@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { renderComponent } from '#tests/support/components/index.ts'
 
@@ -32,9 +32,7 @@ describe('CommonTicketStateIndicator.vue', () => {
       label: 'pending reminder',
     })
 
-    expect(
-      view.getByIconName('check-circle-outline-dashed'),
-    ).toBeInTheDocument()
+    expect(view.getByIconName('check-circle-outline-dashed')).toBeInTheDocument()
   })
 
   it('renders escalated state correctly', () => {

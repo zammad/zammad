@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Mutations
   class Ticket::Article::ChangeVisibility < BaseMutation
@@ -11,7 +11,7 @@ module Gql::Mutations
 
     def resolve(article:, internal:)
       article = Service::Ticket::Article::ChangeVisibility
-        .new(current_user: context.current_user)
+        .with_current_user(context.current_user)
         .execute(article: article, internal: internal)
 
       { article: article }

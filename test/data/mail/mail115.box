@@ -1,0 +1,12 @@
+From: redacted@example.test
+To: redacted@example.test
+Subject: test
+Content-Type: text/html; charset=UTF-8
+Date: Sun, 8 Mar 2026 13:31:07 +0000
+MIME-Version: 1.0
+Message-ID: <mail115-test@example.test>
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head>
+<body><div style="font-family: 'verdana'; font-size: 12px; color: #000;"><span style="background-color: #ffffff;">test</span></div></body></html>

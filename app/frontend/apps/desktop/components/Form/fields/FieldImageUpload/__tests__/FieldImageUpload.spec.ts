@@ -1,10 +1,11 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { getNode } from '@formkit/core'
 import { FormKit } from '@formkit/vue'
 
 import { renderComponent } from '#tests/support/components/index.ts'
 import { dataURItoBlob } from '#tests/support/utils.ts'
+import { waitFor } from '#tests/support/vitest-wrapper.ts'
 
 const renderImageUploadInput = (props: Record<string, unknown> = {}) => {
   return renderComponent(FormKit, {
@@ -57,9 +58,7 @@ describe('Fields - FieldImageUpload', () => {
       placeholderImagePath: '/api/v1/system_assets/product_logo/1704708731',
     })
 
-    expect(
-      view.queryByRole('button', { name: 'Remove image' }),
-    ).not.toBeInTheDocument()
+    expect(view.queryByRole('button', { name: 'Remove image' })).not.toBeInTheDocument()
   })
 
   it('supports removal of the uploaded image', async () => {
@@ -71,9 +70,7 @@ describe('Fields - FieldImageUpload', () => {
 
     await view.events.click(removeImageButton)
 
-    expect(
-      view.queryByRole('button', { name: 'Remove image' }),
-    ).not.toBeInTheDocument()
+    expect(view.queryByRole('button', { name: 'Remove image' })).not.toBeInTheDocument()
 
     expect(getNode('imageUpload')?._value).toEqual('')
   })
@@ -115,10 +112,7 @@ describe('Fields - FieldImageUpload - Input Checklist', () => {
       name: 'test_name',
     })
 
-    expect(view.getByLabelText('Image Upload')).toHaveAttribute(
-      'name',
-      'test_name',
-    )
+    expect(view.getByLabelText('Image Upload')).toHaveAttribute('name', 'test_name')
   })
 
   it('implements blur handler', async () => {
@@ -149,7 +143,7 @@ describe('Fields - FieldImageUpload - Input Checklist', () => {
 
     await view.events.upload(imageUploadInput, testFile)
 
-    await vi.waitFor(() => {
+    await waitFor(() => {
       expect(getNode('imageUpload')?.value).toEqual(testValue)
 
       const uploadImage = view.getByRole('img', { name: 'Image preview' })
@@ -194,10 +188,7 @@ describe('Fields - FieldImageUpload - Input Checklist', () => {
       'test-attribute': 'test_value',
     })
 
-    expect(view.getByLabelText('Image Upload')).toHaveAttribute(
-      'test-attribute',
-      'test_value',
-    )
+    expect(view.getByLabelText('Image Upload')).toHaveAttribute('test-attribute', 'test_value')
   })
 
   it('implements standardized classes', async () => {

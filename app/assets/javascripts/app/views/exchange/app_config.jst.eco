@@ -30,8 +30,13 @@
   </div>
   <h2><%- @T('Your callback URL') %></h2>
   <div class="input form-group">
-    <div class="controls">
-      <input class="form-control js-select" readonly value="<%= @callbackUrl %>">
+    <div class="controls controls--button ignore-readonly">
+      <input readonly type="text" value="<%= @callbackUrl %>" class="form-control js-select js-permanentReadonly">
+      <div class="controls-button u-clickable js-copy" role="button" aria-label="<%- @T('Copy to clipboard') %>">
+        <span class="controls-button-inner">
+          <%- @Icon('clipboard') %>
+        </span>
+      </div>
     </div>
   </div>
 </fieldset>

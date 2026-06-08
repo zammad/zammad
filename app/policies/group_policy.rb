@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class GroupPolicy < ApplicationPolicy
   def show?
@@ -11,6 +11,10 @@ class GroupPolicy < ApplicationPolicy
     end
 
     false
+  end
+
+  def create_tickets?
+    show? && user.group_access?(record.id, :create)
   end
 
   private

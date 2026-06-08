@@ -210,7 +210,7 @@ class ProfilePassword extends App.ControllerSubContent
     @ajax(
       id:   'profile_two_factor_default_authentication_method'
       type: 'POST'
-      url:  @apiPath + '/users/two_factor_default_authentication_method'
+      url:  @apiPath + '/users/two_factor/default_authentication_method'
       processData: true
       data: JSON.stringify(
         method: e.currentTarget.closest('tr').dataset.twoFactorKey

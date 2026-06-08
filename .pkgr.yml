@@ -9,22 +9,34 @@ targets:
       - elasticsearch
       - nginx
       - postgresql-server
-      - which
       - epel-release
       - imlib2
       - shared-mime-info
       - redis
     build_dependencies:
-      - https://download.fedoraproject.org/pub/epel/9/Everything/x86_64/Packages/i/imlib2-1.7.4-1.el9.x86_64.rpm
-      - https://download.fedoraproject.org/pub/epel/9/Everything/x86_64/Packages/i/imlib2-devel-1.7.4-1.el9.x86_64.rpm
+      # EPEL packages can only be installed after enabling the EPEL repo (see before.sh).
+      - epel-release
       - shared-mime-info
-      - mysql-devel
+  centos-10:
+    dependencies:
+      - curl
+      - elasticsearch
+      - nginx
+      - postgresql-server
+      - epel-release
+      - imlib2
+      - shared-mime-info
+      - valkey
+    build_dependencies:
+      # EPEL packages can only be installed after enabling the EPEL repo (see before.sh).
+      - epel-release
+      - shared-mime-info
   debian-11:
     dependencies:
       - curl
       - elasticsearch|elasticsearch-oss
       - nginx|apache2
-      - postgresql|mariadb-server
+      - postgresql
       - libimlib2
       - shared-mime-info
       - redis-server
@@ -37,7 +49,20 @@ targets:
       - curl
       - elasticsearch|elasticsearch-oss
       - nginx|apache2
-      - postgresql|mariadb-server
+      - postgresql
+      - libimlib2
+      - shared-mime-info
+      - redis-server
+    build_dependencies:
+      - libimlib2
+      - libimlib2-dev
+      - shared-mime-info
+  debian-13:
+    dependencies:
+      - curl
+      - elasticsearch|elasticsearch-oss
+      - nginx|apache2
+      - postgresql
       - libimlib2
       - shared-mime-info
       - redis-server
@@ -50,7 +75,7 @@ targets:
       - curl
       - elasticsearch|elasticsearch-oss
       - nginx|apache2
-      - postgresql|mysql-server|mariadb-server
+      - postgresql
       - libimlib2
       - shared-mime-info
       - redis-server
@@ -63,7 +88,7 @@ targets:
       - curl
       - elasticsearch|elasticsearch-oss
       - nginx|apache2
-      - postgresql|mysql-server|mariadb-server
+      - postgresql
       - libimlib2
       - shared-mime-info
       - redis-server
@@ -87,17 +112,15 @@ targets:
       - psmisc
       - procps
       - libopenssl1_1
-      - which
     build_dependencies:
       # Add packages required for build that are not in the official SLES repo.
       # Direct URLs must be used since we cannot add repos on packager.io
       #   (would require a paid SLES account and credential management on packager.io).
-      - https://ftp.lysator.liu.se/pub/opensuse/ports/aarch64/distribution/leap/15.4/repo/oss/x86_64/imlib2-1.4.10-1.28.x86_64.rpm
-      - https://ftp.lysator.liu.se/pub/opensuse/ports/aarch64/distribution/leap/15.4/repo/oss/x86_64/imlib2-devel-1.4.10-1.28.x86_64.rpm
-      - https://ftp.lysator.liu.se/pub/opensuse/ports/aarch64/distribution/leap/15.4/repo/oss/x86_64/imlib2-filters-1.4.10-1.28.x86_64.rpm
-      - https://ftp.lysator.liu.se/pub/opensuse/ports/aarch64/distribution/leap/15.4/repo/oss/x86_64/libImlib2-1-1.4.10-1.28.x86_64.rpm
+      - https://rpmfind.net/linux/opensuse/distribution/leap/15.6/repo/oss/x86_64/imlib2-1.4.10-1.28.x86_64.rpm
+      - https://rpmfind.net/linux/opensuse/distribution/leap/15.6/repo/oss/x86_64/imlib2-devel-1.4.10-1.28.x86_64.rpm
+      - https://rpmfind.net/linux/opensuse/distribution/leap/15.6/repo/oss/x86_64/imlib2-filters-1.4.10-1.28.x86_64.rpm
+      - https://rpmfind.net/linux/opensuse/distribution/leap/15.6/repo/oss/x86_64/libImlib2-1-1.4.10-1.28.x86_64.rpm
       - shared-mime-info
-      - libmariadb-devel
 before:
   - contrib/packager.io/before.sh
 after:
@@ -107,9 +130,6 @@ env:
   - ZAMMAD_BIND_IP=127.0.0.1
   - ZAMMAD_RAILS_PORT=3000
   - ZAMMAD_WEBSOCKET_PORT=6042
-services:
-  - postgres:15
-  - redis
 before_install: contrib/packager.io/preinstall.sh
 after_install: contrib/packager.io/postinstall.sh
 buildpack: https://github.com/zammad/heroku-buildpack-multi.git#master

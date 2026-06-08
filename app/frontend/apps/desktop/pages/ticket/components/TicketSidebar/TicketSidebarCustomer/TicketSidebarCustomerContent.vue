@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, type ComputedRef } from 'vue'
@@ -6,7 +6,8 @@ import { computed, type ComputedRef } from 'vue'
 import ObjectAttributes from '#shared/components/ObjectAttributes/ObjectAttributes.vue'
 import type { ObjectAttribute } from '#shared/entities/object-attributes/types/store.ts'
 import { useTicketView } from '#shared/entities/ticket/composables/useTicketView.ts'
-import type { Organization, UserQuery } from '#shared/graphql/types.ts'
+import { useUserNoteUpdateMutation } from '#shared/entities/user/graphql/mutations/noteUpdate.api.ts'
+import { EnumTicketStateTypeCategory, type Organization, type User } from '#shared/graphql/types.ts'
 import type { ObjectLike } from '#shared/types/utils.ts'
 import { normalizeEdges } from '#shared/utils/helpers.ts'
 
@@ -17,8 +18,10 @@ import CommonSimpleEntityList from '#desktop/components/CommonSimpleEntityList/C
 import { EntityType } from '#desktop/components/CommonSimpleEntityList/types.ts'
 import NavigationMenuList from '#desktop/components/NavigationMenu/NavigationMenuList.vue'
 import { NavigationMenuDensity } from '#desktop/components/NavigationMenu/types.ts'
+import TicketListPopoverWithTrigger from '#desktop/components/Ticket/TicketListPopoverWithTrigger.vue'
 import UserInfo from '#desktop/components/User/UserInfo.vue'
 import type { TicketInformation } from '#desktop/entities/ticket/types.ts'
+import { useUserEdit } from '#desktop/entities/user/composables/useUserEdit.ts'
 import { useTicketInformation } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
 import {
   type TicketSidebarContentProps,
@@ -28,10 +31,8 @@ import {
 import TicketSidebarContent from '../TicketSidebarContent.vue'
 
 interface Props extends TicketSidebarContentProps {
-  customer: UserQuery['user']
-  secondaryOrganizations: ReturnType<
-    typeof normalizeEdges<Partial<Organization>>
-  >
+  customer: User
+  secondaryOrganizations: ReturnType<typeof normalizeEdges<Partial<Organization>>>
   objectAttributes: ObjectAttribute[]
 }
 
@@ -48,9 +49,7 @@ const CUSTOMER_FLYOUT_KEY = 'ticket-change-customer'
 const { open: openChangeCustomerFlyout } = useFlyout({
   name: CUSTOMER_FLYOUT_KEY,
   component: () =>
-    import(
-      '#desktop/pages/ticket/components/TicketDetailView/actions/TicketChangeCustomer/TicketChangeCustomerFlyout.vue'
-    ),
+    import('#desktop/pages/ticket/components/TicketDetailView/actions/TicketChangeCustomer/TicketChangeCustomerFlyout.vue'),
 })
 
 let ticket: TicketInformation['ticket']
@@ -63,20 +62,28 @@ if (props.context.screenType === TicketSidebarScreenType.TicketDetailView) {
   ;({ isTicketAgent, isTicketEditable } = useTicketView(ticket))
 }
 
+const { openUserEditFlyout } = useUserEdit()
+
 const actions = computed<MenuItem[]>(() => [
   {
     key: CUSTOMER_FLYOUT_KEY,
     label: __('Change customer'),
-    icon: 'person',
+    icon: 'user',
     show: () => ticket && isTicketAgent.value && isTicketEditable.value,
     onClick: () =>
       openChangeCustomerFlyout({
         ticket,
       }),
   },
+  {
+    key: 'edit-customer',
+    label: __('Edit customer'),
+    icon: 'pencil',
+    show: () => props.customer.policy.update,
+    onClick: () => openUserEditFlyout(props.customer, { title: __('Edit customer') }),
+  },
 ])
 </script>
-
 <template>
   <TicketSidebarContent
     v-model="persistentStates.scrollPosition"
@@ -85,12 +92,16 @@ const actions = computed<MenuItem[]>(() => [
     :entity="customer"
     :actions="actions"
   >
-    <UserInfo :user="customer" />
+    <UserInfo :user="customer" has-organization-popover />
 
     <ObjectAttributes
       :attributes="objectAttributes"
       :object="customer"
-      :skip-attributes="['firstname', 'lastname']"
+      :skip-attributes="['firstname', 'lastname', 'organization_id', 'organization_ids']"
+      :inline-editable="{ note: useUserNoteUpdateMutation }"
+      :style="{
+        '--top-header-height': '-4.5px', // Needed to offset the negative vertical margin of the inline editor and not receive the global header height as top value
+      }"
     />
 
     <CommonSimpleEntityList
@@ -100,10 +111,12 @@ const actions = computed<MenuItem[]>(() => [
       :type="EntityType.Organization"
       :label="__('Secondary organizations')"
       :entity="secondaryOrganizations"
+      has-popover
       @load-more="$emit('load-more-secondary-organizations')"
     />
 
     <CommonSectionCollapse
+      v-if="customer.ticketsCount?.open || customer.ticketsCount?.closed"
       id="customer-tickets"
       v-model="persistentStates.collapseTickets"
       :title="__('Tickets')"
@@ -113,21 +126,69 @@ const actions = computed<MenuItem[]>(() => [
         :density="NavigationMenuDensity.Dense"
         :items="[
           {
+            id: 'open',
             label: __('open tickets'),
+            title: __('Open tickets'),
             icon: 'check-circle-no',
             iconColor: 'fill-yellow-500',
             count: customer?.ticketsCount?.open || 0,
-            route: '/search/ticket/open',
+            route: `/search/${customer?.ticketsCount?.openSearchQuery ?? ''}?entity=Ticket`,
+            show: () => Boolean(customer?.ticketsCount?.open),
           },
           {
+            id: 'closed',
             label: __('closed tickets'),
+            title: __('Closed tickets'),
             icon: 'check-circle-outline',
             iconColor: 'fill-green-400',
             count: customer?.ticketsCount?.closed || 0,
-            route: '/search/ticket/closed',
+            route: `/search/${customer?.ticketsCount?.closedSearchQuery ?? ''}?entity=Ticket`,
+            show: () => Boolean(customer?.ticketsCount?.closed),
           },
         ]"
-      />
+      >
+        <template #default="{ entry, paddingClasses, countSize, countVariant }">
+          <TicketListPopoverWithTrigger
+            :filters="{
+              customerId: customer.id,
+              stateTypeCategory:
+                entry.id === 'open'
+                  ? EnumTicketStateTypeCategory.Open
+                  : EnumTicketStateTypeCategory.Closed,
+            }"
+            :title="entry.title!"
+            :no-results="entry.count === 0"
+            :trigger-class="[
+              'focus-visible-app-default flex items-center gap-1 rounded-lg! text-sm text-gray-100 hover:bg-blue-600 hover:text-black! hover:no-underline! dark:text-neutral-400 dark:hover:bg-blue-900 dark:hover:text-white!',
+              paddingClasses,
+            ]"
+            :trigger-link="typeof entry.route === 'string' ? entry.route : undefined"
+            :popover-config="{
+              orientation: 'left',
+            }"
+            no-hover-styling
+          >
+            <CommonIcon
+              size="small"
+              aria-hidden="true"
+              class="h-4 shrink-0"
+              :class="entry.iconColor"
+              :name="entry.icon!"
+            />
+            <CommonLabel class="line-clamp-1! grow text-current!">
+              {{ $t(entry.label) }}
+            </CommonLabel>
+            <CommonBadge
+              class="cursor-pointer leading-snug font-bold"
+              :size="countSize"
+              :variant="countVariant"
+              rounded
+            >
+              {{ entry.count }}
+            </CommonBadge>
+          </TicketListPopoverWithTrigger>
+        </template>
+      </NavigationMenuList>
     </CommonSectionCollapse>
   </TicketSidebarContent>
 </template>

@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { ref, type Ref } from 'vue'
 
@@ -27,7 +27,8 @@ export const useTicketArticleRetryMediaDownload = (articleId: Ref<string>) => {
     try {
       const result = await retryMutation.send()
 
-      if (!result?.ticketArticleRetryMediaDownload?.success) throw new Error()
+      if (!result?.ticketArticleRetryMediaDownload?.success)
+        throw new Error(__('Media download failed.'))
 
       notify({
         id: 'media-download-success',

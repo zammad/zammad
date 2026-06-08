@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 <script setup lang="ts">
 import { pick } from 'lodash-es'
 import { markRaw } from 'vue'
@@ -23,6 +23,10 @@ interface Props {
   context: FormFieldContext<
     AutoCompleteProps & {
       options?: AutoCompleteCustomerGenericOption[]
+      // Lets the user add a typed-in email as a new customer option. Off by
+      // default — opt in only where the email becomes a new customer user on
+      // submit (e.g. ticket create).
+      allowUnknownEmail?: boolean
     }
   >
 }
@@ -38,9 +42,16 @@ const buildEntityOption = (entity: User) => {
   }
 }
 
-const { actions, onSearchInteractionUpdate, onKeydownFilterInput } =
-  useAddUnknownValueAction()
+// Setup-time read: `allowUnknownEmail` is supplied by the form schema and
+// doesn't change for the lifetime of the field, so we read it once and
+// branch wiring statically rather than per-render.
+const allowUnknownEmail = props.context.allowUnknownEmail ?? false
 
+const { actions, onSearchInteractionUpdate, onKeydownFilterInput } = allowUnknownEmail
+  ? useAddUnknownValueAction()
+  : { actions: undefined, onSearchInteractionUpdate: undefined, onKeydownFilterInput: undefined }
+
+// eslint-disable-next-line vue/no-mutating-props
 Object.assign(props.context, {
   optionIconComponent: markRaw(FieldCustomerOptionIcon),
   initialOptionBuilder: (
@@ -61,14 +72,10 @@ Object.assign(props.context, {
     onlyIn: ['User', 'Organization'],
   },
   autocompleteOptionsPreprocessor: (
-    autocompleteOptions: (AutoCompleteCustomerGenericOption &
-      AutoCompleteOption)[],
+    autocompleteOptions: (AutoCompleteCustomerGenericOption & AutoCompleteOption)[],
   ) =>
     autocompleteOptions.map((autocompleteOption) => {
-      if (
-        !autocompleteOption.object ||
-        autocompleteOption.object.__typename !== 'Organization'
-      )
+      if (!autocompleteOption.object || autocompleteOption.object.__typename !== 'Organization')
         return autocompleteOption
 
       autocompleteOption.disabled = true
@@ -104,9 +111,9 @@ Object.assign(props.context, {
       return autocompleteOption
     }),
   actions,
-  emptyInitialLabelText: __(
-    'Start typing to search or enter an email address…',
-  ),
+  emptyInitialLabelText: allowUnknownEmail
+    ? __('Start typing to search or enter an email address…')
+    : __('Start typing to search…'),
 })
 </script>
 

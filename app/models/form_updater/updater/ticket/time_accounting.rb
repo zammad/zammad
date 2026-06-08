@@ -1,6 +1,10 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class FormUpdater::Updater::Ticket::TimeAccounting < FormUpdater::Updater
+
+  def self.required_permissions
+    %w[ticket.agent]
+  end
 
   def resolve
     if meta[:initial]

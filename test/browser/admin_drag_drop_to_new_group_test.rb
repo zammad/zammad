@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'browser_test_helper'
 
@@ -203,7 +203,7 @@ class AdminDragDropToNewGroupTest < TestCase
 
     users_in_group = @browser.find_elements(css: '.js-batch-assign-group-inner .batch-overlay-assign-entry[data-action=user_assign]')
 
-    users_in_group.count == 1
+    users_in_group.one?
   end
 
   def list_tickets

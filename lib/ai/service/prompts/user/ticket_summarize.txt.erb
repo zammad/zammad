@@ -1,17 +1,20 @@
 <title><%= @context_data[:ticket].title %></title>
-<% @context_data[:ticket].articles.summarizable.each do |article| %>
-  <% next if article.body.blank? %>
-  <% next if article.body_as_text.blank? %>
-  <% if article.type.name == 'email' %>
-    <% result = AI::Service::EmailRemoveQuote.new(current_user: @current_user, context_data: { article: article }).execute %>
-    <% next if result['body'].blank? %>
-  <% else %>
-    <% result = { 'body' => article.body_as_text } %>
-  <% end %>
+<% @context_data[:prepared_articles]&.each do |article| -%>
 <article>
-  <sender><%= article.sender.name %></sender>
-  <sender_name><%= User.find(article.origin_by_id || article.created_by_id).fullname %></sender_name>
-  <visibility><%= article.internal ? 'internal' : 'public' %></visibility>
-  <text><%= result['body'] %></text>
+  <sender_type><%= article[:sender_type] %></sender_type>
+  <sender_name><%= article[:sender_name] %></sender_name>
+  <created_at><%= article[:created_at] %></created_at>
+  <visibility><%= article[:visibility] %></visibility>
+  <text><![CDATA[<%= article[:text] %>]]></text>
+  <%- if !article[:attachments].blank? -%>
+  <attachments>
+    <%- article[:attachments].each do |attachment| -%>
+    <attachment>
+      <ocr_text><![CDATA[<%= attachment[:text] %>]]></ocr_text>
+      <content_type><%= attachment[:type] %></content_type>
+    </attachment>
+    <%- end -%>
+  </attachments>
+  <%- end -%>
 </article>
-<% end %>
+<% end -%>

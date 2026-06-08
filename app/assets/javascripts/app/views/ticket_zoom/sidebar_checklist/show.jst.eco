@@ -3,7 +3,7 @@
     <thead>
       <tr>
         <th class="<% if !@readOnly: %>js-title u-clickable<% end %>">
-          <%- @checklistTitle %>
+          <%= @checklistTitle %>
     <tbody>
   </table>
 

@@ -15,6 +15,8 @@ class ChannelForm extends App.ControllerSubContent
 
   constructor: ->
     super
+
+    @title __('Form'), true
     App.Setting.fetchFull(
       @render
       force: false

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -32,7 +32,7 @@ RSpec.describe SearchIndexAssociationsJob, performs_jobs: true, searchindex: tru
     result = false
     30.times do
       result = described_class.perform_now('Organization', organization.id)
-      puts 'Waiting for elastic search to complete mass update...' # rubocop:disable Rails/Output
+      puts 'Waiting for elastic search to complete mass update...'
       break if result == true
 
       sleep 1

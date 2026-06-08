@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
@@ -22,13 +22,9 @@ describe('testing login error handling', () => {
     const view = await visitView('/login')
     await view.events.click(view.getByText('Sign in'))
 
-    expect(view.getByLabelText('Username / Email')).toBeDescribedBy(
-      'This field is required.',
-    )
+    expect(view.getByLabelText('Username / Email')).toBeDescribedBy('This field is required.')
 
-    expect(view.getByLabelText('Password')).toBeDescribedBy(
-      'This field is required.',
-    )
+    expect(view.getByLabelText('Password')).toBeDescribedBy('This field is required.')
   })
 
   it('check that login request error is visible', async () => {
@@ -82,8 +78,7 @@ describe('testing login error handling', () => {
           session: null,
           errors: [
             {
-              message:
-                'Login failed. Please double-check your two-factor authentication method.',
+              message: 'Login failed. Please double-check your two-factor authentication method.',
             },
           ],
           twoFactorRequired: null,
@@ -101,7 +96,7 @@ describe('testing login error handling', () => {
 
     await view.events.click(view.getByText('Sign in'))
 
-    await view.events.type(view.getByLabelText('Security Code'), '123456')
+    await view.events.type(view.getByLabelText('Security code'), '123456')
 
     await view.events.click(view.getByText('Sign in'))
 

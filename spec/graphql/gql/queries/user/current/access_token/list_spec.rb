@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -28,7 +28,7 @@ RSpec.describe Gql::Queries::User::Current::AccessToken::List, type: :graphql do
     let(:token) { create(:token, user: user) }
 
     it 'returns objects from the service' do
-      allow_any_instance_of(Service::User::AccessToken::List)
+      allow(Service::User::AccessToken::List)
         .to receive(:execute)
         .and_return([token])
 
@@ -44,7 +44,7 @@ RSpec.describe Gql::Queries::User::Current::AccessToken::List, type: :graphql do
         gql.execute(query)
 
         expect(gql.result.error_message)
-          .to include("Failed Gql::EntryPoints::Queries's authorization check")
+          .to include('Access forbidden by Gql::Queries::User::Current::AccessToken::List')
       end
     end
   end

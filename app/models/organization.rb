@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Organization < ApplicationModel
   include HasDefaultModelUserRelations
@@ -12,6 +12,7 @@ class Organization < ApplicationModel
   include ChecksHtmlSanitized
   include HasObjectManagerAttributes
   include HasTaskbars
+  include HasRecentCloses
   include CanSelector
   include CanPerformChanges
 
@@ -47,6 +48,7 @@ class Organization < ApplicationModel
   # secondary_members will break eager_load of attributes_with_association_ids because it mixes up with the members relation.
   # so it will get added afterwards
   association_attributes_ignored :secondary_members, :tickets, :created_by, :updated_by
+  deep_destroy_associations_include :members, :tickets
 
   activity_stream_permission 'admin.role'
 
@@ -58,6 +60,7 @@ class Organization < ApplicationModel
       .left_outer_joins(:organization, :organizations_users)
       .distinct
       .where('organizations.id = :id OR organizations_users.organization_id = :id', id:)
+      .reorder(:id)
   end
 
   def destroy(associations: false)

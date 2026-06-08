@@ -1,0 +1,18 @@
+Tiket dieskalasi (#{ticket.title})\r
+\r
+<div>Hai #{recipient.firstname},</div>\r
+<br>\r
+<div>Ticket (#{ticket.title}) dari "<b>#{ticket.customer.longname}</b>" telah dieskalasi pada "#{ticket.escalation_at}"!</div>\r
+<br>\r
+<% if @objects[:article] %>\r
+  <div>\r
+Informasi:\r
+  <blockquote type="cite">\r
+  #{article.body_as_html}\r
+  </blockquote>\r
+  </div>\r
+<% end %>\r
+<br>\r
+<div>\r
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">Lihat Pada #{config.product_name}</a>\r
+</div>

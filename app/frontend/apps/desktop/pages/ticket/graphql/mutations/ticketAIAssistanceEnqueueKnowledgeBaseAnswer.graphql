@@ -1,0 +1,5 @@
+mutation ticketAIAssistanceEnqueueKnowledgeBaseAnswer($ticketId: ID!) {
+  ticketAIAssistanceEnqueueKnowledgeBaseAnswer(ticketId: $ticketId) {
+    success
+  }
+}

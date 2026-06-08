@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 namespace :zammad do
 
@@ -8,7 +8,7 @@ namespace :zammad do
     task rebuild: :environment do
       Package::Migration.linked
       ActiveRecord::Base.connection.reconnect!
-      ActiveRecord::Base.descendants.each(&:reset_column_information)
+      Models.all.each_key(&:reset_column_information)
       Rails.cache.clear
       EventBuffer.reset('transaction')
       Setting.reload

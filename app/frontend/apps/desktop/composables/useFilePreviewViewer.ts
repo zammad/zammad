@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { ref } from 'vue'
 
@@ -7,7 +7,7 @@ import type { FilePreview } from '#shared/utils/files.ts'
 
 import { useFlyout } from '#desktop/components/CommonFlyout/useFlyout.ts'
 
-import type { MaybeRef } from '@vueuse/shared'
+import type { MaybeRef } from 'vue'
 
 interface ImagePreview {
   src?: string
@@ -41,9 +41,7 @@ export const useFilePreviewViewer = (viewFiles: MaybeRef<ViewerFile[]>) => {
   const calendarPreviewFlyout = useFlyout({
     name: 'common-calendar-preview',
     component: () =>
-      import(
-        '#desktop/components/CommonCalendarPreviewFlyout/CommonCalendarPreviewFlyout.vue'
-      ),
+      import('#desktop/components/CommonCalendarPreviewFlyout/CommonCalendarPreviewFlyout.vue'),
   })
 
   const showPreview = (type: FilePreview, filePreviewfile: ViewerFile) => {

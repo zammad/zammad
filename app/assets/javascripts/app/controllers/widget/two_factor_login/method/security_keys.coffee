@@ -24,13 +24,12 @@ class App.TwoFactorLoginMethodSecurityKeys extends App.TwoFactorLoginMethod
       @showError(__('The application is not running in a secure context.'))
       return
 
-    webauthnJSON
-      .get(publicKey: @config)
-      .then((publicKeyCredential) =>
+    navigator.credentials.get({ publicKey: PublicKeyCredential.parseRequestOptionsFromJSON(@config) })
+      .then((credential) =>
         params = _.extend({}, @loginContext.formPayload,
           two_factor_method: @method.key
           two_factor_payload:
-            credential: publicKeyCredential
+            credential: credential.toJSON()
             challenge: @config.challenge
         )
 

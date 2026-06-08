@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Service::User::TwoFactor::RemoveMethodCredentials < Service::User::TwoFactor::Base
   attr_reader :credential_id
@@ -29,11 +29,11 @@ class Service::User::TwoFactor::RemoveMethodCredentials < Service::User::TwoFact
 
   def validate
     if !user_preference
-      raise Exceptions::UnprocessableEntity, __('The given two-factor method is not configured yet.')
+      raise Exceptions::UnprocessableContent, __('The given two-factor method is not configured yet.')
     end
 
     return if credentials&.find { |elem| elem[:public_key] == credential_id }
 
-    raise Exceptions::UnprocessableEntity, __('The two-factor credentials you\'re trying to delete do not exist')
+    raise Exceptions::UnprocessableContent, __('The two-factor credentials you\'re trying to delete do not exist')
   end
 end

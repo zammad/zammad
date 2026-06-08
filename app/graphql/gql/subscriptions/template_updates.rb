@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Subscriptions
   class TemplateUpdates < BaseSubscription
@@ -11,9 +11,7 @@ module Gql::Subscriptions
 
     field :templates, [Gql::Types::TemplateType, { null: false }], description: 'Current ticket templates'
 
-    def authorized?(only_active:)
-      context.current_user.permissions?(['ticket.agent', 'ticket.customer'])
-    end
+    requires_permission 'ticket.agent', 'ticket.customer'
 
     def update(only_active:)
       {

@@ -33,6 +33,14 @@ class App.TicketOverview extends App.Controller
       view: @view
     )
 
+    @contentController.releaseController() if @contentController
+    @contentController = new App.TicketOverviewTable(
+      el:          elLocal.find('.overview-table')
+      view:        @view
+      keyboardOn:  @keyboardOn
+      keyboardOff: @keyboardOff
+    )
+
     if App.User.current().permission('ticket.agent')
       @controllerTicketBatch.releaseController() if @controllerTicketBatch
       @controllerTicketBatch = new App.TicketBatch(
@@ -41,16 +49,8 @@ class App.TicketOverview extends App.Controller
         parentEl:     elLocal
         appEl:        @appEl
         batchSuccess: =>
-          @render()
+          @contentController.render()
       )
-
-    @contentController.releaseController() if @contentController
-    @contentController = new App.TicketOverviewTable(
-      el:          elLocal.find('.overview-table')
-      view:        @view
-      keyboardOn:  @keyboardOn
-      keyboardOff: @keyboardOff
-    )
 
     @html elLocal
 

@@ -1,10 +1,7 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { visitView } from '#tests/support/components/visitView.ts'
-import {
-  mockGraphQLApi,
-  mockGraphQLSubscription,
-} from '#tests/support/mock-graphql-api.ts'
+import { mockGraphQLApi, mockGraphQLSubscription } from '#tests/support/mock-graphql-api.ts'
 import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
 import { waitUntil } from '#tests/support/utils.ts'
 
@@ -19,9 +16,7 @@ describe('selecting a online notification', () => {
       lastname: 'Doe',
     })
 
-    const userUpdateSubscription = mockGraphQLSubscription(
-      OnlineNotificationsCountDocument,
-    )
+    const userUpdateSubscription = mockGraphQLSubscription(OnlineNotificationsCountDocument)
 
     await userUpdateSubscription.next({
       data: {
@@ -107,10 +102,7 @@ describe('selecting a online notification', () => {
       exact: false,
     })
 
-    expect(view.getLinkFromElement(notificationItem)).toHaveAttribute(
-      'href',
-      '/mobile/tickets/111',
-    )
+    expect(view.getLinkFromElement(notificationItem)).toHaveAttribute('href', '/mobile/tickets/111')
   })
 
   it('shows a list of online notifications which includes also items without permission to the relation', async () => {
@@ -150,9 +142,7 @@ describe('selecting a online notification', () => {
 
     expect(notificationItems).toHaveLength(2)
 
-    const noRelationNotificationItems = view.getAllByText(
-      'You can no longer see the ticket.',
-    )
+    const noRelationNotificationItems = view.getAllByText('You can no longer see the ticket.')
     expect(noRelationNotificationItems).toHaveLength(1)
   })
 })

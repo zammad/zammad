@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -108,7 +108,7 @@ RSpec.describe HtmlSanitizer, :aggregate_failures do
         let(:html) { '<div><img style="width: 181px; height: 125px" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/..."><p>123</p><img style="width: 181px; height: 125px" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/..."></div>' }
 
         it 'converts embedded image to cid' do
-          expect(body).to match(%r{<div>\s+<img style="width: 181px; height: 125px" src="cid:.+?"><p>123</p>\s+<img style="width: 181px; height: 125px" src="cid:.+?">\s+</div>})
+          expect(body).to match(%r{<div><img style="width: 181px; height: 125px" src="cid:.+?"><p>123</p><img style="width: 181px; height: 125px" src="cid:.+?"></div>})
         end
 
         it 'extracts two attachments' do
@@ -208,6 +208,35 @@ Building dependency tree...</code></pre>'
       end
     end
 
+    context 'with strings that have very deep nested HTML content' do
+      before do
+        stub_const('Nokogiri::Gumbo::DEFAULT_MAX_TREE_DEPTH', 3)
+      end
+
+      it 'collapses empty nested divs and succeeds' do
+        # Empty nested divs get collapsed, reducing depth
+        expect(described_class.strict('<div><div><div><div></div></div></div></div>'))
+          .to eq('')
+      end
+
+      it 'collapses empty wrapper divs and preserves content' do
+        # Only the innermost div with content is kept
+        expect(described_class.strict('<div><div><div><div>content</div></div></div></div>'))
+          .to eq('<div>content</div>')
+      end
+
+      it 'preserves content at different nesting levels' do
+        # Outer div has direct content "outer", middle wrappers get collapsed
+        expect(described_class.strict('<div>outer<div><div><div>inner</div></div></div></div>'))
+          .to eq('<div>outer<div>inner</div></div>')
+      end
+
+      it 'preserves non-div elements and their wrappers' do
+        expect(described_class.strict('<div><div><div><div><span>content</span></div></div></div></div>'))
+          .to eq('<div><span>content</span></div>')
+      end
+    end
+
     context 'with href links that contain square brackets' do
       it 'correctly URL encodes them' do
         expect(described_class.strict(+'<a href="https://example.com/?foo=bar&baz[x]=y">example</a>', true))
@@ -222,9 +251,16 @@ Building dependency tree...</code></pre>'
       end
     end
 
+    context 'with href links that contain Zammad variable placeholders' do
+      it 'preserves curly braces in URL' do
+        expect(described_class.strict(+'<a href="https://example.com/?no={ticket.number}">example</a>', true))
+          .to eq('<a href="https://example.com/?no={ticket.number}" rel="nofollow noreferrer noopener" target="_blank" title="https://example.com/?no={ticket.number}">example</a>')
+      end
+    end
+
     context 'when HTML sanitizer is removing attributes/styles which are white listed. #4605' do
       it 'does not remove whitelisted attributes width' do
-        expect(described_class.strict('<table width=20><tr width=20><td width=20>123</td></tr></table>')).to eq('<table style="width:20px;"><tr style="width:20px;"><td style="width:20px;">123</td></tr></table>')
+        expect(described_class.strict('<table width=20><tr width=20><td width=20>123</td></tr></table>')).to eq('<table style="width:20px;"><tbody><tr style="width:20px;"><td style="width:20px;">123</td></tr></tbody></table>')
       end
     end
 

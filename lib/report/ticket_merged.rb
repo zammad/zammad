@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Report::TicketMerged < Report::Base
 
@@ -18,7 +18,7 @@ class Report::TicketMerged < Report::Base
   #
   # @return [Array<Integer>]
   def self.aggs(params_origin)
-    params = params_origin.deep_dup
+    params = duplicate_preserving_current_user(params_origin)
 
     Array.new(interval_length(params)) do |_counter|
       case params[:interval]

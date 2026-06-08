@@ -1,17 +1,15 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { mockGraphQLResult } from '#tests/graphql/builders/mocks.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 
 import { mockPublicLinksQuery } from '#shared/entities/public-links/graphql/queries/links.mocks.ts'
-import type {
-  UserSignupMutation,
-  UserSignupResendMutation,
-} from '#shared/graphql/types.ts'
+import type { UserSignupMutation, UserSignupResendMutation } from '#shared/graphql/types.ts'
+
+import { UserSignupResendDocument } from '#desktop/entities/user/graphql/mutations/userSignupResend.api.ts'
 
 import { UserSignupDocument } from '../graphql/mutations/userSignup.api.ts'
-import { UserSignupResendDocument } from '../graphql/mutations/userSignupResend.api.ts'
 
 describe('testing additional signup information', () => {
   beforeEach(() => {
@@ -42,12 +40,14 @@ describe('testing additional signup information', () => {
 
     const [imprint, privacy] = publicLinks
 
-    expect(
-      await view.findByRole('link', { name: imprint.title }),
-    ).toHaveProperty('href', imprint.link)
-    expect(
-      await view.findByRole('link', { name: privacy.title }),
-    ).toHaveProperty('href', privacy.link)
+    expect(await view.findByRole('link', { name: imprint.title })).toHaveProperty(
+      'href',
+      imprint.link,
+    )
+    expect(await view.findByRole('link', { name: privacy.title })).toHaveProperty(
+      'href',
+      privacy.link,
+    )
   })
 
   it('show hint about already existing account', async () => {
@@ -70,12 +70,9 @@ describe('testing additional signup information', () => {
   })
 
   it('signup for an new user and resend signup email', async () => {
-    const mockerSignup = mockGraphQLResult<UserSignupMutation>(
-      UserSignupDocument,
-      {
-        userSignup: { success: true },
-      },
-    )
+    const mockerSignup = mockGraphQLResult<UserSignupMutation>(UserSignupDocument, {
+      userSignup: { success: true },
+    })
 
     const mockerVerifyResend = mockGraphQLResult<UserSignupResendMutation>(
       UserSignupResendDocument,
@@ -107,9 +104,7 @@ describe('testing additional signup information', () => {
     await view.events.type(password, signupData.password)
     await view.events.type(passwordConfirmation, signupData.password)
 
-    await view.events.click(
-      view.getByRole('button', { name: 'Create my account' }),
-    )
+    await view.events.click(view.getByRole('button', { name: 'Create my account' }))
 
     const mockSignupCalls = await mockerSignup.waitForCalls()
 
@@ -119,9 +114,7 @@ describe('testing additional signup information', () => {
     })
 
     expect(
-      await view.findByText(
-        `Thanks for joining. Email sent to "${signupData.email}".`,
-      ),
+      await view.findByText(`Thanks for joining. Email sent to "${signupData.email}".`),
     ).toBeInTheDocument()
 
     expect(
@@ -130,18 +123,14 @@ describe('testing additional signup information', () => {
       ),
     ).toBeInTheDocument()
 
-    expect(
-      view.queryByRole('button', { name: 'Create my account' }),
-    ).not.toBeInTheDocument()
+    expect(view.queryByRole('button', { name: 'Create my account' })).not.toBeInTheDocument()
 
     expect(
       await view.findByRole('button', { name: 'Resend verification email' }),
     ).toBeInTheDocument()
 
     // resend the signup email
-    await view.events.click(
-      view.getByRole('button', { name: 'Resend verification email' }),
-    )
+    await view.events.click(view.getByRole('button', { name: 'Resend verification email' }))
 
     const mockSignupResendCalls = await mockerVerifyResend.waitForCalls()
 
@@ -181,9 +170,7 @@ describe('testing additional signup information', () => {
     await view.events.type(password, 'Test1234')
     await view.events.type(passwordConfirmation, 'Test1234')
 
-    await view.events.click(
-      view.getByRole('button', { name: 'Create my account' }),
-    )
+    await view.events.click(view.getByRole('button', { name: 'Create my account' }))
 
     await mocker.waitForCalls()
 

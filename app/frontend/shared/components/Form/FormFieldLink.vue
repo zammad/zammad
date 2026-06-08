@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { getFieldLinkClasses } from './initializeFieldLinkClasses.ts'
@@ -23,16 +23,12 @@ const classMap = getFieldLinkClasses()
 </script>
 
 <template>
-  <div :class="classMap.container">
-    <div
-      :class="classMap.base"
-      class="flex h-full items-center focus:outline-hidden"
-    >
+  <div v-if="link" :class="classMap.container">
+    <div :class="classMap.base" class="flex h-full items-center focus:outline-hidden">
       <CommonLink
-        v-if="link"
+        v-tooltip="$t(linkLabel)"
         :link="link"
         :class="classMap.link"
-        :aria-label="$t(linkLabel)"
         class="flex items-center justify-center"
         open-in-new-tab
         @click="onLinkClick"

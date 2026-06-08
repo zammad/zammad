@@ -1,5 +1,9 @@
 mutation ticketChecklistAdd($ticketId: ID!, $templateId: ID, $createFirstItem: Boolean) {
-  ticketChecklistAdd(ticketId: $ticketId, templateId: $templateId, createFirstItem: $createFirstItem) {
+  ticketChecklistAdd(
+    ticketId: $ticketId
+    templateId: $templateId
+    createFirstItem: $createFirstItem
+  ) {
     checklist {
       id
       name

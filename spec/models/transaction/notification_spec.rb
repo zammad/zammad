@@ -1,17 +1,17 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
 require 'models/concerns/checks_human_changes_examples'
 
 RSpec.describe Transaction::Notification, type: :model do
-  describe 'pending ticket reminder repeats after midnight at selected time zone' do
+  describe 'pending ticket reminder repeats after midnight at selected time zone', time_zone: 'UTC' do
     let(:group)  { create(:group) }
     let(:user)   { create(:agent) }
     let(:ticket) { create(:ticket, owner: user, state_name: 'open', pending_time: Time.current) }
 
     before do
-      travel_to Time.use_zone('UTC') { Time.current.noon }
+      travel_to DateTime.parse('2024-11-15T12:00:00Z')
 
       user.groups << group
       ticket
@@ -22,13 +22,13 @@ RSpec.describe Transaction::Notification, type: :model do
     end
 
     it 'notification not sent at UTC midnight' do
-      travel_to Time.use_zone('UTC') { Time.current.end_of_day + 1.minute }
+      travel_to DateTime.parse('2024-11-16T00:01:00Z')
 
       expect { run(ticket, user, 'reminder_reached') }.not_to change(OnlineNotification, :count)
     end
 
     it 'notification sent at selected time zone midnight' do
-      travel_to Time.use_zone('America/Santiago') { Time.current.end_of_day + 1.minute }
+      travel_to DateTime.parse('2024-11-16T03:01:00Z')
 
       expect { run(ticket, user, 'reminder_reached') }.to change(OnlineNotification, :count).by(1)
     end
@@ -151,10 +151,10 @@ RSpec.describe Transaction::Notification, type: :model do
       allow_any_instance_of(Net::SMTP).to receive(:start).and_raise(error)
 
       Service::System::SetEmailNotificationConfiguration
-        .new(
+        .execute(
           adapter:           'smtp',
           new_configuration: {}
-        ).execute
+        )
     end
 
     context 'when there is a problem with the sending SMTP server' do
@@ -174,6 +174,91 @@ RSpec.describe Transaction::Notification, type: :model do
         run(ticket, user, 'reminder_reached')
         expect(Rails.logger).to have_received(:info)
       end
+    end
+  end
+
+  describe 'daily locks behaviour' do
+    let(:group)      { create(:group) }
+    let(:user)       { create(:agent, groups: [group]) }
+    let(:other_user) { create(:agent, groups: [group]) }
+    let(:ticket)     { create(:ticket, group:, state_name: 'open', pending_time: Time.current) }
+    let(:instance)   { build(ticket, user, 'reminder_reached') }
+
+    def user_gets_reminders(user)
+      user.preferences[:notification_config][:matrix][:reminder_reached][:criteria] = {
+        'owned_by_me' => true, 'owned_by_nobody' => false, 'subscribed' => true, 'no' => true
+      }
+      user.save!
+    end
+
+    before do
+      travel_to Time.current.noon
+
+      [user, other_user].each { user_gets_reminders(it) }
+
+      allow(instance).to receive(:send_to_single_recipient_online)
+    end
+
+    context 'with existing locks' do
+      before do
+        run(ticket, user, 'reminder_reached')
+      end
+
+      it 'notification not resent on same day' do
+        instance.perform
+
+        expect(instance).not_to have_received(:send_to_single_recipient_online)
+      end
+
+      it 'notification is resent on same day if ticket pending time changes' do
+        ticket.update!(pending_time: 1.hour.from_now)
+
+        instance.perform
+
+        expect(instance).to have_received(:send_to_single_recipient_online).twice
+      end
+
+      context 'when next day' do
+        before { travel 1.day }
+
+        it 'notification is resent on next day' do
+          instance.perform
+
+          expect(instance).to have_received(:send_to_single_recipient_online).twice
+        end
+
+        it 'notification lock is gone next day' do
+          expect { run(ticket, other_user, 'reminder_reached') }.to change(Ticket::DailyEventLock, :count).by(2)
+        end
+      end
+
+      context 'with an additional user' do
+        let(:new_user) { create(:agent, groups: [group]) }
+
+        before do
+          user_gets_reminders(new_user)
+          Rails.cache.clear # clears cache because notification preferences are cached
+        end
+
+        it 'notification is sent to new user on same day' do
+          instance.perform
+
+          expect(instance).to have_received(:send_to_single_recipient_online).once
+        end
+      end
+    end
+
+    it 'one of notification locks are present when one user fails', aggregate_failures: true do
+      call_count = 0
+      allow(instance).to receive(:send_to_single_recipient_online) do
+        raise StandardError if call_count.positive?
+
+        call_count += 1
+      end
+
+      expect do
+        expect { instance.perform }.to raise_error(StandardError)
+      end.to change(Ticket::DailyEventLock, :count).by(1)
     end
   end
 

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Mutations
   class User::Current::TwoFactor::VerifyMethodConfiguration < BaseMutation
@@ -12,21 +12,18 @@ module Gql::Mutations
 
     field :recovery_codes, [String], description: 'One-time two-factor authentication codes'
 
-    def self.authorize(_obj, ctx)
-      ctx.current_user.permissions?('user_preferences.two_factor_authentication')
-    end
+    requires_permission 'user_preferences.two_factor_authentication'
 
     def resolve(method_name:, token:, payload:, configuration:)
       token_object = verify_token!(token)
 
-      verify_method_configuration = Service::User::TwoFactor::VerifyMethodConfiguration.new(
-        user:          context.current_user,
-        method_name:,
-        payload:       payload.is_a?(Hash) ? payload.symbolize_keys! : payload,
-        configuration: configuration.symbolize_keys!
-      )
-
-      result = verify_method_configuration.execute
+      result = Service::User::TwoFactor::VerifyMethodConfiguration
+        .with_current_user(context.current_user)
+        .execute(
+          method_name:,
+          payload:       payload.is_a?(Hash) ? payload.symbolize_keys! : payload,
+          configuration: configuration.symbolize_keys!
+        )
 
       token_object.destroy
 

@@ -16,7 +16,7 @@ class Organization extends App.SingleObjectPopoverProvider
         el = $('<li class="person"></li>')
         if user.active is false
           el.addClass('is-inactive')
-        el.append(user.displayName())
+        el.text(user.displayName())
         members.push el
       html.find('.js-organizationUserList').html(members)
     )

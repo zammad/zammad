@@ -7,6 +7,7 @@
     </div>
     <div class="controls js-setAttribute horizontal span-width"></div>
     <div class="horizontal-filter-group js-setNotification flex"></div>
+    <div class="horizontal-filter-group js-setAI flex"></div>
     <div class="horizontal-filter-group js-setArticle flex"></div>
   </div>
   <div class="filter-controls js-rowActions">

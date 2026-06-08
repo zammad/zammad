@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class CreateBase < ActiveRecord::Migration[4.2]
   def up
@@ -116,11 +116,7 @@ class CreateBase < ActiveRecord::Migration[4.2]
       t.references :signature,                      null: true
       t.references :email_address,                  null: true
 
-      if ActiveRecord::Base.connection_db_config.configuration_hash[:adapter] == 'mysql2'
-        t.string :name, limit: (160 * 6) + (2 * 5), null: false # max depth of 6 and 5 delimiters in between
-      else
-        t.string :name, limit: (160 * 10) + (2 * 9), null: false # max depth of 10 and 9 delimiters in between
-      end
+      t.string :name, limit: (160 * 10) + (2 * 9), null: false # max depth of 10 and 9 delimiters in between
 
       t.string :name_last,              limit: 160, null: false
       t.integer :parent_id,                         null: true
@@ -130,6 +126,7 @@ class CreateBase < ActiveRecord::Migration[4.2]
       t.boolean :follow_up_assignment,              null: false, default: true
       t.boolean :active,                            null: false, default: true
       t.boolean :shared_drafts,                     null: false, default: true
+      t.string :summary_generation,                 null: false, default: 'global_default'
       t.string :note,                   limit: 250, null: true
       t.integer :updated_by_id,                     null: false
       t.integer :created_by_id,                     null: false
@@ -537,6 +534,7 @@ class CreateBase < ActiveRecord::Migration[4.2]
       t.integer :type_lookup_id,                null: false
       t.integer :user_id,                       null: false
       t.boolean :seen,                          null: false, default: false
+      t.jsonb   :meta,                          null: false, default: {}
       t.integer :updated_by_id,                 null: false
       t.integer :created_by_id,                 null: false
       t.timestamps limit: 3, null: false
@@ -548,6 +546,12 @@ class CreateBase < ActiveRecord::Migration[4.2]
     add_foreign_key :online_notifications, :users
     add_foreign_key :online_notifications, :users, column: :created_by_id
     add_foreign_key :online_notifications, :users, column: :updated_by_id
+
+    create_table :online_notification_standalones do |t|
+      t.jsonb 'data', null: false, default: {}
+      t.string 'kind', null: false
+      t.timestamps limit: 3, null: false
+    end
 
     create_table :schedulers do |t|
       t.string :name,                     limit: 250,   null: false
@@ -621,6 +625,7 @@ class CreateBase < ActiveRecord::Migration[4.2]
       t.text :data_option,                    limit: 800.kilobytes + 1,  null: true
       t.text :data_option_new,                limit: 800.kilobytes + 1,  null: true
       t.boolean :editable,                                  null: false, default: true
+      t.boolean :internal,                                  null: false, default: false
       t.boolean :active,                                    null: false, default: true
       t.string :screens,                      limit: 2000,  null: true
       t.boolean :to_create,                                 null: false, default: false
@@ -762,13 +767,7 @@ class CreateBase < ActiveRecord::Migration[4.2]
     create_table :smime_certificates do |t|
       t.string :fingerprint,        limit: 250,  null: false
       t.string :uid,                limit: 1024, null: false
-
-      if Rails.application.config.db_column_array
-        t.string :email_addresses, null: true, array: true
-      else
-        t.json :email_addresses, null: true
-      end
-
+      t.string :email_addresses, null: true, array: true
       t.binary :pem,                limit: 10.megabytes,  null: false
       t.binary :private_key,        limit: 10.megabytes,  null: true
       t.string :private_key_secret, limit: 500,           null: true
@@ -863,11 +862,7 @@ class CreateBase < ActiveRecord::Migration[4.2]
       t.string  :title, limit: 200,       null: false
       t.string  :description, limit: 200, null: true
 
-      if Rails.application.config.db_column_array
-        t.string :screen, null: false, array: true
-      else
-        t.json :screen, null: false
-      end
+      t.string :screen, null: false, array: true
 
       t.boolean :new_tab,                 null: false, default: true
       t.integer :prio,                    null: false
@@ -898,11 +893,7 @@ class CreateBase < ActiveRecord::Migration[4.2]
       t.text     :key,         limit: 500.kilobytes + 1, null: false
       t.datetime :expires_at, null: true, limit: 3
 
-      if Rails.application.config.db_column_array
-        t.string :email_addresses, null: true, array: true
-      else
-        t.json :email_addresses, null: true
-      end
+      t.string :email_addresses, null: true, array: true
 
       t.boolean  :secret,                   null: false, default: false
       t.string   :passphrase,  limit: 500,  null: true
@@ -940,5 +931,122 @@ class CreateBase < ActiveRecord::Migration[4.2]
       t.timestamps limit: 3, null: false
     end
     add_index :system_reports, [:uuid], unique: true
+
+    create_table :ai_analytics_runs do |t|
+      t.string :identifier, null: false
+      t.string :version
+      t.string :ai_service_name, null: false, index: true
+
+      t.references :locale, null: true, foreign_key: { to_table: :locales }
+      t.references :related_object, polymorphic: true, null: true
+      t.references :triggered_by, polymorphic: true, null: true
+
+      t.references :regeneration_of, null: true, foreign_key: { to_table: :ai_analytics_runs }
+
+      t.jsonb :content, null: false, default: {}
+      t.jsonb :payload, null: false, default: {}
+      t.jsonb :context, null: false, default: {}
+      t.jsonb :error,   null: false, default: {}
+
+      t.timestamps limit: 3
+    end
+    add_index :ai_analytics_runs, %i[triggered_by_type triggered_by_id], name: 'index_ai_analytics_runs_on_triggered_by'
+
+    create_table :ai_stored_results do |t|
+      t.string :identifier, null: false
+      t.string :version
+
+      t.jsonb :metadata, null: false, default: {}
+      t.jsonb :content, null: false, default: {}
+
+      t.references :locale, null: true, foreign_key: { to_table: :locales }
+      t.references :related_object, polymorphic: true, null: true,
+        index: { name: 'index_ai_stored_results_on_related_object' }
+
+      t.references :ai_analytics_run, null: true, foreign_key: { to_table: :ai_analytics_runs }
+
+      t.timestamps limit: 3
+
+      t.index %i[identifier locale_id related_object_id related_object_type],
+              unique: true,
+              name:   'index_ai_stored_results_on_identifier_and_other'
+    end
+
+    create_table :ai_agents do |t|
+      t.string 'name', limit: 250, null: false, default: ''
+      t.jsonb 'definition', null: false, default: {}
+      t.jsonb 'action_definition', null: false, default: {}
+
+      t.string 'agent_type', limit: 250
+      t.jsonb 'type_enrichment_data', null: false, default: {}
+
+      t.string 'note', limit: 250
+
+      t.boolean 'active', default: true, null: false
+
+      t.references :created_by, type: :integer, null: false, foreign_key: { to_table: :users }
+      t.references :updated_by, type: :integer, null: false, foreign_key: { to_table: :users }
+
+      t.timestamps limit: 3, null: false
+
+      t.index :name, unique: true
+      t.index :active
+    end
+
+    create_table :ai_text_tools do |t|
+      t.string 'name', limit: 250, null: false, default: ''
+
+      t.string 'instruction', limit: 1.megabyte, null: false, default: ''
+
+      t.string 'note', limit: 250
+
+      t.boolean 'active', default: true, null: false
+
+      t.references :created_by, type: :integer, null: false, foreign_key: { to_table: :users }
+      t.references :updated_by, type: :integer, null: false, foreign_key: { to_table: :users }
+
+      t.timestamps limit: 3, null: false
+
+      t.timestamp :analytics_stats_reset_at, limit: 3, null: true
+
+      t.index :name, unique: true
+      t.index :active
+    end
+
+    create_table :ai_text_tools_groups, id: false do |t|
+      t.references :text_tool, foreign_key: { to_table: :ai_text_tools }
+      t.references :group
+    end
+    add_index :ai_text_tools_groups, [:text_tool_id]
+    add_index :ai_text_tools_groups, [:group_id]
+    add_foreign_key :ai_text_tools_groups, :groups
+
+    create_table :ai_analytics_usages do |t|
+      t.references :ai_analytics_run, null: false, foreign_key: { to_table: :ai_analytics_runs }
+      t.references :user, null: false, foreign_key: { to_table: :users }, type: :integer
+
+      t.boolean :rating, null: true, default: nil # rubocop:disable Rails/ThreeStateBooleanColumn
+      t.text :comment, null: true, default: nil
+
+      t.jsonb :context, null: false, default: {}
+
+      t.timestamps limit: 3
+
+      t.index %i[ai_analytics_run_id user_id], unique: true
+      t.index %i[ai_analytics_run_id created_at], name: 'index_ai_analytics_usages_on_run_id_and_created_at'
+    end
+
+    create_table :recent_closes do |t|
+      t.references :recently_closed_object, polymorphic: true, null: false, type: :integer
+      t.references :user, null: false, foreign_key: true, type: :integer
+
+      t.timestamps limit: 3
+
+      t.index %i[recently_closed_object_type recently_closed_object_id user_id],
+              name:   'index_recent_closed_user_object',
+              unique: true
+
+      t.index :updated_at, order: { updated_at: :desc }
+    end
   end
 end

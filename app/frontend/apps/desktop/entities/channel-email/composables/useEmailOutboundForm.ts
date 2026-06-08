@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { shallowRef, reactive } from 'vue'
 
@@ -14,16 +14,12 @@ export const useEmailOutboundForm = () => {
   const { updateFieldValues, values, formSetErrors, onChangedField } =
     useForm<EmailOutboundData>(formEmailOutbound)
 
-  const emailOutboundFormChangeFields = reactive<
-    Record<string, Partial<FormSchemaField>>
-  >({
+  const emailOutboundFormChangeFields = reactive<Record<string, Partial<FormSchemaField>>>({
     sslVerify: {},
   })
 
   onChangedField('port', (newValue) => {
-    const disabled = Boolean(
-      newValue && !(newValue === '465' || newValue === '587'),
-    )
+    const disabled = Boolean(newValue && !(newValue === '465' || newValue === '587'))
 
     emailOutboundFormChangeFields.sslVerify = {
       disabled,

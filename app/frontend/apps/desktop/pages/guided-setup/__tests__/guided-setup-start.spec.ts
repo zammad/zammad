@@ -1,13 +1,11 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { getTestRouter } from '#tests/support/components/renderComponent.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
+import { waitFor } from '#tests/support/vitest-wrapper.ts'
 
-import {
-  EnumSystemSetupInfoStatus,
-  EnumSystemSetupInfoType,
-} from '#shared/graphql/types.ts'
+import { EnumSystemSetupInfoStatus, EnumSystemSetupInfoType } from '#shared/graphql/types.ts'
 
 import { mockSystemSetupLockMutation } from '../graphql/mutations/systemSetupLock.mocks.ts'
 import { mockSystemSetupInfoQuery } from '../graphql/queries/systemSetupInfo.mocks.ts'
@@ -60,21 +58,18 @@ describe('guided setup start', () => {
       const manualSetupButton = view.getByText('Set up a new system')
 
       expect(manualSetupButton).toBeInTheDocument()
-      expect(
-        view.getByText('Or migrate from another system'),
-      ).toBeInTheDocument()
+      expect(view.getByText('Or migrate from another system')).toBeInTheDocument()
 
       await view.events.click(manualSetupButton)
 
-      await vi.waitFor(() => {
-        expect(
-          view,
-          'correctly redirects to guided setup manual',
-        ).toHaveCurrentUrl('/guided-setup/manual')
+      await waitFor(() => {
+        expect(view, 'correctly redirects to guided setup manual').toHaveCurrentUrl(
+          '/guided-setup/manual',
+        )
       })
 
-      expect(view.getByRole('button', { name: 'Go Back' })).toBeInTheDocument()
-      expect(view.getByText('Create Administrator Account')).toBeInTheDocument()
+      expect(view.getByRole('button', { name: 'Go back' })).toBeInTheDocument()
+      expect(view.getByText('Create administrator account')).toBeInTheDocument()
     })
 
     it('shows guided setup screen and opens import setup on click', async () => {
@@ -99,26 +94,17 @@ describe('guided setup start', () => {
 
       await view.events.click(importSetupButton)
 
-      await vi.waitFor(() => {
-        expect(
-          view,
-          'correctly redirects to guided setup import',
-        ).toHaveCurrentUrl('/guided-setup/import')
+      await waitFor(() => {
+        expect(view, 'correctly redirects to guided setup import').toHaveCurrentUrl(
+          '/guided-setup/import',
+        )
       })
 
-      expect(
-        view.getByRole('button', { name: 'Freshdesk Beta' }),
-      ).toBeInTheDocument()
-      expect(
-        view.getByRole('button', { name: 'Kayako Beta' }),
-      ).toBeInTheDocument()
-      expect(
-        view.getByRole('button', { name: 'OTRS Beta' }),
-      ).toBeInTheDocument()
-      expect(
-        view.getByRole('button', { name: 'Zendesk Beta' }),
-      ).toBeInTheDocument()
-      expect(view.getByRole('button', { name: 'Go Back' })).toBeInTheDocument()
+      expect(view.getByRole('button', { name: 'FreshdeskBeta' })).toBeInTheDocument()
+      expect(view.getByRole('button', { name: 'KayakoBeta' })).toBeInTheDocument()
+      expect(view.getByRole('button', { name: 'OTRSBeta' })).toBeInTheDocument()
+      expect(view.getByRole('button', { name: 'ZendeskBeta' })).toBeInTheDocument()
+      expect(view.getByRole('button', { name: 'Go back' })).toBeInTheDocument()
     })
 
     it('shows guided setup manual screen when lock exists', async () => {
@@ -137,15 +123,14 @@ describe('guided setup start', () => {
 
       const view = await visitView('/guided-setup')
 
-      await vi.waitFor(() => {
-        expect(
-          view,
-          'correctly redirects to guided setup manual',
-        ).toHaveCurrentUrl('/guided-setup/manual')
+      await waitFor(() => {
+        expect(view, 'correctly redirects to guided setup manual').toHaveCurrentUrl(
+          '/guided-setup/manual',
+        )
       })
 
-      expect(view.getByRole('button', { name: 'Go Back' })).toBeInTheDocument()
-      expect(view.getByText('Create Administrator Account')).toBeInTheDocument()
+      expect(view.getByRole('button', { name: 'Go back' })).toBeInTheDocument()
+      expect(view.getByText('Create administrator account')).toBeInTheDocument()
     })
 
     it('redirects to home screen on back navigation, if the setup was completed', async () => {
@@ -160,11 +145,10 @@ describe('guided setup start', () => {
 
       await view.events.click(view.getByText('Set up a new system'))
 
-      await vi.waitFor(() => {
-        expect(
-          view,
-          'correctly redirects to guided setup manual',
-        ).toHaveCurrentUrl('/guided-setup/manual')
+      await waitFor(() => {
+        expect(view, 'correctly redirects to guided setup manual').toHaveCurrentUrl(
+          '/guided-setup/manual',
+        )
       })
 
       mockSystemSetupInfoQuery({
@@ -182,7 +166,7 @@ describe('guided setup start', () => {
 
       router.back()
 
-      await vi.waitFor(() => {
+      await waitFor(() => {
         expect(view, 'correctly redirects to home screen').toHaveCurrentUrl('/')
       })
     })

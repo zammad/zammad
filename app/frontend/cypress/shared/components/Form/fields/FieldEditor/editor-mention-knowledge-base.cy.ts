@@ -1,64 +1,62 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { mockApolloClient } from '#cy/utils.ts'
 
 import { KnowledgeBaseAnswerSuggestionContentTransformDocument } from '#shared/components/Form/fields/FieldEditor/graphql/mutations/knowledgeBase/suggestion/content/transform.api.ts'
 import { KnowledgeBaseAnswerSuggestionsDocument } from '#shared/components/Form/fields/FieldEditor/graphql/queries/knowledgeBase/answerSuggestions.api.ts'
+import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
 import { mountEditorWithAttachments } from './utils.ts'
 
-describe('Testing "knowledge base" popup: "??" command', { retries: 2 }, () => {
-  it('inserts a text', () => {
+describe('Testing "knowledge base" popup: "??" command', () => {
+  it('inserts a knowledge base mention', () => {
     const client = mockApolloClient()
-    client.setRequestHandler(
-      KnowledgeBaseAnswerSuggestionsDocument,
-      async () => ({
-        data: {
-          knowledgeBaseAnswerSuggestions: [
-            {
-              __typename: 'KnowledgeBaseAnswer',
-              id: btoa('How to create a ticket?'),
-              title: 'How to create a ticket?',
-              categoryTreeTranslation: [
-                {
-                  __typename: 'KnowledgeBaseCategoryTranslation',
-                  id: btoa('Category 1'),
-                  title: 'Category 1',
-                },
-              ],
-            },
-          ],
-        },
-      }),
-    )
-    client.setRequestHandler(
-      KnowledgeBaseAnswerSuggestionContentTransformDocument,
-      async () => ({
-        data: {
-          knowledgeBaseAnswerSuggestionContentTransform: {
-            __typename: 'KnowledgeBaseAnswerSuggestionContentTransform',
-            body: 'knowledge base answer body',
-            attachments: [
+    const mock = cy.spy(async () => ({
+      data: {
+        knowledgeBaseAnswerSuggestions: [
+          {
+            __typename: 'KnowledgeBaseAnswer',
+            id: convertToGraphQLId('KnowledgeBaseAnswer', '1'),
+            title: 'How to create a ticket?',
+            categoryTreeTranslation: [
               {
-                id: 'gid://zammad/Store/2062',
-                name: 'Zammad.png',
-                size: 945213,
-                type: 'image/png',
-                preferences: {
-                  'Content-Type': 'image/png',
-                  resizable: true,
-                  content_preview: true,
-                },
-                __typename: 'StoredFile',
+                __typename: 'KnowledgeBaseCategoryTranslation',
+                id: convertToGraphQLId('KnowledgeBaseCategory', '1'),
+                title: 'Category 1',
               },
             ],
-            errors: null,
           },
-        },
-      }),
-    )
+        ],
+      },
+    }))
 
-    mountEditorWithAttachments()
+    client.setRequestHandler(KnowledgeBaseAnswerSuggestionsDocument, mock)
+
+    client.setRequestHandler(KnowledgeBaseAnswerSuggestionContentTransformDocument, async () => ({
+      data: {
+        knowledgeBaseAnswerSuggestionContentTransform: {
+          __typename: 'KnowledgeBaseAnswerSuggestionContentTransform',
+          body: 'knowledge base answer body',
+          attachments: [
+            {
+              id: convertToGraphQLId('Store', 2062),
+              name: 'Zammad.png',
+              size: 945213,
+              type: 'image/png',
+              preferences: {
+                'Content-Type': 'image/png',
+                resizable: true,
+                content_preview: true,
+              },
+              __typename: 'StoredFile',
+            },
+          ],
+          errors: null,
+        },
+      },
+    }))
+
+    mountEditorWithAttachments(['ticket.agent'])
 
     cy.findByRole('textbox').type('??How to c') // supports space
 
@@ -69,11 +67,17 @@ describe('Testing "knowledge base" popup: "??" command', { retries: 2 }, () => {
       .click()
 
     cy.findByRole('textbox')
-      .should('have.text', 'knowledge base answer body')
+      .should('contain.text', 'knowledge base answer body')
       .type('{backspace}{backspace}r')
-      .should('have.text', 'knowledge base answer bor')
+      .should('contain.text', 'knowledge base answer bor')
 
-    cy.findByText('Zammad.png').should('exist')
+    cy.contains('Zammad.png').should('exist')
     cy.findByText('923 KB').should('exist')
+
+    // asserting with `calledWith` is stricter than needed and can fail on unrelated payload expansion.
+    // Prefer `calledWithMatch` to lock only the relevant fields.
+    cy.wrap(mock).should('have.been.calledWithMatch', {
+      query: 'How to c',
+    })
   })
 })

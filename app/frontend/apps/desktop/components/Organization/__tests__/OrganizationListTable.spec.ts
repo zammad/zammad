@@ -1,11 +1,8 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import '#tests/graphql/builders/mocks.ts'
 
-import {
-  renderComponent,
-  type ExtendedMountingOptions,
-} from '#tests/support/components/index.ts'
+import { renderComponent, type ExtendedMountingOptions } from '#tests/support/components/index.ts'
 import { mockRouterHooks } from '#tests/support/mock-vue-router.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
 

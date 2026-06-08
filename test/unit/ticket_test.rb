@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'test_helper'
 
@@ -38,7 +38,7 @@ class TicketTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    assert_equal(article_inbound1.body, 'some message article_inbound1 😍😍😍'.utf8_to_3bytesutf8, 'article_inbound.body verify - inbound')
+    assert_equal(article_inbound1.body, 'some message article_inbound1 😍😍😍', 'article_inbound.body verify - inbound')
 
     ticket = Ticket.find(ticket.id)
     assert_equal(ticket.article_count, 1, 'ticket.article_count verify - inbound')
@@ -63,7 +63,7 @@ class TicketTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    assert_equal(article_inbound2.body, 'some message article_inbound2 😍😍😍'.utf8_to_3bytesutf8, 'article_inbound.body verify - inbound')
+    assert_equal(article_inbound2.body, 'some message article_inbound2 😍😍😍', 'article_inbound.body verify - inbound')
 
     ticket = Ticket.find(ticket.id)
     assert_equal(ticket.article_count, 2, 'ticket.article_count verify - inbound')
@@ -134,7 +134,7 @@ class TicketTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    assert_equal(article_inbound3.body, 'some message article_inbound3 😍😍😍'.utf8_to_3bytesutf8, 'article_inbound.body verify - inbound')
+    assert_equal(article_inbound3.body, 'some message article_inbound3 😍😍😍', 'article_inbound.body verify - inbound')
 
     ticket = Ticket.find(ticket.id)
     assert_equal(ticket.article_count, 5, 'ticket.article_count verify - inbound')
@@ -159,7 +159,7 @@ class TicketTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    assert_equal(article_inbound4.body, 'some message article_inbound4 😍😍😍'.utf8_to_3bytesutf8, 'article_inbound.body verify - inbound')
+    assert_equal(article_inbound4.body, 'some message article_inbound4 😍😍😍', 'article_inbound.body verify - inbound')
 
     ticket = Ticket.find(ticket.id)
     assert_equal(ticket.article_count, 6, 'ticket.article_count verify - inbound')
@@ -414,7 +414,7 @@ class TicketTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
 
-    article_attributes = Ticket::Article.insert_urls(article1.attributes_with_association_ids)
+    article_attributes = article1.attributes_with_association_ids
 
     assert_no_match('15.274327094.140938@zammad.example.com', article_attributes['body'])
     assert_no_match('15.274327094.140939@zammad.example.com', article_attributes['body'])
@@ -500,7 +500,7 @@ class TicketTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
 
-    article_attributes = Ticket::Article.insert_urls(article1.attributes_with_association_ids)
+    article_attributes = article1.attributes_with_association_ids
 
     assert_no_match('15.274327094.140938@zammad.example.com', article_attributes['body'])
     assert_no_match('15.274327094.140939@zammad.example.com', article_attributes['body'])

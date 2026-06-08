@@ -37,6 +37,7 @@
         </div>
         <input type="submit" class="btn" value="<%- @Ti('Load') %>">
       </form>
+      <p class="help-inline u-inlinePad js-browserHelp"></p>
       <div class="browser-body js-browserBody">
         <div class="browser-website js-website">
           <img class="browser-website-background js-screenshot">
@@ -214,7 +215,7 @@ $(function() {
       <li><%- @T('The chat is turned off.') %>
       <li><%- @T('There are too many people in the chat queue.') %>
     </ol>
-    <%- @T('When you turn on debugging by setting the option §debug§ to §true§ the reason gets printed to the javascript console.') %>
+    <%- @T('When you turn on debugging by setting the option §debug§ to §true§ the reason gets printed to the JavaScript console.') %>
   </p>
 
   <hr>

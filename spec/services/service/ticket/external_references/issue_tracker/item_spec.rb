@@ -1,9 +1,9 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
 RSpec.describe Service::Ticket::ExternalReferences::IssueTracker::Item, integration: true, required_envs: %w[GITHUB_ENDPOINT GITHUB_ISSUE_LINK GITHUB_APITOKEN] do
-  subject(:service) { described_class.new(issue_link:, type:) }
+  subject(:service_result) { described_class.execute(issue_link:, type:) }
 
   context 'when GitHub is used' do
     let(:type)       { 'github' }
@@ -40,7 +40,7 @@ RSpec.describe Service::Ticket::ExternalReferences::IssueTracker::Item, integrat
         end
 
         it 'returns a list of issues' do
-          expect(service.execute).to eq(expected_issue)
+          expect(service_result).to eq(expected_issue)
         end
       end
     end

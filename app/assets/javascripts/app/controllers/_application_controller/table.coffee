@@ -693,7 +693,7 @@ class App.ControllerTable extends App.Controller
           true
         callback: (id) =>
           item = @model.find(id)
-          item.name = "Clone: #{item.name}"
+          item.name = App.i18n.translatePlain('Clone: %s', item.name)
 
           if @cloneCallback
             @cloneCallback(item)
@@ -990,7 +990,7 @@ class App.ControllerTable extends App.Controller
       if localObjects
         @objects = localObjects
       else
-        console.log("Unable to orderBy objects, no attribute found with name #{orderBy}")
+        console.log("Objects cannot be ordered - no orderBy attribute found with name #{orderBy}")
 
     # group by
     if @groupBy

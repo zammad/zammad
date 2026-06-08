@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { computed, type ComputedRef } from 'vue'
 
@@ -13,33 +13,25 @@ export const useTicketCreateTitle = (
 ) => {
   const { isTicketCustomer } = useTicketCreateView()
 
-  const { ticketCreateArticleType, defaultTicketCreateArticleType } =
-    useTicketCreateArticleType()
+  const { ticketCreateArticleType, defaultTicketCreateArticleType } = useTicketCreateArticleType()
 
   const currentViewTitle = computed(() => {
     // Customer users should get a generic title prefix, since they cannot control the type of the first article.
     if (isTicketCustomer.value) {
-      if (!currentTitle.value) return i18n.t('New Ticket')
+      if (!currentTitle.value) return i18n.t('New ticket')
 
-      return i18n.t('New Ticket: %s', currentTitle.value)
+      return i18n.t('New ticket: %s', currentTitle.value)
     }
 
     if (!currentArticleType.value) {
-      return i18n.t(
-        ticketCreateArticleType[defaultTicketCreateArticleType]?.label,
-      )
+      return i18n.t(ticketCreateArticleType[defaultTicketCreateArticleType]?.label)
     }
 
-    const createArticleTypeKey =
-      currentArticleType.value as TicketCreateArticleType
+    const createArticleTypeKey = currentArticleType.value as TicketCreateArticleType
 
-    if (!currentTitle.value)
-      return i18n.t(ticketCreateArticleType[createArticleTypeKey]?.label)
+    if (!currentTitle.value) return i18n.t(ticketCreateArticleType[createArticleTypeKey]?.label)
 
-    return i18n.t(
-      ticketCreateArticleType[createArticleTypeKey]?.title,
-      currentTitle.value,
-    )
+    return i18n.t(ticketCreateArticleType[createArticleTypeKey]?.title, currentTitle.value)
   })
 
   return {

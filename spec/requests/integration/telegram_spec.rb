@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -20,7 +20,7 @@ RSpec.describe 'Telegram Webhook Integration', type: :request do
 
         expect do
           TelegramHelper.check_token('invalid_token')
-        end.to raise_error(Exceptions::UnprocessableEntity)
+        end.to raise_error(Exceptions::UnprocessableContent)
       end
 
       it 'valid token' do
@@ -44,7 +44,7 @@ RSpec.describe 'Telegram Webhook Integration', type: :request do
 
         expect do
           TelegramHelper.create_or_update_channel(token, { group_id: group_id, welcome: 'hi!', goodbye: 'goodbye' })
-        end.to raise_error(Exceptions::UnprocessableEntity)
+        end.to raise_error(Exceptions::UnprocessableContent)
       end
 
       it 'via https and invalid port' do
@@ -61,7 +61,7 @@ RSpec.describe 'Telegram Webhook Integration', type: :request do
 
         expect do
           TelegramHelper.create_or_update_channel(token, { group_id: group_id, welcome: 'hi!', goodbye: 'goodbye' })
-        end.to raise_error(Exceptions::UnprocessableEntity)
+        end.to raise_error(Exceptions::UnprocessableContent)
       end
 
       it 'via https and invalid host' do
@@ -78,7 +78,7 @@ RSpec.describe 'Telegram Webhook Integration', type: :request do
 
         expect do
           TelegramHelper.create_or_update_channel(token, { group_id: group_id, welcome: 'hi!', goodbye: 'goodbye' })
-        end.to raise_error(Exceptions::UnprocessableEntity)
+        end.to raise_error(Exceptions::UnprocessableContent)
       end
 
       it 'with https, valid token, host and port' do
@@ -138,14 +138,14 @@ RSpec.describe 'Telegram Webhook Integration', type: :request do
 
         it 'bot id is missing' do
           post '/api/v1/channels_telegram_webhook/not_existing', params: read_message('private', 'start'), as: :json
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
           expect(json_response['error']).to eq('bot id is missing')
         end
 
         it 'invalid callback token' do
           callback_url = "/api/v1/channels_telegram_webhook/not_existing?bid=#{channel.options[:bot][:id]}"
           post callback_url, params: read_message('private', 'start'), as: :json
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
           expect(json_response['error']).to eq('invalid callback token')
         end
 
@@ -213,11 +213,7 @@ RSpec.describe 'Telegram Webhook Integration', type: :request do
           expect(response).to have_http_status(:ok)
           ticket = Ticket.last
 
-          if Rails.application.config.db_4bytes_utf8
-            expect(ticket.title).to eq('😄')
-          else
-            expect(ticket.title).to eq('')
-          end
+          expect(ticket.title).to eq('😄')
           expect(ticket.state.name).to eq('new')
           expect(ticket.articles.count).to eq(1)
           expect(ticket.articles.last.body).to match(%r{<img style="}i)
@@ -319,11 +315,7 @@ RSpec.describe 'Telegram Webhook Integration', type: :request do
           expect(response).to have_http_status(:ok)
           ticket = Ticket.last
 
-          if Rails.application.config.db_4bytes_utf8
-            expect(ticket.title).to eq('😄')
-          else
-            expect(ticket.title).to eq('')
-          end
+          expect(ticket.title).to eq('😄')
           expect(ticket.state.name).to eq('new')
           expect(ticket.articles.count).to eq(1)
           expect(ticket.articles.last.body).to match(%r{<img style="}i)

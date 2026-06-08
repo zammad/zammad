@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import {
   NotificationTypes,
@@ -6,10 +6,7 @@ import {
 } from '#shared/components/CommonNotifications/index.ts'
 import type { FormSubmitData } from '#shared/components/Form/types.ts'
 import { useTicketCustomerUpdateMutation } from '#shared/entities/ticket/graphql/mutations/customerUpdate.api.ts'
-import type {
-  TicketById,
-  TicketCustomerUpdateFormData,
-} from '#shared/entities/ticket/types.ts'
+import type { TicketById, TicketCustomerUpdateFormData } from '#shared/entities/ticket/types.ts'
 import UserError from '#shared/errors/UserError.ts'
 import type { TicketCustomerUpdateInput } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
@@ -23,22 +20,15 @@ export const useTicketChangeCustomer = (
 ) => {
   const { notify } = useNotifications()
 
-  const changeCustomerMutation = new MutationHandler(
-    useTicketCustomerUpdateMutation(),
-  )
+  const changeCustomerMutation = new MutationHandler(useTicketCustomerUpdateMutation())
 
-  const changeCustomer = async (
-    formData: FormSubmitData<TicketCustomerUpdateFormData>,
-  ) => {
+  const changeCustomer = async (formData: FormSubmitData<TicketCustomerUpdateFormData>) => {
     const input = {
       customerId: convertToGraphQLId('User', formData.customer_id),
     } as TicketCustomerUpdateInput
 
     if (formData.organization_id) {
-      input.organizationId = convertToGraphQLId(
-        'Organization',
-        formData.organization_id,
-      )
+      input.organizationId = convertToGraphQLId('Organization', formData.organization_id)
     }
 
     try {

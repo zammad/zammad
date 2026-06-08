@@ -31,12 +31,12 @@ class App.WidgetLink.Ticket extends App.WidgetLink
     list = {}
 
     for item in @localLinks
-      if !list[ item['link_type'] ]
-        list[ item['link_type'] ] = {
-          tickets: []
-        }
-
       if item['link_object'] is 'Ticket'
+        if !list[ item['link_type'] ]
+          list[ item['link_type'] ] = {
+            tickets: []
+          }
+
         ticket = App.Ticket.fullLocal( item['link_object_value'] )
         if ticket.state.state_type.name is 'merged'
           ticket.css = 'merged'

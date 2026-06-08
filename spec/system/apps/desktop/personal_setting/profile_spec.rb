@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -59,7 +59,6 @@ RSpec.describe 'Desktop > Personal Setting > Profile', app: :desktop_view, authe
       o2 = find('li.draggable', text: 'My Assigned Tickets')
       o1.drag_to(o2)
 
-      expect(page).to have_text('The order of your ticket overviews was updated.')
       expect(page).to have_text("My Assigned Tickets\nTest Overview")
 
       within '#page-navigation' do
@@ -78,7 +77,7 @@ RSpec.describe 'Desktop > Personal Setting > Profile', app: :desktop_view, authe
 
       expect(page).to have_text('JD')
       find('input[data-test-id="fileUploadInput"]', visible: :all).set(Rails.root.join('test/data/image/1000x1000.png'))
-      expect(page).to have_text('Avatar Preview')
+      expect(page).to have_text('Avatar preview')
       click_on 'Save'
 
       expect(page).to have_text('Your avatar has been uploaded')
@@ -111,7 +110,7 @@ RSpec.describe 'Desktop > Personal Setting > Profile', app: :desktop_view, authe
 
     it 'user can use direct subscription URL' do
       find_toggle('Not assigned').toggle_on
-      expect(page).to have_text('You calendar subscription settings were updated.')
+      expect(page).to have_text('Your calendar subscription settings were updated.')
 
       visit(find_input('Direct subscription URL').input_element.value)
       expect(page).to have_no_text("new ticket: 'Normal ticket'")

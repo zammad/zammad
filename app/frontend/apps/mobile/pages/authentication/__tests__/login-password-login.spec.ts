@@ -1,4 +1,6 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
+
+import { waitFor } from '@testing-library/vue'
 
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
@@ -7,6 +9,8 @@ import {
   mockPublicLinks,
   mockPublicLinksSubscription,
 } from '#shared/entities/public-links/__tests__/mocks/mockPublicLinks.ts'
+import { mockLoginMutationError } from '#shared/graphql/mutations/login.mocks.ts'
+import { GraphQLErrorTypes } from '#shared/types/error.ts'
 
 describe('password login', () => {
   beforeEach(() => {
@@ -66,5 +70,40 @@ describe('password login', () => {
 
     expect(link).toHaveAttribute('href', '/#admin_password_auth')
     expect(link).not.toHaveAttribute('target', '_blank')
+  })
+
+  it('clears and focuses password field on errors', async () => {
+    mockApplicationConfig({
+      user_show_password_login: true,
+    })
+
+    const view = await visitView('/login')
+
+    const username = view.getByLabelText('Username / Email')
+
+    await view.events.type(username, 'admin@example.com')
+
+    const password = view.getByLabelText('Password')
+
+    await view.events.type(password, 'wrong-password')
+
+    // Sanity check.
+    expect(username).toHaveValue('admin@example.com')
+    expect(password).toHaveValue('wrong-password')
+
+    mockLoginMutationError(
+      'Login failed. Have you double-checked your credentials and completed the email verification step?',
+      {
+        type: GraphQLErrorTypes.NotAuthorized,
+      },
+    )
+
+    await view.events.click(view.getByRole('button', { name: 'Sign in' }))
+
+    await waitFor(() => {
+      expect(username).toHaveValue('admin@example.com')
+      expect(password).toHaveValue('')
+      expect(password).toHaveFocus()
+    })
   })
 })

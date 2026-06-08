@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { escapeRegExp } from 'lodash-es'
@@ -36,9 +36,7 @@ const emit = defineEmits<{
 
 const locale = useLocaleStore()
 
-const currentParent = computed(
-  () => props.currentPath[props.currentPath.length - 1] ?? null,
-)
+const currentParent = computed(() => props.currentPath[props.currentPath.length - 1] ?? null)
 
 const filter = ref('')
 const filterInput = ref<HTMLInputElement>()
@@ -70,13 +68,8 @@ const focusFirstTarget = (targetElements?: HTMLElement[]) => {
   targetElements[0].focus()
 }
 
-const {
-  dialog,
-  getSelectedOptionLabel,
-  selectOption,
-  getDialogFocusTargets,
-  getSelectedOption,
-} = useSelectOptions(toRef(props, 'flatOptions'), contextReactive)
+const { dialog, getSelectedOptionLabel, selectOption, getDialogFocusTargets, getSelectedOption } =
+  useSelectOptions(toRef(props, 'flatOptions'), contextReactive)
 
 const previousPageCallback = () => {
   popFromPath()
@@ -107,8 +100,7 @@ useTraverseOptions(() => dialog.value?.parentElement, {
   },
 })
 
-const deaccent = (s: string) =>
-  s.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+const deaccent = (s: string) => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
 
 const filteredOptions = computed(() => {
   // In case we are not currently filtering for a parent, search across all options.
@@ -122,10 +114,7 @@ const filteredOptions = computed(() => {
 
   // Trim and de-accent search keywords and compile them as a case-insensitive regex.
   //   Make sure to escape special regex characters!
-  const filterRegex = new RegExp(
-    escapeRegExp(deaccent(filter.value.trim())),
-    'i',
-  )
+  const filterRegex = new RegExp(escapeRegExp(deaccent(filter.value.trim())), 'i')
 
   // Search across options via their de-accented labels.
   return options.filter((option) =>
@@ -141,8 +130,7 @@ const select = (option: FlatSelectOption) => {
 
 const currentOptions = computed(() => {
   // In case we are not currently filtering for a parent, return only top-level options.
-  if (!currentParent.value)
-    return props.sortedOptions.filter((option) => !option.parents?.length)
+  if (!currentParent.value) return props.sortedOptions.filter((option) => !option.parents?.length)
 
   // Otherwise, return all options which are children of the current parent.
   return props.sortedOptions.filter(
@@ -180,18 +168,14 @@ const getCurrentIndex = (option: FlatSelectOption) => {
 <template>
   <CommonDialog :name="name" :label="context.label" @close="close">
     <div class="w-full p-4">
-      <CommonInputSearch
-        v-if="!context.noFiltering"
-        ref="filterInput"
-        v-model="filter"
-      />
+      <CommonInputSearch v-if="!context.noFiltering" ref="filterInput" v-model="filter" />
     </div>
     <div
       v-if="currentPath.length"
       :class="{
         'px-6': !context.noFiltering,
       }"
-      class="focus:bg-blue-highlight flex h-[58px] cursor-pointer items-center self-stretch px-4 py-5 text-base leading-[19px] text-white focus:outline-hidden"
+      class="flex h-[58px] cursor-pointer items-center self-stretch px-4 py-5 text-base leading-[19px] text-white focus:bg-blue-highlight focus:outline-hidden"
       tabindex="0"
       role="button"
       :aria-label="$t('Back to previous page')"
@@ -203,7 +187,7 @@ const getCurrentIndex = (option: FlatSelectOption) => {
         class="ltr:mr-3 rtl:ml-3"
         :name="`chevron-${locale.localeData?.dir === 'rtl' ? 'right' : 'left'}`"
       />
-      <span class="grow font-semibold text-white/80">
+      <span class="grow font-medium text-white/80">
         {{ currentParent.label || currentParent.value }}
       </span>
     </div>
@@ -227,12 +211,10 @@ const getCurrentIndex = (option: FlatSelectOption) => {
           'px-6': !context.noFiltering,
           'pointer-events-none': option.disabled,
         }"
-        class="focus:bg-blue-highlight relative flex h-[58px] cursor-pointer items-center self-stretch px-4 py-5 text-base leading-[19px] text-white focus:outline-hidden"
+        class="relative flex h-[58px] cursor-pointer items-center self-stretch px-4 py-5 text-base leading-[19px] text-white focus:bg-blue-highlight focus:outline-hidden"
         tabindex="0"
         role="option"
-        :aria-selected="
-          option.disabled ? undefined : isCurrentValue(option.value)
-        "
+        :aria-selected="option.disabled ? undefined : isCurrentValue(option.value)"
         :aria-setsize="flatOptions.length"
         :aria-posinset="getCurrentIndex(option) + 1"
         :data-value="option.value"
@@ -246,18 +228,12 @@ const getCurrentIndex = (option: FlatSelectOption) => {
         <div
           v-if="index !== 0"
           :class="{
-            'ltr:left-4 rtl:right-4':
-              !context.multiple && !option.icon && !option.status,
-            'ltr:left-[50px] rtl:right-[50px]':
-              !context.multiple && option.icon && !option.status,
-            'ltr:left-[58px] rtl:right-[58px]':
-              !context.multiple && !option.icon && option.status,
-            'ltr:left-[60px] rtl:right-[60px]':
-              context.multiple && !option.icon && !option.status,
-            'ltr:left-[88px] rtl:right-[88px]':
-              context.multiple && option.icon && !option.status,
-            'ltr:left-[94px] rtl:right-[94px]':
-              context.multiple && !option.icon && option.status,
+            'ltr:left-4 rtl:right-4': !context.multiple && !option.icon && !option.status,
+            'ltr:left-[50px] rtl:right-[50px]': !context.multiple && option.icon && !option.status,
+            'ltr:left-[58px] rtl:right-[58px]': !context.multiple && !option.icon && option.status,
+            'ltr:left-[60px] rtl:right-[60px]': context.multiple && !option.icon && !option.status,
+            'ltr:left-[88px] rtl:right-[88px]': context.multiple && option.icon && !option.status,
+            'ltr:left-[94px] rtl:right-[94px]': context.multiple && !option.icon && option.status,
           }"
           class="absolute top-0 h-0 border-t border-white/10 ltr:right-4 rtl:left-4"
         />
@@ -267,9 +243,7 @@ const getCurrentIndex = (option: FlatSelectOption) => {
             '!text-white': isCurrentValue(option.value),
             'opacity-30': option.disabled,
           }"
-          :name="
-            isCurrentValue(option.value) ? 'check-box-yes' : 'check-box-no'
-          "
+          :name="isCurrentValue(option.value) ? 'check-box-yes' : 'check-box-no'"
           size="base"
           decorative
           class="text-white/50 ltr:mr-3 rtl:ml-3"
@@ -295,7 +269,7 @@ const getCurrentIndex = (option: FlatSelectOption) => {
         />
         <span
           :class="{
-            'font-semibold !text-white': isCurrentValue(option.value),
+            'font-medium text-white!': isCurrentValue(option.value),
             'opacity-30': option.disabled,
           }"
           class="grow text-white/80"
@@ -303,8 +277,7 @@ const getCurrentIndex = (option: FlatSelectOption) => {
           {{ option.label || option.value }}
           <template v-if="filter">
             <span
-              v-for="(parentValue, parentIndex) in (option as FlatSelectOption)
-                .parents"
+              v-for="(parentValue, parentIndex) in (option as FlatSelectOption).parents"
               :key="String(parentValue)"
               class="text-gray"
             >
@@ -331,9 +304,7 @@ const getCurrentIndex = (option: FlatSelectOption) => {
           v-if="option.hasChildren && !filter"
           class="pointer-events-auto"
           size="base"
-          :name="`chevron-${
-            locale.localeData?.dir === 'rtl' ? 'left' : 'right'
-          }`"
+          :name="`chevron-${locale.localeData?.dir === 'rtl' ? 'left' : 'right'}`"
           role="link"
           :label="$t('Has submenu')"
           @click.stop="goToNextPage(option)"

@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { createMessage, getNode } from '@formkit/core'
 import { computed, toRef, ref, reactive, watch } from 'vue'
@@ -15,17 +15,13 @@ interface InternalMultiFormSteps {
   errorCount: number
 }
 
-export const useMultiStepForm = (
-  formNode: ComputedRef<FormKitNode | undefined>,
-) => {
+export const useMultiStepForm = (formNode: ComputedRef<FormKitNode | undefined>) => {
   const activeStep = ref('')
   const internalSteps = reactive<Record<string, InternalMultiFormSteps>>({})
   const visitedSteps = ref<string[]>([])
   const stepNames = computed(() => Object.keys(internalSteps))
 
-  const lastStepName = computed(
-    () => stepNames.value[stepNames.value.length - 1],
-  )
+  const lastStepName = computed(() => stepNames.value[stepNames.value.length - 1])
 
   // Watch the active steps to track the visited steps.
   watch(activeStep, (newStep, oldStep) => {
@@ -72,8 +68,7 @@ export const useMultiStepForm = (
         if (!node.context) return
 
         internalSteps[node.name].valid = toRef(node.context.state, 'valid')
-        internalSteps[node.name].label =
-          Object.keys(internalSteps).length.toString()
+        internalSteps[node.name].label = Object.keys(internalSteps).length.toString()
         internalSteps[node.name].order = Object.keys(internalSteps).length
       })
 
@@ -105,12 +100,8 @@ export const useMultiStepForm = (
       mappedSteps[stepName] = {
         label: internalSteps[stepName].label,
         order: internalSteps[stepName].order,
-        errorCount:
-          internalSteps[stepName].blockingCount +
-          internalSteps[stepName].errorCount,
-        valid:
-          internalSteps[stepName].valid &&
-          internalSteps[stepName].errorCount === 0,
+        errorCount: internalSteps[stepName].blockingCount + internalSteps[stepName].errorCount,
+        valid: internalSteps[stepName].valid && internalSteps[stepName].errorCount === 0,
         disabled: !alreadyVisited || activeStep.value === stepName,
         completed: alreadyVisited,
       }

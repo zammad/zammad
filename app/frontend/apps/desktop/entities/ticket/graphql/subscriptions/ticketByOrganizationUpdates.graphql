@@ -1,0 +1,5 @@
+subscription ticketByOrganizationUpdates($organizationId: ID!) {
+  ticketByOrganizationUpdates(organizationId: $organizationId) {
+    listChanged
+  }
+}

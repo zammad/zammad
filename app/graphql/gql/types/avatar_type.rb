@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Types
   class AvatarType < Gql::Types::BaseObject
@@ -12,10 +12,6 @@ module Gql::Types
     field :image_full, String
     field :image_resize, String
     field :image_hash, String, method: :store_hash
-
-    def self.authorize(_object, ctx)
-      ctx.current_user
-    end
 
     def image_full
       return if object.store_full_id.blank?

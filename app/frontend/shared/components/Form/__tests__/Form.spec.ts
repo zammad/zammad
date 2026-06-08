@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { getNode } from '@formkit/core'
 import { waitFor, within } from '@testing-library/vue'
@@ -18,10 +18,7 @@ import type { Props } from '#shared/components/Form/Form.vue'
 import { ObjectManagerFrontendAttributesDocument } from '#shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.api.ts'
 import frontendObjectAttributes from '#shared/entities/ticket/__tests__/mocks/frontendObjectAttributes.json'
 import UserError from '#shared/errors/UserError.ts'
-import {
-  EnumFormUpdaterId,
-  EnumObjectManagerObjects,
-} from '#shared/graphql/types.ts'
+import { EnumFormUpdaterId, EnumObjectManagerObjects } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import type { FormUpdaterAdditionalParams } from '#shared/types/form.ts'
 
@@ -60,7 +57,7 @@ const renderForm = async (options: ExtendedMountingOptions<Props> = {}) => {
           value: 'Some text',
         },
       ],
-      ...(options.props || {}),
+      ...options.props,
     },
   })
 
@@ -74,11 +71,15 @@ const renderTicketCreateForm = async ({
   onSubmit,
   clearValuesAfterSubmit,
   formUpdaterAdditionalParams,
+  handlers,
+  schema: customSchema,
 }: {
   formUpdaterId?: EnumFormUpdaterId
   onSubmit?: () => unknown
   clearValuesAfterSubmit?: boolean
   formUpdaterAdditionalParams?: FormUpdaterAdditionalParams
+  handlers?: Props['handlers']
+  schema?: FormSchemaField[]
 } = {}) => {
   return new Promise<{
     view: ExtendedRenderResult
@@ -86,12 +87,12 @@ const renderTicketCreateForm = async ({
   }>((resolve) => {
     const view = renderComponent(
       {
-        template: `<div><Form ref="form" id="form-ticket-create" :schema="schema" :form-updater-id="formUpdaterId" :form-updater-additional-params="formUpdaterAdditionalParams" :clear-values-after-submit="clearValuesAfterSubmit" @submit="onSubmit" /></div>`,
+        template: `<div><Form ref="form" id="form-ticket-create" :schema="schema" :form-updater-id="formUpdaterId" :form-updater-additional-params="formUpdaterAdditionalParams" :clear-values-after-submit="clearValuesAfterSubmit" :handlers="handlers" @submit="onSubmit" /></div>`,
         components: {
           Form,
         },
         setup() {
-          const schema = [
+          const schema = customSchema || [
             {
               type: 'text',
               name: 'title',
@@ -134,6 +135,7 @@ const renderTicketCreateForm = async ({
             formUpdaterId,
             formUpdaterAdditionalParams,
             clearValuesAfterSubmit,
+            handlers,
             onSubmit,
           }
         },
@@ -309,6 +311,7 @@ describe('Form.vue', () => {
       'title',
       'Other title',
       'Other titl',
+      false,
     ])
   })
 
@@ -515,10 +518,7 @@ describe('Form.vue - Edge Cases', () => {
       },
     })
 
-    expect(wrapper.getByRole('link')).toHaveAttribute(
-      'href',
-      'https://example.com/rendered',
-    )
+    expect(wrapper.getByRole('link')).toHaveAttribute('href', 'https://example.com/rendered')
   })
 
   it('can use form layout in schema', async () => {
@@ -603,9 +603,7 @@ describe('Form.vue - Edge Cases', () => {
       },
     })
 
-    expect(
-      wrapper.container.querySelector('div.example-class'),
-    ).toBeInTheDocument()
+    expect(wrapper.container.querySelector('div.example-class')).toBeInTheDocument()
 
     expect(wrapper.getByText('Example Link')).toBeInTheDocument()
     expect(wrapper.getByLabelText('Title')).toBeInTheDocument()
@@ -748,8 +746,7 @@ describe('Form.vue - with object attributes', () => {
     await waitUntil(() => wrapper.queryByLabelText('Title'))
 
     expect(wrapper.getByLabelText('Title')).toBeInTheDocument()
-    expect(wrapper.getByLabelText('Customer')).toBeInTheDocument()
-    expect(wrapper.getByLabelText('Customer')).toHaveTextContent('John Doe')
+    expect(await wrapper.findByLabelText('Customer')).toHaveTextContent('John Doe')
     expect(wrapper.getByLabelText('Group')).toBeInTheDocument()
     expect(wrapper.getByLabelText('State')).toBeInTheDocument()
   })
@@ -981,17 +978,11 @@ describe('Form.vue - Empty', () => {
 
 describe('Form.vue - Reset', () => {
   const assertDirty = (element: HTMLElement) => {
-    expect(element.closest('.formkit-outer')).toHaveAttribute(
-      'data-dirty',
-      'true',
-    )
+    expect(element.closest('.formkit-outer')).toHaveAttribute('data-dirty', 'true')
   }
 
   const assertNotDirty = (element: HTMLElement) => {
-    expect(element.closest('.formkit-outer')).not.toHaveAttribute(
-      'data-dirty',
-      'true',
-    )
+    expect(element.closest('.formkit-outer')).not.toHaveAttribute('data-dirty', 'true')
   }
 
   it('resets all values to original ones', async () => {
@@ -1045,10 +1036,7 @@ describe('Form.vue - Reset', () => {
     await view.events.clear(example)
     await view.events.type(example, 'New example')
 
-    form.value.resetForm(
-      { values: { text: 'Some text' } },
-      { resetDirty: false },
-    )
+    form.value.resetForm({ values: { text: 'Some text' } }, { resetDirty: false })
     await waitForNextTick()
 
     expect(input).toHaveValue('New title')
@@ -1056,9 +1044,7 @@ describe('Form.vue - Reset', () => {
     expect(example).toHaveValue('New example')
     expect(form.value.findNodeByName('title')?.context?.state.dirty).toBe(true)
     expect(form.value.findNodeByName('text')?.context?.state.dirty).toBe(false)
-    expect(form.value.findNodeByName('example')?.context?.state.dirty).toBe(
-      true,
-    )
+    expect(form.value.findNodeByName('example')?.context?.state.dirty).toBe(true)
   })
 
   it('resets only specific group node', async () => {
@@ -1073,41 +1059,34 @@ describe('Form.vue - Reset', () => {
     await view.events.type(textarea, 'New text')
     await view.events.type(example, 'New example')
 
-    form.value.resetForm(
-      {},
-      { groupNode: form.value.findNodeByName('example') },
-    )
+    form.value.resetForm({}, { groupNode: form.value.findNodeByName('example') })
     await waitForNextTick()
     expect(input).toHaveValue('New title')
     expect(textarea).toHaveValue('New text')
     expect(example).toHaveValue('Some example')
     expect(form.value.findNodeByName('title')?.context?.state.dirty).toBe(true)
-    expect(form.value.findNodeByName('example')?.context?.state.dirty).toBe(
-      false,
-    )
+    expect(form.value.findNodeByName('example')?.context?.state.dirty).toBe(false)
   })
 
   it('should trigger reset form updater call', async () => {
-    const mockFormUpdaterApi = mockGraphQLApi(FormUpdaterDocument).willBehave(
-      (variables) => {
-        const example: Partial<FormSchemaField> = {}
+    const mockFormUpdaterApi = mockGraphQLApi(FormUpdaterDocument).willBehave((variables) => {
+      const example: Partial<FormSchemaField> = {}
 
-        if (variables.meta.reset) {
-          example.value = 'Updater example'
-        }
+      if (variables.meta.reset) {
+        example.value = 'Updater example'
+      }
 
-        return {
-          data: {
-            formUpdater: {
-              fields: {
-                example,
-              },
-              flags: {},
+      return {
+        data: {
+          formUpdater: {
+            fields: {
+              example,
             },
+            flags: {},
           },
-        }
-      },
-    )
+        },
+      }
+    })
 
     const { view, form } = await renderTicketCreateForm({
       formUpdaterId: EnumFormUpdaterId.FormUpdaterUpdaterTicketCreate,
@@ -1194,6 +1173,59 @@ describe('Form.vue - Reset', () => {
 
     expect(input).toHaveValue('')
   })
+
+  it('adds missing entity option on resetForm when value from historicalOptions (addMissingEntityObjectOption)', async () => {
+    const { view, form } = await renderTicketCreateForm({
+      schema: [
+        {
+          type: 'select',
+          name: 'example',
+          label: 'Example',
+          props: {
+            options: [
+              { label: 'Open', value: 1 },
+              { label: 'Closed', value: 2 },
+            ],
+            historicalOptions: {
+              4: 'Deleted',
+            },
+          },
+        },
+      ],
+    })
+
+    const exampleField = view.getByLabelText('Example')
+
+    // Verify only regular options available initially (no historical option yet)
+    await view.events.click(exampleField)
+    let options = view.getAllByRole('option')
+    expect(options).toHaveLength(2)
+    expect(options[0]).toHaveTextContent('Open')
+    expect(options[1]).toHaveTextContent('Closed')
+
+    // Close dropdown
+    await view.events.click(exampleField)
+
+    // Reset form with entity that has historical value
+    // This is where addMissingEntityObjectOption should activate
+    form.value.resetForm({
+      values: { example: 4 },
+      object: { example: 4 }, // Pass as initialEntityObject
+    })
+    await waitForNextTick()
+
+    // The plugin should have added the missing option and set the value
+    expect(exampleField).toHaveTextContent('Deleted')
+
+    // Verify the historical option is now available in dropdown
+    await view.events.click(exampleField)
+    options = view.getAllByRole('option')
+
+    expect(options).toHaveLength(3)
+    expect(options[0]).toHaveTextContent('Open')
+    expect(options[1]).toHaveTextContent('Closed')
+    expect(options[2]).toHaveTextContent('Deleted')
+  })
 })
 
 describe('Form.vue - Autosave notification', () => {
@@ -1206,7 +1238,7 @@ describe('Form.vue - Autosave notification', () => {
 
     mockGraphQLApi(FormUpdaterDocument).willBehave(async (variables) => {
       if (!variables.meta.initial && !variables.meta.additionalData.skipSleep) {
-        await new Promise((r) => setTimeout(r, 6000))
+        await new Promise((r) => setTimeout(r, 9000))
       }
 
       return {
@@ -1237,7 +1269,7 @@ describe('Form.vue - Autosave notification', () => {
     const input = view.getByLabelText('Title')
     await view.events.type(input, 'New title')
 
-    await vi.advanceTimersByTimeAsync(1500)
+    await vi.advanceTimersByTimeAsync(2500)
 
     expect(notifications.notify).toHaveBeenCalledWith({
       id: 'form-updater-autosave',
@@ -1246,7 +1278,7 @@ describe('Form.vue - Autosave notification', () => {
       type: 'info',
     })
 
-    await vi.advanceTimersByTimeAsync(4000)
+    await vi.advanceTimersByTimeAsync(6000)
 
     expect(notifications.notify).toHaveBeenCalledWith({
       id: 'form-updater-autosave',
@@ -1270,11 +1302,11 @@ describe('Form.vue - Autosave notification', () => {
     const input = view.getByLabelText('Title')
     await view.events.type(input, 'New title')
 
-    await vi.advanceTimersByTimeAsync(1500)
+    await vi.advanceTimersByTimeAsync(2500)
 
     expect(notifications.notify).not.toHaveBeenCalled()
 
-    await vi.advanceTimersByTimeAsync(4000)
+    await vi.advanceTimersByTimeAsync(6000)
 
     expect(notifications.notify).not.toHaveBeenCalled()
   })
@@ -1289,12 +1321,100 @@ describe('Form.vue - Autosave notification', () => {
     const input = view.getByLabelText('Title')
     await view.events.type(input, 'New title')
 
-    await vi.advanceTimersByTimeAsync(1500)
+    await vi.advanceTimersByTimeAsync(2500)
 
     expect(notifications.notify).not.toHaveBeenCalled()
 
-    await vi.advanceTimersByTimeAsync(4000)
+    await vi.advanceTimersByTimeAsync(6000)
 
     expect(notifications.notify).not.toHaveBeenCalled()
+  })
+})
+
+describe('Form.vue - Same-tick value changes', () => {
+  it('should handle multiple value changes in the same tick by using additionalChangedFields', async () => {
+    const mockFormUpdaterApi = mockGraphQLApi(FormUpdaterDocument).willBehave(() => {
+      return {
+        data: {
+          formUpdater: {
+            fields: {},
+            flags: {},
+          },
+        },
+      }
+    })
+
+    const { view, form } = await renderTicketCreateForm({
+      formUpdaterId: EnumFormUpdaterId.FormUpdaterUpdaterTicketCreate,
+      schema: [
+        {
+          type: 'text',
+          name: 'customerId',
+          label: 'Customer',
+          triggerFormUpdater: true,
+        },
+        {
+          type: 'text',
+          name: 'organizationId',
+          label: 'Organization',
+          triggerFormUpdater: true,
+        },
+      ],
+      handlers: [
+        {
+          execution: [FormHandlerExecution.FieldChange],
+          callback: (_execution, _reactivity, { changedField, findNodeByName }) => {
+            // Simulate a form handler that changes organizationId when customerId changes
+            if (changedField?.name === 'customerId') {
+              const organizationNode = findNodeByName('organizationId')
+
+              // Synchronously update the organizationId in the same tick
+              organizationNode?.input('org-123', false)
+            }
+          },
+        },
+      ],
+    })
+
+    await waitUntil(() => form.value.formInitialSettled)
+
+    // Remember the initial call count
+    const initialCallCount = mockFormUpdaterApi.calls.behave
+
+    const customerInput = view.getByLabelText('Customer')
+    await view.events.type(customerInput, 'customer-123')
+
+    // Wait for the new formUpdater call to complete
+    await waitUntil(() => mockFormUpdaterApi.calls.behave === initialCallCount + 1)
+
+    // Get all calls after the initial ones
+    const calls = mockFormUpdaterApi.spies.behave.mock.calls.slice(initialCallCount)
+
+    // There should only be one formUpdater call for the value changes
+    expect(calls).toHaveLength(1)
+
+    const [variables] = calls[0]
+
+    // The primary changed field should be customerId
+    expect(variables.meta.changedField).toEqual({
+      name: 'customerId',
+      newValue: 'customer-123',
+      oldValue: '',
+    })
+
+    // The additionalChangedFields should contain organizationId
+    expect(variables.meta.additionalChangedFields).toEqual([
+      {
+        name: 'organizationId',
+        newValue: 'org-123',
+        oldValue: '',
+      },
+    ])
+
+    // Verify that the data object includes both field values
+    expect(variables.data).toMatchObject({
+      customerId: 'customer-123',
+      organizationId: 'org-123',
+    })
   })
 })

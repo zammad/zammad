@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { within } from '@testing-library/vue'
 
@@ -19,8 +19,9 @@ import { mockTicketDetailViewGql } from './mocks/detail-view.ts'
 const visitTicketUser = async (user: ConfidentTake<UserQuery, 'user'>) => {
   mockTicketDetailViewGql()
 
-  const { mockUser, mockUserSubscription, mockAttributes } =
-    mockUserDetailsApis(user, { skipMockOnlineNotificationSeen: true })
+  const { mockUser, mockUserSubscription, mockAttributes } = mockUserDetailsApis(user, {
+    skipMockOnlineNotificationSeen: true,
+  })
 
   const view = await visitView('/tickets/1/information/customer')
 
@@ -43,12 +44,8 @@ describe('visiting ticket user page', () => {
     const user = defaultUser()
     const { view } = await visitTicketUser(user)
 
-    expect(
-      view.queryByRole('region', { name: 'First name' }),
-    ).not.toBeInTheDocument()
-    expect(
-      view.queryByRole('region', { name: 'Last  name' }),
-    ).not.toBeInTheDocument()
+    expect(view.queryByRole('region', { name: 'First name' })).not.toBeInTheDocument()
+    expect(view.queryByRole('region', { name: 'Last  name' })).not.toBeInTheDocument()
 
     const ticketOpenLink = view.getByRole('link', { name: 'open 4' })
     const ticketClosedLink = view.getByRole('link', { name: 'closed 2' })
@@ -104,21 +101,15 @@ describe('visiting ticket user page', () => {
 
     expect(view.getByIconName('crown'), 'vip has crown').toBeInTheDocument()
 
-    expect(
-      view.queryByRole('region', { name: 'First name' }),
-    ).not.toBeInTheDocument()
-    expect(
-      view.queryByRole('region', { name: 'Last  name' }),
-    ).not.toBeInTheDocument()
+    expect(view.queryByRole('region', { name: 'First name' })).not.toBeInTheDocument()
+    expect(view.queryByRole('region', { name: 'Last  name' })).not.toBeInTheDocument()
     expect(getRegion('Email')).toHaveTextContent('some-email@mail.com')
     expect(getRegion('Web')).toHaveTextContent('https://some-web.com')
     expect(getRegion('Phone')).toHaveTextContent('80542243532')
     expect(getRegion('Mobile')).toHaveTextContent('2432332143')
     expect(getRegion('Fax')).toHaveTextContent('fax.fax')
     expect(getRegion('Note')).toHaveTextContent('This user is cool')
-    expect(getRegion('Department')).toHaveTextContent(
-      'Department of Health and Safety',
-    )
+    expect(getRegion('Department')).toHaveTextContent('Department of Health and Safety')
     expect(getRegion('Address')).toHaveTextContent('Berlin')
   })
 
@@ -128,8 +119,6 @@ describe('visiting ticket user page', () => {
     user.policy.update = false
     const { view } = await visitTicketUser(user)
 
-    expect(
-      view.queryByRole('button', { name: 'Edit Customer' }),
-    ).not.toBeInTheDocument()
+    expect(view.queryByRole('button', { name: 'Edit Customer' })).not.toBeInTheDocument()
   })
 })

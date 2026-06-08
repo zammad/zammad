@@ -6,22 +6,9 @@ default: &default
   # http://guides.rubyonrails.org/configuring.html#database-pooling
   pool: 50
   encoding: utf8
-
-  ##### postgresql config #####
-
   adapter: postgresql
   # username: zammad
   # password:
-
-  # If the database server is not on localhost, you can set hostname and port:
-  # host:
-  # port:
-
-  #### mysql config #####
-
-  # adapter: mysql2
-  # username: zammad
-  # password: <Password>
 
   # If the database server is not on localhost, you can set hostname and port:
   # host:

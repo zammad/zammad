@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed } from 'vue'
@@ -28,9 +28,7 @@ const dialogProps = computed(() => {
 })
 
 const defaultLabel = computed(() => {
-  const option = props.options.find(
-    (option) => option.value === props.modelValue,
-  )
+  const option = props.options.find((option) => option.value === props.modelValue)
   return option?.label || props.placeholder || ''
 })
 </script>
@@ -55,12 +53,7 @@ const defaultLabel = computed(() => {
       <slot>
         {{ defaultLabel }}
       </slot>
-      <CommonIcon
-        class="self-center"
-        name="caret-down"
-        size="tiny"
-        decorative
-      />
+      <CommonIcon class="self-center" name="caret-down" size="tiny" decorative />
     </button>
   </CommonSelect>
 </template>

@@ -14,6 +14,10 @@ class SwitchBackToUser extends App.Controller
       @render()
     )
 
+    App.Event.bind('auth:login', (user) ->
+      App.Config.set('switch_back_to_possible', false)
+    )
+
   render: (user) ->
 
     # if no switch to user is active

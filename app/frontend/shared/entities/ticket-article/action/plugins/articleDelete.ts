@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { useConfirmation } from '#shared/composables/useConfirmation.ts'
 import type { TicketArticle } from '#shared/entities/ticket/types.ts'
@@ -11,9 +11,7 @@ import type { TicketArticleActionPlugin, TicketArticleAction } from './types.ts'
 const deleteAction = async (article: TicketArticle) => {
   const { waitForConfirmation } = useConfirmation()
 
-  const confirmed = await waitForConfirmation(
-    __('Are you sure to remove this article?'),
-  )
+  const confirmed = await waitForConfirmation(__('Are you sure to remove this article?'))
 
   if (!confirmed) return
 
@@ -27,8 +25,7 @@ const deleteAction = async (article: TicketArticle) => {
   mutation.send()
 }
 
-const hasDeleteTimeframe = (deleteTimeframe: number) =>
-  deleteTimeframe && deleteTimeframe > 0
+const hasDeleteTimeframe = (deleteTimeframe: number) => deleteTimeframe && deleteTimeframe > 0
 
 const secondsToDelete = (article: TicketArticle, deleteTimeframe: number) => {
   if (!hasDeleteTimeframe(deleteTimeframe)) return 0
@@ -49,10 +46,7 @@ const isDeletable = (article: TicketArticle, deleteTimeframe: number) => {
 
   if (article.type?.communication && !article.internal) return false
 
-  if (
-    hasDeleteTimeframe(deleteTimeframe) &&
-    !secondsToDelete(article, deleteTimeframe)
-  )
+  if (hasDeleteTimeframe(deleteTimeframe) && !secondsToDelete(article, deleteTimeframe))
     return false
 
   return true
@@ -62,8 +56,7 @@ const actionPlugin: TicketArticleActionPlugin = {
   order: 999,
 
   addActions(ticket, article, { onDispose, recalculate, config }) {
-    const deleteTimeframe =
-      config.ui_ticket_zoom_article_delete_timeframe as number
+    const deleteTimeframe = config.ui_ticket_zoom_article_delete_timeframe as number
 
     if (!isDeletable(article, deleteTimeframe)) return []
 
@@ -81,7 +74,7 @@ const actionPlugin: TicketArticleActionPlugin = {
 
     const action: TicketArticleAction = {
       apps: ['mobile', 'desktop'],
-      label: __('Delete Article'),
+      label: __('Delete article'),
       name: 'articleDelete',
       icon: 'trash',
       perform: () => deleteAction(article),

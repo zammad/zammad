@@ -40,7 +40,7 @@ class Index extends App.ControllerSubContent
       payloadExampleUrl: '/api/v1/webhooks/preview'
       container: @el.closest('.content')
       veryLarge: true
-      handlers: [@customPayloadCollapseHandler]
+      handlers: [@authTypeHandler, @customPayloadCollapseHandler]
       validateOnSubmit: @validateOnSubmit
     )
 
@@ -56,6 +56,44 @@ class Index extends App.ControllerSubContent
 
   enableSwitchCallback: ->
     $(@).parents('form').find('[data-attribute-name="customized_payload"] label').css('pointer-events', '')
+
+  authTypeHandler: (params, attribute, attributes, classname, form, ui) ->
+    return if attribute.name isnt 'auth_type'
+
+    return if ui.authTypeHandlerDone
+    ui.authTypeHandlerDone = true
+
+    updateAuthFields = (authType) ->
+      # Reset all auth fields
+      ui.hide(['basic_auth_username', 'basic_auth_password', 'bearer_token'], form)
+      ui.optional(['basic_auth_username', 'basic_auth_password', 'bearer_token'], form)
+
+      # Show and require fields based on selected auth type.
+      switch authType
+        when 'basic_auth'
+          ui.show(['basic_auth_username', 'basic_auth_password'], form)
+          ui.mandantory(['basic_auth_username', 'basic_auth_password'], form)
+        when 'bearer_token'
+          ui.show('bearer_token', form)
+          ui.mandantory('bearer_token', form)
+
+    # Auto-detect auth type from existing values.
+    if !params.auth_type && (params.bearer_token || params.basic_auth_username || params.basic_auth_password)
+      detectedType = if params.bearer_token then 'bearer_token' else 'basic_auth'
+      params.auth_type = detectedType
+      $(form).find('select[name=auth_type]').val(detectedType)
+
+    # Set initial visibility
+    updateAuthFields(params.auth_type)
+
+    # Handle auth type changes
+    $(form).find('select[name=auth_type]').off('change.auth_type').on 'change.auth_type', (e) ->
+      authType = $(e.target).val()
+      updateAuthFields(authType)
+
+      # Clear unused auth fields
+      $(form).find('input[name=basic_auth_username], input[name=basic_auth_password]').val('') if authType isnt 'basic_auth'
+      $(form).find('input[name=bearer_token]').val('') if authType isnt 'bearer_token'
 
   customPayloadCollapseHandler: (params, attribute, attributes, classname, form, ui) =>
     return if attribute.name isnt 'customized_payload'
@@ -112,7 +150,7 @@ class Index extends App.ControllerSubContent
         object: __('Webhook')
       container:         @el.closest('.content')
       veryLarge:         true
-      handlers:          [@customPayloadCollapseHandler]
+      handlers:          [@authTypeHandler, @customPayloadCollapseHandler]
       validateOnSubmit:  @validateOnSubmit
       preDefinedWebhook: webhook
     )
@@ -216,6 +254,8 @@ PreDefinedWebhookMixin =
   # Inject the pre-defined webhook data into the edit and clone form.
   contentFormParams: ->
     return if not @item
+
+    @item.http_method = 'post' if !@item.http_method
 
     $.extend(true, @item, { custom_payload: @preDefinedWebhook?.custom_payload if not @item.customized_payload })
 

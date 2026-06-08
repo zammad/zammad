@@ -1,13 +1,15 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Ticket::ArticlePolicy < ApplicationPolicy
 
   def show?
-    access?(__method__)
+    return false if record.internal && !ticket_policy.agent_read_access?
+
+    ticket_policy.show?
   end
 
   def create?
-    access?(__method__)
+    ticket_policy.follow_up?
   end
 
   def update?

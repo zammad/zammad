@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Controllers::KnowledgeBase::AnswersControllerPolicy < Controllers::KnowledgeBase::BaseControllerPolicy
   def show?
@@ -6,7 +6,7 @@ class Controllers::KnowledgeBase::AnswersControllerPolicy < Controllers::Knowled
   end
 
   def create?
-    verify_category(__method__)
+    verify_category(:update?)
   end
 
   def update?

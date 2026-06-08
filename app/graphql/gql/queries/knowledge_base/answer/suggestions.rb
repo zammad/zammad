@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Queries
   class KnowledgeBase::Answer::Suggestions < BaseQuery
@@ -8,9 +8,7 @@ module Gql::Queries
 
     type [Gql::Types::KnowledgeBase::Answer::TranslationType], null: true
 
-    def self.authorize(_obj, ctx)
-      ctx.current_user.permissions?('ticket.agent')
-    end
+    requires_permission 'ticket.agent'
 
     def resolve(query:)
       SearchKnowledgeBaseBackend.new(

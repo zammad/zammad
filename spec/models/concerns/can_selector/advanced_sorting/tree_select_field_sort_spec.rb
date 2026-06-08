@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -48,13 +48,8 @@ RSpec.describe CanSelector::AdvancedSorting::TreeSelectFieldSort, db_strategy: :
     let(:instance) { described_class.new(input, locale, Ticket) }
     let(:result)   { instance.calculate_sorting }
 
-    if ActiveRecord::Base.connection_db_config.configuration_hash[:adapter] == 'mysql2'
-      let(:column_reference) { "`tickets`.`#{object_manager_attribute.name}`" }
-      let(:order_reference)  { "`_advanced_sorting_Ticket_#{object_manager_attribute.name}` ASC" }
-    else
-      let(:column_reference) { "\"tickets\".\"#{object_manager_attribute.name}\"" }
-      let(:order_reference)  { "\"_advanced_sorting_Ticket_#{object_manager_attribute.name}\" ASC" }
-    end
+    let(:column_reference) { "\"tickets\".\"#{object_manager_attribute.name}\"" }
+    let(:order_reference)  { "\"_advanced_sorting_Ticket_#{object_manager_attribute.name}\" ASC" }
 
     context 'when locale is de-de' do
       let(:locale) { 'de-de' }

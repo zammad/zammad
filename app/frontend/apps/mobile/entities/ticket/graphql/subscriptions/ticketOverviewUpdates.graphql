@@ -1,4 +1,7 @@
-subscription ticketOverviewUpdates($ignoreUserConditions: Boolean = false, $withTicketCount: Boolean!) {
+subscription ticketOverviewUpdates(
+  $ignoreUserConditions: Boolean = false
+  $withTicketCount: Boolean!
+) {
   ticketOverviewUpdates(ignoreUserConditions: $ignoreUserConditions) {
     ticketOverviews {
       ...overviewAttributes

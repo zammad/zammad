@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import type { Translator } from './translator.ts'
 
@@ -27,10 +27,7 @@ const parseDate = (dateTimeString: string): Date => {
   return date
 }
 
-export const absoluteDateTime = (
-  dateTimeString: string,
-  template: string,
-): string => {
+export const absoluteDateTime = (dateTimeString: string, template: string): string => {
   const date = parseDate(dateTimeString)
 
   const d = date.getDate()
@@ -131,8 +128,7 @@ export const relativeDateTime = (
   const date = new Date(dateTimeString)
   let diffSeconds = (baseDate.getTime() - date.getTime()) / 1000
 
-  const direction: Direction =
-    diffSeconds > -1 ? Direction.Past : Direction.Future
+  const direction: Direction = diffSeconds > -1 ? Direction.Past : Direction.Future
 
   diffSeconds = Math.abs(diffSeconds)
 

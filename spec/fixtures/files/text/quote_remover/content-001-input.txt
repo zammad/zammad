@@ -1,0 +1,10 @@
+Dear Agent,
+
+> thank you again for reporting your findings to us in a responsible way. We really appreciate that.
+> You can find information about our security process in [SECURITY.md](https://github.com/company/company/blob/develop/SECURITY.md#rewards), which outlines that unfortunately Company as an open source software does not have a rewards program. We do credit reporters in acknowledged security issues where advisories are released.
+
+Thank you for your response and for the clarification regarding Company's security policy.
+I appreciate the opportunity to contribute to the security of your open-source project and fully understand that rewards are not offered. I would be grateful to be credited if the reported issue results in a published advisory.
+Please let me know if any further information is needed on my end.
+Best regards,
+Customer Test

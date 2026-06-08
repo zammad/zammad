@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { noop } from 'lodash-es'
 import {
@@ -11,10 +11,7 @@ import {
   nextTick,
 } from 'vue'
 
-import {
-  destroyComponent,
-  pushComponent,
-} from '#shared/components/DynamicInitializer/manage.ts'
+import { destroyComponent, pushComponent } from '#shared/components/DynamicInitializer/manage.ts'
 import testFlags from '#shared/utils/testFlags.ts'
 
 import type { AsyncComponentLoader, Component } from 'vue'
@@ -60,10 +57,7 @@ const getDialogOptions = (name: string) => {
   return options
 }
 
-export const openDialog = async (
-  name: string,
-  props: Record<string, unknown>,
-) => {
+export const openDialog = async (name: string, props: Record<string, unknown>) => {
   if (dialogsOpened.value.has(name)) return Promise.resolve()
 
   const options = getDialogOptions(name)
@@ -78,9 +72,7 @@ export const openDialog = async (
     await options.beforeOpen()
   }
 
-  const component = defineAsyncComponent(
-    options.component as AsyncComponentLoader,
-  )
+  const component = defineAsyncComponent(options.component as AsyncComponentLoader)
 
   await pushComponent('dialog', name, component, props)
 

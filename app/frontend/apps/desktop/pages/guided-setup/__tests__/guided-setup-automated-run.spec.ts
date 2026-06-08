@@ -1,10 +1,11 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { flushPromises } from '@vue/test-utils'
 
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockAuthentication } from '#tests/support/mock-authentication.ts'
+import { waitFor } from '#tests/support/vitest-wrapper.ts'
 
 import { EnumSystemSetupInfoStatus } from '#shared/graphql/types.ts'
 
@@ -37,19 +38,23 @@ describe('guided setup automated run', () => {
 
       const view = await visitView('/guided-setup/automated/run')
 
-      expect(view.getByText('Automated Setup')).toBeInTheDocument()
+      // CommonLoader uses useDebouncedLoading which even in test mode (delay=0) — goes
+      // through useTimeoutFn and schedules a setTimeout(fn, 0). With vi.useFakeTimers() active, this timer
+      // never fires automatically, so debouncedLoading stays false and the spinner icon is never rendered
+      // in the DOM.
+      await vi.advanceTimersByTimeAsync(0)
+
+      expect(view.getByText('Automated setup')).toBeInTheDocument()
       expect(view.getByIconName('spinner')).toBeInTheDocument()
 
       expect(
-        view.getByText(
-          'The system was configured successfully. You are being redirected.',
-        ),
+        view.getByText('The system was configured successfully. You are being redirected.'),
       ).toBeInTheDocument()
 
       await vi.runAllTimersAsync()
       vi.useRealTimers()
 
-      await vi.waitFor(() => {
+      await waitFor(() => {
         expect(view, 'correctly redirects to home screen').toHaveCurrentUrl('/')
       })
     })
@@ -69,7 +74,7 @@ describe('guided setup automated run', () => {
       const view = await visitView('/guided-setup/automated/run')
       await flushPromises()
 
-      expect(view.getByText('Automated Setup')).toBeInTheDocument()
+      expect(view.getByText('Automated setup')).toBeInTheDocument()
       expect(view.queryByIconName('spinner')).not.toBeInTheDocument()
 
       expect(
@@ -103,7 +108,7 @@ describe('guided setup automated run', () => {
 
       const view = await visitView('/guided-setup/automated/run')
 
-      await vi.waitFor(() => {
+      await waitFor(() => {
         expect(view, 'correctly redirects to home screen').toHaveCurrentUrl('/')
       })
     })
@@ -113,10 +118,8 @@ describe('guided setup automated run', () => {
 
       const view = await visitView('/guided-setup/automated/run')
 
-      await vi.waitFor(() => {
-        expect(view, 'correctly redirects to login screen').toHaveCurrentUrl(
-          '/login',
-        )
+      await waitFor(() => {
+        expect(view, 'correctly redirects to login screen').toHaveCurrentUrl('/login')
       })
     })
   })

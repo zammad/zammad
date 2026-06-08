@@ -1,10 +1,7 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-/* eslint-disable vue/no-v-html */
-
-import { storeToRefs } from 'pinia'
-import { computed, ref } from 'vue'
+import { computed, ref, toRef } from 'vue'
 import { useRouter } from 'vue-router'
 
 import { useRawHTMLIcon } from '#shared/components/CommonIcon/useRawHTMLIcon.ts'
@@ -38,10 +35,9 @@ useHeader({
 })
 
 const session = useSessionStore()
-const { user } = storeToRefs(session)
+const user = toRef(session, 'user')
 
-const { modelCurrentLocale, localeOptions, isSavingLocale, translation } =
-  useLocaleUpdate()
+const { modelCurrentLocale, localeOptions, isSavingLocale, translation } = useLocaleUpdate()
 
 const hasVersionPermission = session.hasPermission('admin')
 
@@ -57,9 +53,7 @@ const productAbout = productAboutQuery.result()
 
 const isMobileIOS = browser.name?.includes('Safari') && os.name?.includes('iOS')
 const { canInstallPWA, installPWA } = usePWASupport()
-const showInstallButton = computed(
-  () => !isStandalone() && (canInstallPWA.value || isMobileIOS),
-)
+const showInstallButton = computed(() => !isStandalone() && (canInstallPWA.value || isMobileIOS))
 
 const showInstallIOSPopup = ref(false)
 const installPWAMessage = computed(() => {
@@ -113,9 +107,7 @@ const { forceDesktop } = useForceDesktop()
       <div>
         <CommonUserAvatar :entity="user" size="xl" personal />
       </div>
-      <div class="mt-2 text-xl font-bold">
-        {{ user.firstname }} {{ user.lastname }}
-      </div>
+      <div class="mt-2 text-xl font-bold">{{ user.firstname }} {{ user.lastname }}</div>
     </div>
 
     <CommonSectionMenu>
@@ -158,7 +150,7 @@ const { forceDesktop } = useForceDesktop()
         :options="localeOptions"
         :disabled="isSavingLocale"
         :no-options-label-translation="true"
-        sorting="label"
+        sorting="value"
       />
 
       <template #help>
@@ -171,9 +163,7 @@ const { forceDesktop } = useForceDesktop()
 
     <CommonSectionMenu v-if="hasVersionPermission">
       <CommonSectionMenuItem :label="__('Version')">
-        {{
-          $t('This is Zammad version %s', productAbout?.productAbout as string)
-        }}
+        {{ $t('This is Zammad version %s', productAbout?.productAbout as string) }}
       </CommonSectionMenuItem>
     </CommonSectionMenu>
 
@@ -193,6 +183,7 @@ const { forceDesktop } = useForceDesktop()
     <CommonSectionPopup v-model:state="showInstallIOSPopup" :messages="[]">
       <template #header>
         <section class="inline-flex min-h-[54px] items-center p-3">
+          <!-- eslint-disable vue/no-v-html -->
           <span v-html="installPWAMessage" />
         </section>
       </template>

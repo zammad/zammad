@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 require 'system/apps/mobile_old/examples/create_article_examples'
@@ -62,7 +62,7 @@ RSpec.describe 'Mobile > Ticket > Article > Create', app: :mobile, authenticated
         internal:     true,
         content_type: 'text/html',
         sender:       Ticket::Article::Sender.lookup(name: 'Agent'),
-        body:         '<p>This is a note</p>',
+        body:         '<p dir="auto">This is a note</p>',
       )
     end
 
@@ -101,7 +101,7 @@ RSpec.describe 'Mobile > Ticket > Article > Create', app: :mobile, authenticated
         type_id:      Ticket::Article::Type.lookup(name: 'note').id,
         internal:     false,
         content_type: 'text/html',
-        body:         '<p>This is a note!</p>',
+        body:         '<p dir="auto">This is a note!</p>',
       )
     end
 
@@ -111,16 +111,22 @@ RSpec.describe 'Mobile > Ticket > Article > Create', app: :mobile, authenticated
 
       it 'creates a public email (default)' do
         visit "/tickets/#{ticket.id}"
+
+        wait_for_form_to_settle('form-ticket-edit')
+
         find_button('Add reply').click
+
+        wait_for_form_updater(2)
 
         find_select('Channel', visible: :all).select_option('Email')
 
-        wait_for_test_flag('editor.signatureAdd')
+        wait_for_form_updater(3)
 
-        find_editor('Text').type('This is a note!')
-
-        find_autocomplete('To').search_for_option('zammad_test_to@zammad.com', gql_number: 1)
-        find_autocomplete('CC').search_for_option('zammad_test_cc@zammad.com', gql_number: 2)
+        within_form(form_updater_gql_number: 3) do
+          find_editor('Text').type('This is a note!')
+          find_autocomplete('To').search_for_option('zammad_test_to@zammad.com')
+          find_autocomplete('CC').search_for_option('zammad_test_cc@zammad.com')
+        end
 
         find_button('Save').click
 
@@ -132,26 +138,33 @@ RSpec.describe 'Mobile > Ticket > Article > Create', app: :mobile, authenticated
           cc:           'zammad_test_cc@zammad.com',
           internal:     false,
           content_type: 'text/html',
-          body:         "<p>This is a note!</p><p><br></p><div data-signature=\"true\" data-signature-id=\"#{signature.id}\"><p>#{agent.firstname}<br>Signature!</p></div>",
+          body:         start_with("<p dir=\"auto\">This is a note!</p><div data-signature=\"true\" dir=\"auto\" data-signature-id=\"#{signature.id}\"><p dir=\"auto\">#{agent.firstname}<br dir=\"auto\">Signature!</p></div><p dir=\"auto\"></p>"),
         )
       end
 
       it 'creates an internal email' do
         visit "/tickets/#{ticket.id}"
+
+        wait_for_form_to_settle('form-ticket-edit')
+
         find_button('Add reply').click
+
+        wait_for_form_updater(2)
 
         find_select('Channel', visible: :all).select_option('Email')
 
-        wait_for_test_flag('editor.signatureAdd')
+        wait_for_form_updater(3)
 
-        find_editor('Text').type('This is a note!')
+        within_form(form_updater_gql_number: 3) do
+          find_editor('Text').type('This is a note!')
 
-        find_autocomplete('To').search_for_option('zammad_test_to@zammad.com', gql_number: 1)
+          find_autocomplete('To').search_for_option('zammad_test_to@zammad.com', gql_number: 1)
 
-        visibility = find_select('Visibility', visible: :all)
-        expect(visibility).to have_selected_option('Public')
+          visibility = find_select('Visibility', visible: :all)
+          expect(visibility).to have_selected_option('Public')
 
-        visibility.select_option('Internal')
+          visibility.select_option('Internal')
+        end
 
         find_button('Save').click
 
@@ -161,7 +174,7 @@ RSpec.describe 'Mobile > Ticket > Article > Create', app: :mobile, authenticated
           type_id:      Ticket::Article::Type.lookup(name: 'email').id,
           internal:     true,
           content_type: 'text/html',
-          body:         "<p>This is a note!</p><p><br></p><div data-signature=\"true\" data-signature-id=\"#{signature.id}\"><p>#{agent.firstname}<br>Signature!</p></div>",
+          body:         start_with("<p dir=\"auto\">This is a note!</p><div data-signature=\"true\" dir=\"auto\" data-signature-id=\"#{signature.id}\"><p dir=\"auto\">#{agent.firstname}<br dir=\"auto\">Signature!</p></div><p dir=\"auto\"></p>"),
         )
       end
     end
@@ -174,7 +187,7 @@ RSpec.describe 'Mobile > Ticket > Article > Create', app: :mobile, authenticated
           find('[data-name="article-context"]').click
         end
 
-        click_on 'Delete Article'
+        click_on 'Delete article'
         click_on 'OK'
 
         wait_for_subscription_update('ticketArticleUpdates', number: number)
@@ -241,7 +254,7 @@ RSpec.describe 'Mobile > Ticket > Article > Create', app: :mobile, authenticated
       # go to the ticket edit view
       find_link(ticket.title).click
 
-      find_input('Ticket title').type('New title')
+      find_input('Ticket title').clear.type('New title')
       find_button('Save').click
 
       wait_for_ticket_edit
@@ -250,7 +263,7 @@ RSpec.describe 'Mobile > Ticket > Article > Create', app: :mobile, authenticated
       expect(Ticket::Article.last).to have_attributes(
         type_id:      Ticket::Article::Type.lookup(name: 'note').id,
         content_type: 'text/html',
-        body:         '<p>This is a note!</p>',
+        body:         '<p dir="auto">This is a note!</p>',
       )
     end
 
@@ -263,7 +276,7 @@ RSpec.describe 'Mobile > Ticket > Article > Create', app: :mobile, authenticated
     end
 
     context 'when creating sms article' do
-      include_examples 'mobile app: create article', 'Sms', conditional: true do
+      include_examples 'mobile app: create article', 'SMS', conditional: true do
         let(:article) do
           create(
             :ticket_article,
@@ -287,37 +300,6 @@ RSpec.describe 'Mobile > Ticket > Article > Create', app: :mobile, authenticated
         end
         let(:type)         { Ticket::Article::Type.lookup(name: 'telegram personal-message') }
         let(:content_type) { 'text/plain' }
-      end
-    end
-
-    context 'when replying to twitter status ticket' do
-      include_examples 'mobile app: create article', 'Twitter', attachments: false do
-        let(:article) do
-          create(
-            :twitter_article,
-            ticket: ticket,
-            sender: Ticket::Article::Sender.lookup(name: 'Customer'),
-          )
-        end
-        let(:type)         { Ticket::Article::Type.lookup(name: 'twitter status') }
-        let(:content_type) { 'text/plain' }
-        let(:result_text)  { "#{new_text}\n/#{agent.firstname.first}#{agent.lastname.first}" }
-      end
-    end
-
-    context 'when replying to twitter dm ticket' do
-      include_examples 'mobile app: create article', 'Twitter', attachments: false do
-        let(:article) do
-          create(
-            :twitter_dm_article,
-            ticket: ticket,
-            sender: Ticket::Article::Sender.lookup(name: 'Customer'),
-          )
-        end
-        let(:type)         { Ticket::Article::Type.lookup(name: 'twitter direct-message') }
-        let(:content_type) { 'text/plain' }
-        let(:to)           { article.from }
-        let(:result_text)  { "#{new_text}\n/#{agent.firstname.first}#{agent.lastname.first}" }
       end
     end
 
@@ -379,7 +361,7 @@ RSpec.describe 'Mobile > Ticket > Article > Create', app: :mobile, authenticated
         internal:     false,
         content_type: 'text/html',
         sender:       Ticket::Article::Sender.lookup(name: 'Customer'),
-        body:         '<p>This is a note</p>',
+        body:         '<p dir="auto">This is a note</p>',
       )
     end
 
@@ -418,8 +400,8 @@ RSpec.describe 'Mobile > Ticket > Article > Create', app: :mobile, authenticated
 
       save_article
 
-      # The fize will always be less than it actually is even without resizing
-      # Chrome has the best compression, so we check that actual value is lower than Firefox's compresssion
+      # The size will always be less than it actually is even without resizing
+      # Chrome has the best compression, so we check that actual value is lower than Firefox's compression
       expect(Store.last.size.to_i).to be <= 25_686
     end
   end

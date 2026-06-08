@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import type { SelectValue } from '#shared/components/CommonSelect/types.ts'
 import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
@@ -10,9 +10,7 @@ import type { JsonValue } from 'type-fest'
 import type { ConcreteComponent } from 'vue'
 import type { RouteLocationRaw } from 'vue-router'
 
-export type AutocompleteSelectValue =
-  | SelectValue
-  | { value: SelectValue; label: string }
+export type AutocompleteSelectValue = SelectValue | { value: SelectValue; label: string }
 
 export type AutoCompleteOption = {
   value: string | number
@@ -45,9 +43,7 @@ export type AutoCompleteProps = FormFieldContext<{
   optionIconComponent?: ConcreteComponent
   options?: AutoCompleteOption[]
   belongsToObjectField?: string
-  additionalQueryParams?:
-    | Record<string, JsonValue>
-    | (() => Record<string, JsonValue>)
+  additionalQueryParams?: Record<string, JsonValue> | (() => Record<string, JsonValue>)
   dialogNotFoundMessage?: string
   dialogEmptyMessage?: string
   initialOptionBuilder?: (

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Selector::SearchIndex < Selector::Base
   OPERATOR_WORDING_TO_SYNTAX = {
@@ -60,8 +60,8 @@ class Selector::SearchIndex < Selector::Base
           {
             range: {
               options[:aggs_interval][:field] => {
-                from: options[:aggs_interval][:from],
-                to:   options[:aggs_interval][:to],
+                gte: options[:aggs_interval][:from],
+                lte: options[:aggs_interval][:to],
               },
             },
           },
@@ -82,6 +82,11 @@ class Selector::SearchIndex < Selector::Base
         date_histogram: {
           field:             options[:aggs_interval][:field],
           calendar_interval: options[:aggs_interval][:interval],
+          min_doc_count:     0,
+          extended_bounds:   {
+            min: options[:aggs_interval][:from],
+            max: options[:aggs_interval][:to]
+          }
         }
       }
     }
@@ -158,6 +163,20 @@ class Selector::SearchIndex < Selector::Base
     if data[:value].is_a?(Array)
       wildcard_or_term = 'terms'
     end
+
+    # because of the deep structure search we don't really know the field type of the related data
+    # so we currently guess it by checking the condition value and if it is not some kind of relation field like state_id
+    value_is_string = Array.wrap(data[:value]).any?(String)
+    if value_is_string && ['.id', '_id', '_ids'].any? { |value| key.ends_with?(value) } # ticket.state_id / user.organization_ids / role.id
+      value_is_string = Array.wrap(data[:value]).any? { |value| value.match(%r{[[:alpha:]]}u) }
+    end
+
+    klass = table.classify.safe_constantize.then { it if it&.include?(HasSearchIndexBackend) } ||
+            "#{target_class}::#{table.classify}".safe_constantize
+
+    field_mapping    = SearchIndexBackend.get_mapping_properties_object(klass).dig(:properties, key_tmp) if klass
+    field_is_keyword = field_mapping&.dig(:fields, :keyword, :type) == 'keyword'
+
     t = {}
 
     # use .keyword in case of compare exact values
@@ -188,23 +207,24 @@ class Selector::SearchIndex < Selector::Base
         data[:value] = user.organization_id
       end
 
-      if data[:value].is_a?(Array)
-        data[:value].each do |value|
-          next if !value.is_a?(String) || value !~ %r{[A-z]}
-
-          key_tmp += '.keyword'
-          break
-        end
-      elsif data[:value].is_a?(String) && %r{[A-z]}.match?(data[:value])
+      if value_is_string && field_is_keyword
         key_tmp += '.keyword'
       end
     end
 
     # use .keyword and wildcard search in cases where query contains non A-z chars
-    value_is_string = Array.wrap(data[:value]).any? { |v| v.is_a?(String) && v.match?(%r{[A-z]}) }
-    if ['contains', 'contains not', 'starts with one of', 'ends with one of'].include?(data[:operator]) && value_is_string
-      wildcard_or_term = 'wildcard'
-      if !key_tmp.ends_with?('.keyword')
+    if ['contains', 'contains not', 'matches', 'starts with one of', 'ends with one of'].include?(data[:operator]) && value_is_string
+      column_details = klass&.columns_hash&.dig(key_tmp)
+
+      # https://github.com/zammad/zammad/issues/5623
+      # https://github.com/zammad/zammad/issues/5686
+      wildcard_or_term = if (column_details&.type == :string && (!column_details.limit || column_details.limit > 5000)) || (column_details&.type == :text)
+                           'match'
+                         else
+                           'wildcard'
+                         end
+
+      if field_is_keyword && !key_tmp.ends_with?('.keyword')
         key_tmp += '.keyword'
       end
 
@@ -218,12 +238,16 @@ class Selector::SearchIndex < Selector::Base
         data[:value].each do |value|
           t = {}
           t[wildcard_or_term] = {}
-          t[wildcard_or_term][key_tmp] = if data[:operator] == 'starts with one of'
-                                           "#{value}*"
-                                         elsif data[:operator] == 'ends with one of'
-                                           "*#{value}"
+
+          # In case of a wildcard search, switch to the object syntax to be able to set `case_insensitive` flag.
+          #   More information: https://github.com/zammad/zammad/issues/6125
+          t[wildcard_or_term][key_tmp] = if wildcard_or_term == 'wildcard'
+                                           {
+                                             value:            search_term_value(value, data[:operator]),
+                                             case_insensitive: true,
+                                           }
                                          else
-                                           "*#{value}*"
+                                           search_term_value(value, data[:operator])
                                          end
 
           or_condition[:bool][:should] << t
@@ -231,7 +255,7 @@ class Selector::SearchIndex < Selector::Base
 
         data[:value] = or_condition
       else
-        data[:value] = "*#{data[:value]}*"
+        data[:value] = search_term_value(data[:value], data[:operator])
       end
     end
 
@@ -256,7 +280,7 @@ class Selector::SearchIndex < Selector::Base
       query_must.push data[:value]
 
     # is/is not/contains/contains not
-    elsif ['is', 'is not', 'contains', 'contains not', 'is any of', 'is none of'].include?(data[:operator])
+    elsif ['is', 'is not', 'contains', 'contains not', 'matches', 'is any of', 'is none of'].include?(data[:operator])
       t[wildcard_or_term] = {}
 
       # We need a special handling for external data sources, because of the sub-hash.
@@ -269,12 +293,20 @@ class Selector::SearchIndex < Selector::Base
         end
 
         t[wildcard_or_term][key_value] = data[:value].is_a?(Hash) ? data[:value][:value] : data[:value].pluck(:value)
+
+      # In case of a wildcard search, switch to the object syntax to be able to set `case_insensitive` flag.
+      #   More information: https://github.com/zammad/zammad/issues/6125
+      elsif wildcard_or_term == 'wildcard'
+        t[wildcard_or_term][key_tmp] = {
+          value:            data[:value],
+          case_insensitive: true,
+        }
       else
         t[wildcard_or_term][key_tmp] = data[:value]
       end
 
       case data[:operator]
-      when 'is', 'contains', 'is any of'
+      when 'is', 'contains', 'matches', 'is any of'
         query_must.push t
       when 'is not', 'contains not', 'is none of'
         query_must_not.push t
@@ -375,6 +407,16 @@ class Selector::SearchIndex < Selector::Base
       t[:range][key_tmp][:gte] = "#{Time.zone.today}T00:00:00Z"
       t[:range][key_tmp][:lte] = "#{Time.zone.today}T23:59:59Z"
       query_must.push t
+    elsif data[:operator] == 'in range'
+      if (!data[:value].is_a?(Array) || data[:value].size != 2) || (data[:value][0].blank? && data[:value][1].blank?)
+        raise "Invalid value in range '#{data[:value]}'."
+      end
+
+      t[:range]                = {}
+      t[:range][key_tmp]       = {}
+      t[:range][key_tmp][:gte] = data[:value][0] if data[:value][0].present?
+      t[:range][key_tmp][:lte] = data[:value][1] if data[:value][1].present?
+      query_must.push t
     else
       raise "unknown operator '#{data[:operator]}' for #{key}"
     end
@@ -389,7 +431,15 @@ class Selector::SearchIndex < Selector::Base
     if query_must_not.present?
       data[:bool][:must_not] = query_must_not
     end
-
+    Rails.logger.debug t.inspect
     data
+  end
+
+  def search_term_value(value, operator)
+    return value if operator == 'matches' && wildcard_value?(value)
+    return "#{value}*" if operator == 'starts with one of'
+    return "*#{value}" if operator == 'ends with one of'
+
+    "*#{value}*"
   end
 end

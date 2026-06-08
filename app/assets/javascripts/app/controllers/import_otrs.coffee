@@ -139,7 +139,7 @@ class ImportOtrs extends App.ControllerWizardFullScreen
       processData: true
       success:     (data, status, xhr) =>
 
-        if data.result is 'import_done'
+        if data.setup_done is true
           window.location.reload()
           return
 

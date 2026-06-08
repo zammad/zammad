@@ -12,20 +12,21 @@
   key:
     prefix: nodejs
     files:
+      - package.json
       - pnpm-lock.yaml
   paths:
-    - tmp/cache/corepack
-    - tmp/cache/pnpm-store
-    - tmp/cache/cypress
+    - tmp/cache/.corepack
+    - tmp/cache/.pnpm-store
+    - tmp/cache/.cypress
 
 .cache_eslint: &cache_eslint
   key:
     prefix: eslint
     files:
+      - package.json
       - pnpm-lock.yaml
-      - .eslintrc.js
   paths:
-    - tmp/eslintcache.js
+    - tmp/cache/.eslintcache.js
 
 .cache:
   read_only_full:

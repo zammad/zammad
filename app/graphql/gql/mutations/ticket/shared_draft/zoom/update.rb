@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Mutations
   class Ticket::SharedDraft::Zoom::Update < BaseMutation
@@ -14,11 +14,11 @@ module Gql::Mutations
 
     def resolve(shared_draft:, input:)
       Service::Ticket::SharedDraft::Zoom::Update
-        .new(
-          context.current_user, input.form_id, shared_draft,
+        .with_current_user(context.current_user)
+        .execute(
+          input.form_id, shared_draft,
           new_article: input.new_article, ticket_attributes: input.ticket_attributes
         )
-        .execute
 
       { shared_draft: }
     end

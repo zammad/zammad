@@ -980,6 +980,25 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
     ZammadChat.prototype.initialQueueDelay = 10000;
 
     ZammadChat.prototype.translations = {
+      'ca': {
+        '<strong>Chat</strong> with us!': '<strong>Xateja</strong> amb nosaltres!',
+        'All colleagues are busy.': 'Tot el personal està ocupat.',
+        'Chat closed by %s': 'Xat tancat per %s',
+        'Compose your message…': 'Redacta el teu missatge…',
+        'Connecting': 'Connectant',
+        'Connection lost': 'Connexió perduda',
+        'Connection re-established': 'Connexió restablerta',
+        'Offline': 'Fora de línia',
+        'Online': 'En línia',
+        'Scroll down to see new messages': 'Desplaçat més avall per veure nous missatges',
+        'Send': 'Envia',
+        'Since you didn\'t respond in the last %s minutes your conversation was closed.': 'Com que no heu respost en els darrers %s minuts, la vostra conversa s\'ha tancat.',
+        'Since you didn\'t respond in the last %s minutes your conversation with <strong>%s</strong> was closed.': 'Com que no heu respost en els darrers %s minuts, la vostra conversa amb <strong>%s</strong> s\'ha tancat.',
+        'Start new conversation': 'Inicia una conversa nova',
+        'Today': 'Avui',
+        'We are sorry, it is taking longer than expected to get a slot. Please try again later or send us an email. Thank you!': 'Ho sentim, està tardant més del que s\'esperava per aconseguir un espai. Si us plau, torna-ho a intentar més tard o envia\'ns un correu electrònic. Gràcies!',
+        'You are on waiting list position <strong>%s</strong>.': 'Estàs en la posició <strong>%s</strong> de la llista d\'espera.'
+      },
       'cs': {
         '<strong>Chat</strong> with us!': '<strong>Chatujte</strong> s námi!',
         'All colleagues are busy.': 'Všichni kolegové jsou vytíženi.',
@@ -1072,7 +1091,7 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
         'Since you didn\'t respond in the last %s minutes your conversation with <strong>%s</strong> was closed.': 'Sans réponse de votre part depuis %s minutes, votre conversation avec <strong>%s</strong> a été fermée.',
         'Start new conversation': 'Démarrer une nouvelle conversation',
         'Today': 'Aujourd\'hui',
-        'We are sorry, it is taking longer than expected to get a slot. Please try again later or send us an email. Thank you!': 'Nous sommes désolés, trouver un agent disponible prend plus de temps que prévu. Réessayez plus tard ou envoyez-nous un mail. Merci !',
+        'We are sorry, it is taking longer than expected to get a slot. Please try again later or send us an email. Thank you!': 'Nous sommes désolés, trouver un agent disponible prend plus de temps que prévu. Réessayez ultérieurement ou envoyez-nous un mail. Merci !',
         'You are on waiting list position <strong>%s</strong>.': 'Vous êtes actuellement en position <strong>%s</strong> dans la file d\'attente.'
       },
       'hr': {
@@ -1096,22 +1115,41 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
       },
       'hu': {
         '<strong>Chat</strong> with us!': '<strong>Csevegjen</strong> velünk!',
-        'All colleagues are busy.': 'Minden munkatársunk foglalt.',
+        'All colleagues are busy.': 'Az összes munkatárs elfoglalt.',
         'Chat closed by %s': 'A csevegés %s által lezárva',
-        'Compose your message…': 'Fogalmazza meg üzenetét…',
-        'Connecting': 'Csatlakozás',
+        'Compose your message…': 'Üzenet írása…',
+        'Connecting': 'Kapcsolatépítés',
         'Connection lost': 'A kapcsolat megszakadt',
         'Connection re-established': 'A kapcsolat helyreállt',
-        'Offline': 'Offline',
-        'Online': 'Online',
-        'Scroll down to see new messages': 'Görgessen lefelé az új üzenetek megtekintéséhez',
+        'Offline': 'Kapcsolat nélkül',
+        'Online': 'Elérhető',
+        'Scroll down to see new messages': 'Görgessen le az új üzenetek megtekintéséhez',
         'Send': 'Küldés',
-        'Since you didn\'t respond in the last %s minutes your conversation was closed.': 'Mivel az elmúlt %s percben nem válaszolt, a beszélgetése lezárásra került.',
-        'Since you didn\'t respond in the last %s minutes your conversation with <strong>%s</strong> was closed.': 'Mivel az elmúlt %s percben nem válaszolt, <strong>%s</strong> munkatársunkkal folytatott beszélgetését lezártuk.',
+        'Since you didn\'t respond in the last %s minutes your conversation was closed.': 'Mivel nem válaszolt az elmúlt %s percben, a beszélgetése lezárásra került.',
+        'Since you didn\'t respond in the last %s minutes your conversation with <strong>%s</strong> was closed.': 'Mivel nem válaszolt az elmúlt %s percben, <strong>%s</strong> ügyintézővel folytatott beszélgetése lezárásra került.',
         'Start new conversation': 'Új beszélgetés indítása',
         'Today': 'Ma',
-        'We are sorry, it is taking longer than expected to get a slot. Please try again later or send us an email. Thank you!': 'Sajnáljuk, hogy a vártnál hosszabb ideig tart a helyfoglalás. Kérjük, próbálja meg később újra, vagy küldjön nekünk egy e-mailt. Köszönjük!',
-        'You are on waiting list position <strong>%s</strong>.': 'Ön a várólistán a <strong>%s</strong> helyen szerepel.'
+        'We are sorry, it is taking longer than expected to get a slot. Please try again later or send us an email. Thank you!': 'Sajnáljuk, a vártnál hosszabb ideig tart a helyfoglalás. Próbálja meg később újra, vagy küldjön nekünk e-mailt. Köszönjük!',
+        'You are on waiting list position <strong>%s</strong>.': 'Ön a várólista <strong>%s.</strong> helyén szerepel.'
+      },
+      'id': {
+        '<strong>Chat</strong> with us!': '<strong>Obrolan</strong> dengan kami!',
+        'All colleagues are busy.': 'Semua rekan sedang sibuk.',
+        'Chat closed by %s': 'Obrolan ditutup oleh %s',
+        'Compose your message…': 'Tulis pesan Anda…',
+        'Connecting': 'Menghubungkan',
+        'Connection lost': 'Koneksi terputus',
+        'Connection re-established': 'Koneksi dipulihkan',
+        'Offline': 'Offline',
+        'Online': 'Online',
+        'Scroll down to see new messages': 'Gulir ke bawah untuk melihat pesan baru',
+        'Send': 'Kirim',
+        'Since you didn\'t respond in the last %s minutes your conversation was closed.': 'Karena Anda tidak membalas dalam %s menit terakhir, percakapan Anda ditutup.',
+        'Since you didn\'t respond in the last %s minutes your conversation with <strong>%s</strong> was closed.': 'Karena Anda tidak membalas dalam %s menit terakhir, percakapan Anda dengan <strong>%s</strong> ditutup.',
+        'Start new conversation': 'Mulai percakapan baru',
+        'Today': 'Hari ini',
+        'We are sorry, it is taking longer than expected to get a slot. Please try again later or send us an email. Thank you!': 'Kami minta maaf, proses ini memakan waktu lebih lama dari yang diharapkan untuk mendapatkan slot. Silakan coba lagi nanti atau kirimkan email ke kami. Terima kasih!',
+        'You are on waiting list position <strong>%s</strong>.': 'Anda berada di posisi daftar tunggu <strong>%s</strong>.'
       },
       'it': {
         '<strong>Chat</strong> with us!': '<strong>Chatta</strong> con noi!',
@@ -1131,6 +1169,25 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
         'Today': 'Oggi',
         'We are sorry, it is taking longer than expected to get a slot. Please try again later or send us an email. Thank you!': 'Siamo spiacenti, ci vuole più tempo del previsto per ottenere uno spazio libero. Riprova più tardi o inviaci un\'e-mail. Grazie!',
         'You are on waiting list position <strong>%s</strong>.': 'Sei alla posizione <strong>%s</strong> della lista di attesa.'
+      },
+      'ko': {
+        '<strong>Chat</strong> with us!': '우리와 <strong>채팅</strong> !',
+        'All colleagues are busy.': '모든 동료가 바쁩니다.',
+        'Chat closed by %s': '%s에 의해 채팅 종료',
+        'Compose your message…': '메시지를 작성하세요…',
+        'Connecting': '연결 중',
+        'Connection lost': '연결 끊김',
+        'Connection re-established': '연결 재설정됨',
+        'Offline': '오프라인',
+        'Online': '온라인',
+        'Scroll down to see new messages': '새 메시지를 보려면 아래로 스크롤',
+        'Send': '보내기',
+        'Since you didn\'t respond in the last %s minutes your conversation was closed.': '지난 %s분 동안 응답하지 않아 대화가 종료되었습니다.',
+        'Since you didn\'t respond in the last %s minutes your conversation with <strong>%s</strong> was closed.': '지난 %s분 동안 응답하지 않아 <strong>%s</strong>님과의 대화가 종료되었습니다.',
+        'Start new conversation': '새 대화 시작',
+        'Today': '오늘',
+        'We are sorry, it is taking longer than expected to get a slot. Please try again later or send us an email. Thank you!': '죄송합니다. 슬롯을 받는 데 예상보다 시간이 오래 걸리고 있습니다. 나중에 다시 시도하거나 이메일을 보내주세요. 감사합니다!',
+        'You are on waiting list position <strong>%s</strong>.': '대기 목록 위치 <strong>%s</strong>에 있습니다.'
       },
       'lt': {
         '<strong>Chat</strong> with us!': '<strong>Kalbėkitės</strong> su mumis!',
@@ -1321,6 +1378,44 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
         'Today': 'Idag',
         'We are sorry, it is taking longer than expected to get a slot. Please try again later or send us an email. Thank you!': 'Det tar tyvärr längre tid än förväntat att få en ledig plats. Försök igen senare eller skicka ett mejl till oss. Tack!',
         'You are on waiting list position <strong>%s</strong>.': 'Du är på väntelistan som position <strong>%s</strong>.'
+      },
+      'tr': {
+        '<strong>Chat</strong> with us!': 'Bizimle <strong>Sohbet</strong> edin!',
+        'All colleagues are busy.': 'Tüm meslektaşlar meşgul.',
+        'Chat closed by %s': 'Sohbet %s tarafından kapatıldı',
+        'Compose your message…': 'Mesajınızı yazın…',
+        'Connecting': 'Bağlanıyor',
+        'Connection lost': 'Bağlantı koptu',
+        'Connection re-established': 'Bağlantı yeniden sağlandı',
+        'Offline': 'Çevrimdışı',
+        'Online': 'Online',
+        'Scroll down to see new messages': 'Scroll down to see new messages',
+        'Send': 'Gönder',
+        'Since you didn\'t respond in the last %s minutes your conversation was closed.': 'Son %s dakika içinde yanıt vermediğiniz için görüşmeniz kapatıldı.',
+        'Since you didn\'t respond in the last %s minutes your conversation with <strong>%s</strong> was closed.': 'Son %s dakika içinde yanıt vermediğiniz için <strong>%s</strong> ile görüşmeniz sonlandırıldı.',
+        'Start new conversation': 'Yeni görüşme başlat',
+        'Today': 'Bugün',
+        'We are sorry, it is taking longer than expected to get a slot. Please try again later or send us an email. Thank you!': 'Üzgünüz, yer bulmamız beklenenden daha uzun sürüyor. Lütfen daha sonra tekrar deneyin veya bize bir e-posta gönderin. Teşekkür ederiz!',
+        'You are on waiting list position <strong>%s</strong>.': 'Bekleme listesindeki sıranız <strong>%s</strong>.'
+      },
+      'uk': {
+        '<strong>Chat</strong> with us!': '<strong>Напишіть</strong> нам!',
+        'All colleagues are busy.': 'Всі колеги зайняті.',
+        'Chat closed by %s': 'Чат закрито %s',
+        'Compose your message…': 'Складіть ваше повідомлення…',
+        'Connecting': 'Підключення',
+        'Connection lost': 'Підключення втрачено',
+        'Connection re-established': 'Підключення відновлено',
+        'Offline': 'Не в мережі',
+        'Online': 'В мережі',
+        'Scroll down to see new messages': 'Прокрутіть униз, щоб побачити нові повідомлення',
+        'Send': 'Відправити',
+        'Since you didn\'t respond in the last %s minutes your conversation was closed.': 'Оскільки ви не відповіли протягом останніх %s хвилин, вашу розмову було закрито.',
+        'Since you didn\'t respond in the last %s minutes your conversation with <strong>%s</strong> was closed.': 'Оскільки ви не відповіли протягом останніх %s хвилин, ваша розмова з <strong>%s</strong> була завершена.',
+        'Start new conversation': 'Почніть нову розмову',
+        'Today': 'Сьогодні',
+        'We are sorry, it is taking longer than expected to get a slot. Please try again later or send us an email. Thank you!': 'Вибачте, отримання слоту займає більше часу, ніж очікувалося. Будь ласка, спробуйте пізніше або надішліть нам електронного листа. Дякуємо!',
+        'You are on waiting list position <strong>%s</strong>.': 'Ви перебуваєте у списку очікування <strong>%s</strong>.'
       },
       'zh-cn': {
         '<strong>Chat</strong> with us!': '发起<strong>即时对话</strong>!',
@@ -2615,7 +2710,7 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
     };
 
     ZammadChat.prototype.wordFilter = function(editor) {
-      var content, cur_level, el, i, j, k, l, last_level, len, len1, len2, len3, len4, len5, len6, len7, list_tag, m, matches, n, o, p, pnt, q, r, ref, ref1, ref10, ref2, ref3, ref4, ref5, ref6, ref7, ref8, ref9, s, start, str, txt;
+      var content, cur_level, el, i, j, k, l, last_level, len, len1, len2, len3, len4, len5, len6, len7, list_tag, m, matches, n, o, p, pnt, q, r, ref, ref1, ref2, ref3, ref4, ref5, ref6, ref7, ref8, ref9, s, start, str, txt;
       content = editor.html();
       content = content.replace(/<!--[\s\S]+?-->/gi, '');
       content = content.replace(/<(!|script[^>]*>.*?<\/script(?=[>\s])|\/?(\?xml(:\w+)?|img|meta|link|style|\w:\w+)(?=[\s\/>]))[^>]*>/gi, '');
@@ -2644,9 +2739,7 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
             matches = /([0-9])\./.exec(txt);
             if (matches) {
               start = parseInt(matches[1], 10);
-              list_tag = (ref2 = start > 1) != null ? ref2 : '<ol start="' + start + {
-                '"></ol>': '<ol></ol>'
-              };
+              list_tag = start > 1 ? '<ol start="' + start + '"></ol>' : '<ol></ol>';
             } else {
               list_tag = '<ol></ol>';
             }
@@ -2661,7 +2754,7 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
             pnt.insertAdjacentHTML('beforeend', list_tag);
           }
           if (cur_level < last_level) {
-            for (i = l = ref3 = i, ref4 = last_level - cur_level; ref3 <= ref4 ? l <= ref4 : l >= ref4; i = ref3 <= ref4 ? ++l : --l) {
+            for (i = l = ref2 = i, ref3 = last_level - cur_level; ref2 <= ref3 ? l <= ref3 : l >= ref3; i = ref2 <= ref3 ? ++l : --l) {
               pnt = pnt.parentNode;
             }
           }
@@ -2675,34 +2768,34 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
           last_level = 0;
         }
       }
-      ref5 = editor.querySelectorAll('[style]');
-      for (m = 0, len2 = ref5.length; m < len2; m++) {
-        el = ref5[m];
+      ref4 = editor.querySelectorAll('[style]');
+      for (m = 0, len2 = ref4.length; m < len2; m++) {
+        el = ref4[m];
         el.removeAttribute('style');
       }
-      ref6 = editor.querySelectorAll('[align]');
-      for (n = 0, len3 = ref6.length; n < len3; n++) {
-        el = ref6[n];
+      ref5 = editor.querySelectorAll('[align]');
+      for (n = 0, len3 = ref5.length; n < len3; n++) {
+        el = ref5[n];
         el.removeAttribute('align');
       }
-      ref7 = editor.querySelectorAll('span');
-      for (o = 0, len4 = ref7.length; o < len4; o++) {
-        el = ref7[o];
+      ref6 = editor.querySelectorAll('span');
+      for (o = 0, len4 = ref6.length; o < len4; o++) {
+        el = ref6[o];
         el.outerHTML = el.innerHTML;
       }
-      ref8 = editor.querySelectorAll('span:empty');
-      for (q = 0, len5 = ref8.length; q < len5; q++) {
-        el = ref8[q];
+      ref7 = editor.querySelectorAll('span:empty');
+      for (q = 0, len5 = ref7.length; q < len5; q++) {
+        el = ref7[q];
         el.remove();
       }
-      ref9 = editor.querySelectorAll("[class^='Mso']");
-      for (r = 0, len6 = ref9.length; r < len6; r++) {
-        el = ref9[r];
+      ref8 = editor.querySelectorAll("[class^='Mso']");
+      for (r = 0, len6 = ref8.length; r < len6; r++) {
+        el = ref8[r];
         el.removeAttribute('class');
       }
-      ref10 = editor.querySelectorAll('p:empty');
-      for (s = 0, len7 = ref10.length; s < len7; s++) {
-        el = ref10[s];
+      ref9 = editor.querySelectorAll('p:empty');
+      for (s = 0, len7 = ref9.length; s < len7; s++) {
+        el = ref9[s];
         el.remove();
       }
       return editor;

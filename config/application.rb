@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require_relative 'boot'
 
@@ -20,7 +20,7 @@ end
 module Zammad
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 7.2
+    config.load_defaults 8.0
 
     Rails.autoloaders.each do |autoloader|
       autoloader.ignore            "#{config.root}/app/frontend"
@@ -59,15 +59,16 @@ module Zammad
     # define cache store
     if ENV['MEMCACHE_SERVERS'].present? && !Zammad::SafeMode.enabled?
       require 'dalli' # Only load this gem when it is really used.
-      config.cache_store = [:mem_cache_store, ENV['MEMCACHE_SERVERS'], { expires_in: 7.days }]
+      config.cache_store = [:mem_cache_store, ENV['MEMCACHE_SERVERS'], { protocol: :meta, expires_in: 7.days }]
     else
       config.cache_store = [:zammad_file_store, Rails.root.join('tmp', "cache_file_store_#{Rails.env}"), { expires_in: 7.days }]
     end
 
     # define websocket session store
-    # The web socket session store will fall back to localhost Redis usage if REDIS_URL is not set.
-    # In this case, or if forced via ZAMMAD_WEBSOCKET_SESSION_STORE_FORCE_FS_BACKEND, the FS back end will be used.
-    legacy_ws_use_redis = ENV['REDIS_URL'].present? && ENV['ZAMMAD_WEBSOCKET_SESSION_STORE_FORCE_FS_BACKEND'].blank? && !Zammad::SafeMode.enabled?
+    # The web socket session store will only use redis if it is explicitly configured.
+    redis_configured = ENV['REDIS_URL'].present? || ENV['REDIS_SENTINELS'].present?
+    # Otherwise, or if forced via ZAMMAD_WEBSOCKET_SESSION_STORE_FORCE_FS_BACKEND, the FS back end will be used.
+    legacy_ws_use_redis = redis_configured && ENV['ZAMMAD_WEBSOCKET_SESSION_STORE_FORCE_FS_BACKEND'].blank? && !Zammad::SafeMode.enabled?
     config.websocket_session_store = legacy_ws_use_redis ? :redis : :file
   end
 end

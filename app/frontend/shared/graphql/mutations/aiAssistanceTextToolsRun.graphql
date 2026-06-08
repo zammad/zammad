@@ -1,0 +1,13 @@
+mutation aiAssistanceTextToolsRun(
+  $input: String!
+  $textToolId: ID!
+  $templateRenderContext: TemplateRenderContextInput!
+) {
+  aiAssistanceTextToolsRun(
+    input: $input
+    textToolId: $textToolId
+    templateRenderContext: $templateRenderContext
+  ) {
+    output
+  }
+}

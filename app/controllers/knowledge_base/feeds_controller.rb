@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class KnowledgeBase::FeedsController < ApplicationController
   ITEMS_IN_FEED = 10
@@ -27,7 +27,9 @@ class KnowledgeBase::FeedsController < ApplicationController
   end
 
   def category
-    @category = KnowledgeBase::Category.where(knowledge_base_id: @knowledge_base.id, id: params[:id]).first
+    @category = @knowledge_base.categories.find(params[:id])
+
+    Pundit.authorize(effective_user, @category, :show_any?)
 
     scope = if KnowledgeBase.granular_permissions?
               granular_scope [@category]

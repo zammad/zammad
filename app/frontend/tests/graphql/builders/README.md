@@ -97,10 +97,7 @@ it('calls mutation', async () => {
 
   const calls = getGraphQLMockCalls<LoginMutation>('mutation', 'Login')
   // or
-  const calls = await waitForGraphQLMockCalls<LoginMutation>(
-    'mutation',
-    'Login',
-  )
+  const calls = await waitForGraphQLMockCalls<LoginMutation>('mutation', 'Login')
   console.log(calls) // [{ result: {}, variables: { login, password } }]
 
   // Other checks...
@@ -123,26 +120,20 @@ This method also returns an object that can reassign defaults (via `updateDefaul
 (via `waitForCalls`).
 
 ```ts
-import type {
-  LoginMutation,
-  LoginMutationVariables,
-} from '#shared/graphql/types.ts'
+import type { LoginMutation, LoginMutationVariables } from '#shared/graphql/types.ts'
 import { LoginDocument } from '#shared/graphql/mutations/login.api.ts'
 import { mockGraphQLResult } from '#tests/graphql/builders/mocks.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
 
 it('correctly returns result', async () => {
-  const mocker = mockGraphQLResult<LoginMutation, LoginMutationVariables>(
-    LoginDocument,
-    {
-      login: {
-        // Since this test depends on these values, set them.
-        twoFactorRequired: {
-          recoveryCodesAvailable: false,
-        },
+  const mocker = mockGraphQLResult<LoginMutation, LoginMutationVariables>(LoginDocument, {
+    login: {
+      // Since this test depends on these values, set them.
+      twoFactorRequired: {
+        recoveryCodesAvailable: false,
       },
     },
-  )
+  })
 
   // You can reassign defaults if needed (i.e. if there are several calls to the same API).
   //   This overrides previous defaults value.
@@ -196,8 +187,7 @@ test('subscription is triggered', async () => {
   const view = await visitView(`/user/${userInternalId}`)
 
   // If you provide a generic type, it will actually typecheck the name.
-  const subscription =
-    getGraphQLSubscriptionHandler<CurrentUserUpdatesSubscription>('userUpdates')
+  const subscription = getGraphQLSubscriptionHandler<CurrentUserUpdatesSubscription>('userUpdates')
 
   // Because the type was provided to the handler, `.trigger` will validate it.
   await subscription.trigger({
@@ -209,8 +199,6 @@ test('subscription is triggered', async () => {
     },
   })
 
-  expect(
-    await view.findByRole('heading', { name: 'Some New Name' }),
-  ).toBeInTheDocument()
+  expect(await view.findByRole('heading', { name: 'Some New Name' })).toBeInTheDocument()
 })
 ```

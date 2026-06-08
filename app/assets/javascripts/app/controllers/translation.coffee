@@ -244,7 +244,6 @@ class TranslationModal extends App.ControllerModal
     content.find('[name="locale"]')
       .off('change.loadSuggestions')
       .on('change.loadSuggestions', (e) =>
-        console.debug('change.loadSuggestions', e.target)
         @loadSuggestions($(e.target).val(), $('.js-suggestionsSearchInput').val(), callback)
       )
 

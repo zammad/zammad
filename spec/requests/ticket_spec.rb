@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -17,7 +17,7 @@ RSpec.describe 'Ticket', type: :request do
     create(:agent, groups: Group.all, firstname: 'Tickets', lastname: 'Agent')
   end
   let!(:agent_change_only) do
-    user = create(:agent, groups: Group.all, firstname: 'Tickets', lastname: 'Agent')
+    user = create(:agent, groups: Group.all, firstname: 'Tickets', lastname: 'AgentChangeOnly')
     user.group_names_access_map = {
       ticket_group_without_create.name => %w[read change],
     }
@@ -47,7 +47,7 @@ RSpec.describe 'Ticket', type: :request do
       }
       authenticated_as(agent)
       post '/api/v1/tickets', params: params, as: :json
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
       expect(json_response).to be_a(Hash)
       expect(json_response['error_human']).to eq("The required value 'group_id' is missing.")
     end
@@ -65,7 +65,7 @@ RSpec.describe 'Ticket', type: :request do
       }
       authenticated_as(agent)
       post '/api/v1/tickets', params: params, as: :json
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
       expect(json_response).to be_a(Hash)
       expect(json_response['error']).to eq('No lookup value found for \'group\': "not_existing"')
     end
@@ -102,7 +102,7 @@ RSpec.describe 'Ticket', type: :request do
       }
       authenticated_as(agent)
       expect { post '/api/v1/tickets', params: params, as: :json }.not_to change(Ticket, :count)
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
       expect(json_response).to be_a(Hash)
       expect(json_response['error']).to eq("Need at least an 'article body' field.")
     end
@@ -118,7 +118,7 @@ RSpec.describe 'Ticket', type: :request do
       }
       authenticated_as(agent)
       expect { post '/api/v1/tickets', params: params, as: :json }.not_to change(Ticket, :count)
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
       expect(json_response).to be_a(Hash)
       expect(json_response['error']).to eq("Need at least an 'article body' field.")
     end
@@ -198,7 +198,7 @@ RSpec.describe 'Ticket', type: :request do
       }
       authenticated_as(agent)
       post '/api/v1/tickets', params: params, as: :json
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
       expect(json_response).to be_a(Hash)
       expect(json_response['error']).to eq('Invalid value for param \'owner_id\': 0')
     end
@@ -240,7 +240,7 @@ RSpec.describe 'Ticket', type: :request do
       }
       authenticated_as(agent)
       post '/api/v1/tickets', params: params, as: :json
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
       expect(json_response).to be_a(Hash)
       expect(json_response['error']).to eq('Invalid value for param \'owner_id\': 99999')
     end
@@ -481,7 +481,7 @@ RSpec.describe 'Ticket', type: :request do
       }
       authenticated_as(agent)
       post '/api/v1/tickets', params: params, as: :json
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
       expect(json_response).to be_a(Hash)
       expect(json_response['error']).to eq("Need at least an 'article body' field.")
     end
@@ -580,7 +580,7 @@ RSpec.describe 'Ticket', type: :request do
       }
       authenticated_as(agent)
       post '/api/v1/tickets', params: params, as: :json
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
       expect(json_response).to be_a(Hash)
       expect(json_response['error']).to eq('Invalid base64 for attachment with index \'0\'')
     end
@@ -602,7 +602,7 @@ RSpec.describe 'Ticket', type: :request do
       }
       authenticated_as(agent)
       post '/api/v1/tickets', params: params, as: :json
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
       expect(json_response).to be_a(Hash)
       expect(json_response['error']).to eq('Invalid base64 for attachment with index \'0\'')
     end
@@ -675,7 +675,7 @@ RSpec.describe 'Ticket', type: :request do
       }
       authenticated_as(agent)
       post '/api/v1/tickets', params: params, as: :json
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
       expect(json_response).to be_a(Hash)
       expect(json_response['error']).to eq('Attachment needs \'mime-type\' param for attachment with index \'0\'')
     end
@@ -767,6 +767,7 @@ RSpec.describe 'Ticket', type: :request do
     end
 
     it 'does ticket create with agent (02.02)' do
+      target_ticket = create(:ticket, group: ticket_group)
       params = {
         title:    'a new ticket #1',
         state:    'new',
@@ -779,7 +780,7 @@ RSpec.describe 'Ticket', type: :request do
         },
         links:    {
           Ticket: {
-            parent: [1],
+            parent: [target_ticket.id],
           }
         }
       }
@@ -797,7 +798,7 @@ RSpec.describe 'Ticket', type: :request do
       )
       expect(links[0]['link_type']).to eq('child')
       expect(links[0]['link_object']).to eq('Ticket')
-      expect(links[0]['link_object_value']).to eq(1)
+      expect(links[0]['link_object_value']).to eq(target_ticket.id)
     end
 
     it 'does ticket with wrong ticket id (02.03)' do
@@ -1817,6 +1818,44 @@ RSpec.describe 'Ticket', type: :request do
       expect(ticket.articles.count).to eq(0)
     end
 
+    it 'does ticket update with article and sets online notification as seen', performs_jobs: true do
+      other_agent = create(:agent, groups: [ticket_group])
+      ticket = create(
+        :ticket,
+        title:         'test ticket',
+        group:         ticket_group,
+        owner:         other_agent,
+        customer_id:   customer.id,
+        updated_by_id: other_agent.id,
+        created_by_id: other_agent.id,
+      )
+
+      # Create an online notification for the ticket owner (not the agent doing the update)
+      online_notification = create(:online_notification, o_id: ticket.id, user_id: other_agent.id, seen: false)
+
+      params = {
+        state:   'closed',
+        article: {
+          body:         'test article',
+          content_type: 'text/plain',
+          type:         'note',
+          sender:       'Agent',
+        }
+      }
+      authenticated_as(agent)
+
+      # Perform the update with ticket update and article in a transaction.
+      put "/api/v1/tickets/#{ticket.id}", params: params, as: :json
+
+      expect(response).to have_http_status(:ok)
+
+      # Execute the enqueued job
+      perform_enqueued_jobs
+
+      # Verify the notification was marked as seen
+      expect(online_notification.reload.seen).to be true
+    end
+
     it 'does ticket split with html - check attachments (05.01)' do
       ticket = create(
         :ticket,
@@ -2184,6 +2223,10 @@ RSpec.describe 'Ticket', type: :request do
       get "/api/v1/ticket_related/#{ticket1.id}", params: {}, as: :json
       expect(response).to have_http_status(:ok)
 
+      authenticated_as(create(:agent, groups: []))
+      get "/api/v1/ticket_related/#{ticket1.id}", params: {}, as: :json
+      expect(response).to have_http_status(:forbidden)
+
       authenticated_as(customer)
       get "/api/v1/ticket_related/#{ticket1.id}", params: {}, as: :json
       expect(response).to have_http_status(:forbidden)
@@ -2234,7 +2277,7 @@ RSpec.describe 'Ticket', type: :request do
 
     it 'create ticket with one of mentions being invalid' do
       new_ticket_with_mentions(user1.id, user2.id, create(:customer).id)
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
       expect(Mention.count).to eq(0)
     end
 
@@ -2305,7 +2348,7 @@ RSpec.describe 'Ticket', type: :request do
               params: { state_id: Ticket::State.find_by(name: 'open').id },
               as:     :json
 
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
           expect(json_response).to include('error' => 'Cannot follow-up on a closed ticket. Please create a new ticket.')
         end
       end
@@ -2339,6 +2382,92 @@ RSpec.describe 'Ticket', type: :request do
 
         context 'as customer', authenticated_as: -> { customer } do
           include_examples 'fail to reopen a ticket'
+        end
+      end
+    end
+  end
+
+  describe 'POST /api/v1/tickets' do
+    let(:group)  { create(:group) }
+    let(:agent)  { create(:agent, groups: [group]) }
+
+    let(:base_params) do
+      {
+        title:       'a new ticket',
+        group:       group.name,
+        article:     { content_type: 'text/plain', body: 'some body' },
+        customer_id: customer.id,
+      }
+    end
+
+    describe 'link authorization', authenticated_as: -> { agent } do
+      context 'when the target is a Ticket' do
+        context 'when the user does not have agent access' do
+          let(:target_ticket) { create(:ticket) } # in a group the agent has no access to
+
+          it 'returns forbidden' do
+            post '/api/v1/tickets',
+                 params: base_params.merge(links: { Ticket: { normal: [target_ticket.id] } }),
+                 as:     :json
+
+            expect(response).to have_http_status(:forbidden)
+          end
+        end
+
+        context 'when the user has agent access to the target ticket' do
+          let(:target_ticket) { create(:ticket, group: group) }
+
+          it 'creates the ticket with the link' do
+            post '/api/v1/tickets',
+                 params: base_params.merge(links: { Ticket: { normal: [target_ticket.id] } }),
+                 as:     :json
+
+            expect(response).to have_http_status(:created)
+          end
+        end
+      end
+
+      context 'when the target is a KnowledgeBase::Answer::Translation' do
+        include_context 'basic Knowledge Base'
+
+        let(:translation) { internal_answer.translations.first }
+
+        context 'when the user has no access to the KB answer' do
+          let(:role)  { create(:role, permission_names: %w[ticket.agent]) }
+          let(:agent) { create(:user, groups: [group], roles: [role]) }
+
+          it 'returns forbidden' do
+            post '/api/v1/tickets',
+                 params: base_params.merge(links: { 'KnowledgeBase::Answer::Translation' => { normal: [translation.id] } }),
+                 as:     :json
+
+            expect(response).to have_http_status(:forbidden)
+          end
+        end
+
+        context 'when the user reader access to the KB answer' do
+          let(:agent) { create(:agent, groups: [group]) }
+
+          it 'returns success' do
+            post '/api/v1/tickets',
+                 params: base_params.merge(links: { 'KnowledgeBase::Answer::Translation' => { normal: [translation.id] } }),
+                 as:     :json
+
+            expect(response).to have_http_status(:created)
+          end
+        end
+
+        context 'when the user editor access to the KB answer' do
+          let(:kb_editor_role) { create(:role, permission_names: %w[knowledge_base.editor ticket.agent]) }
+          let(:agent)          { create(:agent, groups: [group], roles: [kb_editor_role]) }
+
+          it 'creates the ticket with the link' do
+            post '/api/v1/tickets',
+                 params: base_params.merge(links: { 'KnowledgeBase::Answer::Translation' => { normal: [translation.id] } }),
+                 as:     :json
+
+            expect(response).to have_http_status(:created)
+          end
         end
       end
     end
@@ -2609,6 +2738,242 @@ RSpec.describe 'Ticket', type: :request do
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:created)
       expect(Ticket.last.tag_list).to eq([])
+    end
+  end
+
+  describe 'ticket search parameter with_total_count only works with full=true #5687', authenticated_as: :agent, searchindex: true do
+    let(:tickets) { create_list(:ticket, 3, title: 'total test', group: Group.first) }
+
+    before do
+      tickets
+      searchindex_model_reload([Ticket])
+    end
+
+    it 'does search with -none- and with_total_count=false' do
+      get '/api/v1/tickets/search?query=total&full=false&with_total_count=false', params: {}, as: :json
+      expect(response).to have_http_status(:ok)
+      expect(json_response).to be_a(Array)
+      expect(json_response.count).to eq(3)
+    end
+
+    it 'does search with -none- and with_total_count=true' do
+      get '/api/v1/tickets/search?query=total&full=false&with_total_count=true', params: {}, as: :json
+      expect(response).to have_http_status(:ok)
+      expect(json_response).to be_a(Hash)
+      expect(json_response['total_count']).to eq(3)
+      expect(json_response['records'].count).to eq(3)
+    end
+
+    it 'does search with full=true and with_total_count=false' do
+      get '/api/v1/tickets/search?query=total&full=true', params: {}, as: :json
+      expect(response).to have_http_status(:ok)
+      expect(json_response).to be_a(Hash)
+      expect(json_response['total_count']).to eq(3)
+      expect(json_response['record_ids'].count).to eq(3)
+    end
+
+    it 'does search with full=true and with_total_count=true' do
+      get '/api/v1/tickets/search?query=total&full=true&with_total_count=true', params: {}, as: :json
+      expect(response).to have_http_status(:ok)
+      expect(json_response).to be_a(Hash)
+      expect(json_response['total_count']).to eq(3)
+      expect(json_response['record_ids'].count).to eq(3)
+    end
+
+    it 'does search with expand=true and with_total_count=false' do
+      get '/api/v1/tickets/search?query=total&expand=true&with_total_count=false', params: {}, as: :json
+      expect(response).to have_http_status(:ok)
+      expect(json_response).to be_a(Array)
+      expect(json_response.count).to eq(3)
+    end
+
+    it 'does search with expand=true and with_total_count=true' do
+      get '/api/v1/tickets/search?query=total&expand=true&with_total_count=true', params: {}, as: :json
+      expect(response).to have_http_status(:ok)
+      expect(json_response).to be_a(Hash)
+      expect(json_response['total_count']).to eq(3)
+      expect(json_response['records'].count).to eq(3)
+    end
+
+    it 'does search with term=total and with_total_count=false' do
+      get '/api/v1/tickets/search?query=total&term=total&with_total_count=false', params: {}, as: :json
+      expect(response).to have_http_status(:ok)
+      expect(json_response).to be_a(Array)
+      expect(json_response.count).to eq(3)
+    end
+
+    it 'does search with term=total and with_total_count=true' do
+      get '/api/v1/tickets/search?query=total&term=total&with_total_count=true', params: {}, as: :json
+      expect(response).to have_http_status(:ok)
+      expect(json_response).to be_a(Hash)
+      expect(json_response['total_count']).to eq(3)
+      expect(json_response['records'].count).to eq(3)
+    end
+  end
+
+  describe 'Case insensitive in customer mail using the API not always true #5785' do
+    let(:agent)    { create(:agent, groups: Group.all) }
+    let(:customer) { create(:customer, email: 'NEW_HERE@example.com') }
+
+    it 'does create a customer and a ticket for it', :aggregate_failures do
+      customer
+      expect(customer.reload.email).to eq('new_here@example.com')
+
+      params = {
+        title:    'a new ticket #3',
+        group_id: Group.first.id,
+        priority: '2 normal',
+        state:    'new',
+        customer: 'NEW_HERE@example.com'
+      }
+      authenticated_as(agent)
+      post '/api/v1/tickets', params: params, as: :json
+      expect(response).to have_http_status(:created)
+      expect(json_response).to be_a(Hash)
+    end
+  end
+
+  describe 'PUT /api/v1/update_title' do
+    let(:ticket) { create(:ticket) }
+    let(:agent)  { create(:agent, groups: [ticket.group]) }
+    let(:title)  { 'Updated title' }
+
+    context 'with an agent', authenticated_as: :agent do
+      it 'updates the title' do
+        expect { put "/api/v1/tickets/#{ticket.id}/update_title", params: { title: }, as: :json }
+          .to change { ticket.reload.title }
+          .to(title)
+      end
+
+      it 'uses ForcedUpdate service' do
+        allow(Service::Ticket::ForcedUpdate).to receive(:execute).and_call_original
+
+        put "/api/v1/tickets/#{ticket.id}/update_title", params: { title:, owner_id: 123 }, as: :json
+
+        expect(Service::Ticket::ForcedUpdate)
+          .to have_received(:execute).with(ticket, { title: 'Updated title' }, current_user: agent)
+      end
+
+      context 'when agent has no access to the ticket' do
+        let(:agent) { create(:agent) }
+
+        it 'access is forbidden' do
+          put "/api/v1/tickets/#{ticket.id}/update_title", params: { title: }
+          expect(response).to have_http_status(:forbidden)
+        end
+      end
+    end
+
+    context 'with a customer', authenticated_as: -> { ticket.customer } do
+      it 'updates the title' do
+        expect { put "/api/v1/tickets/#{ticket.id}/update_title", params: { title: }, as: :json }
+          .to change { ticket.reload.title }
+          .to(title)
+      end
+    end
+  end
+
+  describe 'PUT /api/v1/update_customer' do
+    let(:ticket)             { create(:ticket) }
+    let(:agent)              { create(:agent, groups: [ticket.group]) }
+    let(:title)              { 'Updated title' }
+    let(:customer)           { create(:customer, organization:, organizations: [other_organization]) }
+    let(:organization)       { create(:organization) }
+    let(:other_organization) { create(:organization) }
+
+    context 'with an agent', authenticated_as: :agent do
+      it 'updates the customer' do
+        put "/api/v1/tickets/#{ticket.id}/update_customer",
+            params: { customer_id: customer.id },
+            as:     :json
+
+        expect(ticket.reload).to have_attributes(
+          customer:,
+          organization:,
+        )
+      end
+
+      it 'updates the customer and the organzization' do
+        put "/api/v1/tickets/#{ticket.id}/update_customer",
+            params: { customer_id: customer.id, organization_id: other_organization.id },
+            as:     :json
+
+        expect(ticket.reload).to have_attributes(
+          customer:,
+          organization: other_organization,
+        )
+      end
+
+      it 'uses ForcedUpdate service with customer and organization' do
+        allow(Service::Ticket::ForcedUpdate).to receive(:execute).and_call_original
+
+        put "/api/v1/tickets/#{ticket.id}/update_customer",
+            params: { customer_id: customer.id, organization_id: organization.id },
+            as:     :json
+
+        expect(Service::Ticket::ForcedUpdate)
+          .to have_received(:execute).with(ticket, { 'customer_id' => customer.id, 'organization_id' => organization.id }, current_user: agent)
+      end
+
+      it 'uses ForcedUpdate service with customer only' do
+        allow(Service::Ticket::ForcedUpdate).to receive(:execute).and_call_original
+
+        put "/api/v1/tickets/#{ticket.id}/update_customer",
+            params: { customer_id: customer.id, not_permited: :field },
+            as:     :json
+
+        expect(Service::Ticket::ForcedUpdate)
+          .to have_received(:execute).with(ticket, { 'customer_id' => customer.id }, current_user: agent)
+      end
+    end
+
+    context 'with a customer', authenticated_as: -> { ticket.customer } do
+      it 'access is forbidden' do
+        put "/api/v1/tickets/#{ticket.id}/update_customer", params: { title: }
+        expect(response).to have_http_status(:forbidden)
+      end
+    end
+  end
+
+  describe 'performs requested macro changes after updating the ticket (#5866)' do
+    let(:ticket)   { create(:ticket) }
+    let(:agent)    { create(:agent, groups: [ticket.group]) }
+    let(:title)    { 'Updated title' }
+    let(:state)    { Ticket::State.lookup(name: 'closed') }
+    let(:priority) { Ticket::Priority.lookup(name: '3 high') }
+    let(:macro)    { create(:macro, perform:) }
+
+    let(:perform) do
+      {
+        'ticket.state_id'    => { 'value' => state.id },
+        'ticket.priority_id' => { 'value' => priority.id },
+      }
+    end
+
+    let(:params) do
+      {
+        'title'                 => title,
+        'macro.id'              => macro.id,
+        'macro.perform_changes' => ['ticket.state_id'],
+      }
+    end
+
+    context 'with an agent', authenticated_as: :agent do
+      it 'performs just the requested macro changes' do
+        expect { put "/api/v1/tickets/#{ticket.id}", params:, as: :json }
+          .to change { ticket.reload.title }.to(title)
+          .and change { ticket.reload.state }.to(state)
+          .and not_change { ticket.reload.priority }
+      end
+    end
+
+    context 'with a customer', authenticated_as: -> { ticket.customer } do
+      it 'does not perform requested macro changes' do
+        expect { put "/api/v1/tickets/#{ticket.id}", params:, as: :json }
+          .to change { ticket.reload.title }
+          .and not_change { ticket.reload.state }
+          .and not_change { ticket.reload.priority }
+      end
     end
   end
 end

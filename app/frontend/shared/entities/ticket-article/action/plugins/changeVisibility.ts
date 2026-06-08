@@ -1,14 +1,11 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { useTicketArticleChangeVisibilityMutation } from '#shared/entities/ticket-article/graphql/mutations/changeVisibility.api.ts'
 import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
 
 import type { TicketArticleActionPlugin, TicketArticleAction } from './types.ts'
 
-const changeVisibilityAction = (
-  articleId: string,
-  targetInternalState: boolean,
-) => {
+const changeVisibilityAction = (articleId: string, targetInternalState: boolean) => {
   const errorNotificationMessage = targetInternalState
     ? __('The article could not be set to internal.')
     : __('The article could not be set to public.')
@@ -29,9 +26,7 @@ const actionPlugin: TicketArticleActionPlugin = {
   addActions(ticket, article) {
     const targetInternalState = !article.internal
 
-    const label = targetInternalState
-      ? __('Set to internal')
-      : __('Set to public')
+    const label = targetInternalState ? __('Set to internal') : __('Set to public')
 
     const iconName = targetInternalState ? 'lock' : 'lock-open'
 

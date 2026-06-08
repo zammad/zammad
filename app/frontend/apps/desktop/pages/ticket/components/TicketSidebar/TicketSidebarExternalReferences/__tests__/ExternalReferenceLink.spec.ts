@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import renderComponent from '#tests/support/components/renderComponent.ts'
 
@@ -52,9 +52,7 @@ describe('IssueIntegrationContent', () => {
       router: true,
     })
 
-    expect(
-      wrapper.queryByRole('button', { name: 'Remove Zammad Test' }),
-    ).not.toBeInTheDocument()
+    expect(wrapper.queryByRole('button', { name: 'Remove Zammad Test' })).not.toBeInTheDocument()
   })
 
   it('emits remove event', () => {

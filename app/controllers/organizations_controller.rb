@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class OrganizationsController < ApplicationController
   prepend_before_action -> { authorize! }, except: %i[index show]
@@ -221,7 +221,7 @@ curl http://localhost/api/v1/organization/{id} -v -u #{login}:#{password} -H "Co
     if string.blank? && params[:file].present?
       string = params[:file].read.force_encoding('utf-8')
     end
-    raise Exceptions::UnprocessableEntity, __('No source data submitted!') if string.blank?
+    raise Exceptions::UnprocessableContent, __('No source data submitted!') if string.blank?
 
     result = Organization.csv_import(
       string:       string,

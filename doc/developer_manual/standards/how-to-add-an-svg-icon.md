@@ -15,11 +15,14 @@ graphics (top right corner) don't use these variables so you probably won't need
 
 ## Build Process
 
-See [`public/assets/images/README.md`](/public/assets/images/README.md):
+See [`public/assets/images/README.md`](/public/assets/images/README.md).
+
+Run the legacy icon build from the images package directory (or from the repository root using `cd`):
 
 ```sh
-pnpm install
-pnpm exec gulp build
+# from repo root
+(cd public/assets/images && pnpm install --frozen-lockfile && pnpm exec gulp build)
+
 [14:08:17] Using gulpfile zammad/public/assets/images/gulpfile.js
 [14:08:17] Starting 'build'...
 [14:08:17] Finished 'build' after 7.48 ms

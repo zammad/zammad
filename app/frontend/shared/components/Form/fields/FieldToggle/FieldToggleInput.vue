@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, nextTick, toRef, watch } from 'vue'
@@ -31,9 +31,7 @@ watch(
   () => props.context.variants,
   (variants) => {
     if (!variants) {
-      console.warn(
-        'FieldToggleInput: variants prop is required, but not provided',
-      )
+      console.warn('FieldToggleInput: variants prop is required, but not provided')
       return
     }
 
@@ -98,8 +96,7 @@ const knobSizeClasses = computed(() => {
 })
 
 const knobTranslateClasses = computed(() => {
-  if (context.value.size === 'small')
-    return 'ltr:translate-x-[13px] rtl:-translate-x-[13px]'
+  if (context.value.size === 'small') return 'ltr:translate-x-[13px] rtl:-translate-x-[13px]'
 
   return 'ltr:translate-x-[17px] rtl:-translate-x-[17px]'
 })
@@ -112,7 +109,7 @@ const classMap = getToggleClasses()
     :id="context.id"
     type="button"
     role="switch"
-    class="formkit-disabled:pointer-events-none relative inline-flex flex-shrink-0 cursor-pointer items-center rounded-full"
+    class="relative inline-flex flex-shrink-0 cursor-pointer items-center rounded-full formkit-disabled:pointer-events-none"
     :class="[
       context.classes.input,
       classMap.track,

@@ -91,5 +91,10 @@ export const TicketArticleAttributesFragmentDoc = gql`
     error
   }
   detectedLanguage
+  highlightedTexts {
+    startIndex
+    endIndex
+    colorClass
+  }
 }
     `;

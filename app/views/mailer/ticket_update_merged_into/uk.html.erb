@@ -1,0 +1,11 @@
+Заявку (#{ticket.title}) об'єднано з іншою заявкою
+
+<div>Привіт #{recipient.firstname},</div>
+<br>
+<div>
+Заявку (#{ticket.title}) було об'єднано з іншою заявкою користувачем "<b>#{current_user.longname}</b>".
+</div>
+<br>
+<div>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">Переглянути в #{config.product_name}</a>
+</div>

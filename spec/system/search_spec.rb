@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -32,7 +32,7 @@ RSpec.describe 'Search', authenticated_as: :authenticate, searchindex: true, typ
     click_on 'Show Search Details'
 
     within '#navigation .tasks a[data-key=Search]' do
-      expect(page).to have_content '"Welcome"'
+      expect(page).to have_text '"Welcome"'
     end
   end
 
@@ -96,25 +96,25 @@ RSpec.describe 'Search', authenticated_as: :authenticate, searchindex: true, typ
 
       it 'has group label' do
         within '.bulkAction .bulkAction-form' do
-          expect(page).to have_content 'GROUP'
+          expect(page).to have_text 'GROUP'
         end
       end
 
       it 'has owner label' do
         within '.bulkAction .bulkAction-form' do
-          expect(page).to have_content 'OWNER'
+          expect(page).to have_text 'OWNER'
         end
       end
 
       it 'has state label' do
         within '.bulkAction .bulkAction-form' do
-          expect(page).to have_content 'STATE'
+          expect(page).to have_text 'STATE'
         end
       end
 
       it 'has priority label' do
         within '.bulkAction .bulkAction-form' do
-          expect(page).to have_content 'PRIORITY'
+          expect(page).to have_text 'PRIORITY'
         end
       end
     end
@@ -665,19 +665,19 @@ RSpec.describe 'Search', authenticated_as: :authenticate, searchindex: true, typ
       it 'does find the ticket' do
         fill_in id: 'global-search', with: ticket.title
 
-        expect(page.find('.global-search-menu')).to have_content(ticket.title)
+        expect(page.find('.global-search-menu')).to have_text(ticket.title)
       end
 
       it 'does not find the customer' do
         fill_in id: 'global-search', with: customer.firstname
 
-        expect(page.find('.global-search-menu')).to have_no_content(customer.firstname)
+        expect(page.find('.global-search-menu')).to have_no_text(customer.firstname)
       end
 
       it 'does not find the organization' do
         fill_in id: 'global-search', with: organization.name
 
-        expect(page.find('.global-search-menu')).to have_no_content(organization.name)
+        expect(page.find('.global-search-menu')).to have_no_text(organization.name)
       end
     end
 
@@ -688,19 +688,19 @@ RSpec.describe 'Search', authenticated_as: :authenticate, searchindex: true, typ
       it 'does find the ticket' do
         fill_in id: 'global-search', with: ticket.title
 
-        expect(page.find('.global-search-menu')).to have_content(ticket.title)
+        expect(page.find('.global-search-menu')).to have_text(ticket.title)
       end
 
       it 'does find the customer' do
         fill_in id: 'global-search', with: customer.firstname
 
-        expect(page.find('.global-search-menu')).to have_content(customer.firstname)
+        expect(page.find('.global-search-menu')).to have_text(customer.firstname)
       end
 
       it 'does find the organization' do
         fill_in id: 'global-search', with: organization.name
 
-        expect(page.find('.global-search-menu')).to have_content(organization.name)
+        expect(page.find('.global-search-menu')).to have_text(organization.name)
       end
     end
 
@@ -711,19 +711,19 @@ RSpec.describe 'Search', authenticated_as: :authenticate, searchindex: true, typ
       it 'does not find the ticket' do
         fill_in id: 'global-search', with: ticket.title
 
-        expect(page.find('.global-search-menu')).to have_no_content(ticket.title)
+        expect(page.find('.global-search-menu')).to have_no_text(ticket.title)
       end
 
       it 'does find the customer' do
         fill_in id: 'global-search', with: customer.firstname
 
-        expect(page.find('.global-search-menu')).to have_content(customer.firstname)
+        expect(page.find('.global-search-menu')).to have_text(customer.firstname)
       end
 
       it 'does find the organization' do
         fill_in id: 'global-search', with: organization.name
 
-        expect(page.find('.global-search-menu')).to have_content(organization.name)
+        expect(page.find('.global-search-menu')).to have_text(organization.name)
       end
     end
   end
@@ -800,12 +800,12 @@ RSpec.describe 'Search', authenticated_as: :authenticate, searchindex: true, typ
     context 'when many tickets exist too' do
       let(:new_tickets) do
         Array.new(55).map.with_index do |_elem, i|
-          t = create(:ticket, group: Ticket.find(1).group, title: "Ticket #{i} zammad")
+          t = create(:ticket, group: Ticket.find(1).group, title: "Ticket #{i} zammad example")
           create(:ticket_article, ticket: t)
         end
       end
 
-      let(:all_zammad_tickets)         { Ticket.where('title LIKE ?', '%ammad%') }
+      let(:all_zammad_tickets)         { Ticket.where('title LIKE ?', '%example%') }
       let(:all_zammad_tickets_default) { all_zammad_tickets.reorder('updated_at desc').to_a }
       let(:all_zammad_tickets_sorted)  { all_zammad_tickets.reorder(:title).to_a }
 

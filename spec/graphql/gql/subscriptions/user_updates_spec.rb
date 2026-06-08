@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -6,8 +6,8 @@ RSpec.describe Gql::Subscriptions::UserUpdates, type: :graphql do
 
   let(:subscription) do
     <<~QUERY
-      subscription userUpdates($userId: ID!) {
-        userUpdates(userId: $userId) {
+      subscription userUpdates($userId: ID!, $initial: Boolean = false) {
+        userUpdates(userId: $userId, initial: $initial) {
           user {
             id
             firstname
@@ -30,6 +30,14 @@ RSpec.describe Gql::Subscriptions::UserUpdates, type: :graphql do
 
     it 'subscribes' do
       expect(gql.result.data).to eq({ 'user' => nil })
+    end
+
+    context 'with initial data' do
+      let(:variables) { { userId: gql.id(target), initial: true } }
+
+      it 'subscribes with initial data' do
+        expect(gql.result.data[:user][:firstname]).to eq(target.firstname)
+      end
     end
 
     it 'receives user updates for target user' do

@@ -1,0 +1,3 @@
+Hi, some platforms are giving me errors because they detect unusual network activity.
+
+Sent from Secure Mail for iOS.

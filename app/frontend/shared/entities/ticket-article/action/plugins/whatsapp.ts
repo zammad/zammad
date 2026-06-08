@@ -1,13 +1,10 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { createMessage, type FormKitNode } from '@formkit/core'
 import { useFormKitNodeById } from '@formkit/vue'
 
 import type { FileUploaded } from '#shared/components/Form/fields/FieldFile/types.ts'
-import {
-  FormValidationVisibility,
-  type FormRef,
-} from '#shared/components/Form/types.ts'
+import { FormValidationVisibility, type FormRef } from '#shared/components/Form/types.ts'
 import { getNodeId } from '#shared/components/Form/utils.ts'
 import { getTicketChannelPlugin } from '#shared/entities/ticket/channel/plugins/index.ts'
 import type { TicketById } from '#shared/entities/ticket/types.ts'
@@ -15,11 +12,7 @@ import { EnumTicketArticleSenderName } from '#shared/graphql/types.ts'
 import { i18n } from '#shared/i18n.ts'
 import { getAcceptableFileTypesString } from '#shared/utils/files.ts'
 
-import type {
-  TicketArticleAction,
-  TicketArticleActionPlugin,
-  TicketArticleType,
-} from './types.ts'
+import type { TicketArticleAction, TicketArticleActionPlugin, TicketArticleType } from './types.ts'
 
 const allowedFiles = [
   {
@@ -73,11 +66,7 @@ const actionPlugin: TicketArticleActionPlugin = {
     const sender = article.sender?.name
     const type = article.type?.name // 'whatsapp message'
 
-    if (
-      sender !== EnumTicketArticleSenderName.Customer ||
-      type !== 'whatsapp message'
-    )
-      return []
+    if (sender !== EnumTicketArticleSenderName.Customer || type !== 'whatsapp message') return []
     if (!canUseWhatsapp(ticket)) return []
 
     const action: TicketArticleAction = {
@@ -158,19 +147,15 @@ const actionPlugin: TicketArticleActionPlugin = {
           currentFiles &&
           currentFiles.length > 0 &&
           currentFiles[0].type &&
-          (currentFiles[0].type === 'image/webp' ||
-            currentFiles[0].type.startsWith('audio'))
+          (currentFiles[0].type === 'image/webp' || currentFiles[0].type.startsWith('audio'))
         ) {
-          bodyCommitEventListener = bodyCommitEventNode.on(
-            'commit',
-            ({ payload: newValue }) => {
-              if (newValue) {
-                setBodyNotAllowedMessage(bodyCommitEventNode)
-              } else {
-                removeBodyNotAllowedMessage(bodyCommitEventNode)
-              }
-            },
-          )
+          bodyCommitEventListener = bodyCommitEventNode.on('commit', ({ payload: newValue }) => {
+            if (newValue) {
+              setBodyNotAllowedMessage(bodyCommitEventNode)
+            } else {
+              removeBodyNotAllowedMessage(bodyCommitEventNode)
+            }
+          })
 
           if (bodyCommitEventNode.value) {
             setBodyNotAllowedMessage(bodyCommitEventNode)
@@ -203,6 +188,12 @@ const actionPlugin: TicketArticleActionPlugin = {
       icon: 'whatsapp',
       view: {
         agent: ['change'],
+      },
+      editorMeta: {
+        footer: {
+          maxlength: 4096,
+          allowExceedMaxLength: true,
+        },
       },
       fields: {
         body: {

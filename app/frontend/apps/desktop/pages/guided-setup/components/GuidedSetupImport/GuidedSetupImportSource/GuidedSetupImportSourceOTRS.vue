@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
@@ -50,8 +50,7 @@ const formSchema = [
         name: 'url',
         label: __('URL'),
         type: 'text',
-        placeholder:
-          'https://example.com/otrs/public.pl?Action=ZammadMigrator;Key=31337',
+        placeholder: 'https://example.com/otrs/public.pl?Action=ZammadMigrator;Key=31337',
         required: true,
         validation: 'url',
         help: __(
@@ -74,9 +73,7 @@ const formSchema = [
   },
 ]
 
-const { configureSystemImportSource } = useImportSourceConfiguration(
-  EnumSystemImportSource.Otrs,
-)
+const { configureSystemImportSource } = useImportSourceConfiguration(EnumSystemImportSource.Otrs)
 
 const { updateFieldValues, onChangedField } = useForm(form)
 const formChangeFields = reactive<Record<string, Partial<FormSchemaField>>>({})
@@ -99,13 +96,7 @@ onChangedField('url', (newValue: FormFieldValue) => {
 <template>
   <div v-if="!pluginDownloaded" class="flex flex-col gap-2">
     <CommonLabel>
-      {{
-        $t(
-          'Download and install the %s Migration Plugin on your %s instance.',
-          'OTRS',
-          'OTRS',
-        )
-      }}
+      {{ $t('Download and install the %s Migration Plugin on your %s instance.', 'OTRS', 'OTRS') }}
     </CommonLabel>
     <GuidedSetupImportSourceOTRSDownloadButtons class="mb-5" />
   </div>
@@ -118,9 +109,7 @@ onChangedField('url', (newValue: FormFieldValue) => {
     :schema="formSchema"
     :change-fields="formChangeFields"
     @submit="
-      configureSystemImportSource(
-        $event as FormSubmitData<ImportSourceConfigurationOtrsData>,
-      )
+      configureSystemImportSource($event as FormSubmitData<ImportSourceConfigurationOtrsData>)
     "
   />
 </template>

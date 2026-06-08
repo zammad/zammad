@@ -1,9 +1,8 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { getAllByRole } from '@testing-library/vue'
 
 import { visitView } from '#tests/support/components/visitView.ts'
-import { mockPermissions } from '#tests/support/mock-permissions.ts'
 import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
 
@@ -12,7 +11,10 @@ import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import { getUserCurrentOverviewOrderingUpdatesSubscriptionHandler } from '#desktop/entities/ticket/graphql/subscriptions/userCurrentOverviewOrderingUpdates.mocks.ts'
 
 import { mockUserCurrentOverviewResetOrderMutation } from '../graphql/mutations/userCurrentOverviewResetOrder.mocks.ts'
-import { mockUserCurrentOverviewListQuery } from '../graphql/queries/userCurrentOverviewList.mocks.ts'
+import {
+  mockUserCurrentOverviewListQuery,
+  waitForUserCurrentOverviewListQueryCalls,
+} from '../graphql/queries/userCurrentOverviewList.mocks.ts'
 
 const userCurrentTicketOverviews = [
   {
@@ -35,15 +37,17 @@ const userCurrentTicketOverviews = [
   },
 ]
 
-const userCurrentOverviewListAferReset = userCurrentTicketOverviews.reverse()
+const userCurrentOverviewListAfterReset = userCurrentTicketOverviews.reverse()
 
 describe('personal settings for token access', () => {
   beforeEach(() => {
     mockUserCurrent({
       firstname: 'John',
       lastname: 'Doe',
+      permissions: {
+        names: ['user_preferences.overview_sorting', 'ticket.agent'],
+      },
     })
-    mockPermissions(['user_preferences.overview_sorting'])
   })
 
   it('shows the overviews order by priority', async () => {
@@ -73,31 +77,29 @@ describe('personal settings for token access', () => {
     mockUserCurrentOverviewResetOrderMutation({
       userCurrentOverviewResetOrder: {
         success: true,
-        overviews: userCurrentOverviewListAferReset,
+        overviews: userCurrentOverviewListAfterReset,
         errors: null,
       },
     })
 
     const resetButton = view.getByRole('button', {
-      name: 'Reset Overview Order',
+      name: 'Reset overview order',
     })
 
-    expect(resetButton).toBeInTheDocument()
+    expect(resetButton).toBeVisible()
 
     await view.events.click(resetButton)
 
     await waitForNextTick()
 
-    expect(
-      await view.findByRole('dialog', { name: 'Confirmation' }),
-    ).toBeInTheDocument()
+    expect(await view.findByRole('dialog', { name: 'Confirmation' })).toBeVisible()
 
     await view.events.click(view.getByRole('button', { name: 'Yes' }))
 
     await waitForNextTick()
 
-    userCurrentOverviewListAferReset.forEach((overview) => {
-      expect(view.getByText(overview.name)).toBeInTheDocument()
+    userCurrentOverviewListAfterReset.forEach((overview) => {
+      expect(view.getByText(overview.name)).toBeVisible()
     })
   })
 
@@ -106,11 +108,10 @@ describe('personal settings for token access', () => {
 
     const view = await visitView('/personal-setting/ticket-overviews')
 
-    const overviewUpdateSubscription =
-      getUserCurrentOverviewOrderingUpdatesSubscriptionHandler()
+    const overviewUpdateSubscription = getUserCurrentOverviewOrderingUpdatesSubscriptionHandler()
 
     userCurrentTicketOverviews.forEach((overview) => {
-      expect(view.getByText(overview.name)).toBeInTheDocument()
+      expect(view.getByText(overview.name)).toBeVisible()
     })
 
     overviewUpdateSubscription.trigger({
@@ -129,6 +130,24 @@ describe('personal settings for token access', () => {
 
     await waitForNextTick()
 
-    expect(view.getByText('New Overview')).toBeInTheDocument()
+    expect(view.getByText('New Overview')).toBeVisible()
+  })
+
+  it('shows a message when there are no overviews', async () => {
+    mockUserCurrentOverviewListQuery({ userCurrentTicketOverviews: [] })
+
+    const view = await visitView('/personal-setting/ticket-overviews')
+
+    await waitForUserCurrentOverviewListQueryCalls()
+
+    expect(
+      view.getByRole('heading', { name: 'exclamation-triangleNo overviews', level: 2 }),
+    ).toBeVisible()
+
+    expect(
+      view.getByText(
+        'Currently, no overviews are assigned to your roles. Please contact your administrator.',
+      ),
+    ).toBeVisible()
   })
 })

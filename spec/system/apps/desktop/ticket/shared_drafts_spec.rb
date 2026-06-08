@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -15,6 +15,8 @@ RSpec.describe 'Desktop > Ticket > Shared Drafts', app: :desktop_view, authentic
 
   context 'when using shared drafts' do
     before do
+      agent2
+
       visit "/ticket/#{ticket.id}"
 
       wait_for_form_to_settle("form-ticket-edit-#{ticket.id}")
@@ -27,7 +29,9 @@ RSpec.describe 'Desktop > Ticket > Shared Drafts', app: :desktop_view, authentic
     end
 
     it 'works correctly', performs_jobs: true do
-      click_on 'Add phone call'
+      click_on 'Add internal note'
+
+      wait_for_form_updater(2)
 
       within_form(form_updater_gql_number: 2) do
         find_editor('Text').type('article text content')
@@ -35,7 +39,7 @@ RSpec.describe 'Desktop > Ticket > Shared Drafts', app: :desktop_view, authentic
       end
 
       # Create draft
-      click_on('Additional ticket edit actions')
+      click_on('Drafts & macros')
       click_on('Save as draft')
 
       wait_for_gql('shared/entities/ticket-shared-draft-zoom/graphql/mutations/ticketSharedDraftZoomCreate.graphql')
@@ -45,16 +49,21 @@ RSpec.describe 'Desktop > Ticket > Shared Drafts', app: :desktop_view, authentic
 
       # Create an internal note for agent2
       click_on('Discard your unsaved changes')
-      click_on('Discard Changes')
+      click_on('Discard changes')
+
+      wait_for_form_updater(6)
+
       click_on('Add internal note')
 
-      within_form(form_updater_gql_number: 4) do
+      wait_for_form_updater(7)
+
+      within_form(form_updater_gql_number: 7) do
         find_editor('Text').type("Can we send this to the customer?  @@#{agent2.firstname}")
       end
 
       find('li', text: agent2.fullname).click
 
-      wait_for_form_updater(6)
+      wait_for_form_updater(9)
 
       click_on('Update')
 
@@ -78,23 +87,27 @@ RSpec.describe 'Desktop > Ticket > Shared Drafts', app: :desktop_view, authentic
         wait_for_form_to_settle("form-ticket-edit-#{ticket.id}")
 
         # Modify draft
-        click_on('Add phone call')
+        click_on('Add internal note')
+
+        wait_for_form_updater(2)
 
         within_form(form_updater_gql_number: 2) do
           find_editor('Text').type('force overwrite dialog')
         end
 
-        click_on('Draft Available')
+        click_on('Draft available')
         click_on('Apply')
-        click_on('Overwrite Content')
+        click_on('Overwrite content')
+
+        wait_for_form_updater(4)
 
         within_form(form_updater_gql_number: 4) do
           find_editor('Text').clear.type('article text content - now with modification')
         end
 
-        click_on('Additional ticket edit actions')
+        click_on('Drafts & macros')
         click_on('Save as draft')
-        click_on('Overwrite Draft')
+        click_on('Overwrite draft')
 
         wait_for_gql('shared/entities/ticket-shared-draft-zoom/graphql/mutations/ticketSharedDraftZoomUpdate.graphql')
 
@@ -102,8 +115,13 @@ RSpec.describe 'Desktop > Ticket > Shared Drafts', app: :desktop_view, authentic
 
         # Create an internal note for agent1
         click_on('Discard your unsaved changes')
-        click_on('Discard Changes')
+        click_on('Discard changes')
+
+        wait_for_form_updater(7)
+
         click_on('Add internal note')
+
+        wait_for_form_updater(8)
 
         within_form(form_updater_gql_number: 8) do
           find_editor('Text').type("I changed it slightly, it's ready now.  @@#{agent1.firstname}")
@@ -128,15 +146,17 @@ RSpec.describe 'Desktop > Ticket > Shared Drafts', app: :desktop_view, authentic
       wait_for_form_to_settle("form-ticket-edit-#{ticket.id}")
 
       # Apply the draft
-      click_on('Add phone call')
+      click_on('Add internal note')
+
+      wait_for_form_updater(2)
 
       within_form(form_updater_gql_number: 2) do
         find_editor('Text').type('force overwrite dialog')
       end
 
-      click_on('Draft Available')
+      click_on('Draft available')
       click_on('Apply')
-      click_on('Overwrite Content')
+      click_on('Overwrite content')
 
       wait_for_form_updater(4)
 
@@ -144,7 +164,7 @@ RSpec.describe 'Desktop > Ticket > Shared Drafts', app: :desktop_view, authentic
 
       wait_for_gql('shared/entities/ticket/graphql/mutations/update.graphql')
 
-      expect(page).to have_no_text('Draft Available')
+      expect(page).to have_no_text('Draft available')
 
       expect(ticket.articles.count).to eq(4)
       expect(ticket.articles.last.body).to include('article text content - now with modification')

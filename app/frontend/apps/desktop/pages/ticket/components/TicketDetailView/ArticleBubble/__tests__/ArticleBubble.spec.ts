@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { renderComponent } from '#tests/support/components/index.ts'
 
@@ -27,15 +27,11 @@ describe('ArticleBubble', () => {
   it('creates the component and shows meta information on click', async () => {
     const wrapper = renderWrapper()
 
-    expect(
-      wrapper.queryByLabelText('Article meta information'),
-    ).not.toBeInTheDocument()
+    expect(wrapper.queryByLabelText('Article meta information')).not.toBeInTheDocument()
 
     await wrapper.events.click(wrapper.getByTestId('article-bubble-body-1'))
 
-    expect(
-      await wrapper.findByLabelText('Article meta information'),
-    ).toBeInTheDocument()
+    expect(await wrapper.findByLabelText('Article meta information')).toBeInTheDocument()
   })
 
   it('shows agent articles on the left', () => {
@@ -43,9 +39,7 @@ describe('ArticleBubble', () => {
       senderName: EnumTicketArticleSenderName.Agent,
     })
 
-    expect(wrapper.getByTestId('article-bubble-container-1')).toHaveClass(
-      'ltr:rounded-br-xl',
-    )
+    expect(wrapper.getByTestId('article-bubble-container-1')).toHaveClass('ltr:rounded-br-xl')
   })
 
   it('shows system articles on the left', () => {
@@ -53,9 +47,7 @@ describe('ArticleBubble', () => {
       senderName: EnumTicketArticleSenderName.System,
     })
 
-    expect(wrapper.getByTestId('article-bubble-container-1')).toHaveClass(
-      'ltr:rounded-br-xl',
-    )
+    expect(wrapper.getByTestId('article-bubble-container-1')).toHaveClass('ltr:rounded-br-xl')
   })
 
   it('shows customer articles on the right', () => {
@@ -63,9 +55,7 @@ describe('ArticleBubble', () => {
       senderName: EnumTicketArticleSenderName.Customer,
     })
 
-    expect(wrapper.getByTestId('article-bubble-container-1')).toHaveClass(
-      'ltr:rounded-bl-xl',
-    )
+    expect(wrapper.getByTestId('article-bubble-container-1')).toHaveClass('ltr:rounded-bl-xl')
   })
 
   it('renders given attachments', () => {

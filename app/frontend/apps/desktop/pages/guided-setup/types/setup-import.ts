@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import type { FormRef } from '#shared/components/Form/types.ts'
 
@@ -18,25 +18,21 @@ export interface ImportSourceConfigurationBase {
   sslVerify?: boolean
 }
 
-export interface ImportSourceConfigurationFreshdeskData
-  extends ImportSourceConfigurationBase {
+export interface ImportSourceConfigurationFreshdeskData extends ImportSourceConfigurationBase {
   secret: string
 }
 
-export interface ImportSourceConfigurationZendeskData
-  extends ImportSourceConfigurationBase {
+export interface ImportSourceConfigurationZendeskData extends ImportSourceConfigurationBase {
   username: string
   secret: string
 }
 
-export interface ImportSourceConfigurationKayakoData
-  extends ImportSourceConfigurationBase {
+export interface ImportSourceConfigurationKayakoData extends ImportSourceConfigurationBase {
   username: string
   secret: string
 }
 
-export interface ImportSourceConfigurationOtrsData
-  extends ImportSourceConfigurationBase {
+export interface ImportSourceConfigurationOtrsData extends ImportSourceConfigurationBase {
   sslVerify: boolean
 }
 

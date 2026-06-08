@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Controllers::MentionsControllerPolicy < Controllers::ApplicationControllerPolicy
   def index?
@@ -17,7 +17,7 @@ class Controllers::MentionsControllerPolicy < Controllers::ApplicationController
 
   def object_accessible?
     Mention.mentionable? record.mentionable_object, user
-  rescue Exceptions::UnprocessableEntity => e
+  rescue Exceptions::UnprocessableContent => e
     not_authorized(e)
   end
 

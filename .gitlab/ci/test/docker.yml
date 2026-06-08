@@ -4,7 +4,7 @@ docker:
   interruptible: false
   rules:
     - !reference [.job_rules, variable_filters]
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event" && $CI_COMMIT_REF_NAME =~ /^private/
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event" && $CI_COMMIT_REF_NAME =~ /^(private|cherry-pick-|revert-|renovate|dependabot)/
       when: manual
       allow_failure: true
     - when: on_success
@@ -12,10 +12,12 @@ docker:
   cache: []
   variables:
     ZAMMAD_IMAGE_TAG: "ci-${CI_JOB_ID}-${CI_COMMIT_SHORT_SHA}"
-    ZAMMAD_IMAGE_REPO: "zammad-local"
+    ZAMMAD_IMAGE_REPO: "$CI_REGISTRY/zammad/zammad"
     ZAMMAD_IMAGE: "${ZAMMAD_IMAGE_REPO}:${ZAMMAD_IMAGE_TAG}"
   before_script:
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
     - docker build --build-arg COMMIT_SHA=${CI_COMMIT_SHORT_SHA} --pull -t $ZAMMAD_IMAGE .
+    - docker push $ZAMMAD_IMAGE
   script: |
     git clone --depth=1 https://github.com/zammad/zammad-docker-compose.git
     cd zammad-docker-compose

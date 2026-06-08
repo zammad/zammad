@@ -1,7 +1,8 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
+import { waitFor } from '#tests/support/vitest-wrapper.ts'
 
 import { waitForUserCurrentTwoFactorRemoveMethodMutationCalls } from '#shared/entities/user/current/graphql/mutations/two-factor/userCurrentTwoFactorRemoveMethod.mocks.ts'
 import { waitForUserCurrentTwoFactorSetDefaultMethodMutationCalls } from '#shared/entities/user/current/graphql/mutations/two-factor/userCurrentTwoFactorSetDefaultMethod.mocks.ts'
@@ -18,10 +19,8 @@ describe('password personal settings', () => {
 
     const view = await visitView('/personal-setting/two-factor-auth')
 
-    await vi.waitFor(() => {
-      expect(view, 'correctly redirects to error page').toHaveCurrentUrl(
-        '/error-tab',
-      )
+    await waitFor(() => {
+      expect(view, 'correctly redirects to error page').toHaveCurrentUrl('/error-tab')
     })
   })
 
@@ -36,33 +35,24 @@ describe('password personal settings', () => {
     it('renders ui with authentication apps', async () => {
       const view = await visitView('/personal-setting/two-factor-auth')
 
-      expect(view.getByText('Authenticator App')).toBeInTheDocument()
+      expect(view.getByText('Authenticator app')).toBeInTheDocument()
       expect(
-        view.getByText(
-          'Get the security code from the authenticator app on your device.',
-        ),
+        view.getByText('Get the security code from the authenticator app on your device.'),
       ).toBeInTheDocument()
 
-      expect(view.getByText('Security Keys')).toBeInTheDocument()
-      expect(
-        view.getByText('Complete the sign-in with your security key.'),
-      ).toBeInTheDocument()
+      expect(view.getByText('Security keys')).toBeInTheDocument()
+      expect(view.getByText('Complete the sign-in with your security key.')).toBeInTheDocument()
     })
 
     describe('authenticator app', () => {
       it('set up', async () => {
-        const { flyoutContent } = await visitViewAndMockPasswordConfirmation(
-          false,
-          {
-            type: 'authenticatorApp',
-            configured: false,
-            action: 'setup',
-          },
-        )
+        const { flyoutContent } = await visitViewAndMockPasswordConfirmation(false, {
+          type: 'authenticatorApp',
+          configured: false,
+          action: 'setup',
+        })
         expect(
-          flyoutContent.getByText(
-            'Set Up Two-factor Authentication: Authenticator App',
-          ),
+          flyoutContent.getByText('Set up two-factor authentication: Authenticator app'),
         ).toBeInTheDocument()
       })
 
@@ -77,8 +67,7 @@ describe('password personal settings', () => {
           /Remove Two-factor Authentication: Confirm Password/i,
         )
 
-        const calls =
-          await waitForUserCurrentTwoFactorRemoveMethodMutationCalls()
+        const calls = await waitForUserCurrentTwoFactorRemoveMethodMutationCalls()
 
         expect(calls.at(-1)?.variables).toEqual(
           expect.objectContaining({
@@ -90,18 +79,13 @@ describe('password personal settings', () => {
       })
 
       it('edit', async () => {
-        const { flyoutContent } = await visitViewAndMockPasswordConfirmation(
-          false,
-          {
-            type: 'authenticatorApp',
-            configured: true,
-            action: 'edit',
-          },
-        )
+        const { flyoutContent } = await visitViewAndMockPasswordConfirmation(false, {
+          type: 'authenticatorApp',
+          configured: true,
+          action: 'edit',
+        })
         expect(
-          flyoutContent.getByText(
-            'Set Up Two-factor Authentication: Authenticator App',
-          ),
+          flyoutContent.getByText('Set up two-factor authentication: Authenticator app'),
         ).toBeInTheDocument()
       })
 
@@ -113,13 +97,11 @@ describe('password personal settings', () => {
             configuration: {
               enabledAuthenticationMethods: [
                 {
-                  authenticationMethod:
-                    EnumTwoFactorAuthenticationMethod.AuthenticatorApp,
+                  authenticationMethod: EnumTwoFactorAuthenticationMethod.AuthenticatorApp,
                   configured: true,
                 },
                 {
-                  authenticationMethod:
-                    EnumTwoFactorAuthenticationMethod.SecurityKeys,
+                  authenticationMethod: EnumTwoFactorAuthenticationMethod.SecurityKeys,
                   configured: true,
                 },
               ],
@@ -133,12 +115,9 @@ describe('password personal settings', () => {
           }),
         )
 
-        await view.events.click(
-          view.getByRole('button', { name: 'Set as default' }),
-        )
+        await view.events.click(view.getByRole('button', { name: 'Set as default' }))
 
-        const calls =
-          await waitForUserCurrentTwoFactorSetDefaultMethodMutationCalls()
+        const calls = await waitForUserCurrentTwoFactorSetDefaultMethodMutationCalls()
 
         expect(calls.at(-1)?.variables).toEqual({ methodName: 'security_keys' })
       })

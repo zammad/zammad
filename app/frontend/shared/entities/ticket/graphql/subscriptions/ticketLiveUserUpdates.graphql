@@ -1,7 +1,4 @@
-subscription ticketLiveUserUpdates(
-  $key: String!
-  $app: EnumTaskbarApp!
-) {
+subscription ticketLiveUserUpdates($key: String!, $app: EnumTaskbarApp!) {
   ticketLiveUserUpdates(key: $key, app: $app) {
     liveUsers {
       ...ticketLiveUserAttributes

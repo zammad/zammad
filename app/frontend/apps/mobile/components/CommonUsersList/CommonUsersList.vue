@@ -1,11 +1,8 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import CommonUserAvatar from '#shared/components/CommonUserAvatar/CommonUserAvatar.vue'
-import type {
-  AvatarUser,
-  AvatarUserAccess,
-} from '#shared/components/CommonUserAvatar/types.ts'
+import type { AvatarUser, AvatarUserAccess } from '#shared/components/CommonUserAvatar/types.ts'
 import { useAvatarIndicator } from '#shared/composables/useAvatarIndicator.ts'
 
 interface Props {
@@ -16,12 +13,7 @@ interface Props {
 const props = defineProps<Props>()
 
 const getAvatarIndicator = (user: AvatarUser) => {
-  return useAvatarIndicator(
-    user,
-    false,
-    undefined,
-    props.accessLookup?.[user.id].access,
-  )
+  return useAvatarIndicator(user, false, undefined, props.accessLookup?.[user.id].access)
 }
 </script>
 
@@ -43,10 +35,7 @@ const getAvatarIndicator = (user: AvatarUser) => {
         {{ user.fullname }}
       </span>
     </div>
-    <div
-      v-if="getAvatarIndicator(user).indicatorIcon"
-      class="flex items-center"
-    >
+    <div v-if="getAvatarIndicator(user).indicatorIcon" class="flex items-center">
       <CommonIcon
         :class="{ 'fill-gray': getAvatarIndicator(user).indicatorIsIdle.value }"
         :label="getAvatarIndicator(user).indicatorLabel.value"

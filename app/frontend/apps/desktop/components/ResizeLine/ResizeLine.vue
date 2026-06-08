@@ -1,8 +1,9 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 <script lang="ts" setup>
 import { useEventListener } from '@vueuse/core'
 import { computed, readonly, ref } from 'vue'
 
+import emitter from '#shared/utils/emitter.ts'
 import getUuid from '#shared/utils/getUuid.ts'
 
 interface Props {
@@ -61,6 +62,7 @@ const addRemoveResizingListener = (event: 'mouseup' | 'touchend') => {
 const handleMousedown = (event: MouseEvent) => {
   if (props.disabled) return
 
+  emitter.emit('resize-layout')
   emit('mousedown-event', event)
   resizing.value = true
 
@@ -70,6 +72,7 @@ const handleMousedown = (event: MouseEvent) => {
 const handleTouchstart = (event: TouchEvent) => {
   if (props.disabled) return
 
+  emitter.emit('resize-layout')
   emit('touchstart-event', event)
   resizing.value = true
 
@@ -79,6 +82,7 @@ const handleTouchstart = (event: TouchEvent) => {
 const handleDoubleClick = (event: MouseEvent) => {
   if (props.disabled) return
 
+  emitter.emit('resize-layout')
   emit('dblclick-event', event)
   resizeLine.value?.blur()
 }
@@ -95,8 +99,8 @@ defineExpose({
     class="flex justify-center opacity-0 focus-within:opacity-100 hover:opacity-100"
     :class="
       {
-        horizontal: 'h-[12px] w-full',
-        vertical: 'h-full w-[12px]',
+        horizontal: 'h-3 w-full',
+        vertical: 'h-full w-3',
       }[orientation]
     "
   >

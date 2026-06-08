@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { ApolloLink, createHttpLink, from } from '@apollo/client/core'
 import { BatchHttpLink } from '@apollo/client/link/batch-http'
@@ -8,11 +8,11 @@ import ActionCableLink from 'graphql-ruby-client/subscriptions/ActionCableLink'
 
 import { consumer } from '#shared/server/action_cable/consumer.ts'
 
-import connectedStateLink from './link/connectedState.ts'
 import csrfLink from './link/csrf.ts'
 import debugLink from './link/debug.ts'
 import errorLink from './link/error.ts'
 import setAuthorizationLink from './link/setAuthorization.ts'
+import skipSubscriptionResultLink from './link/skipSubscriptionResult.ts'
 import testFlagsLink from './link/testFlags.ts'
 import getBatchContext from './utils/getBatchContext.ts'
 import getWebsocketContext from './utils/getWebsocketContext.ts'
@@ -35,13 +35,11 @@ const noBatchLink = createHttpLink(connectionSettings)
 
 const batchLink = new BatchHttpLink({
   ...connectionSettings,
-  batchMax: 5,
+  batchMax: 3,
   batchInterval: 20,
 })
 
-const operationIsLoginLogout = (
-  definition: OperationDefinitionNode | FragmentDefinitionNode,
-) => {
+const operationIsLoginLogout = (definition: OperationDefinitionNode | FragmentDefinitionNode) => {
   return !!(
     definition.kind === 'OperationDefinition' &&
     definition.operation === 'mutation' &&
@@ -55,10 +53,7 @@ const requiresBatchLink = (op: Operation) => {
 
   const definition = getMainDefinition(op.query)
 
-  if (
-    definition.kind === 'OperationDefinition' &&
-    definition.operation === 'mutation'
-  ) {
+  if (definition.kind === 'OperationDefinition' && definition.operation === 'mutation') {
     return false
   }
 
@@ -77,10 +72,8 @@ const requiresHttpLink = (op: Operation) => {
   if (!enableQueriesOverWebsocket) {
     // Only subscriptions over websocket.
     return (
-      !(
-        definition.kind === 'OperationDefinition' &&
-        definition.operation === 'subscription'
-      ) && !websocketContext.active
+      !(definition.kind === 'OperationDefinition' && definition.operation === 'subscription') &&
+      !websocketContext.active
     )
   }
 
@@ -98,7 +91,7 @@ const link = from([
   errorLink,
   setAuthorizationLink,
   debugLink,
-  connectedStateLink,
+  skipSubscriptionResultLink,
   removeTypenameFromVariables(),
   splitLink,
 ])

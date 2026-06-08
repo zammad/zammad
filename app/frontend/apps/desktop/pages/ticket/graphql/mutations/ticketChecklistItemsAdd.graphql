@@ -1,4 +1,4 @@
-mutation ticketChecklistItemsAdd ($checklistId: ID!, $input: [TicketChecklistItemInput!]!){
+mutation ticketChecklistItemsAdd($checklistId: ID!, $input: [TicketChecklistItemInput!]!) {
   ticketChecklistItemsAdd(checklistId: $checklistId, input: $input) {
     success
   }

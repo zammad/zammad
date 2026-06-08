@@ -1,16 +1,17 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed } from 'vue'
+import { useRouter } from 'vue-router'
 
-import CommonPopover from '#shared/components/CommonPopover/CommonPopover.vue'
-import { usePopover } from '#shared/components/CommonPopover/usePopover.ts'
 import { EnumTextDirection } from '#shared/graphql/types.ts'
 import { i18n } from '#shared/i18n/index.ts'
 import { useLocaleStore } from '#shared/stores/locale.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import type { DropdownItem } from '#desktop/components/CommonDropdown/types.ts'
+import CommonPopover from '#desktop/components/CommonPopover/CommonPopover.vue'
+import { usePopover } from '#desktop/components/CommonPopover/usePopover.ts'
 import CommonPopoverMenu from '#desktop/components/CommonPopoverMenu/CommonPopoverMenu.vue'
 import CommonPopoverMenuItem from '#desktop/components/CommonPopoverMenu/CommonPopoverMenuItem.vue'
 import type { MenuItem } from '#desktop/components/CommonPopoverMenu/types.ts'
@@ -55,10 +56,17 @@ const handleSelectRadio = (item: DropdownItem) => {
   toggle()
 }
 
+const router = useRouter()
+
 const actionItems = computed(() =>
+  // oxlint-disable no-map-spread
   props.items.map((item) => ({
     ...item,
-    onClick: () => emit('handle-action', item),
+    // We can't use the original object, since it would overwrite the memory reference to the prop as well
+    onClick: () => {
+      emit('handle-action', item)
+      item.onClick?.(item, router)
+    },
   })),
 )
 </script>
@@ -71,10 +79,14 @@ const actionItems = computed(() =>
     :orientation="orientation"
   >
     <CommonPopoverMenu v-if="modelValue" :popover="popover" :items="items">
-      <template v-for="item in items" :key="item.key" #[`item-${item.key}`]>
+      <template v-for="(item, index) in items" :key="item.key" #[`item-${item.key}`]>
         <div class="group flex grow cursor-pointer items-center">
           <CommonPopoverMenuItem
-            class="flex grow items-center gap-2 p-2.5"
+            class="flex grow items-center gap-2 p-2.5 focus-visible-app-default focus-visible:-outline-offset-1!"
+            :class="{
+              'rounded-t-lg!': index === 0,
+              'rounded-b-lg!': index === items?.length - 1,
+            }"
             :label="item.label"
             :variant="item.variant"
             :link="item.link"
@@ -103,8 +115,7 @@ const actionItems = computed(() =>
     ref="popoverTarget"
     class="group"
     :class="{
-      'hover:bg-blue-600! hover:text-black dark:hover:bg-blue-900! dark:hover:text-white':
-        !isOpen,
+      'hover:bg-blue-600! hover:text-black dark:hover:bg-blue-900! dark:hover:text-white': !isOpen,
       'bg-blue-800! text-white! outline! outline-offset-1! outline-blue-800! hover:bg-blue-800!':
         isOpen,
     }"

@@ -1,33 +1,30 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Types::Input::Ticket
   class BaseInputType < Gql::Types::BaseInputObject
     include Gql::Types::Input::Concerns::ProvidesObjectAttributeValues
 
-    # Class that behaves like NilClass to filter out filtered arguments reliably.
-    class ArgumentFilteredOut
-      def nil?
-        true
-      end
-    end
-
-    only_for_ticket_agents = lambda do |payload, context|
-      context.current_user.permissions?('ticket.agent') ? payload : ArgumentFilteredOut.new
-    end
-
-    argument :owner_id, GraphQL::Types::ID, required: false, description: 'The owner of the ticket.', loads: Gql::Types::UserType, prepare: only_for_ticket_agents
-    argument :customer, Gql::Types::Input::Ticket::CustomerInputType, required: false, description: 'The customer of the ticket.', prepare: only_for_ticket_agents
+    argument :owner_id, GraphQL::Types::ID, required: false, description: 'The owner of the ticket.', loads: Gql::Types::UserType
+    argument :customer, Gql::Types::Input::Ticket::CustomerInputType, required: false, description: 'The customer of the ticket.'
     argument :organization_id, GraphQL::Types::ID, required: false, description: 'The organization of the ticket.', loads: Gql::Types::OrganizationType
-    argument :priority_id, GraphQL::Types::ID, required: false, description: 'The priority of the ticket.', loads: Gql::Types::Ticket::PriorityType, prepare: only_for_ticket_agents
+    argument :priority_id, GraphQL::Types::ID, required: false, description: 'The priority of the ticket.', loads: Gql::Types::Ticket::PriorityType
     argument :state_id, GraphQL::Types::ID, required: false, description: 'The state of the ticket.', loads: Gql::Types::Ticket::StateType
-    argument :pending_time, GraphQL::Types::ISO8601DateTime, required: false, description: 'The pending time of the ticket.', prepare: only_for_ticket_agents
+    argument :pending_time, GraphQL::Types::ISO8601DateTime, required: false, description: 'The pending time of the ticket.'
 
     argument :article, Gql::Types::Input::Ticket::ArticleInputType, required: false, description: 'The article data.'
 
-    transform :remove_filtered_arguments
+    def self.agent_only_fields
+      %w[owner_id customer priority_id pending_time]
+    end
 
-    def remove_filtered_arguments(payload)
-      payload.to_h.reject { |_k, v| v.is_a? ArgumentFilteredOut }
+    def self.agent_only_fields_access
+      :change
+    end
+
+    def self.sanitize_agent_only_fields!(value, user:, group_id:)
+      return if user.group_access?(group_id, agent_only_fields_access)
+
+      value.delete_if { |k, _v| agent_only_fields.include?(k.to_s) || agent_only_fields.include?("#{k}_id") }
     end
   end
 end

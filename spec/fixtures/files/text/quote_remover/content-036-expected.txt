@@ -1,0 +1,10 @@
+Hi Team,
+
+Regarding the [project documentation](https://example.com/project):
+
+I've already updated the project docs and will work on the rest.
+
+See [my notes](https://example.com/notes) for details.
+
+Best,
+Alex

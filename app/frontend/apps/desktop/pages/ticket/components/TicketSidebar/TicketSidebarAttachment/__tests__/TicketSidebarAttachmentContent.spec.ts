@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { vi } from 'vitest'
 import { computed } from 'vue'
@@ -88,10 +88,10 @@ describe('TicketSidebarAttachmentContent', () => {
   it('renders attachments', async () => {
     const wrapper = renderAttachmentContent()
 
-    expect(await wrapper.findByText('image010.jpg')).toBeInTheDocument()
-    expect(await wrapper.findByText('Test PDF.pdf')).toBeInTheDocument()
+    expect(await wrapper.findByRole('link', { name: 'Download image010.jpg' })).toBeInTheDocument()
+    expect(await wrapper.findByRole('link', { name: 'Download Test PDF.pdf' })).toBeInTheDocument()
     expect(
-      await wrapper.findByText('Entsorgungstermine.ics'),
+      await wrapper.findByRole('link', { name: 'Download Entsorgungstermine.ics' }),
     ).toBeInTheDocument()
   })
 })

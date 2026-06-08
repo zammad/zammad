@@ -8,6 +8,6 @@
   "sms": "message",
   "telegram": "telegram",
   "twitter": "twitter",
-  "web": "web",
+  "web": "chat-right-text",
   "whatsapp": "whatsapp"
 }

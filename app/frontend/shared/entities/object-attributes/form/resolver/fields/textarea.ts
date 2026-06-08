@@ -1,8 +1,8 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import type { FieldResolverModule } from '#shared/entities/object-attributes/types/resolver.ts'
 
-import FieldResolver from '../FieldResolver.ts'
+import { FieldResolver } from '../FieldResolver.ts'
 
 export class FieldResolverTextarea extends FieldResolver {
   fieldType = 'textarea'
@@ -14,6 +14,10 @@ export class FieldResolverTextarea extends FieldResolver {
         rows: this.attributeConfig.rows,
       },
     }
+  }
+
+  public override getFieldFilterOperators() {
+    return ['matches']
   }
 }
 

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class ApplicationController < ActionController::Base
   include ApplicationController::HandlesErrors
@@ -15,5 +15,6 @@ class ApplicationController < ActionController::Base
   include ApplicationController::LogsHttpAccess
   include ApplicationController::Authorizes
   include ApplicationController::Klass
+  include ApplicationController::HandlesSensitiveParams
   include ApplicationHelper
 end

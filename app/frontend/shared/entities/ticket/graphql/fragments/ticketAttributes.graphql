@@ -5,6 +5,7 @@ fragment ticketAttributes on Ticket {
   title
   createdAt
   escalationAt
+  aiAgentRunning
   updatedAt
   updatedBy {
     id
@@ -15,6 +16,7 @@ fragment ticketAttributes on Ticket {
     internalId
     firstname
     lastname
+    fullname
   }
   customer {
     id
@@ -63,6 +65,7 @@ fragment ticketAttributes on Ticket {
   group {
     id
     name
+    summaryGeneration
     emailAddress {
       name
       emailAddress

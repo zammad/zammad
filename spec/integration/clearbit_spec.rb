@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 RSpec.describe 'Clearbit', aggregate_failures: true, current_user_id: 1, integration: true, performs_jobs: true, required_envs: %w[CLEARBIT_CI_API_KEY] do
@@ -130,7 +130,7 @@ RSpec.describe 'Clearbit', aggregate_failures: true, current_user_id: 1, integra
       expect(customer).to have_attributes(
         firstname: 'Martin',
         lastname:  'Edenhofer',
-        note:      "Open Source professional and geek. Also known as OTRS inventor. ;)\r\nEntrepreneur and Advisor for open source people in need.",
+        note:      "Open Source professional and geek. Also known as OTRS inventor. ;)\nEntrepreneur and Advisor for open source people in need.",
         address:   'Norsk-Data-Straße 1, 61352 Bad Homburg vor der Höhe, Germany',
       )
     end

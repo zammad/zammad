@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class CtiGenericApi2 < ActiveRecord::Migration[5.1]
   def up
@@ -8,13 +8,7 @@ class CtiGenericApi2 < ActiveRecord::Migration[5.1]
     return if !column_exists?(:cti_logs, :initialized_at)
     return if column_exists?(:cti_logs, :initialized_at_cleanup)
 
-    if ActiveRecord::Base.connection_db_config.configuration_hash[:adapter] == 'mysql2'
-      # disable the MySQL strict_mode for the current connection
-      execute("SET sql_mode = ''")
-      add_column :cti_logs, :initialized_at_cleanup, :timestamp, limit: 3, null: true, default: '0000-00-00 00:00:00'
-    else
-      add_column :cti_logs, :initialized_at_cleanup, :timestamp, limit: 3, null: true
-    end
+    add_column :cti_logs, :initialized_at_cleanup, :timestamp, limit: 3, null: true
 
     Cti::Log.connection.schema_cache.clear!
     Cti::Log.reset_column_information

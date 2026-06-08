@@ -1,20 +1,13 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import type { Role } from '#shared/graphql/types.ts'
+import type { DataPrivacyTask, Role } from '#shared/graphql/types.ts'
 import { i18n } from '#shared/i18n.ts'
 
 import type { ActivityMessageBuilder } from '../types.ts'
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const path = (metaObject: Role) => {
-  return '#'
-}
+const path = (_metaObject: DataPrivacyTask) => '#'
 
-const messageText = (
-  type: string,
-  authorName: string,
-  metaObject?: Role,
-): Maybe<string> => {
+const messageText = (type: string, authorName: string, metaObject?: Role): Maybe<string> => {
   if (!metaObject) {
     return i18n.t('You can no longer see the role.')
   }

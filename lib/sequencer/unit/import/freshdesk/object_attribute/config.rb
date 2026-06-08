@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Sequencer::Unit::Import::Freshdesk::ObjectAttribute::Config < Sequencer::Unit::Base
   prepend ::Sequencer::Unit::Import::Common::Model::Mixin::Skip::Action
@@ -122,33 +122,34 @@ class Sequencer::Unit::Import::Freshdesk::ObjectAttribute::Config < Sequencer::U
   end
 
   def screens
+    return ticket_screens if model_class.to_s == 'Ticket'
+
     {
-      view: {
-        '-all-' => {
-          shown: true,
-          null:  true,
-        },
-        Customer: {
-          shown: false,
-          null:  true,
-        },
-      },
-      edit: {
-        '-all-' => {
-          shown: true,
-          null:  true,
-        },
-        Customer: {
-          shown: false,
-          null:  true,
-        },
-      }
+      create: { '-all-' => { shown: true } },
+      edit:   { '-all-' => { shown: true } },
+      view:   { '-all-' => { shown: true } },
+    }
+  end
+
+  def ticket_screens
+    customer = {
+      shown: resource['customers_can_edit'] ? true : false,
+      null:  resource['required_for_customers'] ? false : true,
+    }
+    agent = {
+      shown: true,
+      null:  resource['required_for_agents'] ? false : true,
+    }
+
+    {
+      create_middle: { 'ticket.agent' => agent, 'ticket.customer' => customer },
+      edit:          { 'ticket.agent' => agent, 'ticket.customer' => customer },
     }
   end
 
   def options
-    resource['choices'].each_with_object({}) do |choice, result|
-      result[choice] = choice
+    resource['choices'].to_h do |choice|
+      [choice, choice]
     end
   end
 end

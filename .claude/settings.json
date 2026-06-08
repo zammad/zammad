@@ -1,0 +1,49 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git log *)",
+      "Bash(git show *)",
+      "Bash(git diff *)",
+      "Bash(git blame *)",
+      "Bash(git branch)",
+      "Bash(git branch --show-current)",
+      "Bash(git status *)",
+      "Bash(git fetch *)",
+      "Bash(git checkout *)",
+      "Bash(git cherry-pick *)",
+      "Bash(glab *)",
+      "Bash(find *)",
+      "Bash(grep *)",
+      "Bash(bundle exec rubocop *)",
+      "Bash(RAILS_ENV=test VITE_TEST_MODE=1 bundle exec rspec *)",
+      "Bash(pnpm test *)",
+      "Bash(pnpm lint *)",
+      "Bash(pnpm generate-graphql-api)",
+      "Bash(pnpm generate-setting-types)",
+      "mcp__github__issue_read",
+      "mcp__github__list_issue_comments"
+    ]
+  },
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/lint-after-edit.sh",
+            "timeout": 120
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/regenerate-after-edit.sh",
+            "timeout": 120
+          }
+        ]
+      }
+    ]
+  }
+}

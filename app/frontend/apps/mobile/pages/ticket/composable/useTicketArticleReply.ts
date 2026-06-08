@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
@@ -23,8 +23,7 @@ export const useTicketArticleReply = (
   const newTicketArticlePresent = ref(false)
 
   const articleFormGroupNode = computed(() => {
-    if (!newTicketArticlePresent.value && !newTicketArticleRequested.value)
-      return undefined
+    if (!newTicketArticlePresent.value && !newTicketArticleRequested.value) return undefined
 
     return form.value?.getNodeByName('article')
   })
@@ -36,9 +35,7 @@ export const useTicketArticleReply = (
   const articleReplyDialog = useDialog({
     name: 'ticket-article-reply',
     component: () =>
-      import(
-        '#mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue'
-      ),
+      import('#mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue'),
     beforeOpen: () => {
       newTicketArticleRequested.value = true
     },
@@ -55,16 +52,9 @@ export const useTicketArticleReply = (
 
   const resetDirtyTicketState = () => {
     const stateId = form.value?.getNodeByName('state_id')
-    const isDefaultFollowUpStateSet = form.value?.getNodeByName(
-      'isDefaultFollowUpStateSet',
-    )
+    const isDefaultFollowUpStateSet = form.value?.getNodeByName('isDefaultFollowUpStateSet')
 
-    if (
-      !stateId ||
-      !isDefaultFollowUpStateSet ||
-      !isDefaultFollowUpStateSet.value
-    )
-      return false
+    if (!stateId || !isDefaultFollowUpStateSet || !isDefaultFollowUpStateSet.value) return false
 
     // If the default follow-up state was set, then we want to reset the state on article discard.
     //   See `app/models/form_updater/updater/ticket/edit.rb` for more info.
@@ -74,9 +64,7 @@ export const useTicketArticleReply = (
     return true
   }
 
-  const openArticleReplyDialog = async ({
-    updateFormLocation,
-  }: ReplyDialogOptions) => {
+  const openArticleReplyDialog = async ({ updateFormLocation }: ReplyDialogOptions) => {
     if (!ticket.value) return
 
     return articleReplyDialog.open({

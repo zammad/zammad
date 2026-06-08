@@ -1,0 +1,19 @@
+Hello Customer,
+
+thank you again for reporting your findings to us in a responsible way. We really appreciate that.
+You can find information about our security process in [https://github.com/company/company/blob/develop/SECURITY.md#rewards](https://github.com/company/company/blob/develop/SECURITY.md#rewards), which outlines that unfortunately Company as an open source software does not have a rewards program. We do credit reporters in acknowledged security issues where advisories are released.
+
+With best regards,
+
+Agent Test
+
+--
+
+Company
+
+P: +49 00 01 23 456-78
+F: +49 00 01 23 456-99
+
+W: [https://example.com](https://example.com/)
+
+[Sign up for the English version](https://company.com/sign-up-en) | [Für die deutsche Version anmelden](https://company.com/sign-up-de?utm_source=website&utm_medium=banner&utm_campaign=nl_cta)

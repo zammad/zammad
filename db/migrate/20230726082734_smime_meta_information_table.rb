@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class SMIMEMetaInformationTable < ActiveRecord::Migration[6.1]
   def change
@@ -33,11 +33,7 @@ class SMIMEMetaInformationTable < ActiveRecord::Migration[6.1]
   end
 
   def add_columns(t)
-    if Rails.application.config.db_column_array
-      t.column :email_addresses, :string, null: true, array: true
-    else
-      t.column :email_addresses, :json, null: true
-    end
+    t.column :email_addresses, :string, null: true, array: true
 
     t.string :issuer_hash,  limit: 128, null: true
     t.string :subject_hash, limit: 128, null: true

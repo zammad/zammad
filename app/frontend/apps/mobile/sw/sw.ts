@@ -1,5 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
-/* eslint-disable no-restricted-globals */
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { clientsClaim } from 'workbox-core'
 import { cleanupOutdatedCaches, precacheAndRoute } from 'workbox-precaching'
@@ -30,9 +29,7 @@ if (import.meta.env.MODE !== 'development') {
 
 if (import.meta.env.MODE === 'development') {
   console.groupCollapsed("Service worker doesn't precache in development mode")
-  self.__WB_MANIFEST.forEach((entry) =>
-    console.log(typeof entry === 'string' ? entry : entry.url),
-  )
+  self.__WB_MANIFEST.forEach((entry) => console.log(typeof entry === 'string' ? entry : entry.url))
   console.groupEnd()
   precacheAndRoute([])
 }

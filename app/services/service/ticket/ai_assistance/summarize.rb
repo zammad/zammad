@@ -1,28 +1,40 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-class Service::Ticket::AIAssistance::Summarize < Service::BaseWithCurrentUser
-  attr_reader :ticket, :locale
+class Service::Ticket::AIAssistance::Summarize < Service::Base
 
-  def initialize(ticket:, current_user: nil, locale: nil)
-    super(current_user:) if current_user.present?
+  attr_reader :ticket, :locale, :persistence_strategy, :regeneration_of
 
-    @ticket = ticket
-    @locale = locale
+  # @param persistence_strategy [Symbol, NilClass] @see AI::Service#initialize
+  def initialize(ticket:, locale: nil, regeneration_of: nil, persistence_strategy: :stored_or_request)
+    @ticket               = ticket
+    @locale               = locale
+    @persistence_strategy = persistence_strategy
+    @regeneration_of      = regeneration_of
   end
 
   def execute
-    Service::CheckFeatureEnabled.new(name: 'ai_assistance_ticket_summary').execute
-    Service::CheckFeatureEnabled.new(name: 'ai_provider', custom_error_message: __('AI provider is not configured.')).execute
+    Service::CheckFeatureEnabled.execute(name: 'ai_assistance_ticket_summary')
+    Service::CheckFeatureEnabled.execute(name: 'ai_provider', custom_error_message: __('AI provider is not configured.'))
 
     return if ticket.articles.none?
+
+    articles = ticket.articles.without_system_notifications
+
+    if persistence_strategy != :stored_only
+      prepared_articles = Service::AI::Ticket::PreProcessArticleContent.execute(articles:, skip_quotes_strip_first_article: true)
+    end
 
     summarize = AI::Service::TicketSummarize.new(
       current_user:,
       locale:,
-      context_data: {
+      context_data:         {
         ticket:,
-        config: Setting.get('ai_assistance_ticket_summary_config')
-      }
+        articles:,
+        prepared_articles:,
+        config:            Setting.get('ai_assistance_ticket_summary_config')
+      },
+      persistence_strategy:,
+      regeneration_of:
     )
 
     summarize.execute

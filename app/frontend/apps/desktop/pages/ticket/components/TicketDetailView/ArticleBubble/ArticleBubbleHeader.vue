@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed } from 'vue'
@@ -22,10 +22,7 @@ const metaFieldContainerClasses = computed(() =>
 </script>
 
 <template>
-  <header
-    :class="metaFieldContainerClasses"
-    :aria-label="$t('Article meta information')"
-  >
+  <header :class="metaFieldContainerClasses" :aria-label="$t('Article meta information')">
     <ArticleBubbleMetaFields :article="article" class="px-6 py-3" />
   </header>
 </template>

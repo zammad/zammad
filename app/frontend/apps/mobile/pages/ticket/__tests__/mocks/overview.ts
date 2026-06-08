@@ -1,12 +1,9 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { mockGraphQLApi } from '#tests/support/mock-graphql-api.ts'
 import { nullableMock } from '#tests/support/utils.ts'
 
-import {
-  EnumTicketStateColorCode,
-  type TicketsByOverviewSlimQuery,
-} from '#shared/graphql/types.ts'
+import { EnumTicketStateColorCode, type TicketsByOverviewSlimQuery } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import type { ConfidentTake } from '#shared/types/utils.ts'
 
@@ -69,9 +66,7 @@ export const mockTicketsByOverview = (
   pageInfo: Partial<TicketByOverviewPageInfo> = {},
   totalCount: number | null = null,
 ) => {
-  return mockGraphQLApi(
-    TicketsByOverviewSlimDocument,
-  ).willResolve<TicketsByOverviewSlimQuery>({
+  return mockGraphQLApi(TicketsByOverviewSlimDocument).willResolve<TicketsByOverviewSlimQuery>({
     ticketsByOverview: {
       __typename: 'TicketConnection',
       totalCount: totalCount ?? tickets.length,

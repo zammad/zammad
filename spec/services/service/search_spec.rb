@@ -1,15 +1,16 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
 RSpec.describe Service::Search do
   let(:query)        { 'test_phrase' }
-  let(:current_user) { create(:agent) }
+  let(:current_user) { create(:agent, groups: [Ticket.first.group]) }
   let(:objects)      { [User, Organization, Ticket] }
   let(:options)      { {} }
-  let(:instance)     { described_class.new(current_user:, query:, objects:, options:) }
 
   describe '#execute' do
+    subject(:service_result) { described_class.with_current_user(current_user).execute(query:, objects:, options:) }
+
     let(:customer) { create(:customer, firstname: query) }
     let(:organization) { create(:organization, name: query) }
 
@@ -19,7 +20,7 @@ RSpec.describe Service::Search do
     end
 
     it 'returns combined result with found items' do
-      expect(instance.execute.result).to include(
+      expect(service_result.result).to include(
         User         => include(objects: [customer], total_count: 1),
         Organization => include(objects: [organization], total_count: 1),
         Ticket       => include(objects: be_blank, total_count: 0)
@@ -27,23 +28,97 @@ RSpec.describe Service::Search do
     end
 
     it 'lists models in the result in a specific order' do
-      expect(instance.execute.result.keys).to eq [Ticket, User, Organization]
+      expect(service_result.result.keys).to eq [Ticket, User, Organization]
     end
 
     it 'lists flattened results in correct order' do
-      expect(instance.execute.flattened).to eq [customer, organization]
+      expect(service_result.flattened).to eq [customer, organization]
     end
 
     context 'when objects are restricted' do
       let(:objects) { [User] }
 
       it 'searches given model only' do
-        expect(instance.execute.result.keys).to eq [User]
+        expect(service_result.result.keys).to eq [User]
+      end
+    end
+
+    context 'with :per_object_conditions option' do
+      let(:options) do
+        {
+          per_object_conditions: {
+            User         => { operator: 'AND', conditions: [{ name: 'user.firstname', operator: 'is', value: query }] },
+            Organization => { operator: 'AND', conditions: [{ name: 'organization.name', operator: 'is', value: 'no_match' }] },
+          }
+        }
+      end
+
+      it 'applies each condition to its matching object and processes objects without one normally' do
+        expect(service_result.result).to include(
+          User         => include(objects: [customer], total_count: 1),
+          Organization => include(objects: be_blank, total_count: 0),
+          Ticket       => include(objects: be_blank, total_count: 0)
+        )
+      end
+    end
+
+    context 'with :only_ids option' do
+      let(:options) { { only_ids: true } }
+
+      context 'with ElasticSearch', searchindex: true do
+        before do
+          customer
+          organization
+
+          searchindex_model_reload([Ticket, User, Organization])
+        end
+
+        it 'returns only object ids in the result' do
+          expect(service_result.result).to include(
+            User         => [customer.id.to_s],
+            Organization => [organization.id.to_s],
+            Ticket       => be_blank
+          )
+        end
+
+        context 'when searching for a ticket' do
+          let(:query)   { 'Help' }
+          let(:objects) { [Ticket] }
+
+          it 'returns ticket ID' do
+            expect(service_result.result).to include(
+              Ticket => [Ticket.first.id.to_s]
+            )
+          end
+        end
+      end
+
+      context 'with SQL fallback' do
+        it 'returns only object ids in the result' do
+          expect(service_result.result).to include(
+            User         => [customer.id],
+            Organization => [organization.id],
+            Ticket       => be_blank
+          )
+        end
+
+        context 'when searching for a ticket' do
+          let(:query)   { 'Help' }
+          let(:objects) { [Ticket] }
+
+          it 'returns ticket ID' do
+            expect(service_result.result).to include(
+              Ticket => [Ticket.first.id]
+            )
+          end
+        end
       end
     end
   end
 
-  describe '#search_single_model' do
+  describe '#search_single_model', current_user_id: -> { current_user.id } do
+    let(:instance) { described_class.new(query:, objects:, options:) }
+
     before do
       allow(SearchIndexBackend).to receive(:search_by_index)
       allow(User).to receive(:search)
@@ -112,4 +187,66 @@ RSpec.describe Service::Search do
       end
     end
   end
+
+  describe '#models', current_user_id: -> { user.id } do
+    let(:instance) { described_class.new(query: 'test', objects: Models.searchable) }
+    let(:models)   { instance.send(:models) }
+
+    before do
+      Setting.set('chat', true)
+      create(:knowledge_base)
+    end
+
+    context 'when user is admin only' do
+      let(:user) { create(:admin_only) }
+
+      it 'returns all globally searchable models' do
+        expect(models).to match(
+          Organization                       => include(direct_search_index: true),
+          User                               => include(direct_search_index: true),
+          KnowledgeBase::Answer::Translation => include(direct_search_index: false),
+        )
+      end
+    end
+
+    context 'when user is admin with agent permissions' do
+      let(:user) { create(:admin) }
+
+      it 'returns all globally searchable models' do
+        expect(models).to match(
+          Organization                       => include(direct_search_index: true),
+          Ticket                             => include(direct_search_index: false),
+          User                               => include(direct_search_index: true),
+          KnowledgeBase::Answer::Translation => include(direct_search_index: false),
+          Chat::Session                      => include(direct_search_index: true),
+        )
+      end
+    end
+
+    context 'when user is agent' do
+      let(:user) { create(:agent) }
+
+      it 'returns all globally searchable models' do
+        expect(models).to match(
+          Organization                       => include(direct_search_index: true),
+          Ticket                             => include(direct_search_index: false),
+          User                               => include(direct_search_index: true),
+          KnowledgeBase::Answer::Translation => include(direct_search_index: false),
+          Chat::Session                      => include(direct_search_index: true),
+        )
+      end
+    end
+
+    context 'when user is customer' do
+      let(:user) { create(:customer) }
+
+      it 'returns all globally searchable models' do
+        expect(models).to match(
+          Organization => include(direct_search_index: false),
+          Ticket       => include(direct_search_index: false),
+        )
+      end
+    end
+  end
+
 end

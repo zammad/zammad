@@ -1,8 +1,20 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
 RSpec.describe Report::Profile, type: :model do
+  describe '.sorted' do
+    before { described_class.destroy_all }
+
+    let!(:profile_z) { create(:report_profile, name: 'zzz') }
+    let!(:profile_a) { create(:report_profile, name: 'aaa') }
+    let!(:profile_b) { create(:report_profile, name: 'bbb') }
+
+    it 'returns profiles ordered by name' do
+      expect(described_class.sorted).to eq([profile_a, profile_b, profile_z])
+    end
+  end
+
   describe 'Organization is removed in the report profile after an reload of the browser tab #5469' do
     let(:conditions_orgs) { create_list(:organization, 3) }
     let(:report_profile)  { create(:report_profile, condition: condition) }

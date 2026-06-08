@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { AutocompleteSearchObjectAttributeExternalDataSourceDocument } from '#shared/components/Form/fields/FieldExternalDataSource/graphql/queries/autocompleteSearchObjectAttributeExternalDataSource.api.ts'
 import type { ObjectLike } from '#shared/types/utils.ts'
@@ -14,7 +14,7 @@ export const useFieldExternalDataSourceWrapper = (
   const additionalQueryParams = () => {
     const additionalQueryParams: Record<string, JsonValue> = {
       object: context.value.object,
-      attributeName: context.value.node.name,
+      attributeName: context.value.attributeName ?? context.value.node.name,
     }
 
     const { searchTemplateRenderContext, formId, object } = context.value
@@ -22,8 +22,7 @@ export const useFieldExternalDataSourceWrapper = (
     const templateRenderContext: Record<string, JsonValue> = {}
 
     // Add the main entity object id from the current object.
-    const entityObject = context.value.node.at('$root')?.context
-      ?.initialEntityObject as ObjectLike
+    const entityObject = context.value.node.at('$root')?.context?.initialEntityObject as ObjectLike
     if (entityObject) {
       templateRenderContext[`${object.toLowerCase()}Id`] = entityObject.id
     }
@@ -52,10 +51,10 @@ export const useFieldExternalDataSourceWrapper = (
 
     // use getter to return new value each time
     get clearValue() {
+      if (context.value.multiple) return []
       return {}
     },
 
-    initialOptionBuilder: (_: ObjectLike, value: AutocompleteSelectValue) =>
-      value,
+    initialOptionBuilder: (_: ObjectLike, value: AutocompleteSelectValue) => value,
   }
 }

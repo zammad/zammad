@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { waitFor, within } from '@testing-library/vue'
 import { expect } from 'vitest'
@@ -21,14 +21,10 @@ import { mockTicketExternalReferencesIdoitObjectSearchQuery } from '#desktop/pag
 describe('Ticket create i-doit links', () => {
   describe('ticket creation', () => {
     it.todo('submits a new ticket with i-doit objects', async () => {
-      await mockApplicationConfig({
+      mockApplicationConfig({
         idoit_integration: true,
         ui_task_mananger_max_task_count: 30,
-        ui_ticket_create_available_types: [
-          'phone-in',
-          'phone-out',
-          'email-out',
-        ],
+        ui_ticket_create_available_types: ['phone-in', 'phone-out', 'email-out'],
       })
       mockPermissions(['ticket.agent'])
       handleMockFormUpdaterQuery({
@@ -47,9 +43,7 @@ describe('Ticket create i-doit links', () => {
       await view.events.click(view.getByRole('button', { name: 'i-doit' }))
 
       await waitFor(() =>
-        expect(
-          view.getByRole('heading', { level: 1, name: 'New Ticket' }),
-        ).toBeInTheDocument(),
+        expect(view.getByRole('heading', { level: 1, name: 'New ticket' })).toBeInTheDocument(),
       )
 
       await view.events.type(view.getByLabelText('Title'), 'Test Ticket')
@@ -102,9 +96,7 @@ describe('Ticket create i-doit links', () => {
 
       await view.events.click(await within(flyout).findByText('26'))
 
-      await view.events.click(
-        within(flyout).getByRole('button', { name: 'Link Objects' }),
-      )
+      await view.events.click(within(flyout).getByRole('button', { name: 'Link Objects' }))
 
       await view.events.click(view.getByRole('button', { name: 'Create' }))
 
@@ -131,9 +123,7 @@ describe('Ticket create i-doit links', () => {
 
     const sidebar = view.getByLabelText('Content sidebar')
 
-    expect(
-      within(sidebar).getByRole('button', { name: 'i-doit' }),
-    ).toBeInTheDocument()
+    expect(within(sidebar).getByRole('button', { name: 'i-doit' })).toBeInTheDocument()
   })
 
   it('hides i-doit integration when not available', async () => {
@@ -148,8 +138,6 @@ describe('Ticket create i-doit links', () => {
 
     const sidebar = view.getByLabelText('Content sidebar')
 
-    expect(
-      within(sidebar).queryByRole('button', { name: 'i-doit' }),
-    ).not.toBeInTheDocument()
+    expect(within(sidebar).queryByRole('button', { name: 'i-doit' })).not.toBeInTheDocument()
   })
 })

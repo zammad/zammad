@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, onMounted } from 'vue'
@@ -24,9 +24,7 @@ const emit = defineEmits<TicketSidebarEmits>()
 
 const { ticket } = useTicketInformation()
 
-const incompleteChecklistItemsCount = computed(
-  () => ticket.value?.checklist?.incomplete,
-)
+const incompleteChecklistItemsCount = computed(() => ticket.value?.checklist?.incomplete)
 
 const badge = computed<TicketSidebarButtonBadgeDetails | undefined>(() => {
   const label = __('Incomplete checklist items')

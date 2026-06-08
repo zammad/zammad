@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 # content of this tags will also be removed
 Rails.application.config.html_sanitizer_tags_remove_content = %w[
@@ -27,11 +27,11 @@ Rails.application.config.html_sanitizer_tags_allowlist = %w[
 
 # attributes allowed for tags
 Rails.application.config.html_sanitizer_attributes_allowlist = {
-  :all         => %w[class dir lang title translate data-signature data-signature-id],
+  :all         => %w[class dir lang title translate data-signature data-signature-id data-signature-placeholder],
   'a'          => %w[href hreflang name rel data-target-id data-target-type data-mention-user-id],
   'abbr'       => %w[title],
   'blockquote' => %w[type cite],
-  'col'        => %w[span width],
+  'col'        => %w[span width style],
   'colgroup'   => %w[span width],
   'data'       => %w[value],
   'del'        => %w[cite datetime],
@@ -41,8 +41,8 @@ Rails.application.config.html_sanitizer_attributes_allowlist = {
   'li'         => %w[value],
   'ol'         => %w[reversed start type],
   'table'      => %w[align bgcolor border cellpadding cellspacing frame rules sortable summary width style],
-  'td'         => %w[abbr align axis colspan headers rowspan valign width style],
-  'th'         => %w[abbr align axis colspan headers rowspan scope sorted valign width style],
+  'td'         => %w[abbr align axis colspan colwidth headers rowspan valign width style],
+  'th'         => %w[abbr align axis colspan colwidth headers rowspan scope sorted valign width style],
   'tr'         => %w[width style],
   'ul'         => %w[type],
   'q'          => %w[cite],
@@ -68,6 +68,9 @@ Rails.application.config.html_sanitizer_css_properties_allowlist = {
   ],
   'p'     => %w[
     white-space
+  ],
+  'col'   => %w[
+    min-width width
   ],
   'table' => %w[
     background background-color color font-size vertical-align
@@ -128,6 +131,7 @@ Rails.application.config.html_sanitizer_css_values_blocklist = {
     'color:#fff',
     'color:#ffffff',
     'color:rgb(0,0,0)',
+    'color:rgb(255,255,255)',
   ],
   'span'  => [
     'color:white',
@@ -137,6 +141,7 @@ Rails.application.config.html_sanitizer_css_values_blocklist = {
     'color:#fff',
     'color:#ffffff',
     'color:rgb(0,0,0)',
+    'color:rgb(255,255,255)',
   ],
   'p'     => [
     'white-space:nowrap',

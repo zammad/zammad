@@ -11,6 +11,8 @@
   --color-neutral-300: #dcdcdc;
   --color-neutral-400: #d1d1d1;
   --color-neutral-500: #999;
+  --color-neutral-700: #b7b7b7;
+  --color-neutral-800: #5f5f5f;
   --color-neutral-950: #191919;
 
   --color-gray-100: #585856;
@@ -32,27 +34,37 @@
   --color-blue-100: #e5f0f5;
   --color-blue-200: #edf1f2;
   --color-blue-300: #d4e2e9;
+  --color-blue-350: #dcf1ff;
   --color-blue-400: #c9e1ea;
   --color-blue-500: #c0dde6;
+  --color-blue-550: #b3ddf9;
   --color-blue-600: #7fd4f1;
   --color-blue-700: #49a9ca;
   --color-blue-800: #23a2cd;
+  --color-blue-850: #09799f;
+  --color-blue-875: #005994;
   --color-blue-900: #045972;
   --color-blue-950: #063849;
 
   --color-green-100: #eff0f1;
   --color-green-200: #bcced2;
+  --color-green-250: #e9fbe6;
   --color-green-300: #bbe0cb;
+  --color-green-350: #bce7b6;
   --color-green-400: #38ad69;
   --color-green-500: #36af6a;
+  --color-green-700: #0c6300;
   --color-green-900: #07341a;
 
   --color-yellow-50: #fff6da;
-  --color-yellow-200: #ffd44c;
+  --color-yellow-100: #fffee2;
+  --color-yellow-150: #e9de40;
+  --color-yellow-200: #fff67b;
   --color-yellow-300: #ffce33;
   --color-yellow-500: #faab00;
   --color-yellow-600: #f39804;
   --color-yellow-700: #f38612;
+  --color-yellow-750: #827900;
   --color-yellow-800: #4a3300;
   --color-yellow-900: #453914;
 
@@ -62,10 +74,18 @@
   --color-red-500: #e54011;
   --color-red-600: #86270c;
   --color-red-900: #220c06;
+
   --color-pink-100: #efd9d2;
+  --color-pink-150: #ffcfdf;
   --color-pink-200: #d75b83;
   --color-pink-300: #ea4d84;
   --color-pink-500: #ff006b;
+  --color-pink-700: #921d43;
+
+  --color-purple-100: #f9c5ff;
+  --color-purple-200: #ce80d7;
+  --color-purple-250: #c76ad2;
+  --color-purple-700: #64116e;
 
   --width-150: 600px;
 
@@ -77,4 +97,9 @@
   --grid-template-columns-2-uneven: repeat(2, minmax(0, 1fr));
 
   --z-index-60: 60;
+
+  --blur-2xs: 2px;
+
+  /* Not a design token, used for calculating sticky top for the FieldEditorActionBar */
+  --top-header-height: 0;
 }

@@ -1,0 +1,142 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://ai.zammad.com/api/v1/me
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Zammad User Agent
+      Host:
+      - ai.zammad.com
+      Authorization:
+      - Bearer <ZAMMAD_AI_TOKEN>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Fri, 29 Aug 2025 09:40:15 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Frame-Options:
+      - DENY
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - '0'
+      X-Content-Type-Options:
+      - nosniff
+      - nosniff
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      Vary:
+      - Accept
+      Etag:
+      - W/"47fec0d9a8354d74b9c8f2eb569e8cac"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - bc90e893-cd5f-4d43-9c02-d350101af6b3
+      X-Runtime:
+      - '0.002819'
+      Strict-Transport-Security:
+      - max-age=63072000
+      - max-age=63072000; includeSubDomains
+      Content-Security-Policy:
+      - default-src 'self'; script-src 'self'; img-src 'self'; style-src 'self' 'unsafe-inline';base-uri
+        'self';form-action 'self'; frame-src 'none';
+    body:
+      encoding: ASCII-8BIT
+      string: '{"current_user":{"id":2,"email":"me@zammad.com","firstname":"Martin","lastname":"Edenhofer","login_failed_count":0,"login_at":"2025-08-21T12:15:14.477Z","platform_admin":true,"organization_admin":false,"active":true,"created_by_id":1,"created_at":"2025-08-21T09:38:47.872Z","updated_at":"2025-08-21T12:15:14.495Z","organization_id":null}}'
+  recorded_at: Fri, 29 Aug 2025 09:40:15 GMT
+- request:
+    method: post
+    uri: https://ai.zammad.com/api/v1/features/text_tool
+    body:
+      encoding: UTF-8
+      string: '{"system_prompt":"You are a text correction AI assistant.\n\nYou are
+        given a text, most likely in HTML format.\n\nYour task is to correct:\n- spelling\n-
+        grammar\n- punctuation\n- and sentence-structure errors.\n\nYou have to follow
+        these rules:\n- Detect the input language and make sure the corrected text
+        is using the same language.\n- Correct only the text content, neither the
+        HTML tags nor the given structure.\n- Preserve all HTML tags and formatting
+        exactly as in the input.\n\nDo not provide any explanations, code fences or
+        additional text. Output only the corrected text.\n","prompt":"I ma Nicole
+        Braun."}'
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Zammad User Agent
+      Host:
+      - ai.zammad.com
+      Content-Type:
+      - application/json; charset=utf-8
+      Authorization:
+      - Bearer <ZAMMAD_AI_TOKEN>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Fri, 29 Aug 2025 09:40:16 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Frame-Options:
+      - DENY
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - '0'
+      X-Content-Type-Options:
+      - nosniff
+      - nosniff
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      Vary:
+      - Accept
+      Etag:
+      - W/"e2aa18bf0db8cacc20876abea5fa84ab"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - '098d71bb-c1d2-414f-a94e-2e093ccdf121'
+      X-Runtime:
+      - '0.330921'
+      Strict-Transport-Security:
+      - max-age=63072000
+      - max-age=63072000; includeSubDomains
+      Content-Security-Policy:
+      - default-src 'self'; script-src 'self'; img-src 'self'; style-src 'self' 'unsafe-inline';base-uri
+        'self';form-action 'self'; frame-src 'none';
+    body:
+      encoding: ASCII-8BIT
+      string: '[{"model":"gemma3:27b","created_at":"2025-08-29T09:40:16.525667843Z","response":"I
+        am Nicole Braun.","done":true,"done_reason":"stop","context":[105,2364,107,3048,659,496,1816,19830,12498,16326,236761,108,3048,659,2238,496,1816,236764,1346,4547,528,16167,6518,236761,108,11069,4209,563,531,4338,236787,107,236772,49248,107,236772,40095,107,236772,88078,107,236772,532,13315,236772,29641,9825,236761,108,3048,735,531,1500,1239,6366,236787,107,236772,43837,506,2744,5192,532,1386,2889,506,32107,1816,563,1699,506,1638,5192,236761,107,236772,58940,1186,506,1816,3004,236764,13637,506,16167,16616,6271,506,2238,3904,236761,107,236772,120892,784,16167,16616,532,53892,7121,618,528,506,2744,236761,108,6294,711,2847,1027,46119,236764,3393,75619,653,4767,1816,236761,16887,1186,506,32107,1816,236761,107,106,107,105,2364,107,236777,3504,46562,64876,236761,106,107,105,4368,107,236777,1006,46562,64876,236761],"total_duration":181418607,"load_duration":41321209,"prompt_eval_count":141,"prompt_eval_duration":61930809,"eval_count":6,"eval_duration":77811915,"uuid":"4640cf8d-7e83-4122-a731-c4c9d5ee71be"}]'
+  recorded_at: Fri, 29 Aug 2025 09:40:16 GMT
+recorded_with: VCR 6.3.1

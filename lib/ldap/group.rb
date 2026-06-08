@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Ldap
 
@@ -74,7 +74,7 @@ class Ldap
       @all_members_dn ||= begin
         all_members.index_by { |entry| entry.dn.downcase }
       end
-      @all_members_dn[target_dn]
+      @all_members_dn[target_dn.downcase]
     end
 
     def nested_users(entry)

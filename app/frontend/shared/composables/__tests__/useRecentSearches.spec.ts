@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { createPinia, setActivePinia } from 'pinia'
 
@@ -13,8 +13,7 @@ describe('useRecentSearches', () => {
     localStorage.clear()
   })
 
-  const { recentSearches, addSearch, removeSearch, clearSearches } =
-    useRecentSearches()
+  const { recentSearches, addSearch, removeSearch, clearSearches } = useRecentSearches()
 
   test('prevents duplicate search terms', () => {
     addSearch('test search')

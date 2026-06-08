@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { useRoute } from 'vue-router'
 
@@ -16,8 +16,7 @@ import { getCurrentApp } from '#desktop/currentApp.ts'
 
 const OVERLAY_CONTAINER_TYPE = 'flyout'
 
-export const getOpenedFlyouts = () =>
-  getOpenedOverlayContainers(OVERLAY_CONTAINER_TYPE)
+export const getOpenedFlyouts = () => getOpenedOverlayContainers(OVERLAY_CONTAINER_TYPE)
 
 export const isFlyoutOpened = (name?: string) =>
   isOverlayContainerOpened(OVERLAY_CONTAINER_TYPE, name)

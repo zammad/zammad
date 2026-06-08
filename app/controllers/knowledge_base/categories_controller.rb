@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class KnowledgeBase::CategoriesController < KnowledgeBase::BaseController
   before_action :load_knowledge_base, only: %i[reorder_root_categories reorder_categories reorder_answers]
@@ -20,7 +20,7 @@ class KnowledgeBase::CategoriesController < KnowledgeBase::BaseController
   def reorder_records(collection, ids, klass)
     # Check if ids for models in collection are present
     all_ids_present = collection.map(&:id).sort == ids.sort
-    raise Exceptions::UnprocessableEntity, __('Provide position of all items in scope') if !all_ids_present
+    raise Exceptions::UnprocessableContent, __('Provide position of all items in scope') if !all_ids_present
 
     klass.acts_as_list_no_update do
       ids.each_with_index do |id, index|

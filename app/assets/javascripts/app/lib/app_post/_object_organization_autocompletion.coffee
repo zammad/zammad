@@ -127,8 +127,7 @@ class App.ObjectOrganizationAutocompletion extends App.Controller
 
   createToken: ({name, value}) =>
     @objectSelect.before App.view('generic/token')(
-      name: name
-      value: value
+      App.TokenHelper.prepareTokenContent({ name, value })
     )
 
   removeThisToken: (e) =>
@@ -324,8 +323,7 @@ class App.ObjectOrganizationAutocompletion extends App.Controller
           objectValue = objectId
           values.push({name: objectName, value: objectValue})
           tokens += App.view('generic/token')(
-            name: objectName
-            value: objectValue
+            App.TokenHelper.prepareTokenContent({ name: objectName, value: objectValue })
           )
         else
           @log 'objectId doesn\'t exist', objectId

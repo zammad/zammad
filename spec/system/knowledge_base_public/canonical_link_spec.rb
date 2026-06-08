@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -40,6 +40,7 @@ RSpec.describe 'Public Knowledge Base canonical link', authenticated_as: false, 
 
   shared_examples 'core locations' do
     let(:scheme) { ssl ? 'https' : 'http' }
+
     before { Setting.set('http_type', scheme) }
 
     context 'with custom domain' do

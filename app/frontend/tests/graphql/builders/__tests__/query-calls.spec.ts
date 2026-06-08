@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import {
   EnumObjectManagerObjects,
@@ -6,11 +6,7 @@ import {
 } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
-import {
-  getGraphQLMockCalls,
-  mockGraphQLResult,
-  mockedApolloClient,
-} from '../mocks.ts'
+import { getGraphQLMockCalls, mockGraphQLResult, mockedApolloClient } from '../mocks.ts'
 
 import {
   TestAutocompleteArrayFirstLevel,
@@ -50,9 +46,7 @@ describe('calling queries without mocking document works correctly', () => {
 
   it('when user is already created, return it if variable is referencing it', async () => {
     expect(getGraphQLMockCalls(TestAvatarDocument)).toHaveLength(0)
-    const handler = getQueryHandler<TestUserQuery, TestUserQueryVariables>(
-      TestUserDocument,
-    )
+    const handler = getQueryHandler<TestUserQuery, TestUserQueryVariables>(TestUserDocument)
 
     const userId = convertToGraphQLId('User', 42)
 
@@ -105,14 +99,8 @@ describe('calling queries with mocked data works correctly', () => {
     const { data } = await handler.query()
     const { data: mock } = handler.getMockedData()
 
-    expect(data).toHaveProperty(
-      'userCurrentAvatarActive.imageFull',
-      exampleImage,
-    )
-    expect(mock).toHaveProperty(
-      'userCurrentAvatarActive.imageFull',
-      exampleImage,
-    )
+    expect(data).toHaveProperty('userCurrentAvatarActive.imageFull', exampleImage)
+    expect(mock).toHaveProperty('userCurrentAvatarActive.imageFull', exampleImage)
 
     const exampleImage2 = 'https://example.com/image2.png'
 
@@ -125,14 +113,8 @@ describe('calling queries with mocked data works correctly', () => {
     const { data: data2 } = await handler.query({ fetchPolicy: 'network-only' })
     const { data: mock2 } = handler.getMockedData()
 
-    expect(mock2).toHaveProperty(
-      'userCurrentAvatarActive.imageFull',
-      exampleImage2,
-    )
-    expect(data2).toHaveProperty(
-      'userCurrentAvatarActive.imageFull',
-      exampleImage2,
-    )
+    expect(mock2).toHaveProperty('userCurrentAvatarActive.imageFull', exampleImage2)
+    expect(data2).toHaveProperty('userCurrentAvatarActive.imageFull', exampleImage2)
   })
 
   it('query correctly uses default data when updating the same object', async () => {
@@ -150,14 +132,8 @@ describe('calling queries with mocked data works correctly', () => {
     const { data } = await handler.query()
     const { data: mock } = handler.getMockedData()
 
-    expect(data).toHaveProperty(
-      'userCurrentAvatarActive.imageFull',
-      exampleImage,
-    )
-    expect(mock).toHaveProperty(
-      'userCurrentAvatarActive.imageFull',
-      exampleImage,
-    )
+    expect(data).toHaveProperty('userCurrentAvatarActive.imageFull', exampleImage)
+    expect(mock).toHaveProperty('userCurrentAvatarActive.imageFull', exampleImage)
 
     const exampleImage2 = 'https://example.com/image2.png'
 
@@ -171,14 +147,8 @@ describe('calling queries with mocked data works correctly', () => {
     const { data: data2 } = await handler.query({ fetchPolicy: 'network-only' })
     const { data: mock2 } = handler.getMockedData()
 
-    expect(mock2).toHaveProperty(
-      'userCurrentAvatarActive.imageFull',
-      exampleImage2,
-    )
-    expect(data2).toHaveProperty(
-      'userCurrentAvatarActive.imageFull',
-      exampleImage2,
-    )
+    expect(mock2).toHaveProperty('userCurrentAvatarActive.imageFull', exampleImage2)
+    expect(data2).toHaveProperty('userCurrentAvatarActive.imageFull', exampleImage2)
   })
 
   it('when operation requests an array inside the first level, it correctly returns an array', async () => {
@@ -200,16 +170,12 @@ describe('calling queries with mocked data works correctly', () => {
     })
     const { data: mocked } = handler.getMockedData()
 
-    expect(
-      data?.autocompleteSearchObjectAttributeExternalDataSource,
-    ).toBeInstanceOf(Array)
-    expect(
-      mocked?.autocompleteSearchObjectAttributeExternalDataSource,
-    ).toBeInstanceOf(Array)
+    expect(data?.autocompleteSearchObjectAttributeExternalDataSource).toBeInstanceOf(Array)
+    expect(mocked?.autocompleteSearchObjectAttributeExternalDataSource).toBeInstanceOf(Array)
 
-    expect(
-      data?.autocompleteSearchObjectAttributeExternalDataSource.length,
-    ).toBe(mocked?.autocompleteSearchObjectAttributeExternalDataSource.length)
+    expect(data?.autocompleteSearchObjectAttributeExternalDataSource.length).toBe(
+      mocked?.autocompleteSearchObjectAttributeExternalDataSource.length,
+    )
     expect(mocked).toMatchObject(data!)
   })
 

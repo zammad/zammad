@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Mutations
   class User::Current::Overview::UpdateLastUsed < BaseMutation
@@ -9,8 +9,8 @@ module Gql::Mutations
     field :success, Boolean, null: false, description: 'Was the save successful?'
 
     def resolve(overviews_last_used:)
-      value_to_store = overviews_last_used.each_with_object({}) do |olu, value|
-        value[olu.overview.id.to_s] = olu.last_used_at
+      value_to_store = overviews_last_used.to_h do |olu|
+        [olu.overview.id.to_s, olu.last_used_at]
       end
 
       context.current_user.preferences[:overviews_last_used] = value_to_store

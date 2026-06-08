@@ -1,9 +1,10 @@
-class SidebarTicketSummary extends App.Controller
+class App.SidebarTicketSummary extends App.Controller
   DISPLAY_STRUCTURE: [
-    { key: 'problem', name: __('Customer Intent'), value: 'problem' },
-    { key: 'conversation_summary', name: __('Conversation Summary'), value: 'conversation_summary' },
+    { key: 'customer_request', name: __('Customer Intent'), value: 'customer_request' },
+    { key: 'conversation_summary', name: __('Conversation Summary'), value: 'conversation_summary', type: 'paragraphs' },
     { key: 'open_questions', name: __('Open Questions'), value: 'open_questions', type: 'list' },
-    { key: 'suggestions', name: __('Suggested Next Steps'), value: 'suggestions', feature: 'checklist', type: 'list' },
+    { key: 'upcoming_events', name: __('Upcoming Events'), value: 'upcoming_events', type: 'list' },
+    { key: 'customer_sentiment', name: __('Customer Sentiment'), value: ['customer_emotion', 'customer_mood'] },
   ]
 
   constructor: ->
@@ -11,53 +12,160 @@ class SidebarTicketSummary extends App.Controller
 
     @controllerBind('config_update', @configHasChanged)
 
-    return if !@sidebarIsEnabled()
+    return if !@parent?.activeState
+
+    @ticketZoomShown()
+
+  activateSummary: =>
+    return if @summaryActivated
+
+    @summaryActivated = true
 
     @loadSummarization()
 
+    # prepopulate already summarized article IDs
+    @summaryReloadNeeded()
+
     # load new summary if it has changed
     @controllerBind('ticket::summary::update', (data) =>
+      return if !@sidebarIsEnabled()
       return if data.ticket_id.toString() isnt @ticket.id.toString()
-      return if data.locale isnt App.i18n.get()
+      return if data.locale isnt App.i18n.get() && !data.error
 
       if data.error
-        @renderSummarization(error: true)
+        if data.ai_analytics_run_id
+          @loadSummarization(null, data.ai_analytics_run_id)
+        else
+          @renderSummarization(error: true)
+
+        return
+
+      if !@isLoadSummaryNow()
+        @waitingSummarization = true
         return
 
       @loadSummarization()
     )
 
-    # check if new summary need ot get requested
+    # check if new summary needs to be requested
     @controllerBind('ui::ticket::load', (data) =>
+      return if !@sidebarIsEnabled()
       return if data.ticket_id.toString() isnt @ticket.id.toString()
       return if !@summaryReloadNeeded()
+      return if !@isLoadSummaryNow()
 
       @loadSummarization()
     )
 
+  isLoadSummaryNow: =>
+    if @summarizeOnTicketShow()
+      !!@parent?.activeState
+    else
+      @parent?.activeState && @isVisible()
+
+  isVisible: =>
+    @parentSidebar?.currentTab == @sidebarItem()?.name
+
+  ticketZoomShown: =>
+    return if !@sidebarIsEnabled()
+
+    if @summaryActivated
+      if @waitingSummarization && @isLoadSummaryNow()
+        @loadSummarization()
+      return
+
+    return if !@summarizeOnTicketShow()
+    @activateSummary()
+
+  configHasChangedLoadSummary: =>
+    return if !@sidebarIsEnabled()
+
+    if !@isLoadSummaryNow()
+      @waitingSummarization = true
+      return
+
+    @loadSummarization()
+
+  summarizeOnTicketShow: =>
+    # Ticket object may have old group contents cached in some cases
+    # Load group object directly to make sure it's up to date
+    groupSetting = App.Group.find(@ticket.group_id)?.summary_generation
+
+    switch groupSetting
+      when 'on_ticket_detail_opening'
+        true
+      when 'on_ticket_summary_sidebar_activation', 'disabled'
+        false
+      else
+        setting = App.Config.get('ai_assistance_ticket_summary_config') || {}
+        setting['generate_on'] == 'on_ticket_detail_opening'
+
+  summaryDisabledForGroup: =>
+    groupSetting = App.Group.find(@ticket.group_id)?.summary_generation
+
+    return true if groupSetting is 'disabled'
+
+    if groupSetting is 'global_default' or !groupSetting
+      setting = App.Config.get('ai_assistance_ticket_summary_config') || {}
+      return setting['generate_on'] is 'disabled'
+
+    false
+
   sidebarItem: =>
     return if !@sidebarIsEnabled()
 
-    @item = {
+    {
       name:           'summary'
       badgeIcon:      'smart-assist'
-      sidebarHead:     __('Summary')
+      badgeCallback:  @badgeRender
+      sidebarHead:     __('AI Summary')
       sidebarCallback: @sidebarCallback
       sidebarActions:  []
     }
 
-    @item
+  badgeDetails: =>
+    {
+      name:       'summary'
+      icon:       'smart-assist'
+      dotVisible: @sidebarItem()?.name isnt @parentSidebar.currentTab and not @isPreparingData && @summaryData?.analytics?.is_unread
+    }
+
+  badgeRender: (el) =>
+    @badgeEl = el
+    @badgeRenderLocal()
+
+  badgeRenderLocal: =>
+    return if !@badgeEl
+    @badgeEl.html(App.view('generic/sidebar_tabs_item')(@badgeDetails()))
+
+  markAsRead: =>
+    @summaryData?.analytics?.is_unread = false
+    @badgeRenderLocal()
+    @feedbackWidget?.recordUsage({}, null, =>
+      @hasUsage = false
+      false
+    )
+    @hasUsage = true
 
   shown: =>
+    if not @isPreparingData and not @hasUsage
+      @markAsRead()
+    else
+      @badgeRenderLocal()
 
-    # trigger shown sidebar to hide ai banner
-    App.Event.trigger('ui::ticket::summarySidebar::shown', { ticket_id: @ticket.id })
+    if @summaryActivated
+      if @waitingSummarization && !@summarizeOnTicketShow()
+        @loadSummarization()
+      return
+
+    @activateSummary()
 
   sidebarIsEnabled: =>
     return false if !App.Config.get('ai_provider')
     return false if !App.Config.get('ai_assistance_ticket_summary')
     return false if !(@ticket and @ticket.currentView() is 'agent')
     return false if @ticket.state.state_type.name is 'merged'
+    return false if @summaryDisabledForGroup()
 
     true
 
@@ -69,39 +177,47 @@ class SidebarTicketSummary extends App.Controller
       when 'ai_assistance_ticket_summary'
         App.Event.trigger('ui::ticket::sidebarRerender', { taskKey: @taskKey })
       when 'ai_assistance_ticket_summary_config'
-        @loadSummarization()
-      when 'checklist'
-        @renderSummarization({})
+        # generate_on can flip sidebarIsEnabled() for groups using global_default,
+        # so rerender the sidebar list before refreshing the summary content.
+        App.Event.trigger('ui::ticket::sidebarRerender', { taskKey: @taskKey })
+        @configHasChangedLoadSummary()
 
   getAvailableDisplayStructure: ->
     config = App.Config.get('ai_assistance_ticket_summary_config')
     @DISPLAY_STRUCTURE.filter((item) -> !(item.key of config) or config[item.key] is true)
 
   renderSummarization: (data) =>
-    if data
-      @summaryData = data
-    else
-      data = @summaryData
+    @summaryData = data if data
+    @isPreparingData = (_.isNull(@summaryData?.result) or @summaryData?.error)
 
-    App.Event.trigger('ui::ticket::summaryUpdate', { ticket_id: @ticket.id, result: data.result })
+    @badgeRenderLocal()
 
     return if !@elSidebar
 
-    noSummaryPossible = data.result && _.every(_.values(data.result), (item) -> item is null)
-
     summarization = $(App.view('ticket_zoom/sidebar_ticket_summary')(
-      data:              data
-      noSummaryPossible: noSummaryPossible
-      checklist:         App.Config.get('checklist')
-      structure:         @getAvailableDisplayStructure()
+      data:      @summaryData
+      structure: @getAvailableDisplayStructure()
     ))
 
     summarization
       .on('click', '.js-retry', @retrySummarization)
-      .on('click', '.js-addChecklistItem', @convertFollowUpToChecklistItem)
-      .on('click', '.js-addAllToChecklist', @convertAllFollowUpsToChecklistItems)
+
+    @stopStripeAnimation() if not @isSummarizationLoading()
+
+    @feedbackWidget = new App.AIFeedbackWidget(
+      el:                  summarization.find('.js-aiFeedback')
+      runId:               @summaryData?.analytics?.run_id
+      hasProvidedFeedback: @summaryData?.analytics?.usage?.user_has_provided_feedback
+      regenerateCallback:  @loadSummarization
+    )
+
+    @hasUsage = not _.isNull(@summaryData?.analytics?.usage)
+    @markAsRead() if @sidebarItem()?.name is @parentSidebar.currentTab and not @hasUsage
 
     @elSidebar.html(summarization)
+
+  isSummarizationLoading: =>
+    not @summaryData?.error and App.Config.get('ai_provider') and not @summaryData?.result
 
   retrySummarization: (e) =>
     @preventDefaultAndStopPropagation(e)
@@ -110,7 +226,7 @@ class SidebarTicketSummary extends App.Controller
 
   summaryReloadNeeded: =>
     ticket = App.Ticket.find(@ticket.id)
-    ticketSummarizableArticleIds = @ticketSumarizableArticleIds(ticket.article_ids)
+    ticketSummarizableArticleIds = @getTicketSummarizableArticleIds(ticket.article_ids)
 
     if @ticketSummarizableArticleIds && _.isEqual(@ticketSummarizableArticleIds, ticketSummarizableArticleIds)
       return false
@@ -118,18 +234,31 @@ class SidebarTicketSummary extends App.Controller
     @ticketSummarizableArticleIds = ticketSummarizableArticleIds
     true
 
-  ticketSumarizableArticleIds: (allArticleIds) ->
+  getTicketSummarizableArticleIds: (allArticleIds) ->
     allArticleIds.filter (elem) ->
       article = App.TicketArticle.find(elem)
       sender  = App.TicketArticleSender.find(article.sender_id)
 
       sender.name != 'System' && article.body?.length > 0
 
-  loadSummarization: =>
+  loadSummarization: (regenerationOfId = null, ai_analytics_run_id = null) =>
+    return if !@sidebarIsEnabled()
+
+    @waitingSummarization = false
+
+    data = {}
+
+    data.regeneration_of_id = regenerationOfId if regenerationOfId
+    data.ai_analytics_run_error_id = ai_analytics_run_id if ai_analytics_run_id
+
+    @startStripeAnimation()
+
     @ajax(
-      id:    "ticket-intelligence-enqueue-#{@taskKey}"
-      type:  'POST'
-      url:   "#{@apiPath}/tickets/#{@ticket.id}/enqueue_summarize"
+      id:             "ticket-summarization-#{@taskKey}"
+      type:           'POST'
+      url:            "#{@apiPath}/tickets/#{@ticket.id}/summarize"
+      data:           JSON.stringify(data)
+      preprocessData: true
       success: (data, status, xhr) =>
         @renderSummarization(data)
 
@@ -137,76 +266,14 @@ class SidebarTicketSummary extends App.Controller
         # show error toaster
     )
 
-  convertFollowUpToChecklistItem: (e) =>
-    target = $(e.target).closest('.js-addChecklistItem')
-    return if !target
+  startStripeAnimation: =>
+    @elSidebar?.parent()
+      .find('hr')
+      .addClass('animate')
 
-    text = $(target).data('content')
-    checklistId = @ticket.checklist_id
+  stopStripeAnimation: =>
+    @elSidebar?.parent()
+      .find('hr')
+      .removeClass('animate')
 
-    if checklistId
-      @checklistItemCreate(checklistId, text)
-    else
-      @checklistItemCreate(null, text, @ticket.id)
-
-  checklistItemCreate: (checklistId, text, ticketId) =>
-    item = new App.ChecklistItem
-    item.checklist_id = checklistId
-    item.ticket_id = ticketId
-    item.text = text
-
-    item.save(
-      done: =>
-        App.Event.trigger('ui::ticket::checklistSidebar::showLoader')
-        @notify(
-          type: 'success'
-          msg: App.i18n.translateInline('Checklist item successfully added.')
-        )
-      fail: =>
-        @notify(
-          type: 'error'
-          msg: App.i18n.translateInline('Unable to add checklist item.')
-        )
-    )
-
-  convertAllFollowUpsToChecklistItems: =>
-    checklistId = @ticket.checklist_id
-
-    itemData = _.map(@summaryData.result.suggestions, (text) ->
-      text: text
-      checked: false
-    )
-
-    if checklistId
-      @checklistItemsBulkCreate(checklistId, itemData)
-    else
-      @checklistItemsBulkCreate(null, itemData, @ticket.id)
-
-  checklistOpen: =>
-    @elSidebar
-      .closest('.content')
-      .find(".tabsSidebar-tab[data-tab='checklist']:not(.active)")
-      .click()
-
-  checklistItemsBulkCreate: (checklistId, items, ticketId) =>
-    @ajax(
-      id:   'checklist_ticket_create_bulk'
-      type: 'POST'
-      url:  "#{@apiPath}/checklist_items/create_bulk"
-      processData: true
-      data: JSON.stringify(
-        checklist_id: checklistId
-        ticket_id:    ticketId
-        items:        items
-      )
-      success:  =>
-        App.Event.trigger('ui::ticket::checklistSidebar::showLoader')
-        @checklistOpen()
-      error: =>
-        @notify(
-          type: 'error'
-          msg: App.i18n.translateInline('Unable to add all checklist items.')
-        )
-    )
-
-App.Config.set('350-TicketSummary', SidebarTicketSummary, 'TicketZoomSidebar')
+App.Config.set('350-TicketSummary', App.SidebarTicketSummary, 'TicketZoomSidebar')

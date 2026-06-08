@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
@@ -19,9 +19,9 @@ import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonPublicLinks from '#desktop/components/CommonPublicLinks/CommonPublicLinks.vue'
 import LayoutPublicPage from '#desktop/components/layout/LayoutPublicPage/LayoutPublicPage.vue'
 import { useSignupForm } from '#desktop/composables/authentication/useSignupForm.ts'
+import { useUserSignupResendMutation } from '#desktop/entities/user/graphql/mutations/userSignupResend.api.ts'
 
 import { useUserSignupMutation } from '../graphql/mutations/userSignup.api.ts'
-import { useUserSignupResendMutation } from '../graphql/mutations/userSignupResend.api.ts'
 
 defineOptions({
   beforeRouteEnter(to) {
@@ -131,13 +131,8 @@ const goToLogin = () => {
     </div>
 
     <template #boxActions>
-      <CommonButton
-        variant="secondary"
-        size="medium"
-        :disabled="isDisabled"
-        @click="goToLogin()"
-      >
-        {{ $t('Cancel & Go Back') }}
+      <CommonButton variant="secondary" size="medium" :disabled="isDisabled" @click="goToLogin()">
+        {{ $t('Cancel & go back') }}
       </CommonButton>
 
       <CommonButton
@@ -150,30 +145,23 @@ const goToLogin = () => {
       >
         {{ $t('Create my account') }}
       </CommonButton>
-      <CommonButton
-        v-else
-        variant="submit"
-        size="medium"
-        @click="resendVerifyEmail()"
-      >
+      <CommonButton v-else variant="submit" size="medium" @click="resendVerifyEmail()">
         {{ $t('Resend verification email') }}
       </CommonButton>
     </template>
 
     <template #bottomContent>
-      <div
-        class="inline-flex flex-wrap items-center justify-center p-2 text-sm"
-      >
-        <CommonLabel class="text-center text-stone-200 dark:text-neutral-500">
+      <div class="inline-flex flex-wrap items-center justify-center p-2 text-sm">
+        <CommonLabel class="max-w-90 text-center text-stone-200 dark:text-neutral-500">
           {{
             $t(
               "You're already registered with your email address if you've been in touch with our Support team.",
             )
           }}
         </CommonLabel>
-        <CommonLink v-if="$c.user_lost_password" link="/reset-password">{{
-          $t('You can request your password here.')
-        }}</CommonLink>
+        <CommonLink v-if="$c.user_lost_password" link="/reset-password" size="medium">
+          {{ $t('You can request your password here.') }}
+        </CommonLink>
       </div>
       <CommonPublicLinks :screen="EnumPublicLinksScreen.Signup" />
     </template>

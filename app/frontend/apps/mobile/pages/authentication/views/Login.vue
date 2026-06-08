@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed } from 'vue'
@@ -61,8 +61,7 @@ const { links } = usePublicLinks(EnumPublicLinksScreen.Login)
 const { enabledProviders, hasEnabledProviders } = useThirdPartyAuthentication()
 
 const showPasswordLogin = computed(
-  () =>
-    application.config.user_show_password_login || !hasEnabledProviders.value,
+  () => application.config.user_show_password_login || !hasEnabledProviders.value,
 )
 
 const { forceDesktop } = useForceDesktop()
@@ -88,11 +87,7 @@ const showError = (error: UserError) => {
 <template>
   <div class="flex h-full min-h-screen flex-col items-center px-6 pt-6 pb-4">
     <div v-if="statePreviousMap[loginFlow.state]" class="flex w-full">
-      <button
-        class="cursor-pointer"
-        :aria-label="__('Go back')"
-        @click="goBack"
-      >
+      <button class="cursor-pointer" :aria-label="__('Go back')" @click="goBack">
         <CommonIcon name="chevron-left" decorative />
       </button>
     </div>
@@ -107,20 +102,14 @@ const showError = (error: UserError) => {
             @finish="finishLogin"
           />
           <LoginTwoFactor
-            v-else-if="
-              loginFlow.state === '2fa' &&
-              twoFactorPlugin &&
-              loginFlow.credentials
-            "
+            v-else-if="loginFlow.state === '2fa' && twoFactorPlugin && loginFlow.credentials"
             :credentials="loginFlow.credentials"
             :two-factor="twoFactorPlugin"
             @error="showError"
             @finish="finishLogin"
           />
           <LoginRecoveryCode
-            v-else-if="
-              loginFlow.state === 'recovery-code' && loginFlow.credentials
-            "
+            v-else-if="loginFlow.state === 'recovery-code' && loginFlow.credentials"
             :credentials="loginFlow.credentials"
             @error="showError"
             @finish="finishLogin"
@@ -143,7 +132,7 @@ const showError = (error: UserError) => {
       >
         {{ $t('Having problems?') }}
         <button
-          class="text-gray cursor-pointer pb-2 leading-4 font-semibold"
+          class="cursor-pointer pb-2 leading-4 font-medium text-gray"
           @click.prevent="updateState('2fa-select')"
         >
           {{ $t('Try another method') }}
@@ -162,25 +151,17 @@ const showError = (error: UserError) => {
           )
         }}
       </p>
-      <CommonLink
-        link="/#admin_password_auth"
-        class="text-gray font-semibold"
-        @click="forceDesktop"
-      >
+      <CommonLink link="/#admin_password_auth" class="font-medium text-gray" @click="forceDesktop">
         {{ $t('Request the password login here.') }}
       </CommonLink>
     </section>
     <div
       v-if="loginFlow.state !== 'credentials' && !hasAlternativeLoginMethod"
-      class="text-gray pb-2 leading-4 font-medium"
+      class="pb-2 leading-4 font-medium text-gray"
     >
       {{ $t('Contact the administrator if you have any problems logging in.') }}
     </div>
-    <CommonLink
-      link="/#login"
-      class="text-gray leading-4 font-medium"
-      @click="forceDesktop"
-    >
+    <CommonLink link="/#login" class="leading-4 font-medium text-gray" @click="forceDesktop">
       {{ $t('Continue to desktop') }}
     </CommonLink>
     <nav
@@ -192,7 +173,7 @@ const showError = (error: UserError) => {
           :link="link.link"
           :title="link.description"
           :open-in-new-tab="link.newTab"
-          class="text-gray leading-4 font-semibold tracking-wide after:ml-1 after:font-medium after:text-gray-200 after:content-['|'] last:after:content-none"
+          class="leading-4 font-medium tracking-wide text-gray after:ml-1 after:font-medium after:text-gray-200 after:content-['|'] last:after:content-none"
         >
           {{ $t(link.title) }}
         </CommonLink>

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 FactoryBot.define do
   factory :scheduler do
@@ -13,8 +13,6 @@ FactoryBot.define do
     note                   { 'test' }
     updated_by_id          { 1 }
     created_by_id          { 1 }
-    created_at             { 1 }
-    updated_at             { 1 }
     add_attribute(:method) { 'test' }
 
     trait :timeplan do

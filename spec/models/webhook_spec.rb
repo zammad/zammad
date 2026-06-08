@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 require 'models/concerns/has_xss_sanitized_note_examples'
@@ -10,9 +10,15 @@ RSpec.describe Webhook, type: :model do
   describe 'check endpoint' do
     subject(:webhook) { build(:webhook, endpoint: endpoint) }
 
-    before { webhook.valid? }
-
     let(:endpoint_errors) { webhook.errors.messages[:endpoint] }
+    let(:resolved_ip)     { '8.8.8.8' }
+
+    before do
+      allow(IPSocket).to receive(:getaddress).and_call_original
+      allow(IPSocket).to receive(:getaddress).with('example.com').and_return(resolved_ip)
+
+      webhook.valid?
+    end
 
     context 'with missing http type' do
       let(:endpoint) { 'example.com' }
@@ -62,6 +68,22 @@ RSpec.describe Webhook, type: :model do
       it 'has no errors' do
         expect(endpoint_errors).to be_empty
       end
+
+      context 'when it points to a loopback IP' do
+        let(:resolved_ip) { '127.0.0.1' }
+
+        it 'has no errors' do
+          expect(endpoint_errors).to be_empty
+        end
+      end
+
+      context 'when it points to a link-local IP' do
+        let(:resolved_ip) { '169.254.123.45' }
+
+        it 'has an error' do
+          expect(endpoint_errors).to include 'The provided endpoint is invalid, it points to a link-local IP address.'
+        end
+      end
     end
 
     context 'with endpoint longer than 300 characters (#5573)' do
@@ -71,6 +93,36 @@ RSpec.describe Webhook, type: :model do
 
       it 'has no errors' do
         expect(endpoint_errors).to be_empty
+      end
+    end
+
+    context 'with variable placeholders in endpoint' do
+      let(:endpoint) { 'https://example.com/webhook/#{ticket.number}' } # rubocop:disable Lint/InterpolationCheck
+
+      it { is_expected.to be_valid }
+
+      it 'has no errors' do
+        expect(endpoint_errors).to be_empty
+      end
+    end
+
+    context 'with multiple variable placeholders in endpoint' do
+      let(:endpoint) { 'https://example.com/webhook?ticket=#{ticket.number}&id=#{ticket.id}' } # rubocop:disable Lint/InterpolationCheck
+
+      it { is_expected.to be_valid }
+
+      it 'has no errors' do
+        expect(endpoint_errors).to be_empty
+      end
+    end
+
+    context 'with invalid endpoint and placeholders' do
+      let(:endpoint) { 'invalid://#{ticket.number}' } # rubocop:disable Lint/InterpolationCheck
+
+      it { is_expected.not_to be_valid }
+
+      it 'has an error' do
+        expect(endpoint_errors).to include 'The provided endpoint is invalid, no http or https protocol was specified.'
       end
     end
   end
@@ -99,6 +151,48 @@ RSpec.describe Webhook, type: :model do
 
       it 'has an error' do
         expect(custom_payload_errors).to include 'The provided payload is invalid. Please check your syntax.'
+      end
+    end
+  end
+
+  describe 'check http_method' do
+    subject(:webhook) { build(:webhook, http_method: http_method) }
+
+    before { webhook.valid? }
+
+    let(:http_method_errors) { webhook.errors.messages[:http_method] }
+
+    context 'with valid http_method' do
+      %w[post put patch delete].each do |method|
+        context "with #{method}" do
+          let(:http_method) { method }
+
+          it { is_expected.to be_valid }
+
+          it 'has no errors' do
+            expect(http_method_errors).to be_empty
+          end
+        end
+      end
+    end
+
+    context 'with uppercase http_method' do
+      let(:http_method) { 'POST' }
+
+      it { is_expected.to be_valid }
+
+      it 'has no errors' do
+        expect(http_method_errors).to be_empty
+      end
+    end
+
+    context 'with invalid http_method' do
+      let(:http_method) { 'invalid' }
+
+      it { is_expected.not_to be_valid }
+
+      it 'has an error' do
+        expect(http_method_errors).to include 'The provided HTTP method is invalid.'
       end
     end
   end
@@ -154,7 +248,14 @@ RSpec.describe Webhook, type: :model do
       let!(:trigger) { create(:trigger, perform: { 'notification.webhook' => { 'webhook_id' => webhook.id.to_s } }) }
 
       it 'raises error with details' do
-        expect { webhook.destroy }.to raise_error(Exceptions::UnprocessableEntity, %r{#{Regexp.escape("Trigger: #{trigger.name} (##{trigger.id})")}})
+        expect { webhook.destroy }
+          .to raise_exception(
+            be_an_instance_of(Exceptions::UnprocessableContent)
+            .and(have_attributes(
+                   message: 'This object is referenced by other object(s) and thus cannot be deleted: %s',
+                   content: eq(["Trigger / #{trigger.name} (##{trigger.id})"])
+                 ))
+          )
       end
     end
   end

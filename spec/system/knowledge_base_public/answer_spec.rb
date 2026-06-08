@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -122,6 +122,20 @@ RSpec.describe 'Public Knowledge Base answer', type: :system do
       click '.tags a'
 
       expect(current_url).to end_with help_tag_path(locale_name, published_answer_tag_name)
+    end
+  end
+
+  context 'attachments' do
+    before do
+      visit help_answer_path(locale_name, category, published_answer)
+    end
+
+    # Making sure it shows the shorthand.
+    # This way we can get away without translating Byte(s).
+    it 'shows an associated attachment' do
+      expect(page)
+        .to have_css('.attachment-size', text: '12 B')
+        .and(have_no_css('.attachment-size', text: 'Byte'))
     end
   end
 

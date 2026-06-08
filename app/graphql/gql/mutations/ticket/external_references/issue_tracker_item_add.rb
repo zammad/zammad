@@ -1,21 +1,17 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Mutations
   class Ticket::ExternalReferences::IssueTrackerItemAdd < BaseMutation
     description 'Add an issue tracker link to a ticket or just resolve it for ticket creation.'
 
-    argument :ticket_id,          GraphQL::Types::ID, required: false, loads: Gql::Types::TicketType, description: 'The related ticket for the issue tracker items'
+    argument :ticket_id,          GraphQL::Types::ID, required: false, loads: Gql::Types::TicketType, loads_pundit_method: :agent_update_access?, description: 'The related ticket for the issue tracker items'
     argument :issue_tracker_link, Gql::Types::UriHttpStringType, description: 'The issue tracker link to add'
     argument :issue_tracker_type, Gql::Types::Enum::Ticket::ExternalReferences::IssueTrackerTypeType, description: 'The issue tracker type'
 
     field :issue_tracker_item, Gql::Types::Ticket::ExternalReferences::IssueTrackerItemType, description: 'The added issue tracker item'
 
     def authorized?(issue_tracker_link:, issue_tracker_type:, ticket: nil)
-      if ticket.present?
-        pundit_authorized?(ticket, :agent_update_access?)
-      else
-        context.current_user.permissions?('ticket.agent')
-      end
+      ticket.present? || context.current_user.permissions?('ticket.agent')
     end
 
     def resolve(issue_tracker_link:, issue_tracker_type:, ticket: nil)
@@ -29,14 +25,12 @@ module Gql::Mutations
         end
       end
 
-      issue_tracker_item_service = Service::Ticket::ExternalReferences::IssueTracker::Item.new(
-        type:       issue_tracker_type,
-        issue_link: issue_tracker_link_string,
-      )
-
       begin
-        item = issue_tracker_item_service.execute
-      rescue Exceptions::UnprocessableEntity => e
+        item = Service::Ticket::ExternalReferences::IssueTracker::Item.execute(
+          type:       issue_tracker_type,
+          issue_link: issue_tracker_link_string,
+        )
+      rescue Exceptions::UnprocessableContent => e
         return error_response({ field: :link, message: e.message })
       end
 

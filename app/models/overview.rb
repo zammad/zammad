@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Overview < ApplicationModel
   include HasDefaultModelUserRelations
@@ -27,6 +27,24 @@ class Overview < ApplicationModel
 
   before_create :fill_link_on_create
   before_update :fill_link_on_update
+
+  def self.attribute_to_references_hash
+    deletable_attributes = ObjectManager::Attribute.where(editable: true, object_lookup_id: ObjectLookup.by_name('Ticket')).pluck(:name)
+
+    Overview.pluck(:name, :order, :view, :group_by).each_with_object({}) do |(name, order, view, group_by), result|
+      fields = Array.wrap(view.except('view_mode_default').values).flatten
+      fields << order['by']
+      fields << group_by
+      fields = fields.compact_blank.uniq
+
+      fields.each do |field|
+        next if deletable_attributes.exclude?(field)
+
+        result["ticket.#{field}"] ||= { 'Overview' => [] }
+        result["ticket.#{field}"]['Overview'] << name
+      end
+    end
+  end
 
   private
 

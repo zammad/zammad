@@ -1,5 +1,6 @@
 class App.TicketZoomArticleNew extends App.Controller
   @include App.SecurityOptions
+  @include App.RichtextBubbleMenu
 
   elements:
     '.js-textarea':                       'textarea'
@@ -36,8 +37,8 @@ class App.TicketZoomArticleNew extends App.Controller
     super
 
     @internalSelector = false
-    @type = @defaults['type'] || 'note'
     @setPossibleArticleTypes()
+    @type = @normalizeArticleType(@defaults['type'] || 'note')
 
     if @ticket.currentView() is 'agent'
       @internalSelector = true
@@ -89,7 +90,7 @@ class App.TicketZoomArticleNew extends App.Controller
     @controllerBind('ui::ticket::shared_draft_saved',       @sharedDraftSaved)
 
     # add article attachment
-    @controllerBind('ui::ticket::addArticleAttachent', (data) =>
+    @controllerBind('ui::ticket::addArticleAttachment', (data) =>
       return if data.ticket?.id?.toString() isnt @ticket_id.toString() && data.form_id isnt @form_id
       return if _.isEmpty(data.attachments)
       for file in data.attachments
@@ -122,6 +123,13 @@ class App.TicketZoomArticleNew extends App.Controller
       @updateSecurityOptions()
     )
 
+    # update signature when group changes
+    @controllerBind('ui::ticket::updateSignature', (data) =>
+      return if data.taskKey isnt @taskKey
+
+      @updateSignatureByGroup(data.newGroupId)
+    )
+
     # Listen to security setting changes.
     @controllerBind('config_update', (data) =>
       return if not /^(pgp|smime)_integration$/.test(data.name)
@@ -150,6 +158,18 @@ class App.TicketZoomArticleNew extends App.Controller
     for config in @actions()
       if config && config.articleTypes
         @articleTypes = config.articleTypes(@articleTypes, @ticket, @)
+
+  normalizeArticleType: (type) =>
+    return if not type
+
+    articleTypeExists = _.some(@articleTypes, (articleType) -> articleType?.name is type)
+    return type if articleTypeExists
+
+    if @ticket?.currentView() is 'customer'
+      fallback = _.find(@articleTypes, (articleType) -> articleType?.name?)
+      return fallback?.name || 'note'
+
+    type
 
   placeCaretAtEnd: (el) ->
     el.focus()
@@ -236,6 +256,9 @@ class App.TicketZoomArticleNew extends App.Controller
       onFileAbortedCallback: =>
         @richTextUploadRenderCallback?(@attachments)
 
+      onFileErrorCallback: =>
+        @richTextUploadRenderCallback?(@attachments)
+
       attachmentPlaceholder: @attachmentPlaceholder
       attachmentUpload:      @attachmentUpload
       progressBar:           @progressBar
@@ -264,9 +287,27 @@ class App.TicketZoomArticleNew extends App.Controller
           )
         @subscribeIdTextModule = ticket.subscribe(callback)
 
+      @textTools?.releaseController()
+      @textTools = new App.WidgetTextTools(
+        el: @$('.js-textarea').parent()
+        data:
+          ticket: ticket
+          user:   App.Session.get()
+        taskKey: @taskKey
+      )
+      if !@subscribeIdTextTools
+        @subscribeIdTextTools = ticket.subscribe((ticket) =>
+          @textTools.reload(
+            ticket: ticket
+            user:   App.Session.get()
+          )
+        )
+
     if _.isArray(@attachments)
       for attachment in @attachments
         @renderAttachment(attachment)
+
+    @richtextBubbleMenuInit(@textarea.parent(), false)
 
   params: =>
     params = @formParam( @$('.article-add') )
@@ -437,6 +478,7 @@ class App.TicketZoomArticleNew extends App.Controller
     @$('[name=internal]').val(value)
 
   setArticleTypePre: (type, signaturePosition = 'bottom') =>
+    type = @normalizeArticleType(type)
     wasScrolledToBottom = @isScrolledToBottom()
 
     # reset old params
@@ -450,6 +492,7 @@ class App.TicketZoomArticleNew extends App.Controller
     @$('.js-selectableTypes').addClass('hide').filter("[data-type='#{type}']").removeClass('hide')
 
     @setPossibleArticleTypes()
+    type = @normalizeArticleType(type)
 
     # get config
     config = {}
@@ -522,12 +565,17 @@ class App.TicketZoomArticleNew extends App.Controller
 
     @updateSecurityTypeToolbar()
 
-  setArticleTypePost: (type, signaturePosition = 'bottom') =>
+  setArticleTypePost: (type, signaturePosition = undefined) =>
     for localConfig in @actions()
       if localConfig && localConfig.setArticleTypePost
         localConfig.setArticleTypePost(@type, @ticket, @, signaturePosition)
 
     @evaluateAttachmentsList()
+
+  updateSignatureByGroup: (newGroupId) =>
+    for localConfig in @actions()
+      if localConfig && localConfig.updateSignatureByGroup
+        localConfig.updateSignatureByGroup(@type, @ticket, @, newGroupId)
 
   isScrolledToBottom: ->
     return @el.scrollParent().scrollTop() + @el.scrollParent().height() is @el.scrollParent().prop('scrollHeight')
@@ -751,7 +799,7 @@ class App.TicketZoomArticleNew extends App.Controller
       data: JSON.stringify({ form_id: @form_id })
       processData: true
       success: (data, status, xhr) =>
-        App.Event.trigger('ui::ticket::addArticleAttachent', {
+        App.Event.trigger('ui::ticket::addArticleAttachment', {
           ticket:      @ticket
           attachments: data.attachments
           form_id:     @form_id

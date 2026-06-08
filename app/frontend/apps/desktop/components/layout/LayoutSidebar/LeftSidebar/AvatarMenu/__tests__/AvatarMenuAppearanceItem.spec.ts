@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import '#tests/graphql/builders/mocks.ts'
 
@@ -27,7 +27,7 @@ describe('avatar menu appearance item', () => {
     })
 
     expect(view.getByText('Appearance')).toBeInTheDocument()
-    const appearanceSwitch = view.getByRole('checkbox', { name: 'Dark Mode' })
+    const appearanceSwitch = view.getByRole('checkbox', { name: 'Dark mode' })
 
     expect(appearanceSwitch).toBeChecked()
 

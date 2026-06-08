@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'digest/md5'
 
@@ -23,6 +23,10 @@ class CoreWorkflow::Attributes
         Ticket::Article.new(clean_params)
       end
     end
+  end
+
+  def new_only
+    @new_only ||= payload_class.new
   end
 
   def selected_only
@@ -149,8 +153,8 @@ class CoreWorkflow::Attributes
 
   # dont cache this else the result object will work with references and cache bugs occur
   def visibility_default
-    object_elements.each_with_object({}) do |attribute, result|
-      result[ attribute[:name] ] = screen_value(attribute, 'shown') == false ? 'remove' : 'show'
+    object_elements.to_h do |attribute|
+      [attribute[:name], screen_value(attribute, 'shown') == false ? 'remove' : 'show']
     end
   end
 
@@ -163,8 +167,8 @@ class CoreWorkflow::Attributes
 
   # dont cache this else the result object will work with references and cache bugs occur
   def mandatory_default
-    object_elements.each_with_object({}) do |attribute, result|
-      result[ attribute[:name] ] = attribute_mandatory?(attribute)
+    object_elements.to_h do |attribute|
+      [attribute[:name], attribute_mandatory?(attribute)]
     end
   end
 
@@ -179,8 +183,8 @@ class CoreWorkflow::Attributes
 
   # dont cache this else the result object will work with references and cache bugs occur
   def readonly_default
-    object_elements.each_with_object({}) do |attribute, result|
-      result[ attribute[:name] ] = false
+    object_elements.to_h do |attribute|
+      [attribute[:name], false]
     end
   end
 
@@ -204,13 +208,19 @@ class CoreWorkflow::Attributes
     @result_object.result[:rerun_count] || 0
   end
 
-  def options_array(options)
+  def options_array(options, attribute_name)
     result = []
+    @attribute_with_disabled_options ||= Set.new
 
     options.each do |option|
-      result << option['value']
+      if option['disabled'].present?
+        @attribute_with_disabled_options << attribute_name
+      else
+        result << option['value']
+      end
+
       if option['children'].present?
-        result += options_array(option['children'])
+        result += options_array(option['children'], attribute_name)
       end
     end
 
@@ -239,6 +249,10 @@ class CoreWorkflow::Attributes
     screen_value(attribute, 'filter').present?
   end
 
+  def attribute_options_disabled?(attribute)
+    @attribute_with_disabled_options&.include?(attribute[:name])
+  end
+
   def attribute_options_array?(attribute)
     attribute[:options].present? && attribute[:options].instance_of?(Array)
   end
@@ -256,7 +270,7 @@ class CoreWorkflow::Attributes
     if attribute_filter?(attribute)
       values = screen_value(attribute, 'filter')
     elsif attribute_options_array?(attribute)
-      values = options_array(attribute[:options])
+      values = options_array(attribute[:options], attribute[:name])
     elsif attribute_options_hash?(attribute)
       values = options_hash(attribute[:options])
     elsif attribute_options_relation?(attribute)
@@ -290,6 +304,13 @@ class CoreWorkflow::Attributes
       result[ attribute[:name] ] = values.map(&:to_s)
     end
     result
+  end
+
+  def skip_mark_restricted_default?(field)
+    attribute = object_elements_hash[field]
+    return false if attribute_options_array?(attribute) && attribute_options_disabled?(attribute)
+
+    true
   end
 
   def all_options_default

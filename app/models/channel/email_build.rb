@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Channel::EmailBuild
 
@@ -95,7 +95,7 @@ generate email with S/MIME
 
           found_content_ids[$1] = true
         end
-        Loofah.fragment(html_alternative.body.to_s).scrub!(scrubber)
+        ScrubHtml.new(html_alternative.body.to_s, scrubber).scrub!
       rescue => e
         logger.error e
       end
@@ -164,6 +164,10 @@ generate email with S/MIME
     mail['X-Powered-By'] = 'Zammad - Helpdesk/Support (https://zammad.org/)'
     mail['X-Mailer'] = 'Zammad Mail Service'
     # rubocop:enable Zammad/DetectTranslatableString
+
+    # Disallow reactions in Microsoft mail clients,
+    # see https://learn.microsoft.com/en-us/microsoft-365-apps/outlook/manage/manage-outlook-reactions.
+    mail['x-ms-reactions'] = 'disallow'
 
     mail
   end

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class FormUpdater::ApplyValue::FormId < FormUpdater::ApplyValue::Base
 
@@ -7,19 +7,17 @@ class FormUpdater::ApplyValue::FormId < FormUpdater::ApplyValue::Base
   end
 
   def map_value(field:, config:)
-    attachments = []
-
-    UploadCache.new(config['value'])
+    attachments = UploadCache.new(config['value'])
       .attachments
       .reject(&:inline?)
       .map do |attachment|
-      attachments << {
-        id:   Gql::ZammadSchema.id_from_object(attachment),
-        name: attachment.filename,
-        size: attachment.size,
-        type: attachment.preferences['Content-Type'],
-      }
-    end
+        {
+          id:   Gql::ZammadSchema.id_from_object(attachment),
+          name: attachment.filename,
+          size: attachment.size,
+          type: attachment.preferences['Content-Type'],
+        }
+      end
 
     result['attachments'] ||= {}
     result['attachments'][:value] = attachments

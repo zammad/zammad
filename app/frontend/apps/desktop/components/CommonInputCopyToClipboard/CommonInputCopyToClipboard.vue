@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { useCopyToClipboard } from '#shared/composables/useCopyToClipboard.ts'
@@ -14,7 +14,7 @@ interface Props {
 }
 
 withDefaults(defineProps<Props>(), {
-  copyButtonText: __('Copy Text'),
+  copyButtonText: __('Copy text'),
 })
 
 const { copyToClipboard } = useCopyToClipboard()

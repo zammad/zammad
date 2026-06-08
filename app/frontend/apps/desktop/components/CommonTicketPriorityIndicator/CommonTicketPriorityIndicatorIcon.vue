@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed } from 'vue'
@@ -13,11 +13,11 @@ const props = defineProps<Props>()
 const icon = computed(() => {
   switch (props.uiColor) {
     case 'high-priority':
-      return 'priority-high'
+      return 'priority-high-micro-2'
     case 'low-priority':
-      return 'priority-low'
+      return 'priority-low-micro-2'
     default:
-      return 'priority-normal'
+      return 'priority-normal-micro-2'
   }
 })
 
@@ -36,11 +36,5 @@ const textColor = computed(() => {
 </script>
 
 <template>
-  <CommonIcon
-    size="xs"
-    :name="icon"
-    class="ltr:mr-1.5 rtl:ml-1.5"
-    :class="textColor"
-    decorative
-  />
+  <CommonIcon size="xs" :name="icon" class="ltr:mr-1.5 rtl:ml-1.5" :class="textColor" decorative />
 </template>

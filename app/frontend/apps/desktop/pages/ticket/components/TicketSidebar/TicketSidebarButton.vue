@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed } from 'vue'
@@ -54,8 +54,7 @@ const badgeColor = computed(() => {
     <CommonButton
       v-tooltip="$t(label)"
       :class="{
-        'text-black! outline-1! outline-offset-1 outline-blue-800! dark:text-white!':
-          selected,
+        'text-black! outline-1! outline-offset-1 outline-blue-800! dark:text-white!': selected,
       }"
       size="large"
       variant="neutral"
@@ -63,7 +62,10 @@ const badgeColor = computed(() => {
       :aria-label="$t(label)"
       @click="$emit('click', name)"
     />
-    <CommonUpdateIndicator v-if="!selected && updateIndicator" />
+    <CommonUpdateIndicator
+      v-if="!selected && updateIndicator"
+      class="top-0.5 ltr:right-0.5 rtl:left-0.5"
+    />
     <CommonLabel
       v-if="badge"
       size="xs"

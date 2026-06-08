@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 RSpec.configure do |config|
   config.before(type: :system) do |example|
@@ -14,10 +14,6 @@ RSpec.configure do |config|
 
     if sessions_jobs_required
       sessions_jobs_thread = Thread.new do
-        # Try to work around a problem with ActiveRecord::StatementInvalid: Mysql2::Error:
-        #   This connection is in use by: #<Thread:0x000000000e940e18 /builds/zammad/zammad/lib/sessions.rb:533 dead>
-        ActiveRecord::Base.connection_pool.release_connection
-
         BackgroundServices::Service::ProcessSessionsJobs
           .new(manager: nil)
           .launch

@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { createPinia, type Pinia } from 'pinia'
 
@@ -7,7 +7,7 @@ import type { UsedStore } from '#shared/types/store.ts'
 import type { App } from 'vue'
 
 declare module 'pinia' {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // oxlint-disable-next-line no-unused-vars
   export interface DefineStoreOptionsBase<S, Store> {
     requiresAuth?: boolean
   }

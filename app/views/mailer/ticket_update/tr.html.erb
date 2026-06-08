@@ -1,0 +1,29 @@
+Güncellenen destek talebi (#{ticket.title})
+
+<div>Merhaba #{recipient.firstname},</div>
+<br>
+<div>
+(#{ticket.title}) başlıklı destek talebi "<b>#{current_user.longname}</b>" tarafından güncellendi.
+</div>
+<br>
+<% if @objects[:changes].present? %>
+  <div>
+  Yapılan Değişiklikler:<br>
+  <% @objects[:changes].each do |key, value| %>
+    <%= t key %>: <%= h value[0] %> -&gt; <%= h value[1] %><br>
+  <% end %>
+  </div>
+<% end %>
+<br>
+<% if @objects[:article] %>
+  <div>
+  Bilgi:
+  <blockquote type="cite">
+  #{article.body_as_html}
+  </blockquote>
+  </div>
+<% end %>
+<br>
+<div>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}<% if @objects[:article] %>/#{article.id}<% end %>" target="zammad_app">Bunu #{config.product_name} üzerinden görüntüle</a>
+</div>

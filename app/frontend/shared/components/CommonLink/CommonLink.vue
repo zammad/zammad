@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, toRef } from 'vue'
@@ -48,8 +48,9 @@ const target = computed(() => {
   return undefined
 })
 
+const { base, internal: internalClass } = getLinkClasses()
+
 const linkClass = computed(() => {
-  const { base } = getLinkClasses()
   if (props.disabled) return `${base} pointer-events-none`
   return base
 })
@@ -124,6 +125,7 @@ defineExpose({
       {
         [activeClass]: isActive,
         [exactActiveClass]: isExactActive,
+        [internalClass]: isInternalLink,
       },
     ]"
     tabindex="0"

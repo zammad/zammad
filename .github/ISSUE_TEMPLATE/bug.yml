@@ -35,7 +35,7 @@ body:
       value: |
         - Installation method: [e.g. source, package]
         - Operating system (if you're unsure: `cat /etc/os-release` ): [e.g. debian 10.4, ubuntu 20.04]
-        - Database + version:  [e.g. postgresql 9.3, mysql 5.7, mariadb 10.3]
+        - Database + version:  [e.g. postgresql 9.3]
         - Elasticsearch version: [e.g. 7.17]
         - Browser + version: [e.g. chrome 83, safari 14, firefox 105]
     validations:

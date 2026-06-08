@@ -416,8 +416,6 @@
 
                 <div class="editControls-icon pop-selectable js-articleTypeItem" data-value="facebook"></div>
 
-                <div class="editControls-icon pop-selectable js-articleTypeItem" data-value="twitter"></div>
-
                 <div class="editControls-icon pop-selectable js-articleTypeItem" data-value="phone"></div>
               </div>
             </div>
@@ -923,10 +921,6 @@
 
           <option value="3">
             FillGroup::918672
-          </option>
-
-          <option value="2">
-            Twitter
           </option>
 
           <option selected value="1">

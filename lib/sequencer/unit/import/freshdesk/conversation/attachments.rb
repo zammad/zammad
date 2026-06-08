@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Sequencer::Unit::Import::Freshdesk::Conversation::Attachments < Sequencer::Unit::Base
   prepend ::Sequencer::Unit::Import::Common::Model::Mixin::Skip::Action
@@ -56,9 +56,9 @@ class Sequencer::Unit::Import::Freshdesk::Conversation::Attachments < Sequencer:
       attachment['attachment_url'],
       {},
       {
-        open_timeout: 20,
-        read_timeout: 240,
-        verify_ssl:   true,
+        read_timeout:  ENV.fetch('ZAMMAD_HTTP_IMPORT_ATTACHMENT_READ_TIMEOUT', 240).to_i,
+        total_timeout: ENV.fetch('ZAMMAD_HTTP_IMPORT_ATTACHMENT_TOTAL_TIMEOUT', 240).to_i,
+        verify_ssl:    true,
       },
     )
 

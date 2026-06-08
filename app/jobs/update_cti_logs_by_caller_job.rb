@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class UpdateCtiLogsByCallerJob < ApplicationJob
   def perform(phone, limit: 60, offset: 0)
@@ -9,7 +9,7 @@ class UpdateCtiLogsByCallerJob < ApplicationJob
             .limit(limit)
             .offset(offset)
             .each do |log|
-      log.update(preferences: preferences)
-    end
+              log.update(preferences: preferences)
+            end
   end
 end

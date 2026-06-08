@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -15,7 +15,6 @@ RSpec.describe Gql::Mutations::Channel::Email::GuessConfiguration, type: :graphq
               port
               ssl
               user
-              password
               sslVerify
               folder
             }
@@ -24,7 +23,6 @@ RSpec.describe Gql::Mutations::Channel::Email::GuessConfiguration, type: :graphq
               host
               port
               user
-              password
               sslVerify
             }
             mailboxStats {
@@ -63,7 +61,6 @@ RSpec.describe Gql::Mutations::Channel::Email::GuessConfiguration, type: :graphq
                 ssl:        probe_ssl,
                 start_tls:  probe_starttls,
                 user:       'some@example.com',
-                password:   'password',
                 folder:     'some_folder',
                 ssl_verify: false,
               },
@@ -74,7 +71,6 @@ RSpec.describe Gql::Mutations::Channel::Email::GuessConfiguration, type: :graphq
                 host:       'smtp.gmail.com',
                 port:       25,
                 user:       'some@example.com',
-                password:   'password',
                 ssl_verify: false,
               },
             },
@@ -94,7 +90,6 @@ RSpec.describe Gql::Mutations::Channel::Email::GuessConfiguration, type: :graphq
               'port'      => 993,
               'ssl'       => expected_ssl,
               'user'      => 'some@example.com',
-              'password'  => 'password',
               'folder'    => 'some_folder',
               'sslVerify' => false,
             },
@@ -103,7 +98,6 @@ RSpec.describe Gql::Mutations::Channel::Email::GuessConfiguration, type: :graphq
               'host'      => 'smtp.gmail.com',
               'port'      => 25,
               'user'      => 'some@example.com',
-              'password'  => 'password',
               'sslVerify' => false,
             }
           }

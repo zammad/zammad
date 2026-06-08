@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { computed, ref } from 'vue'
 
@@ -24,11 +24,7 @@ export const useTicketArticleReply = (
     },
   })
 
-  const articleFormGroupNode = computed(() => {
-    if (!newTicketArticlePresent.value) return undefined
-
-    return form.value?.getNodeByName('article')
-  })
+  const articleFormGroupNode = computed(() => form.value?.getNodeByName('article'))
 
   const isArticleFormGroupValid = computed(() => {
     return !!articleFormGroupNode.value?.context?.state.valid

@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { fireEvent } from '@testing-library/vue'
 import { beforeEach, describe, expect } from 'vitest'
@@ -36,9 +36,7 @@ describe('LayoutSidebar', () => {
     it('does not show CollapseButton when collapsible is false', async () => {
       await view.rerender({ collapsible: false })
 
-      expect(
-        view.queryByLabelText('collapse this item'),
-      ).not.toBeInTheDocument()
+      expect(view.queryByLabelText('collapse this item')).not.toBeInTheDocument()
 
       expect(view.queryByLabelText('expand this item')).not.toBeInTheDocument()
     })
@@ -48,7 +46,7 @@ describe('LayoutSidebar', () => {
     })
 
     it('shows an action Button when iconCollapsed is provided and sidebar is collapsed', async () => {
-      await view.rerender({ iconCollapsed: 'person-gear' })
+      await view.rerender({ iconCollapsed: 'user-settings' })
       const collapseButton = await view.findByLabelText('Collapse sidebar')
       await view.events.click(collapseButton)
       expect(view.queryByTestId('action-button')).toBeInTheDocument()

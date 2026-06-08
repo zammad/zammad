@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { NotificationTypes } from '#shared/components/CommonNotifications/types.ts'
 import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
@@ -12,9 +12,7 @@ export const usePasswordCheckTwoFactor = (
     useNotifications().notify({
       id: 'two-factor-invalid-password-revalidation-token',
       type: NotificationTypes.Error,
-      message: __(
-        'Invalid password revalidation token, please confirm your password again.',
-      ),
+      message: __('Invalid password revalidation token, please confirm your password again.'),
     })
 
     formSubmitCallback?.({ nextState: 'password_check' })

@@ -1,0 +1,5 @@
+fragment organizationTaskbarTabAttributes on Organization {
+  id
+  name
+  active
+}

@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { generateObjectData } from '#tests/graphql/builders/index.ts'
 import renderComponent from '#tests/support/components/renderComponent.ts'
@@ -31,6 +31,10 @@ const defaults = {
         },
         typeName: 'update',
         objectName: 'Ticket',
+        meta: {
+          __typename: 'OnlineNotificationMeta' as const,
+          createdByAi: false,
+        },
         metaObject: {
           id: convertToGraphQLId('Ticket', 1),
           internalId: 1,
@@ -59,6 +63,10 @@ const defaults = {
         },
         typeName: 'update',
         objectName: 'Ticket',
+        meta: {
+          __typename: 'OnlineNotificationMeta' as const,
+          createdByAi: false,
+        },
         metaObject: {
           id: convertToGraphQLId('Ticket', 3),
           internalId: 3,
@@ -87,6 +95,10 @@ const defaults = {
         },
         typeName: 'create',
         objectName: 'Ticket',
+        meta: {
+          __typename: 'OnlineNotificationMeta' as const,
+          createdByAi: false,
+        },
         metaObject: {
           // __typename: 'Ticket', // If not set mocker does not return this object
           id: convertToGraphQLId('Ticket', 2),
@@ -131,15 +143,9 @@ describe('NotificationList', () => {
     expect(notificationsItems).toHaveLength(3)
 
     // Avatars
-    expect(
-      wrapper.getByRole('img', { name: 'Avatar (Zammad Agent)' }),
-    ).toBeInTheDocument()
-    expect(
-      wrapper.getByRole('img', { name: 'Avatar (Admin Foo)' }),
-    ).toBeInTheDocument()
-    expect(
-      wrapper.getByRole('img', { name: 'Avatar (Agent Bar)' }),
-    ).toBeInTheDocument()
+    expect(wrapper.getByRole('img', { name: 'Avatar (Zammad Agent)' })).toBeInTheDocument()
+    expect(wrapper.getByRole('img', { name: 'Avatar (Admin Foo)' })).toBeInTheDocument()
+    expect(wrapper.getByRole('img', { name: 'Avatar (Agent Bar)' })).toBeInTheDocument()
 
     // links to tickets
     const ticketLinks = wrapper.getAllByRole('link')
@@ -154,24 +160,16 @@ describe('NotificationList', () => {
     expect(notificationsItems[0]).toHaveTextContent('Admin Foo updated ticket')
     expect(notificationsItems[0]).toHaveTextContent('Bunch of articles')
 
-    expect(notificationsItems[1]).toHaveTextContent(
-      'Zammad Agent updated ticket',
-    )
+    expect(notificationsItems[1]).toHaveTextContent('Zammad Agent updated ticket')
     expect(notificationsItems[1]).toHaveTextContent('GitLab')
 
     expect(notificationsItems[2]).toHaveTextContent('Agent Bar created ticket')
     expect(notificationsItems[2]).toHaveTextContent('Mixed issues')
 
     // Dates
-    expect(wrapper.getByLabelText('2024-11-18 16:28')).toHaveTextContent(
-      '1 day ago',
-    )
-    expect(wrapper.getByLabelText('2024-11-15 08:06')).toHaveTextContent(
-      '4 days ago',
-    )
-    expect(wrapper.getByLabelText('2024-10-30 06:17')).toHaveTextContent(
-      '2 weeks ago',
-    )
+    expect(wrapper.getByLabelText('2024-11-18 16:28')).toHaveTextContent('1 day ago')
+    expect(wrapper.getByLabelText('2024-11-15 08:06')).toHaveTextContent('4 days ago')
+    expect(wrapper.getByLabelText('2024-10-30 06:17')).toHaveTextContent('2 weeks ago')
   })
 
   it('displays an empty message.', async () => {
@@ -181,18 +179,13 @@ describe('NotificationList', () => {
       },
     })
 
-    expect(wrapper.getByRole('listitem')).toHaveTextContent(
-      'No unread notifications.',
-    )
+    expect(wrapper.getByRole('listitem')).toHaveTextContent('No unread notifications.')
   })
 
   it('emits remove notification event', async () => {
     const list = [
       edgesToArray(
-        generateObjectData<OnlineNotificationConnection>(
-          'OnlineNotificationConnection',
-          defaults,
-        ),
+        generateObjectData<OnlineNotificationConnection>('OnlineNotificationConnection', defaults),
       )[0],
     ]
 
@@ -213,7 +206,7 @@ describe('NotificationList', () => {
       wrapper.getByRole('button', {
         name: 'Admin Foo updated ticket Bunch of articles',
       }),
-    ).toHaveAttribute('aria-description', 'Remove Notification')
+    ).toHaveAttribute('aria-description', 'Remove notification')
 
     expect(wrapper.emitted('remove')).toEqual([[list[0]]])
   })
@@ -222,24 +215,25 @@ describe('NotificationList', () => {
     const wrapper = renderComponent(NotificationList, {
       props: {
         list: edgesToArray(
-          generateObjectData<OnlineNotificationConnection>(
-            'OnlineNotificationConnection',
-            {
-              edges: [
-                {
-                  node: {
-                    id: convertToGraphQLId('OnlineNotification', 1),
-                    seen: false,
-                    createdAt: '2024-11-20T11:15:37Z',
-                    createdBy: null,
-                    typeName: 'update',
-                    objectName: 'Ticket',
-                    metaObject: null,
+          generateObjectData<OnlineNotificationConnection>('OnlineNotificationConnection', {
+            edges: [
+              {
+                node: {
+                  id: convertToGraphQLId('OnlineNotification', 1),
+                  seen: false,
+                  createdAt: '2024-11-20T11:15:37Z',
+                  createdBy: null,
+                  typeName: 'update',
+                  objectName: 'Ticket',
+                  meta: {
+                    __typename: 'OnlineNotificationMeta' as const,
+                    createdByAi: false,
                   },
+                  metaObject: null,
                 },
-              ],
-            },
-          ),
+              },
+            ],
+          }),
         ),
       },
     })
@@ -250,5 +244,64 @@ describe('NotificationList', () => {
 
     expect(wrapper.getAllByIconName('x-lg')).toHaveLength(2)
     expect(wrapper.getByRole('presentation')).toBeInTheDocument() // x icon
+  })
+
+  it('displays AI agent notification', async () => {
+    const wrapper = renderComponent(NotificationList, {
+      props: {
+        list: edgesToArray(
+          generateObjectData<OnlineNotificationConnection>('OnlineNotificationConnection', {
+            edges: [
+              {
+                node: {
+                  id: convertToGraphQLId('OnlineNotification', 1),
+                  seen: false,
+                  createdAt: '2026-04-22T15:11:17Z',
+                  createdBy: {
+                    id: convertToGraphQLId('User', 1),
+                    fullname: '-',
+                    lastname: '',
+                    firstname: '-',
+                    email: '',
+                    vip: false,
+                    outOfOffice: false,
+                    outOfOfficeStartAt: null,
+                    outOfOfficeEndAt: null,
+                    active: false,
+                    image: null,
+                  },
+                  typeName: 'create',
+                  objectName: 'KnowledgeBase::Answer::Translation',
+                  meta: {
+                    __typename: 'OnlineNotificationMeta',
+                    createdByAi: true,
+                  },
+                  metaObject: {
+                    id: convertToGraphQLId('KnowledgeBase::Answer::Translation', 6),
+                    title: 'New answer for knowledge base article',
+                    kbLocale: {
+                      systemLocale: {
+                        locale: 'en-us',
+                      },
+                    },
+                    answer: {
+                      id: convertToGraphQLId('KnowledgeBase::Answer', 6),
+                    },
+                  },
+                },
+                cursor: 'MQ',
+              },
+            ],
+            pageInfo: {
+              endCursor: 'Mw',
+              hasNextPage: false,
+            },
+          }),
+        ),
+      },
+      router: true,
+    })
+
+    expect(wrapper.getByLabelText('AI agent')).toBeInTheDocument()
   })
 })

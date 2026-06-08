@@ -28,6 +28,9 @@ export const OnlineNotificationsDocument = gql`
         }
         typeName
         objectName
+        meta {
+          createdByAi
+        }
         metaObject {
           ... on Ticket {
             id
@@ -47,6 +50,32 @@ export const OnlineNotificationsDocument = gql`
             }
             bodyWithUrls
             preferences
+          }
+          ... on OnlineNotificationStandalone {
+            id
+            internalId
+            data {
+              ... on OnlineNotificationStandaloneBulkJobData {
+                total
+                failedCount
+              }
+              ... on OnlineNotificationStandaloneKbAnswerGenerationFailedData {
+                errorMessage
+                ticketTitle
+              }
+            }
+          }
+          ... on KnowledgeBaseAnswerTranslation {
+            id
+            title
+            kbLocale {
+              systemLocale {
+                locale
+              }
+            }
+            answer {
+              id
+            }
           }
         }
       }

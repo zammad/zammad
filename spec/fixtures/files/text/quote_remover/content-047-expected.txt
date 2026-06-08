@@ -1,0 +1,20 @@
+Sehr geehrter Herr Schmidt,
+
+wir können uns gerne nächste Woche zusammenschalten.
+Haben Sie eine direkte E-Mailadresse?
+
+Vielen Dank vorab.
+
+Mit freundlichen Grüßen
+
+Max Müller
+Abteilung IT
+
+Telefon: +49 123 456789
+E-Mail: [max.mueller@example.org](mailto:max.mueller@example.org)
+
+Example GmbH
+Musterstraße 35
+12345 Musterstadt
+
+[www.example.org](http://www.example.org)

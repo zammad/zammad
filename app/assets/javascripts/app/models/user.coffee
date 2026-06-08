@@ -220,7 +220,7 @@ class App.User extends App.Model
       if item.objectNative
         to = item.objectNative.displayName()
       return App.i18n.translateContent('%s ended switch to |%s|!', item.created_by.displayName(), to)
-    return "Unknow action for (#{@objectDisplayName()}/#{item.type}), extend activityMessage() of model."
+    return "Unknown action for (#{@objectDisplayName()}/#{item.type}), extend activityMessage() of model."
 
   ###
 
@@ -490,3 +490,23 @@ class App.User extends App.Model
     if @login
       return @login
     return '-'
+
+  recipientName: (ticket, withEmail = false) ->
+    format        = App.Config.get('ticket_define_email_from')
+    group         = App.Group.find(ticket.group_id)
+    email_address = App.EmailAddress.find(group.email_address_id)
+    return if !email_address
+
+    separator = App.Config.get('ticket_define_email_from_separator')
+    if (@id is 1 || format is 'SystemAddressName') && @permission('ticket.agent')
+      result = email_address.name
+      result = App.Utils.buildEmailAddress(result, email_address.email) if withEmail
+      return result
+    else if format is 'AgentNameSystemAddressName' && @permission('ticket.agent')
+      result = "#{@firstname} #{@lastname} #{separator} #{email_address.name}"
+      result = App.Utils.buildEmailAddress(result, email_address.email) if withEmail
+      return result
+    else
+      result = "#{@firstname} #{@lastname}" # AgentName or customer
+      result = App.Utils.buildEmailAddress(result, @email) if withEmail
+      return result

@@ -17,8 +17,8 @@ fragment userPersonalSettings on User {
         }
         escalation {
           channel {
-          email
-          online
+            email
+            online
           }
           criteria {
             no
@@ -53,10 +53,9 @@ fragment userPersonalSettings on User {
         }
       }
     }
-    notificationSound{
+    notificationSound {
       enabled
       file
     }
   }
 }
-

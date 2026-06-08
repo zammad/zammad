@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Queries
   class EmailAddresses < BaseQuery
@@ -9,9 +9,7 @@ module Gql::Queries
 
     type [Gql::Types::EmailAddressType, { null: false }], null: false
 
-    def self.authorize(_obj, ctx)
-      ctx.current_user.permissions?(['ticket.agent', 'admin.channel_email', 'admin.wizard'])
-    end
+    requires_permission 'ticket.agent', 'admin.channel_email', 'admin.wizard'
 
     def resolve(only_active: false)
       return EmailAddress.where(active: true) if only_active

@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 import type { FormKitNode } from '@formkit/core'
 
 export const setPopulatedOnWebkitAutofill = (node: FormKitNode) => {
@@ -7,17 +7,14 @@ export const setPopulatedOnWebkitAutofill = (node: FormKitNode) => {
   const onAnimationstart = (e?: AnimationEvent) => {
     if (
       !e ||
-      (e.animationName !== 'onAutoFillStart' &&
-        e.animationName !== 'onAutoFillEnd') ||
+      (e.animationName !== 'onAutoFillStart' && e.animationName !== 'onAutoFillEnd') ||
       (e.animationName === 'onAutoFillEnd' && !autofillField)
     )
       return
 
     const inputElement = e.currentTarget as HTMLInputElement
 
-    const outerElement = inputElement.closest(
-      '.formkit-outer',
-    ) as HTMLDivElement
+    const outerElement = inputElement.closest('.formkit-outer') as HTMLDivElement
 
     if (!outerElement) return
 

@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed } from 'vue'
@@ -25,14 +25,12 @@ import { useFlyout } from '#desktop/components/CommonFlyout/useFlyout.ts'
 import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
 import type { MenuItem } from '#desktop/components/CommonPopoverMenu/types.ts'
 import CommonSimpleTable from '#desktop/components/CommonTable/CommonSimpleTable.vue'
-import type {
-  TableSimpleHeader,
-  TableItem,
-} from '#desktop/components/CommonTable/types.ts'
+import type { TableSimpleHeader, TableItem } from '#desktop/components/CommonTable/types.ts'
 import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
 
 import { useCheckTokenAccess } from '../composables/permission/useCheckTokenAccess.ts'
 import { useBreadcrumb } from '../composables/useBreadcrumb.ts'
+import { usePersonalSettingTabs } from '../composables/usePersonalSettingTabs.ts'
 import { UserCurrentAccessTokenUpdatesDocument } from '../graphql/subscriptions/userCurrentAccessTokenUpdates.api.ts'
 
 defineOptions({
@@ -43,9 +41,7 @@ defineOptions({
       return redirectErrorRoute({
         type: ErrorRouteType.AuthenticatedError,
         title: __('Forbidden'),
-        message: __(
-          'Token-based API access has been disabled by the administrator.',
-        ),
+        message: __('Token-based API access has been disabled by the administrator.'),
         statusCode: ErrorStatusCodes.Forbidden,
       })
 
@@ -53,20 +49,17 @@ defineOptions({
   },
 })
 
-const { breadcrumbItems } = useBreadcrumb(__('Token Access'))
+const { breadcrumbItems } = useBreadcrumb(__('Token access'))
 
 const newAccessTokenFlyout = useFlyout({
   name: 'new-access-token',
-  component: () =>
-    import('../components/PersonalSettingNewAccessTokenFlyout.vue'),
+  component: () => import('../components/PersonalSettingNewAccessTokenFlyout.vue'),
 })
 
-const accessTokenListQuery = new QueryHandler(
-  useUserCurrentAccessTokenListQuery(),
-)
+const accessTokenListQuery = new QueryHandler(useUserCurrentAccessTokenListQuery())
 
 const accessTokenListQueryResult = accessTokenListQuery.result()
-const accessTokenListLoading = accessTokenListQuery.loading()
+const accessTokenListLoading = accessTokenListQuery.loadingWithoutCachedResult()
 
 accessTokenListQuery.subscribeToMore<
   UserCurrentAccessTokenUpdatesSubscriptionVariables,
@@ -79,8 +72,7 @@ accessTokenListQuery.subscribeToMore<
     }
 
     return {
-      userCurrentAccessTokenList:
-        subscriptionData.data.userCurrentAccessTokenUpdates.tokens,
+      userCurrentAccessTokenList: subscriptionData.data.userCurrentAccessTokenUpdates.tokens,
     }
   },
 })
@@ -108,7 +100,7 @@ const tableHeaders: TableSimpleHeader[] = [
   },
   {
     key: 'lastUsedAt',
-    label: __('Last Used'),
+    label: __('Last used'),
     type: 'timestamp',
   },
 ]
@@ -129,9 +121,7 @@ const deleteDevice = (accessToken: Token) => {
       },
     })),
     {
-      errorNotificationMessage: __(
-        'The personal access token could not be deleted.',
-      ),
+      errorNotificationMessage: __('The personal access token could not be deleted.'),
     },
   )
 
@@ -163,19 +153,17 @@ const tableActions: MenuItem[] = [
 ]
 
 const currentAccessTokens = computed<TableItem[]>(() => {
-  return (
-    accessTokenListQueryResult.value?.userCurrentAccessTokenList || []
-  ).map((accessToken) => {
-    return {
+  // oxlint-disable no-map-spread
+  return (accessTokenListQueryResult.value?.userCurrentAccessTokenList || []).map(
+    (accessToken) => ({
+      // We can't use the original object, since it got sealed by Apollo Client to maintain immutability.
       ...accessToken,
       permissions: accessToken.preferences?.permission?.join(', ') || '',
-    }
-  })
+    }),
+  )
 })
 
-const currentAccessTokenPresent = computed(
-  () => currentAccessTokens.value.length > 0,
-)
+const currentAccessTokenPresent = computed(() => currentAccessTokens.value.length > 0)
 
 const helpText = computed(() => [
   i18n.t(
@@ -183,10 +171,14 @@ const helpText = computed(() => [
   ),
   i18n.t("Pick a name for the application, and we'll give you a unique token."),
 ])
+
+const { tabs, activeTab } = usePersonalSettingTabs()
 </script>
 
 <template>
   <LayoutContent
+    :active-tab="activeTab"
+    :tabs="tabs"
     :help-text="helpText"
     :show-inline-help="!currentAccessTokenPresent && !accessTokenListLoading"
     :breadcrumb-items="breadcrumbItems"
@@ -200,7 +192,7 @@ const helpText = computed(() => [
           size="medium"
           @click="newAccessTokenFlyout.open()"
         >
-          {{ $t('New Personal Access Token') }}
+          {{ $t('New personal access token') }}
         </CommonButton>
       </div>
     </template>
@@ -211,15 +203,11 @@ const helpText = computed(() => [
           :headers="tableHeaders"
           :items="currentAccessTokens"
           :actions="tableActions"
-          :caption="$t('Personal Access Tokens')"
+          :caption="$t('Personal access tokens')"
           class="min-w-150"
         >
           <template #item-suffix-name="{ item }">
-            <CommonBadge
-              v-if="item.current"
-              size="medium"
-              variant="info"
-              class="ltr:ml-2 rtl:mr-2"
+            <CommonBadge v-if="item.current" size="medium" variant="info" class="ltr:ml-2 rtl:mr-2"
               >{{ $t('This device') }}
             </CommonBadge>
           </template>

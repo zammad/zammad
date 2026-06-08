@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { renderComponent } from '#tests/support/components/index.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
@@ -35,9 +35,7 @@ describe('TicketTags', () => {
   })
 
   it('can update ticket tags', async () => {
-    const mockTagAssignmentUpdateApi = mockGraphQLApi(
-      TagAssignmentUpdateDocument,
-    ).willResolve({
+    const mockTagAssignmentUpdateApi = mockGraphQLApi(TagAssignmentUpdateDocument).willResolve({
       tagAssignmentUpdate: {
         success: true,
         errors: null,
@@ -93,9 +91,7 @@ describe('TicketTags', () => {
     const filterInput = wrapper.getByPlaceholderText('Tag name…')
     await wrapper.events.type(filterInput, 'pay')
 
-    expect(
-      wrapper.queryByRole('button', { name: 'Create tag' }),
-    ).not.toBeInTheDocument()
+    expect(wrapper.queryByRole('button', { name: 'Create tag' })).not.toBeInTheDocument()
   })
 
   it('can add new ticket tags when it is allowed', async () => {
@@ -120,17 +116,13 @@ describe('TicketTags', () => {
     const filterInput = wrapper.getByPlaceholderText('Tag name…')
     await wrapper.events.type(filterInput, 'pay')
 
-    expect(
-      wrapper.getByRole('button', { name: 'Create tag' }),
-    ).toBeInTheDocument()
+    expect(wrapper.getByRole('button', { name: 'Create tag' })).toBeInTheDocument()
   })
 
   it('reset ticket tags again on update error', async () => {
     const mockTagAssignmentUpdateApi = mockGraphQLApi(
       TagAssignmentUpdateDocument,
-    ).willFailWithError([
-      { message: 'Ticket tags not updated.', extensions: {} },
-    ])
+    ).willFailWithError([{ message: 'Ticket tags not updated.', extensions: {} }])
 
     const wrapper = renderComponent(TicketTags, {
       props: {

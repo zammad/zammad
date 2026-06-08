@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import type { RouteRecordRaw } from 'vue-router'
 
@@ -12,7 +12,7 @@ const route: RouteRecordRaw[] = [
       title: 'Playground',
       icon: 'logo-flat',
       requiresAuth: true,
-      requiredPermission: ['*'],
+      requiredPermission: ['admin'],
       order: 500,
     },
   },

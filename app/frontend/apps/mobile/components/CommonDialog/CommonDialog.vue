@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { onKeyUp, usePointerSwipe } from '@vueuse/core'
@@ -84,8 +84,7 @@ onMounted(() => {
   // if it won't find it, will try to find inside the header
   // most likely will find "Done" button
   const firstFocusable =
-    getFirstFocusableElement(contentElement.value) ||
-    getFirstFocusableElement(dialogElement.value)
+    getFirstFocusableElement(contentElement.value) || getFirstFocusableElement(dialogElement.value)
 
   nextTick(() => {
     firstFocusable?.focus()
@@ -114,7 +113,7 @@ export default {
       :class="{ 'transition-all duration-200 ease-linear': !isSwiping }"
       :style="{ transform: `translateY(${top})` }"
     >
-      <div class="bg-gray-150/40 mx-4 h-2.5 shrink-0 rounded-t-xl" />
+      <div class="mx-4 h-2.5 shrink-0 rounded-t-xl bg-gray-150/40" />
       <div
         class="relative flex h-16 shrink-0 items-center justify-center rounded-t-xl bg-gray-600/80 select-none"
       >
@@ -124,7 +123,7 @@ export default {
           <slot name="before-label" />
         </div>
         <div
-          class="line-clamp-2 max-w-[65%] text-center text-base leading-[19px] font-semibold text-white"
+          class="line-clamp-2 max-w-[65%] text-center text-base leading-[19px] font-medium text-white"
         >
           <slot name="label">
             {{ $t(label) }}

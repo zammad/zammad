@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 # Adds close time (if missing) when tickets are closed.
 class Ticket::Stats
@@ -112,36 +112,17 @@ class Ticket::Stats
   end
 
   def search_stats_year(condition)
-    volume_by_year = []
-    now            = Time.zone.now
+    result = Service::Ticket::Stats::Monthly
+      .with_current_user(current_user)
+      .execute(conditions: condition)
 
-    (0..11).each do |month_back|
-      date_to_check = now - month_back.month
-      date_start = "#{date_to_check.year}-#{date_to_check.month}-01 00:00:00"
-      date_end   = "#{date_to_check.year}-#{date_to_check.month}-#{date_to_check.end_of_month.day} 00:00:00"
-
-      # created
-      created = TicketPolicy::ReadScope.new(current_user).resolve
-                                       .where(created_at: (date_start..date_end))
-                                       .where(condition)
-                                       .count
-
-      # closed
-      closed = TicketPolicy::ReadScope.new(current_user).resolve
-                                      .where(close_at: (date_start..date_end))
-                                      .where(condition)
-                                      .count
-
-      data = {
-        month:   date_to_check.month,
-        year:    date_to_check.year,
-        text:    Date::MONTHNAMES[date_to_check.month],
-        created: created,
-        closed:  closed,
-      }
-      volume_by_year.push data
+    result.each do |elem|
+      elem.transform_keys!(tickets_created: :created, tickets_closed: :closed, month_number: :month)
+      elem[:text] = Date::MONTHNAMES[elem[:month]]
+      elem.delete(:month_label)
     end
-    volume_by_year
+
+    result
   end
 
   private

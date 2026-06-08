@@ -1,0 +1,6 @@
+query organizationInfoForPopover($organizationId: ID!, $membersCount: Int) {
+  organization(organizationId: $organizationId) {
+    ...organizationAttributes
+    ...organizationMembers
+  }
+}

@@ -20,9 +20,9 @@ class App.WidgetUser extends App.Controller
   getAdvancedSearchUrl: (customer_id, states) ->
     states_string = ''
     if states.length > 1
-      states_string = ' AND state.name:("' + states.join('" OR "') + '")'
-    else
-      states_string = " AND state.name:\"#{states[0]}\""
+      states_string = ' AND state.name:("' + _.map(states, (state) -> state.replace(/"/g, '\\"')).join('" OR "') + '")'
+    else if states.length is 1
+      states_string = " AND state.name:\"#{states[0].replace(/"/g, '\\"')}\""
 
     return "/#search/customer_id:#{customer_id}#{states_string}"
 
@@ -99,9 +99,9 @@ class App.WidgetUser extends App.Controller
     @renderOrganizations()
 
     @$('[contenteditable]').ce(
-      mode:      'textonly'
-      multiline: true
-      maxlength: 250
+      mode:      'richtext'
+      maxlength: 5000
+      noImages:  true
     )
 
     @refreshPopovers()

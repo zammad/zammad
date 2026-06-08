@@ -1,0 +1,22 @@
+<div class="text-tools-modal">
+  <span class="label" id="label-text-selected"><%- @T('Selected Text') %></span>
+  <div class="text-selected-field"  aria-labelledby="label-text-selected"><%- @selectedText %></div>
+
+  <% if @error: %>
+    <div class="error-container">
+      <div class="alert alert--danger">
+        <p><%- @T('Writing assistant could not generate text. Please try again or contact your administrator.') %></p>
+        <% if @error_message: %>
+          <p><%- @T('API server error: %s', @T(@error_message)) %></p>
+        <% end %>
+      </div>
+
+      <button type="button" class="js-retry btn btn--positive btn--secondary"><%- @Icon('reload') %> <%- @T('Retry') %></button>
+    </div>
+  <% else: %>
+    <span id="label-result" class="label" ><%- @T('Result') %></span>
+    <div class="result-field" aria-labelledby="label-result"><span><%- @result %></span></div>
+  <% end %>
+
+  <div class="text-tools-feedback js-aiTextToolFeedback"></div>
+</div>

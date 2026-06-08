@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -8,7 +8,7 @@ RSpec.describe HtmlSanitizer::Scrubber::Outgoing::ImageSize do
   describe('#scrubber') do
     subject(:actual) { fragment.scrub!(scrubber).to_html }
 
-    let(:fragment) { Loofah.fragment(input) }
+    let(:fragment) { Loofah.html5_fragment(input) }
 
     context 'when no img tag is used' do
       let(:input)  { '<script src="..."></script>' }

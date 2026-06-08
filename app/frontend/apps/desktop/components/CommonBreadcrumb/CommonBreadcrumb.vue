@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed } from 'vue'
@@ -28,11 +28,7 @@ const sizeClasses = computed(() => {
 </script>
 
 <template>
-  <nav
-    :class="sizeClasses"
-    :aria-label="$t('Breadcrumb navigation')"
-    class="max-w-full"
-  >
+  <nav :class="sizeClasses" :aria-label="$t('Breadcrumb navigation')" class="max-w-full">
     <ol class="flex">
       <li
         v-for="(item, idx) in items"
@@ -49,29 +45,26 @@ const sizeClasses = computed(() => {
 
         <CommonLink
           v-if="item.route"
-          class="focus:outline-hidden focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800"
+          class="focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800"
           :link="item.route"
           internal
         >
-          <CommonLabel size="large" class="line-clamp-1 hover:underline">{{
-            item.noOptionLabelTranslation
-              ? item.label
-              : $t(item.label as string)
-          }}</CommonLabel>
+          <CommonLabel class="line-clamp-1 hover:text-black hover:dark:text-white" size="large">
+            {{ item.noOptionLabelTranslation ? item.label : $t(item.label as string) }}
+          </CommonLabel>
         </CommonLink>
 
         <component
           :is="items.at(-1) === item ? 'h1' : 'span'"
           v-else
           class="line-clamp-1"
-          :class="{ 'text-black dark:text-white': item.isActive }"
+          :class="{
+            'text-black dark:text-white': item.isActive,
+            'break-all': items.at(-1) === item,
+          }"
           aria-current="page"
         >
-          {{
-            item.noOptionLabelTranslation
-              ? item.label
-              : $t(item.label as string)
-          }}
+          {{ item.noOptionLabelTranslation ? item.label : $t(item.label as string) }}
         </component>
 
         <CommonBadge
@@ -85,11 +78,9 @@ const sizeClasses = computed(() => {
 
         <CommonIcon
           v-if="idx !== items.length - 1"
-          :name="
-            locale.localeData?.dir === 'rtl' ? 'chevron-left' : 'chevron-right'
-          "
+          :name="locale.localeData?.dir === 'rtl' ? 'chevron-left' : 'chevron-right'"
           size="xs"
-          class="mx-1 inline-flex shrink-0"
+          class="mx-1 inline-flex shrink-0 text-stone-200 dark:text-neutral-500"
         />
 
         <!-- Add a slot at the end of the last item. -->

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class FormUpdater::StoreValue::Ignore < FormUpdater::StoreValue::Base
 
@@ -17,6 +17,7 @@ class FormUpdater::StoreValue::Ignore < FormUpdater::StoreValue::Base
       attachments
       security
       ticket_duplicate_detection
+      isDefaultFollowUpStateSet
     ]
   end
 end

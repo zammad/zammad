@@ -7,6 +7,7 @@ class App.Html5Upload extends App.Controller
   onFileStartCallback:     null
   onFileCompletedCallback: null
   onFileAbortedCallback:   null
+  onFileErrorCallback:     null
 
   dropContainer:         null
   cancelContainer:       null
@@ -78,20 +79,16 @@ class App.Html5Upload extends App.Controller
     @inputField.val('')
 
     if message
-      message = JSON.parse(message)
+      try
+        message = JSON.parse(message)
+      catch
+        message = {}
 
-    @callbackFileUploadStop?()
+    @onFileErrorCallback?()
 
-    new App.ControllerModal(
-      head: __('Upload Failed')
-      buttonCancel: 'Cancel'
-      buttonCancelClass: 'btn--danger'
-      buttonSubmit: false
-      message: message['error_human'] || message['error'] || __('The file could not be uploaded.')
-      shown: true
-      small: true
-      container: @inputField.closest('.content')
-    )
+    @notify
+      type: 'error'
+      msg:  message['error_human'] || message['error'] || __('The file could not be uploaded.')
 
     App.Log.debug 'Html5Upload', 'upload error'
 

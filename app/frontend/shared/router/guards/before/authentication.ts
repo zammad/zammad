@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { watch } from 'vue'
 
@@ -6,64 +6,44 @@ import { useApplicationStore } from '#shared/stores/application.ts'
 import { useAuthenticationStore } from '#shared/stores/authentication.ts'
 import log from '#shared/utils/log.ts'
 
-import type { WatchStopHandle } from 'vue'
-import type {
-  NavigationGuard,
-  RouteLocationNormalized,
-  NavigationGuardNext,
-} from 'vue-router'
+import type { NavigationGuard, RouteLocationNormalized } from 'vue-router'
 
-const checkAuthenticated = (
-  to: RouteLocationNormalized,
-  next: NavigationGuardNext,
-) => {
+const checkAuthenticated = (to: RouteLocationNormalized) => {
   const { authenticated } = useAuthenticationStore()
 
   if (to.name !== 'Login' && to.meta.requiresAuth && !authenticated) {
-    log.debug(
-      `Route guard for '${to.path}': authentication - forbidden - unauthenticated.`,
-    )
+    log.debug(`Route guard for '${to.path}': authentication - forbidden - unauthenticated.`)
 
     if (to.fullPath !== '/') {
-      next({ path: '/login', query: { redirect: to.fullPath } })
+      return { path: '/login', query: { redirect: to.fullPath } }
     } else {
-      next({ path: '/login' })
+      return { path: '/login' }
     }
   } else if (to.meta.redirectToDefaultRoute && authenticated) {
     // Use the default route here.
-    log.debug(
-      `Route guard for '${to.path}': authentication - forbidden - authenticated.`,
-    )
-    next('/')
+    log.debug(`Route guard for '${to.path}': authentication - forbidden - authenticated.`)
+    return '/'
   } else {
-    log.debug(
-      `Route guard for '${to.path}': authentication - allowed - public.`,
-    )
-    next()
+    log.debug(`Route guard for '${to.path}': authentication - allowed - public.`)
+    return true
   }
 }
 
-const authenticationGuard: NavigationGuard = (
-  to: RouteLocationNormalized,
-  from: RouteLocationNormalized,
-  next: NavigationGuardNext,
-) => {
-  let unwatch: WatchStopHandle | undefined
+const authenticationGuard: NavigationGuard = (to: RouteLocationNormalized) => {
   const application = useApplicationStore()
 
   if (application.loading) {
-    unwatch = watch(
-      () => application.loaded,
-      () => {
-        checkAuthenticated(to, next)
-      },
-    )
+    return new Promise((resolve) => {
+      const unwatch = watch(
+        () => application.loaded,
+        () => {
+          unwatch()
+          resolve(checkAuthenticated(to))
+        },
+      )
+    })
   } else {
-    if (unwatch) {
-      unwatch()
-      unwatch = undefined
-    }
-    checkAuthenticated(to, next)
+    return checkAuthenticated(to)
   }
 }
 

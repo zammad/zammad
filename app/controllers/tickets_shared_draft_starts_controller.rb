@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class TicketsSharedDraftStartsController < ApplicationController
   prepend_before_action :authenticate_and_authorize!
@@ -24,8 +24,8 @@ class TicketsSharedDraftStartsController < ApplicationController
 
   def create
     object = Service::Ticket::SharedDraft::Start::Create
-      .new(current_user, params[:form_id], **safe_params)
-      .execute
+      .with_current_user(current_user)
+      .execute(params[:form_id], **safe_params)
 
     render json: {
       shared_draft_id: object.id,
@@ -37,8 +37,8 @@ class TicketsSharedDraftStartsController < ApplicationController
     object = scope.find params[:id]
 
     Service::Ticket::SharedDraft::Start::Update
-      .new(current_user, object, params[:form_id], **safe_params)
-      .execute
+      .with_current_user(current_user)
+      .execute(object, params[:form_id], **safe_params)
 
     render json: {
       shared_draft_id: object.id,

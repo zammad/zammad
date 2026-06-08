@@ -1,4 +1,7 @@
-subscription userCurrentOverviewOrderingFullAttributesUpdates($ignoreUserConditions: Boolean!, $withTicketCount : Boolean =  false) {
+subscription userCurrentOverviewOrderingFullAttributesUpdates(
+  $ignoreUserConditions: Boolean!
+  $withTicketCount: Boolean = false
+) {
   userCurrentOverviewOrderingUpdates(ignoreUserConditions: $ignoreUserConditions) {
     overviews {
       ...overviewAttributes

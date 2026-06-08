@@ -1,0 +1,6 @@
+{
+  "input": "<p>\nFor more details on triggers visit the following site:\n<br>\n<a href=\"https://admin-docs.zammad.org/en/latest/manage/trigger.html\">https://admin-docs.zammad.org/en/latest/manage/trigger.html</a>\n</p>",
+  "expected": {
+    "language": "en"
+  }
+}

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module ApplicationModel::CanAssets
   extend ActiveSupport::Concern
@@ -30,7 +30,7 @@ returns
       data[ app_model ] = {}
     end
     if !data[ app_model ][ id ]
-      data[ app_model ][ id ] = attributes_with_association_ids
+      data[ app_model ][ id ] = self_assets
     end
 
     return data if !self['created_by_id'] && !self['updated_by_id']
@@ -200,6 +200,10 @@ get assets of object list
       end
       assets
     end
+  end
+
+  def self_assets
+    attributes_with_association_ids
   end
 
   class << self

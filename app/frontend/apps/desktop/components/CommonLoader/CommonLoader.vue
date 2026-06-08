@@ -1,11 +1,10 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-/* eslint-disable vue/no-v-html */
-
 import { computed } from 'vue'
 
 import type { Sizes } from '#shared/components/CommonIcon/types.ts'
+import { useDebouncedLoading } from '#shared/composables/useDebouncedLoading.ts'
 import { markup } from '#shared/utils/markup.ts'
 
 interface Props {
@@ -17,6 +16,11 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   size: 'medium',
+  noTransition: true, // TODO: disable it for now by default, until we have a clear picture for that.
+})
+
+const { debouncedLoading: isSpinnerVisible } = useDebouncedLoading({
+  isLoading: computed(() => props.loading ?? false),
 })
 
 const minHeightClass = computed(() => {
@@ -49,7 +53,7 @@ export default {
 <template>
   <Transition :name="noTransition ? 'none' : 'fade'" mode="out-in">
     <div
-      v-if="loading"
+      v-if="isSpinnerVisible"
       v-bind="$attrs"
       class="flex items-center justify-center"
       :class="minHeightClass"
@@ -63,7 +67,9 @@ export default {
         :label="__('Loading…')"
       />
     </div>
+    <div v-else-if="loading" v-bind="$attrs" :class="minHeightClass" />
     <CommonAlert v-else-if="error" v-bind="$attrs" variant="danger">
+      <!-- eslint-disable vue/no-v-html -->
       <span v-html="markup($t(error))" />
     </CommonAlert>
     <slot v-else />

@@ -1,10 +1,9 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { waitFor } from '@testing-library/vue'
 import { stringifyQuery } from 'vue-router'
 
 import { visitView } from '#tests/support/components/visitView.ts'
-import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
 import { mockTicketOverviews } from '#tests/support/mocks/ticket-overviews.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
@@ -26,27 +25,17 @@ it('see default list when opening page', async () => {
   const plusSign = view.getByIconName('add')
 
   expect(plusSign, 'can create a new ticket from here').toBeInTheDocument()
-  expect(view.getLinkFromElement(plusSign)).toHaveAttribute(
-    'href',
-    '/mobile/tickets/create',
-  )
+  expect(view.getLinkFromElement(plusSign)).toHaveAttribute('href', '/mobile/tickets/create')
 
   await waitForNextTick(true)
 
-  expect(
-    await view.findByTestId('overview'),
-    'has default overview',
-  ).toHaveTextContent('Overview 1')
+  expect(await view.findByTestId('overview'), 'has default overview').toHaveTextContent(
+    'Overview 1',
+  )
 
-  expect(
-    await view.findByTestId('column'),
-    'has default column',
-  ).toHaveTextContent('Created at')
+  expect(await view.findByTestId('column'), 'has default column').toHaveTextContent('Created at')
 
-  expect(
-    view.getByIconName('arrow-down'),
-    'descending by default',
-  ).not.toHaveClass('rotate-180')
+  expect(view.getByIconName('arrow-down'), 'descending by default').not.toHaveClass('rotate-180')
 
   expect(
     await view.findByText('No entries'),
@@ -76,10 +65,7 @@ it('can filter by overview type', async () => {
   const ticketItem = view.getByText('Ticket 1')
 
   expect(ticketItem).toBeInTheDocument()
-  expect(view.getLinkFromElement(ticketItem)).toHaveAttribute(
-    'href',
-    '/mobile/tickets/1',
-  )
+  expect(view.getLinkFromElement(ticketItem)).toHaveAttribute('href', '/mobile/tickets/1')
 })
 
 it('can filter by columns and direction', async () => {
@@ -152,12 +138,10 @@ it('takes filter from query', async () => {
 })
 
 // TODO 2023-05-08 Sheremet V.A. rewrite test to run in Vitest browser mode
-describe.skip('paginating ticket list', () => {
+describe.todo('paginating ticket list', () => {
   const emulateScroll = async (scroll: number) => {
     document.documentElement.scrollTop = scroll
-    document.dispatchEvent(
-      new Event('scroll', { bubbles: true, cancelable: true }),
-    )
+    document.dispatchEvent(new Event('scroll', { bubbles: true, cancelable: true }))
 
     await waitForNextTick()
   }
@@ -168,17 +152,11 @@ describe.skip('paginating ticket list', () => {
       endCursor: 'cursor',
     })
 
-    mockApplicationConfig({
-      ui_ticket_overview_ticket_limit: 2000,
-    })
-
     const view = await visitView(`/tickets/view`)
 
     await waitFor(() => view.getByText('Ticket 1'))
 
-    expect(
-      view.queryByRole('button', { name: 'load 10 more' }),
-    ).not.toBeInTheDocument()
+    expect(view.queryByRole('button', { name: 'load 10 more' })).not.toBeInTheDocument()
 
     await emulateScroll(1000)
 
@@ -193,10 +171,6 @@ describe.skip('paginating ticket list', () => {
     const ticketOverviewsApi = mockTicketsByOverview([ticketDefault()], {
       hasNextPage: true,
       endCursor: 'cursor',
-    })
-
-    mockApplicationConfig({
-      ui_ticket_overview_ticket_limit: 2000,
     })
 
     const view = await visitView(`/tickets/view`)
@@ -223,10 +197,6 @@ describe.skip('paginating ticket list', () => {
     const ticketOverviewsApi = mockTicketsByOverview([ticketDefault()], {
       hasNextPage: true,
       endCursor: 'cursor',
-    })
-
-    mockApplicationConfig({
-      ui_ticket_overview_ticket_limit: 2000,
     })
 
     const view = await visitView(`/tickets/view`)

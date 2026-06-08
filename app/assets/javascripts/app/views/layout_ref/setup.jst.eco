@@ -80,10 +80,6 @@
             <div class="email provider_icon"></div>
             <div class="provider_name">Email</div>
           </div>
-          <div class="btn auth_provider auth_provider--wide twitter" data-target="twitter">
-            <div class="twitter provider_icon"></div>
-            <div class="provider_name">Twitter</div>
-          </div>
           <div class="btn auth_provider auth_provider--wide facebook" data-target="facebook">
             <div class="facebook provider_icon"></div>
             <div class="provider_name">Facebook</div>
@@ -230,10 +226,6 @@
             <div class="email provider_icon"></div>
             <div class="provider_name">Email</div>
           </div>
-          <div class="btn auth_provider auth_provider--wide twitter" data-target="twitter">
-            <div class="twitter provider_icon"></div>
-            <div class="provider_name">Twitter</div>
-          </div>
           <div class="btn auth_provider auth_provider--wide facebook" data-target="facebook">
             <div class="facebook provider_icon"></div>
             <div class="provider_name">Facebook</div>
@@ -292,13 +284,6 @@
             <div class="channelList-label">
               <div class="channelList-name">contact@company.com</div>
               <div class="channelList-status">Email</div>
-            </div>
-          </div>
-          <div class="channelList-entry center">
-            <div class="twitter channel icon"></div>
-            <div class="channelList-label">
-              <div class="channelList-name">@company</div>
-              <div class="channelList-status">Twitter</div>
             </div>
           </div>
           <div class="channelList-placeholder">

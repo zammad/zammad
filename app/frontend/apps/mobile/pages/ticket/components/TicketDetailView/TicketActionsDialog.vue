@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, toRef } from 'vue'
@@ -33,17 +33,12 @@ const router = useRouter()
 const ticketReactive = toRef(props, 'ticket')
 const { isTicketAgent, isTicketEditable } = useTicketView(ticketReactive)
 
-const { autocompleteRef, gqlQuery, openMergeTicketsDialog } = useTicketsMerge(
-  ticketReactive,
-  () => closeDialog(props.name),
+const { autocompleteRef, gqlQuery, openMergeTicketsDialog } = useTicketsMerge(ticketReactive, () =>
+  closeDialog(props.name),
 )
 
-const {
-  isSubscribed,
-  isSubscriptionLoading,
-  canManageSubscription,
-  toggleSubscribe,
-} = useTicketSubscribe(ticketReactive)
+const { isSubscribed, isSubscriptionLoading, canManageSubscription, toggleSubscribe } =
+  useTicketSubscribe(ticketReactive)
 
 const topButtons = computed(() =>
   [
@@ -55,9 +50,7 @@ const topButtons = computed(() =>
     },
     {
       label: isSubscribed.value ? __('Unsubscribe') : __('Subscribe'),
-      icon: isSubscribed.value
-        ? 'notification-unsubscribed'
-        : 'notification-subscribed',
+      icon: isSubscribed.value ? 'notification-unsubscribed' : 'notification-subscribed',
       value: 'subscribe',
       hidden: !canManageSubscription.value,
       selected: isSubscribed.value,
@@ -86,9 +79,7 @@ const topButtons = computed(() =>
 const changeCustomerDialog = useDialog({
   name: 'ticket-change-customer',
   component: () =>
-    import(
-      '#mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue'
-    ),
+    import('#mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue'),
 })
 
 const showChangeCustomer = () => {
@@ -133,10 +124,7 @@ const showChangeCustomer = () => {
         />
       </CommonSectionMenu> -->
       <CommonSectionMenu v-if="isTicketEditable && isTicketAgent">
-        <CommonSectionMenuLink
-          :label="__('Change customer')"
-          @click="showChangeCustomer"
-        >
+        <CommonSectionMenuLink :label="__('Change customer')" @click="showChangeCustomer">
           <template #icon>
             <CommonUserAvatar :entity="ticket.customer" size="small" />
           </template>

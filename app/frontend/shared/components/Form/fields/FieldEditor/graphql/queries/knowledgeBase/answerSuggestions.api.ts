@@ -10,6 +10,7 @@ export const KnowledgeBaseAnswerSuggestionsDocument = gql`
   knowledgeBaseAnswerSuggestions(query: $query) {
     id
     title
+    maybeLocale
     categoryTreeTranslation {
       id
       title

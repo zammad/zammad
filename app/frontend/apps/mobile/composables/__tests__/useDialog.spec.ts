@@ -1,11 +1,8 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { flushPromises, mount } from '@vue/test-utils'
 
-import {
-  destroyComponent,
-  pushComponent,
-} from '#shared/components/DynamicInitializer/manage.ts'
+import { destroyComponent, pushComponent } from '#shared/components/DynamicInitializer/manage.ts'
 
 import { getDialogMeta, useDialog } from '../useDialog.ts'
 
@@ -32,20 +29,22 @@ describe('use dialog usage', () => {
     dialogsOptions.clear()
   })
 
-  test('name and component are required', () => {
+  it('name and component are required', () => {
     // @ts-expect-error - component is required
     useDialog({ name: 'name' })
     // @ts-expect-error - name is required
     useDialog({
       component: vi.fn(),
     })
-    useDialog({
+    const vm = useDialog({
       name: 'name',
       component: vi.fn(),
     })
+
+    expect(vm.isOpened.value).toBeFalsy()
   })
 
-  test('adds and removes meta data', async () => {
+  it('adds and removes meta data', async () => {
     const vm = inContext(() => {
       useDialog({
         name: 'name',
@@ -65,7 +64,7 @@ describe('use dialog usage', () => {
     expect(dialogsOptions.has('name')).toBe(false)
   })
 
-  test('opens and closes dialog', async () => {
+  it('opens and closes dialog', async () => {
     const component = vi.fn().mockResolvedValue({})
     const dialog = useDialog({
       name: 'name',
@@ -78,12 +77,7 @@ describe('use dialog usage', () => {
     expect(dialog.isOpened.value).toBe(true)
     expect(component).toHaveBeenCalled()
     expect(dialogsOpened.value.has('name')).toBe(true)
-    expect(pushComponent).toHaveBeenCalledWith(
-      'dialog',
-      'name',
-      expect.anything(),
-      {},
-    )
+    expect(pushComponent).toHaveBeenCalledWith('dialog', 'name', expect.anything(), {})
 
     await dialog.close()
 
@@ -92,7 +86,7 @@ describe('use dialog usage', () => {
     expect(destroyComponent).toHaveBeenCalledWith('dialog', 'name')
   })
 
-  test('prefetch starts loading', async () => {
+  it('prefetch starts loading', async () => {
     const component = vi.fn().mockResolvedValue({})
     const dialog = useDialog({
       name: 'name',
@@ -102,7 +96,7 @@ describe('use dialog usage', () => {
     expect(component).toHaveBeenCalled()
   })
 
-  test('hooks are called', async () => {
+  it('hooks are called', async () => {
     const component = vi.fn().mockResolvedValue({})
     const beforeOpen = vi.fn()
     const afterClose = vi.fn()

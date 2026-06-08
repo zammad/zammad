@@ -1,9 +1,9 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { nullableMock } from '#tests/support/utils.ts'
 
 import type { TicketQuery } from '#shared/graphql/types.ts'
-import { EnumTicketStateColorCode } from '#shared/graphql/types.ts'
+import { EnumTicketStateColorCode, EnumTicketSummaryGeneration } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
 export const mockTicketCreateDate = new Date(2011, 11, 11, 11, 11, 11, 11)
@@ -71,6 +71,7 @@ export const defaultGroup = {
   name: 'Test Agents',
   emailAddress: null,
   sharedDrafts: true,
+  summaryGeneration: EnumTicketSummaryGeneration.GlobalDefault,
 }
 
 export const defaultPriority = {
@@ -104,7 +105,7 @@ export const createDummyTicket = <R = TicketQuery['ticket']>(options?: {
   organization?: TicketQuery['ticket']['organization']
   state?: TicketQuery['ticket']['state']
   articleType?: string
-  group?: TicketQuery['ticket']['group']
+  group?: Partial<TicketQuery['ticket']['group']>
   defaultPriority?: TicketQuery['ticket']['priority']
   defaultPolicy?: TicketQuery['ticket']['policy']
   mentions?: TicketQuery['ticket']['mentions']
@@ -120,7 +121,12 @@ export const createDummyTicket = <R = TicketQuery['ticket']>(options?: {
   externalReferences?: TicketQuery['ticket']['externalReferences']
   preferences?: TicketQuery['ticket']['preferences']
   sharedDraftZoomId?: number
-  // eslint-disable-next-line sonarjs/cognitive-complexity
+  aiAgentRunning?: TicketQuery['ticket']['aiAgentRunning']
+  escalationAt?: TicketQuery['ticket']['escalationAt']
+  firstResponseEscalationAt?: TicketQuery['ticket']['firstResponseEscalationAt']
+  updateEscalationAt?: TicketQuery['ticket']['updateEscalationAt']
+  closeEscalationAt?: TicketQuery['ticket']['closeEscalationAt']
+  objectAttributeValues?: TicketQuery['ticket']['objectAttributeValues']
 }): R => {
   return nullableMock({
     __typename: 'Ticket',
@@ -134,36 +140,26 @@ export const createDummyTicket = <R = TicketQuery['ticket']>(options?: {
     number: options?.number || '89002',
     title: options?.title || 'Test Ticket',
     createdAt: mockTicketCreateDate.toISOString(),
-    escalationAt: null,
+    escalationAt: options?.escalationAt || null,
     updatedAt: mockTicketUpdateDate.toISOString(),
     pendingTime: null,
     owner: options?.owner === undefined ? defaultOwner : options?.owner,
-    customer:
-      options?.customer === undefined ? defaultCustomer : options?.customer,
-    organization:
-      options?.organization === undefined
-        ? defaultOrganization
-        : options?.organization,
+    customer: options?.customer === undefined ? defaultCustomer : options?.customer,
+    organization: options?.organization === undefined ? defaultOrganization : options?.organization,
     state: options?.state === undefined ? defaultState : options?.state,
     group: options?.group === undefined ? defaultGroup : options?.group,
-    priority:
-      options?.defaultPriority === undefined
-        ? defaultPriority
-        : options?.defaultPriority,
-    objectAttributeValues: [],
-    policy:
-      options?.defaultPolicy === undefined
-        ? defaultPolicy
-        : options?.defaultPolicy,
+    priority: options?.defaultPriority === undefined ? defaultPriority : options?.defaultPriority,
+    objectAttributeValues: options?.objectAttributeValues || [],
+    policy: options?.defaultPolicy === undefined ? defaultPolicy : options?.defaultPolicy,
     tags: options?.tags || [],
     timeUnit: options?.timeUnit || null,
     timeUnitsPerType: options?.timeUnitsPerType || [],
     subscribed: options?.subscribed || false,
     preferences: options?.preferences || {},
     stateColorCode: options?.colorCode || EnumTicketStateColorCode.Open,
-    firstResponseEscalationAt: null,
-    closeEscalationAt: null,
-    updateEscalationAt: null,
+    firstResponseEscalationAt: options?.firstResponseEscalationAt || null,
+    closeEscalationAt: options?.closeEscalationAt || null,
+    updateEscalationAt: options?.updateEscalationAt || null,
     externalReferences: options?.externalReferences,
     initialChannel: null,
     mentions: options?.mentions || defaultMentions,
@@ -172,5 +168,6 @@ export const createDummyTicket = <R = TicketQuery['ticket']>(options?: {
     sharedDraftZoomId: options?.sharedDraftZoomId
       ? convertToGraphQLId('Ticket::SharedDraftZoom', options.sharedDraftZoomId)
       : null,
+    aiAgentRunning: options?.aiAgentRunning,
   }) as R
 }

@@ -1,14 +1,26 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { describe, it, expect, vi, beforeEach } from 'vitest'
-
-import { mockRouterHooks } from '#tests/support/mock-vue-router.ts'
+import { describe, it, expect, vi, beforeEach, type Mock } from 'vitest'
 
 import { useAbortNavigation } from '../useAbortNavigation.ts'
 
 const waitForVariantConfirmationMock = vi.fn()
+let onBeforeRouteUpdateCallback: Mock | undefined
+let onBeforeRouteLeaveCallback: Mock | undefined
 
-mockRouterHooks()
+vi.mock('vue-router', async (importOriginal) => {
+  const module = await importOriginal<typeof import('vue-router')>()
+
+  return {
+    ...module,
+    onBeforeRouteUpdate: vi.fn((callback) => {
+      onBeforeRouteUpdateCallback = callback as Mock
+    }),
+    onBeforeRouteLeave: vi.fn((callback) => {
+      onBeforeRouteLeaveCallback = callback as Mock
+    }),
+  }
+})
 
 vi.mock('#shared/composables/useConfirmation.ts', () => ({
   useConfirmation: () => ({
@@ -17,12 +29,15 @@ vi.mock('#shared/composables/useConfirmation.ts', () => ({
 }))
 
 describe('useAbortNavigation', () => {
-  let confirmCallbackMock: ReturnType<typeof vi.fn>
-  let shouldConfirmNavigationMock: ReturnType<typeof vi.fn>
+  let confirmCallbackMock: Mock
+  let shouldConfirmNavigationMock: Mock
 
   beforeEach(() => {
     confirmCallbackMock = vi.fn()
     shouldConfirmNavigationMock = vi.fn()
+    waitForVariantConfirmationMock.mockReset()
+    onBeforeRouteUpdateCallback = undefined
+    onBeforeRouteLeaveCallback = undefined
   })
 
   it('allows navigation if shouldConfirmNavigation returns false', async () => {
@@ -33,7 +48,11 @@ describe('useAbortNavigation', () => {
       shouldConfirmNavigation: <() => boolean>shouldConfirmNavigationMock,
     })
 
+    const result = await onBeforeRouteUpdateCallback?.()
+
+    expect(result).toBe(true)
     expect(waitForVariantConfirmationMock).not.toHaveBeenCalled()
+    expect(confirmCallbackMock).not.toHaveBeenCalled()
   })
 
   it('aborts navigation if confirmation is not given', async () => {
@@ -45,12 +64,14 @@ describe('useAbortNavigation', () => {
       shouldConfirmNavigation: <() => boolean>shouldConfirmNavigationMock,
     })
 
-    // expect(result).toBe(false)
-    // expect(waitForVariantConfirmationMock).toHaveBeenCalledWith('unsaved')
+    const result = await onBeforeRouteUpdateCallback?.()
+
+    expect(result).toBe(false)
+    expect(waitForVariantConfirmationMock).toHaveBeenCalledWith('unsaved')
     expect(confirmCallbackMock).not.toHaveBeenCalled()
   })
 
-  it.todo('confirms navigation if confirmation is given', async () => {
+  it('confirms navigation if confirmation is given', async () => {
     shouldConfirmNavigationMock.mockReturnValue(true)
     waitForVariantConfirmationMock.mockResolvedValue(true)
 
@@ -59,25 +80,26 @@ describe('useAbortNavigation', () => {
       shouldConfirmNavigation: <() => boolean>shouldConfirmNavigationMock,
     })
 
-    // expect(result).toBe(true)
-    // expect(waitForVariantConfirmationMock).toHaveBeenCalledWith('unsaved')
+    const result = await onBeforeRouteUpdateCallback?.()
+
+    expect(result).toBe(true)
+    expect(waitForVariantConfirmationMock).toHaveBeenCalledWith('unsaved')
     expect(confirmCallbackMock).toHaveBeenCalled()
   })
 
-  it.todo(
-    'handles onBeforeRouteLeave similarly to onBeforeRouteUpdate',
-    async () => {
-      shouldConfirmNavigationMock.mockReturnValue(true)
-      waitForVariantConfirmationMock.mockResolvedValue(true)
+  it('handles onBeforeRouteLeave similarly to onBeforeRouteUpdate', async () => {
+    shouldConfirmNavigationMock.mockReturnValue(true)
+    waitForVariantConfirmationMock.mockResolvedValue(true)
 
-      useAbortNavigation({
-        confirmCallback: confirmCallbackMock,
-        shouldConfirmNavigation: <() => boolean>shouldConfirmNavigationMock,
-      })
+    useAbortNavigation({
+      confirmCallback: confirmCallbackMock,
+      shouldConfirmNavigation: <() => boolean>shouldConfirmNavigationMock,
+    })
 
-      // expect(result).toBe(true)
-      // expect(waitForVariantConfirmationMock).toHaveBeenCalledWith('unsaved')
-      expect(confirmCallbackMock).toHaveBeenCalled()
-    },
-  )
+    const result = await onBeforeRouteLeaveCallback?.()
+
+    expect(result).toBe(true)
+    expect(waitForVariantConfirmationMock).toHaveBeenCalledWith('unsaved')
+    expect(confirmCallbackMock).toHaveBeenCalled()
+  })
 })

@@ -1,16 +1,14 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { flushPromises } from '@vue/test-utils'
 
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
+import { waitFor } from '#tests/support/vitest-wrapper.ts'
 
 import { getConfigUpdatesSubscriptionHandler } from '#shared/graphql/subscriptions/configUpdates.mocks.ts'
-import {
-  EnumSystemSetupInfoStatus,
-  EnumSystemSetupInfoType,
-} from '#shared/graphql/types.ts'
+import { EnumSystemSetupInfoStatus, EnumSystemSetupInfoType } from '#shared/graphql/types.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
 
 import { mockSystemImportStateQuery } from '../graphql/queries/systemImportState.mocks.ts'
@@ -45,7 +43,7 @@ describe('guided setup import source status', () => {
     it('redirects to freshdesk configuration', async () => {
       const view = await visitView('/guided-setup/import/freshdesk/status')
 
-      await vi.waitFor(() => {
+      await waitFor(() => {
         expect(
           view,
           'correctly redirects to guided setup import source freshdesk configuration',
@@ -257,24 +255,20 @@ describe('guided setup import source status', () => {
 
       await waitForNextTick()
 
-      const successMessage = await view.findByText(
-        'Import finished successfully!',
-      )
+      const successMessage = await view.findByText('Import finished successfully!')
 
       expect(successMessage.role).toBe('alert')
       expect(successMessage).toBeInTheDocument()
 
       const goToLoginButton = view.getByRole('button', {
-        name: 'Go to Login',
+        name: 'Go to login',
       })
       await view.events.click(goToLoginButton)
 
       await flushPromises()
 
-      await vi.waitFor(() => {
-        expect(view, 'correctly redirects to login page').toHaveCurrentUrl(
-          '/login',
-        )
+      await waitFor(() => {
+        expect(view, 'correctly redirects to login page').toHaveCurrentUrl('/login')
       })
     })
 
@@ -336,9 +330,7 @@ describe('guided setup import source status', () => {
 
       await waitForNextTick()
 
-      const errorMessage = await view.findByText(
-        'An error occurred while importing data.',
-      )
+      const errorMessage = await view.findByText('An error occurred while importing data.')
       expect(errorMessage.role).toBe('alert')
       expect(errorMessage).toBeInTheDocument()
 
@@ -392,9 +384,7 @@ describe('guided setup import source status', () => {
 
       await waitForNextTick()
 
-      const errorMessage = await view.findByText(
-        'An error occurred while importing data.',
-      )
+      const errorMessage = await view.findByText('An error occurred while importing data.')
       expect(errorMessage.role).toBe('alert')
       expect(errorMessage).toBeInTheDocument()
       expect(view.queryByText('Starting import…')).not.toBeInTheDocument()

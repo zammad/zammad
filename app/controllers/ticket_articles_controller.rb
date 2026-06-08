@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class TicketArticlesController < ApplicationController
   include CreatesTicketArticles
@@ -78,7 +78,7 @@ class TicketArticlesController < ApplicationController
   # POST /articles
   def create
     ticket = Ticket.find(params[:ticket_id])
-    authorize!(ticket)
+    authorize!(ticket, :follow_up?)
     article = article_create(ticket, params)
 
     if response_expand?
@@ -101,17 +101,27 @@ class TicketArticlesController < ApplicationController
     article = Ticket::Article.find(params[:id])
     authorize!(article)
 
-    # only update internal and highlight info
     clean_params = {}
-    if !params[:internal].nil?
-      clean_params[:internal] = params[:internal]
-    end
-    if params.dig(:preferences, :highlight).present?
-      clean_params = article.param_preferences_merge(clean_params.merge(
-                                                       preferences: {
-                                                         highlight: params[:preferences][:highlight].to_s
-                                                       }
-                                                     ))
+
+    # With active import mode every article attribute can be updated.
+    if Setting.get('import_mode') == true
+      clean_params = Ticket::Article.association_name_to_id_convert(params)
+      clean_params = Ticket::Article.param_cleanup(clean_params, true)
+
+      # Only apply preferences changes (keep not updated keys/values)
+      clean_params = article.param_preferences_merge(clean_params)
+    else
+      # only update internal and highlight info
+      if !params[:internal].nil?
+        clean_params[:internal] = params[:internal]
+      end
+      if params.dig(:preferences, :highlight).present?
+        clean_params = article.param_preferences_merge(clean_params.merge(
+                                                         preferences: {
+                                                           highlight: params[:preferences][:highlight].to_s
+                                                         }
+                                                       ))
+      end
     end
 
     article.update!(clean_params)
@@ -194,8 +204,9 @@ class TicketArticlesController < ApplicationController
 
     file = article.as_raw
 
-    # find file
-    return if !file
+    if !file
+      raise ActiveRecord::RecordNotFound, __('This article does not have a raw copy available.')
+    end
 
     send_data(
       file.content,
@@ -244,7 +255,7 @@ class TicketArticlesController < ApplicationController
     if string.blank? && params[:file].present?
       string = params[:file].read.force_encoding('utf-8')
     end
-    raise Exceptions::UnprocessableEntity, __('No source data submitted!') if string.blank?
+    raise Exceptions::UnprocessableContent, __('No source data submitted!') if string.blank?
 
     result = Ticket::Article.csv_import(
       string:       string,
@@ -275,15 +286,15 @@ class TicketArticlesController < ApplicationController
     render json: {}, status: :ok
   rescue => e
     logger.error e
-    render json: { error: __('The retried attachment download failed.') }, status: :unprocessable_entity
+    render json: { error: __('The retried attachment download failed.') }, status: :unprocessable_content
   end
 
   private
 
   def render_calendar_preview
-    render json: Service::Calendar::IcsFile::Parse.new(current_user:).execute(file: download_file), status: :ok
+    render json: Service::Calendar::IcsFile::Parse.with_current_user(current_user).execute(file: download_file), status: :ok
   rescue => e
     logger.error e
-    render json: { error: __('The preview cannot be generated. The format is corrupted or not supported.') }, status: :unprocessable_entity
+    render json: { error: __('The preview cannot be generated. The format is corrupted or not supported.') }, status: :unprocessable_content
   end
 end

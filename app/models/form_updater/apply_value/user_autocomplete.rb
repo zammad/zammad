@@ -1,28 +1,37 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class FormUpdater::ApplyValue::UserAutocomplete < FormUpdater::ApplyValue::Base
+
+  # Resolves a User id into the canonical option entry consumed by the
+  # autocomplete FormKit field — same shape `FieldCustomer`/`FieldAgent` build
+  # client-side. Reused by `map_value` for top-level form fields and by the
+  # advanced search filter prefill path.
+  #
+  # TODO: visibility is not enforced here yet — the lookup is a plain find_by.
+  # The taskbar / template-restore paths already worked this way; the filter
+  # prefill inherits that and will be tightened together with the apply-value
+  # path in a follow-up.
+  def self.resolve_option(id)
+    user = User.find_by(id: id)
+    return if !user
+
+    {
+      value:   user.id,
+      label:   user.fullname.presence || user.login,
+      heading: user.organization&.name,
+      object:  FormUpdater::Graphql::Serializers::User.serialize(user),
+    }
+  end
 
   def can_handle_field?(field:, field_attribute:)
     field_attribute&.data_option&.[]('relation') == 'User'
   end
 
   def map_value(field:, config:)
-    user = User.find_by(id: config['value'])
-    return if !user
+    option = self.class.resolve_option(config['value'])
+    return if !option
 
-    user_obj = user.attributes
-      .slice('active', 'email', 'firstname', 'fullname', 'image', 'lastname', 'mobile', 'out_of_office', 'out_of_office_end_at', 'out_of_office_start_at', 'phone', 'source', 'vip')
-      .merge({
-               '__typename' => 'User',
-               'id'         => Gql::ZammadSchema.id_from_internal_id('User', user.id),
-             })
-
-    result[field][:value] = user.id
-    result[field][:options] = [{
-      value:   user.id,
-      label:   user.fullname.presence || user.phone.presence || user.login,
-      heading: user.organization&.name,
-      object:  user_obj,
-    }]
+    result[field][:value] = option[:value]
+    result[field][:options] = [option]
   end
 end

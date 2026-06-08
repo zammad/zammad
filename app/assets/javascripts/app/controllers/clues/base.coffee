@@ -37,11 +37,11 @@ class App.CluesBase extends App.Controller
 
   next: (event) =>
     event.stopPropagation()
-    @navigate 1
+    @switchDirection 1
 
   previous: (event) =>
     event.stopPropagation()
-    @navigate -1
+    @switchDirection -1
 
   close: =>
     @cleanUp()
@@ -51,7 +51,7 @@ class App.CluesBase extends App.Controller
   remove: ->
     @el.remove()
 
-  navigate: (direction) ->
+  switchDirection: (direction) ->
     @cleanUp =>
       @position += direction
 
@@ -278,6 +278,10 @@ class App.CluesBase extends App.Controller
         target = $( action.substr action.indexOf(' ') + 1 )
 
       switch eventName
+        when 'scrollTo'
+          $(target).get(0).scrollIntoView(block: 'center')
+        when 'navigate'
+          @navigate $(target).attr('href')
         when 'click'
           target.trigger('click')
         when 'hover'

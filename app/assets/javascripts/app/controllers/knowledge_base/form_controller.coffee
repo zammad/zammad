@@ -30,6 +30,7 @@ class App.KnowledgeBaseFormController extends App.ControllerForm
     data.index             = 'KnowledgeBase::Answer::Translation'
     data.locale            = @kb_locale.systemLocale().locale
     data.highlight_enabled = false
+    data.url_type          = 'agent'
 
     attributes.data = JSON.stringify(data)
 

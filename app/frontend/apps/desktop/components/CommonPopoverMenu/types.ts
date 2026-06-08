@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import type { ButtonVariant } from '#shared/types/button.ts'
 import type { RequiredPermission } from '#shared/types/permission.ts'
@@ -7,6 +7,7 @@ import type { ObjectLike } from '#shared/types/utils.ts'
 import { type Props as ItemProps } from './CommonPopoverMenuItem.vue'
 
 import type { Component, ComputedRef } from 'vue'
+import type { Router } from 'vue-router'
 
 export type Variant = ButtonVariant
 
@@ -20,10 +21,14 @@ export interface MenuItem extends ItemProps {
    */
   groupLabel?: string
   separatorTop?: boolean
-  onClick?: (entity?: ObjectLike) => void
+  onClick?: (entity?: ObjectLike, router?: Router) => void
   noCloseOnClick?: boolean
   component?: Component
   variant?: Variant
+  /**
+   * Shows Label when used in single action mode.
+   */
+  showLabel?: boolean
 }
 
 export interface UsePopoverMenuReturn {

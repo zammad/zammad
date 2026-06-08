@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Macro < ApplicationModel
   include ChecksClientNotification
@@ -10,6 +10,7 @@ class Macro < ApplicationModel
   include CanSearch
   include Macro::TriggersSubscriptions
   include HasOptionalGroups
+  include TouchesPerformReferences
 
   store     :perform
   validates :perform,         'validations/verify_perform_rules': true

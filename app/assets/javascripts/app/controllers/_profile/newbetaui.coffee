@@ -4,8 +4,8 @@ class ProfileNewBetaUI extends App.ControllerSubContent
 
   constructor: ->
     super
+
     @render()
-    @controllerBind('ui:beta:saved', @render)
 
   render: (params) =>
     content = $(App.view('profile/newbetaui')())
@@ -55,11 +55,19 @@ class ProfileNewBetaUI extends App.ControllerSubContent
 
 App.Config.set('NewBetaUI', {
   prio: 950,
-  name: __('New Beta UI'),
+  name: __('New BETA UI'),
   parent: '#profile',
   target: '#profile/newbetaui',
   controller: ProfileNewBetaUI,
   permission: (controller) ->
     return false if !App.Config.get('ui_desktop_beta_switch')
-    return controller.permissionCheck('user_preferences.beta_ui_switch')
+
+    role_ids = App.Config.get('ui_desktop_beta_switch_role_ids')
+
+    return false if not _.isEmpty(role_ids) and not _.some(role_ids, (role_id) ->
+      _.contains(App.User.current().role_ids, parseInt(role_id, 10))
+    )
+
+    controller.permissionCheck('user_preferences.beta_ui_switch')
+
 }, 'NavBarProfile')

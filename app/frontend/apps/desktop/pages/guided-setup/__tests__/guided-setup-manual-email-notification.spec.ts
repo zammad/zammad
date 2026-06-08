@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { getNode } from '@formkit/core'
 import { getByRole, queryByRole } from '@testing-library/vue'
@@ -8,6 +8,7 @@ import { visitView } from '#tests/support/components/visitView.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockAuthentication } from '#tests/support/mock-authentication.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
+import { waitFor } from '#tests/support/vitest-wrapper.ts'
 
 import { mockFormUpdaterQuery } from '#shared/components/Form/graphql/queries/formUpdater.mocks.ts'
 import { EnumSystemSetupInfoStatus } from '#shared/graphql/types.ts'
@@ -38,11 +39,10 @@ describe('guided setup manual email notification', () => {
 
       const view = await visitView('/guided-setup/manual/email-notification')
 
-      await vi.waitFor(() => {
-        expect(
-          view,
-          'correctly redirects to guided setup start screen',
-        ).toHaveCurrentUrl('/guided-setup')
+      await waitFor(() => {
+        expect(view, 'correctly redirects to guided setup start screen').toHaveCurrentUrl(
+          '/guided-setup',
+        )
       })
       view.getByText('Set up a new system')
     })
@@ -68,8 +68,7 @@ describe('guided setup manual email notification', () => {
                 },
                 {
                   value: 'sendmail',
-                  label:
-                    'Local MTA (Sendmail/Postfix/Exim/â\u0080¦) - use server setup',
+                  label: 'Local MTA (Sendmail/Postfix/Exim/â\u0080¦) - use server setup',
                 },
               ],
             },
@@ -100,20 +99,19 @@ describe('guided setup manual email notification', () => {
       await flushPromises()
       await getNode('email-notification-setup')?.settled
 
-      expect(view.getByText('Email Notification')).toBeInTheDocument()
+      expect(view.getByText('Email notification')).toBeInTheDocument()
       expect(view.getByLabelText('Send mails via')).toBeInTheDocument()
 
       const continueButton = view.getByRole('button', {
-        name: 'Save and Continue',
+        name: 'Save and continue',
       })
 
       await view.events.click(continueButton)
 
-      await vi.waitFor(() => {
-        expect(
-          view,
-          'correctly redirects to guided setup email channel step',
-        ).toHaveCurrentUrl('/guided-setup/manual/channels')
+      await waitFor(() => {
+        expect(view, 'correctly redirects to guided setup email channel step').toHaveCurrentUrl(
+          '/guided-setup/manual/channels',
+        )
       })
     })
 
@@ -173,25 +171,25 @@ describe('guided setup manual email notification', () => {
 
       await view.events.type(view.getByLabelText('Port'), '25')
 
-      await vi.waitFor(() => {
+      await waitFor(() => {
         expect(view.getByLabelText('SSL verification')).toBeDisabled()
       })
 
       await view.events.clear(view.getByLabelText('Port'))
 
-      await vi.waitFor(() => {
+      await waitFor(() => {
         expect(view.getByLabelText('SSL verification')).not.toBeDisabled()
       })
 
       await view.events.type(view.getByLabelText('Port'), '465')
 
-      await vi.waitFor(() => {
+      await waitFor(() => {
         expect(view.getByLabelText('SSL verification')).not.toBeDisabled()
       })
 
       await view.events.type(view.getByLabelText('Port'), '587')
 
-      await vi.waitFor(() => {
+      await waitFor(() => {
         expect(view.getByLabelText('SSL verification')).not.toBeDisabled()
       })
     })
@@ -221,26 +219,20 @@ describe('guided setup manual email notification', () => {
       await view.events.click(view.getAllByRole('option')[0])
       await view.events.type(view.getByLabelText('Host'), 'mail')
 
-      await view.events.type(
-        view.getByLabelText('User'),
-        'zammad@mail.test.dc.zammad.com',
-      )
+      await view.events.type(view.getByLabelText('User'), 'zammad@mail.test.dc.zammad.com')
 
       await view.events.type(view.getByLabelText('Password'), 'zammad')
       await view.events.type(view.getByLabelText('Port'), '25')
 
-      expect(
-        getNode('email-notification-setup')?.find('sslVerify')?.value,
-      ).toBe(true)
+      expect(getNode('email-notification-setup')?.find('sslVerify')?.value).toBe(true)
 
       await view.events.click(
         view.getByRole('button', {
-          name: 'Save and Continue',
+          name: 'Save and continue',
         }),
       )
 
-      const calls =
-        await waitForChannelEmailValidateConfigurationOutboundMutationCalls()
+      const calls = await waitForChannelEmailValidateConfigurationOutboundMutationCalls()
 
       expect(calls.at(-1)?.variables).toEqual(
         expect.objectContaining({
@@ -254,15 +246,14 @@ describe('guided setup manual email notification', () => {
     it('can go back to system information step', async () => {
       const view = await visitView('/guided-setup/manual/email-notification')
 
-      const goBackButton = view.getByRole('button', { name: 'Go Back' })
+      const goBackButton = view.getByRole('button', { name: 'Go back' })
 
       await view.events.click(goBackButton)
 
-      await vi.waitFor(() => {
-        expect(
-          view,
-          'correctly redirects to email notification step',
-        ).toHaveCurrentUrl('/guided-setup/manual/system-information')
+      await waitFor(() => {
+        expect(view, 'correctly redirects to email notification step').toHaveCurrentUrl(
+          '/guided-setup/manual/system-information',
+        )
       })
     })
 
@@ -273,7 +264,7 @@ describe('guided setup manual email notification', () => {
 
       await view.events.click(skipButton)
 
-      await vi.waitFor(() => {
+      await waitFor(() => {
         expect(view, 'correctly redirects to channels step').toHaveCurrentUrl(
           '/guided-setup/manual/channels',
         )

@@ -1,0 +1,18 @@
+티켓 알림 도달 (#{ticket.title})
+
+<div>안녕하세요 #{recipient.firstname}님,</div>
+<br>
+<div>티켓에 주의가 필요합니다: 고객 "<b>#{ticket.customer.longname}</b>"의 (#{ticket.title})에 대한 알림이 도달했습니다.</div>
+<br>
+<% if @objects[:article] %>
+  <div>
+  정보:
+  <blockquote type="cite">
+  #{article.body_as_html}
+  </blockquote>
+  </div>
+<% end %>
+<br>
+<div>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">#{config.product_name}에서 보기</a>
+</div>

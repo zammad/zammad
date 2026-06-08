@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import type { UseElementBoundingReturn } from '@vueuse/core'
 import type { Ref } from 'vue'
@@ -11,7 +11,9 @@ export interface FieldTreeSelectInputDropdownInstance {
   isOpen: boolean
 }
 
-export interface FieldTreeSelectInputDropdownInternalInstance
-  extends Omit<FieldTreeSelectInputDropdownInstance, 'isOpen'> {
+export interface FieldTreeSelectInputDropdownInternalInstance extends Omit<
+  FieldTreeSelectInputDropdownInstance,
+  'isOpen'
+> {
   isOpen: Ref<boolean>
 }

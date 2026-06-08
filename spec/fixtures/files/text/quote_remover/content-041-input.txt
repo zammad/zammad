@@ -1,0 +1,18 @@
+Hallo Herr Müller,
+
+vielen Dank für Ihre Nachricht. Wir werden uns umgehend darum kümmern.
+
+Mit freundlichen Grüßen,
+Support Team
+
+Von: Max Müller via Zammad Sales <sales@example.com>
+Gesendet: Mittwoch, 30. Juli 2025 14:32
+An: Support <support@example.com>
+Betreff: Anfrage zu Ihrem Produkt
+
+Guten Tag,
+
+ich hätte eine Frage zu Ihrem Produkt. Können Sie mir bitte mehr Informationen zusenden?
+
+Mit freundlichen Grüßen,
+Max Müller

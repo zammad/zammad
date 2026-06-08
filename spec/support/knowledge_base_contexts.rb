@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 RSpec.shared_context 'basic Knowledge Base', current_user_id: 1 do # rubocop:disable RSpec/ContextWording
   let :knowledge_base do
@@ -39,6 +39,14 @@ RSpec.shared_context 'basic Knowledge Base', current_user_id: 1 do # rubocop:dis
 
   let :published_answer_in_other_category do
     create(:knowledge_base_answer, :published, category: other_category)
+  end
+
+  let :internal_answer_in_other_category do
+    create(:knowledge_base_answer, :internal, category: other_category)
+  end
+
+  let :draft_answer_in_other_category do
+    create(:knowledge_base_answer, :draft, category: other_category)
   end
 
   let :published_answer_in_subcategory do

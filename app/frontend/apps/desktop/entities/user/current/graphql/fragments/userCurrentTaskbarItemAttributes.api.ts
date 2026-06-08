@@ -21,14 +21,20 @@ export const UserCurrentTaskbarItemAttributesFragmentDoc = gql`
     ... on UserTaskbarItemEntitySearch {
       query
       model
+      filters
+      filterCount
     }
     ... on User {
       id
       internalId
+      fullname
+      active
     }
     ... on Organization {
       id
       internalId
+      name
+      active
     }
   }
   entityAccess

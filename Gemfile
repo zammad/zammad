@@ -1,10 +1,10 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 source 'https://rubygems.org'
 
 # core - base
-ruby '3.3.8'
-gem 'rails', '~> 7.2.0'
+ruby '3.4.9'
+gem 'rails', '~> 8.0.0'
 gem 'rake'
 
 # core - rails additions
@@ -18,12 +18,12 @@ gem 'parallel'
 gem 'puma', group: :puma
 
 # core - supported ORMs
-gem 'mysql2', group: :mysql
 gem 'pg', '~> 1.5', '>= 1.5.4', group: :postgres
 
 # core - asynchrous task execution
 gem 'daemons'
-gem 'delayed_job_active_record'
+gem 'delayed_job', git: 'https://github.com/zammad-deps/delayed_job', branch: 'threadsafe'
+gem 'delayed_job_active_record', git: 'https://github.com/zammad-deps/delayed_job_active_record', branch: 'update-limit-143'
 
 # core - command line interface
 gem 'thor'
@@ -31,10 +31,8 @@ gem 'thor'
 # core - websocket
 gem 'em-websocket'
 gem 'eventmachine'
-gem 'hiredis'
-# version restriction from actioncable-6.1.6.1/lib/action_cable/subscription_adapter/redis.rb
-#   - check after rails update
-gem 'redis', '>= 3', '< 5'
+gem 'hiredis-client'
+gem 'redis'
 
 # core - password security
 gem 'argon2'
@@ -81,11 +79,11 @@ group :assets do
   # We cannot use sassc-rails, as it can lead to crashes on modern platforms like CentOS 9.
   # See https://jcmaciel.com/apple-silicon-ruby-on-rails-crash-segfault-sassc/
   #     https://github.com/sass/sassc-ruby/issues/197
-  # Pin to v5 which does not use sassc internally.
-  gem 'sass-rails', '~> 5', require: false
+  # Use dartsass-rails which uses Dart Sass (no sassc dependency).
+  gem 'dartsass-rails', require: false
 
   # asset handling - pipeline
-  gem 'sprockets', '~> 3.7.2', require: false
+  gem 'sprockets', '~> 4', require: false
   gem 'terser', require: false
 
   gem 'autoprefixer-rails', require: false
@@ -112,7 +110,7 @@ gem 'omniauth-microsoft-office365'
 gem 'omniauth_openid_connect'
 gem 'omniauth-saml'
 gem 'omniauth-twitter'
-gem 'omniauth-weibo-oauth2', git: 'https://github.com/zammad-deps/omniauth-weibo-oauth2', branch: 'unpin-dependencies'
+gem 'omniauth-weibo-oauth2'
 
 # Rate limiting
 gem 'rack-attack'
@@ -120,7 +118,6 @@ gem 'rack-attack'
 # channels
 gem 'koala'
 gem 'telegram-bot-ruby'
-gem 'twitter', '~> 7'
 gem 'whatsapp_sdk'
 
 # channels - email additions
@@ -171,7 +168,6 @@ gem 'acts_as_list'
 # integrations
 gem 'clearbit', require: false
 gem 'net-ldap'
-gem 'slack-notifier', require: false
 gem 'zendesk_api', require: false
 
 # integrations - exchange
@@ -189,8 +185,6 @@ gem 'PoParser', require: false
 gem 'aws-sdk-s3', require: false
 
 # Debugging and profiling
-gem 'byebug'
-gem 'pry-byebug'
 gem 'pry-rails'
 gem 'pry-remote'
 gem 'pry-rescue'
@@ -208,6 +202,9 @@ gem 'cld'
 
 # CLDR wrapper for i18n and l10n
 gem 'twitter_cldr'
+
+# AI integration
+gem 'elasticsearch', '>=8.11', '<10.0', require: false
 
 # Gems used only for develop/test and not required
 # in production environments by default.
@@ -271,6 +268,10 @@ group :development, :test do
   # Debugging and profiling
   gem 'pry-doc' # This gem is very large, so don't include it in production.
 end
+
+# Pin Minitest to V5 to avoid issues with Minitest V6.
+# This can be removed once the old minitests are updated to work with V6.
+gem 'minitest', '~> 5.0', require: false
 
 # To permanently extend Zammad with additional gems, you can specify them in Gemfile.local.
 Dir['Gemfile.local*'].each do |file|

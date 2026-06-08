@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -62,10 +62,17 @@ RSpec.describe 'GitLab', required_envs: %w[GITLAB_ENDPOINT GITLAB_APITOKEN], typ
 
       authenticated_as(admin)
       instance = instance_double(GitLab)
-      expect(GitLab).to receive(:new).with(endpoint: endpoint, api_token: token, verify_ssl: verify_ssl).and_return instance
-      expect(instance).to receive(:verify!).and_return(true)
+      expect(GitLab).to receive(:new).with(endpoint: endpoint, api_token: token, verify_ssl: verify_ssl).exactly(2).and_return instance
+      expect(instance).to receive(:verify!).exactly(2).and_return(true)
 
       post '/api/v1/integration/gitlab/verify', params: params, as: :json
+      expect(response).to have_http_status(:ok)
+      expect(json_response).to be_a(Hash)
+      expect(json_response).not_to be_blank
+      expect(json_response['result']).to eq('ok')
+
+      Setting.set('gitlab_config', { 'endpoint' => endpoint, 'api_token' => token })
+      post '/api/v1/integration/gitlab/verify', params: params.merge(api_token: SensitiveParamsHelper::SENSITIVE_MASK), as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a(Hash)
       expect(json_response).not_to be_blank

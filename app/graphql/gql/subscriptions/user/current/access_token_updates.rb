@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Subscriptions
   class User::Current::AccessTokenUpdates < BaseSubscription
@@ -7,15 +7,13 @@ module Gql::Subscriptions
 
     subscription_scope :current_user_id
 
-    field :tokens, [Gql::Types::TokenType], null: true, description: 'List of acess tokens for the user'
+    field :tokens, [Gql::Types::TokenType], null: true, description: 'List of access tokens for the user' # rubocop:disable Zammad/GraphqlForbidSensitiveFields -- Returning the user's own access token metadata is the purpose of this subscription.
 
-    def authorized?
-      context.current_user.permissions?('user_preferences.access_token')
-    end
+    requires_permission 'user_preferences.access_token'
 
     def update
       tokens = Service::User::AccessToken::List
-        .new(context.current_user)
+        .with_current_user(context.current_user)
         .execute
 
       { tokens: }

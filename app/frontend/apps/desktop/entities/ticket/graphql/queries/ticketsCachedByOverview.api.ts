@@ -55,6 +55,7 @@ export const TicketsCachedByOverviewDocument = gql`
             name
           }
         }
+        aiAgentRunning
         pendingTime
         group {
           id

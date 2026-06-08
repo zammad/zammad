@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { toRef } from 'vue'
@@ -24,11 +24,7 @@ const {
 </script>
 
 <template>
-  <div
-    v-if="article.securityState && !hasError"
-    role="list"
-    class="flex gap-3 p-3 dark:bg-gray-500"
-  >
+  <div v-if="!hasError && (isEncrypted || isSigned)" role="list" class="flex gap-3 p-3">
     <CommonIcon
       v-if="isEncrypted"
       v-tooltip="encryptedStatusMessage"

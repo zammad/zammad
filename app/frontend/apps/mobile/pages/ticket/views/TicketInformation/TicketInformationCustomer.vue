@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { watchEffect, computed } from 'vue'
@@ -28,9 +28,7 @@ const { ticket, updateRefetchingStatus } = useTicketInformation()
 const { createQueryErrorHandler } = useErrorHandler()
 
 const errorCallback = createQueryErrorHandler({
-  notFound: __(
-    'User with specified ID was not found. Try checking the URL for errors.',
-  ),
+  notFound: __('User with specified ID was not found. Try checking the URL for errors.'),
   forbidden: __('You have insufficient rights to view this user.'),
 })
 
@@ -39,10 +37,11 @@ const customerId = computed(() => ticket.value?.customer.id)
 const {
   user,
   loading,
+  loadingWithoutCachedResult,
   objectAttributes,
   secondaryOrganizations,
-  loadAllSecondaryOrganizations,
-} = useUserDetail(customerId, errorCallback)
+  fetchMoreSecondaryOrganizations,
+} = useUserDetail(customerId, 3, 100, errorCallback)
 
 watchEffect(() => {
   updateRefetchingStatus(loading.value && user.value != null)
@@ -55,18 +54,15 @@ const ticketsData = computed(() => getTicketData(user.value))
 </script>
 
 <template>
-  <CommonLoader :loading="loading && !user">
+  <CommonLoader :loading="loadingWithoutCachedResult">
     <div v-if="user" class="mb-3 flex items-center gap-3">
       <CommonUserAvatar aria-hidden="true" size="normal" :entity="user" />
       <div>
-        <h2 class="text-lg font-semibold">
+        <h2 class="text-lg font-medium">
           {{ user.fullname }}
         </h2>
         <h3 v-if="user.organization">
-          <CommonLink
-            :link="`/organizations/${user.organization.internalId}`"
-            class="text-blue"
-          >
+          <CommonLink :link="`/organizations/${user.organization.internalId}`" class="text-blue">
             {{ user.organization.name }}
           </CommonLink>
         </h3>
@@ -77,7 +73,7 @@ const ticketsData = computed(() => getTicketData(user.value))
     <ObjectAttributes
       :attributes="objectAttributes"
       :object="user"
-      :skip-attributes="['firstname', 'lastname']"
+      :skip-attributes="['firstname', 'lastname', 'organization_ids']"
       :always-show-after-fields="user.policy.update"
     >
       <template v-if="user.policy.update" #after-fields>
@@ -96,7 +92,7 @@ const ticketsData = computed(() => getTicketData(user.value))
       :total-count="secondaryOrganizations.totalCount"
       :disable-show-more="loading"
       :label="__('Secondary organizations')"
-      @show-more="loadAllSecondaryOrganizations()"
+      @show-more="fetchMoreSecondaryOrganizations"
     />
     <CommonTicketStateList
       v-if="ticketsData"

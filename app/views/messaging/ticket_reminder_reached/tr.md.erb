@@ -1,5 +1,5 @@
 # #{ticket.title}
-_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: Hatırlatıcı ulaştı!_
+_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#{config.ticket_hook}#{ticket.number}>: Hatırlatıcı ulaştı!_
 Bir destek talebiyle ilgilenilmesi gerekiyor: müşteri "*#{ticket.customer.longname}*" ile (#{ticket.title}) için hatırlatıcı ulaştı.
 
 <% if @objects[:article] %>

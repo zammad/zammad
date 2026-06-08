@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Service::System::Import::ApplyOtrsConfiguration < Service::System::Import::ApplyConfigurationBase
 
@@ -75,7 +75,7 @@ class Service::System::Import::ApplyOtrsConfiguration < Service::System::Import:
     Setting.set('import_otrs_endpoint', nil)
     Setting.set('import_otrs_endpoint_key', nil)
 
-    raise InaccessibleError, __('The OTRS migrator plugin is not accessable. Please verify the API key.') if !accessible
+    raise InaccessibleError, __('The OTRS migrator plugin is not accessible. Please verify the API key.') if !accessible
   end
 
   def raise_unreachable_error(message = nil)

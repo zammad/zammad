@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -82,7 +82,7 @@ RSpec.describe 'Manage > Settings > Security', type: :system do
 
   describe 'configure third-party applications' do
     shared_examples 'for third-party applications button in login page' do |**args|
-      context "for third-party applications button in login page #{args.empty? ? '' : args.to_s}", authenticated_as: false do
+      context "for third-party applications button in login page #{args.to_s if args.any?}", authenticated_as: false do
         let(:display_name) { args[:display_name] || app_name }
 
         before do

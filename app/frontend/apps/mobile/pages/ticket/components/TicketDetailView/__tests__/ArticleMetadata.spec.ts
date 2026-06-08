@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { getAllByRole, waitFor } from '@testing-library/vue'
 
@@ -8,15 +8,12 @@ import { mockGraphQLApi } from '#tests/support/mock-graphql-api.ts'
 
 import { ObjectManagerFrontendAttributesDocument } from '#shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.api.ts'
 import type { TicketArticle } from '#shared/entities/ticket/types.ts'
-import {
-  EnumSecurityStateType,
-  type TicketArticleSecurityState,
-} from '#shared/graphql/types.ts'
+import { EnumSecurityStateType, type TicketArticleSecurityState } from '#shared/graphql/types.ts'
 
 import { ticketArticleObjectAttributes } from '#mobile/entities/ticket/__tests__/mocks/ticket-mocks.ts'
 import { defaultArticles } from '#mobile/pages/ticket/__tests__/mocks/detail-view.ts'
 
-import ArticleMetadata from '../ArticleMetadataDialog.vue'
+import ArticleMetadataDialog from '../ArticleMetadataDialog.vue'
 
 // parsed is tested in unit test
 const getAddress = (raw: string) => ({
@@ -40,9 +37,7 @@ describe('visuals for metadata', () => {
       // default article has attachment that should be visible as a link
       ...defaultArticles().firstArticles!.edges[0].node,
       internalId: 1,
-      from: getAddress(
-        '"Test Admin Agent via Zammad Helpdesk" <zammad@localhost>',
-      ),
+      from: getAddress('"Test Admin Agent via Zammad Helpdesk" <zammad@localhost>'),
       to: getAddress('Nicole Braun <nicole.braun@zammad.org>'),
       subject: 'Some Email',
       cc: getAddress('Joe Mike <joe.mike@zammad.org>'),
@@ -63,7 +58,7 @@ describe('visuals for metadata', () => {
       },
     }
 
-    const view = renderComponent(ArticleMetadata, {
+    const view = renderComponent(ArticleMetadataDialog, {
       props: {
         name: 'article',
         article,
@@ -79,25 +74,19 @@ describe('visuals for metadata', () => {
     expect(view.getByRole('region', { name: 'To' })).toHaveTextContent(
       /Nicole Braun <nicole.braun@zammad.org>/,
     )
-    expect(view.getByRole('region', { name: 'Subject' })).toHaveTextContent(
-      /Some Email/,
-    )
+    expect(view.getByRole('region', { name: 'Subject' })).toHaveTextContent(/Some Email/)
     expect(view.getByRole('region', { name: 'CC' })).toHaveTextContent(
       /Joe Mike <joe.mike@zammad.org>/,
     )
     expect(view.getByRole('region', { name: 'Reply-To' })).toHaveTextContent(
       /Arthur Miller <arthur.miller@zammad.org/,
     )
-    expect(view.getByRole('region', { name: 'Created' })).toHaveTextContent(
-      /2022-02-01 00:00$/,
-    )
+    expect(view.getByRole('region', { name: 'Created' })).toHaveTextContent(/2022-02-01 00:00$/)
 
     // FIXME: The content does not get replaced with the associated option,
     //   even though the correct object attribute is loaded.
     await waitFor(() => {
-      expect(
-        view.getByRole('region', { name: 'Detected language' }),
-      ).toHaveTextContent(/German$/)
+      expect(view.getByRole('region', { name: 'Detected language' })).toHaveTextContent(/German$/)
     })
 
     const channel = view.getByRole('region', { name: 'Channel' })
@@ -114,22 +103,18 @@ describe('visuals for metadata', () => {
     expect(raw).toHaveTextContent('Raw')
     expect(raw).toHaveAttribute('href', '/api/ticket_article_plain/1')
 
-    expect(attachment).toHaveTextContent('Original Formatting')
+    expect(attachment).toHaveTextContent('Original formatting')
     expect(attachment).toHaveAttribute(
       'href',
       '/api/ticket_attachment/2/1/66?disposition=attachment',
     )
 
-    expect(
-      view.queryByRole('region', { name: 'Security' }),
-    ).not.toBeInTheDocument()
+    expect(view.queryByRole('region', { name: 'Security' })).not.toBeInTheDocument()
   })
 })
 
 describe('rendering security field', () => {
-  const mockArticle = (
-    security: TicketArticleSecurityState,
-  ): TicketArticle => ({
+  const mockArticle = (security: TicketArticleSecurityState): TicketArticle => ({
     ...defaultArticles().firstArticles!.edges[0].node,
     internalId: 1,
     securityState: {
@@ -140,7 +125,7 @@ describe('rendering security field', () => {
 
   describe('renders type', () => {
     it('renders S/MIME type when provided', () => {
-      const view = renderComponent(ArticleMetadata, {
+      const view = renderComponent(ArticleMetadataDialog, {
         props: {
           name: 'article',
           article: mockArticle({
@@ -161,7 +146,7 @@ describe('rendering security field', () => {
     })
 
     it('renders PGP type when provided', () => {
-      const view = renderComponent(ArticleMetadata, {
+      const view = renderComponent(ArticleMetadataDialog, {
         props: {
           name: 'article',
           article: mockArticle({
@@ -186,7 +171,7 @@ describe('rendering security field', () => {
     const mockEncryption = (success: boolean, comment: string) =>
       mockArticle({ encryptionSuccess: success, encryptionMessage: comment })
     const renderEncryption = (success: boolean, comment: string) => {
-      return renderComponent(ArticleMetadata, {
+      return renderComponent(ArticleMetadataDialog, {
         props: {
           name: 'article',
           article: mockEncryption(success, comment),
@@ -209,9 +194,7 @@ describe('rendering security field', () => {
       const view = renderEncryption(false, 'Private key could not be found.')
 
       const security = view.getByRole('region', { name: 'Security' })
-      expect(security).toHaveTextContent(
-        'Encryption error Private key could not be found.',
-      )
+      expect(security).toHaveTextContent('Encryption error Private key could not be found.')
       expect(getByIconName(security, 'encryption-error')).toBeInTheDocument()
     })
   })
@@ -220,7 +203,7 @@ describe('rendering security field', () => {
     const mockSign = (success: boolean, comment: string) =>
       mockArticle({ signingSuccess: success, signingMessage: comment })
     const renderSign = (success: boolean, comment: string) => {
-      return renderComponent(ArticleMetadata, {
+      return renderComponent(ArticleMetadataDialog, {
         props: {
           name: 'article',
           article: mockSign(success, comment),
@@ -243,9 +226,7 @@ describe('rendering security field', () => {
       const view = renderSign(false, 'Public key could not be found.')
 
       const security = view.getByRole('region', { name: 'Security' })
-      expect(security).toHaveTextContent(
-        'Sign error Public key could not be found.',
-      )
+      expect(security).toHaveTextContent('Sign error Public key could not be found.')
       expect(getByIconName(security, 'not-signed')).toBeInTheDocument()
     })
   })
@@ -258,7 +239,7 @@ describe('rendering security field', () => {
       encryptionSuccess: true,
     })
 
-    const view = renderComponent(ArticleMetadata, {
+    const view = renderComponent(ArticleMetadataDialog, {
       props: {
         name: 'article',
         article,
@@ -286,7 +267,7 @@ describe('rendering WhatsApp metadata', () => {
 
   describe('renders message status', () => {
     it('renders correct icon + text for "sent"', () => {
-      const view = renderComponent(ArticleMetadata, {
+      const view = renderComponent(ArticleMetadataDialog, {
         props: {
           name: 'article',
           article: mockArticle({
@@ -298,13 +279,13 @@ describe('rendering WhatsApp metadata', () => {
         store: true,
       })
 
-      const messageStatus = view.getByRole('region', { name: 'Message Status' })
+      const messageStatus = view.getByRole('region', { name: 'Message status' })
       expect(messageStatus).toHaveTextContent('sent to the customer')
       expect(getByIconName(messageStatus, 'check')).toBeInTheDocument()
     })
 
     it('renders correct icon + text for "delivered"', () => {
-      const view = renderComponent(ArticleMetadata, {
+      const view = renderComponent(ArticleMetadataDialog, {
         props: {
           name: 'article',
           article: mockArticle({
@@ -317,13 +298,13 @@ describe('rendering WhatsApp metadata', () => {
         store: true,
       })
 
-      const messageStatus = view.getByRole('region', { name: 'Message Status' })
+      const messageStatus = view.getByRole('region', { name: 'Message status' })
       expect(messageStatus).toHaveTextContent('delivered to the customer')
       expect(getByIconName(messageStatus, 'check-double')).toBeInTheDocument()
     })
 
     it('renders correct icon + text for "read"', () => {
-      const view = renderComponent(ArticleMetadata, {
+      const view = renderComponent(ArticleMetadataDialog, {
         props: {
           name: 'article',
           article: mockArticle({
@@ -337,11 +318,9 @@ describe('rendering WhatsApp metadata', () => {
         store: true,
       })
 
-      const messageStatus = view.getByRole('region', { name: 'Message Status' })
+      const messageStatus = view.getByRole('region', { name: 'Message status' })
       expect(messageStatus).toHaveTextContent('read by the customer')
-      expect(
-        getByIconName(messageStatus, 'check-double-circle'),
-      ).toBeInTheDocument()
+      expect(getByIconName(messageStatus, 'check-double-circle')).toBeInTheDocument()
     })
   })
 })

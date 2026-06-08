@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -58,6 +58,9 @@ RSpec.describe 'NotificationFactory::Renderer article tags' do # rubocop:disable
       last_article:             last_article,
       last_internal_article:    last_internal_article,
       last_external_article:    last_external_article,
+      first_article:            all_articles.first,
+      first_internal_article:   all_articles.find(&:internal?),
+      first_external_article:   all_articles.find { |a| !a.internal? },
       created_article:          article,
       created_internal_article: article&.internal? ? article : nil,
       created_external_article: article&.internal? ? nil : article,
@@ -219,6 +222,30 @@ RSpec.describe 'NotificationFactory::Renderer article tags' do # rubocop:disable
 
       it 'no such object' do
         expect(renderer.render).to eq '#{created_article / no such object}'
+      end
+    end
+
+    describe 'first_article' do
+      let(:template) { "\#{first_article.body}" }
+
+      it 'has body content from the first article' do
+        expect(renderer.render).to eq "&gt; #{ticket.articles.first.body}<br>"
+      end
+    end
+
+    describe 'first_internal_article' do
+      let(:template) { "\#{first_internal_article.body}" }
+
+      it 'has body content from the third article' do
+        expect(renderer.render).to eq "&gt; #{ticket.articles.third.body}<br>"
+      end
+    end
+
+    describe 'first_external_article' do
+      let(:template) { "\#{first_external_article.body}" }
+
+      it 'has body content from the first external article' do
+        expect(renderer.render).to eq "&gt; #{ticket.articles.first.body}<br>"
       end
     end
   end

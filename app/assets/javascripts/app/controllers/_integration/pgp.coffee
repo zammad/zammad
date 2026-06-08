@@ -102,7 +102,7 @@ class Key extends App.ControllerModal
         null: true
       },
       {
-        name: 'key'
+        name: 'private_key'
         display: __('Paste key')
         tag: 'textarea'
         null: true
@@ -138,7 +138,7 @@ class Key extends App.ControllerModal
     $('<div>')
       .addClass('form-field-group')
       .insertAfter(elem.find('.alert--danger'))
-      .append(elem.find('[data-attribute-name=file],[data-attribute-name=key]'))
+      .append(elem.find('[data-attribute-name=file],[data-attribute-name=private_key]'))
 
     $('<div>')
       .addClass('or-divider')

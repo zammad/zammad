@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'yaml'
 
@@ -22,7 +22,7 @@ Dir.glob("#{__dir__}/todo*.yml").each do |f|
   end
 end
 
-if obsolete_excludes.count.positive?
+if obsolete_excludes.any?
   puts 'Obsolete rubocop todo*.yml entries found for these files:'
   obsolete_excludes.sort.uniq.each do |file|
     puts " - #{file}"

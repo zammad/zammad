@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class TagsController < ApplicationController
   prepend_before_action :authenticate_and_authorize!
@@ -43,7 +43,7 @@ class TagsController < ApplicationController
     if success
       render json: success, status: :created
     else
-      render json: success.errors, status: :unprocessable_entity
+      render json: success.errors, status: :unprocessable_content
     end
   end
 
@@ -57,7 +57,7 @@ class TagsController < ApplicationController
     if success
       render json: success
     else
-      render json: success.errors, status: :unprocessable_entity
+      render json: success.errors, status: :unprocessable_content
     end
   end
 
@@ -78,7 +78,10 @@ class TagsController < ApplicationController
 
   # POST /api/v1/tag_list
   def admin_create
-    Tag::Item.lookup_by_name_and_create(params[:name])
+    Array.wrap(params[:name]).each do |name|
+      Tag::Item.lookup_by_name_and_create(name)
+    end
+
     render json: {}
   end
 

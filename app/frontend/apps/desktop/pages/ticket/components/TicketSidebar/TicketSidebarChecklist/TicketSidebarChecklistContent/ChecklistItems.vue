@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { animations } from '@formkit/drag-and-drop'
@@ -45,8 +45,7 @@ const checklistItems = computed({
   },
 })
 
-const checklistInstance =
-  useTemplateRef<InstanceType<typeof ChecklistItem>[]>('checklist')
+const checklistInstance = useTemplateRef<InstanceType<typeof ChecklistItem>[]>('checklist')
 const containerElement = useTemplateRef<HTMLElement>('container')
 const checklistTitleInstance = useTemplateRef('title')
 
@@ -94,8 +93,7 @@ const startReordering = () => {
 
 defineExpose({
   focusTitle: () => checklistTitleInstance.value?.activateEditing(),
-  quitItemEditing: (index: number) =>
-    checklistInstance.value?.at(index)?.quitEditing(),
+  quitItemEditing: (index: number) => checklistInstance.value?.at(index)?.quitEditing(),
   quitReordering: resetOrder,
   focusNewItem,
 })

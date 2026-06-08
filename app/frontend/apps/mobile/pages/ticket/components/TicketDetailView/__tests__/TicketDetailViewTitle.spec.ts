@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { renderComponent } from '#tests/support/components/index.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
@@ -63,9 +63,7 @@ describe('TicketDetailViewTitle.vue', () => {
       router: true,
     })
 
-    expect(
-      view.queryByText('escalation', { exact: false }),
-    ).not.toBeInTheDocument()
+    expect(view.queryByText('escalation', { exact: false })).not.toBeInTheDocument()
   })
 
   it('shows a channel alert, if applicable', () => {
@@ -77,8 +75,7 @@ describe('TicketDetailViewTitle.vue', () => {
       {},
       {
         whatsapp: {
-          timestamp_incoming:
-            testDate.setMinutes(testDate.getMinutes() - 30).valueOf() / 1000,
+          timestamp_incoming: testDate.setMinutes(testDate.getMinutes() - 30).valueOf() / 1000,
         },
       },
     )

@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { nextTick } from 'vue'
 
@@ -21,10 +21,7 @@ describe('CommonLogo.vue', () => {
     const img = wrapper.container.querySelector('img')
 
     expect(img).toHaveAttribute('alt', 'Zammad Custom Logo')
-    expect(img).toHaveAttribute(
-      'src',
-      '/api/v1/system_assets/product_logo/1234',
-    )
+    expect(img).toHaveAttribute('src', '/api/v1/system_assets/product_logo/1234')
   })
 
   it('renders default zammad logo', async () => {
@@ -39,9 +36,6 @@ describe('CommonLogo.vue', () => {
     const img = wrapper.container.querySelector('img')
 
     expect(img).toHaveAttribute('alt', '')
-    expect(img).toHaveAttribute(
-      'src',
-      '/api/v1/system_assets/product_logo/logo.svg',
-    )
+    expect(img).toHaveAttribute('src', '/api/v1/system_assets/product_logo/logo.svg')
   })
 })

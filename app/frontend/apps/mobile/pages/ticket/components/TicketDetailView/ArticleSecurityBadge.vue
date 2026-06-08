@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
@@ -29,12 +29,7 @@ const securityIcon = computed(() => {
 })
 
 const hasError = computed(() => {
-  const {
-    signingMessage,
-    signingSuccess,
-    encryptionMessage,
-    encryptionSuccess,
-  } = props.security
+  const { signingMessage, signingSuccess, encryptionMessage, encryptionSuccess } = props.security
   if (signingSuccess === false && signingMessage) return true
   if (encryptionSuccess === false && encryptionMessage) return true
   return false
@@ -141,12 +136,12 @@ const popupItems = computed(() =>
     v-if="hasError"
     v-bind="$attrs"
     type="button"
-    class="bg-yellow inline-flex h-7 grow items-center gap-1 rounded-lg px-2 py-1 text-xs font-bold text-black"
+    class="inline-flex h-7 grow items-center gap-1 rounded-lg bg-yellow px-2 py-1 text-xs font-bold text-black"
     @click.prevent="showPopup = !showPopup"
     @keydown.space.prevent="showPopup = !showPopup"
   >
     <CommonIcon :name="securityIcon" decorative size="xs" />
-    {{ $t('Security Error') }}
+    {{ $t('Security error') }}
   </button>
   <button
     v-else-if="canView"
@@ -164,24 +159,14 @@ const popupItems = computed(() =>
       size="tiny"
       :label="$t('Encrypted')"
     />
-    <CommonIcon
-      v-if="security.signingSuccess"
-      name="signed"
-      size="tiny"
-      :label="$t('Signed')"
-    />
+    <CommonIcon v-if="security.signingSuccess" name="signed" size="tiny" :label="$t('Signed')" />
   </button>
   <CommonSectionPopup v-model:state="showPopup" :messages="popupItems">
     <template #header>
-      <div
-        class="flex flex-col items-center gap-2 border-b border-b-white/10 p-4"
-      >
-        <div
-          v-if="hasError"
-          class="text-yellow flex w-full items-center justify-center gap-1"
-        >
+      <div class="flex flex-col items-center gap-2 border-b border-b-white/10 p-4">
+        <div v-if="hasError" class="flex w-full items-center justify-center gap-1 text-yellow">
           <CommonIcon :name="securityIcon" size="tiny" />
-          {{ $t('Security Error') }}
+          {{ $t('Security error') }}
         </div>
         <div
           v-if="security.signingMessage"

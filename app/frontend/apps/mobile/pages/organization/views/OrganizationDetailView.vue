@@ -1,7 +1,7 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed, toRef } from 'vue'
+import { computed } from 'vue'
 
 import CommonOrganizationAvatar from '#shared/components/CommonOrganizationAvatar/CommonOrganizationAvatar.vue'
 import type { AvatarOrganization } from '#shared/components/CommonOrganizationAvatar/index.ts'
@@ -9,6 +9,7 @@ import ObjectAttributes from '#shared/components/ObjectAttributes/ObjectAttribut
 import { useOnlineNotificationSeen } from '#shared/composables/useOnlineNotification/useOnlineNotificationSeen.ts'
 import { useOrganizationDetail } from '#shared/entities/organization/composables/useOrganizationDetail.ts'
 import { useErrorHandler } from '#shared/errors/useErrorHandler.ts'
+import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
 import CommonLoader from '#mobile/components/CommonLoader/CommonLoader.vue'
 import CommonTicketStateList from '#mobile/components/CommonTicketStateList/CommonTicketStateList.vue'
@@ -26,22 +27,20 @@ const props = defineProps<Props>()
 const { createQueryErrorHandler } = useErrorHandler()
 
 const errorCallback = createQueryErrorHandler({
-  notFound: __(
-    'Organization with specified ID was not found. Try checking the URL for errors.',
-  ),
+  notFound: __('Organization with specified ID was not found. Try checking the URL for errors.'),
   forbidden: __('You have insufficient rights to view this organization.'),
 })
 
+const organizationId = computed(() => convertToGraphQLId('Organization', props.internalId))
+
 const {
   organization,
+  organizationMembers,
   loading,
+  loadingWithoutCachedResult,
   objectAttributes,
-  organizationQuery,
-  loadAllMembers,
-  // loadOrganization,
-} = useOrganizationDetail(toRef(props, 'internalId'), errorCallback)
-
-// loadOrganization(props.internalId)
+  fetchMoreMembers,
+} = useOrganizationDetail(organizationId, 3, 100, errorCallback)
 
 useOnlineNotificationSeen(organization)
 
@@ -51,12 +50,8 @@ useHeader({
   title: __('Organization'),
   backUrl: '/',
   actionTitle: __('Edit'),
-  actionHidden: computed(
-    () => organization.value == null || !organization.value.policy.update,
-  ),
-  refetch: computed(
-    () => organization.value != null && organizationQuery.loading().value,
-  ),
+  actionHidden: computed(() => organization.value == null || !organization.value.policy.update),
+  refetch: computed(() => organization.value != null && loading.value),
   onAction() {
     if (!organization.value || !organization.value.policy.update) return
     openEditOrganizationDialog(organization.value)
@@ -71,10 +66,7 @@ const ticketData = computed(() => getTicketData(organization.value))
   <div v-if="organization" class="px-4">
     <div class="flex flex-col items-center justify-center py-6">
       <div>
-        <CommonOrganizationAvatar
-          :entity="organization as AvatarOrganization"
-          size="xl"
-        />
+        <CommonOrganizationAvatar :entity="organization as AvatarOrganization" size="xl" />
       </div>
       <div class="mt-2 text-xl font-bold">
         {{ organization.name }}
@@ -87,11 +79,7 @@ const ticketData = computed(() => getTicketData(organization.value))
       :skip-attributes="['name']"
     />
 
-    <OrganizationMembersList
-      :organization="organization"
-      :disable-show-more="loading"
-      @load-more="loadAllMembers()"
-    />
+    <OrganizationMembersList :members="organizationMembers" @load-more="fetchMoreMembers()" />
 
     <CommonTicketStateList
       v-if="ticketData"
@@ -101,5 +89,9 @@ const ticketData = computed(() => getTicketData(organization.value))
       :tickets-link-query="ticketData.query"
     />
   </div>
-  <CommonLoader v-else-if="loading" class="w-full p-4" :loading="loading" />
+  <CommonLoader
+    v-else-if="loadingWithoutCachedResult"
+    class="w-full p-4"
+    :loading="loadingWithoutCachedResult"
+  />
 </template>

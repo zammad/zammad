@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import redirectGuard from '#shared/router/guards/before/redirect.ts'
 
@@ -25,7 +25,7 @@ const route: RouteRecordRaw[] = [
     name: 'TicketOverviews',
     component: () => import('./views/FavoriteTicketOverviewsEdit.vue'),
     meta: {
-      title: __('Ticket Overview'),
+      title: __('Ticket overview'),
       requiresAuth: true,
       requiredPermission: ['ticket.agent', 'ticket.customer'],
       hasBottomNavigation: true,

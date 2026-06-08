@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { getNode } from '@formkit/core'
 import { FormKit } from '@formkit/vue'
@@ -46,10 +46,7 @@ describe('FieldSecurity', () => {
 
     expect(smime).toBeInTheDocument()
     expect(smime).not.toBeDisabled()
-    expect(smime, 'smime is enabled by default').toHaveAttribute(
-      'aria-selected',
-      'true',
-    )
+    expect(smime, 'smime is enabled by default').toHaveAttribute('aria-selected', 'true')
 
     const encrypt = view.getByRole('option', { name: 'Encrypt' })
     await view.events.click(encrypt)
@@ -102,9 +99,7 @@ describe('FieldSecurity', () => {
       },
     })
 
-    expect(
-      view.queryByRole('option', { name: 'S/MIME' }),
-    ).not.toBeInTheDocument()
+    expect(view.queryByRole('option', { name: 'S/MIME' })).not.toBeInTheDocument()
     expect(view.queryByRole('option', { name: 'PGP' })).not.toBeInTheDocument()
 
     const encrypt = view.getByRole('option', { name: 'Encrypt' })
@@ -258,9 +253,7 @@ describe('FieldSecurity', () => {
       },
     })
 
-    await view.events.click(
-      await view.findByRole('option', { name: 'Encrypt' }),
-    )
+    await view.events.click(await view.findByRole('option', { name: 'Encrypt' }))
 
     expect(onSubmit).not.toHaveBeenCalled()
 
@@ -297,11 +290,9 @@ describe('rendering security messages', () => {
 
     await view.events.click(view.getByTestId('tooltipTrigger'))
 
-    expect(view.baseElement).toHaveTextContent(
-      'Encryption: Custom encryption message',
-    )
+    expect(view.baseElement).toHaveTextContent('Encryption: Custom encryption message')
     expect(view.baseElement).toHaveTextContent('Sign: Custom sign message')
-    expect(view.baseElement).toHaveTextContent('Security Information')
+    expect(view.baseElement).toHaveTextContent('Security information')
   })
 
   it("doesn't renders message if there is no messages in a different type", async () => {
@@ -320,11 +311,9 @@ describe('rendering security messages', () => {
 
     await view.events.click(view.getByTestId('tooltipTrigger'))
 
-    expect(view.baseElement).toHaveTextContent(
-      'Encryption: Custom encryption message',
-    )
+    expect(view.baseElement).toHaveTextContent('Encryption: Custom encryption message')
     expect(view.baseElement).toHaveTextContent('Sign: Custom sign message')
-    expect(view.baseElement).toHaveTextContent('Security Information')
+    expect(view.baseElement).toHaveTextContent('Security information')
 
     await view.events.click(view.getByRole('option', { name: 'PGP' }))
 
@@ -351,20 +340,14 @@ describe('rendering security messages', () => {
 
     await view.events.click(view.getByTestId('tooltipTrigger'))
 
-    expect(view.baseElement).toHaveTextContent(
-      'Encryption: Custom S/MIME encryption message',
-    )
-    expect(view.baseElement).toHaveTextContent(
-      'Sign: Custom S/MIME sign message',
-    )
-    expect(view.baseElement).toHaveTextContent('Security Information')
+    expect(view.baseElement).toHaveTextContent('Encryption: Custom S/MIME encryption message')
+    expect(view.baseElement).toHaveTextContent('Sign: Custom S/MIME sign message')
+    expect(view.baseElement).toHaveTextContent('Security information')
 
     await view.events.click(view.getByRole('option', { name: 'PGP' }))
     await view.events.click(view.getByTestId('tooltipTrigger'))
 
-    expect(view.baseElement).toHaveTextContent(
-      'Encryption: Custom PGP encryption message',
-    )
+    expect(view.baseElement).toHaveTextContent('Encryption: Custom PGP encryption message')
     expect(view.baseElement).toHaveTextContent('Sign: Custom PGP sign message')
   })
 })

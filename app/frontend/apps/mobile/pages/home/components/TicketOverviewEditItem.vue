@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed } from 'vue'
@@ -33,9 +33,7 @@ const icon = computed(() => {
   }
 })
 
-const hasTooltip = computed(
-  () => props.overview.organizationShared || props.overview.outOfOffice,
-)
+const hasTooltip = computed(() => props.overview.organizationShared || props.overview.outOfOffice)
 
 const tooltipMessages = computed(() => {
   const messages: TooltipItemDescriptor[] = []
@@ -43,17 +41,13 @@ const tooltipMessages = computed(() => {
   if (props.overview.organizationShared)
     messages.push({
       type: 'text',
-      label: __(
-        'This overview is visible only when you are a shared organization member.',
-      ),
+      label: __('This overview is visible only when you are a shared organization member.'),
     })
 
   if (props.overview.outOfOffice)
     messages.push({
       type: 'text',
-      label: __(
-        'This overview is visible only when you are an out of office replacement.',
-      ),
+      label: __('This overview is visible only when you are an out of office replacement.'),
     })
 
   return messages
@@ -91,16 +85,11 @@ const tooltipMessages = computed(() => {
         class="shrink-0"
         name="visibility"
         :messages="tooltipMessages"
-        :heading="__('Limited Visibility')"
+        :heading="__('Limited visibility')"
       >
         <CommonIcon name="tooltip" size="small" />
       </CommonTooltip>
     </div>
-    <CommonIcon
-      v-if="draggable"
-      name="change-order"
-      size="small"
-      class="text-gray shrink-0"
-    />
+    <CommonIcon v-if="draggable" name="change-order" size="small" class="shrink-0 text-gray" />
   </div>
 </template>

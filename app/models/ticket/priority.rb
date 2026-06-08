@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Ticket::Priority < ApplicationModel
   include HasDefaultModelUserRelations
@@ -24,9 +24,9 @@ class Ticket::Priority < ApplicationModel
     return true if callback_loop
 
     priorities_with_default = Ticket::Priority.where(default_create: true)
-    return true if priorities_with_default.count == 1
+    return true if priorities_with_default.one?
 
-    if priorities_with_default.count.zero?
+    if priorities_with_default.none?
       priority = Ticket::Priority.where(active: true).reorder(id: :asc).first
       priority.default_create = true
       priority.callback_loop = true
@@ -34,7 +34,7 @@ class Ticket::Priority < ApplicationModel
       return true
     end
 
-    if priorities_with_default.count > 1
+    if priorities_with_default.many?
       Ticket::Priority.all.each do |local_priority|
         next if local_priority.id == id
 

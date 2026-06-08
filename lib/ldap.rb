@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 # Class for establishing LDAP connections. A wrapper around Net::LDAP needed for Auth and Sync.
 # ATTENTION: Loads custom 'net/ldap/entry' from 'lib/core_ext' which extends the Net::LDAP::Entry class.
@@ -129,10 +129,10 @@ class Ldap
     return ldap if ldap.bind
 
     result = ldap.get_operation_result
-    raise Exceptions::UnprocessableEntity, "Can't bind to '#{@host}', #{result.code}, #{result.message}"
+    raise Exceptions::UnprocessableContent, "Can't bind to '#{@host}', #{result.code}, #{result.message}"
   rescue => e
     Rails.logger.error e
-    raise Exceptions::UnprocessableEntity, "Can't connect to '#{@host}' on port '#{@port}', #{e}"
+    raise Exceptions::UnprocessableContent, "Can't connect to '#{@host}' on port '#{@port}', #{e}"
   end
 
   def connection_params

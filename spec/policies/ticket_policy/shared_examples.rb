@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 RSpec.shared_examples 'for agent user' do |access_type|
   let(:member_groups)   { create_list(:group, 2) }
@@ -79,24 +79,24 @@ RSpec.shared_examples 'for agent user' do |access_type|
       # this is already true by default, but it doesn't hurt to be explicit
       before { user.user_groups.each { |ug| ug.update_columns(access: 'full') } }
 
-      it 'grants access to all tickets' do
-        expect(scope.resolve).to match_array(Ticket.all)
+      it 'returns no tickets' do
+        expect(scope.resolve).to be_empty
       end
     end
 
     context 'when limited to "read" access' do
       before { user.user_groups.each { |ug| ug.update_columns(access: 'read') } }
 
-      it 'grants access to all tickets' do
-        expect(scope.resolve).to match_array(Ticket.all)
+      it 'returns no tickets' do
+        expect(scope.resolve).to be_empty
       end
     end
 
     context 'when limited to "overview" access' do
       before { user.user_groups.each { |ug| ug.update_columns(access: 'overview') } }
 
-      it 'grants access to all tickets' do
-        expect(scope.resolve).to match_array(Ticket.all)
+      it 'returns no tickets' do
+        expect(scope.resolve).to be_empty
       end
     end
   end

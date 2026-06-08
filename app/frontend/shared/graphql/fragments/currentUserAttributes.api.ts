@@ -15,5 +15,6 @@ export const CurrentUserAttributesFragmentDoc = gql`
   permissions {
     names
   }
+  hasBetaUiSwitchAvailable
 }
     ${UserAttributesFragmentDoc}`;

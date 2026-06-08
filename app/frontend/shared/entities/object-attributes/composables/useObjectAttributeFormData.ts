@@ -1,18 +1,17 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import type {
-  FormFieldValue,
-  FormSubmitData,
-  FormValues,
-} from '#shared/components/Form/types.ts'
-import type { ObjectAttributeValueInput } from '#shared/graphql/types.ts'
+import type { FormFieldValue, FormSubmitData, FormValues } from '#shared/components/Form/types.ts'
+import { EnumObjectManagerObjects, type ObjectAttributeValueInput } from '#shared/graphql/types.ts'
 import { convertToGraphQLId, isGraphQLId } from '#shared/graphql/utils.ts'
 import { camelize, toClassName } from '#shared/utils/formatter.ts'
+
+import getFieldResolver from '../form/resolver/getFieldResolver.ts'
 
 import type { ObjectAttribute } from '../types/store.ts'
 import type { Primitive } from 'type-fest'
 
 export const useObjectAttributeFormData = <T = FormValues>(
+  object: EnumObjectManagerObjects,
   objectAttributes: Map<string, ObjectAttribute>,
   values: FormSubmitData<T>,
 ) => {
@@ -23,19 +22,20 @@ export const useObjectAttributeFormData = <T = FormValues>(
     return convertToGraphQLId(toClassName(relation), value)
   }
 
-  const ensureRelationId = (
-    attribute: ObjectAttribute,
-    value: FormFieldValue,
-  ) => {
+  const ensureRelationId = (attribute: ObjectAttribute, value: FormFieldValue) => {
     const { relation } = attribute.dataOption || {}
     const isInternalID =
-      typeof value === 'number' ||
-      (typeof value === 'string' && !isGraphQLId(value))
+      typeof value === 'number' || (typeof value === 'string' && !isGraphQLId(value))
 
     if (relation && isInternalID) {
       return fullRelationId(relation, value)
     }
     return value
+  }
+
+  const maybeTransformFieldValue = (value: FormFieldValue, attribute: ObjectAttribute) => {
+    const fieldResolver = getFieldResolver(object, attribute)
+    return fieldResolver.transformFieldValue?.(value) ?? value
   }
 
   Object.keys(values).forEach((fieldName) => {
@@ -60,11 +60,11 @@ export const useObjectAttributeFormData = <T = FormValues>(
         newValue = ensureRelationId(objectAttribute, value)
       }
 
-      internalObjectAttributeValues[name] = newValue
+      internalObjectAttributeValues[name] = maybeTransformFieldValue(newValue, objectAttribute)
     } else {
       additionalObjectAttributeValues.push({
         name: objectAttribute.name,
-        value,
+        value: maybeTransformFieldValue(value, objectAttribute),
       })
     }
   })

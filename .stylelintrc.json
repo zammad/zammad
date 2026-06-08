@@ -2,8 +2,7 @@
   "extends": [
     "stylelint-config-standard",
     "stylelint-config-recommended-scss",
-    "stylelint-config-recommended-vue",
-    "stylelint-prettier/recommended"
+    "stylelint-config-recommended-vue"
   ],
   "rules": {
     "alpha-value-notation": null,
@@ -27,7 +26,6 @@
     "selector-no-vendor-prefix": null,
     "selector-pseudo-element-no-unknown": null,
     "scss/at-extend-no-missing-placeholder": null,
-    "scss/at-import-partial-extension": null,
     "scss/load-no-partial-leading-underscore": true,
     "scss/at-rule-no-unknown": null,
     "scss/dollar-variable-pattern": null,
@@ -47,24 +45,26 @@
       {
         "ignoreAtRules": ["apply"]
       }
-    ]
+    ],
+    "nesting-selector-no-missing-scoping-root": null
   },
   "ignoreFiles": [
+    "**/bootstrap*.css",
+    "**/codemirror.css",
+    "**/cropper.css",
+    "**/fineuploader.css",
+    "**/jquery*.css",
+    "**/qunit*.css",
+    "**/reset*.css",
+    "**/svg-dimensions.css",
+    "app/assets/builds/**",
+    "coverage/**",
     "public/assets/*.css",
     "public/assets/chat/chat.css",
     "public/assets/doorkeeper/**",
     "public/assets/frontend/vite-dev/**",
     "public/assets/frontend/vite/**",
-    "**/reset*.css",
-    "**/bootstrap*.css",
-    "**/codemirror.css",
-    "**/jquery*.css",
-    "**/cropper.css",
-    "**/fineuploader.css",
-    "**/qunit*.css",
-    "**/svg-dimensions.css",
     "tmp/**",
-    "vendor/**",
-    "coverage/**"
+    "vendor/**"
   ]
 }

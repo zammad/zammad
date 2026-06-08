@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Channel::Driver::Facebook
 
@@ -62,20 +62,6 @@ class Channel::Driver::Facebook
   end
 
   def disconnect; end
-
-=begin
-
-  Channel::Driver::Facebook.streamable?
-
-returns
-
-  true|false
-
-=end
-
-  def self.streamable?
-    false
-  end
 
   private
 

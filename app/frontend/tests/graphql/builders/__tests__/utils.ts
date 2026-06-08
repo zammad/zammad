@@ -1,11 +1,7 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { render } from '@testing-library/vue'
-import {
-  useLazyQuery,
-  useMutation,
-  useSubscription,
-} from '@vue/apollo-composable'
+import { useLazyQuery, useMutation, useSubscription } from '@vue/apollo-composable'
 
 import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
 import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
@@ -20,13 +16,11 @@ import {
 import type { DocumentNode, OperationVariables } from '@apollo/client/core'
 import type { OptionsParameter } from '@vue/apollo-composable/dist/useQuery'
 
-interface EnhancedQueryHandler<R, V extends OperationVariables>
-  extends QueryHandler<R, V> {
+interface EnhancedQueryHandler<R, V extends OperationVariables> extends QueryHandler<R, V> {
   getMockedData: () => { data: R }
 }
 
-interface EnhancedMutationHandler<R, V extends OperationVariables>
-  extends MutationHandler<R, V> {
+interface EnhancedMutationHandler<R, V extends OperationVariables> extends MutationHandler<R, V> {
   getMockedData: () => { data: R }
 }
 
@@ -57,10 +51,7 @@ const getHandler = (document: DocumentNode, cb: () => any) => {
   return handler!
 }
 
-export const getQueryHandler = <
-  R,
-  V extends OperationVariables = OperationVariables,
->(
+export const getQueryHandler = <R, V extends OperationVariables = OperationVariables>(
   document: DocumentNode,
   variables?: V,
   options?: OptionsParameter<R, V>,
@@ -71,10 +62,7 @@ export const getQueryHandler = <
   ) as EnhancedQueryHandler<R, V>
 }
 
-export const getMutationHandler = <
-  R,
-  V extends OperationVariables = OperationVariables,
->(
+export const getMutationHandler = <R, V extends OperationVariables = OperationVariables>(
   document: DocumentNode,
 ) => {
   return getHandler(

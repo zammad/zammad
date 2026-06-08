@@ -278,69 +278,7 @@ class App.UiElement.core_workflow_condition extends App.UiElement.ApplicationSel
         }
         continue
       if groupKey is 'session'
-        elements['session.role_ids'] = {
-          name: 'role_ids',
-          display: __('Role'),
-          tag: 'select',
-          relation: 'Role',
-          null: false,
-          operator: [__('is'), __('is not')],
-          multiple: true
-        }
-        elements['session.group_ids_read'] = {
-          name: 'group_ids_read',
-          display: __('Group (read)'),
-          tag: 'select',
-          relation: 'Group',
-          null: false,
-          operator: [__('is'), __('is not')],
-          multiple: true
-        }
-        elements['session.group_ids_create'] = {
-          name: 'group_ids_create',
-          display: __('Group (create)'),
-          tag: 'select',
-          relation: 'Group',
-          null: false,
-          operator: [__('is'), __('is not')],
-          multiple: true
-        }
-        elements['session.group_ids_change'] = {
-          name: 'group_ids_change',
-          display: __('Group (change)'),
-          tag: 'select',
-          relation: 'Group',
-          null: false,
-          operator: [__('is'), __('is not')],
-          multiple: true
-        }
-        elements['session.group_ids_overview'] = {
-          name: 'group_ids_overview',
-          display: __('Group (overview)'),
-          tag: 'select',
-          relation: 'Group',
-          null: false,
-          operator: [__('is'), __('is not')],
-          multiple: true
-        }
-        elements['session.group_ids_full'] = {
-          name: 'group_ids_full',
-          display: __('Group (full)'),
-          tag: 'select',
-          relation: 'Group',
-          null: false,
-          operator: [__('is'), __('is not')],
-          multiple: true
-        }
-        elements['session.permission_ids'] = {
-          name: 'permission_ids',
-          display: __('Permissions'),
-          tag: 'select',
-          relation: 'Permission',
-          null: false,
-          operator: [__('is'), __('is not')],
-          multiple: true
-        }
+        elements = @sessionElements(elements)
 
       attributesByObject = App.ObjectManagerAttribute.selectorAttributesByObject()
       configureAttributes = attributesByObject[groupMeta.model] || []
@@ -378,6 +316,72 @@ class App.UiElement.core_workflow_condition extends App.UiElement.ApplicationSel
       operator: [__('is'), __('is not')]
 
     [defaults, groups, elements]
+
+  @sessionElements: (elements) ->
+    elements['session.role_ids'] = {
+      name: 'role_ids',
+      display: __('Role'),
+      tag: 'select',
+      relation: 'Role',
+      null: false,
+      operator: [__('is'), __('is not')],
+      multiple: true
+    }
+    elements['session.group_ids_read'] = {
+      name: 'group_ids_read',
+      display: __('Group (read)'),
+      tag: 'select',
+      relation: 'Group',
+      null: false,
+      operator: [__('is'), __('is not')],
+      multiple: true
+    }
+    elements['session.group_ids_create'] = {
+      name: 'group_ids_create',
+      display: __('Group (create)'),
+      tag: 'select',
+      relation: 'Group',
+      null: false,
+      operator: [__('is'), __('is not')],
+      multiple: true
+    }
+    elements['session.group_ids_change'] = {
+      name: 'group_ids_change',
+      display: __('Group (change)'),
+      tag: 'select',
+      relation: 'Group',
+      null: false,
+      operator: [__('is'), __('is not')],
+      multiple: true
+    }
+    elements['session.group_ids_overview'] = {
+      name: 'group_ids_overview',
+      display: __('Group (overview)'),
+      tag: 'select',
+      relation: 'Group',
+      null: false,
+      operator: [__('is'), __('is not')],
+      multiple: true
+    }
+    elements['session.group_ids_full'] = {
+      name: 'group_ids_full',
+      display: __('Group (full)'),
+      tag: 'select',
+      relation: 'Group',
+      null: false,
+      operator: [__('is'), __('is not')],
+      multiple: true
+    }
+    elements['session.permission_ids'] = {
+      name: 'permission_ids',
+      display: __('Permissions'),
+      tag: 'select',
+      relation: 'Permission',
+      null: false,
+      operator: [__('is'), __('is not')],
+      multiple: true
+    }
+    return elements
 
   @hasEmptySelectorAtStart: ->
     return true

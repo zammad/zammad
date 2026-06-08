@@ -1,10 +1,19 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Channel::Driver::Smtp < Channel::Driver::BaseEmailOutbound
   # We're using the same timeouts like in Net::SMTP gem
   # but we would like to have the possibility to mock them for tests
   DEFAULT_OPEN_TIMEOUT = 30.seconds
   DEFAULT_READ_TIMEOUT = 60.seconds
+
+  # Following SMTP error codes will be handled gracefully on notifications.
+  # They will be logged at info level only and the code will not propagate up the error.
+  # Other SMTP error codes will stop processing and exit with logging it at error level.
+  #
+  # 4xx - temporary issues.
+  # 52x - permanent receiving server errors.
+  # 55x - permanent receiving mailbox errors.
+  SILENCABLE_SMTP_ERROR_CODES_FOR_NOTIFICATIONS = [400..499, 520..529, 550..559].freeze
 
   # Sends a message via SMTP
   #
@@ -29,7 +38,7 @@ class Channel::Driver::Smtp < Channel::Driver::BaseEmailOutbound
 
     options = prepare_options(options, attr)
 
-    attr = prepare_message_attrs(attr)
+    attr = prepare_message_attrs(attr, notification)
 
     smtp_params = build_smtp_params(options)
 
@@ -49,22 +58,27 @@ class Channel::Driver::Smtp < Channel::Driver::BaseEmailOutbound
     end
 
     if !options.key?(:domain)
-      # set fqdn, if local fqdn - use domain of sender
-      fqdn = Setting.get('fqdn')
-      if fqdn =~ %r{(localhost|\.local^|\.loc^)}i && (attr['from'] || attr[:from])
-        domain = Mail::Address.new(attr['from'] || attr[:from]).domain
-        if domain
-          fqdn = domain
-        end
-      end
-      options[:domain] = fqdn
+      options[:domain] = prepare_options_get_fqdn(attr)
     end
 
-    if !options.key?(:enable_starttls_auto)
+    if !options.key?(:enable_starttls_auto) && !options[:ssl]
       options[:enable_starttls_auto] = true
     end
 
     options
+  end
+
+  def prepare_options_get_fqdn(attr)
+    # set fqdn, if local fqdn - use domain of sender
+    fqdn = Setting.get('fqdn')
+
+    if fqdn =~ %r{(localhost|\.local^|\.loc^)}i && (attr['from'] || attr[:from]) && (domain = Mail::Address.new(attr['from'] || attr[:from]).domain)
+      fqdn = domain
+    end
+
+    # https://github.com/zammad/zammad/pull/5635
+    # remove port from the network address. RFC 5321 / 4.1.1.1. EHLO/HELO requires hostname withoutport.
+    fqdn.split(':').first
   end
 
   def build_smtp_params(options)
@@ -75,18 +89,19 @@ class Channel::Driver::Smtp < Channel::Driver::BaseEmailOutbound
                       end
 
     smtp_params = {
-      openssl_verify_mode:  ssl_verify_mode,
-      address:              options[:host],
-      port:                 options[:port],
-      domain:               options[:domain],
-      enable_starttls_auto: options[:enable_starttls_auto],
-      open_timeout:         DEFAULT_OPEN_TIMEOUT,
-      read_timeout:         DEFAULT_READ_TIMEOUT,
+      openssl_verify_mode: ssl_verify_mode,
+      address:             options[:host],
+      port:                options[:port],
+      domain:              options[:domain],
+      open_timeout:        DEFAULT_OPEN_TIMEOUT,
+      read_timeout:        DEFAULT_READ_TIMEOUT,
     }
 
-    # set ssl if needed
+    # set ssl if needed — ssl and enable_starttls_auto are mutually exclusive (mail gem 2.9+)
     if options[:ssl].present?
       smtp_params[:ssl] = options[:ssl]
+    else
+      smtp_params[:enable_starttls_auto] = options[:enable_starttls_auto]
     end
 
     # add authentication only if needed
@@ -97,5 +112,23 @@ class Channel::Driver::Smtp < Channel::Driver::BaseEmailOutbound
     end
 
     smtp_params
+  end
+
+  private
+
+  def server_identifier(options)
+    "'#{options[:address]}' (port #{options[:port]})"
+  end
+
+  def deliver_mail_notification_silence?(e, mail)
+    return false if !e.is_a?(Net::SMTPError)
+
+    status_code = e.response&.status&.to_i
+
+    return false if !status_code
+    return false if SILENCABLE_SMTP_ERROR_CODES_FOR_NOTIFICATIONS.none? { |elem| elem.include? status_code }
+
+    Rails.logger.info { "could not send email notification to (#{mail[:to]}) #{e}" }
+    true
   end
 end

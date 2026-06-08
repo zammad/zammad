@@ -84,19 +84,20 @@ class App.ControllerNavSidbar extends App.Controller
       for key, item of items
         if item.parent is group.target
           if item.controller
-            if !item.permission
-              itemsUnsorted.push item
-            else
-              match = false
+            available = true
+            if item.permission
+              available = false
               if typeof item.permission is 'function'
-                match = item.permission(@)
-                if match
-                  itemsUnsorted.push item
+                available = item.permission(@)
               else
                 for permissionName in item.permission
-                  if !match && @permissionCheck(permissionName)
-                    match = true
-                    itemsUnsorted.push item
+                  if not available and @permissionCheck(permissionName)
+                    available = true
+            if item.setting
+              available = _.any item.setting, (settingName) =>
+                @Config.get(settingName)
+            if available
+              itemsUnsorted.push item
 
       group.items = _.sortBy(itemsUnsorted, (item) -> return item.prio)
 

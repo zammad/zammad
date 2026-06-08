@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { cloneDeep } from 'lodash-es'
 
@@ -13,20 +13,12 @@ import { TicketExternalReferencesIdoitObjectListDocument } from '#desktop/pages/
 import type { ApolloCache, FetchResult } from '@apollo/client/core'
 import type { Ref } from 'vue'
 
-export const useIdoitCacheHandlers = (
-  objectIds: Ref<number[]>,
-  ticketId: Ref<ID | undefined>,
-) => {
+export const useIdoitCacheHandlers = (objectIds: Ref<number[]>, ticketId: Ref<ID | undefined>) => {
   const { cache } = getApolloClient()
 
   const modifyObjectItemAddCache = (
     cache: ApolloCache<TicketExternalReferencesIdoitObjectListQuery>,
-    {
-      data,
-    }: Omit<
-      FetchResult<TicketExternalReferencesIdoitObjectAddMutation>,
-      'context'
-    >,
+    { data }: Omit<FetchResult<TicketExternalReferencesIdoitObjectAddMutation>, 'context'>,
   ) => {
     if (!data) return
 
@@ -43,26 +35,22 @@ export const useIdoitCacheHandlers = (
     }
 
     let existingIdoitObjects =
-      cache.readQuery<TicketExternalReferencesIdoitObjectListQuery>(
-        queryOptions,
-      )
+      cache.readQuery<TicketExternalReferencesIdoitObjectListQuery>(queryOptions)
 
-    const newIdPresent =
-      existingIdoitObjects?.ticketExternalReferencesIdoitObjectList?.find(
-        (object) => {
-          return ticketExternalReferencesIdoitObjectAdd?.idoitObjects?.some(
-            (idoitObject) => idoitObject.idoitObjectId === object.idoitObjectId,
-          )
-        },
-      )
+    const newIdPresent = existingIdoitObjects?.ticketExternalReferencesIdoitObjectList?.find(
+      (object) => {
+        return ticketExternalReferencesIdoitObjectAdd?.idoitObjects?.some(
+          (idoitObject) => idoitObject.idoitObjectId === object.idoitObjectId,
+        )
+      },
+    )
 
     if (newIdPresent) return
 
     existingIdoitObjects = {
       ...existingIdoitObjects,
       ticketExternalReferencesIdoitObjectList: [
-        ...(existingIdoitObjects?.ticketExternalReferencesIdoitObjectList ||
-          []),
+        ...(existingIdoitObjects?.ticketExternalReferencesIdoitObjectList || []),
         ...ticketExternalReferencesIdoitObjectAdd.idoitObjects!,
       ],
     }
@@ -94,9 +82,7 @@ export const useIdoitCacheHandlers = (
     }
 
     const existingIdoitObjects =
-      cache.readQuery<TicketExternalReferencesIdoitObjectListQuery>(
-        queryOptions,
-      )
+      cache.readQuery<TicketExternalReferencesIdoitObjectListQuery>(queryOptions)
 
     if (!existingIdoitObjects) return
 

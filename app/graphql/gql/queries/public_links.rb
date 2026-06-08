@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Queries
   class PublicLinks < BaseQuery
@@ -8,10 +8,7 @@ module Gql::Queries
 
     type [Gql::Types::PublicLinkType], null: true
 
-    # This query is available for all (including unauthenticated) users.
-    def self.authorize(...)
-      true
-    end
+    allow_public_access!
 
     def resolve(screen:)
       PublicLink.select { |link| link[:screen].include?(screen) }

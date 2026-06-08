@@ -1,6 +1,5 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { getNode } from '@formkit/core'
 import { FormKit } from '@formkit/vue'
 import { waitFor } from '@testing-library/vue'
 import { escapeRegExp } from 'lodash-es'
@@ -9,11 +8,7 @@ import { queryByIconName } from '#tests/support/components/iconQueries.ts'
 import { renderComponent } from '#tests/support/components/index.ts'
 import { mockGraphQLApi } from '#tests/support/mock-graphql-api.ts'
 import type { MockGraphQLInstance } from '#tests/support/mock-graphql-api.ts'
-import {
-  nullableMock,
-  waitForNextTick,
-  waitUntil,
-} from '#tests/support/utils.ts'
+import { nullableMock, waitForNextTick, waitUntil } from '#tests/support/utils.ts'
 
 import { AutocompleteSearchOrganizationDocument } from '#shared/components/Form/fields/FieldOrganization/graphql/queries/autocompleteSearch/organization.api.ts'
 import type {
@@ -22,6 +17,8 @@ import type {
 } from '#shared/graphql/types.ts'
 
 import testOptions from './test-options.json'
+
+import type { FormKitNode } from '@formkit/core'
 
 const mockQueryResult = (input: {
   query: string
@@ -38,8 +35,7 @@ const mockQueryResult = (input: {
     }),
   )
 
-  const deaccent = (s: string) =>
-    s.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+  const deaccent = (s: string) => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
 
   // Trim and de-accent search keywords and compile them as a case-insensitive regex.
   //   Make sure to escape special regex characters!
@@ -48,8 +44,7 @@ const mockQueryResult = (input: {
   // Search across options via their de-accented labels.
   const filteredOptions = options.filter(
     (option) =>
-      filterRegex.test(deaccent(option.label)) ||
-      filterRegex.test(deaccent(option.heading)),
+      filterRegex.test(deaccent(option.label)) || filterRegex.test(deaccent(option.heading)),
   ) as unknown as AutocompleteSearchOrganizationEntry[]
 
   return {
@@ -84,22 +79,25 @@ describe('Form - Field - Organization - Features', () => {
         name: 'organization_id',
         value: 123,
         belongsToObjectField: 'organization',
+        // Add manually the "initialEntityObject" which is normally coming
+        // from the root node (for a single field root node === own node).
+        plugins: [
+          (node: FormKitNode) => {
+            node.context!.initialEntityObject = {
+              organization: {
+                name: 'Zammad Organization',
+                internalId: 123,
+              },
+            }
+          },
+        ],
       },
     })
 
-    const node = getNode('organization_id')
-    node!.context!.initialEntityObject = {
-      organization: {
-        name: 'Zammad Organization',
-        internalId: 123,
-      },
-    }
-
     await waitForNextTick(true)
 
-    expect(wrapper.getByRole('listitem')).toHaveTextContent(
-      `Zammad Organization`,
-    )
+    const listitem = await wrapper.findByRole('listitem')
+    expect(listitem).toHaveTextContent(`Zammad Organization`)
   })
 })
 
@@ -108,13 +106,11 @@ describe('Form - Field - Organization - Query', () => {
   let mockApi: MockGraphQLInstance
 
   beforeEach(() => {
-    mockApi = mockGraphQLApi(AutocompleteSearchOrganizationDocument).willBehave(
-      (variables) => {
-        return {
-          data: mockQueryResult(variables.input),
-        }
-      },
-    )
+    mockApi = mockGraphQLApi(AutocompleteSearchOrganizationDocument).willBehave((variables) => {
+      return {
+        data: mockQueryResult(variables.input),
+      }
+    })
   })
 
   it('fetches remote options via GraphQL query', async () => {
@@ -137,9 +133,7 @@ describe('Form - Field - Organization - Query', () => {
     // Search is always case-insensitive.
     await wrapper.events.type(filterElement, 'zammad')
 
-    expect(
-      wrapper.queryByText('Start typing to search…'),
-    ).not.toBeInTheDocument()
+    expect(wrapper.queryByText('Start typing to search…')).not.toBeInTheDocument()
 
     let selectOptions = wrapper.getAllByRole('option')
 
@@ -152,13 +146,11 @@ describe('Form - Field - Organization - Query', () => {
     expect(
       queryByIconName(
         selectOptions[0],
-        testOptions[0].organization.active
-          ? 'organization'
-          : 'inactive-organization',
+        testOptions[0].organization.active ? 'organization' : 'inactive-organization',
       ),
     ).toBeInTheDocument()
 
-    await wrapper.events.click(wrapper.getByLabelText('Clear Search'))
+    await wrapper.events.click(wrapper.getByLabelText('Clear search'))
 
     expect(filterElement).toHaveValue('')
 
@@ -167,9 +159,7 @@ describe('Form - Field - Organization - Query', () => {
     // Search for non-accented characters matches items with accents too.
     await wrapper.events.type(filterElement, 'rodriguez')
 
-    expect(
-      wrapper.queryByText('Start typing to search…'),
-    ).not.toBeInTheDocument()
+    expect(wrapper.queryByText('Start typing to search…')).not.toBeInTheDocument()
 
     selectOptions = wrapper.getAllByRole('option')
 
@@ -180,9 +170,7 @@ describe('Form - Field - Organization - Query', () => {
     expect(
       queryByIconName(
         selectOptions[0],
-        testOptions[7].organization.active
-          ? 'organization'
-          : 'inactive-organization',
+        testOptions[7].organization.active ? 'organization' : 'inactive-organization',
       ),
     ).toBeInTheDocument()
 
@@ -193,9 +181,7 @@ describe('Form - Field - Organization - Query', () => {
     // Search for accented characters matches items with accents too.
     await wrapper.events.type(filterElement, 'rodríguez')
 
-    expect(
-      wrapper.queryByText('Start typing to search…'),
-    ).not.toBeInTheDocument()
+    expect(wrapper.queryByText('Start typing to search…')).not.toBeInTheDocument()
 
     selectOptions = wrapper.getAllByRole('option')
 
@@ -206,9 +192,7 @@ describe('Form - Field - Organization - Query', () => {
     expect(
       queryByIconName(
         selectOptions[0],
-        testOptions[7].organization.active
-          ? 'organization'
-          : 'inactive-organization',
+        testOptions[7].organization.active ? 'organization' : 'inactive-organization',
       ),
     ).toBeInTheDocument()
   })
@@ -242,9 +226,7 @@ describe('Form - Field - Organization - Query', () => {
 
     expect(wrapper.queryByRole('dialog')).not.toBeInTheDocument()
 
-    expect(wrapper.getByRole('listitem')).toHaveTextContent(
-      testOptions[0].label,
-    )
+    expect(wrapper.getByRole('listitem')).toHaveTextContent(testOptions[0].label)
 
     await wrapper.events.click(wrapper.getByLabelText('Select…'))
 

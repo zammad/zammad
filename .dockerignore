@@ -1,6 +1,7 @@
 # Skip some content to avoid blowing up images with unneeded data.
 .git/
 .yarn/cache
+config/database.yml
 node_modules
 log/*.log
 tmp/

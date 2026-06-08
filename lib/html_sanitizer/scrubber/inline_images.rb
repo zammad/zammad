@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class HtmlSanitizer
   module Scrubber
@@ -17,7 +17,7 @@ class HtmlSanitizer
         return CONTINUE if node['src'].blank?
 
         case node['src']
-        when %r{^(data:image/(jpeg|png);base64,.+?)$}i
+        when %r{^(data:image/(jpg|jpeg|png);base64,.+?)$}i
           process_inline_image(node, $1)
         when %r{^(?:/api/v1/attachments/)(\d+)$}
           process_uploaded_image(node, $1)
@@ -35,7 +35,7 @@ class HtmlSanitizer
       def inline_image_data(src)
         return if src.blank?
 
-        matchdata = src.match %r{^(data:image/(jpeg|png);base64,.+?)$}i
+        matchdata = src.match %r{^(data:image/(jpg|jpeg|png);base64,.+?)$}i
 
         return if !matchdata
 

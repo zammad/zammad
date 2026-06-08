@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -28,7 +28,7 @@ RSpec.describe HtmlSanitizer::Strict, :aggregate_failures do
       expect(sanitize('<IMG SRC="jav&#x09;ascript:alert(\'XSS\');">')).to eq('')
       expect(sanitize('<IMG SRC="jav&#x0A;ascript:alert(\'XSS\');">')).to eq('')
       expect(sanitize('<IMG SRC="jav&#x0D;ascript:alert(\'XSS\');">')).to eq('')
-      expect(sanitize('<IMG SRC=" &#14;  javascript:alert(\'XSS\');">')).to eq('<img src="">')
+      expect(sanitize('<IMG SRC=" &#14;  javascript:alert(\'XSS\');">')).to eq('')
       expect(sanitize('<SCRIPT/XSS SRC="http://xss.rocks/xss.js"></SCRIPT>')).to eq('')
       expect(sanitize('<BODY onload!#$%&()*~+-_.,:;?@[/|\]^`=alert("XSS")>')).to eq('')
       expect(sanitize('<SCRIPT/SRC="http://xss.rocks/xss.js"></SCRIPT>')).to eq('')
@@ -39,7 +39,7 @@ RSpec.describe HtmlSanitizer::Strict, :aggregate_failures do
       expect(sanitize('<IMG SRC="javascript:alert(\'XSS\')" abc<b>123</b>')).to eq('123')
       expect(sanitize('<iframe src=http://xss.rocks/scriptlet.html <')).to eq('')
       expect(sanitize('</script><script>alert(\'XSS\');</script>')).to eq('')
-      expect(sanitize('<STYLE>li {list-style-image: url("javascript:alert(\'XSS\')");}</STYLE><UL><LI>XSS</br>')).to eq('<ul><li>XSS</li></ul>')
+      expect(sanitize('<STYLE>li {list-style-image: url("javascript:alert(\'XSS\')");}</STYLE><UL><LI>XSS</br>')).to eq('<ul><li>XSS<br></li></ul>')
       expect(sanitize('<IMG SRC=\'vbscript:msgbox("XSS")\'>')).to eq('')
       expect(sanitize('<IMG SRC="livescript:[code]">')).to eq('')
       expect(sanitize('<svg/onload=alert(\'XSS\')>')).to eq('')
@@ -50,7 +50,7 @@ RSpec.describe HtmlSanitizer::Strict, :aggregate_failures do
       expect(sanitize('<IMG STYLE="java/*XSS*/script:(alert(\'XSS\'), \'\')">')).to eq('<img>')
       expect(sanitize('<IMG src="java/*XSS*/script:(alert(\'XSS\'), \'\')">')).to eq('')
       expect(sanitize('<IFRAME SRC="javascript:alert(\'XSS\');"></IFRAME>')).to eq('')
-      expect(sanitize('<TABLE><TD BACKGROUND="javascript:alert(\'XSS\')">')).to eq('<table><td></td></table>')
+      expect(sanitize('<TABLE><TD BACKGROUND="javascript:alert(\'XSS\')">')).to eq('<table><tbody><tr><td></td></tr></tbody></table>')
       expect(sanitize('<DIV STYLE="background-image: url(javascript:alert(\'XSS\'), \'\')">')).to eq('<div></div>')
       expect(sanitize('<a href="/some/path">test</a>')).to eq('<a href="/some/path">test</a>')
       expect(sanitize('<a href="https://some/path">test</a>')).to eq('<a href="https://some/path" rel="nofollow noreferrer noopener" target="_blank" title="https://some/path">test</a>')
@@ -59,8 +59,8 @@ RSpec.describe HtmlSanitizer::Strict, :aggregate_failures do
       expect(sanitize('<IMG SRC="javas<!-- -->cript:alert(\'XSS\')">')).to eq('')
       expect(sanitize(' <HEAD><META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF-7"> </HEAD>+ADw-SCRIPT+AD4-alert(\'XSS\');+ADw-/SCRIPT+AD4-')).to eq('  +ADw-SCRIPT+AD4-alert(\'XSS\');+ADw-/SCRIPT+AD4-')
       expect(sanitize('<SCRIPT a=">" SRC="httx://xss.rocks/xss.js"></SCRIPT>')).to eq('')
-      expect(sanitize("<A HREF=\"h\ntt  p://6 6.000146.0x7.147/\">XSS</A>")).to eq('<a href="h%0Att%20%20p://6%206.000146.0x7.147/" rel="nofollow noreferrer noopener" target="_blank" title="h%0Att%20%20p://6%206.000146.0x7.147/">XSS</a>')
-      expect(sanitize("<A HREF=\"h\ntt  p://6 6.000146.0x7.147/\">XSS</A>", external: true)).to eq('<a href="http://h%0Att%20%20p://6%206.000146.0x7.147/" rel="nofollow noreferrer noopener" target="_blank" title="http://h%0Att%20%20p://6%206.000146.0x7.147/">XSS</a>')
+      expect(sanitize("<A HREF=\"h\ntt  p://6 6.000146.0x7.147/\">XSS</A>")).to eq('<a href="htt  p://6 6.000146.0x7.147/" rel="nofollow noreferrer noopener" target="_blank" title="htt  p://6 6.000146.0x7.147/">XSS</a>')
+      expect(sanitize("<A HREF=\"h\ntt  p://6 6.000146.0x7.147/\">XSS</A>", external: true)).to eq('<a href="htt  p://6 6.000146.0x7.147/" rel="nofollow noreferrer noopener" target="_blank" title="htt  p://6 6.000146.0x7.147/">XSS</a>')
       expect(sanitize('<A HREF="//www.google.com/">XSS</A>')).to eq('<a href="//www.google.com/" rel="nofollow noreferrer noopener" target="_blank" title="//www.google.com/">XSS</a>')
       expect(sanitize('<A HREF="//www.google.com/">XSS</A>', external: true)).to eq('<a href="//www.google.com/" rel="nofollow noreferrer noopener" target="_blank" title="//www.google.com/">XSS</a>')
       expect(sanitize('<form id="test"></form><button form="test" formaction="javascript:alert(1)">X</button>')).to eq('X')
@@ -68,12 +68,12 @@ RSpec.describe HtmlSanitizer::Strict, :aggregate_failures do
       expect(sanitize('<a xlink:href="javascript:alert(2)">CLICKME</a>')).to eq('CLICKME')
       expect(sanitize('<a xlink:href="javascript:alert(2)">CLICKME</a>', external: true)).to eq('CLICKME')
       expect(sanitize('<!--<img src="--><img src=x onerror=alert(1)//">')).to eq('<img src="x">')
-      expect(sanitize('<![><img src="]><img src=x onerror=alert(1)//">')).to eq('<img src="]&gt;&lt;img%20src=x%20onerror=alert(1)//">')
-      expect(sanitize('<svg><![CDATA[><image xlink:href="]]><img src=xx:x onerror=alert(2)//"></svg>')).to eq('')
-      expect(sanitize('<abc><img src="</abc><img src=x onerror=alert(1)//">')).to eq('<img src="&lt;/abc&gt;&lt;img%20src=x%20onerror=alert(1)//">')
+      expect(sanitize('<![><img src="]><img src=x onerror=alert(1)//">')).to eq('<img src="]><img src=x onerror=alert(1)//">')
+      expect(sanitize('<svg><![CDATA[><image xlink:href="]]><img src=xx:x onerror=alert(2)//"></svg>')).to eq('<img src="xx:x">')
+      expect(sanitize('<abc><img src="</abc><img src=x onerror=alert(1)//">')).to eq('<img src="</abc><img src=x onerror=alert(1)//">')
       expect(sanitize('<object data="data:text/html;base64,PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0Pg=="></object>')).to eq('')
       expect(sanitize('<embed src="data:text/html;base64,PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0Pg=="></embed>')).to eq('')
-      expect(sanitize('<img[a][b]src=x[d]onerror[c]=[e]"alert(1)">')).to eq('<img>')
+      expect(sanitize('<img[a][b]src=x[d]onerror[c]=[e]"alert(1)">')).to eq('')
       expect(sanitize('<a href="[a]java[b]script[c]:alert(1)">XXX</a>')).to eq('<a href="[a]java[b]script[c]:alert(1)">XXX</a>')
       expect(sanitize('<a href="[a]java[b]script[c]:alert(1)">XXX</a>', external: true)).to eq('<a href="http://[a]java[b]script[c]:alert(1)" rel="nofollow noreferrer noopener" target="_blank" title="http://[a]java[b]script[c]:alert(1)">XXX</a>')
       expect(sanitize('<svg xmlns="http://www.w3.org/2000/svg"><script>alert(1)</script></svg>')).to eq('')
@@ -82,16 +82,16 @@ RSpec.describe HtmlSanitizer::Strict, :aggregate_failures do
     it 'performs style cleanups' do
       expect(sanitize('<a style="position:fixed;top:0;left:0;width: 260px;height:100vh;background-color:red;display: block;" href="http://example.com"></a>')).to eq('<a href="http://example.com" rel="nofollow noreferrer noopener" target="_blank" title="http://example.com"></a>')
       expect(sanitize('<a style="position:fixed;top:0;left:0;width: 260px;height:100vh;background-color:red;display: block;" href="http://example.com"></a>', external: true)).to eq('<a href="http://example.com" rel="nofollow noreferrer noopener" target="_blank" title="http://example.com"></a>')
-      expect(sanitize('<table><tr style="font-size: 0"><td>123</td></tr></table>')).to eq('<table><tr><td>123</td></tr></table>')
-      expect(sanitize('<table><tr style="font-size: 0px"><td>123</td></tr></table>')).to eq('<table><tr><td>123</td></tr></table>')
-      expect(sanitize('<table><tr style="font-size: 0pt"><td>123</td></tr></table>')).to eq('<table><tr><td>123</td></tr></table>')
-      expect(sanitize('<table><tr style="font-size:0"><td>123</td></tr></table>')).to eq('<table><tr><td>123</td></tr></table>')
-      expect(sanitize('<table><tr style="font-Size:0px"><td>123</td></tr></table>')).to eq('<table><tr><td>123</td></tr></table>')
-      expect(sanitize('<table><tr style="font-size:0em"><td>123</td></tr></table>')).to eq('<table><tr><td>123</td></tr></table>')
-      expect(sanitize('<table><tr style=" Font-size:0%"><td>123</td></tr></table>')).to eq('<table><tr><td>123</td></tr></table>')
-      expect(sanitize('<table><tr style="font-size:0%;display: none;"><td>123</td></tr></table>')).to eq('<table><tr><td>123</td></tr></table>')
-      expect(sanitize('<table><tr style="font-size:0%;visibility:hidden;"><td>123</td></tr></table>')).to eq('<table><tr><td>123</td></tr></table>')
-      expect(sanitize('<table><tr style="font-size:0%;visibility:hidden;"><td>123</td></tr></table>')).to eq('<table><tr><td>123</td></tr></table>')
+      expect(sanitize('<table><tr style="font-size: 0"><td>123</td></tr></table>')).to eq('<table><tbody><tr><td>123</td></tr></tbody></table>')
+      expect(sanitize('<table><tr style="font-size: 0px"><td>123</td></tr></table>')).to eq('<table><tbody><tr><td>123</td></tr></tbody></table>')
+      expect(sanitize('<table><tr style="font-size: 0pt"><td>123</td></tr></table>')).to eq('<table><tbody><tr><td>123</td></tr></tbody></table>')
+      expect(sanitize('<table><tr style="font-size:0"><td>123</td></tr></table>')).to eq('<table><tbody><tr><td>123</td></tr></tbody></table>')
+      expect(sanitize('<table><tr style="font-Size:0px"><td>123</td></tr></table>')).to eq('<table><tbody><tr><td>123</td></tr></tbody></table>')
+      expect(sanitize('<table><tr style="font-size:0em"><td>123</td></tr></table>')).to eq('<table><tbody><tr><td>123</td></tr></tbody></table>')
+      expect(sanitize('<table><tr style=" Font-size:0%"><td>123</td></tr></table>')).to eq('<table><tbody><tr><td>123</td></tr></tbody></table>')
+      expect(sanitize('<table><tr style="font-size:0%;display: none;"><td>123</td></tr></table>')).to eq('<table><tbody><tr><td>123</td></tr></tbody></table>')
+      expect(sanitize('<table><tr style="font-size:0%;visibility:hidden;"><td>123</td></tr></table>')).to eq('<table><tbody><tr><td>123</td></tr></tbody></table>')
+      expect(sanitize('<table><tr style="font-size:0%;visibility:hidden;"><td>123</td></tr></table>')).to eq('<table><tbody><tr><td>123</td></tr></tbody></table>')
       expect(sanitize('<html><body><div style="font-family: Meiryo, メイリオ, &quot;Hiragino Sans&quot;, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);">このアドレスへのメルマガを解除してください。</div></body></html>')).to eq('<div>このアドレスへのメルマガを解除してください。</div>')
     end
 
@@ -125,12 +125,10 @@ RSpec.describe HtmlSanitizer::Strict, :aggregate_failures do
         <blockquote></div>
       INPUT
       let(:output) { <<~OUTPUT }
-
         <div>
 
         test 123
-        <blockquote></blockquote>
-        </div>
+        <blockquote></blockquote></div>
       OUTPUT
 
       it 'filters correctly' do
@@ -166,7 +164,7 @@ RSpec.describe HtmlSanitizer::Strict, :aggregate_failures do
     end
 
     it 'handles mailto: links' do
-      expect(sanitize('<a href="mailto:testäöü@example.com" id="123">test</a>')).to eq('<a href="mailto:test%C3%A4%C3%B6%C3%BC@example.com">test</a>')
+      expect(sanitize('<a href="mailto:testäöü@example.com" id="123">test</a>')).to eq('<a href="mailto:testäöü@example.com">test</a>')
     end
 
     context 'when handling code blocks' do
@@ -254,6 +252,13 @@ RSpec.describe HtmlSanitizer::Strict, :aggregate_failures do
         expect(sanitize("<a href=\"#{attachment_url}\">No disposition</a>")).to eq("<a href=\"#{attachment_url}\" rel=\"nofollow noreferrer noopener\" target=\"_blank\" title=\"#{attachment_url}\">No disposition</a>")
         expect(sanitize("<a href=\"#{different_fqdn_url}\">Different FQDN</a>")).to eq("<a href=\"#{different_fqdn_url}\" rel=\"nofollow noreferrer noopener\" target=\"_blank\" title=\"#{different_fqdn_url}\">Different FQDN</a>")
         expect(sanitize("<a href=\"#{attachment_url_evil_other}\">Evil link</a>")).to eq("<a href=\"#{attachment_url_good}\" rel=\"nofollow noreferrer noopener\" target=\"_blank\" title=\"#{attachment_url_good}\">Evil link</a>")
+      end
+    end
+
+    context 'when href contains Zammad variable placeholders' do
+      it 'preserves curly brace variables in URL' do
+        expect(sanitize('<a href="https://example.com/?no={ticket.number}">example</a>', external: true))
+          .to eq('<a href="https://example.com/?no={ticket.number}" rel="nofollow noreferrer noopener" target="_blank" title="https://example.com/?no={ticket.number}">example</a>')
       end
     end
   end

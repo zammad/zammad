@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -7,18 +7,14 @@ RSpec.describe Channel::EmailParser, type: :model do
 
     shared_examples 'parses email correctly' do |stored_email|
       context "for #{stored_email}" do
-        let(:yml_file)                 { stored_email.ext('yml') }
-        let(:content)                  { YAML.load_file(yml_file, permitted_classes: [ActiveSupport::HashWithIndifferentAccess]) }
-        let(:parsed)                   { described_class.new.parse(File.read(stored_email)) }
-        let(:expected_msg)             { content.except(:attachments) }
-        let(:parsed_msg)               { parsed.slice(*expected_msg.keys) }
-        let(:content_attachments_md5s) { (content[:attachments]&.map { |a| Digest::MD5.hexdigest(a[:data]) } || []).to_set }
-        let(:parsed_attachments_md5s)  { (parsed[:attachments]&.map { |a| Digest::MD5.hexdigest(a[:data]) } || []).to_set }
+        let(:yml_file)   { stored_email.sub_ext('.yml') }
+        let(:content)    { YAML.load_file(yml_file, permitted_classes: [ActiveSupport::HashWithIndifferentAccess]) }
+        let(:parsed)     { described_class.new.parse(File.read(stored_email)) }
+        let(:parsed_msg) { parsed.slice(*content.keys) }
 
         it 'parses correctly' do
           expect(File).to exist(yml_file)
-          expect(parsed_msg).to include(expected_msg)
-          expect(content_attachments_md5s).to be_subset(parsed_attachments_md5s)
+          expect(parsed_msg).to eq(content)
         end
       end
     end
@@ -55,21 +51,46 @@ RSpec.describe Channel::EmailParser, type: :model do
       end
     end
 
-    # To write new .yml files for emails you can use the following code:
+    # https://github.com/zammad/zammad/issues/5905
+    describe 'when mail does not declare a content type' do
+      subject(:parsed) { described_class.new.parse(raw_mail) }
+
+      let(:raw_mail) { <<~RAW.chomp }
+        Date: Mon, 15 Dec 2025 21:49:11 +0100
+        To: support@test.local
+        From: user6@example.com
+        Subject: Ticket #6
+        Message-Id: <20251215214911.090380@macbookpro.fritz.box>
+        X-Mailer: swaks v20240103.0 jetmore.org/john/code/swaks/
+
+        This is test email 6
+      RAW
+
+      it 'parses the body without treating it as an attachment' do
+        expect(parsed[:attachments]).to be_empty
+        expect(parsed[:body].strip).to eq('This is test email 6')
+      end
+    end
+
+    # To write new .yml files for emails you can use the following rake task:
     #
-    # File.write('test/data/mail/mailXXX.yml', Channel::EmailParser.new.parse(File.read('test/data/mail/mailXXX.box')).slice(:from, :from_email, :from_display_name, :to, :cc, :subject, :body, :content_type, :'reply-to', :attachments).to_yaml)
+    # rake zammad:email_parser:debug:generate_yml[/path/to/your/email.box]
     #
-    # To renew all existing files, you can use the following code:
+    # To renew all existing files, you can use the following rake task:
     #
-    # Dir.glob(Rails.root.join('test/data/mail/mail*.box')).each { |mail_file| File.write(mail_file.gsub('.box', '.yml'), Channel::EmailParser.new.parse(File.read(mail_file)).slice(:from, :from_email, :from_display_name, :to, :cc, :subject, :body, :content_type, :'reply-to', :attachments).to_yaml) }
+    # rake zammad:email_parser:debug:regenerate_all_ymls
     #
     context 'when checking a bunch of stored emails for correct parsing behaviour' do
-      tests = Dir.glob(Rails.root.join('test/data/mail/mail*.box')).each do |stored_email| # rubocop:disable Rails/RootPathnameMethods
+      Rails.root.glob('test/data/mail/mail*.box').each do |stored_email|
+        if ENV['MAIL_PARSER_TEST'] && stored_email.to_s.exclude?("#{ENV['MAIL_PARSER_TEST']}.box")
+          next
+        end
+
         include_examples('parses email correctly', stored_email)
       end
 
       it 'ensures tests were dynamically generated' do
-        expect(tests.count).to eq(110)
+        expect(Rails.root.glob('test/data/mail/mail*.box').count).to eq(116)
       end
     end
 
@@ -321,18 +342,135 @@ RSpec.describe Channel::EmailParser, type: :model do
         end
 
         context 'when from address matches an existing agent' do
-          let!(:agent) { create(:agent, email: 'foo@bar.com') }
-
-          it 'sets article.sender to "Agent"' do
-            described_class.new.process({}, raw_mail)
-
-            expect(Ticket::Article.last.sender.name).to eq('Agent')
+          before do
+            Setting.set('postmaster_sender_is_agent_search_for_customer', search_for_customer)
           end
 
-          it 'sets ticket.state to "new"' do
-            described_class.new.process({}, raw_mail)
+          describe 'postmaster filter group routing' do
+            let(:channel) { create(:email_channel, group: initial_group) }
+            let(:agent)               { create(:agent_and_customer, email: 'foo@bar.com', groups: [agent_group]) }
+            let(:initial_group)       { create(:group) }
+            let(:routed_group)        { create(:group) }
+            let(:postmaster_filter)   { create(:postmaster_filter, :route_to_group, group: routed_group) }
+            let(:search_for_customer) { false }
 
-            expect(Ticket.last.state.name).to eq('new')
+            before { agent && postmaster_filter }
+
+            context 'when agent-customer is customer in target group but postmaster filter routes to another group' do
+              let(:agent_group) { routed_group }
+
+              it 'sets article.sender to "Agent"' do
+                described_class.new.process(channel, raw_mail)
+
+                expect(Ticket::Article.last.sender.name).to eq('Agent')
+              end
+            end
+
+            context 'when agent-customer is agent in target group but postmaster filter routes to another group' do
+              let(:agent_group) { initial_group }
+
+              it 'sets article.sender to "Agent"' do
+                described_class.new.process(channel, raw_mail)
+
+                expect(Ticket::Article.last.sender.name).to eq('Customer')
+              end
+            end
+          end
+
+          context 'when agent is agent in target group' do
+            let!(:agent) { create(:agent, email: 'foo@bar.com', groups: Group.all) }
+
+            context 'when search for customer is false' do
+              let(:search_for_customer) { false }
+
+              it 'sets article.sender to "Agent"' do
+                described_class.new.process({}, raw_mail)
+
+                expect(Ticket::Article.last.sender.name).to eq('Agent')
+              end
+
+              it 'sets ticket.state to "new"' do
+                described_class.new.process({}, raw_mail)
+
+                expect(Ticket.last.state.name).to eq('new')
+              end
+
+              it 'sets agent as customer' do
+                described_class.new.process({}, raw_mail)
+
+                expect(Ticket.last.customer).to eq(agent)
+              end
+            end
+
+            context 'when search for customer is true' do
+              let(:search_for_customer) { true }
+
+              it 'sets article.sender to "Agent"' do
+                described_class.new.process({}, raw_mail)
+
+                expect(Ticket::Article.last.sender.name).to eq('Agent')
+              end
+
+              it 'sets ticket.state to "new"' do
+                described_class.new.process({}, raw_mail)
+
+                expect(Ticket.last.state.name).to eq('new')
+              end
+
+              it 'sets customer using TO value' do
+                described_class.new.process({}, raw_mail)
+
+                expect(Ticket.last.customer).to have_attributes(email: 'baz@qux.net')
+              end
+            end
+          end
+
+          context 'when agent is customer in target group' do
+            let!(:agent) { create(:agent, email: 'foo@bar.com') }
+
+            context 'when search for customer is false' do
+              let(:search_for_customer) { false }
+
+              it 'sets article.sender to "Agent"' do
+                described_class.new.process({}, raw_mail)
+
+                expect(Ticket::Article.last.sender.name).to eq('Customer')
+              end
+
+              it 'sets ticket.state to "new"' do
+                described_class.new.process({}, raw_mail)
+
+                expect(Ticket.last.state.name).to eq('new')
+              end
+
+              it 'sets agent as customer' do
+                described_class.new.process({}, raw_mail)
+
+                expect(Ticket.last.customer).to eq(agent)
+              end
+            end
+
+            context 'when search for customer is true' do
+              let(:search_for_customer) { true }
+
+              it 'sets article.sender to "Agent"' do
+                described_class.new.process({}, raw_mail)
+
+                expect(Ticket::Article.last.sender.name).to eq('Customer')
+              end
+
+              it 'sets ticket.state to "new"' do
+                described_class.new.process({}, raw_mail)
+
+                expect(Ticket.last.state.name).to eq('new')
+              end
+
+              it 'sets customer using TO value' do
+                described_class.new.process({}, raw_mail)
+
+                expect(Ticket.last.customer).to have_attributes(email: 'baz@qux.net')
+              end
+            end
           end
         end
 
@@ -714,6 +852,21 @@ RSpec.describe Channel::EmailParser, type: :model do
 
               include_examples 'adds message to ticket'
             end
+
+            # https://github.com/zammad/zammad/issues/5170
+            context 'when email is encrypted, including subject' do
+              let!(:ticket)  { create(:ticket, number: 31_337) }
+              let(:raw_mail) { Rails.root.join('spec/fixtures/files/pgp/mail/mail-combined.box').read.to_s }
+
+              before do
+                Setting.set('ticket_number_ignore_system_id', true) # this is needed to allow hardcoded ticket reference
+                Setting.set('pgp_integration', true)
+
+                (1..3).each { |i| create(:pgp_key, :with_private, fixture: "pgp#{i}@example.com") }
+              end
+
+              include_examples 'adds message to ticket'
+            end
           end
 
           context 'when body contains ticket reference' do
@@ -971,6 +1124,33 @@ RSpec.describe Channel::EmailParser, type: :model do
               include_examples 'adds message to ticket'
             end
           end
+
+          # https://github.com/zammad/zammad/issues/6141
+          context 'when attachment is malformatted and ticket hook is UTF8' do
+            let(:raw_mail) { <<~RAW.chomp }
+              From: sender@example.org
+              To: support@example.com
+              Subject: test
+              Content-Type: multipart/mixed; boundary="===============2843907148225004358=="
+
+              --===============2843907148225004358==
+              Content-Type: =?utf-8?b?YXBwbGljYXRpb24vcGRmOyBuYW1lPSJzYW1wbMSZLnBkZiI=?=
+              MIME-Version: 1.0
+              Content-Transfer-Encoding: base64
+              Content-Disposition: attachment;
+               filename="=?utf-8?b?c2FtcGzEmS5wZGY=?="
+
+              JVBERi0xLjQKJZOMi54gUmVwb3J0TGFiIEdlbmVyYXRlZCBQREYgZG9jdW1lbnQgKG9wZW5zb3VyY2UpCjEgMCBvYmoKPDwKL0YxIDIgMCBSCj4+CmVuZG9iagoyIDAgb2JqCjw8Ci9CYXNlRm9udCAvSGVsdmV0aWNhIC9FbmNvZGluZyAvV2luQW5zaUVuY29kaW5nIC9OYW1lIC9GMSAvU3VidHlwZSAvVHlwZTEgL1R5cGUgL0ZvbnQKPj4KZW5kb2JqCjMgMCBvYmoKPDwKL0NvbnRlbnRzIDcgMCBSIC9NZWRpYUJveCBbIDAgMCA1OTUuMjc1NiA4NDEuODg5OCBdIC9QYXJlbnQgNiAwIFIgL1Jlc291cmNlcyA8PAovRm9udCAxIDAgUiAvUHJvY1NldCBbIC9QREYgL1RleHQgL0ltYWdlQiAvSW1hZ2VDIC9JbWFnZUkgXQo+PiAvUm90YXRlIDAgL1RyYW5zIDw8Cgo+PiAKICAvVHlwZSAvUGFnZQo+PgplbmRvYmoKNCAwIG9iago8PAovUGFnZU1vZGUgL1VzZU5vbmUgL1BhZ2VzIDYgMCBSIC9UeXBlIC9DYXRhbG9nCj4+CmVuZG9iago1IDAgb2JqCjw8Ci9BdXRob3IgKFwoYW5vbnltb3VzXCkpIC9DcmVhdGlvbkRhdGUgKEQ6MjAyNjA1MTgxODI0MjcrMDMnMDAnKSAvQ3JlYXRvciAoXCh1bnNwZWNpZmllZFwpKSAvS2V5d29yZHMgKCkgL01vZERhdGUgKEQ6MjAyNjA1MTgxODI0MjcrMDMnMDAnKSAvUHJvZHVjZXIgKFJlcG9ydExhYiBQREYgTGlicmFyeSAtIFwob3BlbnNvdXJjZVwpKSAKICAvU3ViamVjdCAoXCh1bnNwZWNpZmllZFwpKSAvVGl0bGUgKFwoYW5vbnltb3VzXCkpIC9UcmFwcGVkIC9GYWxzZQo+PgplbmRvYmoKNiAwIG9iago8PAovQ291bnQgMSAvS2lkcyBbIDMgMCBSIF0gL1R5cGUgL1BhZ2VzCj4+CmVuZG9iago3IDAgb2JqCjw8Ci9GaWx0ZXIgWyAvQVNDSUk4NURlY29kZSAvRmxhdGVEZWNvZGUgXSAvTGVuZ3RoIDE0NAo+PgpzdHJlYW0KR2FwcFZdYWQ6bSY7OXEtTUNEREEvJlotKjsoLCEvJUslTW0rdUVXYDNbMGJdMUdkbyJbInQ0XyljLzVfUlFyVFAic21bWkRHZFoiJ1JlNk0rQTQuPy05JjVsNWVHclpQXGZVKSQiLypXZzdkTDJqPkUuLzQwSk9oLEooMlNfKC5LaSVYSmA6JTdwMTZnQX4+ZW5kc3RyZWFtCmVuZG9iagp4cmVmCjAgOAowMDAwMDAwMDAwIDY1NTM1IGYgCjAwMDAwMDAwNjEgMDAwMDAgbiAKMDAwMDAwMDA5MiAwMDAwMCBuIAowMDAwMDAwMTk5IDAwMDAwIG4gCjAwMDAwMDA0MDIgMDAwMDAgbiAKMDAwMDAwMDQ3MCAwMDAwMCBuIAowMDAwMDAwNzUwIDAwMDAwIG4gCjAwMDAwMDA4MDkgMDAwMDAgbiAKdHJhaWxlcgo8PAovSUQgCls8NTFhNWRhZmFkNmRkOGZmYTYwZGExZTI2NjMwYzUyOTQ+PDUxYTVkYWZhZDZkZDhmZmE2MGRhMWUyNjYzMGM1Mjk0Pl0KJSBSZXBvcnRMYWIgZ2VuZXJhdGVkIFBERiBkb2N1bWVudCAtLSBkaWdlc3QgKG9wZW5zb3VyY2UpCgovSW5mbyA1IDAgUgovUm9vdCA0IDAgUgovU2l6ZSA4Cj4+CnN0YXJ0eHJlZgoxMDQzCiUlRU9GCg==
+
+              --===============2843907148225004358==--
+            RAW
+
+            before do
+              Setting.set('ticket_hook', 'samplę')
+            end
+
+            include_examples 'creates a new ticket'
+          end
         end
 
         context 'when configured to search headers' do
@@ -1016,7 +1196,7 @@ RSpec.describe Channel::EmailParser, type: :model do
             include_examples 'adds message to ticket'
 
             context 'that matches two separate tickets' do
-              let!(:newer_ticket) { create(:ticket) }
+              let!(:newer_ticket)  { create(:ticket) }
               let!(:newer_article) { create(:ticket_article, ticket: newer_ticket, message_id: article.message_id) }
 
               it 'returns more recently created ticket' do
@@ -1800,6 +1980,27 @@ RSpec.describe Channel::EmailParser, type: :model do
       ticket, = described_class.new.process({}, new_email)
       job = Delayed::Job.all.detect { |row| YAML.load(row.handler, permitted_classes: [ActiveJob::QueueAdapters::DelayedJobAdapter::JobWrapper]).job_data['arguments'] == ['Ticket', ticket.id] }
       expect(job).to be_present
+    end
+  end
+
+  # https://github.com/zammad/zammad/issues/5227
+  describe 'decodes and trims base64/encoded email subject' do
+    context 'for a subject with encoded whitespace' do
+
+      let(:raw_mail) { <<~RAW.chomp }
+        From: sender@example.com
+        To: recipient@example.com
+        Subject: =?UTF-8?B?ICAgICAgVGVzdCBFbWFpbCBTdWJqZWN0ICAg?=
+
+        Body text
+      RAW
+
+      let(:parsed)           { described_class.new.parse(raw_mail) }
+      let(:expected_subject) { 'Test Email Subject' }
+
+      it 'decodes and trims the subject correctly' do
+        expect(parsed[:subject]).to eq(expected_subject)
+      end
     end
   end
 end

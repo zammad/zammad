@@ -1,9 +1,6 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import {
-  getGraphQLMockCalls,
-  mockGraphQLResult,
-} from '#tests/graphql/builders/mocks.ts'
+import { getGraphQLMockCalls, mockGraphQLResult } from '#tests/graphql/builders/mocks.ts'
 import { getTestRouter } from '#tests/support/components/renderComponent.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
 import { setupView } from '#tests/support/mock-user.ts'
@@ -131,9 +128,7 @@ describe('avatars', () => {
       mockApollo: false,
     })
 
-    expect(
-      await view.findByLabelText('Avatar (Max Mustermann) (VIP)'),
-    ).toBeAvatarElement({
+    expect(await view.findByLabelText('Avatar (Max Mustermann) (VIP)')).toBeAvatarElement({
       active: false,
       vip: true,
       type: 'user',

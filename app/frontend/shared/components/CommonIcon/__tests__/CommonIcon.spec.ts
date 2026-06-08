@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { renderComponent } from '#tests/support/components/index.ts'
 
@@ -10,10 +10,7 @@ describe('CommonIcon.vue', () => {
       props: { name: 'chevron-left' },
     })
     expect(wrapper.getByIconName('chevron-left')).toHaveClass('icon')
-    expect(wrapper.getByIconName('chevron-left')).toHaveAttribute(
-      'aria-label',
-      'chevron-left',
-    )
+    expect(wrapper.getByIconName('chevron-left')).toHaveAttribute('aria-label', 'chevron-left')
   })
 
   it('renders icon with animation', () => {
@@ -37,10 +34,7 @@ describe('CommonIcon.vue', () => {
       props: { name: 'settings', decorative: true },
     })
 
-    expect(wrapper.getByIconName('settings')).toHaveAttribute(
-      'aria-hidden',
-      'true',
-    )
+    expect(wrapper.getByIconName('settings')).toHaveAttribute('aria-hidden', 'true')
     expect(wrapper.getByIconName('settings')).not.toHaveAttribute('aria-label')
   })
 

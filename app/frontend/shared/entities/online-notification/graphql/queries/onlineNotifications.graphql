@@ -20,6 +20,9 @@ query onlineNotifications {
         }
         typeName
         objectName
+        meta {
+          createdByAi
+        }
         metaObject {
           ... on Ticket {
             id
@@ -39,6 +42,32 @@ query onlineNotifications {
             }
             bodyWithUrls
             preferences
+          }
+          ... on OnlineNotificationStandalone {
+            id
+            internalId
+            data {
+              ... on OnlineNotificationStandaloneBulkJobData {
+                total
+                failedCount
+              }
+              ... on OnlineNotificationStandaloneKbAnswerGenerationFailedData {
+                errorMessage
+                ticketTitle
+              }
+            }
+          }
+          ... on KnowledgeBaseAnswerTranslation {
+            id
+            title
+            kbLocale {
+              systemLocale {
+                locale
+              }
+            }
+            answer {
+              id
+            }
           }
         }
       }

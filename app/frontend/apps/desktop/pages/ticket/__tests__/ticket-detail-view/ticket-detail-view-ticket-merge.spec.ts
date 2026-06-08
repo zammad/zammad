@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { within } from '@testing-library/vue'
 
@@ -45,18 +45,16 @@ describe('Ticket detail view ticket merge', () => {
 
     const sidebar = view.getByLabelText('Content sidebar')
 
-    await view.events.click(
-      within(sidebar).getByRole('button', { name: 'Action menu button' }),
-    )
+    await view.events.click(within(sidebar).getByRole('button', { name: 'Action menu button' }))
 
     await view.events.click(await view.findByRole('button', { name: 'Merge' }))
 
     expect(
-      await view.findByRole('heading', { name: 'Merge Tickets', level: 2 }),
+      await view.findByRole('heading', { name: 'Merge tickets', level: 2 }),
     ).toBeInTheDocument()
 
-    expect(await view.findByText('Recent Customer Tickets')).toBeInTheDocument()
-    expect(view.getByText('Recently Viewed Tickets')).toBeInTheDocument()
+    expect(await view.findByText('Recent customer tickets')).toBeInTheDocument()
+    expect(view.getByText('Recently viewed tickets')).toBeInTheDocument()
     expect(view.getByText('Foo Car')).toBeInTheDocument()
   })
 })

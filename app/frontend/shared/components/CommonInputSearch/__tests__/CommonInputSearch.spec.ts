@@ -1,12 +1,10 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { onMounted, ref } from 'vue'
 
 import { renderComponent } from '#tests/support/components/index.ts'
 
-import CommonInputSearch, {
-  type CommonInputSearchExpose,
-} from '../CommonInputSearch.vue'
+import CommonInputSearch, { type CommonInputSearchExpose } from '../CommonInputSearch.vue'
 
 describe('testing input for searching', () => {
   it('renders input', async () => {

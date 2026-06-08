@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Types::User
   class TaskbarItemType < Gql::Types::BaseObject
@@ -22,10 +22,6 @@ module Gql::Types::User
     field :entity_access, Gql::Types::Enum::TaskbarEntityAccessType
     field :changed, Boolean, null: false
     field :dirty, Boolean, null: false
-
-    def self.authorize(_object, ctx)
-      ctx.current_user
-    end
 
     def entity
       object_entity!

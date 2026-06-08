@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Gql::ZammadSchema < GraphQL::Schema
   mutation      Gql::EntryPoints::Mutations
@@ -18,6 +18,16 @@ class Gql::ZammadSchema < GraphQL::Schema
   max_complexity 10_000
 
   max_depth 8, count_introspection_fields: false
+
+  def self.introspection_enabled?
+    override = ENV['ZAMMAD_GRAPHQL_INTROSPECTION']
+
+    return ActiveRecord::Type::Boolean.new.cast(override) if override.present?
+
+    !Rails.env.production?
+  end
+
+  disable_introspection_entry_points if !introspection_enabled?
 
   # Required for loads:, other types like unions need to implement type resolution directly.
   def self.resolve_type(abstract_type, _obj, _ctx)
@@ -112,7 +122,7 @@ class Gql::ZammadSchema < GraphQL::Schema
       when ActiveRecord::RecordInvalid
         next { errors: build_record_invalid_errors(err.record, user_locale) }
       when ActiveRecord::RecordNotUnique
-        next { errors: [ message: Translation.translate(user_locale, 'This object already exists.') ] }
+        next { errors: [ { message: Translation.translate(user_locale, 'This object already exists.') } ] }
       end
     end
 
@@ -134,7 +144,7 @@ class Gql::ZammadSchema < GraphQL::Schema
 
   def self.build_record_invalid_errors(record, user_locale)
     record.errors.map do |e|
-      field_name = e.attribute.to_s.camelize(:lower)
+      field_name = e.attribute.to_s
 
       {
         field:   field_name == 'base' ? nil : field_name,
@@ -143,4 +153,24 @@ class Gql::ZammadSchema < GraphQL::Schema
     end
   end
   private_class_method :build_record_invalid_errors
+
+  def self.static_validator
+    @static_validator ||= GraphQL::StaticValidation::Validator.new(
+      schema: self,
+      rules:  [
+        GraphqlValidations::DirectivesCount,
+        GraphqlValidations::AliasesCount,
+        GraphqlValidations::FieldUnique,
+        *GraphQL::StaticValidation::ALL_RULES
+      ]
+    )
+  end
+
+  def self.max_aliases_count
+    5
+  end
+
+  def self.max_directives_count
+    5
+  end
 end

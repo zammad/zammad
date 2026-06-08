@@ -1,9 +1,10 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
+import { waitFor } from '#tests/support/vitest-wrapper.ts'
 
 import { EnumAuthenticationProvider } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
@@ -14,10 +15,8 @@ describe('linked accounts page', () => {
   it('is not accessible if no providers are enabled', async () => {
     const view = await visitView('/personal-setting/linked-accounts')
 
-    await vi.waitFor(() => {
-      expect(view, 'correctly redirects to error page').toHaveCurrentUrl(
-        '/error-tab',
-      )
+    await waitFor(() => {
+      expect(view, 'correctly redirects to error page').toHaveCurrentUrl('/error-tab')
     })
   })
 
@@ -59,15 +58,11 @@ describe('linked accounts page', () => {
       context.skipConsole = true
       const view = await visitView('/personal-setting/linked-accounts')
 
-      expect(
-        view.queryByLabelText('Link account on GitHub'),
-      ).not.toBeInTheDocument()
+      expect(view.queryByLabelText('Link account on GitHub')).not.toBeInTheDocument()
 
       expect(view.getByLabelText('Remove account link on GitHub'))
 
-      expect(
-        view.queryByLabelText('Link account on Facebook'),
-      ).toBeInTheDocument()
+      expect(view.queryByLabelText('Link account on Facebook')).toBeInTheDocument()
 
       await view.events.click(view.getByLabelText('Link account on Facebook'))
     })
@@ -75,24 +70,15 @@ describe('linked accounts page', () => {
     it('removes an authorization provider', async () => {
       const view = await visitView('/personal-setting/linked-accounts')
 
-      await view.events.click(
-        view.getByLabelText('Remove account link on GitHub'),
-      )
+      await view.events.click(view.getByLabelText('Remove account link on GitHub'))
 
-      expect(
-        await view.findByRole('dialog', { name: 'Delete Object' }),
-      ).toBeInTheDocument()
+      expect(await view.findByRole('dialog', { name: 'Delete object' })).toBeInTheDocument()
 
-      expect(
-        view.getByText('Are you sure you want to delete this object?'),
-      ).toBeInTheDocument()
+      expect(view.getByText('Are you sure you want to delete this object?')).toBeInTheDocument()
 
-      await view.events.click(
-        view.getByRole('button', { name: 'Delete Object' }),
-      )
+      await view.events.click(view.getByRole('button', { name: 'Delete object' }))
 
-      const mockCalls =
-        await waitForUserCurrentRemoveLinkedAccountMutationCalls()
+      const mockCalls = await waitForUserCurrentRemoveLinkedAccountMutationCalls()
 
       expect(mockCalls[0].variables).toEqual({
         provider: EnumAuthenticationProvider.Github,

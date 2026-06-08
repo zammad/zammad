@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 FactoryBot.define do
   factory :object_manager_attribute, class: 'ObjectManager::Attribute' do
@@ -13,6 +13,7 @@ FactoryBot.define do
     sequence(:display)        { |n| "Display Name #{n}" }
     data_option_new           { {} }
     editable                  { true }
+    internal                  { false }
     active                    { true }
     add_attribute(:to_create) { true }
     to_migrate                { true }

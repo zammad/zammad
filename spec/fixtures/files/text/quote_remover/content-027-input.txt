@@ -1,0 +1,23 @@
+See the forwarded email below for context.
+
+My thoughts: We should proceed with option B.
+
+---------- Forwarded message ----------
+From: Manager <manager@example.com>
+Date: Mon, Dec 2, 2024 at 3:00 PM
+Subject: Re: Project Decision
+To: Team <team@example.com>
+
+Team,
+
+Please review the options and provide your feedback.
+
+Best,
+Manager
+
+On Mon, Dec 2, 2024 at 1:00 PM, Director <director@example.com> wrote:
+
+> We need to decide between option A and option B by end of week.
+>
+> Thanks,
+> Director

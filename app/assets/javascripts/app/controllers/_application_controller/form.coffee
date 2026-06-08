@@ -36,7 +36,7 @@ class App.ControllerForm extends App.Controller
 
     # add alert placeholder
     @form.prepend('<div class="alert alert--danger js-danger js-alert hide" role="alert"></div>')
-    @form.prepend('<div class="alert alert--success js-success hide" role="alert"></div>')
+    @form.prepend('<div class="alert alert--success js-success js-alert hide" role="alert"></div>')
 
     if @handlers.length
       @dispatchHandlers()
@@ -73,10 +73,10 @@ class App.ControllerForm extends App.Controller
     else
       translated = App.i18n.translateInline(message)
 
-    @form.find('.alert--danger').first().removeClass('hide').html(translated)
+    @form.find('.js-danger').first().removeClass('hide').html(translated)
 
   hideAlert: =>
-    @form.find('.alert--danger').addClass('hide').html()
+    @form.find('.js-alert').addClass('hide').html()
 
   html: =>
     @form.html()
@@ -161,7 +161,7 @@ class App.ControllerForm extends App.Controller
       container = $("<div class='form-buttons #{@fullFormButtonsContainerClass}'>")
 
       for buttonConfig in @fullFormAdditionalButtons
-        btn = $("<button class='btn #{buttonConfig.className}'>").text(buttonConfig.text)
+        btn = $("<button class='btn #{buttonConfig.className}'>").text(App.i18n.translateContent(buttonConfig.text))
         if buttonConfig.disabled
           btn.prop('disabled', true)
         container.append(btn)
@@ -369,6 +369,12 @@ class App.ControllerForm extends App.Controller
       )
       fullItem.find('.controls').prepend(item)
 
+      # make error messages for application selector more readable by showing before preview box of objects
+      previewBlock = fullItem.find('.js-preview')
+      helpBlock    = fullItem.find('.help-block')
+      if previewBlock.length > 0 && helpBlock.length > 0
+        previewBlock.insertAfter(helpBlock)
+
       # hide/show item
       if attribute.hide
         @.hide(attribute.name, fullItem)
@@ -402,6 +408,9 @@ class App.ControllerForm extends App.Controller
 
   @fieldIsReadonly: (field) ->
     return field.closest('.form-group').hasClass('is-readonly')
+
+  removedFields: (el = @form) ->
+    return el.find('.form-group.is-removed').map((i, el) -> $(el).data('attributeName') || $(el).data('name')).get()
 
   attributeIsMandatory: (name) ->
     field_by_name = @constructor.findFieldByName(name, @form)
@@ -800,7 +809,7 @@ class App.ControllerForm extends App.Controller
       App.Log.debug 'ControllerForm', 'enable form...', lookupForm
 
       # enable fields again
-      lookupForm.find('button, input, select, textarea, .form-control').prop('readonly', false)
+      lookupForm.find('button:not(.js-permanentReadonly), input:not(.js-permanentReadonly), select:not(.js-permanentReadonly), textarea:not(.js-permanentReadonly), .form-control:not(.js-permanentReadonly)').prop('readonly', false)
 
       # enable radio and checkbox buttons
       lookupForm.find('input[type=checkbox], input[type=radio], input[type=file]').prop('disabled', false)
@@ -834,7 +843,7 @@ class App.ControllerForm extends App.Controller
       itemGeneric.find('.help-inline').html(msg)
 
       # use meta fields
-      itemMeta = lookupForm.find('[data-name="' + key + '"]').closest('.form-group')
+      itemMeta = lookupForm.find('[data-name="' + key + '"], [data-attribute-name="' + key + '"]').closest('.form-group')
       itemMeta.addClass('has-error')
       itemMeta.find('.help-inline').html(msg)
 

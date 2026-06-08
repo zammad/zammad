@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -96,7 +96,7 @@ RSpec.describe Gql::Queries::TextModule::Suggestions, authenticated_as: :agent, 
             'renderedContent' => "t:#{ticket.customer.fullname}-c:#{customer.fullname}-u:#{user.fullname}-g:#{group.name}-o:#{organization.name}-m:-",
           }
         end
-        let(:query_string) { text_modules.first.name }
+        let(:query_string) { text_modules.first.name.upcase }
 
         it 'has data' do
           expect(gql.result.data).to eq([first_text_module_payload])

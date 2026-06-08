@@ -1,8 +1,9 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { keyBy } from 'lodash-es'
 import { computed, shallowRef } from 'vue'
 
+import { EXTENSION_NAME as TEXT_TOOL_PLUGIN_NAME } from '#shared/components/Form/fields/FieldEditor/extensions/AiAssistantTextTools.ts'
 import type { FieldEditorContext } from '#shared/components/Form/fields/FieldEditor/types.ts'
 import { FormHandlerExecution } from '#shared/components/Form/types.ts'
 import type {
@@ -20,6 +21,7 @@ import type {
   TicketArticleTypeFields,
 } from '#shared/entities/ticket-article/action/plugins/types.ts'
 import { EnumObjectManagerObjects } from '#shared/graphql/types.ts'
+import { getIdFromGraphQLId } from '#shared/graphql/utils.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
 
 import type { FormKitNode } from '@formkit/core'
@@ -35,15 +37,27 @@ export const useTicketEditForm = (
     return ticket.value ? createArticleTypes(ticket.value, appName) : []
   })
 
-  const ticketArticleTypeValueLookup = computed(() =>
-    keyBy(ticketArticleTypes.value, 'value'),
-  )
+  const ticketArticleTypeValueLookup = computed(() => keyBy(ticketArticleTypes.value, 'value'))
 
   const currentArticleType = shallowRef<AppSpecificTicketArticleType>()
 
-  const recipientContact = computed(
-    () => currentArticleType.value?.options?.recipientContact,
+  const hasInternalArticle = computed(
+    () =>
+      (form.value?.values?.article as { internal?: boolean })?.internal ??
+      currentArticleType.value?.internal ??
+      false,
   )
+
+  const currentSchemaArticleType = computed(() => {
+    if (!currentArticleType.value) return undefined
+
+    return {
+      ...currentArticleType.value,
+      internal: hasInternalArticle.value,
+    }
+  })
+
+  const recipientContact = computed(() => currentArticleType.value?.options?.recipientContact)
   const editorType = computed(() => currentArticleType.value?.contentType)
 
   const editorMeta = computed(() => {
@@ -57,36 +71,44 @@ export const useTicketEditForm = (
       mentionKnowledgeBase: {
         attachmentsNodeName: 'attachments',
       },
+      [TEXT_TOOL_PLUGIN_NAME]: {
+        groupNodeName: 'group_id',
+        ticketNodeName: 'ticket_id',
+        customerNodeName: 'customer_id',
+        organizationNodeName: 'organization_id',
+      },
       ...currentArticleType.value?.editorMeta,
     }
   })
 
-  const articleTypeFields = [
-    'to',
-    'cc',
-    'subject',
-    'body',
-    'attachments',
-    'security',
-  ] as const
+  const articleTypeFields = ['to', 'cc', 'subject', 'body', 'attachments', 'security'] as const
 
   const articleTypeFieldProps = articleTypeFields.reduce((acc, field) => {
     acc[field] = {
-      validation: computed(
-        () => currentArticleType.value?.fields?.[field]?.validation || null,
-      ),
-      required: computed(
-        () => !!currentArticleType.value?.fields?.[field]?.required,
-      ),
+      validation: computed(() => currentArticleType.value?.fields?.[field]?.validation || null),
+      required: computed(() => !!currentArticleType.value?.fields?.[field]?.required),
     }
 
     return acc
   }, {} as TicketArticleTypeFields)
 
-  const { isTicketAgent, isTicketCustomer, isTicketEditable } =
-    useTicketView(ticket)
+  // Static default values for article type fields for resetting in the different situations.
+  const ticketArticleDefaultValues = {
+    articleType: undefined,
+    internal: undefined,
+    inReplyTo: undefined,
+    body: '',
+  }
+
+  const { isTicketAgent, isTicketCustomer, isTicketEditable } = useTicketView(ticket)
 
   const isMobileApp = appName === 'mobile'
+
+  const application = useApplicationStore()
+
+  const additionalAddArticleNotes = computed(
+    () => (application.config.ui_ticket_add_article_hint as Record<string, string>) || {},
+  )
 
   const ticketSchema = {
     type: 'group',
@@ -120,13 +142,32 @@ export const useTicketEditForm = (
 
   const articleSchema = {
     // Desktop is handling the condition on top for the teleport.
-    if: isMobileApp
-      ? '$newTicketArticleRequested || $newTicketArticlePresent'
-      : undefined,
+    if: isMobileApp ? '$newTicketArticleRequested || $newTicketArticlePresent' : undefined,
     type: 'group',
     name: 'article',
     isGroupOrList: true,
     children: [
+      {
+        if: '$existingAdditionalAddArticleNotes() && $getAdditionalAddArticleNote($currentArticleType) !== undefined',
+        isLayout: true,
+        component: 'CommonAlert',
+        props: {
+          variant: 'warning',
+          class: 'col-span-full',
+        },
+        children: [
+          {
+            isLayout: true,
+            element: 'div',
+            attrs: {
+              // We convert light weight markup
+              // The input is not sanitized and relies on the administrator to provide safe content
+              innerHTML: '$markup($t($getAdditionalAddArticleNote($currentArticleType)))',
+            },
+            children: '',
+          },
+        ],
+      },
       {
         type: 'hidden',
         name: 'inReplyTo',
@@ -143,9 +184,10 @@ export const useTicketEditForm = (
         type: 'select',
         hidden: computed(() => ticketArticleTypes.value.length === 1),
         props: {
+          classes: { outer: '@md:col-span-1' },
           // We need to disable the auto preselection when the field
-          // is initialized, so that we have a correct dirty state.
-          noInitialAutoPreselect: true,
+          //  so that we have a correct dirty state.
+          noAutoPreselect: true,
           options: ticketArticleTypes,
         },
       },
@@ -156,6 +198,7 @@ export const useTicketEditForm = (
         hidden: isTicketCustomer,
         type: 'select',
         props: {
+          classes: { outer: '@md:col-span-1' },
           options: [
             {
               value: true,
@@ -168,6 +211,9 @@ export const useTicketEditForm = (
               icon: 'unlock',
             },
           ],
+          // We need to disable the auto preselection when the field
+          //  so that we have a correct dirty state.
+          noAutoPreselect: true,
         },
       },
       {
@@ -177,6 +223,7 @@ export const useTicketEditForm = (
         type: 'recipient',
         validation: articleTypeFieldProps.to.validation,
         props: {
+          classes: { outer: '@md:col-span-1' },
           contact: recipientContact,
           multiple: true,
         },
@@ -189,6 +236,7 @@ export const useTicketEditForm = (
         type: 'recipient',
         validation: articleTypeFieldProps.cc.validation,
         props: {
+          classes: { outer: '@md:col-span-1' },
           contact: recipientContact,
           multiple: true,
         },
@@ -219,6 +267,10 @@ export const useTicketEditForm = (
         props: {
           ticketId: computed(() => ticket.value?.internalId),
           customerId: computed(() => ticket.value?.customer.internalId),
+          groupId: computed(() =>
+            ticket.value?.group.id ? getIdFromGraphQLId(ticket.value?.group.id) : undefined,
+          ),
+          organizationId: computed(() => ticket.value?.organization?.internalId),
           contentType: editorType,
           meta: editorMeta,
         },
@@ -234,20 +286,15 @@ export const useTicketEditForm = (
         props: {
           multiple: computed(() =>
             Boolean(
-              typeof currentArticleType.value?.fields?.attachments?.multiple ===
-                'boolean'
+              typeof currentArticleType.value?.fields?.attachments?.multiple === 'boolean'
                 ? currentArticleType.value?.fields?.attachments?.multiple
                 : true,
             ),
           ),
           allowedFiles: computed(
-            () =>
-              currentArticleType.value?.fields?.attachments?.allowedFiles ||
-              null,
+            () => currentArticleType.value?.fields?.attachments?.allowedFiles || null,
           ),
-          accept: computed(
-            () => currentArticleType.value?.fields?.attachments?.accept || null,
-          ),
+          accept: computed(() => currentArticleType.value?.fields?.attachments?.accept || null),
         },
         required: articleTypeFieldProps.attachments.required,
       },
@@ -261,17 +308,14 @@ export const useTicketEditForm = (
       changedField?: ChangedField,
     ) => {
       if (!schemaData.fields.articleType) return false
+
       return !(
         execution === FormHandlerExecution.FieldChange &&
         (!changedField || changedField.name !== 'articleType')
       )
     }
 
-    const handleArticleType: FormHandlerFunction = (
-      execution,
-      reactivity,
-      data,
-    ) => {
+    const handleArticleType: FormHandlerFunction = (execution, reactivity, data) => {
       const { formNode, changedField, formUpdaterData } = data
       const { schemaData } = reactivity
 
@@ -280,9 +324,7 @@ export const useTicketEditForm = (
         formUpdaterData?.fields.articleType?.value
       ) {
         currentArticleType.value =
-          ticketArticleTypeValueLookup.value[
-            formUpdaterData.fields.articleType.value
-          ]
+          ticketArticleTypeValueLookup.value[formUpdaterData.fields.articleType.value]
       }
 
       if (
@@ -302,8 +344,7 @@ export const useTicketEditForm = (
       }
 
       if (!changedField?.newValue) return
-      const newType =
-        ticketArticleTypeValueLookup.value[changedField?.newValue as string]
+      const newType = ticketArticleTypeValueLookup.value[changedField?.newValue as string]
       if (!newType) return
 
       if (!formNode.context?._open) {
@@ -315,10 +356,7 @@ export const useTicketEditForm = (
     }
 
     return {
-      execution: [
-        FormHandlerExecution.Initial,
-        FormHandlerExecution.FieldChange,
-      ],
+      execution: [FormHandlerExecution.Initial, FormHandlerExecution.FieldChange],
       callback: handleArticleType,
     }
   }
@@ -332,6 +370,7 @@ export const useTicketEditForm = (
       const articleType = ticketArticleTypeValueLookup.value[payload as string]
 
       if (!articleType) return
+
       const body = formNode.find('body', 'name') as FormKitNode
       const context = {
         body: body.context as unknown as FieldEditorContext,
@@ -340,25 +379,23 @@ export const useTicketEditForm = (
     })
   }
 
-  const application = useApplicationStore()
-
   const securityIntegration = computed<boolean>(
-    () =>
-      (application.config.smime_integration ||
-        application.config.pgp_integration) ??
-      false,
+    () => (application.config.smime_integration || application.config.pgp_integration) ?? false,
   )
 
   return {
     ticketSchema,
     articleSchema,
     currentArticleType,
+    currentSchemaArticleType,
     ticketArticleTypes,
+    ticketArticleDefaultValues,
     securityIntegration,
     isTicketAgent,
     isTicketCustomer,
     isTicketEditable,
     articleTypeHandler: articleTypeChangeHandler,
     articleTypeSelectHandler,
+    additionalAddArticleNotes,
   }
 }

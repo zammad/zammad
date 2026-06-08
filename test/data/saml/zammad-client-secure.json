@@ -49,7 +49,11 @@
     "saml.allow.ecp.flow": "false",
     "saml_signature_canonicalization_method": "http://www.w3.org/2001/10/xml-exc-c14n#",
     "saml.onetimeuse.condition": "false",
-    "saml.server.signature.keyinfo.xmlSigKeyInfoKeyNameTransformer": "NONE"
+    "saml.server.signature.keyinfo.xmlSigKeyInfoKeyNameTransformer": "NONE",
+    "saml.encryption.algorithm": "",
+    "saml.encryption.digestMethod": "",
+    "saml.encryption.maskGenerationFunction": "",
+    "saml.encryption.keyAlgorithm": "http://www.w3.org/2001/04/xmlenc#rsa-1_5"
   },
   "authenticationFlowBindingOverrides": {},
   "fullScopeAllowed": true,

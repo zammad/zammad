@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { type ObjectDirective } from 'vue'
 
@@ -17,13 +17,10 @@ let tooltipTimeout: NodeJS.Timeout | null = null
 
 let tooltipRecordsCount = 0
 
-let tooltipTargetRecords: WeakMap<HTMLElement, { modifiers: Modifiers }> =
-  new WeakMap()
+let tooltipTargetRecords: WeakMap<HTMLElement, { modifiers: Modifiers }> = new WeakMap()
 
 const removeTooltips = () => {
-  document
-    .querySelectorAll('[role="tooltip"]')
-    .forEach((node) => node?.remove())
+  document.querySelectorAll('[role="tooltip"]').forEach((node) => node?.remove())
   isTooltipInDom = false
 }
 
@@ -46,10 +43,7 @@ const getModifierRecord = ($el: HTMLDivElement) => {
   return tooltipTargetRecords.get($el) || null
 }
 
-const createTooltip = (
-  { top, left }: { top: string; left: string },
-  message: string,
-) => {
+const createTooltip = ({ top, left }: { top: string; left: string }, message: string) => {
   const tooltipNode = document.createElement('div')
   tooltipNode.classList.add('tooltip')
 
@@ -148,9 +142,13 @@ const addTooltip = (
 }
 
 const isContentTruncated = (element: HTMLElement) => {
+  // The element may itself be truncating (e.g. via a `truncate` utility class).
+  if (element.offsetWidth < element.scrollWidth) return true
+
+  // Otherwise check the parent — covers cases where the directive is set on
+  //   inner content inside a truncating container.
   const { parentElement } = element
-  // top-level element
-  if (!parentElement) return element.offsetWidth < element.scrollWidth
+  if (!parentElement) return false
 
   return parentElement.offsetWidth < parentElement.scrollWidth
 }
@@ -168,9 +166,8 @@ const evaluateModifiers = (element: HTMLElement, options?: Modifiers) => {
   return modifications
 }
 
-const findTooltipTarget = (
-  element: HTMLDivElement | null,
-): HTMLDivElement | null => element?.closest('[data-tooltip]') || null
+const findTooltipTarget = (element: HTMLDivElement | null): HTMLDivElement | null =>
+  element?.closest('[data-tooltip]') || null
 
 const handleTooltipAddEvent = (event: MouseEvent | TouchEvent) => {
   if (isTooltipInDom) removeTooltips() // Remove tooltips if there is already one set in the DOM
@@ -193,10 +190,7 @@ const handleTooltipAddEvent = (event: MouseEvent | TouchEvent) => {
 
   const tooltipRecord = getModifierRecord(tooltipTargetNode)
 
-  const { isTruncated } = evaluateModifiers(
-    tooltipTargetNode,
-    tooltipRecord?.modifiers,
-  )
+  const { isTruncated } = evaluateModifiers(tooltipTargetNode, tooltipRecord?.modifiers)
 
   // If the content gets truncated and the modifier is set to only show the tooltip on truncation
   if (!isTruncated && tooltipRecord?.modifiers.truncate) return
@@ -245,6 +239,9 @@ const addEventListeners = () => {
   window.addEventListener('mouseout', handleTooltipRemoveEvent, {
     passive: true,
   })
+  window.addEventListener('mousedown', handleTooltipRemoveEvent, {
+    passive: true,
+  })
 }
 
 const cleanupEventHandlers = () => {
@@ -255,6 +252,7 @@ const cleanupEventHandlers = () => {
   window.removeEventListener('mouseover', handleTooltipAddEvent)
   window.removeEventListener('mousemove', handleEvent)
   window.removeEventListener('mouseout', handleTooltipRemoveEvent)
+  window.removeEventListener('mousedown', handleTooltipRemoveEvent)
 
   window.removeEventListener('scroll', handleTooltipRemoveEvent)
 }
@@ -288,8 +286,7 @@ export default {
     },
     updated(element: HTMLDivElement, { value: message }) {
       if (!message) {
-        if (element.getAttribute('aria-label'))
-          element.removeAttribute('aria-label')
+        if (element.getAttribute('aria-label')) element.removeAttribute('aria-label')
         return
       }
 

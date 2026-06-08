@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import {
   type MaybeComputedElementRef,
@@ -53,10 +53,7 @@ export const useResizeLine = (
       positionX = screenWidth.value - positionX
 
     // In case of LTR locale and resizer is used from right side of the window, subtract the reported position from the current screen width.
-    if (
-      locale.localeData?.dir === EnumTextDirection.Ltr &&
-      options?.calculateFromRight
-    )
+    if (locale.localeData?.dir === EnumTextDirection.Ltr && options?.calculateFromRight)
       positionX = screenWidth.value - positionX
 
     resizeCallback(positionX)
@@ -77,16 +74,12 @@ export const useResizeLine = (
     resizeCallback(positionY)
   }
 
+  // oxlint-disable no-use-before-define
+
   const resize = (event: MouseEvent | TouchEvent) => {
     if (options?.orientation === 'vertical') return handleVerticalResize(event)
 
     handleHorizontalResize(event)
-  }
-
-  const endResizing = () => {
-    // eslint-disable-next-line no-use-before-define
-    removeListeners()
-    isResizing.value = false
   }
 
   const removeListeners = () => {
@@ -95,6 +88,12 @@ export const useResizeLine = (
     document.removeEventListener('mousemove', resize)
     document.removeEventListener('mouseup', endResizing)
   }
+
+  const endResizing = () => {
+    removeListeners()
+    isResizing.value = false
+  }
+
   const addEventListeners = () => {
     document.addEventListener('touchend', endResizing)
     document.addEventListener('touchmove', resize)
@@ -105,8 +104,6 @@ export const useResizeLine = (
   const startResizing = (e: MouseEvent | TouchEvent) => {
     // Do not react on double click event.
     if (e.detail > 1) return
-
-    e.preventDefault()
 
     isResizing.value = true
 

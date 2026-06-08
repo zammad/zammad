@@ -37,7 +37,7 @@ attachments:
     Charset: UTF-8
 - !ruby/hash:ActiveSupport::HashWithIndifferentAccess
   data: ''
-  filename: Undelivered Message.eml
+  filename: Mail.eml
   preferences: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
     Content-Type: message/rfc822
     Content-Description: Undelivered Message

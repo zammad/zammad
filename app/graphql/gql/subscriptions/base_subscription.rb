@@ -1,8 +1,9 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Subscriptions
   class BaseSubscription < GraphQL::Schema::Subscription
     include Gql::Concerns::HandlesAuthorization
+    include Gql::Concerns::HandlesSettingCheck
     include Gql::Concerns::HasNestedGraphqlName
 
     object_class   Gql::Types::BaseObject
@@ -10,10 +11,6 @@ module Gql::Subscriptions
     argument_class Gql::Types::BaseArgument
 
     description 'Base class for all subscriptions'
-
-    def self.authorize(_obj, ctx)
-      ctx.current_user
-    end
 
     # Add DSL to specify if a subscription is broadcastable.
     def self.broadcastable(broadcastable = nil)

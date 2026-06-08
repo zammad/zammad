@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { noop } from 'lodash-es'
 import { computed, type ComputedRef, nextTick, type Ref } from 'vue'
@@ -34,9 +34,7 @@ export const useArticleDataHandler = (
     pageSize: 20,
   },
 ) => {
-  const firstArticlesCount = computed(
-    () => options.firstArticlesCount?.value || 5,
-  )
+  const firstArticlesCount = computed(() => options.firstArticlesCount?.value || 5)
 
   const articlesQuery = new QueryHandler(
     useTicketArticlesQuery(
@@ -61,10 +59,7 @@ export const useArticleDataHandler = (
 
   const allArticleLoaded = computed(() => {
     if (!articleResult.value?.articles.totalCount) return false
-    return (
-      articleResult.value?.articles.edges.length <
-      articleResult.value?.articles.totalCount
-    )
+    return articleResult.value?.articles.edges.length < articleResult.value?.articles.totalCount
   })
 
   const refetchArticlesQuery = (pageSize: Maybe<number>) => {
@@ -74,15 +69,7 @@ export const useArticleDataHandler = (
     })
   }
 
-  const articleLoading = articlesQuery.loading()
-
-  const isLoadingArticles = computed(() => {
-    // Return already true when a article result already exists from the cache, also
-    // when maybe a loading is in progress(because of cache + network).
-    if (articleData.value !== undefined) return false
-
-    return articleLoading.value
-  })
+  const isLoadingArticles = articlesQuery.loadingWithoutCachedResult()
 
   const adjustPageInfoAfterDeletion = (nextEndCursorEdge?: Maybe<string>) => {
     const newPageInfo: Pick<PageInfo, 'startCursor' | 'endCursor'> = {}
@@ -108,11 +95,9 @@ export const useArticleDataHandler = (
     onError: noop,
     updateQuery(_, { previousData, subscriptionData }) {
       const updates = subscriptionData.data.ticketArticleUpdates
-      const previousArticles =
-        previousData?.articles as TicketArticlesQuery['articles']
+      const previousArticles = previousData?.articles as TicketArticlesQuery['articles']
 
-      if (!previousArticles || updates.updateArticle)
-        return previousData as TicketArticlesQuery
+      if (!previousArticles || updates.updateArticle) return previousData as TicketArticlesQuery
 
       const previousArticlesEdges = previousArticles.edges
       const previousArticlesEdgesCount = previousArticlesEdges.length
@@ -122,8 +107,7 @@ export const useArticleDataHandler = (
           (edge) => edge.node.id !== updates.removeArticleId,
         )
 
-        const removedArticleVisible =
-          edges.length !== previousArticlesEdgesCount
+        const removedArticleVisible = edges.length !== previousArticlesEdgesCount
 
         if (removedArticleVisible && !allArticleLoaded.value) {
           refetchArticlesQuery(firstArticlesCount.value)
@@ -141,8 +125,7 @@ export const useArticleDataHandler = (
         }
 
         if (removedArticleVisible) {
-          const nextEndCursorEdge =
-            previousArticlesEdges[previousArticlesEdgesCount - 2]
+          const nextEndCursorEdge = previousArticlesEdges[previousArticlesEdgesCount - 2]
 
           result.articles.pageInfo = {
             ...previousArticles.pageInfo,

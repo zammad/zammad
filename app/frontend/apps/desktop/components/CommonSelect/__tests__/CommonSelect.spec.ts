@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { ref } from 'vue'
 
@@ -34,10 +34,12 @@ const renderSelect = (props: Props, modelValue?: Ref) => {
       ...props,
     },
     slots: {
-      default: html` <template #default="{ open, focus }">
-        <button @click="open()">Open Select</button>
-        <button @click="focus()">Move Focus</button>
-      </template>`,
+      default: html`
+        <template #default="{ open, focus }">
+          <button @click="open()">Open Select</button>
+          <button @click="focus()">Move Focus</button>
+        </template>
+      `,
     },
     vModel: {
       modelValue,
@@ -55,25 +57,20 @@ describe('CommonSelect.vue', () => {
     const view = renderSelect({ options }, modelValue)
 
     await view.events.click(view.getByText('Open Select'))
+
+    expect(view.queryByRole('menu')).toBeInTheDocument()
+
     await view.events.click(view.getByText('Item A'))
 
     expect(view.emitted().select).toEqual([[options[0]]])
-
-    expect(
-      view.queryByRole('menu'),
-      'dropdown is hidden',
-    ).not.toBeInTheDocument()
-
+    expect(view.queryByRole('menu')).not.toBeInTheDocument()
     expect(modelValue.value).toBe(0)
 
     await view.events.click(view.getByText('Open Select'))
 
     expect(
       view.getByIconName((name, node) => {
-        return (
-          name === '#icon-check2' &&
-          !node?.parentElement?.classList.contains('invisible')
-        )
+        return name === '#icon-check2' && !node?.parentElement?.classList.contains('invisible')
       }),
     ).toBeInTheDocument()
 
@@ -165,14 +162,14 @@ describe('CommonSelect.vue', () => {
 
   it('cannot select disabled values', async () => {
     const modelValue = ref()
-    const view = renderSelect(
-      { options: [{ ...options[0], disabled: true }] },
-      modelValue,
-    )
+    const view = renderSelect({ options: [{ ...options[0], disabled: true }] }, modelValue)
 
     await view.events.click(view.getByText('Open Select'))
 
-    expect(view.getByRole('option')).toHaveAttribute('aria-disabled', 'true')
+    expect(view.getByTestId('select-item')).toHaveAttribute(
+      'aria-description',
+      'This item expands to show more options',
+    )
 
     await view.events.click(view.getByText('Item A'))
 
@@ -210,9 +207,7 @@ describe('CommonSelect.vue', () => {
     const view = renderSelect({ options, noOptionsLabelTranslation: true })
 
     await view.events.click(view.getByText('Open Select'))
-    expect(
-      view.getByRole('option', { name: 'Label (A) – Heading (B)' }),
-    ).toBeInTheDocument()
+    expect(view.getByRole('option', { name: 'Label (A) – Heading (B)' })).toBeInTheDocument()
   })
 
   it('can use boolean as value', async () => {
@@ -257,10 +252,7 @@ describe('CommonSelect.vue', () => {
     const option = view.getByRole('option')
 
     expect(option).toHaveTextContent('foo (1) – bar (2)')
-    expect(option.children[1]).toHaveAttribute(
-      'aria-label',
-      'foo (1) – bar (2)',
-    )
+    expect(option.children[1]).toHaveAttribute('aria-label', 'foo (1) – bar (2)')
   })
 
   it('supports navigating options with children', async () => {
@@ -282,14 +274,15 @@ describe('CommonSelect.vue', () => {
 
     await view.events.click(view.getByText('Open Select'))
 
-    expect(
-      view.queryByRole('button', { name: 'Back to previous page' }),
-    ).not.toBeInTheDocument()
+    expect(view.queryByRole('button', { name: 'Back to previous page' })).not.toBeInTheDocument()
 
-    expect(view.getByRole('option')).toHaveTextContent('parent')
-    expect(view.getByRole('option')).toHaveAttribute('aria-disabled', 'true')
+    expect(view.getByTestId('select-item')).toHaveTextContent('parent')
+    expect(view.getByTestId('select-item')).toHaveAttribute(
+      'aria-description',
+      'This item expands to show more options',
+    )
 
-    await view.events.click(view.getByRole('button', { name: 'Has submenu' }))
+    await view.events.click(view.getByTestId('select-item'))
 
     expect(view.emitted().push).toEqual([[testParentOption]])
 
@@ -298,11 +291,9 @@ describe('CommonSelect.vue', () => {
       isChildPage: true,
     })
 
-    expect(view.getByRole('option')).toHaveTextContent('child')
+    expect(view.getByTestId('select-item')).toHaveTextContent('child')
 
-    await view.events.click(
-      view.getByRole('button', { name: 'Back to previous page' }),
-    )
+    await view.events.click(view.getByRole('button', { name: 'Back to previous page' }))
 
     expect(view.emitted().pop).toEqual([[]])
 
@@ -311,14 +302,15 @@ describe('CommonSelect.vue', () => {
       isChildPage: false,
     })
 
-    expect(
-      view.queryByRole('button', { name: 'Back to previous page' }),
-    ).not.toBeInTheDocument()
+    expect(view.queryByRole('button', { name: 'Back to previous page' })).not.toBeInTheDocument()
 
-    expect(view.getByRole('option')).toHaveTextContent('parent')
-    expect(view.getByRole('option')).toHaveAttribute('aria-disabled', 'true')
+    expect(view.getByTestId('select-item')).toHaveTextContent('parent')
+    expect(view.getByTestId('select-item')).toHaveAttribute(
+      'aria-description',
+      'This item expands to show more options',
+    )
 
-    await view.events.click(view.getByRole('button', { name: 'Has submenu' }))
+    await view.events.click(view.getByTestId('select-item'))
 
     await view.rerender({
       options: [testChildOption],

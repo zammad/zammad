@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed } from 'vue'
@@ -37,20 +37,13 @@ const completedGroup = computed(() => {
     <td :colspan="tableColumnLength">
       <CommonDivider class="mt-2 mb-1 group-first:mt-0" />
       <div class="h-10 p-2.5">
-        <CommonLabel
-          class="cursor-default truncate text-stone-200! dark:text-neutral-500!"
-        >
+        <CommonLabel class="cursor-default truncate text-stone-200! dark:text-neutral-500!">
           <ObjectAttributeContent
             mode="table"
             :attribute="attribute as unknown as ObjectAttribute"
             :object="item"
           />
-          <CommonBadge
-            class="ms-0.5 leading-snug font-bold"
-            rounded
-            size="xs"
-            variant="info"
-          >
+          <CommonBadge class="ms-0.5 leading-snug font-bold" rounded size="xs" variant="info">
             {{ groupByRowCount }}{{ completedGroup ? '' : '+' }}
           </CommonBadge>
         </CommonLabel>

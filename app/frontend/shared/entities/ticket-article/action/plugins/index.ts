@@ -1,9 +1,6 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import type {
-  TicketArticle,
-  TicketById,
-} from '#shared/entities/ticket/types.ts'
+import type { TicketArticle, TicketById } from '#shared/entities/ticket/types.ts'
 import { getTicketView } from '#shared/entities/ticket/utils/getTicketView.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
 import type { AppName } from '#shared/types/app.ts'
@@ -34,8 +31,7 @@ const createFilter = (options: TicketTypeAddOptions, app: AppName) => {
     const view = object.view[options.view.ticketView]
     if (!view || !view.length) return false
     if (view.includes('read')) return true
-    if (options.view.isTicketEditable && view.includes('change')) return true
-    return false
+    return options.view.isTicketEditable && view.includes('change')
   }
 }
 
@@ -53,8 +49,7 @@ export const createArticleActions = (
   }
   const filterByView = createFilter(options, app)
   return articleActionPlugins
-    .map((p) => p.addActions?.(ticket, article, options) || [])
-    .flat()
+    .flatMap((p) => p.addActions?.(ticket, article, options) || [])
     .filter(filterByView)
 }
 
@@ -70,13 +65,9 @@ export const createArticleTypes = (
   const filterByView = createFilter(options, app)
   return (
     articleActionPlugins
-      .map((p) => p.addTypes?.(ticket, options) || [])
-      .flat()
+      .flatMap((p) => p.addTypes?.(ticket, options) || [])
       .filter(filterByView)
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      .map(({ apps, ...type }) => ({
-        ...type,
-        icon: type.icon,
-      }))
+      // oxlint-disable-next-line no-unused-vars
+      .map(({ apps, ...type }) => type)
   )
 }

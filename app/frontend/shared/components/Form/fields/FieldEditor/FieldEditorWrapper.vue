@@ -1,18 +1,15 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 <script setup lang="ts">
 import { computed, defineAsyncComponent, nextTick } from 'vue'
 
+import FieldEditorFooter from '#shared/components/Form/fields/FieldEditor/FieldEditorFooter.vue'
 import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
 
-import FieldEditorFooter from './FieldEditorFooter.vue'
+import type { FieldEditorContext, FieldEditorProps, PossibleSignature } from './types.ts'
 
-import type {
-  FieldEditorContext,
-  FieldEditorProps,
-  PossibleSignature,
-} from './types.ts'
-
-const FieldEditor = defineAsyncComponent(() => import('./FieldEditorInput.vue'))
+const FieldEditor = defineAsyncComponent(
+  () => import('#shared/components/Form/fields/FieldEditor/FieldEditorInput.vue'),
+)
 
 interface Props {
   context: FormFieldContext<FieldEditorProps>
@@ -40,6 +37,7 @@ const preContext = {
   focus: () => queueAction((context) => nextTick(() => context.focus())),
 }
 
+// eslint-disable-next-line vue/no-mutating-props
 Object.assign(props.context, preContext)
 </script>
 

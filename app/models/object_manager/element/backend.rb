@@ -1,14 +1,15 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class ObjectManager::Element::Backend
 
-  attr_reader :user, :attribute, :record, :skip_permission
+  attr_reader :user, :attribute, :record, :skip_permission, :act_as_customer
 
-  def initialize(user:, attribute:, record:, skip_permission: false)
+  def initialize(user:, attribute:, record:, skip_permission: false, act_as_customer: false)
     @user            = user
     @attribute       = attribute
     @record          = record
     @skip_permission = skip_permission
+    @act_as_customer = act_as_customer
   end
 
   def visible?

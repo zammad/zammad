@@ -7,6 +7,7 @@ class Navigation extends App.Controller
     '.search': 'searchContainer'
     '.js-global-search-result': 'searchResult'
     '.js-details-link': 'searchDetails'
+    '.js-toggleNotifications': 'toggleNotificationsButton'
 
   events:
     'click .js-toggleNotifications': 'toggleNotifications'
@@ -58,19 +59,6 @@ class Navigation extends App.Controller
         1000
         'recent-view-changed'
       )
-    )
-
-    # bell on / bell off
-    @controllerBind('bell', (data) =>
-      if data is 'on'
-        @$('.bell').addClass('show')
-        App.Audio.play( 'https://www.sounddogs.com/previews/2193/mp3/219024_SOUNDDOGS__be.mp3' )
-        @delay(
-          -> App.Event.trigger('bell', 'off')
-          3000
-        )
-      else
-        @$('.bell').removeClass('show')
     )
 
   release: =>
@@ -147,8 +135,9 @@ class Navigation extends App.Controller
     # if only one child exists, use direct access
     for item in items
       if item && item.child && item.child.length is 1
-        item.target = item.child[0].target
-        delete item.child
+        if item.class != 'user' # allow user menu with a single logout button
+          item.target = item.child[0].target
+          delete item.child
 
     # get open tabs to reopen on rerender
     openTab = {}
@@ -173,7 +162,6 @@ class Navigation extends App.Controller
       )
 
     @renderDesktopBetaSwitch()
-    @controllerBind('ui:beta:saved', @renderDesktopBetaSwitch)
 
   renderDesktopBetaSwitch: =>
     if not App.DesktopBetaSwitch.isSwitchVisible()
@@ -194,7 +182,7 @@ class Navigation extends App.Controller
 
         new App.ControllerConfirm(
           head: __('Help')
-          message: __('You can switch between the old and the New BETA UI at any moment in the Profile > New BETA UI section.')
+          message: __('You can switch between the old and the New BETA UI at any moment in the Profile settings > New BETA UI section.')
           buttonClass: 'btn--success'
           buttonCancel: false
           buttonSubmit: __('Got it')
@@ -202,8 +190,9 @@ class Navigation extends App.Controller
       )
 
     content.find('.js-switchControl').replaceWith App.UiElement.switch.render(
-      name: 'desktop_beta_switch'
+      name:    'desktop_beta_switch'
       display: __('Try New BETA UI')
+      theme:   'light' # force light mode on the switch, due to bad contrast in dark mode
     )
 
     content.find('input[name="desktop_beta_switch"]')
@@ -260,8 +249,12 @@ class Navigation extends App.Controller
     # renderPersonal
     @renderPersonal()
 
-    if @notificationWidget
-      @notificationWidget.remove()
+    @notificationWidget.remove() if @notificationWidget
+
+    if not @permissionCheck('ticket.agent')
+      @toggleNotificationsButton.addClass('u-unclickable')
+      return
+
     @notificationWidget = new App.OnlineNotificationWidget()
     @appEl.append @notificationWidget.el
 

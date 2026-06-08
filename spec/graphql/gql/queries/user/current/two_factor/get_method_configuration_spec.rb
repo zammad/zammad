@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -35,17 +35,13 @@ RSpec.describe Gql::Queries::User::Current::TwoFactor::GetMethodConfiguration, :
   context 'when user is authenticated', authenticated_as: :user do
     it 'calls get method configuration service' do
       allow(Service::User::TwoFactor::GetMethodConfiguration)
-        .to receive(:new)
-        .and_call_original
-
-      expect_any_instance_of(Service::User::TwoFactor::GetMethodConfiguration)
         .to receive(:execute)
         .and_call_original
 
       gql.execute(query, variables: variables)
 
       expect(Service::User::TwoFactor::GetMethodConfiguration)
-        .to have_received(:new).with(user: user, method_name: 'security_keys')
+        .to have_received(:execute).with(method_name: 'security_keys', current_user: user)
     end
 
     context 'when given method exists' do

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Types::Input::FormUpdater
   class MetaInputType < Gql::Types::BaseInputObject
@@ -8,6 +8,7 @@ module Gql::Types::Input::FormUpdater
     argument :initial, Boolean, required: false, description: 'Initial form updater request'
     argument :reset, Boolean, required: false, description: 'After form reset form updater request'
     argument :changed_field, Gql::Types::Input::FormUpdater::ChangedFieldInputType, required: false, description: 'Changed field information'
+    argument :additional_changed_fields, [Gql::Types::Input::FormUpdater::ChangedFieldInputType], required: false, description: 'Additional changed fields in the same tick'
     argument :form_id, Gql::Types::FormIdType, required: true, description: 'Generated frontend form ID'
     argument :request_id, String, required: false, description: 'Generated frontend request ID'
     argument :additional_data, GraphQL::Types::JSON, required: false, description: 'Additional data for form updater'

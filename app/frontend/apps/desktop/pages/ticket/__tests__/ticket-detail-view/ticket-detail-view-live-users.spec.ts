@@ -1,11 +1,8 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { expect } from 'vitest'
 
-import {
-  getByIconName,
-  queryByIconName,
-} from '#tests/support/components/iconQueries.ts'
+import { getByIconName, queryByIconName } from '#tests/support/components/iconQueries.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
 
 import { mockTicketQuery } from '#shared/entities/ticket/graphql/queries/ticket.mocks.ts'
@@ -20,7 +17,7 @@ vi.hoisted(() => {
 
 describe('Ticket detail view live users handling', () => {
   beforeEach(() => {
-    mockTicketQuery({ ticket: createDummyTicket() })
+    mockTicketQuery({ ticket: createDummyTicket({ aiAgentRunning: true }) })
   })
 
   it('displays idle state of the user avatar', async () => {
@@ -56,9 +53,10 @@ describe('Ticket detail view live users handling', () => {
 
     expect(customerAvatar).toHaveClass('opacity-60')
 
-    expect(
-      getByIconName(customerAvatar.parentElement!, 'user-idle-2'),
-    ).toHaveClasses(['fill-stone-200', 'dark:fill-neutral-500'])
+    expect(getByIconName(customerAvatar.parentElement!, 'user-idle-2')).toHaveClasses([
+      'fill-stone-200',
+      'dark:fill-neutral-500',
+    ])
 
     await getTicketLiveUserUpdatesSubscriptionHandler().trigger({
       ticketLiveUserUpdates: {
@@ -86,9 +84,7 @@ describe('Ticket detail view live users handling', () => {
 
     expect(customerAvatar).not.toHaveClass('opacity-60')
 
-    expect(
-      queryByIconName(customerAvatar.parentElement!, 'user-idle'),
-    ).not.toBeInTheDocument()
+    expect(queryByIconName(customerAvatar.parentElement!, 'user-idle')).not.toBeInTheDocument()
   })
 
   it('displays icon on user avatar if they are editing', async () => {
@@ -122,9 +118,7 @@ describe('Ticket detail view live users handling', () => {
       name: 'Avatar (Nicole Braun) (VIP)',
     })
 
-    expect(
-      queryByIconName(customerAvatar.parentElement!, 'pencil'),
-    ).not.toBeInTheDocument()
+    expect(queryByIconName(customerAvatar.parentElement!, 'pencil')).not.toBeInTheDocument()
 
     await getTicketLiveUserUpdatesSubscriptionHandler().trigger({
       ticketLiveUserUpdates: {
@@ -150,9 +144,10 @@ describe('Ticket detail view live users handling', () => {
       },
     })
 
-    expect(
-      getByIconName(customerAvatar.parentElement!, 'pencil'),
-    ).toHaveClasses(['text-black', 'dark:text-white'])
+    expect(getByIconName(customerAvatar.parentElement!, 'pencil')).toHaveClasses([
+      'text-black',
+      'dark:text-white',
+    ])
   })
 
   it('displays icon on user avatar if they are on mobile', async () => {
@@ -186,9 +181,7 @@ describe('Ticket detail view live users handling', () => {
       name: 'Avatar (Nicole Braun) (VIP)',
     })
 
-    expect(
-      queryByIconName(customerAvatar.parentElement!, 'phone'),
-    ).not.toBeInTheDocument()
+    expect(queryByIconName(customerAvatar.parentElement!, 'phone')).not.toBeInTheDocument()
 
     await getTicketLiveUserUpdatesSubscriptionHandler().trigger({
       ticketLiveUserUpdates: {
@@ -214,9 +207,10 @@ describe('Ticket detail view live users handling', () => {
       },
     })
 
-    expect(getByIconName(customerAvatar.parentElement!, 'phone')).toHaveClasses(
-      ['text-black', 'dark:text-white'],
-    )
+    expect(getByIconName(customerAvatar.parentElement!, 'phone')).toHaveClasses([
+      'text-black',
+      'dark:text-white',
+    ])
   })
 
   it('hides the user avatar if they leave the ticket', async () => {
@@ -258,8 +252,14 @@ describe('Ticket detail view live users handling', () => {
       },
     })
 
-    expect(
-      view.queryByRole('img', { name: 'Avatar (Nicole Braun) (VIP)' }),
-    ).not.toBeInTheDocument()
+    expect(view.queryByRole('img', { name: 'Avatar (Nicole Braun) (VIP)' })).not.toBeInTheDocument()
+  })
+
+  describe('Ai Agent', () => {
+    it('should display AI agent avatar when AI agent is processing', async () => {
+      const view = await visitView('/tickets/1')
+
+      expect(await view.findByLabelText('AI agent')).toBeInTheDocument()
+    })
   })
 })

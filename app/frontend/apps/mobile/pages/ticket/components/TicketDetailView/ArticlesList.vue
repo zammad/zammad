@@ -1,12 +1,9 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { toRef, shallowRef } from 'vue'
 
-import type {
-  TicketArticle,
-  TicketById,
-} from '#shared/entities/ticket/types.ts'
+import type { TicketArticle, TicketById } from '#shared/entities/ticket/types.ts'
 import { EnumTicketArticleSenderName } from '#shared/graphql/types.ts'
 
 import CommonSectionPopup from '#mobile/components/CommonSectionPopup/CommonSectionPopup.vue'
@@ -33,15 +30,11 @@ const emit = defineEmits<{
   'load-previous': []
 }>()
 
-const { contextOptions, articleContextShown, showArticleContext } =
-  useTicketArticleContext()
+const { contextOptions, articleContextShown, showArticleContext } = useTicketArticleContext()
 
 const articlesElement = shallowRef<HTMLElement>()
 
-const { rows } = useTicketArticleRows(
-  toRef(props, 'articles'),
-  toRef(props, 'totalCount'),
-)
+const { rows } = useTicketArticleRows(toRef(props, 'articles'), toRef(props, 'totalCount'))
 
 const filterAttachments = (article: TicketArticle) => {
   return article.attachmentsWithoutInline.filter(
@@ -89,9 +82,7 @@ const markSeen = (id: string) => {
         :internal="row.article.internal"
         :content-type="row.article.contentType"
         :position="
-          row.article.sender?.name !== EnumTicketArticleSenderName.Customer
-            ? 'left'
-            : 'right'
+          row.article.sender?.name !== EnumTicketArticleSenderName.Customer ? 'left' : 'right'
         "
         :media-error="row.article.mediaErrorState?.error"
         :security="row.article.securityState"
@@ -125,8 +116,5 @@ const markSeen = (id: string) => {
       />
     </template>
   </section>
-  <CommonSectionPopup
-    v-model:state="articleContextShown"
-    :messages="contextOptions"
-  />
+  <CommonSectionPopup v-model:state="articleContextShown" :messages="contextOptions" />
 </template>

@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { beforeEach, expect } from 'vitest'
 
@@ -7,10 +7,7 @@ import { mockPermissions } from '#tests/support/mock-permissions.ts'
 
 import { mockTicketQuery } from '#shared/entities/ticket/graphql/queries/ticket.mocks.ts'
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
-import {
-  EnumTaskbarEntity,
-  EnumTaskbarEntityAccess,
-} from '#shared/graphql/types.ts'
+import { EnumTaskbarEntity, EnumTaskbarEntityAccess } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
 import { mockUserCurrentTaskbarItemListQuery } from '#desktop/entities/user/current/graphql/queries/userCurrentTaskbarItemList.mocks.ts'
@@ -46,13 +43,9 @@ describe('Ticket detail view error handling', () => {
     expect(view).toHaveCurrentUrl('/tickets/123')
     expect(view.getByRole('img', { name: 'Error' })).toBeInTheDocument()
 
-    expect(view.getByRole('heading', { level: 1 })).toHaveTextContent(
-      'Forbidden',
-    )
+    expect(view.getByRole('heading', { level: 1 })).toHaveTextContent('Forbidden')
 
-    expect(
-      view.getByText('You have insufficient rights to view this ticket.'),
-    ).toBeInTheDocument()
+    expect(view.getByText('You have insufficient rights to view this ticket.')).toBeInTheDocument()
   })
 
   it('shows an error page if ticket is not found', async () => {
@@ -74,14 +67,10 @@ describe('Ticket detail view error handling', () => {
     expect(view).toHaveCurrentUrl('/tickets/999')
     expect(view.getByRole('img', { name: 'Error' })).toBeInTheDocument()
 
-    expect(view.getByRole('heading', { level: 1 })).toHaveTextContent(
-      'Not Found',
-    )
+    expect(view.getByRole('heading', { level: 1 })).toHaveTextContent('Not found')
 
     expect(
-      view.getByText(
-        'Ticket with specified ID was not found. Try checking the URL for errors.',
-      ),
+      view.getByText('Ticket with specified ID was not found. Try checking the URL for errors.'),
     ).toBeInTheDocument()
   })
 
@@ -126,9 +115,7 @@ describe('Ticket detail view error handling', () => {
 
     expect(view.getByRole('main')).not.toHaveTextContent(ticket.title)
 
-    expect(
-      view.getByText('You have insufficient rights to view this ticket.'),
-    ).toBeInTheDocument()
+    expect(view.getByText('You have insufficient rights to view this ticket.')).toBeInTheDocument()
   })
 
   it('automatically shows the ticket when the access is regained', async () => {
@@ -147,9 +134,7 @@ describe('Ticket detail view error handling', () => {
 
     const view = await visitView('/tickets/123')
 
-    expect(
-      view.getByText('You have insufficient rights to view this ticket.'),
-    ).toBeInTheDocument()
+    expect(view.getByText('You have insufficient rights to view this ticket.')).toBeInTheDocument()
 
     const ticket = createDummyTicket({
       ticketId: '123',

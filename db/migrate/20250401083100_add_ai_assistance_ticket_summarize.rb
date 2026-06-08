@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class AddAIAssistanceTicketSummarize < ActiveRecord::Migration[7.2]
   def change
@@ -14,7 +14,7 @@ class AddAIAssistanceTicketSummarize < ActiveRecord::Migration[7.2]
     Permission.create_if_not_exists(
       name:        'admin.ai_assistance_ticket_summary',
       label:       'Ticket Summary',
-      description: 'Manage Zammad Smart Assist ticket summarization of your system.',
+      description: 'Manage ticket summarization of your system.',
       preferences: { prio: 1334 }
     )
 
@@ -29,7 +29,8 @@ class AddAIAssistanceTicketSummarize < ActiveRecord::Migration[7.2]
         authentication: true,
         permission:     ['admin.ai'],
         validations:    [
-          'Setting::Validation::AIProvider',
+          # This validaiton is now gone
+          # 'Setting::Validation::AIProvider',
         ],
       },
       frontend:    true,
@@ -73,7 +74,7 @@ class AddAIAssistanceTicketSummarize < ActiveRecord::Migration[7.2]
       options:     {},
       state:       {
         open_questions: true,
-        suggestions:    true,
+        suggestions:    false,
       },
       preferences: {
         authentication: true,

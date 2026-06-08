@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Mutations::Ticket::Concerns::HandlesGroup
   extend ActiveSupport::Concern
@@ -7,6 +7,7 @@ module Gql::Mutations::Ticket::Concerns::HandlesGroup
     private
 
     def group_has_email?(input:)
+      return true if input.nil?
       return true if input[:group].blank?
       return true if input[:article].blank?
 

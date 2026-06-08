@@ -311,7 +311,7 @@
 
 .zammad-chat-message-body {
   white-space: pre-line;
-  word-wrap: break-word;
+  overflow-wrap: break-word;
   border-radius: 1em;
 }
 

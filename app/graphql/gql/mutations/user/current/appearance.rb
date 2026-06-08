@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Mutations
   class User::Current::Appearance < BaseMutation
@@ -8,9 +8,7 @@ module Gql::Mutations
 
     field :success, Boolean, null: false, description: 'Profile appearance settings updated successfully?'
 
-    def self.authorize(_obj, ctx)
-      ctx.current_user.permissions?('user_preferences.appearance')
-    end
+    requires_permission 'user_preferences.appearance'
 
     def resolve(theme:)
       user = context.current_user

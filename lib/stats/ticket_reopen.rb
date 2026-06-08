@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Stats::TicketReopen
 
@@ -69,14 +69,14 @@ class Stats::TicketReopen
     # check if close_at is already set / if not, ticket is not reopened
     return if !ticket.close_at
 
+    # only if current owner is not 1
+    return if ticket.owner_id == 1
+
     # only if state id has changed
     return if !changes['state_id']
 
     # only if ticket is not created in closed state
     return if !changes['state_id'][0]
-
-    # only if current owner is not 1
-    return if ticket.owner_id == 1
 
     state_before      = Ticket::State.lookup(id: changes['state_id'][0])
     state_type_before = Ticket::StateType.lookup(id: state_before.state_type_id)

@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { expect } from 'vitest'
 
@@ -16,7 +16,6 @@ describe('mobile app header', () => {
   })
 
   describe('title prop tests', () => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let view: ReturnType<typeof renderComponent>
 
     beforeEach(() => {

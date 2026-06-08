@@ -1,6 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
-
-import { axe } from 'vitest-axe'
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockGraphQLApi } from '#tests/support/mock-graphql-api.ts'
@@ -40,14 +38,12 @@ describe('testing account a11y', () => {
 
   test('account overview has no accessibility violations', async () => {
     const view = await visitView('/account')
-    const results = await axe(view.html())
-    expect(results).toHaveNoViolations()
+    await expect(view.container).toBeAccessible()
   })
 
   test('avatar editor has no accessibility violations', async () => {
     mockActiveAvatar()
     const view = await visitView('/user/current/avatar')
-    const results = await axe(view.html())
-    expect(results).toHaveNoViolations()
+    await expect(view.container).toBeAccessible()
   })
 })

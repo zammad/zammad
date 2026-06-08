@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -39,7 +39,7 @@ RSpec.describe 'Ticket Article Attachments', authenticated_as: -> { agent }, typ
 
           get "/api/v1/ticket_attachment/#{ticket1.id}/#{article2.id}/#{store_file.id}", params: {}
           expect(response).to have_http_status(:forbidden)
-          expect(response.body).to match(%r{403: Forbidden})
+          expect(response.body).to include('403: Forbidden')
         end
       end
 
@@ -60,7 +60,7 @@ RSpec.describe 'Ticket Article Attachments', authenticated_as: -> { agent }, typ
 
           get "/api/v1/ticket_attachment/#{ticket2.id}/#{article2.id}/#{store_file.id}", params: {}
           expect(response).to have_http_status(:forbidden)
-          expect(response.body).to match(%r{403: Forbidden})
+          expect(response.body).to include('403: Forbidden')
 
           # allow access via merged ticket id also
           get "/api/v1/ticket_attachment/#{ticket1.id}/#{article1.id}/#{store_file.id}", params: {}
@@ -69,7 +69,7 @@ RSpec.describe 'Ticket Article Attachments', authenticated_as: -> { agent }, typ
 
           get "/api/v1/ticket_attachment/#{ticket1.id}/#{article2.id}/#{store_file.id}", params: {}
           expect(response).to have_http_status(:forbidden)
-          expect(response.body).to match(%r{403: Forbidden})
+          expect(response.body).to include('403: Forbidden')
         end
       end
 
@@ -170,7 +170,7 @@ RSpec.describe 'Ticket Article Attachments', authenticated_as: -> { agent }, typ
         _ticket_p, article_p, _user_p = Channel::EmailParser.new.process({}, email_raw_string)
 
         post "/api/v1/ticket_attachment_upload_clone_by_article/#{article_p.id}", params: {}, as: :json
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
         expect(json_response).to be_a(Hash)
         expect(json_response['error']).to eq("Need 'form_id' to add attachments to new form.")
 

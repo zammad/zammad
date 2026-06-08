@@ -1,9 +1,24 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import type { ObjectManagerFrontendAttributesPayload } from '#shared/graphql/types.ts'
 
 export default (): ObjectManagerFrontendAttributesPayload => ({
   attributes: [
+    {
+      name: 'number',
+      display: '#',
+      dataType: 'input',
+      dataOption: {
+        type: 'text',
+        display_config: 'ticket_hook',
+      },
+      isInternal: true,
+      screens: {
+        create_top: {},
+        edit: {},
+      },
+      __typename: 'ObjectManagerFrontendAttribute',
+    },
     {
       name: 'title',
       display: 'Title',
@@ -254,29 +269,22 @@ export default (): ObjectManagerFrontendAttributesPayload => ({
     },
     {
       name: 'edit',
-      attributes: [
-        'group_id',
-        'owner_id',
-        'state_id',
-        'pending_time',
-        'priority_id',
-      ],
+      attributes: ['group_id', 'owner_id', 'state_id', 'pending_time', 'priority_id'],
       __typename: 'ObjectManagerScreenAttributes',
     },
     {
       name: 'create_middle',
-      attributes: [
-        'group_id',
-        'owner_id',
-        'state_id',
-        'pending_time',
-        'priority_id',
-      ],
+      attributes: ['group_id', 'owner_id', 'state_id', 'pending_time', 'priority_id'],
       __typename: 'ObjectManagerScreenAttributes',
     },
     {
       name: 'create_bottom',
       attributes: ['tags'],
+      __typename: 'ObjectManagerScreenAttributes',
+    },
+    {
+      name: 'overview_bulk',
+      attributes: ['group_id', 'owner_id', 'state_id', 'pending_time', 'priority_id'],
       __typename: 'ObjectManagerScreenAttributes',
     },
   ],

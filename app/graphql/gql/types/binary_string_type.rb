@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Types
   class BinaryStringType < BaseScalar
@@ -7,7 +7,7 @@ module Gql::Types
 
     def self.coerce_input(input_value, _context = nil)
       # Cut out prefix of data: url if needed (in-place to save memory).
-      input_value.sub!(%r{data:.*?base64,}, '')
+      input_value = input_value.sub(%r{data:.*?base64,}, '')
       Base64.strict_decode64(input_value)
     rescue ArgumentError => e
       raise GraphQL::CoercionError, e.message

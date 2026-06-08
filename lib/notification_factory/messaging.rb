@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class NotificationFactory::Messaging
 
@@ -35,8 +35,8 @@ returns
     end
 
     {
-      subject: render_template(messaging_template[:subject], data).strip!,
-      body:    message_body.strip!,
+      subject: render_template(messaging_template[:subject], data).strip,
+      body:    message_body.strip,
     }
   end
 

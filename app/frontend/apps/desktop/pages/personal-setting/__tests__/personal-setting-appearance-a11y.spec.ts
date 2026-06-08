@@ -1,13 +1,10 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
-
-import { axe } from 'vitest-axe'
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { visitView } from '#tests/support/components/visitView.ts'
 
-describe('testing appearance a11y view', async () => {
+describe('testing appearance a11y view', () => {
   it('has no accessibility violations', async () => {
     const view = await visitView('/personal-setting/appearance')
-    const results = await axe(view.html())
-    expect(results).toHaveNoViolations()
+    await expect(view.container).toBeAccessible()
   })
 })

@@ -1,18 +1,18 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import AddMenu from '#desktop/components/layout/LayoutSidebar/LeftSidebar/MenuContainer/AddMenu/AddMenu.vue'
 import AdminMenu from '#desktop/components/layout/LayoutSidebar/LeftSidebar/MenuContainer/AdminMenu/AdminMenu.vue'
-import { useCollapsedState } from '#desktop/components/layout/LayoutSidebar/LeftSidebar/useCollapsedState.ts'
+import { SidebarName, useSidebarDisplay } from '#desktop/components/layout/useSidebarDisplay.ts'
 
-const { collapsedState } = useCollapsedState()
+const { isSidebarCollapsed } = useSidebarDisplay(SidebarName.Primary)
 </script>
 
 <template>
   <div
     role="list"
-    class="flex items-center gap-4 rounded-xl bg-gray-700 p-4 empty:hidden"
-    :class="{ 'flex-col bg-transparent': collapsedState }"
+    class="flex items-center gap-1.5 rounded-xl bg-gray-700 p-2 empty:hidden"
+    :class="{ 'flex-col bg-transparent': isSidebarCollapsed }"
   >
     <AdminMenu role="listitem" />
     <AddMenu role="listitem" />

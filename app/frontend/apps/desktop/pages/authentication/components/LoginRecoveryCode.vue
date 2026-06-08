@@ -1,16 +1,10 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import Form from '#shared/components/Form/Form.vue'
-import type {
-  FormSubmitData,
-  FormSchemaNode,
-} from '#shared/components/Form/types.ts'
+import type { FormSubmitData, FormSchemaNode } from '#shared/components/Form/types.ts'
 import { useForm } from '#shared/components/Form/useForm.ts'
-import type {
-  RecoveryCodeFormData,
-  LoginCredentials,
-} from '#shared/entities/two-factor/types.ts'
+import type { RecoveryCodeFormData, LoginCredentials } from '#shared/entities/two-factor/types.ts'
 import UserError from '#shared/errors/UserError.ts'
 import { useAuthenticationStore } from '#shared/stores/authentication.ts'
 
@@ -30,7 +24,7 @@ const schema: FormSchemaNode[] = [
   {
     type: 'text',
     name: 'code',
-    label: __('Recovery Code'),
+    label: __('Recovery code'),
     required: true,
     props: {
       help: __('Enter one of your unused recovery codes.'),

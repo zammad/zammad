@@ -120,7 +120,7 @@ class App.Ticket extends App.Model
       when 'update.received_merge'
         App.i18n.translateContent('Another ticket was merged into ticket |%s|', item.title)
       else
-        "Unknow action for (#{@objectDisplayName()}/#{item.type}), extend activityMessage() of model."
+        "Unknown action for (#{@objectDisplayName()}/#{item.type}), extend activityMessage() of model."
 
   # apply macro
   @macro: (params) ->
@@ -192,6 +192,11 @@ class App.Ticket extends App.Model
         # apply direct value changes
         for articleKey, aricleValue of content
           params.article[articleKey] = aricleValue
+
+      # perform AI agent or notification changes later
+      else if attributes[0] is 'ai' or attributes[0] is 'notification'
+        params.ticket['macro.perform_changes'] ||= []
+        params.ticket['macro.perform_changes'].push "#{attributes[0]}.#{attributes[1]}"
 
   editable: (permission = 'change') ->
     user = App.User.current()

@@ -1,26 +1,30 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { until } from '@vueuse/core'
 import { computed } from 'vue'
 
+import CommonEmptyMessage from '#desktop/components/CommonEmptyMessage/CommonEmptyMessage.vue'
+import type { NavigationTab } from '#desktop/components/CommonTabs/types.ts'
 import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
 import LayoutSidebar from '#desktop/components/layout/LayoutSidebar.vue'
+import { SidebarName } from '#desktop/components/layout/useSidebarDisplay.ts'
+import DragAndDropBulkWrapper from '#desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkWrapper.vue'
+import { useDragAndDropBulk } from '#desktop/components/Ticket/DragAndDropBulk/useDragAndDropBulk.ts'
 import TicketBulkEditButton from '#desktop/components/Ticket/TicketBulkEditButton.vue'
 import { useTicketBulkEdit } from '#desktop/components/Ticket/TicketBulkEditFlyout/useTicketBulkEdit.ts'
 import TicketList from '#desktop/pages/ticket-overviews/components/TicketList.vue'
-import TicketOverviewsEmptyText from '#desktop/pages/ticket-overviews/components/TicketOverviewsEmptyText.vue'
 import TicketOverviewsSidebar from '#desktop/pages/ticket-overviews/components/TicketOverviewsSidebar.vue'
 import { useTicketOverviews } from '#desktop/pages/ticket-overviews/composables/useTicketOverviews.ts'
 
 interface Props {
-  overviewLink: string
+  overviewLink?: string
 }
 
 const props = defineProps<Props>()
 
 defineOptions({
-  async beforeRouteEnter(to, _, next) {
+  async beforeRouteEnter(to) {
     const {
       overviews,
       overviewsLoading,
@@ -35,47 +39,51 @@ defineOptions({
 
     if (overviewLink in overviewsByLink.value || overviews.value.length === 0) {
       setCurrentTicketOverviewLink(overviewLink || '')
-      return next()
+      return true
     }
 
-    const nextOverviewLink =
-      currentTicketOverviewLink.value || overviews.value[0].link
+    const nextOverviewLink = currentTicketOverviewLink.value || overviews.value[0].link
     setCurrentTicketOverviewLink(nextOverviewLink)
 
-    next({
+    return {
       name: 'TicketOverview',
       params: { overviewLink: nextOverviewLink },
-    })
+    }
   },
-  beforeRouteUpdate(to, _, next) {
-    const {
-      currentTicketOverviewLink,
-      overviews,
-      setCurrentTicketOverviewLink,
-    } = useTicketOverviews()
+  beforeRouteUpdate(to) {
+    const { currentTicketOverviewLink, overviews, setCurrentTicketOverviewLink } =
+      useTicketOverviews()
 
     if (to.params.overviewLink) {
       setCurrentTicketOverviewLink(to.params.overviewLink as string)
-      return next()
+      return true
     }
 
-    const nextOverviewLink =
-      currentTicketOverviewLink.value || overviews.value[0].link
+    const nextOverviewLink = currentTicketOverviewLink.value || overviews.value[0].link
     setCurrentTicketOverviewLink(nextOverviewLink)
 
-    next({
+    return {
       name: 'TicketOverview',
       params: { overviewLink: nextOverviewLink },
-    })
+    }
   },
 })
 
-const { overviewsByLink, hasOverviews, overviewsTicketCountById } =
-  useTicketOverviews()
+const { overviews, overviewsByLink, hasOverviews, overviewsTicketCountById } = useTicketOverviews()
 
-const currentOverview = computed(
-  () => overviewsByLink.value[props.overviewLink],
+const currentOverview = computed(() => overviewsByLink.value[props.overviewLink || ''])
+
+const overviewsTabs = computed<NavigationTab[]>(() =>
+  overviews.value?.map((item) => ({
+    label: item.name,
+    key: item.id,
+    default: item.link === props.overviewLink,
+    count: overviewsTicketCountById.value[item.id],
+    link: item.link,
+  })),
 )
+
+const activeTab = computed(() => currentOverview.value?.id || '')
 
 const currentOverviewCount = computed(
   () => overviewsTicketCountById.value[currentOverview.value?.id],
@@ -92,30 +100,44 @@ const breadcrumbItems = computed(() => [
   },
 ])
 
-const { checkedTicketIds, openBulkEditFlyout } = useTicketBulkEdit()
+const { checkedTicketIds, openBulkEditFlyout, bulkSelector } = useTicketBulkEdit()
+
+const {
+  isActive: isDragAndDropActive,
+  cursorPosition,
+  dragPreviewData,
+  dropSuccessTargetEntity,
+} = useDragAndDropBulk({
+  checkedTicketIds,
+  bulkSelector,
+})
 </script>
 
 <template>
-  <div class="h-full" :class="{ 'grid grid-cols-[260px_1fr]': hasOverviews }">
+  <div class="h-full" :class="{ 'grid grid-cols-1 lg:grid-cols-[260px_1fr]': hasOverviews }">
     <LayoutSidebar
       v-if="hasOverviews"
       id="ticket-overviews"
+      class="hidden lg:flex"
       :aria-label="$t('second level navigation sidebar')"
       background-variant="secondary"
-      name="overviews"
+      :name="SidebarName.TicketOverviews"
     >
       <TicketOverviewsSidebar />
     </LayoutSidebar>
 
     <LayoutContent
       class="relative"
+      :active-tab="activeTab"
       :breadcrumb-items="currentOverview ? breadcrumbItems : undefined"
+      :tabs="overviewsTabs"
       no-scrollable
       content-padding
     >
       <template #headerRight>
         <TicketBulkEditButton
           :checked-ticket-ids="checkedTicketIds"
+          :total-count="currentOverviewCount"
           @open-flyout="openBulkEditFlyout"
         />
       </template>
@@ -130,9 +152,10 @@ const { checkedTicketIds, openBulkEditFlyout } = useTicketBulkEdit()
         :group-by="currentOverview.groupBy || undefined"
         :overview-count="currentOverviewCount"
       />
-      <TicketOverviewsEmptyText
+      <CommonEmptyMessage
         v-else
-        :title="$t('No Overviews')"
+        class="absolute top-1/2 w-full -translate-y-1/2 text-center ltr:left-1/2 ltr:-translate-x-1/2 rtl:right-1/2 rtl:translate-x-1/2"
+        :title="$t('No overviews')"
         :text="
           $t(
             'Currently, no overviews are assigned to your roles. Please contact your administrator.',
@@ -141,5 +164,12 @@ const { checkedTicketIds, openBulkEditFlyout } = useTicketBulkEdit()
         icon="exclamation-triangle"
       />
     </LayoutContent>
+
+    <DragAndDropBulkWrapper
+      v-if="isDragAndDropActive"
+      :cursor-position="cursorPosition"
+      :preview-data="dragPreviewData"
+      :drop-success-target-entity="dropSuccessTargetEntity"
+    />
   </div>
 </template>

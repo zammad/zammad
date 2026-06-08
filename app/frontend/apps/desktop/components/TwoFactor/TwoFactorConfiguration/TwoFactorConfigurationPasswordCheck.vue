@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed } from 'vue'
@@ -31,14 +31,11 @@ const schema = defineFormSchema([
   },
 ])
 
-const passwordCheckMutation = new MutationHandler(
-  useUserCurrentPasswordCheckMutation(),
-  {
-    errorNotificationMessage: __('Password could not be checked'),
-  },
-)
+const passwordCheckMutation = new MutationHandler(useUserCurrentPasswordCheckMutation(), {
+  errorNotificationMessage: __('Password could not be checked'),
+})
 
-const headerSubtitle = __('Confirm Password')
+const headerSubtitle = __('Confirm password')
 
 const { twoFactorMethodLookup } = useTwoFactorPlugins()
 
@@ -63,7 +60,7 @@ const footerActionOptions = computed(() => {
     variant = 'danger'
   }
 
-  if (props.type === 'method_list') cancelLabel = __('Cancel & Sign Out')
+  if (props.type === 'method_list') cancelLabel = __('Cancel & sign out')
 
   return {
     actionLabel,
@@ -73,30 +70,24 @@ const footerActionOptions = computed(() => {
 })
 
 const submitForm = async (formData: FormSubmitData<Record<string, string>>) => {
-  return passwordCheckMutation
-    .send({ password: formData.password })
-    .then((data) => {
-      if (
-        !data?.userCurrentPasswordCheck?.success ||
-        !data?.userCurrentPasswordCheck?.token
-      )
-        return
+  return passwordCheckMutation.send({ password: formData.password }).then((data) => {
+    if (!data?.userCurrentPasswordCheck?.success || !data?.userCurrentPasswordCheck?.token) return
 
-      if (props.type === 'removal_confirmation') {
-        props.successCallback?.({
-          token: data.userCurrentPasswordCheck.token,
-        })
-
-        props.formSubmitCallback?.({})
-
-        return
-      }
-
-      props.formSubmitCallback?.({
-        nextState: props.type,
+    if (props.type === 'removal_confirmation') {
+      props.successCallback?.({
         token: data.userCurrentPasswordCheck.token,
       })
+
+      props.formSubmitCallback?.({})
+
+      return
+    }
+
+    props.formSubmitCallback?.({
+      nextState: props.type,
+      token: data.userCurrentPasswordCheck.token,
     })
+  })
 }
 
 defineExpose({

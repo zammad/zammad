@@ -1,9 +1,9 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Service::Translation::Search::Collector
   include Mixin::RequiredSubPaths
 
-  attr_reader :locale, :query, :like_query, :like_operator, :limit, :mode
+  attr_reader :locale, :query, :like_query, :limit, :mode
 
   def self.collector_suggestions
     @collector_suggestions ||= descendants.select { |collector| collector.type == :suggestion }
@@ -18,8 +18,6 @@ class Service::Translation::Search::Collector
   end
 
   def initialize(locale:, query:, limit:, mode:)
-    super()
-
     @locale = locale
     @query  = query
     @limit  = limit
@@ -28,7 +26,6 @@ class Service::Translation::Search::Collector
     return if mode == :list
 
     @like_query = "%#{SqlHelper.quote_like(query)}%"
-    @like_operator = Rails.application.config.db_like
   end
 
   def result

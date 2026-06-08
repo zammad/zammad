@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 <script setup lang="ts">
 import { computed } from 'vue'
 
@@ -22,9 +22,7 @@ const props = defineProps<Props>()
 const { contact } = props.context
 
 const actionLabel = computed(() =>
-  contact === 'phone'
-    ? __('add new phone number')
-    : __('add new email address'),
+  contact === 'phone' ? __('add new phone number') : __('add new email address'),
 )
 
 const filterValueValidator = (filter: string) => {
@@ -37,9 +35,12 @@ const filterValueValidator = (filter: string) => {
   }
 }
 
-const { actions, onSearchInteractionUpdate, onKeydownFilterInput } =
-  useAddUnknownValueAction(actionLabel, filterValueValidator)
+const { actions, onSearchInteractionUpdate, onKeydownFilterInput } = useAddUnknownValueAction(
+  actionLabel,
+  filterValueValidator,
+)
 
+// eslint-disable-next-line vue/no-mutating-props
 Object.assign(props.context, {
   actions,
   emptyInitialLabelText:

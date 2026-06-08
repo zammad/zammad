@@ -1,11 +1,11 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Service::System::Import::ApplyConfigurationBase < Service::Base
 
   attr_reader :url, :endpoint, :secret, :username, :tls_verify
 
   def initialize(url:, secret: nil, username: nil, tls_verify: true)
-    super()
+    configured!
 
     @url = url
     @endpoint = build_endpoint
@@ -38,6 +38,10 @@ class Service::System::Import::ApplyConfigurationBase < Service::Base
     raise TLSError, __('The server presented a certificate that could not be verified.') if response.error&.include?('OpenSSL::SSL::SSLError')
 
     response
+  end
+
+  def configured!
+    raise Service::System::CheckSetup::SystemSetupError, __('This system has already been configured.') if Service::System::CheckSetup.done?
   end
 
   class UnreachableError < StandardError; end

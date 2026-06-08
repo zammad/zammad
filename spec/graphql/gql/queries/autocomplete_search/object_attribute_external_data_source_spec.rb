@@ -1,8 +1,8 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
-RSpec.describe Gql::Queries::AutocompleteSearch::ObjectAttributeExternalDataSource, :aggregate_failures, authenticated_as: :agent, db_adapter: :postgresql, type: :graphql do
+RSpec.describe Gql::Queries::AutocompleteSearch::ObjectAttributeExternalDataSource, :aggregate_failures, authenticated_as: :agent, type: :graphql do
 
   context 'when searching for values in external data source object attributes' do
     let(:attribute)   { create(:object_manager_attribute_autocompletion_ajax_external_data_source, object_name:) }

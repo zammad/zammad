@@ -1,18 +1,15 @@
-query organization(
-  $organizationId: ID
-  $organizationInternalId: Int
-  $membersCount: Int
-) {
-  organization(
-    organization: {
-      organizationId: $organizationId
-      organizationInternalId: $organizationInternalId
-    }
-  ) {
+query organization($organizationId: ID!, $first: Int, $after: String) {
+  organization(organizationId: $organizationId) {
+    ...organizationAttributes
+    ...organizationMembersWithFetchMore
     policy {
       update
     }
-    ...organizationAttributes
-    ...organizationMembers
+    ticketsCount {
+      open
+      closed
+      openSearchQuery
+      closedSearchQuery
+    }
   }
 }

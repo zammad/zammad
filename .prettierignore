@@ -1,6 +1,0 @@
-**/graphql/**/*.api.ts
-!**/graphql/**/mocks/*.ts
-!**/graphql/**/*.spec.ts
-!**/tests/graphql/**
-public/**/*
-tmp/**/*

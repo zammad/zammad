@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module CanSelector
   class AdvancedSorting
@@ -30,7 +30,9 @@ module CanSelector
 
         return fallback if fallback && column_names.include?(fallback.to_s)
 
-        raise __('The chosen sort column is unknown.')
+        Rails.logger.error "The chosen sort column is unknown ('#{column}'), falling back to 'created_at'."
+
+        'created_at'
       end
 
       def column
@@ -46,8 +48,6 @@ module CanSelector
       end
 
       def collate
-        return if ActiveRecord::Base.connection.instance_values['config'][:adapter] == 'mysql2'
-
         locale_object = Locale.find_by(locale:)
 
         quoted_collation = ApplicationModel.connection.quote_column_name(locale_object.postgres_collation_name)

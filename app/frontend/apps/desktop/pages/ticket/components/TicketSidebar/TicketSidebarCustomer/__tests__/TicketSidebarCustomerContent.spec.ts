@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { computed, ref } from 'vue'
 
@@ -75,13 +75,15 @@ mockRouterHooks()
 const renderTicketSidebarCustomerContent = async (
   screen: TicketSidebarScreenType = TicketSidebarScreenType.TicketCreate,
   ticket = defaultTicket,
-  options: any = {},
+  options: any = {
+    user: null,
+  },
 ) =>
   renderComponent(TicketSidebarCustomerContent, {
     props: {
       modelValue: {},
       sidebarPlugin: customerSidebarPlugin,
-      customer: mockedUser,
+      customer: options.user || mockedUser,
       secondaryOrganizations,
       objectAttributes: [
         {
@@ -130,66 +132,53 @@ describe('TicketSidebarCustomerContent.vue', () => {
 
       await waitForNextTick()
 
-      expect(wrapper.getByRole('heading', { level: 2 })).toHaveTextContent(
-        'Customer',
-      )
+      expect(wrapper.getByRole('heading', { level: 2 })).toHaveTextContent('Customer')
 
-      // :TODO currently we don't have an available actions
-      // For example customer change is logically not available in ticket create
-      expect(
-        wrapper.queryByRole('button', { name: 'Action menu button' }),
-      ).not.toBeInTheDocument()
+      expect(wrapper.queryByRole('button', { name: 'Action menu button' })).toBeInTheDocument()
 
-      expect(
-        wrapper.getByRole('img', { name: 'Avatar (Nicole Braun)' }),
-      ).toHaveTextContent('NB')
+      expect(wrapper.getByRole('img', { name: 'Avatar (Nicole Braun)' })).toHaveTextContent('NB')
 
       expect(wrapper.getByText('Nicole Braun')).toBeInTheDocument()
 
-      expect(
-        wrapper.getByRole('link', { name: 'Zammad Foundation' }),
-      ).toHaveAttribute('href', '/organizations/1')
+      expect(wrapper.getByRole('link', { name: 'Zammad Foundation' })).toHaveAttribute(
+        'href',
+        '/organizations/1',
+      )
 
       expect(wrapper.getByText('Email')).toBeInTheDocument()
 
-      expect(
-        wrapper.getByRole('link', { name: 'nicole.braun@zammad.org' }),
-      ).toBeInTheDocument()
+      expect(wrapper.getByRole('link', { name: 'nicole.braun@zammad.org' })).toBeInTheDocument()
 
       expect(wrapper.getByText('Secondary organizations')).toBeInTheDocument()
 
       expect(
         await wrapper.findByRole('link', {
-          name: 'Avatar (Zammad Org) Zammad Org',
+          name: 'Avatar (Zammad Org)Zammad Org',
         }),
       ).toHaveAttribute('href', '/organizations/2')
 
-      expect(
-        wrapper.getByRole('link', { name: 'Avatar (Zammad Inc) Zammad Inc' }),
-      ).toHaveAttribute('href', '/organizations/3')
+      expect(wrapper.getByRole('link', { name: 'Avatar (Zammad Inc)Zammad Inc' })).toHaveAttribute(
+        'href',
+        '/organizations/3',
+      )
 
-      expect(
-        wrapper.getByRole('link', { name: 'Avatar (Zammad Ltd) Zammad Ltd' }),
-      ).toHaveAttribute('href', '/organizations/4')
+      expect(wrapper.getByRole('link', { name: 'Avatar (Zammad Ltd)Zammad Ltd' })).toHaveAttribute(
+        'href',
+        '/organizations/4',
+      )
 
-      expect(
-        wrapper.getByRole('button', { name: 'Show 2 more' }),
-      ).toBeInTheDocument()
+      expect(wrapper.getByRole('button', { name: 'Show more' })).toBeInTheDocument()
 
       expect(wrapper.getByText('Tickets')).toBeInTheDocument()
 
-      expect(
-        wrapper.getByRole('link', { name: 'open tickets 42' }),
-      ).toBeInTheDocument()
+      expect(wrapper.getByRole('link', { name: 'open tickets42' })).toBeInTheDocument()
 
-      expect(
-        wrapper.getByRole('link', { name: 'closed tickets 10' }),
-      ).toBeInTheDocument()
+      expect(wrapper.getByRole('link', { name: 'closed tickets10' })).toBeInTheDocument()
     })
   })
 
   describe('ticket-detail-screen', () => {
-    it.each(['Change customer'])(
+    it.each(['Change customer', 'Edit customer'])(
       'shows button for `%s` action',
       async (buttonLabel) => {
         const wrapper = await renderTicketSidebarCustomerContent(
@@ -202,9 +191,7 @@ describe('TicketSidebarCustomerContent.vue', () => {
           }),
         )
 
-        expect(
-          await wrapper.findByRole('button', { name: buttonLabel }),
-        ).toBeInTheDocument()
+        expect(await wrapper.findByRole('button', { name: buttonLabel })).toBeInTheDocument()
       },
     )
 
@@ -222,9 +209,29 @@ describe('TicketSidebarCustomerContent.vue', () => {
         },
       )
 
-      expect(
-        wrapper.queryByRole('button', { name: 'Action menu button' }),
-      ).not.toBeInTheDocument()
+      const actionMenuButton = wrapper.getByRole('button', { name: 'Action menu button' })
+
+      await wrapper.events.click(actionMenuButton)
+
+      expect(wrapper.queryByRole('button', { name: 'Change customer' })).not.toBeInTheDocument()
     })
+  })
+
+  it('does not show `Edit customer` when user has no update permission', async () => {
+    mockPermissions(['ticket.agent'])
+
+    const user = mockedUser
+    mockedUser.policy.update = false
+    const wrapper = await renderTicketSidebarCustomerContent(
+      TicketSidebarScreenType.TicketDetailView,
+      defaultTicket,
+      user,
+    )
+
+    const actionMenuButton = wrapper.getByRole('button', { name: 'Action menu button' })
+
+    await wrapper.events.click(actionMenuButton)
+
+    expect(wrapper.queryByRole('button', { name: 'Edit customer' })).not.toBeInTheDocument()
   })
 })

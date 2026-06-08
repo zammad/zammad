@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { animations, updateConfig } from '@formkit/drag-and-drop'
@@ -21,11 +21,7 @@ import TicketOverviewEditItem from '../components/TicketOverviewEditItem.vue'
 
 const overviewOrderStore = useTicketOverviewOrderStore()
 
-const {
-  overviews,
-  loading: overviewsLoading,
-  overviewsByKey,
-} = storeToRefs(overviewOrderStore)
+const { overviews, loading: overviewsLoading, overviewsByKey } = storeToRefs(overviewOrderStore)
 
 // we store local included, so they won't affect home page
 const includedIds = ref(new Set(overviewOrderStore.includedIds.values()))
@@ -40,9 +36,7 @@ watch(
 
 const includedOverviews = computed({
   get: () => {
-    return [...includedIds.value]
-      .map((id) => overviewsByKey.value[id])
-      .filter(Boolean)
+    return [...includedIds.value].map((id) => overviewsByKey.value[id]).filter(Boolean)
   },
   set: (value) => {
     includedIds.value = new Set(value.map((overview) => overview.id))
@@ -56,7 +50,7 @@ dragAndDrop({
   values: includedOverviews,
   plugins: [animations()],
   dropZoneClass: 'opacity-0',
-  touchDropZoneClass: 'opacity-0',
+  synthDropZoneClass: 'opacity-0',
 })
 
 const { notify } = useNotifications()
@@ -64,7 +58,7 @@ const { notify } = useNotifications()
 const walker = useWalker()
 
 useHeader({
-  title: __('Ticket Overview'),
+  title: __('Ticket overview'),
   backUrl: '/',
   backAvoidHomeButton: true,
   actionTitle: __('Save'),
@@ -84,7 +78,7 @@ useHeader({
 
     notify({
       id: 'overview-save',
-      message: __('Ticket Overview settings are saved.'),
+      message: __('Ticket overview settings are saved.'),
       type: NotificationTypes.Success,
     })
     walker.back('/')
@@ -92,9 +86,7 @@ useHeader({
 })
 
 const excludedOverviews = computed(() => {
-  return overviews.value.filter(
-    (overview) => !includedIds.value.has(overview.id),
-  )
+  return overviews.value.filter((overview) => !includedIds.value.has(overview.id))
 })
 
 const removeFromFavorites = (id: string) => {
@@ -132,10 +124,7 @@ const updateDndDisabledConfig = (disabled: boolean) => {
           @action-active="updateDndDisabledConfig"
         />
       </div>
-      <div
-        v-if="!includedOverviews.length"
-        class="ms-3 flex min-h-[54px] items-center"
-      >
+      <div v-if="!includedOverviews.length" class="ms-3 flex min-h-[54px] items-center">
         <p>{{ $t('No entries') }}</p>
       </div>
     </CommonSectionMenu>
@@ -152,10 +141,7 @@ const updateDndDisabledConfig = (disabled: boolean) => {
         :overview="overview"
         @action="addToFavorites(overview.id)"
       />
-      <div
-        v-if="!excludedOverviews.length"
-        class="ms-3 flex min-h-[54px] items-center"
-      >
+      <div v-if="!excludedOverviews.length" class="ms-3 flex min-h-[54px] items-center">
         <p>{{ $t('No entries') }}</p>
       </div>
     </CommonSectionMenu>

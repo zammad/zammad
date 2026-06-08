@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -10,8 +10,8 @@ RSpec.describe FixedStoreUpgradeRor45, type: :db_migration do
 
   context 'when DB contains `store`d attributes saved as unpermitted ActionController::Parameters' do
     before do
-      ActiveRecord::Base.connection.execute(<<~SQL.tap { |sql| sql.delete!('`') if !mysql? }) # rubocop:disable Rails/SquishedSQLHeredocs
-        INSERT INTO taskbars (`user_id`, `key`, `callback`, `state`, `params`, `prio`, `notify`, `active`, `preferences`, `last_contact`, `updated_at`, `created_at`)
+      ActiveRecord::Base.connection.execute(<<~SQL) # rubocop:disable Rails/SquishedSQLHeredocs
+        INSERT INTO taskbars (user_id, key, callback, state, params, prio, notify, active, preferences, last_contact, updated_at, created_at)
         VALUES (#{user.id},
                 'Ticket-123',
                 'TicketZoom',
@@ -27,7 +27,6 @@ RSpec.describe FixedStoreUpgradeRor45, type: :db_migration do
       SQL
     end
 
-    let(:mysql?)       { ActiveRecord::Base.connection_db_config.configuration_hash[:adapter] == 'mysql2' }
     let(:user)         { User.last }
     let(:last_contact) { '2017-09-01 10:10:00' }
     let(:state)        { ActionController::Parameters.new('ticket' => {}, 'article' => {}) }

@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { useApplicationStore } from '#shared/stores/application.ts'
 
@@ -13,6 +13,7 @@ export default <TicketSidebarPlugin>{
   component: TicketSidebarAttachment,
   permissions: ['ticket.agent', 'ticket.customer'],
   screens: [TicketSidebarScreenType.TicketDetailView],
+  views: ['agent', 'customer'],
   icon: 'paperclip',
   order: 7000,
   available: () => {

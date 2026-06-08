@@ -1,0 +1,24 @@
+Нова заявка (#{ticket.title})
+
+<div>Вітаю #{recipient.firstname},</div>
+<br>
+<div>Нову заявку (#{ticket.title}) створив "<b>#{current_user.longname}</b>".</div>
+<br>
+<div>
+Група: #{ticket.group.name}<br>
+Власник: #{ticket.owner.fullname}<br>
+Статус: #{t(ticket.state.name)}<br>
+</div>
+<br>
+<% if @objects[:article] %>
+  <div>
+  Інформація:
+  <blockquote type="cite">
+  #{article.body_as_html}
+  </blockquote>
+  </div>
+<% end %>
+<br>
+<div>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">Переглянути в #{config.product_name}</a>
+</div>

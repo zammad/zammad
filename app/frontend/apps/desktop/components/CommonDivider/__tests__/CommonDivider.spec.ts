@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { renderComponent } from '#tests/support/components/index.ts'
 
@@ -40,21 +40,18 @@ describe('CommonDivider.vue', () => {
     expect(container).toHaveClass('py-2.5')
   })
 
-  it('supports alternative background prop', async () => {
+  it.each(['neutral', 'gray'])('supports variant %s prop', (variant) => {
     const view = renderComponent(CommonDivider, {
       props: {
-        alternativeBackground: true,
+        variant,
       },
     })
 
     const separator = view.getByRole('separator')
 
-    expect(separator).toHaveClasses(['bg-white', 'dark:bg-gray-200'])
-
-    await view.rerender({
-      alternativeBackground: false,
-    })
-
-    expect(separator).toHaveClasses(['bg-neutral-100', 'dark:bg-gray-900'])
+    if (variant === 'gray') expect(separator).toHaveClasses(['bg-white', 'dark:bg-gray-200'])
+    else if (variant === 'stone')
+      expect(separator).toHaveClasses(['bg-stone-200', 'dark:bg-neutral-500'])
+    else expect(separator).toHaveClasses(['bg-neutral-100', 'dark:bg-gray-900'])
   })
 })

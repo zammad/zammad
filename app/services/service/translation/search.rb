@@ -1,11 +1,9 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Service::Translation::Search < Service::Base
   attr_reader :locale, :query, :limit, :collector_mode
 
   def initialize(locale:, query:, limit: 150)
-    super()
-
     @locale  = locale
     @query   = query
     @limit   = limit

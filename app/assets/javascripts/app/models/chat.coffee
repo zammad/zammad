@@ -249,7 +249,7 @@ class App.Chat extends App.Model
 
   @configure_attributes = [
     { name: 'name',           display: __('Name'),            tag: 'input',       type: 'text', limit: 100, null: false },
-    { name: 'note',           display: __('Note'),            tag: 'textarea',    limit: 250, null: true },
+    { name: 'note',           display: __('Note'),            tag: 'richtext',    limit: 250, null: true },
     { name: 'max_queue',      display: __('Max. clients on waitlist'), tag: 'input',   default: 2 },
     { name: 'block_ip',       display: __('Blocked IPs (separated by ;)'), tag: 'input', default: '', null: true },
     { name: 'allowed_websites', display: __('Allow websites (separated by ;)'), tag: 'input', default: '', null: true },

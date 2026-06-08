@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Mutations
   class System::Setup::Unlock < BaseMutation
@@ -11,9 +11,7 @@ module Gql::Mutations
 
     field :success, Boolean, 'Success.', null: true
 
-    def self.authorize(...)
-      true
-    end
+    allow_public_access!
 
     def resolve(value:)
       return { success: false } if !Service::ExecuteLockedBlock.locked?(RESOURCE)

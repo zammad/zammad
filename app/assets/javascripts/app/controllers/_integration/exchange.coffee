@@ -681,6 +681,9 @@ class AppConfig extends App.ControllerModal
   button: 'Connect'
   buttonCancel: true
   small: true
+  events:
+    'click .js-copy':   'copyInputToClipboard'
+    'click .js-select': 'selectAll'
 
   content: ->
     @external_credential = App.ExternalCredential.findByAttribute('name', 'exchange')

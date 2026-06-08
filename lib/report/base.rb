@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Report::Base
 
@@ -383,5 +383,14 @@ class Report::Base
         'value'    => merged_state_id
       }
     }
+  end
+
+  # https://github.com/zammad/zammad/issues/5176
+  def self.duplicate_preserving_current_user(input)
+    input
+      .deep_dup
+      .tap do |elem|
+        elem[:current_user] = input[:current_user]
+      end
   end
 end

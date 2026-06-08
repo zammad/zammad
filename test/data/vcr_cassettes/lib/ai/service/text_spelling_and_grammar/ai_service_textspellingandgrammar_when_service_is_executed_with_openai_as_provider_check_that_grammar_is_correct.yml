@@ -1,38 +1,547 @@
 ---
 http_interactions:
 - request:
-    method: post
-    uri: https://api.openai.com/v1/chat/completions
+    method: get
+    uri: https://api.openai.com/v1/models
     body:
-      encoding: UTF-8
-      string: '{"model":"gpt-4o-mini","response_format":{"type":"json_object"},"messages":[{"role":"system","content":"You
-        are a helpful support agent. Your task is to fix the spelling, grammar, and
-        punctuation of the following response while keeping it in the same language
-        as the user''s input. Detect the language from the input and ensure corrections
-        are made in the same language. Ensure that the reply remains polite and professional.\n\nAdditionally,
-        if the response contains any HTML content, do not break or remove the HTML
-        tags. Make corrections only to the text within the tags without altering the
-        HTML structure.\n\nAdd also the reason what you have done to response.\n\nPlease
-        respond using the defined JSON syntax provided below:\n{\n“text”: “string”,\n“reason”,
-        “string”\n}\n"},{"role":"user","content":"I Nicole Braun."}],"temperature":0.2,"stream":false}'
+      encoding: US-ASCII
+      string: ''
     headers:
-      Content-Type:
-      - application/json
-      Authorization:
-      - Bearer <OPEN_AI_TOKEN>
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
       - "*/*"
       User-Agent:
-      - Ruby
+      - Zammad User Agent
+      Host:
+      - api.openai.com
+      Authorization:
+      - Bearer <OPEN_AI_TOKEN>
   response:
     status:
       code: 200
       message: OK
     headers:
       Date:
-      - Fri, 11 Oct 2024 12:40:45 GMT
+      - Wed, 07 May 2025 08:07:48 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Openai-Version:
+      - '2020-10-01'
+      X-Request-Id:
+      - 7990e65882befd7e43b942b807139758
+      Openai-Processing-Ms:
+      - '453'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - __cf_bm=Dam.0ib7R2cWwLjFMUk7R9H00p3UmoEPzzsoscPwIJk-1746605268-1.0.1.1-sVSMYMJOkMxcIFeLhI92K76_vF_5lXwCcDqvl2xiDE52iCqTbiiqNA.34F09rKwJEm7m0CnI2Z_B0Db.WpV5hbTLhgZuaaa606UEeqkXd9g;
+        path=/; expires=Wed, 07-May-25 08:37:48 GMT; domain=.api.openai.com; HttpOnly;
+        Secure; SameSite=None
+      - _cfuvid=iggID4uP9TUTbWssp0.h.zu2c1yl1o5X1YO__EtAnVw-1746605268647-0.0.1.1-604800000;
+        path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 93bf39cb382bc8bb-FRA
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "object": "list",
+          "data": [
+            {
+              "id": "gpt-4o-audio-preview-2024-12-17",
+              "object": "model",
+              "created": 1734034239,
+              "owned_by": "system"
+            },
+            {
+              "id": "dall-e-3",
+              "object": "model",
+              "created": 1698785189,
+              "owned_by": "system"
+            },
+            {
+              "id": "dall-e-2",
+              "object": "model",
+              "created": 1698798177,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-4o-audio-preview-2024-10-01",
+              "object": "model",
+              "created": 1727389042,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-4-turbo-preview",
+              "object": "model",
+              "created": 1706037777,
+              "owned_by": "system"
+            },
+            {
+              "id": "text-embedding-3-small",
+              "object": "model",
+              "created": 1705948997,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-4.1-nano",
+              "object": "model",
+              "created": 1744321707,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-4.1-nano-2025-04-14",
+              "object": "model",
+              "created": 1744321025,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-4o-realtime-preview-2024-10-01",
+              "object": "model",
+              "created": 1727131766,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-4o-realtime-preview",
+              "object": "model",
+              "created": 1727659998,
+              "owned_by": "system"
+            },
+            {
+              "id": "babbage-002",
+              "object": "model",
+              "created": 1692634615,
+              "owned_by": "system"
+            },
+            {
+              "id": "o1-mini-2024-09-12",
+              "object": "model",
+              "created": 1725648979,
+              "owned_by": "system"
+            },
+            {
+              "id": "o1-mini",
+              "object": "model",
+              "created": 1725649008,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-4",
+              "object": "model",
+              "created": 1687882411,
+              "owned_by": "openai"
+            },
+            {
+              "id": "text-embedding-ada-002",
+              "object": "model",
+              "created": 1671217299,
+              "owned_by": "openai-internal"
+            },
+            {
+              "id": "chatgpt-4o-latest",
+              "object": "model",
+              "created": 1723515131,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-4o-mini-audio-preview",
+              "object": "model",
+              "created": 1734387424,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-4-1106-preview",
+              "object": "model",
+              "created": 1698957206,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-4o-audio-preview",
+              "object": "model",
+              "created": 1727460443,
+              "owned_by": "system"
+            },
+            {
+              "id": "o1-preview-2024-09-12",
+              "object": "model",
+              "created": 1725648865,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-4o-mini-realtime-preview",
+              "object": "model",
+              "created": 1734387380,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-4.1-mini",
+              "object": "model",
+              "created": 1744318173,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-4o-mini-realtime-preview-2024-12-17",
+              "object": "model",
+              "created": 1734112601,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-3.5-turbo-instruct-0914",
+              "object": "model",
+              "created": 1694122472,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-4o-mini-search-preview",
+              "object": "model",
+              "created": 1741391161,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-4.1-mini-2025-04-14",
+              "object": "model",
+              "created": 1744317547,
+              "owned_by": "system"
+            },
+            {
+              "id": "o1",
+              "object": "model",
+              "created": 1734375816,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-3.5-turbo-16k",
+              "object": "model",
+              "created": 1683758102,
+              "owned_by": "openai-internal"
+            },
+            {
+              "id": "o1-2024-12-17",
+              "object": "model",
+              "created": 1734326976,
+              "owned_by": "system"
+            },
+            {
+              "id": "davinci-002",
+              "object": "model",
+              "created": 1692634301,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-3.5-turbo-1106",
+              "object": "model",
+              "created": 1698959748,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-4o-search-preview",
+              "object": "model",
+              "created": 1741388720,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-3.5-turbo-instruct",
+              "object": "model",
+              "created": 1692901427,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-3.5-turbo",
+              "object": "model",
+              "created": 1677610602,
+              "owned_by": "openai"
+            },
+            {
+              "id": "gpt-4o-mini-search-preview-2025-03-11",
+              "object": "model",
+              "created": 1741390858,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-4-0125-preview",
+              "object": "model",
+              "created": 1706037612,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-4o-2024-11-20",
+              "object": "model",
+              "created": 1739331543,
+              "owned_by": "system"
+            },
+            {
+              "id": "whisper-1",
+              "object": "model",
+              "created": 1677532384,
+              "owned_by": "openai-internal"
+            },
+            {
+              "id": "gpt-4o-2024-05-13",
+              "object": "model",
+              "created": 1715368132,
+              "owned_by": "system"
+            },
+            {
+              "id": "o1-pro",
+              "object": "model",
+              "created": 1742251791,
+              "owned_by": "system"
+            },
+            {
+              "id": "o1-pro-2025-03-19",
+              "object": "model",
+              "created": 1742251504,
+              "owned_by": "system"
+            },
+            {
+              "id": "o1-preview",
+              "object": "model",
+              "created": 1725648897,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-4-0613",
+              "object": "model",
+              "created": 1686588896,
+              "owned_by": "openai"
+            },
+            {
+              "id": "gpt-image-1",
+              "object": "model",
+              "created": 1745517030,
+              "owned_by": "system"
+            },
+            {
+              "id": "text-embedding-3-large",
+              "object": "model",
+              "created": 1705953180,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-4o-mini-tts",
+              "object": "model",
+              "created": 1742403959,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-4o-transcribe",
+              "object": "model",
+              "created": 1742068463,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-4.5-preview",
+              "object": "model",
+              "created": 1740623059,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-4.5-preview-2025-02-27",
+              "object": "model",
+              "created": 1740623304,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-4o-mini-transcribe",
+              "object": "model",
+              "created": 1742068596,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-4o-search-preview-2025-03-11",
+              "object": "model",
+              "created": 1741388170,
+              "owned_by": "system"
+            },
+            {
+              "id": "omni-moderation-2024-09-26",
+              "object": "model",
+              "created": 1732734466,
+              "owned_by": "system"
+            },
+            {
+              "id": "o3-mini",
+              "object": "model",
+              "created": 1737146383,
+              "owned_by": "system"
+            },
+            {
+              "id": "o3-mini-2025-01-31",
+              "object": "model",
+              "created": 1738010200,
+              "owned_by": "system"
+            },
+            {
+              "id": "tts-1-hd",
+              "object": "model",
+              "created": 1699046015,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-4o",
+              "object": "model",
+              "created": 1715367049,
+              "owned_by": "system"
+            },
+            {
+              "id": "tts-1-hd-1106",
+              "object": "model",
+              "created": 1699053533,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-4o-mini",
+              "object": "model",
+              "created": 1721172741,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-4o-2024-08-06",
+              "object": "model",
+              "created": 1722814719,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-4.1",
+              "object": "model",
+              "created": 1744316542,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-4.1-2025-04-14",
+              "object": "model",
+              "created": 1744315746,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-4o-mini-2024-07-18",
+              "object": "model",
+              "created": 1721172717,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-4o-mini-audio-preview-2024-12-17",
+              "object": "model",
+              "created": 1734115920,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-3.5-turbo-0125",
+              "object": "model",
+              "created": 1706048358,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-4o-realtime-preview-2024-12-17",
+              "object": "model",
+              "created": 1733945430,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-4-turbo",
+              "object": "model",
+              "created": 1712361441,
+              "owned_by": "system"
+            },
+            {
+              "id": "tts-1",
+              "object": "model",
+              "created": 1681940951,
+              "owned_by": "openai-internal"
+            },
+            {
+              "id": "gpt-4-turbo-2024-04-09",
+              "object": "model",
+              "created": 1712601677,
+              "owned_by": "system"
+            },
+            {
+              "id": "tts-1-1106",
+              "object": "model",
+              "created": 1699053241,
+              "owned_by": "system"
+            },
+            {
+              "id": "omni-moderation-latest",
+              "object": "model",
+              "created": 1731689265,
+              "owned_by": "system"
+            },
+            {
+              "id": "o4-mini-2025-04-16",
+              "object": "model",
+              "created": 1744133506,
+              "owned_by": "system"
+            },
+            {
+              "id": "o4-mini",
+              "object": "model",
+              "created": 1744225351,
+              "owned_by": "system"
+            }
+          ]
+        }
+  recorded_at: Wed, 07 May 2025 08:07:48 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-4o","messages":[{"role":"system","content":"Proofread
+        the provided text, correcting grammatical and spelling errors without altering
+        any HTML markup. Ensure you analyze the text, identify both grammatical and
+        spelling mistakes, and make necessary corrections for clarity and accuracy,
+        including sentence structure, punctuation, verb tense consistency, and correct
+        word usage. Apply all changes directly to the text to enhance readability
+        and flow, ensuring the end result communicates efficiently and professionally.\n\n#
+        Steps\n\n1. **Initial Read-Through**: Carefully read the text once to understand
+        the context and main message.\n2. **Identify Errors**: Examine the text for
+        grammatical and spelling errors including incorrect punctuation, verb tense
+        inconsistencies, improper sentence structures, and incorrect word usage.\n3.
+        **Correction Process**: Make necessary grammatical and spelling corrections,
+        ensuring not to alter any HTML markup present in the text.\n4. **Readability
+        and Flow**: Directly amend the text to improve readability and flow while
+        maintaining the original intent.\n5. **Review**: Double-check the text to
+        ensure no HTML tags are broken and that all corrections maintain coherence
+        and professionalism.\n\n# Output Format\n\n- Provide the fully corrected text
+        with no broken HTML markup.\n\n# Notes\n\n- Retain existing HTML tags; ensure
+        they remain unaltered in the corrected text.\n- Maintain the text in its original
+        language, as the target language should always be used.\n- Prioritize clarity
+        and professionalism in all corrections.\n\nPlease find the text requiring
+        proofreading below:\n"},{"role":"user","content":"I Nicole Braun."}],"temperature":0.1,"response_format":{"type":"text"},"stream":false,"store":false}'
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Zammad User Agent
+      Host:
+      - api.openai.com
+      Content-Type:
+      - application/json; charset=utf-8
+      Authorization:
+      - Bearer <OPEN_AI_TOKEN>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 07 May 2025 08:07:49 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -44,73 +553,79 @@ http_interactions:
       Openai-Organization:
       - zammad-gmbh
       Openai-Processing-Ms:
-      - '807'
+      - '371'
       Openai-Version:
       - '2020-10-01'
       X-Ratelimit-Limit-Requests:
-      - '10000'
+      - '500'
       X-Ratelimit-Limit-Tokens:
-      - '200000'
+      - '30000'
       X-Ratelimit-Remaining-Requests:
-      - '9999'
+      - '499'
       X-Ratelimit-Remaining-Tokens:
-      - '199808'
+      - '29604'
       X-Ratelimit-Reset-Requests:
-      - 8.64s
+      - 120ms
       X-Ratelimit-Reset-Tokens:
-      - 57ms
+      - 792ms
       X-Request-Id:
-      - req_2476493d7f505208bc72baf2a90f6e47
+      - req_f988f9c536dac31c4b7495c466d9e4dc
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
-      - __cf_bm=nm34B.0PQB8Jv_cZivP3ENreNByuC7SbEAasUxe0Qpg-1728650445-1.0.1.1-BjIAj0oCZliYo5BctE4pPoNJ1sFSUlvWunAIoRDRvnft4k2U3MJDJsbO.t78nDzUVwxXLg.3xojyYgb9ASrxog;
-        path=/; expires=Fri, 11-Oct-24 13:10:45 GMT; domain=.api.openai.com; HttpOnly;
+      - __cf_bm=nBgHaxA2s14TYnQv03Ea5OMRXHMNDEfJ6lI51dysl6w-1746605269-1.0.1.1-EFhEsSjlyblHJOHKHT4mfGbVv_.57dKY5waJJFG.mIkkD5UzE3FT1rf.c8M4tY5FhqgAsMmjFt8NY4n8JBnDxXY3DlDw.GpHioRsZQDn8Oc;
+        path=/; expires=Wed, 07-May-25 08:37:49 GMT; domain=.api.openai.com; HttpOnly;
         Secure; SameSite=None
-      - _cfuvid=2vlEgAOCQNTMefJFnSbK6dwOiDb9yRwVshejfaG7akg-1728650445857-0.0.1.1-604800000;
+      - _cfuvid=WVVUzfevnxVew8G4eRN_MtaaaUugp_2Ly7S1d89GF8w-1746605269395-0.0.1.1-604800000;
         path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None
       X-Content-Type-Options:
       - nosniff
       Server:
       - cloudflare
       Cf-Ray:
-      - 8d0eeba09bd8cab9-HAM
+      - 93bf39d25be519af-FRA
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-AH9EjYKjmSmYcLzdFSQ7etweyquSy",
+          "id": "chatcmpl-BUU6eNxSzLL1OwrBF4dibrbF5EzEd",
           "object": "chat.completion",
-          "created": 1728650445,
-          "model": "gpt-4o-mini-2024-07-18",
+          "created": 1746605268,
+          "model": "gpt-4o-2024-08-06",
           "choices": [
             {
               "index": 0,
               "message": {
                 "role": "assistant",
-                "content": "{\n  \"text\": \"I am Nicole Braun.\",\n  \"reason\": \"Corrected the sentence to include the verb 'am' for proper grammatical structure.\"\n}",
-                "refusal": null
+                "content": "I am Nicole Braun.",
+                "refusal": null,
+                "annotations": []
               },
               "logprobs": null,
               "finish_reason": "stop"
             }
           ],
           "usage": {
-            "prompt_tokens": 145,
-            "completion_tokens": 33,
-            "total_tokens": 178,
+            "prompt_tokens": 299,
+            "completion_tokens": 6,
+            "total_tokens": 305,
             "prompt_tokens_details": {
-              "cached_tokens": 0
+              "cached_tokens": 0,
+              "audio_tokens": 0
             },
             "completion_tokens_details": {
-              "reasoning_tokens": 0
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
             }
           },
-          "system_fingerprint": "fp_e2bde53e6e"
+          "service_tier": "default",
+          "system_fingerprint": "fp_90122d973c"
         }
-  recorded_at: Fri, 11 Oct 2024 12:40:45 GMT
+  recorded_at: Wed, 07 May 2025 08:07:49 GMT
 recorded_with: VCR 6.3.1

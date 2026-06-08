@@ -66,7 +66,7 @@ class App.Utils
 
     ]
     'IMG': [
-      'width', 'height',
+      'width', 'height', 'max-width'
     ]
 
   @cssValuesBacklist:
@@ -553,23 +553,6 @@ class App.Utils
       if origHref != fixedHref then $(@).attr('href', fixedHref)
     )
 
-  # signatureNeeded = App.Utils.signatureCheck(message, signature)
-  @signatureCheck: (message, signature) ->
-    messageText   = $('<div>' + message + '</div>').text().trim()
-    messageText   = messageText.replace(/(\n|\r|\t)/g, '')
-    signatureText = $('<div>' + signature + '</div>').text().trim()
-    signatureText = signatureText.replace(/(\n|\r|\t)/g, '')
-
-    quote = (str) ->
-      (str + '').replace(/[.?*+^$[\]\\(){}|-]/g, "\\$&")
-
-    #console.log('SC', messageText, signatureText, quote(signatureText))
-    regex = new RegExp(quote(signatureText), 'mi')
-    if messageText.match(regex)
-      false
-    else
-      true
-
   # messageWithMarker = App.Utils.signatureIdentifyByPlaintext(message, false)
   @signatureIdentifyByPlaintext: (message, test = false, internal = false) ->
     textToSearch = @html2text(message)
@@ -807,14 +790,14 @@ class App.Utils
 
     @signatureIdentifyByHtmlHelper(message)
 
-  @signatureRemoveByHtml: (message) ->
+  @signatureRemoveByHtml: (message, placeholder = false) ->
     container = document.createElement('container-element')
     container.innerHTML = message
 
     brsToRemove = []
 
-    signatures = container
-      .querySelectorAll('div[data-signature]')
+    container
+      .querySelectorAll('div[data-signature-placeholder]')
       .forEach (elem) ->
         node = elem
         while(node?.previousSibling?.nodeName == 'BR')
@@ -822,6 +805,19 @@ class App.Utils
           node = node.previousSibling
 
         elem.remove()
+
+    container
+      .querySelectorAll('div[data-signature]')
+      .forEach (elem) ->
+        if placeholder
+          elem.replaceWith($('<div data-signature-placeholder="true"></div>')[0])
+        else
+          node = elem
+          while(node?.previousSibling?.nodeName == 'BR')
+            brsToRemove.push node.previousSibling
+            node = node.previousSibling
+
+          elem.remove()
 
     brsToRemove.forEach (elem) -> elem.remove()
 
@@ -938,8 +934,10 @@ class App.Utils
                     value = key.map((element) -> attributes[attributeName]['historical_options'][element]).join(', ')
                   when 'autocompletion_ajax_external_data_source'
                     value = dataRefLast.label
-                  else
+                  when 'richtext'
                     value = dataRefLast[attributeName]
+                  else
+                    value = App.Utils.htmlEscape(dataRefLast[attributeName])
               else
                 switch dataType
                   when 'textarea'
@@ -956,7 +954,10 @@ class App.Utils
 
         # as fallback use value of toString()
         if !value
-          value = dataRef.toString()
+          value = if dataType is 'richtext'
+            dataRef.toString()
+          else
+            App.Utils.htmlEscape(dataRef).toString()
       else
         value = ''
       value = '-' if value is ''
@@ -1487,7 +1488,10 @@ class App.Utils
       App.Utils._htmlImage2DataUrlAsync(@,
         success: (img, data) ->
           element.attr('src', data)
-          element.css('max-width','100%')
+
+          unless element.css('max-width') isnt 'none'
+            element.css('max-width', '100%')
+
           params.success(element, data) if params.success
         fail: (img) ->
           element.remove()
@@ -1626,3 +1630,50 @@ class App.Utils
     return string if string.length < length
 
     string.substring(0, length) + '…'
+
+  # Save a Blob to the user's disk with the given filename
+  # Usage: App.Utils.downloadBlob(blob, 'file.xlsx')
+  @downloadBlob: (blob, filename) ->
+    return if !blob
+
+    url = undefined
+    try
+      url = window.URL?.createObjectURL?(blob)
+      return if !url
+
+      link = document.createElement('a')
+      link.style.display = 'none'
+      link.href = url
+      link.download = filename
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+    finally
+      if url
+        try
+          window.URL.revokeObjectURL(url)
+        catch e then null
+
+  # Extract filename from Content-Disposition header
+  @resolveFilename: (xhr) ->
+    disposition = xhr?.getResponseHeader('Content-Disposition')
+    if disposition
+      match = disposition.match(/filename="?([^";]+)"?/)
+      return match[1] if match?[1]
+
+    return null
+
+  # Download file from Blob data returned by XHR request
+  @downloadFileFromBlob: (data, xhr, option = {}) ->
+    blob = if data instanceof Blob
+      data
+
+    unless blob
+      @notify(
+        type: 'error'
+        message: __('The download could not be started. Please try again later.')
+      )
+      return
+
+    filename = @resolveFilename(xhr) || option.fallbackFilename
+    @downloadBlob(blob, filename)

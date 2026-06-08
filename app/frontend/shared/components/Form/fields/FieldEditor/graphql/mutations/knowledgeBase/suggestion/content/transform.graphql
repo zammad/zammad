@@ -1,11 +1,5 @@
-mutation knowledgeBaseAnswerSuggestionContentTransform(
-  $translationId: ID!
-  $formId: FormId!
-) {
-  knowledgeBaseAnswerSuggestionContentTransform(
-    translationId: $translationId
-    formId: $formId
-  ) {
+mutation knowledgeBaseAnswerSuggestionContentTransform($translationId: ID!, $formId: FormId!) {
+  knowledgeBaseAnswerSuggestionContentTransform(translationId: $translationId, formId: $formId) {
     body
     attachments {
       id

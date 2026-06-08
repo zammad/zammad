@@ -1,11 +1,13 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
 RSpec.describe 'Ticket Zoom > Email Reply Body', authenticated_as: :authenticate, time_zone: 'Europe/London', type: :system do
-  let(:agent)    { create(:agent, groups: [Group.first]) }
-  let(:customer) { create(:customer) }
-  let(:ticket)   { create(:ticket, customer: customer, group: Group.first) }
+  let(:agent)     { create(:agent, groups: [Group.first]) }
+  let(:customer)  { create(:customer) }
+  let(:ticket)    { create(:ticket, customer: customer, group: Group.first) }
+  let(:timestamp) { DateTime.parse('2022-10-06 12:40:00 UTC') }
+  let(:article)   { create(:ticket_article, :inbound_email, ticket: ticket, origin_by: customer, created_at: timestamp) }
 
   def authenticate
     Setting.set 'ui_ticket_zoom_article_email_full_quote', full_quote_setting_enabled
@@ -17,8 +19,7 @@ RSpec.describe 'Ticket Zoom > Email Reply Body', authenticated_as: :authenticate
   # Create a ticket article with a specific timestamp and customer origin.
   #   This will allow us to later compare citation header with expected format.
   before do
-    timestamp = DateTime.parse('2022-10-06 12:40:00 UTC')
-    create(:ticket_article, :inbound_email, ticket: ticket, origin_by: customer, created_at: timestamp)
+    article
   end
 
   context 'when replying to a message' do
@@ -73,6 +74,23 @@ RSpec.describe 'Ticket Zoom > Email Reply Body', authenticated_as: :authenticate
         it 'body contains localized citation header' do
           click_reply
           expect(body).to contain_citation_header("Am Donnerstag, 6. Oktober 2022 um 13:40:00, schrieb #{customer.fullname}:")
+        end
+      end
+
+      # https://github.com/zammad/zammad/issues/5634
+      context 'with signature in quoted part' do
+        let(:full_quote_header_setting_enabled) { true }
+        let(:article_body) { <<~RAW.chomp }
+          Hello,<br>
+          This is a test email.<br>
+          <div data-signature="true" data-signature-id="123">Best regards,<br>Customer</div>
+        RAW
+
+        let(:article) { create(:ticket_article, :inbound_email, body: article_body, ticket: ticket, origin_by: customer, created_at: timestamp, content_type: 'text/html') }
+
+        it 'body contains signature in quoted part' do
+          click_reply
+          expect(body).to have_text('Best regards,')
         end
       end
     end

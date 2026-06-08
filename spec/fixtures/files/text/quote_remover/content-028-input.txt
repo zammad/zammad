@@ -1,0 +1,31 @@
+Done! I've updated the settings as requested.
+
+--
+Best regards,
+John Smith
+IT Support
+Tel: +1-555-123-4567
+
+-----Original Message-----
+From: Customer Service <cs@example.com>
+Sent: Tuesday, December 3, 2024 9:15 AM
+To: IT Support <it@example.com>
+Subject: FW: User Access Request
+
+Please see forwarded request below.
+
+Thanks,
+CS Team
+
+-----Original Message-----
+From: End User <user@example.com>
+Sent: Monday, December 2, 2024 4:30 PM
+To: Customer Service <cs@example.com>
+Subject: User Access Request
+
+Hi,
+
+I need access to the reporting dashboard.
+
+Thanks,
+End User

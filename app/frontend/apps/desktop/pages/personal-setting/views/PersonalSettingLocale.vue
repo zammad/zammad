@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { useLocaleUpdate } from '#shared/composables/useLocaleUpdate.ts'
@@ -6,15 +6,19 @@ import { useLocaleUpdate } from '#shared/composables/useLocaleUpdate.ts'
 import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
 
 import { useBreadcrumb } from '../composables/useBreadcrumb.ts'
+import { usePersonalSettingTabs } from '../composables/usePersonalSettingTabs.ts'
 
-const { modelCurrentLocale, localeOptions, isSavingLocale, translation } =
-  useLocaleUpdate()
+const { modelCurrentLocale, localeOptions, isSavingLocale, translation } = useLocaleUpdate()
 
 const { breadcrumbItems } = useBreadcrumb(__('Language'))
+
+const { tabs, activeTab } = usePersonalSettingTabs()
 </script>
 
 <template>
   <LayoutContent
+    :active-tab="activeTab"
+    :tabs="tabs"
     :breadcrumb-items="breadcrumbItems"
     width="narrow"
     provide-default
@@ -28,13 +32,13 @@ const { breadcrumbItems } = useBreadcrumb(__('Language'))
         :label="$t('Your language')"
         :disabled="isSavingLocale"
         :no-options-label-translation="true"
-        sorting="label"
+        sorting="value"
         :options="localeOptions"
       />
 
       <p class="mt-4 text-sm">
         {{ $t('Did you know?') }}
-        <CommonLink size="medium" target="_blank" :link="translation.link">
+        <CommonLink :link="translation.link" size="medium" open-in-new-tab>
           {{ $t('You can help translating Zammad.') }}
         </CommonLink>
       </p>

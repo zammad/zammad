@@ -1,10 +1,10 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import type { ImageViewerFile } from '#shared/composables/useImageViewer.ts'
 
 import type { Ref } from 'vue'
 
-const useHtmlInlineImages = (
+export const useHtmlInlineImages = (
   inlineImages: Ref<ImageViewerFile[]>,
   onClick: (int: number) => void,
 ) => {
@@ -12,9 +12,7 @@ const useHtmlInlineImages = (
     inlineImages.value.splice(0)
 
     element.querySelectorAll('img').forEach((image) => {
-      const mime = (image.alt || image.src)?.match(/\.(jpe?g)$/i)
-        ? 'image/jpeg'
-        : 'image/png'
+      const mime = (image.alt || image.src)?.match(/\.(jpe?g)$/i) ? 'image/jpeg' : 'image/png'
 
       const preview: ImageViewerFile = {
         name: image.alt,
@@ -23,6 +21,12 @@ const useHtmlInlineImages = (
       }
 
       image.classList.add('cursor-pointer')
+
+      if (image.style.width) {
+        image.style.maxWidth = image.style.width
+        image.style.width = '100%'
+      }
+
       const index = inlineImages.value.push(preview) - 1
       image.onclick = (event) => {
         event.preventDefault()
@@ -36,5 +40,3 @@ const useHtmlInlineImages = (
     populateInlineImages,
   }
 }
-
-export { useHtmlInlineImages }

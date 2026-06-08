@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { ref } from 'vue'
@@ -23,10 +23,10 @@ useArticleSeen(articleElement, emit)
   <div ref="articleElement" class="flex justify-center">
     <div
       :class="{ 'mt-6': gap === 'big', 'mt-2': gap === 'small' }"
-      class="border-yellow bg-yellow-highlight text-yellow flex flex-col items-center rounded-3xl border p-4"
+      class="flex flex-col items-center rounded-3xl border border-yellow bg-yellow-highlight p-4 text-yellow"
     >
       <div
-        class="bg-yellow absolute flex h-7 w-7 -translate-y-7 items-center justify-center rounded-full text-black"
+        class="absolute flex h-7 w-7 -translate-y-7 items-center justify-center rounded-full bg-yellow text-black"
       >
         <CommonIcon name="warning" size="small" />
       </div>

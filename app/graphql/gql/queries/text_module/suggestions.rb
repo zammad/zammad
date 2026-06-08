@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Queries
   class TextModule::Suggestions < BaseQuery
@@ -8,16 +8,14 @@ module Gql::Queries
     argument :query,    String, description: 'Query from the autocomplete field'
     argument :limit,    Integer, required: false, description: 'Limit for the amount of entries'
     argument :group_id, GraphQL::Types::ID, loads: Gql::Types::GroupType, required: false, description: 'Group to filter by'
-    argument :ticket_id, GraphQL::Types::ID, loads: Gql::Types::TicketType, required: false, description: 'Optional ticket this is going to be inserted into'
+    argument :ticket_id, GraphQL::Types::ID, required: false, description: 'Optional ticket this is going to be inserted into'
 
     type [Gql::Types::TextModuleType], null: false
 
-    def self.authorize(_obj, ctx)
-      ctx.current_user.permissions?('ticket.agent')
-    end
+    requires_permission 'ticket.agent'
 
-    def resolve(query:, group: nil, ticket: nil, template_render_context: nil, limit: 10)
-      permission = ticket.present? ? :read : :create
+    def resolve(query:, group: nil, ticket_id: nil, template_render_context: nil, limit: 10)
+      permission = ticket_id.present? ? :read : :create
 
       scope = TextModulePolicy::Scope
         .new(context.current_user, ::TextModule)
@@ -27,7 +25,7 @@ module Gql::Queries
         scope = scope.available_in_groups(group)
       end
 
-      scope.where('((text_modules.name LIKE :query) OR (text_modules.keywords LIKE :query))', query: "%#{SqlHelper.quote_like(query.strip)}%")
+      scope.where('((text_modules.name ILIKE :query) OR (text_modules.keywords ILIKE :query))', query: "%#{SqlHelper.quote_like(query.strip)}%")
         .limit(limit || 10)
         .reorder(:name)
     end

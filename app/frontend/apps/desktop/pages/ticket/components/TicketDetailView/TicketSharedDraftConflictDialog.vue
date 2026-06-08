@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { NotificationTypes } from '#shared/components/CommonNotifications/types.ts'
@@ -28,12 +28,9 @@ const close = () => {
   closeDialog(dialogName)
 }
 
-const draftUpdateMutation = new MutationHandler(
-  useTicketSharedDraftZoomUpdateMutation(),
-  {
-    errorNotificationMessage: __('Draft could not be updated.'),
-  },
-)
+const draftUpdateMutation = new MutationHandler(useTicketSharedDraftZoomUpdateMutation(), {
+  errorNotificationMessage: __('Draft could not be updated.'),
+})
 
 const updateDraft = () => {
   draftUpdateMutation
@@ -61,26 +58,19 @@ const showDraft = () => {
 <template>
   <CommonDialog
     :name="dialogName"
-    header-title="Save Draft"
-    content="There is an existing draft. Do you want to overwrite it?"
+    :header-title="__('Save draft')"
+    :content="__('There is an existing draft. Do you want to overwrite it?')"
   >
     <template #footer>
-      <div
-        class="flex items-center gap-2 ltr:justify-end rtl:flex-row-reverse rtl:justify-start"
-      >
+      <div class="flex items-center gap-2 ltr:justify-end rtl:flex-row-reverse rtl:justify-start">
         <CommonButton size="large" variant="secondary" @click="close()">
-          {{ $t('Cancel & Go Back') }}
+          {{ $t('Cancel & go back') }}
         </CommonButton>
-        <CommonButton
-          size="large"
-          prefix-icon="file-text"
-          variant="tertiary"
-          @click="showDraft()"
-        >
-          {{ $t('Show Draft') }}
+        <CommonButton size="large" prefix-icon="file-text" variant="tertiary" @click="showDraft()">
+          {{ $t('Show draft') }}
         </CommonButton>
         <CommonButton size="large" variant="danger" @click="updateDraft()">
-          {{ $t('Overwrite Draft') }}
+          {{ $t('Overwrite draft') }}
         </CommonButton>
       </div>
     </template>

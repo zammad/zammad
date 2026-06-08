@@ -1,0 +1,6 @@
+{
+  "input": "Zammad-Integration eingerichtet und Ticketvorlagen auf das Support-Postfach abgebildet\n<p>API-Daten gesendet > Herr Meier muss mit dem Admin-Team abklären, wie die Authentifizierung für die gemeinsamen Gruppenpostfächer funktioniert und wird sich bei uns zurückmelden</p>",
+  "expected": {
+    "language": "de"
+  }
+}

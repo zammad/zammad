@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Validations::ObjectManager::AttributeValidator < ActiveModel::Validator
   include ::Mixin::HasBackends
@@ -25,7 +25,7 @@ class Validations::ObjectManager::AttributeValidator < ActiveModel::Validator
 
     return false if ApplicationHandleInfo.context_without_custom_attributes?
 
-    ApplicationHandleInfo.current == 'application_server'
+    %w[application_server ai_agent_execution].include?(ApplicationHandleInfo.current)
   end
 
   def attributes_unchanged?

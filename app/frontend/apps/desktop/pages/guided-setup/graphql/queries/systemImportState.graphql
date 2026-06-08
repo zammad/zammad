@@ -6,4 +6,3 @@ query systemImportState {
     finishedAt
   }
 }
-

@@ -1,17 +1,15 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { watch, computed } from 'vue'
 
 import { useOrganizationDetail } from '#shared/entities/organization/composables/useOrganizationDetail.ts'
 import { useUserQuery } from '#shared/entities/user/graphql/queries/user.api.ts'
+import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
 
 import { usePersistentStates } from '#desktop/pages/ticket/composables/usePersistentStates.ts'
-import type {
-  TicketSidebarProps,
-  TicketSidebarEmits,
-} from '#desktop/pages/ticket/types/sidebar.ts'
+import type { TicketSidebarProps, TicketSidebarEmits } from '#desktop/pages/ticket/types/sidebar.ts'
 
 import TicketSidebarWrapper from '../TicketSidebarWrapper.vue'
 
@@ -30,8 +28,8 @@ const customerId = computed(() => Number(props.context.formValues.customer_id))
 const userQuery = new QueryHandler(
   useUserQuery(
     () => ({
-      userInternalId: customerId.value,
-      secondaryOrganizationsCount: 3,
+      userId: convertToGraphQLId('User', customerId.value),
+      secondaryOrganizationsCount: 5,
     }),
     () => ({ enabled: Boolean(customerId.value), fetchPolicy: 'cache-first' }),
   ),
@@ -57,12 +55,12 @@ watch(
 
 const organizationInternalId = computed(() => {
   if (props.context.formValues?.organization_id)
-    return Number(props.context.formValues?.organization_id)
+    return convertToGraphQLId('Organization', Number(props.context.formValues?.organization_id))
 
-  return customer.value?.organization?.internalId
+  return customer.value?.organization?.id
 })
 
-const { organization, organizationMembers, objectAttributes, loadAllMembers } =
+const { organization, organizationMembers, objectAttributes, fetchMoreMembers } =
   useOrganizationDetail(organizationInternalId)
 </script>
 
@@ -81,7 +79,7 @@ const { organization, organizationMembers, objectAttributes, loadAllMembers } =
       :organization="organization"
       :organization-members="organizationMembers"
       :object-attributes="objectAttributes"
-      @load-more-members="loadAllMembers"
+      @load-more-members="fetchMoreMembers"
     />
   </TicketSidebarWrapper>
 </template>

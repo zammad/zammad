@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { renderComponent } from '#tests/support/components/index.ts'
 
@@ -34,20 +34,14 @@ describe('tickets zoom header', () => {
     })
 
     expect(view.getByIconName('home'), 'has home icon').toBeInTheDocument()
-    expect(
-      view.getByText(`#${ticket.number}`),
-      'has ticket id',
-    ).toBeInTheDocument()
-    expect(
-      view.getByText('created 3 days ago'),
-      'has time ticket was created',
-    ).toBeInTheDocument()
+    expect(view.getByText(`#${ticket.number}`), 'has ticket id').toBeInTheDocument()
+    expect(view.getByText('created 3 days ago'), 'has time ticket was created').toBeInTheDocument()
   })
 
   test('has avatars and opens viewers dialog', async () => {
     const view = renderComponent(TicketDetailViewHeader, {
       props: {
-        ticket,
+        ticket: { ...ticket, aiAgentRunning: false },
         refetchingTicket: false,
         liveUserList: [
           {
@@ -99,11 +93,24 @@ describe('tickets zoom header', () => {
     expect(counter, 'has a counter').toBeInTheDocument()
     expect(counter).toHaveTextContent('+2')
 
-    await view.events.click(
-      view.getByRole('button', { name: 'Show ticket viewers' }),
-    )
+    await view.events.click(view.getByRole('button', { name: 'Show ticket viewers' }))
 
     expect(view.getByText('Viewing ticket')).toBeInTheDocument()
     expect(view.getByText('Opened in tabs')).toBeInTheDocument()
+  })
+
+  describe('AI Agent', () => {
+    it('displays AI agent running', () => {
+      const view = renderComponent(TicketDetailViewHeader, {
+        props: {
+          ticket: { ...ticket, aiAgentRunning: true },
+          refetchingTicket: false,
+          liveUserList: [],
+        },
+        router: true,
+      })
+
+      expect(view.getByLabelText('AI agent')).toBeInTheDocument()
+    })
   })
 })

@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { createPinia, setActivePinia } from 'pinia'
 
@@ -25,11 +25,10 @@ describe('permissionGuard', () => {
       path: '/test',
       meta: {},
     } as RouteLocationNormalized
-    const next = vi.fn()
 
-    permissionGuard(to, from, next)
+    const result = permissionGuard(to, from, vi.fn())
 
-    expect(next).toHaveBeenCalledWith()
+    expect(result).toEqual(true)
   })
 
   it('should skip guard for no required permission', () => {
@@ -41,13 +40,12 @@ describe('permissionGuard', () => {
         requiredPermission: null,
       },
     } as RouteLocationNormalized
-    const next = vi.fn()
 
     useAuthenticationStore().authenticated = true
 
-    permissionGuard(to, from, next)
+    const result = permissionGuard(to, from, vi.fn())
 
-    expect(next).toHaveBeenCalledWith()
+    expect(result).toEqual(true)
   })
 
   it('should forbid access for user without required permission (redirect error page)', () => {
@@ -60,7 +58,6 @@ describe('permissionGuard', () => {
         requiredPermission: ['ticket.agent'],
       },
     } as RouteLocationNormalized
-    const next = vi.fn()
 
     useAuthenticationStore().authenticated = true
     useSessionStore().user = {
@@ -72,9 +69,9 @@ describe('permissionGuard', () => {
       objectAttributeValues: [],
     }
 
-    permissionGuard(to, from, next)
+    const result = permissionGuard(to, from, vi.fn())
 
-    expect(next).toHaveBeenCalledWith({
+    expect(result).toEqual({
       name: 'Error',
       query: {
         redirect: '1',
@@ -100,7 +97,6 @@ describe('permissionGuard', () => {
         requiredPermission: ['ticket.agent'],
       },
     } as RouteLocationNormalized
-    const next = vi.fn()
 
     useAuthenticationStore().authenticated = true
     useSessionStore().user = {
@@ -112,8 +108,8 @@ describe('permissionGuard', () => {
       objectAttributeValues: [],
     }
 
-    permissionGuard(to, from, next)
+    const result = permissionGuard(to, from, vi.fn())
 
-    expect(next).toHaveBeenCalledWith()
+    expect(result).toEqual(true)
   })
 })

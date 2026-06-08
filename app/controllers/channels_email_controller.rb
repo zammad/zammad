@@ -1,7 +1,12 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class ChannelsEmailController < ApplicationController
   prepend_before_action :authenticate_and_authorize!
+
+  SENSITIVE_FIELDS = %i[
+    options.password
+    settings.options.password
+  ].freeze
 
   def index
     system_online_service = Setting.get('system_online_service')
@@ -71,8 +76,14 @@ class ChannelsEmailController < ApplicationController
     # verify access
     return if params[:channel_id] && !check_access(params[:channel_id])
 
+    channel          = Channel.find_by(id: params[:channel_id])
+    original_options = channel&.options&.dig(:outbound)
+    unmasked_params  = unmask_sensitive_params(params.permit!.to_h, original_options)
+
     # connection test
-    render json: EmailHelper::Probe.outbound(params, params[:email])
+    result = EmailHelper::Probe.outbound(unmasked_params, params[:email])
+
+    render json: mask_sensitive_values(result, nil)
   end
 
   def inbound
@@ -80,37 +91,46 @@ class ChannelsEmailController < ApplicationController
     # verify access
     return if params[:channel_id] && !check_access(params[:channel_id])
 
+    channel          = Channel.find_by(id: params[:channel_id])
+    original_options = channel&.options&.dig(:inbound)
+    unmasked_params  = unmask_sensitive_params(params.permit!.to_h, original_options)
+
     # connection test
-    result = EmailHelper::Probe.inbound(params.permit!.to_h)
+    result = EmailHelper::Probe.inbound(unmasked_params)
 
     # check account duplicate
-    return if account_duplicate?({ setting: { inbound: params } }, params[:channel_id])
+    return if account_duplicate?({ setting: { inbound: unmasked_params } }, params[:channel_id])
 
-    render json: result
+    render json: mask_sensitive_values(result, nil)
   end
 
   def verify
     params.permit!
-    email = params[:email] || params[:meta][:email]
-    email = email.downcase
+    email      = (params[:email] || params[:meta][:email]).downcase
     channel_id = params[:channel_id]
 
     # verify access
     return if channel_id && !check_access(channel_id)
+
+    channel                   = Channel.find_by(id: channel_id)
+    original_options_inbound  = channel&.options&.dig(:inbound)
+    original_options_outbound = channel&.options&.dig(:outbound)
+    unmasked_params_inbound   = unmask_sensitive_params(params[:inbound].to_h, original_options_inbound)
+    unmasked_params_outbound  = unmask_sensitive_params(params[:outbound].to_h, original_options_outbound)
 
     # check account duplicate
     return if account_duplicate?({ setting: { inbound: params[:inbound] } }, channel_id)
 
     # check delivery for 30 sec.
     result = EmailHelper::Verify.email(
-      outbound: params[:outbound].to_h,
-      inbound:  params[:inbound].to_h,
+      outbound: unmasked_params_outbound,
+      inbound:  unmasked_params_inbound,
       sender:   email,
       subject:  params[:subject],
     )
 
     if result[:result] != 'ok'
-      render json: result
+      render json: mask_sensitive_values(result, nil)
       return
     end
 
@@ -124,8 +144,8 @@ class ChannelsEmailController < ApplicationController
       channel = Channel.find(channel_id)
       channel.update!(
         options:      {
-          inbound:  params[:inbound].to_h,
-          outbound: params[:outbound].to_h,
+          inbound:  unmasked_params_inbound,
+          outbound: unmasked_params_outbound,
         },
         group_id:     params[:group_id],
         last_log_in:  nil,
@@ -136,20 +156,20 @@ class ChannelsEmailController < ApplicationController
 
       handle_group_email_address(channel)
 
-      render json: result
+      render json: mask_sensitive_values(result, nil)
       return
     end
 
-    ::Service::Channel::Email::Create.new.execute(
-      inbound_configuration:  params[:inbound].to_h,
-      outbound_configuration: params[:outbound].to_h,
+    ::Service::Channel::Email::Create.execute(
+      inbound_configuration:  unmasked_params_inbound,
+      outbound_configuration: unmasked_params_outbound,
       group:                  ::Group.find(params[:group_id]),
       email_address:          email,
       email_realname:         params[:meta][:realname],
       group_email_address:    handle_group_email_address?,
     )
 
-    render json: result
+    render json: mask_sensitive_values(result, nil)
   end
 
   def enable
@@ -192,19 +212,26 @@ class ChannelsEmailController < ApplicationController
 
     email = Setting.get('notification_sender')
 
+    channel = Channel
+      .where(area: 'Email::Notification')
+      .find { |elem| elem.options.dig(:outbound, :adapter).casecmp?(adapter) }
+
+    original_options = channel&.options&.dig(:outbound)
+    unmasked_params  = unmask_sensitive_params(params.permit!.to_h, original_options)
+
     # connection test
-    result = EmailHelper::Probe.outbound(params, email)
+    result = EmailHelper::Probe.outbound(unmasked_params, email)
 
     # save settings
     if result[:result] == 'ok'
       Service::System::SetEmailNotificationConfiguration
-        .new(
+        .execute(
           adapter:,
-          new_configuration: params[:options].to_h
-        ).execute
+          new_configuration: unmasked_params[:options].to_h
+        )
     end
 
-    render json: result
+    render json: mask_sensitive_values(result, nil)
   end
 
   private
@@ -254,11 +281,11 @@ class ChannelsEmailController < ApplicationController
       email_address = EmailAddress.find(params[:group_email_address_id])
     end
 
-    Service::Channel::Email::UpdateDestinationGroupEmail.new(
+    Service::Channel::Email::UpdateDestinationGroupEmail.execute(
       group:         Group.find(params[:group_id]),
       channel:       channel,
       email_address:,
-    ).execute
+    )
   end
 
   def handle_group_email_address?

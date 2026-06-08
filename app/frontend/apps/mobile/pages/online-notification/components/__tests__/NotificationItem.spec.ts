@@ -1,15 +1,11 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { generateObjectData } from '#tests/graphql/builders/index.ts'
 import { renderComponent } from '#tests/support/components/index.ts'
 import { mockGraphQLApi } from '#tests/support/mock-graphql-api.ts'
 
 import { OnlineNotificationDeleteDocument } from '#shared/entities/online-notification/graphql/mutations/delete.api.ts'
-import type {
-  OnlineNotification,
-  Scalars,
-  Ticket,
-} from '#shared/graphql/types.ts'
+import type { OnlineNotification, Scalars, Ticket } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
 import NotificationItem from '../NotificationItem.vue'
@@ -25,9 +21,7 @@ vi.mock('#shared/server/apollo/client.ts', () => ({
 
 const userId = convertToGraphQLId('User', 100)
 
-const renderNotificationItem = (
-  activityProps: Partial<OnlineNotification> = {},
-) => {
+const renderNotificationItem = (activityProps: Partial<OnlineNotification> = {}) => {
   mockGraphQLApi(OnlineNotificationDeleteDocument).willResolve({
     onlineNotificationDelete: {
       errors: null,
@@ -72,9 +66,7 @@ describe('NotificationItem.vue', () => {
   it('check activity message output', () => {
     const view = renderNotificationItem()
 
-    expect(view.container).toHaveTextContent(
-      'John Doe updated ticket Ticket Title',
-    )
+    expect(view.container).toHaveTextContent('John Doe updated ticket Ticket Title')
   })
 
   it('unseen identifier visible', () => {
@@ -101,13 +93,9 @@ describe('NotificationItem.vue', () => {
 
     expect(view.emitted().remove).toBeTruthy()
 
-    const emittedRemove = view.emitted().remove as Array<
-      Array<Scalars['ID']['output']>
-    >
+    const emittedRemove = view.emitted().remove as Array<Array<Scalars['ID']['output']>>
 
-    expect(emittedRemove[0][0]).toBe(
-      convertToGraphQLId('OnlineNotification', 1),
-    )
+    expect(emittedRemove[0][0]).toBe(convertToGraphQLId('OnlineNotification', 1))
   })
 
   it('should emit "seen" event on click for none linked notifications', async () => {
@@ -122,9 +110,7 @@ describe('NotificationItem.vue', () => {
 
     expect(view.emitted().seen).toBeTruthy()
 
-    const emittedSeen = view.emitted().seen as Array<
-      Array<Scalars['ID']['output']>
-    >
+    const emittedSeen = view.emitted().seen as Array<Array<Scalars['ID']['output']>>
     expect(emittedSeen[0][0]).toBe(convertToGraphQLId('OnlineNotification', 1))
   })
 })

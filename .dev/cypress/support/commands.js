@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import '@testing-library/cypress/add-commands'
 import 'cypress-real-events/support'
@@ -29,46 +29,59 @@ Cypress.Commands.add('mount', mount)
  *   pastePayload: {hello: 'yolo'},
  * });
  */
-Cypress.Commands.add(
-  'paste',
-  { prevSubject: true },
-  function onPaste(subject, pasteOptions) {
-    const { pastePayload = '', pasteType = 'text', files = [] } = pasteOptions
-    const data =
-      pasteType === 'application/json'
-        ? JSON.stringify(pastePayload)
-        : pastePayload
-    // https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer
-    const clipboardData = new DataTransfer()
-    clipboardData.setData(pasteType, data)
-    files.forEach((file) => {
-      clipboardData.items.add(file)
-    })
-    // https://developer.mozilla.org/en-US/docs/Web/API/Element/paste_event
-    const pasteEvent = new ClipboardEvent('paste', {
-      bubbles: true,
-      cancelable: true,
-      dataType: pasteType,
-      data,
-      clipboardData,
-    })
-    subject[0].dispatchEvent(pasteEvent)
+Cypress.Commands.add('paste', { prevSubject: true }, function onPaste(subject, pasteOptions) {
+  const { pastePayload = '', pasteType = 'text', files = [] } = pasteOptions
+  const data = pasteType === 'application/json' ? JSON.stringify(pastePayload) : pastePayload
+  // https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer
+  const clipboardData = new DataTransfer()
+  clipboardData.setData(pasteType, data)
+  files.forEach((file) => {
+    clipboardData.items.add(file)
+  })
+  // https://developer.mozilla.org/en-US/docs/Web/API/Element/paste_event
+  const pasteEvent = new ClipboardEvent('paste', {
+    bubbles: true,
+    cancelable: true,
+    dataType: pasteType,
+    data,
+    clipboardData,
+  })
+  subject[0].dispatchEvent(pasteEvent)
 
-    return subject
+  return subject
+})
+
+Cypress.Commands.add('selectText', { prevSubject: true }, (subject, direction, size) => {
+  return cy
+    .wrap(subject)
+    .realPress([
+      'Shift',
+      ...new Array(size).fill(direction === 'right' ? 'ArrowRight' : 'ArrowLeft'),
+    ])
+})
+
+// :TODO - remove this helper if we decide in the long run to not reintroduce the uniqueID extension from tiptap
+const normalizeHTML = (html) =>
+  html
+    // strip node ids from unique ids
+    .replaceAll(/\sdata-id="[^"]*"/g, '')
+
+Cypress.Commands.add(
+  'shouldContainNormalizedHtml',
+  { prevSubject: 'element' },
+  (subject, expected) => {
+    const actual = normalizeHTML(subject[0].innerHTML)
+    const wanted = normalizeHTML(expected)
+    expect(actual).to.contain(wanted)
   },
 )
 
 Cypress.Commands.add(
-  'selectText',
-  { prevSubject: true },
-  (subject, direction, size) => {
-    return cy
-      .wrap(subject)
-      .realPress([
-        'Shift',
-        ...new Array(size).fill(
-          direction === 'right' ? 'ArrowRight' : 'ArrowLeft',
-        ),
-      ])
+  'shouldHaveNormalizedHtml',
+  { prevSubject: 'element' },
+  (subject, expected) => {
+    const actual = normalizeHTML(subject[0].innerHTML)
+    const wanted = normalizeHTML(expected)
+    expect(actual).to.equal(wanted)
   },
 )

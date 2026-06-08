@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -38,6 +38,10 @@ RSpec.describe Escalation do
     article.ticket.update! state: Ticket::State.lookup(name: 'open')
 
     article.ticket
+  end
+
+  before do
+    travel_to '2025-07-30 12:00'
   end
 
   describe '#preferences' do
@@ -237,6 +241,56 @@ RSpec.describe Escalation do
     end
   end
 
+  describe '#calculate_forced' do
+    before do
+      sla_247
+      ticket.update!(state: Ticket::State.lookup(name: 'open'))
+    end
+
+    it 'calls assign_reset' do
+      allow(instance).to receive(:assign_reset)
+      instance.send(:calculate_forced)
+      expect(instance).to have_received(:assign_reset)
+    end
+
+    it 'calls enforce_if_needed' do
+      allow(instance).to receive(:enforce_if_needed)
+      instance.send(:calculate_forced)
+      expect(instance).to have_received(:enforce_if_needed)
+    end
+
+    it 'calls update_escalations' do
+      allow(instance).to receive(:update_escalations)
+      instance.send(:calculate_forced)
+      expect(instance).to have_received(:update_escalations)
+    end
+
+    it 'calls update_statistics' do
+      allow(instance).to receive(:update_statistics)
+      instance.send(:calculate_forced)
+      expect(instance).to have_received(:update_statistics)
+    end
+
+    it 'calls apply_preferences' do
+      allow(instance).to receive(:apply_preferences)
+      instance.send(:calculate_forced)
+      expect(instance).to have_received(:apply_preferences)
+    end
+
+    it 'calls methods in the correct order' do
+      call_order = []
+      allow(instance).to receive(:assign_reset) { call_order << :assign_reset }
+      allow(instance).to receive(:enforce_if_needed) { call_order << :enforce_if_needed }
+      allow(instance).to receive(:update_escalations) { call_order << :update_escalations }
+      allow(instance).to receive(:update_statistics) { call_order << :update_statistics }
+      allow(instance).to receive(:apply_preferences) { call_order << :apply_preferences }
+
+      instance.send(:calculate_forced)
+
+      expect(call_order).to eq(%i[assign_reset enforce_if_needed update_escalations update_statistics apply_preferences])
+    end
+  end
+
   describe '#update_escalations' do
     it 'sets escalation times' do
       instance = described_class.new open_ticket_with_history
@@ -287,6 +341,40 @@ RSpec.describe Escalation do
           .not_to change { ticket.reload.update_escalation_at }
       end
     end
+
+    context 'when ticket moves between SLAs with different update time configurations' do
+      let(:group_support) { create(:group) }
+      let(:group_sales) { create(:group) }
+      let(:sla_support) do
+        create(:sla,
+               calendar:            calendar,
+               first_response_time: 60,
+               update_time:         120,
+               solution_time:       240,
+               condition:           { 'ticket.group_id' => { 'operator' => 'is', 'value' => group_support.id } })
+      end
+      let(:sla_sales) do
+        create(:sla,
+               calendar:            calendar,
+               first_response_time: 60,
+               solution_time:       240,
+               condition:           { 'ticket.group_id' => { 'operator' => 'is', 'value' => group_sales.id } })
+      end
+
+      before do
+        sla_support
+        sla_sales
+        ticket.update!(group: group_support)
+        create(:ticket_article, :inbound_email, ticket: ticket)
+        ticket.reload
+      end
+
+      it 'clears update_escalation_at when moving from SLA with update_time to one without' do
+        ticket.update!(group: group_sales)
+
+        expect(ticket.reload.update_escalation_at).to be_nil
+      end
+    end
   end
 
   describe '#escalation_first_response' do
@@ -304,29 +392,6 @@ RSpec.describe Escalation do
       allow(instance_with_history).to receive(:escalation_disabled?).and_return(false)
       result = instance_with_history.send(:escalation_first_response)
       expect(result).to include(first_response_escalation_at: nil)
-    end
-  end
-
-  describe '#escalation_update_reset' do
-    it 'resets to nil when no sla#response_time and sla#update_time' do
-      sla_247
-      allow(instance_with_history).to receive(:escalation_disabled?).and_return(false)
-      result = instance_with_history.send(:escalation_update_reset)
-      expect(result).to include(update_escalation_at: nil)
-    end
-
-    it 'returns nil when no sla#response_time' do
-      sla_247_update
-      allow(instance_with_history).to receive(:escalation_disabled?).and_return(false)
-      result = instance_with_history.send(:escalation_update_reset)
-      expect(result).to be_nil
-    end
-
-    it 'returns nil when no sla#update_time' do
-      sla_247_response
-      allow(instance_with_history).to receive(:escalation_disabled?).and_return(false)
-      result = instance_with_history.send(:escalation_update_reset)
-      expect(result).to be_nil
     end
   end
 

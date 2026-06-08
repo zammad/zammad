@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 require 'models/concerns/can_perform_changes_examples'
@@ -69,6 +69,21 @@ RSpec.describe 'Ticket::PerformChanges', :aggregate_failures do
       {
         'ticket.state_id' => {
           'value' => Ticket::State.lookup(name: 'closed').id
+        }
+      }
+    end
+
+    it 'changes #state to specified value' do
+      expect { object.perform_changes(performable, 'trigger', object, User.first) }
+        .to change { object.reload.state.name }.to('closed')
+    end
+  end
+
+  context 'with "ticket.state" key in "perform" hash' do
+    let(:perform) do
+      {
+        'ticket.state' => {
+          'value' => 'closed'
         }
       }
     end
@@ -157,7 +172,7 @@ RSpec.describe 'Ticket::PerformChanges', :aggregate_failures do
     end
   end
 
-  context 'with tags in "perform" hash' do
+  context 'with tags in "perform" hash', performs_jobs: true do
     let(:user) { create(:agent, groups: [group]) }
 
     let(:perform) do
@@ -169,9 +184,28 @@ RSpec.describe 'Ticket::PerformChanges', :aggregate_failures do
     context 'with add' do
       let(:tag_operator) { 'add' }
 
+      before do
+        Transaction.execute do
+          object
+        end
+
+        perform_enqueued_jobs
+      end
+
       it 'adds the tags' do
         expect { object.perform_changes(performable, 'trigger', object, user.id) }
           .to change { object.reload.tag_list }.to(%w[tag1 tag2])
+      end
+
+      it 'schedules a search index update job' do
+        allow(SearchIndexBackend).to receive(:enabled?).and_return(true)
+
+        expect do
+          Transaction.execute do
+            object.perform_changes(performable, 'trigger')
+          end
+        end
+          .to have_enqueued_job(SearchIndexJob).with('Ticket', object.id)
       end
     end
 
@@ -179,12 +213,57 @@ RSpec.describe 'Ticket::PerformChanges', :aggregate_failures do
       let(:tag_operator) { 'remove' }
 
       before do
-        %w[tag1 tag2].each { |tag| object.tag_add(tag, 1) }
+        Transaction.execute do
+          object
+          %w[tag1 tag2].each { |tag| object.tag_add(tag, 1) }
+        end
+
+        perform_enqueued_jobs
       end
 
       it 'removes the tags' do
         expect { object.perform_changes(performable, 'trigger', object, user.id) }
           .to change { object.reload.tag_list }.to([])
+      end
+
+      it 'schedules a search index update job' do
+        allow(SearchIndexBackend).to receive(:enabled?).and_return(true)
+
+        expect do
+          Transaction.execute do
+            object.perform_changes(performable, 'trigger', object, user.id)
+          end
+        end
+          .to have_enqueued_job(SearchIndexJob).with('Ticket', object.id)
+      end
+    end
+
+    context 'with replace' do
+      let(:tag_operator) { 'replace' }
+
+      before do
+        Transaction.execute do
+          object
+          %w[tag0 tag1].each { |tag| object.tag_add(tag, 1) }
+        end
+
+        perform_enqueued_jobs
+      end
+
+      it 'replaces the tags' do
+        expect { object.perform_changes(performable, 'trigger', object, user.id) }
+          .to change { object.reload.tag_list }.to(%w[tag1 tag2])
+      end
+
+      it 'schedules a search index update job' do
+        allow(SearchIndexBackend).to receive(:enabled?).and_return(true)
+
+        expect do
+          Transaction.execute do
+            object.perform_changes(performable, 'trigger', object, user.id)
+          end
+        end
+          .to have_enqueued_job(SearchIndexJob).with('Ticket', object.id)
       end
     end
   end
@@ -323,7 +402,7 @@ RSpec.describe 'Ticket::PerformChanges', :aggregate_failures do
 
         expect(NotificationFactory::Mailer)
           .to have_received(:template)
-          .with(hash_including(objects: objects))
+          .with(hash_including(objects: hash_including(objects)))
           .at_least(:once)
 
         expect(NotificationFactory::Mailer)
@@ -584,6 +663,13 @@ RSpec.describe 'Ticket::PerformChanges', :aggregate_failures do
       }
     end
 
+    before do
+      allow(IPSocket)
+        .to receive(:getaddress)
+        .with('api.example.com')
+        .and_return('8.8.8.8')
+    end
+
     it 'schedules the webhooks notification job' do
       expect { object.perform_changes(trigger, 'trigger', context_data, 1) }.to have_enqueued_job(TriggerWebhookJob).with(
         trigger,
@@ -594,6 +680,38 @@ RSpec.describe 'Ticket::PerformChanges', :aggregate_failures do
         execution_type: 'trigger',
         event_type:     'info',
       )
+    end
+  end
+
+  context 'with a "ai.ai_agent" trigger', performs_jobs: true do
+    let(:ai_agent) { create(:ai_agent) }
+    let(:trigger) do
+      create(:trigger,
+             perform: {
+               'ai.ai_agent' => { 'ai_agent_id' => ai_agent.id }
+             })
+    end
+
+    let(:context_data) do
+      {
+        type:      'info',
+        execution: 'trigger',
+        changes:   { 'state_id' => %w[2 4] },
+        user_id:   1,
+      }
+    end
+
+    it 'schedules the webhooks notification job' do
+      expect { object.perform_changes(trigger, 'trigger', context_data, 1) }
+        .to have_enqueued_job(TriggerAIAgentJob).with(
+          ai_agent,
+          object,
+          nil,
+          changes:        { 'State' => %w[open closed] },
+          user_id:        1,
+          execution_type: 'trigger',
+          event_type:     'info',
+        )
     end
   end
 
@@ -612,6 +730,22 @@ RSpec.describe 'Ticket::PerformChanges', :aggregate_failures do
         body:     'Test body note',
         internal: true,
       )
+    end
+
+    context 'when note is added with current user variable' do
+      let(:perform) do
+        { 'article.note' => { 'subject' => 'Test subject note', 'internal' => 'true', 'body' => "Test body note from \#{user.firstname}" } }
+      end
+
+      it 'adds the note with the current user' do
+        object.perform_changes(performable, 'trigger', object, user.id)
+
+        expect(object.articles.reload.last).to have_attributes(
+          subject:  'Test subject note',
+          body:     "Test body note from #{user.firstname}",
+          internal: true,
+        )
+      end
     end
   end
 

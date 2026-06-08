@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { faker } from '@faker-js/faker'
 
@@ -18,10 +18,7 @@ describe('correctly mocks operations', () => {
       organizations.push(mock.organization)
       expect(mock).toHaveProperty('organization')
       expect(mock.organization).toHaveProperty('__typename', 'Organization')
-      expect(mock.organization).toHaveProperty(
-        'id',
-        convertToGraphQLId('Organization', 1),
-      )
+      expect(mock.organization).toHaveProperty('id', convertToGraphQLId('Organization', 1))
       // we don't have members by default because it might go into a loop
       expect(mock.organization.allMembers).toEqual({
         edges: [],
@@ -42,9 +39,7 @@ describe('correctly mocks operations', () => {
 
     it('generates a different organization in another test', () => {
       const mock = mockOperation(OrganizationDocument, {})
-      expect(mock.organization).toSatisfy(
-        (organization) => !organizations.includes(organization),
-      )
+      expect(mock.organization).toSatisfy((organization) => !organizations.includes(organization))
     })
   })
 
@@ -56,17 +51,17 @@ describe('correctly mocks operations', () => {
       expect(user.organization).toBe(organization)
       expect(organization.allMembers.totalCount).toBe(2)
       expect(organization.allMembers.edges[0].node).toBe(user)
-      expect(
-        organization.allMembers.edges[0].node.organization.allMembers,
-      ).toBe(organization.allMembers)
+      expect(organization.allMembers.edges[0].node.organization.allMembers).toBe(
+        organization.allMembers,
+      )
 
       const { user: user2 } = mockOperation(UserDocument, {})
       expect(user2.organization).toBe(organization)
       expect(organization.allMembers.totalCount).toBe(3)
       expect(organization.allMembers.edges[1].node).toBe(user2)
-      expect(
-        organization.allMembers.edges[1].node.organization.allMembers,
-      ).toBe(organization.allMembers)
+      expect(organization.allMembers.edges[1].node.organization.allMembers).toBe(
+        organization.allMembers,
+      )
     })
   })
 

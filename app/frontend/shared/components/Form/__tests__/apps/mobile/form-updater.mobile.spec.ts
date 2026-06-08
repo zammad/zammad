@@ -1,12 +1,9 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { waitFor } from '@testing-library/vue'
 import { cloneDeep } from 'lodash-es'
 
-import {
-  getByIconName,
-  queryByIconName,
-} from '#tests/support/components/iconQueries.ts'
+import { getByIconName, queryByIconName } from '#tests/support/components/iconQueries.ts'
 import { renderComponent } from '#tests/support/components/index.ts'
 import type {
   ExtendedMountingOptions,
@@ -58,15 +55,14 @@ const mergeFrontendObjectAttributes = (
     localAdditionalObjectAttributes.attributes,
   )
 
-  const additionalObjectAttriutesScreenLookup =
-    localAdditionalObjectAttributes.screens.reduce(
-      (screenLookup: Record<string, string[]>, screenItem) => {
-        screenLookup[screenItem.name] = screenItem.attributes
+  const additionalObjectAttriutesScreenLookup = localAdditionalObjectAttributes.screens.reduce(
+    (screenLookup: Record<string, string[]>, screenItem) => {
+      screenLookup[screenItem.name] = screenItem.attributes
 
-        return screenLookup
-      },
-      {},
-    )
+      return screenLookup
+    },
+    {},
+  )
   const screens: ObjectManagerScreenAttributes[] = []
 
   localMainObjectAttributes.screens.forEach((screenItem) => {
@@ -87,11 +83,7 @@ const getOuterFieldElement = (wrapper: ExtendedRenderResult, label: string) => {
   return wrapper.getByLabelText(label).closest('.formkit-outer')
 }
 
-const checkFieldHidden = (
-  wrapper: ExtendedRenderResult,
-  label: string,
-  hidden: boolean,
-) => {
+const checkFieldHidden = (wrapper: ExtendedRenderResult, label: string, hidden: boolean) => {
   const outer = getOuterFieldElement(wrapper, label)
 
   if (hidden) {
@@ -101,11 +93,7 @@ const checkFieldHidden = (
   }
 }
 
-const checkFieldRequired = (
-  wrapper: ExtendedRenderResult,
-  label: string,
-  required: boolean,
-) => {
+const checkFieldRequired = (wrapper: ExtendedRenderResult, label: string, required: boolean) => {
   const outer = getOuterFieldElement(wrapper, label)
 
   if (required) {
@@ -115,11 +103,7 @@ const checkFieldRequired = (
   }
 }
 
-const checkFieldDirty = (
-  wrapper: ExtendedRenderResult,
-  label: string,
-  dirty: boolean,
-) => {
+const checkFieldDirty = (wrapper: ExtendedRenderResult, label: string, dirty: boolean) => {
   const outer = getOuterFieldElement(wrapper, label)
 
   if (dirty) {
@@ -129,11 +113,7 @@ const checkFieldDirty = (
   }
 }
 
-const checkFieldDisabled = (
-  wrapper: ExtendedRenderResult,
-  label: string,
-  disabled: boolean,
-) => {
+const checkFieldDisabled = (wrapper: ExtendedRenderResult, label: string, disabled: boolean) => {
   const outer = getOuterFieldElement(wrapper, label)
 
   if (disabled) {
@@ -157,19 +137,11 @@ const checkDisplayValue = (
   }
 }
 
-const checkInputValue = (
-  wrapper: ExtendedRenderResult,
-  label: string,
-  value: string | number,
-) => {
+const checkInputValue = (wrapper: ExtendedRenderResult, label: string, value: string | number) => {
   expect(wrapper.getByLabelText(label)).toHaveValue(value)
 }
 
-const checkSelected = (
-  wrapper: ExtendedRenderResult,
-  label: string,
-  selected: boolean,
-) => {
+const checkSelected = (wrapper: ExtendedRenderResult, label: string, selected: boolean) => {
   if (selected) {
     expect(wrapper.getByLabelText(label)).toBeChecked()
   } else {
@@ -200,11 +172,7 @@ const checkSelectOptions = async (
   }
 }
 
-const selectValue = async (
-  wrapper: ExtendedRenderResult,
-  label: string,
-  dsiaplyValue: string,
-) => {
+const selectValue = async (wrapper: ExtendedRenderResult, label: string, dsiaplyValue: string) => {
   await wrapper.events.click(wrapper.getByLabelText(label))
 
   wrapper.events.click(wrapper.getByText(dsiaplyValue))
@@ -225,13 +193,9 @@ const checkSelectClearable = (
   }
 
   if (clearable) {
-    expect(
-      getByIconName(wrapper.getByLabelText(label), 'close-small'),
-    ).toBeInTheDocument()
+    expect(getByIconName(wrapper.getByLabelText(label), 'close-small')).toBeInTheDocument()
   } else {
-    expect(
-      queryByIconName(wrapper.getByLabelText(label), 'close-small'),
-    ).not.toBeInTheDocument()
+    expect(queryByIconName(wrapper.getByLabelText(label), 'close-small')).not.toBeInTheDocument()
   }
 }
 
@@ -249,9 +213,8 @@ const renderForm = async (
     objectManagerFrontendAttributes,
   })
 
-  const mockFormUpdaterApi = mockGraphQLApi(FormUpdaterDocument).willResolve(
-    formUpdaterQueryResponse,
-  )
+  const mockFormUpdaterApi =
+    mockGraphQLApi(FormUpdaterDocument).willResolve(formUpdaterQueryResponse)
 
   const wrapper = renderComponent(Form, {
     ...wrapperParameters,
@@ -273,7 +236,7 @@ const renderForm = async (
         },
       ],
       formUpdaterId: EnumFormUpdaterId.FormUpdaterUpdaterTicketCreate,
-      ...(options.props || {}),
+      ...options.props,
     },
   })
 
@@ -286,7 +249,7 @@ const renderForm = async (
 }
 
 describe('Form.vue - Form Updater - Initialization', () => {
-  test('render initial form schema with select and treeselect fields', async () => {
+  it('render initial form schema with select and treeselect fields', async () => {
     const { wrapper } = await renderForm({
       formUpdater: {
         fields: {
@@ -385,22 +348,14 @@ describe('Form.vue - Form Updater - Initialization', () => {
 
     await checkSelectOptions(wrapper, 'Type', ['Problem', 'Request for Change'])
 
-    await checkSelectOptions(wrapper, 'Multi Select', [
-      'Key 1',
-      'Key 2',
-      'Key 3',
-      'Key 4',
-    ])
+    await checkSelectOptions(wrapper, 'Multi Select', ['Key 1', 'Key 2', 'Key 3', 'Key 4'])
 
-    await checkSelectOptions(wrapper, 'Treeselect', [
-      'Incident',
-      'Service request',
-    ])
+    await checkSelectOptions(wrapper, 'Treeselect', ['Incident', 'Service request'])
     checkDisplayValue(wrapper, 'Treeselect', 'Incident')
     checkSelectClearable(wrapper, 'Treeselect', true)
   })
 
-  test('render initial form schema with input, textarea, number, date, datetime', async () => {
+  it('render initial form schema with input, textarea, number, date, datetime', async () => {
     const { wrapper } = await renderForm({
       formUpdater: {
         fields: {
@@ -426,9 +381,7 @@ describe('Form.vue - Form Updater - Initialization', () => {
 
     expect(wrapper.queryByLabelText('Title')).not.toBeInTheDocument()
 
-    expect(wrapper.getByLabelText('Textarea')).toHaveValue(
-      'Example description',
-    )
+    expect(wrapper.getByLabelText('Textarea')).toHaveValue('Example description')
 
     expect(wrapper.getByLabelText('Number')).toHaveValue(10)
 
@@ -453,15 +406,12 @@ describe('Form.vue - Form Updater - reacts on form updater results', () => {
     shared: 'Shared',
   }
 
-  test('remove field after new form updater result comes in', async () => {
+  it('remove field after new form updater result comes in', async () => {
     const { wrapper, mockFormUpdaterApi } = await renderForm([
       {
         formUpdater: {
           fields: Object.keys(formFields).reduce(
-            (
-              showFields: Record<string, Partial<FormSchemaField>>,
-              fieldName,
-            ) => {
+            (showFields: Record<string, Partial<FormSchemaField>>, fieldName) => {
               showFields[fieldName] = {
                 show: true,
               }
@@ -475,10 +425,7 @@ describe('Form.vue - Form Updater - reacts on form updater results', () => {
       {
         formUpdater: {
           fields: Object.keys(formFields).reduce(
-            (
-              removeFields: Record<string, Partial<FormSchemaField>>,
-              fieldName,
-            ) => {
+            (removeFields: Record<string, Partial<FormSchemaField>>, fieldName) => {
               removeFields[fieldName] = {
                 show: false,
               }
@@ -504,16 +451,13 @@ describe('Form.vue - Form Updater - reacts on form updater results', () => {
     })
   })
 
-  test('show field after new form updater result comes in (from remove)', async () => {
+  it('show field after new form updater result comes in (from remove)', async () => {
     const { wrapper, mockFormUpdaterApi } = await renderForm([
       {
         formUpdater: {
           fields: {
             ...Object.keys(formFields).reduce(
-              (
-                removeFields: Record<string, Partial<FormSchemaField>>,
-                fieldName,
-              ) => {
+              (removeFields: Record<string, Partial<FormSchemaField>>, fieldName) => {
                 removeFields[fieldName] = {
                   show: false,
                 }
@@ -542,10 +486,7 @@ describe('Form.vue - Form Updater - reacts on form updater results', () => {
       {
         formUpdater: {
           fields: Object.keys(formFields).reduce(
-            (
-              showFields: Record<string, Partial<FormSchemaField>>,
-              fieldName,
-            ) => {
+            (showFields: Record<string, Partial<FormSchemaField>>, fieldName) => {
               showFields[fieldName] = {
                 show: true,
               }
@@ -571,7 +512,7 @@ describe('Form.vue - Form Updater - reacts on form updater results', () => {
     })
   })
 
-  test('show field again with a new initial value', async () => {
+  it('show field again with a new initial value', async () => {
     const { wrapper, mockFormUpdaterApi } = await renderForm([
       {
         formUpdater: {
@@ -607,16 +548,13 @@ describe('Form.vue - Form Updater - reacts on form updater results', () => {
     expect(exampleField).toHaveValue('A example text')
   })
 
-  test('show field after new form updater result comes in (from hidden)', async () => {
+  it('show field after new form updater result comes in (from hidden)', async () => {
     const { wrapper, mockFormUpdaterApi } = await renderForm([
       {
         formUpdater: {
           fields: {
             ...Object.keys(formFields).reduce(
-              (
-                hideFields: Record<string, Partial<FormSchemaField>>,
-                fieldName,
-              ) => {
+              (hideFields: Record<string, Partial<FormSchemaField>>, fieldName) => {
                 hideFields[fieldName] = {
                   show: true,
                   hidden: true,
@@ -646,10 +584,7 @@ describe('Form.vue - Form Updater - reacts on form updater results', () => {
       {
         formUpdater: {
           fields: Object.keys(formFields).reduce(
-            (
-              showFields: Record<string, Partial<FormSchemaField>>,
-              fieldName,
-            ) => {
+            (showFields: Record<string, Partial<FormSchemaField>>, fieldName) => {
               showFields[fieldName] = {
                 show: true,
                 hidden: false,
@@ -678,15 +613,12 @@ describe('Form.vue - Form Updater - reacts on form updater results', () => {
     })
   })
 
-  test('hide field after new form updater result comes in (from show)', async () => {
+  it('hide field after new form updater result comes in (from show)', async () => {
     const { wrapper, mockFormUpdaterApi } = await renderForm([
       {
         formUpdater: {
           fields: Object.keys(formFields).reduce(
-            (
-              showFields: Record<string, Partial<FormSchemaField>>,
-              fieldName,
-            ) => {
+            (showFields: Record<string, Partial<FormSchemaField>>, fieldName) => {
               showFields[fieldName] = {
                 show: true,
                 hidden: false,
@@ -701,10 +633,7 @@ describe('Form.vue - Form Updater - reacts on form updater results', () => {
       {
         formUpdater: {
           fields: Object.keys(formFields).reduce(
-            (
-              hideFields: Record<string, Partial<FormSchemaField>>,
-              fieldName,
-            ) => {
+            (hideFields: Record<string, Partial<FormSchemaField>>, fieldName) => {
               hideFields[fieldName] = {
                 show: true,
                 hidden: true,
@@ -733,15 +662,12 @@ describe('Form.vue - Form Updater - reacts on form updater results', () => {
     })
   })
 
-  test('require field after new form updater result comes in (from not required)', async () => {
+  it('require field after new form updater result comes in (from not required)', async () => {
     const { wrapper, mockFormUpdaterApi } = await renderForm([
       {
         formUpdater: {
           fields: Object.keys(formFields).reduce(
-            (
-              notRequiredFields: Record<string, Partial<FormSchemaField>>,
-              fieldName,
-            ) => {
+            (notRequiredFields: Record<string, Partial<FormSchemaField>>, fieldName) => {
               notRequiredFields[fieldName] = {
                 required: false,
               }
@@ -755,10 +681,7 @@ describe('Form.vue - Form Updater - reacts on form updater results', () => {
       {
         formUpdater: {
           fields: Object.keys(formFields).reduce(
-            (
-              requireFields: Record<string, Partial<FormSchemaField>>,
-              fieldName,
-            ) => {
+            (requireFields: Record<string, Partial<FormSchemaField>>, fieldName) => {
               requireFields[fieldName] = {
                 required: true,
               }
@@ -784,15 +707,12 @@ describe('Form.vue - Form Updater - reacts on form updater results', () => {
     })
   })
 
-  test('none require field after new form updater result comes in (from required)', async () => {
+  it('none require field after new form updater result comes in (from required)', async () => {
     const { wrapper, mockFormUpdaterApi } = await renderForm([
       {
         formUpdater: {
           fields: Object.keys(formFields).reduce(
-            (
-              requiredFields: Record<string, Partial<FormSchemaField>>,
-              fieldName,
-            ) => {
+            (requiredFields: Record<string, Partial<FormSchemaField>>, fieldName) => {
               requiredFields[fieldName] = {
                 required: true,
               }
@@ -806,10 +726,7 @@ describe('Form.vue - Form Updater - reacts on form updater results', () => {
       {
         formUpdater: {
           fields: Object.keys(formFields).reduce(
-            (
-              notRequired: Record<string, Partial<FormSchemaField>>,
-              fieldName,
-            ) => {
+            (notRequired: Record<string, Partial<FormSchemaField>>, fieldName) => {
               notRequired[fieldName] = {
                 required: false,
               }
@@ -835,15 +752,12 @@ describe('Form.vue - Form Updater - reacts on form updater results', () => {
     })
   })
 
-  test('disable (readonly) field after new form updater result comes in (from not disabled)', async () => {
+  it('disable (readonly) field after new form updater result comes in (from not disabled)', async () => {
     const { wrapper, mockFormUpdaterApi } = await renderForm([
       {
         formUpdater: {
           fields: Object.keys(formFields).reduce(
-            (
-              notDisabledField: Record<string, Partial<FormSchemaField>>,
-              fieldName,
-            ) => {
+            (notDisabledField: Record<string, Partial<FormSchemaField>>, fieldName) => {
               notDisabledField[fieldName] = {
                 disabled: false,
               }
@@ -857,10 +771,7 @@ describe('Form.vue - Form Updater - reacts on form updater results', () => {
       {
         formUpdater: {
           fields: Object.keys(formFields).reduce(
-            (
-              disableFields: Record<string, Partial<FormSchemaField>>,
-              fieldName,
-            ) => {
+            (disableFields: Record<string, Partial<FormSchemaField>>, fieldName) => {
               disableFields[fieldName] = {
                 disabled: true,
               }
@@ -886,16 +797,13 @@ describe('Form.vue - Form Updater - reacts on form updater results', () => {
     })
   })
 
-  test('not disabled (readonly) field after new form updater result comes in (from disabled)', async () => {
+  it('not disabled (readonly) field after new form updater result comes in (from disabled)', async () => {
     const { wrapper, mockFormUpdaterApi } = await renderForm([
       {
         formUpdater: {
           fields: {
             ...Object.keys(formFields).reduce(
-              (
-                disabledField: Record<string, Partial<FormSchemaField>>,
-                fieldName,
-              ) => {
+              (disabledField: Record<string, Partial<FormSchemaField>>, fieldName) => {
                 disabledField[fieldName] = {
                   disabled: true,
                 }
@@ -924,10 +832,7 @@ describe('Form.vue - Form Updater - reacts on form updater results', () => {
       {
         formUpdater: {
           fields: Object.keys(formFields).reduce(
-            (
-              notDisableFields: Record<string, Partial<FormSchemaField>>,
-              fieldName,
-            ) => {
+            (notDisableFields: Record<string, Partial<FormSchemaField>>, fieldName) => {
               notDisableFields[fieldName] = {
                 disabled: false,
               }
@@ -953,7 +858,7 @@ describe('Form.vue - Form Updater - reacts on form updater results', () => {
     })
   })
 
-  test('set field value after new form updater result comes in', async () => {
+  it('set field value after new form updater result comes in', async () => {
     const { wrapper, mockFormUpdaterApi } = await renderForm([
       {
         formUpdater: {
@@ -1016,17 +921,14 @@ describe('Form.vue - Form Updater - reacts on form updater results', () => {
     checkDisplayValue(wrapper, 'Type', 'Incident')
     checkDisplayValue(wrapper, 'Multi Select', ['Key 1', 'Key 3'])
     checkDisplayValue(wrapper, 'Treeselect', 'Service request')
-    checkDisplayValue(wrapper, 'Multi Treeselect', [
-      'Incident \u203A Hardware',
-      'Service request',
-    ])
+    checkDisplayValue(wrapper, 'Multi Treeselect', ['Incident \u203A Hardware', 'Service request'])
     checkInputValue(wrapper, 'Example', 'example')
     checkInputValue(wrapper, 'Textarea', 'some more text')
     checkInputValue(wrapper, 'Number', 100)
     checkSelected(wrapper, 'Shared', true)
   })
 
-  test('set field options after new form updater result comes in', async () => {
+  it('set field options after new form updater result comes in', async () => {
     const { wrapper, mockFormUpdaterApi } = await renderForm([
       {
         formUpdater: {
@@ -1069,17 +971,9 @@ describe('Form.vue - Form Updater - reacts on form updater results', () => {
       },
     ])
 
-    await checkSelectOptions(wrapper, 'Multi Select', [
-      'Key 1',
-      'Key 2',
-      'Key 3',
-      'Key 4',
-    ])
+    await checkSelectOptions(wrapper, 'Multi Select', ['Key 1', 'Key 2', 'Key 3', 'Key 4'])
 
-    await checkSelectOptions(wrapper, 'Multi Treeselect', [
-      'Incident',
-      'Service request',
-    ])
+    await checkSelectOptions(wrapper, 'Multi Treeselect', ['Incident', 'Service request'])
 
     await selectValue(wrapper, 'Type', 'Incident')
 
@@ -1092,7 +986,7 @@ describe('Form.vue - Form Updater - reacts on form updater results', () => {
 })
 
 describe('Form.vue - Form Updater - special situations', () => {
-  test('show field again with a new initial value', async () => {
+  it('show field again with a new initial value', async () => {
     const { wrapper, mockFormUpdaterApi } = await renderForm([
       {
         formUpdater: {
@@ -1128,7 +1022,7 @@ describe('Form.vue - Form Updater - special situations', () => {
     expect(exampleField).toHaveValue('A example text')
   })
 
-  test('change field value (should not trigger additional request)', async () => {
+  it('change field value (should not trigger additional request)', async () => {
     const { wrapper, mockFormUpdaterApi } = await renderForm([
       {
         formUpdater: {
@@ -1181,7 +1075,7 @@ describe('Form.vue - Form Updater - special situations', () => {
     checkDisplayValue(wrapper, 'State', 'open')
   })
 
-  test('preselect first value when no longer clearable (should not trigger additional request)', async () => {
+  it('preselect first value when no longer clearable (should not trigger additional request)', async () => {
     const { wrapper, mockFormUpdaterApi } = await renderForm([
       {
         formUpdater: {
@@ -1236,7 +1130,7 @@ describe('Form.vue - Form Updater - special situations', () => {
     checkDisplayValue(wrapper, 'State', 'new')
   })
 
-  test('delay submit and perform form updater request before', async () => {
+  it('delay submit and perform form updater request before', async () => {
     const submitCallbackSpy = vi.fn()
 
     const { wrapper, mockFormUpdaterApi } = await renderForm(
@@ -1298,8 +1192,8 @@ describe('Form.vue - Form Updater - special situations', () => {
         example: '',
         group_id: undefined,
         multiselect: [],
-        multitreeselect: undefined,
-        number: '',
+        multitreeselect: [],
+        number: undefined,
         shared: false,
         start_date: undefined,
         state_id: 1,
@@ -1309,7 +1203,7 @@ describe('Form.vue - Form Updater - special situations', () => {
     })
   })
 
-  test('usage together with changeFields prop (fixed required field from frontend side)', async () => {
+  it('usage together with changeFields prop (fixed required field from frontend side)', async () => {
     const { wrapper, mockFormUpdaterApi } = await renderForm(
       [
         {
@@ -1352,7 +1246,7 @@ describe('Form.vue - Form Updater - special situations', () => {
     checkFieldRequired(wrapper, 'Example', true)
   })
 
-  test('test dirty flag set for initialValues changes from form update', async () => {
+  it('test dirty flag set for initialValues changes from form update', async () => {
     const { wrapper } = await renderForm(
       {
         formUpdater: {
@@ -1376,7 +1270,7 @@ describe('Form.vue - Form Updater - special situations', () => {
     checkFieldDirty(wrapper, 'Example', true)
   })
 
-  test('test dirty flag unset for initialValues changes from form update', async () => {
+  it('test dirty flag unset for initialValues changes from form update', async () => {
     const { wrapper } = await renderForm(
       {
         formUpdater: {
@@ -1400,7 +1294,7 @@ describe('Form.vue - Form Updater - special situations', () => {
     checkFieldDirty(wrapper, 'Example', false)
   })
 
-  test('no endless loop (additional request) for non existing options for new field values', async () => {
+  it('no endless loop (additional request) for non existing options for new field values', async () => {
     const { wrapper, mockFormUpdaterApi } = await renderForm(
       [
         {
@@ -1453,7 +1347,7 @@ describe('Form.vue - Form Updater - special situations', () => {
     await checkDisplayValue(wrapper, 'Multi Select', ['Key 1'])
   })
 
-  test('no endless loop (additional request) for activated preselect mode in single select', async () => {
+  it('no endless loop (additional request) for activated preselect mode in single select', async () => {
     const { wrapper, mockFormUpdaterApi } = await renderForm(
       [
         {
@@ -1494,7 +1388,7 @@ describe('Form.vue - Form Updater - special situations', () => {
     await checkDisplayValue(wrapper, 'Type', 'Request for Change')
   })
 
-  test('add empty value for multiselect, when present in the current returned values', async () => {
+  it('add empty value for multiselect, when present in the current returned values', async () => {
     const { wrapper, mockFormUpdaterApi } = await renderForm(
       [
         {

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class MacroPolicy < ApplicationPolicy
   def show?
@@ -22,7 +22,7 @@ class MacroPolicy < ApplicationPolicy
   private
 
   def admin?
-    user.permissions?('admin.group')
+    user.permissions?('admin.macro')
   end
 
   def agent_accessible?

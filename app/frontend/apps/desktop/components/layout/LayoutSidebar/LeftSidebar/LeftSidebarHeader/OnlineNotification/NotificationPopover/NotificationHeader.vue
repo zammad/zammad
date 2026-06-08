@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
@@ -19,11 +19,7 @@ defineEmits<{
     <CommonLabel size="small" class="dark:text-neutral-500" tag="h3">
       {{ $t('Notifications') }}
     </CommonLabel>
-    <CommonButton
-      v-if="hasUnseenNotification"
-      prefix-icon="lightning"
-      @click="$emit('mark-all')"
-    >
+    <CommonButton v-if="hasUnseenNotification" prefix-icon="lightning" @click="$emit('mark-all')">
       {{ $t('mark all as read') }}
     </CommonButton>
   </header>

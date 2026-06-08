@@ -1,4 +1,6 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
+
+require 'yaml'
 
 if !Gem::Version.correct?(ARGV[0])
   puts 'Usage: update_files.rb new.semantic.version'
@@ -28,3 +30,26 @@ changelog = <<~CHANGELOG
 CHANGELOG
 
 Rails.root.join('CHANGELOG.md').write(changelog)
+
+# Update publiccode.yml
+publiccode_path = Rails.root.join('publiccode.yml')
+publiccode_content = File.read(publiccode_path)
+
+# Update version and release date
+publiccode_content.gsub!(%r{^softwareVersion: .*$}, "softwareVersion: #{new_version}")
+publiccode_content.gsub!(%r{^releaseDate: .*$}, "releaseDate: '#{Time.zone.today.strftime('%Y-%m-%d')}'")
+
+# Update available languages from locales.yml
+locales_config = YAML.load_file(Rails.root.join('config/locales.yml'))
+available_languages = locales_config
+  .select { |locale| locale['active'] }
+  .map { |locale| locale['alias'].presence || locale['locale'].split('-').first.downcase }
+  .uniq
+  .sort
+
+# Format languages as YAML list and replace in content
+languages_yaml = available_languages.map { |lang| "    - \"#{lang}\"" }.join("\n")
+publiccode_content.gsub!(%r{  availableLanguages:\n(?:    - .*\n)+}, "  availableLanguages:\n#{languages_yaml}\n")
+
+# Write back to file
+File.write(publiccode_path, publiccode_content)

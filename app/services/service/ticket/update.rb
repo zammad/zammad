@@ -1,15 +1,25 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-class Service::Ticket::Update < Service::BaseWithCurrentUser
+class Service::Ticket::Update < Service::Base
   include Service::Concerns::HandlesCoreWorkflow
 
-  def execute(ticket:, ticket_data:, skip_validators: nil, macro: nil)
-    Pundit.authorize current_user, ticket, :follow_up?
+  requires_current_user!
+
+  attr_reader :ticket, :ticket_data, :skip_validators, :macro
+
+  def initialize(ticket:, ticket_data:, skip_validators: nil, macro: nil)
+    @ticket = ticket
+    @ticket_data = ticket_data
+    @skip_validators = skip_validators
+    @macro = macro
+  end
+
+  def execute
     set_core_workflow_information(ticket_data, ::Ticket, 'edit')
 
     article_data = ticket_data.delete(:article)
 
-    validate!(current_user, ticket, ticket_data, article_data, skip_validators)
+    validate!(current_user, ticket, ticket_data, article_data, skip_validators, macro)
 
     save_ticket!(ticket, ticket_data, article_data, macro)
 
@@ -38,7 +48,7 @@ class Service::Ticket::Update < Service::BaseWithCurrentUser
 
   def save_ticket_attributes_and_apply_macro!(ticket, ticket_data, article_data, macro)
     ticket.assign_attributes(ticket_data)
-    ticket.perform_changes(macro, 'macro', ticket, current_user.id) do |object, _save_needed|
+    ticket.perform_changes(macro, 'macro', nil, current_user.id) do |object, _save_needed|
       object.save!
       create_article(ticket, article_data)
     end
@@ -50,7 +60,7 @@ class Service::Ticket::Update < Service::BaseWithCurrentUser
     preprocess_article_data! article_data
 
     Service::Ticket::Article::Create
-      .new(current_user: current_user)
+      .with_current_user(current_user)
       .execute(article_data: article_data, ticket: ticket)
   end
 
@@ -60,8 +70,10 @@ class Service::Ticket::Update < Service::BaseWithCurrentUser
     article_input[:from] = current_user.fullname
   end
 
-  def validate!(user, ticket, ticket_data, article_data, skip_validators)
-    Service::Ticket::Update::Validator.new(user:, ticket:, ticket_data:, article_data:, skip_validators:).validate!
+  def validate!(user, ticket, ticket_data, article_data, skip_validators, macro) # rubocop:disable Metrics/ParameterLists
+    Service::Ticket::Update::Validator
+      .with_current_user(user)
+      .execute(ticket:, ticket_data:, article_data:, skip_validators:, macro:)
   end
 
   def handle_shared_draft(ticket, ticket_data)
@@ -70,7 +82,7 @@ class Service::Ticket::Update < Service::BaseWithCurrentUser
     return if !shared_draft
 
     if shared_draft && shared_draft.ticket != ticket
-      raise Exceptions::UnprocessableEntity, __('Shared draft cannot be selected for this ticket.')
+      raise Exceptions::UnprocessableContent, __('Shared draft cannot be selected for this ticket.')
     end
 
     shared_draft.destroy!

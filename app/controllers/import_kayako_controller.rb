@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class ImportKayakoController < ApplicationController
   def url_check
@@ -53,8 +53,7 @@ class ImportKayakoController < ApplicationController
     Setting.set('import_mode', true)
     Setting.set('import_backend', 'kayako')
 
-    job = ImportJob.create(name: 'Import::Kayako')
-    AsyncImportJob.perform_later(job)
+    ImportJob.create!(name: 'Import::Kayako', start_after_creation: true)
 
     render json: {
       result: 'ok',
@@ -64,11 +63,19 @@ class ImportKayakoController < ApplicationController
   def import_status
     job = ImportJob.find_by(name: 'Import::Kayako')
 
-    if job.finished_at.present?
-      Setting.reload
+    if job.nil?
+      render json: { setup_done: true }
+      return
     end
 
-    model_show_render_item(job)
+    if job.finished_at.present?
+      Setting.reload
+
+      render json: { setup_done: true }
+      return
+    end
+
+    model_item_render(job)
   end
 
   private

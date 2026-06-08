@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -22,7 +22,7 @@ RSpec.describe 'Desktop > Personal Setting > Security', app: :desktop_view, auth
       fill_in 'New password', with: 'testTEST1234'
       fill_in 'Confirm new password', with: 'testTEST1234'
 
-      click_on 'Change Password'
+      click_on 'Change password'
 
       expect(page).to have_text('Password changed successfully')
     end
@@ -41,14 +41,14 @@ RSpec.describe 'Desktop > Personal Setting > Security', app: :desktop_view, auth
 
       it 'can set up and use the method' do
         go_to_personal_setting
-        click_on 'Two-factor Authentication'
+        click_on 'Two-factor authentication'
 
         click_on 'Set up security keys'
 
         fill_in 'Current password', with: 'test'
         click_on 'Next'
 
-        click_on 'Set Up'
+        find('#flyout-two-factor-flyout button', text: 'Set up').click
 
         fill_in 'Name for this security key', with: Faker::Lorem.unique.word
 
@@ -92,7 +92,7 @@ RSpec.describe 'Desktop > Personal Setting > Security', app: :desktop_view, auth
 
         it 'can set up and use the method' do
           go_to_personal_setting
-          click_on 'Two-factor Authentication'
+          click_on 'Two-factor authentication'
 
           click_on 'Set up authenticator app'
 
@@ -102,7 +102,7 @@ RSpec.describe 'Desktop > Personal Setting > Security', app: :desktop_view, auth
           find('canvas').click
           secret = find('#qr-code-secret-overlay > span').text
           fill_in('securityCode', with: ROTP::TOTP.new(secret).now)
-          click_on 'Set Up'
+          click_on 'Set up'
           expect(page).to have_text('Two-factor method has been configured successfully.')
 
           # Logout
@@ -121,7 +121,7 @@ RSpec.describe 'Desktop > Personal Setting > Security', app: :desktop_view, auth
           click_on 'Sign in'
 
           # 2FA Code
-          fill_in('Security Code', with: ROTP::TOTP.new(secret).now)
+          fill_in('Security code', with: ROTP::TOTP.new(secret).now)
           click_on('Sign in')
           expect(page).to have_current_route('/')
         end
@@ -135,19 +135,19 @@ RSpec.describe 'Desktop > Personal Setting > Security', app: :desktop_view, auth
         it 'can set up and use the method' do
           visit '/'
 
-          expect(page).to have_text('Set Up Two-factor Authentication')
+          expect(page).to have_text('Set up two-factor authentication')
           fill_in('Current password', with: 'test')
           click_on 'Next'
 
           expect(page).to have_text('You must protect your account with two-factor authentication.')
           expect(page).to have_text('Choose your preferred two-factor authentication method to set it up.')
 
-          click_on 'Authenticator App'
+          click_on 'Authenticator app'
 
           find('canvas').click
           secret = find('#qr-code-secret-overlay > span').text
           fill_in('securityCode', with: ROTP::TOTP.new(secret).now)
-          click_on 'Set Up'
+          click_on 'Set up'
           expect(page).to have_text('Two-factor method has been configured successfully.')
 
           # Logout
@@ -166,7 +166,7 @@ RSpec.describe 'Desktop > Personal Setting > Security', app: :desktop_view, auth
           click_on 'Sign in'
 
           # 2FA Code
-          fill_in('Security Code', with: ROTP::TOTP.new(secret).now)
+          fill_in('Security code', with: ROTP::TOTP.new(secret).now)
           click_on('Sign in')
           expect(page).to have_current_route('/')
         end
@@ -182,7 +182,7 @@ RSpec.describe 'Desktop > Personal Setting > Security', app: :desktop_view, auth
 
       it 'can use a pre-generated code to login' do
         go_to_personal_setting
-        click_on 'Two-factor Authentication'
+        click_on 'Two-factor authentication'
 
         click_on 'Set up authenticator app'
 
@@ -192,7 +192,7 @@ RSpec.describe 'Desktop > Personal Setting > Security', app: :desktop_view, auth
         find('canvas').click
         secret = find('#qr-code-secret-overlay > span').text
         fill_in('securityCode', with: ROTP::TOTP.new(secret).now)
-        click_on 'Set Up'
+        click_on 'Set up'
         expect(page).to have_text('Two-factor method has been configured successfully.')
 
         recovery_codes = find('div[data-test-id="recovery-codes"]').text.split("\n")
@@ -201,7 +201,7 @@ RSpec.describe 'Desktop > Personal Setting > Security', app: :desktop_view, auth
 
         click_on "OK, I've saved my recovery codes"
 
-        expect(page).to have_button('Regenerate Recovery Codes')
+        expect(page).to have_button('Regenerate recovery codes')
 
         # Logout
         find("[aria-label=\"Avatar (#{agent.fullname})\"]").click
@@ -215,7 +215,7 @@ RSpec.describe 'Desktop > Personal Setting > Security', app: :desktop_view, auth
         # Switch to recovery codes.
         click_on 'Try another method'
         click_on 'Or use one of your recovery codes.'
-        fill_in('Recovery Code', with: recovery_codes[0])
+        fill_in('Recovery code', with: recovery_codes[0])
         click_on('Sign in')
         expect(page).to have_current_route('/')
       end
@@ -227,9 +227,9 @@ RSpec.describe 'Desktop > Personal Setting > Security', app: :desktop_view, auth
 
     it 'user can create and use a token' do
       go_to_personal_setting
-      click_on 'Token Access'
+      click_on 'Token access'
 
-      click_on 'New Personal Access Token'
+      click_on 'New personal access token'
 
       fill_in 'Name', with: 'Test Token'
 

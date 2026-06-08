@@ -77,12 +77,10 @@ class App.UiElement.postmaster_match
             value:    'x-priority'
             name:     'X-Priority'
           },
-
           {
             value:    'organization'
             name:     'Organization'
           },
-
           {
             value:    'x-original-to'
             name:     'X-Original-To'
@@ -131,7 +129,42 @@ class App.UiElement.postmaster_match
             value:    'x-loop'
             name:     'X-Loop'
           },
+          {
+            value:    'Resent-Bcc'
+            name:     'Resent-Bcc'
+          },
+          {
+            value:    'Resent-Cc'
+            name:     'Resent-Cc'
+          },
+          {
+            value:    'Resent-Date'
+            name:     'Resent-Date'
+          },
+          {
+            value:    'Resent-From'
+            name:     'Resent-From'
+          },
+          {
+            value:    'Resent-Message-ID'
+            name:     'Resent-Message-ID'
+          },
+          {
+            value:    'Resent-To'
+            name:     'Resent-To'
+          },
+          {
+            value:    'x-auto-response-suppress'
+            name:     'X-Auto-Response-Suppress'
+          },
+          {
+            value:    'x-ms-exchange-inbox-rules-loop'
+            name:     'X-MS-Exchange-Inbox-Rules-Loop'
+          },
         ]
+
+    groups.expert.options = groups.expert.options.sort (a, b) ->
+      a.name.toLowerCase().localeCompare(b.name.toLowerCase())
 
     groups
 

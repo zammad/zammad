@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import type { ExtendedRenderResult } from '#tests/support/components/renderComponent.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
@@ -10,17 +10,11 @@ import {
   mockPublicLinksSubscription,
 } from '#shared/entities/public-links/__tests__/mocks/mockPublicLinks.ts'
 import { LoginDocument } from '#shared/graphql/mutations/login.api.ts'
-import {
-  EnumTwoFactorAuthenticationMethod,
-  type LoginMutation,
-} from '#shared/graphql/types.ts'
+import { EnumTwoFactorAuthenticationMethod, type LoginMutation } from '#shared/graphql/types.ts'
 
 const twoFactorAuthentication = () => ({
-  availableTwoFactorAuthenticationMethods: [
-    EnumTwoFactorAuthenticationMethod.AuthenticatorApp,
-  ],
-  defaultTwoFactorAuthenticationMethod:
-    EnumTwoFactorAuthenticationMethod.AuthenticatorApp,
+  availableTwoFactorAuthenticationMethods: [EnumTwoFactorAuthenticationMethod.AuthenticatorApp],
+  defaultTwoFactorAuthenticationMethod: EnumTwoFactorAuthenticationMethod.AuthenticatorApp,
   recoveryCodesAvailable: false,
 })
 
@@ -74,7 +68,7 @@ describe('two factor login flow', () => {
 
     await login(view)
 
-    expect(view.queryByLabelText('Security Code')).toBeInTheDocument()
+    expect(view.queryByLabelText('Security code')).toBeInTheDocument()
     expect(view.queryByTestId('loginThirdParty')).not.toBeInTheDocument()
   })
 
@@ -99,9 +93,7 @@ describe('two factor login flow', () => {
 
     expect(view.getByLabelText('Go back')).toBeInTheDocument()
 
-    await view.events.click(
-      view.getByRole('button', { name: 'Try another method' }),
-    )
+    await view.events.click(view.getByRole('button', { name: 'Try another method' }))
 
     expect(view.getByLabelText('Go back')).toBeInTheDocument()
 
@@ -109,7 +101,7 @@ describe('two factor login flow', () => {
       view.getByRole('button', { name: 'Or use one of your recovery codes.' }),
     )
 
-    expect(view.getByLabelText('Recovery Code')).toBeInTheDocument()
+    expect(view.getByLabelText('Recovery code')).toBeInTheDocument()
 
     await view.events.click(view.getByLabelText('Go back'))
 
@@ -119,11 +111,11 @@ describe('two factor login flow', () => {
 
     await view.events.click(view.getByLabelText('Go back'))
 
-    expect(view.queryByLabelText('Security Code')).toBeInTheDocument()
+    expect(view.queryByLabelText('Security code')).toBeInTheDocument()
 
     await view.events.click(view.getByLabelText('Go back'))
 
-    expect(view.queryByLabelText('Security Code')).not.toBeInTheDocument()
+    expect(view.queryByLabelText('Security code')).not.toBeInTheDocument()
     expect(view.getByPlaceholderText('Username / Email')).toBeInTheDocument()
     expect(view.queryByLabelText('Go back')).not.toBeInTheDocument()
   })
@@ -134,8 +126,7 @@ describe('two factor login flow', () => {
         availableTwoFactorAuthenticationMethods: [
           EnumTwoFactorAuthenticationMethod.AuthenticatorApp,
         ],
-        defaultTwoFactorAuthenticationMethod:
-          EnumTwoFactorAuthenticationMethod.AuthenticatorApp,
+        defaultTwoFactorAuthenticationMethod: EnumTwoFactorAuthenticationMethod.AuthenticatorApp,
         recoveryCodesAvailable: false,
         name: "can't see when only one method is available and recovery is disabled",
         available: false,
@@ -144,8 +135,7 @@ describe('two factor login flow', () => {
         availableTwoFactorAuthenticationMethods: [
           EnumTwoFactorAuthenticationMethod.AuthenticatorApp,
         ],
-        defaultTwoFactorAuthenticationMethod:
-          EnumTwoFactorAuthenticationMethod.AuthenticatorApp,
+        defaultTwoFactorAuthenticationMethod: EnumTwoFactorAuthenticationMethod.AuthenticatorApp,
         recoveryCodesAvailable: true,
         name: 'can see when only one method is available and recovery is enabled',
         available: true,
@@ -170,13 +160,9 @@ describe('two factor login flow', () => {
       await login(view)
 
       if (available) {
-        expect(
-          view.queryByRole('button', { name: 'Try another method' }),
-        ).toBeInTheDocument()
+        expect(view.queryByRole('button', { name: 'Try another method' })).toBeInTheDocument()
       } else {
-        expect(
-          view.queryByRole('button', { name: 'Try another method' }),
-        ).not.toBeInTheDocument()
+        expect(view.queryByRole('button', { name: 'Try another method' })).not.toBeInTheDocument()
       }
     })
   })

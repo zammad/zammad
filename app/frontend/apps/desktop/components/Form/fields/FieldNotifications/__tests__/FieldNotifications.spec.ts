@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { FormKit } from '@formkit/vue'
 import { waitFor } from '@testing-library/vue'
@@ -98,9 +98,7 @@ const wrapperParameters = {
   formField: true,
 }
 
-const renderNotificationsInput = async (
-  props: Record<string, unknown> = {},
-) => {
+const renderNotificationsInput = async (props: Record<string, unknown> = {}) => {
   const view = renderComponent(FormKit, {
     ...wrapperParameters,
     props: {
@@ -167,10 +165,7 @@ describe('Fields - Notifications - Input Checklist', () => {
       id: 'test_id',
     })
 
-    expect(view.getByLabelText('Notifications matrix')).toHaveAttribute(
-      'id',
-      'test_id',
-    )
+    expect(view.getByLabelText('Notifications matrix')).toHaveAttribute('id', 'test_id')
   })
 
   it('implements input name', async () => {
@@ -178,10 +173,7 @@ describe('Fields - Notifications - Input Checklist', () => {
       name: 'test_name',
     })
 
-    expect(view.getByLabelText('Notifications matrix')).toHaveAttribute(
-      'name',
-      'test_name',
-    )
+    expect(view.getByLabelText('Notifications matrix')).toHaveAttribute('name', 'test_name')
   })
 
   it('implements blur handler', async () => {
@@ -229,63 +221,39 @@ describe('Fields - Notifications - Input Checklist', () => {
     expect(view.getByLabelText('New ticket - Subscribed tickets')).toBeChecked()
     expect(view.getByLabelText('New ticket - All tickets')).not.toBeChecked()
 
-    expect(
-      view.getByLabelText('New ticket - Also notify via email'),
-    ).toBeChecked()
+    expect(view.getByLabelText('New ticket - Also notify via email')).toBeChecked()
 
     // Row 2
     expect(view.getByLabelText('Ticket update - My tickets')).toBeChecked()
     expect(view.getByLabelText('Ticket update - Not assigned')).toBeChecked()
 
-    expect(
-      view.getByLabelText('Ticket update - Subscribed tickets'),
-    ).toBeChecked()
+    expect(view.getByLabelText('Ticket update - Subscribed tickets')).toBeChecked()
 
     expect(view.getByLabelText('Ticket update - All tickets')).not.toBeChecked()
 
-    expect(
-      view.getByLabelText('Ticket update - Also notify via email'),
-    ).toBeChecked()
+    expect(view.getByLabelText('Ticket update - Also notify via email')).toBeChecked()
 
     // Row 3
-    expect(
-      view.getByLabelText('Ticket reminder reached - My tickets'),
-    ).toBeChecked()
+    expect(view.getByLabelText('Ticket reminder reached - My tickets')).toBeChecked()
 
-    expect(
-      view.getByLabelText('Ticket reminder reached - Not assigned'),
-    ).not.toBeChecked()
+    expect(view.getByLabelText('Ticket reminder reached - Not assigned')).not.toBeChecked()
 
-    expect(
-      view.getByLabelText('Ticket reminder reached - Subscribed tickets'),
-    ).not.toBeChecked()
+    expect(view.getByLabelText('Ticket reminder reached - Subscribed tickets')).not.toBeChecked()
 
-    expect(
-      view.getByLabelText('Ticket reminder reached - All tickets'),
-    ).not.toBeChecked()
+    expect(view.getByLabelText('Ticket reminder reached - All tickets')).not.toBeChecked()
 
-    expect(
-      view.getByLabelText('Ticket reminder reached - Also notify via email'),
-    ).toBeChecked()
+    expect(view.getByLabelText('Ticket reminder reached - Also notify via email')).toBeChecked()
 
     // Row 4
     expect(view.getByLabelText('Ticket escalation - My tickets')).toBeChecked()
 
-    expect(
-      view.getByLabelText('Ticket escalation - Not assigned'),
-    ).not.toBeChecked()
+    expect(view.getByLabelText('Ticket escalation - Not assigned')).not.toBeChecked()
 
-    expect(
-      view.getByLabelText('Ticket escalation - Subscribed tickets'),
-    ).not.toBeChecked()
+    expect(view.getByLabelText('Ticket escalation - Subscribed tickets')).not.toBeChecked()
 
-    expect(
-      view.getByLabelText('Ticket escalation - All tickets'),
-    ).not.toBeChecked()
+    expect(view.getByLabelText('Ticket escalation - All tickets')).not.toBeChecked()
 
-    expect(
-      view.getByLabelText('Ticket escalation - Also notify via email'),
-    ).toBeChecked()
+    expect(view.getByLabelText('Ticket escalation - Also notify via email')).toBeChecked()
   })
 
   it('implements disabled', async () => {
@@ -316,8 +284,6 @@ describe('Fields - Notifications - Input Checklist', () => {
   it('implements standardized classes', async () => {
     const view = await renderNotificationsInput()
 
-    expect(view.getByLabelText('Notifications matrix')).toHaveClass(
-      'formkit-input',
-    )
+    expect(view.getByLabelText('Notifications matrix')).toHaveClass('formkit-input')
   })
 })

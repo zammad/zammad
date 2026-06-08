@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { FormKit } from '@formkit/vue'
 import { within, waitFor } from '@testing-library/vue'
@@ -13,10 +13,7 @@ import type { AutocompleteSearchRecipientEntry } from '#shared/graphql/types.ts'
 
 import type { SetRequired } from 'type-fest'
 
-const testOptions: SetRequired<
-  Partial<AutocompleteSearchRecipientEntry>,
-  'label'
->[] = [
+const testOptions: SetRequired<Partial<AutocompleteSearchRecipientEntry>, 'label'>[] = [
   {
     value: 'baz@bar.tld',
     label: 'Baz',
@@ -66,18 +63,14 @@ describe('Form - Field - Recipient - Features', () => {
     })
 
     expect(
-      await wrapper.findByText(
-        'Start typing to search or enter an email address…',
-      ),
+      await wrapper.findByText('Start typing to search or enter an email address…'),
     ).toBeInTheDocument()
 
     await wrapper.events.type(filterElement, 'foo@bar.tld')
 
     await waitForAutocompleteSearchRecipientQueryCalls()
 
-    await wrapper.events.click(
-      await wrapper.findByText('add new email address'),
-    )
+    await wrapper.events.click(await wrapper.findByText('add new email address'))
 
     await waitFor(() => {
       expect(wrapper.emitted().inputRaw).toBeTruthy()
@@ -94,9 +87,7 @@ describe('Form - Field - Recipient - Features', () => {
 
     const listitem = within(wrapper.getByRole('listitem'))
 
-    await wrapper.events.click(
-      listitem.getByRole('button', { name: 'Unselect Option' }),
-    )
+    await wrapper.events.click(listitem.getByRole('button', { name: 'Unselect option' }))
 
     expect(emittedInput[1][0]).toEqual([])
   })
@@ -114,9 +105,7 @@ describe('Form - Field - Recipient - Features', () => {
     await wrapper.events.click(await wrapper.findByLabelText('Recipient'))
 
     expect(
-      await wrapper.findByText(
-        'Start typing to search or enter a phone number…',
-      ),
+      await wrapper.findByText('Start typing to search or enter a phone number…'),
     ).toBeInTheDocument()
 
     const filterElement = wrapper.getByRole('searchbox')
@@ -155,21 +144,17 @@ describe('Form - Field - Recipient - Query', () => {
       wrapper.queryByText('Start typing to search or enter an email address…'),
     ).not.toBeInTheDocument()
 
-    let selectOptions = wrapper.getAllByRole('option')
-
-    selectOptions = wrapper.getAllByRole('option')
+    let selectOptions = wrapper.getAllByTestId('select-item')
 
     expect(selectOptions).toHaveLength(1)
     expect(selectOptions[0]).toHaveTextContent(testOptions[0].label)
 
-    await wrapper.events.click(wrapper.getByLabelText('Clear Search'))
+    await wrapper.events.click(wrapper.getByLabelText('Clear search'))
 
     expect(filterElement).toHaveValue('')
 
     expect(
-      await wrapper.findByText(
-        'Start typing to search or enter an email address…',
-      ),
+      await wrapper.findByText('Start typing to search or enter an email address…'),
     ).toBeInTheDocument()
 
     mockAutocompleteSearchRecipientQuery({
@@ -180,7 +165,7 @@ describe('Form - Field - Recipient - Query', () => {
 
     await waitForAutocompleteSearchRecipientQueryCalls()
 
-    selectOptions = wrapper.getAllByRole('option')
+    selectOptions = wrapper.getAllByTestId('select-item')
 
     expect(selectOptions).toHaveLength(1)
     expect(selectOptions[0]).toHaveTextContent(testOptions[1].label)

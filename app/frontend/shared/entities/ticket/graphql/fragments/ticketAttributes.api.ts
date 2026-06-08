@@ -10,6 +10,7 @@ export const TicketAttributesFragmentDoc = gql`
   title
   createdAt
   escalationAt
+  aiAgentRunning
   updatedAt
   updatedBy {
     id
@@ -20,6 +21,7 @@ export const TicketAttributesFragmentDoc = gql`
     internalId
     firstname
     lastname
+    fullname
   }
   customer {
     id
@@ -68,6 +70,7 @@ export const TicketAttributesFragmentDoc = gql`
   group {
     id
     name
+    summaryGeneration
     emailAddress {
       name
       emailAddress

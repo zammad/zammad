@@ -3,7 +3,7 @@ from: Martin Edenhofer <me@example.com>
 from_email: me@example.com
 from_display_name: Martin Edenhofer
 to: Martin Edenhofer <me@example.net>
-subject: 'test 1234 äöü sig test without attachment '
+subject: test 1234 äöü sig test without attachment
 body: "test 1234 äöü sig test without attachment\n\n"
 content_type: text/plain
 attachments:

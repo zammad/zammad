@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class TwoFactorDefaultAuthenticationMethod < ActiveRecord::Migration[6.1]
   def change
@@ -11,8 +11,8 @@ class TwoFactorDefaultAuthenticationMethod < ActiveRecord::Migration[6.1]
       next if user_has_default_two_factor_authentication_method?(user)
 
       Service::User::TwoFactor::SetDefaultMethod
-        .new(user: user, method_name: two_factor_preferences.first.method, force: true)
-        .execute
+        .with_current_user(user)
+        .execute(method_name: two_factor_preferences.first.method, force: true)
     end
   end
 

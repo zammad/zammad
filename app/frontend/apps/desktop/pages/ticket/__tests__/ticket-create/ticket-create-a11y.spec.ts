@@ -1,7 +1,6 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { waitFor } from '@testing-library/vue'
-import { axe } from 'vitest-axe'
 
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
@@ -12,10 +11,7 @@ import {
   waitForTicketSharedDraftStartListQueryCalls,
 } from '#shared/entities/ticket-shared-draft-start/graphql/queries/ticketSharedDraftStartList.mocks.ts'
 import { waitForUserQueryCalls } from '#shared/entities/user/graphql/queries/user.mocks.ts'
-import {
-  EnumTaskbarEntity,
-  EnumTaskbarEntityAccess,
-} from '#shared/graphql/types.ts'
+import { EnumTaskbarEntity, EnumTaskbarEntityAccess } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import getUuid from '#shared/utils/getUuid.ts'
 
@@ -26,7 +22,7 @@ import {
   handleMockUserQuery,
 } from '#desktop/pages/ticket/__tests__/support/ticket-create-helpers.ts'
 
-describe('testing tickets create a11y view', async () => {
+describe('testing tickets create a11y view', () => {
   beforeEach(() => {
     mockApplicationConfig({
       ui_ticket_create_available_types: ['phone-in', 'phone-out', 'email-out'],
@@ -62,9 +58,7 @@ describe('testing tickets create a11y view', async () => {
 
     const view = await visitView(`/tickets/create/${uid}`)
 
-    const results = await axe(view.html())
-
-    expect(results).toHaveNoViolations()
+    await expect(view.container).toBeAccessible()
   })
 
   it('has no accessibility violations in customer sidebar', async () => {
@@ -102,9 +96,7 @@ describe('testing tickets create a11y view', async () => {
       ).toBeInTheDocument()
     })
 
-    const results = await axe(view.html())
-
-    expect(results).toHaveNoViolations()
+    await expect(view.container).toBeAccessible()
   })
 
   it('has no accessibility violations in organization sidebar', async () => {
@@ -160,9 +152,7 @@ describe('testing tickets create a11y view', async () => {
 
     await view.events.click(view.getByLabelText('Organization'))
 
-    const results = await axe(view.html())
-
-    expect(results).toHaveNoViolations()
+    await expect(view.container).toBeAccessible()
   })
 
   it('has no accessibility violations in shared drafts sidebar', async () => {
@@ -209,8 +199,6 @@ describe('testing tickets create a11y view', async () => {
       ).toBeInTheDocument()
     })
 
-    const results = await axe(view.html())
-
-    expect(results).toHaveNoViolations()
+    await expect(view.container).toBeAccessible()
   })
 })

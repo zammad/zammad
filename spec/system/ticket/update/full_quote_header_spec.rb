@@ -1,17 +1,19 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
 RSpec.describe 'Ticket > Update > Full Quote Header', current_user_id: -> { current_user.id }, time_zone: 'Europe/London', type: :system do
-  let(:group)          { Group.find_by(name: 'Users') }
-  let(:ticket)         { create(:ticket, group: group) }
-  let(:ticket_article) { create(:ticket_article, ticket: ticket, from: 'Example Name <asdf1@example.com>') }
-  let(:customer)       { create(:customer) }
-  let(:current_user)   { customer }
-  let(:selection)      { '' }
+  let(:group)                     { Group.find_by(name: 'Users') }
+  let(:ticket)                    { create(:ticket, group: group) }
+  let(:ticket_article)            { create(:ticket_article, ticket: ticket, from: 'Example Name <asdf1@example.com>') }
+  let(:customer)                  { create(:customer) }
+  let(:current_user)              { customer }
+  let(:selection)                 { '' }
+  let(:setting_ticket_email_from) { 'AgentNameSystemAddressName' }
 
   prepend_before do
     Setting.set 'ui_ticket_zoom_article_email_full_quote_header', full_quote_header_setting
+    Setting.set 'ticket_define_email_from', setting_ticket_email_from
   end
 
   before do
@@ -242,6 +244,39 @@ RSpec.describe 'Ticket > Update > Full Quote Header', current_user_id: -> { curr
             expect(page).to have_css('blockquote', count: 2)
           end
         end
+      end
+    end
+  end
+
+  # https://github.com/zammad/zammad/issues/5130
+  context 'when sender format is switched' do
+    let(:full_quote_header_setting) { true }
+    let(:sender_agent)              { create(:agent) }
+    let(:sender_outbound_article)   { create(:ticket_article, :outbound_email, ticket: ticket, created_by_id: sender_agent.id, origin_by_id: sender_agent.id, body: SecureRandom.hex(8)) }
+
+    context 'when setting value is SystemAddressName' do
+      let(:setting_ticket_email_from) { 'SystemAddressName' }
+
+      it 'does not show agent name on forward' do
+        sender_outbound_article
+        expect(page).to have_text(sender_outbound_article.body)
+
+        page.all(".js-ArticleAction[data-type='emailForward'] span").last.click
+        expect(page.find('.js-writeArea')).to have_text("From: #{ticket.group.email_address.name} <#{ticket.group.email_address.email}>")
+        expect(page.find('.js-writeArea')).to have_no_text("From: #{sender_agent.fullname}")
+      end
+    end
+
+    context 'when setting value is AgentNameSystemAddressName' do
+      let(:setting_ticket_email_from) { 'AgentNameSystemAddressName' }
+
+      it 'does show agent name on forward' do
+        sender_outbound_article
+        expect(page).to have_text(sender_outbound_article.body)
+
+        page.all(".js-ArticleAction[data-type='emailForward'] span").last.click
+        expect(page.find('.js-writeArea')).to have_no_text("From: #{ticket.group.email_address.name} <#{ticket.group.email_address.email}>")
+        expect(page.find('.js-writeArea')).to have_text("From: #{sender_agent.fullname} #{Setting.get('ticket_define_email_from_separator')} #{ticket.group.email_address.name} <#{ticket.group.email_address.email}>")
       end
     end
   end

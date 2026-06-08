@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import type { AlertClassMap } from '#shared/components/CommonAlert/types.ts'
 
@@ -9,6 +9,7 @@ let alertClasses: AlertClassMap = {
   info: 'common-alert-info',
   success: 'common-alert-success',
   warning: 'common-alert-warning',
+  dismissButton: '',
 }
 
 export const initializeAlertClasses = (classes: AlertClassMap) => {

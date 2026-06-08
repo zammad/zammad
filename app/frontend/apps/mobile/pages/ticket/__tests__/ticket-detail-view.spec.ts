@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { ApolloError } from '@apollo/client/errors'
 import { getNode } from '@formkit/core'
@@ -8,10 +8,7 @@ import { flushPromises } from '@vue/test-utils'
 import { getByIconName } from '#tests/support/components/iconQueries.ts'
 import { getTestRouter } from '#tests/support/components/renderComponent.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
-import {
-  mockGraphQLApi,
-  mockGraphQLSubscription,
-} from '#tests/support/mock-graphql-api.ts'
+import { mockGraphQLApi, mockGraphQLSubscription } from '#tests/support/mock-graphql-api.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
 import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
 import { nullableMock, waitUntil } from '#tests/support/utils.ts'
@@ -36,11 +33,7 @@ import { TicketLiveUserDeleteDocument } from '../graphql/mutations/live-user/del
 import { TicketLiveUserUpsertDocument } from '../graphql/mutations/live-user/ticketLiveUserUpsert.api.ts'
 
 import { mockArticleQuery } from './mocks/articles.ts'
-import {
-  defaultArticles,
-  defaultTicket,
-  mockTicketDetailViewGql,
-} from './mocks/detail-view.ts'
+import { defaultArticles, defaultTicket, mockTicketDetailViewGql } from './mocks/detail-view.ts'
 
 vi.hoisted(() => {
   const now = new Date(2022, 1, 1, 0, 0, 0, 0)
@@ -214,9 +207,7 @@ describe('user avatars', () => {
     const view = await visitView('/tickets/1')
     await waitUntilTicketLoaded()
 
-    expect(
-      view.getByRole('img', { name: `Avatar (${author.fullname})` }),
-    ).toBeAvatarElement({
+    expect(view.getByRole('img', { name: `Avatar (${author.fullname})` })).toBeAvatarElement({
       type: 'user',
       image: 'avatar.png',
       outOfOffice: false,
@@ -246,9 +237,7 @@ describe('user avatars', () => {
     const view = await visitView('/tickets/1')
     await waitUntilTicketLoaded()
 
-    expect(
-      view.getByRole('img', { name: `Avatar (${author.fullname}) (VIP)` }),
-    ).toBeAvatarElement({
+    expect(view.getByRole('img', { name: `Avatar (${author.fullname}) (VIP)` })).toBeAvatarElement({
       type: 'user',
       outOfOffice: true,
       outOfOfficeStartAt: '2021-12-01',
@@ -260,9 +249,9 @@ describe('user avatars', () => {
 })
 
 test("redirects to error page, if can't find ticket", async () => {
-  const { calls } = mockGraphQLApi(
-    TicketWithMentionLimitDocument,
-  ).willFailWithNotFoundError('The ticket 9866 could not be found')
+  const { calls } = mockGraphQLApi(TicketWithMentionLimitDocument).willFailWithNotFoundError(
+    'The ticket 9866 could not be found',
+  )
   mockGraphQLApi(TicketLiveUserDeleteDocument).willFailWithNotFoundError(
     'The ticket 9866 could not be found',
   )
@@ -320,8 +309,7 @@ test('show article context on click', async () => {
 })
 
 test('change content on subscription', async () => {
-  const { waitUntilTicketLoaded, mockTicketSubscription, ticket } =
-    mockTicketDetailViewGql()
+  const { waitUntilTicketLoaded, mockTicketSubscription, ticket } = mockTicketDetailViewGql()
 
   const view = await visitView('/tickets/1')
 
@@ -362,7 +350,7 @@ describe('calling API to retry encryption', () => {
 
     await waitUntilTicketLoaded()
 
-    const securityError = view.getByRole('button', { name: 'Security Error' })
+    const securityError = view.getByRole('button', { name: 'Security error' })
     await view.events.click(securityError)
 
     const retryResult = {
@@ -421,7 +409,7 @@ describe('calling API to retry encryption', () => {
 
     await waitUntilTicketLoaded()
 
-    const securityError = view.getByRole('button', { name: 'Security Error' })
+    const securityError = view.getByRole('button', { name: 'Security error' })
     await view.events.click(securityError)
 
     const retryResult = {
@@ -488,11 +476,11 @@ describe('remote content removal', () => {
 
     await waitUntilTicketLoaded()
 
-    const blockedContent = view.getByRole('button', { name: 'Blocked Content' })
+    const blockedContent = view.getByRole('button', { name: 'Blocked content' })
 
     await view.events.click(blockedContent)
 
-    await view.events.click(view.getByText('Original Formatting'))
+    await view.events.click(view.getByText('Original formatting'))
 
     expect(view.queryByTestId('popupWindow')).not.toBeInTheDocument()
   })
@@ -500,8 +488,7 @@ describe('remote content removal', () => {
 
 describe('ticket viewers inside a ticket', () => {
   it('displays information with newer last interaction (and without own entry)', async () => {
-    const { waitUntilTicketLoaded, mockTicketLiveUsersSubscription } =
-      mockTicketDetailViewGql()
+    const { waitUntilTicketLoaded, mockTicketLiveUsersSubscription } = mockTicketDetailViewGql()
 
     mockUserCurrent({
       lastname: 'Doe',
@@ -590,18 +577,12 @@ describe('ticket viewers inside a ticket', () => {
     expect(counter, 'has a counter').toBeInTheDocument()
     expect(counter).toHaveTextContent('+1')
 
-    await view.events.click(
-      view.getByRole('button', { name: 'Show ticket viewers' }),
-    )
+    await view.events.click(view.getByRole('button', { name: 'Show ticket viewers' }))
 
-    await waitUntil(() =>
-      view.queryByRole('dialog', { name: 'Ticket viewers' }),
-    )
+    await waitUntil(() => view.queryByRole('dialog', { name: 'Ticket viewers' }))
 
     expect(view.getByText('Opened in tabs')).toBeInTheDocument()
-    expect(
-      view.queryByRole('dialog', { name: 'Ticket viewers' }),
-    ).toHaveTextContent('John Doe')
+    expect(view.queryByRole('dialog', { name: 'Ticket viewers' })).toHaveTextContent('John Doe')
     expect(view.queryByIconName('desktop')).not.toBeInTheDocument()
 
     await mockTicketLiveUsersSubscription.next({
@@ -642,8 +623,7 @@ describe('ticket viewers inside a ticket', () => {
   })
 
   it('editing has always the highest priority', async () => {
-    const { waitUntilTicketLoaded, mockTicketLiveUsersSubscription } =
-      mockTicketDetailViewGql()
+    const { waitUntilTicketLoaded, mockTicketLiveUsersSubscription } = mockTicketDetailViewGql()
 
     mockUserCurrent({
       lastname: 'Doe',
@@ -691,23 +671,16 @@ describe('ticket viewers inside a ticket', () => {
       },
     })
 
-    await view.events.click(
-      view.getByRole('button', { name: 'Show ticket viewers' }),
-    )
+    await view.events.click(view.getByRole('button', { name: 'Show ticket viewers' }))
 
-    await waitUntil(() =>
-      view.queryByRole('dialog', { name: 'Ticket viewers' }),
-    )
+    await waitUntil(() => view.queryByRole('dialog', { name: 'Ticket viewers' }))
 
-    expect(
-      view.queryByRole('dialog', { name: 'Ticket viewers' }),
-    ).toHaveTextContent('John Doe')
+    expect(view.queryByRole('dialog', { name: 'Ticket viewers' })).toHaveTextContent('John Doe')
     expect(view.queryByIconName('desktop-edit')).toBeInTheDocument()
   })
 
   it('show current user avatar when editing on other device', async () => {
-    const { waitUntilTicketLoaded, mockTicketLiveUsersSubscription } =
-      mockTicketDetailViewGql()
+    const { waitUntilTicketLoaded, mockTicketLiveUsersSubscription } = mockTicketDetailViewGql()
 
     mockUserCurrent({
       lastname: 'Doe',
@@ -755,17 +728,11 @@ describe('ticket viewers inside a ticket', () => {
       },
     })
 
-    await view.events.click(
-      view.getByRole('button', { name: 'Show ticket viewers' }),
-    )
+    await view.events.click(view.getByRole('button', { name: 'Show ticket viewers' }))
 
-    await waitUntil(() =>
-      view.queryByRole('dialog', { name: 'Ticket viewers' }),
-    )
+    await waitUntil(() => view.queryByRole('dialog', { name: 'Ticket viewers' }))
 
-    expect(
-      view.queryByRole('dialog', { name: 'Ticket viewers' }),
-    ).toHaveTextContent('Agent 1 Test')
+    expect(view.queryByRole('dialog', { name: 'Ticket viewers' })).toHaveTextContent('Agent 1 Test')
     expect(view.queryByIconName('desktop-edit')).toBeInTheDocument()
   })
 
@@ -777,11 +744,8 @@ describe('ticket viewers inside a ticket', () => {
       id: convertToGraphQLId('User', 3),
     })
 
-    const {
-      waitUntilTicketLoaded,
-      mockTicketLiveUserUpsert,
-      mockTicketLiveUsersSubscription,
-    } = mockTicketDetailViewGql({ ticketView: 'customer' })
+    const { waitUntilTicketLoaded, mockTicketLiveUserUpsert, mockTicketLiveUsersSubscription } =
+      mockTicketDetailViewGql({ ticketView: 'customer' })
 
     const view = await visitView('/tickets/1')
 
@@ -823,9 +787,7 @@ describe('ticket viewers inside a ticket', () => {
       },
     })
 
-    expect(
-      view.queryByRole('button', { name: 'Show ticket viewers' }),
-    ).not.toBeInTheDocument()
+    expect(view.queryByRole('button', { name: 'Show ticket viewers' })).not.toBeInTheDocument()
   })
 })
 
@@ -847,21 +809,17 @@ describe('ticket add/edit reply article', () => {
 
     await waitUntil(() => view.queryByRole('dialog', { name: 'Add reply' }))
 
-    await view.events.type(view.getByLabelText('Text'), 'Testing')
+    await view.events.type(await view.findByLabelText('Text'), 'Testing')
 
-    await expect(
-      view.findByRole('button', { name: 'Save' }),
-    ).resolves.toBeInTheDocument()
+    await expect(view.findByRole('button', { name: 'Save' })).resolves.toBeInTheDocument()
 
-    await view.events.click(view.getByRole('combobox', { name: 'Visibility' }))
+    await view.events.click(await view.findByRole('combobox', { name: 'Visibility' }))
 
     expect(view.queryByRole('button', { name: 'Save' })).not.toBeInTheDocument()
 
     await view.events.click(view.getByRole('option', { name: 'Public' }))
 
-    await expect(
-      view.findByRole('button', { name: 'Save' }),
-    ).resolves.toBeInTheDocument()
+    await expect(view.findByRole('button', { name: 'Save' })).resolves.toBeInTheDocument()
   })
 
   it('save button is not shown when non-reply dialog field is opened', async () => {
@@ -879,33 +837,21 @@ describe('ticket add/edit reply article', () => {
 
     await view.events.type(view.getByLabelText('Text'), 'Testing')
 
-    await expect(
-      view.findByRole('button', { name: 'Save' }),
-    ).resolves.toBeInTheDocument()
+    await expect(view.findByRole('button', { name: 'Save' })).resolves.toBeInTheDocument()
 
     await view.events.click(view.getByRole('button', { name: 'Done' }))
 
-    await view.events.click(
-      view.getByRole('button', { name: 'Show ticket actions' }),
-    )
+    await view.events.click(view.getByRole('button', { name: 'Show ticket actions' }))
 
-    await waitUntil(() =>
-      view.queryByRole('dialog', { name: 'Ticket actions' }),
-    )
+    await waitUntil(() => view.queryByRole('dialog', { name: 'Ticket actions' }))
 
-    expect(
-      view.queryByText('You have unsaved changes.'),
-    ).not.toBeInTheDocument()
+    expect(view.queryByText('You have unsaved changes.')).not.toBeInTheDocument()
 
     await view.events.click(view.getByText('Change customer'))
 
-    await waitUntil(() =>
-      view.queryByRole('dialog', { name: 'Change customer' }),
-    )
+    await waitUntil(() => view.queryByRole('dialog', { name: 'Change customer' }))
 
-    expect(
-      view.queryByText('You have unsaved changes.'),
-    ).not.toBeInTheDocument()
+    expect(view.queryByText('You have unsaved changes.')).not.toBeInTheDocument()
   })
 
   it('add reply (first time) should hold the form state after save button with an invalid state is used', async () => {
@@ -923,9 +869,7 @@ describe('ticket add/edit reply article', () => {
 
     form?.find('title', 'name')?.input('')
 
-    await expect(
-      view.findByLabelText('Validation failed'),
-    ).resolves.toBeInTheDocument()
+    await expect(view.findByLabelText('Validation failed')).resolves.toBeInTheDocument()
 
     await view.events.click(view.getByRole('button', { name: 'Add reply' }))
 
@@ -956,15 +900,11 @@ describe('ticket add/edit reply article', () => {
 
     await view.events.click(view.getByRole('button', { name: 'Add reply' }))
 
-    expect(
-      await view.findByRole('dialog', { name: 'Add reply' }),
-    ).toBeInTheDocument()
+    expect(await view.findByRole('dialog', { name: 'Add reply' })).toBeInTheDocument()
 
     await view.events.type(view.getByLabelText('Text'), 'Testing')
 
-    expect(
-      await view.findByRole('button', { name: 'Save' }),
-    ).toBeInTheDocument()
+    expect(await view.findByRole('button', { name: 'Save' })).toBeInTheDocument()
 
     mockGraphQLApi(TicketUpdateDocument).willResolve({
       ticketUpdate: {
@@ -976,21 +916,15 @@ describe('ticket add/edit reply article', () => {
 
     await view.events.click(view.getByRole('button', { name: 'Save' }))
 
-    expect(
-      await view.findByRole('button', { name: 'Add reply' }),
-    ).toBeInTheDocument()
+    expect(await view.findByRole('button', { name: 'Add reply' })).toBeInTheDocument()
 
     await view.events.click(view.getByRole('button', { name: 'Add reply' }))
 
-    expect(
-      await view.findByRole('dialog', { name: 'Add reply' }),
-    ).toBeInTheDocument()
+    expect(await view.findByRole('dialog', { name: 'Add reply' })).toBeInTheDocument()
 
     await view.events.click(view.getByRole('button', { name: 'Cancel' }))
 
-    expect(
-      await view.findByRole('button', { name: 'Add reply' }),
-    ).toBeInTheDocument()
+    expect(await view.findByRole('button', { name: 'Add reply' })).toBeInTheDocument()
     expect(view.queryByRole('button', { name: 'Save' })).not.toBeInTheDocument()
   })
 })
@@ -1050,8 +984,7 @@ it("scrolls to the bottom the first time, but doesn't trigger rescroll on subseq
     [
       {
         internalId: 2,
-        bodyWithUrls:
-          '<p>Existing article switched to internal> all can see this haha</p>',
+        bodyWithUrls: '<p>Existing article switched to internal> all can see this haha</p>',
       },
       {
         internalId: 3,
@@ -1073,11 +1006,10 @@ it("scrolls to the bottom the first time, but doesn't trigger rescroll on subseq
     ],
   )
 
-  const { waitUntilTicketLoaded, mockTicketArticleSubscription } =
-    mockTicketDetailViewGql({
-      ticketView: 'agent',
-      articles: [newArticlesQuery, newArticlesQueryAfterUpdate],
-    })
+  const { waitUntilTicketLoaded, mockTicketArticleSubscription } = mockTicketDetailViewGql({
+    ticketView: 'agent',
+    articles: [newArticlesQuery, newArticlesQueryAfterUpdate],
+  })
 
   vi.spyOn(window, 'scrollTo').mockReturnValue()
 
@@ -1162,8 +1094,7 @@ describe('with ticket on a whatsapp channel', () => {
       {},
       {
         whatsapp: {
-          timestamp_incoming:
-            testDate.setHours(testDate.getHours() - 25).valueOf() / 1000,
+          timestamp_incoming: testDate.setHours(testDate.getHours() - 25).valueOf() / 1000,
         },
       },
     )

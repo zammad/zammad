@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { useLocalStorage } from '@vueuse/core'
 
@@ -10,18 +10,13 @@ const ADD_RECENT_SEARCH_DEBOUNCE_TIME = 1000
 export const useRecentSearches = (maxLength = RECENTLY_SEARCHES_MAX_LENGTH) => {
   const { userId } = useSessionStore()
 
-  const recentSearches = useLocalStorage<string[]>(
-    `${userId}-recentSearches`,
-    [],
-  )
+  const recentSearches = useLocalStorage<string[]>(`${userId}-recentSearches`, [])
 
   const addSearch = (search?: string) => {
     if (!search) return
 
     // Remove the search term if it already exists to avoid duplicates
-    recentSearches.value = recentSearches.value.filter(
-      (item) => item !== search,
-    )
+    recentSearches.value = recentSearches.value.filter((item) => item !== search)
 
     // Add the new search term
     recentSearches.value.push(search)
@@ -33,9 +28,7 @@ export const useRecentSearches = (maxLength = RECENTLY_SEARCHES_MAX_LENGTH) => {
   }
 
   const removeSearch = (search: string) => {
-    recentSearches.value = recentSearches.value.filter(
-      (item) => item !== search,
-    )
+    recentSearches.value = recentSearches.value.filter((item) => item !== search)
   }
 
   const clearSearches = () => {

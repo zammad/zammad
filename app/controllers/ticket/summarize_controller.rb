@@ -1,34 +1,79 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Ticket::SummarizeController < ApplicationController
   prepend_before_action :authenticate_and_authorize!
 
-  def enqueue
-    Service::CheckFeatureEnabled.new(name: 'ai_assistance_ticket_summary').execute
-    Service::CheckFeatureEnabled.new(name: 'ai_provider', custom_error_message: __('AI provider is not configured.')).execute
+  def summarize
+    Service::CheckFeatureEnabled.execute(name: 'ai_assistance_ticket_summary', custom_exception_class: Exceptions::UnprocessableContent)
+    Service::CheckFeatureEnabled.execute(name: 'ai_provider', custom_error_message: __('AI provider is not configured.'))
 
-    ticket = Ticket.find(params[:id])
     authorize!(ticket, :agent_read_access?)
 
-    cache_key = AI::Service::TicketSummarize.cache_key(ticket, current_user.locale)
-    cache     = Rails.cache.read(cache_key)
-
-    if cache.present?
-      render json: {
-        result: {
-          problem:              cache['problem'],
-          conversation_summary: cache['summary'],
-          open_questions:       cache['open_questions'],
-          suggestions:          cache['suggestions'],
-          fingerprint_md5:      Digest::MD5.hexdigest(cache.slice('problem', 'summary', 'open_questions', 'suggestions').to_s),
-        },
-      }
+    if regeneration_of
+      authorize!(regeneration_of, :show?)
+      enqueue_job
       return
     end
 
+    ai_result = Service::Ticket::AIAssistance::Summarize
+      .with_current_user(current_user)
+      .execute(
+        locale:               current_user.locale,
+        ticket:,
+        persistence_strategy: :stored_only,
+      )
+
+    if ai_result&.content.blank?
+      # When AI analytics error ID is present, return this error message instead of enqueuing a new job.
+      if params[:ai_analytics_run_error_id].present?
+        ai_analytics_run_error = AI::Analytics::Run.find(params[:ai_analytics_run_error_id])
+
+        render json: {
+          result:        nil,
+          error:         true,
+          error_message: ai_analytics_run_error.error['error_message'],
+        }
+      else
+        enqueue_job
+      end
+
+      return
+    end
+
+    return_stored_result(ai_result)
+  end
+
+  private
+
+  def ticket
+    @ticket ||= Ticket.find(params[:id])
+  end
+
+  def regeneration_of
+    return @regeneration_of if defined?(@regeneration_of)
+
+    @regeneration_of = AI::Analytics::Run.find(params[:regeneration_of_id]) if params[:regeneration_of_id].present?
+  end
+
+  def enqueue_job
     # Trigger background job to generate summary...
-    TicketAIAssistanceSummarizeJob.perform_later(ticket, current_user.locale)
+    TicketAIAssistanceSummarizeJob
+      .perform_later(ticket, current_user.locale, regeneration_of:)
 
     render json: { result: nil }
+  end
+
+  def return_stored_result(ai_result)
+    usage     = ai_result.ai_analytics_run&.usage_by(current_user)
+    is_unread = ticket.ai_summary_unread?(current_user, ai_result.ai_analytics_run)
+
+    render json: {
+      result:    ai_result.content,
+      analytics: {
+        run_id:    ai_result.ai_analytics_run&.id,
+        usage:,
+        is_unread:
+      },
+    }
   end
 end

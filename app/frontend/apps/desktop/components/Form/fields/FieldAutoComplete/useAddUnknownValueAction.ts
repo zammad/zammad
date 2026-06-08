@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { email as emailValidation } from '@formkit/rules'
 import { ref, type Ref } from 'vue'
@@ -17,8 +17,7 @@ import type { FormKitNode } from '@formkit/core'
 export const emailFilterValueValidator = (filter: string) =>
   emailValidation({ value: filter } as FormKitNode)
 
-export const phoneFilterValueValidator = (filter: string) =>
-  /^\+?[1-9]\d+$/.test(filter)
+export const phoneFilterValueValidator = (filter: string) => /^\+?[1-9]\d+$/.test(filter)
 
 export const useAddUnknownValueAction = (
   label?: Ref<string>,
@@ -29,10 +28,8 @@ export const useAddUnknownValueAction = (
 
   const isValidFilterValue = filterValueValidator ?? emailFilterValueValidator
 
-  const isNewOption = (
-    filter: string,
-    optionValues: AutoCompleteOptionValueDictionary,
-  ) => !optionValues[filter]
+  const isNewOption = (filter: string, optionValues: AutoCompleteOptionValueDictionary) =>
+    !optionValues[filter]
 
   const addUnknownValue = (
     filter: string,
@@ -89,8 +86,7 @@ export const useAddUnknownValueAction = (
     if (['Enter', 'Tab'].includes(key)) {
       stopEvent(event)
 
-      if (!isNewOption(filter, optionValues) || !isValidFilterValue(filter))
-        return
+      if (!isNewOption(filter, optionValues) || !isValidFilterValue(filter)) return
 
       addUnknownValue(filter, selectOption, clearFilter, true)
     }

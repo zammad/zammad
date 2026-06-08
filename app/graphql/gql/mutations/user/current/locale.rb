@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Mutations
   class User::Current::Locale < BaseMutation
@@ -8,9 +8,7 @@ module Gql::Mutations
 
     field :success, Boolean, null: false, description: 'Was the update successful?'
 
-    def self.authorize(_obj, ctx)
-      ctx.current_user.permissions?('user_preferences.language')
-    end
+    requires_permission 'user_preferences.language'
 
     def resolve(locale:)
       if !Locale.exists?(locale: locale, active: true)

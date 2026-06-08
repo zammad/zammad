@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 require 'models/concerns/checks_kb_client_notification_examples'
@@ -171,6 +171,18 @@ RSpec.describe KnowledgeBase::Category, current_user_id: 1, type: :model do
         before { another_category_published_answer }
 
         it { expect(assets).to include_assets_of category }
+      end
+    end
+  end
+
+  describe '#attributes_with_association_ids' do
+    context 'when category has children' do
+      subject(:kb_category_with_tree) { create(:kb_category_with_tree) }
+
+      it 'returns attributes with association ids' do
+        expect(kb_category_with_tree.attributes_with_association_ids).to include(
+          'child_ids' => kb_category_with_tree.child_ids,
+        )
       end
     end
   end

@@ -1,8 +1,8 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Auth
 
-  attr_reader :user, :password, :auth_user, :two_factor_method, :two_factor_payload, :only_verify_password
+  attr_reader :password, :auth_user, :two_factor_method, :two_factor_payload, :only_verify_password
 
   delegate :user, to: :auth_user
 

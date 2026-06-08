@@ -1,0 +1,6 @@
+This is a plain message with no quotes at all.
+
+Just some regular text here.
+
+Regards,
+The Sender

@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { useLazyQuery } from '@vue/apollo-composable'
@@ -13,15 +13,7 @@ import {
 import gql from 'graphql-tag'
 import { cloneDeep, escapeRegExp, isEqual, uniqBy } from 'lodash-es'
 import { useTemplateRef } from 'vue'
-import {
-  computed,
-  markRaw,
-  nextTick,
-  ref,
-  toRef,
-  watch,
-  type ConcreteComponent,
-} from 'vue'
+import { computed, markRaw, nextTick, ref, toRef, watch, type ConcreteComponent } from 'vue'
 
 import type { SelectOption } from '#shared/components/CommonSelect/types'
 import useValue from '#shared/components/Form/composables/useValue.ts'
@@ -88,6 +80,7 @@ const {
   appendedOptions,
   optionValueLookup,
   getSelectedOption,
+  getSelectedOptionValue,
   getSelectedOptionLabel,
 } = useSelectOptions<AutoCompleteOption[]>(localOptions, contextReactive)
 
@@ -165,10 +158,7 @@ const trimmedFilter = computed(() => {
   return props.context.stripFilter(filter.value.trim())
 })
 
-const debouncedFilter = refDebounced(
-  trimmedFilter,
-  props.context.debounceInterval ?? 500,
-)
+const debouncedFilter = refDebounced(trimmedFilter, props.context.debounceInterval ?? 500)
 
 const AutocompleteSearchDocument = gql`
   ${props.context.gqlQuery}
@@ -183,8 +173,12 @@ const additionalQueryParams = () => {
 }
 
 const defaultFilter = computed(() => {
-  if (props.context.alwaysApplyDefaultFilter) return props.context.defaultFilter
-  if (hasValue.value) return ''
+  // Multiselect dropdowns stay open after a selection — keep applying the
+  // default filter so the recommended list re-renders, instead of collapsing
+  // to just the picked chips.
+  if (hasValue.value && !props.context.alwaysApplyDefaultFilter && !props.context.multiple) {
+    return ''
+  }
   return props.context.defaultFilter
 })
 
@@ -195,7 +189,7 @@ const autocompleteQueryHandler = new QueryHandler(
       input: {
         query: debouncedFilter.value || defaultFilter.value || '',
         limit: props.context.limit,
-        ...(additionalQueryParams() || {}),
+        ...additionalQueryParams(),
       },
     }),
     () => ({
@@ -218,25 +212,19 @@ if (defaultFilter.value) {
 }
 
 const autocompleteQueryResultKey = (
-  (AutocompleteSearchDocument.definitions[0] as OperationDefinitionNode)
-    .selectionSet.selections[0] as SelectionNode & { name: NameNode }
+  (AutocompleteSearchDocument.definitions[0] as OperationDefinitionNode).selectionSet
+    .selections[0] as SelectionNode & { name: NameNode }
 ).name.value
 
-const autocompleteQueryResultOptions = computed<AutoCompleteOption[]>(
-  (oldValue) => {
-    const resultOptions =
-      autocompleteQueryHandler.result().value?.[autocompleteQueryResultKey] ||
-      []
+const autocompleteQueryResultOptions = computed<AutoCompleteOption[]>((oldValue) => {
+  const resultOptions = autocompleteQueryHandler.result().value?.[autocompleteQueryResultKey] || []
 
-    if (oldValue && isEqual(oldValue, resultOptions)) return oldValue
+  if (oldValue && isEqual(oldValue, resultOptions)) return oldValue
 
-    return resultOptions
-  },
-)
+  return resultOptions
+})
 
-const autocompleteOptions = computed(
-  () => cloneDeep(autocompleteQueryResultOptions.value) || [],
-)
+const autocompleteOptions = computed(() => cloneDeep(autocompleteQueryResultOptions.value) || [])
 
 const {
   sortedOptions: sortedAutocompleteOptions,
@@ -244,18 +232,12 @@ const {
   getSelectedOption: getSelectedAutocompleteOption,
   getSelectedOptionIcon: getSelectedAutocompleteOptionIcon,
   optionValueLookup: autocompleteOptionValueLookup,
-} = useSelectOptions<AutoCompleteOption[]>(
-  autocompleteOptions,
-  toRef(props, 'context'),
-)
+} = useSelectOptions<AutoCompleteOption[]>(autocompleteOptions, toRef(props, 'context'))
 
 const preprocessedAutocompleteOptions = computed(() => {
-  if (!props.context.autocompleteOptionsPreprocessor)
-    return sortedAutocompleteOptions.value
+  if (!props.context.autocompleteOptionsPreprocessor) return sortedAutocompleteOptions.value
 
-  return props.context.autocompleteOptionsPreprocessor(
-    sortedAutocompleteOptions.value,
-  )
+  return props.context.autocompleteOptionsPreprocessor(sortedAutocompleteOptions.value)
 })
 
 const selectOption = (option: SelectOption, focus = false) => {
@@ -271,16 +253,14 @@ const selectOption = (option: SelectOption, focus = false) => {
     appendedOptions.value.push(option as AutoCompleteOption)
   }
 
-  appendedOptions.value = appendedOptions.value.filter((elem) =>
-    isCurrentValue(elem.value),
-  )
+  appendedOptions.value = appendedOptions.value.filter((elem) => isCurrentValue(elem.value))
 
   if (!focus) return
 
   filterInput.value?.focus()
 }
 
-const isLoading = autocompleteQueryHandler.loading()
+const isLoading = autocompleteQueryHandler.loadingWithoutCachedResult()
 const isUserTyping = ref(false)
 
 const selectNewOption = (option: SelectOption, focus = false) => {
@@ -346,25 +326,18 @@ const onKeydownFilterInput = (event: KeyboardEvent) => {
   })
 }
 
-const deaccent = (s: string) =>
-  s.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+const deaccent = (s: string) => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
 
 const availableOptionsWithMatches = computed(() => {
   // Trim and de-accent search keywords and compile them as a case-insensitive regex.
   //   Make sure to escape special regex characters!
-  const filterRegex = new RegExp(
-    escapeRegExp(deaccent(filter.value.trim())),
-    'i',
-  )
+  const filterRegex = new RegExp(escapeRegExp(deaccent(filter.value.trim())), 'i')
 
-  return availableOptions.value.map(
-    (option) =>
-      ({
-        ...option,
-
-        // Match options via their de-accented labels.
-        match: filterRegex.exec(deaccent(option.label || String(option.value))),
-      }) as AutoCompleteOption,
+  return availableOptions.value.map((option) =>
+    Object.assign(option, {
+      // Match options via their de-accented labels.
+      match: filterRegex.exec(deaccent(option.label || String(option.value))),
+    }),
   )
 })
 
@@ -386,8 +359,7 @@ const displayOptions = computed(() => {
 })
 
 const suggestedOptionLabel = computed(() => {
-  if (!filter.value || !availableOptionsWithMatches.value.length)
-    return undefined
+  if (!filter.value || !availableOptionsWithMatches.value.length) return undefined
 
   const exactMatches = availableOptionsWithMatches.value.filter(
     (option) =>
@@ -426,6 +398,7 @@ const foldDropdown = (event?: MouseEvent) => {
 
 const openSelectDropdown = () => {
   if (props.context.disabled) return
+  if (!input.value) return
 
   select.value?.openDropdown(inputElementBounds, windowSize.height)
 
@@ -462,8 +435,7 @@ const handleToggleDropdown = (event: MouseEvent) => {
 }
 
 const OptionIconComponent =
-  props.context.optionIconComponent ??
-  (FieldAutoCompleteOptionIcon as ConcreteComponent)
+  props.context.optionIconComponent ?? (FieldAutoCompleteOptionIcon as ConcreteComponent)
 
 const handleCloseDropdown = (
   event: KeyboardEvent,
@@ -501,7 +473,7 @@ useFormBlock(
 <template>
   <div
     ref="input"
-    class="flex h-auto min-h-10 hover:outline hover:outline-1 hover:outline-offset-1 hover:outline-blue-600 has-[output:focus,input:focus]:outline has-[output:focus,input:focus]:outline-1 has-[output:focus,input:focus]:outline-offset-1 has-[output:focus,input:focus]:outline-blue-800 dark:hover:outline-blue-900 dark:has-[output:focus,input:focus]:outline-blue-800"
+    class="flex h-auto min-h-10 hover:outline-1 hover:-outline-offset-1 hover:outline-blue-600 has-[output:focus,input:focus]:outline has-[output:focus,input:focus]:-outline-offset-1 has-[output:focus,input:focus]:outline-blue-800 dark:hover:outline-blue-900 dark:has-[output:focus,input:focus]:outline-blue-800"
     :class="[
       context.classes.input,
       {
@@ -547,7 +519,7 @@ useFormBlock(
         aria-haspopup="menu"
         :aria-expanded="expanded"
         :name="context.node.name"
-        class="formkit-disabled:pointer-events-none flex grow items-center gap-2.5 px-2.5 py-2 text-black focus:outline-hidden dark:text-white"
+        class="flex grow items-center gap-2.5 px-2.5 py-2 text-black focus:outline-hidden dark:text-white formkit-disabled:pointer-events-none"
         :aria-labelledby="`label-${context.id}`"
         :aria-disabled="context.disabled"
         :aria-describedby="context.describedBy"
@@ -565,12 +537,17 @@ useFormBlock(
       >
         <div
           v-if="hasValue && context.multiple"
-          class="flex flex-wrap gap-1.5"
+          class="select-scroll-shadows flex flex-wrap gap-1.5 overflow-y-auto outline-hidden"
+          :class="{
+            'select-scroll-shadows--base': !context.alternativeBackground,
+            'select-scroll-shadows--alt': context.alternativeBackground,
+            'max-w-1/2 shrink-0': expanded,
+          }"
           role="list"
         >
           <div
             v-for="selectedValue in valueContainer"
-            :key="selectedValue.toString()"
+            :key="getSelectedOptionValue(selectedValue).toString()"
             class="flex items-center gap-1.5"
             role="listitem"
           >
@@ -578,8 +555,7 @@ useFormBlock(
               class="inline-flex items-center gap-1 rounded px-1.5 py-0.5 text-xs text-black dark:text-white"
               :class="{
                 'bg-white dark:bg-gray-200': !context.alternativeBackground,
-                'bg-neutral-100 dark:bg-gray-200':
-                  context.alternativeBackground,
+                'bg-neutral-100 dark:bg-gray-200': context.alternativeBackground,
               }"
             >
               <CommonIcon
@@ -592,18 +568,18 @@ useFormBlock(
               <span
                 v-tooltip="
                   getSelectedOptionLabel(selectedValue) ||
-                  i18n.t('%s (unknown)', selectedValue.toString())
+                  i18n.t('%s (unknown)', getSelectedOptionValue(selectedValue).toString())
                 "
-                class="line-clamp-3 break-words whitespace-pre-wrap"
+                class="line-clamp-3 break-word"
               >
                 {{
                   getSelectedOptionLabel(selectedValue) ||
-                  i18n.t('%s (unknown)', selectedValue.toString())
+                  i18n.t('%s (unknown)', getSelectedOptionValue(selectedValue).toString())
                 }}
               </span>
               <CommonIcon
-                :aria-label="i18n.t('Unselect Option')"
-                class="shrink-0 fill-stone-200 hover:fill-black focus:outline-hidden focus-visible:rounded-xs focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 dark:fill-neutral-500 dark:hover:fill-white"
+                :aria-label="i18n.t('Unselect option')"
+                class="shrink-0 fill-stone-200 focus-visible-app-default hover:fill-black focus-visible:rounded-xs dark:fill-neutral-500 dark:hover:fill-white"
                 name="x-lg"
                 size="xs"
                 role="button"
@@ -663,21 +639,21 @@ useFormBlock(
             <span
               v-tooltip="
                 getSelectedOptionLabel(currentValue) ||
-                i18n.t('%s (unknown)', currentValue.toString())
+                i18n.t('%s (unknown)', getSelectedOptionValue(currentValue).toString())
               "
-              class="line-clamp-3 break-words whitespace-pre-wrap"
+              class="line-clamp-3 break-word"
             >
               {{
                 getSelectedOptionLabel(currentValue) ||
-                i18n.t('%s (unknown)', currentValue.toString())
+                i18n.t('%s (unknown)', getSelectedOptionValue(currentValue).toString())
               }}
             </span>
           </div>
         </div>
         <CommonIcon
           v-if="context.clearable && hasValue && !context.disabled"
-          :aria-label="i18n.t('Clear Selection')"
-          class="shrink-0 fill-stone-200 hover:fill-black focus:outline-hidden focus-visible:rounded-xs focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 dark:fill-neutral-500 dark:hover:fill-white"
+          :aria-label="i18n.t('Clear selection')"
+          class="shrink-0 fill-stone-200 focus-visible-app-default! hover:fill-black focus-visible:rounded-xs dark:fill-neutral-500 dark:hover:fill-white"
           name="x-lg"
           size="xs"
           role="button"

@@ -28,6 +28,10 @@ class App.TicketZoomSidebar extends App.ControllerObserver
       if backend && backend.postParams
         backend.postParams(args)
 
+  ticketZoomShown: =>
+    for key, value of @sidebarBackends
+      value.ticketZoomShown?()
+
   render: (ticket) =>
     @sidebarBackends ||= {}
     @sidebarItems = []

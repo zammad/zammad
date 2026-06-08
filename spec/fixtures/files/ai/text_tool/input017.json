@@ -1,0 +1,6 @@
+{
+  "input": "<h2>The Complexity of Biological Systems</h2>\n<p>Modern biology no longer views organisms as isolated entities but rather as <b>complex systems</b> intricately woven into networks of interaction. A single cell, once regarded as a mere container of life, is now understood as an <i>information-processing unit</i>, constantly exchanging signals with its environment. From the genetic code stored in DNA to the protein machinery that maintains cellular stability, each element fulfills a function within a broader architecture. This architecture is neither static nor linear; it demonstrates feedback loops, emergent properties, and adaptive behaviors that challenge traditional reductionist explanations.</p>\n<p>Contemporary research highlights the necessity of interdisciplinary approaches. Mathematics, physics, and computer science contribute to the modeling of biological processes that cannot be grasped by observation alone. For example, systems biology employs computational simulations to predict how networks of genes respond to perturbations. Such methods emphasize that understanding life is less a matter of isolating parts and more about revealing <b>patterns of organization</b>. The very definition of what constitutes \"life\" may thus evolve as our conceptual frameworks expand.</p>",
+  "expected": {
+    "language": "en"
+  }
+}

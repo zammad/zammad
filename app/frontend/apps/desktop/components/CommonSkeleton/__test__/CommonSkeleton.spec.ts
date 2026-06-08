@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { expect } from 'vitest'
 
@@ -23,20 +23,19 @@ describe('CommonSkeleton', () => {
   describe('a11y', () => {
     it('should have no accessibility violations', async () => {
       const wrapper = renderComponent(CommonSkeleton, {
-        label: 'Avatar skeleton',
+        props: {
+          label: 'Avatar skeleton',
+        },
       })
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-expect-error
-      expect(wrapper.getByRole('progressbar'), {
-        busy: true,
+      const progressBar = wrapper.getByRole('progressbar', {
         name: 'Avatar skeleton',
-        value: {
-          min: 0,
-          max: 100,
-          text: 'Please wait until content is loaded',
-        },
-      }).toBeInTheDocument()
+        busy: true,
+      })
+
+      expect(progressBar).toHaveAttribute('aria-valuemin', '0')
+      expect(progressBar).toHaveAttribute('aria-valuemax', '100')
+      expect(progressBar).toHaveAttribute('aria-valuetext', 'Please wait until content is loaded')
     })
   })
 })

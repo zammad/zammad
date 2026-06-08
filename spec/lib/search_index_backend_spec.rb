@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -80,6 +80,37 @@ RSpec.describe SearchIndexBackend do
   end
 
   describe '.search_by_index', searchindex: true do
+    context 'when query is blank' do
+      let(:record_type) { 'Ticket'.freeze }
+      let(:record) { create(:ticket) }
+
+      before do
+        record.search_index_update_backend
+        described_class.refresh
+      end
+
+      it 'returns nil without explicit search_by_index option' do
+        expect(described_class.search_by_index('', record_type, with_total_count: true)).to be_nil
+      end
+
+      it 'supports explicit search_by_index with conditions' do
+        result = described_class.search_by_index('', record_type,
+                                                 search_by_index:  true,
+                                                 with_total_count: true,
+                                                 condition:        {
+                                                   'ticket.id' => {
+                                                     'operator' => 'is',
+                                                     'value'    => record.id.to_s,
+                                                   },
+                                                 })
+
+        expect(result).to include(
+          total_count:     1,
+          object_metadata: include(include(id: record.id.to_s))
+        )
+      end
+    end
+
     context 'query finds results' do
 
       let(:record_type) { 'Ticket'.freeze }
@@ -211,6 +242,130 @@ RSpec.describe SearchIndexBackend do
       it 'finds added records by quoted integer' do
         result = described_class.search_by_index('"1021052349"', record_type, sort_by: ['updated_at'], order_by: ['desc'])
         expect(result).to eq([{ id: record.id.to_s, type: record_type }])
+      end
+
+      context "with 'in range' operator" do
+        let(:value) { %w[1021052339 1021052359] }
+
+        let(:result) do
+          described_class.search_by_index('', record_type,
+                                          search_by_index:  true,
+                                          with_total_count: true,
+                                          condition:        {
+                                            'ticket.inttest' => {
+                                              'operator' => 'in range',
+                                              'value'    => value,
+                                            },
+                                          })
+        end
+
+        it 'finds added record when integer is in range' do
+          expect(result).to include(
+            total_count:     1,
+            object_metadata: include(include(id: record.id.to_s))
+          )
+        end
+
+        context 'when integer is out of range' do
+          let(:value) { %w[1021052359 1021052399] }
+
+          it 'does not find added record' do
+            expect(result).to include(total_count: 0)
+          end
+        end
+
+        context 'when the upper edge is empty' do
+          let(:value) { ['1021052349', ''] }
+
+          it 'finds added record' do
+            expect(result).to include(
+              total_count:     1,
+              object_metadata: include(include(id: record.id.to_s))
+            )
+          end
+        end
+
+        context 'when the lower edge is empty' do
+          let(:value) { ['', '1021052349'] }
+
+          it 'finds added record' do
+            expect(result).to include(
+              total_count:     1,
+              object_metadata: include(include(id: record.id.to_s))
+            )
+          end
+        end
+
+        context 'when both values are empty' do
+          let(:value) { ['', nil] }
+
+          it 'raises an error' do
+            expect { result }.to raise_error(RuntimeError)
+          end
+        end
+
+        context 'when value is of wrong type' do
+          let(:value) { '1021052349' }
+
+          it 'raises an error' do
+            expect { result }.to raise_error(RuntimeError)
+          end
+        end
+      end
+    end
+
+    context 'can filter by accounted time' do
+      let(:record_type)            { 'Ticket'.freeze }
+      let(:record)                 { create(:ticket) }
+      let(:ticket_time_accounting) { create(:ticket_time_accounting, ticket: record, time_unit: 10.5) }
+
+      before do
+        ticket_time_accounting
+        record.search_index_update_backend
+        described_class.refresh
+      end
+
+      context "with 'in range' operator" do
+        let(:value) { %w[10 11] }
+
+        let(:result) do
+          described_class.search_by_index('', record_type,
+                                          search_by_index:  true,
+                                          with_total_count: true,
+                                          condition:        {
+                                            'ticket.time_unit' => {
+                                              'operator' => 'in range',
+                                              'value'    => value,
+                                            },
+                                          })
+        end
+
+        it 'finds added record when accounted time is in range' do
+          expect(result).to include(
+            total_count:     1,
+            object_metadata: include(include(id: record.id.to_s))
+          )
+        end
+
+        context 'when accounted time is out of range' do
+          let(:value) { %w[10.75 11] }
+
+          it 'does not find added record' do
+            expect(result).to include(total_count: 0)
+          end
+        end
+
+        context 'when accounted time is negative' do
+          let(:ticket_time_accounting) { create(:ticket_time_accounting, ticket: record, time_unit: -0.5) }
+          let(:value) { ['-1', '0'] }
+
+          it 'finds added record' do
+            expect(result).to include(
+              total_count:     1,
+              object_metadata: include(include(id: record.id.to_s))
+            )
+          end
+        end
       end
     end
 
@@ -678,6 +833,32 @@ RSpec.describe SearchIndexBackend do
                                            })
         expect(result).to eq({ count: 1, object_ids: [ticket2.id.to_s] })
       end
+
+      it 'finds records with matches without explicit wildcard like contains' do
+        result = described_class.selectors('Ticket',
+                                           {
+                                             'title' => {
+                                               'operator' => 'matches',
+                                               'value'    => 'phrase',
+                                             },
+                                           },
+                                           {},
+                                           {
+                                             field: 'created_at', # sort to verify result
+                                           })
+        expect(result).to eq({ count: 3, object_ids: [ticket6.id.to_s, ticket5.id.to_s, ticket4.id.to_s] })
+      end
+
+      it 'finds records with matches and preserved wildcard' do
+        result = described_class.selectors('Ticket',
+                                           {
+                                             'title' => {
+                                               'operator' => 'matches',
+                                               'value'    => 'some*title*',
+                                             },
+                                           })
+        expect(result).to eq({ count: 5, object_ids: [ticket8.id.to_s, ticket7.id.to_s, ticket3.id.to_s, ticket2.id.to_s, ticket1.id.to_s] })
+      end
     end
 
     context 'query with contains not' do
@@ -994,7 +1175,7 @@ RSpec.describe SearchIndexBackend do
       end
     end
 
-    context 'with external data source field', db_adapter: :postgresql, db_strategy: :reset do
+    context 'with external data source field', db_strategy: :reset do
       let(:external_data_source_attribute) do
         create(:object_manager_attribute_autocompletion_ajax_external_data_source,
                name: 'external_data_source_attribute')
@@ -1190,6 +1371,160 @@ RSpec.describe SearchIndexBackend do
       create(:ticket, preferences: { special_key: 43 })
       searchindex_model_reload([Ticket])
       expect(described_class.search('preferences.special_key: 42', 'Ticket').count).to eq(1)
+    end
+  end
+
+  describe 'works with special characters', performs_jobs: true, searchindex: true do
+    # Verify fix for Github issue #2058 - Autocomplete hangs on dot in the new user form
+    it 'does searching for organization with a dot in its name' do
+      organization = create(:organization, name: 'Tes.t. Org')
+      perform_enqueued_jobs
+      searchindex_model_reload([Organization])
+
+      result = described_class.search 'Tes.', 'Organization'
+      expect(result).to include(include(id: organization.id.to_s, type: 'Organization'))
+    end
+
+    # Search query H& should correctly match H&M
+    it 'does searching for organization with & in its name' do
+      organization = create(:organization, name: 'H&M')
+      perform_enqueued_jobs
+      searchindex_model_reload([Organization])
+
+      result = described_class.search 'h&', 'Organization'
+      expect(result).to include(include(id: organization.id.to_s, type: 'Organization'))
+    end
+
+    it 'does searching for organization with _ in its name' do
+      organization = create(:organization, name: 'ABC_D')
+      perform_enqueued_jobs
+      searchindex_model_reload([Organization])
+
+      result = described_class.search 'abc_', 'Organization'
+      expect(result).to include(include(id: organization.id.to_s, type: 'Organization'))
+    end
+  end
+
+  describe '.attachment_ignored?', searchindex: false do
+    let(:store) do
+      create(:store,
+             object:   'SomeObject',
+             o_id:     1,
+             data:     'some content',
+             filename:)
+    end
+
+    context 'when attachment is indexable', searchindex: false do
+      let(:filename) { 'test.TXT' }
+
+      it 'return false' do
+        expect(described_class).not_to be_attachment_ignored(store)
+      end
+    end
+
+    context 'when attachment is not indexable' do
+      let(:filename) { 'test.bin' }
+
+      it 'return true' do
+        expect(described_class).to be_attachment_ignored(store)
+      end
+    end
+  end
+
+  describe '.attachment_too_big?', searchindex: false do
+    let(:store) do
+      create(:store,
+             object:   'SomeObject',
+             o_id:     1,
+             data:     'a' * ((1024**2) * 2.4), # with 2.4 mb
+             filename: 'test.TXT')
+    end
+
+    before do
+      Setting.set('es_attachment_max_size_in_mb', max_file_size_in_mb)
+    end
+
+    context 'when file is too big' do
+      let(:max_file_size_in_mb) { 2 }
+
+      it 'return true' do
+        expect(described_class).to be_attachment_too_big(store)
+      end
+    end
+
+    context 'when file is not too big' do
+      let(:max_file_size_in_mb) { 3 }
+
+      it 'return false' do
+        expect(described_class).not_to be_attachment_too_big(store)
+      end
+    end
+  end
+
+  describe '.payload_too_big?', searchindex: false do
+    context 'when payload is too big' do
+      it 'return true' do
+        expect(described_class).to be_payload_too_big(2.gigabytes)
+      end
+    end
+
+    context 'when payload is not too big' do
+      it 'return false' do
+        expect(described_class).not_to be_payload_too_big(2.megabytes)
+      end
+    end
+  end
+
+  describe '.attachment_to_attributes', searchindex: false do
+    let(:data) { 'some content' }
+    let(:store) do
+      create(:store,
+             object:   'SomeObject',
+             o_id:     1,
+             data:,
+             filename: 'test.TXT')
+    end
+
+    it 'return a hash with attachment attributes' do
+      expect(described_class.attachment_to_attributes(store)).to eq(
+        {
+          '_name'    => 'test.TXT',
+          '_size'    => 12,
+          '_content' => Base64.encode64(data).delete("\n"),
+        }
+      )
+    end
+  end
+
+  describe '.get_mapping_properties_object' do
+    context 'with multi-value object attributes (#6130)', db_strategy: :reset do
+      let(:screens) { { create_middle: { '-all-' => { shown: true, required: false } } } }
+
+      before do
+        create(:object_manager_attribute_multiselect,
+               object_name: 'Ticket', name: 'multi_select_test', display: 'Multi Select Test', screens: screens)
+        create(:object_manager_attribute_multi_tree_select,
+               object_name: 'Ticket', name: 'multi_tree_select_test', display: 'Multi Tree Select Test', screens: screens)
+        ObjectManager::Attribute.migration_execute
+      end
+
+      it 'maps multiselect array column with .keyword subfield' do
+        mapping = described_class.get_mapping_properties_object(Ticket)
+
+        expect(mapping.dig(:properties, 'multi_select_test')).to include(
+          type:   'text',
+          fields: include(keyword: include(type: 'keyword')),
+        )
+      end
+
+      it 'maps multi_tree_select array column with .keyword subfield' do
+        mapping = described_class.get_mapping_properties_object(Ticket)
+
+        expect(mapping.dig(:properties, 'multi_tree_select_test')).to include(
+          type:   'text',
+          fields: include(keyword: include(type: 'keyword')),
+        )
+      end
     end
   end
 end

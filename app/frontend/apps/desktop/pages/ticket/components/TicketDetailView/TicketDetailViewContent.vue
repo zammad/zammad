@@ -1,7 +1,7 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { useResizeObserver, useWindowSize, whenever } from '@vueuse/core'
+import { useLocalStorage, useScroll, whenever } from '@vueuse/core'
 import { cloneDeep, isEqual } from 'lodash-es'
 import {
   computed,
@@ -15,6 +15,8 @@ import {
   watch,
   useTemplateRef,
   ref,
+  effectScope,
+  onUnmounted,
 } from 'vue'
 
 import {
@@ -22,10 +24,7 @@ import {
   useNotifications,
 } from '#shared/components/CommonNotifications/index.ts'
 import Form from '#shared/components/Form/Form.vue'
-import type {
-  FormSubmitData,
-  FormValues,
-} from '#shared/components/Form/types.ts'
+import type { FormSubmitData, FormValues } from '#shared/components/Form/types.ts'
 import { useForm } from '#shared/components/Form/useForm.ts'
 import { setErrors } from '#shared/components/Form/utils.ts'
 import { useConfirmation } from '#shared/composables/useConfirmation.ts'
@@ -37,6 +36,8 @@ import { useTicketArticleReplyAction } from '#shared/entities/ticket/composables
 import { useTicketEdit } from '#shared/entities/ticket/composables/useTicketEdit.ts'
 import { useTicketEditForm } from '#shared/entities/ticket/composables/useTicketEditForm.ts'
 import { useTicketLiveUserList } from '#shared/entities/ticket/composables/useTicketLiveUserList.ts'
+import { useTicketNumberAndTitle } from '#shared/entities/ticket/composables/useTicketNumberAndTitle.ts'
+import { useTicketSignature } from '#shared/entities/ticket/composables/useTicketSignature.ts'
 import type {
   TicketArticleTimeAccountingFormData,
   TicketUpdateFormData,
@@ -47,19 +48,14 @@ import {
   type AddArticleCallbackArgs,
 } from '#shared/entities/ticket-article/composables/useArticleDataHandler.ts'
 import UserError from '#shared/errors/UserError.ts'
-import {
-  EnumFormUpdaterId,
-  EnumTaskbarApp,
-  EnumUserErrorException,
-} from '#shared/graphql/types.ts'
+import { EnumFormUpdaterId, EnumTaskbarApp, EnumUserErrorException } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
-import {
-  GraphQLErrorTypes,
-  type GraphQLHandlerError,
-} from '#shared/types/error.ts'
+import { GraphQLErrorTypes, type GraphQLHandlerError } from '#shared/types/error.ts'
 
 import { useFlyout } from '#desktop/components/CommonFlyout/useFlyout.ts'
+import CommonIndicator from '#desktop/components/CommonIndicator/CommonIndicator.vue'
+import { useIndicator } from '#desktop/components/CommonIndicator/useIndicator.ts'
 import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
 import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
 import { usePage } from '#desktop/composables/usePage.ts'
@@ -68,8 +64,8 @@ import { useTaskbarTab } from '#desktop/entities/user/current/composables/useTas
 import { useTaskbarTabStateUpdates } from '#desktop/entities/user/current/composables/useTaskbarTabStateUpdates.ts'
 import type { TaskbarTabContext } from '#desktop/entities/user/current/types.ts'
 import TicketDetailBottomBar from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue'
+import { items as highlightMenuItems } from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/useHighlightMenuState.ts'
 import { useTicketScreenBehavior } from '#desktop/pages/ticket/components/TicketDetailView/TicketScreenBehavior/useTicketScreenBehavior.ts'
-import { useArticleContainerScroll } from '#desktop/pages/ticket/components/TicketDetailView/useArticleContainerScroll.ts'
 
 import { ARTICLES_INFORMATION_KEY } from '../../composables/useArticleContext.ts'
 import { useTicketArticleReply } from '../../composables/useTicketArticleReply.ts'
@@ -77,20 +73,15 @@ import {
   initializeTicketInformation,
   provideTicketInformation,
 } from '../../composables/useTicketInformation.ts'
-import { useTicketNumber } from '../../composables/useTicketNumber.ts'
-import {
-  useTicketSidebar,
-  useProvideTicketSidebar,
-} from '../../composables/useTicketSidebar.ts'
-import {
-  type TicketSidebarContext,
-  TicketSidebarScreenType,
-} from '../../types/sidebar.ts'
+import { useTicketSidebar, useProvideTicketSidebar } from '../../composables/useTicketSidebar.ts'
+import { type TicketSidebarContext, TicketSidebarScreenType } from '../../types/sidebar.ts'
 import TicketSidebar from '../TicketSidebar.vue'
 
 import ArticleList from './ArticleList.vue'
 import ArticleReply from './ArticleReply.vue'
+import TicketDetailScrollToBottomButton from './TicketDetailScrollToBottomButton.vue'
 import TicketDetailTopBar from './TicketDetailTopBar/TicketDetailTopBar.vue'
+import { useUnreadArticle } from './useUnreadArticle.ts'
 
 interface Props {
   internalId: string
@@ -99,17 +90,25 @@ interface Props {
 const props = defineProps<Props>()
 
 const internalId = toRef(props, 'internalId')
-const isReplyPinned = ref(false)
+const isReplyPinned = useLocalStorage('article-reply-pinned', false)
+const contentContainerElement = useTemplateRef('content-container')
 
-const { ticket, ticketId, ...ticketInformation } =
-  initializeTicketInformation(internalId)
+const { ticket, ticketId, ...ticketInformation } = initializeTicketInformation(internalId)
 
-const onAddArticleCallback = ({ articlesQuery }: AddArticleCallbackArgs) => {
+const { isIntersecting: isReachingBottom } = useIndicator()
+const { articleCount, addUnreadArticle } = useUnreadArticle({ cleanupDependency: isReachingBottom })
+
+const onAddArticleCallback = ({ articlesQuery, updates }: AddArticleCallbackArgs) => {
+  // When we are at the end user is aware of the new article
+  if (!isReachingBottom.value) addUnreadArticle(updates?.addArticle?.id as string)
+
   return (articlesQuery as QueryHandler).refetch()
 }
 
-const { articleResult, articlesQuery, isLoadingArticles } =
-  useArticleDataHandler(ticketId, { pageSize: 20, onAddArticleCallback })
+const { articleResult, articlesQuery, isLoadingArticles } = useArticleDataHandler(ticketId, {
+  pageSize: 20,
+  onAddArticleCallback,
+})
 
 provide(ARTICLES_INFORMATION_KEY, {
   articles: computed(() => articleResult.value),
@@ -135,39 +134,68 @@ const tabContext = computed<TaskbarTabContext>((currentContext) => {
     formIsDirty: isDirty.value,
   }
 
-  if (currentContext && isEqual(newContext, currentContext))
-    return currentContext
+  if (currentContext && isEqual(newContext, currentContext)) return currentContext
 
   return newContext
 })
 
-const {
-  currentTaskbarTabId,
-  currentTaskbarTabFormId,
-  currentTaskbarTabNewArticlePresent,
-} = useTaskbarTab(tabContext)
+const { currentTaskbarTabId, currentTaskbarTabFormId, currentTaskbarTabNewArticlePresent } =
+  useTaskbarTab(tabContext)
 
-const { ticketNumberWithTicketHook } = useTicketNumber(ticket)
+const { ticketNumberWithTitle } = useTicketNumberAndTitle(ticket)
 
 usePage({
-  metaTitle: computed(
-    () => `${ticketNumberWithTicketHook.value} - ${ticket.value?.title}`,
-  ),
+  metaTitle: ticketNumberWithTitle,
 })
 
-const contentContainerElement = useTemplateRef('content-container')
+const { scrollIntoView: scrollToArticle } = useScrollPosition(contentContainerElement)
 
-useScrollPosition(contentContainerElement)
+const handleScrollToArticle = async (behavior: 'smooth' | 'instant' = 'instant') =>
+  scrollToArticle('end', { behavior })
 
-const scrollToArticlesEnd = () => {
-  nextTick(() => {
-    const scrollHeight = contentContainerElement.value?.scrollHeight
-    if (scrollHeight)
-      contentContainerElement.value?.scrollTo({
-        top: scrollHeight,
-      })
-  })
+const isReplyActive = computed(() => !isLoadingArticles.value && isInitialSettled.value)
+
+const ticketDetailTopBarInstance = useTemplateRef('detail-top-bar')
+
+let scrollTimeout: NodeJS.Timeout | undefined
+const scrollScope = effectScope()
+
+const handleInitialScrollToEnd = () => {
+  const stopWatch = watch(
+    () => isReplyActive.value,
+    (visible) => {
+      if (!visible) return
+      //  It is unreliable scrolling to the end
+      // Async effects which need to run before
+      // :TODO find a better solution then setTimeout
+      scrollTimeout = setTimeout(() => {
+        handleScrollToArticle('instant')
+
+        scrollScope.run(() => {
+          const { directions } = useScroll(contentContainerElement)
+
+          // Wait for the user to initially scroll up
+          // Because when this code has run, we are at the bottom
+          whenever(
+            () => directions.top,
+            () => {
+              ticketDetailTopBarInstance.value?.hideDetails()
+              scrollScope.stop()
+            },
+          )
+        })
+
+        stopWatch()
+      }, 50)
+    },
+    { flush: 'post', immediate: true },
+  )
 }
+
+onUnmounted(() => {
+  if (scrollTimeout) clearTimeout(scrollTimeout)
+  scrollScope.stop()
+})
 
 const groupId = computed(() =>
   isInitialSettled.value && values.value.group_id
@@ -175,29 +203,52 @@ const groupId = computed(() =>
     : undefined,
 )
 
-const { setSkipNextStateUpdate } = useTaskbarTabStateUpdates(
-  currentTaskbarTabId,
-  form,
-  triggerFormUpdater,
-)
-
 const {
   ticketSchema,
   articleSchema,
   currentArticleType,
+  currentSchemaArticleType,
   ticketArticleTypes,
+  ticketArticleDefaultValues,
   securityIntegration,
   isTicketAgent,
   isTicketCustomer,
   isTicketEditable,
   articleTypeHandler,
   articleTypeSelectHandler,
+  additionalAddArticleNotes,
 } = useTicketEditForm(ticket, form)
+
+const { signatureHandling } = useTicketSignature('email')
+
+const {
+  isArticleFormGroupValid,
+  newTicketArticlePresent,
+  articleFormGroupNode,
+  showTicketArticleReplyForm,
+} = useTicketArticleReply(form, currentTaskbarTabNewArticlePresent)
+
+useTaskbarTabStateUpdates(currentTaskbarTabId, form, triggerFormUpdater, async () => {
+  newTicketArticlePresent.value = false
+
+  await nextTick()
+
+  currentArticleType.value = undefined
+
+  nextTick(() => {
+    formReset({
+      values: {
+        article: ticketArticleDefaultValues,
+      },
+    })
+  })
+})
 
 const sidebarContext = computed<TicketSidebarContext>(() => ({
   ticket,
   isTicketEditable,
   screenType: TicketSidebarScreenType.TicketDetailView,
+  view: isTicketAgent.value ? 'agent' : 'customer',
   form: form.value,
   formValues: {
     // TODO: Workaround, to make the sidebars working for now.
@@ -210,26 +261,38 @@ const sidebarContext = computed<TicketSidebarContext>(() => ({
 useProvideTicketSidebar(sidebarContext)
 const { hasSidebar, activeSidebar, switchSidebar } = useTicketSidebar()
 
-const hasInternalArticle = computed(
-  () => (values.value as TicketUpdateFormData).article?.internal,
-)
+const hasInternalArticle = computed(() => (values.value as TicketUpdateFormData).article?.internal)
 
 const formEditAttributeLocation = computed(() => {
   if (activeSidebar.value === 'information') return '#ticketEditAttributeForm'
   return '#wrapper-form-ticket-edit'
 })
 
-const {
-  isArticleFormGroupValid,
-  newTicketArticlePresent,
-  showTicketArticleReplyForm,
-} = useTicketArticleReply(form, currentTaskbarTabNewArticlePresent)
-
-const { liveUserList } = useTicketLiveUserList(
-  internalId,
-  isTicketAgent,
-  EnumTaskbarApp.Desktop,
+// Use a separate ref that lags by one post-flush tick so the Teleport target
+// is only switched after the new sub-component has mounted, avoiding an
+// orphaned teleport when ArticleReplyPinned/Unpinned swap their form div.
+const formReplyTarget = ref(
+  isReplyPinned.value ? '#ticketArticleReplyFormPinned' : '#ticketArticleReplyForm',
 )
+watch(
+  isReplyPinned,
+  (pinned) => {
+    formReplyTarget.value = pinned ? '#ticketArticleReplyFormPinned' : '#ticketArticleReplyForm'
+  },
+  { flush: 'post' },
+)
+const formArticleReplyLocation = computed(() => {
+  if (newTicketArticlePresent.value) return formReplyTarget.value
+  return '#wrapper-form-ticket-edit'
+})
+
+const hiddenFormGroups = computed(() => {
+  if (newTicketArticlePresent.value) return
+
+  return ['article']
+})
+
+const { liveUserList } = useTicketLiveUserList(internalId, isTicketAgent, EnumTaskbarApp.Desktop)
 
 provideTicketInformation({
   ticket,
@@ -238,14 +301,30 @@ provideTicketInformation({
   form,
   newTicketArticlePresent,
   showTicketArticleReplyForm,
+  highlightMenu: reactive({
+    activeMenuItem: highlightMenuItems[0],
+    isActive: false,
+    isEraserActive: false,
+  }),
   ...ticketInformation,
 })
 
 const ticketEditSchemaData = reactive({
   formEditAttributeLocation,
+  formArticleReplyLocation,
   securityIntegration,
   newTicketArticlePresent,
-  currentArticleType,
+  currentArticleType: currentSchemaArticleType,
+  existingAdditionalAddArticleNotes: () => {
+    return Object.keys(additionalAddArticleNotes.value).length > 0
+  },
+  getAdditionalAddArticleNote: (articleType?: AppSpecificTicketArticleType) => {
+    if (!articleType) return undefined
+
+    const accessor = `${articleType.value}-${articleType.internal ? 'internal' : 'public'}`
+
+    return additionalAddArticleNotes.value[accessor]
+  },
 })
 
 const ticketEditSchema = [
@@ -260,7 +339,7 @@ const ticketEditSchema = [
         isLayout: true,
         component: 'FormGroup',
         props: {
-          class: '@container/form-group',
+          class: '@sm:*:col-span-1',
           showDirtyMark: true,
         },
         children: [ticketSchema],
@@ -268,19 +347,21 @@ const ticketEditSchema = [
     ],
   },
   {
-    if: '$newTicketArticlePresent',
     isLayout: true,
     component: 'Teleport',
+    attrs: {
+      style: {
+        if: '$newTicketArticlePresent',
+        then: 'display: none;',
+      },
+    },
     props: {
-      to: '#ticketArticleReplyForm',
+      to: '$formArticleReplyLocation',
     },
     children: [
       {
         isLayout: true,
         component: 'FormGroup',
-        props: {
-          class: '@container/form-group',
-        },
         children: [articleSchema],
       },
     ],
@@ -310,10 +391,15 @@ const discardChanges = async () => {
 
     await nextTick()
 
-    // Skip subscription for the current tab, to avoid not needed form updater requests.
-    setSkipNextStateUpdate(true)
+    currentArticleType.value = undefined
 
-    formReset()
+    await nextTick()
+
+    formReset({
+      values: {
+        article: ticketArticleDefaultValues,
+      },
+    })
   }
 }
 
@@ -322,13 +408,13 @@ const errorCallback = (errorHandler: GraphQLHandlerError) =>
   errorHandler.type !== GraphQLErrorTypes.Forbidden &&
   errorHandler.type !== GraphQLErrorTypes.RecordNotFound
 
-const { isTicketFormGroupValid, initialTicketValue, editTicket } =
-  useTicketEdit(ticket, form, errorCallback)
-
-const { openReplyForm } = useTicketArticleReplyAction(
+const { isTicketFormGroupValid, initialTicketValue, editTicket } = useTicketEdit(
+  ticket,
   form,
-  showTicketArticleReplyForm,
+  errorCallback,
 )
+
+const { openReplyForm } = useTicketArticleReplyAction(form, showTicketArticleReplyForm)
 
 const isFormValid = computed(() => {
   if (!newTicketArticlePresent.value) return isTicketFormGroupValid.value
@@ -346,12 +432,8 @@ const checkSubmitEditTicket = () => {
   if (!isFormValid.value) {
     if (activeSidebar.value !== 'information') switchSidebar('information')
 
-    if (
-      newTicketArticlePresent.value &&
-      !isArticleFormGroupValid.value &&
-      !isReplyPinned.value
-    )
-      scrollToArticlesEnd()
+    if (newTicketArticlePresent.value && !isArticleFormGroupValid.value && !isReplyPinned.value)
+      scrollToArticle('end')
   }
 
   formSubmit()
@@ -365,7 +447,7 @@ const handleIncompleteChecklist = async (error: UserError) => {
       'You have unchecked items in the checklist. Do you want to handle them before closing this ticket?',
     ),
     {
-      headerTitle: __('Incomplete Ticket Checklist'),
+      headerTitle: __('Incomplete ticket checklist'),
       headerIcon: 'checklist',
       buttonLabel: __('Yes, open the checklist'),
       cancelLabel: __('No, just close the ticket'),
@@ -426,15 +508,11 @@ const handleUserErrorException = (error: UserError) => {
   return true
 }
 
-const { activeMacro, executeMacro, disposeActiveMacro } =
-  useTicketMacros(formSubmit)
+const { activeMacro, executeMacro, disposeActiveMacro } = useTicketMacros(formSubmit)
 
-const submitEditTicket = async (
-  formData: FormSubmitData<TicketUpdateFormData>,
-) => {
+const submitEditTicket = async (formData: FormSubmitData<TicketUpdateFormData>) => {
   let data = cloneDeep(formData)
-  if (currentArticleType.value?.updateForm)
-    data = currentArticleType.value.updateForm(data)
+  if (currentArticleType.value?.updateForm) data = currentArticleType.value.updateForm(data)
 
   if (data.article && timeAccountingData.value) {
     data.article = {
@@ -477,7 +555,7 @@ const submitEditTicket = async (
         timeAccountingData.value = undefined
 
         // Await subscription to update article list before we scroll to the bottom.
-        watch(articleResult, scrollToArticlesEnd, {
+        watch(articleResult, () => scrollToArticle('end'), {
           once: true,
         })
 
@@ -485,13 +563,16 @@ const submitEditTicket = async (
         newTicketArticlePresent.value = false
 
         return {
-          reset: (
-            values: FormSubmitData<TicketUpdateFormData>,
-            formNodeValues: FormValues,
-          ) => {
+          reset: (values: FormSubmitData<TicketUpdateFormData>, formNodeValues: FormValues) => {
             nextTick(() => {
               if (!formNodeValues) return
-              formReset({ values: { ticket: formNodeValues.ticket } })
+
+              formReset({
+                values: {
+                  ticket: formNodeValues.ticket,
+                  article: ticketArticleDefaultValues,
+                },
+              })
             })
           },
         }
@@ -501,8 +582,7 @@ const submitEditTicket = async (
     })
     .catch((error) => {
       if (error instanceof UserError) {
-        if (error.getFirstErrorException())
-          return handleUserErrorException(error)
+        if (error.getFirstErrorException()) return handleUserErrorException(error)
         skipValidators.value.length = 0
         timeAccountingData.value = undefined
         if (form.value?.formNode) {
@@ -528,8 +608,12 @@ const discardReplyForm = async () => {
 
   await nextTick()
 
-  // Skip subscription for the current tab, to avoid not needed form updater requests.
-  setSkipNextStateUpdate(true)
+  // Reset only the article group.
+  currentArticleType.value = undefined
+
+  await nextTick()
+
+  articleFormGroupNode.value?.reset(ticketArticleDefaultValues)
 
   return triggerFormUpdater()
 }
@@ -544,64 +628,26 @@ const handleShowArticleForm = (
 const onEditFormSettled = () => {
   watch(
     () => flags.value.newArticlePresent,
-    (newValue) => {
-      newTicketArticlePresent.value = newValue
+    (newValue, oldValue) => {
+      if (newTicketArticlePresent.value === newValue) return
+      const oldNewTicketArticlePresent = newTicketArticlePresent.value
+
+      newTicketArticlePresent.value = newValue ?? false
+
+      if (oldNewTicketArticlePresent && oldValue !== undefined && oldValue && !newValue) {
+        // Reset only the article group.
+        currentArticleType.value = undefined
+
+        nextTick(() => {
+          articleFormGroupNode.value?.reset()
+        })
+      }
     },
+    { immediate: true },
   )
 }
 
-// Reset newTicketArticlePresent when ticket changed, that the
-// taskbar information is used for the start.
-watch(ticketId, () => {
-  initialTicketValue.value = undefined
-  newTicketArticlePresent.value = undefined
-})
-
-const articleListInstance = useTemplateRef('article-list')
-
-const topBarInstance = useTemplateRef('top-bar')
-
-const {
-  handleScroll,
-  isHoveringOnTopBar,
-  isHidingTicketDetails,
-  isReachingBottom,
-  isReachingTop,
-} = useArticleContainerScroll(
-  ticket,
-  contentContainerElement,
-  articleListInstance,
-  topBarInstance,
-)
-
-const { height } = useWindowSize()
-
-whenever(height, () => {
-  if (!contentContainerElement) return
-
-  // On window resize, manually check if the article list is at the bottom.
-  const { clientHeight, scrollHeight, scrollTop } =
-    contentContainerElement.value!
-
-  isReachingBottom.value = scrollTop + clientHeight < scrollHeight
-})
-
 const articleListTopPadding = ref('4rem')
-
-useResizeObserver(
-  () => topBarInstance.value?.$el,
-  (observerEntry) => {
-    if (!isReachingTop.value) return
-
-    const gap = 20
-    const topBarNode = observerEntry[observerEntry.length - 1]?.target
-
-    if (!topBarNode) return
-
-    const height = topBarNode.clientHeight
-    articleListTopPadding.value = `${(height + gap) / 16}rem`
-  },
-)
 </script>
 
 <template>
@@ -616,50 +662,50 @@ useResizeObserver(
     <CommonLoader class="mt-8" :loading="!ticket">
       <div
         ref="content-container"
-        class="relative grid h-full w-full overflow-y-auto"
+        data-test-id="ticket-detail-content-container"
+        class="@container isolate grid w-full overflow-y-auto overscroll-contain"
         :class="{
           'grid-rows-[max-content_max-content_max-content]':
             !newTicketArticlePresent || !isReplyPinned,
-          'grid-rows-[max-content_1fr_max-content]':
-            newTicketArticlePresent && isReplyPinned,
+          'grid-rows-[max-content_1fr_max-content]': newTicketArticlePresent && isReplyPinned,
         }"
-        @scroll.passive="handleScroll"
       >
-        <div class="sticky top-0 z-10">
-          <Transition name="slide-down">
-            <TicketDetailTopBar
-              ref="top-bar"
-              :key="`${isHidingTicketDetails}-top-bar`"
-              v-model:hover="isHoveringOnTopBar"
-              class="absolute! top-0 w-full"
-              data-test-id="visible-ticket-detail-top-bar"
-              :hide-details="isHidingTicketDetails"
-            />
-          </Transition>
-        </div>
+        <TicketDetailTopBar
+          ref="detail-top-bar"
+          :content-container-element="contentContainerElement"
+        />
 
         <ArticleList
-          ref="article-list"
           :style="{
             'padding-top': articleListTopPadding,
           }"
-          :aria-busy="isLoadingArticles"
+          :is-loading-articles="isLoadingArticles"
+          @scroll-to-end="handleInitialScrollToEnd"
         />
 
-        <ArticleReply
-          v-if="ticket?.id && isTicketEditable"
-          v-show="!isLoadingArticles"
-          v-model:pinned="isReplyPinned"
-          :ticket="ticket"
-          :new-article-present="newTicketArticlePresent"
-          :create-article-type="ticket.createArticleType?.name"
-          :ticket-article-types="ticketArticleTypes"
-          :is-ticket-customer="isTicketCustomer"
-          :has-internal-article="hasInternalArticle"
-          :parent-reached-bottom-scroll="isReachingBottom"
-          @show-article-form="handleShowArticleForm"
-          @discard-form="discardReplyForm"
+        <CommonIndicator v-model="isReachingBottom" class="h-0.5" />
+
+        <TicketDetailScrollToBottomButton
+          v-if="articleCount && articleCount > 0 && !isReachingBottom"
+          :count="articleCount"
+          @click="handleScrollToArticle('smooth')"
         />
+
+        <div v-show="!isLoadingArticles && isInitialSettled">
+          <ArticleReply
+            v-if="ticket?.id && isTicketEditable"
+            v-model:pinned="isReplyPinned"
+            :ticket="ticket"
+            :new-article-present="newTicketArticlePresent"
+            :create-article-type="ticket.createArticleType?.name"
+            :ticket-article-types="ticketArticleTypes"
+            :is-ticket-customer="isTicketCustomer"
+            :has-internal-article="hasInternalArticle"
+            :parent-reached-bottom-scroll="isReachingBottom"
+            @show-article-form="handleShowArticleForm"
+            @discard-form="discardReplyForm"
+          />
+        </div>
 
         <div id="wrapper-form-ticket-edit" class="hidden" aria-hidden="true">
           <Form
@@ -670,7 +716,8 @@ useResizeObserver(
             :schema="ticketEditSchema"
             :disabled="!isTicketEditable"
             :flatten-form-groups="['ticket']"
-            :handlers="[articleTypeHandler()]"
+            :hidden-form-groups="hiddenFormGroups"
+            :handlers="[articleTypeHandler(), signatureHandling('body')]"
             :form-kit-plugins="[articleTypeSelectHandler]"
             :schema-data="ticketEditSchemaData"
             :initial-values="initialTicketValue"
@@ -681,22 +728,17 @@ useResizeObserver(
             :schema-component-library="{
               Teleport: markRaw(Teleport) as unknown as Component,
             }"
-            @submit="
-              submitEditTicket($event as FormSubmitData<TicketUpdateFormData>)
-            "
+            @submit="submitEditTicket($event as FormSubmitData<TicketUpdateFormData>)"
             @settled="onEditFormSettled"
-            @changed="setSkipNextStateUpdate(true)"
           />
         </div>
       </div>
     </CommonLoader>
-    <template #sideBar="{ isCollapsed, toggleCollapse }">
-      <TicketSidebar
-        :is-collapsed="isCollapsed"
-        :toggle-collapse="toggleCollapse"
-        :context="sidebarContext"
-      />
+    <!-- Render underlying components only when the ticket is available to avoid providing undefined ticket context -->
+    <template v-if="!!ticket" #sideBar>
+      <TicketSidebar :context="sidebarContext" />
     </template>
+
     <template #bottomBar>
       <TicketDetailBottomBar
         :can-use-draft="canUseDraft"
@@ -709,7 +751,6 @@ useResizeObserver(
         :has-available-draft="hasAvailableDraft"
         :live-user-list="liveUserList"
         :shared-draft-id="ticket?.sharedDraftZoomId"
-        :set-skip-next-state-update="setSkipNextStateUpdate"
         :ticket-id="ticketId"
         @submit="checkSubmitEditTicket"
         @discard="discardChanges"

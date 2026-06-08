@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Queries
   class FormUpdater < BaseQuery
@@ -13,6 +13,10 @@ module Gql::Queries
     argument :id, GraphQL::Types::ID, required: false, description: 'Optional ID for related entity (e.g. for update forms)'
 
     type Gql::Types::FormUpdaterResultType, null: false
+
+    requires_authentication lambda { |ctx, _obj|
+      ctx[:current_arguments][:form_updater_id].requires_authentication
+    }
 
     def initialize(...)
       super
@@ -30,21 +34,12 @@ module Gql::Queries
       raise ActiveRecord::RecordNotFound, __('FormSchema could not be found.') if !@form_updater
     end
 
-    def self.authorize(_obj, ctx)
-      # Per default the queries require a authenticated user.
-      if !ctx[:current_arguments][:form_updater_id].requires_authentication
-        return true
-      end
-
-      super
-    end
-
     def authorized?(...)
       if form_updater.respond_to?(:authorized?)
         return form_updater.authorized?
       end
 
-      super
+      true
     end
 
     def resolve(...)

@@ -104,6 +104,8 @@ class App.SearchableAjaxSelect extends App.SearchableSelect
     # refresh elements
     @refreshElements()
 
+    @filterByQuery('')
+
   renderResponseItemAjax: (elem, data) ->
     result = _.find(data.details, (detailElem) -> detailElem.type == elem.type and detailElem.id == elem.id)
 
@@ -131,7 +133,7 @@ class App.SearchableAjaxSelect extends App.SearchableSelect
     {
       name:  name
       value: object.id
-      inactive: object.active == false
+      inactive: !@options.attribute.allowInactive && object.active == false
     }
 
   showLoader: =>

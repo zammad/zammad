@@ -1,27 +1,24 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, toRef } from 'vue'
 
 import type { UserTaskbarItemEntitySearch } from '#shared/graphql/types.ts'
 
-import { useUserTaskbarTabLink } from '#desktop/composables/useUserTaskbarTabLink.ts'
+import { useSearchTitle } from '#desktop/components/Search/composables/useSearchTitle.ts'
+import { useUserTaskbarTab } from '#desktop/composables/useUserTaskbarTab.ts'
 
 import type { UserTaskbarTabEntityProps } from '../types.ts'
 
-const props =
-  defineProps<UserTaskbarTabEntityProps<UserTaskbarItemEntitySearch>>()
+const props = defineProps<UserTaskbarTabEntityProps<UserTaskbarItemEntitySearch>>()
 
-const { tabLinkInstance, taskbarTabActive } = useUserTaskbarTabLink(
-  toRef(props, 'taskbarTab'),
-)
+const { tabLinkInstance, taskbarTabActive } = useUserTaskbarTab(toRef(props, 'taskbarTab'))
 
-const currentTitle = computed(
-  () =>
-    props.context?.query ||
-    props.taskbarTab.entity?.query ||
-    __('Extended Search'),
+const filterCount = computed<number>(() => props.taskbarTab.entity?.filterCount ?? 0)
+const currentSearchTerm = computed(
+  () => (props.context?.query as string) || props.taskbarTab.entity?.query || '',
 )
+const { searchTitle: currentTitle } = useSearchTitle(currentSearchTerm, filterCount)
 </script>
 
 <template>
@@ -36,11 +33,11 @@ const currentTitle = computed(
     internal
   >
     <CommonIcon
-      class="shrink-0 text-neutral-500"
+      class="shrink-0 text-neutral-500 group-focus-visible/link:text-white!"
       :class="{
         'text-white!': taskbarTabActive,
       }"
-      size="small"
+      size="tiny"
       name="search-detail"
     />
     <CommonLabel

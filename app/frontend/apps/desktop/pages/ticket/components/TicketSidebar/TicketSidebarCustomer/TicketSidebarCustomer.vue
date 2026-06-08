@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { watch, computed } from 'vue'
@@ -36,18 +36,15 @@ const {
   user: customer,
   secondaryOrganizations,
   objectAttributes,
-  loadAllSecondaryOrganizations,
+  fetchMoreSecondaryOrganizations,
 } = useUserDetail(customerId)
 
 const calculateBadgeType = (value: number) => {
   // If the sidebar is open in the ticket detail view,
   //   we need to subtract 1 from the value to account for the ticket itself.
-  if (props.context.screenType === TicketSidebarScreenType.TicketDetailView)
-    value -= 1
+  if (props.context.screenType === TicketSidebarScreenType.TicketDetailView) value -= 1
 
-  return value > 1
-    ? TicketSidebarButtonBadgeType.Alarming
-    : TicketSidebarButtonBadgeType.Default
+  return value > 1 ? TicketSidebarButtonBadgeType.Alarming : TicketSidebarButtonBadgeType.Default
 }
 
 const badge = computed<TicketSidebarButtonBadgeDetails | undefined>(() => {
@@ -73,9 +70,7 @@ watch(customerId, (newValue) => {
 })
 
 // On initial setup we show the sidebar if customerId is present.
-if (customerId.value) {
-  emit('show')
-}
+if (customerId.value) emit('show')
 </script>
 
 <template>
@@ -94,7 +89,7 @@ if (customerId.value) {
       :customer="customer"
       :secondary-organizations="secondaryOrganizations"
       :object-attributes="objectAttributes"
-      @load-more-secondary-organizations="loadAllSecondaryOrganizations"
+      @load-more-secondary-organizations="fetchMoreSecondaryOrganizations"
     />
   </TicketSidebarWrapper>
 </template>

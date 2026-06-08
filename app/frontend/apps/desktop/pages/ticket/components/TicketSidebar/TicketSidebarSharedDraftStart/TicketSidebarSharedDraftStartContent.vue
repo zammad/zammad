@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { createMessage, getNode } from '@formkit/core'
@@ -18,6 +18,7 @@ import type { ObjectLike } from '#shared/types/utils.ts'
 import { removeSignatureFromBody } from '#shared/utils/dom.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
+import { useFlyout } from '#desktop/components/CommonFlyout/useFlyout.ts'
 import { useTicketSharedDraft } from '#desktop/pages/ticket/composables/useTicketSharedDraft.ts'
 import type { TicketSidebarContentProps } from '#desktop/pages/ticket/types/sidebar.ts'
 
@@ -29,6 +30,12 @@ interface Props extends TicketSidebarContentProps {
 
 const props = defineProps<Props>()
 
+useFlyout({
+  name: 'shared-draft',
+  component: () => import('../../TicketSharedDraftFlyout.vue'),
+  global: true,
+})
+
 const persistentStates = defineModel<ObjectLike>({ required: true })
 
 const groupId = computed(() =>
@@ -36,10 +43,7 @@ const groupId = computed(() =>
 )
 
 const currentSharedDraftId = computed(() =>
-  convertToGraphQLId(
-    'Ticket::SharedDraftStart',
-    Number(props.context.formValues.shared_draft_id),
-  ),
+  convertToGraphQLId('Ticket::SharedDraftStart', Number(props.context.formValues.shared_draft_id)),
 )
 
 const sharedDraftTitle = ref('')
@@ -50,20 +54,18 @@ const sharedDraftStartCreateMutation = new MutationHandler(
   useTicketSharedDraftStartCreateMutation(),
 )
 
-const unsupportedFields = [
+const unsupportedFields = new Set([
   'articleSenderType',
   'attachments',
   'group_id',
   'security',
   'shared_draft_id',
   'ticket_duplicate_detection',
-]
+])
 
 const supportedFields = () =>
   Object.fromEntries(
-    Object.entries(props.context.formValues).filter(
-      ([field]) => !unsupportedFields.includes(field),
-    ),
+    Object.entries(props.context.formValues).filter(([field]) => !unsupportedFields.has(field)),
   )
 
 const sharedDraftContent = () => ({
@@ -76,9 +78,7 @@ const sharedDraftContent = () => ({
 
 const route = useRoute()
 
-const sharedDraftTitleNodeId = computed(
-  () => `sharedDraftTitle-${route.meta.taskbarTabEntityKey}`,
-)
+const sharedDraftTitleNodeId = computed(() => `sharedDraftTitle-${route.meta.taskbarTabEntityKey}`)
 
 const createSharedDraft = async () => {
   const sharedDraftTitleNode = getNode(sharedDraftTitleNodeId.value)
@@ -142,9 +142,7 @@ const updateSharedDraft = () => {
     })
 }
 
-const { openSharedDraftFlyout } = useTicketSharedDraft(
-  props.context.setSkipNextStateUpdate,
-)
+const { openSharedDraftFlyout } = useTicketSharedDraft()
 
 const openFlyout = (sharedDraftStartId: string) => {
   openSharedDraftFlyout('start', sharedDraftStartId, props.context.form)
@@ -166,7 +164,7 @@ const openFlyout = (sharedDraftStartId: string) => {
       validation="required:trim"
       link="/"
       link-icon="plus-square-fill"
-      :link-label="__('Create Shared Draft')"
+      :link-label="__('Create shared draft')"
       @link-click.prevent="createSharedDraft"
       @keypress.enter.prevent="createSharedDraft"
     />
@@ -186,14 +184,13 @@ const openFlyout = (sharedDraftStartId: string) => {
               v-tooltip="sharedDraftStart.name"
               link="#"
               class="line-clamp-1"
-              :aria-label="$t('Preview Shared Draft')"
+              :aria-label="$t('Preview shared draft')"
+              internal
               @click.prevent="openFlyout(sharedDraftStart.id)"
-              >{{ sharedDraftStart.name }}</CommonLink
             >
-            <CommonLabel
-              class="line-clamp-1 text-stone-200! dark:text-neutral-500!"
-              size="small"
-            >
+              {{ sharedDraftStart.name }}
+            </CommonLink>
+            <CommonLabel class="line-clamp-1 text-stone-200! dark:text-neutral-500!" size="small">
               <CommonDateTime :date-time="sharedDraftStart.updatedAt" />
               <template v-if="sharedDraftStart.updatedBy">
                 <span v-tooltip="sharedDraftStart.updatedBy.fullname">
@@ -204,7 +201,7 @@ const openFlyout = (sharedDraftStartId: string) => {
           </div>
           <CommonButton
             v-if="currentSharedDraftId === sharedDraftStart.id"
-            v-tooltip="__('Update Shared Draft')"
+            v-tooltip="__('Update shared draft')"
             variant="submit"
             size="small"
             icon="arrow-repeat"
@@ -212,11 +209,7 @@ const openFlyout = (sharedDraftStartId: string) => {
           />
         </div>
       </div>
-      <CommonLabel
-        v-else
-        class="text-stone-200! dark:text-neutral-500!"
-        size="small"
-      >
+      <CommonLabel v-else class="text-stone-200! dark:text-neutral-500!" size="small">
         {{ $t('No shared drafts yet') }}
       </CommonLabel>
     </div>

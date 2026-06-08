@@ -4,11 +4,91 @@ from_email: k.guenther@example.com
 from_display_name: Günther John | Example GmbH
 to: Fritz Bauer <me@example.com>
 subject: Ticket Templates
-body: |-
-  <div>
-  <p><span style="color:#1f497d;">Hallo Martin,</span></p><p><span style="color:#1f497d;"> </span></p><p><span style="color:#1f497d;">ich möchte mich gern für den Beta-Test für die Ticket Templates unter XXXX 2.4 anmelden.</span></p><p><span style="color:#1f497d;"> </span></p><div>
-  <p><span style="color:#1f497d;"> </span></p><p><span style="color:#1f497d;">Mit freundlichen Grüßen</span></p><p><span style="color:#1f497d;">John Günther</span></p><p><span style="color:#1f497d;"> </span></p><p><span style="color:#1f497d;"><a href="http://www.GeoFachDatenServer.de" rel="nofollow noreferrer noopener" target="_blank" title="http://www.GeoFachDatenServer.de"><span style="color:blue;">example.com</span></a> – profitieren Sie vom umfangreichen Daten-Netzwerk </span></p><p><span style="color:#1f497d;"> </span></p><p><span style="color:#1f497d;">_ __ ___ ____________________________ ___ __ _</span></p><p><span style="color:#1f497d;"> </span></p><p><span style="color:#1f497d;">Example GmbH</span></p><p><span style="color:#1f497d;">Some What</span></p><p><span style="color:#1f497d;"> </span></p><p><span style="color:#1f497d;">Sitz: Someware-Straße 9, XXXXX Someware</span></p><p><span style="color:#1f497d;"> </span></p><p><span style="color:#1f497d;">M: +49 (0) XXX XX XX 70</span></p><p><span style="color:#1f497d;">T: +49 (0) XXX XX XX 22</span></p><p><span style="color:#1f497d;">F: +49 (0) XXX XX XX 11</span></p><p><span style="color:#1f497d;">W: www.example.de </span></p><p><span style="color:#1f497d;"> </span></p><p><span style="color:#1f497d;">Geschäftsführer: John Smith</span></p><p><span style="color:#1f497d;">HRB XXXXXX AG Someware</span></p><p><span style="color:#1f497d;">St.-Nr.: 112/107/05858</span></p><p><span style="color:#1f497d;"> </span></p><p><span style="color:#1f497d;">ISO 9001:2008 Zertifiziert -Qualitätsstandard mit Zukunft </span></p><p><span style="color:#1f497d;">_ __ ___ ____________________________ ___ __ _</span></p><p><span style="color:#1f497d;"> </span></p><p><span style="color:#1f497d;">Diese Information ist ausschließlich für den Adressaten bestimmt und kann vertrauliche oder gesetzlich geschützte Informationen enthalten. Wenn Sie nicht der bestimmungsgemäße Adressat sind, unterrichten Sie bitte den Absender und vernichten Sie diese Mail. Anderen als dem bestimmungsgemäßen Adressaten ist es untersagt, diese E-Mail zu lesen, zu speichern, weiterzuleiten oder ihren Inhalt auf welche Weise auch immer zu verwenden.</span></p></div><p><span style="color:#1f497d;"> </span></p><div><span class="js-signatureMarker"></span><p><b>Von:</b><span> Fritz Bauer [mailto:me@example.com] <br><b>Gesendet:</b> Donnerstag, 3. Mai 2012 11:51<br><b>An:</b> John Smith<br><b>Cc:</b> Smith, John Marian; johnel.fratczak@example.com; ole.brei@example.com; Günther John | Example GmbH; bkopon@example.com; john.heisterhagen@team.example.com; sven.rocked@example.com; michael.house@example.com; tgutzeit@example.com<br><b>Betreff:</b> Re: OTRS::XXX Erweiterung - Anhänge an CI's</span></p></div><p>&nbsp;</p><p>Hallo,</p><div><p>&nbsp;</p></div><div><p>ich versuche an den Punkten anzuknüpfen.</p></div><div><p>&nbsp;</p></div><div><p><b>a) LDAP Muster Konfigdatei</b></p></div><div><p>&nbsp;</p></div><div><p><a href="https://wiki.lab.example.com/doku.php?id=xxxx:start&amp;#ldap" rel="nofollow noreferrer noopener" target="_blank">https://wiki.lab.example.com/doku.php?id=xxxx:start&amp;#ldap</a></p></div><div><p>&nbsp;</p></div><div><p>PS: Es gibt noch eine Reihe weiterer Möglichkeiten, vor allem im Bezug auf Agenten-Rechte/LDAP Gruppen Synchronisation. Wenn Ihr hier weitere Informationen benötigt, einfach im Wiki die Aufgabenbeschreibung rein machen und ich kann eine Beispiel-Config dazu legen.</p></div><div><p>&nbsp;</p></div><div><p>&nbsp;</p></div><div><p><b>b) Ticket Templates</b></p></div><div><p>Wir haben das Paket vom alten Maintainer übernommen, es läuft nun auf XXXX 2.4, XXXX 3.0 und XXXX 3.1. Wir haben das Paket um weitere Funktionen ergänzt und würden es gerne hier in diesen Kreis zum Beta-Test bereit stellen.</p></div><div><p>&nbsp;</p></div><div><p>Vorgehen:</p></div><div><p>Wer Interesse hat, bitte eine Email an mich und ich versende Zugänge zu den Beta-Test-Systemen. Nach ca. 2 Wochen werden wir die Erweiterungen in der Version 1.0 veröffentlichen.</p></div><div><p>&nbsp;</p></div><div><p>&nbsp;</p></div><div><p><b>c) XXXX Entwickler Schulung</b></p></div><div><p>Weil es immer wieder Thema war, falls jemand Interesse hat, das XXXX bietet nun auch OTRS Entwickler Schulungen an (<a href="http://www.example.com/kurs/xxxx_entwickler/" rel="nofollow noreferrer noopener" target="_blank">http://www.example.com/kurs/xxxx_entwickler/</a>).</p></div><div><p>&nbsp;</p></div><div><p>&nbsp;</p></div><div><p><b>d) Genelle Fragen?</b></p></div><div><p>Haben sich beim ein oder anderen generell noch Fragen aufgetan?</p></div><div><p>&nbsp;</p></div><div><p>&nbsp;</p></div><div><p>Viele Grüße!</p></div><div><p>&nbsp;</p></div><div>
-  <div><p>-Fritz</p></div><p>On May 2, 2012, at 14:25 , John Smith wrote:<br><br></p><p>Moin Moin,<br><br>die Antwort ist zwar etwas spät, aber nach der Schulung war ich krank und danach<br>hatte ich viel zu tun auf der Arbeit, sodass ich keine Zeit für XXXX hatte.<br>Ich denke das ist allgemein das Problem, wenn sowas nebenbei gemacht werden muss.<br><br>Wie auch immer, danke für die mail mit dem ITSM Zusatz auch wenn das zur Zeit bei der Example nicht relevant ist.<br><br>Ich habe im XXXX Wiki den Punkt um die Vorlagen angefügt.<br>Ticket Template von John Bäcker<br>Bei uns habe ich das Ticket Template von John Bäcker in der Version 0.1.96 unter XXXX 3.0.10 implementiert. <br><br>Fritz wollte sich auch um das andere Ticket Template Modul kümmern und uns zur Verfügung stellen, welches unter XXXX 3.0 nicht lauffähig sein sollte.<br><br>Im Wiki kann ich die LDAP Muster Konfigdatei nicht finden.<br>Hat die jemand von euch zufälligerweise ?<br><br>Danke und Gruß<br>John Smith<br><br>Am 4. April 2012 08:24 schrieb Smith, John Marian &lt;<a href="mailto:john.smith@example.com">john.hinz@example.com</a>&gt;:<br>Hallo zusammen,<br><br>ich hoffe Ihr seid noch gut nach Hause gekommen am Mittwoch. Der XXX Kurs Donnerstag und Freitag war noch ganz gut, wobei ich mir den letzten halben Tag eigentlich hätte schenken können.<br><br>Soweit ich weiß arbeitet Ihr nicht mit XXX? Falls doch habe ich hier eine tolle (eigentlich) kostenpflichtige Erweiterung für Euch.<br><br>Es handelt sich um eine programmiertes Paket von der XXXX AG. Die Weitergabe ist legal.<br><br>Mit dem Paket kann man Anhänge an CI’s (Configuration Items) verknüpfen. Das ist sehr praktisch wenn man zum Beispiel Rechnungen an Server, Computern und und und anhängen möchte.<br><br>Der Dank geht an Frank Linden, der uns das Paket kostenlos zur Verfügung gestellt hat.<br><br>Viele Grüße aus Someware<br><br>John<br><br>_________________________<br>SysAdmin<br>John Marian Smith<br>IT-Management<br><br>Example GmbH &amp; Co. KG<br>Der Provider für<br>Mehrwertdienste &amp; YYY<br><br>Someware 23<br>XXXXX Someware<br><br>Tel. (01802) XX XX XX - 42<br>Fax (01802) XX XX XX - 99<br>nur 6 Cent je Anruf aus dem dt. Festnetz,<br>max. 42 Cent pro Min. aus dem Mobilfunknetz<br><br>E-Mail <a href="mailto:john.smith@Example.de">john.smith@Example.de</a><br>Web <a href="http://www.Example.de" rel="nofollow noreferrer noopener" target="_blank">www.Example.de</a><br>Amtsgericht Hannover HRA xxxxxxxx<br>Komplementärin: Example Verwaltungs- GmbH<br>Vertreten durch: Somebody, Somebody<br>Amtsgericht Someware HRB XXX XXX<br><br>_________________________ <br>Highlights der Example Contact Center-Suite:<br>Virtual XXX&amp;Power-XXX, Self-Services&amp;XXX-Portale,<br>XXX-/Web-Kundenbefragungen, CRM, PEP, YYY</p></div></div>
+body: '<div><p><span style="color:#1f497d;">Hallo Martin,</span></p><p><span style="color:#1f497d;">
+  </span></p><p><span style="color:#1f497d;">ich möchte mich gern für den Beta-Test
+  für die Ticket Templates unter XXXX 2.4 anmelden.</span></p><p><span style="color:#1f497d;">
+  </span></p><div><p><span style="color:#1f497d;"> </span></p><p><span style="color:#1f497d;">Mit
+  freundlichen Grüßen</span></p><p><span style="color:#1f497d;">John Günther</span></p><p><span
+  style="color:#1f497d;"> </span></p><p><span style="color:#1f497d;"><a href="http://www.GeoFachDatenServer.de"
+  rel="nofollow noreferrer noopener" target="_blank" title="http://www.GeoFachDatenServer.de"><span
+  style="color:blue;">example.com</span></a> – profitieren Sie vom umfangreichen Daten-Netzwerk
+  </span></p><p><span style="color:#1f497d;"> </span></p><p><span style="color:#1f497d;">_
+  __ ___ ____________________________ ___ __ _</span></p><p><span style="color:#1f497d;">
+  </span></p><p><span style="color:#1f497d;">Example GmbH</span></p><p><span style="color:#1f497d;">Some
+  What</span></p><p><span style="color:#1f497d;"> </span></p><p><span style="color:#1f497d;">Sitz:
+  Someware-Straße 9, XXXXX Someware</span></p><p><span style="color:#1f497d;"> </span></p><p><span
+  style="color:#1f497d;">M: +49 (0) XXX XX XX 70</span></p><p><span style="color:#1f497d;">T:
+  +49 (0) XXX XX XX 22</span></p><p><span style="color:#1f497d;">F: +49 (0) XXX XX
+  XX 11</span></p><p><span style="color:#1f497d;">W: www.example.de </span></p><p><span
+  style="color:#1f497d;"> </span></p><p><span style="color:#1f497d;">Geschäftsführer:
+  John Smith</span></p><p><span style="color:#1f497d;">HRB XXXXXX AG Someware</span></p><p><span
+  style="color:#1f497d;">St.-Nr.: 112/107/05858</span></p><p><span style="color:#1f497d;">
+  </span></p><p><span style="color:#1f497d;">ISO 9001:2008 Zertifiziert -Qualitätsstandard
+  mit Zukunft </span></p><p><span style="color:#1f497d;">_ __ ___ ____________________________
+  ___ __ _</span></p><p><span style="color:#1f497d;"> </span></p><p><span style="color:#1f497d;">Diese
+  Information ist ausschließlich für den Adressaten bestimmt und kann vertrauliche
+  oder gesetzlich geschützte Informationen enthalten. Wenn Sie nicht der bestimmungsgemäße
+  Adressat sind, unterrichten Sie bitte den Absender und vernichten Sie diese Mail.
+  Anderen als dem bestimmungsgemäßen Adressaten ist es untersagt, diese E-Mail zu
+  lesen, zu speichern, weiterzuleiten oder ihren Inhalt auf welche Weise auch immer
+  zu verwenden.</span></p></div><p><span style="color:#1f497d;"> </span></p><div><span
+  class="js-signatureMarker"></span><p><b>Von:</b><span> Fritz Bauer [mailto:me@example.com]
+  <br><b>Gesendet:</b> Donnerstag, 3. Mai 2012 11:51<br><b>An:</b> John Smith<br><b>Cc:</b>
+  Smith, John Marian; johnel.fratczak@example.com; ole.brei@example.com; Günther John
+  | Example GmbH; bkopon@example.com; john.heisterhagen@team.example.com; sven.rocked@example.com;
+  michael.house@example.com; tgutzeit@example.com<br><b>Betreff:</b> Re: OTRS::XXX
+  Erweiterung - Anhänge an CI''s</span></p></div><p>&nbsp;</p><p>Hallo,</p><div><p>&nbsp;</p></div><div><p>ich
+  versuche an den Punkten anzuknüpfen.</p></div><div><p>&nbsp;</p></div><div><p><b>a)
+  LDAP Muster Konfigdatei</b></p></div><div><p>&nbsp;</p></div><div><p><a href="https://wiki.lab.example.com/doku.php?id=xxxx:start&amp;#ldap"
+  rel="nofollow noreferrer noopener" target="_blank">https://wiki.lab.example.com/doku.php?id=xxxx:start&amp;#ldap</a></p></div><div><p>&nbsp;</p></div><div><p>PS:
+  Es gibt noch eine Reihe weiterer Möglichkeiten, vor allem im Bezug auf Agenten-Rechte/LDAP
+  Gruppen Synchronisation. Wenn Ihr hier weitere Informationen benötigt, einfach im
+  Wiki die Aufgabenbeschreibung rein machen und ich kann eine Beispiel-Config dazu
+  legen.</p></div><div><p>&nbsp;</p></div><div><p>&nbsp;</p></div><div><p><b>b) Ticket
+  Templates</b></p></div><div><p>Wir haben das Paket vom alten Maintainer übernommen,
+  es läuft nun auf XXXX 2.4, XXXX 3.0 und XXXX 3.1. Wir haben das Paket um weitere
+  Funktionen ergänzt und würden es gerne hier in diesen Kreis zum Beta-Test bereit
+  stellen.</p></div><div><p>&nbsp;</p></div><div><p>Vorgehen:</p></div><div><p>Wer
+  Interesse hat, bitte eine Email an mich und ich versende Zugänge zu den Beta-Test-Systemen.
+  Nach ca. 2 Wochen werden wir die Erweiterungen in der Version 1.0 veröffentlichen.</p></div><div><p>&nbsp;</p></div><div><p>&nbsp;</p></div><div><p><b>c)
+  XXXX Entwickler Schulung</b></p></div><div><p>Weil es immer wieder Thema war, falls
+  jemand Interesse hat, das XXXX bietet nun auch OTRS Entwickler Schulungen an (<a
+  href="http://www.example.com/kurs/xxxx_entwickler/" rel="nofollow noreferrer noopener"
+  target="_blank">http://www.example.com/kurs/xxxx_entwickler/</a>).</p></div><div><p>&nbsp;</p></div><div><p>&nbsp;</p></div><div><p><b>d)
+  Genelle Fragen?</b></p></div><div><p>Haben sich beim ein oder anderen generell noch
+  Fragen aufgetan?</p></div><div><p>&nbsp;</p></div><div><p>&nbsp;</p></div><div><p>Viele
+  Grüße!</p></div><div><p>&nbsp;</p></div><div><div><p>-Fritz</p></div><p>On May 2,
+  2012, at 14:25 , John Smith wrote:<br><br></p><p>Moin Moin,<br><br>die Antwort ist
+  zwar etwas spät, aber nach der Schulung war ich krank und danach<br>hatte ich viel
+  zu tun auf der Arbeit, sodass ich keine Zeit für XXXX hatte.<br>Ich denke das ist
+  allgemein das Problem, wenn sowas nebenbei gemacht werden muss.<br><br>Wie auch
+  immer, danke für die mail mit dem ITSM Zusatz auch wenn das zur Zeit bei der Example
+  nicht relevant ist.<br><br>Ich habe im XXXX Wiki den Punkt um die Vorlagen angefügt.<br>Ticket
+  Template von John Bäcker<br>Bei uns habe ich das Ticket Template von John Bäcker
+  in der Version 0.1.96 unter XXXX 3.0.10 implementiert. <br><br>Fritz wollte sich
+  auch um das andere Ticket Template Modul kümmern und uns zur Verfügung stellen,
+  welches unter XXXX 3.0 nicht lauffähig sein sollte.<br><br>Im Wiki kann ich die
+  LDAP Muster Konfigdatei nicht finden.<br>Hat die jemand von euch zufälligerweise
+  ?<br><br>Danke und Gruß<br>John Smith<br><br>Am 4. April 2012 08:24 schrieb Smith,
+  John Marian &lt;<a href="mailto:john.smith@example.com">john.hinz@example.com</a>&gt;:<br>Hallo
+  zusammen,<br><br>ich hoffe Ihr seid noch gut nach Hause gekommen am Mittwoch. Der
+  XXX Kurs Donnerstag und Freitag war noch ganz gut, wobei ich mir den letzten halben
+  Tag eigentlich hätte schenken können.<br><br>Soweit ich weiß arbeitet Ihr nicht
+  mit XXX? Falls doch habe ich hier eine tolle (eigentlich) kostenpflichtige Erweiterung
+  für Euch.<br><br>Es handelt sich um eine programmiertes Paket von der XXXX AG. Die
+  Weitergabe ist legal.<br><br>Mit dem Paket kann man Anhänge an CI’s (Configuration
+  Items) verknüpfen. Das ist sehr praktisch wenn man zum Beispiel Rechnungen an Server,
+  Computern und und und anhängen möchte.<br><br>Der Dank geht an Frank Linden, der
+  uns das Paket kostenlos zur Verfügung gestellt hat.<br><br>Viele Grüße aus Someware<br><br>John<br><br>_________________________<br>SysAdmin<br>John
+  Marian Smith<br>IT-Management<br><br>Example GmbH &amp; Co. KG<br>Der Provider für<br>Mehrwertdienste
+  &amp; YYY<br><br>Someware 23<br>XXXXX Someware<br><br>Tel. (01802) XX XX XX - 42<br>Fax
+  (01802) XX XX XX - 99<br>nur 6 Cent je Anruf aus dem dt. Festnetz,<br>max. 42 Cent
+  pro Min. aus dem Mobilfunknetz<br><br>E-Mail <a href="mailto:john.smith@Example.de">john.smith@Example.de</a><br>Web
+  <a href="http://www.Example.de" rel="nofollow noreferrer noopener" target="_blank">www.Example.de</a><br>Amtsgericht
+  Hannover HRA xxxxxxxx<br>Komplementärin: Example Verwaltungs- GmbH<br>Vertreten
+  durch: Somebody, Somebody<br>Amtsgericht Someware HRB XXX XXX<br><br>_________________________
+  <br>Highlights der Example Contact Center-Suite:<br>Virtual XXX&amp;Power-XXX, Self-Services&amp;XXX-Portale,<br>XXX-/Web-Kundenbefragungen,
+  CRM, PEP, YYY</p></div></div>'
 content_type: text/html
 attachments:
 - !ruby/hash:ActiveSupport::HashWithIndifferentAccess

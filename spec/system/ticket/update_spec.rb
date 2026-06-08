@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -238,7 +238,7 @@ RSpec.describe 'Ticket Update', type: :system do
         click '.js-actions .dropdown-menu [data-type="ticket-history"]'
 
         in_modal do
-          expect(page).to have_content "this ticket was merged into ticket ##{target_ticket.number}"
+          expect(page).to have_text "this ticket was merged into ticket ##{target_ticket.number}"
           expect(page).to have_link "##{target_ticket.number}", href: "#ticket/zoom/#{target_ticket.id}"
         end
 
@@ -248,7 +248,7 @@ RSpec.describe 'Ticket Update', type: :system do
         click '.js-actions .dropdown-menu [data-type="ticket-history"]'
 
         in_modal do
-          expect(page).to have_content("ticket ##{origin_ticket.number} was merged into this ticket")
+          expect(page).to have_text("ticket ##{origin_ticket.number} was merged into this ticket")
           expect(page).to have_link "##{origin_ticket.number}", href: "#ticket/zoom/#{origin_ticket.id}"
         end
       end
@@ -333,18 +333,24 @@ RSpec.describe 'Ticket Update', type: :system do
       it 'updates used data' do
         visit "#ticket/zoom/#{ticket.id}"
 
-        expect(page).to have_field('owner_id', with: user.id)
+        check_select_field_value('owner_id', user.id.to_s)
 
         within(:active_content) do
           select_text_module
-          expect(find(:richtext).text).to include("#{user.firstname} #{user.lastname}")
+          check_editor_field_richtext_value('body', "#{user.firstname} #{user.lastname}")
+          set_editor_field_richtext_value('body', '')
 
-          select another_user.fullname, from: 'Owner'
+          set_select_field_value('owner_id', another_user.id)
+          check_select_field_value('owner_id', another_user.id.to_s)
+
           find('.js-submit').click
+          expect(page).to have_no_css('.js-submitDropdown .js-submit[disabled]')
+
           expect(ticket.reload.owner_id).to eq(another_user.id)
+          check_select_field_value('owner_id', another_user.id.to_s)
 
           select_text_module
-          expect(find(:richtext).text).to include("#{another_user.firstname} #{another_user.lastname}")
+          check_editor_field_richtext_value('body', "#{another_user.firstname} #{another_user.lastname}")
         end
       end
     end

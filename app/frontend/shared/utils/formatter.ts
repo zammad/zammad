@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 /**
  * Creates an oxford-comma separated list of items.
@@ -6,10 +6,7 @@
  * @param conjunction - in: x, y, and z "and" is the conjunction to use
  * @returns
  */
-export const commaSeparatedList = (
-  items: string[],
-  conjunction = 'or',
-): string => {
+export const commaSeparatedList = (items: string[], conjunction = 'or'): string => {
   return items.reduce((oxford, item, index) => {
     let oxfordList = oxford + item
     if (index <= items.length - 2 && items.length > 2) {
@@ -44,10 +41,7 @@ export const capitalize = (str: string) => {
 }
 
 export const toClassName = (str: string) => {
-  return str.replace(
-    /([a-z])([A-Z])/g,
-    (_, lowerCase, upperCase) => `${lowerCase}::${upperCase}`,
-  )
+  return str.replace(/([a-z])([A-Z])/g, (_, lowerCase, upperCase) => `${lowerCase}::${upperCase}`)
 }
 
 // app/assets/javascripts/app/lib/app_post/utils.coffee:230
@@ -93,7 +87,7 @@ export const getInitials = (
  */
 export const replaceTags = (
   template: string,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // oxlint-disable-next-line no-explicit-any
   objects: any,
   encodeLink = false,
 ): string => {

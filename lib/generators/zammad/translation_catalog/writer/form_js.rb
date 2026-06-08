@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Zammad::TranslationCatalog::Writer::FormJs < Zammad::TranslationCatalog::Writer::Base
 
@@ -62,7 +62,7 @@ class Zammad::TranslationCatalog::Writer::FormJs < Zammad::TranslationCatalog::W
       string_map[missing_source] = ''
     end
 
-    return if string_map.values.count(&:blank?) > 1
+    return if string_map.values.many?(&:blank?)
 
     string_map
   end

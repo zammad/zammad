@@ -1,0 +1,21 @@
+--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+from: redacted@example.test
+from_email: redacted@example.test
+from_display_name: ''
+to: redacted@example.test
+subject: test
+body: '<div><span style="background-color: #ffffff;">test</span></div>'
+content_type: text/html
+attachments:
+- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+  data: |
+    <html>
+    <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head>
+    <body><div style="font-family: 'verdana'; font-size: 12px; color: #000;"><span style="background-color: #ffffff;">test</span></div></body></html>
+  filename: message.html
+  preferences: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+    content-alternative: true
+    original-format: true
+    Mime-Type: text/html
+    Charset: UTF-8

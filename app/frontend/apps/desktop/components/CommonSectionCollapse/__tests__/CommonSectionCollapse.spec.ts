@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { within } from '@testing-library/vue'
 import { ref, type Ref } from 'vue'
@@ -24,9 +24,11 @@ const renderCommonSectionCollapse = (
       modelValue,
     },
     slots: {
-      default: html` <template #default="{ headerId }">
-        <nav :aria-labelledby="headerId" />
-      </template>`,
+      default: html`
+        <template #default="{ headerId }">
+          <nav :aria-labelledby="headerId" />
+        </template>
+      `,
     },
     store: true,
   })

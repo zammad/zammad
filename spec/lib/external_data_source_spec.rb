@@ -1,9 +1,9 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
 RSpec.describe ExternalDataSource do
-  describe '#execute', db_adapter: :postgresql do
+  describe '#execute' do
     context 'with ElasticSearch', searchindex: true do
       let(:data_option) do
         create(:object_manager_attribute_autocompletion_ajax_external_data_source, :elastic_search)
@@ -47,6 +47,7 @@ RSpec.describe ExternalDataSource do
               .and(having_attributes(external_data_source: instance))
             )
         end
+
       end
 
       context 'when search url is not parsable URI' do
@@ -70,6 +71,24 @@ RSpec.describe ExternalDataSource do
           expect { instance.process }
             .to raise_error(
               an_instance_of(ExternalDataSource::Errors::SearchUrlInvalidError)
+              .and(having_attributes(external_data_source: instance))
+            )
+        end
+      end
+
+      context 'when search url is unsafe' do
+        let(:search_url)  { 'http://linklocal.example.com' }
+        let(:resolved_ip) { '169.254.123.45' }
+
+        before do
+          allow(IPSocket).to receive(:getaddress).with('linklocal.example.com').and_return(resolved_ip)
+        end
+
+        it 'raises error' do
+          instance = described_class.new(options: data_option, render_context: {}, term: 'term')
+          expect { instance.process }
+            .to raise_error(
+              an_instance_of(ExternalDataSource::Errors::SearchUrlUnsafe)
               .and(having_attributes(external_data_source: instance))
             )
         end

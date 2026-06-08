@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Group < ApplicationModel
   include HasDefaultModelUserRelations
@@ -81,7 +81,7 @@ class Group < ApplicationModel
     new_depth = depth(force: true)
     return if new_depth < self.class.max_depth && all_children(force: true).all? { |child| new_depth + (child.depth - old_depth) < self.class.max_depth }
 
-    raise Exceptions::UnprocessableEntity, __('This group or its children exceed the allowed nesting depth.')
+    raise Exceptions::UnprocessableContent, __('This group or its children exceed the allowed nesting depth.')
   end
 
   def update_path
@@ -147,9 +147,7 @@ class Group < ApplicationModel
   end
 
   def self.max_depth
-    return @@max_depth if @@max_depth
-
-    @@max_depth = ActiveRecord::Base.connection_db_config.configuration_hash[:adapter] == 'mysql2' ? 6 : 10 # rubocop:disable Style/ClassVars
+    10
   end
 
   def self.customer_create_groups_with_parent_ids

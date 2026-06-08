@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 export interface FocusableOptions {
   ignoreTabindex?: boolean
@@ -23,9 +23,7 @@ export const getFocusableElements = (
   container?: Maybe<HTMLElement>,
   options: FocusableOptions = {},
 ) => {
-  return Array.from<HTMLElement>(
-    container?.querySelectorAll(FOCUSABLE_QUERY) || [],
-  ).filter(
+  return Array.from<HTMLElement>(container?.querySelectorAll(FOCUSABLE_QUERY) || []).filter(
     (el) =>
       isElementVisible(el) &&
       (options.ignoreTabindex || !isNegativeTabIndex(el)) &&
@@ -38,9 +36,7 @@ export const getFirstFocusableElement = (container?: Maybe<HTMLElement>) => {
   return getFocusableElements(container)[0]
 }
 
-export const getPreviousFocusableElement = (
-  currentElement?: Maybe<HTMLElement>,
-) => {
+export const getPreviousFocusableElement = (currentElement?: Maybe<HTMLElement>) => {
   if (!currentElement) return null
 
   const focusableElements = getFocusableElements(document.body)

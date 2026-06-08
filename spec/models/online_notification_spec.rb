@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 require 'models/application_model_examples'
@@ -50,6 +50,37 @@ RSpec.describe OnlineNotification, type: :model do
             )
           end.to raise_error(ActiveRecord::RecordNotFound)
         end
+      end
+    end
+
+    describe 'adding a standalone notification' do
+      let(:user) { create(:agent) }
+      let(:data) do
+        {
+          'total'        => 123,
+          'failed_count' => 1,
+        }
+      end
+
+      let(:notification) do
+        described_class.add(
+          user_id:       user.id,
+          kind:          'bulk_job',
+          seen:          false,
+          data:,
+          created_by_id: 1,
+        )
+      end
+
+      it 'adds a notification and related standalone record' do
+        expect(notification).to have_attributes(
+          user:,
+          seen:           false,
+          related_object: have_attributes(
+            data:,
+            kind: 'bulk_job'
+          )
+        )
       end
     end
   end
@@ -711,6 +742,46 @@ RSpec.describe OnlineNotification, type: :model do
         it { expect(described_class).to be_seen_state(ticket, agent1.id) }
         it { expect(described_class).to be_seen_state(ticket, agent2.id) }
       end
+    end
+  end
+
+  describe '.mark_as_seen!' do
+    let(:user) { create(:agent, groups: [group]) }
+    let(:group)        { create(:group) }
+    let(:ticket)       { create(:ticket, group:) }
+    let(:other_ticket) { create(:ticket, group:) }
+
+    let(:notification) { create(:online_notification, o: ticket, user:, seen: false) }
+    let(:notification_other_user)   { create(:online_notification, o: ticket, user: create(:agent), seen: false) }
+    let(:notification_other_ticket) { create(:online_notification, o: other_ticket, user:, seen: false) }
+    let(:notification_seen)         { create(:online_notification, o: ticket, user:, seen: true) }
+    let(:notification_other)        { create(:online_notification, o: ticket, user:, seen: false) }
+
+    context 'when many notifications exist' do
+      before do
+        [notification, notification_other_user, notification_other_ticket, notification_seen, notification_other]
+          .each { allow(it).to receive(:update!).and_call_original }
+      end
+
+      it 'updates all unseen notifications for the object/user pair' do
+        expect { described_class.mark_as_seen!(ticket, user) }
+          .to change { notification.reload.updated_at }
+          .and change { notification_other.reload.updated_at }
+          .and not_change { notification_other_user.reload.updated_at }
+          .and not_change { notification_other_ticket.reload.updated_at }
+      end
+
+      it 'triggers subscriptions only once' do
+        allow(described_class).to receive(:trigger_subscriptions).and_call_original
+        described_class.mark_as_seen!(ticket, user)
+        expect(described_class).to have_received(:trigger_subscriptions).once
+      end
+    end
+
+    it 'handles no-unseen-notifications case gracefully' do
+      allow(described_class).to receive(:trigger_subscriptions).and_call_original
+      described_class.mark_as_seen!(ticket, user)
+      expect(described_class).not_to have_received(:trigger_subscriptions)
     end
   end
 end

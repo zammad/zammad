@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { i18n } from '#shared/i18n.ts'
 
@@ -14,8 +14,7 @@ export const useSSLVerificationWarningHandler = () =>
       ),
     },
     (field) => !field.props.disabled && field.props.value === false,
-    (changedField, fields) =>
-      !fields.sslVerify.props.disabled && changedField?.newValue === false,
+    (changedField, fields) => !fields.sslVerify.props.disabled && changedField?.newValue === false,
     (node, addAlert, clearAlert) => {
       const { props, value } = node
 

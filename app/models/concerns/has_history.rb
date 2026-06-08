@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module HasHistory
   extend ActiveSupport::Concern
@@ -101,30 +101,22 @@ log object update history with all updated attributes, if configured - will be e
     value_id        = []
     value_str       = [ value_changes[0], value_changes[1] ]
 
-    if key.to_s[-3, 3] == '_id'
+    if key.to_s.end_with?('_id')
       value_id[0] = value_changes[0]
       value_id[1] = value_changes[1]
 
-      if respond_to?(attribute_name) && send(attribute_name)
-        relation_class = send(attribute_name).class
-        if relation_class && value_id[0]
-          relation_model = relation_class.lookup(id: value_id[0])
-          if relation_model
-            if relation_model['name']
-              value_str[0] = relation_model['name']
-            elsif relation_model.respond_to?(:fullname)
-              value_str[0] = relation_model.send(:fullname)
-            end
-          end
-        end
-        if relation_class && value_id[1]
-          relation_model = relation_class.lookup(id: value_id[1])
-          if relation_model
-            if relation_model['name']
-              value_str[1] = relation_model['name']
-            elsif relation_model.respond_to?(:fullname)
-              value_str[1] = relation_model.send(:fullname)
-            end
+      relation_class = send(attribute_name).class if respond_to?(attribute_name) && send(attribute_name)
+      if relation_class
+        [0, 1].each do |index|
+          next if value_id[index].blank?
+
+          relation_model = relation_class.lookup(id: value_id[index])
+          next if !relation_model
+
+          if relation_model.respond_to?(:fullname)
+            value_str[index] = relation_model.send(:fullname)
+          elsif relation_model['name']
+            value_str[index] = relation_model['name']
           end
         end
       end
@@ -279,7 +271,7 @@ returns
 
   def history_change_source_attribute(source, attribute)
     return if source.blank?
-    return if [Job, Trigger, PostmasterFilter].exclude?(source.class)
+    return if [Job, Trigger, PostmasterFilter, AI::Agent].exclude?(source.class)
     return if !source.persisted?
 
     @history_changes_source ||= {}

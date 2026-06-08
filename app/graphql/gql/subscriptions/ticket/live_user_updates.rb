@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Subscriptions
   class Ticket::LiveUserUpdates < BaseSubscription
@@ -12,9 +12,7 @@ module Gql::Subscriptions
 
     field :live_users, [Gql::Types::Ticket::LiveUserType], description: 'Current live users from the ticket.'
 
-    def authorized?(key:, app:)
-      context.current_user.permissions?('ticket.agent')
-    end
+    requires_permission 'ticket.agent'
 
     def subscribe(key:, app:)
       response(Taskbar.find_by(key: key, user_id: context.current_user.id, app: app))

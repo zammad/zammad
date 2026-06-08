@@ -1,6 +1,11 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class NotificationFactory::Renderer
+  ARTICLE_TAGS = %i[
+    article last_article last_internal_article last_external_article
+    first_article first_internal_article first_external_article
+    created_article created_internal_article created_external_article
+  ].freeze
 
 =begin
 
@@ -29,18 +34,22 @@ examples how to use
 
 =end
 
-  def initialize(objects:, template:, locale: nil, timezone: nil, escape: true, url_encode: false, trusted: false)
+  def initialize(objects:, template:, locale: nil, timezone: nil, escape: true, url_encode: false, trusted: false, ignore_missing_objects: false, trim_mode: nil)
     @objects  = objects
     @locale   = locale || Locale.default
     @timezone = timezone || Setting.get('timezone_default')
     @template = NotificationFactory::Template.new(template, escape || url_encode, trusted)
     @escape = escape
     @url_encode = url_encode
+    @trusted = trusted
+    @ignore_missing_objects = ignore_missing_objects
+    @trim_mode = trim_mode
   end
 
   def render(debug_errors: true)
     @debug_errors = debug_errors
-    ERB.new(@template.to_s).result(binding)
+    template_str = @template.to_s
+    ERB.new(template_str, trim_mode: @trim_mode).result(template_binding)
   rescue Exception => e # rubocop:disable Lint/RescueException
     raise StandardError, e.message if e.is_a? SyntaxError
 
@@ -50,16 +59,12 @@ examples how to use
   # d - data of object
   # d('user.firstname', htmlEscape)
   def d(key, escape = nil, escaping: true)
-
     # do validation, ignore some methods
     return "\#{#{key} / not allowed}" if !data_key_valid?(key)
 
-    article_tags = %w[article last_article last_internal_article last_external_article
-                      created_article created_internal_article created_external_article]
-
     # aliases
     map = { 'ticket.tags' => 'ticket.tag_list', 'ticket.group.name' => 'ticket.group.fullname', 'group.name' => 'group.fullname' }
-    article_tags.each do |tag|
+    ARTICLE_TAGS.each do |tag|
       map["#{tag}.body"] = "#{tag}.body_as_text_with_quote.text2html"
     end
 
@@ -70,9 +75,10 @@ examples how to use
     # escape in html mode
     if escape
       no_escape = {}
-      article_tags.each do |tag|
+      ARTICLE_TAGS.each do |tag|
         no_escape["#{tag}.body_as_html"] = true
         no_escape["#{tag}.body_as_text_with_quote.text2html"] = true
+        no_escape["#{tag}.body_as_text.text2html"] = true
       end
       if no_escape[key]
         escape = false
@@ -89,7 +95,11 @@ examples how to use
     object_refs = @objects[object_name] || @objects[object_name.to_sym]
 
     # if object is not in available objects, just return
-    return debug("\#{#{object_name} / no such object}") if !object_refs
+    if !object_refs
+      return "\#{#{key}}" if @ignore_missing_objects
+
+      return debug("\#{#{object_name} / no such object}")
+    end
 
     # if content of method is a complex datatype, just return
     if object_methods.blank? && object_refs.class != String && object_refs.class != Float && object_refs.class != Integer
@@ -133,7 +143,7 @@ examples how to use
 
         parameters = []
         parameter.split(',').each do |p|
-          p = p.strip!
+          p = p.strip
 
           if p != p.to_i.to_s
             value = debug("\#{#{object_name}.#{object_methods_s} / invalid parameter: #{p}}")
@@ -237,6 +247,28 @@ examples how to use
   end
 
   private
+
+  def template_binding
+    TemplateContext.new(self, @objects).safe_binding
+  end
+
+  # Restricted ERB execution context that only exposes safe template helpers.
+  class TemplateContext
+    def initialize(renderer, objects)
+      @renderer = renderer
+      @objects  = objects
+    end
+
+    def d(...) = @renderer.d(...)
+    def t(...) = @renderer.t(...)
+    def c(...) = @renderer.c(...)
+    def h(...) = @renderer.h(...)
+    def dt(...) = @renderer.dt(...)
+
+    def safe_binding
+      binding
+    end
+  end
 
   def debug(message)
     @debug_errors ? message : '-'

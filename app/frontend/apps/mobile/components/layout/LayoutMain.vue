@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, ref, unref } from 'vue'
@@ -42,10 +42,7 @@ const { stickyStyles } = useStickyHeader([title], headerElement)
       :title="title"
       :style="stickyStyles.header"
     />
-    <main
-      class="flex h-full flex-col"
-      :style="showHeader ? stickyStyles.body : {}"
-    >
+    <main class="flex h-full flex-col" :style="showHeader ? stickyStyles.body : {}">
       <!-- let's see how it feels without transition -->
       <RouterView />
       <div

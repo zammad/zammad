@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -61,12 +61,12 @@ RSpec.describe 'Taskbars', type: :request do
 
       authenticated_as(customer)
       put "/api/v1/taskbar/#{taskbar_id}", params: params, as: :json
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
       expect(json_response).to be_a(Hash)
       expect(json_response['error']).to eq('Not allowed to access this task.')
 
       delete "/api/v1/taskbar/#{taskbar_id}", params: {}, as: :json
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
       expect(json_response).to be_a(Hash)
       expect(json_response['error']).to eq('Not allowed to access this task.')
 
@@ -103,10 +103,10 @@ RSpec.describe 'Taskbars', type: :request do
       expect(json_response['ticket_create']).to be_present
     end
 
-    it 'does return ticket all data' do
+    it 'does return tickets' do
       get '/api/v1/taskbar/init', params: {}, as: :json
       expect(response).to have_http_status(:ok)
-      expect(json_response['ticket_all'].keys.map(&:to_i)).to include(*tickets.pluck(:id))
+      expect(json_response['assets']).to include_assets_of(*tickets)
     end
 
     it 'does return user profiles' do

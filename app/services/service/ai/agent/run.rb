@@ -1,0 +1,97 @@
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
+
+class Service::AI::Agent::Run < Service::Base
+  attr_reader :ai_agent, :agent_definition, :action_definition, :ticket, :article
+
+  def initialize(ai_agent:, ticket:, article: nil)
+    @ai_agent = ai_agent
+    @ticket = ticket
+    @article = article
+    @agent_definition = ai_agent.execution_definition(context: { ticket:, article: })
+    @action_definition = ai_agent.execution_action_definition
+  end
+
+  def execute
+    Service::CheckFeatureEnabled.execute(name: 'ai_provider', custom_error_message: __('AI provider is not configured.'))
+
+    return if execution_blocked_by_preconditions?
+
+    ai_agent_result = fetch_ai_agent_result
+
+    ai_agent_perform_template = Service::AI::Agent::Run::Perform::Agent.new(ai_agent:, ai_result: ai_agent_result) # rubocop:disable Zammad/ForbidCallingServiceDirectly
+
+    # When ai result content is not matching the expected result structure, raise an temporary error to retry the job.
+    if !ai_agent_perform_template.result_structure_matches_content?
+      raise TemporaryError, __('AI agent result content does not match expected result structure.')
+    end
+
+    apply_perform_changes(ai_agent_perform_template)
+  end
+
+  private
+
+  def execution_blocked_by_preconditions?
+    checks = ai_agent.agent_type_object&.precondition_checks(ticket:) || []
+    checks.lazy.any? { |check| !check.passed? }
+  end
+
+  def fetch_ai_agent_result
+    ai_agent_service_result
+  rescue AI::Provider::OutputFormatError => e
+    raise PermanentError, e.message
+  rescue AI::Provider::ResponseError => e
+    raise TemporaryError, e.message
+  rescue => e # rubocop:disable Lint/DuplicateBranch
+    raise PermanentError, e.message
+  end
+
+  def apply_perform_changes(ai_agent_perform_template)
+    ApplicationHandleInfo.use('ai_agent_execution') do
+      ticket.perform_changes(ai_agent_perform_template, 'ai_agent', {
+                               article_id:                  article&.id,
+                               skip_blank_attribute_values: action_definition['skip_blank_values'],
+                             })
+      TransactionDispatcher.commit(disable_notification: true)
+    end
+  rescue => e
+    Rails.logger.error "AI Agent '#{ai_agent.name}' with ID #{ai_agent.id} perform_changes failed for ticket #{ticket.id}."
+
+    raise PermanentError, e.message
+  end
+
+  def ai_agent_service_result
+    context = Service::AI::Agent::Run::Context.new( # rubocop:disable Zammad/ForbidCallingServiceDirectly
+      instruction_context:           agent_definition['instruction_context'],
+      entity_object:                 ticket,
+      entity_context:                agent_definition['entity_context'],
+      entity_article:                article,
+      placeholder_object_attributes: ai_agent.agent_type_object&.placeholder_field_names,
+      type_enrichment_data:          ai_agent.type_enrichment_data,
+    )
+
+    prepared_instruction_context = context.prepare_instructions
+    prepared_entity_context = context.prepare_entity
+
+    AI::Service::AIAgent.new(
+      context_data:       {
+        ai_agent:,
+        ticket:,
+        role_description:    agent_definition['role_description'],
+        instruction:         agent_definition['instruction'],
+        instruction_context: prepared_instruction_context,
+        entity_context:      prepared_entity_context,
+        result_structure:    agent_definition['result_structure'],
+      },
+      additional_options: {
+        json_response: json_response?
+      }
+    ).execute
+  end
+
+  def json_response?
+    @json_response ||= agent_definition['result_structure'].present?
+  end
+
+  class PermanentError < StandardError; end
+  class TemporaryError < StandardError; end
+end

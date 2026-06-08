@@ -1,25 +1,16 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import type { EnumTaskbarEntity } from '#shared/graphql/types.ts'
 import log from '#shared/utils/log.ts'
 
 import { useUserCurrentTaskbarTabsStore } from '#desktop/entities/user/current/stores/taskbarTabs.ts'
 
-import type {
-  NavigationGuard,
-  RouteLocationNormalized,
-  NavigationGuardNext,
-} from 'vue-router'
+import type { NavigationGuard, RouteLocationNormalized } from 'vue-router'
 
-const activeTaskbarTab: NavigationGuard = async (
-  to: RouteLocationNormalized,
-  from: RouteLocationNormalized,
-  next: NavigationGuardNext,
-) => {
+const activeTaskbarTab: NavigationGuard = async (to: RouteLocationNormalized) => {
   if (
     !to.meta?.taskbarTabEntity ||
-    (typeof to.meta.isTaskbarTabPossible === 'function' &&
-      !to.meta.isTaskbarTabPossible(to))
+    (typeof to.meta.isTaskbarTabPossible === 'function' && !to.meta.isTaskbarTabPossible(to))
   ) {
     if (to.meta?.requiresAuth) {
       // Reset the previously active tab state if the new route does not support the taskbar.
@@ -28,17 +19,14 @@ const activeTaskbarTab: NavigationGuard = async (
       useUserCurrentTaskbarTabsStore().resetActiveTaskbarTab()
     }
 
-    next()
-
-    return
+    return true
   }
 
   const taskbarTabStore = useUserCurrentTaskbarTabsStore()
 
   const taskbarTabEntityType = to.meta.taskbarTabEntity as EnumTaskbarEntity
 
-  const taskbarTypePlugin =
-    taskbarTabStore.getTaskbarTabTypePlugin(taskbarTabEntityType)
+  const taskbarTypePlugin = taskbarTabStore.getTaskbarTabTypePlugin(taskbarTabEntityType)
 
   const taskbarTabEntityKey = taskbarTypePlugin.buildEntityTabKey(to)
 
@@ -47,11 +35,7 @@ const activeTaskbarTab: NavigationGuard = async (
     await taskbarTabStore.waitForTaskbarListLoaded()
   }
 
-  taskbarTabStore.upsertTaskbarTab(
-    taskbarTabEntityType,
-    taskbarTabEntityKey,
-    to,
-  )
+  taskbarTabStore.upsertTaskbarTab(taskbarTabEntityType, taskbarTabEntityKey, to)
 
   // Remember the entity key for the current taskbar tab,
   //   so it can be used for checking the entity access.
@@ -61,7 +45,7 @@ const activeTaskbarTab: NavigationGuard = async (
     `Route guard for '${to.path}': active taskbar tab with entity key '${taskbarTabEntityKey}'.`,
   )
 
-  next()
+  return true
 }
 
 export default activeTaskbarTab

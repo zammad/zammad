@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed } from 'vue'
@@ -28,7 +28,7 @@ const router = useRouter()
 
 const { setTitle } = useSystemSetup()
 
-setTitle(__('Connect Channels'))
+setTitle(__('Connect channels'))
 
 const emailAddressesQuery = new QueryHandler(
   useEmailAddressesQuery({
@@ -59,20 +59,14 @@ const finish = () => {
       {{ $t('Your Zammad has the following email address:') }}
     </CommonLabel>
 
-    <ul
-      class="list-disc gap-1 text-sm text-gray-100 ltr:ml-5 rtl:mr-5 dark:text-neutral-400"
-    >
+    <ul class="list-disc gap-1 text-sm text-gray-100 ltr:ml-5 rtl:mr-5 dark:text-neutral-400">
       <li v-for="address in emailAddresses" :key="address.email">
         {{ address.name }} &lt;{{ address.email }}&gt;
       </li>
     </ul>
 
     <CommonLabel>
-      {{
-        $t(
-          'If you want to use additional email addresses, you can configure them later.',
-        )
-      }}
+      {{ $t('If you want to use additional email addresses, you can configure them later.') }}
     </CommonLabel>
     <GuidedSetupActionFooter
       go-back-route="/guided-setup/manual/system-information"

@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { waitFor } from '@testing-library/vue'
 
@@ -24,9 +24,7 @@ import TicketActionsDialog from '../TicketActionsDialog.vue'
 const { notify } = useNotifications()
 
 beforeAll(async () => {
-  await import(
-    '#mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue'
-  )
+  await import('#mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue')
 })
 
 describe('actions that you can do with a ticket, when clicked on 3 dots', () => {
@@ -43,9 +41,7 @@ describe('actions that you can do with a ticket, when clicked on 3 dots', () => 
       form: true,
       router: true,
     })
-    expect(
-      view.queryByRole('button', { name: 'Merge tickets' }),
-    ).not.toBeInTheDocument()
+    expect(view.queryByRole('button', { name: 'Merge tickets' })).not.toBeInTheDocument()
   })
 
   it("don't see 'subscribe' button, if have no rights", () => {
@@ -61,12 +57,8 @@ describe('actions that you can do with a ticket, when clicked on 3 dots', () => 
       form: true,
       router: true,
     })
-    expect(
-      view.queryByRole('button', { name: 'Subscribe' }),
-    ).not.toBeInTheDocument()
-    expect(
-      view.queryByRole('button', { name: 'Unsubscribe' }),
-    ).not.toBeInTheDocument()
+    expect(view.queryByRole('button', { name: 'Subscribe' })).not.toBeInTheDocument()
+    expect(view.queryByRole('button', { name: 'Unsubscribe' })).not.toBeInTheDocument()
   })
 
   it('shows an error, if no ticket is selected and user is trying to merge', async () => {
@@ -115,9 +107,7 @@ describe('actions that you can do with a ticket, when clicked on 3 dots', () => 
       internalId: 5,
     }
 
-    const searchMock = mockGraphQLApi(
-      AutocompleteSearchTicketDocument,
-    ).willResolve({
+    const searchMock = mockGraphQLApi(AutocompleteSearchTicketDocument).willResolve({
       autocompleteSearchTicket: [
         nullableMock({
           value: targetTicketId,
@@ -143,9 +133,7 @@ describe('actions that you can do with a ticket, when clicked on 3 dots', () => 
 
     await view.events.click(mergeButton)
 
-    await expect(
-      view.findByRole('dialog', { name: 'Find a ticket' }),
-    ).resolves.toBeInTheDocument()
+    await expect(view.findByRole('dialog', { name: 'Find a ticket' })).resolves.toBeInTheDocument()
 
     await view.events.type(view.getByRole('searchbox'), 'Ticket')
 
@@ -188,9 +176,7 @@ describe('actions that you can do with a ticket, when clicked on 3 dots', () => 
       router: true,
     })
 
-    expect(
-      view.queryByRole('button', { name: 'Change customer' }),
-    ).not.toBeInTheDocument()
+    expect(view.queryByRole('button', { name: 'Change customer' })).not.toBeInTheDocument()
   })
 
   it('can open change customer, when have rights (and close without confirmation)', async () => {
@@ -212,17 +198,13 @@ describe('actions that you can do with a ticket, when clicked on 3 dots', () => 
     await view.events.click(customerChangeButton)
 
     await waitFor(() => {
-      expect(
-        view.queryByRole('dialog', { name: 'Change customer' }),
-      ).toBeInTheDocument()
+      expect(view.queryByRole('dialog', { name: 'Change customer' })).toBeInTheDocument()
     })
 
     await view.events.click(view.getByRole('button', { name: 'Cancel' }))
 
     await waitFor(() => {
-      expect(
-        view.queryByRole('dialog', { name: 'Change customer' }),
-      ).not.toBeInTheDocument()
+      expect(view.queryByRole('dialog', { name: 'Change customer' })).not.toBeInTheDocument()
     })
   })
 })

@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { createApp } from 'vue'
 
@@ -20,10 +20,7 @@ describe('getFormPlugins', () => {
   }
 
   it('should return the plugin list', () => {
-    expect(getFormPlugins(pluginModules)).toEqual([
-      examplePlugin,
-      examplePlugin,
-    ])
+    expect(getFormPlugins(pluginModules)).toEqual([examplePlugin, examplePlugin])
   })
 })
 

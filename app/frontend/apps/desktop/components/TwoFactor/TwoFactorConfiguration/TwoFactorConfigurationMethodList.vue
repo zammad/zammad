@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed } from 'vue'
@@ -8,10 +8,7 @@ import { useSessionStore } from '#shared/stores/session.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 
-import type {
-  TwoFactorConfigurationComponentProps,
-  TwoFactorConfigurationType,
-} from '../types.ts'
+import type { TwoFactorConfigurationComponentProps, TwoFactorConfigurationType } from '../types.ts'
 
 const props = defineProps<TwoFactorConfigurationComponentProps>()
 
@@ -25,7 +22,7 @@ const switchTo = (nextState: TwoFactorConfigurationType) => {
 
 const footerActionOptions = computed(() => ({
   hideActionButton: true,
-  cancelLabel: __('Cancel & Sign Out'),
+  cancelLabel: __('Cancel & sign out'),
 }))
 
 defineExpose({
@@ -35,16 +32,12 @@ defineExpose({
 
 <template>
   <div class="text-center">
-    <template
-      v-if="hasPermission('user_preferences.two_factor_authentication')"
-    >
+    <template v-if="hasPermission('user_preferences.two_factor_authentication')">
       <CommonLabel class="mb-3">{{
         $t('You must protect your account with two-factor authentication.')
       }}</CommonLabel>
       <CommonLabel class="mb-3">{{
-        $t(
-          'Choose your preferred two-factor authentication method to set it up.',
-        )
+        $t('Choose your preferred two-factor authentication method to set it up.')
       }}</CommonLabel>
       <section
         v-for="method of twoFactorEnabledMethods"

@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import type {
   TicketsCachedByOverviewQuery,
@@ -11,9 +11,7 @@ import { TicketsCachedByOverviewDocument } from '../graphql/queries/ticketsCache
 export const useTicketsCachedByOverviewCache = () => {
   const apolloClient = getApolloClient()
 
-  const readTicketsByOverviewCache = (
-    variables: TicketsCachedByOverviewQueryVariables,
-  ) => {
+  const readTicketsByOverviewCache = (variables: TicketsCachedByOverviewQueryVariables) => {
     return apolloClient.readQuery<TicketsCachedByOverviewQuery>({
       query: TicketsCachedByOverviewDocument,
       variables,
@@ -40,13 +38,11 @@ export const useTicketsCachedByOverviewCache = () => {
 
     if (!currentTicketsCachedByOverview) return
 
-    const currentTickets =
-      currentTicketsCachedByOverview?.ticketsCachedByOverview?.edges
+    const currentTickets = currentTicketsCachedByOverview?.ticketsCachedByOverview?.edges
 
     const currentTicketsEdgesCount = currentTickets?.length
 
-    if (!currentTicketsEdgesCount || currentTicketsEdgesCount <= pageSize)
-      return
+    if (!currentTicketsEdgesCount || currentTicketsEdgesCount <= pageSize) return
 
     const slicedTickets = currentTickets?.slice(0, pageSize)
 

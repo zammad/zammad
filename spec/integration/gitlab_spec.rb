@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -99,6 +99,15 @@ RSpec.describe GitLab, integration: true, required_envs: %w[GITLAB_ENDPOINT GITL
 
       it 'does remove the subfolder from the fullpath to get the issue correctly' do
         expect(linked_issue.send(:variables, issue_url)[:fullpath]).to eq('group/project')
+      end
+    end
+
+    describe 'work_items URL format' do
+      let(:linked_issue) { GitLab::LinkedIssue.new(instance.client) }
+      let(:work_item_url) { "https://#{URI.parse(ENV['GITLAB_ISSUE_LINK']).host}/group/project/-/work_items/42" }
+
+      it 'accepts work_items URLs in addition to issues URLs' do
+        expect(linked_issue.send(:variables, work_item_url)).to include(fullpath: 'group/project', issue_id: '42')
       end
     end
   end

@@ -1,23 +1,21 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 <script setup lang="ts">
 import { cloneDeep, isEqual } from 'lodash-es'
 import { computed, reactive, toRef, watch } from 'vue'
 
 import type { SelectValue } from '#shared/components/CommonSelect/types.ts'
 import useValue from '#shared/components/Form/composables/useValue.ts'
+import {
+  GroupAccess,
+  type GroupPermissionReactive,
+  type GroupPermissionsContext,
+} from '#shared/components/Form/fields/FieldGroupPermissions/types.ts'
+import useFlatSelectOptions from '#shared/components/Form/fields/FieldTreeSelect/composables/useFlatSelectOptions.ts'
 import type { TreeSelectOption } from '#shared/components/Form/fields/FieldTreeSelect/types.ts'
 import { useDelegateFocus } from '#shared/composables/useDelegateFocus.ts'
 import getUuid from '#shared/utils/getUuid.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
-
-import useFlatSelectOptions from '../FieldTreeSelect/useFlatSelectOptions.ts'
-
-import {
-  GroupAccess,
-  type GroupPermissionReactive,
-  type GroupPermissionsContext,
-} from './types.ts'
 
 interface Props {
   context: GroupPermissionsContext
@@ -134,11 +132,7 @@ watch(
     if (!newValue || !newValue.length) {
       groupOptions.splice(0, groupOptions.length, filterGroupOptions(0))
 
-      groupPermissions.splice(
-        0,
-        groupPermissions.length,
-        getNewGroupPermission(),
-      )
+      groupPermissions.splice(0, groupPermissions.length, getNewGroupPermission())
 
       return
     }
@@ -147,8 +141,11 @@ watch(
     if (isEqual(newValue, groupPermissions)) return
 
     const newValues = cloneDeep(newValue || []) as GroupPermissionReactive[]
+
     newValues.forEach((groupPermission, index) => {
-      groupPermission.key = getUuid()
+      // Ensure the existing group permissions retain the same key, otherwise set a random one.
+      groupPermission.key = groupPermission.key || getUuid()
+
       groupOptions[index] = filterGroupOptions(index)
     })
 
@@ -165,14 +162,12 @@ const hasNoMoreGroups = computed(
   () =>
     !flatOptions.value.length ||
     groupPermissions.reduce((emptyGroups, groupPermission) => {
-      if (!((groupPermission.groups as unknown as SelectValue[]) || []).length)
-        emptyGroups += 1
+      if (!((groupPermission.groups as unknown as SelectValue[]) || []).length) emptyGroups += 1
       return emptyGroups
     }, 0) > 0 ||
     groupPermissions.reduce(
       (selectedGroupCount, groupPermission) =>
-        selectedGroupCount +
-        ((groupPermission.groups as unknown as SelectValue[]) || []).length,
+        selectedGroupCount + ((groupPermission.groups as unknown as SelectValue[]) || []).length,
       0,
     ) === flatOptions.value.length,
 )
@@ -195,10 +190,7 @@ const ensureGranularOrFullAccess = (
         groupAccess[key as GroupAccess] = false
       }
     })
-  } else if (
-    access !== GroupAccess.Full &&
-    groupAccess[GroupAccess.Full] === true
-  )
+  } else if (access !== GroupAccess.Full && groupAccess[GroupAccess.Full] === true)
     groupAccess[GroupAccess.Full] = false
 }
 </script>
@@ -206,7 +198,7 @@ const ensureGranularOrFullAccess = (
 <template>
   <output
     :id="context.id"
-    class="flex w-full flex-col space-y-2 rounded-lg p-2 focus:outline focus:outline-1 focus:outline-offset-1 focus:outline-blue-800 hover:focus:outline-blue-800"
+    class="flex w-full flex-col space-y-2 rounded-lg p-2 focus-visible:outline-1 focus-visible:-outline-offset-1 focus-visible:outline-blue-800 hover:focus-visible:outline-blue-800"
     :class="context.classes.input"
     :name="context.node.name"
     role="list"
@@ -249,15 +241,12 @@ const ensureGranularOrFullAccess = (
           ensureGranularOrFullAccess(
             groupPermission.groupAccess,
             groupAccess.access,
-            $event!,
+            $event as boolean,
           )
         "
       >
         <template #label>
-          <CommonLabel
-            class="text-gray-300! uppercase dark:text-neutral-400!"
-            size="small"
-          >
+          <CommonLabel class="text-gray-300! uppercase dark:text-neutral-400!" size="small">
             {{ $t(groupAccess.label) }}
           </CommonLabel>
         </template>
@@ -266,7 +255,7 @@ const ensureGranularOrFullAccess = (
         class="shrink-0 text-gray-300 dark:text-neutral-400"
         icon="dash-circle"
         size="medium"
-        :aria-label="$t('Remove')"
+        :tooltip="__('Remove')"
         :disabled="hasLastGroupPermission"
         :tabindex="hasLastGroupPermission ? '-1' : '0'"
         @click="removeGroupPermission(index)"
@@ -275,7 +264,7 @@ const ensureGranularOrFullAccess = (
         class="me-2.5 shrink-0 text-gray-300 dark:text-neutral-400"
         icon="plus-circle"
         size="medium"
-        :aria-label="$t('Add')"
+        :tooltip="__('Add')"
         :disabled="hasNoMoreGroups"
         :tabindex="hasNoMoreGroups ? '-1' : '0'"
         @click="addGroupPermission(index + 1)"

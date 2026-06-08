@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import {
   createRouter,
@@ -21,7 +21,7 @@ import { initializeWalker } from './walker.ts'
 import type { App } from 'vue'
 
 declare module 'vue-router' {
-  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+  // oxlint-disable-next-line @typescript-eslint/no-empty-object-type
   interface RouteMeta extends RouteRecordMeta {}
 }
 

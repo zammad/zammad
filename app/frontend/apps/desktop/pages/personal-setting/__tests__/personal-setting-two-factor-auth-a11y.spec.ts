@@ -1,13 +1,11 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
-
-import { axe } from 'vitest-axe'
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 
 import { visitViewAndMockPasswordConfirmation } from '#desktop/pages/personal-setting/__tests__/support/personal-setting-two-factor-auth.ts'
 
-describe('testing locale a11y view', async () => {
+describe('testing locale a11y view', () => {
   beforeEach(() => {
     mockApplicationConfig({
       two_factor_authentication_method_security_keys: true,
@@ -23,9 +21,7 @@ describe('testing locale a11y view', async () => {
   it('has no accessibility violations', async () => {
     const view = await visitView('/personal-setting/two-factor-auth')
 
-    const results = await axe(view.html())
-
-    expect(results).toHaveNoViolations()
+    await expect(view.container).toBeAccessible()
   })
 
   it('has no accessibility violations for authenticator app flyout', async () => {
@@ -35,9 +31,7 @@ describe('testing locale a11y view', async () => {
       action: 'setup',
     })
 
-    const results = await axe(view.html())
-
-    expect(results).toHaveNoViolations()
+    await expect(view.container).toBeAccessible()
   })
 
   it('has no accessibility violations for security keys flyout', async () => {
@@ -47,8 +41,6 @@ describe('testing locale a11y view', async () => {
       action: 'setup',
     })
 
-    const results = await axe(view.html())
-
-    expect(results).toHaveNoViolations()
+    await expect(view.container).toBeAccessible()
   })
 })

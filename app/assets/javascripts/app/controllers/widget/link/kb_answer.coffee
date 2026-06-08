@@ -8,8 +8,9 @@ class App.WidgetLinkKbAnswer extends App.WidgetLink
     '.js-input':         'inputField'
 
   events:
-    'change .js-shadow': 'didSubmit'
-    'blur .js-input':    'didBlur'
+    'change .js-shadow':        'didSubmit'
+    'blur .js-input':           'didBlur'
+    'click .js-kb-ai-generate': 'requestAiAnswer'
 
   getAjaxAttributes: (field, attributes) ->
     @apiPath = App.Config.get('api_path')
@@ -23,6 +24,8 @@ class App.WidgetLinkKbAnswer extends App.WidgetLink
     data.include_locale    = true
     data.index             = 'KnowledgeBase::Answer::Translation'
     data.highlight_enabled = false
+    data.include_subtitle  = true
+    data.url_type          = 'agent'
 
     attributes.data = JSON.stringify(data)
 
@@ -41,9 +44,17 @@ class App.WidgetLinkKbAnswer extends App.WidgetLink
         elem?
 
   render: ->
+    user = App.User.current()
+
+    aiEnabled =
+      App.Config.get('ai_assistance_kb_answer_from_ticket_generation') &&
+      App.Config.get('ai_provider') &&
+      user?.permission('ticket.agent+knowledge_base.editor')
+
     @html App.view('link/kb_answer')(
-      list: @linksForRendering()
-      editable: @editable
+      list:      @linksForRendering()
+      editable:  @editable
+      aiEnabled: aiEnabled
     )
 
     @renderPopovers()
@@ -64,6 +75,9 @@ class App.WidgetLinkKbAnswer extends App.WidgetLink
     @searchableSelect.addClass('hidden')
 
   didSubmit: =>
+    if @shadowField.val() == ''
+      return
+
     @clearDelay('hideField')
     @inputField.attr('disabled', true)
     @saveToServer(@shadowField.val())
@@ -105,5 +119,29 @@ class App.WidgetLinkKbAnswer extends App.WidgetLink
           type:      'error'
           msg:       xhr.responseJSON?.error || __("Couldn't save changes")
           removeAll: true
+        )
+    )
+
+  requestAiAnswer: (e) ->
+    @preventDefault(e)
+    e.stopPropagation()
+
+    @ajax(
+      id:   "knowledge_base_answer_enqueue_ai_#{@object.id}"
+      type: 'POST'
+      url:  "#{@apiPath}/tickets/#{@object.id}/knowledge_base_answers"
+      failResponseNoTrigger: true
+      success: =>
+        @notify(
+          type: 'success'
+          msg:  __('A related knowledge base answer is being generated. You will be notified once the draft is ready.')
+          timeout: 8000
+        )
+      error: (xhr) =>
+        details = xhr.responseJSON || {}
+
+        @notify(
+          type: 'error'
+          msg:  details.error_message
         )
     )

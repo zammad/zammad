@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { type Ref, type ComputedRef } from 'vue'
 import { ref } from 'vue'
@@ -43,10 +43,7 @@ export const useTicketLiveUserList = (
 
       // Sort app items by last interaction.
       appItems.sort((a, b) => {
-        return (
-          new Date(b.lastInteraction).getTime() -
-          new Date(a.lastInteraction).getTime()
-        )
+        return new Date(b.lastInteraction).getTime() - new Date(a.lastInteraction).getTime()
       })
 
       mappedLiveUsers.push({

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module FormUpdater::Concerns::AppliesTicketSharedDraft
   extend ActiveSupport::Concern
@@ -36,6 +36,8 @@ module FormUpdater::Concerns::AppliesTicketSharedDraft
         if apply_shared_draft_group_keys.present? && apply_shared_draft_group_keys.include?(field) && value.is_a?(Hash)
           value.each_pair do |sub_field, sub_value|
             apply_value.perform(field: sub_field, config: { 'value' => sub_value }, parent_field: field)
+
+            check_applied_field_from_group_key(field, sub_field)
           end
         else
           apply_value.perform(field: field, config: { 'value' => value })
@@ -53,6 +55,15 @@ module FormUpdater::Concerns::AppliesTicketSharedDraft
 
       Gql::ZammadSchema.authorized_object_from_id(id, type: draft_type, user: context[:current_user]) if id.present?
     end
+  end
+
+  def check_applied_field_from_group_key(parent_field, field)
+    store_state_group_keys = self.class.instance_variable_get(:@store_state_group_keys)
+
+    return if store_state_group_keys.blank? || store_state_group_keys.exclude?(parent_field.to_s)
+
+    applied_field_from_group_key[field] = parent_field.to_s
+
   end
 
   def agent?

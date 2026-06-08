@@ -1,12 +1,8 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import gql from 'graphql-tag'
 
-import type {
-  UserError,
-  UserInput,
-  UserSignupInput,
-} from '#shared/graphql/types.ts'
+import type { UserError, UserInput, UserSignupInput } from '#shared/graphql/types.ts'
 
 export interface TestAvatarQuery {
   userCurrentAvatarActive: {
@@ -93,10 +89,7 @@ export const TestTicketArticlesMultiple = gql`
         }
       }
     }
-    articles: ticketArticles(
-      ticket: { ticketId: $ticketId }
-      before: $beforeCursor
-    ) {
+    articles: ticketArticles(ticket: { ticketId: $ticketId }, before: $beforeCursor) {
       totalCount
       edges {
         node {

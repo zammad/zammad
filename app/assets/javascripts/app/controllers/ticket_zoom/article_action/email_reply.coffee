@@ -149,7 +149,8 @@ class EmailReply extends App.Controller
     if selected
       quote_header = @replyQuoteHeader(article)
 
-      selected = "<div><br><br/></div><div><blockquote type=\'cite\'>#{quote_header}#{selected}<br></blockquote></div><div><br></div>"
+      marker = if signaturePosition is 'top' then ' data-marker=\'signature-before\'' else ''
+      selected = "<div><br><br/></div><div><blockquote type=\'cite\'#{marker}>#{quote_header}#{selected}<br></blockquote></div><div><br></div>"
 
       # add selected text to body
       body = selected + body
@@ -258,7 +259,7 @@ class EmailReply extends App.Controller
 
     quote_header = App.FullQuoteHeader.fullQuoteHeaderForward(article)
 
-    body = "<br/><div>---#{App.i18n.translateInline('Begin forwarded message')}:---<br/><br/></div><div><blockquote type=\"cite\">#{quote_header}#{body}</blockquote></div><div><br></div>"
+    body = "<br/><div>---#{App.i18n.translateInline('Begin forwarded message')}:---<br/><br/></div><div><blockquote type=\"cite\" data-marker=\"signature-before\">#{quote_header}#{body}</blockquote></div><div><br></div>"
 
     articleNew = {}
     articleNew.body = body
@@ -290,7 +291,7 @@ class EmailReply extends App.Controller
       processData: true
       success: (data, status, xhr) ->
         return if _.isEmpty(data.attachments)
-        App.Event.trigger('ui::ticket::addArticleAttachent', {
+        App.Event.trigger('ui::ticket::addArticleAttachment', {
           ticket: ticket
           article: article
           attachments: data.attachments
@@ -332,10 +333,8 @@ class EmailReply extends App.Controller
     task = App.TaskManager.get(ui.taskKey)
     if task && task.state && task.state.ticket && task.state.ticket.group_id
       group_id = task.state.ticket.group_id
-    group = App.Group.find(group_id)
-    signature = undefined
-    if group && group.signature_id
-      signature = App.Signature.find(group.signature_id)
+
+    result = App.SignatureHelper.findForGroup(group_id)
 
     # remove signature if it was added but type is no longer email
     # https://github.com/zammad/zammad/issues/4453
@@ -344,28 +343,112 @@ class EmailReply extends App.Controller
       return
 
     # add/replace signature
-    if signature && signature.active && signature.body
+    if result
 
-      # if signature has changed, remove it
-      signature_id = ui.$('[data-signature=true]').data('signature-id')
-      if signature_id && signature_id.toString() isnt signature.id.toString()
-        ui.$('[data-name=body] [data-signature="true"]').remove()
+      existingTopLevelSignature = ui.$('[data-signature=true]').not('blockquote [data-signature=true]').first()
+      if existingTopLevelSignature.length > 0 && existingTopLevelSignature.attr('data-signature-id') is "#{result.signature.id}"
+        unless signaturePosition is 'top'
+          App.Utils.htmlImage2DataUrlAsyncInline(ui.$('[contenteditable=true]'))
+          return
+
+      # remove existing top-level signature (skip signatures in quoted messages)
+      # https://github.com/zammad/zammad/issues/5634, https://github.com/zammad/zammad/issues/2319
+      App.SignatureHelper.removeTopLevel(ui.$('[data-name=body]'))
 
       # apply new signature
-      signatureFinished = App.Utils.replaceTags(signature.body, { user: App.Session.get(), ticket: ticketCurrent, config: App.Config.all() })
+      signatureFinished = App.SignatureHelper.render(result.signature.body, ticketCurrent)
 
       body = ui.$('[data-name=body]')
-      if App.Utils.signatureCheck(body.html() || '', signatureFinished)
-        if !App.Utils.htmlLastLineEmpty(body)
-          body.append('<br><br>')
-        signature = $("<div data-signature=\"true\" data-signature-id=\"#{signature.id}\">#{signatureFinished}</div>")
-        App.Utils.htmlStrip(signature)
-        if signaturePosition is 'top'
-          body.prepend(signature)
-          body.prepend('<br>')
+      sigEl = App.SignatureHelper.buildElement(result.signature.id, signatureFinished)
+
+      placeholder = body.find('[data-signature-placeholder]')
+      if placeholder.length > 0
+        placeholder[0].replaceWith(sigEl[0])
+      else
+        # detect full-quote layout on autosave restore: check data-marker first, then leading BR fingerprint
+        effectiveSigPosition = signaturePosition
+        if not signaturePosition? && (body.find('blockquote[type=cite][data-marker=signature-before]').length > 0 || EmailReply.hasFullQuoteLayout(body))
+          effectiveSigPosition = 'top'
+
+        if effectiveSigPosition is 'top'
+          body.prepend(sigEl)
+          body.prepend('<br><br>')
         else
-          body.append(signature)
+          App.SignatureHelper.appendToBottom(body, sigEl)
+      ui.$('[data-name=body]').replaceWith(body)
+    else
+      body = ui.$('[data-name=body]')
+
+      signatures = body.find('[data-signature-placeholder]')
+
+      if signatures.length > 0
+        signatures.each ->
+          node = @
+          brsToRemove = []
+          while(node?.previousSibling?.nodeName == 'BR')
+            brsToRemove.push node.previousSibling
+            node = node.previousSibling
+
+          brsToRemove.forEach (elem) -> elem.remove()
+
+          @remove()
+
         ui.$('[data-name=body]').replaceWith(body)
+
+    # convert remote images into data urls
+    App.Utils.htmlImage2DataUrlAsyncInline(ui.$('[contenteditable=true]'))
+
+  # returns true when the body starts with a bare BR before a blockquote (full-quote fingerprint)
+  @hasFullQuoteLayout: (body) ->
+    return false unless body.find('blockquote[type=cite]').length > 0
+    firstChild = body.get(0)?.firstChild
+    firstChild = firstChild.nextSibling while firstChild?.nodeType is 3
+    firstChild?.nodeName is 'BR'
+
+  @updateSignatureByGroup: (type, ticket, ui, newGroupId) ->
+    return if type isnt 'email'
+
+    ticketCurrent = App.Ticket.fullLocal(ticket.id)
+    result = App.SignatureHelper.findForGroup(newGroupId)
+
+    body = ui.$('[data-name=body]')
+
+    if result
+
+      # apply new signature
+      signatureFinished = App.SignatureHelper.render(result.signature.body, ticketCurrent)
+      newSig = App.SignatureHelper.buildElement(result.signature.id, signatureFinished)
+
+      existingSignature = body.find('[data-signature=true]').not('blockquote [data-signature=true]').first()
+      if existingSignature.length > 0
+        # preserve signature in place if it already matches the new group (e.g. no actual change)
+        if existingSignature.attr('data-signature-id') is "#{result.signature.id}"
+          App.Utils.htmlImage2DataUrlAsyncInline(ui.$('[contenteditable=true]'))
+          return
+        # replace in-place to preserve the signature's position in the body
+        existingSignature.replaceWith(newSig[0])
+      else
+        # place signature before the full-quote block if marked, append otherwise
+        markedBlockquote = body.find('blockquote[type=cite][data-marker=signature-before]').first()
+        if markedBlockquote.length > 0
+          # place before the full-quote's container
+          parents = markedBlockquote.parentsUntil(body)
+          quoteContainer = if parents.length > 0 then parents.last() else markedBlockquote
+          prevElement = quoteContainer.prev()
+          if prevElement.length > 0
+            prevElement.before(newSig)
+          else
+            quoteContainer.before(newSig)
+          # add blank lines above signature if not already present
+          unless newSig[0].previousSibling?.nodeName is 'BR'
+            newSig.before('<br><br>')
+        else
+          App.SignatureHelper.appendToBottom(body, newSig)
+    else
+      # no signature for the new group – remove the existing one
+      App.SignatureHelper.removeTopLevel(body)
+
+    ui.$('[data-name=body]').replaceWith(body)
 
     # convert remote images into data urls
     App.Utils.htmlImage2DataUrlAsyncInline(ui.$('[contenteditable=true]'))

@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, ref, watchEffect } from 'vue'
@@ -22,21 +22,21 @@ const { ticket, updateRefetchingStatus } = useTicketInformation()
 const { createQueryErrorHandler } = useErrorHandler()
 
 const errorCallback = createQueryErrorHandler({
-  notFound: __(
-    'Organization with specified ID was not found. Try checking the URL for errors.',
-  ),
+  notFound: __('Organization with specified ID was not found. Try checking the URL for errors.'),
   forbidden: __('You have insufficient rights to view this organization.'),
 })
 
-const organizationId = computed(() => ticket.value?.organization?.internalId)
+const organizationId = computed(() => ticket.value?.organization?.id)
 
 const {
   organization,
+  organizationMembers,
   organizationQuery,
-  loading: organizationLoading,
+  loading,
+  loadingWithoutCachedResult,
   objectAttributes,
-  loadAllMembers,
-} = useOrganizationDetail(organizationId, errorCallback)
+  fetchMoreMembers,
+} = useOrganizationDetail(organizationId, 3, 100, errorCallback)
 
 const error = ref('')
 organizationQuery.onError((apolloError) => {
@@ -44,9 +44,7 @@ organizationQuery.onError((apolloError) => {
 })
 
 watchEffect(() => {
-  updateRefetchingStatus(
-    organizationLoading.value && organization.value != null,
-  )
+  updateRefetchingStatus(loading.value && organization.value != null)
 })
 
 const { openEditOrganizationDialog } = useOrganizationEdit()
@@ -56,10 +54,10 @@ const ticketsData = computed(() => getTicketData(organization.value))
 </script>
 
 <template>
-  <CommonLoader :loading="!organization && organizationLoading" :error="error">
+  <CommonLoader :loading="loadingWithoutCachedResult" :error="error">
     <div v-if="organization" class="mb-3 flex items-center gap-3">
       <CommonOrganizationAvatar size="normal" :entity="organization" />
-      <h2 class="text-lg font-semibold">
+      <h2 class="text-lg font-medium">
         {{ organization.name }}
       </h2>
     </div>
@@ -77,15 +75,15 @@ const ticketsData = computed(() => getTicketData(organization.value))
           transparent-background
           @click="openEditOrganizationDialog(organization!)"
         >
-          {{ $t('Edit Organization') }}
+          {{ $t('Edit organization') }}
         </CommonButton>
       </template>
     </ObjectAttributes>
 
     <OrganizationMembersList
-      :organization="organization"
-      :disable-show-more="organizationLoading"
-      @load-more="loadAllMembers()"
+      :members="organizationMembers"
+      :disable-show-more="loading"
+      @load-more="fetchMoreMembers()"
     />
 
     <CommonTicketStateList

@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 export const isGraphQLId = (id: unknown): id is string => {
   return typeof id === 'string' && id.startsWith('gid://zammad/')
@@ -16,9 +16,7 @@ export const ensureGraphqlId = (type: string, id: number | string): string => {
   return convertToGraphQLId(type, id)
 }
 
-export const parseGraphqlId = (
-  id: string,
-): { relation: string; id: number } => {
+export const parseGraphqlId = (id: string): { relation: string; id: number } => {
   const [relation, idString] = id.slice('gid://zammad/'.length).split('/')
 
   return {

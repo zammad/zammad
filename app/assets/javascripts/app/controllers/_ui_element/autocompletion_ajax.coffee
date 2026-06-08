@@ -14,9 +14,10 @@ class App.UiElement.autocompletion_ajax
         name:        attribute.name
         id:          params.organization_id || attribute.id
         placeholder: App.i18n.translateInline('Search…')
-        limit:       40
-        relation:    attribute.relation
-        ajax:        true
-        multiple:    attribute.multiple
+        limit:        40
+        relation:     attribute.relation
+        ajax:         true
+        multiple:     attribute.multiple
+        allowInactive: attribute.allow_inactive
     )
     searchableAjaxSelectObject.element()

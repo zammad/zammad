@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -51,7 +51,6 @@ RSpec.describe SystemReport, current_user_id: 1, type: :model do
           'ui_user_organization_selector_with_email',
           'ui_ticket_zoom_article_email_full_quote',
           'ui_ticket_zoom_article_email_full_quote_header',
-          'ui_ticket_zoom_article_twitter_initials',
           'ui_ticket_zoom_attachments_preview',
           'ui_ticket_zoom_sidebar_article_attachments',
           'ui_ticket_create_notes',
@@ -145,17 +144,16 @@ RSpec.describe SystemReport, current_user_id: 1, type: :model do
           'time_accounting_type_default',
           'tag_new',
           'defaults_calendar_subscriptions_tickets',
-          '0005_postmaster_filter_trusted',
+          '0000_postmaster_filter_trusted',
+          '0001_postmaster_filter_secure_mailing',
           '0006_postmaster_filter_auto_response_check',
           '0007_postmaster_filter_follow_up_check',
           '0008_postmaster_filter_follow_up_merged',
           '0009_postmaster_filter_follow_up_assignment',
           '0011_postmaster_sender_based_on_reply_to',
           '0018_postmaster_import_archive',
-          '0012_postmaster_filter_sender_is_system_address',
           '0014_postmaster_filter_own_notification_loop_detection',
-          '0015_postmaster_filter_identify_sender',
-          '0016_postmaster_filter_secure_mailing',
+          '0015_postmaster_filter_identify_session_user',
           '0030_postmaster_filter_out_of_office_check',
           '0200_postmaster_filter_follow_up_possible_check',
           '0900_postmaster_filter_bounce_follow_up_check',
@@ -171,6 +169,9 @@ RSpec.describe SystemReport, current_user_id: 1, type: :model do
           '5400_postmaster_filter_jira_check',
           '5401_postmaster_filter_jira_check',
           '5500_postmaster_internal_article_check',
+          '6005_postmaster_filter_identify_group',
+          '6105_postmaster_filter_sender_is_system_address',
+          '6500_postmaster_filter_identify_sender',
           'icinga_integration',
           'icinga_sender',
           'icinga_auto_close',
@@ -197,8 +198,6 @@ RSpec.describe SystemReport, current_user_id: 1, type: :model do
           '0100_trigger',
           '0100_notification',
           '1000_signature_detection',
-          '6000_slack_webhook',
-          'slack_integration',
           'sipgate_integration',
           'sipgate_alternative_fqdn',
           'cti_integration',
@@ -229,8 +228,15 @@ RSpec.describe SystemReport, current_user_id: 1, type: :model do
           'auto_shutdown',
           'language_detection_article',
           'ui_desktop_beta_switch',
+          'ai_assistance_text_tools',
           'ai_assistance_ticket_summary',
+          'ai_assistance_text_tools_fixed_instructions',
+          'ai_assistance_kb_answer_from_ticket_generation',
           'ai_provider',
+          'ui_richtext_bubble_menu',
+          'ui_desktop_beta_switch_admin_menu',
+          'ui_desktop_beta_switch_role_ids',
+          'form_allowed_params'
         ]
       end
 

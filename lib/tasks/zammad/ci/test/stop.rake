@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 namespace :zammad do
 
@@ -16,7 +16,7 @@ namespace :zammad do
         Rails.env = ENV['RAILS_ENV']
 
         Rake::Task['zammad:ci:app:stop'].invoke if args[:no_app].blank?
-        Rake::Task['db:drop:all'].invoke
+        Rake::Task['db:drop'].invoke
 
         next if !SearchIndexBackend.enabled?
 

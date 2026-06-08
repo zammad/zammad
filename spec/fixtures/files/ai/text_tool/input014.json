@@ -1,0 +1,6 @@
+{
+  "input": "<ul>\n<li>Nach dem letzten Windows 11 Update startet die VPN Verbindung nicht mehr.</li>\n<li>Fehlermeldung: \"Connection failed. Please check your network settings.\"</li>\n<li>Im Office funktioniert WLAN normal, nur VPN bleibt blockiert.</li>\n<li>Restart vom Laptop und Re-Install der <a href=\"https://www.example.com\">VPN App</a> wurden bereits versucht.</li>\n</ul>",
+  "expected": {
+    "language": "de"
+  }
+}

@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed } from 'vue'
@@ -38,13 +38,11 @@ const confirmationVariant = computed<ConfirmationVariantOptions>(() => {
   switch (currentConfirmationOptions.value?.confirmationVariant) {
     case 'delete':
       return {
-        headerTitle: __('Delete Object'),
+        headerTitle: __('Delete object'),
         headerIcon: 'trash3',
         content: __('Are you sure you want to delete this object?'),
         footerActionOptions: {
-          actionLabel:
-            currentConfirmationOptions.value?.buttonLabel ||
-            __('Delete Object'),
+          actionLabel: currentConfirmationOptions.value?.buttonLabel || __('Delete object'),
           actionButton: {
             variant: 'danger',
           },
@@ -52,12 +50,10 @@ const confirmationVariant = computed<ConfirmationVariantOptions>(() => {
       }
     case 'unsaved':
       return {
-        headerTitle: __('Unsaved Changes'),
-        content: __(
-          'Are you sure? You have unsaved changes that will get lost.',
-        ),
+        headerTitle: __('Unsaved changes'),
+        content: __('Are you sure? You have unsaved changes that will get lost.'),
         footerActionOptions: {
-          actionLabel: __('Discard Changes'),
+          actionLabel: __('Discard changes'),
           actionButton: {
             variant: 'danger',
           },
@@ -68,11 +64,9 @@ const confirmationVariant = computed<ConfirmationVariantOptions>(() => {
         headerTitle: __('Confirmation'),
         content: __('Do you want to continue?'),
         footerActionOptions: {
-          actionLabel:
-            currentConfirmationOptions.value?.buttonLabel || __('Yes'),
+          actionLabel: currentConfirmationOptions.value?.buttonLabel || __('Yes'),
           actionButton: {
-            variant:
-              currentConfirmationOptions.value?.buttonVariant || 'primary',
+            variant: currentConfirmationOptions.value?.buttonVariant || 'primary',
           },
           cancelLabel: currentConfirmationOptions.value?.cancelLabel,
           hideCancelButton: currentConfirmationOptions.value?.hideCancelButton,
@@ -97,9 +91,7 @@ const headerTitle = computed(() => {
   <CommonDialog
     :name="`confirmation:${props.uniqueId}`"
     :header-title="headerTitle"
-    :header-icon="
-      currentConfirmationOptions?.headerIcon || confirmationVariant.headerIcon
-    "
+    :header-icon="currentConfirmationOptions?.headerIcon || confirmationVariant.headerIcon"
     :content="currentConfirmationOptions?.text || confirmationVariant.content"
     :content-placeholder="currentConfirmationOptions?.textPlaceholder"
     :footer-action-options="confirmationVariant.footerActionOptions"

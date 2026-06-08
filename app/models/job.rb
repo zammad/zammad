@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Job < ApplicationModel
   include ChecksClientNotification
@@ -8,6 +8,7 @@ class Job < ApplicationModel
   include HasSearchIndexBackend
   include CanSelector
   include CanSearch
+  include TouchesPerformReferences
 
   include Job::Assets
   include Job::SearchIndex

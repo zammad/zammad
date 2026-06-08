@@ -1,23 +1,18 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, toRefs } from 'vue'
+import { useRouter } from 'vue-router'
 
 import type { Sizes } from '#shared/components/CommonIcon/types.ts'
-import CommonPopover from '#shared/components/CommonPopover/CommonPopover.vue'
-import type {
-  Orientation,
-  Placement,
-} from '#shared/components/CommonPopover/types.ts'
-import { usePopover } from '#shared/components/CommonPopover/usePopover.ts'
 import type { ObjectLike } from '#shared/types/utils.ts'
 import getUuid from '#shared/utils/getUuid.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
-import type {
-  ButtonSize,
-  ButtonVariant,
-} from '#desktop/components/CommonButton/types.ts'
+import type { ButtonSize, ButtonVariant } from '#desktop/components/CommonButton/types.ts'
+import CommonPopover from '#desktop/components/CommonPopover/CommonPopover.vue'
+import type { Orientation, Placement } from '#desktop/components/CommonPopover/types.ts'
+import { usePopover } from '#desktop/components/CommonPopover/usePopover.ts'
 import CommonPopoverMenu from '#desktop/components/CommonPopoverMenu/CommonPopoverMenu.vue'
 import type { MenuItem } from '#desktop/components/CommonPopoverMenu/types.ts'
 import { usePopoverMenu } from '#desktop/components/CommonPopoverMenu/usePopoverMenu.ts'
@@ -35,6 +30,7 @@ export interface Props {
   customMenuButtonLabel?: string
   defaultIcon?: string
   defaultButtonVariant?: ButtonVariant | 'neutral-light' | 'neutral-dark'
+  zIndex?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -49,8 +45,11 @@ const { popover, isOpen: popoverIsOpen, popoverTarget, toggle } = usePopover()
 
 const { actions, entity } = toRefs(props)
 
-const { filteredMenuItems, singleMenuItemPresent, singleMenuItem } =
-  usePopoverMenu(actions, entity, { provides: true })
+const { filteredMenuItems, singleMenuItemPresent, singleMenuItem } = usePopoverMenu(
+  actions,
+  entity,
+  { provides: true },
+)
 
 const entityId = computed(() => props.entity?.id || getUuid())
 const menuId = computed(() => `popover-${entityId.value}`)
@@ -87,18 +86,17 @@ const variantClasses = computed(() => {
   if (singleMenuItem.value?.variant === 'danger') return 'text-red-500!'
   return 'text-stone-200! dark:text-neutral-500!'
 })
+
+const router = useRouter()
 </script>
 
 <template>
-  <div
-    v-if="filteredMenuItems && filteredMenuItems.length > 0"
-    class="inline-block"
-  >
+  <div v-if="filteredMenuItems && filteredMenuItems.length > 0" class="inline-block">
     <template v-if="singleActionMode">
       <CommonLink
         v-if="singleMenuItem?.link"
         v-tooltip="$t(singleActionAriaLabel)"
-        class="flex focus:outline-hidden focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800"
+        class="flex focus-visible-app-default"
         :aria-label="$t(singleActionAriaLabel)"
         :disabled="disabled"
         :link="singleMenuItem.link"
@@ -120,7 +118,7 @@ const variantClasses = computed(() => {
         :aria-label="$t(singleActionAriaLabel)"
         :icon="singleMenuItem?.icon"
         :icon-class="singleMenuItem?.iconClass"
-        @click="singleMenuItem?.onClick?.(props.entity as ObjectLike)"
+        @click="singleMenuItem?.onClick?.(props.entity as ObjectLike, router)"
       />
     </template>
 
@@ -128,8 +126,9 @@ const variantClasses = computed(() => {
       <CommonButton
         :id="`action-menu-${entityId}`"
         ref="popoverTarget"
-        :aria-label="$t(customMenuButtonLabel || 'Action menu button')"
+        :tooltip="customMenuButtonLabel || __('Action menu button')"
         aria-haspopup="true"
+        :aria-expanded="popoverIsOpen"
         :aria-controls="popoverIsOpen ? menuId : undefined"
         :disabled="disabled"
         class="outline-offset-0!"
@@ -140,8 +139,7 @@ const variantClasses = computed(() => {
           buttonVariantClassExtension,
         ]"
         :variant="
-          defaultButtonVariant !== 'neutral-dark' &&
-          defaultButtonVariant !== 'neutral-light'
+          defaultButtonVariant !== 'neutral-dark' && defaultButtonVariant !== 'neutral-light'
             ? defaultButtonVariant
             : 'neutral'
         "
@@ -153,6 +151,7 @@ const variantClasses = computed(() => {
       <CommonPopover
         :id="menuId"
         ref="popover"
+        :z-index="zIndex"
         :placement="placement"
         :hide-arrow="hideArrow"
         :orientation="orientation"

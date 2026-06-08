@@ -1,16 +1,5 @@
-query ticketWithMentionLimit(
-  $ticketId: ID
-  $ticketInternalId: Int
-  $ticketNumber: String
-  $mentionsCount: Int = null
-) {
-  ticket(
-    ticket: {
-      ticketId: $ticketId
-      ticketInternalId: $ticketInternalId
-      ticketNumber: $ticketNumber
-    }
-  ) {
+query ticketWithMentionLimit($ticketId: ID!, $mentionsCount: Int = null) {
+  ticket(ticketId: $ticketId) {
     ...ticketAttributes
     createArticleType {
       id

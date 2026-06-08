@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
@@ -46,9 +46,7 @@ const message = computed(() => {
     case 'success':
       return __('Woo hoo! Your email address has been verified!')
     case 'error':
-      return __(
-        'Email could not be verified. Please contact your administrator.',
-      )
+      return __('Email could not be verified. Please contact your administrator.')
     case 'loading':
     default:
       return __('Verifying your email…')
@@ -82,11 +80,7 @@ onMounted(() => {
     .then(async (result) => {
       const { setAuthenticatedSessionId } = useAuthenticationStore()
 
-      if (
-        await setAuthenticatedSessionId(
-          result?.userSignupVerify?.session?.id || null,
-        )
-      ) {
+      if (await setAuthenticatedSessionId(result?.userSignupVerify?.session?.id || null)) {
         setState('success')
 
         const afterAuth = result?.userSignupVerify?.session?.afterAuth
@@ -113,7 +107,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <LayoutPublicPage box-size="small" :title="__('Email Verification')">
+  <LayoutPublicPage box-size="small" :title="__('Email verification')">
     <div class="mt-1 text-center">
       <CommonLabel>
         {{ $t(message) }}

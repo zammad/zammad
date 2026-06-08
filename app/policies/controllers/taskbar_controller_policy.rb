@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Controllers::TaskbarControllerPolicy < Controllers::ApplicationControllerPolicy
   def index?
@@ -33,6 +33,6 @@ class Controllers::TaskbarControllerPolicy < Controllers::ApplicationControllerP
 
     # current implementation requires this exception type
     # should be replaced by unified way
-    not_authorized Exceptions::UnprocessableEntity.new __('Not allowed to access this task.')
+    not_authorized Exceptions::UnprocessableContent.new __('Not allowed to access this task.')
   end
 end

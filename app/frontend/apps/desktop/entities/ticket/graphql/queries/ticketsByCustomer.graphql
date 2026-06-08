@@ -1,0 +1,34 @@
+query ticketsByCustomer(
+  $customerId: ID!
+  $customerOrganizations: Boolean
+  $stateTypeCategory: EnumTicketStateTypeCategory
+  $pageSize: Int = 7
+  $cursor: String
+) {
+  ticketsByCustomer(
+    customerId: $customerId
+    customerOrganizations: $customerOrganizations
+    stateTypeCategory: $stateTypeCategory
+    first: $pageSize
+    after: $cursor
+  ) {
+    totalCount
+    edges {
+      node {
+        id
+        internalId
+        number
+        title
+        stateColorCode
+        state {
+          id
+          name
+        }
+        createdAt
+      }
+    }
+    pageInfo {
+      endCursor
+    }
+  }
+}

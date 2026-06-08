@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 require 'rack/handler/puma'
@@ -326,7 +326,7 @@ RSpec.describe UserAgent, :aggregate_failures do
               {
                 'method'                 => 'post',
                 'submitted'              => 'some value',
-                'body'                   => ['submitted=some+value'],
+                'body'                   => 'submitted=some+value',
                 'content_type_requested' => 'application/x-www-form-urlencoded',
               }
             end
@@ -343,8 +343,8 @@ RSpec.describe UserAgent, :aggregate_failures do
               {
                 'method'                 => 'post',
                 'submitted'              => nil,
-                'body'                   => ['raw body'],
-                'content_type_requested' => 'application/x-www-form-urlencoded',
+                'body'                   => 'raw body',
+                'content_type_requested' => nil,
               }
             end
 
@@ -666,7 +666,6 @@ RSpec.describe UserAgent, :aggregate_failures do
             let(:code) { '200' }
             let(:content_type)   { 'application/json; charset=utf-8' }
             let(:request_url)    { "#{host}/test_bearer_auth/delete/1" }
-            let(:request_params) { { submitted: 'some value' } }
             let(:bearer_token)   { 'test_bearer_123' }
             let(:expected_body) do
               {
@@ -687,6 +686,42 @@ RSpec.describe UserAgent, :aggregate_failures do
 
             include_examples 'unsuccessful get/post/put/delete request'
           end
+        end
+      end
+    end
+
+    # Tests guarding against SSRF attacks
+    context 'with safety validation' do
+      let(:url) { 'http://example.com/test' }
+
+      before do
+        allow(HostnameSafetyCheck).to receive(:validate!)
+      end
+
+      context 'when safety validation is on' do
+        it 'calls HostnameSafetyCheck.validate!' do
+          described_class.get(url, {}, { validate_safety: true })
+
+          expect(HostnameSafetyCheck)
+            .to have_received(:validate!)
+            .with('example.com')
+        end
+
+        it 'passes given options to HostnameSafetyCheck.validate!' do
+          described_class.get(url, {}, { validate_safety: { allow_private: true } })
+
+          expect(HostnameSafetyCheck)
+            .to have_received(:validate!)
+            .with('example.com', allow_private: true)
+        end
+      end
+
+      context 'when safety validation is off' do
+        it 'does not call HostnameSafetyCheck.validate!' do
+          described_class.get(url, {}, { validate_safety: false })
+
+          expect(HostnameSafetyCheck)
+            .not_to have_received(:validate!)
         end
       end
     end
@@ -846,6 +881,50 @@ RSpec.describe UserAgent, :aggregate_failures do
         described_class.get('http://example.com')
 
         expect(Net::HTTP).not_to have_received(:Proxy)
+      end
+    end
+  end
+
+  describe '.log' do
+    before do
+      allow(HttpLog).to receive(:create)
+      allow(response).to receive(:body).and_return('')
+      described_class.log('/', request, response, { log: log_params })
+    end
+
+    let(:request)    { Net::HTTP::Get.new('/') }
+    let(:response)   { Net::HTTPOK.new('/', '200', 'OK') }
+    let(:log_params) { { facility: 'AI::Provider' } }
+
+    context 'when always logging' do
+      it 'creates a log entry' do
+        expect(HttpLog).to have_received(:create)
+      end
+    end
+
+    context 'when logging only on error' do
+      let(:log_params) { { facility: 'AI::Provider', log_only_on_error: true } }
+
+      context 'when request was successful' do
+        it 'does not create a log entry' do
+          expect(HttpLog).not_to have_received(:create)
+        end
+      end
+
+      context 'when request was a redirect' do
+        let(:response) { Net::HTTPFound.new('/', '302', 'Found') }
+
+        it 'does not create a log entry' do
+          expect(HttpLog).not_to have_received(:create)
+        end
+      end
+
+      context 'when request was not successful' do
+        let(:response) { Net::HTTPNotFound.new('/', '404', 'Not Found') }
+
+        it 'creates a log entry' do
+          expect(HttpLog).to have_received(:create)
+        end
       end
     end
   end

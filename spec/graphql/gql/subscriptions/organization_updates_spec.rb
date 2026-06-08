@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -49,7 +49,7 @@ RSpec.describe Gql::Subscriptions::OrganizationUpdates, type: :graphql do
               'data'   => nil,
               'errors' => include(
                 include(
-                  'message' => 'not allowed to OrganizationPolicy#show? this Organization',
+                  'message' => 'Access forbidden by Gql::Types::OrganizationType',
                 ),
               ),
             }

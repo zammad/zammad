@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { ref, type Ref } from 'vue'
 
@@ -7,7 +7,7 @@ import { waitForNextTick } from '#tests/support/utils.ts'
 
 import ThemeSwitch, { type Props } from '../ThemeSwitch.vue'
 
-export const renderThemeSwitch = (props?: Props, modelValue?: Ref) => {
+const renderThemeSwitch = (props?: Props, modelValue?: Ref) => {
   return renderComponent(ThemeSwitch, {
     props,
     vModel: {
@@ -19,7 +19,7 @@ export const renderThemeSwitch = (props?: Props, modelValue?: Ref) => {
 describe('ThemeSwitch', () => {
   it('cycles between checkbox states', async () => {
     const view = renderThemeSwitch()
-    const button = view.getByLabelText('Dark Mode')
+    const button = view.getByLabelText('Dark mode')
 
     expect(button).toBePartiallyChecked()
 
@@ -39,7 +39,7 @@ describe('ThemeSwitch', () => {
   it('supports model-value', async () => {
     const appearance = ref('dark')
     const view = renderThemeSwitch({}, appearance)
-    const button = view.getByLabelText('Dark Mode')
+    const button = view.getByLabelText('Dark mode')
 
     expect(button).toBeChecked()
 
@@ -61,7 +61,7 @@ describe('ThemeSwitch', () => {
       size: 'small',
     })
 
-    const button = view.getByLabelText('Dark Mode')
+    const button = view.getByLabelText('Dark mode')
 
     expect(button).toHaveClasses(['w-11', 'h-[19px]'])
 
@@ -93,7 +93,7 @@ describe('ThemeSwitch', () => {
 
   it('supports keyboard activation', async () => {
     const view = renderThemeSwitch()
-    const button = view.getByLabelText('Dark Mode')
+    const button = view.getByLabelText('Dark mode')
 
     expect(button).toBePartiallyChecked()
 

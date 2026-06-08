@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Types::User::TaskbarItemEntity
   class SearchType < Gql::Types::BaseObject
@@ -6,6 +6,8 @@ module Gql::Types::User::TaskbarItemEntity
 
     field :query, String
     field :model, String
+    field :filters, String
+    field :filter_count, Integer, hash_key: :filterCount
 
   end
 end

@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { waitFor } from '@testing-library/vue'
 
@@ -24,12 +24,10 @@ describe('CheckListTemplates', () => {
       },
     })
 
-    expect(
-      wrapper.getByText('Or choose a checklist template.'),
-    ).toBeInTheDocument()
-    expect(wrapper.getByText('Add From a Template')).toBeInTheDocument()
+    expect(wrapper.getByText('Or choose a checklist template.')).toBeInTheDocument()
+    expect(wrapper.getByText('Add from a template')).toBeInTheDocument()
 
-    await wrapper.events.click(wrapper.getByText('Add From a Template'))
+    await wrapper.events.click(wrapper.getByText('Add from a template'))
 
     await waitFor(() => expect(wrapper.getByRole('menu')).toBeInTheDocument())
 

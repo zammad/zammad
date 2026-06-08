@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Mutations
   class Ticket::Create < BaseMutation
@@ -10,16 +10,20 @@ module Gql::Mutations
 
     field :ticket, Gql::Types::TicketType, description: 'The created ticket. If this is present but empty, the mutation was successful but the user has no rights to view the new ticket.'
 
-    def self.authorize(_obj, ctx)
-      ctx.current_user.permissions?(['ticket.agent', 'ticket.customer'])
-    end
+    requires_permission 'ticket.agent', 'ticket.customer'
 
     def resolve(input:)
+      Gql::Types::Input::Ticket::CreateInputType.sanitize_agent_only_fields!(
+        input,
+        user:     context.current_user,
+        group_id: input[:group].id
+      )
+
       return group_has_no_email_error if !group_has_email?(input: input)
 
       {
         ticket: Service::Ticket::Create
-          .new(current_user: context.current_user)
+          .with_current_user(context.current_user)
           .execute(ticket_data: input)
       }
     rescue Exceptions::InvalidAttribute => e

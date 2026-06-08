@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class TicketsController < ApplicationController
   include CreatesTicketArticles
@@ -89,7 +89,7 @@ class TicketsController < ApplicationController
         shared_draft = Ticket::SharedDraftStart.find_by id: shared_draft_id
 
         if shared_draft && (shared_draft.group_id.to_s != params[:group_id]&.to_s || !shared_draft.group.shared_drafts?)
-          raise Exceptions::UnprocessableEntity, __('Shared draft cannot be selected for this ticket.')
+          raise Exceptions::UnprocessableContent, __('Shared draft cannot be selected for this ticket.')
         end
 
         shared_draft&.destroy
@@ -116,7 +116,7 @@ class TicketsController < ApplicationController
         email_address = $1
         email_address_validation = EmailAddressValidation.new(email_address)
         if !email_address_validation.valid?
-          render json: { error: "Invalid email '#{email_address}' of customer" }, status: :unprocessable_entity
+          render json: { error: "Invalid email '#{email_address}' of customer" }, status: :unprocessable_content
           return
         end
         local_customer = User.find_by(email: email_address.downcase)
@@ -199,17 +199,26 @@ class TicketsController < ApplicationController
       #   },
       # }
       if params[:links].present?
-        link = params[:links].permit!.to_h
-        raise Exceptions::UnprocessableEntity, __('Invalid link structure') if !link.is_a? Hash
+        authorize!(ticket, :agent_create_access?)
 
-        link.each do |target_object, link_types_with_object_ids|
-          raise Exceptions::UnprocessableEntity, __('Invalid link structure (Object)') if !link_types_with_object_ids.is_a? Hash
+        links = params[:links].permit!.to_h
+        raise Exceptions::UnprocessableContent, __('Invalid link structure') if !links.is_a? Hash
+
+        links.each do |target_object, link_types_with_object_ids|
+          raise Exceptions::UnprocessableContent, __('Invalid link structure (Object)') if !link_types_with_object_ids.is_a? Hash
 
           link_types_with_object_ids.each do |link_type, object_ids|
-            raise Exceptions::UnprocessableEntity, __('Invalid link structure (Object → LinkType)') if !object_ids.is_a? Array
+            raise Exceptions::UnprocessableContent, __('Invalid link structure (Object → LinkType)') if !object_ids.is_a? Array
 
             object_ids.each do |local_object_id|
-              link = Link.add(
+              case target_object
+              when 'Ticket'
+                authorize! Ticket.find(local_object_id), :agent_read_access?
+              when 'KnowledgeBase::Answer::Translation'
+                authorize! KnowledgeBase::Answer::Translation.find(local_object_id), :show?
+              end
+
+              Link.add(
                 link_type:                link_type,
                 link_object_target:       target_object,
                 link_object_target_value: local_object_id,
@@ -222,24 +231,7 @@ class TicketsController < ApplicationController
       end
     end
 
-    if response_expand?
-      result = ticket.reload.attributes_with_association_names
-      render json: result, status: :created
-      return
-    end
-
-    if response_full?
-      full = Ticket.full(ticket.id)
-      render json: full, status: :created
-      return
-    end
-
-    if response_all?
-      render json: Ticket::AssetsAll.new(current_user, ticket.reload).all_assets, status: :created
-      return
-    end
-
-    render json: ticket.reload.attributes_with_association_ids, status: :created
+    render_reloaded_ticket(ticket, status: :created)
   end
 
   # PUT /api/v1/tickets/1
@@ -264,46 +256,32 @@ class TicketsController < ApplicationController
 
     # overwrite params
     if !current_user.permissions?('ticket.agent')
-      %i[owner owner_id customer customer_id organization organization_id preferences].each do |key|
+      %i[group group_id owner owner_id customer customer_id organization organization_id preferences].each do |key|
         clean_params.delete(key)
       end
     end
 
     ticket.with_lock do
-      ticket.update!(clean_params)
-      if params[:article].present?
-        if (shared_draft_id = params[:article][:shared_draft_id])
-          shared_draft = Ticket::SharedDraftZoom.find_by id: shared_draft_id
+      handle_shared_draft(ticket, params[:article])
 
-          if shared_draft && shared_draft.ticket != ticket
-            raise Exceptions::UnprocessableEntity, __('Shared draft cannot be selected for this ticket.')
-          end
+      macro = handle_macro_perform_changes(params['macro.id'], params['macro.perform_changes'])
 
-          shared_draft&.destroy
+      # NB: Perform optional macro actions, but only after the ticket changes were made.
+      #   This is needed because macros in the legacy app are applied in the frontend, just before the submission.
+      #   However, we can only reliably trigger some of those actions after all the ticket changes are applied.
+      if macro
+        ticket.assign_attributes(clean_params)
+        ticket.perform_changes(macro, 'macro', nil, current_user.id) do |object, _save_needed|
+          object.save!
+          article_create(ticket, params[:article]) if params[:article].present?
         end
-
-        article_create(ticket, params[:article])
+      else
+        ticket.update!(clean_params)
+        article_create(ticket, params[:article]) if params[:article].present?
       end
     end
 
-    if response_expand?
-      result = ticket.reload.attributes_with_association_names
-      render json: result, status: :ok
-      return
-    end
-
-    if response_full?
-      full = Ticket.full(params[:id])
-      render json: full, status: :ok
-      return
-    end
-
-    if response_all?
-      render json: Ticket::AssetsAll.new(current_user, ticket.reload).all_assets, status: :ok
-      return
-    end
-
-    render json: ticket.reload.attributes_with_association_ids, status: :ok
+    render_reloaded_ticket(ticket)
   end
 
   # DELETE /api/v1/tickets/1
@@ -344,6 +322,8 @@ class TicketsController < ApplicationController
   def ticket_related
 
     ticket = Ticket.find(params[:ticket_id])
+    authorize!(ticket, :show?)
+
     assets = ticket.assets({})
 
     tickets = TicketPolicy::ReadScope.new(current_user).resolve
@@ -425,7 +405,7 @@ class TicketsController < ApplicationController
     end
 
     # merge ticket
-    Service::Ticket::Merge.new(current_user:).execute(source_ticket:, target_ticket:)
+    Service::Ticket::Merge.with_current_user(current_user).execute(source_ticket:, target_ticket:)
 
     # return result
     render json: {
@@ -518,7 +498,7 @@ class TicketsController < ApplicationController
     if string.blank? && params[:file].present?
       string = params[:file].read.force_encoding('utf-8')
     end
-    raise Exceptions::UnprocessableEntity, __('No source data submitted!') if string.blank?
+    raise Exceptions::UnprocessableContent, __('No source data submitted!') if string.blank?
 
     result = Ticket.csv_import(
       string:       string,
@@ -529,4 +509,78 @@ class TicketsController < ApplicationController
     )
     render json: result, status: :ok
   end
+
+  # PUT /api/v1/tickets/1/update_title
+  def update_title
+    ticket = Ticket.find(params[:id])
+    authorize!(ticket, :update?)
+
+    Service::Ticket::ForcedUpdate
+      .with_current_user(current_user)
+      .execute(ticket, params.permit(:title).to_h)
+
+    render_reloaded_ticket(ticket)
+  end
+
+  # PUT /api/v1/tickets/1/update_customer
+  def update_customer
+    ticket = Ticket.find(params[:id])
+    authorize!(ticket, :agent_update_access?)
+
+    Service::Ticket::ForcedUpdate
+      .with_current_user(current_user)
+      .execute(ticket, params.permit(:customer_id, :organization_id).to_h)
+
+    render_reloaded_ticket(ticket)
+  end
+
+  private
+
+  def render_reloaded_ticket(ticket, status: :ok)
+    if response_expand?
+      result = ticket.reload.attributes_with_association_names
+      render(json: result, status:)
+      return
+    end
+
+    if response_full?
+      full = Ticket.full(ticket.id)
+      render(json: full, status:)
+      return
+    end
+
+    if response_all?
+      render(json: Ticket::AssetsAll.new(current_user, ticket.reload).all_assets, status:)
+      return
+    end
+
+    render json: ticket.reload.attributes_with_association_ids, status:
+  end
+
+  def handle_shared_draft(ticket, article_data)
+    return if article_data.blank? || article_data[:shared_draft_id].blank?
+
+    shared_draft_id = article_data[:shared_draft_id]
+    shared_draft = Ticket::SharedDraftZoom.find_by id: shared_draft_id
+
+    if shared_draft && shared_draft.ticket != ticket
+      raise Exceptions::UnprocessableContent, __('Shared draft cannot be selected for this ticket.')
+    end
+
+    shared_draft&.destroy
+  end
+
+  def handle_macro_perform_changes(id, perform_changes)
+    return if id.blank? || perform_changes.blank? || !current_user.permissions?('ticket.agent')
+
+    macro = Macro.lookup(id:)
+    return if !macro
+
+    # Filter perform config based on the keys from params, so we can perform the delayed actions only.
+    #   The rest were already applied in the frontend.
+    macro.perform = macro.perform.select { |key| perform_changes.include?(key) }
+
+    macro
+  end
+
 end

@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { shallowRef } from 'vue'
 
@@ -24,7 +24,7 @@ export const useEmailAccountForm = () => {
           label: __('Full name'),
           type: 'text',
           props: {
-            placeholder: __('Organization Support'),
+            placeholder: __('Organization support'),
           },
           required: true,
         },
@@ -47,8 +47,7 @@ export const useEmailAccountForm = () => {
     },
   ]
 
-  const { values, formSetErrors, updateFieldValues } =
-    useForm<EmailAccountData>(formEmailAccount)
+  const { values, formSetErrors, updateFieldValues } = useForm<EmailAccountData>(formEmailAccount)
 
   return {
     formEmailAccount,

@@ -1,15 +1,11 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { setupView } from '#tests/support/mock-user.ts'
 
 import type { TicketView } from '#shared/entities/ticket/types.ts'
 
-import {
-  createTicketArticle,
-  createTestArticleActions,
-  createTicket,
-} from './utils.ts'
+import { createTicketArticle, createTestArticleActions, createTicket } from './utils.ts'
 
 const createDeletableArticle = (
   userId = '123',
@@ -33,9 +29,7 @@ describe('article delete action', () => {
     const actions = createTestArticleActions(ticket, article)
 
     expect(actions).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({ name: 'articleDelete' }),
-      ]),
+      expect.arrayContaining([expect.objectContaining({ name: 'articleDelete' })]),
     )
   })
   it('does not return article delete for article created by another user', () => {
@@ -45,9 +39,7 @@ describe('article delete action', () => {
     const actions = createTestArticleActions(ticket, article)
 
     expect(actions).toEqual(
-      expect.not.arrayContaining([
-        expect.objectContaining({ name: 'articleDelete' }),
-      ]),
+      expect.not.arrayContaining([expect.objectContaining({ name: 'articleDelete' })]),
     )
   })
 
@@ -58,9 +50,7 @@ describe('article delete action', () => {
     const actions = createTestArticleActions(ticket, article)
 
     expect(actions).toEqual(
-      expect.not.arrayContaining([
-        expect.objectContaining({ name: 'articleDelete' }),
-      ]),
+      expect.not.arrayContaining([expect.objectContaining({ name: 'articleDelete' })]),
     )
   })
 
@@ -71,9 +61,7 @@ describe('article delete action', () => {
     const actions = createTestArticleActions(ticket, article)
 
     expect(actions).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({ name: 'articleDelete' }),
-      ]),
+      expect.arrayContaining([expect.objectContaining({ name: 'articleDelete' })]),
     )
   })
 
@@ -81,18 +69,11 @@ describe('article delete action', () => {
     mockApplicationConfig({ ui_ticket_zoom_article_delete_timeframe: 600 })
     setupView('agent')
     const ticket = createTicket({ policy: { update: true } })
-    const article = createDeletableArticle(
-      '123',
-      false,
-      false,
-      new Date('1999 12 31'),
-    )
+    const article = createDeletableArticle('123', false, false, new Date('1999 12 31'))
     const actions = createTestArticleActions(ticket, article)
 
     expect(actions).toEqual(
-      expect.not.arrayContaining([
-        expect.objectContaining({ name: 'articleDelete' }),
-      ]),
+      expect.not.arrayContaining([expect.objectContaining({ name: 'articleDelete' })]),
     )
   })
 
@@ -102,36 +83,24 @@ describe('article delete action', () => {
     })
     setupView('agent')
     const ticket = createTicket({ policy: { update: true } })
-    const article = createDeletableArticle(
-      '123',
-      false,
-      false,
-      new Date('1999 12 31'),
-    )
+    const article = createDeletableArticle('123', false, false, new Date('1999 12 31'))
     const actions = createTestArticleActions(ticket, article)
     expect(actions).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({ name: 'articleDelete' }),
-      ]),
+      expect.arrayContaining([expect.objectContaining({ name: 'articleDelete' })]),
     )
   })
 
   const views: TicketView[] = ['agent', 'customer']
-  it.each(views)(
-    "doesn't return article delete for non-editable tickets %s",
-    (view) => {
-      setupView(view)
-      const ticket = createTicket({ policy: { update: false } })
-      const article = createDeletableArticle()
-      const actions = createTestArticleActions(ticket, article)
+  it.each(views)("doesn't return article delete for non-editable tickets %s", (view) => {
+    setupView(view)
+    const ticket = createTicket({ policy: { update: false } })
+    const article = createDeletableArticle()
+    const actions = createTestArticleActions(ticket, article)
 
-      expect(actions).toEqual(
-        expect.not.arrayContaining([
-          expect.objectContaining({ name: 'articleDelete' }),
-        ]),
-      )
-    },
-  )
+    expect(actions).toEqual(
+      expect.not.arrayContaining([expect.objectContaining({ name: 'articleDelete' })]),
+    )
+  })
 
   it("doesn't return article delete for customer", () => {
     setupView('customer')
@@ -140,9 +109,7 @@ describe('article delete action', () => {
     const actions = createTestArticleActions(ticket, article)
 
     expect(actions).toEqual(
-      expect.not.arrayContaining([
-        expect.objectContaining({ name: 'articleDelete' }),
-      ]),
+      expect.not.arrayContaining([expect.objectContaining({ name: 'articleDelete' })]),
     )
   })
 })

@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { renderComponent } from '#tests/support/components/index.ts'
 
@@ -6,25 +6,13 @@ import getUuid from '#shared/utils/getUuid.ts'
 
 import CommonInputCopyToClipboard from '../CommonInputCopyToClipboard.vue'
 
-const clipboardCopyMock = vi.fn()
+const copyToClipboardMock = vi.fn()
 
-vi.mock('@vueuse/core', async () => {
-  const mod =
-    await vi.importActual<typeof import('@vueuse/core')>('@vueuse/core')
+vi.mock('#shared/composables/useCopyToClipboard.ts', async () => ({
+  useCopyToClipboard: () => ({ copyToClipboard: copyToClipboardMock }),
+}))
 
-  return {
-    ...mod,
-    useClipboard: () => ({
-      copy: clipboardCopyMock,
-      copied: vi.fn(),
-    }),
-  }
-})
-
-const renderCopyToClipboard = (
-  props: Record<string, unknown> = {},
-  options: any = {},
-) => {
+const renderCopyToClipboard = (props: Record<string, unknown> = {}, options: any = {}) => {
   return renderComponent(CommonInputCopyToClipboard, {
     props,
     ...options,
@@ -38,25 +26,25 @@ describe('CommonInputCopyToClipboard.vue', () => {
   it('show disabled input field with value and copy button', async () => {
     const view = renderCopyToClipboard({
       value: uuidValue,
-      label: 'A Label',
+      label: 'A label',
     })
 
-    const input = view.getByLabelText('A Label')
+    const input = view.getByLabelText('A label')
 
     expect(input).toHaveValue(uuidValue)
     expect(input).toHaveAttribute('readonly')
-    expect(view.getByRole('button', { name: 'Copy Text' })).toBeInTheDocument()
+    expect(view.getByRole('button', { name: 'Copy text' })).toBeInTheDocument()
   })
 
   it('click copy button with a custom copy label', async () => {
     const view = renderCopyToClipboard({
       value: uuidValue,
-      label: 'A Label',
-      copyButtonText: 'Copy Token',
+      label: 'A label',
+      copyButtonText: 'Copy token',
     })
 
-    await view.events.click(view.getByRole('button', { name: 'Copy Token' }))
+    await view.events.click(view.getByRole('button', { name: 'Copy token' }))
 
-    expect(clipboardCopyMock).toHaveBeenCalledWith(uuidValue)
+    expect(copyToClipboardMock).toHaveBeenCalledWith(uuidValue)
   })
 })

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -33,6 +33,10 @@ RSpec.describe Gql::Mutations::System::Setup::RunAutoWizard, :aggregate_failures
       json_response
     end
 
+    before do
+      Setting.set('system_init_done', false)
+    end
+
     context 'with auto wizard not enabled' do
       it 'fails with an error' do
         expect(graphql_response['data']['systemSetupRunAutoWizard']['errors'].first['message']).to eq('An unexpected error occurred during system setup.')
@@ -61,6 +65,17 @@ RSpec.describe Gql::Mutations::System::Setup::RunAutoWizard, :aggregate_failures
           expect(graphql_response['data']['systemSetupRunAutoWizard']).to include({ 'session' => include({ 'id' => a_kind_of(String) }), 'errors' => nil })
           expect(User.find_by(email: 'hans.atila@zammad.org')).to be_present
           expect(Setting.get('system_init_done')).to be true
+        end
+
+        context 'when system is already configured' do
+          before do
+            Setting.set('system_init_done', true)
+            create(:admin)
+          end
+
+          it 'fails with an error' do
+            expect(graphql_response['errors'].first['message']).to eq('This system has already been configured.')
+          end
         end
       end
     end

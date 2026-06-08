@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 /**
  * @fileoverview Enforce "ltr/rtl" rule, if positioning classes are used
@@ -51,9 +51,7 @@ const parsePossibleClassString = (classesList) => {
   })
 
   classes.forEach((className) => {
-    const match = className.match(
-      new RegExp(`^(rtl|ltr):(${baseClass})-([^\n]+)`),
-    )
+    const match = className.match(new RegExp(`^(rtl|ltr):(${baseClass})-([^\n]+)`))
     if (!match) return
     const [, dir, prefix, value] = match
     if (value === '0') return
@@ -102,8 +100,7 @@ module.exports = {
       if (errors.length) {
         context.report({
           loc: node.loc,
-          message:
-            'When positioning classes are used, they must be prefixed with ltr/rtl.',
+          message: 'When positioning classes are used, they must be prefixed with ltr/rtl.',
           fix(fixer) {
             const newClasses = [...classes]
             errors.forEach(({ remove, add }) => {
@@ -117,10 +114,7 @@ module.exports = {
                 }
               })
             })
-            return fixer.replaceText(
-              node,
-              `${quotes}${newClasses.join(' ')}${quotes}`,
-            )
+            return fixer.replaceText(node, `${quotes}${newClasses.join(' ')}${quotes}`)
           },
         })
       }

@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { useUserMedia, usePermission } from '@vueuse/core'
@@ -19,13 +19,9 @@ const canvasHeight = 256
 const canvasWidth = 256
 
 const cameraAccess = usePermission('camera')
-const cameraIsDisabled = computed(
-  () => !cameraAccess.value || cameraAccess.value === 'denied',
-)
+const cameraIsDisabled = computed(() => !cameraAccess.value || cameraAccess.value === 'denied')
 
-const cameraIcon = computed(() =>
-  cameraIsDisabled.value ? 'camera-video-off' : 'camera-video',
-)
+const cameraIcon = computed(() => (cameraIsDisabled.value ? 'camera-video-off' : 'camera-video'))
 
 const { stream, start, stop } = useUserMedia({
   constraints: {
@@ -153,27 +149,15 @@ const captureImage = () => {
       </div>
 
       <CommonAlert v-if="cameraIsDisabled" variant="danger">
-        {{
-          $t('Accessing your camera is forbidden. Please check your settings.')
-        }}
+        {{ $t('Accessing your camera is forbidden. Please check your settings.') }}
       </CommonAlert>
 
       <div v-else class="flex flex-row gap-2">
-        <CommonButton
-          v-if="!image"
-          variant="primary"
-          size="medium"
-          @click="captureImage"
-        >
-          {{ $t('Capture From Camera') }}
+        <CommonButton v-if="!image" variant="primary" size="medium" @click="captureImage">
+          {{ $t('Capture from camera') }}
         </CommonButton>
-        <CommonButton
-          v-else
-          variant="remove"
-          size="medium"
-          @click="discardImage"
-        >
-          {{ $t('Discard Snapshot') }}
+        <CommonButton v-else variant="remove" size="medium" @click="discardImage">
+          {{ $t('Discard snapshot') }}
         </CommonButton>
       </div>
     </div>

@@ -1,7 +1,4 @@
-query userCurrentTicketOverviewsCount(
-  $ignoreUserConditions: Boolean!
-  $cacheTtl: Int!
-) {
+query userCurrentTicketOverviewsCount($ignoreUserConditions: Boolean!, $cacheTtl: Int!) {
   userCurrentTicketOverviews(ignoreUserConditions: $ignoreUserConditions) {
     id
     cachedTicketCount(cacheTtl: $cacheTtl)

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Service::Auth::SendAdminToken < Service::Base
   include Service::Auth::Concerns::CheckAdminPasswordAuth
@@ -6,7 +6,6 @@ class Service::Auth::SendAdminToken < Service::Base
   attr_reader :login
 
   def initialize(login:)
-    super()
     @login = login
     @path = 'desktop/login?token='
   end

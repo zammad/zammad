@@ -1,7 +1,9 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Integration::SMIMEController < ApplicationController
   prepend_before_action :authenticate_and_authorize!
+
+  SENSITIVE_FIELDS = %w[private_key_secret].freeze
 
   def certificate_download
     cert = SMIMECertificate.find(params[:id])
@@ -26,7 +28,9 @@ class Integration::SMIMEController < ApplicationController
   end
 
   def certificate_list
-    list = SMIMECertificate.all.map { |cert| cert_obj_to_json(cert) }
+    list = SMIMECertificate
+      .all
+      .map { |cert| mask_sensitive_values(cert_obj_to_json(cert), nil) }
 
     render json: list
   end
@@ -39,7 +43,7 @@ class Integration::SMIMEController < ApplicationController
   end
 
   def certificate_add
-    string = params[:data]
+    string = params[:certificate]
     if string.blank? && params[:file].present?
       string = params[:file].read.force_encoding('utf-8')
     end
@@ -54,7 +58,7 @@ class Integration::SMIMEController < ApplicationController
       response: items.map { |c| cert_obj_to_json(c) },
     }
   rescue => e
-    unprocessable_entity(e)
+    unprocessable_content(e)
   end
 
   def private_key_delete
@@ -69,12 +73,12 @@ class Integration::SMIMEController < ApplicationController
   end
 
   def private_key_add
-    string = params[:data]
+    string = params[:private_key]
     if string.blank? && params[:file].present?
       string = params[:file].read.force_encoding('utf-8')
     end
 
-    raise __("Parameter 'data' or 'file' required.") if string.blank?
+    raise __("Parameter 'private_key' or 'file' required.") if string.blank?
 
     private_key = SecureMailing::SMIME::PrivateKey.read(string, params[:secret])
     private_key.valid_smime_private_key!
@@ -86,7 +90,7 @@ class Integration::SMIMEController < ApplicationController
       result: 'ok',
     }
   rescue => e
-    unprocessable_entity(e)
+    unprocessable_content(e)
   end
 
   def search

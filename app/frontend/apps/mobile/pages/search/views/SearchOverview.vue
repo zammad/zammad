@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { ignorableWatch } from '@vueuse/shared'
@@ -46,9 +46,7 @@ const found = reactive({} as Record<string, Record<string, unknown>[]>)
 const { recentSearches, addSearch } = useRecentSearches(5)
 
 const model = computed(() => {
-  return props.type
-    ? searchPlugins[props.type]?.model
-    : EnumSearchableModels.Ticket // default passed by router
+  return props.type ? searchPlugins[props.type]?.model : EnumSearchableModels.Ticket // default passed by router
 })
 
 const searchQuery = new QueryHandler(
@@ -61,7 +59,7 @@ const searchQuery = new QueryHandler(
   ),
 )
 
-const loading = searchQuery.loading()
+const loading = searchQuery.loadingWithoutCachedResult()
 
 searchQuery.watchOnResult((data) => {
   if (!props.type) return
@@ -88,9 +86,7 @@ const selectType = async (selectedType: string) => {
   // focus on tab that was selected
   // it's useful when user selected type from the main screen (without tab controls)
   // and after that we focus on tab controls, so user can easily change current type
-  const tabOption = document.querySelector(
-    `[data-value="${selectedType}"]`,
-  ) as HTMLElement | null
+  const tabOption = document.querySelector(`[data-value="${selectedType}"]`) as HTMLElement | null
   tabOption?.focus()
 }
 
@@ -140,10 +136,9 @@ const selectRecentSearch = async (recentSearch: string) => {
   await loadByFilter(recentSearch)
 }
 
-const pluginsArray = Object.entries(searchPlugins).map(([name, plugin]) => ({
-  name,
-  ...plugin,
-}))
+const pluginsArray = Object.entries(searchPlugins).map(([name, plugin]) =>
+  Object.assign({ name }, plugin),
+)
 
 const searchPills: CommonButtonOption[] = pluginsArray.map((plugin) => ({
   value: plugin.name,
@@ -170,10 +165,7 @@ const canShowLastSearches = computed(() => {
   return (props.type && !found[props.type]?.length) || !canSearch.value
 })
 
-const { headerElement, stickyStyles } = useStickyHeader([
-  loading,
-  () => !!props.type,
-])
+const { headerElement, stickyStyles } = useStickyHeader([loading, () => !!props.type])
 
 const showLoader = computed(() => {
   if (!loading.value) return false
@@ -220,7 +212,7 @@ export default {
         />
         <CommonLink
           link="/"
-          class="text-blue flex items-center justify-center text-base ltr:pl-3 rtl:pr-3"
+          class="flex items-center justify-center text-base text-blue ltr:pl-3 rtl:pr-3"
         >
           {{ $t('Cancel') }}
         </CommonLink>
@@ -234,22 +226,12 @@ export default {
         :model-value="type"
         @update:model-value="selectType($event as string)"
       />
-      <div
-        v-else-if="canSearch"
-        class="mt-8 px-4"
-        data-test-id="selectTypesSection"
-      >
-        <CommonSectionMenu
-          :header-label="__('Search for…')"
-          :items="menuSearchTypes"
-        />
+      <div v-else-if="canSearch" class="mt-8 px-4" data-test-id="selectTypesSection">
+        <CommonSectionMenu :header-label="__('Search for…')" :items="menuSearchTypes" />
       </div>
     </header>
     <div :style="stickyStyles.body">
-      <div
-        v-if="showLoader"
-        class="flex h-14 w-full items-center justify-center"
-      >
+      <div v-if="showLoader" class="flex h-14 w-full items-center justify-center">
         <CommonIcon name="loading" animation="spin" />
       </div>
       <div
@@ -264,30 +246,13 @@ export default {
       <div v-else-if="canSearch && type" class="px-4 pt-4">
         {{ $t('No entries') }}
       </div>
-      <div
-        v-if="canShowLastSearches"
-        class="px-4 pt-8"
-        data-test-id="recentSearches"
-      >
+      <div v-if="canShowLastSearches" class="px-4 pt-8" data-test-id="recentSearches">
         <div class="text-white/50">{{ $t('Recent searches') }}</div>
         <ul class="pt-3">
-          <li
-            v-for="searchItem in [...recentSearches].reverse()"
-            :key="searchItem"
-            class="pb-4"
-          >
-            <button
-              type="button"
-              class="flex items-center"
-              @click="selectRecentSearch(searchItem)"
-            >
+          <li v-for="searchItem in [...recentSearches].reverse()" :key="searchItem" class="pb-4">
+            <button type="button" class="flex items-center" @click="selectRecentSearch(searchItem)">
               <span>
-                <CommonIcon
-                  name="clock"
-                  size="small"
-                  class="mx-2 text-white/50"
-                  decorative
-                />
+                <CommonIcon name="clock" size="small" class="mx-2 text-white/50" decorative />
               </span>
               <span class="text-left text-base">{{ searchItem }}</span>
             </button>

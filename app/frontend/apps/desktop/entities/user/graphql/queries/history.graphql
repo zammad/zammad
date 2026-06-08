@@ -1,0 +1,5 @@
+query userHistory($userId: ID!) {
+  userHistory(userId: $userId) {
+    ...HistoryGroup
+  }
+}

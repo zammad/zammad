@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Ticket < ApplicationModel
   include CanBeImported
@@ -14,6 +14,7 @@ class Ticket < ApplicationModel
   include HasLinks
   include HasObjectManagerAttributes
   include HasTaskbars
+  include HasRecentCloses
   include Ticket::CallsStatsTicketReopenLog
   include Ticket::EnqueuesUserTicketCounterJob
   include Ticket::ResetsPendingTimeSeconds
@@ -23,6 +24,7 @@ class Ticket < ApplicationModel
   include Ticket::TriggersSubscriptions
   include Ticket::ChecksReopenAfterCertainTime
   include Ticket::Checklists
+  include Ticket::HasDailyEventLocks
 
   include ::Ticket::Escalation
   include ::Ticket::Subject
@@ -45,6 +47,12 @@ class Ticket < ApplicationModel
   # the transaction dispatcher must be run after the workflow checks!
   include ChecksCoreWorkflow
   include HasTransactionDispatcher
+
+  transaction_ignore_changes_attributes :updated_at,
+                                        :article_count,
+                                        :create_article_type_id,
+                                        :create_article_sender_id,
+                                        :ai_agent_running
 
   validates :group_id, presence: true
 
@@ -76,17 +84,21 @@ class Ticket < ApplicationModel
                                      :last_contact_agent_at,
                                      :last_contact_customer_at,
                                      :last_owner_update_at,
-                                     :preferences
+                                     :preferences,
+                                     :ai_agent_running
 
   search_index_attributes_relevant :organization_id,
                                    :group_id,
                                    :state_id,
-                                   :priority_id
+                                   :priority_id,
+                                   :customer_id,
+                                   :owner_id
 
   history_attributes_ignored :create_article_type_id,
                              :create_article_sender_id,
                              :article_count,
-                             :preferences
+                             :preferences,
+                             :ai_agent_running
 
   history_relation_object 'Ticket::Article', 'Mention', 'Ticket::SharedDraftZoom', 'Checklist', 'Checklist::Item'
 
@@ -108,6 +120,8 @@ class Ticket < ApplicationModel
   belongs_to    :updated_by,             class_name: 'User', optional: true
   belongs_to    :create_article_type,    class_name: 'Ticket::Article::Type', optional: true
   belongs_to    :create_article_sender,  class_name: 'Ticket::Article::Sender', optional: true
+
+  has_many :ai_stored_results, class_name: 'AI::StoredResult', as: :related_object, dependent: :destroy
 
   association_attributes_ignored :flags, :mentions
 
@@ -309,6 +323,16 @@ returns
 
 =begin
 
+get article_count for a ticket, excluding system generated articles
+
+=end
+
+  def compute_articles_count
+    self.article_count = articles.non_system.count
+  end
+
+=begin
+
 merge tickets
 
   ticket = Ticket.find(123)
@@ -328,10 +352,10 @@ returns
     # prevent cross merging tickets
     target_ticket = Ticket.find_by(id: data[:ticket_id])
     raise 'no target ticket given' if !target_ticket
-    raise Exceptions::UnprocessableEntity, __('It is not possible to merge into an already merged ticket.') if target_ticket.state.state_type.name == 'merged'
+    raise Exceptions::UnprocessableContent, __('It is not possible to merge into an already merged ticket.') if target_ticket.state.state_type.name == 'merged'
 
     # check different ticket ids
-    raise Exceptions::UnprocessableEntity, __('A ticket cannot be merged into itself.') if id == target_ticket.id
+    raise Exceptions::UnprocessableContent, __('A ticket cannot be merged into itself.') if id == target_ticket.id
 
     # update articles
     Transaction.execute context: 'merge' do
@@ -341,11 +365,11 @@ returns
       # quiet update of reassign of articles
       Ticket::Article.where(ticket_id: id).update_all(['ticket_id = ?', data[:ticket_id]]) # rubocop:disable Rails/SkipsModelValidations
 
-      # mark target ticket as updated
-      # otherwise the "received_merge" history entry
-      # will be the same as the last updated_at
-      # which might be a long time ago
-      target_ticket.updated_at = Time.zone.now
+      # mark target ticket as updated before logging the merge
+      target_ticket.compute_articles_count
+      target_ticket.update!(
+        updated_at: Time.zone.now,
+      )
 
       # add merge event to both ticket's history (Issue #2469 - Add information "Ticket merged" to History)
       target_ticket.history_log(
@@ -371,6 +395,8 @@ returns
         created_by_id: data[:user_id],
         updated_by_id: data[:user_id],
       )
+
+      compute_articles_count
 
       # search for mention duplicates and destroy them before moving mentions
       Mention.duplicates(self, target_ticket).destroy_all
@@ -629,6 +655,19 @@ returns a hex color code
 
   def mention_user_ids
     mentions.pluck(:user_id)
+  end
+
+  def ai_summary_unread?(user, ai_analytics_run)
+    return false if !ai_analytics_run
+
+    usage = ai_analytics_run.usages.find_by(user:)
+
+    return false if usage
+
+    articles
+      .without_system_notifications
+      .last
+      &.author_id != user.id
   end
 
   private

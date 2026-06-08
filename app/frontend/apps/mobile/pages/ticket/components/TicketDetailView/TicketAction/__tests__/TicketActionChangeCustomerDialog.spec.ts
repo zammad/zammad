@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { waitFor } from '@testing-library/vue'
 
@@ -17,9 +17,7 @@ import { defaultTicket } from '#mobile/pages/ticket/__tests__/mocks/detail-view.
 import TicketActionChangeCustomerDialog from '../TicketActionChangeCustomerDialog.vue'
 
 beforeAll(async () => {
-  await import(
-    '#mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue'
-  )
+  await import('#mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue')
 })
 
 const { ticket: currentTicket } = defaultTicket()
@@ -69,9 +67,7 @@ const defaultAutoCompleteSearchUserResult = (
   ],
 })
 
-const mockCustomerQueryResult = (
-  autoCompleteSearchUserResult?: AutocompleteSearchUserQuery[],
-) => {
+const mockCustomerQueryResult = (autoCompleteSearchUserResult?: AutocompleteSearchUserQuery[]) => {
   return mockGraphQLApi(AutocompleteSearchUserDocument).willResolve(
     autoCompleteSearchUserResult || defaultAutoCompleteSearchUserResult(),
   )
@@ -101,9 +97,7 @@ describe('TicketAction - change customer dialog', () => {
     await waitUntil(() => view.queryByLabelText('Customer'))
 
     await view.events.click(view.getByLabelText('Customer'))
-    await expect(
-      view.findByRole('dialog', { name: 'Customer' }),
-    ).resolves.toBeInTheDocument()
+    await expect(view.findByRole('dialog', { name: 'Customer' })).resolves.toBeInTheDocument()
 
     await view.events.type(view.getByRole('searchbox'), 'nicole')
 
@@ -134,9 +128,7 @@ describe('TicketAction - change customer dialog', () => {
     await waitUntil(() => view.queryByLabelText('Customer'))
 
     await view.events.click(view.getByLabelText('Customer'))
-    await expect(
-      view.findByRole('dialog', { name: 'Customer' }),
-    ).resolves.toBeInTheDocument()
+    await expect(view.findByRole('dialog', { name: 'Customer' })).resolves.toBeInTheDocument()
 
     await view.events.type(view.getByRole('searchbox'), 'nicole')
 
@@ -207,9 +199,7 @@ describe('TicketAction - change customer dialog', () => {
     await waitUntil(() => view.queryByLabelText('Customer'))
 
     await view.events.click(view.getByLabelText('Customer'))
-    await expect(
-      view.findByRole('dialog', { name: 'Customer' }),
-    ).resolves.toBeInTheDocument()
+    await expect(view.findByRole('dialog', { name: 'Customer' })).resolves.toBeInTheDocument()
 
     await view.events.type(view.getByRole('searchbox'), 'nicole')
     await waitUntil(() => mockCustomer.calls.resolve === 1)

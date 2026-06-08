@@ -2,9 +2,6 @@
   "private": true,
   "version": "1.0.0",
   "description": "DX packages",
-  "pnpm": {
-    "neverBuiltDependencies": []
-  },
   "dependencies": {
     "hygen": "^6.2.11"
   }

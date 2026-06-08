@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { getByRole } from '@testing-library/vue'
 
@@ -6,6 +6,7 @@ import { getTestRouter } from '#tests/support/components/renderComponent.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
+import { waitFor } from '#tests/support/vitest-wrapper.ts'
 
 import { mockLogoutMutation } from '#shared/graphql/mutations/logout.mocks.ts'
 import { EnumAfterAuthType } from '#shared/graphql/types.ts'
@@ -35,7 +36,7 @@ describe('Login - After Auth - Two Factor Configuration', () => {
       )
 
       const logoutButton = view.getByRole('button', {
-        name: 'Cancel & Sign Out',
+        name: 'Cancel & sign out',
       })
 
       mockLogoutMutation({
@@ -47,10 +48,8 @@ describe('Login - After Auth - Two Factor Configuration', () => {
 
       await view.events.click(logoutButton)
 
-      await vi.waitFor(() => {
-        expect(view, 'correctly redirects to login page').toHaveCurrentUrl(
-          '/login',
-        )
+      await waitFor(() => {
+        expect(view, 'correctly redirects to login page').toHaveCurrentUrl('/login')
       })
     })
   })
@@ -67,70 +66,58 @@ describe('Login - After Auth - Two Factor Configuration', () => {
     it('shows a list of two-factor methods', async () => {
       const view = await visitAfterAuthTwoFactorConfiguration()
 
+      expect(view.getByText('Set up two-factor authentication')).toBeInTheDocument()
+
       expect(
-        view.getByText('Set Up Two-factor Authentication'),
+        view.getByText('You must protect your account with two-factor authentication.'),
       ).toBeInTheDocument()
 
       expect(
-        view.getByText(
-          'You must protect your account with two-factor authentication.',
-        ),
-      ).toBeInTheDocument()
-
-      expect(
-        view.getByText(
-          'Choose your preferred two-factor authentication method to set it up.',
-        ),
+        view.getByText('Choose your preferred two-factor authentication method to set it up.'),
       ).toBeInTheDocument()
 
       expect(
         view.getByRole('button', {
-          name: 'Security Keys',
+          name: 'Security keys',
         }),
       ).toBeInTheDocument()
 
-      expect(
-        view.getByText('Complete the sign-in with your security key.'),
-      ).toBeInTheDocument()
+      expect(view.getByText('Complete the sign-in with your security key.')).toBeInTheDocument()
 
       const authenticatorAppButton = view.getByRole('button', {
-        name: 'Authenticator App',
+        name: 'Authenticator app',
       })
 
       expect(
-        view.getByText(
-          'Get the security code from the authenticator app on your device.',
-        ),
+        view.getByText('Get the security code from the authenticator app on your device.'),
       ).toBeInTheDocument()
 
       await view.events.click(authenticatorAppButton)
 
       expect(
-        view.getByText(
-          'To set up Authenticator App for your account, follow the steps below:',
-        ),
+        view.getByText('To set up an authenticator app for your account, follow the steps below:'),
       ).toBeInTheDocument()
 
       expect(
         view.getByRole('button', {
-          name: 'Set Up',
+          name: 'Set up',
         }),
       ).toBeInTheDocument()
 
       const goBackButton = view.getByRole('button', {
-        name: 'Go Back',
+        name: 'Go back',
       })
 
       await view.events.click(goBackButton)
 
       expect(
         view.getByRole('button', {
-          name: 'Authenticator App',
+          name: 'Authenticator app',
         }),
       ).toBeInTheDocument()
 
       const logoutButton = view.getByRole('button', {
-        name: 'Cancel & Sign Out',
+        name: 'Cancel & sign out',
       })
 
       mockLogoutMutation({
@@ -142,10 +129,8 @@ describe('Login - After Auth - Two Factor Configuration', () => {
 
       await view.events.click(logoutButton)
 
-      await vi.waitFor(() => {
-        expect(view, 'correctly redirects to login page').toHaveCurrentUrl(
-          '/login',
-        )
+      await waitFor(() => {
+        expect(view, 'correctly redirects to login page').toHaveCurrentUrl('/login')
       })
     })
   })

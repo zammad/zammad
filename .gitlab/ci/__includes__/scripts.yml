@@ -5,16 +5,16 @@
     - bundle config set --local deployment 'true'
     - bundle install -j $(nproc) > /dev/null
   pnpm_init: &pnpm_init
-    - pnpm config set store-dir ${CI_PROJECT_DIR}/tmp/cache/pnpm-store
+    - pnpm config set store-dir ${CI_PROJECT_DIR}/tmp/cache/.pnpm-store
   pnpm_install: &pnpm_install
     - *pnpm_init
-    - pnpm install
+    - pnpm install --frozen-lockfile # fail if lockfile is broken or not up to date
   pnpm_install_chat: &pnpm_install_chat
     - *pnpm_init
     - pnpm --dir public/assets/chat install
   pnpm_install_cypress: &pnpm_install_cypress
     - *pnpm_install
-    - export CYPRESS_CACHE_FOLDER="${CI_PROJECT_DIR}/tmp/cache/cypress"
+    - export CYPRESS_CACHE_FOLDER="${CI_PROJECT_DIR}/tmp/cache/.cypress"
     - pnpm cypress:install
   pnpm_install_eslint_plugin_zammad: &pnpm_install_eslint_plugin_zammad
     - *pnpm_init

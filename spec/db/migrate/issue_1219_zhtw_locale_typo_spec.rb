@@ -1,9 +1,8 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
-RSpec.describe Issue1219ZhtwLocaleTypo, db_adapter: :postgresql, type: :db_migration do
-  # Test code does not apply properly on mysql which is fading away - so run it only on postgresql.
+RSpec.describe Issue1219ZhtwLocaleTypo, type: :db_migration do
   let(:locale)      { create(:locale, locale: premigrate_locale, name: 'Chinese (Trad.) (繁體中文)') }
   let(:translation) { create(:translation, locale: premigrate_locale) }
   let(:user)        { create(:user, preferences: { locale: premigrate_locale }) }

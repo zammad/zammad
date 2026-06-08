@@ -1,20 +1,21 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 # Be sure to restart your server when you modify this file.
 
 # Version of your assets, change this if you want to expire all your assets.
 Rails.application.config.assets.version = '1.0'
 
-# Add additional assets to the asset load path.
-# Rails.application.config.assets.paths << Emoji.images_path
-# Add Yarn node_modules folder to the asset load path.
-# Rails.application.config.assets.paths << Rails.root.join('node_modules')
+# Configure Dart Sass (dartsass-rails) entry points.
+# Maps source .scss files to their compiled .css output in app/assets/builds/.
+# Add dartsass output directory to Sprockets load path so compiled CSS is found.
+Rails.application.config.assets.paths << Rails.root.join('app/assets/builds')
 
-# Precompile additional assets.
-# application.js, application.css, and all non-JS/CSS in the app/assets
-# folder are already added.
-# Rails.application.config.assets.precompile += %w( admin.js admin.css )
-Rails.application.config.assets.precompile += %w[application-print.css]
-Rails.application.config.assets.precompile += %w[print.css]
-Rails.application.config.assets.precompile += %w[knowledge_base.css knowledge_base_public.js knowledge_base_public_polyfills.js]
-Rails.application.config.assets.precompile += %w[ie11CustomProperties.min.js]
+# Setup DartSASS only if the gem is loaded.
+# Otherwise config.dartsass does not exist
+if defined?(Dartsass)
+  Rails.application.config.dartsass.builds = {
+    'zammad.scss'         => 'zammad.css',
+    'print.scss'          => 'print.css',
+    'knowledge_base.scss' => 'knowledge_base.css',
+  }
+end

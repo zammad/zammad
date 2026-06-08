@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -52,8 +52,10 @@ RSpec.describe SearchKnowledgeBaseBackend do
             SearchIndexBackend.make_request_and_validate(url, data: { index: { 'highlight.max_analyzed_offset': 1000 } }, method: :put)
           end
 
+          let(:attachment) { fixture_file_upload('spec/fixtures/files/upload/lipsum.pdf') }
+
           let :published_answer do
-            create(:knowledge_base_answer, :published, :with_attachment, attachment: File.open('spec/fixtures/files/upload/lipsum.pdf'), category: category)
+            create(:knowledge_base_answer, :published, :with_attachment, attachment:, category: category)
           end
 
           it 'lists item with an attachment' do
@@ -156,18 +158,34 @@ RSpec.describe SearchKnowledgeBaseBackend do
       described_class.new options
     end
 
+    shared_examples 'verify given object is visible' do |searchindex:, ui:|
+      it "lists in #{ui} interface when ES=#{searchindex}", searchindex: do
+        instance = expected_visibility_instance ui
+        object
+
+        handle_elasticsearch(searchindex)
+
+        expect(instance.search(object.translations.first.title, user: user)).to be_present
+      end
+    end
+
+    shared_examples 'verify given object is not visible' do |searchindex:, ui:|
+      it "does not list in #{ui} interface when ES=#{searchindex}", searchindex: do
+        instance = expected_visibility_instance ui
+        object
+
+        handle_elasticsearch(searchindex)
+
+        expect(instance.search(object.translations.first.title, user: user)).to be_blank
+      end
+    end
+
     shared_examples 'verify given search backend' do |permissions:, ui:|
-      is_visible = permissions == :all || permissions == ui
-      prefix     = is_visible ? 'lists' : 'does not list'
-
-      [true, false].each do |elasticsearch|
-        it "#{prefix} in #{ui} interface when ES=#{elasticsearch}", searchindex: elasticsearch do
-          instance = expected_visibility_instance ui
-          object
-
-          handle_elasticsearch(elasticsearch)
-
-          expect(instance.search(object.translations.first.title, user: user)).to is_visible ? be_present : be_blank
+      [true, false].each do |searchindex|
+        if permissions == :all || permissions == ui
+          it_behaves_like 'verify given object is visible', searchindex:, ui:
+        else
+          it_behaves_like 'verify given object is not visible', searchindex:, ui:
         end
       end
     end

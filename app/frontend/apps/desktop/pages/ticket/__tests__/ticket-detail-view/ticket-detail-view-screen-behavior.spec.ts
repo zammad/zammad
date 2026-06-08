@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { getNode } from '@formkit/core'
 import { waitFor, within } from '@testing-library/vue'
@@ -227,9 +227,7 @@ describe('Ticket detail view screen behavior', () => {
 
     await view.events.click(await ticketMetaSidebar.findByLabelText('State'))
 
-    expect(
-      await view.findByRole('listbox', { name: 'Select…' }),
-    ).toBeInTheDocument()
+    expect(await view.findByRole('listbox', { name: 'Select…' })).toBeInTheDocument()
 
     mockFormUpdaterQuery({
       formUpdater: {
@@ -275,9 +273,7 @@ describe('Ticket detail view screen behavior', () => {
     await waitForTicketUpdateMutationCalls()
 
     // TODO: Test for a real redirect once the overview is implemented.
-    await waitFor(() =>
-      expect(router.currentRoute.value.path).not.toEqual('/tickets/1'),
-    )
+    await waitFor(() => expect(router.currentRoute.value.path).not.toEqual('/tickets/1'))
   })
 
   it('stays on tab after ticket update', async () => {
@@ -373,9 +369,7 @@ describe('Ticket detail view screen behavior', () => {
 
     await view.events.click(view.getByRole('button', { name: 'Update' }))
 
-    expect(
-      await view.findByText('Ticket updated successfully.'),
-    ).toBeInTheDocument()
+    expect(await view.findByText('Ticket updated successfully.')).toBeInTheDocument()
 
     const router = getTestRouter()
 

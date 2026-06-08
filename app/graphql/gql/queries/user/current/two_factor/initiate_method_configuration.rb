@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Queries
   class User::Current::TwoFactor::InitiateMethodConfiguration < BaseQuery
@@ -10,16 +10,14 @@ module Gql::Queries
 
     type GraphQL::Types::JSON, null: false
 
-    def self.authorize(_obj, ctx)
-      ctx.current_user.permissions?('user_preferences.two_factor_authentication')
-    end
+    requires_permission 'user_preferences.two_factor_authentication'
 
     def resolve(method_name:, token:)
       verify_token!(token)
 
       Service::User::TwoFactor::InitiateMethodConfiguration
-        .new(user: context.current_user, method_name: method_name)
-        .execute
+        .with_current_user(context.current_user)
+        .execute(method_name: method_name)
     end
   end
 end

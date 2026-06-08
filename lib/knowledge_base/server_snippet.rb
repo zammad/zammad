@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class KnowledgeBase
   class ServerSnippet
@@ -7,7 +7,7 @@ class KnowledgeBase
     end
 
     def render
-      raise Exceptions::UnprocessableEntity, __('Custom address is not set') if @kb.custom_address_uri.nil?
+      raise Exceptions::UnprocessableContent, __('Custom address is not set') if @kb.custom_address_uri.nil?
 
       template_rewrite = host.present? ? template_full : template_path
       "#{template_rewrite}\n#{template_original_url}"

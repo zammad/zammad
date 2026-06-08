@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -37,7 +37,7 @@ RSpec.describe 'Desktop > Ticket > Multitasking', app: :desktop_view, authentica
 
     wait_for_gql('apps/desktop/pages/ticket/graphql/queries/ticketHistory.graphql')
 
-    scroll_into_view(find('#flyout-ticket-history span span', text: 'Ticket Title'))
+    scroll_into_view(find('#flyout-ticket-history'))
 
     flyout = find('#flyout-ticket-history')
     preserved_scroll_offset = flyout.find('.h-full').evaluate_script('this.scrollTop')
@@ -52,6 +52,8 @@ RSpec.describe 'Desktop > Ticket > Multitasking', app: :desktop_view, authentica
 
     click_on ticket.title
 
+    expect(page).to have_css('#flyout-ticket-history')
+
     flyout = find('#flyout-ticket-history')
     current_scroll_offset = flyout.find('.h-full').evaluate_script('this.scrollTop')
 
@@ -62,7 +64,7 @@ RSpec.describe 'Desktop > Ticket > Multitasking', app: :desktop_view, authentica
     visit "/tickets/#{ticket.id}"
     visit "/tickets/#{other_ticket.id}"
 
-    click_on('Add phone call')
+    click_on('Add internal note')
     within_form do
       find_editor('Text').type('Call content here')
     end
@@ -73,7 +75,7 @@ RSpec.describe 'Desktop > Ticket > Multitasking', app: :desktop_view, authentica
     article = ticket.articles.third
     elem = find('.Content', text: article.body)
     scroll_into_view(elem)
-    preserved_scroll_offset = find('div[data-test-id="layout-wrapper"] .h-full').evaluate_script('this.scrollTop')
+    preserved_scroll_offset = find('div[data-test-id="ticket-detail-content-container"]').evaluate_script('this.scrollTop')
 
     click_on other_ticket.title
 
@@ -86,7 +88,7 @@ RSpec.describe 'Desktop > Ticket > Multitasking', app: :desktop_view, authentica
 
     click_on(ticket.title)
 
-    current_scroll_offset = find('div[data-test-id="layout-wrapper"] .h-full').evaluate_script('this.scrollTop')
+    current_scroll_offset = find('div[data-test-id="ticket-detail-content-container"]').evaluate_script('this.scrollTop')
 
     expect(preserved_scroll_offset).to eq(current_scroll_offset).and(be_positive)
   end

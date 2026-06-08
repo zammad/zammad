@@ -1,17 +1,15 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { toRef } from 'vue'
 
-import { useUserTaskbarTabLink } from '#desktop/composables/useUserTaskbarTabLink.ts'
+import { useUserTaskbarTab } from '#desktop/composables/useUserTaskbarTab.ts'
 
 import type { UserTaskbarTabEntityProps } from './types.ts'
 
 const props = defineProps<UserTaskbarTabEntityProps>()
 
-const { tabLinkInstance, taskbarTabActive } = useUserTaskbarTabLink(
-  toRef(props, 'taskbarTab'),
-)
+const { tabLinkInstance, taskbarTabActive } = useUserTaskbarTab(toRef(props, 'taskbarTab'))
 </script>
 
 <template>
@@ -19,22 +17,18 @@ const { tabLinkInstance, taskbarTabActive } = useUserTaskbarTabLink(
     v-if="taskbarTabLink"
     ref="tabLinkInstance"
     v-tooltip="$t('This object could not be found.')"
-    class="flex grow gap-2 rounded-md px-2 py-3 group-hover/tab:bg-blue-600 hover:no-underline! focus-visible:rounded-md focus-visible:outline-hidden group-hover/tab:dark:bg-blue-900"
+    class="flex grow items-center gap-2 px-2 py-3 focus-visible-app-default group-hover/tab:bg-blue-600 hover:no-underline! focus-visible:rounded-md group-hover/tab:dark:bg-blue-900"
     :class="{
-      ['!bg-blue-800 text-white']: taskbarTabActive,
+      ['bg-blue-800! text-white']: taskbarTabActive,
+      'rounded-lg!': !collapsed,
     }"
     :link="taskbarTabLink"
     internal
   >
-    <CommonIcon
-      name="x-lg"
-      size="small"
-      class="shrink-0 text-red-500"
-      decorative
-    />
+    <CommonIcon name="x-lg" size="tiny" class="shrink-0 text-red-500" decorative />
 
     <CommonLabel
-      class="block! truncate text-gray-300 group-hover/tab:text-white group-focus-visible/link:text-white dark:text-neutral-400"
+      class="block! truncate text-gray-300 group-hover/tab:text-white dark:text-neutral-400"
       :class="{
         'text-white!': taskbarTabActive,
       }"

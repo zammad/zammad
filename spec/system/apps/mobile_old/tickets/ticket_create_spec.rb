@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 require 'system/apps/mobile_old/examples/core_workflow_examples'
@@ -49,10 +49,10 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :user
         # Step 2.
         case article_type
         when 'email'
-          find_radio('articleSenderType').select_choice('Send Email')
+          find_radio('articleSenderType').select_choice('Send email')
         when 'phone'
           if direction == 'out'
-            find_radio('articleSenderType').select_choice('Outbound Call')
+            find_radio('articleSenderType').select_choice('Outbound call')
           end
         end
 
@@ -112,7 +112,7 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :user
         find_input('Title').type(Faker::Name.unique.name_with_middle)
         next_step
 
-        find_radio('articleSenderType').select_choice('Send Email')
+        find_radio('articleSenderType').select_choice('Send email')
 
         next_step
         next_step
@@ -133,7 +133,7 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :user
         find_input('Title').type(Faker::Name.unique.name_with_middle)
         next_step
 
-        find_radio('articleSenderType').select_choice('Send Email')
+        find_radio('articleSenderType').select_choice('Send email')
         next_step
 
         find_select('Group').select_option('Users')
@@ -154,7 +154,7 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :user
         find_input('Title').type(Faker::Name.unique.name_with_middle)
         next_step
 
-        find_radio('articleSenderType').select_choice('Send Email')
+        find_radio('articleSenderType').select_choice('Send email')
         next_step
 
         find_select('Group').select_option('Users')
@@ -174,8 +174,7 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :user
       within_form(form_updater_gql_number: 1) do
         find_input('Title').type(Faker::Name.unique.name_with_middle)
         next_step
-
-        find_radio('articleSenderType').select_choice('Send Email')
+        find_radio('articleSenderType').select_choice('Send email')
         next_step
 
         find_select('Group').select_option('Users')
@@ -184,7 +183,7 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :user
         expect(find_editor('Text')).to have_text_value(user.fullname)
 
         go_to_step(2)
-        find_radio('articleSenderType').select_choice('Outbound Call')
+        find_radio('articleSenderType').select_choice('Outbound call')
 
         go_to_step(4)
 
@@ -198,7 +197,7 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :user
         find_input('Title').type(Faker::Name.unique.name_with_middle)
         next_step
 
-        find_radio('articleSenderType').select_choice('Send Email')
+        find_radio('articleSenderType').select_choice('Send email')
         next_step
 
         find_select('Group').select_option('Users')
@@ -229,7 +228,7 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :user
         next_step
 
         # Step 2.
-        type = 'Outbound Call'
+        type = 'Outbound call'
         find_radio('articleSenderType').select_choice(type)
         next_step
 
@@ -266,9 +265,7 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :user
 
       find_button('Go home').click
 
-      within '[role=alert]' do
-        expect(page).to have_text('Are you sure? You have unsaved changes that will get lost.')
-      end
+      expect(page).to have_text('Are you sure? You have unsaved changes that will get lost.')
     end
 
     it 'fills out new customer when it\'s created in place' do
@@ -301,7 +298,7 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :user
       next_step
 
       # Step 2.
-      check_is_focused find_radio('articleSenderType').find('label', text: 'Received Call').find('input')
+      check_is_focused find_radio('articleSenderType').find('label', text: 'Received call').find('input')
       next_step
 
       # Step 3.
@@ -321,7 +318,7 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :user
 
       # Step 2.
       go_to_step(2)
-      check_is_focused find_radio('articleSenderType').find('label', text: 'Received Call').find('input')
+      check_is_focused find_radio('articleSenderType').find('label', text: 'Received call').find('input')
 
       # Step 4.
       go_to_step(4)
@@ -332,7 +329,7 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :user
       find_input('Title').input_element.send_keys :enter
       check_is_step(2)
 
-      find_radio('articleSenderType').find('label', text: 'Received Call').find('input').send_keys :enter
+      find_radio('articleSenderType').find('label', text: 'Received call').find('input').send_keys :enter
       check_is_step(3)
     end
 

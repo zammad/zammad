@@ -1,7 +1,4 @@
-query autocompleteSearchGeneric(
-  $input: AutocompleteSearchGenericInput!
-  $membersCount: Int = 10
-) {
+query autocompleteSearchGeneric($input: AutocompleteSearchGenericInput!, $membersCount: Int = 10) {
   autocompleteSearchGeneric(input: $input) {
     value
     label

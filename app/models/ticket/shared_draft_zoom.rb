@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Ticket::SharedDraftZoom < ApplicationModel
   include HasRichText
@@ -40,11 +40,7 @@ class Ticket::SharedDraftZoom < ApplicationModel
   def body_with_base64
     scrubber = HtmlSanitizer::Scrubber::InsertInlineImages.new(attachments)
 
-    sanitized = Loofah
-      .fragment(body)
-      .scrub!(scrubber)
-
-    sanitized.to_s
+    ScrubHtml.new(body, scrubber).scrub!.to_s
   end
 
   # Returns images with src=/api/v1/attachments/1337

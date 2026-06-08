@@ -1,5 +1,6 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
+import type { AutoCompleteOrganizationOption } from '#shared/components/Form/fields/FieldOrganization/types.ts'
 import { FormHandlerExecution } from '#shared/components/Form/types.ts'
 import type {
   FormSchemaField,
@@ -13,7 +14,6 @@ import type { Organization, Scalars } from '#shared/graphql/types.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
 import type { UserData } from '#shared/types/store.ts' // TODO: remove this import
 
-// TODO: needs to be aligned, when auto completes has a final state.
 export const useTicketFormOrganizationHandler = (): FormHandler => {
   const executeHandler = (
     execution: FormHandlerExecution,
@@ -31,13 +31,8 @@ export const useTicketFormOrganizationHandler = (): FormHandler => {
     return true
   }
 
-  const handleOrganizationField: FormHandlerFunction = (
-    execution,
-    reactivity,
-    data,
-    // eslint-disable-next-line sonarjs/cognitive-complexity
-  ) => {
-    const { formNode, values, initialEntityObject, changedField } = data
+  const handleOrganizationField: FormHandlerFunction = (execution, reactivity, data) => {
+    const { formNode, values, initialEntityObject, changedField, formUpdaterData } = data
     const { schemaData, changeFields, updateSchemaDataField } = reactivity
 
     if (!executeHandler(execution, schemaData, changedField)) return
@@ -52,17 +47,20 @@ export const useTicketFormOrganizationHandler = (): FormHandler => {
     const setCustomer = (): Maybe<UserData> | undefined => {
       if (session.hasPermission('ticket.agent')) {
         if (changedField?.newValue) {
-          // TODO: user <=> object ?!?!?
           const optionValue = formNode?.find('customer_id', 'name')?.context
-            ?.optionValueLookup as Record<
-            number,
-            Record<'object' | 'user', UserData>
-          >
+            ?.optionValueLookup as Record<number, Record<'object' | 'user', UserData>>
           // ⚠️ :INFO mobile query retrieves .user and .object for desktop
           return (
             (optionValue[changedField.newValue as number].object as UserData) ||
             (optionValue[changedField.newValue as number].user as UserData)
           )
+        }
+
+        if (
+          execution === FormHandlerExecution.Initial &&
+          formUpdaterData?.fields.customer_id?.value
+        ) {
+          return formUpdaterData.fields.customer_id.options?.[0]?.object as UserData
         }
 
         if (
@@ -81,42 +79,73 @@ export const useTicketFormOrganizationHandler = (): FormHandler => {
     const setOrganizationField = (
       customerId: Scalars['ID']['output'],
       organization?: Maybe<Partial<Organization>>,
+      options?: AutoCompleteOrganizationOption[],
     ) => {
-      if (!organization) return
+      const props = {
+        defaultFilter: '*',
+        alwaysApplyDefaultFilter: true,
+        additionalQueryParams: {
+          customerId,
+        },
+      }
 
       organizationField.show = true
       organizationField.required = true
 
-      const currentValueOption = getAutoCompleteOption(organization)
+      if (organization) {
+        const currentValueOption = getAutoCompleteOption(organization)
 
-      // Some information can be changed during the next user interactions, so update only the current schema data.
-      updateSchemaDataField({
-        name: 'organization_id',
-        props: {
-          defaultFilter: '*',
-          alwaysApplyDefaultFilter: true,
-          options: [currentValueOption],
-          additionalQueryParams: {
-            customerId,
+        // Some information can be changed during the next user interactions, so update only the current schema data.
+        updateSchemaDataField({
+          name: 'organization_id',
+          props: {
+            ...props,
+            options: [currentValueOption],
           },
-        },
-        value: currentValueOption.value,
-      })
+          value: currentValueOption.value,
+        })
+      } else if (options) {
+        updateSchemaDataField({
+          name: 'organization_id',
+          props: {
+            ...props,
+            options,
+          },
+          value: options[0].value,
+        })
+      } else {
+        updateSchemaDataField({
+          name: 'organization_id',
+          props,
+        })
+      }
     }
 
     const customer = setCustomer()
+
     if (customer?.hasSecondaryOrganizations) {
-      setOrganizationField(
-        customer.id,
-        execution === FormHandlerExecution.Initial && initialEntityObject
-          ? initialEntityObject.organization
-          : (customer.organization as Organization),
-      )
+      if (
+        execution === FormHandlerExecution.Initial &&
+        formUpdaterData?.fields.organization_id?.value
+      ) {
+        setOrganizationField(customer.id)
+      } else if (!changedField?.formUpdaterValueChange) {
+        setOrganizationField(customer.id, customer.organization as Organization)
+      } else if (
+        changedField?.formUpdaterValueChange &&
+        schemaData.fields.organization_id?.props?.options
+      ) {
+        setOrganizationField(
+          customer.id,
+          undefined,
+          schemaData.fields.organization_id?.props?.options as AutoCompleteOrganizationOption[],
+        )
+      }
     }
 
     // This values should be fixed, until the user change something in the customer_id field.
     changeFields.value.organization_id = {
-      ...(changeFields.value.organization_id || {}),
+      ...changeFields.value.organization_id,
       ...organizationField,
     }
   }

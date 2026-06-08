@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Mutations
   class Channel::Email::Add < Channel::Email::BaseConfiguration
@@ -9,7 +9,7 @@ module Gql::Mutations
     field :channel, Gql::Types::ChannelType, description: 'The new channel object'
 
     def resolve(input:)
-      channel = ::Service::Channel::Email::Create.new.execute(
+      channel = ::Service::Channel::Email::Create.execute(
         inbound_configuration:  map_type_to_config(input.inbound_configuration),
         outbound_configuration: map_type_to_config(input.outbound_configuration),
         group:                  input.group,

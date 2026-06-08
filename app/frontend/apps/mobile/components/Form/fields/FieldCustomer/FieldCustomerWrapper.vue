@@ -1,6 +1,6 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 <script setup lang="ts">
-import { markRaw, defineAsyncComponent, nextTick } from 'vue'
+import { markRaw, nextTick } from 'vue'
 
 import type { SelectValue } from '#shared/components/CommonSelect/types.ts'
 import type { AutoCompleteProps } from '#shared/components/Form/fields/FieldAutocomplete/types.ts'
@@ -10,17 +10,11 @@ import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
 import type { User } from '#shared/graphql/types.ts'
 import type { ObjectLike } from '#shared/types/utils.ts'
 
+import FieldAutoCompleteInput from '#mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue'
 import { closeDialog } from '#mobile/composables/useDialog.ts'
 import { useUserCreate } from '#mobile/entities/user/composables/useUserCreate.ts'
 
 import FieldCustomerOptionIcon from './FieldCustomerOptionIcon.vue'
-
-const FieldAutoCompleteInput = defineAsyncComponent(
-  () =>
-    import(
-      '#mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue'
-    ),
-)
 
 interface Props {
   context: FormFieldContext<
@@ -46,14 +40,9 @@ const { openCreateUserDialog } = useUserCreate({
     const { props: nodeProps } = props.context.node
     // If the user is not in options, add it
     if (
-      !nodeProps.options?.some(
-        (v: AutoCompleteCustomerUserOption) => v.value === user.internalId,
-      )
+      !nodeProps.options?.some((v: AutoCompleteCustomerUserOption) => v.value === user.internalId)
     ) {
-      nodeProps.options = [
-        ...(nodeProps.options || []),
-        buildEntityOption(user),
-      ]
+      nodeProps.options = [...(nodeProps.options || []), buildEntityOption(user)]
     }
     await nextTick()
     props.context.node.input(user.internalId, false)
@@ -61,6 +50,7 @@ const { openCreateUserDialog } = useUserCreate({
   },
 })
 
+// eslint-disable-next-line vue/no-mutating-props
 Object.assign(props.context, {
   optionIconComponent: markRaw(FieldCustomerOptionIcon),
   initialOptionBuilder: (

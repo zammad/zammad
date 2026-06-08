@@ -12,6 +12,12 @@ export const MentionSuggestionsDocument = gql`
     internalId
     fullname
     email
+    image
+    vip
+    outOfOffice
+    outOfOfficeStartAt
+    outOfOfficeEndAt
+    active
   }
 }
     `;

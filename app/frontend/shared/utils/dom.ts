@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { type MaybeRef, toValue } from 'vue'
 
@@ -10,16 +10,22 @@ export const domFrom = (html: string, document_ = document) => {
   return dom
 }
 
-export const removeSignatureFromBody = (input: FormFieldValue) => {
+export const removeSignatureFromBody = (input: FormFieldValue, placeholder: boolean = false) => {
   if (!input || typeof input !== 'string') {
     return input
   }
 
   const dom = domFrom(input)
 
-  dom
-    .querySelectorAll('div[data-signature="true"]')
-    .forEach((elem) => elem.remove())
+  dom.querySelectorAll('div[data-signature-placeholder]').forEach((elem) => elem.remove())
+
+  dom.querySelectorAll('div[data-signature]').forEach((elem) => {
+    if (placeholder) {
+      elem.replaceWith(domFrom('<div data-signature-placeholder="true"></div>'))
+    } else {
+      elem.remove()
+    }
+  })
 
   return dom.innerHTML
 }
@@ -28,8 +34,7 @@ export const removeSignatureFromBody = (input: FormFieldValue) => {
  * Queries all images in the container and waits for them to load.
  * */
 export const waitForImagesToLoad = async (container: MaybeRef) => {
-  const inlineImages: HTMLImageElement[] =
-    toValue(container).querySelectorAll('img')
+  const inlineImages: HTMLImageElement[] = toValue(container).querySelectorAll('img')
 
   if (inlineImages.length > 0) {
     return Promise.allSettled<null>(

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Mutations
   class User::Current::Avatar::Add < BaseMutation
@@ -8,9 +8,7 @@ module Gql::Mutations
 
     field :avatar, Gql::Types::AvatarType, description: 'The newly created avatar.'
 
-    def self.authorize(_obj, ctx)
-      ctx.current_user.permissions?('user_preferences.avatar')
-    end
+    requires_permission 'user_preferences.avatar'
 
     def resolve(images:)
       original = images[:original]
@@ -26,7 +24,7 @@ module Gql::Mutations
     private
 
     def add(original, resized)
-      Service::Avatar::Add.new(current_user: context.current_user).execute(full_image: original, resize_image: resized)
+      Service::Avatar::Add.with_current_user(context.current_user).execute(full_image: original, resize_image: resized)
     end
   end
 end

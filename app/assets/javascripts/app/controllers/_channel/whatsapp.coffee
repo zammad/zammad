@@ -10,6 +10,7 @@ class ChannelWhatsapp extends App.ControllerSubContent
   constructor: ->
     super
 
+    @title __('WhatsApp'), true
     @load()
 
   load: =>
@@ -129,6 +130,9 @@ class WhatsappAccountCloudAPIModal extends App.ControllerModal
     @formDisable(e)
 
     params = if @params then _.extend(@params, @formParams()) else @formParams()
+
+    if @channel
+      params.channel_id = @channel.id
 
     @ajax(
       id: 'whatsapp_initial'
@@ -260,27 +264,17 @@ class WhatsappAccountWebhookModal extends App.ControllerModal
   buttonClass: 'btn--primary'
   small: true
   events:
-    'click .js-copy': 'copyToClipboard'
+    'click .js-copy':   'copyInputToClipboard'
+    'click .js-select': 'selectAll'
 
   content: =>
-    content = $(App.view('whatsapp/account_webhook')(
+    $(App.view('whatsapp/account_webhook')(
       channel: @channel
       callback_url: "#{@Config.get('http_type')}://#{@Config.get('fqdn')}/#{@apiPath}/channels_whatsapp_webhook/#{@channel.options?.callback_url_uuid}"
     ))
 
-    content
-
   onSubmit: (e) =>
     @close()
-
-  copyToClipboard: (e) =>
-    e.preventDefault()
-
-    button = $(e.target).parents('[role="button"]')
-    field_name = button.data('targetField')
-    value = $(@container).find("input[name='#{jQuery.escapeSelector(field_name)}']").val()
-
-    @copyToClipboardWithTooltip(value, e.target,'.modal-body', true)
 
 App.Config.set('Whatsapp', {
   prio: 5600,

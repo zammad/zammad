@@ -1,13 +1,11 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 import { beforeAll } from 'vitest'
 import { h } from 'vue'
 
 import { renderComponent } from '#tests/support/components/index.ts'
 import { mockRouterHooks } from '#tests/support/mock-vue-router.ts'
 
-import LayoutContent, {
-  type Props,
-} from '#desktop/components/layout/LayoutContent.vue'
+import LayoutContent, { type Props } from '#desktop/components/layout/LayoutContent.vue'
 
 const breadcrumbItems = [
   {
@@ -20,10 +18,7 @@ const breadcrumbItems = [
   },
 ]
 
-const renderLayoutContent = (
-  slots: typeof LayoutContent.slots,
-  props?: Props,
-) => {
+const renderLayoutContent = (slots: typeof LayoutContent.slots, props?: Props) => {
   return renderComponent(LayoutContent, {
     props: {
       ...props,
@@ -52,9 +47,7 @@ describe('LayoutContent', () => {
     const wrapper = renderLayoutContent({ default: () => 'Hello Test World!' })
 
     expect(wrapper.getByText('Hello Test World!')).toBeInTheDocument()
-    expect(
-      wrapper.getByRole('link', { name: 'Test Profile' }),
-    ).toBeInTheDocument()
+    expect(wrapper.getByRole('link', { name: 'Test Profile' })).toBeInTheDocument()
     expect(wrapper.getByRole('link', { name: 'Test Foo' })).toBeInTheDocument()
   })
 
@@ -81,9 +74,7 @@ describe('LayoutContent', () => {
     )
 
     expect(wrapper.queryByText('Hello Test World!')).not.toBeInTheDocument() // should not show default content
-    expect(
-      wrapper.queryByRole('button', { name: 'Help' }),
-    ).not.toBeInTheDocument()
+    expect(wrapper.queryByRole('button', { name: 'Help' })).not.toBeInTheDocument()
 
     expect(wrapper.getByText('Hello Help Text')).toBeInTheDocument()
   })
@@ -112,9 +103,7 @@ describe('LayoutContent', () => {
 
     await wrapper.events.click(wrapper.getByRole('button', { name: 'Help' }))
 
-    expect(
-      await wrapper.findByText('Hello Test Text World!'),
-    ).toBeInTheDocument()
+    expect(await wrapper.findByText('Hello Test Text World!')).toBeInTheDocument()
   })
 
   it('shows custom help text component', async () => {
@@ -128,9 +117,7 @@ describe('LayoutContent', () => {
 
     await wrapper.events.click(wrapper.getByRole('button', { name: 'Help' }))
 
-    expect(
-      await wrapper.findByText('Hello custom Help Text'),
-    ).toBeInTheDocument()
+    expect(await wrapper.findByText('Hello custom Help Text')).toBeInTheDocument()
   })
 
   it('allows custom widths', async () => {
@@ -169,9 +156,7 @@ describe('LayoutContent', () => {
 
     expect(wrapper.getByTestId('wrapper-breadcrumb')).toHaveClass('px-4 pt-4')
 
-    expect(
-      wrapper.getByRole('heading', { name: 'Hello Test World!' }),
-    ).toHaveClass('px-4 pb-4')
+    expect(wrapper.getByRole('heading', { name: 'Hello Test World!' })).toHaveClass('px-4 pb-4')
   })
 
   it('prevents component to be scrollable', () => {

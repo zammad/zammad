@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Certificate::X509 < OpenSSL::X509::Certificate
   attr_reader :fingerprint
@@ -10,8 +10,8 @@ class Certificate::X509 < OpenSSL::X509::Certificate
   end
 
   def extensions_as_hash
-    extensions.each_with_object({}) do |ext, hash|
-      hash[ext.oid] = ext.value.split(',').map(&:strip)
+    extensions.to_h do |ext|
+      [ext.oid, ext.value.split(',').map(&:strip)]
     end
   end
 

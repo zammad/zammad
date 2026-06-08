@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { useApplicationStore } from '#shared/stores/application.ts'
 
@@ -11,10 +11,8 @@ export default <TicketSidebarPlugin>{
   title: __('i-doit'),
   component: TicketSidebarIdoit,
   permissions: ['ticket.agent'],
-  screens: [
-    TicketSidebarScreenType.TicketDetailView,
-    TicketSidebarScreenType.TicketCreate,
-  ],
+  screens: [TicketSidebarScreenType.TicketDetailView, TicketSidebarScreenType.TicketCreate],
+  views: ['agent'],
   icon: 'i-doit-logo', // icon does not exist underlying cmp will use it as a base to get light and dark icon name
   order: 6000,
   available: () => useApplicationStore().config.idoit_integration,

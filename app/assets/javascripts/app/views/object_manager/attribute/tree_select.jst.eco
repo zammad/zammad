@@ -5,6 +5,7 @@
         <tr>
           <th style="width: 36px" class="table-draggable"></th>
           <th><%- @T('Key') %>
+          <th><%- @T('Active') %>
           <th style="width: 180px"><%- @T('Action') %>
         </tr>
       </thead>
@@ -15,7 +16,9 @@
         <tr class="js-template input-data-row">
           <td class="table-draggable"><%- @Icon('draggable') %></td>
           <td class="settings-list-control-cell">
-            <input class="form-control form-control--small js-key" type="text" value="" data-level="" required/>
+            <input class="form-control form-control--small js-key" type="text" value="" data-level="" required />
+          <td class="text-center">
+            <input class="js-active" type="checkbox" value="true" />
           <td class="settings-list-row-control">
             <div class="btn btn--text js-remove" style="margin-left: -10px;">
               <%- @Icon('trash') %>

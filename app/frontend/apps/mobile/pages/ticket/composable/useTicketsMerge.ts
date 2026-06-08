@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { keyBy } from 'lodash-es'
 import { ref, markRaw } from 'vue'
@@ -23,18 +23,13 @@ import TicketMergeStatus from '../components/TicketDetailView/TicketMergeStatus.
 import type { FormKitNode } from '@formkit/core'
 import type { Ref } from 'vue'
 
-export const useTicketsMerge = (
-  sourceTicket: Ref<TicketById>,
-  onSuccess?: () => void,
-) => {
+export const useTicketsMerge = (sourceTicket: Ref<TicketById>, onSuccess?: () => void) => {
   const autocompleteRef = ref<{ node: FormKitNode }>()
   const ticketsSearchDialog = useDialog({
     name: 'tickets-search',
     prefetch: true,
     component: () =>
-      import(
-        '#mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue'
-      ),
+      import('#mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue'),
   })
 
   const mergeHandler = new MutationHandler(useTicketMergeMutation({}))

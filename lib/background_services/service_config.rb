@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class BackgroundServices
   class ServiceConfig
@@ -22,16 +22,18 @@ class BackgroundServices
       env_prefix = "ZAMMAD_#{service.service_name.underscore.upcase}"
 
       new(
-        service:  service,
-        disabled: ActiveModel::Type::Boolean.new.cast(input["#{env_prefix}_DISABLE"]) || false,
-        workers:  input["#{env_prefix}_WORKERS"].to_i,
+        service:        service,
+        disabled:       ActiveModel::Type::Boolean.new.cast(input["#{env_prefix}_DISABLE"]) || false,
+        workers:        input["#{env_prefix}_WORKERS"].to_i,
+        worker_threads: (input["#{env_prefix}_WORKER_THREADS"].presence || service.default_worker_threads).to_i,
       )
     end
 
-    def initialize(service:, disabled:, workers:)
+    def initialize(service:, disabled:, workers:, worker_threads:)
       @service  = service
       @disabled = disabled
       @workers  = workers
+      @worker_threads = worker_threads
     end
 
     def enabled?
@@ -48,6 +50,10 @@ class BackgroundServices
 
     def workers
       [@workers, service.max_workers].min
+    end
+
+    def worker_threads
+      [@worker_threads, service.max_worker_threads].min
     end
   end
 end

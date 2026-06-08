@@ -1,0 +1,7 @@
+Hello, this is my message.
+
+--
+John Doe
+[Company Website](https://example.com)
+
+[1] https://example.com

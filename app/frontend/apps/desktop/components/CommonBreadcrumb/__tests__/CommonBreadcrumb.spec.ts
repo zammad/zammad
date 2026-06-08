@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { renderComponent } from '#tests/support/components/index.ts'
 
@@ -73,9 +73,7 @@ describe('breadcrumb', () => {
 
     const lastItem = view.getByText('Settings')
 
-    expect(lastItem.parentElement).toHaveClass(
-      'last:dark:text-white last:text-black',
-    )
+    expect(lastItem.parentElement).toHaveClass('last:dark:text-white last:text-black')
   })
 
   it('supports different text sizes', async () => {
@@ -95,9 +93,7 @@ describe('breadcrumb', () => {
     })
 
     // Default size
-    expect(view.getByLabelText('Breadcrumb navigation')).toHaveClass(
-      'text-base',
-    )
+    expect(view.getByLabelText('Breadcrumb navigation')).toHaveClass('text-base')
 
     await view.rerender({
       items: [
@@ -157,8 +153,8 @@ describe('breadcrumb', () => {
       router: true,
     })
 
-    expect(
-      view.getByRole('heading', { name: 'Settings', level: 1 }),
-    ).toHaveClass('text-black dark:text-white')
+    expect(view.getByRole('heading', { name: 'Settings', level: 1 })).toHaveClass(
+      'text-black dark:text-white',
+    )
   })
 })

@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { renderComponent } from '#tests/support/components/index.ts'
 
@@ -6,9 +6,7 @@ import { createDummyArticle } from '#shared/entities/ticket-article/__tests__/mo
 
 import ArticleBubbleSecurityWarning from '#desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleSecurityWarning.vue'
 
-const renderHeaderWarning = (
-  article: ReturnType<typeof createDummyArticle>,
-) => {
+const renderHeaderWarning = (article: ReturnType<typeof createDummyArticle>) => {
   return renderComponent(
     {
       setup() {
@@ -25,7 +23,7 @@ describe('ArticleBubbleSecurityWarning', () => {
   it('does not display anything if there are no security issues', () => {
     const wrapper = renderHeaderWarning(createDummyArticle())
 
-    expect(wrapper.queryByText('Security Error')).not.toBeInTheDocument()
+    expect(wrapper.queryByText('Security error')).not.toBeInTheDocument()
   })
 
   it('does not display anything in case of a signing success', () => {
@@ -33,7 +31,7 @@ describe('ArticleBubbleSecurityWarning', () => {
       createDummyArticle({ securityState: { signingSuccess: true } }),
     )
 
-    expect(wrapper.queryByText('Security Error')).not.toBeInTheDocument()
+    expect(wrapper.queryByText('Security error')).not.toBeInTheDocument()
   })
 
   it('displays a warning in case of a signing error', () => {
@@ -46,7 +44,7 @@ describe('ArticleBubbleSecurityWarning', () => {
       }),
     )
 
-    expect(wrapper.queryByText('Security Error')).toBeInTheDocument()
+    expect(wrapper.queryByText('Security error')).toBeInTheDocument()
     expect(wrapper.queryByText('Sign: signing failure')).toBeInTheDocument()
   })
 
@@ -55,7 +53,7 @@ describe('ArticleBubbleSecurityWarning', () => {
       createDummyArticle({ securityState: { encryptionSuccess: true } }),
     )
 
-    expect(wrapper.queryByText('Security Error')).not.toBeInTheDocument()
+    expect(wrapper.queryByText('Security error')).not.toBeInTheDocument()
   })
 
   it('displays a warning in case of a decryption error', () => {
@@ -68,10 +66,8 @@ describe('ArticleBubbleSecurityWarning', () => {
       }),
     )
 
-    expect(wrapper.queryByText('Security Error')).toBeInTheDocument()
-    expect(
-      wrapper.queryByText('Encryption: decryption failure'),
-    ).toBeInTheDocument()
+    expect(wrapper.queryByText('Security error')).toBeInTheDocument()
+    expect(wrapper.queryByText('Encryption: decryption failure')).toBeInTheDocument()
   })
 
   it('displays a warning in case of both sign and decryption errors', () => {
@@ -86,10 +82,8 @@ describe('ArticleBubbleSecurityWarning', () => {
       }),
     )
 
-    expect(wrapper.queryByText('Security Error')).toBeInTheDocument()
+    expect(wrapper.queryByText('Security error')).toBeInTheDocument()
     expect(wrapper.queryByText('Sign: signing failure')).toBeInTheDocument()
-    expect(
-      wrapper.queryByText('Encryption: decryption failure'),
-    ).toBeInTheDocument()
+    expect(wrapper.queryByText('Encryption: decryption failure')).toBeInTheDocument()
   })
 })

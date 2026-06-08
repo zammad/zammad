@@ -1,8 +1,8 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { EnumTaskbarEntity } from '#shared/graphql/types.ts'
 
-import type { RouteRecordRaw } from 'vue-router'
+import type { RouteLocationNormalized, RouteRecordRaw } from 'vue-router'
 
 const route: RouteRecordRaw[] = [
   {
@@ -16,7 +16,7 @@ const route: RouteRecordRaw[] = [
       '/ticket/create/:pathMatch(.*)*',
     ],
     meta: {
-      title: __('New Ticket'),
+      title: __('New ticket'),
       requiresAuth: true,
       requiredPermission: ['ticket.agent', 'ticket.customer'],
       taskbarTabEntity: EnumTaskbarEntity.TicketCreate,
@@ -35,6 +35,12 @@ const route: RouteRecordRaw[] = [
       requiresAuth: true,
       requiredPermission: ['ticket.agent', 'ticket.customer'],
       taskbarTabEntity: EnumTaskbarEntity.TicketZoom,
+      skipRedirect: (toRoute: RouteLocationNormalized) => {
+        // Allow article anchors to pass for ticket detail
+        // important to allow scrolling to the article
+        const location = toRoute.hash && toRoute.hash.slice(1)
+        return location.startsWith('article-')
+      },
       isTaskbarTabPossible: (route) => !!route.params.internalId,
       messageForbidden: __('You have insufficient rights to view this ticket.'),
       messageNotFound: __(
@@ -45,13 +51,11 @@ const route: RouteRecordRaw[] = [
   },
   {
     path: '/ticket/zoom/:internalId(\\d+)/:articleId(\\d+)',
-    redirect: (to) =>
-      `/tickets/${to.params.internalId}#article-${to.params.articleId}`,
+    redirect: (to) => `/tickets/${to.params.internalId}#article-${to.params.articleId}`,
   },
   {
     path: '/tickets/:internalId(\\d+)/:articleId(\\d+)',
-    redirect: (to) =>
-      `/tickets/${to.params.internalId}#article-${to.params.articleId}`,
+    redirect: (to) => `/tickets/${to.params.internalId}#article-${to.params.articleId}`,
   },
 ]
 

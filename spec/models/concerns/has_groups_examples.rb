@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 RSpec.shared_examples 'HasGroups' do |group_access_factory:|
   describe 'group' do
@@ -93,13 +93,15 @@ RSpec.shared_examples 'HasGroups' do |group_access_factory:|
 
       context 'Group ID parameter' do
         include_examples '#group_access? call' do
-          let(:group_parameter) { group_read.id }
+          let(:group_parameter)              { group_read.id }
+          let(:inaccessible_group_parameter) { group_inactive.id }
         end
       end
 
       context 'Group parameter' do
         include_examples '#group_access? call' do
-          let(:group_parameter) { group_read }
+          let(:group_parameter)              { group_read }
+          let(:inaccessible_group_parameter) { group_inactive }
         end
       end
 
@@ -343,6 +345,49 @@ RSpec.shared_examples 'HasGroups' do |group_access_factory:|
       end
     end
 
+    describe '#saved_group_names_access_map' do
+
+      it 'responds to saved_group_names_access_map' do
+        expect(subject).to respond_to(:saved_group_names_access_map)
+      end
+
+      it 'returns instance Group name => access relations as Hash' do
+        expected = {
+          group_full.name => ['full'],
+          group_read.name => ['read'],
+        }
+
+        subject.group_names_access_map = expected
+
+        expect(subject.saved_group_names_access_map).to eq(expected)
+      end
+
+      it 'returns saved map for inactive instances' do
+        subject.update!(active: false)
+
+        expected = {
+          group_full.name => ['full'],
+          group_read.name => ['read'],
+        }
+
+        subject.group_names_access_map = expected
+
+        expect(subject.saved_group_names_access_map).to eq(expected)
+      end
+
+      it 'returns empty map if none is stored' do
+
+        subject.group_names_access_map = {
+          group_full.name => 'full',
+          group_read.name => 'read',
+        }
+
+        subject.group_names_access_map = {}
+
+        expect(subject.saved_group_names_access_map).to be_blank
+      end
+    end
+
     describe '#group_ids_access_map=' do
 
       it 'responds to group_ids_access_map=' do
@@ -464,6 +509,49 @@ RSpec.shared_examples 'HasGroups' do |group_access_factory:|
         subject.group_ids_access_map = {}
 
         expect(subject.group_ids_access_map).to be_blank
+      end
+    end
+
+    describe '#saved_group_ids_access_map' do
+
+      it 'responds to saved_group_ids_access_map' do
+        expect(subject).to respond_to(:saved_group_ids_access_map)
+      end
+
+      it 'returns instance Group ID => access relations as Hash' do
+        expected = {
+          group_full.id => ['full'],
+          group_read.id => ['read'],
+        }
+
+        subject.group_ids_access_map = expected
+
+        expect(subject.saved_group_ids_access_map).to eq(expected)
+      end
+
+      it 'returns saved map for inactive instances' do
+        subject.update!(active: false)
+
+        expected = {
+          group_full.id => ['full'],
+          group_read.id => ['read'],
+        }
+
+        subject.group_ids_access_map = expected
+
+        expect(subject.saved_group_ids_access_map).to eq(expected)
+      end
+
+      it 'returns empty map if none is stored' do
+
+        subject.group_ids_access_map = {
+          group_full.id => 'full',
+          group_read.id => 'read',
+        }
+
+        subject.group_ids_access_map = {}
+
+        expect(subject.saved_group_ids_access_map).to be_blank
       end
     end
 
@@ -614,6 +702,14 @@ RSpec.shared_examples '#group_access? call' do
 
     it 'checks negative' do
       expect(subject.group_access?(group_parameter, 'change')).to be false
+    end
+
+    it 'checks wildcard' do
+      expect(subject.group_access?(group_parameter, :any)).to be true
+    end
+
+    it 'checks negative wildcard' do
+      expect(subject.group_access?(inaccessible_group_parameter, :any)).to be false
     end
   end
 

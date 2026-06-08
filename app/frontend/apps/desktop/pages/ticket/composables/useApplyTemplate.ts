@@ -1,7 +1,6 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { storeToRefs } from 'pinia'
-import { onBeforeUnmount } from 'vue'
+import { onBeforeUnmount, toRef } from 'vue'
 import { useRoute } from 'vue-router'
 
 import { useTicketTemplateStore } from '../stores/ticketTemplate.ts'
@@ -9,7 +8,7 @@ import { useTicketTemplateStore } from '../stores/ticketTemplate.ts'
 export const useApplyTemplate = () => {
   const templateStore = useTicketTemplateStore()
 
-  const { templateList } = storeToRefs(templateStore)
+  const templateList = toRef(templateStore, 'templateList')
 
   const { activate, deactivate } = templateStore
 

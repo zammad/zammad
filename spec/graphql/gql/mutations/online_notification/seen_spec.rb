@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -83,6 +83,37 @@ RSpec.describe Gql::Mutations::OnlineNotification::Seen, :aggregate_failures, ty
       let(:object)                  { create(:organization) }
 
       include_context 'when mobile: notification seen handling'
+    end
+
+    context 'with Notification model directly', authenticated_as: :agent do
+      let(:notification) { create(:online_notification, :with_bulk_job, user:) }
+      let(:variables) do
+        {
+          objectId: gql.id(notification),
+        }
+      end
+
+      before do
+        gql.execute(query, variables:)
+      end
+
+      context 'with permissions' do
+        let(:user) { agent }
+
+        it 'marks the existing notification as seen' do
+          expect(gql.result.data[:success]).to be true
+          expect(notification.reload).to have_attributes(seen: true)
+        end
+      end
+
+      context 'without permissions' do
+        let(:user) { create(:agent) }
+
+        it 'results in an error' do
+          expect(gql.result.error_type).to eq Exceptions::Forbidden
+          expect(gql.result.error_message).to match %r{not allowed to .*Policy#show\? this #{notification.class.name}}
+        end
+      end
     end
   end
 end

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module KnowledgeBaseTopBarHelper
   def kb_top_bar_color(object)
@@ -29,9 +29,9 @@ module KnowledgeBaseTopBarHelper
       object.can_be_published_aasm.current_state
     when KnowledgeBase::Category
       kb_locale = object&.translation&.kb_locale
-      object.public_content?(kb_locale) ? 'Visible' : 'Invisible'
+      object.public_content?(kb_locale) ? __('Visible') : __('Invisible')
     when KnowledgeBase
-      'Published'
+      __('Published')
     end
   end
 

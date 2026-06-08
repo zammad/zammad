@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed } from 'vue'
@@ -30,25 +30,25 @@ const calendarEventsQuery = new QueryHandler(
   }),
 )
 const calendarEventsQueryResult = calendarEventsQuery.result()
-const calendarEventsQueryLoading = calendarEventsQuery.loading()
+const calendarEventsQueryLoading = calendarEventsQuery.loadingWithoutCachedResult()
 
 const tableHeaders: TableSimpleHeader[] = [
   {
     key: 'summary',
-    label: __('Event Summary'),
+    label: __('Event summary'),
   },
   {
     key: 'location',
-    label: __('Event Location'),
+    label: __('Event location'),
   },
   {
     key: 'start',
-    label: __('Event Starting'),
+    label: __('Event starting'),
     type: 'timestamp_absolute',
   },
   {
     key: 'end',
-    label: __('Event Ending'),
+    label: __('Event ending'),
     type: 'timestamp_absolute',
   },
 ]
@@ -56,15 +56,13 @@ const tableHeaders: TableSimpleHeader[] = [
 const tableItems = computed(() => {
   if (!calendarEventsQueryResult.value?.calendarIcsFileEvents) return []
 
-  return calendarEventsQueryResult.value?.calendarIcsFileEvents.map(
-    (event) => ({
-      id: getUuid(),
-      summary: event.title,
-      location: event.location,
-      start: event.startDate,
-      end: event.endDate,
-    }),
-  )
+  return calendarEventsQueryResult.value?.calendarIcsFileEvents.map((event) => ({
+    id: getUuid(),
+    summary: event.title,
+    location: event.location,
+    start: event.startDate,
+    end: event.endDate,
+  }))
 })
 
 const downloadCalendar = () => {
@@ -84,7 +82,7 @@ const downloadCalendar = () => {
 
 <template>
   <CommonFlyout
-    :header-title="__('Preview Calendar')"
+    :header-title="__('Preview calendar')"
     :footer-action-options="{
       actionLabel: __('Download'),
       actionButton: { variant: 'primary' },
@@ -95,7 +93,7 @@ const downloadCalendar = () => {
   >
     <CommonLoader :loading="calendarEventsQueryLoading">
       <CommonSimpleTable
-        :caption="__('Preview Calendar')"
+        :caption="__('Preview calendar')"
         class="mb-4 w-full"
         :headers="tableHeaders"
         :items="tableItems"

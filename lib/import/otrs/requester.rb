@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Import
   module OTRS
@@ -119,8 +119,8 @@ module Import
           params,
           {
             open_timeout:  10,
-            read_timeout:  120,
-            total_timeout: 360,
+            read_timeout:  ENV.fetch('ZAMMAD_OTRS_IMPORT_READ_TIMEOUT', 600).to_i,
+            total_timeout: ENV.fetch('ZAMMAD_OTRS_IMPORT_TOTAL_TIMEOUT', 1200).to_i,
             user:          Setting.get('import_otrs_user'),
             password:      Setting.get('import_otrs_password'),
           },

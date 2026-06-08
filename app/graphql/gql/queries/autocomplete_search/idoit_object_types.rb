@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Queries
   class AutocompleteSearch::IdoitObjectTypes < BaseQuery
@@ -9,9 +9,8 @@ module Gql::Queries
 
     type [Gql::Types::AutocompleteSearch::EntryType], null: false
 
-    def self.authorize(_obj, ctx)
-      Setting.get('idoit_integration') && ctx.current_user.permissions?('ticket.agent')
-    end
+    requires_permission 'ticket.agent'
+    requires_enabled_setting 'idoit_integration', error_message: __('i-doit integration is not enabled')
 
     def resolve(input:)
       filtered_results(input).first(input.limit || 10)&.map do |type|

@@ -8,7 +8,7 @@ class App.PostmasterFilter extends App.Model
     { name: 'channel',        display: __('Channel'),           type: 'input', readonly: 1 },
     { name: 'match',          display: __('Match all of the following'),      tag: 'postmaster_match' },
     { name: 'perform',        display: __('Perform actions'),   tag: 'postmaster_set', user_action: false },
-    { name: 'note',           display: __('Note'),              tag: 'textarea', limit: 250, null: true },
+    { name: 'note',           display: __('Note'),              tag: 'richtext', limit: 250, null: true },
     { name: 'updated_at',     display: __('Updated'),           tag: 'datetime', readonly: 1 },
     { name: 'active',         display: __('Active'),            tag: 'active', default: true },
     { name: 'created_by_id',  display: __('Created by'),        relation: 'User', readonly: 1 },

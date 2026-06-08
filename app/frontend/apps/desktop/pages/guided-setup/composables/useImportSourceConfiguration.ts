@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { useRouter } from 'vue-router'
 
@@ -11,9 +11,7 @@ import { useImportSource } from './useImportSource.ts'
 
 import type { ImportSourceConfigurationBase } from '../types/setup-import.ts'
 
-export const useImportSourceConfiguration = <
-  T extends ImportSourceConfigurationBase,
->(
+export const useImportSourceConfiguration = <T extends ImportSourceConfigurationBase>(
   source: EnumSystemImportSource,
 ) => {
   const router = useRouter()

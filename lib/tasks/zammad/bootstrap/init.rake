@@ -1,10 +1,10 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 namespace :zammad do
 
   namespace :bootstrap do
 
-    desc 'Initializes a Zammad for the first time'
+    desc 'Initializes a Zammad instance for the first time'
     task init: %i[
       zammad:setup:db_config
       zammad:db:init

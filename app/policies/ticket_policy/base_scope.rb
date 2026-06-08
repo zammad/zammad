@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 # Abstract base class for various "types" of ticket access.
 #
@@ -13,7 +13,7 @@ class TicketPolicy < ApplicationPolicy
       super
     end
 
-    def resolve # rubocop:disable Metrics/AbcSize
+    def resolve
       raise NoMethodError, <<~ERR.chomp if instance_of?(TicketPolicy::BaseScope)
         specify an access type using a subclass of TicketPolicy::BaseScope
       ERR
@@ -38,10 +38,7 @@ class TicketPolicy < ApplicationPolicy
         end
       end
 
-      # The report permission can access all tickets.
-      if sql.empty? && !user.permissions?('report')
-        sql.push '0 = 1' # Forbid unlimited access for all other permissions.
-      end
+      sql.push '0 = 1' if sql.empty? # Forbid unlimited access for all other permissions.
 
       scope.where sql.join(' OR '), *bind
     end

@@ -1,10 +1,7 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import '#tests/graphql/builders/mocks.ts'
-import {
-  renderComponent,
-  type ExtendedMountingOptions,
-} from '#tests/support/components/index.ts'
+import { renderComponent, type ExtendedMountingOptions } from '#tests/support/components/index.ts'
 import { mockRouterHooks } from '#tests/support/mock-vue-router.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
 
@@ -37,7 +34,7 @@ const renderListTable = async (
   return wrapper
 }
 
-const tableHeaders = ['title', 'owner', 'state', 'priority']
+const tableHeaders = ['title', 'owner', 'state', 'stateIcon', 'priority']
 
 const tableItems: TicketByList[] = [
   {
@@ -106,5 +103,24 @@ describe('TicketListTable', () => {
     expect(wrapper.getByText('Agent 1 Test')).toBeInTheDocument()
     expect(wrapper.getByText('open')).toBeInTheDocument()
     expect(wrapper.getByText('3 high')).toBeInTheDocument()
+  })
+
+  describe('Ai Agent', () => {
+    it('displays that indicator that agent is running', async () => {
+      const wrapper = await renderListTable({
+        headers: tableHeaders,
+        items: [{ ...tableItems[0], aiAgentRunning: true }],
+        totalCount: 100,
+        caption: 'Table caption',
+        tableId: 'ticket-list-table',
+        maxItems: 1000,
+        loading: false,
+        loadingNewPage: false,
+      })
+
+      expect(
+        wrapper.getByRole('status', { name: 'Currently processing this ticket…' }),
+      ).toBeInTheDocument()
+    })
   })
 })

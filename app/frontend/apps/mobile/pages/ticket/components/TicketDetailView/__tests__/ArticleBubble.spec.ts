@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { getByAltText, queryByAltText, waitFor } from '@testing-library/vue'
 import { flushPromises } from '@vue/test-utils'
@@ -65,11 +65,17 @@ describe('component for displaying text article', () => {
     mockApplicationConfig({
       ui_ticket_zoom_attachments_preview: true,
       api_path: '/api',
-      'active_storage.web_image_content_types': [
+      'active_storage.content_types_allowed_inline': [
+        'image/webp',
+        'image/avif',
         'image/png',
-        'image/jpeg',
-        'image/jpg',
         'image/gif',
+        'image/jpeg',
+        'image/tiff',
+        'image/bmp',
+        'image/vnd.adobe.photoshop',
+        'image/vnd.microsoft.icon',
+        'image/jpg',
       ],
     })
   })
@@ -83,13 +89,8 @@ describe('component for displaying text article', () => {
       type: 'user',
     })
 
-    expect(view.getByRole('comment'), 'has content reversed').toHaveClass(
-      'flex-row-reverse',
-    )
-    expect(
-      view.queryByIconName('lock'),
-      'doesnt have a lock icon',
-    ).not.toBeInTheDocument()
+    expect(view.getByRole('comment'), 'has content reversed').toHaveClass('flex-row-reverse')
+    expect(view.queryByIconName('lock'), 'doesnt have a lock icon').not.toBeInTheDocument()
     expect(view.getByText('Me'), 'instead of name shows me').toBeInTheDocument()
 
     await view.events.click(
@@ -114,10 +115,9 @@ describe('component for displaying text article', () => {
       'shows surname, when not mine article and has no name',
     ).toBeInTheDocument()
 
-    expect(
-      view.getByRole('comment'),
-      'doesnt have content reversed',
-    ).not.toHaveClass('flex-row-reverse')
+    expect(view.getByRole('comment'), 'doesnt have content reversed').not.toHaveClass(
+      'flex-row-reverse',
+    )
 
     await view.rerender({
       position: 'left',
@@ -128,10 +128,9 @@ describe('component for displaying text article', () => {
       },
     })
 
-    expect(
-      view.getByTestId('article-username'),
-      'doesnt have content name',
-    ).not.toHaveTextContent('-')
+    expect(view.getByTestId('article-username'), 'doesnt have content name').not.toHaveTextContent(
+      '-',
+    )
 
     expect(view.queryByText('Show more')).not.toBeInTheDocument()
   })
@@ -153,29 +152,27 @@ describe('component for displaying text article', () => {
     expect(seeMoreButton).toBeInTheDocument()
 
     await flushPromises()
-    await waitFor(() =>
-      expect(content, 'has maximum height').toHaveStyle({ height: '320px' }),
-    )
+    await waitFor(() => expect(content, 'has maximum height').toHaveStyle({ height: '320px' }))
 
     await view.events.click(seeMoreButton)
 
     expect(seeMoreButton).toHaveTextContent('See less')
 
-    await waitFor(() =>
-      expect(content, 'has actual height').toHaveStyle({ height: '910px' }),
-    )
+    await waitFor(() => expect(content, 'has actual height').toHaveStyle({ height: 'auto' }))
   })
 
   it('has "see more" for small article with signature', async () => {
     const html = String.raw
 
     const view = renderArticleBubble({
-      content: html`<div>
-        Text
+      content: html`
         <div>
-          <div data-test-id="signature" data-signature="true">Signature</div>
+          Text
+          <div>
+            <div data-test-id="signature" data-signature="true">Signature</div>
+          </div>
         </div>
-      </div>`,
+      `,
     })
 
     const content = view.getByTestId('article-content')
@@ -195,17 +192,13 @@ describe('component for displaying text article', () => {
 
     await flushPromises()
 
-    await waitFor(() =>
-      expect(content, 'has maximum height').toHaveStyle({ height: '65px' }),
-    )
+    await waitFor(() => expect(content, 'has maximum height').toHaveStyle({ height: '65px' }))
 
     await view.events.click(seeMoreButton)
 
     expect(seeMoreButton).toHaveTextContent('See less')
 
-    await waitFor(() =>
-      expect(content, 'has actual height').toHaveStyle({ height: '210px' }),
-    )
+    await waitFor(() => expect(content, 'has actual height').toHaveStyle({ height: 'auto' }))
   })
 
   it('processes plain text into html', () => {
@@ -262,24 +255,19 @@ describe('component for displaying text article', () => {
 
     const [attachment1, attachment2] = attachments
 
-    expect(attachment1).toHaveAttribute(
-      'href',
-      '/api/attachments/1?disposition=attachment',
-    )
+    expect(attachment1).toHaveAttribute('href', '/api/attachments/1?disposition=attachment')
     expect(attachment1).toHaveTextContent('Zammad 1.png')
     expect(attachment1).toHaveTextContent('236 KB')
 
     const previewButton = view.getByRole('button', {
       name: 'Preview Zammad 1.png',
     })
-    expect(
-      getByAltText(previewButton, 'Image of Zammad 1.png'),
-    ).toHaveAttribute('src', '/api/attachments/1?preview=1')
-
-    expect(attachment2).toHaveAttribute(
-      'href',
-      '/api/attachments/2?disposition=attachment',
+    expect(getByAltText(previewButton, 'Image of Zammad 1.png')).toHaveAttribute(
+      'src',
+      '/api/attachments/1?preview=1',
     )
+
+    expect(attachment2).toHaveAttribute('href', '/api/attachments/2?disposition=attachment')
     expect(attachment2).toHaveTextContent('Zammad 2.pdf')
     expect(attachment2).toHaveTextContent('355 Bytes')
     expect(
@@ -442,10 +430,7 @@ describe('links handling', () => {
   })
   it('handles target=_blank desktop links with fqdn', async () => {
     mockApplicationConfig({ http_type: 'https', fqdn: 'example.com' })
-    await clickLink(
-      `https://example.com/#${desktop.link.slice(1)}`,
-      'target="_blank"',
-    )
+    await clickLink(`https://example.com/#${desktop.link.slice(1)}`, 'target="_blank"')
     const router = getTestRouter()
     expect(open).toHaveBeenCalledWith(desktop.pathname, '_blank')
     expect(router.push).not.toHaveBeenCalledWith()

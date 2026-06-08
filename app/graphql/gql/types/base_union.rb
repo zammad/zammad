@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 # This is required because of circular references in BaseEdge and BaseConnection.
 # Both of them are BaseObject subclasses yet referenced by BaseObject.

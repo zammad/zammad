@@ -1,10 +1,12 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
+
+import { type App } from 'vue'
 
 import { initializeFileClasses } from '#shared/components/Form/fields/FieldFile/initializeFileClasses.ts'
 import { initializeToggleClasses } from '#shared/components/Form/fields/FieldToggle/initializeToggleClasses.ts'
 import {
   initializeFieldEditorClasses,
-  initializeFieldEditorProps,
+  initializeEditorComponents,
 } from '#shared/components/Form/initializeFieldEditor.ts'
 import { initializeFieldLinkClasses } from '#shared/components/Form/initializeFieldLinkClasses.ts'
 import { initializeFormClasses } from '#shared/components/Form/initializeFormClasses.ts'
@@ -17,19 +19,24 @@ import type {
 } from '#shared/types/form.ts'
 import type { ImportGlobEagerOutput } from '#shared/types/utils.ts'
 
+import FieldEditorActionBar from '#desktop/components/Form/fields/FieldEditor/FieldEditorActionBar.vue'
+import FieldEditorActionMenu from '#desktop/components/Form/fields/FieldEditor/FieldEditorActionMenu.vue'
+import FieldEditorSuggestionList from '#desktop/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue'
+
 import { getCoreDesktopClasses } from './theme/global/getCoreDesktopClasses.ts'
 
 import type { FormKitPlugin } from '@formkit/core'
-import type { App } from 'vue'
 
 const pluginModules: ImportGlobEagerOutput<FormKitPlugin> = import.meta.glob(
   './plugins/global/*.ts',
   { eager: true },
 )
 export const desktopFormFieldModules: ImportGlobEagerOutput<FormFieldTypeImportModules> =
-  import.meta.glob('../components/Form/fields/**/index.ts', { eager: true })
-const themeExtensionModules: ImportGlobEagerOutput<FormThemeExtension> =
-  import.meta.glob('./theme/global/extensions/*.ts', { eager: true })
+  import.meta.glob('../components/Form/fields/*/index.ts', { eager: true })
+const themeExtensionModules: ImportGlobEagerOutput<FormThemeExtension> = import.meta.glob(
+  './theme/global/extensions/*.ts',
+  { eager: true },
+)
 
 export const initializeForm: InitializeAppForm = (app: App) => {
   const plugins = getFormPlugins(pluginModules)
@@ -43,14 +50,7 @@ export const initializeForm: InitializeAppForm = (app: App) => {
       '<svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 fill-current"><path d="M10.9696 4.96967C11.2625 4.67678 11.7374 4.67678 12.0303 4.96967C12.3196 5.25897 12.3231 5.72582 12.0409 6.01947L8.04873 11.0097C8.04297 11.0169 8.03682 11.0238 8.03029 11.0303C7.7374 11.3232 7.26253 11.3232 6.96963 11.0303L4.32319 8.38388C4.03029 8.09099 4.03029 7.61612 4.32319 7.32322C4.61608 7.03033 5.09095 7.03033 5.38385 7.32322L7.47737 9.41674L10.9497 4.9921C10.9559 4.98424 10.9626 4.97674 10.9696 4.96967Z" /></svg>',
   }
 
-  mainInitializeForm(
-    app,
-    undefined,
-    desktopFormFieldModules,
-    plugins,
-    theme,
-    decoratorIcons,
-  )
+  mainInitializeForm(app, undefined, desktopFormFieldModules, plugins, theme, decoratorIcons)
 }
 
 export const initializeFormFields = () => {
@@ -59,13 +59,13 @@ export const initializeFormFields = () => {
   })
 
   initializeFieldLinkClasses({
-    container: 'formkit-link',
-    base: 'ms-3 mb-2.5',
-    link: 'hover:rounded-xs hover:outline hover:outline-1 hover:outline-offset-1 hover:outline-blue-600 dark:hover:outline-blue-900',
+    container: 'formkit-link min-h-10 flex items-center',
+    base: 'ms-2',
+    link: 'w-min h-min min-h-min shrink-0 flex-nowrap items-center justify-center gap-x-1 border-0 font-normal shadow-none transition-transform duration-200 hover:outline-1 hover:outline-offset-1 hover:outline-blue-600 focus:outline-0 focus:hover:outline-1 focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 focus:active:scale-[95%] dark:hover:outline-blue-900 text-blue-800 hover:text-blue-850 dark:hover:text-blue-600 text-base p-2 rounded-lg',
   })
 
   initializeFormGroupClasses({
-    container: 'form-group grid grid-cols-2 gap-y-2.5 gap-x-3',
+    container: 'form-group @container grid grid-cols-2 gap-y-2.5 gap-x-3',
     help: 'text-xs',
     dirtyMark: 'form-group-mark-dirty',
     bottomMargin: 'mb-4 last:mb-0',
@@ -80,64 +80,28 @@ export const initializeFormFields = () => {
 
   initializeFieldEditorClasses({
     actionBar: {
-      buttonContainer:
-        'gap-1.5 px-2.5 py-2 focus:outline focus:outline-1 focus:outline-offset-2 rounded-md focus:outline-blue-800',
       tableMenuContainer:
-        'gap-1.5 px-1.5 py-1.5 focus:outline focus:outline-1 focus:outline-offset-2 rounded-md focus:outline-blue-800',
-      leftGradient: {
-        left: '0',
-        before: {
-          background: {
-            light: `linear-gradient(
-                    270deg,
-                    rgba(0, 0, 0, 0),
-                    #EDF1F2)`,
-            dark: `linear-gradient(
-                    270deg,
-                    rgba(255, 255, 255, 0),
-                    #262627`, // :TODO inject tailwind theme colors
-          },
-        },
-      },
-      rightGradient: {
-        before: {
-          background: {
-            light: `linear-gradient(
-                    90deg,
-                    rgba(0, 0, 0, 0),
-                    #EDF1F2)`,
-            dark: `linear-gradient(
-                    90deg,
-                    rgba(255, 255, 255, 0),
-                    #262627`, // :TODO inject tailwind theme colors
-          },
-        },
-      },
-      shadowGradient: {
-        before: {
-          top: 'calc(0px - 20px - 1.5rem)',
-          height: 'calc(28px + 1rem)',
-        },
-      },
+        'gap-1 p-2 focus:outline focus:outline-1 focus:outline-offset-2 rounded-md focus:outline-blue-800',
+      tableMenuGrid: 'gap-1',
       button: {
-        base: 'bg-green-200  focus:outline focus:outline-1 focus:outline-offset-2 focus:outline-blue-800 transition-color hover:bg-green-300 dark:hover:bg-neutral-950 text-gray-300 dark:bg-gray-600 dark:text-neutral-400 rounded-lg p-1.5',
-        active: 'bg-green-300 dark:bg-neutral-950', // :TODO adapt if gets adapted in figma
+        base: 'focus-visible-app-default dark:hover:bg-blue-900 hover:bg-blue-600 rounded-lg dark:hover:text-white hover:text-black transition-color',
       },
     },
     input: {
-      container: 'px-2.5 py-2',
+      container:
+        'px-2.5 py-2 formkit-invalid:outline formkit-invalid:outline-1 formkit-invalid:-outline-offset-1 formkit-errors:-outline-offset-1  formkit-invalid:outline-red-500 formkit-errors:outline formkit-errors:outline-1 formkit-errors:outline-red-500 formkit-warning:outline-1 formkit-warning:outline-yellow-600! formkit-warning:-outline-offset-1 ',
+      inlineContainer: 'px-1.5! py-1!',
+    },
+    tableMenu: {
+      triggerButton:
+        'w-6 h-6 flex items-center justify-center bg-blue-800/80 text-black dark:text-white',
     },
   })
 
-  initializeFieldEditorProps({
-    actionBar: {
-      visible: true, // show action bar always
-      button: {
-        icon: {
-          size: 'tiny',
-        },
-      },
-    },
+  initializeEditorComponents({
+    actionBar: FieldEditorActionBar,
+    actionMenu: FieldEditorActionMenu,
+    suggestionList: FieldEditorSuggestionList,
   })
 
   initializeFileClasses({

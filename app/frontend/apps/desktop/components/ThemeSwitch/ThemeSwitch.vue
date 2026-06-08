@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { useVModel } from '@vueuse/core'
@@ -82,7 +82,7 @@ const ariaChecked = computed(() => {
   <button
     type="button"
     role="checkbox"
-    class="relative inline-flex flex-shrink-0 cursor-pointer items-center rounded-full bg-stone-200 ring-1 ring-neutral-100 transition-colors duration-200 ease-in-out hover:outline hover:outline-1 hover:outline-offset-2 hover:outline-blue-600 focus:outline focus:outline-1 focus:outline-offset-2 focus:outline-blue-800 hover:focus:outline-blue-800 dark:bg-gray-500 dark:ring-gray-900 dark:hover:outline-blue-900 dark:hover:focus:outline-blue-800"
+    class="relative inline-flex flex-shrink-0 cursor-pointer items-center rounded-full bg-stone-200 ring-1 ring-neutral-100 focus-visible-app-default hover:outline-1 hover:outline-offset-2 hover:outline-blue-600 dark:bg-gray-500 dark:ring-gray-900"
     :class="[
       trackSizeClasses,
       {
@@ -90,7 +90,7 @@ const ariaChecked = computed(() => {
         'bg-blue-800! dark:bg-blue-800!': isDark,
       },
     ]"
-    :aria-label="$t('Dark Mode')"
+    :aria-label="$t('Dark mode')"
     :aria-checked="ariaChecked"
     tabindex="0"
     @click="updateLocalValue"

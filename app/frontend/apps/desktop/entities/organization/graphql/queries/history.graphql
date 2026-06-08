@@ -1,0 +1,5 @@
+query organizationHistory($organizationId: ID!) {
+  organizationHistory(organizationId: $organizationId) {
+    ...HistoryGroup
+  }
+}

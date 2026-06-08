@@ -1,6 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
-
-import { axe } from 'vitest-axe'
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
@@ -39,7 +37,6 @@ describe('personal settings for token access', () => {
 
     const view = await visitView('/personal-setting/ticket-overviews')
 
-    const results = await axe(view.html())
-    expect(results).toHaveNoViolations()
+    await expect(view.container).toBeAccessible()
   })
 })

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class MentionsController < ApplicationController
   prepend_before_action :authenticate_and_authorize!
@@ -44,7 +44,7 @@ class MentionsController < ApplicationController
       when 'Ticket'
         Ticket.find_by id: params[:mentionable_id]
       else
-        raise Exceptions::UnprocessableEntity, __("The parameter 'mentionable_type' is invalid.")
+        raise Exceptions::UnprocessableContent, __("The parameter 'mentionable_type' is invalid.")
       end
     end
   end

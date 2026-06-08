@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -515,7 +515,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
       }
       authenticated_as(agent)
       post '/api/v1/tickets', params: params, as: :json
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
       expect(Mention.count).to eq(0)
     end
 
@@ -532,6 +532,37 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
       post '/api/v1/tickets', params: params, as: :json
       expect(response).to have_http_status(:forbidden)
       expect(Mention.count).to eq(0)
+    end
+
+    context 'when special params should be updated' do
+      it 'does not update created_at via PUT when import mode is inactive' do
+        ticket  = create(:ticket, group: group)
+        article = create(:ticket_article, ticket: ticket)
+
+        original_created_at = article.created_at
+
+        authenticated_as(agent)
+
+        put "/api/v1/ticket_articles/#{article.id}", params: { created_at: 2.days.ago }, as: :json
+
+        expect(response).to have_http_status(:ok)
+        expect(article.reload.created_at.to_i).to eq(original_created_at.to_i)
+      end
+
+      it 'updates created_at via PUT when import mode is active' do
+        ticket  = create(:ticket, group: group)
+        article = create(:ticket_article, ticket: ticket)
+
+        Setting.set('import_mode', true)
+        authenticated_as(agent)
+
+        new_created_at = Time.zone.parse('2020-01-02 03:04:05 UTC')
+
+        put "/api/v1/ticket_articles/#{article.id}", params: { created_at: new_created_at }, as: :json
+
+        expect(response).to have_http_status(:ok)
+        expect(article.reload.created_at.to_i).to eq(new_created_at.to_i)
+      end
     end
   end
 
@@ -752,5 +783,106 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
         end
       end
     end
+  end
+
+  describe 'GET /api/v1/ticket_article_plain/:id', authenticated_as: :agent do
+    let(:ticket)  { create(:ticket, group: Group.first) }
+    let(:article) { create(:ticket_article, ticket: ticket) }
+
+    context 'when article has a raw copy present' do
+      before do
+        article.save_as_raw('This is a test article')
+
+        get "/api/v1/ticket_article_plain/#{article.id}"
+      end
+
+      it 'returns the raw copy of the article' do
+        expect(response.body).to eq('This is a test article')
+      end
+    end
+
+    context 'when article does not have a raw copy' do
+      before do
+        get "/api/v1/ticket_article_plain/#{article.id}"
+      end
+
+      it 'returns 404' do
+        expect(response).to have_http_status(:not_found)
+      end
+
+      it 'returns a human readable error message' do
+        expect(response.body).to include('This article does not have a raw copy available.')
+      end
+    end
+  end
+
+  describe 'POST /api/v1/ticket_articles', authenticated_as: :user do
+    let(:group)  { create(:group) }
+    let(:ticket) { create(:ticket, group:) }
+
+    describe 'permissions' do
+      let(:params) do
+        {
+          ticket_id:    ticket.id,
+          content_type: 'text/plain', # or text/html
+          body:         'some body',
+          type:         'note',
+        }
+      end
+
+      context 'when user is agent' do
+        let(:user)  { create(:agent_and_customer) }
+
+        before { user.user_groups.create!(group: group, access:) if defined?(access) }
+
+        context 'when agent has full access to the group' do
+          let(:access) { :full }
+
+          it 'creates a new article' do
+            expect { post '/api/v1/ticket_articles', params: params, as: :json }
+              .to change { ticket.articles.count }.by(1)
+          end
+        end
+
+        context 'when agent has change access to the group' do
+          let(:access) { :change }
+
+          it 'creates a new article' do
+            expect { post '/api/v1/ticket_articles', params: params, as: :json }
+              .to change { ticket.articles.count }.by(1)
+          end
+        end
+
+        context 'when agent has read access to the group' do
+          let(:access) { :read }
+
+          it 'does not create a new article' do
+            expect { post '/api/v1/ticket_articles', params: params, as: :json }
+              .not_to change { ticket.articles.count }
+          end
+        end
+
+        context 'when agent has customer access to the ticket' do
+          let(:ticket) { create(:ticket, customer: user, group:) }
+          let(:user) { create(:customer) }
+
+          it 'creates a new article' do
+            expect { post '/api/v1/ticket_articles', params: params, as: :json }
+              .to change { ticket.articles.count }.by(1)
+          end
+        end
+      end
+
+      context 'when user is customer' do
+        let(:ticket) { create(:ticket, customer: user) }
+        let(:user)   { create(:customer) }
+
+        it 'creates a new article' do
+          expect { post '/api/v1/ticket_articles', params: params, as: :json }
+            .to change { ticket.articles.count }.by(1)
+        end
+      end
+    end
+
   end
 end

@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { defineStore } from 'pinia'
 
@@ -15,7 +15,8 @@ export const staticObjectAttributes: EntityStaticObjectAttributes = {
       dataOption: {
         relation: 'User',
       },
-      dataType: 'autocomplete',
+      id: 'created_by_id-1',
+      dataType: 'autocompletion_ajax',
       isStatic: true,
       isInternal: true,
     },
@@ -23,6 +24,7 @@ export const staticObjectAttributes: EntityStaticObjectAttributes = {
       name: 'created_at',
       display: __('Created at'),
       dataType: 'datetime',
+      id: 'created_at-1',
       isStatic: true,
       isInternal: true,
     },
@@ -32,13 +34,15 @@ export const staticObjectAttributes: EntityStaticObjectAttributes = {
       dataOption: {
         relation: 'User',
       },
-      dataType: 'autocomplete',
+      dataType: 'autocompletion_ajax',
+      id: 'updated_by_id-1',
       isStatic: true,
       isInternal: true,
     },
     {
       name: 'updated_at',
       display: __('Updated at'),
+      id: 'updated_at-1',
       dataType: 'datetime',
       isStatic: true,
       isInternal: true,
@@ -46,14 +50,13 @@ export const staticObjectAttributes: EntityStaticObjectAttributes = {
   ],
 }
 
-export const useUserObjectAttributesStore = defineStore(
-  'userObjectAttributes',
-  () => {
-    const { screenAttributes: viewScreenAttributes } =
-      useObjectAttributesScreen(EnumObjectManagerObjects.User, 'view')
+export const useUserObjectAttributesStore = defineStore('userObjectAttributes', () => {
+  const { screenAttributes: viewScreenAttributes } = useObjectAttributesScreen(
+    EnumObjectManagerObjects.User,
+    'view',
+  )
 
-    return {
-      viewScreenAttributes,
-    }
-  },
-)
+  return {
+    viewScreenAttributes,
+  }
+})

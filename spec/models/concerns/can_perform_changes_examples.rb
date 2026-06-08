@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 RSpec.shared_examples 'CanPerformChanges', :aggregate_failures do |object_name:, data_privacy_deletion_task: true|
   describe '#perform_changes' do
@@ -12,7 +12,7 @@ RSpec.shared_examples 'CanPerformChanges', :aggregate_failures do |object_name:,
     end
 
     before do
-      stub_const('PERFORMABLE_STRUCT', Struct.new(:id, :perform, keyword_init: true))
+      stub_const('PERFORMABLE_STRUCT', Struct.new(:id, :perform))
     end
 
     context 'when data privacy deletion task should be created', if: data_privacy_deletion_task do
@@ -38,7 +38,7 @@ RSpec.shared_examples 'CanPerformChanges', :aggregate_failures do |object_name:,
       let(:custom_attribute_text2) do
         create(:object_manager_attribute_text, name: 'custom_attribute_text2', object_name: object_name)
       end
-      let(:object) { create(object_name.downcase.to_sym, custom_attribute_text1: 'testing-example') }
+      let(:object) { create(object_name.downcase.to_sym, custom_attribute_text1: 'testing-example ') }
 
       let(:perform) do
         {
@@ -58,7 +58,50 @@ RSpec.shared_examples 'CanPerformChanges', :aggregate_failures do |object_name:,
 
       it 'does replace custom fields in trigger' do
         object.perform_changes(performable, 'trigger', object, User.first)
+        puts object.reload.custom_attribute_text2
         expect(object.reload.custom_attribute_text2).to eq('testing-example')
+      end
+    end
+
+    describe 'Allow fields with multiple value support', db_strategy: :reset do
+      let(:custom_attribute_multiselect) do
+        create(:object_manager_attribute_multiselect, name: 'custom_attribute_multiselect', object_name: object_name)
+      end
+      let(:object) { create(object_name.downcase.to_sym) }
+
+      let(:perform) do
+        {
+          "#{object_name_downcase}.custom_attribute_multiselect" => {
+            'value' => %w[key_1 key_2],
+          }
+        }
+      end
+
+      before do
+        custom_attribute_multiselect
+        ObjectManager::Attribute.migration_execute
+
+        object
+      end
+
+      it 'does set multi-select field values in trigger' do
+        object.perform_changes(performable, 'trigger', object, User.first)
+        expect(object.reload.custom_attribute_multiselect).to eq(%w[key_1 key_2])
+      end
+
+      context 'when single string is given for multi-select field' do
+        let(:perform) do
+          {
+            "#{object_name_downcase}.custom_attribute_multiselect" => {
+              'value' => 'key_1',
+            }
+          }
+        end
+
+        it 'does set multi-select field values in trigger' do
+          object.perform_changes(performable, 'trigger', object, User.first)
+          expect(object.reload.custom_attribute_multiselect).to eq(%w[key_1])
+        end
       end
     end
 

@@ -1,0 +1,58 @@
+query ticketInfoForPopover($ticketId: ID!) {
+  ticket(ticketId: $ticketId) {
+    id
+    internalId
+    number
+    title
+    createdAt
+    escalationAt
+    firstResponseEscalationAt
+    closeEscalationAt
+    updateEscalationAt
+    owner {
+      id
+      internalId
+      firstname
+      lastname
+      fullname
+    }
+    customer {
+      id
+      internalId
+      firstname
+      lastname
+      fullname
+      image
+      vip
+      active
+      outOfOffice
+      outOfOfficeStartAt
+      outOfOfficeEndAt
+      email
+    }
+    organization {
+      id
+      internalId
+      name
+      vip
+      active
+    }
+    stateColorCode
+    state {
+      id
+      name
+      stateType {
+        id
+        name
+      }
+    }
+    group {
+      id
+      name
+    }
+    priority {
+      id
+      name
+    }
+  }
+}

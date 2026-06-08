@@ -18,7 +18,7 @@ class App.KnowledgeBaseNavigation extends App.Controller
     @listenTo App.KnowledgeBase, 'kb_visibility_change_loaded', @needsUpdate
 
   buildCrumbsForRendering: (array, kb_locale, action) ->
-    if action is 'search'
+    if action is 'search' || action is 'search-inline'
       action = null
 
     if !kb_locale
@@ -66,7 +66,7 @@ class App.KnowledgeBaseNavigation extends App.Controller
     if action is 'search'
       App.i18n.translateInline 'Search'
     else if !object
-      App.i18n.translateInline 'Not found'
+      App.i18n.translateInline 'Not Found'
 
   dontRenderFor: (object) ->
     if object instanceof App.Model

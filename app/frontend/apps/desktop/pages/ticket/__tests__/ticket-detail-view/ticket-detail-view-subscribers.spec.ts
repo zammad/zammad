@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { within } from '@testing-library/vue'
 
@@ -176,9 +176,7 @@ describe('Ticket detail view', () => {
 
       expect(subscribers).toBeInTheDocument()
 
-      expect(
-        ticketMetaSidebar.queryByLabelText('Avatar (Adam Doe)'),
-      ).not.toBeInTheDocument()
+      expect(ticketMetaSidebar.queryByLabelText('Avatar (Adam Doe)')).not.toBeInTheDocument()
 
       const toggle = view.getByLabelText('Subscribe me')
       expect(toggle).toBeInTheDocument()
@@ -221,9 +219,7 @@ describe('Ticket detail view', () => {
 
       await waitForNextTick()
 
-      expect(
-        ticketMetaSidebar.getByLabelText('Avatar (Adam Doe)'),
-      ).toBeInTheDocument()
+      expect(ticketMetaSidebar.getByLabelText('Avatar (Adam Doe)')).toBeInTheDocument()
     })
   })
 })

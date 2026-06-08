@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import gql from 'graphql-tag'
 
@@ -88,10 +88,8 @@ export interface SampleUpdatedSubscriptionVariables {
   id: ID
 }
 
-export const SampleTypedQueryDocument: TypedDocumentNode<
-  SampleQuery,
-  SampleQueryVariables
-> = SampleDocument
+export const SampleTypedQueryDocument: TypedDocumentNode<SampleQuery, SampleQueryVariables> =
+  SampleDocument
 
 export const SampleTypedMutationDocument: TypedDocumentNode<
   SampleUpdateMutation,

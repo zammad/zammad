@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { describe } from 'vitest'
 
@@ -21,17 +21,14 @@ describe('whatsapp channel plugin', () => {
       const ticket = createTicket({
         preferences: {
           whatsapp: {
-            timestamp_incoming:
-              testDate.setMinutes(testDate.getMinutes() - 30).valueOf() / 1000,
+            timestamp_incoming: testDate.setMinutes(testDate.getMinutes() - 30).valueOf() / 1000,
           },
         },
         initialChannel: EnumChannelArea.WhatsAppBusiness,
       })
 
       expect(
-        getTicketChannelPlugin(EnumChannelArea.WhatsAppBusiness)?.channelAlert(
-          ticket,
-        ),
+        getTicketChannelPlugin(EnumChannelArea.WhatsAppBusiness)?.channelAlert(ticket),
       ).toEqual({
         text: 'You have a 24 hour window to send WhatsApp messages in this conversation. The customer service window closes %s.',
         textPlaceholder: 'in 23 hours',
@@ -47,17 +44,14 @@ describe('whatsapp channel plugin', () => {
       const ticket = createTicket({
         preferences: {
           whatsapp: {
-            timestamp_incoming:
-              testDate.setHours(testDate.getHours() - 24).valueOf() / 1000,
+            timestamp_incoming: testDate.setHours(testDate.getHours() - 24).valueOf() / 1000,
           },
         },
         initialChannel: EnumChannelArea.WhatsAppBusiness,
       })
 
       expect(
-        getTicketChannelPlugin(EnumChannelArea.WhatsAppBusiness)?.channelAlert(
-          ticket,
-        ),
+        getTicketChannelPlugin(EnumChannelArea.WhatsAppBusiness)?.channelAlert(ticket),
       ).toEqual({
         text: 'The 24 hour customer service window is now closed, no further WhatsApp messages can be sent.',
         variant: 'danger',
@@ -77,9 +71,7 @@ describe('whatsapp channel plugin', () => {
       })
 
       expect(
-        getTicketChannelPlugin(EnumChannelArea.WhatsAppBusiness)?.channelAlert(
-          ticket,
-        ),
+        getTicketChannelPlugin(EnumChannelArea.WhatsAppBusiness)?.channelAlert(ticket),
       ).toBeNull()
     })
 
@@ -96,9 +88,7 @@ describe('whatsapp channel plugin', () => {
       })
 
       expect(
-        getTicketChannelPlugin(EnumChannelArea.WhatsAppBusiness)?.channelAlert(
-          ticket,
-        ),
+        getTicketChannelPlugin(EnumChannelArea.WhatsAppBusiness)?.channelAlert(ticket),
       ).toBeNull()
     })
 
@@ -110,8 +100,7 @@ describe('whatsapp channel plugin', () => {
       const ticket = createTicket({
         preferences: {
           whatsapp: {
-            timestamp_incoming:
-              testDate.setMinutes(testDate.getMinutes() - 30).valueOf() / 1000,
+            timestamp_incoming: testDate.setMinutes(testDate.getMinutes() - 30).valueOf() / 1000,
           },
         },
         state: {
@@ -124,9 +113,7 @@ describe('whatsapp channel plugin', () => {
       })
 
       expect(
-        getTicketChannelPlugin(EnumChannelArea.WhatsAppBusiness)?.channelAlert(
-          ticket,
-        ),
+        getTicketChannelPlugin(EnumChannelArea.WhatsAppBusiness)?.channelAlert(ticket),
       ).toBeNull()
     })
   })

@@ -1,11 +1,8 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import type { Props as CommonLinkProps } from '#shared/components/CommonLink/CommonLink.vue'
 import type { ObjectAttribute } from '#shared/entities/object-attributes/types/store.ts'
-import type {
-  EnumObjectManagerObjects,
-  EnumOrderDirection,
-} from '#shared/graphql/types.ts'
+import type { EnumObjectManagerObjects, EnumOrderDirection } from '#shared/graphql/types.ts'
 
 import type { MenuItem } from '#desktop/components/CommonPopoverMenu/types.ts'
 
@@ -31,11 +28,11 @@ type TableColumnPreference = {
    * @default 'left'
    * */
   alignContent?: 'center' | 'right' | 'left'
+  noPadding?: boolean
 }
 
 export interface TableSimpleHeader<K = string>
-  extends TableHeaderPreference,
-    TableColumnPreference {
+  extends TableHeaderPreference, TableColumnPreference {
   key: K
   label: string
   labelPlaceholder?: string[]
@@ -89,11 +86,9 @@ export interface TableAttribute {
   headerPreferences?: TableHeaderPreference
   columnPreferences?: TableColumnPreference & {
     link?: Pick<CommonLinkProps, 'internal' | 'openInNewTab'> & {
-      getLink: (
-        item: TableAdvancedItem,
-        tableAttribute: TableAttribute,
-      ) => string
+      getLink: (item: TableAdvancedItem, tableAttribute: TableAttribute) => string
     }
+    tooltip?: (item: TableAdvancedItem) => string | undefined
   }
   dataType: ObjectAttribute['dataType']
   dataOption?: ObjectAttribute['dataOption']
@@ -102,6 +97,11 @@ export interface TableAttribute {
 export interface AdvancedTableProps extends BaseTableProps {
   items: TableAdvancedItem[]
   headers: string[]
+  /**
+   * Used to determine the total number of items for pagination and infinite scroll
+   */
+  totalItemsCount: number
+
   attributes?: TableAttribute[]
   attributeExtensions?: Record<string, Partial<TableAttribute>>
   object?: EnumObjectManagerObjects
@@ -110,9 +110,16 @@ export interface AdvancedTableProps extends BaseTableProps {
    * Is not used for checkbox
    * */
   selectedRowId?: string
-  hasCheckboxColumn?: boolean // TODO: rename this prop, related to bulk???
+  /**.
+   * Indicates if the table has a checkbox column for bulk actions
+   */
+  hasBulkAction?: boolean
 
-  totalItems: number
+  /**
+   * Disable all checkbox cells, requires hasBulkAction to be true
+   */
+  disableBulkAction?: boolean
+
   maxItems?: number
 
   onClickRow?: (tableItem: TableAdvancedItem) => void

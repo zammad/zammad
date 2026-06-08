@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
@@ -70,7 +70,7 @@ const hoverPoweredByLogo = ref(false)
           link="https://zammad.org"
           open-in-new-tab
           external
-          class="flex items-center gap-1 text-neutral-500"
+          class="flex items-center gap-1 text-neutral-500 hover:text-neutral-500!"
           @focus="hoverPoweredByLogo = true"
           @blur="hoverPoweredByLogo = false"
           @mouseover="hoverPoweredByLogo = true"

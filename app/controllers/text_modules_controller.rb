@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class TextModulesController < ApplicationController
   prepend_before_action :authenticate_and_authorize!
@@ -187,7 +187,7 @@ curl http://localhost/api/v1/text_modules.json -v -u #{login}:#{password} -H "Co
     if string.blank? && params[:file].present?
       string = params[:file].read.force_encoding('utf-8')
     end
-    raise Exceptions::UnprocessableEntity, __('No source data submitted!') if string.blank?
+    raise Exceptions::UnprocessableContent, __('No source data submitted!') if string.blank?
 
     result = TextModule.csv_import(
       string:       string,

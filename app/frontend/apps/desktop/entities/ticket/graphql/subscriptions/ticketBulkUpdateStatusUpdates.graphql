@@ -1,0 +1,10 @@
+subscription userCurrentTicketBulkUpdateStatusUpdates {
+  userCurrentTicketBulkUpdateStatusUpdates {
+    bulkUpdateStatus {
+      status
+      total
+      processedCount
+      failedCount
+    }
+  }
+}

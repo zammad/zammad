@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import type {
   EnumTaskbarEntity,
@@ -34,6 +34,7 @@ export interface UserTaskbarTabEntityProps<T = UserTaskbarTabEntity> {
   taskbarTab: UserTaskbarTab<T>
   taskbarTabLink?: string
   context?: TaskbarTabContext
+  collapsed?: boolean
 }
 
 export interface UserTaskbarTabPlugin<T = UserTaskbarTabEntity> {
@@ -42,12 +43,8 @@ export interface UserTaskbarTabPlugin<T = UserTaskbarTabEntity> {
   entityType?: string
   entityDocument?: DocumentNode
   buildEntityTabKey: (route: RouteLocationNormalizedGeneric) => string
-  buildTaskbarTabEntityId: (
-    route: RouteLocationNormalizedGeneric,
-  ) => string | undefined
-  buildTaskbarTabParams: <T = Record<string, unknown>>(
-    route: RouteLocationNormalizedGeneric,
-  ) => T
+  buildTaskbarTabEntityId: (route: RouteLocationNormalizedGeneric) => string | undefined
+  buildTaskbarTabParams: <T = Record<string, unknown>>(route: RouteLocationNormalizedGeneric) => T
   buildTaskbarTabLink?: (entity?: T, entityKey?: string) => string | undefined
   confirmTabRemove?: boolean
   touchExistingTab?: boolean

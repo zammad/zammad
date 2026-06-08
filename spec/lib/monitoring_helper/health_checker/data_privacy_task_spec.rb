@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -11,7 +11,7 @@ RSpec.describe MonitoringHelper::HealthChecker::DataPrivacyTask do
   describe '#check_health' do
     it 'adds issue for stuck task' do
       task2
-      expect(instance.check_health.issues.first).to match %r{Stuck data privacy task}
+      expect(instance.check_health.issues.first).to include('Stuck data privacy task')
     end
   end
 

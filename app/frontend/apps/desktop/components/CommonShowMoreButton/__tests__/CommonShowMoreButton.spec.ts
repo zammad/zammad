@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { renderComponent } from '#tests/support/components/index.ts'
 
@@ -28,7 +28,7 @@ describe('CommonShowMoreButton', () => {
       store: true,
     })
 
-    expect(view.container).toHaveTextContent('Show 3 more')
+    expect(view.container).toHaveTextContent('Show more')
   })
 
   it('cannot load more, if disabled', async () => {
@@ -49,7 +49,7 @@ describe('CommonShowMoreButton', () => {
       store: true,
     })
 
-    await view.events.click(view.getByRole('button', { name: 'Show 2 more' }))
+    await view.events.click(view.getByRole('button', { name: 'Show more' }))
 
     expect(view.getByRole('button')).toBeDisabled()
   })

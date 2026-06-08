@@ -1,20 +1,24 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import type { FormRef } from '#shared/components/Form/types.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
+import { useFlyout } from '#desktop/components/CommonFlyout/useFlyout.ts'
 import { useTicketSharedDraft } from '#desktop/pages/ticket/composables/useTicketSharedDraft.ts'
 
-const props = defineProps<{
+defineProps<{
   sharedDraftId?: string | null
   form?: FormRef
-  setSkipNextStateUpdate: (skip: boolean) => void
 }>()
 
-const { openSharedDraftFlyout } = useTicketSharedDraft(
-  props.setSkipNextStateUpdate,
-)
+useFlyout({
+  name: 'shared-draft',
+  component: () => import('../../TicketSharedDraftFlyout.vue'),
+  global: true,
+})
+
+const { openSharedDraftFlyout } = useTicketSharedDraft()
 </script>
 
 <template>
@@ -24,7 +28,7 @@ const { openSharedDraftFlyout } = useTicketSharedDraft(
       size="large"
       variant="tertiary"
       @click="openSharedDraftFlyout('detail-view', sharedDraftId, form)"
-      >{{ $t('Draft Available') }}</CommonButton
+      >{{ $t('Draft available') }}</CommonButton
     >
   </div>
 </template>

@@ -1,9 +1,5 @@
 {
   "extends": "./tsconfig.base.json",
-  "compilerOptions": {
-    "lib": ["DOM", "WebWorker", "dom.iterable"],
-    "types": ["vitest/globals", "vite/client", "vite-plugin-pwa/client"]
-  },
   "include": ["app/frontend/**/*", "./vite.config.*", "./vitest.setup.ts"],
   "exclude": [
     "app/frontend/cypress/**/*",

@@ -1,13 +1,10 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
 
 import type { AlertVariant } from '#shared/components/CommonAlert/types.ts'
-import type {
-  FormSchemaField,
-  FormValues,
-} from '#shared/components/Form/types.ts'
+import type { FormSchemaField, FormValues } from '#shared/components/Form/types.ts'
 import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
 
 import { useAdminPasswordAuthVerifyMutation } from '../graphql/mutations/adminPasswordAuthVerify.api.ts'
@@ -17,9 +14,7 @@ interface AdminPasswordAuthVerifyOptions {
   formInitialValues: FormValues
 }
 
-export const useAdminPasswordAuthVerify = (
-  options: AdminPasswordAuthVerifyOptions,
-) => {
+export const useAdminPasswordAuthVerify = (options: AdminPasswordAuthVerifyOptions) => {
   const route = useRoute()
 
   const token = route.query.token as string
@@ -58,9 +53,7 @@ export const useAdminPasswordAuthVerify = (
       }
     })
     .catch(() => {
-      verifyTokenMessage.value = __(
-        'The token for the admin password login is invalid.',
-      )
+      verifyTokenMessage.value = __('The token for the admin password login is invalid.')
     })
 
   const verifyTokenAlertVariant = computed<AlertVariant>(() => {

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class FormController < ApplicationController
   prepend_before_action -> { authorize! }, only: %i[configuration submit]
@@ -34,105 +34,22 @@ class FormController < ApplicationController
     return if !fingerprint_exists?
     return if !token_valid?(params[:token], params[:fingerprint])
 
-    # validate input
-    errors = {}
-    if params[:name].blank?
-      errors['name'] = 'required'
-    end
-    if params[:title].blank?
-      errors['title'] = 'required'
-    end
-    if params[:body].blank?
-      errors['body'] = 'required'
-    end
-
-    if params[:email].blank?
-      errors['email'] = 'required'
-    else
-      begin
-        email_address_validation = EmailAddressValidation.new(params[:email])
-        if !email_address_validation.valid?(check_mx: true)
-          errors['email'] = 'invalid'
-        end
-      rescue => e
-        message = e.to_s
-        Rails.logger.info "Can't verify email #{params[:email]}: #{message}"
-
-        # ignore 450, graylistings
-        errors['email'] = message if message.exclude?('450')
-      end
-    end
-
-    if errors.present?
-      render json: {
-        errors: errors
-      }, status: :ok
+    if (errors = validate_params) && errors.present?
+      render json: { errors: }, status: :ok
       return
     end
 
-    name = params[:name].strip
-    email = params[:email].strip.downcase
+    customer = fetch_customer
 
-    customer = User.find_by(email: email)
-    if !customer
-      role_ids = Role.signup_role_ids
-      customer = User.create(
-        firstname:     name,
-        lastname:      '',
-        email:         email,
-        active:        true,
-        role_ids:      role_ids,
-        updated_by_id: 1,
-        created_by_id: 1,
-      )
-    end
-
-    ticket = nil
-
-    # set current user
-    UserInfo.current_user_id = customer.id
-    ApplicationHandleInfo.in_context('form') do # rubocop:disable Metrics/BlockLength
-      group = Group.find_by(id: Setting.get('form_ticket_create_group_id'))
-      if !group
-        group = Group.where(active: true).first
-        if !group
-          group = Group.first
+    ticket = UserInfo.with_user_id(customer.id) do
+      if Setting.get('form_allowed_params').blank?
+        ApplicationHandleInfo.in_context('form') do
+          create_ticket(customer)
         end
-      end
-      ticket = Ticket.create!(
-        group_id:    group.id,
-        customer_id: customer.id,
-        title:       params[:title],
-        preferences: {
-          form: {
-            remote_ip:       request.remote_ip,
-            fingerprint_md5: Digest::MD5.hexdigest(params[:fingerprint]),
-          }
-        }
-      )
-      article = Ticket::Article.create!(
-        ticket_id: ticket.id,
-        type_id:   Ticket::Article::Type.find_by(name: 'web').id,
-        sender_id: Ticket::Article::Sender.find_by(name: 'Customer').id,
-        body:      params[:body],
-        subject:   params[:title],
-        internal:  false,
-      )
-
-      params[:file]&.each do |file|
-        Store.create!(
-          object:      'Ticket::Article',
-          o_id:        article.id,
-          data:        file.read,
-          filename:    file.original_filename,
-          preferences: {
-            'Mime-Type' => file.content_type,
-          }
-        )
+      else
+        create_ticket(customer)
       end
     end
-
-    UserInfo.current_user_id = 1
 
     result = {
       ticket: {
@@ -202,5 +119,96 @@ class FormController < ApplicationController
 
     Rails.logger.info "The required parameter 'fingerprint' is missing or invalid."
     raise Exceptions::Forbidden
+  end
+
+  def validate_params
+    errors = {}
+
+    if params[:name].blank?
+      errors['name'] = 'required'
+    end
+    if params[:title].blank?
+      errors['title'] = 'required'
+    end
+    if params[:body].blank?
+      errors['body'] = 'required'
+    end
+
+    if params[:email].blank?
+      errors['email'] = 'required'
+    else
+      begin
+        email_address_validation = EmailAddressValidation.new(params[:email])
+        if !email_address_validation.valid?(check_mx: true)
+          errors['email'] = 'invalid'
+        end
+      rescue => e
+        message = e.to_s
+        Rails.logger.info "Can't verify email #{params[:email]}: #{message}"
+
+        # ignore 450, graylistings
+        errors['email'] = message if message.exclude?('450')
+      end
+    end
+
+    errors
+  end
+
+  def fetch_customer
+    name  = params[:name].strip
+    email = params[:email].strip.downcase
+
+    User.create_with(
+      firstname:     name,
+      lastname:      '',
+      active:        true,
+      updated_by_id: 1,
+      created_by_id: 1,
+    ).find_or_create_by(email:)
+  end
+
+  def create_ticket(customer)
+    group = Group.find_by(id: Setting.get('form_ticket_create_group_id')) || Group.where(active: true).first || Group.first
+
+    ticket = Ticket.create!(
+      group_id:    group.id,
+      customer_id: customer.id,
+      preferences: {
+        form: {
+          remote_ip:       request.remote_ip,
+          fingerprint_md5: Digest::MD5.hexdigest(params[:fingerprint]),
+        }
+      },
+      **ticket_attributes
+    )
+
+    article = Ticket::Article.create!(
+      ticket_id: ticket.id,
+      type_id:   Ticket::Article::Type.find_by(name: 'web').id,
+      sender_id: Ticket::Article::Sender.find_by(name: 'Customer').id,
+      body:      params[:body],
+      subject:   params[:title],
+      internal:  false,
+    )
+
+    params[:file]&.each do |file|
+      Store.create!(
+        object:      'Ticket::Article',
+        o_id:        article.id,
+        data:        file.read,
+        filename:    file.original_filename,
+        preferences: {
+          'Mime-Type' => file.content_type,
+        }
+      )
+    end
+
+    ticket
+  end
+
+  def ticket_attributes
+    attrs = [:title] + Setting.get('form_allowed_params')
+
+    params.permit!.slice(*attrs)
   end
 end

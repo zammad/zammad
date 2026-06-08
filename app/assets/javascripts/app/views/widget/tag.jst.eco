@@ -2,7 +2,7 @@
 <ul class="list list--sidebar">
   <% for tag in @tags: %>
   <li class="list-item">
-    <a href="#" class="list-item-name js-tag"><%= tag %></a>
+    <a href="#" class="list-item-name list-item-name-shrinkable js-tag" title="<%= tag %>"><%= tag %></a>
     <% if @editable: %>
       <div class="list-item-delete js-delete">
         <%- @Icon('diagonal-cross') %>
@@ -11,7 +11,11 @@
   <% end %>
 </ul>
 <% if @editable: %>
- <div class="text-muted js-newTagLabel u-clickable">+ <%- @T('Add Tag') %></div>
+ <div class="text-muted horizontal center justify-end gap-16">
+   <span class="js-newTagLabel u-clickable" href="#">
+     + <%- @T('Tag') %>
+   </span>
+ </div>
  <form class="ui-front">
    <input type="text" name="new_tag" class="hide js-newTagInput" autocomplete="off">
  </form>

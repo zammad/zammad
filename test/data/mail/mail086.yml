@@ -20,7 +20,7 @@ attachments:
     To: recipient@example.com
     Message-ID: "<900001#9A9E287A5FG0TAEK@example.com>"
     Subject: who knows
-    Mime-Version: '1.0'
+    MIME-Version: '1.0'
     Content-Type: application/octet-stream; name=test.pdf
     Original-encoded-information-types: "(2) (6) (1) (12) (0)"
     Mime-Type: application/octet-stream

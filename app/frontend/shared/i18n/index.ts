@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { reactive } from 'vue'
 
@@ -23,9 +23,8 @@ export class I18N {
     return this.translator.translate(source, ...args)
   }
 
-  // eslint-disable-next-line class-methods-use-this
   locale() {
-    return document.documentElement.getAttribute('lang') || 'en-US'
+    return document.documentElement.getAttribute('lang') || 'en-us'
   }
 
   date(dateString: string): string {
@@ -43,11 +42,7 @@ export class I18N {
   }
 
   relativeDateTime(dateTimeString: string, baseDate?: Date): string {
-    return dates.relativeDateTime(
-      dateTimeString,
-      baseDate || reactiveNow.value,
-      this.translator,
-    )
+    return dates.relativeDateTime(dateTimeString, baseDate || reactiveNow.value, this.translator)
   }
 
   setTranslationMap(map: TranslationMap): void {

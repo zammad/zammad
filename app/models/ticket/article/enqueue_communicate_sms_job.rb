@@ -1,11 +1,11 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 # Schedules a backgrond communication job for new SMS articles.
 module Ticket::Article::EnqueueCommunicateSmsJob
   extend ActiveSupport::Concern
 
   included do
-    after_create :ticket_article_enqueue_communicate_sms_job
+    after_create_commit :ticket_article_enqueue_communicate_sms_job
   end
 
   private

@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import {
   outer,
@@ -44,34 +44,19 @@ export interface FieldsCustomOptions {
 
 const initializeFieldDefinition = (
   definition: FormKitTypeDefinition,
-  additionalDefinitionOptions: Pick<
-    FormKitTypeDefinition,
-    'props' | 'features'
-  > = {},
+  additionalDefinitionOptions: Pick<FormKitTypeDefinition, 'props' | 'features'> = {},
   options: FieldsCustomOptions = {},
 ) => {
-  const {
-    addDefaultProps = true,
-    addDefaultFeatures = true,
-    addArrow = false,
-  } = options
+  const { addDefaultProps = true, addDefaultFeatures = true, addArrow = false } = options
 
   const localDefinition = definition
-  localDefinition.props = Array.isArray(localDefinition.props)
-    ? localDefinition.props
-    : []
+  localDefinition.props = Array.isArray(localDefinition.props) ? localDefinition.props : []
   localDefinition.features ||= []
 
   if (options.schema) {
     const wrapperSchema = wrapper(
       label('$label'),
-      inner(
-        icon('prefix', 'label'),
-        prefix(),
-        options.schema(),
-        suffix(),
-        icon('suffix'),
-      ),
+      inner(icon('prefix', 'label'), prefix(), options.schema(), suffix(), icon('suffix')),
     )
     const blockSchema = [wrapperSchema]
 
@@ -92,9 +77,7 @@ const initializeFieldDefinition = (
     ? additionalDefinitionOptions.props
     : []
   if (addDefaultProps) {
-    const defaulfFieldDefinitionProps = Array.isArray(
-      defaulfFieldDefinition.props,
-    )
+    const defaulfFieldDefinitionProps = Array.isArray(defaulfFieldDefinition.props)
       ? defaulfFieldDefinition.props
       : []
 

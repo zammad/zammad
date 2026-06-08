@@ -1,7 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
-
-/* eslint-disable no-restricted-syntax */
-/* eslint-disable no-use-before-define */
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { createRequire } from 'node:module'
 
@@ -17,10 +14,7 @@ import {
 } from 'graphql'
 import { uniqBy } from 'lodash-es'
 
-import {
-  convertToGraphQLId,
-  getIdFromGraphQLId,
-} from '#shared/graphql/utils.ts'
+import { convertToGraphQLId, getIdFromGraphQLId } from '#shared/graphql/utils.ts'
 import type { DeepPartial, DeepRequired } from '#shared/types/utils.ts'
 import getUuid from '#shared/utils/getUuid.ts'
 
@@ -29,6 +23,7 @@ import { generateGraphqlMockId, hasNodeParent, setNodeParent } from './utils.ts'
 
 const _require = createRequire(import.meta.url)
 const introspection = _require('../../../../graphql/graphql_introspection.json')
+// oxlint-disable no-use-before-define
 
 export interface ResolversMeta {
   variables: Record<string, unknown>
@@ -52,10 +47,7 @@ const factoriesModules = import.meta.glob<Resolver>(
 
 const storedObjects = new Map<string, any>()
 
-export const getStoredMockedObject = <T>(
-  type: string,
-  id: number,
-): DeepRequired<T> => {
+export const getStoredMockedObject = <T>(type: string, id: number): DeepRequired<T> => {
   return storedObjects.get(convertToGraphQLId(type, id))
 }
 
@@ -65,13 +57,9 @@ afterEach(() => {
 
 const factories: Resolvers = {}
 
-// eslint-disable-next-line guard-for-in
 for (const key in factoriesModules) {
   factories[
-    key.replace(
-      /\.\.\/factories\/(?:mutations|subscriptions|queries|types)\/(.*)\.ts$/,
-      '$1',
-    )
+    key.replace(/\.\.\/factories\/(?:mutations|subscriptions|queries|types)\/(.*)\.ts$/, '$1')
   ] = factoriesModules[key]
 }
 
@@ -162,10 +150,7 @@ const schemas = {
   subscription: subscriptions,
 }
 
-export const getOperationDefinition = (
-  operation: OperationTypeNode,
-  name: string,
-) => {
+export const getOperationDefinition = (operation: OperationTypeNode, name: string) => {
   const { fields } = schemas[operation]
   return fields.find((field) => field.name === name)!
 }
@@ -219,9 +204,7 @@ const isList = (definitionType: SchemaType): boolean => {
   if (definitionType.kind === 'LIST') {
     return true
   }
-  return 'ofType' in definitionType && definitionType.ofType
-    ? isList(definitionType.ofType)
-    : false
+  return 'ofType' in definitionType && definitionType.ofType ? isList(definitionType.ofType) : false
 }
 
 export const getFieldData = (definitionType: SchemaType): any => {
@@ -232,8 +215,7 @@ export const getFieldData = (definitionType: SchemaType): any => {
     definitionType.kind === 'INPUT_OBJECT'
   )
     return definitionType
-  if (definitionType.kind === 'ENUM')
-    return getEnumDefinition(definitionType.name)
+  if (definitionType.kind === 'ENUM') return getEnumDefinition(definitionType.name)
   return definitionType.ofType ? getFieldData(definitionType.ofType) : null
 }
 
@@ -253,10 +235,7 @@ const getFieldInformation = (definitionType: SchemaType) => {
 const getFromCache = (value: any, meta: ResolversMeta) => {
   if (!meta.cached) return undefined
   const potentialId =
-    value.id ||
-    (value.internalId
-      ? convertToGraphQLId(value.__typename, value.internalId)
-      : null)
+    value.id || (value.internalId ? convertToGraphQLId(value.__typename, value.internalId) : null)
   if (!potentialId) {
     // try to guess Id from variables
     const type = value.__typename
@@ -265,9 +244,7 @@ const getFromCache = (value: any, meta: ResolversMeta) => {
     const id = meta.variables[potentialIdKey] as string | undefined
     if (id) return storedObjects.get(id)
     const potentialInternalIdKey = `${lowercaseType}InternalId`
-    const internalId = meta.variables[potentialInternalIdKey] as
-      | number
-      | undefined
+    const internalId = meta.variables[potentialInternalIdKey] as number | undefined
     if (!internalId) return undefined
     const gqlId = convertToGraphQLId(type, internalId)
     return storedObjects.get(gqlId)
@@ -280,17 +257,13 @@ const getFromCache = (value: any, meta: ResolversMeta) => {
 
 // merges cache with custom defaults recursively by modifying the original object
 const deepMerge = (target: any, source: any): any => {
-  // eslint-disable-next-line guard-for-in
   for (const key in source) {
     const value = source[key]
 
     if (typeof value === 'object' && value !== null) {
       if (Array.isArray(value)) {
         target[key] = value.map((v, index) => {
-          if (
-            typeof target[key]?.[index] === 'object' &&
-            target[key]?.[index] !== null
-          ) {
+          if (typeof target[key]?.[index] === 'object' && target[key]?.[index] !== null) {
             return deepMerge(target[key]?.[index] || {}, v)
           }
 
@@ -327,9 +300,7 @@ const populateObjectFromVariables = (value: any, meta: ResolversMeta) => {
 const getObjectDefinitionFromUnion = (fieldDefinition: any) => {
   if (fieldDefinition.kind === 'UNION') {
     const unionDefinition = getUnionDefinition(fieldDefinition.name)
-    const randomObjectDefinition = faker.helpers.arrayElement(
-      unionDefinition.possibleTypes,
-    )
+    const randomObjectDefinition = faker.helpers.arrayElement(unionDefinition.possibleTypes)
     return getObjectDefinition(randomObjectDefinition.name)
   }
   return fieldDefinition
@@ -341,7 +312,6 @@ const buildObjectFromInformation = (
   { list, field }: { list: boolean; field: any },
   defaults: any,
   meta: ResolversMeta,
-  // eslint-disable-next-line sonarjs/cognitive-complexity
 ) => {
   if (field.kind === 'UNION' && !defaults) {
     const factory = factories[field.name as 'Avatar']
@@ -361,9 +331,7 @@ const buildObjectFromInformation = (
     const isUnion = field.kind === 'UNION'
     const builtList = defaults.map((item: any) => {
       const actualFieldType =
-        isUnion && item.__typename
-          ? getObjectDefinition(item.__typename)
-          : field
+        isUnion && item.__typename ? getObjectDefinition(item.__typename) : field
       return generateGqlValue(parent, fieldName, actualFieldType, item, meta)
     })
     if (typeof builtList[0] === 'object' && builtList[0]?.id) {
@@ -397,7 +365,6 @@ const generateObject = (
   definition: SchemaObjectType,
   defaults: Record<string, any> | undefined,
   meta: ResolversMeta,
-  // eslint-disable-next-line sonarjs/cognitive-complexity
 ): Record<string, any> | null => {
   logger.log(
     'creating',
@@ -426,11 +393,7 @@ const generateObject = (
     for (const key in resolved) {
       if (!(key in value)) {
         value[key] = resolved[key]
-      } else if (
-        value[key] &&
-        typeof value[key] === 'object' &&
-        resolved[key]
-      ) {
+      } else if (value[key] && typeof value[key] === 'object' && resolved[key]) {
         value[key] = deepMerge(resolved[key], value[key])
       }
     }
@@ -443,27 +406,20 @@ const generateObject = (
     // I am not sure if this is a good change - it makes you think that ID is always numerical (even in prod) because of the tests
     // but it removes a lot of repetitive code - time will tell!
     if (typeof value.id !== 'string') {
-      throw new Error(
-        `id must be a string, got ${typeof value.id} inside ${type}`,
-      )
+      throw new Error(`id must be a string, got ${typeof value.id} inside ${type}`)
     }
     // session has a unique base64 id
     if (type !== 'Session' && !value.id.startsWith('gid://zammad/')) {
       if (Number.isNaN(Number(value.id))) {
-        throw new Error(
-          `expected numerical or graphql id for ${type}, got ${value.id}`,
-        )
+        throw new Error(`expected numerical or graphql id for ${type}, got ${value.id}`)
       }
       const gqlId = convertToGraphQLId(type, value.id)
-      logger.log(
-        `received ${value.id} ID inside ${type}, rewriting to ${gqlId}`,
-      )
+      logger.log(`received ${value.id} ID inside ${type}, rewriting to ${gqlId}`)
       value.id = gqlId
     }
     storedObjects.set(value.id, value)
   }
-  const needUpdateTotalCount =
-    type.endsWith('Connection') && !('totalCount' in value)
+  const needUpdateTotalCount = type.endsWith('Connection') && !('totalCount' in value)
   const buildField = (field: SchemaObjectField) => {
     const { name } = field
     // ignore null and undefined
@@ -478,19 +434,12 @@ const generateObject = (
     // first two can lead to recursions or inconsistent data
     // the "errors" should usually be "null" anyway
     // this is still possible to override with defaults
-    if (
-      !(name in value) &&
-      (name === 'updatedBy' || name === 'createdBy' || name === 'errors')
-    ) {
+    if (!(name in value) && (name === 'updatedBy' || name === 'createdBy' || name === 'errors')) {
       value[name] = null
       return
     }
     // by default, all mutations are successful because errors are null
-    if (
-      field.type.kind === 'SCALAR' &&
-      name === 'success' &&
-      !(name in value)
-    ) {
+    if (field.type.kind === 'SCALAR' && name === 'success' && !(name in value)) {
       value[name] = true
       return
     }
@@ -559,8 +508,7 @@ const getEnumDefinition = (name: string) => {
 }
 
 const generateEnumValue = (definition: any): string => {
-  return (faker.helpers.arrayElement(definition.enumValues) as { name: string })
-    .name
+  return (faker.helpers.arrayElement(definition.enumValues) as { name: string }).name
 }
 
 const generateGqlValue = (
@@ -572,16 +520,10 @@ const generateGqlValue = (
 ) => {
   if (defaults === null) return null
   if (typeDefinition.kind === 'OBJECT')
-    return generateObject(
-      parent,
-      getObjectDefinition(typeDefinition.name),
-      defaults,
-      meta,
-    )
+    return generateObject(parent, getObjectDefinition(typeDefinition.name), defaults, meta)
   if (defaults !== undefined) return defaults
   if (typeDefinition.kind === 'ENUM') return generateEnumValue(typeDefinition)
-  if (typeDefinition.kind === 'SCALAR')
-    return getScalarValue(parent, fieldName, typeDefinition)
+  if (typeDefinition.kind === 'SCALAR') return getScalarValue(parent, fieldName, typeDefinition)
   logger.log(typeDefinition)
   throw new Error(`wrong definition for ${typeDefinition.name}`)
 }
@@ -592,10 +534,7 @@ const generateGqlValue = (
  *
  * This function always generates a new object and never caches it.
  */
-export const generateObjectData = <T>(
-  typename: string,
-  defaults?: DeepPartial<T>,
-): T => {
+export const generateObjectData = <T>(typename: string, defaults?: DeepPartial<T>): T => {
   return generateObject(undefined, getObjectDefinition(typename), defaults, {
     document: undefined,
     variables: {},
@@ -603,9 +542,7 @@ export const generateObjectData = <T>(
   }) as T
 }
 
-const getJsTypeFromScalar = (
-  scalar: string,
-): 'string' | 'number' | 'boolean' | null => {
+const getJsTypeFromScalar = (scalar: string): 'string' | 'number' | 'boolean' | null => {
   switch (scalar) {
     case 'Boolean':
       return 'boolean'
@@ -626,10 +563,7 @@ const getJsTypeFromScalar = (
   }
 }
 
-const createVariablesError = (
-  definition: OperationDefinitionNode,
-  message: string,
-) => {
+const createVariablesError = (definition: OperationDefinitionNode, message: string) => {
   return new Error(
     `(Variables error for ${definition.operation} ${definition.name?.value}) ${message}`,
   )
@@ -639,16 +573,12 @@ const validateSchemaValue = (
   definition: OperationDefinitionNode,
   data: SchemaObjectField,
   value: any,
-  // eslint-disable-next-line sonarjs/cognitive-complexity
 ) => {
   const required = data.type.kind === 'NON_NULL'
   const { field, list } = getFieldInformation(data.type)
   if (value == null) {
     if (required && data.defaultValue == null) {
-      throw createVariablesError(
-        definition,
-        `non-nullable field "${data.name}" is not defined`,
-      )
+      throw createVariablesError(definition, `non-nullable field "${data.name}" is not defined`)
     }
     return
   }
@@ -666,7 +596,6 @@ const validateSchemaValue = (
   }
   if (field.kind === 'SCALAR') {
     const type = getJsTypeFromScalar(field.name)
-    // eslint-disable-next-line valid-typeof
     if (type && typeof value !== type) {
       throw createVariablesError(
         definition,
@@ -676,9 +605,7 @@ const validateSchemaValue = (
   }
   if (field.kind === 'ENUM') {
     const enumDefinition = getEnumDefinition(field.name)
-    const enumValues = enumDefinition.enumValues.map(
-      (enumValue) => enumValue.name,
-    )
+    const enumValues = enumDefinition.enumValues.map((enumValue) => enumValue.name)
     if (!enumValues.includes(value)) {
       throw createVariablesError(
         definition,
@@ -698,10 +625,7 @@ const validateSchemaValue = (
     const fields = new Set(object.inputFields.map((f) => f.name))
     for (const key in value) {
       if (!fields.has(key)) {
-        throw createVariablesError(
-          definition,
-          `field "${key}" is not defined on ${field.name}`,
-        )
+        throw createVariablesError(definition, `field "${key}" is not defined on ${field.name}`)
       }
     }
     for (const field of object.inputFields) {
@@ -765,14 +689,9 @@ const validateQueryDefinitionVariables = (
   const required = variableDefinition.type.kind === Kind.NON_NULL_TYPE
   const list = isVariableDefinitionList(variableDefinition)
   const field = getVariableDefinitionField(variableDefinition.type)
-  const fieldDefinitions = schemaTypes.filter(
-    (type) => type.name === field.name.value,
-  )
+  const fieldDefinitions = schemaTypes.filter((type) => type.name === field.name.value)
   if (fieldDefinitions.length === 0) {
-    throw createVariablesError(
-      definition,
-      `Cannot find definition for "${field.name.value}"`,
-    )
+    throw createVariablesError(definition, `Cannot find definition for "${field.name.value}"`)
   }
   if (fieldDefinitions.length > 1) {
     throw createVariablesError(
@@ -812,11 +731,13 @@ export const validateOperationVariables = (
 ) => {
   const name = definition.name?.value
   if (!name || !definition.variableDefinitions) return
-  const variablesNames = definition.variableDefinitions.map(
-    (variableDefinition) => variableDefinition.variable.name.value,
+  const variablesNames = new Set(
+    definition.variableDefinitions.map(
+      (variableDefinition) => variableDefinition.variable.name.value,
+    ),
   )
   for (const variable in variables) {
-    if (!variablesNames.includes(variable)) {
+    if (!variablesNames.has(variable)) {
       throw createVariablesError(
         definition,
         `field "${variable}" is not defined on ${definition.operation} ${name}`,
@@ -832,7 +753,6 @@ export const mockOperation = (
   document: DocumentNode,
   variables: Record<string, unknown>,
   defaults?: Record<string, any>,
-  // eslint-disable-next-line sonarjs/cognitive-complexity
 ): Record<string, any> => {
   const definition = document.definitions[0]
   if (definition.kind !== Kind.OPERATION_DEFINITION) {
@@ -849,17 +769,13 @@ export const mockOperation = (
     const selection = selectionSet.selections[0]
 
     if (selection.kind !== Kind.FIELD) {
-      throw new Error(
-        `unsupported selection kind ${selectionSet.selections[0].kind}`,
-      )
+      throw new Error(`unsupported selection kind ${selectionSet.selections[0].kind}`)
     }
 
     operationType = getOperationDefinition(operation, selection.name.value)
 
     if (!operationType)
-      throw new Error(
-        `unsupported operation named ${operationName} or ${selection.name.value}`,
-      )
+      throw new Error(`unsupported operation named ${operationName} or ${selection.name.value}`)
   }
 
   const query: any = { __typename: queriesTypes[operation] }
@@ -870,9 +786,7 @@ export const mockOperation = (
     const information = getFieldInformation(operationType.type)
     const selection = selectionSet.selections[0]
     if (selection.kind !== Kind.FIELD) {
-      throw new Error(
-        `unsupported selection kind ${selectionSet.selections[0].kind}`,
-      )
+      throw new Error(`unsupported selection kind ${selectionSet.selections[0].kind}`)
     }
     if (selection.name.value !== rootName) {
       throw new Error(
@@ -895,10 +809,7 @@ export const mockOperation = (
       if (selection.kind !== Kind.FIELD) {
         throw new Error(`unsupported selection kind ${selection.kind}`)
       }
-      const operationType = getOperationDefinition(
-        operation,
-        selection.name.value,
-      )
+      const operationType = getOperationDefinition(operation, selection.name.value)
 
       if (!operationType) {
         throw new Error(`unsupported operation named ${operationName}`)

@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { radio as radioDefinition } from '@formkit/inputs'
 import { has } from '@formkit/utils'
@@ -75,7 +75,7 @@ const handleButtonMode = (node: FormKitNode) => {
       // this is needed to not show "required" label on buttons
       props.labelClass = '$reset'
       props.wrapperClass =
-        'items-center justify-center py-2 px-4 w-full h-14 text-lg font-normal text-white bg-gray-600 rounded-xl select-none formkit-is-checked:bg-white formkit-is-checked:text-black formkit-is-checked:font-semibold'
+        'items-center justify-center py-2 px-4 w-full h-14 text-lg font-normal text-white bg-gray-600 rounded-xl select-none formkit-is-checked:bg-white formkit-is-checked:text-black formkit-is-checked:font-medium'
       props.inputClass = '$reset sr-only'
       props.decoratorClass = 'hidden'
     } else {

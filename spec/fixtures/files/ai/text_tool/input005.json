@@ -1,0 +1,6 @@
+{
+  "input": "Microsoft Office installiert und Rechnungen auf das Postfach abgebildet<div>Azure-App Daten gesendet &gt; Herr Mustermann muss mit TestMail abklären, wie auf die gemeinsamen Mailboxes zugegriffen werden kann und wird sich bei uns zurückmelden</div>",
+  "expected": {
+    "language": "de"
+  }
+}

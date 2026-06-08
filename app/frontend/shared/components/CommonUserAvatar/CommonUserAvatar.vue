@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, toRef } from 'vue'
@@ -10,10 +10,7 @@ import { getIdFromGraphQLId } from '#shared/graphql/utils.ts'
 import { i18n } from '#shared/i18n.ts'
 import { getUserAvatarClasses } from '#shared/initializer/initializeUserAvatarClasses.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
-import {
-  SYSTEM_USER_ID,
-  SYSTEM_USER_INTERNAL_ID,
-} from '#shared/utils/constants.ts'
+import { SYSTEM_USER_ID, SYSTEM_USER_INTERNAL_ID } from '#shared/utils/constants.ts'
 import { getInitials } from '#shared/utils/formatter.ts'
 
 import CommonAvatar from '../CommonAvatar/CommonAvatar.vue'
@@ -26,6 +23,7 @@ import type { AvatarSize } from '../CommonAvatar/index.ts'
 export interface Props {
   entity: AvatarUser
   size?: AvatarSize
+  responsive?: boolean
   personal?: boolean
   decorative?: boolean
   initialsOnly?: boolean
@@ -67,11 +65,9 @@ const colorClass = computed(() => {
   return backgroundColors[internalId % (backgroundColors.length - 1)]
 })
 
-const sources = ['facebook', 'twitter']
-
 const icon = computed(() => {
   const { source } = props.entity
-  if (source && sources.includes(source)) return source
+  if (source && (source == 'facebook' || source == 'twitter')) return source
   return null
 })
 
@@ -150,6 +146,7 @@ const indicatorSize = computed(() => indicatorSizes[props.size])
     <CommonAvatar
       :initials="initials"
       :size="size"
+      :responsive="responsive"
       :icon="icon"
       :class="className"
       :image="image"
@@ -160,7 +157,7 @@ const indicatorSize = computed(() => indicatorSizes[props.size])
     <div
       v-if="indicator"
       v-tooltip="indicatorLabel"
-      class="absolute end-0 bottom-0 flex translate-y-1 items-center justify-center rounded-full bg-blue-200 p-[3px] outline-1 -outline-offset-1 outline-neutral-100 ltr:translate-x-2 rtl:-translate-x-2 dark:bg-gray-700 dark:outline-gray-900"
+      class="absolute inset-e-0 bottom-0 flex translate-y-1 items-center justify-center rounded-full bg-blue-200 p-0.75 outline-1 -outline-offset-1 outline-neutral-100 ltr:translate-x-2 rtl:-translate-x-2 dark:bg-gray-700 dark:outline-gray-900"
     >
       <CommonIcon
         :class="indicatorClass"

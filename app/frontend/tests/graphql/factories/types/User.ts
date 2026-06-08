@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { faker } from '@faker-js/faker'
 
@@ -8,10 +8,7 @@ import type { DeepPartial } from '#shared/types/utils.ts'
 
 import { getStoredMockedObject } from '../../builders/index.ts'
 
-export default (
-  parent: any | undefined,
-  userValue: User | undefined,
-): DeepPartial<User> => {
+export default (parent: any | undefined, userValue: User | undefined): DeepPartial<User> => {
   const firstname = faker.person.firstName()
   const lastname = faker.person.lastName()
   const user: DeepPartial<User> = {
@@ -23,9 +20,7 @@ export default (
     email: faker.internet.email(),
     fax: null,
     login: faker.internet.username(),
-    phone: '+49 #### ######'.replace(/#+/g, (m) =>
-      faker.string.numeric(m.length),
-    ),
+    phone: '+49 #### ######'.replace(/#+/g, (m) => faker.string.numeric(m.length)),
     outOfOffice: null,
     outOfOfficeStartAt: null,
     outOfOfficeEndAt: null,
@@ -60,8 +55,7 @@ export default (
       })
       organization.allMembers.totalCount += 1
       organization.allMembers.pageInfo ??= {} as any
-      organization.allMembers.pageInfo.startCursor =
-        members[0]?.cursor || cursor
+      organization.allMembers.pageInfo.startCursor = members[0]?.cursor || cursor
       organization.allMembers.pageInfo.endCursor = cursor
     } else {
       user.organization = {

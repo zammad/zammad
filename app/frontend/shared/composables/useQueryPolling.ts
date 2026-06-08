@@ -1,16 +1,10 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import {
-  ref,
-  type Ref,
-  type ComputedRef,
-  onScopeDispose,
-  toRef,
-  watch,
-  toValue,
-} from 'vue'
+import { watchPausable } from '@vueuse/core'
+import { ref, type Ref, type ComputedRef, onScopeDispose, toRef, watch, toValue } from 'vue'
 
 import type { QueryHandler } from '#shared/server/apollo/handler'
+import { connected } from '#shared/server/connection.ts'
 import type { OperationQueryResult } from '#shared/types/server/apollo/handler'
 
 import type { OperationVariables } from '@apollo/client/core'
@@ -18,6 +12,12 @@ import type { OperationVariables } from '@apollo/client/core'
 export type QueryPollingOptions = {
   enabled?: boolean // Enable polling, default is true.
   randomize?: boolean // Randomize the interval (1000 milliseconds). Useful to prevent request at the same time.
+}
+
+const activePollings = new Set<() => void>()
+
+export const stopAllQueryPollings = () => {
+  activePollings.forEach((stop) => stop())
 }
 
 export const useQueryPolling = <
@@ -40,25 +40,28 @@ export const useQueryPolling = <
   let pollTimer: ReturnType<typeof setTimeout>
 
   // Only randomize up to +1000ms to avoid requests happening at the same time
-  const randomizeInterval = toValue(options)?.randomize
-    ? Math.floor(Math.random() * 1000)
-    : 0
+  const randomizeInterval = toValue(options)?.randomize ? Math.floor(Math.random() * 1000) : 0
 
   const intervalRef = toRef(interval)
 
+  const stopPolling = () => {
+    if (!isPolling.value) return
+
+    clearTimeout(pollTimer)
+    isPolling.value = false
+    activePollings.delete(stopPolling)
+  }
+
   const startPolling = () => {
-    if (
-      isPolling.value ||
-      (toValue(options)?.enabled !== undefined && !toValue(options)?.enabled)
-    )
+    if (isPolling.value || (toValue(options)?.enabled !== undefined && !toValue(options)?.enabled))
       return
 
     isPolling.value = true
+    activePollings.add(stopPolling)
 
     const poll = async () => {
-      const pollVariables =
-        typeof variables === 'function' ? variables() : variables?.value
-      await query.refetch(pollVariables as TVariables)
+      const pollVariables = typeof variables === 'function' ? variables() : variables?.value
+      await query.refetch(pollVariables as TVariables).catch(() => {})
 
       // Only schedule next poll after current one completes
       if (isPolling.value) {
@@ -68,13 +71,6 @@ export const useQueryPolling = <
 
     // Schedule first poll after interval instead of running immediately
     pollTimer = setTimeout(poll, intervalRef.value + randomizeInterval)
-  }
-
-  const stopPolling = () => {
-    if (!isPolling.value) return
-
-    clearTimeout(pollTimer)
-    isPolling.value = false
   }
 
   watch(
@@ -88,6 +84,29 @@ export const useQueryPolling = <
       stopPolling()
     },
   )
+
+  // When connection is lost or established again, start or stop polling accordingly.
+  const { resume: startConnectionWatch } = watchPausable(
+    connected,
+    (newValue) => {
+      if (!isPolling.value && toValue(options)?.enabled !== undefined && !toValue(options)?.enabled)
+        return
+
+      if (newValue && !isPolling.value) {
+        startPolling()
+      } else if (!newValue && isPolling.value) {
+        stopPolling()
+      }
+    },
+    {
+      initialState: 'paused',
+    },
+  )
+
+  // Start the connection watcher only after the polling was started at least once.
+  watch(isPolling, startConnectionWatch, {
+    once: true,
+  })
 
   // Automatically stop polling when scope is disposed
   onScopeDispose(() => {

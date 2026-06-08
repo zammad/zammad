@@ -1,10 +1,19 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-worker_count = Integer(ENV['WEB_CONCURRENCY'] || 0)
+# Support both ZAMMAD_WEB_CONCURRENCY (as recommended by the Zammad docker stack & documentation)
+#   and WEB_CONCURRENCY (Zammad and Rails default).
+
+# Rails might not be available at this point, so we can't use `.presence` here.
+def puma_env_presence(key)
+  value = ENV[key]
+  value.to_s.strip.empty? ? nil : value
+end
+
+worker_count = Integer(puma_env_presence('ZAMMAD_WEB_CONCURRENCY') || puma_env_presence('WEB_CONCURRENCY') || 0)
 workers worker_count
 
-threads_count_min = Integer(ENV['MIN_THREADS'] || 5)
-threads_count_max = Integer(ENV['MAX_THREADS'] || 30)
+threads_count_min = Integer(puma_env_presence('MIN_THREADS') || 5)
+threads_count_max = Integer(puma_env_presence('MAX_THREADS') || 30)
 threads threads_count_min, threads_count_max
 
 environment ENV.fetch('RAILS_ENV', 'development')
@@ -21,7 +30,7 @@ if defined?(Puma::ControlCLI) && Zammad::ProcessDebug.enable_thread_status_handl
 end
 
 begin
-  on_booted do
+  after_booted do
     AppVersion.start_maintenance_thread(process_name: 'puma')
     Zammad::ProcessDebug.install_thread_status_handler
   end
@@ -31,7 +40,7 @@ rescue NoMethodError
 end
 
 if worker_count.positive?
-  on_worker_boot do
+  before_worker_boot do
     ActiveRecord::Base.establish_connection
     Zammad::ProcessDebug.install_thread_status_handler
   end

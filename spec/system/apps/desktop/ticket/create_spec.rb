@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -16,10 +16,10 @@ RSpec.describe 'Desktop > Ticket > Create', app: :desktop_view, authenticated_as
     end
 
     it 'creates a new ticket' do
-      find('[role="tab"]', text: 'Send Email').click
+      find('[role="tab"]', text: 'Send email').click
 
       within_form(form_updater_gql_number: 2) do
-        expect(page).to have_css('h1', text: 'New Ticket')
+        expect(page).to have_css('h1', text: 'New ticket')
         find_input('Title').type('Example Ticket Title')
         expect(page).to have_css('h1', text: 'Example Ticket Title')
 
@@ -28,7 +28,10 @@ RSpec.describe 'Desktop > Ticket > Create', app: :desktop_view, authenticated_as
         find_autocomplete('CC').search_for_option(Faker::Internet.unique.email, use_action: true)
 
         text = find_editor('Text')
-        text.type('# ').type('Heading').type(:enter, click: false)
+
+        text.type('# ', skip_waiting: true, wait_for: 0.1) # markdown shortcut, editor is still considered empty
+          .type('Heading', click: false)
+          .type(:enter, click: false)
 
         find('button[aria-label="Format as bold"]').click
         text.type('Bold Text ', click: false).type(:enter, click: false)
@@ -45,10 +48,9 @@ RSpec.describe 'Desktop > Ticket > Create', app: :desktop_view, authenticated_as
 
         find('button[aria-label="Add link"]').click
 
-        # Has to be adjusted as soon as we update to new link implementation
-        prompt = page.driver.browser.switch_to.alert
-        prompt.send_keys('https://zammad.com')
-        prompt.accept
+        fill_in 'url', with: 'https://zammad.com'
+
+        find('[data-id="floating-popover"] button[type="submit"]', text: 'Add link').click
 
         find_treeselect('Group').search_for_option(another_group.name)
 
@@ -67,7 +69,7 @@ RSpec.describe 'Desktop > Ticket > Create', app: :desktop_view, authenticated_as
         customer: customer,
       )
 
-      expect(Ticket.last.articles.first.body).to eq('<h1>Heading</h1><p><strong>Bold Text </strong><br></p><p><em>Italic Text </em><br></p><ul><li><p>Bullet List </p></li></ul><ol><li><p>Ordered List </p></li></ol><p><a rel="nofollow noreferrer noopener" href="https://zammad.com" target="_blank">https://zammad.com</a><br></p>')
+      expect(Ticket.last.articles.first.body).to start_with('<h1 dir="auto">Heading</h1><p dir="auto"><strong>Bold Text </strong></p><p dir="auto"><em>Italic Text </em></p><ul dir="auto"><li dir="auto"><p dir="auto">Bullet List </p></li></ul><ol dir="auto"><li dir="auto"><p dir="auto">Ordered List </p></li></ol><p dir="auto"><a rel="nofollow noreferrer noopener" href="https://zammad.com" target="_blank">https://zammad.com</a></p>')
     end
   end
 
@@ -100,7 +102,7 @@ RSpec.describe 'Desktop > Ticket > Create', app: :desktop_view, authenticated_as
     end
 
     it 'applies the template correctly' do
-      click_on 'Apply Template'
+      click_on 'Apply template'
       click_on template.name
 
       wait_for_form_updater(2)

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -29,12 +29,25 @@ RSpec.describe Gql::Mutations::System::Import::Configuration, type: :graphql do
         }
       end
 
-      it 'succeeds' do
+      before do
         mock = Service::System::Import::ApplyFreshdeskConfiguration
         allow_any_instance_of(mock).to receive(:execute).and_return(true)
+      end
 
+      it 'succeeds' do
         gql.execute(mutation, variables: variables)
         expect(gql.result.data).to include({ 'success' => true })
+      end
+
+      context 'when system is already configured' do
+        before do
+          Setting.set('system_init_done', true)
+        end
+
+        it 'raises an error' do
+          gql.execute(mutation, variables: variables)
+          expect(gql.result.error_type).to eq(Service::System::CheckSetup::SystemSetupError)
+        end
       end
     end
 

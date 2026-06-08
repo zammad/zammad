@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class KnowledgeBase::ManageController < KnowledgeBase::BaseController
   def init
@@ -17,7 +17,7 @@ class KnowledgeBase::ManageController < KnowledgeBase::BaseController
     kb = KnowledgeBase.find params[:id]
 
     if kb.custom_address.blank?
-      raise Exceptions::UnprocessableEntity, __('Please submit custom address before generating the snippet')
+      raise Exceptions::UnprocessableContent, __('Please submit custom address before generating the snippet')
     end
 
     render json: {

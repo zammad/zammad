@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'English'
 
@@ -76,6 +76,10 @@ module Tasks
         puts `#{cmd}`
         puts ''
         raise if !$CHILD_STATUS.success?
+      end
+
+      def self.set_default_umask
+        File.umask(0o022)
       end
     end
   end

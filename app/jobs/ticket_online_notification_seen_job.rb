@@ -1,30 +1,31 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class TicketOnlineNotificationSeenJob < ApplicationJob
   include HasActiveJobLock
 
   def lock_key
+    ticket = arguments[0]
+
     # "TicketOnlineNotificationSeenJob/23/42"
-    "#{self.class.name}/#{arguments[0]}/#{arguments[1]}"
+    "#{self.class.name}/#{ticket.id}/#{arguments[1]}"
   end
 
-  def perform(ticket_id, user_id)
+  def perform(ticket, user_id)
     user_id ||= 1
 
     # set all online notifications to seen
     Transaction.execute do
-      ticket = Ticket.lookup(id: ticket_id)
-      OnlineNotification.list_by_object('Ticket', ticket_id).each do |notification|
-        next if notification.seen
+      return if !OnlineNotification.seen_state?(ticket)
 
-        seen = OnlineNotification.seen_state?(ticket, notification.user_id)
-        next if !seen
-        next if seen == notification.seen
+      mention_user_ids = ticket.mentions.map(&:user_id)
 
-        notification.seen = true
-        notification.updated_by_id = user_id
-        notification.save!
-      end
+      unseen_notifications = OnlineNotification.list_by_object('Ticket', ticket.id)
+                                               .where(seen: false)
+                                               .where.not(user_id: mention_user_ids)
+
+      return if unseen_notifications.empty?
+
+      unseen_notifications.each { |n| n.update!(seen: true, updated_by_id: user_id) }
     end
   end
 end

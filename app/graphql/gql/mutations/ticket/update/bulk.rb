@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Mutations
   class Ticket::Update::Bulk < BaseMutation
@@ -6,45 +6,39 @@ module Gql::Mutations
 
     description 'Bulk-update tickets.'
 
-    argument :ticket_ids, [GraphQL::Types::ID], loads: Gql::Types::TicketType, description: 'The tickets to be updated'
-    argument :input, Gql::Types::Input::Ticket::UpdateInputType, description: 'The ticket data'
-    argument :macro_id, GraphQL::Types::ID, loads: Gql::Types::MacroType, required: false, description: 'The macro to apply onto ticket'
+    argument :selector, Gql::Types::Input::Ticket::Bulk::SelectorInputType, description: 'The selector for bulk ticket update.'
+    argument :perform, Gql::Types::Input::Ticket::Bulk::PerformInputType, description: 'The bulk update action to be performed on the selected tickets.'
 
-    field :success, Boolean, description: 'Were the tickets updated successfully?'
-    # Overwrite the default errors field.
-    field :errors, [Gql::Types::Ticket::Update::BulkUserErrorType], description: 'Did the bulk update fail?'
+    field :async, Boolean, description: 'Whether the update is being processed asynchronously. This will be true if the number of tickets exceeds the defined threshold.'
+    field :total, Integer, description: 'Total number of tickets selected for update.'
 
-    def self.authorize(_obj, ctx)
-      ctx.current_user.permissions?(['ticket.agent'])
+    field :failed_count, Integer, null: true, description: ''
+    field :inaccessible_ticket_ids, [GraphQL::Types::ID], null: true, description: 'Tickets that are no longer accessible to the user.'
+    field :invalid_ticket_ids, [GraphQL::Types::ID], null: true, description: 'Tickets that failed to update due to validation errors or other issues.'
+
+    requires_permission 'ticket.agent'
+
+    def resolve(selector:, perform:)
+      return group_has_no_email_error if !group_has_email?(input: perform[:input])
+
+      result = Service::Ticket::Bulk::DispatchUpdate
+        .with_current_user(context.current_user)
+        .execute(selector:, perform:)
+
+      convert_to_global_ids(result)
     end
 
-    def authorized?(tickets:, input:, macro: nil)
-      tickets.all? { |ticket| pundit_authorized?(ticket, :agent_update_access?) }
-    end
+    private
 
-    def resolve(tickets:, input:, macro: nil)
-      return group_has_no_email_error if !group_has_email?(input: input)
+    def convert_to_global_ids(result)
+      %i[invalid_tickets inaccessible_tickets].each do |key|
+        tickets = result.delete(key)
+        next if !tickets
 
-      execute_transaction(tickets) do |ticket|
-        Service::Ticket::Update
-          .new(current_user: context.current_user)
-          .execute(ticket: ticket, ticket_data: input, skip_validators: Service::Ticket::Update::Validator.exceptions, macro:)
-      end
-    end
-
-    def execute_transaction(tickets, &)
-      errors = nil
-
-      ActiveRecord::Base.transaction do
-        tickets.each(&)
-      rescue => e
-        raise e if !e.try(:record)
-
-        errors = [ { failed_ticket: e.record, message: e.message, error_type: e.class.to_s } ]
-        raise ActiveRecord::Rollback
+        result["#{key.to_s.singularize}_ids"] = tickets.map(&:to_gid)
       end
 
-      errors ? { errors: } : { success: true }
+      result
     end
   end
 end

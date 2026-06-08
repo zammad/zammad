@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require_dependency 'tasks/zammad/command.rb'
 
@@ -11,6 +11,10 @@ module Tasks
         end
 
         def self.task_handler
+
+          # ensure umask is correct for asset handling #5846
+          set_default_umask
+
           if ::Package.app_package_installation?
             exec_command('zammad run rake zammad:package:migrate')
             exec_command('zammad run rake zammad:package:precompile')

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Ticket::State < ApplicationModel
   include HasDefaultModelUserRelations
@@ -57,11 +57,11 @@ returns:
   def ensure_defaults
     return if callback_loop
 
-    %w[default_create default_follow_up].each do |default_field|
+    %w[default_create default_follow_up default_close].each do |default_field|
       states_with_default = Ticket::State.where(default_field => true)
-      next if states_with_default.count == 1
+      next if states_with_default.one?
 
-      if states_with_default.count.zero?
+      if states_with_default.none?
         state = Ticket::State.where(active: true).reorder(id: :asc).first
         state[default_field] = true
         state.callback_loop = true
@@ -125,6 +125,7 @@ returns:
     return if Setting.get('import_mode')
 
     return if state_type.name != 'merged'
+    return if (changed_attribute_names_to_save - %w[created_by_id updated_by_id updated_at]).blank?
 
     throw :abort
   end

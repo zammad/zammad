@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import CommonIcon from '#shared/components/CommonIcon/CommonIcon.vue'
@@ -15,10 +15,7 @@ const props = defineProps<Props>()
 
 const { ticketInternalId } = useTicketInformation()
 
-const { originalFormattingUrl } = useEmailFileUrls(
-  props.article,
-  ticketInternalId,
-)
+const { originalFormattingUrl } = useEmailFileUrls(props.article, ticketInternalId)
 </script>
 
 <template>
@@ -39,9 +36,9 @@ const { originalFormattingUrl } = useEmailFileUrls(
         v-if="originalFormattingUrl"
         :link="originalFormattingUrl"
         size="medium"
-        target="_blank"
+        open-in-new-tab
       >
-        {{ $t('Original Formatting') }}
+        {{ $t('Original formatting') }}
       </CommonLink>
     </CommonLabel>
   </div>

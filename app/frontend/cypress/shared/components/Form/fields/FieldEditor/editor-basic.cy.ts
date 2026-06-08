@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { mountEditor } from './utils.ts'
 
@@ -6,29 +6,20 @@ describe('FieldEditor basic functionality', { retries: 2 }, () => {
   it('typing works, text becomes bold, when "B" is clicked', () => {
     mountEditor()
 
-    cy.findByRole('textbox')
-      .click()
-      .then(() => {
-        cy.findByTestId('action-bar').should('be.visible')
-      })
-      .type('Hello, World!{selectall}')
-      .then(() => {
-        cy.findByLabelText('Format as bold')
-          .click()
-          .should('have.class', 'bg-gray-300')
-          .then(() => {
-            cy.findByTestId('action-bar').should('be.visible') // should not dissapear on click
-          })
+    cy.findByTestId('action-bar').should('not.be.visible')
 
-        cy.findByRole('textbox').within((editor) => {
-          expect(editor.find('strong')).to.have.text('Hello, World!')
-        })
-      })
-      .then(() => {
-        cy.findByTestId('action-bar').should('be.visible')
-        cy.get('body').click(400, 400, { force: true })
-        cy.findByTestId('action-bar').should('not.be.visible')
-      })
+    cy.findByRole('textbox').click()
+    cy.findByTestId('action-bar').should('be.visible')
+
+    cy.findByRole('textbox').type('Hello, World!{selectall}')
+
+    cy.findByLabelText('Format as bold').click().should('have.class', 'bg-gray-300')
+
+    cy.findByTestId('action-bar').should('be.visible') // should not disappear on click
+
+    cy.findByRole('textbox').within((editor) => {
+      expect(editor.find('strong')).to.have.text('Hello, World!')
+    })
   })
 
   it('text is italic (or any other style) from the start', () => {
@@ -36,19 +27,19 @@ describe('FieldEditor basic functionality', { retries: 2 }, () => {
 
     cy.findByRole('textbox').click()
     cy.findByTestId('action-bar').findByLabelText('Format as italic').click()
+    cy.findByRole('textbox').type('Hello, World!')
+
     cy.findByRole('textbox')
-      .type('Hello, World!')
       .within((editor) => {
         expect(editor.find('em')).to.have.text('Hello, World!')
       })
       .selectText('left', 2)
       .findByLabelText('Format as italic')
       .click()
-      .then(() => {
-        cy.findByRole('textbox').within((editor) => {
-          expect(editor.find('em')).to.have.text('Hello, Worl')
-        })
-      })
+
+    cy.findByRole('textbox').within((editor) => {
+      expect(editor.find('em')).to.have.text('Hello, Worl')
+    })
   })
 
   it('has content when it is provided', () => {
@@ -56,9 +47,10 @@ describe('FieldEditor basic functionality', { retries: 2 }, () => {
       value: '<strong>Hello, World!</strong>',
     })
 
-    cy.findByRole('textbox')
-      .should('have.text', 'Hello, World!')
-      .and('have.html', '<p><strong>Hello, World!</strong></p>')
+    cy.findByRole('textbox').should('have.text', 'Hello, World!')
+    cy.findByRole('textbox').shouldHaveNormalizedHtml(
+      '<p dir="auto"><strong>Hello, World!</strong></p>',
+    )
   })
 
   // TODO: Clarify the paste handling in the editor.
@@ -69,9 +61,7 @@ describe('FieldEditor basic functionality', { retries: 2 }, () => {
       .type('He')
       .selectText('left', 2)
       .then(() => {
-        cy.findByTestId('action-bar')
-          .findByLabelText('Format as italic')
-          .click()
+        cy.findByTestId('action-bar').findByLabelText('Format as italic').click()
       })
 
     cy.findByRole('textbox')

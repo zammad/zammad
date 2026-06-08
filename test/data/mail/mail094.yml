@@ -20,7 +20,7 @@ attachments:
     Message-ID: "<ADR4500000006414610000155D80992E1EDB8AC8CAAB8AA5A0FA@Example-GROUP.NET>"
     Subject: Otto Example Bestellung 4500258840
     Keywords: Zammad
-    Mime-Version: '1.0'
+    MIME-Version: '1.0'
     Content-Type: application/pdf; name="Otto Example Bestellung 4500258840.pdf"
     Content-Description: Otto Example Bestellung 4500258840
     Authentication-Results: spf=softfail (sender IP is 11.11.11.111) smtp.mailfrom=example.com;

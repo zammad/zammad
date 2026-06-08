@@ -1,9 +1,12 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 /* eslint-disable zammad/zammad-detect-translatable-string */
-import { computed, reactive, ref } from 'vue'
+import { computed, onMounted, reactive, ref } from 'vue'
 
+import { NotificationTypes } from '#shared/components/CommonNotifications/types.ts'
+import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
+import CommonProgressBar from '#shared/components/CommonProgressBar/CommonProgressBar.vue'
 import { EnumSecurityStateType } from '#shared/components/Form/fields/FieldSecurity/types.ts'
 import Form from '#shared/components/Form/Form.vue'
 import { defineFormSchema } from '#shared/form/defineFormSchema.ts'
@@ -26,8 +29,7 @@ const linkSchemaRaw = [
   {
     type: 'security',
     name: 'security',
-    label:
-      'Security Long Name Very long Not Truncated Oh no Please Its Too Long',
+    label: 'Security Long Name Very long Not Truncated Oh no Please Its Too Long',
     required: true,
     props: {
       securityAllowed: {
@@ -381,8 +383,7 @@ const editorProps = reactive({
 })
 
 const updateEditorProps = () => {
-  editorProps.contentType =
-    editorProps.contentType === 'text/plain' ? 'text/html' : 'text/plain'
+  editorProps.contentType = editorProps.contentType === 'text/plain' ? 'text/html' : 'text/plain'
 }
 
 const editorSchema = defineFormSchema([
@@ -401,6 +402,70 @@ const editorSchema = defineFormSchema([
   },
 ])
 const logSubmit = console.log
+
+const { notify } = useNotifications()
+
+const progressBarNotificationValue = ref(0)
+
+const increaseProgressBarNotificationValue = () => {
+  if (progressBarNotificationValue.value < 1) {
+    progressBarNotificationValue.value += 0.25
+  }
+}
+
+const notifyWithProgress = (progress: number) => {
+  notify({
+    id: 'playground-notification-progress',
+    type: NotificationTypes.Info,
+    message: `${progress * 100}% Progress Notification`,
+    persistent: true,
+    currentProgress: progress,
+  })
+}
+const rampUpProgressBarNotificationValue = () => {
+  // reset if already done
+  if (progressBarNotificationValue.value == 1) {
+    progressBarNotificationValue.value = 0
+  }
+
+  // show 0 progress toast
+  notifyWithProgress(0)
+  // wait before increasing
+  setTimeout(() => setInterval(increaseProgressBarNotificationValue, 500), 2000)
+}
+
+const progressBarValue = ref(0)
+
+const increaseProgressBar = () => {
+  progressBarValue.value += 25
+}
+
+onMounted(() => {
+  setInterval(increaseProgressBar, 2000)
+})
+
+const notifyAllTypes = () => {
+  notify({
+    id: 'playground-notification-info',
+    type: NotificationTypes.Info,
+    message: 'ℹ️ Info Notification',
+  })
+  notify({
+    id: 'playground-notification-success',
+    type: NotificationTypes.Success,
+    message: 'Success! ✅',
+  })
+  notify({
+    id: 'playground-notification-warn',
+    type: NotificationTypes.Warn,
+    message: 'Warn Notification: ⚠️',
+  })
+  notify({
+    id: 'playground-notification-error',
+    type: NotificationTypes.Error,
+    message: 'Error Notification: ❌!',
+  })
+}
 </script>
 
 <template>
@@ -408,11 +473,91 @@ const logSubmit = console.log
     <LayoutHeader title="Playground">
       <template #before>1 / 3</template>
       <template #after>
-        <CommonButton class="flex-1 px-4 py-2" variant="secondary"
-          >Click
-        </CommonButton>
+        <CommonButton class="flex-1 px-4 py-2" variant="secondary">Click </CommonButton>
       </template>
     </LayoutHeader>
+
+    <h3>Notifications / Alerts</h3>
+    <div class="flex flex-wrap gap-2">
+      <div class="mb-4 space-y-4 space-x-2 *:p-2">
+        <CommonButton variant="danger" @click="notifyAllTypes()">
+          Open "all" Notification</CommonButton
+        >
+
+        <CommonButton
+          variant="primary"
+          @click="
+            notify({
+              id: 'playground-notification-success',
+              type: NotificationTypes.Success,
+              message: 'Success! ✅',
+            })
+          "
+          >Open "success" Notification</CommonButton
+        >
+
+        <CommonButton
+          variant="secondary"
+          @click="
+            notify({
+              id: 'playground-notification-warn',
+              type: NotificationTypes.Warn,
+              message: 'Warn Notification: ⚠️',
+            })
+          "
+        >
+          Open "warn" Notification</CommonButton
+        >
+        <CommonButton
+          variant="danger"
+          @click="
+            notify({
+              id: 'playground-notification-error',
+              type: NotificationTypes.Error,
+              message: 'Error Notification: ❌!',
+            })
+          "
+        >
+          Open "error" Notification</CommonButton
+        >
+
+        <CommonButton
+          @click="
+            notify({
+              id: 'playground-notification-info',
+              type: NotificationTypes.Info,
+              message: 'ℹ️ Info Notification',
+            })
+          "
+        >
+          Open "info" Notification</CommonButton
+        >
+
+        <CommonButton
+          @click="
+            notify({
+              id: 'playground-notification-pinned',
+              type: NotificationTypes.Success,
+              message: '📌 Persistent (Pinned) Notification',
+              persistent: true,
+            })
+          "
+        >
+          'Open "Persistent (Pinned)" Notification'
+        </CommonButton>
+
+        <CommonButton @click="rampUpProgressBarNotificationValue()">
+          'Open "Progress 0..100%" Notification'
+        </CommonButton>
+      </div>
+    </div>
+
+    <h3>Progress Bar</h3>
+    <div class="flex flex-col gap-3">
+      <CommonProgressBar class="w-full" value="50" max="100" />
+      <CommonProgressBar class="w-full" value="50" max="100" variant="inverted" />
+    </div>
+
     <h2 class="text-xl font-bold">Buttons</h2>
     <div class="mt-2 flex gap-3">
       <CommonButton class="flex-1 py-2" variant="primary" />
@@ -422,41 +567,19 @@ const logSubmit = console.log
       <CommonButton class="flex-1 py-2" variant="submit" />
       <CommonButton class="flex-1 py-2" variant="danger" />
     </div>
-    <h3 class="text-gray mt-2 mb-2 text-lg font-semibold">
-      With transparent background
-    </h3>
+    <h3 class="mt-2 mb-2 text-lg font-medium text-gray">With transparent background</h3>
     <div class="flex gap-3">
-      <CommonButton
-        class="flex-1 py-2"
-        variant="primary"
-        transparent-background
-      />
-      <CommonButton
-        class="flex-1 py-2"
-        variant="secondary"
-        transparent-background
-      />
+      <CommonButton class="flex-1 py-2" variant="primary" transparent-background />
+      <CommonButton class="flex-1 py-2" variant="secondary" transparent-background />
     </div>
     <div class="my-4 flex gap-3">
-      <CommonButton
-        class="flex-1 py-2"
-        variant="submit"
-        transparent-background
-      />
-      <CommonButton
-        class="flex-1 py-2"
-        variant="danger"
-        transparent-background
-      />
+      <CommonButton class="flex-1 py-2" variant="submit" transparent-background />
+      <CommonButton class="flex-1 py-2" variant="danger" transparent-background />
     </div>
 
-    <button @click="dialog.toggle({ name: 'dialog', label: 'Hello World' })">
-      Dialog
-    </button>
+    <button @click="dialog.toggle({ name: 'dialog', label: 'Hello World' })">Dialog</button>
 
-    <button type="button" @click="updateEditorProps">
-      CHANGE EDITOR PROPS
-    </button>
+    <button type="button" @click="updateEditorProps">CHANGE EDITOR PROPS</button>
 
     <button form="form">Submit</button>
 

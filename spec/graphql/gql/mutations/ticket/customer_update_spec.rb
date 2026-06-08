@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -48,6 +48,16 @@ RSpec.describe Gql::Mutations::Ticket::CustomerUpdate, :aggregate_failures, type
       it 'updates customer and organization' do
         gql.execute(query, variables: variables)
         expect(gql.result.data[:ticket]).to eq(expected_response)
+      end
+
+      it 'uses forced update service' do
+        allow(Service::Ticket::ForcedUpdate).to receive(:execute).and_call_original
+
+        gql.execute(query, variables: variables)
+
+        expect(Service::Ticket::ForcedUpdate)
+          .to have_received(:execute)
+          .with(ticket, { customer:, organization: }, current_user: agent)
       end
 
       context 'without organization' do

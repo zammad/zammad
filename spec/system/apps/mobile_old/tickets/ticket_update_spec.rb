@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 require 'system/apps/mobile_old/examples/core_workflow_examples'
@@ -75,9 +75,11 @@ RSpec.describe 'Mobile > Ticket > Update', app: :mobile, authenticated_as: :agen
 
         expect(page).to have_no_selector(:button, 'Save')
 
+        title = find_input('Ticket title')
+        expect(title).to have_value('Ticket Title')
+        title.clear
+
         within_form(form_updater_gql_number: 1) do
-          title = find_input('Ticket title')
-          expect(title).to have_value('Ticket Title')
           title.type('New Title')
 
           state = find_select('State')
@@ -133,7 +135,7 @@ RSpec.describe 'Mobile > Ticket > Update', app: :mobile, authenticated_as: :agen
 
         expect(page).to have_no_css('label', text: 'Pending until')
 
-        date = 1.day.from_now.beginning_of_minute
+        date = 1.day.from_now.change(hour: 3).beginning_of_minute
 
         within_form(form_updater_gql_number: 1) do
           find_select('State').select_option('pending reminder')
@@ -152,13 +154,15 @@ RSpec.describe 'Mobile > Ticket > Update', app: :mobile, authenticated_as: :agen
         submit_form
 
         ticket.reload
-        expect(ticket.pending_time.localtime).to eq(date)
+        expect(ticket.pending_time).to eq(date)
       end
 
       it 'can save form on another page' do
         visit "/tickets/#{ticket.id}/information"
 
         wait_for_form_to_settle('form-ticket-edit')
+
+        find_input('Ticket title').clear # does not trigger form updater for some reason
 
         within_form(form_updater_gql_number: 1) do
           find_input('Ticket title').type('New Title')

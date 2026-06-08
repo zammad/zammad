@@ -1,4 +1,4 @@
-mutation userCurrentNotificationPreferencesReset{
+mutation userCurrentNotificationPreferencesReset {
   userCurrentNotificationPreferencesReset {
     user {
       ...userPersonalSettings

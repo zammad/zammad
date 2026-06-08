@@ -1,7 +1,6 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { storeToRefs } from 'pinia'
-import { computed, type ComputedRef, ref, type Ref } from 'vue'
+import { computed, type ComputedRef, ref, type Ref, toRef } from 'vue'
 
 import { useUserQuery } from '#shared/entities/user/graphql/queries/user.api.ts'
 import { useUserObjectAttributesStore } from '#shared/entities/user/stores/objectAttributes.ts'
@@ -9,6 +8,8 @@ import { UserUpdatesDocument } from '#shared/graphql/subscriptions/userUpdates.a
 import type {
   UserUpdatesSubscriptionVariables,
   UserUpdatesSubscription,
+  User,
+  UserQuery,
 } from '#shared/graphql/types.ts'
 import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 import type { GraphQLHandlerError } from '#shared/types/error.ts'
@@ -16,18 +17,25 @@ import { normalizeEdges } from '#shared/utils/helpers.ts'
 
 import type { WatchQueryFetchPolicy } from '@apollo/client/core'
 
+export const SECONDARY_ORGANIZATIONS_FETCH_COUNT = 5
+
 export const useUserDetail = (
   userId: Ref<string | undefined> | ComputedRef<string | undefined>,
+  initialDisplayLimit = 5,
+  additionalPageSize = 100,
   errorCallback?: (error: GraphQLHandlerError) => boolean,
-  fetchPolicy?: WatchQueryFetchPolicy,
+  fetchPolicy: WatchQueryFetchPolicy = 'cache-and-network',
+  hasOrganizationCounts = false,
 ) => {
-  const fetchSecondaryOrganizationsCount = ref<Maybe<number>>(3)
+  // Track whether show-more has been clicked for this instance
+  const hasLoadedMore = ref(false)
 
   const userQuery = new QueryHandler(
     useUserQuery(
       () => ({
-        userId: userId.value,
-        secondaryOrganizationsCount: 3,
+        userId: userId.value!,
+        secondaryOrganizationsCount: SECONDARY_ORGANIZATIONS_FETCH_COUNT,
+        hasOrganizationCounts,
       }),
       () => ({ enabled: Boolean(userId.value), fetchPolicy }),
     ),
@@ -36,45 +44,72 @@ export const useUserDetail = (
     },
   )
 
-  userQuery.subscribeToMore<
-    UserUpdatesSubscriptionVariables,
-    UserUpdatesSubscription
-  >(() => ({
+  const userResult = userQuery.result()
+
+  userQuery.subscribeToMore<UserUpdatesSubscriptionVariables, UserUpdatesSubscription>(() => ({
     document: UserUpdatesDocument,
     variables: {
       userId: userId.value!,
-      secondaryOrganizationsCount: fetchSecondaryOrganizationsCount.value,
+      secondaryOrganizationsCount: hasLoadedMore.value
+        ? userResult.value?.user.secondaryOrganizations?.totalCount
+        : SECONDARY_ORGANIZATIONS_FETCH_COUNT,
+      hasOrganizationCounts,
+    },
+    updateQuery: (_, { subscriptionData }) => {
+      if (!subscriptionData.data?.userUpdates.user) return null as unknown as UserQuery
+
+      return {
+        user: subscriptionData.data.userUpdates.user,
+      }
     },
   }))
 
-  const loadAllSecondaryOrganizations = () => {
-    userQuery
-      .refetch({
-        userId: userId.value,
-        secondaryOrganizationsCount: null,
-      })
-      .then(() => {
-        fetchSecondaryOrganizationsCount.value = null
-      })
+  const loading = userQuery.loading()
+  const loadingWithoutCachedResult = userQuery.loadingWithoutCachedResult()
+
+  const user = computed(() => userResult.value?.user as User)
+
+  const fetchMoreSecondaryOrganizations = () => {
+    if (!user.value) return
+
+    hasLoadedMore.value = true
+
+    userQuery.fetchMore({
+      variables: {
+        secondaryOrganizationsCount: additionalPageSize,
+        after: userResult.value?.user.secondaryOrganizations?.pageInfo.endCursor,
+      },
+    })
   }
 
-  const userResult = userQuery.result()
-  const loading = userQuery.loading()
+  const viewScreenAttributes = toRef(useUserObjectAttributesStore(), 'viewScreenAttributes')
 
-  const user = computed(() => userResult.value?.user)
-
-  const { viewScreenAttributes } = storeToRefs(useUserObjectAttributesStore())
-
-  const secondaryOrganizations = computed(() =>
+  const allSecondaryOrganizations = computed(() =>
     normalizeEdges(user.value?.secondaryOrganizations),
   )
 
+  const secondaryOrganizations = computed(() => {
+    const all = allSecondaryOrganizations.value
+
+    // Once show-more was clicked, show all cached items
+    if (hasLoadedMore.value) {
+      return all
+    }
+
+    // Initially show only initialDisplayLimit items
+    return {
+      array: all.array.slice(0, initialDisplayLimit),
+      totalCount: all.totalCount,
+    }
+  })
+
   return {
     loading,
+    loadingWithoutCachedResult,
     user,
     userQuery,
     objectAttributes: viewScreenAttributes,
     secondaryOrganizations,
-    loadAllSecondaryOrganizations,
+    fetchMoreSecondaryOrganizations,
   }
 }

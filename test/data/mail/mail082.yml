@@ -4,11 +4,31 @@ from_email: from@example.com
 from_display_name: John Smith
 to: to@example.com
 subject: 'FW: Tax Invoice  INX4183'
-body: |-
-  <div>
-  <p><span style="color:#1f497d;">Goeie dag,</span></p><p><span style="color:#1f497d;"> </span></p><p><span style="color:#1f497d;">Jammer Janette hierdie is ‘n fout. Moet asb nie deurstuur medies toe nie. Die pasient het klaar betaal.</span></p><p><span style="color:#1f497d;">Die invoice is verkeerde persoon, ek stuur die korrekte een.</span></p><p><span style="color:#1f497d;"> </span></p><p><span style="color:#1f497d;">Dankie</span></p><p><span style="color:#1f497d;"> </span></p><p><span style="color:#1f497d;"> </span></p><div>
-  <p><b><span style="color:#403152;">Chantel Wilken</span></b></p><p><b><span style="color:#403152;">John Smith</span></b></p><p><b><span style="color:#403152;">Tel: 053-8311646</span></b></p><p><b><span style="color:#403152;"> : 053-8311710</span></b></p><p><b><span style="color:#403152;">Fax to e-mail: 0865586973</span></b></p><p><b><span style="color:#403152;">Fax to e-mail: 0865665137</span></b><b><span style="color:#403152;"></span></b></p></div><p><span style="color:#1f497d;"> </span></p><div><span class="js-signatureMarker"></span><p><b><span lang="EN-US">From:</span></b><span lang="EN-US"> Profsen Lab [mailto:from@example.com] <br><b>Sent:</b> Wednesday, 06 March 2019 08:52<br><b>To:</b> to@example.com<br><b>Subject:</b> FW: Tax Invoice INX4183</span></p></div><p>&nbsp;</p><p><span style="color:#1f497d;"> </span></p><p><span style="color:#1f497d;"> </span></p><div>
-  <p><b><span style="color:#403152;">Chantel Wilken</span></b></p><p><b><span style="color:#403152;">John Smith</span></b></p><p><b><span style="color:#403152;">Tel: 053-8311646</span></b></p><p><b><span style="color:#403152;"> : 053-8311710</span></b></p><p><b><span style="color:#403152;">Fax to e-mail: 0865586973</span></b></p><p><b><span style="color:#403152;">Fax to e-mail: 0865665137</span></b><b><span style="color:#403152;"></span></b></p></div><p><span style="color:#1f497d;"> </span></p><div><p><b><span lang="EN-US">From:</span></b><span lang="EN-US"> Profsen Lab <a href="mailto:[mailto:from@example.com]">[mailto:from@example.com]</a> <br><b>Sent:</b> Monday, 04 March 2019 12:41<br><b>To:</b> <a href="mailto:from@example.com">from@example.com</a><br><b>Subject:</b> Tax Invoice INX4183</span></p></div><p>&nbsp;</p><p>Tax Invoice INX4183 from Shammah Dental BK t/a John Smith</p><p>&nbsp;</p></div>
+body: '<div><p><span style="color:#1f497d;">Goeie dag,</span></p><p><span style="color:#1f497d;">
+  </span></p><p><span style="color:#1f497d;">Jammer Janette hierdie is ‘n fout. Moet
+  asb nie deurstuur medies toe nie. Die pasient het klaar betaal.</span></p><p><span
+  style="color:#1f497d;">Die invoice is verkeerde persoon, ek stuur die korrekte een.</span></p><p><span
+  style="color:#1f497d;"> </span></p><p><span style="color:#1f497d;">Dankie</span></p><p><span
+  style="color:#1f497d;"> </span></p><p><span style="color:#1f497d;"> </span></p><div><p><b><span
+  style="color:#403152;">Chantel Wilken</span></b></p><p><b><span style="color:#403152;">John
+  Smith</span></b></p><p><b><span style="color:#403152;">Tel: 053-8311646</span></b></p><p><b><span
+  style="color:#403152;"> : 053-8311710</span></b></p><p><b><span style="color:#403152;">Fax
+  to e-mail: 0865586973</span></b></p><p><b><span style="color:#403152;">Fax to e-mail:
+  0865665137</span></b><b><span style="color:#403152;"></span></b></p></div><p><span
+  style="color:#1f497d;"> </span></p><div><span class="js-signatureMarker"></span><p><b><span
+  lang="EN-US">From:</span></b><span lang="EN-US"> Profsen Lab [mailto:from@example.com]
+  <br><b>Sent:</b> Wednesday, 06 March 2019 08:52<br><b>To:</b> to@example.com<br><b>Subject:</b>
+  FW: Tax Invoice INX4183</span></p></div><p>&nbsp;</p><p><span style="color:#1f497d;">
+  </span></p><p><span style="color:#1f497d;"> </span></p><div><p><b><span style="color:#403152;">Chantel
+  Wilken</span></b></p><p><b><span style="color:#403152;">John Smith</span></b></p><p><b><span
+  style="color:#403152;">Tel: 053-8311646</span></b></p><p><b><span style="color:#403152;">
+  : 053-8311710</span></b></p><p><b><span style="color:#403152;">Fax to e-mail: 0865586973</span></b></p><p><b><span
+  style="color:#403152;">Fax to e-mail: 0865665137</span></b><b><span style="color:#403152;"></span></b></p></div><p><span
+  style="color:#1f497d;"> </span></p><div><p><b><span lang="EN-US">From:</span></b><span
+  lang="EN-US"> Profsen Lab <a href="mailto:[mailto:from@example.com]">[mailto:from@example.com]</a>
+  <br><b>Sent:</b> Monday, 04 March 2019 12:41<br><b>To:</b> <a href="mailto:from@example.com">from@example.com</a><br><b>Subject:</b>
+  Tax Invoice INX4183</span></p></div><p>&nbsp;</p><p>Tax Invoice INX4183 from Shammah
+  Dental BK t/a John Smith</p><p>&nbsp;</p></div>'
 content_type: text/html
 attachments:
 - !ruby/hash:ActiveSupport::HashWithIndifferentAccess

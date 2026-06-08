@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { getByIconName } from '#tests/support/components/iconQueries.ts'
 import { renderComponent } from '#tests/support/components/index.ts'
@@ -35,10 +35,7 @@ describe('buttons group', () => {
       store: true,
     })
 
-    expect(view.getByRole('link', { name: 'link text' })).toHaveAttribute(
-      'href',
-      '/mobile/example',
-    )
+    expect(view.getByRole('link', { name: 'link text' })).toHaveAttribute('href', '/mobile/example')
 
     const button = view.getByRole('button', { name: 'button' })
 

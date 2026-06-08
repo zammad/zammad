@@ -1,9 +1,9 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
 RSpec.describe '.eco files check', :aggregate_failures do
-  eco_files = Rails.root.glob('**/*.eco')
+  let(:eco_files) { Rails.root.glob('**/*.eco') }
 
   it 'only runs the test as long as .eco files are present - delete the test once they are gone' do
     expect(eco_files.count).to be_positive

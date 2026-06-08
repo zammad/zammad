@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, toRef } from 'vue'
@@ -8,10 +8,7 @@ import type { FormRef } from '#shared/components/Form/types.ts'
 import { useForm } from '#shared/components/Form/useForm.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
-import type {
-  ButtonType,
-  ButtonVariant,
-} from '#desktop/components/CommonButton/types.ts'
+import type { ButtonType, ButtonVariant } from '#desktop/components/CommonButton/types.ts'
 import LayoutPublicPageBoxActions from '#desktop/components/layout/LayoutPublicPage/LayoutPublicPageBoxActions.vue'
 
 interface Props {
@@ -85,7 +82,7 @@ const submit = () => {
       :disabled="isDisabled"
       @click="goBack()"
     >
-      {{ $t('Go Back') }}
+      {{ $t('Go back') }}
     </CommonButton>
     <CommonButton
       v-if="skipRoute || onSkip"

@@ -1,9 +1,9 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 require 'lib/import/otrs/dynamic_field_examples'
 
-RSpec.describe Import::OTRS::DynamicField::Multiselect, mariadb: true do
+RSpec.describe Import::OTRS::DynamicField::Multiselect do
   it_behaves_like 'Import::OTRS::DynamicField'
 
   it 'imports an OTRS Multiselect DynamicField' do

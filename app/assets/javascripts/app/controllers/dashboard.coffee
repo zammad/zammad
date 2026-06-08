@@ -95,22 +95,18 @@ class App.Dashboard extends App.Controller
     '#dashboard'
 
   show: (params) =>
-
-    # incase of being only customer, redirect to default router
-    if @permissionCheck('ticket.customer') && !@permissionCheck('ticket.agent')
+    if @permissionCheck('ticket.agent')
+      @title __('Dashboard')
+      @navupdate '#dashboard'
+    # in case of being only customer, redirect to default router
+    else if @permissionCheck('ticket.customer')
       @navigate '#ticket/view', { hideCurrentLocationFromHistory: true }
-      return
-
-    # incase of being only admin, redirect to admin interface (show no empty white content page)
-    if !@permissionCheck('ticket.customer') && !@permissionCheck('ticket.agent') && @permissionCheck('admin')
+    # in case of being only admin, redirect to admin interface (show no empty white content page)
+    else if @permissionCheck('admin')
       @navigate '#manage', { hideCurrentLocationFromHistory: true }
-      return
-
-    # set title
-    @title __('Dashboard')
-
-    # highlight navbar
-    @navupdate '#dashboard'
+    # fallback for user who is neither admin nor customer
+    else
+      @navigate '#welcome', { hideCurrentLocationFromHistory: true }
 
   changed: ->
     false

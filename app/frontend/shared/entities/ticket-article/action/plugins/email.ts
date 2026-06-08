@@ -1,17 +1,11 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { uniq } from 'lodash-es'
 import { ref } from 'vue'
 
 import { useEmailFileUrls } from '#shared/composables/useEmailFileUrls.ts'
-import { getTicketSignatureQuery } from '#shared/composables/useTicketSignature.ts'
-import type {
-  TicketArticle,
-  TicketById,
-} from '#shared/entities/ticket/types.ts'
+import type { TicketArticle } from '#shared/entities/ticket/types.ts'
 import { EnumTicketArticleSenderName } from '#shared/graphql/types.ts'
-import { getIdFromGraphQLId } from '#shared/graphql/utils.ts'
-import { textCleanup } from '#shared/utils/helpers.ts'
 import openExternalLink from '#shared/utils/openExternalLink.ts'
 
 import { forwardEmail } from './email/forward.ts'
@@ -37,27 +31,15 @@ const canReplyAll = (article: TicketArticle) => {
   return uniq(foreignRecipients).length > 1
 }
 
-const addSignature = async (
-  ticket: TicketById,
-  { body }: TicketArticleSelectionOptions,
-  position?: number,
-) => {
-  const ticketSignature = getTicketSignatureQuery()
-  const { data: signature } = await ticketSignature.query({
-    variables: {
-      groupId: ticket.group.id,
-      ticketId: ticket.id,
-    },
-  })
-  const text = signature?.ticketSignature?.renderedBody
-  const id = signature?.ticketSignature?.id
-  if (!text || !id) {
-    body.removeSignature()
-    return
-  }
+const addSignature = ({ body }: TicketArticleSelectionOptions, position?: number) => {
+  // Get signature from form props (set by form updater)
+  const { signature } = body
+
+  if (!signature) return body.removeSignature()
+
   body.addSignature({
-    body: textCleanup(text),
-    id: getIdFromGraphQLId(id),
+    renderedBody: signature.renderedBody,
+    internalId: signature.internalId,
     position,
   })
 }
@@ -84,7 +66,7 @@ const actionPlugin: TicketArticleActionPlugin = {
           apps: ['mobile', 'desktop'],
           name: 'email-reply',
           view: { agent: ['change'] },
-          label: __('Reply'),
+          label: sender === EnumTicketArticleSenderName.Agent ? __('Follow up') : __('Reply'),
           icon: 'reply',
           alwaysVisible: true,
           perform: (t, a, o) => replyToEmail(t, a, o, config),
@@ -105,7 +87,8 @@ const actionPlugin: TicketArticleActionPlugin = {
         apps: ['mobile', 'desktop'],
         name: 'email-reply-all',
         view: { agent: ['change'] },
-        label: __('Reply All'),
+        label:
+          sender === EnumTicketArticleSenderName.Agent ? __('Follow up to all') : __('Reply all'),
         icon: 'reply-alt',
         alwaysVisible: true,
         perform: (t, a, o) => replyToEmail(t, a, o, config, true),
@@ -122,10 +105,7 @@ const actionPlugin: TicketArticleActionPlugin = {
           view: { agent: ['read'] },
           label: __('Download original email'),
           icon: 'download',
-          perform: () =>
-            openExternalLink(
-              emailFileUrls.originalFormattingUrl.value as string,
-            ),
+          perform: () => openExternalLink(emailFileUrls.originalFormattingUrl.value as string),
         })
       }
 
@@ -136,8 +116,7 @@ const actionPlugin: TicketArticleActionPlugin = {
           view: { agent: ['read'] },
           label: __('Download raw email'),
           icon: 'download',
-          perform: () =>
-            openExternalLink(emailFileUrls.rawMessageUrl.value as string),
+          perform: () => openExternalLink(emailFileUrls.rawMessageUrl.value as string),
         })
       }
     }
@@ -171,16 +150,18 @@ const actionPlugin: TicketArticleActionPlugin = {
       view: { agent: ['change'] },
       fields,
       onDeselected(_, { body }) {
-        getTicketSignatureQuery().cancel()
         body.removeSignature()
       },
       onOpened(_, { body }) {
+        // solve the issue in firefox that the signature is not inserted
         // always reset position if reply is added as a new article
-        return addSignature(ticket, { body }, 1)
+        requestAnimationFrame(() => {
+          addSignature({ body }, 1)
+        })
       },
       onSelected(_, { body }) {
-        // try to dynamically set cursor position, dependeing on where it was before signature was added
-        return addSignature(ticket, { body })
+        // try to dynamically set cursor position, depending on where it was before signature was added
+        addSignature({ body })
       },
       internal: false,
       performReply(ticket) {

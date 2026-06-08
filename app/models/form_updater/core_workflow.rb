@@ -1,16 +1,17 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class FormUpdater::CoreWorkflow
   include ::Mixin::HasBackends
 
-  def self.perform_mapping(perform_result, result, relation_fields:)
+  def self.perform_mapping(perform_result, result, relation_fields:, object:)
     initialize_fields(perform_result, result)
 
     backends.each do |backend|
       backend.perform(
-        perform_result:  perform_result,
-        result:          result,
-        relation_fields: relation_fields
+        perform_result:,
+        result:,
+        relation_fields:,
+        object:,
       )
     end
   end

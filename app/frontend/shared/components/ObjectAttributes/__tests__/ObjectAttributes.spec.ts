@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { getByRole } from '@testing-library/vue'
 import { flushPromises } from '@vue/test-utils'
@@ -103,6 +103,7 @@ describe('common object attributes interface', () => {
       },
       router: true,
       store: true,
+      form: true,
     })
 
     const getRegion = (name: string) => view.getByRole('region', { name })
@@ -118,32 +119,25 @@ describe('common object attributes interface', () => {
     expect(getRegion('Integer Field')).toHaveTextContent('600')
     expect(getRegion('DateTime Field')).toHaveTextContent('11/08/2022 05:00')
     expect(getRegion('Single Select Field')).toHaveTextContent('Display1')
-    expect(getRegion('Multi Select Field')).toHaveTextContent(
-      'Display1, Display2',
+    expect(getRegion('Multi Select Field')).toHaveTextContent('Display1, Display2')
+    expect(getRegion('Single Tree Select Field')).toHaveTextContent('key1 › key1_child1')
+    expect(getRegion('Multi Tree Select Field')).toHaveTextContent('key1, key2, key2 › key2_child1')
+    expect(getRegion('External Attribute')).toHaveTextContent('Display External')
+
+    expect(getByRole(getRegion('Phone'), 'link', { name: '+49 123456789' })).toHaveAttribute(
+      'href',
+      'tel:+49123456789',
     )
-    expect(getRegion('Single Tree Select Field')).toHaveTextContent(
-      'key1 › key1_child1',
+    expect(getByRole(getRegion('Email'), 'link', { name: 'email@email.com' })).toHaveAttribute(
+      'href',
+      'mailto:email@email.com',
     )
-    expect(getRegion('Multi Tree Select Field')).toHaveTextContent(
-      'key1, key2, key2 › key2_child1',
-    )
-    expect(getRegion('External Attribute')).toHaveTextContent(
-      'Display External',
+    expect(getByRole(getRegion('Url'), 'link', { name: 'https://url.com' })).toHaveAttribute(
+      'href',
+      'https://url.com',
     )
 
-    expect(
-      getByRole(getRegion('Phone'), 'link', { name: '+49 123456789' }),
-    ).toHaveAttribute('href', 'tel:+49123456789')
-    expect(
-      getByRole(getRegion('Email'), 'link', { name: 'email@email.com' }),
-    ).toHaveAttribute('href', 'mailto:email@email.com')
-    expect(
-      getByRole(getRegion('Url'), 'link', { name: 'https://url.com' }),
-    ).toHaveAttribute('href', 'https://url.com')
-
-    expect(
-      view.queryByRole('region', { name: 'Hidden Boolean' }),
-    ).not.toBeInTheDocument()
+    expect(view.queryByRole('region', { name: 'Hidden Boolean' })).not.toBeInTheDocument()
   })
 
   test("don't show empty fields", () => {
@@ -349,17 +343,129 @@ describe('common object attributes interface', () => {
 
     const getRegion = (name: string) => view.getByRole('region', { name })
 
-    expect(
-      getByRole(getRegion('Integer Field'), 'link', { name: '600' }),
-    ).toHaveAttribute('href', 'https://integer.com/rendered')
-    expect(
-      getByRole(getRegion('Phone'), 'link', { name: '+49 123456789' }),
-    ).toHaveAttribute('href', 'https://phone.com/rendered')
-    expect(
-      getByRole(getRegion('Email'), 'link', { name: 'email@email.com' }),
-    ).toHaveAttribute('href', 'https://email.com/rendered')
-    expect(
-      getByRole(getRegion('Url'), 'link', { name: 'https://url.com' }),
-    ).toHaveAttribute('href', 'https://url.com')
+    expect(getByRole(getRegion('Integer Field'), 'link', { name: '600' })).toHaveAttribute(
+      'href',
+      'https://integer.com/rendered',
+    )
+    expect(getByRole(getRegion('Phone'), 'link', { name: '+49 123456789' })).toHaveAttribute(
+      'href',
+      'https://phone.com/rendered',
+    )
+    expect(getByRole(getRegion('Email'), 'link', { name: 'email@email.com' })).toHaveAttribute(
+      'href',
+      'https://email.com/rendered',
+    )
+    expect(getByRole(getRegion('Url'), 'link', { name: 'https://url.com' })).toHaveAttribute(
+      'href',
+      'https://url.com',
+    )
+  })
+
+  test('renders editable attributes with inline editing', async () => {
+    mockPermissions(['ticket.agent'])
+
+    const object = {
+      internalId: 123,
+      note: 'original note text',
+      objectAttributeValues: [],
+    }
+
+    const view = renderComponent(ObjectAttributes, {
+      props: {
+        object,
+        attributes: [attributesByKey.note],
+        inlineEditable: { note: vi.fn() },
+      },
+      router: true,
+      form: true,
+      store: true,
+    })
+
+    // Should render the FormKit cmp when inline editable -> vitest -> textarea
+    const editor = await view.findByRole('textbox')
+
+    expect(editor).toBeInTheDocument()
+
+    expect(view.queryByRole('region', { name: 'Note' })).not.toBeInTheDocument()
+  })
+
+  test('renders editable attributes in view mode when not inline editable', () => {
+    mockPermissions(['ticket.agent'])
+
+    const object = {
+      internalId: 123,
+      note: '<p>formatted note text</p>',
+      objectAttributeValues: [],
+    }
+
+    const view = renderComponent(ObjectAttributes, {
+      props: {
+        object,
+        attributes: [attributesByKey.note],
+      },
+      router: true,
+      store: true,
+      form: true,
+    })
+
+    const noteRegion = view.getByRole('region', { name: 'Note' })
+
+    expect(noteRegion).toBeInTheDocument()
+    expect(noteRegion).toHaveTextContent('formatted note text')
+
+    expect(view.queryByRole('textbox')).not.toBeInTheDocument()
+  })
+
+  test('does not render editable field if mode is not view', () => {
+    mockPermissions(['ticket.agent'])
+
+    const object = {
+      internalId: 123,
+      note: '<p>formatted note text</p>',
+      objectAttributeValues: [],
+    }
+
+    const view = renderComponent(ObjectAttributes, {
+      props: {
+        object,
+        attributes: [attributesByKey.note],
+        mode: 'table',
+      },
+      router: true,
+      store: true,
+      form: true,
+    })
+
+    const noteRegion = view.getByRole('region', { name: 'Note' })
+
+    expect(noteRegion).toBeInTheDocument()
+    expect(noteRegion).toHaveTextContent('formatted note text')
+
+    expect(view.queryByRole('textbox')).not.toBeInTheDocument()
+  })
+
+  test('does not render empty inline editable fields', async () => {
+    const object = {
+      internalId: 123,
+      note: '',
+      objectAttributeValues: [],
+    }
+
+    const view = renderComponent(ObjectAttributes, {
+      props: {
+        object,
+        attributes: [attributesByKey.note],
+        inlineEditable: { note: vi.fn() },
+      },
+      router: true,
+      form: true,
+      formField: true,
+      store: true,
+    })
+
+    // Empty inline editable fields should still be rendered (unlike non-editable fields)
+    const editor = await view.findByLabelText('Note')
+
+    expect(editor).toBeInTheDocument()
   })
 })

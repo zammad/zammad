@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -45,7 +45,7 @@ RSpec.describe Gql::Mutations::Link::Add, :aggregate_failures, type: :graphql do
     next if RSpec.configuration.formatters.first
       .class.name.exclude?('DocumentationFormatter')
 
-    puts "with link type: #{type}" # rubocop:disable Rails/Output
+    puts "with link type: #{type}"
   end
 
   context 'with unauthenticated session' do
@@ -87,7 +87,7 @@ RSpec.describe Gql::Mutations::Link::Add, :aggregate_failures, type: :graphql do
 
       it 'raises an error' do
         gql.execute(mutation, variables: variables)
-        expect(gql.result.error_type).to eq(Exceptions::Forbidden)
+        expect(gql.result.error_type).to eq(Pundit::NotAuthorizedError)
       end
     end
 
@@ -96,7 +96,7 @@ RSpec.describe Gql::Mutations::Link::Add, :aggregate_failures, type: :graphql do
 
       it 'raises an error' do
         gql.execute(mutation, variables: variables)
-        expect(gql.result.error_type).to eq(Exceptions::Forbidden)
+        expect(gql.result.error_type).to eq(Pundit::NotAuthorizedError)
       end
     end
   end

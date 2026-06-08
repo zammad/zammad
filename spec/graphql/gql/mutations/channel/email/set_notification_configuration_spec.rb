@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -86,6 +86,6 @@ RSpec.describe Gql::Mutations::Channel::Email::SetNotificationConfiguration, typ
     Channel
       .where(area: 'Email::Notification')
       .to_a
-      .find { _1.options.dig(:outbound, :adapter) == adapter }
+      .find { it.options.dig(:outbound, :adapter) == adapter }
   end
 end

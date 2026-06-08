@@ -1,6 +1,6 @@
 <div class="datepicker">
     <div class="datepicker-days">
-        <table class=" table-condensed">
+        <table class="table-condensed">
             <thead>
                 <tr>
                     <th colspan="7" class="datepicker-title"></th>
@@ -37,16 +37,6 @@
               </tr>
           </thead>
           <tbody><tr><td colspan="7"></td></tr></tbody>
-          <tfoot>
-            <tr>
-              <td colspan="7">
-                <div class="datepicker-footer-buttons">
-                  <div class="clear"></div>
-                  <div class="today"></div>
-                </div>
-              </td>
-            </tr>
-          </tfoot>
       </table>
   </div>
   <div class="datepicker-years">
@@ -62,16 +52,6 @@
               </tr>
           </thead>
           <tbody><tr><td colspan="7"></td></tr></tbody>
-          <tfoot>
-            <tr>
-              <td colspan="7">
-                <div class="datepicker-footer-buttons">
-                  <div class="clear"></div>
-                  <div class="today"></div>
-                </div>
-              </td>
-            </tr>
-          </tfoot>
       </table>
   </div>
 </div>

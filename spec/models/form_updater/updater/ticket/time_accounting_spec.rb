@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -27,6 +27,20 @@ RSpec.describe(FormUpdater::Updater::Ticket::TimeAccounting) do
         { label: accounted_time_types.second.name, value: accounted_time_types.second.id },
       ]
     }
+  end
+
+  describe '#authorized?' do
+    it 'is authorized for agents' do
+      expect(resolved_result.authorized?).to be true
+    end
+
+    context 'with admin-only user' do
+      let(:user) { create(:user, roles: [Role.find_by(name: 'Admin')]) }
+
+      it 'is not authorized' do
+        expect(resolved_result.authorized?).to be false
+      end
+    end
   end
 
   context 'when resolving' do

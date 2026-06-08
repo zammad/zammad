@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class User::OverviewSortingsController < ApplicationController
   prepend_before_action :authenticate_and_authorize!
@@ -40,8 +40,8 @@ class User::OverviewSortingsController < ApplicationController
       .sort_by { |elem| overview_ids.index(elem.id) }
 
     Service::User::Overview::UpdateOrder
-      .new(current_user, authorized_overviews)
-      .execute
+      .with_current_user(current_user)
+      .execute(authorized_overviews)
 
     Gql::Subscriptions::User::Current::OverviewOrderingUpdates
       .trigger_by(current_user)

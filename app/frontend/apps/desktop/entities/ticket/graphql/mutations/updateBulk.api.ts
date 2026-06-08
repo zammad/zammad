@@ -6,18 +6,13 @@ import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;
 
 export const TicketUpdateBulkDocument = gql`
-    mutation ticketUpdateBulk($ticketIds: [ID!]!, $input: TicketUpdateInput!, $macroId: ID) {
-  ticketUpdateBulk(ticketIds: $ticketIds, input: $input, macroId: $macroId) {
-    success
-    errors {
-      failedTicket {
-        id
-        title
-        number
-      }
-      errorType
-      message
-    }
+    mutation ticketUpdateBulk($selector: TicketBulkSelectorInput!, $perform: TicketBulkPerformInput!) {
+  ticketUpdateBulk(selector: $selector, perform: $perform) {
+    async
+    total
+    failedCount
+    inaccessibleTicketIds
+    invalidTicketIds
   }
 }
     `;

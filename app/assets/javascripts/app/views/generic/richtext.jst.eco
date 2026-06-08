@@ -5,7 +5,7 @@
         <a class="btn btn--action btn--small" data-action="<%= action %>">
           <%- @Icon(@toolButtons[action].icon) %>
           <% if @toolButtons[action].text: %>
-          <span><%= @toolButtons[action].text %></span>
+          <span><%- @T(@toolButtons[action].text) %></span>
           <% end %>
         </a>
       <% end %>

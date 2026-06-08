@@ -1,13 +1,12 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { storeToRefs } from 'pinia'
-import { computed, ref, type Ref } from 'vue'
+import { computed, ref, type ComputedRef, type Ref, toRef } from 'vue'
 
 import type {
   OrganizationUpdatesSubscriptionVariables,
   OrganizationUpdatesSubscription,
+  Organization,
 } from '#shared/graphql/types.ts'
-import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 import type { GraphQLHandlerError } from '#shared/types/error.ts'
 import { normalizeEdges } from '#shared/utils/helpers.ts'
@@ -18,26 +17,26 @@ import { useOrganizationObjectAttributesStore } from '../stores/objectAttributes
 
 import type { WatchQueryFetchPolicy } from '@apollo/client/core'
 
+export const SECONDARY_ORGANIZATIONS_FETCH_COUNT = 5
+
 export const useOrganizationDetail = (
-  internalId: Ref<number | undefined>,
+  organizationId: Ref<string | undefined> | ComputedRef<string | undefined>,
+  initialDisplayLimit = 5,
+  additionalPageSize = 100,
   errorCallback?: (error: GraphQLHandlerError) => boolean,
   fetchPolicy?: WatchQueryFetchPolicy,
 ) => {
-  const organizationId = computed(() => {
-    if (!internalId.value) return
-
-    return convertToGraphQLId('Organization', internalId.value)
-  })
-  const fetchMembersCount = ref<Maybe<number>>(3)
+  // Track whether show-more has been clicked for this instance
+  const hasLoadedMore = ref(false)
 
   const organizationQuery = new QueryHandler(
     useOrganizationQuery(
       () => ({
-        organizationInternalId: internalId.value,
-        membersCount: 3,
+        organizationId: organizationId.value!,
+        first: SECONDARY_ORGANIZATIONS_FETCH_COUNT,
       }),
       () => ({
-        enabled: Boolean(internalId.value),
+        enabled: Boolean(organizationId.value),
         fetchPolicy,
       }),
     ),
@@ -46,6 +45,8 @@ export const useOrganizationDetail = (
     },
   )
 
+  const organizationResult = organizationQuery.result()
+
   organizationQuery.subscribeToMore<
     OrganizationUpdatesSubscriptionVariables,
     OrganizationUpdatesSubscription
@@ -53,45 +54,61 @@ export const useOrganizationDetail = (
     document: OrganizationUpdatesDocument,
     variables: {
       organizationId: organizationId.value!,
-      membersCount: fetchMembersCount.value,
+      // Once the user has expanded the list, request enough members in each
+      // subscription update to cover all previously loaded items so that the
+      // relay-pagination cache is not silently reset to the first page only.
+      first: hasLoadedMore.value
+        ? organizationResult.value?.organization.allMembers?.totalCount
+        : SECONDARY_ORGANIZATIONS_FETCH_COUNT,
     },
   }))
 
-  const organizationResult = organizationQuery.result()
   const loading = organizationQuery.loading()
+  const loadingWithoutCachedResult = organizationQuery.loadingWithoutCachedResult()
 
-  const organization = computed(() => organizationResult.value?.organization)
+  const organization = computed(() => organizationResult.value?.organization as Organization)
 
-  const loadAllMembers = () => {
-    const organizationInternalId = organization.value?.internalId
-    if (!organizationInternalId) {
-      return
-    }
+  const fetchMoreMembers = () => {
+    if (!organizationId) return
 
-    organizationQuery
-      .refetch({
-        organizationInternalId,
-        membersCount: null,
-      })
-      .then(() => {
-        fetchMembersCount.value = null
-      })
+    hasLoadedMore.value = true
+
+    organizationQuery.fetchMore({
+      variables: {
+        first: additionalPageSize,
+        after: organizationResult.value?.organization?.allMembers?.pageInfo.endCursor,
+      },
+    })
   }
 
-  const { viewScreenAttributes } = storeToRefs(
-    useOrganizationObjectAttributesStore(),
-  )
+  const viewScreenAttributes = toRef(useOrganizationObjectAttributesStore(), 'viewScreenAttributes')
 
-  const organizationMembers = computed(
+  const allOrganizationMembers = computed(
     () => normalizeEdges(organization.value?.allMembers) || [],
   )
 
+  const organizationMembers = computed(() => {
+    const all = allOrganizationMembers.value
+
+    // Once show-more was clicked, show all cached items
+    if (hasLoadedMore.value) {
+      return all
+    }
+
+    // Initially show only initialDisplayLimit items
+    return {
+      array: all.array.slice(0, initialDisplayLimit),
+      totalCount: all.totalCount,
+    }
+  })
+
   return {
     loading,
+    loadingWithoutCachedResult,
     organizationQuery,
     organization,
     objectAttributes: viewScreenAttributes,
     organizationMembers,
-    loadAllMembers,
+    fetchMoreMembers,
   }
 }

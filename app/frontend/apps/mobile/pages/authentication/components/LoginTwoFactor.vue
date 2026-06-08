@@ -1,14 +1,13 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
 
 import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
+import { useClearFormInput } from '#shared/components/Form/composables/useClearFormInput.ts'
 import Form from '#shared/components/Form/Form.vue'
-import type {
-  FormSubmitData,
-  FormSchemaNode,
-} from '#shared/components/Form/types.ts'
+import type { FormSubmitData, FormSchemaNode } from '#shared/components/Form/types.ts'
+import { useForm } from '#shared/components/Form/useForm.ts'
 import type {
   TwoFactorLoginFormData,
   TwoFactorPlugin,
@@ -36,6 +35,10 @@ const emit = defineEmits<{
 
 const twoFactorLoginOptions = computed(() => props.twoFactor.loginOptions)
 
+const { form } = useForm()
+
+const { clearAndFocus: clearAndFocusCodeField } = useClearFormInput(form, 'code')
+
 const schema: FormSchemaNode[] = [
   {
     isLayout: true,
@@ -47,7 +50,7 @@ const schema: FormSchemaNode[] = [
       {
         type: 'text',
         name: 'code',
-        label: __('Security Code'),
+        label: __('Security code'),
         required: true,
         props: {
           autocomplete: 'one-time-code',
@@ -89,6 +92,9 @@ const login = (payload: unknown) => {
       if (error instanceof UserError) {
         emit('error', error)
       }
+
+      // Clear the code field on any error and refocus it, in order to facilitate easier retry.
+      clearAndFocusCodeField()
     })
 }
 
@@ -108,9 +114,7 @@ const tryMethod = async () => {
       login: props.credentials.login,
     })
     if (!initiated?.twoFactorMethodInitiateAuthentication?.initiationData) {
-      error.value = __(
-        'Two-factor authentication method could not be initiated.',
-      )
+      error.value = __('Two-factor authentication method could not be initiated.')
       return
     }
     const result = await twoFactorLoginOptions.value.setup(
@@ -139,7 +143,9 @@ onMounted(async () => {
 <template>
   <Form
     v-if="twoFactorLoginOptions.form !== false"
+    ref="form"
     :schema="schema"
+    should-autofocus
     @submit="login(($event as FormSubmitData<TwoFactorLoginFormData>).code)"
   >
     <template #after-fields>
@@ -159,7 +165,7 @@ onMounted(async () => {
   >
     <CommonLoader :loading="loading" :error="error" />
 
-    <div class="text-gray pt-2 pb-2 leading-4 font-medium">
+    <div class="pt-2 pb-2 leading-4 font-medium text-gray">
       <template v-if="error && twoFactorLoginOptions.errorHelpMessage">
         {{ $t(twoFactorLoginOptions.errorHelpMessage) }}
       </template>

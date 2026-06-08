@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { useTimeoutFn } from '@vueuse/shared'
 import { onMounted } from 'vue'
@@ -29,10 +29,7 @@ export const useTicketOverviews = () => {
     if (!overviews.loading) {
       ticketOverviewTicketCountHandler.load()
     } else {
-      useTimeoutFn(
-        () => ticketOverviewTicketCountHandler.load(),
-        POLLING_INTERVAL,
-      )
+      useTimeoutFn(() => ticketOverviewTicketCountHandler.load(), POLLING_INTERVAL)
     }
   })
 

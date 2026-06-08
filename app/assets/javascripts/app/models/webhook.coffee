@@ -1,17 +1,21 @@
 class App.Webhook extends App.Model
-  @configure 'Webhook', 'name', 'endpoint', 'signature_token', 'ssl_verify', 'basic_auth_username', 'basic_auth_password', 'pre_defined_webhook_type', 'customized_payload', 'custom_payload', 'note', 'preferences', 'active'
+  @configure 'Webhook', 'name', 'endpoint', 'http_method', 'signature_token', 'ssl_verify', 'basic_auth_username', 'basic_auth_password', 'bearer_token', 'pre_defined_webhook_type', 'customized_payload', 'custom_payload', 'note', 'preferences', 'active'
+
   @extend Spine.Model.Ajax
   @url: @apiPath + '/webhooks'
   @configure_attributes = [
     { name: 'name',                display: __('Name'),                      tag: 'input',       type: 'text', limit: 250, null: false },
     { name: 'endpoint',            display: __('Endpoint'),                  tag: 'input',       type: 'text', limit: 2000, null: false, placeholder: 'https://target.example.com/webhook' },
-    { name: 'signature_token',     display: __('HMAC SHA1 Signature Token'), tag: 'input',       type: 'text', limit: 100, null: true },
+    { name: 'http_method',         display: __('Request Method'),            tag: 'select',      null: false, translate: false, options: { post: 'POST', put: 'PUT', patch: 'PATCH', delete: 'DELETE' }, default: 'post' },
     { name: 'ssl_verify',          display: __('SSL verification'),          tag: 'boolean',     null: true, translate: true, options: { true: 'yes', false: 'no' }, default: true },
-    { name: 'basic_auth_username', display: __('HTTP Basic Authentication Username'), tag: 'input', type: 'text', limit: 250, null: true, item_class: 'formGroup--halfSize' },
-    { name: 'basic_auth_password', display: __('HTTP Basic Authentication Password'), tag: 'input', type: 'text', limit: 250, null: true, item_class: 'formGroup--halfSize' },
+    { name: 'auth_type',           display: __('Authentication'),            tag: 'select',      null: true, translate: true, nulloption: true, options: { 'basic_auth': __('HTTP Basic Authentication'), 'bearer_token': __('Bearer Token') } },
+    { name: 'basic_auth_username', display: __('Username'),                  tag: 'input',       type: 'text', limit: 250, null: true, item_class: 'formGroup--halfSize' },
+    { name: 'basic_auth_password', display: __('Password'),                  tag: 'input',       type: 'text', input_type: 'password', limit: 250, null: true, item_class: 'formGroup--halfSize' },
+    { name: 'bearer_token',        display: __('Bearer Token'),              tag: 'input',       type: 'text', input_type: 'password', limit: 250, null: true },
+    { name: 'signature_token',     display: __('HMAC SHA1 Signature Token'), tag: 'input',       type: 'text', input_type: 'password', limit: 200, null: true },
     { name: 'customized_payload',  display: __('Custom Payload'),            tag: 'switch',      null: true, label_class: 'hidden' },
     { name: 'custom_payload',      display: __('Custom Payload'),            tag: 'code_editor', null: true, collapsible: true, label_class: 'hidden', hint: __('To revert back to the default payload, simply turn off the "Custom Payload" switch above.') },
-    { name: 'note',                display: __('Note'),                      tag: 'textarea',    null: true, note: '', limit: 250 },
+    { name: 'note',                display: __('Note'),                      tag: 'richtext',    null: true, note: '', limit: 250 },
     { name: 'active',              display: __('Active'),                    tag: 'active',      default: true },
     { name: 'updated_at',          display: __('Updated'),                   tag: 'datetime',    readonly: 1 },
   ]

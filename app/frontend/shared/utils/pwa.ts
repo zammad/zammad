@@ -1,10 +1,9 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { computed, shallowRef } from 'vue'
 
 export const isStandalone = () =>
-  (('standalone' in window.navigator &&
-    window.navigator.standalone) as boolean) ||
+  (('standalone' in window.navigator && window.navigator.standalone) as boolean) ||
   window.matchMedia('(display-mode: standalone)').matches
 
 interface InstallEvent extends Event {

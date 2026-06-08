@@ -1,32 +1,75 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
-RSpec.describe Webhook, type: :request do
+RSpec.describe WebhooksController, type: :request do
   let(:agent) { create(:agent) }
   let(:admin) { create(:admin) }
 
   describe 'request handling', authenticated_as: :admin do
     context 'when listing webhooks' do
-      let!(:webhooks) { create_list(:webhook, 10) }
+      let!(:webhooks) { create_list(:webhook, 10, signature_token: 'some_token', basic_auth_password: 'some_password', bearer_token: 'some_token') }
+      let(:url) { '/api/v1/webhooks.json' }
 
       before do
-        get '/api/v1/webhooks.json'
+        get url
       end
 
-      it 'returns all' do
-        expect(json_response.length).to eq(webhooks.length)
+      context 'without parameters' do
+
+        it 'returns all' do
+          expect(json_response.length).to eq(webhooks.length)
+        end
+
+        it 'masks sensitive fields' do
+          expect(json_response.first).to include(
+            'signature_token'     => SensitiveParamsHelper::SENSITIVE_MASK,
+            'basic_auth_password' => SensitiveParamsHelper::SENSITIVE_MASK,
+            'bearer_token'        => SensitiveParamsHelper::SENSITIVE_MASK
+          )
+        end
+
+        context 'with agent permissions', authenticated_as: :agent do
+          it 'request is forbidden' do
+            expect(response).to have_http_status(:forbidden)
+          end
+        end
       end
 
-      context 'with agent permissions', authenticated_as: :agent do
-        it 'request is forbidden' do
-          expect(response).to have_http_status(:forbidden)
+      context 'with expand=1' do
+        let(:url) { '/api/v1/webhooks.json?expand=1' }
+
+        it 'returns all' do
+          expect(json_response.length).to eq(webhooks.length)
+        end
+
+        it 'masks sensitive fields' do
+          expect(json_response.first).to include(
+            'signature_token'     => SensitiveParamsHelper::SENSITIVE_MASK,
+            'basic_auth_password' => SensitiveParamsHelper::SENSITIVE_MASK,
+          )
+
+        end
+      end
+
+      context 'with full=1' do
+        let(:url) { '/api/v1/webhooks.json?full=1' }
+
+        it 'returns all' do
+          expect(json_response['record_ids'].length).to eq(webhooks.length)
+        end
+
+        it 'masks sensitive fields' do
+          expect(json_response['assets']['Webhook'][webhooks.first.id.to_s]).to include(
+            'signature_token'     => SensitiveParamsHelper::SENSITIVE_MASK,
+            'basic_auth_password' => SensitiveParamsHelper::SENSITIVE_MASK,
+          )
         end
       end
     end
 
     context 'when showing webhook' do
-      let!(:webhook) { create(:webhook) }
+      let!(:webhook) { create(:webhook, signature_token: 'some_token', basic_auth_password: 'some_password') }
 
       before do
         get "/api/v1/webhooks/#{webhook.id}.json"
@@ -37,11 +80,18 @@ RSpec.describe Webhook, type: :request do
       end
 
       context 'with inactive template' do
-        let!(:webhook) { create(:webhook, active: false) } # rubocop:disable RSpec/LetSetup
+        let!(:webhook) { create(:webhook, active: false) }
 
         it 'returns ok' do
           expect(response).to have_http_status(:ok)
         end
+      end
+
+      it 'masks sensitive fields' do
+        expect(json_response).to include(
+          'signature_token'     => SensitiveParamsHelper::SENSITIVE_MASK,
+          'basic_auth_password' => SensitiveParamsHelper::SENSITIVE_MASK,
+        )
       end
 
       context 'with agent permissions', authenticated_as: :agent do
@@ -68,14 +118,40 @@ RSpec.describe Webhook, type: :request do
     end
 
     context 'when updating webhook' do
-      let!(:webhook) { create(:webhook) }
+      let!(:webhook) { create(:webhook, signature_token: 'some_token', basic_auth_password: 'some_password') }
+      let(:params)   { { name: 'Foo' } }
 
       before do
-        put "/api/v1/webhooks/#{webhook.id}.json", params: { name: 'Foo' }
+        put "/api/v1/webhooks/#{webhook.id}.json", params:
       end
 
       it 'returns ok' do
         expect(response).to have_http_status(:ok)
+      end
+
+      context 'with masked fields' do
+        let(:params) do
+          {
+            name:                'Foo',
+            signature_token:     SensitiveParamsHelper::SENSITIVE_MASK,
+            basic_auth_password: SensitiveParamsHelper::SENSITIVE_MASK,
+          }
+        end
+
+        it 'returns ok' do
+          expect(response).to have_http_status(:ok)
+        end
+
+        it 'masks sensitive fields' do
+          expect(json_response).to include(
+            'signature_token'     => SensitiveParamsHelper::SENSITIVE_MASK,
+            'basic_auth_password' => SensitiveParamsHelper::SENSITIVE_MASK,
+          )
+        end
+
+        it 'keeps field values' do
+          expect(webhook.reload).to have_attributes(signature_token: 'some_token', basic_auth_password: 'some_password')
+        end
       end
 
       context 'with agent permissions', authenticated_as: :agent do

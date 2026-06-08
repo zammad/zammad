@@ -1,9 +1,6 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import type {
-  FormSchemaField,
-  FormFieldValue,
-} from '#shared/components/Form/types.ts'
+import type { FormSchemaField, FormFieldValue } from '#shared/components/Form/types.ts'
 import type { EnumObjectManagerObjects } from '#shared/graphql/types.ts'
 
 import getFieldResolver from './resolver/getFieldResolver.ts'
@@ -26,11 +23,7 @@ export const transformResolvedFieldForScreen = (
   }
 
   // Special handling for the clearable prop in the select/treeselect/autocomplete fields.
-  if (
-    'nulloption' in screen &&
-    resolvedField.props &&
-    'clearable' in resolvedField.props
-  ) {
+  if ('nulloption' in screen && resolvedField.props && 'clearable' in resolvedField.props) {
     resolvedField.props.clearable = screen.nulloption
   }
 }

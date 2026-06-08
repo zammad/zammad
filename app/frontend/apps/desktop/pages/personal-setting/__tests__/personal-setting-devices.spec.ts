@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { within } from '@testing-library/vue'
 
@@ -51,11 +51,7 @@ const userCurrentDeviceList = [
 
 const rowContents = [
   ['Chrome on Mac', 'Germany, Berlin', ['2024-02-01 12:00', '2 months ago']],
-  [
-    'Firefox on Mac',
-    'Germany, Frankfurt',
-    ['2024-01-01 12:00', '3 months ago'],
-  ],
+  ['Firefox on Mac', 'Germany, Frankfurt', ['2024-01-01 12:00', '3 months ago']],
 ]
 
 describe('devices personal settings', () => {
@@ -85,9 +81,7 @@ describe('devices personal settings', () => {
 
     expect(view.getByRole('table')).toHaveTextContent(/This device/)
 
-    expect(
-      table.getAllByRole('button', { name: 'Delete this device' }),
-    ).toHaveLength(1)
+    expect(table.getAllByRole('button', { name: 'Delete this device' })).toHaveLength(1)
   })
 
   it('can delete a device', async () => {
@@ -111,13 +105,31 @@ describe('devices personal settings', () => {
 
     await waitForNextTick()
 
-    expect(
-      await view.findByRole('dialog', { name: 'Delete Object' }),
-    ).toBeInTheDocument()
+    expect(await view.findByRole('dialog', { name: 'Delete object' })).toBeInTheDocument()
 
-    await view.events.click(view.getByRole('button', { name: 'Delete Object' }))
+    await view.events.click(view.getByRole('button', { name: 'Delete object' }))
 
     checkSimpleTableContent(view, [rowContents[0]])
+  })
+
+  it('shows a translated label when the device location is unknown', async () => {
+    mockUserCurrentDeviceListQuery({
+      userCurrentDeviceList: [
+        {
+          id: convertToGraphQLId('UserDevice', 1),
+          name: 'Chrome on Mac',
+          fingerprint: 'dummy',
+          location: 'unknown',
+          updatedAt: '2024-02-01T12:00:00Z',
+        },
+      ],
+    })
+
+    const view = await visitView('/personal-setting/devices')
+
+    checkSimpleTableContent(view, [
+      ['Chrome on Mac', 'Unknown', ['2024-02-01 12:00', '2 months ago']],
+    ])
   })
 
   it('updates the device list when a new device is added', async () => {
@@ -125,8 +137,7 @@ describe('devices personal settings', () => {
 
     const view = await visitView('/personal-setting/devices')
 
-    const devicesUpdateSubscription =
-      getUserCurrentDevicesUpdatesSubscriptionHandler()
+    const devicesUpdateSubscription = getUserCurrentDevicesUpdatesSubscriptionHandler()
 
     devicesUpdateSubscription.trigger({
       userCurrentDevicesUpdates: {
@@ -154,8 +165,6 @@ describe('devices personal settings', () => {
     checkSimpleTableContent(view, [...rowContents, newDeviceRowContents])
 
     const table = within(view.getByRole('table'))
-    expect(
-      table.getAllByRole('button', { name: 'Delete this device' }),
-    ).toHaveLength(2)
+    expect(table.getAllByRole('button', { name: 'Delete this device' })).toHaveLength(2)
   })
 })

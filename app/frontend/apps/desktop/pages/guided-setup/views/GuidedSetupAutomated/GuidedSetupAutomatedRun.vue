@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
@@ -46,11 +46,7 @@ runAutoWizardMutation
   .then(async (result) => {
     finished.value = true
     const { setAuthenticatedSessionId } = useAuthenticationStore()
-    if (
-      await setAuthenticatedSessionId(
-        result?.systemSetupRunAutoWizard?.session?.id || null,
-      )
-    ) {
+    if (await setAuthenticatedSessionId(result?.systemSetupRunAutoWizard?.session?.id || null)) {
       const afterAuth = result?.systemSetupRunAutoWizard?.session?.afterAuth
 
       // Redirect only after some seconds, in order to give the user a chance to read the message.
@@ -69,20 +65,15 @@ runAutoWizardMutation
   })
 
 const statusMessage = computed(() => {
-  if (finished.value)
-    return __(
-      'The system was configured successfully. You are being redirected.',
-    )
+  if (finished.value) return __('The system was configured successfully. You are being redirected.')
 
   return __('Relax, your system is being set up…')
 })
 </script>
 
 <template>
-  <LayoutPublicPage box-size="medium" :title="__('Automated Setup')">
+  <LayoutPublicPage box-size="medium" :title="__('Automated setup')">
     <GuidedSetupStatusMessage v-if="!errors" :message="statusMessage" />
-    <CommonAlert v-else variant="danger">{{
-      errors?.generalErrors[0]
-    }}</CommonAlert>
+    <CommonAlert v-else variant="danger">{{ errors?.generalErrors[0] }}</CommonAlert>
   </LayoutPublicPage>
 </template>

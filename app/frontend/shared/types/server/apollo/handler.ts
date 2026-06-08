@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import type { NotificationTypes } from '#shared/components/CommonNotifications/index.ts'
 import type { PageInfo } from '#shared/graphql/types.ts'
@@ -21,17 +21,11 @@ export type OperationReturn<TResult, TVariables extends OperationVariables> =
   | UseMutationReturn<TResult, TVariables>
   | UseSubscriptionReturn<TResult, TVariables>
 
-export type OperationQueryOptionsReturn<
-  TResult,
-  TVariables extends OperationVariables,
-> =
+export type OperationQueryOptionsReturn<TResult, TVariables extends OperationVariables> =
   | UseQueryOptions<TResult, TVariables>
   | Ref<UseQueryOptions<TResult, TVariables>>
 
-export type OperationSubscriptionOptionsReturn<
-  TResult,
-  TVariables extends OperationVariables,
-> =
+export type OperationSubscriptionOptionsReturn<TResult, TVariables extends OperationVariables> =
   | UseSubscriptionOptions<TResult, TVariables>
   | Ref<UseSubscriptionOptions<TResult, TVariables>>
 
@@ -56,7 +50,7 @@ export type OperationMutationOptions<TResult, TVariables> =
 
 export type OperationMutationFunction<
   TResult = OperationMutationResult,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // oxlint-disable-next-line no-explicit-any
   TVariables = any,
 > = (
   options: OperationMutationOptions<TResult, TVariables>,
@@ -92,9 +86,13 @@ export interface BaseHandlerOptions {
   errorCallback?: (error: GraphQLHandlerError) => void | boolean
 }
 
+export interface QueryHandlerOptions {
+  triggerRefetchOnConnectionReconnect: boolean | (() => boolean)
+}
+
 export type CommonHandlerOptions<TOptions> = BaseHandlerOptions & TOptions
 
-export type CommonHandlerOptionsParameter<TOptions> =
-  Partial<BaseHandlerOptions> & Partial<TOptions>
+export type CommonHandlerOptionsParameter<TOptions> = Partial<BaseHandlerOptions> &
+  Partial<TOptions>
 
 export type WatchResultCallback<TResult> = (result: TResult) => void

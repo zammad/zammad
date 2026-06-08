@@ -32,7 +32,7 @@
   </div>
   <div class="controls js-body js-body-<%- @notificationType %>">
     <div class="richtext form-control">
-      <div contenteditable="true" data-name="<%= @name %>::body"><%- @meta.body %></div>
+      <div contenteditable="true" dir="auto" data-name="<%= @name %>::body"><%- @meta.body %></div>
     </div>
   </div>
   <div class="controls js-sign">

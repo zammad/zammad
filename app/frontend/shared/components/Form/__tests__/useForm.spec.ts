@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { createMessage, getNode, type FormKitNode } from '@formkit/core'
 
@@ -82,8 +82,7 @@ describe('useForm', () => {
 
   it('use different states', () => {
     renderForm()
-    const { form, isValid, isDirty, isComplete, isSubmitted, isDisabled } =
-      useForm()
+    const { form, isValid, isDirty, isComplete, isSubmitted, isDisabled } = useForm()
 
     form.value = getFormContext()
 
@@ -183,9 +182,7 @@ describe('submitting form rules', () => {
     expect(form.value?.formNode).toBeDefined()
     expect(canSubmit.value).toBeFalsy()
 
-    await view.events.debounced(() =>
-      view.events.type(view.getByLabelText('Title'), 'Some title'),
-    )
+    await view.events.debounced(() => view.events.type(view.getByLabelText('Title'), 'Some title'))
 
     expect(canSubmit.value).toBeTruthy()
   })
@@ -224,9 +221,7 @@ describe('submitting form rules', () => {
     expect(form.value?.formNode).toBeDefined()
     expect(canSubmit.value).toBeFalsy()
 
-    await view.events.debounced(() =>
-      view.events.type(view.getByLabelText('Title'), 'Some title'),
-    )
+    await view.events.debounced(() => view.events.type(view.getByLabelText('Title'), 'Some title'))
 
     expect(canSubmit.value).toBeTruthy()
 
@@ -246,9 +241,7 @@ describe('submitting form rules', () => {
     // Register callback on changed title field.
     onChangedField('title', onChangedFieldCallbackSpy)
 
-    await view.events.debounced(() =>
-      view.events.type(view.getByLabelText('Title'), 'Some title'),
-    )
+    await view.events.debounced(() => view.events.type(view.getByLabelText('Title'), 'Some title'))
 
     expect(onChangedFieldCallbackSpy).toHaveBeenCalledWith(
       'Some title',

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Mutations
   class User::Current::OutOfOffice < BaseMutation
@@ -8,14 +8,12 @@ module Gql::Mutations
 
     field :success, Boolean, description: 'Profile out of office settings updated successfully?'
 
-    def self.authorize(_obj, ctx)
-      ctx.current_user.permissions?('user_preferences.out_of_office+ticket.agent')
-    end
+    requires_permission 'user_preferences.out_of_office+ticket.agent'
 
     def resolve(input:)
       Service::User::OutOfOffice
-        .new(context.current_user, **input)
-        .execute
+        .with_current_user(context.current_user)
+        .execute(**input)
 
       { success: true }
     end

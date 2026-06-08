@@ -1,5 +1,6 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
+import type { InlineEditable } from '#shared/components/ObjectAttributes/types.ts'
 import type { ObjectAttribute } from '#shared/entities/object-attributes/types/store.ts'
 import { useEntity } from '#shared/entities/useEntity.ts'
 import type { ObjectAttributeValue } from '#shared/graphql/types.ts'
@@ -56,10 +57,7 @@ export const isEmpty = (value: unknown) => {
   return value === null || value === undefined || value === ''
 }
 
-export const getLink = (
-  name: string,
-  attributesObject: Dictionary<ObjectAttributeValue>,
-) => {
+export const getLink = (name: string, attributesObject: Dictionary<ObjectAttributeValue>) => {
   const attribute = attributesObject[name]
   return attribute?.renderedLink || null
 }
@@ -72,3 +70,10 @@ export const translateOption = (attribute: ObjectAttribute, str?: string) => {
   }
   return str
 }
+
+export const isInlineAttributeEditable = (
+  attributeName: keyof InlineEditable,
+  inlineEditable?: InlineEditable,
+) => inlineEditable && attributeName in inlineEditable
+
+export const stripDataId = (html: string) => html.replace(/\sdata-id="[^"]*"/g, '')

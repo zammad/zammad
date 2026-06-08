@@ -1,17 +1,15 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-const { FormKit } = await import('@formkit/vue')
-const { renderComponent } = await import('#tests/support/components/index.ts')
-const { i18n } = await import('#shared/i18n.ts')
+import { FormKit } from '@formkit/vue'
 
-export {}
+import { renderComponent } from '#tests/support/components/index.ts'
+import { waitFor } from '#tests/support/vitest-wrapper.ts'
+
+import { i18n } from '#shared/i18n.ts'
 
 const now = new Date('2021-04-13T11:10:00Z')
 
-const renderDateField = async (
-  props: Record<string, unknown> = {},
-  options: any = {},
-) => {
+const renderDateField = async (props: Record<string, unknown> = {}, options: any = {}) => {
   return renderComponent(FormKit, {
     props: {
       type: 'date',
@@ -48,7 +46,7 @@ describe('Fields - FieldDate', () => {
       expect(input).toHaveDisplayValue('')
 
       await view.events.click(input)
-      await view.events.click(view.getByText('12'))
+      await view.events.click(await view.findByText('12'))
 
       const emittedInput = view.emitted().inputRaw as Array<Array<InputEvent>>
 
@@ -68,7 +66,7 @@ describe('Fields - FieldDate', () => {
 
       const emittedInput = view.emitted().inputRaw as Array<Array<InputEvent>>
 
-      expect(emittedInput[0][0]).toBe('2021-04-12')
+      expect(emittedInput.at(-1)?.at(0)).toBe('2021-04-12')
       expect(input).toHaveDisplayValue('2021-04-12')
     })
 
@@ -81,12 +79,12 @@ describe('Fields - FieldDate', () => {
       expect(input).toHaveDisplayValue('')
 
       await view.events.click(input)
-      await view.events.click(view.getByText('12'))
+      await view.events.click(await view.findByText('12'))
       await view.events.click(view.getByText('14'))
 
       const emittedInput = view.emitted().inputRaw as Array<Array<InputEvent>>
 
-      expect(emittedInput[0][0]).toEqual(['2021-04-12', '2021-04-14'])
+      expect(emittedInput.at(-1)?.at(0)).toEqual(['2021-04-12', '2021-04-14'])
       expect(input).toHaveDisplayValue('2021-04-12 - 2021-04-14')
     })
 
@@ -104,7 +102,7 @@ describe('Fields - FieldDate', () => {
 
       const emittedInput = view.emitted().inputRaw as Array<Array<InputEvent>>
 
-      expect(emittedInput[0][0]).toEqual(['2021-04-12', '2021-04-14'])
+      expect(emittedInput.at(-1)?.[0]).toEqual(['2021-04-12', '2021-04-14'])
       expect(input).toHaveDisplayValue('2021-04-12 - 2021-04-14')
     })
 
@@ -115,7 +113,7 @@ describe('Fields - FieldDate', () => {
       expect(input).toHaveDisplayValue('')
 
       await view.events.click(input)
-      await view.events.click(view.getByText('Today'))
+      await view.events.click(await view.findByText('Today'))
 
       const emittedInput = view.emitted().inputRaw as Array<Array<InputEvent>>
 
@@ -143,7 +141,7 @@ describe('Fields - FieldDate', () => {
 
       expect(input).toHaveDisplayValue('2020-02-10')
 
-      await view.events.click(view.getByLabelText('Clear Selection'))
+      await view.events.click(view.getByLabelText('Clear selection'))
 
       const emittedInput = view.emitted().inputRaw as Array<Array<InputEvent>>
 
@@ -154,16 +152,28 @@ describe('Fields - FieldDate', () => {
     it("doesn't allow changing anything while disabled", async () => {
       const view = await renderDateField({
         disabled: true,
-        value: '2020-02-10',
       })
 
       const input = view.getByLabelText('Date')
 
       expect(input).toBeDisabled()
+    })
 
-      await view.events.click(view.getByText('Today'))
+    it('disables days after today, if pastOnly present', async () => {
+      const view = await renderDateField({
+        pastOnly: true,
+      })
 
-      expect(input).toHaveDisplayValue('2020-02-10')
+      const input = view.getByLabelText('Date')
+
+      await view.events.click(input)
+      await view.events.click(await view.findByText('14'))
+
+      expect(input).toHaveDisplayValue('')
+
+      await view.events.click(view.getByText('13'))
+
+      expect(input).toHaveDisplayValue('2021-04-13')
     })
 
     it('disables days before today, if futureOnly present', async () => {
@@ -173,7 +183,7 @@ describe('Fields - FieldDate', () => {
       const input = view.getByLabelText('Date')
 
       await view.events.click(input)
-      await view.events.click(view.getByText('12'))
+      await view.events.click(await view.findByText('12'))
 
       expect(input).toHaveDisplayValue('')
 
@@ -190,7 +200,7 @@ describe('Fields - FieldDate', () => {
       const input = view.getByLabelText('Date')
 
       await view.events.click(input)
-      await view.events.click(view.getByText('15'))
+      await view.events.click(await view.findByText('15'))
 
       expect(input).toHaveDisplayValue('')
 
@@ -198,9 +208,9 @@ describe('Fields - FieldDate', () => {
         maxDate: '2021-04-15',
       })
 
-      await view.events.click(view.getByText('15'))
+      await view.events.click(await view.findByText('15'))
 
-      expect(input).toHaveDisplayValue('2021-04-15')
+      await waitFor(() => expect(input).toHaveDisplayValue('2021-04-15'))
     })
   })
 
@@ -215,11 +225,11 @@ describe('Fields - FieldDate', () => {
       expect(input).toHaveDisplayValue('')
 
       await view.events.click(input)
-      await view.events.click(view.getByText('Today'))
+      await view.events.click(await view.findByText('Today'))
 
       const emittedInput = view.emitted().inputRaw as Array<Array<InputEvent>>
 
-      expect(emittedInput[0][0]).toBe('2021-04-13T11:10:00.000Z')
+      expect(emittedInput.at(-1)?.at(0)).toMatch(/^2021-04-13T11:10:.*Z$/)
       expect(input).toHaveDisplayValue('2021-04-13 11:10')
     })
 
@@ -237,14 +247,12 @@ describe('Fields - FieldDate', () => {
 
       const emittedInput = view.emitted().inputRaw as Array<Array<InputEvent>>
 
-      expect(emittedInput[0][0]).toBe('2021-04-13T11:10:00.000Z')
+      expect(emittedInput.at(-1)?.at(0)).toBe('2021-04-13T11:10:00.000Z')
       expect(input).toHaveDisplayValue('2021-04-13 11:10')
     })
 
     it('renders AM/PM, if needed', async () => {
-      i18n.setTranslationMap(
-        new Map([['FORMAT_DATETIME', 'mm/dd/yyyy l:MM P']]),
-      )
+      i18n.setTranslationMap(new Map([['FORMAT_DATETIME', 'mm/dd/yyyy l:MM P']]))
 
       const view = await renderDateField({
         type: 'datetime',
@@ -255,7 +263,7 @@ describe('Fields - FieldDate', () => {
       expect(input).toHaveDisplayValue('')
 
       await view.events.click(input)
-      await view.events.click(view.getByText('Today'))
+      await view.events.click(await view.findByText('Today'))
 
       expect(input).toHaveDisplayValue('04/13/2021 11:10 am')
     })

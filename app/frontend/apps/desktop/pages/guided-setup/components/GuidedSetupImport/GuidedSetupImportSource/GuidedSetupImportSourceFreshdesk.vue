@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import Form from '#shared/components/Form/Form.vue'
@@ -74,9 +74,7 @@ const formSchema = [
             ],
           },
         },
-        help: __(
-          'Enter your Freshdesk API token gained from your account profile settings.',
-        ),
+        help: __('Enter your Freshdesk API token gained from your account profile settings.'),
       },
     ],
   },

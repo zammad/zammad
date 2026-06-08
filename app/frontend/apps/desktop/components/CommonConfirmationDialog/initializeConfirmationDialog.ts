@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { watch } from 'vue'
 import { useRoute } from 'vue-router'
@@ -37,14 +37,9 @@ export const initializeConfirmationDialog = () => {
     if (!lastConfirmationUuid.value) return
 
     if (!confirmationDialogPerRoute.has(getRouteIdentifier(route))) {
-      confirmationDialogPerRoute.set(
-        getRouteIdentifier(route),
-        new Set<string>(),
-      )
+      confirmationDialogPerRoute.set(getRouteIdentifier(route), new Set<string>())
     }
-    confirmationDialogPerRoute
-      .get(getRouteIdentifier(route))!
-      .add(lastConfirmationUuid.value)
+    confirmationDialogPerRoute.get(getRouteIdentifier(route))!.add(lastConfirmationUuid.value)
 
     confirmationDialog.open({
       uniqueId: lastConfirmationUuid.value,

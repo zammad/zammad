@@ -1,13 +1,10 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { getNode, type FormKitNode } from '@formkit/core'
 import { FormKit } from '@formkit/vue'
 import { waitFor } from '@testing-library/vue'
 
-import {
-  getByIconName,
-  queryByIconName,
-} from '#tests/support/components/iconQueries.ts'
+import { getByIconName, queryByIconName } from '#tests/support/components/iconQueries.ts'
 import { renderComponent } from '#tests/support/components/index.ts'
 import { nullableMock, waitForNextTick } from '#tests/support/utils.ts'
 
@@ -107,9 +104,7 @@ describe('Form - Field - Organization - Features', () => {
 
     await waitForNextTick(true)
 
-    expect(wrapper.getByRole('listitem')).toHaveTextContent(
-      'Zammad Organization',
-    )
+    expect(wrapper.getByRole('listitem')).toHaveTextContent('Zammad Organization')
 
     // Reset the field with new value and before change the initial entity object.
     const node = getNode('organization_id')!
@@ -144,9 +139,7 @@ describe('Form - Field - Organization - Query', () => {
 
     expect(filterElement).toBeInTheDocument()
 
-    expect(
-      await wrapper.findByText('Start typing to search…'),
-    ).toBeInTheDocument()
+    expect(await wrapper.findByText('Start typing to search…')).toBeInTheDocument()
 
     mockAutocompleteSearchOrganizationQuery({
       autocompleteSearchOrganization: [testOptions[0]],
@@ -156,9 +149,7 @@ describe('Form - Field - Organization - Query', () => {
 
     await waitForAutocompleteSearchOrganizationQueryCalls()
 
-    expect(
-      wrapper.queryByText('Start typing to search…'),
-    ).not.toBeInTheDocument()
+    expect(wrapper.queryByText('Start typing to search…')).not.toBeInTheDocument()
 
     let selectOptions = wrapper.getAllByRole('option')
 
@@ -173,13 +164,11 @@ describe('Form - Field - Organization - Query', () => {
     // Organization with ID 1 should have a silver crown (VIP).
     expect(getByIconName(selectOptions[0], 'crown-silver')).toBeInTheDocument()
 
-    await wrapper.events.click(wrapper.getByLabelText('Clear Search'))
+    await wrapper.events.click(wrapper.getByLabelText('Clear search'))
 
     expect(filterElement).toHaveValue('')
 
-    expect(
-      await wrapper.findByText('Start typing to search…'),
-    ).toBeInTheDocument()
+    expect(await wrapper.findByText('Start typing to search…')).toBeInTheDocument()
 
     mockAutocompleteSearchOrganizationQuery({
       autocompleteSearchOrganization: [testOptions[1]],
@@ -189,9 +178,7 @@ describe('Form - Field - Organization - Query', () => {
 
     await waitForAutocompleteSearchOrganizationQueryCalls()
 
-    expect(
-      wrapper.queryByText('Start typing to search…'),
-    ).not.toBeInTheDocument()
+    expect(wrapper.queryByText('Start typing to search…')).not.toBeInTheDocument()
 
     selectOptions = wrapper.getAllByRole('option')
 
@@ -199,14 +186,10 @@ describe('Form - Field - Organization - Query', () => {
     expect(selectOptions[0]).toHaveTextContent(testOptions[1].label)
 
     // Organization with ID 2 should show the slashed buildings icon (inactive).
-    expect(
-      getByIconName(selectOptions[0], 'buildings-slash'),
-    ).toBeInTheDocument()
+    expect(getByIconName(selectOptions[0], 'buildings-slash')).toBeInTheDocument()
 
     // Organization with ID 2 should not have a silver crown (not VIP).
-    expect(
-      queryByIconName(selectOptions[0], 'crown-silver'),
-    ).not.toBeInTheDocument()
+    expect(queryByIconName(selectOptions[0], 'crown-silver')).not.toBeInTheDocument()
   })
 
   it('replaces local options with selection', async () => {
@@ -242,9 +225,7 @@ describe('Form - Field - Organization - Query', () => {
 
     expect(wrapper.queryByRole('menu')).not.toBeInTheDocument()
 
-    expect(wrapper.getByRole('listitem')).toHaveTextContent(
-      testOptions[0].label,
-    )
+    expect(wrapper.getByRole('listitem')).toHaveTextContent(testOptions[0].label)
 
     await wrapper.events.click(wrapper.getByLabelText('Select…'))
 

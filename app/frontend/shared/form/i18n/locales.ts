@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { createMessageName } from '@formkit/validation'
 
@@ -34,8 +34,7 @@ const loadLocales = (): FormKitLocaleExtended => {
       /**
        * Shown when all fields are not filled out correctly.
        */
-      incomplete: () =>
-        i18n.t('Sorry, not all fields are filled out correctly.'),
+      incomplete: () => i18n.t('Sorry, not all fields are filled out correctly.'),
       /**
        * Shown in a button inside a form to submit the form.
        */
@@ -135,10 +134,7 @@ const loadLocales = (): FormKitLocaleExtended => {
       date_after({ args }) {
         if (Array.isArray(args) && args.length) {
           /* <i18n case="Shown when the user-provided date is not after the date supplied to the rule."> */
-          return i18n.t(
-            'This field must have a value that is after %s.',
-            i18n.date(args[0]),
-          )
+          return i18n.t('This field must have a value that is after %s.', i18n.date(args[0]))
           /* </i18n> */
         }
         /* <i18n case="Shown when the user-provided date is not after today's date, since no date was supplied to the rule."> */
@@ -273,10 +269,7 @@ const loadLocales = (): FormKitLocaleExtended => {
       date_before({ args }) {
         if (Array.isArray(args) && args.length) {
           /* <i18n case="Shown when the user-provided date is not before the date supplied to the rule."> */
-          return i18n.t(
-            'This field must have a value that is before %s.',
-            i18n.date(args[0]),
-          )
+          return i18n.t('This field must have a value that is before %s.', i18n.date(args[0]))
           /* </i18n> */
         }
         /* <i18n case="Shown when the user-provided date is not before today's date, since no date was supplied to the rule."> */
@@ -291,20 +284,14 @@ const loadLocales = (): FormKitLocaleExtended => {
       between({ args }) {
         if (Number.isNaN(args[0]) || Number.isNaN(args[1])) {
           /* <i18n case="Shown when any of the arguments supplied to the rule were not a number."> */
-          return i18n.t(
-            "This field was configured incorrectly and can't be submitted.",
-          )
+          return i18n.t("This field was configured incorrectly and can't be submitted.")
           /* </i18n> */
         }
 
         const [first, second] = order(args[0], args[1])
 
         /* <i18n case="Shown when the user-provided value is not between two numbers."> */
-        return i18n.t(
-          'This field must have a value that is between %s and %s.',
-          first,
-          second,
-        )
+        return i18n.t('This field must have a value that is between %s and %s.', first, second)
         /* </i18n> */
       },
 
@@ -326,16 +313,11 @@ const loadLocales = (): FormKitLocaleExtended => {
       date_format({ args }) {
         if (Array.isArray(args) && args.length) {
           /* <i18n case="Shown when the user-provided date does not satisfy the date format supplied to the rule."> */
-          return i18n.t(
-            'This field isn\'t a valid date, please use the format "%s".',
-            args[0],
-          )
+          return i18n.t('This field isn\'t a valid date, please use the format "%s".', args[0])
           /* </i18n> */
         }
         /* <i18n case="Shown when no date argument was supplied to the rule."> */
-        return i18n.t(
-          "This field was configured incorrectly and can't be submitted.",
-        )
+        return i18n.t("This field was configured incorrectly and can't be submitted.")
         /* </i18n> */
       },
 
@@ -365,10 +347,7 @@ const loadLocales = (): FormKitLocaleExtended => {
        */
       ends_with({ args }) {
         /* <i18n case="Shown when the user-provided value does not end with the substring supplied to the rule."> */
-        return i18n.t(
-          'This field doesn\'t end with "%s".',
-          commaSeparatedList(args),
-        )
+        return i18n.t('This field doesn\'t end with "%s".', commaSeparatedList(args))
         /* </i18n> */
       },
 
@@ -396,10 +375,7 @@ const loadLocales = (): FormKitLocaleExtended => {
         }
         if (min === 0 && max) {
           /* <i18n case="Shown when first argument supplied to the rule is 0, and the user-provided value is longer than the max (the 2nd argument) supplied to the rule."> */
-          return i18n.t(
-            'This field must not contain more than %s characters.',
-            max,
-          )
+          return i18n.t('This field must not contain more than %s characters.', max)
           /* </i18n> */
         }
         if (min && max === Infinity) {
@@ -408,11 +384,7 @@ const loadLocales = (): FormKitLocaleExtended => {
           /* </i18n> */
         }
         /* <i18n case="Shown when the length of the user-provided value is between the two lengths supplied to the rule."> */
-        return i18n.t(
-          'This field must contain between %s and %s characters.',
-          min,
-          max,
-        )
+        return i18n.t('This field must contain between %s and %s characters.', min, max)
         /* </i18n> */
       },
 
@@ -437,10 +409,7 @@ const loadLocales = (): FormKitLocaleExtended => {
           /* </i18n> */
         }
         /* <i18n case="Shown when the user-provided value is greater than the maximum number supplied to the rule."> */
-        return i18n.t(
-          'This field must have a value that is at most %s.',
-          args[0],
-        )
+        return i18n.t('This field must have a value that is at most %s.', args[0])
         /* </i18n> */
       },
 
@@ -470,10 +439,7 @@ const loadLocales = (): FormKitLocaleExtended => {
           /* </i18n> */
         }
         /* <i18n case="Shown when the user-provided value is less than the minimum number supplied to the rule."> */
-        return i18n.t(
-          'This field must have a value that is at least %s.',
-          args[0],
-        )
+        return i18n.t('This field must have a value that is at least %s.', args[0])
         /* </i18n> */
       },
 
@@ -483,10 +449,7 @@ const loadLocales = (): FormKitLocaleExtended => {
        */
       not({ node: { value } }) {
         /* <i18n case="Shown when the user-provided value matches one of the values supplied to (and thus disallowed by) the rule."> */
-        return i18n.t(
-          'This field can\'t contain the value "%s".',
-          value as string,
-        )
+        return i18n.t('This field can\'t contain the value "%s".', value as string)
         /* </i18n> */
       },
 
@@ -531,9 +494,7 @@ const loadLocales = (): FormKitLocaleExtended => {
         const translatedSeparator = i18n.t('or')
         return i18n.t(
           '%s is required.',
-          labels
-            .map((label: ComputedRef<string>) => label.value)
-            .join(` ${translatedSeparator} `),
+          labels.map((label: ComputedRef<string>) => label.value).join(` ${translatedSeparator} `),
         )
         /* </i18n> */
       },
@@ -544,10 +505,7 @@ const loadLocales = (): FormKitLocaleExtended => {
        */
       starts_with({ args }) {
         /* <i18n case="Shown when the user-provided value does not start with the substring supplied to the rule."> */
-        return i18n.t(
-          'This field doesn\'t start with "%s".',
-          commaSeparatedList(args),
-        )
+        return i18n.t('This field doesn\'t start with "%s".', commaSeparatedList(args))
         /* </i18n> */
       },
 

@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { generateClasses } from '@formkit/themes'
 import { extend } from '@formkit/utils'
@@ -8,44 +8,35 @@ import type {
   FormThemeClasses,
   FormThemeExtension,
 } from '#shared/types/form.ts'
-import type {
-  ImportGlobEagerOutput,
-  ImportGlobEagerDefault,
-} from '#shared/types/utils.ts'
+import type { ImportGlobEagerOutput, ImportGlobEagerDefault } from '#shared/types/utils.ts'
 
 import commonClasses from '../theme/global/index.ts'
 
-const extensionsModules: ImportGlobEagerOutput<FormThemeExtension> =
-  import.meta.glob('../theme/global/extensions/*.ts', { eager: true })
+const extensionsModules: ImportGlobEagerOutput<FormThemeExtension> = import.meta.glob(
+  '../theme/global/extensions/*.ts',
+  { eager: true },
+)
 
-const getExtensionsFromModules = (
-  extensionsModules: ImportGlobEagerOutput<FormThemeExtension>,
-) => {
+const getExtensionsFromModules = (extensionsModules: ImportGlobEagerOutput<FormThemeExtension>) => {
   const extensions: FormThemeExtension[] = []
 
-  Object.values(extensionsModules).forEach(
-    (module: ImportGlobEagerDefault<FormThemeExtension>) => {
-      const extension = module.default
+  Object.values(extensionsModules).forEach((module: ImportGlobEagerDefault<FormThemeExtension>) => {
+    const extension = module.default
 
-      extensions.push(extension)
-    },
-  )
+    extensions.push(extension)
+  })
 
   return extensions
 }
 const createTailwindClasses = (additionalTheme: FormAppSpecificTheme = {}) => {
-  const themeExtensions: FormThemeExtension[] = [
-    ...getExtensionsFromModules(extensionsModules),
-  ]
+  const themeExtensions: FormThemeExtension[] = [...getExtensionsFromModules(extensionsModules)]
 
   if (additionalTheme.coreClasses) {
     themeExtensions.push(additionalTheme.coreClasses)
   }
 
   if (additionalTheme.extensions) {
-    themeExtensions.push(
-      ...getExtensionsFromModules(additionalTheme.extensions),
-    )
+    themeExtensions.push(...getExtensionsFromModules(additionalTheme.extensions))
   }
 
   let classes = commonClasses

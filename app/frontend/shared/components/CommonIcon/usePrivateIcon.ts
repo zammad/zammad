@@ -1,13 +1,11 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { computed } from 'vue'
 
 import type { Props } from './CommonIcon.vue'
 import type { Animations, Sizes } from './types.ts'
 
-export const usePrivateIcon = (
-  props: Omit<Props, 'size'> & { size: Sizes },
-) => {
+export const usePrivateIcon = (props: Omit<Props, 'size'> & { size: Sizes }) => {
   const animationClassMap: Record<Animations, string> = {
     pulse: 'animate-pulse',
     spin: 'animate-spin',

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module CommonActions
 
@@ -228,7 +228,7 @@ module CommonActions
   #  expect(page).to have_current_route('login')
   # => checks for SPA route '/#login'
   #
-  def have_current_route(route, app: self.class.metadata[:app], **options) # rubocop:disable Naming/PredicateName
+  def have_current_route(route, app: self.class.metadata[:app], **options) # rubocop:disable Naming/PredicatePrefix
     if route.is_a?(String)
       case app
       when :mobile
@@ -339,7 +339,7 @@ module CommonActions
   # @param timeout [Integer] seconds to wait
   # @param disappears: [Boolean] wait for modal to close because of action taken in the block. Defaults to yes.
   # @yield [] A block to be executed scoped to the modal element
-  def in_modal(timeout: Capybara.default_max_wait_time, disappears: nil, &block)
+  def in_modal(timeout: Capybara.default_max_wait_time, disappears: nil, &)
     elem = modal_ready(timeout: timeout)
 
     # check traces for RSpec's #expect
@@ -351,7 +351,7 @@ module CommonActions
     end
 
     trace.enable do
-      within(elem, &block)
+      within(elem, &)
     end
 
     # return and don't wait for modal to disappear if disappears is not nil and falsey

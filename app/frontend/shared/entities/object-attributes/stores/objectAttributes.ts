@@ -1,43 +1,81 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { computed, getCurrentScope, ref } from 'vue'
 
+import type { FormSchemaField } from '#shared/components/Form/types.ts'
 import type { EnumObjectManagerObjects } from '#shared/graphql/types.ts'
+import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 import log from '#shared/utils/log.ts'
+
+import getFieldFromAttribute from '../form/getFieldFromAttribute.ts'
+import getFieldResolver from '../form/resolver/getFieldResolver.ts'
+import { useObjectManagerFrontendAttributesQuery } from '../graphql/queries/objectManagerFrontendAttributes.api.ts'
 
 import type {
   EntityStaticObjectAttributes,
+  EntityPolicyBasedObjectAttributeScreenMapper,
+  FilterAttribute,
   ObjectAttribute,
   ObjectAttributesObject,
 } from '../types/store.ts'
 
-const staticObjectAttributesEntityModules: Record<
+const staticObjectAttributesEntityModules: Record<string, EntityStaticObjectAttributes> =
+  import.meta.glob(['../../*/stores/objectAttributes.ts'], {
+    eager: true,
+    import: 'staticObjectAttributes',
+  })
+
+const policyBasedObjectAttributeScreenMapperModules: Record<
   string,
-  EntityStaticObjectAttributes
+  { policyBasedObjectAttributeScreenMapper?: EntityPolicyBasedObjectAttributeScreenMapper }
 > = import.meta.glob(['../../*/stores/objectAttributes.ts'], {
   eager: true,
-  import: 'staticObjectAttributes',
 })
 
-export const entitiesStaticObjectAttributes = Object.values(
-  staticObjectAttributesEntityModules,
+export const entitiesStaticObjectAttributes = Object.values(staticObjectAttributesEntityModules)
+export const staticObjectAttributesByEntity = entitiesStaticObjectAttributes.reduce<
+  Record<EnumObjectManagerObjects, ObjectAttribute[]>
+>(
+  (result, entityItem) => {
+    result[entityItem.name] = entityItem.attributes
+    return result
+  },
+  {} as Record<EnumObjectManagerObjects, ObjectAttribute[]>,
 )
-export const staticObjectAttributesByEntity =
-  entitiesStaticObjectAttributes.reduce<
-    Record<EnumObjectManagerObjects, ObjectAttribute[]>
+
+export const entitiesPolicyBasedObjectAttributeScreenMappers = Object.values(
+  policyBasedObjectAttributeScreenMapperModules,
+)
+  .map((module) => module.policyBasedObjectAttributeScreenMapper)
+  .filter((item): item is EntityPolicyBasedObjectAttributeScreenMapper => item !== undefined)
+
+export const policyBasedObjectAttributeScreenMappersByEntity =
+  entitiesPolicyBasedObjectAttributeScreenMappers.reduce<
+    Record<EnumObjectManagerObjects, EntityPolicyBasedObjectAttributeScreenMapper['mappings']>
   >(
     (result, entityItem) => {
-      result[entityItem.name] = entityItem.attributes
+      result[entityItem.name] = entityItem.mappings
       return result
     },
-    {} as Record<EnumObjectManagerObjects, ObjectAttribute[]>,
+    {} as Record<
+      EnumObjectManagerObjects,
+      EntityPolicyBasedObjectAttributeScreenMapper['mappings']
+    >,
   )
 
 export const useObjectAttributesStore = defineStore('objectAttributes', () => {
-  const objectAttributesObjectLookup = ref<
-    Record<string, ObjectAttributesObject>
-  >({})
+  const objectAttributesObjectLookup = ref<Record<string, ObjectAttributesObject>>({})
+
+  // Capture the store's setup-time effect scope so reactive effects created
+  // later by `loadObjectAttributesForObject` (vue-apollo watchers, computeds)
+  // are bound to it. On logout `$dispose()` stops this scope and the
+  // watchers along with it.
+  const storeScope = getCurrentScope()
+
+  if (!storeScope) {
+    throw new Error('objectAttributes store must be created inside a setup scope')
+  }
 
   const getObjectAttributesForObject = (object: EnumObjectManagerObjects) => {
     const objectAttributesObject = objectAttributesObjectLookup.value[object]
@@ -58,9 +96,105 @@ export const useObjectAttributesStore = defineStore('objectAttributes', () => {
     objectAttributesObjectLookup.value[object] = data
   }
 
+  const loadObjectAttributesForObject = (object: EnumObjectManagerObjects) => {
+    if (objectAttributesObjectLookup.value[object]) return
+
+    storeScope.run(() => {
+      const handler = new QueryHandler(
+        useObjectManagerFrontendAttributesQuery({
+          object,
+        }),
+      )
+      const attributesRaw = handler.result()
+      const attributesLoading = handler.loadingWithoutCachedResult()
+
+      const attributes = computed<ObjectAttribute[]>(() => {
+        return [
+          ...(attributesRaw.value?.objectManagerFrontendAttributes?.attributes || []),
+          ...(staticObjectAttributesByEntity[object] || []),
+        ]
+      })
+
+      const screens = computed(() => {
+        return (
+          attributesRaw.value?.objectManagerFrontendAttributes?.screens.reduce(
+            (screens: Record<string, string[]>, screen) => {
+              screens[screen.name] = screen.attributes
+              return screens
+            },
+            {},
+          ) || {}
+        )
+      })
+
+      const attributesLookup = computed(() => {
+        const lookup: Map<string, ObjectAttribute> = new Map()
+
+        attributes.value?.forEach((attribute) => lookup.set(attribute.name, attribute))
+
+        return lookup
+      })
+
+      const formFieldAttributesLookup = computed(() => {
+        const lookup: Map<string, FormSchemaField> = new Map()
+
+        attributes.value?.forEach((attribute) => {
+          if (!attribute.isStatic) {
+            lookup.set(attribute.name, getFieldFromAttribute(object, attribute))
+          }
+        })
+
+        return lookup
+      })
+
+      // Filter attribute names are emitted in the backend selector shape
+      // `<table>.<attribute>` so they can flow unchanged into URL, storage,
+      // and GraphQL selector payloads. The table prefix is the lowercased
+      // object name, which matches the SQL selector's expected target name
+      // for Ticket/User/Organization (the objects that currently expose
+      // filter operators).
+      const entityLowerCase = object.toLowerCase()
+
+      // Only attributes whose resolver support operators are filterable
+      const filterAttributes = computed<FilterAttribute[]>(() =>
+        attributes.value.flatMap((attribute) => {
+          const resolver = getFieldResolver(object, attribute)
+
+          const operators = resolver.getFieldFilterOperators()
+          const operatorFilterProps = resolver.getFilterOperatorProps()
+          const relation = resolver.getFilterRelation()
+          const autocompleteFilterType = resolver.getFilterAutocompleteType()
+
+          if (!operators?.length) return []
+
+          return [
+            {
+              name: `${entityLowerCase}.${attribute.name}`,
+              label: attribute.display,
+              operators,
+              operatorFilterProps,
+              relation,
+              autocompleteFilterType,
+            },
+          ]
+        }),
+      )
+
+      setObjectAttributesForObject(object, {
+        attributes,
+        screens,
+        attributesLookup,
+        filterAttributes,
+        formFieldAttributesLookup,
+        loading: attributesLoading,
+      })
+    })
+  }
+
   return {
     objectAttributesObjectLookup,
     setObjectAttributesForObject,
     getObjectAttributesForObject,
+    loadObjectAttributesForObject,
   }
 })

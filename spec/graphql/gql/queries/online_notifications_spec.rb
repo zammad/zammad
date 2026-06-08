@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -77,6 +77,19 @@ RSpec.describe Gql::Queries::OnlineNotifications, authenticated_as: :user, type:
 
         expect(gql.result.nodes)
           .to include(include('id' => gql.id(inaccessible_notification), 'metaObject' => nil, 'createdBy' => nil))
+      end
+    end
+
+    context 'with knowledge base answer translation' do
+      let(:notification) { create(:online_notification, user: user, o: knowledge_base_answer_translation, type_name: 'create') }
+      let(:knowledge_base_answer_translation) { create(:knowledge_base_answer_translation) }
+
+      it 'returns list' do
+        gql.execute(query)
+
+        returned_ids = gql.result.nodes.pluck('id')
+
+        expect(returned_ids).to contain_exactly(gql.id(notification))
       end
     end
 

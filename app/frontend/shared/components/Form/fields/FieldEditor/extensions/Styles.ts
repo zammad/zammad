@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { Extension } from '@tiptap/core'
 import { type CommandProps } from '@tiptap/vue-3'
@@ -50,8 +50,7 @@ const createStyle = (o: CreateStyleOptions) => {
           attributes: {
             [name]: {
               default: null,
-              parseHTML: (element) =>
-                element.style[styleName as number] || null,
+              parseHTML: (element) => element.style[styleName as number] || null,
               renderHTML: (attributes) => {
                 const attr = attributes[name]
                 if (!attr) {
@@ -103,16 +102,12 @@ const createStyle = (o: CreateStyleOptions) => {
               return this.options.types.every((type) =>
                 commands.updateAttributes(type, { [name]: value }),
               )
-            return this.options.types.every((type) =>
-              commands.resetAttributes(type, name),
-            )
+            return this.options.types.every((type) => commands.resetAttributes(type, name))
           },
         [`unset${fn}`]:
           () =>
           ({ commands }: CommandProps) => {
-            return this.options.types.every((type) =>
-              commands.resetAttributes(type, name),
-            )
+            return this.options.types.every((type) => commands.resetAttributes(type, name))
           },
       }
     },

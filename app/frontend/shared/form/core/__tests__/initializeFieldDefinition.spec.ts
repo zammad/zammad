@@ -1,10 +1,6 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import {
-  text as inputTextDefinition,
-  select as selectDefinition,
-  casts,
-} from '@formkit/inputs'
+import { text as inputTextDefinition, select as selectDefinition, casts } from '@formkit/inputs'
 import { cloneDeep } from 'lodash-es'
 
 import initializeFieldDefinition from '#shared/form/core/initializeFieldDefinition.ts'
@@ -23,6 +19,7 @@ describe('initializeFieldDefinition', () => {
       'labelSrOnly',
       'labelPlaceholder',
       'internal',
+      'formUpdaterValueChange',
     ])
   })
 
@@ -36,6 +33,7 @@ describe('initializeFieldDefinition', () => {
       'labelSrOnly',
       'labelPlaceholder',
       'internal',
+      'formUpdaterValueChange',
     ])
   })
 
@@ -74,11 +72,7 @@ describe('initializeFieldDefinition', () => {
 
   it('do not add default features', () => {
     const definition = cloneDeep(inputTextDefinition)
-    initializeFieldDefinition(
-      definition,
-      {},
-      { addDefaultProps: true, addDefaultFeatures: false },
-    )
+    initializeFieldDefinition(definition, {}, { addDefaultProps: true, addDefaultFeatures: false })
 
     expect(definition.features).toEqual([casts])
   })
@@ -97,6 +91,7 @@ describe('initializeFieldDefinition', () => {
       'labelSrOnly',
       'labelPlaceholder',
       'internal',
+      'formUpdaterValueChange',
       'example',
     ])
     expect(definition.features).toEqual([

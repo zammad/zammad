@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, toRef } from 'vue'
@@ -89,10 +89,7 @@ const customer = computed(() => {
               :label="ticket.state.name"
               pill
             />
-            <CommonTicketPriorityIndicator
-              v-if="isTicketAgent"
-              :priority="ticket.priority"
-            />
+            <CommonTicketPriorityIndicator v-if="isTicketAgent" :priority="ticket.priority" />
           </div>
         </div>
         <CommonIcon

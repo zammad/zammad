@@ -1,0 +1,60 @@
+name: packager.io
+on:
+  push:
+    branches:
+      - stable*
+      # Test builds for public branches based on develop. Don't forget to clean up test branches in go.packager.io after merging.
+      - develop-*
+  schedule:
+    # Build for develop only once per workday to save space in packagehall.
+    - cron:  '20 6 * * 1-5'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    if: github.repository == 'zammad/zammad'
+    name: ${{ matrix.target }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        target:
+          - debian:11
+          - debian:12
+          - debian:13
+          - el:9
+          - el:10
+          - sles:15
+          - ubuntu:22.04
+          - ubuntu:24.04
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - name: Setup
+        id: setup
+        run: |
+          VERSION=$(cat VERSION)
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+      - name: Package
+        uses: pkgr/action/package@v1
+        id: package
+        with:
+          target: ${{ matrix.target }}
+          version: ${{ steps.setup.outputs.version }}
+          debug: true
+          # Don't require Redis or Postgres (use fake DATABASE_URL to make Rails validation happy).
+          env: |
+            DATABASE_URL=postgresql://zammad:/zammad
+            ZAMMAD_SAFE_MODE=1
+      - name: Publish
+        uses: pkgr/action/publish@v1
+        with:
+          target: ${{ matrix.target }}
+          token: ${{ secrets.PACKAGER_PUBLISH_TOKEN }}
+          repository: zammad/zammad
+          channel: ${{ github.ref_name }}
+          file: ${{ steps.package.outputs.package_path }}

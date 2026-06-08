@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Queries
   class Templates < BaseQuery
@@ -9,9 +9,7 @@ module Gql::Queries
 
     type [Gql::Types::TemplateType, { null: false }], null: false
 
-    def self.authorize(_obj, ctx)
-      ctx.current_user.permissions?(['admin.template', 'ticket.agent'])
-    end
+    requires_permission 'admin.template', 'ticket.agent'
 
     def resolve(only_active:)
       templates = only_active ? Template.active : Template.all

@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { useVModel } from '@vueuse/core'
@@ -47,10 +47,7 @@ export default {
 </script>
 
 <template>
-  <div
-    class="relative flex w-full items-center self-stretch"
-    :class="wrapperClass"
-  >
+  <div class="relative flex w-full items-center self-stretch" :class="wrapperClass">
     <CommonIcon
       class="text-gray absolute shrink-0 ltr:left-2 rtl:right-2"
       size="base"
@@ -75,7 +72,7 @@ export default {
       <slot name="controls" />
       <CommonIcon
         v-if="filter && filter.length"
-        :aria-label="i18n.t('Clear Search')"
+        :aria-label="i18n.t('Clear search')"
         class="text-gray"
         size="base"
         name="input-cancel"

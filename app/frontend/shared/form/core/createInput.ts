@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { createSection } from '@formkit/inputs'
 import { cloneAny } from '@formkit/utils'
@@ -17,11 +17,11 @@ const isComponent = (obj: unknown): obj is Component => {
   if (!obj) return false
   return Boolean(
     (typeof obj === 'function' && obj.length === 2) ||
-      (typeof obj === 'object' &&
-        !Array.isArray(obj) &&
-        !('$el' in obj) &&
-        !('$cmp' in obj) &&
-        !('if' in obj)),
+    (typeof obj === 'object' &&
+      !Array.isArray(obj) &&
+      !('$el' in obj) &&
+      !('$cmp' in obj) &&
+      !('if' in obj)),
   )
 }
 
@@ -49,7 +49,6 @@ const createInput = (
   }
   let schema: () => FormKitSchemaExtendableSection
   if (isComponent(schemaOrComponent)) {
-    // eslint-disable-next-line no-plusplus
     const cmpName = `CustomSchemaComponent${totalCreated++}`
     schema = createSection('input', () => ({
       $cmp: cmpName,

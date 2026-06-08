@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { mountEditor } from './utils.ts'
 
@@ -52,7 +52,7 @@ describe('displays footer information', () => {
     })
   })
 
-  it('renders counter that decrements', () => {
+  it('does allow input below limit', () => {
     mountEditor({
       contentType: 'text/plain',
       meta: {
@@ -60,6 +60,7 @@ describe('displays footer information', () => {
           text: '/AB',
           maxlength: 10,
           warningLength: 5,
+          allowExceedMaxLength: true,
         },
       },
     })
@@ -87,6 +88,27 @@ describe('displays footer information', () => {
         cy.findByTitle('Available characters')
           .should('have.text', '-6')
           .and('have.class', 'text-red')
+      })
+  })
+
+  it('prevents input bellow limit', () => {
+    mountEditor({
+      contentType: 'text/plain',
+      meta: {
+        footer: {
+          text: '/AB',
+          maxlength: 10,
+          warningLength: 5,
+          allowExceedMaxLength: false,
+        },
+      },
+    })
+    cy.findByRole('textbox').type('123456789')
+
+    cy.findByRole('textbox')
+      .type('\n\n\n4567')
+      .then(() => {
+        cy.findByTitle('Available characters').should('have.text', '0')
       })
   })
 })

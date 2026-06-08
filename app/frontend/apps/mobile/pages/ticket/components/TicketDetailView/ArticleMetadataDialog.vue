@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, toRef } from 'vue'
@@ -55,7 +55,7 @@ const links = computed(() => {
     const { ticketInternalId } = props
     const url = `/ticket_attachment/${ticketInternalId}/${articleInternalId}/${attachmentInternalId}?disposition=attachment`
     links.push({
-      label: __('Original Formatting'),
+      label: __('Original formatting'),
       api: true,
       url,
       target: '_blank',
@@ -76,32 +76,22 @@ const {
   signedStatusMessage,
 } = useArticleSecurity(toRef(props.article))
 
-const { attributesLookup } = useObjectAttributes(
-  EnumObjectManagerObjects.TicketArticle,
-)
+const { attributesLookup } = useObjectAttributes(EnumObjectManagerObjects.TicketArticle)
 
-const detectedLanguageAttribute = computed(() =>
-  attributesLookup.value.get('detected_language'),
-)
+const detectedLanguageAttribute = computed(() => attributesLookup.value.get('detected_language'))
 </script>
 
 <template>
-  <CommonDialog :label="__('Meta Data')" :name="name" class="p-4">
+  <CommonDialog :label="__('Meta data')" :name="name" class="p-4">
     <CommonSectionMenu>
       <ArticleMetadataAddress :address="article.from" :label="__('From')" />
-      <ArticleMetadataAddress
-        :address="article.replyTo"
-        :label="__('Reply-To')"
-      />
+      <ArticleMetadataAddress :address="article.replyTo" :label="__('Reply-To')" />
       <ArticleMetadataAddress :address="article.to" :label="__('To')" />
       <ArticleMetadataAddress :address="article.cc" :label="__('CC')" />
       <CommonSectionMenuItem v-if="article.subject" :label="__('Subject')">
         <div>{{ article.subject }}</div>
       </CommonSectionMenuItem>
-      <CommonSectionMenuItem
-        v-if="article.detectedLanguage"
-        :label="__('Detected language')"
-      >
+      <CommonSectionMenuItem v-if="article.detectedLanguage" :label="__('Detected language')">
         <ObjectAttributeContent
           v-if="detectedLanguageAttribute"
           :attribute="detectedLanguageAttribute"
@@ -111,12 +101,7 @@ const detectedLanguageAttribute = computed(() =>
       </CommonSectionMenuItem>
       <CommonSectionMenuItem v-if="article.type?.name" :label="__('Channel')">
         <span class="inline-flex items-center gap-1">
-          <CommonIcon
-            v-if="channelIcon"
-            :name="channelIcon"
-            size="tiny"
-            class="inline"
-          />
+          <CommonIcon v-if="channelIcon" :name="channelIcon" size="tiny" class="inline" />
           {{ $t(article.type.name) }}
         </span>
         <div class="leading-3">
@@ -132,35 +117,21 @@ const detectedLanguageAttribute = computed(() =>
           </CommonLink>
         </div>
       </CommonSectionMenuItem>
-      <CommonSectionMenuItem
-        v-if="articleDeliveryStatus"
-        :label="__('Message Status')"
-      >
-        <CommonIcon
-          :name="articleDeliveryStatus.icon"
-          size="tiny"
-          class="inline"
-        />
+      <CommonSectionMenuItem v-if="articleDeliveryStatus" :label="__('Message status')">
+        <CommonIcon :name="articleDeliveryStatus.icon" size="tiny" class="inline" />
         {{ $t(articleDeliveryStatus.message) }}
       </CommonSectionMenuItem>
       <CommonSectionMenuItem :label="__('Created')">
         <CommonDateTime :date-time="article.createdAt" type="absolute" />
       </CommonSectionMenuItem>
-      <CommonSectionMenuItem
-        v-if="hasSecurityAttribute"
-        :label="__('Security')"
-      >
+      <CommonSectionMenuItem v-if="hasSecurityAttribute" :label="__('Security')">
         <div class="flex flex-col gap-1">
           <span v-if="article.securityState?.type">
             {{ translateArticleSecurity(article.securityState.type) }}
           </span>
 
           <span v-if="isEncrypted">
-            <CommonIcon
-              class="mb-1 inline"
-              size="tiny"
-              :name="encryptionIcon"
-            />
+            <CommonIcon class="mb-1 inline" size="tiny" :name="encryptionIcon" />
             {{ $t(encryptedStatusMessage) }}
             <div v-if="encryptionMessage" class="ms-5 break-all">
               {{ $t(encryptionMessage) }}

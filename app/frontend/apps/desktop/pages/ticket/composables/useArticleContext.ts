@@ -1,11 +1,8 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { type ComputedRef, inject, type InjectionKey } from 'vue'
 
-import type {
-  TicketArticlesQuery,
-  TicketArticlesQueryVariables,
-} from '#shared/graphql/types.ts'
+import type { TicketArticlesQuery, TicketArticlesQueryVariables } from '#shared/graphql/types.ts'
 import type { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 
 export type ArticleContext = {

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 require 'lib/report_examples'
@@ -201,6 +201,50 @@ RSpec.describe Report::TicketGenericTime, searchindex: true do
         let(:expected_result) { [1, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0] }
 
         it_behaves_like 'getting the correct aggregated results'
+      end
+    end
+
+    it 'passes current user to SearchIndexBackend' do
+      user = create(:user)
+
+      allow(SearchIndexBackend).to receive(:selectors).and_call_original
+
+      described_class.aggs(
+        range_start:  Time.zone.parse('2015-01-01T00:00:00Z'),
+        range_end:    Time.zone.parse('2015-12-31T23:59:59Z'),
+        interval:     'month', # year, quarter, month, week, day, hour, minute, second
+        selector:     {}, # ticket selector to get only a collection of tickets
+        params:       { field: 'created_at' },
+        current_user: user
+      )
+
+      expect(SearchIndexBackend).to have_received(:selectors).with(anything, anything, hash_including(current_user: user), anything)
+    end
+
+    # https://github.com/zammad/zammad/issues/6134
+    context 'when in Europe/London timezone' do
+      let(:group) { create(:group) }
+      let(:user)  { create(:user, groups: [group]) }
+
+      before do
+        %w[2025-09-13 2025-10-03 2025-10-13 2025-11-11 2025-11-15 2025-11-21]
+          .each { create(:ticket, group:, close_at: it) }
+
+        searchindex_model_reload([Ticket])
+      end
+
+      it 'returns the correct result for October' do
+        result = described_class.aggs(
+          range_start:  '2025-01-01T00:00:00'.in_time_zone('Europe/London'),
+          range_end:    '2025-12-31T23:59:59'.in_time_zone('Europe/London'),
+          interval:     'month', # year, quarter, month, week, day, hour, minute, second
+          selector:     {}, # ticket selector to get only a collection of tickets
+          params:       { field: 'close_at' },
+          current_user: user,
+          timezone:     'Europe/London'
+        )
+
+        expect(result).to eq [0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 0]
       end
     end
   end

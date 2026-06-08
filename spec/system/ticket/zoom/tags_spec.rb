@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -30,7 +30,7 @@ RSpec.describe 'Ticket zoom > Tags', type: :system do
       end
 
       it 'shows recommended tags (#4869)' do
-        click '.js-newTagLabel', text: 'Add Tag'
+        click '.js-newTagLabel', text: '+ Tag'
 
         expect(page).to have_css('ul.ui-autocomplete > li.ui-menu-item', minimum: 3, wait: 30)
 

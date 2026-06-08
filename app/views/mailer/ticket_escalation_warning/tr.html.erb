@@ -1,0 +1,18 @@
+Destek talebi yükseltilecek (#{ticket.title})
+
+<div>Merhaba #{recipient.firstname},</div>
+<br>
+<div>"<b>#{ticket.customer.longname}</b>" adlı müşteriye ait (#{ticket.title}) başlıklı destek talebi "#{ticket.escalation_at}" tarihinde yükseltilecektir!</div>
+<br>
+<% if @objects[:article] %>
+  <div>
+  Bilgi:
+  <blockquote type="cite">
+  #{article.body_as_html}
+  </blockquote>
+  </div>
+<% end %>
+<br>
+<div>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">Bunu #{config.product_name} üzerinden görüntüle</a>
+</div>

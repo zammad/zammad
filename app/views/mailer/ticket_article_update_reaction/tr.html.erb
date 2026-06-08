@@ -1,0 +1,19 @@
+Güncellenen destek talebi içeriği (#{ticket.title})
+
+<div>Merhaba #{recipient.firstname},</div>
+<br>
+<div>
+<%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') %>, #{article.created_by.fullname} tarafından gönderilen mesaja <%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'emoji') %> emojisiyle tepki verdi:
+</div>
+<br>
+<% if @objects[:article] %>
+  <div>
+    <blockquote type="cite">
+    #{article.body_as_html}
+    </blockquote>
+  </div>
+<% end %>
+<br>
+<div>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/#{article.id}" target="zammad_app">Bunu #{config.product_name} üzerinden görüntüle</a>
+</div>

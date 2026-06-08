@@ -1,12 +1,9 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import '#tests/graphql/builders/mocks.ts'
 import { within } from '@testing-library/vue'
 
-import {
-  renderComponent,
-  type ExtendedMountingOptions,
-} from '#tests/support/components/index.ts'
+import { renderComponent, type ExtendedMountingOptions } from '#tests/support/components/index.ts'
 import { mockRouterHooks } from '#tests/support/mock-vue-router.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
 
@@ -36,13 +33,7 @@ const renderListTable = async (
   return wrapper
 }
 
-const tableHeaders = [
-  'login',
-  'firstname',
-  'lastname',
-  'organization',
-  'organization_ids',
-]
+const tableHeaders = ['login', 'firstname', 'lastname', 'organization', 'organization_ids']
 
 const tableItems: User[] = [
   {

@@ -6,7 +6,6 @@
 ZAMMAD_DIR="/opt/zammad"
 DB="zammad"
 DB_USER="zammad"
-MY_CNF="/etc/mysql/debian.cnf"
 ZAMMAD_WEBS="1"
 ZAMMAD_WEBSOCKETS="1"
 ZAMMAD_WORKERS="1"

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Service::System::SetEmailNotificationConfiguration < Service::Base
   # Setup Email Notification channel configuration
@@ -12,8 +12,6 @@ class Service::System::SetEmailNotificationConfiguration < Service::Base
   # @option new_configuration [String] :password of SMTP server
   # @option new_configuration [Boolean] :ssl_verify Wether SSL verification is performed
   def initialize(adapter:, new_configuration:)
-    super()
-
     @adapter = adapter
     @new_configuration = new_configuration
   end
@@ -27,7 +25,7 @@ class Service::System::SetEmailNotificationConfiguration < Service::Base
     ActiveRecord::Base.transaction do
       Channel
         .where(area: 'Email::Notification')
-        .each { update_single_channel(_1) }
+        .each { update_single_channel(it) }
     end
 
     true

@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { TicketState } from '#shared/entities/ticket/types.ts'
@@ -17,9 +17,7 @@ interface Props {
 const props = defineProps<Props>()
 
 const getTicketsLink = (stateIds: number[]) => {
-  const states = stateIds
-    .map((stateId) => `state.state_type_id: ${stateId}`)
-    .join(' OR ')
+  const states = stateIds.map((stateId) => `state.state_type_id: ${stateId}`).join(' OR ')
   return replaceTags(`/search/ticket?search=(${states}) AND #{query}`, {
     query: props.ticketsLinkQuery,
   })
@@ -57,7 +55,7 @@ const getTicketsLink = (stateIds: number[]) => {
     </CommonSectionMenuLink>
     <CommonLink
       v-if="createLink && createLabel"
-      class="text-blue flex min-h-[54px] items-center justify-center gap-2"
+      class="flex min-h-[54px] items-center justify-center gap-2 text-blue"
       :link="createLink"
     >
       <CommonIcon name="add" size="tiny" decorative />

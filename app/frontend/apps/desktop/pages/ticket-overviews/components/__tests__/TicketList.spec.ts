@@ -1,6 +1,7 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { within } from '@testing-library/vue'
+import { computed, nextTick } from 'vue'
 
 import ticketObjectAttributes from '#tests/graphql/factories/fixtures/ticket-object-attributes.ts'
 import renderComponent from '#tests/support/components/renderComponent.ts'
@@ -12,12 +13,12 @@ import type { TicketById } from '#shared/entities/ticket/types.ts'
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
 import { EnumOrderDirection } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
 
-import {
-  mockTicketsCachedByOverviewQuery,
-  waitForTicketsCachedByOverviewQueryCalls,
-} from '#desktop/entities/ticket/graphql/queries/ticketsCachedByOverview.mocks.ts'
+import { waitForTicketsCachedByOverviewQueryCalls } from '#desktop/entities/ticket/graphql/queries/ticketsCachedByOverview.mocks.ts'
 import TicketList from '#desktop/pages/ticket-overviews/components/TicketList.vue'
+
+import { mockDefaultTicketsCachedByOverview } from '../../__tests__/mocks/ticket-overviews-mocks.ts'
 
 mockRouterHooks()
 
@@ -27,19 +28,8 @@ vi.hoisted(() => {
 })
 
 const applyMocks = (ticket: TicketById = createDummyTicket()) => {
-  mockApplicationConfig({
-    ui_ticket_overview_ticket_limit: 1000,
-  })
-
-  mockTicketsCachedByOverviewQuery({
-    ticketsCachedByOverview: {
-      edges: [{ node: { ...ticket } }],
-      pageInfo: {
-        endCursor: 'MjU',
-        hasNextPage: true,
-      },
-      totalCount: 1,
-    },
+  mockDefaultTicketsCachedByOverview({
+    edges: [{ node: ticket }],
   })
 
   mockObjectManagerFrontendAttributesQuery({
@@ -77,30 +67,26 @@ describe('TicketList', () => {
   })
 
   describe('loading states', () => {
+    afterEach(() => {
+      vi.useRealTimers()
+      vi.resetAllMocks()
+    })
+
     it('displays the skeleton for the table on initial load', async () => {
-      mockTicketsCachedByOverviewQuery({
-        ticketsCachedByOverview: {
-          edges: [{ node: createDummyTicket() }],
-          pageInfo: {
-            endCursor: 'MjU',
-            hasNextPage: true,
-          },
-          totalCount: 207,
-        },
-      })
+      vi.useFakeTimers()
+      mockDefaultTicketsCachedByOverview({ totalCount: 207 })
+
+      // mock to show a endless loading to make sure indicator is shown
+      // Otherwise the timing won't work.
+      vi.spyOn(QueryHandler.prototype, 'loadingWithoutCachedResult').mockReturnValue(
+        computed(() => true),
+      )
 
       const wrapper = renderComponent(TicketList, {
         props: {
           overviewId: convertToGraphQLId('Overview', 1),
           overviewName: 'test tickets',
-          headers: [
-            'title',
-            'customer',
-            'group',
-            'owner',
-            'state',
-            'created_at',
-          ],
+          headers: ['title', 'customer', 'group', 'owner', 'state', 'created_at'],
           orderBy: 'group',
           orderDirection: 'ASCENDING',
         },
@@ -108,7 +94,16 @@ describe('TicketList', () => {
         form: true,
       })
 
-      expect(await wrapper.findByTestId('table-skeleton')).toBeInTheDocument()
+      // Allow Vue's reactivity and async composables to initialize before
+      // advancing fake timers. nextTick uses Promise.resolve() and works
+      // correctly with fake timers, unlike flushPromises() which relies on
+      // setImmediate (faked by vi.useFakeTimers()).
+      await nextTick()
+
+      // Advance timers to trigger the debounced loading state
+      await vi.advanceTimersByTimeAsync(0)
+
+      expect(wrapper.getAllByLabelText('Content loader').length).toBeGreaterThan(0)
     })
   })
 
@@ -127,23 +122,31 @@ describe('TicketList', () => {
 
     await Promise.all(
       Object.values(headers).map(async (header) => {
-        expect(
-          await within(table).findByRole('columnheader', { name: header }),
-        ).toBeInTheDocument()
+        expect(await within(table).findByRole('columnheader', { name: header })).toBeInTheDocument()
       }),
     )
 
-    expect(
-      wrapper.getByRole('cell', { name: ticket.title }),
-    ).toBeInTheDocument()
+    expect(wrapper.getByRole('cell', { name: ticket.title })).toBeInTheDocument()
 
-    expect(
-      wrapper.getByRole('cell', { name: ticket.group.name! }),
-    ).toBeInTheDocument()
+    expect(wrapper.getByRole('cell', { name: ticket.group.name! })).toBeInTheDocument()
 
-    expect(
-      wrapper.getByRole('cell', { name: ticket.state.name }),
-    ).toBeInTheDocument()
+    expect(wrapper.getAllByRole('cell', { name: ticket.state.name })).toHaveLength(2) // state is shown as text and as color indicator
+  })
+
+  it('exposes a tooltip with the full title on the title cell', async () => {
+    vi.useRealTimers()
+
+    const ticket = createDummyTicket({ title: 'A rather long ticket title' })
+
+    applyMocks(ticket)
+
+    const { wrapper } = renderTicketList()
+
+    const titleCell = await wrapper.findByRole('cell', { name: ticket.title })
+    const titleLink = within(titleCell).getByRole('link')
+
+    expect(titleLink).toHaveAttribute('data-tooltip', 'true')
+    expect(titleLink).toHaveAttribute('aria-label', ticket.title)
   })
 
   it('shows priority icon if flag is set', async () => {
@@ -163,11 +166,11 @@ describe('TicketList', () => {
 
     const { wrapper } = renderTicketList()
 
-    expect(await wrapper.findByIconName('priority-high')).toBeInTheDocument()
+    expect(await wrapper.findByIconName('priority-high-micro-2')).toBeInTheDocument()
   })
 
   it('resizes table column', async () => {
-    await applyMocks()
+    applyMocks()
 
     const { wrapper, headers } = renderTicketList()
 
@@ -182,7 +185,7 @@ describe('TicketList', () => {
     const firstResizeButton = resizeButtons[0]
     const firstTableHeader = tableHeaders[0]
 
-    expect(firstTableHeader).toHaveStyle({ width: '25px' })
+    expect(firstTableHeader).toHaveStyle({ width: '21px' })
 
     firstResizeButton.focus()
     // Does not work in test environment
@@ -191,24 +194,22 @@ describe('TicketList', () => {
   })
 
   it('sorts table column', async () => {
-    await applyMocks()
+    applyMocks()
 
     const { wrapper } = renderTicketList()
 
-    const sortButtons = await wrapper.findAllByRole('button', {
-      name: 'Sorted ascending',
+    const sortButton = await wrapper.findByRole('button', {
+      name: 'Sort by Title ascending',
     })
 
-    const firstSortButton = sortButtons[0]
-
-    await wrapper.events.click(firstSortButton)
+    await wrapper.events.click(sortButton)
 
     const mock = await waitForTicketsCachedByOverviewQueryCalls()
 
     expect(mock.at(-1)?.variables).toEqual({
       cacheTtl: 5,
       knownCollectionSignature: undefined,
-      orderBy: 'created_at',
+      orderBy: 'title',
       orderDirection: EnumOrderDirection.Ascending,
       overviewId: convertToGraphQLId('Overview', 1),
       pageSize: 30,
@@ -216,15 +217,26 @@ describe('TicketList', () => {
     })
   })
 
-  it.todo('allows grouping of rows', async () => {
+  it('allows grouping of rows', async () => {
     const ticket = createDummyTicket()
 
-    applyMocks(ticket)
+    await applyMocks(ticket)
 
-    const { wrapper } = renderTicketList({ groupBy: 'customer' })
+    const { wrapper, headers } = renderTicketList({ groupBy: 'customer' })
 
-    expect(
-      await wrapper.findByRole('cell', { name: ticket.customer.fullname! }),
-    ).toBeInTheDocument()
+    const table = await wrapper.findByRole('table', {
+      name: 'Overview: test tickets',
+    })
+
+    await Promise.all(
+      Object.values(headers).map(async (header) => {
+        expect(await within(table).findByRole('columnheader', { name: header })).toBeInTheDocument()
+      }),
+    )
+
+    expect(wrapper.getByRole('cell', { name: ticket.title })).toBeInTheDocument()
+
+    // Group name with count
+    expect(wrapper.getByRole('row', { name: `${ticket.customer.fullname!}1` })).toBeInTheDocument()
   })
 })

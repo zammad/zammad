@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -35,11 +35,11 @@ RSpec.describe 'Mobile > Organization > Can edit organization', app: :mobile, ty
         save_organization
       end
 
-      wait_for_gql('apps/mobile/entities/organization/graphql/mutations/update.graphql')
+      wait_for_gql('shared/entities/organization/graphql/mutations/update.graphql')
 
       organization.reload
 
-      expect(organization.note).to eq('<p>edit field</p>')
+      expect(organization.note).to eq('<p dir="auto">edit field</p>')
     end
 
     it 'can edit organization with object atrributes', db_strategy: :reset do
@@ -57,15 +57,17 @@ RSpec.describe 'Mobile > Organization > Can edit organization', app: :mobile, ty
       wait_for_form_to_settle('organization-edit')
 
       within('#dialog-organization-edit') do
+        find_input('Name').clear # does not trigger form updater for some reason
+
         within_form do
-          find_editor('Name').type('new name')
+          find_input('Name').type('new name')
           find_input('Custom Text').type('some text')
         end
 
         save_organization(3)
       end
 
-      wait_for_gql('apps/mobile/entities/organization/graphql/mutations/update.graphql')
+      wait_for_gql('shared/entities/organization/graphql/mutations/update.graphql')
 
       organization.reload
       expect(organization.name).to eq('new name')

@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { createMessage } from '@formkit/core'
 
@@ -24,11 +24,7 @@ export const useAlertFormHandler = (
     field: ChangedField | undefined,
     fields: Record<string, ReactiveFormSchemaDataField>,
   ) => boolean,
-  eventHandler: (
-    node: FormKitNode,
-    addAlert: () => void,
-    clearAlert: () => void,
-  ) => void,
+  eventHandler: (node: FormKitNode, addAlert: () => void, clearAlert: () => void) => void,
   eventName: string = 'input',
 ): FormHandler => {
   const addAlert = (formNode?: FormKitNode) => {
@@ -111,11 +107,7 @@ export const useAlertFormHandler = (
     return true
   }
 
-  const alertFormHandler: FormHandlerFunction = (
-    execution,
-    reactivity,
-    data,
-  ) => {
+  const alertFormHandler: FormHandlerFunction = (execution, reactivity, data) => {
     const { changedField, formNode, getNodeByName } = data
     const { schemaData } = reactivity
 
@@ -138,10 +130,7 @@ export const useAlertFormHandler = (
   }
 
   return {
-    execution: [
-      FormHandlerExecution.InitialSettled,
-      FormHandlerExecution.FieldChange,
-    ],
+    execution: [FormHandlerExecution.InitialSettled, FormHandlerExecution.FieldChange],
     callback: alertFormHandler,
   }
 }

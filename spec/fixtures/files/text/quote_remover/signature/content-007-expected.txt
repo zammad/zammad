@@ -1,0 +1,3 @@
+Hello, this is my message without any signature.
+
+Best regards

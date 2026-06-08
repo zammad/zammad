@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require_relative 'test_flags'
 
@@ -276,7 +276,7 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
   def clear_selection
     raise 'Field does not support clearing selection' if !type_select? && !type_treeselect? && !autocomplete?
 
-    element.find('[role="button"][aria-label="Clear Selection"]').click
+    element.find('[role="button"][aria-label="Clear selection"]').click
 
     maybe_wait_for_form_updater
 
@@ -293,21 +293,23 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
   def type(text, **type_options)
     return type_editor(text, **type_options) if type_editor?
 
-    input_element.fill_in with: text
+    input_element.click.send_keys(text)
 
     maybe_wait_for_form_updater
 
     self # support chaining
   end
 
-  def type_editor(text, click: true)
+  def type_editor(text, click: true, skip_waiting: false, wait_for: nil)
     raise 'Field does not support typing' if !type_editor?
 
     cursor_home_shortcut = mac_platform? ? %i[command up] : %i[control home]
     input_element.click.send_keys(cursor_home_shortcut) if click
     input_element.send_keys(text)
 
-    maybe_wait_for_form_updater
+    maybe_wait_for_form_updater if !skip_waiting
+
+    sleep wait_for if wait_for
 
     self # support chaining
   end
@@ -316,7 +318,7 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
   def clear
     return clear_date if type_date? || type_datetime?
 
-    raise 'Field does not support clearing' if !input? && !type_editor?
+    raise 'Field does not support clearing' if !input? && !type_editor? && !type_textarea?
 
     input_element.click.send_keys([magic_key, 'a'], :backspace)
 
@@ -349,8 +351,9 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
     element.find_by_id(id).click # rubocop:disable Rails/DynamicFindBy
 
     if desktop_view?
+      wait_until_closed_desktop_view
       element.click
-      wait_until_opened
+      wait_until_opened_desktop_view
     end
 
     yield if block_given?
@@ -548,7 +551,7 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
   end
 
   def autocomplete?
-    type_autocomplete? || type_customer? || type_organization? || type_recipient? || type_externalDataSource?
+    type_autocomplete? || type_customer? || type_organization? || type_recipient? || type_externalDataSource? || type_ticket?
   end
 
   # Input elements in supported fields define data attribute for "multiple" state.
@@ -767,7 +770,7 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
         maybe_wait_for_form_updater
 
         if !use_action
-          find('[aria-label="Clear Search"]').click
+          find('[aria-label="Clear search"]').click
         end
       end
     end
@@ -913,6 +916,8 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
       wait_for_gql('shared/components/Form/fields/FieldRecipient/graphql/queries/autocompleteSearch/recipient.graphql', number: gql_number)
     elsif type_externalDataSource?
       wait_for_gql('shared/components/Form/fields/FieldExternalDataSource/graphql/queries/autocompleteSearchObjectAttributeExternalDataSource.graphql', number: gql_number)
+    elsif type_ticket?
+      wait_for_gql('shared/entities/ticket/graphql/queries/autocompleteSearchTicket.graphql', number: gql_number)
     elsif type_tags?
       # NB: tags autocomplete query fires only once?!
       wait_for_gql('shared/entities/tags/graphql/queries/autocompleteTags.graphql', number: 1, skip_clearing: true)
@@ -929,6 +934,7 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
     return form_context.form_gql_number(:organization) if type_organization?
     return form_context.form_gql_number(:recipient) if type_recipient?
     return form_context.form_gql_number(:externalDataSource) if type_externalDataSource?
+    return form_context.form_gql_number(:ticket) if type_ticket?
 
     form_context.form_gql_number(:tags) if type_tags?
   end
@@ -953,7 +959,7 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
   end
 
   def clear_date
-    element.find('[role="button"][aria-label="Clear Selection"]').click
+    element.find('[role="button"][aria-label="Clear selection"]').click
 
     maybe_wait_for_form_updater
 

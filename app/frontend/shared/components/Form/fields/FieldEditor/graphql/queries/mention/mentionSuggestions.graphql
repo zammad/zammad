@@ -4,5 +4,11 @@ query mentionSuggestions($query: String!, $groupId: ID!) {
     internalId
     fullname
     email
+    image
+    vip
+    outOfOffice
+    outOfOfficeStartAt
+    outOfOfficeEndAt
+    active
   }
 }

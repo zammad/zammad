@@ -1,0 +1,9 @@
+query TicketsStatsMonthlyByOrganization($organizationId: ID!) {
+  ticketsStatsMonthlyByOrganization(organizationId: $organizationId) {
+    monthLabel
+    monthNumber
+    ticketsClosed
+    ticketsCreated
+    year
+  }
+}

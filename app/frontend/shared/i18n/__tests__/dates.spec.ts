@@ -1,12 +1,8 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import timezoneMock from 'timezone-mock'
 
-import {
-  absoluteDateTime as absDT,
-  relativeDateTime as relDT,
-  getISODatetime,
-} from '../dates.ts'
+import { absoluteDateTime as absDT, relativeDateTime as relDT, getISODatetime } from '../dates.ts'
 import { Translator } from '../translator.ts'
 
 describe('Dates', () => {
@@ -16,22 +12,14 @@ describe('Dates', () => {
   it('translates absolute dates correctly', () => {
     // UTC is default
     expect(absDT('2021-04-09T10:11:12Z', dateUS)).toBe('04/09/2021')
-    expect(absDT('2021-04-09T10:11:12Z', dateTimeUS)).toBe(
-      '04/09/2021 10:11 am',
-    )
-    expect(absDT('2021-04-09T22:11:12Z', dateTimeUS)).toBe(
-      '04/09/2021 10:11 pm',
-    )
+    expect(absDT('2021-04-09T10:11:12Z', dateTimeUS)).toBe('04/09/2021 10:11 am')
+    expect(absDT('2021-04-09T22:11:12Z', dateTimeUS)).toBe('04/09/2021 10:11 pm')
 
     // Switch to US/Eastern
     timezoneMock.register('US/Eastern', global)
     expect(absDT('2021-04-09T10:11:12Z', dateUS)).toBe('04/09/2021')
-    expect(absDT('2021-04-09T10:11:12Z', dateTimeUS)).toBe(
-      '04/09/2021  6:11 am',
-    )
-    expect(absDT('2021-04-09T22:11:12Z', dateTimeUS)).toBe(
-      '04/09/2021  6:11 pm',
-    )
+    expect(absDT('2021-04-09T10:11:12Z', dateTimeUS)).toBe('04/09/2021  6:11 am')
+    expect(absDT('2021-04-09T22:11:12Z', dateTimeUS)).toBe('04/09/2021  6:11 pm')
     timezoneMock.unregister(global)
   })
 
@@ -81,13 +69,9 @@ describe('Dates', () => {
   })
 
   it('shows ISO date times', () => {
-    expect(getISODatetime('2021-04-09T10:11:12Z')).toBe(
-      '2021-04-09T10:11:12.000Z',
-    )
+    expect(getISODatetime('2021-04-09T10:11:12Z')).toBe('2021-04-09T10:11:12.000Z')
 
-    expect(getISODatetime('2021-04-09 10:11:12')).toBe(
-      '2021-04-09T10:11:12.000Z',
-    )
+    expect(getISODatetime('2021-04-09 10:11:12')).toBe('2021-04-09T10:11:12.000Z')
 
     expect(getISODatetime('2021-04-09')).toBe('2021-04-09T00:00:00.000Z')
   })

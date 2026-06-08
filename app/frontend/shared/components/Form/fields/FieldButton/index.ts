@@ -1,17 +1,11 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import {
-  button as buttonDefinition,
-  submit as submitDefinition,
-} from '@formkit/inputs'
+import { button as buttonDefinition, submit as submitDefinition } from '@formkit/inputs'
 import { has } from '@formkit/utils'
 
 import initializeFieldDefinition from '#shared/form/core/initializeFieldDefinition.ts'
 import extendSchemaDefinition from '#shared/form/utils/extendSchemaDefinition.ts'
-import type {
-  FormFieldsTypeDefinition,
-  FormFieldType,
-} from '#shared/types/form.ts'
+import type { FormFieldsTypeDefinition, FormFieldType } from '#shared/types/form.ts'
 
 import type { FormKitNode } from '@formkit/core'
 

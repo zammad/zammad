@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { ref } from 'vue'
 
@@ -15,8 +15,7 @@ import {
 describe('useTicketArticleRetryMediaDownload', () => {
   const testArticleId = ref(convertToGraphQLId('Ticket::Article', 1))
 
-  const { loading, tryAgain } =
-    useTicketArticleRetryMediaDownload(testArticleId)
+  const { loading, tryAgain } = useTicketArticleRetryMediaDownload(testArticleId)
 
   describe('tryAgain', () => {
     it('resolves on success', async () => {
@@ -26,7 +25,7 @@ describe('useTicketArticleRetryMediaDownload', () => {
         },
       })
 
-      expect(tryAgain()).resolves.toBeUndefined()
+      await expect(tryAgain()).resolves.toBeUndefined()
 
       const calls = await waitForTicketArticleRetryMediaDownloadMutationCalls()
 
@@ -47,7 +46,7 @@ describe('useTicketArticleRetryMediaDownload', () => {
         },
       })
 
-      expect(tryAgain()).rejects.toThrow()
+      await expect(tryAgain()).rejects.toThrow('')
 
       const calls = await waitForTicketArticleRetryMediaDownloadMutationCalls()
 

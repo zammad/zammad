@@ -1,0 +1,6 @@
+{
+  "input": "<span style=\"font-weight: normal;\">Ich kann das Problem, das Sie beschrieben haben, leider nicht reproduzieren. Bitte stellen Sie sicher, dass Sie alle relevanten Schritte und Bedingungen genau schildern.<br></span><div><span style=\"font-weight: normal;\">Videoanruf vorschlagen<br></span><div><span style=\"font-weight: normal;\">Um das Problem besser zu verstehen und gemeinsam eine Lösung zu finden, schlage ich vor, einen Videoanruf zu vereinbaren. Auf diese Weise können wir das Problem direkt besprechen und ich kann Ihnen gegebenenfalls Schritt für Schritt helfen.<br>Lassen Sie mich wissen, welcher Zeitpunkt für Sie am besten passt, damit wir einen Termin festlegen können.</span></div></div>",
+  "expected": {
+    "language": "de"
+  }
+}

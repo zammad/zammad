@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -99,7 +99,7 @@ RSpec.describe UploadCache do
                       'Content-Type' => 'text/plain',
                     },)
 
-      expect { upload_cache.remove_item(item.id) }.to raise_error(Exceptions::UnprocessableEntity)
+      expect { upload_cache.remove_item(item.id) }.to raise_error(Exceptions::UnprocessableContent)
     end
 
     it 'fails for non existing UploadCache Store items' do

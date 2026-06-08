@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Channel::Filter::BounceDeliveryPermanentFailed
   def self.run(_channel, mail, _transaction_params)
@@ -95,7 +95,7 @@ module Channel::Filter::BounceDeliveryPermanentFailed
       end
     end
 
-    return [] if recipients.count > 1
+    return [] if recipients.many?
 
     recipients
   end

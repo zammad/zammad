@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
@@ -7,10 +7,7 @@ import { waitForNextTick } from '#tests/support/utils.ts'
 
 import { mockFormUpdaterQuery } from '#shared/components/Form/graphql/queries/formUpdater.mocks.ts'
 import { mockCurrentUserQuery } from '#shared/graphql/queries/currentUser.mocks.ts'
-import {
-  EnumFormUpdaterId,
-  EnumNotificationSoundFile,
-} from '#shared/graphql/types.ts'
+import { EnumFormUpdaterId, EnumNotificationSoundFile } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
 import { waitForUserCurrentNotificationPreferencesResetMutationCalls } from '#desktop/pages/personal-setting/graphql/mutations/userCurrentNotificationPreferencesReset.mocks.ts'
@@ -83,8 +80,7 @@ describe('personal notifications settings', () => {
     mockFormUpdaterQuery({
       formUpdater: {
         fields: {
-          EnumFormUpdaterId:
-            EnumFormUpdaterId.FormUpdaterUpdaterUserNotifications,
+          EnumFormUpdaterId: EnumFormUpdaterId.FormUpdaterUpdaterUserNotifications,
           group_ids: {
             options: [
               {
@@ -132,13 +128,9 @@ describe('personal notifications settings', () => {
     // Fields
     expect(view.getByText('Notification sound')).toBeInTheDocument()
 
-    expect(
-      view.getByText('Limit notifications to specific groups'),
-    ).toBeInTheDocument()
+    expect(view.getByText('Limit notifications to specific groups')).toBeInTheDocument()
 
-    expect(
-      view.getByText('Play user interface sound effects'),
-    ).toBeInTheDocument()
+    expect(view.getByText('Play user interface sound effects')).toBeInTheDocument()
   })
 
   it("doesn't render user groups if groups are not provided", async () => {
@@ -173,28 +165,19 @@ describe('personal notifications settings', () => {
 
     await view.events.click(checkboxes.at(-1)!)
 
-    expect(
-      (view.getByLabelText('Notification sound') as HTMLInputElement).value,
-    ).toEqual('Plop')
+    expect((view.getByLabelText('Notification sound') as HTMLInputElement).value).toEqual('Plop')
 
-    await view.events.click(
-      view.getByRole('button', { name: 'Reset to Default Settings' }),
-    )
+    await view.events.click(view.getByRole('button', { name: 'Reset to default settings' }))
+
+    expect(await view.findByRole('dialog', { name: 'Confirmation' })).toBeInTheDocument()
 
     expect(
-      await view.findByRole('dialog', { name: 'Confirmation' }),
-    ).toBeInTheDocument()
-
-    expect(
-      view.getByText(
-        'Are you sure? Your notifications settings will be reset to default.',
-      ),
+      view.getByText('Are you sure? Your notifications settings will be reset to default.'),
     ).toBeInTheDocument()
 
     await view.events.click(view.getByRole('button', { name: 'Yes' }))
 
-    const mocks =
-      await waitForUserCurrentNotificationPreferencesResetMutationCalls()
+    const mocks = await waitForUserCurrentNotificationPreferencesResetMutationCalls()
 
     expect(mocks.at(-1)?.variables).toEqual({})
 
@@ -233,9 +216,7 @@ describe('personal notifications settings', () => {
       },
     })
 
-    await view.events.click(
-      view.getByRole('button', { name: 'Save Notifications' }),
-    )
+    await view.events.click(view.getByRole('button', { name: 'Save notifications' }))
 
     const previousMockedData = mockPersonalSettings()
 
@@ -243,12 +224,11 @@ describe('personal notifications settings', () => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-expect-error
     previousMockedData.personalSettings.notificationConfig.groupIds =
-      previousMockedData.personalSettings.notificationConfig?.groupIds?.map(
-        (id) => convertToGraphQLId('Group', id),
+      previousMockedData.personalSettings.notificationConfig?.groupIds?.map((id) =>
+        convertToGraphQLId('Group', id),
       )
 
-    const mocks =
-      await waitForUserCurrentNotificationPreferencesUpdateMutationCalls()
+    const mocks = await waitForUserCurrentNotificationPreferencesUpdateMutationCalls()
 
     // Last checkbox in table got updated
     expect(mocks.at(-1)?.variables).not.toEqual(previousMockedData)

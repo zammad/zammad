@@ -87,4 +87,9 @@ fragment ticketArticleAttributes on TicketArticle {
     error
   }
   detectedLanguage
+  highlightedTexts {
+    startIndex
+    endIndex
+    colorClass
+  }
 }

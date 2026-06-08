@@ -1,11 +1,8 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { setupView } from '#tests/support/mock-user.ts'
 
-import {
-  EnumTicketArticleSenderName,
-  type PolicyTicket,
-} from '#shared/graphql/types.ts'
+import { EnumTicketArticleSenderName, type PolicyTicket } from '#shared/graphql/types.ts'
 
 import {
   createEligibleTicketArticleReplyData,
@@ -20,8 +17,6 @@ describe.each([
   ['telegram personal-message', { sender: ['Agent'] }],
   ['sms', { sender: ['Agent'] }],
   // these can be replied when sender is agent
-  ['twitter status', { sender: ['Agent', 'Customer'] }],
-  ['twitter direct-message', { sender: ['Agent', 'Customer'] }],
   [
     'facebook feed comment',
     { sender: ['Agent', 'Customer'], createArticleType: 'facebook feed post' },
@@ -33,16 +28,13 @@ describe.each([
     createEligibleTicketArticleReplyData(name, policies)
 
   describe('seeing possible article actions', () => {
-    it.skipIf(sender.includes('Customer'))(
-      `cannot reply to ${name}, if sender is Agent`,
-      () => {
-        setupView('agent')
-        const { ticket, article } = createEligibleData()
-        article.sender!.name = EnumTicketArticleSenderName.Agent
-        const actions = createTestArticleActions(ticket, article)
-        expect(actions.find((a) => a.name === name)).toBeUndefined()
-      },
-    )
+    it.skipIf(sender.includes('Customer'))(`cannot reply to ${name}, if sender is Agent`, () => {
+      setupView('agent')
+      const { ticket, article } = createEligibleData()
+      article.sender!.name = EnumTicketArticleSenderName.Agent
+      const actions = createTestArticleActions(ticket, article)
+      expect(actions.find((a) => a.name === name)).toBeUndefined()
+    })
 
     it(`cannot reply to article, if article type is not ${name}`, () => {
       setupView('agent')

@@ -192,8 +192,8 @@ img, svg, video, canvas, audio, iframe, embed, object {
   flex-grow: 1;
 }
 
-.font-extrabold {
-  font-weight: 800;
+.font-bold {
+  font-weight: 700;
 }
 
 .text-8xl {
@@ -224,8 +224,8 @@ img, svg, video, canvas, audio, iframe, embed, object {
   vertical-align: middle;
 }
 
-.font-semibold {
-  font-weight: 600;
+.font-medium {
+  font-weight: 500;
 }
 
 .text-xl {

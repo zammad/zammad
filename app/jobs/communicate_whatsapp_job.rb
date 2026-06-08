@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class CommunicateWhatsappJob < ApplicationJob
 
@@ -7,7 +7,6 @@ class CommunicateWhatsappJob < ApplicationJob
   }
 
   def perform(article_id)
-    whatsapp_message_deliver = Service::Ticket::Article::Type::WhatsappMessage::Deliver.new(article_id: article_id)
-    whatsapp_message_deliver.execute
+    Service::Ticket::Article::Type::WhatsappMessage::Deliver.execute(article_id: article_id)
   end
 end

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -198,7 +198,7 @@ RSpec.describe Gql::Queries::ObjectManager::FrontendAttributes, type: :graphql d
               'name'       => 'note',
               'display'    => 'Note',
               'dataType'   => 'richtext',
-              'dataOption' => { 'type'      => 'text',
+              'dataOption' => { 'type'      => 'richtext',
                                 'maxlength' => 5000,
                                 'no_images' => true,
                                 'null'      => true,
@@ -262,7 +262,7 @@ RSpec.describe Gql::Queries::ObjectManager::FrontendAttributes, type: :graphql d
               'name'       => 'note',
               'display'    => 'Note',
               'dataType'   => 'richtext',
-              'dataOption' => { 'type'      => 'text',
+              'dataOption' => { 'type'      => 'richtext',
                                 'maxlength' => 5000,
                                 'no_images' => true,
                                 'null'      => true,
@@ -297,6 +297,20 @@ RSpec.describe Gql::Queries::ObjectManager::FrontendAttributes, type: :graphql d
         {
           'attributes' => [
             {
+              'name'       => 'number',
+              'display'    => '#',
+              'dataType'   => 'input',
+              'dataOption' => {
+                'display_config' => 'ticket_hook',
+                'type'           => 'text',
+                'readonly'       => 1,
+                'null'           => true,
+                'maxlength'      => 60,
+                'width'          => '68px'
+              },
+              'isInternal' => true
+            },
+            {
               'name'       => 'title',
               'display'    => 'Title',
               'dataType'   => 'input',
@@ -322,7 +336,7 @@ RSpec.describe Gql::Queries::ObjectManager::FrontendAttributes, type: :graphql d
                 'placeholder'    => 'Enter Person or Organization/Company',
                 'minLengt'       => 2,
                 'translate'      => false,
-                'permission'     => ['ticket.agent'],
+                'permission'     => ['ticket.agent', 'ticket.customer'],
                 'belongs_to'     => 'customer',
               },
               'isInternal' => true,
@@ -464,6 +478,20 @@ RSpec.describe Gql::Queries::ObjectManager::FrontendAttributes, type: :graphql d
         {
           'attributes' => [
             {
+              'name'       => 'number',
+              'display'    => '#',
+              'dataType'   => 'input',
+              'dataOption' => {
+                'display_config' => 'ticket_hook',
+                'type'           => 'text',
+                'readonly'       => 1,
+                'null'           => true,
+                'maxlength'      => 60,
+                'width'          => '68px'
+              },
+              'isInternal' => true
+            },
+            {
               'name'       => 'title',
               'display'    => 'Title',
               'dataType'   => 'input',
@@ -472,6 +500,26 @@ RSpec.describe Gql::Queries::ObjectManager::FrontendAttributes, type: :graphql d
                 'maxlength' => 200,
                 'null'      => false,
                 'translate' => false
+              },
+              'isInternal' => true,
+            },
+            {
+              'name'       => 'customer_id',
+              'display'    => 'Customer',
+              'dataType'   => 'user_autocompletion',
+              'dataOption' => {
+                'autocapitalize' => false,
+                'belongs_to'     => 'customer',
+                'guess'          => true,
+                'limit'          => 200,
+                'minLengt'       => 2,
+                'multiple'       => false,
+                'null'           => false,
+                'permission'     => ['ticket.agent',
+                                     'ticket.customer'],
+                'placeholder'    => 'Enter Person or Organization/Company',
+                'relation'       => 'User',
+                'translate'      => false
               },
               'isInternal' => true,
             },
@@ -526,6 +574,33 @@ RSpec.describe Gql::Queries::ObjectManager::FrontendAttributes, type: :graphql d
               },
               'isInternal' => true,
             },
+            {
+              'name'       => 'priority_id',
+              'display'    => 'Priority',
+              'dataType'   => 'select',
+              'dataOption' => {
+                'belongs_to' => 'priority',
+                'default'    => 2,
+                'maxlength'  => 255,
+                'multiple'   => false,
+                'null'       => false,
+                'nulloption' => false,
+                'relation'   => 'TicketPriority',
+                'translate'  => true
+              },
+              'isInternal' => true,
+            },
+            {
+              'name'       => 'tags',
+              'display'    => 'Tags',
+              'dataType'   => 'tag',
+              'dataOption' => {
+                'null'      => true,
+                'translate' => false,
+                'type'      => 'text'
+              },
+              'isInternal' => true,
+            },
           ],
           'screens'    => [
             {
@@ -550,6 +625,34 @@ RSpec.describe Gql::Queries::ObjectManager::FrontendAttributes, type: :graphql d
       end
 
       include_context 'when fetching frontend attributes as agent and customer'
+    end
+
+    context 'with object "Ticket" with agent-customer', authenticated_as: :user, db_strategy: :reset do
+      let(:user)   { create(:agent_and_customer) }
+      let(:object) { 'Ticket' }
+      let(:object_attribute) do
+        create(:object_manager_attribute_text, object_name: object, screens: { 'edit' => {
+                 'ticket.agent' => {
+                   'shown'    => true,
+                   'required' => true,
+                 }
+               } }).tap { ObjectManager::Attribute.migration_execute }
+      end
+
+      before do
+        object_attribute
+      end
+
+      it 'returns frontend object attributes' do
+        gql.execute(query, variables: variables)
+
+        expect(gql.result.data).to include(
+          screens: include(
+            include(name: 'edit', attributes: include(object_attribute.name)),
+            include(name: 'edit_customer', attributes: not_include(object_attribute.name))
+          )
+        )
+      end
     end
   end
 end

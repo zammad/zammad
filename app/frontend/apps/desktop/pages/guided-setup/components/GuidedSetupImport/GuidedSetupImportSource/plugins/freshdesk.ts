@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { EnumSystemImportSource } from '#shared/graphql/types.ts'
 
@@ -17,6 +17,5 @@ export default <GuidedSetupImportSourcePlugin>{
     Users: __('Users'),
     Tickets: __('Tickets'),
   },
-  documentationURL:
-    'https://docs.zammad.org/en/latest/migration/freshdesk.html',
+  documentationURL: 'https://docs.zammad.org/en/latest/migration/freshdesk.html',
 }

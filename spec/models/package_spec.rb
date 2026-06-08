@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -13,7 +13,12 @@ RSpec.describe Package, type: :model do
     end
   end
 
-  def get_package_structure(name, files, version = '1.0.1')
+  def get_package_structure(name, files, version = '1.0.1', dependencies = '{}')
+    optional_js = ''
+    if dependencies.present?
+      optional_js += "\"dependencies\": #{dependencies},"
+    end
+
     <<-JSON
       {
         "name": "#{name}",
@@ -21,6 +26,7 @@ RSpec.describe Package, type: :model do
         "vendor": "Zammad Foundation",
         "license": "ABC",
         "url": "https://zammad.org/",
+        #{optional_js}
         "description": [
           {
             "language": "en",
@@ -322,6 +328,44 @@ RSpec.describe Package, type: :model do
     it 'does not allow to patch the same file twice via package' do
       described_class.install(string: package_1)
       expect { described_class.install(string: package_2) }.to raise_error("Can't create file, because file 'example.rb' is already provided by package 'PackageA'!")
+    end
+  end
+
+  describe 'Dependencies' do
+    let(:package_1) { get_package_structure('PackageA', package_zpm_files_json, '1.0.0') }
+    let(:package_2)         { get_package_structure('PackageB', '[]', '1.0.0', '{ "PackageA": ">= 1.0.0" }') }
+    let(:package_3_invalid) { get_package_structure('PackageB', '[]', '1.0.0', '{ "PackageA": "!= 1.0.0" }') }
+    let(:package_4)         { get_package_structure('PackageC', '[]', '1.0.0') }
+
+    it 'does not install package if dependencies are missing' do
+      expect { described_class.install(string: package_2) }.to raise_error(RuntimeError, "Can't install package, because of missing dependencies: PackageA >= 1.0.0!")
+    end
+
+    it 'does not install package if dependencies are invalid' do
+      expect { described_class.install(string: package_3_invalid) }.to raise_error(RuntimeError, "Can't install package, because of invalid dependencies: PackageA != 1.0.0!")
+    end
+
+    it 'does install package if dependencies are present' do
+      described_class.install(string: package_1)
+      expect { described_class.install(string: package_2) }.not_to raise_error
+    end
+
+    it 'does not uninstall package if dependencies are required' do
+      described_class.install(string: package_1)
+      described_class.install(string: package_2)
+      expect { described_class.uninstall(string: package_1) }.to raise_error(RuntimeError, "Can't uninstall package, because of required dependencies: PackageB requires PackageA!")
+    end
+
+    it 'does uninstall package if dependencies are not required' do
+      described_class.install(string: package_1)
+      described_class.install(string: package_2)
+      described_class.uninstall(string: package_2)
+      expect { described_class.uninstall(string: package_1) }.not_to raise_error
+    end
+
+    it 'does install and uninstall without any dependencies' do
+      described_class.install(string: package_4)
+      expect { described_class.uninstall(string: package_4) }.not_to raise_error
     end
   end
 end

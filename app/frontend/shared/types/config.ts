@@ -1,10 +1,14 @@
 export interface ConfigList {
   api_path: string
-  'active_storage.web_image_content_types': string[]
+  'active_storage.content_types_allowed_inline': string[]
   'auth_saml_credentials.display_name'?: string
+  'auth_openid_connect_credentials.display_name'?: string
+  ai_assistance_kb_answer_from_ticket_generation: boolean
+  ai_assistance_text_tools: boolean
+  ai_assistance_text_tools_fixed_instructions: string
   ai_assistance_ticket_summary: boolean
   ai_assistance_ticket_summary_config: unknown
-  ai_provider: string
+  ai_provider: boolean
   api_password_access?: boolean | null
   api_token_access?: boolean | null
   auth_facebook?: boolean | null
@@ -46,7 +50,24 @@ export interface ConfigList {
   maintenance_login_message: string
   maintenance_mode: boolean
   organization: string
-  password_max_login_failed?: 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 | null
+  password_max_login_failed?:
+    | 4
+    | 5
+    | 6
+    | 7
+    | 8
+    | 9
+    | 10
+    | 11
+    | 13
+    | 14
+    | 15
+    | 16
+    | 17
+    | 18
+    | 19
+    | 20
+    | null
   pgp_config: unknown
   pgp_integration?: boolean | null
   pgp_recipient_alias_configuration: boolean
@@ -58,7 +79,98 @@ export interface ConfigList {
   sipgate_integration?: boolean | null
   smime_config: unknown
   smime_integration?: boolean | null
-  system_id?: 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 | 21 | 22 | 23 | 24 | 25 | 26 | 27 | 28 | 29 | 30 | 31 | 32 | 33 | 34 | 35 | 36 | 37 | 38 | 39 | 40 | 41 | 42 | 43 | 44 | 45 | 46 | 47 | 48 | 49 | 50 | 51 | 52 | 53 | 54 | 55 | 56 | 57 | 58 | 59 | 60 | 61 | 62 | 63 | 64 | 65 | 66 | 67 | 68 | 69 | 70 | 71 | 72 | 73 | 74 | 75 | 76 | 77 | 78 | 79 | 80 | 81 | 82 | 83 | 84 | 85 | 86 | 87 | 88 | 89 | 90 | 91 | 92 | 93 | 94 | 95 | 96 | 97 | 98 | 99 | null
+  system_id?:
+    | 10
+    | 11
+    | 12
+    | 13
+    | 14
+    | 15
+    | 16
+    | 17
+    | 18
+    | 19
+    | 20
+    | 21
+    | 22
+    | 23
+    | 24
+    | 25
+    | 26
+    | 27
+    | 28
+    | 29
+    | 30
+    | 31
+    | 32
+    | 33
+    | 34
+    | 35
+    | 36
+    | 37
+    | 38
+    | 39
+    | 40
+    | 41
+    | 42
+    | 43
+    | 44
+    | 45
+    | 46
+    | 47
+    | 48
+    | 49
+    | 50
+    | 51
+    | 52
+    | 53
+    | 54
+    | 55
+    | 56
+    | 57
+    | 58
+    | 59
+    | 60
+    | 61
+    | 62
+    | 63
+    | 64
+    | 65
+    | 66
+    | 67
+    | 68
+    | 69
+    | 70
+    | 71
+    | 72
+    | 73
+    | 74
+    | 75
+    | 76
+    | 77
+    | 78
+    | 79
+    | 80
+    | 81
+    | 82
+    | 83
+    | 84
+    | 85
+    | 86
+    | 87
+    | 88
+    | 89
+    | 90
+    | 91
+    | 92
+    | 93
+    | 94
+    | 95
+    | 96
+    | 97
+    | 98
+    | 99
+    | null
   system_init_done: boolean
   system_online_service: boolean
   tag_new?: boolean | null
@@ -93,6 +205,9 @@ export interface ConfigList {
   two_factor_authentication_method_security_keys?: boolean | null
   two_factor_authentication_recovery_codes?: boolean | null
   ui_desktop_beta_switch: boolean
+  ui_desktop_beta_switch_admin_menu: boolean
+  ui_desktop_beta_switch_role_ids: unknown
+  ui_richtext_bubble_menu?: boolean | null
   ui_sidebar_open_ticket_indicator_colored?: boolean | null
   ui_table_group_by_show_count?: boolean | null
   ui_task_mananger_max_task_count: number
@@ -108,7 +223,6 @@ export interface ConfigList {
   ui_ticket_zoom_article_email_full_quote_header?: boolean | null
   ui_ticket_zoom_article_email_subject?: boolean | null
   ui_ticket_zoom_article_note_new_internal?: boolean | null
-  ui_ticket_zoom_article_twitter_initials?: boolean | null
   ui_ticket_zoom_article_visibility_confirmation_dialog?: boolean | null
   ui_ticket_zoom_attachments_preview?: boolean | null
   ui_ticket_zoom_sidebar_article_attachments?: boolean | null

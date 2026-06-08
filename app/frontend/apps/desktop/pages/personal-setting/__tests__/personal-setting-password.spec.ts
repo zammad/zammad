@@ -1,10 +1,11 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import type { ExtendedRenderResult } from '#tests/support/components/renderComponent.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
 import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
+import { waitFor } from '#tests/support/vitest-wrapper.ts'
 
 import { mockUserCurrentChangePasswordMutation } from '../graphql/mutations/userCurrentChangePassword.mocks.ts'
 
@@ -14,19 +15,13 @@ const changePassword = async (
   newPassword: string,
   newPasswordConfirm?: string,
 ) => {
-  await view.events.type(
-    await view.findByLabelText('Current password'),
-    currentPassword,
-  )
-  await view.events.type(
-    await view.findByLabelText('New password'),
-    newPassword,
-  )
+  await view.events.type(await view.findByLabelText('Current password'), currentPassword)
+  await view.events.type(await view.findByLabelText('New password'), newPassword)
   await view.events.type(
     await view.findByLabelText('Confirm new password'),
     newPasswordConfirm || newPassword,
   )
-  await view.events.click(view.getByRole('button', { name: 'Change Password' }))
+  await view.events.click(view.getByRole('button', { name: 'Change password' }))
 }
 
 describe('password personal settings', () => {
@@ -50,10 +45,8 @@ describe('password personal settings', () => {
 
     const view = await visitView('/personal-setting/password')
 
-    await vi.waitFor(() => {
-      expect(view, 'correctly redirects to error page').toHaveCurrentUrl(
-        '/error-tab',
-      )
+    await waitFor(() => {
+      expect(view, 'correctly redirects to error page').toHaveCurrentUrl('/error-tab')
     })
   })
 
@@ -64,9 +57,7 @@ describe('password personal settings', () => {
     expect(view.getByText('New password')).toBeInTheDocument()
     expect(view.getByText('Confirm new password')).toBeInTheDocument()
 
-    expect(
-      view.getByRole('button', { name: 'Change Password' }),
-    ).toBeInTheDocument()
+    expect(view.getByRole('button', { name: 'Change password' })).toBeInTheDocument()
   })
 
   it('shows an error message when e.g. current password is incorrect', async () => {
@@ -97,9 +88,7 @@ describe('password personal settings', () => {
     await changePassword(view, 'old-password', 'new-password', 'wrong-password')
 
     expect(
-      await view.findByText(
-        "This field doesn't correspond to the expected value.",
-      ),
+      await view.findByText("This field doesn't correspond to the expected value."),
     ).toBeInTheDocument()
   })
 
@@ -115,8 +104,6 @@ describe('password personal settings', () => {
 
     await changePassword(view, 'old-password', 'new-password')
 
-    expect(
-      await view.findByText('Password changed successfully.'),
-    ).toBeInTheDocument()
+    expect(await view.findByText('Password changed successfully.')).toBeInTheDocument()
   })
 })

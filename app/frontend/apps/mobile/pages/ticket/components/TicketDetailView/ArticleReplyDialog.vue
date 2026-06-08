@@ -1,8 +1,8 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { cloneDeep, isEqual } from 'lodash-es'
-import { computed, onMounted, onUnmounted } from 'vue'
+import { computed, onMounted, onUnmounted, ref } from 'vue'
 
 import type { FormRef } from '#shared/components/Form/types.ts'
 import { useConfirmation } from '#shared/composables/useConfirmation.ts'
@@ -33,13 +33,10 @@ const emit = defineEmits<{
   done: []
 }>()
 
-const label = computed(() =>
-  props.newTicketArticlePresent ? __('Edit reply') : __('Add reply'),
-)
+const label = computed(() => (props.newTicketArticlePresent ? __('Edit reply') : __('Add reply')))
+const firstChangeDetected = ref(false)
 
-const articleFormGroupNodeContext = computed(
-  () => props.articleFormGroupNode?.context,
-)
+const articleFormGroupNodeContext = computed(() => props.articleFormGroupNode?.context)
 
 const rememberArticleFormData = cloneDeep({
   ...articleFormGroupNodeContext.value?._value,
@@ -47,13 +44,9 @@ const rememberArticleFormData = cloneDeep({
 })
 
 const dialogFormIsDirty = computed(() => {
-  if (!props.newTicketArticlePresent)
-    return !!articleFormGroupNodeContext.value?.state.dirty
+  if (!props.newTicketArticlePresent) return firstChangeDetected.value
 
-  return !isEqual(
-    rememberArticleFormData,
-    articleFormGroupNodeContext.value?._value,
-  )
+  return !isEqual(rememberArticleFormData, articleFormGroupNodeContext.value?._value)
 })
 
 const { waitForConfirmation } = useConfirmation()
@@ -101,6 +94,29 @@ const discardDialog = async () => {
 
 onMounted(() => {
   emit('show-article-form')
+
+  // We need a special handling for the initial reply dialog, because the article group is always dirty.
+  // Because of that we waiting on the first article type value and then that this is settled to the form group.
+  // After that we now that the next change inside the form values is a manual action and we can
+  // set the first change detected flag.
+  if (!props.newTicketArticlePresent && props.articleFormGroupNode) {
+    const articleTypeNode = props.articleFormGroupNode.find('articleType', 'name')
+
+    if (articleTypeNode) {
+      const checkForGroupChangeInitialize = articleTypeNode.on('commit', async () => {
+        props.articleFormGroupNode?.off(checkForGroupChangeInitialize)
+
+        if (!props.articleFormGroupNode) return
+
+        await props.articleFormGroupNode.settled
+
+        const checkForFirstChange = props.articleFormGroupNode.on('commit', () => {
+          firstChangeDetected.value = true
+          props.articleFormGroupNode?.off(checkForFirstChange)
+        })
+      })
+    }
+  }
 })
 
 onUnmounted(() => {
@@ -145,10 +161,7 @@ const close = () => {
       >
         {{ $t('Discard your unsaved changes') }}
       </FormKit>
-      <div
-        class="transition-all"
-        :class="{ 'pb-16': needSpaceForSaveBanner }"
-      ></div>
+      <div class="transition-all" :class="{ 'pb-16': needSpaceForSaveBanner }"></div>
     </div>
   </CommonDialog>
 </template>

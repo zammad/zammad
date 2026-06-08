@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -28,7 +28,7 @@ RSpec.describe 'Integration SMIME', type: :request do
 
       it 'adds certificate by string' do
         expect do
-          post endpoint, params: { data: certificate_string }, as: :json
+          post endpoint, params: { certificate: certificate_string }, as: :json
         end.to change(SMIMECertificate, :count).by(1)
 
         expect(response).to have_http_status(:ok)
@@ -49,7 +49,7 @@ RSpec.describe 'Integration SMIME', type: :request do
 
     context 'GET requests' do
 
-      let!(:certificate) { create(:smime_certificate, fixture: email_address) }
+      let!(:certificate) { create(:smime_certificate, fixture: email_address, private_key_secret: 'real secret') }
 
       it 'lists certificates' do
         get endpoint, as: :json
@@ -71,9 +71,15 @@ RSpec.describe 'Integration SMIME', type: :request do
           subject_alternative_name
           usage
         ]
-        expect(json_response.first['usage']).to match_array(%w[Signature Encryption])
-        expect(json_response.first['subject_alternative_name']).to include(email_address)
-        expect(json_response.any? { |e| e['id'] == certificate.id }).to be true
+
+        expect(json_response).to include(
+          include(
+            'id'                       => certificate.id,
+            'usage'                    => match_array(%w[Signature Encryption]),
+            'subject_alternative_name' => include(email_address),
+            'private_key_secret'       => SensitiveParamsHelper::SENSITIVE_MASK,
+          )
+        )
       end
     end
 
@@ -111,7 +117,7 @@ RSpec.describe 'Integration SMIME', type: :request do
 
       it 'adds by string' do
         expect do
-          post endpoint, params: { data: private_string, secret: secret }, as: :json
+          post endpoint, params: { private_key: private_string, secret: secret }, as: :json
         end.to change {
           certificate.reload
           certificate.private_key

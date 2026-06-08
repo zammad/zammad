@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { computed, inject, provide } from 'vue'
 
@@ -13,12 +13,8 @@ import type { Ref, InjectionKey } from 'vue'
 
 export const TICKET_KEY = Symbol('ticket') as InjectionKey<TicketInformation>
 
-export const initializeTicketInformation = (
-  internalId: Ref<number | string>,
-) => {
-  const ticketId = computed(() =>
-    convertToGraphQLId('Ticket', internalId.value),
-  )
+export const initializeTicketInformation = (internalId: Ref<number | string>) => {
+  const ticketId = computed(() => convertToGraphQLId('Ticket', internalId.value))
 
   const ticketQuery = new QueryHandler(
     // Currently we need no subscribeToMore here, because the tab registration holds the ticket subscription.

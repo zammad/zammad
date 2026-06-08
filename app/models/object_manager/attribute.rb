@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class ObjectManager::Attribute < ApplicationModel
   include HasDefaultModelUserRelations
@@ -62,6 +62,8 @@ class ObjectManager::Attribute < ApplicationModel
     action
     scope
     constructor
+    preferences
+    data
   ].freeze
 
   RESERVED_NAMES_PER_MODEL = {
@@ -72,11 +74,12 @@ class ObjectManager::Attribute < ApplicationModel
 
   belongs_to :object_lookup, optional: true
 
-  validates :name, presence: true
+  validates :name,    presence: true
+  validates :display, presence: true
   validates :data_type, inclusion: { in: DATA_TYPES, msg: '%{value} is not a valid data type' }
   validate :inactive_must_be_unused_by_references, unless: :active?
   validate :data_type_must_not_change, on: :update
-  validate :json_field_only_on_postgresql, on: :create
+  validate :prevent_internal_flag_change, on: :update
 
   validates_with ObjectManager::Attribute::DataOptionValidator
 
@@ -86,8 +89,9 @@ class ObjectManager::Attribute < ApplicationModel
 
   before_validation :set_base_options
 
-  before_create :ensure_multiselect
-  before_update :ensure_multiselect
+  before_create  :ensure_multiselect
+  before_update  :ensure_multiselect
+  before_destroy :internal_attribute_indelible, if: :internal?
 
   scope :active,     -> { where(active:   true) }
   scope :editable,   -> { where(editable: true) }
@@ -359,7 +363,7 @@ possible types
     end
     data.delete(:object)
 
-    data[:name].downcase!
+    data[:name] = data[:name].downcase
 
     # check new entry - is needed
     record = ObjectManager::Attribute.find_by(
@@ -463,7 +467,7 @@ use "force: true" to delete also not editable fields
       raise 'need object or object_lookup_id param!'
     end
 
-    data[:name].downcase!
+    data[:name] = data[:name].downcase
 
     # check newest entry - is needed
     record = ObjectManager::Attribute.find_by(
@@ -639,7 +643,7 @@ to send no browser reload event, pass false
       # config changes
       if attribute.to_config
         execute_config_count += 1
-        if attribute.data_type =~ %r{^(multi|tree_)?select$} && attribute.data_option[:options]
+        if attribute.option_attribute? && attribute.data_option[:options]
           attribute.data_option_new[:historical_options] = attribute_historic_options(attribute)
         end
         attribute.data_option = attribute.data_option_new
@@ -649,22 +653,16 @@ to send no browser reload event, pass false
         next if !attribute.to_create && !attribute.to_migrate && !attribute.to_delete
       end
 
-      if %r{^(multi|tree_)?select$}.match?(attribute.data_type)
+      if attribute.option_attribute?
         attribute.data_option[:historical_options] = attribute_historic_options(attribute)
       end
 
       data_type = nil
       case attribute.data_type
-      when %r{^(input|select|tree_select|richtext|textarea|checkbox)$}
+      when %r{^(input|select|tree_select|richtext|textarea|checkbox|multiselect|multi_tree_select)$}
         data_type = :string
       when 'autocompletion_ajax_external_data_source'
         data_type = :jsonb
-      when %r{^(multiselect|multi_tree_select)$}
-        data_type = if Rails.application.config.db_column_array
-                      :string
-                    else
-                      :json
-                    end
       when %r{^(integer|user_autocompletion)$}
         data_type = :integer
       when %r{^(boolean|active)$}
@@ -688,11 +686,9 @@ to send no browser reload event, pass false
           )
         when %r{^(multiselect|multi_tree_select)$}
           options = {
-            null: true,
+            null:  true,
+            array: true,
           }
-          if Rails.application.config.db_column_array
-            options[:array] = true
-          end
 
           ActiveRecord::Migration.change_column(
             model.table_name,
@@ -701,15 +697,12 @@ to send no browser reload event, pass false
             options,
           )
         when 'autocompletion_ajax_external_data_source'
-          options = {
-            null: true,
-          }
-
           ActiveRecord::Migration.change_column(
             model.table_name,
             attribute.name,
             data_type,
-            options,
+            null:    false,
+            default: {},
           )
         when %r{^(integer|user_autocompletion|datetime|date)$}, %r{^(boolean|active)$}
           ActiveRecord::Migration.change_column(
@@ -745,11 +738,9 @@ to send no browser reload event, pass false
         )
       when %r{^(multiselect|multi_tree_select)$}
         options = {
-          null: true,
+          null:  true,
+          array: true,
         }
-        if Rails.application.config.db_column_array
-          options[:array] = true
-        end
 
         ActiveRecord::Migration.add_column(
           model.table_name,
@@ -758,14 +749,12 @@ to send no browser reload event, pass false
           **options,
         )
       when 'autocompletion_ajax_external_data_source'
-        options = {
-          null: true,
-        }
         ActiveRecord::Migration.add_column(
           model.table_name,
           attribute.name,
           data_type,
-          **options,
+          null:    false,
+          default: {},
         )
       when %r{^(integer|user_autocompletion)$}, %r{^(boolean|active)$}, %r{^(datetime|date)$}
         ActiveRecord::Migration.add_column(
@@ -823,22 +812,47 @@ where attributes are used in conditions
 =end
 
   def self.attribute_to_references_hash
-    attribute_list = {}
-
     attribute_to_references_hash_objects
       .map { |elem| elem.select(:name, :condition) }
       .flatten
-      .each do |item|
-        item.condition.each_key do |condition_key|
-          attribute_list[condition_key] ||= {}
-          attribute_list[condition_key][item.class.name] ||= []
-          next if attribute_list[condition_key][item.class.name].include?(item.name)
+      .each_with_object({}) do |item, attribute_list|
+        walk_conditions(item.condition) do |condition_name|
+          attribute_list[condition_name] ||= {}
+          attribute_list[condition_name][item.class.name] ||= []
+          next if attribute_list[condition_name][item.class.name].include?(item.name)
 
-          attribute_list[condition_key][item.class.name].push item.name
+          attribute_list[condition_name][item.class.name] << item.name
         end
       end
+        .deep_merge(attribute_to_references_hash_model)
+        .deep_merge(AI::Agent.object_attribute_dependencies)
+  end
 
-    attribute_list
+  private_class_method def self.walk_conditions(condition, &)
+    case condition
+    when Hash
+      if condition.key?('conditions') && condition['conditions'].is_a?(Array)
+        condition['conditions'].each { |sub| walk_conditions(sub, &) }
+      elsif condition.key?('name')
+        yield condition['name']
+      else
+        condition.each_key do |key|
+          next if %w[operator value].include?(key)
+
+          yield key
+        end
+      end
+    when Array
+      condition.each { |sub| walk_conditions(sub, &) }
+    end
+  end
+
+  def self.attribute_to_references_hash_model
+    attribute_to_references_hash_objects.each_with_object({}) do |model, hash|
+      next if !model.respond_to?(:attribute_to_references_hash)
+
+      hash.merge!(model.attribute_to_references_hash)
+    end
   end
 
 =begin
@@ -931,7 +945,7 @@ is certain attribute used by triggers, overviews or schedulers
     model.columns
   end
 
-  def check_name
+  def check_name(raise_error: true)
     return if !name
 
     if name.match?(%r{.+?_(id|ids)$}i)
@@ -957,21 +971,21 @@ is certain attribute used by triggers, overviews or schedulers
       errors.add(:name, __('%{name} is a reserved word'), name: name)
     end
 
-    # fixes issue #2236 - Naming an attribute "attribute" causes ActiveRecord failure
-    begin
-      ObjectLookup.by_id(object_lookup_id).constantize.instance_method_already_implemented? name
-    rescue ActiveRecord::DangerousAttributeError
-      errors.add(:name, __('%{name} is a reserved word'), name: name)
+    record = object_lookup.to_class.new
+
+    # https://github.com/zammad/zammad/issues/2236
+    # https://github.com/zammad/zammad/issues/6072
+    if new_record?
+      if record.respond_to?(name, true)
+        errors.add(:name, __('%{name} is a reserved word'), name: name)
+      end
+      if record.attributes.key?(name)
+        errors.add(:name, __('%{name} already exists'), name: name)
+      end
     end
 
-    record = model.constantize.new
-    if new_record? && (record.respond_to?(name.to_sym) || record.attributes.key?(name))
-      errors.add(:name, __('%{name} already exists'), name: name)
-    end
-
-    if errors.present?
-      raise ActiveRecord::RecordInvalid, self
-    end
+    raise ActiveRecord::RecordInvalid, self if raise_error && errors.present?
+    return false if errors.present?
 
     true
   end
@@ -989,6 +1003,10 @@ is certain attribute used by triggers, overviews or schedulers
 
   def local_data_option=(val)
     send(:"#{local_data_attr}=", val)
+  end
+
+  def option_attribute?
+    %w[select tree_select multiselect multi_tree_select].include?(data_type)
   end
 
   private
@@ -1026,11 +1044,17 @@ is certain attribute used by triggers, overviews or schedulers
     errors.add(:data_type, __("can't be altered after creation (you can delete the attribute and create another with the desired value)"))
   end
 
-  def json_field_only_on_postgresql
-    return if data_type != 'autocompletion_ajax_external_data_source'
-    return if ActiveRecord::Base.connection_db_config.configuration_hash[:adapter] == 'postgresql'
+  def prevent_internal_flag_change
+    return if !respond_to?(:internal_changed?)
+    return if !internal_changed?
 
-    errors.add(:data_type, __('can only be created on postgresql databases'))
+    errors.add(:internal, __("can't be modified"))
+  end
+
+  def internal_attribute_indelible
+    errors.add(:base, __('Internal attributes cannot be deleted'))
+
+    throw :abort
   end
 
   def local_data_attr

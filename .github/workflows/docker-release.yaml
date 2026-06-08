@@ -8,9 +8,11 @@ on:
   push:
     branches:
       - stable
-      - develop
     tags:
       - '*'
+  schedule:
+    # Build for develop only once per workday to avoid hitting rate limits on docker hub.
+    - cron:  '10 6 * * 1-5'
 
 jobs:
   docker-build-image:
@@ -24,28 +26,28 @@ jobs:
     runs-on: ${{ matrix.runs-on.runner }}
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
             fetch-depth: 0
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v4
 
       - name: Login to docker.io container registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Login to GitHub Container Registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Login to Quay.io
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           registry: quay.io
           username: ${{ secrets.QUAY_USERNAME }}
@@ -53,7 +55,7 @@ jobs:
 
       - name: Get tags for platform specific image
         id: meta
-        uses: docker/metadata-action@v5
+        uses: docker/metadata-action@v6
         with:
           images: |
             ghcr.io/${{ github.repository_owner }}/zammad
@@ -67,7 +69,7 @@ jobs:
 
       - name: Build and push
         id: docker_build
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: .
           build-args: |
@@ -91,28 +93,28 @@ jobs:
           - image: index.docker.io/${{ github.repository_owner }}/zammad-docker-compose
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
             fetch-depth: 0
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v4
 
       - name: Login to docker.io container registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Login to GitHub Container Registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Login to Quay.io
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           registry: quay.io
           username: ${{ secrets.QUAY_USERNAME }}
@@ -120,7 +122,7 @@ jobs:
 
       - name: Get tag for amd64 image
         id: meta_arch_amd64
-        uses: docker/metadata-action@v5
+        uses: docker/metadata-action@v6
         with:
           images: ${{ matrix.target.image }}
           tags: |
@@ -128,14 +130,16 @@ jobs:
 
       - name: Get tag for arm64 image
         id: meta_arch_arm64
-        uses: docker/metadata-action@v5
+        uses: docker/metadata-action@v6
         with:
           images: ${{ matrix.target.image }}
           tags: |
             type=sha,suffix=-arm64
 
       - name: Get incrementing Zammad version from the most recent tag
-        run: echo ZAMMAD_VERSION="$(git describe --tags | sed -e 's/-[a-z0-9]\{8,\}.*//g')" >> $GITHUB_ENV
+        # Make sure the number is always present (via --long), and pad it to four digits
+        #   for proper alphabetical sorting in tools like updatecli (e.g. 7.0.0-0000, 7.1.0-0215).
+        run: echo ZAMMAD_VERSION="$(git describe --tags --long | awk -F'-' '{printf "%s-%04d\n", $1, $(NF-1)}')" >> $GITHUB_ENV
 
       - name: Get Zammad major.minor version from the most recent tag
         run: echo ZAMMAD_VERSION_MAJOR_MINOR="$(git describe --tags | cut -f1-2 -d.)" >> $GITHUB_ENV
@@ -145,7 +149,7 @@ jobs:
 
       - name: Get tags for final multiarch reference
         id: meta
-        uses: docker/metadata-action@v5
+        uses: docker/metadata-action@v6
         with:
           images: ${{ matrix.target.image }}
           # Don't automatically generate a 'latest' tag for the default branch.

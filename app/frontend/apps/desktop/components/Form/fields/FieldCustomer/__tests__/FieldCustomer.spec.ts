@@ -1,7 +1,7 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { FormKit } from '@formkit/vue'
-import { getByRole, waitFor } from '@testing-library/vue'
+import { waitFor } from '@testing-library/vue'
 
 import { getByIconName } from '#tests/support/components/iconQueries.ts'
 import { renderComponent } from '#tests/support/components/index.ts'
@@ -28,13 +28,41 @@ const testProps = {
 }
 
 describe('Form - Field - Customer - Features', () => {
-  it('supports adding and removing of new email addresses', async () => {
+  it('does not offer the add-email action without explicit opt-in (default)', async () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
         ...testProps,
         debounceInterval: 0,
         clearable: true,
+      },
+    })
+
+    await wrapper.events.click(await wrapper.findByLabelText('Select…'))
+
+    expect(
+      wrapper.queryByText('Start typing to search or enter an email address…'),
+    ).not.toBeInTheDocument()
+    expect(wrapper.getByText('Start typing to search…')).toBeInTheDocument()
+
+    const filterElement = wrapper.getByRole('searchbox')
+
+    mockAutocompleteSearchGenericQuery({ autocompleteSearchGeneric: [] })
+
+    await wrapper.events.type(filterElement, 'foo@bar.tld')
+    await waitForAutocompleteSearchGenericQueryCalls()
+
+    expect(wrapper.queryByRole('button', { name: 'add new email address' })).not.toBeInTheDocument()
+  })
+
+  it('supports adding and removing of new email addresses when allowUnknownEmail is set', async () => {
+    const wrapper = renderComponent(FormKit, {
+      ...wrapperParameters,
+      props: {
+        ...testProps,
+        debounceInterval: 0,
+        clearable: true,
+        allowUnknownEmail: true,
       },
     })
 
@@ -56,19 +84,15 @@ describe('Form - Field - Customer - Features', () => {
 
     await waitForAutocompleteSearchGenericQueryCalls()
 
-    expect(
-      wrapper.queryByRole('button', { name: 'add new email address' }),
-    ).not.toBeInTheDocument()
+    expect(wrapper.queryByRole('button', { name: 'add new email address' })).not.toBeInTheDocument()
 
-    expect(wrapper.getByRole('option')).toHaveTextContent('Loading…')
+    expect(wrapper.getByTestId('select-item')).toHaveTextContent('Loading…')
 
     await wrapper.events.type(filterElement, '@bar.tld')
 
     await waitForAutocompleteSearchGenericQueryCalls()
 
-    await wrapper.events.click(
-      wrapper.getByRole('button', { name: 'add new email address' }),
-    )
+    await wrapper.events.click(wrapper.getByRole('button', { name: 'add new email address' }))
 
     await waitFor(() => {
       expect(wrapper.emitted().inputRaw).toBeTruthy()
@@ -94,9 +118,7 @@ describe('Form - Field - Customer - Features', () => {
 
     await wrapper.events.keyboard('{Escape}')
 
-    await wrapper.events.click(
-      wrapper.getByRole('button', { name: 'Clear Selection' }),
-    )
+    await wrapper.events.click(wrapper.getByRole('button', { name: 'Clear selection' }))
 
     expect(emittedInput[1][0]).toBeNull()
 
@@ -120,9 +142,7 @@ describe('Form - Field - Customer - Query', () => {
 
     expect(filterElement).toBeInTheDocument()
 
-    expect(
-      wrapper.queryByText('Start typing to search or enter an email address…'),
-    ).toBeInTheDocument()
+    expect(wrapper.queryByText('Start typing to search…')).toBeInTheDocument()
 
     mockAutocompleteSearchGenericQuery({
       autocompleteSearchGeneric: testOptions,
@@ -132,11 +152,9 @@ describe('Form - Field - Customer - Query', () => {
 
     await waitForAutocompleteSearchGenericQueryCalls()
 
-    expect(
-      wrapper.queryByText('Start typing to search or enter an email address…'),
-    ).not.toBeInTheDocument()
+    expect(wrapper.queryByText('Start typing to search…')).not.toBeInTheDocument()
 
-    let selectOptions = wrapper.getAllByRole('option')
+    let selectOptions = wrapper.getAllByTestId('select-item')
 
     expect(selectOptions).toHaveLength(2)
 
@@ -150,13 +168,9 @@ describe('Form - Field - Customer - Query', () => {
 
     expect(getByIconName(selectOptions[1], 'buildings')).toBeInTheDocument()
 
-    const button = getByRole(selectOptions[1], 'button', {
-      name: 'Has submenu',
-    })
+    await wrapper.events.click(selectOptions[1])
 
-    await wrapper.events.click(button)
-
-    selectOptions = wrapper.getAllByRole('option')
+    selectOptions = wrapper.getAllByTestId('select-item')
 
     expect(selectOptions).toHaveLength(1)
 
@@ -164,11 +178,9 @@ describe('Form - Field - Customer - Query', () => {
       `${testOptions[0].label} – ${testOptions[0].heading}`,
     )
 
-    await wrapper.events.click(
-      wrapper.getByRole('button', { name: 'Back to previous page' }),
-    )
+    await wrapper.events.click(wrapper.getByRole('button', { name: 'Back to previous page' }))
 
-    selectOptions = wrapper.getAllByRole('option')
+    selectOptions = wrapper.getAllByTestId('select-item')
 
     expect(selectOptions).toHaveLength(2)
   })
@@ -206,9 +218,7 @@ describe('Form - Field - Customer - Query', () => {
 
     expect(wrapper.queryByRole('menu')).not.toBeInTheDocument()
 
-    expect(wrapper.getByRole('listitem')).toHaveTextContent(
-      testOptions[0].label,
-    )
+    expect(wrapper.getByRole('listitem')).toHaveTextContent(testOptions[0].label)
 
     await wrapper.events.click(wrapper.getByLabelText('Select…'))
 

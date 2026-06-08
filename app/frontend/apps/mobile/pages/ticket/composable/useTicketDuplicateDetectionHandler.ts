@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { FormHandlerExecution } from '#shared/components/Form/types.ts'
 import type {
@@ -15,9 +15,7 @@ export interface TicketDuplicateDetectionPayload {
 }
 
 export const useTicketDuplicateDetectionHandler = (
-  showTicketDuplicateDetectionDialog: (
-    data: TicketDuplicateDetectionPayload,
-  ) => void,
+  showTicketDuplicateDetectionDialog: (data: TicketDuplicateDetectionPayload) => void,
 ): FormHandler => {
   const executeHandler = (
     execution: FormHandlerExecution,
@@ -45,8 +43,7 @@ export const useTicketDuplicateDetectionHandler = (
 
     if (!executeHandler(execution, schemaData, changedField)) return
 
-    const newFieldData =
-      changedField?.newValue as unknown as TicketDuplicateDetectionPayload
+    const newFieldData = changedField?.newValue as unknown as TicketDuplicateDetectionPayload
 
     if (!newFieldData?.count) return
 

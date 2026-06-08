@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -238,7 +238,7 @@ RSpec.describe Sequencer::Sequence::Import::Kayako::Case, db_strategy: :reset, s
       process(process_payload)
       expect(Ticket::Article.last).to have_attributes(
         to:   'info@zammad.org',
-        body: "<div dir=\"ltr\">Some text conent<br>\n</div>",
+        body: '<div dir="ltr">Some text conent<br></div>',
       )
     end
 

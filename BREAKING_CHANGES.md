@@ -1,6 +1,54 @@
 # Breaking Changes
 
+## 7.2
+
+### Elasticsearch 7 no longer supported
+
+Elasticsearch 7 has reached end of life and is no longer supported. Zammad now
+requires **Elasticsearch 8** or later.
+
+⚠️ Please upgrade your Elasticsearch installation before updating to Zammad 7.2.
+
+### Calendar iCal feed must be a URL
+
+Calendars can no longer be configured with a local file path as the iCal feed source. Only HTTP/HTTPS URLs are accepted.
+
+⚠️ If you previously used a local `.ics`
+file path, host the file on an HTTP server and update the calendar's iCal feed URL accordingly.
+
+### Deprecated `es-ca` locale inactivated
+
+The deprecated `es-ca` locale (Catalan) is no longer offered for selection.
+Users still set to `es-ca` are automatically migrated to the proper `ca`
+locale. Existing Knowledge Base locales referencing `es-ca` are left
+untouched and must be migrated manually due to the URL change.
+
+### Stricter default Content-Security-Policy
+
+A new `frame-ancestors 'self'` directive was added to the default
+Content-Security-Policy header.
+
+⚠️ Setups that previously allowed the Zammad web interface to be embedded in
+an `<iframe>` on a different origin by overriding the `X-Frame-Options` header
+at the reverse proxy will now be blocked again by the new `frame-ancestors 'self'`
+CSP directive. To re-enable embedding from trusted origins, the `frame-ancestors`
+directive of the `Content-Security-Policy` response header must be adjusted at
+the reverse proxy as well.
+
 ## 7.0
+
+### MySQL support removed, database related application settings deprecated
+
+After a long period of deprecation, support for the MySQL database was removed.
+Any systems still running on MySQL need to be migrated to PostgreSQL
+_before updating to Zammad 7.0_.
+
+The following configuration values are now deprecated and will be removed with Zammad 8.0:
+
+- `Rails.application.config.db_null_byte`
+- `Rails.application.config.db_case_sensitive`
+- `Rails.application.config.db_like`
+- `Rails.application.config.db_column_array`
 
 ### Fulltext search is now asciifolding
 
@@ -20,6 +68,71 @@ Example for asciifolding searches:
 **disabled**: Searching for `Munchen` will not match `München`.
 
 Thanks to [Jano Suchal](https://github.com/jsuchal) for the contribution.
+
+### nginx configuration update
+
+Please update your nginx configuration file to insert the line `proxy_http_version 1.1;` to the `location /`
+section like in the example below:
+
+```diff
+   location / {
++    proxy_http_version 1.1;
+     proxy_set_header Host $http_host;
+```
+
+### Disallow assigning the same organization as primary and secondary
+
+It is no longer allowed for the same organization to be assigned as both a primary and a
+secondary organization of a user. An automatic migration makes sure the user data is in a consistent
+state after the update.
+
+⚠️ Before upgrading, ensure that no calls to the API are used that try to put users in this invalid state.
+User records cannot have the same organization set as both primary and secondary anymore, and trying to
+do this will now result in an API error.
+
+### Catalan locale change
+
+The previously available Catalan locale used a wrong internal locale code and was deprecated. There is now a
+new Catalan locale with the correct code "ca". The deprecated locale will be removed in a future release of Zammad.
+An automatic update will switch the language preference of all Catalan user profiles to the new 'Catalan (Català)'
+locale during the migration.
+
+The following applies only in case you are already using Knowledge Base with Catalan language. Please note the
+deprecated Catalan locale will not be updated automatically. Changing the locale of a Knowledge Base causes a change in
+the public URLs. You can migrate Knowledge Base at your own pace by running the following command:
+
+```ruby
+zammad run rails r "KnowledgeBase::Locale.find_by(system_locale: Locale.find_by(locale: 'es-ca'))&.update!(system_locale: Locale.find_by(locale: 'ca'))"
+```
+
+### Slack integration removed
+
+The slack integration was remved from the codebase. It is recommended that you
+[switch to pre-built webhooks instead](https://admin-docs.zammad.org/en/latest/manage/webhook/examples/slack-notifications.html).
+Existing Slack integrations should be migrated manually, if not already done.
+
+### Twitter integration removed
+
+The Twitter integration was removed due to problems with API licensing. There is no replacement available.
+
+## 6.5.2
+
+The following breaking changes occurred due to a security fix.
+
+### PGPController parameter name changes
+
+The field `key` of the "key add" endpoint was renamed to `private_key`.
+
+### SMIMEController parameter name changes
+
+- The field `data` of the "certificate add" endpoint was renamed to `certificate`.
+- The field `data` of the "private key add" endpoint was renamed to `private_key`.
+
+### HttpLogsController access control
+
+Logging subsystem (`HttpLog`) API access control is now more fine grained.
+In the past, any `admin.*` permission was sufficient to access this data.
+Now, only the relevant parts can be accessed (e.g. `admin.webhook`)
 
 ## 6.5
 
@@ -48,7 +161,7 @@ The structure of the **full search** (e.g. `/ticket/search?full=true`) remains t
 
 Some objects used an object-related hash key, such as `ticket_ids`. This is now always `record_ids`.
 
-The **count search** (e.g. `/ticket/search?only_total_count=true`) is a  new feature.
+The **count search** (e.g. `/ticket/search?only_total_count=true`) is a new feature.
 
 ### API performance optimization of asset return data
 
@@ -191,8 +304,8 @@ now it is forbidden.
 On existing systems, the group names that contain the now reserved delimiter will be renamed, with sets of double colons
 being replaced by a dash (`-`) during the migration process.
 
-Additionally, existing custom group object attributes named _name\_last_ and _parent\_id_ will be renamed too, by adding
-an underscore in front (_\_name\_last_ and _\_parent\_id_). This is due to these attributes now being part of the group
+Additionally, existing custom group object attributes named _name_last_ and _parent_id_ will be renamed too, by adding
+an underscore in front (_\_name_last_ and _\_parent_id_). This is due to these attributes now being part of the group
 model, requiring dedicated table columns under the reserved names.
 
 ### Disallowed URL Values in User's Name Attributes

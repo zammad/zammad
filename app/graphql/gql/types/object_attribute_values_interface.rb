@@ -1,10 +1,10 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Types
   module ObjectAttributeValuesInterface
     include Gql::Types::BaseInterface
 
-    description 'Custom object fields (only editable & active)'
+    description 'Custom object fields (only non-internal & active)'
 
     scoped_fields do
       field :object_attribute_values, [Gql::Types::ObjectAttributeValueType, { null: false }]
@@ -20,7 +20,7 @@ module Gql::Types
 
     def find_object_attributes
       ::ObjectManager::Object.new(@object.class.name).attributes(context.current_user, @object, data_only: false)
-        .select { |oa| oa.attribute.editable }
+        .reject { |oa| oa.attribute.internal }
     end
 
     private

@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { within } from '@testing-library/vue'
 import { vi } from 'vitest'
@@ -168,29 +168,19 @@ describe('TicketSidebarGitHub', () => {
 
     expect(wrapper.getByRole('button', { name: 'GitHub' })).toBeInTheDocument()
 
-    expect(
-      wrapper.getByRole('button', { name: 'Link Issue' }),
-    ).toBeInTheDocument()
+    expect(wrapper.getByRole('button', { name: 'Link issue' })).toBeInTheDocument()
 
-    expect(
-      wrapper.queryByRole('status', { name: 'Issues' }),
-    ).not.toBeInTheDocument()
+    expect(wrapper.queryByRole('status', { name: 'Issues' })).not.toBeInTheDocument()
 
-    expect(
-      wrapper.queryByRole('button', { name: 'Action menu button' }),
-    ).not.toBeInTheDocument()
+    expect(wrapper.queryByRole('button', { name: 'Action menu button' })).not.toBeInTheDocument()
   })
 
   it('displays the GitHub issue tracker', async () => {
     const wrapper = renderGitHubSidebar()
 
-    expect(wrapper.getByRole('heading', { level: 2 })).toHaveTextContent(
-      'GitHub',
-    )
+    expect(wrapper.getByRole('heading', { level: 2 })).toHaveTextContent('GitHub')
 
-    expect(
-      await wrapper.findByRole('status', { name: 'Issues' }),
-    ).toHaveTextContent('2')
+    expect(await wrapper.findByRole('status', { name: 'Issues' })).toHaveTextContent('2')
 
     expect(
       await wrapper.findByRole('link', {
@@ -208,14 +198,10 @@ describe('TicketSidebarGitHub', () => {
   it('links a new issue with issues present', async () => {
     const wrapper = renderGitHubSidebar()
 
-    await wrapper.events.click(
-      await wrapper.findByRole('button', { name: 'Action menu button' }),
-    )
+    await wrapper.events.click(await wrapper.findByRole('button', { name: 'Action menu button' }))
 
     expect(await wrapper.findByIconName('link-45deg')).toBeInTheDocument()
-    await wrapper.events.click(
-      wrapper.getByRole('button', { name: 'Link Issue' }),
-    )
+    await wrapper.events.click(wrapper.getByRole('button', { name: 'Link issue' }))
 
     const flyout = await wrapper.findByRole('complementary', {
       name: 'GitHub: Link issue',
@@ -230,12 +216,9 @@ describe('TicketSidebarGitHub', () => {
       'https://git.zammad.com/zammad/zammad/-/issues/124',
     )
 
-    await wrapper.events.click(
-      wrapper.getByRole('button', { name: 'Link Issue' }),
-    )
+    await wrapper.events.click(wrapper.getByRole('button', { name: 'Link issue' }))
 
-    const calls =
-      await waitForTicketExternalReferencesIssueTrackerItemAddMutationCalls()
+    const calls = await waitForTicketExternalReferencesIssueTrackerItemAddMutationCalls()
 
     expect(calls.at(-1)?.variables).toEqual({
       issueTrackerLink: 'https://git.zammad.com/zammad/zammad/-/issues/124',
@@ -247,13 +230,9 @@ describe('TicketSidebarGitHub', () => {
   it('links a new issue with no issues present', async () => {
     const wrapper = renderGitHubSidebar(true, [])
 
-    expect(
-      wrapper.queryByRole('button', { name: 'Action menu button' }),
-    ).not.toBeInTheDocument()
+    expect(wrapper.queryByRole('button', { name: 'Action menu button' })).not.toBeInTheDocument()
 
-    await wrapper.events.click(
-      await wrapper.findByRole('button', { name: 'Link Issue' }),
-    )
+    await wrapper.events.click(await wrapper.findByRole('button', { name: 'Link issue' }))
 
     const flyout = await wrapper.findByRole('complementary', {
       name: 'GitHub: Link issue',
@@ -279,8 +258,7 @@ describe('TicketSidebarGitHub', () => {
 
     await wrapper.events.click(unlinkButtons[0])
 
-    const calls =
-      await waitForTicketExternalReferencesIssueTrackerItemRemoveMutationCalls()
+    const calls = await waitForTicketExternalReferencesIssueTrackerItemRemoveMutationCalls()
 
     expect(calls.at(-1)?.variables).toEqual({
       issueTrackerLink: 'https://git.zammad.com/zammad/zammad/-/issues/123',
@@ -302,13 +280,9 @@ describe('TicketSidebarGitHub', () => {
 
     expect(wrapper.emitted('show')).toHaveLength(1)
 
-    expect(
-      wrapper.queryByRole('button', { name: 'Unlink issue' }),
-    ).not.toBeInTheDocument()
+    expect(wrapper.queryByRole('button', { name: 'Unlink issue' })).not.toBeInTheDocument()
 
-    expect(
-      wrapper.queryByRole('button', { name: 'Action menu button' }),
-    ).not.toBeInTheDocument()
+    expect(wrapper.queryByRole('button', { name: 'Action menu button' })).not.toBeInTheDocument()
   })
 })
 
@@ -361,8 +335,6 @@ describe('errors', () => {
       'Error fetching information from GitHub. Please contact your administrator.',
     )
 
-    expect(
-      wrapper.queryByRole('button', { name: 'Action menu button' }),
-    ).not.toBeInTheDocument()
+    expect(wrapper.queryByRole('button', { name: 'Action menu button' })).not.toBeInTheDocument()
   })
 })

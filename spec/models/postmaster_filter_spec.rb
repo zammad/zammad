@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -20,11 +20,11 @@ RSpec.describe PostmasterFilter, type: :model do
       }
     end
 
-    shared_examples 'raises error' do |params|
+    shared_examples 'raises exception' do |params|
       let(:matcher) { params[:matcher] }
 
-      it 'raises error' do
-        expect { described_class.create!(filter) }.to raise_error(Exceptions::UnprocessableEntity)
+      it 'raises exception' do
+        expect { described_class.create!(filter) }.to raise_exception(an_instance_of(Exceptions::InvalidAttribute).and(have_attributes(attribute: 'match', message: start_with(params[:message]))))
       end
     end
 
@@ -51,27 +51,27 @@ RSpec.describe PostmasterFilter, type: :model do
       end
 
       context 'when empty match' do
-        include_examples('raises error', matcher: {})
+        include_examples('raises exception', matcher: {}, message: 'At least one match rule is required, but none was provided.')
       end
 
       context 'when incomplete match' do
-        include_examples('raises error', matcher: {
+        include_examples('raises exception', matcher: {
                            from: {
                              operator: 'contains',
                              value:    '',
                            }
-                         })
+                         }, message: 'The required match value is missing.')
       end
 
       context 'when invalid match regex' do
         %w[[] ?? *].each do |regex|
           describe regex do
-            include_examples('raises error', matcher: {
+            include_examples('raises exception', matcher: {
                                from: {
                                  operator: 'matches regex',
                                  value:    regex,
                                },
-                             })
+                             }, message: "Can't use regex '#{regex}'")
           end
         end
       end

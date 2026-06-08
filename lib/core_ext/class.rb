@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Class
   def to_app_model_url
@@ -10,6 +10,18 @@ class Class
           .downcase
     end
   end
+
+=begin
+
+This function returns the frontend name for the rails class (legacy). To reverse this, check ObjectLookup::app_model2class.
+
+  result = Ticket::Article.to_app_model
+
+returns
+
+  result = :TicketArticle
+
+=end
 
   def to_app_model
     @to_app_model ||= to_s.gsub(%r{::}, '').to_sym

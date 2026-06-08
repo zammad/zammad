@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Sequencer::Unit::Import::Common::User::Attributes::Downcase < Sequencer::Unit::Base
   prepend ::Sequencer::Unit::Import::Common::Model::Mixin::Skip::Action
@@ -11,7 +11,7 @@ class Sequencer::Unit::Import::Common::User::Attributes::Downcase < Sequencer::U
     %i[login email].each do |attribute|
       next if mapped[attribute].blank?
 
-      mapped[attribute].downcase!
+      mapped[attribute] = mapped[attribute].downcase
     end
   end
 end

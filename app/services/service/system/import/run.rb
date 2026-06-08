@@ -1,9 +1,7 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Service::System::Import::Run < Service::Base
   def initialize
-    super
-
     configured!
   end
 
@@ -11,21 +9,30 @@ class Service::System::Import::Run < Service::Base
     Setting.set('import_mode', true)
     source = Setting.get('import_backend')
 
-    # Captain, oh my captain! I hate to do this, but we need to do it.
-    return execute_otrs_import if source == 'otrs'
-
-    job_name = "Import::#{source.camelize}"
-    job = ImportJob.create(name: job_name)
-    AsyncImportJob.perform_later(job)
+    case source
+    when 'otrs'
+      execute_otrs_import
+    else
+      execute_import(source)
+    end
   end
 
   private
 
+  def execute_import(source)
+    job_name = "Import::#{source.camelize}"
+
+    ImportJob.create!(name: job_name, start_after_creation: true)
+  end
+
   def execute_otrs_import
-    AsyncOtrsImportJob.perform_later
+    ApplicationModel.current_transaction.after_commit do
+      AsyncOtrsImportJob.perform_later
+    end
   end
 
   def configured!
+    raise Service::System::CheckSetup::SystemSetupError, __('This system has already been configured.') if Service::System::CheckSetup.done?
     raise ExecuteError if Setting.get('import_backend').empty?
   end
 

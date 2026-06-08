@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class LdapSourcesController < ApplicationController
   include CanPrioritize
@@ -24,4 +24,11 @@ class LdapSourcesController < ApplicationController
   def destroy
     model_destroy_render(LdapSource, params)
   end
+
+  private
+
+  def sensitive_attributes(_input, _object)
+    LdapSource::SENSITIVE_FIELDS
+  end
+
 end

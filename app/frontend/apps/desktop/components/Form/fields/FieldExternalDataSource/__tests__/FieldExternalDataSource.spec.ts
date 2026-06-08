@@ -1,9 +1,11 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { getNode } from '@formkit/core'
 import { FormKit } from '@formkit/vue'
 
+import { getByIconName } from '#tests/support/components/iconQueries.ts'
 import { renderComponent } from '#tests/support/components/index.ts'
+import { waitFor } from '#tests/support/vitest-wrapper.ts'
 
 import { mockAutocompleteSearchObjectAttributeExternalDataSourceQuery } from '#shared/components/Form/fields/FieldExternalDataSource/graphql/queries/autocompleteSearchObjectAttributeExternalDataSource.mocks.ts'
 import { EnumObjectManagerObjects } from '#shared/graphql/types.ts'
@@ -46,11 +48,9 @@ describe('Form - Field - External Data Source - Query', () => {
       },
     })
 
-    const mocker = mockAutocompleteSearchObjectAttributeExternalDataSourceQuery(
-      {
-        autocompleteSearchObjectAttributeExternalDataSource: testOptions,
-      },
-    )
+    const mocker = mockAutocompleteSearchObjectAttributeExternalDataSourceQuery({
+      autocompleteSearchObjectAttributeExternalDataSource: testOptions,
+    })
 
     // When we only have one field, the root node is the field itself.
     // So we are faking the initial entity object.
@@ -64,16 +64,12 @@ describe('Form - Field - External Data Source - Query', () => {
 
     const filterElement = wrapper.getByRole('searchbox')
 
-    expect(
-      await wrapper.findByText('Start typing to search…'),
-    ).toBeInTheDocument()
+    expect(await wrapper.findByText('Start typing to search…')).toBeInTheDocument()
 
     // Search is always case-insensitive.
     await wrapper.events.type(filterElement, 'A')
 
-    expect(
-      wrapper.queryByText('Start typing to search…'),
-    ).not.toBeInTheDocument()
+    expect(wrapper.queryByText('Start typing to search…')).not.toBeInTheDocument()
 
     const mockCalls = await mocker.waitForCalls()
 
@@ -98,58 +94,140 @@ describe('Form - Field - External Data Source - Query', () => {
     expect(selectOptions[0]).toHaveTextContent(testOptions[0].label)
     expect(selectOptions[1]).toHaveTextContent(testOptions[1].label)
 
-    await wrapper.events.click(wrapper.getByLabelText('Clear Search'))
+    await wrapper.events.click(wrapper.getByLabelText('Clear search'))
 
     expect(filterElement).toHaveValue('')
 
-    expect(
-      await wrapper.findByText('Start typing to search…'),
-    ).toBeInTheDocument()
+    expect(await wrapper.findByText('Start typing to search…')).toBeInTheDocument()
   })
 
-  it('correctly renders default value', async () => {
+  it.each([false, true])('correctly renders default value (multiple: %s)', async (multiple) => {
+    const value = multiple ? [testOptions[0]] : testOptions[0]
+
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
         ...testProps,
-        value: {
-          value: '1',
-          label: 'Selected Value',
-        },
-        debounceInterval: 0,
+        value,
+        options: [testOptions[0]],
+        multiple,
       },
     })
 
     const input = await wrapper.findByLabelText('Select…')
-    expect(input).toHaveTextContent('Selected Value')
+
+    expect(input).toHaveTextContent(testOptions[0].label)
+
+    await wrapper.events.click(input)
+
+    const selectOptions = wrapper.getAllByRole('option')
+
+    expect(selectOptions).toHaveLength(1)
+    expect(selectOptions[0]).toHaveTextContent(testOptions[0].label)
+
+    if (multiple) {
+      expect(getByIconName(selectOptions[0], 'check-square')).toBeInTheDocument()
+    } else {
+      expect(getByIconName(selectOptions[0], 'check2')).toBeInTheDocument()
+    }
   })
 
-  it('supports clear button', async () => {
+  it('can select/unselect multiple options', async () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
         ...testProps,
-        value: {
-          value: '1',
-          label: 'Selected Value',
-        },
-        clearable: true,
+        options: testOptions,
+        multiple: true,
       },
     })
 
-    await vi.waitFor(() => {
-      expect(wrapper.getByRole('listitem')).toHaveTextContent('Selected Value')
+    const input = await wrapper.findByLabelText('Select…')
+
+    expect(input).not.toHaveTextContent(testOptions[0].label)
+    expect(input).not.toHaveTextContent(testOptions[1].label)
+
+    await wrapper.events.click(input)
+
+    const selectOptions = wrapper.getAllByRole('option')
+
+    await wrapper.events.click(selectOptions[0])
+
+    await waitFor(() => {
+      expect(wrapper.emitted().inputRaw).toHaveLength(1)
     })
 
-    await wrapper.events.click(wrapper.getByRole('button'))
+    let emittedInput = wrapper.emitted().inputRaw as Array<Array<InputEvent>>
 
-    await vi.waitFor(() => {
+    expect(emittedInput[0][0]).toEqual([testOptions[0]])
+
+    expect(input).toHaveTextContent(testOptions[0].label)
+    expect(input).not.toHaveTextContent(testOptions[1].label)
+
+    await wrapper.events.click(selectOptions[1])
+
+    await waitFor(() => {
+      expect(wrapper.emitted().inputRaw).toHaveLength(2)
+    })
+
+    emittedInput = wrapper.emitted().inputRaw as Array<Array<InputEvent>>
+
+    expect(emittedInput[1][0]).toEqual(testOptions)
+
+    expect(input).toHaveTextContent(testOptions[0].label)
+    expect(input).toHaveTextContent(testOptions[1].label)
+
+    await wrapper.events.click(selectOptions[0])
+
+    await waitFor(() => {
+      expect(wrapper.emitted().inputRaw).toHaveLength(3)
+    })
+
+    emittedInput = wrapper.emitted().inputRaw as Array<Array<InputEvent>>
+
+    expect(emittedInput[2][0]).toEqual([testOptions[1]])
+
+    expect(input).not.toHaveTextContent(testOptions[0].label)
+    expect(input).toHaveTextContent(testOptions[1].label)
+
+    await wrapper.events.click(selectOptions[1])
+
+    await waitFor(() => {
+      expect(wrapper.emitted().inputRaw).toHaveLength(4)
+    })
+
+    emittedInput = wrapper.emitted().inputRaw as Array<Array<InputEvent>>
+
+    expect(emittedInput[3][0]).toEqual([])
+
+    expect(input).not.toHaveTextContent(testOptions[0].label)
+    expect(input).not.toHaveTextContent(testOptions[1].label)
+  })
+
+  it.each([false, true])('supports clearing selection (multiple: %s)', async (multiple) => {
+    const wrapper = renderComponent(FormKit, {
+      ...wrapperParameters,
+      props: {
+        ...testProps,
+        value: multiple ? [testOptions[0]] : testOptions[0],
+        clearable: true,
+        multiple,
+      },
+    })
+
+    await waitFor(() => {
+      expect(wrapper.getByRole('listitem')).toHaveTextContent(testOptions[0].label)
+    })
+
+    await wrapper.events.click(wrapper.getByRole('button', { name: 'Clear selection' }))
+
+    await waitFor(() => {
       expect(wrapper.emitted().inputRaw).toBeTruthy()
     })
 
     const emittedInput = wrapper.emitted().inputRaw as Array<Array<InputEvent>>
 
-    expect(emittedInput[0][0]).toEqual({})
+    expect(emittedInput[0][0]).toEqual(multiple ? [] : {})
 
     expect(wrapper.queryByRole('listitem')).not.toBeInTheDocument()
     expect(wrapper.queryByRole('button')).not.toBeInTheDocument()

@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { isRef, ref, toValue, watch, type ComputedRef, type Ref } from 'vue'
 import { onBeforeRouteUpdate } from 'vue-router'
@@ -17,11 +17,7 @@ export const useSorting = <
   },
 >(
   query: QueryHandler<TQueryResult, TQueryVariables>,
-  orderByParam:
-    | string
-    | Ref<string | undefined>
-    | ComputedRef<string | undefined>
-    | undefined,
+  orderByParam: string | Ref<string | undefined> | ComputedRef<string | undefined> | undefined,
   orderDirectionParam:
     | EnumOrderDirection
     | Ref<EnumOrderDirection | undefined>
@@ -31,9 +27,7 @@ export const useSorting = <
 ) => {
   // Local refs that you'll work with inside this composable
   const orderBy = ref<string | undefined>(toValue(orderByParam))
-  const orderDirection = ref<EnumOrderDirection | undefined>(
-    toValue(orderDirectionParam),
-  )
+  const orderDirection = ref<EnumOrderDirection | undefined>(toValue(orderDirectionParam))
 
   if (isRef(orderByParam)) {
     watch(orderByParam, (newValue) => {
@@ -52,6 +46,7 @@ export const useSorting = <
     column: string,
     direction: EnumOrderDirection,
     additionalVariables: Partial<TQueryVariables> = {},
+    afterSortCallback?: () => void,
   ) => {
     isSorting.value = true
     // It's fine to parse only partial variables, in this case the original variables values are used for
@@ -64,6 +59,8 @@ export const useSorting = <
       })
       .finally(() => {
         isSorting.value = false
+
+        afterSortCallback?.()
 
         requestAnimationFrame(() => {
           scrollContainer?.value?.scrollTo({ top: 0 })

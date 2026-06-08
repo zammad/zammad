@@ -4,11 +4,8 @@ from_email: martin@example.de
 from_display_name: Martin Edenhofer
 to: me@example.de
 subject: Test with different content type file name options
-body: |-
-  Enjoy!<div>
-  <br><div>-Martin<br><span class="js-signatureMarker"></span><br>--<br>Old programmers never die. They just branch to a new address.<br>
-  </div><br>
-  </div>
+body: Enjoy!<div><br><div>-Martin<br><span class="js-signatureMarker"></span><br>--<br>Old
+  programmers never die. They just branch to a new address.<br></div><br></div>
 content_type: text/html
 attachments:
 - !ruby/hash:ActiveSupport::HashWithIndifferentAccess

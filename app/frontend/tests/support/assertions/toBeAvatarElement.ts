@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { prettyDOM } from '@testing-library/vue'
 import { useDateFormat } from '@vueuse/shared'
@@ -13,12 +13,7 @@ export interface ToBeAvatarOptions {
   type: 'user' | 'organization'
 }
 
-// eslint-disable-next-line sonarjs/cognitive-complexity
-export default function toBeAvatar(
-  this: any,
-  received: unknown,
-  options: ToBeAvatarOptions,
-) {
+export default function toBeAvatar(this: any, received: unknown, options: ToBeAvatarOptions) {
   if (!received || !(received instanceof HTMLElement)) {
     return {
       message: () => 'received is not an HTMLElement',
@@ -28,8 +23,7 @@ export default function toBeAvatar(
 
   if (received.dataset.testId !== 'common-avatar') {
     return {
-      message: () =>
-        `received element is not an avatar\n${prettyDOM(received)}`,
+      message: () => `received element is not an avatar\n${prettyDOM(received)}`,
       pass: false,
     }
   }
@@ -68,9 +62,7 @@ export default function toBeAvatar(
       const isOutOfOffice = received.classList.contains('opacity-60')
       const localPass = options.outOfOffice ? isOutOfOffice : !isOutOfOffice
       if (!localPass) {
-        errors.push(
-          `out of office class is ${options.outOfOffice ? 'missing' : 'present'}`,
-        )
+        errors.push(`out of office class is ${options.outOfOffice ? 'missing' : 'present'}`)
       }
       pass = pass && localPass
     }
@@ -94,12 +86,10 @@ export default function toBeAvatar(
       errors.push(`organization avatar doesn't have an image`)
     } else {
       const style = window.getComputedStyle(received)
-      const imageStyle = `url(/api/users/image/${options.image})`
+      const imageStyle = `url("/api/users/image/${options.image}")`
       const hasImage = style.backgroundImage === imageStyle
       if (!hasImage) {
-        errors.push(
-          `avatar has image ${style.backgroundImage} instead of ${imageStyle}`,
-        )
+        errors.push(`avatar has image ${style.backgroundImage} instead of ${imageStyle}`)
       }
       pass = pass && hasImage
     }

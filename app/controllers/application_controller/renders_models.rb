@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module ApplicationController::RendersModels
   extend ActiveSupport::Concern
@@ -12,7 +12,7 @@ module ApplicationController::RendersModels
 
     clean_params = object.association_name_to_id_convert(params)
     clean_params = object.param_cleanup(clean_params, true)
-    if object.included_modules.include?(ChecksCoreWorkflow)
+    if object.include?(ChecksCoreWorkflow)
       clean_params[:screen] = 'create'
     end
 
@@ -25,21 +25,7 @@ module ApplicationController::RendersModels
     # save object
     generic_object.save!
 
-    if response_expand?
-      render json: generic_object.attributes_with_association_names, status: :created
-      return
-    end
-
-    if response_full?
-      render json: generic_object.class.full(generic_object.id), status: :created
-      return
-    end
-
-    model_create_render_item(generic_object)
-  end
-
-  def model_create_render_item(generic_object)
-    render json: generic_object.attributes_with_association_ids, status: :created
+    model_item_render(generic_object, status: :created)
   end
 
   def model_update_render(object, params)
@@ -47,9 +33,11 @@ module ApplicationController::RendersModels
     # find object
     generic_object = object.find(params[:id])
 
+    params = unmask_sensitive_params(params, generic_object)
+
     clean_params = object.association_name_to_id_convert(params)
     clean_params = object.param_cleanup(clean_params, true)
-    if object.included_modules.include?(ChecksCoreWorkflow)
+    if object.include?(ChecksCoreWorkflow)
       clean_params[:screen] = 'edit'
     end
 
@@ -63,21 +51,7 @@ module ApplicationController::RendersModels
 
     end
 
-    if response_expand?
-      render json: generic_object.attributes_with_association_names, status: :ok
-      return
-    end
-
-    if response_full?
-      render json: generic_object.class.full(generic_object.id), status: :ok
-      return
-    end
-
-    model_update_render_item(generic_object)
-  end
-
-  def model_update_render_item(generic_object)
-    render json: generic_object.attributes_with_association_ids, status: :ok
+    model_item_render(generic_object)
   end
 
   def model_destroy_render(object, params)
@@ -91,23 +65,9 @@ module ApplicationController::RendersModels
   end
 
   def model_show_render(object, params)
+    generic_object = object.find(params[:id])
 
-    if response_expand?
-      generic_object = object.find(params[:id])
-      render json: generic_object.attributes_with_association_names, status: :ok
-      return
-    end
-
-    if response_full?
-      render json: object.full(params[:id]), status: :ok
-      return
-    end
-
-    model_show_render_item(object.find(params[:id]))
-  end
-
-  def model_show_render_item(generic_object)
-    render json: generic_object.attributes_with_association_ids, status: :ok
+    model_item_render(generic_object)
   end
 
   def model_index_render(object, params)
@@ -121,7 +81,7 @@ module ApplicationController::RendersModels
     generic_objects = object.reorder(Arel.sql(order_sql)).offset(pagination.offset).limit(pagination.limit)
 
     if response_expand?
-      list = generic_objects.map(&:attributes_with_association_names)
+      list = mask_attributes_with_association_names(generic_objects)
       render json: list, status: :ok
       return
     end
@@ -141,7 +101,7 @@ module ApplicationController::RendersModels
       return
     end
 
-    generic_objects_with_associations = generic_objects.map(&:attributes_with_association_ids)
+    generic_objects_with_associations = mask_attributes_with_association_ids(generic_objects)
     model_index_render_result(generic_objects_with_associations)
   end
 
@@ -154,9 +114,9 @@ module ApplicationController::RendersModels
     result = Models.references(object, generic_object.id)
     return false if result.blank?
 
-    raise Exceptions::UnprocessableEntity, __('Can\'t delete, object has references.')
+    raise Exceptions::UnprocessableContent, __('Can\'t delete, object has references.')
   rescue => e
-    raise Exceptions::UnprocessableEntity, e
+    raise Exceptions::UnprocessableContent, e
   end
 
   def model_search_render(object, params)
@@ -188,8 +148,15 @@ module ApplicationController::RendersModels
     elsif params[:label] || params[:term]
       model_search_render_result_label(object, generic_objects)
     else
-      generic_objects_with_associations = generic_objects[:objects].map(&:attributes_with_association_ids)
-      model_index_render_result(generic_objects_with_associations)
+      result = mask_attributes_with_association_ids(generic_objects[:objects])
+      if response_with_total_count?
+        result = {
+          records:     result,
+          total_count: generic_objects[:total_count],
+        }
+      end
+
+      model_index_render_result(result)
     end
   end
 
@@ -214,13 +181,19 @@ module ApplicationController::RendersModels
   end
 
   def model_search_render_result_expand(generic_objects)
-    list = generic_objects[:objects].map(&:attributes_with_association_names)
+    result = mask_attributes_with_association_names(generic_objects[:objects])
+    if response_with_total_count?
+      result = {
+        records:     result,
+        total_count: generic_objects[:total_count],
+      }
+    end
 
-    render json: list, status: :ok
+    render json: result, status: :ok
   end
 
   def model_search_render_result_label(object, generic_objects)
-    rows = generic_objects[:objects].map do |row|
+    result = generic_objects[:objects].map do |row|
       realname = row.try(:fullname, recipient_line: true) || row.try(:fullname) || row.try(:name) || row.try(:id)
       value    = row.try(:email) || realname
 
@@ -231,7 +204,33 @@ module ApplicationController::RendersModels
       end
     end
 
-    render json: rows
+    if response_with_total_count?
+      result = {
+        records:     result,
+        total_count: generic_objects[:total_count],
+      }
+    end
+
+    render json: result
   end
 
+  def model_item_render(object, status: :ok)
+    attrs = if response_expand?
+              object.attributes_with_association_names
+            elsif response_full?
+              object.class.full(object.id)
+            else
+              object.attributes_with_association_ids
+            end
+
+    render json: mask_sensitive_values(attrs, object), status:
+  end
+
+  def mask_attributes_with_association_ids(list)
+    list.map { mask_sensitive_values(it.attributes_with_association_ids, it) }
+  end
+
+  def mask_attributes_with_association_names(list)
+    list.map { mask_sensitive_values(it.attributes_with_association_names, it) }
+  end
 end

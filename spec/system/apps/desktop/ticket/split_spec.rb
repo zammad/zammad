@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -66,7 +66,7 @@ RSpec.describe 'Desktop > Ticket > Split, Link and Subscribe', app: :desktop_vie
 
         wait_for_form_to_settle("form-ticket-edit-#{Ticket.last.id}")
 
-        click_on('Add reply')
+        click_on('Add internal note')
 
         within_form(form_updater_gql_number: 2) do
           find_editor('Text').type('Some reply.')

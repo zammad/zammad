@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -40,6 +40,21 @@ RSpec.describe 'Report', searchindex: true, type: :system do
       expect(page)
         .to have_css('ul.checkbox-list .label-text', text: report_profile_active.name)
         .and have_no_css('ul.checkbox-list .label-text', text: report_profile_inactive.name)
+    end
+  end
+
+  context 'report profiles sorting #6146' do
+    before { Report::Profile.destroy_all }
+
+    let!(:profile_z) { create(:report_profile, name: 'zzz') }
+    let!(:profile_a) { create(:report_profile, name: 'aaa') }
+    let!(:profile_b) { create(:report_profile, name: 'bbb') }
+
+    it 'shows report profiles in alphabetical order' do
+      visit 'report'
+
+      labels = all('ul.checkbox-list .label-text').map(&:text)
+      expect(labels).to eq([profile_a.name, profile_b.name, profile_z.name])
     end
   end
 

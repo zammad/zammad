@@ -1,15 +1,14 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { noop } from 'lodash-es'
-import { storeToRefs } from 'pinia'
-import { computed } from 'vue'
+import { computed, toRef } from 'vue'
 
 import { useSessionStore } from '#shared/stores/session.ts'
 
 const defaultSoundFile = 'Xylo.mp3'
 
 export const useOnlineNotificationSound = () => {
-  const { user } = storeToRefs(useSessionStore())
+  const user = toRef(useSessionStore(), 'user')
 
   const isEnabled = computed(
     () => Boolean(user.value?.preferences?.notification_sound?.enabled ?? true), // it is enabled by default for new users

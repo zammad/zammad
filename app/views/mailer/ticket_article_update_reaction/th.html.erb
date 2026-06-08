@@ -1,0 +1,19 @@
+อัปเดตบทความตั๋ว (#{ticket.title})  
+
+<div>สวัสดี #{recipient.firstname},</div>  
+<br>  
+<div>  
+<%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') %> ตอบสนองด้วย <%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'emoji') %> ต่อข้อความจาก #{article.created_by.fullname}:  
+</div>  
+<br>  
+<% if @objects[:article] %>  
+  <div>  
+    <blockquote type="cite">  
+    #{article.body_as_html}  
+    </blockquote>  
+  </div>  
+<% end %>  
+<br>  
+<div>  
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/#{article.id}" target="zammad_app">ดูสิ่งนี้ใน #{config.product_name}</a>  
+</div>

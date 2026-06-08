@@ -1,32 +1,32 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import {
-  onClickOutside,
-  onLongPress,
-  useElementHover,
-  whenever,
-} from '@vueuse/core'
+import { onClickOutside, onLongPress, useElementHover, whenever } from '@vueuse/core'
 import { computed, onDeactivated, onUnmounted, shallowRef, watch } from 'vue'
+
+import getUuid from '#shared/utils/getUuid.ts'
 
 import CommonPopover, {
   type Props as CommonPopoverProps,
-} from '#shared/components/CommonPopover/CommonPopover.vue'
-import { usePopover } from '#shared/components/CommonPopover/usePopover.ts'
-import getUuid from '#shared/utils/getUuid.ts'
+} from '#desktop/components/CommonPopover/CommonPopover.vue'
+import { usePopover } from '#desktop/components/CommonPopover/usePopover.ts'
+import { useTransitionConfig } from '#desktop/composables/useTransitionConfig.ts'
 
-interface Props extends Omit<CommonPopoverProps, 'owner'> {
+export interface Props extends Omit<CommonPopoverProps, 'owner'> {
   triggerLink?: string
+  triggerLinkClass?: string
   triggerLinkActiveClass?: string
   noFocusStyling?: boolean
   noHoverStyling?: boolean
+  noMinWidth?: boolean
+  zIndex?: string
 }
 
 const props = defineProps<Props>()
 
 const triggerTag = computed(() => (props.triggerLink ? 'CommonLink' : 'div'))
 
-const { popoverTarget, popover, isOpen, open, close } = usePopover()
+const { popoverTarget, popover, isOpen, openDelayed, open, close } = usePopover()
 
 const uniqueId = `popover-${getUuid()}`
 
@@ -54,33 +54,32 @@ onLongPress(popoverTarget, () => {
   open()
 })
 
+const { timings } = useTransitionConfig()
+
 const isPopoverHovered = useElementHover(popoverElement, {
-  delayEnter: 100,
-  delayLeave: 200,
+  delayEnter: timings.veryShort,
+  delayLeave: timings.short,
 })
 
 const isPopoverTargetHovered = useElementHover(popoverTarget, {
-  delayEnter: 100,
-  delayLeave: 200,
+  delayEnter: timings.veryShort,
+  delayLeave: timings.short,
 })
 
-watch(
-  [isPopoverHovered, isPopoverTargetHovered],
-  ([isPopoverHovered, isPopoverTargetHovered]) => {
-    if (hasOpenedViaLongPress.value) return
+watch([isPopoverHovered, isPopoverTargetHovered], ([isPopoverHovered, isPopoverTargetHovered]) => {
+  if (hasOpenedViaLongPress.value) return
 
-    const shouldOpen = isPopoverTargetHovered || isPopoverHovered
+  const shouldOpen = isPopoverTargetHovered || isPopoverHovered
 
-    if (shouldOpen && !isOpen.value) {
-      open()
-      return
-    }
+  if (shouldOpen && !isOpen.value) {
+    openDelayed()
+    return
+  }
 
-    if (!shouldOpen && isOpen.value) {
-      close()
-    }
-  },
-)
+  if (!shouldOpen && isOpen.value) {
+    close()
+  }
+})
 
 whenever(
   () => !isOpen.value,
@@ -104,15 +103,18 @@ onUnmounted(() => {
     v-bind="$props"
     :id="uniqueId"
     ref="popover"
-    class="min-w-[17rem]"
+    :class="{ 'min-w-68': !noMinWidth }"
+    :z-index="zIndex"
     no-close-on-click-outside
     :owner="popoverTarget"
   >
     <slot
       name="popover-content"
       :popover-id="uniqueId"
+      :popover="popover"
       :is-open="isOpen"
       :has-opened-via-long-click="hasOpenedViaLongPress"
+      :close="close"
     />
   </CommonPopover>
 
@@ -122,21 +124,22 @@ onUnmounted(() => {
     ref="popoverTarget"
     :role="triggerLink ? undefined : 'button'"
     :link="triggerLink ? triggerLink : undefined"
+    :disabled="(triggerLink && hasOpenedViaLongPress) || undefined"
     tabindex="0"
     :aria-controls="uniqueId"
     :aria-expanded="isOpen"
-    class="group"
+    class="group transition-none empty:hidden"
     :class="[
+      triggerLinkClass ?? '',
       {
         [triggerLinkActiveClass ?? '']: isOpen && hasOpenedViaLongPress,
         'hover:no-underline!': triggerLink,
-        'focus-visible:outline-1 focus-visible:outline-blue-800 hover:focus-visible:outline-blue-800':
-          !noFocusStyling,
+        'focus-visible-app-default': !noFocusStyling,
         'outline-transparent!': noFocusStyling,
-        'hover:outline-1 hover:outline-blue-900': !noHoverStyling,
+        'hover:outline-1 hover:outline-blue-600 hover:dark:outline-blue-900': !noHoverStyling,
       },
     ]"
-    @keydown.space.prevent="open"
+    @keydown.space.prevent="open()"
     @click="hasOpenedViaLongPress && $event.preventDefault()"
   >
     <slot

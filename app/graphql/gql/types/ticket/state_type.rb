@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Types::Ticket
   class StateType < Gql::Types::BaseObject
@@ -14,6 +14,7 @@ module Gql::Types::Ticket
     field :ignore_escalation, Boolean, null: false
     field :default_create, Boolean, null: false
     field :default_follow_up, Boolean, null: false
+    field :default_close, Boolean, null: false
     field :active, Boolean, null: false
   end
 end

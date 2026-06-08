@@ -5,7 +5,7 @@ InstanceMethods =
     if @constructor.canBePublished?()
       buttons.push {
         iconName: 'eye'
-        name:     'Visibility'
+        name:     __('Visibility')
         action:   'visibility'
         cssClass: 'btn--success'
         disabled: @isNew()
@@ -14,7 +14,7 @@ InstanceMethods =
     if (@ instanceof App.KnowledgeBaseCategory) || (@ instanceof App.KnowledgeBase)
       buttons.push {
         iconName: 'lock'
-        name:     'Permissions'
+        name:     __('Permissions')
         action:   'permissions'
         cssClass: 'btn--success'
         disabled: @isNew()
@@ -23,7 +23,7 @@ InstanceMethods =
     if !(@ instanceof App.KnowledgeBase)
       buttons.push {
         iconName: 'trash'
-        name:     'Delete'
+        name:     __('Delete')
         action:   'delete'
         cssClass: 'btn--danger'
         disabled: @isNew()

@@ -14,10 +14,12 @@ class App.UiElement.richtext.additions.RichTextToolPopup extends App.ControllerF
     if params.selection.type is 'existing'
       url        = params.selection.dom.attr('href')
       label      = @labelExisting
-      additional = [{
-        className: 'btn btn--danger js-clear'
-        text:      @labelClear
-      }]
+
+      if @labelClear?
+        additional = [{
+          className: 'btn btn--danger js-clear'
+          text:      @labelClear
+        }]
     else
       label = @labelNew
 

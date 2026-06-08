@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { renderComponent } from '#tests/support/components/index.ts'
 
@@ -173,37 +173,30 @@ describe('CollapseButton', () => {
         ownerId: 'test',
       },
     })
-    expect(wrapper.getByRole('button').parentElement).toHaveClasses([
-      'opacity-0',
-    ])
+    expect(wrapper.getByRole('button').parentElement).toHaveClasses(['opacity-0'])
   })
 
-  it.each(['tertiary-gray', 'none'])(
-    'renders variant %s correctly',
-    (variant) => {
-      const wrapper = renderComponent(CollapseButton, {
-        props: {
-          variant,
-          ownerId: 'test',
-        },
-      })
-      if (variant === 'tertiary-gray') {
-        expect(wrapper.getByRole('button')).toHaveClasses([
-          'focus-visible:bg-blue-800',
-          'active:dark:bg-blue-800',
-          'focus:dark:bg-blue-800',
-          'active:bg-blue-800',
-          'focus:bg-blue-800',
-          'hover:bg-blue-600',
-          'hover:dark:bg-blue-900',
-          'text-black',
-          'dark:bg-gray-200',
-          'dark:text-white',
-        ])
-      }
-      expect(wrapper.getByRole('button')).toHaveClasses([])
-    },
-  )
+  it.each(['tertiary-gray', 'none'])('renders variant %s correctly', (variant) => {
+    const wrapper = renderComponent(CollapseButton, {
+      props: {
+        variant,
+        ownerId: 'test',
+      },
+    })
+    if (variant === 'tertiary-gray') {
+      expect(wrapper.getByRole('button')).toHaveClasses([
+        'focus-visible:bg-blue-800',
+        'active:dark:bg-blue-800',
+        'active:bg-blue-800',
+        'hover:bg-blue-600',
+        'hover:dark:bg-blue-900',
+        'text-black',
+        'dark:bg-gray-200',
+        'dark:text-white',
+      ])
+    }
+    expect(wrapper.getByRole('button')).toHaveClasses([])
+  })
 
   it('shows always for touch devices', () => {
     // Impersonate a touch device by mocking the corresponding media query.

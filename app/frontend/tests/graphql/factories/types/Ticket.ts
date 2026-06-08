@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { faker } from '@faker-js/faker'
 
@@ -8,15 +8,10 @@ import type { DeepPartial } from '#shared/types/utils.ts'
 
 import type { ResolversMeta } from '../../builders/index.ts'
 
-export default (
-  _parent: unknown,
-  _value: unknown,
-  meta: ResolversMeta,
-): DeepPartial<Ticket> => {
-  const permissions = Reflect.get(
-    globalThis,
-    Symbol.for('tests.permissions'),
-  ) as { names: string[] } | undefined
+export default (_parent: unknown, _value: unknown, meta: ResolversMeta): DeepPartial<Ticket> => {
+  const permissions = Reflect.get(globalThis, Symbol.for('tests.permissions')) as
+    | { names: string[] }
+    | undefined
   const ticket: DeepPartial<Ticket> = {
     objectAttributeValues: [],
     customer: {

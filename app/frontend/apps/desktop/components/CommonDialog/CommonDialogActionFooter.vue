@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import CommonButton, {
@@ -12,11 +12,12 @@ export interface Props {
   hideCancelButton?: boolean
   cancelLabel?: string
   cancelButton?: Pick<ButtonProps, 'prefixIcon' | 'variant'>
+  formNodeId?: string
 }
 
 withDefaults(defineProps<Props>(), {
   actionLabel: __('OK'),
-  cancelLabel: __('Cancel & Go Back'),
+  cancelLabel: __('Cancel & go back'),
 })
 
 const emit = defineEmits<{
@@ -35,9 +36,7 @@ const action = () => {
 
 <template>
   <!-- TODO: rtl button order? -->
-  <div
-    class="flex items-center gap-2 ltr:justify-end rtl:flex-row-reverse rtl:justify-start"
-  >
+  <div class="flex items-center gap-2 ltr:justify-end rtl:flex-row-reverse rtl:justify-start">
     <CommonButton
       v-if="!hideCancelButton"
       size="large"
@@ -52,6 +51,8 @@ const action = () => {
       size="large"
       :prefix-icon="actionButton?.prefixIcon"
       :variant="actionButton?.variant || 'primary'"
+      :type="formNodeId ? 'submit' : undefined"
+      :form="formNodeId"
       @click="action()"
     >
       {{ $t(actionLabel) }}

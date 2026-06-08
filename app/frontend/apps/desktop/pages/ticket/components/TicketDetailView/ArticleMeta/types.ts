@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import type { TicketArticle } from '#shared/entities/ticket/types.ts'
 
@@ -13,3 +13,5 @@ export interface ChannelMetaField {
   props?: Record<string, unknown>
   show?: (article: TicketArticle) => boolean
 }
+
+export type MetaHeader = 'from' | 'to' | 'cc'

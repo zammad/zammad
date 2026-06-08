@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Ldap
 
@@ -87,7 +87,7 @@ class Ldap
 
     def oracle_raw16(string, dashify: false)
       # remove dashes
-      string.delete!('-')
+      string = string.delete('-')
 
       # split every two chars
       parts = string.scan(%r{.{1,2}})

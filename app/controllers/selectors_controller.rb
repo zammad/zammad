@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class SelectorsController < ApplicationController
   prepend_before_action :authenticate_and_authorize!
@@ -42,6 +42,6 @@ class SelectorsController < ApplicationController
   def ensure_object_klass_has_selector!
     return if object_klass.present?
 
-    raise Exceptions::UnprocessableEntity, __('Given object does not support selector')
+    raise Exceptions::UnprocessableContent, __('Given object does not support selector')
   end
 end

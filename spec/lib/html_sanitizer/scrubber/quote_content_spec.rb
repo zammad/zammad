@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -18,7 +18,7 @@ RSpec.describe HtmlSanitizer::Scrubber::QuoteContent do
         .and_return(%w[tag-to-quote])
     end
 
-    let(:fragment) { Loofah.fragment(input) }
+    let(:fragment) { Loofah.html5_fragment(input) }
 
     context 'when tag-to-quote div' do
       let(:input)  { '<tag-to-quote><div>&amp;content</div></tag-to-quote>' }

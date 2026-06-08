@@ -1,0 +1,6 @@
+{
+  "input": "<div>Die würde ich empfehlen auf `disabled` zu stellen. Als gewissenhafter Sysadmin achtet man ja ohnehin darauf, sein System stets auf dem aktuellsten Stand zu halten. Und wie oben beschrieben, kann es halt in Zusammenhang mit Zammad zu Problemen führen, wenn der Dienst für sich alleine entscheidet, Pakete zu aktualisieren.</div><div><br></div><div>Schauen Sie mal in die Logs vom apt selbst (`/var/log/apt/history.log.*), und ob Zeiten, in denen Sie Probleme feststellen konnten, mit Zeiten zu denen Upgrades gefahren wurden korrellieren.</div>",
+  "expected": {
+    "language": "de"
+  }
+}

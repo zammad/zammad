@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { EnumObjectManagerObjects } from '#shared/graphql/types.ts'
 
@@ -6,18 +6,15 @@ import { FieldResolverBoolean } from '../boolean.ts'
 
 describe('FieldResolverBoolean', () => {
   it('should return the correct field attributes', () => {
-    const fieldResolver = new FieldResolverBoolean(
-      EnumObjectManagerObjects.Ticket,
-      {
-        dataType: 'boolean',
-        name: 'correct',
-        display: 'Correct?',
-        dataOption: {
-          options: { false: 'no', true: 'yes' },
-        },
-        isInternal: true,
+    const fieldResolver = new FieldResolverBoolean(EnumObjectManagerObjects.Ticket, {
+      dataType: 'boolean',
+      name: 'correct',
+      display: 'Correct?',
+      dataOption: {
+        options: { false: 'no', true: 'yes' },
       },
-    )
+      isInternal: true,
+    })
 
     expect(fieldResolver.fieldAttributes()).toEqual({
       label: 'Correct?',
@@ -33,6 +30,29 @@ describe('FieldResolverBoolean', () => {
       type: 'toggle',
       internal: true,
       wrapperClass: '@lg/form-group:mt-6',
+    })
+  })
+
+  it('provides select filter fields for is operator with boolean options', () => {
+    const fieldResolver = new FieldResolverBoolean(EnumObjectManagerObjects.Ticket, {
+      dataType: 'boolean',
+      name: 'vip',
+      display: 'VIP',
+      dataOption: {
+        options: { false: 'no', true: 'yes' },
+      },
+      isInternal: true,
+    })
+
+    expect(fieldResolver.getFilterOperatorProps()).toEqual({
+      is: {
+        noOptionsLabelTranslation: true,
+        options: [
+          { label: 'no', value: 'false' },
+          { label: 'yes', value: 'true' },
+        ],
+        sorting: 'label',
+      },
     })
   })
 })

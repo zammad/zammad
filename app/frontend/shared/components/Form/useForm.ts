@@ -1,11 +1,11 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { computed, shallowRef } from 'vue'
 
 import type { MutationSendError } from '#shared/types/error.ts'
 import type { FormUpdaterOptions } from '#shared/types/form.ts'
 
-import { setErrors } from './utils.ts'
+import { clearMessage, setErrors, setMessage } from './utils.ts'
 
 import type {
   FormRef,
@@ -15,7 +15,7 @@ import type {
   FormSchemaField,
   FormResetData,
 } from './types.ts'
-import type { FormKitNode } from '@formkit/core'
+import type { FormKitMessage, FormKitNode } from '@formkit/core'
 import type { ShallowRef, Ref } from 'vue'
 
 export const useForm = <T = FormValues>(formRef?: Ref<FormRef | undefined>) => {
@@ -95,11 +95,7 @@ export const useForm = <T = FormValues>(formRef?: Ref<FormRef | undefined>) => {
 
   const onChangedField = (
     name: string,
-    callback: (
-      newValue: FormFieldValue,
-      oldValue: FormFieldValue,
-      node: FormKitNode,
-    ) => void,
+    callback: (newValue: FormFieldValue, oldValue: FormFieldValue, node: FormKitNode) => void,
   ) => {
     const registerChangeEvent = (node: FormKitNode) => {
       node.on(`changed:${name}`, ({ payload }) => {
@@ -116,11 +112,11 @@ export const useForm = <T = FormValues>(formRef?: Ref<FormRef | undefined>) => {
     }
   }
 
-  const updateFieldValues = (fieldValues: Record<string, FormFieldValue>) => {
-    const changedFieldValues: Record<
-      string,
-      Pick<FormSchemaField, 'value'>
-    > = {}
+  const updateFieldValues = (
+    fieldValues: Record<string, FormFieldValue>,
+    canTriggerFormUpdater = false,
+  ) => {
+    const changedFieldValues: Record<string, Pick<FormSchemaField, 'value'>> = {}
 
     Object.keys(fieldValues).forEach((fieldName) => {
       changedFieldValues[fieldName] = {
@@ -128,7 +124,7 @@ export const useForm = <T = FormValues>(formRef?: Ref<FormRef | undefined>) => {
       }
     })
 
-    form.value?.updateChangedFields(changedFieldValues)
+    form.value?.updateChangedFields(changedFieldValues, canTriggerFormUpdater)
   }
 
   const values = computed<T>(() => {
@@ -136,6 +132,18 @@ export const useForm = <T = FormValues>(formRef?: Ref<FormRef | undefined>) => {
   })
 
   const flags = computed(() => form.value?.flags || {})
+
+  const formClearMessage = (key: string) => {
+    if (!node.value) return
+
+    clearMessage(node.value, key)
+  }
+
+  const formSetMessage = (message: Partial<FormKitMessage> & Pick<FormKitMessage, 'key'>) => {
+    if (!node.value) return
+
+    setMessage(node.value, message)
+  }
 
   const formSetErrors = (errors: MutationSendError) => {
     if (!node.value) return
@@ -165,6 +173,8 @@ export const useForm = <T = FormValues>(formRef?: Ref<FormRef | undefined>) => {
     isFormUpdaterRunning,
     formNodeId,
     canSubmit,
+    formClearMessage,
+    formSetMessage,
     formSetErrors,
     formReset,
     formGroupReset,

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Mutations
   class User::Current::RemoveLinkedAccount < BaseMutation
@@ -9,13 +9,13 @@ module Gql::Mutations
 
     field :success, Boolean, null: false, description: 'Was the linked account removed?'
 
-    def self.authorize(_obj, ctx)
-      ctx.current_user.permissions?('user_preferences.linked_accounts')
-    end
+    requires_permission 'user_preferences.linked_accounts'
 
     def resolve(provider:, uid:)
 
-      Service::User::RemoveLinkedAccount.new(provider:, uid:, current_user: context.current_user).execute
+      Service::User::RemoveLinkedAccount
+        .with_current_user(context.current_user)
+        .execute(provider:, uid:)
 
       { success: true }
     end

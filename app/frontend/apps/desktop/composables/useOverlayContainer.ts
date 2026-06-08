@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { last, noop } from 'lodash-es'
 import SparkMD5 from 'spark-md5'
@@ -16,10 +16,7 @@ import {
 } from 'vue'
 import { useRoute, type RouteLocationNormalizedLoadedGeneric } from 'vue-router'
 
-import {
-  destroyComponent,
-  pushComponent,
-} from '#shared/components/DynamicInitializer/manage.ts'
+import { destroyComponent, pushComponent } from '#shared/components/DynamicInitializer/manage.ts'
 import testFlags from '#shared/utils/testFlags.ts'
 
 export interface OverlayContainerOptions {
@@ -34,7 +31,6 @@ export interface OverlayContainerOptions {
   refocus?: boolean
   beforeOpen?: (uniqueId?: string) => Awaited<unknown>
   afterClose?: (uniqueId?: string) => Awaited<unknown>
-  fullscreen?: boolean
   /**
    * If true, no page context will be added to the name, e.g. for confirmation dialogs.
    * @default false
@@ -45,15 +41,13 @@ export interface OverlayContainerOptions {
 export type OverlayContainerType = 'dialog' | 'flyout'
 
 export interface OverlayContainerMeta {
-  mounted: Set<string>
+  mounted: Map<string, number>
   options: Map<string, OverlayContainerOptions>
   opened: Ref<Set<string>>
   lastFocusedElements: Record<string, HTMLElement>
 }
 
-export const getRouteIdentifier = (
-  route: RouteLocationNormalizedLoadedGeneric,
-) => {
+export const getRouteIdentifier = (route: RouteLocationNormalizedLoadedGeneric) => {
   if (route.meta.pageKey) return route.meta.pageKey
 
   // If no params exists, just use the name.
@@ -66,43 +60,35 @@ export const getRouteIdentifier = (
   return `${String(route.name)}_${paramHash}`
 }
 
-const overlayContainerMeta: Record<OverlayContainerType, OverlayContainerMeta> =
-  {
-    dialog: {
-      mounted: new Set<string>(),
-      options: new Map<string, OverlayContainerOptions>(),
-      opened: ref(new Set<string>()),
-      lastFocusedElements: {},
-    },
-    flyout: {
-      mounted: new Set<string>(),
-      options: new Map<string, OverlayContainerOptions>(),
-      opened: ref(new Set<string>()),
-      lastFocusedElements: {},
-    },
-  }
+const overlayContainerMeta: Record<OverlayContainerType, OverlayContainerMeta> = {
+  dialog: {
+    mounted: new Map<string, number>(),
+    options: new Map<string, OverlayContainerOptions>(),
+    opened: ref(new Set<string>()),
+    lastFocusedElements: {},
+  },
+  flyout: {
+    mounted: new Map<string, number>(),
+    options: new Map<string, OverlayContainerOptions>(),
+    opened: ref(new Set<string>()),
+    lastFocusedElements: {},
+  },
+}
 
 export const getOpenedOverlayContainers = (type: OverlayContainerType) =>
   overlayContainerMeta[type].opened.value
 
-export const isOverlayContainerOpened = (
-  type: OverlayContainerType,
-  name?: string,
-) =>
+export const isOverlayContainerOpened = (type: OverlayContainerType, name?: string) =>
   name
     ? overlayContainerMeta[type].opened.value.has(name)
     : overlayContainerMeta[type].opened.value.size > 0
 
 export const currentOverlayContainersOpen = computed(() => {
-  const openContainers: Partial<
-    Record<OverlayContainerType, string | undefined>
-  > = {}
+  const openContainers: Partial<Record<OverlayContainerType, string | undefined>> = {}
 
   Object.keys(overlayContainerMeta).forEach((type) => {
     openContainers[type as OverlayContainerType] = last(
-      Array.from(
-        overlayContainerMeta[type as OverlayContainerType].opened.value,
-      ),
+      Array.from(overlayContainerMeta[type as OverlayContainerType].opened.value),
     )
   })
 
@@ -116,13 +102,41 @@ export const getOverlayContainerMeta = (type: OverlayContainerType) => {
   }
 }
 
-const getOverlayContainerOptions = (
+// Handle the current reference of the overlay container for the different situations.
+// It could be that the usage is more then once, that it should not be removed completely.
+const getOverlayReferenceCount = (type: OverlayContainerType, name: string): number => {
+  return overlayContainerMeta[type].mounted.get(name) || 0
+}
+
+const addOverlayReference = (
   type: OverlayContainerType,
   name: string,
+  options: OverlayContainerOptions,
 ) => {
+  const refCount = getOverlayReferenceCount(type, name)
+  overlayContainerMeta[type].mounted.set(name, refCount + 1)
+  overlayContainerMeta[type].options.set(name, options)
+}
+
+const removeOverlayReference = (type: OverlayContainerType, name: string): void => {
+  const refCount = getOverlayReferenceCount(type, name)
+  const newRefCount = refCount - 1
+
+  if (newRefCount > 0) {
+    overlayContainerMeta[type].mounted.set(name, newRefCount)
+  } else {
+    overlayContainerMeta[type].mounted.delete(name)
+  }
+}
+
+const getOverlayContainerOptions = (type: OverlayContainerType, name: string) => {
   const options = overlayContainerMeta[type].options.get(name)
 
   if (!options) {
+    console.error(`[${type}] getOverlayContainerOptions ERROR: ${name}`, {
+      availableOptions: Array.from(overlayContainerMeta[type].options.keys()),
+      mounted: Array.from(overlayContainerMeta[type].mounted.entries()),
+    })
     throw new Error(
       `Overlay container '${name}' from type '${type}' was not initialized with 'useOverlayContainer'.`,
     )
@@ -131,10 +145,7 @@ const getOverlayContainerOptions = (
   return options
 }
 
-export const closeOverlayContainer = async (
-  type: OverlayContainerType,
-  name: string,
-) => {
+export const closeOverlayContainer = async (type: OverlayContainerType, name: string) => {
   const [realName, uniqueId] = name.split(':')
 
   if (!overlayContainerMeta[type].opened.value.has(name)) return
@@ -152,8 +163,7 @@ export const closeOverlayContainer = async (
   const controllerElement =
     (document.querySelector(
       `[aria-haspopup="${type}"][aria-controls="${type}-${name}"]`,
-    ) as HTMLElement | null) ||
-    overlayContainerMeta[type].lastFocusedElements[name]
+    ) as HTMLElement | null) || overlayContainerMeta[type].lastFocusedElements[name]
   if (controllerElement && 'focus' in controllerElement)
     controllerElement.focus({ preventScroll: true })
 
@@ -185,9 +195,7 @@ export const openOverlayContainer = async (
     await options.beforeOpen(props.uniqueId as string | undefined)
   }
 
-  const component = defineAsyncComponent(
-    options.component as AsyncComponentLoader,
-  )
+  const component = defineAsyncComponent(options.component as AsyncComponentLoader)
 
   await pushComponent(type, uniqueName, component, props)
 
@@ -208,6 +216,7 @@ export const useOverlayContainer = (
   const { name } = options
 
   const vm = getCurrentInstance()
+
   if (!vm) {
     throw new Error(
       `Overlay container '${name}' from type '${type}' was not initialized inside setup context.`,
@@ -218,27 +227,22 @@ export const useOverlayContainer = (
 
   const route = useRoute()
 
-  const currentName = options.global
-    ? name
-    : `${name}_${getRouteIdentifier(route)}`
+  const currentName = options.global ? name : `${name}_${getRouteIdentifier(route)}`
 
   overlayContainerMeta[type].options.set(currentName, options)
 
-  const isOpened = computed(() =>
-    overlayContainerMeta[type].opened.value.has(currentName),
-  )
+  const isOpened = computed(() => overlayContainerMeta[type].opened.value.has(currentName))
 
-  // Unmounted happens after setup, if component was unmounted so we need to add options again.
-  // This happens mainly in storybook stories.
   onMounted(() => {
-    overlayContainerMeta[type].mounted.add(currentName)
-    overlayContainerMeta[type].options.set(currentName, options)
+    addOverlayReference(type, currentName, options)
   })
 
   onUnmounted(async () => {
-    overlayContainerMeta[type].mounted.delete(currentName)
+    removeOverlayReference(type, currentName)
+
     await closeOverlayContainer(type, currentName)
-    // Was mounted during hmr.
+
+    // Only delete the overlay options when no components are using it anymore
     if (!overlayContainerMeta[type].mounted.has(currentName)) {
       overlayContainerMeta[type].options.delete(currentName)
     }

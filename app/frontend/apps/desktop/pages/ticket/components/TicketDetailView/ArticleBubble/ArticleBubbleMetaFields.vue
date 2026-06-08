@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { toRef } from 'vue'
@@ -18,17 +18,14 @@ const { fields } = useArticleMeta(toRef(props, 'article'))
 </script>
 
 <template>
-  <div
-    class="grid grid-cols-[max-content_1fr] gap-x-3 gap-y-2 rounded-t-xl p-3"
-  >
+  <div class="grid grid-cols-[max-content_1fr] gap-x-3 gap-y-2 rounded-t-xl p-3">
     <template v-for="(field, index) in fields" :key="`${field.label}-${index}`">
-      <CommonLabel class="ltr:ml-auto rtl:mr-auto"
-        >{{ $t(field.label) }}
-      </CommonLabel>
+      <CommonLabel class="ms-auto self-start">{{ $t(field.label) }} </CommonLabel>
 
       <div class="flex items-center gap-2">
         <Component
           :is="field.component || CommonLabel"
+          v-tooltip.truncate="field.value"
           :prefix-icon="field.icon && !field.component ? field.icon : undefined"
           v-bind="field.props || {}"
           :context="{ field, article }"
@@ -44,7 +41,7 @@ const { fields } = useArticleMeta(toRef(props, 'article'))
             :link="url"
             :rest-api="api"
             :target="target"
-            class="text-sm! text-[rgba(255,255,255,0.75)]!"
+            size="medium"
           >
             {{ $t(label) }}
           </CommonLink>

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class KnowledgeBase::Answer::Translation::Content < ApplicationModel
   include HasAgentAllowedParams
@@ -42,13 +42,22 @@ class KnowledgeBase::Answer::Translation::Content < ApplicationModel
 
   def search_index_attribute_lookup(include_references: true)
     attrs = super
-    attrs['body'] = ActionController::Base.helpers.strip_tags attrs['body']
+    attrs['body'] = body_text_only
     attrs
+  end
+
+  def body_text_only
+    body
+      .gsub(%r{<br\s*/?>}i, "\n")
+      .gsub(%r{<div\s*>}i, "\n")
+      .then { ActionController::Base.helpers.strip_tags(it) }
   end
 
   private
 
   def touch_translation
+    return if !translation.persisted?
+
     translation&.touch # rubocop:disable Rails/SkipsModelValidations
   end
 

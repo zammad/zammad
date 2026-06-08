@@ -1,18 +1,14 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Mutations
   class Ticket::ExternalReferences::IssueTrackerItemRemove < BaseMutation
     description 'Removes an issue tracker link from an ticket.'
 
-    argument :ticket_id,          GraphQL::Types::ID, loads: Gql::Types::TicketType, description: 'The related ticket for the issue tracker items'
+    argument :ticket_id,          GraphQL::Types::ID, loads: Gql::Types::TicketType, loads_pundit_method: :agent_update_access?, description: 'The related ticket for the issue tracker items'
     argument :issue_tracker_link, Gql::Types::UriHttpStringType, description: 'The issue tracker link to remove'
     argument :issue_tracker_type, Gql::Types::Enum::Ticket::ExternalReferences::IssueTrackerTypeType, description: 'The issue tracker type'
 
     field :success, Boolean, description: 'Was the mutation successful?'
-
-    def authorized?(ticket:, issue_tracker_link:, issue_tracker_type:)
-      pundit_authorized?(ticket, :agent_update_access?)
-    end
 
     def resolve(ticket:, issue_tracker_link:, issue_tracker_type:)
       ticket

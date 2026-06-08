@@ -1,0 +1,6 @@
+{
+  "input": "Sehr geehrter Herr Müller,<div><br></div><div>leider ist Ihre Anfrage aufgrund von Urlaubszeit untergegangen. Ich habe den Auftrag erstellt und würde ihn nächste Woche weiter an die IT-Abteilung schicken.&nbsp;</div><div>Hatte ich das richtig verstanden, dass Sie die 50 Lizenzen zum Kauf bestellen möchten? Ansonsten kann ich den Auftrag nochmal anpassen.&nbsp;</div><div><br><div data-signature=\"true\" data-signature-id=\"17\"><p>Viele Grüße</p>Thomas Weber&nbsp;</div></div>",
+  "expected": {
+    "language": "de"
+  }
+}

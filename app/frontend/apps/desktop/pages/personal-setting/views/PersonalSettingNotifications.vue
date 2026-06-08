@@ -1,9 +1,8 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { isEqual } from 'lodash-es'
-import { storeToRefs } from 'pinia'
-import { computed, ref, watch } from 'vue'
+import { computed, ref, watch, toRef } from 'vue'
 
 import {
   NotificationTypes,
@@ -31,9 +30,11 @@ import { useUserCurrentNotificationPreferencesResetMutation } from '#desktop/pag
 import { useUserCurrentNotificationPreferencesUpdateMutation } from '#desktop/pages/personal-setting/graphql/mutations/userCurrentNotificationPreferencesUpdate.api.ts'
 import type { NotificationFormData } from '#desktop/pages/personal-setting/types/notifications.ts'
 
+import { usePersonalSettingTabs } from '../composables/usePersonalSettingTabs.ts'
+
 const { breadcrumbItems } = useBreadcrumb(__('Notifications'))
 
-const { user } = storeToRefs(useSessionStore())
+const user = toRef(useSessionStore(), 'user')
 
 const { notify } = useNotifications()
 
@@ -85,8 +86,7 @@ const schema = defineFormSchema([
 ])
 
 const initialFormValues = computed<NotificationFormData>((oldValues) => {
-  const { notificationConfig = {}, notificationSound = {} } =
-    user.value?.personalSettings || {}
+  const { notificationConfig = {}, notificationSound = {} } = user.value?.personalSettings || {}
 
   const values: NotificationFormData = {
     group_ids: notificationConfig?.groupIds ?? [],
@@ -126,8 +126,7 @@ const onSubmit = async (form: FormSubmitData<NotificationFormData>) => {
   return notificationUpdateMutation
     .send({
       matrix: form.matrix as UserNotificationMatrixInput,
-      groupIds:
-        form?.group_ids?.map((id) => convertToGraphQLId('Group', id)) || [],
+      groupIds: form?.group_ids?.map((id) => convertToGraphQLId('Group', id)) || [],
       sound: {
         file: form.file as EnumNotificationSoundFile,
         enabled: form.enabled,
@@ -147,9 +146,7 @@ const onSubmit = async (form: FormSubmitData<NotificationFormData>) => {
     })
 }
 
-const resetFormToDefaults = (
-  personalSettings: UserData['personalSettings'],
-) => {
+const resetFormToDefaults = (personalSettings: UserData['personalSettings']) => {
   form.value?.resetForm({
     values: {
       matrix: personalSettings?.notificationConfig?.matrix || {},
@@ -177,8 +174,7 @@ const onResetToDefaultSettings = async () => {
     .send()
     .then((response) => {
       const personalSettings =
-        response?.userCurrentNotificationPreferencesReset?.user
-          ?.personalSettings
+        response?.userCurrentNotificationPreferencesReset?.user?.personalSettings
 
       if (!personalSettings) return
 
@@ -194,10 +190,17 @@ const onResetToDefaultSettings = async () => {
       loading.value = false
     })
 }
+
+const { tabs, activeTab } = usePersonalSettingTabs()
 </script>
 
 <template>
-  <LayoutContent :breadcrumb-items="breadcrumbItems" width="narrow">
+  <LayoutContent
+    :active-tab="activeTab"
+    :tabs="tabs"
+    :breadcrumb-items="breadcrumbItems"
+    width="narrow"
+  >
     <div class="mb-4">
       <Form
         id="notifications-form"
@@ -216,15 +219,10 @@ const onResetToDefaultSettings = async () => {
               :disabled="loading"
               @click="onResetToDefaultSettings"
             >
-              {{ $t('Reset to Default Settings') }}
+              {{ $t('Reset to default settings') }}
             </CommonButton>
-            <CommonButton
-              size="medium"
-              type="submit"
-              variant="submit"
-              :disabled="loading"
-            >
-              {{ $t('Save Notifications') }}
+            <CommonButton size="medium" type="submit" variant="submit" :disabled="loading">
+              {{ $t('Save notifications') }}
             </CommonButton>
           </div>
         </template>

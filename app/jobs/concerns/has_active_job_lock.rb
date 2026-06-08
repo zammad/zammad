@@ -1,9 +1,20 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module HasActiveJobLock
   class LockKeyNotGeneratable < StandardError; end
 
-  EXISTING_ACTIVE_JOB_LOCK_BEHAVIOUR = :dismiss # or upsert_date
+  # Sets default behaviour how to treat existing active job locks
+  #
+  # :dismiss - Simply do not enqueue the job if there's one enqueued.
+  #            But still enqueue if same job is already running!
+  #
+  # :dismiss_running - Simply do not enqueue the job. Even if matching job is already running!
+  #
+  # :upsert_date - If there's already a job enqueued with the same lock key AND scheduled_at date,
+  #                update the existing job's scheduled_at date.
+  #                If matching job is already runnig, enqueues a new job!
+  #
+  EXISTING_ACTIVE_JOB_LOCK_BEHAVIOUR = :dismiss
 
   extend ActiveSupport::Concern
 
@@ -117,20 +128,21 @@ module HasActiveJobLock
     # but it's safe to retry as described in the docs:
     # https://www.postgresql.org/docs/10/transaction-iso.html
     e.message.include?('PG::TRSerializationFailure') ? retry : raise
-  rescue ActiveRecord::Deadlocked => e
-    # MySQL handles lock race condition differently and raises a Deadlock exception:
-    # Mysql2::Error: Deadlock found when trying to get lock; try restarting transaction
-    e.message.include?('Mysql2::Error: Deadlock found when trying to get lock') ? retry : raise
   rescue ActiveRecord::RecordNotUnique
-    existing_active_job_lock!
+    retry
   end
 
   def active_job_lock_for_enqueue!
     return if active_job_lock.blank?
 
-    # don't enqueue perform_later jobs if a job with the same
-    # lock key exists that hasn't started to perform yet
-    existing_active_job_lock! if active_job_lock.perform_pending?
+    case self.class::EXISTING_ACTIVE_JOB_LOCK_BEHAVIOUR
+    when :dismiss
+      throw :abort if active_job_lock.perform_pending? && active_job_lock.related_job.present?
+    when :dismiss_running
+      throw :abort if active_job_lock.related_job.present?
+    when :upsert_date
+      existing_active_job_lock! if active_job_lock.perform_pending?
+    end
 
     active_job_lock.tap { |lock| lock.transfer_to(self) }
   end
@@ -144,8 +156,6 @@ module HasActiveJobLock
   end
 
   def existing_active_job_lock!
-    throw :abort if self.class::EXISTING_ACTIVE_JOB_LOCK_BEHAVIOUR == :dismiss
-
     throw :abort if scheduled_at.blank? # apply to postponed jobs only
 
     if active_job_lock && !active_job_lock.perform_pending?

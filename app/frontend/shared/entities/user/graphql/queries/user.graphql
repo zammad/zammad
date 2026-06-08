@@ -1,10 +1,22 @@
 query user(
-  $userId: ID
-  $userInternalId: Int
+  $userId: ID!
   $secondaryOrganizationsCount: Int
+  $after: String
+  $hasOrganizationCounts: Boolean! = false
 ) {
-  user(user: { userId: $userId, userInternalId: $userInternalId }) {
+  user(userId: $userId) {
     ...userDetailAttributes
+    hasSecondaryOrganizations
+    ticketsCount {
+      open
+      openSearchQuery
+      closed
+      closedSearchQuery
+      organizationOpen @include(if: $hasOrganizationCounts)
+      organizationOpenSearchQuery @include(if: $hasOrganizationCounts)
+      organizationClosed @include(if: $hasOrganizationCounts)
+      organizationClosedSearchQuery @include(if: $hasOrganizationCounts)
+    }
     policy {
       update
     }

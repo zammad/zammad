@@ -1,0 +1,19 @@
+#{config.product_name} вхід з нового пристрою
+
+<div>Вітаю #{user.firstname},</div>
+<br>
+<div>Схоже, ви увійшли до свого облікового запису <b>з нового пристрою</b> о "#{user_device.created_at}":</div>
+<br>
+<div>
+Ваш пристрій: #{user_device.name}<br>
+Ваше місцезнаходження (відносне): #{user_device.location}<br>
+Ваш IP: #{user_device.ip}<br>
+</div>
+<br>
+<div>Ваш пристрій додано до списку відомих пристроїв, який ви можете переглянути тут:</div>
+<br>
+<div><a href="#{config.http_type}://#{config.fqdn}/#profile/devices">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>
+<br>
+<div>Якщо це не ви, вилучіть пристрій, змініть пароль до облікового запису та зверніться до свого адміністратора. Можливо, хтось отримав несанкціонований доступ до вашого облікового запису.</div>
+<br>
+<div>Команда #{config.product_name}</div>

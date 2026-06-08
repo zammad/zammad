@@ -1,9 +1,10 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { within } from '@testing-library/vue'
 
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
+import { waitFor } from '#tests/support/vitest-wrapper.ts'
 
 import {
   mockUserCurrentTwoFactorGetMethodConfigurationQuery,
@@ -32,7 +33,7 @@ describe('Two-factor Authentication - Password Check', () => {
     await view.events.click(actionMenuButton)
 
     const flyout = await view.findByRole('complementary', {
-      name: 'Set Up Two-factor Authentication: Confirm Password',
+      name: 'Set up two-factor authentication: Confirm password',
     })
 
     const flyoutContent = within(flyout)
@@ -57,8 +58,8 @@ describe('Two-factor Authentication - Password Check', () => {
 
     expect(passwordInput).not.toBeInTheDocument()
 
-    expect(flyout).toHaveAccessibleName(
-      'Set Up Two-factor Authentication: Security Keys',
+    await waitFor(() =>
+      expect(flyout).toHaveAccessibleName('Set up two-factor authentication: Security keys'),
     )
   })
 
@@ -72,7 +73,7 @@ describe('Two-factor Authentication - Password Check', () => {
     await view.events.click(actionMenuButton)
 
     const flyout = await view.findByRole('complementary', {
-      name: 'Set Up Two-factor Authentication: Confirm Password',
+      name: 'Set up two-factor authentication: Confirm password',
     })
 
     const flyoutContent = within(flyout)
@@ -102,7 +103,7 @@ describe('Two-factor Authentication - Password Check', () => {
     await view.events.click(actionMenuButton)
 
     const flyout = await view.findByRole('complementary', {
-      name: 'Set Up Two-factor Authentication: Confirm Password',
+      name: 'Set up two-factor authentication: Confirm password',
     })
 
     const flyoutContent = within(flyout)
@@ -124,7 +125,7 @@ describe('Two-factor Authentication - Password Check', () => {
     await view.events.click(actionMenuButton)
 
     const flyout = await view.findByRole('complementary', {
-      name: 'Set Up Two-factor Authentication: Confirm Password',
+      name: 'Set up two-factor authentication: Confirm password',
     })
 
     const flyoutContent = within(flyout)

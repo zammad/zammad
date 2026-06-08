@@ -1,12 +1,10 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Service::Channel::Whatsapp
   class Preload < Service::Base
     attr_reader :business_id, :access_token
 
     def initialize(business_id:, access_token:)
-      super()
-
       @business_id  = business_id
       @access_token = access_token
     end

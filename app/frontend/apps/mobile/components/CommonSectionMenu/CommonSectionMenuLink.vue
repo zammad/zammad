@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, type HTMLAttributes } from 'vue'
@@ -39,10 +39,7 @@ const iconProps = computed<IconProps | null>(() => {
     class="cursor-pointer border-b border-[rgba(255,255,255,0.1)] px-3 first:pt-1 last:border-0 last:pb-1"
     data-test-id="section-menu-link"
   >
-    <div
-      data-test-id="section-menu-item"
-      class="flex items-center justify-between"
-    >
+    <div data-test-id="section-menu-item" class="flex items-center justify-between">
       <div class="flex min-h-[54px] items-center">
         <div
           v-if="iconProps || $slots.icon"
@@ -53,27 +50,17 @@ const iconProps = computed<IconProps | null>(() => {
           }"
         >
           <slot name="icon">
-            <CommonIcon
-              v-if="iconProps"
-              v-bind="iconProps"
-              size="base"
-              decorative
-            />
+            <CommonIcon v-if="iconProps" v-bind="iconProps" size="base" decorative />
           </slot>
         </div>
         <slot>{{ i18n.t(label, ...(labelPlaceholder || [])) }}</slot>
       </div>
 
-      <div
-        class="flex items-center ltr:mr-1 rtl:ml-1"
-        data-test-id="section-menu-information"
-      >
+      <div class="flex items-center ltr:mr-1 rtl:ml-1" data-test-id="section-menu-information">
         <slot name="right">{{ information && i18n.t(`${information}`) }}</slot>
         <CommonIcon
           class="text-white ltr:-mr-2 ltr:ml-2 rtl:mr-2 rtl:-ml-2"
-          :name="`chevron-${
-            locale.localeData?.dir === 'rtl' ? 'left' : 'right'
-          }`"
+          :name="`chevron-${locale.localeData?.dir === 'rtl' ? 'left' : 'right'}`"
           size="base"
           decorative
         />

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -142,11 +142,15 @@ RSpec.describe 'System > Objects', type: :system do
       click 'tbody tr:last-child'
 
       in_modal do
-        # Add two new attributes to the field.
+        # Add two new options to the field.
         2.times do |i|
           click 'tbody tr:last-child .js-addRow'
           find('tbody tr:last-child .js-key').fill_in(with: "new tree option #{i}")
         end
+
+        # Disable one of the options.
+        find('tbody tr:last-child .js-active').click
+
         click '.js-submit'
       end
 
@@ -158,8 +162,20 @@ RSpec.describe 'System > Objects', type: :system do
         click 'button.js-submit'
       end
 
-      # Check that the attributes were correctly saved.
-      expect(ObjectManager::Attribute.last.data_option[:options][-2..]).to eq([{ 'name' => 'new tree option 0', 'value' => 'new tree option 0' }, { 'name' => 'new tree option 1', 'value' => 'new tree option 1' }])
+      # Check that the options were correctly saved.
+      expect(ObjectManager::Attribute.last.data_option[:options][-2..]).to eq(
+        [
+          {
+            'name'  => 'new tree option 0',
+            'value' => 'new tree option 0',
+          },
+          {
+            'name'     => 'new tree option 1',
+            'value'    => 'new tree option 1',
+            'disabled' => true,
+          }
+        ]
+      )
     end
   end
 
@@ -778,7 +794,7 @@ RSpec.describe 'System > Objects', type: :system do
     end
   end
 
-  describe 'with external data source format', db_adapter: :postgresql, searchindex: true do
+  describe 'with external data source format', searchindex: true do
     let(:users)       { create_list(:user, 10) }
     let(:link_prefix) { "#{Setting.get('http_type')}://#{Setting.get('fqdn')}/#user/profile/" }
 

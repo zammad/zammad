@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Queries
   class ApplicationConfig < BaseQuery
@@ -7,9 +7,7 @@ module Gql::Queries
 
     type [Gql::Types::KeyComplexValueType, { null: false }], null: false
 
-    def self.authorize(...)
-      true # This query should be available for all (including unauthenticated) users.
-    end
+    allow_public_access!
 
     # Reimplemented from sessions_controller#config_frontend.
     def resolve(...)
@@ -35,7 +33,7 @@ module Gql::Queries
 
     def rails_application_config
       [
-        'active_storage.web_image_content_types',
+        'active_storage.content_types_allowed_inline',
       ].map do |config_name|
         (method, key) = config_name.split('.')
 
@@ -49,6 +47,7 @@ module Gql::Queries
     def custom_settings
       [
         'auth_saml_credentials.display_name',
+        'auth_openid_connect_credentials.display_name',
       ].filter_map do |config_name|
         (setting, key) = config_name.split('.')
 

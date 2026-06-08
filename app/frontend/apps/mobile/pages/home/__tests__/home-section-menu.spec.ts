@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
@@ -14,7 +14,7 @@ describe('testing home section menu', () => {
 
     expect(
       view.queryByRole('link', {
-        name: 'Ticket Overviews',
+        name: 'Ticket overviews',
       }),
     ).not.toBeInTheDocument()
   })
@@ -25,7 +25,7 @@ describe('testing home section menu', () => {
     const view = await visitView('/')
 
     const ticketOverviewLink = view.getByRole('link', {
-      name: 'Ticket Overviews',
+      name: 'Ticket overviews',
     })
 
     expect(ticketOverviewLink).toHaveAttribute('href', '/mobile/tickets/view')

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -30,20 +30,13 @@ RSpec.describe 'Manage > Integration > Clearbit', type: :system do
     end
 
     shared_examples 'showing set config' do
-      it 'shows the set api_key' do
+      it 'shows the api_key as masked, the set source and destination' do
         within :active_content, '.main' do
-          expect(page).to have_field('api_key', with: api_key)
+          expect(page).to have_field('api_key')
+          expect(page).to have_no_text(api_key)
         end
-      end
-
-      it 'shows the set source' do
         within :active_content, '.main .js-userSync' do
           expect(page).to have_field('source', with: source)
-        end
-      end
-
-      it 'shows the set destination' do
-        within :active_content, '.main .js-userSync' do
           expect(page).to have_field('destination', with: destination)
         end
       end

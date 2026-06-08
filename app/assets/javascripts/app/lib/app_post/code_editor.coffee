@@ -137,19 +137,24 @@ class App.CodeEditor extends App.Controller
     )
 
   hintOptions: =>
-    completeSingle: false
-    hint: (cm, option) =>
-      new Promise((resolve) =>
-        cursor = cm.getCursor()
-        line = cm.getLine(cursor.line)
+    options =
+      completeSingle: false
 
-        # Resolve early, if there was no trigger detected on the current line.
-        if not @regTrigger().test(line)
-          resolve(null)
-          return
+    if !@attribute.noHints
+      options.hint = (cm, option) =>
+        new Promise((resolve) =>
+          cursor = cm.getCursor()
+          line = cm.getLine(cursor.line)
 
-        @fetchReplacements(cursor, line, resolve)
-      )
+          # Resolve early, if there was no trigger detected on the current line.
+          if not @regTrigger().test(line)
+            resolve(null)
+            return
+
+          @fetchReplacements(cursor, line, resolve)
+        )
+
+    options
 
   mode: =>
     @attribute.mode or 'json'
@@ -174,9 +179,7 @@ class App.CodeEditor extends App.Controller
     return if not @textarea.length
 
     callback = (element) =>
-      @textarea
-        .hide()
-        .after(element)
+      @textarea.after(element)
 
     @editor = CodeMirror(callback, @editorOptions())
 

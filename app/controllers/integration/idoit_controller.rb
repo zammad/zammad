@@ -1,10 +1,14 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Integration::IdoitController < ApplicationController
   prepend_before_action :authenticate_and_authorize!
 
+  SENSITIVE_FIELDS = [:api_token].freeze
+
   def verify
-    response = ::Idoit.verify(params[:method], params[:api_token], params[:endpoint], params[:username], params[:password], params[:client_id], verify_ssl: params[:verify_ssl])
+    unmasked_params = unmask_sensitive_params(params, Setting.get('idoit_config'))
+    response = ::Idoit.verify(unmasked_params[:method], unmasked_params[:api_token], unmasked_params[:endpoint], unmasked_params[:username], unmasked_params[:password],
+                              unmasked_params[:client_id], verify_ssl: unmasked_params[:verify_ssl])
     render json: {
       result:   'ok',
       response: response,
@@ -47,5 +51,4 @@ class Integration::IdoitController < ApplicationController
       result: 'ok',
     }
   end
-
 end

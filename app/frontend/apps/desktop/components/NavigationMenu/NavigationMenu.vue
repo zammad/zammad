@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { transform, deburr } from 'lodash-es'
@@ -35,7 +35,7 @@ const permittedEntries = computed(() => {
         )
           return false
 
-        if (typeof entry.show === 'function') return entry.show()
+        if (typeof entry.show === 'function') return entry.show(session.user)
 
         return true
       })

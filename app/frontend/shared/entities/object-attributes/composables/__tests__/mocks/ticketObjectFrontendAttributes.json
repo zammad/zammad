@@ -1,0 +1,78 @@
+{
+  "attributes": [
+    {
+      "__typename": "ObjectManagerFrontendAttribute",
+      "name": "title",
+      "display": "Title",
+      "dataType": "input",
+      "isInternal": true,
+      "dataOption": {
+        "type": "text",
+        "maxlength": 200,
+        "null": false
+      },
+      "screens": {
+        "edit": {
+          "shown": true,
+          "required": true
+        },
+        "edit_customer": {
+          "shown": true,
+          "required": true
+        }
+      }
+    },
+    {
+      "__typename": "ObjectManagerFrontendAttribute",
+      "name": "group_id",
+      "display": "Group",
+      "dataType": "select",
+      "isInternal": true,
+      "dataOption": {
+        "null": false,
+        "relation": "Group"
+      },
+      "screens": {
+        "edit": {
+          "shown": true,
+          "required": true
+        },
+        "edit_customer": {
+          "shown": true,
+          "required": true
+        }
+      }
+    },
+    {
+      "__typename": "ObjectManagerFrontendAttribute",
+      "name": "owner_id",
+      "display": "Owner",
+      "dataType": "select",
+      "isInternal": true,
+      "dataOption": {
+        "null": true,
+        "relation": "User"
+      },
+      "screens": {
+        "edit": {
+          "shown": true,
+          "required": false
+        },
+        "edit_customer": {
+          "shown": false,
+          "required": false
+        }
+      }
+    }
+  ],
+  "screens": [
+    {
+      "name": "edit",
+      "attributes": ["title", "group_id", "owner_id"]
+    },
+    {
+      "name": "edit_customer",
+      "attributes": ["title", "group_id"]
+    }
+  ]
+}

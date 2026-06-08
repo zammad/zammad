@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Queries
   class User::Current::Avatar::List < BaseQuery
@@ -7,9 +7,7 @@ module Gql::Queries
 
     type [Gql::Types::AvatarType], null: true
 
-    def self.authorize(_obj, ctx)
-      ctx.current_user.permissions?('user_preferences.avatar')
-    end
+    requires_permission 'user_preferences.avatar'
 
     def resolve(...)
       Avatar.list('User', context.current_user.id, raw: true)

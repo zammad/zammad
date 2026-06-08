@@ -1,24 +1,16 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, reactive, toRef } from 'vue'
 
-import {
-  NotificationTypes,
-  useNotifications,
-} from '#shared/components/CommonNotifications/index.ts'
-import { populateEditorNewLines } from '#shared/components/Form/fields/FieldEditor/utils.ts'
+import { transformEditorHtml } from '#shared/components/Form/fields/FieldEditor/utils.ts'
 import Form from '#shared/components/Form/Form.vue'
 import type { FormSubmitData } from '#shared/components/Form/types.ts'
 import { useForm } from '#shared/components/Form/useForm.ts'
 import { getNodeByName } from '#shared/components/Form/utils.ts'
-import {
-  useMacros,
-  useTicketMacros,
-} from '#shared/entities/macro/composables/useMacros.ts'
+import { useMacros, useTicketMacros } from '#shared/entities/macro/composables/useMacros.ts'
 import { useObjectAttributeFormData } from '#shared/entities/object-attributes/composables/useObjectAttributeFormData.ts'
 import { useObjectAttributes } from '#shared/entities/object-attributes/composables/useObjectAttributes.ts'
-import { getTicketNumberWithHook } from '#shared/entities/ticket/composables/getTicketNumber.ts'
 import type {
   TicketArticleReceivedFormValues,
   TicketBulkEditFormData,
@@ -28,36 +20,38 @@ import { defineFormSchema } from '#shared/form/defineFormSchema.ts'
 import {
   EnumFormUpdaterId,
   EnumObjectManagerObjects,
-  type TicketUpdateBulkUserError,
+  type TicketMacrosSelectorInput,
   type TicketUpdateInput,
 } from '#shared/graphql/types.ts'
 import { i18n } from '#shared/i18n.ts'
-import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
-import { useApplicationStore } from '#shared/stores/application.ts'
 import type { MutationSendError } from '#shared/types/error.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonFlyout from '#desktop/components/CommonFlyout/CommonFlyout.vue'
 import type { MenuItem } from '#desktop/components/CommonPopoverMenu/types.ts'
+import { provideFieldEditorOptions } from '#desktop/components/Form/fields/FieldEditor/useFieldEditorOptions.ts'
 import SplitButton from '#desktop/components/SplitButton/SplitButton.vue'
-import { useTicketUpdateBulkMutation } from '#desktop/entities/ticket/graphql/mutations/updateBulk.api.ts'
+import { useTicketBulkUpdate } from '#desktop/entities/ticket/composables/useTicketBulkUpdate.ts'
+import { useTicketBulkUpdateStore } from '#desktop/entities/user/current/stores/ticketBulkUpdate.ts'
 
 import { closeFlyout } from '../../CommonFlyout/useFlyout.ts'
 
 interface Props {
-  ticketIds: ID[]
-  groupIds: ID[]
+  currentSelectedTicketCount: number
+  bulkCount: number
+  bulkSelector: TicketMacrosSelectorInput
+  macrosSelector: TicketMacrosSelectorInput
+  bulkHasMoreItems?: boolean
 }
 
 const props = defineProps<Props>()
 
 const emit = defineEmits<{
   success: []
+  failure: [ID[]]
 }>()
 
-const application = useApplicationStore()
-
-const { form, formSetErrors, formNodeId, formSubmit } = useForm()
+const { form, formClearMessage, formSetMessage, formSetErrors, formNodeId, formSubmit } = useForm()
 
 const flyoutName = 'tickets-bulk-edit'
 
@@ -70,9 +64,13 @@ const formSchema = defineFormSchema([
         isLayout: true,
         component: 'CommonLabel',
         children: {
-          if: '$ticketIdsCount === 1',
-          then: '$t("%s ticket selected", $ticketIdsCount)',
-          else: '$t("%s tickets selected", $ticketIdsCount)',
+          if: '$bulkCount > 0',
+          then: {
+            if: '$bulkHasMoreItems',
+            then: '$t("%s ticket(s) selected, selection limit reached", $ticketIdsCount)',
+            else: '$t("All %s ticket(s) selected", $ticketIdsCount)',
+          },
+          else: '$t("%s ticket(s) selected", $ticketIdsCount)',
         },
       },
       {
@@ -124,24 +122,9 @@ const formSchema = defineFormSchema([
           },
           {
             name: 'body',
-            screen: 'edit',
             object: EnumObjectManagerObjects.TicketArticle,
             props: {
-              // Disable all the advanced features for now.
-              meta: {
-                mentionText: {
-                  disabled: true,
-                },
-                mentionKnowledgeBase: {
-                  disabled: true,
-                },
-                mentionUser: {
-                  disabled: true,
-                },
-                image: {
-                  disabled: true,
-                },
-              },
+              mode: ['note'],
             },
             required: true,
           },
@@ -170,15 +153,14 @@ const formSchema = defineFormSchema([
   },
 ])
 
+// To make popover be above the flyout backdrop
+provideFieldEditorOptions({ zIndex: '40' })
+
 const { attributesLookup: ticketObjectAttributesLookup } = useObjectAttributes(
   EnumObjectManagerObjects.Ticket,
 )
 
-const { notify } = useNotifications()
-
-const updateBulkMutation = new MutationHandler(useTicketUpdateBulkMutation(), {
-  errorShowNotification: false,
-})
+const { sendBulkUpdate, notifyBulkSuccess, notifyBulkError } = useTicketBulkUpdate()
 
 const processBulkEditArticle = (
   formId: string,
@@ -186,12 +168,9 @@ const processBulkEditArticle = (
 ) => {
   if (!article) return null
 
-  const contentType =
-    getNodeByName(formId, 'body')?.context?.contentType || 'text/html'
+  const contentType = getNodeByName(formId, 'body')?.context?.contentType || 'text/html'
 
-  if (contentType === 'text/html') {
-    article.body = populateEditorNewLines(article.body)
-  }
+  if (contentType === 'text/html') article.body = transformEditorHtml(article.body)
 
   return {
     type: article.articleType,
@@ -201,9 +180,8 @@ const processBulkEditArticle = (
   }
 }
 
-const { macrosLoaded, macros } = useMacros(toRef(props, 'groupIds'))
-const { activeMacro, executeMacro, disposeActiveMacro } =
-  useTicketMacros(formSubmit)
+const { macrosLoaded, macros } = useMacros(toRef(props, 'macrosSelector'))
+const { activeMacro, executeMacro, disposeActiveMacro } = useTicketMacros(formSubmit)
 
 const macroMenuItems = computed<MenuItem[]>(
   () =>
@@ -217,87 +195,117 @@ const macroMenuItems = computed<MenuItem[]>(
     })) ?? [],
 )
 
-const bulkEditTickets = async (
-  formData: FormSubmitData<TicketBulkEditFormData>,
-) => {
+const isRunning = toRef(useTicketBulkUpdateStore(), 'isRunning')
+
+const bulkEditTickets = async (formData: FormSubmitData<TicketBulkEditFormData>) => {
+  if (isRunning.value) {
+    formSetErrors(
+      new UserError([
+        {
+          message: __(
+            'Another bulk update is currently in progress. Please wait until it is finished before starting a new one.',
+          ),
+        },
+      ]),
+    )
+
+    return
+  }
+
+  formClearMessage('ticket-bulk-update-succeeded')
+
   const cleanedFormData = Object.fromEntries(
     Object.entries(formData).filter(([, value]) => value),
   ) as FormSubmitData<TicketBulkEditFormData>
 
-  const { internalObjectAttributeValues } =
-    useObjectAttributeFormData<TicketBulkEditFormData>(
-      ticketObjectAttributesLookup.value,
-      cleanedFormData,
-    )
+  const { internalObjectAttributeValues } = useObjectAttributeFormData<TicketBulkEditFormData>(
+    EnumObjectManagerObjects.Ticket,
+    ticketObjectAttributesLookup.value,
+    cleanedFormData,
+  )
 
-  const formArticle = formData.article as
-    | TicketArticleReceivedFormValues
-    | undefined
+  const formArticle = formData.article as TicketArticleReceivedFormValues | undefined
 
   const article = processBulkEditArticle(form.value!.formId, formArticle)
 
   try {
-    const result = await updateBulkMutation.send({
-      ticketIds: props.ticketIds,
-      input: {
-        ...internalObjectAttributeValues,
-        article,
-      } as TicketUpdateInput,
+    const result = await sendBulkUpdate(props.bulkSelector, {
+      input: { ...internalObjectAttributeValues, article } as TicketUpdateInput,
       macroId: activeMacro.value?.id,
     })
 
-    if (result) {
-      notify({
-        id: 'tickets-updated-bulk',
-        type: NotificationTypes.Success,
-        message: __('The %s selected tickets have been updated successfully.'),
-        messagePlaceholder: [props.ticketIds.length.toString()],
-      })
+    if (!result) return
 
+    if (result.async) {
       emit('success')
       closeFlyout(flyoutName)
+
+      return
     }
-  } catch (error) {
-    if (error instanceof UserError) {
-      const firstError = error.errors[0] as TicketUpdateBulkUserError
 
-      if (firstError.failedTicket) {
-        formSetErrors(
-          new UserError([
-            {
-              message: i18n.t(
-                `Ticket failed to save: %s (Reason: %s)`,
-                `${getTicketNumberWithHook(
-                  application.config.ticket_hook,
-                  firstError.failedTicket.number,
-                )} - ${firstError.failedTicket.title}`,
-                firstError.message,
-              ),
-            },
-          ]),
-        )
+    const { total, failedCount, invalidTicketIds } = result
 
-        return
+    // In case there are invalid tickets, show alert messages and allow retry.
+    if (invalidTicketIds.length) {
+      // Only if some tickets were processed successfully.
+      if (total - failedCount > 0) {
+        formSetMessage({
+          key: 'ticket-bulk-update-succeeded',
+          value: i18n.t('Bulk action successful for %s ticket(s).', total - failedCount),
+          type: 'success',
+        })
       }
+
+      formSetErrors(
+        new UserError([
+          {
+            message: i18n.t(
+              'Bulk action failed for %s ticket(s). Check attribute values and try again.',
+              invalidTicketIds.length,
+            ),
+          },
+        ]),
+      )
+
+      emit('failure', invalidTicketIds)
+
+      return
     }
 
+    // Otherwise, close the flyout and show toast messages.
+    if (failedCount) {
+      // Only if some tickets were processed successfully.
+      if (total - failedCount > 0) notifyBulkSuccess(total - failedCount, 5000)
+
+      notifyBulkError(failedCount)
+
+      emit('failure', invalidTicketIds)
+      closeFlyout(flyoutName)
+
+      return
+    }
+
+    notifyBulkSuccess(total)
+    emit('success')
+    closeFlyout(flyoutName)
+  } catch (error) {
     formSetErrors(error as MutationSendError)
   } finally {
     disposeActiveMacro()
   }
 }
 
-const ticketIdsCount = computed(() => props.ticketIds.length)
-
 const schemaData = reactive({
-  ticketIdsCount,
+  ticketIdsCount: props.currentSelectedTicketCount,
+  bulkCount: props.bulkCount,
+  bulkHasMoreItems: props.bulkHasMoreItems,
 })
 </script>
 
 <template>
   <CommonFlyout
     :name="flyoutName"
-    :header-title="__('Tickets Bulk Edit')"
+    :header-title="__('Tickets bulk edit')"
     header-icon="collection-play"
     size="large"
     no-close-on-action
@@ -306,18 +314,17 @@ const schemaData = reactive({
       id="form-tickets-bulk-edit"
       ref="form"
       :form-updater-id="EnumFormUpdaterId.FormUpdaterUpdaterTicketBulkEdit"
+      :form-updater-additional-params="bulkSelector"
       should-autofocus
       use-object-attributes
       :schema="formSchema"
       :schema-data="schemaData"
-      @submit="
-        bulkEditTickets($event as FormSubmitData<TicketBulkEditFormData>)
-      "
+      @submit="bulkEditTickets($event as FormSubmitData<TicketBulkEditFormData>)"
     />
     <template #footer="{ close }">
       <div class="flex items-center justify-end gap-4">
         <CommonButton size="large" variant="secondary" @click="close">
-          {{ $t('Cancel & Go Back') }}
+          {{ $t('Cancel & go back') }}
         </CommonButton>
         <SplitButton
           v-if="!macrosLoaded || macroMenuItems.length"
@@ -326,16 +333,11 @@ const schemaData = reactive({
           variant="submit"
           :items="macroMenuItems"
           :form="formNodeId"
+          :addon-label="__('Macros')"
         >
           {{ $t('Apply') }}
         </SplitButton>
-        <CommonButton
-          v-else
-          type="submit"
-          size="large"
-          variant="submit"
-          :form="formNodeId"
-        >
+        <CommonButton v-else type="submit" size="large" variant="submit" :form="formNodeId">
           {{ $t('Apply') }}
         </CommonButton>
       </div>

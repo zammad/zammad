@@ -8,7 +8,7 @@ export type ReactiveFunction<TParam> = () => TParam;
 export const UserCurrentTaskbarItemStateUpdatesDocument = gql`
     subscription userCurrentTaskbarItemStateUpdates($taskbarItemId: ID!) {
   userCurrentTaskbarItemStateUpdates(taskbarItemId: $taskbarItemId) {
-    stateChanged
+    stateUpdateType
   }
 }
     `;

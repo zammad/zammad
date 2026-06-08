@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Mutations
   class GuidedSetup::SetSystemInformation < BaseMutation
@@ -9,15 +9,12 @@ module Gql::Mutations
 
     field :success, Boolean, description: 'System setup information updated successfully?'
 
-    def self.authorize(_obj, ctx)
-      ctx.current_user.permissions?('admin.wizard')
-    end
+    requires_permission 'admin.wizard'
 
     def resolve(input:)
       begin
         # TODO: what are we doing with required string parameter which only holding whitespaces?
-        set_system_information = Service::System::SetSystemInformation.new(data: input.to_h)
-        set_system_information.execute
+        Service::System::SetSystemInformation.execute(data: input.to_h)
       rescue Exceptions::InvalidAttribute => e
         return error_response({ message: e.message, field: e.attribute })
       end

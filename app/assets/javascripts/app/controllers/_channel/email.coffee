@@ -326,9 +326,6 @@ class ChannelEmailAccountWizard extends App.ControllerWizardModal
     'click  .js-goToSlide':                'goToSlide'
     'click  .js-expert':                   'probeBasedOnIntro'
     'click  .js-close':                    'hide'
-  inboundPassword: ''
-  outboundPassword: ''
-  passwordPlaceholder: '{{{{{{{{{{{{SECRTE_PASSWORD}}}}}}}}}}}}'
 
   constructor: ->
     super
@@ -348,14 +345,6 @@ class ChannelEmailAccountWizard extends App.ControllerWizardModal
         inbound: clone(@channel.options.inbound)
         outbound: clone(@channel.options.outbound)
         meta: {}
-
-      # remember passwords, do not show in ui
-      if @account.inbound.options && @account.inbound.options.password
-        @inboundPassword = @account.inbound.options.password
-        @account.inbound.options.password = @passwordPlaceholder
-      if @account.outbound.options && @account.outbound.options.password
-        @outboundPassword = @account.outbound.options.password
-        @account.outbound.options.password = @passwordPlaceholder
 
     @render()
 
@@ -645,9 +634,6 @@ class ChannelEmailAccountWizard extends App.ControllerWizardModal
       @formValidate(form: e.target, errors: errors)
       return false
 
-    if params.options && params.options.password is @passwordPlaceholder
-      params.options.password = @inboundPassword
-
     # Update meta as the one from AttributesBase could be outdated
     @account.meta.realname = params.options.realname
     @account.meta.email = params.options.email
@@ -809,9 +795,6 @@ class ChannelEmailAccountWizard extends App.ControllerWizardModal
     params          = @formParam(e.target)
     params['email'] = @account['meta']['email']
 
-    if params.options && params.options.password is @passwordPlaceholder
-      params.options.password = @outboundPassword
-
     if !params['email'] && @channel
       email_addresses = App.EmailAddress.search(filter: { channel_id: @channel.id })
       if email_addresses && email_addresses[0]
@@ -883,11 +866,6 @@ class ChannelEmailAccountWizard extends App.ControllerWizardModal
       if email_addresses && email_addresses[0]
         params.email = email_addresses[0].email
 
-    if params.inbound?.options?.password is @passwordPlaceholder
-      params.inbound.options.password = @inboundPassword
-    if params.outbound?.options?.password is @passwordPlaceholder
-      params.outbound.options.password = @outboundPassword
-
     @ajax(
       id:   'email_verify'
       type: 'POST'
@@ -938,9 +916,6 @@ class ChannelEmailNotificationWizard extends App.ControllerWizardModal
     'change .js-outbound [name=adapter]':  'toggleOutboundAdapter'
     'submit .js-outbound':                 'probleOutbound'
     'click  .js-close':                    'hide'
-  inboundPassword: ''
-  outboundPassword: ''
-  passwordPlaceholder: '{{{{{{{{{{{{SECRTE_PASSWORD}}}}}}}}}}}}'
 
   constructor: ->
     super
@@ -959,14 +934,6 @@ class ChannelEmailNotificationWizard extends App.ControllerWizardModal
       @account =
         inbound: clone(@channel.options.inbound)
         outbound: clone(@channel.options.outbound)
-
-      # remember passwords, do not show in ui
-      if @account.inbound && @account.inbound.options && @account.inbound.options.password
-        @inboundPassword = @account.inbound.options.password
-        @account.inbound.options.password = @passwordPlaceholder
-      if @account.outbound && @account.outbound.options && @account.outbound.options.password
-        @outboundPassword = @account.outbound.options.password
-        @account.outbound.options.password = @passwordPlaceholder
 
     @render()
     @toggleSslVerifyAlert(target: @el.find('[name="options::ssl_verify"]'))
@@ -1058,9 +1025,6 @@ class ChannelEmailNotificationWizard extends App.ControllerWizardModal
 
     # get params
     params = @formParam(e.target)
-
-    if params.options && params.options.password is @passwordPlaceholder
-      params.options.password = @outboundPassword
 
     # let backend know about the channel
     params.channel_id = @channel.id

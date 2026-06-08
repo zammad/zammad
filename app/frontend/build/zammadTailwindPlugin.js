@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 /* eslint-disable @typescript-eslint/no-require-imports */
 const defaultTheme = require('tailwindcss/defaultTheme')
@@ -24,16 +24,8 @@ module.exports = plugin(
       '[data-populated] &',
       '[data-populated]&',
     ])
-    addVariant('formkit-required', [
-      '&[data-required]',
-      '[data-required] &',
-      '[data-required]&',
-    ])
-    addVariant('formkit-dirty', [
-      '&[data-dirty]',
-      '[data-dirty] &',
-      '[data-dirty]&',
-    ])
+    addVariant('formkit-required', ['&[data-required]', '[data-required] &', '[data-required]&'])
+    addVariant('formkit-dirty', ['&[data-dirty]', '[data-dirty] &', '[data-dirty]&'])
     addVariant('formkit-is-checked', [
       '&[data-is-checked]',
       '[data-is-checked] &',
@@ -52,26 +44,19 @@ module.exports = plugin(
       '[data-variant="secondary"] &',
       '[data-variant="secondary"]&',
     ])
-    addVariant('formkit-variant-submit', [
-      '[data-variant="submit"] &',
-      '[data-variant="submit"]&',
-    ])
-    addVariant('formkit-variant-danger', [
-      '[data-variant="danger"] &',
-      '[data-variant="danger"]&',
+    addVariant('formkit-variant-submit', ['[data-variant="submit"] &', '[data-variant="submit"]&'])
+    addVariant('formkit-variant-danger', ['[data-variant="danger"] &', '[data-variant="danger"]&'])
+    addVariant('formkit-warning', [
+      '&[data-message-type="warning"]',
+      '[data-message-type="warning"] &',
+      '[data-message-type="warning"]&',
     ])
   },
   {
     theme: {
       extend: {
         fontFamily: {
-          sans: [
-            '"Fira Sans"',
-            '"Helvetica Neue"',
-            'Helvetica',
-            'Arial',
-            'sans-serif',
-          ],
+          sans: ['"Fira Sans"', '"Helvetica Neue"', 'Helvetica', 'Arial', 'sans-serif'],
           mono: ['"Fira Mono"', ...defaultTheme.fontFamily.mono],
         },
         colors: {
@@ -80,6 +65,9 @@ module.exports = plugin(
         },
         minWidth: {
           '1/2': '50%',
+        },
+        animation: {
+          'ping-once': 'ping .3s cubic-bezier(0, 0, 0.2, 1)',
         },
       },
     },

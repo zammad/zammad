@@ -1,21 +1,58 @@
 {
-  "enabledManagers": ["bundler", "npm", "github-actions"],
-  "lockFileMaintenance": { "enabled": false },
+  "enabledManagers": ["bundler", "npm", "github-actions", "devcontainer", "custom.regex"],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^\\.gitlab/ci/.*\\.yml$/"
+      ],
+      "matchStrings": ["DEVCONTAINERS_CLI_VERSION: '(?<currentValue>[^']+)'"],
+      "depNameTemplate": "@devcontainers/cli",
+      "datasourceTemplate": "npm"
+    }
+  ],
+  "bundler": {
+    "lockFileMaintenance": {
+      "enabled": true,
+      "extends": ["schedule:weekly"],
+      "branchTopic": "lock-file-maintenance-ruby",
+      "commitMessageExtra": "(Ruby)"
+    }
+  },
+  "devcontainer": {
+    "managerFilePatterns": [
+      "/^\\.devcontainer/[^/]+/devcontainer\\.json$/"
+    ]
+  },
+  "npm": {
+    "lockFileMaintenance": {
+      "enabled": true,
+      "extends": ["schedule:weekly"],
+      "branchTopic": "lock-file-maintenance-js",
+      "commitMessageExtra": "(JS)"
+    }
+  },
+  "minimumReleaseAge": "3 days",
   "packageRules": [
-    { "matchCategories": ["ci"], "assignees": ["mg"] },
+    {
+      "matchManagers": ["devcontainer"],
+      "assignees": ["fl"]
+    },
+    {
+      "matchCategories": ["ci"],
+      "assignees": ["fl"]
+    },
     {
       "matchCategories": ["ruby"],
-      "assignees": ["mg"],
+      "assignees": ["fl"],
       "addLabels": ["ruby"],
-      "rangeStrategy": "in-range-only",
-      "extends": [":maintainLockFilesWeekly"]
+      "rangeStrategy": "in-range-only"
     },
     {
       "matchCategories": ["js"],
-      "assignees": ["dk"],
+      "assignees": ["fl"],
       "addLabels": ["javascript"],
-      "rangeStrategy": "bump",
-      "extends": ["schedule:weekly", ":maintainLockFilesWeekly"]
+      "rangeStrategy": "bump"
     },
     {
       "matchCategories": ["js"],
@@ -29,7 +66,6 @@
     },
     {
       "matchCategories": ["js"],
-      "assignees": ["fl"],
       "matchFileNames": [".cypress/package.json"],
       "labels": ["cypress"]
     },
@@ -53,7 +89,6 @@
     },
     {
       "matchCategories": ["js"],
-      "assignees": ["fl"],
       "matchPackageNames": [
         "vitest",
         "jsdom",
@@ -67,7 +102,6 @@
     },
     {
       "matchCategories": ["js"],
-      "assignees": ["fl"],
       "groupName": "Vite packages",
       "groupSlug": "vite-related",
       "matchPackageNames": ["/^vite/", "/^@vitejs/", "!vitest"]
@@ -76,31 +110,27 @@
       "matchCategories": ["js"],
       "groupName": "Formkit packages",
       "groupSlug": "formkit-related",
-      "matchPackageNames": ["/^@formkit/"],
-      "excludePackageNames": ["@formkit/drag-and-drop"]
+      "matchPackageNames": ["/^@formkit/", "!@formkit/drag-and-drop"]
     },
     {
       "matchCategories": ["js"],
-      "matchPackageNames": ["pinia", "/^@vue/", "/^vue/"],
-      "excludePackageNames": [
-        "@vue/eslint-config-prettier",
-        "@vue/eslint-config-typescript",
-        "@vuepic/vue-datepicker"
+      "matchPackageNames": [
+        "pinia",
+        "/^@vue/",
+        "/^vue/",
+        "!@vue/eslint-config-typescript",
+        "!@vuepic/vue-datepicker"
       ],
       "groupName": "Vue packages",
       "groupSlug": "vue"
     },
     {
-      "matchPackageNames": [
-        "@vue/eslint-config-prettier",
-        "@vue/eslint-config-typescript"
-      ],
+      "matchPackageNames": ["@vue/eslint-config-typescript"],
       "groupName": "Vue ESLint Configs",
       "groupSlug": "vue-eslint-configs"
     },
     {
       "matchCategories": ["js"],
-      "assignees": ["fl"],
       "matchPackageNames": [
         "prosemirror-model",
         "prosemirror-state",

@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { shallowRef } from 'vue'
 
@@ -112,7 +112,7 @@ describe('GuidedSetupActionFooter.vue', () => {
       ...wrapperParameters,
     })
 
-    const goBackButton = view.getByRole('button', { name: 'Go Back' })
+    const goBackButton = view.getByRole('button', { name: 'Go back' })
 
     expect(goBackButton).toBeInTheDocument()
   })
@@ -127,7 +127,7 @@ describe('GuidedSetupActionFooter.vue', () => {
       ...wrapperParameters,
     })
 
-    const goBackButton = view.getByRole('button', { name: 'Go Back' })
+    const goBackButton = view.getByRole('button', { name: 'Go back' })
 
     expect(goBackButton).toBeInTheDocument()
 

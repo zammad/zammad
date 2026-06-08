@@ -1,6 +1,7 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { merge } from 'lodash-es'
+
 import { initializeAppName } from '#shared/composables/useAppName.ts'
 import initializeStore from '#shared/stores/index.ts'
 import initializeGlobalComponents from '#shared/initializer/globalComponents.ts'
@@ -27,11 +28,34 @@ import createCache from '#shared/server/apollo/cache.ts'
 
 import { createMockClient } from 'mock-apollo-client'
 import { provideApolloClient } from '@vue/apollo-composable'
+import { useSessionStore } from '#shared/stores/session.ts'
+import { useApplicationStore } from '#shared/stores/application.ts'
 
 const router = createRouter({
   history: createMemoryHistory('/'),
   routes: [{ path: '/', component: { template: '<div />' } }],
 })
+
+const mockPermissions = (permissions: string[]) => {
+  const session = useSessionStore()
+  if (!session.user) {
+    session.user = {
+      id: '123',
+      internalId: 1,
+      objectAttributeValues: [],
+    }
+  }
+
+  session.user!.permissions = { names: permissions }
+}
+
+const mockApplicationConfig = (config: Record<string, unknown>) => {
+  const app = useApplicationStore()
+
+  Object.entries(config).forEach(([key, value]) => {
+    app.config[key] = value
+  })
+}
 
 export const mountComponent: typeof mount = (
   component: any,
@@ -51,7 +75,10 @@ export const mountComponent: typeof mount = (
   plugins.push(initializeMobileVisuals)
   plugins.push((app: App) => router.install(app))
 
-  return cy.mount(component, merge({ global: { plugins } }, options))
+  return cy.mount(component, merge({ global: { plugins } }, options)).then(() => {
+    if (options?.config) mockApplicationConfig(options.config)
+    if (options?.permissions) mockPermissions(options.permissions)
+  })
 }
 
 export const mockApolloClient = () => {

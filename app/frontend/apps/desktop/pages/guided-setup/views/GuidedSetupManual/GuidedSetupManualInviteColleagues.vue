@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <!-- eslint-disable @typescript-eslint/no-unused-vars -->
 
@@ -20,18 +20,13 @@ import {
 } from '#shared/graphql/types.ts'
 import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
 
-import {
-  GroupAccess,
-  type GroupPermissionReactive,
-} from '#desktop/components/Form/fields/FieldGroupPermissions/types.ts'
-
 import GuidedSetupActionFooter from '../../components/GuidedSetupActionFooter.vue'
 import { useSystemSetup } from '../../composables/useSystemSetup.ts'
 
 const { setBoxSize, setTitle } = useSystemSetup()
 
 setBoxSize?.('large')
-setTitle(__('Invite Colleagues'))
+setTitle(__('Invite colleagues'))
 
 const { form } = useForm()
 
@@ -44,41 +39,11 @@ const schema = defineFormSchema([
   },
 ])
 
-const transformGroupPermissions = (value: GroupPermissionReactive[]) =>
-  value.reduce(
-    (groupPermissions, row) => {
-      if (!row.groups) return groupPermissions
-
-      groupPermissions.push(
-        ...(row.groups as unknown as SelectValue[]).map((groupInternalId) => ({
-          groupInternalId,
-          accessType: Object.keys(row.groupAccess).reduce((accesses, key) => {
-            if (row.groupAccess[key as GroupAccess])
-              accesses.push(key as GroupAccess)
-            return accesses
-          }, [] as GroupAccess[]),
-        })),
-      )
-      return groupPermissions
-    },
-    [] as {
-      groupInternalId: SelectValue
-      accessType: GroupAccess[]
-    }[],
-  )
-
 const { attributesLookup } = useObjectAttributes(EnumObjectManagerObjects.User)
 
 const inviteUser = async (formData: FormSubmitData) => {
-  // TODO: Try to move this value transformation into the relevant field.
-  if (formData.group_ids) {
-    formData.group_ids = transformGroupPermissions(
-      formData.group_ids as unknown as GroupPermissionReactive[],
-    )
-  }
-
   const { internalObjectAttributeValues, additionalObjectAttributeValues } =
-    useObjectAttributeFormData(attributesLookup.value, formData)
+    useObjectAttributeFormData(EnumObjectManagerObjects.User, attributesLookup.value, formData)
 
   const input: UserInput = {
     ...internalObjectAttributeValues,
@@ -117,8 +82,8 @@ const inviteUser = async (formData: FormSubmitData) => {
   />
   <GuidedSetupActionFooter
     :form="form"
-    :submit-button-text="__('Send Invitation')"
-    :continue-button-text="__('Finish Setup')"
+    :submit-button-text="__('Send invitation')"
+    :continue-button-text="__('Finish setup')"
     continue-route="/guided-setup/manual/finish"
   />
 </template>

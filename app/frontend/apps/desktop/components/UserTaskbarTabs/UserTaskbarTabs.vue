@@ -1,22 +1,24 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { animations, parents, updateConfig } from '@formkit/drag-and-drop'
-import { dragAndDrop } from '@formkit/drag-and-drop/vue'
+import { parents, updateConfig } from '@formkit/drag-and-drop'
 import { computedAsync } from '@vueuse/core'
 import { cloneDeep } from 'lodash-es'
 import { storeToRefs } from 'pinia'
-import { type Ref, ref, watch, useTemplateRef, nextTick } from 'vue'
+import { watch, useTemplateRef, nextTick, onMounted, shallowRef } from 'vue'
 
-import CommonPopover from '#shared/components/CommonPopover/CommonPopover.vue'
-import { usePopover } from '#shared/components/CommonPopover/usePopover.ts'
+import { useTouchDevice } from '#shared/composables/useTouchDevice.ts'
 import { EnumTaskbarEntityAccess } from '#shared/graphql/types.ts'
 import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
-import { startAndEndEventsDNDPlugin } from '#shared/utils/startAndEndEventsDNDPlugin.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
+import CommonPopover from '#desktop/components/CommonPopover/CommonPopover.vue'
+import { usePopover } from '#desktop/components/CommonPopover/usePopover.ts'
 import CommonSectionCollapse from '#desktop/components/CommonSectionCollapse/CommonSectionCollapse.vue'
+import { useAnnouncer } from '#desktop/composables/accessibility/useAnnouncer.ts'
+import { useAccessibleDragAndDrop } from '#desktop/composables/dragAndDrop/useAccessibleDragAndDrop.ts'
+import { useKeyboardKeysForDragAndDrop } from '#desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts'
 import { useUserCurrentTaskbarItemListPrioMutation } from '#desktop/entities/user/current/graphql/mutations/userCurrentTaskbarItemListPrio.api.ts'
 import { useUserCurrentTaskbarTabsStore } from '#desktop/entities/user/current/stores/taskbarTabs.ts'
 
@@ -97,23 +99,52 @@ const dndEndCallback = (parent: HTMLElement) => {
 }
 
 const dndParentElement = useTemplateRef('dnd-parent')
-const dndTaskbarTabListOrder = ref(taskbarTabListOrder.value || [])
+const dndTaskbarTabListOrder = shallowRef(taskbarTabListOrder.value || [])
+let isKeyboardReorder = false
+
+const { announce, messageNodeId } = useAnnouncer()
+
+const initializeDragAndDrop = () =>
+  useAccessibleDragAndDrop(dndParentElement, dndTaskbarTabListOrder, announce, {
+    dropZoneClass: 'no-tooltip',
+    synthDropZoneClass: 'no-tooltip',
+    dndStartCallback,
+    dndEndCallback,
+  })
 
 watch(taskbarTabListOrder, (newValue) => {
-  dndTaskbarTabListOrder.value = cloneDeep(newValue || [])
+  if (!isKeyboardReorder) {
+    dndTaskbarTabListOrder.value = cloneDeep(newValue || [])
+  }
+
+  // Reset flag after store update
+  isKeyboardReorder = false
 })
 
-dragAndDrop({
-  parent: dndParentElement as Ref<HTMLElement>,
-  values: dndTaskbarTabListOrder,
-  plugins: [
-    startAndEndEventsDNDPlugin(dndStartCallback, dndEndCallback),
-    animations(),
-  ],
-  dropZoneClass: 'opacity-0 no-tooltip dragging-active',
-  touchDropZoneClass: 'opacity-0 no-tooltip dragging-active',
-  draggingClass: 'dragging-active',
+const {
+  focusedItemIndex,
+  selectedItemIndex,
+  focusedItemId,
+  handleKeydown,
+  handleFocus,
+  handleBlur,
+} = useKeyboardKeysForDragAndDrop({
+  items: dndTaskbarTabListOrder,
+  onReorder: (newOrder) => {
+    isKeyboardReorder = true
+    updateTaskbarTabListOrder(newOrder)
+  },
 })
+
+watch(
+  () => dndTaskbarTabListOrder.value?.length,
+  (newLength, oldLength) => {
+    // If we went from 0 tabs to some tabs, or the DOM was recreated, reinitialize
+    if (!oldLength && newLength) nextTick(initializeDragAndDrop)
+  },
+)
+
+onMounted(initializeDragAndDrop)
 
 watch(
   () => props.collapsed,
@@ -128,17 +159,12 @@ const getTaskbarTabComponent = (tabEntityKey: string) => {
   const taskbarTab = taskbarTabListByTabEntityKey.value[tabEntityKey]
   if (!taskbarTab) return
 
-  if (
-    !taskbarTab.entityAccess ||
-    taskbarTab.entityAccess === EnumTaskbarEntityAccess.Granted
-  )
+  if (!taskbarTab.entityAccess || taskbarTab.entityAccess === EnumTaskbarEntityAccess.Granted)
     return getTaskbarTabTypePlugin(taskbarTab.type).component
 
-  if (taskbarTab.entityAccess === EnumTaskbarEntityAccess.Forbidden)
-    return UserTaskbarTabForbidden
+  if (taskbarTab.entityAccess === EnumTaskbarEntityAccess.Forbidden) return UserTaskbarTabForbidden
 
-  if (taskbarTab.entityAccess === EnumTaskbarEntityAccess.NotFound)
-    return UserTaskbarTabNotFound
+  if (taskbarTab.entityAccess === EnumTaskbarEntityAccess.NotFound) return UserTaskbarTabNotFound
 }
 
 const getTaskbarTabLink = (tabEntityKey: string) => {
@@ -149,10 +175,7 @@ const getTaskbarTabLink = (tabEntityKey: string) => {
   const plugin = getTaskbarTabTypePlugin(taskbarTab.type)
   if (typeof plugin.buildTaskbarTabLink !== 'function') return
 
-  return (
-    plugin.buildTaskbarTabLink(taskbarTab.entity, taskbarTab.tabEntityKey) ??
-    '#'
-  )
+  return plugin.buildTaskbarTabLink(taskbarTab.entity, taskbarTab.tabEntityKey) ?? '#'
 }
 
 const { popover, popoverTarget, toggle, isOpen: popoverIsOpen } = usePopover()
@@ -162,8 +185,8 @@ const taskbarTabListContainer = useTemplateRef('taskbar-tab-list')
 const taskbarTabListLocation = computedAsync(() => {
   if (!taskbarTabListContainer.value) return '#taskbarTabListHidden'
 
-  // NB: Prevent teleport component from complaining that the target is not ready.
-  //   Defer the value update for after next tick.
+  // NB: Prevent a teleport component from complaining that the target is not ready.
+  //   Defer the value update for after the next tick.
   return nextTick(() => {
     if (props.collapsed) return '#taskbarTabListCollapsed'
     return '#taskbarTabListExpanded'
@@ -184,13 +207,16 @@ const getTaskbarTabDirtyFlag = (tabEntityKey: string) => {
     taskbarTabListByTabEntityKey.value[tabEntityKey].dirty
   )
 }
+
+const { isTouchDevice } = useTouchDevice()
 </script>
 
 <template>
   <CommonLoader no-transition :loading="loading">
     <div
       v-if="hasTaskbarTabs"
-      class="-m-1 flex flex-col overflow-y-hidden py-2"
+      class="flex flex-col overflow-y-hidden"
+      :class="{ 'py-1': collapsed }"
     >
       <div v-if="props.collapsed" class="flex justify-center">
         <CommonPopover
@@ -213,14 +239,12 @@ const getTaskbarTabDirtyFlag = (tabEntityKey: string) => {
           icon="card-list"
           size="large"
           variant="neutral"
-          :aria-controls="
-            popoverIsOpen ? 'user-taskbar-tabs-popover' : undefined
-          "
+          :aria-controls="popoverIsOpen ? 'user-taskbar-tabs-popover' : undefined"
           aria-haspopup="true"
           :aria-expanded="popoverIsOpen"
-          :aria-label="$t('List of all user taskbar tabs')"
+          :tooltip="__('List of all user taskbar tabs')"
           :class="{
-            '!bg-blue-800 !text-white': popoverIsOpen,
+            'bg-blue-800! text-white!': popoverIsOpen,
           }"
           @click="toggle(true)"
         />
@@ -229,54 +253,69 @@ const getTaskbarTabDirtyFlag = (tabEntityKey: string) => {
       <template v-else>
         <CommonSectionCollapse
           id="user-taskbar-tabs"
+          class="gap-0! px-2 py-0.5"
           :title="__('Tabs')"
           no-negative-margin
           scrollable
         >
-          <span id="drag-and-drop-taskbar-tabs" class="sr-only">
-            {{ $t('Drag and drop to reorder your tabs.') }}
-          </span>
-
           <div id="taskbarTabListExpanded" ref="taskbar-tab-list" />
         </CommonSectionCollapse>
       </template>
 
       <div id="taskbarTabListHidden" class="hidden" aria-hidden="true">
         <Teleport :to="taskbarTabListLocation" defer>
+          <!--   eslint-disable vuejs-accessibility/no-static-element-interactions       -->
           <ul
             ref="dnd-parent"
-            :class="{ 'flex flex-col gap-1.5 overflow-y-auto p-1': !collapsed }"
+            tabindex="0"
+            :aria-label="$t('User taskbar tabs')"
+            :aria-activedescendant="focusedItemId"
+            :aria-describedby="messageNodeId"
+            :class="{
+              'flex flex-col gap-1.5 overflow-y-auto p-1': !collapsed,
+            }"
+            class="rounded-lg focus-visible-app-default focus-visible:-outline-offset-1!"
+            @focus="handleFocus"
+            @blur="handleBlur"
+            @keydown="handleKeydown"
           >
             <li
-              v-for="tabEntityKey in dndTaskbarTabListOrder"
+              v-for="(tabEntityKey, index) in dndTaskbarTabListOrder"
+              :id="`item-${tabEntityKey}`"
               :key="tabEntityKey"
               class="group/tab relative"
-              :class="{ draggable: !collapsed }"
+              :class="{
+                draggable: !collapsed,
+                'overflow-hidden first:rounded-t-lg last:rounded-b-lg': collapsed,
+              }"
               :draggable="!collapsed ? 'true' : undefined"
-              :aria-describedby="
-                !collapsed ? 'drag-and-drop-taskbar-tabs' : undefined
-              "
             >
+              <UserTaskbarTabRemove
+                v-if="taskbarTabListByTabEntityKey[tabEntityKey].taskbarTabId"
+                class="peer"
+                :taskbar-tab="taskbarTabListByTabEntityKey[tabEntityKey]"
+                :dirty="getTaskbarTabDirtyFlag(tabEntityKey)"
+                :plugin="getTaskbarTabTypePlugin(taskbarTabListByTabEntityKey[tabEntityKey].type)"
+              />
+
               <component
                 :is="getTaskbarTabComponent(tabEntityKey)"
                 :context="getTaskbarTabContext(tabEntityKey)"
                 :taskbar-tab="taskbarTabListByTabEntityKey[tabEntityKey]"
                 :taskbar-tab-link="getTaskbarTabLink(tabEntityKey)"
+                :collapsed="collapsed"
+                class="group/link peer-focus-visible:trl:pl-(--tab-remove-bar-button-width) focus-visible-app-default [--tab-remove-bar-button-width:2rem] group-hover/tab:ltr:pr-(--tab-remove-bar-button-width) peer-focus-visible:ltr:pr-(--tab-remove-bar-button-width) group-hover/tab:rtl:pl-(--tab-remove-bar-button-width)"
                 :class="{
-                  'group/link rounded-none group-first/tab:rounded-t-[10px] group-last/tab:rounded-b-[10px] focus-visible:bg-blue-800 focus-visible:outline-0':
+                  'rounded-none group-first/tab:rounded-t-[10px] group-last/tab:rounded-b-[10px] focus-visible:-outline-offset-1!':
                     collapsed,
+                  'rounded-t-lg!': collapsed && index === 0,
+                  'rounded-b-lg!': collapsed && index === dndTaskbarTabListOrder.length - 1,
                   'active:cursor-grabbing': !collapsed,
+                  'ltr:pr-(--tab-remove-bar-button-width) rtl:pl-(--tab-remove-bar-button-width)':
+                    isTouchDevice,
+                  'outline outline-offset-1 outline-blue-900': index == focusedItemIndex,
+                  'outline outline-offset-1 outline-blue-800!': index == selectedItemIndex,
                 }"
-              />
-
-              <UserTaskbarTabRemove
-                :taskbar-tab="taskbarTabListByTabEntityKey[tabEntityKey]"
-                :dirty="getTaskbarTabDirtyFlag(tabEntityKey)"
-                :plugin="
-                  getTaskbarTabTypePlugin(
-                    taskbarTabListByTabEntityKey[tabEntityKey].type,
-                  )
-                "
               />
             </li>
           </ul>

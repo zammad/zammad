@@ -1,16 +1,16 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { basename } from 'node:path'
-import { optimize } from 'svgo'
-import SVGCompiler from 'svg-baker'
 import { readFileSync } from 'node:fs'
+import { basename } from 'node:path'
+
+import SVGCompiler from 'svg-baker'
+import { optimize } from 'svgo'
 
 /**
  * @param {string} filepath
  * @returns {string}
  */
 const optimizeSvg = (filepath) => {
-  // eslint-disable-next-line security/detect-non-literal-fs-filename
   const content = readFileSync(filepath, 'utf-8')
   const result = optimize(content, {
     plugins: [{ name: 'preset-default' }],

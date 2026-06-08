@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -49,13 +49,15 @@ RSpec.describe BackgroundServices do
         BackgroundServices::Service::ManageSessionsJobs,
         BackgroundServices::Service::ProcessScheduledJobs,
         BackgroundServices::Service::ProcessSessionsJobs,
-        BackgroundServices::Service::ProcessDelayedJobs
+        BackgroundServices::Service::ProcessDelayedCommunicationInboundJobs,
+        BackgroundServices::Service::ProcessDelayedJobs,
+        BackgroundServices::Service::ProcessDelayedAIJobs,
       )
     end
   end
 
   describe '#run', ensure_threads_exited: true do
-    let(:config) { described_class::ServiceConfig.new(service: SampleService, disabled: false, workers: 0) }
+    let(:config) { described_class::ServiceConfig.new(service: SampleService, disabled: false, workers: 0, worker_threads: 1) }
 
     it 'runs given services' do
       allow(instance).to receive(:run_service)
@@ -64,8 +66,8 @@ RSpec.describe BackgroundServices do
     end
 
     context 'when config has multiple services' do
-      let(:forked)   { described_class::ServiceConfig.new(service: SampleService, disabled: false, workers: 3) }
-      let(:threaded) { described_class::ServiceConfig.new(service: SampleService, disabled: false, workers: 0) }
+      let(:forked)   { described_class::ServiceConfig.new(service: SampleService, disabled: false, workers: 3, worker_threads: 1) }
+      let(:threaded) { described_class::ServiceConfig.new(service: SampleService, disabled: false, workers: 0, worker_threads: 1) }
       let(:config)   { [threaded, forked] }
 
       it 'runs forked services before threaded', aggregate_failures: true do
@@ -78,7 +80,7 @@ RSpec.describe BackgroundServices do
   end
 
   describe '#run_service' do
-    let(:config)      { described_class::ServiceConfig.new(service: SampleService, disabled: is_disabled, workers: workers_count) }
+    let(:config)      { described_class::ServiceConfig.new(service: SampleService, disabled: is_disabled, workers: workers_count, worker_threads: 1) }
     let(:is_disabled) { false }
 
     before do
@@ -95,7 +97,7 @@ RSpec.describe BackgroundServices do
           instance.send(:run_service, config)
 
           expect(Rails.logger).to have_received(:info).with(no_args) do |&block|
-            expect(block.call).to match(%r{Skipping disabled service})
+            expect(block.call).to include('Skipping disabled service')
           end
         end
       end
@@ -158,7 +160,7 @@ RSpec.describe BackgroundServices do
   end
 
   describe '#start_as_thread', ensure_threads_exited: true do
-    let(:config) { described_class::ServiceConfig.new(service: SampleService, disabled: false, workers: 0) }
+    let(:config) { described_class::ServiceConfig.new(service: SampleService, disabled: false, workers: 0, worker_threads: 1) }
 
     context 'with logging' do
       let(:log) { [] }
@@ -183,7 +185,7 @@ RSpec.describe BackgroundServices do
   end
 
   describe '#restart_on_file_change' do
-    let(:config) { described_class::ServiceConfig.new(service: SampleService, disabled: false, workers: 0) }
+    let(:config) { described_class::ServiceConfig.new(service: SampleService, disabled: false, workers: 0, worker_threads: 1) }
 
     before do
       stub_const("#{described_class}::FILE_WATCHING_INTERVAL", 0)

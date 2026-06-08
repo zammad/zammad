@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class PGPKey < ApplicationModel
   default_scope { order(created_at: :desc, id: :desc) }
@@ -21,15 +21,11 @@ class PGPKey < ApplicationModel
   def self.find_all_by_uid(uid, only_valid: true, secret: false)
     uid = uid.downcase
 
-    email_addresses_query = SqlHelper.new(object: PGPKey).array_contains_one(:email_addresses, uid)
-
-    query = if domain_alias_configuration_active?
-              ["#{email_addresses_query} OR (? LIKE domain_alias)", SqlHelper.quote_like(uid)]
-            else
-              email_addresses_query
-            end
-
-    keys_selector = PGPKey.where(query)
+    keys_selector = PGPKey.where(SqlHelper.new(object: PGPKey).array_contains_one(:email_addresses, uid), uid)
+    if domain_alias_configuration_active?
+      domain_alias_where = PGPKey.where('(? LIKE domain_alias)', SqlHelper.quote_like(uid))
+      keys_selector = keys_selector.or(domain_alias_where)
+    end
 
     keys_selector = keys_selector.where(secret: true) if secret
 
@@ -62,19 +58,6 @@ class PGPKey < ApplicationModel
     return false if e.message == 'invalid byte sequence in UTF-8'
 
     raise e
-  end
-
-  def self.params_cleanup!(params)
-    if params[:key].present?
-      params[:key].strip!
-      return params
-    end
-
-    return params if !params[:file].is_a? ActionDispatch::Http::UploadedFile
-
-    params[:key] = params[:file].tempfile
-
-    params
   end
 
   def self.convert_binary_key_to_ascii(binary, passphrase)

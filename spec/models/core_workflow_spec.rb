@@ -1,9 +1,9 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 require 'models/core_workflow/base'
 
-RSpec.describe CoreWorkflow, mariadb: true, type: :model do
+RSpec.describe CoreWorkflow, type: :model do
   include_context 'with core workflow base'
 
   describe '.perform - No assets' do
@@ -356,6 +356,89 @@ RSpec.describe CoreWorkflow, mariadb: true, type: :model do
 
     it 'does not endless loop because of removing and adding the same element' do
       expect(result[:rerun_count]).to be < CoreWorkflow::Result::MAX_RERUN
+    end
+  end
+
+  describe 'The default value of a boolean ticket object is not recognized correctly by Core Workflows when creating a ticket. #5670', db_strategy: :reset do
+    let(:field_name) { SecureRandom.uuid }
+    let(:screens) do
+      {
+        'create_middle' => {
+          'ticket.agent' => {
+            'shown'    => false,
+            'required' => false,
+          }
+        }
+      }
+    end
+
+    context 'when select field' do
+      let!(:workflow1) do
+        create(:core_workflow,
+               object:             'Ticket',
+               condition_selected: { "ticket.#{field_name}" => { 'operator' => 'is', 'value' => ['jx'] } })
+      end
+
+      before do
+        create(:object_manager_attribute_select, name: field_name, display: field_name, screens: screens, data_option: { 'options' => [{ value: 'nx', name: 'nx' }, { value: 'jx', name: 'jx' }], 'default' => 'jx', 'linktemplate' => '', 'translate' => false, 'null' => true, 'relation' => '', 'nulloption' => false, 'maxlength' => 255, 'historical_options' => { 'jx' => 'jx', 'nx' => 'nx' } })
+        ObjectManager::Attribute.migration_execute
+      end
+
+      it 'does match because the default value is used in the background' do
+        expect(result[:matched_workflows]).to include(workflow1.id)
+      end
+    end
+
+    context 'when boolean field' do
+      let!(:workflow1) do
+        create(:core_workflow,
+               object:             'Ticket',
+               condition_selected: { "ticket.#{field_name}" => { 'operator' => 'is', 'value' => ['true'] } })
+      end
+
+      before do
+        create(:object_manager_attribute_boolean, name: field_name, display: field_name, screens: screens, data_option: { 'options' => { false => 'nx', true => 'jx' }, 'default' => true, 'translate' => false, 'null' => true, 'relation' => '' })
+        ObjectManager::Attribute.migration_execute
+      end
+
+      it 'does match because the default value is used in the background' do
+        expect(result[:matched_workflows]).to include(workflow1.id)
+      end
+    end
+  end
+
+  describe 'core workflow: saved value lost on set_fixed_to action #5852' do
+    let(:ticket) { create(:ticket, group: group, state: Ticket::State.find_by(name: 'open')) }
+    let(:payload) do
+      base_payload.merge('params' => { 'id' => ticket.id }, 'screen' => 'edit')
+    end
+    let!(:workflow1) do
+      create(:core_workflow,
+             object:  'Ticket',
+             perform: {
+               'ticket.group_id': {
+                 operator:      'remove_option',
+                 remove_option: Group.where(name: group.name).map { |row| row.id.to_s },
+               },
+             })
+    end
+
+    before do
+      workflow1
+    end
+
+    it 'does not remove the saved value for the group of the ticket' do
+      expect(result[:restrict_values]['group_id']).to include(group.id.to_s)
+    end
+
+    context 'when another field is marked as changed' do
+      let(:payload) do
+        base_payload.merge('params' => { 'id' => ticket.id, 'priority_id' => Ticket::Priority.find_by(name: '3 high').id.to_s }, 'screen' => 'edit')
+      end
+
+      it 'does not remove the saved value for the group of the ticket' do
+        expect(result[:restrict_values]['group_id']).to include(group.id.to_s)
+      end
     end
   end
 end

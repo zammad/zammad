@@ -1,160 +1,63 @@
 # Getting Started
 
-## Development Environment
+## Introduction
 
-Please make sure that you setup your system correctly by following our
-"[**How to set up a development environment**](how-to-set-up-a-development-environment.md)" guide.
+This guide explains how to setup a local Zammad development environment.
+You can choose between two approaches:
 
-We emphasize to set following environment variables for developing Zammad.
+- **[Devcontainer Setup](devcontainer-setup.md) (recommended)** - Uses a prebuilt development container for a
+  ready-to-use environment. This is the quickest way to get started.
+- **[Manual Setup](manual-setup.md)** - Install all dependencies directly on your machine for full control.
 
-- Out of the box, `rails db:seed` is _very_ slow, because it pulls a large library of user interface translations
-(in over thirty different languages) from a remote server.
+## Quick Start
 
-  To speed this up, use `$Z_LOCALES` to limit the set of downloaded translations.
+### 1. Clone the [Zammad repository](https://github.com/zammad/zammad)
 
-  ```sh
-  Z_LOCALES=en-us:de-de
-  ```
+### 2. Starting the Environment
 
-  **Note:** Make sure to include your locale in `$Z_LOCALES`.
+#### Devcontainer Setup
 
-## Cloning Repository
+- Open the project folder in VS Code
+- Click "Reopen in Container"
+- The container will build automatically and start all required services
 
-It's possible to clone the repository via HTTPS and SSH.
+For more information, see [devcontainer setup guide](devcontainer-setup.md)
 
-```sh
-# HTTPS
-git clone https://github.com/zammad/zammad.git
+#### Manual Setup
 
-# SSH
-git clone git@github.com:zammad/zammad.git
-```
+- Follow instructions in [manual setup guide](manual-setup.md)
 
-## Initializing Zammad
+### 3. First-Time Initialization
 
-After the installation of the correct Ruby version (see [**here**](../development_environment/index.md#rvm)), the
-following command can be used to install all Ruby dependencies:
+- **Devcontainer setup:** Not required; the container comes preconfigured.
+- **Manual setup:**
+  Refer to the [development-workflow](development-workflow.md#quickly-reset-an-existing-development-database) setup.
 
-```sh
-bundle config set --local without 'mysql'
-bundle install
-```
+### 4. Launching Zammad
 
-We at Zammad like to work in an efficient way, therefore we have some `Rake` tasks to speed up setting up/refreshing a
-Zammad installation:
+You can start Zammad development services with:
+
+#### Devcontainer setup
 
 ```sh
-rails zammad:bootstrap:init   # on a fresh install
-rails zammad:bootstrap:reset  # on an existing install
+dev
 ```
 
-The following sections describe in detail the steps automated by the rake tasks above. If you’re not too concerned about
-what’s going on under the hood,
-skip ahead to [**Launching Zammad**](#launching-zammad).
-
-### `database.yml`
-
-The official repository does not include a `config/database.yml` file, because the contents of this file may vary from
-one developer to another, _e.g.,_ for different login credentials or different DB backends. Therefore we decided to
-exclude it from the repo to reduce the risk of someone accidentally committing such changes.
-
-However, a working sample is provided in the `config/database` directory:
+#### Manual setup
 
 ```sh
-cp config/database/database.yml config/database.yml
+bin/dev
 ```
 
-### (Bypassing) The setup wizard
+### 5. Login
 
-Zammad requires some extra initialization beyond the standard `rails db:` rake tasks (`create` / `migrate` / `seed`).
-If you visit the homepage after running those tasks and starting the server, you will be presented with a setup wizard
-like the one below:
+Once the application is running, open it in your browser at `http://localhost:3000` and use the default development credentials:
 
-![Zammad Setup Wizard](../assets/images/setup-wizard.png)
-
-The wizard can be time-consuming to go through (for instance, you have the option to enter and validate SMTP credentials
-for outgoing emails), but you can’t access the main dashboard (below) or interact with the rest of the app until you
-complete it.
-
-![Zammad Dashboard](../assets/images/dashboard.png)
-
-You should click through the wizard just once, just to get a sense of what our users go through — but if we had to do
-this _every time_ we reset the database, we’d never get any actual work done. So, Zammad includes a feature called the
-**auto-wizard** to load the application with a set of predefined values instead.
-
-The auto-wizard can either be run from the Rails console or triggered by a page visit in the browser, but either way,
-it needs two things to work:
-
-1. a clean, freshly-seeded database, and
-2. an `auto_wizard.json` config file (like the one stored in `/contrib`)
-   located in the project root. Once the auto-wizard is complete, this file
-   will be removed automatically.
-
-#### Option 1: Rake task
-
-```sh
-rake zammad:setup:auto_wizard
+```text
+Username / Email: admin@example.com
+Password: test
 ```
 
-#### Option 2: Running via `rails console`
-
-```sh
-cp contrib/auto_wizard_test.json auto_wizard.json
-rails console
-Loading development environment (Rails 5.1.5)
->> AutoWizard.setup
-=> #<User:0x000056220b14db50...
->> UserInfo.current_user_id = 1
-=> 1
->> Setting.set('system_init_done', true)
-=> true
-```
-
-#### Option 3: Running in-browser
-
-```sh
-cp contrib/auto_wizard_test.json auto_wizard.json
-rails server
-```
-
-Then, visit <http://localhost:3000/#getting_started/auto_wizard>.
-
-## Launching Zammad
-
-There are **three separate processes** that support the Zammad application (a _web server_, _websocket server_ and
-_background-worker_). The web server alone is sufficient to launch the application, but without the other two, critical
-features will not work.
-
-### Using the Procfile
-
-Zammad uses a [`Procfile`](https://devcenter.heroku.com/articles/procfile) to specify the different processes required
-by the application. We are using [**forego**](https://github.com/ddollar/forego)) to read the `Procfile` and spawn each
-process listed within it:
-
-```sh
-forego start -r
-```
-
-Note the `-r` switch which means that if any one of the services are gracefully stopped (e.g. due to a configuration
-change), `forego` will automatically respawn them for you.
-
-### Manually
-
-Of course, you can always just start and stop all the processes by hand:
-
-```sh
-# in three separate terminal windows
-rails server
-script/background-worker.rb start
-script/websocket-server.rb start
-```
-
-## Login
-
-Once you’ve launched Zammad, access the app in your browser by visiting [**localhost:3000**](http://localhost:3000) and
-log in using following credentials:
-
-```plain
-User: admin@example.com
-Pasword: test
-```
+> [!NOTE]
+> The first time you launch the app, it can take a few minutes for assets to compile.
+> You may see a blank browser window until this process is complete.

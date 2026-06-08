@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { getByIconName } from '#tests/support/components/iconQueries.ts'
 import { renderComponent } from '#tests/support/components/index.ts'
@@ -6,36 +6,48 @@ import { renderComponent } from '#tests/support/components/index.ts'
 import CommonLoader from '../CommonLoader.vue'
 
 describe('CommonLoader.vue', () => {
-  it('does not render with default prop values', async () => {
-    const view = renderComponent(CommonLoader)
+  beforeEach(() => {
+    vi.useFakeTimers()
+  })
 
-    expect(view.queryByRole('status')).not.toBeInTheDocument()
+  afterAll(() => {
+    vi.useRealTimers()
+  })
+
+  it('does not render with default prop values', async () => {
+    const wrapper = renderComponent(CommonLoader)
+
+    expect(wrapper.queryByRole('status')).not.toBeInTheDocument()
   })
 
   it('renders loading animation with loading prop set', async () => {
-    const view = renderComponent(CommonLoader, {
+    const wrapper = renderComponent(CommonLoader, {
       props: {
         loading: true,
       },
     })
 
-    const loader = view.getByRole('status')
+    vi.advanceTimersByTime(300)
+
+    const loader = await wrapper.findByRole('status')
 
     expect(getByIconName(loader, 'spinner')).toBeInTheDocument()
   })
 
   it('hides loading animation when loading prop is unset', async () => {
-    const view = renderComponent(CommonLoader, {
+    const wrapper = renderComponent(CommonLoader, {
       props: {
         loading: true,
       },
     })
 
-    const loader = view.getByRole('status')
+    vi.advanceTimersByTime(300)
+
+    const loader = await wrapper.findByRole('status')
 
     expect(loader).toBeInTheDocument()
 
-    await view.rerender({
+    await wrapper.rerender({
       loading: false,
     })
 
@@ -43,27 +55,27 @@ describe('CommonLoader.vue', () => {
   })
 
   it('renders alert if error prop is supplied', async () => {
-    const view = renderComponent(CommonLoader, {
+    const wrapper = renderComponent(CommonLoader, {
       props: {
         error: 'foobar',
       },
     })
 
-    const alert = view.getByRole('alert')
+    const alert = wrapper.getByRole('alert')
 
     expect(alert).toHaveTextContent('foobar')
     expect(getByIconName(alert, 'x-circle')).toBeInTheDocument()
   })
 
   it('provides default slot', async () => {
-    const view = renderComponent(CommonLoader, {
+    const wrapper = renderComponent(CommonLoader, {
       slots: {
         default: 'foobar',
       },
     })
 
-    expect(view.baseElement).toHaveTextContent('foobar')
-    expect(view.queryByRole('status')).not.toBeInTheDocument()
-    expect(view.queryByRole('alert')).not.toBeInTheDocument()
+    expect(wrapper.baseElement).toHaveTextContent('foobar')
+    expect(wrapper.queryByRole('status')).not.toBeInTheDocument()
+    expect(wrapper.queryByRole('alert')).not.toBeInTheDocument()
   })
 })

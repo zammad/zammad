@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module ApplicationModel::CanAssociations
   extend ActiveSupport::Concern
@@ -52,7 +52,7 @@ returns
 
         # complain if we found no reference
         if !lookup
-          raise Exceptions::UnprocessableEntity, "No value found for '#{assoc_name}' with id #{item_id.inspect}"
+          raise Exceptions::UnprocessableContent, "No value found for '#{assoc_name}' with id #{item_id.inspect}"
         end
 
         list.push item_id
@@ -93,7 +93,7 @@ returns
             lookup = class_object.lookup(login: value)
           end
           if !lookup
-            lookup = class_object.lookup(email: value)
+            lookup = class_object.lookup(email: value.downcase)
           end
         else
           lookup = class_object.lookup(name: value)
@@ -101,7 +101,7 @@ returns
 
         # complain if we found no reference
         if !lookup
-          raise Exceptions::UnprocessableEntity, "No lookup value found for '#{assoc_name}': #{value.inspect}"
+          raise Exceptions::UnprocessableContent, "No lookup value found for '#{assoc_name}': #{value.inspect}"
         end
 
         list.push lookup.id
@@ -144,7 +144,14 @@ returns
       next if association_attributes_ignored.include?(assoc_name)
 
       eager_load.push(assoc_name)
-      pluck.push(Arel.sql("#{ActiveRecord::Base.connection.quote_table_name(assoc.table_name)}.id AS #{ActiveRecord::Base.connection.quote_table_name(assoc_name)}"))
+      alias_name = if assoc.klass.table_name == self.class.table_name
+                     "#{assoc.name}_#{assoc.klass.table_name}"
+                   else
+                     assoc.klass.table_name
+                   end
+
+      pluck.push(Arel.sql("#{ActiveRecord::Base.connection.quote_table_name(alias_name)}.id AS #{ActiveRecord::Base.connection.quote_table_name(assoc_name)}"))
+
       keys.push("#{assoc_name.to_s.singularize}_ids")
     end
 
@@ -210,7 +217,7 @@ returns
 
           attributes[assoc.name.to_s].push item[:name]
         end
-        if ref.count.positive? && attributes[assoc.name.to_s].blank?
+        if ref.any? && attributes[assoc.name.to_s].blank?
           attributes.delete(assoc.name.to_s)
         end
         next
@@ -379,14 +386,14 @@ returns
           lookup = nil
           if class_object == User
             if !value.instance_of?(String)
-              raise Exceptions::UnprocessableEntity, "String is needed as ref value #{value.inspect} for '#{assoc_name}'"
+              raise Exceptions::UnprocessableContent, "String is needed as ref value #{value.inspect} for '#{assoc_name}'"
             end
 
             if !lookup
               lookup = class_object.lookup(login: value)
             end
             if !lookup
-              lookup = class_object.lookup(email: value)
+              lookup = class_object.lookup(email: value.downcase)
             end
           else
             lookup = class_object.lookup(name: value)
@@ -394,7 +401,7 @@ returns
 
           # complain if we found no reference
           if !lookup
-            raise Exceptions::UnprocessableEntity, "No lookup value found for '#{assoc_name}': #{value.inspect}"
+            raise Exceptions::UnprocessableContent, "No lookup value found for '#{assoc_name}': #{value.inspect}"
           end
 
           # release data value
@@ -426,14 +433,14 @@ returns
           lookup = nil
           if class_object == User
             if !item.instance_of?(String)
-              raise Exceptions::UnprocessableEntity, "String is needed in array ref as ref value #{value.inspect} for '#{assoc_name}'"
+              raise Exceptions::UnprocessableContent, "String is needed in array ref as ref value #{value.inspect} for '#{assoc_name}'"
             end
 
             if !lookup
               lookup = class_object.lookup(login: item)
             end
             if !lookup
-              lookup = class_object.lookup(email: item)
+              lookup = class_object.lookup(email: item.downcase)
             end
           else
             lookup = class_object.lookup(name: item)
@@ -441,7 +448,7 @@ returns
 
           # complain if we found no reference
           if !lookup
-            raise Exceptions::UnprocessableEntity, "No lookup value found for '#{assoc_name}': #{item.inspect}"
+            raise Exceptions::UnprocessableContent, "No lookup value found for '#{assoc_name}': #{item.inspect}"
           end
 
           lookup_ids.push lookup.id

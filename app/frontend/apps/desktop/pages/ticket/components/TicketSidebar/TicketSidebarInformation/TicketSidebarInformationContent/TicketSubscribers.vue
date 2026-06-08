@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { nextTick, toRef, watch } from 'vue'
@@ -16,13 +16,8 @@ const props = defineProps<Props>()
 
 const ticketReactive = toRef(props, 'ticket')
 
-const {
-  isSubscribed,
-  isSubscriptionLoading,
-  toggleSubscribe,
-  subscribers,
-  totalSubscribers,
-} = useTicketSubscribe(ticketReactive)
+const { isSubscribed, isSubscriptionLoading, toggleSubscribe, subscribers, totalSubscribers } =
+  useTicketSubscribe(ticketReactive)
 
 let isOutsideUpdate = false
 watch(
@@ -45,14 +40,11 @@ const handleToggleInput = async () => {
 
 <template>
   <div class="flex flex-col gap-2">
-    <div
-      class="flex w-full flex-col rounded-lg bg-blue-200 px-3 py-3.5 dark:bg-gray-700"
-    >
+    <div class="flex w-full flex-col rounded-lg bg-blue-200 px-3 py-3.5 dark:bg-gray-700">
       <div
         class="flex gap-2"
         :class="{
-          'border-b border-neutral-100 pb-2 dark:border-gray-900':
-            subscribers.length,
+          'border-b border-neutral-100 pb-2 dark:border-gray-900': subscribers.length,
         }"
       >
         <FormKit
@@ -76,6 +68,9 @@ const handleToggleInput = async () => {
           :entity="subscriber.user"
           :access="subscriber.access"
           :user="subscriber.user"
+          :popover-config="{
+            placement: 'arrowStart',
+          }"
         />
       </div>
     </div>

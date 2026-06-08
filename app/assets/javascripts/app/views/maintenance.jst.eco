@@ -40,9 +40,10 @@
       </div>
       <div class="form-group">
         <label for="maintenance-message"><%- @T('Message') %></label>
-        <div class="controls">
-          <div contenteditable="true" id="maintenance-message" data-name="message" class="form-control form-control--multiline js-textarea richtext-content" dir="auto"></div>
+        <div class="controls form-control form-control--multiline">
+          <div contenteditable="true" id="maintenance-message" data-name="message" class="js-textarea richtext-content" dir="auto"></div>
         </div>
+        <div class="help-inline"></div>
       </div>
       <div class="form-group">
         <label class="inline-label checkbox-replacement">

@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, unref } from 'vue'
@@ -10,9 +10,7 @@ import DynamicInitializer from '#shared/components/DynamicInitializer/DynamicIni
 import useAuthenticationChanges from '#shared/composables/authentication/useAuthenticationUpdates.ts'
 
 import CommonConfirmation from '#mobile/components/CommonConfirmation/CommonConfirmation.vue'
-import LayoutHeader, {
-  type Props as HeaderProps,
-} from '#mobile/components/layout/LayoutHeader.vue'
+import LayoutHeader, { type Props as HeaderProps } from '#mobile/components/layout/LayoutHeader.vue'
 import { headerOptions as header } from '#mobile/composables/useHeader.ts'
 
 defineProps<{ testKey: number }>()
@@ -33,20 +31,14 @@ const hasOwnLandmarks = computed(() => {
 
 const mainContainer = computed(() => (hasOwnLandmarks.value ? 'div' : 'main'))
 
-const footerContainer = computed(() =>
-  hasOwnLandmarks.value ? 'div' : 'footer',
-)
+const footerContainer = computed(() => (hasOwnLandmarks.value ? 'div' : 'footer'))
 
 useAuthenticationChanges()
 </script>
 
 <template>
   <div>
-    <LayoutHeader
-      v-if="showHeader"
-      v-bind="header as HeaderProps"
-      :title="title"
-    />
+    <LayoutHeader v-if="showHeader" v-bind="header as HeaderProps" :title="title" />
     <component :is="mainContainer" data-test-id="appMain">
       <RouterView :key="testKey" />
     </component>

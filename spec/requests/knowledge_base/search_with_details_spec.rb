@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -7,6 +7,11 @@ RSpec.describe 'Knowledge Base search with details', searchindex: true, type: :r
 
   before do
     published_answer
+
+    if defined?(answer_body)
+      published_answer.translations.first.content.update!(body: answer_body)
+    end
+
     searchindex_model_reload([KnowledgeBase::Translation, KnowledgeBase::Category::Translation, KnowledgeBase::Answer::Translation])
   end
 
@@ -59,13 +64,13 @@ RSpec.describe 'Knowledge Base search with details', searchindex: true, type: :r
     end
 
     it 'returns category in locale without category translation', authenticated_as: -> { create(:admin) } do
-      post endpoint, params: { query: search_phrase }
+      post endpoint, params: { query: search_phrase, include_subtitle: true }
       expect(json_response['details'][0]['subtitle']).to eq category.translation_to(primary_locale).title
     end
   end
 
   context 'when answer tree is long' do
-    let(:category1) { create(:'knowledge_base/category') }
+    let(:category1)        { create(:'knowledge_base/category') }
     let(:category2)        { create(:'knowledge_base/category', parent: category1) }
     let(:category3)        { create(:'knowledge_base/category', parent: category2) }
     let(:answer_cut_tree)  { create(:knowledge_base_answer, :published, :with_attachment, category: category3) }
@@ -79,12 +84,12 @@ RSpec.describe 'Knowledge Base search with details', searchindex: true, type: :r
     end
 
     it 'returns category with cut tree', authenticated_as: -> { create(:admin) } do
-      post endpoint, params: { query: answer_cut_tree.translations.first.title }
+      post endpoint, params: { query: answer_cut_tree.translations.first.title, include_subtitle: true }
       expect(json_response['details'][0]['subtitle']).to eq("#{category1.translations.first.title} > .. > #{category3.translations.first.title}")
     end
 
     it 'returns category with full tree', authenticated_as: -> { create(:admin) } do
-      post endpoint, params: { query: answer_full_tree.translations.first.title }
+      post endpoint, params: { query: answer_full_tree.translations.first.title, include_subtitle: true }
       expect(json_response['details'][0]['subtitle']).to eq("#{category4.translations.first.title} > #{category5.translations.first.title}")
     end
   end
@@ -137,6 +142,40 @@ RSpec.describe 'Knowledge Base search with details', searchindex: true, type: :r
     end
   end
 
+  # https://github.com/zammad/zammad/issues/5902
+  context 'when preparing body for use in preview' do
+    let(:answer_body) { 'This is a test answer.<br>It contains line breaks.<div></div><div>It should be <b>handled</b> properly.</div>' }
+
+    context 'with ElasticSearch' do
+      context 'when no highlighting' do
+        it 'does not merge words around line breaks' do
+          post endpoint, params: { query: published_answer.translations.first.title }
+
+          expect(json_response['details'][0]['body'])
+            .to include('This is a test answer. It contains line breaks. It should be handled properly.')
+        end
+      end
+
+      context 'when body has highlighting' do
+        it 'does not merge words around line breaks' do
+          post endpoint, params: { query: 'test answer' }
+
+          expect(json_response['details'][0]['body'])
+            .to include('This is a <em>test</em> <em>answer</em>. It contains line breaks. It should be handled properly.')
+        end
+      end
+    end
+
+    context 'with SQL fallback', searchindex: false do
+      it 'does not merge words around line breaks' do
+        post endpoint, params: { query: published_answer.translations.first.title }
+
+        expect(json_response['details'][0]['body'])
+          .to include('This is a test answer. It contains line breaks. It should be handled properly.')
+      end
+    end
+  end
+
   context 'when sorting' do
     let(:answers) do
       Array.new(3) do |nth|
@@ -177,6 +216,41 @@ RSpec.describe 'Knowledge Base search with details', searchindex: true, type: :r
 
     context 'with no elasticsearch', searchindex: false do
       include_examples 'test sorting'
+    end
+  end
+
+  context 'when scoping' do
+    let(:search_phrase) { 'scoping test' }
+
+    before do |example|
+      published_answer_in_other_category
+      published_answer_in_subcategory
+
+      [published_answer, published_answer_in_other_category, published_answer_in_subcategory].each do |elem|
+        elem.translations.first.update!(title: "#{search_phrase} #{elem.id}")
+      end
+
+      next if !example.metadata[:searchindex]
+
+      searchindex_model_reload([KnowledgeBase::Translation, KnowledgeBase::Category::Translation, KnowledgeBase::Answer::Translation])
+    end
+
+    shared_examples 'test scoping' do
+      it 'finds answers only in the defined scope' do
+        post endpoint, params: { query: search_phrase, scope_id: category.id, knowledge_base_id: knowledge_base.id }
+
+        returned_ids = json_response['details'].pluck('id')
+
+        expect(returned_ids).to contain_exactly(published_answer.translations.first.id, published_answer_in_subcategory.translations.first.id)
+      end
+    end
+
+    context 'with elasticsearch' do
+      include_examples 'test scoping'
+    end
+
+    context 'with no elasticsearch', searchindex: false do
+      include_examples 'test scoping'
     end
   end
 end

@@ -1,11 +1,15 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import Image from '@tiptap/extension-image'
 import { VueNodeViewRenderer } from '@tiptap/vue-3'
 
+import ImageHandler from '#shared/components/Form/fields/FieldEditor/features/image-handler/ImageHandler.vue'
 import { dataURLToBlob } from '#shared/utils/files.ts'
 
-import ImageHandler from '../ImageHandler/ImageHandler.vue'
+const getAttributeFromElement = (element: Element, attr: 'width' | 'height') => {
+  const htmlElement = element as HTMLElement
+  return htmlElement.style[attr]
+}
 
 export default Image.extend({
   addAttributes() {
@@ -15,10 +19,9 @@ export default Image.extend({
       width: {
         default: '100%',
         renderHTML: (attributes) => {
-          return {
-            width: attributes.width,
-          }
+          return { width: attributes.width }
         },
+        parseHTML: (element) => getAttributeFromElement(element, 'width'),
       },
 
       height: {
@@ -28,6 +31,7 @@ export default Image.extend({
             height: attributes.height,
           }
         },
+        parseHTML: (element) => getAttributeFromElement(element, 'height'),
       },
 
       isDraggable: {
@@ -42,12 +46,18 @@ export default Image.extend({
         renderHTML: () => ({}),
       },
 
+      style: {
+        default: null,
+        renderHTML: () => ({}),
+      },
+
       content: {
         default: null,
         renderHTML: () => ({}),
       },
     }
   },
+
   addNodeView() {
     return VueNodeViewRenderer(ImageHandler)
   },

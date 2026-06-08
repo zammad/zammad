@@ -1,9 +1,8 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 
-import { useTouchDevice } from '#shared/composables/useTouchDevice.ts'
 import { useTicketArticleReplyAction } from '#shared/entities/ticket/composables/useTicketArticleReplyAction.ts'
 import type { TicketArticle } from '#shared/entities/ticket/types.ts'
 import { createArticleActions } from '#shared/entities/ticket-article/action/plugins/index.ts'
@@ -20,17 +19,16 @@ const props = defineProps<{
   article: TicketArticle
 }>()
 
-const { ticket, isTicketEditable, showTicketArticleReplyForm, form } =
-  useTicketInformation()
+const { ticket, isTicketEditable, showTicketArticleReplyForm, form } = useTicketInformation()
 
-const { isTouchDevice } = useTouchDevice()
+const buttonVariantBaseClasses =
+  'border! border-neutral-100! outline-transparent! hover:border-blue-700! text-gray-100! dark:border-gray-900! dark:text-neutral-400!'
 
 const buttonVariantClassExtension = computed(() => {
-  // TODO maybe general classes string for same classes
   if (props.position === 'left')
-    return 'border! border-neutral-100! outline-transparent! hover:border-blue-700! hover:border-blue-800! bg-neutral-50! hover:dark:bg-gray-500! hover:bg-white!  text-gray-100! dark:border-gray-900! dark:bg-gray-500! dark:text-neutral-400!'
+    return `${buttonVariantBaseClasses} hover:border-blue-800! bg-neutral-50! hover:dark:bg-gray-500! hover:bg-white! dark:bg-gray-500!`
 
-  return 'border! border-neutral-100! outline-transparent! hover:border-blue-700! dark:hover:border-blue-700! bg-blue-100! bg-blue-100!  text-gray-100! dark:border-gray-900! dark:bg-stone-500! dark:text-neutral-400!'
+  return `${buttonVariantBaseClasses} dark:hover:border-blue-700! bg-blue-100! dark:bg-stone-500!`
 })
 
 const { getNewArticleBody, openReplyForm } = useTicketArticleReplyAction(
@@ -73,17 +71,12 @@ const actions = computed(() => {
   // Clear all side effects before recalculating actions.
   handleDisposeCallbacks()
 
-  const articleActions = createArticleActions(
-    ticket.value,
-    props.article,
-    'desktop',
-    {
-      onDispose,
-      recalculate: () => {
-        recalculateTriggerId.value += 1
-      },
+  const articleActions = createArticleActions(ticket.value, props.article, 'desktop', {
+    onDispose,
+    recalculate: () => {
+      recalculateTriggerId.value += 1
     },
-  )
+  })
 
   const popoverActions: MenuItem[] = []
   const alwaysVisibleActions: MenuItem[] = []
@@ -94,13 +87,13 @@ const actions = computed(() => {
       label: action.label,
       icon: action.icon,
       link: action.link,
-      ...(action?.perform
+      ...(action.perform
         ? {
             onClick: () => {
-              if (!action?.perform || !ticket.value) return
+              if (!ticket.value) return
 
-              action.perform(ticket.value, props.article, {
-                formId: form.value?.formId || '',
+              action.perform!(ticket.value, props.article, {
+                formId: form.value?.formId ?? '',
                 selection: articleSelection(props.article.internalId),
                 openReplyForm,
                 getNewArticleBody,
@@ -135,15 +128,11 @@ const actions = computed(() => {
       :key="action.key"
       data-test-id="top-level-article-action-container"
       class="order-1 flex items-center"
-      :class="{
-        '-order-1!': position === 'right',
-        'opacity-0 transition-opacity group-hover/article:opacity-100 focus-within:opacity-100':
-          !isTouchDevice,
-      }"
+      :class="position === 'right' ? 'order-first' : 'order-last'"
     >
       <CommonButton
         class="px-1 py-0.5! text-xs! focus-visible:outline-offset-0! focus-visible:outline-blue-800!"
-        :class="[buttonVariantClassExtension]"
+        :class="buttonVariantClassExtension"
         :prefix-icon="action.icon"
         size="large"
         @click="action.onClick"
@@ -156,11 +145,10 @@ const actions = computed(() => {
       :entity="{ ticket, article }"
       button-size="medium"
       :placement="position === 'left' ? 'arrowStart' : 'arrowEnd'"
-      :default-button-variant="
-        position === 'left' ? 'neutral-dark' : 'neutral-light'
-      "
+      :default-button-variant="position === 'left' ? 'neutral-dark' : 'neutral-light'"
       :actions="actions.popoverActions"
       no-single-action-mode
+      z-index="20"
     />
   </div>
 </template>

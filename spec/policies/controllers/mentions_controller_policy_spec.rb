@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -57,8 +57,8 @@ describe Controllers::MentionsControllerPolicy do
 
     it { is_expected.to forbid_actions(%i[index create]) }
 
-    it { expect { policy.index? }.to change(policy, :custom_exception).to(Exceptions::UnprocessableEntity) }
-    it { expect { policy.create? }.to change(policy, :custom_exception).to(Exceptions::UnprocessableEntity) }
+    it { expect { policy.index? }.to change(policy, :custom_exception).to(Exceptions::UnprocessableContent) }
+    it { expect { policy.create? }.to change(policy, :custom_exception).to(Exceptions::UnprocessableContent) }
   end
 
   context 'with mention' do

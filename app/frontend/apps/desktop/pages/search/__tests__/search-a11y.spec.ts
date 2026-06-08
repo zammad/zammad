@@ -1,14 +1,9 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
-
-import { axe } from 'vitest-axe'
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
 
-import {
-  EnumSearchableModels,
-  EnumTicketStateColorCode,
-} from '#shared/graphql/types.ts'
+import { EnumSearchableModels, EnumTicketStateColorCode } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
 import { mockDetailSearchQuery } from '#desktop/components/Search/graphql/queries/detailSearch.mocks.ts'
@@ -64,10 +59,8 @@ describe('search view', () => {
       },
     })
 
-    const view = await visitView('/search')
+    const view = await visitView('/search/Nicole')
 
-    const results = await axe(view.html())
-
-    expect(results).toHaveNoViolations()
+    await expect(view.container).toBeAccessible()
   })
 })

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -29,6 +29,7 @@ RSpec.describe TicketUserTicketCounterJob, type: :job do
   it 'checks if customer ticket count has been updated in preferences' do
     described_class.perform_now(
       customer.id,
+      nil,
       customer.id,
     )
     customer.reload

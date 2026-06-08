@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails/generators'
 
@@ -9,6 +9,9 @@ class Zammad::SettingTypesGenerator < Rails::Generators::Base
   class_option :check, type: :boolean, required: false, desc: 'Only check if the types file is up-to-date.'
 
   SETTING_TYPES_FILEPATH = Rails.root.join 'app/frontend/shared/types/config.ts'
+
+  PRINT_WIDTH = 100
+  FIELD_INDENT = '  '.length
 
   def generate
     new_content = generate_types_file_content
@@ -32,8 +35,9 @@ class Zammad::SettingTypesGenerator < Rails::Generators::Base
     <<~MSG
       export interface ConfigList {
         api_path: string
-        'active_storage.web_image_content_types': string[]
+        'active_storage.content_types_allowed_inline': string[]
         'auth_saml_credentials.display_name'?: string
+        'auth_openid_connect_credentials.display_name'?: string
       #{fields.join("\n")}
         [key: string]: unknown
       }
@@ -52,15 +56,22 @@ class Zammad::SettingTypesGenerator < Rails::Generators::Base
   end
   # rubocop:enable Rails/Output
 
-  def build_select_type(optional:, nullable:, options:, multiple:)
-    values = options.keys.map { |val| val.is_a?(String) ? "'#{val}'" : val }.join(' | ')
+  def build_select_type(optional:, nullable:, options:, multiple:, name:)
+    values = options.keys.map { |val| val.is_a?(String) ? "'#{val}'" : val }
 
-    return "#{optional}: (#{values})[]#{nullable}" if multiple
+    return "#{optional}: (#{values.join(' | ')})[]#{nullable}" if multiple
 
-    "#{optional}: #{values}#{nullable}"
+    single_line = "#{optional}: #{values.join(' | ')}#{nullable}"
+
+    if (FIELD_INDENT + name.length + single_line.length) > PRINT_WIDTH
+      all_values = values + (nullable.empty? ? [] : ['null'])
+      "#{optional}:\n#{all_values.map { |v| "    | #{v}" }.join("\n")}"
+    else
+      single_line
+    end
   end
 
-  def build_form_type(option)
+  def build_form_type(option, name:)
     optional = option[:null] ? '?' : ''
     nullable = option[:null] ? ' | null' : ''
 
@@ -71,7 +82,7 @@ class Zammad::SettingTypesGenerator < Rails::Generators::Base
     return "#{optional}: string#{nullable}" if tag == 'input'
 
     if tag == 'select'
-      return build_select_type(optional: optional, nullable: nullable, options: options, multiple: option[:multiple])
+      return build_select_type(optional: optional, nullable: nullable, options: options, multiple: option[:multiple], name: name)
     end
 
     nil
@@ -80,7 +91,7 @@ class Zammad::SettingTypesGenerator < Rails::Generators::Base
   def build_type(setting)
     form = setting.options[:form]
     if !form.nil? && form.length == 1
-      type = build_form_type(form[0])
+      type = build_form_type(form[0], name: setting.name)
       return type if !type.nil?
     end
 

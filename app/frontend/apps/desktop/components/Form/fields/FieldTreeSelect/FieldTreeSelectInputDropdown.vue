@@ -1,26 +1,16 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import {
-  type UseElementBoundingReturn,
-  onClickOutside,
-  onKeyDown,
-  useVModel,
-} from '@vueuse/core'
-import {
-  useTemplateRef,
-  onUnmounted,
-  computed,
-  nextTick,
-  ref,
-  toRef,
-} from 'vue'
+import { type UseElementBoundingReturn, onClickOutside, onKeyDown, useVModel } from '@vueuse/core'
+import { escape } from 'lodash-es'
+import { useTemplateRef, onUnmounted, computed, nextTick, ref, toRef } from 'vue'
 
 import type {
   FlatSelectOption,
   MatchedFlatSelectOption,
 } from '#shared/components/Form/fields/FieldTreeSelect/types.ts'
 import { useFocusWhenTyping } from '#shared/composables/useFocusWhenTyping.ts'
+import { useOnEmitter } from '#shared/composables/useOnEmitter.ts'
 import { useTrapTab } from '#shared/composables/useTrapTab.ts'
 import { useTraverseOptions } from '#shared/composables/useTraverseOptions.ts'
 import { i18n } from '#shared/i18n.ts'
@@ -79,11 +69,8 @@ if (localValue.value == null && props.multiple) {
   localValue.value = []
 }
 
-const getFocusableOptions = () => {
-  return Array.from<HTMLElement>(
-    dropdownElement.value?.querySelectorAll('[tabindex="0"]') || [],
-  )
-}
+const getFocusableOptions = () =>
+  Array.from<HTMLElement>(dropdownElement.value?.querySelectorAll('[data-type="option"]') || [])
 
 const showDropdown = ref(false)
 
@@ -107,17 +94,13 @@ const dropdownStyle = computed(() => {
   if (hasDirectionUp.value) {
     style.bottom = `${windowHeight.value - inputElementBounds.top.value}px`
   } else {
-    style.top = `${
-      inputElementBounds.top.value + inputElementBounds.height.value
-    }px`
+    style.top = `${inputElementBounds.top.value + inputElementBounds.height.value}px`
   }
 
   return style
 })
 
-const { activateTabTrap, deactivateTabTrap } = useTrapTab(
-  dropdownElement as Ref<HTMLElement>,
-)
+const { activateTabTrap, deactivateTabTrap } = useTrapTab(dropdownElement as Ref<HTMLElement>)
 
 let lastFocusableOutsideElement: HTMLElement | null = null
 
@@ -144,14 +127,11 @@ const closeDropdown = () => {
   })
 }
 
-const openDropdown = (
-  bounds: UseElementBoundingReturn,
-  height: Ref<number>,
-) => {
+const openDropdown = (bounds: UseElementBoundingReturn, height: Ref<number>) => {
   inputElementBounds = bounds
   windowHeight = toRef(height)
   instances.value.forEach((instance) => {
-    if (instance.isOpen) instance.closeDropdown()
+    if (instance.isOpen.value) instance.closeDropdown()
   })
   showDropdown.value = true
   lastFocusableOutsideElement = getActiveElement()
@@ -167,6 +147,15 @@ const openDropdown = (
   })
 }
 
+// In case the dropdown is open and the layout changes, we need to update the position of the dropdown just in case.
+useOnEmitter('resize-layout', () => {
+  if (!showDropdown.value) return
+
+  nextTick(() => {
+    inputElementBounds?.update()
+  })
+})
+
 const moveFocusToDropdown = (lastOption = false) => {
   // Focus selected or first available option.
   //   https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/listbox_role#keyboard_interactions
@@ -178,9 +167,7 @@ const moveFocusToDropdown = (lastOption = false) => {
   if (lastOption) {
     focusElement = focusableElements[focusableElements.length - 1]
   } else {
-    const selected = focusableElements.find(
-      (el) => el.getAttribute('aria-selected') === 'true',
-    )
+    const selected = focusableElements.find((el) => el.getAttribute('aria-selected') === 'true')
     if (selected) focusElement = selected
   }
 
@@ -205,7 +192,13 @@ onUnmounted(() => {
 defineExpose(exposedInstance)
 
 // https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/listbox_role#keyboard_interactions
-useTraverseOptions(dropdownElement, { direction: 'vertical' })
+useTraverseOptions(dropdownElement, {
+  direction: 'vertical',
+  filterOption: (element) => {
+    // Only allow navigation to option buttons, not toolbar buttons and navigation buttons
+    return element.closest('[data-type="option"]') !== null
+  },
+})
 
 // - Type-ahead is recommended for all listboxes, especially those with more than seven options
 useFocusWhenTyping(dropdownElement)
@@ -262,14 +255,10 @@ const select = (option: FlatSelectOption) => {
 
 const hasMoreSelectableOptions = computed(() => {
   if (props.currentPath.length)
-    return props.currentOptions.some(
-      (option) => !option.disabled && !isCurrentValue(option.value),
-    )
+    return props.currentOptions.some((option) => !option.disabled && !isCurrentValue(option.value))
 
   return (
-    props.options.filter(
-      (option) => !option.disabled && !isCurrentValue(option.value),
-    ).length > 0
+    props.options.filter((option) => !option.disabled && !isCurrentValue(option.value)).length > 0
   )
 })
 
@@ -328,20 +317,11 @@ const nextPageCallback = (option?: FlatSelectOption, noFocus?: boolean) => {
   }
 }
 
-const goToNextPage = ({
-  option,
-  noFocus,
-}: {
-  option: FlatSelectOption
-  noFocus?: boolean
-}) => {
+const goToNextPage = ({ option, noFocus }: { option: FlatSelectOption; noFocus?: boolean }) => {
   nextPageCallback(option, noFocus)
 }
 
-const maybeGoToNextOrPreviousPage = (
-  option: FlatSelectOption,
-  direction: 'left' | 'right',
-) => {
+const maybeGoToNextOrPreviousPage = (option: FlatSelectOption, direction: 'left' | 'right') => {
   if (
     (locale.localeData?.dir === 'rtl' && direction === 'right') ||
     (locale.localeData?.dir === 'ltr' && direction === 'left')
@@ -364,10 +344,9 @@ const highlightedOptions = computed(() =>
 
     if (option.parents) {
       parentPaths = option.parents.map((parentValue) => {
-        const parentOption =
-          props.optionValueLookup[parentValue as string | number]
+        const parentOption = props.optionValueLookup[parentValue as string | number]
 
-        return `${parentOption.label || parentOption.value} \u203A `
+        return `${escape(parentOption.label || parentOption.value.toString())} \u203A `
       })
     }
 
@@ -387,15 +366,13 @@ const highlightedOptions = computed(() =>
         option.match.index + option.match[0].length,
       )
 
-      const labelAfterMatch = label.slice(
-        option.match.index + option.match[0].length,
-      )
+      const labelAfterMatch = label.slice(option.match.index + option.match[0].length)
 
       const highlightClasses = option.disabled
         ? 'bg-blue-200 dark:bg-gray-300'
         : 'bg-blue-600 dark:bg-blue-900 group-hover:bg-blue-800 group-hover:group-focus:bg-blue-600 group-hover:text-white group-focus:text-black group-hover:group-focus:text-black'
 
-      label = `${labelBeforeMatch}<span class="${highlightClasses}">${labelMatchedText}</span>${labelAfterMatch}`
+      label = `${escape(labelBeforeMatch)}<span class="${highlightClasses}">${escape(labelMatchedText)}</span>${escape(labelAfterMatch)}`
     }
 
     return {
@@ -407,6 +384,10 @@ const highlightedOptions = computed(() =>
 
 const { collapseDuration, collapseEnter, collapseAfterEnter, collapseLeave } =
   useTransitionCollapse()
+
+const hasTopElement = computed(
+  () => !!(props.currentPath.length || (props.multiple && hasMoreSelectableOptions)),
+)
 </script>
 
 <template>
@@ -440,20 +421,11 @@ const { collapseDuration, collapseEnter, collapseAfterEnter, collapseLeave } =
               'rounded-b-lg border-b': !hasDirectionUp,
             }"
           >
-            <div
-              v-if="
-                currentPath.length || (multiple && hasMoreSelectableOptions)
-              "
-              class="flex w-full justify-between gap-2 px-2.5 py-1.5"
-            >
+            <div v-if="hasTopElement" class="flex w-full justify-between gap-2 px-2.5 py-1.5">
               <CommonLabel
                 v-if="currentPath.length"
-                class="text-blue-800 hover:text-black focus-visible:rounded-xs focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 dark:text-blue-800 dark:hover:text-white"
-                :prefix-icon="
-                  locale.localeData?.dir === 'rtl'
-                    ? 'chevron-right'
-                    : 'chevron-left'
-                "
+                class="text-blue-800! focus-visible-app-default hover:text-black! focus-visible:rounded-xs dark:hover:text-white!"
+                :prefix-icon="locale.localeData?.dir === 'rtl' ? 'chevron-right' : 'chevron-left'"
                 :aria-label="$t('Back to previous page')"
                 size="small"
                 role="button"
@@ -466,7 +438,7 @@ const { collapseDuration, collapseEnter, collapseAfterEnter, collapseLeave } =
               </CommonLabel>
               <CommonLabel
                 v-if="multiple && hasMoreSelectableOptions"
-                class="ms-auto text-blue-800 hover:text-black focus-visible:rounded-xs focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 dark:text-blue-800 dark:hover:text-white"
+                class="ms-auto text-blue-800! focus-visible-app-default hover:text-black! focus-visible:rounded-xs dark:hover:text-white!"
                 prefix-icon="check-all"
                 size="small"
                 role="button"
@@ -475,11 +447,7 @@ const { collapseDuration, collapseEnter, collapseAfterEnter, collapseLeave } =
                 @keypress.enter.prevent.stop="selectAll()"
                 @keypress.space.prevent.stop="selectAll()"
               >
-                {{
-                  currentPath.length
-                    ? $t('select visible options')
-                    : $t('select all options')
-                }}
+                {{ currentPath.length ? $t('select visible options') : $t('select all options') }}
               </CommonLabel>
             </div>
             <div
@@ -490,7 +458,7 @@ const { collapseDuration, collapseEnter, collapseAfterEnter, collapseLeave } =
               class="w-full overflow-y-auto"
             >
               <FieldTreeSelectInputDropdownItem
-                v-for="option in filter ? highlightedOptions : currentOptions"
+                v-for="(option, index) in filter ? highlightedOptions : currentOptions"
                 :key="String(option.value)"
                 :class="{
                   'first:rounded-t-[7px]':
@@ -499,6 +467,10 @@ const { collapseDuration, collapseEnter, collapseAfterEnter, collapseLeave } =
                     (!multiple || !hasMoreSelectableOptions),
                   'last:rounded-b-[7px]': !hasDirectionUp,
                 }"
+                :index="index"
+                :total="filter ? highlightedOptions.length : currentOptions.length"
+                :has-top-button="hasTopElement"
+                :has-direction-up="hasDirectionUp"
                 :aria-setsize="flatOptions.length"
                 :aria-posinset="getCurrentIndex(option) + 1"
                 :selected="isCurrentValue(option.value)"
@@ -508,12 +480,8 @@ const { collapseDuration, collapseEnter, collapseAfterEnter, collapseLeave } =
                 :no-label-translate="noOptionsLabelTranslation"
                 @select="select($event)"
                 @next="goToNextPage($event)"
-                @keydown.right.prevent="
-                  maybeGoToNextOrPreviousPage(option, 'right')
-                "
-                @keydown.left.prevent="
-                  maybeGoToNextOrPreviousPage(option, 'left')
-                "
+                @keydown.right.prevent="maybeGoToNextOrPreviousPage(option, 'right')"
+                @keydown.left.prevent="maybeGoToNextOrPreviousPage(option, 'left')"
               />
               <FieldTreeSelectInputDropdownItem
                 v-if="!options.length"
@@ -525,6 +493,8 @@ const { collapseDuration, collapseEnter, collapseAfterEnter, collapseLeave } =
                   } as MatchedFlatSelectOption
                 "
                 no-selection-indicator
+                :index="0"
+                :total="0"
               />
               <slot name="footer" />
             </div>

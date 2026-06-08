@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, ref, toRef } from 'vue'
@@ -34,9 +34,7 @@ const options = computed(() => {
     {
       option: 'encryption',
       label: __('Encrypt'),
-      icon: isCurrentSecurityOption('encryption')
-        ? 'encryption-enabled'
-        : 'encryption-disabled',
+      icon: isCurrentSecurityOption('encryption') ? 'encryption-enabled' : 'encryption-disabled',
     },
     {
       option: 'sign',
@@ -70,10 +68,7 @@ const tooltipMessages = computed(() => {
   const { encryption, sign } = props.context.securityMessages?.[method] || {}
 
   if (encryption) {
-    const message = i18n.t(
-      encryption.message,
-      ...(encryption.messagePlaceholder || []),
-    )
+    const message = i18n.t(encryption.message, ...(encryption.messagePlaceholder || []))
     messages.push({
       type: 'text',
       label: `${i18n.t('Encryption:')} ${message}`,
@@ -117,7 +112,7 @@ const tooltipMessages = computed(() => {
         class="flex flex-1 items-center justify-center rounded-md px-2 py-1 select-none"
         :aria-selected="previewMethod === securityType"
         :class="{
-          'bg-white font-semibold text-black': previewMethod === securityType,
+          'bg-white font-medium text-black': previewMethod === securityType,
           'bg-gray-300': previewMethod !== securityType,
         }"
         @click="changeSecurityState(securityType)"
@@ -132,7 +127,7 @@ const tooltipMessages = computed(() => {
         v-if="tooltipMessages.length"
         :name="`security-${context.node.name}`"
         :messages="tooltipMessages"
-        :heading="__('Security Information')"
+        :heading="__('Security information')"
       >
         <CommonIcon name="tooltip" size="small" />
       </CommonTooltip>
@@ -154,8 +149,7 @@ const tooltipMessages = computed(() => {
             'bg-gray-600/50 text-white/30': isSecurityOptionDisabled(option),
             'cursor-pointer': !isSecurityOptionDisabled(option),
             'bg-gray-300 text-white': !isCurrentSecurityOption(option),
-            'bg-white font-semibold text-black':
-              isCurrentSecurityOption(option),
+            'bg-white font-medium text-black': isCurrentSecurityOption(option),
           }"
           :tabindex="isSecurityOptionDisabled(option) ? -1 : 0"
           :disabled="isSecurityOptionDisabled(option)"

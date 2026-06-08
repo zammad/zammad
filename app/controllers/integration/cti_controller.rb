@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Integration::CtiController < ApplicationController
   skip_before_action :verify_csrf_token
@@ -68,7 +68,7 @@ class Integration::CtiController < ApplicationController
   end
 
   def response_error(error)
-    render json: { error: error }, status: :unprocessable_entity
+    render json: { error: error }, status: :unprocessable_content
   end
 
   def response_unauthorized(error)

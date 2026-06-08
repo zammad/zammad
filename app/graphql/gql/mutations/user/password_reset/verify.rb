@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Mutations
   class User::PasswordReset::Verify < BaseMutation
@@ -8,15 +8,11 @@ module Gql::Mutations
 
     field :success, Boolean, description: 'This indicates if the password reset token is valid.'
 
-    def self.authorize(...)
-      true
-    end
+    allow_public_access!
 
     def resolve(token:)
-      verify = Service::User::PasswordReset::Verify.new(token: token)
-
       begin
-        verify.execute
+        Service::User::PasswordReset::Verify.execute(token: token)
       rescue Service::User::PasswordReset::Verify::InvalidTokenError => e
         return error_response({ message: e.message })
       end

@@ -10,68 +10,37 @@ body: |-
   <br>Gravierend?<br>
 
   <table>
-  <tr>
-  <td>Mit freundlichen Grüßen</td>
-  </tr>
-  </table>
+  <tbody><tr>
+  <td>Mit freundlichen Grüßen</td></tr></tbody></table>
   <br>
   <table>
-  <tr>
-  <td>
-  <b>Franz Schäfer</b>
-  </td>
-  </tr>
-  <tr>
-  <td>Manager Information Systems</td>
-  </tr>
-  </table>
+  <tbody><tr>
+  <td><b>Franz Schäfer</b>
+  </td></tr><tr>
+  <td>Manager Information Systems</td></tr></tbody></table>
   <br>
   <table>
-  <tr>
-  <td> Telefon </td>
-  <td> +49 000 000 8565 </td>
-  </tr>
-  <tr>
-  <td colspan="2">christian.schaefer@example.com</td>
-  </tr>
-  </table>
+  <tbody><tr>
+  <td>Telefon </td><td>+49 000 000 8565 </td></tr><tr>
+  <td colspan="2">christian.schaefer@example.com</td></tr></tbody></table>
   <br>
   <table>
-  <tr>
-  <td>
-  <b>Example Stoff GmbH</b>
-  </td>
-  </tr>
-  <tr>
-  <td> Fakultaet </td>
-  </tr>
-  <tr>
-  <td> Düsseldorfer Landstraße 395 </td>
-  </tr>
-  <tr>
-  <td> D-00000 Hof </td>
-  </tr>
-  <tr>
-  <td><a href="http://www.example.com" rel="nofollow noreferrer noopener" target="_blank"><u>www.example.com</u></a></td>
-  </tr>
-  </table>
+  <tbody><tr>
+  <td><b>Example Stoff GmbH</b>
+  </td></tr><tr>
+  <td>Fakultaet </td></tr><tr>
+  <td>Düsseldorfer Landstraße 395 </td></tr><tr>
+  <td>D-00000 Hof </td></tr><tr>
+  <td><a href="http://www.example.com" rel="nofollow noreferrer noopener" target="_blank"><u>www.example.com</u></a></td></tr></tbody></table>
   <br>
   <table>
-  <tr>
+  <tbody><tr>
   <td>
   <hr>
-  </td>
-  </tr>
-  <tr>
-  <td> Geschäftsführung/Management Board: Jan Bauer (Vorsitzender/Chairman), Oliver Bauer, Heiko Bauer, Boudewijn Bauer </td>
-  </tr>
-  <tr>
-  <td> Sitz der Gesellschaft / Registered Office: Hof </td>
-  </tr>
-  <tr>
-  <td>Registergericht / Commercial Register of the Local Court: HRB 0000 AG Hof</td>
-  </tr>
-  </table>
+  </td></tr><tr>
+  <td>Geschäftsführung/Management Board: Jan Bauer (Vorsitzender/Chairman), Oliver Bauer, Heiko Bauer, Boudewijn Bauer </td></tr><tr>
+  <td>Sitz der Gesellschaft / Registered Office: Hof </td></tr><tr>
+  <td>Registergericht / Commercial Register of the Local Court: HRB 0000 AG Hof</td></tr></tbody></table>
 content_type: text/html
 attachments:
 - !ruby/hash:ActiveSupport::HashWithIndifferentAccess

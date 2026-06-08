@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
@@ -29,9 +29,7 @@ const props = defineProps<Props>()
 const { createQueryErrorHandler } = useErrorHandler()
 
 const errorCallback = createQueryErrorHandler({
-  notFound: __(
-    'User with specified ID was not found. Try checking the URL for errors.',
-  ),
+  notFound: __('User with specified ID was not found. Try checking the URL for errors.'),
   forbidden: __('You have insufficient rights to view this user.'),
 })
 
@@ -39,12 +37,12 @@ const userId = computed(() => convertToGraphQLId('User', props.internalId))
 
 const {
   user,
-  userQuery,
   loading,
+  loadingWithoutCachedResult,
   objectAttributes,
   secondaryOrganizations,
-  loadAllSecondaryOrganizations,
-} = useUserDetail(userId, errorCallback)
+  fetchMoreSecondaryOrganizations,
+} = useUserDetail(userId, 3, 100, errorCallback)
 
 useOnlineNotificationSeen(user)
 
@@ -55,7 +53,7 @@ useHeader({
   backUrl: '/',
   actionTitle: __('Edit'),
   actionHidden: computed(() => user.value == null || !user.value.policy.update),
-  refetch: computed(() => user.value != null && userQuery.loading().value),
+  refetch: computed(() => user.value != null && loading.value),
   onAction() {
     if (!user.value || !user.value.policy.update) return
     openEditUserDialog(user.value)
@@ -85,8 +83,7 @@ const ticketButtons = computed<CommonButtonOption[]>(() => {
   ]
 })
 
-const { getTicketData: getOrganizationTicketsData } =
-  useOrganizationTicketsCount()
+const { getTicketData: getOrganizationTicketsData } = useOrganizationTicketsCount()
 const { getTicketData: getUserTicketsData } = useUsersTicketsCount()
 
 const ticketsData = computed(() => {
@@ -117,7 +114,7 @@ const ticketsData = computed(() => {
         v-if="user.organization"
         data-test-id="organization-link"
         :link="`/organizations/${user.organization.internalId}`"
-        class="text-blue text-center text-base"
+        class="text-center text-base text-blue"
       >
         {{ user.organization.name }}
       </CommonLink>
@@ -126,7 +123,7 @@ const ticketsData = computed(() => {
     <ObjectAttributes
       :attributes="objectAttributes"
       :object="user"
-      :skip-attributes="['firstname', 'lastname']"
+      :skip-attributes="['firstname', 'lastname', 'organization_ids']"
     />
 
     <CommonOrganizationsList
@@ -134,7 +131,7 @@ const ticketsData = computed(() => {
       :total-count="secondaryOrganizations.totalCount"
       :disable-show-more="loading"
       :label="__('Secondary organizations')"
-      @show-more="loadAllSecondaryOrganizations()"
+      @show-more="fetchMoreSecondaryOrganizations"
     />
 
     <CommonTicketStateList
@@ -158,5 +155,5 @@ const ticketsData = computed(() => {
       </template>
     </CommonTicketStateList>
   </div>
-  <CommonLoader v-else :loading="loading" />
+  <CommonLoader v-else :loading="loadingWithoutCachedResult" />
 </template>

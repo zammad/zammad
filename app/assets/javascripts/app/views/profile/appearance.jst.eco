@@ -36,26 +36,5 @@
         </div>
       </div>
     </div>
-
-    <% if @isProviderConfigured: %>
-      <div class="settings-entry">
-
-        <div class="form-item js-theme flex">
-            <div class="formGroup-label">
-              <label for="appearance"><%- @T('Ticket Summary') %></label>
-            </div>
-            <div class="formGroup">
-              <label class="inline-label">
-                <span class="checkbox-replacement checkbox-replacement--inline">
-                  <input type="checkbox" name="summary_banner_visible" value="true" <% if @isSummaryBannerVisible: %> checked<% end %>>
-                  <%- @Icon('checkbox', 'icon-unchecked') %>
-                  <%- @Icon('checkbox-checked', 'icon-checked') %>
-                </span>
-                <%- @T('Show an info banner in the article list indicating that a summary has been created by %s.', 'Zammad Smart Assist') %>
-              </label>
-            </div>
-          </div>
-      </div>
-    <% end %>
   </form>
 </div>

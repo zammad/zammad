@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { createMessage } from '@formkit/core'
 import { isEmpty } from 'lodash-es'
@@ -18,10 +18,7 @@ const translateAttrs = (node: FormKitNode, attrs: Record<string, string>) => {
   }
 
   attrsToTranslate.forEach((attr) => {
-    if (
-      attr in attrs &&
-      (!node.store[attr] || node.store[attr].value !== attrs[attr])
-    ) {
+    if (attr in attrs && (!node.store[attr] || node.store[attr].value !== attrs[attr])) {
       // Remember the source message.
       node.store.set(
         createMessage({
@@ -46,11 +43,9 @@ const translateWrapperProps = (node: FormKitNode) => {
   node.hook.prop(({ prop, value }, next) => {
     const propName = prop as string
     if (propName === 'attrs' && !isEmpty(value)) {
-      // eslint-disable-next-line vue/no-ref-as-operand
       value = translateAttrs(node, value)
     }
     if (propsToTranslate.includes(propName)) {
-      // eslint-disable-next-line vue/no-ref-as-operand
       if (!node.store[propName] || node.store[propName].value !== value) {
         node.store.set(
           createMessage({
@@ -62,7 +57,6 @@ const translateWrapperProps = (node: FormKitNode) => {
       }
 
       if (propName === 'label') {
-        // eslint-disable-next-line vue/no-ref-as-operand
         value = computed(() => {
           return i18n.t(
             node.store[propName].value as string,
@@ -70,7 +64,6 @@ const translateWrapperProps = (node: FormKitNode) => {
           )
         })
       } else {
-        // eslint-disable-next-line vue/no-ref-as-operand
         value = computed(() => {
           return i18n.t(node.store[propName].value as string)
         })
@@ -83,7 +76,7 @@ const translateWrapperProps = (node: FormKitNode) => {
   node.on('created', () => {
     propsToTranslate.forEach((prop) => {
       if (prop in node.props) {
-        // eslint-disable-next-line no-self-assign
+        // oxlint-disable-next-line no-self-assign
         node.props[prop] = node.props[prop]
       }
     })

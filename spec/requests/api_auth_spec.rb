@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -42,7 +42,7 @@ RSpec.describe 'Api Auth', type: :request do
       get '/api/v1/sessions', params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(response.header['Access-Control-Allow-Origin']).to eq('*')
-      expect(response.header['Cache-Control']).to eq('max-age=0, private, must-revalidate')
+      expect(response.header['Cache-Control']).to eq('no-store')
       expect(json_response).to be_a(Hash)
       expect(json_response).to be_truthy
     end
@@ -61,7 +61,7 @@ RSpec.describe 'Api Auth', type: :request do
       get '/api/v1/tickets', params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(response.header['Access-Control-Allow-Origin']).to eq('*')
-      expect(response.header['Cache-Control']).to eq('max-age=0, private, must-revalidate')
+      expect(response.header['Cache-Control']).to eq('no-store')
       expect(json_response).to be_a(Array)
       expect(json_response).to be_truthy
     end
@@ -80,7 +80,7 @@ RSpec.describe 'Api Auth', type: :request do
       get '/api/v1/tickets', params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(response.header['Access-Control-Allow-Origin']).to eq('*')
-      expect(response.header['Cache-Control']).to eq('max-age=0, private, must-revalidate')
+      expect(response.header['Cache-Control']).to eq('no-store')
       expect(json_response).to be_a(Array)
       expect(json_response).to be_truthy
     end
@@ -122,7 +122,7 @@ RSpec.describe 'Api Auth', type: :request do
       get '/api/v1/sessions', params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(response.header['Access-Control-Allow-Origin']).to eq('*')
-      expect(response.header['Cache-Control']).to eq('max-age=0, private, must-revalidate')
+      expect(response.header['Cache-Control']).to eq('no-store')
 
       expect(json_response).to be_a(Hash)
       expect(json_response).to be_truthy
@@ -270,7 +270,7 @@ RSpec.describe 'Api Auth', type: :request do
       get '/api/v1/tickets', params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(response.header['Access-Control-Allow-Origin']).to eq('*')
-      expect(response.header['Cache-Control']).to eq('max-age=0, private, must-revalidate')
+      expect(response.header['Cache-Control']).to eq('no-store')
       expect(json_response).to be_a(Array)
       expect(json_response).to be_truthy
 
@@ -306,7 +306,7 @@ RSpec.describe 'Api Auth', type: :request do
       Setting.set('api_token_access', true)
       get '/api/v1/tickets', params: {}, as: :json
       expect(response.header['Access-Control-Allow-Origin']).to eq('*')
-      expect(response.header['Cache-Control']).to eq('max-age=0, private, must-revalidate')
+      expect(response.header['Cache-Control']).to eq('no-store')
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a(Array)
       expect(json_response).to be_truthy
@@ -391,7 +391,7 @@ RSpec.describe 'Api Auth', type: :request do
       get '/api/v1/tickets', params: {}, as: :json
       expect(response).to have_http_status(:ok)
       expect(response.header['Access-Control-Allow-Origin']).to eq('*')
-      expect(response.header['Cache-Control']).to eq('max-age=0, private, must-revalidate')
+      expect(response.header['Cache-Control']).to eq('no-store')
       expect(json_response).to be_a(Array)
       expect(json_response).to be_truthy
 
@@ -431,7 +431,7 @@ RSpec.describe 'Api Auth', type: :request do
 
       context 'without two factor token' do
         it 'rejects the log-in' do
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
         end
       end
 

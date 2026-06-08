@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed } from 'vue'
@@ -32,9 +32,7 @@ const translatedSourcePieces = computed(() => {
     }),
   )
 
-  const filteredPlaceholders = props.placeholders.filter(
-    (ph) => typeof ph === 'object',
-  )
+  const filteredPlaceholders = props.placeholders.filter((ph) => typeof ph === 'object')
 
   const translatedSourcePieces: (string | RenderPlaceholder)[] = []
   const translatedSourceParts = translatedSource.split('%s')

@@ -27,6 +27,7 @@ class ChannelChat extends App.ControllerSubContent
     '.js-color': 'colorField'
     '.js-chatSetting input': 'chatSetting'
     '.js-eyedropper': 'eyedropper'
+    '.js-browserHelp': 'browserHelp'
 
   apiOptions: [
     {
@@ -111,6 +112,8 @@ class ChannelChat extends App.ControllerSubContent
 
   constructor: ->
     super
+
+    @title __('Chat'), true
     if @Session.get('email')
       @previewUrl = "www.#{@Session.get('email').replace(/^.+?\@/, '')}"
 
@@ -209,18 +212,23 @@ class ChannelChat extends App.ControllerSubContent
     @changeDemoWebsite()
 
   changeDemoWebsite: ->
-    return if @urlInput.val() is '' or @urlInput.val() is @urlCache
-    @urlCache = @urlInput.val()
+    @url = @urlInput.val().trim()
+    return if @url is '' or @url is @urlCache
 
-    @url = @urlCache
+    @urlCache = @url
+
     if !@url.startsWith('http')
-      @url = "http://#{ @url }"
+      @url = "https://#{ @url }"
 
     @urlInput.addClass('is-loading')
 
     @palette.empty()
 
-    @screenshot.attr('src', '')
+    # Clear previous image and set empty GIF image as a placeholder.
+    #   This prevents showing a broken image icon in some browsers while a new one is being loaded.
+    @screenshot.attr('src', 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7')
+
+    @browserHelp.empty().hide()
 
     $.ajax
       url: 'https://images.zammad.com/api/v1/webpage/combined'
@@ -228,6 +236,8 @@ class ChannelChat extends App.ControllerSubContent
         url: @url
         count: 20
       success: @renderDemoWebsite
+      error: (data) =>
+        @renderError(data?.responseJSON)
       dataType: 'json'
 
   renderDemoWebsite: (data) =>
@@ -236,6 +246,14 @@ class ChannelChat extends App.ControllerSubContent
     @screenshot.attr 'src', @_screenshotSource
 
     @renderPalette data['palette']
+
+    @urlInput.removeClass('is-loading')
+
+  renderError: (data) =>
+    errorMessage = data?.error || __('An error occurred while fetching the website preview.')
+
+    @browserHelp.text(App.i18n.translatePlain(errorMessage))
+      .show()
 
     @urlInput.removeClass('is-loading')
 

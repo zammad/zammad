@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { ref } from 'vue'
 
@@ -58,13 +58,9 @@ describe('stepper component', () => {
 
     expect(modelValue.value).toBe('step2')
 
-    expect(
-      view.getByRole('status', { name: 'Invalid values in step 4' }),
-    ).toHaveTextContent('3')
+    expect(view.getByRole('status', { name: 'Invalid values in step 4' })).toHaveTextContent('3')
 
-    expect(
-      view.getByRole('button', { name: 'Step 1 is completed' }),
-    ).toBeInTheDocument()
+    expect(view.getByRole('button', { name: 'Step 1 is completed' })).toBeInTheDocument()
 
     await view.events.click(view.getByRole('button', { name: '3' }))
 

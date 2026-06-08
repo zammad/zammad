@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Trigger < ApplicationModel
   include ChecksConditionValidation
@@ -7,6 +7,8 @@ class Trigger < ApplicationModel
   include HasSearchIndexBackend
   include CanSelector
   include CanSearch
+  include ChecksClientNotification
+  include TouchesPerformReferences
 
   include Trigger::Assets
 
@@ -33,9 +35,12 @@ class Trigger < ApplicationModel
   def performable_on?(object, activator_type:)
     return if !time_based?
 
-    already_notified_cutoff = Time.use_zone(Setting.get('timezone_default')) { Time.current.beginning_of_day }
-
-    !history_scope(object, activator_type:).exists?(['created_at > ?', already_notified_cutoff])
+    Ticket::DailyEventLock.lock!(
+      lock_type:      'trigger',
+      lock_activator: activator_type,
+      ticket:         object,
+      related_object: self
+    )
   end
 
   def condition_changes_required?

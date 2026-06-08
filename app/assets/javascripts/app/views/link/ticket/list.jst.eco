@@ -1,4 +1,4 @@
-<label><%- @T('Links') %></label>
+<label><%- @T('Related tickets') %></label>
 <% for type of @links: %>
 <% type_definition = _.find(@link_types, (elem) => elem[0] == type) || [] %>
 <div class="ticketLinks">
@@ -7,5 +7,7 @@
 </div>
 <% end %>
 <% if @editable: %>
-  <div class="text-muted u-clickable js-add">+ <%- @T('Add Link') %></div>
+  <div class="text-muted horizontal center justify-end gap-16">
+    <span class="u-clickable js-add js-add-related-ticket">+ <%- @T('Link') %></span>
+  </div>
 <% end %>

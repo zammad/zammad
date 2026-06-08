@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { useWhatsapp } from '#shared/entities/ticket/channel/composables/useWhatsapp.ts'
 
@@ -7,12 +7,13 @@ import ArticleMetaWhatsappMessageStatus from '#desktop/pages/ticket/components/T
 
 export default <ChannelModule>{
   name: 'whatsapp message',
-  label: __('WhatsApp Message'),
+  label: __('WhatsApp message'),
+  metaLabel: __('whatsapp message'),
   icon: 'whatsapp',
   additionalFields: [
     {
       name: 'preferences.whatsapp',
-      label: __('Message Status'),
+      label: __('Message status'),
       show: (article) => {
         const { hasDeliveryStatus } = useWhatsapp(article)
         return hasDeliveryStatus.value

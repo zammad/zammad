@@ -1,17 +1,13 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { storeToRefs } from 'pinia'
-import { computed } from 'vue'
+import { computed, toRef } from 'vue'
 
 import type { TicketById } from '#shared/entities/ticket/types.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
 
 import CommonSimpleTable from '#desktop/components/CommonTable/CommonSimpleTable.vue'
-import type {
-  TableSimpleHeader,
-  TableItem,
-} from '#desktop/components/CommonTable/types'
+import type { TableSimpleHeader, TableItem } from '#desktop/components/CommonTable/types'
 import CommonTicketStateIndicatorIcon from '#desktop/components/CommonTicketStateIndicator/CommonTicketStateIndicatorIcon.vue'
 import type { TicketRelationAndRecentListItem } from '#desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/types.ts'
 
@@ -25,7 +21,7 @@ const emit = defineEmits<{
   'click-ticket': [TicketRelationAndRecentListItem]
 }>()
 
-const { config } = storeToRefs(useApplicationStore())
+const config = toRef(useApplicationStore(), 'config')
 
 const headers: TableSimpleHeader[] = [
   { key: 'state', label: '', truncate: true, type: 'link' },

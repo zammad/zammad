@@ -1,11 +1,11 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed } from 'vue'
 
+import type { FieldEditorProps } from '#shared/components/Form/fields/FieldEditor/types.ts'
+import { useAppName } from '#shared/composables/useAppName.ts'
 import type { ConfidentTake } from '#shared/types/utils.ts'
-
-import type { FieldEditorProps } from './types.ts'
 
 interface Props {
   footer: ConfidentTake<FieldEditorProps, 'meta.footer'>
@@ -19,6 +19,13 @@ const availableCharactersCount = computed(() => {
   if (!maxlength) return 0
   return maxlength - props.characters
 })
+
+const appName = useAppName()
+
+const isDesktop = appName === 'desktop'
+
+const characterClassError = isDesktop ? 'text-red-500' : 'text-red'
+const characterClassWarning = isDesktop ? 'text-yellow-600' : 'text-orange'
 </script>
 
 <template>
@@ -29,8 +36,8 @@ const availableCharactersCount = computed(() => {
       title="Available characters"
       class="text-right"
       :class="{
-        'text-red': availableCharactersCount < 0,
-        'text-orange':
+        [characterClassError]: availableCharactersCount < 0,
+        [characterClassWarning]:
           footer.warningLength &&
           availableCharactersCount >= 0 &&
           availableCharactersCount < footer.warningLength,
@@ -44,12 +51,7 @@ const availableCharactersCount = computed(() => {
       aria-atomic="true"
       aria-live="polite"
     >
-      {{
-        $t(
-          'You have exceeded the character limit by %s',
-          0 - availableCharactersCount,
-        )
-      }}
+      {{ $t('You have exceeded the character limit by %s', 0 - availableCharactersCount) }}
     </span>
   </div>
 </template>

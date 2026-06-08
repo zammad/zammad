@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Idoit
 
@@ -129,8 +129,6 @@ or with filter:
         headers:      header,
         verify_ssl:   verify_ssl,
         json:         true,
-        open_timeout: 6,
-        read_timeout: 16,
         log:          {
           facility: 'idoit',
         },
@@ -138,7 +136,7 @@ or with filter:
     )
 
     raise "Can't fetch objects from #{url}: Unable to parse response from server. Invalid JSON response." if !result.success? && result.error =~ %r{JSON::ParserError:.+?\s+unexpected\s+token\s+at\s+'<!DOCTYPE\s+html}i
-    raise "Can't fetch object from #{url}: Unable to login using given credentials and apiKey." if result.data['error'].present?
+    raise "Can't fetch object from #{url}: Unable to login using given credentials and apiKey." if result.data&.dig('error').present?
     raise "Can't fetch objects from #{url}: #{result.error}" if !result.success?
 
     # add link to idoit
@@ -154,7 +152,7 @@ or with filter:
   end
 
   def self._url_cleanup(url)
-    url.strip!
+    url = url.strip
     raise "Invalid endpoint '#{url}', need to start with http:// or https://" if !url.match?(%r{^http(s|)://}i)
 
     url = _url_cleanup_baseurl(url)
@@ -163,7 +161,7 @@ or with filter:
   end
 
   def self._url_cleanup_baseurl(url)
-    url.strip!
+    url = url.strip
     raise "Invalid endpoint '#{url}', need to start with http:// or https://" if !url.match?(%r{^http(s|)://}i)
 
     url.gsub!(%r{src/jsonrpc.php}, '')

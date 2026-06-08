@@ -1,9 +1,9 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Ticket::PerformChanges::Action::NotificationWebhook < Ticket::PerformChanges::Action
 
   def self.phase
-    :after_save
+    :after_commit
   end
 
   def execute(...)

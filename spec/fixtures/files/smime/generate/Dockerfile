@@ -1,4 +1,4 @@
-FROM debian:buster
+FROM debian:trixie-slim
 
 ENV CERT_DIR "/etc/ssl/certs"
 

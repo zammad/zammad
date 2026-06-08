@@ -1,4 +1,6 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
+
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { useApolloClient } from '@vue/apollo-composable'
 import { random } from 'lodash-es'
@@ -8,6 +10,8 @@ import { random } from 'lodash-es'
 
 import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
 import { useLocaleStore } from '#shared/stores/locale.ts'
+
+import { initializeBetaUiFeedbackConsentDialog } from '#desktop/components/BetaUi/composables/useBetaUiFeedbackConsent.ts'
 
 import mockApolloClient from '../mock-apollo-client.ts'
 
@@ -28,9 +32,7 @@ const isDesktop = await vi.hoisted(async () => {
 
 vi.mock('#shared/server/apollo/client.ts', async () => {
   if (isDesktop) {
-    const { mockedApolloClient } = await import(
-      '#tests/graphql/builders/mocks.ts'
-    )
+    const { mockedApolloClient } = await import('#tests/graphql/builders/mocks.ts')
     return {
       clearApolloClientStore: async () => {
         await mockedApolloClient.clearStore()
@@ -97,9 +99,8 @@ if (isDesktop) {
   //     '#desktop/router/guards/before/systemSetupInfo.ts'
   //   )
   //   routerBeforeGuards.push(systemSetupInfo)
-  const { default: activeTaskbarTab } = await import(
-    '#desktop/router/guards/before/activeTaskbarTab.ts'
-  )
+  const { default: activeTaskbarTab } =
+    await import('#desktop/router/guards/before/activeTaskbarTab.ts')
   routerBeforeGuards.push(activeTaskbarTab)
 }
 
@@ -125,9 +126,11 @@ export const visitView = async (
 
   const view = renderComponent(
     {
-      template: html` <LayoutTest${isDesktop
-        ? 'DesktopView'
-        : 'MobileView'} />`,
+      template: html` <LayoutTest${isDesktop ? 'DesktopView' : 'MobileView'} />`,
+      setup() {
+        if (!isDesktop) return
+        initializeBetaUiFeedbackConsentDialog()
+      },
       components: {
         LayoutTestDesktopView,
         LayoutTestMobileView,

@@ -1,7 +1,9 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Selector::Base
   attr_accessor :selector, :options, :changed_attributes, :target_class, :target_table, :target_name
+
+  MATCH_WILDCARD_REGEX = %r{[*?]}
 
   def initialize(selector:, options:, target_class: Ticket)
     if selector.respond_to?(:permit!)
@@ -125,6 +127,10 @@ class Selector::Base
       end
     end
     result
+  end
+
+  def wildcard_value?(value)
+    value.to_s.match?(MATCH_WILDCARD_REGEX)
   end
 
   def get

@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { tryOnScopeDispose, watchOnce } from '@vueuse/core'
 import { keyBy } from 'lodash-es'
@@ -18,10 +18,7 @@ import { TicketOverviewUpdatesDocument } from '#mobile/entities/ticket/graphql/s
 
 import { getTicketOverviewStorage } from '../helpers/ticketOverviewStorage.ts'
 
-export type TicketOverview = Pick<
-  Overview,
-  'id' | 'name' | 'organizationShared' | 'outOfOffice'
->
+export type TicketOverview = Pick<Overview, 'id' | 'name' | 'organizationShared' | 'outOfOffice'>
 
 export const useTicketOverviewsStore = defineStore('ticketOverviews', () => {
   const ticketOverviewHandler = new QueryHandler(
@@ -41,8 +38,7 @@ export const useTicketOverviewsStore = defineStore('ticketOverviews', () => {
       ignoreUserConditions: false,
     },
     updateQuery(_, { subscriptionData }) {
-      const ticketOverviews =
-        subscriptionData.data.ticketOverviewUpdates?.ticketOverviews
+      const ticketOverviews = subscriptionData.data.ticketOverviewUpdates?.ticketOverviews
       // if we return empty array here, the actual query will be aborted, because we have fetchPolicy "cache-and-network"
       // if we return existing value, it will throw an error, because "overviews" doesn't exist yet on the query result
       if (!ticketOverviews) {
@@ -55,7 +51,7 @@ export const useTicketOverviewsStore = defineStore('ticketOverviews', () => {
   })
 
   const overviewsRaw = ticketOverviewHandler.result()
-  const overviewsLoading = ticketOverviewHandler.loading()
+  const overviewsLoading = ticketOverviewHandler.loadingWithoutCachedResult()
 
   const overviews = computed(() => {
     if (!overviewsRaw.value?.ticketOverviews) return []
@@ -70,9 +66,7 @@ export const useTicketOverviewsStore = defineStore('ticketOverviews', () => {
   const includedIds = ref(new Set<string>(storage.getOverviews()))
 
   const includedOverviews = computed(() => {
-    return [...includedIds.value]
-      .map((id) => overviewsByKey.value[id])
-      .filter(Boolean)
+    return [...includedIds.value].map((id) => overviewsByKey.value[id]).filter(Boolean)
   })
 
   const populateIncludeIds = (overviews: TicketOverview[]) => {

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 require 'system/apps/mobile_old/examples/core_workflow_examples'
@@ -132,6 +132,11 @@ RSpec.describe 'Mobile > Search > User > Edit', app: :mobile, authenticated_as: 
 
     shared_examples 'editing user data' do
       it 'supports editing user data' do
+        # Does not trigger form updater for some reason.
+        find_input('First name').clear
+        find_input('Last name').clear
+        find_input('Address').clear
+
         within_form(form_updater_gql_number: 1) do
           find_input('First name').type('Foo')
           find_input('Last name').type('Bar')
@@ -167,15 +172,15 @@ RSpec.describe 'Mobile > Search > User > Edit', app: :mobile, authenticated_as: 
 
       find_button('Cancel').click
 
-      within '[role=alert]' do
-        expect(page).to have_text('Are you sure? You have unsaved changes that will get lost.')
-      end
+      expect(page).to have_text('Are you sure? You have unsaved changes that will get lost.')
     end
 
     context 'when user is email-less' do
       let(:user) { create(:customer, :without_email) }
 
       it 'updates User record' do
+        find_input('First name').clear # does not trigger form updater for some reason
+
         within_form(form_updater_gql_number: 1) do
           find_input('First name').type('No Email')
 

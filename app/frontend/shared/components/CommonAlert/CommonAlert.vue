@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
@@ -35,6 +35,10 @@ const icon = computed(() => {
 const classMap = getAlertClasses()
 
 const dismissed = ref(false)
+
+const dismiss = () => {
+  dismissed.value = true
+}
 </script>
 
 <template>
@@ -46,23 +50,24 @@ const dismissed = ref(false)
     role="alert"
     data-test-id="common-alert"
   >
-    <CommonIcon
-      class="mx-auto mt-0.5 md:mx-0"
-      :name="icon"
-      size="tiny"
-      decorative
-    />
+    <CommonIcon class="mx-auto mt-0.5 md:mx-0" :name="icon" size="tiny" decorative />
 
     <slot />
 
-    <div v-if="props.dismissible">
+    <div
+      :class="classMap.dismissButton"
+      role="button"
+      tabindex="0"
+      :aria-label="$t('Dismiss alert')"
+      @click="dismiss"
+      @keydown.enter="dismiss"
+    >
       <CommonIcon
         v-if="props.dismissible"
         size="tiny"
         decorative
         name="common-alert-dismiss"
         class="mx-auto cursor-pointer md:mx-0"
-        @click="dismissed = true"
       />
     </div>
   </div>

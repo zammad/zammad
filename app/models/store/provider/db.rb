@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Store
   module Provider
@@ -14,15 +14,20 @@ class Store
       end
 
       def self.get(sha)
-        file = Store::Provider::DB.find_by(sha: sha)
-        return if !file
-
-        file.data
+        Store::Provider::DB
+          .find_by(sha: sha)
+          &.data
       end
 
       def self.delete(sha)
         Store::Provider::DB.where(sha: sha).destroy_all
         true
+      end
+
+      def self.change_checksum(old_sha, new_sha)
+        Store::Provider::DB
+          .find_by(sha: old_sha)
+          &.update(sha: new_sha)
       end
     end
   end

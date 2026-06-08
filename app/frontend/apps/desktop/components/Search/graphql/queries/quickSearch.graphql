@@ -1,9 +1,5 @@
 query quickSearch($search: String!, $limit: Int = 10) {
-  quickSearchOrganizations: search(
-    search: $search
-    onlyIn: Organization
-    limit: $limit
-  ) {
+  quickSearchOrganizations: search(search: $search, onlyIn: Organization, limit: $limit) {
     totalCount
     items {
       ... on Organization {

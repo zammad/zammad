@@ -1,7 +1,9 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Integration::PGPController < ApplicationController
   prepend_before_action :authenticate_and_authorize!
+
+  SENSITIVE_FIELDS = %w[passphrase].freeze
 
   def key_list
     model_index_render(PGPKey, params)
@@ -15,7 +17,7 @@ class Integration::PGPController < ApplicationController
     key = PGPKey.find(params[:id])
 
     if %w[1 true].include?(params[:secret])
-      raise Exceptions::UnprocessableEntity, __('This is not a private PGP key.') if !key.secret
+      raise Exceptions::UnprocessableContent, __('This is not a private PGP key.') if !key.secret
 
       return send_data(
         key.key,
@@ -34,9 +36,7 @@ class Integration::PGPController < ApplicationController
   end
 
   def key_add
-    PGPKey.params_cleanup! params
-
-    model_create_render(PGPKey, params)
+    model_create_render(PGPKey, params_add)
   end
 
   def key_delete
@@ -79,4 +79,17 @@ class Integration::PGPController < ApplicationController
       pgp_tool.export(key.fingerprint).stdout
     end
   end
+
+  def params_add
+    safe_params = params.permit(:file, :private_key, :passphrase, :domain_alias)
+
+    if safe_params[:private_key].present?
+      safe_params[:key] = safe_params.delete(:private_key).strip
+    elsif safe_params[:file].is_a? ActionDispatch::Http::UploadedFile
+      safe_params[:key] = safe_params.delete(:file).tempfile
+    end
+
+    safe_params
+  end
+
 end

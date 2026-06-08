@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -20,6 +20,20 @@ RSpec.describe 'Microsoft Graph channel admin API endpoints', aggregate_failures
         'not_used_email_address_ids' => [],
         'channel_ids'                => [channel.id],
         'callback_url'               => ExternalCredential.callback_url('microsoft_graph'),
+        'assets'                     => include(
+          'Channel' => include(
+            channel.id.to_s => include(
+              'id'      => channel.id,
+              'options' => include(
+                'auth' => include(
+                  'access_token'  => SensitiveParamsHelper::SENSITIVE_MASK,
+                  'refresh_token' => SensitiveParamsHelper::SENSITIVE_MASK,
+                  'client_secret' => SensitiveParamsHelper::SENSITIVE_MASK,
+                )
+              )
+            )
+          )
+        )
       )
     end
   end
@@ -123,7 +137,7 @@ RSpec.describe 'Microsoft Graph channel admin API endpoints', aggregate_failures
         post "/api/v1/channels/admin/microsoft_graph/verify/#{channel.id}", params: { group_email_address: true, group_id: group.id, options: { folder_id: 'AAMkAD=', keep_on_server: 'true' } }
 
         expect(response).to have_http_status(:ok)
-        expect(channel.group.reload.email_address_id).to eq(email_address.id)
+        expect(channel.reload.group.reload.email_address_id).to eq(email_address.id)
       end
 
       context 'when group email should not be changed' do

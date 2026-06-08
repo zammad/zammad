@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { createNode, getNode } from '@formkit/core'
 import { FormKit } from '@formkit/vue'
@@ -80,7 +80,18 @@ const getImageInViewer = (view: ExtendedRenderResult) => {
 describe('Fields - FieldFile', () => {
   beforeEach(() => {
     mockApplicationConfig({
-      'active_storage.web_image_content_types': ['image/png'],
+      'active_storage.content_types_allowed_inline': [
+        'image/webp',
+        'image/avif',
+        'image/png',
+        'image/gif',
+        'image/jpeg',
+        'image/tiff',
+        'image/bmp',
+        'image/vnd.adobe.photoshop',
+        'image/vnd.microsoft.icon',
+        'image/jpg',
+      ],
     })
   })
 
@@ -106,9 +117,7 @@ describe('Fields - FieldFile', () => {
     const file = new File([], 'foo.png', { type: 'image/png' })
     const { view, filesSrc } = await uploadFiles([file])
 
-    expect(view.container, 'text on button changed').toHaveTextContent(
-      'Attach another file',
-    )
+    expect(view.container, 'text on button changed').toHaveTextContent('Attach another file')
 
     const filePreview = view.getByRole('button', { name: 'Preview foo.png' })
     expect(filePreview).toBeInTheDocument()
@@ -117,10 +126,7 @@ describe('Fields - FieldFile', () => {
 
     const previewImage = getImageInViewer(view)
 
-    expect(previewImage, 'image is shown in preview').toHaveAttribute(
-      'src',
-      filesSrc[0],
-    )
+    expect(previewImage, 'image is shown in preview').toHaveAttribute('src', filesSrc[0])
   })
 
   it('exposes files to Form', async () => {
@@ -129,9 +135,7 @@ describe('Fields - FieldFile', () => {
 
     const node = getNode('file')
     expect(node).toBeDefined()
-    expect(node?._value).toEqual([
-      expect.objectContaining({ name: 'foo.png', type: 'image/png' }),
-    ])
+    expect(node?._value).toEqual([expect.objectContaining({ name: 'foo.png', type: 'image/png' })])
 
     node?.input([
       {
@@ -155,7 +159,7 @@ describe('Fields - FieldFile', () => {
     const file = new File([], 'foo.txt', { type: 'text/plain' })
     const { view } = await uploadFiles([file])
 
-    const filePreview = view.getByText('foo.txt')
+    const filePreview = view.getByRole('link', { name: 'Download foo.txt' })
     expect(filePreview).toBeInTheDocument()
 
     await view.events.click(filePreview)
@@ -182,7 +186,7 @@ describe('Fields - FieldFile', () => {
     const elementImage1 = view.getByRole('button', {
       name: 'Preview image1.png',
     })
-    const elementPdf = view.getByText('pdf.pdf')
+    const elementPdf = view.getByRole('link', { name: 'Download pdf.pdf' })
     const elementImage2 = view.getByRole('button', {
       name: 'Preview image2.png',
     })
@@ -194,21 +198,14 @@ describe('Fields - FieldFile', () => {
 
     expect(getImageInViewer(view)).toHaveAttribute('src', srcImage1)
 
-    await view.events.click(
-      view.getByRole('button', { name: 'next image button' }),
-    )
+    await view.events.click(view.getByRole('button', { name: 'next image button' }))
 
-    expect(getImageInViewer(view), 'show next image').toHaveAttribute(
-      'src',
-      srcImage2,
-    )
+    expect(getImageInViewer(view), 'show next image').toHaveAttribute('src', srcImage2)
   })
 
   it('can delete file', async () => {
     const file = new File([], 'foo.png', { type: 'image/png' })
-    const mockRemove = mockGraphQLApi(
-      FormUploadCacheRemoveDocument,
-    ).willResolve({
+    const mockRemove = mockGraphQLApi(FormUploadCacheRemoveDocument).willResolve({
       formUploadCacheRemove: {
         success: true,
       },
@@ -299,14 +296,10 @@ describe('Fields - FieldFile', () => {
     mockAdd.spies.resolve.mockResolvedValue(promise)
 
     await view.events.upload(view.getByTestId('fileInput'), [file])
-    expect(
-      await view.findByLabelText("File 'foo.png' is uploading"),
-    ).toBeInTheDocument()
+    expect(await view.findByLabelText("File 'foo.png' is uploading")).toBeInTheDocument()
 
     resolve({ data: uploadedFileQuery })
-    expect(
-      await view.findByRole('button', { name: 'Preview foo.png' }),
-    ).toBeInTheDocument()
+    expect(await view.findByRole('button', { name: 'Preview foo.png' })).toBeInTheDocument()
   })
 
   it('hide upload button, if file got uploaded and multiple is false', async () => {
@@ -323,9 +316,7 @@ describe('Fields - FieldFile', () => {
       ],
     })
     // Should be not in the "dom" if a file got uploaded
-    expect(
-      view.queryByRole('button', { name: 'Attach file' }),
-    ).not.toBeInTheDocument()
+    expect(view.queryByRole('button', { name: 'Attach file' })).not.toBeInTheDocument()
   })
 
   it('omits upload if file exceeds allowed size', async () => {
@@ -349,9 +340,7 @@ describe('Fields - FieldFile', () => {
     const { view } = await uploadFiles([file], props, { skipWait: true })
 
     expect(
-      view.getByText(
-        'File is too big. Image file has to be 5120 KB or smaller.',
-      ),
+      view.getByText('File is too big. Image file has to be 5120 KB or smaller.'),
     ).toBeInTheDocument()
   })
 })

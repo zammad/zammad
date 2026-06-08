@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { wordFilter } from './wordFilter.ts'
 
@@ -32,9 +32,6 @@ const removeTrailingLineBreaks = (parent: Element) => {
   parent.querySelectorAll('br').forEach((element) => {
     // keep paragraphs with just a line break, but convert them into <p> tags
     if (element.parentElement?.childNodes.length === 1) {
-      if (element.parentElement.tagName !== 'DIV') {
-        return
-      }
       const p = document.createElement('p')
       for (const attr of element.parentElement.attributes) {
         p.setAttribute(attr.name, attr.value)
@@ -47,8 +44,7 @@ const removeTrailingLineBreaks = (parent: Element) => {
       // if <br> is the last element, remove it because editor will add one anyway
       !nextSibling ||
       // if next element is a block element, remove <br>, because it will be converted into a paragraph with a line break
-      (nextSibling.nodeType !== Node.TEXT_NODE &&
-        (nextSibling as Element).tagName !== 'BR') ||
+      (nextSibling.nodeType !== Node.TEXT_NODE && (nextSibling as Element).tagName !== 'BR') ||
       // if the next element is an empty text, remove <br>
       (nextSibling.nodeType === Node.TEXT_NODE &&
         !nextSibling.nextSibling &&
@@ -68,7 +64,22 @@ const removeWordMarkup = (parent: Element) => {
   return parent
 }
 
-export const htmlCleanup = (html: string, removeImages = false): string => {
+const replaceEmptyTableCells = (parent: Element) => {
+  parent.querySelectorAll('td, th').forEach((cell) => {
+    if (cell.innerHTML.trim() !== '') return
+
+    // TODO: TipTap has parsing issues with completely empty table cells, so we add a non-breaking space.
+    //   Consider dropping this workaround if the upstream issue gets fixed:
+    //   https://github.com/ueberdosis/tiptap/issues/6237
+    cell.innerHTML = '&nbsp;'
+  })
+}
+
+export const htmlCleanup = (
+  html: string,
+  removeImages = false,
+  returnElement = false,
+): string | Element => {
   const element = document.createElement('div') as Element
   element.innerHTML = html
 
@@ -83,8 +94,11 @@ export const htmlCleanup = (html: string, removeImages = false): string => {
     'svg, input, select, button, style, applet, embed, noframes, canvas, script, frame, iframe, meta, link, title, head, fieldset',
   )
   removeTrailingLineBreaks(element)
+  replaceEmptyTableCells(element)
 
   // we don't need to remove attributes here, because the editor doesn't put unknown attributes on html elements
+
+  if (returnElement) return element
 
   // remove empty new lines, editor considers them actual new lines
   // and this will affect lists, where new line is a new list item

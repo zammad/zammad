@@ -1,0 +1,6 @@
+Dear Agent,
+Thank you for your response and for the clarification regarding [Company's security policy](https://github.com/company/company).
+I appreciate the opportunity to contribute to the security of your open-source project and fully understand that rewards are not offered. I would be grateful to be credited if the reported issue results in a published advisory.
+Please let me know if any further information is needed on my end.
+Best regards,
+Customer Test

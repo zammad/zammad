@@ -1,15 +1,9 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { uniq } from 'lodash-es'
 
-import type {
-  TicketById,
-  TicketArticle,
-} from '#shared/entities/ticket/types.ts'
-import {
-  EnumTicketArticleSenderName,
-  type AddressesField,
-} from '#shared/graphql/types.ts'
+import type { TicketById, TicketArticle } from '#shared/entities/ticket/types.ts'
+import { EnumTicketArticleSenderName, type AddressesField } from '#shared/graphql/types.ts'
 import type { ConfigList } from '#shared/types/store.ts'
 
 import { getArticleSelection, getReplyQuoteHeader } from './selection.ts'
@@ -19,8 +13,7 @@ import type { TicketArticlePerformOptions } from '../types.ts'
 const getEmailAddresses = (field?: Maybe<AddressesField>) => {
   if (!field) return []
   const addresses = field.parsed?.filter(
-    (email): email is { emailAddress: string; isSystemAddress: boolean } =>
-      !!email.emailAddress,
+    (email): email is { emailAddress: string; isSystemAddress: boolean } => !!email.emailAddress,
   )
   if (addresses?.length) {
     return addresses
@@ -66,11 +59,7 @@ const areAddressesSystem = (address?: Maybe<AddressesField>) => {
   return address.parsed.some((address) => address.isSystemAddress)
 }
 
-const prepareEmails = (
-  emailsSeen: Set<string>,
-  emails: string[],
-  newEmail?: string[],
-) => {
+const prepareEmails = (emailsSeen: Set<string>, emails: string[], newEmail?: string[]) => {
   const filteredEmails = emails
     .map((email) => email.toLowerCase())
     .filter((email) => {
@@ -94,36 +83,20 @@ const prepareAllEmails = (
   newArticle: ReturnType<typeof getEmptyArticle>,
 ) => {
   if (article.from) {
-    newArticle.to = prepareEmails(
-      emailsSeen,
-      getEmailAddresses(article.from),
-      newArticle.to,
-    )
+    newArticle.to = prepareEmails(emailsSeen, getEmailAddresses(article.from), newArticle.to)
   }
 
   if (article.to) {
-    newArticle.to = prepareEmails(
-      emailsSeen,
-      getEmailAddresses(article.to),
-      newArticle.to,
-    )
+    newArticle.to = prepareEmails(emailsSeen, getEmailAddresses(article.to), newArticle.to)
   }
 
   if (article.cc) {
-    newArticle.cc = prepareEmails(
-      emailsSeen,
-      getEmailAddresses(article.cc),
-      newArticle.cc,
-    )
+    newArticle.cc = prepareEmails(emailsSeen, getEmailAddresses(article.cc), newArticle.cc)
   }
 }
 
 // app/assets/javascripts/app/lib/app_post/utils.coffee:1236
-const getRecipientArticle = (
-  ticket: TicketById,
-  article: TicketArticle,
-  all = false,
-) => {
+const getRecipientArticle = (ticket: TicketById, article: TicketArticle, all = false) => {
   const type = article.type?.name
 
   if (type === 'phone') {
@@ -189,11 +162,7 @@ export const replyToEmail = (
   }
 
   // eslint-disable-next-line prefer-const
-  let { content: selection, full } = getArticleSelection(
-    options.selection,
-    article,
-    config,
-  )
+  let { content: selection, full } = getArticleSelection(options.selection, article, config)
 
   if (selection) {
     const header = getReplyQuoteHeader(config, article)
@@ -205,8 +174,7 @@ export const replyToEmail = (
 
   const currentBody = options.getNewArticleBody('text/html')
   const body =
-    (selection || '') +
-    (currentBody && selection ? `<p></p>${currentBody}` : currentBody)
+    (selection || '') + (currentBody && selection ? `<p></p>${currentBody}` : currentBody)
 
   // signature is handled in article type "onSelected" hook
   options.openReplyForm({

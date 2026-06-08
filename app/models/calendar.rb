@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Calendar < ApplicationModel
   include ChecksClientNotification
@@ -420,7 +420,7 @@ returns
       return
     end
 
-    # raise Exceptions::UnprocessableEntity, 'There are no business hours configured.' if hours.blank?
+    # raise Exceptions::UnprocessableContent, 'There are no business hours configured.' if hours.blank?
 
     # validate if business hours are usable by execute a try calculation
     begin

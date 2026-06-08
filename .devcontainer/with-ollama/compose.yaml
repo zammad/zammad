@@ -1,0 +1,29 @@
+name: "zammad-devcontainer"
+
+include: [../default/compose.yaml]
+
+services:
+  ollama-init:
+    image: alpine/curl
+    environment:
+      OLLAMA_PULL_MODEL: llama3.2
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - |
+        echo "Pulling model $${OLLAMA_PULL_MODEL}…"
+        curl --location 'http://ollama:11434/api/pull' --data "{ \"name\": \"$${OLLAMA_PULL_MODEL}\" }"
+    restart: "no"
+    depends_on:
+      - ollama
+
+  ollama:
+    image: docker.io/ollama/ollama:latest
+    ports:
+      - 127.0.0.1:11434:11434
+    volumes:
+      - ollama-data:/root/.ollama
+    restart: unless-stopped
+
+volumes:
+  ollama-data:
+    driver: local

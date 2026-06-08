@@ -1,10 +1,7 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { getAttachmentLinks } from '#shared/composables/getAttachmentLinks.ts'
-import type {
-  TicketArticle,
-  TicketById,
-} from '#shared/entities/ticket/types.ts'
+import type { TicketArticle, TicketById } from '#shared/entities/ticket/types.ts'
 import { useTicketArticleEmailForwardReplyMutation } from '#shared/entities/ticket-article/graphql/mutations/ticketArticleEmailForwardReply.api.ts'
 import type { TicketArticleEmailForwardReplyMutation } from '#shared/graphql/types.ts'
 import { i18n } from '#shared/i18n.ts'
@@ -15,17 +12,13 @@ import { textCleanup, textToHtml } from '#shared/utils/helpers.ts'
 
 import type { TicketArticlePerformOptions } from '../types.ts'
 
-const forwardMutation = new MutationHandler(
-  useTicketArticleEmailForwardReplyMutation({}),
-  { errorShowNotification: true },
-)
+const forwardMutation = new MutationHandler(useTicketArticleEmailForwardReplyMutation({}), {
+  errorShowNotification: true,
+})
 
 export const buildEmailForwardHeader = (
   article: TicketArticle,
-  meta: ConfidentTake<
-    TicketArticleEmailForwardReplyMutation,
-    'ticketArticleEmailForwardReply'
-  >,
+  meta: ConfidentTake<TicketArticleEmailForwardReplyMutation, 'ticketArticleEmailForwardReply'>,
 ) => {
   const { quotableFrom, quotableCc, quotableTo } = meta || {}
 
@@ -73,8 +66,7 @@ export const forwardEmail = async (
   // show attachment previews, but don't save its content
   const attachments = (result?.attachments || []).map((file, idx) => {
     const originalAttachment = article.attachmentsWithoutInline[idx]
-    if (!originalAttachment || originalAttachment.name !== file.name)
-      return file
+    if (!originalAttachment || originalAttachment.name !== file.name) return file
     const { previewUrl, inlineUrl } = getAttachmentLinks(
       {
         internalId: originalAttachment.internalId,
@@ -82,11 +74,11 @@ export const forwardEmail = async (
       },
       config.api_path,
     )
-    return {
-      ...file,
+
+    return Object.assign(file, {
       preview: previewUrl,
       inline: inlineUrl,
-    }
+    })
   })
   const quotedHeader =
     config.ui_ticket_zoom_article_email_full_quote_header && result
@@ -99,9 +91,7 @@ export const forwardEmail = async (
 
   return options.openReplyForm({
     articleType: 'email',
-    subject: config.ui_ticket_zoom_article_email_subject
-      ? article.subject || ticket.title
-      : '',
+    subject: config.ui_ticket_zoom_article_email_subject ? article.subject || ticket.title : '',
     subtype: 'forward',
     attachments,
     body: quotedBody,

@@ -1,12 +1,10 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
+import { waitFor } from '#tests/support/vitest-wrapper.ts'
 
-import {
-  EnumSystemSetupInfoStatus,
-  EnumSystemSetupInfoType,
-} from '#shared/graphql/types.ts'
+import { EnumSystemSetupInfoStatus, EnumSystemSetupInfoType } from '#shared/graphql/types.ts'
 
 import { mockSystemSetupInfoQuery } from '../graphql/queries/systemSetupInfo.mocks.ts'
 
@@ -45,27 +43,19 @@ describe('guided setup import selection', () => {
 
       const view = await visitView('/guided-setup/import')
 
-      expect(
-        view.getByRole('button', { name: 'Freshdesk Beta' }),
-      ).toBeInTheDocument()
-      expect(
-        view.getByRole('button', { name: 'Kayako Beta' }),
-      ).toBeInTheDocument()
-      expect(
-        view.getByRole('button', { name: 'OTRS Beta' }),
-      ).toBeInTheDocument()
-      expect(
-        view.getByRole('button', { name: 'Zendesk Beta' }),
-      ).toBeInTheDocument()
-      expect(view.getByRole('button', { name: 'Go Back' })).toBeInTheDocument()
+      expect(view.getByRole('button', { name: 'FreshdeskBeta' })).toBeInTheDocument()
+      expect(view.getByRole('button', { name: 'KayakoBeta' })).toBeInTheDocument()
+      expect(view.getByRole('button', { name: 'OTRSBeta' })).toBeInTheDocument()
+      expect(view.getByRole('button', { name: 'ZendeskBeta' })).toBeInTheDocument()
+      expect(view.getByRole('button', { name: 'Go back' })).toBeInTheDocument()
 
       const importSourceButton = view.getByRole('button', {
-        name: 'Freshdesk Beta',
+        name: 'FreshdeskBeta',
       })
 
       await view.events.click(importSourceButton)
 
-      await vi.waitFor(() => {
+      await waitFor(() => {
         expect(
           view,
           'correctly redirects to guided setup import source freshdesk',

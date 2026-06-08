@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Mutations
   class User::Current::TwoFactor::RemoveMethodCredentials < BaseMutation
@@ -11,16 +11,14 @@ module Gql::Mutations
 
     field :success, Boolean, description: 'This indicates if removing authentication method was successful'
 
-    def self.authorize(_obj, ctx)
-      ctx.current_user.permissions?('user_preferences.two_factor_authentication')
-    end
+    requires_permission 'user_preferences.two_factor_authentication'
 
     def resolve(method_name:, token:, credential_id:)
       verify_token!(token)
 
       Service::User::TwoFactor::RemoveMethodCredentials
-        .new(user: context.current_user, method_name:, credential_id:)
-        .execute
+        .with_current_user(context.current_user)
+        .execute(method_name:, credential_id:)
 
       { success: true }
     end

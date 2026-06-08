@@ -1,17 +1,17 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-// eslint-disable-next-line max-classes-per-file
-import '@testing-library/jest-dom/vitest'
 import { loadErrorMessages, loadDevMessages } from '@apollo/client/dev'
+import { setup as setupA11y, toBeAccessible } from '@sa11y/vitest'
+import * as domMatchers from '@testing-library/jest-dom/matchers'
 import { toBeDisabled } from '@testing-library/jest-dom/matchers'
 import { configure } from '@testing-library/vue'
 import { expect, vi } from 'vitest'
-import * as matchers from 'vitest-axe/matchers'
-import 'vitest-axe/extend-expect'
 
 import { ServiceWorkerHelper } from '#shared/utils/testSw.ts'
 
 import * as assertions from './support/assertions/index.ts'
+
+import type { TestingLibraryMatchers } from '@testing-library/jest-dom/matchers'
 
 // Zammad custom assertions: toBeAvatarElement, toHaveClasses, toHaveImagePreview, toHaveCurrentUrl
 
@@ -56,10 +56,8 @@ Object.defineProperty(globalThis, 'Notification', {
 class DOMRectList {
   length = 0
 
-  // eslint-disable-next-line class-methods-use-this
   item = () => null;
 
-  // eslint-disable-next-line class-methods-use-this
   [Symbol.iterator] = () => {
     //
   }
@@ -71,11 +69,9 @@ Object.defineProperty(Node.prototype, 'getClientRects', {
 Object.defineProperty(Element.prototype, 'scroll', { value: vi.fn() })
 Object.defineProperty(Element.prototype, 'scrollBy', { value: vi.fn() })
 Object.defineProperty(Element.prototype, 'scrollIntoView', { value: vi.fn() })
+Object.defineProperty(Element.prototype, 'scrollTo', { value: vi.fn() })
 
-const descriptor = Object.getOwnPropertyDescriptor(
-  HTMLImageElement.prototype,
-  'src',
-)!
+const descriptor = Object.getOwnPropertyDescriptor(HTMLImageElement.prototype, 'src')!
 
 Object.defineProperty(HTMLImageElement.prototype, 'src', {
   set(value) {
@@ -105,13 +101,26 @@ Object.defineProperty(HTMLCanvasElement.prototype, 'toDataURL', {
 
 // Mock IntersectionObserver feature by injecting it into the global namespace.
 //   More info here: https://vitest.dev/guide/mocking.html#globals
-const IntersectionObserverMock = vi.fn(() => ({
-  disconnect: vi.fn(),
-  observe: vi.fn(),
-  takeRecords: vi.fn(),
-  unobserve: vi.fn(),
-}))
+const IntersectionObserverMock = vi.fn(function () {
+  return {
+    disconnect: vi.fn(),
+    observe: vi.fn(),
+    takeRecords: vi.fn(),
+    unobserve: vi.fn(),
+  }
+})
+
 globalThis.IntersectionObserver = IntersectionObserverMock as any
+
+// Mock ClipboardItem class by injecting it into the global namespace.
+globalThis.ClipboardItem = class {
+  constructor(
+    private data: Record<string, Blob | string | Promise<Blob | string>>,
+    private options: { presentationStyle: 'unspecified' | 'inline' | 'attachment' } = {
+      presentationStyle: 'unspecified',
+    },
+  ) {}
+} as any
 
 require.extensions['.css'] = () => ({})
 
@@ -119,7 +128,8 @@ globalThis.requestAnimationFrame = (cb) => {
   setTimeout(cb, 0)
   return 0
 }
-globalThis.scrollTo = vi.fn<any>()
+
+globalThis.scrollTo = vi.fn()
 globalThis.matchMedia = (media: string) => ({
   matches: false,
   media,
@@ -131,72 +141,95 @@ globalThis.matchMedia = (media: string) => ({
   removeEventListener: vi.fn(),
 })
 
-vi.mock(
-  '#shared/components/CommonNotifications/useNotifications.ts',
-  async () => {
-    const { useNotifications: originalUseNotifications } =
-      await vi.importActual<any>(
-        '#shared/components/CommonNotifications/useNotifications.ts',
-      )
-    let notifications: any
-    const useNotifications = () => {
-      if (notifications) return notifications
-      const result = originalUseNotifications()
-      notifications = {
-        notify: vi.fn(result.notify),
-        notifications: result.notifications,
-        removeNotification: vi.fn(result.removeNotification),
-        clearAllNotifications: vi.fn(result.clearAllNotifications),
-        hasErrors: vi.fn(result.hasErrors),
-      }
-      return notifications
-    }
+vi.mock('#shared/components/CommonNotifications/useNotifications.ts', async () => {
+  const { useNotifications: originalUseNotifications } = await vi.importActual<any>(
+    '#shared/components/CommonNotifications/useNotifications.ts',
+  )
 
-    return {
-      useNotifications,
-      default: useNotifications,
+  let notifications: any
+  const useNotifications = () => {
+    if (notifications) return notifications
+    const result = originalUseNotifications()
+    notifications = {
+      notify: vi.fn(result.notify),
+      notifications: result.notifications,
+      removeNotification: vi.fn(result.removeNotification),
+      clearAllNotifications: vi.fn(result.clearAllNotifications),
+      hasErrors: vi.fn(result.hasErrors),
     }
-  },
-)
+    return notifications
+  }
+
+  return {
+    useNotifications,
+    default: useNotifications,
+  }
+})
 
 // don't rely on tiptap, because it's not supported in JSDOM
-vi.mock(
-  '#shared/components/Form/fields/FieldEditor/FieldEditorInput.vue',
-  async () => {
-    const { computed, defineComponent } = await import('vue')
-    const component = defineComponent({
-      name: 'FieldEditorInput',
-      props: { context: { type: Object, required: true } },
-      setup(props) {
-        const value = computed({
-          get: () => props.context._value,
-          set: (value) => {
-            props.context.node.input(value)
-          },
-        })
+vi.mock('#shared/components/Form/fields/FieldEditor/FieldEditorWrapper.vue', async () => {
+  const { computed, defineComponent } = await import('vue')
 
-        return {
-          value,
-          name: props.context.node.name,
-          id: props.context.id,
-        }
-      },
-      template: `<textarea :id="id" :name="name" v-model="value" />`,
-    })
-    return { __esModule: true, default: component }
-  },
-)
+  // eslint-disable-next-line vue/one-component-per-file
+  const component = defineComponent({
+    name: 'FieldEditorWrapper',
+    props: { context: { type: Object, required: true } },
+    setup(props) {
+      const value = computed({
+        get: () => props.context._value,
+        set: (value) => {
+          props.context.node.input(value)
+        },
+      })
+
+      // eslint-disable-next-line vue/no-mutating-props
+      Object.assign(props.context, {
+        focus: vi.fn(),
+        addSignature: vi.fn(),
+        removeSignature: vi.fn(),
+      })
+
+      return {
+        value,
+        name: props.context.node.name,
+        id: props.context.id,
+      }
+    },
+    template: `<textarea :id="id" :name="name" v-model="value" />`,
+  })
+
+  return { __esModule: true, default: component }
+})
+
+// don't rely on vue-echarts, because it's not properly supported in JSDOM
+// canvas element with some browser apis
+vi.mock('vue-echarts', async (importOriginal) => {
+  const { defineComponent } = await import('vue')
+
+  const module = (await importOriginal()) as typeof import('vue-echarts')
+
+  // eslint-disable-next-line vue/one-component-per-file
+  const component = defineComponent({
+    name: 'VChart',
+    props: {
+      option: { type: Object, required: true },
+    },
+    setup() {
+      return {}
+    },
+    template: `<div data-test-id="chart"/>`,
+  })
+
+  return { __esModule: true, ...module, default: component }
+})
 
 // mock vueuse because of CommonDialog, it uses usePointerSwipe
 // that is not supported in JSDOM
 vi.mock('@vueuse/core', async () => {
-  const mod =
-    await vi.importActual<typeof import('@vueuse/core')>('@vueuse/core')
+  const mod = await vi.importActual<typeof import('@vueuse/core')>('@vueuse/core')
   return {
     ...mod,
-    usePointerSwipe: vi
-      .fn()
-      .mockReturnValue({ distanceY: 0, isSwiping: false }),
+    usePointerSwipe: vi.fn().mockReturnValue({ distanceY: 0, isSwiping: false }),
   }
 })
 
@@ -224,21 +257,19 @@ afterEach((context) => {
   }
 
   if (context.skipConsole !== true) {
-    expect(
-      console.warn,
-      'there were no warning during test',
-    ).not.toHaveBeenCalled()
-    expect(
-      console.error,
-      'there were no errors during test',
-    ).not.toHaveBeenCalled()
+    expect(console.warn, 'there were no warning during test').not.toHaveBeenCalled()
+    expect(console.error, 'there were no errors during test').not.toHaveBeenCalled()
   }
 })
 
-// Import the matchers for accessibility testing with aXe.
-expect.extend(matchers)
+setupA11y()
+// There is a problem that sa11y uses still vitest v3
+// https://github.com/salesforce/sa11y/blob/master/packages/vitest/package.json
+// In vitest v.4 we still need to manually provide the assertion api
+expect.extend({ toBeAccessible })
+
 expect.extend(assertions)
-// expect.extend(domMatchers)
+expect.extend(domMatchers)
 
 expect.extend({
   // allow aria-disabled in toBeDisabled
@@ -253,25 +284,30 @@ expect.extend({
         return { pass: true, message: () => 'should not have "aria-disabled"' }
       }
     }
+
     return (toBeDisabled as any).call(this, received, ...args)
   },
 })
-
-process.on('uncaughtException', (e) => console.log('Uncaught Exception', e))
-process.on('unhandledRejection', (e) => console.log('Unhandled Rejection', e))
 
 declare module 'vitest' {
   interface TestContext {
     skipConsole: boolean
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-interface
-  // interface Assertion<T> extends TestingLibraryMatchers<null, T> {}
-}
-
-declare module 'vitest' {
-  // eslint-disable-next-line @typescript-eslint/no-empty-object-type, @typescript-eslint/no-unused-vars
-  interface Assertion<T> extends matchers.AxeMatchers {}
+  interface Assertion<T = any> extends TestingLibraryMatchers<typeof expect.stringContaining, T> {
+    /**
+     * @param options - Allow passing custom rulesets
+     * @sa11y/preset-rule base, extend, full
+     */
+    toBeAccessible(options?: Parameters<typeof toBeAccessible>[1]): Promise<void>
+  }
+  interface AsymmetricMatchersContaining extends TestingLibraryMatchers<any, any> {
+    /**
+     * @param options - Allow passing custom rulesets
+     * @sa11y/preset-rule base, extend, full
+     */
+    toBeAccessible(options?: Parameters<typeof toBeAccessible>[1]): Promise<void>
+  }
 }
 
 declare global {

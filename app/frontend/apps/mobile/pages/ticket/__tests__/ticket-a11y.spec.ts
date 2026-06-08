@@ -1,12 +1,7 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
-
-import { axe } from 'vitest-axe'
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { visitView } from '#tests/support/components/visitView.ts'
-import {
-  mockGraphQLApi,
-  mockGraphQLSubscription,
-} from '#tests/support/mock-graphql-api.ts'
+import { mockGraphQLApi, mockGraphQLSubscription } from '#tests/support/mock-graphql-api.ts'
 import { mockTicketOverviews } from '#tests/support/mocks/ticket-overviews.ts'
 import { waitUntil, waitUntilApisResolved } from '#tests/support/utils.ts'
 
@@ -32,10 +27,9 @@ describe('testing ticket a11y', () => {
 
   test('ticket overview has no accessibility violations', async () => {
     mockTicketsByOverview([])
-    await visitView('/tickets/view')
+    const view = await visitView('/tickets/view')
 
-    const results = await axe(document.body)
-    expect(results).toHaveNoViolations()
+    await expect(view.container).toBeAccessible()
   })
 
   test('ticket detail view has no accessibility violations', async () => {
@@ -49,8 +43,7 @@ describe('testing ticket a11y', () => {
 
     await waitUntilTicketLoaded()
 
-    const results = await axe(document.body)
-    expect(results).toHaveNoViolations()
+    await expect(view.container).toBeAccessible()
   })
 
   test('ticket organization information has no accessibility violations', async () => {
@@ -62,12 +55,11 @@ describe('testing ticket a11y', () => {
     mockGraphQLSubscription(OrganizationUpdatesDocument)
     const mockAttributes = mockOrganizationObjectAttributes()
 
-    await visitView('/tickets/1/information/organization')
+    const view = await visitView('/tickets/1/information/organization')
 
     await waitUntil(() => mockApi.calls.resolve && mockAttributes.calls.resolve)
 
-    const results = await axe(document.body)
-    expect(results).toHaveNoViolations()
+    await expect(view.container).toBeAccessible()
   })
 
   test('ticket user information has no accessibility violations', async () => {
@@ -77,11 +69,10 @@ describe('testing ticket a11y', () => {
       skipMockOnlineNotificationSeen: true,
     })
 
-    await visitView('/tickets/1/information/customer')
+    const view = await visitView('/tickets/1/information/customer')
 
     await waitUntilApisResolved(mockUser, mockAttributes)
 
-    const results = await axe(document.body)
-    expect(results).toHaveNoViolations()
+    await expect(view.container).toBeAccessible()
   })
 })

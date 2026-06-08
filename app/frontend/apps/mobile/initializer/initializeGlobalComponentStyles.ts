@@ -1,6 +1,8 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { initializeEditorColorMenuClasses } from '#shared/components/Form/fields/FieldEditor/FieldEditorColorMenu/initializeEditorColorMenu.ts'
+import { initializeAiAssistantTextToolsLoadingBannerClasses } from '#shared/components/Form/fields/FieldEditor/features/ai-assistant-text-tools/AiAssistantLoadingBanner/initializeAiAssistantTextToolsLoadingBannerClasses.ts'
+import { initializeAiAssistantTextToolsClasses } from '#shared/components/Form/fields/FieldEditor/features/ai-assistant-text-tools/AiAssistantTextTools/initializeAiAssistantTextToolsClasses.ts'
+import { initializeEditorColorMenuClasses } from '#shared/components/Form/fields/FieldEditor/features/color-picker/initializeEditorColorMenuClasses.ts'
 import { initializeAlertClasses } from '#shared/initializer/initializeAlertClasses.ts'
 import { initializeAvatarClasses } from '#shared/initializer/initializeAvatarClasses.ts'
 import { initializeFilePreviewClasses } from '#shared/initializer/initializeFilePreviewClasses.ts'
@@ -13,15 +15,20 @@ import { initializeUserAvatarClasses } from '#shared/initializer/initializeUserA
 export const initializeGlobalComponentStyles = () => {
   initializeLinkClasses({
     base: '',
+    internal: '',
   })
 
+  // Adding .Alert on mobile to be able to style links inside alerts
+  /* eslint-disable zammad/zammad-detect-translatable-string */
   initializeAlertClasses({
-    base: 'grid w-full content-start items-center justify-items-center text-center grid-flow-col grid-cols-[auto_minmax(auto,1fr)] justify-items-start text-start border w-auto text-sm',
+    base: 'Alert grid w-full content-start items-center justify-items-center text-center grid-flow-col grid-cols-[auto_minmax(auto,1fr)] justify-items-start text-start border w-auto text-sm',
     success: 'alert-success bg-green text-white',
     info: 'alert-info bg-white text-black',
     warning: 'alert-warning bg-yellow text-black',
     danger: 'alert-error bg-red/60 text-white',
+    dismissButton: '',
   })
+  /* eslint-enable zammad/zammad-detect-translatable-string */
 
   initializeAvatarClasses({
     base: 'text-black',
@@ -48,7 +55,7 @@ export const initializeGlobalComponentStyles = () => {
 
   initializeNotificationClasses({
     base: 'rounded px-4 py-2',
-    baseContainer: 'ltr:right-0 rtl:left-0',
+    baseContainer: 'mx-auto max-w-full min-w-xs',
     error: 'bg-red/60 text-white',
     info: 'bg-white text-black',
     message: 'ltr:ml-2 rtl:mr-2',
@@ -57,19 +64,18 @@ export const initializeGlobalComponentStyles = () => {
   })
 
   initializePopoverClasses({
-    base: 'min-h-9 rounded-xl max-w-[calc(100vw-8px)] text-white top-0 border border-gray-500 bg-gray-400 antialiased rtl:right-1/2 ltr:left-1/2 rtl:translate-x-1/2 ltr:-translate-x-1/2',
+    base: 'min-h-9 rounded-xl max-w-[calc(100vw-8px)] text-white top-0 border border-gray-500 bg-gray-400 antialiased',
     arrow: 'hidden',
   })
 
   initializeEditorColorMenuClasses({
     colorSchemeList: {
-      base: 'border-b  pb-1',
-      button: 'p-4',
+      base: 'gap-2',
+      button: '',
+      autoButton: 'bg-gray-500 text-white',
+      autoButtonIcon: 'min-[200px]:scale-150 min-[300px]:scale-200 min-[400px]:scale-250',
     },
   })
-
-  //   Initialize editor classes
-  // :TODO Sub Folder
 
   initializeFilePreviewClasses({
     base: 'leading-4',
@@ -79,5 +85,19 @@ export const initializeGlobalComponentStyles = () => {
     link: '',
     size: 'text-white/80',
     icon: 'border-gray-300',
+  })
+
+  initializeAiAssistantTextToolsClasses({
+    popover: {
+      base: '',
+      item: 'border-b border-gray-300 last:border-0',
+      button: 'py-4 px-3 w-full',
+    },
+  })
+
+  initializeAiAssistantTextToolsLoadingBannerClasses({
+    icon: 'text-blue',
+    label: 'text-white',
+    button: 'text-blue',
   })
 }

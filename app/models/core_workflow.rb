@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class CoreWorkflow < ApplicationModel
   include ChecksClientNotification
@@ -25,7 +25,7 @@ class CoreWorkflow < ApplicationModel
   validates :name, presence: true, uniqueness: { case_sensitive: false }
 
   def self.classes
-    Models.all.keys.select { |m| m.included_modules.include?(ChecksCoreWorkflow) }
+    Models.all.keys.select { |m| m.include?(ChecksCoreWorkflow) }
   end
 
   def self.config

@@ -1,0 +1,46 @@
+name: "zammad-devcontainer"
+
+include: [../default/compose.yaml]
+
+services:
+  mailserver-init:
+    image: ghcr.io/docker-mailserver/docker-mailserver:latest
+    entrypoint: ["/bin/sh", "-c", "sh /tmp/docker-mailserver/scripts/init-mailserver.sh"]
+    environment:
+      ACCOUNT_PROVISIONER: FILE
+    volumes:
+      - ./scripts:/tmp/docker-mailserver/scripts:ro
+      - ./certs:/tmp/docker-mailserver/certs
+      - mailserver-config:/tmp/docker-mailserver
+    restart: no
+
+  mailserver:
+    image: ghcr.io/docker-mailserver/docker-mailserver:latest
+    hostname: mail.test.local
+    domainname: test.local
+    environment:
+      SSL_TYPE: manual
+      SSL_CERT_PATH: /tmp/docker-mailserver/certs/mail.test.local.crt
+      SSL_KEY_PATH: /tmp/docker-mailserver/certs/mail.test.local.key
+      ENABLE_IMAP: "1"
+      ENABLE_POP3: "1"
+      DMS_DEBUG: "0"
+      ONE_DIR: "1"
+      POSTMASTER_ADDRESS: postmaster@test.local
+      OVERRIDE_HOSTNAME: mail.test.local
+      ACCOUNT_PROVISIONER: FILE
+    depends_on:
+      mailserver-init:
+        condition: service_completed_successfully
+    ports:
+      - 127.0.0.1:1465:465 # SMTP (SSL)
+      - 127.0.0.1:1587:587 # SMTP (STARTTLS)
+      - 127.0.0.1:1993:993 # IMAP (SSL)
+    volumes:
+      - ./certs:/tmp/docker-mailserver/certs
+      - mailserver-config:/tmp/docker-mailserver
+    restart: unless-stopped
+
+volumes:
+  mailserver-config:
+    driver: local

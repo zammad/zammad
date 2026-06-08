@@ -1,6 +1,4 @@
-mutation ticketSharedDraftZoomCreate(
-  $input: TicketSharedDraftZoomInput!
-) {
+mutation ticketSharedDraftZoomCreate($input: TicketSharedDraftZoomInput!) {
   ticketSharedDraftZoomCreate(input: $input) {
     sharedDraft {
       ...ticketSharedDraftZoomAttributes

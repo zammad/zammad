@@ -1,14 +1,31 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
 import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
 
-import { useNewBetaUi } from '#desktop/composables/useNewBetaUi.ts'
+const openFeedbackDialogMock = vi.fn()
 
-describe('personal new beta ui settings', async () => {
+vi.mock(
+  '#desktop/components/BetaUi/FeedbackDialog/useFeedbackDialog.ts',
+  async (originalModule) => {
+    const module =
+      await originalModule<typeof import('#desktop/components/CommonDialog/useDialog.ts')>()
+
+    return {
+      ...module,
+      useFeedbackDialog: () => ({
+        openFeedbackDialog: openFeedbackDialogMock,
+      }),
+    }
+  },
+)
+
+describe('personal BETA UI settings', () => {
   beforeEach(() => {
+    localStorage.clear()
+
     mockUserCurrent({
       firstname: 'John',
       lastname: 'Doe',
@@ -19,38 +36,42 @@ describe('personal new beta ui settings', async () => {
     mockApplicationConfig({
       ui_desktop_beta_switch: true,
     })
-
-    Object.defineProperty(window, 'location', {
-      value: {
-        ...window.location,
-        pathname: '/desktop',
-        href: '/desktop',
-      },
-    })
   })
 
   it('renders view correctly', async () => {
+    localStorage.setItem('beta-ui-switch', 'true')
+
     const view = await visitView('/personal-setting/new-beta-ui')
 
     const switchToggleField = await view.findByLabelText(
-      'Display Zammad with the New BETA User Interface',
+      'Display Zammad with the new BETA user interface',
     )
     expect(switchToggleField).toBeInTheDocument()
 
     const dismissCheckbox = await view.findByLabelText(
-      'Have the BETA switch between the old and the new UI always available in the Primary Navigation',
+      'Show the BETA switch between the old and the new UI in the primary navigation',
     )
     expect(dismissCheckbox).toBeInTheDocument()
 
-    const { switchValue, dismissValue } = useNewBetaUi()
-
-    expect(switchValue.value).toBe(false)
-    expect(dismissValue.value).toBe(false)
+    expect(localStorage.getItem('beta-ui-switch-dismiss')).toBe('false')
 
     await dismissCheckbox.click()
-    expect(dismissValue.value).toBe(true)
+    expect(localStorage.getItem('beta-ui-switch-dismiss')).toBe('true')
 
     await dismissCheckbox.click()
-    expect(dismissValue.value).toBe(false)
+    expect(localStorage.getItem('beta-ui-switch-dismiss')).toBe('false')
+  })
+
+  it('opens manual feedback dialog', async () => {
+    localStorage.setItem('beta-ui-feedback-consent', 'true')
+    localStorage.setItem('beta-ui-switch', 'true')
+
+    const view = await visitView('/personal-setting/new-beta-ui')
+
+    const feedbackLink = view.getByText('Give feedback')
+
+    await view.events.click(feedbackLink)
+
+    expect(openFeedbackDialogMock).toHaveBeenCalled()
   })
 })

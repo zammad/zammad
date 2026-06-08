@@ -1,8 +1,4 @@
-query ticketRelationAndRecentTicketLists(
-  $ticketId: Int!
-  $customerId: ID!
-  $limit: Int
-) {
+query ticketRelationAndRecentTicketLists($ticketId: Int!, $customerId: ID!, $limit: Int) {
   ticketsRecentByCustomer(
     customerId: $customerId
     limit: $limit

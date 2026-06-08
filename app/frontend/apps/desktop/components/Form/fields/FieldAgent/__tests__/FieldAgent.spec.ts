@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { getNode, type FormKitNode } from '@formkit/core'
 import { FormKit } from '@formkit/vue'
@@ -159,9 +159,7 @@ describe('Form - Field - Agent - Query', () => {
 
     expect(filterElement).toBeInTheDocument()
 
-    expect(
-      await wrapper.findByText('Start typing to search…'),
-    ).toBeInTheDocument()
+    expect(await wrapper.findByText('Start typing to search…')).toBeInTheDocument()
 
     mockAutocompleteSearchAgentQuery({
       autocompleteSearchAgent: [testOptions[0]],
@@ -171,9 +169,7 @@ describe('Form - Field - Agent - Query', () => {
 
     await waitForAutocompleteSearchAgentQueryCalls()
 
-    expect(
-      wrapper.queryByText('Start typing to search…'),
-    ).not.toBeInTheDocument()
+    expect(wrapper.queryByText('Start typing to search…')).not.toBeInTheDocument()
 
     let selectOptions = wrapper.getAllByRole('option')
 
@@ -187,13 +183,11 @@ describe('Form - Field - Agent - Query', () => {
       backgroundImage: `url(/${logo})`,
     })
 
-    await wrapper.events.click(wrapper.getByLabelText('Clear Search'))
+    await wrapper.events.click(wrapper.getByLabelText('Clear search'))
 
     expect(filterElement).toHaveValue('')
 
-    expect(
-      await wrapper.findByText('Start typing to search…'),
-    ).toBeInTheDocument()
+    expect(await wrapper.findByText('Start typing to search…')).toBeInTheDocument()
 
     mockAutocompleteSearchAgentQuery({
       autocompleteSearchAgent: [testOptions[1]],
@@ -203,9 +197,7 @@ describe('Form - Field - Agent - Query', () => {
 
     await waitForAutocompleteSearchAgentQueryCalls()
 
-    expect(
-      wrapper.queryByText('Start typing to search…'),
-    ).not.toBeInTheDocument()
+    expect(wrapper.queryByText('Start typing to search…')).not.toBeInTheDocument()
 
     selectOptions = wrapper.getAllByRole('option')
 
@@ -218,9 +210,7 @@ describe('Form - Field - Agent - Query', () => {
 
     await wrapper.events.clear(filterElement)
 
-    expect(
-      await wrapper.findByText('Start typing to search…'),
-    ).toBeInTheDocument()
+    expect(await wrapper.findByText('Start typing to search…')).toBeInTheDocument()
 
     mockAutocompleteSearchAgentQuery({
       autocompleteSearchAgent: [testOptions[2]],
@@ -230,18 +220,14 @@ describe('Form - Field - Agent - Query', () => {
 
     await waitForAutocompleteSearchAgentQueryCalls()
 
-    expect(
-      wrapper.queryByText('Start typing to search…'),
-    ).not.toBeInTheDocument()
+    expect(wrapper.queryByText('Start typing to search…')).not.toBeInTheDocument()
 
     selectOptions = wrapper.getAllByRole('option')
 
     expect(selectOptions).toHaveLength(1)
     expect(selectOptions[0]).toHaveTextContent(testOptions[2].label)
 
-    expect(getByTestId(selectOptions[0], 'common-avatar')).toHaveTextContent(
-      'fb',
-    )
+    expect(getByTestId(selectOptions[0], 'common-avatar')).toHaveTextContent('fb')
   })
 
   it('replaces local options with selection', async () => {
@@ -277,9 +263,7 @@ describe('Form - Field - Agent - Query', () => {
 
     expect(wrapper.queryByRole('menu')).not.toBeInTheDocument()
 
-    expect(wrapper.getByRole('listitem')).toHaveTextContent(
-      testOptions[0].label,
-    )
+    expect(wrapper.getByRole('listitem')).toHaveTextContent(testOptions[0].label)
 
     await wrapper.events.click(wrapper.getByLabelText('Select…'))
 
@@ -301,7 +285,7 @@ describe('Form - Field - Agent - Query', () => {
     const filterElement = wrapper.getByRole('searchbox')
 
     mockAutocompleteSearchAgentQuery({
-      autocompleteSearchAgent: [...testOptions.slice(0, 1)],
+      autocompleteSearchAgent: testOptions.slice(0, 1),
     })
 
     await wrapper.events.type(filterElement, '*')

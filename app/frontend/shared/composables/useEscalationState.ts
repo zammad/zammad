@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { computed, type ToRef, toValue } from 'vue'
 
@@ -10,9 +10,7 @@ export enum EscalationState {
   None = 'none',
 }
 
-export const useEscalationState = (
-  escalationAt: Readonly<ToRef<string | undefined | null>>,
-) => {
+export const useEscalationState = (escalationAt: Readonly<ToRef<string | undefined | null>>) => {
   const reactiveNow = useReactiveNow()
 
   return computed(() => {

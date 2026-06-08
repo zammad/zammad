@@ -1,0 +1,11 @@
+mutation ticketArticleHighlightedTextUpsert(
+  $articleId: ID!
+  $highlight: [TicketArticleHighlightedTextInput!]
+) {
+  ticketArticleHighlightedTextUpsert(articleId: $articleId, highlight: $highlight) {
+    success
+    errors {
+      ...errors
+    }
+  }
+}

@@ -47,14 +47,28 @@
     //maxlength: 20,
   };
 
+  supportedFormattingActions = [
+    'bold',
+    'italic',
+    'underline',
+    'strikeThrough',
+    'removeFormat',
+    'h1',
+    'h2',
+    'h3',
+    'insertOrderedList',
+    'insertUnorderedList',
+  ]
+
   function Plugin( element, options ) {
     this.element  = element;
     this.$element = $(element)
 
     this.options = $.extend( {}, defaults, options) ;
 
-    this._defaults = defaults;
-    this._name     = pluginName;
+    this._defaults                   = defaults;
+    this._name                       = pluginName;
+    this._supportedFormattingActions = supportedFormattingActions;
 
     // take placeholder from markup
     if ( !this.options.placeholder && this.$element.data('placeholder') ) {
@@ -81,6 +95,24 @@
     this.$element.on('paste', this.onPaste.bind(this))
     this.$element.on('dragover', this.onDragover.bind(this))
     this.$element.on('drop', this.onDrop.bind(this))
+  }
+
+  Plugin.prototype.onSelection = function (callback) {
+    startSelectionHandler = function () {
+      endSelectionHandler = function() {
+        this.$element.closest('.content').off('mouseup.selection, keyup.selection')
+
+        // Skip empty selections.
+        sel = window.getSelection()
+        if (sel.isCollapsed) return
+
+        callback(this.getSelection())
+      }
+
+      this.$element.closest('.content').off('mouseup.selection, keyup.selection').on('mouseup.selection, keyup.selection', endSelectionHandler.bind(this))
+    }
+
+    $(document).on('selectionchange', startSelectionHandler.bind(this))
   }
 
   Plugin.prototype.toggleBlock = function(tag) {
@@ -169,6 +201,11 @@
     }
     if (richtTextControl && this.options.richTextFormatKey[ e.keyCode ]) {
       e.preventDefault()
+
+      if ( this.options.mode === 'textonly' ) {
+        return
+      }
+
       if (e.keyCode == 66) {
         document.execCommand('bold')
         return true
@@ -275,12 +312,21 @@
     }
   }
 
+  Plugin.prototype.executeFormattingAction = function (formattingAction) {
+    if (!Array.prototype.includes.call(this._supportedFormattingActions, formattingAction)) {
+      this.log('unsupported formatting action', formattingAction)
+      return
+    }
+
+    document.execCommand(formattingAction)
+  }
+
   Plugin.prototype.getHtmlFromClipboard = function(clipboardData) {
     try {
       return clipboardData.getData('text/html')
     }
     catch (e) {
-      console.log('Sorry, can\'t get html of clipboard because browser is not supporting it.')
+      this.log('Sorry, can\'t get html of clipboard because browser is not supporting it.', e)
       return
     }
   }
@@ -324,6 +370,82 @@
     return $.grep(clipboardData.items, function(item){
       return item.kind == 'file' && (item.type == 'image/png' || item.type == 'image/jpeg')
     })[0]
+  }
+
+  Plugin.prototype.getSelection = function() {
+    var result = {
+      content: '',
+      ranges: [],
+    }
+
+    if (window.getSelection || document.getSelection) {
+      var sel
+
+      if (window.getSelection) sel = window.getSelection()
+      else sel = document.getSelection()
+
+      if (sel.rangeCount) {
+        var container = $('<div />')
+        for (var i = 0; i < sel.rangeCount; ++i) {
+          var range = sel.getRangeAt(i)
+
+          // Skip ranges that are not inside the element.
+          if (
+            !range.commonAncestorContainer.isSameNode(this.$element.get(0))
+            && !this.$element.get(0).contains(range.commonAncestorContainer)
+          ) continue
+
+          result.ranges.push(range)
+          container.append(range.cloneContents())
+        }
+
+        // If no ranges are inside the element, return an empty result.
+        if (!result.ranges.length) return result
+
+        if ( this.options.mode === 'textonly' ) {
+          result.content = container.text().trim()
+        }
+        else {
+          result.content = container.html()
+        }
+      }
+    }
+    else if (document.selection) {
+      if (document.selection.type === 'Text') {
+        if ( this.options.mode === 'textonly' ) {
+          result.content = document.selection.createRange().text
+        }
+        else {
+          result.content = document.selection.createRange().htmlText
+        }
+      }
+    }
+
+    return result
+  }
+
+  Plugin.prototype.restoreSelection = function (ranges) {
+    if (!ranges || !ranges.length || (!window.getSelection && !document.getSelection))
+      return
+
+    this.log('restore selection')
+
+    var sel
+
+    if (window.getSelection) sel = window.getSelection()
+    else sel = document.getSelection()
+
+    sel.removeAllRanges()
+
+    for (var i = 0; i < ranges.length; i++) {
+      sel.addRange(ranges[i])
+    }
+  }
+
+  Plugin.prototype.replaceSelection = function (ranges, content) {
+    this.restoreSelection(ranges)
+
+    this.paste(App.Utils.clipboardHtmlInsertPreperation(content, this.options))
   }
 
   Plugin.prototype.onPaste = function (e) {
@@ -461,6 +583,10 @@
 
     // look for images
     if (file.type.match('image.*')) {
+
+      // stop processing if input form does not accept images
+      if (this.options.noImages) return;
+
       var reader = new FileReader()
       reader.onload = $.proxy(function(e) {
         var result = e.target.result

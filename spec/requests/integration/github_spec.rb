@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -61,10 +61,17 @@ RSpec.describe 'GitHub', required_envs: %w[GITHUB_ENDPOINT GITHUB_APITOKEN], typ
 
       authenticated_as(admin)
       instance = instance_double(GitHub)
-      expect(GitHub).to receive(:new).with(endpoint: endpoint, api_token: token).and_return instance
-      expect(instance).to receive(:verify!).and_return(true)
+      expect(GitHub).to receive(:new).with(endpoint: endpoint, api_token: token).exactly(2).and_return instance
+      expect(instance).to receive(:verify!).exactly(2).and_return(true)
 
       post '/api/v1/integration/github/verify', params: params, as: :json
+      expect(response).to have_http_status(:ok)
+      expect(json_response).to be_a(Hash)
+      expect(json_response).not_to be_blank
+      expect(json_response['result']).to eq('ok')
+
+      Setting.set('github_config', { 'endpoint' => endpoint, 'api_token' => token })
+      post '/api/v1/integration/github/verify', params: params.merge(api_token: SensitiveParamsHelper::SENSITIVE_MASK), as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a(Hash)
       expect(json_response).not_to be_blank

@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import Form from '#shared/components/Form/Form.vue'
@@ -56,9 +56,7 @@ const formSchema = [
   },
 ]
 
-const { configureSystemImportSource } = useImportSourceConfiguration(
-  EnumSystemImportSource.Kayako,
-)
+const { configureSystemImportSource } = useImportSourceConfiguration(EnumSystemImportSource.Kayako)
 </script>
 
 <template>
@@ -76,9 +74,7 @@ const { configureSystemImportSource } = useImportSourceConfiguration(
       form-class="mb-2.5"
       :schema="formSchema"
       @submit="
-        configureSystemImportSource(
-          $event as FormSubmitData<ImportSourceConfigurationKayakoData>,
-        )
+        configureSystemImportSource($event as FormSubmitData<ImportSourceConfigurationKayakoData>)
       "
     />
   </div>

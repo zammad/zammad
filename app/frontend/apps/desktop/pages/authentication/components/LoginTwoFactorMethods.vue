@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import type { TwoFactorPlugin } from '#shared/entities/two-factor/types.ts'
@@ -20,11 +20,7 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <section
-    v-for="method of methods"
-    :key="method.name"
-    class="mt-3 flex flex-col"
-  >
+  <section v-for="method of methods" :key="method.name" class="mt-3 flex flex-col">
     <CommonButton
       size="large"
       block
@@ -42,10 +38,11 @@ const emit = defineEmits<{
     </div>
   </section>
 
-  <div class="mt-8 text-center text-sm">
+  <div class="mt-8 text-center">
     <CommonLink
       v-if="recoveryCodesAvailable"
       link="#"
+      size="medium"
       @click="emit('use-recovery-code')"
     >
       {{ $t('Or use one of your recovery codes.') }}
@@ -53,6 +50,6 @@ const emit = defineEmits<{
   </div>
 
   <CommonButton class="mt-5" size="large" block @click="emit('cancel')">
-    {{ $t('Cancel & Go Back') }}
+    {{ $t('Cancel & go back') }}
   </CommonButton>
 </template>

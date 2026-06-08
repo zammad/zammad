@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -48,6 +48,27 @@ RSpec.describe 'Idoit', type: :request do
       expect(json_response).not_to be_blank
       expect(json_response['error']).to eq('User authorization failed.')
 
+      # Verifies with masked token
+      stub_request(:post, "#{endpoint}src/jsonrpc.php")
+        .with(body: "{\"method\":\"cmdb.object_types\",\"params\":{\"apikey\":\"#{token}\"},\"version\":\"2.0\",\"id\":42}")
+        .to_return(status: 200, body: read_message('object_types_response'), headers: {})
+
+      params = {
+        api_token: SensitiveParamsHelper::SENSITIVE_MASK,
+        endpoint:  endpoint,
+        client_id: '',
+      }
+      authenticated_as(admin)
+      post '/api/v1/integration/idoit/verify', params: params, as: :json
+      expect(response).to have_http_status(:ok)
+      expect(json_response).to be_a(Hash)
+      expect(json_response).not_to be_blank
+      expect(json_response['result']).to eq('ok')
+      expect(json_response['response']).to be_truthy
+      expect(json_response['response']['jsonrpc']).to eq('2.0')
+      expect(json_response['response']['result']).to be_truthy
+
+      # Verifies with new token
       stub_request(:post, "#{endpoint}src/jsonrpc.php")
         .with(body: "{\"method\":\"cmdb.object_types\",\"params\":{\"apikey\":\"#{token}\"},\"version\":\"2.0\",\"id\":42}")
         .to_return(status: 200, body: read_message('object_types_response'), headers: {})

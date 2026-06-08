@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import type { UserError } from '#shared/graphql/types.ts'
 
@@ -13,6 +13,8 @@ export enum GraphQLErrorTypes {
 
   // This exception actually means 'NotAuthenticated'
   NotAuthorized = 'Exceptions::NotAuthorized',
+
+  InvalidCsrfToken = 'Exceptions::InvalidCSRFToken',
 }
 
 export type GraphQLErrorTypeKeys = keyof GraphQLErrorTypes

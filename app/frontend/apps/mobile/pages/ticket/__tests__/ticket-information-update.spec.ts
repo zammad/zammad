@@ -1,12 +1,9 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { getNode } from '@formkit/core'
 
 import { visitView } from '#tests/support/components/visitView.ts'
-import {
-  mockGraphQLApi,
-  mockGraphQLSubscription,
-} from '#tests/support/mock-graphql-api.ts'
+import { mockGraphQLApi, mockGraphQLSubscription } from '#tests/support/mock-graphql-api.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
 import { waitUntil } from '#tests/support/utils.ts'
 
@@ -30,18 +27,16 @@ vi.hoisted(() => {
 
 const visitTicketInformation = async (ticket?: TicketQuery) => {
   mockPermissions(['ticket.agent'])
-  mockGraphQLApi(ObjectManagerFrontendAttributesDocument).willBehave(
-    ({ object }) => {
-      if (object === 'Ticket') {
-        return {
-          data: { objectManagerFrontendAttributes: ticketObjectAttributes() },
-        }
-      }
+  mockGraphQLApi(ObjectManagerFrontendAttributesDocument).willBehave(({ object }) => {
+    if (object === 'Ticket') {
       return {
-        data: { objectManagerFrontendAttributes: userObjectAttributes() },
+        data: { objectManagerFrontendAttributes: ticketObjectAttributes() },
       }
-    },
-  )
+    }
+    return {
+      data: { objectManagerFrontendAttributes: userObjectAttributes() },
+    }
+  })
   const { mockApiTicket } = mockTicketDetailViewGql({ ticket })
   mockGraphQLApi(FormUpdaterDocument).willResolve({
     formUpdater: {
@@ -126,9 +121,7 @@ describe('updating ticket information', () => {
 
     await getNode('form-ticket-edit')?.settled
 
-    await expect(
-      view.findByRole('button', { name: 'Save' }),
-    ).resolves.toBeInTheDocument()
+    await expect(view.findByRole('button', { name: 'Save' })).resolves.toBeInTheDocument()
   })
 
   it('show save banner with error indicator when one field is invalid (and error message after save click)', async () => {
@@ -140,9 +133,7 @@ describe('updating ticket information', () => {
 
     await getNode('form-ticket-edit')?.settled
 
-    await expect(
-      view.findByLabelText('Validation failed'),
-    ).resolves.toBeInTheDocument()
+    await expect(view.findByLabelText('Validation failed')).resolves.toBeInTheDocument()
 
     await view.events.click(view.getByRole('button', { name: 'Save' }))
 
@@ -156,7 +147,7 @@ describe('rendering escalation times', () => {
   const yesterday = new Date(2022, 1, 0, 0, 0, 0, 0)
   const tomorrow = new Date(2022, 1, 2, 0, 0, 0, 0)
 
-  const regions = ['First Response Time', 'Update Time', 'Solution Time']
+  const regions = ['First response time', 'Update time', 'Solution time']
 
   const escalatedClasses = 'text-red-bright bg-red-highlight'
   const warningClasses = 'text-yellow bg-yellow-highlight'
@@ -174,34 +165,29 @@ describe('rendering escalation times', () => {
       escalated: [true, null, false],
       labels: ['1 day ago', null, 'in 1 day'],
     },
-  ])(
-    'renders escalation time - $name',
-    async ({ dates, escalated, labels }) => {
-      const ticket = defaultTicket()
-      ticket.ticket.firstResponseEscalationAt = dates[0]?.toISOString() ?? null
-      ticket.ticket.updateEscalationAt = dates[1]?.toISOString() ?? null
-      ticket.ticket.closeEscalationAt = dates[2]?.toISOString() ?? null
+  ])('renders escalation time - $name', async ({ dates, escalated, labels }) => {
+    const ticket = defaultTicket()
+    ticket.ticket.firstResponseEscalationAt = dates[0]?.toISOString() ?? null
+    ticket.ticket.updateEscalationAt = dates[1]?.toISOString() ?? null
+    ticket.ticket.closeEscalationAt = dates[2]?.toISOString() ?? null
 
-      const { view } = await visitTicketInformation(ticket)
+    const { view } = await visitTicketInformation(ticket)
 
-      expect(view.getByText('Escalation Times')).toBeInTheDocument()
+    expect(view.getByText('Escalation times')).toBeInTheDocument()
 
-      regions.forEach((region, index) => {
-        if (dates[index] === null) {
-          expect(
-            view.queryByRole('region', { name: region }),
-          ).not.toBeInTheDocument()
-          return
-        }
+    regions.forEach((region, index) => {
+      if (dates[index] === null) {
+        expect(view.queryByRole('region', { name: region })).not.toBeInTheDocument()
+        return
+      }
 
-        const responseTime = view.getByRole('region', { name: region })
-        const classes = escalated[index] ? escalatedClasses : warningClasses
+      const responseTime = view.getByRole('region', { name: region })
+      const classes = escalated[index] ? escalatedClasses : warningClasses
 
-        expect(responseTime).toHaveTextContent(labels[index]!)
-        expect(responseTime.parentElement).toHaveClass(classes)
-      })
-    },
-  )
+      expect(responseTime).toHaveTextContent(labels[index]!)
+      expect(responseTime.parentElement).toHaveClass(classes)
+    })
+  })
 
   it("doesn't render escalation time if it's not provided", async () => {
     const ticket = defaultTicket()
@@ -211,11 +197,9 @@ describe('rendering escalation times', () => {
 
     const { view } = await visitTicketInformation(ticket)
 
-    expect(view.queryByText('Escalation Times')).not.toBeInTheDocument()
+    expect(view.queryByText('Escalation times')).not.toBeInTheDocument()
     regions.forEach((region) => {
-      expect(
-        view.queryByRole('region', { name: region }),
-      ).not.toBeInTheDocument()
+      expect(view.queryByRole('region', { name: region })).not.toBeInTheDocument()
     })
   })
 })

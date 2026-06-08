@@ -1,8 +1,8 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
-RSpec.describe 'Ticket > Update > External Data Source Attribute', db_adapter: :postgresql, db_strategy: :reset, searchindex: true, type: :system do
+RSpec.describe 'Ticket > Update > External Data Source Attribute', db_strategy: :reset, searchindex: true, type: :system do
   let(:search_url) { "#{Setting.get('es_url')}/#{Setting.get('es_index')}_test_user/_search?q=\#{search.term}" }
   let(:external_data_source_attribute) do
     create(:object_manager_attribute_autocompletion_ajax_external_data_source, :shown_screen, :elastic_search, search_url: search_url, name: 'external_data_source_attribute')

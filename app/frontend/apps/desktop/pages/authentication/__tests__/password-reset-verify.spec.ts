@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import {
   getTestRouter,
@@ -6,6 +6,7 @@ import {
 } from '#tests/support/components/renderComponent.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
+import { waitFor } from '#tests/support/vitest-wrapper.ts'
 
 import { mockPublicLinksQuery } from '#shared/entities/public-links/graphql/queries/links.mocks.ts'
 
@@ -18,10 +19,7 @@ const updatePassword = async (
   newPassword: string,
 ) => {
   await view.events.type(await view.findByLabelText('Password'), oldPassword)
-  await view.events.type(
-    await view.findByLabelText('Confirm password'),
-    newPassword,
-  )
+  await view.events.type(await view.findByLabelText('Confirm password'), newPassword)
   await view.events.click(view.getByRole('button', { name: 'Submit' }))
 }
 
@@ -32,9 +30,7 @@ const confirmSuccess = async (view: ExtendedRenderResult, password: string) => {
     password,
   })
 
-  expect(
-    await view.findByText('Woo hoo! Your password has been changed!'),
-  ).toBeInTheDocument()
+  expect(await view.findByText('Woo hoo! Your password has been changed!')).toBeInTheDocument()
 }
 
 beforeEach(() => {
@@ -70,9 +66,7 @@ it('can update a password', async () => {
 
   const view = await visitView('/reset-password/verify/123')
 
-  expect(
-    await view.findByRole('button', { name: 'Cancel & Go Back' }),
-  ).toBeInTheDocument()
+  expect(await view.findByRole('button', { name: 'Cancel & go back' })).toBeInTheDocument()
 
   const [imprint, privacy] = publicLinks
 
@@ -88,7 +82,7 @@ it('can update a password', async () => {
   await updatePassword(view, 'password', 'password')
   await confirmSuccess(view, 'password')
 
-  await vi.waitFor(() => {
+  await waitFor(() => {
     expect(getTestRouter().currentRoute.value.name).toBe('Login')
   })
 })
@@ -106,9 +100,7 @@ it('expects passwords to be equal', async () => {
   await updatePassword(view, 'password', 'password123')
 
   expect(
-    await view.findByText(
-      "This field doesn't correspond to the expected value.",
-    ),
+    await view.findByText("This field doesn't correspond to the expected value."),
   ).toBeInTheDocument()
 })
 
@@ -122,9 +114,7 @@ it('shows an error if reset was unsuccessful', async () => {
 
   const view = await visitView('/reset-password/verify/123')
 
-  expect(
-    await view.findByText('The provided token is invalid.'),
-  ).toBeInTheDocument()
+  expect(await view.findByText('The provided token is invalid.')).toBeInTheDocument()
   expect(view.queryByLabelText('Password')).not.toBeInTheDocument()
 })
 
@@ -132,9 +122,7 @@ it('shows an error if no token is provided', async () => {
   const view = await visitView('/reset-password/verify')
 
   expect(
-    await view.findByText(
-      'The token could not be verified. Please contact your administrator.',
-    ),
+    await view.findByText('The token could not be verified. Please contact your administrator.'),
   ).toBeInTheDocument()
   expect(view.queryByLabelText('Password')).not.toBeInTheDocument()
 })

@@ -14,9 +14,9 @@ body: "<div>\n<p>Bonjour,</p><p>&nbsp;</p><p>Je vous contacte suite ŕ ma comman
   style=\"width:7.5pt;border:none;padding:0cm 0cm 0cm 0cm;\">\n<p><span style=\"color:#676b68;\">
   </span></p></td>\n<td valign=\"top\" style=\"width:90.0pt;border:none;padding:0cm
   0cm 0cm 0cm;\">\n<p><span style=\"color:#676b68;\"><br>\n<b>XXXX S.aĚ r.l.</b><br>
-  12, Somewhere<br>\n</span></p></td>\n</tr>\n</tbody>\n</table>\n<p><span><br>\n<table
+  12, Somewhere<br>\n</span></p></td>\n</tr>\n</tbody>\n</table>\n<p><span><br>\n</span></p><table
   border=\"0\" cellspacing=\"0\" cellpadding=\"0\">\n<tbody>\n<tr>\n<td style=\"padding:0cm
-  0cm 0cm 0cm;\">\n</td>\n</tr>\n</tbody>\n</table>\n<p><span lang=\"EN-US\"> </span></p></span></p></div>"
+  0cm 0cm 0cm;\">\n</td>\n</tr>\n</tbody>\n</table>\n<p><span lang=\"EN-US\"> </span></p></div>"
 content_type: text/html
 attachments:
 - !ruby/hash:ActiveSupport::HashWithIndifferentAccess

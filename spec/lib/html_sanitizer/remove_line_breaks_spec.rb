@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -8,7 +8,7 @@ RSpec.describe HtmlSanitizer::RemoveLineBreaks do
   describe('#scrubber') do
     subject(:actual) { fragment.scrub!(scrubber).to_html }
 
-    let(:fragment) { Loofah.fragment(input) }
+    let(:fragment) { Loofah.html5_fragment(input) }
 
     describe 'removes newline-only spans' do
       let(:input)  { "<div>test<span>a\n</span><span>\r\n</span></div>" }
@@ -19,14 +19,14 @@ RSpec.describe HtmlSanitizer::RemoveLineBreaks do
 
     describe 'removes newline-only in divs' do
       let(:input)  { "<div>test<div>a\n</div><div>\r\n\n\n</div></div>" }
-      let(:target) { "<div>test<div>a\n</div>\n</div>" }
+      let(:target) { "<div>test<div>a\n</div></div>" }
 
       it { is_expected.to match target }
     end
 
     describe 'does not remove newlines in other elements' do
       let(:input)  { "<div>test<output>a\n</output></div>" }
-      let(:target) { "<div>test<output>a\n</output>\n</div>" }
+      let(:target) { "<div>test<output>a\n</output></div>" }
 
       it { is_expected.to match target }
     end

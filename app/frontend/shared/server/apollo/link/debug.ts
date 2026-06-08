@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { ApolloLink } from '@apollo/client/core'
 import { getMainDefinition } from '@apollo/client/utilities'
@@ -18,9 +18,7 @@ const debugLink = new ApolloLink((operation, forward) => {
 
   const definition = getMainDefinition(operation.query)
   const operationType =
-    definition.kind === 'OperationDefinition'
-      ? capitalize(definition.operation)
-      : null
+    definition.kind === 'OperationDefinition' ? capitalize(definition.operation) : null
 
   const requestOutput: DebugLinkRequestOutput = {
     printedDocument: print(operation.query),
@@ -38,10 +36,7 @@ const debugLink = new ApolloLink((operation, forward) => {
   // Called before operation is sent to server
   operation.setContext({ start: new Date() })
 
-  log.debug(
-    `[GraphQL - Request] - ${operationType} - ${operation.operationName}:`,
-    requestOutput,
-  )
+  log.debug(`[GraphQL - Request] - ${operationType} - ${operation.operationName}:`, requestOutput)
 
   return forward(operation).map((data) => {
     const context = operation.getContext()

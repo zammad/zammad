@@ -24,26 +24,26 @@ class App.FullQuoteHeader
   @fullQuoteHeaderForwardFrom: (article) ->
     user_id = article.origin_by_id || article.created_by_id
 
-    @fullQuoteHeaderEnsurePrivacy(user_id) || @fullQuoteHeaderEnsurePrivacy(article.from) || article.from
+    @fullQuoteHeaderEnsurePrivacy(user_id, article) || @fullQuoteHeaderEnsurePrivacy(article.from, article) || article.from
 
   @fullQuoteHeaderForwardTo: (article) ->
     if article.type.name is 'email' || article.type.name is 'web'
-      @fullQuoteHeaderEnsureMultiPrivacy(article.to)
+      @fullQuoteHeaderEnsureMultiPrivacy(article.to, article)
     else if article.sender.name is 'Customer' && article.type.name is 'phone'
       if email_address_id = App.Group.findByAttribute('name', article.to)?.email_address_id
         App.EmailAddress.find(email_address_id).displayName()
       else
         article.to
     else if article.sender.name is 'Agent' && article.type.name is 'phone'
-      ticket = App.Ticket.find article.ticket_id
-      @fullQuoteHeaderEnsurePrivacy(ticket.customer_id) || @fullQuoteHeaderEnsureMultiPrivacy(article.to)
+      ticket = App.Ticket.find(article.ticket_id)
+      @fullQuoteHeaderEnsurePrivacy(ticket.customer_id, article) || @fullQuoteHeaderEnsureMultiPrivacy(article.to, article)
     else
       article.to
 
   @fullQuoteHeaderForwardCC: (article) ->
-    @fullQuoteHeaderEnsureMultiPrivacy(article.cc)
+    @fullQuoteHeaderEnsureMultiPrivacy(article.cc, article)
 
-  @fullQuoteHeaderEnsureMultiPrivacy: (input) ->
+  @fullQuoteHeaderEnsureMultiPrivacy: (input, article) ->
     return if !input
 
     input
@@ -51,7 +51,7 @@ class App.FullQuoteHeader
       .map (elem) ->
         elem.trim()
       .map (elem) =>
-        @fullQuoteHeaderEnsurePrivacy(elem) || elem
+        @fullQuoteHeaderEnsurePrivacy(elem, article) || elem
       .join(', ')
 
   @fullQuoteHeaderEnsurePrivacyParseInput: (input) ->
@@ -64,17 +64,14 @@ class App.FullQuoteHeader
       when 'object'
         input
 
-  @fullQuoteHeaderEnsurePrivacy: (input) =>
+  @fullQuoteHeaderEnsurePrivacy: (input, article) =>
     user = @fullQuoteHeaderEnsurePrivacyParseInput(input)
-
     return if !user
 
-    output = "#{user.displayName()}"
+    ticket = App.Ticket.find(article.ticket_id)
+    return if !ticket
 
-    if !user.permission('ticket.agent') && user.email
-      output = App.Utils.buildEmailAddress(user.displayName(), user.email)
-
-    output
+    user.recipientName(ticket, true)
 
   @fullQuoteHeaderExtractEmail: (input) ->
     if match = input.match(/<?(\S+@\S[^>]+)(>?)/)

@@ -1,0 +1,114 @@
+---
+- name: cnr - Non sono riuscito a contattarti...
+  keywords: ''
+  content:
+    Non sono riuscito a contattarti telefonicamente. Potresti inviarmi una breve email e farmi sapere quando sarai di nuovo disponibile?
+  note: ''
+- name: iq - Se hai domande...
+  keywords: ''
+  content: Se avete domande, non esitate a contattarmi
+  note: ''
+- name: ifq - in caso di ulteriori domande...
+  keywords: ''
+  content: Per ulteriori domande non esitate a contattarmi
+  note: ''
+- name: kr - Cordiali saluti,
+  keywords: ''
+  content: Cordiali saluti,
+  note: ''
+- name: 'Hello - Salve #{ticket.customer.firstname},'
+  keywords: ''
+  content: 'Buongiorno #{ticket.customer.firstname},'
+  note: ''
+- name: 'hello - Buongiorno Sig.ra #{ticket.customer.firstname},'
+  keywords: ''
+  content: 'Buongiorno Sig. #{ticket.customer.firstname},'
+  note: ''
+- name: ilf - Aspetto tue notizie
+  keywords: ''
+  content: Aspetto tue notizie
+  note: ''
+- name: 'dms- Gentile Sig.ra #{ticket.customer.lastname},'
+  keywords: ''
+  content: 'Gentile Sig. #{ticket.customer.lastname},'
+  note: ''
+- name: 'dmr - Gentile Sig. #{ticket.customer.lastname},'
+  keywords: ''
+  content: 'Gentile Sig. #{ticket.customer.lastname},'
+  note: ''
+- name: tfqr - Grazie per la tua rapida risposta.
+  keywords: ''
+  content: Grazie per la tua rapida risposta.
+  note: ''
+- name: tff - Grazie per il feedback
+  keywords: ''
+  content: Grazie per il feedback.
+  note: ''
+- name: tfyr - Grazie per la tua richiesta.
+  keywords: ''
+  content: Grazie per la tua richiesta.
+  note: ''
+- name: ilff - Attendo con ansia il tuo feedback
+  keywords: ''
+  content: Attendo con ansia il tuo feedback.
+  note: ''
+- name: fs - Attendo con ansia il tuo feedback sui prossimi passi
+  keywords: ''
+  content: Attendo con ansia il tuo feedback sui prossimi passi.
+  note: ''
+- name: br - Distinti saluti,
+  keywords: ''
+  content: Distinti saluti,
+  note: ''
+- name: sg - Saluti solari,
+  keywords: ''
+  content: Con saluti solari,
+  note: ''
+- name: sug - Saluti solari,
+  keywords: ''
+  content: ' Con saluti solari,'
+  note: ''
+- name: wg - Saluti invernali,
+  keywords: ''
+  content: Con i saluti invernali,
+  note: ''
+- name: tybr - Grazie e cordiali saluti,
+  keywords: ''
+  content: Grazie e cordiali saluti,
+  note: ''
+- name: ifqp - In caso di ulteriori domande...chiamate
+  keywords: ''
+  content: Se avete domande, non esitate a contattarmi telefonicamente.
+  note: ''
+- name: ai - Analizza il problema
+  keywords: ''
+  content:
+    '<p>Grazie per la tua richiesta.</p><p>Analizzeremo il problema e ti
+    risponderemo il prima possibile.</p>'
+  note: ''
+- name: tya - Grazie in anticipo
+  keywords: ''
+  content: Cordiali saluti e grazie in anticipo,
+  note: ''
+- name: iwlk - Vorrei sapere
+  keywords: ''
+  content: Vorrei sapere,
+  note: ''
+- name: wrt - Con riferimento a
+  keywords: ''
+  content: Con riferimento a
+  note: ''
+- name: mdi - informazioni più dettagliate
+  keywords: ''
+  content:
+    Vi saremmo grati se poteste inviarci informazioni più dettagliate su
+    ...
+  note: ''
+- name: fa - ulteriore assistenza
+  keywords: ''
+  content: Se hai bisogno di ulteriore assistenza, contattami
+  note: ''
+- name: reg - Saluti
+  keywords: ''
+  content: Saluti
+  note: ''

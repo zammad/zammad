@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { renderComponent } from '#tests/support/components/index.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
@@ -83,7 +83,7 @@ describe('CommonTicketPriorityIndicator.vue', () => {
       },
     })
 
-    expect(view.getByIconName('priority-normal')).toBeInTheDocument()
+    expect(view.getByIconName('priority-normal-micro-2')).toBeInTheDocument()
 
     await view.rerender({
       priority: {
@@ -93,7 +93,7 @@ describe('CommonTicketPriorityIndicator.vue', () => {
       },
     })
 
-    expect(view.getByIconName('priority-high')).toBeInTheDocument()
+    expect(view.getByIconName('priority-high-micro-2')).toBeInTheDocument()
 
     await view.rerender({
       priority: {
@@ -103,7 +103,7 @@ describe('CommonTicketPriorityIndicator.vue', () => {
       },
     })
 
-    expect(view.getByIconName('priority-low')).toBeInTheDocument()
+    expect(view.getByIconName('priority-low-micro-2')).toBeInTheDocument()
 
     const { initializeConfigUpdateSubscription } = useApplicationStore()
 
@@ -118,6 +118,6 @@ describe('CommonTicketPriorityIndicator.vue', () => {
       },
     })
 
-    expect(view.queryByIconName('priority-low')).not.toBeInTheDocument()
+    expect(view.queryByIconName('priority-low-micro-2')).not.toBeInTheDocument()
   })
 })

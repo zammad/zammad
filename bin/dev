@@ -1,0 +1,3 @@
+#!/usr/bin/env sh
+
+RAILS_ENV=development forego start -r -f Procfile.dev

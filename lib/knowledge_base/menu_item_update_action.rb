@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class KnowledgeBase
   class MenuItemUpdateAction
@@ -91,7 +91,7 @@ class KnowledgeBase
     end
 
     def raise_unprocessable
-      raise Exceptions::UnprocessableEntity, __('Provide position of all items in scope')
+      raise Exceptions::UnprocessableContent, __('Provide position of all items in scope')
     end
   end
 end

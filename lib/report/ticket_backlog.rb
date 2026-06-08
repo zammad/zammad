@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Report::TicketBacklog < Report::Base
 
@@ -19,19 +19,18 @@ returns
 =end
 
   def self.aggs(params_origin)
-    params = params_origin.deep_dup
+    params = duplicate_preserving_current_user(params_origin)
 
-    local_params = params.clone
-    local_params[:params] = {}
+    params[:params] = {}
 
-    local_params[:params][:field] = 'created_at'
-    created = Report::TicketGenericTime.aggs(local_params)
+    params[:params][:field] = 'created_at'
+    created = Report::TicketGenericTime.aggs(params)
 
-    local_params[:params][:field] = 'close_at'
-    closed = Report::TicketGenericTime.aggs(local_params)
+    params[:params][:field] = 'close_at'
+    closed = Report::TicketGenericTime.aggs(params)
 
     result = []
-    (0..created.length - 1).each do |position|
+    (0..(created.length - 1)).each do |position|
       count = created[position] - closed[position]
       result.push count
     end

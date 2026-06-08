@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -25,8 +25,8 @@ RSpec.describe TwoFactorDefaultAuthenticationMethod, db_strategy: :reset, type: 
     security_key_pref = create(:user_two_factor_preference, :security_keys, user: user)
 
     Service::User::TwoFactor::SetDefaultMethod
-      .new(user: user.reload, method_name: security_key_pref.method, force: true)
-      .execute
+      .with_current_user(user.reload)
+      .execute(method_name: security_key_pref.method, force: true)
 
     user
   end

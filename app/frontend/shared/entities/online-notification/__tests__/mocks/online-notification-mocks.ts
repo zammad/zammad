@@ -1,11 +1,8 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { nullableMock } from '#tests/support/utils.ts'
 
-import type {
-  OnlineNotificationsQuery,
-  Scalars,
-} from '#shared/graphql/types.ts'
+import type { OnlineNotificationsQuery, Scalars } from '#shared/graphql/types.ts'
 
 import type { LastArrayElement } from 'type-fest'
 
@@ -34,6 +31,10 @@ export const mockOnlineNotification = (
     },
     typeName: 'update',
     objectName: 'Ticket',
+    meta: {
+      __typename: 'OnlineNotificationMeta',
+      createdByAi: false,
+    },
     metaObject: {
       __typename: 'Ticket',
       id: '111',

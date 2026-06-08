@@ -1,5 +1,11 @@
 # How to Test with RSpec and Capybara
 
+We assume you are using our recommended [Devcontainer Setup](../development_environment/devcontainer-setup.md)
+and are starting from `develop` branch.
+
+Switching between running tests and doing development work (by running `dev` from `/bin`)
+should be effortless without any issues.
+
 RSpec is the recommended way of writing back end tests for Zammad,
 and in combination with Capybara also Selenium based end-to-end tests.
 
@@ -7,10 +13,11 @@ This page explains some Zammad specific extensions that make testing easier.
 
 ## Running
 
-To run tests locally in the test environment, you need to first ensure the `test` database is in the expected state:
+To run tests you need to first ensure the `test` database and all assets are in the expected state:
 
 ```sh
 RAILS_ENV=test bundle exec rake db:drop db:create zammad:ci:test:prepare
+RAILS_ENV=test rails assets:precompile
 ```
 
 Now, running a single test can be done via the following command:
@@ -25,11 +32,11 @@ Note that it's also possible to run a specific test case by including the line n
 bundle exec rspec spec/system/ticket/zoom_spec.rb:1072
 ```
 
-If you would like to specify the used browser for Capybara end-to-end tests, simply set the `BROWSER` environment
+If you would like to specify the used browser for Capybara end-to-end tests, simply set the `SELENIUM_BROWSER` environment
 variable:
 
 ```sh
-BROWSER=firefox bundle exec rspec spec/system/ticket/zoom_spec.rb
+SELENIUM_BROWSER=firefox bundle exec rspec spec/system/ticket/zoom_spec.rb
 ```
 
 Also running failed tests only is possible with the option `--only-failures`.
@@ -45,6 +52,12 @@ RSpec will populate the database at startup. These users are available in any te
 - admin: `admin@example.com`
 - agent: `agent1@example.com`
 - client: `nicole.braun@zammad.org`
+
+## Re-initialize database
+
+To reset an existing development database (without running `auto_wizard`)
+
+- [Run db:init again](../development_environment/development-workflow.md#database-tasks)
 
 ## RSpec Meta Attributes
 
@@ -70,15 +83,47 @@ Browser in CI is not affected.
 
 Example usage: `Rspec.describe :example, time_zone: 'Vilnius/Lithuania'`
 
-### `db_strategy: :reset / :reset_all`
+### `db_strategy: :reset`
 
-RSpec resets database using transaction after each example. But DBs can't handle some changes (e.g. altering schema)
-this way. MySQL is especially bad at this.
+RSpec resets database using transaction after each example. But PostgreSQL can't handle some changes (e.g. altering schema)
+this way. Use `db_strategy: :reset` to reset database schema after each example.
 
-- `db_strategy: :reset` will reset database after each example
-- `db_strategy: :reset_all` will reset database only once after whole context! This is a great way to increase
-performance. But easy to shoot yourself in a foot too! Use custom `before :all` and `after :all` to setup and tear down
-environment
+Example usage: `Rspec.describe :example, db_strategy: :reset`
+
+### `type: :db_migration`
+
+By using `type: :db_migration`, you can test database migrations.
+
+Be aware: names of migration class and `Rspec.describe` block must be the same.
+
+Explanation:
+Usually `describe` needs a to be valid class name or any string.
+But `type: :db_migration` is a bit more sensitive.
+Since `migrate` method relies on `described_class` to properly load migration class, use and run it in tests directly.
+
+For example, if your migration class looks like this:
+
+```ruby
+# db/migrate/20240101000000_this_name_needs_to_match.rb
+class ThisNameNeedsToMatch < ActiveRecord::Migration[8.0]
+```
+
+Then in your test you need to have the same name in `Rspec.describe` block, so it can properly load the migration class.
+
+```ruby
+# spec/db/migrate/this_name_needs_to_match_spec.rb
+RSpec.describe ThisNameNeedsToMatch, type: :db_migration do
+```
+
+Run `migrate` to execute the migration
+
+```ruby
+it "test migration changes" do
+  expect { migrate }
+    .to change { object.something }
+    .to(false)
+end
+```
 
 ### `performs_jobs`
 
@@ -306,3 +351,15 @@ expect(find_datepicker('Date')).to have_date(Date.today)
 expect(find_datepicker('Date Time')).to have_datetime(DateTime.now)
 expect(find_toggle('Boolean')).to be_toggled_on
 ```
+
+## Email tests
+
+Email importing issues are covered by the test that compares the raw email content with the expected parsed content. The
+test is located in `spec/models/channel/email_parser_spec.rb`. Search for `when checking a bunch of stored emails` RSpec
+context. It loops over sample emails in `test/data/mail` folder.
+
+To add a new email test case, use `rake zammad:email_parser:debug:generate_yml[/path/to/file.eml]`. It will copy the
+file to the appropriate location and generate an accompanying YAML file with the expected content. Please adjust the
+total count of the test emails in the same spec file few lines below the test case.
+
+To regenerate all YAML content files for existing emails, use `rake zammad:email_parser:debug:regenerate_all_ymls`.

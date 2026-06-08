@@ -1,0 +1,11 @@
+工單 (#{ticket.title}) 被合併至另一個工單
+
+<div>你好 #{recipient.firstname},</div>
+<br>
+<div>
+工單(#{ticket.title})由"<b>#{current_user.longname}</b>" 合併至另一工單 .
+</div>
+<br>
+<div>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">在 #{config.product_name} 檢視此工單</a>
+</div>

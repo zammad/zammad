@@ -61,7 +61,7 @@ class UserNew extends App.ControllerModal
         if role && role.active is true && role.default_at_signup is true
           role_ids.push role.id
       params.role_ids = role_ids
-    @log 'notice', 'updateAttributes', params
+    @log 'debug', 'updateAttributes', params
 
     user = new App.User
     user.load(params)

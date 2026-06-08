@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 interface Props {
@@ -13,7 +13,7 @@ defineProps<Props>()
 <template>
   <button
     v-if="entities.length < totalCount"
-    class="flex min-h-[54px] items-center justify-center gap-2"
+    class="flex min-h-13.5 items-center justify-center gap-2"
     :class="{
       'cursor-default text-gray-100/50': disabled,
       'text-blue': !disabled,

@@ -1,0 +1,19 @@
+Login #{config.product_name} dari perangkat baru
+
+<div>Hai #{user.firstname},</div>
+<br>
+<div>Sepertinya Anda masuk ke akun Anda <b>menggunakan perangkat baru</b> pada "#{user_device.created_at}":</div>
+<br>
+<div>
+Perangkat Anda: #{user_device.name}<br>
+Lokasi Anda (relatif): #{user_device.location}<br>
+IP Anda: #{user_device.ip}<br>
+</div>
+<br>
+<div>Perangkat Anda telah ditambahkan ke daftar perangkat yang dikenal, yang dapat Anda lihat di sini:</div>
+<br>
+<div><a href="#{config.http_type}://#{config.fqdn}/#profile/devices">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>
+<br>
+<div>Jika ini bukan Anda, harap hapus perangkat tersebut, ubah kata sandi akun Anda, dan hubungi administrator Anda. Seseorang mungkin telah mendapatkan akses tidak sah ke akun Anda.</div>
+<br>
+<div>Tim #{config.product_name} Anda</div>

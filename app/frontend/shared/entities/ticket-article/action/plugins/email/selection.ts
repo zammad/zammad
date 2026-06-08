@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import type { TicketArticle } from '#shared/entities/ticket/types.ts'
 import { i18n } from '#shared/i18n.ts'
@@ -20,10 +20,7 @@ const formatDate = (date: string) => {
   }
 }
 
-export const getReplyQuoteHeader = (
-  config: ConfigList,
-  article: TicketArticle,
-) => {
+export const getReplyQuoteHeader = (config: ConfigList, article: TicketArticle) => {
   if (!config.ui_ticket_zoom_article_email_full_quote_header) return ''
 
   const date = formatDate(article.createdAt)
@@ -46,8 +43,7 @@ export const getArticleSelection = (
   }
   if (config.ui_ticket_zoom_article_email_full_quote) {
     const cleanBody = textCleanup(article.bodyWithUrls)
-    const content =
-      article.contentType === 'text/html' ? cleanBody : textToHtml(cleanBody)
+    const content = article.contentType === 'text/html' ? cleanBody : textToHtml(cleanBody)
 
     return { content, full: true }
   }

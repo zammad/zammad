@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { flushPromises } from '@vue/test-utils'
 
@@ -124,8 +124,6 @@ describe('rendering common back button', () => {
       dir: EnumTextDirection.Rtl,
     } as any
 
-    await expect(
-      view.findByIconName('chevron-right'),
-    ).resolves.toBeInTheDocument()
+    await expect(view.findByIconName('chevron-right')).resolves.toBeInTheDocument()
   })
 })

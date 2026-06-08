@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, toRef } from 'vue'
@@ -27,9 +27,7 @@ const { attachments: attachmentsWithUrls } = useAttachments({
   attachments: toRef(props, 'ticketAttachments'),
 })
 
-const { showPreview } = useFilePreviewViewer(
-  computed(() => attachmentsWithUrls.value),
-)
+const { showPreview } = useFilePreviewViewer(computed(() => attachmentsWithUrls.value))
 </script>
 
 <template>

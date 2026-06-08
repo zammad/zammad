@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Mutations
   class User::Add < BaseMutation
@@ -9,13 +9,11 @@ module Gql::Mutations
 
     field :user, Gql::Types::UserType, description: 'The created user.'
 
-    def self.authorize(_obj, ctx)
-      ctx.current_user.permissions?(['admin.user', 'ticket.agent'])
-    end
+    requires_permission 'ticket.agent', 'admin.user'
 
     def resolve(input:, send_invite: false)
       user = Service::User::AddInternal
-        .new(current_user: context.current_user)
+        .with_current_user(context.current_user)
         .execute(user_data: input.to_h, send_invite:)
 
       { user: }

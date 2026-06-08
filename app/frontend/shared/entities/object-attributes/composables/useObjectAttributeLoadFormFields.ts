@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { computed } from 'vue'
 
@@ -20,17 +20,12 @@ export const useObjectAttributeLoadFormFields = (
   const objectAttributesLoading = computed(() => {
     let loading = false
 
-    const usedObjects = Object.keys(
-      objectAttributesByObject,
-    ) as EnumObjectManagerObjects[]
+    const usedObjects = Object.keys(objectAttributesByObject) as EnumObjectManagerObjects[]
 
     usedObjects.forEach((object: EnumObjectManagerObjects) => {
       if (
-        (
-          objectAttributesByObject[object] as ReturnType<
-            typeof useObjectAttributes
-          >
-        ).formFieldAttributesLookup.value.size === 0
+        (objectAttributesByObject[object] as ReturnType<typeof useObjectAttributes>)
+          .formFieldAttributesLookup.value.size === 0
       ) {
         loading = true
       }

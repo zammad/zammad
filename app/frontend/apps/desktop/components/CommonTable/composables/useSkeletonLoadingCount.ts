@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { useWindowSize } from '@vueuse/core'
 import { computed, type ComputedRef, type Ref } from 'vue'
@@ -11,8 +11,7 @@ export const useSkeletonLoadingCount = (
   const visibleSkeletonLoadingCount = computed(() => {
     const maxVisibleRowCount = Math.ceil(screenHeight.value / 40)
 
-    if (count.value && count.value > maxVisibleRowCount)
-      return maxVisibleRowCount
+    if (count.value && count.value > maxVisibleRowCount) return maxVisibleRowCount
 
     return count.value
   })

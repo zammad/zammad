@@ -182,7 +182,7 @@ class App.TicketBatch extends App.Controller
               groupId = @hoveredBatchEntry.attr('data-group-id')
               items = @parentEl.find('[name="bulk"]:checked')
               @hoveredBatchEntry.removeAttr('style')
-              @cleanUpDrag(true)
+              @cleanUpDragToLoading()
 
               @performBatchAction items, action, id, groupId
     @batchDragger.velocity
@@ -209,6 +209,36 @@ class App.TicketBatch extends App.Controller
       # uncheck all checked items
       @el.find('[name="bulk"]:checked').prop('checked', false)
       @el.find('[name="bulk_all"]').prop('checked', false)
+
+  cleanUpDragToLoading: ->
+    $(document).off 'mousemove.batchoverlay'
+    @batchOverlayShown = false
+    @hideBatchCircles() if @batchCirclesShown
+    @hideBatchAssign() if @batchAssignShown
+    @hideBatchMacro() if @batchMacroShown
+    @hideBatchAssignGroup() if @batchAssignGroupShown
+    @el.removeClass('u-no-userselect')
+    $('.batch-dragger').remove()
+    @hoveredBatchEntry = null
+    if @grabbedItemWasntChecked
+      @grabbedItem.find('[name="bulk"]').prop('checked', false)
+    # uncheck all selected items
+    @parentEl.find('[name="bulk"]:checked').prop('checked', false)
+    @parentEl.find('[name="bulk_all"]').prop('checked', false)
+    # switch overlay to loading state, keeping backdrop visible
+    @el.addClass('is-loading')
+
+  hideBatchLoading: ->
+    @batchOverlayBackdrop.velocity { opacity: [0, 1] },
+      duration: 300
+      queue: false
+      complete: =>
+        @el.removeClass('is-loading is-visible')
+        $('html').css('overflow', '')
+        @batchCirclesShown = false
+        @batchAssignShown = false
+        @batchMacroShown = false
+        @batchAssignGroupShown = false
 
   alignDraggedItems: (dir) ->
     @draggedItems.velocity
@@ -255,7 +285,11 @@ class App.TicketBatch extends App.Controller
           attributes:
             group_id: id
 
-    @parent.ajax_mass(path, data, @batchSuccess)
+    wrappedSuccess = =>
+      @hideBatchLoading()
+      @batchSuccess?()
+
+    @parent.ajax_mass(path, data, wrappedSuccess, { skipLoading: true, onError: => @hideBatchLoading() })
 
   showBatchOverlay: ->
     @el.addClass('is-visible')

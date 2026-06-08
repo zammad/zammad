@@ -1,15 +1,10 @@
 #!/usr/bin/env ruby
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require File.expand_path('../config/environment', __dir__)
 
 class CheckPostgresArrayColumns
   def self.run
-    if Rails.configuration.database_configuration[Rails.env]['adapter'] != 'postgresql'
-      puts 'Error: This script works only with postgresql adapter!'
-      exit 1
-    end
-
     puts 'Checking database array columns:'
 
     check_columns_type
@@ -21,7 +16,7 @@ class CheckPostgresArrayColumns
   def self.check_columns_type
     puts '  (type == :string):'
 
-    smime_certificates.concat(pgp_keys).concat(public_links).concat(object_manager_attributes).each do |item|
+    table_information.each do |item|
       print "    #{item[:table]}.#{item[:column]} ... "
 
       type = column(item[:table], item[:column]).type
@@ -39,7 +34,7 @@ class CheckPostgresArrayColumns
   def self.check_columns_array
     puts '  (array == true):'
 
-    smime_certificates.concat(pgp_keys).concat(public_links).concat(object_manager_attributes).each do |item|
+    table_information.each do |item|
       print "    #{item[:table]}.#{item[:column]} ... "
 
       array = column(item[:table], item[:column]).array
@@ -70,6 +65,18 @@ class CheckPostgresArrayColumns
 
   def self.public_links
     [{ table: PublicLink.table_name, column: 'screen' }]
+  end
+
+  def self.checklists
+    [{ table: Checklist.table_name, column: 'sorted_item_ids' }]
+  end
+
+  def self.checklist_templates
+    [{ table: ChecklistTemplate.table_name, column: 'sorted_item_ids' }]
+  end
+
+  def self.table_information
+    smime_certificates + pgp_keys + public_links + checklists + checklist_templates + object_manager_attributes
   end
 
   def self.column(table, column)

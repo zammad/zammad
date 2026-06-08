@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -61,7 +61,7 @@ RSpec.describe Validations::ChannelEmailAccountUniquenessValidator do
       let(:duplicate_channel) { create(:google_channel, gmail_user: 'email@example.com') }
       let(:editable_channel) do
         build(:google_channel, gmail_user: 'email@example.com')
-          .tap { _1.save!(validate: false) }
+          .tap { it.save!(validate: false) }
       end
 
       let(:new_token) { 'new_xoauth2_token' }

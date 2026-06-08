@@ -1,7 +1,6 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { storeToRefs } from 'pinia'
-import { unref } from 'vue'
+import { toRef, unref } from 'vue'
 
 import { useApplicationStore } from '#shared/stores/application.ts'
 import type { ConfigList } from '#shared/types/store.ts'
@@ -16,7 +15,7 @@ declare module '@vue/runtime-core' {
 
 const applicationConfigPlugin = (app: App) => {
   const application = useApplicationStore()
-  const { config } = storeToRefs(application)
+  const config = toRef(application, 'config')
 
   Object.defineProperty(app.config.globalProperties, '$c', {
     enumerable: true,

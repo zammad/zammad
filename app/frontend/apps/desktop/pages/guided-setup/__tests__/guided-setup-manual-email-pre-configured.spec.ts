@@ -1,14 +1,12 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockAuthentication } from '#tests/support/mock-authentication.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
+import { waitFor } from '#tests/support/vitest-wrapper.ts'
 
-import {
-  EnumSystemSetupInfoStatus,
-  EnumSystemSetupInfoType,
-} from '#shared/graphql/types.ts'
+import { EnumSystemSetupInfoStatus, EnumSystemSetupInfoType } from '#shared/graphql/types.ts'
 
 import { mockEmailAddressesQuery } from '#desktop/entities/email-addresses/graphql/queries/emailAddresses.mocks.ts'
 
@@ -34,18 +32,15 @@ describe('guided setup manual email notification', () => {
         },
       })
 
-      const view = await visitView(
-        '/guided-setup/manual/channels/email-pre-configured',
-      )
+      const view = await visitView('/guided-setup/manual/channels/email-pre-configured')
 
-      await vi.waitFor(() => {
-        expect(
-          view,
-          'correctly redirects to guided setup channels email screen',
-        ).toHaveCurrentUrl('/guided-setup/manual/channels/email')
+      await waitFor(() => {
+        expect(view, 'correctly redirects to guided setup channels email screen').toHaveCurrentUrl(
+          '/guided-setup/manual/channels/email',
+        )
       })
 
-      expect(view.getByText('Email Account')).toBeInTheDocument()
+      expect(view.getByText('Email account')).toBeInTheDocument()
       expect(view.getByText('Email address')).toBeInTheDocument()
     })
   })
@@ -78,11 +73,9 @@ describe('guided setup manual email notification', () => {
         ],
       })
 
-      const view = await visitView(
-        '/guided-setup/manual/channels/email-pre-configured',
-      )
+      const view = await visitView('/guided-setup/manual/channels/email-pre-configured')
 
-      await vi.waitFor(() => {
+      await waitFor(() => {
         expect(
           view,
           'correctly shows information about pre-configured email addresses',
@@ -92,13 +85,9 @@ describe('guided setup manual email notification', () => {
       const labels = view.getAllByTestId('common-label')
 
       expect(labels[0]).toBeInTheDocument()
-      expect(labels[0]).toHaveTextContent(
-        'Your Zammad has the following email address',
-      )
+      expect(labels[0]).toHaveTextContent('Your Zammad has the following email address')
 
-      expect(
-        view.getByText('Example Corporation <example@zammad.com>'),
-      ).toBeInTheDocument()
+      expect(view.getByText('Example Corporation <example@zammad.com>')).toBeInTheDocument()
 
       expect(labels[1]).toBeInTheDocument()
       expect(labels[1]).toHaveTextContent(

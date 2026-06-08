@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -21,14 +21,17 @@ RSpec.describe Gql::Mutations::User::Current::TaskbarItem::Add, :aggregate_failu
     end
     let(:input) do
       {
-        key:      'key',
+        key:,
         callback: 'TicketZoom',
-        params:   {},
+        params:,
         prio:     1,
         notify:   false,
         app:      'desktop'
       }
     end
+
+    let(:key)    { 'key' }
+    let(:params) { {} }
 
     def execute_graphql_mutation
       gql.execute(mutation, variables: { input: input })
@@ -45,8 +48,38 @@ RSpec.describe Gql::Mutations::User::Current::TaskbarItem::Add, :aggregate_failu
     context 'when user is authenticated', authenticated_as: :agent do
       let(:agent) { create(:agent) }
 
-      it 'adds a taskbar item' do
-        expect { execute_graphql_mutation }.to change(Taskbar, :count).by(1)
+      context 'when taskbar item has no related object' do
+        it 'adds a taskbar item' do
+          expect { execute_graphql_mutation }.to change(Taskbar, :count).by(1)
+        end
+
+        it 'does not call mark as seen service' do
+          allow(OnlineNotification).to receive(:mark_as_seen!)
+          execute_graphql_mutation
+          expect(OnlineNotification).not_to have_received(:mark_as_seen!)
+        end
+      end
+
+      context 'when taskbar item has a related object' do
+        let(:ticket) { create(:ticket) }
+        let(:key)    { "Ticket-#{ticket.id}" }
+        let(:params) { { ticket_id: ticket.id } }
+
+        before do
+          agent.groups << ticket.group
+        end
+
+        it 'adds a taskbar item' do
+          expect { execute_graphql_mutation }.to change(Taskbar, :count).by(1)
+        end
+
+        it 'marks the related object as seen' do
+          allow(OnlineNotification).to receive(:mark_as_seen!)
+
+          execute_graphql_mutation
+
+          expect(OnlineNotification).to have_received(:mark_as_seen!).with(ticket, agent)
+        end
       end
     end
   end

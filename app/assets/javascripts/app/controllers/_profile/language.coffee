@@ -10,10 +10,16 @@ class ProfileLanguage extends App.ControllerSubContent
 
   render: =>
     html    = $( App.view('profile/language')() )
-    options = {}
-    locales = App.Locale.all()
-    for locale in locales
-      options[locale.locale] = locale.name
+    locales = App.Locale.all().slice().sort (a, b) ->
+      a.locale.localeCompare(b.locale)
+
+    options = _.map(locales, (locale) ->
+      {
+        value: locale.locale
+        name:  locale.name
+      }
+    )
+
     configure_attributes = [
       { name: 'locale', display: '', tag: 'searchable_select', null: false, class: 'input', options: options, default: App.i18n.get() },
     ]

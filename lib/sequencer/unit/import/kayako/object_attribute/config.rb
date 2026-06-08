@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Sequencer::Unit::Import::Kayako::ObjectAttribute::Config < Sequencer::Unit::Base
   prepend ::Sequencer::Unit::Import::Common::Model::Mixin::Skip::Action
@@ -26,6 +26,6 @@ class Sequencer::Unit::Import::Kayako::ObjectAttribute::Config < Sequencer::Unit
   private
 
   def attribute_type
-    "Sequencer::Unit::Import::Kayako::ObjectAttribute::AttributeType::#{resource['type'].capitalize}".constantize.new(resource, default_language)
+    "Sequencer::Unit::Import::Kayako::ObjectAttribute::AttributeType::#{resource['type'].capitalize}".constantize.new(resource, default_language, model_class)
   end
 end

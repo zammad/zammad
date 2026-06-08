@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -49,7 +49,7 @@ RSpec.describe 'Desktop > Ticket > Online Notifications', app: :desktop_view, au
       find('label', text: 'New ticket - All tickets').click
       find('label', text: 'Ticket update - All tickets').click
 
-      click_on 'Save Notifications'
+      click_on 'Save notifications'
 
       wait_for_mutation('userCurrentNotificationPreferencesUpdate', number: 1)
 
@@ -83,8 +83,6 @@ RSpec.describe 'Desktop > Ticket > Online Notifications', app: :desktop_view, au
       within('[role="region"]') do
         click_on "#{agent_b.fullname} created ticket"
       end
-
-      wait_for_mutation('onlineNotificationSeen')
 
       expect(page).to have_current_path("/desktop/tickets/#{ticket_b.id}")
 

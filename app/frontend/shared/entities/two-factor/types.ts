@@ -1,9 +1,6 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import type {
-  EnumTwoFactorAuthenticationMethod,
-  Scalars,
-} from '#shared/graphql/types.ts'
+import type { EnumTwoFactorAuthenticationMethod, Scalars } from '#shared/graphql/types.ts'
 
 import type { Component } from 'vue'
 
@@ -40,8 +37,7 @@ export interface TwoFactorConfigurationOptions {
   getActionA11yLabel(type: TwoFactorActionTypes): string
 }
 
-export interface TwoFactorConfigurationPlugin
-  extends TwoFactorConfigurationOptions {
+export interface TwoFactorConfigurationPlugin extends TwoFactorConfigurationOptions {
   name: EnumTwoFactorAuthenticationMethod
 }
 

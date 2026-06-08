@@ -1,20 +1,89 @@
 ---
 http_interactions:
 - request:
+    method: get
+    uri: "<ZAMMAD_AI_API_URL>/api/v1/me"
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Zammad User Agent
+      Host:
+      - ai.edenhofer.de
+      Authorization:
+      - Bearer <ZAMMAD_AI_TOKEN>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Wed, 07 May 2025 08:07:49 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - '0'
+      X-Content-Type-Options:
+      - nosniff
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      Vary:
+      - Accept
+      Etag:
+      - W/"fe50ebbaa41ce0a7faa99cc4b8b65660"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 1efba2a8-666b-4947-bfb8-9412ad8e4654
+      X-Runtime:
+      - '0.005978'
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains
+    body:
+      encoding: ASCII-8BIT
+      string: '{"current_user":{"id":3,"email":"me@edenhofer.de","firstname":"Martin","lastname":"Edenhofer","active":true,"created_by_id":1,"created_at":"2024-07-15T23:15:06.140Z","updated_at":"2025-05-03T20:58:06.103Z","organization_id":1,"is_platform_admin":true,"is_organization_admin":false,"login_failed_count":0,"login_at":"2025-05-03T20:58:06.095Z"}}'
+  recorded_at: Wed, 07 May 2025 08:07:49 GMT
+- request:
     method: post
-    uri: https://ai.edenhofer.de/api/v1/features/text_spelling_and_grammar
+    uri: "<ZAMMAD_AI_API_URL>/api/v1/features/text_spelling_and_grammar"
     body:
       encoding: UTF-8
-      string: '{"system_prompt":"You are a helpful support agent. Your task is to
-        fix the spelling, grammar, and punctuation of the following response while
-        keeping it in the same language as the user''s input. Detect the language
-        from the input and ensure corrections are made in the same language. Ensure
-        that the reply remains polite and professional.\n\nAdditionally, if the response
-        contains any HTML content, do not break or remove the HTML tags. Make corrections
-        only to the text within the tags without altering the HTML structure.\n\nAdd
-        also the reason what you have done to response.\n\nPlease respond using the
-        defined JSON syntax provided below:\n{\n“text”: “string”,\n“reason”, “string”\n}\n","prompt":"I
-        Nicole Braun.","options":{}}'
+      string: '{"system_prompt":"Proofread the provided text, correcting grammatical
+        and spelling errors without altering any HTML markup. Ensure you analyze the
+        text, identify both grammatical and spelling mistakes, and make necessary
+        corrections for clarity and accuracy, including sentence structure, punctuation,
+        verb tense consistency, and correct word usage. Apply all changes directly
+        to the text to enhance readability and flow, ensuring the end result communicates
+        efficiently and professionally.\n\n# Steps\n\n1. **Initial Read-Through**:
+        Carefully read the text once to understand the context and main message.\n2.
+        **Identify Errors**: Examine the text for grammatical and spelling errors
+        including incorrect punctuation, verb tense inconsistencies, improper sentence
+        structures, and incorrect word usage.\n3. **Correction Process**: Make necessary
+        grammatical and spelling corrections, ensuring not to alter any HTML markup
+        present in the text.\n4. **Readability and Flow**: Directly amend the text
+        to improve readability and flow while maintaining the original intent.\n5.
+        **Review**: Double-check the text to ensure no HTML tags are broken and that
+        all corrections maintain coherence and professionalism.\n\n# Output Format\n\n-
+        Provide the fully corrected text with no broken HTML markup.\n\n# Notes\n\n-
+        Retain existing HTML tags; ensure they remain unaltered in the corrected text.\n-
+        Maintain the text in its original language, as the target language should
+        always be used.\n- Prioritize clarity and professionalism in all corrections.\n\nPlease
+        find the text requiring proofreading below:\n","prompt":"I Nicole Braun."}'
     headers:
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
@@ -36,7 +105,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Fri, 11 Oct 2024 12:40:47 GMT
+      - Wed, 07 May 2025 08:07:49 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -56,21 +125,18 @@ http_interactions:
       Vary:
       - Accept
       Etag:
-      - W/"4317d05a619dd85cb5a20f1d2d50090f"
+      - W/"43b2efd4d096cb3c3dccbb311d140077"
       Cache-Control:
       - max-age=0, private, must-revalidate
       X-Request-Id:
-      - 4bbe9cef-2e08-4c6d-bec6-4a28cff47e34
+      - 99333fc3-ec81-4346-a252-a0c8615ebeb1
       X-Runtime:
-      - '0.857255'
+      - '0.320539'
       Strict-Transport-Security:
       - max-age=63072000; includeSubDomains
     body:
       encoding: ASCII-8BIT
-      string: '[{"model":"llama3.1","created_at":"2024-10-11T12:40:46.927156869Z","response":"{\n  \"text\":
-        \"Hello, I am Nicole Braun.\",\n  \"reason\": \"The original text was a single
-        sentence with no punctuation, so I added a period at the end to make it a
-        complete sentence and also capitalized ''I'' as it''s the first word of the
-        sentence.\"\n}","done":true,"done_reason":"stop","context":[128006,882,128007,271,2675,527,264,11190,1862,8479,13,4718,3465,374,311,5155,279,43529,11,32528,11,323,62603,315,279,2768,2077,1418,10494,433,304,279,1890,4221,439,279,1217,596,1988,13,34387,279,4221,505,279,1988,323,6106,51479,527,1903,304,279,1890,4221,13,30379,430,279,10052,8625,48887,323,6721,382,50674,11,422,279,2077,5727,904,9492,2262,11,656,539,1464,477,4148,279,9492,9681,13,7557,51479,1193,311,279,1495,2949,279,9681,2085,60923,279,9492,6070,382,2261,1101,279,2944,1148,499,617,2884,311,2077,382,5618,6013,1701,279,4613,4823,20047,3984,3770,512,517,2118,1342,57633,1054,928,863,345,2118,20489,9520,1054,928,89874,3818,40,45130,70703,13,128009,128006,78191,128007,271,517,220,330,1342,794,330,9906,11,358,1097,45130,70703,10560,220,330,20489,794,330,791,4113,1495,574,264,3254,11914,449,912,62603,11,779,358,3779,264,4261,520,279,842,311,1304,433,264,4686,11914,323,1101,98421,364,40,6,439,433,596,279,1176,3492,315,279,11914,10246,92],"total_duration":608398872,"load_duration":18389827,"prompt_eval_count":145,"prompt_eval_duration":39144000,"eval_count":61,"eval_duration":508861000,"uuid":"4bbe9cef-2e08-4c6d-bec6-4a28cff47e34"}]'
-  recorded_at: Fri, 11 Oct 2024 12:40:47 GMT
+      string: '[{"model":"gemma3:27b","created_at":"2025-05-07T08:07:49.959841933Z","response":"I
+        am Nicole Braun.\n","done":true,"done_reason":"stop","context":[105,2364,107,14476,1399,506,3847,1816,236764,74240,77536,532,49248,9825,2180,66035,1027,16167,71911,236761,41152,611,18840,506,1816,236764,8701,1800,77536,532,49248,23153,236764,532,1386,4127,38565,573,29972,532,10634,236764,2440,13315,3904,236764,88078,236764,14177,54817,25725,236764,532,4338,3658,14120,236761,30839,784,3731,5467,531,506,1816,531,14051,122499,532,2727,236764,17096,506,1345,1354,83043,23057,532,46766,236761,108,236865,50228,108,236770,236761,5213,22995,8847,236772,24452,66515,151531,1676,506,1816,3622,531,3050,506,4403,532,1689,3618,236761,107,236778,236761,5213,137938,77905,66515,160153,506,1816,573,77536,532,49248,9825,2440,21648,88078,236764,14177,54817,114461,236764,35503,13315,9108,236764,532,21648,3658,14120,236761,107,236800,236761,5213,135778,12364,66515,9996,4127,77536,532,49248,38565,236764,17096,711,531,9702,1027,16167,71911,1861,528,506,1816,236761,107,236812,236761,5213,6190,2109,532,19179,66515,181141,22802,506,1816,531,4006,122499,532,2727,1651,16977,506,3303,9703,236761,107,236810,236761,5213,30852,66515,16193,236772,4256,506,1816,531,5330,951,16167,16616,659,11207,532,600,784,38565,4883,64106,532,66672,236761,108,236865,16887,36353,108,236772,39525,506,6340,32107,1816,607,951,11207,16167,71911,236761,108,236865,24118,108,236772,5578,662,6330,16167,16616,236793,5330,901,4595,145394,528,506,32107,1816,236761,107,236772,75133,506,1816,528,1061,3303,5192,236764,618,506,3328,5192,1374,2462,577,1456,236761,107,236772,22282,77372,29972,532,66672,528,784,38565,236761,108,9366,1586,506,1816,20226,7724,37974,3426,236787,109,236777,46562,64876,236761,106,107,105,4368,107,236777,1006,46562,64876,236761,107],"total_duration":256835711,"load_duration":63814426,"prompt_eval_count":301,"prompt_eval_duration":90798721,"eval_count":7,"eval_duration":101694728,"uuid":"99333fc3-ec81-4346-a252-a0c8615ebeb1"}]'
+  recorded_at: Wed, 07 May 2025 08:07:49 GMT
 recorded_with: VCR 6.3.1

@@ -1,17 +1,15 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed } from 'vue'
 
 import CommonActionMenu from '#desktop/components/CommonActionMenu/CommonActionMenu.vue'
 import adminItems from '#desktop/components/layout/LayoutSidebar/LeftSidebar/MenuContainer/AdminMenu/plugins/index.ts'
-import { useCollapsedState } from '#desktop/components/layout/LayoutSidebar/LeftSidebar/useCollapsedState.ts'
+import { SidebarName, useSidebarDisplay } from '#desktop/components/layout/useSidebarDisplay.ts'
 
-const { collapsedState } = useCollapsedState()
+const { isSidebarCollapsed } = useSidebarDisplay(SidebarName.Primary)
 
-const defaultItem = computed(() =>
-  adminItems.find((item) => item.key === 'admin'),
-)
+const defaultItem = computed(() => adminItems.find((item) => item.key === 'admin'))
 </script>
 
 <template>
@@ -21,8 +19,8 @@ const defaultItem = computed(() =>
     orientation="autoVertical"
     :default-icon="defaultItem?.icon"
     :default-button-variant="defaultItem?.variant"
-    :hide-arrow="collapsedState"
-    :placement="collapsedState ? 'start' : 'arrowStart'"
+    :hide-arrow="isSidebarCollapsed"
+    :placement="isSidebarCollapsed ? 'start' : 'arrowStart'"
     link-size="small"
     button-size="large"
   />

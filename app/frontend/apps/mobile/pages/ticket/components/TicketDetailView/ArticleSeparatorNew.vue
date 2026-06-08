@@ -1,8 +1,8 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <template>
   <div class="line-new text-center select-none">
-    <span class="text-blue bg-black px-2">{{ $t('new') }}</span>
+    <span class="bg-black px-2 text-blue">{{ $t('new') }}</span>
   </div>
 </template>
 

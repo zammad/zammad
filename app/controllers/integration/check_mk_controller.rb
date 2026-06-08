@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Integration::CheckMkController < ApplicationController
   skip_before_action :verify_csrf_token
@@ -7,9 +7,9 @@ class Integration::CheckMkController < ApplicationController
   def update
 
     # check params
-    raise Exceptions::UnprocessableEntity, 'event_id is missing!' if params[:event_id].blank?
-    raise Exceptions::UnprocessableEntity, 'state is missing!' if params[:state].blank?
-    raise Exceptions::UnprocessableEntity, 'host is missing!' if params[:host].blank?
+    raise Exceptions::UnprocessableContent, 'event_id is missing!' if params[:event_id].blank?
+    raise Exceptions::UnprocessableContent, 'state is missing!' if params[:state].blank?
+    raise Exceptions::UnprocessableContent, 'host is missing!' if params[:host].blank?
 
     # search for open ticket
     auto_close = Setting.get('check_mk_auto_close')
@@ -140,11 +140,11 @@ UserAgent: #{request.env['HTTP_USER_AGENT'] || '-'}
     http_log_config facility: 'check_mk'
 
     if !Setting.get('check_mk_integration')
-      raise Exceptions::UnprocessableEntity, __('Feature is disabled, please contact your administrator!')
+      raise Exceptions::UnprocessableContent, __('Feature is disabled, please contact your administrator!')
     end
 
     if Setting.get('check_mk_token') != params[:token]
-      raise Exceptions::UnprocessableEntity, __('The provided token is invalid.')
+      raise Exceptions::UnprocessableContent, __('The provided token is invalid.')
     end
 
     true

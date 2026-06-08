@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { renderComponent } from '#tests/support/components/index.ts'
 
@@ -24,9 +24,7 @@ describe('CommonTicketStateIndicator.vue', () => {
     })
 
     expect(view.getByRole('group')).toHaveClass('text-yellow')
-    expect(view.getByIconName('check-circle-no')).toHaveAccessibleName(
-      '(state: open)',
-    )
+    expect(view.getByIconName('check-circle-no')).toHaveAccessibleName('(state: open)')
   })
 
   it('renders pending state correctly', () => {
@@ -36,9 +34,7 @@ describe('CommonTicketStateIndicator.vue', () => {
     })
 
     expect(view.getByRole('group')).toHaveClass('text-gray')
-    expect(view.getByIconName('check-circle-no')).toHaveAccessibleName(
-      '(state: pending reminder)',
-    )
+    expect(view.getByIconName('check-circle-no')).toHaveAccessibleName('(state: pending reminder)')
   })
 
   it('renders escalated state correctly', () => {
@@ -48,9 +44,7 @@ describe('CommonTicketStateIndicator.vue', () => {
     })
 
     expect(view.getByRole('group')).toHaveClass('text-red-bright')
-    expect(view.getByIconName('check-circle-no')).toHaveAccessibleName(
-      '(state: new)',
-    )
+    expect(view.getByIconName('check-circle-no')).toHaveAccessibleName('(state: new)')
   })
 
   it('renders closed state correctly', () => {
@@ -60,9 +54,7 @@ describe('CommonTicketStateIndicator.vue', () => {
     })
 
     expect(view.getByRole('group')).toHaveClass('text-green')
-    expect(view.getByIconName('check-circle-no')).toHaveAccessibleName(
-      '(state: closed)',
-    )
+    expect(view.getByIconName('check-circle-no')).toHaveAccessibleName('(state: closed)')
   })
 
   it('renders open state correctly (pill)', () => {
@@ -74,10 +66,7 @@ describe('CommonTicketStateIndicator.vue', () => {
 
     const statusIndicator = view.getByRole('group')
 
-    expect(statusIndicator).toHaveClasses([
-      'bg-yellow-highlight',
-      'text-yellow',
-    ])
+    expect(statusIndicator).toHaveClasses(['bg-yellow-highlight', 'text-yellow'])
     expect(statusIndicator).toHaveTextContent('open')
   })
 

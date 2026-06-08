@@ -1,7 +1,13 @@
-
-
-query ticketExternalReferencesIdoitObjectSearch ($idoitTypeId: String, $limit: Int!, $query: String, ){
-  ticketExternalReferencesIdoitObjectSearch(idoitTypeId: $idoitTypeId, limit: $limit, query: $query) {
+query ticketExternalReferencesIdoitObjectSearch(
+  $idoitTypeId: String
+  $limit: Int!
+  $query: String
+) {
+  ticketExternalReferencesIdoitObjectSearch(
+    idoitTypeId: $idoitTypeId
+    limit: $limit
+    query: $query
+  ) {
     ...IdoitObjectAttributes
   }
 }

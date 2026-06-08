@@ -1,8 +1,5 @@
 mutation ticketMerge($sourceTicketId: ID!, $targetTicketId: ID!) {
-  ticketMerge(
-    sourceTicketId: $sourceTicketId
-    targetTicketId: $targetTicketId
-  ) {
+  ticketMerge(sourceTicketId: $sourceTicketId, targetTicketId: $targetTicketId) {
     errors {
       ...errors
     }

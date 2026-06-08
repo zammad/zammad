@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class TriggerWebhookJob < ApplicationJob
 
@@ -26,6 +26,8 @@ class TriggerWebhookJob < ApplicationJob
     return if request.success?
 
     raise TriggerWebhookJob::RequestError
+  rescue HostnameSafetyCheck::SafetyError => e
+    Rails.logger.error "Can't execute Webhook with ID #{webhook_id} for Trigger '#{trigger.name}' with ID #{trigger.id}: #{e.message}"
   end
 
   private
@@ -64,24 +66,29 @@ class TriggerWebhookJob < ApplicationJob
   end
 
   def request
-    UserAgent.post(
-      webhook.endpoint,
+    http_method = (webhook.http_method.presence || 'post').downcase.to_sym
+    interpolated_endpoint = interpolate_endpoint
+
+    UserAgent.send(
+      http_method,
+      interpolated_endpoint,
       payload,
       {
         json:                    true,
         jsonParseDisable:        true,
-        open_timeout:            4,
-        read_timeout:            30,
-        total_timeout:           60,
+        read_timeout:            ENV.fetch('ZAMMAD_HTTP_WEBHOOK_READ_TIMEOUT', 30).to_i,
+        total_timeout:           ENV.fetch('ZAMMAD_HTTP_WEBHOOK_TOTAL_TIMEOUT', 30).to_i,
         headers:                 headers,
         signature_token:         webhook.signature_token,
         verify_ssl:              webhook.ssl_verify,
         user:                    webhook.basic_auth_username,
         password:                webhook.basic_auth_password,
+        bearer_token:            webhook.bearer_token,
         do_not_follow_redirects: true,
         log:                     {
           facility: 'webhook',
         },
+        validate_safety:         { allow_private: true, allow_loopback: true },
       },
     )
   end
@@ -107,27 +114,34 @@ class TriggerWebhookJob < ApplicationJob
   end
 
   def pre_defined_webhook_payload
-    TriggerWebhookJob::CustomPayload::Track::PreDefinedWebhook.payload(webhook.pre_defined_webhook_type)
+    Service::Template::Interpolation::Interpolator::Webhook::Track::PreDefinedWebhook.payload(webhook.pre_defined_webhook_type)
   end
 
   def generate_custom_payload
-    tracks = { ticket:, article: }
-    add_custom_tracks(tracks)
-
     payload = webhook.customized_payload ? webhook.custom_payload : pre_defined_webhook_payload
     return default_payload if payload.nil?
 
-    hash = TriggerWebhookJob::CustomPayload.generate(payload, tracks)
-    return hash if webhook.customized_payload
+    tracks = { ticket:, article: }
 
+    # Use the new interpolation service
+    interpolator = Service::Template::Interpolation::Interpolator::Webhook.new( # rubocop:disable Zammad/ForbidCallingServiceDirectly
+      template:                       payload,
+      tracks:,
+      additional_track_generate_data: webhook_data,
+    )
+
+    result = interpolator.execute
+    return result if webhook.customized_payload
+
+    # Handle post_replace for pre-defined webhooks
     pre_defined_webhook = "Webhook::PreDefined::#{webhook.pre_defined_webhook_type}".constantize.new
-    return hash if !pre_defined_webhook.respond_to?(:post_replace)
+    return result if !pre_defined_webhook.respond_to?(:post_replace)
 
-    pre_defined_webhook.post_replace(hash, tracks)
+    pre_defined_webhook.post_replace(result, tracks)
   end
 
-  def add_custom_tracks(tracks)
-    data = {
+  def webhook_data
+    {
       event:   {
         type:      event_type,
         execution: execution_type,
@@ -136,12 +150,22 @@ class TriggerWebhookJob < ApplicationJob
       },
       webhook: webhook
     }
-
-    TriggerWebhookJob::CustomPayload.tracks.each do |track|
-      next if !track.respond_to?(:generate)
-
-      track.generate(tracks, data)
-    end
   end
 
+  def interpolate_endpoint
+    endpoint = webhook.endpoint
+
+    return endpoint if !endpoint.match?(%r{#\{[a-z0-9_.?!]+\}})
+
+    tracks = { ticket:, article: }
+
+    # Use the interpolation service for scanning and parsing
+    interpolator = Service::Template::Interpolation::Interpolator.new( # rubocop:disable Zammad/ForbidCallingServiceDirectly
+      template: endpoint,
+      tracks:,
+      mode:     :url,
+    )
+
+    interpolator.execute
+  end
 end

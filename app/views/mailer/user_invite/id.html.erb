@@ -1,0 +1,13 @@
+Undangan untuk #{config.product_name} pada #{config.fqdn}
+
+<div>Hai #{user.firstname},</div>
+<br>
+<div>I (#{current_user.firstname} #{current_user.lastname}) telah mengundang Anda ke #{config.product_name} - platform dukungan pelanggan kami.</div>
+<br>
+<div>Klik <a href="#{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.token}">di sini</a> dan atur sandi Anda.</div>
+<br>
+<div>Nikmati,</div>
+<br>
+<div>#{current_user.firstname} #{current_user.lastname}</div>
+<br>
+<div>Tim #{config.product_name} Anda</div>

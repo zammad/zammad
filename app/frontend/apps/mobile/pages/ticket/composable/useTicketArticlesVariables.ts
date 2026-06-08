@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { computed } from 'vue'
 
@@ -36,8 +36,7 @@ export const useTicketArticlesQueryVariables = () => {
     ticketArticlesLoaded.add(ticketId)
   }
 
-  const allTicketArticlesLoaded = (ticketId: string) =>
-    ticketArticlesLoaded.has(ticketId)
+  const allTicketArticlesLoaded = (ticketId: string) => ticketArticlesLoaded.has(ticketId)
 
   return {
     ticketArticlesMin,

@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { within } from '@testing-library/vue'
 
@@ -19,8 +19,6 @@ const SUCCESS_COMMENT =
   '/emailAddress=smime1@example.com/C=DE/ST=Berlin/L=Berlin/O=Example Security/OU=IT Department/CN=example.com'
 
 describe('rendering security badge', () => {
-  it('renders success classes, when security passed')
-
   describe('renders encryption', () => {
     const renderEncryption = (success: boolean, comment: string) => {
       return renderBadge({
@@ -44,10 +42,8 @@ describe('rendering security badge', () => {
 
       await view.events.click(view.getByRole('button'))
 
-      expect(view.queryByText('Security Error')).not.toBeInTheDocument()
-      expect(
-        view.getByText(`Encryption: ${SUCCESS_COMMENT}`),
-      ).toBeInTheDocument()
+      expect(view.queryByText('Security error')).not.toBeInTheDocument()
+      expect(view.getByText(`Encryption: ${SUCCESS_COMMENT}`)).toBeInTheDocument()
     })
 
     it('ignores encryption error, if comment is not provided', () => {
@@ -60,7 +56,7 @@ describe('rendering security badge', () => {
     it('renders security error, if encryption is unsuccessful and comment is provided', async () => {
       const view = renderEncryption(false, 'error!')
 
-      expect(view.getByText('Security Error')).toBeInTheDocument()
+      expect(view.getByText('Security error')).toBeInTheDocument()
 
       const icon = view.getByIconName('unlock')
       expect(icon).toBeInTheDocument()
@@ -68,7 +64,7 @@ describe('rendering security badge', () => {
       await view.events.click(icon)
 
       const popup = view.getByTestId('popupWindow')
-      expect(within(popup).getByText('Security Error')).toBeInTheDocument()
+      expect(within(popup).getByText('Security error')).toBeInTheDocument()
       expect(within(popup).getByText('Encryption: error!')).toBeInTheDocument()
       expect(within(popup).getByText('Try again')).toBeInTheDocument()
     })
@@ -93,7 +89,7 @@ describe('rendering security badge', () => {
 
       await view.events.click(view.getByRole('button'))
 
-      expect(view.queryByText('Security Error')).not.toBeInTheDocument()
+      expect(view.queryByText('Security error')).not.toBeInTheDocument()
       expect(view.getByText(`Sign: ${SUCCESS_COMMENT}`)).toBeInTheDocument()
     })
 
@@ -109,7 +105,7 @@ describe('rendering security badge', () => {
     it('renders security error, if sign is unsuccessful and comment is provided', async () => {
       const view = renderSign(false, 'error!')
 
-      expect(view.getByText('Security Error')).toBeInTheDocument()
+      expect(view.getByText('Security error')).toBeInTheDocument()
 
       const icon = view.getByIconName('not-signed')
       expect(icon).toBeInTheDocument()
@@ -117,7 +113,7 @@ describe('rendering security badge', () => {
       await view.events.click(icon)
 
       const popup = view.getByTestId('popupWindow')
-      expect(within(popup).getByText('Security Error')).toBeInTheDocument()
+      expect(within(popup).getByText('Security error')).toBeInTheDocument()
       expect(within(popup).getByText('Sign: error!')).toBeInTheDocument()
       expect(within(popup).getByText('Try again')).toBeInTheDocument()
     })
@@ -134,7 +130,7 @@ describe('rendering security badge', () => {
       },
     })
 
-    expect(view.queryByText('Security Error')).not.toBeInTheDocument()
+    expect(view.queryByText('Security error')).not.toBeInTheDocument()
     expect(view.getByLabelText('Signed')).toBeInTheDocument()
     expect(view.getByIconName('signed')).toBeInTheDocument()
     expect(view.getByIconName('lock')).toBeInTheDocument()
@@ -152,7 +148,7 @@ describe('rendering security badge', () => {
       },
     })
 
-    expect(view.getByText('Security Error')).toBeInTheDocument()
+    expect(view.getByText('Security error')).toBeInTheDocument()
 
     // signed icon has priority over lock icon, when both failed
     const icon = view.getByIconName('not-signed')
@@ -161,10 +157,8 @@ describe('rendering security badge', () => {
     await view.events.click(icon)
 
     const popup = view.getByTestId('popupWindow')
-    expect(within(popup).getByText('Security Error')).toBeInTheDocument()
-    expect(
-      within(popup).getByText('Encryption: encryption error'),
-    ).toBeInTheDocument()
+    expect(within(popup).getByText('Security error')).toBeInTheDocument()
+    expect(within(popup).getByText('Encryption: encryption error')).toBeInTheDocument()
     expect(within(popup).getByText('Sign: sign error')).toBeInTheDocument()
 
     expect(within(popup).getByText('Try again')).toBeInTheDocument()

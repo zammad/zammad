@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -91,7 +91,7 @@ RSpec.describe Gql::Mutations::Ticket::Merge, :aggregate_failures, type: :graphq
       it 'raises an error', :aggregate_failures do
         gql.execute(query, variables: variables)
         expect(gql.result.error_type).to eq(Exceptions::Forbidden)
-        expect(gql.result.error_message).to eq("Failed Gql::EntryPoints::Mutations's authorization check on field ticketMerge")
+        expect(gql.result.error_message).to eq('Access forbidden by Gql::Mutations::Ticket::Merge')
       end
     end
   end

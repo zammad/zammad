@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -9,7 +9,7 @@ RSpec.describe HtmlSanitizer::Scrubber::InlineImages do
   describe('#scrubber') do
     subject(:actual) { fragment.scrub!(scrubber).to_html }
 
-    let(:fragment) { Loofah.fragment(input) }
+    let(:fragment) { Loofah.html5_fragment(input) }
 
     context 'when matching image' do
       let(:input)  { '<img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/...">' }
@@ -76,10 +76,14 @@ RSpec.describe HtmlSanitizer::Scrubber::InlineImages do
   end
 
   describe '#inline_image_data' do
-    it 'truthy when image' do
-      input = base64
+    %w[image/jpeg image/jpg image/png].each do |type|
+      context "with #{type}" do
+        it 'returns truthy' do
+          input = "data:#{type};base64,/9j/4AAQSkZJRgABAQAAAQABAAD/..."
 
-      expect(scrubber.send(:inline_image_data, input)).to be_truthy
+          expect(scrubber.send(:inline_image_data, input)).to be_truthy
+        end
+      end
     end
 
     it 'falsey when non-jpeg/png' do

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -282,6 +282,28 @@ RSpec.describe 'Elasticsearch', searchindex: true do
           expect(result).not_to be_present
         end
       end
+    end
+  end
+
+  describe 'Job can not index perform field of type flattened with big html #5862' do
+    let(:job) do
+      create(:job,
+             name:      'br',
+             object:    'Ticket',
+             condition: { 'ticket.state_id' => { 'operator' => 'is', 'value' => ['1'] } },
+             perform:   { 'notification.email' => { 'body' => "<div><h1>Title</h1>#{Faker::Lorem.paragraphs(number: 1000).map { |p| "<p>#{p}</p>" }.join}</div>", 'internal' => 'false', 'recipient' => ['article_last_sender'], 'subject' => 'test', 'include_attachments' => 'false' } },)
+    end
+
+    before do
+      job
+    end
+
+    it 'does not index html for notification email' do
+      expect(job.search_index_attribute_lookup['perform']['notification.email']['body']).not_to include('<h1>Title</h1>')
+    end
+
+    it 'does not throw error during indexing of a job with a long notification email' do
+      expect { job.search_index_update_backend }.not_to raise_error
     end
   end
 end

@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { getNode } from '@formkit/core'
 import { FormKit } from '@formkit/vue'
@@ -45,10 +45,7 @@ describe('Form - Field - Security - Tabs & Options', () => {
 
     expect(smime).toBeInTheDocument()
     expect(smime).not.toBeDisabled()
-    expect(smime, 'smime is enabled by default').toHaveAttribute(
-      'aria-selected',
-      'true',
-    )
+    expect(smime, 'smime is enabled by default').toHaveAttribute('aria-selected', 'true')
 
     const encrypt = view.getByRole('option', { name: 'Encrypt' })
 
@@ -260,9 +257,7 @@ describe('Form - Field - Security - Tabs & Options', () => {
       },
     })
 
-    await view.events.click(
-      await view.findByRole('option', { name: 'Encrypt' }),
-    )
+    await view.events.click(await view.findByRole('option', { name: 'Encrypt' }))
 
     expect(onSubmit).not.toHaveBeenCalled()
 
@@ -298,13 +293,9 @@ describe('Form - Field - Security - Messages', () => {
       },
     })
 
-    expect(
-      view.getByRole('option', { name: 'Custom encryption message' }),
-    ).toBeInTheDocument()
+    expect(view.getByRole('option', { name: 'Custom encryption message' })).toBeInTheDocument()
 
-    expect(
-      view.getByRole('option', { name: 'Custom sign message' }),
-    ).toBeInTheDocument()
+    expect(view.getByRole('option', { name: 'Custom sign message' })).toBeInTheDocument()
   })
 
   it("doesn't render a message if there is no messages in a different type", async () => {
@@ -321,13 +312,9 @@ describe('Form - Field - Security - Messages', () => {
       },
     })
 
-    expect(
-      view.getByRole('option', { name: 'Custom encryption message' }),
-    ).toBeInTheDocument()
+    expect(view.getByRole('option', { name: 'Custom encryption message' })).toBeInTheDocument()
 
-    expect(
-      view.getByRole('option', { name: 'Custom sign message' }),
-    ).toBeInTheDocument()
+    expect(view.getByRole('option', { name: 'Custom sign message' })).toBeInTheDocument()
 
     await view.events.click(view.getByRole('tab', { name: 'PGP' }))
 
@@ -357,18 +344,12 @@ describe('Form - Field - Security - Messages', () => {
       view.getByRole('option', { name: 'Custom S/MIME encryption message' }),
     ).toBeInTheDocument()
 
-    expect(
-      view.getByRole('option', { name: 'Custom S/MIME sign message' }),
-    ).toBeInTheDocument()
+    expect(view.getByRole('option', { name: 'Custom S/MIME sign message' })).toBeInTheDocument()
 
     await view.events.click(view.getByRole('tab', { name: 'PGP' }))
 
-    expect(
-      view.getByRole('option', { name: 'Custom PGP encryption message' }),
-    ).toBeInTheDocument()
+    expect(view.getByRole('option', { name: 'Custom PGP encryption message' })).toBeInTheDocument()
 
-    expect(
-      view.getByRole('option', { name: 'Custom PGP sign message' }),
-    ).toBeInTheDocument()
+    expect(view.getByRole('option', { name: 'Custom PGP sign message' })).toBeInTheDocument()
   })
 })

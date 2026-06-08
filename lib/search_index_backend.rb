@@ -1,9 +1,22 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class SearchIndexBackend
 
   SUPPORTED_ES_VERSION_MINIMUM   = '7.8'.freeze
-  SUPPORTED_ES_VERSION_LESS_THAN = '9'.freeze
+  SUPPORTED_ES_VERSION_LESS_THAN = '10'.freeze
+
+  STORE_NAMES           = %w[preferences data].freeze
+  STORE_NAMES_PER_MODEL = {
+    CoreWorkflow     => %w[condition_selected condition_saved perform],
+    Job              => %w[condition perform timeplan],
+    Macro            => %w[perform],
+    Overview         => %w[condition view order],
+    PostmasterFilter => %w[perform match],
+    Report::Profile  => %w[condition],
+    Sla              => %w[condition],
+    Template         => %w[options],
+    Trigger          => %w[condition perform],
+  }.freeze
 
 =begin
 
@@ -235,7 +248,7 @@ It should get used in batches to prevent performance issues on entities which ha
       },
     }
 
-    response = make_request(url, data: data, method: :post, read_timeout: 10.minutes)
+    response = make_request(url, data: data, method: :post, request_type: :reindex)
     if !response.success?
       Rails.logger.error humanized_error(
         verb:     'GET',
@@ -371,7 +384,7 @@ remove whole data from index
 =end
 
   def self.search_by_index(query, index, options = {})
-    return if query.blank?
+    return if query.blank? && !options[:search_by_index]
 
     action = '_search'
     if options[:only_total_count].present?
@@ -382,16 +395,22 @@ remove whole data from index
     return if url.blank?
 
     # real search condition
-    condition = {
-      'query_string' => {
-        'query'            => append_wildcard_to_simple_query(query),
-        'time_zone'        => Setting.get('timezone_default'),
-        'default_operator' => 'AND',
-        'analyze_wildcard' => true,
-      }
-    }
+    condition = if query.blank?
+                  {
+                    match_all: {},
+                  }
+                else
+                  {
+                    'query_string' => {
+                      'query'            => append_wildcard_to_simple_query(query),
+                      'time_zone'        => Setting.get('timezone_default'),
+                      'default_operator' => 'AND',
+                      'analyze_wildcard' => true,
+                    }
+                  }
+                end
 
-    if (fields = options.dig(:query_fields_by_indexes, index.to_sym))
+    if query.present? && (fields = options.dig(:query_fields_by_indexes, index.to_sym))
       condition['query_string']['fields'] = fields
     end
 
@@ -761,8 +780,10 @@ generate url for index or document access (only for internal use)
 
     if options[:condition].present?
       selector_query = SearchIndexBackend.selector2query(index, options[:condition], {}, nil)
-      data[:query][:bool][:must] += Array.wrap(selector_query[:query][:bool][:must])
-      data[:query][:bool][:must_not] += Array.wrap(selector_query[:query][:bool][:must_not])
+      if selector_query.dig(:query, :bool).present?
+        data[:query][:bool][:must] += Array.wrap(selector_query[:query][:bool][:must])
+        data[:query][:bool][:must_not] += Array.wrap(selector_query[:query][:bool][:must_not])
+      end
     end
 
     # do not return attachments since they could contain invalid utf-8 #5575
@@ -794,21 +815,23 @@ helper method for making HTTP calls
 @param url [String] url
 @option params [Hash] :data is a payload hash
 @option params [Symbol] :method is a HTTP method
-@option params [Integer] :open_timeout is HTTP request open timeout
-@option params [Integer] :read_timeout is HTTP request read timeout
+@option params [Symbol] :request_type selects the timeout profile; use `:reindex` for long-running reindex operations
 
 @return UserAgent response
 
 =end
-  def self.make_request(url, data: {}, method: :get, open_timeout: 8, read_timeout: 180)
+  def self.make_request(url, data: {}, method: :get, request_type: :default)
     Rails.logger.debug { "# curl -X #{method} \"#{url}\" " }
     Rails.logger.debug { "-d '#{data.to_json}'" } if data.present?
 
+    read_timeout, total_timeout = timeouts_for(request_type)
+
     options = {
       json:              true,
-      open_timeout:      open_timeout,
+      # Elasticsearch is typically a local service, so a dead instance should be detected quickly.
+      open_timeout:      8,
       read_timeout:      read_timeout,
-      total_timeout:     (open_timeout + read_timeout + 60),
+      total_timeout:     total_timeout,
       open_socket_tries: 3,
       user:              Setting.get('es_user'),
       password:          Setting.get('es_password'),
@@ -820,6 +843,21 @@ helper method for making HTTP calls
     Rails.logger.debug { "# #{response.code}" }
 
     response
+  end
+
+  def self.timeouts_for(request_type)
+    case request_type
+    when :reindex
+      [
+        ENV.fetch('ZAMMAD_HTTP_ELASTICSEARCH_REINDEX_READ_TIMEOUT', 600).to_i,
+        ENV.fetch('ZAMMAD_HTTP_ELASTICSEARCH_REINDEX_TOTAL_TIMEOUT', 600).to_i,
+      ]
+    else
+      [
+        ENV.fetch('ZAMMAD_HTTP_ELASTICSEARCH_READ_TIMEOUT', 180).to_i,
+        ENV.fetch('ZAMMAD_HTTP_ELASTICSEARCH_TOTAL_TIMEOUT', 180).to_i,
+      ]
+    end
   end
 
 =begin
@@ -872,24 +910,26 @@ helper method for making HTTP calls and raising error if response was not succes
       properties: {}
     }
 
-    store_columns = %w[preferences data condition condition_selected condition_saved perform options view order match timeplan]
-
     # for elasticsearch 6.x and later
     string_type = 'text'
     string_raw  = { type: 'keyword', ignore_above: 5012 }
     boolean_raw = { type: 'boolean' }
 
     object.columns_hash.each do |key, value|
-      if store_columns.include?(key)
+      if STORE_NAMES.include?(key) || Array.wrap(STORE_NAMES_PER_MODEL[object]).include?(key)
         result[:properties][key] = {
           type: 'flattened',
         }
-      elsif value.type == :string && value.limit && value.limit <= 5000
+      elsif value.type == :string && (value.array || (value.limit && value.limit <= 5000))
         result[:properties][key] = {
           type:   string_type,
           fields: {
             keyword: string_raw,
           }
+        }
+      elsif (value.type == :string && (!value.limit || value.limit > 5000)) || (value.type == :text)
+        result[:properties][key] = {
+          type: string_type,
         }
       elsif value.type == :integer
         result[:properties][key] = {
@@ -945,11 +985,6 @@ helper method for making HTTP calls and raising error if response was not succes
         include_in_parent: true,
       }
     end
-
-    # do not return attachments since they could contain invalid utf-8 #5575
-    result[:_source] = {
-      excludes: ['attachment', 'article.attachment']
-    }
 
     result
   end
@@ -1118,6 +1153,32 @@ helper method for making HTTP calls and raising error if response was not succes
     {
       'hits'         => { 'total' => { 'value' => 0, 'relation' => 'eq' }, 'max_score' => nil, 'hits' => [] },
       'aggregations' => { 'time_buckets' => { 'buckets' => [] } }
+    }
+  end
+
+  def self.attachment_ignored?(attachment)
+    return true if attachment.filename.blank?
+
+    extension = File.extname(attachment.filename).downcase
+
+    Setting.get('es_attachment_ignore').include?(extension)
+  end
+
+  def self.attachment_too_big?(attachment)
+    return true if attachment.content.blank?
+
+    attachment.content.bytesize > Setting.get('es_attachment_max_size_in_mb').megabyte
+  end
+
+  def self.payload_too_big?(new_size)
+    new_size >= Setting.get('es_total_max_size_in_mb').megabyte
+  end
+
+  def self.attachment_to_attributes(attachment)
+    {
+      '_size'    => attachment.content.bytesize,
+      '_name'    => attachment.filename,
+      '_content' => Base64.encode64(attachment.content).delete("\n")
     }
   end
 end

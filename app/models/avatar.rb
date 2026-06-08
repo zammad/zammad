@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Avatar < ApplicationModel
   include HasDefaultModelUserRelations
@@ -149,9 +149,9 @@ add avatar by url
           url,
           {},
           {
-            open_timeout:  4,
-            read_timeout:  6,
-            total_timeout: 6,
+            open_timeout:  12,
+            read_timeout:  24,
+            total_timeout: 24,
           },
         )
         if !response.success?

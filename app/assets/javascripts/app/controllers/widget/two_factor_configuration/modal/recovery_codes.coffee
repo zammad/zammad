@@ -91,7 +91,7 @@ class App.TwoFactorConfigurationModalRecoveryCodes extends App.TwoFactorConfigur
 
     text = @$('code').text()
 
-    @copyToClipboardWithTooltip(text, e.target,'.modal-body', true)
+    @copyToClipboardWithTooltip(text, e.target, '.modal-body', true)
 
   beforePrint: =>
     @originalHead = @$('.modal-title').text()

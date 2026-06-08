@@ -1,23 +1,46 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class PerformChanges::Action::AttributeUpdates < PerformChanges::Action
+  def self.phase
+    :before_save
+  end
+
   def execute(...)
     valid_attributes!
 
-    execution_data.each do |key, value|
-      next if key.eql?('subscribe') && subscribe(value)
-      next if key.eql?('unsubscribe') && unsubscribe(value)
-      next if key.eql?('tags') && tags(value)
-      next if change_date(key, value, performable)
-
-      exchange_user_id(value)
-      template_value(value)
-
-      update_key(key, value['value'])
+    execution_data.reduce(false) do |result, (key, value)|
+      needs_saving = single_execution_block(key, value)
+      result || needs_saving
     end
   end
 
   private
+
+  def single_execution_block(key, value)
+    case key
+    when 'subscribe'
+      subscribe(value)
+    when 'unsubscribe'
+      unsubscribe(value)
+    when 'tags'
+      tags(value)
+    else
+      object_attribute = object_manager_attribute(key)
+
+      change_date(key, value, performable, object_attribute) || change_attribute(key, value, object_attribute)
+    end
+  end
+
+  def change_attribute(key, value, object_attribute)
+    return false if context_data.is_a?(Hash) && context_data[:skip_blank_attribute_values] && value['value'].blank?
+
+    exchange_user_id(value)
+    template_value(value)
+
+    update_key(key, value['value'], object_attribute)
+
+    true
+  end
 
   def valid_attributes!
     raise "The given #{origin} contains invalid attributes, stopping!" if execution_data.keys.any? { |key| !attribute_valid?(key) }
@@ -31,8 +54,15 @@ class PerformChanges::Action::AttributeUpdates < PerformChanges::Action
     record.class.column_names.include?(attribute)
   end
 
-  def update_key(attribute, value)
+  def update_key(attribute, value, object_attribute)
     return if record[attribute].to_s.eql?(value.to_s)
+
+    if value.is_a?(String)
+      value = value.strip
+
+      # When only a string is given, but the attribute is multiple, we need to convert it to an array.
+      value = [value] if object_attribute&.data_option&.fetch(:multiple, false)
+    end
 
     record[attribute] = value
     history(attribute, value)
@@ -41,23 +71,44 @@ class PerformChanges::Action::AttributeUpdates < PerformChanges::Action
   def tags(value)
     return if record.class.included_modules.exclude?(HasTags)
 
-    tags = value['value'].split(',')
+    tags = normalized_tags(value['value'])
     return if tags.blank?
 
     operator = tags_operator(value)
     return if operator.blank?
 
-    tags.each do |tag|
-      record.send(:"tag_#{operator}", tag, user_id || 1, sourceable: performable)
+    case operator
+    when 'replace'
+      record.tag_update(tags, user_id || 1, sourceable: performable)
+    when 'add', 'remove'
+      tags.each do |tag|
+        record.send(:"tag_#{operator}", tag, user_id || 1, sourceable: performable)
+      end
     end
 
-    true
+    nil
+  end
+
+  def normalized_tags(raw_value)
+    tags = case raw_value
+           when Array
+             raw_value
+           when String
+             raw_value.split(',')
+           else
+             []
+           end
+
+    tags
+      .map { |tag| tag.to_s.strip }
+      .compact_blank
+      .uniq
   end
 
   def tags_operator(value)
     operator = value['operator']
 
-    if %w[add remove].exclude?(operator)
+    if %w[add remove replace].exclude?(operator)
       Rails.logger.error "Unknown tags operator #{value['operator']}"
       return
     end
@@ -69,9 +120,11 @@ class PerformChanges::Action::AttributeUpdates < PerformChanges::Action
     user = value['pre_condition'] == 'specific' ? User.find_by(id: value['value']) : User.find_by(id: user_id)
 
     # Ignore it for non-agent users.
-    return true if !Mention.mentionable?(record, user)
+    return if !Mention.mentionable?(record, user)
 
     Mention.subscribe! record, user, sourceable: performable
+
+    nil
   end
 
   def unsubscribe(value)
@@ -82,6 +135,8 @@ class PerformChanges::Action::AttributeUpdates < PerformChanges::Action
     else
       Mention.unsubscribe! record, User.find_by(id: user_id), sourceable: performable
     end
+
+    nil
   end
 
   def exchange_user_id(value)
@@ -105,14 +160,13 @@ class PerformChanges::Action::AttributeUpdates < PerformChanges::Action
     Rails.logger.debug { "set #{record.class.name.downcase}.#{attribute} = #{value.inspect} for #{record.class.name} with id #{record.id}" }
   end
 
-  def change_date(attribute, value, performable)
-    oa = object_manager_attribute(attribute)
-    return if oa.blank?
+  def change_date(attribute, value, performable, object_attribute)
+    return if object_attribute.blank? || %w[datetime date].exclude?(object_attribute[:data_type])
 
     new_value = fetch_new_date_value(value)
     return if !new_value
 
-    record[attribute] = format_new_date_value(new_value, oa)
+    record[attribute] = format_new_date_value(new_value, object_attribute)
 
     record.history_change_source_attribute(performable, attribute)
 
@@ -120,7 +174,7 @@ class PerformChanges::Action::AttributeUpdates < PerformChanges::Action
   end
 
   def object_manager_attribute(attribute)
-    ObjectManager::Attribute.for_object(record.class.name).find_by(name: attribute, data_type: %w[datetime date])
+    ObjectManager::Attribute.for_object(record.class.name).find_by(name: attribute)
   end
 
   def fetch_new_date_value(value)

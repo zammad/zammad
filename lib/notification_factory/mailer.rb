@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class NotificationFactory::Mailer
 
@@ -82,7 +82,7 @@ returns
       selected_group_ids = user_preferences['notification_config']['group_ids']
       if selected_group_ids.is_a?(Array)
         hit = nil
-        if selected_group_ids.blank? || (selected_group_ids[0] == '-' && selected_group_ids.count == 1)
+        if selected_group_ids.blank? || (selected_group_ids[0] == '-' && selected_group_ids.one?)
           hit = true
         else
           hit = false
@@ -148,7 +148,7 @@ returns
 =end
 
   def self.deliver(data)
-    raise Exceptions::UnprocessableEntity, "Unable to send mail to user with id #{data[:recipient][:id]} because there is no email available." if data[:recipient][:email].blank?
+    raise Exceptions::UnprocessableContent, "Unable to send mail to user with id #{data[:recipient][:id]} because there is no email available." if data[:recipient][:email].blank?
 
     sender = Setting.get('notification_sender')
     Rails.logger.debug { "Send notification to: #{data[:recipient][:email]} (from:#{sender}/subject:#{data[:subject]})" }

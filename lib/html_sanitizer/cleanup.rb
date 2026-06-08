@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class HtmlSanitizer
   class Cleanup < Base
@@ -19,7 +19,7 @@ class HtmlSanitizer
     end
 
     def clean_string(input)
-      output = input.gsub(%r{<(|/)[A-z]:[A-z]>}, '')
+      output = input.gsub(%r{<(|/)[[:word:]]:[[:word:]]>}u, '')
 
       output = output.delete("\t")
       # remove all new lines
@@ -32,7 +32,7 @@ class HtmlSanitizer
       empty_node_scrubber = HtmlSanitizer::Scrubber::RemoveLastEmptyNode.new
       string = loop_string(string, empty_node_scrubber)
 
-      Loofah.fragment(string).scrub!(HtmlSanitizer::Scrubber::Cleanup.new).to_html
+      ScrubHtml.new(string, HtmlSanitizer::Scrubber::Cleanup.new).scrub!.to_html
     end
   end
 end

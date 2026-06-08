@@ -14,12 +14,12 @@
   rake zammad:store:move_files SOURCE_STORAGE TARGET_STORAGE
   </code>
   <p class="help-text"><%- @T('Examples:') %></p>
-  <p class="help-text"><%- @T('Move all from "%s" to "%s":', 'filesystem', 'database') %></p>
+  <p class="help-text"><%- @T('Move all from "%s" to "%s":', @T('Filesystem'), @T('Database')) %></p>
   </p>
   <code>
   rake zammad:store:move_files File DB
   </code>
-  <p class="help-text"><%- @T('Move all from "%s" to "%s":', 'database', 'simple storage') %></p>
+  <p class="help-text"><%- @T('Move all from "%s" to "%s":', @T('Database'), @T('Simple Storage (S3)')) %></p>
   </p>
   <code>
   rake zammad:store:move_files DB S3

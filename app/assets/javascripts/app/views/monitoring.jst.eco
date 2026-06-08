@@ -9,7 +9,16 @@
     <div class="page-header-title">
       <h2><%- @T('Current Token') %></h2>
     </div>
-    <p><input class="js-select js-token" type="text" value="<%= @data.token %>" readonly></p>
+    <div class="input form-group">
+      <div class="controls controls--button ignore-readonly">
+        <input readonly type="text" value="<%= @data.token %>" class="form-control js-select js-token js-permanentReadonly">
+        <div class="controls-button u-clickable js-copy" role="button" aria-label="<%- @T('Copy to clipboard') %>">
+          <span class="controls-button-inner">
+            <%- @Icon('clipboard') %>
+          </span>
+        </div>
+      </div>
+    </div>
     <button class="btn btn--primary js-resetToken"><%- @T('Reset') %></button>
   </div>
 
@@ -18,7 +27,16 @@
       <h2><%- @T('Health Check') %></h2>
     </div>
     <p><%- @T('Health information can be retrieved as JSON using:') %></p>
-    <input class="js-select js-url" type="text" value="<%- @C('http_type') %>://<%- @C('fqdn') %>/<%- @C('api_path') %>/monitoring/health_check?token=<%= @data.token %>" readonly></p>
+    <div class="input form-group">
+      <div class="controls controls--button ignore-readonly">
+        <input readonly type="text" value="<%= @C('http_type') %>://<%= @C('fqdn') %>/<%= @C('api_path') %>/monitoring/health_check?token=<%= @data.token %>" class="form-control js-select js-url js-permanentReadonly">
+        <div class="controls-button u-clickable js-copy" role="button" aria-label="<%- @T('Copy to clipboard') %>">
+          <span class="controls-button-inner">
+            <%- @Icon('clipboard') %>
+          </span>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div class="settings-entry">

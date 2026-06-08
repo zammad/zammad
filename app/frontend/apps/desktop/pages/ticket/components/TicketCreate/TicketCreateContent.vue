@@ -1,44 +1,44 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { isEqual } from 'lodash-es'
-import { computed, markRaw, reactive } from 'vue'
+import { computed, markRaw, nextTick, reactive } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 
+import { EXTENSION_NAME as TEXT_TOOL_EXTENSION_NAME } from '#shared/components/Form/fields/FieldEditor/extensions/AiAssistantTextTools.ts'
 import Form from '#shared/components/Form/Form.vue'
 import type { FormSubmitData } from '#shared/components/Form/types.ts'
 import { useForm } from '#shared/components/Form/useForm.ts'
+import { getNodeByName } from '#shared/components/Form/utils.ts'
 import { useConfirmation } from '#shared/composables/useConfirmation.ts'
-import { useTicketSignature } from '#shared/composables/useTicketSignature.ts'
 import { useTicketCreate } from '#shared/entities/ticket/composables/useTicketCreate.ts'
 import { useTicketCreateArticleType } from '#shared/entities/ticket/composables/useTicketCreateArticleType.ts'
 import { useTicketFormOrganizationHandler } from '#shared/entities/ticket/composables/useTicketFormOrganizationHandler.ts'
+import { useTicketSignature } from '#shared/entities/ticket/composables/useTicketSignature.ts'
 import type { TicketFormData } from '#shared/entities/ticket/types.ts'
 import { defineFormSchema } from '#shared/form/defineFormSchema.ts'
 import {
   EnumFormUpdaterId,
   EnumObjectManagerObjects,
+  type User,
+  type UserAddMutation,
 } from '#shared/graphql/types.ts'
 import { useWalker } from '#shared/router/walker.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonContentPanel from '#desktop/components/CommonContentPanel/CommonContentPanel.vue'
+import { useFieldCustomerOption } from '#desktop/components/Form/fields/FieldCustomer/useFieldCustomerOption.ts'
 import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
 import { usePage } from '#desktop/composables/usePage.ts'
 import { useTicketCreateTitle } from '#desktop/entities/ticket/composables/useTicketCreateTitle.ts'
+import { useUserCreate } from '#desktop/entities/user/composables/useUserCreate.ts'
 import { useTaskbarTab } from '#desktop/entities/user/current/composables/useTaskbarTab.ts'
 import { useTaskbarTabStateUpdates } from '#desktop/entities/user/current/composables/useTaskbarTabStateUpdates.ts'
 import type { TaskbarTabContext } from '#desktop/entities/user/current/types.ts'
 
-import {
-  useProvideTicketSidebar,
-  useTicketSidebar,
-} from '../../composables/useTicketSidebar.ts'
-import {
-  TicketSidebarScreenType,
-  type TicketSidebarContext,
-} from '../../types/sidebar.ts'
+import { useProvideTicketSidebar, useTicketSidebar } from '../../composables/useTicketSidebar.ts'
+import { TicketSidebarScreenType, type TicketSidebarContext } from '../../types/sidebar.ts'
 import TicketSidebar from '../TicketSidebar.vue'
 
 import ApplyTemplate from './ApplyTemplate.vue'
@@ -54,25 +54,13 @@ const router = useRouter()
 const walker = useWalker()
 const route = useRoute()
 
-const {
-  form,
-  isDisabled,
-  isDirty,
-  isInitialSettled,
-  formNodeId,
-  values,
-  triggerFormUpdater,
-} = useForm()
+const { form, isDisabled, isDirty, isInitialSettled, formNodeId, values, triggerFormUpdater } =
+  useForm()
 
 const currentTitle = computed(() => values.value.title as string)
-const currentArticleType = computed(
-  () => values.value.articleSenderType as string,
-)
+const currentArticleType = computed(() => values.value.articleSenderType as string)
 
-const { currentViewTitle } = useTicketCreateTitle(
-  currentTitle,
-  currentArticleType,
-)
+const { currentViewTitle } = useTicketCreateTitle(currentTitle, currentArticleType)
 
 usePage({
   metaTitle: currentViewTitle,
@@ -96,12 +84,30 @@ const goBack = () => {
 
 const { ticketArticleSenderTypeField } = useTicketCreateArticleType()
 
-const { createTicket, isTicketCustomer } = useTicketCreate(
-  form,
-  redirectAfterCreate,
-)
+const { createTicket, isTicketCustomer } = useTicketCreate(form, redirectAfterCreate)
 
-const defaultTitle = __('New Ticket')
+const defaultTitle = __('New ticket')
+
+const { openUserCreateFlyout } = useUserCreate()
+
+// FIXME: Try to sort out this mess!
+//   Instead of directly manipulating the form node, we should instead rely on a new helper from
+//   `useForm()`, as proposed in https://github.com/zammad/coordination-desktop-view/issues/597.
+const applyNewlyCreatedCustomer = async (data: unknown) => {
+  const user = (data as UserAddMutation).userAdd?.user as User
+  if (!user || !form.value?.formId) return
+
+  const customerNode = getNodeByName(form.value.formId, 'customer_id')
+  if (!customerNode) return
+
+  const { props } = customerNode
+
+  props.options = [...(props.options || []), useFieldCustomerOption(user)]
+
+  await nextTick()
+
+  customerNode.input(user.internalId, false)
+}
 
 const formSchema = defineFormSchema([
   {
@@ -112,8 +118,7 @@ const formSchema = defineFormSchema([
         isLayout: true,
         element: 'h1',
         attrs: {
-          class:
-            'py-2.5 text-center text-xl font-medium leading-snug text-black dark:text-white',
+          class: 'py-2.5 text-center text-xl font-medium leading-snug text-black dark:text-white',
           ariaCurrent: 'page',
         },
         children: '$values.title || $t($defaultTitle)',
@@ -121,7 +126,9 @@ const formSchema = defineFormSchema([
       {
         if: '$isTicketCustomer === false',
         ...ticketArticleSenderTypeField,
-        outerClass: 'flex justify-center',
+        outerClass: 'flex justify-center max-w-full overflow-x-hidden',
+        blockClass: 'w-full',
+        innerClass: 'flex justify-stretch @md:justify-center',
       },
       {
         isLayout: true,
@@ -140,7 +147,18 @@ const formSchema = defineFormSchema([
             props: {
               variant: 'warning',
             },
-            children: '$t($getAdditionalCreateNote($values.articleSenderType))',
+            children: [
+              {
+                isLayout: true,
+                element: 'div',
+                attrs: {
+                  // We convert light weight markup
+                  // The input is not sanitized and relies on the administrator to provide safe links
+                  innerHTML: '$markup($t($getAdditionalCreateNote($values.articleSenderType)))',
+                },
+                children: '',
+              },
+            ],
           },
           {
             if: '$values.ticket_duplicate_detection.count > 0',
@@ -190,6 +208,12 @@ const formSchema = defineFormSchema([
                 mentionKnowledgeBase: {
                   attachmentsNodeName: 'attachments',
                 },
+                [TEXT_TOOL_EXTENSION_NAME]: {
+                  groupNodeName: 'group_id',
+                  ticketNodeName: 'ticket_id',
+                  customerNodeName: 'customer_id',
+                  organizationNodeName: 'organization_id',
+                },
               },
             },
           },
@@ -234,7 +258,7 @@ const formSchema = defineFormSchema([
         isLayout: true,
         element: 'div',
         attrs: {
-          class: 'grid grid-cols-2-uneven gap-2.5',
+          class: 'grid @md:grid-cols-2-uneven gap-2.5',
         },
         children: [
           {
@@ -252,15 +276,11 @@ const formSchema = defineFormSchema([
 ])
 
 const securityIntegration = computed<boolean>(
-  () =>
-    (application.config.smime_integration ||
-      application.config.pgp_integration) ??
-    false,
+  () => (application.config.smime_integration || application.config.pgp_integration) ?? false,
 )
 
 const additionalCreateNotes = computed(
-  () =>
-    (application.config.ui_ticket_create_notes as Record<string, string>) || {},
+  () => (application.config.ui_ticket_create_notes as Record<string, string>) || {},
 )
 
 const schemaData = reactive({
@@ -270,7 +290,7 @@ const schemaData = reactive({
   getTabLabel: (value: string) => `tab-label-${value}`,
   getTabPanelId: (value: string) => `tab-panel-${value}`,
   existingAdditionalCreateNotes: () => {
-    return Object.keys(additionalCreateNotes).length > 0
+    return Object.keys(additionalCreateNotes.value).length > 0
   },
   getAdditionalCreateNote: (value: string) => {
     return additionalCreateNotes.value[value]
@@ -281,6 +301,27 @@ const changedFields = reactive({
   // Workaround until the object attribute for body is required so core worklow is returning it correctly.
   body: {
     required: true,
+  },
+
+  // The customer_id field needs some additional props for the creation of new customers (it can not be
+  // directly in the schema definition, because it will lose the correct position in the form).
+  customer_id: {
+    props: {
+      link: '#',
+      linkLabel: __('Create new customer'),
+      linkIcon: 'user-add',
+      onLinkClick: (e: MouseEvent) => {
+        e.preventDefault()
+
+        openUserCreateFlyout({
+          title: __('Create new customer'),
+          onSuccess: applyNewlyCreatedCustomer,
+        })
+      },
+      // Ticket create accepts unknown customers — the typed-in email
+      // becomes a new customer user on submit.
+      allowUnknownEmail: true,
+    },
   },
 })
 
@@ -294,31 +335,22 @@ const tabContext = computed<TaskbarTabContext>((currentContext) => {
     formIsDirty: isDirty.value,
   }
 
-  if (currentContext && isEqual(newContext, currentContext))
-    return currentContext
+  if (currentContext && isEqual(newContext, currentContext)) return currentContext
 
   return newContext
 })
 
-const {
-  currentTaskbarTab,
-  currentTaskbarTabId,
-  currentTaskbarTabFormId,
-  currentTaskbarTabDelete,
-} = useTaskbarTab(tabContext)
+const { currentTaskbarTab, currentTaskbarTabId, currentTaskbarTabFormId, currentTaskbarTabDelete } =
+  useTaskbarTab(tabContext)
 
-const { setSkipNextStateUpdate } = useTaskbarTabStateUpdates(
-  currentTaskbarTabId,
-  form,
-  triggerFormUpdater,
-)
+useTaskbarTabStateUpdates(currentTaskbarTabId, form, triggerFormUpdater)
 
 const sidebarContext = computed<TicketSidebarContext>(() => ({
   screenType: TicketSidebarScreenType.TicketCreate,
+  view: isTicketCustomer.value ? 'customer' : 'agent',
   form: form.value,
   formValues: values.value,
   currentTaskbarTabId,
-  setSkipNextStateUpdate,
 }))
 
 useProvideTicketSidebar(sidebarContext)
@@ -336,9 +368,6 @@ const discardChanges = async () => {
 }
 
 const applyTemplate = (templateId: string) => {
-  // Skip subscription for the current tab, to avoid not needed form updater requests.
-  setSkipNextStateUpdate(true)
-
   triggerFormUpdater({
     includeDirtyFields: true,
     additionalParams: {
@@ -349,7 +378,7 @@ const applyTemplate = (templateId: string) => {
 
 const formAdditionalRouteQueryParams = computed(() => ({
   taskbarId: currentTaskbarTab.value?.taskbarTabId,
-  ...(route.query || {}),
+  ...route.query,
 }))
 
 const submitCreateTicket = async (event: FormSubmitData<TicketFormData>) => {
@@ -368,8 +397,9 @@ const submitCreateTicket = async (event: FormSubmitData<TicketFormData>) => {
     background-variant="primary"
     content-alignment="center"
     :show-sidebar="hasSidebar"
+    no-padding
   >
-    <div class="w-full max-w-screen-xl px-28 py-3.5">
+    <div class="w-full max-w-270 px-4 py-7.5">
       <Form
         id="ticket-create"
         ref="form"
@@ -382,24 +412,16 @@ const submitCreateTicket = async (event: FormSubmitData<TicketFormData>) => {
         }"
         :schema-data="schemaData"
         :form-updater-id="EnumFormUpdaterId.FormUpdaterUpdaterTicketCreate"
-        :handlers="[
-          useTicketFormOrganizationHandler(),
-          signatureHandling('body'),
-        ]"
+        :handlers="[useTicketFormOrganizationHandler(), signatureHandling('body')]"
         :change-fields="changedFields"
         :form-updater-additional-params="formAdditionalRouteQueryParams"
         use-object-attributes
-        form-class="flex flex-col gap-3"
+        form-class="flex flex-col gap-3 min-w-xs"
         @submit="submitCreateTicket($event as FormSubmitData<TicketFormData>)"
-        @changed="setSkipNextStateUpdate(true)"
       />
     </div>
-    <template #sideBar="{ isCollapsed, toggleCollapse }">
-      <TicketSidebar
-        :context="sidebarContext"
-        :is-collapsed="isCollapsed"
-        :toggle-collapse="toggleCollapse"
-      />
+    <template #sideBar>
+      <TicketSidebar :context="sidebarContext" />
     </template>
     <template #bottomBar>
       <template v-if="isInitialSettled">
@@ -409,10 +431,10 @@ const submitCreateTicket = async (event: FormSubmitData<TicketFormData>) => {
           variant="danger"
           :disabled="isDisabled"
           @click="discardChanges"
-          >{{ __('Discard Changes') }}</CommonButton
+          >{{ $t('Discard changes') }}</CommonButton
         >
         <CommonButton v-else size="large" variant="secondary" @click="goBack">{{
-          __('Cancel & Go Back')
+          $t('Cancel & go back')
         }}</CommonButton>
       </template>
 
@@ -424,7 +446,7 @@ const submitCreateTicket = async (event: FormSubmitData<TicketFormData>) => {
         type="submit"
         :form="formNodeId"
         :disabled="isDisabled"
-        >{{ __('Create') }}</CommonButton
+        >{{ $t('Create') }}</CommonButton
       >
     </template>
   </LayoutContent>

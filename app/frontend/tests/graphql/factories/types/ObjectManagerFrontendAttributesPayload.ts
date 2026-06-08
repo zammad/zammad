@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import {
   EnumObjectManagerObjects,
@@ -12,10 +12,7 @@ import userAttributes from '../fixtures/user-object-attributes.ts'
 
 import type { ResolversMeta } from '../../builders/index.ts'
 
-const payloads: Record<
-  EnumObjectManagerObjects,
-  () => ObjectManagerFrontendAttributesPayload
-> = {
+const payloads: Record<EnumObjectManagerObjects, () => ObjectManagerFrontendAttributesPayload> = {
   [EnumObjectManagerObjects.Group]: () => ({ screens: [], attributes: [] }),
   [EnumObjectManagerObjects.User]: userAttributes,
   [EnumObjectManagerObjects.Organization]: organizationAttributes,

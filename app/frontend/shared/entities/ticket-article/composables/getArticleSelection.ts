@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 // import { textToHtml } from '#shared/utils/helpers.ts'
 import { getCurrentSelectionData } from '#shared/utils/selection.ts'
@@ -28,14 +28,8 @@ export const getArticleSelection = (articleId: number) => {
     `#article-${articleId} .Content`,
   ) as HTMLDivElement | null
   if (!articleContent) return undefined
-  const startInsideArticle = isInsideSelectionBoundary(
-    range.startContainer as Element,
-    articleId,
-  )
-  const endInsideArticle = isInsideSelectionBoundary(
-    range.endContainer as Element,
-    articleId,
-  )
+  const startInsideArticle = isInsideSelectionBoundary(range.startContainer as Element, articleId)
+  const endInsideArticle = isInsideSelectionBoundary(range.endContainer as Element, articleId)
   const contains = containsNode(selection, articleContent)
   const canQuote = startInsideArticle || endInsideArticle || contains
 

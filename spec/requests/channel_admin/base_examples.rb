@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 RSpec.shared_examples 'base channel management' do |factory:, path:|
   describe "GET /api/v1/channels_admin/#{path}" do
@@ -6,13 +6,15 @@ RSpec.shared_examples 'base channel management' do |factory:, path:|
 
     before { channel }
 
-    it 'lists channels' do
+    it 'lists channels', aggregate_failures: true do
       get "/api/v1/channels/admin/#{path}", as: :json
 
       expect(json_response).to include(
         'channel_ids' => [channel.id],
         'assets'      => be_present
       )
+
+      expect(response.body).to include(SensitiveParamsHelper::SENSITIVE_MASK)
     end
   end
 

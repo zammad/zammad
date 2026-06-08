@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { cloneDeep } from 'lodash-es'
@@ -31,13 +31,10 @@ const valueLookup = computed<Record<string, boolean>>(() => {
 })
 
 const parentChildLookup = ref(
-  props.context.options.reduce(
-    (lookup: Record<string, PermissionsChildOption[]>, option) => {
-      lookup[option.value] = option.children
-      return lookup
-    },
-    {},
-  ),
+  props.context.options.reduce((lookup: Record<string, PermissionsChildOption[]>, option) => {
+    lookup[option.value] = option.children
+    return lookup
+  }, {}),
 )
 
 const initializeCollapseState = (key: string) =>
@@ -155,13 +152,13 @@ const { collapseDuration, collapseEnter, collapseAfterEnter, collapseLeave } =
               ],
             },
           }"
-          @update:model-value="updateValue(option.value, $event)"
+          @update:model-value="updateValue(option.value, $event as boolean | undefined)"
           @blur="index === 0 ? context.handlers.blur : undefined"
         />
         <CommonIcon
           v-if="option.children && !valueLookup[option.value]"
           class="shrink-0 fill-stone-200 hover:fill-black focus:outline-hidden focus-visible:rounded-xs focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 dark:fill-neutral-500 dark:hover:fill-white"
-          :aria-label="i18n.t('Toggle Group')"
+          :aria-label="i18n.t('Toggle group')"
           :name="collapseLookup[option.value] ? 'chevron-up' : 'chevron-down'"
           size="xs"
           role="button"
@@ -243,7 +240,7 @@ const { collapseDuration, collapseEnter, collapseAfterEnter, collapseLeave } =
                   ],
                 },
               }"
-              @update:model-value="updateValue(childOption.value, $event)"
+              @update:model-value="updateValue(childOption.value, $event as boolean | undefined)"
             />
           </div>
         </div>

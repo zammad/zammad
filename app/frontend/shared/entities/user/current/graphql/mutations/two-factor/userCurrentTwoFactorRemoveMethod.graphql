@@ -1,11 +1,5 @@
-mutation userCurrentTwoFactorRemoveMethod(
-  $methodName: String!
-  $token: String!
-) {
-  userCurrentTwoFactorRemoveMethod(
-    methodName: $methodName
-    token: $token
-  ) {
+mutation userCurrentTwoFactorRemoveMethod($methodName: String!, $token: String!) {
+  userCurrentTwoFactorRemoveMethod(methodName: $methodName, token: $token) {
     success
     errors {
       ...errors

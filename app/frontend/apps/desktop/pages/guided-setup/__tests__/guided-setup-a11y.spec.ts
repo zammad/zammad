@@ -1,6 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
-
-import { axe } from 'vitest-axe'
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import '#tests/graphql/builders/mocks.ts'
 
@@ -43,8 +41,7 @@ describe('testing admin password request a11y', () => {
 
     const view = await visitView('/guided-setup')
 
-    const results = await axe(view.html())
-    expect(results).toHaveNoViolations()
+    await expect(view.container).toBeAccessible()
   })
 
   it('has no accessibility violations in the import selection screen', async () => {
@@ -57,8 +54,7 @@ describe('testing admin password request a11y', () => {
 
     const view = await visitView('/guided-setup/import')
 
-    const results = await axe(view.html())
-    expect(results).toHaveNoViolations()
+    await expect(view.container).toBeAccessible()
   })
 
   it('has no accessibility violations in the import source screen', async () => {
@@ -71,8 +67,7 @@ describe('testing admin password request a11y', () => {
 
     const view = await visitView('/guided-setup/import/freshdesk')
 
-    const results = await axe(view.html())
-    expect(results).toHaveNoViolations()
+    await expect(view.container).toBeAccessible()
   })
 
   beforeEach(() => {
@@ -110,8 +105,7 @@ describe('testing admin password request a11y', () => {
 
     const view = await visitView('/guided-setup/import/freshdesk/start')
 
-    const results = await axe(view.html())
-    expect(results).toHaveNoViolations()
+    await expect(view.container).toBeAccessible()
   })
 
   it('has no accessibility violations in the import source status screen', async () => {
@@ -125,8 +119,7 @@ describe('testing admin password request a11y', () => {
 
     const view = await visitView('/guided-setup/import/freshdesk/status')
 
-    const results = await axe(view.html())
-    expect(results).toHaveNoViolations()
+    await expect(view.container).toBeAccessible()
   })
 
   it('has no accessibility violations in the admin screen', async () => {
@@ -139,8 +132,7 @@ describe('testing admin password request a11y', () => {
 
     const view = await visitView('/guided-setup/manual/admin')
 
-    const results = await axe(view.html())
-    expect(results).toHaveNoViolations()
+    await expect(view.container).toBeAccessible()
   })
 
   it('has no accessibility violations in the system information screen', async () => {
@@ -152,8 +144,7 @@ describe('testing admin password request a11y', () => {
 
     const view = await visitView('/guided-setup/manual/system-information')
 
-    const results = await axe(view.html())
-    expect(results).toHaveNoViolations()
+    await expect(view.container).toBeAccessible()
   })
 
   it('has no accessibility violations in the email notification screen', async () => {
@@ -175,8 +166,7 @@ describe('testing admin password request a11y', () => {
               },
               {
                 value: 'sendmail',
-                label:
-                  'Local MTA (Sendmail/Postfix/Exim/â\u0080¦) - use server setup',
+                label: 'Local MTA (Sendmail/Postfix/Exim/…) - use server setup',
               },
             ],
           },
@@ -202,8 +192,7 @@ describe('testing admin password request a11y', () => {
 
     const view = await visitView('/guided-setup/manual/email-notification')
 
-    const results = await axe(view.html())
-    expect(results).toHaveNoViolations()
+    await expect(view.container).toBeAccessible()
   })
 
   it('has no accessibility violations in the channels screen', async () => {
@@ -215,8 +204,7 @@ describe('testing admin password request a11y', () => {
 
     const view = await visitView('/guided-setup/manual/channels')
 
-    const results = await axe(view.html())
-    expect(results).toHaveNoViolations()
+    await expect(view.container).toBeAccessible()
   })
 
   it('has no accessibility violations in the email channel screen', async () => {
@@ -241,8 +229,7 @@ describe('testing admin password request a11y', () => {
                     },
                     {
                       value: 'sendmail',
-                      label:
-                        'Local MTA (Sendmail/Postfix/Exim/â\u0080¦) - use server setup',
+                      label: 'Local MTA (Sendmail/Postfix/Exim/…) - use server setup',
                     },
                   ],
                 },
@@ -276,8 +263,7 @@ describe('testing admin password request a11y', () => {
 
     const view = await visitView('/guided-setup/manual/channels/email')
 
-    const results = await axe(view.html())
-    expect(results).toHaveNoViolations()
+    await expect(view.container).toBeAccessible()
   })
 
   it('has no accessibility violations in the pre-configured email address screen', async () => {
@@ -305,12 +291,9 @@ describe('testing admin password request a11y', () => {
       ],
     })
 
-    const view = await visitView(
-      '/guided-setup/manual/channels/email-pre-configured',
-    )
+    const view = await visitView('/guided-setup/manual/channels/email-pre-configured')
 
-    const results = await axe(view.html())
-    expect(results).toHaveNoViolations()
+    await expect(view.container).toBeAccessible()
   })
 
   it('has no accessibility violations in the invite screen', async () => {
@@ -361,8 +344,7 @@ describe('testing admin password request a11y', () => {
 
     const view = await visitView('/guided-setup/manual/invite')
 
-    const results = await axe(view.html())
-    expect(results).toHaveNoViolations()
+    await expect(view.container).toBeAccessible()
   })
 
   it('has no accessibility violations in the finish screen', async () => {
@@ -374,7 +356,6 @@ describe('testing admin password request a11y', () => {
 
     const view = await visitView('/guided-setup/manual/finish')
 
-    const results = await axe(view.html())
-    expect(results).toHaveNoViolations()
+    await expect(view.container).toBeAccessible()
   })
 })

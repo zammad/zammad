@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, ref, useTemplateRef } from 'vue'
@@ -30,12 +30,8 @@ const filterValueValidator = (filter: string) => {
   return true
 }
 
-const {
-  actions,
-  isValidFilterValue,
-  addUnknownValue,
-  onSearchInteractionUpdate,
-} = useAddUnknownValueAction(actionLabel, filterValueValidator)
+const { actions, isValidFilterValue, addUnknownValue, onSearchInteractionUpdate } =
+  useAddUnknownValueAction(actionLabel, filterValueValidator)
 
 const emptyInitialLabelText = computed(() => {
   if (!allowNewTags()) return __('Start typing to search…')
@@ -85,9 +81,12 @@ const onCloseSelectDropdown = async () => {
   onDeactivate()
 }
 
+// eslint-disable-next-line vue/no-mutating-props
 Object.assign(props.context, {
   actions,
-  defaultFilter: '*', // show tag recommendations on initial opening
+  // Show tag recommendations on initial opening unless the caller has its own
+  // policy (e.g. the search filter, which deliberately starts empty).
+  defaultFilter: props.context.defaultFilter ?? '*',
   emptyInitialLabelText,
   multiple: props.context.multiple ?? true,
   gqlQuery: AutocompleteSearchTagDocument,

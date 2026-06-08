@@ -1,17 +1,25 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
 RSpec.describe TriggerWebhookJob, type: :job do
 
-  let(:endpoint) { 'http://api.example.com/webhook' }
-  let(:token)    { 's3cr3t-t0k3n' }
-  let(:webhook)  { create(:webhook, endpoint: endpoint, signature_token: token) }
+  let(:endpoint)    { 'http://api.example.com/webhook' }
+  let(:resolved_ip) { '8.8.8.8' }
+  let(:token)       { 's3cr3t-t0k3n' }
+  let(:webhook)     { build(:webhook, endpoint: endpoint, signature_token: token).tap { it.save(validate: false) } }
   let(:trigger) do
     create(:trigger,
            perform: {
              'notification.webhook' => { 'webhook_id' => webhook.id }
            })
+  end
+
+  before do
+    allow(IPSocket)
+      .to receive(:getaddress)
+      .with('api.example.com')
+      .and_return(resolved_ip)
   end
 
   context 'when serialized model argument gets deleted' do
@@ -104,6 +112,8 @@ RSpec.describe TriggerWebhookJob, type: :job do
     let(:response_headers) { {} }
 
     before do
+      allow(Rails.logger).to receive(:error)
+
       stub_request(:post, endpoint).to_return(headers: response_headers, status: response_status, body: response_body)
 
       perform
@@ -146,6 +156,43 @@ RSpec.describe TriggerWebhookJob, type: :job do
         expect(WebMock).to have_requested(:post, endpoint)
           .with(body: payload, headers: headers)
           .with { |req| !req.headers.key?('Authorization') }
+      end
+    end
+
+    context 'with Bearer Token configured' do
+      let(:webhook) { create(:webhook, endpoint: endpoint, bearer_token: 'secret-bearer-token-123') }
+
+      it 'generates a request with Bearer Authorization header' do
+        expect(WebMock).to have_requested(:post, endpoint)
+          .with(body: payload, headers: headers)
+          .with { |req| req.headers['Authorization'] == 'Bearer secret-bearer-token-123' }
+      end
+    end
+
+    context 'without Bearer Token configured' do
+      let(:webhook)  { create(:webhook, endpoint: endpoint) }
+
+      it 'generates a request without Bearer Authorization header' do
+        expect(WebMock).to have_requested(:post, endpoint)
+          .with(body: payload, headers: headers)
+          .with { |req| !req.headers.key?('Authorization') }
+      end
+    end
+
+    context 'with different HTTP methods' do
+      %w[post put patch delete].each do |method|
+        context "with #{method.upcase} method" do
+          let(:webhook) { create(:webhook, endpoint: endpoint, http_method: method) }
+
+          before do
+            stub_request(method.to_sym, endpoint).to_return(headers: response_headers, status: response_status, body: response_body)
+            perform
+          end
+
+          it "makes a #{method.upcase} request" do
+            expect(WebMock).to have_requested(method.to_sym, endpoint)
+          end
+        end
       end
     end
 
@@ -206,12 +253,17 @@ RSpec.describe TriggerWebhookJob, type: :job do
           webhook: webhook
         }
 
-        TriggerWebhookJob::CustomPayload.tracks.select { |t| t.respond_to?(:generate) }.each do |klass|
-          klass.generate(tracks, data)
-        end
+        # Get predefined payload from the new track system
+        predefined_payload = Service::Template::Interpolation::Interpolator::Webhook::Track::PreDefinedWebhook.payload('Mattermost')
 
-        predefined_payload = TriggerWebhookJob::CustomPayload::Track::PreDefinedWebhook.payload('Mattermost')
-        TriggerWebhookJob::CustomPayload.generate(predefined_payload, tracks)
+        # Use the new interpolation service
+        interpolator = Service::Template::Interpolation::Interpolator::Webhook.new( # rubocop:disable Zammad/ForbidCallingServiceDirectly
+          template:                       predefined_payload,
+          tracks:                         tracks,
+          additional_track_generate_data: data,
+        )
+
+        interpolator.execute
       end
 
       shared_examples 'including correct payload' do
@@ -234,7 +286,7 @@ RSpec.describe TriggerWebhookJob, type: :job do
 
       context 'with customized payload' do
         let(:customized_payload) { true }
-        let(:custom_payload)     { '{"ticket":"\#{ticket.title}"}' }
+        let(:custom_payload)     { '{"ticket":"#{ticket.title}"}' } # rubocop:disable Lint/InterpolationCheck
         let(:payload) do
           {
             ticket: ticket.title,
@@ -267,6 +319,65 @@ RSpec.describe TriggerWebhookJob, type: :job do
             it_behaves_like 'including correct payload'
           end
         end
+      end
+    end
+
+    context 'with endpoint variable interpolation' do
+      let(:endpoint) { 'http://api.example.com/webhook/tickets/#{ticket.id}' } # rubocop:disable Lint/InterpolationCheck
+      let(:expected_endpoint) { "http://api.example.com/webhook/tickets/#{ticket.id}" }
+
+      before do
+        stub_request(:post, expected_endpoint).to_return(status: response_status, body: response_body)
+        perform
+      end
+
+      it 'interpolates ticket variables in the endpoint' do
+        expect(WebMock).to have_requested(:post, expected_endpoint)
+      end
+
+      context 'with multiple variables' do
+        let(:endpoint) { 'http://api.example.com/webhook?ticket=#{ticket.number}&id=#{ticket.id}' } # rubocop:disable Lint/InterpolationCheck
+        let(:expected_endpoint) { "http://api.example.com/webhook?ticket=#{ticket.number}&id=#{ticket.id}" }
+
+        it 'interpolates all variables correctly' do
+          expect(WebMock).to have_requested(:post, expected_endpoint)
+        end
+      end
+
+      context 'with special characters requiring URL encoding' do
+        before do
+          ticket.update!(title: 'Test Ticket #123: Special & Characters')
+        end
+
+        let(:endpoint) { 'http://api.example.com/webhook?title=#{ticket.title}' } # rubocop:disable Lint/InterpolationCheck
+        let(:expected_endpoint) { "http://api.example.com/webhook?title=#{CGI.escape(ticket.title)}" }
+
+        it 'URL-encodes the interpolated values' do
+          expect(WebMock).to have_requested(:post, expected_endpoint)
+        end
+      end
+
+      context 'without variables' do
+        let(:endpoint) { 'http://api.example.com/webhook/static' }
+
+        it 'uses the endpoint as-is' do
+          expect(WebMock).to have_requested(:post, endpoint)
+        end
+      end
+    end
+
+    context 'when endpoint is unsafe' do
+      let(:resolved_ip) { '1' }
+
+      it 'logs an error' do
+        expect(Rails.logger)
+          .to have_received(:error)
+          .with("Can't execute Webhook with ID #{webhook.id} for Trigger '#{trigger.name}' with ID #{trigger.id}: Could not ensure safety of the hostname: api.example.com")
+      end
+
+      it 'does not perform the request' do
+        expect(WebMock)
+          .not_to have_requested(:post, endpoint)
       end
     end
   end

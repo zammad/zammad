@@ -1,11 +1,8 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { nullableMock } from '#tests/support/utils.ts'
 
-import {
-  EnumTicketArticleSenderName,
-  type TicketArticlesQuery,
-} from '#shared/graphql/types.ts'
+import { EnumTicketArticleSenderName, type TicketArticlesQuery } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
 import type { LastArrayElement } from 'type-fest'
@@ -38,9 +35,7 @@ export const defaultFromAddress = {
 
 export const defaultBodyWithUrls = '<p>Default test body</p>'
 
-type ArticleNode = LastArrayElement<
-  TicketArticlesQuery['articles']['edges']
->['node']
+type ArticleNode = LastArrayElement<TicketArticlesQuery['articles']['edges']>['node']
 
 export const createDummyArticle = (options?: {
   articleId?: number
@@ -60,7 +55,6 @@ export const createDummyArticle = (options?: {
   mediaErrorState?: ArticleNode['mediaErrorState']
   preferences?: ArticleNode['preferences']
   detectedLanguage?: ArticleNode['detectedLanguage']
-  // eslint-disable-next-line sonarjs/cognitive-complexity
 }) => {
   return nullableMock({
     __typename: 'TicketArticle',
@@ -89,10 +83,8 @@ export const createDummyArticle = (options?: {
       __typename: 'TicketArticleSender',
       name: options?.senderName || EnumTicketArticleSenderName.Customer,
     },
-    securityState:
-      options?.securityState === undefined ? null : options.securityState,
-    mediaErrorState:
-      options?.mediaErrorState === undefined ? null : options.mediaErrorState,
+    securityState: options?.securityState === undefined ? null : options.securityState,
+    mediaErrorState: options?.mediaErrorState === undefined ? null : options.mediaErrorState,
     detectedLanguage: options?.detectedLanguage ?? null,
   }) as ArticleNode
 }

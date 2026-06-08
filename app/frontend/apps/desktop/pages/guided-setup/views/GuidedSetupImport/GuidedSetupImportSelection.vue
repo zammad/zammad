@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
@@ -25,16 +25,14 @@ const startImport = (source: string) => {
   router.push(`/guided-setup/import/${source}`)
 }
 
-const importPlugins: CommonButtonItem[] = guidedSetupImportSourcePlugins.map(
-  (plugin) => {
-    return {
-      label: plugin.label,
-      variant: 'primary',
-      size: 'medium',
-      onActionClick: () => startImport(plugin.source),
-    }
-  },
-)
+const importPlugins: CommonButtonItem[] = guidedSetupImportSourcePlugins.map((plugin) => {
+  return {
+    label: plugin.label,
+    variant: 'primary',
+    size: 'medium',
+    onActionClick: () => startImport(plugin.source),
+  }
+})
 
 const unlockCallback = () => {
   router.push('/guided-setup')
@@ -47,14 +45,10 @@ const unlockCallback = () => {
       <span class="ltr:mr-1.5 rtl:ml-1.5">
         {{ $t(label) }}
       </span>
-      <CommonBadge
-        class="bg-pink-300 text-white dark:bg-pink-300"
-        variant="custom"
-        >{{ $t('Beta') }}</CommonBadge
-      >
+      <CommonBadge class="bg-pink-300 text-white dark:bg-pink-300" variant="custom">{{
+        $t('Beta')
+      }}</CommonBadge>
     </template>
   </CommonButtonGroup>
-  <GuidedSetupActionFooter
-    @go-back="systemSetupInfoStore.systemSetupUnlock(unlockCallback)"
-  />
+  <GuidedSetupActionFooter @go-back="systemSetupInfoStore.systemSetupUnlock(unlockCallback)" />
 </template>

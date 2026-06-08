@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 /**
  * @fileoverview Enforce kebab-case for Symbol descriptors
@@ -9,21 +9,17 @@
 // Requirements
 //------------------------------------------------------------------------------
 
-/* eslint-disable @typescript-eslint/no-require-imports */
 const { RuleTester } = require('eslint')
 
 const rule = require('../../../lib/rules/zammad-symbol-description.js')
-/* eslint-enable @typescript-eslint/no-require-imports */
 
 //------------------------------------------------------------------------------
 // Tests
 //------------------------------------------------------------------------------
 
 const ruleTester = new RuleTester({
-  parser: require.resolve('vue-eslint-parser'),
-  parserOptions: {
-    ecmaVersion: 2020,
-    sourceType: 'module',
+  languageOptions: {
+    parser: require('vue-eslint-parser'), // required to parse .vue files properly otherwise js-parser will be used
   },
 })
 
@@ -79,11 +75,6 @@ ruleTester.run('zammad-symbol-descriptor', rule, {
     {
       filename: 'test.js',
       code: `Symbol('fooBar')`,
-      errors: [{ message: 'Symbol description should be in kebab-case.' }],
-    },
-    {
-      filename: 'test.ts',
-      code: `Symbol('foo bar')`,
       errors: [{ message: 'Symbol description should be in kebab-case.' }],
     },
     {

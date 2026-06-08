@@ -1,24 +1,24 @@
-<div class="settings-entry">
-  <table class="settings-list u-overflow-wrap" style="width: 100%;">
+<div class="settings-entry no-margin">
+  <table class="settings-list u-overflow-wrap no-margin" style="width: 100%;">
     <tbody>
       <tr>
         <td width="20%"><%- @T('Direction') %>
         <td><%- @T(@record.direction) %>
       <tr>
         <td><%- @T('URL') %>
-        <td><%= @record.url %>
+        <td><pre class="no-margin"><code><%= @record.url %></code></pre>
       <tr>
         <td><%- @T('Method') %>
-        <td><%= @record.method %>
+        <td><pre class="no-margin"><code><%= @record.method %></code></pre>
       <tr>
         <td><%- @T('Status') %>
-        <td><%= @record.status %>
+        <td><pre class="no-margin"><code><%= @record.status %></code></pre>
       <tr>
         <td><%- @T('Request') %>
-        <td><%- App.Utils.text2html(JSON.stringify(@record.request.content, null, 2)) %>
+        <td><pre class="no-margin"><code><%- @request_content %></code></pre>
       <tr>
         <td><%- @T('Response') %>
-        <td><%- App.Utils.text2html(JSON.stringify(@record.response.content, null, 2)) %>
+        <td><pre class="no-margin"><code><%- @response_content %></code></pre>
       <tr>
         <td><%- @T('Created at') %>
         <td><%- @datetime(@record.created_at) %>

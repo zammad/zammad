@@ -1,0 +1,6 @@
+Hello, this is my message.
+
+--
+John Doe
+
+Sent from my iPhone

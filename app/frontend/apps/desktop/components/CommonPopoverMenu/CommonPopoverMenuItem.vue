@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed } from 'vue'
@@ -14,6 +14,7 @@ export interface Props {
   labelPlaceholder?: string[]
   link?: Link
   linkExternal?: boolean
+  openInNewTab?: boolean
   variant?: Variant
   icon?: string
   labelClass?: string
@@ -25,14 +26,14 @@ const props = defineProps<Props>()
 const variantClass = computed(() => {
   if (props.variant === 'secondary') return 'text-blue-800'
   if (props.variant === 'danger') return 'text-red-500'
-  return 'group-focus-within:text-white group-hover:text-black group-hover:group-focus-within:text-white dark:group-hover:text-white'
+  return 'group-hover:text-black dark:group-hover:text-white'
 })
 
 const iconColor = computed(() => {
   if (props.iconClass) return props.iconClass
   if (props.variant === 'secondary') return 'text-blue-800'
   if (props.variant === 'danger') return 'text-red-500'
-  return 'text-stone-200 dark:text-neutral-500 group-hover:text-black dark:group-hover:text-white group-focus-within:text-white group-hover:group-focus-within:text-white'
+  return 'text-stone-200 dark:text-neutral-500 group-hover:text-black dark:group-hover:text-white'
 })
 </script>
 
@@ -41,17 +42,24 @@ const iconColor = computed(() => {
     :is="link ? 'CommonLink' : 'button'"
     :link="link"
     :external="link && linkExternal"
-    class="group block cursor-pointer leading-snug hover:no-underline! focus-visible:!outline-hidden"
+    :open-in-new-tab="link && openInNewTab"
+    class="group cursor-pointer leading-snug hover:no-underline!"
     data-test-id="popover-menu-item"
   >
     <slot name="leading" />
     <CommonLabel
-      class="gap-2 text-left"
+      class="flex-1 gap-2 text-left"
       :class="[labelClass, variantClass]"
       :prefix-icon="icon"
       :icon-color="iconColor"
     >
       <slot>{{ i18n.t(label, ...(labelPlaceholder || [])) }}</slot>
     </CommonLabel>
+    <CommonIcon
+      v-if="link && linkExternal"
+      size="tiny"
+      name="box-arrow-up-right"
+      :class="iconColor"
+    />
   </component>
 </template>

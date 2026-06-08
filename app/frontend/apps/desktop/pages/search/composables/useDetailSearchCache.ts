@@ -1,9 +1,6 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import type {
-  DetailSearchQuery,
-  DetailSearchQueryVariables,
-} from '#shared/graphql/types'
+import type { DetailSearchQuery, DetailSearchQueryVariables } from '#shared/graphql/types'
 import { getApolloClient } from '#shared/server/apollo/client.ts'
 
 import { DetailSearchDocument } from '#desktop/components/Search/graphql/queries/detailSearch.api.ts'
@@ -12,10 +9,7 @@ export const useDetailSearchCache = () => {
   const apolloClient = getApolloClient()
 
   const readDetailSearchCache = (variables: DetailSearchQueryVariables) => {
-    return apolloClient.readQuery<
-      DetailSearchQuery,
-      DetailSearchQueryVariables
-    >({
+    return apolloClient.readQuery<DetailSearchQuery, DetailSearchQueryVariables>({
       query: DetailSearchDocument,
       variables,
     })

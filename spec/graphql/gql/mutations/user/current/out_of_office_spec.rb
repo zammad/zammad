@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -60,7 +60,7 @@ RSpec.describe Gql::Mutations::User::Current::OutOfOffice, type: :graphql do
 
         expect(gql.result.data).to include('errors' => include(
           include(
-            'field'   => 'outOfOfficeReplacementId',
+            'field'   => 'out_of_office_replacement_id',
             'message' => 'This field can\'t be blank'
           )
         ))

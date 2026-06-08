@@ -1,0 +1,30 @@
+{
+  "semi": false,
+  "singleQuote": true,
+  "printWidth": 100,
+  "sortTailwindcss": {
+    "stylesheet": "./app/frontend/apps/desktop/styles/main.css"
+  },
+  "sortPackageJson": false,
+  "overrides": [
+    {
+      "files": ["./app/frontend/apps/desktop/**"],
+      "options": {
+        "sortTailwindcss": { "stylesheet": "./app/frontend/apps/desktop/styles/main.css" }
+      }
+    },
+    {
+      "files": ["./app/frontend/apps/mobile/**"],
+      "options": {
+        "sortTailwindcss": { "stylesheet": "./app/frontend/apps/mobile/styles/main.css" }
+      }
+    }
+  ],
+  "ignorePatterns": [
+    "app/frontend/**/graphql/**/*.ts",
+    "!app/frontend/tests/graphql/**/*.ts",
+    "public/**/*",
+    "tmp/**/*",
+    ".dev/rubocop/**/*.yml"
+  ]
+}

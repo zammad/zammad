@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -9,6 +9,7 @@ require 'models/form_updater/concerns/applies_ticket_shared_draft_examples'
 require 'models/form_updater/concerns/applies_split_ticket_article_examples'
 require 'models/form_updater/concerns/stores_taskbar_state_examples'
 require 'models/form_updater/concerns/applies_taskbar_state_examples'
+require 'models/form_updater/concerns/prepares_ticket_signature_examples'
 
 RSpec.describe(FormUpdater::Updater::Ticket::Create) do
   subject(:resolved_result) do
@@ -183,20 +184,46 @@ RSpec.describe(FormUpdater::Updater::Ticket::Create) do
         expect(resolved_result.resolve[:fields]).to include(
           'customer_id' => include(
             initialValue: customer.id,
-            options:      [{
-              value:   customer.id,
-              label:   customer.fullname,
-              heading: customer.organization.name,
-              object:  customer.attributes
-                        .slice('active', 'email', 'firstname', 'fullname', 'image', 'lastname', 'mobile', 'out_of_office', 'out_of_office_end_at', 'out_of_office_start_at', 'phone', 'source', 'vip')
-                        .merge({
-                                 '__typename' => 'User',
-                                 'id'         => Gql::ZammadSchema.id_from_internal_id('User', customer.id),
-                               })
-
-            }]
+            options:      include(
+              include(
+                value:   customer.id,
+                label:   customer.fullname,
+                heading: customer.organization.name,
+                object:  include(
+                  '__typename'   => 'User',
+                  'id'           => Gql::ZammadSchema.id_from_internal_id('User', customer.id),
+                  'organization' => include(
+                    '__typename' => 'Organization',
+                    'id'         => Gql::ZammadSchema.id_from_internal_id('Organization', customer.organization.id),
+                    'name'       => customer.organization.name,
+                  )
+                )
+              )
+            )
           )
         )
+      end
+    end
+  end
+
+  describe '#authorized?' do
+    it 'is authorized for agents' do
+      expect(resolved_result.authorized?).to be true
+    end
+
+    context 'with customer user' do
+      let(:user) { create(:customer) }
+
+      it 'is authorized for customers' do
+        expect(resolved_result.authorized?).to be true
+      end
+    end
+
+    context 'with admin-only user' do
+      let(:user) { create(:user, roles: [Role.find_by(name: 'Admin')]) }
+
+      it 'is not authorized' do
+        expect(resolved_result.authorized?).to be false
       end
     end
   end
@@ -208,4 +235,5 @@ RSpec.describe(FormUpdater::Updater::Ticket::Create) do
   include_examples 'FormUpdater::AppliesSplitTicketArticle'
   include_examples 'FormUpdater::StoresTaskbarState', taskbar_key: 'TicketCreateScreen-1234', taskbar_callback: 'TicketCreate', store_state_collect_group_key: nil, store_state_group_keys: nil
   include_examples 'FormUpdater::AppliesTaskbarState', taskbar_key: 'TicketCreateScreen-1234', taskbar_callback: 'TicketCreate', apply_state_group_keys: nil
+  include_examples 'FormUpdater::PreparesTicketSignature'
 end

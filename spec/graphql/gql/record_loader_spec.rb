@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -18,13 +18,11 @@ RSpec.describe Gql::RecordLoader, :aggregate_failures, authenticated_as: :agent,
       end
       next if !debug
 
-      # rubocop:disable Rails/Output
       puts payload[:name], payload[:sql], payload[:cached]
       caller.reject { |line| line.match(%r{gems|spec}) }.first(30).each do |relevant_caller_line|
         puts("  ↳ #{relevant_caller_line.sub(Rails.root.join('/').to_s, '')}")
       end
       puts ''
-      # rubocop:enable Rails/Output
     end
 
     ActiveSupport::Notifications.subscribed(callback, 'sql.active_record') do
@@ -175,8 +173,8 @@ RSpec.describe Gql::RecordLoader, :aggregate_failures, authenticated_as: :agent,
     let(:organization_id) { gql.id(Organization.last) }
     let(:query) do
       <<~QUERY
-        query organization($organizationId: ID, $organizationInternalId: Int) {
-          organization( organization: { organizationId: $organizationId, organizationInternalId: $organizationInternalId } ) {
+        query organization($organizationId: ID!) {
+          organization(organizationId: $organizationId) {
             id
             name
             shared

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Mutations
   class User::Current::Avatar::Delete < BaseMutation
@@ -8,9 +8,7 @@ module Gql::Mutations
 
     field :success, Boolean, null: false, description: 'Was the avatar deletion successful?'
 
-    def self.authorize(_obj, ctx)
-      ctx.current_user.permissions?('user_preferences.avatar')
-    end
+    requires_permission 'user_preferences.avatar'
 
     def resolve(id:)
       avatar_id = Gql::ZammadSchema.verified_object_from_id(id, type: Avatar).id

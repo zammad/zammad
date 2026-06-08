@@ -1,0 +1,18 @@
+Destek talebi hatırlatma süresi doldu (#{ticket.title})
+
+<div>Merhaba #{recipient.firstname},</div>
+<br>
+<div>Bir destek talebinin dikkate alınması gerekiyor: (#{ticket.title}) başlıklı talep için hatırlatma süresi doldu. Müşteri: "<b>#{ticket.customer.longname}</b>".</div>
+<br>
+<% if @objects[:article] %>
+  <div>
+  Bilgi:
+  <blockquote type="cite">
+  #{article.body_as_html}
+  </blockquote>
+  </div>
+<% end %>
+<br>
+<div>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">#{config.product_name} üzerinden görüntüle</a>
+</div>

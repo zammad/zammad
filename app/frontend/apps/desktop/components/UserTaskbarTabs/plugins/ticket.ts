@@ -1,10 +1,7 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { TicketTaskbarTabAttributesFragmentDoc } from '#shared/entities/ticket/graphql/fragments/ticketTaskbarTabAttributes.api.ts'
-import {
-  EnumTaskbarEntity,
-  type Ticket as TicketType,
-} from '#shared/graphql/types.ts'
+import { EnumTaskbarEntity, type Ticket as TicketType } from '#shared/graphql/types.ts'
 
 import type { UserTaskbarTabPlugin } from '#desktop/components/UserTaskbarTabs/types.ts'
 
@@ -23,8 +20,9 @@ export default <UserTaskbarTabPlugin>{
   buildTaskbarTabLink: (entity?: TicketType, entityKey?: string) => {
     if (!entity?.internalId) {
       if (!entityKey) return
-      return `/tickets/${entityKey.split('-')?.[1]}`
+      return `/tickets/${entityKey.split('-')[1]}`
     }
+
     return `/tickets/${entity.internalId}`
   },
   confirmTabRemove: true,

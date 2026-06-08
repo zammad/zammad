@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Mutations
   class Logout < BaseMutation
@@ -9,15 +9,8 @@ module Gql::Mutations
     field :success, Boolean, null: false, description: 'Was the logout successful?'
     field :external_logout_url, String, null: true, description: 'External logout URL (e.g. for SAML)?'
 
-    # Don't require an authenticated user, because that is not present in maintenance_mode,
-    #   when users still need to be correctly logged out.
-    def self.authorize(...)
-      true
-    end
-
-    def self.requires_csrf_verification?
-      false
-    end
+    allow_public_access!
+    skip_csrf_verification!
 
     def resolve(...)
       # Handling of third-party logouts (we need to redirect to the IDP).

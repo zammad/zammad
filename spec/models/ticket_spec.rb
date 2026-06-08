@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 require 'models/application_model_examples'
@@ -9,6 +9,7 @@ require 'models/concerns/checks_core_workflow_examples'
 require 'models/concerns/has_history_examples'
 require 'models/concerns/has_tags_examples'
 require 'models/concerns/has_taskbars_examples'
+require 'models/concerns/has_recent_closes_examples'
 require 'models/concerns/has_xss_sanitized_note_examples'
 require 'models/concerns/has_object_manager_attributes_examples'
 require 'models/tag/writes_to_ticket_history_examples'
@@ -17,9 +18,10 @@ require 'models/ticket/escalation_examples'
 require 'models/ticket/resets_pending_time_seconds_examples'
 require 'models/ticket/sets_close_time_examples'
 require 'models/ticket/sets_last_owner_update_time_examples'
+require 'models/ticket/has_daily_event_locks_examples'
 
 RSpec.describe Ticket, type: :model do
-  subject(:ticket) { create(:ticket) }
+  subject(:ticket) { create(:ticket).tap { TransactionDispatcher.commit } }
 
   it_behaves_like 'ApplicationModel', can_param: { sample_data_attribute: :title }
   it_behaves_like 'CanBeImported'
@@ -30,6 +32,7 @@ RSpec.describe Ticket, type: :model do
   it_behaves_like 'HasTags'
   it_behaves_like 'TagWritesToTicketHistory'
   it_behaves_like 'HasTaskbars'
+  it_behaves_like 'HasRecentCloses'
   it_behaves_like 'HasXssSanitizedNote', model_factory: :ticket
   it_behaves_like 'HasObjectManagerAttributes'
   it_behaves_like 'Ticket::Escalation'
@@ -37,6 +40,7 @@ RSpec.describe Ticket, type: :model do
   it_behaves_like 'TicketResetsPendingTimeSeconds'
   it_behaves_like 'TicketSetsCloseTime'
   it_behaves_like 'TicketSetsLastOwnerUpdateTime'
+  it_behaves_like 'Ticket::HasDailyEventLocks'
   it_behaves_like 'Association clears cache', association: :articles, factory: :ticket_article
 
   describe 'Class methods:' do
@@ -102,7 +106,7 @@ RSpec.describe Ticket, type: :model do
 
   describe 'Instance methods:' do
     describe '#merge_to' do
-      let(:target_ticket) { create(:ticket) }
+      let(:target_ticket) { create(:ticket).tap { TransactionDispatcher.commit } }
 
       context 'when source ticket has Links' do
         let(:linked_tickets) { create_list(:ticket, 3) }
@@ -253,6 +257,24 @@ RSpec.describe Ticket, type: :model do
           expect { ticket.merge_to(ticket_id: target_ticket.id, user_id: 1) }
             .to change { target_ticket.mentions.count }
             .to(1)
+        end
+      end
+
+      context 'when merging tickets with articles' do
+        let(:merge_user) { create(:user) }
+
+        it 'recalculates article_count for source and target tickets' do
+          create_list(:ticket_article, 2, :outbound_email, ticket: ticket)
+          create(:ticket_article, :system_outbound_email, ticket: ticket)
+          create(:ticket_article, :outbound_email, ticket: target_ticket)
+
+          ticket.merge_to(ticket_id: target_ticket.id, user_id: merge_user.id)
+
+          reloaded_ticket        = described_class.find(ticket.id)
+          reloaded_target_ticket = described_class.find(target_ticket.id)
+
+          expect(reloaded_ticket.article_count).to eq(reloaded_ticket.articles.non_system.count)
+          expect(reloaded_target_ticket.article_count).to eq(reloaded_target_ticket.articles.non_system.count)
         end
       end
 
@@ -1249,10 +1271,10 @@ RSpec.describe Ticket, type: :model do
     describe 'Cti::CallerId syncing:', performs_jobs: true do
       subject(:ticket) { build(:ticket) }
 
-      before { allow(Cti::CallerId).to receive(:build) }
+      before { allow(Cti::CallerId).to receive(:add) }
 
-      it 'adds numbers in article bodies (via Cti::CallerId.build)' do
-        expect(Cti::CallerId).to receive(:build).with(ticket)
+      it 'adds numbers in article bodies (via Cti::CallerId.add)' do
+        expect(Cti::CallerId).to receive(:add).with(ticket)
 
         ticket.save
         perform_enqueued_jobs commit_transaction: true
@@ -1282,6 +1304,17 @@ RSpec.describe Ticket, type: :model do
           expect { ticket.destroy }
             .to change { customer.reload.updated_at }
             .and change { organization.reload.updated_at }
+        end
+
+        it 'destroys related AI persistent storages' do
+          article = create(:ticket_article, ticket: ticket)
+
+          create(:ai_stored_result, related_object: ticket)
+          create(:ai_stored_result, related_object: article)
+
+          expect { ticket.destroy }
+            .to change(AI::StoredResult, :count)
+            .by(-2)
         end
       end
 
@@ -1361,6 +1394,7 @@ RSpec.describe Ticket, type: :model do
           'Ticket::TimeAccounting'  => { 'ticket_id' => 1 },
           'Ticket::SharedDraftZoom' => { 'ticket_id' => 0 },
           'Checklist::Item'         => { 'ticket_id' => 1 },
+          'Ticket::DailyEventLock'  => { 'ticket_id' => 0 },
         }
 
         ticket         = create(:ticket)
@@ -1765,110 +1799,6 @@ RSpec.describe Ticket, type: :model do
     end
   end
 
-  describe '.search_index_attribute_lookup_oversized?' do
-    subject!(:ticket) { create(:ticket) }
-
-    context 'when payload is ok' do
-      let(:current_payload_size) { 3.megabytes }
-
-      it 'return false' do
-        expect(ticket.send(:search_index_attribute_lookup_oversized?, current_payload_size)).to be false
-      end
-    end
-
-    context 'when payload is bigger' do
-      let(:current_payload_size) { 350.megabytes }
-
-      it 'return true' do
-        expect(ticket.send(:search_index_attribute_lookup_oversized?, current_payload_size)).to be true
-      end
-    end
-  end
-
-  describe '.search_index_attribute_lookup_file_oversized?' do
-    subject!(:store) do
-      create(:store,
-             object:   'SomeObject',
-             o_id:     1,
-             data:     'a' * ((1024**2) * 2.4), # with 2.4 mb
-             filename: 'test.TXT')
-    end
-
-    context 'when total payload is ok' do
-      let(:current_payload_size) { 200.megabytes }
-
-      it 'return false' do
-        expect(ticket.send(:search_index_attribute_lookup_file_oversized?, store, current_payload_size)).to be false
-      end
-    end
-
-    context 'when total payload is oversized' do
-      let(:current_payload_size) { 299.megabytes }
-
-      it 'return true' do
-        expect(ticket.send(:search_index_attribute_lookup_file_oversized?, store, current_payload_size)).to be true
-      end
-    end
-  end
-
-  describe '.search_index_attribute_lookup_file_ignored?' do
-    context 'when attachment is indexable' do
-      subject!(:store_with_indexable_extention) do
-        create(:store,
-               object:   'SomeObject',
-               o_id:     1,
-               data:     'some content',
-               filename: 'test.TXT')
-      end
-
-      it 'return false' do
-        expect(ticket.send(:search_index_attribute_lookup_file_ignored?, store_with_indexable_extention)).to be false
-      end
-    end
-
-    context 'when attachment is no indexable' do
-      subject!(:store_without_indexable_extention) do
-        create(:store,
-               object:   'SomeObject',
-               o_id:     1,
-               data:     'some content',
-               filename: 'test.BIN')
-      end
-
-      it 'return true' do
-        expect(ticket.send(:search_index_attribute_lookup_file_ignored?, store_without_indexable_extention)).to be true
-      end
-    end
-  end
-
-  describe '.search_index_article_attachment_attributes' do
-    context 'payload for article' do
-      subject!(:store_item) do
-        create(:store,
-               object:   'SomeObject',
-               o_id:     1,
-               data:     'some content',
-               filename: 'test.TXT')
-      end
-
-      it 'verify count of attributes' do
-        expect(ticket.send(:search_index_article_attachment_attributes, store_item).count).to be 3
-      end
-
-      it 'verify size' do
-        expect(ticket.send(:search_index_article_attachment_attributes, store_item)['size']).to eq '12'
-      end
-
-      it 'verify _name' do
-        expect(ticket.send(:search_index_article_attachment_attributes, store_item)['_name']).to eq 'test.TXT'
-      end
-
-      it 'verify _content' do
-        expect(ticket.send(:search_index_article_attachment_attributes, store_item)['_content']).to eq 'c29tZSBjb250ZW50'
-      end
-    end
-  end
-
   describe '.search_index_article_attributes' do
     context 'payload for attachment' do
       subject!(:ticket_article) do
@@ -2060,6 +1990,61 @@ RSpec.describe Ticket, type: :model do
     it 'does not deliver global assets' do
       expect(ticket.group).to be_present
       expect(ticket.assets({}).deep_symbolize_keys.keys).not_to include(:TicketPriority, :Role, :TicketState, :Group)
+    end
+  end
+
+  describe '#ai_summary_unread?' do
+    subject(:ticket) { create(:ticket) }
+
+    let(:user)             { create(:agent, groups: [ticket.group]) }
+    let(:ai_analytics_run) { create(:ai_analytics_run, related_object: ticket) }
+
+    context 'when a given run is seen' do
+      let(:ai_analytics_usage) { create(:ai_analytics_usage, user:, ai_analytics_run:) }
+
+      before do
+        ai_analytics_usage
+        article
+      end
+
+      context 'when the last relevant article is from the user' do
+        let(:article) { create(:ticket_article, ticket:, created_by: user) }
+
+        it { is_expected.not_to be_ai_summary_unread(user, ai_analytics_run) }
+      end
+
+      context 'when the last relevant article is from someone else' do
+        let(:article) { create(:ticket_article, ticket:, created_by: ticket.customer) }
+
+        it { is_expected.not_to be_ai_summary_unread(user, ai_analytics_run) }
+      end
+    end
+
+    context 'when a given run is not seen yet' do
+      before do
+        ai_analytics_run
+        article
+      end
+
+      context 'when the last relevant article is from the user' do
+        let(:article) { create(:ticket_article, ticket:, created_by: user) }
+
+        it { is_expected.not_to be_ai_summary_unread(user, ai_analytics_run) }
+      end
+
+      context 'when the last relevant article is from someone else' do
+        let(:article) { create(:ticket_article, ticket:, created_by: ticket.customer) }
+
+        it { is_expected.to be_ai_summary_unread(user, ai_analytics_run) }
+      end
+    end
+
+    context 'without a given run' do
+      before do
+        create(:ticket_article, ticket:, created_by: user)
+      end
+
+      it { is_expected.not_to be_ai_summary_unread(user, nil) }
     end
   end
 end

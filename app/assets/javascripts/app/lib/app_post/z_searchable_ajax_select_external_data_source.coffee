@@ -24,7 +24,9 @@ class App.ExternalDataSourceAjaxSelect extends App.SearchableAjaxSelect
         )
 
         for option in @attribute.options
-          @attribute.existingTokens += App.view('generic/token')(option)
+          @attribute.existingTokens += App.view('generic/token')(
+            @prepareTokenContent({ name: option.name, value: option.value })
+          )
 
       else
         @attribute.options = [_.extend({}, { value: @attribute.value.value, name: @attribute.value.label, selected: true })]
@@ -36,6 +38,7 @@ class App.ExternalDataSourceAjaxSelect extends App.SearchableAjaxSelect
     @attribute.valueRaw = JSON.stringify(@attribute.value)
 
     @renderElement()
+    @toggleClear()
 
   renderOptions: (options) ->
     # We need to transform the value that we don't lose the needed type information.
@@ -128,6 +131,7 @@ class App.ExternalDataSourceAjaxSelect extends App.SearchableAjaxSelect
       return
 
     @setShadowValue(value: key, label: value)
+    @toggleClear()
 
   onKeyUp: =>
     return if @input.val().trim() isnt '' || @attribute.multiple
@@ -175,8 +179,7 @@ class App.ExternalDataSourceAjaxSelect extends App.SearchableAjaxSelect
 
   createToken: ({label, value}) =>
     @input.before App.view('generic/token')(
-      name: String(label)
-      value: value
+      @prepareTokenContent({ name: label, value: value })
     )
 
   onEnter: (event) ->

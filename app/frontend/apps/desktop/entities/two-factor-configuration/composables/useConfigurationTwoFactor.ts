@@ -1,7 +1,6 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { storeToRefs } from 'pinia'
-import { computed, watch } from 'vue'
+import { computed, toRef, watch } from 'vue'
 
 import { useApplicationConfigTwoFactor } from '#shared/composables/authentication/useApplicationConfigTwoFactor.ts'
 import type {
@@ -16,20 +15,14 @@ import { useUserCurrentTwoFactorUpdatesSubscription } from '#desktop/entities/us
 import type { TwoFactorConfigurationMethod } from '../types.ts'
 
 export const useConfigurationTwoFactor = () => {
-  const {
-    twoFactorEnabledMethods,
-    hasEnabledMethods,
-    hasEnabledRecoveryCodes,
-  } = useApplicationConfigTwoFactor()
+  const { twoFactorEnabledMethods, hasEnabledMethods, hasEnabledRecoveryCodes } =
+    useApplicationConfigTwoFactor()
 
-  const session = useSessionStore()
-  const { user } = storeToRefs(session)
+  const user = toRef(useSessionStore(), 'user')
 
-  const defaultTwoFactorMethod = computed<EnumTwoFactorAuthenticationMethod>(
-    () => {
-      return user.value?.preferences?.two_factor_authentication?.default
-    },
-  )
+  const defaultTwoFactorMethod = computed<EnumTwoFactorAuthenticationMethod>(() => {
+    return user.value?.preferences?.two_factor_authentication?.default
+  })
 
   const userCurrentTwoFactorSubscription = new SubscriptionHandler(
     useUserCurrentTwoFactorUpdatesSubscription(),
@@ -38,9 +31,7 @@ export const useConfigurationTwoFactor = () => {
   const userCurrentTwoFactorResult = userCurrentTwoFactorSubscription.result()
 
   const twoFactorConfigurationResult = computed(
-    () =>
-      userCurrentTwoFactorResult.value?.userCurrentTwoFactorUpdates
-        .configuration,
+    () => userCurrentTwoFactorResult.value?.userCurrentTwoFactorUpdates.configuration,
   )
 
   const enabledAuthenticationMethodLookup = computed(() => {
@@ -49,8 +40,7 @@ export const useConfigurationTwoFactor = () => {
         methodLookup[enabledAuthenticationMethod.authenticationMethod] = {
           ...enabledAuthenticationMethod,
           default:
-            enabledAuthenticationMethod.authenticationMethod ===
-            defaultTwoFactorMethod.value,
+            enabledAuthenticationMethod.authenticationMethod === defaultTwoFactorMethod.value,
         }
         return methodLookup
       },
@@ -63,9 +53,7 @@ export const useConfigurationTwoFactor = () => {
 
     twoFactorEnabledMethods.value.forEach((enabledAuthenticationMethod) => {
       const configurationMethod =
-        enabledAuthenticationMethodLookup.value?.[
-          enabledAuthenticationMethod.name
-        ]
+        enabledAuthenticationMethodLookup.value?.[enabledAuthenticationMethod.name]
 
       mappedMethods.push({
         ...enabledAuthenticationMethod,
@@ -88,9 +76,7 @@ export const useConfigurationTwoFactor = () => {
   })
 
   // We need to restart the subscription when enabled two factor method list changed.
-  watch(twoFactorEnabledMethods, () =>
-    userCurrentTwoFactorSubscription.operationResult.restart(),
-  )
+  watch(twoFactorEnabledMethods, () => userCurrentTwoFactorSubscription.operationResult.restart())
 
   return {
     twoFactorConfigurationMethods,

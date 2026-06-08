@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Capybara::Node::Element
 
@@ -105,7 +105,7 @@ module ZammadCapybarActionDelegator
   end
 
   def mac_platform?
-    Gem::Platform.local.os.eql? 'darwin'
+    (ENV['SELENIUM_BROWSER_OS'] || Gem::Platform.local.os).eql? 'darwin'
   end
 
   def check(...)

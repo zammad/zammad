@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { i18n } from '#shared/i18n.ts'
 
@@ -14,10 +14,9 @@ export const useRawHTMLIcon = (props: Props & { class?: string }) => {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       class="icon ${iconClass.value} ${props.class || ''} fill-current"
-      width="${finalSize.value.width}"
-      height="${finalSize.value.height}"
-      ${!props.decorative &&
-      `aria-label=${i18n.t(props.label || props.name) || ''}`}
+      width=${finalSize.value.width}
+      height=${finalSize.value.height}
+      ${!props.decorative && `aria-label=${i18n.t(props.label || props.name) || ''}`}
       ${(props.decorative && 'aria-hidden="true"') || ''}
     >
       <use href="#icon-${props.name}" />

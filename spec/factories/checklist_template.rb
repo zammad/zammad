@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 FactoryBot.define do
   factory :checklist_template do
@@ -8,12 +8,13 @@ FactoryBot.define do
 
     transient do
       item_count { 5 }
+      items      { Array.new(item_count) { Faker::Lorem.unique.sentence } }
     end
 
     after(:create) do |checklist, context|
-      next if context.item_count.blank?
+      next if context.items.blank?
 
-      checklist.replace_items! Array.new(context.item_count) { Faker::Lorem.unique.sentence }
+      checklist.replace_items! context.items
     end
   end
 end

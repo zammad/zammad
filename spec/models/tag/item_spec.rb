@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -6,6 +6,15 @@ RSpec.describe Tag::Item do
   subject(:item) { create(:'tag/item') }
 
   describe '.rename' do
+    let!(:ticket) { create(:ticket) }
+
+    before do
+      Overview.destroy_all
+      Trigger.destroy_all
+      Job.destroy_all
+      PostmasterFilter.destroy_all
+    end
+
     context 'when given a unique item name' do
       it 'updates the name on the Tag::Item' do
         expect { described_class.rename(id: item.id, name: 'foo') }
@@ -22,37 +31,37 @@ RSpec.describe Tag::Item do
       let!(:item_2) { create(:'tag/item', name: 'foo') }
 
       context 'with no redundant tags' do
-        let!(:tag) { create(:tag, o: Ticket.first, tag_item: item) }
+        let!(:tag) { create(:tag, o: ticket, tag_item: item) }
 
         it 'reassigns all tags from old-name item to new-name item' do
           expect { described_class.rename(id: item.id, name: item_2.name) }
             .to change { tag.reload.tag_item }.to(item_2)
-            .and change { Ticket.first.tag_list }.to([item_2.name])
+            .and change { ticket.reload.tag_list }.to([item_2.name])
         end
 
         it 'strips trailing/leading whitespace' do
           expect { described_class.rename(id: item.id, name: "  #{item_2.name} ") }
             .to change { tag.reload.tag_item }.to(item_2)
-            .and change { Ticket.first.tag_list }.to([item_2.name])
+            .and change { ticket.reload.tag_list }.to([item_2.name])
         end
       end
 
       context 'with redundant tags' do
         let!(:tags) do
-          [create(:tag, o: Ticket.first, tag_item: item),
-           create(:tag, o: Ticket.first, tag_item: item_2)]
+          [create(:tag, o: ticket, tag_item: item),
+           create(:tag, o: ticket, tag_item: item_2)]
         end
 
         it 'removes the tag assigned to old-name item' do
           expect { described_class.rename(id: item.id, name: item_2.name) }
             .to change { Tag.exists?(id: tags.first.id) }.to(false)
-            .and change { Ticket.first.tag_list }.to([item_2.name])
+            .and change { ticket.reload.tag_list }.to([item_2.name])
         end
 
         it 'strips trailing/leading whitespace' do
           expect { described_class.rename(id: item.id, name: "  #{item_2.name} ") }
             .to change { Tag.exists?(id: tags.first.id) }.to(false)
-            .and change { Ticket.first.tag_list }.to([item_2.name])
+            .and change { ticket.reload.tag_list }.to([item_2.name])
         end
       end
 
@@ -74,6 +83,62 @@ RSpec.describe Tag::Item do
             .to change { object.reload.send(method)[label][:value] }
             .from('test1').to('test1_renamed')
         end
+
+        if method == :condition
+          context 'with expert mode in conditions' do
+            let(:object) do
+              create(object_klass.name.underscore,
+                     condition: {
+                       operator:   'AND',
+                       conditions: [
+                         {
+                           name:     label,
+                           operator: 'contains one',
+                           value:    'test1',
+                         },
+                       ]
+                     })
+            end
+
+            it 'updates reference with new tag name' do
+              expect { described_class.rename(id: item.id, name: 'test1_renamed') }
+                .to change { object.reload.send(method)[:conditions].first[:value] }
+                .from('test1').to('test1_renamed')
+            end
+          end
+
+          context 'with expert mode in conditions (nested)' do
+            let(:object) do
+              create(object_klass.name.underscore,
+                     condition: {
+                       'operator'   => 'OR',
+                       'conditions' => [
+                         {
+                           'name'     => label,
+                           'operator' => 'contains one',
+                           'value'    => 'test2',
+                         },
+                         {
+                           'operator'   => 'NOT',
+                           'conditions' => [
+                             {
+                               'name'     => label,
+                               'operator' => 'contains one',
+                               'value'    => 'test1',
+                             },
+                           ],
+                         },
+                       ],
+                     })
+            end
+
+            it 'updates reference with new tag name' do
+              expect { described_class.rename(id: item.id, name: 'test1_renamed') }
+                .to change { object.reload.send(method)[:conditions][1][:conditions].first[:value] }
+                .from('test1').to('test1_renamed')
+            end
+          end
+        end
       end
 
       context "with reference to renamed tag in its #{method} hash (contains-all)" do
@@ -84,6 +149,62 @@ RSpec.describe Tag::Item do
           expect { described_class.rename(id: item.id, name: 'test1_renamed') }
             .to change { object.reload.send(method)[label][:value] }
             .from('test1, test2, test3').to('test1_renamed, test2, test3')
+        end
+
+        if method == :condition
+          context 'with expert mode in conditions' do
+            let(:object) do
+              create(object_klass.name.underscore,
+                     condition: {
+                       operator:   'AND',
+                       conditions: [
+                         {
+                           name:     label,
+                           operator: 'contains all',
+                           value:    'test1, test2, test3',
+                         },
+                       ]
+                     })
+            end
+
+            it 'updates reference with new tag name' do
+              expect { described_class.rename(id: item.id, name: 'test1_renamed') }
+                .to change { object.reload.send(method)[:conditions].first[:value] }
+                .from('test1, test2, test3').to('test1_renamed, test2, test3')
+            end
+          end
+
+          context 'with expert mode in conditions (nested)' do
+            let(:object) do
+              create(object_klass.name.underscore,
+                     condition: {
+                       'operator'   => 'OR',
+                       'conditions' => [
+                         {
+                           'name'     => label,
+                           'operator' => 'contains one',
+                           'value'    => 'test2',
+                         },
+                         {
+                           'operator'   => 'NOT',
+                           'conditions' => [
+                             {
+                               'name'     => label,
+                               'operator' => 'contains one',
+                               'value'    => 'test1',
+                             },
+                           ],
+                         },
+                       ],
+                     })
+            end
+
+            it 'updates reference with new tag name' do
+              expect { described_class.rename(id: item.id, name: 'test1_renamed') }
+                .to change { object.reload.send(method)[:conditions][1][:conditions].first[:value] }
+                .from('test1').to('test1_renamed')
+            end
+          end
         end
       end
     end
@@ -108,9 +229,12 @@ RSpec.describe Tag::Item do
   end
 
   describe '.remove' do
+    let!(:user)   { create(:user) }
+    let!(:ticket) { create(:ticket) }
+
     let!(:tags) do
-      [create(:tag, tag_item: item, o: User.first),
-       create(:tag, tag_item: item, o: Ticket.first)]
+      [create(:tag, tag_item: item, o: user),
+       create(:tag, tag_item: item, o: ticket)]
     end
 
     it 'removes the specified Tag::Item' do
@@ -150,7 +274,7 @@ RSpec.describe Tag::Item do
     end
 
     it 'returns items descending by occurrence count' do
-      expect(described_class.recommended.pluck(:name))
+      expect(described_class.recommended.pluck(:name).select { |name| name.in?(%w[once twice thrice]) })
         .to eq(%w[thrice twice once])
     end
   end
@@ -163,7 +287,7 @@ RSpec.describe Tag::Item do
     end
 
     it 'returns items descending by occurrence count' do
-      expect(described_class.filter_by_name('e').pluck(:name))
+      expect(described_class.filter_by_name('e').pluck(:name).select { |name| name.in?(%w[tag test qwerty]) })
         .to eq(%w[qwerty test])
     end
   end

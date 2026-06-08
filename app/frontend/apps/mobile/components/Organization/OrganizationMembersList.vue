@@ -1,36 +1,43 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed } from 'vue'
 
-import type { OrganizationQuery } from '#shared/graphql/types.ts'
-import type { ConfidentTake } from '#shared/types/utils.ts'
+import type { User } from '#shared/graphql/types.ts'
 
 import CommonSectionMenu from '../CommonSectionMenu/CommonSectionMenu.vue'
 import CommonShowMoreButton from '../CommonShowMoreButton/CommonShowMoreButton.vue'
 import CommonUsersList from '../CommonUsersList/CommonUsersList.vue'
 
 interface Props {
-  organization: ConfidentTake<OrganizationQuery, 'organization'>
+  members: {
+    array: User[]
+    totalCount: number | null
+  }
   disableShowMore?: boolean
 }
 
 const props = defineProps<Props>()
+
 const emit = defineEmits<{
   'load-more': []
 }>()
 
-const members = computed(() => {
-  return props.organization.allMembers?.edges.map(({ node }) => node) || []
+const totalCount = computed(() => {
+  const count = props.members.totalCount || 0
+  const loaded = props.members.array.length
+
+  // We only fetch maximum of 100 member per batch
+  return loaded + Math.min(count - loaded, 100)
 })
 </script>
 
 <template>
-  <CommonSectionMenu v-if="members.length" :header-label="__('Members')">
-    <CommonUsersList :users="members" />
+  <CommonSectionMenu v-if="members?.array" :header-label="__('Members')">
+    <CommonUsersList :users="members.array" />
     <CommonShowMoreButton
-      :entities="members"
-      :total-count="organization.allMembers?.totalCount || 0"
+      :entities="members.array"
+      :total-count="totalCount"
       :disabled="disableShowMore"
       @click="emit('load-more')"
     />

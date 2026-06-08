@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import type {
   Scalars,
@@ -24,14 +24,11 @@ export interface EmailOutboundSendmailFormData extends EmailBaseOutboundData {
   adapter: EnumChannelEmailOutboundAdapter.Sendmail
 }
 
-export interface EmailOutboundSmtpFormData
-  extends Required<EmailBaseOutboundData> {
+export interface EmailOutboundSmtpFormData extends Required<EmailBaseOutboundData> {
   adapter: EnumChannelEmailOutboundAdapter.Smtp
 }
 
-export type EmailOutboundData =
-  | EmailOutboundSendmailFormData
-  | EmailOutboundSmtpFormData
+export type EmailOutboundData = EmailOutboundSendmailFormData | EmailOutboundSmtpFormData
 
 export interface EmailInboundMessagesData {
   archive?: boolean
@@ -40,8 +37,7 @@ export interface EmailInboundMessagesData {
 }
 
 export interface EmailInboundData
-  extends Required<EmailBaseConfigurationData>,
-    EmailInboundMessagesData {
+  extends Required<EmailBaseConfigurationData>, EmailInboundMessagesData {
   adapter: EnumChannelEmailInboundAdapter
   ssl: EnumChannelEmailSsl
   folder?: string

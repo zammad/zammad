@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -32,7 +32,7 @@ RSpec.describe Gql::Queries::Templates, type: :graphql do
     context 'with authenticated session', authenticated_as: :agent do
 
       it 'returns templates in alphabetical order' do
-        actual_names = gql.result.data.map { |t| t['name'] }
+        actual_names = gql.result.data.pluck('name')
         sorted_names = actual_names.sort
         expect(actual_names).to eq(sorted_names)
       end

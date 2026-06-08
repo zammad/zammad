@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -10,6 +10,22 @@ RSpec.describe 'Ticket::CallsStatsTicketReopenLog' do
     ticket.update(state: Ticket::State.find_by(name: 'closed'))
     ticket.update(state: Ticket::State.find_by(name: 'open'))
     expect(StatsStore.find_by(key: 'ticket:reopen', stats_storable_type: 'User', stats_storable_id: agent.id).data).to eq({ 'ticket_id'=> ticket.id })
+  end
+
+  it 'does track reopened tickets with multiple saves in one transaction' do
+    # Close the ticket first
+    ticket.update(state: Ticket::State.find_by(name: 'closed'))
+
+    # Reopen ticket and change another attribute in the same transaction
+    Transaction.execute do
+      ticket.state = Ticket::State.find_by(name: 'open')
+      ticket.save!
+      ticket.priority = Ticket::Priority.find_by(name: '3 high')
+      ticket.save!
+    end
+
+    # Verify stats were correctly recorded despite multiple saves
+    expect(StatsStore.find_by(key: 'ticket:reopen', stats_storable_type: 'User', stats_storable_id: agent.id).data).to eq({ 'ticket_id' => ticket.id })
   end
 
   it 'does calculate dashboard correctly' do

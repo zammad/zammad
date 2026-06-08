@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { computed, type Ref } from 'vue'
 
@@ -15,21 +15,13 @@ import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
 export const useArticleSecurity = (article: Ref<TicketArticle>) => {
   const { notify } = useNotifications()
 
-  const signingSuccess = computed(
-    () => article.value?.securityState?.signingSuccess,
-  )
+  const signingSuccess = computed(() => article.value?.securityState?.signingSuccess)
 
-  const signingMessage = computed(
-    () => article.value?.securityState?.signingMessage,
-  )
+  const signingMessage = computed(() => article.value?.securityState?.signingMessage)
 
-  const encryptionSuccess = computed(
-    () => article.value?.securityState?.encryptionSuccess,
-  )
+  const encryptionSuccess = computed(() => article.value?.securityState?.encryptionSuccess)
 
-  const encryptionMessage = computed(
-    () => article.value?.securityState?.encryptionMessage,
-  )
+  const encryptionMessage = computed(() => article.value?.securityState?.encryptionMessage)
 
   const isEncrypted = computed(
     () =>
@@ -144,15 +136,11 @@ export const useArticleSecurity = (article: Ref<TicketArticle>) => {
     isSigned,
     hasSecurityAttribute,
     typeLabel,
-    signingIcon: computed(() =>
-      signingSuccess.value ? 'signing-success' : 'signing-fail',
-    ),
+    signingIcon: computed(() => (signingSuccess.value ? 'signing-success' : 'signing-fail')),
     encryptionIcon: computed(() =>
       encryptionSuccess.value ? 'encryption-success' : 'encryption-fail',
     ),
-    signedStatusMessage: computed(() =>
-      signingSuccess.value ? __('Signed') : __('Sign error'),
-    ),
+    signedStatusMessage: computed(() => (signingSuccess.value ? __('Signed') : __('Sign error'))),
     encryptedStatusMessage: computed(() =>
       encryptionSuccess.value ? __('Encrypted') : __('Encryption error'),
     ),

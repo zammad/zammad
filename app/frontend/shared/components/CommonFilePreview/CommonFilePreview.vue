@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
@@ -65,11 +65,26 @@ const componentType = computed(() => {
 })
 
 const ariaLabel = computed(() => {
-  if (props.downloadUrl && canDownload.value)
-    return i18n.t('Download %s', props.file.name) // directly downloads file
-  if (props.downloadUrl && !canDownload.value)
-    return i18n.t('Open %s', props.file.name) // opens file in another tab
+  if (props.downloadUrl && canDownload.value) return i18n.t('Download %s', props.file.name) // directly downloads file
+  if (props.downloadUrl && !canDownload.value) return i18n.t('Open %s', props.file.name) // opens file in another tab
   return props.file.name // cannot download and preview, probably just uploaded pdf
+})
+
+const fileNameParts = computed(() => {
+  const name = props.file.name.trim() || 'file'
+  const lastDot = name.lastIndexOf('.')
+
+  // No extension if:
+  // - no dot in filename (README)
+  // - dot is first character → hidden file (.gitignore)
+  if (lastDot <= 0) {
+    return { base: name, ext: '' }
+  }
+
+  return {
+    base: name.slice(0, lastDot),
+    ext: name.slice(lastDot),
+  }
 })
 
 const onPreviewClick = (event: Event) => {
@@ -141,14 +156,11 @@ const classMap = getFilePreviewClasses()
         <CommonIcon v-else size="base" decorative :name="icon" />
       </div>
       <div class="flex flex-1 flex-col overflow-hidden" :class="classMap.base">
-        <span class="line-clamp-1">
-          {{ file.name }}
-        </span>
-        <span
-          v-if="file.size"
-          class="line-clamp-1"
-          :class="[classMap.size, sizeClass]"
-        >
+        <div class="flex">
+          <span class="line-clamp-1 min-w-0 break-all">{{ fileNameParts.base }}</span>
+          <span v-if="fileNameParts.ext" class="shrink-0">{{ fileNameParts.ext }}</span>
+        </div>
+        <span v-if="file.size" class="line-clamp-1" :class="[classMap.size, sizeClass]">
           {{ humanizeFileSize(file.size) }}
         </span>
       </div>

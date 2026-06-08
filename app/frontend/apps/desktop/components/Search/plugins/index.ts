@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { keyBy } from 'lodash-es'
 import { computed } from 'vue'
@@ -17,15 +17,13 @@ const plugins = import.meta.glob<SearchPlugin>(
 
 export const searchPlugins = Object.values(plugins)
 
-export const sortedByPriorityPlugins = searchPlugins.sort(
-  (a, b) => a.priority - b.priority,
-)
+export const sortedByPriorityPlugins = searchPlugins.sort((a, b) => a.priority - b.priority)
 
-export const sortedByNamePlugins = searchPlugins.sort((a, b) =>
-  a.name.localeCompare(b.name),
-)
+export const sortedByNamePlugins = searchPlugins.sort((a, b) => a.name.localeCompare(b.name))
 
 export const searchPluginByName = keyBy(searchPlugins, 'name')
+
+export const getSearchPlugin = (name: string) => searchPluginByName[name]
 
 export const useSearchPlugins = () => {
   const { hasPermission } = useSessionStore()
@@ -46,9 +44,7 @@ export const useSearchPlugins = () => {
     plugins.value.sort((a, b) => a.name.localeCompare(b.name)),
   )
 
-  const searchPluginNames = computed(() =>
-    plugins.value.map((plugin) => plugin.name),
-  )
+  const searchPluginNames = computed(() => plugins.value.map((plugin) => plugin.name))
 
   return {
     plugins,

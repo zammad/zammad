@@ -113,9 +113,6 @@ class PasswordResetVerify extends App.ControllerFullPage
           password: @password
         success: =>
 
-          # login check
-          App.Auth.loginCheck()
-
           # redirect to #
           @navigate '#'
 

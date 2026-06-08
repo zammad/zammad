@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { computed, ref } from 'vue'
 
@@ -62,12 +62,12 @@ describe('TicketChecklistBadges', () => {
 
     expect(wrapper.getByIconName('checklist')).toBeInTheDocument()
 
-    expect(
-      wrapper.getByRole('button', { name: 'Open Checklist' }),
-    ).toHaveTextContent('checked2 of 5') // because of margin
+    expect(wrapper.getByRole('button', { name: 'Open checklist' })).toHaveTextContent(
+      'checked2 of 5',
+    ) // because of margin
   })
 
-  it('opens checklist in sidebar if checked badge is clicked ', async () => {
+  it('opens checklist in sidebar if checked badge is clicked', async () => {
     const data = createDummyTicket({
       checklist: {
         id: convertToGraphQLId('Checklist', 1),
@@ -83,9 +83,7 @@ describe('TicketChecklistBadges', () => {
       provide: [[TICKET_KEY, mockTicket(data)]],
     })
 
-    await wrapper.events.click(
-      wrapper.getByRole('button', { name: 'Open Checklist' }),
-    )
+    await wrapper.events.click(wrapper.getByRole('button', { name: 'Open checklist' }))
 
     expect(switchSidebar).toHaveBeenCalledWith('checklist')
   })
@@ -171,28 +169,24 @@ describe('TicketChecklistBadges', () => {
       provide: [[TICKET_KEY, mockTicket(data)]],
     })
 
-    await wrapper.events.click(
-      wrapper.getByRole('button', { name: 'Show tracking tickets' }),
-    )
+    await wrapper.events.click(wrapper.getByRole('button', { name: 'Show tracking tickets' }))
 
-    expect(
-      await wrapper.findByText('Tracked as checklist item in'),
-    ).toBeInTheDocument()
+    expect(await wrapper.findByText('Tracked as checklist item in')).toBeInTheDocument()
 
     const badges = wrapper.getAllByTestId('common-badge')
 
     expect(badges.at(1)).toHaveTextContent('tracked in2')
 
-    expect(wrapper.getByRole('link', { name: 'Hook#123' })).toHaveTextContent(
+    expect(wrapper.getByRole('link', { name: 'Hook#123 - Foo Title' })).toHaveTextContent(
       'Foo Title',
     )
 
-    expect(wrapper.getByRole('link', { name: 'Hook#123' })).toHaveAttribute(
+    expect(wrapper.getByRole('link', { name: 'Hook#123 - Foo Title' })).toHaveAttribute(
       'href',
       '/desktop/tickets/2',
     )
 
-    expect(wrapper.getByRole('link', { name: 'Hook#456' })).toHaveAttribute(
+    expect(wrapper.getByRole('link', { name: 'Hook#456 - Bar Title' })).toHaveAttribute(
       'href',
       '/desktop/tickets/23',
     )
@@ -214,8 +208,6 @@ describe('TicketChecklistBadges', () => {
       provide: [[TICKET_KEY, mockTicket(data)]],
     })
 
-    expect(
-      wrapper.queryByRole('button', { name: 'checked3 of 3' }),
-    ).not.toBeInTheDocument()
+    expect(wrapper.queryByRole('button', { name: 'checked3 of 3' })).not.toBeInTheDocument()
   })
 })

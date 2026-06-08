@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { keyBy } from 'lodash-es'
 import { computed } from 'vue'
@@ -7,9 +7,9 @@ import type { ObjectAttribute } from '#shared/entities/object-attributes/types/s
 import type { ObjectAttributeValue } from '#shared/graphql/types.ts'
 import type { ObjectLike } from '#shared/types/utils.ts'
 
-import { getLink, getValue, isEmpty } from './utils.ts'
+import { getLink, getValue, isEmpty, isInlineAttributeEditable } from './utils.ts'
 
-import type { AttributeDeclaration } from './types.ts'
+import type { AttributeDeclaration, InlineEditable } from './types.ts'
 import type { Dictionary } from 'ts-essentials'
 import type { Component } from 'vue'
 
@@ -17,15 +17,15 @@ interface BaseObjectAttributeDisplayOptions {
   object: ObjectLike
 }
 
-export interface ObjectAttributeDisplayOptions
-  extends BaseObjectAttributeDisplayOptions {
+export interface ObjectAttributeDisplayOptions extends BaseObjectAttributeDisplayOptions {
   attribute: ObjectAttribute
 }
 
-export interface ObjectAttributesDisplayOptions
-  extends BaseObjectAttributeDisplayOptions {
-  skipAttributes?: string[]
+export interface ObjectAttributesDisplayOptions extends BaseObjectAttributeDisplayOptions {
   attributes: ObjectAttribute[]
+  skipAttributes?: string[]
+  inlineEditable?: InlineEditable
+  includeStatic?: boolean
 }
 
 export interface AttributeField {
@@ -50,9 +50,7 @@ const definitionsByType = Object.values(attributesDeclarations).reduce(
   {} as Record<string, Component>,
 )
 
-export const useDisplayObjectAttribute = (
-  options: ObjectAttributeDisplayOptions,
-) => {
+export const useDisplayObjectAttribute = (options: ObjectAttributeDisplayOptions) => {
   const attributesObject = computed<Dictionary<ObjectAttributeValue>>(() => {
     return keyBy(options.object.objectAttributeValues || {}, 'attribute.name')
   })
@@ -63,43 +61,34 @@ export const useDisplayObjectAttribute = (
     return {
       attribute,
       component: definitionsByType[attribute.dataType],
-      value: getValue(
-        attribute.name,
-        object,
-        attributesObject.value,
-        attribute,
-      ),
+      value: getValue(attribute.name, object, attributesObject.value, attribute),
       link: getLink(attribute.name, attributesObject.value),
     }
   })
   return { field }
 }
 
-export const useDisplayObjectAttributes = (
-  options: ObjectAttributesDisplayOptions,
-) => {
+export const useDisplayObjectAttributes = (options: ObjectAttributesDisplayOptions) => {
   const attributesObject = computed<Dictionary<ObjectAttributeValue>>(() => {
     return keyBy(options.object.objectAttributeValues || {}, 'attribute.name')
   })
 
   const fields = computed<AttributeField[]>(() => {
     return options.attributes
-      .filter((attribute) => !attribute.isStatic)
+      .filter((attribute) => options.includeStatic || !attribute.isStatic)
       .map((attribute) => ({
-        attribute,
+        attribute: {
+          ...attribute,
+          id: `${attribute.name}-${options.object.internalId}`,
+        },
         component: definitionsByType[attribute.dataType],
-        value: getValue(
-          attribute.name,
-          options.object,
-          attributesObject.value,
-          attribute,
-        ),
+        value: getValue(attribute.name, options.object, attributesObject.value, attribute),
         link: getLink(attribute.name, attributesObject.value),
       }))
       .filter(({ attribute, value, component }) => {
         if (!component) return false
 
-        if (isEmpty(value)) {
+        if (isEmpty(value) && !isInlineAttributeEditable(attribute.name, options.inlineEditable)) {
           return false
         }
 

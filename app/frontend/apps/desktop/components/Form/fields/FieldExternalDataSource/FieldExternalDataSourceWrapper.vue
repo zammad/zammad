@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { toRef } from 'vue'
@@ -10,10 +10,8 @@ import FieldAutoCompleteInput from '../FieldAutoComplete/FieldAutoCompleteInput.
 
 const props = defineProps<Props>()
 
-Object.assign(
-  props.context,
-  useFieldExternalDataSourceWrapper(toRef(props, 'context')),
-)
+// eslint-disable-next-line vue/no-mutating-props
+Object.assign(props.context, useFieldExternalDataSourceWrapper(toRef(props, 'context')))
 </script>
 
 <template>

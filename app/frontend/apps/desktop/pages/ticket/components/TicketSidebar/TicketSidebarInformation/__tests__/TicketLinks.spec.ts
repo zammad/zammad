@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { renderComponent } from '#tests/support/components/index.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
@@ -10,9 +10,7 @@ import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import { mockLinkListQuery } from '#desktop/pages/ticket/graphql/queries/linkList.mocks.ts'
 import { getLinkUpdatesSubscriptionHandler } from '#desktop/pages/ticket/graphql/subscriptions/linkUpdates.mocks.ts'
 
-import TicketLinks, {
-  type Props,
-} from '../TicketSidebarInformationContent/TicketLinks.vue'
+import TicketLinks, { type Props } from '../TicketSidebarInformationContent/TicketLinks.vue'
 
 const renderTicketLinks = (props: Partial<Props> = {}) =>
   renderComponent(TicketLinks, {

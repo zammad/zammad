@@ -1,9 +1,26 @@
 /* stylelint-disable import-notation */
 @import 'tailwindcss';
 @import './tokens.css';
+@import '../../../shared/styles/utilities.css';
 
 @plugin '@formkit/themes/tailwindcss';
 @plugin '../../../build/zammadTailwindPlugin.js';
+
+:root {
+  /* LIMITED support -> opt in modern browsers @see https://developer.mozilla.org/en-US/docs/Web/CSS/interpolate-size */
+
+  /* allows animating of intrinsic absolute <-> relative units */
+  interpolate-size: allow-keywords;
+}
+
+/*
+* We don't use global styling for links on mobile
+* that's why we use a global components name styling
+* for CommonAlert links
+*/
+.Alert a {
+  @apply text-blue;
+}
 
 @layer base {
   html {
@@ -70,7 +87,7 @@
 @layer components {
   .absolute-floating-input:focus-within label,
   .absolute-floating-input.formkit-outer[data-populated] label {
-    @apply -translate-y-2 scale-75 opacity-75 ltr:translate-x-[2px] rtl:pt-5 rtl:pb-0 rtl:text-xs;
+    @apply -translate-y-2 scale-75 opacity-75 after:scale-[1.3] ltr:translate-x-[2px] rtl:pt-5 rtl:pb-0 rtl:text-xs;
   }
 
   .floating-input.formkit-outer[data-populated] label {
@@ -79,7 +96,7 @@
 
   .floating-textarea:focus-within label,
   .floating-textarea.formkit-outer[data-populated] label {
-    @apply translate-y-0! text-xs! opacity-75!;
+    @apply translate-y-1.5! text-xs! opacity-75!;
   }
 
   .form-group {
@@ -118,8 +135,20 @@
       outline: none;
     }
 
+    p {
+      @apply my-2 min-h-5;
+    }
+
     blockquote {
-      @apply border-l-4 border-l-gray-200 px-3 py-2;
+      @apply border-l-5 border-l-gray-300 px-3 py-px;
+
+      .Agent & {
+        @apply border-l-gray-100;
+      }
+
+      .Customer & {
+        @apply border-l-blue-dark;
+      }
     }
 
     ol {
@@ -132,10 +161,7 @@
 
     ol,
     ul {
-      @apply pb-2;
-
-      padding-inline-start: 0.5rem;
-      list-style-position: inside;
+      @apply ms-5 pb-2;
 
       p {
         display: inline;
@@ -156,6 +182,10 @@
 
     a {
       @apply text-blue;
+
+      .Customer & {
+        @apply text-black underline;
+      }
     }
 
     [dir='rtl'] {
@@ -164,6 +194,236 @@
 
     [dir='ltr'] {
       text-align: left;
+    }
+
+    pre {
+      @apply my-2 rounded-md bg-black-full/20 p-2.5;
+
+      code {
+        @apply bg-transparent p-0;
+      }
+    }
+
+    code {
+      @apply rounded-md bg-black-full/20 p-0.75 font-mono;
+    }
+
+    table.zammad-table,
+    &:not(.Content) table {
+      @apply my-2 w-full max-w-full table-fixed border-collapse overflow-hidden border-2 border-gray-200;
+
+      .Agent & {
+        @apply border-gray;
+      }
+
+      .Customer & {
+        @apply border-blue-dark;
+      }
+
+      td,
+      th {
+        @apply relative box-border min-w-[1em] border border-gray-200 px-[5px] py-[3px] align-top;
+
+        .Agent & {
+          @apply border-gray;
+        }
+
+        .Customer & {
+          @apply border-blue-dark;
+        }
+      }
+
+      th {
+        @apply bg-black-full/20 text-start font-bold;
+
+        .Agent & {
+          @apply bg-black-full/10;
+        }
+      }
+    }
+
+    table td,
+    table th {
+      > * {
+        @apply m-0;
+      }
+    }
+
+    hr {
+      @apply my-2 h-px border-none bg-gray text-[0px];
+
+      .Customer & {
+        @apply bg-blue-dark;
+      }
+    }
+  }
+
+  /*
+    Reset styles for nested tables in blockquotes and signatures.
+      There is currently no way to determine whether they are internal or external.
+      These tables will not be assigned `zammad-table` class on submission anyway.
+      We need to increase specificity to override the base styles, therefore we repeat the wrapper selector.
+  */
+  .ProseMirror blockquote .tableWrapper.tableWrapper.tableWrapper table,
+  .ProseMirror [data-signature='true'] .tableWrapper.tableWrapper table {
+    @apply m-0 w-auto max-w-none table-auto overflow-auto border-1 border-gray-200/60;
+
+    td,
+    th {
+      @apply min-w-auto border-gray-200/60;
+    }
+
+    th {
+      @apply bg-transparent;
+    }
+  }
+
+  .content:not(.Agent),
+  .ProseMirror {
+    /* neutral 1 */
+    [style*='color:rgb(102, 102, 102)'],
+    [style*='color: rgb(102, 102, 102)'] {
+      color: rgb(204, 204, 204) !important;
+    }
+
+    /* neutral 2 is the same for both themes */
+
+    /* neutral 3 */
+    [style*='color:rgb(204, 204, 204)'],
+    [style*='color: rgb(204, 204, 204)'] {
+      color: rgb(102, 102, 102) !important;
+    }
+
+    /* red 1 */
+    [style*='color:rgb(239, 68, 68)'],
+    [style*='color: rgb(239, 68, 68)'] {
+      color: rgb(241, 152, 167) !important;
+    }
+
+    /* orange 1 */
+    [style*='color:rgb(205, 121, 45)'],
+    [style*='color: rgb(205, 121, 45)'] {
+      color: rgb(246, 211, 102) !important;
+    }
+
+    /* green 1 */
+    [style*='color:rgb(80, 140, 70)'],
+    [style*='color: rgb(80, 140, 70)'] {
+      color: rgb(170, 214, 164) !important;
+    }
+
+    /* blue 1 */
+    [style*='color:rgb(48, 100, 172)'],
+    [style*='color: rgb(48, 100, 172)'] {
+      color: rgb(122, 202, 247) !important;
+    }
+
+    /* purple 1 */
+    [style*='color:rgb(107, 41, 132)'],
+    [style*='color: rgb(107, 41, 132)'] {
+      color: rgb(201, 135, 236) !important;
+    }
+
+    /* red 2 */
+    [style*='color:rgb(235, 61, 79)'],
+    [style*='color: rgb(235, 61, 79)'] {
+      color: rgb(237, 97, 118) !important;
+    }
+
+    /* orange 2 */
+    [style*='color:rgb(233, 159, 59)'],
+    [style*='color: rgb(233, 159, 59)'] {
+      color: rgb(243, 193, 79) !important;
+    }
+
+    /* green 2 */
+    [style*='color:rgb(95, 159, 84)'],
+    [style*='color: rgb(95, 159, 84)'] {
+      color: rgb(127, 187, 118) !important;
+    }
+
+    /* blue 2 */
+    [style*='color:rgb(70, 147, 231)'],
+    [style*='color: rgb(70, 147, 231)'] {
+      color: rgb(91, 174, 243) !important;
+
+      .Customer & {
+        mix-blend-mode: multiply;
+      }
+    }
+
+    /* purple 2 */
+    [style*='color:rgb(153, 62, 195)'],
+    [style*='color: rgb(153, 62, 195)'] {
+      color: rgb(179, 91, 223) !important;
+    }
+
+    /* red 3 */
+    [style*='color:rgb(237, 97, 118)'],
+    [style*='color: rgb(237, 97, 118)'] {
+      color: rgb(235, 61, 79) !important;
+    }
+
+    /* orange 3 */
+    [style*='color:rgb(243, 193, 79)'],
+    [style*='color: rgb(243, 193, 79)'] {
+      color: rgb(233, 159, 59) !important;
+    }
+
+    /* green 3 */
+    [style*='color:rgb(127, 187, 118)'],
+    [style*='color: rgb(127, 187, 118)'] {
+      color: rgb(95, 159, 84) !important;
+
+      .Customer & {
+        mix-blend-mode: multiply;
+      }
+    }
+
+    /* blue 3 */
+    [style*='color:rgb(91, 174, 243)'],
+    [style*='color: rgb(91, 174, 243)'] {
+      color: rgb(70, 147, 231) !important;
+
+      .Customer & {
+        mix-blend-mode: multiply;
+      }
+    }
+
+    /* purple 3 */
+    [style*='color:rgb(179, 91, 223)'],
+    [style*='color: rgb(179, 91, 223)'] {
+      color: rgb(153, 62, 195) !important;
+    }
+
+    /* red 4 */
+    [style*='color:rgb(241, 152, 167)'],
+    [style*='color: rgb(241, 152, 167)'] {
+      color: rgb(239, 68, 68) !important;
+    }
+
+    /* orange 4 */
+    [style*='color:rgb(246, 211, 102)'],
+    [style*='color: rgb(246, 211, 102)'] {
+      color: rgb(205, 121, 45) !important;
+    }
+
+    /* green 4 */
+    [style*='color:rgb(170, 214, 164)'],
+    [style*='color: rgb(170, 214, 164)'] {
+      color: rgb(80, 140, 70) !important;
+    }
+
+    /* blue 4 */
+    [style*='color:rgb(122, 202, 247)'],
+    [style*='color: rgb(122, 202, 247)'] {
+      color: rgb(48, 100, 172) !important;
+    }
+
+    /* purple 4 */
+    [style*='color:rgb(201, 135, 236)'],
+    [style*='color: rgb(201, 135, 236)'] {
+      color: rgb(107, 41, 132) !important;
     }
   }
 
@@ -186,6 +446,70 @@
     top: 0;
     background: linear-gradient(var(--color-gray-500), rgba(255, 255, 255, 0));
   }
+
+  /* Mobile is not final and need to be decided  */
+  .progress-bar {
+    &.progress-bar--primary {
+      --pb-fill: var(--color-blue);
+      --pb-track: var(--color-blue-highlight);
+    }
+
+    &.progress-bar--inverted {
+      --pb-fill: var(--color-white);
+      --pb-track: var(--color-gray-highlight);
+    }
+
+    background-color: var(--pb-track);
+
+    &::-webkit-progress-bar {
+      border-radius: 1rem;
+      background-color: var(--pb-track);
+    }
+
+    &::-webkit-progress-value {
+      border-radius: 0;
+      background-color: var(--pb-fill);
+      transition: width 1s;
+    }
+
+    &::-moz-progress-bar {
+      border-radius: 0;
+      background-color: var(--pb-fill);
+    }
+
+    &:indeterminate {
+      background-image: repeating-linear-gradient(
+        90deg,
+        var(--pb-fill) -1%,
+        var(--pb-fill) 10%,
+        transparent 10%,
+        transparent 90%
+      );
+      background-size: 200%;
+      background-position-x: 15%;
+      animation: progress-loading 5s ease-in-out infinite;
+    }
+
+    &:indeterminate::-moz-progress-bar {
+      background-color: var(--pb-track);
+      background-image: repeating-linear-gradient(
+        90deg,
+        var(--pb-fill) -1%,
+        var(--pb-fill) 10%,
+        transparent 10%,
+        transparent 90%
+      );
+      background-size: 200%;
+      background-position-x: 15%;
+      animation: progress-loading 5s ease-in-out infinite;
+    }
+  }
+}
+
+@keyframes progress-loading {
+  50% {
+    background-position-x: -115%;
+  }
 }
 
 @utility pb-safe {
@@ -197,5 +521,75 @@
 }
 
 @utility required {
-  @apply after:bg-yellow after:ms-1 after:inline-block after:h-1 after:w-1 after:rounded-full after:align-middle after:content-[''];
+  @apply after:ms-1 after:inline-block after:size-1 after:shrink-0 after:self-center after:rounded-full after:bg-yellow after:align-middle after:leading-0 after:content-[''];
+}
+
+@utility ai-stripe {
+  &::before {
+    content: '';
+    height: 2px;
+    width: 100%;
+    background: repeating-linear-gradient(
+      to right,
+      var(--color-blue),
+      var(--color-pink),
+      var(--color-blue)
+    );
+    background-size: 200% auto;
+    background-position: 0 100%;
+    transition: background-position 1s ease-in-out;
+  }
+}
+
+@utility animate-ai-stripe-vertical {
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 100%;
+    width: 2px;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+      to bottom,
+      var(--color-blue),
+      var(--color-pink),
+      var(--color-blue)
+    );
+    background-size: 100% 200%;
+    z-index: 1;
+    animation: gradient-vertical 2s linear infinite;
+    animation-fill-mode: forwards;
+  }
+}
+
+@utility animate-ai-stripe {
+  &::before {
+    animation: gradient 2s infinite;
+    animation-fill-mode: forwards;
+    animation-timing-function: linear;
+  }
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@keyframes gradient-vertical {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 0 -200%;
+  }
 }

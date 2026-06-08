@@ -1,0 +1,28 @@
+.template_supabase:
+  stage: test
+  tags:
+    - push-to-ftp # use only allow-listed ci runners
+  services:
+    - !reference [.services, postgresql]
+  variables:
+    ZAMMAD_SAFE_MODE: 1
+
+supabase:translation_stats:
+  extends:
+    - .template_supabase
+  rules:
+   - if: $CI_PIPELINE_SOURCE == "schedule" && $CI_COMMIT_REF_NAME =~ /^(develop|stable)$/
+     when: always
+   - when: never
+  script:
+    - bundle exec rails runner .gitlab/supabase/translation_stats.rb
+
+supabase:github_stats:
+  extends:
+    - .template_supabase
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule" && $CI_COMMIT_REF_NAME == "develop"
+      when: always
+    - when: never
+  script:
+    - bundle exec rails runner .gitlab/supabase/github_stats.rb

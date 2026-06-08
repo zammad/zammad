@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed } from 'vue'
@@ -27,18 +27,14 @@ const errorImage = computed(() => {
 </script>
 
 <template>
-  <img width="540" class="max-h-96" :alt="$t('Error')" :src="errorImage" />
+  <img class="max-h-96 w-135" :alt="$t('Error')" :src="errorImage" />
   <h1 class="text-center text-xl leading-snug text-black dark:text-white">
     {{ $t(options?.title) }}
   </h1>
   <CommonLabel class="mx-auto max-w-prose text-center" tag="p">
     {{ $t(options?.message, ...(options?.messagePlaceholder || [])) }}
   </CommonLabel>
-  <CommonLabel
-    v-if="options?.route"
-    class="mx-auto max-w-prose text-center"
-    tag="p"
-  >
+  <CommonLabel v-if="options?.route" class="mx-auto max-w-prose text-center" tag="p">
     {{ options.route }}
   </CommonLabel>
   <CommonLink v-if="!authenticated" link="/login" size="medium">

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 require 'models/taskbar/has_attachments_examples'
@@ -14,438 +14,7 @@ RSpec.describe Taskbar, performs_jobs: true, type: :model do
     it { is_expected.to validate_inclusion_of(:app).in_array(%w[desktop mobile]) }
 
     it do
-      if ActiveRecord::Base.connection_db_config.configuration_hash[:adapter] == 'mysql2'
-        expect(taskbar).to validate_uniqueness_of(:key).scoped_to(%w[user_id app]).with_message(%r{}).case_insensitive
-      else
-        expect(taskbar).to validate_uniqueness_of(:key).scoped_to(%w[user_id app]).with_message(%r{})
-      end
-    end
-  end
-
-  context 'single creation' do
-
-    let(:taskbar) do
-
-      described_class.destroy_all
-      UserInfo.current_user_id = 1
-
-      create(:taskbar, params: { id: 1234 }, key: 'Ticket-1234')
-    end
-
-    it 'existing key' do
-      expect(taskbar.key).to eq('Ticket-1234')
-    end
-
-    it 'params' do
-      expect(taskbar.params[:id]).to eq(1234)
-    end
-
-    it 'state' do
-      expect(taskbar.state.blank?).to be(true)
-    end
-
-    it 'check last_contact' do
-      UserInfo.current_user_id = 1
-
-      last_contact1 = taskbar.last_contact
-
-      travel 2.minutes
-      taskbar.notify = false
-      taskbar.state = { a: 1 }
-      taskbar.save!
-      expect(taskbar.last_contact.to_s).not_to eq(last_contact1.to_s)
-
-      last_contact2 = taskbar.last_contact
-      travel 2.minutes
-      taskbar.notify = true
-      taskbar.save!
-      expect(taskbar.last_contact.to_s).not_to eq(last_contact1.to_s)
-      expect(taskbar.last_contact.to_s).to eq(last_contact2.to_s)
-
-      travel 2.minutes
-      taskbar.notify = true
-      taskbar.save!
-
-      expect(taskbar.last_contact.to_s).not_to eq(last_contact1.to_s)
-      expect(taskbar.last_contact.to_s).to eq(last_contact2.to_s)
-
-      travel 2.minutes
-      taskbar.notify = false
-      taskbar.state = { a: 1 }
-      taskbar.save!
-
-      expect(taskbar.last_contact.to_s).not_to eq(last_contact1.to_s)
-      expect(taskbar.last_contact.to_s).to eq(last_contact2.to_s)
-
-      travel 2.minutes
-      taskbar.notify = true
-      taskbar.state = { a: 1 }
-      taskbar.save!
-
-      expect(taskbar.last_contact.to_s).not_to eq(last_contact1.to_s)
-      expect(taskbar.last_contact.to_s).to eq(last_contact2.to_s)
-
-      travel 2.minutes
-      taskbar.notify = true
-      taskbar.state = { a: 2 }
-      taskbar.save!
-
-      expect(taskbar.last_contact.to_s).not_to eq(last_contact1.to_s)
-      expect(taskbar.last_contact.to_s).not_to eq(last_contact2.to_s)
-    end
-  end
-
-  context 'multiple creation', :aggregate_failures do
-
-    it 'create tasks' do
-      # skip 'What does this test?'
-
-      described_class.destroy_all
-      UserInfo.current_user_id = 1
-      taskbar1 = described_class.create!(
-        key:      'Ticket-1234',
-        callback: 'TicketZoom',
-        params:   {
-          id: 1234,
-        },
-        state:    {},
-        prio:     1,
-        notify:   false,
-        user_id:  1,
-      )
-
-      UserInfo.current_user_id = 2
-      taskbar2 = described_class.create!(
-        key:      'Ticket-1234',
-        callback: 'TicketZoom',
-        params:   {
-          id: 1234,
-        },
-        state:    {},
-        prio:     2,
-        notify:   false,
-        user_id:  1,
-      )
-
-      perform_enqueued_jobs
-
-      taskbar1.reload
-      expect(taskbar1.preferences[:tasks].count).to eq(2)
-      expect(taskbar1.preferences[:tasks][0][:user_id]).to eq(1)
-      expect(taskbar1.preferences[:tasks][0][:apps][:desktop][:changed]).to be(false)
-      expect(taskbar1.preferences[:tasks][1][:user_id]).to eq(2)
-      expect(taskbar1.preferences[:tasks][1][:apps][:desktop][:changed]).to be(false)
-
-      taskbar2.reload
-      expect(taskbar2.preferences[:tasks].count).to eq(2)
-      expect(taskbar2.preferences[:tasks][0][:user_id]).to eq(1)
-      expect(taskbar2.preferences[:tasks][0][:apps][:desktop][:changed]).to be(false)
-      expect(taskbar2.preferences[:tasks][1][:user_id]).to eq(2)
-      expect(taskbar2.preferences[:tasks][1][:apps][:desktop][:changed]).to be(false)
-
-      taskbar3 = described_class.create(
-        key:      'Ticket-4444',
-        callback: 'TicketZoom',
-        params:   {
-          id: 4444,
-        },
-        state:    {},
-        prio:     2,
-        notify:   false,
-        user_id:  1,
-      )
-
-      perform_enqueued_jobs
-
-      taskbar1.reload
-      expect(taskbar1.preferences[:tasks].count).to eq(2)
-      expect(taskbar1.preferences[:tasks][0][:user_id]).to eq(1)
-      expect(taskbar1.preferences[:tasks][0][:apps][:desktop][:changed]).to be(false)
-      expect(taskbar1.preferences[:tasks][1][:user_id]).to eq(2)
-      expect(taskbar1.preferences[:tasks][1][:apps][:desktop][:changed]).to be(false)
-
-      taskbar2.reload
-      expect(taskbar2.preferences[:tasks].count).to eq(2)
-      expect(taskbar2.preferences[:tasks][0][:user_id]).to eq(1)
-      expect(taskbar2.preferences[:tasks][0][:apps][:desktop][:changed]).to be(false)
-      expect(taskbar2.preferences[:tasks][1][:user_id]).to eq(2)
-      expect(taskbar2.preferences[:tasks][1][:apps][:desktop][:changed]).to be(false)
-
-      taskbar3.reload
-      expect(taskbar3.preferences[:tasks].count).to eq(1)
-      expect(taskbar3.preferences[:tasks][0][:user_id]).to eq(2)
-      expect(taskbar3.preferences[:tasks][0][:apps][:desktop][:changed]).to be(false)
-
-      agent_id = create(:agent).id
-      UserInfo.current_user_id = agent_id
-
-      taskbar4 = described_class.create(
-        key:      'Ticket-1234',
-        callback: 'TicketZoom',
-        params:   {
-          id: 1234,
-        },
-        state:    {},
-        prio:     4,
-        notify:   false,
-        user_id:  1,
-      )
-
-      perform_enqueued_jobs
-
-      taskbar1.reload
-      expect(taskbar1.preferences[:tasks].count).to eq(3)
-      expect(taskbar1.preferences[:tasks][0][:user_id]).to eq(1)
-      expect(taskbar1.preferences[:tasks][0][:apps][:desktop][:changed]).to be(false)
-      expect(taskbar1.preferences[:tasks][1][:user_id]).to eq(2)
-      expect(taskbar1.preferences[:tasks][1][:apps][:desktop][:changed]).to be(false)
-      expect(taskbar1.preferences[:tasks][2][:user_id]).to eq(agent_id)
-      expect(taskbar1.preferences[:tasks][2][:apps][:desktop][:changed]).to be(false)
-
-      taskbar2.reload
-      expect(taskbar2.preferences[:tasks].count).to eq(3)
-      expect(taskbar2.preferences[:tasks][0][:user_id]).to eq(1)
-      expect(taskbar2.preferences[:tasks][0][:apps][:desktop][:changed]).to be(false)
-      expect(taskbar2.preferences[:tasks][1][:user_id]).to eq(2)
-      expect(taskbar2.preferences[:tasks][1][:apps][:desktop][:changed]).to be(false)
-      expect(taskbar2.preferences[:tasks][2][:user_id]).to eq(agent_id)
-      expect(taskbar2.preferences[:tasks][2][:apps][:desktop][:changed]).to be(false)
-
-      taskbar3.reload
-      expect(taskbar3.preferences[:tasks].count).to eq(1)
-      expect(taskbar3.preferences[:tasks][0][:user_id]).to eq(2)
-      expect(taskbar3.preferences[:tasks][0][:apps][:desktop][:changed]).to be(false)
-
-      taskbar4.reload
-      expect(taskbar4.preferences[:tasks].count).to eq(3)
-      expect(taskbar4.preferences[:tasks][0][:user_id]).to eq(1)
-      expect(taskbar4.preferences[:tasks][0][:apps][:desktop][:changed]).to be(false)
-      expect(taskbar4.preferences[:tasks][1][:user_id]).to eq(2)
-      expect(taskbar4.preferences[:tasks][1][:apps][:desktop][:changed]).to be(false)
-      expect(taskbar4.preferences[:tasks][2][:user_id]).to eq(agent_id)
-      expect(taskbar4.preferences[:tasks][2][:apps][:desktop][:changed]).to be(false)
-
-      UserInfo.current_user_id = 2
-      taskbar2.state = { article: {}, ticket: {} }
-      taskbar2.save!
-
-      perform_enqueued_jobs
-
-      taskbar1.reload
-      expect(taskbar1.preferences[:tasks].count).to eq(3)
-      expect(taskbar1.preferences[:tasks][0][:user_id]).to eq(1)
-      expect(taskbar1.preferences[:tasks][0][:apps][:desktop][:changed]).to be(false)
-      expect(taskbar1.preferences[:tasks][1][:user_id]).to eq(2)
-      expect(taskbar1.preferences[:tasks][1][:apps][:desktop][:changed]).to be(false)
-      expect(taskbar1.preferences[:tasks][2][:user_id]).to eq(agent_id)
-      expect(taskbar1.preferences[:tasks][2][:apps][:desktop][:changed]).to be(false)
-
-      taskbar2.reload
-      expect(taskbar2.preferences[:tasks].count).to eq(3)
-      expect(taskbar2.preferences[:tasks][0][:user_id]).to eq(1)
-      expect(taskbar2.preferences[:tasks][0][:apps][:desktop][:changed]).to be(false)
-      expect(taskbar2.preferences[:tasks][1][:user_id]).to eq(2)
-      expect(taskbar2.preferences[:tasks][1][:apps][:desktop][:changed]).to be(false)
-      expect(taskbar2.preferences[:tasks][2][:user_id]).to eq(agent_id)
-      expect(taskbar2.preferences[:tasks][2][:apps][:desktop][:changed]).to be(false)
-
-      taskbar3.reload
-      expect(taskbar3.preferences[:tasks].count).to eq(1)
-      expect(taskbar3.preferences[:tasks][0][:user_id]).to eq(2)
-      expect(taskbar3.preferences[:tasks][0][:apps][:desktop][:changed]).to be(false)
-
-      taskbar4.reload
-      expect(taskbar4.preferences[:tasks].count).to eq(3)
-      expect(taskbar4.preferences[:tasks][0][:user_id]).to eq(1)
-      expect(taskbar4.preferences[:tasks][0][:apps][:desktop][:changed]).to be(false)
-      expect(taskbar4.preferences[:tasks][1][:user_id]).to eq(2)
-      expect(taskbar4.preferences[:tasks][1][:apps][:desktop][:changed]).to be(false)
-      expect(taskbar4.preferences[:tasks][2][:user_id]).to eq(agent_id)
-      expect(taskbar4.preferences[:tasks][2][:apps][:desktop][:changed]).to be(false)
-
-      UserInfo.current_user_id = 2
-      taskbar2.state = { article: { body: 'some body' }, ticket: {} }
-      taskbar2.save!
-
-      perform_enqueued_jobs
-
-      taskbar1.reload
-      expect(taskbar1.preferences[:tasks].count).to eq(3)
-      expect(taskbar1.preferences[:tasks][0][:user_id]).to eq(1)
-      expect(taskbar1.preferences[:tasks][0][:apps][:desktop][:changed]).to be(false)
-      expect(taskbar1.preferences[:tasks][1][:user_id]).to eq(2)
-      expect(taskbar1.preferences[:tasks][1][:apps][:desktop][:changed]).to be(true)
-      expect(taskbar1.preferences[:tasks][2][:user_id]).to eq(agent_id)
-      expect(taskbar1.preferences[:tasks][2][:apps][:desktop][:changed]).to be(false)
-
-      taskbar2.reload
-      expect(taskbar2.preferences[:tasks].count).to eq(3)
-      expect(taskbar2.preferences[:tasks][0][:user_id]).to eq(1)
-      expect(taskbar2.preferences[:tasks][0][:apps][:desktop][:changed]).to be(false)
-      expect(taskbar2.preferences[:tasks][1][:user_id]).to eq(2)
-      expect(taskbar2.preferences[:tasks][1][:apps][:desktop][:changed]).to be(true)
-      expect(taskbar2.preferences[:tasks][2][:user_id]).to eq(agent_id)
-      expect(taskbar2.preferences[:tasks][2][:apps][:desktop][:changed]).to be(false)
-
-      taskbar3.reload
-      expect(taskbar3.preferences[:tasks].count).to eq(1)
-      expect(taskbar3.preferences[:tasks][0][:user_id]).to eq(2)
-      expect(taskbar3.preferences[:tasks][0][:apps][:desktop][:changed]).to be(false)
-
-      taskbar4.reload
-      expect(taskbar4.preferences[:tasks].count).to eq(3)
-      expect(taskbar4.preferences[:tasks][0][:user_id]).to eq(1)
-      expect(taskbar4.preferences[:tasks][0][:apps][:desktop][:changed]).to be(false)
-      expect(taskbar4.preferences[:tasks][1][:user_id]).to eq(2)
-      expect(taskbar4.preferences[:tasks][1][:apps][:desktop][:changed]).to be(true)
-      expect(taskbar4.preferences[:tasks][2][:user_id]).to eq(agent_id)
-      expect(taskbar4.preferences[:tasks][2][:apps][:desktop][:changed]).to be(false)
-
-      UserInfo.current_user_id = 1
-      taskbar1.state = { article: { body: '' }, ticket: { state_id: 123 } }
-      taskbar1.save!
-
-      perform_enqueued_jobs
-
-      taskbar1.reload
-      expect(taskbar1.preferences[:tasks].count).to eq(3)
-      expect(taskbar1.preferences[:tasks][0][:user_id]).to eq(1)
-      expect(taskbar1.preferences[:tasks][0][:apps][:desktop][:changed]).to be(true)
-      expect(taskbar1.preferences[:tasks][1][:user_id]).to eq(2)
-      expect(taskbar1.preferences[:tasks][1][:apps][:desktop][:changed]).to be(true)
-      expect(taskbar1.preferences[:tasks][2][:user_id]).to eq(agent_id)
-      expect(taskbar1.preferences[:tasks][2][:apps][:desktop][:changed]).to be(false)
-
-      taskbar2.reload
-      expect(taskbar2.preferences[:tasks].count).to eq(3)
-      expect(taskbar2.preferences[:tasks][0][:user_id]).to eq(1)
-      expect(taskbar2.preferences[:tasks][0][:apps][:desktop][:changed]).to be(true)
-      expect(taskbar2.preferences[:tasks][1][:user_id]).to eq(2)
-      expect(taskbar2.preferences[:tasks][1][:apps][:desktop][:changed]).to be(true)
-      expect(taskbar2.preferences[:tasks][2][:user_id]).to eq(agent_id)
-      expect(taskbar2.preferences[:tasks][2][:apps][:desktop][:changed]).to be(false)
-
-      taskbar3.reload
-      expect(taskbar3.preferences[:tasks].count).to eq(1)
-      expect(taskbar3.preferences[:tasks][0][:user_id]).to eq(2)
-      expect(taskbar3.preferences[:tasks][0][:apps][:desktop][:changed]).to be(false)
-
-      taskbar4.reload
-      expect(taskbar4.preferences[:tasks].count).to eq(3)
-      expect(taskbar4.preferences[:tasks][0][:user_id]).to eq(1)
-      expect(taskbar4.preferences[:tasks][0][:apps][:desktop][:changed]).to be(true)
-      expect(taskbar4.preferences[:tasks][1][:user_id]).to eq(2)
-      expect(taskbar4.preferences[:tasks][1][:apps][:desktop][:changed]).to be(true)
-      expect(taskbar4.preferences[:tasks][2][:user_id]).to eq(agent_id)
-      expect(taskbar4.preferences[:tasks][2][:apps][:desktop][:changed]).to be(false)
-
-      taskbar1_last_contact = taskbar1.last_contact.to_s
-      taskbar2_last_contact = taskbar2.last_contact.to_s
-      taskbar3_last_contact = taskbar3.last_contact.to_s
-      taskbar4_last_contact = taskbar4.last_contact.to_s
-      travel 2.minutes
-
-      UserInfo.current_user_id = 2
-      taskbar2.state = { article: { body: 'some body' }, ticket: {} }
-      taskbar2.notify = true
-      taskbar2.save!
-
-      perform_enqueued_jobs
-
-      taskbar1.reload
-      expect(taskbar1.preferences[:tasks].count).to eq(3)
-      expect(taskbar1.preferences[:tasks][0][:user_id]).to eq(1)
-      expect(taskbar1.preferences[:tasks][0][:apps][:desktop][:changed]).to be(true)
-      expect(taskbar1.preferences[:tasks][0][:apps][:desktop][:last_contact].to_s).to eq(taskbar1_last_contact)
-      expect(taskbar1.preferences[:tasks][1][:user_id]).to eq(2)
-      expect(taskbar1.preferences[:tasks][1][:apps][:desktop][:changed]).to be(true)
-      expect(taskbar1.preferences[:tasks][1][:apps][:desktop][:last_contact].to_s).to eq(taskbar2_last_contact)
-      expect(taskbar1.preferences[:tasks][2][:user_id]).to eq(agent_id)
-      expect(taskbar1.preferences[:tasks][2][:apps][:desktop][:changed]).to be(false)
-      expect(taskbar1.preferences[:tasks][2][:apps][:desktop][:last_contact].to_s).to eq(taskbar4_last_contact)
-
-      taskbar2.reload
-      expect(taskbar2.preferences[:tasks].count).to eq(3)
-      expect(taskbar2.preferences[:tasks][0][:user_id]).to eq(1)
-      expect(taskbar2.preferences[:tasks][0][:apps][:desktop][:changed]).to be(true)
-      expect(taskbar2.preferences[:tasks][0][:apps][:desktop][:last_contact].to_s).to eq(taskbar1_last_contact)
-      expect(taskbar2.preferences[:tasks][1][:user_id]).to eq(2)
-      expect(taskbar2.preferences[:tasks][1][:apps][:desktop][:changed]).to be(true)
-      expect(taskbar2.preferences[:tasks][1][:apps][:desktop][:last_contact].to_s).to eq(taskbar2_last_contact)
-      expect(taskbar2.preferences[:tasks][2][:user_id]).to eq(agent_id)
-      expect(taskbar2.preferences[:tasks][2][:apps][:desktop][:changed]).to be(false)
-      expect(taskbar2.preferences[:tasks][2][:apps][:desktop][:last_contact].to_s).to eq(taskbar4_last_contact)
-
-      taskbar3.reload
-      expect(taskbar3.preferences[:tasks].count).to eq(1)
-      expect(taskbar3.preferences[:tasks][0][:user_id]).to eq(2)
-      expect(taskbar3.preferences[:tasks][0][:apps][:desktop][:changed]).to be(false)
-      expect(taskbar3.preferences[:tasks][0][:apps][:desktop][:last_contact].to_s).to eq(taskbar3_last_contact)
-
-      taskbar4.reload
-      expect(taskbar4.preferences[:tasks].count).to eq(3)
-      expect(taskbar4.preferences[:tasks][0][:user_id]).to eq(1)
-      expect(taskbar4.preferences[:tasks][0][:apps][:desktop][:changed]).to be(true)
-      expect(taskbar4.preferences[:tasks][0][:apps][:desktop][:last_contact].to_s).to eq(taskbar1_last_contact)
-      expect(taskbar4.preferences[:tasks][1][:user_id]).to eq(2)
-      expect(taskbar4.preferences[:tasks][1][:apps][:desktop][:changed]).to be(true)
-      expect(taskbar4.preferences[:tasks][1][:apps][:desktop][:last_contact].to_s).to eq(taskbar2_last_contact)
-      expect(taskbar4.preferences[:tasks][2][:user_id]).to eq(agent_id)
-      expect(taskbar4.preferences[:tasks][2][:apps][:desktop][:changed]).to be(false)
-      expect(taskbar4.preferences[:tasks][2][:apps][:desktop][:last_contact].to_s).to eq(taskbar4_last_contact)
-
-      UserInfo.current_user_id = 2
-      taskbar2.state = { article: { body: 'some body 222' }, ticket: {} }
-      taskbar2.notify = true
-      taskbar2.save!
-
-      perform_enqueued_jobs
-
-      taskbar1.reload
-      expect(taskbar1.preferences[:tasks].count).to eq(3)
-      expect(taskbar1.preferences[:tasks][0][:user_id]).to eq(1)
-      expect(taskbar1.preferences[:tasks][0][:apps][:desktop][:changed]).to be(true)
-      expect(taskbar1.preferences[:tasks][0][:apps][:desktop][:last_contact].to_s).to eq(taskbar1_last_contact)
-      expect(taskbar1.preferences[:tasks][1][:user_id]).to eq(2)
-      expect(taskbar1.preferences[:tasks][1][:apps][:desktop][:changed]).to be(true)
-      expect(taskbar1.preferences[:tasks][1][:apps][:desktop][:last_contact].to_s).not_to eq(taskbar2_last_contact)
-      expect(taskbar1.preferences[:tasks][2][:user_id]).to eq(agent_id)
-      expect(taskbar1.preferences[:tasks][2][:apps][:desktop][:changed]).to be(false)
-      expect(taskbar1.preferences[:tasks][2][:apps][:desktop][:last_contact].to_s).to eq(taskbar4_last_contact)
-
-      taskbar2.reload
-      expect(taskbar2.preferences[:tasks].count).to eq(3)
-      expect(taskbar2.preferences[:tasks][0][:user_id]).to eq(1)
-      expect(taskbar2.preferences[:tasks][0][:apps][:desktop][:changed]).to be(true)
-      expect(taskbar2.preferences[:tasks][0][:apps][:desktop][:last_contact].to_s).to eq(taskbar1_last_contact)
-      expect(taskbar2.preferences[:tasks][1][:user_id]).to eq(2)
-      expect(taskbar2.preferences[:tasks][1][:apps][:desktop][:changed]).to be(true)
-      expect(taskbar2.preferences[:tasks][1][:apps][:desktop][:last_contact].to_s).not_to eq(taskbar2_last_contact)
-      expect(taskbar2.preferences[:tasks][2][:user_id]).to eq(agent_id)
-      expect(taskbar2.preferences[:tasks][2][:apps][:desktop][:changed]).to be(false)
-      expect(taskbar2.preferences[:tasks][2][:apps][:desktop][:last_contact].to_s).to eq(taskbar4_last_contact)
-
-      taskbar3.reload
-      expect(taskbar3.preferences[:tasks].count).to eq(1)
-      expect(taskbar3.preferences[:tasks][0][:user_id]).to eq(2)
-      expect(taskbar3.preferences[:tasks][0][:apps][:desktop][:changed]).to be(false)
-      expect(taskbar3.preferences[:tasks][0][:apps][:desktop][:last_contact].to_s).to eq(taskbar3_last_contact)
-
-      taskbar4.reload
-      expect(taskbar4.preferences[:tasks].count).to eq(3)
-      expect(taskbar4.preferences[:tasks][0][:user_id]).to eq(1)
-      expect(taskbar4.preferences[:tasks][0][:apps][:desktop][:changed]).to be(true)
-      expect(taskbar4.preferences[:tasks][0][:apps][:desktop][:last_contact].to_s).to eq(taskbar1_last_contact)
-      expect(taskbar4.preferences[:tasks][1][:user_id]).to eq(2)
-      expect(taskbar4.preferences[:tasks][1][:apps][:desktop][:changed]).to be(true)
-      expect(taskbar4.preferences[:tasks][1][:apps][:desktop][:last_contact].to_s).not_to eq(taskbar2_last_contact)
-      expect(taskbar4.preferences[:tasks][2][:user_id]).to eq(agent_id)
-      expect(taskbar4.preferences[:tasks][2][:apps][:desktop][:changed]).to be(false)
-      expect(taskbar4.preferences[:tasks][2][:apps][:desktop][:last_contact].to_s).to eq(taskbar4_last_contact)
-
-      travel_back
-
-      UserInfo.current_user_id = nil
+      expect(taskbar).to validate_uniqueness_of(:key).scoped_to(%w[user_id app]).with_message(%r{})
     end
   end
 
@@ -516,36 +85,37 @@ RSpec.describe Taskbar, performs_jobs: true, type: :model do
     end
 
     context 'with other taskbars' do
-      let(:key)           { Random.hex }
-      let(:other_user)    { create(:user) }
-      let(:other_taskbar) { create(:taskbar, key: key, user: other_user) }
+      let(:ticket)        { create(:ticket) }
+      let(:user)          { create(:agent, groups: [ticket.group]) }
+      let(:other_user)    { create(:agent, groups: [ticket.group]) }
+      let(:other_taskbar) { create(:taskbar, :with_ticket, ticket:, user: other_user) }
 
       before { other_taskbar }
 
       it 'sets tasks when creating a taskbar' do
-        taskbar = create(:taskbar, key: key)
+        taskbar = create(:taskbar, :with_ticket, ticket:, user:)
 
-        expect(taskbar.preferences[:tasks]).to include(include(user_id: other_user.id), include(user_id: 1))
+        expect(taskbar.preferences[:tasks]).to include(include(user_id: other_user.id), include(user_id: user.id))
       end
 
       it 'updates related items when creating a taskbar' do
-        create(:taskbar, key: key)
+        create(:taskbar, :with_ticket, ticket:, user:)
         perform_enqueued_jobs
 
-        expect(other_taskbar.reload.preferences[:tasks]).to include(include(user_id: other_user.id), include(user_id: 1))
+        expect(other_taskbar.reload.preferences[:tasks]).to include(include(user_id: other_user.id), include(user_id: user.id))
       end
 
       it 'sets tasks when updating a taskbar' do
-        taskbar = create(:taskbar, key: key)
+        taskbar = create(:taskbar, :with_ticket, ticket:, user:)
         taskbar.update_columns preferences: {}
 
         taskbar.update! state: { a: :b }
 
-        expect(taskbar.preferences[:tasks]).to include(include(user_id: other_user.id), include(user_id: 1))
+        expect(taskbar.preferences[:tasks]).to include(include(user_id: other_user.id), include(user_id: user.id))
       end
 
       it 'sets tasks when updating a taskbar with same user but different app' do
-        taskbar = create(:taskbar, key: key, user: other_user, app: 'mobile')
+        taskbar = create(:taskbar, :with_ticket, ticket:, user: other_user, app: 'mobile')
         taskbar.update_columns preferences: {}
 
         taskbar.update! state: { a: :b }
@@ -555,7 +125,7 @@ RSpec.describe Taskbar, performs_jobs: true, type: :model do
       end
 
       it 'updates related items when updating a taskbar' do
-        taskbar = create(:taskbar, key: key)
+        taskbar = create(:taskbar, :with_ticket, ticket:, user:)
 
         other_taskbar.update_columns preferences: {}
 
@@ -563,11 +133,11 @@ RSpec.describe Taskbar, performs_jobs: true, type: :model do
 
         perform_enqueued_jobs
 
-        expect(other_taskbar.reload.preferences[:tasks]).to include(include(user_id: other_user.id), include(user_id: 1))
+        expect(other_taskbar.reload.preferences[:tasks]).to include(include(user_id: other_user.id), include(user_id: user.id))
       end
 
       it 'updates related items when destroying a taskbar' do
-        taskbar = create(:taskbar, key: key)
+        taskbar = create(:taskbar, :with_ticket, ticket:, user:)
         taskbar.destroy!
 
         expect(other_taskbar.reload.preferences[:tasks]).to include(include(user_id: other_user.id))
@@ -576,9 +146,13 @@ RSpec.describe Taskbar, performs_jobs: true, type: :model do
   end
 
   describe '#collect_related_tasks' do
-    let(:key)       { Random.hex }
-    let(:taskbar_1) { create(:taskbar, key: key, user: create(:user)) }
-    let(:taskbar_2) { create(:taskbar, key: key, user: create(:user)) }
+    let(:ticket)   { create(:ticket) }
+
+    let(:user_1) { create(:agent, groups: [ticket.group]) }
+    let(:user_2) { create(:agent, groups: [ticket.group]) }
+
+    let(:taskbar_1) { create(:taskbar, :with_ticket, ticket:, user: user_1) }
+    let(:taskbar_2) { create(:taskbar, :with_ticket, ticket:, user: user_2) }
 
     before { taskbar_2 }
 
@@ -588,7 +162,8 @@ RSpec.describe Taskbar, performs_jobs: true, type: :model do
     end
 
     it 'returns tasks for a new taskbar' do
-      new_taskbar = build(:taskbar, key: key)
+      user = create(:agent, groups: [ticket.group])
+      new_taskbar = build(:taskbar, :with_ticket, ticket:, user:)
 
       expect(new_taskbar.send(:collect_related_tasks))
         .to eq([taskbar_2.preferences_task_info, new_taskbar.preferences_task_info])
@@ -601,6 +176,20 @@ RSpec.describe Taskbar, performs_jobs: true, type: :model do
 
       expect(taskbar_2.send(:collect_related_tasks))
         .to eq([taskbar_1.preferences_task_info])
+    end
+
+    # https://github.com/zammad/zammad/issues/5637
+    it 'does not include user who does not have access to the ticket' do
+      create(:taskbar, :with_ticket, ticket:)
+
+      expect(taskbar_1.send(:collect_related_tasks))
+        .to eq([taskbar_2.preferences_task_info, taskbar_1.preferences_task_info])
+    end
+
+    it 'does not leak other taskbars to user who does not have access to the ticket' do
+      new_taskbar = build(:taskbar, :with_ticket, ticket:)
+
+      expect(new_taskbar.send(:collect_related_tasks)).to be_empty
     end
   end
 
@@ -629,10 +218,13 @@ RSpec.describe Taskbar, performs_jobs: true, type: :model do
   end
 
   describe '#update_related_taskbars' do
-    let(:key)       { Random.hex }
-    let(:taskbar_1) { create(:taskbar, key: key, user: create(:user)) }
-    let(:taskbar_2) { create(:taskbar, key: key, user: create(:user)) }
-    let(:taskbar_3) { create(:taskbar, user: taskbar_1.user) }
+    let(:ticket)       { create(:ticket) }
+    let(:other_ticket) { create(:ticket, group: ticket.group) }
+    let(:user_1)       { create(:agent, groups: [ticket.group]) }
+    let(:user_2)       { create(:agent, groups: [ticket.group]) }
+    let(:taskbar_1)    { create(:taskbar, :with_ticket, ticket:, user: user_1) }
+    let(:taskbar_2)    { create(:taskbar, :with_ticket, ticket:, user: user_2) }
+    let(:taskbar_3)    { create(:taskbar, :with_ticket, ticket: other_ticket, user: user_1) }
 
     before { taskbar_1 && taskbar_2 && taskbar_3 }
 
@@ -642,6 +234,53 @@ RSpec.describe Taskbar, performs_jobs: true, type: :model do
 
       expect(taskbar_2.reload.preferences[:tasks].count).to eq(2)
       expect(taskbar_3.reload.preferences[:tasks].count).to eq(1)
+    end
+
+    describe 'related taskbars job enqueuing' do
+      context 'when taskbar is a ticket' do
+        let(:ticket)  { create(:ticket) }
+        let(:taskbar) { create(:taskbar, :with_ticket, ticket:, user:) }
+
+        context 'when user has access to the ticket' do
+          let(:user) { create(:agent, groups: [ticket.group]) }
+
+          it 'enqueues a job to update related taskbars' do
+            expect { taskbar }.to have_enqueued_job(TaskbarUpdateRelatedTasksJob)
+          end
+        end
+
+        context 'when user has no access to the ticket' do
+          let(:user) { create(:agent) }
+
+          it 'enqueues a job to update related taskbars' do
+            expect { taskbar }.to have_enqueued_job(TaskbarUpdateRelatedTasksJob)
+          end
+        end
+      end
+
+      context 'when taskbar is a user' do
+        let(:taskbar) { create(:taskbar, :with_user) }
+
+        it 'does not enqueue a job to update related taskbars' do
+          expect { taskbar }.not_to have_enqueued_job(TaskbarUpdateRelatedTasksJob)
+        end
+      end
+
+      context 'when taskbar is a new ticket' do
+        let(:taskbar) { create(:taskbar, :with_new_ticket) }
+
+        it 'does not enqueue a job to update related taskbars' do
+          expect { taskbar }.not_to have_enqueued_job(TaskbarUpdateRelatedTasksJob)
+        end
+      end
+
+      context 'when taskbar is a search' do
+        let(:taskbar) { create(:taskbar, :with_search) }
+
+        it 'does not enqueue a job to update related taskbars' do
+          expect { taskbar }.not_to have_enqueued_job(TaskbarUpdateRelatedTasksJob)
+        end
+      end
     end
   end
 
@@ -733,13 +372,15 @@ RSpec.describe Taskbar, performs_jobs: true, type: :model do
     let(:organization) { create(:organization) }
     let(:user)         { create(:user) }
 
-    let(:taskbar_ticket)       { create(:taskbar, params: { ticket_id: ticket.id }) }
-    let(:taskbar_ticket2)      { create(:taskbar, params: { ticket_id: ticket2.id }) }
-    let(:taskbar_organization) { create(:taskbar, params: { organization_id: organization.id }) }
-    let(:taskbar_user)         { create(:taskbar, params: { user_id: user.id }) }
+    let(:taskbar_ticket)       { create(:taskbar, :with_ticket, ticket:) }
+    let(:taskbar_ticket2)      { create(:taskbar, :with_ticket, ticket: ticket2) }
+    let(:taskbar_organization) { create(:taskbar, :with_organization, organization:) }
+    let(:taskbar_user)         { create(:taskbar, :with_user, user:) }
+    let(:taskbar_search)       { create(:taskbar, :with_search) }
+    let(:taskbar_new_ticket)   { create(:taskbar, :with_new_ticket) }
 
     before do
-      taskbar_ticket && taskbar_ticket2 && taskbar_organization && taskbar_user
+      taskbar_ticket && taskbar_ticket2 && taskbar_organization && taskbar_user && taskbar_search && taskbar_new_ticket
     end
 
     it 'returns object ids' do
@@ -756,6 +397,212 @@ RSpec.describe Taskbar, performs_jobs: true, type: :model do
         user_ids:         [user.id],
         organization_ids: []
       )
+    end
+  end
+
+  describe '#to_object' do
+    context 'when a taskbar has a related object' do
+      let(:ticket)  { create(:ticket) }
+      let(:taskbar) { create(:taskbar, :with_ticket, ticket:) }
+
+      it 'returns the related object' do
+        expect(taskbar.to_object).to eq(ticket)
+      end
+    end
+
+    context 'when a taskbar has no related object' do
+      let(:taskbar) { create(:taskbar, :with_new_ticket) }
+
+      it 'returns nil' do
+        expect(taskbar.to_object).to be_nil
+      end
+    end
+  end
+
+  describe '#to_object_class' do
+    context 'when a taskbar has a related object' do
+      let(:taskbar) { create(:taskbar, :with_organization) }
+
+      it 'returns the related object' do
+        expect(taskbar.to_object_class).to eq(Organization)
+      end
+    end
+
+    context 'when a taskbar has no related object' do
+      let(:taskbar) { create(:taskbar, :with_new_ticket) }
+
+      it 'returns nil' do
+        expect(taskbar.to_object_class).to be_nil
+      end
+    end
+  end
+
+  describe '#to_object_id' do
+    context 'when a taskbar has a related object' do
+      let(:user)    { create(:user) }
+      let(:taskbar) { create(:taskbar, :with_user, user:) }
+
+      it 'returns the related object' do
+        expect(taskbar.to_object_id).to eq(user.id)
+      end
+    end
+
+    context 'when a taskbar has no related object' do
+      let(:taskbar) { create(:taskbar, :with_new_ticket) }
+
+      it 'returns nil' do
+        expect(taskbar.to_object_id).to be_nil
+      end
+    end
+  end
+
+  describe '#relatable?' do
+    context 'when it is a new ticket' do
+      subject(:taskbar) { create(:taskbar, :with_new_ticket) }
+
+      it { is_expected.not_to be_relatable }
+    end
+
+    context 'when it is a user' do
+      subject(:taskbar) { create(:taskbar, :with_user) }
+
+      it { is_expected.not_to be_relatable }
+    end
+
+    context 'when it is a detailed search' do
+      subject(:taskbar) { create(:taskbar, :with_search) }
+
+      it { is_expected.not_to be_relatable }
+    end
+
+    context 'when it is a ticket' do
+      subject(:taskbar) { create(:taskbar, :with_ticket) }
+
+      it { is_expected.to be_relatable }
+    end
+  end
+
+  describe '#target_accessible_to_owner?' do
+    context 'when taskbar is a ticket' do
+      subject(:taskbar) { create(:taskbar, :with_ticket, ticket:, user:) }
+
+      context 'when owner has agent access to the ticket' do
+        let(:ticket) { create(:ticket) }
+        let(:user)   { create(:agent, groups: [ticket.group]) }
+
+        it { is_expected.to be_target_accessible_to_owner }
+      end
+
+      context 'when owner has customer access to the ticket' do
+        let(:ticket) { create(:ticket, customer: user) }
+        let(:user) { create(:customer) }
+
+        it { is_expected.to be_target_accessible_to_owner }
+      end
+
+      context 'when owner has no access to the ticket' do
+        let(:user) { create(:user) }
+        let(:ticket) { create(:ticket) }
+
+        it { is_expected.not_to be_target_accessible_to_owner }
+      end
+    end
+
+    context 'when taskbar is a user' do
+      let(:taskbar) { create(:taskbar, :with_user) }
+
+      it { expect(taskbar.target_accessible_to_owner?).to be_nil }
+    end
+
+    context 'when taskbar is a search' do
+      let(:taskbar) { create(:taskbar, :with_search) }
+
+      it { expect(taskbar.target_accessible_to_owner?).to be_nil }
+    end
+
+    context 'when taskbar is a new ticket' do
+      let(:taskbar) { create(:taskbar, :with_new_ticket) }
+
+      it { expect(taskbar.target_accessible_to_owner?).to be_nil }
+    end
+
+    describe '#update_last_contact' do
+      let(:ticket)  { create(:ticket) }
+      let(:user)    { create(:agent, groups: [ticket.group]) }
+      let(:taskbar) { create(:taskbar, :with_ticket, ticket:, user:) }
+
+      before do
+        freeze_time
+
+        taskbar
+
+        travel 1.minute
+      end
+
+      it 'sets initial contact time' do
+        expect(taskbar.last_contact).to eq(1.minute.ago)
+      end
+
+      it 'updates last contact time if taskbar was updated in' do
+        taskbar.state = { article: { body: 'some body' }, ticket: {} }
+
+        expect { taskbar.save! }.to change(taskbar, :last_contact).to(Time.current)
+      end
+
+      it 'does not update last contact time if updated because of changes in a related taskbar' do
+        create(:taskbar, :with_ticket, ticket:, user: create(:agent, groups: [ticket.group]))
+
+        expect { perform_enqueued_jobs }.not_to change { taskbar.reload.last_contact }
+      end
+
+      it 'does not update last contact if taskbar was saved without any changes' do
+        expect { taskbar.save! }.not_to change(taskbar, :last_contact)
+      end
+
+      it 'does not update last contact if taskbar was touched without any content changes' do
+        expect { taskbar.touch }.not_to change(taskbar, :last_contact)
+      end
+
+      it 'does not update last contact if flag was the only chage' do
+        taskbar.notify = true
+
+        expect { taskbar.save! }.not_to change(taskbar, :last_contact)
+      end
+
+      it 'does not update last contact if ordering weight was the only chage' do
+        taskbar.prio = 12_345
+
+        expect { taskbar.save! }.not_to change(taskbar, :last_contact)
+      end
+    end
+  end
+
+  describe '#log_recent_close' do
+    before do
+      allow(RecentClose).to receive(:upsert_closing_time!)
+    end
+
+    context 'when taskbar has a related object' do
+      let(:ticket)  { create(:ticket) }
+      let(:user)    { create(:agent) }
+      let(:taskbar) { create(:taskbar, :with_ticket, ticket:, user:) }
+
+      it 'calls RecentClose.upsert_closing_time!' do
+        taskbar.destroy
+
+        expect(RecentClose).to have_received(:upsert_closing_time!).with(user, ticket)
+      end
+    end
+
+    context 'when taskbar has no related object' do
+      let(:user)    { create(:agent) }
+      let(:taskbar) { create(:taskbar, user:) }
+
+      it 'deos not call RecentClose.upsert_closing_time!' do
+        taskbar.destroy
+
+        expect(RecentClose).not_to have_received(:upsert_closing_time!)
+      end
     end
   end
 end

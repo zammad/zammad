@@ -1,0 +1,50 @@
+Leider ist Herr Schmidt kurzfristig ausgefallen, weshalb wir den morgigen Termin nicht wahrnehmen können.
+Bitte nennen Sie uns 1-2 mögliche Ersatztermine.
+
+Mit freundlichen Grüßen
+
+Max Mustermann
+Leiter IT & Digitalisierung
+
+Telefon: +49 123 456 789
+E-Mail: [max.mustermann@example.com](mailto:max.mustermann@example.com)
+
+Example GmbH • Musterstraße 12 • 12345 Musterstadt
+
+-----Ursprünglicher Termin-----
+Von: Weber, Thomas <Thomas.Weber@example.com>
+Gesendet: Donnerstag, 6. November 2025 11:48
+An: Weber, Thomas; Support via Helpdesk; Mustermann, Max
+Betreff: Workshop Termin [Ticket#12345678]
+Zeit: Mittwoch, 3. Dezember 2025 13:00-17:00 (UTC+01:00) Amsterdam, Berlin.
+Ort: Microsoft Teams-Besprechung
+
+________________________________________________________________________________
+
+Microsoft Teams - Benötigen Sie Hilfe?
+
+Jetzt an der Besprechung teilnehmen
+
+Besprechungs-ID: 311 185 097 313 32
+Passcode: abc123
+
+________________________________________________________________________________
+
+_____________________________________________
+Von: Support via Helpdesk <support@example.com>
+Gesendet: Donnerstag, 6. November 2025 11:44
+An: Weber, Thomas <Thomas.Weber@example.com>
+Betreff: RE: Workshop Anfrage [Ticket#12345678]
+
+Sehr geehrter Herr Weber,
+
+Wie telefonisch besprochen, besuche ich Sie am 3.12. ab 13:00 Uhr.
+
+Viele Grüße
+
+Support Team
+
+--
+
+Example GmbH // Musterstraße 18 // 12345 Musterstadt // Germany
+

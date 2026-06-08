@@ -15,6 +15,8 @@ fragment userDetailAttributes on User {
   mobile
   fax
   note
+  source
+  verified
   active
   objectAttributeValues {
     ...objectAttributeValues
@@ -30,7 +32,7 @@ fragment userDetailAttributes on User {
       closed
     }
   }
-  secondaryOrganizations(first: $secondaryOrganizationsCount) {
+  secondaryOrganizations(first: $secondaryOrganizationsCount, after: $after) {
     edges {
       node {
         id
@@ -39,11 +41,9 @@ fragment userDetailAttributes on User {
         name
       }
     }
+    pageInfo {
+      endCursor
+    }
     totalCount
-  }
-  hasSecondaryOrganizations
-  ticketsCount {
-    open
-    closed
   }
 }

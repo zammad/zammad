@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, useSlots, type SetupContext } from 'vue'
@@ -46,8 +46,7 @@ const slots: SetupContext['slots'] = useSlots()
 
 const hasHelp = computed(() => slots.help || props.help)
 const showLabel = computed(() => {
-  if (!itemsWithPermission.value && !slots.default && !slots['before-items'])
-    return false
+  if (!itemsWithPermission.value && !slots.default && !slots['before-items']) return false
   return slots.header || props.headerLabel || props.actionLabel
 })
 </script>
@@ -61,7 +60,7 @@ const showLabel = computed(() => {
       :is="actionLink ? 'CommonLink' : 'div'"
       v-if="actionLabel"
       :link="actionLink"
-      class="text-blue cursor-pointer ltr:pr-4 rtl:pl-4"
+      class="cursor-pointer text-blue ltr:pr-4 rtl:pl-4"
       @click="clickOnAction"
     >
       {{ i18n.t(actionLabel) }}

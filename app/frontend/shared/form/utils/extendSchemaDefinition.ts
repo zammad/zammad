@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { extend } from '@formkit/utils'
 import { cloneDeep } from 'lodash-es'
@@ -19,22 +19,17 @@ const extendSchemaDefinition = (
   schemaExtension: FormKitSchemaCondition | Partial<FormKitSchemaNode>,
   extendType: FormSchemaExtendType = FormSchemaExtendType.Merge,
   cloneDefinition = false,
-  // eslint-disable-next-line sonarjs/cognitive-complexity
 ) => {
   const { props } = node
 
   if (!props.definition) return
 
-  const definition = cloneDefinition
-    ? cloneDeep(props.definition)
-    : props.definition
+  const definition = cloneDefinition ? cloneDeep(props.definition) : props.definition
 
   const originalSchema = definition.schema as FormKitExtendableSchemaRoot
 
   definition.schema = (extensions) => {
-    let sectionSchemaExtension:
-      | FormKitSchemaCondition
-      | Partial<FormKitSchemaNode>
+    let sectionSchemaExtension: FormKitSchemaCondition | Partial<FormKitSchemaNode>
 
     const currentExtension = extensions[sectionKey] || {}
 
@@ -50,9 +45,7 @@ const extendSchemaDefinition = (
     } else if (extendType === FormSchemaExtendType.Replace) {
       sectionSchemaExtension = schemaExtension
     } else {
-      let currentChildren: Maybe<
-        (FormKitSchemaCondition | Partial<FormKitSchemaNode>)[]
-      > = null
+      let currentChildren: Maybe<(FormKitSchemaCondition | Partial<FormKitSchemaNode>)[]> = null
       if (
         currentExtension &&
         typeof currentExtension === 'object' &&

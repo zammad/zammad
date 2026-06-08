@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'test_helper'
 
@@ -474,7 +474,7 @@ class TicketOverviewTest < ActiveSupport::TestCase
     assert_equal(result[2][:tickets].class, Array)
     assert(result[2][:tickets].blank?)
 
-    travel 1.second # because of mysql millitime issues
+    travel 1.second
     ticket2 = Ticket.create!(
       title:         'overview test 2',
       group:         Group.lookup(name: 'OverviewTest'),
@@ -571,7 +571,7 @@ class TicketOverviewTest < ActiveSupport::TestCase
     assert_equal(result[2][:tickets].class, Array)
     assert(result[2][:tickets].blank?)
 
-    travel 1.second # because of mysql millitime issues
+    travel 1.second
     ticket3 = Ticket.create!(
       title:         'overview test 3',
       group:         Group.lookup(name: 'OverviewTest'),

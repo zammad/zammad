@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { watch } from 'vue'
 
@@ -8,7 +8,7 @@ import type {
   WatchResultCallback,
 } from '#shared/types/server/apollo/handler.ts'
 
-import BaseHandler from './BaseHandler.ts'
+import { BaseHandler } from './BaseHandler.ts'
 
 import type { FetchResult, OperationVariables } from '@apollo/client/core'
 import type { UseSubscriptionReturn } from '@vue/apollo-composable'
@@ -17,11 +17,7 @@ import type { Ref, WatchStopHandle } from 'vue'
 export default class SubscriptionHandler<
   TResult = OperationSubscriptionsResult,
   TVariables extends OperationVariables = OperationVariables,
-> extends BaseHandler<
-  TResult,
-  TVariables,
-  UseSubscriptionReturn<TResult, TVariables>
-> {
+> extends BaseHandler<TResult, TVariables, UseSubscriptionReturn<TResult, TVariables>> {
   public subscribed = false
 
   public options(): OperationSubscriptionOptionsReturn<TResult, TVariables> {
@@ -42,11 +38,7 @@ export default class SubscriptionHandler<
 
   public onResult(
     callback: (
-      result: FetchResult<
-        TResult,
-        Record<string, unknown>,
-        Record<string, unknown>
-      >,
+      result: FetchResult<TResult, Record<string, unknown>, Record<string, unknown>>,
     ) => void,
   ) {
     this.operationResult.onResult(callback)
@@ -54,7 +46,9 @@ export default class SubscriptionHandler<
 
   public async onSubscribed(): Promise<Maybe<TResult> | undefined> {
     return new Promise((resolve, reject) => {
+      // eslint-disable-next-line prefer-const
       let errorUnsubscribe!: () => void
+      // eslint-disable-next-line prefer-const
       let resultUnsubscribe!: () => void
 
       const onFirstResultLoaded = () => {
@@ -77,9 +71,7 @@ export default class SubscriptionHandler<
     })
   }
 
-  public watchOnResult(
-    callback: WatchResultCallback<TResult>,
-  ): WatchStopHandle {
+  public watchOnResult(callback: WatchResultCallback<TResult>): WatchStopHandle {
     return watch(
       this.result(),
       (result) => {

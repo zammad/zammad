@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module KnowledgeBaseRichTextHelper
   def prepare_rich_text(input)
@@ -64,7 +64,7 @@ module KnowledgeBaseRichTextHelper
     end
 
     Loofah
-      .fragment(input)
+      .html5_fragment(input)
       .scrub!(scrubber_link)
       .scrub!(scrubber_images)
       .to_s

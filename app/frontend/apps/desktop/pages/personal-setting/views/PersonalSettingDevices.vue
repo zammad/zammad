@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed } from 'vue'
@@ -20,13 +20,11 @@ import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
 import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
 import type { MenuItem } from '#desktop/components/CommonPopoverMenu/types.ts'
 import CommonSimpleTable from '#desktop/components/CommonTable/CommonSimpleTable.vue'
-import type {
-  TableSimpleHeader,
-  TableItem,
-} from '#desktop/components/CommonTable/types.ts'
+import type { TableSimpleHeader, TableItem } from '#desktop/components/CommonTable/types.ts'
 import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
 
 import { useBreadcrumb } from '../composables/useBreadcrumb.ts'
+import { usePersonalSettingTabs } from '../composables/usePersonalSettingTabs.ts'
 import { useUserCurrentDeviceDeleteMutation } from '../graphql/mutations/userCurrentDeviceDelete.api.ts'
 import { useUserCurrentDeviceListQuery } from '../graphql/queries/userCurrentDeviceList.api.ts'
 import { UserCurrentDevicesUpdatesDocument } from '../graphql/subscriptions/userCurrentDevicesUpdates.api.ts'
@@ -39,7 +37,7 @@ const { fingerprint } = useFingerprint()
 
 const deviceListQuery = new QueryHandler(useUserCurrentDeviceListQuery())
 const deviceListQueryResult = deviceListQuery.result()
-const deviceListQueryLoading = deviceListQuery.loading()
+const deviceListQueryLoading = deviceListQuery.loadingWithoutCachedResult()
 
 deviceListQuery.subscribeToMore<
   UserCurrentDevicesUpdatesSubscriptionVariables,
@@ -52,8 +50,7 @@ deviceListQuery.subscribeToMore<
     }
 
     return {
-      userCurrentDeviceList:
-        subscriptionData.data.userCurrentDevicesUpdates.devices,
+      userCurrentDeviceList: subscriptionData.data.userCurrentDevicesUpdates.devices,
     }
   },
 })
@@ -122,26 +119,28 @@ const tableActions: MenuItem[] = [
   },
 ]
 
-const currentDevices = computed<TableItem[]>(() => {
-  return (deviceListQueryResult.value?.userCurrentDeviceList || []).map(
-    (device) => {
-      return {
-        ...device,
-        current: device.fingerprint && device.fingerprint === fingerprint.value,
-      }
-    },
-  )
-})
+const currentDevices = computed<TableItem[]>(() =>
+  // oxlint-disable no-map-spread
+  (deviceListQueryResult.value?.userCurrentDeviceList || []).map((device) => ({
+    // We can't use the original object, since it got sealed by Apollo Client to maintain immutability.
+    ...device,
+    location:
+      !device.location || device.location === 'unknown' ? i18n.t('Unknown') : device.location,
+    current: device.fingerprint && device.fingerprint === fingerprint.value,
+  })),
+)
 
 const helpText = computed(() =>
-  i18n.t(
-    'All computers and browsers from which you logged in to Zammad appear here.',
-  ),
+  i18n.t('All computers and browsers from which you logged in to Zammad appear here.'),
 )
+
+const { tabs, activeTab } = usePersonalSettingTabs()
 </script>
 
 <template>
   <LayoutContent
+    :active-tab="activeTab"
+    :tabs="tabs"
     :breadcrumb-items="breadcrumbItems"
     :help-text="helpText"
     width="narrow"
@@ -158,10 +157,7 @@ const helpText = computed(() =>
           :aria-label="helpText"
         >
           <template #item-suffix-name="{ item }">
-            <CommonBadge
-              v-if="item.current"
-              variant="info"
-              class="ltr:ml-2 rtl:mr-2"
+            <CommonBadge v-if="item.current" variant="info" class="ltr:ml-2 rtl:mr-2"
               >{{ $t('This device') }}
             </CommonBadge>
           </template>

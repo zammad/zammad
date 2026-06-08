@@ -1,13 +1,10 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { defineStore } from 'pinia'
 import { effectScope, ref } from 'vue'
 
 import { useLocalesLazyQuery } from '#shared/graphql/queries/locales.api.ts'
-import type {
-  LocalesQuery,
-  LocalesQueryVariables,
-} from '#shared/graphql/types.ts'
+import type { LocalesQuery, LocalesQueryVariables } from '#shared/graphql/types.ts'
 import localeForBrowserLanguage from '#shared/i18n/localeForBrowserLanguage.ts'
 import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 import log from '#shared/utils/log.ts'
@@ -36,6 +33,9 @@ export const useLocaleStore = defineStore(
   () => {
     const localeData = ref<Maybe<Locale>>(null)
     const locales = ref<Maybe<LocalesQuery['locales']>>(null)
+    const settingLocaleFor = ref<string>()
+
+    const translations = useTranslationsStore()
 
     const loadLocales = async (): Promise<void> => {
       if (locales.value) return
@@ -47,6 +47,15 @@ export const useLocaleStore = defineStore(
     }
 
     const setLocale = async (locale?: string): Promise<void> => {
+      if (settingLocaleFor.value && settingLocaleFor.value === locale) {
+        log.debug(
+          'localeStore.setLocale()',
+          'Aborting, already setting locale for:',
+          settingLocaleFor.value,
+        )
+        return
+      }
+
       await loadLocales()
 
       let newLocaleData
@@ -57,19 +66,23 @@ export const useLocaleStore = defineStore(
         })
       }
 
-      if (!newLocaleData)
-        newLocaleData = localeForBrowserLanguage(locales.value || [])
+      if (!newLocaleData) newLocaleData = localeForBrowserLanguage(locales.value || [])
 
       log.debug('localeStore.setLocale()', newLocaleData)
 
-      // Update the translation store, when the locale is different.
-      if (localeData.value?.locale !== newLocaleData.locale) {
-        await useTranslationsStore().load(newLocaleData.locale)
-        localeData.value = newLocaleData
+      if (localeData.value?.locale === newLocaleData.locale) return
 
-        document.documentElement.setAttribute('dir', newLocaleData.dir)
-        document.documentElement.setAttribute('lang', newLocaleData.locale)
-      }
+      settingLocaleFor.value = newLocaleData.locale
+
+      // Update the translations store, when the locale is different.
+      await translations.load(newLocaleData.locale)
+
+      localeData.value = newLocaleData
+
+      document.documentElement.setAttribute('dir', newLocaleData.dir)
+      document.documentElement.setAttribute('lang', newLocaleData.locale)
+
+      settingLocaleFor.value = undefined
     }
 
     return {

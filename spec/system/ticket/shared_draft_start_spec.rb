@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -167,7 +167,7 @@ RSpec.describe 'Ticket Shared Draft Start', authenticated_as: :authenticate, typ
         click '.js-update'
       end
 
-      expect(draft.reload.content['body']).to match %r{add update}
+      expect(draft.reload.content['body']).to include('add update')
     end
 
     it 'changes name' do

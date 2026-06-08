@@ -97,7 +97,7 @@ class ProfileNotification extends App.ControllerSubContent
     groups = _.sortBy(groups, (item) -> return item.name)
 
     for sound in @sounds
-      sound.selected = sound.file is App.OnlineNotification.soundFile() ? true : false
+      sound.selected = sound.file is App.OnlineNotification.soundFile()
 
     @html App.view('profile/notification')
       matrixTableHTML: @renderNotificationMatrix(config.matrix)

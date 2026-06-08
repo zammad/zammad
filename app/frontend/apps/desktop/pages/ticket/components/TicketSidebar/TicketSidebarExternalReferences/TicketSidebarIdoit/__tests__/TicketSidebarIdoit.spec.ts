@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { within } from '@testing-library/vue'
 import { vi } from 'vitest'
@@ -51,11 +51,7 @@ const mockedData = [
   },
 ]
 
-const renderIdoitSidebar = (
-  isTicketEditable = true,
-  objects = mockedData,
-  customMocks = false,
-) => {
+const renderIdoitSidebar = (isTicketEditable = true, objects = mockedData, customMocks = false) => {
   mockApplicationConfig({
     idoit_integration: true,
   })
@@ -144,23 +140,15 @@ describe('TicketSidebarIdoit', () => {
       form: true,
     })
 
-    await wrapper.events.click(
-      await wrapper.findByRole('button', { name: 'i-doit' }),
-    )
+    await wrapper.events.click(await wrapper.findByRole('button', { name: 'i-doit' }))
 
     await waitForNextTick()
 
-    expect(
-      wrapper.getByRole('button', { name: 'Link Objects' }),
-    ).toBeInTheDocument()
+    expect(wrapper.getByRole('button', { name: 'Link objects' })).toBeInTheDocument()
 
-    expect(
-      wrapper.queryByRole('status', { name: 'Objects' }),
-    ).not.toBeInTheDocument()
+    expect(wrapper.queryByRole('status', { name: 'Objects' })).not.toBeInTheDocument()
 
-    expect(
-      wrapper.queryByRole('button', { name: 'Action menu button' }),
-    ).not.toBeInTheDocument()
+    expect(wrapper.queryByRole('button', { name: 'Action menu button' })).not.toBeInTheDocument()
   })
 
   it('displays on ticket create screen correctly without objects', async () => {
@@ -211,13 +199,9 @@ describe('TicketSidebarIdoit', () => {
       form: true,
     })
 
-    expect(
-      wrapper.queryByRole('status', { name: 'Objects' }),
-    ).toBeInTheDocument()
+    expect(wrapper.queryByRole('status', { name: 'Objects' })).toBeInTheDocument()
 
-    expect(
-      wrapper.queryByRole('button', { name: 'Action menu button' }),
-    ).toBeInTheDocument()
+    expect(wrapper.queryByRole('button', { name: 'Action menu button' })).toBeInTheDocument()
 
     const group = await wrapper.findAllByRole('group')
 
@@ -231,9 +215,7 @@ describe('TicketSidebarIdoit', () => {
     expect(wrapper.getAllByIconName('i-doit-logo-dark')).toHaveLength(2)
 
     expect(wrapper.getByRole('button', { name: 'i-doit' })).toBeInTheDocument()
-    expect(wrapper.getByRole('status', { name: 'Objects' })).toHaveTextContent(
-      '1',
-    )
+    expect(wrapper.getByRole('status', { name: 'Objects' })).toHaveTextContent('1')
 
     const link = await wrapper.findByRole('link')
 
@@ -255,15 +237,11 @@ describe('TicketSidebarIdoit', () => {
   it('adds a new object with issues present', async () => {
     const wrapper = renderIdoitSidebar()
 
-    await wrapper.events.click(
-      await wrapper.findByRole('button', { name: 'Action menu button' }),
-    )
+    await wrapper.events.click(await wrapper.findByRole('button', { name: 'Action menu button' }))
 
     const menu = await wrapper.findByRole('menu')
 
-    await wrapper.events.click(
-      within(menu).getByRole('button', { name: 'Link objects' }),
-    )
+    await wrapper.events.click(within(menu).getByRole('button', { name: 'Link objects' }))
 
     const flyout = await wrapper.findByRole('complementary', {
       name: 'i-doit: Link objects',
@@ -283,8 +261,7 @@ describe('TicketSidebarIdoit', () => {
 
     await wrapper.events.click(unlinkButtons[0])
 
-    const calls =
-      await waitForTicketExternalReferencesIdoitObjectRemoveMutationCalls()
+    const calls = await waitForTicketExternalReferencesIdoitObjectRemoveMutationCalls()
 
     expect(calls.at(-1)?.variables).toEqual({
       ticketId: convertToGraphQLId('Ticket', 1),
@@ -302,13 +279,9 @@ describe('TicketSidebarIdoit', () => {
 
     await waitForNextTick()
 
-    expect(
-      wrapper.queryByRole('button', { name: 'Unlink object' }),
-    ).not.toBeInTheDocument()
+    expect(wrapper.queryByRole('button', { name: 'Unlink object' })).not.toBeInTheDocument()
 
-    expect(
-      wrapper.queryByRole('button', { name: 'Action menu button' }),
-    ).not.toBeInTheDocument()
+    expect(wrapper.queryByRole('button', { name: 'Action menu button' })).not.toBeInTheDocument()
   })
 
   it('updates to light logo if theme is dark', () => {
@@ -397,8 +370,6 @@ describe('errors', () => {
       'Error fetching information from i-doit. Please contact your administrator.',
     )
 
-    expect(
-      wrapper.queryByRole('button', { name: 'Action menu button' }),
-    ).not.toBeInTheDocument()
+    expect(wrapper.queryByRole('button', { name: 'Action menu button' })).not.toBeInTheDocument()
   })
 })

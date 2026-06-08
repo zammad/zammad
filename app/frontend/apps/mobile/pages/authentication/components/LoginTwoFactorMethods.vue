@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import type { TwoFactorPlugin } from '#shared/entities/two-factor/types.ts'
@@ -30,7 +30,7 @@ const emit = defineEmits<{
   </CommonSectionMenu>
   <button
     v-if="recoveryCodesAvailable"
-    class="text-gray mb-6 w-full max-w-md text-center font-semibold"
+    class="mb-6 w-full max-w-md text-center font-medium text-gray"
     @click="emit('use-recovery-code')"
   >
     {{ $t('Or use one of your recovery codes.') }}

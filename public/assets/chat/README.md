@@ -2,9 +2,11 @@
 
 ## Recreating the Static Zammad Chat Build
 
+From the repository root you can run:
+
 ```sh
-pnpm install
-pnpm exec gulp build
+(cd public/assets/images && pnpm install --frozen-lockfile && pnpm exec gulp build)
+
 [11:13:03] Using gulpfile zammad/public/assets/chat/gulpfile.js
 [11:13:03] Starting 'build'...
 [11:13:03] Starting 'js'...

@@ -1,35 +1,19 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 <!-- eslint-disable zammad/zammad-detect-translatable-string -->
 
 <script setup lang="ts">
 import { reset } from '@formkit/core'
 import gql from 'graphql-tag'
-import { storeToRefs } from 'pinia'
-import {
-  computed,
-  h,
-  onMounted,
-  reactive,
-  ref,
-  watch,
-  type Ref,
-  useTemplateRef,
-} from 'vue'
+import { computed, h, onMounted, reactive, ref, watch, type Ref, useTemplateRef, toRef } from 'vue'
 
 import CommonAlert from '#shared/components/CommonAlert/CommonAlert.vue'
-import CommonPopover from '#shared/components/CommonPopover/CommonPopover.vue'
-import type {
-  Orientation,
-  Placement,
-} from '#shared/components/CommonPopover/types.ts'
-import { usePopover } from '#shared/components/CommonPopover/usePopover.ts'
+import { NotificationTypes } from '#shared/components/CommonNotifications/types.ts'
+import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
+import CommonProgressBar from '#shared/components/CommonProgressBar/CommonProgressBar.vue'
 import CommonTranslateRenderer from '#shared/components/CommonTranslateRenderer/CommonTranslateRenderer.vue'
 import CommonUserAvatar from '#shared/components/CommonUserAvatar/CommonUserAvatar.vue'
 import Form from '#shared/components/Form/Form.vue'
-import type {
-  FormSchemaNode,
-  FormValues,
-} from '#shared/components/Form/types.ts'
+import type { FormSchemaNode, FormValues } from '#shared/components/Form/types.ts'
 import { useConfirmation } from '#shared/composables/useConfirmation.ts'
 import { useCopyToClipboard } from '#shared/composables/useCopyToClipboard.ts'
 import { defineFormSchema } from '#shared/form/defineFormSchema.ts'
@@ -38,27 +22,31 @@ import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
 
+import { useFeedbackDialog } from '#desktop/components/BetaUi/FeedbackDialog/useFeedbackDialog.ts'
 import CommonActionMenu from '#desktop/components/CommonActionMenu/CommonActionMenu.vue'
 import CommonBreadcrumb from '#desktop/components/CommonBreadcrumb/CommonBreadcrumb.vue'
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonButtonGroup from '#desktop/components/CommonButtonGroup/CommonButtonGroup.vue'
 import type { CommonButtonItem } from '#desktop/components/CommonButtonGroup/types.ts'
+import CommonBarChart from '#desktop/components/CommonCharts/CommonBarChart/CommonBarChart.vue'
 import CommonDialog from '#desktop/components/CommonDialog/CommonDialog.vue'
 import { useDialog } from '#desktop/components/CommonDialog/useDialog.ts'
 import CommonFlyout from '#desktop/components/CommonFlyout/CommonFlyout.vue'
 import { useFlyout } from '#desktop/components/CommonFlyout/useFlyout.ts'
 import CommonInlineEdit from '#desktop/components/CommonInlineEdit/CommonInlineEdit.vue'
 import CommonInputCopyToClipboard from '#desktop/components/CommonInputCopyToClipboard/CommonInputCopyToClipboard.vue'
+import CommonPopover from '#desktop/components/CommonPopover/CommonPopover.vue'
+import type { Orientation, Placement } from '#desktop/components/CommonPopover/types.ts'
+import { usePopover } from '#desktop/components/CommonPopover/usePopover.ts'
 import CommonPopoverMenu from '#desktop/components/CommonPopoverMenu/CommonPopoverMenu.vue'
 import type { MenuItem } from '#desktop/components/CommonPopoverMenu/types.ts'
-import CommonProgressBar from '#desktop/components/CommonProgressBar/CommonProgressBar.vue'
 import CommonSkeleton from '#desktop/components/CommonSkeleton/CommonSkeleton.vue'
-import CommonTabGroup from '#desktop/components/CommonTabGroup/CommonTabGroup.vue'
-import { useTabGroup } from '#desktop/components/CommonTabGroup/useTabGroup.ts'
 import CommonAdvancedTable from '#desktop/components/CommonTable/CommonAdvancedTable.vue'
 import CommonSimpleTable from '#desktop/components/CommonTable/CommonSimpleTable.vue'
 import CommonTableSkeleton from '#desktop/components/CommonTable/Skeleton/CommonTableSkeleton.vue'
 import type { TableAdvancedItem } from '#desktop/components/CommonTable/types.ts'
+import CommonNavigationTabs from '#desktop/components/CommonTabs/CommonNavigationTabs/CommonNavigationTabs.vue'
+import CommonTabGroup from '#desktop/components/CommonTabs/CommonTabGroup/CommonTabGroup.vue'
 import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
 import SplitButton from '#desktop/components/SplitButton/SplitButton.vue'
 import ThemeSwitch from '#desktop/components/ThemeSwitch/ThemeSwitch.vue'
@@ -215,11 +203,6 @@ const permissions = [
         value: 'admin.channel_microsoft_graph',
         label: ' Microsoft Graph',
         description: 'To manage Microsoft Graph channel of your system.',
-      },
-      {
-        value: 'admin.channel_twitter',
-        label: 'Twitter',
-        description: 'To manage Twitter channel of your system.',
       },
       {
         value: 'admin.channel_facebook',
@@ -424,8 +407,7 @@ const permissions = [
       {
         value: 'user_preferences.two_factor_authentication',
         label: 'Two-factor Authentication',
-        description:
-          'To access the two-factor authentication personal setting.',
+        description: 'To access the two-factor authentication personal setting.',
       },
       {
         value: 'user_preferences.device',
@@ -489,7 +471,7 @@ const treeselectOptions = [
         value: 5,
         label: 'Item 2',
         children: [
-          ...[longOption.value],
+          longOption.value,
           {
             value: 6,
             label: 'Item IV',
@@ -549,6 +531,11 @@ const application = useApplicationStore()
 
 const formSchema = defineFormSchema([
   {
+    type: 'rating',
+    name: 'rating',
+    label: 'How would you rate the Zammad BETA UI?',
+  },
+  {
     type: 'editor',
     name: 'editor',
     label: 'Editor',
@@ -568,7 +555,7 @@ const formSchema = defineFormSchema([
         outerClass: 'col-span-1',
         props: {
           maxLength: 150,
-          options: [...alphabetOptions.value, ...[longOption.value]],
+          options: [...alphabetOptions.value, longOption.value],
           clearable: true,
           help: 'Testing',
         },
@@ -711,7 +698,7 @@ const formSchema = defineFormSchema([
     props: {
       clearable: true,
       link: '/',
-      linkIcon: 'person-add',
+      linkIcon: 'user-add',
     },
   },
   {
@@ -789,11 +776,16 @@ const formSchema = defineFormSchema([
     },
   },
   {
+    name: 'checkbox_0',
+    label: "I'm a checkbox, check me please!",
+    type: 'checkbox',
+  },
+  {
     type: 'select',
     name: 'select_1',
     label: 'Single select',
     props: {
-      options: [...alphabetOptions.value, ...[longOption.value]],
+      options: [...alphabetOptions.value, longOption.value],
       clearable: true,
     },
   },
@@ -803,7 +795,7 @@ const formSchema = defineFormSchema([
     label: 'Multi select',
     props: {
       multiple: true,
-      options: [...alphabetOptions.value, ...[longOption.value]],
+      options: [...alphabetOptions.value, longOption.value],
       clearable: true,
     },
   },
@@ -891,6 +883,48 @@ const formInitialValues: FormValues = {
   // date_0: [new Date(), new Date(new Date().setDate(new Date().getDate() + 7))],
 }
 
+const progressBarNotificationValue = ref(0)
+
+const increaseProgressBarNotificationValue = () => {
+  if (progressBarNotificationValue.value < 1) {
+    progressBarNotificationValue.value += 0.01
+  }
+}
+
+const { notify } = useNotifications()
+
+let progressBarNotificationIntervalId: number | null = null
+
+const notifyWithProgress = (progress: number) => {
+  notify({
+    id: 'playground-notification-progress',
+    type: NotificationTypes.Info,
+    message: `${(progress * 100).toFixed(0)}% progress bar notification`,
+    persistent: true,
+    currentProgress: progress,
+    closeCallback: () => {
+      clearInterval(progressBarNotificationIntervalId!)
+      progressBarNotificationIntervalId = null
+    },
+  })
+}
+
+const rampUpProgressBarNotificationValue = () => {
+  // reset if already done
+  if (progressBarNotificationValue.value > 0) progressBarNotificationValue.value = 0
+
+  // show 0 progress toast
+  notifyWithProgress(0)
+
+  // wait before increasing
+  setTimeout(() => {
+    progressBarNotificationIntervalId = setInterval(
+      increaseProgressBarNotificationValue,
+      500,
+    ) as unknown as number
+  }, 2000)
+}
+
 const progressBarValue = ref(0)
 
 const increaseProgressBar = () => {
@@ -909,8 +943,17 @@ watch(progressBarValue, (newValue) => {
   }, 1000)
 })
 
-const session = useSessionStore()
-const { user } = storeToRefs(session)
+watch(progressBarNotificationValue, (newValue) => {
+  if (newValue < 1) notifyWithProgress(progressBarNotificationValue.value)
+  else
+    notify({
+      id: 'playground-notification-progress',
+      type: NotificationTypes.Success,
+      message: 'Progress bar notification completed successfully.',
+    })
+})
+
+const user = toRef(useSessionStore(), 'user')
 
 const { isOpen: popoverIsOpen, popover, popoverTarget, toggle } = usePopover()
 
@@ -943,18 +986,10 @@ const flyout = useFlyout({
           CommonFlyout,
           {
             onClose: () => {
-              console.log(
-                '%c %s',
-                'color: red; font-size: 16px',
-                'Flyout closed!',
-              )
+              console.log('%c %s', 'color: red; font-size: 16px', 'Flyout closed!')
             },
             onAction: () => {
-              console.log(
-                '%c %s',
-                'color: green; font-size: 16px',
-                'Flyout action!',
-              )
+              console.log('%c %s', 'color: green; font-size: 16px', 'Flyout action!')
             },
             name: 'playground',
             headerTitle: 'Hello Playground',
@@ -1137,6 +1172,7 @@ const tableItemsAdvanced = reactive<TableAdvancedItem[]>([
     name: 'Tom Cook',
     title: 'Director of Product',
     email: 'tom.cook@example.com',
+    disabled: true,
     role: 'Member',
   },
   {
@@ -1144,6 +1180,7 @@ const tableItemsAdvanced = reactive<TableAdvancedItem[]>([
     name: 'Whitney Francis',
     title: 'Copywriter',
     email: 'whitney.francis@example.com',
+    disabled: true,
     role: 'Admin',
   },
   {
@@ -1221,9 +1258,29 @@ const changeRowSimple = () => {
   tableItems[0].role = tableItems[0].role ? '' : 'Member'
 }
 
-const { activeTab } = useTabGroup<string>()
+const activeTab = ref()
 
-const { activeTab: activeFilters } = useTabGroup<string[]>()
+const activeFilters = ref()
+
+const activeTabOverflow = ref<string>()
+const activeFiltersOverflow = ref<string[]>()
+
+const activeNavTabScroll = ref<string>()
+const activeNavTabOverflow = ref<string>()
+
+const playgroundNavTabs = [
+  { label: 'Overview', key: 'overview', link: '/' },
+  { label: 'My Tickets', key: 'my-tickets', link: '/' },
+  { label: 'Unassigned', key: 'unassigned', link: '/' },
+  { label: 'Open', key: 'open', link: '/' },
+  { label: 'Pending', key: 'pending', link: '/' },
+  { label: 'Escalated', key: 'escalated', link: '/' },
+  { label: 'Closed', key: 'closed', link: '/' },
+  { label: 'Spam', key: 'spam', link: '/' },
+  { label: 'All Tickets', key: 'all-tickets', link: '/' },
+]
+
+const playgroundTabItems = playgroundNavTabs.map(({ label, key }) => ({ label, key }))
 
 const popoverOrientation: Ref<Orientation> = ref('autoVertical')
 const popoverOrientationOptions = [
@@ -1353,11 +1410,151 @@ const userEntity = {
   note: '',
   active: true,
 }
+
+const { openFeedbackDialog } = useFeedbackDialog()
 </script>
 
 <template>
   <LayoutContent>
     <div>
+      <h3>Notifications / Alerts</h3>
+      <div class="mb-4 space-x-2">
+        <CommonButton
+          variant="submit"
+          @click="
+            notify({
+              id: 'playground-notification-success',
+              type: NotificationTypes.Success,
+              message: 'The notification was triggered successfully.',
+            })
+          "
+        >
+          Show success notification
+        </CommonButton>
+
+        <CommonButton
+          variant="primary"
+          @click="
+            notify({
+              id: 'playground-notification-persistent',
+              type: NotificationTypes.Info,
+              message: 'The persistent notification was triggered successfully.',
+              persistent: true,
+            })
+          "
+        >
+          Show persistent notification
+        </CommonButton>
+
+        <CommonButton
+          variant="secondary"
+          @click="
+            notify({
+              id: 'playground-notification-persistent-action',
+              type: NotificationTypes.Warn,
+              message: 'The persistent notification was triggered successfully.',
+              persistent: true,
+              actionLabel: 'Action',
+              actionCallback: () => {
+                notify({
+                  id: 'playground-notification-persistent-action-callback',
+                  type: NotificationTypes.Success,
+                  message: 'The action callback was triggered successfully.',
+                })
+              },
+            })
+          "
+        >
+          Show persistent notification (with action)
+        </CommonButton>
+
+        <CommonButton variant="subtle" @click="rampUpProgressBarNotificationValue">
+          Show persistent notification (with progress bar)
+        </CommonButton>
+      </div>
+
+      <h3>Feedback Dialog</h3>
+      <div class="mb-4 space-x-2">
+        <CommonButton variant="primary" @click="openFeedbackDialog({ milestone: '5h' })"
+          >Open Timed Feedback Dialog
+        </CommonButton>
+
+        <CommonButton variant="primary" @click="openFeedbackDialog()"
+          >Open Manual Feedback Dialog</CommonButton
+        >
+      </div>
+
+      <div>
+        <CommonLabel class="block!" tag="h2">Charts Examples</CommonLabel>
+        <CommonLabel class="block!" tag="h3">Bar Chart</CommonLabel>
+        <CommonBarChart
+          class="h-72!"
+          :option="{
+            title: {
+              text: 'Frequency',
+            },
+            tooltip: {
+              trigger: 'axis',
+              axisPointer: {
+                type: 'shadow',
+              },
+            },
+            legend: {
+              data: ['Created', 'Closed'],
+            },
+            grid: {
+              containLabel: true,
+            },
+            xAxis: {
+              type: 'category',
+              data: [
+                'Jan',
+                'Feb',
+                'Mar',
+                'Apr',
+                'May',
+                'Jun',
+                'Jul',
+                'Aug',
+                'Sep',
+                'Oct',
+                'Nov',
+                'Dec',
+              ],
+              axisLabel: {
+                interval: 0,
+                rotate: 0,
+              },
+            },
+            yAxis: {
+              type: 'value',
+              interval: 0,
+            },
+            series: [
+              {
+                name: 'Created',
+                type: 'bar',
+                data: [45, 52, 48, 61, 55, 58, 60, 62, 65, 70, 68, 72],
+                itemStyle: {
+                  color: '#3B82F6',
+                  borderRadius: 8,
+                },
+              },
+              {
+                name: 'Closed',
+                type: 'bar',
+                data: [33, 37, 38, 43, 41, 38, 40, 42, 44, 46, 45, 47],
+                itemStyle: {
+                  color: '#10B981',
+                  borderRadius: 8,
+                },
+              },
+            ],
+            backgroundColor: 'transparent',
+          }"
+        />
+      </div>
+
       Generic skeleton
       <CommonSkeleton class="h-8 w-full" />
 
@@ -1387,9 +1584,7 @@ const userEntity = {
             ]"
           />
         </div>
-        <h1 id="test" v-tooltip="'Hello world'" class="w-fit">
-          Tooltip example
-        </h1>
+        <h1 id="test" v-tooltip="'Hello world'" class="w-fit">Tooltip example</h1>
 
         <h2 title="Buttons" class="text-xl">Buttons</h2>
 
@@ -1474,14 +1669,10 @@ const userEntity = {
       <div class="w-1/2">
         <h2 class="text-xl">Alerts</h2>
 
-        <CommonAlert variant="info" dismissible class="mb-2.5"
-          >It's Friday!
-        </CommonAlert>
+        <CommonAlert variant="info" dismissible class="mb-2.5">It's Friday! </CommonAlert>
         <CommonAlert variant="success" class="mb-2.5">
           <div class="flex flex-col gap-1.5">
-            <CommonLabel class="text-yellow-600!" size="large"
-              >Similar tickets found</CommonLabel
-            >
+            <CommonLabel class="text-yellow-600!" size="large">Similar tickets found</CommonLabel>
             <CommonLabel class="text-yellow-600!"
               >Tickets with the same attributes were found.</CommonLabel
             >
@@ -1490,31 +1681,21 @@ const userEntity = {
             </ul>
           </div>
         </CommonAlert>
-        <CommonAlert variant="warning" class="mb-2.5"
-          >Heee! You're typing too fast.
-        </CommonAlert>
-        <CommonAlert variant="danger" class="mb-2.5"
-          >Ooops! You broke it.
-        </CommonAlert>
+        <CommonAlert variant="warning" class="mb-2.5">Heee! You're typing too fast. </CommonAlert>
+        <CommonAlert variant="danger" class="mb-2.5">Ooops! You broke it. </CommonAlert>
       </div>
 
       <div>
         <h2>Labels</h2>
-        <CommonLabel size="small" prefix-icon="logo" suffix-icon="logo-flat">
-          Small
-        </CommonLabel>
+        <CommonLabel size="small" prefix-icon="logo" suffix-icon="logo-flat"> Small </CommonLabel>
 
         <br />
 
-        <CommonLabel size="medium" prefix-icon="logo" suffix-icon="logo-flat">
-          Medium
-        </CommonLabel>
+        <CommonLabel size="medium" prefix-icon="logo" suffix-icon="logo-flat"> Medium </CommonLabel>
 
         <br />
 
-        <CommonLabel size="large" prefix-icon="logo" suffix-icon="logo-flat">
-          Large
-        </CommonLabel>
+        <CommonLabel size="large" prefix-icon="logo" suffix-icon="logo-flat"> Large </CommonLabel>
 
         <br />
 
@@ -1526,23 +1707,15 @@ const userEntity = {
       <div>
         <h2>Badges</h2>
 
-        <CommonBadge class="ltr:mr-2 rtl:ml-2" variant="neutral">
-          Neutral
-        </CommonBadge>
+        <CommonBadge class="ltr:mr-2 rtl:ml-2" variant="neutral"> Neutral </CommonBadge>
 
         <CommonBadge class="ltr:mr-2 rtl:ml-2" variant="info">Info</CommonBadge>
 
-        <CommonBadge class="ltr:mr-2 rtl:ml-2" variant="success">
-          Success
-        </CommonBadge>
+        <CommonBadge class="ltr:mr-2 rtl:ml-2" variant="success"> Success </CommonBadge>
 
-        <CommonBadge class="ltr:mr-2 rtl:ml-2" variant="warning">
-          Warning
-        </CommonBadge>
+        <CommonBadge class="ltr:mr-2 rtl:ml-2" variant="warning"> Warning </CommonBadge>
 
-        <CommonBadge class="ltr:mr-2 rtl:ml-2" variant="danger">
-          Danger
-        </CommonBadge>
+        <CommonBadge class="ltr:mr-2 rtl:ml-2" variant="danger"> Danger </CommonBadge>
 
         <CommonBadge
           class="bg-pink-300 text-white ltr:mr-2 rtl:ml-2 dark:bg-pink-300"
@@ -1557,23 +1730,28 @@ const userEntity = {
         <div class="flex flex-col gap-3">
           <div class="flex flex-col gap-2">
             <CommonLabel size="small">What is the meaning of life?</CommonLabel>
+            <CommonLabel size="small"> Variant:Primary</CommonLabel>
             <CommonProgressBar />
+            <CommonLabel size="small"> Variant:Inverted</CommonLabel>
+            <CommonProgressBar variant="inverted" />
           </div>
 
           <div class="flex items-end gap-2">
             <div class="mb-1 flex grow flex-col gap-1">
               <div class="flex justify-between">
                 <CommonLabel size="small">Organizations</CommonLabel>
-                <CommonLabel
-                  class="text-stone-200 dark:text-neutral-500"
-                  size="small"
-                >
+                <CommonLabel class="text-stone-200 dark:text-neutral-500" size="small">
                   {{ progressBarValue }} of 100
                 </CommonLabel>
               </div>
 
+              <CommonLabel size="small">Size: Normal</CommonLabel>
+              <CommonProgressBar class="mb-4" :value="progressBarValue.toString()" max="100" />
+              <CommonLabel size="small">Size: Small</CommonLabel>
               <CommonProgressBar
                 :value="progressBarValue.toString()"
+                size="small"
+                variant="inverted"
                 max="100"
               />
             </div>
@@ -1591,15 +1769,14 @@ const userEntity = {
 
       <h2 class="mt-8 mb-2">Table (Simple)</h2>
       <div class="mb-6 flex flex-col gap-4">
-        <CommonButton variant="primary" @click="changeRowSimple()"
-          >Change row</CommonButton
-        >
+        <CommonButton variant="primary" @click="changeRowSimple()">Change row</CommonButton>
         <CommonSimpleTable
           caption="test"
           :headers="tableHeaders"
           :items="tableItems"
           :actions="tableActions"
-        ></CommonSimpleTable>
+        >
+        </CommonSimpleTable>
       </div>
 
       <h2 class="mt-8 mb-2">Table (Advanced)</h2>
@@ -1610,8 +1787,8 @@ const userEntity = {
           :items="tableItemsAdvanced"
           :actions="tableActions"
           :max-items="8"
-          :total-items="10"
-          has-checkbox-column
+          :total-items-count="10"
+          has-bulk-action
           caption="test advanced table"
           table-id="2"
           :attributes="[
@@ -1635,10 +1812,10 @@ const userEntity = {
                 noResize: false,
                 hideLabel: false,
                 displayWidth: 200,
-                truncate: true,
               },
               columnPreferences: {
                 alignContent: 'center',
+                tooltip: (item) => item.title as string,
               },
               dataType: 'integer',
             },
@@ -1679,7 +1856,7 @@ const userEntity = {
 
         <div class="my-4 flex items-center gap-4">
           <CommonUserAvatar
-            class="cursor-pointer border border-neutral-100 outline outline-2 outline-transparent hover:outline-blue-600 focus:outline-blue-800 dark:border-gray-900 dark:hover:outline-blue-900 dark:hover:focus:outline-blue-800"
+            class="cursor-pointer border border-neutral-100 outline-2 outline-transparent hover:outline-blue-600 focus:outline-blue-800 dark:border-gray-900 dark:hover:outline-blue-900 dark:hover:focus:outline-blue-800"
             tabindex="0"
             :entity="{
               id: 'gid://zammad/User/1',
@@ -1688,10 +1865,7 @@ const userEntity = {
             size="medium"
           />
 
-          <CommonButton
-            :variant="vip ? 'neutral' : 'subtle'"
-            @click="vip = !vip"
-          >
+          <CommonButton :variant="vip ? 'neutral' : 'subtle'" @click="vip = !vip">
             {{ vip ? 'Make us unimportant :(' : 'Make us important :)' }}
           </CommonButton>
         </div>
@@ -1704,7 +1878,7 @@ const userEntity = {
 
         <div class="flex gap-4">
           <CommonUserAvatar
-            class="cursor-pointer border border-neutral-100 outline outline-2 outline-transparent hover:outline-blue-600 focus:outline-blue-800 dark:border-gray-900 dark:hover:outline-blue-900 dark:hover:focus:outline-blue-800"
+            class="cursor-pointer border border-neutral-100 outline-2 outline-transparent hover:outline-blue-600 focus:outline-blue-800 dark:border-gray-900 dark:hover:outline-blue-900 dark:hover:focus:outline-blue-800"
             tabindex="0"
             :entity="{
               id: 'gid://zammad/User/2',
@@ -1715,7 +1889,7 @@ const userEntity = {
             size="xs"
           />
           <CommonUserAvatar
-            class="cursor-pointer border border-neutral-100 outline outline-2 outline-transparent hover:outline-blue-600 focus:outline-blue-800 dark:border-gray-900 dark:hover:outline-blue-900 dark:hover:focus:outline-blue-800"
+            class="cursor-pointer border border-neutral-100 outline-2 outline-transparent hover:outline-blue-600 focus:outline-blue-800 dark:border-gray-900 dark:hover:outline-blue-900 dark:hover:focus:outline-blue-800"
             tabindex="0"
             :entity="{
               id: 'gid://zammad/User/3',
@@ -1828,7 +2002,7 @@ const userEntity = {
                   key: 'personal-setting',
                   label: 'Profile settings',
                   link: '/personal-setting',
-                  icon: 'person-gear',
+                  icon: 'user-settings',
                 },
                 {
                   key: 'sign-out',
@@ -1841,11 +2015,7 @@ const userEntity = {
             >
               <template #itemRight-appearance>
                 <div class="flex items-center px-2">
-                  <ThemeSwitch
-                    ref="theme-switch"
-                    v-model="appearance"
-                    size="small"
-                  />
+                  <ThemeSwitch ref="theme-switch" v-model="appearance" size="small" />
                 </div>
               </template>
             </CommonPopoverMenu>
@@ -1880,7 +2050,15 @@ const userEntity = {
             {
               key: 'change-customer',
               label: 'Change Customer',
-              icon: 'person-gear',
+              icon: 'user-settings',
+              onClick: (data) => {
+                console.log(data?.id, data?.name, 'Change customer')
+              },
+            },
+            {
+              key: 'secondary',
+              label: 'Neutral',
+              variant: 'secondary',
               onClick: (data) => {
                 console.log(data?.id, data?.name, 'Change customer')
               },
@@ -1894,7 +2072,7 @@ const userEntity = {
             {
               key: 'change-customer',
               label: 'Change Customer',
-              icon: 'person-gear',
+              icon: 'user-settings',
               onClick: (id) => {
                 console.log(id, 'Delete customer')
               },
@@ -1919,27 +2097,18 @@ const userEntity = {
       <div class="w-1/2">
         <h2 class="mt-8 mb-2">Flyout and Dialog</h2>
         <div class="mb-6 flex gap-4">
-          <CommonButton variant="tertiary" @click="dialog.open()"
-            >Show Dialog
-          </CommonButton>
-          <CommonButton variant="primary" @click="flyout.open()">
-            Open Flyout
-          </CommonButton>
+          <CommonButton variant="tertiary" @click="dialog.open()">Show Dialog </CommonButton>
+          <CommonButton variant="primary" @click="flyout.open()"> Open Flyout </CommonButton>
         </div>
 
         <h2 class="mb-2">Confirmation</h2>
         <div class="mb-6 flex gap-4">
-          <CommonButton variant="tertiary" @click="deleteTest()"
-            >Delete
-          </CommonButton>
+          <CommonButton variant="tertiary" @click="deleteTest()">Delete </CommonButton>
         </div>
 
         <h2 class="mt-8 mb-2">Input Copy To Clipboard</h2>
         <div class="mb-6">
-          <CommonInputCopyToClipboard
-            value="some text to copy"
-            label="A label"
-          />
+          <CommonInputCopyToClipboard value="some text to copy" label="A label" />
         </div>
       </div>
 
@@ -1956,83 +2125,135 @@ const userEntity = {
         >
           <template #after-fields>
             <div class="my-5 flex items-center justify-end gap-2">
-              <CommonButton
-                variant="secondary"
-                size="medium"
-                @click="reset('playground-form')"
-              >
+              <CommonButton variant="secondary" size="medium" @click="reset('playground-form')">
                 Reset
               </CommonButton>
-              <CommonButton variant="submit" type="submit" size="medium">
-                Submit
-              </CommonButton>
+              <CommonButton variant="submit" type="submit" size="medium"> Submit </CommonButton>
             </div>
           </template>
         </Form>
         <pre
           class="flex flex-wrap gap-5 rounded-lg bg-blue-200 p-5 font-mono text-sm text-wrap text-gray-100 dark:bg-gray-700 dark:text-neutral-400"
-          >{{ formValues }}</pre
+        >
+          {{ formValues }}</pre
         >
       </div>
 
-      <h3>Tabs Groups</h3>
-      <CommonTabGroup
-        v-model="activeTab"
-        class="mb-4"
-        :tabs="[
-          { label: 'Tab 1', key: 'tab-1' },
-          { label: 'Tab 2', default: true, key: 'tab-2' },
-          { label: 'Tab 3', key: 'tab-3' },
-        ]"
-      />
+      <section class="mb-6">
+        <h2>Tab Rendering Modes</h2>
 
-      <h3>Search Entities</h3>
-      <CommonTabGroup
-        v-model="activeTab"
-        class="mb-4"
-        size="medium"
-        :tabs="[
-          { label: 'Organization', count: 5, key: 'organization' },
-          { label: 'Ticket', default: true, count: 5, key: 'ticket' },
-          { label: 'User', key: 'user', count: 2 },
-        ]"
-      />
+        <h3 class="mb-2">1. Tab Group — Single Select (scroll + marker pill)</h3>
+        <p class="mb-2 text-sm text-gray-500">
+          <code>CommonTabGroup</code> — single selection, animated marker pill, scrollable with
+          arrow buttons when overflowing.
+        </p>
+        <div class="mb-4 w-96">
+          <CommonTabGroup v-model="activeTab" :tabs="playgroundTabItems" select-first-by-default />
+        </div>
+        <pre class="mb-6 rounded bg-blue-100 px-3 py-1 font-mono text-xs dark:bg-gray-700">
+active: {{ activeTab }}</pre
+        >
 
-      <h3>Filter Selector</h3>
-      <CommonTabGroup
-        v-model="activeFilters"
-        label="Roles"
-        :tabs="[
-          { label: 'Admin', key: 'admin' },
-          { label: 'Agent', key: 'agent' },
-          { label: 'Customer', key: 'customer' },
-        ]"
-        multiple
-      />
+        <h3 class="mb-2">2. Tab Group — Multi Select (scroll, no marker)</h3>
+        <p class="mb-2 text-sm text-gray-500">
+          <code>CommonTabGroup multiple</code> — multi-selection filter style, no marker pill,
+          scrollable when overflowing.
+        </p>
+        <div class="mb-4 w-96">
+          <CommonTabGroup
+            v-model="activeFilters"
+            label="Filters"
+            :tabs="playgroundTabItems"
+            multiple
+          />
+        </div>
+        <pre class="mb-6 rounded bg-blue-100 px-3 py-1 font-mono text-xs dark:bg-gray-700">
+active: {{ activeFilters }}</pre
+        >
+
+        <h3 class="mb-2">3. Tab Group — Single Select (overflow menu)</h3>
+        <p class="mb-2 text-sm text-gray-500">
+          <code>CommonTabGroup mode="overflow"</code> — visible tabs fill the container; any that
+          don't fit collapse into a popover menu.
+        </p>
+        <div class="mb-4 w-96">
+          <CommonTabGroup
+            v-model="activeTabOverflow"
+            :tabs="playgroundTabItems"
+            mode="overflow"
+            select-first-by-default
+          />
+        </div>
+        <pre class="mb-6 rounded bg-blue-100 px-3 py-1 font-mono text-xs dark:bg-gray-700">
+active: {{ activeTabOverflow }}</pre
+        >
+
+        <h3 class="mb-2">4. Tab Group — Multi Select (overflow menu)</h3>
+        <p class="mb-2 text-sm text-gray-500">
+          <code>CommonTabGroup multiple mode="overflow"</code> — multi-selection filter style; any
+          tabs that don't fit collapse into a popover menu.
+        </p>
+        <div class="mb-4 w-96">
+          <CommonTabGroup
+            v-model="activeFiltersOverflow"
+            label="Filters"
+            :tabs="playgroundTabItems"
+            multiple
+            mode="overflow"
+          />
+        </div>
+        <pre class="mb-6 rounded bg-blue-100 px-3 py-1 font-mono text-xs dark:bg-gray-700">
+active: {{ activeFiltersOverflow }}</pre
+        >
+
+        <h3 class="mb-2">5. Navigation Tabs — Scroll Mode</h3>
+        <p class="mb-2 text-sm text-gray-500">
+          <code>CommonNavigationTabs mode="scroll"</code> — tabs scroll horizontally; left/right
+          arrow buttons appear when the list overflows.
+        </p>
+        <div class="mb-4 w-96">
+          <CommonNavigationTabs
+            v-model="activeNavTabScroll"
+            :tabs="playgroundNavTabs"
+            mode="scroll"
+          />
+        </div>
+        <pre class="mb-6 rounded bg-blue-100 px-3 py-1 font-mono text-xs dark:bg-gray-700">
+active: {{ activeNavTabScroll }}</pre
+        >
+
+        <h3 class="mb-2">6. Navigation Tabs — Overflow Menu</h3>
+        <p class="mb-2 text-sm text-gray-500">
+          <code>CommonNavigationTabs mode="overflow"</code> — visible tabs fill the container; any
+          that don't fit collapse into a popover menu.
+        </p>
+        <div class="mb-4 w-96">
+          <CommonNavigationTabs
+            v-model="activeNavTabOverflow"
+            :tabs="playgroundNavTabs"
+            mode="overflow"
+          />
+        </div>
+        <pre class="mb-6 rounded bg-blue-100 px-3 py-1 font-mono text-xs dark:bg-gray-700">
+active: {{ activeNavTabOverflow }}</pre
+        >
+      </section>
 
       <h3>Split Button</h3>
       <div class="mb-3 flex justify-end gap-3">
-        <SplitButton
-          variant="submit"
-          size="large"
-          :items="splitButtonMenuItems"
-          disabled
+        <SplitButton variant="submit" size="large" :items="splitButtonMenuItems" disabled
           >Disabled</SplitButton
         >
-        <SplitButton
-          variant="submit"
-          size="large"
-          addon-disabled
-          @click="onSplitButtonClick"
-          >Addon disabled</SplitButton
-        >
+        <SplitButton variant="submit" size="large" addon-disabled @click="onSplitButtonClick"
+          >Addon disabled
+        </SplitButton>
         <SplitButton
           variant="submit"
           size="large"
           :items="splitButtonMenuItems"
           @click="onSplitButtonClick"
-          >Update</SplitButton
-        >
+          >Update
+        </SplitButton>
       </div>
     </div>
   </LayoutContent>

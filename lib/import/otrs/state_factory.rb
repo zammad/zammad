@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Import
   module OTRS
@@ -59,6 +59,7 @@ module Import
       def update_attribute
         update_default_create
         update_default_follow_up
+        update_default_close
       end
 
       def update_default_create
@@ -80,6 +81,25 @@ module Import
         return if !state
 
         state.default_follow_up = true
+        state.save!
+      end
+
+      def update_default_close
+        state = ::Ticket::State.find_by(
+          name:   'closed successful',
+          active: true,
+        )
+
+        if !state
+          state = ::Ticket::State.find_by(
+            state_type_id: ::Ticket::StateType.where(name: 'closed'),
+            active:        true,
+          )
+        end
+
+        return if !state
+
+        state.default_close = true
         state.save!
       end
 

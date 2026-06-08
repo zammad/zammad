@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class FormUpdater::CoreWorkflow::Options < FormUpdater::CoreWorkflow::Backend
   def perform
@@ -102,13 +102,19 @@ class FormUpdater::CoreWorkflow::Options < FormUpdater::CoreWorkflow::Backend
       return all_options[ActiveModel::Type::Boolean.new.cast(value)]
     end
 
-    # When the not existing option is inside the historical options we need to add the
+    # When the not existing option is inside the historical options or is the current value of the object we need to add the
     # option inside the frontend field.
-    if historical_options[value].present?
+    # The situations can happen, when options are removed in the object attribute configuration or when unknown values are
+    # used from API level (or other special situations).
+    if historical_options[value].present? || object_current_value?(name, value)
       uncheck_reject_non_existent_values(name)
     end
 
     nil
+  end
+
+  def object_current_value?(name, value)
+    @object.present? && Array(@object[name]).include?(value)
   end
 
   def check_clearable(name, values)

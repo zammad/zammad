@@ -1,5 +1,5 @@
 # #{ticket.title}
-_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: Poslednji put izmenjeno od strane #{current_user.longname} u #{ticket.updated_at}_
+_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#{config.ticket_hook}#{ticket.number}>: Poslednji put izmenjeno od strane #{current_user.longname} u #{ticket.updated_at}_
 * Grupa: #{ticket.group.name}
 * Vlasnik: #{ticket.owner.fullname}
 * Stanje: #{t(ticket.state.name)}

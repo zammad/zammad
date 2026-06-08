@@ -1,8 +1,8 @@
 .variables_selenium_firefox:
   variables:
-    REMOTE_URL: 'http://selenium-firefox:4444/wd/hub'
-    BROWSER: 'firefox'
-    BROWSER_HEADLESS: 'true'
+    SELENIUM_REMOTE_URL: 'http://selenium-firefox:4444/wd/hub'
+    SELENIUM_BROWSER: 'firefox'
+    SELENIUM_BROWSER_HEADLESS: 'true'
     START_XVFB: 'false' # not needed for headless mode
     SE_NODE_MAX_SESSIONS: '5'
     SE_NODE_OVERRIDE_MAX_SESSIONS: 'true'
@@ -10,9 +10,9 @@
 
 .variables_selenium_chrome:
   variables:
-    REMOTE_URL: 'http://selenium-chrome:4444/wd/hub'
-    BROWSER: chrome
-    BROWSER_HEADLESS: 'true'
+    SELENIUM_REMOTE_URL: 'http://selenium-chrome:4444/wd/hub'
+    SELENIUM_BROWSER: chrome
+    SELENIUM_BROWSER_HEADLESS: 'true'
     START_XVFB: 'false' # not needed for headless mode
     SE_NODE_MAX_SESSIONS: '5'
     SE_NODE_OVERRIDE_MAX_SESSIONS: 'true'
@@ -41,11 +41,8 @@
 .variables_auth:
   variables:
     KEYCLOAK_BASE_URL: 'http://ci-service-auth:8080'
-    KEYCLOAK_CREATE_ADMIN_USER: 'true'
-    KEYCLOAK_ADMIN_USER: 'admin'
-    KEYCLOAK_ADMIN_PASSWORD: 'admin'
-    KEYCLOAK_DATABASE_VENDOR: 'dev-file'
-    KEYCLOAK_EXTRA_ARGS: '--import-realm'
+    KC_BOOTSTRAP_ADMIN_USERNAME: 'admin'
+    KC_BOOTSTRAP_ADMIN_PASSWORD: 'admin'
 
 .variables_s3:
   variables:

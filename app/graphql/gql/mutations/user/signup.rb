@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Mutations
   class User::Signup < BaseMutation
@@ -10,23 +10,20 @@ module Gql::Mutations
 
     field :success, Boolean, description: 'This indicates if creating the user and sending the token was successful.'
 
-    def self.authorize(...)
-      true
-    end
+    allow_public_access!
 
-    def ready?(input:)
+    def throttle_if_needed!(input:)
       throttle!(limit: 3, period: 1.minute, by_identifier: input[:email])
     end
 
     def resolve(input:)
       Service::User::Signup
-        .new(user_data: input.to_h)
-        .execute
+        .execute(user_data: input.to_h)
 
       { success: true }
     rescue PasswordPolicy::Error => e
       error_response({ message: e.message, message_placeholder: e.metadata.drop(1), field: 'password' })
-    rescue Exceptions::UnprocessableEntity => e
+    rescue Exceptions::UnprocessableContent => e
       error_response({ message: e.message })
     end
   end

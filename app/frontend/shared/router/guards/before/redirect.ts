@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { getCurrentRouter } from '#shared/router/router.ts'
 import log from '#shared/utils/log.ts'
@@ -14,8 +14,14 @@ const redirectGuard: NavigationGuard = (to: RouteLocationNormalized) => {
   }
 
   const location = to.hash && to.hash.slice(1)
+
   if (!location) return true
 
+  if (to.meta?.skipRedirect?.(to)) {
+    log.debug(`Route guard for '${to.fullPath}': redirect - skipping.`)
+
+    return true
+  }
   // Resolve the route using the global router instance.
   //   This requires the app to expose it via the `window` global during router initialization.
   //   Make sure that each route has a suitable alias defined that should correspond to the old path.

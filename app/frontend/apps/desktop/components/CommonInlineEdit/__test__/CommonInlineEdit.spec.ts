@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { fireEvent, waitFor } from '@testing-library/vue'
 
@@ -35,9 +35,7 @@ describe('CommonInlineEdit', () => {
     const wrapper = renderInlineEdit({ placeholder: 'test placeholder' })
     await wrapper.events.click(wrapper.getByRole('button'))
 
-    expect(
-      await wrapper.findByPlaceholderText('test placeholder'),
-    ).toBeInTheDocument()
+    expect(await wrapper.findByPlaceholderText('test placeholder')).toBeInTheDocument()
   })
 
   it('submits edit on button click and enter', async () => {
@@ -51,9 +49,7 @@ describe('CommonInlineEdit', () => {
 
     await wrapper.events.type(wrapper.getByRole('textbox'), ' update')
 
-    await waitFor(() =>
-      expect(wrapper.getByRole('textbox')).toBeInTheDocument(),
-    )
+    await waitFor(() => expect(wrapper.getByRole('textbox')).toBeInTheDocument())
 
     await wrapper.events.click(wrapper.getByRole('button', { name: 'Submit' }))
 
@@ -73,9 +69,7 @@ describe('CommonInlineEdit', () => {
 
     await wrapper.events.type(wrapper.getByRole('textbox'), ' update 2')
 
-    await waitFor(() =>
-      expect(wrapper.getByRole('textbox')).toBeInTheDocument(),
-    )
+    await waitFor(() => expect(wrapper.getByRole('textbox')).toBeInTheDocument())
 
     await wrapper.events.keyboard('{enter}')
 
@@ -93,9 +87,7 @@ describe('CommonInlineEdit', () => {
 
     await wrapper.events.type(wrapper.getByRole('textbox'), ' update 2')
 
-    await waitFor(() =>
-      expect(wrapper.getByRole('textbox')).toBeInTheDocument(),
-    )
+    await waitFor(() => expect(wrapper.getByRole('textbox')).toBeInTheDocument())
 
     await fireEvent.click(document.body)
 
@@ -115,9 +107,7 @@ describe('CommonInlineEdit', () => {
 
     await wrapper.events.type(wrapper.getByRole('textbox'), ' update')
 
-    await waitFor(() =>
-      expect(wrapper.getByRole('textbox')).toBeInTheDocument(),
-    )
+    await waitFor(() => expect(wrapper.getByRole('textbox')).toBeInTheDocument())
 
     await wrapper.events.click(wrapper.getByRole('button', { name: 'Submit' }))
 
@@ -129,9 +119,7 @@ describe('CommonInlineEdit', () => {
 
     await wrapper.events.click(wrapper.getByRole('button'))
 
-    await waitFor(() =>
-      expect(wrapper.getByRole('textbox')).toBeInTheDocument(),
-    )
+    await waitFor(() => expect(wrapper.getByRole('textbox')).toBeInTheDocument())
 
     expect(wrapper.getByRole('textbox')).toHaveFocus()
   })
@@ -153,9 +141,7 @@ describe('CommonInlineEdit', () => {
 
     await wrapper.events.click(wrapper.getByRole('button'))
 
-    await waitFor(() =>
-      expect(wrapper.getByRole('textbox')).toBeInTheDocument(),
-    )
+    await waitFor(() => expect(wrapper.getByRole('textbox')).toBeInTheDocument())
 
     await wrapper.events.keyboard('{esc}')
 
@@ -167,9 +153,7 @@ describe('CommonInlineEdit', () => {
 
     await wrapper.events.click(wrapper.getByRole('button'))
 
-    await waitFor(() =>
-      expect(wrapper.getByRole('textbox')).toBeInTheDocument(),
-    )
+    await waitFor(() => expect(wrapper.getByRole('textbox')).toBeInTheDocument())
 
     await wrapper.events.clear(wrapper.getByRole('textbox'))
 
@@ -214,9 +198,7 @@ describe('CommonInlineEdit', () => {
       value: 'https://zammad.com/en',
     })
 
-    expect(
-      wrapper.getByRole('link', { name: 'https://zammad.com/en' }),
-    ).toBeInTheDocument()
+    expect(wrapper.getByRole('link', { name: 'https://zammad.com/en' })).toBeInTheDocument()
   })
 
   it('displays initial edit value if editing got activated', async () => {
@@ -249,20 +231,14 @@ describe('CommonInlineEdit', () => {
 
     await wrapper.events.click(wrapper.getByText('test value'))
 
-    expect(wrapper.html()).toContain(
-      'before:bg-neutral-50 dark:before:bg-gray-500',
-    )
+    expect(wrapper.html()).toContain('before:bg-neutral-50 dark:before:bg-gray-500')
 
     await wrapper.rerender({
       alternativeBackground: false,
     })
 
-    expect(wrapper.html()).toContain(
-      'before:bg-blue-200 dark:before:bg-gray-700',
-    )
+    expect(wrapper.html()).toContain('before:bg-blue-200 dark:before:bg-gray-700')
 
-    expect(wrapper.html()).not.toContain(
-      'before:bg-neutral-50 dark:before:bg-gray-500',
-    )
+    expect(wrapper.html()).not.toContain('before:bg-neutral-50 dark:before:bg-gray-500')
   })
 })

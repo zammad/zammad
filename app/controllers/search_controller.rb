@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class SearchController < ApplicationController
   prepend_before_action :authentication_check
@@ -54,8 +54,7 @@ class SearchController < ApplicationController
       query = params[:query].try(:permit!)&.to_h || params[:query]
 
       Service::Search
-        .new(current_user:, query:, objects: search_result_objects, options: search_result_options)
-        .execute
+        .execute(current_user:, query:, objects: search_result_objects, options: search_result_options)
     end
   end
 

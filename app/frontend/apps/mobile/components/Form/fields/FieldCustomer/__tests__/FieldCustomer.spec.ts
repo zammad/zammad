@@ -1,20 +1,12 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { getNode } from '@formkit/core'
 import { FormKit } from '@formkit/vue'
 import { getByTestId, waitFor } from '@testing-library/vue'
 import { escapeRegExp } from 'lodash-es'
 
 import { renderComponent } from '#tests/support/components/index.ts'
-import {
-  mockGraphQLApi,
-  type MockGraphQLInstance,
-} from '#tests/support/mock-graphql-api.ts'
-import {
-  nullableMock,
-  waitForNextTick,
-  waitUntil,
-} from '#tests/support/utils.ts'
+import { mockGraphQLApi, type MockGraphQLInstance } from '#tests/support/mock-graphql-api.ts'
+import { nullableMock, waitForNextTick, waitUntil } from '#tests/support/utils.ts'
 
 import { AutocompleteSearchUserDocument } from '#shared/components/Form/fields/FieldCustomer/graphql/queries/autocompleteSearch/user.api.ts'
 import type {
@@ -24,10 +16,9 @@ import type {
 
 import testOptions from './test-options.json'
 
-const mockQueryResult = (input: {
-  query: string
-  limit: number
-}): AutocompleteSearchUserQuery => {
+import type { FormKitNode } from '@formkit/core'
+
+const mockQueryResult = (input: { query: string; limit: number }): AutocompleteSearchUserQuery => {
   const options = testOptions.map((option) =>
     nullableMock({
       ...option,
@@ -39,8 +30,7 @@ const mockQueryResult = (input: {
     }),
   )
 
-  const deaccent = (s: string) =>
-    s.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+  const deaccent = (s: string) => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
 
   // Trim and de-accent search keywords and compile them as a case-insensitive regex.
   //   Make sure to escape special regex characters!
@@ -49,8 +39,7 @@ const mockQueryResult = (input: {
   // Search across options via their de-accented labels.
   const filteredOptions = options.filter(
     (option) =>
-      filterRegex.test(deaccent(option.label)) ||
-      filterRegex.test(deaccent(option.heading)),
+      filterRegex.test(deaccent(option.label)) || filterRegex.test(deaccent(option.heading)),
   ) as unknown as AutocompleteSearchUserEntry[]
 
   return {
@@ -86,20 +75,22 @@ describe('Form - Field - Customer - Features', () => {
         name: 'customer_id',
         value: 123,
         belongsToObjectField: 'customer',
+        plugins: [
+          (node: FormKitNode) => {
+            node.context!.initialEntityObject = {
+              customer: {
+                internalId: 123,
+                fullname: 'John Doe',
+              },
+            }
+          },
+        ],
       },
     })
 
-    const node = getNode('customer')
-    node!.context!.initialEntityObject = {
-      customer: {
-        internalId: 123,
-        fullname: 'John Doe',
-      },
-    }
-
     await waitForNextTick(true)
 
-    expect(wrapper.getByRole('listitem')).toHaveTextContent(`John Doe`)
+    expect(await wrapper.findByRole('listitem')).toHaveTextContent(`John Doe`)
   })
 })
 
@@ -107,13 +98,11 @@ describe('Form - Field - Customer - Query', () => {
   let mockApi: MockGraphQLInstance
 
   beforeEach(() => {
-    mockApi = mockGraphQLApi(AutocompleteSearchUserDocument).willBehave(
-      (variables) => {
-        return {
-          data: mockQueryResult(variables.input),
-        }
-      },
-    )
+    mockApi = mockGraphQLApi(AutocompleteSearchUserDocument).willBehave((variables) => {
+      return {
+        data: mockQueryResult(variables.input),
+      }
+    })
   })
 
   it('fetches remote options via GraphQL query', async () => {
@@ -136,9 +125,7 @@ describe('Form - Field - Customer - Query', () => {
     // Search is always case-insensitive.
     await wrapper.events.type(filterElement, 'adam')
 
-    expect(
-      wrapper.queryByText('Start typing to search…'),
-    ).not.toBeInTheDocument()
+    expect(wrapper.queryByText('Start typing to search…')).not.toBeInTheDocument()
 
     let selectOptions = wrapper.getAllByRole('option')
 
@@ -153,7 +140,7 @@ describe('Form - Field - Customer - Query', () => {
       'background-image': `url(${testOptions[0].user.image})`,
     })
 
-    await wrapper.events.click(wrapper.getByLabelText('Clear Search'))
+    await wrapper.events.click(wrapper.getByLabelText('Clear search'))
 
     expect(filterElement).toHaveValue('')
 
@@ -162,9 +149,7 @@ describe('Form - Field - Customer - Query', () => {
     // Search for non-accented characters matches items with accents too.
     await wrapper.events.type(filterElement, 'rodríguez')
 
-    expect(
-      wrapper.queryByText('Start typing to search…'),
-    ).not.toBeInTheDocument()
+    expect(wrapper.queryByText('Start typing to search…')).not.toBeInTheDocument()
 
     await waitUntil(() => mockApi.calls.behave)
 
@@ -185,9 +170,7 @@ describe('Form - Field - Customer - Query', () => {
     // Search for accented characters matches items with accents too.
     await wrapper.events.type(filterElement, 'rodríguez')
 
-    expect(
-      wrapper.queryByText('Start typing to search…'),
-    ).not.toBeInTheDocument()
+    expect(wrapper.queryByText('Start typing to search…')).not.toBeInTheDocument()
 
     selectOptions = wrapper.getAllByRole('option')
 
@@ -227,9 +210,7 @@ describe('Form - Field - Customer - Query', () => {
 
     expect(wrapper.queryByRole('dialog')).not.toBeInTheDocument()
 
-    expect(wrapper.getByRole('listitem')).toHaveTextContent(
-      testOptions[0].label,
-    )
+    expect(wrapper.getByRole('listitem')).toHaveTextContent(testOptions[0].label)
 
     await wrapper.events.click(wrapper.getByLabelText('Select…'))
 

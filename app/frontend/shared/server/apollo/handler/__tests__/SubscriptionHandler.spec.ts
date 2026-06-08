@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { NetworkStatus } from '@apollo/client/core'
 import { useSubscription } from '@vue/apollo-composable'
@@ -56,15 +56,13 @@ const mockClient = () => {
 const scope = effectScope()
 
 describe('SubscriptionHandler', () => {
-  const sampleSubscription = (
-    variables: SampleUpdatedSubscriptionVariables,
-    options = {},
-  ) => {
+  const sampleSubscription = (variables: SampleUpdatedSubscriptionVariables, options = {}) => {
     subscriptionFunctionCallSpy()
-    return useSubscription<
-      SampleUpdatedSubscription,
-      SampleUpdatedSubscriptionVariables
-    >(SampleTypedSubscriptionDocument, variables, options)
+    return useSubscription<SampleUpdatedSubscription, SampleUpdatedSubscriptionVariables>(
+      SampleTypedSubscriptionDocument,
+      variables,
+      options,
+    )
   }
 
   describe('constructor', () => {
@@ -74,9 +72,7 @@ describe('SubscriptionHandler', () => {
 
     it('instance can be created', () => {
       scope.run(() => {
-        const subscriptionHandlerObject = new SubscriptionHandler(
-          sampleSubscription({ id: 1 }),
-        )
+        const subscriptionHandlerObject = new SubscriptionHandler(sampleSubscription({ id: 1 }))
         expect(subscriptionHandlerObject).toBeInstanceOf(SubscriptionHandler)
       })
     })
@@ -85,23 +81,18 @@ describe('SubscriptionHandler', () => {
       scope.run(() => {
         const errorNotificationMessage = 'A test message.'
 
-        const subscriptionHandlerObject = new SubscriptionHandler(
-          sampleSubscription({ id: 1 }),
-          {
-            errorNotificationMessage,
-          },
+        const subscriptionHandlerObject = new SubscriptionHandler(sampleSubscription({ id: 1 }), {
+          errorNotificationMessage,
+        })
+        expect(subscriptionHandlerObject.handlerOptions.errorNotificationMessage).toBe(
+          errorNotificationMessage,
         )
-        expect(
-          subscriptionHandlerObject.handlerOptions.errorNotificationMessage,
-        ).toBe(errorNotificationMessage)
       })
     })
 
     it('given subscription function was executed', () => {
       scope.run(() => {
-        const subscriptionHandlerObject = new SubscriptionHandler(
-          sampleSubscription({ id: 1 }),
-        )
+        const subscriptionHandlerObject = new SubscriptionHandler(sampleSubscription({ id: 1 }))
         expect(subscriptionFunctionCallSpy).toBeCalled()
         expect(subscriptionHandlerObject.operationResult).toBeTruthy()
       })
@@ -117,9 +108,7 @@ describe('SubscriptionHandler', () => {
       await scope.run(async () => {
         expect.assertions(2)
 
-        const subscriptionHandlerObject = new SubscriptionHandler(
-          sampleSubscription({ id: 1 }),
-        )
+        const subscriptionHandlerObject = new SubscriptionHandler(sampleSubscription({ id: 1 }))
         expect(subscriptionHandlerObject.loading().value).toBe(true)
 
         const subscribed = subscriptionHandlerObject.onSubscribed()
@@ -143,9 +132,7 @@ describe('SubscriptionHandler', () => {
     it('subscribed', async () => {
       await scope.run(async () => {
         expect.assertions(1)
-        const subscriptionHandlerObject = new SubscriptionHandler(
-          sampleSubscription({ id: 1 }),
-        )
+        const subscriptionHandlerObject = new SubscriptionHandler(sampleSubscription({ id: 1 }))
 
         const subscribed = subscriptionHandlerObject.onSubscribed()
 
@@ -162,9 +149,7 @@ describe('SubscriptionHandler', () => {
     it('watch on result change', async () => {
       await scope.run(async () => {
         expect.assertions(2)
-        const subscriptionHandlerObject = new SubscriptionHandler(
-          sampleSubscription({ id: 1 }),
-        )
+        const subscriptionHandlerObject = new SubscriptionHandler(sampleSubscription({ id: 1 }))
 
         const subscribed = subscriptionHandlerObject.onSubscribed()
 
@@ -177,9 +162,7 @@ describe('SubscriptionHandler', () => {
         let watchCount = 0
         subscriptionHandlerObject.watchOnResult((result) => {
           expect(result).toEqual(
-            watchCount === 0
-              ? subscriptionSampleResult
-              : subscriptionSampleResultUpdated,
+            watchCount === 0 ? subscriptionSampleResult : subscriptionSampleResultUpdated,
           )
           watchCount += 1
         })
@@ -194,9 +177,7 @@ describe('SubscriptionHandler', () => {
       await scope.run(async () => {
         expect.assertions(1)
 
-        const subscriptionHandlerObject = new SubscriptionHandler(
-          sampleSubscription({ id: 1 }),
-        )
+        const subscriptionHandlerObject = new SubscriptionHandler(sampleSubscription({ id: 1 }))
 
         const resultCallbackSpy = vi.fn()
 
@@ -231,9 +212,7 @@ describe('SubscriptionHandler', () => {
 
       it('notification is triggerd', () => {
         scope.run(() => {
-          const subscriptionHandlerObject = new SubscriptionHandler(
-            sampleSubscription({ id: 1 }),
-          )
+          const subscriptionHandlerObject = new SubscriptionHandler(sampleSubscription({ id: 1 }))
 
           mockSubscription.next(subscriptionSampleErrorResult)
 
@@ -248,14 +227,11 @@ describe('SubscriptionHandler', () => {
         scope.run(() => {
           const errorCallbackSpy = vi.fn()
 
-          const subscriptionHandlerObject = new SubscriptionHandler(
-            sampleSubscription({ id: 1 }),
-            {
-              errorCallback: (error) => {
-                errorCallbackSpy(error)
-              },
+          const subscriptionHandlerObject = new SubscriptionHandler(sampleSubscription({ id: 1 }), {
+            errorCallback: (error) => {
+              errorCallbackSpy(error)
             },
-          )
+          })
 
           mockSubscription.next(subscriptionSampleErrorResult)
 
@@ -277,9 +253,7 @@ describe('SubscriptionHandler', () => {
 
     it('use returned query options', () => {
       scope.run(() => {
-        const subscriptionHandlerObject = new SubscriptionHandler(
-          sampleSubscription({ id: 1 }),
-        )
+        const subscriptionHandlerObject = new SubscriptionHandler(sampleSubscription({ id: 1 }))
 
         expect(subscriptionHandlerObject.options()).toBeTruthy()
       })

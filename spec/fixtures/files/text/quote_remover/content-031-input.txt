@@ -1,0 +1,14 @@
+Hi,
+
+Please check out [our website](https://example.com) and [the documentation](https://example.com/docs).
+
+Thanks!
+
+On Dec 3, 2024, Support wrote:
+
+> Here are some useful links:
+> - [FAQ page](https://example.com/faq)
+> - [Contact form](https://example.com/contact)
+>
+> Best,
+> Support

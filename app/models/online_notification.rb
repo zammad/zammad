@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class OnlineNotification < ApplicationModel
   include HasDefaultModelUserRelations
@@ -42,6 +42,9 @@ add a new online notification for this user
   end
 
   def self.add(data)
+    if data[:kind].present?
+      add_standalone(data)
+    end
 
     # lookups
     if data[:type]
@@ -59,6 +62,7 @@ add a new online notification for this user
       object_lookup_id: object_id,
       type_lookup_id:   type_id,
       seen:             data[:seen],
+      meta:             data[:meta] || {},
       user_id:          data[:user_id],
       created_by_id:    data[:created_by_id],
       updated_by_id:    data[:updated_by_id] || data[:created_by_id],
@@ -67,6 +71,15 @@ add a new online notification for this user
     }
 
     OnlineNotification.create!(record)
+  end
+
+  def self.add_standalone(data)
+    standalone_notification = OnlineNotificationStandalone.create!(data.slice(:data, :kind))
+    data.except!(:data, :kind)
+
+    data[:type]   = standalone_notification.kind
+    data[:object] = OnlineNotificationStandalone.name
+    data[:o_id]   = standalone_notification.id
   end
 
 =begin
@@ -261,6 +274,34 @@ returns
     user_id_check == ticket.owner_id && user_id_check != ticket.updated_by_id
   end
   private_class_method :seen_state_not_merged_owner?
+
+  # Marks all notifications for object/user pair as seen.
+  # Also makes sure to trigger subscription only once.
+  def self.mark_as_seen!(object, user)
+    notifications = list_by_object(object.class.name, object.id).where(seen: false, user:)
+
+    without_callback(:commit, :after, :trigger_subscriptions) do
+      notifications.each { it.update!(seen: true) }
+    end
+
+    return if notifications.empty?
+
+    ApplicationModel.current_transaction.after_commit do
+      trigger_subscriptions(user)
+    end
+  end
+
+  def mark_as_seen!
+    return if seen
+
+    update!(seen: true)
+
+    return if !user
+
+    ApplicationModel.current_transaction.after_commit do
+      self.class.trigger_subscriptions(user)
+    end
+  end
 
   private
 

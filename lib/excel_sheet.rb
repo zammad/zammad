@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class ExcelSheet
 
@@ -142,7 +142,9 @@ class ExcelSheet
         return ref_name
       end
     end
-    value = record.try(attribute)
+
+    # Direct attribute access if no value found yet.
+    value = record.try(attribute) if !value
 
     # if no value exists, check additional values
     if !value && additional && additional[attribute.to_sym]

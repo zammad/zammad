@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { mockGraphQLResult } from '#tests/graphql/builders/mocks.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
@@ -39,9 +39,7 @@ describe('verifying a token for the admin password auth', () => {
     expect(view.getByText('Sign in')).toBeInTheDocument()
 
     expect(
-      await view.findByText(
-        'The token is valid. You are now able to login via password once.',
-      ),
+      await view.findByText('The token is valid. You are now able to login via password once.'),
     ).toBeInTheDocument()
   })
 
@@ -74,9 +72,7 @@ describe('verifying a token for the admin password auth', () => {
     expect(view.queryByText('Sign in')).not.toBeInTheDocument()
 
     expect(
-      await view.findByText(
-        'The token for the admin password login is invalid.',
-      ),
+      await view.findByText('The token for the admin password login is invalid.'),
     ).toBeInTheDocument()
   })
 })

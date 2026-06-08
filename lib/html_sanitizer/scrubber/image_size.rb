@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class HtmlSanitizer
   module Scrubber
@@ -20,7 +20,7 @@ class HtmlSanitizer
       end
 
       def build_style(input)
-        style = 'max-width:100%;'
+        style = +'max-width:100%;'
 
         return style if input.blank?
 

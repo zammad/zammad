@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { ref } from 'vue'
 
@@ -21,22 +21,6 @@ describe('useElementScroll', () => {
   afterEach(() => {
     document.body.removeChild(container)
   })
-
-  it.todo('detects scrolling down', async () => {
-    const { isScrollingDown } = useElementScroll(ref(container))
-    container.scrollTop = 100 // Scroll down
-    container.dispatchEvent(new Event('scroll'))
-    expect(isScrollingDown.value).toBe(true)
-  })
-
-  it.todo('detects scrolling up', async () => {
-    const { isScrollingDown } = useElementScroll(ref(container))
-    container.scrollTop = 100 // Scroll down
-    container.dispatchEvent(new Event('scroll'))
-    expect(isScrollingDown.value).toBe(true)
-  })
-
-  it.todo('detects scrolling after start threshold', async () => {})
 
   it('detects reaching top', async () => {
     const { reachedTop } = useElementScroll(ref(container))

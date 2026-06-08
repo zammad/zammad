@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { getCSRFToken } from '#shared/server/apollo/utils/csrfToken.ts'
@@ -37,7 +37,7 @@ const csrfToken = getCSRFToken()
     <CommonButton
       type="submit"
       :class="buttonClass"
-      :aria-label="buttonLabel"
+      :tooltip="buttonLabel"
       :size="buttonSize"
       :variant="buttonVariant"
       :disabled="disabled"

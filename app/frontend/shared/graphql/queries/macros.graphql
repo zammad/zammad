@@ -1,6 +1,7 @@
-query macros($groupIds: [ID!]!) {
-  macros(groupIds: $groupIds) {
+query macros($selector: TicketMacrosSelectorInput!) {
+  macros(selector: $selector) {
     id
+    internalId
     active
     name
     uxFlowNextUp

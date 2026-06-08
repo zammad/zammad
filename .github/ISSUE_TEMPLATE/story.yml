@@ -1,0 +1,61 @@
+name: "Story item"
+description: "This should only be used by team members after discussing it with the product owner."
+type: Story
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Hi there - thanks for filing an issue. Please ensure the following things before creating an issue - thank you! 🤓
+
+        🛑 Please post the following on our [community board](https://community.zammad.org/) rather than filing an issue:
+
+        👉 Feature Requests
+        👉 Development Questions
+        👉 Technical Questions
+
+        Once a feature request has reached the stage of serious consideration, it is the responsibility of the product team to create a story item. Thank you for respecting our workflows.
+
+  - type: textarea
+    id: user-story
+    attributes:
+      label: User Story
+      description: "As a [role], I want to [action] so that [benefit]."
+      placeholder: |
+        If more than one user type is affected, or if there are multiple perspectives on the issue, please submit multiple user stories.
+
+        Make sure that the business value is accurately reflected in the user stories.
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance Criteria
+      description: "Define the conditions that must be met for this item to be considered complete."
+      placeholder: |
+        - Acceptance criteria 1
+        - Acceptance criteria 2
+        - Acceptance criteria 3
+    validations:
+      required: true
+
+  - type: textarea
+    id: background-information
+    attributes:
+      label: Background information
+      description: "Technical details. Research results."
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: product-team-approved
+    attributes:
+      label: Has this been approved by the product team?
+      options:
+        - label: "Yes!"
+          required: true
+
+  - type: markdown
+    attributes:
+      value: |
+        For feature requests please use our [community forum](https://community.zammad.org).

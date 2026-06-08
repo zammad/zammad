@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { beforeEach } from 'vitest'
 import { computed, ref } from 'vue'
@@ -59,9 +59,7 @@ describe('TicketSidebarInformationContent', () => {
 
       const wrapper = renderInformationSidebar()
 
-      expect(
-        wrapper.getByRole('heading', { name: 'Ticket', level: 2 }),
-      ).toBeInTheDocument()
+      expect(wrapper.getByRole('heading', { name: 'Ticket', level: 2 })).toBeInTheDocument()
 
       expect(wrapper.getByIconName('chat-left-text'))
     })
@@ -71,9 +69,7 @@ describe('TicketSidebarInformationContent', () => {
 
       const wrapper = renderInformationSidebar()
 
-      expect(
-        wrapper.getByRole('heading', { name: 'Attributes', level: 3 }),
-      ).toBeInTheDocument()
+      expect(wrapper.getByRole('heading', { name: 'Attributes', level: 3 })).toBeInTheDocument()
 
       expect(wrapper.getByTestId('ticket-edit-attribute-form')).toHaveAttribute(
         'id',
@@ -89,37 +85,32 @@ describe('TicketSidebarInformationContent', () => {
         tags: ['tag1', 'tag2'],
       })
 
-      expect(
-        wrapper.getByRole('heading', { name: 'Tags', level: 3 }),
-      ).toBeInTheDocument()
+      expect(wrapper.getByRole('heading', { name: 'Tags', level: 3 })).toBeInTheDocument()
 
-      expect(wrapper.getByRole('link', { name: 'tag1' })).toBeInTheDocument()
+      expect(wrapper.getByRole('link', { name: 'tag1' })).toHaveAttribute(
+        'href',
+        `/desktop/search/${encodeURI('tags:"tag1"')}?entity=Ticket`,
+      )
 
-      // TODO: adjust link as soon as we have correct value for search
       expect(wrapper.getByRole('link', { name: 'tag2' })).toHaveAttribute(
         'href',
-        '#',
+        `/desktop/search/${encodeURI('tags:"tag2"')}?entity=Ticket`,
       )
     })
 
-    it.each(['Change customer'])(
-      'shows button for `%s` action',
-      async (buttonLabel) => {
-        mockPermissions(['ticket.agent'])
+    it.each(['Change customer'])('shows button for `%s` action', async (buttonLabel) => {
+      mockPermissions(['ticket.agent'])
 
-        const wrapper = renderInformationSidebar()
+      const wrapper = renderInformationSidebar()
 
-        await wrapper.events.click(
-          wrapper.getByRole('button', {
-            name: 'Action menu button',
-          }),
-        )
+      await wrapper.events.click(
+        wrapper.getByRole('button', {
+          name: 'Action menu button',
+        }),
+      )
 
-        expect(
-          await wrapper.findByRole('button', { name: buttonLabel }),
-        ).toBeInTheDocument()
-      },
-    )
+      expect(await wrapper.findByRole('button', { name: buttonLabel })).toBeInTheDocument()
+    })
 
     it('does not show customer change action if agent has no update permission', async () => {
       mockPermissions(['ticket.agent'])
@@ -138,9 +129,7 @@ describe('TicketSidebarInformationContent', () => {
 
       await wrapper.events.click(actionMenuButton)
 
-      expect(
-        wrapper.queryByRole('button', { name: 'Change customer' }),
-      ).not.toBeInTheDocument()
+      expect(wrapper.queryByRole('button', { name: 'Change customer' })).not.toBeInTheDocument()
     })
 
     it('does not show `Customer change` action if user is customer', () => {
@@ -154,9 +143,7 @@ describe('TicketSidebarInformationContent', () => {
         },
       })
 
-      expect(
-        wrapper.queryByRole('button', { name: 'Action menu button' }),
-      ).not.toBeInTheDocument()
+      expect(wrapper.queryByRole('button', { name: 'Action menu button' })).not.toBeInTheDocument()
     })
 
     it('does not display accounted time if user is customer', () => {
@@ -179,7 +166,7 @@ describe('TicketSidebarInformationContent', () => {
       })
 
       expect(
-        wrapper.queryByRole('heading', { name: 'Accounted Time', level: 3 }),
+        wrapper.queryByRole('heading', { name: 'Accounted time', level: 3 }),
       ).not.toBeInTheDocument()
     })
 
@@ -198,9 +185,7 @@ describe('TicketSidebarInformationContent', () => {
         ],
       })
 
-      expect(
-        wrapper.getByRole('heading', { name: 'Accounted Time', level: 3 }),
-      ).toBeInTheDocument()
+      expect(wrapper.getByRole('heading', { name: 'Accounted time', level: 3 })).toBeInTheDocument()
     })
 
     it('hides tags, links, accounted time if user has readonly permission and no entries are present', () => {
@@ -221,16 +206,12 @@ describe('TicketSidebarInformationContent', () => {
 
       const wrapper = renderInformationSidebar(ticket)
 
-      expect(
-        wrapper.queryByRole('heading', { name: 'Tags', level: 3 }),
-      ).not.toBeInTheDocument()
+      expect(wrapper.queryByRole('heading', { name: 'Tags', level: 3 })).not.toBeInTheDocument()
+
+      expect(wrapper.queryByRole('heading', { name: 'Links', level: 3 })).not.toBeInTheDocument()
 
       expect(
-        wrapper.queryByRole('heading', { name: 'Links', level: 3 }),
-      ).not.toBeInTheDocument()
-
-      expect(
-        wrapper.queryByRole('heading', { name: 'Accounted Time', level: 3 }),
+        wrapper.queryByRole('heading', { name: 'Accounted time', level: 3 }),
       ).not.toBeInTheDocument()
     })
   })

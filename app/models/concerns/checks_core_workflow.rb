@@ -1,7 +1,10 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module ChecksCoreWorkflow
   extend ActiveSupport::Concern
+
+  # keep in sync with App.Model@_validate_is_empty
+  EMPTY_VALUES = [nil, {}, [], [''], ''].freeze
 
   included do
     before_create :validate_workflows
@@ -64,7 +67,7 @@ module ChecksCoreWorkflow
       next if field_visible?(perform_result, key)
       next if !field_mandatory?(perform_result, key)
       next if !column_empty?(key)
-      next if !colum_default?(key)
+      next if column_default?(key)
 
       raise Exceptions::ApplicationModel.new(self, "Missing required value for field '#{key}'!")
     end
@@ -79,10 +82,10 @@ module ChecksCoreWorkflow
   end
 
   def column_empty?(key)
-    self[key].nil? || ([true, false].exclude?(self[key]) && self[key].blank?)
+    EMPTY_VALUES.include?(self[key])
   end
 
-  def colum_default?(key)
-    self.class.column_defaults[key].nil?
+  def column_default?(key)
+    EMPTY_VALUES.exclude?(self.class.column_defaults[key])
   end
 end

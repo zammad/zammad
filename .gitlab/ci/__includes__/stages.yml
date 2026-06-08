@@ -1,5 +1,6 @@
 stages:
   - pre
+  - automate
   - lint
   - test
   - browser

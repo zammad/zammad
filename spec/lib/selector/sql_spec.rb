@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -332,6 +332,34 @@ RSpec.describe Selector::Sql do
         end
       end
 
+      describe "operator 'matches'" do
+        let(:operator) { 'matches' }
+
+        context 'with matching string' do
+          let(:value) { 'Some' }
+
+          include_examples 'finds the ticket'
+        end
+
+        context 'with matching upcased string' do
+          let(:value) { 'SOME' }
+
+          include_examples 'finds the ticket'
+        end
+
+        context 'with non-matching string' do
+          let(:value) { 'Other' }
+
+          include_examples 'does not find the ticket'
+        end
+
+        context 'with wildcard matching' do
+          let(:value) { 'som*' }
+
+          include_examples 'finds the ticket'
+        end
+      end
+
       describe "operator 'contains not'" do
         let(:operator) { 'contains not' }
 
@@ -382,8 +410,7 @@ RSpec.describe Selector::Sql do
           include_examples 'finds the ticket'
         end
 
-        # Skip for MySQL as it handles IN case insensitive.
-        context 'with matching upcased string', db_adapter: :postgresql do
+        context 'with matching upcased string' do
           let(:value) { 'SOME really nice title' }
 
           include_examples 'does not find the ticket'
@@ -427,8 +454,7 @@ RSpec.describe Selector::Sql do
           include_examples 'finds the ticket'
         end
 
-        # Skip for MySQL as it handles IN case insensitive.
-        context 'with matching upcased string', db_adapter: :postgresql do
+        context 'with matching upcased string' do
           let(:value) { ['SOME really nice title', 'another example'] }
 
           include_examples 'does not find the ticket'
@@ -472,8 +498,7 @@ RSpec.describe Selector::Sql do
           include_examples 'does not find the ticket'
         end
 
-        # Skip for MySQL as it handles IN case insensitive.
-        context 'with matching upcased string', db_adapter: :postgresql do
+        context 'with matching upcased string' do
           let(:value) { 'SOME really nice title' }
 
           include_examples 'finds the ticket'
@@ -517,8 +542,7 @@ RSpec.describe Selector::Sql do
           include_examples 'does not find the ticket'
         end
 
-        # Skip for MySQL as it handles IN case insensitive.
-        context 'with matching upcased string', db_adapter: :postgresql do
+        context 'with matching upcased string' do
           let(:value) { %w[SO SOME] }
 
           include_examples 'finds the ticket'
@@ -667,7 +691,7 @@ RSpec.describe Selector::Sql do
         end
       end
 
-      describe "operator 'matches regex'", mariadb: true do
+      describe "operator 'matches regex'" do
         let(:operator) { 'matches regex' }
 
         context 'with matching string' do
@@ -689,7 +713,7 @@ RSpec.describe Selector::Sql do
         end
       end
 
-      describe "operator 'does not match regex'", mariadb: true do
+      describe "operator 'does not match regex'" do
         let(:operator) { 'does not match regex' }
 
         context 'with matching string' do
@@ -711,6 +735,94 @@ RSpec.describe Selector::Sql do
         end
       end
 
+    end
+
+    describe 'integer fields', db_strategy: :reset do
+      let(:attribute)                    { create(:object_manager_attribute_integer, object_name: 'Ticket') }
+      let(:additional_ticket_attributes) { { attribute.name => 3 } }
+      let(:name)                         { "ticket.#{attribute.name}" }
+
+      before do
+        attribute
+        ObjectManager::Attribute.migration_execute
+        ticket
+      end
+
+      describe "operator 'in range'" do
+        let(:operator) { 'in range' }
+        let(:value)    { %w[1 5] }
+
+        include_examples 'finds the ticket'
+
+        context 'when value is out of range' do
+          let(:value) { %w[4 5] }
+
+          include_examples 'does not find the ticket'
+        end
+
+        context 'when the edges are equal' do
+          let(:value) { %w[3 3] }
+
+          include_examples 'finds the ticket'
+        end
+
+        context 'when the upper edge is empty' do
+          let(:value) { ['3', ''] }
+
+          include_examples 'finds the ticket'
+        end
+
+        context 'when the lower edge is empty' do
+          let(:value) { ['', '3'] }
+
+          include_examples 'finds the ticket'
+        end
+
+        context 'when both values are empty' do
+          let(:value) { ['', nil] }
+
+          it 'raises an error' do
+            expect { Ticket.selectors(condition, { current_user: agent }) }.to raise_error(RuntimeError)
+          end
+        end
+
+        context 'when value is of wrong type' do
+          let(:value) { '3' }
+
+          it 'raises an error' do
+            expect { Ticket.selectors(condition, { current_user: agent }) }.to raise_error(RuntimeError)
+          end
+        end
+      end
+    end
+
+    describe 'accounted time' do
+      let(:name)                         { 'ticket.time_unit' }
+      let(:additional_ticket_attributes) { { 'time_unit' => 10.5 } }
+
+      describe "operator 'in range'" do
+        let(:operator) { 'in range' }
+        let(:value)    { %w[10 11] }
+
+        before do
+          ticket
+        end
+
+        include_examples 'finds the ticket'
+
+        context 'when value is out of range' do
+          let(:value) { %w[10.75 11] }
+
+          include_examples 'does not find the ticket'
+        end
+
+        context 'when value is negative' do
+          let(:additional_ticket_attributes) { { 'time_unit' => '-0.5' } }
+          let(:value)                        { ['-1', '0'] }
+
+          include_examples 'finds the ticket'
+        end
+      end
     end
 
     describe 'complex conditions' do
@@ -811,7 +923,7 @@ RSpec.describe Selector::Sql do
       end
     end
 
-    describe 'external data source field', db_adapter: :postgresql, db_strategy: :reset do
+    describe 'external data source field', db_strategy: :reset do
       let(:external_data_source_attribute) do
         create(:object_manager_attribute_autocompletion_ajax_external_data_source,
                name: 'external_data_source_attribute')
@@ -931,10 +1043,88 @@ RSpec.describe Selector::Sql do
         end
       end
     end
+
+    describe 'Invalid object selector conditions if value contains a question mark #6091', db_strategy: :reset do
+      let(:attribute) do
+        create(:object_manager_attribute_multi_tree_select,
+               object_name:             'Ticket',
+               additional_data_options: {
+                 'options' => [
+                   {
+                     'name'     => 'trip?',
+                     'value'    => 'trip?',
+                     'children' => [
+                       {
+                         'name'  => 'done',
+                         'value' => 'trip?::done',
+                       }
+                     ],
+                   },
+                 ],
+               })
+      end
+      let(:name)  { "ticket.#{attribute.name}" }
+      let(:value) { ['trip?::done'] }
+
+      before do
+        attribute
+        ObjectManager::Attribute.migration_execute
+        ticket
+      end
+
+      describe 'contains one' do
+        let(:operator) { 'contains one' }
+
+        context 'when valid check' do
+          let(:additional_ticket_attributes) { { attribute.name => ['trip?::done', 'other'] } }
+
+          it 'is valid' do
+            expect(described_class.new(selector: condition, options: { current_user: User.find(1) }, target_class: Ticket).valid?).to be(true)
+          end
+        end
+
+        context 'when ticket value matches' do
+          let(:additional_ticket_attributes) { { attribute.name => ['trip?::done', 'other'] } }
+
+          include_examples 'finds the ticket'
+        end
+
+        context 'when ticket value does not match' do
+          let(:additional_ticket_attributes) { { attribute.name => ['other'] } }
+
+          include_examples 'does not find the ticket'
+        end
+      end
+
+      describe 'contains all' do
+        let(:operator) { 'contains all' }
+
+        context 'when valid check' do
+          let(:additional_ticket_attributes) { { attribute.name => ['trip?::done', 'other'] } }
+
+          it 'is valid' do
+            expect(described_class.new(selector: condition, options: { current_user: User.find(1) }, target_class: Ticket).valid?).to be(true)
+          end
+        end
+
+        context 'when ticket value matches' do
+          let(:additional_ticket_attributes) { { attribute.name => ['trip?::done'] } }
+
+          include_examples 'finds the ticket'
+        end
+
+        context 'when ticket value does not match' do
+          let(:additional_ticket_attributes) { { attribute.name => ['other'] } }
+
+          include_examples 'does not find the ticket'
+        end
+      end
+    end
   end
 
   describe '.valid?' do
-    let(:instance) { described_class.new(selector: { operator: 'AND', conditions: [ condition ] }, options: {}) }
+    let(:block_operator) { 'AND' }
+    let(:instance) { described_class.new(selector: { operator: block_operator, conditions: [ condition ] }, options: {}) }
 
     context 'with valid conditions' do
       let(:condition) do
@@ -977,7 +1167,7 @@ RSpec.describe Selector::Sql do
       end
     end
 
-    context 'with invalid regular expression', mariadb: true do
+    context 'with invalid regular expression' do
       let(:condition) do
         {
           name:     'ticket.title',
@@ -991,7 +1181,7 @@ RSpec.describe Selector::Sql do
       end
     end
 
-    context 'with external data source field', db_adapter: :postgresql, db_strategy: :reset do
+    context 'with external data source field', db_strategy: :reset do
       let(:external_data_source_attribute) do
         create(:object_manager_attribute_autocompletion_ajax_external_data_source,
                name: 'external_data_source_attribute')
@@ -1015,6 +1205,21 @@ RSpec.describe Selector::Sql do
 
       it 'validates' do
         expect(instance.valid?).to be true
+      end
+    end
+
+    context 'with invalid block conditions' do
+      let(:block_operator) { ';;;' }
+      let(:condition) do
+        {
+          name:          'ticket.organization_id',
+          operator:      'is',
+          pre_condition: 'not_set',
+        }
+      end
+
+      it 'does not validate' do
+        expect(instance.valid?).to be false
       end
     end
   end

@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { useLazyQuery } from '@vue/apollo-composable'
@@ -46,15 +46,14 @@ const emit = defineEmits<{
   action: []
 }>()
 
-const { sortedOptions, selectOption, appendedOptions } = useSelectOptions<
-  AutoCompleteOption[]
->(toRef(props, 'options'), contextReactive)
+const { sortedOptions, selectOption, appendedOptions } = useSelectOptions<AutoCompleteOption[]>(
+  toRef(props, 'options'),
+  contextReactive,
+)
 
 let areLocalOptionsReplaced = false
 
-const replacementLocalOptions: Ref<AutoCompleteOption[]> = ref(
-  cloneDeep(props.options),
-)
+const replacementLocalOptions: Ref<AutoCompleteOption[]> = ref(cloneDeep(props.options))
 
 const filter = ref('')
 
@@ -64,9 +63,7 @@ const focusFirstTarget = () => {
   const filterInputFormKit = filterInput.value as null | { node: FormKitNode }
   if (!filterInputFormKit) return
 
-  const filterInputElement = document.getElementById(
-    filterInputFormKit.node.context?.id as string,
-  )
+  const filterInputElement = document.getElementById(filterInputFormKit.node.context?.id as string)
   if (!filterInputElement) return
 
   filterInputElement.focus()
@@ -97,10 +94,7 @@ const close = () => {
 
 const trimmedFilter = computed(() => filter.value.trim())
 
-const debouncedFilter = refDebounced(
-  trimmedFilter,
-  props.context.debounceInterval ?? 500,
-)
+const debouncedFilter = refDebounced(trimmedFilter, props.context.debounceInterval ?? 500)
 
 const AutocompleteSearchDocument = gql`
   ${props.context.gqlQuery}
@@ -121,7 +115,7 @@ const autocompleteQueryHandler = new QueryHandler(
       input: {
         query: debouncedFilter.value || props.context.defaultFilter || '',
         limit: props.context.limit,
-        ...(additionalQueryParams() || {}),
+        ...additionalQueryParams(),
       },
     }),
     () => ({
@@ -144,8 +138,8 @@ if (props.context.defaultFilter) {
 }
 
 const autocompleteQueryResultKey = (
-  (AutocompleteSearchDocument.definitions[0] as OperationDefinitionNode)
-    .selectionSet.selections[0] as SelectionNode & { name: NameNode }
+  (AutocompleteSearchDocument.definitions[0] as OperationDefinitionNode).selectionSet
+    .selections[0] as SelectionNode & { name: NameNode }
 ).name.value
 
 const autocompleteQueryResultOptions = computed(
@@ -189,25 +183,22 @@ const select = (option: AutoCompleteOption) => {
     if (
       isCurrentValue(option.value) &&
       !replacementLocalOptions.value.some(
-        (replacementLocalOption) =>
-          replacementLocalOption.value === option.value,
+        (replacementLocalOption) => replacementLocalOption.value === option.value,
       )
     ) {
       replacementLocalOptions.value.push(option)
     }
 
     // Remove any extra options from the replacement list.
-    replacementLocalOptions.value = replacementLocalOptions.value.filter(
-      (replacementLocalOption) => isCurrentValue(replacementLocalOption.value),
+    replacementLocalOptions.value = replacementLocalOptions.value.filter((replacementLocalOption) =>
+      isCurrentValue(replacementLocalOption.value),
     )
 
     if (!sortedOptions.value.some((elem) => elem.value === option.value)) {
       appendedOptions.value.push(option)
     }
 
-    appendedOptions.value = appendedOptions.value.filter((elem) =>
-      isCurrentValue(elem.value),
-    )
+    appendedOptions.value = appendedOptions.value.filter((elem) => isCurrentValue(elem.value))
 
     // Sort the replacement list according to the original order.
     replacementLocalOptions.value.sort(
@@ -226,8 +217,7 @@ const select = (option: AutoCompleteOption) => {
   }
 }
 
-const OptionIconComponent =
-  props.optionIconComponent ?? FieldAutoCompleteOptionIcon
+const OptionIconComponent = props.optionIconComponent ?? FieldAutoCompleteOptionIcon
 
 const router = useRouter()
 
@@ -250,12 +240,7 @@ useTraverseOptions(autocompleteList)
     @close="close"
   >
     <template v-if="context.action || context.onActionClick" #before-label>
-      <CommonButton
-        class="grow"
-        transparent-background
-        @click="close"
-        @keypress.space="close"
-      >
+      <CommonButton class="grow" transparent-background @click="close" @keypress.space="close">
         {{ $t('Cancel') }}
       </CommonButton>
     </template>
@@ -316,7 +301,7 @@ useTraverseOptions(autocompleteList)
         :aria-posinset="options.findIndex((o) => o.value === option.value) + 1"
         tabindex="0"
         :aria-selected="isCurrentValue(option.value)"
-        class="focus:bg-blue-highlight relative flex h-[58px] cursor-pointer items-center self-stretch px-6 py-5 text-base leading-[19px] text-white focus:outline-hidden"
+        class="relative flex h-[58px] cursor-pointer items-center self-stretch px-6 py-5 text-base leading-[19px] text-white focus:bg-blue-highlight focus:outline-hidden"
         role="option"
         @click="select(option as AutoCompleteOption)"
         @keyup.space="select(option as AutoCompleteOption)"
@@ -325,12 +310,9 @@ useTraverseOptions(autocompleteList)
           v-if="index !== 0"
           :class="{
             'ltr:left-4 rtl:right-4': !context.multiple && !option.icon,
-            'ltr:left-[60px] rtl:right-[60px]':
-              context.multiple && !option.icon,
-            'ltr:left-[72px] rtl:right-[72px]':
-              !context.multiple && option.icon,
-            'ltr:left-[108px] rtl:right-[108px]':
-              context.multiple && option.icon,
+            'ltr:left-[60px] rtl:right-[60px]': context.multiple && !option.icon,
+            'ltr:left-[72px] rtl:right-[72px]': !context.multiple && option.icon,
+            'ltr:left-[108px] rtl:right-[108px]': context.multiple && option.icon,
           }"
           class="absolute top-0 h-0 border-t border-white/10 ltr:right-4 rtl:left-4"
         />
@@ -340,9 +322,7 @@ useTraverseOptions(autocompleteList)
             '!text-white': isCurrentValue(option.value),
             'opacity-30': option.disabled,
           }"
-          :name="
-            isCurrentValue(option.value) ? 'check-box-yes' : 'check-box-no'
-          "
+          :name="isCurrentValue(option.value) ? 'check-box-yes' : 'check-box-no'"
           class="text-white/50 ltr:mr-3 rtl:ml-3"
           size="base"
           decorative
@@ -364,7 +344,7 @@ useTraverseOptions(autocompleteList)
             :class="{
               'opacity-30': option.disabled,
             }"
-            class="grow truncate text-lg leading-[22px] font-semibold"
+            class="grow truncate text-lg leading-[22px] font-medium"
           >
             {{ option.label || option.value }}
           </span>
@@ -372,7 +352,7 @@ useTraverseOptions(autocompleteList)
         <span
           v-else
           :class="{
-            'font-semibold !text-white': isCurrentValue(option.value),
+            'font-medium text-white!': isCurrentValue(option.value),
             'opacity-30': option.disabled,
           }"
           class="grow truncate text-white/80"
@@ -391,11 +371,7 @@ useTraverseOptions(autocompleteList)
       </div>
     </div>
     <div
-      v-if="
-        debouncedFilter &&
-        autocompleteQueryResultOptions &&
-        !autocompleteOptions.length
-      "
+      v-if="debouncedFilter && autocompleteQueryResultOptions && !autocompleteOptions.length"
       class="relative flex h-[58px] items-center justify-center self-stretch px-4 py-5 text-base leading-[19px] text-white/50"
       role="alert"
     >

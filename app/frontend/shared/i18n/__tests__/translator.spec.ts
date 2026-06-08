@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { Translator } from '../translator.ts'
 
@@ -12,10 +12,7 @@ describe('Translator', () => {
   it('keeps unknown strings', () => {
     const map = new Map([
       ['yes', 'ja'],
-      [
-        'String with 3 placeholders: %s %s %s',
-        'Zeichenkette mit 3 Platzhaltern: %s %s %s',
-      ],
+      ['String with 3 placeholders: %s %s %s', 'Zeichenkette mit 3 Platzhaltern: %s %s %s'],
     ])
 
     t.setTranslationMap(map)
@@ -38,20 +35,13 @@ describe('Translator', () => {
       'Zeichenkette mit 3 Platzhaltern: 1 2 %s',
     )
     // Correct arguments.
-    expect(
-      t.translate('String with 3 placeholders: %s %s %s', 1, '2', 'some words'),
-    ).toBe('Zeichenkette mit 3 Platzhaltern: 1 2 some words')
+    expect(t.translate('String with 3 placeholders: %s %s %s', 1, '2', 'some words')).toBe(
+      'Zeichenkette mit 3 Platzhaltern: 1 2 some words',
+    )
     // Excess arguments.
-    expect(
-      t.translate(
-        'String with 3 placeholders: %s %s %s',
-        1,
-        '2',
-        'some words',
-        3,
-        4,
-      ),
-    ).toBe('Zeichenkette mit 3 Platzhaltern: 1 2 some words')
+    expect(t.translate('String with 3 placeholders: %s %s %s', 1, '2', 'some words', 3, 4)).toBe(
+      'Zeichenkette mit 3 Platzhaltern: 1 2 some words',
+    )
   })
   it('lookup() works correctly', () => {
     expect(t.lookup('yes')).toBe('ja')

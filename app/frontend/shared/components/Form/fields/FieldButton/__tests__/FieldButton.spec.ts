@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { FormKit } from '@formkit/vue'
 
@@ -59,10 +59,7 @@ describe('Form - Field - Button (Formkit-BuildIn)', () => {
       },
     })
 
-    expect(view.getByText('Sign In').closest('div')).toHaveAttribute(
-      'data-variant',
-      'secondary',
-    )
+    expect(view.getByText('Sign In').closest('div')).toHaveAttribute('data-variant', 'secondary')
   })
 
   it('can be disabled', async () => {

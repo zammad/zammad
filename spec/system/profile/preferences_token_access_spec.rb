@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -39,7 +39,7 @@ RSpec.describe 'Profile > Token Access', type: :system do
     context 'with expire date' do
       it 'generates a new personal token' do
         in_modal do
-          expect(page).to have_css('.form-control.input.js-select')
+          expect(page).to have_css('input.form-control[readonly]')
             .and have_text('Your New Personal Access Token')
         end
       end
@@ -61,7 +61,7 @@ RSpec.describe 'Profile > Token Access', type: :system do
 
       it 'generates a new personal token' do
         in_modal do
-          expect(page).to have_css('.form-control.input.js-select')
+          expect(page).to have_css('input.form-control[readonly]')
             .and have_text('Your New Personal Access Token')
         end
       end

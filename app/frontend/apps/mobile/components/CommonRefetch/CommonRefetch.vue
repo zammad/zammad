@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { ref, watch } from 'vue'
@@ -41,11 +41,7 @@ watch(
       class="absolute items-center justify-center"
       role="status"
     >
-      <CommonIcon
-        :label="__('Loading content')"
-        name="loading"
-        animation="spin"
-      />
+      <CommonIcon :label="__('Loading content')" name="loading" animation="spin" />
     </div>
     <div v-else v-bind="$attrs">
       <slot />

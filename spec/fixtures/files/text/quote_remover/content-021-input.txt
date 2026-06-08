@@ -1,0 +1,17 @@
+Hi, some platforms are giving me errors because they detect unusual network activity.
+
+Sent from Secure Mail for iOS.
+
+-------- Original Message --------
+On Sunday, 11/30/25 at 01:04 Alex <support@example.net> wrote:
+Hello,
+
+Are you saying that the services themselves are blocking your access, or that your provider is preventing you from reaching our servers?
+
+Best regards,
+Alex
+
+On 11/29/25 19:09, Robin wrote:
+I’m having trouble with several regional servers, as their addresses seem to be flagged. Is there any configuration file you can send me to resolve this?
+
+Thanks!

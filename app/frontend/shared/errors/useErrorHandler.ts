@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { useRouter } from 'vue-router'
 
@@ -22,7 +22,7 @@ export const useErrorHandler = () => {
       let statusCode: number
 
       if (errorHandler.type === GraphQLErrorTypes.RecordNotFound) {
-        title = __('Not Found')
+        title = __('Not found')
         message = messages.notFound
         statusCode = ErrorStatusCodes.NotFound
       } else if (errorHandler.type === GraphQLErrorTypes.Forbidden) {
@@ -30,7 +30,7 @@ export const useErrorHandler = () => {
         message = messages.forbidden
         statusCode = ErrorStatusCodes.Forbidden
       } else if (errorHandler.type !== GraphQLErrorTypes.NotAuthorized) {
-        title = __('Internal Error')
+        title = __('Internal error')
         message = errorHandler.message
           ? __('Something went wrong. Received message: %s')
           : __('Something went wrong.')

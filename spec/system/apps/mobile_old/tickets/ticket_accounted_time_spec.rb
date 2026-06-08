@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -10,7 +10,7 @@ RSpec.describe 'Mobile > Ticket > Information > Accounted Time', app: :mobile, a
   let(:time_accounting) { create(:'ticket/time_accounting', ticket: ticket, ticket_article: article, time_unit: time_unit) }
 
   let(:accounted_time_element) do
-    find('section', text: 'Accounted Time')
+    find('section', text: 'Total accounted time')
   end
 
   def authenticate
@@ -67,7 +67,7 @@ RSpec.describe 'Mobile > Ticket > Information > Accounted Time', app: :mobile, a
     let(:ticket) { create(:ticket, customer: user) }
 
     it 'does not show accounted time' do
-      expect(page).to have_no_css('Accounted Time')
+      expect(page).to have_no_css('Accounted time')
     end
   end
 end

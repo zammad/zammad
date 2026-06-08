@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { computed, type ComputedRef } from 'vue'
 
@@ -8,10 +8,7 @@ import { useObjectAttributes } from './useObjectAttributes.ts'
 
 import type { ObjectAttribute } from '../types/store.ts'
 
-export const useObjectAttributesScreen = (
-  object: EnumObjectManagerObjects,
-  screen: string,
-) => {
+export const useObjectAttributesScreen = (object: EnumObjectManagerObjects, screen: string) => {
   const objectAttributes = useObjectAttributes(object)
 
   const getScreenAttributes = (
@@ -21,23 +18,14 @@ export const useObjectAttributesScreen = (
   ) => {
     if (!screens.value[screen]) return []
 
-    return screens.value[screen].reduce(
-      (screenAttributes: ObjectAttribute[], attributeName) => {
-        screenAttributes.push(
-          attributesLookup.value.get(attributeName) as ObjectAttribute,
-        )
-        return screenAttributes
-      },
-      [],
-    )
+    return screens.value[screen].reduce((screenAttributes: ObjectAttribute[], attributeName) => {
+      screenAttributes.push(attributesLookup.value.get(attributeName) as ObjectAttribute)
+      return screenAttributes
+    }, [])
   }
 
   const screenAttributes = computed(() => {
-    return getScreenAttributes(
-      screen,
-      objectAttributes.screens,
-      objectAttributes.attributesLookup,
-    )
+    return getScreenAttributes(screen, objectAttributes.screens, objectAttributes.attributesLookup)
   })
 
   return {

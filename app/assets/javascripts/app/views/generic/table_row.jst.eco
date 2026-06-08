@@ -33,7 +33,11 @@
   <% end %>
   <td class="<% if header.parentClass: %><%= header.parentClass %><% end %> <% if header.align: %> align-<%= header.align %><% end %>" <% if header.title: %> title="<%= header.title %>"<% end %>>
     <% if header.name is 'icon': %>
-      <%- @Icon('task-state', header.class) %>
+        <% if @object.ai_agent_running and @object.currentView() is 'agent': %>
+            <%- @Icon('task-state-ai', "#{header.class} animate-spin ") %>
+        <% else: %>
+            <%- @Icon('task-state', header.class) %>
+        <% end %>
     <% else if header.icon: %>
       <%- @Icon(header.icon) %>
     <% else if header.name is 'action': %>
@@ -81,7 +85,7 @@
         <% if @object.constructor.badges && @object.constructor.badges.length > 0: %>
           <% for badge in @object.constructor.badges: %>
             <% if badge.attribute == header.name && badge.active(@object): %>
-              <span class="badge badge--<%= badge.class %>"><%- @T(badge.display) %></span>
+              <span class="badge badge--<%= badge.class %>"<% if badge.title: %> title="<%- @Ti(badge.title) %>"<% end %>><%- @T(badge.display) %></span>
             <% end %>
           <% end %>
         <% end %>

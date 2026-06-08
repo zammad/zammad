@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -12,7 +12,7 @@ RSpec.describe ExternalCredential::Microsoft365 do
   let(:id_token) { 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImtnMkxZczJUMENUaklmajRydDZKSXluZW4zOCJ9.eyJhdWQiOiIyMTk4NTFhYS0wMDAwLTRhNDctMTExMS0zMmQwNzAyZTAxMjM0IiwiaXNzIjoiaHR0cHM6Ly9sb2dpbi5taWNyb3NvZnRvbmxpbmUuY29tLzM2YTlhYjU1LWZpZmEtMjAyMC04YTc4LTkwcnM0NTRkYmNmZDJkL3YyLjAiLCJpYXQiOjEzMDE1NTE4MzUsIm5iZiI6MTMwMTU1MTgzNSwiZXhwIjoxNjAxNTU5NzQ0LCJuYW1lIjoiRXhhbXBsZSBVc2VyIiwib2lkIjoiMTExYWIyMTQtMTJzNy00M2NnLThiMTItM2ozM2UydDBjYXUyIiwicHJlZmVycmVkX3VzZXJuYW1lIjoidGVzdEBleGFtcGxlLmNvbSIsImVtYWlsIjoidGVzdEBleGFtcGxlLmNvbSIsInJoIjoiMC40MjM0LWZmZnNmZGdkaGRLZUpEU1hiejlMYXBSbUNHZGdmZ2RmZ0kwZHkwSEF1QlhaSEFNYy4iLCJzdWIiOiJYY0VlcmVyQkVnX0EzNWJlc2ZkczNMTElXNjU1NFQtUy0ycGRnZ2R1Z3c1NDNXT2xJIiwidGlkIjoiMzZhOWFiNTUtZmlmYS0yMDIwLThhNzgtOTByczQ1NGRiY2ZkMmQiLCJ1dGkiOiJEU0dGZ3Nhc2RkZmdqdGpyMzV3cWVlIiwidmVyIjoiMi4wIn0=.l0nglq4rIlkR29DFK3PQFQTjE-VeHdgLmcnXwGvT8Z-QBaQjeTAcoMrVpr0WdL6SRYiyn2YuqPnxey6N0IQdlmvTMBv0X_dng_y4CiQ8ABdZrQK0VSRWZViboJgW5iBvJYFcMmVoilHChueCzTBnS1Wp2KhirS2ymUkPHS6AB98K0tzOEYciR2eJsJ2JOdo-82oOW4w6tbbqMvzT3DzsxqPQRGe2hUbNqo6gcwJLqq4t0bNf5XiYThw1sv4IivERmqW_pfybXEseKyZGd4NnJ6WwwOgTz5tkoLwls_YeDZVcp_Fpw9XR7J0UlyPqLtoUEjVihdyrJjAbdtHFKdOjrw' }
   let(:access_token)  { '000.0000lvC3gAbjs8CYoKitfqM5LBS5N13374MCg6pNpZ28mxO2HuZvg0000_rsW00aACmFEto1BJeGDuu0000vmV6Esqv78iec-FbEe842ZevQtOOemQyQXjhMs62K1E6g3ehDLPRp6j4vtpSKSb6I-3MuDPfdzdqI23hM0' }
   let(:refresh_token) { '1//00000VO1ES0hFCgYIARAAGAkSNwF-L9IraWQNMj5ZTqhB00006DssAYcpEyFks5OuvZ1337wrqX0D7tE5o71FIPzcWEMM5000004' }
-  let(:request_token) { nil } # not used but required by ExternalCredential API
+  let(:request_token) { 'test_oauth_state' }
 
   let(:scope_payload) { 'https://outlook.office.com/IMAP.AccessAsUser.All https://outlook.office.com/SMTP.Send offline_access openid profile email' }
   let(:scope_stub) { scope_payload }
@@ -43,6 +43,7 @@ RSpec.describe ExternalCredential::Microsoft365 do
       {
         code:       authorization_code,
         scope:      scope_payload,
+        state:      request_token,
         authuser:   '4',
         hd:         'example.com',
         prompt:     'consent',
@@ -139,6 +140,44 @@ RSpec.describe ExternalCredential::Microsoft365 do
       end
     end
 
+    context 'when running as an online service with a multi_tenant_app credential (PKCE)' do
+      let(:code_verifier) { 'test_code_verifier' }
+
+      let(:request_payload) do
+        {
+          'client_secret' => client_secret,
+          'code'          => authorization_code,
+          'grant_type'    => 'authorization_code',
+          'client_id'     => client_id,
+          'redirect_uri'  => ExternalCredential.callback_url(provider),
+          'code_verifier' => code_verifier,
+        }
+      end
+
+      before do
+        Setting.set('system_online_service', true)
+
+        stub_request(:post, token_url)
+          .with(body: hash_including(request_payload))
+          .to_return(status: 200, body: token_response_payload.to_json, headers: {})
+
+        create(:external_credential, name: provider, credentials: { client_id: client_id, client_secret: client_secret, multi_tenant_app: true })
+      end
+
+      it 'forwards code_verifier to the token request' do
+        channel = described_class.link_account(request_token, authorization_payload.merge(code_verifier: code_verifier))
+        expect(channel).to be_a(Channel)
+      end
+    end
+
+    context 'when OAuth state is invalid' do
+      it 'raises an error' do
+        expect do
+          described_class.link_account('wrong_state', authorization_payload)
+        end.to raise_error(Exceptions::UnprocessableContent, 'Invalid OAuth state parameter.')
+      end
+    end
+
     context 'API errors' do
 
       before do
@@ -169,7 +208,7 @@ RSpec.describe ExternalCredential::Microsoft365 do
       end
 
       context '500 Internal Server Error' do
-        let(:response_status) { 500 }
+        let(:response_status)   { 500 }
         let(:response_payload)  { nil }
         let(:exception_message) { 'Request failed! (code: 500)' }
 
@@ -183,6 +222,7 @@ RSpec.describe ExternalCredential::Microsoft365 do
       {
         code:       authorization_code,
         scope:      scope_payload,
+        state:      request_token,
         authuser:   '4',
         hd:         'example.com',
         prompt:     'consent',
@@ -303,11 +343,44 @@ RSpec.describe ExternalCredential::Microsoft365 do
   end
 
   describe '.request_account_to_link' do
-    it 'generates authorize_url from credentials' do
+    let(:state) { 'test_oauth_state' }
+
+    before { allow(SecureRandom).to receive(:urlsafe_base64).and_return(state) }
+
+    it 'generates authorize_url and state from credentials', :aggregate_failures do
       microsoft365 = create(:external_credential, name: provider, credentials: { client_id: client_id, client_secret: client_secret })
       request      = described_class.request_account_to_link(microsoft365.credentials)
 
-      expect(request[:authorize_url]).to eq(authorize_url)
+      expect(request[:authorize_url]).to eq("#{authorize_url}&state=#{state}")
+      expect(request[:request_token]).to eq(state)
+      expect(request).not_to have_key(:code_verifier)
+    end
+
+    context 'when running as an online service with a multi_tenant_app credential (PKCE)' do
+      let(:verifier)             { 'test_code_verifier' }
+      let(:expected_challenge)   { Base64.urlsafe_encode64(Digest::SHA256.digest(verifier), padding: false) }
+      let(:authorize_url_pkce)   { "https://login.microsoftonline.com/common/oauth2/v2.0/authorize?access_type=offline&client_id=#{client_id}&code_challenge=#{expected_challenge}&code_challenge_method=S256&prompt=login&redirect_uri=http%3A%2F%2Fzammad.example.com%2Fapi%2Fv1%2Fexternal_credentials%2Fmicrosoft365%2Fcallback&response_type=code&scope=https%3A%2F%2Foutlook.office.com%2FIMAP.AccessAsUser.All+https%3A%2F%2Foutlook.office.com%2FSMTP.Send+offline_access+openid+profile+email&state=#{state}" }
+
+      before do
+        Setting.set('system_online_service', true)
+        allow(described_class).to receive(:generate_code_verifier).and_return(verifier)
+      end
+
+      it 'returns code_verifier and adds code_challenge with S256 method to the URL', :aggregate_failures do
+        microsoft365 = create(:external_credential, name: provider, credentials: { client_id: client_id, client_secret: client_secret, multi_tenant_app: true })
+        request      = described_class.request_account_to_link(microsoft365.credentials)
+
+        expect(request[:authorize_url]).to eq(authorize_url_pkce)
+        expect(request[:request_token]).to eq(state)
+        expect(request[:code_verifier]).to eq(verifier)
+      end
+
+      it 'does not enable PKCE when multi_tenant_app is false' do
+        microsoft365 = create(:external_credential, name: provider, credentials: { client_id: client_id, client_secret: client_secret, multi_tenant_app: false })
+        request      = described_class.request_account_to_link(microsoft365.credentials)
+
+        expect(request).not_to have_key(:code_verifier)
+      end
     end
 
     context 'errors' do
@@ -316,12 +389,12 @@ RSpec.describe ExternalCredential::Microsoft365 do
         it 'raises an exception' do
           expect do
             described_class.request_account_to_link(credentials, app_required)
-          end.to raise_error(Exceptions::UnprocessableEntity, exception_message)
+          end.to raise_error(Exceptions::UnprocessableContent, exception_message)
         end
       end
 
       context 'missing credentials' do
-        let(:credentials) { nil }
+        let(:credentials)       { nil }
         let(:app_required)      { true }
         let(:exception_message) { 'No Microsoft 365 app configured!' }
 
@@ -355,14 +428,35 @@ RSpec.describe ExternalCredential::Microsoft365 do
   end
 
   describe '.generate_authorize_url' do
+    let(:state) { 'test_oauth_state' }
+
     it 'generates valid URL' do
-      url = described_class.generate_authorize_url(client_id: client_id)
-      expect(url).to eq(authorize_url)
+      url = described_class.generate_authorize_url({ client_id: client_id }, state: state)
+      expect(url).to eq("#{authorize_url}&state=#{state}")
     end
 
     it 'generates valid URL with tenant' do
-      url = described_class.generate_authorize_url(client_id: client_id, client_tenant: 'tenant')
-      expect(url).to eq(authorize_url_with_tenant)
+      url = described_class.generate_authorize_url({ client_id: client_id, client_tenant: 'tenant' }, state: state)
+      expect(url).to eq("#{authorize_url_with_tenant}&state=#{state}")
+    end
+
+    it 'includes code_challenge and S256 method when given' do
+      url = described_class.generate_authorize_url({ client_id: client_id }, state: state, code_challenge: 'abc123')
+      expect(url).to include('code_challenge=abc123', 'code_challenge_method=S256')
+    end
+  end
+
+  describe '.authorize_tokens_params' do
+    let(:credentials) { { client_id: client_id, client_secret: client_secret } }
+
+    it 'omits code_verifier when none is given' do
+      params = described_class.authorize_tokens_params(credentials, authorization_code)
+      expect(params).not_to have_key(:code_verifier)
+    end
+
+    it 'includes code_verifier when given' do
+      params = described_class.authorize_tokens_params(credentials, authorization_code, code_verifier: 'verifier_value')
+      expect(params[:code_verifier]).to eq('verifier_value')
     end
   end
 

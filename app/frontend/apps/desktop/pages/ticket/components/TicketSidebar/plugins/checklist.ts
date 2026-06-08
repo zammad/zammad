@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { useApplicationStore } from '#shared/stores/application.ts'
 
@@ -12,6 +12,7 @@ export default <TicketSidebarPlugin>{
   component: TicketSidebarChecklist,
   permissions: ['ticket.agent'],
   screens: [TicketSidebarScreenType.TicketDetailView],
+  views: ['agent'],
   icon: 'checklist',
   order: 8000,
   available: () => {

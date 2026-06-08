@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module CanSelector
   class AdvancedSorting
@@ -6,13 +6,14 @@ module CanSelector
       include CanApplyAdvancedSorting
 
       def calculate_sorting
-        command = case ActiveRecord::Base.connection_db_config.configuration_hash[:adapter]
-                  when 'postgresql'
-                    column_part = cached_sorted_ids.include?("'") ? "CAST(#{adjusted_column} as TEXT)" : adjusted_column
-
-                    "array_position(ARRAY[#{cached_sorted_ids}], #{column_part})"
-                  when 'mysql2'
-                    "FIELD(#{adjusted_column}, #{cached_sorted_ids})"
+        command = if cached_sorted_ids.include?("'")
+                    "array_position(ARRAY[#{cached_sorted_ids}], #{adjusted_column}::text)"
+                  else
+                    # Casting to bigint is required for PostgreSQL 13 only.
+                    # Newer versions figure out types automatically.
+                    # This can be removed once PostgreSQL 13 support is dropped.
+                    # https://github.com/zammad/zammad/issues/5927
+                    "array_position(ARRAY[#{cached_sorted_ids}]::bigint[], #{adjusted_column}::bigint)"
                   end
 
         {

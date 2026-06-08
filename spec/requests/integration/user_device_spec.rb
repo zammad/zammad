@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -37,7 +37,7 @@ RSpec.describe 'User Device', performs_jobs: true, sends_notification_emails: tr
 
       params = { without_fingerprint: 'none', username: 'user-device-admin', password: 'adminpw' }
       post '/api/v1/signin', params: params, as: :json
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
 
       expect(json_response).to be_a(Hash)
       expect(json_response['error']).to eq('Need fingerprint param!')
@@ -618,7 +618,7 @@ RSpec.describe 'User Device', performs_jobs: true, sends_notification_emails: tr
     it 'does login with invalid fingerprint (11)' do
       params = { fingerprint: 'to_long_1234567890to_long_1234567890to_long_1234567890to_long_1234567890to_long_1234567890to_long_1234567890to_long_1234567890to_long_1234567890to_long_1234567890to_long_1234567890to_long_1234567890', username: 'user-device-admin', password: 'adminpw' }
       post '/api/v1/signin', params: params, as: :json
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
 
       expect(json_response).to be_a(Hash)
       expect(json_response['error']).to eq('fingerprint is 198 chars but can only be 160 chars!')
@@ -665,6 +665,25 @@ RSpec.describe 'User Device', performs_jobs: true, sends_notification_emails: tr
       expect(UserDevice.where(user_id: admin.id).count).to eq(1)
       expect(json_response).to be_a(Hash)
       expect(json_response['error']).to be_nil
+    end
+
+    context 'when listing devices via REST index' do
+      before do
+        UserDevice.destroy_all
+        create(:user_device, user_id: admin.id, location: 'Germany', location_details: { 'city_name' => 'Berlin' })
+        create(:user_device, user_id: admin.id, location: 'France')
+        create(:user_device, user_id: admin.id, location: 'unknown', location_details: { 'city_name' => 'Paris' })
+        create(:user_device, user_id: admin.id, location: 'unknown')
+
+        authenticated_as(admin, password: 'adminpw')
+        get '/api/v1/user_devices', as: :json
+      end
+
+      it 'combines location and city, prefers city alone when country is unknown, and leaves bare "unknown" for translation' do
+        expect(response).to have_http_status(:ok)
+        expect(json_response.pluck('location'))
+          .to contain_exactly('Germany, Berlin', 'France', 'Paris', 'unknown')
+      end
     end
 
     it 'does login form controller - check no user device logging (13)' do

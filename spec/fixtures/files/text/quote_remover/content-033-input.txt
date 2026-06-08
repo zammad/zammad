@@ -1,0 +1,7 @@
+No links in my reply.
+
+On Dec 3, 2024, Support wrote:
+
+> Check out [our site](https://example.com) and [our blog](https://example.com/blog).
+>
+> Thanks!

@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { useVModel } from '@vueuse/core'
@@ -33,9 +33,7 @@ const accessibilityLabel = computed(() => {
   return i18n.t(
     'Tickets are ordered by "%s" column (%s).',
     i18n.t(props.label),
-    props.direction === EnumOrderDirection.Ascending
-      ? i18n.t('ascending')
-      : i18n.t('descending'),
+    props.direction === EnumOrderDirection.Ascending ? i18n.t('ascending') : i18n.t('descending'),
   )
 })
 
@@ -73,8 +71,7 @@ const selector = useTemplateRef('select')
 
 const advanceFocus = (event: KeyboardEvent, idx: number) => {
   const { key } = event
-  if (!['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key))
-    return
+  if (!['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) return
 
   stopEvent(event)
 
@@ -105,7 +102,7 @@ const advanceFocus = (event: KeyboardEvent, idx: number) => {
         aria-haspopup="dialog"
         :aria-expanded="expanded"
         :aria-label="accessibilityLabel"
-        class="text-blue flex cursor-pointer items-center gap-1 overflow-hidden whitespace-nowrap"
+        class="flex cursor-pointer items-center gap-1 overflow-hidden whitespace-nowrap text-blue"
         data-test-id="column"
         @click="open"
         @keydown.space.prevent="open"
@@ -113,11 +110,7 @@ const advanceFocus = (event: KeyboardEvent, idx: number) => {
         <div>
           <CommonIcon
             decorative
-            :name="
-              direction === EnumOrderDirection.Ascending
-                ? 'arrow-up'
-                : 'arrow-down'
-            "
+            :name="direction === EnumOrderDirection.Ascending ? 'arrow-up' : 'arrow-down'"
             size="tiny"
           />
         </div>

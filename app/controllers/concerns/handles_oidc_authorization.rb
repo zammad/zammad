@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module HandlesOidcAuthorization
   extend ActiveSupport::Concern
@@ -7,17 +7,16 @@ module HandlesOidcAuthorization
     skip_before_action :verify_csrf_token, only: %i[oidc_destroy oidc_bc_logout] # rubocop:disable Rails/LexicallyScopedActionFilter
 
     def oidc_bc_logout
-      raise Exceptions::UnprocessableEntity, __("The required parameter 'logout_token' is missing.") if params[:logout_token].blank?
+      raise Exceptions::UnprocessableContent, __("The required parameter 'logout_token' is missing.") if params[:logout_token].blank?
 
       begin
-        oidc = OmniAuth::Strategies::OidcDatabase.new(OmniAuth::Strategies::OidcDatabase.setup)
-        decoded = oidc.decode_logout_token(params[:logout_token])
+        decoded = oidc_strategy.decode_logout_token(params[:logout_token])
       rescue => e
         Rails.logger.error "OpenID Connect OP-initiated logout failed: #{e.message}"
-        raise Exceptions::UnprocessableEntity, __("The 'logout_token' is invalid.")
+        raise Exceptions::UnprocessableContent, __("The 'logout_token' is invalid.")
       end
 
-      raise Exceptions::UnprocessableEntity, __("The 'logout_token' does not contain any session information.") if decoded.sid.blank?
+      raise Exceptions::UnprocessableContent, __("The 'logout_token' does not contain any session information.") if decoded.sid.blank?
 
       Session.all.detect { |s| s.data['oidc_sid'] == decoded.sid }&.destroy
     end
@@ -25,15 +24,11 @@ module HandlesOidcAuthorization
     private
 
     def oidc_session?
-      session[:oidc_id_token].present?
+      session[:oidc_id_token].present? && oidc_end_session_endpoint.present?
     end
 
     def oidc_destroy
-      oidc = OmniAuth::Strategies::OidcDatabase.new(OmniAuth::Strategies::OidcDatabase.setup)
-
-      options = oidc.config
-
-      logout_url = Addressable::URI.parse(options.end_session_endpoint)
+      logout_url = Addressable::URI.parse(oidc_end_session_endpoint)
       logout_url.query_values = {
         id_token_hint:            session[:oidc_id_token],
         post_logout_redirect_uri: "#{Setting.get('http_type')}://#{Setting.get('fqdn')}"
@@ -46,5 +41,13 @@ module HandlesOidcAuthorization
       Rails.logger.error "OpenID Connect RP-initiated logout failed: #{e.message}"
     end
 
+    def oidc_end_session_endpoint
+      # Try client_options first (for manual configuration), fall back to discovery config
+      @oidc_end_session_endpoint ||= oidc_strategy.options.client_options.end_session_endpoint || oidc_strategy.config.end_session_endpoint
+    end
+
+    def oidc_strategy
+      @oidc_strategy ||= OmniAuth::Strategies::OidcDatabase.new(OmniAuth::Strategies::OidcDatabase.setup)
+    end
   end
 end

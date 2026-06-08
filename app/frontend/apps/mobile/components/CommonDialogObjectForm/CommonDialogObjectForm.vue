@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import Form from '#shared/components/Form/Form.vue'
@@ -12,11 +12,8 @@ import { useForm } from '#shared/components/Form/useForm.ts'
 import { useConfirmation } from '#shared/composables/useConfirmation.ts'
 import { useObjectAttributeFormData } from '#shared/entities/object-attributes/composables/useObjectAttributeFormData.ts'
 import { useObjectAttributes } from '#shared/entities/object-attributes/composables/useObjectAttributes.ts'
-import type {
-  EnumFormUpdaterId,
-  EnumObjectManagerObjects,
-  ObjectAttributeValue,
-} from '#shared/graphql/types.ts'
+import { flattenObjectAttributeValues } from '#shared/entities/object-attributes/utils.ts'
+import type { EnumFormUpdaterId, EnumObjectManagerObjects } from '#shared/graphql/types.ts'
 import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
 import type { OperationMutationFunction } from '#shared/types/server/apollo/handler.ts'
 import type { ObjectLike } from '#shared/types/utils.ts'
@@ -41,11 +38,7 @@ const props = defineProps<Props>()
 const emit = defineEmits<{
   success: [data: unknown]
   error: []
-  'changed-field': [
-    fieldName: string,
-    newValue: FormFieldValue,
-    oldValue: FormFieldValue,
-  ]
+  'changed-field': [fieldName: string, newValue: FormFieldValue, oldValue: FormFieldValue]
 }>()
 
 const updateMutation = new MutationHandler(props.mutation({}), {
@@ -53,23 +46,14 @@ const updateMutation = new MutationHandler(props.mutation({}), {
 })
 const { form, isDirty, canSubmit } = useForm()
 
-const objectAtrributes: Record<string, string> =
-  props.object?.objectAttributeValues?.reduce(
-    (acc: Record<string, string>, cur: ObjectAttributeValue) => {
-      acc[cur.attribute.name] = cur.value
-      return acc
-    },
-    {},
-  ) || {}
+const objectAttributes = flattenObjectAttributeValues(props.object?.objectAttributeValues)
 
 const initialFlatObject = {
   ...props.object,
-  ...objectAtrributes,
+  ...objectAttributes,
 }
 
-const { attributesLookup: objectAttributesLookup } = useObjectAttributes(
-  props.type,
-)
+const { attributesLookup: objectAttributesLookup } = useObjectAttributes(props.type)
 
 const { waitForConfirmation } = useConfirmation()
 
@@ -99,7 +83,7 @@ const changedFormField = (
 
 const saveObject = async (formData: FormSubmitData) => {
   const { internalObjectAttributeValues, additionalObjectAttributeValues } =
-    useObjectAttributeFormData(objectAttributesLookup.value, formData)
+    useObjectAttributeFormData(props.type, objectAttributesLookup.value, formData)
 
   const result = await updateMutation.send({
     id: props.object?.id,

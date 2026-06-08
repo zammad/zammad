@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Queries
   class Calendar::IcsFile::Events < BaseQuery
@@ -11,7 +11,7 @@ module Gql::Queries
 
     def resolve(file:)
       calendar_data = ::Service::Calendar::IcsFile::Parse
-        .new(current_user: context.current_user)
+        .with_current_user(context.current_user)
         .execute(file:)
 
       return [] if calendar_data.blank? || calendar_data[:events].blank?

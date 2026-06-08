@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -12,7 +12,7 @@ RSpec.describe HtmlSanitizer::Scrubber::Wipe do
         .to_html save_with: Nokogiri::XML::Node::SaveOptions::DEFAULT_HTML ^ Nokogiri::XML::Node::SaveOptions::FORMAT
     end
 
-    let(:fragment) { Loofah.fragment(input) }
+    let(:fragment) { Loofah.html5_fragment(input) }
 
     context 'when has not allowed tag' do
       let(:input)  { '<not-allowed><b>asd</b></not-allowed>' }
@@ -86,6 +86,41 @@ RSpec.describe HtmlSanitizer::Scrubber::Wipe do
       it 'does not mark remote content as removed' do
         expect { actual }.not_to change(scrubber, :remote_content_removed)
       end
+    end
+
+    context 'when href contains javascript: scheme' do
+      let(:input)  { '<a href="javascript:alert()">click</a>' }
+      let(:target) { '<a>click</a>' }
+
+      it { is_expected.to eq target }
+    end
+
+    context 'when href contains data: scheme' do
+      let(:input)  { '<a href="data:text/html,<h1>XSS</h1>">click</a>' }
+      let(:target) { '<a>click</a>' }
+
+      it { is_expected.to eq target }
+    end
+
+    context 'when href contains data: scheme with javascript' do
+      let(:input)  { '<a href="data:text/javascript,alert(1)">click</a>' }
+      let(:target) { '<a>click</a>' }
+
+      it { is_expected.to eq target }
+    end
+
+    context 'when href contains data: scheme uppercased' do
+      let(:input)  { '<a href="DATA:text/html,<b>test</b>">click</a>' }
+      let(:target) { '<a>click</a>' }
+
+      it { is_expected.to eq target }
+    end
+
+    context 'when style contains data: scheme' do
+      let(:input)  { '<a style="data:text/html,something">click</a>' }
+      let(:target) { '<a>click</a>' }
+
+      it { is_expected.to eq target }
     end
 
     context 'when has an image with a proper link' do

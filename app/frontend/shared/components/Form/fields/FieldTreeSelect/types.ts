@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import type { SelectOption } from '#shared/components/CommonSelect/types.ts'
 import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
@@ -19,6 +19,7 @@ export type MatchedFlatSelectOption = FlatSelectOption & {
 }
 
 export interface TreeSelectProps {
+  autoOpenDropdown?: boolean
   clearable?: boolean
   historicalOptions?: Record<string, string>
   multiple?: boolean

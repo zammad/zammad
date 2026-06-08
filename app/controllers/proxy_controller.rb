@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class ProxyController < ApplicationController
   prepend_before_action :authenticate_and_authorize!
@@ -9,8 +9,9 @@ class ProxyController < ApplicationController
     options = params
       .permit(:proxy, :proxy_username, :proxy_password, :proxy_no)
       .to_h
-    options[:open_timeout] = 12
-    options[:read_timeout] = 24
+    options[:open_timeout]  = 12
+    options[:read_timeout]  = 24
+    options[:total_timeout] = 24
     begin
       result = UserAgent.get(
         url,

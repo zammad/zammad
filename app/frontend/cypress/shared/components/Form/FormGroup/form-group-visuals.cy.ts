@@ -1,10 +1,11 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 // To update snapshots, run `pnpm cypress:snapshots`
 // DO NOT update snapshots, when running with --open flag (Cypress GUI)
 
-import { checkFormMatchesSnapshot, mountComponent } from '#cy/utils.ts'
 import { h } from 'vue'
+
+import { checkFormMatchesSnapshot, mountComponent } from '#cy/utils.ts'
 
 import DynamicInitializer from '#shared/components/DynamicInitializer/DynamicInitializer.vue'
 import Form from '#shared/components/Form/Form.vue'
@@ -227,10 +228,7 @@ describe('grouping form fields', { retries: 3 }, () => {
       {
         components: { Form, DynamicInitializer },
         render() {
-          return h('div', [
-            h(DynamicInitializer, { name: 'dialog' }),
-            h(Form, props),
-          ])
+          return h('div', [h(DynamicInitializer, { name: 'dialog' }), h(Form, props)])
         },
       },
       {

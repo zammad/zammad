@@ -1,7 +1,7 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Types::Input::Ticket
-  class ExternalReferencesInputType < BaseInputType
+  class ExternalReferencesInputType < Gql::Types::BaseInputObject
     description 'Represents the ticket external links to be added'
 
     argument :github,

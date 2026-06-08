@@ -1,8 +1,7 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { storeToRefs } from 'pinia'
-import { computed, onMounted, watch } from 'vue'
+import { computed, onMounted, watch, toRef } from 'vue'
 
 import TicketSidebarIdoitContent from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue'
 import type { ExternalReferencesFormValues } from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/types.ts'
@@ -27,7 +26,7 @@ const isTicketEditable = computed(
   () => props.context.isTicketEditable?.value ?? true, // True for ticket create screen.
 )
 
-const { isDarkMode } = storeToRefs(useThemeStore())
+const isDarkMode = toRef(useThemeStore(), 'isDarkMode')
 
 const plugin = computed(() => {
   const icon = isDarkMode.value
@@ -43,8 +42,7 @@ const plugin = computed(() => {
 const objectIds = computed(() => {
   if (props.context.screenType === TicketSidebarScreenType.TicketCreate)
     return (
-      (props.context.formValues as ExternalReferencesFormValues)
-        .externalReferences?.idoit || []
+      (props.context.formValues as ExternalReferencesFormValues).externalReferences?.idoit || []
     )
 
   return props.context.ticket?.value?.preferences?.idoit?.object_ids || []
@@ -60,9 +58,7 @@ const objectBadges = computed(() =>
     : undefined,
 )
 
-const hideSidebar = computed(
-  () => !objectIds.value?.length && !isTicketEditable.value,
-)
+const hideSidebar = computed(() => !objectIds.value?.length && !isTicketEditable.value)
 
 if (props.context.screenType === TicketSidebarScreenType.TicketDetailView) {
   watch(

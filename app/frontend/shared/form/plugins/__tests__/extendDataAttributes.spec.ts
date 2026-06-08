@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { createNode, getNode } from '@formkit/core'
 import { FormKit } from '@formkit/vue'
@@ -8,10 +8,7 @@ import { waitForNextTick } from '#tests/support/utils.ts'
 
 import extendDataAttribues from '../global/extendDataAttributes.ts'
 
-import type {
-  FormKitExtendableSchemaRoot,
-  FormKitFrameworkContext,
-} from '@formkit/core'
+import type { FormKitExtendableSchemaRoot, FormKitFrameworkContext } from '@formkit/core'
 
 const wrapperParameters = {
   form: true,
@@ -62,9 +59,7 @@ describe('extendDataAttributes - data-populated', () => {
 
       schema({})
 
-      expect(originalSchema.mock.calls[0][0]).toHaveProperty(
-        'outer.attrs.data-populated',
-      )
+      expect(originalSchema.mock.calls[0][0]).toHaveProperty('outer.attrs.data-populated')
     })
 
     it('skips non-inputs', () => {

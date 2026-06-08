@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { describe, expect, vi } from 'vitest'
 import { ref } from 'vue'
@@ -54,10 +54,7 @@ describe('populateInlineImages', () => {
 
     const mockedCallback = vi.fn()
 
-    const { populateInlineImages } = useHtmlInlineImages(
-      inlineImages,
-      mockedCallback,
-    )
+    const { populateInlineImages } = useHtmlInlineImages(inlineImages, mockedCallback)
 
     populateInlineImages(elem)
 

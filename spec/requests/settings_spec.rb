@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -112,6 +112,94 @@ RSpec.describe 'Settings', type: :request do
       delete "/api/v1/settings/#{setting.id}", params: {}, as: :json
       expect(response).to have_http_status(:forbidden)
       expect(json_response['error']).to eq('Not authorized (feature not possible)')
+    end
+
+    it 'performs masking and unmasking of sensitive settings' do
+      idoit_config = {
+        api_token: 'some_api_token',
+        endpoint:  'https://idoit.example.com/i-doit/',
+        client_id: '',
+      }
+
+      Setting.set('idoit_config', idoit_config)
+
+      authenticated_as(admin)
+
+      # Masks sensitive data when fetching by value hash key
+      setting = Setting.find_by(name: 'idoit_config')
+      get "/api/v1/settings/#{setting.id}", params: {}, as: :json
+      expect(response).to have_http_status(:ok)
+      expect(json_response).to be_a(Hash)
+      expect(json_response['state_current']['value']['api_token']).to eq(SensitiveParamsHelper::SENSITIVE_MASK)
+
+      get '/api/v1/settings', params: {}, as: :json
+      expect(response).to have_http_status(:ok)
+      expect(json_response).to be_a(Array)
+      expect(json_response.find { it['name'] == 'idoit_config' }['state_current']['value']['api_token']).to eq(SensitiveParamsHelper::SENSITIVE_MASK)
+
+      # Unmasks sensitive data when updating by value hask key
+      params = {
+        id:            setting.id,
+        state_current: {
+          value: idoit_config.merge(api_token: SensitiveParamsHelper::SENSITIVE_MASK, client_id: 'new_client_id'),
+        }
+      }
+      put "/api/v1/settings/#{setting.id}", params: params, as: :json
+      expect(response).to have_http_status(:ok)
+      expect(json_response).to be_a(Hash)
+      expect(json_response['state_current']['value']['api_token']).to eq(SensitiveParamsHelper::SENSITIVE_MASK)
+      expect(Setting.get('idoit_config')).to include(api_token: 'some_api_token', client_id: 'new_client_id')
+
+      # Masks sensitive data when fetching by name
+      setting = Setting.find_by(name: 'proxy_password')
+      Setting.set('proxy_password', 'some_password')
+      get "/api/v1/settings/#{setting.id}", params: {}, as: :json
+      expect(response).to have_http_status(:ok)
+      expect(json_response).to be_a(Hash)
+      expect(json_response['state_current']['value']).to eq(SensitiveParamsHelper::SENSITIVE_MASK)
+
+      get '/api/v1/settings', params: {}, as: :json
+      expect(response).to have_http_status(:ok)
+      expect(json_response).to be_a(Array)
+      expect(json_response.find { it['name'] == 'proxy_password' }['state_current']['value']).to eq(SensitiveParamsHelper::SENSITIVE_MASK)
+
+      # Unmasks sensitive data when updating by name
+      params = {
+        id:            setting.id,
+        state_current: {
+          value: SensitiveParamsHelper::SENSITIVE_MASK,
+        }
+      }
+      put "/api/v1/settings/#{setting.id}", params: params, as: :json
+      expect(response).to have_http_status(:ok)
+      expect(json_response).to be_a(Hash)
+      expect(json_response['state_current']['value']).to eq(SensitiveParamsHelper::SENSITIVE_MASK)
+      expect(Setting.get('proxy_password')).to eq('some_password')
+
+      # Updates sensitive data when updating by name
+      params = {
+        id:            setting.id,
+        state_current: {
+          value: 'new_password',
+        }
+      }
+      put "/api/v1/settings/#{setting.id}", params: params, as: :json
+      expect(response).to have_http_status(:ok)
+      expect(json_response).to be_a(Hash)
+      expect(json_response['state_current']['value']).to eq(SensitiveParamsHelper::SENSITIVE_MASK)
+      expect(Setting.get('proxy_password')).to eq('new_password')
+
+      # Does not mask sensitive-matching names that are in the NOT_SENSITIVE_NAMES list
+      setting = Setting.find_by(name: 'user_lost_password')
+      get "/api/v1/settings/#{setting.id}", params: {}, as: :json
+      expect(response).to have_http_status(:ok)
+      expect(json_response).to be_a(Hash)
+      expect(json_response['state_current']['value']).to be(true)
+
+      get '/api/v1/settings', params: {}, as: :json
+      expect(response).to have_http_status(:ok)
+      expect(json_response).to be_a(Array)
+      expect(json_response.find { it['name'] == 'user_lost_password' }['state_current']['value']).to be(true)
     end
 
     it 'does settings index with admin-api' do

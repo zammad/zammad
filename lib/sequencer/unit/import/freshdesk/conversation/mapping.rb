@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Sequencer::Unit::Import::Freshdesk::Conversation::Mapping < Sequencer::Unit::Base
   include ::Sequencer::Unit::Import::Common::Mapping::Mixin::ProvideMapped
@@ -35,8 +35,8 @@ class Sequencer::Unit::Import::Freshdesk::Conversation::Mapping < Sequencer::Uni
     provide_mapped do
       {
         from:          resource['from_email'],
-        to:            resource['to_emails']&.join(', '),
-        cc:            resource['cc_emails']&.join(', '),
+        to:            format_email_field(resource['to_emails']),
+        cc:            format_email_field(resource['cc_emails']),
         ticket_id:     ticket_id,
         body:          resource['body'],
         content_type:  'text/html',
@@ -53,6 +53,13 @@ class Sequencer::Unit::Import::Freshdesk::Conversation::Mapping < Sequencer::Uni
   end
 
   private
+
+  def format_email_field(value)
+    return if value.nil?
+    return value.join(', ') if value.is_a?(Array)
+
+    value
+  end
 
   def ticket_id
     id_map['Ticket'][resource['ticket_id']]

@@ -1,11 +1,23 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
+
+import { ref } from 'vue'
 
 import { renderComponent } from '#tests/support/components/index.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
-import { mockPermissions } from '#tests/support/mock-permissions.ts'
 import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
 
+import { isSidebarCollapsed, SidebarName } from '#desktop/components/layout/useSidebarDisplay.ts'
+
 import LeftSidebarFooterMenu from '../LeftSidebarFooterMenu.vue'
+
+const isSmallScreen = ref(false)
+
+vi.mock('#desktop/composables/responsiveness/useAppBreakpoints.ts', () => ({
+  useAppBreakpoints: () => ({
+    isSmallScreen,
+    isSmallestScreen: ref(false),
+  }),
+}))
 
 describe('layout sidebar footer menu', () => {
   beforeEach(() => {
@@ -13,6 +25,8 @@ describe('layout sidebar footer menu', () => {
       lastname: 'Doe',
       firstname: 'John',
     })
+    isSidebarCollapsed[SidebarName.Primary].value = false
+    isSmallScreen.value = false
   })
 
   it('renders user avatar', async () => {
@@ -28,9 +42,10 @@ describe('layout sidebar footer menu', () => {
   })
 
   it('renders small user avatar in collapsed mode', async () => {
+    isSidebarCollapsed[SidebarName.Primary].value = true
+
     const view = renderComponent(LeftSidebarFooterMenu, {
       router: true,
-      props: { collapsed: true },
     })
 
     expect(view.getByText('JD')).toBeInTheDocument()
@@ -39,18 +54,83 @@ describe('layout sidebar footer menu', () => {
     expect(avatar).toHaveClass('size-small')
   })
 
-  it('renders the beta UI switch (if enabled)', async () => {
-    mockApplicationConfig({
-      ui_desktop_beta_switch: true,
-    })
-
-    mockPermissions(['user_preferences.beta_ui_switch'])
+  it('renders the inline collapse button on smaller screens', async () => {
+    isSmallScreen.value = true
+    isSidebarCollapsed[SidebarName.Primary].value = true
 
     const view = renderComponent(LeftSidebarFooterMenu, {
       router: true,
       form: true,
     })
 
-    expect(view.getByText('New BETA UI')).toBeInTheDocument()
+    const collapseButton = view.getByLabelText('Expand sidebar')
+
+    expect(collapseButton.parentElement).toHaveClass('order-last')
+    expect(collapseButton.parentElement).not.toHaveClass('absolute')
+
+    isSmallScreen.value = false
+  })
+
+  it('renders the beta UI switch (if enabled)', async () => {
+    mockApplicationConfig({
+      ui_desktop_beta_switch: true,
+    })
+
+    mockUserCurrent({
+      hasBetaUiSwitchAvailable: true,
+    })
+
+    const view = renderComponent(LeftSidebarFooterMenu, {
+      router: true,
+      form: true,
+    })
+
+    expect(view.getByText('BETA UI')).toBeInTheDocument()
+  })
+
+  it('has no feedback link when the user is not in BETA program', async () => {
+    mockApplicationConfig({
+      ui_desktop_beta_switch: true,
+    })
+
+    mockUserCurrent({
+      hasBetaUiSwitchAvailable: true,
+    })
+
+    const view = renderComponent(LeftSidebarFooterMenu, {
+      router: true,
+      form: true,
+      dialog: true,
+    })
+
+    expect(view.queryByText('Feedback')).not.toBeInTheDocument()
+  })
+
+  it('opens manual feedback dialog', async () => {
+    mockApplicationConfig({
+      ui_desktop_beta_switch: true,
+    })
+
+    mockUserCurrent({
+      hasBetaUiSwitchAvailable: true,
+    })
+
+    localStorage.setItem('beta-ui-switch', 'true')
+
+    const view = renderComponent(LeftSidebarFooterMenu, {
+      router: true,
+      form: true,
+      dialog: true,
+    })
+
+    const feedbackLink = view.getByText('Feedback')
+
+    await view.events.click(feedbackLink)
+
+    const feedbackDialog = await view.findByRole('dialog', { name: 'Send feedback on the BETA UI' })
+
+    expect(feedbackDialog).toBeVisible()
+
+    localStorage.removeItem('beta-ui-switch')
   })
 })

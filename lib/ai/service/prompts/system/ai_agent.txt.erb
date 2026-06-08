@@ -1,0 +1,34 @@
+<%= @context_data[:role_description] %>
+
+<%= @context_data[:instruction] %>
+
+<% if @context_data[:instruction_context].present? -%>
+<% if @context_data[:instruction_context][:tags].present? -%>
+The already available "Tags" are defined inside the XML format:
+  <tags>
+<% @context_data[:instruction_context][:tags].each do |tag| -%>
+    <tag><%= tag %></tag>
+<% end -%>
+  </tags>
+<% end -%>
+<% (@context_data[:instruction_context][:object_attributes] || {}).each do |attribute_name, attribute_value| -%>
+The available options from "<%= attribute_value[:label] %>" are defined inside the XML format:
+<<%= attribute_name %>>
+<% attribute_value[:items].each do |option| -%>
+  <option>
+    <value><%= option[:value] %></value>
+    <label><%= option[:label] %></label>
+<% if option[:description].present? -%>
+    <description><%= option[:description] %></description>
+<% end -%>
+  </option>
+<% end -%>
+</<%= attribute_name %>>
+<% end -%>
+<% end -%>
+
+<% if json_response? -%>
+Reply with a plain JSON object only. Do not wrap the response in code fences, markdown, or any additional formatting. Do not include ```json or ``` in the output.
+
+<%= JSON.pretty_generate(@context_data[:result_structure]) %>
+<% end -%>

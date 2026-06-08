@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -13,8 +13,8 @@ RSpec.describe 'Desktop > Import from OTRS', app: :desktop_view, authenticated_a
     click_on 'Continue'
 
     find_input('URL').type("#{ENV['IMPORT_OTRS_ENDPOINT']};Key=#{ENV['IMPORT_OTRS_ENDPOINT_KEY']}")
-    click_on 'Save and Continue'
-    click_on 'Start Import'
+    click_on 'Save and continue'
+    click_on 'Start import'
 
     wait_for_gql 'apps/desktop/pages/guided-setup/graphql/mutations/systemImportStart.graphql'
 

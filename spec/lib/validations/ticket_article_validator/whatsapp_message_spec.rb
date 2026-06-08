@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -45,7 +45,7 @@ RSpec.describe Validations::TicketArticleValidator::WhatsappMessage do
       described_class.new(instance).validate
 
       expect(instance.errors).to have_attributes(
-        errors: include(have_attributes(message: match(%r{Text or attachment is required})))
+        errors: include(have_attributes(message: include('Text or attachment is required')))
       )
     end
 
@@ -68,7 +68,7 @@ RSpec.describe Validations::TicketArticleValidator::WhatsappMessage do
       described_class.new(instance).validate
 
       expect(instance.errors).to have_attributes(
-        errors: include(have_attributes(message: match(%r{Audio file is sent without text caption})))
+        errors: include(have_attributes(message: include('Audio file is sent without text caption')))
       )
     end
 
@@ -103,7 +103,7 @@ RSpec.describe Validations::TicketArticleValidator::WhatsappMessage do
       described_class.new(instance).validate
 
       expect(instance.errors).to have_attributes(
-        errors: include(have_attributes(message: match(%r{Only 1 attachment allowed})))
+        errors: include(have_attributes(message: include('Only 1 attachment allowed')))
       )
     end
 
@@ -120,7 +120,7 @@ RSpec.describe Validations::TicketArticleValidator::WhatsappMessage do
       described_class.new(instance).validate
 
       expect(instance.errors).to have_attributes(
-        errors: include(have_attributes(message: match(%r{File is too big. Document file has to be 10 Bytes or smaller.})))
+        errors: include(have_attributes(message: match(%r{File is too big. Document file has to be 10 B or smaller.})))
       )
     end
 
@@ -128,12 +128,12 @@ RSpec.describe Validations::TicketArticleValidator::WhatsappMessage do
       instance = build(:whatsapp_article, :with_prepended_attachment,
                        sender_name: 'Agent',
                        ticket:,
-                       attachment:  File.open('spec/fixtures/files/upload/test.rtf'))
+                       attachment:  fixture_file_upload('spec/fixtures/files/upload/test.rtf', 'application/rtf'))
 
       described_class.new(instance).validate
 
       expect(instance.errors).to have_attributes(
-        errors: include(have_attributes(message: match(%r{File format is not allowed: application/rtf})))
+        errors: include(have_attributes(message: include('File format is not allowed: application/rtf')))
       )
     end
   end

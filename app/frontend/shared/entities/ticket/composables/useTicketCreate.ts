@@ -1,8 +1,8 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { NotificationTypes } from '#shared/components/CommonNotifications/types.ts'
 import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
-import { populateEditorNewLines } from '#shared/components/Form/fields/FieldEditor/utils.ts'
+import { transformEditorHtml } from '#shared/components/Form/fields/FieldEditor/utils.ts'
 import type { FormRef, FormSubmitData } from '#shared/components/Form/types.ts'
 import { setErrors } from '#shared/components/Form/utils.ts'
 import { useCheckBodyAttachmentReference } from '#shared/composables/form/useCheckBodyAttachmentReference.ts'
@@ -11,10 +11,7 @@ import { useObjectAttributes } from '#shared/entities/object-attributes/composab
 import { ticketCreateArticleType } from '#shared/entities/ticket/composables/useTicketCreateArticleType.ts'
 import { useTicketCreateMutation } from '#shared/entities/ticket/graphql/mutations/create.api.ts'
 import UserError from '#shared/errors/UserError.ts'
-import {
-  EnumObjectManagerObjects,
-  type TicketCreateInput,
-} from '#shared/graphql/types.ts'
+import { EnumObjectManagerObjects, type TicketCreateInput } from '#shared/graphql/types.ts'
 import { isGraphQLId, convertToGraphQLId } from '#shared/graphql/utils.ts'
 import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
 import { GraphQLErrorTypes } from '#shared/types/error.ts'
@@ -25,6 +22,12 @@ import { useTicketCreateView } from './useTicketCreateView.ts'
 import type { TicketFormData } from '../types.ts'
 import type { ApolloError } from '@apollo/client/core'
 import type { Ref } from 'vue'
+
+const {
+  missingBodyAttachmentReference,
+  bodyAttachmentReferenceConfirmation,
+  skipAttachmentReferenceCheck,
+} = useCheckBodyAttachmentReference()
 
 export const useTicketCreate = (
   form: Ref<FormRef | undefined>,
@@ -49,6 +52,7 @@ export const useTicketCreate = (
       // Treat this as successful, because it happens when you create a ticket inside a group, where you only
       // have create permission, but not view permission.
       if (graphQLErrors?.extensions?.type === GraphQLErrorTypes.Forbidden) {
+        skipAttachmentReferenceCheck.value = false
         notifySuccess()
 
         return () => redirectAfterCreate()
@@ -73,17 +77,9 @@ export const useTicketCreate = (
     }
   }
 
-  const ticketCreateMutation = new MutationHandler(
-    useTicketCreateMutation({}),
-    {
-      errorShowNotification: false,
-    },
-  )
-
-  const {
-    missingBodyAttachmentReference,
-    bodyAttachmentReferenceConfirmation,
-  } = useCheckBodyAttachmentReference()
+  const ticketCreateMutation = new MutationHandler(useTicketCreateMutation({}), {
+    errorShowNotification: false,
+  })
 
   const getCustomerVariable = (customerId: string) => {
     return isGraphQLId(customerId) ? { id: customerId } : { email: customerId }
@@ -99,11 +95,16 @@ export const useTicketCreate = (
       return false
     }
 
-    const { attributesLookup: ticketObjectAttributesLookup } =
-      useObjectAttributes(EnumObjectManagerObjects.Ticket)
+    const { attributesLookup: ticketObjectAttributesLookup } = useObjectAttributes(
+      EnumObjectManagerObjects.Ticket,
+    )
 
     const { internalObjectAttributeValues, additionalObjectAttributeValues } =
-      useObjectAttributeFormData(ticketObjectAttributesLookup.value, formData)
+      useObjectAttributeFormData(
+        EnumObjectManagerObjects.Ticket,
+        ticketObjectAttributesLookup.value,
+        formData,
+      )
 
     // The customerId has an special handling, so we need to extract it from the internalObjectAttributeValues.
     const { customerId, ...internalValues } = internalObjectAttributeValues
@@ -119,12 +120,10 @@ export const useTicketCreate = (
     const input = {
       ...internalValues,
       sharedDraftId,
-      customer: customerId
-        ? getCustomerVariable(customerId as string)
-        : undefined,
+      customer: customerId ? getCustomerVariable(customerId as string) : undefined,
       article: {
         cc: formData.cc,
-        body: populateEditorNewLines(formData.body),
+        body: transformEditorHtml(formData.body),
         sender: isTicketCustomer.value
           ? 'Customer'
           : ticketCreateArticleType[formData.articleSenderType].sender,
@@ -145,10 +144,7 @@ export const useTicketCreate = (
     }
 
     if (formData.link_ticket_id) {
-      const linkObjectId = convertToGraphQLId(
-        'Ticket',
-        formData.link_ticket_id as string | number,
-      )
+      const linkObjectId = convertToGraphQLId('Ticket', formData.link_ticket_id as string | number)
 
       input.links = [
         {
@@ -166,14 +162,16 @@ export const useTicketCreate = (
       .send({ input })
       .then((result) => {
         if (result?.ticketCreate?.ticket) {
+          // Reset missingBodyAttachmentReference confirmation prompts
+          // after successful ticket create
+          skipAttachmentReferenceCheck.value = false
+
           notifySuccess()
 
           return () => {
             const ticket = result.ticketCreate?.ticket
 
-            redirectAfterCreate(
-              ticket?.policy.update ? ticket.internalId : undefined,
-            )
+            redirectAfterCreate(ticket?.policy.update ? ticket.internalId : undefined)
           }
         }
         return null

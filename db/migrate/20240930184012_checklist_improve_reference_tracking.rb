@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class ChecklistImproveReferenceTracking < ActiveRecord::Migration[7.1]
   def change
@@ -15,10 +15,6 @@ class ChecklistImproveReferenceTracking < ActiveRecord::Migration[7.1]
   def add_default_empty_strings
     change_column_default :checklists,               :name, ''
     change_column_default :checklist_templates,      :name, ''
-
-    # MySQL does not support default text on non-null text items
-    return if ActiveRecord::Base.connection_db_config.configuration_hash[:adapter] == 'mysql2'
-
     change_column_default :checklist_items,          :text, ''
     change_column_default :checklist_template_items, :text, ''
   end

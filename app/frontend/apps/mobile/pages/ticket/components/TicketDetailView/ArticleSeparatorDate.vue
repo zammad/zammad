@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 interface Props {
@@ -9,7 +9,7 @@ defineProps<Props>()
 </script>
 
 <template>
-  <div class="text-gray text-center">
+  <div class="text-center text-gray">
     <CommonDateTime :date-time="date" type="absolute" absolute-format="date" />
   </div>
 </template>

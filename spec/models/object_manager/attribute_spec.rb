@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -90,11 +90,19 @@ RSpec.describe ObjectManager::Attribute, type: :model do
       end
     end
 
-    %w[priority state note].each do |existing_attribute|
+    %w[note].each do |existing_attribute|
+      it "rejects '#{existing_attribute}' which is used and reserved" do
+        expect do
+          described_class.add attributes_for :object_manager_attribute_text, name: existing_attribute
+        end.to raise_error(ActiveRecord::RecordInvalid, "Validation failed: Name #{existing_attribute} is a reserved word, Name #{existing_attribute} already exists")
+      end
+    end
+
+    %w[priority state ai_action].each do |existing_attribute|
       it "rejects '#{existing_attribute}' which is used" do
         expect do
           described_class.add attributes_for :object_manager_attribute_text, name: existing_attribute
-        end.to raise_error(ActiveRecord::RecordInvalid, "Validation failed: Name #{existing_attribute} already exists")
+        end.to raise_error(ActiveRecord::RecordInvalid, "Validation failed: Name #{existing_attribute} is a reserved word")
       end
     end
 
@@ -129,6 +137,24 @@ RSpec.describe ObjectManager::Attribute, type: :model do
       expect do
         described_class.add attributes_for :object_manager_attribute_text
       end.not_to raise_error
+    end
+  end
+
+  describe 'validate that display label is not blank' do
+    subject(:attr) { create(:object_manager_attribute_text) }
+
+    context 'when display label is blank' do
+      it 'is not valid' do
+        attr.display = ''
+        expect(attr).not_to be_valid
+      end
+
+      it 'adds an error message' do
+        attr.display = ''
+        attr.valid?
+
+        expect(attr.errors[:display]).to include("can't be blank")
+      end
     end
   end
 
@@ -171,6 +197,61 @@ RSpec.describe ObjectManager::Attribute, type: :model do
     end
   end
 
+  describe 'Internal flag handling' do
+    subject(:attr) { create(:object_manager_attribute_text, internal: initial_value) }
+
+    before { attr.internal = new_value }
+
+    shared_examples 'preventing internal flag modification' do
+      it { is_expected.not_to be_valid }
+
+      it 'includes appropriate error message' do
+        attr.valid?
+        expect(attr.errors.full_messages).to include("Internal can't be modified")
+      end
+    end
+
+    context 'when changing from false to true' do
+      let(:initial_value) { false }
+      let(:new_value)     { true }
+
+      it_behaves_like 'preventing internal flag modification'
+    end
+
+    context 'when changing from true to false' do
+      let(:initial_value) { true }
+      let(:new_value)     { false }
+
+      it_behaves_like 'preventing internal flag modification'
+    end
+
+    context 'when destroying an internal attribute' do
+      let(:initial_value) { true }
+      let(:new_value)     { true }
+
+      it 'is not allowed' do
+        expect { attr.destroy }.not_to change(described_class, :count)
+      end
+
+      it 'includes appropriate error message' do
+        attr.destroy
+        expect(attr.errors.full_messages).to include('Internal attributes cannot be deleted')
+      end
+
+      it 'raises an error when using destroy!' do
+        expect { attr.destroy! }.to raise_error(ActiveRecord::RecordNotDestroyed)
+      end
+
+      it 'includes appropriate error message when using destroy!' do
+        begin
+          attr.destroy!
+        rescue ActiveRecord::RecordNotDestroyed
+          expect(attr.errors.full_messages).to include('Internal attributes cannot be deleted')
+        end
+      end
+    end
+  end
+
   describe 'Class methods:' do
     describe '.pending_migration?', db_strategy: :reset do
       it 'returns false if there are no pending migrations' do
@@ -192,6 +273,39 @@ RSpec.describe ObjectManager::Attribute, type: :model do
     describe '.attribute_to_references_hash_objects' do
       it 'returns classes with conditions' do
         expect(described_class.attribute_to_references_hash_objects).to contain_exactly(Trigger, Overview, Job, Sla, Report::Profile)
+      end
+    end
+
+    describe '.attribute_to_references_hash', db_strategy: :reset do
+      before do
+        create(:object_manager_attribute_text, object_name: 'Ticket', name: 'custom_textfield')
+      end
+
+      context 'when no attribute is used in an overview' do
+        it 'returns an empty hash' do
+          result = described_class.attribute_to_references_hash
+
+          expect(result).not_to have_key('ticket.custom_textfield')
+        end
+      end
+
+      context 'when attribute is used in overview' do
+        it 'returns a hash with the overview name and the attribute' do
+          create(:overview, name: 'Test Overview', view: { 's' => %w[title custom_textfield] }, prio: nil)
+          result = described_class.attribute_to_references_hash
+
+          expect(result['ticket.custom_textfield']).to include('Overview' => ['Test Overview'])
+        end
+      end
+
+      context 'when attribute is used in ai agent' do
+        it 'returns a hash with the ai agent name and the attribute' do
+          create(:ai_agent, name: 'Test AI Agent', agent_type: 'TicketCategorizer', type_enrichment_data: { 'category' => 'custom_textfield' })
+          create(:ai_agent, name: 'Test AI Agent 2', agent_type: 'TicketCategorizer', type_enrichment_data: { 'category' => 'custom_textfield' })
+          result = described_class.attribute_to_references_hash
+
+          expect(result['ticket.custom_textfield']).to include('AI Agent' => ['Test AI Agent', 'Test AI Agent 2'])
+        end
       end
     end
 
@@ -400,13 +514,9 @@ RSpec.describe ObjectManager::Attribute, type: :model do
       end
       let(:attribute) { create(:object_manager_attribute_autocompletion_ajax_external_data_source) }
 
-      it 'works on postgresql', db_adapter: :postgresql do
+      it 'works on postgresql' do
         expect { attribute }.to change(described_class, :count)
         expect(attribute).to have_attributes(expected_attributes)
-      end
-
-      it 'fails on mysql', db_adapter: :mysql do
-        expect { attribute }.to raise_error(ActiveRecord::RecordInvalid, 'Validation failed: Data type can only be created on postgresql databases')
       end
     end
   end
@@ -444,6 +554,17 @@ RSpec.describe ObjectManager::Attribute, type: :model do
     context 'when attribute does not exist' do
       it 'raises an error' do
         expect { described_class.remove(object: 'Ticket', name: 'test4') }.to raise_error(RuntimeError)
+      end
+    end
+
+    context 'when attribute is referenced' do
+      before do
+        create(:object_manager_attribute_text, name: 'test5')
+        create(:overview, name: 'Test Overview', view: { 's' => %w[test5] }, prio: nil)
+      end
+
+      it 'raises an error' do
+        expect { described_class.remove(object: 'Ticket', name: 'test5') }.to raise_error(RuntimeError, 'Ticket.test5 is referenced by Overview: Test Overview and thus cannot be deleted!')
       end
     end
   end

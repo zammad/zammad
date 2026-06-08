@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Mutations
   class TwoFactorMethodInitiateAuthentication < BaseMutation
@@ -10,9 +10,7 @@ module Gql::Mutations
 
     field :initiation_data, GraphQL::Types::JSON, description: ''
 
-    def self.authorize(...)
-      true
-    end
+    allow_public_access!
 
     def resolve(login:, password:, two_factor_method:)
       initiate(login:, password:, two_factor_method:)

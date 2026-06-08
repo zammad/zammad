@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { useDateFormat } from '@vueuse/shared'
 import { computed, toValue, type MaybeRef } from 'vue'
@@ -38,20 +38,14 @@ export const useAvatarIndicator = (
 
   const isInactive = computed(() => toValue(entity).active === false)
 
-  const isWithoutAccess = computed(
-    () => toValue(access)?.agentReadAccess === false,
-  )
+  const isWithoutAccess = computed(() => toValue(access)?.agentReadAccess === false)
 
   const isLiveUserIdle = computed(() => toValue(live)?.isIdle)
   const isLiveUserEditing = computed(() => toValue(live)?.editing)
 
-  const isLiveUserDesktop = computed(
-    () => toValue(live)?.app === EnumTaskbarApp.Desktop,
-  )
+  const isLiveUserDesktop = computed(() => toValue(live)?.app === EnumTaskbarApp.Desktop)
 
-  const isLiveUserMobile = computed(
-    () => toValue(live)?.app === EnumTaskbarApp.Mobile,
-  )
+  const isLiveUserMobile = computed(() => toValue(live)?.app === EnumTaskbarApp.Mobile)
 
   const indicatorIcon = computed(() => {
     if (isInactive.value) return 'avatar-indicator-inactive'
@@ -61,14 +55,11 @@ export const useAvatarIndicator = (
     if (isLiveUserEditing.value && isLiveUserDesktop.value)
       return 'avatar-indicator-editing-desktop'
 
-    if (isLiveUserEditing.value && isLiveUserMobile.value)
-      return 'avatar-indicator-editing-mobile'
+    if (isLiveUserEditing.value && isLiveUserMobile.value) return 'avatar-indicator-editing-mobile'
 
-    if (isLiveUserDesktop.value && appName !== 'desktop')
-      return 'avatar-indicator-desktop'
+    if (isLiveUserDesktop.value && appName !== 'desktop') return 'avatar-indicator-desktop'
 
-    if (isLiveUserMobile.value && appName !== 'mobile')
-      return 'avatar-indicator-mobile'
+    if (isLiveUserMobile.value && appName !== 'mobile') return 'avatar-indicator-mobile'
 
     if (isLiveUserIdle.value) return 'avatar-indicator-idle'
     return null
@@ -78,8 +69,7 @@ export const useAvatarIndicator = (
     if (isInactive.value) return i18n.t('User is inactive')
     if (isWithoutAccess.value) return i18n.t('User has no access')
 
-    if (isOutOfOffice.value && toValue(personal))
-      return i18n.t('Out of office active')
+    if (isOutOfOffice.value && toValue(personal)) return i18n.t('Out of office active')
 
     if (isOutOfOffice.value) return i18n.t('User is out of office')
 
@@ -91,11 +81,9 @@ export const useAvatarIndicator = (
 
     if (isLiveUserEditing.value) return i18n.t('User is editing')
 
-    if (isLiveUserDesktop.value && appName !== 'desktop')
-      return i18n.t('User is on desktop')
+    if (isLiveUserDesktop.value && appName !== 'desktop') return i18n.t('User is on desktop')
 
-    if (isLiveUserMobile.value && appName !== 'mobile')
-      return i18n.t('User is on mobile')
+    if (isLiveUserMobile.value && appName !== 'mobile') return i18n.t('User is on mobile')
 
     if (isLiveUserIdle.value) return i18n.t('User is idle')
 
@@ -103,11 +91,7 @@ export const useAvatarIndicator = (
   })
 
   const indicatorIsIdle = computed(
-    () =>
-      isInactive.value ||
-      isOutOfOffice.value ||
-      isWithoutAccess.value ||
-      isLiveUserIdle.value,
+    () => isInactive.value || isOutOfOffice.value || isWithoutAccess.value || isLiveUserIdle.value,
   )
 
   return {

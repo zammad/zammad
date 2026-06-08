@@ -1,10 +1,10 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Ticket::Article::EnqueueCommunicateWhatsappJob
   extend ActiveSupport::Concern
 
   included do
-    after_create :ticket_article_enqueue_communicate_whatsapp_job
+    after_create_commit :ticket_article_enqueue_communicate_whatsapp_job
   end
 
   private

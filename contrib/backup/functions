@@ -27,6 +27,21 @@ function demand_backup_conf () {
       echo "FULL_FS_DUMP is not set, falling back to 'yes' to produce a full backup."
     fi
   fi
+
+  # set VARs related to pigz
+  if command -v pigz  > /dev/null; then
+    if [ "${DEBUG}" == "yes" ]; then
+      echo "Using pigz instead of gzip."
+    fi
+    GZIP_PROG="pigz"
+    TAR_GZIP_ARG="-I $GZIP_PROG"
+  else
+    if [ "${DEBUG}" == "yes" ]; then
+      echo "pigz is not available, falling back to gzip."
+    fi
+    GZIP_PROG="gzip"
+    TAR_GZIP_ARG="-z"
+  fi
 }
 
 function get_zammad_dir () {
@@ -45,7 +60,7 @@ function delete_old_backups () {
   # Use -mmin to clean up files as -mtime (days) is too unprecise.
   #   However, add +60 minutes to allow for the backup script run time, so that
   #   backups created a few minutes more than a day ago are not already purged.
-  FILES_TO_DELETE=$(test -d ${BACKUP_DIR} && find ${BACKUP_DIR}/*_zammad_*.gz -type f -mmin +$(((60*24)*${HOLD_DAYS}+60)))
+  FILES_TO_DELETE=$(test -d "${BACKUP_DIR}" && find "${BACKUP_DIR}" -maxdepth 1 -type f -name '*_zammad_*.gz' -mmin "+$((60*24*HOLD_DAYS+60))")
 
   if [[ -n ${FILES_TO_DELETE} ]]; then
     if [ "${DEBUG}" == "yes" ]; then
@@ -60,25 +75,22 @@ function delete_old_backups () {
 }
 
 function get_db_credentials () {
-  DB_ADAPTER="$(grep -m 1 '^[[:space:]]*adapter:' < ${ZAMMAD_DIR}/config/database.yml | sed -e 's/.*adapter:[[:space:]]*//g')"
   DB_HOST="$(grep -m 1 '^[[:space:]]*host:' < ${ZAMMAD_DIR}/config/database.yml | sed -e 's/.*host:[[:space:]]*//g')"
   DB_PORT="$(grep -m 1 '^[[:space:]]*port:' < ${ZAMMAD_DIR}/config/database.yml | sed -e 's/.*port:[[:space:]]*//g')"
   DB_NAME="$(grep -m 1 '^[[:space:]]*database:' < ${ZAMMAD_DIR}/config/database.yml | sed -e 's/.*database:[[:space:]]* //g')"
   DB_USER="$(grep -m 1 '^[[:space:]]*username:' < ${ZAMMAD_DIR}/config/database.yml | sed -e 's/.*username:[[:space:]]*//g')"
   DB_PASS="$(grep -m 1 '^[[:space:]]*password:' < ${ZAMMAD_DIR}/config/database.yml | sed -e 's/.*password:[[:space:]]*//g')"
 
-  if [ "${DB_ADAPTER}" == "postgresql" ]; then
-    # Ensure that HOST and PORT are not empty, provide defaults if needed.
-    if [ "${DB_HOST}x" == "x" ]; then
-      DB_HOST="localhost"
-    fi
-    if [ "${DB_PORT}x" == "x" ]; then
-      DB_PORT="5432"
-    fi
+  # Ensure that HOST and PORT are not empty, provide defaults if needed.
+  if [ "${DB_HOST}x" == "x" ]; then
+    DB_HOST="localhost"
+  fi
+  if [ "${DB_PORT}x" == "x" ]; then
+    DB_PORT="5432"
   fi
 
   if [ "${DEBUG}" == "yes" ]; then
-    echo "adapter=${DB_ADAPTER} dbhost=${DB_HOST} dbport=${DB_PORT} dbname=${DB_NAME} dbuser=${DB_USER} dbpass=${DB_PASS}"
+    echo "dbhost=${DB_HOST} dbport=${DB_PORT} dbname=${DB_NAME} dbuser=${DB_USER} dbpass=${DB_PASS}"
   fi
 }
 
@@ -124,10 +136,10 @@ backup_file_read_test () {
   if [ "${DEBUG}" == "yes" ]; then
     echo "I've been looking for these backup files: "
     echo "- ${BACKUP_DIR}/${RESTORE_FILE_DATE}_zammad_files.tar.gz"
-    echo "- ${BACKUP_DIR}/${RESTORE_DB_DATE}_zammad_db.${DB_FILE_EXT}.gz"
+    echo "- ${BACKUP_DIR}/${RESTORE_DB_DATE}_zammad_db.psql.gz"
   fi
 
-  if [[ (! -r "${BACKUP_DIR}/${RESTORE_FILE_DATE}_zammad_files.tar.gz") || (! -r "${BACKUP_DIR}/${RESTORE_DB_DATE}_zammad_db.${DB_FILE_EXT}.gz") ]]; then
+  if [[ (! -r "${BACKUP_DIR}/${RESTORE_FILE_DATE}_zammad_files.tar.gz") || (! -r "${BACKUP_DIR}/${RESTORE_DB_DATE}_zammad_db.psql.gz") ]]; then
     echo -e "\n\n # ERROR - Cannot read on or more of my backup files. Double check permissions."
     echo -e " #-> RESTORE WAS NOT SUCCESSFUL"
     exit 3
@@ -148,7 +160,7 @@ function backup_files () {
 
   if [ "${FULL_FS_DUMP}" == 'yes' ]; then
     echo " ... as full dump"
-    tar -C / -czf ${BACKUP_DIR}/${TIMESTAMP}_zammad_files.tar.gz\
+    tar -C / -c ${TAR_GZIP_ARG} -f ${BACKUP_DIR}/${TIMESTAMP}_zammad_files.tar.gz\
       --exclude='tmp' --exclude 'node_modules' --exclude '.git' --exclude '.yarn/cache' --exclude='config/database.yml' ${ZAMMAD_DIR#/}
 
     state=$?
@@ -174,7 +186,7 @@ function backup_files () {
       ZAMMAD_STORAGE_DIR="${ZAMMAD_DIR#/}/storage/"
     fi
 
-    tar -C / -czf ${BACKUP_DIR}/${TIMESTAMP}_zammad_files.tar.gz ${ZAMMAD_STORAGE_DIR}
+    tar -C / -c ${TAR_GZIP_ARG} -f ${BACKUP_DIR}/${TIMESTAMP}_zammad_files.tar.gz ${ZAMMAD_STORAGE_DIR}
 
     state=$?
   fi
@@ -205,38 +217,28 @@ EOT
 }
 
 function backup_db () {
-  if [ "${DB_ADAPTER}" == "mysql2" ]; then
-    echo "creating mysql backup..."
-    mysqldump --opt --single-transaction ${DB_HOST:+--host $DB_HOST} -u${DB_USER} -p${DB_PASS} ${DB_NAME} | gzip > ${BACKUP_DIR}/${TIMESTAMP}_zammad_db.mysql.gz
-    ln -sfn ${BACKUP_DIR}/${TIMESTAMP}_zammad_db.mysql.gz ${BACKUP_DIR}/latest_zammad_db.mysql.gz
-  elif [ "${DB_ADAPTER}" == "postgresql" ]; then
-    echo "creating postgresql backup..."
+  echo "creating postgresql backup..."
 
-    create_pgpassfile
+  create_pgpassfile
 
-    pg_dump --dbname "${DB_NAME}" \
-        --username "${DB_USER}" \
-        ${DB_HOST:+--host $DB_HOST} \
-        ${DB_PORT:+--port $DB_PORT} \
-        --no-privileges --no-owner \
-        --compress 6 --file "${BACKUP_DIR}/${TIMESTAMP}_zammad_db.psql.gz"
+  pg_dump --dbname "${DB_NAME}" \
+      --username "${DB_USER}" \
+      ${DB_HOST:+--host $DB_HOST} \
+      ${DB_PORT:+--port $DB_PORT} \
+      --no-privileges --no-owner \
+      | ${GZIP_PROG} > "${BACKUP_DIR}/${TIMESTAMP}_zammad_db.psql.gz"
 
-    state=$?
+  state=$?
 
-    if [ "${state}" == "1" ]; then
-      # We're checking for critical restoration errors
-      # It may not cover all possible errors which is out of scope of this script
-      echo -e "\n\n # ERROR(${state}) - Database credentials are wrong or database server configuration is invalid."
-      echo -e " #-> BACKUP WAS NOT SUCCESSFUL"
-      exit 2
-    fi
-
-    ln -sfn ${BACKUP_DIR}/${TIMESTAMP}_zammad_db.psql.gz ${BACKUP_DIR}/latest_zammad_db.psql.gz
-  else
-    echo -e "\n\n # ERROR - Database type or database.yml incorrect. Unsupported database type found."
+  if [ "${state}" == "1" ]; then
+    # We're checking for critical restoration errors
+    # It may not cover all possible errors which is out of scope of this script
+    echo -e "\n\n # ERROR(${state}) - Database credentials are wrong or database server configuration is invalid."
     echo -e " #-> BACKUP WAS NOT SUCCESSFUL"
     exit 2
   fi
+
+  ln -sfn ${BACKUP_DIR}/${TIMESTAMP}_zammad_db.psql.gz ${BACKUP_DIR}/latest_zammad_db.psql.gz
 }
 
 function backup_chmod_dump_data () {
@@ -275,7 +277,6 @@ function db_helper_warning () {
 
   echo -e " Limitations:"
   echo -e " - only works for local postgresql installations"
-  echo -e " - only works for postgresql\n"
   echo -e "Enter 'yes' if you want to proceed!"
   read -p 'ALTER zammad users password?: ' DB_HELPER
 
@@ -287,14 +288,7 @@ function db_helper_warning () {
 
 function get_restore_dates () {
   RESTORE_FILE_DATES="$(find ${BACKUP_DIR} -type f -iname '*_zammad_files.tar.gz' | sed -e "s#${BACKUP_DIR}/##g" -e "s#_zammad_files.tar.gz##g" | sort)"
-
-  if [ "${DB_ADAPTER}" == "postgresql" ]; then
-    DB_FILE_EXT="psql"
-  elif [ "${DB_ADAPTER}" == "mysql2" ]; then
-    DB_FILE_EXT="mysql"
-  fi
-
-  RESTORE_DB_DATES="$(find ${BACKUP_DIR} -type f -iname "*_zammad_db.${DB_FILE_EXT}.gz" | sed -e "s#${BACKUP_DIR}/##g" -e "s#_zammad_db.${DB_FILE_EXT}.gz##g" | sort)"
+  RESTORE_DB_DATES="$(find ${BACKUP_DIR} -type f -iname "*_zammad_db.psql.gz" | sed -e "s#${BACKUP_DIR}/##g" -e "s#_zammad_db.psql.gz##g" | sort)"
 }
 
 function choose_restore_date () {
@@ -317,8 +311,8 @@ function choose_restore_date () {
     read -p 'DB date: ' RESTORE_DB_DATE
   fi
 
-  if [ ! -f "${BACKUP_DIR}/${RESTORE_DB_DATE}_zammad_db.${DB_FILE_EXT}.gz" ];then
-    echo -e "File ${BACKUP_DIR}/${RESTORE_DB_DATE}_zammad_db.${DB_FILE_EXT}.gz does not exist! \nRestore aborted!"
+  if [ ! -f "${BACKUP_DIR}/${RESTORE_DB_DATE}_zammad_db.psql.gz" ];then
+    echo -e "File ${BACKUP_DIR}/${RESTORE_DB_DATE}_zammad_db.psql.gz does not exist! \nRestore aborted!"
     exit 1
   fi
 }
@@ -366,70 +360,52 @@ function restore_zammad () {
     restore_files
   fi
 
-  if [ "${DB_ADAPTER}" == "postgresql" ]; then
-    echo "# Checking requirements"
+  echo "# Checking requirements"
 
-    if ! id "zammad" &> /dev/null; then
-      echo "# ERROR: User 'zammad' is not present, but should be by default! #"
-      echo "# Restoration was NOT successful, exiting ..."
-      exit 1
-    fi
+  if ! id "zammad" &> /dev/null; then
+    echo "# ERROR: User 'zammad' is not present, but should be by default! #"
+    echo "# Restoration was NOT successful, exiting ..."
+    exit 1
+  fi
 
-    echo "# ... Dropping current database ${DB_NAME}"
+  echo "# ... Dropping current database ${DB_NAME}"
 
-    # This step is only needed for some pgsql dumps, as they don't provide a drop table statement which will cause
-    # relation errors during restoration (as on package installation there's always an initialized database)
-    if command -v zammad > /dev/null; then
-      zammad config:set DISABLE_DATABASE_ENVIRONMENT_CHECK=1
-      zammad run rake db:drop
-      zammad config:set DISABLE_DATABASE_ENVIRONMENT_CHECK=0
-    else
-      DISABLE_DATABASE_ENVIRONMENT_CHECK=1 ${ZAMMAD_DIR}/bin/rake db:drop
-    fi
-
-    echo "# ... Creating database ${DB_NAME} for owner ${DB_USER}"
-    if command -v zammad > /dev/null; then
-      # We'll skip this part for docker installations
-      su -c "psql -c \"CREATE DATABASE ${DB_NAME} OWNER ${DB_USER};\"" postgres
-    else
-      ${ZAMMAD_DIR}/bin/rake db:create
-    fi
-
-    echo "# Restoring PostgreSQL DB"
-
-    create_pgpassfile
-
-    # We're removing uncritical dump information that caused "ugly" error
-    # messages on older script versions. These could safely be ignored.
-    zcat ${BACKUP_DIR}/${RESTORE_DB_DATE}_zammad_db.${DB_FILE_EXT}.gz | \
-    sed '/^CREATE EXTENSION IF NOT EXISTS plpgsql/d'| \
-    sed '/^COMMENT ON EXTENSION plpgsql/d'| \
-    psql -q -b -o /dev/null \
-    ${DB_HOST:+--host $DB_HOST} ${DB_PORT:+--port $DB_PORT} ${DB_USER:+--username $DB_USER} --dbname ${DB_NAME}
-
-    state=$?
-
-    if [[ ("${state}" == "1") || ( "${state}" == "2") || ( "${state}" == "3") ]]; then
-      # We're checking for critical restoration errors
-      # It may not cover all possible errors which is out of scope of this script
-      echo -e "\n\n # ERROR(${state}) - Database credentials are wrong or database server configuration is invalid."
-      echo -e " #-> RESTORE WAS NOT SUCCESSFUL"
-      exit 2
-    fi
-
-  elif [ "${DB_ADAPTER}" == "mysql2" ]; then
-    echo "# Restoring MySQL DB"
-    zcat < ${BACKUP_DIR}/${RESTORE_DB_DATE}_zammad_db.${DB_FILE_EXT}.gz | mysql -u${DB_USER} -p${DB_PASS} ${DB_NAME}
-
-    state=$?
-
-    if [ "${state}" != "0" ]; then
-      echo -e "\n\n # ERROR(${state}) - Database credentials are wrong or database server configuration is invalid."
-      echo -e " #-> RESTORE WAS NOT SUCCESSFUL"
-      exit 2
-    fi
+  # This step is only needed for some pgsql dumps, as they don't provide a drop table statement which will cause
+  # relation errors during restoration (as on package installation there's always an initialized database)
+  if command -v zammad > /dev/null; then
+    zammad config:set DISABLE_DATABASE_ENVIRONMENT_CHECK=1
+    zammad run rake db:drop
+    zammad config:set DISABLE_DATABASE_ENVIRONMENT_CHECK=0
   else
-    echo -e "\n\n # ERROR - Database type or database.yml incorrect. Unsupported database type found."
+    DISABLE_DATABASE_ENVIRONMENT_CHECK=1 ${ZAMMAD_DIR}/bin/rake db:drop
+  fi
+
+  echo "# ... Creating database ${DB_NAME} for owner ${DB_USER}"
+  if command -v zammad > /dev/null; then
+    # We'll skip this part for docker installations
+    su -c "psql -c \"CREATE DATABASE ${DB_NAME} OWNER ${DB_USER};\"" postgres
+  else
+    ${ZAMMAD_DIR}/bin/rake db:create
+  fi
+
+  echo "# Restoring PostgreSQL DB"
+
+  create_pgpassfile
+
+  # We're removing uncritical dump information that caused "ugly" error
+  # messages on older script versions. These could safely be ignored.
+  zcat ${BACKUP_DIR}/${RESTORE_DB_DATE}_zammad_db.psql.gz | \
+  sed '/^CREATE EXTENSION IF NOT EXISTS plpgsql/d'| \
+  sed '/^COMMENT ON EXTENSION plpgsql/d'| \
+  psql -q -b -o /dev/null \
+  ${DB_HOST:+--host $DB_HOST} ${DB_PORT:+--port $DB_PORT} ${DB_USER:+--username $DB_USER} --dbname ${DB_NAME}
+
+  state=$?
+
+  if [[ ("${state}" == "1") || ( "${state}" == "2") || ( "${state}" == "3") ]]; then
+    # We're checking for critical restoration errors
+    # It may not cover all possible errors which is out of scope of this script
+    echo -e "\n\n # ERROR(${state}) - Database credentials are wrong or database server configuration is invalid."
     echo -e " #-> RESTORE WAS NOT SUCCESSFUL"
     exit 2
   fi
@@ -450,7 +426,7 @@ function restore_zammad () {
 
 function restore_files () {
   echo "# Restoring Files"
-  tar -C / --overwrite -xzf ${BACKUP_DIR}/${RESTORE_FILE_DATE}_zammad_files.tar.gz
+  tar -C / --overwrite -x ${TAR_GZIP_ARG} -f ${BACKUP_DIR}/${RESTORE_FILE_DATE}_zammad_files.tar.gz
 
   state=$?
 
@@ -480,8 +456,7 @@ function db_helper_alter_user () {
 
     DB_PASS="$(tr -dc A-Za-z0-9 < /dev/urandom | head -c10)"
 
-    sed -e "s/.*adapter:.*/  adapter: ${DB_ADAPTER}/" \
-    -e "s/.*username:.*/  username: ${DB_USER}/" \
+    sed -e "s/.*username:.*/  username: ${DB_USER}/" \
     -e "s/.*password:.*/  password: ${DB_PASS}/" \
     -e "s/.*database:.*/  database: ${DB_NAME}/" < ${ZAMMAD_DIR}/contrib/packager.io/database.yml.pkgr > ${ZAMMAD_DIR}/config/database.yml
 
@@ -497,23 +472,14 @@ function db_helper_alter_user () {
     kind_exit
   fi
 
-  if [ "${DB_ADAPTER}" == "postgresql" ]; then
-
-    if [[ ("${DB_HOST}" == "localhost") || "${DB_HOST}" == "127.0.0.1" || "${DB_HOST}" == "::1" ]]; then
-      # Looks like a local pgsql installation - let's continue
-      su -c "psql -c \"ALTER USER ${DB_USER} WITH PASSWORD '${DB_PASS}';\"" postgres
-      state=$?
-
-    else
-      echo "You don't seem to be using a local PostgreSQL installation."
-      echo "This script does not support your installation. No changes were done."
-
-      kind_exit
-    fi
+  if [[ ("${DB_HOST}" == "localhost") || "${DB_HOST}" == "127.0.0.1" || "${DB_HOST}" == "::1" ]]; then
+    # Looks like a local pgsql installation - let's continue
+    su -c "psql -c \"ALTER USER ${DB_USER} WITH PASSWORD '${DB_PASS}';\"" postgres
+    state=$?
 
   else
-    echo "You don't seem to use PostgreSQL. This script does not support your installation."
-    echo "No changes were done."
+    echo "You don't seem to be using a local PostgreSQL installation."
+    echo "This script does not support your installation. No changes were done."
 
     kind_exit
   fi

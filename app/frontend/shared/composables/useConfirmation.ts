@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { ref } from 'vue'
 
@@ -44,8 +44,7 @@ export const useConfirmation = () => {
     > = {},
     name: string | undefined = undefined,
   ) => {
-    const uniqueName =
-      appName === 'desktop' ? name || getUuid() : 'confirmation'
+    const uniqueName = appName === 'desktop' ? name || getUuid() : 'confirmation'
 
     if (confirmationOptions.value.has(uniqueName)) {
       return new Promise<undefined>((resolve) => {

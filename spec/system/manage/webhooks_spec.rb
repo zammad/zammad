@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 require 'system/examples/pagination_examples'
@@ -47,7 +47,7 @@ RSpec.describe 'Manage > Webhook', type: :system do
         expect(page).to have_field('Messaging Icon URL', with: 'https://zammad.com/assets/images/logo-200x200.png')
         expect(page).to have_field('Custom Payload', checked: false, visible: :all)
         expect(page).to have_field('custom_payload', with: custom_payload, disabled: :all, visible: :all)
-        expect(page).to have_field('Note', with: 'Pre-defined webhook for Mattermost Notifications.')
+        check_editor_field_richtext_value('note', 'Pre-defined webhook for Mattermost Notifications.')
 
         fill_in 'Endpoint', with: 'https://example.com/mattermost_endpoint'
         fill_in 'Messaging Username', with: 'username'
@@ -182,7 +182,7 @@ RSpec.describe 'Manage > Webhook', type: :system do
         expect(page).to have_field('Messaging Icon URL', with: webhook.preferences['pre_defined_webhook']['messaging_icon_url'])
         expect(page).to have_field('Custom Payload', checked: false, visible: :all)
         expect(page).to have_field('custom_payload', with: custom_payload, disabled: :all, visible: :all)
-        expect(page).to have_field('Note', with: 'Pre-defined webhook for Mattermost Notifications.')
+        check_editor_field_richtext_value('note', 'Pre-defined webhook for Mattermost Notifications.')
 
         fill_in 'Endpoint', with: 'https://example.com/mattermost_endpoint'
         fill_in 'Messaging Username', with: 'username'
@@ -235,13 +235,24 @@ RSpec.describe 'Manage > Webhook', type: :system do
     end
   end
 
-  context 'when deleting' do
-    let!(:webhook) { create(:webhook) }
-    let!(:trigger) { create(:trigger, perform: { 'notification.webhook' => { 'webhook_id' => webhook.id.to_s } }) }
+  context 'when deleting', authenticated_as: :admin do
+    let(:admin)       { create(:admin, preferences: { locale: 'de-de' }) }
+    let(:webhook)     { create(:webhook) }
+    let(:trigger)     { create(:trigger, perform: { 'notification.webhook' => { 'webhook_id' => webhook.id.to_s } }) }
+    let(:source)      { 'This object is referenced by other object(s) and thus cannot be deleted: %s' }
+    let(:target)      { "[TRANSLATED] #{source}" }
+    let(:translation) do
+      Translation.where(locale: 'de-de', source:).destroy_all
+      create(:translation, locale: 'de-de', source:, target:)
+    end
 
-    it 'referenced webhook shows error message' do
+    before do
+      webhook && trigger && translation
+
       visit '/#manage/webhook'
+    end
 
+    it 'referenced webhook shows translated error message (#5619)' do
       within :active_content do
         click '.js-action'
         click '.js-delete'
@@ -250,7 +261,7 @@ RSpec.describe 'Manage > Webhook', type: :system do
       in_modal do
         click '.js-submit'
 
-        expect(page).to have_text('Cannot delete').and(have_text("##{trigger.id}"))
+        expect(page).to have_text('[TRANSLATED]').and(have_text("##{trigger.id}"))
       end
     end
   end

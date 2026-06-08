@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -25,7 +25,7 @@ RSpec.describe 'Profile > Overviews', type: :system do
   it 'shows the out of office replacement overview (#5458)' do
     visit 'profile/overviews'
 
-    expect(page).to have_content('My Replacement Tickets Only when out of office replacement')
+    expect(page).to have_text('My Replacement Tickets Only when out of office replacement')
   end
 
   def overview_names
@@ -53,6 +53,6 @@ RSpec.describe 'Profile > Overviews', type: :system do
   def reset_overview_order
     visit 'profile/overviews'
     page.find('a[data-type=reset]').click
-    wait.until { User::OverviewSorting.where(user: current_user).count.zero? }
+    wait.until { User::OverviewSorting.where(user: current_user).none? }
   end
 end

@@ -1,13 +1,10 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, reactive } from 'vue'
 
 import Form from '#shared/components/Form/Form.vue'
-import type {
-  FormSchemaNode,
-  FormSubmitData,
-} from '#shared/components/Form/types.ts'
+import type { FormSchemaNode, FormSubmitData } from '#shared/components/Form/types.ts'
 import { useForm } from '#shared/components/Form/useForm.ts'
 import type { TicketArticleTimeAccountingFormData } from '#shared/entities/ticket/types.ts'
 import { EnumFormUpdaterId } from '#shared/graphql/types.ts'
@@ -29,9 +26,7 @@ const { form } = useForm()
 
 const flyoutName = 'ticket-time-accounting'
 
-const submitForm = (
-  formData: FormSubmitData<TicketArticleTimeAccountingFormData>,
-) => {
+const submitForm = (formData: FormSubmitData<TicketArticleTimeAccountingFormData>) => {
   if (formData.time_unit) {
     formData.time_unit = formData.time_unit.replace(',', '.')
   }
@@ -55,8 +50,7 @@ const timeAccountingUnit = computed(() => {
     case 'minute':
       return __('minute(s)')
     case 'custom': {
-      if (config.time_accounting_unit_custom)
-        return config.time_accounting_unit_custom
+      if (config.time_accounting_unit_custom) return config.time_accounting_unit_custom
       return null
     }
     default:
@@ -73,14 +67,11 @@ const formSchema = [
   {
     isLayout: true,
     component: 'FormGroup',
-    props: {
-      class: '@container/form-group',
-    },
     children: [
       {
         id: 'timeUnit',
         name: 'time_unit',
-        label: __('Accounted Time'),
+        label: __('Accounted time'),
         type: 'text',
         required: true,
         placeholder: __('Enter the time you want to record'),
@@ -89,9 +80,7 @@ const formSchema = [
           validationRuleTimeAccountingUnit,
         },
         validationMessages: {
-          validationRuleTimeAccountingUnit: __(
-            'This field must contain a number.',
-          ),
+          validationRuleTimeAccountingUnit: __('This field must contain a number.'),
         },
         ...(timeAccountingUnit.value
           ? {
@@ -115,7 +104,7 @@ const formSchema = [
         if: '$timeAccountingTypes === true',
         id: 'accountedTimeTypeId',
         name: 'accounted_time_type_id',
-        label: __('Activity Type'),
+        label: __('Activity type'),
         type: 'select',
         props: {
           clearable: true,
@@ -133,7 +122,7 @@ const schemaData = reactive({
 })
 
 const footerActionOptions = computed<ActionFooterOptions>(() => ({
-  actionLabel: __('Account Time'),
+  actionLabel: __('Account time'),
   actionButton: { variant: 'submit', type: 'submit' },
   cancelLabel: __('Skip'),
 }))
@@ -141,7 +130,7 @@ const footerActionOptions = computed<ActionFooterOptions>(() => ({
 
 <template>
   <CommonFlyout
-    :header-title="__('Time Accounting')"
+    :header-title="__('Time accounting')"
     :form="form"
     :footer-action-options="footerActionOptions"
     header-icon="stopwatch"
@@ -156,15 +145,9 @@ const footerActionOptions = computed<ActionFooterOptions>(() => ({
         :schema="formSchema"
         :schema-data="schemaData"
         should-autofocus
-        :form-updater-id="
-          EnumFormUpdaterId.FormUpdaterUpdaterTicketTimeAccounting
-        "
+        :form-updater-id="EnumFormUpdaterId.FormUpdaterUpdaterTicketTimeAccounting"
         form-updater-initial-only
-        @submit="
-          submitForm(
-            $event as FormSubmitData<TicketArticleTimeAccountingFormData>,
-          )
-        "
+        @submit="submitForm($event as FormSubmitData<TicketArticleTimeAccountingFormData>)"
       />
     </div>
   </CommonFlyout>

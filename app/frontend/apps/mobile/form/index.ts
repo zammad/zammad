@@ -1,10 +1,12 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
+
+import { defineAsyncComponent, type App } from 'vue'
 
 import { initializeFileClasses } from '#shared/components/Form/fields/FieldFile/initializeFileClasses.ts'
 import { initializeToggleClasses } from '#shared/components/Form/fields/FieldToggle/initializeToggleClasses.ts'
 import {
   initializeFieldEditorClasses,
-  initializeFieldEditorProps,
+  initializeEditorComponents,
 } from '#shared/components/Form/initializeFieldEditor.ts'
 import { initializeFieldLinkClasses } from '#shared/components/Form/initializeFieldLinkClasses.ts'
 import { initializeFormClasses } from '#shared/components/Form/initializeFormClasses.ts'
@@ -17,19 +19,22 @@ import type {
 } from '#shared/types/form.ts'
 import type { ImportGlobEagerOutput } from '#shared/types/utils.ts'
 
+import FieldEditorSuggestionList from '#mobile/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue'
+
 import getCoreClasses from './theme/global/getCoreMobileClasses.ts'
 
 import type { FormKitPlugin } from '@formkit/core'
-import type { App } from 'vue'
 
 const pluginModules: ImportGlobEagerOutput<FormKitPlugin> = import.meta.glob(
   './plugins/global/*.ts',
   { eager: true },
 )
 export const mobileFormFieldModules: ImportGlobEagerOutput<FormFieldTypeImportModules> =
-  import.meta.glob('../components/Form/fields/**/index.ts', { eager: true })
-const themeExtensionModules: ImportGlobEagerOutput<FormThemeExtension> =
-  import.meta.glob('./theme/global/extensions/*.ts', { eager: true })
+  import.meta.glob('../components/Form/fields/*/index.ts', { eager: true })
+const themeExtensionModules: ImportGlobEagerOutput<FormThemeExtension> = import.meta.glob(
+  './theme/global/extensions/*.ts',
+  { eager: true },
+)
 
 export const initializeForm: InitializeAppForm = (app: App) => {
   const plugins = getFormPlugins(pluginModules)
@@ -68,63 +73,29 @@ export const initializeFormFields = () => {
 
   initializeFieldEditorClasses({
     actionBar: {
-      buttonContainer: 'gap-1 p-2',
-      tableMenuContainer: 'gap-1 p-2',
-      leftGradient: {
-        left: '-0.5rem',
-        before: {
-          // Currently mobile supports only dark mode
-          background: {
-            light: `linear-gradient(
-                    270deg,
-                    rgba(255, 255, 255, 0),
-                    #282829)`,
-            dark: `linear-gradient(
-                    270deg,
-                    rgba(255, 255, 255, 0),
-                    #282829)`, // :TODO inject tailwind theme colors
-          },
-        },
-      },
-      rightGradient: {
-        before: {
-          // Currently mobile supports only dark mode
-          background: {
-            light: `linear-gradient(
-                    90deg,
-                    rgba(255, 255, 255, 0),
-                    #282829)`,
-            dark: `linear-gradient(
-                    90deg,
-                    rgba(255, 255, 255, 0),
-                    #282829`, // :TODO inject tailwind theme colors
-          },
-        },
-      },
-      shadowGradient: {
-        before: {
-          top: 'calc(0px - 30px - 1.5rem)',
-          height: 'calc(30px + 1.5rem)',
-        },
-      },
+      tableMenuContainer: 'gap-2 p-4',
+      tableMenuGrid: 'gap-2',
       button: {
-        base: 'rounded bg-black p-2 lg:hover:bg-gray-300', // Should we add a hover class here? It was there in the original code.
-        active: 'bg-gray-300',
+        base: 'rounded-sm bg-black',
       },
     },
     input: {
       container: 'p-2',
+      inlineContainer: '',
+    },
+    tableMenu: {
+      triggerButton: 'w-7 h-7 flex items-center justify-center bg-blue/80 text-white',
     },
   })
 
-  initializeFieldEditorProps({
-    actionBar: {
-      button: {
-        icon: {
-          size: 'small',
-        },
-      },
-    },
+  initializeEditorComponents({
+    actionBar: defineAsyncComponent(
+      () => import('#mobile/components/Form/fields/FieldEditor/FieldEditorActionBar.vue'),
+    ),
+    actionMenu: defineAsyncComponent(
+      () => import('#mobile/components/Form/fields/FieldEditor/FieldEditorActionMenu.vue'),
+    ),
+    suggestionList: FieldEditorSuggestionList,
   })
 
   initializeFileClasses({

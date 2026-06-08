@@ -1,10 +1,11 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockAuthentication } from '#tests/support/mock-authentication.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
 import { dataURItoBlob } from '#tests/support/utils.ts'
+import { waitFor } from '#tests/support/vitest-wrapper.ts'
 
 import { EnumSystemSetupInfoStatus } from '#shared/graphql/types.ts'
 
@@ -28,11 +29,10 @@ describe('guided setup system information', () => {
 
       const view = await visitView('/guided-setup/manual/system-information')
 
-      await vi.waitFor(() => {
-        expect(
-          view,
-          'correctly redirects to guided setup start screen',
-        ).toHaveCurrentUrl('/guided-setup')
+      await waitFor(() => {
+        expect(view, 'correctly redirects to guided setup start screen').toHaveCurrentUrl(
+          '/guided-setup',
+        )
       })
       view.getByText('Set up a new system')
     })
@@ -50,11 +50,9 @@ describe('guided setup system information', () => {
     it('can configure system information', async () => {
       const view = await visitView('/guided-setup/manual/system-information')
 
-      expect(view.getByText('System Information')).toBeInTheDocument()
+      expect(view.getByText('System information')).toBeInTheDocument()
 
-      expect(
-        view.queryByRole('button', { name: 'Go Back' }),
-      ).not.toBeInTheDocument()
+      expect(view.queryByRole('button', { name: 'Go back' })).not.toBeInTheDocument()
 
       const organizationField = view.getByLabelText('Organization name')
       const urlField = view.getByLabelText('System URL')
@@ -80,12 +78,12 @@ describe('guided setup system information', () => {
       await view.events.upload(logoField, testFile)
 
       const continueButton = view.getByRole('button', {
-        name: 'Save and Continue',
+        name: 'Save and continue',
       })
 
       await view.events.click(continueButton)
 
-      await vi.waitFor(() => {
+      await waitFor(() => {
         expect(
           view,
           'correctly redirects to guided setup email notification setp',

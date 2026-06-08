@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { getAllByRole, getByRole, queryByRole } from '@testing-library/vue'
 import { flushPromises } from '@vue/test-utils'
@@ -7,6 +7,7 @@ import { visitView } from '#tests/support/components/visitView.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockAuthentication } from '#tests/support/mock-authentication.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
+import { waitFor } from '#tests/support/vitest-wrapper.ts'
 
 import { mockFormUpdaterQuery } from '#shared/components/Form/graphql/queries/formUpdater.mocks.ts'
 import {
@@ -35,11 +36,10 @@ describe('guided setup manual invite', () => {
 
       const view = await visitView('/guided-setup/manual/invite')
 
-      await vi.waitFor(() => {
-        expect(
-          view,
-          'correctly redirects to guided setup start screen',
-        ).toHaveCurrentUrl('/guided-setup')
+      await waitFor(() => {
+        expect(view, 'correctly redirects to guided setup start screen').toHaveCurrentUrl(
+          '/guided-setup',
+        )
       })
       view.getByText('Set up a new system')
     })
@@ -98,16 +98,14 @@ describe('guided setup manual invite', () => {
 
       await flushPromises()
 
-      expect(view.getByText('Invite Colleagues')).toBeInTheDocument()
+      expect(view.getByText('Invite colleagues')).toBeInTheDocument()
       expect(view.getByLabelText('First name')).toBeInTheDocument()
       expect(view.getByLabelText('Last name')).toBeInTheDocument()
       expect(view.getByLabelText('Email')).toBeInTheDocument()
       expect(view.getByLabelText('Roles')).toBeInTheDocument()
       expect(view.getByLabelText('Group permissions')).toBeInTheDocument()
 
-      expect(
-        view.getByRole('button', { name: 'Finish Setup' }),
-      ).toBeInTheDocument()
+      expect(view.getByRole('button', { name: 'Finish setup' })).toBeInTheDocument()
 
       await view.events.type(view.getByLabelText('Email'), 'test@example.com')
       await view.events.click(view.getAllByRole('switch')[2])
@@ -121,21 +119,18 @@ describe('guided setup manual invite', () => {
       const listbox = view.getByRole('listbox')
       const options = getAllByRole(listbox, 'option')
 
-      await view.events.click(options[0])
+      await view.events.click(options[0].firstChild as Element)
       await view.events.click(view.getByLabelText('Full'))
 
       expect(view.getByLabelText('Email')).toHaveValue('test@example.com')
 
-      expect(view.getAllByRole('switch')[2]).toHaveAttribute(
-        'aria-checked',
-        'true',
-      )
+      expect(view.getAllByRole('switch')[2]).toHaveAttribute('aria-checked', 'true')
 
       expect(queryByRole(combobox, 'listitem')).toBeInTheDocument()
       expect(view.getByLabelText('Full')).toBeChecked()
 
       const inviteButton = view.getByRole('button', {
-        name: 'Send Invitation',
+        name: 'Send invitation',
       })
 
       await view.events.click(inviteButton)
@@ -162,18 +157,14 @@ describe('guided setup manual invite', () => {
       expect(await view.findByText('Invitation sent!')).toBeInTheDocument()
       expect(view.getByLabelText('Email')).toHaveValue('')
 
-      expect(view.getAllByRole('switch')[2]).not.toHaveAttribute(
-        'aria-checked',
-        'true',
-      )
+      expect(view.getAllByRole('switch')[2]).not.toHaveAttribute('aria-checked', 'true')
 
       expect(queryByRole(combobox, 'listitem')).not.toBeInTheDocument()
       expect(view.getByLabelText('Full')).not.toBeChecked()
 
-      expect(
-        view,
-        'stays on the guided setup manual invite step',
-      ).toHaveCurrentUrl('/guided-setup/manual/invite')
+      expect(view, 'stays on the guided setup manual invite step').toHaveCurrentUrl(
+        '/guided-setup/manual/invite',
+      )
     })
 
     it('can display form errors', async () => {
@@ -193,7 +184,7 @@ describe('guided setup manual invite', () => {
       })
 
       const inviteButton = view.getByRole('button', {
-        name: 'Send Invitation',
+        name: 'Send invitation',
       })
 
       await view.events.click(inviteButton)
@@ -208,15 +199,12 @@ describe('guided setup manual invite', () => {
     it('redirects to guided setup finish screen when continued', async () => {
       const view = await visitView('/guided-setup/manual/invite')
 
-      await view.events.click(
-        view.getByRole('button', { name: 'Finish Setup' }),
-      )
+      await view.events.click(view.getByRole('button', { name: 'Finish setup' }))
 
-      await vi.waitFor(() => {
-        expect(
-          view,
-          'correctly redirects to guided setup finish screen',
-        ).toHaveCurrentUrl('/guided-setup/manual/finish')
+      await waitFor(() => {
+        expect(view, 'correctly redirects to guided setup finish screen').toHaveCurrentUrl(
+          '/guided-setup/manual/finish',
+        )
       })
     })
   })

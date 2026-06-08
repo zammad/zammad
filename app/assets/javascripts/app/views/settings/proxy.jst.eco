@@ -18,10 +18,10 @@
       <input type="password" name="proxy_password" value="<%= @proxy_password %>" class="form-control">
     </div>
   </div>
-  <p class="help-text"><%- @T('Do not use the proxy for the following hosts.') %></p>
+  <p class="help-text"><%- @T('No proxy for these comma-separated addresses. Supports wildcards like *.example.com. Note: Loopback addresses are always excluded from proxying.') %></p>
   <div class="horizontal end">
     <div class="form-item flex">
-      <input type="text" name="proxy_no" value="<%= @proxy_no %>" placeholder="localhost,127.0.0.1" class="form-control">
+      <input type="text" name="proxy_no" value="<%= @proxy_no %>" placeholder="example.com,*.example.org" class="form-control">
     </div>
   </div>
   <div class="horizontal justify-end form-controls">

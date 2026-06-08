@@ -1,6 +1,4 @@
-subscription userCurrentTaskbarItemUpdates(
-  $app: EnumTaskbarApp!
-) {
+subscription userCurrentTaskbarItemUpdates($app: EnumTaskbarApp!) {
   userCurrentTaskbarItemUpdates(app: $app) {
     addItem {
       ...userCurrentTaskbarItemAttributes

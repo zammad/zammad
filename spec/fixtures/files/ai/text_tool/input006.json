@@ -1,0 +1,6 @@
+{
+  "input": "<h1>Änderung der Muster-Überwachung</h1> Wir führen eine wichtige Änderung in unser<br> durchgeführt, bei der Muster E-Mails an<br> Ab sofort übernehmen wir die Überwachung über die bestehende Einsatzteilen set-<br> Sollte ein Problem auftreten, wird automatisch ein Ticket erstellt, um die e-<br> den Status aller Jobs über ein spezielles schnelle Lösung zu ermöglichen.",
+  "expected": {
+    "language": "de"
+  }
+}

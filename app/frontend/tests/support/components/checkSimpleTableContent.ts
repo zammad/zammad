@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { within } from '@testing-library/vue'
 
@@ -12,9 +12,7 @@ export const checkSimpleTableHeader = (
   const table = within(view.getByRole('table', { name: tableLabel }))
 
   tableHeaders.forEach((header) => {
-    expect(
-      table.getByRole('columnheader', { name: header }),
-    ).toBeInTheDocument()
+    expect(table.getByRole('columnheader', { name: header })).toBeInTheDocument()
   })
 }
 

@@ -1,0 +1,138 @@
+# This repository adheres to the publiccode.yml standard by including this
+# metadata file that makes public software easily discoverable.
+# More info at https://github.com/italia/publiccode.yml
+
+---
+publiccodeYmlVersion: "0.4"
+name: "Zammad"
+categories:
+  - "help-desk"
+releaseDate: "2026-04-08"
+softwareVersion: "7.0.x"
+softwareType: "standalone/web"
+logo: "logo.svg"
+platforms:
+  - "web"
+developmentStatus: "stable"
+url: "https://github.com/zammad/zammad"
+landingURL: "https://zammad.com/"
+maintenance:
+  type: "internal"
+  contacts:
+    - name: "Martin Gruner"
+      email: "enjoy@zammad.com"
+legal:
+  license: "AGPL-3.0-only"
+  mainCopyrightOwner: "Zammad Foundation"
+  repoOwner: "Zammad GmbH"
+usedBy:
+  - "Landeshauptstadt München"
+  - "Dataport AöR"
+  - "IT-Verbund Schleswig-Holstein"
+localisation:
+  localisationReady: true
+  availableLanguages:
+    - "ar"
+    - "bg"
+    - "ca"
+    - "cs"
+    - "da"
+    - "de"
+    - "el"
+    - "en"
+    - "es"
+    - "et"
+    - "fa"
+    - "fi"
+    - "fr"
+    - "he"
+    - "hi"
+    - "hr"
+    - "hu"
+    - "id"
+    - "is"
+    - "it"
+    - "ja"
+    - "ko"
+    - "lt"
+    - "lv"
+    - "ms"
+    - "nb"
+    - "nl"
+    - "pl"
+    - "pt"
+    - "ro"
+    - "ru"
+    - "rw"
+    - "sk"
+    - "sl"
+    - "sr"
+    - "sv"
+    - "th"
+    - "tr"
+    - "uk"
+    - "vi"
+    - "zh"
+description:
+  de:
+    genericName: "Helpdesk-Software"
+    shortDescription: "Zammad ist ein webbasiertes Open-Source-Helpdesk-/Kundensupport-System."
+    longDescription: >
+      # Willkommen bei Zammad
+
+      Kämpfen Sie mit unzähligen Kundenanfragen über mehrere Kanäle?
+      Haben Sie Schwierigkeiten, Ihr Support-Team auf dem gleichen Stand zu halten?
+      Oder verbringen Sie mehr Zeit mit der Verwaltung Ihres Helpdesks als mit der Bereitstellung eines außergewöhnlichen Supports für Ihre Kunden?
+
+      Zammad ist Ihr Schweizer Taschenmesser - eine webbasierte Open-Source-Helpdesk- und Kundensupport-Plattform
+      vollgepackt mit Funktionen, um die Kundenkommunikation über Kanäle wie E-Mail, Chat, Telefon und soziale Medien zu optimieren.
+
+      ## Die Software
+
+      Die Zammad-Software ist und bleibt Open Source. Sie ist unter der GNU AGPLv3 lizenziert.
+      Der Quellcode ist [auf GitHub verfügbar](https://github.com/zammad/zammad) und wird von der
+      [Zammad Foundation](https://zammad-foundation.org/) verwaltet, die unabhängig von kommerziellen
+      Anbietern wie der Zammad GmbH ist.
+
+      ## Das Unternehmen - Zammad GmbH
+
+      Die Entwicklung von Zammad wird vom [fantastischen Team von Menschen](https://zammad.com/en/company)
+      bei der [Zammad GmbH](https://zammad.com/) in Zusammenarbeit mit der Community durchgeführt.
+      Wir lieben es, Open-Source-Software für Sie zu erstellen. Wenn Sie eine vielversprechende und nachhaltige Zukunft für die Zammad-Software sicherstellen möchten, sollten Sie in Erwägung ziehen, Zammad-Kunde zu werden!
+
+      Sind Sie es leid, komplexe Aufgaben wie Einrichtung, Konfiguration, Backup und Updates zu erledigen? Lassen Sie uns diese Aufgaben für Sie übernehmen! 🚀
+
+      Der einfachste und oft kostengünstigste Weg, Zammad zu betreiben, ist [unser Cloud-Service](https://zammad.com/en/pricing).
+      Probieren Sie es mit einer [kostenlosen Testinstanz](https://zammad.com/en/getting-started) aus!"
+  en:
+    genericName: "Helpdesk software"
+    shortDescription: "Zammad is a web based open source helpdesk/customer support system."
+    longDescription: >
+      # Welcome to Zammad
+
+      Are you juggling countless customer inquiries across multiple channels?
+      Struggling to keep your support team on the same page?
+      Or spending more time managing your helpdesk than delivering exceptional support to your customers?
+
+      Zammad is your Swiss Army knife - a web-based, open-source helpdesk and customer support platform
+      packed with features to streamline customer communication across channels like email, chat, telephone and social media.
+
+      ## The Software
+
+      The Zammad software is and will stay open source. It is licensed under the GNU AGPLv3.
+      The source code is [available on GitHub](https://github.com/zammad/zammad) and owned by
+      the [Zammad Foundation](https://zammad-foundation.org/), which is independent of commercial
+      providers such as Zammad GmbH.
+
+      ## The Company - Zammad GmbH
+
+      The development of Zammad is carried out by the [amazing team of people](https://zammad.com/en/company)
+      at [Zammad GmbH](https://zammad.com/) in collaboration with the community.
+      We love to create open source software for you. If you want to ensure the Zammad software
+      has a bright and sustainable future, consider becoming a Zammad customer!
+
+      Are you tired of complex setup, configuration, backup and update tasks? Let us handle this stuff for you! 🚀
+
+      The easiest and often most cost-effective way to operate Zammad is [our cloud service](https://zammad.com/en/pricing).
+      Give it a try with a [free trial instance](https://zammad.com/en/getting-started)!"
+    documentation: "https://docs.zammad.org/en/latest/"

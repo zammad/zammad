@@ -1,0 +1,25 @@
+Date: Thu, 05 Jun 2025 18:02:40 +0300
+From: from@example.com
+To: to@example.com
+Message-ID: <6841b190d3905_21491f04658de@hMac.local.mail>
+Subject: A HTML email with text signature
+Mime-Version: 1.0
+Content-Type: multipart/mixed;
+ boundary="--==_mimepart_6841b18f198aa_21491f0465727"
+Content-Transfer-Encoding: 7bit
+
+
+----==_mimepart_6841b18f198aa_21491f0465727
+Content-Type: text/html;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<html><body><h1>This is the html message </h1></body></html>
+----==_mimepart_6841b18f198aa_21491f0465727
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+This is the text signature part
+----==_mimepart_6841b18f198aa_21491f0465727--
+

@@ -1,16 +1,12 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Channel::Driver::BaseEmailInbound < Channel::EmailParser
   ACTIVE_CHECK_INTERVAL = 20
 
-  MessageResult = Struct.new(:success, :after_action, keyword_init: true)
+  MessageResult = Struct.new(:success, :after_action)
 
   def fetchable?(_channel)
     true
-  end
-
-  def self.streamable?
-    false
   end
 
   # Checks if the given channel was modified since it it was loaded

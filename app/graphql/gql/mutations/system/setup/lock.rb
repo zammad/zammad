@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Mutations
   class System::Setup::Lock < BaseMutation
@@ -13,9 +13,7 @@ module Gql::Mutations
     field :resource, String, 'Critical section resoure name.', null: true
     field :value, String, 'Critical section resoure value.', null: true
 
-    def self.authorize(...)
-      true
-    end
+    allow_public_access!
 
     def resolve(ttl: TTL)
       Service::System::CheckSetup.new!

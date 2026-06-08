@@ -1,0 +1,29 @@
+업데이트된 티켓 (#{ticket.title})
+
+<div>안녕하세요 #{recipient.firstname}님,</div>
+<br>
+<div>
+티켓 (#{ticket.title})이 "<b>#{current_user.longname}</b>"에 의해 업데이트되었습니다.
+</div>
+<br>
+<% if @objects[:changes].present? %>
+  <div>
+  변경 사항:<br>
+  <% @objects[:changes].each do |key, value| %>
+    <%= t key %>: <%= h value[0] %> -&gt; <%= h value[1] %><br>
+  <% end %>
+  </div>
+<% end %>
+<br>
+<% if @objects[:article] %>
+  <div>
+  정보:
+  <blockquote type="cite">
+  #{article.body_as_html}
+  </blockquote>
+  </div>
+<% end %>
+<br>
+<div>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}<% if @objects[:article] %>/#{article.id}<% end %>" target="zammad_app">#{config.product_name}에서 보기</a>
+</div>

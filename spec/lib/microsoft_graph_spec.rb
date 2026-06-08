@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -256,6 +256,117 @@ RSpec.describe MicrosoftGraph, :aggregate_failures, integration: true, required_
 
     it 'converts array-of-hashes to a simplified hash' do
       expect(client.send(:headers_to_hash, input)).to eq(output)
+    end
+  end
+
+  describe 'retry-after handling', required_envs: [], use_vcr: false do
+    let(:client) { described_class.new(access_token: 'token', mailbox: 'me') }
+    let(:body) do
+      '{
+        "error": {
+          "code": "TooManyRequests",
+          "message": "Too many requests. Please try again later.",
+          "innerError": {
+            "date": "2025-07-31T10:00:00",
+            "request-id": "MS_GRAPH_TOKEN",
+            "client-request-id": "MS_GRAPH_TOKEN"
+          }
+        }
+      }'
+    end
+
+    before do
+      stub_const("#{described_class}::BASE_URL", 'http://localhost/')
+      stub_request(:post, 'http://localhost/users/me/sendMail')
+        .to_return(status: status_code, body:, headers: { 'Retry-After' => retry_after_header }.compact)
+
+      freeze_time
+    end
+
+    context 'when response is 429 with retry-after in seconds' do
+      let(:status_code)        { 429 }
+      let(:retry_after_header) { '60' }
+
+      it 'raises ApiError with retry-after time' do
+        expect { client.send_message('') }
+          .to raise_error(MicrosoftGraph::ApiError) do |error|
+            expect(error.message).to eq("Too many requests. Please try again later. (TooManyRequests)\nMicrosoft Graph API Request ID: MS_GRAPH_TOKEN")
+            expect(error.retry_after).to eq(60.seconds.from_now)
+          end
+      end
+    end
+
+    context 'when response is 503 with retry-after in seconds' do
+      let(:status_code)        { 503 }
+      let(:retry_after_header) { '120' }
+
+      it 'raises ApiError with retry-after time' do
+        expect { client.send_message('') }
+          .to raise_error(MicrosoftGraph::ApiError) do |error|
+            expect(error.message).to eq("Too many requests. Please try again later. (TooManyRequests)\nMicrosoft Graph API Request ID: MS_GRAPH_TOKEN")
+            expect(error.retry_after).to eq(120.seconds.from_now)
+          end
+      end
+    end
+
+    context 'when response is 429 with retry-after in HTTP date format' do
+      let(:status_code)        { 429 }
+      let(:timestamp)          { 30.seconds.from_now.change(usec: 0) }
+      let(:retry_after_header) { timestamp.httpdate }
+
+      it 'raises ApiError with retry-after time' do
+        expect { client.send_message('') }
+          .to raise_error(MicrosoftGraph::ApiError) do |error|
+            expect(error.message).to eq("Too many requests. Please try again later. (TooManyRequests)\nMicrosoft Graph API Request ID: MS_GRAPH_TOKEN")
+            expect(error.retry_after).to eq(timestamp)
+          end
+      end
+    end
+
+    context 'when response is 503 without retry-after' do
+      let(:status_code)        { 503 }
+      let(:retry_after_header) { nil }
+
+      it 'raises ApiError without retry-after time' do
+        expect { client.send_message('') }
+          .to raise_error(MicrosoftGraph::ApiError) do |error|
+            expect(error.message).to eq("Too many requests. Please try again later. (TooManyRequests)\nMicrosoft Graph API Request ID: MS_GRAPH_TOKEN")
+            expect(error.retry_after).to be_blank
+          end
+      end
+    end
+  end
+
+  describe 'HTTP logging', required_envs: [], use_vcr: false do
+    let(:client) { described_class.new(access_token: 'token', mailbox: 'me') }
+
+    before do
+      stub_const("#{described_class}::BASE_URL", 'http://localhost/')
+    end
+
+    context 'when the request fails' do
+      before do
+        stub_request(:post, 'http://localhost/users/me/sendMail')
+          .to_return(status: 500, body: '{"error":{"code":"Boom","message":"Server error"}}')
+      end
+
+      it 'persists an HttpLog entry with the MicrosoftGraph facility' do
+        expect { client.send_message('') }
+          .to raise_error(MicrosoftGraph::ApiError)
+          .and change(HttpLog.where(facility: 'MicrosoftGraph'), :count).by(1)
+      end
+    end
+
+    context 'when the request succeeds' do
+      before do
+        stub_request(:post, 'http://localhost/users/me/sendMail')
+          .to_return(status: 202, body: '')
+      end
+
+      it 'does not persist an HttpLog entry' do
+        expect { client.send_message('') }
+          .not_to change(HttpLog.where(facility: 'MicrosoftGraph'), :count)
+      end
     end
   end
 end

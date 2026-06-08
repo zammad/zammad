@@ -1,6 +1,6 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { type Ref, onMounted, watch } from 'vue'
+import { type Ref, nextTick, onMounted, watch } from 'vue'
 
 import type { SelectOption } from '#shared/components/CommonSelect/types.ts'
 import useValue from '#shared/components/Form/composables/useValue.ts'
@@ -19,8 +19,7 @@ const useSelectPreselect = (
   const { hasValue } = useValue(context)
 
   // Consider only enabled options.
-  const getPreselectValue = () =>
-    options.value?.find((option) => !option.disabled)?.value
+  const getPreselectValue = () => options.value?.find((option) => !option.disabled)?.value
 
   // Remember function to use it during the next value check.
   context.value.getPreselectValue = getPreselectValue
@@ -30,6 +29,7 @@ const useSelectPreselect = (
   const preselectOption = () => {
     if (
       !hasValue.value &&
+      !context.value.pendingValueUpdate &&
       !context.value.disabled &&
       !context.value.multiple &&
       !context.value.clearable &&
@@ -41,17 +41,21 @@ const useSelectPreselect = (
   }
 
   onMounted(() => {
-    if (!context.value.noInitialAutoPreselect) preselectOption()
+    if (!context.value.noAutoPreselect) {
+      nextTick(() => {
+        preselectOption()
+      })
 
-    watch(
-      () =>
-        !hasValue.value &&
-        !context.value.disabled &&
-        !context.value.multiple &&
-        !context.value.clearable &&
-        options.value,
-      preselectOption,
-    )
+      watch(
+        () =>
+          !hasValue.value &&
+          !context.value.disabled &&
+          !context.value.multiple &&
+          !context.value.clearable &&
+          options.value,
+        preselectOption,
+      )
+    }
   })
 }
 

@@ -1,11 +1,11 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { h } from 'vue'
 
 import { renderComponent } from '#tests/support/components/index.ts'
 
-import CommonPopover from '#shared/components/CommonPopover/CommonPopover.vue'
-import { usePopover } from '#shared/components/CommonPopover/usePopover.ts'
+import CommonPopover from '#desktop/components/CommonPopover/CommonPopover.vue'
+import { usePopover } from '#desktop/components/CommonPopover/usePopover.ts'
 
 import CommonPopoverMenu from '../CommonPopoverMenu.vue'
 
@@ -101,9 +101,7 @@ describe('rendering section', () => {
   it('support click handler on item', async () => {
     const clickHandler = vi.fn()
 
-    const items: MenuItem[] = [
-      { key: 'example', onClick: clickHandler, label: 'Example' },
-    ]
+    const items: MenuItem[] = [{ key: 'example', onClick: clickHandler, label: 'Example' }]
 
     const view = renderComponent(CommonPopoverMenu, {
       shallow: false,
@@ -176,9 +174,7 @@ describe('rendering section', () => {
     }
     CustomComponent.props = ['label']
 
-    const items: MenuItem[] = [
-      { key: 'menu-item', component: CustomComponent, label: 'Menu item' },
-    ]
+    const items: MenuItem[] = [{ key: 'menu-item', component: CustomComponent, label: 'Menu item' }]
 
     const view = renderComponent(CommonPopoverMenu, {
       shallow: false,
@@ -249,25 +245,28 @@ describe('rendering section', () => {
     })
 
     expect(view.getByRole('button', { name: 'group test' })).toBeInTheDocument()
-    expect(
-      view.getByRole('button', { name: 'group test 2' }),
-    ).toBeInTheDocument()
-    expect(
-      view.getByRole('button', { name: 'group test 3' }),
-    ).toBeInTheDocument()
-    expect(
-      view.getByRole('button', { name: 'single-group test 3' }),
-    ).toBeInTheDocument()
-    expect(
-      view.getByRole('button', { name: 'single test' }),
-    ).toBeInTheDocument()
+    expect(view.getByRole('button', { name: 'group test 2' })).toBeInTheDocument()
+    expect(view.getByRole('button', { name: 'group test 3' })).toBeInTheDocument()
+    expect(view.getByRole('button', { name: 'single-group test 3' })).toBeInTheDocument()
+    expect(view.getByRole('button', { name: 'single test' })).toBeInTheDocument()
 
-    expect(
-      view.getByRole('heading', { name: 'test group', level: 3 }),
-    ).toBeInTheDocument()
+    expect(view.getByRole('heading', { name: 'test group', level: 3 })).toBeInTheDocument()
 
-    expect(
-      view.getByRole('heading', { name: 'single group', level: 3 }),
-    ).toBeInTheDocument()
+    expect(view.getByRole('heading', { name: 'single group', level: 3 })).toBeInTheDocument()
+  })
+
+  it('shows message if no items are available', () => {
+    const items: MenuItem[] = [{ key: 'shared-draft', label: 'Shared draft', show: () => false }]
+
+    const view = renderComponent(CommonPopoverMenu, {
+      shallow: false,
+      props: {
+        popover: null,
+        items,
+      },
+      router: true,
+    })
+
+    expect(view.baseElement).toHaveTextContent('No items available')
   })
 })

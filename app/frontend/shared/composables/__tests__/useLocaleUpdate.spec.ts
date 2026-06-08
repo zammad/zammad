@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { beforeEach, describe, expect, vi } from 'vitest'
 
@@ -20,12 +20,12 @@ const mockUpdateLocaleMutationHandler = () => {
   }
 }
 const mockedLocales = [
-  { locale: 'de', name: 'Deutsch' },
-  { locale: 'en', name: 'English' },
+  { locale: 'de-de', name: 'Deutsch' },
+  { locale: 'en-us', name: 'English (United States)' },
 ]
 describe('useLocaleUpdate', () => {
   beforeEach(() => {
-    mockLocalesQuery({ locales: [{ locale: 'en', name: 'English' }] })
+    mockLocalesQuery({ locales: [{ locale: 'en-us', name: 'English (United States)' }] })
     initializePiniaStore()
     mockLocalesQuery({
       locales: mockedLocales,
@@ -41,32 +41,32 @@ describe('useLocaleUpdate', () => {
   })
   it('returns correct modelCurrentLocale', () => {
     const { modelCurrentLocale } = useLocaleUpdate()
-    // default locale is 'en'
-    expect(modelCurrentLocale.value).toBe('en')
+    // default locale is 'en-us'
+    expect(modelCurrentLocale.value).toBe('en-us')
   })
   it('returns a list of locales', async () => {
     const { loadLocales } = useLocaleStore()
     await loadLocales()
     const { localeOptions } = useLocaleUpdate()
     const expectedOptions = [
-      { value: 'de', label: 'Deutsch' },
-      { value: 'en', label: 'English' },
+      { value: 'de-de', label: 'Deutsch' },
+      { value: 'en-us', label: 'English (United States)' },
     ]
     expect(localeOptions.value).toEqual(expectedOptions)
   })
   it('updates modelCurrentLocale correctly', async () => {
     const { sendMock } = mockUpdateLocaleMutationHandler()
     const { modelCurrentLocale, isSavingLocale } = useLocaleUpdate()
-    modelCurrentLocale.value = 'de'
+    modelCurrentLocale.value = 'de-de'
     expect(isSavingLocale.value).toBe(true)
     expect(sendMock).toHaveBeenCalledOnce()
     expect(sendMock).toHaveBeenCalledWith({
-      locale: 'de',
+      locale: 'de-de',
     })
     await waitUntil(() => {
       return isSavingLocale.value === false
     })
-    expect(modelCurrentLocale.value).toBe('de')
+    expect(modelCurrentLocale.value).toBe('de-de')
     expect(isSavingLocale.value).toBe(false)
   })
 })

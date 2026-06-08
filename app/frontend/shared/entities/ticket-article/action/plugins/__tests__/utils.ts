@@ -1,12 +1,9 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { generateObjectData } from '#tests/graphql/builders/index.ts'
 import { initializeStore } from '#tests/support/components/initializeStore.ts'
 
-import type {
-  TicketArticle,
-  TicketById,
-} from '#shared/entities/ticket/types.ts'
+import type { TicketArticle, TicketById } from '#shared/entities/ticket/types.ts'
 import {
   EnumTicketArticleSenderName,
   type PolicyTicket,
@@ -23,10 +20,7 @@ export const createTicketArticle = (defaults?: DeepPartial<TicketArticle>) => {
   return generateObjectData<TicketArticle>('TicketArticle', defaults)
 }
 
-const defaultOptions: Pick<
-  TicketActionAddOptions,
-  'onDispose' | 'recalculate'
-> = {
+const defaultOptions: Pick<TicketActionAddOptions, 'onDispose' | 'recalculate'> = {
   recalculate: vi.fn(),
   onDispose: vi.fn(),
 }
@@ -61,10 +55,7 @@ export const createTestArticleActions = (
   return createArticleActions(ticket, article, app, defaultOptions)
 }
 
-export const createTestArticleTypes = (
-  ticket: TicketById,
-  app: AppName = 'mobile',
-) => {
+export const createTestArticleTypes = (ticket: TicketById, app: AppName = 'mobile') => {
   initializeStore()
   return createArticleTypes(ticket, app)
 }

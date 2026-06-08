@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
@@ -20,10 +20,7 @@ defineOptions({
   beforeRouteEnter(to, from) {
     const application = useApplicationStore()
 
-    if (
-      !application.config.import_backend &&
-      from.name !== 'GuidedSetupImportSource'
-    ) {
+    if (!application.config.import_backend && from.name !== 'GuidedSetupImportSource') {
       return { path: `/guided-setup/import/${to.params.source}`, replace: true }
     }
   },
@@ -42,12 +39,10 @@ const { systemSetupUnlock } = useSystemSetupInfoStore()
 
 const sourcePlugin = guidedSetupImportSourcePluginLookup[props.source]
 
-setTitle(i18n.t('Start Import from %s', sourcePlugin.label))
+setTitle(i18n.t('Start import from %s', sourcePlugin.label))
 
 const startImport = () => {
-  const importStartMutation = new MutationHandler(
-    useSystemImportStartMutation(),
-  )
+  const importStartMutation = new MutationHandler(useSystemImportStartMutation())
 
   importStartMutation
     .send()
@@ -69,15 +64,9 @@ const startImport = () => {
         )
       }}
     </CommonLabel>
-    <CommonLink
-      class="text-sm"
-      :link="sourcePlugin.documentationURL"
-      external
-      open-in-new-tab
-      >{{
-        $t('For additional support, consult our migration guide.')
-      }}</CommonLink
-    >
+    <CommonLink :link="sourcePlugin.documentationURL" size="medium" external open-in-new-tab>
+      {{ $t('For additional support, consult our migration guide.') }}
+    </CommonLink>
     <div
       v-if="sourcePlugin.preStartHints && sourcePlugin.preStartHints.length > 0"
       class="flex flex-col gap-1.5"
@@ -101,7 +90,7 @@ const startImport = () => {
   </div>
   <GuidedSetupActionFooter
     :go-back-route="`/guided-setup/import/${source}`"
-    :submit-button-text="__('Start Import')"
+    :submit-button-text="__('Start import')"
     @submit="startImport"
   />
 </template>

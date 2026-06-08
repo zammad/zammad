@@ -38,6 +38,7 @@ export const TicketsByOverviewSlimDocument = gql`
           id
           name
         }
+        aiAgentRunning
         state {
           id
           name

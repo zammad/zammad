@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -33,7 +33,7 @@ RSpec.describe Locale, type: :model do
       end
 
       it 'imports locale data correctly' do
-        expect(described_class.find_by(locale: 'de-de')).to have_attributes(locale: 'de-de', alias: 'de', name: 'Deutsch', dir: 'ltr', active: true)
+        expect(described_class.find_by(locale: 'de-de')).to have_attributes(locale: 'de-de', alias: 'de', name: 'Deutsch - German', dir: 'ltr', active: true)
       end
     end
   end

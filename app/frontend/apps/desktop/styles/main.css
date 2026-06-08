@@ -2,6 +2,7 @@
 @import 'tailwindcss';
 @import './tokens.css';
 @import './transitions.css';
+@import '../../../shared/styles/utilities.css';
 
 @plugin '@formkit/themes/tailwindcss';
 @plugin '../../../build/zammadTailwindPlugin.js';
@@ -9,6 +10,13 @@
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] * ));
 
 @layer base {
+  :root {
+    /* LIMITED support -> opt-in modern browsers @see https://developer.mozilla.org/en-US/docs/Web/CSS/interpolate-size */
+
+    /* allows animating of intrinsic absolute <-> relative units */
+    interpolate-size: allow-keywords;
+  }
+
   /* Override autofill styles in Firefox. */
   :-moz-autofill {
     background: transparent;
@@ -21,27 +29,16 @@
     caret-color: var(--color-black);
   }
 
-  [data-theme='dark'] :-webkit-autofill {
-    -webkit-text-fill-color: var(--color-white);
-    caret-color: var(--color-white);
+  @variant dark {
+    :-webkit-autofill {
+      -webkit-text-fill-color: var(--color-white);
+      caret-color: var(--color-white);
+    }
   }
 
   /* No-op animation for hooking into autofill mechanism in Webkit-based browsers. */
   :-webkit-autofill {
     animation-name: onAutoFillStart;
-  }
-
-  :not(:-webkit-autofill) {
-    animation-name: onAutoFillEnd;
-  }
-
-  /* Better-looking typography on high-density screens. */
-  body {
-    @apply antialiased;
-  }
-
-  a {
-    @apply text-blue-800 focus-visible:rounded-xs focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800;
   }
 
   @keyframes onAutoFillStart {
@@ -52,12 +49,78 @@
     }
   }
 
+  :not(:-webkit-autofill) {
+    animation-name: onAutoFillEnd;
+  }
+
   @keyframes onAutoFillEnd {
     from {
     }
 
     to {
     }
+  }
+
+  /* Better-looking typography on high-density screens. */
+  body {
+    @apply antialiased;
+  }
+
+  a {
+    @apply text-blue-800 hover:text-blue-850 hover:underline focus-visible:rounded-xs focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 hover:dark:text-blue-600;
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    @apply text-stone-200 dark:text-neutral-500;
+  }
+
+  button,
+  [role='button'] {
+    cursor: pointer;
+  }
+
+  /*
+  * CSS Custom Highlight API – article body text highlights.
+  * ::highlight() inherits CSS custom properties from the cascade, so dark-mode
+  * overrides defined in @variant dark block are picked up automatically.
+  */
+  :root {
+    --article-highlight-yellow: var(--color-yellow-200);
+    --article-highlight-green: var(--color-green-350);
+    --article-highlight-blue: var(--color-blue-550);
+    --article-highlight-pink: var(--color-pink-150);
+    --article-highlight-purple: var(--color-purple-100);
+  }
+
+  @variant dark {
+    &:root {
+      --article-highlight-yellow: var(--color-yellow-750);
+      --article-highlight-green: var(--color-green-700);
+      --article-highlight-blue: var(--color-blue-875);
+      --article-highlight-pink: var(--color-pink-700);
+      --article-highlight-purple: var(--color-purple-700);
+    }
+  }
+
+  ::highlight(highlight-yellow) {
+    background-color: var(--article-highlight-yellow);
+  }
+
+  ::highlight(highlight-green) {
+    background-color: var(--article-highlight-green);
+  }
+
+  ::highlight(highlight-blue) {
+    background-color: var(--article-highlight-blue);
+  }
+
+  ::highlight(highlight-pink) {
+    background-color: var(--article-highlight-pink);
+  }
+
+  ::highlight(highlight-purple) {
+    background-color: var(--article-highlight-purple);
   }
 }
 
@@ -66,54 +129,39 @@
     grid-column: span 2;
   }
 
-  input::placeholder,
-  textarea::placeholder {
-    @apply text-stone-200 dark:text-neutral-500;
-  }
-
   /*
     Responsive multi-column mode for form groups:
     - compatibility layer for object attributes and form columns via legacy `.formGroup--halfSize` class
     - container query via optional TW `@container/form-group` class
   */
   .form-group .formkit-outer {
-    /* stylelint-disable-next-line scss/operator-no-unspaced */
-    @apply col-span-2 @lg/form-group:col-span-1;
+    /* All fields default to full-width. */
+    @apply col-span-full;
 
-    /* Optional full-width style for specific fields. */
-    &[data-type='editor'],
-    &[data-type='file'],
-    &:last-of-type:nth-of-type(odd) {
-      /* stylelint-disable-next-line scss/operator-no-unspaced */
-      @apply @lg/form-group:col-span-2;
-    }
-
+    /* Optional single-column style for configured fields (medium+ breakpoint). */
     &.form-group-single-column {
-      @apply col-span-1;
+      @apply @md:col-span-1;
+    }
+  }
+
+  /*
+    Responsive multi-column mode for object attributes:
+    - compatibility layer for object attributes via legacy `.formGroup--halfSize` class
+    - container query via optional TW `@container/object-attributes` class
+  */
+  .object-attributes .object-attribute {
+    @apply col-span-full @md/object-attributes:col-span-1;
+
+    /* Optional full-width style for configured attributes. */
+    &.object-attribute-spanned-column,
+    &:last-of-type:nth-of-type(odd) {
+      @apply @md/object-attributes:col-span-full;
     }
   }
 
   /*
     Use specific selector for dirty flag styling due to nested FormKit fields.
   */
-  [data-theme='dark']
-    .form-group.form-group-mark-dirty
-    > .formkit-outer[data-dirty]
-    > .formkit-block
-    > .formkit-wrapper
-    > .formkit-inner {
-    &::before {
-      background: repeating-linear-gradient(
-          45deg,
-          var(--color-gray-200),
-          var(--color-gray-200) 5px,
-          transparent 5px,
-          transparent 10px
-        )
-        repeat center;
-    }
-  }
-
   .form-group.form-group-mark-dirty
     > .formkit-outer[data-dirty]
     > .formkit-block
@@ -122,12 +170,12 @@
     @apply relative;
 
     &::before {
-      @apply absolute top-0 bottom-0 w-2 rounded-ss-lg rounded-es-lg content-[''] ltr:left-0 rtl:right-0;
+      @apply absolute inset-s-px top-px bottom-px w-1.75 rounded-ss-lg rounded-es-lg content-[''];
 
       background: repeating-linear-gradient(
           45deg,
-          var(--color-white),
-          var(--color-white) 5px,
+          var(--color-blue-300),
+          var(--color-blue-300) 5px,
           transparent 5px,
           transparent 10px
         )
@@ -142,8 +190,27 @@
     }
   }
 
+  @variant dark {
+    .form-group.form-group-mark-dirty
+      > .formkit-outer[data-dirty]
+      > .formkit-block
+      > .formkit-wrapper
+      > .formkit-inner {
+      &::before {
+        background: repeating-linear-gradient(
+            45deg,
+            var(--color-gray-200),
+            var(--color-gray-200) 5px,
+            transparent 5px,
+            transparent 10px
+          )
+          repeat center;
+      }
+    }
+  }
+
   .tooltip {
-    @apply fixed z-50 w-fit -translate-y-2 rounded-md border border-neutral-100 bg-blue-200 px-2 py-1 text-xs leading-snug text-wrap text-gray-100 opacity-0 transition-all select-none dark:border-gray-900 dark:bg-gray-700 dark:text-neutral-400;
+    @apply fixed z-60 w-fit -translate-y-2 rounded-md border border-neutral-100 bg-blue-200 px-2 py-1 text-xs leading-snug text-wrap text-gray-100 opacity-0 transition-all select-none dark:border-gray-900 dark:bg-gray-700 dark:text-neutral-400;
   }
 
   .tooltip-animate {
@@ -153,7 +220,7 @@
   /*
     Editor content styles
   */
-  .Content,
+  .Content .inner-article-body,
   .ProseMirror {
     div[data-signature-marker] {
       display: none;
@@ -163,8 +230,16 @@
       outline: none;
     }
 
+    p {
+      @apply my-2 min-h-5;
+    }
+
     blockquote {
-      @apply border-l-4 border-l-gray-200 px-3 py-2;
+      @apply border-s-5 border-s-neutral-100 px-3 py-px dark:border-s-gray-500;
+
+      .Content--customer & {
+        @apply border-s-blue-300 dark:border-s-stone-700;
+      }
     }
 
     ol {
@@ -177,10 +252,12 @@
 
     ol,
     ul {
-      @apply pb-2;
+      @apply ms-5 pb-2;
 
-      padding-inline-start: 0.5rem;
-      list-style-position: inside;
+      ol,
+      ul {
+        padding-bottom: 0;
+      }
 
       p {
         display: inline;
@@ -188,19 +265,15 @@
     }
 
     h1 {
-      @apply mt-2 mb-1 text-2xl font-bold;
-    }
-
-    h2 {
       @apply mt-2 mb-1 text-xl font-bold;
     }
 
-    h3 {
-      @apply mt-2 mb-1 text-lg font-bold;
+    h2 {
+      @apply mt-2 mb-1 text-base font-bold;
     }
 
-    a {
-      @apply text-blue-800;
+    h3 {
+      @apply mt-2 mb-1 text-sm font-bold;
     }
 
     [dir='rtl'] {
@@ -209,6 +282,199 @@
 
     [dir='ltr'] {
       text-align: left;
+    }
+
+    pre {
+      @apply my-2 rounded-md bg-black/10 p-2.5 break-all whitespace-pre-wrap dark:bg-black/20;
+
+      code {
+        @apply bg-transparent p-0;
+      }
+    }
+
+    code {
+      @apply rounded-md bg-black/10 px-0.75 py-px font-mono wrap-break-word whitespace-pre-wrap dark:bg-black/20;
+    }
+
+    table.zammad-table,
+    &:not(.Content .inner-article-body) table {
+      @apply my-2 w-full max-w-full table-fixed border-collapse overflow-hidden border-2 border-neutral-700 dark:border-neutral-500;
+
+      td,
+      th {
+        @apply relative box-border min-w-[1em] border border-neutral-700 px-1.25 py-0.75 align-top dark:border-neutral-500;
+      }
+
+      th {
+        @apply bg-black/10 text-start font-bold dark:bg-black/20;
+      }
+    }
+
+    table td,
+    table th {
+      > * {
+        @apply m-0;
+      }
+    }
+
+    hr {
+      @apply my-2 h-px border-none bg-stone-200 text-[0px] dark:bg-neutral-500;
+    }
+
+    @variant dark {
+      /* neutral 1 */
+      [style*='color:rgb(102, 102, 102)'],
+      [style*='color: rgb(102, 102, 102)'] {
+        color: rgb(204, 204, 204) !important;
+      }
+
+      /* neutral 2 is the same for both themes */
+
+      /* neutral 3 */
+      [style*='color:rgb(204, 204, 204)'],
+      [style*='color: rgb(204, 204, 204)'] {
+        color: rgb(102, 102, 102) !important;
+      }
+
+      /* red 1 */
+      [style*='color:rgb(239, 68, 68)'],
+      [style*='color: rgb(239, 68, 68)'] {
+        color: rgb(241, 152, 167) !important;
+      }
+
+      /* orange 1 */
+      [style*='color:rgb(205, 121, 45)'],
+      [style*='color: rgb(205, 121, 45)'] {
+        color: rgb(246, 211, 102) !important;
+      }
+
+      /* green 1 */
+      [style*='color:rgb(80, 140, 70)'],
+      [style*='color: rgb(80, 140, 70)'] {
+        color: rgb(170, 214, 164) !important;
+      }
+
+      /* blue 1 */
+      [style*='color:rgb(48, 100, 172)'],
+      [style*='color: rgb(48, 100, 172)'] {
+        color: rgb(122, 202, 247) !important;
+      }
+
+      /* purple 1 */
+      [style*='color:rgb(107, 41, 132)'],
+      [style*='color: rgb(107, 41, 132)'] {
+        color: rgb(201, 135, 236) !important;
+      }
+
+      /* red 2 */
+      [style*='color:rgb(235, 61, 79)'],
+      [style*='color: rgb(235, 61, 79)'] {
+        color: rgb(237, 97, 118) !important;
+      }
+
+      /* orange 2 */
+      [style*='color:rgb(233, 159, 59)'],
+      [style*='color: rgb(233, 159, 59)'] {
+        color: rgb(243, 193, 79) !important;
+      }
+
+      /* green 2 */
+      [style*='color:rgb(95, 159, 84)'],
+      [style*='color: rgb(95, 159, 84)'] {
+        color: rgb(127, 187, 118) !important;
+      }
+
+      /* blue 2 */
+      [style*='color:rgb(70, 147, 231)'],
+      [style*='color: rgb(70, 147, 231)'] {
+        color: rgb(91, 174, 243) !important;
+      }
+
+      /* purple 2 */
+      [style*='color:rgb(153, 62, 195)'],
+      [style*='color: rgb(153, 62, 195)'] {
+        color: rgb(179, 91, 223) !important;
+      }
+
+      /* red 3 */
+      [style*='color:rgb(237, 97, 118)'],
+      [style*='color: rgb(237, 97, 118)'] {
+        color: rgb(235, 61, 79) !important;
+      }
+
+      /* orange 3 */
+      [style*='color:rgb(243, 193, 79)'],
+      [style*='color: rgb(243, 193, 79)'] {
+        color: rgb(233, 159, 59) !important;
+      }
+
+      /* green 3 */
+      [style*='color:rgb(127, 187, 118)'],
+      [style*='color: rgb(127, 187, 118)'] {
+        color: rgb(95, 159, 84) !important;
+      }
+
+      /* blue 3 */
+      [style*='color:rgb(91, 174, 243)'],
+      [style*='color: rgb(91, 174, 243)'] {
+        color: rgb(70, 147, 231) !important;
+      }
+
+      /* purple 3 */
+      [style*='color:rgb(179, 91, 223)'],
+      [style*='color: rgb(179, 91, 223)'] {
+        color: rgb(153, 62, 195) !important;
+      }
+
+      /* red 4 */
+      [style*='color:rgb(241, 152, 167)'],
+      [style*='color: rgb(241, 152, 167)'] {
+        color: rgb(239, 68, 68) !important;
+      }
+
+      /* orange 4 */
+      [style*='color:rgb(246, 211, 102)'],
+      [style*='color: rgb(246, 211, 102)'] {
+        color: rgb(205, 121, 45) !important;
+      }
+
+      /* green 4 */
+      [style*='color:rgb(170, 214, 164)'],
+      [style*='color: rgb(170, 214, 164)'] {
+        color: rgb(80, 140, 70) !important;
+      }
+
+      /* blue 4 */
+      [style*='color:rgb(122, 202, 247)'],
+      [style*='color: rgb(122, 202, 247)'] {
+        color: rgb(48, 100, 172) !important;
+      }
+
+      /* purple 4 */
+      [style*='color:rgb(201, 135, 236)'],
+      [style*='color: rgb(201, 135, 236)'] {
+        color: rgb(107, 41, 132) !important;
+      }
+    }
+  }
+
+  /*
+    Reset styles for nested tables in blockquotes and signatures.
+      There is currently no way to determine whether they are internal or external.
+      These tables will not be assigned `zammad-table` class on submission anyway.
+      We need to increase specificity to override the base styles, therefore we repeat the wrapper selector.
+  */
+  .ProseMirror blockquote .tableWrapper.tableWrapper.tableWrapper table,
+  .ProseMirror [data-signature='true'] .tableWrapper.tableWrapper table {
+    @apply m-0 w-auto max-w-none table-auto overflow-auto border-1 border-neutral-700/60 dark:border-neutral-500/60;
+
+    td,
+    th {
+      @apply min-w-auto border-neutral-700/60 dark:border-neutral-500/60;
+    }
+
+    th {
+      @apply bg-transparent;
     }
   }
 
@@ -228,16 +494,184 @@
     position: absolute;
     z-index: -10;
   }
-}
 
-[data-theme='dark'] .bg-stripes::before {
-  background-image: repeating-linear-gradient(
-    45deg,
-    var(--color-blue-700),
-    var(--color-blue-700) 5px,
-    var(--color-blue-900) 5px,
-    var(--color-blue-900) 10px
-  );
+  @variant dark {
+    .bg-stripes::before {
+      background-image: repeating-linear-gradient(
+        45deg,
+        var(--color-blue-700),
+        var(--color-blue-700) 5px,
+        var(--color-blue-900) 5px,
+        var(--color-blue-900) 10px
+      );
+    }
+  }
+
+  .progress-bar {
+    &.progress-bar--primary {
+      --pb-fill: var(--color-blue-800);
+      --pb-track: var(--color-blue-200);
+
+      @variant dark {
+        --pb-track: var(--color-gray-700);
+      }
+    }
+
+    &.progress-bar--inverted {
+      --pb-fill: var(--color-black);
+      --pb-track: rgba(0, 0, 0, 0.1);
+
+      @variant dark {
+        --pb-fill: var(--color-white);
+        --pb-track: rgba(255, 255, 255, 0.1);
+      }
+    }
+
+    background-color: var(--pb-track);
+
+    &::-webkit-progress-bar {
+      border-radius: 1rem;
+      background-color: var(--pb-track);
+    }
+
+    &::-webkit-progress-value {
+      border-radius: 0;
+      background-color: var(--pb-fill);
+      transition: width 1s;
+    }
+
+    &::-moz-progress-bar {
+      border-radius: 0;
+      background-color: var(--pb-fill);
+    }
+
+    &:indeterminate {
+      background-image: repeating-linear-gradient(
+        90deg,
+        var(--pb-fill) -1%,
+        var(--pb-fill) 10%,
+        transparent 10%,
+        transparent 90%
+      );
+      background-size: 200%;
+      background-position-x: 15%;
+      animation: progress-loading 5s ease-in-out infinite;
+    }
+
+    &:indeterminate::-moz-progress-bar {
+      background-color: var(--pb-track);
+      background-image: repeating-linear-gradient(
+        90deg,
+        var(--pb-fill) -1%,
+        var(--pb-fill) 10%,
+        transparent 10%,
+        transparent 90%
+      );
+      background-size: 200%;
+      background-position-x: 15%;
+      animation: progress-loading 5s ease-in-out infinite;
+    }
+  }
+
+  @keyframes progress-loading {
+    50% {
+      background-position-x: -115%;
+    }
+  }
+
+  .select-scroll-shadows {
+    max-height: 85px;
+    margin: -7px 0;
+    padding: 7px 0;
+
+    /*
+      All background layers are needed to properly display scroll shadows on both light and dark themes:
+      - scroll cover top
+      - scroll cover bottom
+      - scroll shadow top
+      - scroll shadow bottom
+
+      The radial shadow gradients create a smooth fade-out of the shadow at the top and bottom edges,
+      while the linear cover gradients ensure that the shadow is visible only when the content is not scrolled
+      all the way to the top or bottom.
+
+      Due to the `background` directive overriding all background-related properties, we need to repeat the entire
+      positioning declaration for both themes (dark/light) and styles (base/alt).
+    */
+    &.select-scroll-shadows--base {
+      background:
+        linear-gradient(rgb(237, 241, 242) 30%, transparent) center top,
+        linear-gradient(transparent, rgb(237, 241, 242) 70%) center bottom,
+        radial-gradient(farthest-side at 50% 0, rgba(35, 162, 205, 0.5), transparent) center top,
+        radial-gradient(farthest-side at 50% 100%, rgba(35, 162, 205, 0.5), transparent) center
+          bottom;
+      background-repeat: no-repeat;
+      background-size:
+        100% 40px,
+        100% 40px,
+        100% 14px,
+        100% 14px;
+      background-attachment: local, local, scroll, scroll;
+
+      @variant dark {
+        background:
+          linear-gradient(rgb(38, 38, 39) 30%, transparent) center top,
+          linear-gradient(transparent, rgb(38, 38, 39) 70%) center bottom,
+          radial-gradient(farthest-side at 50% 0, rgba(35, 162, 205, 0.5), transparent) center top,
+          radial-gradient(farthest-side at 50% 100%, rgba(35, 162, 205, 0.5), transparent) center
+            bottom;
+        background-repeat: no-repeat;
+        background-size:
+          100% 40px,
+          100% 40px,
+          100% 14px,
+          100% 14px;
+        background-attachment: local, local, scroll, scroll;
+      }
+    }
+
+    &.select-scroll-shadows--alt {
+      background:
+        linear-gradient(rgb(250, 250, 250) 30%, transparent) center top,
+        linear-gradient(transparent, rgb(250, 250, 250) 70%) center bottom,
+        radial-gradient(farthest-side at 50% 0, rgba(35, 162, 205, 0.5), transparent) center top,
+        radial-gradient(farthest-side at 50% 100%, rgba(35, 162, 205, 0.5), transparent) center
+          bottom;
+      background-repeat: no-repeat;
+      background-size:
+        100% 40px,
+        100% 40px,
+        100% 14px,
+        100% 14px;
+      background-attachment: local, local, scroll, scroll;
+
+      @variant dark {
+        background:
+          linear-gradient(rgb(50, 50, 52) 30%, transparent) center top,
+          linear-gradient(transparent, rgb(50, 50, 52) 70%) center bottom,
+          radial-gradient(farthest-side at 50% 0, rgba(35, 162, 205, 0.5), transparent) center top,
+          radial-gradient(farthest-side at 50% 100%, rgba(35, 162, 205, 0.5), transparent) center
+            bottom;
+        background-repeat: no-repeat;
+        background-size:
+          100% 40px,
+          100% 40px,
+          100% 14px,
+          100% 14px;
+        background-attachment: local, local, scroll, scroll;
+      }
+    }
+  }
+
+  @media print {
+    [data-print-mode='true'] body {
+      @apply invisible;
+
+      & .print-area {
+        @apply visible fixed inset-0;
+      }
+    }
+  }
 }
 
 @utility group-block {
@@ -249,7 +683,7 @@
 }
 
 @utility required {
-  @apply after:ms-1.5 after:inline-block after:h-1.5 after:w-1.5 after:rounded-full after:bg-yellow-600 after:align-middle after:content-[''];
+  @apply after:ms-1.5 after:inline-block after:size-1.5 after:rounded-full after:bg-yellow-600 after:align-middle after:content-[''];
 }
 
 @utility ai-stripe {
@@ -257,32 +691,76 @@
     content: '';
     height: 2px;
     width: 100%;
-    background-image: repeating-linear-gradient(
+    background: repeating-linear-gradient(
       to right,
       var(--color-blue-800),
-      var(--color-pink-200)
+      var(--color-pink-200),
+      var(--color-blue-800)
     );
+    background-size: 200% auto;
+    background-position: 0 100%;
+    transition: background-position 1s ease-in-out;
+  }
+}
+
+@utility animate-ai-stripe-vertical {
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 100%;
+    width: 2px;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+      to bottom,
+      var(--color-blue-800),
+      var(--color-pink-200),
+      var(--color-blue-800)
+    );
+    background-size: 100% 200%;
+    z-index: 1;
+    animation: gradient-vertical 2s linear infinite;
+    animation-fill-mode: forwards;
+  }
+}
+
+@keyframes gradient-vertical {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 0 -200%;
+  }
+}
+
+@utility animate-ai-stripe {
+  &::before {
+    animation: gradient 2s infinite;
+    animation-fill-mode: forwards;
+    animation-timing-function: linear;
+  }
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: -200% 0;
   }
 }
 
 /* https://developer.mozilla.org/en-US/docs/Web/CSS/word-break#break-word */
 @utility break-word {
   overflow-wrap: anywhere !important;
-  word-wrap: normal;
 }
 
-/* Uses to be in the @layer utilities */
-@media print {
-  [data-print-mode='true'] body {
-    @apply invisible;
-
-    & .print-area {
-      @apply visible fixed inset-0;
-    }
-  }
-}
-
-button,
-[role='button'] {
-  cursor: pointer;
+@utility focus-visible-app-default {
+  @apply focus:outline-transparent focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800;
 }

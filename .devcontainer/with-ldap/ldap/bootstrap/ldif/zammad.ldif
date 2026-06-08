@@ -1,0 +1,302 @@
+dn: dc=foo,dc=example,dc=com
+objectClass: top
+objectClass: domain
+dc: foo
+
+dn: cn=nb,dc=foo,dc=example,dc=com
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: inetOrgPerson
+cn: Nicole
+sn: Braun
+uid: nb
+uidNumber: 5000
+gidNumber: 5000
+userPassword: testnb
+homeDirectory: /home/nb
+loginShell: /bin/sh
+gecos: Comments
+mail: nb@example.com
+telephoneNumber: 110
+roomNumber: 0200
+
+dn: cn=ab,dc=foo,dc=example,dc=com
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: inetOrgPerson
+cn: Albert
+sn: Braun
+uid: ab
+uidNumber: 5001
+gidNumber: 5000
+userPassword: testab
+homeDirectory: /home/ab
+loginShell: /bin/sh
+gecos: Comments
+mail: ab@example.com
+telephoneNumber: 111
+roomNumber: 0201
+
+dn: cn=bb,dc=foo,dc=example,dc=com
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: inetOrgPerson
+cn: Berta
+sn: Braun
+uid: bb
+uidNumber: 5002
+gidNumber: 5000
+userPassword: testbb
+homeDirectory: /home/bb
+loginShell: /bin/sh
+gecos: Comments
+mail: bb@example.com
+telephoneNumber: 112
+roomNumber: 0202
+
+dn: cn=fb,dc=foo,dc=example,dc=com
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: inetOrgPerson
+cn: Frida
+sn: Braun
+uid: fb
+uidNumber: 5003
+gidNumber: 5000
+userPassword: testfb
+homeDirectory: /home/fb
+loginShell: /bin/sh
+gecos: Comments
+mail: fb@example.com
+telephoneNumber: 113
+roomNumber: 0203
+
+dn: cn=lb,dc=foo,dc=example,dc=com
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: inetOrgPerson
+cn: Lena
+sn: Braun
+uid: lb
+uidNumber: 5004
+gidNumber: 5000
+userPassword: testlb
+homeDirectory: /home/lb
+loginShell: /bin/sh
+gecos: Comments
+mail: lb@example.com
+telephoneNumber: 114
+roomNumber: 0204
+
+dn: cn=eb,dc=foo,dc=example,dc=com
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: inetOrgPerson
+cn: Elke
+sn: Braun
+uid: eb
+uidNumber: 5005
+gidNumber: 5000
+userPassword: testeb
+homeDirectory: /home/eb
+loginShell: /bin/sh
+gecos: Comments
+mail: eb@example.com
+telephoneNumber: 115
+roomNumber: 0205
+
+dn: cn=customer1,dc=foo,dc=example,dc=com
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: inetOrgPerson
+cn: Customer
+sn: 1
+uid: customer1
+uidNumber: 6001
+gidNumber: 6000
+userPassword: testc1
+homeDirectory: /home/customer1
+loginShell: /bin/sh
+gecos: Comments
+mail: customer1@example.com
+telephoneNumber: 1001
+roomNumber: 2001
+
+dn: cn=customer2,dc=foo,dc=example,dc=com
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: inetOrgPerson
+cn: Customer
+sn: 2
+uid: customer2
+uidNumber: 6002
+gidNumber: 6000
+userPassword: testc2
+homeDirectory: /home/customer2
+loginShell: /bin/sh
+gecos: Comments
+mail: customer2@example.com
+telephoneNumber: 1002
+roomNumber: 2002
+
+dn: cn=customer3,dc=foo,dc=example,dc=com
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: inetOrgPerson
+cn: Customer
+sn: 3
+uid: customer3
+uidNumber: 6003
+gidNumber: 6000
+userPassword: testc3
+homeDirectory: /home/customer3
+loginShell: /bin/sh
+gecos: Comments
+mail: customer3@example.com
+telephoneNumber: 1003
+roomNumber: 2003
+
+dn: cn=customer4,dc=foo,dc=example,dc=com
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: inetOrgPerson
+cn: Customer
+sn: 4
+uid: customer4
+uidNumber: 6004
+gidNumber: 6000
+userPassword: testc4
+homeDirectory: /home/customer4
+loginShell: /bin/sh
+gecos: Comments
+mail: customer4@example.com
+telephoneNumber: 1004
+roomNumber: 2004
+
+dn: cn=customer5,dc=foo,dc=example,dc=com
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: inetOrgPerson
+cn: Customer
+sn: 5
+uid: customer5
+uidNumber: 6005
+gidNumber: 6000
+userPassword: testc5
+homeDirectory: /home/customer5
+loginShell: /bin/sh
+gecos: Comments
+mail: customer5@example.com
+telephoneNumber: 1005
+roomNumber: 2005
+
+dn: cn=customer6,dc=foo,dc=example,dc=com
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: inetOrgPerson
+cn: Customer
+sn: 6
+uid: customer6
+uidNumber: 6006
+gidNumber: 6000
+userPassword: testc6
+homeDirectory: /home/customer6
+loginShell: /bin/sh
+gecos: Comments
+mail: customer6@example.com
+telephoneNumber: 1000
+roomNumber: 2000
+
+dn: cn=customer7,dc=foo,dc=example,dc=com
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: inetOrgPerson
+cn: Customer
+sn: 7
+uid: customer7
+uidNumber: 6007
+gidNumber: 6000
+userPassword: testc7
+homeDirectory: /home/customer7
+loginShell: /bin/sh
+gecos: Comments
+mail: customer7@example.com
+telephoneNumber: 1007
+roomNumber: 2007
+
+dn: cn=customer8,dc=foo,dc=example,dc=com
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: inetOrgPerson
+cn: Customer
+sn: 8
+uid: customer8
+uidNumber: 6008
+gidNumber: 6000
+userPassword: testc8
+homeDirectory: /home/customer8
+loginShell: /bin/sh
+gecos: Comments
+mail: customer8@example.com
+telephoneNumber: 1008
+roomNumber: 2008
+
+dn: ou=groups,dc=foo,dc=example,dc=com
+objectClass: organizationalUnit
+ou: groups
+
+dn: cn=admin,ou=groups,dc=foo,dc=example,dc=com
+objectClass: top
+objectClass: groupOfNames
+member: cn=ab,dc=foo,dc=example,dc=com
+member: cn=bb,dc=foo,dc=example,dc=com
+
+dn: cn=1st level,ou=groups,dc=foo,dc=example,dc=com
+objectClass: top
+objectClass: groupOfNames
+member: cn=eb,dc=foo,dc=example,dc=com
+member: cn=lb,dc=foo,dc=example,dc=com
+
+dn: cn=2nd level,ou=groups,dc=foo,dc=example,dc=com
+objectClass: top
+objectClass: groupOfNames
+member: cn=fb,dc=foo,dc=example,dc=com
+member: cn=lb,dc=foo,dc=example,dc=com
+
+dn: cn=3rd level,ou=groups,dc=foo,dc=example,dc=com
+objectClass: top
+objectClass: groupOfNames
+member: cn=3rd level - north,ou=groups,dc=foo,dc=example,dc=com
+member: cn=3rd level - west,ou=groups,dc=foo,dc=example,dc=com
+
+dn: cn=3rd level - north,ou=groups,dc=foo,dc=example,dc=com
+objectClass: top
+objectClass: groupOfNames
+member: cn=fb,dc=foo,dc=example,dc=com
+
+dn: cn=3rd level - west,ou=groups,dc=foo,dc=example,dc=com
+objectClass: top
+objectClass: groupOfNames
+member: cn=lb,dc=foo,dc=example,dc=com
+
+dn: cn=4th level,ou=groups,dc=foo,dc=example,dc=com
+objectClass: top
+objectClass: groupOfNames
+member: cn=4th level - north,ou=groups,dc=foo,dc=example,dc=com
+member: cn=4th level - west,ou=groups,dc=foo,dc=example,dc=com
+
+dn: cn=4th level - north,ou=groups,dc=foo,dc=example,dc=com
+objectClass: top
+objectClass: groupOfNames
+member: cn=ab,dc=foo,dc=example,dc=com
+
+dn: cn=4th level - west,ou=groups,dc=foo,dc=example,dc=com
+objectClass: top
+objectClass: groupOfNames
+member: cn=bb,dc=foo,dc=example,dc=com
+
+dn: cn=sales,ou=groups,dc=foo,dc=example,dc=com
+objectClass: top
+objectClass: groupOfNames
+member: cn=ab,dc=foo,dc=example,dc=com
+member: cn=nb,dc=foo,dc=example,dc=com

@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { getNode } from '@formkit/core'
 import { waitFor, within } from '@testing-library/vue'
@@ -9,6 +9,7 @@ import { visitView } from '#tests/support/components/visitView.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
+import { waitUntil } from '#tests/support/vitest-wrapper.ts'
 
 import { waitForFormUpdaterQueryCalls } from '#shared/components/Form/graphql/queries/formUpdater.mocks.ts'
 import { mockObjectManagerFrontendAttributesQuery } from '#shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.mocks.ts'
@@ -25,10 +26,7 @@ import {
   waitForTicketSharedDraftStartSingleQueryCalls,
 } from '#shared/entities/ticket-shared-draft-start/graphql/queries/ticketSharedDraftStartSingle.mocks.ts'
 import { getTicketSharedDraftStartUpdateByGroupSubscriptionHandler } from '#shared/entities/ticket-shared-draft-start/graphql/subscriptions/ticketSharedDraftStartUpdateByGroup.mocks.ts'
-import {
-  convertToGraphQLId,
-  getIdFromGraphQLId,
-} from '#shared/graphql/utils.ts'
+import { convertToGraphQLId, getIdFromGraphQLId } from '#shared/graphql/utils.ts'
 import getUuid from '#shared/utils/getUuid.ts'
 
 import { handleMockFormUpdaterQuery } from '#desktop/pages/ticket/__tests__/support/ticket-create-helpers.ts'
@@ -40,15 +38,11 @@ vi.hoisted(() => {
 
 const uid = getUuid()
 
-describe('ticket create view - shared drafts sidebar', async () => {
-  describe('with agent permissions', async () => {
+describe('ticket create view - shared drafts sidebar', () => {
+  describe('with agent permissions', () => {
     beforeEach(() => {
       mockApplicationConfig({
-        ui_ticket_create_available_types: [
-          'phone-in',
-          'phone-out',
-          'email-out',
-        ],
+        ui_ticket_create_available_types: ['phone-in', 'phone-out', 'email-out'],
       })
       mockPermissions(['ticket.agent'])
       handleMockFormUpdaterQuery()
@@ -68,7 +62,7 @@ describe('ticket create view - shared drafts sidebar', async () => {
       )
 
       const formUpdaterCalls = await waitForFormUpdaterQueryCalls()
-      await vi.waitUntil(() => formUpdaterCalls.length === 2)
+      await waitUntil(() => formUpdaterCalls.length === 2)
 
       mockTicketSharedDraftStartListQuery({
         ticketSharedDraftStartList: [],
@@ -85,16 +79,11 @@ describe('ticket create view - shared drafts sidebar', async () => {
         }),
       )
 
-      await view.events.type(
-        aside.getByLabelText('Create a shared draft'),
-        'Test shared draft 1',
-      )
+      await view.events.type(aside.getByLabelText('Create a shared draft'), 'Test shared draft 1')
 
       await getNode(`sharedDraftTitle-TicketCreateScreen-${uid}`)?.settled
 
-      await view.events.click(
-        aside.getByRole('link', { name: 'Create Shared Draft' }),
-      )
+      await view.events.click(aside.getByRole('link', { name: 'Create shared draft' }))
 
       const calls = await waitForTicketSharedDraftStartCreateMutationCalls()
 
@@ -112,28 +101,24 @@ describe('ticket create view - shared drafts sidebar', async () => {
         'Shared draft has been created successfully.',
       )
 
-      await getTicketSharedDraftStartUpdateByGroupSubscriptionHandler().trigger(
-        {
-          ticketSharedDraftStartUpdateByGroup: {
-            sharedDraftStarts: [
-              {
-                id: convertToGraphQLId('Ticket::SharedDraftStart', 1),
-                name: 'Test shared draft 1',
-                updatedAt: '2024-07-03T13:48:09Z',
-                updatedBy: {
-                  fullname: 'Erika Mustermann',
-                },
+      await getTicketSharedDraftStartUpdateByGroupSubscriptionHandler().trigger({
+        ticketSharedDraftStartUpdateByGroup: {
+          sharedDraftStarts: [
+            {
+              id: convertToGraphQLId('Ticket::SharedDraftStart', 1),
+              name: 'Test shared draft 1',
+              updatedAt: '2024-07-03T13:48:09Z',
+              updatedBy: {
+                fullname: 'Erika Mustermann',
               },
-            ],
-          },
+            },
+          ],
         },
-      )
+      })
 
       await waitForNextTick()
 
-      expect(
-        aside.getByRole('link', { name: 'Test shared draft 1' }),
-      ).toBeInTheDocument()
+      expect(aside.getByRole('link', { name: 'Test shared draft 1' })).toBeInTheDocument()
     })
 
     it('supports applying shared drafts', async () => {
@@ -172,33 +157,27 @@ describe('ticket create view - shared drafts sidebar', async () => {
         ticketSharedDraftStartSingle: draftToMock,
       })
 
-      await view.events.click(
-        aside.getByRole('link', { name: draftToMock.name }),
-      )
+      await view.events.click(aside.getByRole('link', { name: draftToMock.name }))
 
       await waitForTicketSharedDraftStartSingleQueryCalls()
 
       const flyout = within(
         view.getByRole('complementary', {
-          name: 'Preview Shared Draft',
+          name: 'Preview shared draft',
         }),
       )
 
-      expect(
-        flyout.getByText(draftToMock.updatedBy.fullname),
-      ).toBeInTheDocument()
+      expect(flyout.getByText(draftToMock.updatedBy.fullname)).toBeInTheDocument()
       expect(flyout.getByText('just now')).toBeInTheDocument()
       expect(flyout.getByText(draftToMock.content.body)).toBeInTheDocument()
 
       await view.events.click(flyout.getByRole('button', { name: 'Apply' }))
 
-      expect(
-        await view.findByRole('dialog', { name: 'Apply Draft' }),
-      ).toBeInTheDocument()
+      expect(await view.findByRole('dialog', { name: 'Apply draft' })).toBeInTheDocument()
 
       const dialog = within(
         view.getByRole('dialog', {
-          name: 'Apply Draft',
+          name: 'Apply draft',
         }),
       )
 
@@ -213,14 +192,12 @@ describe('ticket create view - shared drafts sidebar', async () => {
         shared_draft_id: { value: getIdFromGraphQLId(draftToMock.id) },
       })
 
-      await view.events.click(
-        dialog.getByRole('button', { name: 'Overwrite Content' }),
-      )
+      await view.events.click(dialog.getByRole('button', { name: 'Overwrite content' }))
 
       await waitFor(() => {
         expect(
           view.queryByRole('dialog', {
-            name: 'Apply Draft',
+            name: 'Apply draft',
           }),
         ).not.toBeInTheDocument()
       })
@@ -240,9 +217,7 @@ describe('ticket create view - shared drafts sidebar', async () => {
 
       await waitForNextTick()
 
-      expect(view.getByLabelText('Title')).toHaveValue(
-        draftToMock.content.title,
-      )
+      expect(view.getByLabelText('Title')).toHaveValue(draftToMock.content.title)
 
       await view.events.click(view.getByRole('button', { name: 'Create' }))
 
@@ -297,23 +272,19 @@ describe('ticket create view - shared drafts sidebar', async () => {
         },
       })
 
-      await view.events.click(
-        aside.getByRole('link', { name: 'Test shared draft 1' }),
-      )
+      await view.events.click(aside.getByRole('link', { name: 'Test shared draft 1' }))
 
       await waitForTicketSharedDraftStartSingleQueryCalls()
 
       const flyout = within(
         view.getByRole('complementary', {
-          name: 'Preview Shared Draft',
+          name: 'Preview shared draft',
         }),
       )
 
       await view.events.click(flyout.getByRole('button', { name: 'Apply' }))
 
-      const dialog = within(
-        await view.findByRole('dialog', { name: 'Apply Draft' }),
-      )
+      const dialog = within(await view.findByRole('dialog', { name: 'Apply draft' }))
 
       handleMockFormUpdaterQuery({
         shared_draft_id: {
@@ -324,21 +295,17 @@ describe('ticket create view - shared drafts sidebar', async () => {
         },
       })
 
-      await view.events.click(
-        dialog.getByRole('button', { name: 'Overwrite Content' }),
-      )
+      await view.events.click(dialog.getByRole('button', { name: 'Overwrite content' }))
 
       await waitFor(() => {
         expect(
           view.queryByRole('complementary', {
-            name: 'Preview Shared Draft',
+            name: 'Preview shared draft',
           }),
         ).not.toBeInTheDocument()
       })
 
-      await view.events.click(
-        aside.getByRole('button', { name: 'Update Shared Draft' }),
-      )
+      await view.events.click(aside.getByRole('button', { name: 'Update shared draft' }))
 
       const calls = await waitForTicketSharedDraftStartUpdateMutationCalls()
 
@@ -355,9 +322,7 @@ describe('ticket create view - shared drafts sidebar', async () => {
         'Shared draft has been updated successfully.',
       )
 
-      expect(
-        aside.getByRole('button', { name: 'Update Shared Draft' }),
-      ).toBeInTheDocument()
+      expect(aside.getByRole('button', { name: 'Update shared draft' })).toBeInTheDocument()
     })
 
     it('supports deleting shared drafts', async () => {
@@ -400,27 +365,21 @@ describe('ticket create view - shared drafts sidebar', async () => {
         },
       })
 
-      await view.events.click(
-        aside.getByRole('link', { name: 'Test shared draft 1' }),
-      )
+      await view.events.click(aside.getByRole('link', { name: 'Test shared draft 1' }))
 
       await waitForTicketSharedDraftStartSingleQueryCalls()
 
       const flyout = within(
         view.getByRole('complementary', {
-          name: 'Preview Shared Draft',
+          name: 'Preview shared draft',
         }),
       )
 
       await view.events.click(flyout.getByRole('button', { name: 'Delete' }))
 
-      const dialog = within(
-        await view.findByRole('dialog', { name: 'Delete Object' }),
-      )
+      const dialog = within(await view.findByRole('dialog', { name: 'Delete object' }))
 
-      await view.events.click(
-        dialog.getByRole('button', { name: 'Delete Object' }),
-      )
+      await view.events.click(dialog.getByRole('button', { name: 'Delete object' }))
 
       const calls = await waitForTicketSharedDraftStartDeleteMutationCalls()
 
@@ -431,22 +390,18 @@ describe('ticket create view - shared drafts sidebar', async () => {
       await waitFor(() => {
         expect(
           view.queryByRole('complementary', {
-            name: 'Preview Shared Draft',
+            name: 'Preview shared draft',
           }),
         ).not.toBeInTheDocument()
       })
 
       // FIXME: Check why returning an empty array triggers the following console error in test environment only.
       //   Cache data may be lost when replacing the ticketSharedDraftStartList field of a Query object.
-      await getTicketSharedDraftStartUpdateByGroupSubscriptionHandler().trigger(
-        {
-          ticketSharedDraftStartUpdateByGroup: {},
-        },
-      )
+      await getTicketSharedDraftStartUpdateByGroupSubscriptionHandler().trigger({
+        ticketSharedDraftStartUpdateByGroup: {},
+      })
 
-      expect(
-        aside.queryByRole('link', { name: 'Test shared draft 1' }),
-      ).not.toBeInTheDocument()
+      expect(aside.queryByRole('link', { name: 'Test shared draft 1' })).not.toBeInTheDocument()
     })
   })
 

@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { nextTick, reactive } from 'vue'
 
@@ -10,19 +10,11 @@ export enum Events {
   Destroy = 'dynamic-component.destroy',
 }
 
-const createEvent = <T = PushComponentData | DestroyComponentData>(
-  title: string,
-  detail: T,
-) => {
+const createEvent = <T = PushComponentData | DestroyComponentData>(title: string, detail: T) => {
   return new CustomEvent<T>(title, { detail })
 }
 
-export const pushComponent = async (
-  name: string,
-  id: string,
-  cmp: Component,
-  props = {},
-) => {
+export const pushComponent = async (name: string, id: string, cmp: Component, props = {}) => {
   const event = createEvent(Events.Push, {
     name,
     id,

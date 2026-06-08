@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { getAllByTestId, getByTestId, within } from '@testing-library/vue'
 
@@ -34,23 +34,17 @@ describe('playing with overviews', () => {
 
     const view = await visitView('/favorite/ticket-overviews/edit')
 
-    const includedOverviewsUtils = within(
-      await view.findByTestId('includedOverviews'),
-    )
+    const includedOverviewsUtils = within(await view.findByTestId('includedOverviews'))
 
-    const includedOverviews =
-      await includedOverviewsUtils.findAllByTestId('overviewItem')
+    const includedOverviews = await includedOverviewsUtils.findAllByTestId('overviewItem')
 
     expect(includedOverviews).toHaveLength(2)
     expect(includedOverviews[0]).toHaveTextContent('Overview 1')
     expect(includedOverviews[1]).toHaveTextContent('Overview 2')
 
-    const excludedOverviewsUtils = within(
-      await view.findByTestId('excludedOverviews'),
-    )
+    const excludedOverviewsUtils = within(await view.findByTestId('excludedOverviews'))
 
-    const excludedOverviews =
-      excludedOverviewsUtils.getAllByTestId('overviewItem')
+    const excludedOverviews = excludedOverviewsUtils.getAllByTestId('overviewItem')
 
     expect(excludedOverviews).toHaveLength(1)
     expect(excludedOverviews[0]).toHaveTextContent('Overview 3')
@@ -62,10 +56,7 @@ describe('playing with overviews', () => {
 
     await view.events.click(view.getByText('Save'))
 
-    expect(localStorage.setItem).toHaveBeenCalledWith(
-      LOCAL_STORAGE_NAME,
-      '["1","2"]',
-    )
+    expect(localStorage.setItem).toHaveBeenCalledWith(LOCAL_STORAGE_NAME, '["1","2"]')
   })
 
   it('removing/adding overviews', async () => {
@@ -83,10 +74,7 @@ describe('playing with overviews', () => {
 
     expect(view.getAllByIconName('minus')).toHaveLength(2)
 
-    const overviewOneInExcluded = getByTestId(
-      view.getByTestId('excludedOverviews'),
-      'overviewItem',
-    )
+    const overviewOneInExcluded = getByTestId(view.getByTestId('excludedOverviews'), 'overviewItem')
 
     expect(overviewOneInExcluded).toHaveTextContent('Overview 1')
 
@@ -94,10 +82,7 @@ describe('playing with overviews', () => {
 
     await view.events.click(buttonAdd)
 
-    const includedOverviews = getAllByTestId(
-      view.getByTestId('includedOverviews'),
-      'overviewItem',
-    )
+    const includedOverviews = getAllByTestId(view.getByTestId('includedOverviews'), 'overviewItem')
 
     expect(includedOverviews.at(-1)).toHaveTextContent('Overview 1')
 
@@ -108,17 +93,14 @@ describe('playing with overviews', () => {
 
     await view.events.click(view.getByText('Save'))
 
-    expect(localStorage.setItem).toHaveBeenCalledWith(
-      LOCAL_STORAGE_NAME,
-      '["2","3","1"]',
-    )
+    expect(localStorage.setItem).toHaveBeenCalledWith(LOCAL_STORAGE_NAME, '["2","3","1"]')
 
     const { notify } = useNotifications()
 
     expect(notify).toHaveBeenCalledWith({
       id: 'overview-save',
       type: NotificationTypes.Success,
-      message: 'Ticket Overview settings are saved.',
+      message: 'Ticket overview settings are saved.',
     })
   })
 

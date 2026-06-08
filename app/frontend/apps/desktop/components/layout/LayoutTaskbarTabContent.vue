@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, onActivated, ref, watch } from 'vue'
@@ -22,11 +22,8 @@ const { path: currentRoutePath, meta: currentRouteMeta } = useRoute()
 // Remember the current taskbar entity key
 const currentTaskbarEntityKey = ref(currentRouteMeta.taskbarTabEntityKey)
 
-const {
-  currentTaskbarTabEntityAccess,
-  currentTaskbarTabId,
-  ...currentTaskbarTabData
-} = initializeCurrentTaskbarTab(currentTaskbarEntityKey.value)
+const { currentTaskbarTabEntityAccess, currentTaskbarTabId, ...currentTaskbarTabData } =
+  initializeCurrentTaskbarTab(currentTaskbarEntityKey.value)
 
 onActivated(() => {
   if (!currentTaskbarEntityKey.value) {
@@ -70,12 +67,10 @@ const pageError = computed(() => {
     case EnumTaskbarEntityAccess.NotFound:
       return {
         statusCode: ErrorStatusCodes.NotFound,
-        title: __('Not Found'),
+        title: __('Not found'),
         message:
           (currentRouteMeta.messageNotFound as string) ??
-          __(
-            'Object with specified ID was not found. Try checking the URL for errors.',
-          ),
+          __('Object with specified ID was not found. Try checking the URL for errors.'),
       } as ErrorOptions
     case EnumTaskbarEntityAccess.Granted:
     default:
@@ -98,8 +93,5 @@ provideCurrentTaskbarTab({
     <CommonError :options="pageError" authenticated />
   </LayoutMain>
   <slot v-else-if="showContent && pageError !== undefined" />
-  <div
-    v-else
-    class="flex h-full w-full grow flex-col bg-blue-50 dark:bg-gray-800"
-  ></div>
+  <div v-else class="flex h-full w-full grow flex-col bg-blue-50 dark:bg-gray-800" />
 </template>

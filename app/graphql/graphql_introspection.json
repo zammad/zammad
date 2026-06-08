@@ -12,6 +12,796 @@
       },
       "types": [
         {
+          "kind": "OBJECT",
+          "name": "AIAgent",
+          "description": "AI::Agents",
+          "fields": [
+            {
+              "name": "createdAt",
+              "description": "Create date/time of the record",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "ISO8601DateTime",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "createdBy",
+              "description": "User that created this record",
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "User",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "id",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "ID",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "internalId",
+              "description": "Internal database ID",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "name",
+              "description": "Name of the AI Agent",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "updatedAt",
+              "description": "Last update date/time of the record",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "ISO8601DateTime",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "updatedBy",
+              "description": "Last user that updated this record",
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "User",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
+          "name": "AIAnalyticsMetadata",
+          "description": "AI Analytics Metadata type that returns related run ID and usage data if present",
+          "fields": [
+            {
+              "name": "isUnread",
+              "description": "Indicates if the summary is unread by the current user.",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "run",
+              "description": "ID of the related AI::Analytics::Run.",
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "AIAnalyticsRun",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "usage",
+              "description": "AI analytics usage record.",
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "AIAnalyticsUsage",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
+          "name": "AIAnalyticsRun",
+          "description": "AI::Analytics::Run identifies an AI result that can be used for analytics purposes.",
+          "fields": [
+            {
+              "name": "createdAt",
+              "description": "Create date/time of the record",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "ISO8601DateTime",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "createdBy",
+              "description": "User that created this record",
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "User",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "id",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "ID",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "internalId",
+              "description": "Internal database ID",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "relatedObject",
+              "description": "The ticket related to this AI result.",
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "Ticket",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "updatedAt",
+              "description": "Last update date/time of the record",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "ISO8601DateTime",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "updatedBy",
+              "description": "Last user that updated this record",
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "User",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
+          "name": "AIAnalyticsUsage",
+          "description": "AI::Analytics::Usage records a usage of an AI result that can be used for analytics purposes.",
+          "fields": [
+            {
+              "name": "createdAt",
+              "description": "Create date/time of the record",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "ISO8601DateTime",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "createdBy",
+              "description": "User that created this record",
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "User",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "id",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "ID",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "internalId",
+              "description": "Internal database ID",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "updatedAt",
+              "description": "Last update date/time of the record",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "ISO8601DateTime",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "updatedBy",
+              "description": "Last user that updated this record",
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "User",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "userHasProvidedFeedback",
+              "description": "Indicates if the user has already provided feedback for this AI result.",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "AIAnalyticsUsageInput",
+          "description": "Input for the AI analytics usage.",
+          "fields": null,
+          "inputFields": [
+            {
+              "name": "rating",
+              "description": "Usage rating of the AI result.",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "comment",
+              "description": "Usage comment on the AI result.",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "context",
+              "description": "Context data of the usage, e.g. approval status.",
+              "type": {
+                "kind": "SCALAR",
+                "name": "JSON",
+                "ofType": null
+              },
+              "defaultValue": null
+            }
+          ],
+          "interfaces": null,
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
+          "name": "AIAnalyticsUsagePayload",
+          "description": "Autogenerated return type of AIAnalyticsUsage.",
+          "fields": [
+            {
+              "name": "errors",
+              "description": "Errors encountered during execution of the mutation.",
+              "args": [],
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "UserError",
+                    "ofType": null
+                  }
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "usage",
+              "description": "AI analytics usage record.",
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "AIAnalyticsUsage",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
+          "name": "AIAssistanceTextToolsRunPayload",
+          "description": "Autogenerated return type of AIAssistanceTextToolsRun.",
+          "fields": [
+            {
+              "name": "analytics",
+              "description": "Analytics metadata",
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "AIAnalyticsMetadata",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "errors",
+              "description": "Errors encountered during execution of the mutation.",
+              "args": [],
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "UserError",
+                    "ofType": null
+                  }
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "output",
+              "description": "Returned text",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
+          "name": "AITextTool",
+          "description": "AI::TextTool represents a tool that can be used to process text or HTML content using AI services.",
+          "fields": [
+            {
+              "name": "active",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Boolean",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "createdAt",
+              "description": "Create date/time of the record",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "ISO8601DateTime",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "createdBy",
+              "description": "User that created this record",
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "User",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "groups",
+              "description": null,
+              "args": [
+                {
+                  "name": "after",
+                  "description": "Returns the elements in the list that come after the specified cursor.",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "before",
+                  "description": "Returns the elements in the list that come before the specified cursor.",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "first",
+                  "description": "Returns the first _n_ elements from the list.",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "last",
+                  "description": "Returns the last _n_ elements from the list.",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "OBJECT",
+                "name": "GroupConnection",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "id",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "ID",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "instruction",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "internalId",
+              "description": "Internal database ID",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "name",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "note",
+              "description": "Internal note",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "updatedAt",
+              "description": "Last update date/time of the record",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "ISO8601DateTime",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "updatedBy",
+              "description": "Last user that updated this record",
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "User",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
+          "name": "AITextToolUpdatesPayload",
+          "description": "Autogenerated return type of AITextToolUpdates.",
+          "fields": [
+            {
+              "name": "groupIds",
+              "description": "The group IDs from the updated AI text tool",
+              "args": [],
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "ID",
+                    "ofType": null
+                  }
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "removeTextToolId",
+              "description": "The AI text tool ID that was removed",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "textToolId",
+              "description": "AI text tool ID that was updated",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
           "kind": "UNION",
           "name": "ActivityMessageMetaObject",
           "description": "Objects used to build activity message",
@@ -28,6 +818,16 @@
             {
               "kind": "OBJECT",
               "name": "Group",
+              "ofType": null
+            },
+            {
+              "kind": "OBJECT",
+              "name": "KnowledgeBaseAnswerTranslation",
+              "ofType": null
+            },
+            {
+              "kind": "OBJECT",
+              "name": "OnlineNotificationStandalone",
               "ofType": null
             },
             {
@@ -1934,6 +2734,116 @@
           "possibleTypes": null
         },
         {
+          "kind": "INPUT_OBJECT",
+          "name": "BetaUiFeedbackInput",
+          "description": "Input for the feedback on BETA UI.",
+          "fields": null,
+          "inputFields": [
+            {
+              "name": "type",
+              "description": "The type of feedback",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "ENUM",
+                  "name": "EnumBetaUiFeedbackType",
+                  "ofType": null
+                }
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "comment",
+              "description": "The feedback comment text",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "timeSpent",
+              "description": "Time spent in the BETA UI in minutes",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "rating",
+              "description": "The feedback rating (1-5)",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              },
+              "defaultValue": null
+            }
+          ],
+          "interfaces": null,
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
+          "name": "BetaUiSendFeedbackPayload",
+          "description": "Autogenerated return type of BetaUiSendFeedback.",
+          "fields": [
+            {
+              "name": "errors",
+              "description": "Errors encountered during execution of the mutation.",
+              "args": [],
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "UserError",
+                    "ofType": null
+                  }
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "success",
+              "description": "Was the submission successful?",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Boolean",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
           "kind": "SCALAR",
           "name": "BinaryString",
           "description": "String with binary data, base64 encoded for transport (data: URL prefix is optional)",
@@ -2594,18 +3504,6 @@
               "deprecationReason": null
             },
             {
-              "name": "password",
-              "description": null,
-              "args": [],
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
               "name": "port",
               "description": null,
               "args": [],
@@ -2861,18 +3759,6 @@
             {
               "name": "host",
               "description": "Hostname for the email service to connect to",
-              "args": [],
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "password",
-              "description": null,
               "args": [],
               "type": {
                 "kind": "SCALAR",
@@ -3814,6 +4700,27 @@
           "possibleTypes": null
         },
         {
+          "kind": "UNION",
+          "name": "DataUnion",
+          "description": "Union of data payloads for standalone online notifications",
+          "fields": null,
+          "inputFields": null,
+          "interfaces": null,
+          "enumValues": null,
+          "possibleTypes": [
+            {
+              "kind": "OBJECT",
+              "name": "OnlineNotificationStandaloneBulkJobData",
+              "ofType": null
+            },
+            {
+              "kind": "OBJECT",
+              "name": "OnlineNotificationStandaloneKbAnswerGenerationFailedData",
+              "ofType": null
+            }
+          ]
+        },
+        {
           "kind": "OBJECT",
           "name": "EmailAddress",
           "description": "EmailAddress model instances",
@@ -4040,6 +4947,12 @@
           "interfaces": null,
           "enumValues": [
             {
+              "name": "DoorkeeperReturnTo",
+              "description": "DoorkeeperReturnTo",
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "TwoFactorConfiguration",
               "description": "TwoFactorConfiguration",
               "isDeprecated": false,
@@ -4077,6 +4990,12 @@
             {
               "name": "config_changed",
               "description": "The app configuration has changed.",
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "force_refresh",
+              "description": "Force browsers to refresh.",
               "isDeprecated": false,
               "deprecationReason": null
             }
@@ -4191,6 +5110,76 @@
         },
         {
           "kind": "ENUM",
+          "name": "EnumBetaUiFeedbackType",
+          "description": "BETA UI feedback type",
+          "fields": null,
+          "inputFields": null,
+          "interfaces": null,
+          "enumValues": [
+            {
+              "name": "manual_feedback",
+              "description": "Manual feedback",
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "milestone_question",
+              "description": "Milestone question",
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "back_to_old_ui",
+              "description": "Switch back to old UI",
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "possibleTypes": null
+        },
+        {
+          "kind": "ENUM",
+          "name": "EnumBulkUpdateStatusStatus",
+          "description": "Bulk update status type",
+          "fields": null,
+          "inputFields": null,
+          "interfaces": null,
+          "enumValues": [
+            {
+              "name": "none",
+              "description": "No bulk update in progress",
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "pending",
+              "description": "Bulk update is pending and will start soon",
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "running",
+              "description": "Bulk update is currently running",
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "succeeded",
+              "description": "Bulk update completed successfully",
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "failed",
+              "description": "Bulk update failed",
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "possibleTypes": null
+        },
+        {
+          "kind": "ENUM",
           "name": "EnumChannelArea",
           "description": "The channel area type",
           "fields": null,
@@ -4247,12 +5236,6 @@
             },
             {
               "name": "Telegram__Bot",
-              "description": null,
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "Twitter__Account",
               "description": null,
               "isDeprecated": false,
               "deprecationReason": null
@@ -4375,6 +5358,12 @@
             },
             {
               "name": "FormUpdater__Updater__Organization__Edit",
+              "description": null,
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "FormUpdater__Updater__Search__AdvancedFilters",
               "description": null,
               "isDeprecated": false,
               "deprecationReason": null
@@ -4933,6 +5922,29 @@
         },
         {
           "kind": "ENUM",
+          "name": "EnumTaskbarStateUpdate",
+          "description": "All taskbar state update type values",
+          "fields": null,
+          "inputFields": null,
+          "interfaces": null,
+          "enumValues": [
+            {
+              "name": "changed",
+              "description": "The taskbar item state has changed",
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "reset",
+              "description": "The taskbar item state has been reset",
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "possibleTypes": null
+        },
+        {
+          "kind": "ENUM",
           "name": "EnumTextDirection",
           "description": "Option to choose SQL sorting direction",
           "fields": null,
@@ -5093,6 +6105,142 @@
             {
               "name": "closed",
               "description": "Closed.",
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "possibleTypes": null
+        },
+        {
+          "kind": "ENUM",
+          "name": "EnumTicketStateTypeCategory",
+          "description": "Ticket state color code",
+          "fields": null,
+          "inputFields": null,
+          "interfaces": null,
+          "enumValues": [
+            {
+              "name": "open",
+              "description": null,
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "pending_reminder",
+              "description": null,
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "pending_action",
+              "description": null,
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "pending",
+              "description": null,
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "work_on",
+              "description": null,
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "work_on_all",
+              "description": null,
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "viewable",
+              "description": null,
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "viewable_agent_new",
+              "description": null,
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "viewable_agent_edit",
+              "description": null,
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "viewable_customer_new",
+              "description": null,
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "viewable_customer_edit",
+              "description": null,
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "closed",
+              "description": null,
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "merged",
+              "description": null,
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "archivable_into",
+              "description": null,
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "resolved",
+              "description": null,
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "possibleTypes": null
+        },
+        {
+          "kind": "ENUM",
+          "name": "EnumTicketSummaryGeneration",
+          "description": "Defines when the ticket summary should be generated",
+          "fields": null,
+          "inputFields": null,
+          "interfaces": null,
+          "enumValues": [
+            {
+              "name": "global_default",
+              "description": "Use global default setting.",
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "on_ticket_detail_opening",
+              "description": "On ticket detail opening",
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "on_ticket_summary_sidebar_activation",
+              "description": "On ticket summary sidebar activation",
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "disabled",
+              "description": "AI summary disabled.",
               "isDeprecated": false,
               "deprecationReason": null
             }
@@ -5266,6 +6414,24 @@
                 "kind": "INPUT_OBJECT",
                 "name": "FormUpdaterChangedFieldInput",
                 "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "additionalChangedFields",
+              "description": "Additional changed fields in the same tick",
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "FormUpdaterChangedFieldInput",
+                    "ofType": null
+                  }
+                }
               },
               "defaultValue": null
             },
@@ -5672,6 +6838,18 @@
               "type": {
                 "kind": "SCALAR",
                 "name": "Boolean",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "summaryGeneration",
+              "description": "Ticket summary generation behavior for this group",
+              "args": [],
+              "type": {
+                "kind": "ENUM",
+                "name": "EnumTicketSummaryGeneration",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -6121,7 +7299,17 @@
           "possibleTypes": [
             {
               "kind": "OBJECT",
+              "name": "AIAgent",
+              "ofType": null
+            },
+            {
+              "kind": "OBJECT",
               "name": "Job",
+              "ofType": null
+            },
+            {
+              "kind": "OBJECT",
+              "name": "Macro",
               "ofType": null
             },
             {
@@ -7129,6 +8317,18 @@
               "deprecationReason": null
             },
             {
+              "name": "maybeLocale",
+              "description": "Specified only for knowledge bases with multiple locales",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "title",
               "description": null,
               "args": [],
@@ -8005,109 +9205,6 @@
         },
         {
           "kind": "INPUT_OBJECT",
-          "name": "LocatorOrganizationInput",
-          "description": "Locate an organization via id or internalId.",
-          "fields": null,
-          "inputFields": [
-            {
-              "name": "organizationId",
-              "description": "Organization ID",
-              "type": {
-                "kind": "SCALAR",
-                "name": "ID",
-                "ofType": null
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "organizationInternalId",
-              "description": "Organization internalId",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Int",
-                "ofType": null
-              },
-              "defaultValue": null
-            }
-          ],
-          "interfaces": null,
-          "enumValues": null,
-          "possibleTypes": null
-        },
-        {
-          "kind": "INPUT_OBJECT",
-          "name": "LocatorTicketInput",
-          "description": "Locate a ticket via id, internalId or number.",
-          "fields": null,
-          "inputFields": [
-            {
-              "name": "ticketId",
-              "description": "Ticket ID",
-              "type": {
-                "kind": "SCALAR",
-                "name": "ID",
-                "ofType": null
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "ticketInternalId",
-              "description": "Ticket internalId",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Int",
-                "ofType": null
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "ticketNumber",
-              "description": "Ticket number",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "defaultValue": null
-            }
-          ],
-          "interfaces": null,
-          "enumValues": null,
-          "possibleTypes": null
-        },
-        {
-          "kind": "INPUT_OBJECT",
-          "name": "LocatorUserInput",
-          "description": "Locate a User via id or internalId.",
-          "fields": null,
-          "inputFields": [
-            {
-              "name": "userId",
-              "description": "User ID",
-              "type": {
-                "kind": "SCALAR",
-                "name": "ID",
-                "ofType": null
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "userInternalId",
-              "description": "User internalId",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Int",
-                "ofType": null
-              },
-              "defaultValue": null
-            }
-          ],
-          "interfaces": null,
-          "enumValues": null,
-          "possibleTypes": null
-        },
-        {
-          "kind": "INPUT_OBJECT",
           "name": "LoginInput",
           "description": "The user login fields.",
           "fields": null,
@@ -8348,6 +9445,22 @@
                 "ofType": {
                   "kind": "SCALAR",
                   "name": "ID",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "internalId",
+              "description": "Internal database ID",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
                   "ofType": null
                 }
               },
@@ -8884,6 +9997,125 @@
               "type": {
                 "kind": "OBJECT",
                 "name": "AdminPasswordAuthVerifyPayload",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "aiAnalyticsUsage",
+              "description": "Record usage of an AI result for purposes of analytics",
+              "args": [
+                {
+                  "name": "aiAnalyticsRunId",
+                  "description": "ID of the AI analytics run to record the usage for.",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "ID",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "input",
+                  "description": "Input for the AI analytics usage.",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "AIAnalyticsUsageInput",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "OBJECT",
+                "name": "AIAnalyticsUsagePayload",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "aiAssistanceTextToolsRun",
+              "description": "Run an AI text tool service on the supplied text or HTML content",
+              "args": [
+                {
+                  "name": "input",
+                  "description": "Text or HTML content to run the text tool service on",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "textToolId",
+                  "description": "ID of the AI text tool to be executed.",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "ID",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "templateRenderContext",
+                  "description": "Context data for the text tool instruction rendering, e.g. customer data.",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "TemplateRenderContextInput",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "OBJECT",
+                "name": "AIAssistanceTextToolsRunPayload",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "betaUiSendFeedback",
+              "description": "Submits user feedback on the new BETA UI",
+              "args": [
+                {
+                  "name": "input",
+                  "description": "Input for the feedback on BETA UI",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "BetaUiFeedbackInput",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "OBJECT",
+                "name": "BetaUiSendFeedbackPayload",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -9510,6 +10742,47 @@
               "deprecationReason": null
             },
             {
+              "name": "organizationNoteUpdate",
+              "description": "Update the note field of an organization.",
+              "args": [
+                {
+                  "name": "id",
+                  "description": "The organization ID",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "ID",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "note",
+                  "description": "The organization note",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "OBJECT",
+                "name": "OrganizationNoteUpdatePayload",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "organizationUpdate",
               "description": "Update organization data.",
               "args": [
@@ -9794,6 +11067,33 @@
               "deprecationReason": null
             },
             {
+              "name": "ticketAIAssistanceEnqueueKnowledgeBaseAnswer",
+              "description": "Trigger generation of a knowledge base answer draft for a ticket",
+              "args": [
+                {
+                  "name": "ticketId",
+                  "description": "The ticket to generate a knowledge base answer for",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "ID",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "OBJECT",
+                "name": "TicketAIAssistanceEnqueueKnowledgeBaseAnswerPayload",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "ticketAIAssistanceSummarize",
               "description": "Return current summary or trigger generation in the background",
               "args": [
@@ -9808,6 +11108,16 @@
                       "name": "ID",
                       "ofType": null
                     }
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "regenerationOfId",
+                  "description": "The previous AI run to regenerate the summary for (if any)",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "ID",
+                    "ofType": null
                   },
                   "defaultValue": null
                 }
@@ -9924,6 +11234,51 @@
               "type": {
                 "kind": "OBJECT",
                 "name": "TicketArticleEmailForwardReplyPayload",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "ticketArticleHighlightedTextUpsert",
+              "description": "Store highlighted text in the article preferences",
+              "args": [
+                {
+                  "name": "articleId",
+                  "description": "The article to be updated",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "ID",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "highlight",
+                  "description": "Structured input for highlighted text information (start index, end index, color class)",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "name": null,
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "TicketArticleHighlightedTextInput",
+                        "ofType": null
+                      }
+                    }
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "OBJECT",
+                "name": "TicketArticleHighlightedTextUpsertPayload",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -10886,6 +12241,47 @@
               "deprecationReason": null
             },
             {
+              "name": "ticketTitleUpdate",
+              "description": "Update a ticket title.",
+              "args": [
+                {
+                  "name": "ticketId",
+                  "description": "The ticket to be updated",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "ID",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "title",
+                  "description": "The title of the ticket.",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "OBJECT",
+                "name": "TicketTitleUpdatePayload",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "ticketUpdate",
               "description": "Update a ticket.",
               "args": [
@@ -10941,48 +12337,30 @@
               "description": "Bulk-update tickets.",
               "args": [
                 {
-                  "name": "ticketIds",
-                  "description": "The tickets to be updated",
-                  "type": {
-                    "kind": "NON_NULL",
-                    "name": null,
-                    "ofType": {
-                      "kind": "LIST",
-                      "name": null,
-                      "ofType": {
-                        "kind": "NON_NULL",
-                        "name": null,
-                        "ofType": {
-                          "kind": "SCALAR",
-                          "name": "ID",
-                          "ofType": null
-                        }
-                      }
-                    }
-                  },
-                  "defaultValue": null
-                },
-                {
-                  "name": "input",
-                  "description": "The ticket data",
+                  "name": "selector",
+                  "description": "The selector for bulk ticket update.",
                   "type": {
                     "kind": "NON_NULL",
                     "name": null,
                     "ofType": {
                       "kind": "INPUT_OBJECT",
-                      "name": "TicketUpdateInput",
+                      "name": "TicketBulkSelectorInput",
                       "ofType": null
                     }
                   },
                   "defaultValue": null
                 },
                 {
-                  "name": "macroId",
-                  "description": "The macro to apply onto ticket",
+                  "name": "perform",
+                  "description": "The bulk update action to be performed on the selected tickets.",
                   "type": {
-                    "kind": "SCALAR",
-                    "name": "ID",
-                    "ofType": null
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "TicketBulkPerformInput",
+                      "ofType": null
+                    }
                   },
                   "defaultValue": null
                 }
@@ -11147,7 +12525,7 @@
               "args": [
                 {
                   "name": "tokenId",
-                  "description": "The token o be deleted",
+                  "description": "The token to be deleted",
                   "type": {
                     "kind": "NON_NULL",
                     "name": null,
@@ -11606,12 +12984,12 @@
               "deprecationReason": null
             },
             {
-              "name": "userCurrentRecentViewReset",
-              "description": "Reset recent view records of the current user",
+              "name": "userCurrentRecentCloseReset",
+              "description": "Reset recently closed items of the current user",
               "args": [],
               "type": {
                 "kind": "OBJECT",
-                "name": "UserCurrentRecentViewResetPayload",
+                "name": "UserCurrentRecentCloseResetPayload",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -11843,33 +13221,6 @@
               "deprecationReason": null
             },
             {
-              "name": "userCurrentTicketSummaryBannerHidden",
-              "description": "Update user profile ticket summary banner hidden setting",
-              "args": [
-                {
-                  "name": "hidden",
-                  "description": "The new hidden state of setting",
-                  "type": {
-                    "kind": "NON_NULL",
-                    "name": null,
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "Boolean",
-                      "ofType": null
-                    }
-                  },
-                  "defaultValue": null
-                }
-              ],
-              "type": {
-                "kind": "OBJECT",
-                "name": "UserCurrentTicketSummaryBannerHiddenPayload",
-                "ofType": null
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
               "name": "userCurrentTwoFactorRecoveryCodesGenerate",
               "description": "Regenerates new two factor recovery codes",
               "args": [
@@ -12083,6 +13434,47 @@
               "type": {
                 "kind": "OBJECT",
                 "name": "UserCurrentTwoFactorVerifyMethodConfigurationPayload",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "userNoteUpdate",
+              "description": "Update the note field of a user.",
+              "args": [
+                {
+                  "name": "id",
+                  "description": "The user ID",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "ID",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "note",
+                  "description": "The user note",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "OBJECT",
+                "name": "UserNoteUpdatePayload",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -12410,7 +13802,7 @@
         {
           "kind": "INTERFACE",
           "name": "ObjectAttributeValuesInterface",
-          "description": "Custom object fields (only editable & active)",
+          "description": "Custom object fields (only non-internal & active)",
           "fields": [
             {
               "name": "objectAttributeValues",
@@ -12748,6 +14140,22 @@
               "deprecationReason": null
             },
             {
+              "name": "meta",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "OnlineNotificationMeta",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "metaObject",
               "description": "resolver for Rails' belongs_to relationship",
               "args": [],
@@ -13051,6 +14459,33 @@
         },
         {
           "kind": "OBJECT",
+          "name": "OnlineNotificationMeta",
+          "description": "Meta information for an online notification",
+          "fields": [
+            {
+              "name": "createdByAi",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Boolean",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
           "name": "OnlineNotificationSeenPayload",
           "description": "Autogenerated return type of OnlineNotificationSeen.",
           "fields": [
@@ -13084,6 +14519,183 @@
                 "ofType": {
                   "kind": "SCALAR",
                   "name": "Boolean",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
+          "name": "OnlineNotificationStandalone",
+          "description": "Standalone notification for a user, not related to a specific database object",
+          "fields": [
+            {
+              "name": "createdAt",
+              "description": "Create date/time of the record",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "ISO8601DateTime",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "data",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "UNION",
+                  "name": "DataUnion",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "id",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "ID",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "internalId",
+              "description": "Internal database ID",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "updatedAt",
+              "description": "Last update date/time of the record",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "ISO8601DateTime",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
+          "name": "OnlineNotificationStandaloneBulkJobData",
+          "description": "Data payload for bulk job standalone notifications",
+          "fields": [
+            {
+              "name": "failedCount",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "total",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
+          "name": "OnlineNotificationStandaloneKbAnswerGenerationFailedData",
+          "description": "Data payload for knowledge base answer generation failure notifications",
+          "fields": [
+            {
+              "name": "errorMessage",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "ticketTitle",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
                   "ofType": null
                 }
               },
@@ -13694,6 +15306,16 @@
               "defaultValue": null
             },
             {
+              "name": "vip",
+              "description": "The organization VIP flag",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
               "name": "active",
               "description": "The organization active flag",
               "type": {
@@ -13715,6 +15337,49 @@
             }
           ],
           "interfaces": null,
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
+          "name": "OrganizationNoteUpdatePayload",
+          "description": "Autogenerated return type of OrganizationNoteUpdate.",
+          "fields": [
+            {
+              "name": "errors",
+              "description": "Errors encountered during execution of the mutation.",
+              "args": [],
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "UserError",
+                    "ofType": null
+                  }
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "organization",
+              "description": "The updated organization.",
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "Organization",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
           "enumValues": null,
           "possibleTypes": null
         },
@@ -14865,6 +16530,61 @@
           "description": "All available queries",
           "fields": [
             {
+              "name": "aiAssistanceTextToolsList",
+              "description": "Get a list of available AI text tools",
+              "args": [
+                {
+                  "name": "limit",
+                  "description": "Maximum number of items to return",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "groupId",
+                  "description": "Filter by a specific group",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "ID",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "ticketId",
+                  "description": "Optional ticket this is going to be inserted into",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "ID",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "LIST",
+                  "name": null,
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "AITextTool",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "applicationBuildChecksum",
               "description": "Checksum of the currently built front-end application. If this changes, the front-end(s) should reload.",
               "args": [],
@@ -15595,23 +17315,15 @@
               "description": "Returns a list of macros",
               "args": [
                 {
-                  "name": "groupIds",
-                  "description": "Filter macros by group assignment, must have no group or all groups assigned.",
+                  "name": "selector",
+                  "description": "The selector for ticket macros. Macros will be filtered by group assignment, must have no group or all groups assigned.",
                   "type": {
                     "kind": "NON_NULL",
                     "name": null,
                     "ofType": {
-                      "kind": "LIST",
-                      "name": null,
-                      "ofType": {
-                        "kind": "NON_NULL",
-                        "name": null,
-                        "ofType": {
-                          "kind": "SCALAR",
-                          "name": "ID",
-                          "ofType": null
-                        }
-                      }
+                      "kind": "INPUT_OBJECT",
+                      "name": "TicketMacrosSelectorInput",
+                      "ofType": null
                     }
                   },
                   "defaultValue": null
@@ -15775,14 +17487,14 @@
               "description": "Fetch an organization by ID",
               "args": [
                 {
-                  "name": "organization",
-                  "description": "Organization locator",
+                  "name": "organizationId",
+                  "description": "Organization ID",
                   "type": {
                     "kind": "NON_NULL",
                     "name": null,
                     "ofType": {
-                      "kind": "INPUT_OBJECT",
-                      "name": "LocatorOrganizationInput",
+                      "kind": "SCALAR",
+                      "name": "ID",
                       "ofType": null
                     }
                   },
@@ -15796,6 +17508,45 @@
                   "kind": "OBJECT",
                   "name": "Organization",
                   "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "organizationHistory",
+              "description": "Fetch history of an organization",
+              "args": [
+                {
+                  "name": "organizationId",
+                  "description": "Organization ID",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "ID",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "LIST",
+                  "name": null,
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "HistoryGroup",
+                      "ofType": null
+                    }
+                  }
                 }
               },
               "isDeprecated": false,
@@ -15860,13 +17611,9 @@
                   "name": "search",
                   "description": "What to search for",
                   "type": {
-                    "kind": "NON_NULL",
-                    "name": null,
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "String",
-                      "ofType": null
-                    }
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
                   },
                   "defaultValue": null
                 },
@@ -15923,6 +17670,16 @@
                     "ofType": null
                   },
                   "defaultValue": null
+                },
+                {
+                  "name": "filter",
+                  "description": "Advanced filters as selector conditions",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "SelectorNodeInput",
+                    "ofType": null
+                  },
+                  "defaultValue": null
                 }
               ],
               "type": {
@@ -15945,13 +17702,9 @@
                   "name": "search",
                   "description": "What to search for",
                   "type": {
-                    "kind": "NON_NULL",
-                    "name": null,
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "String",
-                      "ofType": null
-                    }
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
                   },
                   "defaultValue": null
                 },
@@ -15972,6 +17725,24 @@
                           "name": "EnumSearchableModels",
                           "ofType": null
                         }
+                      }
+                    }
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "filters",
+                  "description": "Per-object advanced filters as selector conditions",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "name": null,
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "SelectorObjectInput",
+                        "ofType": null
                       }
                     }
                   },
@@ -16151,14 +17922,14 @@
               "description": "Fetch a ticket by ID",
               "args": [
                 {
-                  "name": "ticket",
-                  "description": "Ticket locator",
+                  "name": "ticketId",
+                  "description": "Ticket ID",
                   "type": {
                     "kind": "NON_NULL",
                     "name": null,
                     "ofType": {
-                      "kind": "INPUT_OBJECT",
-                      "name": "LocatorTicketInput",
+                      "kind": "SCALAR",
+                      "name": "ID",
                       "ofType": null
                     }
                   },
@@ -16182,14 +17953,14 @@
               "description": "Fetch ticket articles by ticket ID",
               "args": [
                 {
-                  "name": "ticket",
-                  "description": "Ticket locator",
+                  "name": "ticketId",
+                  "description": "Ticket ID",
                   "type": {
                     "kind": "NON_NULL",
                     "name": null,
                     "ofType": {
-                      "kind": "INPUT_OBJECT",
-                      "name": "LocatorTicketInput",
+                      "kind": "SCALAR",
+                      "name": "ID",
                       "ofType": null
                     }
                   },
@@ -16292,14 +18063,14 @@
               "description": "Fetch ticket checklist",
               "args": [
                 {
-                  "name": "ticket",
-                  "description": "Ticket locator",
+                  "name": "ticketId",
+                  "description": "Ticket ID",
                   "type": {
                     "kind": "NON_NULL",
                     "name": null,
                     "ofType": {
-                      "kind": "INPUT_OBJECT",
-                      "name": "LocatorTicketInput",
+                      "kind": "SCALAR",
+                      "name": "ID",
                       "ofType": null
                     }
                   },
@@ -16466,14 +18237,14 @@
               "description": "Fetch history of a ticket",
               "args": [
                 {
-                  "name": "ticket",
-                  "description": "Ticket locator",
+                  "name": "ticketId",
+                  "description": "Ticket ID",
                   "type": {
                     "kind": "NON_NULL",
                     "name": null,
                     "ofType": {
-                      "kind": "INPUT_OBJECT",
-                      "name": "LocatorTicketInput",
+                      "kind": "SCALAR",
+                      "name": "ID",
                       "ofType": null
                     }
                   },
@@ -16659,12 +18430,22 @@
               "deprecationReason": null
             },
             {
-              "name": "ticketSignature",
-              "description": "Fetch a ticket signature by group ID",
+              "name": "ticketsByCustomer",
+              "description": "Fetch tickets of a given customer with optional filters",
               "args": [
                 {
-                  "name": "groupId",
-                  "description": "The group of the ticket.",
+                  "name": "stateTypeCategory",
+                  "description": "Filter by state type category",
+                  "type": {
+                    "kind": "ENUM",
+                    "name": "EnumTicketStateTypeCategory",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "customerId",
+                  "description": "Filter by customer",
                   "type": {
                     "kind": "NON_NULL",
                     "name": null,
@@ -16677,20 +18458,145 @@
                   "defaultValue": null
                 },
                 {
-                  "name": "ticketId",
-                  "description": "Current ticket.",
+                  "name": "customerOrganizations",
+                  "description": "Filter by customer's organizations only",
                   "type": {
                     "kind": "SCALAR",
-                    "name": "ID",
+                    "name": "Boolean",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "after",
+                  "description": "Returns the elements in the list that come after the specified cursor.",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "before",
+                  "description": "Returns the elements in the list that come before the specified cursor.",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "first",
+                  "description": "Returns the first _n_ elements from the list.",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "last",
+                  "description": "Returns the last _n_ elements from the list.",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
                     "ofType": null
                   },
                   "defaultValue": null
                 }
               ],
               "type": {
-                "kind": "OBJECT",
-                "name": "Signature",
-                "ofType": null
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "TicketConnection",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "ticketsByOrganization",
+              "description": "Fetch tickets of a given organization with optional filters",
+              "args": [
+                {
+                  "name": "stateTypeCategory",
+                  "description": "Filter by state type category",
+                  "type": {
+                    "kind": "ENUM",
+                    "name": "EnumTicketStateTypeCategory",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "organizationId",
+                  "description": "Filter by organization",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "ID",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "after",
+                  "description": "Returns the elements in the list that come after the specified cursor.",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "before",
+                  "description": "Returns the elements in the list that come before the specified cursor.",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "first",
+                  "description": "Returns the first _n_ elements from the list.",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "last",
+                  "description": "Returns the last _n_ elements from the list.",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "TicketConnection",
+                  "ofType": null
+                }
               },
               "isDeprecated": false,
               "deprecationReason": null
@@ -17016,6 +18922,84 @@
               "deprecationReason": null
             },
             {
+              "name": "ticketsStatsMonthlyByCustomer",
+              "description": "Fetch monthly ticket stats by customer",
+              "args": [
+                {
+                  "name": "customerId",
+                  "description": "Customer to generate stats for",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "ID",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "LIST",
+                  "name": null,
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "TicketStatsMonthly",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "ticketsStatsMonthlyByOrganization",
+              "description": "Fetch monthly ticket stats by organization",
+              "args": [
+                {
+                  "name": "organizationId",
+                  "description": "Organization to generate stats for",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "ID",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "LIST",
+                  "name": null,
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "TicketStatsMonthly",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "translations",
               "description": "Translations for a given locale",
               "args": [
@@ -17057,14 +19041,14 @@
               "description": "Fetch a user information by ID",
               "args": [
                 {
-                  "name": "user",
-                  "description": "User locator",
+                  "name": "userId",
+                  "description": "User ID",
                   "type": {
                     "kind": "NON_NULL",
                     "name": null,
                     "ofType": {
-                      "kind": "INPUT_OBJECT",
-                      "name": "LocatorUserInput",
+                      "kind": "SCALAR",
+                      "name": "ID",
                       "ofType": null
                     }
                   },
@@ -17172,12 +19156,12 @@
               "deprecationReason": null
             },
             {
-              "name": "userCurrentRecentViewList",
-              "description": "Fetch tickets recently viewed by the current user",
+              "name": "userCurrentRecentCloseList",
+              "description": "Fetch recently closed objects for the current user",
               "args": [
                 {
                   "name": "limit",
-                  "description": "Limit for the amount of entries",
+                  "description": "Limit for the amount of returned entries",
                   "type": {
                     "kind": "SCALAR",
                     "name": "Int",
@@ -17197,7 +19181,7 @@
                     "name": null,
                     "ofType": {
                       "kind": "UNION",
-                      "name": "RecentView",
+                      "name": "RecentClose",
                       "ofType": null
                     }
                   }
@@ -17377,6 +19361,45 @@
               },
               "isDeprecated": false,
               "deprecationReason": null
+            },
+            {
+              "name": "userHistory",
+              "description": "Fetch history of a user",
+              "args": [
+                {
+                  "name": "userId",
+                  "description": "User ID",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "ID",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "LIST",
+                  "name": null,
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "HistoryGroup",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
             }
           ],
           "inputFields": null,
@@ -17386,8 +19409,8 @@
         },
         {
           "kind": "UNION",
-          "name": "RecentView",
-          "description": "Objects recently viewed",
+          "name": "RecentClose",
+          "description": "Recently closed object",
           "fields": null,
           "inputFields": null,
           "interfaces": null,
@@ -17612,6 +19635,128 @@
           "possibleTypes": null
         },
         {
+          "kind": "INPUT_OBJECT",
+          "name": "SelectorNodeInput",
+          "description": "Selector node: either a single condition (name/operator/value) or a subclause (operator/conditions).",
+          "fields": null,
+          "inputFields": [
+            {
+              "name": "operator",
+              "description": "Block operator (AND/OR/NOT) for subclauses or the condition operator (e.g. \"is\", \"contains\") for single conditions.",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "conditions",
+              "description": "Nested conditions, present on subclauses only.",
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "SelectorNodeInput",
+                    "ofType": null
+                  }
+                }
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "name",
+              "description": "Target attribute, e.g. \"ticket.title\", conditions only.",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "value",
+              "description": "Condition value (primitive or array), conditions only.",
+              "type": {
+                "kind": "SCALAR",
+                "name": "JSON",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "preCondition",
+              "description": "Optional pre-condition (e.g. \"current_user.id\", \"not_set\"), conditions only.",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "range",
+              "description": "Optional range unit for relative time operators (e.g. \"minute\", \"day\"), conditions only.",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "defaultValue": null
+            }
+          ],
+          "interfaces": null,
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "SelectorObjectInput",
+          "description": "Per-object selector, pairing a searchable model with its selector conditions.",
+          "fields": null,
+          "inputFields": [
+            {
+              "name": "object",
+              "description": "Searchable model the selector applies to, e.g. Ticket",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "ENUM",
+                  "name": "EnumSearchableModels",
+                  "ofType": null
+                }
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "selector",
+              "description": "Selector conditions to apply for the given object",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "SelectorNodeInput",
+                  "ofType": null
+                }
+              },
+              "defaultValue": null
+            }
+          ],
+          "interfaces": null,
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
           "kind": "OBJECT",
           "name": "Session",
           "description": "Session of the currently logged-in user",
@@ -17679,168 +19824,6 @@
                   "name": "EnumAfterAuthType",
                   "ofType": null
                 }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            }
-          ],
-          "inputFields": null,
-          "interfaces": [],
-          "enumValues": null,
-          "possibleTypes": null
-        },
-        {
-          "kind": "OBJECT",
-          "name": "Signature",
-          "description": "Signature",
-          "fields": [
-            {
-              "name": "active",
-              "description": null,
-              "args": [],
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "Boolean",
-                  "ofType": null
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "body",
-              "description": null,
-              "args": [],
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "createdAt",
-              "description": "Create date/time of the record",
-              "args": [],
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "ISO8601DateTime",
-                  "ofType": null
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "createdBy",
-              "description": "User that created this record",
-              "args": [],
-              "type": {
-                "kind": "OBJECT",
-                "name": "User",
-                "ofType": null
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "id",
-              "description": null,
-              "args": [],
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "ID",
-                  "ofType": null
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "name",
-              "description": null,
-              "args": [],
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "note",
-              "description": "Internal note",
-              "args": [],
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "renderedBody",
-              "description": null,
-              "args": [
-                {
-                  "name": "ticketId",
-                  "description": "Current ticket.",
-                  "type": {
-                    "kind": "SCALAR",
-                    "name": "ID",
-                    "ofType": null
-                  },
-                  "defaultValue": null
-                }
-              ],
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "updatedAt",
-              "description": "Last update date/time of the record",
-              "args": [],
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "ISO8601DateTime",
-                  "ofType": null
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "updatedBy",
-              "description": "Last user that updated this record",
-              "args": [],
-              "type": {
-                "kind": "OBJECT",
-                "name": "User",
-                "ofType": null
               },
               "isDeprecated": false,
               "deprecationReason": null
@@ -17993,6 +19976,22 @@
           "name": "Subscriptions",
           "description": "All available subscriptions",
           "fields": [
+            {
+              "name": "aiTextToolUpdates",
+              "description": "Updated AI text tools",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "AITextToolUpdatesPayload",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
             {
               "name": "appMaintenance",
               "description": "Application update/change events",
@@ -18311,6 +20310,68 @@
               "deprecationReason": null
             },
             {
+              "name": "ticketByCustomerUpdates",
+              "description": "Updated customer tickets by filter",
+              "args": [
+                {
+                  "name": "customerId",
+                  "description": "Filter by customer",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "ID",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "TicketByCustomerUpdatesPayload",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "ticketByOrganizationUpdates",
+              "description": "Updated organization tickets by filter",
+              "args": [
+                {
+                  "name": "organizationId",
+                  "description": "Filter by organization",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "ID",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "TicketByOrganizationUpdatesPayload",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "ticketChecklistUpdates",
               "description": "Subscription for ticket checklist changes.",
               "args": [
@@ -18453,6 +20514,20 @@
               "description": "Updates to ticket records",
               "args": [
                 {
+                  "name": "initial",
+                  "description": "Return initial data by subscribing",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Boolean",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": "false"
+                },
+                {
                   "name": "ticketId",
                   "description": "Ticket identifier",
                   "type": {
@@ -18465,20 +20540,6 @@
                     }
                   },
                   "defaultValue": null
-                },
-                {
-                  "name": "initial",
-                  "description": "Return initial ticket data by subscribing",
-                  "type": {
-                    "kind": "NON_NULL",
-                    "name": null,
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "Boolean",
-                      "ofType": null
-                    }
-                  },
-                  "defaultValue": "false"
                 }
               ],
               "type": {
@@ -18573,15 +20634,15 @@
               "deprecationReason": null
             },
             {
-              "name": "userCurrentRecentViewUpdates",
-              "description": "Updates to the recently viewed items of the current user",
+              "name": "userCurrentRecentCloseUpdates",
+              "description": "Updates for the recently closed items of the current user",
               "args": [],
               "type": {
                 "kind": "NON_NULL",
                 "name": null,
                 "ofType": {
                   "kind": "OBJECT",
-                  "name": "UserCurrentRecentViewUpdatesPayload",
+                  "name": "UserCurrentRecentCloseUpdatesPayload",
                   "ofType": null
                 }
               },
@@ -18682,6 +20743,22 @@
               "deprecationReason": null
             },
             {
+              "name": "userCurrentTicketBulkUpdateStatusUpdates",
+              "description": "Updates for ticket bulk update status changes for the current user.",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "UserCurrentTicketBulkUpdateStatusUpdatesPayload",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "userCurrentTicketOverviewUpdates",
               "description": "Updates to overviews according to the sorting of the current user",
               "args": [
@@ -18732,6 +20809,20 @@
               "name": "userUpdates",
               "description": "Updates to user records",
               "args": [
+                {
+                  "name": "initial",
+                  "description": "Return initial data by subscribing",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Boolean",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": "false"
+                },
                 {
                   "name": "userId",
                   "description": "ID of the user to receive updates for",
@@ -19827,6 +21918,18 @@
           "description": "Tickets",
           "fields": [
             {
+              "name": "aiAgentRunning",
+              "description": "Returns true if an AI agent is running for this ticket",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "articleCount",
               "description": "Count of ticket articles that were not sent by 'System'.",
               "args": [],
@@ -20558,8 +22661,8 @@
         },
         {
           "kind": "OBJECT",
-          "name": "TicketAIAssistanceSummarizePayload",
-          "description": "Autogenerated return type of TicketAIAssistanceSummarize.",
+          "name": "TicketAIAssistanceEnqueueKnowledgeBaseAnswerPayload",
+          "description": "Autogenerated return type of TicketAIAssistanceEnqueueKnowledgeBaseAnswer.",
           "fields": [
             {
               "name": "errors",
@@ -20582,25 +22685,56 @@
               "deprecationReason": null
             },
             {
-              "name": "fingerprintMd5",
-              "description": "MD5 digest of the complete summary content",
+              "name": "success",
+              "description": "Whether the generation job was enqueued successfully.",
               "args": [],
               "type": {
                 "kind": "SCALAR",
-                "name": "String",
+                "name": "Boolean",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
+          "name": "TicketAIAssistanceSummarizePayload",
+          "description": "Autogenerated return type of TicketAIAssistanceSummarize.",
+          "fields": [
+            {
+              "name": "analytics",
+              "description": "Analytics metadata",
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "AIAnalyticsMetadata",
                 "ofType": null
               },
               "isDeprecated": false,
               "deprecationReason": null
             },
             {
-              "name": "reason",
-              "description": "Reason for the result of the summary generation",
+              "name": "errors",
+              "description": "Errors encountered during execution of the mutation.",
               "args": [],
               "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "UserError",
+                    "ofType": null
+                  }
+                }
               },
               "isDeprecated": false,
               "deprecationReason": null
@@ -20633,6 +22767,50 @@
               "description": null,
               "args": [],
               "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "customerEmotion",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "customerMood",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "customerRequest",
+              "description": null,
+              "args": [],
+              "type": {
                 "kind": "SCALAR",
                 "name": "String",
                 "ofType": null
@@ -20661,19 +22839,7 @@
               "deprecationReason": null
             },
             {
-              "name": "problem",
-              "description": null,
-              "args": [],
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "suggestions",
+              "name": "upcomingEvents",
               "description": null,
               "args": [],
               "type": {
@@ -20704,36 +22870,24 @@
           "description": "Autogenerated return type of TicketAIAssistanceSummaryUpdates.",
           "fields": [
             {
+              "name": "analytics",
+              "description": "Analytics metadata",
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "AIAnalyticsMetadata",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "error",
               "description": "Error that occurred during the execution of the async job",
               "args": [],
               "type": {
                 "kind": "OBJECT",
                 "name": "AsyncExecutionError",
-                "ofType": null
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "fingerprintMd5",
-              "description": "MD5 digest of the complete summary content",
-              "args": [],
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "reason",
-              "description": "Reason for the result of the summary generation",
-              "args": [],
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -20934,6 +23088,26 @@
                 "kind": "OBJECT",
                 "name": "AddressesField",
                 "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "highlightedTexts",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "TicketArticleHighlightedText",
+                    "ofType": null
+                  }
+                }
               },
               "isDeprecated": false,
               "deprecationReason": null
@@ -21449,6 +23623,165 @@
                 "kind": "SCALAR",
                 "name": "String",
                 "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
+          "name": "TicketArticleHighlightedText",
+          "description": "Ticket article highlighted text information",
+          "fields": [
+            {
+              "name": "colorClass",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "endIndex",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "startIndex",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "TicketArticleHighlightedTextInput",
+          "description": "Input fields for ticket article highlighted text information.",
+          "fields": null,
+          "inputFields": [
+            {
+              "name": "startIndex",
+              "description": "Start index of the highlighted text",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "endIndex",
+              "description": "End index of the highlighted text",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "colorClass",
+              "description": "Color of the highlighted text",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "defaultValue": null
+            }
+          ],
+          "interfaces": null,
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
+          "name": "TicketArticleHighlightedTextUpsertPayload",
+          "description": "Autogenerated return type of TicketArticleHighlightedTextUpsert.",
+          "fields": [
+            {
+              "name": "errors",
+              "description": "Errors encountered during execution of the mutation.",
+              "args": [],
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "UserError",
+                    "ofType": null
+                  }
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "success",
+              "description": "Did the highlight data get successfully stored?",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Boolean",
+                  "ofType": null
+                }
               },
               "isDeprecated": false,
               "deprecationReason": null
@@ -22100,6 +24433,205 @@
           "possibleTypes": null
         },
         {
+          "kind": "INPUT_OBJECT",
+          "name": "TicketBulkPerformInput",
+          "description": "Represents the bulk update action to be performed on the selected tickets.",
+          "fields": null,
+          "inputFields": [
+            {
+              "name": "input",
+              "description": "The ticket data",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "TicketUpdateInput",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "macroId",
+              "description": "The macro to apply onto ticket",
+              "type": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              },
+              "defaultValue": null
+            }
+          ],
+          "interfaces": null,
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "TicketBulkSelectorInput",
+          "description": "Represents the selector for bulk ticket update.",
+          "fields": null,
+          "inputFields": [
+            {
+              "name": "entityIds",
+              "description": "The tickets to be updated",
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "ID",
+                    "ofType": null
+                  }
+                }
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "overviewId",
+              "description": "Ticket overview for selecting tickets",
+              "type": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "searchQuery",
+              "description": "Search query to filter tickets",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "searchFilter",
+              "description": "Advanced search filters as selector conditions",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "SelectorNodeInput",
+                "ofType": null
+              },
+              "defaultValue": null
+            }
+          ],
+          "interfaces": null,
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
+          "name": "TicketBulkUpdateStatus",
+          "description": "Ticket bulk update status information",
+          "fields": [
+            {
+              "name": "failedCount",
+              "description": "Number of tickets that failed to update",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "processedCount",
+              "description": "Number of tickets processed so far",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "status",
+              "description": "Current status of the bulk update",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "ENUM",
+                  "name": "EnumBulkUpdateStatusStatus",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "total",
+              "description": "Total number of tickets to be updated",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
+          "name": "TicketByCustomerUpdatesPayload",
+          "description": "Autogenerated return type of TicketByCustomerUpdates.",
+          "fields": [
+            {
+              "name": "listChanged",
+              "description": "Signals that the customer tickets list has changed",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
+          "name": "TicketByOrganizationUpdatesPayload",
+          "description": "Autogenerated return type of TicketByOrganizationUpdates.",
+          "fields": [
+            {
+              "name": "listChanged",
+              "description": "Signals that the organization tickets list has changed",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
           "kind": "OBJECT",
           "name": "TicketChecklistAddPayload",
           "description": "Autogenerated return type of TicketChecklistAdd.",
@@ -22564,7 +25096,7 @@
           "fields": [
             {
               "name": "closed",
-              "description": null,
+              "description": "Closed ticket count of the related object",
               "args": [],
               "type": {
                 "kind": "NON_NULL",
@@ -22579,8 +25111,20 @@
               "deprecationReason": null
             },
             {
+              "name": "closedSearchQuery",
+              "description": "Closed ticket search query of the related object",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "open",
-              "description": null,
+              "description": "Open ticket count of the related object",
               "args": [],
               "type": {
                 "kind": "NON_NULL",
@@ -22590,6 +25134,66 @@
                   "name": "Int",
                   "ofType": null
                 }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "openSearchQuery",
+              "description": "Open ticket search query of the related object",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "organizationClosed",
+              "description": "Closed ticket count of the related object's organizations",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "organizationClosedSearchQuery",
+              "description": "Closed ticket search query of the related object's organizations",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "organizationOpen",
+              "description": "Open ticket count of the related object's organizations",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "organizationOpenSearchQuery",
+              "description": "Open ticket search query of the related object's organizations",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
               },
               "isDeprecated": false,
               "deprecationReason": null
@@ -23276,94 +25880,6 @@
           "fields": null,
           "inputFields": [
             {
-              "name": "objectAttributeValues",
-              "description": "Additional custom attributes (names + values)",
-              "type": {
-                "kind": "LIST",
-                "name": null,
-                "ofType": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "INPUT_OBJECT",
-                    "name": "ObjectAttributeValueInput",
-                    "ofType": null
-                  }
-                }
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "ownerId",
-              "description": "The owner of the ticket.",
-              "type": {
-                "kind": "SCALAR",
-                "name": "ID",
-                "ofType": null
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "customer",
-              "description": "The customer of the ticket.",
-              "type": {
-                "kind": "INPUT_OBJECT",
-                "name": "TicketCustomerInput",
-                "ofType": null
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "organizationId",
-              "description": "The organization of the ticket.",
-              "type": {
-                "kind": "SCALAR",
-                "name": "ID",
-                "ofType": null
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "priorityId",
-              "description": "The priority of the ticket.",
-              "type": {
-                "kind": "SCALAR",
-                "name": "ID",
-                "ofType": null
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "stateId",
-              "description": "The state of the ticket.",
-              "type": {
-                "kind": "SCALAR",
-                "name": "ID",
-                "ofType": null
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "pendingTime",
-              "description": "The pending time of the ticket.",
-              "type": {
-                "kind": "SCALAR",
-                "name": "ISO8601DateTime",
-                "ofType": null
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "article",
-              "description": "The article data.",
-              "type": {
-                "kind": "INPUT_OBJECT",
-                "name": "TicketArticleInput",
-                "ofType": null
-              },
-              "defaultValue": null
-            },
-            {
               "name": "github",
               "description": "Links for the github integration",
               "type": {
@@ -24004,6 +26520,65 @@
           ],
           "inputFields": null,
           "interfaces": [],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "TicketMacrosSelectorInput",
+          "description": "Represents the selector for ticket macros query.",
+          "fields": null,
+          "inputFields": [
+            {
+              "name": "entityIds",
+              "description": "The groups to be considered",
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "ID",
+                    "ofType": null
+                  }
+                }
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "overviewId",
+              "description": "Ticket overview for selecting tickets and their groups",
+              "type": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "searchQuery",
+              "description": "Search query to filter tickets and their groups",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "searchFilter",
+              "description": "Advanced search filters as selector conditions",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "SelectorNodeInput",
+                "ofType": null
+              },
+              "defaultValue": null
+            }
+          ],
+          "interfaces": null,
           "enumValues": null,
           "possibleTypes": null
         },
@@ -25083,6 +27658,22 @@
               "deprecationReason": null
             },
             {
+              "name": "defaultClose",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Boolean",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "defaultCreate",
               "description": null,
               "args": [],
@@ -25349,6 +27940,97 @@
         },
         {
           "kind": "OBJECT",
+          "name": "TicketStatsMonthly",
+          "description": "Monthly ticket stats",
+          "fields": [
+            {
+              "name": "monthLabel",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "monthNumber",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "ticketsClosed",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "ticketsCreated",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "year",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
           "name": "TicketTimeAccountingTypeSum",
           "description": "Ticket time accounting - sum per type",
           "fields": [
@@ -25392,12 +28074,12 @@
         },
         {
           "kind": "OBJECT",
-          "name": "TicketUpdateBulkPayload",
-          "description": "Autogenerated return type of TicketUpdateBulk.",
+          "name": "TicketTitleUpdatePayload",
+          "description": "Autogenerated return type of TicketTitleUpdate.",
           "fields": [
             {
               "name": "errors",
-              "description": "Did the bulk update fail?",
+              "description": "Errors encountered during execution of the mutation.",
               "args": [],
               "type": {
                 "kind": "LIST",
@@ -25407,7 +28089,7 @@
                   "name": null,
                   "ofType": {
                     "kind": "OBJECT",
-                    "name": "TicketUpdateBulkUserError",
+                    "name": "UserError",
                     "ofType": null
                   }
                 }
@@ -25416,12 +28098,12 @@
               "deprecationReason": null
             },
             {
-              "name": "success",
-              "description": "Were the tickets updated successfully?",
+              "name": "ticket",
+              "description": "The updated ticket.",
               "args": [],
               "type": {
-                "kind": "SCALAR",
-                "name": "Boolean",
+                "kind": "OBJECT",
+                "name": "Ticket",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -25435,49 +28117,101 @@
         },
         {
           "kind": "OBJECT",
-          "name": "TicketUpdateBulkUserError",
-          "description": "Represents an error during a ticket bulk update mutation.",
+          "name": "TicketUpdateBulkPayload",
+          "description": "Autogenerated return type of TicketUpdateBulk.",
           "fields": [
             {
-              "name": "errorType",
-              "description": "Exception class",
+              "name": "async",
+              "description": "Whether the update is being processed asynchronously. This will be true if the number of tickets exceeds the defined threshold.",
               "args": [],
               "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "failedTicket",
-              "description": "Ticket which caused the bulk update transaction to fail and be rolled back",
-              "args": [],
-              "type": {
-                "kind": "OBJECT",
-                "name": "Ticket",
+                "kind": "SCALAR",
+                "name": "Boolean",
                 "ofType": null
               },
               "isDeprecated": false,
               "deprecationReason": null
             },
             {
-              "name": "message",
-              "description": null,
+              "name": "errors",
+              "description": "Errors encountered during execution of the mutation.",
               "args": [],
               "type": {
-                "kind": "NON_NULL",
+                "kind": "LIST",
                 "name": null,
                 "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "UserError",
+                    "ofType": null
+                  }
                 }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "failedCount",
+              "description": "",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "inaccessibleTicketIds",
+              "description": "Tickets that are no longer accessible to the user.",
+              "args": [],
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "ID",
+                    "ofType": null
+                  }
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "invalidTicketIds",
+              "description": "Tickets that failed to update due to validation errors or other issues.",
+              "args": [],
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "ID",
+                    "ofType": null
+                  }
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "total",
+              "description": "Total number of tickets selected for update.",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
               },
               "isDeprecated": false,
               "deprecationReason": null
@@ -25623,94 +28357,6 @@
           "description": "Represents ticket update meta information to be used in ticket update.",
           "fields": null,
           "inputFields": [
-            {
-              "name": "objectAttributeValues",
-              "description": "Additional custom attributes (names + values)",
-              "type": {
-                "kind": "LIST",
-                "name": null,
-                "ofType": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "INPUT_OBJECT",
-                    "name": "ObjectAttributeValueInput",
-                    "ofType": null
-                  }
-                }
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "ownerId",
-              "description": "The owner of the ticket.",
-              "type": {
-                "kind": "SCALAR",
-                "name": "ID",
-                "ofType": null
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "customer",
-              "description": "The customer of the ticket.",
-              "type": {
-                "kind": "INPUT_OBJECT",
-                "name": "TicketCustomerInput",
-                "ofType": null
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "organizationId",
-              "description": "The organization of the ticket.",
-              "type": {
-                "kind": "SCALAR",
-                "name": "ID",
-                "ofType": null
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "priorityId",
-              "description": "The priority of the ticket.",
-              "type": {
-                "kind": "SCALAR",
-                "name": "ID",
-                "ofType": null
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "stateId",
-              "description": "The state of the ticket.",
-              "type": {
-                "kind": "SCALAR",
-                "name": "ID",
-                "ofType": null
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "pendingTime",
-              "description": "The pending time of the ticket.",
-              "type": {
-                "kind": "SCALAR",
-                "name": "ISO8601DateTime",
-                "ofType": null
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "article",
-              "description": "The article data.",
-              "type": {
-                "kind": "INPUT_OBJECT",
-                "name": "TicketArticleInput",
-                "ofType": null
-              },
-              "defaultValue": null
-            },
             {
               "name": "skipValidators",
               "description": "The ticket update validators to skip",
@@ -26464,6 +29110,18 @@
               "deprecationReason": null
             },
             {
+              "name": "hasBetaUiSwitchAvailable",
+              "description": "Whether the user has access to the BETA UI switch",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "hasSecondaryOrganizations",
               "description": null,
               "args": [],
@@ -26771,6 +29429,18 @@
               "type": {
                 "kind": "OBJECT",
                 "name": "OrganizationConnection",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "source",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -27344,7 +30014,7 @@
           "fields": [
             {
               "name": "tokens",
-              "description": "List of acess tokens for the user",
+              "description": "List of access tokens for the user",
               "args": [],
               "type": {
                 "kind": "LIST",
@@ -28219,8 +30889,8 @@
         },
         {
           "kind": "OBJECT",
-          "name": "UserCurrentRecentViewResetPayload",
-          "description": "Autogenerated return type of UserCurrentRecentViewReset.",
+          "name": "UserCurrentRecentCloseResetPayload",
+          "description": "Autogenerated return type of UserCurrentRecentCloseReset.",
           "fields": [
             {
               "name": "errors",
@@ -28266,12 +30936,12 @@
         },
         {
           "kind": "OBJECT",
-          "name": "UserCurrentRecentViewUpdatesPayload",
-          "description": "Autogenerated return type of UserCurrentRecentViewUpdates.",
+          "name": "UserCurrentRecentCloseUpdatesPayload",
+          "description": "Autogenerated return type of UserCurrentRecentCloseUpdates.",
           "fields": [
             {
-              "name": "recentViewsUpdated",
-              "description": "The recent view list of the user has changed.",
+              "name": "recentCloseUpdated",
+              "description": "The recently closed list of the user has changed.",
               "args": [],
               "type": {
                 "kind": "SCALAR",
@@ -28500,12 +31170,24 @@
           "description": "Autogenerated return type of UserCurrentTaskbarItemStateUpdates.",
           "fields": [
             {
-              "name": "stateChanged",
-              "description": "Signals that the taskbar item state has changed",
+              "name": "stateUpdateType",
+              "description": "The type of state update",
               "args": [],
               "type": {
-                "kind": "SCALAR",
-                "name": "Boolean",
+                "kind": "ENUM",
+                "name": "EnumTaskbarStateUpdate",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "taskbarItem",
+              "description": "The updated taskbar item, so consumers can apply the new state directly (e.g. cross-tab search sync)",
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "UserTaskbarItem",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -28652,6 +31334,33 @@
         },
         {
           "kind": "OBJECT",
+          "name": "UserCurrentTicketBulkUpdateStatusUpdatesPayload",
+          "description": "Autogenerated return type of UserCurrentTicketBulkUpdateStatusUpdates.",
+          "fields": [
+            {
+              "name": "bulkUpdateStatus",
+              "description": "Current status of the bulk update",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "TicketBulkUpdateStatus",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
           "name": "UserCurrentTicketOverviewUpdatesPayload",
           "description": "Autogenerated return type of UserCurrentTicketOverviewUpdates.",
           "fields": [
@@ -28709,53 +31418,6 @@
             {
               "name": "success",
               "description": "Whether the user ticket screen behavior setting was updated successfully",
-              "args": [],
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "Boolean",
-                  "ofType": null
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            }
-          ],
-          "inputFields": null,
-          "interfaces": [],
-          "enumValues": null,
-          "possibleTypes": null
-        },
-        {
-          "kind": "OBJECT",
-          "name": "UserCurrentTicketSummaryBannerHiddenPayload",
-          "description": "Autogenerated return type of UserCurrentTicketSummaryBannerHidden.",
-          "fields": [
-            {
-              "name": "errors",
-              "description": "Errors encountered during execution of the mutation.",
-              "args": [],
-              "type": {
-                "kind": "LIST",
-                "name": null,
-                "ofType": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "OBJECT",
-                    "name": "UserError",
-                    "ofType": null
-                  }
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "success",
-              "description": "Profile ticket summary banner setting updated successfully?",
               "args": [],
               "type": {
                 "kind": "NON_NULL",
@@ -29657,6 +32319,49 @@
                   "name": "Boolean",
                   "ofType": null
                 }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
+          "name": "UserNoteUpdatePayload",
+          "description": "Autogenerated return type of UserNoteUpdate.",
+          "fields": [
+            {
+              "name": "errors",
+              "description": "Errors encountered during execution of the mutation.",
+              "args": [],
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "UserError",
+                    "ofType": null
+                  }
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "user",
+              "description": "The created user.",
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "User",
+                "ofType": null
               },
               "isDeprecated": false,
               "deprecationReason": null
@@ -31092,6 +33797,30 @@
           "description": "Entity representing taskbar item search",
           "fields": [
             {
+              "name": "filterCount",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "filters",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "model",
               "description": null,
               "args": [],
@@ -31371,7 +34100,7 @@
             },
             {
               "name": "user",
-              "description": "The created user.",
+              "description": "The updated user.",
               "args": [],
               "type": {
                 "kind": "OBJECT",
@@ -31619,6 +34348,12 @@
               "deprecationReason": null
             },
             {
+              "name": "VARIABLE_DEFINITION",
+              "description": "Location adjacent to a variable definition.",
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "SCHEMA",
               "description": "Location adjacent to a schema definition.",
               "isDeprecated": false,
@@ -31681,12 +34416,6 @@
             {
               "name": "INPUT_FIELD_DEFINITION",
               "description": "Location adjacent to an input object field definition.",
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "VARIABLE_DEFINITION",
-              "description": "Location adjacent to a variable definition.",
               "isDeprecated": false,
               "deprecationReason": null
             }

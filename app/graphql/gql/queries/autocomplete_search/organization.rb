@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Queries
   class AutocompleteSearch::Organization < BaseQuery
@@ -17,13 +17,12 @@ module Gql::Queries
       return [] if query.strip.empty?
 
       Service::Search
-        .new(
-          current_user: context.current_user,
-          query:        query,
-          objects:      [::Organization],
-          options:      { limit: limit, ids: customer_ids(input[:customer]) },
+        .with_current_user(context.current_user)
+        .execute(
+          query:   query,
+          objects: [::Organization],
+          options: { limit: limit, ids: customer_ids(input[:customer]) },
         )
-        .execute
         .flattened
         .map { |organization| coerce_to_result(organization) }
     end

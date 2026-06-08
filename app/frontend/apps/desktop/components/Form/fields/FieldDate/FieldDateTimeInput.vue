@@ -1,21 +1,20 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <!-- eslint-disable zammad/zammad-detect-translatable-string -->
 
 <script setup lang="ts">
 import { getNode, type FormKitNode } from '@formkit/core'
-import VueDatePicker, { type DatePickerInstance } from '@vuepic/vue-datepicker'
+import { VueDatePicker, WeekStart } from '@vuepic/vue-datepicker'
 import { isValid, format, formatISO, parse, parseISO } from 'date-fns'
 import { isEqual } from 'lodash-es'
-import { storeToRefs } from 'pinia'
-import { computed, nextTick, ref, toRef, watch } from 'vue'
+import { computed, nextTick, toRef, watch, useTemplateRef } from 'vue'
 import { IMask, useIMask } from 'vue-imask'
 
 import useValue from '#shared/components/Form/composables/useValue.ts'
 import type { DateTimeContext } from '#shared/components/Form/fields/FieldDate/types.ts'
+import { useDateFnsLocale } from '#shared/components/Form/fields/FieldDate/useDateFnsLocale.ts'
 import { useDateTime } from '#shared/components/Form/fields/FieldDate/useDateTime.ts'
 import dateRange from '#shared/form/validation/rules/date-range.ts'
-import { EnumTextDirection } from '#shared/graphql/types.ts'
 import { i18n } from '#shared/i18n.ts'
 import testFlags from '#shared/utils/testFlags.ts'
 
@@ -33,23 +32,11 @@ const contextReactive = toRef(props, 'context')
 
 const { localValue } = useValue(contextReactive)
 
-const {
-  ariaLabels,
-  displayFormat,
-  is24,
-  localeStore,
-  minDate,
-  position,
-  timePicker,
-  valueFormat,
-} = useDateTime(contextReactive)
+const { ariaLabels, displayFormat, is24, maxDate, minDate, timePicker, valueFormat } =
+  useDateTime(contextReactive)
 
 const config = computed(() => ({
   keepActionRow: true,
-  arrowLeft:
-    localeStore.localeData?.dir === EnumTextDirection.Rtl
-      ? 'calc(100% - 17px)'
-      : '17px',
 }))
 
 const actionRow = computed(() => ({
@@ -59,6 +46,7 @@ const actionRow = computed(() => ({
   //   even if only one date was selected.
   showNow: !props.context.range,
   showPreview: false,
+  nowBtnLabel: i18n.t('Today'),
 }))
 
 const inputIcon = computed(() => {
@@ -67,14 +55,16 @@ const inputIcon = computed(() => {
   return 'calendar-event'
 })
 
-const picker = ref<DatePickerInstance>()
+const pickerInstance = useTemplateRef('picker')
 
-const { isDarkMode } = storeToRefs(useThemeStore())
+const isDarkMode = toRef(useThemeStore(), 'isDarkMode')
 
 const localeFormat = computed(() => {
   if (timePicker.value) return i18n.getDateTimeFormat()
   return i18n.getDateFormat()
 })
+
+const { dateFnsLocale } = useDateFnsLocale()
 
 // Date/time placeholders used in the locale format:
 // - 'dd' - 2-digit day
@@ -90,10 +80,13 @@ const localeFormat = computed(() => {
 // - 'P' - Meridian indicator ('am' or 'pm')
 const inputFormat = computed(() =>
   localeFormat.value
+    .replace(/dd/, '2DigitDay') // 'dd' must be replaced before 'd'
     .replace(/MM/, '2DigitMinute') // 'MM' is used for both minute and month
+    .replace(/d/, 'dd') // treat 'd' as 'dd' to avoid conflicts with month placeholder
     .replace(/mm/, 'MM')
-    .replace(/m/, 'M')
+    .replace(/m/, 'MM') // treat 'm' as 'MM' to avoid conflicts with month placeholder
     .replace(/SS/, 'ss')
+    .replace(/2DigitDay/, 'dd')
     .replace(/2DigitMinute/, 'mm')
     .replace(/l/, 'hh')
     .replace(/P/, 'aaa'),
@@ -214,11 +207,7 @@ watch(
     const newDate = parseValue(newValue)
     const maskedDate = parse(masked.value, inputFormat.value, new Date())
 
-    if (
-      isValid(maskedDate) &&
-      maskedDate.toISOString() === newDate.toISOString()
-    )
-      return
+    if (isValid(maskedDate) && maskedDate.toISOString() === newDate.toISOString()) return
 
     masked.value = format(newDate, inputFormat.value)
   },
@@ -254,8 +243,7 @@ watch(masked, (newValue) => {
       return formatValue(date)
     })
 
-    if (!dateRangeValidation(newValues) || isEqual(localValue.value, newValues))
-      return
+    if (!dateRangeValidation(newValues) || isEqual(localValue.value, newValues)) return
 
     localValue.value = newValues
 
@@ -264,11 +252,7 @@ watch(masked, (newValue) => {
 
   const newDate = parse(newValue, inputFormat.value, new Date())
 
-  if (
-    !isValid(newDate) ||
-    (isValid(newDate) && localValue.value === formatValue(newDate))
-  )
-    return
+  if (!isValid(newDate) || (isValid(newDate) && localValue.value === formatValue(newDate))) return
 
   localValue.value = formatValue(newDate)
 })
@@ -312,8 +296,7 @@ const closed = () => {
 
   const maskedDate = parse(masked.value, inputFormat.value, new Date())
 
-  if (isValid(maskedDate) && localValue.value === formatValue(maskedDate))
-    return
+  if (isValid(maskedDate) && localValue.value === formatValue(maskedDate)) return
 
   const newDate = parseValue(localValue.value)
   masked.value = format(newDate, inputFormat.value)
@@ -326,30 +309,34 @@ const closed = () => {
     <VueDatePicker
       ref="picker"
       v-model="localValue"
-      :uid="context.id"
       :model-type="valueFormat"
-      :name="context.node.name"
-      :clearable="!!context.clearable"
       :disabled="context.disabled"
       :range="context.range"
-      :enable-time-picker="timePicker"
-      :format="displayFormat"
-      :is-24="is24"
+      :time-config="{
+        enableTimePicker: timePicker,
+        is24: is24,
+        ignoreTimeValidation: !timePicker,
+      }"
+      :formats="displayFormat"
       :dark="isDarkMode"
-      :locale="i18n.locale()"
-      :max-date="context.maxDate"
+      :locale="dateFnsLocale"
+      :max-date="maxDate"
       :min-date="minDate"
-      :start-date="minDate || context.maxDate"
-      :ignore-time-validation="!timePicker"
+      :start-date="minDate || maxDate"
       :prevent-min-max-navigation="
-        Boolean(minDate || context.maxDate || context.futureOnly)
+        Boolean(minDate || maxDate || context.futureOnly || context.pastOnly)
       "
-      :now-button-label="$t('Today')"
-      :position="position"
+      :floating="{ placement: 'top-start', strategy: 'absolute', arrow: false, flip: true }"
       :action-row="actionRow"
       :config="config"
       :aria-labels="ariaLabels"
-      :text-input="{ openMenu: 'open' }"
+      :text-input="{ openMenu: 'open', format: displayFormat.input }"
+      :input-attrs="{
+        id: context.id,
+        name: context.node.name,
+        clearable: !!context.clearable,
+      }"
+      :week-start="WeekStart.Monday"
       auto-apply
       offset="12"
       @open="open"
@@ -373,7 +360,7 @@ const closed = () => {
           :name="inputIcon"
           size="tiny"
           decorative
-          @click.stop="picker?.toggleMenu()"
+          @click.stop="pickerInstance?.toggleMenu()"
         />
       </template>
       <template #clear-icon>
@@ -383,8 +370,8 @@ const closed = () => {
           size="xs"
           tabindex="0"
           role="button"
-          :aria-label="$t('Clear Selection')"
-          @click.stop="picker?.clearValue()"
+          :aria-label="$t('Clear selection')"
+          @click.stop="pickerInstance?.clearValue()"
         />
       </template>
       <template #clock-icon>
@@ -410,7 +397,7 @@ const closed = () => {
 </template>
 
 <style scoped>
-:deep(.dp__theme_light) {
+:deep(.dp--theme-light) {
   --dp-background-color: var(--color-white);
   --dp-text-color: var(--color-black);
   --dp-hover-color: var(--color-blue-600);
@@ -443,9 +430,9 @@ const closed = () => {
     color: var(--color-black);
   }
 
-  .dp__btn,
-  .dp__calendar_item,
-  .dp__action_button {
+  .dp--btn,
+  .dp--calendar-item,
+  .dp--action-button {
     &:hover {
       outline-color: var(--color-blue-600);
     }
@@ -455,14 +442,14 @@ const closed = () => {
     }
   }
 
-  .dp__button,
-  .dp__action_button {
+  .dp--button,
+  .dp--action-button {
     color: var(--color-gray-300);
     background: var(--color-green-200);
   }
 }
 
-:deep(.dp__theme_dark) {
+:deep(.dp--theme-dark) {
   --dp-background-color: var(--color-gray-500);
   --dp-text-color: var(--color-white);
   --dp-hover-color: var(--color-blue-900);
@@ -495,9 +482,9 @@ const closed = () => {
     color: var(--color-white);
   }
 
-  .dp__btn,
-  .dp__calendar_item,
-  .dp__action_button {
+  .dp--btn,
+  .dp--calendar-item,
+  .dp--action-button {
     &:hover {
       outline-color: var(--color-blue-900);
     }
@@ -507,14 +494,14 @@ const closed = () => {
     }
   }
 
-  .dp__button,
-  .dp__action_button {
+  .dp--button,
+  .dp--action-button {
     color: var(--color-neutral-400);
     background: var(--color-gray-600);
   }
 }
 
-:deep(.dp__main) {
+:deep(.dp--main) {
   --dp-font-family: var(--default-font-family);
   --dp-border-radius: 0.5rem;
   --dp-cell-border-radius: 0.375rem;
@@ -539,7 +526,7 @@ const closed = () => {
   --dp-preview-font-size: 0.75rem;
   --dp-time-font-size: 1rem;
 
-  .dp__input_icon {
+  .dp--input-icon {
     left: unset;
     right: 0.625rem;
 
@@ -549,12 +536,12 @@ const closed = () => {
     }
   }
 
-  .dp__input_icon_pad {
+  .dp--input-icon-pad {
     padding-inline-start: var(--dp-common-padding);
     padding-inline-end: var(--dp-input-icon-padding);
   }
 
-  .dp__input_wrap {
+  .dp--input-wrap {
     display: flex;
   }
 
@@ -572,32 +559,32 @@ const closed = () => {
     max-width: none;
   }
 
-  .dp__inner_nav:hover,
-  .dp__month_year_select:hover,
-  .dp__year_select:hover,
-  .dp__date_hover:hover,
-  .dp__inc_dec_button {
+  .dp--inner-nav:hover,
+  .dp--month-year-select:hover,
+  .dp--year-select:hover,
+  .dp--date-hoverable:hover,
+  .dp--inc-dec-button {
     background: transparent;
     transition: none;
   }
 
-  .dp__date_hover.dp__cell_offset:hover {
+  .dp--date-hoverable.dp--cell-offset:hover {
     color: var(--dp-secondary-color);
   }
 
-  .dp__menu_inner {
+  .dp--menu-inner {
     padding-bottom: 0;
   }
 
-  .dp__action_row {
+  .dp--action-row {
     padding-top: 0;
     margin-top: 0.125rem;
   }
 
-  .dp__btn,
-  .dp__button,
-  .dp__calendar_item,
-  .dp__action_button {
+  .dp--btn,
+  .dp--button,
+  .dp--calendar-item,
+  .dp--action-button {
     transition: none;
     border-radius: 0.375rem;
     outline-color: transparent;
@@ -615,35 +602,33 @@ const closed = () => {
     }
   }
 
-  .dp__calendar_row {
+  .dp--calendar-row {
     gap: 0.375rem;
   }
 
-  .dp__month_year_wrap {
+  .dp--month-year-wrap {
     gap: 0.5rem;
   }
 
-  .dp__time_col {
+  .dp--time-col {
     gap: 0.75rem;
   }
 
-  .dp__today {
+  .dp--today {
     border: none;
     color: var(--color-blue-800);
 
-    &.dp__range_start,
-    &.dp__range_end,
-    &.dp__active_date {
+    &.dp--active {
       color: var(--color-white);
     }
   }
 
-  .dp__action_buttons {
+  .dp--action-buttons {
     margin-inline-start: 0;
     flex-grow: 1;
   }
 
-  .dp__action_button {
+  .dp--action-button {
     margin-inline-start: 0;
     transition: none;
     flex-grow: 1;
@@ -652,67 +637,58 @@ const closed = () => {
     border-radius: 0.375rem;
   }
 
-  .dp__action_cancel {
+  .dp--action-cancel {
     border: 0;
   }
 
-  .dp--arrow-btn-nav .dp__inner_nav {
+  .dp--arrow-btn-nav .dp--inner-nav {
     color: var(--color-blue-800);
   }
 
-  /* NB: Fix orientation of the popover arrow in RTL locales. */
-
-  .dp__arrow_top:where([dir='rtl'], [dir='rtl'] *) {
-    transform: translate(-50%, -50%) rotate(-45deg);
-  }
-
-  .dp__arrow_bottom:where([dir='rtl'], [dir='rtl'] *) {
-    transform: translate(-50%, 50%) rotate(45deg);
-  }
-
-  .dp__overlay_container {
+  .dp--overlay-container {
     padding-bottom: 0.5rem;
   }
 
-  .dp__overlay_container + .dp__button,
-  .dp__overlay_row + .dp__button {
+  .dp--overlay-container + .dp--button,
+  .dp--overlay-row + .dp--button {
     width: auto;
     margin: 0.5rem;
   }
 
-  .dp__overlay_container + .dp__button {
+  .dp--overlay-container + .dp--button {
     width: calc(var(--dp-menu-min-width));
   }
 
-  .dp__time_display {
+  .dp--time-display {
     transition: none;
     padding: 0.5rem;
   }
 
-  .dp__range_start,
-  .dp__range_end,
-  .dp__range_between {
+  .dp--range-between {
     transition: none;
     border: none;
     border-radius: 0.375rem;
   }
 
-  .dp__range_between:hover {
+  .dp--range-between:hover {
     background: var(--dp-range-between-dates-background-color);
     color: var(--dp-range-between-dates-text-color);
   }
 
-  .dp__range_end,
-  .dp__range_start,
-  .dp__active_date {
-    &.dp__cell_offset {
+  .dp--active {
+    &.dp--cell-offset {
       color: var(--dp-primary-text-color);
     }
   }
 
-  .dp__calendar_header {
+  .dp--calendar-header {
     font-weight: 400;
     text-transform: uppercase;
+
+    .dp--calendar-header-item {
+      padding-left: 0;
+      padding-right: 0;
+    }
   }
 }
 </style>

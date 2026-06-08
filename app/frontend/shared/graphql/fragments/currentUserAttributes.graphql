@@ -10,4 +10,5 @@ fragment currentUserAttributes on User {
   permissions {
     names
   }
+  hasBetaUiSwitchAvailable
 }

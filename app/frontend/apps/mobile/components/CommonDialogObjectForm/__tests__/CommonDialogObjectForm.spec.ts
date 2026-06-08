@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { useMutation } from '@vue/apollo-composable'
 import gql from 'graphql-tag'
@@ -84,10 +84,7 @@ test('can update default object', async () => {
 
   await waitUntilApisResolved(attributesApi)
 
-  const attributeValues = keyBy(
-    organization.objectAttributeValues,
-    'attribute.name',
-  )
+  const attributeValues = keyBy(organization.objectAttributeValues, 'attribute.name')
 
   const name = view.getByLabelText('Name')
   const shared = view.getByLabelText('Shared organization')

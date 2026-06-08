@@ -1,6 +1,6 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-# Using older 5.0 migration to stick to Integer primary keys. Otherwise migration fails in MySQL.
+# Using older 5.0 migration to stick to Integer primary keys
 class InitializeKnowledgeBase < ActiveRecord::Migration[5.0]
   def change
     return if ActiveRecord::Base.connection.table_exists? 'knowledge_bases'
@@ -78,6 +78,11 @@ class InitializeKnowledgeBase < ActiveRecord::Migration[5.0]
       t.references :published_by, foreign_key: { to_table: :users }
 
       t.timestamps limit: 3, null: false
+
+      # Covers published (published+internal) and internal (published+internal+archived) scopes
+      t.index %i[published_at archived_at internal_at], name: 'index_kb_answers_publishing_dates'
+      # Covers archived scope
+      t.index [:archived_at]
     end
 
     create_table :knowledge_base_answer_translation_contents do |t| # rubocop:disable Rails/CreateTableWithTimestamps

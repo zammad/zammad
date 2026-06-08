@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -160,7 +160,7 @@ RSpec.describe Gql::Subscriptions::Ticket::ArticleUpdates, type: :graphql do
       end
 
       it 'does stop receiving ticket updates' do
-        expect(mock_channel.mock_broadcasted_messages.first[:result]['errors'].first['message']).to eq('not allowed to TicketPolicy#show? this Ticket')
+        expect(mock_channel.mock_broadcasted_messages.first[:result]['errors'].first['message']).to eq('Access forbidden by Gql::Types::TicketType')
       end
     end
 

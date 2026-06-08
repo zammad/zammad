@@ -1,13 +1,15 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { Extension } from '@tiptap/core'
 
 import { useLocaleStore } from '#shared/stores/locale.ts'
 
+import { clamp } from '../utils.ts'
 export interface IndentOptions {
   types: string[]
   min: number
   max: number
+  excludeShortcutTypes: string[]
 }
 
 declare module '@tiptap/core' {
@@ -20,12 +22,10 @@ declare module '@tiptap/core' {
   }
 }
 
-const update = ({
-  step = 1,
-  min = 0,
-  max = Number.POSITIVE_INFINITY,
-  unit = '',
-} = {}): ((v: string | number, delta?: number) => string) => {
+const update = ({ step = 1, min = 0, max = Number.POSITIVE_INFINITY, unit = '' } = {}): ((
+  v: string | number,
+  delta?: number,
+) => string) => {
   return (last, delta = step) => {
     let n
 
@@ -41,7 +41,6 @@ const update = ({
       }
     }
     n += delta
-    // eslint-disable-next-line no-use-before-define
     n = clamp(n, min, max)
     let frac = 0
     const abs = Math.abs(delta)
@@ -61,8 +60,6 @@ const update = ({
   }
 }
 
-const { localeData } = useLocaleStore()
-
 export const IndentExtension = Extension.create<IndentOptions>({
   name: 'indent',
   addOptions() {
@@ -70,6 +67,7 @@ export const IndentExtension = Extension.create<IndentOptions>({
       types: ['listItem', 'heading', 'paragraph', 'blockquote'],
       min: 0,
       max: Number.POSITIVE_INFINITY,
+      excludeShortcutTypes: ['listItem'],
     }
   },
   addCommands() {
@@ -78,14 +76,10 @@ export const IndentExtension = Extension.create<IndentOptions>({
         (backspace) =>
         ({ chain, state }) => {
           const { selection } = state
-          if (
-            backspace &&
-            (selection.$anchor.parentOffset > 0 ||
-              selection.from !== selection.to)
-          )
+          if (backspace && (selection.$anchor.parentOffset > 0 || selection.from !== selection.to))
             return false
 
-          return localeData?.dir === 'rtl'
+          return useLocaleStore().localeData?.dir === 'rtl'
             ? chain()
                 .setMarginRight(
                   update({
@@ -110,7 +104,7 @@ export const IndentExtension = Extension.create<IndentOptions>({
       increaseIndent:
         () =>
         ({ chain }) => {
-          return localeData?.dir === 'rtl'
+          return useLocaleStore().localeData?.dir === 'rtl'
             ? chain()
                 .setMarginRight(
                   update({
@@ -133,7 +127,7 @@ export const IndentExtension = Extension.create<IndentOptions>({
       unsetIndent:
         () =>
         ({ commands }) => {
-          return localeData?.dir === 'rtl'
+          return useLocaleStore().localeData?.dir === 'rtl'
             ? commands.unsetMarginRight()
             : commands.unsetMarginLeft()
         },
@@ -142,13 +136,16 @@ export const IndentExtension = Extension.create<IndentOptions>({
 
   addKeyboardShortcuts() {
     return {
-      // Tab: () => this.editor.commands.increaseIndent(),
-      'Shift-Tab': () => this.editor.commands.decreaseIndent(),
-      Backspace: () => this.editor.commands.decreaseIndent(true),
+      Backspace: () => {
+        const { state } = this.editor
+        const { $from } = state.selection
+
+        // Check if we're in an excluded node type
+        if (this.options.excludeShortcutTypes.some((type) => $from.node(-1)?.type.name === type))
+          return false // Let other extensions handle it e.g list extension
+
+        return this.editor.commands.decreaseIndent(true)
+      },
     }
   },
 })
-
-const clamp = (val: number, min: number, max: number) =>
-  // eslint-disable-next-line no-nested-ternary
-  val < min ? min : val > max ? max : val

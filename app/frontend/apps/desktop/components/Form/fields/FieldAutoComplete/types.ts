@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import type {
   AutoCompleteOption,
@@ -16,9 +16,6 @@ export interface AutoCompleteProps extends DefaultAutoCompleteProps {
 
 export type AutoCompleteOptionValueDictionary = Dictionary<AutoCompleteOption>
 
-export type SelectOptionFunction = (
-  option: AutoCompleteOption,
-  focus?: boolean,
-) => void
+export type SelectOptionFunction = (option: AutoCompleteOption, focus?: boolean) => void
 
 export type ClearFilterInputFunction = () => void

@@ -58,7 +58,7 @@ class App.KnowledgeBaseSearchFieldWidget extends App.Controller
 
     @delay( =>
       @makeRequest(query)
-    , 100, 'makeRequest')
+    , 500, 'makeRequest')
 
   data: (query) ->
     attrs = {

@@ -45,3 +45,5 @@ app/assets/stylesheets/bootstrap.css linguist-vendored
 app/assets/stylesheets/cropper.css linguist-vendored
 app/assets/stylesheets/codemirror.css linguist-vendored
 app/assets/stylesheets/fineuploader.css linguist-vendored
+
+.github/workflows/*.lock.yml linguist-generated=true merge=ours

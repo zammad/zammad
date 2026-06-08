@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class HtmlSanitizer
   module Scrubber
@@ -38,7 +38,7 @@ class HtmlSanitizer
           next if !node[attribute_name]
 
           href = cleanup_target(node[attribute_name])
-          next if !href.match?(%r{(javascript|livescript|vbscript):}i)
+          next if !href.match?(%r{(javascript|livescript|vbscript|data):}i)
 
           node.delete(attribute_name)
         end
@@ -48,7 +48,7 @@ class HtmlSanitizer
         return if !node['style']
 
         style = clear_style_pairs(node)
-          .each_with_object('') do |elem, memo|
+          .each_with_object(+'') do |elem, memo|
             memo << "#{elem};" if clear_style_pair_valid?(node, elem)
           end
 
@@ -173,10 +173,13 @@ class HtmlSanitizer
         @css_values_blocklist ||= Rails.application.config.html_sanitizer_css_values_blocklist
       end
 
-      # We allowlist yahoo_quoted because Yahoo Mail marks quoted email content using
-      # <div class='yahoo_quoted'> and we rely on this class to identify quoted messages
+      # We allow usage of certain class names:
+      # - `js-signatureMarker` - because it is used to identify Zammad signature markers
+      # - `yahoo_quoted` - because Yahoo Mail marks quoted email content using <div class='yahoo_quoted'> and we rely
+      #   on  this class to identify quoted messages
+      # - `zammad-table` - because it is used to style Zammad internal tables
       def classes_allowlist
-        %w[js-signatureMarker yahoo_quoted]
+        %w[js-signatureMarker yahoo_quoted zammad-table]
       end
 
       def attributes_2_css

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -122,6 +122,23 @@ RSpec.describe Sequencer::Sequence::Import::Freshdesk::Conversation, sequencer: 
           'resizable'    => false,
         }
       )
+    end
+
+    context 'with special to emails field situation' do
+      let(:resource) do
+        super().merge(
+          'to_emails' => 'info@zammad.org',
+          'cc_emails' => 'cc@zammad.org',
+        )
+      end
+
+      it 'handles string values for to_emails and cc_emails' do
+        process(process_payload)
+        expect(Ticket::Article.last).to have_attributes(
+          to: 'info@zammad.org',
+          cc: 'cc@zammad.org',
+        )
+      end
     end
 
     context 'when handling special inline images' do

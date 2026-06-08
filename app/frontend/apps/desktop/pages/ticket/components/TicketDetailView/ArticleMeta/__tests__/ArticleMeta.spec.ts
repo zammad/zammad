@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { waitFor } from '@testing-library/vue'
 import { describe } from 'vitest'
@@ -16,40 +16,44 @@ import ArticleMetaWhatsappMessageStatus from '#desktop/pages/ticket/components/T
 
 describe('Article Meta', () => {
   describe('Address', () => {
-    it('shows customer content for `from` field correctly', async () => {
-      const dummyAddress = {
-        raw: 'Customer Foo ',
-        parsed: [
-          {
-            name: 'Customer Foo',
-            emailAddress: 'customer@foo.org',
-            isSystemAddress: false,
-          },
-        ],
-      }
-
+    it.each(['from', 'to', 'cc'])('renders %s meta header field correctly', async (metaHeader) => {
       const wrapper = renderComponent(ArticleMetaAddress, {
         props: {
-          type: 'from',
+          metaHeader,
           context: {
             article: createDummyArticle({
-              from: dummyAddress,
+              [metaHeader]: {
+                raw: 'Customer Foo ',
+                parsed: [
+                  {
+                    name: 'Customer Foo',
+                    emailAddress: 'customer@foo.org',
+                    isSystemAddress: false,
+                  },
+                ],
+              },
             }),
           },
         },
       })
 
-      expect(wrapper.getByText('Customer Foo')).toBeInTheDocument()
-      expect(wrapper.getByText(/customer@foo.org/i)).toBeInTheDocument()
+      expect(wrapper.baseElement).toHaveTextContent('Customer Foo')
+      expect(wrapper.baseElement).toHaveTextContent('customer@foo.org')
     })
 
-    it('renders content for agent `from` field correctly', async () => {
+    it("doesn't render system user email", async () => {
       const wrapper = renderComponent(ArticleMetaAddress, {
         props: {
           context: {
             article: createDummyArticle({
-              from: {
-                parsed: null,
+              cc: {
+                parsed: [
+                  {
+                    name: 'System admin',
+                    emailAddress: 'system@admin.com',
+                    isSystemAddress: true,
+                  },
+                ],
                 raw: 'Foo Braun',
               },
             }),
@@ -57,42 +61,169 @@ describe('Article Meta', () => {
         },
       })
 
-      expect(wrapper.getByText('Foo Braun')).toBeInTheDocument()
+      expect(wrapper.queryByText('Foo Braun')).not.toBeInTheDocument()
     })
-  })
 
-  describe('Detected Language', () => {
-    it('shows detected language name', async () => {
-      const wrapper = renderComponent(
-        {
-          setup() {
-            const { article } = mockDetailViewSetup({
-              article: {
-                articleType: 'email',
-                detectedLanguage: 'de',
+    it('renders multiple recipient addresses', () => {
+      const wrapper = renderComponent(ArticleMetaAddress, {
+        props: {
+          metaHeader: 'to',
+          context: {
+            article: createDummyArticle({
+              to: {
+                parsed: [
+                  {
+                    name: 'Nicole Braun',
+                    emailAddress: 'nicole@zammad.com',
+                    isSystemAddress: false,
+                  },
+                  {
+                    name: 'Thomas Braun',
+                    emailAddress: 'thomas@zammad.com',
+                    isSystemAddress: false,
+                  },
+                ],
+                raw: 'Nicole Braun <nicole@zammad.com>, Thomas Braun <thomas@zammad.com>',
               },
-            })
-            return { article }
+            }),
           },
-          template: `
+        },
+      })
+      expect(wrapper.baseElement).toHaveTextContent('Nicole Braun')
+      expect(wrapper.baseElement).toHaveTextContent('nicole@zammad.com')
+
+      expect(wrapper.baseElement).toHaveTextContent('Thomas Braun')
+      expect(wrapper.baseElement).toHaveTextContent('thomas@zammad.com')
+    })
+
+    it('fallbacks to raw address if parsed is missing', () => {
+      const wrapper = renderComponent(ArticleMetaAddress, {
+        props: {
+          metaHeader: 'to',
+          context: {
+            article: createDummyArticle({
+              to: {
+                parsed: null,
+                raw: 'Nicole Braun <nicole@zammad.com>, Thomas Braun <thomas@zammad.com>',
+              },
+            }),
+          },
+        },
+      })
+      expect(wrapper.baseElement).toHaveTextContent(
+        'Nicole Braun <nicole@zammad.com>, Thomas Braun <thomas@zammad.com>',
+      )
+    })
+
+    describe('Detected Language', () => {
+      it('shows detected language name', async () => {
+        const wrapper = renderComponent(
+          {
+            setup() {
+              const { article } = mockDetailViewSetup({
+                article: {
+                  articleType: 'email',
+                  detectedLanguage: 'de',
+                },
+              })
+              return { article }
+            },
+            template: `
           <div>
             <ArticleMetaDetectedLanguage :context="{article}" />
           </div>`,
-          components: { ArticleMetaDetectedLanguage },
-        },
-        {
-          router: true,
-        },
-      )
+            components: { ArticleMetaDetectedLanguage },
+          },
+          {
+            router: true,
+          },
+        )
 
-      await waitFor(() => {
-        expect(wrapper.getByText('German')).toBeInTheDocument()
+        await waitFor(() => {
+          expect(wrapper.getByText('German')).toBeInTheDocument()
+        })
       })
     })
-  })
 
-  describe('Security', () => {
-    it('has PGP encrypted and signed', () => {
+    describe('Security', () => {
+      it('has PGP encrypted and signed', () => {
+        const wrapper = renderComponent(
+          {
+            setup() {
+              const { article } = mockDetailViewSetup({
+                article: {
+                  articleType: 'email',
+                  securityState: {
+                    type: EnumSecurityStateType.Pgp,
+                    encryptionMessage: 'Test Encryption Message',
+                    encryptionSuccess: true,
+                    signingMessage: 'Success Signing Message',
+                    signingSuccess: true,
+                  },
+                },
+              })
+              return { article }
+            },
+            template: `
+          <div>
+            <ArticleMetaSecurity :context="{article}" />
+          </div>`,
+            components: { ArticleMetaSecurity },
+          },
+          {
+            router: true,
+          },
+        )
+
+        expect(wrapper.getByText('PGP')).toBeInTheDocument()
+        expect(wrapper.getByLabelText('Success Signing Message')).toBeInTheDocument()
+        expect(wrapper.getByText('Signed')).toBeInTheDocument()
+        expect(wrapper.getByIconName('patch-check')).toBeInTheDocument()
+
+        expect(wrapper.getByText('Encrypted')).toBeInTheDocument()
+        expect(wrapper.getByIconName('lock')).toBeInTheDocument()
+      })
+
+      it('has PGP decrypted and unsigned', () => {
+        const wrapper = renderComponent(
+          {
+            setup() {
+              const { article } = mockDetailViewSetup({
+                article: {
+                  articleType: 'email',
+                  securityState: {
+                    type: EnumSecurityStateType.Pgp,
+                    encryptionMessage: null,
+                    encryptionSuccess: false,
+                    signingMessage: 'Failed Signing Message',
+                    signingSuccess: false,
+                  },
+                },
+              })
+              return { article }
+            },
+            template: `
+          <div>
+            <ArticleMetaSecurity :context="{article}" />
+          </div>`,
+            components: { ArticleMetaSecurity },
+          },
+          {
+            router: true,
+          },
+        )
+        expect(wrapper.getByText('PGP')).toBeInTheDocument()
+        expect(wrapper.getByLabelText('Failed Signing Message')).toBeInTheDocument()
+
+        expect(wrapper.getByText('Sign error')).toBeInTheDocument()
+        expect(wrapper.getByIconName('patch-x')).toBeInTheDocument()
+
+        expect(wrapper.queryByText('Encryption error')).not.toBeInTheDocument()
+        expect(wrapper.queryByIconName('unlock')).not.toBeInTheDocument()
+      })
+    })
+
+    it('has SMIME encrypted and signed', () => {
       const wrapper = renderComponent(
         {
           setup() {
@@ -111,9 +242,9 @@ describe('Article Meta', () => {
             return { article }
           },
           template: `
-          <div>
-            <ArticleMetaSecurity :context="{article}" />
-          </div>`,
+        <div>
+          <ArticleMetaSecurity :context="{article}" />
+        </div>`,
           components: { ArticleMetaSecurity },
         },
         {
@@ -122,9 +253,7 @@ describe('Article Meta', () => {
       )
 
       expect(wrapper.getByText('PGP')).toBeInTheDocument()
-      expect(
-        wrapper.getByLabelText('Success Signing Message'),
-      ).toBeInTheDocument()
+      expect(wrapper.getByLabelText('Success Signing Message')).toBeInTheDocument()
       expect(wrapper.getByText('Signed')).toBeInTheDocument()
       expect(wrapper.getByIconName('patch-check')).toBeInTheDocument()
 
@@ -132,7 +261,7 @@ describe('Article Meta', () => {
       expect(wrapper.getByIconName('lock')).toBeInTheDocument()
     })
 
-    it('has PGP decrypted and unsigned', () => {
+    it('has SMIME has sign error', () => {
       const wrapper = renderComponent(
         {
           setup() {
@@ -140,7 +269,7 @@ describe('Article Meta', () => {
               article: {
                 articleType: 'email',
                 securityState: {
-                  type: EnumSecurityStateType.Pgp,
+                  type: EnumSecurityStateType.Smime,
                   encryptionMessage: null,
                   encryptionSuccess: false,
                   signingMessage: 'Failed Signing Message',
@@ -151,207 +280,127 @@ describe('Article Meta', () => {
             return { article }
           },
           template: `
-          <div>
-            <ArticleMetaSecurity :context="{article}" />
-          </div>`,
+        <div>
+          <ArticleMetaSecurity :context="{article}" />
+        </div>`,
           components: { ArticleMetaSecurity },
         },
         {
           router: true,
         },
       )
-      expect(wrapper.getByText('PGP')).toBeInTheDocument()
-      expect(
-        wrapper.getByLabelText('Failed Signing Message'),
-      ).toBeInTheDocument()
 
+      expect(wrapper.getByText('S/MIME')).toBeInTheDocument()
+      expect(wrapper.getByLabelText('Failed Signing Message')).toBeInTheDocument()
       expect(wrapper.getByText('Sign error')).toBeInTheDocument()
       expect(wrapper.getByIconName('patch-x')).toBeInTheDocument()
 
       expect(wrapper.queryByText('Encryption error')).not.toBeInTheDocument()
       expect(wrapper.queryByIconName('unlock')).not.toBeInTheDocument()
     })
-  })
 
-  it('has SMIME encrypted and signed', () => {
-    const wrapper = renderComponent(
-      {
-        setup() {
-          const { article } = mockDetailViewSetup({
-            article: {
-              articleType: 'email',
-              securityState: {
-                type: EnumSecurityStateType.Pgp,
-                encryptionMessage: 'Test Encryption Message',
-                encryptionSuccess: true,
-                signingMessage: 'Success Signing Message',
-                signingSuccess: true,
-              },
+    describe('whatsapp message status', () => {
+      it('has message delivered status', () => {
+        const wrapper = renderComponent(
+          {
+            setup() {
+              const { article } = mockDetailViewSetup({
+                article: {
+                  articleType: 'whatsapp message',
+                  preferences: {
+                    whatsapp: {
+                      timestamp_read: false,
+                      timestamp_delivered: '2011-11-11T11:11:11.000Z',
+                      timestamp_sent: '2011-11-11T11:11:11.000Z',
+                    },
+                  },
+                },
+              })
+              return { article }
             },
-          })
-          return { article }
-        },
-        template: `
-        <div>
-          <ArticleMetaSecurity :context="{article}" />
-        </div>`,
-        components: { ArticleMetaSecurity },
-      },
-      {
-        router: true,
-      },
-    )
+            template: `
+          <div>
+            <ArticleMetaWhatsappMessageStatus :context="{article}" />
+          </div>`,
+            components: { ArticleMetaWhatsappMessageStatus },
+          },
+          {
+            router: true,
+          },
+        )
 
-    expect(wrapper.getByText('PGP')).toBeInTheDocument()
-    expect(
-      wrapper.getByLabelText('Success Signing Message'),
-    ).toBeInTheDocument()
-    expect(wrapper.getByText('Signed')).toBeInTheDocument()
-    expect(wrapper.getByIconName('patch-check')).toBeInTheDocument()
+        expect(wrapper.getByText('whatsapp message')).toBeInTheDocument()
+        expect(wrapper.getByText('delivered to the customer')).toBeInTheDocument()
+        expect(wrapper.getByIconName('check-all')).toBeInTheDocument()
+      })
 
-    expect(wrapper.getByText('Encrypted')).toBeInTheDocument()
-    expect(wrapper.getByIconName('lock')).toBeInTheDocument()
-  })
-
-  it('has SMIME has sign error', () => {
-    const wrapper = renderComponent(
-      {
-        setup() {
-          const { article } = mockDetailViewSetup({
-            article: {
-              articleType: 'email',
-              securityState: {
-                type: EnumSecurityStateType.Smime,
-                encryptionMessage: null,
-                encryptionSuccess: false,
-                signingMessage: 'Failed Signing Message',
-                signingSuccess: false,
-              },
+      it('has message send to customer status', () => {
+        const wrapper = renderComponent(
+          {
+            setup() {
+              const { article } = mockDetailViewSetup({
+                article: {
+                  articleType: 'whatsapp message',
+                  preferences: {
+                    whatsapp: {
+                      timestamp_read: false,
+                      timestamp_delivered: null,
+                      timestamp_sent: '2011-11-11T11:11:11.000Z',
+                    },
+                  },
+                },
+              })
+              return { article }
             },
-          })
-          return { article }
-        },
-        template: `
-        <div>
-          <ArticleMetaSecurity :context="{article}" />
-        </div>`,
-        components: { ArticleMetaSecurity },
-      },
-      {
-        router: true,
-      },
-    )
-
-    expect(wrapper.getByText('S/MIME')).toBeInTheDocument()
-    expect(wrapper.getByLabelText('Failed Signing Message')).toBeInTheDocument()
-    expect(wrapper.getByText('Sign error')).toBeInTheDocument()
-    expect(wrapper.getByIconName('patch-x')).toBeInTheDocument()
-
-    expect(wrapper.queryByText('Encryption error')).not.toBeInTheDocument()
-    expect(wrapper.queryByIconName('unlock')).not.toBeInTheDocument()
-  })
-
-  describe('whatsapp message status', () => {
-    it('has message delivered status', () => {
-      const wrapper = renderComponent(
-        {
-          setup() {
-            const { article } = mockDetailViewSetup({
-              article: {
-                articleType: 'whatsapp message',
-                preferences: {
-                  whatsapp: {
-                    timestamp_read: false,
-                    timestamp_delivered: '2011-11-11T11:11:11.000Z',
-                    timestamp_sent: '2011-11-11T11:11:11.000Z',
-                  },
-                },
-              },
-            })
-            return { article }
-          },
-          template: `
+            template: `
           <div>
             <ArticleMetaWhatsappMessageStatus :context="{article}" />
           </div>`,
-          components: { ArticleMetaWhatsappMessageStatus },
-        },
-        {
-          router: true,
-        },
-      )
+            components: { ArticleMetaWhatsappMessageStatus },
+          },
+          {
+            router: true,
+          },
+        )
 
-      expect(wrapper.getByText('whatsapp message')).toBeInTheDocument()
-      expect(wrapper.getByText('delivered to the customer')).toBeInTheDocument()
-      expect(wrapper.getByIconName('check-all')).toBeInTheDocument()
-    })
+        expect(wrapper.getByText('whatsapp message')).toBeInTheDocument()
+        expect(wrapper.getByText('sent to the customer')).toBeInTheDocument()
+        expect(wrapper.getByIconName('check2')).toBeInTheDocument()
+      })
 
-    it('has message send to customer status', () => {
-      const wrapper = renderComponent(
-        {
-          setup() {
-            const { article } = mockDetailViewSetup({
-              article: {
-                articleType: 'whatsapp message',
-                preferences: {
-                  whatsapp: {
-                    timestamp_read: false,
-                    timestamp_delivered: null,
-                    timestamp_sent: '2011-11-11T11:11:11.000Z',
+      it('has message read status', () => {
+        const wrapper = renderComponent(
+          {
+            setup() {
+              const { article } = mockDetailViewSetup({
+                article: {
+                  articleType: 'whatsapp message',
+                  preferences: {
+                    whatsapp: {
+                      timestamp_read: true,
+                      timestamp_delivered: '2011-11-11T11:11:11.000Z',
+                      timestamp_sent: '2011-11-11T11:11:11.000Z',
+                    },
                   },
                 },
-              },
-            })
-            return { article }
-          },
-          template: `
+              })
+              return { article }
+            },
+            template: `
           <div>
             <ArticleMetaWhatsappMessageStatus :context="{article}" />
           </div>`,
-          components: { ArticleMetaWhatsappMessageStatus },
-        },
-        {
-          router: true,
-        },
-      )
-
-      expect(wrapper.getByText('whatsapp message')).toBeInTheDocument()
-      expect(wrapper.getByText('sent to the customer')).toBeInTheDocument()
-      expect(wrapper.getByIconName('check2')).toBeInTheDocument()
-    })
-
-    it('has message read status', () => {
-      const wrapper = renderComponent(
-        {
-          setup() {
-            const { article } = mockDetailViewSetup({
-              article: {
-                articleType: 'whatsapp message',
-                preferences: {
-                  whatsapp: {
-                    timestamp_read: true,
-                    timestamp_delivered: '2011-11-11T11:11:11.000Z',
-                    timestamp_sent: '2011-11-11T11:11:11.000Z',
-                  },
-                },
-              },
-            })
-            return { article }
+            components: { ArticleMetaWhatsappMessageStatus },
           },
-          template: `
-          <div>
-            <ArticleMetaWhatsappMessageStatus :context="{article}" />
-          </div>`,
-          components: { ArticleMetaWhatsappMessageStatus },
-        },
-        {
-          router: true,
-        },
-      )
+          {
+            router: true,
+          },
+        )
 
-      expect(wrapper.getByText('whatsapp message')).toBeInTheDocument()
-      expect(wrapper.getByText('read by the customer')).toBeInTheDocument()
-      expect(wrapper.getByIconName('check-double-circle')).toBeInTheDocument()
+        expect(wrapper.getByText('whatsapp message')).toBeInTheDocument()
+        expect(wrapper.getByText('read by the customer')).toBeInTheDocument()
+        expect(wrapper.getByIconName('check-double-circle')).toBeInTheDocument()
+      })
     })
   })
 })

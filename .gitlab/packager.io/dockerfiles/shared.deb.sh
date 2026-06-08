@@ -14,5 +14,5 @@ curl -fsSL https://artifacts.elastic.co/GPG-KEY-elasticsearch | \
 apt-get update
 apt-get -y install elasticsearch
 
-curl -1sLf https://dl.packager.io/srv/zammad/zammad/key | \
+curl -1sLf https://go.packager.io/srv/deb/zammad/zammad/gpg-key.gpg | \
   gpg --dearmor -o /usr/share/keyrings/zammad-archive-keyring.gpg

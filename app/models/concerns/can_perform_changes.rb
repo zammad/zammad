@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 ##
 # A mixin for ActiveRecord models that enables the possibilitty to perform actions.
@@ -9,7 +9,7 @@
 # It's also possible to run a `pre_execution` for a specifc model, to prepare special data for the actions (e.g. fetch
 # the article in the ticket context, when a `article_id` is present inside the `context_data`).
 #
-# The actions can run in different phases: `initial`, `before_save`, `after_save`. The initial phase could
+# The actions can run in different phases: `initial`, `before_save`, `after_save`, `after_commit`. The initial phase could
 # also manipulate the actions for the other phases (e.g. the delete action will skip the attribute updates).
 #
 # In the ticket context you can see how it's possible to add custom model actions and also to extend the
@@ -27,12 +27,13 @@
 #
 # user.perform_changes(job, 'job', item, current_user_id)
 #
-module CanPerformChanges
+# TODO: disable module length for now, check later what we can do...
+module CanPerformChanges # rubocop:disable Metrics/ModuleLength
   extend ActiveSupport::Concern
 
   # Perform changes on self according to perform rules
   #
-  # @param performable [Trigger, Macro, Job] object
+  # @param performable [Trigger, Macro, Job, AI::Agent] object
   # @param origin [String] name of the object to be performed
   # @param context_data [Hash]
   # @param user_id [Integer] to run as
@@ -44,10 +45,10 @@ module CanPerformChanges
     return if !execute?(performable, activator_type)
 
     perform_changes_data = {
-      performable:  performable,
-      origin:       origin,
-      context_data: context_data,
-      user_id:      user_id,
+      performable:,
+      origin:,
+      context_data:,
+      user_id:,
     }
 
     Rails.logger.debug { "Perform #{origin} #{performable.perform.inspect} on #{self.class.name}.find(#{id})" }
@@ -98,6 +99,10 @@ module CanPerformChanges
 
     prepared_actions[:after_save]&.each(&:execute)
 
+    ApplicationModel.current_transaction.after_commit do
+      prepared_actions[:after_commit]&.each(&:execute)
+    end
+
     true
   end
 
@@ -112,10 +117,10 @@ module CanPerformChanges
   end
 
   def prepare_actions(perform_changes_data)
-    action_checks = %w[notification additional_object object attribute_update]
+    action_checks = %w[notification ai additional_object object attribute_update]
     actions = {}
 
-    perform_changes_data[:performable].perform.each do |attribute, action_value|
+    perform_changes_data[:performable].perform.deep_dup.each do |attribute, action_value|
       (object_name, object_key) = attribute.split('.', 2)
 
       action = nil
@@ -130,9 +135,10 @@ module CanPerformChanges
     end
 
     prepared_actions = {
-      initial:     [],
-      before_save: [],
-      after_save:  [],
+      initial:      [],
+      before_save:  [],
+      after_save:   [],
+      after_commit: [],
     }
 
     actions.each do |action, value|
@@ -145,9 +151,15 @@ module CanPerformChanges
   end
 
   def notification_action(object_name, object_key, action_value, _prepared_actions)
-    return if !object_name.eql?('notification')
+    return if object_name != 'notification'
 
     { name: :"notification_#{object_key}", value: action_value }
+  end
+
+  def ai_action(object_name, object_key, action_value, _prepared_actions)
+    return if object_name != 'ai'
+
+    { name: object_key.to_sym, value: action_value }
   end
 
   def additional_object_action(*)
@@ -166,6 +178,21 @@ module CanPerformChanges
 
   def attribute_update_action(object_name, object_key, action_value, prepared_actions)
     return if !self.class.name.downcase.eql?(object_name)
+
+    if action_value.key?('value')
+      converted = self.class.association_name_to_id_convert({
+                                                              object_key => action_value['value']
+                                                            })
+
+      # If conversion happened, use the converted key and value
+      new_key = converted.keys.first.to_s
+
+      if new_key != object_key
+        object_key = new_key.to_s
+        action_value = action_value.dup
+        action_value['value'] = converted.values.first
+      end
+    end
 
     prepared_actions[:attribute_updates] ||= {}
     prepared_actions[:attribute_updates][object_key] = action_value

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -32,5 +32,11 @@ describe OnlineNotificationPolicy do
     let(:record) { create(:online_notification, user: create(:user)) }
 
     it { is_expected.to forbid_actions(%i[show destroy update]) }
+  end
+
+  context 'when using a standalone object' do
+    let(:record) { create(:online_notification, :with_bulk_job, user:) }
+
+    it { is_expected.to permit_actions(%i[show destroy update]) }
   end
 end

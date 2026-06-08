@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Checklist < ApplicationModel
   include HasDefaultModelUserRelations
@@ -99,7 +99,7 @@ class Checklist < ApplicationModel
 
   def self.create_from_template!(ticket, template)
     if !template.active
-      raise Exceptions::UnprocessableEntity, __('Checklist template must be active to use as a checklist starting point.')
+      raise Exceptions::UnprocessableContent, __('Checklist template must be active to use as a checklist starting point.')
     end
 
     ActiveRecord::Base.transaction do

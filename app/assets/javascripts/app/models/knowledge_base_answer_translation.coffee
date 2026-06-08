@@ -17,6 +17,16 @@ class App.KnowledgeBaseAnswerTranslation extends App.Model
   publicBaseUrl: ->
     @parent().publicBaseUrl(App.KnowledgeBaseLocale.localeFor(@))
 
+  activityMessage: (item) ->
+    return if !item
+    return if !item.created_by
+
+    switch item.type
+      when 'create'
+        App.i18n.translateContent('Knowledge Base Answer "|%s|" has been created', item.title)
+      else
+        App.i18n.translateContent('Knowledge Base Answer could not be created')
+
   content: ->
     App.KnowledgeBaseAnswerTranslationContent.find(@content_id)
 

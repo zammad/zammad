@@ -255,7 +255,7 @@ class App.KnowledgeBaseAgentController extends App.Controller
 
     @bodyModal = new App.ControllerModal(
       head:          __('Locale not found')
-      contentInline: "<a href='#{url}'>Open in primary locale</a>"
+      contentInline: "<a href='#{url}'>#{__('Open in primary locale')}</a>"
       buttonClose:   false
       buttonSubmit: false
       backdrop: 'static'

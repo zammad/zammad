@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, toRef } from 'vue'
@@ -14,8 +14,8 @@ import { useFieldSecurity } from '#shared/components/Form/fields/FieldSecurity/u
 import { translateArticleSecurity } from '#shared/entities/ticket-article/composables/translateArticleSecurity.ts'
 import { i18n } from '#shared/i18n.ts'
 
-import CommonTabGroup from '#desktop/components/CommonTabGroup/CommonTabGroup.vue'
-import type { Tab } from '#desktop/components/CommonTabGroup/types.ts'
+import CommonTabGroup from '#desktop/components/CommonTabs/CommonTabGroup/CommonTabGroup.vue'
+import type { Tab } from '#desktop/components/CommonTabs/types.ts'
 
 const props = defineProps<FieldSecurityProps>()
 const contextReactive = toRef(props, 'context')
@@ -48,9 +48,7 @@ const optionTabs = computed(() => [
   {
     key: 'encryption' as SecurityOption,
     label: __('Encrypt'),
-    icon: isCurrentSecurityOption('encryption')
-      ? 'encryption-enabled'
-      : 'encryption-disabled',
+    icon: isCurrentSecurityOption('encryption') ? 'encryption-enabled' : 'encryption-disabled',
     tooltip: getTooltipText('encryption'),
     disabled: isSecurityOptionDisabled('encryption'),
   },
@@ -93,16 +91,14 @@ const selectOption = (value: Tab['key'] | Tab['key'][]) => {
         :model-value="previewMethod"
         :tabs="securityMethodTabs"
         size="medium"
-        @update:model-value="
-          changeSecurityState($event as EnumSecurityStateType)
-        "
+        @update:model-value="changeSecurityState($event as EnumSecurityStateType)"
       />
       <CommonTabGroup
         :model-value="selectedOptionTabs"
         :tabs="optionTabs"
         size="medium"
         multiple
-        @update:model-value="selectOption"
+        @update:model-value="selectOption($event as Tab['key'][])"
       />
     </div>
   </div>

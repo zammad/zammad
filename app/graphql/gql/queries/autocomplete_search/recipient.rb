@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Queries
   class AutocompleteSearch::Recipient < AutocompleteSearch::User
@@ -51,7 +51,7 @@ module Gql::Queries
     end
 
     def user_email_contact(user)
-      return [] if user.email.empty?
+      return [] if user.email.blank?
 
       {
         name:    user.fullname,

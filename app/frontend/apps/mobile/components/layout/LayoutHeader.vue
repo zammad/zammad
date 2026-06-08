@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, useTemplateRef, useSlots, type SetupContext } from 'vue'
@@ -48,10 +48,7 @@ const slots: SetupContext['slots'] = useSlots()
 const hasSlots = computed(() => Object.keys(slots).length > 0)
 
 const headerClass = computed(() => {
-  return [
-    'flex items-center justify-center text-center text-lg font-bold',
-    props.titleClass,
-  ]
+  return ['flex items-center justify-center text-center text-lg font-bold', props.titleClass]
 })
 </script>
 
@@ -64,10 +61,7 @@ const headerClass = computed(() => {
     data-test-id="appHeader"
   >
     <div class="flex items-center justify-self-start text-base">
-      <slot
-        name="before"
-        :data="{ backUrl, backTitle, backIgnore, backAvoidHomeButton }"
-      >
+      <slot name="before" :data="{ backUrl, backTitle, backIgnore, backAvoidHomeButton }">
         <CommonBackButton
           v-if="backUrl"
           :fallback="backUrl"

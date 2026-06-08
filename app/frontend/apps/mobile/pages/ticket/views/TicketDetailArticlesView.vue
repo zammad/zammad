@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { useEventListener } from '@vueuse/core'
@@ -10,10 +10,7 @@ import {
   type AddArticleCallbackArgs,
   useArticleDataHandler,
 } from '#shared/entities/ticket-article/composables/useArticleDataHandler.ts'
-import {
-  convertToGraphQLId,
-  getIdFromGraphQLId,
-} from '#shared/graphql/utils.ts'
+import { convertToGraphQLId, getIdFromGraphQLId } from '#shared/graphql/utils.ts'
 import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
 import { edgesToArray, waitForElement } from '#shared/utils/helpers.ts'
@@ -21,9 +18,10 @@ import { edgesToArray, waitForElement } from '#shared/utils/helpers.ts'
 import CommonLoader from '#mobile/components/CommonLoader/CommonLoader.vue'
 import { useHeader } from '#mobile/composables/useHeader.ts'
 
-import TicketArticlesList from '../components/TicketDetailView/ArticlesList.vue'
-import TicketHeader from '../components/TicketDetailView/TicketDetailViewHeader.vue'
-import TicketTitle from '../components/TicketDetailView/TicketDetailViewTitle.vue'
+import ArticlesList from '../components/TicketDetailView/ArticlesList.vue'
+import TicketDetailViewHeader from '../components/TicketDetailView/TicketDetailViewHeader.vue'
+import TicketDetailViewTitle from '../components/TicketDetailView/TicketDetailViewTitle.vue'
+import { ARTICLE_PAGE_SIZE } from '../composable/useTicketArticlesRows.ts'
 import { useTicketArticlesQueryVariables } from '../composable/useTicketArticlesVariables.ts'
 import { useTicketInformation } from '../composable/useTicketInformation.ts'
 
@@ -40,14 +38,8 @@ const ticketId = computed(() => convertToGraphQLId('Ticket', props.internalId))
 // Cursor is offset-based, so the old cursor is pointing to an unavailable article,
 //  thus using the cursor for the last article of the already filtered edges.
 
-const {
-  ticket,
-  liveUserList,
-  ticketQuery,
-  scrolledToBottom,
-  newArticlesIds,
-  scrollDownState,
-} = useTicketInformation()
+const { ticket, liveUserList, ticketQuery, scrolledToBottom, newArticlesIds, scrollDownState } =
+  useTicketInformation()
 
 const scrollElement = (element: Element) => {
   scrolledToBottom.value = true
@@ -65,9 +57,7 @@ const scheduleMyArticleScroll = async (
   const difference = new Date().getTime() - originalTime
   if (difference >= 5000 || typeof document === 'undefined') return
 
-  const element = document.querySelector(
-    `#article-${articleInternalId}`,
-  ) as HTMLDivElement | null
+  const element = document.querySelector(`#article-${articleInternalId}`) as HTMLDivElement | null
 
   if (!element) {
     return new Promise((r) => requestAnimationFrame(r)).then(() =>
@@ -81,16 +71,14 @@ const scheduleMyArticleScroll = async (
 }
 
 const isAtTheBottom = () => {
-  const scrollHeight =
-    document.querySelector('main')?.scrollHeight || window.innerHeight
+  const scrollHeight = document.querySelector('main')?.scrollHeight || window.innerHeight
   const scrolledHeight = window.scrollY + window.innerHeight
   const scrollToBottom = scrollHeight - scrolledHeight
   return scrollToBottom < 20
 }
 
 const hasScroll = () => {
-  const scrollHeight =
-    document.querySelector('main')?.scrollHeight || window.innerHeight
+  const scrollHeight = document.querySelector('main')?.scrollHeight || window.innerHeight
   return scrollHeight > window.innerHeight
 }
 
@@ -117,7 +105,7 @@ const onAddArticleCallback = ({
   } else {
     ;(articlesQuery as QueryHandler).fetchMore({
       variables: {
-        pageSize: 100,
+        pageSize: ARTICLE_PAGE_SIZE,
         loadFirstArticles: false,
         afterCursor: result.value?.articles.pageInfo.endCursor,
       },
@@ -125,11 +113,8 @@ const onAddArticleCallback = ({
   }
 }
 
-const {
-  ticketArticlesMin,
-  markTicketArticlesLoaded,
-  getTicketArticlesQueryVariables,
-} = useTicketArticlesQueryVariables()
+const { ticketArticlesMin, markTicketArticlesLoaded, getTicketArticlesQueryVariables } =
+  useTicketArticlesQueryVariables()
 
 const { articlesQuery, articleResult } = useArticleDataHandler(ticketId, {
   firstArticlesCount: ticketArticlesMin,
@@ -148,13 +133,9 @@ const loadPreviousArticles = async () => {
   })
 }
 
-const isLoadingTicket = computed(() => {
-  return ticketQuery.loading().value && !ticket.value
-})
+const isLoadingTicket = ticketQuery.loadingWithoutCachedResult()
 
-const isRefetchingTicket = computed(
-  () => ticketQuery.loading().value && !!ticket.value,
-)
+const isRefetchingTicket = computed(() => ticketQuery.loading().value && !!ticket.value)
 
 const totalCount = computed(() => articleResult.value?.articles.totalCount || 0)
 
@@ -240,10 +221,7 @@ const stopScrollWatch = watch(
   { immediate: true, flush: 'post' },
 )
 
-const { stickyStyles, headerElement } = useStickyHeader([
-  isLoadingTicket,
-  ticket,
-])
+const { stickyStyles, headerElement } = useStickyHeader([isLoadingTicket, ticket])
 
 useEventListener(
   window.document,
@@ -262,7 +240,7 @@ useEventListener(
     class="relative backdrop-blur-lg"
     :style="stickyStyles.header"
   >
-    <TicketHeader
+    <TicketDetailViewHeader
       :ticket="ticket"
       :live-user-list="liveUserList"
       :loading-ticket="isLoadingTicket"
@@ -273,20 +251,12 @@ useEventListener(
       data-test-id="loader-title"
       class="flex border-b-[0.5px] border-white/10 bg-gray-600/90 px-4 py-5"
     >
-      <TicketTitle v-if="ticket" :ticket="ticket" />
+      <TicketDetailViewTitle v-if="ticket" :ticket="ticket" />
     </CommonLoader>
   </div>
-  <div
-    id="ticket-articles-list"
-    class="flex flex-1 flex-col"
-    :style="stickyStyles.body"
-  >
-    <CommonLoader
-      data-test-id="loader-list"
-      :loading="isLoadingTicket"
-      class="mt-2"
-    >
-      <TicketArticlesList
+  <div id="ticket-articles-list" class="flex flex-1 flex-col" :style="stickyStyles.body">
+    <CommonLoader data-test-id="loader-list" :loading="isLoadingTicket" class="mt-2">
+      <ArticlesList
         v-if="ticket"
         :ticket="ticket"
         :articles="articles"

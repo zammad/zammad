@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import redirectGuard from '#shared/router/guards/before/redirect.ts'
 import mainInitializeRouter from '#shared/router/index.ts'
@@ -34,9 +34,7 @@ const handleRoutes = (routes: Array<RouteRecordRaw>, isMainRoute = false) => {
     if (!route.name) return
 
     if (names.has(route.name)) {
-      console.error(
-        `Duplicate route name: ${String(route.name)} for ${route.path}`,
-      )
+      console.error(`Duplicate route name: ${String(route.name)} for ${route.path}`)
     } else {
       names.add(route.name)
     }
@@ -47,10 +45,7 @@ Object.values(routeModules).forEach((module: RoutesModule) => {
   const defaultExport = module.default
   const { isMainRoute } = module
 
-  handleRoutes(
-    Array.isArray(defaultExport) ? defaultExport : [defaultExport],
-    isMainRoute,
-  )
+  handleRoutes(Array.isArray(defaultExport) ? defaultExport : [defaultExport], isMainRoute)
 })
 
 export const routes: Array<RouteRecordRaw> = [
@@ -65,13 +60,7 @@ export const routes: Array<RouteRecordRaw> = [
 ]
 
 const initializeRouter: InitializeAppRouter = (app: App) => {
-  return mainInitializeRouter(
-    app,
-    routes,
-    [systemSetupInfo, activeTaskbarTab],
-    [],
-    'desktop',
-  )
+  return mainInitializeRouter(app, routes, [systemSetupInfo, activeTaskbarTab], [], 'desktop')
 }
 
 export default initializeRouter

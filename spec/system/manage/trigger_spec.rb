@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 require 'system/examples/pagination_examples'
@@ -337,6 +337,22 @@ RSpec.describe 'Manage > Trigger', type: :system do
         find_field('activator').select 'Time event'
 
         expect(page).to have_no_field('execution_condition_mode')
+      end
+    end
+  end
+
+  context 'Trigger placeholder missing when language is set to german #5782', authenticated_as: :admin do
+    let(:admin) { create(:admin, preferences: { locale: 'de-de' }) }
+
+    before do
+      visit '/#manage/trigger'
+    end
+
+    it 'shows trigger placeholder in german' do
+      click ".js-tableBody tr.item[data-id='#{Trigger.find_by(name: 'auto reply (on new tickets)').id}']"
+      wait.until do
+        collection = page.execute_script("return $('div[contenteditable]').data().plugin_textmodule.collection")
+        collection.present? && collection.any? { |row| row['name'].include?('Letzter Artikel') }
       end
     end
   end

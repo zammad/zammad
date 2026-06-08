@@ -1,0 +1,20 @@
+Thanks for the info! I'll check out [the docs](https://example.com/docs) you mentioned.
+
+Best,
+John
+
+-----Original Message-----
+From: Support <support@example.com>
+Sent: Tuesday, December 3, 2024 10:00 AM
+To: John <john@example.com>
+Subject: Resources
+
+Hi John,
+
+Here are some resources:
+- [Getting started](https://example.com/start)
+- [User guide](https://example.com/guide)
+- [API documentation](https://example.com/api)
+
+Best,
+Support Team

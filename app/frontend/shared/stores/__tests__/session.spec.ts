@@ -1,11 +1,8 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { createPinia, setActivePinia } from 'pinia'
 
-import {
-  mockGraphQLApi,
-  mockGraphQLSubscription,
-} from '#tests/support/mock-graphql-api.ts'
+import { mockGraphQLApi, mockGraphQLSubscription } from '#tests/support/mock-graphql-api.ts'
 
 import { CurrentUserDocument } from '#shared/graphql/queries/currentUser.api.ts'
 import { CurrentUserUpdatesDocument } from '#shared/graphql/subscriptions/currentUserUpdates.api.ts'
@@ -113,6 +110,7 @@ const userData = {
     __typename: 'Permission',
     names: ['admin'],
   },
+  hasBetaUiSwitchAvailable: false,
   hasSecondaryOrganizations: false,
   outOfOffice: false,
   outOfOfficeStartAt: null,
@@ -138,9 +136,7 @@ describe('Session Store', () => {
     mockGraphQLApi(CurrentUserDocument).willResolve({
       currentUser: userData,
     })
-    const userUpdateSubscription = mockGraphQLSubscription(
-      CurrentUserUpdatesDocument,
-    )
+    const userUpdateSubscription = mockGraphQLSubscription(CurrentUserUpdatesDocument)
 
     await session.getCurrentUser()
 

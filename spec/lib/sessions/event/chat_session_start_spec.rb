@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -17,14 +17,12 @@ RSpec.describe Sessions::Event::ChatSessionStart do
   end
   let!(:agent) do
     agent = create(:agent, preferences: { chat: { active: { chat.id.to_s => 'on' } } })
-    file = File.open('test/data/image/1000x1000.png', 'rb')
-    contents = file.read
     avatar = Avatar.add(
       object:        'User',
       o_id:          agent.id,
       default:       true,
       resize:        {
-        content:   contents,
+        content:   File.binread('test/data/image/1000x1000.png'),
         mime_type: 'image/jpg',
       },
       source:        'web',

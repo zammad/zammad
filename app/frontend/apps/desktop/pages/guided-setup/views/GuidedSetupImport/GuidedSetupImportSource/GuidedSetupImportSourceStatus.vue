@@ -1,16 +1,15 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { useTimeoutFn } from '@vueuse/shared'
 import { computed, ref, watch, watchEffect } from 'vue'
 import { useRouter } from 'vue-router'
 
+import CommonProgressBar from '#shared/components/CommonProgressBar/CommonProgressBar.vue'
 import { EnumSystemImportSource } from '#shared/graphql/types.ts'
 import { i18n } from '#shared/i18n.ts'
 import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
-
-import CommonProgressBar from '#desktop/components/CommonProgressBar/CommonProgressBar.vue'
 
 import GuidedSetupActionFooter from '../../../components/GuidedSetupActionFooter.vue'
 import { guidedSetupImportSourcePluginLookup } from '../../../components/GuidedSetupImport/GuidedSetupImportSource/plugins/index.ts'
@@ -59,20 +58,15 @@ const systemSetupImportStatusQuery = new QueryHandler(
 const systemSetupImportStatusQueryResult = systemSetupImportStatusQuery.result()
 
 const importIsStarted = computed(() => {
-  return Boolean(
-    systemSetupImportStatusQueryResult.value?.systemImportState?.startedAt,
-  )
+  return Boolean(systemSetupImportStatusQueryResult.value?.systemImportState?.startedAt)
 })
 
 const importJobIsFinished = computed(() => {
-  return Boolean(
-    systemSetupImportStatusQueryResult.value?.systemImportState?.finishedAt,
-  )
+  return Boolean(systemSetupImportStatusQueryResult.value?.systemImportState?.finishedAt)
 })
 
 const importJobErrorMessage = computed(() => {
-  const jobResult =
-    systemSetupImportStatusQueryResult.value?.systemImportState?.result
+  const jobResult = systemSetupImportStatusQueryResult.value?.systemImportState?.result
 
   if (!jobResult || !jobResult.error) return
 
@@ -82,8 +76,7 @@ const importJobErrorMessage = computed(() => {
 const currentSystemSetupImportProgressItems = computed(() => {
   if (!importIsStarted.value) return []
 
-  const stats =
-    systemSetupImportStatusQueryResult.value?.systemImportState?.result
+  const stats = systemSetupImportStatusQueryResult.value?.systemImportState?.result
 
   if (!stats) return []
 
@@ -93,32 +86,18 @@ const currentSystemSetupImportProgressItems = computed(() => {
     progressStats.push({
       entity,
       entityLabel: label,
-      processed:
-        stats[entity] && stats[entity].sum
-          ? String(stats[entity].sum)
-          : undefined,
-      total:
-        stats[entity] && stats[entity].total
-          ? String(stats[entity].total)
-          : undefined,
+      processed: stats[entity] && stats[entity].sum ? String(stats[entity].sum) : undefined,
+      total: stats[entity] && stats[entity].total ? String(stats[entity].total) : undefined,
       isFinished: false,
     })
   })
 
   progressStats.forEach((item) => {
-    if (
-      item.processed &&
-      item.total &&
-      Number(item.processed) > Number(item.total)
-    ) {
+    if (item.processed && item.total && Number(item.processed) > Number(item.total)) {
       item.processed = item.total
     }
 
-    if (
-      item.processed !== undefined &&
-      item.total !== undefined &&
-      item.processed === item.total
-    )
+    if (item.processed !== undefined && item.total !== undefined && item.processed === item.total)
       item.isFinished = true
   })
 
@@ -165,10 +144,7 @@ const systemInitSettingsUpdated = ref(false)
 const application = useApplicationStore()
 
 watchEffect(() => {
-  if (
-    application.config.system_init_done &&
-    application.config.import_mode === false
-  ) {
+  if (application.config.system_init_done && application.config.import_mode === false) {
     systemInitSettingsUpdated.value = true
   }
 })
@@ -180,9 +156,7 @@ if (!importIsStarted.value) {
 
 const systemInitDone = computed(() => {
   return (
-    systemInitSettingsUpdated.value &&
-    importJobIsFinished.value &&
-    !importJobErrorMessage.value
+    systemInitSettingsUpdated.value && importJobIsFinished.value && !importJobErrorMessage.value
   )
 })
 
@@ -256,7 +230,7 @@ const goToLogin = () => {
     v-if="systemInitDone"
     submit-button-variant="primary"
     submit-button-type="button"
-    :submit-button-text="__('Go to Login')"
+    :submit-button-text="__('Go to login')"
     @submit="goToLogin"
   />
 </template>

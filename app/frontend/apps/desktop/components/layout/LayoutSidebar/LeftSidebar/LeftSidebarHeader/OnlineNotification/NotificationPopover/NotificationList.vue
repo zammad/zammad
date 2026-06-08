@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import type { OnlineNotification } from '#shared/graphql/types.ts'
@@ -11,6 +11,7 @@ interface Props {
 defineProps<Props>()
 
 defineEmits<{
+  visited: [OnlineNotification]
   seen: [OnlineNotification]
   remove: [OnlineNotification]
 }>()
@@ -26,6 +27,7 @@ defineEmits<{
         v-for="notification in list"
         :key="notification.id"
         :notification="notification"
+        @visited="$emit('visited', $event)"
         @seen="$emit('seen', $event)"
         @remove="$emit('remove', $event)"
       />

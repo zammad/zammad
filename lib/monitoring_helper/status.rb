@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module MonitoringHelper
   class Status
@@ -29,20 +29,18 @@ module MonitoringHelper
     end
 
     def counts
-      INCLUDE_CLASSES.each_with_object({}) do |elem, memo|
-        memo[elem.table_name] = elem.count
+      INCLUDE_CLASSES.to_h do |elem|
+        [elem.table_name, elem.count]
       end
     end
 
     def last_created_at
-      INCLUDE_CLASSES.each_with_object({}) do |elem, memo|
-        memo[elem.table_name] = elem.last&.created_at
+      INCLUDE_CLASSES.to_h do |elem|
+        [elem.table_name, elem.last&.created_at]
       end
     end
 
     def storage
-      return if ActiveRecord::Base.connection_db_config.configuration_hash[:adapter] != 'postgresql'
-
       sql = 'SELECT SUM(CAST(coalesce(size, \'0\') AS INTEGER)) FROM stores'
 
       stored = ActiveRecord::Base.connection.exec_query(sql).first&.dig('sum')

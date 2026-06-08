@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 interface Props {
@@ -11,12 +11,9 @@ defineProps<Props>()
 <template>
   <div class="ltr:text-left rtl:text-right">
     <template v-if="Array.isArray(helpText)">
-      <CommonLabel
-        v-for="(text, index) in helpText"
-        :key="`${text}-${index}`"
-        tag="p"
-        >{{ text }}</CommonLabel
-      >
+      <CommonLabel v-for="(text, index) in helpText" :key="`${text}-${index}`" tag="p">{{
+        text
+      }}</CommonLabel>
     </template>
     <CommonLabel v-else tag="p">{{ helpText }}</CommonLabel>
   </div>

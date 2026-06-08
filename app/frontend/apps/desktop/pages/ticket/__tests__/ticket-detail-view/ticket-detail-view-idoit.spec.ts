@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 import { within } from '@testing-library/vue'
 
 import { visitView } from '#tests/support/components/visitView.ts'
@@ -26,9 +26,7 @@ describe('Ticket detail view i-doit integration', () => {
 
     const sidebar = view.getByLabelText('Content sidebar')
 
-    expect(
-      within(sidebar).getByRole('button', { name: 'i-doit' }),
-    ).toBeInTheDocument()
+    expect(within(sidebar).getByRole('button', { name: 'i-doit' })).toBeInTheDocument()
   })
 
   it('hides i-doit integration when not available', async () => {
@@ -50,8 +48,6 @@ describe('Ticket detail view i-doit integration', () => {
 
     const sidebar = view.getByLabelText('Content sidebar')
 
-    expect(
-      within(sidebar).queryByRole('button', { name: 'i-doit' }),
-    ).not.toBeInTheDocument()
+    expect(within(sidebar).queryByRole('button', { name: 'i-doit' })).not.toBeInTheDocument()
   })
 })

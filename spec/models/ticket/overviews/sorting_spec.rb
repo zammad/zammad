@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -112,7 +112,7 @@ RSpec.describe 'Ticket::Overviews > Sorting' do # rubocop:disable RSpec/Describe
   end
 
   context 'when grouping and sorting' do
-    let(:overview)  { super().tap { _1.update! group_by: 'customer_id', group_direction: 'ASC' } }
+    let(:overview)  { super().tap { it.update! group_by: 'customer_id', group_direction: 'ASC' } }
     let(:customers) { create_list(:customer, 3) }
     let(:order_by)  { 'title' }
     let(:locale)    { 'en-us' }
@@ -157,8 +157,8 @@ RSpec.describe 'Ticket::Overviews > Sorting' do # rubocop:disable RSpec/Describe
       it_behaves_like 'it sorts correctly'
     end
 
-    context 'when grouping by organization_id', db_adapter: :postgresql do
-      let(:overview)        { super().tap { _1.update! group_by: 'organization_id', group_direction: } }
+    context 'when grouping by organization_id' do
+      let(:overview)        { super().tap { it.update! group_by: 'organization_id', group_direction: } }
       let(:group_direction) { 'ASC' }
       let(:customers)       { create_list(:customer, 3) + create_list(:customer, 3, :with_org) }
 

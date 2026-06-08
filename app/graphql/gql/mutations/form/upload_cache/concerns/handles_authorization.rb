@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Mutations::Form::UploadCache::Concerns::HandlesAuthorization
   extend ActiveSupport::Concern
@@ -9,7 +9,7 @@ module Gql::Mutations::Form::UploadCache::Concerns::HandlesAuthorization
       form_id = @prepared_arguments[:form_id]
       cache = UploadCache.new(form_id)
 
-      UploadCachePolicy.new(context.current_user, cache).any?
+      UploadCachePolicy.new(context.current_user, cache).any? && super
     end
 
   end

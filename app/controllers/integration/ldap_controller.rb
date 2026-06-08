@@ -1,9 +1,11 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Integration::LdapController < ApplicationController
   include Integration::ImportJobBase
 
   prepend_before_action :authenticate_and_authorize!
+
+  SENSITIVE_FIELDS = [:bind_pw].freeze
 
   EXCEPTIONS_SPECIAL_TREATMENT = {
     '48, Inappropriate Authentication' => {}, # workaround for issue #1114
@@ -25,13 +27,15 @@ class Integration::LdapController < ApplicationController
   end
 
   def bind
+    unmasked_params = unmask_sensitive_params(params, LdapSource.find_by(id: params[:ldap_source_id])&.preferences)
+
     answer_with do
       # create single instance so
       # User and Group don't have to
       # open new connections
-      ldap  = ::Ldap.new(params)
-      user  = ::Ldap::User.new(params, ldap: ldap)
-      group = ::Ldap::Group.new(params, ldap: ldap)
+      ldap  = ::Ldap.new(unmasked_params)
+      user  = ::Ldap::User.new(unmasked_params, ldap: ldap)
+      group = ::Ldap::Group.new(unmasked_params, ldap: ldap)
 
       {
         # the order of these calls is relevant!
@@ -50,8 +54,9 @@ class Integration::LdapController < ApplicationController
   private
 
   def payload_dry_run
+    payload = unmask_sensitive_params(super, LdapSource.find_by(id: params[:ldap_source_id]))
     {
-      ldap_config: super
+      ldap_config: payload
     }
   end
 end

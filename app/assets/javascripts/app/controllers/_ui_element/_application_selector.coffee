@@ -460,6 +460,12 @@ class App.UiElement.ApplicationSelector
 
     if attributeConfig.operator
 
+      # https://github.com/zammad/zammad/issues/5661
+      if !groupAndAttribute.match(/^ticket/) && _.contains(['has changed', 'just changed', 'is modified'], meta.operator)
+        # only show "has changed" in ticket attributes
+        # reset has changed to find next suitable operator
+        meta.operator = null
+
       # check if operator exists
       operatorExists = false
       for operator in attributeConfig.operator
@@ -474,12 +480,11 @@ class App.UiElement.ApplicationSelector
 
       for operator in attributeConfig.operator
         operatorName = App.i18n.translatePlain(@mapOperatorDisplayName(operator))
-        selected = ''
         if !groupAndAttribute.match(/^ticket/) && _.contains(['has changed', 'just changed', 'is modified'], operator)
           # do nothing, only show "has changed" in ticket attributes
         else
-          if meta.operator is operator
-            selected = 'selected="selected"'
+          selected = if meta.operator is operator then 'selected="selected"'
+
           selection.append("<option value=\"#{operator}\" #{selected}>#{operatorName}</option>")
       selection
 

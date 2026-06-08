@@ -1,11 +1,8 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import type { EnumTwoFactorAuthenticationMethod } from '#shared/graphql/types.ts'
 
-import type {
-  TwoFactorConfigurationOptions,
-  TwoFactorPlugin,
-} from '../types.ts'
+import type { TwoFactorConfigurationOptions, TwoFactorPlugin } from '../types.ts'
 
 const pluginsModules = import.meta.glob<TwoFactorPlugin>('../plugins/*.ts', {
   eager: true,

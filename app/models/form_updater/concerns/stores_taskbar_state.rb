@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module FormUpdater::Concerns::StoresTaskbarState
   extend ActiveSupport::Concern
@@ -11,6 +11,14 @@ module FormUpdater::Concerns::StoresTaskbarState
     def store_state_group_keys(group_keys)
       @store_state_group_keys ||= group_keys
     end
+  end
+
+  attr_reader :applied_field_from_group_key
+
+  def initialize(**)
+    @applied_field_from_group_key = {}
+
+    super
   end
 
   def resolve
@@ -63,7 +71,14 @@ module FormUpdater::Concerns::StoresTaskbarState
       # Only process fields that have a 'value' key.
       next if !value.key?(:value)
 
-      data[key] = value[:value]
+      if applied_field_from_group_key.key?(key)
+        parent_key = applied_field_from_group_key[key]
+
+        data[parent_key] ||= {}
+        data[parent_key][key] = value[:value]
+      else
+        data[key] = value[:value]
+      end
     end
 
     data
@@ -85,6 +100,9 @@ module FormUpdater::Concerns::StoresTaskbarState
 
     # Return always true, when field does not exists on object, because we need always to store the value.
     return true if !object.respond_to?(field)
+
+    # When current object field is empty and the value is empty, then we don't need to store the value.
+    return false if object[field].blank? && value.blank?
 
     object[field] != value
   end

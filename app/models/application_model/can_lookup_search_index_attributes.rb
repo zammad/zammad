@@ -1,24 +1,9 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module ApplicationModel::CanLookupSearchIndexAttributes
   extend ActiveSupport::Concern
 
-  class RequestCache < ActiveSupport::CurrentAttributes
-    attribute :integer_attribute_names
-
-    def integer_fields(class_name)
-      self.integer_attribute_names ||= {}
-
-      updated_at = ObjectManager::Attribute.maximum('updated_at')
-      return self.integer_attribute_names[class_name][:data] if self.integer_attribute_names[class_name].present? && self.integer_attribute_names[class_name][:updated_at] == updated_at
-
-      self.integer_attribute_names[class_name] = {
-        updated_at: updated_at,
-        data:       ObjectManager::Attribute.where(object_lookup: ObjectLookup.find_by(name: class_name), data_type: 'integer', editable: true).pluck(:name),
-      }
-      self.integer_attribute_names[class_name][:data]
-    end
-  end
+  include ApplicationModel::CanLookupSearchIndexAttributes::Sanitizer
 
 =begin
 
@@ -71,14 +56,14 @@ returns
     end
 
     if is_a? HasObjectManagerAttributes
-      RequestCache.integer_fields(self.class.to_s).each do |field|
+      ApplicationModel::CanLookupSearchIndexAttributes::RequestCache.integer_fields(self.class.to_s).each do |field|
         next if attributes[field].blank?
 
         attributes["#{field}_text"] = attributes[field].to_s
       end
     end
 
-    attributes
+    search_index_sanitize_store_attributes(attributes)
   end
 
 =begin
@@ -160,7 +145,7 @@ returns
 
     def search_index_attribute_ignored?(attribute_name = '')
       ignored_attributes = instance_variable_get(:@search_index_attributes_ignored) || []
-      return if ignored_attributes.blank?
+      return false if ignored_attributes.blank?
 
       ignored_attributes.include?(attribute_name.to_sym)
     end

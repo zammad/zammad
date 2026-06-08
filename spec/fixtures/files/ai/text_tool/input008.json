@@ -1,0 +1,6 @@
+{
+  "input": "<span style=\"font-weight: normal;\">As I noticed, you are in the Chicago time zone (CDT), while we are in Berlin (CET), which makes finding a suitable timeslot a bit challenging. However, I would like to propose a spontaneous meeting today at 8:00 AM (CDT).<br></span><span style=\"font-weight: normal;\">If today's timeslot doesn't work for you, I am also available next Tuesday at the same time. Alternatively, you can have the call without me, which would also be fine.&nbsp;</span><span style=\"background-color: initial; color: unset;\">Our support team is available from&nbsp;</span><span style=\"background-color: initial; color: unset;\">Monday to Friday: 9:00 AM to 5:00 PM (CDT). P</span><span style=\"background-color: initial; color: unset; font-family: inherit;\">lease suggest a timeslot that is convenient for you.</span>",
+  "expected": {
+    "language": "en"
+  }
+}

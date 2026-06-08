@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Types
   class UserDeviceType < Gql::Types::BaseObject
@@ -17,14 +17,14 @@ module Gql::Types
     field :user_agent, String
     field :ip, String
 
-    def self.authorize(_object, ctx)
-      ctx.current_user
-    end
-
     def location
-      return object.location if object.location_details['city_name'].blank?
+      city_name = object.location_details['city_name']
+      country   = object.location
 
-      "#{object.location}, #{object.location_details['city_name']}"
+      return country if city_name.blank?
+      return city_name if country.blank? || country == 'unknown'
+
+      "#{country}, #{city_name}"
     end
   end
 end

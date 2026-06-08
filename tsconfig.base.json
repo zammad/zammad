@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
-    "target": "es2020",
+    "target": "es2023",
+    "lib": ["ES2023", "DOM", "WebWorker", "DOM.iterable"],
     "module": "esnext",
     "jsx": "preserve",
     "sourceMap": true,
@@ -14,23 +15,18 @@
     "resolvePackageJsonImports": true,
     "resolvePackageJsonExports": false,
     "allowSyntheticDefaultImports": true,
-    "baseUrl": ".",
     "paths": {
-      "#mobile/*": ["app/frontend/apps/mobile/*"],
-      "#desktop/*": ["app/frontend/apps/desktop/*"],
-      "#shared/*": ["app/frontend/shared/*"],
-      "#tests/*": ["app/frontend/tests/*"],
-      "#cy/*": [".dev/cypress/*"]
+      "#mobile/*": ["./app/frontend/apps/mobile/*"],
+      "#desktop/*": ["./app/frontend/apps/desktop/*"],
+      "#shared/*": ["./app/frontend/shared/*"],
+      "#tests/*": ["./app/frontend/tests/*"],
+      "#cy/*": ["./.dev/cypress/*"],
     },
-    "types": [
-      "vite/client",
-      "node",
-      "vite-plugin-pwa/client"
-    ],
+    "types": ["vitest/globals", "vite/client", "vite-plugin-pwa/client"],
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "resolveJsonModule": true
-  }
+    "resolveJsonModule": true,
+  },
 }

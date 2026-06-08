@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'uri'
 
@@ -32,14 +32,12 @@ class GitLab
         endpoint,
         payload,
         {
-          headers:      headers,
-          json:         true,
-          open_timeout: 6,
-          read_timeout: 16,
-          log:          {
+          headers:    headers,
+          json:       true,
+          log:        {
             facility: 'GitLab',
           },
-          verify_ssl:   verify_ssl,
+          verify_ssl: verify_ssl,
         },
       )
 
@@ -59,14 +57,12 @@ class GitLab
         "#{uri.scheme}://#{uri.host}/api/v4/projects/#{ERB::Util.url_encode(variables[:fullpath])}/issues/#{variables[:issue_id]}",
         {},
         {
-          headers:      headers,
-          json:         true,
-          open_timeout: 6,
-          read_timeout: 16,
-          log:          {
+          headers:    headers,
+          json:       true,
+          log:        {
             facility: 'GitLab',
           },
-          verify_ssl:   verify_ssl,
+          verify_ssl: verify_ssl,
         },
       )
 

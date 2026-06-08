@@ -1,8 +1,9 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockAuthentication } from '#tests/support/mock-authentication.ts'
+import { waitFor } from '#tests/support/vitest-wrapper.ts'
 
 import { EnumSystemSetupInfoStatus } from '#shared/graphql/types.ts'
 
@@ -26,12 +27,10 @@ describe('guided setup automated info', () => {
     it('shows info screen', async () => {
       const view = await visitView('/guided-setup/automated')
 
-      expect(view.getByText('Automated Setup')).toBeInTheDocument()
+      expect(view.getByText('Automated setup')).toBeInTheDocument()
       expect(view.queryByIconName('spinner')).not.toBeInTheDocument()
 
-      expect(
-        view.getByText('This system is configured for automated setup.'),
-      ).toBeInTheDocument()
+      expect(view.getByText('This system is configured for automated setup.')).toBeInTheDocument()
 
       expect(view.getByText('Please use the provided URL.')).toBeInTheDocument()
     })
@@ -39,11 +38,10 @@ describe('guided setup automated info', () => {
     it('redirects to info screen first', async () => {
       const view = await visitView('/guided-setup')
 
-      await vi.waitFor(() => {
-        expect(
-          view,
-          'correctly redirects to guided setup automated info screen',
-        ).toHaveCurrentUrl('/guided-setup/automated')
+      await waitFor(() => {
+        expect(view, 'correctly redirects to guided setup automated info screen').toHaveCurrentUrl(
+          '/guided-setup/automated',
+        )
       })
     })
   })
@@ -59,7 +57,7 @@ describe('guided setup automated info', () => {
     it('redirects to home screen', async () => {
       const view = await visitView('/guided-setup/automated')
 
-      await vi.waitFor(() => {
+      await waitFor(() => {
         expect(view, 'correctly redirects to home screen').toHaveCurrentUrl('/')
       })
     })

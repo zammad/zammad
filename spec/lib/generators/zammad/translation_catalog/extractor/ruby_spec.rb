@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -7,7 +7,7 @@ RSpec.describe Zammad::TranslationCatalog::Extractor::Ruby do
 
   let(:filename) { 'myfile' }
   let(:result_strings) do
-    extractor_module.extract_from_string(string, filename)
+    extractor_module.extract_from_string(+string, filename)
     extractor_module.extracted_strings.keys.sort
   end
 

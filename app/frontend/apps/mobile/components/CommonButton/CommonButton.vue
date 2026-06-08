@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { startCase } from 'lodash-es'
@@ -23,8 +23,8 @@ const variantClasses = computed(() => {
       if (props.transparentBackground) return ['text-blue']
       return ['bg-blue', 'text-white']
     case 'submit':
-      if (props.transparentBackground) return ['font-semibold', 'text-yellow']
-      return ['bg-yellow', 'font-semibold', 'text-black-full']
+      if (props.transparentBackground) return ['font-medium', 'text-yellow']
+      return ['bg-yellow', 'font-medium', 'text-black-full']
     case 'danger':
       if (props.transparentBackground) return ['text-red-bright']
       return ['bg-red-dark', 'text-red-bright']
@@ -68,6 +68,8 @@ const iconSizeClass = computed(() => {
       ...sizeClasses,
       {
         'opacity-50': disabled,
+        'justify-start': align === 'start',
+        'justify-end': align === 'end',
       },
     ]"
   >
@@ -79,13 +81,7 @@ const iconSizeClass = computed(() => {
       :name="prefixIcon"
     />
 
-    <CommonIcon
-      v-if="icon"
-      class="shrink-0"
-      :size="iconSizeClass"
-      decorative
-      :name="icon"
-    />
+    <CommonIcon v-if="icon" class="shrink-0" :size="iconSizeClass" decorative :name="icon" />
     <span v-else class="truncate"
       ><slot>{{ $t(startCase(variant)) }}</slot></span
     >

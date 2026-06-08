@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Channel::Filter::InternalArticleCheck
   def self.run(_channel, mail, _transaction_params)
@@ -28,7 +28,7 @@ module Channel::Filter::InternalArticleCheck
     return false if from_email.blank?
 
     last_outgoing_mail = ticket.articles
-      .where("ticket_articles.to #{Rails.application.config.db_like} ?", "%#{from_email}%")
+      .where('ticket_articles.to ILIKE ?', "%#{from_email}%")
       .reorder(created_at: :desc).first
 
     last_outgoing_mail&.internal.present?

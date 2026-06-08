@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -192,25 +192,77 @@ RSpec.describe 'Form', type: :request do
       expect(response).to have_http_status(:forbidden)
     end
 
+    describe 'form_allowed_params Setting', db_strategy: :reset do
+      let(:fingerprint) { SecureRandom.hex(40) }
+      let(:token)       { json_response['token'] }
+      let(:ticket)      { Ticket.find json_response.dig('ticket', 'id') }
+      let(:custom_attr) { create(:object_manager_attribute_text) }
+
+      before do
+        custom_attr
+        ObjectManager::Attribute.migration_execute
+
+        Setting.set('form_allowed_params', form_allowed_params)
+        Setting.set('form_ticket_create', true)
+        post '/api/v1/form_config', params: { fingerprint: }, as: :json
+
+        post '/api/v1/form_submit', params: {
+          fingerprint:,
+          token:,
+          name:  'Bob Smith',
+          email: 'discard@zammad.com',
+          title: 'test-last',
+          body:  'hello',
+          custom_attr.name => 'some note'
+        }, as: :json
+      end
+
+      context 'when blank' do
+        let(:form_allowed_params) { [] }
+
+        it 'rejects additional parameters' do
+          expect(ticket).to have_attributes(custom_attr.name => be_blank)
+        end
+      end
+
+      context 'when present' do
+        let(:form_allowed_params) { [custom_attr.name] }
+
+        it 'allows additional parameters' do
+          expect(ticket).to have_attributes(custom_attr.name => 'some note')
+        end
+      end
+    end
+
     context 'when ApplicationHandleInfo context' do
       let(:fingerprint) { SecureRandom.hex(40) }
       let(:token)       { json_response['token'] }
 
       before do
+        allow(ApplicationHandleInfo).to receive('context=')
         Setting.set('form_ticket_create', true)
         post '/api/v1/form_config', params: { fingerprint: fingerprint }, as: :json
       end
 
       it 'gets switched to "form"' do
-        allow(ApplicationHandleInfo).to receive('context=')
         post '/api/v1/form_submit', params: { fingerprint: fingerprint, token: token, name: 'Bob Smith', email: 'discard@zammad.com', title: 'test-last', body: 'hello' }, as: :json
         expect(ApplicationHandleInfo).to have_received('context=').with('form').at_least(1)
       end
 
       it 'reverts back to default' do
-        allow(ApplicationHandleInfo).to receive('context=')
         post '/api/v1/form_submit', params: { fingerprint: fingerprint, token: token, name: 'Bob Smith', email: 'discard@zammad.com', title: 'test-last', body: 'hello' }, as: :json
         expect(ApplicationHandleInfo.context).not_to eq 'form'
+      end
+
+      context 'when form_allowed_params is not blank' do
+        before do
+          Setting.set('form_allowed_params', %w[note])
+        end
+
+        it 'does not switch context to "form"' do
+          post '/api/v1/form_submit', params: { fingerprint: fingerprint, token: token, name: 'Bob Smith', email: 'discard@zammad.com', title: 'test-last', body: 'hello' }, as: :json
+          expect(ApplicationHandleInfo).not_to have_received('context=').with('form')
+        end
       end
     end
   end

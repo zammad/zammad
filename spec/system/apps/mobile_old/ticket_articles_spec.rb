@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -19,9 +19,9 @@ RSpec.describe 'Mobile > Ticket > Articles', app: :mobile, authenticated_as: :ag
     let(:ticket) { create(:ticket, title: 'Ticket Title', group: group) }
     let(:article) { create(:ticket_article, body: 'Article 1', ticket: ticket, internal: false) }
 
-    it 'see a single article and no "load more"' do
+    it 'see a single article and no "Load more"' do
       expect(page).to have_text(article.body)
-      expect(page).to have_no_text('load')
+      expect(page).to have_no_css('button', text: %r{\ALoad \d+ more\z})
     end
 
     it 'switches article to internal' do
@@ -36,7 +36,7 @@ RSpec.describe 'Mobile > Ticket > Articles', app: :mobile, authenticated_as: :ag
 
       it 'deletes article' do
         find('[data-name="article-context"]').click
-        click_on 'Delete Article'
+        click_on 'Delete article'
         click_on 'OK'
 
         expect(page).to have_no_text(article.body)
@@ -57,7 +57,7 @@ RSpec.describe 'Mobile > Ticket > Articles', app: :mobile, authenticated_as: :ag
         expect(page).to have_text(article.body, count: 1)
       end
 
-      expect(page).to have_no_text('load')
+      expect(page).to have_no_css('button', text: %r{\ALoad \d+ more\z})
     end
   end
 
@@ -78,7 +78,7 @@ RSpec.describe 'Mobile > Ticket > Articles', app: :mobile, authenticated_as: :ag
     end
 
     it 'deleting article if every article is loaded', current_user_id: -> { agent.id } do
-      click('button', text: 'load 4 more')
+      click('button', text: 'Load 4 more')
 
       wait_for_gql('shared/entities/ticket/graphql/queries/ticket/articles.graphql')
 
@@ -89,15 +89,15 @@ RSpec.describe 'Mobile > Ticket > Articles', app: :mobile, authenticated_as: :ag
 
       all('[data-name="article-context"]').last.click
 
-      expect(page).to have_button('Delete Article')
+      expect(page).to have_button('Delete article')
 
-      click_on 'Delete Article'
+      click_on 'Delete article'
       click_on 'OK'
 
       expect(page).to have_no_text(articles.last.body)
     end
 
-    it 'can use "load more" button' do
+    it 'can use "Load more" button' do
       expect(page).to have_text('Article 1.')
 
       (6..10).each do |number|
@@ -106,7 +106,7 @@ RSpec.describe 'Mobile > Ticket > Articles', app: :mobile, authenticated_as: :ag
 
       expect(page).to have_no_text('Article 5.')
 
-      click('button', text: 'load 4 more')
+      click('button', text: 'Load 4 more')
 
       wait_for_gql('shared/entities/ticket/graphql/queries/ticket/articles.graphql')
 
@@ -114,14 +114,14 @@ RSpec.describe 'Mobile > Ticket > Articles', app: :mobile, authenticated_as: :ag
         expect(page).to have_text("Article #{number}.", count: 1)
       end
 
-      expect(page).to have_no_text('load')
+      expect(page).to have_no_css('button', text: %r{\ALoad \d+ more\z})
     end
 
     it 'can go back to the same spot' do
       expect(page).to have_text('Article 1.')
       expect(page).to have_no_text('Article 5.')
 
-      click('button', text: 'load 4 more')
+      click('button', text: 'Load 4 more')
 
       page.scroll_to 0, 100
 
@@ -157,22 +157,22 @@ RSpec.describe 'Mobile > Ticket > Articles', app: :mobile, authenticated_as: :ag
     it 'updates state on successful retry' do
       create(:smime_certificate, :with_private, fixture: 'smime1@example.com')
 
-      find_button('Security Error').click
+      find_button('Security error').click
       find_button('Try again').click
 
       # visually updates state
       expect(find('[aria-label="Signed"]')).to be_present
 
       expect(page).to have_text('The signature was successfully verified.')
-      expect(page).to have_no_text('Security Error')
+      expect(page).to have_no_text('Security error')
     end
 
     it 'shows error on unsucessful retry' do
-      find_button('Security Error').click
+      find_button('Security error').click
       find_button('Try again').click
 
       expect(page).to have_text('The certificate for verification could not be found.')
-      expect(page).to have_text('Security Error')
+      expect(page).to have_text('Security error')
       expect(page).to have_no_css('[aria-label="Signed"]')
     end
   end

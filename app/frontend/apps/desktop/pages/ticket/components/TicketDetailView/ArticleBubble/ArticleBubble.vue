@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, defineAsyncComponent, ref } from 'vue'
@@ -8,10 +8,7 @@ import type { TicketArticle } from '#shared/entities/ticket/types.ts'
 import { EnumTicketArticleSenderName } from '#shared/graphql/types.ts'
 
 import UserPopoverWithTrigger from '#desktop/components/User/UserPopoverWithTrigger.vue'
-import {
-  useFilePreviewViewer,
-  type ViewerFile,
-} from '#desktop/composables/useFilePreviewViewer.ts'
+import { useFilePreviewViewer, type ViewerFile } from '#desktop/composables/useFilePreviewViewer.ts'
 import ArticleBubbleActionList from '#desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue'
 import ArticleBubbleBlockedContentWarning from '#desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBlockedContentWarning.vue'
 import ArticleBubbleBody from '#desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue'
@@ -25,9 +22,7 @@ import ArticleReactionBadge from '#desktop/pages/ticket/components/TicketDetailV
 
 const ArticleBubbleHeader = defineAsyncComponent(
   () =>
-    import(
-      '#desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleHeader.vue'
-    ),
+    import('#desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleHeader.vue'),
 )
 
 interface Props {
@@ -37,6 +32,14 @@ interface Props {
 const props = defineProps<Props>()
 
 const { showMetaInformation, toggleHeader } = useBubbleHeader()
+
+const toggleHeaderFromKeyboard = () => {
+  toggleHeader(new MouseEvent('click'))
+}
+
+const metaInformationRegionId = computed(
+  () => `article-meta-information-${props.article.internalId}`,
+)
 
 const position = computed(() => {
   switch (props.article.sender?.name) {
@@ -52,9 +55,7 @@ const position = computed(() => {
 })
 
 const hasInternalNote = computed(
-  () =>
-    (props.article.type?.name === 'note' && props.article.internal) ||
-    props.article.internal,
+  () => (props.article.type?.name === 'note' && props.article.internal) || props.article.internal,
 )
 
 const {
@@ -97,7 +98,7 @@ const { showPreview } = useFilePreviewViewer(
     ]"
   >
     <UserPopoverWithTrigger
-      class="!absolute bottom-0"
+      class="absolute! bottom-0"
       :class="{
         'ltr:-right-2.5 ltr:translate-x-full rtl:-left-2.5 rtl:-translate-x-full':
           position === 'right',
@@ -112,6 +113,7 @@ const { showPreview } = useFilePreviewViewer(
         size: 'small',
         noIndicator: true,
       }"
+      z-index="52"
     />
 
     <div
@@ -124,6 +126,7 @@ const { showPreview } = useFilePreviewViewer(
       ]"
     >
       <div
+        :id="metaInformationRegionId"
         :aria-hidden="!showMetaInformation"
         class="grid w-full grid-rows-[0fr] overflow-hidden"
       >
@@ -141,39 +144,45 @@ const { showPreview } = useFilePreviewViewer(
 
       <ArticleBubbleSecurityStatusBar
         v-if="!showMetaInformation"
-        :class="[
-          headerAndIconBarBackgroundClass,
-          showMetaInformation ? dividerClass : '',
-        ]"
+        :class="[headerAndIconBarBackgroundClass, showMetaInformation ? dividerClass : '']"
         :article="article"
       />
 
       <ArticleBubbleSecurityWarning :article="article" />
       <ArticleBubbleMediaError :article="article" />
 
-      <ArticleBubbleBody
-        tabindex="0"
-        :data-test-id="`article-bubble-body-${article.internalId}`"
-        class="last:rounded-b-xl focus:outline-hidden focus-visible:outline focus-visible:-outline-offset-1 focus-visible:outline-blue-800"
-        :class="[
-          bodyClasses,
-          {
-            'pt-3': showMetaInformation,
-            '[&:nth-child(2)]:rounded-t-xl': !showMetaInformation,
-            'rtl:rounded-br-none [&:nth-child(2)]:ltr:rounded-br-none':
-              position === 'right',
-            'rtl:rounded-br-none [&:nth-child(2)]:ltr:rounded-bl-none':
-              position === 'left',
-          },
-        ]"
-        :position="position"
-        :show-meta-information="showMetaInformation"
-        :inline-images="inlineImages"
-        :article="article"
-        @click="toggleHeader"
-        @keydown.enter="toggleHeader"
-        @preview="showPreview('image', $event)"
-      />
+      <div
+        class="relative isolate"
+        :class="{
+          'nth-2:rounded-t-xl': !showMetaInformation,
+          'nth-2:ltr:rounded-br-none nth-2:ltr:rounded-bl-xl nth-2:rtl:rounded-br-xl nth-2:rtl:rounded-bl-none':
+            position === 'right',
+          'nth-2:ltr:rounded-br-xl nth-2:ltr:rounded-bl-none nth-2:rtl:rounded-br-none nth-2:rtl:rounded-bl-xl':
+            position === 'left',
+        }"
+      >
+        <button
+          type="button"
+          class="pointer-events-none absolute top-0 z-10 size-full rounded-[inherit] border-blue-800 focus:outline-none focus-visible:border ltr:left-0 rtl:right-0"
+          :aria-label="$t('Toggle article meta information')"
+          :aria-expanded="showMetaInformation"
+          :aria-controls="metaInformationRegionId"
+          @keydown.enter.prevent="toggleHeaderFromKeyboard"
+          @keydown.space.prevent="toggleHeaderFromKeyboard"
+        />
+
+        <ArticleBubbleBody
+          :data-test-id="`article-bubble-body-${article.internalId}`"
+          class="z-5 h-full"
+          :class="[bodyClasses]"
+          :position="position"
+          :show-meta-information="showMetaInformation"
+          :inline-images="inlineImages"
+          :article="article"
+          @preview="showPreview('image', $event)"
+          @click="toggleHeader"
+        />
+      </div>
 
       <ArticleBubbleBlockedContentWarning
         :class="[

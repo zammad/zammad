@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Service::Ticket::ExternalReferences::IssueTracker::Item < Service::Ticket::ExternalReferences::IssueTracker::Base
   attr_reader :issue_link
@@ -10,7 +10,7 @@ class Service::Ticket::ExternalReferences::IssueTracker::Item < Service::Ticket:
   end
 
   def execute
-    Service::CheckFeatureEnabled.new(name: integration_setting_name).execute
+    Service::CheckFeatureEnabled.execute(name: integration_setting_name)
 
     issue_tracker_object.issue_by_url(issue_link)
   end

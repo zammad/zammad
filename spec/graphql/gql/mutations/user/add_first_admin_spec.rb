@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -92,7 +92,7 @@ RSpec.describe Gql::Mutations::User::AddFirstAdmin, :aggregate_failures, set_up:
       end
 
       it 'fails with an error' do
-        expect(graphql_response['data']['userAddFirstAdmin']['errors'].first['message']).to match(%r{Invalid password})
+        expect(graphql_response['data']['userAddFirstAdmin']['errors'].first['message']).to include('Invalid password')
       end
     end
 

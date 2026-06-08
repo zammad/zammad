@@ -1,11 +1,9 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import type { TwoFactorConfigurationPlugin } from '#shared/entities/two-factor/types.ts'
 import { EnumTwoFactorAuthenticationMethod } from '#shared/graphql/types.ts'
 
 import TwoFactorConfigurationSecurityKeys from '#desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue'
-
-import type { CredentialCreationOptionsJSON } from '@github/webauthn-json'
 
 export default {
   name: EnumTwoFactorAuthenticationMethod.SecurityKeys,
@@ -26,9 +24,7 @@ export default {
         return ''
     }
   },
-  async setup(
-    publicKey: NonNullable<CredentialCreationOptionsJSON['publicKey']>,
-  ) {
+  async setup(publicKeyOptions: PublicKeyCredentialCreationOptionsJSON) {
     if (!window.isSecureContext) {
       return {
         success: false,
@@ -37,14 +33,18 @@ export default {
       }
     }
     try {
-      const { create } = await import('@github/webauthn-json')
+      const publicKey = PublicKeyCredential.parseCreationOptionsFromJSON(publicKeyOptions)
+      const credential = (await navigator.credentials.create({ publicKey })) as PublicKeyCredential
 
-      const publicKeyCredential = await create({ publicKey })
+      if (!credential || credential.type !== 'public-key') {
+        throw new Error()
+      }
+
       return {
         success: true,
         payload: {
-          challenge: publicKey.challenge,
-          credential: publicKeyCredential,
+          challenge: publicKeyOptions.challenge,
+          credential: credential.toJSON(),
         },
       }
     } catch {

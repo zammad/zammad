@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { createTestingPinia } from '@pinia/testing'
 
@@ -29,9 +29,7 @@ describe('useLoginTwoFactor', () => {
     updateSecondFactor(EnumTwoFactorAuthenticationMethod.SecurityKeys)
 
     expect(clearErrors).toHaveBeenCalledOnce()
-    expect(loginFlow.twoFactor).toBe(
-      EnumTwoFactorAuthenticationMethod.SecurityKeys,
-    )
+    expect(loginFlow.twoFactor).toBe(EnumTwoFactorAuthenticationMethod.SecurityKeys)
     expect(loginFlow.state).toBe('2fa')
   })
 
@@ -74,8 +72,7 @@ describe('useLoginTwoFactor', () => {
   it('can filter for allowed two-factor methods', () => {
     const clearErrors = vi.fn()
 
-    const { loginFlow, twoFactorAllowedMethods } =
-      useLoginTwoFactor(clearErrors)
+    const { loginFlow, twoFactorAllowedMethods } = useLoginTwoFactor(clearErrors)
 
     loginFlow.allowedMethods = [
       EnumTwoFactorAuthenticationMethod.AuthenticatorApp,
@@ -122,8 +119,7 @@ describe('useLoginTwoFactor', () => {
   it('can tell if there is an alternative login method', () => {
     const clearErrors = vi.fn()
 
-    const { loginFlow, hasAlternativeLoginMethod } =
-      useLoginTwoFactor(clearErrors)
+    const { loginFlow, hasAlternativeLoginMethod } = useLoginTwoFactor(clearErrors)
 
     loginFlow.allowedMethods = [
       EnumTwoFactorAuthenticationMethod.AuthenticatorApp,
@@ -167,15 +163,15 @@ describe('useLoginTwoFactor', () => {
 
     loginFlow.state = 'recovery-code'
 
-    expect(loginPageTitle.value).toBe('Recovery Code')
+    expect(loginPageTitle.value).toBe('Recovery code')
 
     loginFlow.twoFactor = EnumTwoFactorAuthenticationMethod.AuthenticatorApp
     loginFlow.state = '2fa'
 
-    expect(loginPageTitle.value).toBe('Authenticator App')
+    expect(loginPageTitle.value).toBe('Authenticator app')
 
     loginFlow.state = '2fa-select'
 
-    expect(loginPageTitle.value).toBe('Try Another Method')
+    expect(loginPageTitle.value).toBe('Try another method')
   })
 })

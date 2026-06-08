@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module ApplicationController::LogsHttpAccess
   extend ActiveSupport::Concern
@@ -33,7 +33,7 @@ module ApplicationController::LogsHttpAccess
                                   "#{key}: #{value}\n"
                                 end
     end
-    body = request.body.read
+    body = request.raw_post
     if body
       request_data[:content] += "\n#{body}"
     end

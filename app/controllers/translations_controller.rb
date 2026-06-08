@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class TranslationsController < ApplicationController
   prepend_before_action :authenticate_and_authorize!, except: [:lang]
@@ -14,16 +14,12 @@ class TranslationsController < ApplicationController
 
   # GET /translations/search/:locale
   def search
-    translations_search = Service::Translation::Search.new(locale: params[:locale], query: params[:query])
-
-    render json: translations_search.execute, status: :ok
+    render json: Service::Translation::Search.execute(locale: params[:locale], query: params[:query]), status: :ok
   end
 
   # POST /translations/upsert
   def upsert
-    translations_upsert = Service::Translation::Upsert.new(locale: params[:locale], source: params[:source], target: params[:target])
-
-    render json: translations_upsert.execute, status: :ok
+    render json: Service::Translation::Upsert.execute(locale: params[:locale], source: params[:source], target: params[:target]), status: :ok
   end
 
   # POST /translations/reset

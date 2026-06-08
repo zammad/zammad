@@ -1,9 +1,6 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import {
-  mockGraphQLResult,
-  waitForGraphQLMockCalls,
-} from '#tests/graphql/builders/mocks.ts'
+import { mockGraphQLResult, waitForGraphQLMockCalls } from '#tests/graphql/builders/mocks.ts'
 import type { ExtendedRenderResult } from '#tests/support/components/renderComponent.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
@@ -25,9 +22,7 @@ const confirmSuccess = async (view: ExtendedRenderResult, login: string) => {
     username: login,
   })
 
-  expect(
-    await view.findByText('The password reset request was successful.'),
-  ).toBeInTheDocument()
+  expect(await view.findByText('The password reset request was successful.')).toBeInTheDocument()
 }
 
 beforeEach(() => {
@@ -56,9 +51,7 @@ it('can reset a password and try again', async () => {
 
   const view = await visitView('/reset-password')
 
-  expect(
-    await view.findByRole('button', { name: 'Cancel & Go Back' }),
-  ).toBeInTheDocument()
+  expect(await view.findByRole('button', { name: 'Cancel & go back' })).toBeInTheDocument()
 
   const [imprint, privacy] = publicLinks
 
@@ -87,24 +80,19 @@ it('shows an error if reset was unsuccessful', async () => {
 
   const view = await visitView('/reset-password')
 
-  mockGraphQLResult<UserPasswordResetSendMutation>(
-    UserPasswordResetSendDocument,
-    {
-      userPasswordResetSend: {
-        success: false,
-        errors: [
-          {
-            message: 'The password reset request could not be sent',
-            field: null,
-          },
-        ],
-      },
+  mockGraphQLResult<UserPasswordResetSendMutation>(UserPasswordResetSendDocument, {
+    userPasswordResetSend: {
+      success: false,
+      errors: [
+        {
+          message: 'The password reset request could not be sent',
+          field: null,
+        },
+      ],
     },
-  )
+  })
 
   await resetPassword(view, 'admin@example.com')
 
-  expect(
-    await view.findByText('The password reset request could not be sent'),
-  ).toBeInTheDocument()
+  expect(await view.findByText('The password reset request could not be sent')).toBeInTheDocument()
 })

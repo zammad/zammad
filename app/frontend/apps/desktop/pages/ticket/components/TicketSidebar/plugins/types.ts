@@ -1,4 +1,6 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
+
+import type { TicketView } from '#shared/entities/ticket/types.ts'
 
 import type {
   TicketSidebarContext,
@@ -13,6 +15,7 @@ export interface TicketSidebarPlugin {
   component: Component
   permissions: string[]
   screens: TicketSidebarScreenType[]
+  views: TicketView[]
   icon: string
   available?: (context: TicketSidebarContext) => boolean
 }

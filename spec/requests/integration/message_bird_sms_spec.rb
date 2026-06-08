@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -36,8 +36,8 @@ RSpec.describe 'Message Bird SMS', performs_jobs: true, type: :request do
       expect(response).to have_http_status(:not_found)
 
       post '/api/v1/sms_webhook/secret_webhook_token', params: read_message('inbound_sms1'), as: :json
-      expect(response).to have_http_status(:unprocessable_entity)
-      expect(json_response['error']).to eq('Can\'t use Channel::Driver::Sms::MessageBird: #<Exceptions::UnprocessableEntity: Group needed in channel definition!>')
+      expect(response).to have_http_status(:unprocessable_content)
+      expect(json_response['error']).to eq('Sms::MessageBird: Group needed in channel definition! (Exceptions::UnprocessableContent)')
 
       channel.group_id = Group.first.id
       channel.save!

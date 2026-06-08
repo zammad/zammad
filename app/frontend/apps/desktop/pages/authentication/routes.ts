@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import type { RouteRecordRaw } from 'vue-router'
 
@@ -22,7 +22,7 @@ const route: RouteRecordRaw[] = [
     name: 'AdminPasswordAuth',
     component: () => import('./views/AdminPasswordAuth.vue'),
     meta: {
-      title: __('Admin Password Login'),
+      title: __('Admin password login'),
       requiresAuth: false,
       requiredPermission: null,
       redirectToDefaultRoute: true,
@@ -40,8 +40,9 @@ const route: RouteRecordRaw[] = [
     },
   },
   {
-    path: '/reset-password',
+    path: '/reset-password/:login?',
     name: 'PasswordReset',
+    props: true,
     component: () => import('./views/PasswordReset.vue'),
     meta: {
       requiresAuth: false,
@@ -67,13 +68,10 @@ const route: RouteRecordRaw[] = [
     name: 'Logout',
     component: {
       async beforeRouteEnter() {
-        const [{ useAuthenticationStore }, { useNotifications }] =
-          await Promise.all([
-            import('#shared/stores/authentication.ts'),
-            import(
-              '#shared/components/CommonNotifications/useNotifications.ts'
-            ),
-          ])
+        const [{ useAuthenticationStore }, { useNotifications }] = await Promise.all([
+          import('#shared/stores/authentication.ts'),
+          import('#shared/components/CommonNotifications/useNotifications.ts'),
+        ])
 
         const { clearAllNotifications } = useNotifications()
 
@@ -110,7 +108,7 @@ const route: RouteRecordRaw[] = [
     props: true,
     component: () => import('./views/SignupVerify.vue'),
     meta: {
-      title: __('Email Verification'),
+      title: __('Email verification'),
       requiresAuth: false,
       requiredPermission: null,
       redirectToDefaultRoute: true,

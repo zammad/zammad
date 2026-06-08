@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -6,7 +6,7 @@ RSpec.describe 'System Assets', type: :request do
   describe '#show' do
     it 'returns content for product logo' do
       allow(Service::SystemAssets::ProductLogo).to receive(:sendable_asset).and_return(
-        Service::SystemAssets::SendableAsset.new(
+        Service::SystemAssets::SendableAsset.new( # rubocop:disable Zammad/ForbidCallingServiceDirectly
           content:  'product_logo',
           filename: 'test',
           type:     'image/test'

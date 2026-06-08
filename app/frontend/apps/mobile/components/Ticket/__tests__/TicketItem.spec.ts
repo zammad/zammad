@@ -1,8 +1,9 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { renderComponent } from '#tests/support/components/index.ts'
 
 import { TicketState } from '#shared/entities/ticket/types.ts'
+import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
 import { EnumTicketStateColorCode } from '#shared/graphql/types.ts'
 
 import TicketItem from '../TicketItem.vue'
@@ -47,16 +48,12 @@ describe('ticket item display', () => {
     })
 
     expect(view.getByRole('group')).toHaveClass('text-yellow')
-    expect(view.getByIconName('check-circle-no')).toHaveAccessibleName(
-      '(state: open)',
-    )
+    expect(view.getByIconName('check-circle-no')).toHaveAccessibleName('(state: open)')
 
     expect(view.getByText('#12345 · John Doe')).toBeInTheDocument()
     expect(view.getByText('test ticket')).toBeInTheDocument()
 
-    expect(
-      view.getByText('edited 10 hours ago by Jane Doe'),
-    ).toBeInTheDocument()
+    expect(view.getByText('edited 10 hours ago by Jane Doe')).toBeInTheDocument()
 
     const priority = view.getByText('3 high')
 
@@ -83,9 +80,7 @@ describe('ticket item display', () => {
     })
 
     expect(view.getByRole('group')).toHaveClass('text-yellow')
-    expect(view.getByIconName('check-circle-no')).toHaveAccessibleName(
-      '(state: open)',
-    )
+    expect(view.getByIconName('check-circle-no')).toHaveAccessibleName('(state: open)')
 
     expect(view.getByText('#12345')).toBeInTheDocument()
     expect(view.queryByText(/·/)).not.toBeInTheDocument()
@@ -93,5 +88,22 @@ describe('ticket item display', () => {
 
     expect(view.queryByTestId('stringUpdated')).not.toBeInTheDocument()
     expect(view.queryByText('3 high')).not.toBeInTheDocument()
+  })
+
+  describe('Ai Agent', () => {
+    it('shows ai agent indicator if running', () => {
+      const view = renderComponent(TicketItem, {
+        props: {
+          entity: createDummyTicket({ aiAgentRunning: true }),
+        },
+        store: true,
+        router: true,
+      })
+
+      expect(view.getByIconName('check-circle-no-ai')).toHaveAttribute(
+        'aria-label',
+        'Currently processing this ticket…',
+      )
+    })
   })
 })

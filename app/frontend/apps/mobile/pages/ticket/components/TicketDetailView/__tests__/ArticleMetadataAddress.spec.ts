@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { renderComponent } from '#tests/support/components/index.ts'
 
@@ -16,9 +16,7 @@ describe('displaying contact address in metadata', () => {
       },
     })
 
-    expect(view.getByRole('region', { name: 'Label' })).toHaveTextContent(
-      /some-email/,
-    )
+    expect(view.getByRole('region', { name: 'Label' })).toHaveTextContent(/some-email/)
   })
 
   it('displays parsed data, if exists', () => {

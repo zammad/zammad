@@ -156,13 +156,13 @@ class ImportZendesk extends App.ControllerWizardFullScreen
           @$('.js-error').html(App.i18n.translateContent('Background process did not start or has not finished! Please contact your support.'))
           return
 
-        if !_.isEmpty(data.result['error'])
+        if !_.isEmpty(data.result) && !_.isEmpty(data.result['error'])
           @$('.js-error').removeClass('hide')
           @$('.js-error').html(App.i18n.translateContent(data.result['error']))
         else
           @$('.js-error').addClass('hide')
 
-        if !_.isEmpty(data.finished_at) && _.isEmpty(data.result['error'])
+        if data.setup_done is true
           @redirectToLogin()
           return
 

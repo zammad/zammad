@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Subscriptions
   class PushMessages < BaseSubscription
@@ -10,9 +10,7 @@ module Gql::Subscriptions
     field :title, String, description: 'Message title'
     field :text, String, description: 'Message text'
 
-    def self.authorize(...)
-      true # This subscription should be available for all (including unauthenticated) users.
-    end
+    allow_public_access!
 
     def update
       object

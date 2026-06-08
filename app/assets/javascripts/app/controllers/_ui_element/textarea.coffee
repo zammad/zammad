@@ -10,7 +10,7 @@ class App.UiElement.textarea
 
     if attribute.collapsible
       collapseClasses= 'panel-collapse collapse'
-      if !_.isEmpty(attribute.value)
+      if not _.isEmpty(attribute.value) and not attribute.collapsed
         collapseClasses += ' in'
       item = $('<div id="collapse-' + attribute.id + '" class="' + collapseClasses + '">').append(item)
 

@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed } from 'vue'
@@ -34,10 +34,9 @@ const emit = defineEmits<{
   'execute-macro': [MacroById]
 }>()
 
-const groupIds = computed(() => (props.groupId ? [props.groupId] : undefined))
+const macrosSelector = computed(() => (props.groupId ? { entityIds: [props.groupId] } : {}))
 
-// For now handover ticket editable, flag, maybe later we can move the action menu in an own component.
-const { macrosLoaded, macros } = useMacros(groupIds)
+const { macrosLoaded, macros } = useMacros(macrosSelector)
 
 const { notify } = useNotifications()
 
@@ -53,13 +52,15 @@ const sharedDraftConflictDialog = useDialog({
   component: () => import('../TicketSharedDraftConflictDialog.vue'),
 })
 
+const articleReplyIsPresent = computed(() => !!props.form?.flags.newArticlePresent)
+
 const actionItems = computed(() => {
   const saveAsDraftAction: MenuItem = {
     label: __('Save as draft'),
     groupLabel: groupLabels.drafts,
     icon: 'floppy',
     key: 'save-draft',
-    show: () => props.canUseDraft,
+    show: () => props.canUseDraft && articleReplyIsPresent.value,
     onClick: () => {
       if (props.sharedDraftId) {
         sharedDraftConflictDialog.open({
@@ -71,12 +72,9 @@ const actionItems = computed(() => {
         return
       }
 
-      const draftCreateMutation = new MutationHandler(
-        useTicketSharedDraftZoomCreateMutation(),
-        {
-          errorNotificationMessage: __('Draft could not be saved.'),
-        },
-      )
+      const draftCreateMutation = new MutationHandler(useTicketSharedDraftZoomCreateMutation(), {
+        errorNotificationMessage: __('Draft could not be saved.'),
+      })
 
       draftCreateMutation
         .send({ input: mapSharedDraftParams(props.ticketId, props.form) })
@@ -113,7 +111,7 @@ const actionItems = computed(() => {
     type="button"
     :disabled="disabled"
     :items="actionItems"
-    :addon-label="__('Additional ticket edit actions')"
+    :addon-label="__('Drafts & macros')"
     @click="$emit('submit', $event)"
   >
     {{ $t('Update') }}

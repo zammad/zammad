@@ -15,11 +15,11 @@
       </div>
     </div>
     <div class="action-block action-block--flex">
-      <div class="label"><%- @T('From') %></div>
+      <div class="label"><%- @T('Start date') %></div>
       <div class="form-group js-startDate"></div>
     </div>
     <div class="action-block action-block--flex">
-      <div class="label"><%- @T('Till') %></div>
+      <div class="label"><%- @T('End date') %></div>
       <div class="form-group js-endDate"></div>
     </div>
     <div class="action-row">

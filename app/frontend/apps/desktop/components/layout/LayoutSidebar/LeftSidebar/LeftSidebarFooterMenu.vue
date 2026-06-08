@@ -1,70 +1,94 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { FormKit } from '@formkit/vue'
-import { computed, provide } from 'vue'
 
+import { useBetaUi } from '#desktop/components/BetaUi/composables/useBetaUi.ts'
+import { showFeedbackConsent } from '#desktop/components/BetaUi/composables/useBetaUiFeedbackConsent.ts'
+import { useFeedbackDialog } from '#desktop/components/BetaUi/FeedbackDialog/useFeedbackDialog.ts'
+import CollapseButton from '#desktop/components/CollapseButton/CollapseButton.vue'
 import AvatarMenu from '#desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/AvatarMenu.vue'
 import MenuContainer from '#desktop/components/layout/LayoutSidebar/LeftSidebar/MenuContainer/MenuContainer.vue'
-import { COLLAPSED_STATE_KEY } from '#desktop/components/layout/LayoutSidebar/LeftSidebar/useCollapsedState.ts'
-import { useNewBetaUi } from '#desktop/composables/useNewBetaUi.ts'
+import { SidebarName, useSidebarDisplay } from '#desktop/components/layout/useSidebarDisplay.ts'
 
-const props = defineProps<{
-  collapsed?: boolean
-}>()
+const { isSidebarCollapsed, toggleSidebar } = useSidebarDisplay(SidebarName.Primary)
 
-provide(
-  COLLAPSED_STATE_KEY,
-  computed(() => props.collapsed),
-)
+const {
+  switchValue,
+  toggleBetaUiSwitch,
+  betaUiSwitchEnabled,
+  dismissBetaUiSwitch,
+  hasFeedbackConsent,
+} = useBetaUi()
 
-const { betaUiSwitchEnabled, toggleBetaUiSwitch, dismissBetaUiSwitch } =
-  useNewBetaUi()
+const { openFeedbackDialog } = useFeedbackDialog()
 </script>
 
 <template>
   <section
     class="flex items-center justify-center"
-    :class="{ 'mx-auto mb-0.5 flex-col!': collapsed }"
+    :class="{ 'mx-auto mb-2 flex-col!': isSidebarCollapsed }"
   >
     <div class="flex w-full flex-col gap-2">
       <div
-        v-if="betaUiSwitchEnabled && !collapsed"
+        v-if="betaUiSwitchEnabled && !isSidebarCollapsed"
         class="relative -mx-3 inline-flex h-11 items-center justify-start gap-2 bg-blue-900 ps-3 pe-8 dark:bg-blue-900"
       >
         <FormKit
           type="toggle"
-          :label="__('New BETA UI')"
+          :label="__('BETA UI')"
           :value="true"
           :variants="{ true: 'True', false: 'False' }"
           wrapper-class="!flex-row"
           label-class="!text-white truncate"
           @input-raw="toggleBetaUiSwitch()"
         />
-        <!-- <CommonLink class="truncate text-white" link="#" size="small">
-          {{ $t('Send Feedback') }}
-        </CommonLink> -->
+        <CommonLink
+          v-if="switchValue"
+          class="truncate text-white hover:text-white! hover:underline!"
+          link="#"
+          size="small"
+          @click="
+            () => (hasFeedbackConsent === 'true' ? openFeedbackDialog() : showFeedbackConsent())
+          "
+        >
+          {{ $t('Feedback') }}
+        </CommonLink>
         <CommonIcon
-          class="absolute end-3 text-white"
+          class="absolute inset-e-3 text-white"
           name="x"
           :fixed-size="{ width: 16, height: 16 }"
           role="button"
-          :aria-label="$t('Hide Beta UI switch')"
+          :aria-label="$t('Hide BETA UI switch')"
           @click="dismissBetaUiSwitch"
         />
       </div>
 
-      <div class="flex" :class="{ 'mx-auto mb-0.5 flex-col!': collapsed }">
+      <div class="flex gap-2" :class="{ 'mx-auto mb-0.5 flex-col!': isSidebarCollapsed }">
+        <CollapseButton
+          class="lg:hidden"
+          owner-id="primary-sidebar"
+          no-padded
+          visible
+          size="large"
+          variant="tertiary-gray"
+          :collapsed="isSidebarCollapsed"
+          :class="isSidebarCollapsed ? 'order-last' : 'order-first'"
+          :collapse-label="$t('Collapse sidebar')"
+          :expand-label="$t('Expand sidebar')"
+          @toggle-collapse="toggleSidebar"
+        />
+
         <div
           class="flex items-center justify-start"
-          :class="{ 'justify-center!': collapsed }"
+          :class="{ 'justify-center!': isSidebarCollapsed }"
         >
           <AvatarMenu />
         </div>
 
         <div
           class="flex flex-1 items-center justify-end"
-          :class="{ 'justify-center!': collapsed }"
+          :class="{ 'justify-center!': isSidebarCollapsed }"
         >
           <MenuContainer />
         </div>

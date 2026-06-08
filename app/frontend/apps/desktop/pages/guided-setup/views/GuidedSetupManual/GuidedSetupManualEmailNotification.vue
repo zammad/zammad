@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
@@ -27,19 +27,16 @@ defineOptions({
 const router = useRouter()
 
 const { setTitle } = useSystemSetup()
-setTitle(__('Email Notification'))
+setTitle(__('Email notification'))
 
-const {
-  formEmailOutbound,
-  emailOutboundSchema,
-  emailOutboundFormChangeFields,
-} = useEmailOutboundForm()
+const { formEmailOutbound, emailOutboundSchema, emailOutboundFormChangeFields } =
+  useEmailOutboundForm()
 
 const emailNotificationSchema = [
   // For now this is hidden, but should be changeable at some point: https://github.com/zammad/zammad/issues/3343
   {
     name: 'notification_sender',
-    label: __('Notification Sender'),
+    label: __('Notification sender'),
     type: 'hidden',
   },
   ...emailOutboundSchema,
@@ -98,21 +95,17 @@ const probeEmailNotification = async (data: EmailNotificationData) => {
       data-test-id="email-notification-setup"
       form-class="mb-2.5"
       :flatten-form-groups="['outbound']"
-      :form-updater-id="
-        EnumFormUpdaterId.FormUpdaterUpdaterGuidedSetupEmailNotification
-      "
+      :form-updater-id="EnumFormUpdaterId.FormUpdaterUpdaterGuidedSetupEmailNotification"
       :schema="emailNotificationSchema"
       :handlers="[useSSLVerificationWarningHandler()]"
       :change-fields="emailOutboundFormChangeFields"
-      @submit="
-        probeEmailNotification($event as FormSubmitData<EmailNotificationData>)
-      "
+      @submit="probeEmailNotification($event as FormSubmitData<EmailNotificationData>)"
     />
     <GuidedSetupActionFooter
       go-back-route="/guided-setup/manual/system-information"
       skip-route="/guided-setup/manual/channels"
       :form="formEmailOutbound"
-      :submit-button-text="__('Save and Continue')"
+      :submit-button-text="__('Save and continue')"
     />
   </div>
 </template>

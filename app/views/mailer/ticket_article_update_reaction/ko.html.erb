@@ -1,0 +1,19 @@
+업데이트된 티켓 게시물 (#{ticket.title})
+
+<div>안녕하세요 #{recipient.firstname}님,</div>
+<br>
+<div>
+<%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') %>이(가) <%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'emoji') %>로 #{article.created_by.fullname}의 메시지에 반응했습니다:
+</div>
+<br>
+<% if @objects[:article] %>
+  <div>
+    <blockquote type="cite">
+    #{article.body_as_html}
+    </blockquote>
+  </div>
+<% end %>
+<br>
+<div>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/#{article.id}" target="zammad_app">#{config.product_name}에서 보기</a>
+</div>

@@ -1,11 +1,11 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { useApplicationConfigTwoFactor } from '#shared/composables/authentication/useApplicationConfigTwoFactor.ts'
 
 import type { PersonalSettingPlugin } from './types.ts'
 
 export default <PersonalSettingPlugin>{
-  label: __('Two-factor Authentication'),
+  label: __('Two-factor authentication'),
   category: {
     label: __('Security'),
     id: 'category-security',
@@ -17,7 +17,7 @@ export default <PersonalSettingPlugin>{
     component: () => import('../../PersonalSettingTwoFactorAuth.vue'),
     level: 2,
     meta: {
-      title: __('Two-factor Authentication'),
+      title: __('Two-factor authentication'),
       requiresAuth: true,
       requiredPermission: 'user_preferences.two_factor_authentication',
     },

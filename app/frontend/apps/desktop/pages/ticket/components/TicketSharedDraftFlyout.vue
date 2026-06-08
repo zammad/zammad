@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, toRef } from 'vue'
@@ -16,14 +16,12 @@ import type {
   TicketSharedDraftZoomShowQuery,
 } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
-import {
-  MutationHandler,
-  QueryHandler,
-} from '#shared/server/apollo/handler/index.ts'
+import { MutationHandler, QueryHandler } from '#shared/server/apollo/handler/index.ts'
 import type {
   OperationMutationFunction,
   OperationQueryFunction,
 } from '#shared/types/server/apollo/handler'
+import { normalizeImageSizingInHtml } from '#shared/utils/markup.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonFlyout from '#desktop/components/CommonFlyout/CommonFlyout.vue'
@@ -37,7 +35,6 @@ const props = defineProps<{
   draftType: 'start' | 'detail-view'
   metaInformationQuery: OperationQueryFunction
   deleteMutation: OperationMutationFunction
-  setSkipNextStateUpdate?: (skip: boolean) => void
 }>()
 
 const emit = defineEmits<{
@@ -66,42 +63,39 @@ const sharedDraft = computed(() => {
   return metaInformationQueryResult.value
     ?.ticketSharedDraftZoomShow as TicketSharedDraftZoomShowQuery['ticketSharedDraftZoomShow']
 })
-
 const sharedDraftContent = computed(() => {
+  if (!sharedDraft.value) return ''
+
   if (props.draftType === 'start') {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const content: any =
+    const content =
       sharedDraft.value as TicketSharedDraftStartSingleQuery['ticketSharedDraftStartSingle']
 
-    return content.content.body
+    return normalizeImageSizingInHtml(content?.content?.body || '')
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const newArticle: any =
+  const newArticle =
     sharedDraft.value as TicketSharedDraftZoomShowQuery['ticketSharedDraftZoomShow']
 
-  return newArticle.newArticle.body
+  return normalizeImageSizingInHtml(newArticle?.newArticle?.body || '')
 })
 
 const close = () => {
-  closeFlyout(flyoutName)
+  closeFlyout(flyoutName, true) // global
 }
 
 const { waitForConfirmation, waitForVariantConfirmation } = useConfirmation()
 
 const { notify } = useNotifications()
 
-const sharedDrafteleteMutation = new MutationHandler(deleteMutation({}))
+const sharedDraftDeleteMutation = new MutationHandler(deleteMutation({}))
 
-const { isDirty, triggerFormUpdater, updateFieldValues, values } = useForm(
-  toRef(props, 'form'),
-)
+const { isDirty, triggerFormUpdater, updateFieldValues, values } = useForm(toRef(props, 'form'))
 
 const deleteSharedDraft = async (sharedDraftId: string) => {
   const confirmed = await waitForVariantConfirmation('delete')
   if (!confirmed) return
 
-  sharedDrafteleteMutation
+  sharedDraftDeleteMutation
     .send({
       sharedDraftId,
     })
@@ -109,15 +103,11 @@ const deleteSharedDraft = async (sharedDraftId: string) => {
       // Reset shared draft internal ID, if currently set to the same value in the form.
       if (
         (props.draftType === 'start' &&
-          convertToGraphQLId(
-            'Ticket::SharedDraftStart',
-            Number(values.value.shared_draft_id),
-          ) === sharedDraftId) ||
+          convertToGraphQLId('Ticket::SharedDraftStart', Number(values.value.shared_draft_id)) ===
+            sharedDraftId) ||
         (props.draftType === 'detail-view' &&
-          convertToGraphQLId(
-            'Ticket::SharedDraftZoom',
-            Number(values.value.shared_draft_id),
-          ) === sharedDraftId)
+          convertToGraphQLId('Ticket::SharedDraftZoom', Number(values.value.shared_draft_id)) ===
+            sharedDraftId)
       ) {
         updateFieldValues({
           shared_draft_id: null,
@@ -141,8 +131,8 @@ const applySharedDraft = async (sharedDraftId: string) => {
     const confirmed = await waitForConfirmation(
       __('There is existing content. Do you want to overwrite it?'),
       {
-        headerTitle: __('Apply Draft'),
-        buttonLabel: __('Overwrite Content'),
+        headerTitle: __('Apply draft'),
+        buttonLabel: __('Overwrite content'),
         buttonVariant: 'danger',
       },
     )
@@ -153,9 +143,6 @@ const applySharedDraft = async (sharedDraftId: string) => {
     sharedDraftId,
     draftType: props.draftType,
   }
-
-  // Skip subscription for the current taskbar tab, to avoid unnecessary form updater requests.
-  props.setSkipNextStateUpdate?.(true)
 
   triggerFormUpdater({ additionalParams })
 
@@ -168,10 +155,10 @@ const applySharedDraft = async (sharedDraftId: string) => {
 
 const headerTitle = computed(() => {
   if (props.draftType === 'start') {
-    return __('Preview Shared Draft')
+    return __('Preview shared draft')
   }
 
-  return __('Apply Shared Draft')
+  return __('Apply shared draft')
 })
 </script>
 
@@ -183,6 +170,7 @@ const headerTitle = computed(() => {
       actionButton: { variant: 'primary' },
     }"
     header-icon="file-text"
+    global
     :name="flyoutName"
     @activated="metaInformationQueryHandler.refetch()"
   >
@@ -195,10 +183,7 @@ const headerTitle = computed(() => {
       </CommonObjectAttributeContainer> -->
 
       <div class="flex items-start gap-y-3">
-        <CommonObjectAttributeContainer
-          v-if="sharedDraft?.updatedBy"
-          class="grow"
-        >
+        <CommonObjectAttributeContainer v-if="sharedDraft?.updatedBy" class="grow">
           <CommonObjectAttribute :label="__('Author')">
             <div class="flex items-center gap-1.5">
               <CommonUserAvatar :entity="sharedDraft?.updatedBy" size="small" />
@@ -230,20 +215,12 @@ const headerTitle = computed(() => {
     <template #footer>
       <div class="flex items-center justify-end gap-4">
         <CommonButton size="large" variant="secondary" @click="close">
-          {{ $t('Cancel & Go Back') }}
+          {{ $t('Cancel & go back') }}
         </CommonButton>
-        <CommonButton
-          size="large"
-          variant="danger"
-          @click="deleteSharedDraft(sharedDraftId)"
-        >
+        <CommonButton size="large" variant="danger" @click="deleteSharedDraft(sharedDraftId)">
           {{ $t('Delete') }}
         </CommonButton>
-        <CommonButton
-          size="large"
-          variant="primary"
-          @click="applySharedDraft(sharedDraftId)"
-        >
+        <CommonButton size="large" variant="primary" @click="applySharedDraft(sharedDraftId)">
           {{ $t('Apply') }}
         </CommonButton>
       </div>

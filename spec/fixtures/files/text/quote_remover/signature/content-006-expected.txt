@@ -1,0 +1,6 @@
+First part of message.
+
+--
+Middle content that looks like signature but isn't.
+
+Second part of message.

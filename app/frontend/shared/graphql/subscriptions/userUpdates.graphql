@@ -1,7 +1,27 @@
-subscription userUpdates($userId: ID!, $secondaryOrganizationsCount: Int) {
-  userUpdates(userId: $userId) {
+subscription userUpdates(
+  $userId: ID!
+  $secondaryOrganizationsCount: Int
+  $after: String
+  $hasOrganizationCounts: Boolean! = false
+  $initial: Boolean = false
+) {
+  userUpdates(userId: $userId, initial: $initial) {
     user {
       ...userDetailAttributes
+      hasSecondaryOrganizations
+      ticketsCount {
+        open
+        openSearchQuery
+        closed
+        closedSearchQuery
+        organizationOpen @include(if: $hasOrganizationCounts)
+        organizationOpenSearchQuery @include(if: $hasOrganizationCounts)
+        organizationClosed @include(if: $hasOrganizationCounts)
+        organizationClosedSearchQuery @include(if: $hasOrganizationCounts)
+      }
+      policy {
+        update
+      }
     }
   }
 }

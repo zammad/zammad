@@ -1,8 +1,11 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class LdapSource < ApplicationModel
   include CanPriorization
+  include CanSensitiveAssets
   include ChecksClientNotification
+
+  SENSITIVE_FIELDS = %i[preferences.bind_pw].freeze
 
   default_scope { order(:prio, :id) }
   scope :active, -> { where(active: true) }

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -60,7 +60,7 @@ RSpec.describe Controllers::ChecklistItemsControllerPolicy, current_user_id: 1 d
     end
 
     context 'when user has read-only access to ticket' do
-      let(:user) { create(:agent).tap { _1.user_groups.create!(group: ticket.group, access: 'read') } }
+      let(:user) { create(:agent).tap { it.user_groups.create!(group: ticket.group, access: 'read') } }
 
       context 'when checklist is given' do
         let(:params) { { checklist_id: checklist.id } }

@@ -1,0 +1,14 @@
+{
+  "id": "add-bin-path",
+  "version": "1.0.0",
+  "name": "Add Bin Path",
+  "description": "Adds a custom bin path to the container environment.",
+  "options": {
+    "addBinPath": {
+      "type": "string",
+      "default": "",
+      "description": "The path to add to the container's PATH."
+    }
+  },
+  "privileged": true
+}

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -37,7 +37,8 @@ RSpec.describe 'Integration PGP', :aggregate_failures, authenticated_as: :user, 
             'name'            => pgp_key.name,
             'email_addresses' => pgp_key.email_addresses,
             'expires_at'      => pgp_key.expires_at,
-            'secret'          => false
+            'secret'          => false,
+            'passphrase'      => SensitiveParamsHelper::SENSITIVE_MASK,
           )
         end
       end
@@ -65,7 +66,7 @@ RSpec.describe 'Integration PGP', :aggregate_failures, authenticated_as: :user, 
           let(:params) { 'secret=true' }
 
           it 'returns an error' do
-            expect(response).to have_http_status(:unprocessable_entity)
+            expect(response).to have_http_status(:unprocessable_content)
           end
         end
       end
@@ -107,7 +108,8 @@ RSpec.describe 'Integration PGP', :aggregate_failures, authenticated_as: :user, 
             'name'            => pgp_key.name,
             'email_addresses' => pgp_key.email_addresses,
             'expires_at'      => pgp_key.expires_at,
-            'secret'          => false
+            'secret'          => false,
+            'passphrase'      => SensitiveParamsHelper::SENSITIVE_MASK,
           )
         end
       end
@@ -124,7 +126,7 @@ RSpec.describe 'Integration PGP', :aggregate_failures, authenticated_as: :user, 
       context 'with admin user' do
         context 'when importing a public key' do
           before do
-            post '/api/v1/integration/pgp/key', params: { key: public_key }
+            post '/api/v1/integration/pgp/key', params: { private_key: public_key }
           end
 
           it 'creates a new public key' do
@@ -156,21 +158,21 @@ RSpec.describe 'Integration PGP', :aggregate_failures, authenticated_as: :user, 
 
           context 'when adding the same key again' do
             before do
-              post '/api/v1/integration/pgp/key', params: { key: public_key }
+              post '/api/v1/integration/pgp/key', params: { private_key: public_key }
             end
 
             it 'returns an error' do
-              expect(response).to have_http_status(:unprocessable_entity)
+              expect(response).to have_http_status(:unprocessable_content)
             end
           end
 
           context 'when importing a private key with the same fingerprint' do
             before do
-              post '/api/v1/integration/pgp/key', params: { key: private_key, passphrase: private_passphrase }
+              post '/api/v1/integration/pgp/key', params: { private_key: private_key, passphrase: private_passphrase }
             end
 
             it 'returns an error' do
-              expect(response).to have_http_status(:unprocessable_entity)
+              expect(response).to have_http_status(:unprocessable_content)
             end
           end
 
@@ -179,7 +181,7 @@ RSpec.describe 'Integration PGP', :aggregate_failures, authenticated_as: :user, 
 
         context 'when importing a private key' do
           before do
-            post '/api/v1/integration/pgp/key', params: { key: private_key, passphrase: private_passphrase }
+            post '/api/v1/integration/pgp/key', params: { private_key: private_key, passphrase: private_passphrase }
           end
 
           it 'creates only one key' do

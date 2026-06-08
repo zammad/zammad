@@ -1,6 +1,4 @@
-query autocompleteSearchOrganization(
-  $input: AutocompleteSearchOrganizationInput!
-) {
+query autocompleteSearchOrganization($input: AutocompleteSearchOrganizationInput!) {
   autocompleteSearchOrganization(input: $input) {
     value
     label

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 require 'models/application_model_examples'
@@ -15,6 +15,7 @@ require 'models/concerns/has_object_manager_attributes_examples'
 require 'models/user/can_lookup_search_index_attributes_examples'
 require 'models/user/performs_geo_lookup_examples'
 require 'models/concerns/has_taskbars_examples'
+require 'models/concerns/has_recent_closes_examples'
 require 'models/concerns/has_two_factor_examples'
 
 RSpec.describe User, type: :model do
@@ -39,6 +40,7 @@ RSpec.describe User, type: :model do
   it_behaves_like 'HasObjectManagerAttributes'
   it_behaves_like 'CanLookupSearchIndexAttributes'
   it_behaves_like 'HasTaskbars'
+  it_behaves_like 'HasRecentCloses'
   it_behaves_like 'UserPerformsGeoLookup'
   it_behaves_like 'Association clears cache', association: :roles
   it_behaves_like 'Association clears cache', association: :organizations
@@ -277,42 +279,198 @@ RSpec.describe User, type: :model do
     end
 
     describe '#check_login' do
-      let(:agent) { create(:agent) }
+      let(:agent) { create(:agent, login: nil) }
 
-      it 'does use the origin login' do
+      it 'does use given login' do
         new_agent = create(:agent)
         expect(new_agent.login).not_to end_with('1')
       end
 
-      it 'does number up agent logins (1)' do
-        new_agent = create(:agent, login: agent.login)
-        expect(new_agent.login).to eq("#{agent.login}1")
+      it 'ensures login is downcase and without white spaces' do
+        new_agent = create(:agent, login: ' TestUser ')
+        expect(new_agent.login).to eq('testuser')
       end
 
-      it 'does number up agent logins (5)' do
-        new_agent = create(:agent, login: agent.login)
-        4.times do
-          new_agent = create(:agent, login: agent.login)
-        end
+      it 'returns validation error if the login is already taken' do
+        new_agent = build(:agent, login: agent.login)
 
-        expect(new_agent.login).to eq("#{agent.login}5")
+        new_agent.valid?
+
+        expect(new_agent.errors[:login]).to include('has already been taken')
       end
 
-      it 'does backup with uuid in cases of many duplicates' do
-        new_agent = create(:agent, login: agent.login)
-        20.times do
-          new_agent = create(:agent, login: agent.login)
+      context 'when email-as-login was used and is changed' do
+        it 'updates login' do
+          new_agent = create(:agent, login: nil)
+
+          new_agent.update! email: Faker::Internet.unique.email
+
+          expect(new_agent.login).to eq(new_agent.email)
+        end
+      end
+
+      context 'when email is empty too' do
+        it 'generates auto-login' do
+          new_agent = create(:agent, login: nil, email: nil)
+
+          expect(new_agent.login).to start_with('auto-')
+        end
+      end
+
+      context 'when user_email_multiple_use is enabled' do
+        before { Setting.set('user_email_multiple_use', true) }
+
+        context 'when login is given' do
+          it 'raises error if the login is already taken' do
+            new_agent = build(:agent, login: agent.login)
+
+            new_agent.valid?
+
+            expect(new_agent.errors[:login]).to include('has already been taken')
+          end
         end
 
-        expect(new_agent.login.sub!(agent.login, '')).to be_a_uuid
+        context 'when login is not given' do
+          it 'uses email as fallback' do
+            new_agent = create(:agent, login: nil)
+
+            expect(new_agent.login).to eq(new_agent.email)
+          end
+
+          it 'does number up agent logins (1)' do
+            new_agent = create(:agent, login: nil, email: agent.email)
+
+            expect(new_agent.login).to eq("#{new_agent.email}1")
+          end
+
+          it 'does number up agent logins (5)' do
+            new_agent = create(:agent, login: nil, email: agent.email)
+            4.times do
+              new_agent = create(:agent, login: nil, email: agent.email)
+            end
+
+            expect(new_agent.login).to eq("#{new_agent.email}5")
+          end
+
+          it 'does backup with uuid in cases of many duplicates' do
+            new_agent = create(:agent, login: nil, email: agent.email)
+            20.times do
+              new_agent = create(:agent, login: nil, email: agent.email)
+            end
+
+            expect(new_agent.login.sub!(new_agent.email, '')).to be_a_uuid
+          end
+        end
+
+        context 'when email-as-login was used and is changed' do
+          it 'updates login' do
+            new_agent = create(:agent, login: nil)
+
+            new_agent.update! email: Faker::Internet.unique.email
+
+            expect(new_agent.login).to eq(new_agent.email)
+          end
+
+          it 'number up agent logins (1)' do
+            new_agent = create(:agent, login: nil, email: agent.email)
+
+            new_email = Faker::Internet.unique.email
+
+            agent.update! email: new_email
+
+            new_agent.update! email: new_email
+
+            expect(new_agent.login).to eq("#{new_agent.email}1")
+          end
+        end
       end
     end
 
     describe '#check_name' do
-      it 'guesses user first/last name with non-ASCII characters' do
-        user = create(:user, firstname: 'perkūnas ąžuolas', lastname: '')
+      shared_examples 'preserving name' do |expected_firstname, expected_lastname|
+        it 'preserves the given name' do
+          expect(user).to have_attributes(firstname: expected_firstname, lastname: expected_lastname)
+        end
+      end
 
-        expect(user).to have_attributes(firstname: 'Perkūnas', lastname: 'Ąžuolas')
+      context 'without postmaster context' do
+        context 'when only lastname is present' do
+          let(:user) { create(:user, firstname: '', lastname: lastname, email: Faker::Internet.unique.email) }
+
+          context 'with all-uppercase single word' do
+            let(:lastname) { 'TESTUSER' }
+
+            it_behaves_like 'preserving name', '', 'TESTUSER'
+          end
+
+          context 'with all-lowercase single word' do
+            let(:lastname) { 'testuser' }
+
+            it_behaves_like 'preserving name', '', 'testuser'
+          end
+
+          context 'with mixed-case single word' do
+            let(:lastname) { 'McTester' }
+
+            it_behaves_like 'preserving name', '', 'McTester'
+          end
+        end
+
+        context 'when only firstname is present' do
+          let(:user) { create(:user, firstname: firstname, lastname: '', email: Faker::Internet.unique.email) }
+
+          context 'with two words (splits and capitalizes via name_guess)' do
+            let(:firstname) { 'perkūnas ąžuolas' }
+
+            it_behaves_like 'preserving name', 'Perkūnas', 'Ąžuolas'
+          end
+        end
+
+        context 'when both names are present' do
+          let(:user) { create(:user, firstname: 'John', lastname: 'TESTUSER', email: Faker::Internet.unique.email) }
+
+          it_behaves_like 'preserving name', 'John', 'TESTUSER'
+        end
+      end
+
+      context 'with postmaster context' do
+        context 'when only firstname is present' do
+          let(:user) do
+            ApplicationHandleInfo.use('scheduler.postmaster') do
+              create(:user, firstname: firstname, lastname: '', email: Faker::Internet.unique.email)
+            end
+          end
+
+          context 'with two lowercase words (splits into first/last)' do
+            let(:firstname) { 'yann degran' }
+
+            it_behaves_like 'preserving name', 'Yann', 'Degran'
+          end
+
+          context 'with two uppercase words (splits and capitalizes)' do
+            let(:firstname) { 'YANN DEGRAN' }
+
+            it_behaves_like 'preserving name', 'Yann', 'Degran'
+          end
+
+          context 'with non-ASCII characters' do
+            let(:firstname) { 'perkūnas ąžuolas' }
+
+            it_behaves_like 'preserving name', 'Perkūnas', 'Ąžuolas'
+          end
+        end
+
+        context 'when both names are blank' do
+          context 'with firstname.lastname email' do
+            let(:user) do
+              ApplicationHandleInfo.use('scheduler.postmaster') do
+                create(:user, firstname: '', lastname: '', email: 'john.doe@example.com')
+              end
+            end
+
+            it_behaves_like 'preserving name', 'John', 'Doe'
+          end
+        end
       end
     end
   end
@@ -470,7 +628,7 @@ RSpec.describe User, type: :model do
         before { user } # create user
 
         it 'does not attempt to update CallerId record' do
-          allow(Cti::CallerId).to receive(:build).with(any_args)
+          allow(Cti::CallerId).to receive(:add).with(any_args)
 
           expect(Cti::CallerId.where(object: 'User', o_id: user.id).count)
             .to eq(0)
@@ -478,7 +636,7 @@ RSpec.describe User, type: :model do
           expect { user.update(phone: new_number) }
             .not_to change { Cti::CallerId.where(object: 'User', o_id: user.id).count }
 
-          expect(Cti::CallerId).not_to have_received(:build)
+          expect(Cti::CallerId).not_to have_received(:add)
         end
       end
 
@@ -537,11 +695,11 @@ RSpec.describe User, type: :model do
         let(:value) { 'Th1515n0t4v4l1dh45h' }
 
         it 'prevents create' do
-          expect { create(:user, image: value) }.to raise_error(Exceptions::UnprocessableEntity, %r{#{value}})
+          expect { create(:user, image: value) }.to raise_error(Exceptions::UnprocessableContent, %r{#{value}})
         end
 
         it 'prevents update' do
-          expect { create(:user).update!(image: value) }.to raise_error(Exceptions::UnprocessableEntity, %r{#{value}})
+          expect { create(:user).update!(image: value) }.to raise_error(Exceptions::UnprocessableContent, %r{#{value}})
         end
       end
     end
@@ -617,7 +775,7 @@ RSpec.describe User, type: :model do
         'Ticket::SharedDraftZoom'            => { 'created_by_id' => 1, 'updated_by_id' => 0 },
         'Ticket::TimeAccounting'             => { 'created_by_id' => 0 },
         'Ticket::TimeAccounting::Type'       => { 'created_by_id' => 0, 'updated_by_id' => 0 },
-        'Ticket::State'                      => { 'created_by_id' => 0, 'updated_by_id' => 0 },
+        'Ticket::State'                      => { 'created_by_id' => 1, 'updated_by_id' => 1 },
         'PostmasterFilter'                   => { 'created_by_id' => 0, 'updated_by_id' => 0 },
         'PublicLink'                         => { 'created_by_id' => 1, 'updated_by_id' => 0 },
         'User::TwoFactorPreference'          => { 'created_by_id' => 1, 'updated_by_id' => 1, 'user_id' => 1 },
@@ -636,6 +794,7 @@ RSpec.describe User, type: :model do
         'Chat::Agent'                        => { 'created_by_id' => 1, 'updated_by_id' => 1 },
         'Chat::Session'                      => { 'user_id' => 1, 'created_by_id' => 0, 'updated_by_id' => 0 },
         'Tag'                                => { 'created_by_id' => 0 },
+        'RecentClose'                        => { 'user_id' => 1 },
         'RecentView'                         => { 'created_by_id' => 1 },
         'KnowledgeBase::Answer::Translation' => { 'created_by_id' => 0, 'updated_by_id' => 0 },
         'LdapSource'                         => { 'created_by_id' => 0, 'updated_by_id' => 0 },
@@ -661,6 +820,9 @@ RSpec.describe User, type: :model do
         'Webhook'                            => { 'created_by_id' => 0, 'updated_by_id' => 0 },
         'Overview'                           => { 'created_by_id' => 1, 'updated_by_id' => 0 },
         'PGPKey'                             => { 'created_by_id' => 0, 'updated_by_id' => 0 },
+        'AI::Agent'                          => { 'created_by_id' => 0, 'updated_by_id' => 0 },
+        'AI::Analytics::Usage'               => { 'user_id' => 1 },
+        'AI::TextTool'                       => { 'created_by_id' => 0, 'updated_by_id' => 0 },
         'ActivityStream'                     => { 'created_by_id' => 0 },
         'StatsStore'                         => { 'created_by_id' => 0 },
         'TextModule'                         => { 'created_by_id' => 0, 'updated_by_id' => 0 },
@@ -678,7 +840,7 @@ RSpec.describe User, type: :model do
       # delete objects
       token                      = create(:token, user: user)
       online_notification        = create(:online_notification, user: user)
-      taskbar                    = create(:taskbar, user: user)
+      taskbar                    = create(:taskbar, :with_ticket, user: user)
       user_device                = create(:user_device, user: user)
       cti_caller_id              = create(:cti_caller_id, user: user)
       authorization              = create(:twitter_authorization, user: user)
@@ -696,6 +858,8 @@ RSpec.describe User, type: :model do
       public_link                = create(:public_link, created_by: user)
       user_two_factor_preference = create(:user_two_factor_preference, :authenticator_app, user: user)
       user_overview_sorting      = create(:'user/overview_sorting', user: user)
+      recent_close               = create(:recent_close, user: user)
+      ai_usage                   = create(:ai_analytics_usage, user: user)
       expect(overview.reload.user_ids).to eq([user.id])
 
       # create a chat agent for admin user (id=1) before agent user
@@ -719,6 +883,8 @@ RSpec.describe User, type: :model do
       customer_ticket2      = create(:ticket, group: group_subject, customer: user)
       customer_ticket3      = create(:ticket, group: group_subject, customer: user)
       knowledge_base_answer = create(:knowledge_base_answer, archived_by_id: user.id, published_by_id: user.id, internal_by_id: user.id)
+      ticket_state          = create(:ticket_state, created_by_id: user.id)
+      ticket_merged_state   = Ticket::State.find_by(name: 'merged').tap { it.update!(updated_by_id: user.id) }
 
       refs_user = Models.references('User', user.id, true)
       expect(refs_user).to eq(refs_known)
@@ -745,6 +911,8 @@ RSpec.describe User, type: :model do
       expect { chat_message2.reload }.to raise_exception(ActiveRecord::RecordNotFound)
       expect { user_two_factor_preference.reload }.to raise_exception(ActiveRecord::RecordNotFound)
       expect { user_overview_sorting.reload }.to raise_exception(ActiveRecord::RecordNotFound)
+      expect { recent_close.reload }.to raise_exception(ActiveRecord::RecordNotFound)
+      expect { ai_usage.reload }.to raise_exception(ActiveRecord::RecordNotFound)
 
       # move ownership objects
       expect { group.reload }.to change(group, :created_by_id).to(1)
@@ -766,6 +934,8 @@ RSpec.describe User, type: :model do
       expect { draft_zoom.reload }.to change(draft_zoom, :created_by_id).to(1)
       expect { invalid_user.reload }.to change(invalid_user, :created_by_id).to(1)
       expect { public_link.reload }.to change(public_link, :created_by_id).to(1)
+      expect { ticket_state.reload }.to change(ticket_state, :created_by_id).to(1)
+      expect { ticket_merged_state.reload }.to change(ticket_merged_state, :updated_by_id).to(1)
     end
 
     it 'does delete cache after user deletion' do
@@ -898,7 +1068,7 @@ RSpec.describe User, type: :model do
               create_list(:agent, 2)
 
               expect { create(:agent) }
-                .to raise_error(Exceptions::UnprocessableEntity)
+                .to raise_error(Exceptions::UnprocessableContent)
                 .and not_change(current_agents, :count)
             end
 
@@ -908,7 +1078,7 @@ RSpec.describe User, type: :model do
               future_agent = create(:customer)
 
               expect { future_agent.roles = [agent_role] }
-                .to raise_error(Exceptions::UnprocessableEntity)
+                .to raise_error(Exceptions::UnprocessableContent)
                 .and not_change(current_agents, :count)
             end
           end
@@ -957,7 +1127,7 @@ RSpec.describe User, type: :model do
               create_list(:agent, 2)
 
               expect { create(:agent) }
-                .to raise_error(Exceptions::UnprocessableEntity)
+                .to raise_error(Exceptions::UnprocessableContent)
                 .and not_change(current_agents, :count)
             end
 
@@ -967,7 +1137,7 @@ RSpec.describe User, type: :model do
               future_agent = create(:customer)
 
               expect { future_agent.roles = [agent_role] }
-                .to raise_error(Exceptions::UnprocessableEntity)
+                .to raise_error(Exceptions::UnprocessableContent)
                 .and not_change(current_agents, :count)
             end
           end
@@ -1001,7 +1171,7 @@ RSpec.describe User, type: :model do
               inactive_agent = create(:agent, active: false)
 
               expect { inactive_agent.update!(active: true) }
-                .to raise_error(Exceptions::UnprocessableEntity)
+                .to raise_error(Exceptions::UnprocessableContent)
                 .and not_change(current_agents, :count)
             end
           end
@@ -1015,7 +1185,7 @@ RSpec.describe User, type: :model do
               inactive_agent = create(:agent, active: false)
 
               expect { inactive_agent.update!(active: true) }
-                .to raise_error(Exceptions::UnprocessableEntity)
+                .to raise_error(Exceptions::UnprocessableContent)
                 .and not_change(current_agents, :count)
             end
           end
@@ -1040,17 +1210,17 @@ RSpec.describe User, type: :model do
       context 'with a #phone attribute' do
         subject(:user) { build(:user, phone: '1234567890') }
 
-        it 'adds CallerId record on creation (via Cti::CallerId.build)' do
-          expect(Cti::CallerId).to receive(:build).with(user)
+        it 'adds CallerId record on creation (via Cti::CallerId.add)' do
+          expect(Cti::CallerId).to receive(:add).with(user)
 
           user.save
         end
 
-        it 'does not update CallerId record on touch/update (via Cti::CallerId.build)' do
-          expect(Cti::CallerId).to receive(:build).with(user)
+        it 'does not update CallerId record on touch/update (via Cti::CallerId.add)' do
+          expect(Cti::CallerId).to receive(:add).with(user)
           user.save
 
-          expect(Cti::CallerId).not_to receive(:build).with(user)
+          expect(Cti::CallerId).not_to receive(:add).with(user)
           user.touch
         end
 
@@ -1344,6 +1514,53 @@ RSpec.describe User, type: :model do
     it 'does not deliver global assets' do
       expect(user.groups).to be_present
       expect(user.assets({}).deep_symbolize_keys.keys).not_to include(:TicketPriority, :Role, :TicketState, :Group)
+    end
+  end
+
+  describe 'Prevent an organization from being both primary and secondary #5254' do
+    let(:organizations) { create_list(:organization, 3) }
+
+    it 'is not allowed to assign the same organization as primary and secondary' do
+      expect { create(:user, organization_id: organizations.first.id, organization_ids: [organizations.first.id, organizations.second.id]) }.to raise_error(ActiveRecord::RecordInvalid, 'Validation failed: Secondary organizations cannot include the primary organization.')
+    end
+
+    it 'is not allowed to add one of the secondary orgaizations as primary' do
+      user = create(:user, organization: organizations.first, organizations: [organizations.second])
+
+      expect { user.organizations << organizations.first }
+        .to raise_error(ActiveRecord::RecordInvalid, 'Validation failed: Secondary organizations cannot include the primary organization.')
+    end
+
+    it 'allows to move organization from secondary to primary' do
+      user = create(:user, organization: organizations.first, organizations: [organizations.second])
+
+      expect { user.update!(organization: organizations.second, organizations: [organizations.first]) }
+        .not_to raise_error
+    end
+  end
+
+  describe '#all_organization_ids' do
+    it 'returns empty array when user has no organizations' do
+      user = create(:user, organization: nil, organization_ids: [])
+
+      expect(user.all_organization_ids).to eq([])
+    end
+
+    it 'returns only primary organization id when user has only primary organization' do
+      organization = create(:organization)
+      user = create(:user, organization: organization, organization_ids: [])
+
+      expect(user.all_organization_ids).to eq([organization.id])
+    end
+
+    it 'returns both primary and secondary organization ids' do
+      organization1 = create(:organization)
+      organization2 = create(:organization)
+      organization3 = create(:organization)
+
+      user = create(:user, organization: organization1, organizations: [organization2, organization3])
+
+      expect(user.all_organization_ids).to contain_exactly(organization1.id, organization2.id, organization3.id)
     end
   end
 end

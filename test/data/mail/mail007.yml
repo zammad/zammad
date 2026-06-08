@@ -5,13 +5,13 @@ from_display_name: ''
 to: Martin Edenhofer via Znuny Team <support@example.com>
 subject: AW:Installation [Ticket#11392]
 body: "Hallo.<br>Jetzt muss ich dir noch kurzfristig absagen für morgen.<br>Lass uns
-  evtl morgen Tel.<br><br>Mfg eike <br><br><div>\n<div>Martin Edenhofer via Znuny
-  Team --- Installation [Ticket#11392] ---</div><div>\n<br><table border=\"0\" cellspacing=\"0\"
-  cellpadding=\"0\" style=\"width:100%;\">\n<tr>\n<td style=\"width: 96px;\">Von:</td>\n<td
-  style=\"width: auto;\">\"Martin Edenhofer via Znuny Team\" &lt;support@example.com&gt;</td>\n</tr>\n<tr>\n<td
-  style=\"width: 96px;\">An</td>\n<td style=\"width: auto;\">eike.xx@xx-corpxx.com</td>\n</tr>\n<tr>\n<td
-  style=\"width: 96px;\">Datum:</td>\n<td style=\"width: auto;\">Mi., 13.06.2012 14:30</td>\n</tr>\n<tr>\n<td
-  style=\"width: 96px;\">Betreff</td>\n<td style=\"width: auto;\">Installation [Ticket#11392]</td>\n</tr>\n</table>\n<hr>\n<br><pre>Hi
+  evtl morgen Tel.<br><br>Mfg eike <br><br><div><div>Martin Edenhofer via Znuny Team
+  --- Installation [Ticket#11392] ---</div><div><br><table border=\"0\" cellspacing=\"0\"
+  cellpadding=\"0\" style=\"width:100%;\"><tbody><tr><td style=\"width: 96px;\">Von:</td><td
+  style=\"width: auto;\">\"Martin Edenhofer via Znuny Team\" &lt;support@example.com&gt;</td></tr><tr><td
+  style=\"width: 96px;\">An</td><td style=\"width: auto;\">eike.xx@xx-corpxx.com</td></tr><tr><td
+  style=\"width: 96px;\">Datum:</td><td style=\"width: auto;\">Mi., 13.06.2012 14:30</td></tr><tr><td
+  style=\"width: 96px;\">Betreff</td><td style=\"width: auto;\">Installation [Ticket#11392]</td></tr></tbody></table><hr><br><pre>Hi
   Eike,\n\nanbei wie gestern telefonisch besprochen Informationen zur Vorbereitung.\n\na)
   Installation von http://ftp.gwdg.de/pub/misc/zammad/RPMS/fedora/4/zammad-3.0.13-01.noarch.rpm
   (dieses RPM ist RHEL kompatible) und dessen Abhängigkeiten.\n\nb) Installation von
@@ -19,7 +19,7 @@ body: "Hallo.<br>Jetzt muss ich dir noch kurzfristig absagen für morgen.<br>Las
   nur zu!\n\n -Martin\n\n--\nMartin Edenhofer\n\nZnuny GmbH // Marienstraße 11 //
   10117 Berlin // Germany\n\nP: +49 (0) 30 60 98 54 18-0\nF: +49 (0) 30 60 98 54 18-8\nW:
   http://example.com \n\nLocation: Berlin - HRB 139852 B Amtsgericht Berlin-Charlottenburg\nManaging
-  Director: Martin Edenhofer\n\n</pre>\n</div></div>"
+  Director: Martin Edenhofer\n\n</pre></div></div>"
 content_type: text/html
 attachments:
 - !ruby/hash:ActiveSupport::HashWithIndifferentAccess

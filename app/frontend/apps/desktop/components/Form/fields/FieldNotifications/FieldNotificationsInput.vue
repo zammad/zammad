@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { cloneDeep } from 'lodash-es'
@@ -157,7 +157,7 @@ const updateValue = (
               item.key as NotificationMatrixRowKey,
               header.path as NotificationMatrixPathKey,
               header.key as NotificationMatrixColumnKey,
-              $event,
+              $event as boolean | undefined,
             )
           "
           @blur="context.handlers.blur"

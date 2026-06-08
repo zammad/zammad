@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Authorization::Provider::OpenidConnect < Authorization::Provider
   private
@@ -11,5 +11,9 @@ class Authorization::Provider::OpenidConnect < Authorization::Provider
     end
 
     user
+  end
+
+  def user_create_login_lookup
+    auth_hash['uid']
   end
 end

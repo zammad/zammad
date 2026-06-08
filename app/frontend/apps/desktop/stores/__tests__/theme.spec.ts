@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { flushPromises } from '@vue/test-utils'
 import { createPinia, setActivePinia, storeToRefs } from 'pinia'
@@ -71,13 +71,11 @@ describe('useThemeStore', () => {
   })
 
   it('changes app theme', async () => {
-    const mockerUserCurrentAppearanceUpdate = mockUserCurrentAppearanceMutation(
-      {
-        userCurrentAppearance: {
-          success: true,
-        },
+    const mockerUserCurrentAppearanceUpdate = mockUserCurrentAppearanceMutation({
+      userCurrentAppearance: {
+        success: true,
       },
-    )
+    })
 
     const themeStore = useThemeStore()
     const { updateTheme } = themeStore
@@ -96,17 +94,15 @@ describe('useThemeStore', () => {
   })
 
   it('should change theme value back to old value when update fails', async () => {
-    const mockerUserCurrentAppearanceUpdate = mockUserCurrentAppearanceMutation(
-      {
-        userCurrentAppearance: {
-          errors: [
-            {
-              message: 'Failed to update.',
-            },
-          ],
-        },
+    const mockerUserCurrentAppearanceUpdate = mockUserCurrentAppearanceMutation({
+      userCurrentAppearance: {
+        errors: [
+          {
+            message: 'Failed to update.',
+          },
+        ],
       },
-    )
+    })
 
     const themeStore = useThemeStore()
     const { updateTheme } = themeStore
@@ -154,15 +150,6 @@ describe('useThemeStore', () => {
   })
 
   describe('isDarkMode', () => {
-    it.todo('returns true when user prefers dark media theme', async () => {
-      // :TODO mock media theme does not update preferredColorScheme
-      mockMediaTheme(EnumAppearanceTheme.Dark)
-
-      const { isDarkMode } = useThemeStore()
-
-      expect(isDarkMode).toBe(true)
-    })
-
     it('returns false when user prefers light media theme', async () => {
       mockMediaTheme(EnumAppearanceTheme.Light)
 

@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import type { TicketExternalReferencesIssueTrackerItemLabel } from '#shared/graphql/types.ts'
@@ -11,11 +11,7 @@ defineProps<Props>()
 </script>
 
 <template>
-  <div
-    :aria-label="$t('List of issue labels')"
-    class="flex flex-wrap gap-1"
-    role="list"
-  >
+  <div :aria-label="$t('List of issue labels')" class="flex flex-wrap gap-1" role="list">
     <CommonBadge
       v-for="label in badges"
       :key="label.title"

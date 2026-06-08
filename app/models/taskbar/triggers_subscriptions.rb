@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 # Trigger GraphQL subscriptions on ticket changes.
 module Taskbar::TriggersSubscriptions
@@ -70,7 +70,9 @@ module Taskbar::TriggersSubscriptions
     return if app != 'desktop'
 
     Gql::Subscriptions::User::Current::TaskbarItemStateUpdates.trigger(
-      nil,
+      {
+        state_update_type: state_changed? ? 'changed' : 'reset'
+      },
       arguments: {
         taskbar_item_id: Gql::ZammadSchema.id_from_internal_id('Taskbar', id),
       }

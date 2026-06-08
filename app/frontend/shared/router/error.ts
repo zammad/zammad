@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { ref } from 'vue'
 
@@ -21,7 +21,7 @@ export interface ErrorOptions {
 }
 
 const defaultOptions: ErrorOptions = {
-  title: __('Not Found'),
+  title: __('Not found'),
   message: __("This page doesn't exist."),
   messagePlaceholder: [],
   statusCode: ErrorStatusCodes.NotFound,
@@ -51,7 +51,5 @@ export const redirectErrorRoute = (options: Partial<ErrorOptions> = {}) => {
   }
 }
 
-export const redirectToError = (
-  router: Router,
-  options: Partial<ErrorOptions> = {},
-) => router.replace(redirectErrorRoute(options))
+export const redirectToError = (router: Router, options: Partial<ErrorOptions> = {}) =>
+  router.replace(redirectErrorRoute(options))

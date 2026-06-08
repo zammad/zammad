@@ -1,6 +1,7 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class FormUpdater::Updater::Ticket::Edit < FormUpdater::Updater
+  include FormUpdater::Concerns::PreparesTicketSignature
   include FormUpdater::Concerns::AppliesTaskbarState
   include FormUpdater::Concerns::AppliesTicketSharedDraft
   include FormUpdater::Concerns::ChecksCoreWorkflow
@@ -9,6 +10,10 @@ class FormUpdater::Updater::Ticket::Edit < FormUpdater::Updater
   include FormUpdater::Updater::Ticket::Concerns::HasOwnerId
 
   core_workflow_screen 'edit'
+
+  def self.required_permissions
+    %w[ticket.agent ticket.customer]
+  end
 
   apply_shared_draft_group_keys %i[article ticket]
   apply_state_group_keys %w[ticket article]
@@ -53,7 +58,7 @@ class FormUpdater::Updater::Ticket::Edit < FormUpdater::Updater
   end
 
   def customer?
-    return false if current_user.permissions?('ticket.agent') && current_user.groups.access(:read).include?(object.group)
+    return false if current_user.permissions?('ticket.agent') && current_user.group_access?(object.group, 'read')
     return true if current_user.permissions?('ticket.customer')
 
     false

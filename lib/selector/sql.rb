@@ -1,6 +1,8 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Selector::Sql < Selector::Base
+  VALID_BLOCK_OPERATORS = %w[AND OR NOT].freeze
+
   VALID_OPERATORS = [
     'after (absolute)',
     'after (relative)',
@@ -19,6 +21,7 @@ class Selector::Sql < Selector::Base
     'has changed',
     'has reached warning',
     'has reached',
+    'in range',
     'is any of',
     'is in working time',
     'is less than',
@@ -30,6 +33,7 @@ class Selector::Sql < Selector::Base
     'is not',
     'is set',
     'is',
+    'matches',
     'matches regex',
     'not set',
     'starts with one of',
@@ -85,6 +89,8 @@ class Selector::Sql < Selector::Base
   end
 
   def run_block(block, level)
+    validate_block_operator!(block)
+
     block_query = block[:conditions].map do |sub_block|
       run(sub_block, level + 1)
     end
@@ -111,7 +117,6 @@ class Selector::Sql < Selector::Base
     query                           = []
     tables                          = []
     bind_params                     = []
-    like                            = Rails.application.config.db_like
     attribute_table, attribute_name = block_condition[:name].split('.')
 
     # get tables to join
@@ -136,6 +141,9 @@ class Selector::Sql < Selector::Base
       when 'ticket_state'
         tables         |= ['INNER JOIN ticket_states ON tickets.state_id = ticket_states.id']
         sql_helper      = SqlHelper.new(object: Ticket::State)
+      when 'content'
+        tables         |= ['INNER JOIN knowledge_base_answer_translation_contents ON knowledge_base_answer_translations.content_id = knowledge_base_answer_translation_contents.id']
+        sql_helper      = SqlHelper.new(object: KnowledgeBase::Answer::Translation::Content, table_name: 'knowledge_base_answer_translation_contents')
       else
         raise "invalid selector #{attribute_table}, #{attribute_name}"
       end
@@ -162,7 +170,7 @@ class Selector::Sql < Selector::Base
     end
 
     # Performance: use left join instead of sub select if tags value is only one element and contains all is used
-    if attribute_table == 'ticket' && attribute_name == 'tags' && block_condition[:operator] == 'contains all' && block_condition[:value].count == 1
+    if attribute_table == 'ticket' && attribute_name == 'tags' && block_condition[:operator] == 'contains all' && block_condition[:value].one?
       block_condition[:operator] = 'contains one'
     end
 
@@ -333,26 +341,26 @@ class Selector::Sql < Selector::Base
                  "users.id NOT IN (SELECT DISTINCT #{distinct_column} FROM tickets#{query_where})"
                end
     elsif block_condition[:operator] == 'starts with'
-      query << "#{attribute} #{like} (?)"
+      query << "#{attribute} ILIKE (?)"
       bind_params.push "#{SqlHelper.quote_like(block_condition[:value])}%"
     elsif block_condition[:operator] == 'starts with one of'
       block_condition[:value] = Array.wrap(block_condition[:value])
 
       sub_query = []
       block_condition[:value].each do |value|
-        sub_query << "#{attribute} #{like} (?)"
+        sub_query << "#{attribute} ILIKE (?)"
         bind_params.push "#{SqlHelper.quote_like(value)}%"
       end
       query << "(#{sub_query.join(' OR ')})" if sub_query.present?
     elsif block_condition[:operator] == 'ends with'
-      query << "#{attribute} #{like} (?)"
+      query << "#{attribute} ILIKE (?)"
       bind_params.push "%#{SqlHelper.quote_like(block_condition[:value])}"
     elsif block_condition[:operator] == 'ends with one of'
       block_condition[:value] = Array.wrap(block_condition[:value])
 
       sub_query = []
       block_condition[:value].each do |value|
-        sub_query << "#{attribute} #{like} (?)"
+        sub_query << "#{attribute} ILIKE (?)"
         bind_params.push "%#{SqlHelper.quote_like(value)}"
       end
       query << "(#{sub_query.join(' OR ')})" if sub_query.present?
@@ -471,13 +479,20 @@ class Selector::Sql < Selector::Base
         # rubocop:enable Style/IfInsideElse, Metrics/BlockNesting
       end
     elsif block_condition[:operator] == 'contains'
-      query << "#{attribute} #{like} (?)"
+      query << "#{attribute} ILIKE (?)"
       bind_params.push "%#{SqlHelper.quote_like(block_condition[:value])}%"
     elsif block_condition[:operator] == 'contains not'
       # NOT LIKE is always false on NULL values
       # https://github.com/zammad/zammad/issues/4948
-      query << "#{attribute} NOT #{like} (?) OR #{attribute} IS NULL"
+      query << "#{attribute} NOT ILIKE (?) OR #{attribute} IS NULL"
       bind_params.push "%#{SqlHelper.quote_like(block_condition[:value])}%"
+    elsif block_condition[:operator] == 'matches'
+      query << "#{attribute} ILIKE (?)"
+      if wildcard_value?(block_condition[:value])
+        bind_params.push SqlHelper.quote_like(block_condition[:value]).gsub(MATCH_WILDCARD_REGEX, '%')
+      else
+        bind_params.push "%#{SqlHelper.quote_like(block_condition[:value])}%"
+      end
     elsif block_condition[:operator] == 'matches regex'
       query << sql_helper.regex_match(attribute, negated: false)
       bind_params.push block_condition[:value]
@@ -506,6 +521,7 @@ class Selector::Sql < Selector::Base
         bind_params.push block_condition[:value].count
       elsif sql_helper.containable?(attribute_name)
         query << sql_helper.array_contains_all(attribute_name, block_condition[:value])
+        bind_params += Array.wrap(block_condition[:value])
       end
     elsif block_condition[:operator] == 'contains one'
       if attribute_name == 'tags' && attribute_table == 'ticket'
@@ -515,6 +531,7 @@ class Selector::Sql < Selector::Base
         bind_params.push block_condition[:value]
       elsif sql_helper.containable?(attribute_name)
         query << sql_helper.array_contains_one(attribute_name, block_condition[:value])
+        bind_params += Array.wrap(block_condition[:value])
       end
     elsif block_condition[:operator] == 'contains all not'
       if attribute_name == 'tags' && attribute_table == 'ticket'
@@ -537,6 +554,7 @@ class Selector::Sql < Selector::Base
         bind_params.push block_condition[:value].count
       elsif sql_helper.containable?(attribute_name)
         query << sql_helper.array_contains_all(attribute_name, block_condition[:value], negated: true)
+        bind_params += Array.wrap(block_condition[:value])
       end
     elsif block_condition[:operator] == 'contains one not'
       if attribute_name == 'tags' && attribute_table == 'ticket'
@@ -554,6 +572,7 @@ class Selector::Sql < Selector::Base
         bind_params.push block_condition[:value]
       elsif sql_helper.containable?(attribute_name)
         query << sql_helper.array_contains_one(attribute_name, block_condition[:value], negated: true)
+        bind_params += Array.wrap(block_condition[:value])
       end
     elsif block_condition[:operator] == 'today'
       Time.use_zone(Setting.get('timezone_default')) do
@@ -563,6 +582,20 @@ class Selector::Sql < Selector::Base
         query << "#{attribute} BETWEEN ? AND ?"
         bind_params.push day_start
         bind_params.push day_end
+      end
+    elsif block_condition[:operator] == 'in range'
+      if (!block_condition[:value].is_a?(Array) || block_condition[:value].size != 2) || (block_condition[:value][0].blank? && block_condition[:value][1].blank?)
+        raise "Invalid value in range: '#{block_condition[:value].inspect}'"
+      elsif block_condition[:value][0].present? && block_condition[:value][1].present?
+        query << "#{attribute} BETWEEN ? AND ?"
+        bind_params.push block_condition[:value][0]
+        bind_params.push block_condition[:value][1]
+      elsif block_condition[:value][0].present?
+        query << "#{attribute} >= ?"
+        bind_params.push block_condition[:value][0]
+      elsif block_condition[:value][1].present?
+        query << "#{attribute} <= ?"
+        bind_params.push block_condition[:value][1]
       end
     elsif block_condition[:operator] == 'before (absolute)'
       query << "#{attribute} <= ?"
@@ -608,7 +641,7 @@ class Selector::Sql < Selector::Base
       query << query_wrap.gsub('###QUERY###', query.pop)
     end
 
-    query.map! { "(#{_1})" }
+    query.map! { "(#{it})" }
 
     [query, bind_params, tables]
   end
@@ -619,11 +652,15 @@ class Selector::Sql < Selector::Base
     raise 'unknown selector'
   end
 
-  def validate_operator!(condition)
-    if condition[:operator].blank?
-      raise "Invalid condition, operator missing #{condition.inspect}"
-    end
+  def validate_block_operator!(condition)
+    raise "Invalid condition, block operator missing #{condition.inspect}" if condition[:operator].blank?
+    return true if self.class.valid_block_operator?(condition[:operator])
 
+    raise "Invalid condition, block operator '#{condition[:operator]}' is invalid #{condition.inspect}"
+  end
+
+  def validate_operator!(condition)
+    raise "Invalid condition, operator missing #{condition.inspect}" if condition[:operator].blank?
     return true if self.class.valid_operator?(condition[:operator])
 
     raise "Invalid condition, operator '#{condition[:operator]}' is invalid #{condition.inspect}"
@@ -666,6 +703,10 @@ class Selector::Sql < Selector::Base
 
   def update_action_requires_changed_attributes?(condition, check)
     condition[:value] == 'update' && check && options[:changes_required] && changed_attributes.blank?
+  end
+
+  def self.valid_block_operator?(operator)
+    VALID_BLOCK_OPERATORS.include?(operator)
   end
 
   def self.valid_operator?(operator)

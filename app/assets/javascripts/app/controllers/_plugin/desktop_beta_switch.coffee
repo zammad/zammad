@@ -3,14 +3,25 @@ class App.DesktopBetaSwitch
     App.LocalStorage.get('beta-ui-switch-dismiss')
 
   @isSwitchVisible: =>
-    App.Config.get('ui_desktop_beta_switch') and App.User.current()?.permission('user_preferences.beta_ui_switch') and not @isSwitchDismissed()
+    return false if not App.Config.get('ui_desktop_beta_switch')
+
+    role_ids = App.Config.get('ui_desktop_beta_switch_role_ids')
+
+    return false if not _.isEmpty(role_ids) and not _.some(role_ids, (role_id) ->
+      _.contains(App.User.current().role_ids, parseInt(role_id, 10))
+    )
+
+    return false if not App.User.current()?.permission('user_preferences.beta_ui_switch')
+    return false if @isSwitchDismissed()
+
+    true
 
   @isSwitchActive: ->
     App.Config.get('ui_desktop_beta_switch') and App.LocalStorage.get('beta-ui-switch')
 
   @dismissSwitch: ->
     App.LocalStorage.set('beta-ui-switch-dismiss', true)
-    App.Event.trigger('ui:beta:saved')
+    App.Event.trigger('ui:rerender')
 
     true
 
@@ -18,7 +29,7 @@ class App.DesktopBetaSwitch
     if App.LocalStorage.get('beta-ui-switch-dismiss')
       App.LocalStorage.delete('beta-ui-switch-dismiss')
 
-    App.Event.trigger('ui:beta:saved')
+    App.Event.trigger('ui:rerender')
 
     true
 

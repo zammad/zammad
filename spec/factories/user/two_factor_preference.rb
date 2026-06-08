@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rotp'
 require 'webauthn'
@@ -74,7 +74,7 @@ FactoryBot.define do
         #   the emulated two factor preferences.
         credential do
           WebAuthn.configure do |config|
-            config.origin  = "#{Setting.get('http_type')}://#{Capybara.app_host.gsub(%r{^https?://}, '')}:#{Capybara.current_session.server.port}"
+            config.allowed_origins = ["#{Setting.get('http_type')}://#{Capybara.app_host.gsub(%r{^https?://}, '')}:#{Capybara.current_session.server.port}"]
             config.rp_name = Setting.get('organization').presence || Setting.get('product_name').presence || 'Zammad'
             config.credential_options_timeout = 120_000
           end
@@ -92,8 +92,7 @@ FactoryBot.define do
                                                                          user_verification: true, user_verified: true)
           page.driver.browser.add_virtual_authenticator(options)
 
-          public_key_json       = JSON.generate({ publicKey: initiate_configuration.as_json.to_h })
-          public_key_credential = page.execute_script("return webauthnJSON.create(#{public_key_json}).then((publicKeyCredential) => publicKeyCredential);")
+          public_key_credential = page.execute_script("return navigator.credentials.create({ publicKey: PublicKeyCredential.parseCreationOptionsFromJSON(#{initiate_configuration.as_json.to_h}) }).then((publicKeyCredential) => publicKeyCredential.toJSON());")
           webauthn_credential   = WebAuthn::Credential.from_create(public_key_credential)
 
           if wrong_key

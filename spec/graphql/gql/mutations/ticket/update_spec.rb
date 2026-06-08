@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -282,9 +282,9 @@ RSpec.describe Gql::Mutations::Ticket::Update, :aggregate_failures, type: :graph
           expect(gql.result.data).to eq({
                                           'ticket' => nil,
                                           'errors' => [
-                                            'message'   => 'The ticket checklist is incomplete.',
-                                            'field'     => nil,
-                                            'exception' => exception,
+                                            { 'message'   => 'The ticket checklist is incomplete.',
+                                              'field'     => nil,
+                                              'exception' => exception },
                                           ],
                                         })
         end
@@ -307,8 +307,42 @@ RSpec.describe Gql::Mutations::Ticket::Update, :aggregate_failures, type: :graph
       end
     end
 
-    context 'with a customer', authenticated_as: :customer do
+    context 'with an agent-customer', authenticated_as: :agent_customer do
+      let(:agent_customer) { create(:agent_and_customer) }
+      let(:customer)       { agent_customer }
+
       let(:input_payload) { input_base_payload.tap { |h| h.delete(:customer) } }
+
+      let(:expected_response) do
+        expected_base_response.merge(
+          {
+            'owner'    => { 'fullname' => '-' },
+            'priority' => { 'name' => Ticket::Priority.where(default_create: true).first.name },
+          }
+        )
+      end
+
+      it 'updates the ticket with filtered values' do
+        gql.execute(query, variables: variables)
+        expect(gql.result.data[:ticket]).to eq(expected_response)
+      end
+
+      context 'when sending a different customerId' do
+        let(:input_payload) { input_base_payload.tap { |h| h[:customer][:id] = gql.id(create(:customer)) } }
+
+        it 'updates the ticket with filtered values' do
+          gql.execute(query, variables: variables)
+          expect(gql.result.data[:ticket]).to eq(expected_response)
+        end
+      end
+    end
+
+    context 'with a customer', authenticated_as: :customer do
+      let(:input_payload) do
+        input_base_payload
+          .tap { |h| h.delete(:customer) }
+          .tap { |h| h.delete(:ownerId) }
+      end
 
       let(:expected_response) do
         expected_base_response.merge(
@@ -331,6 +365,22 @@ RSpec.describe Gql::Mutations::Ticket::Update, :aggregate_failures, type: :graph
           gql.execute(query, variables: variables)
           expect(gql.result.error_type).to eq(Exceptions::Forbidden)
           expect(gql.result.error_message).to eq('Access forbidden by Gql::Types::UserType')
+        end
+      end
+
+      context 'when trying to change the group_id' do
+        let(:other_group)   { create(:group) }
+        let(:input_payload) do
+          input_base_payload
+            .tap { |h| h[:groupId] = gql.id(other_group) }
+            .tap { |h| h.delete(:ownerId) }
+            .tap { |h| h.delete(:customer) }
+        end
+
+        it 'ignores the group_id change and keeps the original group' do
+          gql.execute(query, variables:)
+          expect(gql.result.data[:ticket]).to eq(expected_response)
+          expect(ticket.reload.group_id).to eq(agent.groups.first.id)
         end
       end
 

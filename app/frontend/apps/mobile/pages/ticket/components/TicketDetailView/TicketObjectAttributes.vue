@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, toRef, ref } from 'vue'
@@ -18,8 +18,7 @@ interface Props {
 const props = defineProps<Props>()
 const ticketData = toRef(props, 'ticket')
 
-const { timeAccountingDisplayUnit, timeAccountingConfig } =
-  useTicketAccountedTime()
+const { timeAccountingDisplayUnit, timeAccountingConfig } = useTicketAccountedTime()
 
 const isShown = toRef(() => Boolean(ticketData.value.timeUnit))
 
@@ -48,23 +47,14 @@ const shownUnits = computed(() => {
 
 <template>
   <CommonSectionMenu v-if="isShown">
-    <CommonSectionMenuItem
-      v-if="ticketData.timeUnit"
-      :label="__('Total Accounted Time')"
-    >
+    <CommonSectionMenuItem v-if="ticketData.timeUnit" :label="__('Total accounted time')">
       {{ ticketData.timeUnit }}
       {{ $t(timeAccountingDisplayUnit) }}
     </CommonSectionMenuItem>
 
-    <CommonSectionMenuItem
-      v-if="allUnits.length"
-      data-test-id="timeUnitsEntries"
-    >
+    <CommonSectionMenuItem v-if="allUnits.length" data-test-id="timeUnitsEntries">
       <div class="grid grid-cols-[1fr_auto_auto] py-2" role="list">
-        <template
-          v-for="({ name, timeUnit }, index) of shownUnits"
-          :key="index"
-        >
+        <template v-for="({ name, timeUnit }, index) of shownUnits" :key="index">
           <div class="col-[1] truncate text-white/80 ltr:mr-2 rtl:ml-2">
             {{ capitalize($t(name)) }}
           </div>

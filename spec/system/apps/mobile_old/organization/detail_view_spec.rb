@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -82,12 +82,19 @@ RSpec.describe 'Mobile > Organization > Can view organization', app: :mobile, ty
       expect(page).to have_button('Show 3 more')
       click_on('Show 3 more')
 
-      expect(page).to have_text(members.first.fullname)
-        .and have_text(members.last.fullname)
+      wait_for_query('organization', number: 2)
+
+      # 1 extra is for the Organization Avatar on the top of the page.
+      expect(page).to have_css('a[href*="users"] span[data-test-id="common-avatar"]', count: 6)
 
       members << create(:customer, organization: organization)
+
       wait_for_subscription_update('organizationUpdates', number: 2)
-      expect(page).to have_text(members.last.fullname)
+
+      expect(page).to have_button('Show 1 more')
+      click_on('Show 1 more')
+
+      expect(page).to have_css('a[href*="users"] span[data-test-id="common-avatar"]', count: 7)
     end
   end
 

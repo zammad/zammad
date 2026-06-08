@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class NotificationFactory::Template
 
@@ -22,7 +22,7 @@ examples how to use
 
   def to_s
     result = @template
-    result.gsub!(%r{<%(?!%)}, '<%%') if !@trusted
+    result = result.gsub(%r{<%(?!%)}, '<%%') if !@trusted
     result = result.gsub(%r{(?<!\\)\#{\s*(.*?)\s*}}m) do
       # some browsers start adding HTML tags
       # fixes https://github.com/zammad/zammad/issues/385

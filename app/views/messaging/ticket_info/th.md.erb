@@ -1,0 +1,9 @@
+# #{ticket.title}
+_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|ตั๋ว##{ticket.number}>: อัปเดตล่าสุดเมื่อ #{ticket.updated_at}_
+* กลุ่ม: #{ticket.group.name}
+* เจ้าของ: #{ticket.owner.fullname}
+* สถานะ: #{t(ticket.state.name)}
+
+<% if @objects[:article] %>
+#{article.body_as_text}
+<% end %>

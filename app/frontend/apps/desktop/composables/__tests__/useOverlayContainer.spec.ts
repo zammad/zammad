@@ -1,13 +1,10 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { flushPromises, mount } from '@vue/test-utils'
 import SparkMD5 from 'spark-md5'
 import { useRoute, type RouteLocationNormalizedLoadedGeneric } from 'vue-router'
 
-import {
-  destroyComponent,
-  pushComponent,
-} from '#shared/components/DynamicInitializer/manage.ts'
+import { destroyComponent, pushComponent } from '#shared/components/DynamicInitializer/manage.ts'
 
 import {
   getOverlayContainerMeta,
@@ -28,10 +25,7 @@ vi.mock('vue-router', () => ({
 
 const mockedUseRoute = vi.mocked(useRoute)
 
-const inContext = (
-  fn: () => void,
-  route: Partial<RouteLocationNormalizedLoadedGeneric>,
-) => {
+const inContext = (fn: () => void, route: Partial<RouteLocationNormalizedLoadedGeneric>) => {
   mockedUseRoute.mockReturnValue(route as RouteLocationNormalizedLoadedGeneric)
 
   const component = {
@@ -49,7 +43,7 @@ describe('use dialog usage', () => {
     options.clear()
   })
 
-  test('name and component are required', () => {
+  it('name and component are required', () => {
     inContext(
       () => {
         // @ts-expect-error - component is required
@@ -80,7 +74,7 @@ describe('use dialog usage', () => {
       },
     )
 
-    inContext(
+    const component = inContext(
       () => {
         useOverlayContainer('dialog', {
           name: 'name',
@@ -95,6 +89,8 @@ describe('use dialog usage', () => {
         },
       },
     )
+
+    expect(component.element).toBeDefined()
   })
 
   test('adds and removes meta data', async () => {
@@ -156,12 +152,7 @@ describe('use dialog usage', () => {
     expect(dialog.isOpened.value).toBe(true)
     expect(component).toHaveBeenCalled()
     expect(opened.value.has('name_Example')).toBe(true)
-    expect(pushComponent).toHaveBeenCalledWith(
-      'dialog',
-      'name_Example',
-      expect.anything(),
-      {},
-    )
+    expect(pushComponent).toHaveBeenCalledWith('dialog', 'name_Example', expect.anything(), {})
 
     await dialog.close()
 

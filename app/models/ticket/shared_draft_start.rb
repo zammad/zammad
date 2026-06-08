@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Ticket::SharedDraftStart < ApplicationModel
   include HasRichText
@@ -47,11 +47,7 @@ class Ticket::SharedDraftStart < ApplicationModel
   def body_with_base64
     scrubber = HtmlSanitizer::Scrubber::InsertInlineImages.new(attachments)
 
-    sanitized = Loofah
-      .fragment(body)
-      .scrub!(scrubber)
-
-    sanitized.to_s
+    ScrubHtml.new(body, scrubber).scrub!.to_s
   end
 
   # Adds backwards compatibility for the old desktop app

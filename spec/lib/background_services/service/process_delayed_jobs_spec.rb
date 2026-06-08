@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -8,26 +8,35 @@ class SampleDelayedJob < ApplicationJob
   end
 end
 
-RSpec.describe BackgroundServices::Service::ProcessDelayedJobs, ensure_threads_exited: true do
+class SampleDelayedAIJob < AIJob
+  def perform
+    Rails.logger.debug 'performing SampleTestAIJob'
+  end
+end
+
+RSpec.describe BackgroundServices::Service::ProcessDelayedJobs, :aggregate_failures, ensure_threads_exited: true do
   before do
     stub_const "#{described_class}::SLEEP_IF_EMPTY", 1
   end
 
-  let(:instance) { described_class.new(manager: nil) }
+  let(:manager)  { BackgroundServices.new(BackgroundServices::ServiceConfig.configuration_from_env({})) }
+  let(:instance) { described_class.new(manager:) }
 
   describe '#run' do
     context 'with a queued job' do
       before do
         Delayed::Job.destroy_all
         SampleDelayedJob.perform_later
+        SampleDelayedAIJob.perform_later
       end
 
-      it 'processes a job' do
+      it 'processes the default job, but not the AI job' do
         expect do
           ensure_block_keeps_running do
-            described_class.new(manager: nil).run
+            described_class.new(manager:).run
           end
         end.to change(Delayed::Job, :count).by(-1)
+        expect(Delayed::Job.last.queue).to eq 'ai'
       end
 
       it 'runs loop multiple times', :aggregate_failures do
@@ -47,37 +56,50 @@ RSpec.describe BackgroundServices::Service::ProcessDelayedJobs, ensure_threads_e
         end
 
         it 'does not start jobs' do
-          expect { described_class.new(manager: nil).run }.not_to change(Delayed::Job, :count)
+          expect { described_class.new(manager:).run }.not_to change(Delayed::Job, :count)
         end
       end
     end
   end
 
   describe '#process_results' do
-    it 'sleeps & loops when no jobs processed', :aggregate_failures do
-      allow(Rails.logger).to receive(:debug)
-      instance.send(:process_results, [0, 0], 1)
-
-      expect(Rails.logger).to have_received(:debug).with(no_args) do |&block|
-        expect(block.call).to match(%r{loop})
-      end
+    before do
+      allow(instance).to receive(:process_empty).and_call_original
+      allow(instance).to receive(:process_busy).and_call_original
+      allow(instance).to receive(:interruptible_sleep)
     end
 
-    it 'loops immediatelly when there was anything to process', :aggregate_failures do
-      allow(Rails.logger).to receive(:debug)
+    it 'sleeps & loops when no jobs processed', :aggregate_failures do
+      instance.send(:process_results, [0, 0], 1)
+
+      expect(instance).to have_received(:process_empty)
+      expect(instance).to have_received(:interruptible_sleep)
+    end
+
+    it 'loops immediately when there was anything to process', :aggregate_failures do
       instance.send(:process_results, [1, 0], 1)
 
-      expect(Rails.logger).to have_received(:debug).with(no_args) do |&block|
-        expect(block.call).to match(%r{jobs processed})
-      end
+      expect(instance).to have_received(:process_busy).with([1, 0], 1)
+      expect(instance).not_to have_received(:interruptible_sleep)
+    end
+
+    it 'loops immediately when all processed jobs failed', :aggregate_failures do
+      instance.send(:process_results, [0, 123], 1)
+
+      expect(instance).to have_received(:process_busy).with([0, 123], 1)
+      expect(instance).not_to have_received(:interruptible_sleep)
     end
   end
 
   describe '.pre_run' do
     it 'cleans up DelayedJobs' do
       allow(described_class::CleanupAction).to receive(:cleanup_delayed_jobs)
+
       described_class.pre_run
-      expect(described_class::CleanupAction).to have_received(:cleanup_delayed_jobs)
+
+      expect(described_class::CleanupAction)
+        .to have_received(:cleanup_delayed_jobs)
+        .with(anything, queues: contain_exactly(:default))
     end
 
     it 'cleans up ImportJobs' do

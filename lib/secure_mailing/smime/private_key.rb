@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class SecureMailing::SMIME::PrivateKey
   attr_reader :uid, :pem, :secret
@@ -7,7 +7,7 @@ class SecureMailing::SMIME::PrivateKey
     begin
       new(pem, secret)
     rescue OpenSSL::PKey::PKeyError
-      raise Exceptions::UnprocessableEntity, __('The private key is not valid for S/MIME usage. Please check the key format and the secret.')
+      raise Exceptions::UnprocessableContent, __('The private key is not valid for S/MIME usage. Please check the key format and the secret.')
     end
   end
 
@@ -33,7 +33,7 @@ class SecureMailing::SMIME::PrivateKey
     Rails.logger.error { "SMIME::PrivateKey: #{message}" }
     Rails.logger.error { "SMIME::PrivateKey:\n #{@key.to_pem}" }
 
-    raise Exceptions::UnprocessableEntity, message
+    raise Exceptions::UnprocessableContent, message
   end
 
   def rsa?

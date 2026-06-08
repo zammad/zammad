@@ -1,15 +1,15 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
 RSpec.describe Service::Calendar::IcsFile::Parse do
-  subject(:service) { described_class.new(current_user: user) }
+  subject(:service_result) { described_class.execute(file: calendar_file) }
 
   let(:user)          { create(:user) }
   let(:calendar_file) { create(:store, :ics) }
 
   it 'parses the calendar file' do
-    expect(service.execute(file: calendar_file)).to eq(
+    expect(service_result).to eq(
       events:   [{
         title:       'Test Summary',
         location:    'https://us.zoom.us/j/example?pwd=test',

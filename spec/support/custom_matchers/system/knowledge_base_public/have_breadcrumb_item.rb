@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module KnowledgeBasePublicMatchers
   module HaveBreadcrumbItem
@@ -65,15 +65,10 @@ module KnowledgeBasePublicMatchers
       end
 
       def breadcrumb_item_url
-        @breadcrumb_item_url ||= begin
-          elem = actual
+        @breadcrumb_item_url ||= actual
             .all('.breadcrumbs .breadcrumb')
-            .find do |item|
-              item.find('span').text == expected
-            end
-
-          elem ? elem[:href] : nil
-        end
+            .find { it.find('span').text == expected }
+            .then { it[:href] if it }
       end
     end
   end

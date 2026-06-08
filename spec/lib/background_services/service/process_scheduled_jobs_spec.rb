@@ -1,9 +1,10 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
 RSpec.describe BackgroundServices::Service::ProcessScheduledJobs do
-  let(:instance)    { described_class.new(manager: nil) }
+  let(:manager)     { BackgroundServices.new(BackgroundServices::ServiceConfig.configuration_from_env({})) }
+  let(:instance)    { described_class.new(manager:) }
   let(:scheduler_1) { create(:scheduler, active: true, prio: 5) }
   let(:scheduler_2) { create(:scheduler, active: true, prio: 1) }
   let(:scheduler_3) { create(:scheduler, active: false, prio: 3) }

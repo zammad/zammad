@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Zammad::TranslationCatalog::Extractor::Ruby < Zammad::TranslationCatalog::Extractor::Base
   REMOVE_DOC_COMMENTS_REGEX = %r{^=begin.*?^=end}mx
@@ -22,9 +22,8 @@ class Zammad::TranslationCatalog::Extractor::Ruby < Zammad::TranslationCatalog::
 
   def find_files
     %w[config app db lib]
-      .map do |dir|
-        Dir.glob("#{base_path}/#{dir}/**/*.rb")
+      .flat_map do |dir|
+        Dir.glob("#{base_path}/#{dir}/**/*.rb") + Dir.glob("#{base_path}/#{dir}/**/*.txt.erb")
       end
-      .flatten
   end
 end

@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { EnumTwoFactorAuthenticationMethod } from '#shared/graphql/types.ts'
 
@@ -6,10 +6,8 @@ import type { TwoFactorPlugin } from '../types.ts'
 
 export default {
   name: EnumTwoFactorAuthenticationMethod.AuthenticatorApp,
-  label: __('Authenticator App'),
-  description: __(
-    'Get the security code from the authenticator app on your device.',
-  ),
+  label: __('Authenticator app'),
+  description: __('Get the security code from the authenticator app on your device.'),
   order: 200,
   icon: '2fa-authenticator-app',
   loginOptions: {

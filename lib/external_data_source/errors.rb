@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class ExternalDataSource
   module Errors
@@ -38,6 +38,12 @@ class ExternalDataSource
     class SearchUrlInvalidError < BaseError
       def message
         __('Search URL is invalid.')
+      end
+    end
+
+    class SearchUrlUnsafe < BaseError
+      def message
+        __('Search URL is unsafe.')
       end
     end
 

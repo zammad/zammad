@@ -1,19 +1,17 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { injectLocal, provideLocal } from '@vueuse/shared'
 import { isEqual } from 'lodash-es'
-import { computed, ref, type InjectionKey, type Ref } from 'vue'
+import { computed, ref, watch, type InjectionKey, type Ref } from 'vue'
 
-import { useSessionStore } from '#shared/stores/session.ts'
 import emitter from '#shared/utils/emitter.ts'
+
+import { SidebarName } from '#desktop/components/layout/useSidebarDisplay.ts'
 
 import { useTicketSidebarPlugins } from '../components/TicketSidebar/plugins/index.ts'
 
 import type { TicketSidebarPlugin } from '../components/TicketSidebar/plugins/types.ts'
-import type {
-  TicketSidebarContext,
-  TicketSidebarInformation,
-} from '../types/sidebar.ts'
+import type { TicketSidebarContext, TicketSidebarInformation } from '../types/sidebar.ts'
 
 export const TICKET_SIDEBAR_SYMBOL = Symbol(
   'ticket-sidebar',
@@ -22,8 +20,6 @@ export const TICKET_SIDEBAR_SYMBOL = Symbol(
 export const useProvideTicketSidebar = (context: Ref<TicketSidebarContext>) => {
   const shownSidebars = ref<Record<string, boolean>>({})
   const switchedSidebar = ref<string>()
-
-  const { userId } = useSessionStore()
 
   const showSidebar = (sidebar: string) => {
     shownSidebars.value[sidebar] = true
@@ -35,7 +31,7 @@ export const useProvideTicketSidebar = (context: Ref<TicketSidebarContext>) => {
 
   const switchSidebar = (newSidebar: string) => {
     switchedSidebar.value = newSidebar
-    emitter.emit('expand-collapsed-content', `${userId}-ticket-detail`)
+    emitter.emit('expand-collapsed-content', SidebarName.TicketContent)
   }
 
   const sidebarPlugins = useTicketSidebarPlugins(context.value.screenType)
@@ -43,11 +39,13 @@ export const useProvideTicketSidebar = (context: Ref<TicketSidebarContext>) => {
   const availableSidebarPlugins = computed<Record<string, TicketSidebarPlugin>>(
     (currentAvailableSidebarPlugins) => {
       const newCurrentSidebarPlugins = Object.fromEntries(
-        Object.entries(sidebarPlugins).filter(([, sidebarPlugin]) =>
-          typeof sidebarPlugin.available === 'function'
-            ? sidebarPlugin.available(context.value)
-            : true,
-        ),
+        Object.entries(sidebarPlugins)
+          .filter(([, sidebarPlugin]) => sidebarPlugin.views.includes(context.value.view))
+          .filter(([, sidebarPlugin]) =>
+            typeof sidebarPlugin.available === 'function'
+              ? sidebarPlugin.available(context.value)
+              : true,
+          ),
       )
 
       if (
@@ -69,14 +67,18 @@ export const useProvideTicketSidebar = (context: Ref<TicketSidebarContext>) => {
     )
       return switchedSidebar.value
 
-    const sidebar = Object.entries(availableSidebarPlugins.value).filter(
+    const sidebar = Object.entries(availableSidebarPlugins.value).find(
       ([sidebar]) => shownSidebars.value[sidebar],
-    )?.[0]?.[0]
+    )?.[0]
 
     return sidebar === undefined ? ' ' : sidebar // ' ' is a fallback value for a non-selectable sidebar to prevent flickering if sidebar is loading
   })
 
   const hasSidebar = computed(() => Boolean(activeSidebar.value))
+
+  watch(hasSidebar, () => {
+    emitter.emit('resize-layout')
+  })
 
   provideLocal(TICKET_SIDEBAR_SYMBOL, {
     shownSidebars,

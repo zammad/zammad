@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { within } from '@testing-library/vue'
 import { ref } from 'vue'
@@ -9,10 +9,7 @@ import { waitForNextTick } from '#tests/support/utils.ts'
 
 import type { TicketLiveAppUser } from '#shared/entities/ticket/types.ts'
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
-import {
-  mockMacrosQuery,
-  waitForMacrosQueryCalls,
-} from '#shared/graphql/queries/macros.mocks.ts'
+import { mockMacrosQuery, waitForMacrosQueryCalls } from '#shared/graphql/queries/macros.mocks.ts'
 import { getMacrosUpdateSubscriptionHandler } from '#shared/graphql/subscriptions/macrosUpdate.mocks.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
@@ -40,7 +37,6 @@ const renderTicketDetailBottomBar = (props?: Partial<Props>) =>
       liveUserList: [],
       ticketId: ticket.id,
       isTicketAgent: true,
-      setSkipNextStateUpdate: vi.fn(),
       ...props,
     },
     store: true,
@@ -80,40 +76,46 @@ describe('TicketDetailBottomBar', () => {
 
     expect(wrapper.getByRole('button', { name: 'Update' })).toBeDisabled()
 
-    expect(
-      wrapper.queryByRole('button', { name: 'Discard your unsaved changes' }),
-    ).toBeDisabled()
+    expect(wrapper.queryByRole('button', { name: 'Discard your unsaved changes' })).toBeDisabled()
   })
 
-  it.each(['submit', 'discard'])(
-    'emits %s event when button is clicked',
-    async (eventName) => {
-      const wrapper = renderTicketDetailBottomBar({
-        dirty: true,
-        disabled: false,
-      })
+  it.each(['submit', 'discard'])('emits %s event when button is clicked', async (eventName) => {
+    const wrapper = renderTicketDetailBottomBar({
+      dirty: true,
+      disabled: false,
+    })
 
-      if (eventName === 'submit') {
-        await wrapper.events.click(
-          wrapper.getByRole('button', { name: 'Update' }),
-        )
+    if (eventName === 'submit') {
+      await wrapper.events.click(wrapper.getByRole('button', { name: 'Update' }))
 
-        expect(wrapper.emitted('submit')).toBeTruthy()
-      }
+      expect(wrapper.emitted('submit')).toBeTruthy()
+    }
 
-      if (eventName === 'discard') {
-        await wrapper.events.click(
-          wrapper.getByRole('button', { name: 'Discard your unsaved changes' }),
-        )
+    if (eventName === 'discard') {
+      await wrapper.events.click(
+        wrapper.getByRole('button', { name: 'Discard your unsaved changes' }),
+      )
 
-        expect(wrapper.emitted('discard')).toBeTruthy()
-      }
-    },
-  )
+      expect(wrapper.emitted('discard')).toBeTruthy()
+    }
+  })
 
   describe('Drafts', () => {
-    it.todo('should not display draft information if ticket has no draft')
-    it.todo('should display draft information if ticket has a draft')
+    it('should not display draft information if ticket has no draft', () => {
+      const wrapper = renderTicketDetailBottomBar({
+        hasAvailableDraft: false,
+      })
+
+      expect(wrapper.queryByRole('button', { name: 'Draft available' })).not.toBeInTheDocument()
+    })
+
+    it('should display draft information if ticket has a draft', () => {
+      const wrapper = renderTicketDetailBottomBar({
+        hasAvailableDraft: true,
+      })
+
+      expect(wrapper.getByRole('button', { name: 'Draft available' })).toBeInTheDocument()
+    })
   })
 
   describe('Macros', () => {
@@ -141,9 +143,7 @@ describe('TicketDetailBottomBar', () => {
 
       const wrapper = renderTicketDetailBottomBar()
 
-      const actionMenu = await wrapper.findByLabelText(
-        'Additional ticket edit actions',
-      )
+      const actionMenu = await wrapper.findByLabelText('Drafts & macros')
 
       await wrapper.events.click(actionMenu)
 
@@ -160,17 +160,13 @@ describe('TicketDetailBottomBar', () => {
         isTicketEditable: false,
       })
 
-      expect(
-        wrapper.queryByRole('button', { name: 'Update' }),
-      ).not.toBeInTheDocument()
+      expect(wrapper.queryByRole('button', { name: 'Update' })).not.toBeInTheDocument()
 
       expect(
         wrapper.queryByRole('button', { name: 'Discard your unsaved changes' }),
       ).not.toBeInTheDocument()
 
-      expect(
-        wrapper.queryByLabelText('Additional ticket edit actions'),
-      ).not.toBeInTheDocument()
+      expect(wrapper.queryByLabelText('Drafts & macros')).not.toBeInTheDocument()
     })
 
     it('reloads macro query if subscription is triggered', async () => {
@@ -183,7 +179,9 @@ describe('TicketDetailBottomBar', () => {
       const calls = await waitForMacrosQueryCalls()
 
       expect(calls?.at(-1)?.variables).toEqual({
-        groupIds: [convertToGraphQLId('Group', 2)],
+        selector: {
+          entityIds: [convertToGraphQLId('Group', 2)],
+        },
       })
 
       await waitForNextTick()
@@ -242,9 +240,7 @@ describe('TicketDetailBottomBar', () => {
 
       const wrapper = renderTicketDetailBottomBar()
 
-      const actionMenu = await wrapper.findByLabelText(
-        'Additional ticket edit actions',
-      )
+      const actionMenu = await wrapper.findByLabelText('Drafts & macros')
 
       await wrapper.events.click(actionMenu)
 
@@ -259,6 +255,7 @@ describe('TicketDetailBottomBar', () => {
           {
             __typename: 'Macro',
             id: convertToGraphQLId('Macro', 1),
+            internalId: 1,
             active: true,
             name: 'Macro 1',
             uxFlowNextUp: 'next_task',
@@ -273,14 +270,12 @@ describe('TicketDetailBottomBar', () => {
       })
 
       const addonButton = wrapper.getByRole('button', {
-        name: 'Additional ticket edit actions',
+        name: 'Drafts & macros',
       })
 
       await wrapper.events.click(addonButton)
 
-      expect(
-        within(wrapper.getByRole('menu')).queryByRole('menuitem'),
-      ).not.toBeInTheDocument()
+      expect(within(wrapper.getByRole('menu')).queryByRole('menuitem')).not.toBeInTheDocument()
     })
   })
 
@@ -290,21 +285,13 @@ describe('TicketDetailBottomBar', () => {
         liveUserList: liveUserList as TicketLiveAppUser[],
       })
 
-      expect(
-        wrapper.getByRole('img', { name: 'Avatar (Nicole Braun) (VIP)' }),
-      ).toBeInTheDocument()
+      expect(wrapper.getByRole('img', { name: 'Avatar (Nicole Braun) (VIP)' })).toBeInTheDocument()
 
-      expect(
-        wrapper.getByRole('img', { name: 'Avatar (Test Admin Agent)' }),
-      ).toBeInTheDocument()
+      expect(wrapper.getByRole('img', { name: 'Avatar (Test Admin Agent)' })).toBeInTheDocument()
 
-      expect(
-        wrapper.getByRole('img', { name: 'Avatar (Agent 1 Test)' }),
-      ).toBeInTheDocument()
+      expect(wrapper.getByRole('img', { name: 'Avatar (Agent 1 Test)' })).toBeInTheDocument()
 
-      expect(
-        wrapper.getByRole('img', { name: 'Avatar (Agent 2 Test)' }),
-      ).toBeInTheDocument()
+      expect(wrapper.getByRole('img', { name: 'Avatar (Agent 2 Test)' })).toBeInTheDocument()
     })
   })
 })

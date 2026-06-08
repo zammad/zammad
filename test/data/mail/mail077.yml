@@ -3,7 +3,7 @@ from: John.Smith@example.com
 from_email: John.Smith@example.com
 from_display_name: ''
 to: metest@znuny.com
-subject: " Personaländerung"
+subject: Personaländerung
 body: |
   äöüß ad asd
 

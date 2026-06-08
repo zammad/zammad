@@ -1,0 +1,8 @@
+This is my reply.
+
+On Tue, Dec 3, 2024 at 10:30 AM John Smith <john@example.com> wrote:
+
+> Hello,
+> This is the original message.
+> Best regards,
+> John

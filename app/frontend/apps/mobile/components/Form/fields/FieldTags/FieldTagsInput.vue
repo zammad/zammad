@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, toRef } from 'vue'
@@ -61,7 +61,7 @@ useFormBlock(reactiveContext, onInputClick)
       :id="context.id"
       :name="context.node.name"
       role="combobox"
-      class="formkit-disabled:pointer-events-none flex grow items-center focus:outline-hidden"
+      class="flex grow items-center focus:outline-hidden formkit-disabled:pointer-events-none"
       :aria-disabled="context.disabled ? 'true' : undefined"
       tabindex="0"
       v-bind="context.attrs"
@@ -75,15 +75,11 @@ useFormBlock(reactiveContext, onInputClick)
       @keypress.space.prevent="showDialog()"
       @blur="context.handlers.blur"
     >
-      <div
-        v-if="selectedTagsList.length"
-        class="flex grow flex-wrap gap-1"
-        role="list"
-      >
+      <div v-if="selectedTagsList.length" class="flex grow flex-wrap gap-1" role="list">
         <div
           v-for="tag of selectedTagsList"
           :key="tag"
-          class="bg-gray/20 text-gray rounded-xs px-[4px] py-[2px] text-base leading-4 uppercase"
+          class="rounded-xs bg-gray/20 px-[4px] py-[2px] text-base leading-4 text-gray uppercase"
           role="listitem"
         >
           {{ tag }}

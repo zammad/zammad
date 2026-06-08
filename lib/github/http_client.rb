@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'uri'
 
@@ -18,14 +18,12 @@ class GitHub
         endpoint,
         payload,
         {
-          headers:      headers,
-          json:         true,
-          open_timeout: 6,
-          read_timeout: 16,
-          log:          {
+          headers:    headers,
+          json:       true,
+          log:        {
             facility: 'GitHub',
           },
-          verify_ssl:   true,
+          verify_ssl: true,
         },
       )
 

@@ -1,12 +1,13 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { animations, parents } from '@formkit/drag-and-drop'
-import { dragAndDrop } from '@formkit/drag-and-drop/vue'
+import { parents } from '@formkit/drag-and-drop'
 import { cloneDeep, isEqual } from 'lodash-es'
-import { ref, watch, useTemplateRef, type Ref } from 'vue'
+import { watch, useTemplateRef, shallowRef } from 'vue'
 
-import { startAndEndEventsDNDPlugin } from '#shared/utils/startAndEndEventsDNDPlugin.ts'
+import { useAnnouncer } from '#desktop/composables/accessibility/useAnnouncer.ts'
+import { useAccessibleDragAndDrop } from '#desktop/composables/dragAndDrop/useAccessibleDragAndDrop.ts'
+import { useKeyboardKeysForDragAndDrop } from '#desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts'
 
 export interface OverviewItem {
   id: string
@@ -27,7 +28,7 @@ const dndEndCallback = (parent: HTMLElement) => {
 }
 
 const dndParentElement = useTemplateRef('dnd-parent')
-const dndLocalValue = ref(localValue.value || [])
+const dndLocalValue = shallowRef<OverviewItem[]>(localValue.value || [])
 
 watch(localValue, (newValue) => {
   if (isEqual(dndLocalValue.value, newValue)) return
@@ -35,33 +36,55 @@ watch(localValue, (newValue) => {
   dndLocalValue.value = cloneDeep(newValue || [])
 })
 
-dragAndDrop({
-  parent: dndParentElement as Ref<HTMLElement>,
-  values: dndLocalValue,
-  plugins: [
-    startAndEndEventsDNDPlugin(undefined, dndEndCallback),
-    animations(),
-  ],
-  dropZoneClass: 'opacity-0',
-  touchDropZoneClass: 'opacity-0',
+const { announce, messageNodeId } = useAnnouncer()
+
+const getValue = (item: OverviewItem) => item.name
+
+useAccessibleDragAndDrop<HTMLElement, OverviewItem>(dndParentElement, dndLocalValue, announce, {
+  dndEndCallback,
+  getValue,
+})
+
+const {
+  focusedItemIndex,
+  selectedItemIndex,
+  focusedItemId,
+  handleKeydown,
+  handleFocus,
+  handleBlur,
+} = useKeyboardKeysForDragAndDrop<OverviewItem>({
+  items: dndLocalValue,
+  getValue,
+  onReorder: (newOrder) => {
+    localValue.value = cloneDeep(newOrder)
+  },
 })
 </script>
 
 <template>
   <div v-if="localValue" class="rounded-lg bg-blue-200 dark:bg-gray-700">
-    <!-- :TODO if we add proper a11y support   -->
-    <!--    <span class="hidden" aria-live="assertive" >{{assistiveText}}</span>-->
-    <span id="drag-and-drop-ticket-overviews" class="sr-only">
-      {{ $t('Drag and drop to reorder ticket overview list items.') }}
-    </span>
-
-    <ul ref="dnd-parent" class="flex flex-col p-1">
+    <!--   eslint-disable vuejs-accessibility/no-static-element-interactions       -->
+    <ul
+      ref="dnd-parent"
+      tabindex="0"
+      :aria-label="$t('Overview order list')"
+      :aria-activedescendant="focusedItemId"
+      :aria-describedby="messageNodeId"
+      class="group isolate flex flex-col rounded-lg p-1 focus-visible-app-default focus-visible:-outline-offset-1!"
+      @focus="handleFocus"
+      @blur="handleBlur"
+      @keydown="handleKeydown"
+    >
       <li
-        v-for="value in dndLocalValue"
+        v-for="(value, index) in dndLocalValue"
         :key="value.id"
-        class="draggable flex min-h-9 cursor-grab items-start gap-2.5 p-2.5 active:cursor-grabbing"
+        class="draggable flex min-h-9 cursor-grab items-start gap-2.5 rounded-lg p-2.5 active:cursor-grabbing"
         draggable="true"
-        aria-describedby="drag-and-drop-ticket-overviews"
+        :class="{
+          '-outline-offset-1 outline-blue-900 group-focus-visible:outline':
+            index == focusedItemIndex,
+          'outline -outline-offset-1 outline-blue-800!': index == selectedItemIndex,
+        }"
       >
         <CommonIcon
           class="mt-1 shrink-0 fill-stone-200 dark:fill-neutral-500"
@@ -73,12 +96,9 @@ dragAndDrop({
           <CommonLabel class="inline text-black dark:text-white">
             {{ $t(value.name) }}
           </CommonLabel>
-          <CommonBadge
-            v-if="value.organizationShared"
-            variant="info"
-            class="ms-1.5"
-            >{{ $t('Only when shared organization member') }}</CommonBadge
-          >
+          <CommonBadge v-if="value.organizationShared" variant="info" class="ms-1.5">{{
+            $t('Only when shared organization member')
+          }}</CommonBadge>
           <CommonBadge v-if="value.outOfOffice" variant="info" class="ms-1.5">{{
             $t('Only when out of office replacement')
           }}</CommonBadge>

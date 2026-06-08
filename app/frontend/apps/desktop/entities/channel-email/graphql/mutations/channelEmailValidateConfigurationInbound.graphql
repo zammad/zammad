@@ -1,9 +1,7 @@
 mutation channelEmailValidateConfigurationInbound(
   $inboundConfiguration: ChannelEmailInboundConfigurationInput!
 ) {
-  channelEmailValidateConfigurationInbound(
-    inboundConfiguration: $inboundConfiguration
-  ) {
+  channelEmailValidateConfigurationInbound(inboundConfiguration: $inboundConfiguration) {
     success
     mailboxStats {
       contentMessages

@@ -1,0 +1,32 @@
+query ticketsByOrganization(
+  $organizationId: ID!
+  $stateTypeCategory: EnumTicketStateTypeCategory
+  $pageSize: Int = 7
+  $cursor: String
+) {
+  ticketsByOrganization(
+    organizationId: $organizationId
+    stateTypeCategory: $stateTypeCategory
+    first: $pageSize
+    after: $cursor
+  ) {
+    totalCount
+    edges {
+      node {
+        id
+        internalId
+        number
+        title
+        stateColorCode
+        state {
+          id
+          name
+        }
+        createdAt
+      }
+    }
+    pageInfo {
+      endCursor
+    }
+  }
+}

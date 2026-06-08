@@ -16,7 +16,9 @@ class App.Model extends Spine.Model
     @constructor.className
 
   displayName: ->
-    return @name || '-'
+    return App.i18n.translatePlain(@name) or '-' if @translate()
+
+    @name or '-'
 
   # shows the icon representing the object itself (e. g. the organization icon in organization profile or ticket sidebar)
   icon: (user) ->
@@ -112,12 +114,14 @@ class App.Model extends Spine.Model
     # return no errors
     return
 
+  # keep in sync with ChecksCoreWorkflow::EMPTY_VALUES
   @_validate_is_empty: (value) ->
     return true if value is ''
     return true if value is null
     return true if value is undefined
     return true if _.isArray(value) is true && value.length is 0
     return true if _.isArray(value) is true && value.length is 1 && value[0] is ''
+    return true if _.isObject(value) is true && _.isEmpty(value)
     false
 
   ###
@@ -234,6 +238,11 @@ set new attributes of model (remove already available attributes)
 
   # App.Model.full(id, callback, force, bind)
   @full: (id, callback = false, force = false, bind = false) ->
+
+    # skip full requests for guessing users since they won't return results anyway
+    # and produce a lot of errors in the log #5132
+    return if @className is 'User' && typeof id is 'string' && id.startsWith('guess:')
+
     url = "#{@url}/#{id}?full=true"
 
     # subscribe and reload data / fetch new data if triggered

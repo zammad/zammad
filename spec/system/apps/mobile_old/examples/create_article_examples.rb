@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 RSpec.shared_examples 'mobile app: create article' do |type_label, internal: false, attachments: false, conditional: true|
   let(:group)       { Group.find_by(name: 'Users') }
@@ -7,7 +7,7 @@ RSpec.shared_examples 'mobile app: create article' do |type_label, internal: fal
   let(:to)          { nil }
   let(:cc)          { nil }
   let(:new_text)    { 'This is a note' }
-  let(:result_text) { content_type == 'text/html' ? "<p>#{new_text}</p>" : new_text }
+  let(:result_text) { content_type == 'text/html' ? "<p dir=\"auto\">#{new_text}</p>" : new_text }
 
   # expected variables:
   # ticket
@@ -48,7 +48,6 @@ RSpec.shared_examples 'mobile app: create article' do |type_label, internal: fal
       article
     end
 
-    # rubocop:disable RSpec/ExampleLength
     it "can create article #{type_label}" do
       open_article_dialog
 
@@ -76,7 +75,8 @@ RSpec.shared_examples 'mobile app: create article' do |type_label, internal: fal
         find_field('attachments', visible: :all).attach_file('spec/fixtures/files/image/small.png')
 
         # need to wait until the file is uploaded
-        expect(page).to have_text('small.png', wait: 60)
+        expect(page).to have_css('[aria-label="small.png"]', wait: 60)
+
       else
         expect(page).to have_no_field('attachments', visible: :all)
       end
@@ -106,6 +106,5 @@ RSpec.shared_examples 'mobile app: create article' do |type_label, internal: fal
 
       expect(Ticket::Article.last).to have_attributes(attributes)
     end
-    # rubocop:enable RSpec/ExampleLength
   end
 end

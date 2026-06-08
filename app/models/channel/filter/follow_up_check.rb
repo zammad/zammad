@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Channel::Filter::FollowUpCheck
 
@@ -38,15 +38,18 @@ module Channel::Filter::FollowUpCheck
 
         if %r{text/html}i.match?(attachment[:preferences]['Mime-Type'])
           begin
-            text = attachment[:data].html2text
-            ticket = Ticket::Number.check(text)
+            ticket = Ticket::Number.check(attachment[:data].html2text)
           rescue => e
             Rails.logger.error e
           end
         end
 
         if %r{text/plain}i.match?(attachment[:preferences]['Mime-Type'])
-          ticket = Ticket::Number.check(attachment[:data])
+          begin
+            ticket = Ticket::Number.check(attachment[:data])
+          rescue => e
+            Rails.logger.error e
+          end
         end
 
         next if !ticket

@@ -2,7 +2,7 @@ class Ldap extends App.ControllerIntegrationBase
   featureIntegration: 'ldap_integration'
   featureName: __('LDAP')
   description: [
-    [__('Use this switch to start synchronization of your ldap sources.')]
+    [__('Use this switch to start synchronization of your LDAP sources.')]
     [__('If a user is found in two (or more) configured LDAP sources, the last synchronisation will win.')]
     [__('In order to be able to influence the desired behavior in this regard, you can influence the order of the LDAP sources via drag & drop.')]
   ]
@@ -182,7 +182,7 @@ class Form extends App.Controller
   setConfig: (value) =>
     @item.name = value.name
     @item.active = value.active
-    @item.preferences = _.omit(value, ['id', 'name', 'active'])
+    @item.preferences = _.omit(value, ['id', 'name', 'active', 'ldap_source_id'])
     @item.save(
       done: =>
         @showIndex()
@@ -369,6 +369,9 @@ class ConnectionWizard extends App.ControllerWizardModal
     return if element && element.reportValidity && !element.reportValidity()
 
     params                   = @formParam(e.target)
+
+    delete @wizardConfig.base_dn if @wizardConfig.host and params.host isnt @wizardConfig.host
+
     @wizardConfig.host       = params.host
     @wizardConfig.ssl        = params.ssl
     @wizardConfig.ssl_verify = params.ssl_verify
@@ -392,14 +395,17 @@ class ConnectionWizard extends App.ControllerWizardModal
   hostChange: (e) ->
     e.preventDefault()
 
-    [protocol, host] = $(e.currentTarget).val().split('://')
-    return if _.isEmpty(protocol) || _.isEmpty(host)
+    currentHost = $(e.currentTarget).val()
+    [protocol, host] = currentHost.split('://')
+    normalizedHost = if _.isEmpty(host) then currentHost else host
+
+    return if _.isEmpty(protocol) || _.isEmpty(normalizedHost)
     return if !['ldap', 'ldaps'].includes(protocol)
 
     protocol_ssl_mapping = { ldap: 'off', ldaps: 'ssl' }
 
-    $('.js-hostUrl').val(host)
-    $('.js-Ssl').val(protocol_ssl_mapping[protocol]).trigger('change')
+    @$('.js-hostUrl').val(normalizedHost)
+    @$('.js-Ssl').val(protocol_ssl_mapping[protocol]).trigger('change')
 
   sslChange: (e) =>
     @checkSslVerifyVisibility($(e.currentTarget).val())
@@ -461,6 +467,8 @@ class ConnectionWizard extends App.ControllerWizardModal
         if !_.isEmpty(data.error) && data.error is 'disallow-bind-anon'
           @wizardConfig.disallow_bind_anon = true
 
+        delete @wizardConfig.base_dn if @wizardConfig.host and params.host isnt @wizardConfig.host
+
         @wizardConfig.host       = params.host
         @wizardConfig.ssl        = params.ssl
         @wizardConfig.ssl_verify = params.ssl_verify
@@ -494,22 +502,27 @@ class ConnectionWizard extends App.ControllerWizardModal
   bindShow: (alreadyShown) =>
     @showSlide('js-bind') if !alreadyShown
 
-    if @wizardConfig.disallow_bind_anon
-      baseDnInput = App.UiElement.input.render(
-        name: 'base_dn'
-        id: 'base_dn'
-        display: __('Base DN')
-        tag: 'input'
-        type: 'text'
-        class: 'form-control--small js-baseDn'
-        required: 'required'
-        placeholder: ''
-        value: @wizardConfig.base_dn
-        autocomplete: 'autocomplete="off"'
-      )[0].outerHTML
-      @$('.js-bind .js-baseDn').html(baseDnInput)
-    else
-      @$('.js-bind .js-baseDn').html(@createSelection('base_dn', @wizardConfig.options, @wizardConfig.base_dn || @wizardConfig.option, true))
+    selectedBaseDn = @wizardConfig.base_dn || @wizardConfig.option || ''
+
+    baseDnInput = App.UiElement.input.render(
+      name: 'base_dn'
+      id: 'base_dn'
+      display: __('Base DN')
+      tag: 'input'
+      type: 'text'
+      class: 'form-control--small'
+      placeholder: ''
+      value: selectedBaseDn
+      autocomplete: 'autocomplete="off"'
+    )
+    @$('.js-bind .js-baseDn').empty().append(baseDnInput)
+
+    if !_.isEmpty(@wizardConfig.options)
+      baseDnInput.autocomplete(
+        source: Object.keys(@wizardConfig.options)
+        minLength: 0
+      )
+      baseDnInput.on('click', -> $(@).autocomplete('search', ''))
 
     @$('.js-bind input[name="bind_user"]').val(@wizardConfig.bind_user)
     @$('.js-bind input[name="bind_pw"]').val(@wizardConfig.bind_pw)
@@ -521,6 +534,7 @@ class ConnectionWizard extends App.ControllerWizardModal
     params.host       = @wizardConfig.host
     params.ssl        = @wizardConfig.ssl
     params.ssl_verify = @wizardConfig.ssl_verify
+    params.ldap_source_id = @wizardConfig.id if @wizardConfig.id
     @ajax(
       id:   'ldap_bind'
       type: 'POST'
@@ -820,7 +834,7 @@ class LdapSourceIndex extends App.ControllerGenericIndex
         item = new App.LdapSource(
           name: config.name
           active: config.active
-          preferences: _.omit(config, ['id', 'name', 'active'])
+          preferences: _.omit(config, ['id', 'name', 'active', 'ldap_source_id'])
         )
         item.save(
           done: ->

@@ -16,7 +16,6 @@ export const ChannelEmailGuessConfigurationDocument = gql`
         port
         ssl
         user
-        password
         sslVerify
         folder
       }
@@ -25,7 +24,6 @@ export const ChannelEmailGuessConfigurationDocument = gql`
         host
         port
         user
-        password
         sslVerify
       }
       mailboxStats {

@@ -1,12 +1,12 @@
 <div class="js-lastImport"></div>
 <div class="js-notConfigured">
-  <h5><a href="#" class="js-back">❮ ><%- @T('Back to overview') %></a></h5>
+  <h5><a href="#" class="js-back">❮ <%- @T('Back to overview') %></a></h5>
   <h2><%- @T('Settings %s', @item.name) %></h2>
   <p><%- @T('No configuration set.') %></p>
   <button type="submit" class="btn btn--primary js-wizard"><%- @T('Configure') %></button>
 </div>
 <div class="js-summary hide">
-  <h5><a href="#" class="js-back">❮ Back to overview</a></h5>
+  <h5><a href="#" class="js-back">❮ <%- @T('Back to overview') %></a></h5>
   <h2><%- @T('Settings %s', @item.name) %></h2>
 <% if (@config.ssl is 'ssl' or @config.ssl is 'starttls') and not @config.ssl_verify: %>
   <div class="alert alert--warning" role="alert">

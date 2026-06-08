@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import type { RequiredPermission } from '#shared/types/permission.ts'
 
@@ -21,7 +21,6 @@ import type { RequiredPermission } from '#shared/types/permission.ts'
 const hasPermission = (
   requiredPermission: RequiredPermission,
   permissions: Array<string>,
-  // eslint-disable-next-line sonarjs/cognitive-complexity
 ): boolean => {
   const requiredPermissions = Array.isArray(requiredPermission)
     ? requiredPermission
@@ -63,9 +62,7 @@ const hasPermission = (
           if (checkPartsRequiredPermission) checkPartsRequiredPermission += '.'
           checkPartsRequiredPermission += partRequiredPermission
 
-          singleAccessGranted = permissions.includes(
-            checkPartsRequiredPermission,
-          )
+          singleAccessGranted = permissions.includes(checkPartsRequiredPermission)
 
           if (singleAccessGranted) break
         }

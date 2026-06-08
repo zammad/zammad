@@ -1,11 +1,11 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
 RSpec.describe MicrosoftGraph::ApiError do
-  subject(:instance) { described_class.new(error_hash) }
+  subject(:instance) { described_class.new(error_details) }
 
-  let(:error_hash) do
+  let(:error_details) do
     {
       code:       'badRequest',
       message:    'Uploaded fragment overlaps with existing data.',
@@ -25,7 +25,7 @@ RSpec.describe MicrosoftGraph::ApiError do
     end
 
     context 'with incomplete error hash' do
-      let(:error_hash) do
+      let(:error_details) do
         {
           message: 'Uploaded fragment overlaps with existing data.',
         }
@@ -37,10 +37,18 @@ RSpec.describe MicrosoftGraph::ApiError do
     end
 
     context 'without error hash' do
-      let(:error_hash) { {} }
+      let(:error_details) { {} }
 
       it 'generates correct message' do
         expect(instance.message).to eq('An unknown error occurred. (no error code present)')
+      end
+    end
+
+    context 'with string error details' do
+      let(:error_details) { 'Microsoft Graph API: Connection timeout' }
+
+      it 'generates correct message' do
+        expect(instance.message).to eq('Microsoft Graph API: Connection timeout (no error code present)')
       end
     end
   end
@@ -51,5 +59,4 @@ RSpec.describe MicrosoftGraph::ApiError do
     end
 
   end
-
 end

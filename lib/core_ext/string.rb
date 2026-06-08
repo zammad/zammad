@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rchardet'
 
@@ -84,29 +84,14 @@ class String
     camel_cased_word.split('/').map(&:camelize).join('::')
   end
 
-  # because of mysql inno_db limitations, strip 4 bytes utf8 chars (e. g. emojis)
-  # unfortunaly UTF8mb4 will raise other limitaions of max varchar and lower index sizes
-  # More details: http://pjambet.github.io/blog/emojis-and-mysql/
-  def utf8_to_3bytesutf8
-    return self if Rails.application.config.db_4bytes_utf8
-
-    removed = ''
-    each_char.with_object('') do |c, result|
-      if c.bytesize > 3
-        removed << c
-        next
-      end
-      result << c
-    end.tap do
-      if removed.present?
-        Rails.logger.warn "strip out 4 bytes utf8 chars '#{removed[0..255]}' of '#{self[0..255]}'"
-      end
-    end
-  end
-
 =begin
 
   text = html_string.html2text
+
+  options:
+    string_only - if true, returns simplified text without link references
+    strict - if true, preserves some formatting
+    link_style - :numbered (default) uses [1] references, :markdown uses [text](url) format
 
   returns
 
@@ -114,7 +99,7 @@ class String
 
 =end
 
-  def html2text(string_only = false, strict = false)
+  def html2text(string_only = false, strict = false, link_style: :numbered)
     string = dup
 
     # in case of invalid encoding, strip invalid chars
@@ -127,7 +112,7 @@ class String
     # remove html comments
     string.gsub!(%r{<!--.+?-->}m, '')
 
-    # find <a href=....> and replace it with [x]
+    # find <a href=....> and replace it with appropriate format
     link_list = ''
     counter   = 0
     if string_only
@@ -164,11 +149,33 @@ class String
         end
       end
     elsif string.scan(%r{<a[[:space:]]}i).count < 5_000
-      string.gsub!(%r{<a[[:space:]].*?href=("|')(.+?)("|').*?>}ix) do
-        link = $2
-        counter += 1
-        link_list += "[#{counter}] #{link}\n"
-        "[#{counter}] "
+      if link_style == :markdown
+        # Markdown style: [text](url) - always consistent format
+        string.gsub!(%r{<a[[:space:]]+(|\S+[[:space:]]+)href=("|')(.+?)("|')([[:space:]]*|[[:space:]]+[^>]*)>(.+?)<[[:space:]]*/a[[:space:]]*>}mxi) do |_placeholder|
+          link = $3
+          text = $6
+          text.gsub!(%r{<.+?>}, '')
+          link.presence&.strip!
+          text.presence&.strip!
+
+          if link.present? && text.present?
+            "[#{text}](#{link})"
+          elsif link.present? && text.blank?
+            link
+          elsif link.blank? && text.present?
+            text
+          else
+            ''
+          end
+        end
+      else
+        # Default: numbered references [1], [2], etc.
+        string.gsub!(%r{<a[[:space:]].*?href=("|')(.+?)("|').*?>}ix) do
+          link = $2
+          counter += 1
+          link_list += "[#{counter}] #{link}\n"
+          "[#{counter}] "
+        end
       end
     end
 
@@ -190,7 +197,7 @@ class String
     end
 
     # insert spaces on [A-z]\n[A-z]
-    string.gsub!(%r{([A-z])[[:space:]]([A-z])}m, '\1 \2')
+    string.gsub!(%r{([[:alpha:]])[[:space:]]([[:alpha:]])}mu, '\1 \2')
 
     # remove all new lines
     string.gsub!(%r{(\n\r|\r\r\n|\r\n|\n)}, '')
@@ -324,6 +331,12 @@ class String
     text.chomp
   end
 
+  def contains_html?
+    text = CGI.escapeHTML(self)
+    text.gsub!('&amp;amp;', '&amp;')
+    self != text
+  end
+
 =begin
 
   html = text_string.text2html
@@ -394,11 +407,15 @@ class String
         '<blockquote(|.+?)>[[:space:]]*<div>[[:space:]]*(On|Am|Le|El|Den|Dňa|W dniu|Il|Op|Dne|Dana)[[:space:]]',
         '<div(|.+?)>[[:space:]]*<br>[[:space:]]*(On|Am|Le|El|Den|Dňa|W dniu|Il|Op|Dne|Dana)[[:space:]].{1,500}<blockquote',
       ]
+
       map.each do |regexp|
         string.sub!(%r{#{regexp}}m) do |placeholder|
           "#{marker}#{placeholder}"
         end
+      rescue Regexp::TimeoutError => e
+        Rails.logger.error "Signature identification RegExp #{regexp} timed out: #{e.inspect}"
       end
+
       return string
     end
 
@@ -409,8 +426,13 @@ class String
     end
 
     # search for signature separator "--\n"
-    string.sub!(%r{^\s{0,2}--\s{0,2}$}) do |placeholder|
-      "#{marker}#{placeholder}"
+    signature_separator_regex = %r{^\s{0,2}--\s{0,2}$}
+    begin
+      string.sub!(signature_separator_regex) do |placeholder|
+        "#{marker}#{placeholder}"
+      end
+    rescue Regexp::TimeoutError => e
+      Rails.logger.error "Signature identification RegExp #{signature_separator_regex.source} timed out: #{e.inspect}"
     end
 
     map = {}
@@ -526,6 +548,10 @@ class String
     else
       raise EncodingError, 'could not find a valid input encoding'
     end
+  end
+
+  def json_escape
+    to_json[1..-2] # convert to JSON string, and remove surrounding quotes
   end
 
   private

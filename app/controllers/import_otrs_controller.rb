@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class ImportOtrsController < ApplicationController
 
@@ -115,7 +115,9 @@ class ImportOtrsController < ApplicationController
     end
 
     # start migration
-    AsyncOtrsImportJob.perform_later
+    ApplicationModel.current_transaction.after_commit do
+      AsyncOtrsImportJob.perform_later
+    end
 
     render json: {
       result: 'ok',
@@ -138,7 +140,7 @@ class ImportOtrsController < ApplicationController
       issues.push 'otrsDynamicFields'
     end
 
-    # check if process exsists
+    # check if process exists
     sys_configs = Import::OTRS::Requester.load('SysConfig')
     sys_configs.each do |sys_config|
       next if sys_config['Key'] != 'Process'
@@ -158,9 +160,14 @@ class ImportOtrsController < ApplicationController
 
   def import_status
     result = Import::OTRS.status_bg
+
     if result[:result] == 'import_done'
       Setting.reload
+
+      render json: { setup_done: true }
+      return
     end
+
     render json: result
   end
 

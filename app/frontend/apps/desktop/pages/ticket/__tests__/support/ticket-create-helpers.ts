@@ -1,5 +1,6 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 import type { ExtendedRenderResult } from '#tests/support/components'
+import { visitView } from '#tests/support/components/visitView.ts'
 import { nullableMock } from '#tests/support/utils.ts'
 
 import {
@@ -10,6 +11,7 @@ import { mockFormUpdaterQuery } from '#shared/components/Form/graphql/queries/fo
 import { mockOrganizationQuery } from '#shared/entities/organization/graphql/queries/organization.mocks.ts'
 import { mockUserQuery } from '#shared/entities/user/graphql/queries/user.mocks.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+import getUuid from '#shared/utils/getUuid.ts'
 
 import { testOptions } from '#desktop/components/Form/fields/FieldCustomer/__tests__/support/testOptions.ts'
 
@@ -178,4 +180,9 @@ export const handleMockOrganizationQuery = () => {
       },
     }),
   })
+}
+
+export const visitCreateView = async () => {
+  const id = getUuid()
+  return visitView(`/tickets/create/${id}`)
 }

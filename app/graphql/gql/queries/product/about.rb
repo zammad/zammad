@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Queries
   class Product::About < BaseQuery
@@ -6,9 +6,7 @@ module Gql::Queries
 
     type String, null: false
 
-    def self.authorize(_obj, ctx)
-      VersionPolicy.new(ctx.current_user, nil).show?
-    end
+    requires_permission 'admin'
 
     def resolve(...)
       Version.get

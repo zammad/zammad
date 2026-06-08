@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class SystemReport::Plugin::Ruby < SystemReport::Plugin
   DESCRIPTION = __('Ruby information (version and installed gems)').freeze
@@ -24,7 +24,11 @@ class SystemReport::Plugin::Ruby < SystemReport::Plugin
   end
 
   def gems
-    gems = Bundler.load.specs.reject { |s| s.name == 'bundler' }
-    gems.sort_by(&:name).to_h { |s| [s.name, s.version.to_s || s.git_version.to_s] }
+    Bundler
+      .load
+      .specs
+      .reject { |s| s.name == 'bundler' }
+      .sort_by(&:name)
+      .to_h { |s| [s.name, s.version.to_s.presence || s.git_version.to_s] }
   end
 end

@@ -1,0 +1,18 @@
+ตั๋วที่ถูกยกระดับ (#{ticket.title})
+
+<div>สวัสดี #{recipient.firstname},</div>
+<br>
+<div>ตั๋ว (#{ticket.title}) จาก "<b>#{ticket.customer.longname}</b>" ถูกยกระดับตั้งแต่ "#{ticket.escalation_at}" แล้ว!</div>
+<br>
+<% if @objects[:article] %>
+  <div>
+  ข้อมูล:
+  <blockquote type="cite">
+  #{article.body_as_html}
+  </blockquote>
+  </div>
+<% end %>
+<br>
+<div>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">ดูตั๋วนี้ใน #{config.product_name}</a>
+</div>

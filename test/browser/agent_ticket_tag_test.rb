@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'browser_test_helper'
 
@@ -379,17 +379,17 @@ class AgentTicketTagTest < TestCase
     )
 
     set(
-      css:   '.content.active .js-create input[name="name"]',
+      css:   '.content.active .js-create input.token-input',
       value: "#{tag_prefix} A",
     )
     click(css: '.content.active .js-create .js-submit')
     set(
-      css:   '.content.active .js-create input[name="name"]',
+      css:   '.content.active .js-create input.token-input',
       value: "#{tag_prefix} B",
     )
     click(css: '.content.active .js-create .js-submit')
     set(
-      css:   '.content.active .js-create input[name="name"]',
+      css:   '.content.active .js-create input.token-input',
       value: "#{tag_prefix} C",
     )
     click(css: '.content.active .js-create .js-submit')

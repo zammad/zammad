@@ -1,10 +1,7 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { visitView } from '#tests/support/components/visitView.ts'
-import {
-  mockGraphQLApi,
-  mockGraphQLSubscription,
-} from '#tests/support/mock-graphql-api.ts'
+import { mockGraphQLApi, mockGraphQLSubscription } from '#tests/support/mock-graphql-api.ts'
 import type { ExtendedIMockSubscription } from '#tests/support/mock-graphql-api.ts'
 import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
 import { waitUntil } from '#tests/support/utils.ts'
@@ -35,9 +32,7 @@ describe('selecting a online notification', () => {
       lastname: 'Doe',
     })
 
-    onlineNotificationCountSubscription = mockGraphQLSubscription(
-      OnlineNotificationsCountDocument,
-    )
+    onlineNotificationCountSubscription = mockGraphQLSubscription(OnlineNotificationsCountDocument)
   })
 
   it('can delete online notification', async () => {
@@ -180,9 +175,7 @@ describe('selecting a online notification', () => {
       },
     })
 
-    const noRelationNotificationItem = view.getByText(
-      'You can no longer see the ticket.',
-    )
+    const noRelationNotificationItem = view.getByText('You can no longer see the ticket.')
 
     await view.events.click(noRelationNotificationItem)
 

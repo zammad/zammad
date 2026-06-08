@@ -1,7 +1,4 @@
-mutation ticketSharedDraftZoomUpdate(
-  $sharedDraftId: ID!
-  $input: TicketSharedDraftZoomInput!
-) {
+mutation ticketSharedDraftZoomUpdate($sharedDraftId: ID!, $input: TicketSharedDraftZoomInput!) {
   ticketSharedDraftZoomUpdate(input: $input, sharedDraftId: $sharedDraftId) {
     sharedDraft {
       ...ticketSharedDraftZoomAttributes

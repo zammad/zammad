@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { onKeyStroke } from '@vueuse/core'
 import { ref, type Ref, type ShallowRef } from 'vue'
@@ -56,13 +56,22 @@ export const useTrapTab = <T extends HTMLElement>(
   const moveNextFocusToTrap = () => {
     if (!container.value) return
 
-    const dummyElement = document.createElement('div')
-    dummyElement.tabIndex = 0
+    const firstElementToShiftFocusOnFirstNode = document.createElement('div')
+    firstElementToShiftFocusOnFirstNode.tabIndex = 0
+    firstElementToShiftFocusOnFirstNode.style.outline = 'none'
 
     requestAnimationFrame(() => {
-      container.value?.prepend(dummyElement)
-      dummyElement.focus()
-      dummyElement.remove()
+      container.value?.prepend(firstElementToShiftFocusOnFirstNode)
+      firstElementToShiftFocusOnFirstNode.focus()
+
+      // We delay removal of the pseudo element to ensure that focus has shifted.
+      firstElementToShiftFocusOnFirstNode.addEventListener(
+        'blur',
+        () => {
+          firstElementToShiftFocusOnFirstNode.remove()
+        },
+        { once: true },
+      )
     })
   }
 

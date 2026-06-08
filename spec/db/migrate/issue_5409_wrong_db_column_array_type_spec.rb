@@ -1,9 +1,9 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
 RSpec.describe Issue5409WrongDbColumnArrayType, type: :db_migration do
-  describe 'with PostgreSQL backend', db_adapter: :postgresql, db_strategy: :reset do
+  describe 'with PostgreSQL backend', db_strategy: :reset do
     before do
       change_column :smime_certificates, :email_addresses, :text, null: true, array: true
       change_column :pgp_keys, :email_addresses, :text, null: true, array: true
@@ -79,15 +79,6 @@ RSpec.describe Issue5409WrongDbColumnArrayType, type: :db_migration do
           expect { migrate }.not_to raise_error
         end
       end
-    end
-  end
-
-  describe 'with MariaDB backend', db_adapter: :mysql do
-    it 'does not migrate column array type' do
-      expect { migrate }
-        .to not_change { SMIMECertificate.columns.find { |c| c.name == 'email_addresses' }.type }.from(:json)
-        .and not_change { PGPKey.columns.find { |c| c.name == 'email_addresses' }.type }.from(:json)
-        .and not_change { PublicLink.columns.find { |c| c.name == 'screen' }.type }.from(:json)
     end
   end
 end

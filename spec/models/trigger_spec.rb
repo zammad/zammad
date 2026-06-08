@@ -1,8 +1,9 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 require 'models/application_model_examples'
 require 'models/concerns/has_xss_sanitized_note_examples'
+require 'models/concerns/touches_perform_references_examples'
 
 RSpec.describe Trigger, type: :model do
   subject(:trigger) { create(:trigger, condition: condition, perform: perform, activator: activator, execution_condition_mode: execution_condition_mode) }
@@ -18,6 +19,7 @@ RSpec.describe Trigger, type: :model do
 
   it_behaves_like 'ApplicationModel', can_assets: { selectors: %i[condition perform] }
   it_behaves_like 'HasXssSanitizedNote', model_factory: :trigger
+  it_behaves_like 'TouchesPerformReferences'
 
   describe 'validation' do
     it 'uses Validations::VerifyPerformRulesValidator' do
@@ -248,25 +250,82 @@ RSpec.describe Trigger, type: :model do
           expect(article.attachments[0].preferences['Content-ID']).to eq('image001.jpg@01CDB132.D8A510F0')
 
           expect(article.body).to eq(<<~RAW.chomp
-            some body with &gt;snip&lt;<div>
-            <p>Herzliche Grüße aus Oberalteich sendet Herrn Smith</p>
-            <p> </p>
-            <p>Sepp Smith - Dipl.Ing. agr. (FH)</p>
-            <p>Geschäftsführer der example Straubing-Bogen</p>
-            <p>Klosterhof 1 | 94327 Bogen-Oberalteich</p>
-            <p>Tel: 09422-505601 | Fax: 09422-505620</p>
-            <p><span>Internet: <a href="http://example-straubing-bogen.de/" rel="nofollow noreferrer noopener" target="_blank"><span style="color:blue;">http://example-straubing-bogen.de</span></a></span></p>
-            <p><span lang="EN-US">Facebook: </span><a href="http://facebook.de/examplesrbog" rel="nofollow noreferrer noopener" target="_blank"><span lang="EN-US" style="color:blue;">http://facebook.de/examplesrbog</span></a><span lang="EN-US"></span></p>
-            <p><b><span style="color:navy;"><img border="0" src="cid:image001.jpg@01CDB132.D8A510F0" alt="Beschreibung: Beschreibung: efqmLogo" style="width:60px;height:19px;"></span></b><b><span lang="EN-US" style="color:navy;"> - European Foundation für Quality Management</span></b><span lang="EN-US"></span></p>
-            <p><span lang="EN-US"> </span></p>
-            </div>&gt;/snip&lt;
+            some body with &gt;snip&lt;<div><p>Herzliche Grüße aus Oberalteich sendet Herrn Smith</p><p>&nbsp;</p><p>Sepp Smith - Dipl.Ing. agr. (FH)</p><p>Geschäftsführer der example Straubing-Bogen</p><p>Klosterhof 1 | 94327 Bogen-Oberalteich</p><p>Tel: 09422-505601 | Fax: 09422-505620</p><p><span>Internet: <a href="http://example-straubing-bogen.de/" rel="nofollow noreferrer noopener" target="_blank"><span style="color:blue;">http://example-straubing-bogen.de</span></a></span></p><p><span lang="EN-US">Facebook: </span><a href="http://facebook.de/examplesrbog" rel="nofollow noreferrer noopener" target="_blank"><span lang="EN-US" style="color:blue;">http://facebook.de/examplesrbog</span></a><span lang="EN-US"></span></p><p><b><span style="color:navy;"><img border="0" src="cid:image001.jpg@01CDB132.D8A510F0" alt="Beschreibung: Beschreibung: efqmLogo" style="width:60px;height:19px;"></span></b><b><span lang="EN-US" style="color:navy;"> - European Foundation für Quality Management</span></b><span lang="EN-US"></span></p><p><span lang="EN-US"> </span></p></div>&gt;/snip&lt;
           RAW
                                     )
         end
       end
 
+      context 'when ticket has attachments or inline images (#5918)' do
+        let(:condition) do
+          { 'ticket.action' => { 'operator' => 'is', 'value' => 'update' } }
+        end
+
+        let(:perform) do
+          { 'article.note' => { 'subject' => 'Test subject note', 'internal' => 'true', 'body' => 'some body with #{last_external_article.body_as_html}', 'include_attachments' => true } } # rubocop:disable Lint/InterpolationCheck
+        end
+
+        context 'when inline images are used' do
+          it 'does add attachments because last article has inline attachments' do
+            ticket = create(:ticket)
+            create(:ticket_article, :with_inline_attachment, ticket: ticket)
+            TransactionDispatcher.commit
+
+            UserInfo.current_user_id = 1
+            create(:ticket_article, :with_inline_attachment, ticket: ticket, body: 'Second article with inline attachments')
+
+            expect { TransactionDispatcher.commit }.to change(Ticket::Article, :count).by(1)
+
+            note = Ticket::Article.last
+            expect(note.attachments.count).to eq(1)
+          end
+
+          it 'does not add attachments from first article because perform only uses last_external_article' do
+            ticket = create(:ticket)
+            create(:ticket_article, :with_inline_attachment, ticket: ticket)
+            TransactionDispatcher.commit
+
+            UserInfo.current_user_id = 1
+            create(:ticket_article, ticket: ticket, body: 'Second article without inline attachments')
+            expect { TransactionDispatcher.commit }.to change(Ticket::Article, :count).by(1)
+
+            note = Ticket::Article.last
+            expect(note.attachments.count).to eq(0)
+          end
+        end
+
+        context 'when attachments are used' do
+          it 'does add attachments because latest article has attachments and include_attachments is activated' do
+            ticket = create(:ticket)
+            create(:ticket_article, :with_attachment, ticket: ticket)
+            TransactionDispatcher.commit
+
+            UserInfo.current_user_id = 1
+            create(:ticket_article, :with_attachment, ticket: ticket, body: 'Second article with attachments')
+
+            expect { TransactionDispatcher.commit }.to change(Ticket::Article, :count).by(1)
+
+            note = Ticket::Article.last
+            expect(note.attachments.count).to eq(1)
+          end
+
+          it 'does not add attachments from first article because attachments are only used from the latest article if activated' do
+            ticket = create(:ticket)
+            create(:ticket_article, :with_attachment, ticket: ticket)
+            TransactionDispatcher.commit
+
+            UserInfo.current_user_id = 1
+            create(:ticket_article, ticket: ticket, body: 'Second article without attachments')
+            expect { TransactionDispatcher.commit }.to change(Ticket::Article, :count).by(1)
+
+            note = Ticket::Article.last
+            expect(note.attachments.count).to eq(0)
+          end
+        end
+      end
+
       context 'notification.email recipient' do
-        let!(:ticket) { create(:ticket) }
+        let!(:ticket)     { create(:ticket) }
         let!(:recipient1) { create(:user, email: 'test1@zammad-test.com') }
         let!(:recipient2) { create(:user, email: 'test2@zammad-test.com') }
         let!(:recipient3) { create(:user, email: 'test3@zammad-test.com') }
@@ -1136,7 +1195,7 @@ RSpec.describe Trigger, type: :model do
     end
   end
 
-  describe 'multiselect triggers', db_strategy: :reset, mariadb: true do
+  describe 'multiselect triggers', db_strategy: :reset do
 
     let(:attribute_name) { 'multiselect' }
 
@@ -1560,28 +1619,54 @@ RSpec.describe Trigger, type: :model do
 
       it 'returns true if it was performed yesterday' do
         travel(-1.day) do
-          trigger.performed_on(ticket, activator_type: 'reminder_reached')
+          trigger.performable_on?(ticket, activator_type: 'reminder_reached')
         end
 
         expect(trigger).to be_performable_on(ticket, activator_type: 'reminder_reached')
       end
 
       it 'returns true if it was performed today on another ticket' do
-        trigger.performed_on(create(:ticket), activator_type: 'reminder_reached')
+        trigger.performable_on?(create(:ticket), activator_type: 'reminder_reached')
 
         expect(trigger).to be_performable_on(ticket, activator_type: 'reminder_reached')
       end
 
       it 'returns true if it was performed today by another activator' do
-        trigger.performed_on(ticket, activator_type: 'escalation')
+        trigger.performable_on?(ticket, activator_type: 'escalation')
 
         expect(trigger).to be_performable_on(ticket, activator_type: 'reminder_reached')
       end
 
       it 'returns false if it was performed today on the same ticket by the same activator and same user' do
-        trigger.performed_on(ticket, activator_type: 'reminder_reached')
+        trigger.performable_on?(ticket, activator_type: 'reminder_reached')
 
         expect(trigger).not_to be_performable_on(ticket, activator_type: 'reminder_reached')
+      end
+
+      # https://github.com/zammad/zammad/issues/5655
+      it 'returns true if it was performed today and then ticket related field was changed' do
+        ticket.update(pending_time: 30.minutes.from_now)
+        trigger.performable_on?(ticket, activator_type: 'reminder_reached')
+
+        expect { ticket.update(pending_time: 1.hour.from_now) }
+          .to change { trigger.performable_on?(ticket, activator_type: 'reminder_reached') }
+          .to true
+      end
+
+      # https://github.com/zammad/zammad/issues/5655
+      it 'returns true if it was performed today and then ticket related field was changed and reverted back to original' do
+        initial_pending_time = 1.hour.from_now
+        ticket.update(pending_time: initial_pending_time)
+
+        trigger.performable_on?(ticket, activator_type: 'reminder_reached')
+
+        ticket.update(pending_time: 2.hours.from_now)
+
+        trigger.performable_on?(ticket, activator_type: 'reminder_reached')
+
+        expect { ticket.update(pending_time: initial_pending_time) }
+          .to change { trigger.performable_on?(ticket, activator_type: 'reminder_reached') }
+          .to true
       end
     end
   end
@@ -1808,7 +1893,7 @@ RSpec.describe Trigger, type: :model do
   end
 
   describe 'Extend trigger conditions with an article accounted time entry flag #4760' do
-    let!(:ticket) { create(:ticket) }
+    let!(:ticket) { create(:ticket, state_name: 'pending reminder') }
 
     before do
       ticket && article && trigger

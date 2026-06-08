@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { renderComponent } from '#tests/support/components/index.ts'
 
@@ -12,7 +12,7 @@ describe('CommonAvatar.vue', () => {
 
     expect(avatar).toHaveTextContent('??')
     expect(avatar).toHaveClass('size-medium')
-    expect(avatar).toHaveStyle({ 'background-image': '' })
+    expect(avatar.style.backgroundImage).toBe('')
   })
 
   it('renders initials and chooses color based on it', async () => {
@@ -50,10 +50,7 @@ describe('CommonAvatar.vue', () => {
 
     await view.rerender({ image: 'data:image/png;base64,1' })
 
-    expect(
-      avatar,
-      'renders base64 as an image instead of relying on API',
-    ).toHaveStyle({
+    expect(avatar, 'renders base64 as an image instead of relying on API').toHaveStyle({
       'background-image': 'url("data:image/png;base64,1")',
     })
   })
@@ -96,5 +93,25 @@ describe('CommonAvatar.vue', () => {
     expect(view.queryByIconName('crown')).not.toBeInTheDocument()
     await view.rerender({ vipIcon: 'crown' })
     expect(view.getByIconName('crown')).toBeInTheDocument()
+  })
+
+  it('scales down to the next smaller size below @3xl when responsive', async () => {
+    const view = renderComponent(CommonAvatar, {
+      props: { size: 'normal', responsive: true },
+    })
+
+    const avatar = view.getByTestId('common-avatar')
+
+    // renders the next smaller size as the base and restores the target at @3xl
+    expect(avatar).toHaveClass('size-medium')
+    expect(avatar).toHaveClass('size-3xl-normal')
+    expect(avatar).not.toHaveClass('size-normal')
+
+    // without the flag the size is applied as-is
+    await view.rerender({ size: 'normal', responsive: false })
+
+    expect(avatar).toHaveClass('size-normal')
+    expect(avatar).not.toHaveClass('size-medium')
+    expect(avatar).not.toHaveClass('size-3xl-normal')
   })
 })

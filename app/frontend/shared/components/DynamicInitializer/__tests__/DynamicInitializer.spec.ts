@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { render } from '@testing-library/vue'
 import { h, nextTick, ref } from 'vue'
@@ -44,12 +44,7 @@ describe('dynamicaly add components to dom', () => {
 
     const name = ref('dialog')
 
-    await pushComponent(
-      'dialog',
-      '1',
-      (props) => h('div', `Hello, ${props.name}!`),
-      { name },
-    )
+    await pushComponent('dialog', '1', (props) => h('div', `Hello, ${props.name}!`), { name })
 
     expect(view.container).toHaveTextContent('Hello, dialog!')
 

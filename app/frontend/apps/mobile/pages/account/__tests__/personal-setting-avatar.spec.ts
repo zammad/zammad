@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { defineComponent } from 'vue'
 
@@ -96,7 +96,9 @@ const removeAvatar = async (view: ExtendedRenderResult) => {
   await view.events.click(view.getByText('Delete'))
   await view.findByText('Delete avatar')
   await view.events.click(view.getByText('Delete avatar'))
-  await checkShownAvatar(view, '')
+
+  const avatar = await view.findByTestId('common-avatar')
+  expect(avatar.style.backgroundImage).toBe('')
 }
 
 describe('editing avatar', () => {

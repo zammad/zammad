@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -33,10 +33,9 @@ RSpec.describe Gql::Mutations::Ticket::Article::ChangeVisibility, :aggregate_fai
     it 'delegates to the service' do
       log = []
 
-      allow_any_instance_of(Service::Ticket::Article::ChangeVisibility)
-        .to receive(:execute) do |article:, internal:|
-          log << { article: article.id, internal: internal }
-        end
+      allow(Service::Ticket::Article::ChangeVisibility).to receive(:execute) do |article:, internal:, **|
+        log << { article: article.id, internal: internal }
+      end
 
       gql.execute(query, variables: variables)
 

@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed } from 'vue'
@@ -24,9 +24,7 @@ defineEmits<{
 }>()
 
 const issueStateColor = computed(() => {
-  if (
-    props.issue.state === EnumTicketExternalReferencesIssueTrackerItemState.Open
-  ) {
+  if (props.issue.state === EnumTicketExternalReferencesIssueTrackerItemState.Open) {
     return 'text-yellow-500'
   }
 
@@ -80,10 +78,7 @@ const issueStateName = computed(() => {
         :values="issue.assignees"
       />
 
-      <ExternalReferenceContent
-        v-if="issue.labels?.length"
-        :label="$t('Labels')"
-      >
+      <ExternalReferenceContent v-if="issue.labels?.length" :label="$t('Labels')">
         <IssueTrackerBadgeList :badges="issue.labels" />
       </ExternalReferenceContent>
     </div>

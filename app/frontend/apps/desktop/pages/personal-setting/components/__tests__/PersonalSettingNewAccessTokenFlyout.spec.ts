@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { getByRole, within } from '@testing-library/vue'
 
@@ -12,10 +12,7 @@ import {
 
 import PersonalSettingNewAccessTokenFlyout from '../PersonalSettingNewAccessTokenFlyout.vue'
 
-const renderNewAccessTokenFlyout = (
-  props: Record<string, unknown> = {},
-  options: any = {},
-) => {
+const renderNewAccessTokenFlyout = (props: Record<string, unknown> = {}, options: any = {}) => {
   return renderComponent(PersonalSettingNewAccessTokenFlyout, {
     props,
     ...options,
@@ -51,8 +48,7 @@ describe('PersonalSettingNewAccessTokenFlyout - create new access token', () => 
                   {
                     value: 'ticket.agent',
                     label: 'Agent Tickets (%s)',
-                    description:
-                      'To access the agent tickets based on group access.',
+                    description: 'To access the agent tickets based on group access.',
                   },
                 ],
               },
@@ -67,7 +63,7 @@ describe('PersonalSettingNewAccessTokenFlyout - create new access token', () => 
     const view = renderNewAccessTokenFlyout()
 
     await view.findByRole('complementary', {
-      name: 'New Personal Access Token',
+      name: 'New personal access token',
     })
 
     expect(await view.findByLabelText('Name')).toBeInTheDocument()
@@ -106,8 +102,6 @@ describe('PersonalSettingNewAccessTokenFlyout - create new access token', () => 
       }),
     )
 
-    expect(view.getByLabelText('Your Personal Access Token')).toHaveValue(
-      'new-token-1234',
-    )
+    expect(view.getByLabelText('Your personal access token')).toHaveValue('new-token-1234')
   })
 })

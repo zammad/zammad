@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class KnowledgeBase::CategoryPolicy < ApplicationPolicy
   USER_REQUIRED = false
@@ -9,6 +9,10 @@ class KnowledgeBase::CategoryPolicy < ApplicationPolicy
 
   def show_public?
     access_editor? || record.public_content?
+  end
+
+  def show_any?
+    show? || show_public?
   end
 
   def permissions?

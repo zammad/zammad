@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class ChannelsSmsController < ApplicationController
   prepend_before_action :authenticate_and_authorize!, except: [:webhook]
@@ -53,7 +53,7 @@ class ChannelsSmsController < ApplicationController
   end
 
   def webhook
-    raise Exceptions::UnprocessableEntity, 'token param missing' if params['token'].blank?
+    raise Exceptions::UnprocessableContent, 'token param missing' if params['token'].blank?
 
     ApplicationHandleInfo.in_context('sms') do
       channel = nil

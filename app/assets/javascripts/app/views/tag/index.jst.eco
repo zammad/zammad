@@ -18,9 +18,8 @@
 
   <div class="settings-entry vertical">
     <h2><%- @T('Manage Tags') %></h2>
-    <form class="horizontal form-group formGroup--halfSize js-create">
-      <div class="form-item">
-        <input type="text" name="name" class="" autocomplete="off">
+    <form class="horizontal form-group js-create">
+      <div class="tags-add form-item">
       </div>
       <button type="submit" class="btn btn--primary js-submit"><%- @T('Add') %></button>
     </form>

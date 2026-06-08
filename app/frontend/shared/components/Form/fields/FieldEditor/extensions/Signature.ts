@@ -1,7 +1,9 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { mergeAttributes, Node } from '@tiptap/core'
 import { DOMParser, type Node as ProseNode } from '@tiptap/pm/model'
+
+import { htmlCleanup } from '#shared/utils/htmlCleanup.ts'
 
 import type { Range } from '@tiptap/core'
 
@@ -13,25 +15,66 @@ export default Node.create({
       addSignature:
         (signature) =>
         ({ editor, chain }) => {
-          const element = document.createElement('div')
-          element.innerHTML = `<div>${signature.body}</div>`
+          const signatureElement = htmlCleanup(
+            `<div>${signature.renderedBody}</div>`,
+            false,
+            true, // return as element due to DOMParser requirement below
+          ) as Element
+
           const slice = DOMParser.fromSchema(editor.state.schema)
-            .parseSlice(element)
+            .parseSlice(signatureElement)
             .toJSON()
+
           if (!slice) return false
-          const needBr =
-            signature.position === 'before' ||
-            slice.content[0]?.content?.[0].type !== 'hardBreak'
+
+          const trailingNode = editor.state.doc.resolve(signature.from).nodeAfter
+
+          const isEmptyParagraphOrHardBreak = (node?: ProseNode | null) =>
+            !!(
+              node &&
+              (node.type.name === 'paragraph' || node.type.name === 'hardBreak') &&
+              !node.content.size &&
+              !node.marks.length
+            )
+
+          const hasSingleHardBreakParagraph = (node?: ProseNode | null) =>
+            !!(
+              node &&
+              node.type.name === 'paragraph' &&
+              node.content.size === 1 &&
+              node.firstChild?.type.name === 'hardBreak' &&
+              !node.marks.length
+            )
+
+          const trailingHasSpacing =
+            isEmptyParagraphOrHardBreak(trailingNode) || hasSingleHardBreakParagraph(trailingNode)
+
+          // Insert a blank paragraph before the signature for visual separation, but only
+          // when there is no empty paragraph already sitting at the insertion point.
+          // Skipping it when one exists prevents blank lines from accumulating on each
+          // remove → re-add cycle (e.g. switching groups back and forth).
+          const $from = editor.state.doc.resolve(signature.from)
+          const { nodeBefore } = $from
+          const leadingBreak = !(
+            nodeBefore &&
+            nodeBefore.type.name === 'paragraph' &&
+            !nodeBefore.content.size &&
+            !nodeBefore.marks.length
+          )
+
+          // for full quote we need to add a trailing break
+          const trailingBreak = signature.position === 'before' && !trailingHasSpacing
           return chain()
             .insertContentAt(signature.from, [
-              ...(needBr ? [{ type: 'paragraph' }] : []),
+              ...(leadingBreak ? [{ type: 'paragraph' }] : []),
               {
                 type: 'signature',
                 content: slice.content,
                 attrs: {
-                  signatureId: signature.id,
+                  signatureId: signature.internalId,
                 },
               },
+              ...(trailingBreak ? [{ type: 'paragraph' }] : []),
             ])
             .run()
         },
@@ -40,9 +83,14 @@ export default Node.create({
         ({ editor, chain }) => {
           const ranges: Range[] = []
           let prev: [ProseNode | null, number] = [null, 0]
-          editor.state.doc.descendants((node, pos) => {
+          editor.state.doc.descendants((node, pos, parent) => {
             if (node.type.name !== 'signature') {
               prev = [node, pos]
+              return
+            }
+
+            // Only remove top-level signatures (not inside blockquotes/quoted content)
+            if (parent?.type.name !== 'doc') {
               return
             }
 
@@ -81,7 +129,6 @@ export default Node.create({
   },
   group: 'block',
   content: 'block*',
-  marks: '_',
   addOptions() {
     return {
       HTMLAttributes: {
@@ -109,17 +156,19 @@ export default Node.create({
     }
   },
   renderHTML({ HTMLAttributes }) {
-    return [
-      'div',
-      mergeAttributes(this.options.HTMLAttributes, HTMLAttributes),
-      0,
-    ]
+    return ['div', mergeAttributes(this.options.HTMLAttributes, HTMLAttributes), 0]
   },
   parseHTML() {
     return [
       {
-        tag: 'div.signature',
-        attrs: { class: 'signature', 'data-signature': 'true' },
+        tag: 'div',
+        getAttrs: (element) => {
+          // Match both formats: old (no class) and new (with class)
+          return element.getAttribute('data-signature') === 'true' ? {} : false
+          // Because no attributes from the HTML element need to be
+          //  extracted or stored in the node's data. The mere presence of the `data-signature`
+          //  attribute is sufficient to identify and parse the element as a signature node.
+        },
         consuming: false,
       },
     ]

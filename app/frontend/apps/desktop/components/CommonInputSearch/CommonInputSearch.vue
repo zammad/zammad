@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { useVModel } from '@vueuse/core'
@@ -46,9 +46,7 @@ const clearFilter = () => {
   focus()
 }
 
-const suggestionVisiblePart = computed(() =>
-  props.suggestion?.slice(filter.value?.length),
-)
+const suggestionVisiblePart = computed(() => props.suggestion?.slice(filter.value?.length))
 
 const maybeAcceptSuggestion = (event: Event) => {
   if (
@@ -69,16 +67,14 @@ const onKeydown = (event: KeyboardEvent) => emit('keydown', event)
 </script>
 
 <template>
-  <div
-    class="inline-flex grow items-center justify-start gap-1 text-sm"
-    :class="wrapperClass"
-  >
+  <div class="inline-flex grow items-center justify-start gap-2 text-sm" :class="wrapperClass">
     <CommonIcon
       class="shrink-0 fill-stone-200 dark:fill-neutral-500"
       size="tiny"
       name="search"
       decorative
     />
+    <slot name="prefix" />
     <div class="relative inline-flex grow overflow-clip">
       <div class="grow">
         <input
@@ -87,7 +83,7 @@ const onKeydown = (event: KeyboardEvent) => emit('keydown', event)
           v-bind="$attrs"
           :placeholder="i18n.t(placeholder)"
           :aria-label="$t('Search…')"
-          class="w-full min-w-16 text-black outline-hidden dark:text-white"
+          class="w-full text-black outline-hidden dark:text-white"
           :class="{
             'bg-blue-200 dark:bg-gray-700': !alternativeBackground,
             'bg-neutral-50 dark:bg-gray-500': alternativeBackground,
@@ -109,20 +105,15 @@ const onKeydown = (event: KeyboardEvent) => emit('keydown', event)
         data-test-id="suggestion"
       >
         <span class="invisible">{{ filter }}</span>
-        <span class="text-stone-200 dark:text-neutral-500">{{
-          suggestionVisiblePart
-        }}</span>
+        <span class="text-stone-200 dark:text-neutral-500">{{ suggestionVisiblePart }}</span>
       </div>
     </div>
     <div class="flex shrink-0 items-center gap-1">
       <slot name="controls" />
       <CommonIcon
-        class="fill-stone-200 hover:fill-black focus-visible:rounded-xs focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 dark:fill-neutral-500 dark:hover:fill-white"
-        :class="{
-          invisible: !filter?.length,
-        }"
-        :aria-label="$t('Clear Search')"
-        :aria-hidden="!filter?.length ? 'true' : undefined"
+        v-if="filter?.length"
+        class="fill-stone-200 focus-visible-app-default outline-0 hover:fill-black focus-visible:rounded-xs dark:fill-neutral-500 dark:hover:fill-white"
+        :aria-label="$t('Clear search')"
         name="backspace2"
         size="xs"
         role="button"

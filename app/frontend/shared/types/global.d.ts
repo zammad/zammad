@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 declare type LogLevel = 'trace' | 'debug' | 'info' | 'warn' | 'error' | 'silent'
 
@@ -10,18 +10,18 @@ declare global {
   interface Window {
     __(source: string): string
     setLogLevel(level: LogLevel, persistent: boolean): void
-    setQueryPollingConfig(
-      config?: Partial<QueryPollingConfig>,
-    ): QueryPollingConfig
+    setQueryPollingConfig(config?: Partial<QueryPollingConfig>): QueryPollingConfig
+    resetQueryPollingConfig(): QueryPollingConfig
+    getCurrentQueryPollingConfig(): QueryPollingConfig
   }
 }
 
 declare function __(source: string): string
 declare function setLogLevel(level: LogLevel, persistent: boolean): void
 
-declare function setQueryPollingConfig(
-  config?: Partial<QueryPollingConfig>,
-): QueryPollingConfig
+declare function setQueryPollingConfig(config?: Partial<QueryPollingConfig>): QueryPollingConfig
+declare function resetQueryPollingConfig(): QueryPollingConfig
+declare function getCurrentQueryPollingConfig(): QueryPollingConfig
 
 // TODO: Workaround for current problem with formkit version, remove when fixed
 declare module '@formkit/themes'

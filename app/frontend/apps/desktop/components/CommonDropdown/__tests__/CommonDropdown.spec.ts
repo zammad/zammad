@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { renderComponent } from '#tests/support/components/index.ts'
 
@@ -22,11 +22,10 @@ describe('CommonDropdown', () => {
         items: dropdownItems,
         actionLabel: 'text-dropdown',
       },
+      router: true,
     })
 
-    await wrapper.events.click(
-      wrapper.getByRole('button', { name: 'text-dropdown' }),
-    )
+    await wrapper.events.click(wrapper.getByRole('button', { name: 'text-dropdown' }))
 
     expect(await wrapper.findByRole('menu')).toBeInTheDocument()
     expect(wrapper.queryByRole('checkbox')).not.toBeInTheDocument()
@@ -38,17 +37,14 @@ describe('CommonDropdown', () => {
         items: dropdownItems,
         actionLabel: 'action-dropdown',
       },
+      router: true,
     })
 
-    await wrapper.events.click(
-      wrapper.getByRole('button', { name: 'action-dropdown' }),
-    )
+    await wrapper.events.click(wrapper.getByRole('button', { name: 'action-dropdown' }))
 
     expect(await wrapper.findByRole('menu')).toBeInTheDocument()
 
-    await wrapper.events.click(
-      wrapper.getByRole('button', { name: dropdownItems[0].label }),
-    )
+    await wrapper.events.click(wrapper.getByRole('button', { name: dropdownItems[0].label }))
 
     expect(wrapper.emitted('handle-action')).toEqual([[dropdownItems[0]]])
   })
@@ -61,14 +57,13 @@ describe('CommonDropdown', () => {
         dropdownItems,
         items: dropdownItems,
       },
+      router: true,
       vModel: {
         modelValue: selectedItem,
       },
     })
 
-    expect(
-      wrapper.getByRole('button', { name: selectedItem.label }),
-    ).toBeInTheDocument()
+    expect(wrapper.getByRole('button', { name: selectedItem.label })).toBeInTheDocument()
 
     await wrapper.events.click(wrapper.getByText(dropdownItems[0].label))
 
@@ -78,8 +73,6 @@ describe('CommonDropdown', () => {
 
     await wrapper.events.click(wrapper.getByText(dropdownItems[1].label))
 
-    expect(
-      await wrapper.findByRole('button', { name: dropdownItems[1].label }),
-    ).toBeInTheDocument()
+    expect(await wrapper.findByRole('button', { name: dropdownItems[1].label })).toBeInTheDocument()
   })
 })

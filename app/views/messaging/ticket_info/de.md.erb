@@ -1,5 +1,5 @@
 # #{ticket.title}
-_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: Zuletzt geändert um #{ticket.updated_at}_
+_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#{config.ticket_hook}#{ticket.number}>: Zuletzt geändert um #{ticket.updated_at}_
 * Gruppe: #{ticket.group.name}
 * Besitzer: #{ticket.owner.fullname}
 * Status: #{t(ticket.state.name)}

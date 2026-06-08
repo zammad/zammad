@@ -1,0 +1,45 @@
+Sehr geehrter Herr Schmidt,
+
+wir können uns gerne nächste Woche zusammenschalten.
+Haben Sie eine direkte E-Mailadresse?
+
+Vielen Dank vorab.
+
+Mit freundlichen Grüßen
+
+Max Müller
+Abteilung IT
+
+Telefon: +49 123 456789
+E-Mail: [max.mueller@example.org](mailto:max.mueller@example.org)
+
+Example GmbH
+Musterstraße 35
+12345 Musterstadt
+
+[www.example.org](http://www.example.org)
+
+Von: Hans Schmidt <hans.schmidt@example.org>
+Gesendet: Dienstag, 14. November 2023 19:23
+An: Max Müller <max.mueller@example.org>
+Betreff: Re: Projekt Update
+
+Hallo Herr Müller,
+
+sehr gerne. Ich stelle einen Termin ein.
+
+Viele Grüße,
+Hans Schmidt
+
+Peter Weber <peter.weber@example.org> schrieb am Di. 14. Nov. 2023 um 14:06:
+
+> Hallo Herr Schmidt,
+>
+> können wir nächste Woche telefonieren?
+>
+> Sonnige Grüße,
+> Peter Weber
+>
+> --
+> Example GmbH // Musterstraße 18 // Berlin
+

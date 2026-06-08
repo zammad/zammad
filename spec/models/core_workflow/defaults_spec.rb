@@ -1,9 +1,9 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 require 'models/core_workflow/base'
 
-RSpec.describe 'CoreWorkflow > Defaults', mariadb: true, type: :model do
+RSpec.describe 'CoreWorkflow > Defaults', type: :model do
   include_context 'with core workflow base'
 
   describe '.perform - Default - Group' do
@@ -240,6 +240,15 @@ RSpec.describe 'CoreWorkflow > Defaults', mariadb: true, type: :model do
       it 'does not show empty value for create_middle' do
         expect(result[:restrict_values]['state_id']).not_to include('')
       end
+    end
+
+  end
+
+  describe '.perform - Default - State for agent and customer user' do
+    let(:action_user) { create(:agent_and_customer, groups: [ticket.group]) }
+
+    it 'does show all create_middle states that an agent would see' do
+      expect(result[:restrict_values]['state_id']).to eq([''] + Ticket::State.by_category_ids(:viewable_agent_new).map(&:to_s))
     end
   end
 

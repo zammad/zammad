@@ -1,18 +1,16 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import {
-  fireEvent,
-  getAllByRole,
-  getByLabelText,
-  getByRole,
-} from '@testing-library/vue'
+import { fireEvent, getAllByRole, getByLabelText, getByRole } from '@testing-library/vue'
 import { flushPromises } from '@vue/test-utils'
 
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
 import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
+import { waitFor } from '#tests/support/vitest-wrapper.ts'
 
 import { mockLogoutMutation } from '#shared/graphql/mutations/logout.mocks.ts'
+
+import { SidebarName, isSidebarCollapsed } from '#desktop/components/layout/useSidebarDisplay.ts'
 
 describe('Left sidebar', () => {
   beforeEach(() => {
@@ -23,6 +21,8 @@ describe('Left sidebar', () => {
       fullname: 'Nicole Braun',
       preferences: {},
     })
+
+    isSidebarCollapsed[SidebarName.Primary].value = false
   })
 
   afterEach(() => {
@@ -41,8 +41,7 @@ describe('Left sidebar', () => {
     })
 
     it('restores stored width', async () => {
-      localStorage.setItem('gid://zammad/User/999-left-sidebar-width', '216')
-
+      localStorage.setItem('primary-sidebar-width', '216')
       const view = await visitView('/')
 
       const aside = view.getByRole('complementary')
@@ -56,9 +55,10 @@ describe('Left sidebar', () => {
       const view = await visitView('/')
 
       const aside = view.getByRole('complementary')
-      const collapseButton = getByRole(aside, 'button', {
+      // one button has display none it's for smaller screens
+      const collapseButton = getAllByRole(aside, 'button', {
         name: 'Collapse sidebar',
-      })
+      })[0]
 
       await view.events.click(collapseButton)
 
@@ -66,9 +66,9 @@ describe('Left sidebar', () => {
         gridTemplateColumns: '56px 1fr',
       })
 
-      const expandButton = getByRole(aside, 'button', {
+      const expandButton = getAllByRole(aside, 'button', {
         name: 'Expand sidebar',
-      })
+      })[0]
 
       await view.events.click(expandButton)
 
@@ -77,11 +77,8 @@ describe('Left sidebar', () => {
       })
     })
 
-    it('restores collapsed state width', async () => {
-      localStorage.setItem(
-        'gid://zammad/User/999-left-sidebar-collapsed',
-        'true',
-      )
+    it('renders collapsed width when collapsed state is active', async () => {
+      isSidebarCollapsed[SidebarName.Primary].value = true
 
       const view = await visitView('/')
 
@@ -108,7 +105,7 @@ describe('Left sidebar', () => {
     })
 
     it('supports resetting', async () => {
-      localStorage.setItem('gid://zammad/User/999-left-sidebar-width', '216')
+      localStorage.setItem('primary-sidebar-width', '216')
 
       const view = await visitView('/')
 
@@ -131,10 +128,18 @@ describe('Left sidebar', () => {
     it.each([{ collapsed: false }, { collapsed: true }])(
       'shows menu popover on click (collapsed: $collapsed)',
       async ({ collapsed }) => {
-        localStorage.setItem(
-          'gid://zammad/User/999-left-sidebar-collapsed',
-          String(collapsed),
-        )
+        mockPermissions(['user_preferences', 'ticket.agent', 'admin'])
+
+        isSidebarCollapsed[SidebarName.Primary].value = collapsed
+
+        const expectedMenuItems = [
+          'Admin documentation',
+          'User documentation',
+          'Appearance',
+          'Playground',
+          'Profile settings',
+          'Sign out',
+        ]
 
         const view = await visitView('/')
 
@@ -154,7 +159,9 @@ describe('Left sidebar', () => {
         const menu = getByRole(popover, 'menu')
         const menuItems = getAllByRole(menu, 'menuitem')
 
-        expect(menuItems).toHaveLength(4)
+        expectedMenuItems.forEach((expectedMenuItem) => {
+          expect(menuItems.some((item) => item.textContent === expectedMenuItem)).toBeTruthy()
+        })
       },
     )
 
@@ -169,7 +176,7 @@ describe('Left sidebar', () => {
       await view.events.click(avatarButton)
 
       const appearanceButton = view.getByRole('button', { name: 'Appearance' })
-      const appearanceSwitch = view.getByRole('checkbox', { name: 'Dark Mode' })
+      const appearanceSwitch = view.getByRole('checkbox', { name: 'Dark mode' })
 
       expect(appearanceSwitch).toBePartiallyChecked()
 
@@ -187,6 +194,8 @@ describe('Left sidebar', () => {
     })
 
     it('supports navigating to playground', async () => {
+      mockPermissions(['admin'])
+
       const view = await visitView('/')
 
       const aside = view.getByRole('complementary')
@@ -200,20 +209,18 @@ describe('Left sidebar', () => {
 
       await view.events.click(playgroundLink)
 
-      await vi.waitFor(() => {
-        expect(view, 'correctly redirects to playground page').toHaveCurrentUrl(
-          '/playground',
-        )
+      await waitFor(() => {
+        expect(view, 'correctly redirects to playground page').toHaveCurrentUrl('/playground')
       })
 
-      expect(
-        view.queryByRole('region', { name: 'User menu' }),
-      ).not.toBeInTheDocument()
+      expect(view.queryByRole('region', { name: 'User menu' })).not.toBeInTheDocument()
     })
 
     // TODO: Cover keyboard shortcuts menu item when ready.
 
     it('supports navigating to personal settings', async () => {
+      mockPermissions(['user_preferences.appearance'])
+
       const view = await visitView('/')
 
       const aside = view.getByRole('complementary')
@@ -227,16 +234,13 @@ describe('Left sidebar', () => {
 
       await view.events.click(personalSettingsLink)
 
-      await vi.waitFor(() => {
-        expect(
-          view,
-          'correctly redirects to personal settings page',
-        ).toHaveCurrentUrl('/personal-setting/appearance')
+      await waitFor(() => {
+        expect(view, 'correctly redirects to personal settings page').toHaveCurrentUrl(
+          '/personal-setting/appearance',
+        )
       })
 
-      expect(
-        view.queryByRole('region', { name: 'User menu' }),
-      ).not.toBeInTheDocument()
+      expect(view.queryByRole('region', { name: 'User menu' })).not.toBeInTheDocument()
     })
 
     it('supports signing out', async () => {
@@ -260,15 +264,11 @@ describe('Left sidebar', () => {
 
       await flushPromises()
 
-      await vi.waitFor(() => {
-        expect(view, 'correctly redirects to login page').toHaveCurrentUrl(
-          '/login',
-        )
+      await waitFor(() => {
+        expect(view, 'correctly redirects to login page').toHaveCurrentUrl('/login')
       })
 
-      expect(
-        view.queryByRole('region', { name: 'User menu' }),
-      ).not.toBeInTheDocument()
+      expect(view.queryByRole('region', { name: 'User menu' })).not.toBeInTheDocument()
     })
   })
 })

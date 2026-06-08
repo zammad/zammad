@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Mutations
   class Ticket::LiveUser::Delete < Ticket::LiveUser::Base
@@ -8,9 +8,8 @@ module Gql::Mutations
 
     def resolve(ticket:, app:)
       taskbar_key = taskbar_key(ticket.id)
-      taskbar_item = taskbar_item(taskbar_key, app)
 
-      taskbar_item.destroy! if taskbar_item.present?
+      taskbar_item(taskbar_key, app)&.destroy!
 
       { success: true }
     end

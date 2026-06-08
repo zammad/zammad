@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { ref } from 'vue'
 
@@ -31,9 +31,11 @@ const renderSelect = (props: Props, modelValue?: Ref) => {
   return renderComponent(CommonSelect, {
     props,
     slots: {
-      default: html` <template #default="{ open }">
-        <button @click="open()">Open Select</button>
-      </template>`,
+      default: html`
+        <template #default="{ open }">
+          <button @click="open()">Open select</button>
+        </template>
+      `,
     },
     vModel: {
       modelValue,
@@ -50,26 +52,20 @@ describe('interacting with CommonSelect', () => {
     const modelValue = ref()
     const view = renderSelect({ options }, modelValue)
 
-    await view.events.click(view.getByText('Open Select'))
+    await view.events.click(view.getByText('Open select'))
     await view.events.click(view.getByText('Item A'))
 
     expect(view.emitted().select).toEqual([[options[0]]])
 
-    expect(
-      view.queryByTestId('dialog-overlay'),
-      'dialog is hidden',
-    ).not.toBeInTheDocument()
+    expect(view.queryByTestId('dialog-overlay'), 'dialog is hidden').not.toBeInTheDocument()
 
     expect(modelValue.value).toBe(0)
 
-    await view.events.click(view.getByText('Open Select'))
+    await view.events.click(view.getByText('Open select'))
 
     expect(
       view.getByIconName((name, node) => {
-        return (
-          name === '#icon-check' &&
-          !node?.parentElement?.classList.contains('invisible')
-        )
+        return name === '#icon-check' && !node?.parentElement?.classList.contains('invisible')
       }),
     ).toBeInTheDocument()
     await view.events.click(view.getByText('Item A'))
@@ -81,7 +77,7 @@ describe('interacting with CommonSelect', () => {
   test("doesn't close select with noClose props", async () => {
     const view = renderSelect({ options, noClose: true })
 
-    await view.events.click(view.getByText('Open Select'))
+    await view.events.click(view.getByText('Open select'))
     await view.events.click(view.getByRole('option', { name: 'Item A' }))
 
     expect(view.getByRole('dialog')).toBeInTheDocument()
@@ -91,7 +87,7 @@ describe('interacting with CommonSelect', () => {
     const modelValue = ref()
     const view = renderSelect({ options, multiple: true }, modelValue)
 
-    await view.events.click(view.getByText('Open Select'))
+    await view.events.click(view.getByText('Open select'))
     await view.events.click(view.getByText('Item A'))
 
     expect(modelValue.value).toEqual([0])
@@ -113,7 +109,7 @@ describe('interacting with CommonSelect', () => {
     const modelValue = ref()
     const view = renderSelect({ options, passive: true }, modelValue)
 
-    await view.events.click(view.getByText('Open Select'))
+    await view.events.click(view.getByText('Open select'))
     await view.events.click(view.getByText('Item A'))
 
     expect(view.emitted().select).toBeDefined()
@@ -123,12 +119,9 @@ describe('interacting with CommonSelect', () => {
 
   test("can't select disabled values", async () => {
     const modelValue = ref()
-    const view = renderSelect(
-      { options: [{ ...options[0], disabled: true }] },
-      modelValue,
-    )
+    const view = renderSelect({ options: [{ ...options[0], disabled: true }] }, modelValue)
 
-    await view.events.click(view.getByText('Open Select'))
+    await view.events.click(view.getByText('Open select'))
     await view.events.click(view.getByText('Item A'))
 
     expect(view.emitted().select).toBeUndefined()
@@ -139,7 +132,7 @@ describe('interacting with CommonSelect', () => {
     i18n.setTranslationMap(new Map([[options[0].label, 'Translated Item A']]))
     const view = renderSelect({ options })
 
-    await view.events.click(view.getByText('Open Select'))
+    await view.events.click(view.getByText('Open select'))
     expect(view.getByText('Translated Item A')).toBeInTheDocument()
   })
 
@@ -147,7 +140,7 @@ describe('interacting with CommonSelect', () => {
     i18n.setTranslationMap(new Map([[options[0].label, 'Translated Item A']]))
     const view = renderSelect({ options, noOptionsLabelTranslation: true })
 
-    await view.events.click(view.getByText('Open Select'))
+    await view.events.click(view.getByText('Open select'))
     expect(view.getByText(/^Item A$/)).toBeInTheDocument()
   })
 
@@ -162,7 +155,7 @@ describe('interacting with CommonSelect', () => {
       },
       modelValue,
     )
-    await view.events.click(view.getByText('Open Select'))
+    await view.events.click(view.getByText('Open select'))
     await view.events.click(view.getByText('Yes'))
     expect(modelValue.value).toBe(true)
   })
@@ -170,11 +163,9 @@ describe('interacting with CommonSelect', () => {
   test('has an accessible name', async () => {
     const view = renderSelect({ options })
 
-    await view.events.click(view.getByText('Open Select'))
+    await view.events.click(view.getByText('Open select'))
 
-    expect(view.getByRole('dialog')).toHaveAccessibleName(
-      'Dialog window with selections',
-    )
+    expect(view.getByRole('dialog')).toHaveAccessibleName('Dialog window with selections')
   })
 })
 
@@ -182,7 +173,7 @@ describe('traversing and focusing select', () => {
   it('focuses on the first element, when no option is selected', async () => {
     const view = renderSelect({ options })
 
-    await view.events.click(view.getByText('Open Select'))
+    await view.events.click(view.getByText('Open select'))
     expect(view.getByRole('option', { name: 'Item A' })).toHaveFocus()
   })
 
@@ -190,14 +181,14 @@ describe('traversing and focusing select', () => {
     const modelValue = ref(1)
     const view = renderSelect({ options }, modelValue)
 
-    await view.events.click(view.getByText('Open Select'))
+    await view.events.click(view.getByText('Open select'))
     expect(view.getByRole('option', { name: 'Item B' })).toHaveFocus()
   })
 
   it('emits close when closing, so children can refocus select', async () => {
     const view = renderSelect({ options })
 
-    await view.events.click(view.getByText('Open Select'))
+    await view.events.click(view.getByText('Open select'))
     await view.events.click(view.getByRole('option', { name: 'Item A' }))
 
     expect(view.emitted().close).toBeDefined()
@@ -207,7 +198,7 @@ describe('traversing and focusing select', () => {
     const modelValue = ref()
     const view = renderSelect({ options }, modelValue)
 
-    await view.events.click(view.getByText('Open Select'))
+    await view.events.click(view.getByText('Open select'))
 
     const optionsElements = view.getAllByRole('option')
     expect(optionsElements).toHaveLength(3)
@@ -245,7 +236,7 @@ describe('traversing and focusing select', () => {
     const modelValue = ref()
     const view = renderSelect({ options }, modelValue)
 
-    await view.events.click(view.getByText('Open Select'))
+    await view.events.click(view.getByText('Open select'))
 
     const optionsElements = view.getAllByRole('option')
     const [itemI, itemII, itemIII] = optionsElements
@@ -268,24 +259,24 @@ describe('traversing and focusing select', () => {
   it('refocuses on the last element that opened select', async () => {
     const view = renderSelect({ options })
 
-    await view.events.click(view.getByText('Open Select'))
+    await view.events.click(view.getByText('Open select'))
     await view.events.keyboard('{Escape}')
 
-    expect(view.getByText('Open Select')).toHaveFocus()
+    expect(view.getByText('Open select')).toHaveFocus()
   })
 
   it("doesn't refocuses on the last element that opened select, when specified", async () => {
     const view = renderSelect({ options, noRefocus: true })
 
-    await view.events.click(view.getByText('Open Select'))
+    await view.events.click(view.getByText('Open select'))
     await view.events.keyboard('{Escape}')
 
-    expect(view.getByText('Open Select')).not.toHaveFocus()
+    expect(view.getByText('Open select')).not.toHaveFocus()
   })
 
   it('focuses by filtered words', async () => {
     const view = renderSelect({ options })
-    await view.events.click(view.getByText('Open Select'))
+    await view.events.click(view.getByText('Open select'))
 
     expect(view.getByRole('option', { name: 'Item A' })).toHaveFocus()
 

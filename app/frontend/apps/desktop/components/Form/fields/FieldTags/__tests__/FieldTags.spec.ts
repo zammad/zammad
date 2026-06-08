@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { FormKit } from '@formkit/vue'
 import { waitFor } from '@testing-library/vue'
@@ -61,9 +61,7 @@ describe('Form - Field - Tags - Features', () => {
 
     await waitForAutocompleteSearchTagQueryCalls()
 
-    expect(
-      wrapper.getByText('Start typing to search or enter a new tag…'),
-    ).toBeInTheDocument()
+    expect(wrapper.getByText('Start typing to search or enter a new tag…')).toBeInTheDocument()
 
     const filterElement = wrapper.getByRole('searchbox')
 
@@ -71,9 +69,7 @@ describe('Form - Field - Tags - Features', () => {
 
     await waitForAutocompleteSearchTagQueryCalls()
 
-    await wrapper.events.click(
-      wrapper.getByRole('button', { name: 'add new tag' }),
-    )
+    await wrapper.events.click(wrapper.getByRole('button', { name: 'add new tag' }))
 
     await waitFor(() => {
       expect(wrapper.emitted().inputRaw).toBeTruthy()
@@ -87,11 +83,9 @@ describe('Form - Field - Tags - Features', () => {
 
     await wrapper.events.keyboard('{Escape}')
 
-    await wrapper.events.click(
-      wrapper.getByRole('button', { name: 'Clear Selection' }),
-    )
+    await wrapper.events.click(wrapper.getByRole('button', { name: 'Clear selection' }))
 
-    expect(emittedInput[1][0]).toBeNull()
+    expect(emittedInput[1][0]).toBe(null)
     expect(wrapper.queryByRole('listitem')).not.toBeInTheDocument()
   })
 
@@ -121,12 +115,10 @@ describe('Form - Field - Tags - Features', () => {
 
     await waitForAutocompleteSearchTagQueryCalls()
 
-    expect(
-      wrapper.queryByRole('button', { name: 'add new tag' }),
-    ).not.toBeInTheDocument()
+    expect(wrapper.queryByRole('button', { name: 'add new tag' })).not.toBeInTheDocument()
   })
 
-  it.todo('supports selecting tags via keyboard shortcuts', async () => {
+  it('supports selecting tags via keyboard shortcuts', async () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
@@ -145,9 +137,7 @@ describe('Form - Field - Tags - Features', () => {
 
     await waitForAutocompleteSearchTagQueryCalls()
 
-    expect(
-      wrapper.getByText('Start typing to search or enter a new tag…'),
-    ).toBeInTheDocument()
+    expect(wrapper.getByText('Start typing to search or enter a new tag…')).toBeInTheDocument()
 
     const filterElement = wrapper.getByRole('searchbox')
 
@@ -165,20 +155,25 @@ describe('Form - Field - Tags - Features', () => {
       autocompleteSearchTag: [testOptions[0]],
     })
 
-    // :TODO fix test
-    await wrapper.events.type(filterElement, 'tag 1') // enter
+    await wrapper.events.type(filterElement, 'tag 1{Tab}')
 
-    expect(emittedInput[1][0]).toEqual(['tag', 'tag 1'])
+    await waitForAutocompleteSearchTagQueryCalls()
+
+    await waitFor(() => {
+      expect(emittedInput.at(-1)?.[0]).toEqual(['tag', 'tag 1'])
+    })
 
     mockAutocompleteSearchTagQuery({
       autocompleteSearchTag: [testOptions[1]],
     })
 
-    await wrapper.events.type(filterElement, 'tag 2{Tab}') // tab
+    await wrapper.events.type(filterElement, 'tag 2{Tab}')
 
-    expect(await wrapper.findByText('tag 2')).toBeInTheDocument()
+    await waitForAutocompleteSearchTagQueryCalls()
 
-    expect(emittedInput[2][0]).toEqual(['tag', 'tag 1', 'tag 2'])
+    await waitFor(() => {
+      expect(emittedInput.at(-1)?.[0]).toEqual(['tag', 'tag 1', 'tag 2'])
+    })
   })
 })
 
@@ -200,9 +195,7 @@ describe('Form - Field - Tags - Query', () => {
 
     await waitForAutocompleteSearchTagQueryCalls()
 
-    expect(
-      wrapper.queryByText('Start typing to search…'),
-    ).not.toBeInTheDocument()
+    expect(wrapper.queryByText('Start typing to search…')).not.toBeInTheDocument()
 
     let selectOptions = wrapper.getAllByRole('option')
 
@@ -262,9 +255,7 @@ describe('Form - Field - Tags - Query', () => {
 
     expect(wrapper.queryByRole('menu')).toBeInTheDocument()
 
-    expect(wrapper.getByRole('listitem')).toHaveTextContent(
-      testOptions[0].label,
-    )
+    expect(wrapper.getByRole('listitem')).toHaveTextContent(testOptions[0].label)
 
     expect(wrapper.getByIconName('check-square')).toBeInTheDocument()
   })

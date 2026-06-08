@@ -1,12 +1,8 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { EnumTicketArticleSenderName } from '#shared/graphql/types.ts'
 
-import type {
-  TicketArticleAction,
-  TicketArticleActionPlugin,
-  TicketArticleType,
-} from './types.ts'
+import type { TicketArticleAction, TicketArticleActionPlugin, TicketArticleType } from './types.ts'
 
 const actionPlugin: TicketArticleActionPlugin = {
   order: 300,
@@ -15,10 +11,7 @@ const actionPlugin: TicketArticleActionPlugin = {
     const sender = article.sender?.name
     const type = article.type?.name
 
-    if (
-      sender !== EnumTicketArticleSenderName.Customer ||
-      type !== 'telegram personal-message'
-    )
+    if (sender !== EnumTicketArticleSenderName.Customer || type !== 'telegram personal-message')
       return []
 
     const action: TicketArticleAction = {
@@ -68,6 +61,7 @@ const actionPlugin: TicketArticleActionPlugin = {
         footer: {
           maxlength: 10000,
           warningLength: 5000,
+          allowExceedMaxLength: true,
         },
       },
     }

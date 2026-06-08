@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
@@ -55,28 +55,20 @@ describe('personal calendar subscription settings', () => {
     )
 
     expect(
-      view.getByLabelText(
-        'Add alarm to pending reminder and escalated tickets',
-      ),
+      view.getByLabelText('Add alarm to pending reminder and escalated tickets'),
     ).toBeInTheDocument()
 
-    expect(
-      view.getByRole('tab', { name: 'Escalated Tickets' }),
-    ).toBeInTheDocument()
+    expect(view.getByRole('tab', { name: 'Escalated tickets' })).toBeInTheDocument()
 
-    expect(
-      view.getByRole('tab', { name: 'New & Open Tickets' }),
-    ).toBeInTheDocument()
+    expect(view.getByRole('tab', { name: 'New & open tickets' })).toBeInTheDocument()
 
-    expect(
-      view.getByRole('tab', { name: 'Pending Tickets' }),
-    ).toBeInTheDocument()
+    expect(view.getByRole('tab', { name: 'Pending tickets' })).toBeInTheDocument()
   })
 
   it('switches tab panels correctly', async () => {
     const view = await visitView('personal-setting/calendar-subscriptions')
 
-    const escalationTab = view.getByRole('tab', { name: 'Escalated Tickets' })
+    const escalationTab = view.getByRole('tab', { name: 'Escalated tickets' })
 
     expect(escalationTab).toHaveAttribute('aria-selected', 'true')
 
@@ -87,7 +79,7 @@ describe('personal calendar subscription settings', () => {
     expect(view.getAllByLabelText('My tickets')[0]).toBeChecked()
     expect(view.getAllByLabelText('Not assigned')[0]).not.toBeChecked()
 
-    const newOpenTab = view.getByRole('tab', { name: 'New & Open Tickets' })
+    const newOpenTab = view.getByRole('tab', { name: 'New & open tickets' })
 
     await view.events.click(newOpenTab)
 
@@ -101,7 +93,7 @@ describe('personal calendar subscription settings', () => {
     expect(view.getAllByLabelText('My tickets')[1]).not.toBeChecked()
     expect(view.getAllByLabelText('Not assigned')[1]).toBeChecked()
 
-    const pendingTab = view.getByRole('tab', { name: 'Pending Tickets' })
+    const pendingTab = view.getByRole('tab', { name: 'Pending tickets' })
 
     await view.events.click(pendingTab)
 
@@ -127,9 +119,7 @@ describe('personal calendar subscription settings', () => {
     })
 
     await view.events.click(
-      view.getByLabelText(
-        'Add alarm to pending reminder and escalated tickets',
-      ),
+      view.getByLabelText('Add alarm to pending reminder and escalated tickets'),
     )
 
     const calls = await waitForUserCurrentCalendarSubscriptionUpdateCalls()
@@ -167,9 +157,7 @@ describe('personal calendar subscription settings', () => {
   it('updates calendar subscription when different tab is changed', async () => {
     const view = await visitView('personal-setting/calendar-subscriptions')
 
-    await view.events.click(
-      view.getByRole('tab', { name: 'New & Open Tickets' }),
-    )
+    await view.events.click(view.getByRole('tab', { name: 'New & open tickets' }))
 
     mockUserCurrentCalendarSubscriptionUpdate({
       userCurrentCalendarSubscriptionUpdate: {
@@ -239,11 +227,7 @@ describe('personal calendar subscription settings', () => {
       },
     })
 
-    expect(
-      view.getByLabelText(
-        'Add alarm to pending reminder and escalated tickets',
-      ),
-    ).toBeChecked()
+    expect(view.getByLabelText('Add alarm to pending reminder and escalated tickets')).toBeChecked()
 
     expect(view.getAllByLabelText('My tickets')[0]).not.toBeChecked()
     expect(view.getAllByLabelText('Not assigned')[0]).toBeChecked()

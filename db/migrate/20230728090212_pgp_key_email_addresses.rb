@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class PGPKeyEmailAddresses < ActiveRecord::Migration[6.1]
   def change
@@ -14,12 +14,7 @@ class PGPKeyEmailAddresses < ActiveRecord::Migration[6.1]
 
   def migrate_db_schema_pre
     add_column :pgp_keys, :name, :string, limit: 3000, null: true
-
-    if Rails.application.config.db_column_array
-      add_column :pgp_keys, :email_addresses, :string, null: true, array: true
-    else
-      add_column :pgp_keys, :email_addresses, :json, null: true
-    end
+    add_column :pgp_keys, :email_addresses, :string, null: true, array: true
 
     PGPKey.reset_column_information
   end

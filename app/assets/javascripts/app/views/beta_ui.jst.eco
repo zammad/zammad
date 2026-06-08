@@ -1,0 +1,24 @@
+<div class="page-header">
+  <div class="page-header-title">
+    <div class="zammad-switch zammad-switch--small js-betaUIToggle">
+      <input name="betaUIToggle" type="checkbox" id="betaUIToggle" <% if @C('ui_desktop_beta_switch'): %>checked<% end %>>
+      <label for="betaUIToggle"></label>
+    </div>
+    <h1><%- @T(@header) %><small></small></h1>
+  </div>
+</div>
+
+<div class="page-content">
+
+  <%- @description %>
+
+  <div class="spacer"></div>
+
+  <form class="settings-entry">
+    <div class="horizontal end">
+      <div class="form-item flex"></div>
+      <button type="submit" class="btn btn--primary js-submit"><%- @T('Submit') %></button>
+    </div>
+  </form>
+
+</div>

@@ -1,14 +1,8 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { getNode } from '@formkit/core'
 import { FormKit } from '@formkit/vue'
-import {
-  getAllByRole,
-  getByRole,
-  getByText,
-  queryByRole,
-  waitFor,
-} from '@testing-library/vue'
+import { getAllByRole, getByRole, getByText, queryByRole, waitFor } from '@testing-library/vue'
 import { cloneDeep, keyBy } from 'lodash-es'
 
 import {
@@ -20,12 +14,11 @@ import {
 import { renderComponent } from '#tests/support/components/index.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
 
+import useFlatSelectOptions from '#shared/components/Form/fields/FieldTreeSelect/composables/useFlatSelectOptions.ts'
 import type { TreeSelectOption } from '#shared/components/Form/fields/FieldTreeSelect/types.ts'
 import { EnumTextDirection } from '#shared/graphql/types.ts'
 import { i18n } from '#shared/i18n.ts'
 import { useLocaleStore } from '#shared/stores/locale.ts'
-
-import useFlatSelectOptions from '../useFlatSelectOptions.ts'
 
 const { flattenOptions } = useFlatSelectOptions()
 
@@ -130,7 +123,7 @@ describe('Form - Field - TreeSelect - Dropdown', () => {
 
     const listbox = wrapper.getByRole('listbox')
 
-    await wrapper.events.click(getAllByRole(listbox, 'option')[0])
+    await wrapper.events.click(getAllByRole(listbox, 'option')[0].firstChild as Element)
 
     await waitFor(() => {
       expect(wrapper.emitted().inputRaw).toBeTruthy()
@@ -157,10 +150,7 @@ describe('Form - Field - TreeSelect - Dropdown', () => {
 
     expect(
       wrapper.getByIconName((name, node) => {
-        return (
-          name === '#icon-check2' &&
-          !node?.parentElement?.classList.contains('invisible')
-        )
+        return name === '#icon-check2' && !node?.parentElement?.classList.contains('invisible')
       }),
     ).toBeInTheDocument()
 
@@ -218,93 +208,61 @@ describe('Form - Field - TreeSelect - Dropdown', () => {
     })
 
     // Level 1
-    await wrapper.events.click(
-      getByRole(listbox, 'button', { name: 'Has submenu' }),
-    )
+    await wrapper.events.click(getByRole(listbox, 'button', { name: 'Has submenu' }))
 
-    expect(
-      getByRole(dropdown, 'button', { name: 'Back to previous page' }),
-    ).toBeInTheDocument()
+    expect(getByRole(dropdown, 'button', { name: 'Back to previous page' })).toBeInTheDocument()
 
     selectOptions = getAllByRole(listbox, 'option')
 
     expect(selectOptions).toHaveLength(testOptions[0].children!.length)
 
     selectOptions.forEach((selectOption, index) => {
-      expect(selectOption).toHaveTextContent(
-        testOptions[0].children![index].label!,
-      )
+      expect(selectOption).toHaveTextContent(testOptions[0].children![index].label!)
     })
 
     // Level 2
-    await wrapper.events.click(
-      getAllByRole(listbox, 'button', { name: 'Has submenu' })[0],
-    )
+    await wrapper.events.click(getAllByRole(listbox, 'button', { name: 'Has submenu' })[0])
 
-    expect(
-      getByRole(dropdown, 'button', { name: 'Back to previous page' }),
-    ).toBeInTheDocument()
+    expect(getByRole(dropdown, 'button', { name: 'Back to previous page' })).toBeInTheDocument()
 
     selectOptions = getAllByRole(listbox, 'option')
 
-    expect(selectOptions).toHaveLength(
-      testOptions[0].children![0].children!.length,
-    )
+    expect(selectOptions).toHaveLength(testOptions[0].children![0].children!.length)
 
     selectOptions.forEach((selectOption, index) => {
-      expect(selectOption).toHaveTextContent(
-        testOptions[0].children![0].children![index].label!,
-      )
+      expect(selectOption).toHaveTextContent(testOptions[0].children![0].children![index].label!)
     })
 
     // Level 1
-    await wrapper.events.click(
-      getByRole(dropdown, 'button', { name: 'Back to previous page' }),
-    )
+    await wrapper.events.click(getByRole(dropdown, 'button', { name: 'Back to previous page' }))
 
-    expect(
-      getByRole(dropdown, 'button', { name: 'Back to previous page' }),
-    ).toBeInTheDocument()
+    expect(getByRole(dropdown, 'button', { name: 'Back to previous page' })).toBeInTheDocument()
 
     selectOptions = getAllByRole(listbox, 'option')
 
     expect(selectOptions).toHaveLength(testOptions[0].children!.length)
 
     selectOptions.forEach((selectOption, index) => {
-      expect(selectOption).toHaveTextContent(
-        testOptions[0].children![index].label!,
-      )
+      expect(selectOption).toHaveTextContent(testOptions[0].children![index].label!)
     })
 
     // Level 2
-    await wrapper.events.click(
-      getAllByRole(listbox, 'button', { name: 'Has submenu' })[1],
-    )
+    await wrapper.events.click(getAllByRole(listbox, 'button', { name: 'Has submenu' })[1])
 
-    expect(
-      getByRole(dropdown, 'button', { name: 'Back to previous page' }),
-    ).toBeInTheDocument()
+    expect(getByRole(dropdown, 'button', { name: 'Back to previous page' })).toBeInTheDocument()
 
     selectOptions = getAllByRole(listbox, 'option')
 
-    expect(selectOptions).toHaveLength(
-      testOptions[0].children![1].children!.length,
-    )
+    expect(selectOptions).toHaveLength(testOptions[0].children![1].children!.length)
 
     selectOptions.forEach((selectOption, index) => {
-      expect(selectOption).toHaveTextContent(
-        testOptions[0].children![1].children![index].label!,
-      )
+      expect(selectOption).toHaveTextContent(testOptions[0].children![1].children![index].label!)
     })
 
     // Level 0
-    await wrapper.events.click(
-      getByRole(dropdown, 'button', { name: 'Back to previous page' }),
-    )
+    await wrapper.events.click(getByRole(dropdown, 'button', { name: 'Back to previous page' }))
 
-    await wrapper.events.click(
-      getByRole(dropdown, 'button', { name: 'Back to previous page' }),
-    )
+    await wrapper.events.click(getByRole(dropdown, 'button', { name: 'Back to previous page' }))
 
     // No back button in root.
     expect(
@@ -342,10 +300,14 @@ describe('Form - Field - TreeSelect - Options', () => {
 
     let selectOptions = getAllByRole(listbox, 'option')
 
-    expect(selectOptions).toHaveLength(optionsProp.length)
+    expect(selectOptions).toHaveLength(testOptions.length + 1)
 
     selectOptions.forEach((selectOption, index) => {
-      expect(selectOption).toHaveTextContent(testOptions[index].label!)
+      if (index === testOptions.length) {
+        expect(selectOption).toHaveTextContent('10')
+      } else {
+        expect(selectOption).toHaveTextContent(testOptions[index].label!)
+      }
     })
 
     optionsProp.push({
@@ -431,7 +393,7 @@ describe('Form - Field - TreeSelect - Options', () => {
       else expect(selectOption).toHaveTextContent(testOptions[index].label!)
     })
 
-    await wrapper.events.click(selectOptions[0])
+    await wrapper.events.click(selectOptions[0].firstChild as Element)
 
     await waitFor(() => {
       expect(wrapper.emitted().inputRaw).toBeTruthy()
@@ -440,9 +402,7 @@ describe('Form - Field - TreeSelect - Options', () => {
     const emittedInput = wrapper.emitted().inputRaw as Array<Array<InputEvent>>
 
     expect(emittedInput[0][0]).toBe(testOptions[0].value)
-    expect(wrapper.getByRole('listitem')).toHaveTextContent(
-      testOptions[0].label!,
-    )
+    expect(wrapper.getByRole('listitem')).toHaveTextContent(testOptions[0].label!)
 
     await wrapper.events.click(wrapper.getByLabelText('Treeselect'))
 
@@ -456,6 +416,66 @@ describe('Form - Field - TreeSelect - Options', () => {
       if (index === 3) expect(selectOption).toHaveTextContent('Item D')
       else expect(selectOption).toHaveTextContent(testOptions[index].label!)
     })
+  })
+
+  it('shows value as unknown when not present in historical options', async () => {
+    const wrapper = renderComponent(FormKit, {
+      ...wrapperParameters,
+      props: {
+        ...commonProps,
+        value: 10,
+        options: testOptions,
+        historicalOptions: {
+          ...keyBy(testOptions, 'value'),
+          // value 10 intentionally omitted
+        },
+      },
+    })
+
+    expect(wrapper.getByRole('listitem')).toHaveTextContent('10 (unknown)')
+
+    await wrapper.events.click(wrapper.getByLabelText('Treeselect'))
+
+    const listbox = wrapper.getByRole('listbox')
+    const selectOptions = getAllByRole(listbox, 'option')
+
+    expect(selectOptions).toHaveLength(testOptions.length + 1)
+  })
+
+  it('removes appended unknown option when it becomes available in real options', async () => {
+    const optionsProp = cloneDeep(testOptions)
+
+    const wrapper = renderComponent(FormKit, {
+      ...wrapperParameters,
+      props: {
+        ...commonProps,
+        value: 10,
+        options: optionsProp,
+      },
+    })
+
+    expect(wrapper.getByRole('listitem')).toHaveTextContent('10 (unknown)')
+
+    await wrapper.events.click(wrapper.getByLabelText('Treeselect'))
+
+    const listbox = wrapper.getByRole('listbox')
+    let selectOptions = getAllByRole(listbox, 'option')
+
+    expect(selectOptions).toHaveLength(testOptions.length + 1)
+
+    optionsProp.push({ value: 10, label: 'Item D' })
+
+    await wrapper.rerender({
+      options: optionsProp,
+    })
+
+    selectOptions = getAllByRole(listbox, 'option')
+
+    expect(selectOptions).toHaveLength(optionsProp.length)
+
+    await wrapper.events.click(wrapper.baseElement)
+
+    expect(wrapper.getByRole('listitem')).toHaveTextContent('Item D')
   })
 
   it('supports rejection of non-existent values', async () => {
@@ -532,34 +552,26 @@ describe('Form - Field - TreeSelect - Options', () => {
 
     const listbox = wrapper.getByRole('listbox')
 
-    let selectOptions = getAllByRole(listbox, 'option')
+    let selectOptions = getAllByRole(listbox, 'button')
 
-    expect(selectOptions[1]).toHaveAttribute('aria-disabled', 'true')
-    expect(selectOptions[1].childNodes[2]).toHaveClass('pointer-events-none')
+    expect(selectOptions[1]).toHaveAttribute(
+      'aria-description',
+      'This item expands to show more options',
+    )
 
-    expect(getByText(listbox, disabledOptions[1].label)).toHaveClasses([
-      'text-gray-100',
-      'dark:text-neutral-400',
-    ])
+    expect(selectOptions[2]).toHaveAttribute(
+      'aria-description',
+      'This item expands to show more options',
+    )
 
-    expect(selectOptions[2]).toHaveAttribute('aria-disabled', 'true')
-    expect(selectOptions[2].childNodes[2]).toHaveClass('pointer-events-none')
-
-    expect(getByText(listbox, disabledOptions[2].label)).toHaveClasses([
-      'text-stone-200',
-      'dark:text-neutral-500',
-    ])
-
-    await wrapper.events.click(getByRole(listbox, 'button'))
+    await wrapper.events.click(selectOptions[1])
 
     selectOptions = getAllByRole(listbox, 'option')
 
     expect(selectOptions).toHaveLength(disabledOptions[1].children!.length)
 
     selectOptions.forEach((selectOption, index) => {
-      expect(selectOption).toHaveTextContent(
-        disabledOptions[1].children![index].label,
-      )
+      expect(selectOption).toHaveTextContent(disabledOptions[1].children![index].label)
     })
   })
 
@@ -593,7 +605,7 @@ describe('Form - Field - TreeSelect - Options', () => {
     expect(queryByIconName(listbox, iconOptions[0].icon)).toBeInTheDocument()
     expect(queryByIconName(listbox, iconOptions[1].icon)).toBeInTheDocument()
 
-    await wrapper.events.click(getAllByRole(listbox, 'option')[0])
+    await wrapper.events.click(getAllByRole(listbox, 'option')[0].firstChild as Element)
 
     const listitem = wrapper.getByRole('listitem')
 
@@ -614,18 +626,14 @@ describe('Form - Field - TreeSelect - Features', () => {
       },
     })
 
-    expect(wrapper.getByRole('listitem')).toHaveTextContent(
-      testOptions[1].label!,
-    )
+    expect(wrapper.getByRole('listitem')).toHaveTextContent(testOptions[1].label!)
 
     const node = getNode('treeselect')
     node?.input(testOptions[2].value)
 
     await waitForNextTick(true)
 
-    expect(wrapper.getByRole('listitem')).toHaveTextContent(
-      testOptions[2].label!,
-    )
+    expect(wrapper.getByRole('listitem')).toHaveTextContent(testOptions[2].label!)
   })
 
   it('supports selection clearing', async () => {
@@ -644,7 +652,7 @@ describe('Form - Field - TreeSelect - Features', () => {
     expect(listitem).toHaveTextContent(testOptions[1].label!)
 
     const clearSelectionButton = wrapper.getByRole('button', {
-      name: 'Clear Selection',
+      name: 'Clear selection',
     })
 
     await wrapper.events.click(clearSelectionButton)
@@ -685,11 +693,9 @@ describe('Form - Field - TreeSelect - Features', () => {
 
     expect(selectAllButton).toBeInTheDocument()
 
-    expect(selectOptions).toHaveLength(
-      queryAllByIconName(listbox, 'square').length,
-    )
+    expect(selectOptions).toHaveLength(queryAllByIconName(listbox, 'square').length)
 
-    await wrapper.events.click(selectOptions[0])
+    await wrapper.events.click(selectOptions[0].firstChild as Element)
 
     await waitFor(() => {
       expect(wrapper.emitted().inputRaw).toBeTruthy()
@@ -708,13 +714,10 @@ describe('Form - Field - TreeSelect - Features', () => {
       expect(selectedLabel).toHaveTextContent(testOptions[index].label!)
     })
 
-    await wrapper.events.click(selectOptions[1])
+    await wrapper.events.click(selectOptions[1].firstChild as Element)
 
     await waitFor(() => {
-      expect(emittedInput[1][0]).toStrictEqual([
-        testOptions[0].value,
-        testOptions[1].value,
-      ])
+      expect(emittedInput[1][0]).toStrictEqual([testOptions[0].value, testOptions[1].value])
     })
 
     expect(selectAllButton).toBeInTheDocument()
@@ -727,7 +730,7 @@ describe('Form - Field - TreeSelect - Features', () => {
       expect(selectedLabel).toHaveTextContent(testOptions[index].label!)
     })
 
-    await wrapper.events.click(selectOptions[2])
+    await wrapper.events.click(selectOptions[2].firstChild as Element)
 
     await waitFor(() => {
       expect(emittedInput[2][0]).toStrictEqual([
@@ -747,13 +750,10 @@ describe('Form - Field - TreeSelect - Features', () => {
       expect(selectedLabel).toHaveTextContent(testOptions[index].label!)
     })
 
-    await wrapper.events.click(selectOptions[2])
+    await wrapper.events.click(selectOptions[2].firstChild as Element)
 
     await waitFor(() => {
-      expect(emittedInput[3][0]).toStrictEqual([
-        testOptions[0].value,
-        testOptions[1].value,
-      ])
+      expect(emittedInput[3][0]).toStrictEqual([testOptions[0].value, testOptions[1].value])
     })
 
     expect(selectAllButton).toBeInTheDocument()
@@ -780,9 +780,7 @@ describe('Form - Field - TreeSelect - Features', () => {
     expect(wrapper.queryByRole('menu')).toBeInTheDocument()
     expect(wrapper.queryAllByRole('listitem')).toHaveLength(10)
 
-    await wrapper.events.click(
-      getByRole(listbox, 'button', { name: 'Has submenu' }),
-    )
+    await wrapper.events.click(getByRole(listbox, 'button', { name: 'Has submenu' }))
 
     expect(
       queryByRole(menu, 'button', {
@@ -792,7 +790,7 @@ describe('Form - Field - TreeSelect - Features', () => {
 
     selectOptions = getAllByRole(listbox, 'option')
 
-    await wrapper.events.click(selectOptions[0])
+    await wrapper.events.click(selectOptions[0].firstChild as Element)
 
     await waitFor(() => {
       expect(emittedInput[5][0]).toStrictEqual(
@@ -859,9 +857,7 @@ describe('Form - Field - TreeSelect - Features', () => {
       sorting: 'foobar',
     })
 
-    expect(console.warn).toHaveBeenCalledWith(
-      'Unsupported sorting option "foobar"',
-    )
+    expect(console.warn).toHaveBeenCalledWith('Unsupported sorting option "foobar"')
   })
 
   it('supports label translation', async () => {
@@ -886,10 +882,7 @@ describe('Form - Field - TreeSelect - Features', () => {
 
     const translatedOptions = untranslatedOptions.map((untranslatedOption) => ({
       ...untranslatedOption,
-      label: i18n.t(
-        untranslatedOption.label,
-        untranslatedOption.labelPlaceholder as never,
-      ),
+      label: i18n.t(untranslatedOption.label, untranslatedOption.labelPlaceholder as never),
     }))
 
     const wrapper = renderComponent(FormKit, {
@@ -910,11 +903,9 @@ describe('Form - Field - TreeSelect - Features', () => {
       expect(selectOption).toHaveTextContent(translatedOptions[index].label)
     })
 
-    await wrapper.events.click(selectOptions[0])
+    await wrapper.events.click(selectOptions[0].firstChild as Element)
 
-    expect(wrapper.getByRole('listitem')).toHaveTextContent(
-      translatedOptions[0].label,
-    )
+    expect(wrapper.getByRole('listitem')).toHaveTextContent(translatedOptions[0].label)
 
     await wrapper.rerender({
       noOptionsLabelTranslation: true,
@@ -935,11 +926,9 @@ describe('Form - Field - TreeSelect - Features', () => {
       }
     })
 
-    await wrapper.events.click(selectOptions[2])
+    await wrapper.events.click(selectOptions[2].firstChild as Element)
 
-    expect(wrapper.getByRole('listitem')).toHaveTextContent(
-      untranslatedOptions[2].label,
-    )
+    expect(wrapper.getByRole('listitem')).toHaveTextContent(untranslatedOptions[2].label)
   })
 
   it('supports option pre-select', async () => {
@@ -963,9 +952,7 @@ describe('Form - Field - TreeSelect - Features', () => {
       clearable: true,
     })
 
-    await wrapper.events.click(
-      wrapper.getByRole('button', { name: 'Clear Selection' }),
-    )
+    await wrapper.events.click(wrapper.getByRole('button', { name: 'Clear selection' }))
 
     await waitFor(() => {
       expect(wrapper.emitted().inputRaw).toBeTruthy()
@@ -1012,9 +999,7 @@ describe('Form - Field - TreeSelect - Features', () => {
       multiple: true,
     })
 
-    await wrapper.events.click(
-      wrapper.getByRole('button', { name: 'Clear Selection' }),
-    )
+    await wrapper.events.click(wrapper.getByRole('button', { name: 'Clear selection' }))
 
     await waitFor(() => {
       expect(wrapper.emitted().inputRaw).toBeTruthy()
@@ -1118,9 +1103,7 @@ describe('Form - Field - TreeSelect - Features', () => {
     expect(selectOptions).toHaveLength(1)
     expect(selectOptions[0]).toHaveTextContent('Item A › Item 2 › Item IV')
 
-    await wrapper.events.click(
-      wrapper.getByRole('button', { name: 'Clear Search' }),
-    )
+    await wrapper.events.click(wrapper.getByRole('button', { name: 'Clear search' }))
 
     expect(filterElement).toHaveValue('')
 
@@ -1156,9 +1139,7 @@ describe('Form - Field - TreeSelect - Features', () => {
 
     expect(selectOptions).toHaveLength(3)
 
-    await wrapper.events.click(
-      getByRole(listbox, 'button', { name: 'Has submenu' }),
-    )
+    await wrapper.events.click(getByRole(listbox, 'button', { name: 'Has submenu' }))
 
     // With parent filtering, search happens only across children and other descendants.
     await wrapper.events.type(filterElement, 'a')
@@ -1175,9 +1156,7 @@ describe('Form - Field - TreeSelect - Features', () => {
     expect(selectOptions).toHaveLength(3)
 
     selectOptions.forEach((selectOption, index) => {
-      expect(selectOption).toHaveTextContent(
-        testOptions[0].children![index].label!,
-      )
+      expect(selectOption).toHaveTextContent(testOptions[0].children![index].label!)
       expect(selectOption).not.toHaveTextContent(`${testOptions[0].label} › `)
     })
 
@@ -1189,10 +1168,7 @@ describe('Form - Field - TreeSelect - Features', () => {
     expect(selectOptions).toHaveLength(1)
     expect(selectOptions[0]).toHaveTextContent('Item A › Item 1 › Item III')
 
-    expect(getByText(selectOptions[0], 'III')).toHaveClasses([
-      'bg-blue-600',
-      'dark:bg-blue-900',
-    ])
+    expect(getByText(selectOptions[0], 'III')).toHaveClasses(['bg-blue-600', 'dark:bg-blue-900'])
 
     await wrapper.rerender({ noFiltering: true })
 
@@ -1203,9 +1179,7 @@ describe('Form - Field - TreeSelect - Features', () => {
     expect(selectOptions).toHaveLength(3)
 
     selectOptions.forEach((selectOption, index) => {
-      expect(selectOption).toHaveTextContent(
-        testOptions[0].children![index].label!,
-      )
+      expect(selectOption).toHaveTextContent(testOptions[0].children![index].label!)
       expect(selectOption).not.toHaveTextContent(`${testOptions[0].label} › `)
     })
   })
@@ -1229,12 +1203,16 @@ describe('Form - Field - TreeSelect - Features', () => {
 
     selectOptions.forEach((selectOption) => {
       if (selectOption.textContent === 'Ítem C') {
-        expect(selectOption.children[1].children[0]).toHaveTextContent('Ítem')
+        expect((selectOption.firstChild as Element).children[1].children[0]).toHaveTextContent(
+          'Ítem',
+        )
       } else {
-        expect(selectOption.children[1].children[0]).toHaveTextContent('Item')
+        expect((selectOption.firstChild as Element).children[1].children[0]).toHaveTextContent(
+          'Item',
+        )
       }
 
-      expect(selectOption.children[1].children[0]).toHaveClasses([
+      expect((selectOption.firstChild as Element).children[1].children[0]).toHaveClasses([
         'bg-blue-600',
         'dark:bg-blue-900',
       ])
@@ -1255,20 +1233,19 @@ describe('Form - Field - TreeSelect - Accessibility', () => {
       },
     })
 
-    expect(wrapper.getByLabelText('Treeselect')).toHaveAttribute(
+    expect(wrapper.getByLabelText('Treeselect')).toHaveAttribute('tabindex', '0')
+
+    const listitem = wrapper.getByRole('listitem')
+
+    expect(getByRole(listitem, 'button', { name: 'Unselect option' })).toHaveAttribute(
       'tabindex',
       '0',
     )
 
-    const listitem = wrapper.getByRole('listitem')
-
-    expect(
-      getByRole(listitem, 'button', { name: 'Unselect Option' }),
-    ).toHaveAttribute('tabindex', '0')
-
-    expect(
-      wrapper.getByRole('button', { name: 'Clear Selection' }),
-    ).toHaveAttribute('tabindex', '0')
+    expect(wrapper.getByRole('button', { name: 'Clear selection' })).toHaveAttribute(
+      'tabindex',
+      '0',
+    )
 
     await wrapper.events.click(wrapper.getByLabelText('Treeselect'))
 
@@ -1282,25 +1259,20 @@ describe('Form - Field - TreeSelect - Accessibility', () => {
 
     const listbox = getByRole(menu, 'listbox')
 
-    const selectOptions = getAllByRole(listbox, 'option')
+    const selectOptions = wrapper.getAllByTestId('option-button')
 
     expect(selectOptions).toHaveLength(testOptions.length)
-
-    selectOptions.forEach((selectOption) => {
-      expect(selectOption).toHaveAttribute('tabindex', '0')
-    })
 
     // Sub-menu button is not part of tab-order in order to allow easier selection of options.
     //   Its function can be still triggered via keyboard arrow right/left key.
     const submenuButton = getByRole(listbox, 'button', { name: 'Has submenu' })
 
-    expect(submenuButton).toHaveAttribute('tabindex', '-1')
-
     await wrapper.events.click(submenuButton)
 
-    expect(
-      getByRole(menu, 'button', { name: 'Back to previous page' }),
-    ).toHaveAttribute('tabindex', '0')
+    expect(getByRole(menu, 'button', { name: 'Back to previous page' })).toHaveAttribute(
+      'tabindex',
+      '0',
+    )
   })
 
   it('allows focusing of disabled field for a11y', async () => {
@@ -1337,7 +1309,7 @@ describe('Form - Field - TreeSelect - Accessibility', () => {
 
     const selectOptions = getAllByRole(listbox, 'option')
 
-    await wrapper.events.type(selectOptions[0], '{Space}')
+    await wrapper.events.type(selectOptions[0].firstChild as Element, '{Space}')
 
     expect(selectButton).toHaveFocus()
   })
@@ -1386,10 +1358,7 @@ describe('Form - Field - TreeSelect - Accessibility', () => {
       },
     })
 
-    expect(wrapper.getByRole('button')).toHaveAttribute(
-      'aria-label',
-      'Clear Selection',
-    )
+    expect(wrapper.getByRole('button')).toHaveAttribute('aria-label', 'Clear selection')
   })
 
   it('supports keyboard navigation', async () => {
@@ -1415,21 +1384,27 @@ describe('Form - Field - TreeSelect - Accessibility', () => {
 
     await wrapper.events.type(search, '{Down}')
 
-    const listbox = wrapper.getByRole('listbox')
+    const selectOptions = wrapper.getAllByTestId('option-button')
 
-    const selectOptions = getAllByRole(listbox, 'option')
+    const submenuButton = wrapper.getByRole('button', { name: 'Has submenu' })
 
-    expect(selectOptions[1]).toHaveFocus()
+    expect(selectOptions[0]).toHaveFocus()
 
     await wrapper.events.keyboard('{Tab}')
 
-    expect(selectOptions[2]).toHaveFocus()
+    expect(submenuButton).toHaveFocus()
+
+    await wrapper.events.keyboard('{ArrowDown}')
+
+    expect(selectOptions[0]).toHaveFocus()
 
     await wrapper.events.keyboard('{ArrowUp}')
 
-    expect(selectOptions[1]).toHaveFocus()
+    expect(selectOptions.at(-1)).toHaveFocus()
 
-    await wrapper.events.type(selectOptions[2], '{Space}')
+    await wrapper.events.keyboard('{ArrowDown}')
+
+    await wrapper.events.keyboard('{Space}')
 
     await waitFor(() => {
       expect(wrapper.emitted().inputRaw).toBeTruthy()
@@ -1437,12 +1412,9 @@ describe('Form - Field - TreeSelect - Accessibility', () => {
 
     const emittedInput = wrapper.emitted().inputRaw as Array<Array<InputEvent>>
 
-    expect(emittedInput[0][0]).toBe(testOptions[2].value)
+    expect(emittedInput[0][0]).toBe(testOptions[0].value)
 
-    wrapper.events.type(
-      wrapper.getByRole('button', { name: 'Clear Selection' }),
-      '{Space}',
-    )
+    await wrapper.events.type(wrapper.getByRole('button', { name: 'Clear selection' }), '{Space}')
 
     await waitFor(() => {
       expect(emittedInput[1][0]).toBe(null)
@@ -1463,10 +1435,7 @@ describe('Form - Field - TreeSelect - Input Checklist', () => {
       },
     })
 
-    expect(wrapper.getByLabelText('Treeselect')).toHaveAttribute(
-      'id',
-      'test_id',
-    )
+    expect(wrapper.getByLabelText('Treeselect')).toHaveAttribute('id', 'test_id')
   })
 
   it('implements input name', async () => {
@@ -1479,10 +1448,7 @@ describe('Form - Field - TreeSelect - Input Checklist', () => {
       },
     })
 
-    expect(wrapper.getByLabelText('Treeselect')).toHaveAttribute(
-      'name',
-      'test_name',
-    )
+    expect(wrapper.getByLabelText('Treeselect')).toHaveAttribute('name', 'test_name')
   })
 
   it('implements blur handler', async () => {
@@ -1515,7 +1481,7 @@ describe('Form - Field - TreeSelect - Input Checklist', () => {
 
     await wrapper.events.click(wrapper.getByLabelText('Treeselect'))
 
-    wrapper.events.click(wrapper.getAllByRole('option')[1])
+    await wrapper.events.click(wrapper.getAllByRole('option')[1].firstChild as Element)
 
     await waitFor(() => {
       expect(wrapper.emitted().inputRaw).toBeTruthy()
@@ -1526,23 +1492,20 @@ describe('Form - Field - TreeSelect - Input Checklist', () => {
     expect(emittedInput[0][0]).toBe(testOptions[1].value)
   })
 
-  it.each([0, 1, 2])(
-    'implements input value display',
-    async (testOptionsIndex) => {
-      const testOption = testOptions[testOptionsIndex]
+  it.each([0, 1, 2])('implements input value display', async (testOptionsIndex) => {
+    const testOption = testOptions[testOptionsIndex]
 
-      const wrapper = renderComponent(FormKit, {
-        ...wrapperParameters,
-        props: {
-          ...commonProps,
-          options: testOptions,
-          value: testOption.value,
-        },
-      })
+    const wrapper = renderComponent(FormKit, {
+      ...wrapperParameters,
+      props: {
+        ...commonProps,
+        options: testOptions,
+        value: testOption.value,
+      },
+    })
 
-      expect(wrapper.getByRole('listitem')).toHaveTextContent(testOption.label!)
-    },
-  )
+    expect(wrapper.getByRole('listitem')).toHaveTextContent(testOption.label!)
+  })
 
   it('implements disabled', async () => {
     const wrapper = renderComponent(FormKit, {
@@ -1554,10 +1517,7 @@ describe('Form - Field - TreeSelect - Input Checklist', () => {
       },
     })
 
-    expect(wrapper.getByLabelText('Treeselect')).toHaveAttribute(
-      'aria-disabled',
-      'true',
-    )
+    expect(wrapper.getByLabelText('Treeselect')).toHaveAttribute('aria-disabled', 'true')
   })
 
   it('implements attribute passthrough', async () => {
@@ -1570,10 +1530,7 @@ describe('Form - Field - TreeSelect - Input Checklist', () => {
       },
     })
 
-    expect(wrapper.getByLabelText('Treeselect')).toHaveAttribute(
-      'test-attribute',
-      'test_value',
-    )
+    expect(wrapper.getByLabelText('Treeselect')).toHaveAttribute('test-attribute', 'test_value')
   })
 
   it('implements standardized classes', async () => {
@@ -1612,9 +1569,7 @@ describe('Form - Field - TreeSelect - Visuals', () => {
       dir: EnumTextDirection.Rtl,
     } as any
 
-    await expect(
-      findByIconName(submenuButton, 'chevron-right'),
-    ).resolves.toBeInTheDocument()
+    await expect(findByIconName(submenuButton, 'chevron-right')).resolves.toBeInTheDocument()
   })
 
   it('back button arrow changes direction when locale changes', async () => {
@@ -1632,9 +1587,7 @@ describe('Form - Field - TreeSelect - Visuals', () => {
 
     const listbox = getByRole(dropdown, 'listbox')
 
-    await wrapper.events.click(
-      getByRole(listbox, 'button', { name: 'Has submenu' }),
-    )
+    await wrapper.events.click(getByRole(listbox, 'button', { name: 'Has submenu' }))
 
     expect(getByIconName(dropdown, 'chevron-left')).toBeInTheDocument()
 
@@ -1643,8 +1596,6 @@ describe('Form - Field - TreeSelect - Visuals', () => {
       dir: EnumTextDirection.Rtl,
     } as any
 
-    await expect(
-      findByIconName(dropdown, 'chevron-right'),
-    ).resolves.toBeInTheDocument()
+    await expect(findByIconName(dropdown, 'chevron-right')).resolves.toBeInTheDocument()
   })
 })

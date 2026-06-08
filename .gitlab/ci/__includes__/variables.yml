@@ -2,7 +2,7 @@
 variables:
   FF_NETWORK_PER_BUILD: 1 # https://docs.gitlab.com/runner/configuration/feature-flags.html
   # For corepack download caching.
-  COREPACK_HOME: ${CI_PROJECT_DIR}/tmp/cache/corepack
+  COREPACK_HOME: ${CI_PROJECT_DIR}/tmp/cache/.corepack
   # for faster translation loading
   Z_LOCALES: 'en-us:de-de'
   RAILS_ENV: 'test'

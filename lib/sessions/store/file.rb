@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Sessions::Store::File
   def initialize
@@ -59,8 +59,12 @@ class Sessions::Store::File
   end
 
   def destroy(client_id)
+    # single sessions worker
     path = "#{@path}/#{client_id}"
     FileUtils.rm_rf path
+
+    # forked sessions workers
+    Dir.glob("#{@nodes_path}/*.#{client_id}.session").each { FileUtils.rm_rf it }
   end
 
   def set(client_id, data)

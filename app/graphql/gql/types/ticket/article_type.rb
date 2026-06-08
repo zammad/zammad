@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Types::Ticket
   class ArticleType < Gql::Types::BaseObject
@@ -36,21 +36,19 @@ module Gql::Types::Ticket
     field :attachments, [Gql::Types::StoredFileType, { null: false }], null: false, description: 'All attached files as stored in the database.'
     field :attachments_without_inline, [Gql::Types::StoredFileType, { null: false }], null: false, description: 'Attachments for display, with inline images filtered out.'
 
+    internal_fields do
+      field :highlighted_texts, [Gql::Types::Ticket::Article::HighlightedTextType]
+    end
+
     belongs_to :ticket, Gql::Types::TicketType, null: false
     # belongs_to :origin_by, Gql::Types::UserType # see :author instead
 
     def body_with_urls
-      display_article['body']
+      display_article[:body]
     end
 
     def attachments_without_inline
-      # TODO: This uses asset handling related code which does more than what we need here.
-      #   On the long run it might be better to store the display flag directly with the attachments,
-      #   rather than always calculating it on-the-fly.
-      select_ids = display_article['attachments'].pluck('id')
-      @object.attachments.select do |attachment|
-        select_ids.include?(attachment.id)
-      end
+      display_article[:attachments]
     end
 
     def security_state
@@ -61,11 +59,18 @@ module Gql::Types::Ticket
       @object.preferences&.dig('whatsapp')
     end
 
+    def highlighted_texts
+      @object.preferences&.dig('highlight')&.split('|')&.drop(1) || []
+    end
+
     private
 
     def display_article
-      # TODO: This uses asset handling related code which does more than what we need here.
-      @display_article ||= @object.class.insert_urls(@object.attributes_with_association_ids)
+      @display_article ||= begin
+        body, attachments = @object.class.insert_urls(@object)
+
+        { body:, attachments: }
+      end
     end
   end
 end

@@ -1,8 +1,6 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-/* eslint-disable vue/no-v-html */
-
 import { computed, nextTick, onMounted, ref, watch } from 'vue'
 
 import CommonFilePreview from '#shared/components/CommonFilePreview/CommonFilePreview.vue'
@@ -14,16 +12,13 @@ import { useHtmlLinks } from '#shared/composables/useHtmlLinks.ts'
 import type { ImageViewerFile } from '#shared/composables/useImageViewer.ts'
 import { useImageViewer } from '#shared/composables/useImageViewer.ts'
 import type { Attachment } from '#shared/entities/attachment/types.ts'
-import type {
-  TicketArticleSecurityState,
-  TicketArticlesQuery,
-} from '#shared/graphql/types.ts'
+import type { TicketArticleSecurityState, TicketArticlesQuery } from '#shared/graphql/types.ts'
 import { getIdFromGraphQLId } from '#shared/graphql/utils.ts'
 import { i18n } from '#shared/i18n.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
 import type { ConfidentTake } from '#shared/types/utils.ts'
 import stopEvent from '#shared/utils/events.ts'
-import { textToHtml } from '#shared/utils/helpers.ts'
+import { textToHtml, ensureImagesKeepAspectRatio } from '#shared/utils/helpers.ts'
 
 import { useArticleSeen } from '../../composable/useArticleSeen.ts'
 
@@ -59,8 +54,12 @@ const colorClasses = computed(() => {
   const { internal, position } = props
 
   if (internal) return 'border border-blue bg-black'
-  if (position === 'left') return 'border border-black bg-white text-black'
-  return 'border border-black bg-blue text-black'
+
+  // eslint-disable-next-line zammad/zammad-detect-translatable-string
+  if (position === 'left') return 'Agent border border-black bg-white text-black'
+
+  // eslint-disable-next-line zammad/zammad-detect-translatable-string
+  return 'Customer border border-black bg-blue text-black'
 })
 
 const bubbleClasses = computed(() => {
@@ -87,7 +86,8 @@ const body = computed(() => {
   if (props.contentType !== 'text/html') {
     return textToHtml(props.content)
   }
-  return props.content
+
+  return ensureImagesKeepAspectRatio(props.content)
 })
 
 const colorsClasses = computed(() => {
@@ -107,8 +107,7 @@ const colorsClasses = computed(() => {
   }
 })
 
-const { shownMore, bubbleElement, hasShowMore, toggleShowMore } =
-  useArticleToggleMore()
+const { shownMore, bubbleElement, hasShowMore, toggleShowMore } = useArticleToggleMore()
 
 const articleInternalId = computed(() => getIdFromGraphQLId(props.articleId))
 
@@ -190,10 +189,7 @@ const onContextClick = () => {
         class="content flex flex-col overflow-hidden rounded-3xl px-4 pt-2 pb-3"
         :class="[bubbleClasses, colorClasses]"
       >
-        <div
-          class="flex items-center text-xs font-bold"
-          data-test-id="article-username"
-        >
+        <div class="flex items-center text-xs font-bold" data-test-id="article-username">
           <span class="truncate break-words">
             {{ username }}
           </span>
@@ -201,8 +197,9 @@ const onContextClick = () => {
         <div
           ref="bubbleElement"
           data-test-id="article-content"
-          class="overflow-hidden text-base"
+          class="overflow-hidden text-base transition-[height] duration-200"
         >
+          <!-- eslint-disable vue/no-v-html -->
           <div class="Content" v-html="body" />
         </div>
         <div
@@ -212,11 +209,7 @@ const onContextClick = () => {
             BubbleGradient: hasShowMore && !shownMore,
           }"
         ></div>
-        <div
-          v-if="attachments.length"
-          class="mt-1 mb-2"
-          :class="colorsClasses.top"
-        >
+        <div v-if="attachments.length" class="mt-1 mb-2" :class="colorsClasses.top">
           <div class="py-1 text-xs" :class="colorsClasses.amount">
             {{
               attachments.length === 1
@@ -246,11 +239,7 @@ const onContextClick = () => {
               : 'ltr:right-10 rtl:left-10',
           ]"
         >
-          <ArticleReactionBadge
-            v-if="reaction"
-            :class="[colorClasses]"
-            :reaction="reaction"
-          />
+          <ArticleReactionBadge v-if="reaction" :class="[colorClasses]" :reaction="reaction" />
           <ArticleWhatsappMediaBadge
             v-if="props.mediaError"
             :article-id="articleId"
@@ -271,7 +260,7 @@ const onContextClick = () => {
             v-if="hasShowMore"
             :class="[
               colorClasses,
-              'flex h-7 items-center justify-center rounded-md px-2 font-semibold',
+              'flex h-7 items-center justify-center rounded-md px-2 font-medium',
             ]"
             type="button"
             @click="toggleShowMore()"
@@ -280,22 +269,14 @@ const onContextClick = () => {
             {{ shownMore ? $t('See less') : $t('See more') }}
           </button>
           <button
-            :class="[
-              colorClasses,
-              'flex h-7 w-7 items-center justify-center rounded-md',
-            ]"
+            :class="[colorClasses, 'flex h-7 w-7 items-center justify-center rounded-md']"
             type="button"
             data-name="article-context"
             :aria-label="$t('Article actions')"
             @pointerdown="onContextClick()"
             @keydown.enter.prevent="onContextClick()"
           >
-            <CommonIcon
-              name="more-vertical"
-              size="small"
-              decorative
-              data-ignore-click
-            />
+            <CommonIcon name="more-vertical" size="small" decorative data-ignore-click />
           </button>
         </div>
       </div>
@@ -307,6 +288,19 @@ const onContextClick = () => {
 .Content {
   word-break: normal;
   overflow-wrap: anywhere;
+
+  &:deep(img, svg) {
+    display: inline;
+  }
+
+  &:deep(pre) {
+    overflow-x: auto;
+  }
+
+  /* Wrap long lines in code blocks. */
+  &:deep(code) {
+    white-space: pre-wrap;
+  }
 }
 
 .Article:not(.Internal) {

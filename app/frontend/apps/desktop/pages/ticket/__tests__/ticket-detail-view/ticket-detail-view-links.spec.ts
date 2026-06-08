@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { within } from '@testing-library/vue'
 
@@ -47,21 +47,15 @@ describe('Ticket detail view links', () => {
 
     const ticketMetaSidebar = within(view.getByLabelText('Content sidebar'))
 
-    expect(ticketMetaSidebar.getByText('Links')).toBeInTheDocument()
-    expect(
-      ticketMetaSidebar.getByText('No links added yet.'),
-    ).toBeInTheDocument()
+    expect(ticketMetaSidebar.getByText('Related tickets')).toBeInTheDocument()
+    expect(ticketMetaSidebar.getByText('No links added yet.')).toBeInTheDocument()
 
-    await view.events.click(
-      await view.findByRole('button', { name: 'Add link' }),
-    )
+    await view.events.click(await view.findByRole('button', { name: 'Add link' }))
 
-    expect(
-      await view.findByRole('heading', { name: 'Link Tickets', level: 2 }),
-    ).toBeInTheDocument()
+    expect(await view.findByRole('heading', { name: 'Link tickets', level: 2 })).toBeInTheDocument()
 
-    expect(await view.findByText('Recent Customer Tickets')).toBeInTheDocument()
-    expect(view.getByText('Recently Viewed Tickets')).toBeInTheDocument()
+    expect(await view.findByText('Recent customer tickets')).toBeInTheDocument()
+    expect(view.getByText('Recently viewed tickets')).toBeInTheDocument()
     expect(view.getByText('Foo Car')).toBeInTheDocument()
 
     const rows = view.getAllByRole('row', {
@@ -104,9 +98,7 @@ describe('Ticket detail view links', () => {
 
     await waitForNextTick()
 
-    expect(
-      ticketMetaSidebar.queryByText('No links added yet.'),
-    ).not.toBeInTheDocument()
+    expect(ticketMetaSidebar.queryByText('No links added yet.')).not.toBeInTheDocument()
 
     expect(view.getByText('Parent')).toBeInTheDocument()
     expect(view.getByText('Foo Car')).toBeInTheDocument()

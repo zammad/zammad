@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 require 'models/application_model_examples'
@@ -114,6 +114,18 @@ RSpec.describe Overview, type: :model do
   describe 'Make conditions AND/OR and thus enable several conditions of same type #2185' do
     it 'does create overviews with the expert structure' do
       expect { create(:overview, :condition_expert) }.not_to raise_error
+    end
+  end
+
+  describe '#attribute_to_references_hash' do
+    it 'returns a hash with the overview name' do
+      create(:object_manager_attribute_text, object_name: 'Ticket', name: 'custom_textfield')
+      create(:overview, name: 'Test Overview', view: { 's' => %w[title custom_textfield] }, prio: nil)
+
+      result = described_class.attribute_to_references_hash
+
+      expect(result).to include('ticket.custom_textfield')
+      expect(result['ticket.custom_textfield']).to include('Overview' => ['Test Overview'])
     end
   end
 end

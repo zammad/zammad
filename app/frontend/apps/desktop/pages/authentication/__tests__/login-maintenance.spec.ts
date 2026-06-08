@@ -1,14 +1,11 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { waitFor } from '@testing-library/vue'
 
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockAuthentication } from '#tests/support/mock-authentication.ts'
-import {
-  mockGraphQLApi,
-  mockGraphQLSubscription,
-} from '#tests/support/mock-graphql-api.ts'
+import { mockGraphQLApi, mockGraphQLSubscription } from '#tests/support/mock-graphql-api.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
 
 import { OnlineNotificationsCountDocument } from '#shared/entities/online-notification/graphql/subscriptions/onlineNotificationsCount.api.ts'
@@ -22,7 +19,7 @@ import { ConfigUpdatesDocument } from '#shared/graphql/subscriptions/configUpdat
 import { useApplicationStore } from '#shared/stores/application.ts'
 import { useAuthenticationStore } from '#shared/stores/authentication.ts'
 
-import { UserCurrentRecentViewUpdatesDocument } from '#desktop/entities/user/current/graphql/subscriptions/userCurrentRecentViewUpdates.api.ts'
+import { UserCurrentRecentCloseUpdatesDocument } from '#desktop/entities/user/current/graphql/subscriptions/userCurrentRecentCloseUpdates.api.ts'
 import { UserCurrentTaskbarItemListUpdatesDocument } from '#desktop/entities/user/current/graphql/subscriptions/userCurrentTaskbarItemListUpdates.api.ts'
 import { UserCurrentTaskbarItemUpdatesDocument } from '#desktop/entities/user/current/graphql/subscriptions/userCurrentTaskbarItemUpdates.api.ts'
 
@@ -43,7 +40,7 @@ beforeEach(() => {
   mockGraphQLSubscription(UserCurrentTaskbarItemUpdatesDocument)
   mockGraphQLSubscription(UserCurrentTaskbarItemListUpdatesDocument)
   mockGraphQLSubscription(OnlineNotificationsCountDocument)
-  mockGraphQLSubscription(UserCurrentRecentViewUpdatesDocument)
+  mockGraphQLSubscription(UserCurrentRecentCloseUpdatesDocument)
 })
 
 describe('testing login maintenance mode', () => {
@@ -83,9 +80,7 @@ describe('testing login maintenance mode', () => {
 
     const view = await visitView('/login')
 
-    const maintenanceModeCustomMessage = view.queryByText(
-      'Custom maintenance login message.',
-    )
+    const maintenanceModeCustomMessage = view.queryByText('Custom maintenance login message.')
 
     expect(maintenanceModeCustomMessage).toBeInTheDocument()
   })

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -74,10 +74,23 @@ RSpec.describe 'ObjectManager::Attribute::Object::Ticket', aggregate_failures: t
       attribute
     end
     let(:ticket) { create(:ticket) }
-    let(:mysql?)       { ActiveRecord::Base.connection_db_config.configuration_hash[:adapter] == 'mysql2' }
 
     it 'is successful' do
-      expect(ticket.attributes[attribute.name]).to eq(mysql? ? '0' : 'f')
+      expect(ticket.attributes[attribute.name]).to eq('f')
+    end
+  end
+
+  # https://github.com/zammad/zammad/issues/5666
+  describe 'external data attribute is initialized correctly', db_strategy: :reset do
+    let(:attribute) { create(:object_manager_attribute_autocompletion_ajax_external_data_source) }
+
+    it 'initializes with the correct value' do
+      attribute
+      ObjectManager::Attribute.migration_execute
+
+      ticket = build(:ticket)
+
+      expect(ticket.attributes[attribute.name]).to eq({})
     end
   end
 end

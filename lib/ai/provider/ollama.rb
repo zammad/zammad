@@ -1,9 +1,11 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class AI::Provider::Ollama < AI::Provider
+  include AI::Provider::Concerns::HasConfigurableModel
 
+  # default model also in app/assets/javascripts/app/lib/app_post/ai_provider/ollama.coffee
   DEFAULT_OPTIONS = {
-    model:           'llama3.2',
+    model:           'mistral-small3.2',
     temperature:     0.0,
     embedding_model: 'all-minilm',
   }.freeze
@@ -14,16 +16,22 @@ class AI::Provider::Ollama < AI::Provider
     'mxbai-embed-large' => 1024,
   }.freeze
 
-  def chat(prompt_system:, prompt_user:)
+  def chat(prompt_system:, prompt_user:, prompt_image:)
     params = {
-      model:   options[:model],
-      system:  prompt_system,
-      prompt:  prompt_user,
-      stream:  false,
-      options: {
-        temperature: options[:temperature],
-      }
+      model:  model_for(prompt_image:),
+      system: prompt_system,
+      prompt: prompt_user,
+      stream: false,
+      think:  false,
     }
+
+    if model_supports_temperature?
+      params[:options] = { temperature: options[:temperature] }
+    end
+
+    if prompt_image.is_a?(::Store)
+      params[:images] = [Base64.strict_encode64(prompt_image.content_ocr)]
+    end
 
     if options[:json_response]
       params[:format] = 'json'
@@ -33,18 +41,18 @@ class AI::Provider::Ollama < AI::Provider
       "#{config[:url]}/api/generate",
       params,
       {
-        open_timeout:  4,
-        read_timeout:  60,
-        verify_ssl:    true,
-        total_timeout: 60,
-        json:          true,
-        log:           {
+        **REQUEST_TIMEOUT_OPTIONS,
+        verify_ssl: true,
+        json:       true,
+        log:        {
           facility: 'AI::Provider',
         },
       },
     )
 
     data = validate_response!(response)
+    extract_response_metadata(data)
+
     data['response']
   end
 
@@ -56,11 +64,9 @@ class AI::Provider::Ollama < AI::Provider
         input: input,
       },
       {
-        open_timeout:  4,
-        read_timeout:  60,
-        verify_ssl:    true,
-        total_timeout: 60,
-        json:          true,
+        **REQUEST_TIMEOUT_OPTIONS,
+        verify_ssl: true,
+        json:       true,
       },
     )
 
@@ -73,18 +79,31 @@ class AI::Provider::Ollama < AI::Provider
       config[:url],
       {},
       {
-        open_timeout:  4,
-        read_timeout:  60,
-        verify_ssl:    true,
-        total_timeout: 60,
-        log:           {
-          facility: 'AI::Provider',
+        **REQUEST_TIMEOUT_OPTIONS,
+        verify_ssl: true,
+        log:        {
+          facility:          'AI::Provider',
+          log_only_on_error: true,
         },
       },
     )
 
-    raise AI::Provider::ResponseError, __('API server not accessible') if response.code.to_i != 200
+    validate_response!(response)
 
     nil
+  end
+
+  private
+
+  def specific_metadata
+    {
+      model: options[:model],
+    }
+  end
+
+  def extract_response_metadata(data)
+    @response_metadata = {
+      total_duration: data['total_duration'],
+    }
   end
 end

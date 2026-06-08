@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Service::Translation::Search::Collector::Model < Service::Translation::Search::Collector
   def self.type
@@ -25,7 +25,7 @@ class Service::Translation::Search::Collector::Model < Service::Translation::Sea
 
   def search_by_query
     Translation.not_customized.where(
-      "locale = :locale AND (source #{like_operator} :query OR target #{like_operator} :query OR target_initial #{like_operator} :query)",
+      'locale = :locale AND (source ILIKE :query OR target ILIKE :query OR target_initial ILIKE :query)',
       locale: locale,
       query:  like_query
     )

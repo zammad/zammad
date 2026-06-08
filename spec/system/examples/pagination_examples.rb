@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 RSpec.shared_examples 'pagination', authenticated_as: :authenticate do |model:, klass:, path:, create_params: {}, main_column: :name|
   let(:create_params) { create_params }

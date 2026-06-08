@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class KnowledgeBase::PermissionsController < ApplicationController
   prepend_before_action :authentication_check
@@ -9,7 +9,7 @@ class KnowledgeBase::PermissionsController < ApplicationController
   end
 
   def update
-    permissions_params = params.require(:permissions_dialog).permit(permissions: {})
+    permissions_params = params.expect(permissions_dialog: [{ permissions: {} }])
 
     KnowledgeBase::PermissionsUpdate.new(@object, current_user).update_using_params!(permissions_params)
 

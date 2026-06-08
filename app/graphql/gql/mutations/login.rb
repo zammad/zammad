@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Mutations
   class Login < BaseMutation
@@ -11,9 +11,7 @@ module Gql::Mutations
     field :session, Gql::Types::SessionType, description: 'The current session, if the login was successful.'
     field :two_factor_required, Gql::Types::User::LoginTwoFactorMethodsType, description: 'Two factor authentication methods available for the user about to log-in.'
 
-    def self.authorize(...)
-      true
-    end
+    allow_public_access!
 
     def resolve(input:)
       authenticate(**input)

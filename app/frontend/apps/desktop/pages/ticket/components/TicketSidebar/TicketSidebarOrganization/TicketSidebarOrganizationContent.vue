@@ -1,28 +1,29 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script lang="ts" setup>
-import type { AvatarOrganization } from '#shared/components/CommonOrganizationAvatar'
-import CommonOrganizationAvatar from '#shared/components/CommonOrganizationAvatar/CommonOrganizationAvatar.vue'
 import ObjectAttributes from '#shared/components/ObjectAttributes/ObjectAttributes.vue'
 import type { ObjectAttribute } from '#shared/entities/object-attributes/types/store.ts'
-import type { OrganizationQuery, User } from '#shared/graphql/types.ts'
+import { useOrganizationNoteUpdateMutation } from '#shared/entities/organization/graphql/mutations/noteUpdate.api.ts'
+import type { Organization, User } from '#shared/graphql/types.ts'
 import type { ObjectLike } from '#shared/types/utils.ts'
 import { normalizeEdges } from '#shared/utils/helpers.ts'
 
 import type { MenuItem } from '#desktop/components/CommonPopoverMenu/types.ts'
 import CommonSimpleEntityList from '#desktop/components/CommonSimpleEntityList/CommonSimpleEntityList.vue'
 import { EntityType } from '#desktop/components/CommonSimpleEntityList/types.ts'
+import OrganizationInfo from '#desktop/components/Organization/OrganizationInfo.vue'
+import { useOrganizationEdit } from '#desktop/entities/organization/composables/useOrganizationEdit.ts'
 import type { TicketSidebarContentProps } from '#desktop/pages/ticket/types/sidebar.ts'
 
 import TicketSidebarContent from '../TicketSidebarContent.vue'
 
 interface Props extends TicketSidebarContentProps {
-  organization: OrganizationQuery['organization']
+  organization: Organization
   organizationMembers: ReturnType<typeof normalizeEdges<Partial<User>>>
   objectAttributes: ObjectAttribute[]
 }
 
-defineProps<Props>()
+const props = defineProps<Props>()
 
 const persistentStates = defineModel<ObjectLike>({ required: true })
 
@@ -30,15 +31,16 @@ defineEmits<{
   'load-more-members': []
 }>()
 
+const { openOrganizationEditFlyout } = useOrganizationEdit()
+
 const actions: MenuItem[] = [
   {
     key: 'edit-organization',
-    label: __('Edit Organization'),
-    icon: 'organization-edit',
+    label: __('Edit organization'),
+    icon: 'pencil',
     show: (entity) => entity?.policy.update,
-    onClick: (id) => {
-      console.log(id, 'Edit organization')
-    },
+    onClick: () =>
+      openOrganizationEditFlyout(props.organization, { title: __('Edit organization') }),
   },
 ]
 </script>
@@ -51,24 +53,15 @@ const actions: MenuItem[] = [
     :entity="organization"
     :actions="actions"
   >
-    <CommonLink
-      :link="`/organizations/${organization.internalId}`"
-      class="flex gap-2"
-    >
-      <CommonOrganizationAvatar
-        class="p-3.5"
-        :entity="organization as AvatarOrganization"
-        size="normal"
-      />
-      <CommonLabel size="large" class="dark:text-white!"
-        >{{ organization.name }}
-      </CommonLabel>
-    </CommonLink>
+    <OrganizationInfo :organization="organization" />
 
     <ObjectAttributes
       :object="organization"
       :attributes="objectAttributes"
       :skip-attributes="['name', 'vip', 'active']"
+      :inline-editable="{
+        note: useOrganizationNoteUpdateMutation,
+      }"
     />
 
     <CommonSimpleEntityList
@@ -77,6 +70,7 @@ const actions: MenuItem[] = [
       :type="EntityType.User"
       :label="__('Members')"
       :entity="organizationMembers"
+      has-popover
       @load-more="$emit('load-more-members')"
     />
   </TicketSidebarContent>

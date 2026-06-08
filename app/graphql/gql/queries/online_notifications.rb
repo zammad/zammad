@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Queries
   class OnlineNotifications < BaseQuery
@@ -16,7 +16,7 @@ module Gql::Queries
         .where(
           # Make sure to limit it to known meta object types.
           object_lookup_id: ObjectLookup.where(
-            name: Gql::Types::ActivityMessageMetaObjectType.possible_types.map(&:graphql_name)
+            name: Gql::Types::ActivityMessageMetaObjectType.possible_types.map { |t| t.name.delete_prefix('Gql::Types::').delete_suffix('Type') }
           ).select(:id)
         )
     end

@@ -1,10 +1,14 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Integration::GitLabController < ApplicationController
   prepend_before_action :authenticate_and_authorize!
 
+  SENSITIVE_FIELDS = [:api_token].freeze
+
   def verify
-    gitlab = ::GitLab.new(endpoint: params[:endpoint], api_token: params[:api_token], verify_ssl: params[:verify_ssl])
+    unmasked_params = unmask_sensitive_params(params, Setting.get('gitlab_config'))
+
+    gitlab = ::GitLab.new(endpoint: unmasked_params[:endpoint], api_token: unmasked_params[:api_token], verify_ssl: unmasked_params[:verify_ssl])
 
     gitlab.verify!
 
@@ -21,21 +25,21 @@ class Integration::GitLabController < ApplicationController
   end
 
   def query
-    issue_tracker_list_service = if params[:ticket_id]
-                                   Service::Ticket::ExternalReferences::IssueTracker::TicketList.new(
-                                     type:   'gitlab',
-                                     ticket: Ticket.find(params[:ticket_id]),
-                                   )
-                                 else
-                                   Service::Ticket::ExternalReferences::IssueTracker::FetchMetadata.new(
-                                     type:        'gitlab',
-                                     issue_links: params[:links],
-                                   )
-                                 end
+    response = if params[:ticket_id]
+                 Service::Ticket::ExternalReferences::IssueTracker::TicketList.execute(
+                   type:   'gitlab',
+                   ticket: Ticket.find(params[:ticket_id]),
+                 )
+               else
+                 Service::Ticket::ExternalReferences::IssueTracker::FetchMetadata.execute(
+                   type:        'gitlab',
+                   issue_links: params[:links],
+                 )
+               end
 
     render json: {
       result:   'ok',
-      response: issue_tracker_list_service.execute,
+      response: response,
     }
   rescue => e
     logger.error e

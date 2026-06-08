@@ -1,0 +1,12 @@
+Hier ist meine Antwort.
+
+-----Ursprüngliche Nachricht-----
+Von: Support Team <support@example.com>
+Gesendet: Dienstag, 3. Dezember 2024 09:00
+An: Kunde <kunde@example.de>
+Betreff: Re: Ihre Anfrage
+
+Sehr geehrter Kunde,
+vielen Dank für Ihre Nachricht.
+Mit freundlichen Grüßen,
+Support Team

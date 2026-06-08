@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class FormUpdater::Relation::TicketState < FormUpdater::Relation
   private
@@ -9,5 +9,9 @@ class FormUpdater::Relation::TicketState < FormUpdater::Relation
 
   def order
     { name: :asc }
+  end
+
+  def default_scope
+    relation_type.where(active: true)
   end
 end

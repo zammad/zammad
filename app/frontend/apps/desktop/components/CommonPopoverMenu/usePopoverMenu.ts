@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { inject, computed, provide } from 'vue'
 
@@ -6,12 +6,7 @@ import { useSessionStore } from '#shared/stores/session.ts'
 import type { ObjectLike } from '#shared/types/utils.ts'
 import getUuid from '#shared/utils/getUuid.ts'
 
-import type {
-  GroupItem,
-  MenuItem,
-  MenuItems,
-  UsePopoverMenuReturn,
-} from './types.ts'
+import type { GroupItem, MenuItem, MenuItems, UsePopoverMenuReturn } from './types.ts'
 import type { Ref } from 'vue'
 
 const POPOVER_MENU_SYMBOL = Symbol('popover-menu')
@@ -19,25 +14,20 @@ const POPOVER_MENU_SYMBOL = Symbol('popover-menu')
 export const usePopoverMenu = (
   items: Ref<MenuItem[] | undefined>,
   entity: Ref<ObjectLike | undefined>,
-  options: { provides?: boolean } = {},
+  options: { provides?: boolean; injects?: boolean } = {},
 ) => {
-  const injectPopoverMenu = inject<Maybe<UsePopoverMenuReturn>>(
-    POPOVER_MENU_SYMBOL,
-    null,
-  )
+  const { provides = false, injects = false } = options
 
-  if (injectPopoverMenu) return injectPopoverMenu
+  const injectPopoverMenu = inject<Maybe<UsePopoverMenuReturn>>(POPOVER_MENU_SYMBOL, null)
 
-  const { provides = false } = options
+  if (injects && injectPopoverMenu) return injectPopoverMenu
 
   const session = useSessionStore()
 
   const filterItems = () => {
     return items.value?.filter((item) => {
       if (item.permission && item.show) {
-        return (
-          session.hasPermission(item.permission) && item.show(entity?.value)
-        )
+        return session.hasPermission(item.permission) && item.show(entity?.value)
       }
 
       if (item.permission) {
@@ -62,9 +52,7 @@ export const usePopoverMenu = (
         return acc
       }
 
-      const foundedItem = acc.find(
-        (group) => group.groupLabel === item.groupLabel,
-      )
+      const foundedItem = acc.find((group) => group.groupLabel === item.groupLabel)
 
       const { groupLabel, ...rest } = item
 

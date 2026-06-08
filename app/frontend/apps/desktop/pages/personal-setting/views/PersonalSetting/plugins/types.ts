@@ -1,4 +1,6 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
+
+import type { UserData } from '#shared/types/store.ts'
 
 import type { NavigationMenuCategory } from '#desktop/components/NavigationMenu/types.ts'
 
@@ -10,5 +12,5 @@ export interface PersonalSettingPlugin {
   route: RouteRecordRaw & { name: string }
   order: number
   keywords: string
-  show?: () => boolean
+  show?: (currentUser?: Maybe<UserData>) => boolean
 }

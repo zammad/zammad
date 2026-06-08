@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Queries
   module ObjectManager
@@ -12,19 +12,34 @@ module Gql::Queries
       field :screens, [Gql::Types::ObjectManager::ScreenAttributesType, { null: false }], null: false, description: 'Screens with attributes to be shown in the frontend'
 
       def resolve(object:)
-        object_manager_attributes(object)
+        result = object_manager_attributes(object)
+
+        if object == 'Ticket' && context.current_user.permissions?('ticket.customer+ticket.agent')
+          agent_customer_attrs = object_manager_attributes(object, act_as_customer: true)
+
+          customer_edit_screen = agent_customer_attrs[:screens].find { it[:name] == 'edit' }
+          # edit_customer screen is used by Agent-Customers in tickets they have customer access to.
+          # Regular customers still use the edit screen.
+          customer_edit_screen[:name] = 'edit_customer'
+
+          result[:screens] << customer_edit_screen
+        end
+
+        result
       end
 
       private
 
-      def object_manager_attributes(object)
-        object_attributes = ::ObjectManager::Object.new(object).attributes(context.current_user, nil, data_only: false)
+      def object_manager_attributes(object, act_as_customer: false)
+        object_attributes = ::ObjectManager::Object
+          .new(object)
+          .attributes(context.current_user, nil, data_only: false, act_as_customer:)
 
         frontend_attributes = []
         frontend_screens = {}
 
         object_attributes.each do |element|
-          next if !check_attribute_frontend_screens(frontend_screens, element.screens, element.attribute.name)
+          prepare_attribute_frontend_screens(frontend_screens, element.screens, element.attribute.name)
 
           frontend_attributes << frontend_attribute_fields(element)
         end
@@ -46,7 +61,7 @@ module Gql::Queries
           data_type:   attribute[:data_type],
           data_option: attribute[:data_option],
           screens:     element.screens,
-          is_internal: !attribute[:editable],
+          is_internal: attribute[:internal],
         }
       end
 
@@ -56,20 +71,14 @@ module Gql::Queries
         attribute[:data_option][:belongs_to] = attribute[:name].humanize(capitalize: false)
       end
 
-      def check_attribute_frontend_screens(frontend_screens, screens, name)
-        attribute_shown = false
-
+      def prepare_attribute_frontend_screens(frontend_screens, screens, name)
         screens.each do |screen, screen_data|
           frontend_screens[screen] ||= []
 
           next if !apply_screen_filter?(screen, screen_data)
 
           frontend_screens[screen] << name
-
-          attribute_shown = true
         end
-
-        attribute_shown
       end
 
       def apply_screen_filter?(screen, screen_data)
@@ -86,7 +95,7 @@ module Gql::Queries
       end
 
       def core_workflow?
-        @core_workflow ||= object_class.included_modules.include?(ChecksCoreWorkflow)
+        @core_workflow ||= object_class.include?(ChecksCoreWorkflow)
       end
 
       def object_class

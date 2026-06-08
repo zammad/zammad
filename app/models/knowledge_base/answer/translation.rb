@@ -1,11 +1,13 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class KnowledgeBase::Answer::Translation < ApplicationModel
   include HasDefaultModelUserRelations
+  include HasOnlineNotifications
 
   include HasAgentAllowedParams
   include HasLinks
   include HasSearchIndexBackend
+  include HasVectorIndex
   include KnowledgeBase::HasUniqueTitle
   include KnowledgeBase::Answer::Translation::Search
 
@@ -40,11 +42,33 @@ class KnowledgeBase::Answer::Translation < ApplicationModel
   def search_index_attribute_lookup(include_references: true)
     attrs = super
 
-    attrs.merge('title'      => ActionController::Base.helpers.strip_tags(attrs['title']),
-                'content'    => content&.search_index_attribute_lookup,
-                'scope_id'   => answer.category_id,
-                'attachment' => answer.attachments_for_search_index_attribute_lookup,
-                'tags'       => answer.tag_list)
+    attrs['title']      = ActionController::Base.helpers.strip_tags(title)
+    attrs['content']    = content&.search_index_attribute_lookup
+    attrs['scope_id']   = answer.category_id
+    attrs['tags']       = answer.tag_list
+    attrs['attachment'] = answer.search_index_attachments_lookup(attrs.to_json.bytesize)
+
+    attrs
+  end
+
+  def vector_index_data
+    {
+      content:  "#{title}\n#{content.body.html2text}",
+      metadata: {
+        locale:      kb_locale.system_locale.locale,
+        category_id: answer.category_id,
+      },
+    }
+  end
+
+  def vector_indexing_for_record?
+    return false if !answer.visible_internally?
+
+    # For now only explicitly enabled categories or all are indexed.
+    relevant_categorie_ids = ENV.fetch('VECTOR_INDEX_FOR_KNOWLEDGE_BASE_CATEGORY_IDS', nil)
+    return false if relevant_categorie_ids&.split(',')&.exclude?(answer.category_id.to_s)
+
+    true
   end
 
   def inline_linked_objects
@@ -76,8 +100,7 @@ class KnowledgeBase::Answer::Translation < ApplicationModel
 
   scope :apply_kb_scope, lambda { |scope|
     if scope.present?
-      output
-        .joins(:answer)
+      joins(:answer)
         .where(knowledge_base_answers: { category_id: scope })
     end
   }

@@ -279,7 +279,7 @@ class App.Search extends App.Controller
         )
         @navigate ticket.uiUrl()
 
-      checkbox = @permissionCheck('ticket.agent') ? true : false
+      checkbox = @permissionCheck('ticket.agent')
 
       callbackCheckbox = (id, checked, e) =>
         if @shouldShowBulkForm()
@@ -396,6 +396,8 @@ class App.Search extends App.Controller
         pagerEnabled: false
         orderEnabled: false
         pagerAjax: true
+        clone: false
+        destroy: false
       )
 
     @renderPagination()

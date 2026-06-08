@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Whatsapp::Webhook::Message
   include Mixin::RequiredSubPaths
@@ -103,7 +103,7 @@ class Whatsapp::Webhook::Message
   end
 
   def create_article
-    is_first_article = @ticket.articles.count.zero?
+    is_first_article = @ticket.articles.none?
 
     article = Ticket::Article.create!(
       ticket_id:    @ticket.id,

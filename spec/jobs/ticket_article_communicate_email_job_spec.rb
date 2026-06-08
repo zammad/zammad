@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -54,6 +54,105 @@ RSpec.describe TicketArticleCommunicateEmailJob, type: :job do
         expect(Rails.logger)
           .to have_received(:error)
           .with("Channel defined for email address id '#{email_address.id}' is not active!")
+      end
+    end
+  end
+
+  describe 'MicrosoftGraph::ApiError handling' do
+    let(:job) { described_class.perform_later(article.id) }
+    let(:article) { create(:ticket_article, :outbound_email) }
+    let(:error_hash) do
+      {
+        'error' => {
+          'code'       => 'TooManyRequests',
+          'message'    => 'Too many requests. Please try again later.',
+          'innerError' => {
+            'date'              => '2025-07-31T10:00:00',
+            'request-id'        => 'MS_GRAPH_TOKEN',
+            'client-request-id' => 'MS_GRAPH_TOKEN'
+          }
+        }
+      }
+    end
+
+    before do
+      allow_any_instance_of(Channel).to receive(:deliver).and_raise(error)
+    end
+
+    context 'when error has Retry-After time' do
+      let(:time)  { 1.hour.from_now }
+      let(:error) { MicrosoftGraph::ApiError.new(error_hash['error'], retry_after: time) }
+
+      it 'uses Retry-After time' do
+        ActiveJob::Base.execute job.serialize
+
+        new_job = enqueued_jobs.last
+
+        expect(new_job[:at]).to be_within(1.second).of(time.to_i)
+      end
+
+      it 'stops after 4 attempts' do
+        ActiveJob::Base.execute job.serialize
+
+        4.times do
+          new_job = enqueued_jobs.last
+          enqueued_jobs.clear
+          ActiveJob::Base.execute new_job
+        end
+
+        expect(enqueued_jobs).to be_empty
+      end
+
+      it 'creates error article after 4 attempts' do
+        ActiveJob::Base.execute job.serialize
+
+        4.times do
+          new_job = enqueued_jobs.last
+          enqueued_jobs.clear
+          ActiveJob::Base.execute new_job
+        end
+
+        expect(Ticket::Article.last).to have_attributes(
+          body: "Unable to send email to '#{article.to}': Too many requests. Please try again later. (TooManyRequests)\nMicrosoft Graph API Request ID: MS_GRAPH_TOKEN"
+        )
+      end
+    end
+
+    context 'when error has no Retry-After' do
+      let(:error) { MicrosoftGraph::ApiError.new(error_hash['error']) }
+
+      it 'uses back-off timer' do
+        ActiveJob::Base.execute job.serialize
+
+        new_job = enqueued_jobs.last
+
+        expect(new_job[:at]).to be_within(1.second).of(25.seconds.from_now.to_i)
+      end
+
+      it 'stops after 4 attempts' do
+        ActiveJob::Base.execute job.serialize
+
+        4.times do
+          new_job = enqueued_jobs.last
+          enqueued_jobs.clear
+          ActiveJob::Base.execute new_job
+        end
+
+        expect(enqueued_jobs).to be_empty
+      end
+
+      it 'creates error article after 4 attempts' do
+        ActiveJob::Base.execute job.serialize
+
+        4.times do
+          new_job = enqueued_jobs.last
+          enqueued_jobs.clear
+          ActiveJob::Base.execute new_job
+        end
+
+        expect(Ticket::Article.last).to have_attributes(
+          body: "Unable to send email to '#{article.to}': Too many requests. Please try again later. (TooManyRequests)\nMicrosoft Graph API Request ID: MS_GRAPH_TOKEN"
+        )
       end
     end
   end

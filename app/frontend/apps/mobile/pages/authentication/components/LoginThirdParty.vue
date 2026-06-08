@@ -1,7 +1,6 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import useFingerprint from '#shared/composables/useFingerprint.ts'
 import { getCSRFToken } from '#shared/server/apollo/utils/csrfToken.ts'
 import type { ThirdPartyAuthProvider } from '#shared/types/authentication.ts'
 
@@ -9,29 +8,23 @@ export interface Props {
   providers: ThirdPartyAuthProvider[]
 }
 
-const props = defineProps<Props>()
+defineProps<Props>()
 
 const csrfToken = getCSRFToken()
-
-const { fingerprint } = useFingerprint()
 </script>
 
 <template>
   <section class="mt-4 mb-16 w-full max-w-md" data-test-id="loginThirdParty">
     <p class="p-3 text-center">
-      {{
-        $c.user_show_password_login
-          ? $t('Or sign in using')
-          : $t('Sign in using')
-      }}
+      {{ $c.user_show_password_login ? $t('Or sign in using') : $t('Sign in using') }}
     </p>
     <div class="-m-2 flex flex-wrap p-1">
       <form
-        v-for="provider of props.providers"
+        v-for="provider of providers"
         :key="provider.name"
         class="flex min-w-1/2 grow"
         method="post"
-        :action="`${provider.url}?fingerprint=${fingerprint}`"
+        :action="provider.url"
       >
         <input type="hidden" name="authenticity_token" :value="csrfToken" />
         <button

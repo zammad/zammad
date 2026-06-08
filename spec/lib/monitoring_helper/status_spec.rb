@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -75,21 +75,14 @@ RSpec.describe MonitoringHelper::Status do
   end
 
   describe '#storage' do
-    case ActiveRecord::Base.connection_db_config.configuration_hash[:adapter]
-    when 'postgresql'
-      it 'returns size of attached files' do
-        20.times { create(:store).update! size: 65_000_000 }
+    it 'returns size of attached files' do
+      20.times { create(:store).update! size: 65_000_000 }
 
-        expect(instance.send(:storage)).to include({ kB: 1_269_531, MB: 1239, GB: 1 })
-      end
+      expect(instance.send(:storage)).to include({ kB: 1_269_531, MB: 1239, GB: 1 })
+    end
 
-      it 'returns nil if no files attached' do # rubocop:disable RSpec/RepeatedExample
-        expect(instance.send(:storage)).to be_nil
-      end
-    when 'mysql'
-      it 'returns nil' do # rubocop:disable RSpec/RepeatedExample
-        expect(instance.send(:storage)).to be_nil
-      end
+    it 'returns nil if no files attached' do
+      expect(instance.send(:storage)).to be_nil
     end
   end
 end

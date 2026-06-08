@@ -27,25 +27,25 @@ class App.UiElement.richtext.toolButtons.embed_video extends App.UiElement.richt
 
     walker.currentNode = sel.anchorNode
 
-    while !startNode and (walker.currentNode.nodeName == '#text' || walker.currentNode.nodeName == 'SPAN') and walker.currentNode
+    while !startNode and (walker.currentNode.nodeName == '#text' || walker.currentNode.nodeName == 'SPAN')
       if walker.currentNode instanceof Text
         offset = walker.currentNode.textContent.indexOf '('
       if offset? and offset > -1
         startNode = walker.currentNode
         startOffset = offset
 
-      walker.previousNode()
+      break if !walker.previousNode()
 
     walker.currentNode = sel.anchorNode # back to start
 
-    while !endNode and (walker.currentNode.nodeName == '#text' || walker.currentNode.nodeName == 'SPAN') and walker.currentNode
+    while !endNode and (walker.currentNode.nodeName == '#text' || walker.currentNode.nodeName == 'SPAN')
       if walker.currentNode instanceof Text
         offset = walker.currentNode.textContent.indexOf ')'
       if offset? and offset > -1 and (walker.currentNode != sel.anchorNode || offset > startOffset)
         endNode = walker.currentNode
         endOffset = offset + 1
 
-      walker.nextNode()
+      break if !walker.nextNode()
 
     if startNode and endNode
       range = document.createRange()

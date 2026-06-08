@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Mutations
   class Channel::Email::GuessConfiguration < Channel::Email::BaseConfiguration
@@ -31,7 +31,7 @@ module Gql::Mutations
       hash
         .slice(:adapter)
         .merge(hash[:options])
-        .tap { _1[:ssl] = map_ssl_value(_1) }
+        .tap { it[:ssl] = map_ssl_value(it) }
     end
 
     def map_ssl_value(hash)

@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 /**
  * @fileoverview Enforce presence of Zammad copyright header
@@ -9,19 +9,23 @@
 // Requirements
 //------------------------------------------------------------------------------
 
-/* eslint-disable @typescript-eslint/no-require-imports */
 const { RuleTester } = require('eslint')
 
 const rule = require('../../../lib/rules/zammad-copyright.js')
-/* eslint-enable @typescript-eslint/no-require-imports */
 
 //------------------------------------------------------------------------------
 // Tests
 //------------------------------------------------------------------------------
 
 // NOTE: Cannot test with xml tags inside vue files, as the preprocessors are not running.
-const year = new Date().getYear() + 1900
-const ruleTester = new RuleTester()
+const year = new Date().getFullYear()
+
+const ruleTester = new RuleTester({
+  languageOptions: {
+    parser: require('vue-eslint-parser'), // required to parse .vue files properly otherwise js-parser will be used
+  },
+})
+
 ruleTester.run('zammad-copyright', rule, {
   valid: [
     {

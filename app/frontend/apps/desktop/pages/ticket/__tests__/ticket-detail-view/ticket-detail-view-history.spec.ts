@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { waitFor, within } from '@testing-library/vue'
 
@@ -68,27 +68,19 @@ describe('Ticket detail view - history', () => {
 
     const sidebar = view.getByLabelText('Content sidebar')
 
-    await view.events.click(
-      within(sidebar).getByRole('button', { name: 'Action menu button' }),
-    )
+    await view.events.click(within(sidebar).getByRole('button', { name: 'Action menu button' }))
 
-    await view.events.click(
-      await view.findByRole('button', { name: 'History' }),
-    )
+    await view.events.click(await view.findByRole('button', { name: 'History' }))
 
     await waitForNextTick()
 
-    expect(
-      await view.findByRole('heading', { name: 'Ticket History', level: 2 }),
-    ).toBeInTheDocument()
+    expect(await view.findByRole('heading', { name: 'History', level: 2 })).toBeInTheDocument()
 
     const flyout = view.getByRole('complementary', {
-      name: 'Ticket History',
+      name: 'History',
     })
 
-    await waitFor(() =>
-      expect(within(flyout).getByText('Created')).toBeInTheDocument(),
-    )
+    await waitFor(() => expect(within(flyout).getByText('Created')).toBeInTheDocument())
 
     expect(within(flyout).getByText('Created')).toBeInTheDocument()
     expect(within(flyout).getByText('John Doe')).toBeInTheDocument()

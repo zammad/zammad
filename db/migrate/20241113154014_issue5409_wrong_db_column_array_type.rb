@@ -1,11 +1,8 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Issue5409WrongDbColumnArrayType < ActiveRecord::Migration[7.1]
   def change
     return if !Setting.exists?(name: 'system_init_done')
-
-    # Do not execute on unsupported backends.
-    return if !Rails.application.config.db_column_array
 
     migrate_smime_certificates_email_addresses_column
     migrate_pgp_keys_email_addresses_column

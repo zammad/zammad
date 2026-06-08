@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed } from 'vue'
@@ -23,9 +23,9 @@ const hasOverviewSortingPreference = computed(() =>
       link="/personal-setting/ticket-overviews"
     >
       <CommonLabel
-        size="small"
-        class="text-blue-800!"
+        class="text-blue-800! hover:text-blue-850! hover:dark:text-blue-600!"
         prefix-icon="list-columns-reverse"
+        size="small"
       >
         {{ $t('reorder items') }}
       </CommonLabel>

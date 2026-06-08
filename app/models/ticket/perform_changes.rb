@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Ticket::PerformChanges
   extend ActiveSupport::Concern
@@ -12,7 +12,8 @@ module Ticket::PerformChanges
                                      :notification_email,
                                      :notification_sms,
                                      :notification_webhook,
-                                     :article_note
+                                     :article_note,
+                                     :ai_agent
   end
 
   def pre_execute(perform_changes_data)

@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { within } from '@testing-library/vue'
 import { vi } from 'vitest'
@@ -170,29 +170,19 @@ describe('TicketSidebarGitLab', () => {
 
     expect(wrapper.getByRole('button', { name: 'GitLab' })).toBeInTheDocument()
 
-    expect(
-      wrapper.getByRole('button', { name: 'Link Issue' }),
-    ).toBeInTheDocument()
+    expect(wrapper.getByRole('button', { name: 'Link issue' })).toBeInTheDocument()
 
-    expect(
-      wrapper.queryByRole('status', { name: 'Issues' }),
-    ).not.toBeInTheDocument()
+    expect(wrapper.queryByRole('status', { name: 'Issues' })).not.toBeInTheDocument()
 
-    expect(
-      wrapper.queryByRole('button', { name: 'Action menu button' }),
-    ).not.toBeInTheDocument()
+    expect(wrapper.queryByRole('button', { name: 'Action menu button' })).not.toBeInTheDocument()
   })
 
   it('displays the GitLab issue tracker', async () => {
     const wrapper = renderGitLabSidebar()
 
-    expect(wrapper.getByRole('heading', { level: 2 })).toHaveTextContent(
-      'GitLab',
-    )
+    expect(wrapper.getByRole('heading', { level: 2 })).toHaveTextContent('GitLab')
 
-    expect(
-      await wrapper.findByRole('status', { name: 'Issues' }),
-    ).toHaveTextContent('2')
+    expect(await wrapper.findByRole('status', { name: 'Issues' })).toHaveTextContent('2')
 
     expect(
       await wrapper.findByRole('link', {
@@ -210,14 +200,10 @@ describe('TicketSidebarGitLab', () => {
   it('links a new issue with issues present', async () => {
     const wrapper = renderGitLabSidebar()
 
-    await wrapper.events.click(
-      await wrapper.findByRole('button', { name: 'Action menu button' }),
-    )
+    await wrapper.events.click(await wrapper.findByRole('button', { name: 'Action menu button' }))
 
     expect(await wrapper.findByIconName('link-45deg')).toBeInTheDocument()
-    await wrapper.events.click(
-      wrapper.getByRole('button', { name: 'Link Issue' }),
-    )
+    await wrapper.events.click(wrapper.getByRole('button', { name: 'Link issue' }))
 
     const flyout = await wrapper.findByRole('complementary', {
       name: 'GitLab: Link issue',
@@ -232,12 +218,9 @@ describe('TicketSidebarGitLab', () => {
       'https://git.zammad.com/zammad/zammad/-/issues/124',
     )
 
-    await wrapper.events.click(
-      wrapper.getByRole('button', { name: 'Link Issue' }),
-    )
+    await wrapper.events.click(wrapper.getByRole('button', { name: 'Link issue' }))
 
-    const calls =
-      await waitForTicketExternalReferencesIssueTrackerItemAddMutationCalls()
+    const calls = await waitForTicketExternalReferencesIssueTrackerItemAddMutationCalls()
 
     expect(calls.at(-1)?.variables).toEqual({
       issueTrackerLink: 'https://git.zammad.com/zammad/zammad/-/issues/124',
@@ -249,13 +232,9 @@ describe('TicketSidebarGitLab', () => {
   it('links a new issue with no issues present', async () => {
     const wrapper = renderGitLabSidebar(true, [])
 
-    expect(
-      wrapper.queryByRole('button', { name: 'Action menu button' }),
-    ).not.toBeInTheDocument()
+    expect(wrapper.queryByRole('button', { name: 'Action menu button' })).not.toBeInTheDocument()
 
-    await wrapper.events.click(
-      await wrapper.findByRole('button', { name: 'Link Issue' }),
-    )
+    await wrapper.events.click(await wrapper.findByRole('button', { name: 'Link issue' }))
 
     const flyout = await wrapper.findByRole('complementary', {
       name: 'GitLab: Link issue',
@@ -281,8 +260,7 @@ describe('TicketSidebarGitLab', () => {
 
     await wrapper.events.click(unlinkButtons[0])
 
-    const calls =
-      await waitForTicketExternalReferencesIssueTrackerItemRemoveMutationCalls()
+    const calls = await waitForTicketExternalReferencesIssueTrackerItemRemoveMutationCalls()
 
     expect(calls.at(-1)?.variables).toEqual({
       issueTrackerLink: 'https://git.zammad.com/zammad/zammad/-/issues/123',
@@ -304,13 +282,9 @@ describe('TicketSidebarGitLab', () => {
 
     expect(wrapper.emitted('show')).toHaveLength(1)
 
-    expect(
-      wrapper.queryByRole('button', { name: 'Unlink issue' }),
-    ).not.toBeInTheDocument()
+    expect(wrapper.queryByRole('button', { name: 'Unlink issue' })).not.toBeInTheDocument()
 
-    expect(
-      wrapper.queryByRole('button', { name: 'Action menu button' }),
-    ).not.toBeInTheDocument()
+    expect(wrapper.queryByRole('button', { name: 'Action menu button' })).not.toBeInTheDocument()
   })
 })
 
@@ -365,8 +339,6 @@ describe('errors', () => {
       'Error fetching information from GitLab. Please contact your administrator.',
     )
 
-    expect(
-      wrapper.queryByRole('button', { name: 'Action menu button' }),
-    ).not.toBeInTheDocument()
+    expect(wrapper.queryByRole('button', { name: 'Action menu button' })).not.toBeInTheDocument()
   })
 })

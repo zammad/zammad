@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -53,7 +53,7 @@ RSpec.describe Store, type: :model do
 
         it 'stores data as binary string to #content attribute' do
           expect { create(:store, **attributes) }
-            .to change { described_class.last&.content }.to('hello world äöüß'.force_encoding('ASCII-8BIT'))
+            .to change { described_class.last&.content }.to('hello world äöüß'.dup.force_encoding('ASCII-8BIT'))
         end
       end
 
@@ -360,6 +360,40 @@ RSpec.describe Store, type: :model do
             end
           end
         end
+      end
+    end
+
+    describe '#image_resize' do
+      subject(:store_instance) { described_class.new(filename: 'upload2.jpg') }
+
+      let(:content)   { Rails.root.join('test/data/upload/upload2.jpg').binread }
+      let(:width)     { 200 }
+      let(:temp_file) { Tempfile.new.path }
+
+      before do
+        allow(Rails.cache).to receive(:fetch).and_call_original
+      end
+
+      it 'caches by default' do
+        result = store_instance.send(:image_resize, content, width)
+
+        expect(Rails.cache).to have_received(:fetch)
+
+        File.binwrite(temp_file, result)
+
+        expect(Rszr::Image.load(temp_file).width).to eq(width)
+      end
+
+      it 'skips caching when asked not to' do
+        allow(Rails.cache).to receive(:fetch).and_call_original
+
+        result = store_instance.send(:image_resize, content, width, no_cache: true)
+
+        expect(Rails.cache).not_to have_received(:fetch)
+
+        File.binwrite(temp_file, result)
+
+        expect(Rszr::Image.load(temp_file).width).to eq(width)
       end
     end
 

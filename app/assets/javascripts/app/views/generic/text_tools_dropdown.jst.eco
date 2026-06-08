@@ -1,0 +1,10 @@
+<% if !@disabled: %>
+<div class="text-tools-dropdown dropdown dropdown--actions dropup">
+  <ul class="dropdown-menu" role="menu">
+  <% for item in @items: %>
+    <li class="js-action" role="menuitem" data-id="<%= item.id %>">
+      <%- @T(item.name) %>
+  <% end %>
+  </ul>
+</div>
+<% end %>

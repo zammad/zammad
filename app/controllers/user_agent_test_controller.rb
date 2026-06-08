@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class UserAgentTestController < ApplicationController
   skip_before_action :verify_csrf_token
@@ -48,7 +48,7 @@ class UserAgentTestController < ApplicationController
              remote_ip:              request.remote_ip,
              content_type_requested: request.media_type,
              method:                 type,
-             body:                   request.body,
+             body:                   request.raw_post,
              submitted:              params[:submitted]
            },
            status: status

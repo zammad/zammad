@@ -20,8 +20,6 @@ detect_docker
 
 detect_initcmd
 
-detect_database
-
 detect_webserver
 
 enforce_redis

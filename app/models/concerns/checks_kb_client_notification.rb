@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module ChecksKbClientNotification
   extend ActiveSupport::Concern
@@ -18,9 +18,7 @@ module ChecksKbClientNotification
   end
 
   def self.all_classes
-    ActiveRecord::Base
-      .descendants
-      .select { |c| c.included_modules.include?(ChecksKbClientNotification) }
+    Models.all.keys.select { |c| c.include?(ChecksKbClientNotification) }
   end
 
   private

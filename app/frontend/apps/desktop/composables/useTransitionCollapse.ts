@@ -1,6 +1,6 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { useTransitionConfig } from '#shared/composables/useTransitionConfig.ts'
+import { useTransitionConfig } from '#desktop/composables/useTransitionConfig.ts'
 
 export const useTransitionCollapse = () => {
   const { durations } = useTransitionConfig()

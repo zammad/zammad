@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, ref, useTemplateRef } from 'vue'
@@ -27,9 +27,7 @@ const emit = defineEmits<{
 
 const isTicketItem = computed(() => !!props.item.ticketReference)
 
-const noAccessToLinkedTicket = computed(
-  () => !props.item.ticketReference?.ticket,
-)
+const noAccessToLinkedTicket = computed(() => !props.item.ticketReference?.ticket)
 
 const inlineEditInstance = useTemplateRef('inline-edit')
 
@@ -93,11 +91,7 @@ defineExpose({
     :class="{ 'items-center': isEditing }"
   >
     <template v-if="isReordering">
-      <CommonIcon
-        name="grip-vertical"
-        class="mt-1.5 inline-block shrink-0"
-        size="xs"
-      />
+      <CommonIcon name="grip-vertical" class="mt-1.5 inline-block shrink-0" size="xs" />
       <CommonIcon
         v-if="!isTicketItem"
         tabindex="0"

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -14,6 +14,7 @@ RSpec.describe KnowledgeBase::PermissionsUpdate do
     describe 'updating itself' do
       shared_examples 'updating itself' do |object_name:|
         let(:object) { send(object_name) }
+
         it 'adds role permission for self' do
           described_class.new(object).update! role_editor => 'editor'
 
@@ -116,12 +117,12 @@ RSpec.describe KnowledgeBase::PermissionsUpdate do
 
           it 'raises error on updating to reader permission' do
             expect { described_class.new(child_category).update! role_editor => 'reader' }
-              .to raise_error(Exceptions::UnprocessableEntity)
+              .to raise_error(Exceptions::UnprocessableContent)
           end
 
           it 'raises error on updating to none permission' do
             expect { described_class.new(child_category).update! role_editor => 'none' }
-              .to raise_error(Exceptions::UnprocessableEntity)
+              .to raise_error(Exceptions::UnprocessableContent)
           end
         end
 
@@ -142,12 +143,12 @@ RSpec.describe KnowledgeBase::PermissionsUpdate do
 
           it 'raises error on updating to reader permission' do
             expect { described_class.new(child_category).update! role_editor => 'reader' }
-              .to raise_error(Exceptions::UnprocessableEntity)
+              .to raise_error(Exceptions::UnprocessableContent)
           end
 
           it 'raises error on updating to editor permission' do
             expect { described_class.new(child_category).update! role_editor => 'editor' }
-              .to raise_error(Exceptions::UnprocessableEntity)
+              .to raise_error(Exceptions::UnprocessableContent)
           end
         end
       end
@@ -229,7 +230,7 @@ RSpec.describe KnowledgeBase::PermissionsUpdate do
 
         it 'raises an error when saving a lockout change for a given user' do
           expect { described_class.new(object, user).update! role => 'reader' }
-            .to raise_error(Exceptions::UnprocessableEntity)
+            .to raise_error(Exceptions::UnprocessableContent)
         end
 
         it 'allows to save same change without a user' do

@@ -6,7 +6,7 @@
       <label for="api_token"><%- @T('%s API Token', 'Telegram') %> <span>*</span></label>
     </div>
     <div class="controls">
-      <input id="api_token" type="text" name="api_token" value="<%= @channel.options.api_token %>" class="form-control" required autocomplete="off">
+      <input id="api_token" type="password" name="api_token" value="<%= @channel.options.api_token %>" class="form-control" required autocomplete="off">
     </div>
   </div>
   <h2><%- @T('Settings') %></h2>

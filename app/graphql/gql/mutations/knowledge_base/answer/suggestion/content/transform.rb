@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Mutations
   class KnowledgeBase::Answer::Suggestion::Content::Transform < BaseMutation
@@ -10,39 +10,35 @@ module Gql::Mutations
     field :body, String, null: true, description: 'Answer translation content'
     field :attachments, [Gql::Types::StoredFileType], null: true, description: 'Attachments of the answer'
 
-    def self.authorize(_obj, ctx)
-      ctx.current_user.permissions?('ticket.agent')
-    end
+    requires_permission 'ticket.agent'
 
     def resolve(translation_id:, form_id:)
       translation = Gql::ZammadSchema.verified_object_from_id(translation_id, type: ::KnowledgeBase::Answer::Translation)
 
       {
-        body:        convert_body(translation),
-        attachments: extract_and_copy_attachments(translation, form_id)
+        body:        convert_body(translation, form_id),
+        attachments: clone_attachments(translation, form_id)
       }
     end
 
     private
 
-    def convert_body(translation)
-      return if translation.content.blank?
-
-      scrubber = HtmlSanitizer::Scrubber::InsertInlineImages.new(translation.content.attachments)
-
-      Loofah.scrub_fragment(translation.content.body, scrubber).to_s
+    def convert_body(translation, form_id)
+      # Consider moving this to the CanCloneAttachments concern in future.
+      content_attachments = translation.content.attachments.map do |elem|
+        Store.create!(
+          object:      'UploadCache',
+          o_id:        form_id,
+          data:        elem.content,
+          filename:    elem.filename,
+          preferences: elem.preferences,
+        )
+      end
+      HasRichText.insert_urls(translation.content.body.dup, content_attachments)
     end
 
-    def extract_and_copy_attachments(translation, form_id)
-      return if translation.answer.attachments.none?
-
-      translation.answer.clone_attachments(
-        'UploadCache',
-        form_id,
-        only_attached_attachments: true
-      ).each_with_object([]) do |attachment, result|
-        result.push(attachment)
-      end
+    def clone_attachments(translation, form_id)
+      translation.answer.clone_attachments('UploadCache', form_id, only_attached_attachments: true)
     end
   end
 end

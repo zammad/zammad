@@ -1,0 +1,8 @@
+<span class="text-muted text-tools-feedback-output">
+  <%- @Icon('thumbs-up') %>
+  <%- @positive_feedback %>%
+</span>
+<span>
+  <%- @Icon('thumbs-down') %>
+  <%- @negative_feedback %>%
+</span>

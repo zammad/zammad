@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { ref } from 'vue'
 
@@ -55,12 +55,7 @@ describe('useAddUnknownValueAction', () => {
     const testSelectOption = vi.fn()
     const testClearFilter = vi.fn()
 
-    onSearchInteractionUpdate(
-      testEmailAddress,
-      testOptions,
-      testSelectOption,
-      testClearFilter,
-    )
+    onSearchInteractionUpdate(testEmailAddress, testOptions, testSelectOption, testClearFilter)
 
     expect(actions.value).toEqual([
       expect.objectContaining({
@@ -113,18 +108,12 @@ describe('useAddUnknownValueAction', () => {
   it('supports providing custom action label', async () => {
     const testActionLabel = ref('foo')
 
-    const { actions, onSearchInteractionUpdate } =
-      useAddUnknownValueAction(testActionLabel)
+    const { actions, onSearchInteractionUpdate } = useAddUnknownValueAction(testActionLabel)
 
     const testSelectOption = vi.fn()
     const testClearFilter = vi.fn()
 
-    onSearchInteractionUpdate(
-      testEmailAddress,
-      testOptions,
-      testSelectOption,
-      testClearFilter,
-    )
+    onSearchInteractionUpdate(testEmailAddress, testOptions, testSelectOption, testClearFilter)
 
     expect(actions.value).toEqual([
       expect.objectContaining({
@@ -134,12 +123,7 @@ describe('useAddUnknownValueAction', () => {
 
     testActionLabel.value = 'bar'
 
-    onSearchInteractionUpdate(
-      testEmailAddress,
-      testOptions,
-      testSelectOption,
-      testClearFilter,
-    )
+    onSearchInteractionUpdate(testEmailAddress, testOptions, testSelectOption, testClearFilter)
 
     expect(actions.value).toEqual([
       expect.objectContaining({
@@ -149,12 +133,9 @@ describe('useAddUnknownValueAction', () => {
   })
 
   it('supports providing custom validator', async () => {
-    const testActionLabel = ref(
-      'the answer to life the universe and everything',
-    )
+    const testActionLabel = ref('the answer to life the universe and everything')
 
-    const testFilterValueValidator = (filter: string) =>
-      parseInt(filter, 10) === 42
+    const testFilterValueValidator = (filter: string) => parseInt(filter, 10) === 42
 
     const { actions, onSearchInteractionUpdate } = useAddUnknownValueAction(
       testActionLabel,

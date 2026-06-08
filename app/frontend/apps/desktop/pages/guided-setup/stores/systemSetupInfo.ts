@@ -1,13 +1,10 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { useLocalStorage } from '@vueuse/core'
 import { defineStore } from 'pinia'
 import { computed } from 'vue'
 
-import {
-  EnumSystemSetupInfoStatus,
-  EnumSystemSetupInfoType,
-} from '#shared/graphql/types.ts'
+import { EnumSystemSetupInfoStatus, EnumSystemSetupInfoType } from '#shared/graphql/types.ts'
 import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
 import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
@@ -18,10 +15,7 @@ import { useSystemSetupInfoLazyQuery } from '../graphql/queries/systemSetupInfo.
 import type { SystemSetupInfoStorage } from '../types/setup-info.ts'
 
 export const useSystemSetupInfoStore = defineStore('systemSetupInfo', () => {
-  const systemSetupInfo = useLocalStorage<SystemSetupInfoStorage>(
-    'systemSetupInfo',
-    {},
-  )
+  const systemSetupInfo = useLocalStorage<SystemSetupInfoStorage>('systemSetupInfo', {})
 
   const systemSetupInfoQuery = new QueryHandler(
     useSystemSetupInfoLazyQuery({
@@ -65,13 +59,8 @@ export const useSystemSetupInfoStore = defineStore('systemSetupInfo', () => {
     return `${pathPrefix}${importBackendRoute}`
   }
 
-  const getSystemSetupInfoRedirectPath = (
-    status?: string,
-    type?: string,
-    lockValue?: string,
-  ) => {
-    if (!status || status === EnumSystemSetupInfoStatus.New)
-      return '/guided-setup'
+  const getSystemSetupInfoRedirectPath = (status?: string, type?: string, lockValue?: string) => {
+    if (!status || status === EnumSystemSetupInfoStatus.New) return '/guided-setup'
 
     if (status === EnumSystemSetupInfoStatus.Automated) {
       return '/guided-setup/automated'
@@ -117,10 +106,7 @@ export const useSystemSetupInfoStore = defineStore('systemSetupInfo', () => {
   const systemSetupDone = computed(() => {
     const { status } = systemSetupInfo.value
 
-    return (
-      status === EnumSystemSetupInfoStatus.Done ||
-      application.config.system_init_done
-    )
+    return status === EnumSystemSetupInfoStatus.Done || application.config.system_init_done
   })
 
   const systemSetupAlreadyStarted = computed(() => {
@@ -147,6 +133,7 @@ export const useSystemSetupInfoStore = defineStore('systemSetupInfo', () => {
       .then(() => {
         systemSetupInfo.value = {}
 
+        // oxlint-disable-next-line eslint-plugin-promise(no-callback-in-promise)
         callback()
       })
       .catch(() => {})

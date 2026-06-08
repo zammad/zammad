@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class CreateTicket < ActiveRecord::Migration[4.2]
   def up
@@ -20,6 +20,7 @@ class CreateTicket < ActiveRecord::Migration[4.2]
       t.column :ignore_escalation,    :boolean,             null: false, default: false
       t.column :default_create,       :boolean,             null: false, default: false
       t.column :default_follow_up,    :boolean,             null: false, default: false
+      t.column :default_close,        :boolean,             null: false, default: false
       t.column :note,                 :string, limit: 250,  null: true
       t.column :active,               :boolean,             null: false, default: true
       t.column :updated_by_id,        :integer,             null: false
@@ -29,6 +30,7 @@ class CreateTicket < ActiveRecord::Migration[4.2]
     add_index :ticket_states, [:name], unique: true
     add_index :ticket_states, [:default_create]
     add_index :ticket_states, [:default_follow_up]
+    add_index :ticket_states, [:default_close]
     add_foreign_key :ticket_states, :ticket_state_types, column: :state_type_id
     add_foreign_key :ticket_states, :users, column: :created_by_id
     add_foreign_key :ticket_states, :users, column: :updated_by_id
@@ -83,6 +85,7 @@ class CreateTicket < ActiveRecord::Migration[4.2]
       t.column :type,                             :string,    limit: 100, null: true
       t.column :time_unit,                        :decimal, precision: 6, scale: 2, null: true
       t.column :preferences,                      :text, limit: 500.kilobytes + 1, null: true
+      t.column :ai_agent_running,                 :boolean, default: false, null: false
       t.column :updated_by_id,                    :integer,               null: false
       t.column :created_by_id,                    :integer,               null: false
       t.timestamps limit: 3, null: false
@@ -126,6 +129,7 @@ class CreateTicket < ActiveRecord::Migration[4.2]
     add_index :tickets, %i[group_id state_id owner_id created_at], name: 'index_tickets_on_group_id_state_id_owner_id_created_at'
     add_index :tickets, %i[group_id state_id close_at]
     add_index :tickets, %i[group_id state_id owner_id close_at], name: 'index_tickets_on_group_id_state_id_owner_id_close_at'
+    add_index :tickets, [:ai_agent_running]
     add_foreign_key :tickets, :groups
     add_foreign_key :tickets, :users, column: :owner_id
     add_foreign_key :tickets, :users, column: :customer_id
@@ -513,13 +517,20 @@ class CreateTicket < ActiveRecord::Migration[4.2]
     add_foreign_key :report_profiles, :users, column: :created_by_id
     add_foreign_key :report_profiles, :users, column: :updated_by_id
 
+    create_table :report_profiles_roles, id: false do |t|
+      t.references :profile, null: false, foreign_key: { to_table: :report_profiles }, index: true
+      t.references :role, null: false, foreign_key: true, index: true
+    end
+
     create_table :webhooks do |t|
       t.column :name,                       :string, limit: 250,              null: false
       t.column :endpoint,                   :string, limit: 2000,             null: false
+      t.column :http_method,                :string, limit: 10,               null: false, default: 'post'
       t.column :signature_token,            :string, limit: 200,              null: true
       t.column :ssl_verify,                 :boolean,                         null: false, default: true
       t.column :basic_auth_username,        :string, limit: 250,              null: true
       t.column :basic_auth_password,        :string, limit: 250,              null: true
+      t.column :bearer_token,               :string, limit: 2500,             null: true
       t.column :note,                       :string, limit: 500,              null: true
       t.column :pre_defined_webhook_type,   :string, limit: 250,              null: true
       t.column :customized_payload,         :boolean,                         null: false, default: false
@@ -551,11 +562,7 @@ class CreateTicket < ActiveRecord::Migration[4.2]
 
     create_table :checklists do |t|
       t.string :name,      limit: 250,     null: false, default: ''
-      if Rails.application.config.db_column_array
-        t.string :sorted_item_ids, null: false, array: true, default: []
-      else
-        t.json :sorted_item_ids, null: false
-      end
+      t.string :sorted_item_ids, null: false, array: true, default: []
       t.references :created_by, null: false, foreign_key: { to_table: :users }
       t.references :updated_by, null: false, foreign_key: { to_table: :users }
       t.timestamps limit: 3, null: false
@@ -566,11 +573,7 @@ class CreateTicket < ActiveRecord::Migration[4.2]
     end
 
     create_table :checklist_items do |t|
-      if ActiveRecord::Base.connection_db_config.configuration_hash[:adapter] == 'mysql2'
-        t.text :text, null: false
-      else
-        t.text :text, null: false, default: ''
-      end
+      t.text :text,             null: false, default: ''
       t.boolean :checked,       null: false, default: false
       t.references :checklist,  null: false, foreign_key: true
       t.references :created_by, null: false, foreign_key: { to_table: :users }
@@ -583,11 +586,7 @@ class CreateTicket < ActiveRecord::Migration[4.2]
     create_table :checklist_templates do |t|
       t.string  :name,      limit: 250,     null: false, default: ''
       t.boolean :active,    default: true,  null: false
-      if Rails.application.config.db_column_array
-        t.string :sorted_item_ids, null: false, array: true, default: []
-      else
-        t.json :sorted_item_ids, null: false
-      end
+      t.string :sorted_item_ids, null: false, array: true, default: []
       t.references :created_by, null: false, foreign_key: { to_table: :users }
       t.references :updated_by, null: false, foreign_key: { to_table: :users }
       t.timestamps limit: 3, null: false
@@ -595,19 +594,30 @@ class CreateTicket < ActiveRecord::Migration[4.2]
     add_index :checklist_templates, [:active]
 
     create_table :checklist_template_items do |t|
-      if ActiveRecord::Base.connection_db_config.configuration_hash[:adapter] == 'mysql2'
-        t.text :text, null: false
-      else
-        t.text :text, null: false, default: ''
-      end
+      t.text :text, null: false, default: ''
       t.references :checklist_template,  null: false, foreign_key: true
       t.references :created_by, null: false, foreign_key: { to_table: :users }
       t.references :updated_by, null: false, foreign_key: { to_table: :users }
       t.timestamps limit: 3, null: false
     end
+
+    create_table :ticket_daily_event_locks do |t|
+      t.date :date, null: false
+      t.string :lock_type, null: false
+      t.string :lock_activator, null: false
+      t.references :ticket, null: false, type: :integer, foreign_key: { to_table: :tickets }
+      t.references :related_object, polymorphic: true, type: :integer, null: true
+
+      t.index %i[date lock_type lock_activator ticket_id related_object_type related_object_id],
+              name:   'index_daily_event_locks_on_unique_fields',
+              unique: true
+
+      t.timestamps limit: 3
+    end
   end
 
   def self.down
+    drop_table :report_profiles_roles
     drop_table :checklist_template_items
     drop_table :checklist_templates
     drop_table :checklist_items

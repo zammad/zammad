@@ -1,24 +1,24 @@
 新工單 (#{ticket.title})
 
-<div>你好, #{recipient.firstname}:</div>
+<div>你好：#{recipient.firstname}:</div>
 <br>
-<div>"<b>#{current_user.longname}</b>" 客戶創建了一張標題為 (#{ticket.title}) 的新工單.</div>
+<div>"<b>#{current_user.longname}</b>" 客戶創建了一張標題為 (#{ticket.title}) 的新工單。 </div>
 <br>
 <div>
-#{t('Group')}: #{ticket.group.name}<br>
-#{t('Owner')}: #{ticket.owner.fullname}<br>
-#{t('State')}: #{t(ticket.state.name)}<br>
+群組： #{ticket.group.name}<br>
+擁有者： #{ticket.owner.fullname}<br>
+狀態： #{t(ticket.state.name)}<br>
 </div>
 <br>
 <% if @objects[:article] %>
   <div>
-  #{t('Information')}:
-  <blockquote type="cite">
-  #{article.body_as_html}
-  </blockquote>
-  </div>
+   資訊：
+   <blockquote type="cite">
+   #{article.body_as_html}
+   </blockquote>
+   </div>
 <% end %>
 <br>
 <div>
-  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">#{t('View this in Zammad')}</a>
+   <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">在 #{config.product_name} 檢視此工單 </a>
 </div>

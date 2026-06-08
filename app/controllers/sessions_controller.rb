@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class SessionsController < ApplicationController
   include HandlesOidcAuthorization
@@ -28,7 +28,7 @@ class SessionsController < ApplicationController
       .json_hash(user)
       .merge(
         config:     config_frontend,
-        after_auth: Auth::AfterAuth.run(user, session, options: { initial: true })
+        after_auth: Auth::AfterAuth.run(user, session, options: { initial: true }),
       )
 
     # return new session data
@@ -40,13 +40,15 @@ class SessionsController < ApplicationController
         available_two_factor_authentication_methods: e.available_two_factor_authentication_methods,
         recovery_codes_available:                    e.recovery_codes_available
       }
-    }, status: :unprocessable_entity
+    }, status: :unprocessable_content
   rescue Auth::Error::Base => e
     raise Exceptions::NotAuthorized, e.message
   end
 
   def create_sso
     raise Exceptions::Forbidden, 'SSO authentication disabled!' if !Setting.get('auth_sso')
+
+    verify_sso_trusted_ip!
 
     user = begin
       login = request.env['REMOTE_USER'] ||
@@ -64,7 +66,7 @@ class SessionsController < ApplicationController
 
     initiate_session_for(user, 'SSO')
 
-    redirect_to '/#'
+    redirect_after_omniauth('/#')
   end
 
   # "Delete" a login, aka "log the user out"
@@ -96,9 +98,9 @@ class SessionsController < ApplicationController
     auth = request.env['omniauth.auth']
 
     redirect_url = if request.env['omniauth.origin']&.include?('/mobile')
-                     '/mobile'
+                     "/mobile#{omniauth_redirect_path}"
                    elsif request.env['omniauth.origin']&.include?('/desktop')
-                     '/desktop'
+                     "/desktop#{omniauth_redirect_path}"
                    else
                      '/#'
                    end
@@ -147,13 +149,13 @@ class SessionsController < ApplicationController
     end
 
     # redirect to app
-    redirect_to redirect_url
+    redirect_after_omniauth(redirect_url)
   rescue Authorization::Provider::AccountError => e
     forbidden(e)
   end
 
   def failure_omniauth
-    raise Exceptions::UnprocessableEntity, "Message from #{params[:strategy]}: #{params[:message]}"
+    raise Exceptions::UnprocessableContent, "Message from #{params[:strategy]}: #{params[:message]}"
   end
 
   # "switch" to user
@@ -260,23 +262,30 @@ class SessionsController < ApplicationController
 
   def two_factor_authentication_method_initiate_authentication
     %i[username password method].each do |param|
-      raise Exceptions::UnprocessableEntity, "The required parameter '#{param}' is missing." if params[param].blank?
+      raise Exceptions::UnprocessableContent, "The required parameter '#{param}' is missing." if params[param].blank?
     end
 
     auth = Auth.new(params[:username], params[:password], only_verify_password: true)
     begin
       auth.valid!
     rescue Auth::Error::AuthenticationFailed
-      raise Exceptions::UnprocessableEntity, __('The username or password is incorrect.')
+      raise Exceptions::UnprocessableContent, __('The username or password is incorrect.')
     end
 
     two_factor_method = auth.user.auth_two_factor.authentication_method_object(params[:method])
-    raise Exceptions::UnprocessableEntity, __('The two-factor authentication method is not enabled.') if !two_factor_method&.enabled? || !two_factor_method&.available?
+    raise Exceptions::UnprocessableContent, __('The two-factor authentication method is not enabled.') if !two_factor_method&.enabled? || !two_factor_method&.available?
 
     render json: two_factor_method.initiate_authentication, status: :ok
   end
 
   private
+
+  def verify_sso_trusted_ip!
+    trusted_ips = Auth::Sso::TrustedIps.new(Setting.get('auth_sso_trusted_ips'))
+    return if trusted_ips.blank?
+
+    raise Exceptions::Forbidden, __('SSO request from untrusted IP address.') if trusted_ips.exclude?(request.remote_ip)
+  end
 
   def authenticate_with_password
     auth = Auth.new(params[:username], params[:password],
@@ -319,10 +328,6 @@ class SessionsController < ApplicationController
     config['auth_saml_display_name'] = Setting.get('auth_saml_credentials')[:display_name]
     config['auth_openid_connect_display_name'] = Setting.get('auth_openid_connect_credentials')[:display_name]
 
-    # Include the flag for JSON column type support (currently only on PostgreSQL backend).
-    config['column_type_json_supported'] =
-      ActiveRecord::Base.connection_db_config.configuration_hash[:adapter] == 'postgresql'
-
     # Announce searchable models to the front end.
     config['models_searchable'] = Models.searchable.map(&:to_s)
 
@@ -364,5 +369,19 @@ class SessionsController < ApplicationController
     render json: { url: url }
   rescue => e
     Rails.logger.error "SAML SLO failed: #{e.message}"
+  end
+
+  def omniauth_redirect_path
+    request.env['omniauth.params']['redirect'] || ''
+  end
+
+  def redirect_after_omniauth(default_url)
+    return_to = session[:doorkeeper_return_to]
+
+    if return_to.is_a?(String) && return_to.match?(%r{\A/oauth/authorize(?:\z|[/?#])})
+      redirect_to session.delete(:doorkeeper_return_to)
+    else
+      redirect_to default_url
+    end
   end
 end

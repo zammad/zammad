@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { ref } from 'vue'
 
@@ -10,12 +10,11 @@ const clipboardCopyMock = vi.fn()
 const clipboardCopiedMock = ref(false)
 
 vi.mock('@vueuse/core', async () => {
-  const mod =
-    await vi.importActual<typeof import('@vueuse/core')>('@vueuse/core')
+  const mod = await vi.importActual<typeof import('@vueuse/core')>('@vueuse/core')
 
   return {
     ...mod,
-    useClipboard: () => ({
+    useClipboardItems: () => ({
       copy: clipboardCopyMock,
       copied: clipboardCopiedMock,
     }),
@@ -24,14 +23,11 @@ vi.mock('@vueuse/core', async () => {
 
 const notifyMock = vi.fn()
 
-vi.mock(
-  '#shared/components/CommonNotifications/useNotifications.ts',
-  async () => ({
-    useNotifications: () => ({
-      notify: notifyMock,
-    }),
+vi.mock('#shared/components/CommonNotifications/useNotifications.ts', async () => ({
+  useNotifications: () => ({
+    notify: notifyMock,
   }),
-)
+}))
 
 describe('useCopyToClipboard', () => {
   it('supports copying text to clipboard', () => {
@@ -39,7 +35,39 @@ describe('useCopyToClipboard', () => {
 
     copyToClipboard('foobar')
 
-    expect(clipboardCopyMock).toHaveBeenCalledWith('foobar')
+    expect(clipboardCopyMock).toHaveBeenCalledWith([
+      {
+        data: {
+          'text/plain': 'foobar',
+        },
+        options: {
+          presentationStyle: 'unspecified',
+        },
+      },
+    ])
+  })
+
+  it('supports copying content of different MIME types to clipboard', () => {
+    const { copyToClipboard } = useCopyToClipboard()
+
+    copyToClipboard([
+      new ClipboardItem({
+        'text/plain': 'foobar',
+        'text/html': '<b>foobar</b>',
+      }),
+    ])
+
+    expect(clipboardCopyMock).toHaveBeenCalledWith([
+      {
+        data: {
+          'text/html': '<b>foobar</b>',
+          'text/plain': 'foobar',
+        },
+        options: {
+          presentationStyle: 'unspecified',
+        },
+      },
+    ])
   })
 
   it('shows a notification on success', async () => {
@@ -51,12 +79,10 @@ describe('useCopyToClipboard', () => {
 
     await waitForNextTick()
 
-    expect(notifyMock).toHaveBeenCalledWith(
-      expect.objectContaining({ message: 'Copied.' }),
-    )
+    expect(notifyMock).toHaveBeenCalledWith(expect.objectContaining({ message: 'Copied.' }))
   })
 
-  it('does not copy undefined nor null text to clipboard', () => {
+  it('does not copy undefined nor null values to clipboard', () => {
     const { copyToClipboard } = useCopyToClipboard()
 
     copyToClipboard(undefined)

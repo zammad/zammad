@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Service::GeoLocation::Osm
   OSM_SEARCH_URL = 'https://nominatim.openstreetmap.org/search?q=%s&format=jsonv2'.freeze
@@ -10,10 +10,7 @@ class Service::GeoLocation::Osm
       url,
       {},
       {
-        open_timeout:  2,
-        read_timeout:  4,
-        total_timeout: 4,
-        verify_ssl:    true,
+        verify_ssl: true,
       },
     )
     return if !response.success?
@@ -34,11 +31,8 @@ class Service::GeoLocation::Osm
       url,
       {},
       {
-        json:          true,
-        open_timeout:  2,
-        read_timeout:  4,
-        total_timeout: 4,
-        verify_ssl:    true,
+        json:       true,
+        verify_ssl: true,
       },
     )
     return if !response.success?

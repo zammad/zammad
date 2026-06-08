@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import type { FormUpdaterTrigger } from '../../types/form.ts'
 import type { FormKitNode } from '@formkit/core'
@@ -10,11 +10,7 @@ const formUpdaterTrigger = (
   return (node: FormKitNode) => {
     const { props } = node
 
-    node.addProps([
-      'triggerFormUpdater',
-      'formUpdaterTrigger',
-      'pendingValueUpdate',
-    ])
+    node.addProps(['triggerFormUpdater', 'formUpdaterTrigger', 'pendingValueUpdate'])
 
     node.on('created', () => {
       if (!props.formUpdaterTrigger) {

@@ -948,6 +948,32 @@ QUnit.test('Last column is right-aligned if auto align flag is set', assert => {
   assert.equal(el.find('tbody > tr > td.align-right').length, 0, 'last non-date column not aligned to the right')
 });
 
+QUnit.test('table clone - name gets translated prefix', assert => {
+  App.i18n.set('de-de')
+  App.i18n.setMap('Clone: %s', 'Klon: %s')
+
+  $('#qunit').append('<hr><h1>clone name prefix</h1><div id="table-clone-name"></div>')
+  var el = $('#table-clone-name')
+
+  App.TicketPriority.refresh([
+    { id: 99, name: 'my priority', active: true, created_at: '2014-06-10T11:17:34.000Z' },
+  ], { clear: true })
+
+  var clonedItem
+  new App.ControllerTable({
+    el:                 el,
+    overviewAttributes: ['name', 'active'],
+    model:              App.TicketPriority,
+    objects:            App.TicketPriority.search({ sortBy: 'name', order: 'ASC' }),
+    clone:              true,
+    cloneCallback:      (item) => { clonedItem = item },
+  })
+
+  el.find('tbody > tr:nth-child(1) .js-clone').trigger('click')
+
+  assert.equal(clonedItem.name, 'Klon: my priority', 'clone name has translated prefix')
+});
+
 function click_sort(table, column_number) {
   table
     .find(`table > thead > tr > th:nth-child(${column_number}) > .js-sort`)

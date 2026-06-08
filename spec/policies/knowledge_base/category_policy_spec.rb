@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 require 'policies/knowledge_base_policy_examples'
@@ -24,6 +24,20 @@ describe KnowledgeBase::CategoryPolicy do
       before { allow(record).to receive(:public_content?).and_return(false) }
 
       include_examples 'with KB policy check', editor: true, reader: false, none: false, method: :show_public?
+    end
+  end
+
+  describe '#show_any?' do
+    context 'when category has public content' do
+      before { allow(record).to receive(:public_content?).and_return(true) }
+
+      include_examples 'with KB policy check', editor: true, reader: true, none: true, method: :show_any?
+    end
+
+    context 'when category has no public content' do
+      before { allow(record).to receive(:public_content?).and_return(false) }
+
+      include_examples 'with KB policy check', editor: true, reader: true, none: false, method: :show_any?
     end
   end
 

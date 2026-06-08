@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import {
   useNotifications,
@@ -19,13 +19,13 @@ import type { ApolloError, OperationVariables } from '@apollo/client/core'
 import type { GraphQLFormattedError } from 'graphql'
 import type { Ref } from 'vue'
 
-export default abstract class BaseHandler<
+export abstract class BaseHandler<
   TResult = OperationResult,
   TVariables extends OperationVariables = OperationVariables,
-  TOperationReturn extends OperationReturn<
+  TOperationReturn extends OperationReturn<TResult, TVariables> = OperationReturn<
     TResult,
     TVariables
-  > = OperationReturn<TResult, TVariables>,
+  >,
   THandlerOptions = BaseHandlerOptions,
 > {
   public operationResult!: TOperationReturn
@@ -81,9 +81,7 @@ export default abstract class BaseHandler<
 
     if (graphQLErrors.length > 0) {
       const { message, extensions }: GraphQLFormattedError = graphQLErrors[0]
-      let type =
-        (extensions?.type as GraphQLErrorTypes) ||
-        GraphQLErrorTypes.UnknownError
+      let type = (extensions?.type as GraphQLErrorTypes) || GraphQLErrorTypes.UnknownError
 
       // When it's not a known type, use the unknown error type.
       if (!Object.values(GraphQLErrorTypes).includes(type)) {
@@ -122,11 +120,8 @@ export default abstract class BaseHandler<
       //   console.error(error)
       // }
       useNotifications().notify({
-        id: this.handlerId,
-        message: this.errorNotificationMessage(
-          errorHandler.type,
-          errorHandler.message,
-        ),
+        id: this.handlerId, // TODO maybe for network error we should have the same id for all?
+        message: this.errorNotificationMessage(errorHandler.type, errorHandler.message),
         type: options.errorNotificationType,
       })
     }
@@ -142,13 +137,8 @@ export default abstract class BaseHandler<
     ) as CommonHandlerOptions<THandlerOptions>
   }
 
-  private errorNotificationMessage(
-    errorType: GraphQLErrorTypes,
-    errorMessage?: string,
-  ): string {
-    const defaultErrorNotificationMessage = __(
-      'An error occured during the operation.',
-    )
+  private errorNotificationMessage(errorType: GraphQLErrorTypes, errorMessage?: string): string {
+    const defaultErrorNotificationMessage = __('An error occurred during the operation.')
 
     const fallbackErrorMessage =
       errorType === GraphQLErrorTypes.UnknownError || !errorMessage

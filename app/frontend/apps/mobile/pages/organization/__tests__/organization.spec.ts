@@ -1,11 +1,8 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { getTestRouter } from '#tests/support/components/renderComponent.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
-import {
-  mockGraphQLApi,
-  mockGraphQLSubscription,
-} from '#tests/support/mock-graphql-api.ts'
+import { mockGraphQLApi, mockGraphQLSubscription } from '#tests/support/mock-graphql-api.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
 import { setupView } from '#tests/support/mock-user.ts'
 import { nullableMock, waitUntil } from '#tests/support/utils.ts'
@@ -55,20 +52,14 @@ describe('static organization', () => {
 
     expect(view.getByText(organization.name || 'Not Found')).toBeInTheDocument()
 
-    expect(
-      view.getByLabelText(`Avatar (${organization.name})`),
-    ).toBeAvatarElement({
+    expect(view.getByLabelText(`Avatar (${organization.name})`)).toBeAvatarElement({
       vip: !!organization.vip,
       active: !!organization.active,
       type: 'organization',
     })
 
-    expect(
-      view.getByRole('region', { name: 'Shared organization' }),
-    ).toHaveTextContent('no')
-    expect(
-      view.getByRole('region', { name: 'Domain based assignment' }),
-    ).toHaveTextContent('yes')
+    expect(view.getByRole('region', { name: 'Shared organization' })).toHaveTextContent('no')
+    expect(view.getByRole('region', { name: 'Domain based assignment' })).toHaveTextContent('yes')
 
     expect(view.container).toHaveTextContent('Tickets')
 
@@ -109,7 +100,10 @@ describe('static organization', () => {
         ...organization,
         allMembers: {
           ...organization.allMembers,
-          totalCount: 2,
+          totalCount: 3,
+          pageInfo: {
+            endCursor: 'Mw',
+          },
         },
       },
     })
@@ -143,7 +137,6 @@ describe('static organization', () => {
           allMembers: {
             ...organization.allMembers,
             edges: nullableMock([
-              ...members,
               {
                 __typename: 'UserEdge',
                 node: {
@@ -179,12 +172,16 @@ describe('static organization', () => {
                 },
               },
             ]),
+            totalCount: 3,
+            pageInfo: {
+              endCursor: 'Mw',
+            },
           },
         },
       },
     })
 
-    await view.events.click(view.getByRole('button', { name: 'Show 1 more' }))
+    await view.events.click(view.getByRole('button', { name: 'Show 2 more' }))
     await waitUntil(() => mockApi.calls.resolve > 1)
 
     const [, JD, JH, MM] = view.getAllByTestId('common-avatar')
@@ -246,8 +243,7 @@ describe('static organization', () => {
   it('redirects to error page if organization is not found', async () => {
     mockPermissions(['admin.organization'])
 
-    const mockApi =
-      mockGraphQLApi(OrganizationDocument).willFailWithNotFoundError()
+    const mockApi = mockGraphQLApi(OrganizationDocument).willFailWithNotFoundError()
 
     mockGraphQLSubscription(OrganizationUpdatesDocument)
 
@@ -257,14 +253,13 @@ describe('static organization', () => {
 
     await waitUntil(() => mockApi.calls.error)
 
-    await expect(view.findByText('Not Found')).resolves.toBeInTheDocument()
+    await expect(view.findByText('Not found')).resolves.toBeInTheDocument()
   })
 
   it('redirects to error page if access to organization is forbidden', async () => {
     mockPermissions(['admin.organization'])
 
-    const mockApi =
-      mockGraphQLApi(OrganizationDocument).willFailWithForbiddenError()
+    const mockApi = mockGraphQLApi(OrganizationDocument).willFailWithForbiddenError()
     mockGraphQLSubscription(OrganizationUpdatesDocument)
     mockOrganizationObjectAttributes()
 

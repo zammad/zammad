@@ -1,10 +1,10 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { getNode } from '@formkit/core'
 import { FormKit } from '@formkit/vue'
 
 import { getGraphQLMockCalls } from '#tests/graphql/builders/mocks.ts'
 import { renderComponent } from '#tests/support/components/index.ts'
+import { waitFor, waitUntil } from '#tests/support/vitest-wrapper.ts'
 
 import { AutocompleteSearchObjectAttributeExternalDataSourceDocument } from '#shared/components/Form/fields/FieldExternalDataSource/graphql/queries/autocompleteSearchObjectAttributeExternalDataSource.api.ts'
 import {
@@ -12,6 +12,8 @@ import {
   type AutocompleteSearchObjectAttributeExternalDataSourceQuery,
 } from '#shared/graphql/types.ts'
 import { ensureGraphqlId } from '#shared/graphql/utils.ts'
+
+import type { FormKitNode } from '@formkit/core'
 
 const wrapperParameters = {
   form: true,
@@ -37,23 +39,25 @@ beforeAll(async () => {
 // We include only some query-related test cases, as the actual autocomplete component has its own unit test.
 describe('Form - Field - External Data Source - Query', () => {
   it('fetches remote options via GraphQL query', async () => {
+    const ticketId = ensureGraphqlId('Ticket', 123)
+
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
         ...testProps,
         debounceInterval: 0,
+        // When we only have one field, the root node is the field itself.
+        // So we are faking the initial entity object.
+        plugins: [
+          (node: FormKitNode) => {
+            node.context!.initialEntityObject = {
+              id: ticketId,
+            }
+          },
+        ],
       },
     })
 
-    // When we only have one field, the root node is the field itself.
-    // So we are faking the initial entity object.
-    const ticketId = ensureGraphqlId('Ticket', 123)
-    const node = getNode('test')
-    node!.context!.initialEntityObject = {
-      id: ticketId,
-    }
-
-    // Resolve `defineAsyncComponent()` calls first.
     await vi.dynamicImportSettled()
 
     await wrapper.events.click(wrapper.getByLabelText('Select…'))
@@ -65,19 +69,16 @@ describe('Form - Field - External Data Source - Query', () => {
     // Search is always case-insensitive.
     await wrapper.events.type(filterElement, 'a')
 
-    expect(
-      wrapper.queryByText('Start typing to search…'),
-    ).not.toBeInTheDocument()
+    expect(wrapper.queryByText('Start typing to search…')).not.toBeInTheDocument()
 
-    const callResult = await vi.waitUntil(
+    const callResult = await waitUntil(
       () =>
         getGraphQLMockCalls<AutocompleteSearchObjectAttributeExternalDataSourceQuery>(
           AutocompleteSearchObjectAttributeExternalDataSourceDocument,
         ).at(-1)!,
     )
 
-    const testOptions =
-      callResult.result.autocompleteSearchObjectAttributeExternalDataSource
+    const testOptions = callResult.result.autocompleteSearchObjectAttributeExternalDataSource
 
     expect(callResult.variables).toMatchObject({
       input: {
@@ -103,24 +104,22 @@ describe('Form - Field - External Data Source - Query', () => {
       expect(option).toHaveTextContent(testOptions[index].heading)
     })
 
-    await wrapper.events.click(wrapper.getByLabelText('Clear Search'))
+    await wrapper.events.click(wrapper.getByLabelText('Clear search'))
 
     expect(filterElement).toHaveValue('')
 
-    await vi.waitFor(() => {
+    await waitFor(() => {
       expect(wrapper.queryByText('Start typing to search…')).toBeInTheDocument()
     })
 
     // // Search for non-accented characters matches items with accents too.
     await wrapper.events.type(filterElement, 'r')
 
-    expect(
-      wrapper.queryByText('Start typing to search…'),
-    ).not.toBeInTheDocument()
+    expect(wrapper.queryByText('Start typing to search…')).not.toBeInTheDocument()
 
     selectOptions = wrapper.getAllByRole('option')
 
-    const newTestOptions = await vi.waitFor(
+    const newTestOptions = await waitFor(
       () =>
         getGraphQLMockCalls<AutocompleteSearchObjectAttributeExternalDataSourceQuery>(
           AutocompleteSearchObjectAttributeExternalDataSourceDocument,
@@ -165,13 +164,13 @@ describe('Form - Field - External Data Source - Query', () => {
       },
     })
 
-    await vi.waitFor(() => {
+    await waitFor(() => {
       expect(wrapper.getByRole('listitem')).toHaveTextContent('Selected Value')
     })
 
     await wrapper.events.click(wrapper.getByRole('button'))
 
-    await vi.waitFor(() => {
+    await waitFor(() => {
       expect(wrapper.emitted().inputRaw).toBeTruthy()
     })
 

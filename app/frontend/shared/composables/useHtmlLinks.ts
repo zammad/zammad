@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { useEventListener } from '@vueuse/core'
 import { useRouter } from 'vue-router'
@@ -34,10 +34,7 @@ const useHtmlLinks = (urlPrefix: '/desktop' | '/mobile') => {
     try {
       const url = new URL(link.href)
 
-      if (
-        url.origin === window.location.origin ||
-        url.origin === baseUrl.value
-      ) {
+      if (url.origin === window.location.origin || url.origin === baseUrl.value) {
         const redirectRoute = getRedirectRoute(url)
         if (redirectRoute) {
           event.preventDefault()

@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import type { PersonalSettingPlugin } from './types.ts'
 
@@ -18,7 +18,7 @@ export default <PersonalSettingPlugin>{
     meta: {
       title: __('Overviews'),
       requiresAuth: true,
-      requiredPermission: 'user_preferences.overview_sorting',
+      requiredPermission: 'user_preferences.overview_sorting+ticket.agent',
     },
   },
   order: 2000,

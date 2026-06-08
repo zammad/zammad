@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 RSpec.shared_examples 'FormUpdater::AppliesTicketTemplate' do
   context 'when applying a ticket template' do
@@ -90,18 +90,22 @@ RSpec.shared_examples 'FormUpdater::AppliesTicketTemplate' do
         let(:field_result) do
           {
             value:   search_user.id,
-            options: [{
-              value:   search_user.id,
-              label:   search_user.fullname,
-              heading: search_user.organization.name,
-              object:  search_user.attributes
-                        .slice('active', 'email', 'firstname', 'fullname', 'image', 'lastname', 'mobile', 'out_of_office', 'out_of_office_end_at', 'out_of_office_start_at', 'phone', 'source', 'vip')
-                        .merge({
-                                 '__typename' => 'User',
-                                 'id'         => Gql::ZammadSchema.id_from_internal_id('User', search_user.id),
-                               })
-
-            }]
+            options: include(
+              include(
+                value:   search_user.id,
+                label:   search_user.fullname,
+                heading: search_user.organization.name,
+                object:  include(
+                  '__typename'   => 'User',
+                  'id'           => Gql::ZammadSchema.id_from_internal_id('User', search_user.id),
+                  'organization' => include(
+                    '__typename' => 'Organization',
+                    'id'         => Gql::ZammadSchema.id_from_internal_id('Organization', search_user.organization.id),
+                    'name'       => search_user.organization.name,
+                  )
+                )
+              )
+            )
           }
         end
 
@@ -161,7 +165,7 @@ RSpec.shared_examples 'FormUpdater::AppliesTicketTemplate' do
         let(:field_result) do
           {
             value:   search_organization.id,
-            options: [{ value: search_organization.id, label: search_organization.name }]
+            options: [{ value: search_organization.id, label: search_organization.name, organization: search_organization.attributes.slice('name', 'shared', 'domain', 'domain_assignment', 'active', 'vip').to_h.transform_keys { |key| key.camelize(:lower) }.merge({ '__typename' => 'Organization', 'id' => Gql::ZammadSchema.id_from_internal_id('Organization', search_organization.id) }) }]
           }
         end
 

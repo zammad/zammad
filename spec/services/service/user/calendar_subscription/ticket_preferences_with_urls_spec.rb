@@ -1,10 +1,11 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
 RSpec.describe Service::User::CalendarSubscription::TicketPreferencesWithUrls do
+  subject(:service_result) { described_class.with_current_user(user).execute }
+
   let(:user)     { create(:user) }
-  let(:service)  { described_class.new(user) }
   let(:base_url) { "#{Setting.get('http_type')}://#{Setting.get('fqdn')}" }
 
   let(:mocked_data) do
@@ -19,12 +20,12 @@ RSpec.describe Service::User::CalendarSubscription::TicketPreferencesWithUrls do
   end
 
   before do
-    allow_any_instance_of(Service::User::CalendarSubscription::Preferences)
+    allow(Service::User::CalendarSubscription::Preferences)
       .to receive(:execute).and_return(mocked_data)
   end
 
   it 'returns preferences and URLs with FQDN' do
-    expect(service.execute)
+    expect(service_result)
       .to include(
         combined_url:   "#{base_url}/ical/tickets",
         global_options: include(alarm: true),

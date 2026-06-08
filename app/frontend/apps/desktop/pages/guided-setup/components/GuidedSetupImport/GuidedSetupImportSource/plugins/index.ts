@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import type { EnumSystemImportSource } from '#shared/graphql/types.ts'
 
@@ -22,15 +22,14 @@ const pluginsModules = import.meta.glob<GuidedSetupImportSourcePlugin>(
   },
 )
 
-export const guidedSetupImportSourcePlugins = Object.values(
-  pluginsModules,
-).sort((p1, p2) => p1.label.localeCompare(p2.label))
+export const guidedSetupImportSourcePlugins = Object.values(pluginsModules).sort((p1, p2) =>
+  p1.label.localeCompare(p2.label),
+)
 
-export const guidedSetupImportSourcePluginLookup =
-  guidedSetupImportSourcePlugins.reduce(
-    (lookup: Record<string, GuidedSetupImportSourcePlugin>, plugin) => {
-      lookup[plugin.source] = plugin
-      return lookup
-    },
-    {},
-  )
+export const guidedSetupImportSourcePluginLookup = guidedSetupImportSourcePlugins.reduce(
+  (lookup: Record<string, GuidedSetupImportSourcePlugin>, plugin) => {
+    lookup[plugin.source] = plugin
+    return lookup
+  },
+  {},
+)

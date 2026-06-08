@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { ref, type Ref, watch } from 'vue'
 
@@ -9,9 +9,7 @@ import type { TicketLiveAppUser } from '../types.ts'
 // Default idle time from 5 minutes.
 const IDLE_TIME_MS = 5 * 60 * 1000
 
-export const useTicketLiveUsersDisplay = (
-  liveUserList: Ref<TicketLiveAppUser[]>,
-) => {
+export const useTicketLiveUsersDisplay = (liveUserList: Ref<TicketLiveAppUser[]>) => {
   const liveUsers = ref<TicketLiveAppUser[]>([])
   const viewingUsers = ref<TicketLiveAppUser[]>([])
   const idleUsers = ref<TicketLiveAppUser[]>([])
@@ -26,8 +24,7 @@ export const useTicketLiveUsersDisplay = (
       liveUserList.value?.forEach((liveUser) => {
         if (
           liveUser.lastInteraction &&
-          new Date(liveUser.lastInteraction).getTime() + IDLE_TIME_MS <
-            reactiveNow.value.getTime()
+          new Date(liveUser.lastInteraction).getTime() + IDLE_TIME_MS < reactiveNow.value.getTime()
         ) {
           localLiveUsers.push({
             user: liveUser.user,

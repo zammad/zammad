@@ -31,8 +31,7 @@ The Zammad [repository](https://github.com/zammad/zammad) has several branches.
 
 ## Packages
 
-- Zammad packages are built on [packager.io](https://packager.io).
-- You can find all Zammad packages [here](https://packager.io/gh/zammad/zammad).
+- Zammad packages are built and published on [packager.io](https://packager.io).
 - Builds of new packages are triggered with every push to our GitHub repo
 - If you fork the Zammad repo, you can use packager.io to get builds for your fork
 - Just change the file `.pkgr.yml` to fit your needs

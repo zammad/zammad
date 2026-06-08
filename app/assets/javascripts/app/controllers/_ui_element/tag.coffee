@@ -2,6 +2,7 @@
 class App.UiElement.tag
   @render: (attributeConfig) ->
     attribute = $.extend(true, {}, attributeConfig)
+    initialValue = attribute.value || '' # Initial value to preserve
 
     if !attribute.id
       attribute.id = 'tag-' + new Date().getTime() + '-' + Math.floor(Math.random() * 999999)
@@ -9,7 +10,19 @@ class App.UiElement.tag
     source = "#{App.Config.get('api_path')}/tag_search"
     possibleTags = {}
     a = ->
-      $('#' + attribute.id ).tokenfield(
+      fieldName = '#' + attribute.id
+      field = $(fieldName)
+
+      isFocused = field.is(':focus')
+
+      # Compare the original value with the current input while typing
+      # to correctly create labels and distinguish existing ones from newly added labels.
+      val = field.val()
+      if val?.startsWith(initialValue)
+        addedValue = val.slice(initialValue.length)
+      field.val(initialValue)
+
+      field.tokenfield(
         createTokensOnBlur: true
         showAutocompleteOnFocus: true
         autocomplete: {
@@ -26,6 +39,13 @@ class App.UiElement.tag
           return false
         true
       )
+
+      # If field was already focused, add what was alredy typed into the new tokenfield and focus it (#5838)
+      if isFocused
+        $(fieldName + '-tokenfield' )
+          .val(addedValue)
+          .focus()
+
       $('#' + attribute.id ).parent().css('height', 'auto')
     App.Delay.set(a, 500, undefined, 'tags')
     item

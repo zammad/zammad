@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -133,6 +133,9 @@ RSpec.describe NotificationFactory::Renderer do
           last_article:             last_article,
           last_internal_article:    last_internal_article,
           last_external_article:    last_external_article,
+          first_article:            all_articles.first,
+          first_internal_article:   all_articles.find(&:internal?),
+          first_external_article:   all_articles.find { |a| !a.internal? },
           created_article:          article,
           created_internal_article: article&.internal? ? article : nil,
           created_external_article: article&.internal? ? nil : article,
@@ -155,6 +158,59 @@ RSpec.describe NotificationFactory::Renderer do
 
         it 'correctly renders ticket tags references' do
           expect(renderer.render).to eq 'Tag1'
+        end
+      end
+
+      context 'with first_article.body as template' do
+        let(:template) { '#{first_article.body}' }
+
+        before do
+          create(:ticket_article, ticket: ticket, body: 'older', internal: false)
+          create(:ticket_article, ticket: ticket, body: 'newer', internal: true)
+        end
+
+        it 'renders the very first article body' do
+          expect(renderer.render).to eq '&gt; older<br>'
+        end
+      end
+
+      context 'with first_internal_article.body as template' do
+        let(:template) { '#{first_internal_article.body}' }
+
+        before do
+          create(:ticket_article, ticket: ticket, body: 'external', internal: false)
+          create(:ticket_article, ticket: ticket, body: 'internal1', internal: true)
+          create(:ticket_article, ticket: ticket, body: 'internal2', internal: true)
+        end
+
+        it 'renders the first internal article body' do
+          expect(renderer.render).to eq '&gt; internal1<br>'
+        end
+      end
+
+      context 'with first_external_article.body as template' do
+        let(:template) { '#{first_external_article.body}' }
+
+        before do
+          create(:ticket_article, ticket: ticket, body: 'internal', internal: true)
+          create(:ticket_article, ticket: ticket, body: 'external1', internal: false)
+          create(:ticket_article, ticket: ticket, body: 'external2', internal: false)
+        end
+
+        it 'renders the first external article body' do
+          expect(renderer.render).to eq '&gt; external1<br>'
+        end
+      end
+
+      context 'with article.body_as_text as template' do
+        let(:template) { '#{first_article.body_as_text.text2html}' }
+
+        before do
+          create(:ticket_article, ticket: ticket, body: "hello \n world", internal: false)
+        end
+
+        it 'renders the first article body as plain text' do
+          expect(renderer.render).to eq 'hello <br> world'
         end
       end
 
@@ -286,7 +342,7 @@ RSpec.describe NotificationFactory::Renderer do
         it_behaves_like 'correctly rendering the attributes'
       end
 
-      context 'with multiselect', mariadb: true do
+      context 'with multiselect' do
         context 'with a simple multiselect attribute' do
           let(:create_object_manager_attribute) do
             create(:object_manager_attribute_multiselect, name: 'multiselect')
@@ -473,7 +529,7 @@ RSpec.describe NotificationFactory::Renderer do
           it_behaves_like 'correctly rendering the attributes'
         end
 
-        context 'with external data source attribute on chained group object', db_adapter: :postgresql do
+        context 'with external data source attribute on chained group object' do
           let(:create_object_manager_attribute) do
             create(:object_manager_attribute_autocompletion_ajax_external_data_source,
                    object_lookup_id: ObjectLookup.by_name('Group'),
@@ -518,6 +574,21 @@ RSpec.describe NotificationFactory::Renderer do
         let(:expected_render) { 'Line 1<br>Line 2<br>Line 3 _SEPERATOR_ Line 1<br>Line 2<br>Line 3 _SEPERATOR_  _SEPERATOR_ ' }
 
         it_behaves_like 'correctly rendering the attributes'
+      end
+    end
+
+    context 'when variables for not given objects should be ignored' do
+      let(:ticket) { create(:ticket, customer: @user) }
+      let(:user)            { create(:user, firstname: 'Max') }
+      let(:template)        { '#{user.firstname} _SEPERATOR_ #{ticket.customer.lastname}' }
+      let(:expected_render) { 'Nicole _SEPERATOR_ ' }
+
+      it 'correctly renders variables for given object reference' do
+        renderer = build(:notification_factory_renderer,
+                         objects:                { user: },
+                         template:,
+                         ignore_missing_objects: true)
+        expect(renderer.render).to eq 'Max _SEPERATOR_ #{ticket.customer.lastname}'
       end
     end
   end

@@ -1,8 +1,15 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Service::System::RunAutoWizard < Service::Base
 
-  def execute(token:)
+  attr_reader :token
+
+  def initialize(token:)
+    @token = token
+  end
+
+  def execute
+    raise Service::System::CheckSetup::SystemSetupError, __('This system has already been configured.') if Service::System::CheckSetup.done?
     raise AutoWizardNotEnabledError if !AutoWizard.enabled?
 
     auto_wizard_data = AutoWizard.data

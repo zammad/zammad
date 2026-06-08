@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, watch } from 'vue'
@@ -23,8 +23,7 @@ const { persistentStates } = usePersistentStates()
 
 const emit = defineEmits<TicketSidebarEmits>()
 
-const { ticketAttachments, ticketAttachmentsQuery, loading } =
-  useTicketAttachments()
+const { ticketAttachments, ticketAttachmentsQuery, loading } = useTicketAttachments()
 
 const { context: contextArticle } = useArticleContext()
 

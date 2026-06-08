@@ -1,9 +1,11 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { within } from '@testing-library/vue'
 
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
+import { createMockCredential, mockWebAuthnCreation } from '#tests/support/mock-webauthn.ts'
+import { waitFor } from '#tests/support/vitest-wrapper.ts'
 
 import {
   mockUserCurrentTwoFactorGetMethodConfigurationQuery,
@@ -28,13 +30,6 @@ describe('Two-factor Authentication - Security Keys', () => {
     mockApplicationConfig({
       two_factor_authentication_method_security_keys: true,
     })
-
-    vi.mock('@github/webauthn-json', () => ({
-      create: ({ publicKey }: { publicKey: string }) => {
-        if (publicKey === 'mock-error') throw new Error()
-        return {}
-      },
-    }))
   })
 
   it('supports setting up new security keys', async () => {
@@ -47,7 +42,7 @@ describe('Two-factor Authentication - Security Keys', () => {
     await view.events.click(actionMenuButton)
 
     const flyout = await view.findByRole('complementary', {
-      name: 'Set Up Two-factor Authentication: Confirm Password',
+      name: 'Set up two-factor authentication: Confirm password',
     })
 
     const flyoutContent = within(flyout)
@@ -64,36 +59,32 @@ describe('Two-factor Authentication - Security Keys', () => {
       userCurrentTwoFactorGetMethodConfiguration: null,
     })
 
+    mockWebAuthnCreation()
+
     await view.events.type(passwordInput, 'test')
     await view.events.click(view.getByRole('button', { name: 'Next' }))
 
     await waitForUserCurrentPasswordCheckMutationCalls()
     await waitForUserCurrentTwoFactorGetMethodConfigurationQueryCalls()
 
-    expect(flyout).toHaveAccessibleName(
-      'Set Up Two-factor Authentication: Security Keys',
+    await waitFor(() =>
+      expect(flyout).toHaveAccessibleName('Set up two-factor authentication: Security keys'),
     )
 
     expect(flyout).toHaveTextContent(
       'Security keys are hardware or software credentials that can be used as your two-factor authentication method.To register a new security key with your account, press the button below.',
     )
 
-    await view.events.click(view.getByRole('button', { name: 'Set Up' }))
+    await view.events.click(view.getByRole('button', { name: 'Set up' }))
 
-    const nicknameInput = flyoutContent.getByLabelText(
-      'Name for this security key',
-    )
+    const nicknameInput = flyoutContent.getByLabelText('Name for this security key')
 
     await view.events.type(nicknameInput, 'My key')
 
-    Object.defineProperty(window, 'isSecureContext', {
-      value: true,
-    })
-
     await view.events.click(view.getByRole('button', { name: 'Next' }))
 
-    expect(flyout).toHaveAccessibleName(
-      'Set Up Two-factor Authentication: Save Codes',
+    await waitFor(() =>
+      expect(flyout).toHaveAccessibleName('Set up two-factor authentication: Save codes'),
     )
   })
 
@@ -105,8 +96,7 @@ describe('Two-factor Authentication - Security Keys', () => {
         configuration: {
           enabledAuthenticationMethods: [
             {
-              authenticationMethod:
-                EnumTwoFactorAuthenticationMethod.SecurityKeys,
+              authenticationMethod: EnumTwoFactorAuthenticationMethod.SecurityKeys,
               configured: true,
             },
           ],
@@ -126,7 +116,7 @@ describe('Two-factor Authentication - Security Keys', () => {
     await view.events.click(actionMenuItem)
 
     const flyout = await view.findByRole('complementary', {
-      name: 'Set Up Two-factor Authentication: Confirm Password',
+      name: 'Set up two-factor authentication: Confirm password',
     })
 
     const flyoutContent = within(flyout)
@@ -158,9 +148,7 @@ describe('Two-factor Authentication - Security Keys', () => {
     await waitForUserCurrentTwoFactorGetMethodConfigurationQueryCalls()
 
     expect(flyout).toHaveTextContent('foobar')
-    expect(
-      within(flyout).getByLabelText('2024-01-01 00:00'),
-    ).toBeInTheDocument()
+    expect(within(flyout).getByLabelText('2024-01-01 00:00')).toBeInTheDocument()
 
     mockUserCurrentTwoFactorRemoveMethodCredentialsMutation({
       userCurrentTwoFactorRemoveMethodCredentials: {
@@ -191,7 +179,7 @@ describe('Two-factor Authentication - Security Keys', () => {
     await view.events.click(actionMenuButton)
 
     const flyout = await view.findByRole('complementary', {
-      name: 'Set Up Two-factor Authentication: Confirm Password',
+      name: 'Set up two-factor authentication: Confirm password',
     })
 
     const flyoutContent = within(flyout)
@@ -214,20 +202,16 @@ describe('Two-factor Authentication - Security Keys', () => {
     await waitForUserCurrentPasswordCheckMutationCalls()
     await waitForUserCurrentTwoFactorGetMethodConfigurationQueryCalls()
 
-    await view.events.click(view.getByRole('button', { name: 'Set Up' }))
+    await view.events.click(view.getByRole('button', { name: 'Set up' }))
 
-    const nicknameInput = flyoutContent.getByLabelText(
-      'Name for this security key',
-    )
+    const nicknameInput = flyoutContent.getByLabelText('Name for this security key')
 
-    Object.defineProperty(window, 'isSecureContext', {
-      value: true,
-    })
+    mockWebAuthnCreation()
 
     await view.events.type(nicknameInput, 'My key{Enter}')
 
-    expect(flyout).toHaveAccessibleName(
-      'Set Up Two-factor Authentication: Save Codes',
+    await waitFor(() =>
+      expect(flyout).toHaveAccessibleName('Set up two-factor authentication: Save codes'),
     )
   })
 
@@ -241,7 +225,7 @@ describe('Two-factor Authentication - Security Keys', () => {
     await view.events.click(actionMenuButton)
 
     const flyout = await view.findByRole('complementary', {
-      name: 'Set Up Two-factor Authentication: Confirm Password',
+      name: 'Set up two-factor authentication: Confirm password',
     })
 
     const flyoutContent = within(flyout)
@@ -264,11 +248,9 @@ describe('Two-factor Authentication - Security Keys', () => {
     await waitForUserCurrentPasswordCheckMutationCalls()
     await waitForUserCurrentTwoFactorGetMethodConfigurationQueryCalls()
 
-    await view.events.click(view.getByRole('button', { name: 'Set Up' }))
+    await view.events.click(view.getByRole('button', { name: 'Set up' }))
 
-    const nicknameInput = flyoutContent.getByLabelText(
-      'Name for this security key',
-    )
+    const nicknameInput = flyoutContent.getByLabelText('Name for this security key')
 
     await view.events.click(view.getByRole('button', { name: 'Next' }))
 
@@ -285,7 +267,7 @@ describe('Two-factor Authentication - Security Keys', () => {
     await view.events.click(actionMenuButton)
 
     const flyout = await view.findByRole('complementary', {
-      name: 'Set Up Two-factor Authentication: Confirm Password',
+      name: 'Set up two-factor authentication: Confirm password',
     })
 
     const flyoutContent = within(flyout)
@@ -308,17 +290,14 @@ describe('Two-factor Authentication - Security Keys', () => {
     await waitForUserCurrentPasswordCheckMutationCalls()
     await waitForUserCurrentTwoFactorGetMethodConfigurationQueryCalls()
 
-    await view.events.click(view.getByRole('button', { name: 'Set Up' }))
+    await view.events.click(view.getByRole('button', { name: 'Set up' }))
 
-    const nicknameInput = flyoutContent.getByLabelText(
-      'Name for this security key',
-    )
+    const nicknameInput = flyoutContent.getByLabelText('Name for this security key')
 
     await view.events.type(nicknameInput, 'My key')
 
-    Object.defineProperty(window, 'isSecureContext', {
-      value: true,
-    })
+    const mocks = mockWebAuthnCreation()
+    mocks.createSpy.mockRejectedValue(new Error('WebAuthn failed'))
 
     mockUserCurrentTwoFactorInitiateMethodConfigurationQuery({
       userCurrentTwoFactorInitiateMethodConfiguration: 'mock-error',
@@ -326,18 +305,20 @@ describe('Two-factor Authentication - Security Keys', () => {
 
     await view.events.click(view.getByRole('button', { name: 'Next' }))
 
-    expect(flyoutContent.getByRole('alert')).toHaveTextContent(
-      'Security key setup failed.',
+    await waitFor(() =>
+      expect(flyoutContent.getByRole('alert')).toHaveTextContent('Security key setup failed.'),
     )
 
     mockUserCurrentTwoFactorInitiateMethodConfigurationQuery({
       userCurrentTwoFactorInitiateMethodConfiguration: {},
     })
 
+    mocks.createSpy.mockResolvedValue(createMockCredential())
+
     await view.events.click(view.getByRole('button', { name: 'Retry' }))
 
-    expect(flyout).toHaveAccessibleName(
-      'Set Up Two-factor Authentication: Save Codes',
+    waitFor(() =>
+      expect(flyout).toHaveAccessibleName('Set up two-factor authentication: Save codes'),
     )
   })
 
@@ -351,7 +332,7 @@ describe('Two-factor Authentication - Security Keys', () => {
     await view.events.click(actionMenuButton)
 
     const flyout = await view.findByRole('complementary', {
-      name: 'Set Up Two-factor Authentication: Confirm Password',
+      name: 'Set up two-factor authentication: Confirm password',
     })
 
     const flyoutContent = within(flyout)
@@ -371,20 +352,16 @@ describe('Two-factor Authentication - Security Keys', () => {
     await view.events.type(passwordInput, 'test')
     await view.events.click(view.getByRole('button', { name: 'Next' }))
 
+    mockWebAuthnCreation()
+
     await waitForUserCurrentPasswordCheckMutationCalls()
     await waitForUserCurrentTwoFactorGetMethodConfigurationQueryCalls()
 
-    await view.events.click(view.getByRole('button', { name: 'Set Up' }))
+    await view.events.click(view.getByRole('button', { name: 'Set up' }))
 
-    const nicknameInput = flyoutContent.getByLabelText(
-      'Name for this security key',
-    )
+    const nicknameInput = flyoutContent.getByLabelText('Name for this security key')
 
     await view.events.type(nicknameInput, 'My key')
-
-    Object.defineProperty(window, 'isSecureContext', {
-      value: true,
-    })
 
     mockUserCurrentTwoFactorVerifyMethodConfigurationMutation({
       userCurrentTwoFactorVerifyMethodConfiguration: {
@@ -411,8 +388,8 @@ describe('Two-factor Authentication - Security Keys', () => {
 
     await view.events.click(view.getByRole('button', { name: 'Retry' }))
 
-    expect(flyout).toHaveAccessibleName(
-      'Set Up Two-factor Authentication: Save Codes',
+    await waitFor(() =>
+      expect(flyout).toHaveAccessibleName('Set up two-factor authentication: Save codes'),
     )
   })
 
@@ -426,7 +403,7 @@ describe('Two-factor Authentication - Security Keys', () => {
     await view.events.click(actionMenuButton)
 
     const flyout = await view.findByRole('complementary', {
-      name: 'Set Up Two-factor Authentication: Confirm Password',
+      name: 'Set up two-factor authentication: Confirm password',
     })
 
     const flyoutContent = within(flyout)
@@ -449,17 +426,13 @@ describe('Two-factor Authentication - Security Keys', () => {
     await waitForUserCurrentPasswordCheckMutationCalls()
     await waitForUserCurrentTwoFactorGetMethodConfigurationQueryCalls()
 
-    await view.events.click(view.getByRole('button', { name: 'Set Up' }))
+    await view.events.click(view.getByRole('button', { name: 'Set up' }))
 
-    const nicknameInput = flyoutContent.getByLabelText(
-      'Name for this security key',
-    )
+    const nicknameInput = flyoutContent.getByLabelText('Name for this security key')
 
     await view.events.type(nicknameInput, 'My key')
 
-    Object.defineProperty(window, 'isSecureContext', {
-      value: true,
-    })
+    mockWebAuthnCreation()
 
     mockUserCurrentTwoFactorVerifyMethodConfigurationMutation({
       userCurrentTwoFactorVerifyMethodConfiguration: {
@@ -469,12 +442,10 @@ describe('Two-factor Authentication - Security Keys', () => {
 
     await view.events.click(view.getByRole('button', { name: 'Next' }))
 
-    expect(flyout).not.toBeInTheDocument()
+    await waitFor(() => expect(flyout).not.toBeInTheDocument())
 
     expect(
-      view.getByText(
-        'Two-factor authentication method was set up successfully.',
-      ),
+      view.getByText('Two-factor authentication method was set up successfully.'),
     ).toBeInTheDocument()
   })
 })

@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { checkbox as checkboxDefinition } from '@formkit/inputs'
 import { has } from '@formkit/utils'
@@ -54,11 +54,7 @@ const handleAlternativeBorder = (node: FormKitNode) => {
 
 initializeFieldDefinition(checkboxDefinition, {
   props: ['alternativeBorder'],
-  features: [
-    addCheckedDataAttribute,
-    handleAlternativeBorder,
-    formUpdaterTrigger(),
-  ],
+  features: [addCheckedDataAttribute, handleAlternativeBorder, formUpdaterTrigger()],
 })
 
 export default {

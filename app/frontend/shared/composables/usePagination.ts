@@ -1,13 +1,6 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import {
-  computed,
-  reactive,
-  readonly,
-  ref,
-  type ComputedRef,
-  type Ref,
-} from 'vue'
+import { computed, reactive, readonly, ref, type ComputedRef, type Ref } from 'vue'
 
 import type { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 import type {

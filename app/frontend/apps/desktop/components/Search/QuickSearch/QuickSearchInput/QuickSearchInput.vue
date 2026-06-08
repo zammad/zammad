@@ -1,18 +1,18 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { useTemplateRef, watch } from 'vue'
 import { useRouter } from 'vue-router'
 
-import emitter from '#shared/utils/emitter.ts'
-
-import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
-import CommonInputSearch from '#desktop/components/CommonInputSearch/CommonInputSearch.vue'
 import {
   KeyboardKey,
   type OrderKeyHandlerConfig,
-} from '#desktop/composables/useOrderedKeyboardEvents/types.ts'
-import { useKeyboardEventBus } from '#desktop/composables/useOrderedKeyboardEvents/useKeyboardEventBus.ts'
+} from '#shared/composables/useKeyboardEventBus/types.ts'
+import { useKeyboardEventBus } from '#shared/composables/useKeyboardEventBus/useKeyboardEventBus.ts'
+import { useOnEmitter } from '#shared/composables/useOnEmitter.ts'
+
+import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
+import CommonInputSearch from '#desktop/components/CommonInputSearch/CommonInputSearch.vue'
 
 const searchValue = defineModel<string>()
 
@@ -32,7 +32,7 @@ const resetInput = () => {
 }
 
 const goToSearchView = () => {
-  router.push({ name: 'search', params: { searchTerm: searchValue.value } })
+  router.push({ name: 'Search', params: { searchTerm: searchValue.value } })
   resetInput()
 }
 
@@ -47,13 +47,11 @@ const { subscribeEvent, unsubscribeEvent } = useKeyboardEventBus(
 )
 
 watch(isSearchActive, (isActive) =>
-  isActive
-    ? subscribeEvent(keyHandlerConfig)
-    : unsubscribeEvent(keyHandlerConfig),
+  isActive ? subscribeEvent(keyHandlerConfig) : unsubscribeEvent(keyHandlerConfig),
 )
 
-emitter.on('focus-quick-search-field', () => inputSearchInstance.value?.focus())
-emitter.on('reset-quick-search-field', () => resetInput())
+useOnEmitter('focus-quick-search-field', () => inputSearchInstance.value?.focus())
+useOnEmitter('reset-quick-search-field', () => resetInput())
 </script>
 
 <template>
@@ -61,13 +59,13 @@ emitter.on('reset-quick-search-field', () => resetInput())
     <CommonInputSearch
       ref="input-search"
       v-model="searchValue"
-      wrapper-class="rounded-lg bg-blue-200 px-2.5 py-2 outline-offset-1 outline-blue-800 focus-within:outline dark:bg-gray-700"
+      wrapper-class="rounded-lg bg-blue-200 px-2.5 py-2 outline-blue-800 focus-within:outline dark:bg-gray-700"
       @focus-input="isSearchActive = true"
       @keydown.enter="goToSearchView"
     />
     <CommonButton
       v-if="isSearchActive"
-      :aria-label="$t('Reset Search')"
+      :aria-label="$t('Reset search')"
       icon="x-lg"
       variant="neutral"
       @click="resetInput"

@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import renderComponent from '#tests/support/components/renderComponent.ts'
 
@@ -13,9 +13,7 @@ describe('NotificationHeader', () => {
     })
 
     expect(wrapper.getByRole('button')).toHaveTextContent('mark all as read')
-    expect(wrapper.getByRole('heading', { level: 3 })).toHaveTextContent(
-      'Notifications',
-    )
+    expect(wrapper.getByRole('heading', { level: 3 })).toHaveTextContent('Notifications')
     expect(wrapper.getByIconName('lightning')).toBeInTheDocument()
   })
 
@@ -26,9 +24,7 @@ describe('NotificationHeader', () => {
       },
     })
 
-    expect(
-      wrapper.queryByRole('button', { name: 'mark all as read' }),
-    ).not.toBeInTheDocument()
+    expect(wrapper.queryByRole('button', { name: 'mark all as read' })).not.toBeInTheDocument()
   })
 
   it('emits mark-all event', async () => {
@@ -38,9 +34,7 @@ describe('NotificationHeader', () => {
       },
     })
 
-    await wrapper.events.click(
-      wrapper.getByRole('button', { name: 'mark all as read' }),
-    )
+    await wrapper.events.click(wrapper.getByRole('button', { name: 'mark all as read' }))
 
     expect(wrapper.emitted('mark-all')).toHaveLength(1)
   })

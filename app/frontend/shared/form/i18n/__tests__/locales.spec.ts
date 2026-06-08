@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { en } from '@formkit/i18n'
 
@@ -19,9 +19,7 @@ describe('locales', () => {
 
   it('check the validation strings', () => {
     Object.keys(en.validation).forEach((key) => {
-      expect
-        .soft(staticLocaleValidation[key], `"${key}" is not defined`)
-        .toBeTruthy()
+      expect.soft(staticLocaleValidation[key], `"${key}" is not defined`).toBeTruthy()
     })
   })
 })

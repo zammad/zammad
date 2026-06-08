@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Channel::Filter::ImportArchive
 
@@ -75,7 +75,6 @@ module Channel::Filter::ImportArchive
   def self.disable_notifications_and_triggers(transaction_params)
     transaction_params[:disable] += %w[
       Transaction::Notification
-      Transaction::Slack
       Transaction::Trigger
     ]
   end

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Mutations
   class User::Current::ChangePassword < BaseMutation
@@ -11,21 +11,20 @@ module Gql::Mutations
 
     field :success, Boolean, description: 'This indicates if changing the password was successful.'
 
-    def self.authorize(_obj, ctx)
-      ctx.current_user.permissions?('user_preferences.password')
-    end
+    requires_permission 'user_preferences.password'
 
-    def ready?(...)
+    def throttle_if_needed!(...)
       throttle!(limit: 10, period: 1.minute, by_identifier: context.current_user.login)
     end
 
     def resolve(current_password:, new_password:)
       begin
-        Service::User::ChangePassword.new(
-          user:             context.current_user,
-          current_password: current_password,
-          new_password:     new_password
-        ).execute
+        Service::User::ChangePassword
+          .with_current_user(context.current_user)
+          .execute(
+            current_password: current_password,
+            new_password:     new_password
+          )
       rescue PasswordHash::Error
         return error_response({ message: __('The current password you provided is incorrect.'), field: 'current_password' })
       rescue PasswordPolicy::Error => e

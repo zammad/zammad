@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { defineComponent, nextTick } from 'vue'
 
@@ -7,7 +7,7 @@ import { renderComponent } from '#tests/support/components/index.ts'
 import { i18n } from '#shared/i18n.ts'
 
 const Example = defineComponent({
-  name: 'Example',
+  name: 'ExampleComponent',
   props: {
     text: {
       type: String,
@@ -23,10 +23,7 @@ const populateTranslationMap = () => {
     ['yes', 'ja'],
     ['Hello world!', 'Hallo Welt!'],
     ['The second component.', 'Die zweite Komponente.'],
-    [
-      'String with 3 placeholders: %s %s %s',
-      'Zeichenkette mit 3 Platzhaltern: %s %s %s',
-    ],
+    ['String with 3 placeholders: %s %s %s', 'Zeichenkette mit 3 Platzhaltern: %s %s %s'],
     ['FORMAT_DATE', 'dd/mm/yyyy'],
     ['FORMAT_DATETIME', 'dd/mm/yyyy HH:MM:SS'],
   ])
@@ -65,9 +62,7 @@ describe('i18n', () => {
       expect(i18n.date('2021-04-09T10:11:12Z')).toBe('09/04/2021')
       expect(i18n.dateTime('2021-04-09T10:11:12Z')).toBe('09/04/2021 10:11:12')
       expect(i18n.relativeDateTime(new Date().toISOString())).toBe('just now')
-      expect(i18n.dateTimeISO('2021-04-09T10:11:12Z')).toBe(
-        '2021-04-09T10:11:12.000Z',
-      )
+      expect(i18n.dateTimeISO('2021-04-09T10:11:12Z')).toBe('2021-04-09T10:11:12.000Z')
     })
 
     it('returns date/time format information', () => {

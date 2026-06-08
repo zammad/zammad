@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, useSlots, type SetupContext } from 'vue'
@@ -27,11 +27,7 @@ const classMap = getFormGroupClasses()
   >
     <slot />
   </div>
-  <div
-    v-if="hasHelp"
-    class="pt-1"
-    :class="[classMap.bottomMargin, classMap.help]"
-  >
+  <div v-if="hasHelp" class="pt-1" :class="[classMap.bottomMargin, classMap.help]">
     <slot name="help">
       {{ help }}
     </slot>

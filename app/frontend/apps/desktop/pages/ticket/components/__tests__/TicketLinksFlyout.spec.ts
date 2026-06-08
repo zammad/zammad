@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import renderComponent from '#tests/support/components/renderComponent.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
@@ -36,22 +36,20 @@ describe('TicketLinksFlyout', () => {
       router: true,
     })
 
-    expect(
-      wrapper.getByRole('heading', { name: 'Link Tickets', level: 2 }),
-    ).toBeInTheDocument()
+    expect(wrapper.getByRole('heading', { name: 'Link tickets', level: 2 })).toBeInTheDocument()
 
     expect(wrapper.getByLabelText('Link ticket')).toBeInTheDocument()
     expect(wrapper.getByLabelText('Link type')).toBeInTheDocument()
 
     expect(
       await wrapper.findByRole('table', {
-        name: 'Recent Customer Tickets',
+        name: 'Recent customer tickets',
       }),
     ).toBeInTheDocument()
 
     expect(
       wrapper.getByRole('table', {
-        name: 'Recently Viewed Tickets',
+        name: 'Recently viewed tickets',
       }),
     ).toBeInTheDocument()
   })

@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { computed, ref } from 'vue'
 
@@ -36,6 +36,7 @@ const renderTicketSidebarCustomer = async (
       },
     },
     router: true,
+    form: true,
     provide: [
       [
         TICKET_KEY,

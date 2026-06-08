@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import type { FileUploaded } from '#shared/components/Form/fields/FieldFile/types.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
@@ -48,8 +48,6 @@ export interface AllowedFile {
   size: number
 }
 
-const allowCompressMime = ['image/jpeg', 'image/png']
-
 const getQuality = (x: number, y: number) => {
   if (x < 200 && y < 200) return 1
   if (x < 400 && y < 400) return 0.9
@@ -58,13 +56,8 @@ const getQuality = (x: number, y: number) => {
   return 0.6
 }
 
-export const compressImage = (
-  imageSrc: string,
-  type: string,
-  options?: CompressOptions,
-) => {
+export const compressImage = (imageSrc: string, type: string, options?: CompressOptions) => {
   const img = new Image()
-  // eslint-disable-next-line sonarjs/cognitive-complexity
   const promise = new Promise<string>((resolve) => {
     img.onload = () => {
       const {
@@ -131,8 +124,7 @@ export const compressImage = (
         context.drawImage(img, 0, 0, imageWidth, imageHeight)
       }
 
-      const qualityValue =
-        quality === 'auto' ? getQuality(imageWidth, imageHeight) : quality
+      const qualityValue = quality === 'auto' ? getQuality(imageWidth, imageHeight) : quality
 
       try {
         const base64 = canvas.toDataURL(mimeType, qualityValue)
@@ -182,7 +174,7 @@ export const convertFileList = async (
   const promises = files.map(async (file) => {
     let base64 = await blobToBase64(file)
 
-    if (options?.compress && allowCompressMime.includes(file.type)) {
+    if (options?.compress && (file.type == 'image/jpeg' || file.type == 'image/png')) {
       base64 = await compressImage(base64, file.type, options)
     }
 
@@ -198,65 +190,42 @@ export const convertFileList = async (
   return readFiles.filter((file) => file.content)
 }
 
-export const loadImageIntoBase64 = async (
-  src: string,
-  type?: string,
-  alt?: string,
-): Promise<string | null> => {
-  const img = new Image()
-  img.crossOrigin = 'anonymous'
-  const promise = new Promise<string | null>((resolve) => {
-    img.onload = () => {
-      const canvas = document.createElement('canvas')
-      canvas.width = img.width
-      canvas.height = img.height
-      const ctx = canvas.getContext('2d')
-      ctx?.drawImage(img, 0, 0, img.width, img.height)
-      const mime =
-        type || (img.alt?.match(/\.(jpe?g)$/i) ? 'image/jpeg' : 'image/png')
-      try {
-        const base64 = canvas.toDataURL(mime)
-        resolve(base64)
-      } catch {
-        resolve(null)
-      }
-    }
-    img.onerror = () => {
-      resolve(null)
-    }
-  })
-  img.alt = alt || ''
-  img.src = src
-  return promise
-}
-
 export const canDownloadFile = (type?: Maybe<string>) => {
   return Boolean(type && type !== 'text/html')
 }
 
 export const allowedImageTypes = () => {
-  const { config } = useApplicationStore()
+  const allowedImageTypes = ['image/png', 'image/jpg', 'image/jpeg', 'image/gif', 'image/webp']
 
-  return config['active_storage.web_image_content_types'] || []
+  // Filter allowed image types based on Rails config for allowed inline content types.
+  //   This ensures that only the image types that are allowed to be displayed inline in Rails are considered
+  //   previewable in the frontend.
+  const allowedInlineTypes =
+    useApplicationStore().config['active_storage.content_types_allowed_inline'] || []
+
+  return allowedImageTypes.filter((type) => allowedInlineTypes.includes(type))
 }
 
 export const allowedImageTypesString = () => {
   return allowedImageTypes().join(',')
 }
 
+export const sanitizedContentType = (type?: Maybe<string>) =>
+  type?.replace(/^(.+?\/.+?)(\b|\s).+?$/, '$1')
+
 export const canPreviewFile = (type?: Maybe<string>): FilePreview | false => {
   if (!type) return false
 
-  if (allowedImageTypes().includes(type)) return 'image'
-  if (type === 'text/calendar') return 'calendar'
+  const contentType = sanitizedContentType(type)
+  if (!contentType) return false
+
+  if (allowedImageTypes().includes(contentType)) return 'image'
+  if (contentType === 'text/calendar') return 'calendar'
 
   return false
 }
 
-export const convertFilesToAttachmentInput = (
-  formId: string,
-  attachments?: FileUploaded[],
-) => {
+export const convertFilesToAttachmentInput = (formId: string, attachments?: FileUploaded[]) => {
   const files = attachments?.map((file) => ({
     name: file.name,
     type: file.type,
@@ -276,10 +245,7 @@ export const validateFileSizeLimit = (file: File, allowedSize: number) => {
   return file.size <= allowedSize
 }
 
-export const validateFileSizes = (
-  files: File[],
-  allowedFiles: AllowedFile[],
-) => {
+export const validateFileSizes = (files: File[], allowedFiles: AllowedFile[]) => {
   const failedFiles: Omit<ValidatedFile, 'allowedTypes'>[] = []
   files.forEach((file) => {
     allowedFiles.forEach((allowedFile) => {
@@ -298,9 +264,7 @@ export const validateFileSizes = (
 /**
  * @return {string} - A string of acceptable file types for input element.
  * * */
-export const getAcceptableFileTypesString = (
-  allowedFiles: AllowedFile[],
-): string => {
+export const getAcceptableFileTypesString = (allowedFiles: AllowedFile[]): string => {
   const result: Set<string> = new Set([])
   allowedFiles.forEach((file) => {
     file.types.forEach((type) => {

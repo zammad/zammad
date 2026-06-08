@@ -1,0 +1,10 @@
+See below for the details.
+
+---------- Forwarded message ----------
+From: John Doe <john@example.com>
+Date: Mon, Dec 2, 2024 at 3:00 PM
+Subject: Project Update
+To: Team <team@example.com>
+
+Hi team,
+Here is the latest update on the project.

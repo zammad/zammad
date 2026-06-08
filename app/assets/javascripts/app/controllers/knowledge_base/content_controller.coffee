@@ -124,21 +124,19 @@ class App.KnowledgeBaseContentController extends App.Controller
     , 500, 'check_unsaved_changes'
 
   quickActions: ->
-    prefix  = App.i18n.translatePlain('Update') + ' & '
     actions = @object.can_be_published_quick_actions()
-
     [
       {
         id:       'internal'
-        name:     prefix + App.i18n.translatePlain('Internal')
+        name:     App.i18n.translatePlain('Update & Internal')
         disabled: !_.includes(actions, 'internal')
       },{
         id:       'publish'
-        name:     prefix + App.i18n.translatePlain('Publish')
+        name:     App.i18n.translatePlain('Update & Publish')
         disabled: !_.includes(actions, 'publish')
       },{
         id:       'archive'
-        name:     prefix + App.i18n.translatePlain('Archive')
+        name:     App.i18n.translatePlain('Update & Archive')
         disabled: !_.includes(actions, 'archive')
       }
     ]

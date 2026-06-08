@@ -1,12 +1,9 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { computed, ref, reactive } from 'vue'
 
 import { useTwoFactorPlugins } from '#shared/entities/two-factor/composables/useTwoFactorPlugins.ts'
-import type {
-  LoginFlow,
-  LoginCredentials,
-} from '#shared/entities/two-factor/types.ts'
+import type { LoginFlow, LoginCredentials } from '#shared/entities/two-factor/types.ts'
 import type {
   EnumTwoFactorAuthenticationMethod,
   UserLoginTwoFactorMethods,
@@ -42,10 +39,7 @@ const useLoginTwoFactor = (clearErrors: () => void) => {
     updateState('2fa', true)
   }
 
-  const askTwoFactor = (
-    twoFactor: UserLoginTwoFactorMethods,
-    formData: LoginCredentials,
-  ) => {
+  const askTwoFactor = (twoFactor: UserLoginTwoFactorMethods, formData: LoginCredentials) => {
     clearErrors()
     loginFlow.credentials = formData
     loginFlow.recoveryCodesAvailable = twoFactor.recoveryCodesAvailable
@@ -58,22 +52,15 @@ const useLoginTwoFactor = (clearErrors: () => void) => {
   }
 
   const twoFactorAllowedMethods = computed(() => {
-    return twoFactorMethods.filter((method) =>
-      loginFlow.allowedMethods.includes(method.name),
-    )
+    return twoFactorMethods.filter((method) => loginFlow.allowedMethods.includes(method.name))
   })
 
   const twoFactorPlugin = computed(() => {
-    return loginFlow.twoFactor
-      ? twoFactorMethodLookup[loginFlow.twoFactor]
-      : undefined
+    return loginFlow.twoFactor ? twoFactorMethodLookup[loginFlow.twoFactor] : undefined
   })
 
   const hasAlternativeLoginMethod = computed(() => {
-    return (
-      twoFactorAllowedMethods.value.length > 1 ||
-      loginFlow.recoveryCodesAvailable
-    )
+    return twoFactorAllowedMethods.value.length > 1 || loginFlow.recoveryCodesAvailable
   })
 
   const statePreviousMap = {
@@ -102,11 +89,11 @@ const useLoginTwoFactor = (clearErrors: () => void) => {
   const loginPageTitle = computed(() => {
     const productName = application.config.product_name
     if (loginFlow.state === 'credentials') return productName
-    if (loginFlow.state === 'recovery-code') return __('Recovery Code')
+    if (loginFlow.state === 'recovery-code') return __('Recovery code')
     if (loginFlow.state === '2fa') {
       return twoFactorPlugin.value?.label ?? productName
     }
-    return __('Try Another Method')
+    return __('Try another method')
   })
 
   return {

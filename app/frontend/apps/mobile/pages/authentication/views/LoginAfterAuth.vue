@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { ref, nextTick, watch } from 'vue'
@@ -43,11 +43,7 @@ const redirect = async (route: RouteLocationRaw) => {
       <div class="flex grow flex-col justify-center">
         <div v-if="currentPlugin" class="my-5 grow">
           <LoginHeader :title="currentPlugin.title" />
-          <component
-            :is="currentPlugin.component"
-            :data="data"
-            @redirect="redirect"
-          />
+          <component :is="currentPlugin.component" :data="data" @redirect="redirect" />
         </div>
       </div>
     </main>

@@ -1,17 +1,24 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { useClipboard, whenever } from '@vueuse/core'
+import { useClipboardItems, whenever } from '@vueuse/core'
 
 import { NotificationTypes } from '#shared/components/CommonNotifications/types.ts'
 import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
 
 export const useCopyToClipboard = () => {
-  const { copy, copied: copiedToClipboard } = useClipboard()
+  const { copy: copyClipboardItems, copied: copiedToClipboard } = useClipboardItems()
   const { notify } = useNotifications()
 
-  const copyToClipboard = (input?: string | null) => {
+  const copyToClipboard = (input?: string | ClipboardItem[] | null) => {
     if (typeof input === 'undefined' || input === null) return
-    copy(input)
+
+    let source = input
+
+    if (typeof input === 'string') {
+      source = [new ClipboardItem({ 'text/plain': input })]
+    }
+
+    copyClipboardItems(source as ClipboardItem[])
   }
 
   whenever(copiedToClipboard, () => {

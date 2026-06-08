@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -19,7 +19,7 @@ RSpec.describe 'Manage > Channels > Google Email', time_zone: 'Europe/London', t
         fill_in 'client_id', with: client_id
         fill_in 'client_secret', with: client_secret
 
-        check_input_field_value('callback_url', callback_url)
+        check_input_field_value('callback_url', callback_url, attr: 'id')
 
         click_on 'Submit'
       end

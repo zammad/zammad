@@ -1,8 +1,7 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { storeToRefs } from 'pinia'
-import { computed, useTemplateRef } from 'vue'
+import { computed, toRef, useTemplateRef } from 'vue'
 
 import CommonPopoverMenuItem, {
   type Props,
@@ -20,7 +19,7 @@ const cycleThemeSwitchValue = () => {
 
 const themeStore = useThemeStore()
 const { updateTheme } = themeStore
-const { currentTheme } = storeToRefs(themeStore)
+const currentTheme = toRef(themeStore, 'currentTheme')
 
 const modelTheme = computed({
   get: () => currentTheme.value,
@@ -29,15 +28,12 @@ const modelTheme = computed({
 </script>
 
 <template>
-  <CommonPopoverMenuItem
-    v-bind="{ ...$props, ...$attrs }"
-    @click="cycleThemeSwitchValue"
-  />
+  <CommonPopoverMenuItem v-bind="{ ...$props, ...$attrs }" @click="cycleThemeSwitchValue" />
   <div class="flex items-center px-2">
     <ThemeSwitch
       ref="theme-switch"
       v-model="modelTheme"
-      class="hover:outline-blue-300 focus:outline-blue-600 hover:focus:outline-blue-600 dark:hover:outline-blue-950 dark:focus:outline-blue-900 dark:hover:focus:outline-blue-900"
+      class="hover:outline-blue-300 dark:hover:outline-blue-950"
       size="small"
     />
   </div>

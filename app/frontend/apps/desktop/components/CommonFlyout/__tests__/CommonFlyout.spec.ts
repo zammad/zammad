@@ -1,6 +1,6 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { beforeAll, describe, expect } from 'vitest'
+import { describe, expect } from 'vitest'
 import { nextTick } from 'vue'
 
 import renderComponent from '#tests/support/components/renderComponent.ts'
@@ -12,19 +12,6 @@ const html = String.raw
 describe('CommonFlyout', () => {
   describe('standalone component', () => {
     let flyout: ReturnType<typeof renderComponent>
-    let mainElement: HTMLElement
-    let app: HTMLDivElement
-
-    beforeAll(() => {
-      app = document.createElement('div')
-      app.id = 'app'
-      document.body.appendChild(app)
-
-      mainElement = document.createElement('main')
-      mainElement.id = 'main-content'
-
-      app.insertAdjacentElement('beforeend', mainElement)
-    })
 
     beforeEach(() => {
       flyout = renderComponent(CommonFlyout, {
@@ -34,6 +21,7 @@ describe('CommonFlyout', () => {
           headerIcon: 'buildings',
           showBackdrop: false,
         },
+        flyout: true,
         router: true,
       })
     })
@@ -60,7 +48,7 @@ describe('CommonFlyout', () => {
     })
 
     it('renders a default cancel label', () => {
-      expect(flyout.getByText('Cancel & Go Back')).toBeInTheDocument()
+      expect(flyout.getByText('Cancel & go back')).toBeInTheDocument()
     })
 
     it('renders a custom cancel label', async () => {
@@ -81,9 +69,7 @@ describe('CommonFlyout', () => {
         resizable: false,
       })
 
-      expect(
-        flyout.queryByLabelText('Resize side panel'),
-      ).not.toBeInTheDocument()
+      expect(flyout.queryByLabelText('Resize side panel')).not.toBeInTheDocument()
     })
 
     it('renders slot content', async () => {
@@ -115,11 +101,7 @@ describe('CommonFlyout', () => {
           showBackdrop: false,
         },
         slots: {
-          default: html`<input
-            type="text"
-            placeholder="test"
-            name="test-input"
-          />`,
+          default: html` <input type="text" placeholder="test" name="test-input" /> `,
         },
       })
 
@@ -130,26 +112,26 @@ describe('CommonFlyout', () => {
 
     it('has a default container width of 500px', async () => {
       expect(flyout.getByRole('complementary')).toHaveStyle({
-        width: '500px',
+        '--flyout-container-width': '500px',
       })
     })
 
     it('displays by default over the main content', async () => {
       await flyout.rerender({ fullscreen: false })
 
-      expect(mainElement.children).not.include(flyout.baseElement)
-      expect(app.children).include(flyout.baseElement)
+      expect(document.body).not.include(flyout.baseElement)
+      expect(document.body).include(flyout.baseElement)
     })
 
     it('supports displaying over entire viewport', async () => {
       await flyout.rerender({ fullscreen: true })
 
-      expect(mainElement.children).include(flyout.baseElement)
+      expect(document.body).include(flyout.baseElement)
     })
 
     describe('events', () => {
       it('emits close event when cancel button is clicked', async () => {
-        await flyout.events.click(flyout.getByText('Cancel & Go Back'))
+        await flyout.events.click(flyout.getByText('Cancel & go back'))
 
         expect(flyout.emitted('close')).toHaveLength(1)
       })

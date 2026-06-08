@@ -51,7 +51,7 @@ class App.TicketArticle extends App.Model
       return App.i18n.translateContent('%s updated article for |%s|', item.created_by.displayName(), item.title)
     else if item.type is 'update.reaction'
       return App.i18n.translateContent('%s reacted with a %s to message from %s |%s|', item.objectNative.preferences?.whatsapp?.reaction?.author, item.objectNative.preferences?.whatsapp?.reaction?.emoji, item.created_by.displayName(), App.Utils.truncate(item.objectNative.body) or '-')
-    return "Unknow action for (#{@objectDisplayName()}/#{item.type}), extend activityMessage() of model."
+    return "Unknown action for (#{@objectDisplayName()}/#{item.type}), extend activityMessage() of model."
 
   @contentAttachments: (article) ->
     return [] if !article
@@ -71,14 +71,6 @@ class App.TicketArticle extends App.Model
     attrs
 
   recipientName: ->
-    format        = App.Config.get('ticket_define_email_from')
-    user          = App.User.find((@origin_by_id || @created_by_id))
-    ticket        = App.Ticket.find(@ticket_id)
-    group         = App.Group.find(ticket.group_id)
-    email_address = App.EmailAddress.find(group.email_address_id)
-    return if !email_address
-
-    separator = App.Config.get('ticket_define_email_from_separator')
-    return email_address.name if (user.id is 1 || format is 'SystemAddressName') && user.permission('ticket.agent')
-    return "#{user.firstname} #{user.lastname} #{separator} #{email_address.name}" if format is 'AgentNameSystemAddressName' && user.permission('ticket.agent')
-    return "#{user.firstname} #{user.lastname}" # AgentName or customer
+    user   = App.User.find((@origin_by_id || @created_by_id))
+    ticket = App.Ticket.find(@ticket_id)
+    return user.recipientName(ticket, false)

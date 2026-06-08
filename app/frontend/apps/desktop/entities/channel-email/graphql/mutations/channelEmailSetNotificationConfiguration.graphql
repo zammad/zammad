@@ -1,9 +1,7 @@
 mutation channelEmailSetNotificationConfiguration(
   $outboundConfiguration: ChannelEmailOutboundConfigurationInput!
 ) {
-  channelEmailSetNotificationConfiguration(
-    outboundConfiguration: $outboundConfiguration
-  ) {
+  channelEmailSetNotificationConfiguration(outboundConfiguration: $outboundConfiguration) {
     success
     errors {
       ...errors

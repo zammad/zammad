@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -45,6 +45,23 @@ RSpec.describe 'Manage > Users', type: :system do
       Setting.set('maintenance_mode', true)
       switch_to(alternative_three_user)
       expect(current_user).to eq alternative_three_user
+    end
+
+    # https://github.com/zammad/zammad/issues/5641
+    it 'clears switched-to-user bar after logout' do
+      switch_to(alternative_one_user)
+
+      find(".navbar-items-personal a[title=\"#{alternative_one_user.login}\"]").click
+      click_on('Sign out')
+
+      within('#login') do
+        fill_in 'username', with: original_user.login
+        fill_in 'password', with: original_user.password_plain
+
+        click_on('Sign in')
+      end
+
+      expect(page).to have_no_text('Zammad looks like this')
     end
 
     def switch_to(user)
@@ -467,6 +484,42 @@ RSpec.describe 'Manage > Users', type: :system do
 
         expect_no_two_factor
       end
+    end
+  end
+
+  describe 'when updating an inactive agent' do
+    let(:groups) { create_list(:group, 2) }
+    let(:user)   { create(:agent, groups: groups, active: false) }
+
+    before do
+      user
+      visit '#manage/users'
+    end
+
+    it 'does not clear group permissions when setting user as active (#5727)' do
+      expect(user.reload).to have_attributes(
+        active: false,
+        groups: groups,
+      )
+
+      click "tr[data-id='#{user.id}']"
+
+      in_modal do
+        # The group permissions field should be hidden for inactive users.
+        expect(page).to have_no_text('GROUP PERMISSIONS')
+
+        set_select_field_label 'active', 'active'
+
+        click_on 'Submit'
+
+        expect(page).to have_text('User updated successfully.')
+          .and have_text('GROUP PERMISSIONS')
+      end
+
+      expect(user.reload).to have_attributes(
+        active: true,
+        groups: groups,
+      )
     end
   end
 end

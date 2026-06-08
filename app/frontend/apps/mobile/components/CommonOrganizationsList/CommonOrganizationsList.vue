@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import CommonOrganizationAvatar from '#shared/components/CommonOrganizationAvatar/CommonOrganizationAvatar.vue'
@@ -31,10 +31,7 @@ const emit = defineEmits<{
       :link="`/organizations/${organization.internalId}`"
       class="flex min-h-[66px] items-center"
     >
-      <CommonOrganizationAvatar
-        :entity="organization"
-        class="ltr:mr-3 rtl:ml-3"
-      />
+      <CommonOrganizationAvatar :entity="organization" class="ltr:mr-3 rtl:ml-3" />
       <span class="truncate">
         {{ organization.name }}
       </span>

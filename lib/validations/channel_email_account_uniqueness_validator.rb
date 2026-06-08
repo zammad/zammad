@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Validations::ChannelEmailAccountUniquenessValidator < ActiveModel::Validator
   MATCHED_KEYS = %i[adapter].freeze
@@ -11,7 +11,7 @@ class Validations::ChannelEmailAccountUniquenessValidator < ActiveModel::Validat
 
     record_data = extract_matched_data(record.options)
 
-    return if scope(record).none? { matches?(record_data, _1) }
+    return if scope(record).none? { matches?(record_data, it) }
 
     record.errors.add :base, __('The provided email account is already in use.')
   end
@@ -29,7 +29,7 @@ class Validations::ChannelEmailAccountUniquenessValidator < ActiveModel::Validat
     record
       .class
       .where(area: record.area)
-      .then { record.persisted? ? _1.where.not(id: record.id) : _1 }
+      .then { record.persisted? ? it.where.not(id: record.id) : it }
   end
 
   def matches?(record_data, other_record)

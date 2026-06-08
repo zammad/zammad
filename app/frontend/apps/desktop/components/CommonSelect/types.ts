@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import type { UseElementBoundingReturn } from '@vueuse/core'
 import type { Ref } from 'vue'
@@ -11,8 +11,7 @@ export interface CommonSelectInstance {
   isOpen: boolean
 }
 
-export interface CommonSelectInternalInstance
-  extends Omit<CommonSelectInstance, 'isOpen'> {
+export interface CommonSelectInternalInstance extends Omit<CommonSelectInstance, 'isOpen'> {
   isOpen: Ref<boolean>
 }
 

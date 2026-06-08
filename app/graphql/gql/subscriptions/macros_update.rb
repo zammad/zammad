@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Subscriptions
   class MacrosUpdate < BaseSubscription
@@ -7,10 +7,6 @@ module Gql::Subscriptions
     field :macro_id, GraphQL::Types::ID, description: 'Macro ID that was updated'
     field :group_ids, [GraphQL::Types::ID], description: 'The group IDs from the updated macro'
     field :remove_macro_id, GraphQL::Types::ID, description: 'The macro ID that was removed'
-
-    def authorized?
-      true
-    end
 
     class << self
       # Helper methods for triggering with custom payload.

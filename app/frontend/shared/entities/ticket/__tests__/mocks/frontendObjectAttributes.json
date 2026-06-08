@@ -161,7 +161,7 @@
   "screens": [
     {
       "name": "create_top",
-      "attributes": ["title", "organization_id"]
+      "attributes": ["title", "customer_id", "organization_id"]
     },
     {
       "name": "edit",

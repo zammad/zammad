@@ -1,4 +1,6 @@
-query autocompleteSearchObjectAttributeExternalDataSource($input: AutocompleteSearchObjectAttributeExternalDataSourceInput!) {
+query autocompleteSearchObjectAttributeExternalDataSource(
+  $input: AutocompleteSearchObjectAttributeExternalDataSourceInput!
+) {
   autocompleteSearchObjectAttributeExternalDataSource(input: $input) {
     value
     label

@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { useRouteQuery } from '@vueuse/router'
@@ -9,7 +9,6 @@ import { useRoute, useRouter } from 'vue-router'
 import { useStickyHeader } from '#shared/composables/useStickyHeader.ts'
 import { EnumOrderDirection } from '#shared/graphql/types.ts'
 import { i18n } from '#shared/i18n.ts'
-import { useApplicationStore } from '#shared/stores/application.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
 
 import CommonLoader from '#mobile/components/CommonLoader/CommonLoader.vue'
@@ -21,17 +20,16 @@ import { useTicketOverviews } from '#mobile/entities/ticket/composables/useTicke
 import TicketList from '../components/TicketList/TicketList.vue'
 import TicketOrderBySelector from '../components/TicketList/TicketOrderBySelector.vue'
 
-const application = useApplicationStore()
+const MAX_COUNT = 2000
 
 const props = defineProps<{
-  overviewLink: string
+  overviewLink?: string
 }>()
 
 const router = useRouter()
 const route = useRoute()
 
-const { overviews, loading: loadingOverviews } =
-  storeToRefs(useTicketOverviews())
+const { overviews, loading: loadingOverviews } = storeToRefs(useTicketOverviews())
 
 const optionsOverviews = computed(() => {
   return overviews.value.map((overview) => ({
@@ -41,10 +39,7 @@ const optionsOverviews = computed(() => {
 })
 
 const selectedOverview = computed(() => {
-  return (
-    overviews.value.find((overview) => overview.link === props.overviewLink) ||
-    null
-  )
+  return overviews.value.find((overview) => overview.link === props.overviewLink) || null
 })
 
 const selectedOverviewLink = computed(() => {
@@ -55,12 +50,9 @@ const session = useSessionStore()
 
 const hiddenColumns = computed(() => {
   if (session.hasPermission(['ticket.agent'])) return []
-  const viewColumns =
-    selectedOverview.value?.viewColumns.map((column) => column.key) || []
+  const viewColumns = selectedOverview.value?.viewColumns.map((column) => column.key) || []
   // show priority only if it is specified in overview
-  return ['priority', 'updated_by'].filter(
-    (name) => !viewColumns.includes(name),
-  )
+  return ['priority', 'updated_by'].filter((name) => !viewColumns.includes(name))
 })
 
 const selectOverview = (link: string) => {
@@ -111,13 +103,11 @@ watch(selectedOverview, () => {
 
 const orderBy = computed({
   get: () => {
-    if (userOrderBy.value && orderColumnLabels.value[userOrderBy.value])
-      return userOrderBy.value
+    if (userOrderBy.value && orderColumnLabels.value[userOrderBy.value]) return userOrderBy.value
     return selectedOverview.value?.orderBy
   },
   set: (column) => {
-    userOrderBy.value =
-      column !== selectedOverview.value?.orderBy ? column : undefined
+    userOrderBy.value = column !== selectedOverview.value?.orderBy ? column : undefined
   },
 })
 
@@ -125,10 +115,7 @@ const columnLabel = computed(() => {
   return orderColumnLabels.value[orderBy.value || ''] || ''
 })
 
-const userOrderDirection = useRouteQuery<EnumOrderDirection | undefined>(
-  'direction',
-  undefined,
-)
+const userOrderDirection = useRouteQuery<EnumOrderDirection | undefined>('direction', undefined)
 
 // Check that the given order direction is a valid direction, otherwise
 // reset the query parameter.
@@ -146,9 +133,7 @@ const orderDirection = computed({
   },
   set: (direction) => {
     userOrderDirection.value =
-      direction !== selectedOverview.value?.orderDirection
-        ? direction
-        : undefined
+      direction !== selectedOverview.value?.orderDirection ? direction : undefined
   },
 })
 
@@ -201,25 +186,19 @@ const showRefetch = ref(false)
       </div>
     </header>
     <div :style="stickyStyles.body">
-      <CommonLoader
-        v-if="loadingOverviews || overviews.length"
-        :loading="loadingOverviews"
-      >
+      <CommonLoader v-if="loadingOverviews || overviews.length" :loading="loadingOverviews">
         <TicketList
           v-if="selectedOverview && orderBy && orderDirection"
           :overview-id="selectedOverview.id"
           :overview-ticket-count="selectedOverview.ticketCount"
           :order-by="orderBy"
           :order-direction="orderDirection"
-          :max-count="application.config.ui_ticket_overview_ticket_limit"
+          :max-count="MAX_COUNT"
           :hidden-columns="hiddenColumns"
           @refetch="showRefetch = $event"
         />
       </CommonLoader>
-      <div
-        v-else
-        class="flex items-center justify-center gap-2 p-4 text-center"
-      >
+      <div v-else class="flex items-center justify-center gap-2 p-4 text-center">
         <CommonIcon class="text-red" name="close-small" />
         {{ $t('Currently no overview is assigned to your roles.') }}
       </div>

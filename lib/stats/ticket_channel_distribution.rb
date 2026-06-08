@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Stats::TicketChannelDistribution
 
@@ -45,15 +45,6 @@ class Stats::TicketChannelDistribution
         {
           sender: 'sms',
           icon:   'sms',
-        }
-      )
-    end
-
-    if Channel.exists?(area: 'Twitter::Account')
-      channels.push(
-        {
-          sender: 'twitter',
-          icon:   'twitter',
         }
       )
     end

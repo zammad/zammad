@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Service::System::CheckSetup < Service::Base
 
@@ -6,6 +6,13 @@ class Service::System::CheckSetup < Service::Base
 
   STATES = %w[new automated in_progress done].freeze
   TYPES = %w[auto manual import].freeze
+
+  def self.status_info
+    setup = new
+    setup.execute
+
+    { status: setup.status, type: setup.type }
+  end
 
   def self.new?
     setup = new
@@ -23,6 +30,13 @@ class Service::System::CheckSetup < Service::Base
     setup.execute
 
     setup.status == 'done'
+  end
+
+  def self.importing?
+    setup = new
+    setup.execute
+
+    setup.status == 'in_progress' && setup.type == 'import'
   end
 
   def self.done!
@@ -58,8 +72,8 @@ class Service::System::CheckSetup < Service::Base
   private
 
   def setup_done!
-    is_done = Setting.get('system_init_done')
-    has_admin = User.all.any? { |user| user.role?('Admin') && user.active? && user.id != 1 }
+    is_done   = Setting.get('system_init_done')
+    has_admin = User.admin_user_exists?(except_user_id: [1])
 
     if !is_done && has_admin
       Rails.logger.warn('The system setup is not marked as done, but at least one admin user is existing. Marking system setup as done.')

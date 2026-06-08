@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Mutations
   class User::Current::TaskbarItem::TouchLastContact < BaseMutation
@@ -11,6 +11,10 @@ module Gql::Mutations
 
     def resolve(taskbar_item:)
       taskbar_item.touch_last_contact!
+
+      if (object = taskbar_item.to_object)
+        ::OnlineNotification.mark_as_seen!(object, context.current_user)
+      end
 
       { taskbar_item: }
     end

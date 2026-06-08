@@ -1,0 +1,44 @@
+<ticket>
+<% if @context_data[:entity_context].present? && @context_data[:entity_context][:object_attributes].present? -%>
+<% @context_data[:entity_context][:object_attributes].each do |attribute_name, attribute_data| -%>
+  <<%= attribute_name %>>
+<% if attribute_data[:label].present? -%>
+    <label><%= attribute_data[:label] %></label>
+<% end -%>
+    <value><%= attribute_data[:value] %></value>
+  </<%= attribute_name %>>
+<% end -%>
+<% end -%>
+<% if @context_data[:entity_context].present? && @context_data[:entity_context][:tags].present? -%>
+  <tags>
+<% @context_data[:entity_context][:tags].each do |tag| -%>
+    <tag><%= tag %></tag>
+<% end -%>
+  </tags>
+<% end -%>
+
+<% if @context_data[:entity_context].present? && @context_data[:entity_context][:articles].present? -%>
+<% @context_data[:entity_context][:articles].each do |processed_article| -%>
+<% article = processed_article[:article] -%>
+<% result = processed_article[:processed_body] -%>
+  <article>
+    <sender_type><%= article.sender.name %></sender_type>
+    <sender_name><%= article.author.fullname %></sender_name>
+<% if article.from.present? -%>
+    <from><%= article.from %></from>
+<% end -%>
+<% if article.to.present? -%>
+    <to><%= article.to %></to>
+<% end -%>
+<% if article.cc.present? -%>
+    <cc><%= article.cc %></cc>
+<% end -%>
+    <visibility><%= article.internal ? 'internal' : 'public' %></visibility>
+<% if article.subject.present? -%>
+    <subject><%= article.subject %></subject>
+<% end -%>
+    <text><%= result %></text>
+  </article>
+<% end -%>
+<% end -%>
+</ticket>

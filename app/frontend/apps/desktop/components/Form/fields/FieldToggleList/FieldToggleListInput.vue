@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { cloneDeep } from 'lodash-es'
@@ -31,16 +31,13 @@ const valueLookup = computed<Record<string, boolean>>(() => {
   }, {})
 })
 
-const updateValue = (
-  key: ToggleListOptionValue,
-  state: boolean | undefined,
-) => {
+const updateValue = (key: ToggleListOptionValue, state: boolean | undefined) => {
   const values: ToggleListOptionValue[] = cloneDeep(localValue.value) || []
 
   if (state === true && !values.includes(key)) {
     values.push(key)
     localValue.value = values
-  } else if (state === false) {
+  } else if (state === false && values.includes(key)) {
     localValue.value = values.filter((value) => value !== key)
   }
 }
@@ -106,7 +103,7 @@ const { delegateFocus } = useDelegateFocus(
             ],
           },
         }"
-        @update:model-value="updateValue(option.value, $event)"
+        @update:model-value="updateValue(option.value, $event as boolean | undefined)"
         @blur="index === 0 ? context.handlers.blur : undefined"
       />
     </div>

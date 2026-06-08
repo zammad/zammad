@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -289,7 +289,7 @@ RSpec.describe AutoWizard do
         }
       end
 
-      let(:channel) { create(:twitter_channel) }
+      let(:channel) { create(:telegram_channel) }
       let(:new_group) { create(:group) }
 
       it 'updates the specified channel with the given attributes' do

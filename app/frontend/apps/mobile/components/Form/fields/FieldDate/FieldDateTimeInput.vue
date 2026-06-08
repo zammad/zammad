@@ -1,15 +1,17 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import VueDatePicker from '@vuepic/vue-datepicker'
+import { VueDatePicker, WeekStart } from '@vuepic/vue-datepicker'
 import { useEventListener } from '@vueuse/core'
 import { computed, nextTick, ref, toRef } from 'vue'
 
 import useValue from '#shared/components/Form/composables/useValue.ts'
 import type { DateTimeContext } from '#shared/components/Form/fields/FieldDate/types.ts'
+import { useDateFnsLocale } from '#shared/components/Form/fields/FieldDate/useDateFnsLocale.ts'
 import { useDateTime } from '#shared/components/Form/fields/FieldDate/useDateTime.ts'
 import { i18n } from '#shared/i18n.ts'
 import testFlags from '#shared/utils/testFlags.ts'
+
 import '@vuepic/vue-datepicker/dist/main.css'
 
 interface Props {
@@ -18,22 +20,18 @@ interface Props {
 
 const props = defineProps<Props>()
 
+const { dateFnsLocale } = useDateFnsLocale()
+
 const contextReactive = toRef(props, 'context')
 
 const { localValue } = useValue(contextReactive)
 
-const {
-  ariaLabels,
-  displayFormat,
-  is24,
-  minDate,
-  position,
-  timePicker,
-  valueFormat,
-} = useDateTime(contextReactive)
+const { ariaLabels, displayFormat, is24, maxDate, minDate, timePicker, valueFormat } =
+  useDateTime(contextReactive)
 
 const config = {
   keepActionRow: true,
+  monthChangeOnScroll: false,
 }
 
 const actionRow = {
@@ -41,6 +39,7 @@ const actionRow = {
   showCancel: false,
   showNow: true,
   showPreview: false,
+  nowBtnLabel: i18n.t('Today'),
 }
 
 const input = ref<HTMLInputElement>()
@@ -89,48 +88,40 @@ useEventListener('click', (e) => {
       ref="picker"
       v-model="localValue"
       :class="{ 'pointer-events-none': context.disabled }"
-      :uid="context.id"
       :model-type="valueFormat"
-      :name="context.node.name"
-      :clearable="!!context.clearable"
       :disabled="context.disabled"
       :range="context.range"
-      :enable-time-picker="timePicker"
-      :format="displayFormat"
-      :is-24="is24"
-      :locale="i18n.locale()"
-      :max-date="context.maxDate"
+      :time-config="{
+        enableTimePicker: timePicker,
+        is24: is24,
+        ignoreTimeValidation: !timePicker,
+      }"
+      :formats="displayFormat"
+      :locale="dateFnsLocale"
+      :max-date="maxDate"
       :min-date="minDate"
-      :start-date="minDate || context.maxDate"
-      :ignore-time-validation="!timePicker"
+      :start-date="minDate || maxDate"
       :prevent-min-max-navigation="
-        Boolean(minDate || context.maxDate || context.futureOnly)
+        Boolean(minDate || maxDate || context.futureOnly || context.pastOnly)
       "
-      :now-button-label="$t('Today')"
-      :position="position"
       :action-row="actionRow"
       :config="config"
       :aria-labels="ariaLabels"
       :inline="{ input: true }"
-      :month-change-on-scroll="false"
-      :text-input="{ openMenu: 'toggle' }"
+      :text-input="{ openMenu: 'toggle', format: displayFormat.input }"
+      :input-attrs="{
+        id: context.id,
+        name: context.node.name,
+        clearable: !!context.clearable,
+      }"
+      :week-start="WeekStart.Monday"
       auto-apply
       dark
       @open="expandPicker"
       @close="collapsePicker"
       @blur="context.handlers.blur"
     >
-      <template
-        #dp-input="{
-          value,
-          onInput,
-          onEnter,
-          onTab,
-          onBlur,
-          onKeypress,
-          onPaste,
-        }"
-      >
+      <template #dp-input="{ value, onInput, onEnter, onTab, onBlur, onKeypress, onPaste }">
         <input
           :id="context.id"
           ref="input"
@@ -142,21 +133,21 @@ useEventListener('click', (e) => {
           type="text"
           v-bind="context.attrs"
           @input="onInput"
-          @keypress.enter="onEnter"
-          @keypress.tab="onTab"
-          @keypress="onKeypress"
+          @keydown.enter="onEnter"
+          @keydown.tab="onTab"
+          @keydown="onKeypress"
           @paste="onPaste"
           @blur="onBlur"
           @focus="expandPicker"
         />
         <div v-if="showPicker" class="w-full" :class="{ 'pe-2': context.link }">
-          <div class="h-[1px] w-full bg-white/10"></div>
+          <div class="h-px w-full bg-white/10" />
         </div>
       </template>
       <template #clear-icon>
         <CommonIcon
-          class="text-gray absolute -mt-5 shrink-0 ltr:right-2 rtl:left-2"
-          :aria-label="i18n.t('Clear Selection')"
+          class="absolute -mt-5 shrink-0 text-gray ltr:right-2 rtl:left-2"
+          :aria-label="i18n.t('Clear selection')"
           name="close-small"
           size="base"
           role="button"
@@ -188,14 +179,14 @@ useEventListener('click', (e) => {
 </template>
 
 <style scoped>
-:deep(.dp__outer_menu_wrap) .dp__menu {
+:deep(.dp--outer-menu-wrap) .dp--menu {
   /* stylelint-disable value-keyword-case */
   display: v-bind(pickerDisplayStyle);
   max-width: var(--dp-menu-min-width);
   margin: 0 auto;
 }
 
-:deep(.dp__theme_dark) {
+:deep(.dp--theme-dark) {
   --dp-background-color: var(--color-gray-500);
   --dp-text-color: var(--color-white);
   --dp-hover-color: transparent;
@@ -206,7 +197,7 @@ useEventListener('click', (e) => {
   --dp-border-color: transparent;
   --dp-menu-border-color: transparent;
   --dp-border-color-hover: transparent;
-  --dp-range-between-dates-background-color: var('--color-blue-highlight');
+  --dp-range-between-dates-background-color: var(--color-blue-highlight);
   --dp-range-between-dates-text-color: var(--color-white);
   --dp-range-between-border-color: transparent;
 
@@ -216,7 +207,7 @@ useEventListener('click', (e) => {
   }
 }
 
-:deep(.dp__main) {
+:deep(.dp--main) {
   --dp-font-family: var(--default-font-family);
   --dp-border-radius: 0.375rem;
   --dp-cell-border-radius: 9999px;
@@ -231,12 +222,13 @@ useEventListener('click', (e) => {
   --dp-preview-font-size: 1rem;
   --dp-time-font-size: 1.25rem;
 
+  &,
   & > div {
     width: 100%;
   }
 
-  .dp__button,
-  .dp__action_button {
+  .dp--button,
+  .dp--action-button {
     border: none;
     color: var(--color-white);
     background: var(--color-gray-200);
@@ -251,20 +243,20 @@ useEventListener('click', (e) => {
     max-width: none;
   }
 
-  .dp__btn,
-  .dp__button,
-  .dp__calendar_item,
-  .dp__action_button {
+  .dp--btn,
+  .dp--button,
+  .dp--calendar-item,
+  .dp--action-button {
     transition: none;
     border-radius: 0.375rem;
   }
 
-  .dp__action_buttons {
+  .dp--action-buttons {
     margin-inline-start: 0;
     flex-grow: 1;
   }
 
-  .dp__action_button {
+  .dp--action-button {
     margin-inline-start: 0;
     transition: none;
     flex-grow: 1;
@@ -273,30 +265,35 @@ useEventListener('click', (e) => {
     border-radius: 0.375rem;
   }
 
-  .dp__action_cancel {
+  .dp--action-cancel {
     border: none;
   }
 
-  .dp--arrow-btn-nav .dp__inner_nav {
+  .dp--arrow-btn-nav .dp--inner-nav {
     color: var(--color-blue);
   }
 
-  .dp__overlay_container {
+  .dp--overlay-container {
     padding-bottom: 0.5rem;
   }
 
-  .dp__overlay_container + .dp__button,
-  .dp__overlay_row + .dp__button {
+  .dp--overlay-container + .dp--button,
+  .dp--overlay-row + .dp--button {
     width: auto;
     margin: 0.5rem;
   }
 
-  .dp__overlay_container + .dp__button:not(.dp__overlay_action) {
+  .dp--overlay-container + .dp--button:not(.dp--overlay-action) {
     width: calc(var(--dp-menu-min-width) - 0.375rem * 2);
   }
 
-  .dp__overlay_container + .dp__button.dp__overlay_action {
+  .dp--overlay-container + .dp--button.dp--overlay-action {
     width: calc(var(--dp-menu-min-width) - 0.625rem * 2);
+  }
+
+  .dp--calendar-header-item {
+    padding-left: 0;
+    padding-right: 0;
   }
 }
 </style>

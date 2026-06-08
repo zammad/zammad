@@ -2,8 +2,9 @@ class Monitoring extends App.ControllerSubContent
   @requiredPermission: 'admin.monitoring'
   header: __('Monitoring')
   events:
-    'click .js-resetToken': 'resetToken'
-    'click .js-select': 'selectAll'
+    'click .js-copy':              'copyInputToClipboard'
+    'click .js-resetToken':        'resetToken'
+    'click .js-select':            'selectAll'
     'click .js-restartFailedJobs': 'restartFailedJobs'
 
   constructor: ->

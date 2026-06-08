@@ -1,0 +1,11 @@
+{
+  "input": "Take a look in the triggers of the Zammad admin documentation.<br><br>img src=\"test.png\" alt=\"illustration\">",
+  "expected": {
+    "language": "en"
+  },
+  "text_tool_execution": [
+    "Fix spelling and grammar",
+    "Expand draft into well-written section",
+    "Rewrite complex section and make it easy to understand"
+  ]
+}

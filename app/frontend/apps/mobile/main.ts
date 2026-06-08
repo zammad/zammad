@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { createApp } from 'vue'
 
@@ -6,9 +6,9 @@ import '#mobile/styles/main.css'
 
 import { initializeAppName } from '#shared/composables/useAppName.ts'
 import { useForceDesktop } from '#shared/composables/useForceDesktop.ts'
+import { initializeDefaultObjectAttributes } from '#shared/entities/object-attributes/composables/useObjectAttributes.ts'
 import initializeGlobalComponents from '#shared/initializer/globalComponents.ts'
 import initializeGlobalProperties from '#shared/initializer/globalProperties.ts'
-import { initializeAbstracts } from '#shared/initializer/initializeAbstracts.ts'
 import initializeStoreSubscriptions from '#shared/initializer/storeSubscriptions.ts'
 import { setCurrentRouter } from '#shared/router/router.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
@@ -17,6 +17,7 @@ import initializeStore from '#shared/stores/index.ts'
 import { useLocaleStore } from '#shared/stores/locale.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
 
+import { setCurrentApp } from '#mobile/currentApp.ts'
 import { initializeForm, initializeFormFields } from '#mobile/form/index.ts'
 import { initializeGlobalComponentStyles } from '#mobile/initializer/initializeGlobalComponentStyles.ts'
 import initializeGlobalDirectives from '#mobile/initializer/initializeGlobalDirectives.ts'
@@ -25,7 +26,7 @@ import { initializeMobileVisuals } from '#mobile/initializer/mobileVisuals.ts'
 import initializeRouter from '#mobile/router/index.ts'
 import initializeApolloClient from '#mobile/server/apollo/index.ts'
 
-import App from './AppMobile.vue'
+import AppMobile from './AppMobile.vue'
 import { ensureAfterAuth } from './pages/authentication/after-auth/composable/useAfterAuthPlugins.ts'
 
 const { forceDesktopLocalStorage } = useForceDesktop()
@@ -35,8 +36,11 @@ const { forceDesktopLocalStorage } = useForceDesktop()
 if (forceDesktopLocalStorage.value) window.location.href = '/'
 
 export default async function mountApp(): Promise<void> {
-  const app = createApp(App)
+  const app = createApp(AppMobile)
   initializeAppName('mobile')
+
+  // Remember the current created app.
+  setCurrentApp(app)
 
   initializeApolloClient(app)
 
@@ -56,10 +60,6 @@ export default async function mountApp(): Promise<void> {
   initializeMobileVisuals()
   initializeStoreSubscriptions()
 
-  initializeAbstracts({
-    durations: { normal: { enter: 300, leave: 200 } },
-  }) // :TODO move this argument to own config?
-
   const session = useSessionStore()
   const authentication = useAuthenticationStore()
 
@@ -70,13 +70,16 @@ export default async function mountApp(): Promise<void> {
 
   const application = useApplicationStore()
 
-  const initalizeAfterSessionCheck: Array<Promise<unknown>> = [
-    application.getConfig(),
-  ]
+  const initalizeAfterSessionCheck: Array<Promise<unknown>> = [application.getConfig()]
 
   if (session.id) {
     authentication.authenticated = true
     initalizeAfterSessionCheck.push(session.getCurrentUser())
+
+    // Pre-warm the default object-attribute queries in parallel with the
+    // current-user and config requests, so the cache is hot by the time the
+    // first form mounts and asks for them.
+    initializeDefaultObjectAttributes()
   }
 
   await Promise.all(initalizeAfterSessionCheck)

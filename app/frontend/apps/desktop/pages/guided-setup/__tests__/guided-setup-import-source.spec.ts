@@ -1,12 +1,10 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
+import { waitFor } from '#tests/support/vitest-wrapper.ts'
 
-import {
-  EnumSystemSetupInfoStatus,
-  EnumSystemSetupInfoType,
-} from '#shared/graphql/types.ts'
+import { EnumSystemSetupInfoStatus, EnumSystemSetupInfoType } from '#shared/graphql/types.ts'
 
 import { mockSystemImportConfigurationMutation } from '../graphql/mutations/systemImportConfiguration.mocks.ts'
 import { mockSystemSetupInfoQuery } from '../graphql/queries/systemSetupInfo.mocks.ts'
@@ -58,10 +56,8 @@ describe('guided setup import source', () => {
       expect(view.getByText('URL')).toBeInTheDocument()
       expect(view.getByText('API token')).toBeInTheDocument()
 
-      expect(view.getByRole('button', { name: 'Go Back' })).toBeInTheDocument()
-      expect(
-        view.getByRole('button', { name: 'Save and Continue' }),
-      ).toBeInTheDocument()
+      expect(view.getByRole('button', { name: 'Go back' })).toBeInTheDocument()
+      expect(view.getByRole('button', { name: 'Save and continue' })).toBeInTheDocument()
 
       mockSystemImportConfigurationMutation({
         systemImportConfiguration: {
@@ -82,13 +78,11 @@ describe('guided setup import source', () => {
       await view.events.type(apiTokenField, 'random-api-token')
 
       const saveAndContinueButton = view.getByRole('button', {
-        name: 'Save and Continue',
+        name: 'Save and continue',
       })
       await view.events.click(saveAndContinueButton)
 
-      expect(
-        await view.findByText('The hostname could not be found.'),
-      ).toBeInTheDocument()
+      expect(await view.findByText('The hostname could not be found.')).toBeInTheDocument()
 
       mockSystemImportConfigurationMutation({
         systemImportConfiguration: {
@@ -99,16 +93,14 @@ describe('guided setup import source', () => {
 
       await view.events.click(saveAndContinueButton)
 
-      await vi.waitFor(() => {
+      await waitFor(() => {
         expect(
           view,
           'correctly redirects to guided setup import source freshdesk',
         ).toHaveCurrentUrl('/guided-setup/import/freshdesk/start')
       })
 
-      expect(
-        view.getByRole('button', { name: 'Start Import' }),
-      ).toBeInTheDocument()
+      expect(view.getByRole('button', { name: 'Start import' })).toBeInTheDocument()
     })
 
     describe('when otrs import is used', () => {

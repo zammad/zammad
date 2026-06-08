@@ -20,7 +20,22 @@ class Tag extends App.ControllerSubContent
     return if currentNewTagSetting is @lastNewTagSetting
     @lastNewTagSetting = currentNewTagSetting
 
-    @html App.view('tag/index')()
+    @renderContent()
+
+  renderContent: =>
+    content = $(App.view('tag/index')())
+
+    newTagHTML = App.UiElement.tag_new.render(
+      id: 'name'
+      name: 'name'
+      type: 'text'
+      null: true
+      translate: false
+    )
+
+    content.find('.form-item').append(newTagHTML)
+
+    @html content
     new Table(
       el: @$('.js-Table')
     )
@@ -31,18 +46,17 @@ class Tag extends App.ControllerSubContent
 
   create: (e) =>
     e.preventDefault()
-    field = $(e.currentTarget).find('input[name]')
-    name = field.val().trim()
-    return if !name
+
+    params = @formParam(e.currentTarget)
+
+    names = params.name.trim().split(/\s*,\s*/)
+    return if names.length < 1
+
     @ajax(
       type:  'POST'
       url:   "#{@apiPath}/tag_list"
-      data:  JSON.stringify(name: name)
-      success: (data, status, xhr) =>
-        @html App.view('tag/index')()
-        new Table(
-          el: @$('.js-Table')
-        )
+      data:  JSON.stringify(name: names)
+      success: @renderContent
     )
 
 class Table extends App.Controller

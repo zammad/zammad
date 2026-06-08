@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import type { FormRef } from '#shared/components/Form/types.ts'
@@ -7,6 +7,7 @@ import type { TicketLiveAppUser } from '#shared/entities/ticket/types.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import TicketScreenBehavior from '#desktop/pages/ticket/components/TicketDetailView/TicketScreenBehavior/TicketScreenBehavior.vue'
+import { useTicketInformation } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
 
 import TicketAgentUpdateButton from './TicketAgentUpdateButton.vue'
 import TicketLiveUsers from './TicketLiveUsers.vue'
@@ -24,7 +25,6 @@ export interface Props {
   canUseDraft?: boolean
   sharedDraftId?: string | null
   liveUserList: TicketLiveAppUser[]
-  setSkipNextStateUpdate: (skip: boolean) => void
 }
 
 defineProps<Props>()
@@ -34,21 +34,18 @@ defineEmits<{
   discard: [MouseEvent]
   'execute-macro': [MacroById]
 }>()
+
+const { ticket } = useTicketInformation()
 </script>
 
 <template>
   <div class="flex gap-4 ltr:mr-auto rtl:ml-auto">
     <TicketLiveUsers
-      v-if="liveUserList?.length"
+      v-if="liveUserList?.length || ticket?.aiAgentRunning"
       :live-user-list="liveUserList"
     />
 
-    <TicketSharedDraftZoom
-      v-if="hasAvailableDraft"
-      :form="form"
-      :shared-draft-id="sharedDraftId"
-      :set-skip-next-state-update="setSkipNextStateUpdate"
-    />
+    <TicketSharedDraftZoom v-if="hasAvailableDraft" :form="form" :shared-draft-id="sharedDraftId" />
   </div>
 
   <template v-if="isTicketEditable">

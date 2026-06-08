@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import Form from '#shared/components/Form/Form.vue'
@@ -63,17 +63,13 @@ const formSchema = [
             ],
           },
         },
-        help: __(
-          'Enter your Zendesk API token gained from your admin interface.',
-        ),
+        help: __('Enter your Zendesk API token gained from your admin interface.'),
       },
     ],
   },
 ]
 
-const { configureSystemImportSource } = useImportSourceConfiguration(
-  EnumSystemImportSource.Zendesk,
-)
+const { configureSystemImportSource } = useImportSourceConfiguration(EnumSystemImportSource.Zendesk)
 </script>
 
 <template>
@@ -91,9 +87,7 @@ const { configureSystemImportSource } = useImportSourceConfiguration(
       form-class="mb-2.5"
       :schema="formSchema"
       @submit="
-        configureSystemImportSource(
-          $event as FormSubmitData<ImportSourceConfigurationZendeskData>,
-        )
+        configureSystemImportSource($event as FormSubmitData<ImportSourceConfigurationZendeskData>)
       "
     />
   </div>

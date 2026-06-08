@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class KnowledgeBase < ApplicationModel
   include HasTranslations
@@ -185,6 +185,25 @@ class KnowledgeBase < ApplicationModel
 
   def self.granular_permissions?
     KnowledgeBase::Permission.any?
+  end
+
+  def self.access_for_user(user)
+    hash = {
+      granular: KnowledgeBase.granular_permissions?,
+      editor:   user&.permissions?('knowledge_base.editor'),
+      reader:   user&.permissions?('knowledge_base.reader')
+    }
+
+    case hash
+    in { granular: true, reader: true } | { granular: true, editor: true }
+      :granular
+    in { editor: true }
+      :editor
+    in { reader: true }
+      :reader
+    else
+      :public
+    end
   end
 
   def public_content?(kb_locale = nil)

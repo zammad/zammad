@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class UserDevicesController < ApplicationController
   prepend_before_action :authenticate_and_authorize!
@@ -8,8 +8,13 @@ class UserDevicesController < ApplicationController
     devices_full = []
     devices.each do |device|
       attributes = device.attributes
-      if device.location_details['city_name'].present?
-        attributes['location'] += ", #{device.location_details['city_name']}"
+      city_name = device.location_details['city_name']
+      if city_name.present?
+        attributes['location'] = if attributes['location'].blank? || attributes['location'] == 'unknown'
+                                   city_name
+                                 else
+                                   "#{attributes['location']}, #{city_name}"
+                                 end
       end
       attributes.delete('created_at')
       attributes.delete('device_details')
@@ -27,8 +32,8 @@ class UserDevicesController < ApplicationController
 
   def destroy
     begin
-      Service::User::Device::Delete.new(user: current_user, device: UserDevice.find_by(user_id: current_user.id, id: params[:id])).execute
-    rescue Exceptions::UnprocessableEntity
+      Service::User::Device::Delete.with_current_user(current_user).execute(device: UserDevice.find_by(user_id: current_user.id, id: params[:id]))
+    rescue Exceptions::UnprocessableContent
       # noop
     end
 

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module CanBePublished
   extend ActiveSupport::Concern
@@ -26,7 +26,8 @@ module CanBePublished
     validate    :archived_after_published
     validate    :published_after_internal
     before_save :update_user_references
-    after_save  :schedule_touch
+
+    after_save_commit :schedule_touch
 
     after_save    :update_active_publicly
     after_destroy :update_active_publicly
@@ -43,18 +44,51 @@ module CanBePublished
       User.association_attributes_ignored remote
     end
 
+    # Returns answers according to given KnowledgeBase::AccessibleCategories::CategoriesStruct
+    #
+    # @param [KnowledgeBase::AccessibleCategories::CategoriesStruct] accessible_categories
+    scope :visible_by_categories, lambda { |accessible_categories|
+      all.where(category: accessible_categories.editor)
+        .or(all.internal.where(category: accessible_categories.reader))
+        .or(all.published.where(category: accessible_categories.public_reader))
+    }
+
+    # Returns answers accessible to the given user
+    # This method also evaluates if granular permissions are enabled
+    #
+    # @param [User] user
+    scope :visible_to_user, lambda { |user|
+      case KnowledgeBase.access_for_user(user)
+      when :granular
+        visible_by_categories(KnowledgeBase::AccessibleCategories.for_user(user))
+      when :editor
+        all
+      when :reader
+        internal
+      else
+        published
+      end
+    }
+
+    # Returns all currently published answers
     scope :published, lambda {
       timestamp = Time.zone.now
 
       date_earlier(:published_at, timestamp).date_later_or_nil(:archived_at, timestamp)
     }
 
+    # Returns all archived answers
+    # Note: this method disregards granular permissions
+    # @see .visible_to_user
     scope :archived, lambda {
       timestamp = Time.zone.now
 
       date_earlier(:archived_at, timestamp)
     }
 
+    # Returns all internally published answers
+    # Note: this method disregards granular permissions
+    # @see .visible_to_user
     scope :only_internal, lambda {
       timestamp = Time.zone.now
 
@@ -63,6 +97,11 @@ module CanBePublished
         .date_later_or_nil(:published_at, timestamp)
     }
 
+    # Returns all answers visible internally, both internally and publicly published
+    # Note: this method disregards granular permissions
+    # @see .visible_to_user
+    #
+    # @see .only_internal
     scope :internal, lambda {
       timestamp = Time.zone.now
 

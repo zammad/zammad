@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module ThreadsHelper
   # Ensure that any new threads which might be spawned by the block will be cleaned up
@@ -15,13 +15,13 @@ module ThreadsHelper
         t.kill
         t.join # From `Timeout.timeout`: make sure thread is dead.
       end
-      break if superfluous_threads.call.count.zero?
+      break if superfluous_threads.call.none?
 
       sleep 1 # Wait a bit for stuff to settle before trying again.
     end
 
-    if superfluous_threads.call.count.positive?
-      superfluous_threads.each do |thread|
+    if superfluous_threads.call.any?
+      superfluous_threads.call.each do |thread|
         warn "Error: found a superfluous thread after clean-up: #{thread}"
         warn "Backtrace: #{thread.backtrace.join("\n")}"
       end
@@ -34,11 +34,11 @@ module ThreadsHelper
   end
 
   # Thread control loops usually run forever. This method can test that they were started.
-  def ensure_block_keeps_running(timeout: 2.seconds, &block)
+  def ensure_block_keeps_running(timeout: 2.seconds, &)
     # Stop after timeout and return true if everything was ok.
     # Suppress the Rails logger as its exception may rescue our TimeoutErrors, causing failures here.
     Rails.logger.silence do
-      Timeout.timeout(timeout, &block)
+      Timeout.timeout(timeout, &)
     end
     raise 'Process ended unexpectedly.'
   rescue SystemExit

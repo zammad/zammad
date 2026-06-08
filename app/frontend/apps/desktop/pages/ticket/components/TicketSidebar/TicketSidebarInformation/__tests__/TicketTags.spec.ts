@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { within } from '@testing-library/vue'
 
@@ -23,9 +23,7 @@ import {
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
 import { type AutocompleteSearchEntry } from '#shared/graphql/types.ts'
 
-import TicketTags, {
-  type Props,
-} from '../TicketSidebarInformationContent/TicketTags.vue'
+import TicketTags, { type Props } from '../TicketSidebarInformationContent/TicketTags.vue'
 
 mockRouterHooks()
 
@@ -106,13 +104,9 @@ describe('TicketTags', () => {
       expect(tag).toHaveTextContent(testTags[index])
     })
 
-    expect(
-      view.queryByRole('button', { name: 'Remove this tag' }),
-    ).not.toBeInTheDocument()
+    expect(view.queryByRole('button', { name: 'Remove this tag' })).not.toBeInTheDocument()
 
-    expect(
-      view.queryByRole('button', { name: 'Add tag' }),
-    ).not.toBeInTheDocument()
+    expect(view.queryByRole('button', { name: 'Add tag' })).not.toBeInTheDocument()
   })
 
   it('supports adding new tags', async () => {
@@ -126,9 +120,7 @@ describe('TicketTags', () => {
 
     await waitForAutocompleteSearchTagQueryCalls()
 
-    expect(
-      view.queryByRole('button', { name: 'Add tag' }),
-    ).not.toBeInTheDocument()
+    expect(view.queryByRole('button', { name: 'Add tag' })).not.toBeInTheDocument()
 
     const autocomplete = await view.findByLabelText('Add tag')
 
@@ -260,12 +252,10 @@ describe('TicketTags', () => {
 
     expect(view.queryByRole('link', { name: 'tag 6' })).not.toBeInTheDocument()
 
-    await view.events.click(view.getByRole('button', { name: 'Show 1 more' }))
+    await view.events.click(view.getByRole('button', { name: 'Show more' }))
 
     expect(view.getByRole('link', { name: 'tag 6' })).toBeInTheDocument()
 
-    expect(
-      view.queryByRole('button', { name: 'Show 1 more' }),
-    ).not.toBeInTheDocument()
+    expect(view.queryByRole('button', { name: 'Show more' })).not.toBeInTheDocument()
   })
 })

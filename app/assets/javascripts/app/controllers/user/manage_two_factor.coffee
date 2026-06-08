@@ -90,7 +90,7 @@ class App.ControllerManageTwoFactor extends App.ControllerModal
         method = App.TwoFactorMethods.methodByKey(params.method)
         @notify
           type:    'success'
-          msg:     App.i18n.translateContent('The two-factor authentication method "%s" was removed for this user.', App.i18n.translateContent(method.label))
+          msg:     App.i18n.translatePlain('The two-factor authentication method "%s" was removed for this user.', App.i18n.translatePlain(method.label))
           timeout: 4000
 
         @close()

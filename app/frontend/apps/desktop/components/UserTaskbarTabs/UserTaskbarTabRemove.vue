@@ -1,7 +1,7 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { storeToRefs } from 'pinia'
+import { toRef } from 'vue'
 import { useRouter } from 'vue-router'
 
 import { useConfirmation } from '#shared/composables/useConfirmation.ts'
@@ -21,8 +21,8 @@ interface Props {
 const props = defineProps<Props>()
 
 const taskbarTabStore = useUserCurrentTaskbarTabsStore()
-
-const { activeTaskbarTabEntityKey } = storeToRefs(taskbarTabStore)
+const { deleteTaskbarTab } = taskbarTabStore
+const activeTaskbarTabEntityKey = toRef(taskbarTabStore, 'activeTaskbarTabEntityKey')
 
 const { isTouchDevice } = useTouchDevice()
 
@@ -32,7 +32,7 @@ const confirmRemoveUserTaskbarTab = async () => {
   if (!props.taskbarTab.taskbarTabId) return
 
   if (props.plugin?.confirmTabRemove) {
-    // Redirect to taskbar tab that is to be closed, if:
+    // Redirect to the taskbar tab that is to be closed, if:
     //   * it has a dirty state
     //   * it's not the currently active tab
     //   * the tab link can be computed
@@ -60,14 +60,13 @@ const confirmRemoveUserTaskbarTab = async () => {
     }
   }
 
-  // Redirection to a historical route will be handled by the store.
-  taskbarTabStore.deleteTaskbarTab(props.taskbarTab.taskbarTabId)
+  // The store will handle redirection to a historical route.
+  deleteTaskbarTab(props.taskbarTab.taskbarTabId)
 }
 </script>
 
 <template>
   <CommonButton
-    v-if="props.taskbarTab.taskbarTabId"
     v-tooltip="$t('Close this tab')"
     :class="{ 'opacity-0 transition-opacity': !isTouchDevice }"
     class="absolute end-2 top-3 group-hover/tab:opacity-100 focus:opacity-100"

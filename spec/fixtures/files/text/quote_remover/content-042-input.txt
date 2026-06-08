@@ -1,0 +1,21 @@
+Hallo Herr Schmidt,
+
+vielen Dank für Ihre Nachricht. Das klingt sehr interessant.
+
+Viele Grüße
+Max Müller
+
+---Anfang der weitergeleiteten Nachricht:---
+
+	Betreff: Projekt Update
+	Datum: 11.11.2025 13:37
+	Von: Hans Schmidt <hans.schmidt@example.com>
+	An: Max Müller <max.mueller@example.com>
+
+
+	Hallo Herr Müller,
+
+	hier ist mein ursprüngliches Anliegen.
+
+	Mit freundlichen Grüßen,
+	Hans Schmidt

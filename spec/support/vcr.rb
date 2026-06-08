@@ -1,11 +1,13 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'vcr'
 
-VCR_IGNORE_MATCHING_HOSTS = %w[build elasticsearch selenium ci-service- zammad.org zammad.com znuny.com google.com login.microsoftonline.com github.com badssl.com].freeze
+VCR_IGNORE_MATCHING_HOSTS = %w[build elasticsearch selenium ci-service- zammad.org znuny.com login.microsoftonline.com github.com badssl.com].freeze
 VCR_IGNORE_MATCHING_REGEXPS = [
-  %r{^192\.168\.\d+\.\d+$},   # typical home network address
-  %r{^172\.17\.0\.\d+$},      # docker
+  %r{^192\.168\.\d+\.\d+$},         # typical home network address
+  %r{^172\.17\.0\.\d+$},            # docker
+  %r{(?<!^ai\.)zammad\.com$},       # *.zammad.com excl. ai.zammad.com
+  %r{(?<!^calendar\.)google\.com$}, # *.google.com excl. calendar.google.com
 ].freeze
 
 VCR.configure do |config|
@@ -37,6 +39,15 @@ module RSpec
 
     Check `git status` to see if a new VCR cassette has been generated.
     If so, rename the old cassette to replace the new one and try again.
+
+  MSG
+
+  VCR_MISSING_INTEGRATION_ADVISORY = <<~MSG.freeze
+
+    *** VCR ADVISORY ***
+    This spec uses VCR cassettes but is missing the `integration: true` metadata.
+    When CI_IGNORE_CASSETTES=1 is set, this spec will NOT run in live mode and will keep using the cassette.
+    If it should run live, add `integration: true` to the spec metadata.
 
   MSG
 
@@ -84,13 +95,17 @@ RSpec.configure do |config|
     Setting.set('storage_provider', 'DB') if Setting.get('storage_provider') == 'S3'
 
     # Perform live integration tests without using VCR cassettes if CI_IGNORE_CASSETTES is set.
-    if example.metadata[:integration] && %w[1 true].include?(ENV['CI_IGNORE_CASSETTES'])
+    ignore_cassettes = %w[1 true].include?(ENV['CI_IGNORE_CASSETTES'])
+
+    if example.metadata[:integration] && ignore_cassettes
       next VCR.turned_off(ignore_cassettes: true) do
         WebMock.disable!
         example.run
       ensure
         WebMock.enable!
       end
+    elsif !example.metadata.key?(:integration) && ignore_cassettes
+      RSpec.configuration.reporter.message("#{example.location}: #{RSpec::VCR_MISSING_INTEGRATION_ADVISORY}")
     end
 
     vcr_options = Array(example.metadata[:use_vcr])

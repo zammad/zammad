@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -354,6 +354,7 @@ RSpec.describe Channel::Driver::Imap, integration: true, required_envs: %w[MAIL_
           expect(parsed_oversized_email_reply).to include(
             {
               from_email: email_address.email,
+              from_display_name: email_address.name,
               subject: '[undeliverable] Message too large',
               'references' => "<#{cid}@zammad.test.com>",
               'in-reply-to' => "<#{cid}@zammad.test.com>",

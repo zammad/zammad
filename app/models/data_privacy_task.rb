@@ -1,10 +1,14 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class DataPrivacyTask < ApplicationModel
   include HasDefaultModelUserRelations
 
   include DataPrivacyTask::HasActivityStreamLog
   include ChecksClientNotification
+
+  scope :failed,     -> { where(state: 'failed') }
+  scope :in_process, -> { where(state: 'in process') }
+  scope :completed,  -> { where(state: 'completed') }
 
   store :preferences
 
@@ -31,6 +35,17 @@ class DataPrivacyTask < ApplicationModel
       .destroy_all
 
     true
+  end
+
+  def prepare_deletion_preview
+    prepare_deletion_preview_tickets
+    prepare_deletion_preview_user
+    prepare_deletion_preview_organization
+    prepare_deletion_preview_anonymize
+  end
+
+  def deletion_counts
+    preferences.slice(:owner_tickets_count, :customer_tickets_count)
   end
 
   private
@@ -70,11 +85,13 @@ class DataPrivacyTask < ApplicationModel
   def perform_organization(organization)
     update_inactive(organization)
     organization.members.find_each { |user| update_inactive(user) }
+    organization.destroy_dependent_associations
     organization.destroy(associations: true)
   end
 
   def perform_user
     update_inactive(deletable)
+    deletable.destroy_dependent_associations
     deletable.destroy
   end
 
@@ -96,13 +113,6 @@ class DataPrivacyTask < ApplicationModel
     return false if deletable.organization.members.count != 1
 
     true
-  end
-
-  def prepare_deletion_preview
-    prepare_deletion_preview_tickets
-    prepare_deletion_preview_user
-    prepare_deletion_preview_organization
-    prepare_deletion_preview_anonymize
   end
 
   def prepare_deletion_preview_tickets

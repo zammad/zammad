@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -21,6 +21,7 @@ RSpec.describe AppVersion, :aggregate_failures do
       expect { described_class.trigger_browser_reload(AppVersion::MSG_CONFIG_CHANGED) }
         .to change(described_class, :get)
       expect(Sessions).to have_received(:broadcast)
+        .with({ data: { app_version: a_string_matching(%r#\d{14}#), type: 'config_changed' }, event: 'maintenance' }, 'public')
       expect(Gql::Subscriptions::AppMaintenance).to have_received(:trigger)
     end
   end

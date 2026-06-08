@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class ChannelsAdmin::BaseController < ApplicationController
   prepend_before_action :authenticate_and_authorize!
@@ -8,7 +8,7 @@ class ChannelsAdmin::BaseController < ApplicationController
   end
 
   def index
-    channels = Service::Channel::Admin::List.new(area: area).execute
+    channels = Service::Channel::Admin::List.execute(area: area)
 
     assets = {}
     channel_ids = []
@@ -26,24 +26,21 @@ class ChannelsAdmin::BaseController < ApplicationController
 
   def enable
     Service::Channel::Admin::Enable
-      .new(area: area, channel_id: params[:id])
-      .execute
+      .execute(area: area, channel_id: params[:id])
 
     render json: { status: :ok }
   end
 
   def disable
     Service::Channel::Admin::Disable
-      .new(area: area, channel_id: params[:id])
-      .execute
+      .execute(area: area, channel_id: params[:id])
 
     render json: { status: :ok }
   end
 
   def destroy
     Service::Channel::Admin::Destroy
-      .new(area: area, channel_id: params[:id])
-      .execute
+      .execute(area: area, channel_id: params[:id])
 
     render json: { status: :ok }
   end

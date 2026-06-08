@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require_relative 'set_up'
 
@@ -30,7 +30,7 @@ RSpec.configure do |config|
     Setting.set('http_type', 'https')
     Setting.set('fqdn', "#{CAPYBARA_HOSTNAME}:#{CAPYBARA_PORT}")
 
-    browser_name = ENV.fetch('BROWSER', 'firefox')
+    browser_name = ENV.fetch('SELENIUM_BROWSER', 'firefox')
 
     # If mobile user agent was requested by the example,
     #   use an appropriate driver (e.g. zammad_chrome_mobile).

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -44,19 +44,22 @@ RSpec.describe Gql::Mutations::KnowledgeBase::Answer::Suggestion::Content::Trans
     end
 
     context 'with authenticated session' do
-      let(:copied_attachments) { Store.list(object: 'UploadCache', o_id: '5570fac8-8868-40b7-89e7-1cdabbd954ba') }
+      let(:copied_attachments)          { Store.list(object: 'UploadCache', o_id: '5570fac8-8868-40b7-89e7-1cdabbd954ba') }
+      let(:copied_inline_attachments)   { copied_attachments.select(&:inline?) }
+      let(:copied_attached_attachments) { copied_attachments.reject(&:inline?) }
 
       it 'converts inline images to base64 data' do
-        expect(gql.result.data[:body]).to include('src="data:image/jpeg;base64,')
+        expect(gql.result.data[:body]).to include("src=\"/api/v1/attachments/#{copied_inline_attachments.first.id}")
       end
 
       it 'contains attachments' do
+        attachment = copied_attached_attachments.first
         expect(gql.result.data[:attachments]).to match_array(include(
-                                                               id:          Gql::ZammadSchema.id_from_object(copied_attachments.first),
-                                                               name:        copied_attachments.first.filename,
-                                                               size:        copied_attachments.first.size.to_i,
-                                                               type:        copied_attachments.first.preferences['Content-Type'],
-                                                               preferences: copied_attachments.first.preferences,
+                                                               id:          Gql::ZammadSchema.id_from_object(attachment),
+                                                               name:        attachment.filename,
+                                                               size:        attachment.size.to_i,
+                                                               type:        attachment.preferences['Content-Type'],
+                                                               preferences: attachment.preferences,
                                                              ))
       end
 

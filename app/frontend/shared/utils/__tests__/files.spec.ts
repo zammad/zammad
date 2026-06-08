@@ -1,10 +1,15 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
+
+import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 
 import {
   getAcceptableFileTypesString,
   humanizeFileSize,
   validateFileSizes,
   type AllowedFile,
+  sanitizedContentType,
+  canPreviewFile,
+  allowedImageTypes,
 } from '#shared/utils/files.ts'
 
 describe('files utility', () => {
@@ -52,9 +57,7 @@ describe('files utility', () => {
       const file2 = new File(['content'], 'file2.txt', { type: 'text/plain' })
       const files: File[] = [file1, file2]
 
-      const allowedFiles: AllowedFile[] = [
-        { label: 'Text', types: ['text/plain'], size: 5000000 },
-      ]
+      const allowedFiles: AllowedFile[] = [{ label: 'Text', types: ['text/plain'], size: 5000000 }]
 
       const result = validateFileSizes(files, allowedFiles)
 
@@ -82,6 +85,112 @@ describe('files utility', () => {
         { file: file1, label: 'Text', maxSize: 5000000 },
         { file: file2, label: 'Image', maxSize: 5000000 },
       ])
+    })
+  })
+
+  describe('sanitizedContentType', () => {
+    it('returns the sanitized content type without parameters', () => {
+      const type = 'image/jpeg; charset=UTF-8'
+      const result = sanitizedContentType(type)
+      expect(result).toBe('image/jpeg')
+    })
+
+    it('returns the original content type if no parameters are present', () => {
+      const type = 'application/pdf'
+      const result = sanitizedContentType(type)
+      expect(result).toBe('application/pdf')
+    })
+
+    it('returns undefined when input is undefined', () => {
+      const result = sanitizedContentType(undefined)
+      expect(result).toBeUndefined()
+    })
+  })
+
+  describe('canPreviewFile', () => {
+    beforeEach(() => {
+      mockApplicationConfig({
+        'active_storage.content_types_allowed_inline': [
+          'image/webp',
+          'image/avif',
+          'image/png',
+          'image/gif',
+          'image/jpeg',
+          'image/tiff',
+          'image/bmp',
+          'image/vnd.adobe.photoshop',
+          'image/vnd.microsoft.icon',
+          'image/jpg',
+        ],
+      })
+    })
+
+    it('returns "image" for allowed image type', () => {
+      const type = 'image/png'
+      const result = canPreviewFile(type)
+      expect(result).toBe('image')
+    })
+
+    it('returns "calendar" for allowed calendar type', () => {
+      const type = 'text/calendar; charset=UTF-8'
+      const result = canPreviewFile(type)
+      expect(result).toBe('calendar')
+    })
+
+    it('returns false for disallowed file type', () => {
+      const type = 'application/octet-stream'
+      const result = canPreviewFile(type)
+      expect(result).toBe(false)
+    })
+  })
+
+  describe('allowedImageTypes', () => {
+    beforeEach(() => {
+      mockApplicationConfig({
+        'active_storage.content_types_allowed_inline': [
+          'image/webp',
+          'image/avif',
+          'image/png',
+          'image/gif',
+          'image/jpeg',
+          'image/tiff',
+          'image/bmp',
+          'image/vnd.adobe.photoshop',
+          'image/vnd.microsoft.icon',
+          'image/jpg',
+        ],
+      })
+    })
+
+    it.each(['image/png', 'image/jpg', 'image/jpeg', 'image/gif', 'image/webp'])(
+      'includes %s in the list',
+      (contentType) => {
+        const result = allowedImageTypes()
+        expect(result).toContain(contentType)
+      },
+    )
+
+    it('does not include non-inline types', () => {
+      mockApplicationConfig({
+        'active_storage.content_types_allowed_inline': [
+          'image/webp',
+          'image/png',
+          'image/jpeg',
+          'image/jpg',
+        ],
+      })
+
+      const result = allowedImageTypes()
+      expect(result).not.toContain('image/gif')
+    })
+
+    it('returns empty list if there are no configured inline types', () => {
+      mockApplicationConfig({
+        'active_storage.content_types_allowed_inline': [],
+      })
+
+      const result = allowedImageTypes()
+      expect(result).toHaveLength(0)
     })
   })
 })

@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { registerPWAHooks } from '#shared/utils/pwa.ts'
 
@@ -9,8 +9,7 @@ mountApp()
 
 // make sure the color of the address bar and iOS/Android header matches the theme
 const meta =
-  document.head.querySelector('meta[name="theme-color"]') ||
-  document.createElement('meta')
+  document.head.querySelector('meta[name="theme-color"]') || document.createElement('meta')
 
 meta.setAttribute('name', 'theme-color')
 meta.setAttribute('content', '#191919')

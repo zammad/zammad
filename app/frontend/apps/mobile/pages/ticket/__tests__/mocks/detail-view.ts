@@ -1,10 +1,7 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { initializeStore } from '#tests/support/components/initializeStore.ts'
-import {
-  mockGraphQLApi,
-  mockGraphQLSubscription,
-} from '#tests/support/mock-graphql-api.ts'
+import { mockGraphQLApi, mockGraphQLSubscription } from '#tests/support/mock-graphql-api.ts'
 import type { ExtendedIMockSubscription } from '#tests/support/mock-graphql-api.ts'
 import { setupView } from '#tests/support/mock-user.ts'
 import { nullableMock, waitUntil } from '#tests/support/utils.ts'
@@ -294,22 +291,16 @@ interface MockOptions {
 }
 
 export const mockTicketLiveUsersGql = () => {
-  const mockTicketLiveUsersSubscription = mockGraphQLSubscription(
-    TicketLiveUserUpdatesDocument,
-  )
+  const mockTicketLiveUsersSubscription = mockGraphQLSubscription(TicketLiveUserUpdatesDocument)
 
-  const mockTicketLiveUserUpsert = mockGraphQLApi(
-    TicketLiveUserUpsertDocument,
-  ).willResolve(
+  const mockTicketLiveUserUpsert = mockGraphQLApi(TicketLiveUserUpsertDocument).willResolve(
     nullableMock<TicketLiveUserUpsertPayload>({
       success: true,
       errors: null,
     }),
   )
 
-  const mockTicketLiveUserDelete = mockGraphQLApi(
-    TicketLiveUserDeleteDocument,
-  ).willResolve(
+  const mockTicketLiveUserDelete = mockGraphQLApi(TicketLiveUserDeleteDocument).willResolve(
     nullableMock<TicketLiveUserDeletePayload>({
       success: true,
       errors: null,
@@ -346,20 +337,18 @@ export const mockTicketDetailViewGql = (options: MockOptions = {}) => {
   setupView(ticketView)
 
   if (mockFrontendObjectAttributes) {
-    mockGraphQLApi(ObjectManagerFrontendAttributesDocument).willBehave(
-      ({ object }) => {
-        if (object === 'Ticket') {
-          return {
-            data: { objectManagerFrontendAttributes: ticketObjectAttributes() },
-          }
-        }
+    mockGraphQLApi(ObjectManagerFrontendAttributesDocument).willBehave(({ object }) => {
+      if (object === 'Ticket') {
         return {
-          data: {
-            objectManagerFrontendAttributes: ticketArticleObjectAttributes(),
-          },
+          data: { objectManagerFrontendAttributes: ticketObjectAttributes() },
         }
-      },
-    )
+      }
+      return {
+        data: {
+          objectManagerFrontendAttributes: ticketArticleObjectAttributes(),
+        },
+      }
+    })
     mockGraphQLApi(FormUpdaterDocument).willResolve({
       formUpdater: {
         fields: {
@@ -373,9 +362,7 @@ export const mockTicketDetailViewGql = (options: MockOptions = {}) => {
 
   const ticket = options.ticket || defaultTicket()
 
-  const mockApiTicket = mockGraphQLApi(
-    TicketWithMentionLimitDocument,
-  ).willResolve(ticket)
+  const mockApiTicket = mockGraphQLApi(TicketWithMentionLimitDocument).willResolve(ticket)
   const mockApiArticles = mockGraphQLApi(TicketArticlesDocument).willResolve(
     options.articles || defaultArticles(),
   )
@@ -386,14 +373,10 @@ export const mockTicketDetailViewGql = (options: MockOptions = {}) => {
     mockTicketSubscription = {} as ExtendedIMockSubscription
   }
 
-  const mockTicketArticleSubscription = mockGraphQLSubscription(
-    TicketArticleUpdatesDocument,
-  )
+  const mockTicketArticleSubscription = mockGraphQLSubscription(TicketArticleUpdatesDocument)
 
   const waitUntilTicketLoaded = async () => {
-    await waitUntil(
-      () => mockApiTicket.calls.resolve && mockApiArticles.calls.resolve,
-    )
+    await waitUntil(() => mockApiTicket.calls.resolve && mockApiArticles.calls.resolve)
   }
 
   const mockTicketLiveUser = mockTicketLiveUsersGql()

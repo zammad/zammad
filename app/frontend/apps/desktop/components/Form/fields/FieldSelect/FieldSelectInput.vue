@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import {
@@ -8,7 +8,7 @@ import {
   useWindowSize,
 } from '@vueuse/core'
 import { escapeRegExp } from 'lodash-es'
-import { useTemplateRef, computed, nextTick, ref, toRef, watch } from 'vue'
+import { useTemplateRef, computed, nextTick, onMounted, ref, toRef, watch } from 'vue'
 
 import type { SelectOption } from '#shared/components/CommonSelect/types.ts'
 import useValue from '#shared/components/Form/composables/useValue.ts'
@@ -33,8 +33,7 @@ const props = defineProps<Props>()
 
 const contextReactive = toRef(props, 'context')
 
-const { hasValue, valueContainer, currentValue, clearValue } =
-  useValue(contextReactive)
+const { hasValue, valueContainer, currentValue, clearValue } = useValue(contextReactive)
 
 const {
   sortedOptions,
@@ -60,16 +59,12 @@ const clearFilter = () => {
 
 watch(() => contextReactive.value.noFiltering, clearFilter)
 
-const deaccent = (s: string) =>
-  s.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+const deaccent = (s: string) => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
 
 const filteredOptions = computed(() => {
   // Trim and de-accent search keywords and compile them as a case-insensitive regex.
   //   Make sure to escape special regex characters!
-  const filterRegex = new RegExp(
-    escapeRegExp(deaccent(filter.value.trim())),
-    'i',
-  )
+  const filterRegex = new RegExp(escapeRegExp(deaccent(filter.value.trim())), 'i')
 
   return sortedOptions.value
     .map(
@@ -78,9 +73,7 @@ const filteredOptions = computed(() => {
           ...option,
 
           // Match options via their de-accented labels.
-          match: filterRegex.exec(
-            deaccent(option.label || String(option.value)),
-          ),
+          match: filterRegex.exec(deaccent(option.label || String(option.value))),
         }) as SelectOption,
     )
     .filter((option) => option.match)
@@ -113,6 +106,7 @@ const isBelowHalfScreen = computed(() => {
 
 const openSelectDropdown = () => {
   if (props.context.disabled) return
+  if (!inputElement.value) return
 
   selectInstance.value?.openDropdown(inputElementBounds, windowSize.height)
 
@@ -122,6 +116,10 @@ const openSelectDropdown = () => {
     else filterInputElement.value?.focus()
   })
 }
+
+onMounted(() => {
+  if (props.context.autoOpenDropdown) openSelectDropdown()
+})
 
 const openOrMoveFocusToDropdown = (lastOption = false) => {
   if (!selectInstance.value?.isOpen) {
@@ -143,10 +141,7 @@ const onCloseDropdown = () => {
 }
 
 const foldDropdown = (event: MouseEvent) => {
-  if (
-    (event?.target as HTMLElement).tagName !== 'INPUT' &&
-    selectInstance.value
-  ) {
+  if ((event?.target as HTMLElement)?.tagName !== 'INPUT' && selectInstance.value) {
     selectInstance.value.closeDropdown()
 
     return onCloseDropdown()
@@ -184,7 +179,7 @@ setupMissingOrDisabledOptionHandling()
 <template>
   <div
     ref="input"
-    class="flex h-auto min-h-10 hover:outline-1 hover:outline-offset-1 hover:outline-blue-600 has-[output:focus,input:focus]:outline-1 has-[output:focus,input:focus]:outline-offset-1 has-[output:focus,input:focus]:outline-blue-800 dark:hover:outline-blue-900 dark:has-[output:focus,input:focus]:outline-blue-800"
+    class="flex h-auto min-h-10 hover:outline-1 hover:-outline-offset-1 hover:outline-blue-600 has-[output:focus,input:focus]:outline-1 has-[output:focus,input:focus]:-outline-offset-1 has-[output:focus,input:focus]:outline-blue-800 dark:hover:outline-blue-900 dark:has-[output:focus,input:focus]:outline-blue-800"
     :class="[
       context.classes.input,
       {
@@ -222,7 +217,7 @@ setupMissingOrDisabledOptionHandling()
         aria-haspopup="menu"
         :aria-expanded="expanded"
         :name="context.node.name"
-        class="formkit-disabled:pointer-events-none flex grow items-center gap-2.5 px-2.5 py-2 text-black focus:outline-hidden dark:text-white"
+        class="flex grow items-center gap-2.5 px-2.5 py-2 text-black focus:outline-hidden dark:text-white formkit-disabled:pointer-events-none"
         :aria-labelledby="`label-${context.id}`"
         :aria-disabled="context.disabled"
         :data-multiple="context.multiple"
@@ -239,7 +234,12 @@ setupMissingOrDisabledOptionHandling()
       >
         <div
           v-if="hasValue && context.multiple"
-          class="flex flex-wrap gap-1.5"
+          class="select-scroll-shadows flex flex-wrap gap-1.5 overflow-y-auto outline-hidden"
+          :class="{
+            'select-scroll-shadows--base': !context.alternativeBackground,
+            'select-scroll-shadows--alt': context.alternativeBackground,
+            'max-w-1/2 shrink-0': expanded,
+          }"
           role="list"
         >
           <div
@@ -252,8 +252,7 @@ setupMissingOrDisabledOptionHandling()
               class="inline-flex items-center gap-1 rounded px-1.5 py-0.5 text-xs text-black dark:text-white"
               :class="{
                 'bg-white dark:bg-gray-200': !context.alternativeBackground,
-                'bg-neutral-100 dark:bg-gray-200':
-                  context.alternativeBackground,
+                'bg-neutral-100 dark:bg-gray-200': context.alternativeBackground,
               }"
             >
               <CommonIcon
@@ -264,31 +263,23 @@ setupMissingOrDisabledOptionHandling()
                 decorative
               />
               <span
-                class="line-clamp-3 break-words whitespace-pre-wrap"
-                :title="
-                  getSelectedOptionLabel(selectedValue) ||
-                  i18n.t('%s (unknown)', selectedValue)
+                v-tooltip="
+                  getSelectedOptionLabel(selectedValue) || i18n.t('%s (unknown)', selectedValue)
                 "
+                class="line-clamp-3 break-word"
               >
-                {{
-                  getSelectedOptionLabel(selectedValue) ||
-                  i18n.t('%s (unknown)', selectedValue)
-                }}
+                {{ getSelectedOptionLabel(selectedValue) || i18n.t('%s (unknown)', selectedValue) }}
               </span>
               <CommonIcon
-                :aria-label="i18n.t('Unselect Option')"
-                class="shrink-0 fill-stone-200 hover:fill-black focus:outline-hidden focus-visible:rounded-xs focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 dark:fill-neutral-500 dark:hover:fill-white"
+                :aria-label="i18n.t('Unselect option')"
+                class="shrink-0 fill-stone-200 hover:fill-black focus-visible:rounded-xs focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 dark:fill-neutral-500 dark:hover:fill-white"
                 name="x-lg"
                 size="xs"
                 role="button"
                 tabindex="0"
                 @click.stop="selectOption(getSelectedOption(selectedValue))"
-                @keypress.enter.prevent.stop="
-                  selectOption(getSelectedOption(selectedValue))
-                "
-                @keypress.space.prevent.stop="
-                  selectOption(getSelectedOption(selectedValue))
-                "
+                @keypress.enter.prevent.stop="selectOption(getSelectedOption(selectedValue))"
+                @keypress.space.prevent.stop="selectOption(getSelectedOption(selectedValue))"
               />
             </div>
           </div>
@@ -315,23 +306,19 @@ setupMissingOrDisabledOptionHandling()
               decorative
             />
             <span
-              class="line-clamp-3 break-words whitespace-pre-wrap"
-              :title="
-                getSelectedOptionLabel(currentValue) ||
-                i18n.t('%s (unknown)', currentValue)
+              v-tooltip="
+                getSelectedOptionLabel(currentValue) || i18n.t('%s (unknown)', currentValue)
               "
+              class="line-clamp-3 break-word"
             >
-              {{
-                getSelectedOptionLabel(currentValue) ||
-                i18n.t('%s (unknown)', currentValue)
-              }}
+              {{ getSelectedOptionLabel(currentValue) || i18n.t('%s (unknown)', currentValue) }}
             </span>
           </div>
         </div>
         <CommonIcon
           v-if="context.clearable && hasValue && !context.disabled"
-          :aria-label="i18n.t('Clear Selection')"
-          class="shrink-0 fill-stone-200 hover:fill-black focus:outline-hidden focus-visible:rounded-xs focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 dark:fill-neutral-500 dark:hover:fill-white"
+          :aria-label="i18n.t('Clear selection')"
+          class="shrink-0 fill-stone-200 hover:fill-black focus:outline-transparent focus-visible:rounded-xs focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 dark:fill-neutral-500 dark:hover:fill-white"
           name="x-lg"
           size="xs"
           role="button"

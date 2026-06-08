@@ -128,6 +128,11 @@ QUnit.test("htmlLastLineEmpty", assert => {
   source = $('<div><br><b>lala</b><br></div>')
   assert.equal(App.Utils.htmlLastLineEmpty(source), true)
 
+  // full-quote body: the body element contains the quote ending with <div><br></div>, not a plain <br>
+  // this means extra spacing must not be appended at the bottom when placing the signature at the top
+  source = $('<div><div><br><br></div><div><blockquote type="cite">content<br></blockquote></div><div><br></div></div>')
+  assert.equal(App.Utils.htmlLastLineEmpty(source), false)
+
 });
 
 // html2text
@@ -803,41 +808,6 @@ QUnit.test("quote", assert => {
 
 });
 
-// check signature
-QUnit.test("check signature", assert => {
-
-  var message   = "<div>test 123 </div>"
-  var signature = '<div>--<br>Some Signature<br>some department</div>'
-  var result    = App.Utils.signatureCheck(message, signature)
-  assert.equal(result, true)
-
-  message   = "<div>test 123 <div>--<br>Some Signature<br>some department\n</div></div>"
-  signature = '<div>--<br>Some Signature<br>some department</div>'
-  result    = App.Utils.signatureCheck(message, signature)
-  assert.equal(result, false)
-
-  message   = "<div>test 123 <div>--<br>Some Signature\n<br>some department\n</div></div>"
-  signature = '<div>--<br>Some Signature<br>some department</div>'
-  result    = App.Utils.signatureCheck(message, signature)
-  assert.equal(result, false)
-
-  message   = "<div>test 123 <div>--<p>Some Signature</p>\n<p><div>some department</div>\n</p>\n</div></div>"
-  signature = '<div>--<br>Some Signature<br>some department</div>'
-  result    = App.Utils.signatureCheck(message, signature)
-  assert.equal(result, false)
-
-  message   = ""
-  signature = '<div>--<br>Some Signature<br>some department</div>'
-  result    = App.Utils.signatureCheck(message, signature)
-  assert.equal(result, true)
-
-  message   = ""
-  signature = "--\nSome Signature\nsome department"
-  result    = App.Utils.signatureCheck(message, signature)
-  assert.equal(result, true)
-
-});
-
 QUnit.test('remove signature', assert => {
   var message = '<div>test 123 </div>'
   var should  = '<div>test 123 </div>'
@@ -872,6 +842,33 @@ QUnit.test('remove signature', assert => {
   var message = 'test 123<br><div data-signature="true" data-signature-id="1">Test Admin Agent<br>-----</div>'
   var should  = 'test 123'
   var result  = App.Utils.signatureRemoveByHtml(message)
+  assert.equal(result, should)
+
+  var message = 'test 123<br><div data-signature="true" data-signature-id="1">Test Admin Agent<br>-----</div>'
+  var should  = 'test 123<br><div data-signature-placeholder=\"true\"></div>'
+  var result  = App.Utils.signatureRemoveByHtml(message, true)
+  assert.equal(result, should)
+
+  var message = '<div data-signature-placeholder=\"true\"></div>test 123<div data-signature="true" data-signature-id="1">Test Admin Agent<br>-----</div>'
+  var should  = 'test 123<div data-signature-placeholder=\"true\"></div>'
+  var result  = App.Utils.signatureRemoveByHtml(message, true)
+  assert.equal(result, should)
+
+  var message = 'test 123<br><div data-signature="true" data-signature-id="1">Test Admin Agent<br>-----</div>test 256'
+  var should  = 'test 123<br><div data-signature-placeholder=\"true\"></div>test 256'
+  var result  = App.Utils.signatureRemoveByHtml(message, true)
+  assert.equal(result, should)
+
+  // signature inside a blockquote (full-quote reply scenario, issue #2319)
+  message = '<blockquote type="cite"><div>previous text</div><div data-signature="true" data-signature-id="1">Old Sig</div></blockquote>'
+  should  = '<blockquote type="cite"><div>previous text</div></blockquote>'
+  result  = App.Utils.signatureRemoveByHtml(message)
+  assert.equal(result, should)
+
+  // top-level signature plus quoted signature inside blockquote (replying to own email with full quote)
+  message = '<div>reply text</div><blockquote type="cite"><div>quoted</div><div data-signature="true" data-signature-id="1">Old Sig</div></blockquote><br><div data-signature="true" data-signature-id="2">My Sig</div>'
+  should  = '<div>reply text</div><blockquote type="cite"><div>quoted</div></blockquote>'
+  result  = App.Utils.signatureRemoveByHtml(message)
   assert.equal(result, should)
 })
 
@@ -1089,7 +1086,6 @@ QUnit.test("identify signature by plaintext", assert => {
   assert.equal(result, should)
 
 });
-
 
 QUnit.test("identify signature by HTML", assert => {
 
@@ -1578,6 +1574,18 @@ QUnit.test("check replace tags", assert => {
   verify = App.Utils.replaceTags(message, data, true)
   assert.equal(verify, result)
 
+  user = new App.User({
+    firstname: '<b>Bob</b>',
+    lastname: '<i>Smith</i>',
+  })
+  message = "<div>#{user.firstname} #{user.lastname.value}</div>"
+  result  = '<div>&lt;b&gt;Bob&lt;/b&gt; &lt;i&gt;Smith&lt;/i&gt;</div>'
+  data    = {
+    user: user
+  }
+  verify = App.Utils.replaceTags(message, data)
+  assert.equal(verify, result)
+
   var attribute_external_source = {
     name: 'external_data_source', display: 'external_data_source',  tag: 'autocompletion_ajax_external_data_source', null: true
   };
@@ -1728,8 +1736,8 @@ QUnit.test("check replace tags", assert => {
   assert.equal(verify, result)
 });
 
-// check attibute validation
-QUnit.test("check attibute validation", assert => {
+// check attribute validation
+QUnit.test("check attribute validation", assert => {
 
   var string = '123'
   var result = '123'

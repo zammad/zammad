@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -34,13 +34,12 @@ RSpec.describe Gql::Mutations::User::Current::TwoFactor::SetDefaultMethod, :aggr
     end
 
     it 'calls SetDefaultMethod service' do
-      allow(Service::User::TwoFactor::SetDefaultMethod).to receive(:new).and_call_original
-      expect_any_instance_of(Service::User::TwoFactor::SetDefaultMethod).to receive(:execute)
+      allow(Service::User::TwoFactor::SetDefaultMethod).to receive(:execute).and_call_original
 
       gql.execute(mutation, variables: variables)
 
       expect(Service::User::TwoFactor::SetDefaultMethod)
-        .to have_received(:new).with(user: user, method_name: 'authenticator_app')
+        .to have_received(:execute).with(method_name: 'authenticator_app', current_user: user)
     end
 
     context 'when given method exists' do

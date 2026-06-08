@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { useTemplateRef, type Ref } from 'vue'
@@ -19,6 +19,7 @@ interface Props {
 defineProps<Props>()
 
 defineEmits<{
+  visited: [OnlineNotification]
   seen: [OnlineNotification]
   remove: [OnlineNotification]
   'seen-all': []
@@ -26,9 +27,7 @@ defineEmits<{
 
 const sectionElement = useTemplateRef('section')
 
-const { reachedTop, isScrollable } = useElementScroll(
-  sectionElement as Ref<HTMLElement>,
-)
+const { reachedTop, isScrollable } = useElementScroll(sectionElement as Ref<HTMLElement>)
 </script>
 
 <template>
@@ -45,6 +44,7 @@ const { reachedTop, isScrollable } = useElementScroll(
       <NotificationList
         :class="{ 'ltr:pr-5 rtl:pl-5': isScrollable }"
         :list="notificationList"
+        @visited="$emit('visited', $event)"
         @seen="$emit('seen', $event)"
         @remove="$emit('remove', $event)"
       />

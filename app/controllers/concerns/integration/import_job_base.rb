@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Integration::ImportJobBase
   extend ActiveSupport::Concern
@@ -23,9 +23,9 @@ module Integration::ImportJobBase
 
   def job_start_create
     if !ImportJob.exists?(name: backend, finished_at: nil)
-      job = ImportJob.create(name: backend)
-      AsyncImportJob.perform_later(job)
+      ImportJob.create!(name: backend, start_after_creation: true)
     end
+
     render json: {
       result: 'ok',
     }
@@ -70,7 +70,7 @@ module Integration::ImportJobBase
     end
 
     if job
-      model_show_render_item(job)
+      model_item_render(job)
     else
       render json: {}
     end

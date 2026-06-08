@@ -72,7 +72,6 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
       {
         name: __('External data source field'),
         value: 'autocompletion_ajax_external_data_source',
-        filterCallback: -> App.Config.get('column_type_json_supported')
       },
     ]
 
@@ -81,15 +80,8 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
       options = _.filter(options, (option) -> option.value is params.data_type)
       attribute.disabled = true
 
-    # Filter out unsupported options by executing an optional callback.
-    filterOptions = (options) -> _.filter(options, (option) ->
-      return option.filterCallback() if typeof option.filterCallback is 'function'
-
-      true
-    )
-
     configureAttributes = [
-      { name: attribute.name, display: '', tag: 'select', null: false, options: options, translate: true, default: 'input', disabled: attribute.disabled, filter: filterOptions },
+      { name: attribute.name, display: '', tag: 'select', null: false, options: options, translate: true, default: 'input', disabled: attribute.disabled },
     ]
     dataType = new App.ControllerForm(
       el: item.find('.js-dataType')
@@ -509,6 +501,7 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
     newRow = element.find('.js-template').clone().removeClass('js-template')
     newRow.find('.js-key').attr('level', level)
     newRow.find('.js-key').val(child.name)
+    newRow.find('.js-active').prop('checked', !child.disabled)
     @setRowLevel(newRow, level)
     if level is 5
       newRow.find('.js-addChild').addClass('hide')

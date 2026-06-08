@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { renderComponent } from '#tests/support/components/index.ts'
 
@@ -11,6 +11,7 @@ describe('displaying ticket viewer dialog', () => {
     const view = renderComponent(TicketViewersDialog, {
       props: {
         name: 'ticket-viewers-dialog',
+        isAiAgentRunning: false,
         liveUsers: [
           {
             user: {
@@ -52,5 +53,25 @@ describe('displaying ticket viewer dialog', () => {
 
     expect(view.getByText('Viewing ticket')).toBeInTheDocument()
     expect(view.getByText('Opened in tabs')).toBeInTheDocument()
+  })
+
+  describe('Ai Agent', () => {
+    it('displays AI agent running', () => {
+      const view = renderComponent(TicketViewersDialog, {
+        props: {
+          name: 'ticket-viewers-dialog',
+          liveUsers: [],
+          isAiAgentRunning: true,
+        },
+        router: true,
+      })
+
+      expect(view.getByIconName('edit')).toHaveAttribute(
+        'aria-label',
+        'Currently processing this ticket…',
+      )
+
+      expect(view.getByLabelText('AI agent')).toBeInTheDocument()
+    })
   })
 })

@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
@@ -28,9 +28,7 @@ export const generateGraphqlMockId = (parent: any): string => {
   const newId = id + 1
   if (newId >= 100) {
     console.error(parent)
-    throw new Error(
-      `Detected a loop. Too many generated ids for ${typename} inside a single test.`,
-    )
+    throw new Error(`Detected a loop. Too many generated ids for ${typename} inside a single test.`)
   }
   generatedIds.set(typename, newId)
   return convertToGraphQLId(typename, newId)

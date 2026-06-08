@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { isEqual } from 'lodash-es'
 import { computed, ref, type Ref, watch } from 'vue'
@@ -27,13 +27,9 @@ export const useTicketExternalIssueTracker = (
       }),
       () => ({
         enabled:
-          screenType === TicketSidebarScreenType.TicketCreate
-            ? links.value.length > 0
-            : !!ticketId,
+          screenType === TicketSidebarScreenType.TicketCreate ? links.value.length > 0 : !!ticketId,
         fetchPolicy:
-          screenType === TicketSidebarScreenType.TicketCreate
-            ? 'cache-first'
-            : 'cache-and-network',
+          screenType === TicketSidebarScreenType.TicketCreate ? 'cache-first' : 'cache-and-network',
       }),
     ),
     {
@@ -41,7 +37,7 @@ export const useTicketExternalIssueTracker = (
     },
   )
 
-  const isLoading = issueTrackerQuery.loading()
+  const isLoadingIssues = issueTrackerQuery.loadingWithoutCachedResult()
 
   const queryResult = issueTrackerQuery.result()
 
@@ -61,17 +57,7 @@ export const useTicketExternalIssueTracker = (
       : null,
   )
 
-  const issueList = computed(
-    () => queryResult.value?.ticketExternalReferencesIssueTrackerItemList,
-  )
-
-  const isLoadingIssues = computed(() => {
-    // Return already true when a checklist result already exists from the cache, also
-    // when maybe a loading is in progress(because of cache + network).
-    if (issueList.value !== undefined) return false
-
-    return isLoading.value
-  })
+  const issueList = computed(() => queryResult.value?.ticketExternalReferencesIssueTrackerItemList)
 
   const issueListUrls = computed(() => {
     return issueList.value?.map((item) => item.url)

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Queries
   class ApplicationBuildChecksum < BaseQuery
@@ -7,9 +7,7 @@ module Gql::Queries
 
     type String, null: false
 
-    def self.authorize(...)
-      true # This query should be available for all (including unauthenticated) users.
-    end
+    allow_public_access!
 
     def resolve(...)
       # Use a stable identifier for the development environment, as we use hot reloading there instead.

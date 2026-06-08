@@ -1,0 +1,11 @@
+Thanks for getting back to me.
+
+From: John Doe <john@example.com>
+Date: December 3, 2024 at 10:15:00 AM EST
+To: Jane Smith <jane@example.com>
+Subject: Meeting Request
+
+Hi Jane,
+Can we schedule a meeting?
+Thanks,
+John

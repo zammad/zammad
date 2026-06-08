@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 /**
  * @fileoverview Detect unmarked translatable strings
@@ -9,11 +9,9 @@
 // Requirements
 //------------------------------------------------------------------------------
 
-/* eslint-disable @typescript-eslint/no-require-imports */
 const { RuleTester } = require('eslint')
 
 const rule = require('../../../lib/rules/zammad-detect-translatable-string.js')
-/* eslint-enable @typescript-eslint/no-require-imports */
 
 //------------------------------------------------------------------------------
 // Tests
@@ -48,7 +46,6 @@ ruleTester.run('zammad-detect-translatable-string', rule, {
     },
     {
       filename: 'test.ts',
-      // eslint-disable-next-line no-template-curly-in-string
       code: '"String with ${interpolation}..."', // Not fully correct, but a ``-template string does not seem to work.
     },
   ],
@@ -59,8 +56,7 @@ ruleTester.run('zammad-detect-translatable-string', rule, {
       code: `'String that should be translatable'`,
       errors: [
         {
-          message:
-            'This string looks like it should be marked as translatable via __(...)',
+          message: 'This string looks like it should be marked as translatable via __(...)',
         },
       ],
       output: `__('String that should be translatable')`,

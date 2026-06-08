@@ -5,17 +5,10 @@ query textModuleSuggestions(
   $customerId: ID
   $groupId: ID
 ) {
-  textModuleSuggestions(
-    query: $query
-    groupId: $groupId
-    ticketId: $ticketId
-    limit: $limit
-  ) {
+  textModuleSuggestions(query: $query, groupId: $groupId, ticketId: $ticketId, limit: $limit) {
     id
     name
     keywords
-    renderedContent(
-      templateRenderContext: { ticketId: $ticketId, customerId: $customerId }
-    )
+    renderedContent(templateRenderContext: { ticketId: $ticketId, customerId: $customerId })
   }
 }

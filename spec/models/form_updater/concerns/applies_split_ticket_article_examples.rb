@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 RSpec.shared_examples 'FormUpdater::AppliesSplitTicketArticle' do
   context 'when applying a splitting ticket article' do
@@ -120,7 +120,18 @@ RSpec.shared_examples 'FormUpdater::AppliesSplitTicketArticle' do
           expect { resolved_result.resolve[:fields] }.to raise_error(ActiveRecord::RecordNotFound)
         end
       end
-    end
 
+      context 'when title got changed' do
+        let(:meta) { { initial: false, form_id: SecureRandom.uuid, additional_data: } }
+
+        it 'does not override the title' do
+          expect(resolved_result.resolve[:fields].dig('title', 'value')).to be_nil
+        end
+
+        it 'does not override the body' do
+          expect(resolved_result.resolve[:fields].dig('body', 'value')).to be_nil
+        end
+      end
+    end
   end
 end

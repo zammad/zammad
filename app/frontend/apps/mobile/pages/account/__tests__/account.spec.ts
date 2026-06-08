@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { getTestRouter } from '#tests/support/components/renderComponent.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
@@ -44,11 +44,7 @@ describe('account page', () => {
   })
 
   it('can view my account page', async () => {
-    mockPermissions([
-      'user_preferences.avatar',
-      'user_preferences.language',
-      'admin',
-    ])
+    mockPermissions(['user_preferences.avatar', 'user_preferences.language', 'admin'])
 
     const languageApi = mockGraphQLApi(ProductAboutDocument).willResolve({
       productAbout: 'v1.0.0',
@@ -73,9 +69,7 @@ describe('account page', () => {
 
     const view = await visitView('/account')
 
-    const mutationUpdate = mockGraphQLApi(
-      UserCurrentLocaleDocument,
-    ).willResolve({
+    const mutationUpdate = mockGraphQLApi(UserCurrentLocaleDocument).willResolve({
       userCurrentLocale: { success: true, errors: null },
     })
     const translationsMock = mockGraphQLApi(TranslationsDocument).willResolve({
@@ -93,14 +87,12 @@ describe('account page', () => {
 
     expect(mutationUpdate.spies.resolve).toHaveBeenCalledTimes(1)
     expect(translationsMock.spies.resolve).toHaveBeenCalledTimes(1)
-    expect(
-      mutationUpdate.spies.resolve,
-      'updated locale on backend',
-    ).toHaveBeenCalledWith({ locale: 'ar' })
-    expect(
-      translationsMock.spies.resolve,
-      'updated translations',
-    ).toHaveBeenCalledWith(expect.objectContaining({ locale: 'ar' }))
+    expect(mutationUpdate.spies.resolve, 'updated locale on backend').toHaveBeenCalledWith({
+      locale: 'ar',
+    })
+    expect(translationsMock.spies.resolve, 'updated translations').toHaveBeenCalledWith(
+      expect.objectContaining({ locale: 'ar' }),
+    )
 
     await view.events.click(view.getByLabelText('Language'))
     await view.events.click(await view.findByText('Deutsch'))

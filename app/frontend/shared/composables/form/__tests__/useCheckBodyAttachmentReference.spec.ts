@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { i18n } from '#shared/i18n.ts'
 
@@ -15,18 +15,14 @@ describe('useCheckBodyAttachmentReference', () => {
     const { missingBodyAttachmentReference } = useCheckBodyAttachmentReference()
 
     expect(
-      missingBodyAttachmentReference('I attached a file.', [
-        { id: '123', name: 'filename.png' },
-      ]),
+      missingBodyAttachmentReference('I attached a file.', [{ id: '123', name: 'filename.png' }]),
     ).toBeFalsy()
   })
 
   it('not attachment reference in body', () => {
     const { missingBodyAttachmentReference } = useCheckBodyAttachmentReference()
 
-    expect(
-      missingBodyAttachmentReference('I worked on the problem.'),
-    ).toBeFalsy()
+    expect(missingBodyAttachmentReference('I worked on the problem.')).toBeFalsy()
   })
 
   it('ignore attachment match words in quoted body parts', () => {
@@ -50,16 +46,10 @@ describe('useCheckBodyAttachmentReference', () => {
   })
 
   it('ignore attachment match words when match word is not a single word', () => {
-    i18n.setTranslationMap(
-      new Map([['attachment,attached,enclosed,enclosure', 'Anlage']]),
-    )
+    i18n.setTranslationMap(new Map([['attachment,attached,enclosed,enclosure', 'Anlage']]))
 
     const { missingBodyAttachmentReference } = useCheckBodyAttachmentReference()
 
-    expect(
-      missingBodyAttachmentReference(
-        '<p>Siehe Screenshot der Telefonanlage</p>',
-      ),
-    ).toBeFalsy()
+    expect(missingBodyAttachmentReference('<p>Siehe Screenshot der Telefonanlage</p>')).toBeFalsy()
   })
 })

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -22,7 +22,7 @@ RSpec.describe 'Mobile > Favorite', app: :mobile, type: :system do
       expect(page).to have_text("My Assigned Tickets\nTest Overview")
 
       click_on 'Save'
-      expect(page).to have_text('Ticket Overview settings are saved.')
+      expect(page).to have_text('Ticket overview settings are saved.')
 
       expect_current_route('/')
       expect(page).to have_text("My Assigned Tickets\n0\nTest Overview")

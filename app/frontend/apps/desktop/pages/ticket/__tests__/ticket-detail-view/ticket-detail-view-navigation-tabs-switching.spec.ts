@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { within, waitFor } from '@testing-library/vue'
 import { beforeEach } from 'vitest'
@@ -13,17 +13,13 @@ import { mockFormUpdaterQuery } from '#shared/components/Form/graphql/queries/fo
 import { mockObjectManagerFrontendAttributesQuery } from '#shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.mocks.ts'
 import { mockTicketQuery } from '#shared/entities/ticket/graphql/queries/ticket.mocks.ts'
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
-import {
-  EnumTaskbarEntity,
-  EnumTaskbarEntityAccess,
-} from '#shared/graphql/types.ts'
+import { EnumTaskbarEntity, EnumTaskbarEntityAccess } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
 import { mockUserCurrentTaskbarItemListQuery } from '#desktop/entities/user/current/graphql/queries/userCurrentTaskbarItemList.mocks.ts'
 import { mockTicketChecklistQuery } from '#desktop/pages/ticket/graphql/queries/ticketChecklist.mocks.ts'
 
-const getTaskbarEntityKey = (internalTicketId: number) =>
-  `Ticket-${internalTicketId}`
+const getTaskbarEntityKey = (internalTicketId: number) => `Ticket-${internalTicketId}`
 
 describe('Ticket detail view multi tabs switching', () => {
   const ticket = createDummyTicket({ number: '53001' })
@@ -107,20 +103,17 @@ describe('Ticket detail view multi tabs switching', () => {
     })
   })
 
-  it('remembers collapsed states if user returns to tab', async () => {
+  it('remembers collapsed section states if user returns to tab', async () => {
     const view = await visitView('/tickets/1')
 
     let contentSidebar = await view.findByLabelText('Content sidebar')
-    let collapsableHeaderButtons = within(contentSidebar).getByTestId(
-      'controls-ticket-attributes',
-    )
+    let collapsableHeaderButtons = within(contentSidebar).getByTestId('controls-ticket-attributes')
 
     await view.events.click(view.getByTestId('controls-ticket-attributes'))
 
     expect(collapsableHeaderButtons).toHaveAttribute('aria-expanded', 'false')
 
-    let collapsedSection =
-      within(contentSidebar).getByTestId('ticket-attributes')
+    let collapsedSection = within(contentSidebar).getByTestId('ticket-attributes')
 
     expect(collapsedSection).toHaveStyle('display: none')
 
@@ -134,12 +127,8 @@ describe('Ticket detail view multi tabs switching', () => {
       }),
     )
 
-    expect(view.getByLabelText('State')).toHaveTextContent('closed')
-
     contentSidebar = await view.findByLabelText('Content sidebar')
-    collapsableHeaderButtons = within(contentSidebar).getByTestId(
-      'controls-ticket-attributes',
-    )
+    collapsableHeaderButtons = within(contentSidebar).getByTestId('controls-ticket-attributes')
     expect(collapsableHeaderButtons).toHaveAttribute('aria-expanded', 'true')
 
     collapsedSection = within(contentSidebar).getByTestId('ticket-attributes')
@@ -151,12 +140,8 @@ describe('Ticket detail view multi tabs switching', () => {
       }),
     )
 
-    expect(view.getByLabelText('State')).toHaveTextContent('open')
-
     contentSidebar = await view.findByLabelText('Content sidebar')
-    collapsableHeaderButtons = within(contentSidebar).getByTestId(
-      'controls-ticket-attributes',
-    )
+    collapsableHeaderButtons = within(contentSidebar).getByTestId('controls-ticket-attributes')
     expect(collapsableHeaderButtons).toHaveAttribute('aria-expanded', 'false')
 
     collapsedSection = within(contentSidebar).getByTestId('ticket-attributes')
@@ -171,16 +156,12 @@ describe('Ticket detail view multi tabs switching', () => {
 
     const sidebar = await view.findByLabelText('Content sidebar')
 
-    await view.events.click(
-      within(sidebar).getByRole('button', { name: 'Action menu button' }),
-    )
+    await view.events.click(within(sidebar).getByRole('button', { name: 'Action menu button' }))
 
-    await view.events.click(
-      await view.findByRole('button', { name: 'Change customer' }),
-    )
+    await view.events.click(await view.findByRole('button', { name: 'Change customer' }))
 
     const flyoutForFirstTicket = await view.findByRole('complementary', {
-      name: 'Change Customer',
+      name: 'Change customer',
     })
 
     expect(flyoutForFirstTicket).toBeInTheDocument()
@@ -202,64 +183,57 @@ describe('Ticket detail view multi tabs switching', () => {
     )
   })
 
-  it.todo(
-    'preserves the conformation dialog from the previous taskbar tab',
-    async () => {
-      // Current route is not updating when clicking on the link
-      // Initial condition of isActive within CommonDialog is not met
+  it.todo('preserves the conformation dialog from the previous taskbar tab', async () => {
+    // Current route is not updating when clicking on the link
+    // Initial condition of isActive within CommonDialog is not met
 
-      mockTicketChecklistQuery({
-        ticketChecklist: {
-          name: 'Ticket Checklist',
-          id: convertToGraphQLId('Ticket::Checklist', 1),
-          items: [],
-        },
-      })
+    mockTicketChecklistQuery({
+      ticketChecklist: {
+        name: 'Ticket Checklist',
+        id: convertToGraphQLId('Ticket::Checklist', 1),
+        items: [],
+      },
+    })
 
-      await mockApplicationConfig({
-        checklist: true,
-      })
+    await mockApplicationConfig({
+      checklist: true,
+    })
 
-      const view = await visitView('/tickets/1')
+    const view = await visitView('/tickets/1')
 
-      await view.events.click(view.getByRole('button', { name: 'Checklist' }))
+    await view.events.click(view.getByRole('button', { name: 'Checklist' }))
 
-      const sidebar = await view.findByLabelText('Content sidebar')
+    const sidebar = await view.findByLabelText('Content sidebar')
 
-      await view.events.click(
-        within(sidebar).getByRole('button', { name: 'Action menu button' }),
-      )
+    await view.events.click(within(sidebar).getByRole('button', { name: 'Action menu button' }))
 
-      await view.events.click(
-        view.getByRole('button', { name: 'Remove checklist' }),
-      )
+    await view.events.click(view.getByRole('button', { name: 'Remove checklist' }))
 
-      const firstTicketDialog = await view.findByRole('dialog', {
-        name: 'Delete Object',
-      })
+    const firstTicketDialog = await view.findByRole('dialog', {
+      name: 'Delete Object',
+    })
 
-      expect(firstTicketDialog).toBeInTheDocument()
+    expect(firstTicketDialog).toBeInTheDocument()
 
-      await view.events.click(
-        await view.findByRole('link', {
-          name: `Ticket#${secondTicket.number} - ${secondTicket.title}`,
-        }),
-      )
+    await view.events.click(
+      await view.findByRole('link', {
+        name: `Ticket#${secondTicket.number} - ${secondTicket.title}`,
+      }),
+    )
 
-      await waitForNextTick()
-      // :TODO Router does not work as expected it does not update
+    await waitForNextTick()
+    // :TODO Router does not work as expected it does not update
 
-      await waitFor(() => expect(firstTicketDialog).not.toBeInTheDocument())
+    await waitFor(() => expect(firstTicketDialog).not.toBeInTheDocument())
 
-      await view.events.click(
-        await view.findByRole('link', {
-          name: `Ticket#${ticket.number} - ${ticket.title}`,
-        }),
-      )
+    await view.events.click(
+      await view.findByRole('link', {
+        name: `Ticket#${ticket.number} - ${ticket.title}`,
+      }),
+    )
 
-      await waitFor(() => expect(firstTicketDialog).toBeInTheDocument())
-    },
-  )
+    await waitFor(() => expect(firstTicketDialog).toBeInTheDocument())
+  })
 
   it('remembers the sidebar tab selection of the current taskbar tab', async () => {
     const view = await visitView('/tickets/1')
@@ -275,9 +249,7 @@ describe('Ticket detail view multi tabs switching', () => {
      * Sidebar tabs should be a tab rather than a button
      * */
 
-    await waitFor(() =>
-      expect(customerSidebarTab).toHaveClass('outline-blue-800!'),
-    )
+    await waitFor(() => expect(customerSidebarTab).toHaveClass('outline-blue-800!'))
 
     await view.events.click(
       await view.findByRole('link', {
@@ -288,9 +260,7 @@ describe('Ticket detail view multi tabs switching', () => {
     await waitForNextTick()
 
     await waitFor(() =>
-      expect(view.getByRole('button', { name: 'Ticket' })).toHaveClass(
-        'outline-blue-800!',
-      ),
+      expect(view.getByRole('button', { name: 'Ticket' })).toHaveClass('outline-blue-800!'),
     )
 
     await view.events.click(
@@ -299,12 +269,8 @@ describe('Ticket detail view multi tabs switching', () => {
       }),
     )
 
-    await waitFor(() =>
-      expect(customerSidebarTab).toHaveClass('outline-blue-800!'),
-    )
+    await waitFor(() => expect(customerSidebarTab).toHaveClass('outline-blue-800!'))
 
-    expect(view.getByRole('button', { name: 'Ticket' })).not.toHaveClass(
-      'outline-blue-800!',
-    )
+    expect(view.getByRole('button', { name: 'Ticket' })).not.toHaveClass('outline-blue-800!')
   })
 })

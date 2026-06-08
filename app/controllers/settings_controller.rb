@@ -1,17 +1,14 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class SettingsController < ApplicationController
   prepend_before_action :authenticate_and_authorize!
 
   # GET /settings
   def index
-    list = []
-    Setting.all.each do |setting|
-      next if !authorized?(setting, :show?)
+    list        = Setting.all.filter { |elem| authorized?(elem, :show?) }
+    masked_list = list.map { |object| mask_sensitive_values(object.as_json, object) }
 
-      list.push setting
-    end
-    render json: list, status: :ok
+    render json: masked_list, status: :ok
   end
 
   # GET /settings/1
@@ -100,5 +97,27 @@ class SettingsController < ApplicationController
       params[:preferences].merge!(setting.preferences)
     end
     params
+  end
+
+  # Setting hash value keys matching those partterns are sanitized.
+  # Checks inclusion of the substring in the key.
+  SENSITIVE_STATE_KEYS = %w[_key token secret bind_pw].freeze
+
+  # Settings with matching names are sanitized as a whole
+  # This is applied to non-boolean settings only!
+  # Used for single-value settings that can't be sanitized based on value hash keys.
+  # Checks inclusion of the substring in the name
+  SENSITIVE_NAMES      = %w[_password _secret _key].freeze
+
+  def sensitive_attributes(object_payload, object)
+    return if object.options[:form].try(:one?) && object.options[:form].one? { |elem| elem[:tag] == 'boolean' }
+
+    if SENSITIVE_NAMES.any? { |elem| object.name.include?(elem) }
+      return ['state_current.value']
+    end
+
+    (object_payload.dig('state_current', 'value').try(:keys) || [])
+      .select { |elem| elem.end_with?(*SENSITIVE_STATE_KEYS) }
+      .map    { |elem| "state_current.value.#{elem}" }
   end
 end

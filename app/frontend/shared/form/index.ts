@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { createThemePlugin } from '@formkit/themes'
 import { plugin as formPlugin, bindings as bindingsPlugin } from '@formkit/vue'
@@ -9,10 +9,7 @@ import type {
   FormDecoratorIcons,
   FormFieldTypeImportModules,
 } from '#shared/types/form.ts'
-import type {
-  ImportGlobEagerOutput,
-  ImportGlobEagerDefault,
-} from '#shared/types/utils.ts'
+import type { ImportGlobEagerOutput, ImportGlobEagerDefault } from '#shared/types/utils.ts'
 
 import createCustomIcons from './core/createCustomIcons.ts'
 import createFieldPlugin from './core/createFieldPlugin.ts'
@@ -23,17 +20,13 @@ import createValidationPlugin from './core/createValidationPlugin.ts'
 import type { FormKitConfig, FormKitPlugin } from '@formkit/core'
 import type { App } from 'vue'
 
-export const getFormPlugins = (
-  modules: ImportGlobEagerOutput<FormKitPlugin>,
-): FormKitPlugin[] => {
+export const getFormPlugins = (modules: ImportGlobEagerOutput<FormKitPlugin>): FormKitPlugin[] => {
   const plugins: Array<FormKitPlugin> = []
 
-  Object.values(modules).forEach(
-    (module: ImportGlobEagerDefault<FormKitPlugin>) => {
-      const plugin = module.default
-      plugins.push(plugin)
-    },
-  )
+  Object.values(modules).forEach((module: ImportGlobEagerDefault<FormKitPlugin>) => {
+    const plugin = module.default
+    plugins.push(plugin)
+  })
 
   return plugins
 }
@@ -65,8 +58,7 @@ export const buildFormKitPluginConfig = (
       createThemePlugin(
         undefined,
         {
-          checkboxDecorator:
-            appSpecificDecoratorIcons.checkboxDecorator || checkIcon,
+          checkboxDecorator: appSpecificDecoratorIcons.checkboxDecorator || checkIcon,
           radioDecorator: appSpecificDecoratorIcons.radioDecorator || checkIcon,
           ...customIcons,
         },

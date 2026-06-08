@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { useArticleSecurity } from '#shared/composables/useArticleSecurity.ts'
 
@@ -9,6 +9,7 @@ export default <ChannelModule>{
   name: 'email',
   icon: 'mail',
   label: __('Email'),
+  metaLabel: __('email'),
   additionalFields: [
     { name: 'subject', order: 350, label: __('Subject') },
     {

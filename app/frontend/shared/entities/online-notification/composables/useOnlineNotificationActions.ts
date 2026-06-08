@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { cloneDeep } from 'lodash-es'
 
@@ -21,8 +21,7 @@ export const useOnlineNotificationActions = () => {
     const queryOptions = {
       query: OnlineNotificationsDocument,
     }
-    const existingQueryCache =
-      cache.readQuery<OnlineNotificationsQuery>(queryOptions)
+    const existingQueryCache = cache.readQuery<OnlineNotificationsQuery>(queryOptions)
 
     if (!existingQueryCache?.onlineNotifications) return null
 
@@ -42,9 +41,7 @@ export const useOnlineNotificationActions = () => {
       ...queryOptions,
       data: {
         onlineNotifications: {
-          edges: existingQueryCache.onlineNotifications.edges.filter(
-            (edge) => edge.node.id !== id,
-          ),
+          edges: existingQueryCache.onlineNotifications.edges.filter((edge) => edge.node.id !== id),
           pageInfo: existingQueryCache.onlineNotifications.pageInfo,
         },
       },
@@ -102,7 +99,10 @@ export const useOnlineNotificationActions = () => {
     const clonedQueryCache = cloneDeep(existingQueryCache)
 
     clonedQueryCache.onlineNotifications.edges.forEach(({ node }) => {
-      if ((node.metaObject as OnlineNotification['metaObject'])?.id === id) {
+      if (
+        (node.metaObject as OnlineNotification['metaObject'])?.id === id ||
+        (node as OnlineNotification)?.id === id
+      ) {
         node.seen = true
       }
     })
@@ -124,41 +124,27 @@ export const useOnlineNotificationActions = () => {
     }
   }
 
-  const seenNotificationMutation = new MutationHandler(
-    useOnlineNotificationSeenMutation(),
-    {
-      errorNotificationMessage: __(
-        'The online notification could not be marked as seen.',
-      ),
-    },
-  )
+  const seenNotificationMutation = new MutationHandler(useOnlineNotificationSeenMutation(), {
+    errorNotificationMessage: __('The online notification could not be marked as seen.'),
+  })
 
   const seenNotification = async (id: Scalars['ID']['output']) => {
     const revertCache = updateSeenNotificationCache(id)
 
-    return seenNotificationMutation
-      .send({ objectId: id })
-      .catch(() => revertCache)
+    return seenNotificationMutation.send({ objectId: id }).catch(() => revertCache)
   }
 
-  const markAllSeenMutation = new MutationHandler(
-    useOnlineNotificationMarkAllAsSeenMutation(),
-    {
-      errorNotificationMessage: __('Cannot set online notifications as seen'),
-    },
-  )
+  const markAllSeenMutation = new MutationHandler(useOnlineNotificationMarkAllAsSeenMutation(), {
+    errorNotificationMessage: __('Cannot set online notifications as seen'),
+  })
 
   const markAllRead = async (ids: Scalars['ID']['output'][]) => {
     const revertCache = updateAllSeenNotificationCache(ids)
 
-    return markAllSeenMutation
-      .send({ onlineNotificationIds: ids })
-      .catch(() => revertCache)
+    return markAllSeenMutation.send({ onlineNotificationIds: ids }).catch(() => revertCache)
   }
 
-  const deleteNotificationMutation = new MutationHandler(
-    useOnlineNotificationDeleteMutation(),
-  )
+  const deleteNotificationMutation = new MutationHandler(useOnlineNotificationDeleteMutation())
 
   const deleteNotification = async (id: Scalars['ID']['output']) => {
     const revertCache = removeNotificationCacheUpdate(id)

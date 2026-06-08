@@ -1,0 +1,61 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": [
+    "typescript",
+    "import",
+    "unicorn",
+    "promise",
+    "vitest",
+    "oxc"
+  ],
+  "categories": {
+    "correctness": "error",
+    "perf": "error"
+  },
+  "rules": {
+    "import/no-cycle": "error",
+    "import/no-unassigned-import": "off",
+    "jest/expect-expect": "off",
+    "jest/no-conditional-expect": "off",
+    "jest/no-export": "off",
+    "jest/no-standalone-expect": "off",
+    "jest/valid-expect": "off",
+    "no-empty-object-type": "error",
+    "no-irregular-whitespace": "error",
+    "no-use-before-define": "error",
+    "promise/no-callback-in-promise": "off",
+    "typescript/no-explicit-any": "error",
+    "unicorn/no-thenable": "off",
+    "vitest/expect-expect": "off",
+    "vitest/no-conditional-expect": "off",
+    "vitest/no-standalone-expect": "off",
+    "vitest/require-mock-type-parameters": "off",
+    "vitest/valid-expect": "off",
+    "vitest/warn-todo": "warn"
+  },
+  "overrides": [
+    {
+      "files": [
+        "app/frontend/tests/**",
+        "app/frontend/**/__tests__/**",
+        "app/frontend/**/*.spec.*",
+        "app/frontend/cypress/**"
+      ],
+      "rules": {
+        "typescript/no-explicit-any": "off"
+      }
+    }
+  ],
+  "settings": {},
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "globals": {},
+  "ignorePatterns": [
+    "app/frontend/**/graphql/**/*.ts",
+    "!app/frontend/tests/graphql/**/*.ts",
+    "app/frontend/shared/graphql/types.ts",
+    "app/frontend/shared/types/config.ts"
+  ]
+}

@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 <script setup lang="ts">
 import { markRaw } from 'vue'
 
@@ -12,6 +12,7 @@ import FieldOrganizationOptionIcon from './FieldOrganizationOptionIcon.vue'
 
 const props = defineProps<AutocompleteOrganizationProps>()
 
+// eslint-disable-next-line vue/no-mutating-props
 Object.assign(props.context, {
   optionIconComponent: markRaw(FieldOrganizationOptionIcon),
   initialOptionBuilder: useFormFieldOrganizationInitialOptionBuilder(),

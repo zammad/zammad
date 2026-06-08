@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Types::Enum
   class AppMaintenanceTypeType < BaseEnum
@@ -8,5 +8,6 @@ module Gql::Types::Enum
     value AppVersion::MSG_RESTART_MANUAL, 'App needs a restart.'
     value AppVersion::MSG_RESTART_AUTO, 'App is restarting.'
     value AppVersion::MSG_CONFIG_CHANGED, 'The app configuration has changed.'
+    value AppVersion::MSG_FORCE_REFRESH, 'Force browsers to refresh.'
   end
 end

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Service::System::SetSystemInformation < Service::Base
   # Setup basic system settigns
@@ -14,8 +14,6 @@ class Service::System::SetSystemInformation < Service::Base
   attr_reader :new_setting_data
 
   def initialize(data:)
-    super()
-
     @new_settings = parse_data(data)
   end
 

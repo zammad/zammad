@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class User
   module Avatar
@@ -34,7 +34,7 @@ class User
       return if changes['image'].blank?
       return if ::Avatar.exists?(store_hash: image)
 
-      raise Exceptions::UnprocessableEntity, "Invalid Store reference '#{image}' in 'image' attribute."
+      raise Exceptions::UnprocessableContent, "Invalid Store reference '#{image}' in 'image' attribute."
     end
 
     def valid_email_for_avatar?

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 CoreWorkflow.create_if_not_exists(
   name:            'base - hide pending time on non pending states',
@@ -146,6 +146,26 @@ CoreWorkflow.create_if_not_exists(
   perform:         {
     'custom.module': {
       execute: ['CoreWorkflow::Custom::AdminGroupParentId']
+    },
+  },
+  changeable:      false,
+  created_by_id:   1,
+  updated_by_id:   1,
+)
+CoreWorkflow.create_if_not_exists(
+  name:            'base - show summary generation',
+  object:          'Group',
+  condition_saved: {
+    'custom.module': {
+      operator: 'match all modules',
+      value:    [
+        'CoreWorkflow::Custom::AdminGroupSummaryGeneration',
+      ],
+    },
+  },
+  perform:         {
+    'custom.module': {
+      execute: ['CoreWorkflow::Custom::AdminGroupSummaryGeneration']
     },
   },
   changeable:      false,

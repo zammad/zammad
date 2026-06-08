@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Channel::Driver::MicrosoftGraphOutbound < Channel::Driver::BaseEmailOutbound
 
@@ -7,9 +7,20 @@ class Channel::Driver::MicrosoftGraphOutbound < Channel::Driver::BaseEmailOutbou
     # return if we run import mode
     return if Setting.get('import_mode')
 
-    attr = prepare_message_attrs(attr)
+    attr = prepare_message_attrs(attr, notification)
 
     deliver_mail(attr, notification, MicrosoftGraphOutboundClient, options)
+  end
+
+  private
+
+  def server_identifier(_)
+    'Microsoft Graph API' # rubocop:disable Zammad/DetectTranslatableString
+  end
+
+  # Microsoft Graph API shall not be used for sending notifications
+  def deliver_mail_notification_silence?(_e, _mail)
+    false
   end
 
   class MicrosoftGraphOutboundClient

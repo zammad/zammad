@@ -16,7 +16,19 @@ class App.MobileDetection
     target = '/mobile'
 
     if window.location.hash
-      target += "/#{window.location.hash}"
+      hash = window.location.hash.slice(1)
+
+      if hash and hash isnt '/'
+        if App.Session.get('id')
+          # Authenticated user: preserve hash for the mobile app's redirectGuard to handle.
+          target += "/#{window.location.hash}"
+        else
+          # Unauthenticated user: redirect directly to the mobile login page with the
+          # intended destination as a redirect parameter. This ensures the redirect
+          # survives the SSO authentication flow, since the legacy router may overwrite
+          # a hash-based URL before the browser completes the navigation.
+          redirectPath = encodeURIComponent("/#{hash}")
+          target = "/mobile/login?redirect=#{redirectPath}"
 
     window.location.href = target
 

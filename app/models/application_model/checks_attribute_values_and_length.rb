@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module ApplicationModel::ChecksAttributeValuesAndLength
   extend ActiveSupport::Concern
@@ -31,30 +31,22 @@ module ApplicationModel::ChecksAttributeValuesAndLength
       next if value.blank? || self[name].frozen?
 
       # strip null byte chars (postgresql will complain about it)
-      if column.type == :text && Rails.application.config.db_null_byte == false
-        self[name].delete!("\u0000")
+      if column.type == :text
+        self[name] = self[name].delete("\u0000")
       end
 
       # for varchar check length and replace null bytes
       limit = column.limit
-      if limit
-        current_length = value.length
-        if limit < current_length
-          logger.warn "WARNING: cut string because of database length #{self.class}.#{name}(#{limit} but is #{current_length}:#{value})"
-          self[name] = value[0, limit]
-        end
+      next if !limit
 
-        # strip null byte chars (postgresql will complain about it)
-        if Rails.application.config.db_null_byte == false
-          self[name].delete!("\u0000")
-        end
+      current_length = value.length
+      if limit < current_length
+        logger.warn "WARNING: cut string because of database length #{self.class}.#{name}(#{limit} but is #{current_length}:#{value})"
+        self[name] = value[0, limit]
       end
 
-      # strip 4 bytes utf8 chars if needed (mysql/mariadb will complain it)
-      next if self[name].blank?
-      next if column.type == :binary
-
-      self[name] = self[name].utf8_to_3bytesutf8
+      # strip null byte chars (postgresql will complain about it)
+      self[name] = self[name].delete("\u0000")
     end
     true
   end

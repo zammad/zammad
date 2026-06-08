@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Service::GeoIp::Zammad
   def self.location(address)
@@ -19,11 +19,8 @@ class Service::GeoIp::Zammad
         "#{host}#{url}",
         {},
         {
-          json:          true,
-          open_timeout:  2,
-          read_timeout:  4,
-          total_timeout: 4,
-          verify_ssl:    true,
+          json:       true,
+          verify_ssl: true,
         },
       )
       if !response.success? && response.code.to_s !~ %r{^40.$}

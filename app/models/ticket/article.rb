@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Ticket::Article < ApplicationModel
   include HasDefaultModelUserRelations
@@ -13,11 +13,11 @@ class Ticket::Article < ApplicationModel
   include HasObjectManagerAttributes
 
   include Ticket::Article::Assets
+  include Ticket::Article::PreserveContextAfterTransaction
   include Ticket::Article::EnqueueCommunicateEmailJob
   include Ticket::Article::EnqueueCommunicateFacebookJob
   include Ticket::Article::EnqueueCommunicateSmsJob
   include Ticket::Article::EnqueueCommunicateTelegramJob
-  include Ticket::Article::EnqueueCommunicateTwitterJob
   include Ticket::Article::EnqueueCommunicateWhatsappJob
   include Ticket::Article::HasTicketContactAttributesImpact
   include Ticket::Article::ResetsTicketState
@@ -30,12 +30,15 @@ class Ticket::Article < ApplicationModel
   include Ticket::Article::AddsMetadataWhatsapp
 
   include HasTransactionDispatcher
+  include CanLookupSearchIndexAttributesWithAttachments
 
   belongs_to :ticket, optional: true
   has_one    :ticket_time_accounting, class_name: 'Ticket::TimeAccounting', foreign_key: :ticket_article_id, dependent: :destroy, inverse_of: :ticket_article
   belongs_to :type,       class_name: 'Ticket::Article::Type', optional: true
   belongs_to :sender,     class_name: 'Ticket::Article::Sender', optional: true
   belongs_to :origin_by,  class_name: 'User', optional: true
+
+  has_many :ai_stored_results, class_name: 'AI::StoredResult', as: :related_object, dependent: :destroy
 
   before_validation :detect_language, on: :create
   before_validation :check_mentions, on: :create
@@ -69,11 +72,14 @@ class Ticket::Article < ApplicationModel
                              :to,
                              :cc
 
-  scope :summarizable, lambda {
+  scope :without_system_notifications, lambda {
     system_sender = Ticket::Article::Sender.lookup(name: 'System')
+    note_type = Ticket::Article::Type.lookup(name: 'note')
 
-    where.not(sender_id: system_sender.id)
+    where('sender_id != ? OR type_id = ?', system_sender.id, note_type.id)
   }
+
+  scope :non_system, -> { where.not(sender: Ticket::Article::Sender.lookup(name: 'System')) }
 
   attr_accessor :should_clone_inline_attachments, :check_mentions_raises_error, :check_email_recipient_raises_error
 
@@ -92,48 +98,46 @@ class Ticket::Article < ApplicationModel
     self.detected_language = LanguageDetectionHelper.detect(body.html2text)
   end
 
-=begin
-
-insert inline image urls to body
-
-  article_attributes = Ticket::Article.insert_urls(article_attributes)
-
-returns
-
-  article_attributes_with_body_and_urls
-
-=end
-
+  # Replaces cid: references to images in HTML articles.
+  # Returns the modified body and the remaining attachments (without inline attachments ).
+  # If the article does not need modification, the original body and attachments are returned.
+  #
+  # @param article [Ticket::Article] the article for which to replace the URLs
+  # @return [Array(String, Array<Attachment>)] the modified body and the remaining attachments
+  #
+  # Example usage:
+  # body, attachments = Ticket::Article.insert_urls(article)
   def self.insert_urls(article)
-    return article if article['attachments'].blank?
-    return article if !article['content_type'].match?(%r{text/html}i)
-    return article if article['body'] !~ %r{<img}i
+    if article.attachments.blank? ||
+       !article.content_type.match?(%r{text/html}i) ||
+       article.body !~ %r{<img}i
+      return [article.body, article.attachments]
+    end
 
     inline_attachments = {}
-    article['body'].gsub!(%r{(<img[[:space:]](|.+?)src=")cid:(.+?)"(|.+?)>}im) do |item|
+
+    new_body = article.body.gsub(%r{(<img[[:space:]](|.+?)src=")cid:(.+?)"(|.+?)>}im) do |item|
       tag_start = $1
       cid = $3
       tag_end = $4
       replace = item
 
-      # look for attachment
-      article['attachments'].each do |file|
-        next if !file[:preferences] || !file[:preferences]['Content-ID'] || (file[:preferences]['Content-ID'] != cid && file[:preferences]['Content-ID'] != "<#{cid}>")
-
-        replace = "#{tag_start}/api/v1/ticket_attachment/#{article['ticket_id']}/#{article['id']}/#{file[:id]}?view=inline\"#{tag_end}>"
-        inline_attachments[file[:id]] = true
-        break
+      file = article.attachments.find do |file|
+        content_id = file.preferences['Content-ID']
+        content_id == cid || content_id == "<#{cid}>"
       end
+
+      if file
+        replace = "#{tag_start}/api/v1/ticket_attachment/#{article.ticket_id}/#{article.id}/#{file.id}?view=inline\"#{tag_end}>"
+        inline_attachments[file.id] = true
+      end
+
       replace
     end
-    new_attachments = []
-    article['attachments'].each do |file|
-      next if inline_attachments[file[:id]]
 
-      new_attachments.push file
-    end
-    article['attachments'] = new_attachments
-    article
+    new_attachments = article.attachments.reject { inline_attachments[it.id] }
+
+    [new_body, new_attachments]
   end
 
 =begin
@@ -187,6 +191,10 @@ The originator (origin_by, if any) or the creator of an article.
     origin_by || created_by
   end
 
+  def author_id
+    origin_by_id || created_by_id
+  end
+
 =begin
 
 get body as html
@@ -212,11 +220,11 @@ get body as text
 
 =end
 
-  def body_as_text
+  def body_as_text(link_style: :numbered)
     return '' if !body
     return body if content_type.blank? || content_type =~ %r{text/plain}i
 
-    body.html2text
+    body.html2text(link_style:)
   end
 
 =begin
@@ -246,13 +254,9 @@ returns:
 =end
 
   def as_raw
-    list = Store.list(
-      object: 'Ticket::Article::Mail',
-      o_id:   id,
-    )
-    return if list.blank?
-
-    list[0]
+    Store
+      .list(object: 'Ticket::Article::Mail', o_id: id)
+      .first
   end
 
 =begin
@@ -301,9 +305,13 @@ returns
 
   def attributes_with_association_names(empty_keys: false)
     attributes = super
-    add_attachments_to_attributes(attributes)
     add_time_unit_to_attributes(attributes)
-    Ticket::Article.insert_urls(attributes)
+
+    new_body, new_attachments = Ticket::Article.insert_urls(self)
+    attributes['body'] = new_body
+    attributes['attachments'] = new_attachments.map(&:attributes_for_display)
+
+    attributes
   end
 
 =begin
@@ -321,21 +329,16 @@ returns
 
   def attributes_with_association_ids
     attributes = super
-    add_attachments_to_attributes(attributes)
-    if attributes['body'] && attributes['content_type'] =~ %r{text/html}i
-      attributes['body'] = Rails.cache.fetch("#{self.class}/#{cache_key_with_version}/body/dynamic_image_size") do
-        HtmlSanitizer.dynamic_image_size(attributes['body'])
-      end
-    end
-    Ticket::Article.insert_urls(attributes)
+
+    new_body, new_attachments = Ticket::Article.insert_urls(self)
+
+    attributes['body'] = new_body
+    attributes['attachments'] = new_attachments.map(&:attributes_for_display)
+
+    attributes
   end
 
   private
-
-  def add_attachments_to_attributes(attributes)
-    attributes['attachments'] = attachments.map(&:attributes_for_display)
-    attributes
-  end
 
   def add_time_unit_to_attributes(attributes)
     attributes['time_unit'] = ticket_time_accounting&.time_unit.presence || nil
@@ -358,7 +361,7 @@ returns
     current_length = body.length
     return true if body.length <= limit
 
-    raise Exceptions::UnprocessableEntity, "body of article is too large, #{current_length} chars - only #{limit} allowed" if !ApplicationHandleInfo.postmaster? && !Setting.get('import_mode')
+    raise Exceptions::UnprocessableContent, "body of article is too large, #{current_length} chars - only #{limit} allowed" if !ApplicationHandleInfo.postmaster? && !Setting.get('import_mode')
 
     logger.warn "WARNING: cut string because of database length #{self.class}.body(#{limit} but is #{current_length}) - ticket_id(#{ticket_id})"
     self.body = body[0, limit]

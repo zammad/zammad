@@ -1,12 +1,10 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Mutations
   class Channel::Email::BaseConfiguration < BaseMutation
     description 'Base class for configuration mutations'
 
-    def self.authorize(_obj, ctx)
-      ctx.current_user.permissions?('admin.channel_email')
-    end
+    requires_permission 'admin.channel_email'
 
     protected
 

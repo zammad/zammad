@@ -1,13 +1,13 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
 RSpec.describe Gql::Subscriptions::Ticket::LiveUserUpdates, :aggregate_failures, authenticated_as: :agent, performs_jobs: true, type: :graphql do
-  let(:agent)                         { create(:agent) }
+  let(:agent)                         { create(:agent, groups: [ticket.group]) }
   let(:customer)                      { create(:customer) }
-  let(:ticket)                        { create(:ticket) }
-  let(:live_user_entry)               { create(:taskbar, key: "Ticket-#{ticket.id}", user_id: agent.id, app: 'mobile', state: { editing: true }) }
-  let(:live_user_entry_customer)      { create(:taskbar, key: "Ticket-#{ticket.id}", user_id: customer.id, app: 'mobile', state: { editing: false }) }
+  let(:ticket)                        { create(:ticket, customer:) }
+  let(:live_user_entry)               { create(:taskbar, :with_ticket, ticket:, user: agent, app: 'mobile', state: { editing: true }) }
+  let(:live_user_entry_customer)      { create(:taskbar, :with_ticket, ticket:, user: customer, app: 'mobile', state: { editing: false }) }
 
   let(:mock_channel) { build_mock_channel }
   let(:variables) { { key: "Ticket-#{ticket.id}", app: 'mobile' } }
@@ -83,8 +83,8 @@ RSpec.describe Gql::Subscriptions::Ticket::LiveUserUpdates, :aggregate_failures,
     end
 
     context 'with multiple viewers' do
-      let(:third_agent)                 { create(:agent) }
-      let(:live_user_entry_third_agent) { create(:taskbar, key: "Ticket-#{ticket.id}", user_id: third_agent.id, app: 'mobile', state: { editing: false }) }
+      let(:third_agent)                 { create(:agent, groups: [ticket.group]) }
+      let(:live_user_entry_third_agent) { create(:taskbar, :with_ticket, ticket:, user: third_agent, app: 'mobile', state: { editing: false }) }
 
       it 'receives taskbar updates for all viewers' do
         update_taskbar_item(live_user_entry_customer, { editing: true }, customer.id)

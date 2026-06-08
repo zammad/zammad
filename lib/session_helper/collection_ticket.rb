@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module SessionHelper::CollectionTicket
 
@@ -45,6 +45,7 @@ module SessionHelper::CollectionTicket
         EmailAddress,
         Template,
         Ticket::SharedDraftStart,
+        AI::TextTool,
       ].each do |klass|
         collections[ klass.to_app_model ] = []
         klass.all.each do |item|

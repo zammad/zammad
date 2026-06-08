@@ -1,14 +1,14 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed, nextTick, ref, toRef } from 'vue'
+import { nextTick, ref, toRef } from 'vue'
 
 import type { SelectValue } from '#shared/components/CommonSelect/types.ts'
 import useValue from '#shared/components/Form/composables/useValue.ts'
+import useFlatSelectOptions from '#shared/components/Form/fields/FieldTreeSelect/composables/useFlatSelectOptions.ts'
 import type {
   FlatSelectOption,
   TreeSelectContext,
-  TreeSelectOption,
 } from '#shared/components/Form/fields/FieldTreeSelect/types.ts'
 import useSelectOptions from '#shared/composables/useSelectOptions.ts'
 import useSelectPreselect from '#shared/composables/useSelectPreselect.ts'
@@ -25,11 +25,7 @@ interface Props {
 const props = defineProps<Props>()
 const contextReactive = toRef(props, 'context')
 
-const {
-  hasValue,
-  valueContainer,
-  clearValue: clearInternalValue,
-} = useValue(contextReactive)
+const { hasValue, valueContainer, clearValue: clearInternalValue } = useValue(contextReactive)
 
 const currentPath = ref<FlatSelectOption[]>([])
 
@@ -61,23 +57,7 @@ const clearValue = () => {
   focusOutputElement()
 }
 
-const flattenOptions = (
-  options: TreeSelectOption[],
-  parents: SelectValue[] = [],
-): FlatSelectOption[] =>
-  options &&
-  options.reduce((flatOptions: FlatSelectOption[], { children, ...option }) => {
-    flatOptions.push({
-      ...option,
-      parents,
-      hasChildren: Boolean(children),
-    })
-    if (children)
-      flatOptions.push(...flattenOptions(children, [...parents, option.value]))
-    return flatOptions
-  }, [])
-
-const flatOptions = computed(() => flattenOptions(props.context.options))
+const { flatOptions, appendedTreeOptions } = useFlatSelectOptions(toRef(props.context, 'options'))
 
 const filterInput = ref(null)
 
@@ -102,7 +82,7 @@ const {
   getSelectedOptionStatus,
   getDialogFocusTargets,
   setupMissingOrDisabledOptionHandling,
-} = useSelectOptions(flatOptions, toRef(props, 'context'))
+} = useSelectOptions(flatOptions, toRef(props, 'context'), appendedTreeOptions)
 
 const openModal = () => {
   return dialog.open({
@@ -120,9 +100,7 @@ const openModal = () => {
   })
 }
 
-const getSelectedOptionParents = (
-  selectedValue: string | number,
-): SelectValue[] =>
+const getSelectedOptionParents = (selectedValue: string | number): SelectValue[] =>
   (optionValueLookup.value[selectedValue] &&
     (optionValueLookup.value[selectedValue] as FlatSelectOption).parents) ||
   []
@@ -131,8 +109,7 @@ const getSelectedOptionFullPath = (selectedValue: string | number) =>
   getSelectedOptionParents(selectedValue)
     .map((parentValue) => `${getSelectedOptionLabel(parentValue)} \u203A `)
     .join('') +
-  (getSelectedOptionLabel(selectedValue) ||
-    i18n.t('%s (unknown)', selectedValue.toString()))
+  (getSelectedOptionLabel(selectedValue) || i18n.t('%s (unknown)', selectedValue.toString()))
 
 const toggleDialog = async (isVisible: boolean) => {
   if (props.context.disabled) return
@@ -170,7 +147,7 @@ setupMissingOrDisabledOptionHandling()
       ref="outputElement"
       role="combobox"
       :name="context.node.name"
-      class="formkit-disabled:pointer-events-none flex grow items-center focus:outline-hidden"
+      class="flex grow items-center focus:outline-hidden formkit-disabled:pointer-events-none"
       tabindex="0"
       :aria-labelledby="`label-${context.id}`"
       :aria-disabled="context.disabled ? 'true' : undefined"
@@ -217,8 +194,8 @@ setupMissingOrDisabledOptionHandling()
       </div>
       <CommonIcon
         v-if="context.clearable && hasValue && !context.disabled"
-        :label="__('Clear Selection')"
-        class="text-gray absolute -mt-5 shrink-0 ltr:right-2 rtl:left-2"
+        :label="__('Clear selection')"
+        class="absolute -mt-5 shrink-0 text-gray ltr:right-2 rtl:left-2"
         name="close-small"
         size="base"
         role="button"

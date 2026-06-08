@@ -1,8 +1,7 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Queries
   class Tickets::RecentByCustomer < BaseQuery
-
     description 'Fetch recent customer tickets'
 
     argument :customer_id, GraphQL::Types::ID, description: 'Customer to find tickets for', loads: Gql::Types::UserType
@@ -11,9 +10,7 @@ module Gql::Queries
 
     type [Gql::Types::TicketType], null: false
 
-    def self.authorize(_obj, ctx)
-      ctx.current_user.permissions?(['ticket.agent'])
-    end
+    requires_permission 'ticket.agent'
 
     def resolve(customer:, limit: 6, except_ticket_internal_id: nil)
       open_by_customer(customer:, except_ticket_internal_id:, limit:).all.presence ||

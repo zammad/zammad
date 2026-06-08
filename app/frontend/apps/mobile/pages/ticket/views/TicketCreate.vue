@@ -1,31 +1,27 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { useEventListener } from '@vueuse/core'
 import { computed, nextTick, reactive, ref, watch } from 'vue'
 import { onBeforeRouteLeave, useRouter } from 'vue-router'
 
+import { EXTENSION_NAME as TEXT_TOOL_PLUGIN_NAME } from '#shared/components/Form/fields/FieldEditor/extensions/AiAssistantTextTools.ts'
 import Form from '#shared/components/Form/Form.vue'
-import type {
-  FormSubmitData,
-  FormSchemaNode,
-} from '#shared/components/Form/types.ts'
+import type { FormSubmitData, FormSchemaNode } from '#shared/components/Form/types.ts'
 import { useForm } from '#shared/components/Form/useForm.ts'
 import { useMultiStepForm } from '#shared/components/Form/useMultiStepForm.ts'
 import { useConfirmation } from '#shared/composables/useConfirmation.ts'
 import { useStickyHeader } from '#shared/composables/useStickyHeader.ts'
-import { useTicketSignature } from '#shared/composables/useTicketSignature.ts'
 import { useTicketCreate } from '#shared/entities/ticket/composables/useTicketCreate.ts'
 import { useTicketCreateArticleType } from '#shared/entities/ticket/composables/useTicketCreateArticleType.ts'
 import { useTicketCreateView } from '#shared/entities/ticket/composables/useTicketCreateView.ts'
 import { useTicketFormOrganizationHandler } from '#shared/entities/ticket/composables/useTicketFormOrganizationHandler.ts'
+import { useTicketSignature } from '#shared/entities/ticket/composables/useTicketSignature.ts'
 import type { TicketFormData } from '#shared/entities/ticket/types.ts'
 import { useUserQuery } from '#shared/entities/user/graphql/queries/user.api.ts'
 import { defineFormSchema } from '#shared/form/defineFormSchema.ts'
-import {
-  EnumFormUpdaterId,
-  EnumObjectManagerObjects,
-} from '#shared/graphql/types.ts'
+import { EnumFormUpdaterId, EnumObjectManagerObjects } from '#shared/graphql/types.ts'
+import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import { i18n } from '#shared/i18n.ts'
 import { errorOptions } from '#shared/router/error.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
@@ -76,10 +72,7 @@ const redirectAfterCreate = (internalId?: number) => {
   }
 }
 
-const { createTicket, isTicketCustomer } = useTicketCreate(
-  form,
-  redirectAfterCreate,
-)
+const { createTicket, isTicketCustomer } = useTicketCreate(form, redirectAfterCreate)
 
 const getFormSchemaGroupSection = (
   stepName: string,
@@ -131,8 +124,7 @@ const ticketTitleSection = getFormSchemaGroupSection(
       required: true,
       object: EnumObjectManagerObjects.Ticket,
       screen: 'create_top',
-      outerClass:
-        '$reset formkit-outer w-full grow justify-center flex items-center flex-col',
+      outerClass: '$reset formkit-outer w-full grow justify-center flex items-center flex-col',
       wrapperClass: '$reset formkit-disabled:opacity-30 flex w-full',
       labelClass: '$reset sr-only',
       blockClass: '$reset flex w-full',
@@ -161,11 +153,22 @@ const ticketArticleTypeSection = getFormSchemaGroupSection(
     {
       if: '$existingAdditionalCreateNotes() && $getAdditionalCreateNote($values.articleSenderType) !== undefined',
       isLayout: true,
-      element: 'p',
-      attrs: {
-        class: 'my-10 text-base text-center text-yellow',
+      component: 'CommonAlert',
+      props: {
+        variant: 'warning',
       },
-      children: '$getAdditionalCreateNote($values.articleSenderType)',
+      children: [
+        {
+          isLayout: true,
+          element: 'div',
+          attrs: {
+            // We convert light weight markup
+            // The input is not sanitized and relies on the administrator to provide safe content
+            innerHTML: '$markup($t($getAdditionalCreateNote($values.articleSenderType)))',
+          },
+          children: '',
+        },
+      ],
     },
   ],
   true,
@@ -178,7 +181,7 @@ const userOptions = ref<unknown[]>([])
 
 const userQuery = useUserQuery(
   () => ({
-    userInternalId: Number(customUserId),
+    userId: convertToGraphQLId('User', Number(customUserId)),
     secondaryOrganizationsCount: 3,
   }),
   {
@@ -301,6 +304,12 @@ const ticketArticleMessageSection = getFormSchemaGroupSection(
               mentionKnowledgeBase: {
                 attachmentsNodeName: 'attachments',
               },
+              [TEXT_TOOL_PLUGIN_NAME]: {
+                groupNodeName: 'group_id',
+                ticketNodeName: 'ticket_id',
+                customerNodeName: 'customer_id',
+                organizationNodeName: 'organization_id',
+              },
             },
           },
           triggerFormUpdater: false,
@@ -338,20 +347,14 @@ const agentSchema = [
   ticketArticleMessageSection,
 ]
 
-const formSchema = defineFormSchema(
-  isTicketCustomer.value ? customerSchema : agentSchema,
-)
+const formSchema = defineFormSchema(isTicketCustomer.value ? customerSchema : agentSchema)
 
 const securityIntegration = computed<boolean>(
-  () =>
-    (application.config.smime_integration ||
-      application.config.pgp_integration) ??
-    false,
+  () => (application.config.smime_integration || application.config.pgp_integration) ?? false,
 )
 
 const additionalCreateNotes = computed(
-  () =>
-    (application.config.ui_ticket_create_notes as Record<string, string>) || {},
+  () => (application.config.ui_ticket_create_notes as Record<string, string>) || {},
 )
 
 const schemaData = reactive({
@@ -360,18 +363,17 @@ const schemaData = reactive({
   allSteps,
   securityIntegration,
   existingAdditionalCreateNotes: () => {
-    return Object.keys(additionalCreateNotes).length > 0
+    return Object.keys(additionalCreateNotes.value).length > 0
   },
   getAdditionalCreateNote: (value: string) => {
-    return i18n.t(additionalCreateNotes.value[value])
+    return additionalCreateNotes.value[value]
   },
 })
 
 const submitButtonDisabled = computed(() => {
   return (
     !canSubmit.value ||
-    (activeStep.value !== lastStepName.value &&
-      visitedSteps.value.length < stepNames.value.length)
+    (activeStep.value !== lastStepName.value && visitedSteps.value.length < stepNames.value.length)
   )
 })
 
@@ -429,13 +431,10 @@ const { signatureHandling } = useTicketSignature()
 
 const ticketDuplicateDetectionDialog = useDialog({
   name: 'duplicate-ticket-detection',
-  component: () =>
-    import('#mobile/components/Ticket/TicketDuplicateDetectionDialog.vue'),
+  component: () => import('#mobile/components/Ticket/TicketDuplicateDetectionDialog.vue'),
 })
 
-const showTicketDuplicateDetectionDialog = (
-  data: TicketDuplicateDetectionPayload,
-) => {
+const showTicketDuplicateDetectionDialog = (data: TicketDuplicateDetectionPayload) => {
   ticketDuplicateDetectionDialog.open({
     name: 'duplicate-ticket-detection',
     tickets: data.items,
@@ -452,7 +451,7 @@ const changedFields = reactive({
 
 <script lang="ts">
 export default {
-  beforeRouteEnter(to, from, next) {
+  beforeRouteEnter(to) {
     const { ticketCreateEnabled } = useTicketCreateView()
 
     if (!ticketCreateEnabled.value) {
@@ -463,18 +462,16 @@ export default {
         route: to.fullPath,
       }
 
-      next({
+      return {
         name: 'Error',
         query: {
           redirect: '1',
         },
         replace: true,
-      })
-
-      return
+      }
     }
 
-    next()
+    return true
   },
 }
 </script>
@@ -485,7 +482,7 @@ export default {
     class="h-16!"
     :style="stickyStyles.header"
     back-url="/"
-    :title="__('Create Ticket')"
+    :title="__('Create ticket')"
   >
     <template #after>
       <CommonButton
@@ -499,11 +496,7 @@ export default {
       </CommonButton>
     </template>
   </LayoutHeader>
-  <div
-    ref="bodyElement"
-    :style="stickyStyles.body"
-    class="flex h-full flex-col px-4"
-  >
+  <div ref="bodyElement" :style="stickyStyles.body" class="flex h-full flex-col px-4">
     <Form
       id="ticket-create"
       ref="form"
@@ -527,7 +520,7 @@ export default {
     :class="{
       'bg-gray-light backdrop-blur-lg': !isScrolledToBottom,
     }"
-    class="pb-safe fixed bottom-0 z-10 w-full px-4 transition"
+    class="fixed bottom-0 z-10 w-full px-4 pb-safe transition"
   >
     <FormKit
       :variant="lastStepName === activeStep ? 'submit' : 'primary'"
@@ -540,10 +533,6 @@ export default {
     >
       {{ lastStepName === activeStep ? $t('Create ticket') : $t('Continue') }}
     </FormKit>
-    <CommonStepper
-      v-model="activeStep"
-      :steps="allSteps"
-      class="mt-4 mb-8 px-8"
-    />
+    <CommonStepper v-model="activeStep" :steps="allSteps" class="mt-4 mb-8 px-8" />
   </footer>
 </template>

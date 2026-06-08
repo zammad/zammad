@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 /**
  * @fileoverview Enforces consistent kebab-case for Symbol descriptors
@@ -10,7 +10,7 @@
 //------------------------------------------------------------------------------
 
 /**
- * @type {import('eslint').Rule.RuleModule}
+ * @type {RegExp}
  */
 const kebabCaseRegex = /^[a-z-]+$/
 
@@ -26,16 +26,18 @@ module.exports = {
   },
   create(context) {
     return {
-      // eslint-disable-next-line object-shorthand
-      'CallExpression[callee.name="Symbol"]'(node) {
-        const descriptor = node.arguments[0]
-        if (!descriptor && typeof descriptor.value !== 'string') return
+      CallExpression(node) {
+        if (node.callee.type !== 'Identifier' || node.callee.name !== 'Symbol') return
 
-        if (!kebabCaseRegex.test(descriptor.value))
+        const descriptor = node.arguments[0]
+        if (!descriptor || typeof descriptor.value !== 'string') return
+
+        if (!kebabCaseRegex.test(descriptor.value)) {
           context.report({
             node: descriptor,
             message: 'Symbol description should be in kebab-case.',
           })
+        }
       },
     }
   },

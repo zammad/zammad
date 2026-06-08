@@ -1,21 +1,24 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 # Class variables are used here as performance optimization.
 # Technically it is not thread-safe, but it never caused issues.
 # rubocop:disable Style/ClassVars
 class Setting < ApplicationModel
+  include ChecksClientNotification
+
   store         :options
   store         :state_current
   store         :state_initial
   store         :preferences
+  before_validation :transform
   before_validation :state_check
   before_create :set_initial
   after_save    :reset_class_cache_key
   after_commit  :reset_other_caches, :broadcast_frontend, :check_refresh
 
-  validates_with Setting::Validator
+  validates_with Setting::Validator, if: -> { !skip_validate }
 
-  attr_accessor :state
+  attr_accessor :state, :skip_validate
 
   @@current         = {}
   @@raw             = {}
@@ -36,11 +39,13 @@ set config setting
 
 =end
 
-  def self.set(name, value)
+  def self.set(name, value, validate: true)
     setting = Setting.find_by(name: name)
     if !setting
       raise "Can't find config setting '#{name}'"
     end
+
+    setting.skip_validate = !validate
 
     setting.state_current = { value: value }
     setting.save!
@@ -221,7 +226,7 @@ reload config settings
     self.state_current = { value: state }
   end
 
-  # Notify clients about config changes.
+  # Notify clients about config changes (frontend only!).
   def broadcast_frontend
     return if !frontend
 
@@ -240,6 +245,22 @@ reload config settings
     Gql::Subscriptions::ConfigUpdates.trigger(self)
   end
 
+  def notify_clients_send(data)
+    permissions = preferences['permission']
+
+    if permissions.present?
+      User.with_permissions(permissions).each do |user|
+        PushMessages.send_to(user.id, data[:message])
+      end
+
+      return
+    end
+
+    User.with_permissions('admin.*').each do |user|
+      PushMessages.send_to(user.id, data[:message])
+    end
+  end
+
   # NB: Force users to reload on SAML credentials config changes
   #   This is needed because the setting is not frontend related,
   #   so we can't rely on 'config_update_local' mechanism to kick in
@@ -248,6 +269,11 @@ reload config settings
     return if ['auth_saml_credentials'].exclude?(name)
 
     AppVersion.trigger_browser_reload AppVersion::MSG_CONFIG_CHANGED
+  end
+
+  def transform
+    Array(preferences[:transformations])
+      .map { |klass| klass.constantize.new(self).run }
   end
 end
 # rubocop:enable Style/ClassVars

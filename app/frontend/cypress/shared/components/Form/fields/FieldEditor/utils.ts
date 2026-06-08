@@ -1,11 +1,16 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
+
+import { FormKit } from '@formkit/vue'
 
 import { mountComponent } from '#cy/utils.ts'
-import { FormKit } from '@formkit/vue'
 
 import Form from '#shared/components/Form/Form.vue'
 
-export const mountEditor = (props: Record<string, unknown> = {}) => {
+export const mountEditor = (
+  props: Record<string, unknown> = {},
+  permissions?: string[],
+  config?: Record<string, unknown>,
+) => {
   return mountComponent(FormKit, {
     props: {
       id: 'editor',
@@ -13,10 +18,12 @@ export const mountEditor = (props: Record<string, unknown> = {}) => {
       type: 'editor',
       ...props,
     },
+    permissions,
+    config,
   })
 }
 
-export const mountEditorWithAttachments = () => {
+export const mountEditorWithAttachments = (permissions?: string[]) => {
   const props = {
     schema: [
       {
@@ -51,5 +58,6 @@ export const mountEditorWithAttachments = () => {
     attrs: {
       class: 'form',
     },
+    permissions,
   })
 }

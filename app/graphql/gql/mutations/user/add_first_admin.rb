@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Mutations
   class User::AddFirstAdmin < BaseMutation
@@ -10,12 +10,10 @@ module Gql::Mutations
 
     field :session, Gql::Types::SessionType, description: 'The current session, if the user was successfully created.'
 
-    def self.authorize(...)
-      true
-    end
+    allow_public_access!
 
     def resolve(input:)
-      user = Service::User::AddFirstAdmin.new.execute(
+      user = Service::User::AddFirstAdmin.execute(
         user_data: input.to_h,
         request:   context[:controller].request,
       )

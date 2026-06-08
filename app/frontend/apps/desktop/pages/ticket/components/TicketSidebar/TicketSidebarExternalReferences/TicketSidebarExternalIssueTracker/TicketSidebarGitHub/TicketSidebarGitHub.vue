@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, useTemplateRef, ref, toRef, watch, onMounted } from 'vue'
@@ -24,11 +24,10 @@ const { persistentStates } = usePersistentStates()
 
 const emit = defineEmits<TicketSidebarEmits>()
 
-const { hideSidebar, issueLinks, isTicketEditable, openIssuesBadge } =
-  useIssueTracker(
-    EnumTicketExternalReferencesIssueTrackerType.Github,
-    toRef(props, 'context'),
-  )
+const { hideSidebar, issueLinks, isTicketEditable, openIssuesBadge } = useIssueTracker(
+  EnumTicketExternalReferencesIssueTrackerType.Github,
+  toRef(props, 'context'),
+)
 
 const issueTrackerListInstance = useTemplateRef('issue-tracker-list')
 
@@ -68,7 +67,7 @@ const actions = computed((): MenuItem[] =>
     ? [
         {
           key: 'link-github-issue',
-          label: __('Link Issue'),
+          label: __('Link issue'),
           show: () => isTicketEditable.value,
           onClick: () => issueTrackerListInstance.value?.openFlyout(),
           icon: 'link-45deg',

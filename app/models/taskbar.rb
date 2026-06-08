@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Taskbar < ApplicationModel
   include ChecksClientNotification
@@ -28,6 +28,7 @@ class Taskbar < ApplicationModel
   after_update    :notify_clients
   after_destroy :update_preferences_infos, :notify_clients
   after_commit :update_related_taskbars
+  after_destroy_commit :log_recent_close
 
   association_attributes_ignored :user
 
@@ -46,6 +47,34 @@ class Taskbar < ApplicationModel
 
   scope :app, ->(app) { where(app:) }
 
+  def to_object_class
+    case params
+    in { user_id: }
+      User
+    in { organization_id: }
+      Organization
+    in { ticket_id: }
+      Ticket
+    else
+    end
+  end
+
+  def to_object_id
+    case params
+    in { user_id: }
+      user_id.to_i
+    in { organization_id: }
+      organization_id.to_i
+    in { ticket_id: }
+      ticket_id.to_i
+    else
+    end
+  end
+
+  def to_object
+    to_object_class&.find_by(id: to_object_id)
+  end
+
   # Returns IDs of objects referenced by the taskbars.
   # Works on scopes, relations etc.
   #
@@ -57,21 +86,18 @@ class Taskbar < ApplicationModel
   #
   def self.to_object_ids
     all.each_with_object({ user_ids: [], organization_ids: [], ticket_ids: [] }) do |elem, memo|
-      case elem.params
-      in { user_id: }
-        memo[:user_ids] << user_id.to_i
-      in { organization_id: }
-        memo[:organization_ids] << organization_id.to_i
-      in { ticket_id: }
-        memo[:ticket_ids] << ticket_id.to_i
-      else
-      end
+      object_id = elem.to_object_id
+      next if object_id.blank?
+
+      key = "#{elem.to_object_class.name.downcase}_ids"
+
+      memo[key.to_sym] << elem.to_object_id
     end
   end
 
   def self.taskbar_entities
     @taskbar_entities ||= begin
-      ApplicationModel.descendants.select { |model| model.included_modules.include?(HasTaskbars) }.each_with_object([]) do |model, result|
+      ApplicationModel.descendants.select { |model| model.include?(HasTaskbars) }.each_with_object([]) do |model, result|
         model.taskbar_entities&.each do |entity|
           result << entity
         end
@@ -81,7 +107,7 @@ class Taskbar < ApplicationModel
 
   def self.taskbar_ignore_state_updates_entities
     @taskbar_ignore_state_updates_entities ||= begin
-      ApplicationModel.descendants.select { |model| model.included_modules.include?(HasTaskbars) }.each_with_object([]) do |model, result|
+      ApplicationModel.descendants.select { |model| model.include?(HasTaskbars) }.each_with_object([]) do |model, result|
         model.taskbar_ignore_state_updates_entities&.each do |entity|
           result << entity
         end
@@ -137,6 +163,10 @@ class Taskbar < ApplicationModel
     self.skip_live_user_trigger = true
     self.skip_item_trigger      = true
     self.last_contact           = Time.zone.now
+
+    # When we touch the taskbar for the last contact, we should also reset the notify flag.
+    self.notify = false
+
     save!
   end
 
@@ -147,11 +177,40 @@ class Taskbar < ApplicationModel
   end
 
   def collect_related_tasks
-    related_taskbars.map(&:preferences_task_info)
+    return [] if !target_accessible_to_owner?
+
+    related_taskbars
+      .filter(&:target_accessible_to_owner?)
+      .map(&:preferences_task_info)
       .tap { |arr| arr.push(preferences_task_info) if !destroyed? }
       .each_with_object({}) { |elem, memo| reduce_related_tasks(elem, memo) }
       .values
       .sort_by { |elem| elem[:id] || Float::MAX } # sort by IDs to pass old tests
+  end
+
+  # Checks if taskbar's owner has access to the target object (Ticket, User, Organization...)
+  # @return [Boolean, nil] true if the target is accessible, false if not accessible and nil for non-relatable items
+  KEY_REGEXP = %r{^(?<model>\p{Lu}\p{L}+)-(?<id>\d+)$}
+  def target_accessible_to_owner?
+    case key.match(KEY_REGEXP)
+    in model: 'Ticket', id:
+      record = Ticket.find_by(id:)
+
+      TicketPolicy.new(user, record).show? if record
+    else
+    end
+  end
+
+  # Checks if taskbar should update related taskbars
+  # to make sure each taskbar includes siblings
+  # for displaying active users in frontend
+  def relatable?
+    case key.match(KEY_REGEXP)
+    in model: 'Ticket'
+      true
+    else
+      false
+    end
   end
 
   private
@@ -160,17 +219,8 @@ class Taskbar < ApplicationModel
     return if local_update
     return if changes.blank?
     return if changed_only_prio?
+    return if changed_only_notify?
 
-    if changes['notify']
-      count = 0
-      changes.each_key do |attribute|
-        next if attribute == 'updated_at'
-        next if attribute == 'created_at'
-
-        count += 1
-      end
-      return true if count <= 1
-    end
     self.last_contact = Time.zone.now
   end
 
@@ -182,7 +232,7 @@ class Taskbar < ApplicationModel
   end
 
   def update_preferences_infos
-    return if key == 'Search'
+    return if !relatable?
     return if local_update
     return if changed_only_prio?
 
@@ -197,6 +247,10 @@ class Taskbar < ApplicationModel
     changed_attribute_names_to_save.to_set == Set.new(%w[updated_at prio])
   end
 
+  def changed_only_notify?
+    changed_attribute_names_to_save.to_set == Set.new(%w[updated_at notify])
+  end
+
   def reduce_related_tasks(elem, memo)
     key = elem[:user_id]
 
@@ -209,7 +263,7 @@ class Taskbar < ApplicationModel
   end
 
   def update_related_taskbars
-    return if key == 'Search'
+    return if !relatable?
     return if local_update
     return if changed_only_prio?
 
@@ -231,5 +285,16 @@ class Taskbar < ApplicationModel
       user_id,
       data,
     )
+  end
+
+  def log_recent_close
+    return if !ActiveRecord::Base.connection.data_source_exists?('recent_closes')
+
+    object = to_object
+
+    return if !object
+    return if !User.exists?(user.id)
+
+    RecentClose.upsert_closing_time!(user, to_object)
   end
 end

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class ObjectManager::Element::Ticket < ObjectManager::Element::Backend
 
@@ -12,29 +12,57 @@ class ObjectManager::Element::Ticket < ObjectManager::Element::Backend
   end
 
   def skip?(permission)
-    return true if agent_in_general_view?(permission)
-    return true if agent_access_missing?(permission)
-
-    authorized_customer_and_agent?(permission)
+    record.present? ? skip_with_record?(permission) : skip_without_record?(permission)
   end
 
-  def agent_in_general_view?(permission)
-    record.blank? && permission == 'ticket.customer' && agent?
+  def skip_with_record?(permission)
+    case permission
+    when 'ticket.agent'
+      !agent_record_access?
+    when 'ticket.customer'
+      agent_record_access? || !customer_record_access?
+    else
+      false
+    end
   end
 
-  def agent_access_missing?(permission)
-    record.present? && permission == 'ticket.agent' && agent? && !read_access?
-  end
-
-  def authorized_customer_and_agent?(permission)
-    record.present? && permission == 'ticket.customer' && agent? && read_access?
+  def skip_without_record?(permission)
+    case permission
+    when 'ticket.agent'
+      !agent?
+    when 'ticket.customer'
+      agent?
+    else
+      false
+    end
   end
 
   def agent?
+    return false if act_as_customer && user.permissions?('ticket.customer')
+
     user.permissions?('ticket.agent')
   end
 
-  def read_access?
-    user.group_access?(record.group_id, 'read')
+  def customer?
+    user.permissions?('ticket.customer')
+  end
+
+  def agent_record_access?
+    agent? && user.group_access?(record.group_id, 'read')
+  end
+
+  def customer_record_access?
+    return false if !customer?
+    return true if record.customer == user
+
+    shared_organization_record_access?
+  end
+
+  def shared_organization_record_access?
+    return false if record.organization_id.blank?
+    return false if user.organization_id.blank?
+    return false if !user.organization_id?(record.organization_id)
+
+    record.organization.shared?
   end
 end

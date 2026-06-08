@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -165,7 +165,7 @@ RSpec.describe 'System > Translations', type: :system do
 
           expect(find('table')).to have_text(english_translation.target_initial)
 
-          set_tree_select_value('locale', 'Deutsch')
+          set_tree_select_value('locale', 'Deutsch - German')
 
           german_translation = Translation.find_by(locale: 'de-de', source: english_translation.source)
 

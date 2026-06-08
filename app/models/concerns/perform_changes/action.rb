@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class PerformChanges::Action
   include Mixin::RequiredSubPaths
@@ -11,7 +11,7 @@ class PerformChanges::Action
   end
 
   def self.phase
-    :before_save
+    raise 'not implemented'
   end
 
   def initialize(record, execution_data, perform_changes_data)
@@ -39,6 +39,7 @@ class PerformChanges::Action
   def notification_factory_template_objects
     @notification_factory_template_objects ||= {
       record.class.name.downcase.to_sym => record,
+      **(record.is_a?(User) ? {} : { user: User.lookup(id: user_id) })
     }
   end
 

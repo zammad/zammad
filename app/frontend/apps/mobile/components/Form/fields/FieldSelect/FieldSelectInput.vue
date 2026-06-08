@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { toRef, useTemplateRef } from 'vue'
@@ -22,8 +22,7 @@ const props = defineProps<Props>()
 
 const contextReactive = toRef(props, 'context')
 
-const { hasValue, valueContainer, currentValue, clearValue } =
-  useValue(contextReactive)
+const { hasValue, valueContainer, currentValue, clearValue } = useValue(contextReactive)
 const {
   hasStatusProperty,
   sortedOptions,
@@ -37,12 +36,7 @@ const {
 const select = useTemplateRef('select')
 
 const openSelectDialog = () => {
-  if (
-    select.value?.isOpen ||
-    !props.context.options?.length ||
-    props.context.disabled
-  )
-    return
+  if (select.value?.isOpen || !props.context.options?.length || props.context.disabled) return
   select.value?.openDialog()
 }
 
@@ -83,7 +77,7 @@ setupMissingOrDisabledOptionHandling()
         aria-haspopup="dialog"
         :aria-expanded="expanded"
         :name="context.node.name"
-        class="formkit-disabled:pointer-events-none flex grow items-center focus:outline-hidden"
+        class="flex grow items-center focus:outline-hidden formkit-disabled:pointer-events-none"
         :aria-labelledby="`label-${context.id}`"
         :aria-disabled="context.disabled"
         :data-multiple="context.multiple"
@@ -98,14 +92,9 @@ setupMissingOrDisabledOptionHandling()
             <CommonTicketStateIndicator
               v-for="selectedValue in valueContainer"
               :key="selectedValue"
-              :color-code="
-                getSelectedOptionStatus(
-                  selectedValue,
-                ) as EnumTicketStateColorCode
-              "
+              :color-code="getSelectedOptionStatus(selectedValue) as EnumTicketStateColorCode"
               :label="
-                getSelectedOptionLabel(selectedValue) ||
-                i18n.t('%s (unknown)', selectedValue)
+                getSelectedOptionLabel(selectedValue) || i18n.t('%s (unknown)', selectedValue)
               "
               :data-test-status="getSelectedOptionStatus(selectedValue)"
               role="listitem"
@@ -125,17 +114,15 @@ setupMissingOrDisabledOptionHandling()
                 size="tiny"
                 class="ltr:mr-1 rtl:ml-1"
                 decorative
-              />{{
-                getSelectedOptionLabel(selectedValue) ||
-                i18n.t('%s (unknown)', selectedValue)
+              />{{ getSelectedOptionLabel(selectedValue) || i18n.t('%s (unknown)', selectedValue)
               }}{{ idx === valueContainer.length - 1 ? '' : ',' }}
             </div>
           </template>
         </div>
         <CommonIcon
           v-if="context.clearable && hasValue && !context.disabled"
-          :aria-label="i18n.t('Clear Selection')"
-          class="text-gray absolute -mt-5 shrink-0 ltr:right-2 rtl:left-2"
+          :aria-label="i18n.t('Clear selection')"
+          class="absolute -mt-5 shrink-0 text-gray ltr:right-2 rtl:left-2"
           name="close-small"
           size="base"
           role="button"

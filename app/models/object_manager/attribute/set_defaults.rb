@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class ObjectManager
   class Attribute
@@ -35,7 +35,7 @@ class ObjectManager
 
         Time.use_zone(Setting.get('timezone_default')) do
           diff
-            .days
+            .hours
             .from_now
             .to_date
         end
@@ -48,11 +48,19 @@ class ObjectManager
 
         Time.use_zone(Setting.get('timezone_default')) do
           diff
-            .hours
+            .minutes
             .from_now
             .change(usec: 0, sec: 0)
             .utc
         end
+      end
+
+      # https://github.com/zammad/zammad/issues/5666
+      # External data source fields do not have configurable default value
+      # However, Rails 7.2 does not pick up JSONB default value on object initialization
+      # Thus using this mechanism to ensure default value is set
+      def build_value_autocompletion_ajax_external_data_source(_)
+        {}
       end
 
       def attributes_for(record)

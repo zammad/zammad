@@ -15,8 +15,39 @@
       a img {
         border: none;
       }
-      table td {
-        border-collapse: collapse;
+      h1,
+      h2,
+      h3 {
+        margin-top: 8px;
+        margin-bottom: 4px;
+      }
+      p {
+        margin: 8px 0;
+        min-height: 1.25rem;
+      }
+      blockquote {
+        padding: 1px 12px;
+        border-left: 5px solid #eee;
+      }
+      code {
+        padding: 1px 3px;
+        border-radius: 6px;
+        background-color: hsla(0, 0%, 0%, 0.1);
+        white-space: pre-wrap;
+        overflow-wrap: break-word;
+      }
+      pre {
+        margin: 8px 0;
+        padding: 10px;
+        border-radius: 6px;
+        border: 0;
+        background-color: hsla(0, 0%, 0%, 0.1);
+        white-space: pre-wrap;
+        word-break: break-all;
+      }
+      pre code {
+        padding: 0;
+        background: transparent;
       }
       table {
         border-collapse: collapse;
@@ -28,11 +59,10 @@
         width: 100%;
         overflow: auto;
         word-break: keep-all;
-      }
-      table,
-      pre,
-      blockquote {
         margin: 0 0 16px;
+      }
+      table td {
+        border-collapse: collapse;
       }
       td, th {
         padding: 7px 12px;
@@ -44,27 +74,37 @@
       col {
         width: auto;
       }
-      p {
+      table.zammad-table {
+        max-width: 100%;
+        border: 2px solid hsl(0, 0%, 69%);
+        table-layout: fixed;
+        display: table;
+        margin: 8px 0;
+        overflow: hidden;
+      }
+      table.zammad-table td,
+      table.zammad-table th {
+        min-width: 1em;
+        border: 1px solid hsl(0, 0%, 69%);
+        vertical-align: top;
+        position: relative;
+        padding: 3px 5px;
+        box-sizing: border-box;
+      }
+      table.zammad-table td > *,
+      table.zammad-table th > * {
         margin: 0;
       }
-      code {
-        border: none;
-        background: hsl(0,0%,97%);
-        white-space: pre-wrap;
+      table.zammad-table th {
+        text-align: unset;
+        background-color: hsla(0, 0%, 0%, 0.1);
       }
-      blockquote {
-        padding: 8px 12px;
-        border-left: 5px solid #eee;
-      }
-      pre {
-        padding: 12px 15px;
-        font-size: 13px;
-        line-height: 1.45;
-        background: hsl(0,0%,97%);
-        white-space: pre-wrap;
-        border-radius: 3px;
-        border: none;
-        overflow: auto;
+      hr {
+        margin: 8px 0;
+        height: 1px;
+        background-color: hsla(0, 0%, 0%, 0.1);
+        font-size: 0;
+        border: 0;
       }
     </style>
   </head>

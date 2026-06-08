@@ -1,9 +1,6 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import {
-  mockGraphQLApi,
-  mockGraphQLSubscription,
-} from '#tests/support/mock-graphql-api.ts'
+import { mockGraphQLApi, mockGraphQLSubscription } from '#tests/support/mock-graphql-api.ts'
 import type { MockGraphQLInstance } from '#tests/support/mock-graphql-api.ts'
 import { nullableMock, waitUntil } from '#tests/support/utils.ts'
 
@@ -31,6 +28,8 @@ export const defaultUser = (): ConfidentTake<UserQuery, 'user'> => {
     firstname: 'John',
     lastname: 'Doe',
     fullname: 'John Doe',
+    source: 'signup',
+    verified: true,
     active: true,
     vip: false,
     image: null,
@@ -63,6 +62,10 @@ export const defaultUser = (): ConfidentTake<UserQuery, 'user'> => {
           },
         },
       ],
+      pageInfo: {
+        __typename: 'PageInfo',
+        endCursor: null,
+      },
       totalCount: 1,
     },
     hasSecondaryOrganizations: true,

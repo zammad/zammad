@@ -1,7 +1,6 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { storeToRefs } from 'pinia'
-import { computed } from 'vue'
+import { computed, toRef } from 'vue'
 import { useRouter } from 'vue-router'
 
 import type { EnumOrderDirection } from '#shared/graphql/types.ts'
@@ -15,11 +14,9 @@ export const useListTable = <T>(
   emit: (evt: 'sort', args_0: string, args_1: EnumOrderDirection) => void,
   getLink: (item: ObjectWithId) => string,
 ) => {
-  const { userId } = storeToRefs(useSessionStore())
+  const userId = toRef(useSessionStore(), 'userId')
 
-  const storageKeyId = computed(
-    () => `${userId.value}-table-headers-${props.tableId}`,
-  )
+  const storageKeyId = computed(() => `${userId.value}-table-headers-${props.tableId}`)
 
   const loadMore = async () => {
     await props.onLoadMore?.()

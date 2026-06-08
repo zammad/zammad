@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { renderComponent } from '#tests/support/components/index.ts'
 
@@ -65,7 +65,7 @@ describe('CommonButton.vue', () => {
     },
     {
       variant: 'submit',
-      classes: ['bg-yellow', 'font-semibold', 'text-black-full'],
+      classes: ['bg-yellow', 'font-medium', 'text-black-full'],
     },
     {
       variant: 'danger',
@@ -92,26 +92,23 @@ describe('CommonButton.vue', () => {
     },
     {
       variant: 'submit',
-      classes: ['font-semibold', 'text-yellow'],
+      classes: ['font-medium', 'text-yellow'],
     },
     {
       variant: 'danger',
       classes: ['text-red-bright'],
     },
-  ])(
-    'supports $variant variant with transparent background',
-    async ({ variant, classes }) => {
-      const view = renderComponent(CommonButton, {
-        props: {
-          variant,
-          transparentBackground: true,
-        },
-      })
+  ])('supports $variant variant with transparent background', async ({ variant, classes }) => {
+    const view = renderComponent(CommonButton, {
+      props: {
+        variant,
+        transparentBackground: true,
+      },
+    })
 
-      const button = view.getByRole('button')
+    const button = view.getByRole('button')
 
-      expect(button).toHaveClass('bg-transparent')
-      expect(button).toHaveClasses(classes)
-    },
-  )
+    expect(button).toHaveClass('bg-transparent')
+    expect(button).toHaveClasses(classes)
+  })
 })

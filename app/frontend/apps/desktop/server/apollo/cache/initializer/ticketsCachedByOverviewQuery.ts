@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import gql from 'graphql-tag'
 
@@ -8,10 +8,7 @@ import registerRelayStylePagination from '#shared/server/apollo/cache/utils/regi
 import { useTicketsCachedByOverviewCache } from '#desktop/entities/ticket/composables/useTicketsCachedByOverviewCache.ts'
 
 import type { InMemoryCache } from '@apollo/client/cache'
-import type {
-  FieldMergeFunction,
-  FieldPolicy,
-} from '@apollo/client/cache/inmemory/policies'
+import type { FieldMergeFunction, FieldPolicy } from '@apollo/client/cache/inmemory/policies'
 import type { InMemoryCacheConfig } from '@apollo/client/cache/inmemory/types'
 
 const modifyOverviewsCache = (
@@ -48,14 +45,12 @@ const modifyOverviewsCache = (
   })
 }
 
-export default function register(
-  config: InMemoryCacheConfig,
-): InMemoryCacheConfig {
-  const currentConfig = registerRelayStylePagination(
-    config,
-    'ticketsCachedByOverview',
-    ['overviewId', 'orderBy', 'orderDirection'],
-  )
+export default function register(config: InMemoryCacheConfig): InMemoryCacheConfig {
+  const currentConfig = registerRelayStylePagination(config, 'ticketsCachedByOverview', [
+    'overviewId',
+    'orderBy',
+    'orderDirection',
+  ])
 
   currentConfig.typePolicies ||= {}
   currentConfig.typePolicies.Query ||= {}
@@ -65,8 +60,7 @@ export default function register(
   const ticketsCachedByOverviewPolicy = currentConfig.typePolicies.Query.fields
     .ticketsCachedByOverview as FieldPolicy
 
-  const originalMerge =
-    ticketsCachedByOverviewPolicy.merge as FieldMergeFunction
+  const originalMerge = ticketsCachedByOverviewPolicy.merge as FieldMergeFunction
 
   // Override merge function to include noChange handling
   ticketsCachedByOverviewPolicy.merge = (existing, incoming, options) => {
@@ -81,16 +75,33 @@ export default function register(
       })
     }
 
-    const cachedData =
-      useTicketsCachedByOverviewCache().readTicketsByOverviewCache(
+    // We receive null when the query data is still the same.
+    // Important: merge must return store values (with References), not denormalized results from readQuery.
+    if (incoming.edges === null) {
+      if (existing) return existing
+
+      // Reconstruct a store-shaped value using References if we have a denormalized cached query result.
+      const cachedResult = useTicketsCachedByOverviewCache().readTicketsByOverviewCache(
         variables as TicketsCachedByOverviewQueryVariables,
       )
 
-    // We receiving null when the query data is still the same.
-    if ((cachedData || existing) && incoming.edges === null) {
-      // TODO: Returning cache data destroys currently the references on the tickets...
-      // TODO: And workaround with "existing" is not working, because also with cache+network it's always empty.
-      return existing || cachedData!.ticketsCachedByOverview // Return existing data without updating
+      const cachedConnection = cachedResult?.ticketsCachedByOverview
+
+      if (cachedConnection?.edges) {
+        const edgesWithReferences = cachedConnection.edges.map((edge) => {
+          if (!edge || !edge.node) return edge
+
+          const referenceId = cache.identify(edge.node)
+          return referenceId ? { ...edge, node: { __ref: referenceId } } : edge
+        })
+
+        return {
+          ...cachedConnection,
+          edges: edgesWithReferences,
+        }
+      }
+
+      return existing
     }
 
     // Otherwise, call the original merge function for normal pagination behavior

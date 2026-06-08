@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { FormKit } from '@formkit/vue'
 import { waitFor } from '@testing-library/vue'
@@ -18,69 +18,68 @@ import {
 } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
-const testOptions: AutocompleteSearchTicketQuery['autocompleteSearchTicket'][0][] =
-  [
-    {
-      __typename: 'AutocompleteSearchTicketEntry',
-      value: convertToGraphQLId('Ticket', 1),
-      label: 'Sample title 1',
-      labelPlaceholder: [],
-      heading: 'Ticket#123456 - Max Mustermann',
-      headingPlaceholder: [],
-      disabled: false,
-      icon: null,
-      ticket: nullableMock({
-        id: convertToGraphQLId('Ticket', 1),
-        internalId: 1,
-        number: '123456',
-        state: nullableMock({
-          id: convertToGraphQLId('TicketState', 1),
-          name: 'open',
-        }),
-        stateColorCode: EnumTicketStateColorCode.Open,
+const testOptions: AutocompleteSearchTicketQuery['autocompleteSearchTicket'][0][] = [
+  {
+    __typename: 'AutocompleteSearchTicketEntry',
+    value: convertToGraphQLId('Ticket', 1),
+    label: 'Sample title 1',
+    labelPlaceholder: [],
+    heading: 'Ticket#123456 - Max Mustermann',
+    headingPlaceholder: [],
+    disabled: false,
+    icon: null,
+    ticket: nullableMock({
+      id: convertToGraphQLId('Ticket', 1),
+      internalId: 1,
+      number: '123456',
+      state: nullableMock({
+        id: convertToGraphQLId('TicketState', 1),
+        name: 'open',
       }),
-    },
-    {
-      __typename: 'AutocompleteSearchTicketEntry',
-      value: convertToGraphQLId('Ticket', 2),
-      label: 'Sample title 2',
-      labelPlaceholder: [],
-      heading: 'Ticket#55555 - Max Mustermann',
-      headingPlaceholder: [],
-      disabled: false,
-      icon: null,
-      ticket: nullableMock({
-        id: convertToGraphQLId('Ticket', 2),
-        internalId: 1,
-        number: '55555',
-        state: nullableMock({
-          id: convertToGraphQLId('TicketState', 1),
-          name: 'open',
-        }),
-        stateColorCode: EnumTicketStateColorCode.Open,
+      stateColorCode: EnumTicketStateColorCode.Open,
+    }),
+  },
+  {
+    __typename: 'AutocompleteSearchTicketEntry',
+    value: convertToGraphQLId('Ticket', 2),
+    label: 'Sample title 2',
+    labelPlaceholder: [],
+    heading: 'Ticket#55555 - Max Mustermann',
+    headingPlaceholder: [],
+    disabled: false,
+    icon: null,
+    ticket: nullableMock({
+      id: convertToGraphQLId('Ticket', 2),
+      internalId: 1,
+      number: '55555',
+      state: nullableMock({
+        id: convertToGraphQLId('TicketState', 1),
+        name: 'open',
       }),
-    },
-    {
-      __typename: 'AutocompleteSearchTicketEntry',
-      value: convertToGraphQLId('Ticket', 3),
-      label: 'Sample title 3',
-      labelPlaceholder: [],
-      heading: 'Ticket#99999 - Max Mustermann',
-      headingPlaceholder: [],
-      disabled: false,
-      icon: null,
-      ticket: nullableMock({
-        id: convertToGraphQLId('Ticket', 3),
-        internalId: 1,
-        number: '99999',
-        state: nullableMock({
-          id: convertToGraphQLId('TicketState', 1),
-          name: 'open',
-        }),
-        stateColorCode: EnumTicketStateColorCode.Open,
+      stateColorCode: EnumTicketStateColorCode.Open,
+    }),
+  },
+  {
+    __typename: 'AutocompleteSearchTicketEntry',
+    value: convertToGraphQLId('Ticket', 3),
+    label: 'Sample title 3',
+    labelPlaceholder: [],
+    heading: 'Ticket#99999 - Max Mustermann',
+    headingPlaceholder: [],
+    disabled: false,
+    icon: null,
+    ticket: nullableMock({
+      id: convertToGraphQLId('Ticket', 3),
+      internalId: 1,
+      number: '99999',
+      state: nullableMock({
+        id: convertToGraphQLId('TicketState', 1),
+        name: 'open',
       }),
-    },
-  ]
+      stateColorCode: EnumTicketStateColorCode.Open,
+    }),
+  },
+]
 
 const wrapperParameters = {
   form: true,
@@ -110,9 +109,7 @@ describe('Form - Field - Ticket - Query', () => {
 
     expect(filterElement).toBeInTheDocument()
 
-    expect(
-      await wrapper.findByText('Start typing to search…'),
-    ).toBeInTheDocument()
+    expect(await wrapper.findByText('Start typing to search…')).toBeInTheDocument()
 
     mockAutocompleteSearchTicketQuery({
       autocompleteSearchTicket: [testOptions[0]],
@@ -122,9 +119,7 @@ describe('Form - Field - Ticket - Query', () => {
 
     await waitForAutocompleteSearchTicketQueryCalls()
 
-    expect(
-      wrapper.queryByText('Start typing to search…'),
-    ).not.toBeInTheDocument()
+    expect(wrapper.queryByText('Start typing to search…')).not.toBeInTheDocument()
 
     let selectOptions = wrapper.getAllByRole('option')
 
@@ -133,17 +128,13 @@ describe('Form - Field - Ticket - Query', () => {
     expect(selectOptions).toHaveLength(1)
     expect(selectOptions[0]).toHaveTextContent(testOptions[0].label)
 
-    expect(
-      getByIconName(selectOptions[0], 'check-circle-no'),
-    ).toBeInTheDocument()
+    expect(getByIconName(selectOptions[0], 'check-circle-no')).toBeInTheDocument()
 
-    await wrapper.events.click(wrapper.getByLabelText('Clear Search'))
+    await wrapper.events.click(wrapper.getByLabelText('Clear search'))
 
     expect(filterElement).toHaveValue('')
 
-    expect(
-      await wrapper.findByText('Start typing to search…'),
-    ).toBeInTheDocument()
+    expect(await wrapper.findByText('Start typing to search…')).toBeInTheDocument()
 
     mockAutocompleteSearchTicketQuery({
       autocompleteSearchTicket: [testOptions[1]],
@@ -153,9 +144,7 @@ describe('Form - Field - Ticket - Query', () => {
 
     await waitForAutocompleteSearchTicketQueryCalls()
 
-    expect(
-      wrapper.queryByText('Start typing to search…'),
-    ).not.toBeInTheDocument()
+    expect(wrapper.queryByText('Start typing to search…')).not.toBeInTheDocument()
 
     selectOptions = wrapper.getAllByRole('option')
 
@@ -164,9 +153,7 @@ describe('Form - Field - Ticket - Query', () => {
 
     await wrapper.events.clear(filterElement)
 
-    expect(
-      await wrapper.findByText('Start typing to search…'),
-    ).toBeInTheDocument()
+    expect(await wrapper.findByText('Start typing to search…')).toBeInTheDocument()
 
     mockAutocompleteSearchTicketQuery({
       autocompleteSearchTicket: [testOptions[2]],
@@ -176,9 +163,7 @@ describe('Form - Field - Ticket - Query', () => {
 
     await waitForAutocompleteSearchTicketQueryCalls()
 
-    expect(
-      wrapper.queryByText('Start typing to search…'),
-    ).not.toBeInTheDocument()
+    expect(wrapper.queryByText('Start typing to search…')).not.toBeInTheDocument()
 
     selectOptions = wrapper.getAllByRole('option')
 
@@ -219,9 +204,7 @@ describe('Form - Field - Ticket - Query', () => {
 
     expect(wrapper.queryByRole('menu')).not.toBeInTheDocument()
 
-    expect(wrapper.getByRole('listitem')).toHaveTextContent(
-      testOptions[0].label,
-    )
+    expect(wrapper.getByRole('listitem')).toHaveTextContent(testOptions[0].label)
 
     await wrapper.events.click(wrapper.getByLabelText('Select…'))
 
@@ -243,7 +226,7 @@ describe('Form - Field - Ticket - Query', () => {
     const filterElement = wrapper.getByRole('searchbox')
 
     mockAutocompleteSearchTicketQuery({
-      autocompleteSearchTicket: [...testOptions.slice(0, 1)],
+      autocompleteSearchTicket: testOptions.slice(0, 1),
     })
 
     await wrapper.events.type(filterElement, '*')
@@ -275,7 +258,7 @@ describe('Form - Field - Ticket - Query', () => {
     const filterElement = wrapper.getByRole('searchbox')
 
     mockAutocompleteSearchTicketQuery({
-      autocompleteSearchTicket: [...testOptions.slice(0, 1)],
+      autocompleteSearchTicket: testOptions.slice(0, 1),
     })
 
     await wrapper.events.type(filterElement, 'Ticket#123456')

@@ -1,12 +1,9 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class HtmlSanitizer
   class DynamicImageSize
     def sanitize(string)
-      Loofah
-        .fragment(string)
-        .scrub!(HtmlSanitizer::Scrubber::ImageSize.new)
-        .to_html
+      ScrubHtml.new(string, HtmlSanitizer::Scrubber::ImageSize.new).scrub!.to_html
     end
   end
 end

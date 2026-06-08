@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, toRef, watch, nextTick, onMounted } from 'vue'
@@ -8,7 +8,13 @@ import { useHtmlInlineImages } from '#shared/composables/useHtmlInlineImages.ts'
 import { useHtmlLinks } from '#shared/composables/useHtmlLinks.ts'
 import { type ImageViewerFile } from '#shared/composables/useImageViewer.ts'
 import type { TicketArticle } from '#shared/entities/ticket/types.ts'
-import { textToHtml } from '#shared/utils/helpers.ts'
+import { textToHtml, ensureImagesKeepAspectRatio } from '#shared/utils/helpers.ts'
+
+import { useAnnouncer } from '#desktop/composables/accessibility/useAnnouncer.ts'
+
+import { useArticleHighlights } from './useArticleHighlights/useArticleHighlights.ts'
+import { useArticleHighlightsA11y } from './useArticleHighlights/useArticleHighlightsA11y.ts'
+import { useArticleHighlightsSelection } from './useArticleHighlights/useArticleHighlightsSelection.ts'
 
 interface Props {
   article: TicketArticle
@@ -23,8 +29,7 @@ const emit = defineEmits<{
   preview: [image: ImageViewerFile]
 }>()
 
-const { shownMore, bubbleElement, hasShowMore, toggleShowMore } =
-  useArticleToggleMore()
+const { shownMore, bubbleElement, hasShowMore, toggleShowMore } = useArticleToggleMore()
 
 const bodyClasses = computed(() =>
   props.position === 'right'
@@ -36,21 +41,45 @@ const body = computed(() => {
   if (props.article.contentType !== 'text/html') {
     return textToHtml(props.article.bodyWithUrls)
   }
-  return props.article.bodyWithUrls
+  return ensureImagesKeepAspectRatio(props.article.bodyWithUrls)
 })
 
 const showAuthorInformation = computed(() => {
   const author = props.article.author.fullname // `-` => system message
-  return (
-    !props.showMetaInformation && author !== '-' && (author?.length ?? 0) > 0
-  )
+
+  return !props.showMetaInformation && author !== '-' && (author?.length ?? 0) > 0
 })
 
 const { setupLinksHandlers } = useHtmlLinks('/desktop')
-const { populateInlineImages } = useHtmlInlineImages(
-  toRef(props, 'inlineImages'),
-  (index) => emit('preview', props.inlineImages[index]),
+const { populateInlineImages } = useHtmlInlineImages(toRef(props, 'inlineImages'), (index) =>
+  emit('preview', props.inlineImages[index]),
 )
+
+useArticleHighlights(
+  bubbleElement,
+  computed(() => props.article.highlightedTexts ?? undefined),
+  body,
+)
+
+const { descriptionId, description } = useArticleHighlightsA11y(
+  bubbleElement,
+  computed(() => props.article.highlightedTexts ?? undefined),
+  body,
+  computed(() => props.article.internalId),
+)
+
+const { announce } = useAnnouncer()
+
+useArticleHighlightsSelection(
+  bubbleElement,
+  computed(() => props.article.highlightedTexts ?? undefined),
+  computed(() => props.article.id),
+  announce,
+)
+
+const toggleShowMoreAndEmit = () => {
+  toggleShowMore()
+}
 
 watch(
   () => body,
@@ -72,8 +101,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <div
-    class="Content relative p-3 transition-[padding]"
+  <article
+    class="Content relative overflow-hidden p-3 transition-[padding]"
     :class="[
       bodyClasses,
       {
@@ -85,19 +114,18 @@ onMounted(() => {
     <div
       v-if="showAuthorInformation"
       class="absolute top-3 flex w-full px-3 ltr:left-0 rtl:right-0"
-      role="group"
       aria-describedby="author-name-and-creation-date"
     >
       <p id="author-name-and-creation-date" class="sr-only">
         {{ $t('Author name and article creation date') }}
       </p>
 
-      <CommonLabel class="font-bold" size="small" variant="neutral">
+      <CommonLabel class="line-clamp-1! font-bold" size="small" variant="neutral">
         {{ article.author.fullname }}
       </CommonLabel>
 
       <CommonDateTime
-        class="text-xs ltr:ml-auto rtl:mr-auto"
+        class="shrink-0 text-xs ltr:ml-auto rtl:mr-auto"
         :date-time="article.createdAt"
       />
     </div>
@@ -105,10 +133,15 @@ onMounted(() => {
     <div
       ref="bubbleElement"
       data-test-id="article-content"
-      class="overflow-hidden text-sm"
+      class="overflow-hidden text-sm transition-[height] duration-200"
     >
+      <!--    Never drop this inner-article-body class used for Highlight feature-->
       <!--    eslint-disable vue/no-v-html-->
-      <div class="inner-article-body" v-html="body" />
+      <section class="inner-article-body" :aria-details="descriptionId" v-html="body" />
+
+      <div v-if="descriptionId" :id="descriptionId" class="sr-only">
+        {{ description }}
+      </div>
     </div>
     <div
       v-if="hasShowMore"
@@ -119,22 +152,23 @@ onMounted(() => {
     />
     <CommonLink
       v-if="hasShowMore"
-      class="mb-1 inline-block! outline-transparent! hover:no-underline! focus-visible:outline-blue-800!"
+      class="mb-1 inline-block! outline-transparent! hover:underline! focus-visible:outline-blue-800!"
       role="button"
       link="#"
       size="medium"
-      @click.prevent="toggleShowMore"
-      @keydown.enter.prevent="toggleShowMore"
+      @click.prevent="toggleShowMoreAndEmit"
+      @keydown.enter.prevent="toggleShowMoreAndEmit"
     >
       {{ shownMore ? $t('See less') : $t('See more') }}
     </CommonLink>
-  </div>
+  </article>
 </template>
 
 <style scoped>
 .inner-article-body {
   word-break: normal;
   overflow-wrap: anywhere;
+  overflow-x: auto;
 
   /*
    * TODO: Consider extending this rule to other elements.
@@ -144,17 +178,44 @@ onMounted(() => {
    *
    * These elements inherit a `display: block` style from the root stylesheet.
    */
+
   &:deep(img, svg) {
     display: inline;
   }
 
-  /* Wrap long lines in code blocks. */
-  &:deep(code) {
-    white-space: pre-wrap;
-  }
+  /*
+    Strip inline color styles in dark mode.
+      However, we need to keep the colors of the Zammad palette.
+  */
+  [data-theme='dark'] &:deep(*[style*='color']):not(
+    [style*='color:rgb(102, 102, 102)'], [style*='color: rgb(102, 102, 102)'], /* neutral 1 */
+    [style*='color:rgb(153, 153, 153)'], [style*='color: rgb(153, 153, 153)'], /* neutral 2 */
+    [style*='color:rgb(204, 204, 204)'], [style*='color: rgb(204, 204, 204)'], /* neutral 3 */
 
-  /* Strip inline color styles in dark mode. */
-  [data-theme='dark'] &:deep(*[style*='color']) {
+    [style*='color:rgb(239, 68, 68)'], [style*='color: rgb(239, 68, 68)'], /* red 1 */
+    [style*='color:rgb(205, 121, 45)'], [style*='color: rgb(205, 121, 45)'], /* orange 1 */
+    [style*='color:rgb(80, 140, 70)'], [style*='color: rgb(80, 140, 70)'], /* green 1 */
+    [style*='color:rgb(48, 100, 172)'], [style*='color: rgb(48, 100, 172)'], /* blue 1 */
+    [style*='color:rgb(107, 41, 132)'], [style*='color: rgb(107, 41, 132)'], /* purple 1 */
+
+    [style*='color:rgb(235, 61, 79)'], [style*='color: rgb(235, 61, 79)'], /* red 2 */
+    [style*='color:rgb(233, 159, 59)'], [style*='color: rgb(233, 159, 59)'], /* orange 2 */
+    [style*='color:rgb(95, 159, 84)'], [style*='color: rgb(95, 159, 84)'], /* green 2 */
+    [style*='color:rgb(70, 147, 231)'], [style*='color: rgb(70, 147, 231)'], /* blue 2 */
+    [style*='color:rgb(153, 62, 195)'], [style*='color: rgb(153, 62, 195)'], /* purple 2 */
+
+    [style*='color:rgb(237, 97, 118)'], [style*='color: rgb(237, 97, 118)'], /* red 3 */
+    [style*='color:rgb(243, 193, 79)'], [style*='color: rgb(243, 193, 79)'], /* orange 3 */
+    [style*='color:rgb(127, 187, 118)'], [style*='color: rgb(127, 187, 118)'], /* green 3 */
+    [style*='color:rgb(91, 174, 243)'], [style*='color: rgb(91, 174, 243)'], /* blue 3 */
+    [style*='color:rgb(179, 91, 223)'], [style*='color: rgb(179, 91, 223)'], /* purple 3 */
+
+    [style*='color:rgb(241, 152, 167)'], [style*='color: rgb(241, 152, 167)'], /* red 4 */
+    [style*='color:rgb(246, 211, 102)'], [style*='color: rgb(246, 211, 102)'], /* orange 4 */
+    [style*='color:rgb(170, 214, 164)'], [style*='color: rgb(170, 214, 164)'], /* green 4 */
+    [style*='color:rgb(122, 202, 247)'], [style*='color: rgb(122, 202, 247)'], /* blue 4 */
+    [style*='color:rgb(201, 135, 236)'] [style*='color: rgb(201, 135, 236)'] /* purple 4 */
+  ) {
     color: inherit !important;
   }
 }

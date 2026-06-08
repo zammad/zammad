@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, watch } from 'vue'
@@ -27,6 +27,7 @@ import type { TwoFactorConfigurationType } from '#desktop/components/TwoFactor/t
 import { useConfigurationTwoFactor } from '#desktop/entities/two-factor-configuration/composables/useConfigurationTwoFactor.ts'
 
 import { useBreadcrumb } from '../composables/useBreadcrumb.ts'
+import { usePersonalSettingTabs } from '../composables/usePersonalSettingTabs.ts'
 
 defineOptions({
   beforeRouteEnter() {
@@ -69,17 +70,14 @@ watch(hasEnabledMethods, (newValue) => {
   )
 })
 
-const { breadcrumbItems } = useBreadcrumb(__('Two-factor Authentication'))
+const { breadcrumbItems } = useBreadcrumb(__('Two-factor authentication'))
 
 const twoFactorConfigurationFlyout = useFlyout({
   name: 'two-factor-flyout',
-  component: () =>
-    import('#desktop/components/TwoFactor/TwoFactorConfigurationFlyout.vue'),
+  component: () => import('#desktop/components/TwoFactor/TwoFactorConfigurationFlyout.vue'),
 })
 
-const openTwoFactorConfigurationFlyout = async (
-  type: TwoFactorConfigurationType,
-) => {
+const openTwoFactorConfigurationFlyout = async (type: TwoFactorConfigurationType) => {
   return twoFactorConfigurationFlyout.open({
     type,
   })
@@ -88,9 +86,7 @@ const openTwoFactorConfigurationFlyout = async (
 const setDefaultTwoFactorMethod = new MutationHandler(
   useUserCurrentTwoFactorSetDefaultMethodMutation(),
   {
-    errorNotificationMessage: __(
-      'Could not set two-factor authentication method as default',
-    ),
+    errorNotificationMessage: __('Could not set two-factor authentication method as default'),
   },
 )
 
@@ -103,7 +99,7 @@ const submitTwoFactorDefaultMethod = (entity?: ObjectLike) => {
     })
     .then(() => {
       session.setUserPreference('two_factor_authentication', {
-        ...(session.user?.preferences?.two_factor_authentication || {}),
+        ...session.user?.preferences?.two_factor_authentication,
         default: entity.name,
       })
 
@@ -115,14 +111,9 @@ const submitTwoFactorDefaultMethod = (entity?: ObjectLike) => {
     })
 }
 
-const removeTwoFactorMethod = new MutationHandler(
-  useUserCurrentTwoFactorRemoveMethodMutation(),
-  {
-    errorNotificationMessage: __(
-      'Could not remove two-factor authentication method.',
-    ),
-  },
-)
+const removeTwoFactorMethod = new MutationHandler(useUserCurrentTwoFactorRemoveMethodMutation(), {
+  errorNotificationMessage: __('Could not remove two-factor authentication method.'),
+})
 
 const submitTwoFactorMethodRemoval = async (entity?: ObjectLike) => {
   if (!entity) return
@@ -146,17 +137,12 @@ const submitTwoFactorMethodRemoval = async (entity?: ObjectLike) => {
   })
 }
 
-const lookUpA11yActionLabel = (
-  entity: ObjectLike,
-  type: TwoFactorActionTypes,
-) => {
+const lookUpA11yActionLabel = (entity: ObjectLike, type: TwoFactorActionTypes) => {
   const authenticatorMethod = twoFactorConfigurationMethods.value.find(
     (method) => method.name === entity.name,
   )
 
-  return (
-    authenticatorMethod?.configurationOptions?.getActionA11yLabel(type) || ''
-  )
+  return authenticatorMethod?.configurationOptions?.getActionA11yLabel(type) || ''
 }
 
 const actions = computed<MenuItem[]>(() => [
@@ -175,9 +161,7 @@ const actions = computed<MenuItem[]>(() => [
     ariaLabel: (entity) => lookUpA11yActionLabel(entity!, 'edit'),
     icon: 'pencil',
     show: (entity) => {
-      return Boolean(
-        entity?.configured && entity?.configurationOptions.editable,
-      )
+      return Boolean(entity?.configured && entity?.configurationOptions.editable)
     },
     onClick: (entity) => openTwoFactorConfigurationFlyout(entity?.name),
   },
@@ -199,10 +183,17 @@ const actions = computed<MenuItem[]>(() => [
     onClick: (entity) => submitTwoFactorMethodRemoval(entity),
   },
 ])
+
+const { tabs, activeTab } = usePersonalSettingTabs()
 </script>
 
 <template>
-  <LayoutContent :breadcrumb-items="breadcrumbItems" width="narrow">
+  <LayoutContent
+    :active-tab="activeTab"
+    :tabs="tabs"
+    :breadcrumb-items="breadcrumbItems"
+    width="narrow"
+  >
     <div class="flex flex-col gap-2.5">
       <div>
         <CommonLabel class="mb-1.5">{{ $t('Available methods') }}</CommonLabel>
@@ -222,10 +213,7 @@ const actions = computed<MenuItem[]>(() => [
                 <CommonLabel class="text-black dark:text-white"
                   >{{ $t(twoFactorMethod.label) }}
                 </CommonLabel>
-                <CommonBadge
-                  v-if="twoFactorMethod.configured"
-                  variant="success"
-                >
+                <CommonBadge v-if="twoFactorMethod.configured" variant="success">
                   {{ $t('Active') }}
                 </CommonBadge>
                 <CommonBadge v-if="twoFactorMethod.default" variant="info"
@@ -271,11 +259,7 @@ const actions = computed<MenuItem[]>(() => [
             size="medium"
             @click="openTwoFactorConfigurationFlyout('recovery_codes')"
           >
-            {{
-              hasRecoveryCodes
-                ? $t('Regenerate Recovery Codes')
-                : $t('Generate Recovery Codes')
-            }}
+            {{ hasRecoveryCodes ? $t('Regenerate recovery codes') : $t('Generate recovery codes') }}
           </CommonButton>
         </div>
       </template>

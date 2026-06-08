@@ -6,4 +6,50 @@ to: Maruan Break <hussein@example.com>
 subject: 'AW: One Net Business'
 body: no visible content
 content_type: text/plain
-attachments: []
+attachments:
+- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+  data: |
+    --_000_D98C7360C87D6642B509616EFFD4ED2D421C542Cvoexm32winterna_
+    Content-Type: text/plain; charset="utf-8"
+    Content-Transfer-Encoding: base64
+
+    c29tZSB0ZXh0
+
+    --_000_D98C7360C87D6642B509616EFFD4ED2D421C542Cvoexm32winterna_
+    Content-Type: text/html; charset="utf-8"
+    Content-Transfer-Encoding: base64
+
+    PGI+c29tZSB0ZXh0PC9iPg==
+
+    --_000_D98C7360C87D6642B509616EFFD4ED2D421C542Cvoexm32winterna_--
+  filename: file
+  preferences: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+    Return-Path: Karoline.Smith@example.com
+    Received: from VOEXM32W.internal.example.com ([8.1.1.1]) by
+    Date: Wed, 05 Apr 2017 07:45:19 +0000
+    From: '"Smith, Karoline, Example DE" <Karoline.Smith@example.com>'
+    To: Maruan Break <hussein@example.com>
+    Message-ID: "<D98C7360C87D6642B509616EFFD4ED2D421C542C@voexm32w.internal.example.com>"
+    In-Reply-To: "<1D7115FC-2F22-486C-B4B5-820D8A64A4D2@example.com>"
+    References: "<D98C7360C87D6642B509616EFFD4ED2D421C0403@voexm32w.internal.example.com>
+      <5C1F374E-737B-46BA-97F4-4829F1DF5E95@example.com>"
+    Subject: 'AW: One Net Business'
+    MIME-Version: '1.0'
+    Content-Type: multipart/alternative
+    Delivered-To: climax-hussein@example.com
+    X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrIKsWRWlGSWpSXmKPExsWi75nTrTtrwZM
+    X-Env-Sender: Karoline.Smith@example.com
+    X-Msg-Ref: server-9.tower-169.example.com!1491378329!108245161!2
+    X-Originating-IP: "[3.1.1.1]"
+    X-StarScan-Received:
+    X-StarScan-Version: 9.4.12; banners=-,-,-
+    X-VirusChecked: Checked
+    Thread-Topic: One Net Business
+    Thread-Index: AQHSrJW/Plvrkd7dvEe1pr4cBZSIz6Gz0rpmgAAAyYaAASlrAIABavZw
+    Accept-Language: de-DE, en-US
+    Content-Language: de-DE
+    X-MS-Has-Attach:
+    X-MS-TNEF-Correlator:
+    X-getmail-retrieved-from-mailbox: INBOX
+    Mime-Type: multipart/alternative
+    Charset: UTF-8

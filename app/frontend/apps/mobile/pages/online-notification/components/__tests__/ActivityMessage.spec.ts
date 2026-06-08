@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { generateObjectData } from '#tests/graphql/builders/index.ts'
 import { renderComponent } from '#tests/support/components/index.ts'
@@ -20,9 +20,7 @@ vi.mock('non-existing')
 
 const userId = convertToGraphQLId('User', 100)
 
-const renderActivityMessage = (
-  activityProps: Partial<OnlineNotification> = {},
-) => {
+const renderActivityMessage = (activityProps: Partial<OnlineNotification> = {}) => {
   const finishedProps = {
     activity: {
       objectName: 'Ticket',
@@ -58,9 +56,7 @@ describe('NotificationItem.vue', () => {
   it('check update activity message output', () => {
     const view = renderActivityMessage()
 
-    expect(view.container).toHaveTextContent(
-      'John Doe updated ticket Ticket Title',
-    )
+    expect(view.container).toHaveTextContent('John Doe updated ticket Ticket Title')
   })
 
   it('check create activity message output', () => {
@@ -68,9 +64,7 @@ describe('NotificationItem.vue', () => {
       typeName: 'create',
     })
 
-    expect(view.container).toHaveTextContent(
-      'John Doe created ticket Ticket Title',
-    )
+    expect(view.container).toHaveTextContent('John Doe created ticket Ticket Title')
   })
 
   it('check that avatar exists', () => {
@@ -101,9 +95,7 @@ describe('NotificationItem.vue', () => {
       createdBy: undefined,
     })
 
-    expect(view.container).toHaveTextContent(
-      'You can no longer see the ticket.',
-    )
+    expect(view.container).toHaveTextContent('You can no longer see the ticket.')
     expect(view.getByIconName('lock')).toBeInTheDocument()
   })
 

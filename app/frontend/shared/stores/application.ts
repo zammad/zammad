@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { defineStore } from 'pinia'
 import { computed, effectScope, ref, type Ref } from 'vue'
@@ -11,19 +11,13 @@ import type {
   ApplicationConfigQuery,
   ApplicationConfigQueryVariables,
 } from '#shared/graphql/types.ts'
-import {
-  QueryHandler,
-  SubscriptionHandler,
-} from '#shared/server/apollo/handler/index.ts'
+import { QueryHandler, SubscriptionHandler } from '#shared/server/apollo/handler/index.ts'
 import type { ConfigList } from '#shared/types/store.ts'
 import testFlags from '#shared/utils/testFlags.ts'
 
 let configUpdatesSubscriptionInitialized = false
 
-let applicationConfigQuery: QueryHandler<
-  ApplicationConfigQuery,
-  ApplicationConfigQueryVariables
->
+let applicationConfigQuery: QueryHandler<ApplicationConfigQuery, ApplicationConfigQueryVariables>
 
 const getApplicationConfigQuery = () => {
   if (applicationConfigQuery) return applicationConfigQuery
@@ -50,8 +44,7 @@ export const useApplicationStore = defineStore(
 
     const setLoaded = (): void => {
       if (notifications.hasErrors()) {
-        const loadingAppElement: Maybe<HTMLElement> =
-          document.getElementById('loading-app')
+        const loadingAppElement: Maybe<HTMLElement> = document.getElementById('loading-app')
 
         loadingAppElement
           ?.getElementsByClassName('loading-animation')
@@ -83,9 +76,7 @@ export const useApplicationStore = defineStore(
     const initializeConfigUpdateSubscription = (): void => {
       const scope = effectScope()
       scope.run(() => {
-        const configUpdatesSubscription = new SubscriptionHandler(
-          useConfigUpdatesSubscription(),
-        )
+        const configUpdatesSubscription = new SubscriptionHandler(useConfigUpdatesSubscription())
 
         configUpdatesSubscription.onResult((result) => {
           const updatedSetting = result.data?.configUpdates.setting
@@ -125,9 +116,7 @@ export const useApplicationStore = defineStore(
     }
 
     const hasCustomProductBranding = computed(() =>
-      Boolean(
-        config.value.product_logo && config.value.product_logo !== 'logo.svg',
-      ),
+      Boolean(config.value.product_logo && config.value.product_logo !== 'logo.svg'),
     )
 
     // this is called right before router renders a page, - we remove "loading" element here instead of "setLoaded"

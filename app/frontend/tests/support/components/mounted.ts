@@ -1,8 +1,6 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import renderComponent, {
-  type ExtendedRenderResult,
-} from './renderComponent.ts'
+import renderComponent, { type ExtendedRenderResult } from './renderComponent.ts'
 
 const components = new Set<ExtendedRenderResult>()
 afterEach(() => {

@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { isEqual } from 'lodash-es'
@@ -31,12 +31,9 @@ watch(
   },
 )
 
-const tagAssigmentUpdateHandler = new MutationHandler(
-  useTagAssignmentUpdateMutation({}),
-  {
-    errorNotificationMessage: __('Ticket tags could not be updated.'),
-  },
-)
+const tagAssigmentUpdateHandler = new MutationHandler(useTagAssignmentUpdateMutation({}), {
+  errorNotificationMessage: __('Ticket tags could not be updated.'),
+})
 
 const { notify } = useNotifications()
 

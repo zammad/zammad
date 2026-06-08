@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -7,6 +7,7 @@ require 'models/form_updater/concerns/has_security_options_examples'
 require 'models/form_updater/concerns/applies_ticket_shared_draft_examples'
 require 'models/form_updater/concerns/stores_taskbar_state_examples'
 require 'models/form_updater/concerns/applies_taskbar_state_examples'
+require 'models/form_updater/concerns/prepares_ticket_signature_examples'
 
 RSpec.describe(FormUpdater::Updater::Ticket::Edit) do
   subject(:resolved_result) do
@@ -58,6 +59,28 @@ RSpec.describe(FormUpdater::Updater::Ticket::Edit) do
     }
   end
 
+  describe '#authorized?' do
+    it 'is authorized for agents' do
+      expect(resolved_result.authorized?).to be true
+    end
+
+    context 'with customer user' do
+      let(:user) { create(:customer) }
+
+      it 'is authorized for customers' do
+        expect(resolved_result.authorized?).to be true
+      end
+    end
+
+    context 'with admin-only user' do
+      let(:user) { create(:user, roles: [Role.find_by(name: 'Admin')]) }
+
+      it 'is not authorized' do
+        expect(resolved_result.authorized?).to be false
+      end
+    end
+  end
+
   context 'when resolving' do
     it 'returns all resolved relation fields with correct value + label' do
       expect(resolved_result.resolve[:fields]).to include(
@@ -87,6 +110,27 @@ RSpec.describe(FormUpdater::Updater::Ticket::Edit) do
                                      disabled: true,
                                    }),
         )
+      end
+    end
+
+    context 'when rendering signature variables for an existing ticket' do
+      let(:customer) { create(:customer, firstname: 'Elvis') }
+      let(:ticket)   { create(:ticket, group:, customer:, title: 'Test ticket') }
+      let(:id)       { Gql::ZammadSchema.id_from_object(ticket) }
+      let(:data)     { { 'group_id' => group.id } }
+      let(:signature_body) do
+        'Test ticket: id=#{ticket.id} number=#{ticket.number} title=#{ticket.title} customer=#{ticket.customer.firstname}' # rubocop:disable Lint/InterpolationCheck
+      end
+
+      before do
+        group.update!(signature: create(:signature, body: signature_body))
+      end
+
+      it 'uses the real ticket object for template rendering', :aggregate_failures do
+        expected_signature = "Test ticket: id=#{ticket.id} number=#{ticket.number} title=#{ticket.title} customer=#{ticket.customer.firstname}"
+
+        expect(resolved_result.authorized?).to be(true)
+        expect(resolved_result.resolve[:fields].dig('body', :signature, :renderedBody)).to eq(expected_signature)
       end
     end
 
@@ -354,6 +398,43 @@ RSpec.describe(FormUpdater::Updater::Ticket::Edit) do
   end
 
   include_examples 'FormUpdater::ChecksCoreWorkflow', object_name: 'Ticket'
+
+  context 'when handling default follow-up state' do
+    let(:closed_state)    { Ticket::State.find_by(name: 'closed') }
+    let(:follow_up_state) { Ticket::State.find_by(default_follow_up: true) }
+    let(:meta)            { { initial: false, dirty_fields: [] } }
+    let(:data)            { { 'state_id' => closed_state.id, 'article' => { 'body' => 'Some article body' } } }
+
+    before { resolved_result.authorized? }
+
+    context 'when user is a customer viewing their own ticket' do
+      let(:user) { create(:customer) }
+      let(:id)   { Gql::ZammadSchema.id_from_object(create(:ticket, group: group, state: closed_state, customer: user)) }
+
+      it 'sets state_id to the default follow-up state' do
+        expect(resolved_result.resolve[:fields]['state_id'][:value]).to eq(follow_up_state.id)
+      end
+    end
+
+    context 'when user is an agent with direct group access' do
+      let(:id) { Gql::ZammadSchema.id_from_object(create(:ticket, group: group, state: closed_state)) }
+
+      it 'does not change state_id' do
+        expect(resolved_result.resolve[:fields]['state_id'][:value]).to be_nil
+      end
+    end
+
+    context 'when user is an agent_and_customer with role-based group access' do
+      let(:agent_role_with_group) { create(:role, :agent, groups: [group]) }
+      let(:user)                  { create(:user, roles: [Role.find_by(name: 'Customer'), agent_role_with_group]) }
+      let(:id)                    { Gql::ZammadSchema.id_from_object(create(:ticket, group: group, state: closed_state)) }
+
+      it 'does not change state_id' do
+        expect(resolved_result.resolve[:fields]['state_id'][:value]).to be_nil
+      end
+    end
+  end
+
   include_examples 'FormUpdater::HasSecurityOptions', type: 'edit'
   include_examples 'FormUpdater::AppliesTicketSharedDraft', draft_type: 'detail-view'
 
@@ -372,5 +453,7 @@ RSpec.describe(FormUpdater::Updater::Ticket::Edit) do
 
     include_examples 'FormUpdater::StoresTaskbarState', taskbar_key: 'TicketZoom-1234', taskbar_callback: 'Ticket', store_state_collect_group_key: 'ticket', store_state_group_keys: ['article'] # gitleaks:allow
     include_examples 'FormUpdater::AppliesTaskbarState', taskbar_key: 'TicketZoom-1234', taskbar_callback: 'Ticket', apply_state_group_keys: %w[ticket article] # gitleaks:allow
+    include_examples 'FormUpdater::PreparesTicketSignature'
+
   end
 end

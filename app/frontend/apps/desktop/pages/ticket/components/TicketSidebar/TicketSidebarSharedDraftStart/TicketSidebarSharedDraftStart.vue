@@ -1,14 +1,11 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed } from 'vue'
 
 import { useTicketSharedDraftStart } from '#shared/entities/ticket-shared-draft-start/composables/useTicketSharedDraftStart.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
-import {
-  GraphQLErrorTypes,
-  type GraphQLHandlerError,
-} from '#shared/types/error.ts'
+import { GraphQLErrorTypes, type GraphQLHandlerError } from '#shared/types/error.ts'
 
 import { usePersistentStates } from '#desktop/pages/ticket/composables/usePersistentStates.ts'
 import {
@@ -43,8 +40,10 @@ const errorCallback = (error: GraphQLHandlerError) => {
   return true
 }
 
-const { sharedDraftStartListQuery, sharedDraftStartList } =
-  useTicketSharedDraftStart(groupId, errorCallback)
+const { sharedDraftStartListQuery, sharedDraftStartList } = useTicketSharedDraftStart(
+  groupId,
+  errorCallback,
+)
 
 sharedDraftStartListQuery.onResult(({ data }) => {
   if (!data?.ticketSharedDraftStartList) return

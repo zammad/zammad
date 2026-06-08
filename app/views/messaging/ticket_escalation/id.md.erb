@@ -1,0 +1,7 @@
+# #{ticket.title}
+_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Tiket##{ticket.number}>: Dieskalasi pada #{ticket.escalation_at}_
+Tiket (#{ticket.title}) dari "#{ticket.customer.longname}" telah dieskalasi sejak "#{ticket.escalation_at}"!
+
+<% if @objects[:article] %>
+#{article.body_as_text}
+<% end %>

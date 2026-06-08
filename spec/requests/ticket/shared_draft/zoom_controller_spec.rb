@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -182,7 +182,7 @@ RSpec.describe 'Ticket Shared Drafts Zoom API endpoints', authenticated_as: :age
     it 'raises error if draft is not applicable in this context' do
       put_ticket_update(draft_a.ticket.id, draft_b.id)
 
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
     end
 
     it 'keeps draft if not applicable in this context' do

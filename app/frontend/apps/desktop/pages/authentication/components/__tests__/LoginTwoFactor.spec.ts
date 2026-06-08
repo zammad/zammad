@@ -1,19 +1,13 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { waitFor } from '@testing-library/vue'
 
-import {
-  mockGraphQLResult,
-  waitForGraphQLMockCalls,
-} from '#tests/graphql/builders/mocks.ts'
+import { mockGraphQLResult, waitForGraphQLMockCalls } from '#tests/graphql/builders/mocks.ts'
 import renderComponent from '#tests/support/components/renderComponent.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 
 import securityKeys from '#shared/entities/two-factor/plugins/security-keys.ts'
-import type {
-  TwoFactorPlugin,
-  TwoFactorSetupResult,
-} from '#shared/entities/two-factor/types.ts'
+import type { TwoFactorPlugin, TwoFactorSetupResult } from '#shared/entities/two-factor/types.ts'
 import { TwoFactorMethodInitiateAuthenticationDocument } from '#shared/graphql/mutations/twoFactorMethodInitiateAuthentication.api.ts'
 import type { TwoFactorMethodInitiateAuthenticationMutation } from '#shared/graphql/types.ts'
 import { createDeferred } from '#shared/utils/helpers.ts'
@@ -49,10 +43,7 @@ const renderTwoFactor = async (twoFactor: TwoFactorPlugin) => {
     form: true,
   })
 
-  await waitForGraphQLMockCalls(
-    'mutation',
-    'twoFactorMethodInitiateAuthentication',
-  )
+  await waitForGraphQLMockCalls('mutation', 'twoFactorMethodInitiateAuthentication')
 
   return view
 }
@@ -99,9 +90,7 @@ describe('non-form two factor', () => {
     })
 
     await expect(
-      view.findByText(
-        'Two-factor authentication method could not be initiated.',
-      ),
+      view.findByText('Two-factor authentication method could not be initiated.'),
     ).resolves.toBeInTheDocument()
   })
 
@@ -168,9 +157,7 @@ describe('non-form two factor', () => {
 
     await expect(view.findByText(error)).resolves.toBeInTheDocument()
 
-    expect(
-      view.queryByRole('button', { name: 'Retry' }),
-    ).not.toBeInTheDocument()
+    expect(view.queryByRole('button', { name: 'Retry' })).not.toBeInTheDocument()
   })
 
   it("show retry button if it's not disabled", async () => {
@@ -188,9 +175,7 @@ describe('non-form two factor', () => {
     })
 
     await expect(view.findByText(error)).resolves.toBeInTheDocument()
-    await expect(
-      view.findByRole('button', { name: 'Retry' }),
-    ).resolves.toBeInTheDocument()
+    await expect(view.findByRole('button', { name: 'Retry' })).resolves.toBeInTheDocument()
   })
 
   it('retry button calls setup again', async () => {
@@ -199,9 +184,7 @@ describe('non-form two factor', () => {
       initiationData: { foo: 'bar' },
     })
 
-    const setup = vi
-      .fn()
-      .mockResolvedValue({ success: false, retry: true, error })
+    const setup = vi.fn().mockResolvedValue({ success: false, retry: true, error })
 
     const view = await renderTwoFactor({
       ...securityKeys,

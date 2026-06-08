@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, toRef } from 'vue'
@@ -29,7 +29,15 @@ const customer = computed(() => {
 <template>
   <div class="flex cursor-pointer ltr:pr-3 rtl:pl-3">
     <div class="flex w-14 items-center justify-center">
+      <CommonIcon
+        v-if="entity.aiAgentRunning"
+        role="status"
+        :aria-label="$t('Currently processing this ticket…')"
+        size="small"
+        name="check-circle-no-ai"
+      />
       <CommonTicketStateIndicator
+        v-else
         :color-code="entity.stateColorCode"
         :label="entity.state.name"
       />
@@ -45,18 +53,12 @@ const customer = computed(() => {
             {{ customer }}
           </template>
         </span>
-        <span
-          class="mb-1 line-clamp-3 text-lg leading-5 font-bold whitespace-normal"
-        >
+        <span class="mb-1 line-clamp-3 text-lg leading-5 font-bold whitespace-normal">
           <slot>
             {{ entity.title }}
           </slot>
         </span>
-        <div
-          v-if="stringUpdated"
-          data-test-id="stringUpdated"
-          class="text-gray truncate"
-        >
+        <div v-if="stringUpdated" data-test-id="stringUpdated" class="truncate text-gray">
           {{ stringUpdated }}
         </div>
       </div>

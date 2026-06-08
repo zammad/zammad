@@ -31,3 +31,16 @@
 
 en:
   hello: "Hello world"
+  number:
+      human:
+        storage_units:
+          format: "%n %u"
+          units:
+            byte:
+              one: "B"
+              other: "B"
+            kb: "KB"
+            mb: "MB"
+            gb: "GB"
+            tb: "TB"
+            pb: "PB"

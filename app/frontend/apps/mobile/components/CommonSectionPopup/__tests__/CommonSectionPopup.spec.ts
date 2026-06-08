@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { flushPromises } from '@vue/test-utils'
 import { ref } from 'vue'
@@ -242,5 +242,46 @@ describe('popup behaviour', () => {
     await view.events.click(view.getByText('Some kind of text'))
 
     expect(view.queryByTestId('popupWindow')).toBeInTheDocument()
+  })
+
+  it('supports persistent mode', async () => {
+    const state = ref(true)
+
+    const view = renderComponent(CommonSectionPopup, {
+      props: {
+        persistent: true,
+      },
+      vModel: {
+        state,
+      },
+    })
+
+    const popup = view.getByTestId('popupWindow')
+
+    expect(popup).toHaveAttribute('aria-hidden', 'false')
+
+    expect(popup).toHaveStyle({
+      display: 'block',
+    })
+
+    state.value = false
+
+    await flushPromises()
+
+    expect(popup).toHaveAttribute('aria-hidden', 'true')
+
+    expect(popup).toHaveStyle({
+      display: 'none',
+    })
+
+    state.value = true
+
+    await flushPromises()
+
+    expect(popup).toHaveAttribute('aria-hidden', 'false')
+
+    expect(popup).toHaveStyle({
+      display: 'block',
+    })
   })
 })

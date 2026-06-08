@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Translation < ApplicationModel
   include Translation::SynchronizesFromPo
@@ -122,18 +122,12 @@ translate multiple strings at the same time
 
 =begin
 
-find a translation record for a given locale and source string. 'find_by' might not be enough,
-because it could produce wrong matches on case insensitive MySQL databases.
+nice shorthand to find a translation record for a given locale and source string
 
 =end
 
   def self.find_source(locale, string)
-    if ActiveRecord::Base.connection_db_config.configuration_hash[:adapter] == 'mysql2'
-      # MySQL might find the wrong record with find_by with case insensitive locales, so use a direct comparison.
-      where(locale: locale, source: string).find { |t| t.source.eql? string }
-    else
-      find_by(locale: locale, source: string)
-    end
+    find_by(locale: locale, source: string)
   end
 
 =begin

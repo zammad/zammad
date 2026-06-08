@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed } from 'vue'
@@ -43,7 +43,7 @@ const label = computed(() => {
     }"
     tabindex="0"
     :aria-selected="selected"
-    class="focus:bg-blue-highlight flex h-[58px] cursor-pointer items-center self-stretch px-4 py-5 text-base leading-[19px] text-white first:rounded-t-xl last:rounded-b-xl focus:outline-hidden"
+    class="flex h-[58px] cursor-pointer items-center self-stretch px-4 py-5 text-base leading-[19px] text-white first:rounded-t-xl last:rounded-b-xl focus:bg-blue-highlight focus:outline-hidden"
     role="option"
     :data-value="option.value"
     @click="select(option)"
@@ -74,7 +74,7 @@ const label = computed(() => {
       :name="option.icon"
       size="small"
       :class="{
-        '!text-white': selected,
+        'text-white!': selected,
         'opacity-30': option.disabled,
       }"
       decorative
@@ -82,7 +82,7 @@ const label = computed(() => {
     />
     <span
       :class="{
-        'font-semibold !text-white': selected,
+        'font-medium text-white!': selected,
         'opacity-30': option.disabled,
       }"
       class="grow text-white/80"

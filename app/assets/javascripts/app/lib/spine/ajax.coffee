@@ -129,6 +129,14 @@ class Base
     }
 
     if jsonObject
+      # ---
+      # Zammad
+      # ---
+      if options.removedFields
+        jsonObject = jsonObject.dup(false)
+        for field in options.removedFields
+          delete jsonObject[field]
+      # ---
       hash.data        = jsonObject.toJSON()
       hash.contentType = 'application/json'
 

@@ -106,15 +106,10 @@ App.ViewHelpers =
   # define mask helper
   # mask an value like 'a***********yz'
   M: (item, start = 1, end = 2) ->
-    return '' if !item
-    string = ''
-    end = item.length - end - 1
-    for n in [0..item.length-1]
-      if start <= n && end >= n
-        string += '*'
-      else
-        string += item[n]
-    string
+    if item
+      '**********'
+    else
+      ''
 
   # define translation helper
   T: (item, args...) ->

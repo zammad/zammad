@@ -1,6 +1,6 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { useCheckNewBetaUi } from '#desktop/pages/personal-setting/composables/permission/useCheckNewBetaUi.ts'
+import { useApplicationStore } from '#shared/stores/application.ts'
 
 import type { PersonalSettingPlugin } from './types.ts'
 
@@ -25,9 +25,8 @@ export default <PersonalSettingPlugin>{
   },
   order: 1500,
   keywords: __('new,beta,desktop view,desktop ui'),
-  show: () => {
-    const { newBetaUiEnabled } = useCheckNewBetaUi()
-
-    return newBetaUiEnabled.value
-  },
+  show: (currentUser) =>
+    (!!useApplicationStore().config.ui_desktop_beta_switch &&
+      currentUser?.hasBetaUiSwitchAvailable) ??
+    false,
 }

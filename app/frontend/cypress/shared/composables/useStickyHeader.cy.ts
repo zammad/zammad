@@ -1,7 +1,8 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
+
+import { defineComponent, h, Fragment } from 'vue'
 
 import { mountComponent } from '#cy/utils.ts'
-import { defineComponent, h, Fragment } from 'vue'
 
 import { useStickyHeader } from '#shared/composables/useStickyHeader.ts'
 
@@ -19,11 +20,7 @@ const Component = defineComponent({
           },
           'Header',
         ),
-        h(
-          'main',
-          { style: ['height: 2000px;', stickyStyles.value.body] },
-          'Content',
-        ),
+        h('main', { style: ['height: 2000px;', stickyStyles.value.body] }, 'Content'),
       ])
     }
   },

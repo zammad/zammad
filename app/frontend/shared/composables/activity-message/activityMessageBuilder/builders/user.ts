@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import type { User } from '#shared/graphql/types.ts'
 import { i18n } from '#shared/i18n.ts'
@@ -9,11 +9,7 @@ const path = (metaObject: User) => {
   return `users/${metaObject.internalId}`
 }
 
-const messageText = (
-  type: string,
-  authorName: string,
-  metaObject?: User,
-): Maybe<string> => {
+const messageText = (type: string, authorName: string, metaObject?: User): Maybe<string> => {
   if (!metaObject) {
     return i18n.t('You can no longer see the user.')
   }

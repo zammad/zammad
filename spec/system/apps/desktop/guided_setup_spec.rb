@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -41,29 +41,29 @@ RSpec.describe 'Desktop > Guided Setup', app: :desktop_view, authenticated_as: f
     fill_in 'Organization name', with: 'Test corp.'
     find('input[name="logo"]', visible: :all).set(Rails.root.join('test/data/image/1000x1000.png'))
     fill_in 'System URL', with: app_host
-    click_on 'Save and Continue'
+    click_on 'Save and continue'
 
     # Accept default setting (local MTA).
-    expect(page).to have_text('Email Notification')
-    click_on 'Save and Continue'
+    expect(page).to have_text('Email notification')
+    click_on 'Save and continue'
 
-    click_on 'Email Channel'
+    click_on 'Email channel'
     fill_in 'Full name', with: 'John Doe'
     fill_in 'Email address', with: ENV['MAIL_ADDRESS']
     fill_in 'Password', with: ENV['MAIL_PASS']
-    click_on 'Connect and Continue'
+    click_on 'Connect and continue'
 
     expect(page).to have_text('Verifying and saving your configuration…')
 
-    expect(page).to have_text('Invite Colleagues', wait: 2.minutes)
+    expect(page).to have_text('Invite colleagues', wait: 2.minutes)
 
     fill_in 'First name', with: 'Jim'
     fill_in 'Last name', with: 'Doe'
     fill_in 'Email', with: 'jim.doe@example.com'
-    click_on 'Send Invitation'
+    click_on 'Send invitation'
     expect(page).to have_text('Invitation sent!')
 
-    click_on('Finish Setup')
+    click_on('Finish setup')
 
     expect(NotificationFactory::Mailer).to have_received(:notification).once
 

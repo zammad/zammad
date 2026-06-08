@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails/generators'
 
@@ -7,6 +7,8 @@ class Zammad::GraphqlIntrospectionGenerator < Rails::Generators::Base
   desc 'Create JSON from the GraphQL introspection information and output it to STDOUT'
 
   def generate
+    raise 'GraphQL schema generation is disabled for security reasons. To enable it in your system, set the following ENV ZAMMAD_GRAPHQL_INTROSPECTION=true' if !Gql::ZammadSchema.introspection_enabled?
+
     result = Gql::ZammadSchema.execute(GraphQL::Introspection::INTROSPECTION_QUERY, variables: {}, context: { is_graphql_introspection_generator: true })
     raise "GraphQL schema could not be successfully generated: #{result['errors'].first['message']}" if result['errors']
 

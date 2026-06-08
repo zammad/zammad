@@ -17,5 +17,8 @@ class App.ControllerGenericDestroyConfirm extends App.ControllerModal
         @callback()
     options.fail = (xhr, data) =>
       @log 'errors'
-      @showAlert(data.human_error || data.error)
+      if data?.unprocessable_content
+        @showAlert(App.i18n.translatePlain(data.error_human, data.unprocessable_content...))
+      else
+        @showAlert(data.error_human or data.error)
     @item.destroy(options)

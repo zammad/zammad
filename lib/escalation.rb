@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Escalation
   attr_reader :ticket
@@ -56,10 +56,7 @@ class Escalation
     elsif !calendar
       calculate_no_calendar
     elsif forced? || any_changes?
-      enforce_if_needed
-      update_escalations
-      update_statistics
-      apply_preferences
+      calculate_forced
     end
   end
 
@@ -88,6 +85,14 @@ class Escalation
 
   def apply_preferences
     preferences.update_preferences(ticket, sla, escalation_disabled?)
+  end
+
+  def calculate_forced
+    assign_reset
+    enforce_if_needed
+    update_escalations
+    update_statistics
+    apply_preferences
   end
 
   def enforce_if_needed
@@ -128,13 +133,6 @@ class Escalation
     {
       first_response_escalation_at: nullify ? nil : calculate_time(ticket.created_at, sla.first_response_time)
     }
-  end
-
-  def escalation_update_reset
-    return if skip_escalation? && !preferences.last_update_at_changed?(ticket)
-    return if sla.response_time.present? || sla.update_time.present?
-
-    { update_escalation_at: nil }
   end
 
   def escalation_response_timestamp

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'net/imap'
 
@@ -10,12 +10,12 @@ module ImapHelper
 
     message_ids = imap.search(['BEFORE', 1.day.ago.to_date.strftime('%d-%b-%Y')])
 
-    Rails.logger.debug { "#{message_ids.count} messages in INBOX will be deleted!" } if message_ids.count.positive?
+    Rails.logger.debug { "#{message_ids.count} messages in INBOX will be deleted!" } if message_ids.any?
 
     message_ids.each do |message_id|
       imap.store(message_id, '+FLAGS', [:Deleted])
     end
-    imap.expunge if message_ids.count.positive?
+    imap.expunge if message_ids.any?
   end
 end
 

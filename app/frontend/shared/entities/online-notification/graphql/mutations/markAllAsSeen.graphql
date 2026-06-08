@@ -1,7 +1,5 @@
 mutation onlineNotificationMarkAllAsSeen($onlineNotificationIds: [ID!]!) {
-  onlineNotificationMarkAllAsSeen(
-    onlineNotificationIds: $onlineNotificationIds
-  ) {
+  onlineNotificationMarkAllAsSeen(onlineNotificationIds: $onlineNotificationIds) {
     onlineNotifications {
       id
       seen

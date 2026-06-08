@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class FormUpdater::Relation::Group < FormUpdater::Relation
   attr_accessor :lookup_parent_child_groups, :root_groups
@@ -31,6 +31,14 @@ class FormUpdater::Relation::Group < FormUpdater::Relation
 
   def order
     { name: :asc }
+  end
+
+  def default_scope
+    # Non-agent / admin handling is intentionally deferred — see the
+    # FormUpdater::Relation#default_scope TODO.
+    return super if !current_user.permissions?('ticket.agent')
+
+    current_user.groups_access('read')
   end
 
   def display_name(item)

@@ -7,7 +7,8 @@ class SipgateIo extends App.ControllerIntegrationBase
     [__('Caller ID of outbound calls can be changed as well.')]
   ]
   events:
-    'click .js-select': 'selectAll'
+    'click .js-copy':          'copyInputToClipboard'
+    'click .js-select':        'selectAll'
     'change .js-switch input': 'switch'
 
   render: =>
@@ -33,6 +34,7 @@ class Form extends App.Controller
 
   constructor: ->
     super
+    @config = @currentConfig()
     @render()
 
   currentConfig: ->
@@ -53,8 +55,6 @@ class Form extends App.Controller
     App.Setting.set('sipgate_config', value, {notify: true})
 
   render: =>
-    @config = @currentConfig()
-
     @html App.view('integration/sipgate')(
       config: @config
       sipgate_token: App.Setting.get('sipgate_token')

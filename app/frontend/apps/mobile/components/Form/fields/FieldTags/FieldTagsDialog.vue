@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { watchIgnorable } from '@vueuse/shared'
@@ -79,9 +79,7 @@ const { ignoreUpdates } = watchIgnorable(
 const filteredTags = computed(() => {
   if (!filter.value) return sortedOptions.value
 
-  return sortedOptions.value.filter((tag) =>
-    tag.toLowerCase().includes(filter.value.toLowerCase()),
-  )
+  return sortedOptions.value.filter((tag) => tag.toLowerCase().includes(filter.value.toLowerCase()))
 })
 
 const removeTag = (tag: string) => {
@@ -154,7 +152,7 @@ const processSearchKeydown = (event: KeyboardEvent) => {
           <button
             v-if="filter.length > 0"
             :aria-label="$t('Create tag')"
-            class="bg-green rounded-3xl text-white"
+            class="rounded-3xl bg-green text-white"
             :class="{
               'bg-green/40 text-white/20': tagExists(filter),
             }"
@@ -178,7 +176,7 @@ const processSearchKeydown = (event: KeyboardEvent) => {
         v-for="option of filteredTags"
         :id="`${name}-${option}`"
         :key="option"
-        class="focus:bg-blue-highlight flex w-full items-center px-4 focus:outline-hidden"
+        class="flex w-full items-center px-4 focus:bg-blue-highlight focus:outline-hidden"
         role="option"
         aria-setsize="-1"
         :aria-posinset="sortedOptions.indexOf(option) + 1"

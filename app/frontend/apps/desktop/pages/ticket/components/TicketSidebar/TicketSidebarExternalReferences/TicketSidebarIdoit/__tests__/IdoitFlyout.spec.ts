@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import renderComponent from '#tests/support/components/renderComponent.ts'
 
@@ -40,9 +40,7 @@ describe('IdoitFlyout', () => {
       flyout: true,
     })
 
-    expect(wrapper.getByRole('heading', { level: 2 })).toHaveTextContent(
-      'i-doit: Link objects',
-    )
+    expect(wrapper.getByRole('heading', { level: 2 })).toHaveTextContent('i-doit: Link objects')
 
     expect(wrapper.getByIconName('i-doit-logo-light')).toBeInTheDocument()
 

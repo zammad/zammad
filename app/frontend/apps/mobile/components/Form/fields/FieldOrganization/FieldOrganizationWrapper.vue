@@ -1,22 +1,18 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 <script setup lang="ts">
-import { defineAsyncComponent, markRaw } from 'vue'
+import { markRaw } from 'vue'
 
 import { AutocompleteSearchOrganizationDocument } from '#shared/components/Form/fields/FieldOrganization/graphql/queries/autocompleteSearch/organization.api.ts'
 import type { AutocompleteOrganizationProps } from '#shared/components/Form/fields/FieldOrganization/types.ts'
 import { useFormFieldOrganizationInitialOptionBuilder } from '#shared/components/Form/fields/FieldOrganization/useFieldOrganizationInitialOptionBuilder.ts'
 
-import FieldOrganizationOptionIcon from './FieldOrganizationOptionIcon.vue'
+import FieldAutoCompleteInput from '#mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue'
 
-const FieldAutoCompleteInput = defineAsyncComponent(
-  () =>
-    import(
-      '#mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue'
-    ),
-)
+import FieldOrganizationOptionIcon from './FieldOrganizationOptionIcon.vue'
 
 const props = defineProps<AutocompleteOrganizationProps>()
 
+// eslint-disable-next-line vue/no-mutating-props
 Object.assign(props.context, {
   optionIconComponent: markRaw(FieldOrganizationOptionIcon),
   initialOptionBuilder: useFormFieldOrganizationInitialOptionBuilder(),

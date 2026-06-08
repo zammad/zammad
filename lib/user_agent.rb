@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'net/http'
 require 'net/https'
@@ -41,37 +41,13 @@ class UserAgent
   end
 
   def self.get_http(uri, options)
+    http = UserAgent::HttpClient
+      .get_client(uri, options)
+      .new(uri.host, uri.port)
 
-    proxy = options['proxy'] || Setting.get('proxy')
-    proxy_no = options['proxy_no'] || Setting.get('proxy_no') || ''
-    proxy_no = proxy_no.split(',').map(&:strip) || []
-    proxy_no.push('localhost', '127.0.0.1', '::1')
-    if proxy.present? && proxy_no.exclude?(uri.host.downcase)
-      if proxy =~ %r{^(.+?):(.+?)$}
-        proxy_host = $1
-        proxy_port = $2
-      end
-
-      if proxy_host.blank? || proxy_port.blank?
-        raise "Invalid proxy address: #{proxy} - expect e.g. proxy.example.com:3128"
-      end
-
-      proxy_username = options['proxy_username'] || Setting.get('proxy_username')
-      if proxy_username.blank?
-        proxy_username = nil
-      end
-      proxy_password = options['proxy_password'] || Setting.get('proxy_password')
-      if proxy_password.blank?
-        proxy_password = nil
-      end
-
-      http = Net::HTTP::Proxy(proxy_host, proxy_port, proxy_username, proxy_password).new(uri.host, uri.port)
-    else
-      http = Net::HTTP.new(uri.host, uri.port)
-    end
-
-    http.open_timeout = options[:open_timeout] || 4
-    http.read_timeout = options[:read_timeout] || 10
+    # Defaults raised for slow links (e.g. OAuth to external IdPs); override globally via ENV, per-request via options. See https://github.com/zammad/zammad/issues/5991
+    http.open_timeout = options[:open_timeout] || ENV.fetch('ZAMMAD_HTTP_OPEN_TIMEOUT', 30).to_i
+    http.read_timeout = options[:read_timeout] || ENV.fetch('ZAMMAD_HTTP_READ_TIMEOUT', 60).to_i
 
     if uri.scheme == 'https'
       http.use_ssl = true
@@ -83,7 +59,7 @@ class UserAgent
       end
     end
 
-    # http.set_debug_output($stdout) if options[:debug]
+    http.set_debug_output($stdout) if options[:debug]
 
     http
   end
@@ -117,15 +93,14 @@ class UserAgent
 
   def self.set_params(request, params, options)
     if options[:json]
-      if !request.is_a?(Net::HTTP::Get) # GET requests pass params in query, see 'parse_uri'.
-        request.add_field('Content-Type', 'application/json; charset=utf-8')
-        if params.present?
-          request.body = params.to_json
-        end
+      request.add_field('Content-Type', 'application/json; charset=utf-8')
+      if params.present?
+        request.body = params.to_json
       end
     elsif params.present?
       request.set_form_data(params)
     end
+
     request
   end
 
@@ -152,6 +127,7 @@ class UserAgent
 
   def self.log(url, request, response, options)
     return if !options[:log]
+    return if options[:log][:log_only_on_error] && (response.is_a?(Net::HTTPSuccess) || response.is_a?(Net::HTTPRedirection))
 
     # request
     request_data = {
@@ -231,7 +207,7 @@ class UserAgent
         body:    response.body,
         header:  response.each_header.to_h,
       )
-    when Net::HTTPInternalServerError
+    when Net::HTTPServerError # Covers Net::HTTPInternalServerError, Net::HTTPServiceUnavailable etc
       return Result.new(
         error:   "Server Error: #{response.inspect}!",
         success: false,
@@ -295,7 +271,7 @@ class UserAgent
   # @option options [String] :user for basic authentication
   # @option options [String] :password for basic authentication
   # @option options [String] :bearer_token for token authentication
-  # @option options [Hash] :log enable logging
+  # @option options [Hash] :log enable logging, use facility: to set logging facility and log_only_on_error: to only log failed requests
   # @option options [String] :proxy address
   # @option options [String] :proxy_no list of address to skip proxy for
   # @option options [String] :proxy_username
@@ -303,6 +279,7 @@ class UserAgent
   # @option options [Integer] :open_timeout
   # @option options [Integer] :read_timeout
   # @option options [Boolean] :do_not_follow_redirects
+  # @option options [Hash, Boolean] :validate_safety to validate hostname safety via HostnameSafetyCheck.validate! with options as sub-keys
   # @option log [String] :facility is sub-key as in options[:log][:facility] providing name to use when logging in HttpLog
   # @param count [Integer] of redirects. Counts towards zero and then aborts
   #
@@ -320,11 +297,16 @@ class UserAgent
     # prepare request
     request = Net::HTTP.const_get(method.capitalize).new(uri)
 
+    if options[:validate_safety]
+      validate_safety_options = options[:validate_safety].is_a?(Hash) ? options[:validate_safety] : nil
+      HostnameSafetyCheck.validate!(uri.hostname, **validate_safety_options)
+    end
+
     # set headers
     request = set_headers(request, options)
 
     # set params for non-get requests
-    if method != :get
+    if !request.is_a?(Net::HTTP::Get)
       request = set_params(request, params, options)
     end
 
@@ -339,7 +321,7 @@ class UserAgent
 
     # start http call
     begin
-      total_timeout = options[:total_timeout] || 60
+      total_timeout = options[:total_timeout] || ENV.fetch('ZAMMAD_HTTP_TOTAL_TIMEOUT', 60).to_i
 
       handled_open_timeout(options[:open_socket_tries]) do
         Timeout.timeout(total_timeout) do

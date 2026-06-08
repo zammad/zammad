@@ -1,6 +1,4 @@
-mutation userCurrentOverviewUpdateLastUsed(
-  $overviewsLastUsed: [UserCurrentOverviewLastUsed!]!
-) {
+mutation userCurrentOverviewUpdateLastUsed($overviewsLastUsed: [UserCurrentOverviewLastUsed!]!) {
   userCurrentOverviewUpdateLastUsed(overviewsLastUsed: $overviewsLastUsed) {
     success
     errors {

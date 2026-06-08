@@ -1,0 +1,19 @@
+--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+from: from@example.com
+from_email: from@example.com
+from_display_name: ''
+to: to@example.com
+subject: A mixed mail with html signature
+body: "<h1>This is the html message part </h1>This is the text part<h1>This is the
+  html part (signature) </h1>"
+content_type: text/html
+attachments:
+- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+  data: "<html><body><h1>This is the html message part </h1></body></html>This is
+    the text part<html><body><h1>This is the html part (signature) </h1></body></html>"
+  filename: message.html
+  preferences: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+    content-alternative: true
+    original-format: true
+    Mime-Type: text/html
+    Charset: UTF-8

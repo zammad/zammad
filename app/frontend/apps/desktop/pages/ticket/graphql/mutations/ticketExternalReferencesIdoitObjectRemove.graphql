@@ -1,4 +1,4 @@
-mutation ticketExternalReferencesIdoitObjectRemove ($ticketId: ID!, $idoitObjectId: Int!){
+mutation ticketExternalReferencesIdoitObjectRemove($ticketId: ID!, $idoitObjectId: Int!) {
   ticketExternalReferencesIdoitObjectRemove(ticketId: $ticketId, idoitObjectId: $idoitObjectId) {
     success
     errors {

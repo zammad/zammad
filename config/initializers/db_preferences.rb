@@ -1,25 +1,28 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-case ActiveRecord::Base.connection_db_config.configuration_hash[:adapter]
-when 'mysql2'
-  Rails.application.config.db_4bytes_utf8 = false
-  Rails.application.config.db_column_array = false
-  Rails.application.config.db_case_sensitive = false
-  Rails.application.config.db_like = 'LIKE'
-  Rails.application.config.db_null_byte = true
+# Legacy settings, not used anymore. Keep for backwards compatibility.
+class Rails::Application::Configuration
+  def db_null_byte
+    ActiveSupport::Deprecation.new.warn('Rails.application.config.db_null_byte is deprecated and will be removed in Zammad 8.0. Since PostgreSQL is the only supported database, this value is always false.')
 
-  # Because of missing ticket updates in high load environments
-  # we changed the transaction isolation level equally to postgres
-  # to READ COMMITTED which fixed the problem entirely #3877
-  ActiveRecord::ConnectionAdapters::Mysql2Adapter.set_callback :checkout, :after do |conn|
-    conn.execute('SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED')
-  rescue => e
-    Rails.logger.error e
+    false
   end
-when 'postgresql'
-  Rails.application.config.db_4bytes_utf8 = true
-  Rails.application.config.db_column_array = true
-  Rails.application.config.db_case_sensitive = true
-  Rails.application.config.db_like = 'ILIKE'
-  Rails.application.config.db_null_byte = false
+
+  def db_case_sensitive
+    ActiveSupport::Deprecation.new.warn('Rails.application.config.db_case_sensitive is deprecated and will be removed in Zammad 8.0. Since PostgreSQL is the only supported database, this value is always true.')
+
+    true
+  end
+
+  def db_like
+    ActiveSupport::Deprecation.new.warn('Rails.application.config.db_like is deprecated and will be removed in Zammad 8.0. Since PostgreSQL is the only supported database, this value is always ILIKE.')
+
+    'ILIKE'
+  end
+
+  def db_column_array
+    ActiveSupport::Deprecation.new.warn('Rails.application.config.db_column_array is deprecated and will be removed in Zammad 8.0. Since PostgreSQL is the only supported database, this value is always true.')
+
+    true
+  end
 end

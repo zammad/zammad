@@ -1,0 +1,5 @@
+Hi,
+
+Please check out [our website](https://example.com) and [the documentation](https://example.com/docs).
+
+Thanks!

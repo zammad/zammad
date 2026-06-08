@@ -1,12 +1,10 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
+import { waitFor } from '#tests/support/vitest-wrapper.ts'
 
-import {
-  EnumSystemSetupInfoStatus,
-  EnumSystemSetupInfoType,
-} from '#shared/graphql/types.ts'
+import { EnumSystemSetupInfoStatus, EnumSystemSetupInfoType } from '#shared/graphql/types.ts'
 
 import { mockSystemImportStartMutation } from '../graphql/mutations/systemImportStart.mocks.ts'
 import { mockSystemImportStateQuery } from '../graphql/queries/systemImportState.mocks.ts'
@@ -40,7 +38,7 @@ describe('guided setup import source start', () => {
     it('redirects to freshdesk configuration', async () => {
       const view = await visitView('/guided-setup/import/freshdesk/start')
 
-      await vi.waitFor(() => {
+      await waitFor(() => {
         expect(
           view,
           'correctly redirects to guided setup import source freshdesk configuration',
@@ -85,15 +83,15 @@ describe('guided setup import source start', () => {
 
       const view = await visitView('/guided-setup/import/freshdesk/start')
 
-      expect(view.getByText('Start Import from Freshdesk')).toBeInTheDocument()
-      expect(view.getByRole('button', { name: 'Go Back' })).toBeInTheDocument()
+      expect(view.getByText('Start import from Freshdesk')).toBeInTheDocument()
+      expect(view.getByRole('button', { name: 'Go back' })).toBeInTheDocument()
 
-      const startButton = view.getByRole('button', { name: 'Start Import' })
+      const startButton = view.getByRole('button', { name: 'Start import' })
       expect(startButton).toBeInTheDocument()
 
       await view.events.click(startButton)
 
-      await vi.waitFor(() => {
+      await waitFor(() => {
         expect(
           view,
           'correctly redirects to guided setup import source freshdesk status page',
@@ -120,12 +118,12 @@ describe('guided setup import source start', () => {
 
       const view = await visitView('/guided-setup/import/freshdesk/start')
 
-      const goBackButton = view.getByRole('button', { name: 'Go Back' })
+      const goBackButton = view.getByRole('button', { name: 'Go back' })
       expect(goBackButton).toBeInTheDocument()
 
       await view.events.click(goBackButton)
 
-      await vi.waitFor(() => {
+      await waitFor(() => {
         expect(
           view,
           'correctly redirects to guided setup import source freshdesk configuration page',

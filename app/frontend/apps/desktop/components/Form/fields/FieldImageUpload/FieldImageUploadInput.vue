@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 <script setup lang="ts">
 import { useDropZone } from '@vueuse/core'
 import { useTemplateRef, computed, toRef } from 'vue'
@@ -63,10 +63,7 @@ const loadImages = async (files: FileList | File[] | null) => {
 
     if (file.size && file.size > 1024 * 1024 * MAX_IMAGE_SIZE_IN_MB) {
       props.context.node.setErrors(
-        i18n.t(
-          'File too big, max. %s MB allowed.',
-          MAX_IMAGE_SIZE_IN_MB.toString(),
-        ),
+        i18n.t('File too big, max. %s MB allowed.', MAX_IMAGE_SIZE_IN_MB.toString()),
       )
       return
     }

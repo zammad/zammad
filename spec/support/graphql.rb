@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'graphql/gql/shared_examples/fails_if_unauthenticated'
 
@@ -116,7 +116,7 @@ module ZammadSpecSupportGraphql
           @payload[:errors].nil?
         end
         assert('GraphQL result contains exactly one data entry') do
-          @payload[:data]&.count == 1
+          @payload[:data]&.one?
         end
         @payload[:data].values.first
       end
@@ -148,7 +148,7 @@ module ZammadSpecSupportGraphql
           @payload[:data].nil? || @payload[:data].values.first.nil?
         end
         assert('GraphQL result contains exactly one error entry') do
-          @payload[:errors]&.count == 1
+          @payload[:errors]&.one?
         end
         @payload[:errors][0]
       end

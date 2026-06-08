@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { shallowRef, computed, ref, reactive } from 'vue'
 
@@ -58,9 +58,7 @@ export const useEmailInboundForm = () => {
     return options
   })
 
-  const emailInboundFormChangeFields = reactive<
-    Record<string, Partial<FormSchemaField>>
-  >({
+  const emailInboundFormChangeFields = reactive<Record<string, Partial<FormSchemaField>>>({
     sslVerify: {},
     port: {},
   })

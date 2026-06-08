@@ -1,0 +1,203 @@
+Guten Tag,
+
+vielen Dank für Ihre Nachricht. Ich habe die Informationen erhalten und werde mich darum kümmern.
+
+Mit freundlichen Grüßen
+Anna Weber
+
+---Anfang der weitergeleiteten Nachricht:---
+
+> Betreff: Projektanfrage
+> Datum: 15.11.2025 09:30
+> Von: Thomas Klein
+> An: Anna Weber
+>
+> Hallo Frau Weber,
+>
+> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+>
+> Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+>
+> Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+>
+> Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
+>
+> Hier sind die wichtigsten Punkte:
+>
+> 1. Erster Punkt
+>    - Unterpunkt A
+>    - Unterpunkt B
+>    - Unterpunkt C
+>
+> 2. Zweiter Punkt
+>    - Detail X
+>    - Detail Y
+>    - Detail Z
+>
+> 3. Dritter Punkt
+>    - Information 1
+>    - Information 2
+>    - Information 3
+>
+> 4. Vierter Punkt
+>    - Aspekt Alpha
+>    - Aspekt Beta
+>    - Aspekt Gamma
+>
+> Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.
+>
+> Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?
+>
+> Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
+>
+> ───────────────────────────────
+>
+> Weitere Informationen:
+>
+> At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident.
+>
+> Similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.
+>
+> Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus.
+>
+> Links:
+> - [Dokumentation](https://docs.example.com)
+> - [FAQ](https://faq.example.com)
+> - [Support](https://support.example.com)
+>
+> ───────────────────────────────
+>
+> Mit freundlichen Grüßen,
+> Thomas Klein
+>
+> ---Anfang der weitergeleiteten Nachricht:---
+>
+> Betreff: RE: Projektanfrage
+> Datum: 14.11.2025 16:45
+> Von: Maria Schmidt
+> An: Thomas Klein
+>
+> Hallo Herr Klein,
+>
+> Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae.
+>
+> Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.
+>
+> Folgende Tabelle zeigt die Übersicht:
+>
+> | Kategorie | Status | Priorität |
+> |-----------|--------|-----------|
+> | Alpha     | Aktiv  | Hoch      |
+> | Beta      | Pending| Mittel    |
+> | Gamma     | Done   | Niedrig   |
+> | Delta     | Aktiv  | Hoch      |
+>
+> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+>
+> Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+>
+> Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+>
+> Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+>
+> Curabitur pretium tincidunt lacus. Nulla gravida orci a odio. Nullam varius, turpis et commodo pharetra, est eros bibendum elit, nec luctus magna felis sollicitudin mauris.
+>
+> Integer in mauris eu nibh euismod gravida. Duis ac tellus et risus vulputate vehicula. Donec lobortis risus a elit. Etiam tempor.
+>
+> Ut ullamcorper, ligula eu tempor congue, eros est euismod turpis, id tincidunt sapien risus a quam. Maecenas fermentum consequat mi.
+>
+> Donec fermentum. Pellentesque malesuada nulla a mi. Duis sapien sem, aliquet sed, vulputate eget, feugiat non, lacus.
+>
+> ───────────────────────────────
+>
+> Technische Details:
+>
+> ```
+> config:
+>   server: production
+>   port: 8080
+>   timeout: 30
+>   retries: 3
+> ```
+>
+> Morbi nec metus. Phasellus blandit leo ut odio. Maecenas ullamcorper, dui et placerat feugiat, eros pede varius nisi, condimentum viverra felis nunc et lorem.
+>
+> Sed magna purus, fermentum eu, tincidunt eu, varius ut, felis. In auctor lobortis lacus.
+>
+> Quisque libero metus, condimentum nec, tempor a, commodo mollis, magna. Vestibulum ullamcorper mauris at ligula.
+>
+> ───────────────────────────────
+>
+> Beste Grüße,
+> Maria Schmidt
+>
+> ---Anfang der weitergeleiteten Nachricht:---
+>
+> Betreff: Ursprüngliche Anfrage
+> Datum: 13.11.2025 11:20
+> Von: Peter Hoffmann
+> An: Maria Schmidt
+>
+> Sehr geehrte Frau Schmidt,
+>
+> Fusce mauris. Vestibulum luctus nibh at lectus. Sed bibendum, nulla a faucibus semper, leo velit ultricies tellus, ac venenatis arcu wisi vel nisl.
+>
+> Vestibulum diam. Aliquam pellentesque, augue quis sagittis posuere, turpis lacus congue quam, in hendrerit risus eros eget felis.
+>
+> Maecenas eget eros in sapien. Suspendisse potenti. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+>
+> Nulla quam. Aenean laoreet. Vestibulum nisi lectus, commodo ac, facilisis ac, ultricies eu, pede.
+>
+> Ut orci risus, accumsan porttitor, cursus quis, aliquet eget, justo. Sed pretium blandit orci.
+>
+> Ut eu diam at pede suscipit sodales. Aenean lectus elit, fermentum non, convallis id, sagittis at, neque.
+>
+> Nullam mauris orci, aliquet et, iaculis et, viverra vitae, ligula. Nulla ut felis in purus aliquam imperdiet.
+>
+> Maecenas aliquet mollis lectus. Vivamus consectetuer risus et tortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+>
+> Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi.
+>
+> Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris.
+>
+> Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla.
+>
+> Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero.
+>
+> Sed dignissim lacinia nunc. Curabitur tortor. Pellentesque nibh. Aenean quam.
+>
+> In scelerisque sem at dolor. Maecenas mattis. Sed convallis tristique sem. Proin ut ligula vel nunc egestas porttitor.
+>
+> Morbi lectus risus, iaculis vel, suscipit quis, luctus non, massa. Fusce ac turpis quis ligula lacinia aliquet.
+>
+> Mauris ipsum. Nulla metus metus, ullamcorper vel, tincidunt sed, euismod in, nibh.
+>
+> ───────────────────────────────
+>
+> Anhänge:
+> - dokument_v1.pdf
+> - analyse_2025.xlsx
+> - praesentation.pptx
+>
+> ───────────────────────────────
+>
+> Mit freundlichen Grüßen,
+>
+> Peter Hoffmann
+> Abteilungsleiter
+> Musterstraße 123
+> 12345 Musterstadt
+>
+> Tel: +49 123 456 7890
+> Fax: +49 123 456 7891
+> E-Mail: peter.hoffmann@example.org
+>
+> --
+>
+> Example AG
+> Hauptstraße 1
+> 10000 Berlin
+>
+> Geschäftsführer: Max Mustermann
+> Handelsregister: HRB 12345 B
+> Amtsgericht Berlin-Charlottenburg

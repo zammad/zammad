@@ -1,4 +1,7 @@
 <% if @counterPossible is true and @counter and @counter > 0: %>
   <div class="tabsSidebar-tab-count js-tabCounter <% if @cssClass: %><%= @cssClass %><% end %>"><%= @counter %></div>
 <% end %>
+<% if @dotVisible: %>
+  <div class="tabsSidebar-tab-dot"></div>
+<% end %>
 <%- @Icon(@icon) %>

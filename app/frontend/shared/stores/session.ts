@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { cloneDeep } from 'lodash-es'
 import { defineStore } from 'pinia'
@@ -17,10 +17,7 @@ import type {
   SessionQuery,
   SessionQueryVariables,
 } from '#shared/graphql/types.ts'
-import {
-  QueryHandler,
-  SubscriptionHandler,
-} from '#shared/server/apollo/handler/index.ts'
+import { QueryHandler, SubscriptionHandler } from '#shared/server/apollo/handler/index.ts'
 import type { RequiredPermission } from '#shared/types/permission.ts'
 import type { UserData } from '#shared/types/store.ts'
 import hasPermission from '#shared/utils/hasPermission.ts'
@@ -68,9 +65,7 @@ const getCurrentUserQuery = () => {
 
   const scope = effectScope()
   scope.run(() => {
-    currentUserQuery = new QueryHandler(
-      useCurrentUserLazyQuery({ fetchPolicy: 'network-only' }),
-    )
+    currentUserQuery = new QueryHandler(useCurrentUserLazyQuery({ fetchPolicy: 'network-only' }))
   })
 
   return currentUserQuery
@@ -121,10 +116,7 @@ export const useSessionStore = defineStore(
       // Check if the locale is different, then a update is needed.
       const userLocale = user.value?.preferences?.locale as string | undefined
 
-      if (
-        userLocale &&
-        (!locale.localeData || userLocale !== locale.localeData.locale)
-      ) {
+      if (userLocale && (!locale.localeData || userLocale !== locale.localeData.locale)) {
         await locale.setLocale(userLocale)
       }
 
@@ -165,13 +157,8 @@ export const useSessionStore = defineStore(
       user.value = null
     }
 
-    const userHasPermission = (
-      requiredPermission: RequiredPermission,
-    ): boolean => {
-      return hasPermission(
-        requiredPermission,
-        user.value?.permissions?.names || [],
-      )
+    const userHasPermission = (requiredPermission: RequiredPermission): boolean => {
+      return hasPermission(requiredPermission, user.value?.permissions?.names || [])
     }
 
     const setUserPreference = (key: string, value: JsonValue) => {

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -131,19 +131,19 @@ RSpec.describe 'Knowledge Base Locale Answer Reader', time_zone: 'Europe/London'
         end
       end
 
-      it 'not shown for draft' do
+      it 'shown for draft' do
         open_answer draft_answer
 
         within :active_content, '.knowledge-base-article-meta' do
-          expect(page).to have_no_text user.fullname
+          expect(page).to have_text user.fullname
         end
       end
 
-      it 'not shown for archived' do
+      it 'shown for archived' do
         open_answer archived_answer
 
         within :active_content, '.knowledge-base-article-meta' do
-          expect(page).to have_no_text user.fullname
+          expect(page).to have_text user.fullname
         end
       end
 

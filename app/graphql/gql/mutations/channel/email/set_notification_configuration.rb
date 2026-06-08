@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Mutations
   class Channel::Email::SetNotificationConfiguration < Channel::Email::BaseConfiguration
@@ -8,18 +8,14 @@ module Gql::Mutations
 
     field :success, Boolean, description: 'Was the operation successful?'
 
-    def ready?(...)
-      raise Exceptions::Forbidden if Setting.get('system_online_service')
-
-      true
-    end
+    requires_disabled_setting 'system_online_service'
 
     def resolve(outbound_configuration:)
       Service::System::SetEmailNotificationConfiguration
-        .new(
+        .execute(
           adapter:           outbound_configuration.adapter,
           new_configuration: outbound_configuration.to_h.except(:adapter)
-        ).execute
+        )
 
       { success: true }
     end

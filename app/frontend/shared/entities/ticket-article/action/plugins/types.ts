@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import type {
   EditorContentType,
@@ -80,17 +80,11 @@ export interface TicketArticleAction {
   link?: string
   alwaysVisible?: boolean
 
-  perform?(
-    ticket: TicketById,
-    article: TicketArticle,
-    options: TicketArticlePerformOptions,
-  ): void
+  perform?(ticket: TicketById, article: TicketArticle, options: TicketArticlePerformOptions): void
 }
 
 export interface TicketArticleTypeReactiveFieldProps {
-  validation: ComputedRef<
-    null | string | Array<[rule: string, ...args: unknown[]]>
-  >
+  validation: ComputedRef<null | string | Array<[rule: string, ...args: unknown[]]>>
   required: ComputedRef<boolean>
 }
 
@@ -149,10 +143,7 @@ export interface AppSpecificTicketArticleType {
   ): void
 
   // when clicked on other type, but this one is selected
-  onDeselected?(
-    ticket: TicketById,
-    options: TicketArticleSelectionOptions,
-  ): void
+  onDeselected?(ticket: TicketById, options: TicketArticleSelectionOptions): void
 
   updateForm?(
     formValues: FormSubmitData<TicketFormData | TicketUpdateFormData>,
@@ -161,8 +152,7 @@ export interface AppSpecificTicketArticleType {
   performReply?(ticket: TicketById): MaybeRecord<TicketArticleFormValues>
 }
 
-export interface TicketArticleType
-  extends Omit<AppSpecificTicketArticleType, 'icon'> {
+export interface TicketArticleType extends Omit<AppSpecificTicketArticleType, 'icon'> {
   apps: AppName[]
   icon: string
 }
@@ -177,8 +167,5 @@ export interface TicketArticleActionPlugin {
     options: TicketActionAddOptions,
   ): TicketArticleAction[]
 
-  addTypes?(
-    ticket: TicketById,
-    options: TicketTypeAddOptions,
-  ): TicketArticleType[]
+  addTypes?(ticket: TicketById, options: TicketTypeAddOptions): TicketArticleType[]
 }

@@ -1,12 +1,10 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import '#tests/graphql/builders/mocks.ts'
 
 import { waitFor } from '@testing-library/vue'
 
-import renderComponent, {
-  getTestRouter,
-} from '#tests/support/components/renderComponent.ts'
+import renderComponent, { getTestRouter } from '#tests/support/components/renderComponent.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
@@ -34,7 +32,7 @@ const renderQuickSearchResultList = async (search: string) => {
   return wrapper
 }
 
-describe('QuickSearchResultList', async () => {
+describe('QuickSearchResultList', () => {
   it('renders by default the sections with an empty state', async () => {
     mockQuickSearchQuery({
       quickSearchOrganizations: {
@@ -57,9 +55,7 @@ describe('QuickSearchResultList', async () => {
     expect(wrapper.queryByText('Found users')).not.toBeInTheDocument()
     expect(wrapper.queryByText('Found tickets')).not.toBeInTheDocument()
 
-    expect(
-      await wrapper.findByText('No results for this query.'),
-    ).toBeInTheDocument()
+    expect(await wrapper.findByText('No results for this query.')).toBeInTheDocument()
   })
 
   it('renders the sections with the results', async () => {
@@ -124,16 +120,14 @@ describe('QuickSearchResultList', async () => {
     expect(wrapper.getByText('Found tickets')).toBeInTheDocument()
 
     expect(
-      wrapper.queryByText(
-        'Start typing i.e. the name of a ticket, an organization or a user.',
-      ),
+      wrapper.queryByText('Start typing i.e. the name of a ticket, an organization or a user.'),
     ).not.toBeInTheDocument()
 
     await wrapper.events.click(wrapper.getByRole('link', { name: '99 more' }))
 
     const router = getTestRouter()
 
-    await waitFor(() => expect(router.currentRoute.value.name).toBe('search'))
+    await waitFor(() => expect(router.currentRoute.value.name).toBe('Search'))
 
     expect(router.currentRoute.value.params).toEqual({ searchTerm: '1' })
     expect(router.currentRoute.value.query).toEqual({ entity: 'Ticket' })
@@ -214,10 +208,7 @@ describe('QuickSearchResultList', async () => {
     const userLink = wrapper.getByRole('link', { name: 'Organization 1' })
 
     expect(wrapper.getByText('Organization 1')).toHaveClass('text-neutral-500!')
-    expect(userLink).toHaveAttribute(
-      'aria-description',
-      'Organization is inactive.',
-    )
+    expect(userLink).toHaveAttribute('aria-description', 'Organization is inactive.')
   })
 
   it('renders detailed search button if search term is provided', async () => {
@@ -256,7 +247,7 @@ describe('QuickSearchResultList', async () => {
 
     const router = getTestRouter()
 
-    await waitFor(() => expect(router.currentRoute.value.name).toBe('search'))
+    await waitFor(() => expect(router.currentRoute.value.name).toBe('Search'))
 
     expect(router.currentRoute.value.params).toEqual({ searchTerm: 'User' })
   })

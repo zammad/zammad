@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Queries
   class User::Current::Ticket::Overviews < BaseQuery
@@ -10,7 +10,7 @@ module Gql::Queries
     type [Gql::Types::OverviewType], null: false
 
     def resolve(ignore_user_conditions:)
-      Service::User::Overview::List.new(context.current_user, ignore_user_conditions:).execute
+      Service::User::Overview::List.with_current_user(context.current_user).execute(ignore_user_conditions:)
     end
   end
 end

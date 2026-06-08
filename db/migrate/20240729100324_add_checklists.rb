@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class AddChecklists < ActiveRecord::Migration[5.0]
   def up
@@ -53,11 +53,7 @@ class AddChecklists < ActiveRecord::Migration[5.0]
     create_table :checklists do |t|
       t.string  :name,      limit: 250,     null: false
       t.boolean :active,    default: true,  null: false
-      if Rails.application.config.db_column_array
-        t.string :sorted_item_ids, null: false, array: true, default: []
-      else
-        t.json :sorted_item_ids, null: false
-      end
+      t.string :sorted_item_ids, null: false, array: true, default: []
       t.references :created_by, null: false, foreign_key: { to_table: :users }
       t.references :updated_by, null: false, foreign_key: { to_table: :users }
       t.references :ticket, null: true, foreign_key: true, index: { unique: true }
@@ -78,11 +74,7 @@ class AddChecklists < ActiveRecord::Migration[5.0]
     create_table :checklist_templates do |t|
       t.string  :name,      limit: 250,     null: false
       t.boolean :active,    default: true,  null: false
-      if Rails.application.config.db_column_array
-        t.string :sorted_item_ids, null: false, array: true, default: []
-      else
-        t.json :sorted_item_ids, null: false
-      end
+      t.string :sorted_item_ids, null: false, array: true, default: []
       t.references :created_by, null: false, foreign_key: { to_table: :users }
       t.references :updated_by, null: false, foreign_key: { to_table: :users }
       t.timestamps limit: 3, null: false

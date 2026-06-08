@@ -1,8 +1,7 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { storeToRefs } from 'pinia'
-import { computed } from 'vue'
+import { computed, toRef } from 'vue'
 
 import { useApplicationStore } from '#shared/stores/application.ts'
 
@@ -14,7 +13,7 @@ export interface Props {
   priority?: TicketPriority
 }
 
-const { config } = storeToRefs(useApplicationStore())
+const config = toRef(useApplicationStore(), 'config')
 
 const props = defineProps<Props>()
 
@@ -31,12 +30,7 @@ const badgeVariant = computed(() => {
 </script>
 
 <template>
-  <CommonBadge
-    :variant="badgeVariant"
-    class="uppercase"
-    role="status"
-    aria-live="polite"
-  >
+  <CommonBadge :variant="badgeVariant" class="uppercase" role="status" aria-live="polite">
     <CommonTicketPriorityIndicatorIcon
       v-if="config.ui_ticket_priority_icons"
       :ui-color="priority?.uiColor"

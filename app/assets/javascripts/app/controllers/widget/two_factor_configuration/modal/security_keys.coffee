@@ -218,14 +218,13 @@ class App.TwoFactorConfigurationModalSecurityKeyRegister extends App.TwoFactorCo
       @showError(__('The application is not running in a secure context.'))
       return
 
-    webauthnJSON
-      .create(publicKey: @config)
+    navigator.credentials.create({ publicKey: PublicKeyCredential.parseCreationOptionsFromJSON(@config) })
       .then((publicKeyCredential) =>
         data = JSON.stringify(
           method: @method.key
           token: @token
           payload:
-            credential: publicKeyCredential
+            credential: publicKeyCredential.toJSON()
             challenge:  @config.challenge
           configuration: _.extend({}, @config, { nickname: @nickname, type: 'registration' })
         )

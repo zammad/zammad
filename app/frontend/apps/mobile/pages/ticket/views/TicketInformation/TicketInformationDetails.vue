@@ -1,8 +1,6 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-/* eslint-disable vue/attribute-hyphenation */
-
 import { computed, nextTick, onMounted, onUnmounted, watch } from 'vue'
 
 import CommonUserAvatar from '#shared/components/CommonUserAvatar/CommonUserAvatar.vue'
@@ -25,17 +23,10 @@ import TicketObjectAttributes from '../../components/TicketDetailView/TicketObje
 import TicketTags from '../../components/TicketDetailView/TicketTags.vue'
 import { useTicketInformation } from '../../composable/useTicketInformation.ts'
 
-const { attributes: objectAttributes } = useObjectAttributes(
-  EnumObjectManagerObjects.Ticket,
-)
+const { attributes: objectAttributes } = useObjectAttributes(EnumObjectManagerObjects.Ticket)
 
-const {
-  form,
-  initialFormTicketValue,
-  ticket,
-  updateFormLocation,
-  ticketQuery,
-} = useTicketInformation()
+const { form, initialFormTicketValue, ticket, updateFormLocation, ticketQuery } =
+  useTicketInformation()
 
 const ticketFormGroupNode = computed(() => {
   return form.value?.formNode?.at('ticket')
@@ -122,13 +113,8 @@ const { isTicketAgent, isTicketEditable } = useTicketView(ticket)
 
 const hasEscalation = computed(() => {
   if (!ticket.value) return false
-  const { closeEscalationAt, updateEscalationAt, firstResponseEscalationAt } =
-    ticket.value
-  return !!(
-    closeEscalationAt ||
-    updateEscalationAt ||
-    firstResponseEscalationAt
-  )
+  const { closeEscalationAt, updateEscalationAt, firstResponseEscalationAt } = ticket.value
+  return !!(closeEscalationAt || updateEscalationAt || firstResponseEscalationAt)
 })
 </script>
 
@@ -152,33 +138,27 @@ const hasEscalation = computed(() => {
     v-if="!isTicketEditable && ticket"
     :object="ticket"
     :attributes="objectAttributes"
-    :skip-attributes="['title', 'customer_id', 'organization_id']"
+    :skip-attributes="['title', 'number', 'customer_id', 'organization_id']"
   />
 
   <TicketObjectAttributes v-if="isTicketAgent && ticket" :ticket="ticket" />
 
-  <CommonSectionMenu
-    v-if="ticket && hasEscalation"
-    :header-label="__('Escalation Times')"
-  >
+  <CommonSectionMenu v-if="ticket && hasEscalation" :header-label="__('Escalation times')">
     <TicketEscalationTimeMenuItem
       :escalation-at="ticket.firstResponseEscalationAt"
-      :label="__('First Response Time')"
+      :label="__('First response time')"
     />
     <TicketEscalationTimeMenuItem
       :escalation-at="ticket.updateEscalationAt"
-      :label="__('Update Time')"
+      :label="__('Update time')"
     />
     <TicketEscalationTimeMenuItem
       :escalation-at="ticket.closeEscalationAt"
-      :label="__('Solution Time')"
+      :label="__('Solution time')"
     />
   </CommonSectionMenu>
 
-  <TicketTags
-    v-if="isTicketAgent && isTicketEditable && ticket"
-    :ticket="ticket"
-  />
+  <TicketTags v-if="isTicketAgent && isTicketEditable && ticket" :ticket="ticket" />
 
   <CommonSectionMenu v-else-if="ticket?.tags?.length">
     <CommonSectionMenuItem :label="__('Tags')">
@@ -186,15 +166,11 @@ const hasEscalation = computed(() => {
     </CommonSectionMenuItem>
   </CommonSectionMenu>
 
-  <CommonSectionMenu
-    v-if="canManageSubscription"
-    class="py-1"
-    :header-label="__('Subscribers')"
-  >
+  <CommonSectionMenu v-if="canManageSubscription" class="py-1" :header-label="__('Subscribers')">
     <!-- Currently only modelValue is working: https://github.com/formkit/formkit/issues/629 -->
     <FormKit
       type="toggle"
-      :modelValue="isSubscribed"
+      :model-value="isSubscribed"
       :label="__('Get notified')"
       :variants="variants"
       :disabled="isSubscriptionLoading"
@@ -209,19 +185,12 @@ const hasEscalation = computed(() => {
         <!-- id is available on the toggle element  -->
         <!-- eslint-disable vuejs-accessibility/label-has-for -->
         <label :for="context.id" :class="context.classes.label">
-          <CommonUserAvatar
-            v-if="session.user"
-            class="ltr:mr-3 rtl:ml-3"
-            :entity="session.user"
-          />
+          <CommonUserAvatar v-if="session.user" class="ltr:mr-3 rtl:ml-3" :entity="session.user" />
           {{ context.label }}
         </label>
       </template>
     </FormKit>
-    <CommonUsersList
-      :users="subscribersWithoutMe"
-      :access-lookup="subscribersAccessLookup"
-    />
+    <CommonUsersList :users="subscribersWithoutMe" :access-lookup="subscribersAccessLookup" />
     <CommonShowMoreButton
       :entities="subscribersWithoutMe"
       :total-count="totalSubscribersWithoutMe"

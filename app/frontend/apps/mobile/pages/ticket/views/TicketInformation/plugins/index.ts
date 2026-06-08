@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import type { TicketById } from '#shared/entities/ticket/types.ts'
 
@@ -23,6 +23,4 @@ export const ticketInformationPlugins = Object.values(pluginsModules).sort(
   (p1, p2) => p1.order - p2.order,
 )
 
-export const ticketInformationRoutes = ticketInformationPlugins.map(
-  (plugin) => plugin.route,
-)
+export const ticketInformationRoutes = ticketInformationPlugins.map((plugin) => plugin.route)

@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
@@ -18,7 +18,7 @@ const popupItems = computed(() =>
     ? [
         {
           type: 'link' as const,
-          label: __('Original Formatting'),
+          label: __('Original formatting'),
           link: props.originalFormattingUrl,
           attributes: {
             'rest-api': true,
@@ -39,16 +39,14 @@ const popupItems = computed(() =>
     @keydown.space.prevent="showPopup = !showPopup"
   >
     <CommonIcon name="warning" decorative size="xs" />
-    {{ $t('Blocked Content') }}
+    {{ $t('Blocked content') }}
   </button>
   <CommonSectionPopup v-model:state="showPopup" :messages="popupItems">
     <template #header>
-      <div
-        class="flex flex-col items-center gap-2 border-b border-b-white/10 p-4"
-      >
+      <div class="flex flex-col items-center gap-2 border-b border-b-white/10 p-4">
         <div class="flex w-full items-center justify-center gap-1">
           <CommonIcon name="warning" size="tiny" />
-          {{ $t('Blocked Content') }}
+          {{ $t('Blocked content') }}
         </div>
         <div>
           {{

@@ -17,13 +17,18 @@
       <label for="application_secret"><%- @T('Facebook App Secret') %> <span>*</span></label>
     </div>
     <div class="controls">
-      <input id="application_secret" type="text" name="application_secret" value="<% if @external_credential && @external_credential.credentials: %><%= @external_credential.credentials.application_secret %><% end %>" class="form-control" required autocomplete="off">
+      <input id="application_secret" type="password" name="application_secret" value="<% if @external_credential && @external_credential.credentials: %><%= @external_credential.credentials.application_secret %><% end %>" class="form-control" required autocomplete="off">
     </div>
   </div>
   <h2><%- @T('Your callback URL') %></h2>
   <div class="input form-group">
-    <div class="controls">
-      <input class="form-control js-select" readonly value="<%= @callbackUrl %>">
+    <div class="controls controls--button ignore-readonly">
+      <input readonly type="text" value="<%= @callbackUrl %>" class="form-control js-select js-permanentReadonly">
+      <div class="controls-button u-clickable js-copy" role="button" aria-label="<%- @T('Copy to clipboard') %>">
+        <span class="controls-button-inner">
+          <%- @Icon('clipboard') %>
+        </span>
+      </div>
     </div>
   </div>
 </fieldset>

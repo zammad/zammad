@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { renderComponent } from '#tests/support/components/index.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
@@ -69,13 +69,9 @@ describe('TicketSidebarOrganizationContent.vue', () => {
 
     const wrapper = await renderTicketSidebarOrganizationContent()
 
-    expect(wrapper.getByRole('heading', { level: 2 })).toHaveTextContent(
-      'Organization',
-    )
+    expect(wrapper.getByRole('heading', { level: 2 })).toHaveTextContent('Organization')
 
-    expect(
-      wrapper.getByRole('img', { name: 'Avatar (Zammad Foundation)' }),
-    ).toBeInTheDocument()
+    expect(wrapper.getByRole('img', { name: 'Avatar (Zammad Foundation)' })).toBeInTheDocument()
 
     expect(wrapper.getByText('Zammad Foundation')).toBeInTheDocument()
     expect(wrapper.getByText('Domain')).toBeInTheDocument()
@@ -87,10 +83,8 @@ describe('TicketSidebarOrganizationContent.vue', () => {
       await wrapper.findByRole('link', {
         name: 'Avatar (Nicole Braun) Nicole Braun',
       }),
-    ).toHaveAttribute('href', '/user/profile/2')
+    ).toHaveAttribute('href', '/users/2')
 
-    expect(
-      wrapper.getByRole('button', { name: 'Show 1 more' }),
-    ).toBeInTheDocument()
+    expect(wrapper.getByRole('button', { name: 'Show more' })).toBeInTheDocument()
   })
 })

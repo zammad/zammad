@@ -1916,7 +1916,13 @@
 		contTemplate: '<tbody><tr><td colspan="7"></td></tr></tbody>',
 		footTemplate: '<tfoot>'+
 							'<tr>'+
-								'<th colspan="7" class="today"></th>'+
+								'<td colspan="7">'+
+									'<div class="datepicker-footer-buttons">'+
+										'<div class="clear"></div>'+
+										'<div class="today"></div>'+
+									'</div>'+
+								'</td>'+
+								'</th>'+
 							'</tr>'+
 							'<tr>'+
 								'<th colspan="7" class="clear"></th>'+
@@ -1925,7 +1931,7 @@
 	};
 	DPGlobal.template = '<div class="datepicker">'+
 							'<div class="datepicker-days">'+
-								'<table class=" table-condensed">'+
+								'<table class="table-condensed">'+
 									DPGlobal.headTemplate+
 									'<tbody></tbody>'+
 									DPGlobal.footTemplate+
@@ -1935,14 +1941,12 @@
 								'<table class="table-condensed">'+
 									DPGlobal.headTemplate+
 									DPGlobal.contTemplate+
-									DPGlobal.footTemplate+
 								'</table>'+
 							'</div>'+
 							'<div class="datepicker-years">'+
 								'<table class="table-condensed">'+
 									DPGlobal.headTemplate+
 									DPGlobal.contTemplate+
-									DPGlobal.footTemplate+
 								'</table>'+
 							'</div>'+
 						'</div>';

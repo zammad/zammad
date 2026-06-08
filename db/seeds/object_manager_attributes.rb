@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 ObjectManager::Attribute.add(
   force:       true,
@@ -7,13 +7,15 @@ ObjectManager::Attribute.add(
   display:     '#',
   data_type:   'input',
   data_option: {
-    type:      'text',
-    readonly:  1,
-    null:      true,
-    maxlength: 60,
-    width:     '68px',
+    display_config: 'ticket_hook',
+    type:           'text',
+    readonly:       1,
+    null:           true,
+    maxlength:      60,
+    width:          '68px',
   },
   editable:    false,
+  internal:    true,
   active:      true,
   screens:     {
     create_top: {},
@@ -38,6 +40,7 @@ ObjectManager::Attribute.add(
     translate: false,
   },
   editable:    false,
+  internal:    true,
   active:      true,
   screens:     {
     create_top: {
@@ -69,13 +72,14 @@ ObjectManager::Attribute.add(
     placeholder:    __('Enter Person or Organization/Company'),
     minLengt:       2,
     translate:      false,
-    permission:     ['ticket.agent'],
+    permission:     ['ticket.agent', 'ticket.customer'],
   },
   editable:    false,
+  internal:    true,
   active:      true,
   screens:     {
     create_top: {
-      '-all-' => {
+      'ticket.agent' => {
         null: false,
       },
     },
@@ -102,6 +106,7 @@ ObjectManager::Attribute.add(
     permission:     ['ticket.agent', 'ticket.customer'],
   },
   editable:    false,
+  internal:    true,
   active:      true,
   screens:     {
     create_top: {
@@ -136,6 +141,7 @@ ObjectManager::Attribute.add(
     translate:  true,
   },
   editable:    true,
+  internal:    false,
   active:      false,
   screens:     {
     create_middle: {
@@ -173,6 +179,7 @@ ObjectManager::Attribute.add(
     permission:               ['ticket.agent', 'ticket.customer'],
   },
   editable:    false,
+  internal:    true,
   active:      true,
   screens:     {
     create_middle: {
@@ -217,6 +224,7 @@ ObjectManager::Attribute.add(
     permission:         ['ticket.agent'],
   },
   editable:    false,
+  internal:    true,
   active:      true,
   screens:     {
     create_middle: {
@@ -257,6 +265,7 @@ ObjectManager::Attribute.add(
     filter:     Ticket::State.where(active: true).by_category_ids(:viewable),
   },
   editable:    false,
+  internal:    true,
   active:      true,
   screens:     {
     create_middle: {
@@ -315,6 +324,7 @@ ObjectManager::Attribute.add(
     permission: %w[ticket.agent],
   },
   editable:    false,
+  internal:    true,
   active:      true,
   screens:     {
     create_middle: {
@@ -358,6 +368,7 @@ ObjectManager::Attribute.add(
     translate:  true,
   },
   editable:    false,
+  internal:    true,
   active:      true,
   screens:     {
     create_middle: {
@@ -397,6 +408,7 @@ ObjectManager::Attribute.add(
     translate: false,
   },
   editable:    false,
+  internal:    true,
   active:      true,
   screens:     {
     create_bottom: {
@@ -427,6 +439,7 @@ ObjectManager::Attribute.add(
     translate:  true,
   },
   editable:    false,
+  internal:    true,
   active:      true,
   screens:     {
     create_middle: {},
@@ -460,6 +473,7 @@ ObjectManager::Attribute.add(
     translate:  true,
   },
   editable:    false,
+  internal:    true,
   active:      true,
   screens:     {
     create_middle: {},
@@ -487,6 +501,7 @@ ObjectManager::Attribute.add(
     null:      true,
   },
   editable:    false,
+  internal:    true,
   active:      true,
   screens:     {
     create_middle: {},
@@ -513,6 +528,7 @@ ObjectManager::Attribute.add(
     null:      true,
   },
   editable:    false,
+  internal:    true,
   active:      true,
   screens:     {
     create_top:    {},
@@ -536,13 +552,15 @@ ObjectManager::Attribute.add(
   display:     __('Text'),
   data_type:   'richtext',
   data_option: {
-    type:      'richtext',
-    maxlength: 150_000,
-    upload:    true,
-    rows:      8,
-    null:      true,
+    type:        'richtext',
+    maxlength:   150_000,
+    upload:      true,
+    rows:        8,
+    null:        true,
+    bubble_menu: true,
   },
   editable:    false,
+  internal:    true,
   active:      true,
   screens:     {
     create_top: {
@@ -745,6 +763,7 @@ ObjectManager::Attribute.add(
     historical_options: detected_language_options,
   },
   editable:    false,
+  internal:    true,
   active:      true,
   screens:     {
     create_middle: {},
@@ -774,6 +793,7 @@ ObjectManager::Attribute.add(
     item_class:     'formGroup--halfSize',
   },
   editable:    false,
+  internal:    true,
   active:      true,
   screens:     {
     signup:          {},
@@ -805,6 +825,7 @@ ObjectManager::Attribute.add(
     item_class: 'formGroup--halfSize',
   },
   editable:    false,
+  internal:    true,
   active:      true,
   screens:     {
     signup:          {
@@ -857,6 +878,7 @@ ObjectManager::Attribute.add(
     item_class: 'formGroup--halfSize',
   },
   editable:    false,
+  internal:    true,
   active:      true,
   screens:     {
     signup:          {
@@ -909,6 +931,7 @@ ObjectManager::Attribute.add(
     item_class: 'formGroup--halfSize',
   },
   editable:    false,
+  internal:    true,
   active:      true,
   screens:     {
     signup:          {
@@ -961,6 +984,7 @@ ObjectManager::Attribute.add(
     item_class: 'formGroup--halfSize',
   },
   editable:    false,
+  internal:    true,
   active:      true,
   screens:     {
     signup:          {},
@@ -1001,6 +1025,7 @@ ObjectManager::Attribute.add(
     item_class: 'formGroup--halfSize',
   },
   editable:    false,
+  internal:    true,
   active:      true,
   screens:     {
     signup:          {},
@@ -1041,6 +1066,7 @@ ObjectManager::Attribute.add(
     item_class: 'formGroup--halfSize',
   },
   editable:    false,
+  internal:    true,
   active:      true,
   screens:     {
     signup:          {},
@@ -1081,6 +1107,7 @@ ObjectManager::Attribute.add(
     item_class: 'formGroup--halfSize',
   },
   editable:    false,
+  internal:    true,
   active:      true,
   screens:     {
     signup:          {},
@@ -1122,6 +1149,7 @@ ObjectManager::Attribute.add(
     item_class: 'formGroup--halfSize',
   },
   editable:    false,
+  internal:    true,
   active:      true,
   screens:     {
     signup:          {},
@@ -1169,6 +1197,7 @@ ObjectManager::Attribute.add(
     belongs_to:    'secondary_organizations',
   },
   editable:    false,
+  internal:    true,
   active:      true,
   screens:     {
     signup:          {},
@@ -1213,6 +1242,7 @@ ObjectManager::Attribute.add(
     item_class: 'formGroup--halfSize',
   },
   editable:    true,
+  internal:    false,
   active:      true,
   screens:     {
     signup:          {},
@@ -1252,6 +1282,7 @@ ObjectManager::Attribute.add(
     null:      true,
   },
   editable:    true,
+  internal:    false,
   active:      false,
   screens:     {
     signup:          {},
@@ -1292,6 +1323,7 @@ ObjectManager::Attribute.add(
     item_class: 'formGroup--halfSize',
   },
   editable:    true,
+  internal:    false,
   active:      false,
   screens:     {
     signup:          {},
@@ -1332,6 +1364,7 @@ ObjectManager::Attribute.add(
     item_class: 'formGroup--halfSize',
   },
   editable:    true,
+  internal:    false,
   active:      false,
   screens:     {
     signup:          {},
@@ -1372,6 +1405,7 @@ ObjectManager::Attribute.add(
     item_class: 'formGroup--halfSize',
   },
   editable:    true,
+  internal:    false,
   active:      false,
   screens:     {
     signup:          {},
@@ -1413,6 +1447,7 @@ ObjectManager::Attribute.add(
     item_class: 'formGroup--halfSize',
   },
   editable:    true,
+  internal:    false,
   active:      true,
   screens:     {
     signup:          {},
@@ -1457,6 +1492,7 @@ ObjectManager::Attribute.add(
     item_class:   'formGroup--halfSize',
   },
   editable:    false,
+  internal:    true,
   active:      true,
   screens:     {
     signup:          {
@@ -1502,6 +1538,7 @@ ObjectManager::Attribute.add(
     permission: ['admin.user', 'ticket.agent'],
   },
   editable:    false,
+  internal:    true,
   active:      true,
   screens:     {
     edit:   {
@@ -1533,13 +1570,14 @@ ObjectManager::Attribute.add(
   display:     __('Note'),
   data_type:   'richtext',
   data_option: {
-    type:      'text',
+    type:      'richtext',
     maxlength: 5000,
     no_images: true,
     null:      true,
     note:      __('Notes are visible to agents only, never to customers.'),
   },
   editable:    false,
+  internal:    true,
   active:      true,
   screens:     {
     signup:          {},
@@ -1584,6 +1622,7 @@ ObjectManager::Attribute.add(
     permission: ['admin.user'],
   },
   editable:    false,
+  internal:    true,
   active:      true,
   screens:     {
     signup:          {},
@@ -1628,6 +1667,7 @@ ObjectManager::Attribute.add(
     permission: ['admin.user'],
   },
   editable:    false,
+  internal:    true,
   active:      true,
   screens:     {
     signup:          {},
@@ -1671,6 +1711,7 @@ ObjectManager::Attribute.add(
     permission: ['admin.user', 'ticket.agent'],
   },
   editable:    false,
+  internal:    true,
   active:      true,
   screens:     {
     signup:          {},
@@ -1711,6 +1752,7 @@ ObjectManager::Attribute.add(
     item_class: 'formGroup--halfSize',
   },
   editable:    false,
+  internal:    true,
   active:      true,
   screens:     {
     edit:   {
@@ -1757,6 +1799,7 @@ ObjectManager::Attribute.add(
     permission: ['admin.organization'],
   },
   editable:    false,
+  internal:    true,
   active:      true,
   screens:     {
     edit:   {
@@ -1803,6 +1846,7 @@ ObjectManager::Attribute.add(
     permission: ['admin.organization'],
   },
   editable:    false,
+  internal:    true,
   active:      true,
   screens:     {
     edit:   {
@@ -1843,6 +1887,7 @@ ObjectManager::Attribute.add(
     item_class: 'formGroup--halfSize',
   },
   editable:    false,
+  internal:    true,
   active:      true,
   screens:     {
     edit:   {
@@ -1888,6 +1933,7 @@ ObjectManager::Attribute.add(
     permission: ['admin.organization'],
   },
   editable:    false,
+  internal:    true,
   active:      true,
   screens:     {
     edit:   {
@@ -1919,13 +1965,14 @@ ObjectManager::Attribute.add(
   display:     __('Note'),
   data_type:   'richtext',
   data_option: {
-    type:      'text',
+    type:      'richtext',
     maxlength: 5000,
     no_images: true,
     null:      true,
     note:      __('Notes are visible to agents only, never to customers.'),
   },
   editable:    false,
+  internal:    true,
   active:      true,
   screens:     {
     edit:   {
@@ -1965,6 +2012,7 @@ ObjectManager::Attribute.add(
     permission: ['admin.organization'],
   },
   editable:    false,
+  internal:    true,
   active:      true,
   screens:     {
     edit:   {
@@ -2004,6 +2052,7 @@ ObjectManager::Attribute.add(
     readonly:  1,
   },
   editable:    false,
+  internal:    true,
   active:      true,
   screens:     {},
   to_create:   false,
@@ -2024,6 +2073,7 @@ ObjectManager::Attribute.add(
     null:      false,
   },
   editable:    false,
+  internal:    true,
   active:      true,
   screens:     {
     create: {
@@ -2062,6 +2112,7 @@ ObjectManager::Attribute.add(
     do_not_log: true,
   },
   editable:    false,
+  internal:    true,
   active:      true,
   screens:     {
     create: {
@@ -2095,6 +2146,7 @@ ObjectManager::Attribute.add(
     max:       999_999,
   },
   editable:    false,
+  internal:    true,
   active:      true,
   screens:     {
     create: {
@@ -2132,6 +2184,7 @@ ObjectManager::Attribute.add(
     translate: true
   },
   editable:    false,
+  internal:    true,
   active:      true,
   screens:     {
     create: {
@@ -2166,6 +2219,7 @@ ObjectManager::Attribute.add(
     translate: true
   },
   editable:      false,
+  internal:      true,
   active:        true,
   screens:       {
     create: { 'admin.group': { shown: false, required: false } },
@@ -2197,6 +2251,7 @@ ObjectManager::Attribute.add(
     translate: true
   },
   editable:    false,
+  internal:    true,
   active:      true,
   screens:     {
     create: {
@@ -2232,6 +2287,7 @@ ObjectManager::Attribute.add(
     note:       __("A group's email address determines which address should be used for outgoing mails, e.g. when an agent is composing an email or a trigger is sending an auto-reply"),
   },
   editable:    false,
+  internal:    true,
   active:      true,
   screens:     {
     create: {
@@ -2266,6 +2322,7 @@ ObjectManager::Attribute.add(
     do_not_log: true,
   },
   editable:    false,
+  internal:    true,
   active:      true,
   screens:     {
     create: {
@@ -2297,6 +2354,7 @@ ObjectManager::Attribute.add(
     permission: ['admin.group'],
   },
   editable:    false,
+  internal:    true,
   active:      true,
   screens:     {
     create: {
@@ -2328,13 +2386,14 @@ ObjectManager::Attribute.add(
   display:     __('Note'),
   data_type:   'richtext',
   data_option: {
-    type:      'text',
+    type:      'richtext',
     maxlength: 250,
     no_images: true,
     null:      true,
     note:      __('Notes are visible to agents only, never to customers.'),
   },
   editable:    false,
+  internal:    true,
   active:      true,
   screens:     {
     create: {
@@ -2371,6 +2430,7 @@ ObjectManager::Attribute.add(
     permission: ['admin.group'],
   },
   editable:    false,
+  internal:    true,
   active:      true,
   screens:     {
     create: {
@@ -2393,4 +2453,56 @@ ObjectManager::Attribute.add(
   to_migrate:  false,
   to_delete:   false,
   position:    1800,
+)
+
+ObjectManager::Attribute.add(
+  force:       true,
+  object:      'Group',
+  name:        'summary_generation',
+  display:     __('Summary Generation'),
+  data_type:   'select',
+  data_option: {
+    default:    'global_default',
+    options:    [
+      {
+        name:  __('Use global default'),
+        value: 'global_default'
+      },
+      {
+        name:  __('On ticket detail opening'),
+        value: 'on_ticket_detail_opening'
+      },
+      {
+        name:  __('On ticket summary sidebar activation'),
+        value: 'on_ticket_summary_sidebar_activation'
+      },
+      {
+        name:  __('Hide ticket summary sidebar'),
+        value: 'disabled'
+      }
+    ],
+    nulloption: false,
+    multiple:   false,
+    null:       false,
+    translate:  true,
+  },
+  editable:    false,
+  internal:    true,
+  active:      true,
+  screens:     {
+    create: {
+      '-all-' => {
+        null: false,
+      },
+    },
+    edit:   {
+      '-all-' => {
+        null: false,
+      },
+    },
+  },
+  to_create:   false,
+  to_migrate:  false,
+  to_delete:   false,
+  position:    1450,
 )

@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { useSharedVisualConfig } from '#shared/composables/useSharedVisualConfig.ts'
@@ -11,9 +11,10 @@ import { isEmpty } from './utils.ts'
 import type { OutputMode } from './types.ts'
 
 interface Props {
-  mode?: OutputMode
   object: ObjectLike
   attribute: ObjectAttribute
+  mode?: OutputMode
+  inlineEditable?: string[]
 }
 
 const props = withDefaults(defineProps<Props>(), {

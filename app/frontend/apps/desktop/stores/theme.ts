@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { usePreferredColorScheme } from '@vueuse/core'
 import { acceptHMRUpdate, defineStore } from 'pinia'
@@ -37,12 +37,9 @@ export const useThemeStore = defineStore('theme', () => {
 
   const savingTheme = ref(false)
 
-  const setThemeMutation = new MutationHandler(
-    useUserCurrentAppearanceMutation(),
-    {
-      errorNotificationMessage: __('The appearance could not be updated.'),
-    },
-  )
+  const setThemeMutation = new MutationHandler(useUserCurrentAppearanceMutation(), {
+    errorNotificationMessage: __('The appearance could not be updated.'),
+  })
 
   const saveTheme = (newTheme: AppThemeName) => {
     const sanitizedTheme = sanitizeTheme(newTheme)
@@ -54,11 +51,9 @@ export const useThemeStore = defineStore('theme', () => {
 
     session.setUserPreference('theme', theme)
 
-    return setThemeMutation
-      .send({ theme: theme as EnumAppearanceTheme })
-      .catch(() => {
-        session.setUserPreference('theme', oldTheme)
-      })
+    return setThemeMutation.send({ theme: theme as EnumAppearanceTheme }).catch(() => {
+      session.setUserPreference('theme', oldTheme)
+    })
   }
 
   const currentTheme = computed<EnumAppearanceTheme>(
@@ -78,8 +73,7 @@ export const useThemeStore = defineStore('theme', () => {
 
   const updateTheme = async (value: EnumAppearanceTheme) => {
     try {
-      if (value === session.user?.preferences?.theme || savingTheme.value)
-        return
+      if (value === session.user?.preferences?.theme || savingTheme.value) return
 
       savingTheme.value = true
 

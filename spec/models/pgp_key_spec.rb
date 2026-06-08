@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -151,7 +151,7 @@ RSpec.describe PGPKey, type: :model do
     end
   end
 
-  describe '.for_recipient_email_addresses!', mariadb: true do
+  describe '.for_recipient_email_addresses!' do
     let!(:pgp_key1) { create(:'pgp_key/pgp1@example.com') }
     let!(:pgp_key2) { create(:'pgp_key/pgp2@example.com') }
     let!(:pgp_key3) { create(:'pgp_key/pgp3@example.com') }
@@ -204,7 +204,7 @@ RSpec.describe PGPKey, type: :model do
     end
   end
 
-  describe '.find_by_uid', mariadb: true do
+  describe '.find_by_uid' do
     let!(:pgp_key1) { create(:'pgp_key/pgp1@example.com') }
 
     context 'when an existing uid is used' do
@@ -250,7 +250,7 @@ RSpec.describe PGPKey, type: :model do
     end
   end
 
-  describe '.find_all_by_uid', mariadb: true do
+  describe '.find_all_by_uid' do
     let!(:pgp_key1) { create(:'pgp_key/pgp1@example.com', domain_alias: 'zammad.org') }
     let!(:pgp_key2) { create(:'pgp_key/pgp2@example.com', domain_alias: 'zammad.org') }
     let!(:pgp_key3) { create(:'pgp_key/pgp3@example.com', domain_alias: 'zammad.org') }

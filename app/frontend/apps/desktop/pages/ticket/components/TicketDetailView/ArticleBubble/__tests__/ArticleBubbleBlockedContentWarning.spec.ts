@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { renderComponent } from '#tests/support/components/index.ts'
 
@@ -19,14 +19,12 @@ describe('ArticleBubbleBlockedContentWarning', () => {
         provideTicketInformationMocks(ticket)
       },
     })
-    expect(
-      wrapper.queryByIconName('exclamation-triangle'),
-    ).not.toBeInTheDocument()
-    expect(wrapper.queryByText('Original Formatting')).not.toBeInTheDocument()
+    expect(wrapper.queryByIconName('exclamation-triangle')).not.toBeInTheDocument()
+    expect(wrapper.queryByText('Original formatting')).not.toBeInTheDocument()
   })
 
   // TODO: still skipped?!
-  it.skip('shows if there is blocked content', () => {
+  it.todo('shows if there is blocked content', () => {
     const wrapper = renderComponent(ArticleBubbleBlockedContentWarning, {
       router: true,
       props: {
@@ -43,6 +41,6 @@ describe('ArticleBubbleBlockedContentWarning', () => {
       },
     })
     expect(wrapper.getByIconName('exclamation-triangle')).toBeInTheDocument()
-    expect(wrapper.getByText('Original Formatting')).toBeInTheDocument()
+    expect(wrapper.getByText('Original formatting')).toBeInTheDocument()
   })
 })

@@ -1,9 +1,9 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 require 'models/core_workflow/base'
 
-RSpec.describe CoreWorkflow::Custom::AdminShowGroupListForAgents, mariadb: true, type: :model do
+RSpec.describe CoreWorkflow::Custom::AdminShowGroupListForAgents, type: :model do
   include_context 'with core workflow base'
 
   describe 'For Users' do

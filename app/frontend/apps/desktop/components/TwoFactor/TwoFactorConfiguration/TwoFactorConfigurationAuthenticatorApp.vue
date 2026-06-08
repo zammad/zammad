@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import QRCode from 'qrcode'
@@ -27,8 +27,7 @@ import { usePasswordCheckTwoFactor } from '#desktop/entities/two-factor-configur
 import type { TwoFactorConfigurationComponentPropsWithRequiredToken } from '../types.ts'
 import type { ApolloError } from '@apollo/client/errors'
 
-const props =
-  defineProps<TwoFactorConfigurationComponentPropsWithRequiredToken>()
+const props = defineProps<TwoFactorConfigurationComponentPropsWithRequiredToken>()
 
 const { twoFactorMethodLookup } = useTwoFactorPlugins()
 const twoFactorPlugin = twoFactorMethodLookup[props.type]
@@ -47,9 +46,7 @@ const initiationQuery = new QueryHandler(
   ),
 )
 
-const { redirectToPasswordCheck } = usePasswordCheckTwoFactor(
-  props.formSubmitCallback,
-)
+const { redirectToPasswordCheck } = usePasswordCheckTwoFactor(props.formSubmitCallback)
 
 initiationQuery.onError((error: ApolloError) => {
   if (
@@ -96,15 +93,12 @@ const verifyMethodConfiguration = async (securityCode: string) => {
     token: props.token,
     payload: securityCode,
     configuration: {
-      ...initiationResult.value
-        ?.userCurrentTwoFactorInitiateMethodConfiguration,
+      ...initiationResult.value?.userCurrentTwoFactorInitiateMethodConfiguration,
     },
   })
 }
 
-const submitForm = async ({
-  securityCode,
-}: FormSubmitData<{ securityCode: string }>) => {
+const submitForm = async ({ securityCode }: FormSubmitData<{ securityCode: string }>) => {
   try {
     const response = await verifyMethodConfiguration(securityCode)
 
@@ -116,15 +110,11 @@ const submitForm = async ({
       message: __('Two-factor method has been configured successfully.'),
     })
 
-    if (
-      response?.userCurrentTwoFactorVerifyMethodConfiguration?.recoveryCodes
-    ) {
+    if (response?.userCurrentTwoFactorVerifyMethodConfiguration?.recoveryCodes) {
       props.formSubmitCallback?.({
         nextState: 'recovery_codes',
         options: {
-          recoveryCodes:
-            response?.userCurrentTwoFactorVerifyMethodConfiguration
-              ?.recoveryCodes,
+          recoveryCodes: response?.userCurrentTwoFactorVerifyMethodConfiguration?.recoveryCodes,
           headerIcon: headerIcon.value,
         },
       })
@@ -138,9 +128,7 @@ const submitForm = async ({
         new UserError([
           {
             field: 'securityCode',
-            message: __(
-              'Invalid security code! Please try again with a new code.',
-            ),
+            message: __('Invalid security code! Please try again with a new code.'),
           },
         ]),
       )
@@ -168,7 +156,7 @@ const authenticatorApps = [
 ]
 
 const footerActionOptions = computed(() => ({
-  actionLabel: __('Set Up'),
+  actionLabel: __('Set up'),
   actionButton: { variant: 'submit', type: 'submit' },
 }))
 
@@ -193,16 +181,11 @@ const setupQrCode = async (provisioningUri: string, secret: string) => {
 
 initiationQuery.onResult(({ data }) => {
   if (data?.userCurrentTwoFactorInitiateMethodConfiguration) {
-    // eslint-disable-next-line camelcase
-    const { provisioning_uri, secret } =
-      // eslint-disable-next-line no-unsafe-optional-chaining
-      data?.userCurrentTwoFactorInitiateMethodConfiguration
+    const { provisioning_uri, secret } = data.userCurrentTwoFactorInitiateMethodConfiguration
 
     setupQrCode(provisioning_uri, secret)
       .catch(() => {
-        initiationError.value = __(
-          'Failed to set up QR code. Please try again.',
-        )
+        initiationError.value = __('Failed to set up QR code. Please try again.')
       })
       .finally(() => {
         loading.value = false
@@ -220,16 +203,9 @@ defineExpose({
 
 <template>
   <CommonLoader :loading="loading" :error="initiationError" />
-  <div
-    v-show="!loading"
-    class="space-y-2 text-sm text-gray-100 dark:text-neutral-400"
-  >
+  <div v-show="!loading" class="space-y-2 text-sm text-gray-100 dark:text-neutral-400">
     <CommonLabel
-      >{{
-        $t(
-          'To set up Authenticator App for your account, follow the steps below:',
-        )
-      }}
+      >{{ $t('To set up an authenticator app for your account, follow the steps below:') }}
     </CommonLabel>
     <ol class="list-decimal space-y-3 ltr:pl-4 rtl:pr-4">
       <li>
@@ -242,7 +218,7 @@ defineExpose({
         </CommonLabel>
         <ul class="list-disc ltr:pl-5 rtl:pr-5">
           <li v-for="app in authenticatorApps" :key="app.key">
-            <CommonLink external :link="app.link" open-in-new-tab>
+            <CommonLink class="text-sm leading-snug" :link="app.link" open-in-new-tab>
               {{ $t(app.label) }}
             </CommonLink>
           </li>
@@ -287,7 +263,7 @@ defineExpose({
                 prefix-icon="files"
                 size="medium"
                 @click.stop="copyToClipboard(secretCode)"
-                >{{ $t('Copy Secret') }}</CommonButton
+                >{{ $t('Copy secret') }}</CommonButton
               >
             </div>
           </Transition>
@@ -302,14 +278,12 @@ defineExpose({
         <Form
           ref="form"
           should-autofocus
-          @submit="
-            submitForm($event as FormSubmitData<{ securityCode: string }>)
-          "
+          @submit="submitForm($event as FormSubmitData<{ securityCode: string }>)"
         >
           <FormKit
             name="securityCode"
             type="text"
-            :placeholder="$t('Security Code')"
+            :placeholder="$t('Security code')"
             aria-labelledby="security-code-description"
             validation="required"
           />
@@ -317,9 +291,7 @@ defineExpose({
       </li>
 
       <li>
-        <CommonLabel>{{
-          $t('Press the button below to finish the setup.')
-        }}</CommonLabel>
+        <CommonLabel>{{ $t('Press the button below to finish the setup.') }}</CommonLabel>
       </li>
     </ol>
   </div>

@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import linkifyStr from 'linkify-string'
 import { isEqual } from 'lodash-es'
@@ -12,9 +12,7 @@ export const truthy = <T>(value: Maybe<T>): value is IsTruthy<T> => {
   return !!value
 }
 
-export const edgesToArray = <T>(
-  object?: Maybe<{ edges?: Maybe<{ node: T }[]> }>,
-): T[] => {
+export const edgesToArray = <T>(object?: Maybe<{ edges?: Maybe<{ node: T }[]> }>): T[] => {
   return object?.edges?.map((edge) => edge.node) || []
 }
 
@@ -99,15 +97,11 @@ export const createDeferred = <T>() => {
     resolve = res
     reject = rej
   })
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   return { resolve: resolve!, reject: reject!, promise }
 }
 
-export const waitForElement = async (
-  query: string,
-  tries = 60,
-): Promise<Element | null> => {
-  if (tries === 0) return null
+export const waitForElement = async (query: string, tries = 60): Promise<Element | null> => {
+  if (tries === 0 || typeof document === 'undefined') return null
   const element = document.querySelector(query)
   if (element) return element
   await new Promise((resolve) => requestAnimationFrame(resolve))
@@ -125,3 +119,19 @@ export const waitForElement = async (
  * */
 export const findChangedIndex = <T>(oldArray: T[], newArray: T[]) =>
   oldArray.findIndex((item, index) => !isEqual(item, newArray[index]))
+
+export const ensureImagesKeepAspectRatio = (input: string) => {
+  const domBody = document.createElement('div')
+  domBody.innerHTML = input
+
+  domBody.querySelectorAll<HTMLImageElement>('img').forEach((el) => {
+    if (el.style.height) {
+      el.style.maxHeight = el.style.height
+      el.style.height = 'auto'
+    }
+
+    el.style.maxWidth = '100%'
+  })
+
+  return domBody.innerHTML
+}

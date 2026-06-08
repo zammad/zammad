@@ -1,16 +1,9 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { onClickOutside } from '@vueuse/core'
-import {
-  computed,
-  defineAsyncComponent,
-  ref,
-  nextTick,
-  watch,
-  onMounted,
-  useTemplateRef,
-} from 'vue'
+import { escape } from 'lodash-es'
+import { computed, ref, nextTick, watch, onMounted, useTemplateRef } from 'vue'
 
 import CommonLabel from '#shared/components/CommonLabel/CommonLabel.vue'
 import { useHtmlLinks } from '#shared/composables/useHtmlLinks.ts'
@@ -18,10 +11,7 @@ import { useTrapTab } from '#shared/composables/useTrapTab.ts'
 import { i18n } from '#shared/i18n/index.ts'
 import { textToHtml } from '#shared/utils/helpers.ts'
 
-const CommonButton = defineAsyncComponent(
-  () => import('#desktop/components/CommonButton/CommonButton.vue'),
-)
-
+import CommonInlineEditButtons from '#desktop/components/CommonInlineEditButtons/CommonInlineEditButtons.vue'
 export interface Props {
   value: string
   initialEditValue?: string
@@ -42,9 +32,7 @@ export interface Props {
     label?: string
     input?: string
   }
-  onSubmitEdit?: (
-    value: string,
-  ) => Promise<void | (() => void)> | void | (() => void)
+  onSubmitEdit?: (value: string) => Promise<void | (() => void)> | void | (() => void)
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -76,7 +64,7 @@ const contentTooltip = computed(() => {
 
   if (isHoverTargetLink.value) return i18n.t('Open link')
 
-  return props.label || i18n.t('Start Editing')
+  return props.label || i18n.t('Start editing')
 })
 
 const checkValidity = (edit: string) => {
@@ -101,8 +89,7 @@ const stopEditing = (emitCancel = true) => {
   isEditing.value = false
   if (emitCancel) emit('cancel-edit')
 
-  if (!newEditValue.value.length)
-    newEditValue.value = props.initialEditValue ?? props.value
+  if (!newEditValue.value.length) newEditValue.value = props.initialEditValue ?? props.value
 }
 
 const activateEditing = (event?: MouseEvent | KeyboardEvent) => {
@@ -168,7 +155,7 @@ const handleEnterKey = (event: KeyboardEvent) => {
 
 const processedContent = computed(() => {
   if (props.detectLinks) return textToHtml(props.value)
-  return props.value
+  return escape(props.value)
 })
 
 useTrapTab(target)
@@ -176,8 +163,7 @@ useTrapTab(target)
 watch(
   () => props.value,
   () => {
-    if (props.detectLinks && labelInstance.value?.$el)
-      setupLinksHandlers(labelInstance.value?.$el)
+    if (props.detectLinks && labelInstance.value?.$el) setupLinksHandlers(labelInstance.value?.$el)
   },
   {
     flush: 'post',
@@ -186,8 +172,7 @@ watch(
 
 onMounted(() => {
   nextTick(() => {
-    if (props.detectLinks && labelInstance.value?.$el)
-      setupLinksHandlers(labelInstance.value?.$el)
+    if (props.detectLinks && labelInstance.value?.$el) setupLinksHandlers(labelInstance.value?.$el)
   })
 })
 
@@ -209,14 +194,12 @@ const vFocus = (el: HTMLElement) => {
 // Styling
 const focusClasses = computed(() => {
   let classes =
-    'group-focus-within:before:absolute group-focus-within:before:-left-[5px] group-focus-within:before:top-1/2 group-focus-within:before:z-0 group-focus-within:before:h-[calc(100%+10px)] group-focus-within:before:w-[calc(100%+10px)] group-focus-within:before:-translate-y-1/2 group-focus-within:before:rounded-md'
+    'group-focus-within:before:absolute group-focus-within:before:-left-[5px] group-focus-within:before:top-1/2 group-focus-within:before:z-0 group-focus-within:before:h-[calc(100%+10px)] group-focus-within:before:w-[calc(100%+10px)] group-focus-within:before:-translate-y-1/2 group-focus-within:before:rounded-md group-focus-visible-within group-focus-visible:before:outline-1 group-focus-visible:before:outline-blue-800'
 
   if (props.alternativeBackground) {
-    classes +=
-      ' group-focus-within:before:bg-neutral-50 dark:group-focus-within:before:bg-gray-500'
+    classes += ' group-focus-within:before:bg-neutral-50 dark:group-focus-within:before:bg-gray-500'
   } else {
-    classes +=
-      ' group-focus-within:before:bg-blue-200 dark:group-focus-within:before:bg-gray-700'
+    classes += ' group-focus-within:before:bg-blue-200 dark:group-focus-within:before:bg-gray-700'
   }
   return classes
 })
@@ -256,9 +239,11 @@ const hoverClasses = computed(() => {
     'before:absolute before:-left-[5px] before:top-1/2 before:-translate-y-1/2 before:-z-10 before:h-[calc(100%+10px)] before:w-[calc(100%+10px)] before:rounded-md'
 
   if (props.alternativeBackground) {
-    classes += ' hover:before:bg-neutral-50 dark:hover:before:bg-gray-500'
+    classes +=
+      ' hover:before:bg-neutral-50 dark:hover:before:bg-gray-500 hover:before:outline-1 hover:before:outline-blue-600 hover:dark:before:outline-blue-900'
   } else {
-    classes += ' hover:before:bg-blue-200 dark:hover:before:bg-gray-700' // default background
+    classes +=
+      ' hover:before:bg-blue-200 dark:hover:before:bg-gray-700 hover:before:outline-1 hover:before:outline-blue-600 hover:dark:before:outline-blue-900' // default background
   }
 
   return props.disabled ? '' : classes
@@ -275,7 +260,7 @@ defineExpose({
   <div
     ref="target"
     :role="activeEditingMode || disabled ? undefined : 'button'"
-    class="group relative flex w-fit items-center gap-1 focus:outline-hidden"
+    class="group relative flex w-fit items-center gap-1"
     :class="[
       disabledClasses,
       {
@@ -307,8 +292,8 @@ defineExpose({
       <CommonLabel
         :id="id"
         ref="label"
-        class="z-10 break-words"
-        style="word-break: normal; overflow-wrap: anywhere"
+        class="z-10 wrap-break-word"
+        :style="{ wordBreak: 'normal', overflowWrap: 'anywhere' }"
         v-bind="labelAttrs"
         :size="size"
         :class="[classes?.label, minHeightClassMap[size]]"
@@ -318,19 +303,15 @@ defineExpose({
 
     <div
       v-else
-      class="flex max-w-full items-center gap-2 before:absolute before:top-1/2 before:-left-[5px] before:z-0 before:h-[calc(100%+10px)] before:w-[calc(100%+10px)] before:-translate-y-1/2 before:rounded-md"
-      :class="[
-        { 'w-full': block },
-        editBackgroundClass,
-        fontSizeClassMap[size],
-      ]"
+      class="flex max-w-full items-center gap-2 before:absolute before:top-1/2 before:-left-1.25 before:z-0 before:h-[calc(100%+10px)] before:w-[calc(100%+10px)] before:-translate-y-1/2 before:rounded-md focus-within:before:outline-1 focus-within:before:outline-blue-800"
+      :class="[{ 'w-full': block }, editBackgroundClass, fontSizeClassMap[size]]"
     >
       <div class="relative z-10 w-full ltr:pr-14 rtl:pl-14">
         <input
           key="editable-content-key"
           v-model.trim="inputValue"
           v-focus
-          class="block w-full flex-shrink-0 bg-transparent text-gray-100 outline-hidden dark:text-neutral-400"
+          class="block w-full shrink-0 bg-transparent text-gray-100 outline-hidden dark:text-neutral-400"
           :class="[{ grow: block }, classes?.input || '']"
           :disabled="disabled || loading"
           :placeholder="placeholder"
@@ -338,24 +319,14 @@ defineExpose({
         />
       </div>
 
-      <div class="absolute z-10 flex gap-1 ltr:right-0 rtl:left-0 rtl:-order-1">
-        <CommonButton
-          v-tooltip="cancelLabel || $t('Cancel')"
-          icon="x-lg"
-          variant="danger"
-          @click="stopEditing()"
-          @keydown.enter.stop="stopEditing()"
-        />
-        <CommonButton
-          v-tooltip="submitLabel || $t('Save changes')"
-          class="rtl:-order-1"
-          icon="check2"
-          :disabled="!isValid"
-          variant="submit"
-          @click="submitEdit"
-          @keydown.enter.stop="submitEdit"
-        />
-      </div>
+      <CommonInlineEditButtons
+        :submit-label="submitLabel"
+        :cancel-label="cancelLabel"
+        class="absolute inset-e-0 z-10"
+        :submit-disabled="!isValid"
+        @submit="submitEdit"
+        @cancel="stopEditing()"
+      />
     </div>
   </div>
 </template>

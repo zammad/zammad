@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Service::User::TwoFactor::VerifyMethodConfiguration < Service::User::TwoFactor::Base
   attr_reader :payload, :configuration
@@ -12,17 +12,17 @@ class Service::User::TwoFactor::VerifyMethodConfiguration < Service::User::TwoFa
 
   def execute
     if !method&.enabled? || !method&.available?
-      raise Exceptions::UnprocessableEntity, __('The two-factor authentication method is not enabled.')
+      raise Exceptions::UnprocessableContent, __('The two-factor authentication method is not enabled.')
     end
 
-    verified = user.two_factor_verify_configuration?(method_name, payload, configuration)
+    verified = current_user.two_factor_verify_configuration?(method_name, payload, configuration)
 
     if !verified
       raise Service::User::TwoFactor::VerifyMethodConfiguration::Failed, __('The verification of the two-factor authentication method configuration failed.')
     end
 
     {
-      recovery_codes: Service::User::TwoFactor::GenerateRecoveryCodes.new(user: user).execute
+      recovery_codes: Service::User::TwoFactor::GenerateRecoveryCodes.with_current_user(current_user).execute
     }
   end
 

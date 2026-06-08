@@ -6,4 +6,19 @@ to: metest@znuny.com, "Günther John | Example GmbH" <k.günther@example.com>
 subject: aaäöüßad asd
 body: no visible content
 content_type: text/plain
-attachments: []
+attachments:
+- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+  data: !binary |-
+    5Pb83yBhZCBhc2QNCg0KLU1hcnRpbg0KDQotLQ0KT2xkIHByb2dyYW1tZXJzIG5ldmVyIGRpZS4gVGhleSBqdXN0IGJyYW5jaCB0byBhIG5ldyBhZGRyZXNzLg0K
+  filename: file
+  preferences: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+    Date: Fri, 04 May 2012 14:01:03 +0200
+    From: Martin Edenhofer <martin@example.com>
+    To: metest@znuny.com, "Günther John | Example GmbH" <k.günther@example.com>
+    Message-ID: "<BC182994-03FA-4DC5-8202-98CBFACA0887@example.com>"
+    Subject: aaäöüßad asd
+    MIME-Version: '1.0'
+    Content-Type: multipart/mixed; boundary="----_=_NextPart_000_03BED81D.6103DF93"
+    X-Universally-Unique-Identifier: d12c15d2-e6d6-4ccd-86c7-abc2c3d0a2a2
+    Mime-Type: multipart/mixed
+    Charset: UTF-8

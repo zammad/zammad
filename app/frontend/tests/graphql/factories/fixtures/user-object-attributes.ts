@@ -1,9 +1,24 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import type { ObjectManagerFrontendAttributesPayload } from '#shared/graphql/types.ts'
 
 export default (): ObjectManagerFrontendAttributesPayload => ({
   attributes: [
+    {
+      name: 'login',
+      display: 'Login',
+      dataType: 'input',
+      isInternal: true,
+      dataOption: {
+        type: 'text',
+        maxlength: 100,
+        null: true,
+        autocapitalize: false,
+        item_class: 'formGroup--halfSize',
+      },
+      screens: {},
+      __typename: 'ObjectManagerFrontendAttribute',
+    },
     {
       name: 'firstname',
       display: 'First name',

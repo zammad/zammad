@@ -9,7 +9,7 @@
 
           <input name="items" class="form-control form-control--small checklist-item-text" type="text" placeholder="<%- @T('Checklist Item Label') %>" value="<%= item.text %>" required />
 
-          <button class="btn btn--text btn--danger checklist-item-remove-button">
+          <button class="btn btn--text btn--danger checklist-item-remove-button" type="button">
             <%- @Icon('trash') %>
           </button>
         </div>

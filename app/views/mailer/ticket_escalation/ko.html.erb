@@ -1,0 +1,18 @@
+에스컬레이션된 티켓 (#{ticket.title})
+
+<div>안녕하세요 #{recipient.firstname}님,</div>
+<br>
+<div>"<b>#{ticket.customer.longname}</b>"의 티켓 (#{ticket.title})이 "#{ticket.escalation_at}"부터 에스컬레이션되었습니다!</div>
+<br>
+<% if @objects[:article] %>
+  <div>
+  정보:
+  <blockquote type="cite">
+  #{article.body_as_html}
+  </blockquote>
+  </div>
+<% end %>
+<br>
+<div>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">#{config.product_name}에서 보기</a>
+</div>

@@ -1,0 +1,19 @@
+Вхід у #{config.product_name} з нової країни
+
+<div>Вітаю #{user.firstname},</div>
+<br>
+<div>Схоже, що ви увійшли в обліковий запис <b>з відомого пристрою, але з нової країни</b> на "#{user_device.created_at}":</div>
+<br>
+<div>
+Ваш пристрій: #{user_device.name}<br>
+Ваше місце знаходження (орієнтовне):: #{user_device.location}<br>
+Ваш IP: #{user_device.ip}<br>
+</div>
+<br>
+<div>Цю країну додано до списку відомих пристроїв. Ви можете переглянути його тут:</div>
+<br>
+<div><a href="#{config.http_type}://#{config.fqdn}/#profile/devices">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>
+<br>
+<div>Якщо це зробили не ви, будь ласка, видаліть пристрій, змініть пароль облікового запису та зверніться до адміністратора. Це може свідчити про несанкціонований доступ до вашого облікового запису.</div>
+<br>
+<div>Команда #{config.product_name} </div>

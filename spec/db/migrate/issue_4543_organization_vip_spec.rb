@@ -1,11 +1,11 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
 RSpec.describe Issue4543OrganizationVip, db_strategy: :reset, type: :db_migration do
   before do
     # Clean-up vip field of schema
-    ObjectManager::Attribute.remove(object_lookup_id: ObjectLookup.by_name('Organization'), name: 'vip', force: true)
+    ObjectManager::Attribute.find_by(object_lookup_id: ObjectLookup.by_name('Organization'), name: 'vip')&.delete
     ObjectManager::Attribute.migration_execute(false)
 
     # Create custom vip attribute

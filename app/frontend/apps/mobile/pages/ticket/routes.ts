@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { ticketInformationRoutes } from './views/TicketInformation/plugins/index.ts'
 
@@ -26,8 +26,7 @@ const routes: RouteRecordRaw[] = [
       },
       {
         path: 'information',
-        component: () =>
-          import('./views/TicketInformation/TicketInformationView.vue'),
+        component: () => import('./views/TicketInformation/TicketInformationView.vue'),
         name: 'TicketInformationView',
         props: true,
         children: ticketInformationRoutes,
@@ -62,7 +61,7 @@ const routes: RouteRecordRaw[] = [
     component: () => import('./views/TicketCreate.vue'),
     alias: ['/ticket/create', '/ticket/create/:pathMatch(.*)*'],
     meta: {
-      title: __('Create Ticket'),
+      title: __('Create ticket'),
       requiresAuth: true,
       requiredPermission: ['ticket.agent', 'ticket.customer'],
       level: 2,
@@ -70,8 +69,7 @@ const routes: RouteRecordRaw[] = [
   },
   {
     path: '/ticket/zoom/:internalId(\\d+)/:articleId(\\d+)',
-    redirect: (to) =>
-      `/tickets/${to.params.internalId}#article-${to.params.articleId}`,
+    redirect: (to) => `/tickets/${to.params.internalId}#article-${to.params.articleId}`,
   },
 ]
 

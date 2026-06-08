@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { storeToRefs } from 'pinia'
 import { computed, ref } from 'vue'
@@ -24,11 +24,11 @@ export const useLocaleUpdate = () => {
   const { notify } = useNotifications()
 
   const localeStore = useLocaleStore()
-  const { localeData, locales } = storeToRefs(localeStore)
   const { setLocale } = localeStore
+  const { localeData, locales } = storeToRefs(localeStore)
 
   const modelCurrentLocale = computed({
-    get: () => localeData.value?.locale ?? 'en',
+    get: () => localeData.value?.locale ?? 'en-us',
     set: (locale) => {
       if (!locale || localeData.value?.locale === locale) return
       isSavingLocale.value = true

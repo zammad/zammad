@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import emitter from '../emitter.ts'
 
@@ -6,9 +6,9 @@ describe('emitter', () => {
   it('check working emitter object', () => {
     const emitCallbackSpy = vi.fn()
 
-    emitter.on('sessionInvalid', emitCallbackSpy)
+    emitter.on('session-invalid', emitCallbackSpy)
 
-    emitter.emit('sessionInvalid')
+    emitter.emit('session-invalid')
 
     expect(emitCallbackSpy).toHaveBeenCalled()
   })

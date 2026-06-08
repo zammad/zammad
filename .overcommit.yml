@@ -16,20 +16,17 @@ PreCommit:
     command: ['bundle', 'exec', 'rubocop']
   CoffeeLint:
     required_executable: 'coffeelint'
-    install_command: 'npm install -g @coffeelint/cli'
+    install_command: 'npm install -g coffeelint@1'
     # .dev/coffeelint/rules/* not supported in YAML, specify all rules separately.
     flags:
-      [
-        '--reporter=csv',
-        '--rules',
-        './.dev/coffeelint/rules/detect_translatable_string.coffee',
-      ]
+      ['--reporter=csv', '--rules', './.dev/coffeelint/rules/detect_translatable_string.coffee']
     enabled: true
     on_warn: fail
     exclude: 'public/assets/chat/**/*'
   Stylelint:
     enabled: true
     required_executable: 'pnpm'
+    install_command: 'npm install -g stylelint'
     command: ['pnpm', '--silent', 'lint:css:cmd']
     include:
       - '**/*.scss'
@@ -61,34 +58,61 @@ PreCommit:
     enabled: true
     command: ['pnpm', 'lint:ts']
     exclude:
-     - 'node_modules'
-     - 'public'
-     - 'vendor'
+      - 'node_modules'
+      - 'public'
+      - 'vendor'
     include:
       - 'app/frontend/**/*'
       - '**/*.cy.ts'
       - '**/cypress/**/*.ts'
       - './vite.config.*'
       - './vitest.setup.ts'
-  EsLint:
+  # Custom Eslint hook, necessary due to dropping of the "compact" formatter in v9.
+  #   The hook now relies on the default "stylish" formatter and checks stdout instead.
+  #   See `.git-hooks/pre_commit/eslint.rb` for details.
+  Eslint:
     required_executable: 'pnpm'
     enabled: true
-    command: ['pnpm', 'lint:js:cmd']
+    command: ['pnpm', 'lint:js:eslint:cmd']
     exclude:
       - 'app/assets/**/*'
       - 'public/assets/chat/**/*'
       - 'public/assets/form/**/*'
+      - 'app/frontend/shared/graphql/types.ts'
+      - 'app/frontend/shared/types/config.ts'
     include:
       - '**/*.js'
       - '**/*.ts'
       - '**/*.vue'
-  Markdownlint:
+  Oxlint:
+    required_executable: 'pnpm'
+    enabled: true
+    command: ['pnpm', 'lint:js:oxlint:cmd']
+    flags: ['app/frontend/', '.eslint-plugin-zammad/']
+    exclude:
+      - 'app/frontend/shared/graphql/types.ts'
+      - 'app/frontend/shared/types/config.ts'
+    include:
+      - 'app/frontend/**/*'
+      - '.eslint-plugin-zammad/**/*'
+  Oxfmt:
+    required_executable: 'pnpm'
+    enabled: true
+    command: ['pnpm', 'format:check:cmd']
+    flags: ['app/frontend/', '.eslint-plugin-zammad/']
+    include:
+      - 'app/frontend/**/*.js'
+      - 'app/frontend/**/*.ts'
+      - 'app/frontend/**/*.vue'
+      - '.eslint-plugin-zammad/**/*.js'
+      - '.eslint-plugin-zammad/**/*.ts'
+  Mdl:
     required_executable: 'pnpm'
     enabled: true
     command: ['pnpm', 'lint:md:cmd']
-    flags: ['*.md', '**/*.md', '#node_modules', '#**/node_modules']
     exclude:
       - 'node_modules'
+      - 'tmp'
     include:
       - '**/*.md'
 
@@ -113,9 +137,9 @@ PrePush:
     enabled: false
   CustomScript:
     enabled: true
-    description: "Verify GraphQL introspection file is not empty."
+    description: 'Verify GraphQL introspection file is not empty.'
     required_executable: 'bash'
-    command: [ 'bash', '-c', 'test -s app/graphql/graphql_introspection.json' ]
+    command: ['bash', '-c', 'test -s app/graphql/graphql_introspection.json']
     on_warn: fail
 
 PreRebase:

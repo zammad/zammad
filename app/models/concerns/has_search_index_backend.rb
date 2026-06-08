@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module HasSearchIndexBackend
   extend ActiveSupport::Concern
@@ -198,7 +198,7 @@ reload search index with full data
       offset          = 0
       batch_size      = 200
 
-      while query.offset(offset).limit(batch_size).count.positive?
+      while query.offset(offset).limit(batch_size).any?
         records = query.offset(offset).limit(batch_size)
 
         Parallel.map(records, { in_processes: worker }) do |record|

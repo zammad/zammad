@@ -237,5 +237,18 @@ class App.OnlineNotificationContentWidget extends App.CollectionController
             )
             App.OnlineNotification.play()
 
-  onClick: =>
+  onClick: (id, e) =>
+    notification = App.OnlineNotification.find(id)
+
+    @prepareForObjectListItem(notification)
+
+    if notification && !notification.link
+      if !notification.seen
+        notification.seen = true
+        notification.save()
+
+      e.preventDefault()
+      e.stopPropagation()
+      return
+
     @container.hide()

@@ -1,0 +1,6 @@
+{
+  "input": "John Doe hier vom Infrastructure-Team. Gerne können Sie einen kostenfreien Export Ihrer Zammad-instanz example-instance.zammad.com erhalten. Dies steht Ihnen zweimal pro Jahr kostenfrei zu.",
+  "expected": {
+    "language": "de"
+  }
+}

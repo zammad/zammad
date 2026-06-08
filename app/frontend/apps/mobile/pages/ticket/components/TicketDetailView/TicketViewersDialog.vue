@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { toRef } from 'vue'
@@ -6,6 +6,7 @@ import { toRef } from 'vue'
 import { useTicketLiveUsersDisplay } from '#shared/entities/ticket/composables/useTicketLiveUsersDisplay.ts'
 import type { TicketLiveAppUser } from '#shared/entities/ticket/types.ts'
 
+import AiAgentAvatar from '#mobile/components/AiAgent/AiAgentAvatar.vue'
 import CommonDialog from '#mobile/components/CommonDialog/CommonDialog.vue'
 import CommonSectionMenu from '#mobile/components/CommonSectionMenu/CommonSectionMenu.vue'
 
@@ -14,21 +15,16 @@ import TicketViewerItem from './TicketViewerItem.vue'
 interface Props {
   name: string
   liveUsers: TicketLiveAppUser[]
+  isAiAgentRunning?: boolean
 }
 
 const props = defineProps<Props>()
 
-const { viewingUsers, idleUsers } = useTicketLiveUsersDisplay(
-  toRef(() => props.liveUsers),
-)
+const { viewingUsers, idleUsers } = useTicketLiveUsersDisplay(toRef(() => props.liveUsers))
 </script>
 
 <template>
-  <CommonDialog
-    :name="name"
-    :label="__('Ticket viewers')"
-    class="w-full p-4 text-sm"
-  >
+  <CommonDialog :name="name" :label="__('Ticket viewers')" class="w-full p-4 text-sm">
     <CommonSectionMenu
       v-if="viewingUsers.length > 0"
       class="shrink-0 gap-3 py-2"
@@ -42,15 +38,22 @@ const { viewingUsers, idleUsers } = useTicketLiveUsersDisplay(
         :app="viewingUser.app"
       />
     </CommonSectionMenu>
+    <CommonSectionMenu v-if="isAiAgentRunning" :help="__('Currently processing this ticket…')">
+      <div class="flex items-center gap-3 p-3">
+        <AiAgentAvatar size="large" />
+        <CommonLabel size="large" class="text-white">{{ $t('AI agent') }}</CommonLabel>
+        <CommonIcon
+          class="ltr:ml-auto rtl:mr-auto"
+          :label="$t('Currently processing this ticket…')"
+          name="avatar-indicator-editing-mobile"
+        />
+      </div>
+    </CommonSectionMenu>
     <CommonSectionMenu
       v-if="idleUsers.length > 0"
       class="shrink-0 gap-3 py-2"
       :header-label="__('Opened in tabs')"
-      :help="
-        __(
-          'Has ticket open in tabs, but is not actively looking at the ticket.',
-        )
-      "
+      :help="__('Has ticket open in tabs, but is not actively looking at the ticket.')"
     >
       <TicketViewerItem
         v-for="(idleUser, index) in idleUsers"

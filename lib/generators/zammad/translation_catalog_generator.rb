@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails/generators'
 
@@ -31,7 +31,7 @@ class Zammad::TranslationCatalogGenerator < Rails::Generators::Base
   def generate
     options_valid?
     strings = extract_strings
-    return if strings.count.zero?
+    return if strings.none?
 
     write_strings(strings)
   end

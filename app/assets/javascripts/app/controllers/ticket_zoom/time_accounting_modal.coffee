@@ -51,6 +51,7 @@ class App.TicketZoomTimeAccountingModal extends App.ControllerModal
         relation: 'TicketTimeAccountingType'
         null: true
         nulloption: true
+        translate: true
         value: defaultTypeId
 
     @form = new App.ControllerForm(

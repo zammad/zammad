@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import type { FileUploaded } from '#shared/components/Form/fields/FieldFile/types.ts'
 import type { SecurityValue } from '#shared/components/Form/fields/FieldSecurity/types.ts'
@@ -43,10 +43,7 @@ export type TicketByList = NonNullable<
   TicketsCachedByOverviewQuery['ticketsCachedByOverview']['edges']
 >[number]['node']
 
-export type TicketArticle = ConfidentTake<
-  TicketArticlesQuery,
-  'articles.edges.node'
->
+export type TicketArticle = ConfidentTake<TicketArticlesQuery, 'articles.edges.node'>
 
 export interface TicketCustomerUpdateFormData {
   customer_id: number
@@ -120,8 +117,4 @@ export interface TicketArticleTimeAccountingFormData {
   accounted_time_type_id?: number
 }
 
-export type TicketDuplicateDetectionItem = [
-  id: number,
-  number: string,
-  title: string,
-]
+export type TicketDuplicateDetectionItem = [id: number, number: string, title: string]

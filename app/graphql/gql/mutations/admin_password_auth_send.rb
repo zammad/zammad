@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Mutations
   class AdminPasswordAuthSend < BaseMutation
@@ -10,19 +10,15 @@ module Gql::Mutations
 
     field :success, Boolean, null: true, description: 'This indicates if sending the token was successful.'
 
-    def self.authorize(...)
-      true
-    end
+    allow_public_access!
 
-    def ready?(login:)
+    def throttle_if_needed!(login:)
       throttle!(limit: 3, period: 1.minute, by_identifier: login)
     end
 
     def resolve(login:)
-      send = Service::Auth::SendAdminToken.new(login: login)
-
       begin
-        send.execute
+        Service::Auth::SendAdminToken.execute(login: login)
       rescue Service::Auth::SendAdminToken::TokenError, Service::Auth::SendAdminToken::EmailError
         return { success: false }
       end

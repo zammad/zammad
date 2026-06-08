@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import noop from 'lodash-es/noop'
 
@@ -9,7 +9,6 @@ const auto = false
 // should servicer worker be destroyed - should be used only if something went wrong
 const autoDestroy = false
 
-// eslint-disable-next-line sonarjs/cognitive-complexity
 export const registerSW = (options: RegisterSWOptions) => {
   const {
     path,
@@ -28,7 +27,6 @@ export const registerSW = (options: RegisterSWOptions) => {
 
   // service worker is disabled during normal development
   if (import.meta.env.DEV) {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const sw = window.sw!
     // to trigger "Need refresh" run in console: `sw.triggerUpdate()`
     sw.ontriggerupdate = () => {
@@ -47,6 +45,8 @@ export const registerSW = (options: RegisterSWOptions) => {
 
   let wb: import('workbox-window').Workbox | undefined
   let registration: ServiceWorkerRegistration | undefined
+
+  // eslint-disable-next-line prefer-const
   let registerPromise: Promise<void>
   let sendSkipWaitingMessage: () => Promise<void> | undefined
 

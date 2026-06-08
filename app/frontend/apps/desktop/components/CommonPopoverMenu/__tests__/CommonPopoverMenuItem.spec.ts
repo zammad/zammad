@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { renderComponent } from '#tests/support/components/index.ts'
 
@@ -32,5 +32,14 @@ describe('rendering item for section', () => {
     })
 
     expect(view.getByIconName('search')).toBeInTheDocument()
+  })
+
+  it('has an external link icon, if link is external', () => {
+    const view = renderMenuItem({
+      link: '/',
+      linkExternal: true,
+    })
+
+    expect(view.getByIconName('box-arrow-up-right')).toBeInTheDocument()
   })
 })

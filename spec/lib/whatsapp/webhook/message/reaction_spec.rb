@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -72,7 +72,7 @@ RSpec.describe Whatsapp::Webhook::Message::Reaction, :aggregate_failures, curren
       end
 
       # Only for PostgreSQL due to emoji storage
-      context 'when history is written', db_adapter: :postgresql do
+      context 'when history is written' do
         it 'contains correct type and emoji' do
           described_class.new(data:, channel:).process
 

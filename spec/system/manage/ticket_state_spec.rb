@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -67,7 +67,7 @@ RSpec.describe 'Manage > Ticket States', type: :system do
       end
 
       it 'has additional actions' do
-        expect(state_row).to have_css('[data-table-action]', count: 3, visible: :all)
+        expect(state_row).to have_css('[data-table-action]', count: 4, visible: :all)
       end
     end
   end

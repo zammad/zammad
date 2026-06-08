@@ -1,10 +1,10 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { renderComponent } from '#tests/support/components/index.ts'
 
 import { i18n } from '#shared/i18n.ts'
 
-import CommonlTranslateRenderer from '../CommonTranslateRenderer.vue'
+import CommonTranslateRenderer from '../CommonTranslateRenderer.vue'
 
 const populateTranslationMap = () => {
   const map = new Map([
@@ -20,13 +20,13 @@ const populateTranslationMap = () => {
   i18n.setTranslationMap(map)
 }
 
-describe('CommonlTranslateRenderer.vue', () => {
+describe('CommonTranslateRenderer.vue', () => {
   beforeEach(() => {
     populateTranslationMap()
   })
 
   it('renders link in given source string', () => {
-    const view = renderComponent(CommonlTranslateRenderer, {
+    const view = renderComponent(CommonTranslateRenderer, {
       props: {
         source: 'A example with an %s which can be inside a %s.',
         placeholders: [
@@ -51,7 +51,7 @@ describe('CommonlTranslateRenderer.vue', () => {
   })
 
   it('renders a common label in given source string', () => {
-    const view = renderComponent(CommonlTranslateRenderer, {
+    const view = renderComponent(CommonTranslateRenderer, {
       props: {
         source: 'A example with an %s which can be inside a %s.',
         placeholders: [

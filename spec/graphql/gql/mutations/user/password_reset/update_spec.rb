@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -67,7 +67,7 @@ RSpec.describe Gql::Mutations::User::PasswordReset::Update, type: :graphql do
 
         execute_graphql_query
 
-        expect(message).to include('This activity is not known to you? If not, contact your system administrator.')
+        expect(message).to include('If you did not initiate this change, please contact your system administrator.')
       end
     end
 

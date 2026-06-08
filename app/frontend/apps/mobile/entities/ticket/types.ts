@@ -1,13 +1,7 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import type {
-  FormRefParameter,
-  FormValues,
-} from '#shared/components/Form/types.ts'
-import type {
-  TicketById,
-  TicketLiveAppUser,
-} from '#shared/entities/ticket/types.ts'
+import type { FormRefParameter, FormValues } from '#shared/components/Form/types.ts'
+import type { TicketById, TicketLiveAppUser } from '#shared/entities/ticket/types.ts'
 import type {
   TicketWithMentionLimitQuery,
   TicketWithMentionLimitQueryVariables,
@@ -17,10 +11,7 @@ import type { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 import type { ComputedRef, Ref } from 'vue'
 
 export interface TicketInformation {
-  ticketQuery: QueryHandler<
-    TicketWithMentionLimitQuery,
-    TicketWithMentionLimitQueryVariables
-  >
+  ticketQuery: QueryHandler<TicketWithMentionLimitQuery, TicketWithMentionLimitQueryVariables>
   initialFormTicketValue: Ref<FormValues | undefined>
   ticket: ComputedRef<TicketById | undefined>
   newTicketArticleRequested: Ref<boolean>

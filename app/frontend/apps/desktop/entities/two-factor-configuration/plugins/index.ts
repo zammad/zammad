@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import type {
   TwoFactorConfigurationOptions,
@@ -15,13 +15,12 @@ const pluginsModules = import.meta.glob<TwoFactorConfigurationPlugin>(
 
 export const twoFactorConfigurationPlugins = Object.values(pluginsModules)
 
-export const twoFactorConfigurationPluginLookup =
-  twoFactorConfigurationPlugins.reduce(
-    (lookup: Record<string, TwoFactorConfigurationOptions>, plugin) => {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { name, ...options } = plugin // remove not needed name from options.
-      lookup[plugin.name] = options
-      return lookup
-    },
-    {},
-  )
+export const twoFactorConfigurationPluginLookup = twoFactorConfigurationPlugins.reduce(
+  (lookup: Record<string, TwoFactorConfigurationOptions>, plugin) => {
+    // oxlint-disable-next-line no-unused-vars
+    const { name, ...options } = plugin // remove not needed name from options.
+    lookup[plugin.name] = options
+    return lookup
+  },
+  {},
+)

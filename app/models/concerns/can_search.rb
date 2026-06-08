@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module CanSearch
   extend ActiveSupport::Concern
@@ -195,9 +195,9 @@ returns
       params = search_build_params(params)
 
       # try search index backend
-      # we only search in elastic search when we have a query present
+      # we only search in elastic search when we have a query present or if search_by_index is explicitly set to true
       # else we try to use the database result, since it is more up to date
-      object_ids, object_count = if SearchIndexBackend.enabled? && included_modules.include?(HasSearchIndexBackend) && params[:query]&.delete('*').present?
+      object_ids, object_count = if SearchIndexBackend.enabled? && include?(HasSearchIndexBackend) && (params[:query]&.delete('*').present? || params[:search_by_index].present?)
                                    search_es(params)
                                  else
                                    search_sql(params)
@@ -239,6 +239,7 @@ returns
       params[:limit]     ||= 50
       params[:offset]   = params[:offset].presence || params[:from].presence || 0
       params[:full]     = !params.key?(:full) || ActiveModel::Type::Boolean.new.cast(params[:full])
+      params[:search_by_index] = ActiveModel::Type::Boolean.new.cast(params[:search_by_index])
       params[:sort_by]  = sql_helper.get_sort_by(params, search_default_sort_by)
       params[:order_by] = sql_helper.get_order_by(params, search_default_order_by)
 
@@ -301,12 +302,12 @@ returns
     # Returns a relation with objects referenced by the ids in their original order.
     #
     def where_ordered_ids(ids)
-      order_by = case ActiveRecord::Base.connection_db_config.configuration_hash[:adapter]
-                 when 'postgresql'
-                   "array_position(ARRAY[#{ids.join(',')}], id)"
-                 when 'mysql2'
-                   "FIELD(id, #{ids.join(',')})"
-                 end
+      # Casting to bigint is required for PostgreSQL 13 only.
+      # Newer versions figure out types automatically.
+      # This can be removed once PostgreSQL 13 support is dropped.
+      # https://github.com/zammad/zammad/issues/5927
+      order_by = "array_position(ARRAY[#{ids.join(',')}]::bigint[], id::bigint)"
+
       where(id: ids).reorder(Arel.sql(order_by))
     end
   end

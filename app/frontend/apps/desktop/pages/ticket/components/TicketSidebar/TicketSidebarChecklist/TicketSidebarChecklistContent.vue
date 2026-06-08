@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script lang="ts" setup>
 import { cloneDeep } from 'lodash-es'
@@ -6,10 +6,7 @@ import { computed, nextTick, ref, useTemplateRef } from 'vue'
 
 import { useConfirmation } from '#shared/composables/useConfirmation.ts'
 import { handleUserErrors } from '#shared/errors/utils.ts'
-import type {
-  ChecklistItem,
-  TicketChecklistItemInput,
-} from '#shared/graphql/types.ts'
+import type { ChecklistItem, TicketChecklistItemInput } from '#shared/graphql/types.ts'
 import { i18n } from '#shared/i18n/index.ts'
 import { getApolloClient } from '#shared/server/apollo/client.ts'
 import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
@@ -45,17 +42,13 @@ const { cache: apolloCache } = getApolloClient()
 const { ticket, ticketId, isTicketEditable } = useTicketInformation()
 const { ticketNumberWithTicketHook } = useTicketNumber(ticket)
 
-const { checklist, isLoadingChecklist } = useTicketChecklist(ticketId, ticket)
+const { checklist, isLoadingChecklist } = useTicketChecklist(ticketId)
 
 const checklistTitle = computed(
-  () =>
-    checklist.value?.name ||
-    i18n.t('%s Checklist', ticketNumberWithTicketHook.value),
+  () => checklist.value?.name || i18n.t('%s Checklist', ticketNumberWithTicketHook.value),
 )
 
-const addNewChecklistMutation = new MutationHandler(
-  useTicketChecklistAddMutation(),
-)
+const addNewChecklistMutation = new MutationHandler(useTicketChecklistAddMutation())
 
 const createNewChecklist = async (
   input?: Omit<AddNewChecklistInput, 'ticketId'>,
@@ -69,20 +62,15 @@ const createNewChecklist = async (
         ticketId: ticket.value!.id,
       })
       .then(() => {
-        if (options.focusLastItem)
-          nextTick(() => checklistItemsInstance.value?.focusNewItem())
+        if (options.focusLastItem) nextTick(() => checklistItemsInstance.value?.focusNewItem())
       })
       .catch(handleUserErrors)
   }
 }
 
-const checklistTitleUpdateMutation = new MutationHandler(
-  useTicketChecklistTitleUpdateMutation(),
-)
+const checklistTitleUpdateMutation = new MutationHandler(useTicketChecklistTitleUpdateMutation())
 
-const checklistDeleteMutation = new MutationHandler(
-  useTicketChecklistDeleteMutation(),
-)
+const checklistDeleteMutation = new MutationHandler(useTicketChecklistDeleteMutation())
 
 const removeChecklist = async () => {
   const { waitForVariantConfirmation } = useConfirmation()
@@ -125,10 +113,7 @@ const itemAddMutation = new MutationHandler(
         id: cache.identify(checklist.value),
         fields: {
           items(currentItems, { toReference }) {
-            return [
-              ...currentItems,
-              toReference(ticketChecklistItemUpsert.checklistItem!),
-            ]
+            return [...currentItems, toReference(ticketChecklistItemUpsert.checklistItem!)]
           },
           complete(currentComplete) {
             return currentComplete + 1
@@ -148,26 +133,17 @@ const itemAddMutation = new MutationHandler(
   },
 )
 
-const itemOrderMutation = new MutationHandler(
-  useTicketChecklistItemOrderUpdateMutation(),
-  {
-    errorNotificationMessage: __('Failed to save checklist order.'),
-  },
-)
+const itemOrderMutation = new MutationHandler(useTicketChecklistItemOrderUpdateMutation(), {
+  errorNotificationMessage: __('Failed to save checklist order.'),
+})
 
-const itemUpsertMutation = new MutationHandler(
-  useTicketChecklistItemUpsertMutation(),
-  {
-    errorNotificationMessage: __('Failed to update checklist item.'),
-  },
-)
+const itemUpsertMutation = new MutationHandler(useTicketChecklistItemUpsertMutation(), {
+  errorNotificationMessage: __('Failed to update checklist item.'),
+})
 
-const itemDeleteMutation = new MutationHandler(
-  useTicketChecklistItemDeleteMutation(),
-  {
-    errorNotificationMessage: __('Failed to delete checklist item.'),
-  },
-)
+const itemDeleteMutation = new MutationHandler(useTicketChecklistItemDeleteMutation(), {
+  errorNotificationMessage: __('Failed to delete checklist item.'),
+})
 
 const isUpdatingOrder = itemOrderMutation.loading()
 const isAddingNewItem = itemAddMutation.loading()
@@ -196,8 +172,7 @@ const modifyIncompleteItemCountCache = (increase: boolean) => {
   if (increase) incompleteItemCount += 1
   else incompleteItemCount -= 1
 
-  if (incompleteItemCount < 0 || !currentCheckList.items)
-    incompleteItemCount = 0
+  if (incompleteItemCount < 0 || !currentCheckList.items) incompleteItemCount = 0
   else if (incompleteItemCount > currentCheckList.items.length)
     incompleteItemCount = currentCheckList.items.length
 
@@ -255,9 +230,7 @@ const modifyCheckedCache = (item: ChecklistItem) => {
     },
   })
 
-  const restoreIncompleteItemCountCache = modifyIncompleteItemCountCache(
-    !item.checked,
-  )
+  const restoreIncompleteItemCountCache = modifyIncompleteItemCountCache(!item.checked)
 
   // Return function to restore cache to the previous state.
   return () => {
@@ -450,21 +423,16 @@ const { isLoadingTemplates, checklistTemplatesMenuItems } =
             :disabled="isAddingNewChecklist"
             @click="createNewChecklist()"
           >
-            {{ $t('Add Empty Checklist') }}
+            {{ $t('Add empty checklist') }}
           </CommonButton>
 
           <ChecklistTemplates
-            v-if="
-              checklistTemplatesMenuItems &&
-              checklistTemplatesMenuItems?.length > 0
-            "
+            v-if="checklistTemplatesMenuItems && checklistTemplatesMenuItems?.length > 0"
             :templates="checklistTemplatesMenuItems"
           />
           <ChecklistEmptyTemplates v-else-if="!isLoadingTemplates" />
         </template>
-        <CommonLabel v-else>{{
-          $t('No checklist added to this ticket yet.')
-        }}</CommonLabel>
+        <CommonLabel v-else>{{ $t('No checklist added to this ticket yet.') }}</CommonLabel>
       </div>
     </CommonLoader>
   </TicketSidebarContent>

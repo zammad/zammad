@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 // https://www.w3.org/WAI/ARIA/apg/patterns/tooltip/
@@ -22,10 +22,7 @@ defineProps<Props>()
 const tooltipTriggerElement = ref<HTMLElement>()
 
 const { tooltip: tooltipConfig } = useSharedVisualConfig()
-const { tooltipVisible, showTooltip } = useTooltipControls(
-  tooltipTriggerElement,
-  tooltipConfig,
-)
+const { tooltipVisible, showTooltip } = useTooltipControls(tooltipTriggerElement, tooltipConfig)
 </script>
 
 <template>

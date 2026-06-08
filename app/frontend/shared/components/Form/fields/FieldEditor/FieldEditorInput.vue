@@ -1,38 +1,40 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { useEditor, EditorContent } from '@tiptap/vue-3'
+import { type Editor } from '@tiptap/vue-3'
 import { useEventListener } from '@vueuse/core'
-import { computed, onMounted, onUnmounted, ref, toRef, watch } from 'vue'
+import { computed, onMounted, onUnmounted, ref, toRef, useTemplateRef, watch } from 'vue'
 
-import { getFieldEditorClasses } from '#shared/components/Form/initializeFieldEditor.ts'
-import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
-import { htmlCleanup } from '#shared/utils/htmlCleanup.ts'
-import log from '#shared/utils/log.ts'
-import testFlags from '#shared/utils/testFlags.ts'
-
-import useValue from '../../composables/useValue.ts'
-import { getNodeByName } from '../../utils.ts'
-
+import useValue from '#shared/components/Form/composables/useValue.ts'
+import { useAttachments } from '#shared/components/Form/fields/FieldEditor/composables/useAttachments.ts'
+import { useSignatureHandling } from '#shared/components/Form/fields/FieldEditor/composables/useSignatureHandling.ts'
+import { EXTENSION_NAME as userMentionExtensionName } from '#shared/components/Form/fields/FieldEditor/extensions/UserMention.ts'
 import {
+  imageExtensionName,
   getCustomExtensions,
   getHtmlExtensions,
   getPlainExtensions,
-} from './extensions/List.ts'
-import FieldEditorActionBar from './FieldEditorActionBar.vue'
-import FieldEditorFooter from './FieldEditorFooter.vue'
-import FieldEditorTableMenu from './FieldEditorTableMenu.vue'
-import { PLUGIN_NAME as userMentionPluginName } from './suggestions/UserMention.ts'
-import { convertInlineImages } from './utils.ts'
-
+  PlaceholderExtensionName,
+} from '#shared/components/Form/fields/FieldEditor/extensions.ts'
+import FieldEditorFooter from '#shared/components/Form/fields/FieldEditor/FieldEditorFooter.vue'
 import type {
   EditorContentType,
-  EditorCustomPlugins,
+  EditorCustomExtensions,
   FieldEditorContext,
   FieldEditorProps,
-  PossibleSignature,
-} from './types.ts'
-import type { Editor } from '@tiptap/vue-3'
+} from '#shared/components/Form/fields/FieldEditor/types.ts'
+import {
+  getFieldEditorClasses,
+  getEditorComponents,
+} from '#shared/components/Form/initializeFieldEditor.ts'
+import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
+import { getButtonGroup } from '#shared/components/ObjectAttributes/attributes/AttributeRichtext/initializeRichtextButtons.ts'
+import { useSessionStore } from '#shared/stores/session.ts'
+import { htmlCleanup } from '#shared/utils/htmlCleanup.ts'
+
+import { TableKitExtensionName } from './extensions/TableKit.ts'
+import { useInlineMode } from './useInlineMode.ts'
 
 interface Props {
   context: FormFieldContext<FieldEditorProps>
@@ -40,101 +42,104 @@ interface Props {
 
 const props = defineProps<Props>()
 
+const placeholder = props.context.placeholder
+  ? props.context.placeholder
+  : props.context.inline
+    ? __('Click to edit…')
+    : ''
+
+const getEditorContent = (editor: Editor, type: EditorContentType) => {
+  if (type === 'text/plain') return editor.getText()
+
+  const content = editor.getHTML()
+
+  return editor.isEmpty ? '' : content
+}
+
+const actionBarComponent = getEditorComponents().actionBar
+
 const reactiveContext = toRef(props, 'context')
 const { currentValue } = useValue(reactiveContext)
 
-const disabledPlugins = Object.entries(props.context.meta || {})
+const disabledExtensions = Object.entries(props.context.meta || {})
   .filter(([, value]) => value.disabled)
-  .map(([key]) => key as EditorCustomPlugins)
+  .map(([key]) => key as EditorCustomExtensions | string)
 
-const contentType = computed<EditorContentType>(
-  () => props.context.contentType || 'text/html',
-)
-
-// remove user mention in plain text mode and inline images
-if (contentType.value === 'text/plain') {
-  disabledPlugins.push(userMentionPluginName, 'image')
+const disableExtension = (extensionName: EditorCustomExtensions | string) => {
+  if (disabledExtensions.includes(extensionName)) return
+  disabledExtensions.push(extensionName)
 }
 
-const editorExtensions =
-  contentType.value === 'text/plain'
-    ? getPlainExtensions()
-    : getHtmlExtensions()
+const contentType = computed<EditorContentType>(() => props.context.contentType || 'text/html')
 
-getCustomExtensions(reactiveContext).forEach((extension) => {
-  if (!disabledPlugins.includes(extension.name as EditorCustomPlugins)) {
-    editorExtensions.push(extension)
-  }
+const isPlainText = computed(() => contentType.value === 'text/plain')
+
+// Disable user mention and image extensions in plain text mode.
+if (isPlainText.value) {
+  disableExtension(userMentionExtensionName)
+  disableExtension(imageExtensionName)
+}
+
+const { hasPermission } = useSessionStore()
+
+const customExtensions = getCustomExtensions(reactiveContext)
+
+// Disable all custom extensions and tables for the basic set.
+if (props.context.extensionSet === 'basic') {
+  customExtensions.forEach((extension) =>
+    disableExtension(extension.name as EditorCustomExtensions),
+  )
+
+  disableExtension(TableKitExtensionName)
+}
+
+if (placeholder === '') disableExtension(PlaceholderExtensionName)
+
+// TODO: extensions are in general not reactive in TipTap, we need to check if all things are working as expected.
+// TODO: Maybe we need a re-creation of the editor in some edge cases... plain <-> html (check against simple channels...)
+const editorExtensions = computed(() => {
+  const baseExtensions = isPlainText.value
+    ? getPlainExtensions(placeholder, props.context?.meta)
+    : getHtmlExtensions(placeholder, props.context?.meta)
+
+  const availableExtensions = [...baseExtensions, ...customExtensions].filter((extension) => {
+    const { name, options } = extension
+
+    if (disabledExtensions.includes(name as EditorCustomExtensions)) return false
+    if (options?.permission && !hasPermission(options.permission)) return false
+
+    return true
+  })
+
+  return availableExtensions
 })
 
-const hasImageExtension = editorExtensions.some(
-  (extension) => extension.name === 'image',
-)
 const showActionBar = ref(false)
 const editorValue = ref<string>(VITE_TEST_MODE ? props.context._value : '')
 
-interface LoadImagesOptions {
-  attachNonInlineFiles: boolean
-}
+const { hasImageExtension, loadFiles } = useAttachments(
+  editorExtensions.value,
+  props.context.formId,
+)
 
-const inlineImagesInEditor = (editor: Editor, files: File[]) => {
-  convertInlineImages(files, editor.view.dom).then(async (urls) => {
-    if (editor?.isDestroyed) return
-    editor?.commands.setImages(urls)
-  })
-}
+const wrapperElement = useTemplateRef('wrapper')
 
-const addFilesToAttachments = (files: File[]) => {
-  const attachmentsContext = getNodeByName(props.context.formId, 'attachments')
-    ?.context as unknown as
-    | { uploadFiles?: (files: File[]) => void }
-    | undefined
-  if (attachmentsContext && !attachmentsContext.uploadFiles) {
-    log.error(
-      '[FieldEditorInput] Attachments field was found, but it doesn\'t provide "uploadFiles" method.',
-    )
-  } else {
-    attachmentsContext?.uploadFiles?.(files)
-  }
-}
-
-// there is also a gif, but desktop only inlines these two for now
-const imagesMimeType = ['image/png', 'image/jpeg']
-const loadFiles = (
-  files: FileList | File[] | null | undefined,
-  editor: Editor | undefined,
-  options: LoadImagesOptions,
-) => {
-  if (!files) {
-    return false
-  }
-
-  const inlineImages: File[] = []
-  const otherFiles: File[] = []
-
-  for (const file of files) {
-    if (imagesMimeType.includes(file.type)) {
-      inlineImages.push(file)
-    } else {
-      otherFiles.push(file)
-    }
-  }
-
-  if (inlineImages.length && editor) {
-    inlineImagesInEditor(editor, inlineImages)
-  }
-
-  if (options.attachNonInlineFiles && otherFiles.length) {
-    addFilesToAttachments(otherFiles)
-  }
-
-  return Boolean(
-    inlineImages.length || (options.attachNonInlineFiles && otherFiles.length),
-  )
-}
+const {
+  isInlineMode,
+  isSubmitting,
+  isEditing,
+  onWrapperClick,
+  handleCancel,
+  handleChange,
+  labelInlineDesktopClasses,
+  containerInlineDesktopClasses,
+  wrapperInlineDesktopClasses,
+  inputInlineDesktopTextStyles,
+} = useInlineMode(toRef(props, 'context'), wrapperElement)
 
 const editor = useEditor({
-  extensions: editorExtensions,
+  extensions: editorExtensions.value,
+  textDirection: 'auto',
   editorProps: {
     attributes: {
       role: 'textbox',
@@ -146,9 +151,7 @@ const editor = useEditor({
     },
     // add inlined files
     handlePaste(view, event) {
-      if (!hasImageExtension) {
-        return
-      }
+      if (!hasImageExtension.value) return
 
       const items = Array.from(event.clipboardData?.items || [])
       for (const item of items) {
@@ -173,9 +176,8 @@ const editor = useEditor({
       return false
     },
     handleDrop(view, event) {
-      if (!hasImageExtension) {
-        return
-      }
+      if (!hasImageExtension.value) return
+
       const e = event as unknown as InputEvent
       const files = e.dataTransfer?.files || null
       const loaded = loadFiles(files, editor.value, {
@@ -194,9 +196,7 @@ const editor = useEditor({
       ? htmlCleanup(currentValue.value)
       : currentValue.value,
   onUpdate({ editor }) {
-    const content =
-      contentType.value === 'text/plain' ? editor.getText() : editor.getHTML()
-    const value = content === '<p></p>' ? '' : content
+    const value = getEditorContent(editor as Editor, contentType.value)
     props.context.node.input(value)
 
     if (!VITE_TEST_MODE) return
@@ -204,6 +204,10 @@ const editor = useEditor({
   },
   onFocus() {
     showActionBar.value = true
+
+    if (!isInlineMode.value) return
+
+    isEditing.value = true
   },
   onBlur() {
     props.context.handlers.blur()
@@ -229,7 +233,6 @@ if (VITE_TEST_MODE) {
     },
   )
 }
-
 watch(
   () => props.context.disabled,
   (disabled) => {
@@ -245,38 +248,33 @@ const setEditorContent = (
   contentType: EditorContentType,
   emitUpdate?: boolean,
 ) => {
-  if (!editor.value || !content) return
+  if (!editor.value || content === undefined) return
 
-  editor.value.commands.setContent(
-    contentType === 'text/html' ? htmlCleanup(content) : content,
+  editor.value.commands.setContent(contentType === 'text/html' ? htmlCleanup(content) : content, {
     emitUpdate,
-  )
+  })
 }
 
 // Set the new editor content, when the value was changed from outside (e.g. form schema update).
-const updateValueKey = props.context.node.on(
-  'input',
-  ({ payload: newContent }) => {
-    const currentContent =
-      contentType.value === 'text/plain'
-        ? editor.value?.getText()
-        : editor.value?.getHTML()
+const updateValueKey = props.context.node.on('input', ({ payload: newContent }) => {
+  // Early return when no editor exists, keep this in mind, when we have real initial value problems.
+  if (!editor.value) return
 
-    // Skip the update if the value is identical.
-    if (newContent === currentContent) return
+  const currentContent = getEditorContent(editor.value, contentType.value)
 
-    setEditorContent(newContent, contentType.value, true)
-  },
-)
+  // Skip the update if the value is identical.
+  if (newContent === currentContent) return
+
+  setEditorContent(newContent, contentType.value, true)
+})
 
 // Convert the current editor content, if the content type changed from outside (e.g. form schema update).
 const updateContentTypeKey = props.context.node.on(
   'prop:contentType',
   ({ payload: newContentType }) => {
-    const newContent =
-      newContentType === 'text/plain'
-        ? editor.value?.getText()
-        : editor.value?.getHTML()
+    if (!editor.value) return
+
+    const newContent = getEditorContent(editor.value, newContentType)
 
     setEditorContent(newContent, newContentType, true)
   },
@@ -298,194 +296,159 @@ useEventListener('click', (e) => {
   if (label === e.target) focusEditor()
 })
 
-// insert signature before full article blockquote or at the end of the document
-const resolveSignaturePosition = (editor: Editor) => {
-  let blockquotePosition: number | null = null
-  editor.state.doc.descendants((node, pos) => {
-    if (
-      (node.type.name === 'paragraph' || node.type.name === 'blockquote') &&
-      node.attrs['data-marker'] === 'signature-before'
-    ) {
-      blockquotePosition = pos
-      return false
-    }
-  })
-  if (blockquotePosition !== null) {
-    return { position: 'before', from: blockquotePosition }
-  }
-  return { position: 'after', from: editor.state.doc.content.size || 0 }
-}
-
-const addSignature = (signature: PossibleSignature) => {
-  if (!editor.value || editor.value.isDestroyed || !editor.value.isEditable)
-    return
-  const currentPosition = editor.value.state.selection.anchor
-  const positionFromEnd = editor.value.state.doc.content.size - currentPosition
-  // don't use "chain()", because we change positions a lot
-  // and chain doesn't know about it
-  editor.value.commands.removeSignature()
-  const { position, from } = resolveSignaturePosition(editor.value)
-  editor.value.commands.addSignature({ ...signature, position, from })
-  const getNewPosition = (editor: Editor) => {
-    if (signature.position != null) {
-      return signature.position
-    }
-    if (currentPosition < from) {
-      return currentPosition
-    }
-    if (from === 0 && currentPosition <= 1) {
-      return 1
-    }
-    return editor.state.doc.content.size - positionFromEnd
-  }
-  // calculate new position from the end of the signature otherwise
-  editor.value.commands.focus(getNewPosition(editor.value))
-  requestAnimationFrame(() => {
-    testFlags.set('editor.signatureAdd')
-  })
-}
-
-const removeSignature = () => {
-  if (!editor.value || editor.value.isDestroyed || !editor.value.isEditable)
-    return
-  const currentPosition = editor.value.state.selection.anchor
-  editor.value.chain().removeSignature().focus(currentPosition).run()
-  requestAnimationFrame(() => {
-    testFlags.set('editor.removeSignature')
-  })
-}
-
 const characters = computed(() => {
-  if (contentType.value === 'text/plain') {
+  if (isPlainText.value) {
     return currentValue.value?.length || 0
   }
   if (!editor.value) return 0
+
+  // ⚠️ Keep in mind for htmlExtension we count characters based on the serialized HTML, not text content as CharacterCount does.
+  // It is opauce to the user that the counts differs from the input
+  // f.e.g. <b>bold</b> is 13 characters, but user would expect 4 characters.
   return editor.value.storage.characterCount.characters({
     node: editor.value.state.doc,
   })
 })
+
+const { addSignature, removeSignature } = useSignatureHandling(editor)
 
 const editorCustomContext = {
   _loaded: true,
   getEditorValue: (type: EditorContentType) => {
     if (!editor.value) return ''
 
-    return type === 'text/plain'
-      ? editor.value.getText()
-      : editor.value.getHTML()
+    return getEditorContent(editor.value, type)
   },
   addSignature,
   removeSignature,
   focus: focusEditor,
 }
 
+// eslint-disable-next-line vue/no-mutating-props
 Object.assign(props.context, editorCustomContext)
 
 onMounted(() => {
-  const onLoad = props.context.onLoad as ((
-    context: FieldEditorContext,
-  ) => void)[]
+  const onLoad = props.context.onLoad as ((context: FieldEditorContext) => void)[]
   onLoad.forEach((fn) => fn(editorCustomContext))
   onLoad.length = 0
 
   if (VITE_TEST_MODE) {
-    if (!('editors' in globalThis))
-      Object.defineProperty(globalThis, 'editors', { value: {} })
-    Object.defineProperty(
-      Reflect.get(globalThis, 'editors'),
-      props.context.node.name,
-      { value: editor.value, configurable: true },
-    )
+    if (!('editors' in globalThis)) Object.defineProperty(globalThis, 'editors', { value: {} })
+    Object.defineProperty(Reflect.get(globalThis, 'editors'), props.context.node.name, {
+      value: editor.value,
+      configurable: true,
+    })
   }
 })
 
 const classes = getFieldEditorClasses()
+
+const buttonGroup = getButtonGroup()
+
+watch(isEditing, (editing) => {
+  if (!isInlineMode.value && editing) return
+
+  // augmenting type mess up the entire type interface
+  // @ts-expect-error @ts-ignore
+  editor.value?.storage?.characterCount?.clearWarnings?.()
+})
+
+const reclaimEditorFocus = (event: MouseEvent) => {
+  // Place cursor at end when clicking the wrapper directly (not editor content).
+  // Should be true only for inline mode, when button group is not sticky.
+  if ((event.target as HTMLElement).getAttribute('data-field') === 'wrapper')
+    editor.value?.commands.focus('end')
+}
 </script>
 
 <template>
-  <div :class="classes.input.container">
-    <EditorContent
-      class="text-base ltr:text-left rtl:text-right"
-      data-test-id="field-editor"
-      :editor="editor"
-    />
-    <FieldEditorFooter
-      v-if="context.meta?.footer && !context.meta.footer.disabled && editor"
-      :footer="context.meta.footer"
-      :characters="characters"
-    />
+  <!-- TODO: questionable usability - it moves, when new line is added -->
+  <!-- eslint-disable vuejs-accessibility/no-static-element-interactions -->
+  <div
+    ref="wrapper"
+    :role="isInlineMode ? 'button' : undefined"
+    tabindex="-1"
+    class="relative flex flex-col"
+    :class="[
+      containerInlineDesktopClasses,
+      {
+        'show-action-bar': isEditing,
+      },
+    ]"
+    @click="onWrapperClick"
+    @keydown.space="onWrapperClick"
+  >
+    <!-- Check if SR label is present on FormKit level labelSrOnly must be true -->
+    <CommonLabel
+      v-if="context.labelSrOnly && context.label && isInlineMode && !isEditing"
+      class="absolute top-4 ltr:left-1 rtl:right-1"
+      :class="labelInlineDesktopClasses"
+      size="small"
+    >
+      {{ context.label }}
+    </CommonLabel>
 
-    <FieldEditorTableMenu
-      v-if="editor"
+    <!-- We don't need to make thi div a11y, since it affects only no SR users.    -->
+    <!-- eslint-disable-next-line vuejs-accessibility/click-events-have-key-events   -->
+    <div
+      :class="[
+        classes.input.container,
+        wrapperInlineDesktopClasses,
+        {
+          [classes.input.inlineContainer]: isInlineMode,
+        },
+      ]"
+      data-field="wrapper"
+      @click="reclaimEditorFocus"
+    >
+      <EditorContent
+        class="cursor-text text-base"
+        data-test-id="field-editor"
+        :editor="editor"
+        :style="inputInlineDesktopTextStyles"
+      />
+
+      <FieldEditorFooter
+        v-if="context.meta?.footer && !context.meta.footer.disabled && editor"
+        :footer="context.meta.footer"
+        :characters="characters"
+      />
+
+      <!-- BUTTON group is only implemented in DESKTOP -->
+      <component
+        :is="buttonGroup"
+        v-if="isInlineMode && buttonGroup"
+        class="sticky bottom-0 float-right"
+        :class="{ invisible: !isEditing }"
+        :submit-disabled="isSubmitting"
+        :cancel-disabled="isSubmitting"
+        @click.stop
+        @cancel="handleCancel"
+        @submit="handleChange"
+      />
+    </div>
+
+    <component
+      :is="actionBarComponent"
+      :class="{
+        invisible: isInlineMode && !isEditing,
+      }"
       :editor="editor"
       :content-type="contentType"
-      :form-id="context.formId"
+      :visible="showActionBar"
+      :disabled-extensions="disabledExtensions"
+      :form-context="reactiveContext"
+      :is-editing="isEditing"
+      :is-inline-mode="isInlineMode"
+      @hide="showActionBar = false"
+      @blur="focusEditor"
     />
   </div>
-
-  <!-- TODO: questionable usability - it moves, when new line is added -->
-  <FieldEditorActionBar
-    :editor="editor"
-    :content-type="contentType"
-    :visible="showActionBar"
-    :disabled-plugins="disabledPlugins"
-    :form-id="context.formId"
-    @hide="showActionBar = false"
-    @blur="focusEditor"
-  />
 </template>
 
 <style>
 .tiptap {
-  pre {
-    background-color: #ced4da;
-    border-radius: 6px;
-    padding: 5px;
-    margin-bottom: 6px;
-    color: #111;
-  }
-
-  pre > code {
-    background-color: transparent;
-    padding: 0;
-    margin: 0;
-  }
-
-  code {
-    background-color: #ced4da;
-    border-radius: 4px;
-    padding: 1px 2px;
-    color: #111;
-  }
-
   table {
-    border-collapse: collapse;
-    table-layout: fixed;
-    width: 100px;
-    max-width: 200px;
-    margin: 0;
-    overflow: hidden;
-
-    td,
-    th {
-      min-width: 1em;
-      border: 2px solid #ced4da;
-      padding: 3px 5px;
-      vertical-align: top;
-      box-sizing: border-box;
-      position: relative;
-
-      > * {
-        margin-bottom: 0;
-      }
-    }
-
-    th {
-      font-weight: bold;
-      text-align: left;
-      background-color: #f1f3f5;
-    }
-
     .selectedCell::after {
       z-index: 2;
       position: absolute;
@@ -512,10 +475,39 @@ const classes = getFieldEditorClasses()
       margin: 0;
     }
   }
+
+  /* DESKTOP ONLY CLASS  */
+  p.is-editor-empty:first-child::before {
+    color: var(--color-gray-100);
+    content: attr(data-placeholder);
+    float: left;
+    height: 0;
+    pointer-events: none;
+    font-size: var(--text-sm);
+  }
+
+  &:focus p.is-editor-empty:first-child::before {
+    content: none;
+  }
+}
+
+[data-theme='dark'] {
+  /* DESKTOP ONLY CLASS  */
+  p.is-editor-empty:first-child::before {
+    color: var(--color-neutral-400);
+  }
+}
+
+.show-action-bar {
+  .tiptap {
+    p:first-child::before {
+      content: none;
+    }
+  }
 }
 
 .tableWrapper {
-  padding: 1rem 0;
+  position: relative;
   overflow-x: auto;
   max-width: 100%;
 }

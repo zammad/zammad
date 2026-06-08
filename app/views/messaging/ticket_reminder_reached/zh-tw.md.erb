@@ -1,6 +1,6 @@
 # #{ticket.title}
-_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: 到達提醒時間!_
-請留意, "*#{ticket.customer.longname}*" 的工單 (#{ticket.title}) 到達提醒時間.
+_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: 觸發提醒!_
+須留意工單：客戶 "*#{ticket.customer.longname}*" 的工單 (#{ticket.title}) 觸發提醒。
 
 <% if @objects[:article] %>
 #{article.body_as_text}

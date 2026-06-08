@@ -1,4 +1,4 @@
-query userCurrentTicketOverviews ($ignoreUserConditions: Boolean!, $withTicketCount: Boolean!) {
+query userCurrentTicketOverviews($ignoreUserConditions: Boolean!, $withTicketCount: Boolean!) {
   userCurrentTicketOverviews(ignoreUserConditions: $ignoreUserConditions) {
     ...overviewAttributes
     viewColumnsRaw

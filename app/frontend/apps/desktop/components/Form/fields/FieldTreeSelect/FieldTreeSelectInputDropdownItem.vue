@@ -1,8 +1,7 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-/* eslint-disable vue/no-v-html */
-import { computed } from 'vue'
+import { computed, useTemplateRef } from 'vue'
 
 import type {
   FlatSelectOption,
@@ -13,11 +12,15 @@ import { useLocaleStore } from '#shared/stores/locale.ts'
 
 const props = defineProps<{
   option: FlatSelectOption | MatchedFlatSelectOption
+  index: number
+  total: number // total number of options
   selected?: boolean
   multiple?: boolean
   noLabelTranslate?: boolean
   filter?: string
   noSelectionIndicator?: boolean
+  hasTopButton?: boolean
+  hasDirectionUp?: boolean
 }>()
 
 const emit = defineEmits<{
@@ -28,9 +31,7 @@ const emit = defineEmits<{
 const locale = useLocaleStore()
 
 const select = (option: FlatSelectOption) => {
-  if (props.option.disabled) {
-    return
-  }
+  if (props.option.disabled) return
 
   emit('select', option)
 }
@@ -40,110 +41,126 @@ const label = computed(() => {
 
   if (props.noLabelTranslate) return option.label || option.value.toString()
 
-  return (
-    i18n.t(option.label, ...(option.labelPlaceholder || [])) ||
-    option.value.toString()
-  )
+  return i18n.t(option.label, ...(option.labelPlaceholder || [])) || option.value.toString()
 })
+
+const isLastItem = computed(() => props.index + 1 === props.total)
+const isFirstItem = computed(() => props.index === 0)
 
 const goToNextPage = (option: FlatSelectOption, noFocus?: boolean) => {
   emit('next', { option, noFocus })
 }
+
+const optionElement = useTemplateRef('option-button')
+
+const handleClickOnNext = (option: FlatSelectOption | MatchedFlatSelectOption) => {
+  if (option.disabled) return optionElement.value?.click()
+  goToNextPage(option)
+}
+
+const handleNextPageOrSelect = () =>
+  props.option.disabled ? goToNextPage(props.option, false) : select(props.option)
 </script>
 
 <template>
   <div
-    :class="{
-      'cursor-pointer hover:bg-blue-600 focus:bg-blue-800 focus:text-white dark:hover:bg-blue-900 dark:hover:focus:bg-blue-800':
-        !option.disabled,
-    }"
-    tabindex="0"
-    :aria-selected="selected"
-    :aria-disabled="option.disabled ? 'true' : undefined"
-    class="group flex h-9 cursor-default items-center gap-1.5 self-stretch px-2.5 text-sm text-black outline-hidden dark:text-white"
     role="option"
-    :data-value="option.value"
-    @click="select(option)"
-    @keypress.space.prevent="select(option)"
-    @keypress.enter.prevent="select(option)"
+    :aria-selected="selected"
+    class="group flex h-9 cursor-pointer items-center self-stretch text-sm text-black outline-hidden dark:text-white"
+    :class="{
+      'hover:bg-blue-800 has-focus-visible:shadow-[inset_0_0_0_1px_var(--color-blue-800)]':
+        option.disabled,
+      'first:rounded-t-[7px]': !hasTopButton && hasDirectionUp,
+    }"
   >
-    <CommonIcon
-      v-if="multiple && !noSelectionIndicator"
+    <button
+      ref="option-button"
+      tabindex="0"
+      data-type="option"
+      data-test-id="option-button"
+      class="flex size-full items-center gap-1.5 text-left ltr:pl-2.5 rtl:pr-2.5"
       :class="{
-        'fill-gray-100 group-hover:fill-black group-focus:fill-white dark:fill-neutral-400 dark:group-hover:fill-white':
+        'group/button focus-visible-app-default -outline-offset-1! hover:bg-blue-600 dark:hover:bg-blue-900':
           !option.disabled,
-        'fill-stone-200 dark:fill-neutral-500': option.disabled,
+        'outline-none hover:text-black dark:hover:text-white': option.disabled,
+        'rounded-tl-[7px]!': !hasTopButton && hasDirectionUp && isFirstItem,
+        'rounded-bl-[7px]': !hasDirectionUp && isLastItem,
       }"
-      size="xs"
-      decorative
-      :name="selected ? 'check-square' : 'square'"
-      class="m-0.5 shrink-0"
-    />
-    <CommonIcon
-      v-else-if="!noSelectionIndicator"
-      class="shrink-0 fill-gray-100 group-hover:fill-black group-focus:fill-white dark:fill-neutral-400 dark:group-hover:fill-white"
-      :class="{
-        invisible: !selected,
-        'fill-stone-200 dark:fill-neutral-500': option.disabled,
-      }"
-      decorative
-      size="tiny"
-      name="check2"
-    />
-    <CommonIcon
-      v-if="option.icon"
-      :name="option.icon"
-      size="tiny"
-      :class="{
-        'fill-stone-200 dark:fill-neutral-500': option.disabled,
-      }"
-      decorative
-      class="shrink-0 fill-gray-100 group-hover:fill-black group-focus:fill-white dark:fill-neutral-400 dark:group-hover:fill-white"
-    />
-    <span
-      v-if="filter"
-      :class="{
-        'pointer-events-none text-stone-200 dark:text-neutral-500':
-          option.disabled,
-      }"
-      class="grow truncate"
-      :title="label"
-      v-html="(option as MatchedFlatSelectOption).matchedPath"
-    />
-    <span
-      v-else
-      :class="{
-        'pointer-events-none text-stone-200 dark:text-neutral-500':
-          option.disabled && !option.hasChildren,
-        'pointer-events-none text-gray-100 dark:text-neutral-400':
-          option.disabled && option.hasChildren,
-      }"
-      :title="label"
-      class="grow truncate"
-    >
-      {{ label }}
-    </span>
-    <div
-      v-if="option.hasChildren && !filter"
-      class="group/nav -me-2 shrink-0 flex-nowrap items-center justify-center gap-x-2.5 rounded-[5px] p-2.5 hover:bg-blue-800 group-focus:hover:bg-blue-600 dark:group-focus:hover:bg-blue-900"
-      :aria-label="$t('Has submenu')"
-      role="button"
-      tabindex="-1"
-      @click.stop="goToNextPage(option, true)"
-      @keypress.enter.prevent.stop="goToNextPage(option)"
-      @keypress.space.prevent.stop="goToNextPage(option)"
+      :aria-description="option.disabled ? $t('This item expands to show more options') : undefined"
+      :data-value="option.value"
+      @click="handleNextPageOrSelect"
+      @keydown.space.prevent="handleNextPageOrSelect"
+      @keydown.enter.prevent="handleNextPageOrSelect"
     >
       <CommonIcon
-        :class="{
-          'group-hover:fill-black group-focus:fill-white group-focus:group-hover/nav:!fill-black dark:group-hover:fill-white dark:group-focus:group-hover/nav:!fill-white':
-            !option.disabled,
-        }"
-        class="shrink-0 fill-stone-200 group-hover/nav:!fill-white dark:fill-neutral-500"
-        :name="
-          locale.localeData?.dir === 'rtl' ? 'chevron-left' : 'chevron-right'
-        "
+        v-if="multiple && !noSelectionIndicator && !option.disabled"
         size="xs"
-        tabindex="-1"
+        decorative
+        :name="selected ? 'check-square' : 'square'"
+        class="m-0.5 shrink-0 fill-gray-100 group-hover/button:fill-black dark:fill-neutral-400 dark:group-hover/button:fill-white"
+        :class="{ 'group-hover:fill-white': option.disabled }"
+      />
+      <CommonIcon
+        v-else-if="!noSelectionIndicator"
+        class="shrink-0 fill-gray-100 group-hover:fill-black dark:fill-neutral-400 dark:group-hover:fill-white"
+        :class="{
+          invisible: !selected,
+          'group-hover:fill-white': option.disabled,
+        }"
+        decorative
+        size="tiny"
+        name="check2"
+      />
+      <CommonIcon
+        v-if="option.icon"
+        :name="option.icon"
+        size="tiny"
+        decorative
+        class="shrink-0 fill-gray-100 group-hover/button:fill-black dark:fill-neutral-400 dark:group-hover:fill-white"
+      />
+      <!--      eslint-disable vue/no-v-html -->
+      <span
+        v-if="filter"
+        v-tooltip="label"
+        :class="{
+          'pointer-events-none text-stone-200 dark:text-neutral-500': option.disabled,
+        }"
+        class="grow truncate group-hover/button:text-black dark:group-hover/button:text-white"
+        v-html="(option as MatchedFlatSelectOption).matchedPath"
+      />
+      <span
+        v-else
+        v-tooltip="label"
+        class="grow truncate group-hover/button:text-black dark:group-hover/button:text-white"
+        :class="{ 'group-hover:text-white': option.disabled }"
+      >
+        {{ label }}
+      </span>
+    </button>
+    <!--  eslint-disable vuejs-accessibility/no-static-element-interactions  -->
+    <div
+      v-if="option.hasChildren && !filter"
+      class="group/next m-0.5 flex shrink-0 items-center justify-center gap-x-2.5 rounded-lg p-2.5"
+      :class="{
+        'focus-visible-app-default -outline-offset-1! hover:bg-blue-800': !option.disabled,
+        'rounded-tr-lg': !hasTopButton && isFirstItem && hasDirectionUp,
+        'rounded-b-lg': index + 1 === total && !hasDirectionUp,
+      }"
+      :aria-label="$t('Has submenu')"
+      :role="option.disabled ? 'presentation' : 'button'"
+      :tabindex="option.disabled ? -1 : 0"
+      @click="handleClickOnNext(option)"
+      @keydown.enter.prevent="handleClickOnNext(option)"
+      @keydown.space.prevent="handleClickOnNext(option)"
+    >
+      <CommonIcon
+        class="shrink-0 fill-blue-800!"
+        :class="{
+          'group-hover:fill-white!': option.disabled,
+          'group-hover/next:fill-white!': !option.disabled,
+        }"
+        :name="locale.localeData?.dir === 'rtl' ? 'chevron-left' : 'chevron-right'"
+        size="xs"
         decorative
       />
     </div>

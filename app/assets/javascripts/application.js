@@ -13,10 +13,10 @@
 //= require ./app/lib/animations/velocity.ui.js
 
 //not_used= require_tree ./app/lib/spine
-//= require ./app/lib/spine/spine.coffee
-//= require ./app/lib/spine/ajax.coffee
-//= require ./app/lib/spine/local.coffee
-//= require ./app/lib/spine/route.coffee
+//= require ./app/lib/spine/spine
+//= require ./app/lib/spine/ajax
+//= require ./app/lib/spine/local
+//= require ./app/lib/spine/route
 
 //= require ./app/lib/flot/jquery.flot.js
 //= require ./app/lib/flot/jquery.flot.selection.js
@@ -44,7 +44,7 @@
 
 //= require_tree ./app/lib/base
 
-//= require ./app/index.coffee
+//= require ./app/index
 
 // IE8 workaround for missing console.log
 if (!window.console) {

@@ -1,7 +1,8 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Tag::Item < ApplicationModel
-  validates   :name, presence: true, format: { without: %r{,|\*} }
+  validates :name, presence: true, format: { without: %r{,|\*}, message: __('Commas and stars are not allowed in name.') }
+
   before_save :fill_namedowncase
 
   has_many :tags, foreign_key: 'tag_item_id',
@@ -33,12 +34,12 @@ tag_item = Tag::Item.lookup_by_name_and_create('some tag')
 =end
 
   def self.lookup_by_name_and_create(name)
-    name.strip!
+    name = name.strip
 
     tag_item = Tag::Item.lookup(name: name)
     return tag_item if tag_item
 
-    Tag::Item.create(name: name)
+    Tag::Item.create!(name: name)
   end
 
 =begin
@@ -155,37 +156,73 @@ Job.condition       Job.perform
 =end
 
   def self.update_referenced_objects(old_name, new_name)
-    objects = Overview.all + Trigger.all + Job.all + PostmasterFilter.all
-
-    objects.each do |object|
+    all_objects.each do |object|
       changed = false
-      if object.has_attribute?(:condition)
-        changed |= update_condition_hash object.condition, old_name, new_name
-      end
-      if object.has_attribute?(:perform)
-        changed |= update_condition_hash object.perform, old_name, new_name
-      end
+
+      changed |= update_tag_values(object.condition, old_name, new_name) if object.has_attribute?(:condition)
+      changed |= update_tag_values(object.perform, old_name, new_name)   if object.has_attribute?(:perform)
+
       object.save if changed
     end
   end
 
+  def self.all_objects
+    Overview.all + Trigger.all + Job.all + PostmasterFilter.all
+  end
+
+  def self.update_tag_values(data, old_name, new_name)
+    return false if !data
+
+    return update_conditions_array(data[:conditions], old_name, new_name) if data.key?(:conditions)
+
+    update_condition_hash(data, old_name, new_name)
+  end
+
+  def self.update_conditions_array(conditions, old_name, new_name)
+    changed = false
+
+    conditions.each do |condition|
+      if condition.key?(:conditions)
+        # Nested condition group
+        changed |= update_conditions_array(condition[:conditions], old_name, new_name)
+      else
+        next if !tag_condition?(condition[:name])
+        next if !tag_includes?(condition[:value], old_name)
+
+        condition[:value] = update_name(condition[:value], old_name, new_name)
+        changed = true
+      end
+    end
+
+    changed
+  end
+
   def self.update_condition_hash(hash, old_name, new_name)
     changed = false
+
     hash.each do |key, condition|
-      next if %w[ticket.tags x-zammad-ticket-tags].exclude? key
-      next if condition[:value].split(', ').exclude? old_name
+      next if !tag_condition?(key)
+      next if !tag_includes?(condition[:value], old_name)
 
       condition[:value] = update_name(condition[:value], old_name, new_name)
       changed = true
     end
+
     changed
   end
 
-  def self.update_name(condition, old_name, new_name)
-    tags = condition.split(', ')
-    return new_name if tags.size == 1
+  def self.update_name(value, old_name, new_name)
+    tags = value.split(', ')
+    return new_name if tags.one?
 
-    tags = tags.map { |t| t == old_name ? new_name : t }
-    tags.join(', ')
+    tags.map { |t| t == old_name ? new_name : t }.join(', ')
+  end
+
+  def self.tag_condition?(key)
+    %w[ticket.tags x-zammad-ticket-tags].include?(key)
+  end
+
+  def self.tag_includes?(value, tag)
+    value.to_s.split(', ').include?(tag)
   end
 end

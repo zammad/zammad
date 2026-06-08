@@ -1,13 +1,9 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import renderComponent from '#tests/support/components/renderComponent.ts'
 
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
-import {
-  type ChecklistItem,
-  EnumTicketStateColorCode,
-  type Ticket,
-} from '#shared/graphql/types.ts'
+import { type ChecklistItem, EnumTicketStateColorCode, type Ticket } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
 import ChecklistItems from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue'
@@ -92,7 +88,7 @@ describe('ChecklistItems', () => {
 
     const checklistItems: Partial<ChecklistItem>[] = [
       {
-        id: '1',
+        id: convertToGraphQLId('ChecklistItem', 1),
         text: `${ticket?.title}`,
         checked: false,
         ticketReference: { ticket },
@@ -103,21 +99,19 @@ describe('ChecklistItems', () => {
 
     expect(wrapper.getByText(ticket?.title as string)).toBeInTheDocument()
 
-    expect(
-      wrapper.getByRole('status', { name: 'Test Ticket' }),
-    ).toBeInTheDocument()
+    expect(wrapper.getByRole('status', { name: 'Test Ticket' })).toBeInTheDocument()
 
-    expect(
-      wrapper.getByRole('status', { name: 'Test Ticket' }),
-    ).toHaveAttribute('aria-live', 'polite')
+    expect(wrapper.getByRole('status', { name: 'Test Ticket' })).toHaveAttribute(
+      'aria-live',
+      'polite',
+    )
 
-    expect(
-      wrapper.getByRole('status', { name: 'Test Ticket' }),
-    ).toHaveAttribute('aria-roledescription', '(ticket status: open)')
+    expect(wrapper.getByRole('status', { name: 'Test Ticket' })).toHaveAttribute(
+      'aria-roledescription',
+      '(ticket status: open)',
+    )
 
-    expect(
-      wrapper.queryByRole('button', { name: 'Action menu button' }),
-    ).not.toBeInTheDocument()
+    expect(wrapper.queryByRole('button', { name: 'Action menu button' })).not.toBeInTheDocument()
 
     expect(wrapper.queryByRole('checkbox')).not.toBeInTheDocument()
 
@@ -127,7 +121,7 @@ describe('ChecklistItems', () => {
 
     const newChecklistItems: Partial<ChecklistItem>[] = [
       {
-        id: '1',
+        id: convertToGraphQLId('ChecklistItem', 2),
         text: `${ticket?.title}`,
         checked: false,
         ticketReference: {
@@ -140,13 +134,15 @@ describe('ChecklistItems', () => {
 
     await wrapper.rerender({ items: newChecklistItems })
 
-    expect(
-      wrapper.getByRole('status', { name: 'Test Ticket' }),
-    ).toHaveAttribute('aria-live', 'assertive')
+    expect(wrapper.getByRole('status', { name: 'Test Ticket' })).toHaveAttribute(
+      'aria-live',
+      'assertive',
+    )
 
-    expect(
-      wrapper.getByRole('status', { name: 'Test Ticket' }),
-    ).toHaveAttribute('aria-roledescription', '(ticket status: escalating)')
+    expect(wrapper.getByRole('status', { name: 'Test Ticket' })).toHaveAttribute(
+      'aria-roledescription',
+      '(ticket status: escalating)',
+    )
   })
 
   it('displays denied access if authorization is not granted on linked ticket', () => {
@@ -154,7 +150,7 @@ describe('ChecklistItems', () => {
 
     const checklistItems: Partial<ChecklistItem>[] = [
       {
-        id: '1',
+        id: convertToGraphQLId('ChecklistItem', 1),
         text: `${ticket?.title}`,
         ticketReference: {
           ticket: null,
@@ -174,7 +170,7 @@ describe('ChecklistItems', () => {
 
     const checklistItems: Partial<ChecklistItem>[] = [
       {
-        id: '1',
+        id: convertToGraphQLId('ChecklistItem', 1),
         text: `${ticket?.title}`,
         ticketReference: {
           ticket: null,
@@ -188,9 +184,7 @@ describe('ChecklistItems', () => {
     expect(wrapper.getByText('Access denied')).toBeInTheDocument()
     expect(wrapper.getByIconName('x-lg')).toBeInTheDocument()
 
-    expect(
-      wrapper.queryByLabelText('Action menu button'),
-    ).not.toBeInTheDocument()
+    expect(wrapper.queryByLabelText('Action menu button')).not.toBeInTheDocument()
 
     expect(wrapper.getByLabelText('Remove item')).toBeInTheDocument()
   })
@@ -200,7 +194,7 @@ describe('ChecklistItems', () => {
       [
         ...items,
         {
-          id: '2',
+          id: convertToGraphQLId('ChecklistItem', 4),
           text: '',
           ticketReference: null,
           checked: false,
@@ -222,9 +216,7 @@ describe('ChecklistItems', () => {
 
     expect(wrapper.emitted('set-item-checked')).toBeUndefined()
 
-    expect(
-      wrapper.queryByLabelText('Action menu button'),
-    ).not.toBeInTheDocument()
+    expect(wrapper.queryByLabelText('Action menu button')).not.toBeInTheDocument()
 
     expect(wrapper.getByText('-')).toBeInTheDocument()
     expect(wrapper.queryByLabelText('Remove item')).not.toBeInTheDocument()
@@ -234,41 +226,26 @@ describe('ChecklistItems', () => {
     it('supports drag and drop', async () => {
       const wrapper = renderChecklistItems(items)
 
-      await wrapper.events.click(
-        wrapper.getByRole('button', { name: 'Reorder' }),
-      )
+      await wrapper.events.click(wrapper.getByRole('button', { name: 'Reorder' }))
 
-      expect(
-        wrapper.queryByRole('button', { name: 'Reorder' }),
-      ).not.toBeInTheDocument()
+      expect(wrapper.queryByRole('button', { name: 'Reorder' })).not.toBeInTheDocument()
 
       const dragHandles = wrapper.getAllByIconName('grip-vertical')
 
       expect(dragHandles).toHaveLength(3)
 
-      expect(wrapper.getAllByRole('checkbox', { checked: true })).toHaveLength(
-        1,
-      )
+      expect(wrapper.getAllByRole('checkbox', { checked: true })).toHaveLength(1)
 
-      expect(wrapper.getAllByRole('checkbox', { checked: false })).toHaveLength(
-        2,
-      )
+      expect(wrapper.getAllByRole('checkbox', { checked: false })).toHaveLength(2)
 
-      expect(
-        wrapper.queryByRole('button', { name: 'Action menu button' }),
-      ).not.toBeInTheDocument()
+      expect(wrapper.queryByRole('button', { name: 'Action menu button' })).not.toBeInTheDocument()
     })
   })
 
   it('disables checklist item if waiting for server response', () => {
     const itemId = convertToGraphQLId('ChecklistItem', 1)
 
-    const wrapper = renderChecklistItems(
-      items,
-      'Ticket demo title',
-      false,
-      new Set([itemId]),
-    )
+    const wrapper = renderChecklistItems(items, 'Ticket demo title', false, new Set([itemId]))
 
     expect(wrapper.getByTestId(itemId)).toBeDisabled()
     expect(wrapper.getByTestId(itemId)).toHaveClass('pointer-events-none')
@@ -276,31 +253,15 @@ describe('ChecklistItems', () => {
   })
 
   it('disables add new item button if waiting for server response', () => {
-    const wrapper = renderChecklistItems(
-      items,
-      'Ticket demo title',
-      false,
-      new Set(),
-      true,
-      false,
-    )
+    const wrapper = renderChecklistItems(items, 'Ticket demo title', false, new Set(), true, false)
 
-    expect(
-      wrapper.getByRole('button', { name: 'Create a new checklist item' }),
-    ).toBeDisabled()
+    expect(wrapper.getByRole('button', { name: 'Create a new checklist item' })).toBeDisabled()
 
     expect(wrapper.getByRole('button', { name: 'Reorder' })).toBeDisabled()
   })
 
   it('disabled save button if waiting for server response on reorder', async () => {
-    const wrapper = renderChecklistItems(
-      items,
-      'Ticket demo title',
-      false,
-      new Set(),
-      false,
-      true,
-    )
+    const wrapper = renderChecklistItems(items, 'Ticket demo title', false, new Set(), false, true)
 
     await wrapper.events.click(wrapper.getByRole('button', { name: 'Reorder' }))
 
@@ -320,9 +281,7 @@ describe('ChecklistItems', () => {
     )
 
     expect(wrapper.getByTestId('checklistTitle')).toBeDisabled()
-    expect(wrapper.getByTestId('checklistTitle')).toHaveClass(
-      'pointer-events-none',
-    )
+    expect(wrapper.getByTestId('checklistTitle')).toHaveClass('pointer-events-none')
     expect(wrapper.getByTestId('checklistTitle')).toHaveClass('opacity-60')
   })
 })

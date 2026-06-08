@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import hasPermission from '../hasPermission.ts'
 
@@ -16,15 +16,11 @@ describe('hasPermission', () => {
   })
 
   it('access granted when multiple permissions exists', () => {
-    expect(
-      hasPermission('ticket.agent', ['ticket.customer', 'ticket.agent']),
-    ).toBe(true)
+    expect(hasPermission('ticket.agent', ['ticket.customer', 'ticket.agent'])).toBe(true)
   })
 
   it('access granted when multiple required permissions exists', () => {
-    expect(
-      hasPermission(['ticket.agent', 'ticket.customer'], ['ticket.agent']),
-    ).toBe(true)
+    expect(hasPermission(['ticket.agent', 'ticket.customer'], ['ticket.agent'])).toBe(true)
   })
 
   describe('with wildcard usage', () => {
@@ -57,43 +53,31 @@ describe('hasPermission', () => {
     })
 
     it('access granted with a complex structure and wildcard usage', () => {
-      expect(
-        hasPermission('ticket.*.test.*.view', ['ticket.agent.test.foo.view']),
-      ).toBe(true)
+      expect(hasPermission('ticket.*.test.*.view', ['ticket.agent.test.foo.view'])).toBe(true)
     })
 
     it('no access with a complex structure and wildcard usage', () => {
-      expect(
-        hasPermission('ticket.*.test.*.view', ['ticket.agent.asd.foo.view']),
-      ).toBe(false)
+      expect(hasPermission('ticket.*.test.*.view', ['ticket.agent.asd.foo.view'])).toBe(false)
     })
   })
 
   describe('with a "AND" combination', () => {
     it('access granted when both combinated permission exists', () => {
       expect(
-        hasPermission('ticket.agent+ticket.customer', [
-          'ticket.customer',
-          'ticket.agent',
-        ]),
+        hasPermission('ticket.agent+ticket.customer', ['ticket.customer', 'ticket.agent']),
       ).toBe(true)
     })
 
     it('no access when not both combinated permission exists', () => {
-      expect(
-        hasPermission('ticket.agent+ticket.customer', [
-          'ticket.customer',
-          'admin',
-        ]),
-      ).toBe(false)
+      expect(hasPermission('ticket.agent+ticket.customer', ['ticket.customer', 'admin'])).toBe(
+        false,
+      )
     })
   })
 
   describe('with a "AND" combination together with a wildcard', () => {
     it('access granted when both combinated permission exists', () => {
-      expect(
-        hasPermission('ticket.*+admin.chat', ['ticket.customer', 'admin.chat']),
-      ).toBe(true)
+      expect(hasPermission('ticket.*+admin.chat', ['ticket.customer', 'admin.chat'])).toBe(true)
     })
   })
 })

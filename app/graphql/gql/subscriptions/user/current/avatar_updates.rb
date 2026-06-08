@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Subscriptions
   class User::Current::AvatarUpdates < BaseSubscription
@@ -9,9 +9,7 @@ module Gql::Subscriptions
 
     field :avatars, [Gql::Types::AvatarType], null: true, description: 'List of avatars for the user'
 
-    def authorized?
-      context.current_user.permissions?('user_preferences.avatar')
-    end
+    requires_permission 'user_preferences.avatar'
 
     def update
       { avatars: Avatar.list('User', context.current_user.id, raw: true) }

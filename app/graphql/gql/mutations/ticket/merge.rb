@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Mutations
   class Ticket::Merge < BaseMutation
@@ -10,14 +10,12 @@ module Gql::Mutations
     field :source_ticket, Gql::Types::TicketType, description: 'The source ticket after merging.'
     field :target_ticket, Gql::Types::TicketType, description: 'The target ticket after merging.'
 
-    def self.authorize(_obj, ctx)
-      ctx.current_user.permissions?('ticket.agent')
-    end
+    requires_permission 'ticket.agent'
 
     def resolve(source_ticket:, target_ticket:)
-      Service::Ticket::Merge.new(current_user: context.current_user).execute(source_ticket: source_ticket, target_ticket: target_ticket)
+      Service::Ticket::Merge.with_current_user(context.current_user).execute(source_ticket: source_ticket, target_ticket: target_ticket)
       { source_ticket: source_ticket, target_ticket: target_ticket }
-    rescue Exceptions::UnprocessableEntity => e
+    rescue Exceptions::UnprocessableContent => e
       error_response({ message: e.message })
     end
   end

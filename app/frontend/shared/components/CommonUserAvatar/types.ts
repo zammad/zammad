@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import type { EnumTaskbarApp } from '#shared/graphql/types.ts'
 
@@ -16,7 +16,7 @@ export interface AvatarUser {
   active?: Maybe<boolean>
   image?: Maybe<string>
   id: string
-  source?: string
+  source?: Maybe<string>
 }
 
 export interface AvatarUserAccess {

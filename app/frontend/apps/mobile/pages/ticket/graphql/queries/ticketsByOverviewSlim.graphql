@@ -38,6 +38,7 @@ query ticketsByOverviewSlim(
           id
           name
         }
+        aiAgentRunning
         state {
           id
           name

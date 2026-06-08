@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -15,7 +15,7 @@ RSpec.describe 'Ticket zoom > Add Link action', type: :system do
 
       shared_examples 'adding link to target ticket' do
         it 'adds link to target ticket' do
-          click('.js-add', text: 'Add Link')
+          click('.js-add-related-ticket', text: '+ Link')
 
           in_modal do
             fill_in 'ticket_number', with: ticket_number

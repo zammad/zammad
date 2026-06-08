@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { markRaw, ref, toRef, watch } from 'vue'
@@ -61,12 +61,8 @@ const openModal = () => {
   })
 }
 
-const {
-  optionValueLookup,
-  getSelectedOptionIcon,
-  getSelectedOptionValue,
-  getSelectedOptionLabel,
-} = useSelectOptions(localOptions, contextReactive)
+const { optionValueLookup, getSelectedOptionIcon, getSelectedOptionValue, getSelectedOptionLabel } =
+  useSelectOptions(localOptions, contextReactive)
 
 // Remember current optionValueLookup in node context.
 contextReactive.value.optionValueLookup = optionValueLookup
@@ -117,7 +113,7 @@ useFormBlock(contextReactive, onInputClick)
       :id="context.id"
       role="combobox"
       :name="context.node.name"
-      class="formkit-disabled:pointer-events-none flex grow items-center focus:outline-hidden"
+      class="flex grow items-center focus:outline-hidden formkit-disabled:pointer-events-none"
       :aria-disabled="context.disabled ? 'true' : undefined"
       :aria-labelledby="`label-${context.id}`"
       aria-haspopup="dialog"
@@ -152,8 +148,8 @@ useFormBlock(contextReactive, onInputClick)
       </div>
       <CommonIcon
         v-if="context.clearable && hasValue && !context.disabled"
-        :aria-label="i18n.t('Clear Selection')"
-        class="text-gray absolute -mt-5 shrink-0 ltr:right-2 rtl:left-2"
+        :aria-label="i18n.t('Clear selection')"
+        class="absolute -mt-5 shrink-0 text-gray ltr:right-2 rtl:left-2"
         name="close-small"
         size="base"
         role="button"

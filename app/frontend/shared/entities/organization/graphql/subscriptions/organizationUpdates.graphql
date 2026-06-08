@@ -1,8 +1,17 @@
-subscription organizationUpdates($organizationId: ID!, $membersCount: Int) {
+subscription organizationUpdates($organizationId: ID!, $first: Int, $after: String) {
   organizationUpdates(organizationId: $organizationId) {
     organization {
       ...organizationAttributes
-      ...organizationMembers
+      ...organizationMembersWithFetchMore
+      policy {
+        update
+      }
+      ticketsCount {
+        open
+        closed
+        openSearchQuery
+        closedSearchQuery
+      }
     }
   }
 }

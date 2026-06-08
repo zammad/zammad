@@ -1,8 +1,9 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Store < ApplicationModel
   PREFERENCES_SIZE_MAX = 2400
 
+  belongs_to :created_by,   class_name: 'User', optional: true
   belongs_to :store_object, class_name: 'Store::Object', optional: true
   belongs_to :store_file,   class_name: 'Store::File', optional: true
   delegate :content, to: :store_file
@@ -107,7 +108,7 @@ remove one attachment from storage
 
     # check backend for references
     files = Store.where(store_file_id: file_id)
-    if files.count > 1 || files.first.id != store.id
+    if files.many? || files.first.id != store.id
       store.destroy!
       return true
     end
@@ -162,6 +163,26 @@ returns
     image_resize(file.content, 1800)
   end
 
+=begin
+
+get content of file in OCR size
+
+  store = Store.find(store_id)
+  content_as_string = store.content_ocr
+
+returns
+
+  content_as_string
+
+=end
+
+  def content_ocr
+    file = Store::File.find_by(id: store_file_id)
+    raise "No such file #{store_file_id}!" if !file
+
+    image_resize(file.content, 2000, no_cache: true) || file.content
+  end
+
   def attributes_for_display
     slice :id, :store_file_id, :filename, :size, :preferences
   end
@@ -207,30 +228,36 @@ returns
     end
   end
 
-  def image_resize(content, width)
+  def image_resize_via_temp_file(content, width)
+    temp_file = ::Tempfile.new
+    temp_file.binmode
+    temp_file.write(content)
+    temp_file.close
+    image = Rszr::Image.load(temp_file.path)
+
+    # do not resize image if image is smaller or already same size
+    return if image.width <= width
+
+    # do not resize image if new height is smaller then 7px (images
+    # with small height are usually useful to resize)
+    ratio = image.width / width
+    return if image.height / ratio <= 6
+
+    original_format = image.format
+
+    image.resize!(width, :auto)
+    temp_file_resize = ::Tempfile.new.path
+    image.save(temp_file_resize, format: original_format)
+    ::File.binread(temp_file_resize)
+  end
+
+  def image_resize(content, width, no_cache: false)
+    return image_resize_via_temp_file(content, width) if no_cache
+
     local_sha = Digest::SHA256.hexdigest(content)
 
     Rails.cache.fetch("#{self.class}/image-resize-#{local_sha}_#{width}", expires_in: 6.months) do
-      temp_file = ::Tempfile.new
-      temp_file.binmode
-      temp_file.write(content)
-      temp_file.close
-      image = Rszr::Image.load(temp_file.path)
-
-      # do not resize image if image is smaller or already same size
-      return if image.width <= width
-
-      # do not resize image if new height is smaller then 7px (images
-      # with small height are usually useful to resize)
-      ratio = image.width / width
-      return if image.height / ratio <= 6
-
-      original_format = image.format
-
-      image.resize!(width, :auto)
-      temp_file_resize = ::Tempfile.new.path
-      image.save(temp_file_resize, format: original_format)
-      ::File.binread(temp_file_resize)
+      image_resize_via_temp_file(content, width)
     end
   end
 

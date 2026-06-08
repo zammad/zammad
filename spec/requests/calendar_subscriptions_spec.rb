@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -75,7 +75,7 @@ RSpec.describe 'iCal endpoints', type: :request do
     it 'returns the desired calendar file' do
       get '/ical/tickets', headers: { 'REQUEST_METHOD' => 'PROPFIND' }
 
-      expect(response.body).to match(%r{BEGIN:VCALENDAR})
+      expect(response.body).to include('BEGIN:VCALENDAR')
     end
   end
 
@@ -109,7 +109,7 @@ RSpec.describe 'iCal endpoints', type: :request do
       get '/ical/tickets/xxx'
 
       expect(json_response['error']).to eq('An unknown method name was requested.')
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
     end
   end
 end

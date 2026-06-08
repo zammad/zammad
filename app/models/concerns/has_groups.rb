@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module HasGroups
   extend ActiveSupport::Concern
@@ -52,6 +52,9 @@ module HasGroups
   # Checks a given Group( ID) for given access(es) for the instance.
   # Checks indirect access via Roles if instance has Roles, too.
   #
+  # @param group [Group, Integer] or ID check access for
+  # @param access [Symbol, String, Array<Symbol, String>] or array of accesses to check for. Takes :any as a wildcard or :read, :create, :change, :overview, :full for specific access lookup.
+  #
   # @example Group ID param
   #   user.group_access?(1, 'read')
   #   #=> true
@@ -62,6 +65,10 @@ module HasGroups
   #
   # @example Access list
   #   user.group_access?(group, ['read', 'create'])
+  #   #=> true
+  #
+  # @example Check if user has any permissions in the group
+  #   user.group_access?(group, :any)
   #   #=> true
   #
   # @return [Boolean]
@@ -75,17 +82,28 @@ module HasGroups
     return false if !active?
     return false if !groups_access_permission?
 
-    access = Array(access).map(&:to_sym) | [:full]
+    case access
+    when :any
+      return true if group_through.klass.eager_load(:group).exists?(
+        group_through.foreign_key => id,
+        group_id: group,
+        groups: {
+          active: true
+        }
+      )
+    else
+      access = Array(access).map(&:to_sym) | [:full]
 
-    # check direct access
-    return true if group_through.klass.eager_load(:group).exists?(
-      group_through.foreign_key => id,
-      group_id: group,
-      access: access,
-      groups: {
-        active: true
-      }
-    )
+      # check direct access
+      return true if group_through.klass.eager_load(:group).exists?(
+        group_through.foreign_key => id,
+        group_id: group,
+        access: access,
+        groups: {
+          active: true
+        }
+      )
+    end
 
     # check indirect access through Roles if possible
     return false if !respond_to?(:role_access?)
@@ -155,6 +173,21 @@ module HasGroups
     groups_access_map(:name)
   end
 
+  # Returns the *saved* map of Group name to access
+  #
+  # IMPORTANT: Never use this method for checking access in business logic!
+  #   Instead, use `#group_names_access_map` which respects the active state.
+  #   This method ignores the active state of the instance.
+  #
+  # @example
+  #   user.saved_group_names_access_map
+  #   #=> {'Users' => 'full', 'Support' => ['read', 'change']}
+  #
+  # @return [Hash<String=>String,Array<String>>] The *saved* map of Group name to access
+  def saved_group_names_access_map
+    groups_access_map(:name, ignore_active: true)
+  end
+
   # Stores a map of Group ID to access. Deletes all other relations.
   #
   # @example
@@ -177,6 +210,21 @@ module HasGroups
   # @return [Hash<Integer=>String,Array<String>>] The map of Group ID to access
   def group_ids_access_map
     groups_access_map(:id)
+  end
+
+  # Returns the *saved* map of Group ID to access
+  #
+  # IMPORTANT: Never use this method for checking access in business logic!
+  #   Instead, use `#group_ids_access_map` which respects the active state.
+  #   This method ignores the active state of the instance.
+  #
+  # @example
+  #   user.saved_group_ids_access_map
+  #   #=> {1 => 'full', 42 => ['read', 'change']}
+  #
+  # @return [Hash<Integer=>String,Array<String>>] The *saved* map of Group ID to access
+  def saved_group_ids_access_map
+    groups_access_map(:id, ignore_active: true)
   end
 
   # Stores a map of Group ID to access. Deletes all other relations.
@@ -210,8 +258,8 @@ module HasGroups
 
   private
 
-  def groups_access_map(key)
-    return {} if !active?
+  def groups_access_map(key, ignore_active: false)
+    return {} if !ignore_active && !active?
     return {} if !groups_access_permission?
 
     groups.access.where(active: true).pluck(key, :access).each_with_object({}) do |entry, hash|

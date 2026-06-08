@@ -1,15 +1,15 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Service::Image::Zammad
 
   API_HOST      = 'https://images.zammad.com'.freeze
-  OPEN_TIMEOUT  = 4
-  READ_TIMEOUT  = 6
-  TOTAL_TIMEOUT = 6
+  OPEN_TIMEOUT  = 12
+  READ_TIMEOUT  = 24
+  TOTAL_TIMEOUT = 24
   DISABLE_IN_TEST_ENV = true
 
   def self.user(email)
-    raise Exceptions::UnprocessableEntity, 'no email given' if email.blank?
+    raise Exceptions::UnprocessableContent, 'no email given' if email.blank?
 
     return if Rails.env.test? && DISABLE_IN_TEST_ENV
 
@@ -42,7 +42,7 @@ class Service::Image::Zammad
   end
 
   def self.organization(domain)
-    raise Exceptions::UnprocessableEntity, 'no domain given' if domain.blank?
+    raise Exceptions::UnprocessableContent, 'no domain given' if domain.blank?
 
     return if Rails.env.test? && DISABLE_IN_TEST_ENV
 

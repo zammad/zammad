@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { within } from '@testing-library/vue'
 
@@ -13,9 +13,7 @@ import {
 
 import ArticleBubbleMediaError from '#desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleMediaError.vue'
 
-const renderArticleBubbleMediaError = (
-  article: ReturnType<typeof createDummyArticle>,
-) => {
+const renderArticleBubbleMediaError = (article: ReturnType<typeof createDummyArticle>) => {
   return renderComponent(
     {
       setup() {
@@ -48,9 +46,7 @@ describe('ArticleBubbleMediaError', () => {
 
     expect(getByIconName(warning, 'exclamation-triangle')).toBeInTheDocument()
 
-    expect(
-      within(warning).getByText('Failed to load content.'),
-    ).toBeInTheDocument()
+    expect(within(warning).getByText('Failed to load content.')).toBeInTheDocument()
   })
 
   it('shows a button to trigger the retry media download process', async () => {
@@ -73,7 +69,7 @@ describe('ArticleBubbleMediaError', () => {
     })
 
     const retryButton = within(warning).getByRole('button', {
-      name: 'Retry Attachment Download',
+      name: 'Retry attachment download',
     })
 
     await wrapper.events.click(retryButton)

@@ -1,9 +1,6 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import type {
-  TicketOverviewOrderQuery,
-  TicketOverviewsQuery,
-} from '#shared/graphql/types.ts'
+import type { TicketOverviewOrderQuery, TicketOverviewsQuery } from '#shared/graphql/types.ts'
 import { EnumOrderDirection } from '#shared/graphql/types.ts'
 
 import { TicketOverviewOrderDocument } from '#mobile/entities/ticket/graphql/queries/overviewOrder.api.ts'
@@ -102,14 +99,10 @@ export const getApiTicketOverviews = (): TicketOverviewsQuery => ({
 export const mockTicketOverviews = (overviews?: TicketOverviewsQuery) => {
   mockGraphQLSubscription(TicketOverviewUpdatesDocument)
 
-  return mockGraphQLApi(TicketOverviewsDocument).willResolve(
-    overviews || getApiTicketOverviews(),
-  )
+  return mockGraphQLApi(TicketOverviewsDocument).willResolve(overviews || getApiTicketOverviews())
 }
 
-export const mockTicketOverviewOrder = (
-  overviews?: TicketOverviewOrderQuery,
-) => {
+export const mockTicketOverviewOrder = (overviews?: TicketOverviewOrderQuery) => {
   mockGraphQLSubscription(TicketOverviewUpdatesDocument)
 
   return mockGraphQLApi(TicketOverviewOrderDocument).willResolve(

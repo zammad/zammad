@@ -5,18 +5,23 @@ class Maintenance extends App.Controller
     @controllerBind(
       'maintenance'
       (data) =>
-        if data.type is 'message'
-          @showMessage(data)
-        if data.type is 'mode'
-          @maintanaceMode(data)
-        if data.type is 'app_version'
-          @maintanaceAppVersion(data)
-        if data.type is 'config_changed'
-          @maintanaceConfigChanged(data)
-        if data.type is 'restart_auto'
-          @maintanaceRestartAuto(data)
-        if data.type is 'restart_manual'
-          @maintanaceRestartManual(data)
+        switch data.type
+          when 'message'
+            @showMessage(data)
+          when 'mode'
+            @maintenanceMode(data)
+          when 'app_version'
+            @maintenanceAppVersion(data)
+          when 'config_changed'
+            @maintenanceConfigChanged(data)
+          when 'invalid_csrf_token'
+            @maintenanceInvalidCSRFToken(data)
+          when 'restart_auto'
+            @maintenanceRestartAuto(data)
+          when 'restart_manual'
+            @maintenanceRestartManual(data)
+          when 'force_refresh'
+            @maintenanceForceRefresh(data)
     )
 
   showMessage: (message = {}) =>
@@ -40,13 +45,13 @@ class Maintenance extends App.Controller
       forceReload:   message.reload
     )
 
-  maintanaceMode: (data = {}) =>
+  maintenanceMode: (data = {}) =>
     return if data.on isnt true
     return if !@authenticateCheck()
     @navigate '#logout'
 
   #App.Event.trigger('maintenance', {type:'restart_auto'})
-  maintanaceRestartAuto: (data) =>
+  maintenanceRestartAuto: (data) =>
     return if @messageRestartAuto
 
     App.SessionStorage.clear()
@@ -65,7 +70,7 @@ class Maintenance extends App.Controller
     @checkAvailability()
 
   #App.Event.trigger('maintenance', {type:'restart_manual'})
-  maintanaceRestartManual: (data) =>
+  maintenanceRestartManual: (data) =>
     return if @messageRestartManual
 
     App.SessionStorage.clear()
@@ -83,7 +88,13 @@ class Maintenance extends App.Controller
     @disconnectClient()
     @checkAvailability()
 
-  maintanaceConfigChanged: (data) =>
+  maintenanceForceRefresh: (data) =>
+    return if @forceRefreshed
+    @forceRefreshed = true
+
+    window.location.reload()
+
+  maintenanceConfigChanged: (data) =>
     return if @messageConfigChanged
 
     App.SessionStorage.clear()
@@ -98,7 +109,23 @@ class Maintenance extends App.Controller
       forceReload:   true
     )
 
-  maintanaceAppVersion: (data) =>
+  maintenanceInvalidCSRFToken: (data) =>
+    return if @messageConfigChanged
+
+    App.SessionStorage.clear()
+
+    @messageConfigChanged = new App.SessionMessage(
+      head:          __('Security token verification failed')
+      message:       __('The included security token is invalid. This may be just a temporary error, please reload your browser, and try again.')
+      keyboard:      false
+      backdrop:      true
+      buttonClose:   false
+      buttonSubmit:  __('Reload')
+      forceReload:   true
+      reloadTimeout: 10000
+    )
+
+  maintenanceAppVersion: (data) =>
     return if @messageAppVersion
     return if @appVersion is data.app_version
     if !@appVersion

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -49,14 +49,13 @@ RSpec.describe Gql::Queries::User::Current::CalendarSubscription::List, type: :g
     end
 
     it 'calls CalendarSubscription::TicketPreferencesWithUrls service', aggregate_failures: true do
-      allow(Service::User::CalendarSubscription::TicketPreferencesWithUrls).to receive(:new).and_call_original
-      expect_any_instance_of(Service::User::CalendarSubscription::TicketPreferencesWithUrls).to receive(:execute)
+      allow(Service::User::CalendarSubscription::TicketPreferencesWithUrls).to receive(:execute).and_call_original
 
       gql.execute(query)
 
       expect(Service::User::CalendarSubscription::TicketPreferencesWithUrls)
-        .to have_received(:new)
-        .with(user)
+        .to have_received(:execute)
+        .with(current_user: user)
     end
 
     context 'when permissions are insufficient' do

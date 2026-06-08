@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { computed } from 'vue'
 
@@ -71,9 +71,7 @@ describe('Installing Zammad as PWA', () => {
 
     await view.events.click(install)
 
-    expect(
-      view.getByText(/To install Zammad as an app, press/),
-    ).toBeInTheDocument()
+    expect(view.getByText(/To install Zammad as an app, press/)).toBeInTheDocument()
     expect(view.getByIconName('ios-share')).toBeInTheDocument()
     expect(view.getByIconName('add-square')).toBeInTheDocument()
   })

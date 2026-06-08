@@ -1,12 +1,9 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { waitFor } from '@testing-library/vue'
 import { vi } from 'vitest'
 
-import {
-  type ExtendedMountingOptions,
-  renderComponent,
-} from '#tests/support/components/index.ts'
+import { type ExtendedMountingOptions, renderComponent } from '#tests/support/components/index.ts'
 
 import { i18n } from '#shared/i18n.ts'
 
@@ -127,7 +124,7 @@ describe('CommonSimpleTable', () => {
       },
     )
 
-    expect(view.baseElement.querySelector('table')).toMatchFileSnapshot(
+    await expect(view.baseElement.querySelector('table')).toMatchFileSnapshot(
       `${__filename}.snapshot.txt`,
     )
   })
@@ -185,9 +182,7 @@ describe('CommonSimpleTable', () => {
 
     await waitFor(() => {
       expect(wrapper.getByText('Some text to be truncated')).toBeInTheDocument()
-      expect(
-        wrapper.getByLabelText('Some text to be truncated'),
-      ).toBeInTheDocument()
+      expect(wrapper.getByLabelText('Some text to be truncated')).toBeInTheDocument()
     })
   })
 
@@ -252,9 +247,7 @@ describe('CommonSimpleTable', () => {
       ],
     })
 
-    expect(wrapper.getByText('Awesome Cell Header')).toHaveClass(
-      'text-red-500 font-bold',
-    )
+    expect(wrapper.getByText('Awesome Cell Header')).toHaveClass('text-red-500 font-bold')
   })
 
   it('supports adding a link to a cell', () => {

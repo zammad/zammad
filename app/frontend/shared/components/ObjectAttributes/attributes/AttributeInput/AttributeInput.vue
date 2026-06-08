@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 // TODO: check external data input output
@@ -51,8 +51,8 @@ const link = computed(() => {
     v-else
     :class="config?.classes?.link"
     :external="attribute.dataOption.type !== 'url'"
-    open-in-new-tab
     :link="link"
+    open-in-new-tab
   >
     {{ title }}
   </CommonLink>

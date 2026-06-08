@@ -1,8 +1,9 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { getTestRouter } from '#tests/support/components/renderComponent.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
+import { waitFor } from '#tests/support/vitest-wrapper.ts'
 
 import { EnumSystemSetupInfoStatus } from '#shared/graphql/types.ts'
 import { useAuthenticationStore } from '#shared/stores/authentication.ts'
@@ -51,14 +52,13 @@ describe('guided setup admin user creation', () => {
 
       view.getByText('Set up a new system').click()
 
-      await vi.waitFor(() => {
-        expect(
-          view,
-          'correctly redirects to guided setup manual',
-        ).toHaveCurrentUrl('/guided-setup/manual')
+      await waitFor(() => {
+        expect(view, 'correctly redirects to guided setup manual').toHaveCurrentUrl(
+          '/guided-setup/manual',
+        )
       })
 
-      expect(view.getByText('Create Administrator Account')).toBeInTheDocument()
+      expect(view.getByText('Create administrator account')).toBeInTheDocument()
 
       const firstNameField = view.getByLabelText('First name')
       const lastNameField = view.getByLabelText('Last name')
@@ -84,7 +84,7 @@ describe('guided setup admin user creation', () => {
 
       await view.events.click(createUserCurrentButton)
 
-      await vi.waitFor(() => {
+      await waitFor(() => {
         expect(
           view,
           'correctly redirects to guided setup manual system information step',
@@ -109,7 +109,7 @@ describe('guided setup admin user creation', () => {
 
       router.back()
 
-      await vi.waitFor(() => {
+      await waitFor(() => {
         expect(view, 'correctly redirects to home screen').toHaveCurrentUrl('/')
       })
     })

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 # Be sure to restart your server when you modify this file.
 
@@ -28,7 +28,7 @@
 #   # policy.report_uri "/csp-violation-report-endpoint"
 # end
 
-Rails.application.config.content_security_policy do |policy|
+Rails.application.config.content_security_policy do |policy| # rubocop:disable Metrics/BlockLength
   base_uri = proc do
     next if !Rails.env.production?
     next if !Setting.get('system_init_done')
@@ -41,25 +41,36 @@ Rails.application.config.content_security_policy do |policy|
 
   policy.base_uri :self, base_uri
 
-  policy.default_src :self, :ws, :wss, 'https://images.zammad.com'
-  policy.font_src    :self, :data
-  policy.img_src     '*', :data, :blob
-  policy.object_src  :none
-  policy.script_src  :self, :unsafe_eval
-  policy.style_src   :self, :unsafe_inline
-  policy.frame_src   'www.youtube.com', 'player.vimeo.com'
+  policy.default_src     :self
+  policy.connect_src     :self, :ws, :wss, 'https://images.zammad.com'
+  policy.font_src        :self, :data
+  policy.frame_ancestors :self
+  policy.frame_src       'https://www.youtube.com', 'https://player.vimeo.com'
+  policy.img_src         '*', :data, :blob
+  policy.object_src      :none
+  policy.script_src      :self, :unsafe_eval
+  policy.style_src       :self, :unsafe_inline
 
   if Rails.env.development?
-    websocket_uri = proc do
-      "ws://#{ViteRuby.config.host}:#{Setting.get('websocket_port')}"
-    end
+    websocket_uris = proc do
+      [
+        "ws://#{ViteRuby.config.host_with_port}",
+        "ws://#{ViteRuby.config.host}:#{Setting.get('websocket_port')}",
+        "ws://#{ViteRuby.config.host}:#{ENV['ZAMMAD_RAILS_PORT'] || 3000}/cable",
 
-    websocket_cable_uri = proc do
-      "ws://#{ViteRuby.config.host}:#{ENV['ZAMMAD_RAILS_PORT'] || 3000}/cable"
+        # Include localhost URIs as well, to cover local setups where ViteRuby is configured to use another hostname.
+        *(if ViteRuby.config.host != 'localhost'
+            [
+              "ws://localhost:#{ViteRuby.config.port}",
+              "ws://localhost:#{Setting.get('websocket_port')}",
+              "ws://localhost:#{ENV['ZAMMAD_RAILS_PORT'] || 3000}/cable",
+            ]
+          end)
+      ].compact
     end
 
     policy.script_src :self, :unsafe_eval, :unsafe_inline
-    policy.connect_src :self, :https, :wss, "http://#{ViteRuby.config.host_with_port}", "ws://#{ViteRuby.config.host_with_port}", websocket_cable_uri, websocket_uri
+    policy.connect_src :self, :https, :wss, "http://#{ViteRuby.config.host_with_port}", *websocket_uris
   end
 end
 

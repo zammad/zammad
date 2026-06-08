@@ -63,9 +63,10 @@ class App.OnlineNotification extends App.Model
   ###
 
   @seen: (object, o_id) ->
+    normalizedObject = object.replace(/::/g, '')
     notifications = App.OnlineNotification.all()
     for notification in notifications
-      if notification.object is object && notification.o_id.toString() is o_id.toString()
+      if notification.object.replace(/::/g, '') is normalizedObject && notification.o_id.toString() is o_id.toString()
         if notification.seen isnt true
           notification.seen = true
           notification.save()

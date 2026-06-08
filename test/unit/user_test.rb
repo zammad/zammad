@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'test_helper'
 
@@ -863,26 +863,26 @@ class UserTest < ActiveSupport::TestCase
     admin_count_inital = User.with_permissions('admin').count
     assert_equal(1, admin_count_inital)
 
-    assert_raises(Exceptions::UnprocessableEntity) do
+    assert_raises(Exceptions::UnprocessableContent) do
       admin3.update!(roles: Role.where(name: %w[Agent]))
     end
 
     admin_count_inital = User.with_permissions('admin').count
     assert_equal(1, admin_count_inital)
 
-    assert_raises(Exceptions::UnprocessableEntity) do
+    assert_raises(Exceptions::UnprocessableContent) do
       admin3.active = false
       admin3.save!
     end
 
     assert_equal(1, User.with_permissions('admin').count)
     admin_role = Role.find_by(name: 'Admin')
-    assert_raises(Exceptions::UnprocessableEntity) do
+    assert_raises(Exceptions::UnprocessableContent) do
       admin_role.active = false
       admin_role.save!
     end
 
-    assert_raises(Exceptions::UnprocessableEntity) do
+    assert_raises(Exceptions::UnprocessableContent) do
       admin_role.permission_revoke('admin')
     end
 
@@ -1021,11 +1021,11 @@ class UserTest < ActiveSupport::TestCase
     assert_equal(true, agent4.preferences[:notification_sound][:enabled])
 
     agent4.preferences[:notification_sound][:enabled] = 'invalid'
-    assert_raises(Exceptions::UnprocessableEntity) do
+    assert_raises(Exceptions::UnprocessableContent) do
       agent4.save!
     end
 
-    assert_raises(Exceptions::UnprocessableEntity) do
+    assert_raises(Exceptions::UnprocessableContent) do
       User.create!(
         login:         "agent-default-preferences-5#{name}@example.com",
         firstname:     'valid_agent_group_permission-5',
@@ -1094,7 +1094,7 @@ class UserTest < ActiveSupport::TestCase
     )
     assert_equal(1, Authorization.where(user_id: agent1_id).count)
 
-    Cti::CallerId.maybe_add(
+    Cti::CallerId.create!(
       caller_id: '49123456789',
       comment:   'Hairdresser Bob Smith, San Francisco', # optional
       level:     'maybe', # known|maybe

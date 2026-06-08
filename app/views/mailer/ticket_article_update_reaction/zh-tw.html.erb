@@ -1,0 +1,19 @@
+更新工單內容 (#{ticket.title}) 
+
+<div>你好, #{recipient.firstname}:</div>
+<br>
+<div>
+<%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') %> 對 #{article.created_by.fullname} 的訊息回應了一個 <%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'emoji') %>：
+</div>
+<br>
+<% if @objects[:article] %>
+  <div>
+    <blockquote type="cite">
+    #{article.body_as_html}
+    </blockquote>
+  </div>
+<% end %>
+<br>
+<div>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/#{article.id}" target="zammad_app">在 #{config.product_name} 檢視此工單</a>
+</div>

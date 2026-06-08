@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class BackgroundServices
   class Cli < ::Thor
@@ -27,13 +27,17 @@ class BackgroundServices
       shell.say
 
       list = [
-        ['Service', 'Set worker count', 'Max. workers', 'Disable this service'],
-        ['-------', '----------------', '------------', '--------------------'],
+        ['Service', 'Configuration', 'Variable', 'Default value'],
+        ['-------', '-------------', '--------', '-------------'],
       ]
       BackgroundServices.available_services.each do |service|
         service_name = service.name.demodulize
         env_prefix   = "ZAMMAD_#{service_name.underscore.upcase}"
-        list.push [service_name, "#{env_prefix}_WORKERS", service.max_workers, "#{env_prefix}_DISABLE"]
+        list.push [service_name, 'worker count', "#{env_prefix}_WORKERS", "0 (= run in main process, max. #{service.max_workers})"]
+        if service.max_worker_threads > 1
+          list.push [nil, 'threads per worker', "#{env_prefix}_WORKER_THREADS", "#{service.default_worker_threads} (max. #{service.max_worker_threads})"]
+        end
+        list.push [nil, 'disable service', "#{env_prefix}_DISABLE"]
       end
       shell.print_table(list, indent: 2)
 

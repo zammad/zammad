@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { computed } from 'vue'
 
@@ -20,9 +20,7 @@ type CreateNewChecklist = (
   options?: { focusLastItem: boolean },
 ) => Promise<void | Maybe<TicketChecklistAddMutation>>
 
-export const useChecklistTemplates = (
-  createNewChecklist: CreateNewChecklist,
-) => {
+export const useChecklistTemplates = (createNewChecklist: CreateNewChecklist) => {
   const checklistTemplatesQuery = new QueryHandler(
     useChecklistTemplatesQuery(
       {
@@ -34,15 +32,9 @@ export const useChecklistTemplates = (
     ),
   )
 
-  const templatesLoading = checklistTemplatesQuery.loading()
   const checklistTemplates = checklistTemplatesQuery.result()
 
-  const isLoadingTemplates = computed(() => {
-    // Return already true when an templates exists already in the cache.
-    if (checklistTemplates.value !== undefined) return false
-
-    return templatesLoading.value
-  })
+  const isLoadingTemplates = checklistTemplatesQuery.loadingWithoutCachedResult()
 
   checklistTemplatesQuery.subscribeToMore<
     ChecklistTemplateUpdatesSubscriptionVariables,
@@ -57,15 +49,12 @@ export const useChecklistTemplates = (
         return null as unknown as ChecklistTemplatesQuery
 
       return {
-        checklistTemplates:
-          subscriptionData.data.checklistTemplateUpdates.checklistTemplates,
+        checklistTemplates: subscriptionData.data.checklistTemplateUpdates.checklistTemplates,
       }
     },
   })
 
-  const applyChecklistTemplate = async (
-    template: Partial<ChecklistTemplate>,
-  ) => {
+  const applyChecklistTemplate = async (template: Partial<ChecklistTemplate>) => {
     await createNewChecklist(
       {
         templateId: template.id,

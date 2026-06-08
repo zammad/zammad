@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { useMutation } from '@vue/apollo-composable'
 
@@ -87,9 +87,9 @@ describe('MutationHandler', () => {
       const mutationHandlerObject = new MutationHandler(sampleMutation(), {
         errorNotificationMessage,
       })
-      expect(
-        mutationHandlerObject.handlerOptions.errorNotificationMessage,
-      ).toBe(errorNotificationMessage)
+      expect(mutationHandlerObject.handlerOptions.errorNotificationMessage).toBe(
+        errorNotificationMessage,
+      )
     })
 
     it('given mutation function was executed', () => {
@@ -133,9 +133,9 @@ describe('MutationHandler', () => {
     it('result is available', async () => {
       const mutationHandlerObject = new MutationHandler(sampleMutation())
 
-      await expect(
-        mutationHandlerObject.send({ id: 1, Sample: {} }),
-      ).resolves.toEqual(mutationSampleResult)
+      await expect(mutationHandlerObject.send({ id: 1, Sample: {} })).resolves.toEqual(
+        mutationSampleResult,
+      )
     })
 
     it('result with user error', async () => {

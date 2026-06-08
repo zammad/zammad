@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { isString } from 'lodash-es'
 import { computed, reactive, watch } from 'vue'
@@ -28,8 +28,7 @@ const initializeMetaTitle = () => {
   watch(
     currentTitle,
     (newTitle, oldTitle) => {
-      if (isString(newTitle) && newTitle !== oldTitle && document)
-        document.title = newTitle
+      if (isString(newTitle) && newTitle !== oldTitle && document) document.title = newTitle
     },
     { immediate: true },
   )

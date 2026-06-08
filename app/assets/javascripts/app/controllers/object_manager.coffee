@@ -4,12 +4,18 @@ treeParams = (e, params) ->
   lastLevels = []
   previousValueLevels = []
 
-  $(e.target).closest('.modal').find('.js-treeTable .js-key').each( ->
+  $(e.target).closest('.modal').find('.js-treeTable .js-key').each ->
     $element = $(@)
     level = parseInt($element.attr('level'))
     name = $element.val().trim()
+    $row = $element.closest('tr')
     item =
       name: name
+
+    # Only add the key, when it's really disabled.
+    $active = $row.find('.js-active')
+    if $active.length > 0 && !$active.is(':checked')
+      item.disabled = true
 
     if level is 0
       tree.push item
@@ -31,8 +37,6 @@ treeParams = (e, params) ->
     item.value = valueLevels.join('::')
     lastLevels[level] = item
     previousValueLevels = valueLevels
-
-  )
   if tree[0]
     if !params.data_option
       params.data_option = {}

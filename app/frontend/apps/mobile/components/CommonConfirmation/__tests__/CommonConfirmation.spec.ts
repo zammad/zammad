@@ -1,9 +1,6 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import {
-  renderComponent,
-  type ExtendedRenderResult,
-} from '#tests/support/components/index.ts'
+import { renderComponent, type ExtendedRenderResult } from '#tests/support/components/index.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
 
 import { useConfirmation } from '#shared/composables/useConfirmation.ts'

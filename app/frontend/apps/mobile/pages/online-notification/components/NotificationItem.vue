@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { useOnlineNotificationActions } from '#shared/entities/online-notification/composables/useOnlineNotificationActions.ts'
@@ -17,8 +17,7 @@ const emit = defineEmits<{
   seen: [id: Scalars['ID']['output']]
 }>()
 
-const { deleteNotification, deleteNotificationMutation } =
-  useOnlineNotificationActions()
+const { deleteNotification, deleteNotificationMutation } = useOnlineNotificationActions()
 
 const loading = deleteNotificationMutation.loading()
 
@@ -44,9 +43,7 @@ const removeNotification = () => {
         role="status"
         class="h-3 w-3 rounded-full"
         :class="{ 'bg-blue': !activity.seen }"
-        :aria-label="
-          activity.seen ? $t('Notification read') : $t('Unread notification')
-        "
+        :aria-label="activity.seen ? $t('Notification read') : $t('Unread notification')"
       ></div>
     </div>
     <ActivityMessage :activity="activity" @seen="$emit('seen', activity.id)" />

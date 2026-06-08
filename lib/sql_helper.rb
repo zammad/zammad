@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class SqlHelper
 
@@ -196,40 +196,32 @@ sql = 'tickets.created_at ASC, tickets.updated_at DESC'
   end
 
   def array_contains_all(attribute, value, negated: false)
-    value = [''] if value.blank?
-    value = Array(value)
-    result = if Rails.application.config.db_column_array
-               "(#{db_column(attribute)} @> ARRAY[#{value.map { |v| "'#{self.class.quote_string(v)}'" }.join(',')}]::varchar[])"
-             else
-               "JSON_CONTAINS(#{db_column(attribute)}, '#{self.class.quote_string(value.to_json)}', '$')"
-             end
+    value = if value.blank?
+              ['']
+            else
+              Array.wrap(value).map { '?' }
+            end
+
+    result = "(#{db_column(attribute)} @> ARRAY[#{value.join(',')}]::varchar[])"
+
     negated ? "NOT(#{result})" : "(#{result})"
   end
 
   def array_contains_one(attribute, value, negated: false)
-    value = [''] if value.blank?
-    value = Array(value)
-    result = if Rails.application.config.db_column_array
-               "(#{db_column(attribute)} && ARRAY[#{value.map { |v| "'#{self.class.quote_string(v)}'" }.join(',')}]::varchar[])"
-             else
-               value.map { |v| "JSON_CONTAINS(#{db_column(attribute)}, '#{self.class.quote_string(v.to_json)}', '$')" }.join(' OR ')
-             end
+    value = if value.blank?
+              ['']
+            else
+              Array.wrap(value).map { '?' }
+            end
+
+    result = "(#{db_column(attribute)} && ARRAY[#{value.join(',')}]::varchar[])"
+
     negated ? "NOT(#{result})" : "(#{result})"
   end
 
   def regex_match(attribute, negated: false)
-    operator = if mysql?
-                 negated ? 'NOT REGEXP' : 'REGEXP'
-               else
-                 negated ? '!~*' : '~*'
-               end
+    operator = negated ? '!~*' : '~*'
 
     "#{attribute} #{operator} (?)"
-  end
-
-  private
-
-  def mysql?
-    ActiveRecord::Base.connection_db_config.configuration_hash[:adapter] == 'mysql2'
   end
 end

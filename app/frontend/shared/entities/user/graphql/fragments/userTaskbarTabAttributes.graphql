@@ -1,0 +1,5 @@
+fragment userTaskbarTabAttributes on User {
+  id
+  fullname
+  active
+}

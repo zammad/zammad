@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed } from 'vue'
@@ -34,8 +34,10 @@ const props = defineProps<Props>()
 
 const { form, updateFieldValues, onChangedField } = useForm()
 
-const { formListTargetTicketOptions, targetTicketId, handleTicketClick } =
-  useTargetTicketOptions(onChangedField, updateFieldValues)
+const { formListTargetTicketOptions, targetTicketId, handleTicketClick } = useTargetTicketOptions(
+  onChangedField,
+  updateFieldValues,
+)
 
 const mergeFormSchema = [
   {
@@ -90,7 +92,7 @@ const footerActionOptions = computed<ActionFooterOptions>(() => ({
 
 <template>
   <CommonFlyout
-    :header-title="__('Merge Tickets')"
+    :header-title="__('Merge tickets')"
     header-icon="merge"
     size="large"
     no-close-on-action
@@ -103,11 +105,7 @@ const footerActionOptions = computed<ActionFooterOptions>(() => ({
         ref="form"
         :schema="mergeFormSchema"
         should-autofocus
-        @submit="
-          submitMerge(
-            $event as FormSubmitData<Record<'targetTicketId', string>>,
-          )
-        "
+        @submit="submitMerge($event as FormSubmitData<Record<'targetTicketId', string>>)"
       />
 
       <TicketRelationAndRecentLists

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Mutations
   class User::Current::NotificationPreferencesUpdate < BaseMutation
@@ -10,9 +10,7 @@ module Gql::Mutations
 
     field :user, Gql::Types::UserType, null: false, description: 'Updated user object'
 
-    def self.authorize(_obj, ctx)
-      ctx.current_user.permissions?('user_preferences.notifications+ticket.agent')
-    end
+    requires_permission 'user_preferences.notifications+ticket.agent'
 
     def resolve(matrix:, sound:, group_ids: nil)
       user = context.current_user

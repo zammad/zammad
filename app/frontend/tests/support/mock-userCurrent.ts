@@ -1,5 +1,6 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
+import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
 import type { UserData } from '#shared/types/store.ts'
 
@@ -9,8 +10,8 @@ export const mockUserCurrent = (mockUser: Partial<UserData> = {}) => {
   initializePiniaStore()
   const session = useSessionStore()
   session.user = {
-    id: '123',
-    internalId: 1,
+    id: convertToGraphQLId('User', 2),
+    internalId: 2,
     objectAttributeValues: [],
     preferences: {},
     ...mockUser,

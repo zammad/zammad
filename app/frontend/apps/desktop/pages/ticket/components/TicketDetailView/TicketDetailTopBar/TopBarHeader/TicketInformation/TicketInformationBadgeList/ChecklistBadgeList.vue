@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed } from 'vue'
@@ -28,10 +28,10 @@ const isCompleted = computed(() => checklist.value?.completed)
 <template>
   <ChecklistBadge
     v-if="!isCompleted && totalItemsCount"
-    v-tooltip="$t('Open Checklist')"
+    v-tooltip="$t('Open checklist')"
     role="button"
     tabindex="0"
-    class="cursor-pointer hover:outline-1 hover:outline-offset-1 hover:outline-blue-600 focus:outline-transparent focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 active:outline-blue-800 dark:hover:outline-blue-900 dark:active:outline-blue-800"
+    class="cursor-pointer hover:outline-1 hover:outline-offset-1 hover:outline-blue-600 focus:outline-transparent focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 active:outline-blue-800 dark:hover:outline-blue-900 dark:active:outline-blue-800"
     @click="ticketSidebar.switchSidebar('checklist')"
     @keydown.enter="ticketSidebar.switchSidebar('checklist')"
   >

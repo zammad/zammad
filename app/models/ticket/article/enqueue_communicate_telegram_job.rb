@@ -1,11 +1,11 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 # Schedules a backgrond communication job for new telegram articles.
 module Ticket::Article::EnqueueCommunicateTelegramJob
   extend ActiveSupport::Concern
 
   included do
-    after_create :ticket_article_enqueue_communicate_telegram_job
+    after_create_commit :ticket_article_enqueue_communicate_telegram_job
   end
 
   private

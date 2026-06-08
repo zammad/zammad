@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
@@ -7,7 +7,7 @@ import type { ActionFooterProps } from './types.ts'
 
 withDefaults(defineProps<ActionFooterProps>(), {
   actionLabel: __('Update'),
-  cancelLabel: __('Cancel & Go Back'),
+  cancelLabel: __('Cancel & go back'),
 })
 
 const emit = defineEmits<{

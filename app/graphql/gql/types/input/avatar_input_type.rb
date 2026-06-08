@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Types::Input
   class AvatarInputType < Gql::Types::BaseInputObject
@@ -11,11 +11,9 @@ module Gql::Types::Input
     def prepare
       super
 
-      service = Service::Avatar::ImageValidate.new
-
       {
-        original: service.execute(image_data: original),
-        resized:  service.execute(image_data: resized)
+        original: Service::Avatar::ImageValidate.execute(image_data: original),
+        resized:  Service::Avatar::ImageValidate.execute(image_data: resized)
       }
     end
   end

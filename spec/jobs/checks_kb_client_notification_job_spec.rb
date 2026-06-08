@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -25,8 +25,18 @@ RSpec.describe ChecksKbClientNotificationJob, performs_jobs: true, type: :job do
         let(:answer) { send(:"#{prefix}_answer") }
 
         args.each do |key, value|
-          it "#{key} #{value ? 'is' : 'not'} notified" do
-            expect(PushMessages).send(value ? :to : :not_to, have_received(:send_to).with(send(key).id, any_args)) # rubocop:disable RSpec/MissingExpectationTargetMethod
+          it "#{key} #{value ? 'is' : 'not'} notified", aggregate_failures: true do
+            times = if key == :admin
+                      5
+                    else
+                      1
+                    end
+
+            if value
+              expect(PushMessages).to have_received(:send_to).exactly(times).times.with(send(key).id, any_args)
+            else
+              expect(PushMessages).not_to have_received(:send_to).with(send(key).id, any_args)
+            end
           end
         end
       end

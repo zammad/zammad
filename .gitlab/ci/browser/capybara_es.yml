@@ -3,7 +3,7 @@
     - .template_browser-core_capybara
   script:
     - !reference [.scripts, zammad_ci_test_prepare]
-    - bundle exec rspec --require ./spec/rspec_extensions.rb --fail-fast -t ~integration -t searchindex --profile 10 spec/system
+    - bundle exec rspec --require ./spec/rspec_extensions.rb --fail-fast -t ~integration -t searchindex spec/system
 
 .template_browser-core_capybara_chrome_es:
   extends:

@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 /**
  * @fileoverview Enforce presence of Zammad copyright header
@@ -26,18 +26,18 @@ module.exports = {
   },
 
   create(context) {
-    const year = new Date().getYear() + 1900
+    const year = new Date().getFullYear()
 
     let expectedComment = `// Copyright (C) 2012-${year} Zammad Foundation, https://zammad-foundation.org/`
     let findComment = '// Copyright'
-    if (context.getFilename().endsWith('.vue')) {
+    if (context.filename.endsWith('.vue')) {
       expectedComment = `<!-- Copyright (C) 2012-${year} Zammad Foundation, https://zammad-foundation.org/ -->`
       findComment = '<!-- Copyright'
     }
 
     return {
       Program(node) {
-        const firstLine = context.getSourceCode().lines[0]
+        const firstLine = context.sourceCode.lines[0]
         if (!firstLine.length) return
         if (firstLine === expectedComment) return
         if (firstLine.startsWith(findComment)) {

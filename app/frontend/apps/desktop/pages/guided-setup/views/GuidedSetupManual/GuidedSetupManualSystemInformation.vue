@@ -1,14 +1,11 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { shallowRef, computed, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 
 import Form from '#shared/components/Form/Form.vue'
-import type {
-  FormSubmitData,
-  FormValues,
-} from '#shared/components/Form/types.ts'
+import type { FormSubmitData, FormValues } from '#shared/components/Form/types.ts'
 import { useBaseUrl } from '#shared/composables/useBaseUrl.ts'
 import { useLogoUrl } from '#shared/composables/useLogoUrl.ts'
 import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
@@ -26,7 +23,7 @@ const application = useApplicationStore()
 const { logoUrl } = useLogoUrl()
 
 const { setTitle } = useSystemSetup()
-setTitle(__('System Information'))
+setTitle(__('System information'))
 
 const systemInformationSchema = [
   {
@@ -73,9 +70,7 @@ const initialValues: FormValues = {
 
 const form = shallowRef()
 
-const isSystemOnlineService = computed(
-  () => application.config.system_online_service,
-)
+const isSystemOnlineService = computed(() => application.config.system_online_service)
 
 const schemaData = reactive({
   isSystemOnlineService,
@@ -122,12 +117,7 @@ const setSystemInformation = async (formData: SystemInformationData) => {
     :schema="systemInformationSchema"
     :schema-data="schemaData"
     :initial-values="initialValues"
-    @submit="
-      setSystemInformation($event as FormSubmitData<SystemInformationData>)
-    "
+    @submit="setSystemInformation($event as FormSubmitData<SystemInformationData>)"
   />
-  <GuidedSetupActionFooter
-    :form="form"
-    :submit-button-text="__('Save and Continue')"
-  />
+  <GuidedSetupActionFooter :form="form" :submit-button-text="__('Save and continue')" />
 </template>

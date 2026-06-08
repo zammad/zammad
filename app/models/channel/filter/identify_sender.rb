@@ -1,7 +1,6 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-module Channel::Filter::IdentifySender
-
+class Channel::Filter::IdentifySender < Channel::Filter::BaseIdentifyUser
   def self.run(_channel, mail, _transaction_params)
 
     customer_user_id = mail[ :'x-zammad-ticket-customer_id' ]
@@ -21,6 +20,16 @@ module Channel::Filter::IdentifySender
     end
     if !customer_user && mail[ :'x-zammad-customer-email' ].present?
       customer_user = User.find_by(email: mail[ :'x-zammad-customer-email' ])
+    end
+
+    # When found via x-zammad headers, apply explicit name overrides if provided.
+    # IdentifySessionUser runs earlier and may have pre-created this user from the
+    # FROM address with a different name than what the x-zammad headers intend.
+    if customer_user
+      name_attrs = {}
+      name_attrs[:firstname] = sanitize_name(mail[:'x-zammad-customer-firstname']) if mail[:'x-zammad-customer-firstname'].present?
+      name_attrs[:lastname]  = sanitize_name(mail[:'x-zammad-customer-lastname']) if mail[:'x-zammad-customer-lastname'].present?
+      customer_user.update!(name_attrs) if name_attrs.present?
     end
 
     # get correct customer
@@ -60,29 +69,6 @@ module Channel::Filter::IdentifySender
 
     create_recipients(mail)
     mail[ :'x-zammad-ticket-customer_id' ] = customer_user.id
-
-    # find session user
-    session_user_id = mail[ :'x-zammad-session-user-id' ]
-    session_user = nil
-    if session_user_id.present?
-      session_user = User.lookup(id: session_user_id)
-      if session_user
-        Rails.logger.debug { "Took session form x-zammad-session-user-id header '#{session_user_id}'." }
-      else
-        Rails.logger.debug { "Invalid x-zammad-session-user-id header '#{session_user_id}', no such user - take user from 'from'-header." }
-      end
-    end
-    if !session_user
-      session_user = user_create(
-        login:     mail[:from_email],
-        firstname: mail[:from_display_name],
-        lastname:  '',
-        email:     mail[:from_email],
-      )
-    end
-    if session_user
-      mail[ :'x-zammad-session-user-id' ] = session_user.id
-    end
 
     true
   end
@@ -150,67 +136,6 @@ module Channel::Filter::IdentifySender
         end
       end
     end
-  end
-
-  def self.user_create(attrs, role_ids = nil)
-    populate_attributes!(attrs, role_ids: role_ids)
-
-    if attrs[:login]
-      attrs[:login] = EmailHelper::Idn.to_unicode(attrs[:login])
-    end
-
-    if (user = User.find_by('email = :email OR login = :email', attrs))
-      user.update!(attrs.slice(:firstname)) if user.no_name? && attrs[:firstname].present?
-    elsif (user = User.create!(attrs))
-      user.update!(updated_by_id: user.id, created_by_id: user.id)
-    end
-
-    user
-  end
-
-  def self.populate_attributes!(attrs, **extras)
-    if attrs[:email].match?(%r{\S\s+\S}) || attrs[:email].match?(%r{^<|>$})
-      attrs[:preferences] = { mail_delivery_failed:        true,
-                              mail_delivery_failed_reason: 'invalid email',
-                              mail_delivery_failed_data:   Time.zone.now }
-    end
-
-    attrs.merge!(
-      email:         sanitize_email(attrs[:email]),
-      firstname:     sanitize_name(attrs[:firstname]),
-      lastname:      sanitize_name(attrs[:lastname]),
-      password:      '',
-      active:        true,
-      role_ids:      extras[:role_ids] || Role.signup_role_ids,
-      updated_by_id: 1,
-      created_by_id: 1
-    )
-  end
-
-  def self.sanitize_name(string)
-    return '' if string.nil?
-
-    string.strip
-          .delete('"')
-          .delete_prefix("'")
-          .delete_suffix("'")
-          .gsub(%r{.+?\s\(.+?\)$}, '')
-  end
-
-  def self.sanitize_email(string)
-    string += '@local' if string.exclude?('@')
-
-    string = string.downcase
-          .strip
-          .delete('"')
-          .delete("'")
-          .delete(' ') # see https://github.com/zammad/zammad/issues/2254
-          .sub(%r{^<|>$}, '')        # see https://github.com/zammad/zammad/issues/2254
-          .sub(%r{\A'(.*)'\z}, '\1') # see https://github.com/zammad/zammad/issues/2154
-          .gsub(%r{\s}, '')          # see https://github.com/zammad/zammad/issues/2198
-          .delete_suffix('.')
-
-    EmailHelper::Idn.to_unicode(string)
   end
 
 end

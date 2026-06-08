@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -28,14 +28,8 @@ RSpec.describe Gql::Types::GroupType do
     let(:variables) { { ticketId: gql.id(ticket) } }
     let(:query) do
       <<~QUERY
-        query ticket($ticketId: ID, $ticketInternalId: Int, $ticketNumber: String) {
-          ticket(
-            ticket: {
-              ticketId: $ticketId
-              ticketInternalId: $ticketInternalId
-              ticketNumber: $ticketNumber
-            }
-          ) {
+        query ticket($ticketId: ID!) {
+          ticket(ticketId: $ticketId) {
             id
             group {
               name

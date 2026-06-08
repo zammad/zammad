@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
@@ -34,10 +34,8 @@ describe('actions inside article context', () => {
     await view.events.click(contextTriggers[0])
     await view.events.click(view.getByText('Show meta data'))
 
-    expect(view.getByText('Meta Data')).toBeInTheDocument()
-    expect(view.getByRole('region', { name: 'Created' })).toHaveTextContent(
-      /2022-01-29 00:00/,
-    )
+    expect(view.getByText('Meta data')).toBeInTheDocument()
+    expect(view.getByRole('region', { name: 'Created' })).toHaveTextContent(/2022-01-29 00:00/)
 
     // content is tested inside unit test
   })

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -158,7 +158,7 @@ RSpec.describe Checklist, :aggregate_failures, current_user_id: 1, type: :model 
 
       expect { described_class.create_from_template!(ticket, template) }
         .to raise_error(
-          Exceptions::UnprocessableEntity,
+          Exceptions::UnprocessableContent,
           'Checklist template must be active to use as a checklist starting point.'
         )
     end

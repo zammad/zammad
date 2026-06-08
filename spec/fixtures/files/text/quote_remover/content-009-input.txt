@@ -1,0 +1,12 @@
+Here is my response.
+
+-----Original Message-----
+From: Support Team <support@example.com>
+Sent: Tuesday, December 3, 2024 9:00 AM
+To: Customer <customer@example.com>
+Subject: Re: Your Inquiry
+
+Dear Customer,
+Thank you for contacting us.
+Best regards,
+Support Team

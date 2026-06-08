@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { within } from '@testing-library/vue'
 
@@ -11,6 +11,7 @@ import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
 import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
+import { waitFor } from '#tests/support/vitest-wrapper.ts'
 
 import { mockFormUpdaterQuery } from '#shared/components/Form/graphql/queries/formUpdater.mocks.ts'
 import { mockUserCurrentAccessTokenAddMutation } from '#shared/entities/user/current/graphql/mutations/userCurrentAccessTokenAdd.mocks.ts'
@@ -93,9 +94,7 @@ describe('personal settings for token access', () => {
     ).toBeInTheDocument()
 
     expect(
-      view.getByText(
-        "Pick a name for the application, and we'll give you a unique token.",
-      ),
+      view.getByText("Pick a name for the application, and we'll give you a unique token."),
     ).toBeInTheDocument()
   })
 
@@ -106,10 +105,8 @@ describe('personal settings for token access', () => {
 
     const view = await visitView('/personal-setting/token-access')
 
-    await vi.waitFor(() => {
-      expect(view, 'correctly redirects to error page').toHaveCurrentUrl(
-        '/error-tab',
-      )
+    await waitFor(() => {
+      expect(view, 'correctly redirects to error page').toHaveCurrentUrl('/error-tab')
     })
   })
 
@@ -118,24 +115,15 @@ describe('personal settings for token access', () => {
 
     const view = await visitView('/personal-setting/token-access')
 
-    const tableLabel = 'Personal Access Tokens'
+    const tableLabel = 'Personal access tokens'
 
-    const tableHeaders = [
-      'Name',
-      'Permissions',
-      'Created',
-      'Expires',
-      'Last Used',
-      'Actions',
-    ]
+    const tableHeaders = ['Name', 'Permissions', 'Created', 'Expires', 'Last used', 'Actions']
 
     checkSimpleTableHeader(view, tableHeaders, tableLabel)
     checkSimpleTableContent(view, rowContents, tableLabel)
 
     const table = within(view.getByRole('table', { name: tableLabel }))
-    expect(
-      table.getAllByRole('button', { name: 'Delete this access token' }),
-    ).toHaveLength(2)
+    expect(table.getAllByRole('button', { name: 'Delete this access token' })).toHaveLength(2)
   })
 
   it('can delete an personal access token', async () => {
@@ -145,12 +133,9 @@ describe('personal settings for token access', () => {
 
     const table = within(view.getByRole('table'))
 
-    const deleteButton = within(table.getAllByRole('row')[1]).getByRole(
-      'button',
-      {
-        name: 'Delete this access token',
-      },
-    )
+    const deleteButton = within(table.getAllByRole('row')[1]).getByRole('button', {
+      name: 'Delete this access token',
+    })
 
     mockUserCurrentAccessTokenDeleteMutation({
       userCurrentAccessTokenDelete: {
@@ -162,11 +147,9 @@ describe('personal settings for token access', () => {
 
     await waitForNextTick()
 
-    expect(
-      await view.findByRole('dialog', { name: 'Delete Object' }),
-    ).toBeInTheDocument()
+    expect(await view.findByRole('dialog', { name: 'Delete object' })).toBeInTheDocument()
 
-    await view.events.click(view.getByRole('button', { name: 'Delete Object' }))
+    await view.events.click(view.getByRole('button', { name: 'Delete object' }))
 
     checkSimpleTableContent(view, [rowContents[1]])
   })
@@ -176,8 +159,7 @@ describe('personal settings for token access', () => {
 
     const view = await visitView('/personal-setting/token-access')
 
-    const accessTokenUpdateSubscription =
-      getUserCurrentAccessTokenUpdatesSubscriptionHandler()
+    const accessTokenUpdateSubscription = getUserCurrentAccessTokenUpdatesSubscriptionHandler()
 
     accessTokenUpdateSubscription.trigger({
       userCurrentAccessTokenUpdates: {
@@ -228,8 +210,7 @@ describe('personal settings for token access', () => {
                   {
                     value: 'ticket.agent',
                     label: 'Agent Tickets (%s)',
-                    description:
-                      'To access the agent tickets based on group access.',
+                    description: 'To access the agent tickets based on group access.',
                   },
                 ],
               },
@@ -243,13 +224,13 @@ describe('personal settings for token access', () => {
     const view = await visitView('/personal-setting/token-access')
 
     const newAccessTokenButton = view.getByRole('button', {
-      name: 'New Personal Access Token',
+      name: 'New personal access token',
     })
 
     await view.events.click(newAccessTokenButton)
 
     const flyout = await view.findByRole('complementary', {
-      name: 'New Personal Access Token',
+      name: 'New personal access token',
     })
     expect(flyout).toBeInTheDocument()
 
@@ -287,9 +268,7 @@ describe('personal settings for token access', () => {
 
     await view.events.click(view.getByRole('button', { name: 'Create' }))
 
-    expect(
-      await view.findByLabelText('Your Personal Access Token'),
-    ).toHaveValue('new-token-1234')
+    expect(await view.findByLabelText('Your personal access token')).toHaveValue('new-token-1234')
 
     await view.events.click(
       view.getByRole('button', {

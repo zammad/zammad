@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Queries
   class AutocompleteSearch::ObjectAttributeExternalDataSource < BaseQuery
@@ -9,8 +9,8 @@ module Gql::Queries
 
     type [Gql::Types::AutocompleteSearch::ExternalDataSourceEntryType], null: false
 
-    def self.authorize(_obj, ctx)
-      ExternalDataSourcePolicy.new(ctx.current_user, ctx[:current_arguments][:object])
+    def authorized?(input:)
+      ExternalDataSourcePolicy.new(context.current_user, input.object).fetch?
     end
 
     def resolve(input:)
@@ -23,7 +23,7 @@ module Gql::Queries
 
       raise "Could not find object attribute for #{input}." if !attribute
 
-      Service::ExternalDataSource::Search.new.execute(
+      Service::ExternalDataSource::Search.execute(
         attribute:      attribute,
         render_context: input.template_render_context.to_context_hash,
         term:           query,

@@ -1,5 +1,7 @@
 # coffeelint: disable=camel_case_classes
-class App.UiElement.richtext
+class App.UiElement.richtext extends Spine.Module
+  @extend App.RichtextBubbleMenu
+
   @render: (attributeConfig, params, form) ->
     attribute = $.extend(true, {}, attributeConfig)
 
@@ -41,7 +43,7 @@ class App.UiElement.richtext
         for file in attribute.attachments
           renderFile(file)
 
-      App.Event.bind('ui::ticket::addArticleAttachent', (data) ->
+      App.Event.bind('ui::ticket::addArticleAttachment', (data) ->
         form_id = item.closest('form').find('[name=form_id]').val()
 
         return if data.form_id isnt form_id
@@ -99,6 +101,10 @@ class App.UiElement.richtext
             item.find('input').val('')
             item.find('[contenteditable]').trigger('fileUploadStop', ['aborted'])
 
+          onFileErrorCallback: ->
+            item.find('input').val('')
+            item.find('[contenteditable]').trigger('fileUploadStop', ['aborted'])
+
           attachmentPlaceholder: item.find('.attachmentPlaceholder')
           attachmentUpload:      item.find('.attachmentUpload')
           progressBar:           item.find('.attachmentUpload-progressBar')
@@ -107,6 +113,8 @@ class App.UiElement.richtext
 
         uploader.render()
       , 100, undefined, 'form_upload')
+
+    @richtextBubbleMenuInit(item, false) if attribute.bubble_menu
 
     item
 

@@ -1,11 +1,8 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { clean, extendClasses } from '#shared/form/plugins/utils.ts'
 import type { Classes } from '#shared/form/plugins/utils.ts'
-import type {
-  FormThemeClasses,
-  FormThemeExtension,
-} from '#shared/types/form.ts'
+import type { FormThemeClasses, FormThemeExtension } from '#shared/types/form.ts'
 
 import { addAbsoluteFloatingLabel } from './addAbsoluteFloatingLabel.ts'
 import { addBlockFloatingLabel } from './addBlockFloatingLabel.ts'
@@ -16,7 +13,7 @@ export const addButtonVariants = (classes: Classes = {}): Classes => {
   return extendClasses(classes, {
     wrapper: 'relative',
     input:
-      'formkit-variant-primary:bg-blue formkit-variant-submit:text-black formkit-variant-submit:bg-yellow formkit-variant-submit:font-semibold formkit-variant-danger:bg-red-dark formkit-variant-danger:text-red-bright bg-transparent text-white',
+      'formkit-variant-primary:bg-blue formkit-variant-submit:text-black formkit-variant-submit:bg-yellow formkit-variant-submit:font-medium formkit-variant-danger:bg-red-dark formkit-variant-danger:text-red-bright bg-transparent text-white',
   })
 }
 
@@ -29,8 +26,7 @@ const getCoreClasses: FormThemeExtension = (classes: FormThemeClasses) => {
       message: 'text-red-bright pb-1',
       help: 'mt-0.5 px-2 pb-2',
       arrow: 'formkit-arrow formkit-disabled:opacity-30 flex items-center',
-      prefixIcon:
-        'absolute top-1/2 -translate-y-1/2 transform ltr:left-3 rtl:right-3',
+      prefixIcon: 'absolute top-1/2 -translate-y-1/2 transform ltr:left-3 rtl:right-3',
       suffixIcon:
         'absolute top-1/2 flex -translate-y-1/2 transform items-center justify-center fill-current text-white ltr:right-3 rtl:left-3',
     }),
@@ -60,6 +56,7 @@ const getCoreClasses: FormThemeExtension = (classes: FormThemeClasses) => {
     checkbox: extendClasses(classes.checkbox, {
       wrapper: 'w-full select-none ltr:pl-2 rtl:pr-2',
       inner: 'ltr:mr-2 rtl:ml-2',
+      label: 'formkit-required:after:invisible',
       input:
         'focus:border-blue focus:bg-blue-highlight checked:focus:color-blue checked:bg-blue checked:border-blue checked:focus:bg-blue checked:hover:bg-blue h-4 w-4 rounded-xs border-[1.5px] border-white bg-transparent',
     }),
@@ -69,7 +66,8 @@ const getCoreClasses: FormThemeExtension = (classes: FormThemeClasses) => {
     toggle: extendClasses(classes.toggle, {
       outer: 'relative px-2',
       wrapper: 'inline-flex h-14 w-full px-2',
-      label: 'flex h-full w-full cursor-pointer items-center text-base',
+      label:
+        'flex h-full w-full cursor-pointer items-center text-base formkit-required:after:invisible',
       inner: 'flex h-full items-center',
     }),
     tags: addBlockFloatingLabel(classes.tags),

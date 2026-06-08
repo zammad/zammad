@@ -1,18 +1,9 @@
-mutation ticketUpdateBulk(
-  $ticketIds: [ID!]!
-  $input: TicketUpdateInput!
-  $macroId: ID
-) {
-  ticketUpdateBulk(ticketIds: $ticketIds, input: $input, macroId: $macroId) {
-    success
-    errors {
-      failedTicket {
-        id
-        title
-        number
-      }
-      errorType
-      message
-    }
+mutation ticketUpdateBulk($selector: TicketBulkSelectorInput!, $perform: TicketBulkPerformInput!) {
+  ticketUpdateBulk(selector: $selector, perform: $perform) {
+    async
+    total
+    failedCount
+    inaccessibleTicketIds
+    invalidTicketIds
   }
 }

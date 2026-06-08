@@ -1,15 +1,6 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
-
-// eslint-disable-next-line sonarjs/cognitive-complexity
-export default function toHaveClasses(
-  this: any,
-  received: unknown,
-  classes: string[],
-) {
-  if (
-    !received ||
-    (!(received instanceof HTMLElement) && !(received instanceof SVGElement))
-  ) {
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
+export default function toHaveClasses(this: any, received: unknown, classes: string[]) {
+  if (!received || (!(received instanceof HTMLElement) && !(received instanceof SVGElement))) {
     return {
       message: () => 'received is not an HTMLElement or an SVGElement',
       pass: false,
@@ -38,9 +29,7 @@ export default function toHaveClasses(
     message: () =>
       `received element ${
         this.isNot ? 'has' : 'does not have'
-      } one of the CSS classes: ${classes.join(
-        ' ',
-      )}\nClass list: ${received.classList.toString()}`,
+      } one of the CSS classes: ${classes.join(' ')}\nClass list: ${received.classList.toString()}`,
     pass,
   }
 }

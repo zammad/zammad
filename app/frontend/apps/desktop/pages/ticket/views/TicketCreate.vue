@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { useTicketCreateView } from '#shared/entities/ticket/composables/useTicketCreateView.ts'
@@ -15,8 +15,7 @@ interface Props {
 
 defineOptions({
   beforeRouteEnter(to) {
-    const { ticketCreateEnabled, checkUniqueTicketCreateRoute } =
-      useTicketCreateView()
+    const { ticketCreateEnabled, checkUniqueTicketCreateRoute } = useTicketCreateView()
 
     if (!ticketCreateEnabled.value)
       return redirectErrorRoute({

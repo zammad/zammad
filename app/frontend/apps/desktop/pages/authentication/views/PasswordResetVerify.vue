@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { ref, onBeforeMount } from 'vue'
@@ -7,10 +7,7 @@ import { useRouter } from 'vue-router'
 import { NotificationTypes } from '#shared/components/CommonNotifications/types.ts'
 import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
 import Form from '#shared/components/Form/Form.vue'
-import type {
-  FormSchemaNode,
-  FormSubmitData,
-} from '#shared/components/Form/types.ts'
+import type { FormSchemaNode, FormSubmitData } from '#shared/components/Form/types.ts'
 import { useForm } from '#shared/components/Form/useForm.ts'
 import { EnumPublicLinksScreen } from '#shared/graphql/types.ts'
 import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
@@ -82,9 +79,7 @@ onBeforeMount(() => {
   if (!props.token) {
     loading.value = false
     canResetPassword.value = false
-    errorMessage.value = __(
-      'The token could not be verified. Please contact your administrator.',
-    )
+    errorMessage.value = __('The token could not be verified. Please contact your administrator.')
     return
   }
 
@@ -112,10 +107,9 @@ onBeforeMount(() => {
     })
 })
 
-const resetPasswordHandler = new MutationHandler(
-  useUserPasswordResetUpdateMutation(),
-  { errorShowNotification: false },
-)
+const resetPasswordHandler = new MutationHandler(useUserPasswordResetUpdateMutation(), {
+  errorShowNotification: false,
+})
 
 const updatePassword = async (form: FormSubmitData<FormValues>) => {
   await resetPasswordHandler.send({
@@ -149,13 +143,8 @@ const goToLogin = () => {
     />
 
     <template #boxActions>
-      <CommonButton
-        variant="secondary"
-        size="medium"
-        :disabled="isDisabled"
-        @click="goToLogin()"
-      >
-        {{ $t('Cancel & Go Back') }}
+      <CommonButton variant="secondary" size="medium" :disabled="isDisabled" @click="goToLogin()">
+        {{ $t('Cancel & go back') }}
       </CommonButton>
 
       <CommonButton

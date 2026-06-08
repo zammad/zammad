@@ -1,4 +1,5 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
+// eslint-disable expect-expect
 
 import { getNode } from '@formkit/core'
 import { waitFor } from '@testing-library/vue'
@@ -28,23 +29,23 @@ import {
 } from '#mobile/entities/ticket/__tests__/mocks/ticket-mocks.ts'
 
 const visitTicketCreate = async (path = '/tickets/create') => {
-  const mockObjectAttributes = mockGraphQLApi(
-    ObjectManagerFrontendAttributesDocument,
-  ).willBehave(({ object }) => {
-    if (object === 'Ticket') {
+  const mockObjectAttributes = mockGraphQLApi(ObjectManagerFrontendAttributesDocument).willBehave(
+    ({ object }) => {
+      if (object === 'Ticket') {
+        return {
+          data: {
+            objectManagerFrontendAttributes: ticketObjectAttributes(),
+          },
+        }
+      }
+
       return {
         data: {
-          objectManagerFrontendAttributes: ticketObjectAttributes(),
+          objectManagerFrontendAttributes: ticketArticleObjectAttributes(),
         },
       }
-    }
-
-    return {
-      data: {
-        objectManagerFrontendAttributes: ticketArticleObjectAttributes(),
-      },
-    }
-  })
+    },
+  )
 
   const mockFormUpdater = mockGraphQLApi(FormUpdaterDocument).willResolve({
     formUpdater: {
@@ -155,10 +156,7 @@ const nextStep = async (view: ExtendedRenderResult) => {
   await view.events.click(view.getByRole('button', { name: 'Continue' }))
 }
 
-const checkShownSteps = async (
-  view: ExtendedRenderResult,
-  steps: Array<string>,
-) => {
+const checkShownSteps = async (view: ExtendedRenderResult, steps: Array<string>) => {
   steps.forEach((step) => {
     expect(view.getByRole('button', { name: step })).toBeInTheDocument()
   })
@@ -166,9 +164,7 @@ const checkShownSteps = async (
 
 beforeAll(async () => {
   // So we don't need to wait until it loads inside test.
-  await import(
-    '#shared/components/Form/fields/FieldEditor/FieldEditorInput.vue'
-  )
+  await import('#shared/components/Form/fields/FieldEditor/FieldEditorInput.vue')
 })
 
 describe('Creating new ticket as agent', () => {
@@ -205,9 +201,7 @@ describe('Creating new ticket as agent', () => {
     await nextStep(view)
     await nextStep(view)
 
-    expect(
-      view.getByRole('status', { name: 'Invalid values in step 3' }),
-    ).toBeInTheDocument()
+    expect(view.getByRole('status', { name: 'Invalid values in step 3' })).toBeInTheDocument()
   })
 
   it.each([
@@ -292,7 +286,7 @@ describe('Creating new ticket as agent', () => {
     await waitUntil(() => mockFormUpdater.calls.resolve)
     await nextStep(view)
 
-    await view.events.click(view.getByLabelText('Send Email'))
+    await view.events.click(view.getByLabelText('Send email'))
     await nextStep(view)
 
     expect(view.getByLabelText('CC')).toBeInTheDocument()
@@ -324,9 +318,7 @@ describe('Creating new ticket as customer', () => {
 
     const { view } = await visitTicketCreate()
 
-    expect(view.getByRole('main')).toHaveTextContent(
-      'Creating new tickets via web is disabled.',
-    )
+    expect(view.getByRole('main')).toHaveTextContent('Creating new tickets via web is disabled.')
   })
 
   it('does not show the organization field without secondary organizations', async () => {

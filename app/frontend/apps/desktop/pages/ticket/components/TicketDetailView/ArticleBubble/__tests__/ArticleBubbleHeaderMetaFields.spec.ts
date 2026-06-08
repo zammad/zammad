@@ -1,12 +1,9 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { waitFor } from '@testing-library/vue'
 import { expect } from 'vitest'
 
-import {
-  type ExtendedRenderResult,
-  renderComponent,
-} from '#tests/support/components/index.ts'
+import { type ExtendedRenderResult, renderComponent } from '#tests/support/components/index.ts'
 
 import { type createDummyArticle } from '#shared/entities/ticket-article/__tests__/mocks/ticket-articles.ts'
 
@@ -25,10 +22,7 @@ const hasBaseInformation = (wrapper: ExtendedRenderResult) => {
   expect(wrapper.getByText(/nicole.braun@zammad.org/i)).toBeInTheDocument()
 }
 
-const hasAdditionalFields = (
-  wrapper: ExtendedRenderResult,
-  field: ArticleTypeName,
-) => {
+const hasAdditionalFields = (wrapper: ExtendedRenderResult, field: ArticleTypeName) => {
   if (field === 'email') {
     expect(wrapper.getByText('Subject')).toBeInTheDocument()
     expect(wrapper.getByText('Test subject')).toBeInTheDocument()
@@ -64,12 +58,15 @@ const iconAliasMap: Record<string, string> = iconAliasMapRaw
 describe('ArticleBubbleMetaFields', () => {
   it.each(articleTypeModules)(
     'displays meta field for channel $name',
-    ({ name, icon }) => {
+    ({ name, metaLabel, icon }) => {
       const wrapper = renderWrapper(name as ArticleTypeName, {
         articleData: {
           subject: 'Test subject',
           to: {
             raw: 'Test Agents',
+            parsed: [
+              { name: 'Test Agents', emailAddress: 'tet@agents.com', isSystemAddress: false },
+            ],
           },
         },
       })
@@ -77,10 +74,8 @@ describe('ArticleBubbleMetaFields', () => {
       hasBaseInformation(wrapper)
 
       expect(wrapper.getByText('Channel')).toBeInTheDocument()
-      expect(wrapper.getByText(name)).toBeInTheDocument()
-      expect(
-        wrapper.getByIconName(iconAliasMap[icon] || icon),
-      ).toBeInTheDocument()
+      expect(wrapper.getByText(metaLabel)).toBeInTheDocument()
+      expect(wrapper.getByIconName(iconAliasMap[icon] || icon)).toBeInTheDocument()
 
       hasAdditionalFields(wrapper, name as ArticleTypeName)
     },
@@ -116,10 +111,7 @@ describe('ArticleBubbleMetaFields', () => {
         'href',
         '/api/zammad.org',
       )
-      expect(wrapper.getByRole('link', { name: 'Vue' })).toHaveAttribute(
-        'href',
-        '/api/vuejs.org/',
-      )
+      expect(wrapper.getByRole('link', { name: 'Vue' })).toHaveAttribute('href', '/api/vuejs.org/')
     })
 
     it('displays detected language name if available', async () => {

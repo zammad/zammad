@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Types::Input
   class UserInputType < Gql::Types::BaseInputObject
@@ -34,8 +34,8 @@ module Gql::Types::Input
         .tap do |result|
           result[:group_ids_access_map] = result
             .delete(:group_ids)
-            &.each_with_object({}) do |elem, memo|
-              memo[elem[:group_internal_id]] = elem[:access_type]
+            &.to_h do |elem|
+              [elem[:group_internal_id], elem[:access_type]]
             end
         end
     end

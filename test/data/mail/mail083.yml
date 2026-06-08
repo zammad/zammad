@@ -4,10 +4,9 @@ from_email: martin083@example.de
 from_display_name: Martin Smith
 to: me@example.de
 subject: 'AW: OTRS / Anfrage OTRS Einführung/Präsentation [Ticket#11545]'
-body: |-
-  Enjoy!<div>
-  <br><div>-Martin<br><span class="js-signatureMarker"></span><br>--<br>Old programmers never die. They just branch to a new address.<br>
-  </div><br><div><img src="cid:485376C9-2486-4351-B932-E2010998F579@home" style="width:640px;height:425px;"></div></div>
+body: Enjoy!<div><br><div>-Martin<br><span class="js-signatureMarker"></span><br>--<br>Old
+  programmers never die. They just branch to a new address.<br></div><br><div><img
+  src="cid:485376C9-2486-4351-B932-E2010998F579@home" style="width:640px;height:425px;"></div></div>
 content_type: text/html
 attachments:
 - !ruby/hash:ActiveSupport::HashWithIndifferentAccess

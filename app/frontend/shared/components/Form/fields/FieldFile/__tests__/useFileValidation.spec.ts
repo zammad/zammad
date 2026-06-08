@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { faker } from '@faker-js/faker'
 import { createNode, type FormKitNode } from '@formkit/core'
@@ -51,11 +51,7 @@ describe('useFileValidation', () => {
   }
 
   // :TODO move this to testing helper function
-  const createFile = (
-    mimeType: string,
-    sizeInBytes: number,
-    fileEnding: string,
-  ) => {
+  const createFile = (mimeType: string, sizeInBytes: number, fileEnding: string) => {
     const file = new File([''], `${faker.word.noun()}.${fileEnding}`, {
       type: mimeType,
     })

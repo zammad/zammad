@@ -1,6 +1,6 @@
 # #{ticket.title}
-_<<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: Eszkalálódott ekkor: #{ticket.escalation_at}_
-A "#{ticket.customer.longname}"-tól származó jegy (#{ticket.title}) "#{ticket.escalation_at}" óta eszkalálódott!
+_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#{config.ticket_hook}#{ticket.number}>: eszkalálva ekkor: #{ticket.escalation_at}_
+„#{ticket.customer.longname}” jegye (#{ticket.title}) eszkalálva lett ekkortól: „#{ticket.escalation_at}”!
 
 <% if @objects[:article] %>
 #{article.body_as_text}

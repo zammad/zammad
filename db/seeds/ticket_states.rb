@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 Ticket::State.create_if_not_exists(
   id:             1,
@@ -23,6 +23,7 @@ Ticket::State.create_if_not_exists(
   name:              __('closed'),
   state_type_id:     Ticket::StateType.find_by(name: 'closed').id,
   ignore_escalation: true,
+  default_close:     true,
 )
 Ticket::State.create_if_not_exists(
   id:                5,

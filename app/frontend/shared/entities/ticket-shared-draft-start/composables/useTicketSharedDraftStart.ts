@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { computed, type Ref } from 'vue'
 
@@ -33,7 +33,7 @@ export const useTicketSharedDraftStart = (
   )
 
   const sharedDraftStartListResult = sharedDraftStartListQuery.result()
-  const loading = sharedDraftStartListQuery.loading()
+  const loading = sharedDraftStartListQuery.loadingWithoutCachedResult()
 
   const sharedDraftStartList = computed(
     () => sharedDraftStartListResult.value?.ticketSharedDraftStartList,
@@ -48,17 +48,13 @@ export const useTicketSharedDraftStart = (
       groupId: groupId.value,
     },
     updateQuery: (_, { subscriptionData }) => {
-      if (
-        !subscriptionData.data?.ticketSharedDraftStartUpdateByGroup
-          ?.sharedDraftStarts
-      ) {
+      if (!subscriptionData.data?.ticketSharedDraftStartUpdateByGroup?.sharedDraftStarts) {
         return null as unknown as TicketSharedDraftStartListQuery
       }
 
       return {
         ticketSharedDraftStartList:
-          subscriptionData.data.ticketSharedDraftStartUpdateByGroup
-            .sharedDraftStarts,
+          subscriptionData.data.ticketSharedDraftStartUpdateByGroup.sharedDraftStarts,
       }
     },
   }))

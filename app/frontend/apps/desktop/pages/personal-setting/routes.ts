@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { usePersonalSettingStore } from './stores/personalSetting.ts'
 import { personalSettingRoutes } from './views/PersonalSetting/plugins/index.ts'
@@ -12,7 +12,7 @@ const route: RouteRecordRaw[] = [
     component: () => import('./views/PersonalSetting.vue'),
     meta: {
       title: __('Profile'),
-      icon: 'person-gear',
+      icon: 'user-settings',
       requiresAuth: true,
       requiredPermission: ['*'],
       level: 2,

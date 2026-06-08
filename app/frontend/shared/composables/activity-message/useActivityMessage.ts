@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { computed, type Ref } from 'vue'
 
@@ -8,12 +8,8 @@ import log from '#shared/utils/log.ts'
 
 import { activityMessageBuilder } from './activityMessageBuilder/index.ts'
 
-export const useActivityMessage = (
-  activity: Readonly<Ref<OnlineNotification>>,
-) => {
-  const builder = computed(
-    () => activityMessageBuilder[activity.value.objectName],
-  )
+export const useActivityMessage = (activity: Readonly<Ref<OnlineNotification>>) => {
+  const builder = computed(() => activityMessageBuilder[activity.value.objectName])
   if (!builder.value) {
     log.error(`Object missing ${activity.value.objectName}.`)
   }
@@ -23,6 +19,8 @@ export const useActivityMessage = (
     activity.value.createdBy ? userDisplayName(activity.value.createdBy) : '',
     activity.value.metaObject,
   )
+
+  const highlightedMessage = message?.replace(/\|(.+)\|/gm, '<b>$1</b>')
 
   const link = activity.value.metaObject
     ? builder.value?.path(activity.value.metaObject)
@@ -34,5 +32,5 @@ export const useActivityMessage = (
     )
   }
 
-  return { link, builder, message }
+  return { link, builder, message, highlightedMessage }
 }

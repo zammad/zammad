@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { getByTestId } from '@testing-library/vue'
 
@@ -17,7 +17,9 @@ describe('home page', () => {
 
   it('renders ticket overviews based on localStorage', async () => {
     mockPermissions(['ticket.agent', 'ticket.customer'])
+
     const { saveOverviews } = getTicketOverviewStorage()
+
     saveOverviews(['3', '2'])
 
     const view = await visitView('/')
@@ -35,15 +37,12 @@ describe('home page', () => {
 
     const overviewLinks = await view.findAllByTestId('section-menu-link')
     const lastOverview = overviewLinks.at(-1)
+
     expect(lastOverview).toHaveTextContent('Overview 2')
 
-    if (lastOverview) {
-      const overviewCount = getByTestId(
-        lastOverview,
-        'section-menu-information',
-      )
-      expect(overviewCount).toHaveTextContent('2')
-    }
+    const overviewCount = getByTestId(lastOverview!, 'section-menu-information')
+
+    expect(overviewCount).toHaveTextContent('2')
   })
 
   it('do not show favorite ticket overview section on home without permission', async () => {

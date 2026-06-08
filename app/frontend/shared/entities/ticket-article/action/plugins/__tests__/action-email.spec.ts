@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { setupView } from '#tests/support/mock-user.ts'
 
@@ -116,40 +116,28 @@ describe('email permissions', () => {
       const { ticket, article } = setupAction()
       article.to = {
         raw: '',
-        parsed: [
-          { emailAddress: 'zammad1@example.com', isSystemAddress: false },
-        ],
+        parsed: [{ emailAddress: 'zammad1@example.com', isSystemAddress: false }],
       }
       article.cc = {
         raw: '',
-        parsed: [
-          { emailAddress: 'zammad2@example.com', isSystemAddress: false },
-        ],
+        parsed: [{ emailAddress: 'zammad2@example.com', isSystemAddress: false }],
       }
       const actions = createTestArticleActions(ticket, article)
-      expect(
-        actions.find((action) => action.name === 'email-reply-all'),
-      ).toBeDefined()
+      expect(actions.find((action) => action.name === 'email-reply-all')).toBeDefined()
     })
 
     it('reply-all action is not available for agent with email article and multiple non-unique emails', () => {
       const { ticket, article } = setupAction()
       article.to = {
         raw: '',
-        parsed: [
-          { emailAddress: 'zammad1@example.com', isSystemAddress: false },
-        ],
+        parsed: [{ emailAddress: 'zammad1@example.com', isSystemAddress: false }],
       }
       article.cc = {
         raw: '',
-        parsed: [
-          { emailAddress: 'zammad1@example.com', isSystemAddress: false },
-        ],
+        parsed: [{ emailAddress: 'zammad1@example.com', isSystemAddress: false }],
       }
       const actions = createTestArticleActions(ticket, article)
-      expect(
-        actions.find((action) => action.name === 'email-reply-all'),
-      ).toBeUndefined()
+      expect(actions.find((action) => action.name === 'email-reply-all')).toBeUndefined()
     })
 
     it('reply-all action is available for agent with email article from customer and multiple unique emails', () => {
@@ -160,20 +148,14 @@ describe('email permissions', () => {
       }
       article.to = {
         raw: '',
-        parsed: [
-          { emailAddress: 'zammad1@example.com', isSystemAddress: false },
-        ],
+        parsed: [{ emailAddress: 'zammad1@example.com', isSystemAddress: false }],
       }
       article.from = {
         raw: '',
-        parsed: [
-          { emailAddress: 'zammad2@example.com', isSystemAddress: false },
-        ],
+        parsed: [{ emailAddress: 'zammad2@example.com', isSystemAddress: false }],
       }
       const actions = createTestArticleActions(ticket, article)
-      expect(
-        actions.find((action) => action.name === 'email-reply-all'),
-      ).toBeDefined()
+      expect(actions.find((action) => action.name === 'email-reply-all')).toBeDefined()
     })
 
     it('reply-all action is not available for agent with email article from agent and multiple unique emails', () => {
@@ -184,22 +166,16 @@ describe('email permissions', () => {
       }
       article.to = {
         raw: 'zammad1@example.com',
-        parsed: [
-          { emailAddress: 'zammad1@example.com', isSystemAddress: false },
-        ],
+        parsed: [{ emailAddress: 'zammad1@example.com', isSystemAddress: false }],
       }
       article.from = {
         raw: 'zammad2@example.com',
-        parsed: [
-          { emailAddress: 'zammad2@example.com', isSystemAddress: false },
-        ],
+        parsed: [{ emailAddress: 'zammad2@example.com', isSystemAddress: false }],
       }
       article.cc = null
       article.replyTo = null
       const actions = createTestArticleActions(ticket, article)
-      expect(
-        actions.find((action) => action.name === 'email-reply-all'),
-      ).toBeUndefined()
+      expect(actions.find((action) => action.name === 'email-reply-all')).toBeUndefined()
     })
 
     it('reply-all action is not available for agent with multiple non-unique system addresses', () => {
@@ -210,20 +186,14 @@ describe('email permissions', () => {
       }
       article.to = {
         raw: '',
-        parsed: [
-          { emailAddress: 'zammad1@example.com', isSystemAddress: false },
-        ],
+        parsed: [{ emailAddress: 'zammad1@example.com', isSystemAddress: false }],
       }
       article.cc = {
         raw: '',
-        parsed: [
-          { emailAddress: 'zammad2@example.com', isSystemAddress: true },
-        ],
+        parsed: [{ emailAddress: 'zammad2@example.com', isSystemAddress: true }],
       }
       const actions = createTestArticleActions(ticket, article)
-      expect(
-        actions.find((action) => action.name === 'email-reply-all'),
-      ).toBeUndefined()
+      expect(actions.find((action) => action.name === 'email-reply-all')).toBeUndefined()
     })
 
     it('reply-all action is available for agent with multiple unique addresses inside to', () => {
@@ -240,9 +210,7 @@ describe('email permissions', () => {
         ],
       }
       const actions = createTestArticleActions(ticket, article)
-      expect(
-        actions.find((action) => action.name === 'email-reply-all'),
-      ).toBeDefined()
+      expect(actions.find((action) => action.name === 'email-reply-all')).toBeDefined()
     })
 
     it('reply-all action is not available if article was created via web', () => {
@@ -266,9 +234,7 @@ describe('email permissions', () => {
       }
       article.cc = null
       const actions = createTestArticleActions(ticket, article)
-      expect(
-        actions.find((action) => action.name === 'email-reply-all'),
-      ).toBeUndefined()
+      expect(actions.find((action) => action.name === 'email-reply-all')).toBeUndefined()
     })
   })
 
@@ -284,16 +250,13 @@ describe('email permissions', () => {
     expect(actions.find((action) => action.name === type)).toBeUndefined()
   })
 
-  it.each(types)(
-    `%s action is not available for agent without change permissions`,
-    (type) => {
-      setupView('agent')
-      const ticket = createTicket({ policy: { update: false } })
-      const article = createTicketArticle()
-      const actions = createTestArticleActions(ticket, article)
-      expect(actions.find((action) => action.name === type)).toBeUndefined()
-    },
-  )
+  it.each(types)(`%s action is not available for agent without change permissions`, (type) => {
+    setupView('agent')
+    const ticket = createTicket({ policy: { update: false } })
+    const article = createTicketArticle()
+    const actions = createTestArticleActions(ticket, article)
+    expect(actions.find((action) => action.name === type)).toBeUndefined()
+  })
 
   it.each(types)(
     `%s action is not available if there is no email address in the ticket group`,
@@ -349,9 +312,7 @@ describe('email permissions', () => {
         const article = createEmailTicketArticle()
         const actions = createTestArticleActions(ticket, article, 'desktop')
 
-        expect(actions).toEqual(
-          expect.arrayContaining([expect.objectContaining({ name: type })]),
-        )
+        expect(actions).toEqual(expect.arrayContaining([expect.objectContaining({ name: type })]))
       })
 
       it('not available for agent on desktop if article is not email', () => {

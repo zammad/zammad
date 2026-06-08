@@ -1,7 +1,7 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Types::Input::Ticket
-  class UpdateMetaInputType < BaseInputType
+  class UpdateMetaInputType < Gql::Types::BaseInputObject
     description 'Represents ticket update meta information to be used in ticket update.'
 
     argument :skip_validators, [Gql::Types::Enum::UserErrorExceptionType], required: false, description: 'The ticket update validators to skip'

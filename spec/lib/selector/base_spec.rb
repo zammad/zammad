@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
 
@@ -782,6 +782,68 @@ RSpec.describe Selector::Base, searchindex: true do
     end
   end
 
+  describe 'Text input operators', db_strategy: :reset do
+    let(:field_name) { SecureRandom.hex(8) }
+    let(:ticket)     { create(:ticket, title: SecureRandom.uuid, group: Group.first, owner: agent_owner, customer: default_customer, field_name => 'foobar') }
+
+    before do
+      create(:object_manager_attribute_text, object_name: 'Ticket', name: field_name)
+      ObjectManager::Attribute.migration_execute
+      ticket
+      searchindex_model_reload([Ticket])
+    end
+
+    describe 'when matches' do
+      it 'does match the ticket', :aggregate_failures do
+        condition = {
+          operator:   'AND',
+          conditions: [
+            {
+              name:     'ticket.title',
+              operator: 'is',
+              value:    ticket.title,
+            },
+            {
+              name:     "ticket.#{field_name}",
+              operator: 'matches',
+              value:    'foo*',
+            },
+          ]
+        }
+
+        count, = Ticket.selectors(condition, { current_user: agent })
+        expect(count).to eq(1)
+
+        result = SearchIndexBackend.selectors('Ticket', condition, { current_user: agent })
+        expect(result[:count]).to eq(1)
+      end
+
+      it 'does not match the ticket', :aggregate_failures do
+        condition = {
+          operator:   'AND',
+          conditions: [
+            {
+              name:     'ticket.title',
+              operator: 'is',
+              value:    ticket.title,
+            },
+            {
+              name:     "ticket.#{field_name}",
+              operator: 'matches',
+              value:    'bar*',
+            },
+          ]
+        }
+
+        count, = Ticket.selectors(condition, { current_user: agent })
+        expect(count).to eq(0)
+
+        result = SearchIndexBackend.selectors('Ticket', condition, { current_user: agent })
+        expect(result[:count]).to eq(0)
+      end
+    end
+  end
+
   describe 'Tags' do
     let(:ta) { create(:'tag/item', name: 'a') }
     let(:tb) { create(:'tag/item', name: 'b') }
@@ -1482,6 +1544,253 @@ RSpec.describe Selector::Base, searchindex: true do
         result = SearchIndexBackend.selectors('Ticket', condition, { current_user: agent })
         expect(result[:count]).to eq(0)
       end
+    end
+
+    describe 'when in range' do
+      it 'does match the ticket', :aggregate_failures do
+        condition = {
+          operator:   'AND',
+          conditions: [
+            {
+              name:     'ticket.title',
+              operator: 'is',
+              value:    ticket.title,
+            },
+            {
+              name:     "ticket.#{field_name}",
+              operator: 'in range',
+              value:    [42, 42],
+            },
+          ]
+        }
+
+        count, = Ticket.selectors(condition, { current_user: agent })
+        expect(count).to eq(1)
+
+        result = SearchIndexBackend.selectors('Ticket', condition, { current_user: agent })
+        expect(result[:count]).to eq(1)
+      end
+
+      it 'does not match the ticket', :aggregate_failures do
+        condition = {
+          operator:   'AND',
+          conditions: [
+            {
+              name:     'ticket.title',
+              operator: 'is',
+              value:    ticket.title,
+            },
+            {
+              name:     "ticket.#{field_name}",
+              operator: 'in range',
+              value:    ['', '41'],
+            },
+          ]
+        }
+
+        count, = Ticket.selectors(condition, { current_user: agent })
+        expect(count).to eq(0)
+
+        result = SearchIndexBackend.selectors('Ticket', condition, { current_user: agent })
+        expect(result[:count]).to eq(0)
+      end
+    end
+  end
+
+  describe 'Report Profile with selector "starts with one of" on text objects results in "unknown operator" #5198' do
+    before do
+      ticket_1.update(title: "1111 #{ticket_1.title}")
+      ticket_2.update(title: "1111 #{ticket_2.title}")
+      ticket_3.update(title: "1111 #{ticket_3.title}")
+      searchindex_model_reload([Ticket])
+    end
+
+    it 'does match', :aggregate_failures do
+      condition = {
+        operator:   'AND',
+        conditions: [
+          {
+            name:     'ticket.title',
+            operator: 'starts with one of',
+            value:    ['111'],
+          },
+        ]
+      }
+
+      count, = Ticket.selectors(condition, { current_user: agent })
+      expect(count).to eq(3)
+
+      result = SearchIndexBackend.selectors('Ticket', condition, { current_user: agent })
+      expect(result[:count]).to eq(3)
+    end
+  end
+
+  # https://github.com/zammad/zammad/issues/5623
+  describe 'selectors relying on .keyword suffix fails with long articles', :aggregate_failures do
+    let(:term)        { 'ežiukas' }
+    let(:short_text) { "#{Faker::Lorem.characters(number: 30)} #{term}" }
+    let(:long_text)  { "#{term} #{Faker::Lorem.characters(number: 300)}" }
+
+    context 'when item is Ticket' do
+      let(:article_short) { create(:ticket_article, ticket: ticket_1, body: short_text) }
+      let(:article_long)  { create(:ticket_article, ticket: ticket_2, body: long_text) }
+
+      before do
+        article_short && article_long
+        searchindex_model_reload([Ticket])
+      end
+
+      it 'article body does match' do
+        condition = {
+          operator:   'AND',
+          conditions: [
+            {
+              name:     'article.body',
+              operator: 'contains',
+              value:    term,
+            },
+          ]
+        }
+
+        count, = Ticket.selectors(condition, { current_user: agent })
+        expect(count).to eq(2)
+
+        result = SearchIndexBackend.selectors('Ticket', condition, { current_user: agent })
+        expect(result[:count]).to eq(2)
+      end
+    end
+
+    context 'when item is Organization' do
+      let(:organization_short) { create(:organization, note: short_text) }
+      let(:organization_long)  { create(:organization, note: long_text) }
+
+      before do
+        organization_short && organization_long
+        searchindex_model_reload([Organization])
+      end
+
+      it 'organization note does match' do
+        condition = {
+          operator:   'AND',
+          conditions: [
+            {
+              name:     'organization.note',
+              operator: 'contains',
+              value:    term,
+            },
+          ]
+        }
+
+        count, = Organization.selectors(condition, { current_user: agent })
+        expect(count).to eq(2)
+
+        result = SearchIndexBackend.selectors('Organization', condition, { current_user: agent })
+        expect(result[:count]).to eq(2)
+      end
+    end
+
+    context 'when item is KB Answer' do
+      let(:answer_short) { create(:knowledge_base_answer_translation_content, body: short_text).translation.answer }
+      let(:answer_long) { create(:knowledge_base_answer_translation_content, body: long_text).translation.answer }
+
+      before do
+        answer_short && answer_long
+        searchindex_model_reload([KnowledgeBase::Answer::Translation])
+      end
+
+      it 'answer content does match' do
+        condition = {
+          operator:   'AND',
+          conditions: [
+            {
+              name:     'content.body',
+              operator: 'contains',
+              value:    term,
+            },
+          ]
+        }
+
+        count, = KnowledgeBase::Answer::Translation.selectors(condition, { current_user: agent })
+        expect(count).to eq(2)
+
+        result = SearchIndexBackend.selectors('KnowledgeBase::Answer::Translation', condition, { current_user: agent })
+        expect(result[:count]).to eq(2)
+      end
+    end
+  end
+
+  # https://github.com/zammad/zammad/issues/5686
+  describe 'text blob selectors fail with complex partial phrases', :aggregate_failures do
+    let(:ticket)    { create(:ticket, title: 'This is a test ticket') }
+    let(:article)   { create(:ticket_article, ticket: ticket, body: 'phrase: 1337') }
+    let(:condition) do
+      {
+        operator:   'AND',
+        conditions: [
+          {
+            name:     'article.body',
+            operator: 'contains',
+            value:    term,
+          },
+        ]
+      }
+    end
+
+    before do
+      article
+      searchindex_model_reload([Ticket])
+    end
+
+    context 'when term is a full phrase' do
+      let(:term) { 'phrase: 1337' }
+
+      it 'does match' do
+        count, = Ticket.selectors(condition)
+        expect(count).to eq(1)
+
+        result = SearchIndexBackend.selectors('Ticket', condition)
+        expect(result[:count]).to eq(1)
+      end
+    end
+
+    context 'when term is a partial phrase' do
+      let(:term) { 'phrase: 13' }
+
+      it 'does match' do
+        count, = Ticket.selectors(condition)
+        expect(count).to eq(1)
+
+        result = SearchIndexBackend.selectors('Ticket', condition)
+        expect(result[:count]).to eq(1)
+      end
+    end
+  end
+
+  describe 'Wildcard keyword search is case sensitive #6125', :aggregate_failures do
+    let(:ticket) { create(:ticket, title: 'This is a Test Ticket') }
+
+    before do
+      ticket
+      searchindex_model_reload([Ticket])
+    end
+
+    it 'matches in case-insensitive manner' do
+      condition = {
+        operator:   'AND',
+        conditions: [
+          {
+            name:     'ticket.title',
+            operator: 'contains',
+            value:    'test',
+          },
+        ]
+      }
+
+      count, = Ticket.selectors(condition)
+      expect(count).to eq(1)
+
+      result = SearchIndexBackend.selectors('Ticket', condition)
+      expect(result[:count]).to eq(1)
     end
   end
 end

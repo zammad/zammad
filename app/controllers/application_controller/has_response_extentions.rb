@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module ApplicationController::HasResponseExtentions
   extend ActiveSupport::Concern
@@ -19,5 +19,9 @@ module ApplicationController::HasResponseExtentions
 
   def response_only_total_count?
     ActiveModel::Type::Boolean.new.cast params[:only_total_count]
+  end
+
+  def response_with_total_count?
+    ActiveModel::Type::Boolean.new.cast params[:with_total_count]
   end
 end

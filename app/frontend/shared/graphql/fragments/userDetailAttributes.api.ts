@@ -20,6 +20,8 @@ export const UserDetailAttributesFragmentDoc = gql`
   mobile
   fax
   note
+  source
+  verified
   active
   objectAttributeValues {
     ...objectAttributeValues
@@ -35,7 +37,7 @@ export const UserDetailAttributesFragmentDoc = gql`
       closed
     }
   }
-  secondaryOrganizations(first: $secondaryOrganizationsCount) {
+  secondaryOrganizations(first: $secondaryOrganizationsCount, after: $after) {
     edges {
       node {
         id
@@ -44,12 +46,10 @@ export const UserDetailAttributesFragmentDoc = gql`
         name
       }
     }
+    pageInfo {
+      endCursor
+    }
     totalCount
-  }
-  hasSecondaryOrganizations
-  ticketsCount {
-    open
-    closed
   }
 }
     ${ObjectAttributeValuesFragmentDoc}`;

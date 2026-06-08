@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { provide, ref } from 'vue'
@@ -33,11 +33,7 @@ provide<SystemSetup>(SYSTEM_SETUP_SYMBOL, {
 </script>
 
 <template>
-  <LayoutPublicPage
-    :box-size="boxSize"
-    :hide-footer="hideFooter"
-    :title="title"
-  >
+  <LayoutPublicPage :box-size="boxSize" :hide-footer="hideFooter" :title="title">
     <RouterView />
   </LayoutPublicPage>
 </template>

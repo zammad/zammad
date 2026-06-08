@@ -381,3 +381,54 @@ QUnit.test('supports organization object', (assert) => {
 
   assert.notOk(el.find('.js-switch input').length, 'expert mode switch is missing')
 })
+
+QUnit.test('has changed operator does not block value from showing up (#5661)', (assert) => {
+  var { testCount, testName } = testSetup([{ name: 'has_changed_show_value', value: false }])
+  var testFormId = `form${testCount}`
+  $('#forms').append(`<hr><h1>${testName} #${testCount}</h1><form id="${testFormId}"></form>`)
+  var el = $(`#${testFormId}`)
+  new App.ControllerForm({
+    el,
+    model: {
+      configure_attributes: [
+        { name: 'condition',  display: 'Conditions', tag: 'object_selector', hasChanged: true },
+      ]
+    },
+    autofocus: true
+  })
+
+  el.find('.js-filterElement:first-child .js-operator select').val('has changed').trigger('change')
+  assert.ok(el.find('.js-filterElement:first-child .js-value select').is(':hidden'), 'value picker visible when coming from has changed operator')
+
+  var params = App.ControllerForm.params(el)
+
+  var test_params = {
+    condition: {
+      'ticket.state_id': {
+        operator: 'has changed',
+        value: []
+      },
+    },
+  }
+  assert.deepEqual(params, test_params, 'params structure')
+
+  el.find('.js-filterElement:first-child .js-attributeSelector select').val('article.sender_id').trigger('change')
+
+  var test_params = {
+    condition: {
+      'article.sender_id': {
+        operator: 'is',
+        value: []
+      },
+    },
+  }
+
+  var params = App.ControllerForm.params(el)
+  assert.deepEqual(params, test_params, 'params structure')
+
+  assert.equal(el.find('.js-filterElement:first-child .js-attributeSelector select option:selected').text(), 'Sender', 'article sender attribute selected')
+
+  assert.ok(el.find('.js-filterElement:first-child .js-value select').is(':visible'), 'value picker visible when coming from has changed operator')
+
+  assert.ok(!el.find('.js-filterElement:first-child .js-operator select').text().includes('has changed'), 'non-ticket item does not have has changed operator')
+})

@@ -1,22 +1,18 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import type { EntityStaticObjectAttributes } from '#shared/entities/object-attributes/types/store.ts'
-import { EnumObjectManagerObjects } from '#shared/graphql/types.ts'
+import type {
+  EntityPolicyBasedObjectAttributeScreenMapper,
+  EntityStaticObjectAttributes,
+} from '#shared/entities/object-attributes/types/store.ts'
+import { EnumObjectManagerObjects, type PolicyTicket } from '#shared/graphql/types.ts'
 
 export const staticObjectAttributes: EntityStaticObjectAttributes = {
   name: EnumObjectManagerObjects.Ticket,
   attributes: [
     {
-      name: 'number',
-      display: '#',
-      dataType: 'input',
-      isStatic: true,
-      isInternal: true,
-    },
-    {
       name: 'time_unit',
-      display: __('Accounted Time'),
-      dataType: 'time_unit',
+      display: __('Accounted time'),
+      dataType: 'integer', // :TODO in the desktop app it is float
       isStatic: true,
       isInternal: true,
     },
@@ -29,21 +25,21 @@ export const staticObjectAttributes: EntityStaticObjectAttributes = {
     },
     {
       name: 'first_response_escalation_at',
-      display: __('Escalation at (First Response Time)'),
+      display: __('Escalation at (First response time)'),
       dataType: 'datetime',
       isStatic: true,
       isInternal: true,
     },
     {
       name: 'update_escalation_at',
-      display: __('Escalation at (Update Time)'),
+      display: __('Escalation at (Update time)'),
       dataType: 'datetime',
       isStatic: true,
       isInternal: true,
     },
     {
       name: 'close_escalation_at',
-      display: __('Escalation at (Close Time)'),
+      display: __('Escalation at (Close time)'),
       dataType: 'datetime',
       isStatic: true,
       isInternal: true,
@@ -135,3 +131,18 @@ export const staticObjectAttributes: EntityStaticObjectAttributes = {
     },
   ],
 }
+
+export const policyBasedObjectAttributeScreenMapper: EntityPolicyBasedObjectAttributeScreenMapper<PolicyTicket> =
+  {
+    name: EnumObjectManagerObjects.Ticket,
+    mappings: {
+      edit: (policy: PolicyTicket) => {
+        // edit_customer screen is used by Agent-Customers in tickets they have customer access to.
+        // Regular customers still use the edit screen.
+        // It is not possible to detect Agent-Customer or regular customer here.
+        // This function returns edit_customer for anybody who has no agent access to the given ticket.
+        // Then resolveScreenName() at useObjectAttributeFormFields.ts will figure out the final screen name.
+        return policy.agentReadAccess ? 'edit' : 'edit_customer'
+      },
+    },
+  }

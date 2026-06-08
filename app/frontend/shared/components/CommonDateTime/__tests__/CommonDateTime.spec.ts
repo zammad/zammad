@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { nextTick } from 'vue'
 
@@ -30,10 +30,7 @@ describe('CommonDateTime.vue', () => {
   })
 
   it('renders with prefix', async () => {
-    const view = renderDateTime(
-      { dateTime, type: 'relative' },
-      { prefix: 'prefix-slot' },
-    )
+    const view = renderDateTime({ dateTime, type: 'relative' }, { prefix: 'prefix-slot' })
     expect(view.container).toHaveTextContent('prefix-slot 1 day ago')
   })
 

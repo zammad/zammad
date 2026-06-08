@@ -60,7 +60,7 @@ class Signup extends App.ControllerFullPage
 
     @params.signup = true
     @params.role_ids = []
-    @log 'notice', 'updateAttributes', @params
+    @log 'debug', 'updateAttributes', @params
     user = new App.User
     user.load(@params)
 

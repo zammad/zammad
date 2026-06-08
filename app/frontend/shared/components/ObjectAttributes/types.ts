@@ -1,4 +1,6 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
+
+import type { OperationMutationFunction } from '#shared/types/server/apollo/handler.ts'
 
 import type { Component } from 'vue'
 
@@ -17,9 +19,12 @@ export interface ObjectAttributesConfig {
   }
 }
 
+export type InlineEditable = Record<string, OperationMutationFunction>
+
 export interface ObjectAttributeProps<T, V> {
   attribute: T
   value: V
   mode: OutputMode
   config?: ObjectAttributesConfig
+  inlineEditable?: InlineEditable
 }

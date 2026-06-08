@@ -1,4 +1,4 @@
-// Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import type { NotificationClassMap } from '#shared/components/CommonNotifications/types.ts'
 
@@ -13,9 +13,7 @@ let notificationClasses: NotificationClassMap = {
   warn: 'common-notification-warn',
 }
 
-export const initializeNotificationClasses = (
-  classes: NotificationClassMap,
-) => {
+export const initializeNotificationClasses = (classes: NotificationClassMap) => {
   notificationClasses = classes
 }
 

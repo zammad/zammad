@@ -1,3 +1,12 @@
+<% if @aiAgentIsRunning: %>
+  <div  class="aiAgent-outer js-aiAgentAvatar" aria-label="<%- @T('AI agent') %>">
+    <div class="aiAgent-inner">
+      <%- @Icon('ai-agent') %>
+    </div>
+    <div class="avatar-status"><%- @Icon('pen') %></div>
+  </div>
+<% end %>
+
 <div class="attributeBar-avatars horizontal js-avatars hidden-xs"></div>
 
 <div class="attributeBar-draft-spacer hidden-xs"></div>
@@ -68,7 +77,7 @@
         <% if !@macroDisabled: %>
           <li class="dropdown-header" role="menuitem"><%- @T('Macros') %></li>
           <% for macro in @macros: %>
-            <li class="js-dropdownActionMacro" role="menuitem" data-id="<%= macro.id %>"><%- @T(macro.displayName()) %>
+            <li class="js-dropdownActionMacro" role="menuitem" data-id="<%= macro.id %>"><%- @Ti(macro.displayName()) %>
           <% end %>
         <% end %>
     </ul>

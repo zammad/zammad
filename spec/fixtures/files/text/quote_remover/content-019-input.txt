@@ -1,0 +1,10 @@
+Please review and let me know.
+
+Begin forwarded message:
+
+From: Alice <alice@example.com>
+Date: December 2, 2024 at 2:30:00 PM EST
+To: Bob <bob@example.com>
+Subject: Re: Question
+
+The answer is yes.

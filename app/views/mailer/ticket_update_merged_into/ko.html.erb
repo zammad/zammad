@@ -1,0 +1,11 @@
+티켓 (#{ticket.title})이 다른 티켓에 병합되었습니다
+
+<div>안녕하세요 #{recipient.firstname}님,</div>
+<br>
+<div>
+티켓 (#{ticket.title})이 "<b>#{current_user.longname}</b>"에 의해 다른 티켓에 병합되었습니다.
+</div>
+<br>
+<div>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">#{config.product_name}에서 보기</a>
+</div>

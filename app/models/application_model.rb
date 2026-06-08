@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class ApplicationModel < ActiveRecord::Base
   include ActiveModel::Validations
@@ -9,6 +9,7 @@ class ApplicationModel < ActiveRecord::Base
   include ApplicationModel::CanLookupSearchIndexAttributes
   include ApplicationModel::ChecksAttributeValuesAndLength
   include ApplicationModel::CanCleanupParam
+  include ApplicationModel::CanDestroyDependentAssociations
   include ApplicationModel::HasRecentViews
   include ApplicationModel::ChecksUserColumnsFillup
   include ApplicationModel::CanCreatesAndUpdates

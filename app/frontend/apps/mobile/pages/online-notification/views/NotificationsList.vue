@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/ -->
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
@@ -17,7 +17,7 @@ import NotificationItem from '../components/NotificationItem.vue'
 
 const notificationsHandler = new QueryHandler(useOnlineNotificationsQuery())
 
-const loading = notificationsHandler.loading()
+const loading = notificationsHandler.loadingWithoutCachedResult()
 const notificationsResult = notificationsHandler.result()
 let mutationTriggered = false
 
@@ -28,10 +28,7 @@ useHeader({
 })
 
 const notifications = computed(
-  () =>
-    edgesToArray(
-      notificationsResult.value?.onlineNotifications,
-    ) as OnlineNotification[],
+  () => edgesToArray(notificationsResult.value?.onlineNotifications) as OnlineNotification[],
 )
 
 const { seenNotification, markAllRead } = useOnlineNotificationActions()
@@ -62,8 +59,7 @@ const notificationRemoved = () => {
 }
 
 // TODO: currently this triggered in some situations a real subscription on the server: https://github.com/apollographql/apollo-client/issues/10117
-const { unseenCount, notificationsCountSubscription } =
-  useOnlineNotificationCount()
+const { unseenCount, notificationsCountSubscription } = useOnlineNotificationCount()
 
 notificationsCountSubscription.watchOnResult(() => {
   notificationsHandler.refetch()
@@ -71,13 +67,11 @@ notificationsCountSubscription.watchOnResult(() => {
   mutationTriggered = false
 })
 
-const haveUnread = computed(() =>
-  unseenCount.value ? unseenCount.value > 0 : false,
-)
+const haveUnread = computed(() => (unseenCount.value ? unseenCount.value > 0 : false))
 </script>
 
 <template>
-  <CommonLoader :loading="!notifications.length && loading">
+  <CommonLoader :loading="loading">
     <div class="ltr:pr-4 ltr:pl-3 rtl:pr-3 rtl:pl-4">
       <NotificationItem
         v-for="notification of notifications"
@@ -95,7 +89,7 @@ const haveUnread = computed(() =>
         Maybe disabled state that it can not be clicked twice or hidding the action completley. -->
       <div
         v-if="haveUnread"
-        class="text-blue flex flex-1 cursor-pointer justify-center px-4 py-3 text-base"
+        class="flex flex-1 cursor-pointer justify-center px-4 py-3 text-base text-blue"
         :class="{ 'text-red': markingAsSeen }"
         role="button"
         tabindex="0"

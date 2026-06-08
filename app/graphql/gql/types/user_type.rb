@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Types
   class UserType < Gql::Types::BaseObject
@@ -43,6 +43,7 @@ module Gql::Types
       field :fax, String
       field :mobile, String
       field :vip, Boolean
+      field :source, String
       field :verified, Boolean
       field :active, Boolean
       field :out_of_office, Boolean
@@ -55,6 +56,7 @@ module Gql::Types
 
       field :permissions, Gql::Types::User::PermissionType, method: :itself
       field :tickets_count, Gql::Types::TicketCountType, method: :itself
+      field :has_beta_ui_switch_available, Boolean, description: 'Whether the user has access to the BETA UI switch'
     end
 
     # These fields are changeable object attributes, so manage them only via the ObjectAttributeInterface
@@ -79,6 +81,16 @@ module Gql::Types
 
     def updated_by
       ::User.find_by(id: @object.updated_by_id)
+    end
+
+    def has_beta_ui_switch_available
+      role_ids = Setting.get('ui_desktop_beta_switch_role_ids')
+
+      return false if !role_ids.empty? && role_ids.none? do |role_id|
+        @object.role_ids.include? role_id.to_i
+      end
+
+      @object.permissions? 'user_preferences.beta_ui_switch'
     end
   end
 end
