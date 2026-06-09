@@ -29,7 +29,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Mon, 27 Oct 2025 10:06:40 GMT
+      - Tue, 09 Jun 2026 14:38:45 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -51,22 +51,22 @@ http_interactions:
       Vary:
       - Accept
       Etag:
-      - W/"aacf8c267979e5bab523ffd6a686b4d2"
+      - W/"e544834cd4ddb660ba2168c7a793cbaa"
       Cache-Control:
       - max-age=0, private, must-revalidate
-      X-Request-Id:
-      - 4b57eea5-1124-4941-afbe-2330ae86c6b0
-      X-Runtime:
-      - '4.263285'
-      Strict-Transport-Security:
-      - max-age=63072000
-      - max-age=63072000; includeSubDomains
       Content-Security-Policy:
-      - default-src 'self'; script-src 'self'; img-src 'self'; style-src 'self' 'unsafe-inline';base-uri
-        'self';form-action 'self'; frame-src 'none';
+      - 'default-src ''self'' https:; font-src ''self'' https: data:; img-src ''self''
+        https: data:; object-src ''none''; script-src ''self'' https: ''nonce-'';
+        style-src ''self'' https: ''nonce-'''
+      X-Request-Id:
+      - 84e9d768-d0a9-437a-bfeb-2a8f7ac17da8
+      X-Runtime:
+      - '0.753533'
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains
     body:
       encoding: ASCII-8BIT
-      string: '[{"model":"gemma3:27b","created_at":"2025-10-27T10:06:40.874823126Z","response":"{\"connected\":
-        \"true\"}","done":true,"done_reason":"stop","total_duration":4021782850,"load_duration":3605894117,"prompt_eval_count":52,"prompt_eval_duration":56667049,"eval_count":7,"eval_duration":139583709,"uuid":"4834c40a-bd15-46d1-8500-bf1b1eaa2679"}]'
-  recorded_at: Mon, 27 Oct 2025 10:06:40 GMT
-recorded_with: VCR 6.3.1
+      string: '[{"model":"mistral-small3.2:24b","created_at":"2026-06-09 14:38:45
+        UTC","response":"{\"connected\": \"true\"}","done":true,"uuid":"3eb89098-703c-49d7-9fc7-b1fdea18d9c6"}]'
+  recorded_at: Tue, 09 Jun 2026 14:38:45 GMT
+recorded_with: VCR 6.4.0

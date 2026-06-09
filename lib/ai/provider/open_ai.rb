@@ -19,59 +19,6 @@ class AI::Provider::OpenAI < AI::Provider
     'text-embedding-3-small' => 1536
   }.freeze
 
-  def chat(prompt_system:, prompt_user:, prompt_image:)
-    request_body = {
-      model:           model_for(prompt_image:),
-      messages:        messages_for(prompt_system:, prompt_user:, prompt_image:),
-      response_format: {
-        type: options[:json_response] ? 'json_object' : 'text'
-      },
-      stream:          false,
-      store:           false,
-    }
-
-    # Only include temperature if the model supports it
-    request_body[:temperature] = options[:temperature] if model_supports_temperature?
-
-    response = UserAgent.post(
-      "#{OPENAI_API_BASE_URL}/chat/completions",
-      request_body,
-      {
-        **REQUEST_TIMEOUT_OPTIONS,
-        verify_ssl:   true,
-        bearer_token: config[:token],
-        json:         true,
-        log:          {
-          facility: 'AI::Provider',
-        },
-      },
-    )
-
-    data = validate_response!(response)
-    extract_response_metadata(data)
-
-    data['choices'].first['message']['content']
-  end
-
-  def embeddings(input:)
-    response = UserAgent.post(
-      "#{OPENAI_API_BASE_URL}/embeddings",
-      {
-        model: options[:embedding_model] || DEFAULT_OPTIONS[:embedding_model],
-        input: input,
-      },
-      {
-        **REQUEST_TIMEOUT_OPTIONS,
-        verify_ssl:   true,
-        bearer_token: config[:token],
-        json:         true,
-      },
-    )
-
-    data = validate_response!(response)
-    data['data'].first['embedding']
-  end
-
   def self.ping!(config)
     response = UserAgent.get(
       "#{OPENAI_API_BASE_URL}/models",
@@ -130,6 +77,59 @@ class AI::Provider::OpenAI < AI::Provider
   end
 
   private
+
+  def chat(prompt_system:, prompt_user:, prompt_image:)
+    request_body = {
+      model:           model_for(prompt_image:),
+      messages:        messages_for(prompt_system:, prompt_user:, prompt_image:),
+      response_format: {
+        type: options[:json_response] ? 'json_object' : 'text'
+      },
+      stream:          false,
+      store:           false,
+    }
+
+    # Only include temperature if the model supports it
+    request_body[:temperature] = options[:temperature] if model_supports_temperature?
+
+    response = UserAgent.post(
+      "#{OPENAI_API_BASE_URL}/chat/completions",
+      request_body,
+      {
+        **REQUEST_TIMEOUT_OPTIONS,
+        verify_ssl:   true,
+        bearer_token: config[:token],
+        json:         true,
+        log:          {
+          facility: 'AI::Provider',
+        },
+      },
+    )
+
+    data = validate_response!(response)
+    extract_response_metadata(data)
+
+    data['choices'].first['message']['content']
+  end
+
+  def embeddings(input:)
+    response = UserAgent.post(
+      "#{OPENAI_API_BASE_URL}/embeddings",
+      {
+        model: options[:embedding_model] || DEFAULT_OPTIONS[:embedding_model],
+        input: input,
+      },
+      {
+        **REQUEST_TIMEOUT_OPTIONS,
+        verify_ssl:   true,
+        bearer_token: config[:token],
+        json:         true,
+      },
+    )
+
+    data = validate_response!(response)
+    data['data'].pluck('embedding')
+  end
 
   def specific_metadata
     {

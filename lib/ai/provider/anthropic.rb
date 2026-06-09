@@ -12,6 +12,36 @@ class AI::Provider::Anthropic < AI::Provider
     temperature: 0.0,
   }.freeze
 
+  def self.ping!(config)
+    response = UserAgent.get(
+      "#{ANTHROPIC_API_BASE_URL}/models",
+      {},
+      {
+        **REQUEST_TIMEOUT_OPTIONS,
+        verify_ssl: true,
+        headers:    headers(config),
+        json:       true,
+        log:        {
+          facility:          'AI::Provider',
+          log_only_on_error: true,
+        },
+      },
+    )
+
+    validate_response!(response)
+
+    nil
+  end
+
+  def self.headers(config)
+    {
+      'Anthropic-Version' => '2023-06-01',
+      'X-Api-Key'         => config[:token],
+    }
+  end
+
+  private
+
   def chat(prompt_system:, prompt_user:, prompt_image:)
 
     # https://platform.claude.com/docs/en/build-with-claude/vision#base64-encoded-image-example
@@ -72,36 +102,6 @@ class AI::Provider::Anthropic < AI::Provider
   def embeddings(input:)
     raise NotImplementedError, 'not implemented yet due to missing API'
   end
-
-  def self.ping!(config)
-    response = UserAgent.get(
-      "#{ANTHROPIC_API_BASE_URL}/models",
-      {},
-      {
-        **REQUEST_TIMEOUT_OPTIONS,
-        verify_ssl: true,
-        headers:    headers(config),
-        json:       true,
-        log:        {
-          facility:          'AI::Provider',
-          log_only_on_error: true,
-        },
-      },
-    )
-
-    validate_response!(response)
-
-    nil
-  end
-
-  def self.headers(config)
-    {
-      'Anthropic-Version' => '2023-06-01',
-      'X-Api-Key'         => config[:token],
-    }
-  end
-
-  private
 
   def specific_metadata
     {

@@ -5,7 +5,7 @@ http_interactions:
     uri: https://api.openai.com/v1/chat/completions
     body:
       encoding: UTF-8
-      string: '{"model":"nonexisting-model","messages":[{"role":"system","content":""},{"role":"user","content":"This
+      string: '{"model":"nonexisting-model","messages":[{"role":"user","content":"This
         is a connection test. Return in unprettified JSON ''{ \"connected\": \"true\"
         }'' if you got the message. Respond in plain JSON format only and do not wrap
         it in code block markers."}],"response_format":{"type":"json_object"},"stream":false,"store":false,"temperature":0.1}'
@@ -28,37 +28,36 @@ http_interactions:
       message: Not Found
     headers:
       Date:
-      - Mon, 27 Oct 2025 10:05:23 GMT
+      - Tue, 09 Jun 2026 14:38:42 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Vary:
-      - Origin
-      X-Request-Id:
-      - req_647957b72b194d9b955341f435cf90d3
-      X-Envoy-Upstream-Service-Time:
-      - '418'
-      X-Openai-Proxy-Wasm:
-      - v0.1
+      Cf-Ray:
+      - a090e1a94a63bc0d-VNO
       Cf-Cache-Status:
       - DYNAMIC
-      Set-Cookie:
-      - __cf_bm=NT1teLNMw.4tzfj41mUNtHf7_lRHBQ2FgAGKSmnagkM-1761559523-1.0.1.1-LZbQeDcfY6SpmxkGmgSt3U5BO4N7n1xJUUswMrBG61GroD6A3FmtxX7GzeVPgdyZLmvoR2bKfi.1TUD1zvT5hPYzPgGuMihO1r_z_eL93h0;
-        path=/; expires=Mon, 27-Oct-25 10:35:23 GMT; domain=.api.openai.com; HttpOnly;
-        Secure; SameSite=None
-      - _cfuvid=.2nBPE4765indWse.g.cGzvpPI6d07F84ypzihe4Oa0-1761559523433-0.0.1.1-604800000;
-        path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
-      X-Content-Type-Options:
-      - nosniff
       Server:
       - cloudflare
-      Cf-Ray:
-      - 99515fe7dcdbbb43-FRA
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Vary:
+      - Origin
+      Access-Control-Expose-Headers:
+      - CF-Ray
+      - CF-Ray
+      X-Content-Type-Options:
+      - nosniff
+      X-Openai-Proxy-Wasm:
+      - v0.1
+      X-Request-Id:
+      - req_8a6366747f4644e89810e779bccc724e
+      Set-Cookie:
+      - __cf_bm=XibZ89khjpzpxN0TROYYFMtv2xfk9vp7RCZ4MiLDO.4-1781015922.128614-1.0.1.1-tyGVPbngkAnryWWA8otTOAQmSKok0Wbr2Q.lzsaKwgXKUo.4WtE_BRQna27YDqBK9fIBUYcz8kBCr3Q1TNzP6_OJ62ICmdldekl6TkkhKFfuEDd7jOJYdnD4RLuG_Ywc;
+        HttpOnly; SameSite=None; Secure; Path=/; Domain=api.openai.com; Expires=Tue,
+        09 Jun 2026 15:08:42 GMT
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
@@ -72,5 +71,5 @@ http_interactions:
                 "code": "model_not_found"
             }
         }
-  recorded_at: Mon, 27 Oct 2025 10:05:23 GMT
-recorded_with: VCR 6.3.1
+  recorded_at: Tue, 09 Jun 2026 14:38:42 GMT
+recorded_with: VCR 6.4.0

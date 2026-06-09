@@ -14,9 +14,9 @@ RSpec.describe Service::AI::VectorDB::SimilaritySearch do
     allow_any_instance_of(AI::VectorDB).to receive(:knn).and_return('knn response')
 
     allow_any_instance_of(AI::Provider::OpenAI)
-      .to receive(:embeddings)
+      .to receive(:embed)
       .with(input: 'text')
-      .and_return('test embedding')
+      .and_return([0.1, 0.2, 0.3])
 
     expect(service_result).to eq('knn response')
   end

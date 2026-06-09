@@ -1,0 +1,90 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: "<AZURE_URL_COMPLETIONS>"
+    body:
+      encoding: UTF-8
+      string: '{"messages":[{"role":"user","content":"This is a connection test. Return
+        in unprettified JSON ''{ \"connected\": \"true\" }'' if you got the message.
+        Respond in plain JSON format only and do not wrap it in code block markers."}],"response_format":{"type":"json_object"},"stream":false,"store":false,"temperature":null}'
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Zammad User Agent
+      Host:
+      - AZURE.HOST
+      Content-Type:
+      - application/json; charset=utf-8
+      Authorization:
+      - Bearer <AZURE_TOKEN>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '1306'
+      Content-Type:
+      - application/json
+      Azureai-Fe-Is-Streaming:
+      - 'False'
+      Azureml-Model-Session:
+      - d20260523061138-d7502eca
+      Skip-Error-Remapping:
+      - 'true'
+      X-Accel-Buffering:
+      - 'no'
+      X-Ms-Is-Spilled-Over:
+      - 'false'
+      X-Ms-Rai-Invoked:
+      - 'true'
+      X-Ms-Served-Model:
+      - gpt-4o-2024-11-20
+      X-Ratelimit-Abusepenalty-Active:
+      - 'False'
+      X-Ratelimit-Key:
+      - gpt-4o
+      X-Ratelimit-Limit-Requests:
+      - '300'
+      X-Ratelimit-Limit-Tokens:
+      - '50000'
+      X-Ratelimit-Remaining-Requests:
+      - '299'
+      X-Ratelimit-Remaining-Tokens:
+      - '49949'
+      X-Ratelimit-Renewalperiod-Requests:
+      - '10'
+      X-Ratelimit-Renewalperiod-Tokens:
+      - '60'
+      X-Ratelimit-Reset-Requests:
+      - '0'
+      X-Ratelimit-Reset-Tokens:
+      - '0'
+      X-Request-Id:
+      - baf3f601-27a8-405d-9c5a-bc3c523a01a9
+      Apim-Request-Id:
+      - cf137032-a3ba-47cf-8c59-9f4b29cca0f9
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Ms-Client-Request-Id:
+      - Not-Set
+      X-Ms-Deployment-Name:
+      - gpt-4o
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Region:
+      - East US 2
+      Date:
+      - Tue, 09 Jun 2026 14:37:23 GMT
+    body:
+      encoding: UTF-8
+      string: '{"choices":[{"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}},"finish_reason":"stop","index":0,"logprobs":null,"message":{"annotations":[],"content":"{
+        \"connected\": \"true\" }","refusal":null,"role":"assistant"}}],"created":1781015843,"id":"chatcmpl-DorrvsJx33X61L2YN8QxrSdK09at6","model":"gpt-4o-2024-11-20","object":"chat.completion","prompt_filter_results":[{"prompt_index":0,"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}}}],"service_tier":"default","system_fingerprint":"fp_49e2bef596","usage":{"completion_tokens":9,"completion_tokens_details":{"accepted_prediction_tokens":0,"audio_tokens":0,"reasoning_tokens":0,"rejected_prediction_tokens":0},"latency_checkpoint":{"engine_tbt_ms":10,"engine_ttft_ms":148,"engine_ttlt_ms":242,"pre_inference_ms":160,"service_tbt_ms":4,"service_ttft_ms":661,"service_ttlt_ms":680,"total_duration_ms":533,"user_visible_ttft_ms":501},"prompt_tokens":51,"prompt_tokens_details":{"audio_tokens":0,"cached_tokens":0},"total_tokens":60}}
+
+        '
+  recorded_at: Tue, 09 Jun 2026 14:37:24 GMT
+recorded_with: VCR 6.4.0

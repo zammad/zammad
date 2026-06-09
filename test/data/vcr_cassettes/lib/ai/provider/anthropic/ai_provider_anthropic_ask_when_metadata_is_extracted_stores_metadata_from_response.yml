@@ -30,7 +30,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Mar 2026 19:50:28 GMT
+      - Tue, 09 Jun 2026 14:37:21 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -38,52 +38,55 @@ http_interactions:
       Connection:
       - keep-alive
       Anthropic-Ratelimit-Input-Tokens-Limit:
-      - '450000'
+      - '800000'
       Anthropic-Ratelimit-Input-Tokens-Remaining:
-      - '450000'
+      - '800000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-03-10T19:50:27Z'
+      - '2026-06-09T14:37:20Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
-      - '90000'
+      - '160000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
-      - '90000'
+      - '160000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-03-10T19:50:28Z'
+      - '2026-06-09T14:37:21Z'
       Anthropic-Ratelimit-Requests-Limit:
-      - '1000'
+      - '2000'
       Anthropic-Ratelimit-Requests-Remaining:
-      - '999'
+      - '1999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-03-10T19:50:26Z'
+      - '2026-06-09T14:37:15Z'
       Anthropic-Ratelimit-Tokens-Limit:
-      - '540000'
+      - '960000'
       Anthropic-Ratelimit-Tokens-Remaining:
-      - '540000'
+      - '960000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-03-10T19:50:27Z'
+      - '2026-06-09T14:37:20Z'
       Request-Id:
-      - req_011CYuyqXs285boppZ57s6BF
+      - req_011CbsrZiZbSXQfTnxhPgcR6
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Anthropic-Organization-Id:
       - 43c97a25-c30d-4a1b-bb31-5a928256fe18
+      Traceresponse:
+      - 00-50ea705d3f85b5ac9db72a98c8ab2b60-03f24d0cdaa535f7-01
       Server:
       - cloudflare
-      X-Envoy-Upstream-Service-Time:
-      - '2240'
       Vary:
       - Accept-Encoding
+      Set-Cookie:
+      - _cfuvid=PsjLHffPQlaIZPyvDupImzYe1DIOXKZ7ZJ61wNQcL1A-1781015835.226979-1.0.1.1-lEc4AYbOTH7Zi.Ci4skNZY0sn6Bcf6Ka4W4OacS1uc8;
+        HttpOnly; SameSite=None; Secure; Path=/; Domain=api.anthropic.com
       X-Robots-Tag:
       - none
-      Content-Security-Policy:
-      - default-src 'none'; frame-ancestors 'none'
       Cf-Cache-Status:
       - DYNAMIC
+      Content-Security-Policy:
+      - default-src 'none'; frame-ancestors 'none'
       Cf-Ray:
-      - 9da4d92c68d8d2ce-FRA
+      - a090df8a2d7dc9e2-VNO
     body:
       encoding: ASCII-8BIT
-      string: '{"model":"claude-sonnet-4-6","id":"msg_01FLzEMUmjHntuiePL56ExZ4","type":"message","role":"assistant","content":[{"type":"text","text":"{
-        \"connected\": \"true\" }"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":52,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":11,"service_tier":"standard","inference_geo":"global"}}'
-  recorded_at: Tue, 10 Mar 2026 19:50:28 GMT
+      string: '{"model":"claude-sonnet-4-6","id":"msg_01M3xbbVeZqCbNgunGYasrK9","type":"message","role":"assistant","content":[{"type":"text","text":"{
+        \"connected\": \"true\" }"}],"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":52,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":11,"service_tier":"standard","inference_geo":"global"}}'
+  recorded_at: Tue, 09 Jun 2026 14:37:21 GMT
 recorded_with: VCR 6.4.0

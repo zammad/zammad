@@ -24,6 +24,10 @@ class AI::Provider
       options[:model] = @config[:model]
     end
 
+    if @config[:embedding_model] && !options[:embedding_model]
+      options[:embedding_model] = @config[:embedding_model]
+    end
+
     @options = self.class::DEFAULT_OPTIONS.merge(options.compact.deep_symbolize_keys)
 
     @response_metadata = {}
@@ -77,8 +81,20 @@ class AI::Provider
     end
   end
 
+  # Fetches the embedding for a single input. For multiple inputs, use bulk_embed.
+  #
+  # @param input [String] the input to embed
+  # @return [Array<Numeric>] the embedding vector for the input
   def embed(input:)
-    embeddings(input:)
+    embeddings(input:).first
+  end
+
+  # Fetches embeddings for multiple inputs.
+  #
+  # @param input [Array<String>] the inputs to embed
+  # @return [Array<Array<Numeric>>] an array of embedding vectors corresponding to the inputs
+  def bulk_embed(input:)
+    embeddings(input: Array(input))
   end
 
   def metadata
