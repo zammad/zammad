@@ -20,7 +20,7 @@ zypper install -y elasticsearch
 rpm --import https://go.packager.io/srv/rpm/zammad/zammad/gpg-key.asc
 
 curl -o /etc/zypp/repos.d/zammad.repo \
-  https://go.packager.io/srv/zammad/zammad/${CI_COMMIT_REF_NAME}/installer/sles/${DISTRIBUTION_VERSION}.repo
+  "https://go.packager.io/srv/zammad/zammad/${CI_COMMIT_REF_NAME}/installer/sles/${DISTRIBUTION_VERSION%%.*}.repo"
 
 zypper update -y
 zypper install -y --download-only zammad
