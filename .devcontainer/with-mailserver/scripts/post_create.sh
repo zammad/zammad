@@ -39,3 +39,7 @@ bundle exec rails zammad:searchindex:rebuild
 echo "== Precompile frontend assets =="
 
 bundle exec rails assets:precompile
+
+echo "== Prepare test database =="
+
+RAILS_ENV='test' bundle exec rails db:drop db:create zammad:ci:test:prepare || exit 1
