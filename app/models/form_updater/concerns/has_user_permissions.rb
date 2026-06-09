@@ -31,7 +31,7 @@ module FormUpdater::Concerns::HasUserPermissions
         {
           value:       elem.id,
           label:       elem.name,
-          description: elem.note,
+          description: elem.note&.html2text(true, link_style: :plain),
         }
       end
   end

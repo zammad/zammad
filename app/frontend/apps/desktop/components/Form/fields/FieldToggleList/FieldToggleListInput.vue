@@ -51,7 +51,7 @@ const { delegateFocus } = useDelegateFocus(
 <template>
   <output
     :id="context.id"
-    class="block rounded-lg bg-blue-200 focus:outline focus:outline-1 focus:outline-offset-1 focus:outline-blue-800 hover:focus:outline-blue-800 dark:bg-gray-700"
+    class="block rounded-lg bg-blue-200 focus:outline-1 focus:outline-offset-1 focus:outline-blue-800 hover:focus:outline-blue-800 dark:bg-gray-700"
     role="list"
     :class="context.classes.input"
     :name="context.node.name"
