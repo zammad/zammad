@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-05-06 22:02+0000\n"
+"PO-Revision-Date: 2026-05-27 22:02+0000\n"
 "Last-Translator: Balázs Úr <balazs@urbalazs.hu>\n"
 "Language-Team: Hungarian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/hu/>\n"
@@ -496,7 +496,7 @@ msgstr "%s nappal ezelőtt"
 
 #: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:60
 msgid "%s deselected."
-msgstr "%s kijelölése megszüntetve."
+msgstr "%s kiválasztása megszüntetve."
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:695
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:260
@@ -623,7 +623,7 @@ msgstr "%s kötelező!"
 #: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:53
 msgid "%s selected. Use arrow keys to choose drop position, then press Space."
 msgstr ""
-"%s kijelölve. Használja a nyílbillentyűket az ejtés helyének "
+"%s kiválasztva. Használja a nyílbillentyűket az ejtés helyének "
 "kiválasztásához, majd nyomja meg a Szóköz billentyűt."
 
 #: app/assets/javascripts/app/models/user.coffee:212
@@ -4774,9 +4774,9 @@ msgstr ""
 "\n"
 "Példák a kódrészletekre:\n"
 "\n"
-"* Üdvözöljük Mrs. #{ticket.customer.lastname},\n"
-"* Üdvözöljük Mr. #{ticket.customer.lastname},\n"
-"* Üdvözöljük #{ticket.customer.firstname},\n"
+"* Tisztelt #{ticket.customer.lastname} Asszony!\n"
+"* Tisztelt #{ticket.customer.lastname} Úr!\n"
+"* Kedves #{ticket.customer.firstname}!\n"
 "* A nevem #{user.firstname},\n"
 "\n"
 "Természetesen használhat többsoros kódrészleteket is.\n"
@@ -4787,7 +4787,7 @@ msgstr ""
 "ticket.customer.lastname)\n"
 "* ticket.owner (például ticket.owner.firstname, ticket.owner.lastname)\n"
 "* ticket.organization (például ticket.organization.name)\n"
-"* user (például user.keresztnév, user.email)\n"
+"* user (például user.firstname, user.email)\n"
 "\n"
 "Egy listából a helykitöltők kiválasztásához csak írja be a következőt: „::”."
 
@@ -6702,12 +6702,12 @@ msgstr "Leírás (magyarázó szövegként jelenik meg a képernyőolvasók szá
 #: app/frontend/apps/desktop/components/CommonTable/CommonAdvancedTable.vue:471
 #: app/frontend/apps/desktop/components/CommonTable/CommonSimpleTable.vue:76
 msgid "Deselect all entries"
-msgstr "Összes bejegyzések kijelölésének megszüntetése"
+msgstr "Összes bejegyzés kiválasztásának megszüntetése"
 
 #: app/frontend/apps/desktop/components/CommonTable/CellContent/CellCheckbox.vue:36
 #: app/frontend/apps/desktop/components/CommonTable/CommonSimpleTable.vue:132
 msgid "Deselect this entry"
-msgstr "A bejegyzés kijelölésének megszüntetése"
+msgstr "A bejegyzés kiválasztásának megszüntetése"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:17
 #: app/assets/javascripts/app/views/channel/form.jst.eco:25
@@ -8211,7 +8211,7 @@ msgstr "Eszkalációs idők"
 
 #: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:130
 msgid "Escape pressed. No item selected."
-msgstr "Az Escape lenyomva. Nincs kijelölve elem."
+msgstr "Az Escape lenyomva. Nincs kiválasztva elem."
 
 #: app/frontend/apps/desktop/components/CommonCalendarPreviewFlyout/CommonCalendarPreviewFlyout.vue:51
 msgid "Event ending"
@@ -15383,7 +15383,7 @@ msgstr "Kérés módszere"
 
 #: db/seeds/object_manager_attributes.rb:136
 msgid "Request for Change"
-msgstr "Változáskérés"
+msgstr "Változáskérelem"
 
 #: app/assets/javascripts/app/views/admin_password_auth/request.jst.eco:4
 #: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue:59
@@ -16734,7 +16734,7 @@ msgstr "Alapértelmezés beállítása az utókövetésekhez"
 #: app/assets/javascripts/app/controllers/ticket_priority.coffee:26
 #: app/assets/javascripts/app/controllers/ticket_state.coffee:30
 msgid "Set default for new tickets"
-msgstr "Alapértelmezés beállítás az új jegyekhez"
+msgstr "Alapértelmezés beállítása az új jegyekhez"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:65
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:81
@@ -21529,7 +21529,7 @@ msgstr "URL (OCR)"
 
 #: app/controllers/first_steps_controller.rb:206 db/seeds/overviews.rb:32
 msgid "Unassigned & Open Tickets"
-msgstr "Nem hozzárendelt és nyitott jegyek"
+msgstr "Hozzárendelés nélküli és nyitott jegyek"
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:23
 #: app/assets/javascripts/app/views/google/list.jst.eco:16
@@ -21537,8 +21537,8 @@ msgstr "Nem hozzárendelt és nyitott jegyek"
 #: app/assets/javascripts/app/views/microsoft_graph/list.jst.eco:17
 msgid "Unassigned email addresses, assign them to a channel or delete them."
 msgstr ""
-"Nem hozzárendelt e-mail-címek, rendelje hozzá azokat egy csatornához, vagy "
-"törölje azokat."
+"Hozzárendelés nélküli e-mail-címek, rendelje hozzá azokat egy csatornához, "
+"vagy törölje azokat."
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/show_row.jst.eco:26
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:59
@@ -21607,7 +21607,7 @@ msgstr "Olvasatlan értesítések száma"
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:260
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:315
 msgid "Unselect option"
-msgstr "Lehetőség kijelölésének megszüntetése"
+msgstr "Lehetőség kiválasztásának megszüntetése"
 
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee:744
 msgid "Unset default"

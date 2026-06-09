@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-04-14 22:02+0000\n"
+"PO-Revision-Date: 2026-06-02 22:02+0000\n"
 "Last-Translator: Murat Duman <mduman@metu.edu.tr>\n"
 "Language-Team: Turkish <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/tr/>\n"
@@ -20379,7 +20379,7 @@ msgstr ""
 
 #: app/models/ai/agent/type/ticket_title_rewriter.rb:6
 msgid "Ticket Title Rewriter"
-msgstr "Destek Talebi Yeniden Yazıcısı"
+msgstr "Destek Talebi Başlık Yeniden Yazıcısı"
 
 #: db/seeds/settings.rb:2897
 msgid "Ticket Trigger Loop Protection Articles Total"
