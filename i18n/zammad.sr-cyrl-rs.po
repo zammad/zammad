@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-05-18 09:02+0000\n"
+"PO-Revision-Date: 2026-06-08 09:02+0000\n"
 "Last-Translator: Dusan Vuckovic <dv@zammad.com>\n"
 "Language-Team: Serbian (Cyrillic script) <https://translations.zammad.org/"
 "projects/zammad/zammad-development/sr_Cyrl/>\n"
@@ -374,9 +374,9 @@ msgstr "%s (врста)"
 msgid "%s (option)"
 msgstr "%s (опција)"
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:282
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:556
-#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:257
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:321
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:565
+#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:261
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:353
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:145
 #: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue:97
@@ -509,8 +509,8 @@ msgstr ""
 msgid "%s ended switch to |%s|!"
 msgstr "Завршен прелазак од стране %s на |%s|!"
 
-#: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:189
-#: app/frontend/apps/desktop/pages/search/composables/useSearchTitle.ts:11
+#: app/frontend/apps/desktop/components/Search/composables/useSearchTitle.ts:10
+#: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:199
 msgid "%s filter(s)"
 msgstr "%s филтер(а)"
 
@@ -618,11 +618,11 @@ msgstr ""
 msgid "%s required!"
 msgstr "%s је обавезно!"
 
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:381
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:392
 msgid "%s result(s) selected"
 msgstr "%s означен(их) унос(а)"
 
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:381
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:392
 msgid "%s result(s) selected, selection limit reached"
 msgstr "%s означен(их) унос(а), достигнуто ограничење"
 
@@ -935,11 +935,11 @@ msgstr ""
 "Уколико имате клијенте са различитим радним временом, можете додати више "
 "календара. Тикети су повезани са календарима путем **SLA**."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:44
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:45
 msgid "A color scheme that uses dark-colored elements on a light background."
 msgstr "Изглед који користи елементе тамне боје на светлој позадини."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:39
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:40
 msgid "A color scheme that uses light-colored elements on a dark background."
 msgstr "Изглед који користи елементе светле боје на тамној позадини."
 
@@ -1078,7 +1078,7 @@ msgstr "Модел AI провајдера није постављен"
 msgid "AI Service Name"
 msgstr "Назив AI сервиса"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket_summary.coffee:110
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket_summary.coffee:121
 msgid "AI Summary"
 msgstr "AI сажети опис"
 
@@ -1357,6 +1357,10 @@ msgstr "Обрачунато време"
 msgid "Accounted time"
 msgstr "Обрачунато време"
 
+#: app/frontend/apps/desktop/components/Search/plugins/ticket.ts:47
+msgid "Accounted time - %s"
+msgstr "Обрачунато време - %s"
+
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketAccountedTime.vue:79
 msgid "Accounted time unit"
 msgstr "Јединица обрачунатог времена"
@@ -1410,6 +1414,10 @@ msgstr "Дефиниција радње"
 msgid "Action execution"
 msgstr "Извршавање радње"
 
+#: app/frontend/apps/desktop/components/CommonActionMenu/CommonActionMenu.vue:129
+msgid "Action menu button"
+msgstr "Дугме менија радњи"
+
 #: app/frontend/apps/desktop/entities/two-factor-configuration/plugins/authenticator-app.ts:12
 msgid "Action menu button for authenticator app"
 msgstr "Дугме менија радње апликације за аутентификацију"
@@ -1424,7 +1432,7 @@ msgstr "Дугме менија радње безбедносних кључев
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco:15
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:16
 #: app/frontend/apps/desktop/components/CommonTable/CommonSimpleTable.vue:100
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:371
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:382
 msgid "Actions"
 msgstr "Радње"
 
@@ -1474,8 +1482,8 @@ msgstr ""
 #: app/assets/javascripts/app/views/object_manager/attribute/multi_tree_select.jst.eco:8
 #: app/assets/javascripts/app/views/object_manager/attribute/tree_select.jst.eco:8
 #: app/assets/javascripts/app/views/profile/password.jst.eco:29
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue:69
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:209
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue:70
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:217
 #: db/seeds/object_manager_attributes.rb:1705
 msgid "Active"
 msgstr "Активно"
@@ -1626,7 +1634,7 @@ msgstr "Напиши поруку"
 msgid "Add agreement text before submit."
 msgstr "Додај текст споразума пре слања."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:294
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:299
 msgid "Add alarm to pending reminder and escalated tickets"
 msgstr "Додај аларм за ескалиране и тикете на чекању"
 
@@ -1647,7 +1655,7 @@ msgstr "Додај опцију прилога за отпремање."
 msgid "Add bullet list"
 msgstr "Додај листу са тачкама"
 
-#: app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts:44
+#: app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts:48
 msgid "Add comment"
 msgstr "Додај коментар"
 
@@ -1656,7 +1664,7 @@ msgstr "Додај коментар"
 msgid "Add condition"
 msgstr "Додај услов"
 
-#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:146
+#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:147
 msgid "Add email"
 msgstr "Додај имејл поруку"
 
@@ -1665,7 +1673,7 @@ msgstr "Додај имејл поруку"
 msgid "Add empty checklist"
 msgstr "Додај празан списак"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/FieldFilterSelectorInput.vue:312
+#: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/FieldFilterSelectorInput.vue:547
 msgid "Add filter"
 msgstr "Додај филтер"
 
@@ -1765,10 +1773,6 @@ msgstr "Додатне информације и линкови"
 msgid "Additional notes for ticket create types."
 msgstr "Додатне напомене за типове тикета приликом отварања."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketAgentUpdateButton.vue:114
-msgid "Additional ticket edit actions"
-msgstr "Додатне радње уређивања тикета"
-
 #: db/seeds/object_manager_attributes.rb:1439
 msgid "Address"
 msgstr "Адреса"
@@ -1865,11 +1869,11 @@ msgstr "Налог администратора"
 msgid "Advance to next ticket from overview"
 msgstr "Иди на следећи тикет из прегледа"
 
-#: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:224
+#: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:238
 msgid "Advanced filters"
 msgstr "Напредни филтери"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:61
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:63
 msgid "Affects only notifications for not assigned and all tickets."
 msgstr "Утиче само на обавештења за недодељене и све тикете."
 
@@ -1953,7 +1957,7 @@ msgstr "Прихвати и придружи се"
 msgid "Alarm"
 msgstr "Аларм"
 
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:382
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:393
 msgid "All %s result(s) selected"
 msgstr "%s свих означених уноса"
 
@@ -2008,7 +2012,7 @@ msgstr "Све категорије ће бити узете у обзир пр�
 msgid "All colleagues are busy."
 msgstr "Све колеге су заузете."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:131
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:134
 msgid ""
 "All computers and browsers from which you logged in to Zammad appear here."
 msgstr ""
@@ -2311,13 +2315,13 @@ msgstr "Шифра апликације"
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco:3
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/appearance.ts:9
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/appearance.ts:6
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:53
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:54
 #: db/seeds/permissions.rb:440
 msgid "Appearance"
 msgstr "Изглед"
 
 #: app/assets/javascripts/app/controllers/api.coffee:127
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue:74
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue:76
 msgid "Application"
 msgstr "Апликација"
 
@@ -2330,7 +2334,7 @@ msgid "Applications"
 msgstr "Апликације"
 
 #: app/assets/javascripts/app/views/widget/template.jst.eco:8
-#: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:337
+#: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:338
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:134
 msgid "Apply"
 msgstr "Примени"
@@ -2510,7 +2514,7 @@ msgid "Are you sure? You have unsaved changes that will get lost."
 msgstr "Да ли сте сигурни? Имате незапамћене измене које ће бити изгубљене."
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee:150
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:157
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:159
 msgid "Are you sure? Your notifications settings will be reset to default."
 msgstr "Да ли сте сигурни? Ваша подешавања обавештења ће бити поништена."
 
@@ -2591,7 +2595,7 @@ msgstr "Додели наставке"
 msgid "Assign signup roles"
 msgstr "Додели улоге приликом регистрације"
 
-#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkBottomDrawer.vue:211
+#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkBottomDrawer.vue:213
 #: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkConfirmation.vue:68
 msgid "Assign tickets"
 msgstr "Додели тикете"
@@ -2673,7 +2677,7 @@ msgstr "Приложи датотеке"
 msgid "Attached Files"
 msgstr "Attached Files"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:221
+#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:223
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:326
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:283
 msgid "Attachment"
@@ -2954,7 +2958,7 @@ msgstr "Доступне вредности"
 msgid "Available for the following roles"
 msgstr "Доступно следећим улогама"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:191
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:199
 msgid "Available methods"
 msgstr "Доступни методи"
 
@@ -2976,11 +2980,11 @@ msgstr "Доступни типови нових тикета"
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco:3
 #: app/assets/javascripts/app/views/profile/imageCropper.jst.eco:3
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/avatar.ts:6
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:46
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:47
 #: app/frontend/apps/mobile/pages/account/routes.ts:28
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:120
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:167
-#: app/frontend/shared/components/CommonUserAvatar/CommonUserAvatar.vue:114
+#: app/frontend/shared/components/CommonUserAvatar/CommonUserAvatar.vue:115
 #: db/seeds/permissions.rb:454
 msgid "Avatar"
 msgstr "Аватар"
@@ -2994,7 +2998,7 @@ msgstr "Није било могуће пронаћи аватар."
 msgid "Avatar preview"
 msgstr "Приказ аватара"
 
-#: app/frontend/shared/components/CommonAvatar/CommonAvatar.vue:44
+#: app/frontend/shared/components/CommonAvatar/CommonAvatar.vue:58
 msgid "Avatar with initials %s"
 msgstr "Аватар са иницијалима %s"
 
@@ -3020,7 +3024,7 @@ msgid "BCC address for all outgoing emails"
 msgstr "BCC адреса за све одлазеће имејл поруке"
 
 #: app/assets/javascripts/app/controllers/_manage/beta_ui.coffee:2
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarFooterMenu.vue:46
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarFooterMenu.vue:39
 msgid "BETA UI"
 msgstr "BETA интерфејс"
 
@@ -3028,7 +3032,7 @@ msgstr "BETA интерфејс"
 msgid "BETA UI Availability"
 msgstr "Доступност BETA интерфејса"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:73
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:81
 msgid "BETA UI feedback program"
 msgstr "Програм за прикупљање мишљења о новом BETA интерфејсу"
 
@@ -3038,7 +3042,7 @@ msgstr "Илустрација BETA интерфејса"
 
 #: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:397
 #: app/assets/javascripts/app/views/generic/object_search/item_organization_members.jst.eco:5
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:409
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:448
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:429
 msgid "Back"
 msgstr "Иди назад"
@@ -3051,7 +3055,7 @@ msgstr "Иди назад на мој преглед"
 msgid "Back to overview"
 msgstr "Иди назад на преглед"
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:409
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:448
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:429
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue:181
 msgid "Back to previous page"
@@ -3126,7 +3130,7 @@ msgid "Bearer Token"
 msgstr "Bearer Token"
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js:806
-#: app/frontend/shared/components/Form/fields/FieldEditor/extensions/UserMention.ts:105
+#: app/frontend/shared/components/Form/fields/FieldEditor/extensions/UserMention.ts:107
 msgid "Before you mention a user, please select a group."
 msgstr "Пре него што поменете корисника, молимо изаберите групу."
 
@@ -3231,7 +3235,7 @@ msgstr "Извршена масовна радња за |%s| тикет(а): %s 
 msgid "Bulk action executed!"
 msgstr "Извршена масовна радња!"
 
-#: app/assets/javascripts/app/lib/mixins/ticket_mass_updatable.coffee:38
+#: app/assets/javascripts/app/lib/mixins/ticket_mass_updatable.coffee:39
 msgid "Bulk action failed"
 msgstr "Неуспела масовна радња"
 
@@ -3315,7 +3319,7 @@ msgstr "CA"
 #: app/assets/javascripts/app/models/ticket_article.coffee:9
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:58
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:34
-#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:179
+#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:181
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:85
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:90
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:246
@@ -3377,7 +3381,7 @@ msgstr "CTI интеграција"
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco:3
 #: app/assets/javascripts/app/views/sla/index.jst.eco:55
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/calendar.ts:6
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:28
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:29
 #: db/seeds/permissions.rb:65
 msgid "Calendar"
 msgstr "Календар"
@@ -3429,7 +3433,7 @@ msgstr "Евиденција позива"
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee:240
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco:7
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue:115
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:363
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:371
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:205
 msgid "Camera"
 msgstr "Камера"
@@ -3512,7 +3516,7 @@ msgstr "Откажи и одјави се"
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue:118
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:147
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:135
-#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:436
+#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:437
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSharedDraftConflictDialog.vue:67
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:218
 msgid "Cancel & go back"
@@ -3630,7 +3634,7 @@ msgstr "Измени датум"
 msgid "Change order"
 msgstr "Измени редослед"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue:130
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue:135
 msgid "Change password"
 msgstr "Промени лозинку"
 
@@ -4015,15 +4019,15 @@ msgstr "Чисти радне траке мобилних уређаја."
 msgid "Clear Selection"
 msgstr "Очисти избор"
 
-#: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:138
+#: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:117
 msgid "Clear all"
 msgstr "Улони све"
 
-#: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:138
+#: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:117
 msgid "Clear all advanced filter(s)?"
 msgstr "Уклони све напредне филтере?"
 
-#: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:192
+#: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:202
 msgid "Clear all filters"
 msgstr "Уклони све филтере"
 
@@ -4039,19 +4043,19 @@ msgstr "Избриши недавне претраге"
 msgid "Clear recently closed"
 msgstr "Избриши недавно затворене"
 
-#: app/frontend/apps/desktop/components/CommonInputSearch/CommonInputSearch.vue:118
+#: app/frontend/apps/desktop/components/CommonInputSearch/CommonInputSearch.vue:116
 #: app/frontend/shared/components/CommonInputSearch/CommonInputSearch.vue:75
 msgid "Clear search"
 msgstr "Очисти претрагу"
 
 #: app/frontend/apps/desktop/components/CommonTable/CellContent/BulkCheckbox.vue:61
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:405
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:640
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:372
-#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:310
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:372
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:416
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:649
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:378
+#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:314
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:376
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:151
-#: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateTimeInput.vue:149
+#: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateTimeInput.vue:157
 #: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue:124
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:197
 msgid "Clear selection"
@@ -4151,12 +4155,12 @@ msgstr "Затвори сесије ћаскања где су учесници 
 msgid "Close current tab"
 msgstr "Затвори тренутни прозор"
 
-#: app/frontend/apps/desktop/components/CommonDialog/CommonDialog.vue:163
+#: app/frontend/apps/desktop/components/CommonDialog/CommonDialog.vue:168
 #: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkConfirmation.vue:39
 msgid "Close dialog"
 msgstr "Затвори дијалог"
 
-#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:347
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:366
 msgid "Close side panel"
 msgstr "Затвори бочни панел"
 
@@ -4210,11 +4214,13 @@ msgstr "затворени тикети"
 msgid "Closing time"
 msgstr "Време затварања"
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:186
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:183
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarFooterMenu.vue:77
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar.vue:65
 msgid "Collapse sidebar"
 msgstr "Искључи бочну траку"
 
-#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue:60
+#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue:34
 msgid "Collapse this element"
 msgstr "Скупи овај елемент"
 
@@ -4226,7 +4232,7 @@ msgstr "Боја истицања %s примењена на „%s”"
 msgid "Color representation of the open ticket indicator in the sidebar."
 msgstr "Боја индикатора отвореног тикета у траци са стране."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:285
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:290
 msgid "Combined subscription URL"
 msgstr "Комбиновани URL претплате тикета"
 
@@ -4375,7 +4381,7 @@ msgstr "Дијалог потврде"
 msgid "Confirm merge"
 msgstr "Потврди спајање"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue:74
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue:75
 msgid "Confirm new password"
 msgstr "Потврди нову лозинку"
 
@@ -4532,7 +4538,7 @@ msgstr "Учитавање садржаја"
 msgid "Content preview could not be generated."
 msgstr "Није било могуће генерисати приказ садржаја."
 
-#: app/frontend/apps/desktop/components/layout/LayoutContent.vue:144
+#: app/frontend/apps/desktop/components/layout/LayoutContent.vue:178
 msgid "Content sidebar"
 msgstr "Садржајна бочна трака"
 
@@ -4586,6 +4592,7 @@ msgstr "Настави на основни приказ"
 
 #: app/assets/javascripts/app/controllers/_plugin/mobile_detection.coffee:73
 #: app/assets/javascripts/app/views/login.jst.eco:125
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/continue-to-mobile.ts:14
 #: app/frontend/apps/desktop/pages/authentication/views/Login.vue:313
 msgid "Continue to mobile"
 msgstr "Настави на мобилни приказ"
@@ -4594,7 +4601,7 @@ msgstr "Настави на мобилни приказ"
 msgid "Contributing Translations"
 msgstr "Допринос преводима"
 
-#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:76
+#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:80
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket_summary.coffee:4
 msgid "Conversation Summary"
 msgstr "Сажети опис конверзације"
@@ -4603,7 +4610,7 @@ msgstr "Сажети опис конверзације"
 msgid "Conversation is transferred into another chat. Please stay tuned."
 msgstr "Разговор је пренешен у друго ћаскање. Молимо сачекајте."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummary.vue:84
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummary.vue:98
 msgid "Conversation summary"
 msgstr "Сажети опис конверзације"
 
@@ -4621,7 +4628,7 @@ msgstr "Ископирано."
 msgid "Copy"
 msgstr "Копирај"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:286
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:291
 msgid "Copy URL"
 msgstr "Копирај URL"
 
@@ -4649,7 +4656,7 @@ msgstr "Ископирај шифру"
 msgid "Copy text"
 msgstr "Ископирај текст"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader.vue:85
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader.vue:79
 msgid "Copy ticket number"
 msgstr "Копирај број тикета"
 
@@ -4757,7 +4764,7 @@ msgid "Could not remove two-factor authentication method"
 msgstr "Није било могуће уклонити метод двофакторске аутентификације"
 
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:134
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:114
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:115
 msgid "Could not remove two-factor authentication method."
 msgstr "Није било могуће уклонити метод двофакторске аутентификације."
 
@@ -4769,7 +4776,7 @@ msgstr ""
 "import_mode и даље укључено."
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee:228
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:88
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:89
 msgid "Could not set two-factor authentication method as default"
 msgstr ""
 "Није било могуће поставити метод двофакторске аутентификације као "
@@ -4812,7 +4819,7 @@ msgstr "Земља"
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:42
 #: app/frontend/apps/desktop/entities/user/composables/useUserCreate.ts:75
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:114
-#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:309
+#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:311
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:485
 msgid "Create"
 msgstr "Додај"
@@ -4932,7 +4939,7 @@ msgstr "Додај мој налог"
 msgid "Create new Customer"
 msgstr "Додај новог клијента"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:309
+#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:311
 #: app/frontend/apps/mobile/components/Form/fields/FieldCustomer/FieldCustomerWrapper.vue:71
 msgid "Create new customer"
 msgstr "Додај новог клијента"
@@ -5009,7 +5016,7 @@ msgstr "Додај:"
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:14
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco:20
 #: app/frontend/apps/desktop/components/Ticket/TicketBarChart/useTicketStatsChart.ts:94
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:92
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:93
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList.vue:35
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:124
 #: app/models/report.rb:22
@@ -5123,7 +5130,7 @@ msgstr "Тренутни корисник"
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee:75
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationPasswordCheck.vue:24
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue:52
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue:53
 msgid "Current password"
 msgstr "Тренутна лозинка"
 
@@ -5149,14 +5156,14 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/attribute_bar.coffee:145
 #: app/frontend/apps/desktop/components/AiAgent/AiAgentPopoverWithTrigger.vue:27
-#: app/frontend/apps/desktop/components/Ticket/TicketListTable.vue:219
+#: app/frontend/apps/desktop/components/Ticket/TicketListTable.vue:220
 #: app/frontend/apps/mobile/components/Ticket/TicketItem.vue:35
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue:41
 msgid "Currently processing this ticket…"
 msgstr "Тренутно обрађује овај тикет…"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:148
-#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:149
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:156
+#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:161
 msgid ""
 "Currently, no overviews are assigned to your roles. Please contact your "
 "administrator."
@@ -5229,12 +5236,12 @@ msgstr "Клијент"
 msgid "Customer Chat"
 msgstr "Клијент ћаскање"
 
-#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:69
+#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:73
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket_summary.coffee:3
 msgid "Customer Intent"
 msgstr "Намера клијента"
 
-#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:95
+#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:99
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket_summary.coffee:7
 msgid "Customer Sentiment"
 msgstr "Расположење клијента"
@@ -5243,7 +5250,7 @@ msgstr "Расположење клијента"
 msgid "Customer and agent ratio (role based user counts)"
 msgstr "Однос клијената и оператера (на основу улога)"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummary.vue:79
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummary.vue:93
 msgid "Customer intent"
 msgstr "Намера клијента"
 
@@ -5251,7 +5258,7 @@ msgstr "Намера клијента"
 msgid "Customer selection based on sender and receiver list"
 msgstr "Одабир клијента на основу пошиљаоца и листе примаоца"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummary.vue:102
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummary.vue:116
 msgid "Customer sentiment"
 msgstr "Расположење клијента"
 
@@ -5285,7 +5292,7 @@ msgid "Cut"
 msgstr "Исеци"
 
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco:20
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:38
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:39
 msgid "Dark"
 msgstr "Тамни"
 
@@ -5417,7 +5424,7 @@ msgstr "Успешно дешифровање."
 #: app/assets/javascripts/app/views/object_manager/attribute/multiselect.jst.eco:9
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco:9
 #: app/assets/javascripts/app/views/profile/password.jst.eco:44
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:212
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:220
 #: db/seeds/settings.rb:861
 msgid "Default"
 msgstr "Подразумевано"
@@ -5454,10 +5461,8 @@ msgid "Default caller ID for outbound calls."
 msgstr "Подразумевани ID позиваоца за одлазеће позиве."
 
 #: app/assets/javascripts/app/models/ticket_state.coffee:42
-#, fuzzy
-#| msgid "Default for new tickets"
 msgid "Default for closed tickets"
-msgstr "Подразумевано за нове тикете"
+msgstr "Подразумевано за затворене тикете"
 
 #: app/assets/javascripts/app/models/ticket_state.coffee:35
 msgid "Default for follow-ups"
@@ -6638,15 +6643,15 @@ msgstr "Уклони ред"
 msgid "Delete table"
 msgstr "Уклони табелу"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:145
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:146
 msgid "Delete this access token"
 msgstr "Избриши овај приступни кључ"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:333
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:341
 msgid "Delete this avatar"
 msgstr "Избриши овај аватар"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:111
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:112
 msgid "Delete this device"
 msgstr "Избриши овај уређај"
 
@@ -6804,14 +6809,14 @@ msgstr "Развојни систем"
 msgid "Device"
 msgstr "Уређај"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:79
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:80
 msgid "Device has been revoked."
 msgstr "Уређај је опозван."
 
 #: app/assets/javascripts/app/controllers/_profile/devices.coffee:3
 #: app/assets/javascripts/app/views/profile/devices.jst.eco:2
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/devices.ts:6
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:31
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:32
 #: db/seeds/permissions.rb:485
 msgid "Devices"
 msgstr "Уређаји"
@@ -6849,7 +6854,7 @@ msgstr ""
 "нашој јавној платформи %l? Поседује веома удобан кориснички интерфејс "
 "базиран на Weblate-у, пробајте га!"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLocale.vue:31
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLocale.vue:40
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:157
 msgid "Did you know?"
 msgstr "Да ли сте знали?"
@@ -6879,7 +6884,7 @@ msgstr "Неопходна цифра"
 msgid "Direct URL"
 msgstr "Директни URL"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:311
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:316
 msgid "Direct subscription URL"
 msgstr "Директни URL претплате тикета"
 
@@ -6902,7 +6907,7 @@ msgstr "Искључи"
 msgid "Disable Notifications"
 msgstr "Искључи обавештења"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:64
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:72
 msgid "Disable the banner for the BETA switch"
 msgstr "Искључи приказ дугмета за BETA интерфејс"
 
@@ -6932,7 +6937,7 @@ msgid "Discard article"
 msgstr "Откажи чланак"
 
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:56
-#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:433
+#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:434
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:65
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:59
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:36
@@ -6946,7 +6951,8 @@ msgstr "Откажи промене"
 msgid "Discard snapshot"
 msgstr "Одбаци снимак"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:228
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReplyPinned.vue:105
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReplyUnpinned.vue:56
 msgid "Discard unsaved reply"
 msgstr "Откажи несачуван одговор"
 
@@ -6981,7 +6987,7 @@ msgstr "Прикажи"
 msgid "Display Zammad in the New BETA User Interface"
 msgstr "Прикажи Zammad у новом BETA корисничком интерфејсу"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:52
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:60
 msgid "Display Zammad with the new BETA user interface"
 msgstr "Прикажи Zammad у новом BETA корисничком интерфејсу"
 
@@ -6990,7 +6996,7 @@ msgstr "Прикажи Zammad у новом BETA корисничком инте
 msgid "Display name"
 msgstr "Назив за приказ"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:88
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:96
 msgid "Do not ask automatically for feedback on the BETA UI"
 msgstr "Не питај за мишљење о BETA интерфејсу"
 
@@ -7132,11 +7138,11 @@ msgstr "Преузми и инсталирај %s миграциони дода�
 msgid "Download feedback report"
 msgstr "Преузми извештај о мишљењима"
 
-#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:105
+#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:106
 msgid "Download original email"
 msgstr "Преузми оригинални имејл"
 
-#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:116
+#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:117
 msgid "Download raw email"
 msgstr "Преузми изворни имејл"
 
@@ -7166,11 +7172,15 @@ msgstr "Није било могуће освежити нацрт."
 msgid "Drafts"
 msgstr "Нацрти"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketAgentUpdateButton.vue:114
+msgid "Drafts & macros"
+msgstr "Нацрти и макрои"
+
 #: app/frontend/apps/desktop/composables/dragAndDrop/useAccessibleDragAndDrop.ts:68
 msgid "Drag ended for %s."
 msgstr "Превлачење завршено за %s."
 
-#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkWrapper.vue:111
+#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkWrapper.vue:112
 msgid "Drag here to cancel"
 msgstr "Превуци овде за отказивање"
 
@@ -7247,7 +7257,7 @@ msgstr "Ускршњи празници"
 #: app/assets/javascripts/app/views/whatsapp/index.jst.eco:51
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco:11
 #: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailTopBar/actions/edit.ts:13
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:159
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:160
 #: app/frontend/apps/desktop/pages/user/components/UserDetailTopBar/actions/edit.ts:10
 #: app/frontend/apps/mobile/pages/home/views/Home.vue:71
 #: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue:52
@@ -7314,7 +7324,7 @@ msgstr "Измени одговор"
 msgid "Edit security keys"
 msgstr "Уреди безбедносне кључеве"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation.vue:84
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation.vue:100
 msgid "Edit ticket title"
 msgstr "Уреди наслов тикета"
 
@@ -7405,7 +7415,7 @@ msgstr "Elasticsearch верзија"
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue:34
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceZendesk.vue:34
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:11
-#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:145
+#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:146
 #: db/seeds/object_manager_attributes.rb:924 db/seeds/permissions.rb:131
 #: public/assets/form/form.js:32
 msgid "Email"
@@ -7698,7 +7708,7 @@ msgstr "Укључује или искључује сажети опис тик�
 msgid "Enable or disable the writing assistant text tools."
 msgstr "Укључује или искључује текстуалне алатке помоћника за писање."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:65
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:73
 msgid "Enable the banner for the BETA switch"
 msgstr "Укључи приказ дугмета за BETA интерфејс"
 
@@ -8049,7 +8059,7 @@ msgstr ""
 "Унеси своју имејл адресу и %s API кључ из администраторског интерфејса."
 
 #: app/assets/javascripts/app/views/profile/password.jst.eco:9
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue:117
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue:122
 msgid "Enter your current password, insert a new one and confirm it."
 msgstr "Унеси своју важећу лозинку, затим нову па потврди."
 
@@ -8167,7 +8177,7 @@ msgstr ""
 "target=\"zammad_app\">Погледај у #{config.product_name}</a>\n"
 "</div>\n"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:259
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:260
 msgid "Escalated tickets"
 msgstr "Ескалирани тикети"
 
@@ -8347,6 +8357,10 @@ msgstr "Извршава послове увоза."
 msgid "Execute planned jobs."
 msgstr "Извршава заказане послове."
 
+#: app/assets/javascripts/app/views/ticket_overview/batch_overlay.jst.eco:23
+msgid "Executing bulk action…"
+msgstr "Извршавање масовне радње…"
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:22
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:34
 msgid "Execution Time"
@@ -8368,11 +8382,13 @@ msgstr "Постојећи тикети (отворени)"
 msgid "Expand draft into well-written section"
 msgstr "Прошири нацрт у добро написан одељак"
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:187
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:184
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarFooterMenu.vue:78
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar.vue:66
 msgid "Expand sidebar"
 msgstr "Укључи бочну траку"
 
-#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue:59
+#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue:33
 msgid "Expand this element"
 msgstr "Прошири овај елемент"
 
@@ -8403,7 +8419,7 @@ msgstr "Датум истека"
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:19
 #: app/assets/javascripts/app/views/profile/token_access_create.jst.eco:10
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:15
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:97
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:98
 msgid "Expires"
 msgstr "Истиче"
 
@@ -8416,7 +8432,7 @@ msgstr "Истиче"
 msgid "Extended Search"
 msgstr "Проширена претрага"
 
-#: app/frontend/apps/desktop/pages/search/composables/useSearchTitle.ts:9
+#: app/frontend/apps/desktop/components/Search/composables/useSearchTitle.ts:13
 msgid "Extended search"
 msgstr "Проширена претрага"
 
@@ -8424,7 +8440,7 @@ msgstr "Проширена претрага"
 msgid "External data source field"
 msgstr "Поље удаљеног извора података"
 
-#: lib/search_index_backend.rb:762
+#: lib/search_index_backend.rb:780
 msgid "Extract zammad-attachment information from arrays"
 msgstr "Издвоји информације о Zammad прилозима из низова"
 
@@ -8438,7 +8454,7 @@ msgstr "Правила издвајања"
 #: app/assets/javascripts/app/views/facebook/list.jst.eco:3
 #: app/controllers/first_steps_controller.rb:27
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:38
-#: app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts:43
+#: app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts:47
 #: db/seeds/permissions.rb:167 db/seeds/settings.rb:1412
 msgid "Facebook"
 msgstr "Facebook"
@@ -8564,7 +8580,7 @@ msgstr "фебруар"
 
 #: app/assets/javascripts/app/models/ai_text_tool.coffee:27
 #: app/assets/javascripts/app/views/channel/form.jst.eco:34
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarFooterMenu.vue:62
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarFooterMenu.vue:55
 msgid "Feedback"
 msgstr "Повратне информације"
 
@@ -8747,6 +8763,15 @@ msgstr "Фолдер:"
 msgid "Folders"
 msgstr "Фолдери"
 
+#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:69
+#: app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts:18
+msgid "Follow up"
+msgstr "Настави"
+
+#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:91
+msgid "Follow up to all"
+msgstr "Настави свима"
+
 #: app/assets/javascripts/app/models/group.coffee:9
 #: db/seeds/object_manager_attributes.rb:2182
 msgid "Follow-up for closed ticket possible or not."
@@ -8813,10 +8838,10 @@ msgstr ""
 "аутоматизацији (нпр. окидачу, планеру, макроу)."
 
 #: app/frontend/apps/desktop/components/layout/LayoutTaskbarTabContent.vue:62
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue:37
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue:31
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:42
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:38
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue:39
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue:32
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:43
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:39
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:23
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:459
 #: app/frontend/shared/errors/useErrorHandler.ts:29
@@ -8934,7 +8959,7 @@ msgstr "Проследи"
 msgid "Found organizations"
 msgstr "Пронађене организације"
 
-#: app/frontend/apps/desktop/components/Search/plugins/ticket.ts:16
+#: app/frontend/apps/desktop/components/Search/plugins/ticket.ts:17
 msgid "Found tickets"
 msgstr "Пронађени тикети"
 
@@ -9025,7 +9050,7 @@ msgstr "Генериши кључ"
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee:241
 #: app/assets/javascripts/app/views/profile/password.jst.eco:113
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:254
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:262
 msgid "Generate recovery codes"
 msgstr "Генериши шифре за опоравак"
 
@@ -9115,7 +9140,7 @@ msgstr "GitHub конфигурација"
 msgid "GitHub integration"
 msgstr "GitHub интеграција"
 
-#: lib/github/http_client.rb:34
+#: lib/github/http_client.rb:32
 msgid "GitHub request failed. Please have a look at the log file for details."
 msgstr "Неуспео GitHub захтев. Молимо проверите датотеку евиденције за детаље."
 
@@ -9148,7 +9173,7 @@ msgstr "GitLab конфигурација"
 msgid "GitLab integration"
 msgstr "GitLab интеграција"
 
-#: lib/gitlab/http_client.rb:47
+#: lib/gitlab/http_client.rb:45
 msgid "GitLab request failed. Please have a look at the log file for details."
 msgstr "Неуспео GitLab захтев. Молимо проверите датотеку евиденције за детаље."
 
@@ -9156,7 +9181,7 @@ msgstr "Неуспео GitLab захтев. Молимо проверите да
 msgid "GitLab: Link issue"
 msgstr "GitLab: Повежи извештај"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:100
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:108
 msgid "Give feedback"
 msgstr "Дај мишљење"
 
@@ -9188,7 +9213,7 @@ msgstr "Дата временска зона је неисправна."
 msgid "Go Back"
 msgstr "Иди назад"
 
-#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkBottomDrawer.vue:228
+#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkBottomDrawer.vue:230
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfigurationWizard.vue:62
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue:85
 #: app/frontend/apps/mobile/components/CommonBackButton/CommonBackButton.vue:41
@@ -9251,7 +9276,7 @@ msgstr "Google имејл"
 
 #: app/assets/javascripts/app/controllers/_plugin/navigation.coffee:188
 #: app/assets/javascripts/app/views/clues/clues_content.jst.eco:17
-#: app/frontend/apps/desktop/components/BetaUi/composables/useBetaUi.ts:85
+#: app/frontend/apps/desktop/components/BetaUi/composables/useBetaUi.ts:78
 msgid "Got it"
 msgstr "Разумем"
 
@@ -9519,7 +9544,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/navigation.coffee:184
 #: app/assets/javascripts/app/controllers/clues/first_steps_clues.coffee:40
-#: app/frontend/apps/desktop/components/BetaUi/composables/useBetaUi.ts:84
+#: app/frontend/apps/desktop/components/BetaUi/composables/useBetaUi.ts:77
 #: app/frontend/apps/desktop/components/CommonPageHelp/CommonPageHelp.vue:22
 #: app/frontend/apps/desktop/components/CommonPageHelp/CommonPageHelpDialog.vue:20
 msgid "Help"
@@ -9632,7 +9657,11 @@ msgstr ""
 msgid "Hi! Which one of our products?"
 msgstr "Здраво! Који тачно од наших производа?"
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarFooterMenu.vue:69
+#: app/frontend/shared/components/CommonNotifications/CommonNotificationsItem.vue:85
+msgid "Hide"
+msgstr "Сакриј"
+
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarFooterMenu.vue:62
 msgid "Hide BETA UI switch"
 msgstr "Сакриј дугме за BETA интерфејс"
 
@@ -9643,6 +9672,11 @@ msgstr "Сакриј шифру апликације за аутентифика
 #: app/frontend/shared/components/CommonNotifications/CommonNotificationsItem.vue:85
 msgid "Hide notification"
 msgstr "Сакриј обавештење"
+
+#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:57
+#: db/seeds/object_manager_attributes.rb:2479
+msgid "Hide ticket summary sidebar"
+msgstr "Сакриј бочну траку сажетог описа тикета"
 
 #: app/assets/javascripts/app/models/ticket_priority.coffee:7
 msgid "High priority"
@@ -9751,7 +9785,7 @@ msgstr "Сат(и)"
 msgid "Hours"
 msgstr "Сатима"
 
-#: app/views/layouts/knowledge_base.html.erb:41
+#: app/views/layouts/knowledge_base.html.erb:43
 msgid "How can we help you? Search for an answer or a topic…"
 msgstr "Како вам можемо помоћи? Потражите одговор или тему…"
 
@@ -9937,7 +9971,7 @@ msgstr ""
 "захтев за пријаву преко привремене лозинке администратора."
 
 #: app/assets/javascripts/app/views/profile/password.jst.eco:106
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:243
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:251
 msgid ""
 "If you lose your recovery codes it's possible to generate new ones. This "
 "action is going to invalidate previous recovery codes."
@@ -10132,7 +10166,7 @@ msgid ""
 "activated the trigger."
 msgstr "У контексту окидача, последњи чланак ће увек бити извршилац окидача."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue:73
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue:74
 msgid "Inactive"
 msgstr "Искључено"
 
@@ -10173,27 +10207,27 @@ msgstr "Додај прилоге чланка?"
 msgid "Include nested"
 msgstr "Укључи подређене"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:73
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:74
 msgid "Include unassigned tickets in subscription for escalated tickets."
 msgstr "Укључи недодељене тикете у претплату ескалираних тикета."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:100
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:101
 msgid "Include unassigned tickets in subscription for new & open tickets."
 msgstr "Укључи недодељене тикете у претплату нових и отворених тикета."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:127
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:128
 msgid "Include unassigned tickets in subscription for pending tickets."
 msgstr "Укључи недодељене тикете у претплату тикета на чекању."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:61
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:62
 msgid "Include your own tickets in subscription for escalated tickets."
 msgstr "Укључи сопствене тикете у претплату ескалираних тикета."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:88
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:89
 msgid "Include your own tickets in subscription for new & open tickets."
 msgstr "Укључи сопствене тикете у претплату нових и отворених тикета."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:115
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:116
 msgid "Include your own tickets in subscription for pending tickets."
 msgstr "Укључи сопствене тикете у претплату тикета на чекању."
 
@@ -10201,7 +10235,7 @@ msgstr "Укључи сопствене тикете у претплату ти�
 msgid "Included ticket overviews"
 msgstr "Укључени прегледи тикета"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:288
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:293
 msgid "Includes escalated, new & open and pending tickets."
 msgstr "Укључује ескалиране, нове и отворене и тикете на чекању."
 
@@ -10228,7 +10262,7 @@ msgstr "Некомплетан списак задатака"
 msgid "Incomplete credentials"
 msgstr "Непотпуни креденцијали"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:436
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:450
 msgid "Incomplete ticket checklist"
 msgstr "Некомплетан списак задатака"
 
@@ -10758,7 +10792,7 @@ msgstr "Петар Петровић"
 msgid "Join %s"
 msgstr "Придружи се %s"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:107
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:115
 msgid "Join feedback program"
 msgstr "Придружи се програму"
 
@@ -10893,6 +10927,10 @@ msgstr "Активна јавна база знања"
 msgid "Knowledge Base multilingual support"
 msgstr "Мултијезичка подршка базе знања"
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/extensions/KnowledgeBaseSuggestion.ts:59
+msgid "Knowledge base articles"
+msgstr "Чланци базе знања"
+
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketAIKnowledgeBaseAnswers.vue:48
 #: app/services/service/ticket/ai_assistance/create_knowledge_base_answer.rb:21
 msgid "Knowledge base draft could not be generated."
@@ -10940,7 +10978,7 @@ msgstr "Изглед почетне стране"
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco:35
 #: app/assets/javascripts/app/views/profile/language.jst.eco:3
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/locale.ts:6
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLocale.vue:12
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLocale.vue:13
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:149
 #: db/seeds/permissions.rb:447
 msgid "Language"
@@ -11062,7 +11100,7 @@ msgid "Last sync at:"
 msgstr "Последња синхронизација у:"
 
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:20
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:102
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:103
 msgid "Last used"
 msgstr "Последњи пут коришћено"
 
@@ -11074,7 +11112,7 @@ msgstr "Изглед"
 msgid "Layout Reference"
 msgstr "Референца изгледа"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:40
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:41
 msgid "Leave BETA UI feedback program?"
 msgstr "Напуштате програм BETA интерфејса?"
 
@@ -11086,7 +11124,7 @@ msgstr "Оставите празно за коришћење URL адресе (
 msgid "Leave empty to use the base model"
 msgstr "Оставите празно за коришћење основног модела"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:39
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:40
 msgid "Leave program"
 msgstr "Напусти програм"
 
@@ -11103,7 +11141,7 @@ msgid "Library"
 msgstr "Библиотека"
 
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco:26
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:43
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:44
 msgid "Light"
 msgstr "Светло"
 
@@ -11127,7 +11165,7 @@ msgstr "Ограничи категорије и приложи опционе �
 msgid "Limit groups and provide optional descriptions"
 msgstr "Ограничи групе и приложи опционе описе"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:60
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:62
 msgid "Limit notifications to specific groups"
 msgstr "Ограничи обавештења на одређене групе"
 
@@ -11197,7 +11235,7 @@ msgstr "Повежите GitLab извештаје са тикетима."
 msgid "Link URL"
 msgstr "URL адреса линка"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue:178
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue:180
 msgid "Link account on %s"
 msgstr "Повежи налог са %s"
 
@@ -11259,7 +11297,7 @@ msgid "Linked Tickets"
 msgstr "Повезани тикети"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/linkedAccounts.ts:8
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue:47
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue:49
 msgid "Linked accounts"
 msgstr "Повезани налози"
 
@@ -11340,9 +11378,9 @@ msgstr "Неуспешно учитавање."
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js:664
 #: app/assets/javascripts/app/views/generic/page_loading.jst.eco:3
 #: app/frontend/apps/desktop/components/CommonLoader/CommonLoader.vue:67
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:474
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:53
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:40
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:513
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:69
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:56
 #: app/frontend/shared/form/i18n/locales.ts:57 app/views/init/index.html.erb:34
 #: app/views/init/spinner-loading.html.erb:261
 msgid "Loading…"
@@ -11375,7 +11413,7 @@ msgstr "Локализација при извршавању радње"
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco:6
 #: app/assets/javascripts/app/views/profile/devices.jst.eco:13
 #: app/assets/javascripts/app/views/session.jst.eco:10
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:98
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:99
 msgid "Location"
 msgstr "Локација"
 
@@ -11480,7 +11518,7 @@ msgstr ""
 msgid "Mailbox type"
 msgstr "Врста поштанског сандучета"
 
-#: app/frontend/apps/desktop/components/layout/LayoutPage.vue:90
+#: app/frontend/apps/desktop/components/layout/LayoutPage.vue:102
 msgid "Main sidebar"
 msgstr "Основна бочна трака"
 
@@ -11985,7 +12023,7 @@ msgstr "Успешно преузимање медијског прилога."
 #: app/assets/javascripts/app/views/popover/organization.jst.eco:6
 #: app/assets/javascripts/app/views/widget/organization.jst.eco:29
 #: app/frontend/apps/desktop/components/Organization/OrganizationPopoverWithTrigger/OrganizationPopover.vue:74
-#: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailViewContent.vue:120
+#: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailViewContent.vue:122
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarOrganization/TicketSidebarOrganizationContent.vue:71
 #: app/frontend/apps/mobile/components/Organization/OrganizationMembersList.vue:36
 msgid "Members"
@@ -12267,7 +12305,7 @@ msgid "More ticket overviews"
 msgstr "Још прегледа тикета"
 
 #: app/assets/javascripts/app/views/profile/devices.jst.eco:14
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:103
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:104
 msgid "Most recent activity"
 msgstr "Последња активност"
 
@@ -12342,7 +12380,7 @@ msgid "My handling time: %s minutes"
 msgstr "Моје време извршавања: %s минут(а)"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue:35
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:60
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:61
 msgid "My tickets"
 msgstr "Моји тикети"
 
@@ -12420,8 +12458,8 @@ msgstr "Nagios интеграција"
 #: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue:30
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:111
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:28
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:93
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:82
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:94
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:83
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:180
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout/IdoitObjectList.vue:20
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:163
@@ -12452,7 +12490,7 @@ msgid "Navigate to %s"
 msgstr "Иди у %s"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:137
-#: app/frontend/apps/desktop/components/PageNavigation/PageNavigation.vue:42
+#: app/frontend/apps/desktop/components/PageNavigation/PageNavigation.vue:43
 msgid "Navigation"
 msgstr "Навигација"
 
@@ -12515,7 +12553,7 @@ msgstr "Никада ме више не питај"
 msgid "New"
 msgstr "Ново"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:263
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:264
 msgid "New & open tickets"
 msgstr "Нови и отворени тикети"
 
@@ -12547,7 +12585,7 @@ msgstr "Нови атрибут"
 #: app/assets/javascripts/app/controllers/clues/desktop_beta_switch_clues.coffee:5
 #: app/assets/javascripts/app/views/profile/newbetaui.jst.eco:3
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/newBetaUi.ts:8
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:20
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:21
 msgid "New BETA UI"
 msgstr "Нови BETA интерфејс"
 
@@ -12686,12 +12724,12 @@ msgid "New organizations are shared."
 msgstr "Нове организације су заједничке."
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee:76
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue:63
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue:64
 msgid "New password"
 msgstr "Нова лозинка"
 
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:126
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:190
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:195
 msgid "New personal access token"
 msgstr "Нови лични приступни кључ"
 
@@ -12918,7 +12956,7 @@ msgstr ""
 "Није могуће послати додатан текст уз овај тип медија датотеке. Молимо "
 "уклоните текст."
 
-#: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:253
+#: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:273
 msgid "No advanced filters available for %s."
 msgstr "Нема доступних напредних филтера за %s."
 
@@ -13052,8 +13090,8 @@ msgstr "Нису пронађени чланови"
 msgid "No organizations found"
 msgstr "Нису пронађене организације"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:145
-#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:146
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:153
+#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:158
 msgid "No overviews"
 msgstr "Нема прегледа"
 
@@ -13088,19 +13126,19 @@ msgid "No results for this query."
 msgstr "Нема резултата за овај упит."
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js:716
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:315
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:354
 #: app/frontend/apps/desktop/components/CommonSimpleEntityList/plugins/ticket.ts:8
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:54
+#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:70
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:490
 #: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenu.vue:90
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout/IdoitObjectList.vue:38
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:378
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:41
+#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:57
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue:319
 msgid "No results found"
 msgstr "Нема резултата"
 
-#: app/views/layouts/knowledge_base.html.erb:43
+#: app/views/layouts/knowledge_base.html.erb:45
 msgid "No results were found."
 msgstr "Нису пронађени резултати."
 
@@ -13196,7 +13234,7 @@ msgid "No x-zammad-session-user-id, no sender set!"
 msgstr "Без x-zammad-session-user-id, пошиљалац није подешен!"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:8
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:439
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:453
 msgid "No, just close the ticket"
 msgstr "Не, само затвори тикет"
 
@@ -13243,7 +13281,7 @@ msgstr ""
 "Није применљиво на: спајање, имејл поруке, форме, Facebook, Telegram, SMS"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue:42
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:72
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:73
 msgid "Not assigned"
 msgstr "Недодељени"
 
@@ -13367,7 +13405,7 @@ msgstr "Пошиљалац обавештења"
 msgid "Notification Sound"
 msgstr "Звук обавештења"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:54
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:56
 msgid "Notification matrix"
 msgstr "Матрица обавештења"
 
@@ -13379,23 +13417,23 @@ msgstr "Прочитано обавештење"
 msgid "Notification sender"
 msgstr "Пошиљалац обавештења"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:167
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:169
 msgid "Notification settings could not be reset."
 msgstr "Није било могуће поништити подешавања обавештења."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:120
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:122
 msgid "Notification settings could not be saved."
 msgstr "Није било могуће сачувати подешавање обавештења."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:184
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:186
 msgid "Notification settings have been reset to default."
 msgstr "Подешавања обавештења су поништена на подразумевана."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:138
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:140
 msgid "Notification settings have been saved successfully."
 msgstr "Подешавања обавештења су успешно сачувана."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:71
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:73
 msgid "Notification sound"
 msgstr "Звук обавештења"
 
@@ -13407,7 +13445,7 @@ msgstr "Звук обавештења"
 #: app/assets/javascripts/app/views/widget/online_notification.jst.eco:3
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationPopover/NotificationHeader.vue:20
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/notifications.ts:6
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:33
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:35
 #: app/frontend/apps/mobile/pages/online-notification/routes.ts:8
 #: db/seeds/permissions.rb:506
 msgid "Notifications"
@@ -13674,7 +13712,7 @@ msgstr "Отвори"
 msgid "Open %s"
 msgstr "Отвори %s"
 
-#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:83
+#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:87
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket_summary.coffee:5
 msgid "Open Questions"
 msgstr "Отворена питања"
@@ -13717,11 +13755,11 @@ msgstr "Отвори избор макроа"
 msgid "Open note box"
 msgstr "Отвори поље напомене"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummary.vue:90
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummary.vue:104
 msgid "Open questions"
 msgstr "Отворена питања"
 
-#: app/frontend/apps/desktop/components/PageNavigation/PageNavigation.vue:52
+#: app/frontend/apps/desktop/components/PageNavigation/PageNavigation.vue:53
 msgid "Open quick search"
 msgstr "Отвори брзу претрагу"
 
@@ -13842,7 +13880,7 @@ msgstr "Редослед прегледа"
 msgid "Order of overviews"
 msgstr "Редослед прегледа"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:122
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:130
 msgid "Order of ticket overviews"
 msgstr "Редослед прегледа тикета"
 
@@ -13915,7 +13953,7 @@ msgstr "Назив организације"
 msgid "Organization support"
 msgstr "Подршка организације"
 
-#: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailViewContent.vue:170
+#: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailViewContent.vue:172
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:79
 msgid "Organization tickets"
 msgstr "Тикети организације"
@@ -13991,7 +14029,7 @@ msgid "Out of all open tickets (company-wide), how many are assigned to you?"
 msgstr "Колико је тикета додељено вама од свих отворених (широм организације)?"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/outOfOffice.ts:6
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue:121
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue:122
 msgid "Out of office"
 msgstr "Ван канцеларије"
 
@@ -14004,11 +14042,11 @@ msgstr "Ван канцеларије"
 msgid "Out of office replacement"
 msgstr "Замена за ван канцеларије"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue:148
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue:149
 msgid "Out of office settings could not be saved."
 msgstr "Није било могуће сачувати подешавање ван канцеларије."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue:143
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue:144
 msgid "Out of office settings have been saved successfully"
 msgstr "Подешавање ван канцеларије је успешно освежено"
 
@@ -14081,9 +14119,9 @@ msgstr "Преглед: %s"
 #: app/assets/javascripts/app/controllers/overview.coffee:3
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee:258
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/ticketOverviews.ts:6
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:31
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:32
 #: app/frontend/apps/desktop/pages/ticket-overviews/routes.ts:17
-#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:81
+#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:94
 #: db/seeds/permissions.rb:35
 msgid "Overviews"
 msgstr "Прегледи"
@@ -14210,7 +14248,7 @@ msgstr "Надређена група"
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:48
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue:47
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/password.ts:8
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue:32
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue:33
 #: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue:53
 #: db/seeds/object_manager_attributes.rb:1481 db/seeds/permissions.rb:471
 msgid "Password"
@@ -14229,7 +14267,7 @@ msgstr "Приступ путем лозинке"
 msgid "Password Login"
 msgstr "Пријављивање путем лозинке"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue:32
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue:33
 msgid "Password change has been disabled by the administrator."
 msgstr "Администратор је искључио могућност промене лозинке."
 
@@ -14237,11 +14275,11 @@ msgstr "Администратор је искључио могућност пр
 msgid "Password changed successfully!"
 msgstr "Успешно промењена лозинка!"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue:107
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue:108
 msgid "Password changed successfully."
 msgstr "Успешно промењена лозинка."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue:93
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue:94
 msgid "Password could not be changed."
 msgstr "Није било могуће променити лозинку."
 
@@ -14326,7 +14364,7 @@ msgstr "Тикети са достигнутим временом чекања"
 msgid "Pending reminder reached for ticket |%s|"
 msgstr "Достигнуто време чекања за тикет |%s|"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:267
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:268
 msgid "Pending tickets"
 msgstr "Тикети на чекању"
 
@@ -14360,7 +14398,7 @@ msgstr "Ниво дозвола при претраживању тикета"
 #: app/assets/javascripts/app/models/role.coffee:7
 #: app/assets/javascripts/app/views/object_manager/screens.jst.eco:5
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:17
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:87
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:88
 msgid "Permissions"
 msgstr "Дозволе"
 
@@ -14372,11 +14410,11 @@ msgstr "Лични приступни кључеви"
 msgid "Personal Settings"
 msgstr "Лична подешавања"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:131
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:132
 msgid "Personal access token has been deleted."
 msgstr "Лични приступни кључ је уклоњен."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:201
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:206
 msgid "Personal access tokens"
 msgstr "Лични приступни кључеви"
 
@@ -14413,11 +14451,11 @@ msgid "Phone number is already in use by another WhatsApp account."
 msgstr "Одабрани број телефона се већ користи за други WhatsApp налог."
 
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:7
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:171
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:172
 msgid "Pick a name for the application, and we'll give you a unique token."
 msgstr "Изаберите назив апликације, и добићете јединствени кључ."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:235
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReplyUnpinned.vue:63
 msgid "Pin this panel"
 msgstr "Закачи овај панел"
 
@@ -14454,7 +14492,7 @@ msgid "Placetel integration"
 msgstr "Placetel интеграција"
 
 #: app/assets/javascripts/app/views/profile/notification.jst.eco:70
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:79
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:81
 msgid "Play user interface sound effects"
 msgstr "Укључи звучне ефекте у корисничком интерфејсу"
 
@@ -14505,7 +14543,7 @@ msgstr "Молимо подесите извор увоза пре почетк�
 msgid "Please contact your administrator."
 msgstr "Молимо контактирајте администратора."
 
-#: lib/selector/sql.rb:199
+#: lib/selector/sql.rb:200
 msgid ""
 "Please enable execution_time feature to use it (currently only allowed for "
 "triggers and schedulers)"
@@ -14709,7 +14747,7 @@ msgstr "Повратни позив по шаблону"
 msgid "Pre-defined webhook for %s."
 msgstr "Повратни позив по шаблону за %s."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:49
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:50
 msgid "Prefer color scheme as indicated by the operating system."
 msgstr "Користи изглед који одређује оперативни систем."
 
@@ -14905,24 +14943,24 @@ msgstr ""
 msgid "Protocol"
 msgstr "Протокол"
 
-#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:78
+#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:82
 msgid ""
 "Provide a summary of the conversation between customer and support agent."
 msgstr "Пружи сажети опис конверзације између клијента и оператера подршке."
 
-#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:71
+#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:75
 msgid "Provide a summary of the problem the customer needs to get resolved."
 msgstr "Пружи сажети опис проблема који клијент жели да реши."
 
-#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:85
+#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:89
 msgid "Provide a summary of the questions raised in the conversation."
 msgstr "Пружи сажети опис питања која су постављена у конверзацији."
 
-#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:91
+#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:95
 msgid "Provide a summary of the upcoming events based on the conversation."
 msgstr "Пружи сажети опис предстојећих догађаја на основу конверзације."
 
-#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:97
+#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:101
 msgid ""
 "Provide an assessment of the customer sentiment based on the conversation."
 msgstr "Пружи процену расположења клијента на основу конверзације."
@@ -15066,7 +15104,7 @@ msgstr "Читалац"
 msgid "Real-time"
 msgstr "У реалном времену"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue:44
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue:45
 msgid "Reason for absence"
 msgstr "Разлог одсуства"
 
@@ -15169,7 +15207,7 @@ msgid "Recovery code"
 msgstr "Шифра за опоравак"
 
 #: app/assets/javascripts/app/views/profile/password.jst.eco:104
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:236
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:244
 msgid ""
 "Recovery codes can be used to access your account in the event you lose "
 "access to other two-factor authentication methods."
@@ -15203,7 +15241,7 @@ msgid "Regenerate"
 msgstr "Регенериши"
 
 #: app/assets/javascripts/app/views/profile/password.jst.eco:111
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:254
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:262
 msgid "Regenerate recovery codes"
 msgstr "Регенериши шифре за опоравак"
 
@@ -15256,7 +15294,7 @@ msgstr "Генерисање повезаног чланка базе знања
 
 #: app/assets/javascripts/app/views/link/ticket/list.jst.eco:1
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:129
-#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:158
+#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:160
 msgid "Related tickets"
 msgstr "Повезани тикети"
 
@@ -15319,7 +15357,7 @@ msgstr "Удаљено"
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:258
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationPasswordCheck.vue:59
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:149
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:177
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:178
 #: app/frontend/shared/form/i18n/locales.ts:29
 msgid "Remove"
 msgstr "Обриши"
@@ -15332,7 +15370,7 @@ msgstr "Обриши %s"
 msgid "Remove a configured two-factor authentication method"
 msgstr "Уклони подешен метод двофакторске аутентификације"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue:170
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue:172
 msgid "Remove account link on %s"
 msgstr "Уклони повезани налог са %s"
 
@@ -15348,10 +15386,6 @@ msgstr "Уклони све методе"
 msgid "Remove all values"
 msgstr "Избриши све вредности"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/FieldFilterSelectorInput.vue:282
-msgid "Remove attribute"
-msgstr "Уклони атрибут"
-
 #: app/frontend/apps/desktop/entities/two-factor-configuration/plugins/authenticator-app.ts:22
 msgid "Remove authenticator app"
 msgstr "Уклони апликацију за аутентификацију"
@@ -15360,6 +15394,10 @@ msgstr "Уклони апликацију за аутентификацију"
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:379
 msgid "Remove checklist"
 msgstr "Обриши списак"
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/FieldFilterSelectorInput.vue:513
+msgid "Remove filter"
+msgstr "Уклони филтер"
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:121
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:202
@@ -15469,30 +15507,27 @@ msgstr "Замени постојеће ознаке"
 msgid "Replacement"
 msgstr "Замена"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue:59
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue:60
 msgid "Replacement agent"
 msgstr "Оператер на замени"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:61
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReplyPinned.vue:102
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReplyUnpinned.vue:53
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:69
-#: app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts:15
+#: app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts:18
 #: app/frontend/shared/entities/ticket-article/action/plugins/sms.ts:18
 #: app/frontend/shared/entities/ticket-article/action/plugins/telegram.ts:19
 #: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:74
 msgid "Reply"
 msgstr "Одговори"
 
-#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:90
+#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:91
 msgid "Reply all"
 msgstr "одговори свима"
 
 #: lib/validations/ticket_article_validator/whatsapp_message.rb:62
 msgid "Reply allowed only for open tickets"
 msgstr "Одговор је могућ само у отвореним тикетима"
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:61
-msgid "Reply to customer"
-msgstr "Одговори клијенту"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:478
 msgid "Reply to last article"
@@ -15554,7 +15589,7 @@ msgstr "Упути захтев за пријаву преко привреме�
 msgid "Requesting the Grant"
 msgstr "Упућивање захтева за сагласност"
 
-#: app/controllers/reports_controller.rb:66
+#: app/controllers/reports_controller.rb:65
 msgid "Required parameter 'downloadBackendSelected' is missing."
 msgstr "Недостаје обавезан параметар ’downloadBackendSelected’."
 
@@ -15604,7 +15639,7 @@ msgid "Reset feedback"
 msgstr "Ресетуј мишљења"
 
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee:35
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:138
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:146
 msgid "Reset overview order"
 msgstr "Поништи редослед прегледа"
 
@@ -15625,7 +15660,7 @@ msgid "Reset to default"
 msgstr "Поништи вредности"
 
 #: app/assets/javascripts/app/views/profile/notification.jst.eco:75
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:213
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:222
 msgid "Reset to default settings"
 msgstr "Поништи на подразумеване вредности"
 
@@ -15715,11 +15750,11 @@ msgstr ""
 "<br>\n"
 "<div>Ваш #{config.product_name} тим</div>\n"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:91
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:92
 msgid "Resetting the order of your ticket overviews failed."
 msgstr "Поништавање редоследа ваших прегледа тикета није успело."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:184
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReplyPinned.vue:83
 msgid "Resize article panel"
 msgstr "Промени висину панела чланка"
 
@@ -15731,11 +15766,11 @@ msgstr "Прошири колону"
 msgid "Resize frame"
 msgstr "Промени ширину рама"
 
-#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:381
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:400
 msgid "Resize side panel"
 msgstr "Промени ширину бочног панела"
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:156
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:153
 msgid "Resize sidebar"
 msgstr "Промени ширину бочне траке"
 
@@ -15767,7 +15802,7 @@ msgstr "Структура резултата"
 msgid "Result:"
 msgstr "Резултат:"
 
-#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:468
+#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:613
 msgid "Results"
 msgstr "Резултати"
 
@@ -16098,11 +16133,11 @@ msgstr "Сачувај конфигурацију"
 msgid "Save draft"
 msgstr "Сачувај нацрт"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:216
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:225
 msgid "Save notifications"
 msgstr "Сачувај обавештења"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue:172
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue:180
 msgid "Save out of office"
 msgstr "Сачувај ван канцеларије"
 
@@ -16173,7 +16208,7 @@ msgstr "Скролуј на доле за %s нов(их) одговор(а)"
 msgid "Scroll down to see new messages"
 msgstr "Скролујте на доле за нове поруке"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:264
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailScrollToBottomButton.vue:21
 msgid "Scroll to bottom"
 msgstr "Иди на дно"
 
@@ -16185,13 +16220,21 @@ msgstr "Скролуј до краја"
 msgid "Scroll to start"
 msgstr "Скролуј на почетак"
 
+#: app/frontend/apps/desktop/components/CommonTabs/TabsScrollList.vue:255
+msgid "Scroll towards end"
+msgstr "Скролуј према крају"
+
+#: app/frontend/apps/desktop/components/CommonTabs/TabsScrollList.vue:203
+msgid "Scroll towards start"
+msgstr "Скролуј према почетку"
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:169
 #: app/assets/javascripts/app/controllers/clues/first_steps_clues.coffee:32
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:201
 #: app/assets/javascripts/app/views/integration/idoit_object_selector.jst.eco:3
 #: app/assets/javascripts/app/views/knowledge_base/search_field_widget.jst.eco:1
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco:4
-#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:466
+#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:611
 #: app/frontend/apps/mobile/pages/search/routes.ts:8
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue:220
 msgid "Search"
@@ -16213,13 +16256,13 @@ msgstr "Недостаје URL за претрагу."
 msgid "Search URL is unsafe."
 msgstr "URL за претрагу је небезбедан."
 
-#: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailViewContent.vue:150
+#: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailViewContent.vue:152
 #: app/frontend/apps/desktop/pages/organization/components/OrganizationRelatedTickets/OrganizationTicketList.vue:94
 #: app/frontend/apps/desktop/pages/user/components/UserRelatedCustomerTickets/CustomerTicketList.vue:100
 msgid "Search all"
 msgstr "Претражи све"
 
-#: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:208
+#: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:220
 msgid "Search entity"
 msgstr "Предмет претраге"
 
@@ -16410,7 +16453,7 @@ msgstr "Тражи…"
 
 #: app/frontend/apps/desktop/components/User/UserPopoverWithTrigger/UserPopover.vue:75
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:112
-#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:126
+#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:128
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue:94
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:133
 #: db/seeds/object_manager_attributes.rb:1187
@@ -16437,7 +16480,7 @@ msgstr "Додатне организације не могу да обухва�
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/password.ts:10
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/tokenAccess.ts:10
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts:10
-#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:189
+#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:191
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:26
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:127
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:288
@@ -16551,7 +16594,7 @@ msgstr ""
 "Погледајте своје тикете унутар вашег омиљеног календара додавањем следећег "
 "URL у апликацију календара."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:278
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:283
 msgid ""
 "See your tickets from within your favorite calendar by adding the "
 "subscription URL to your calendar app."
@@ -16559,11 +16602,11 @@ msgstr ""
 "Погледајте своје тикете унутар вашег омиљеног календара додавањем URL за "
 "претплату у апликацију календара."
 
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:285
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:296
 msgid "Select"
 msgstr "Означи"
 
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:395
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:406
 msgid "Select %s result(s)"
 msgstr "Означи %s унос(а)"
 
@@ -16584,7 +16627,7 @@ msgstr "Изабери заједнички нацрт"
 msgid "Select Template"
 msgstr "Изабери шаблон"
 
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:396
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:407
 msgid "Select all %s results"
 msgstr "Означи свих %s уноса"
 
@@ -16593,7 +16636,7 @@ msgstr "Означи свих %s уноса"
 msgid "Select all entries"
 msgstr "Означи све уносе"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/FieldFilterSelectorInput.vue:308
+#: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/FieldFilterSelectorInput.vue:543
 msgid "Select attribute"
 msgstr "Изабери атрибут"
 
@@ -16634,7 +16677,7 @@ msgstr ""
 msgid "Select the type of ticket your are creating"
 msgstr "Изабери тип новог тикета"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:302
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:310
 msgid "Select this avatar"
 msgstr "Изабери овај аватар"
 
@@ -16675,7 +16718,15 @@ msgstr "Селективно (подразумевано)"
 msgid "Selector"
 msgstr "Избор услова"
 
-#: app/graphql/gql/types/input/selector/node_input_type.rb:30
+#: app/graphql/gql/types/input/selector/node_input_type.rb:29
+msgid "Selector exceeded maximum nesting depth."
+msgstr "Селектор је прешао максималну дозвољену дубину."
+
+#: app/graphql/gql/types/input/selector/node_input_type.rb:33
+msgid "Selector exceeded maximum number of nodes."
+msgstr "Селектор је прешао максималан број дозвољених чворова."
+
+#: app/graphql/gql/types/input/selector/node_input_type.rb:49
 msgid ""
 "Selector node must be either a subclause (operator + conditions) or a single "
 "condition."
@@ -16687,7 +16738,7 @@ msgstr ""
 msgid "Selects the ticket number generator module."
 msgstr "Одређује модул генератора броја тикета."
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:438
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:477
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:454
 #: app/frontend/apps/mobile/components/CommonSelect/CommonSelect.vue:197
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:287
@@ -16803,7 +16854,7 @@ msgstr "Имејл адреса за слање"
 msgid "Sending an email without a valid recipient is not possible."
 msgstr "Слање имејл поруке без исправног примаоца није могуће."
 
-#: app/services/service/beta_ui/send_feedback.rb:96
+#: app/services/service/beta_ui/send_feedback.rb:87
 msgid "Sending feedback failed, please try again later."
 msgstr "Неуспешно слање мишљења, молимо покушајте поново касније."
 
@@ -16898,7 +16949,7 @@ msgstr "Подеси као подразумевано"
 
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee:728
 #: app/assets/javascripts/app/views/profile/password.jst.eco:62
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:169
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:170
 msgid "Set as default"
 msgstr "Подеси као подразумевано"
 
@@ -16921,10 +16972,8 @@ msgid "Set caller ID of outbound calls based on destination caller ID."
 msgstr "Подеси ID позиваоца одлазних позива на основу ID примаоца."
 
 #: app/assets/javascripts/app/controllers/ticket_state.coffee:50
-#, fuzzy
-#| msgid "Set default for new tickets"
 msgid "Set default for closed tickets"
-msgstr "Постави као подразумевано за нове тикете"
+msgstr "Постави као подразумевано за затворене тикете"
 
 #: app/assets/javascripts/app/controllers/ticket_state.coffee:40
 msgid "Set default for follow-ups"
@@ -16963,7 +17012,7 @@ msgstr "Постави на јавно"
 
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:159
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:60
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:150
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:151
 msgid "Set up"
 msgstr "Постави"
 
@@ -17173,6 +17222,10 @@ msgstr "Прикажи мета податке"
 msgid "Show more"
 msgstr "Прикажи више"
 
+#: app/frontend/apps/desktop/components/CommonTabs/TabsOverflowMenu.vue:85
+msgid "Show more tabs"
+msgstr "Прикажи више језичака"
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:252
 msgid "Show next tab"
 msgstr "Прикажи следећи прозор"
@@ -17194,7 +17247,7 @@ msgstr ""
 msgid "Show previous tab"
 msgstr "Прикажи претходни прозор"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:61
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:69
 msgid ""
 "Show the BETA switch between the old and the new UI in the primary navigation"
 msgstr ""
@@ -17250,7 +17303,7 @@ msgstr "Приказани записи евиденције позива."
 msgid "Shown when the chat is closed."
 msgstr "Приказује се када је ћаскање затворено."
 
-#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:360
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:379
 msgid "Side panel footer"
 msgstr "Подножје бочног панела"
 
@@ -17489,11 +17542,11 @@ msgstr "Жао нам је, нису сва поља исправно попуњ
 msgid "Sorry, there is currently no CTI backend enabled."
 msgstr "Жао нам је, тренутно нема укључених CTI позадинских модула."
 
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:262
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:273
 msgid "Sort by %s ascending"
 msgstr "Сортирај по %s растуће"
 
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:266
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:277
 msgid "Sort by %s descending"
 msgstr "Сортирај по %s опадајуће"
 
@@ -17559,7 +17612,7 @@ msgstr "Основна група тикета."
 msgid "Start Editing"
 msgstr "Започни уређивање"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue:50
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue:51
 msgid "Start and end date"
 msgstr "Датум почетка и краја"
 
@@ -17614,23 +17667,20 @@ msgstr "Започните претрагу уносом текста или п�
 msgid "Start typing to find the ticket to merge into."
 msgstr "Унеси текст за претрагу тикета за спајање."
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:56
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:43
+#: app/frontend/shared/components/Form/fields/FieldEditor/extensions/TextModuleSuggestion.ts:76
 msgid "Start typing to search for text modules…"
 msgstr "Унеси текст за претрагу текстуалних исечака…"
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js:763
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:57
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:44
+#: app/frontend/shared/components/Form/fields/FieldEditor/extensions/UserMention.ts:67
 msgid "Start typing to search for users…"
 msgstr "Унеси текст за претрагу корисника…"
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js:658
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:55
 msgid "Start typing to search in Knowledge Base…"
 msgstr "Унеси текст за претрагу базе знања…"
 
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:42
+#: app/frontend/shared/components/Form/fields/FieldEditor/extensions/KnowledgeBaseSuggestion.ts:60
 msgid "Start typing to search in knowledge base…"
 msgstr "Унеси текст за претрагу базе знања…"
 
@@ -17642,16 +17692,15 @@ msgstr "Унеси појам за претрагу или нову ознаку
 msgid "Start typing to search or enter a phone number…"
 msgstr "Унеси појам за претрагу или број телефона…"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldCustomer/FieldCustomerWrapper.vue:103
+#: app/frontend/apps/desktop/components/Form/fields/FieldCustomer/FieldCustomerWrapper.vue:115
 #: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:49
 msgid "Start typing to search or enter an email address…"
 msgstr "Унеси појам за претрагу или имејл адресу…"
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:55
-#: app/frontend/apps/desktop/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:59
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:64
+#: app/frontend/apps/desktop/components/Form/fields/FieldCustomer/FieldCustomerWrapper.vue:116
 #: app/frontend/apps/desktop/components/Form/fields/FieldTags/FieldTagsWrapper.vue:37
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:385
-#: app/frontend/apps/mobile/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:46
 msgid "Start typing to search…"
 msgstr "Унеси текст за претрагу…"
 
@@ -17887,7 +17936,7 @@ msgstr "Претплатници"
 msgid "Subscription Settings"
 msgstr "Подешавања претплате"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:300
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:305
 msgid "Subscription settings"
 msgstr "Подешавања претплате"
 
@@ -17949,7 +17998,7 @@ msgid "Sync calendars with iCal feeds."
 msgstr "Синхронизуј календаре са iCal изворима."
 
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco:32
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:48
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:49
 msgid "Sync with computer"
 msgstr "Синхронизуј са рачунаром"
 
@@ -18190,7 +18239,9 @@ msgstr "Тестирање"
 msgid "Text"
 msgstr "Текст"
 
+#: app/assets/javascripts/app/controllers/text_module.coffee:3
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco:3
+#: db/seeds/permissions.rb:41
 msgid "Text Modules"
 msgstr "Текстуални исечци"
 
@@ -18207,12 +18258,11 @@ msgstr "Поље текста"
 msgid "Text missing"
 msgstr "Недостаје текст"
 
-#: app/assets/javascripts/app/controllers/text_module.coffee:3
+#: app/assets/javascripts/app/controllers/text_module.coffee:22
 msgid "Text module"
 msgstr "Текстуални исечак"
 
-#: app/assets/javascripts/app/controllers/text_module.coffee:3
-#: db/seeds/permissions.rb:41
+#: app/frontend/shared/components/Form/fields/FieldEditor/extensions/TextModuleSuggestion.ts:75
 msgid "Text modules"
 msgstr "Текстуални исечци"
 
@@ -18429,7 +18479,7 @@ msgstr "Није било могуће проверити податке WhatsAp
 msgid "The access token could not be created."
 msgstr "Није било могуће генерисати приступни кључ."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue:158
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue:160
 msgid "The account link was successfully removed!"
 msgstr "Повезани налог је успешно уклоњен!"
 
@@ -18485,7 +18535,7 @@ msgstr ""
 "Аутоматски асистент је укључен. Молимо користите наведени URL аутоматског "
 "асистента."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:252
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:253
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:129
 msgid "The avatar could not be deleted."
 msgstr "Није било могуће обрисати аватар."
@@ -18494,11 +18544,11 @@ msgstr "Није било могуће обрисати аватар."
 msgid "The avatar could not be fetched."
 msgstr "Није било могуће преузети аватар."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:218
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:219
 msgid "The avatar could not be selected."
 msgstr "Није било могуће одабрати аватар."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:159
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:160
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:82
 msgid "The avatar could not be uploaded."
 msgstr "Није било могуће отпремити аватар."
@@ -18739,7 +18789,7 @@ msgid ""
 msgstr ""
 "Опис одређује улогу AI агента. Користи се да опише његову сврху и понашање."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:71
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:72
 msgid "The device could not be deleted."
 msgstr "Није било могуће обрисати уређај."
 
@@ -18748,7 +18798,7 @@ msgid "The divider between TicketHook and ticket number. E. g. ': '."
 msgstr "Сепаратор између прикључка и броја тикета. Нпр. ’: ’."
 
 #: app/assets/javascripts/app/controllers/_ai/provider.coffee:151
-#: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:83
+#: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:90
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1674
 msgid "The download could not be started. Please try again later."
 msgstr ""
@@ -19041,7 +19091,7 @@ msgstr "Није било могуће освежити објекат."
 msgid "The online notification could not be marked as seen."
 msgstr "Није било могуће означити обавештење као прочитано."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:100
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:101
 msgid "The order of your ticket overviews was reset."
 msgstr "Редослед ваших прегледа тикета је поништен."
 
@@ -19075,7 +19125,7 @@ msgstr "Лозинка је неисправна."
 msgid "The password reset request was successful."
 msgstr "Захтев за поништавање лозинке је примљен."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:123
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:124
 msgid "The personal access token could not be deleted."
 msgstr "Није било могуће уклонити приступни кључ."
 
@@ -19311,7 +19361,7 @@ msgstr "Није пронађен обавезни параметар ’group_i
 msgid "The required parameter 'id' is missing."
 msgstr "Није пронађен обавезни параметар ’id’."
 
-#: lib/search_index_backend.rb:685
+#: lib/search_index_backend.rb:703
 msgid "The required parameter 'key' is missing."
 msgstr "Није пронађен обавезни параметар ’key’."
 
@@ -19367,7 +19417,7 @@ msgstr "Није пронађен обавезни параметар ’ticket_
 msgid "The required parameter 'user_id' is missing."
 msgstr "Није пронађен обавезни параметар ’user_id’."
 
-#: lib/search_index_backend.rb:686
+#: lib/search_index_backend.rb:704
 msgid "The required parameter 'value' is missing."
 msgstr "Није пронађен обавезни параметар ’value’."
 
@@ -19375,7 +19425,7 @@ msgstr "Није пронађен обавезни параметар ’value�
 msgid "The required value 'group_id' is missing."
 msgstr "Није пронађена обавезна вредност ’group_id’."
 
-#: lib/ai/provider.rb:69
+#: lib/ai/provider.rb:75
 msgid "The response could not be processed."
 msgstr "Није било могуће обрадити одговор."
 
@@ -19506,10 +19556,6 @@ msgstr "Није пронађен изворни тикет."
 #: app/assets/javascripts/app/views/channel_account/duplicate_email_address.jst.eco:5
 msgid "The specified email address is already in use by another account."
 msgstr "Одабрана имејл адреса се већ користи за други налог."
-
-#: app/frontend/shared/form/validation/rules/date-range.ts:18
-msgid "The start date must precede or match end date."
-msgstr "Датум почетка мора бити пре или исти као датум краја."
 
 #: app/models/ai/agent/type/custom_ai_agent.rb:45
 msgid ""
@@ -19739,7 +19785,7 @@ msgstr "Њихови тикети"
 
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee:70
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco:12
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:63
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:71
 msgid "Theme"
 msgstr "Тема"
 
@@ -19764,11 +19810,11 @@ msgstr ""
 msgid "There are no business hours configured."
 msgstr "Нема подешеног радног времена."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue:38
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue:40
 msgid "There are no enabled third-party authentication providers."
 msgstr "Нема укључене аутентификације преко трећег лица."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:39
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:40
 msgid "There are no enabled two-factor authentication methods."
 msgstr "Нема укључених метода двофакторске аутентификације."
 
@@ -19976,8 +20022,8 @@ msgstr ""
 "Ова класа ће бити додата дугмету приликом иницијализације и биће уклоњена "
 "када се веза за ћаскање успостави."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:154
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:206
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:161
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:211
 msgid "This device"
 msgstr "Овај уређај"
 
@@ -20336,6 +20382,14 @@ msgstr ""
 "Овај ресурс не може бити закључан зато што је већ закључан од стране другог "
 "процеса."
 
+#: app/frontend/apps/desktop/composables/responsiveness/useMobileDetection.ts:29
+msgid ""
+"This screen size isn't fully supported for the desktop layout. For the best "
+"experience, switch to the mobile layout."
+msgstr ""
+"Ова величина екрана није у потпуности подржана у основном приказу. За "
+"најоптималније искуство, пређите на мобилни приказ."
+
 #: app/assets/javascripts/app/controllers/_integration/github.coffee:6
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee:6
 #: app/assets/javascripts/app/controllers/_integration/idoit.coffee:6
@@ -20545,7 +20599,7 @@ msgstr "четвртак"
 #: app/assets/javascripts/app/models/signature.coffee:15
 #: app/assets/javascripts/app/models/text_module.coffee:15
 #: app/assets/javascripts/app/views/time_accounting/accounted_time.jst.eco:19
-#: app/frontend/apps/desktop/components/Search/plugins/ticket.ts:14
+#: app/frontend/apps/desktop/components/Search/plugins/ticket.ts:15
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/information.ts:10
 #: app/frontend/apps/desktop/pages/ticket/routes.ts:10
 #: app/frontend/apps/mobile/pages/ticket/routes.ts:10
@@ -20787,7 +20841,7 @@ msgstr "Клијент тикета је успешно освежен."
 msgid "Ticket escalation"
 msgstr "Ескалација тикета"
 
-#: app/assets/javascripts/app/lib/mixins/ticket_mass_updatable.coffee:33
+#: app/assets/javascripts/app/lib/mixins/ticket_mass_updatable.coffee:34
 msgid "Ticket failed to save: %s"
 msgstr "Неуспешно снимање тикета: %s"
 
@@ -20816,7 +20870,7 @@ msgstr "Информације тикета"
 msgid "Ticket merged successfully"
 msgstr "Тикет је успешно спојен"
 
-#: app/frontend/apps/desktop/components/Search/plugins/ticket.ts:32
+#: app/frontend/apps/desktop/components/Search/plugins/ticket.ts:40
 msgid "Ticket number"
 msgstr "Број тикета"
 
@@ -20942,7 +20996,7 @@ msgid "Ticket update failed."
 msgstr "Неуспело освежавање тикета."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/useTicketEditTitle.ts:26
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:528
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:542
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:161
 msgid "Ticket updated successfully."
 msgstr "Тикет је успешно освежен."
@@ -21313,8 +21367,8 @@ msgstr "Да бисте освежили приказ, молимо унесит
 msgid "To work on Tickets."
 msgstr "За рад на тикетима."
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:45
-#: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateTimeInput.vue:42
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:48
+#: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateTimeInput.vue:48
 #: public/assets/chat/chat-no-jquery.coffee:215
 #: public/assets/chat/chat.coffee:213
 msgid "Today"
@@ -21369,7 +21423,7 @@ msgid "Token Access"
 msgstr "Приступ путем кључа"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/tokenAccess.ts:8
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:51
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:52
 msgid "Token access"
 msgstr "Приступ путем кључа"
 
@@ -21393,7 +21447,7 @@ msgstr "Кључ за надгледање."
 msgid "Token is invalid!"
 msgstr "Неисправан кључ!"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:43
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:44
 msgid "Token-based API access has been disabled by the administrator."
 msgstr "Администратор је искључио могућност приступа API путем кључа."
 
@@ -21630,7 +21684,7 @@ msgid "Two-factor Authentication Methods"
 msgstr "Методи двофакторске аутентификације"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts:8
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:72
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:73
 msgid "Two-factor authentication"
 msgstr "Двофакторска аутентификација"
 
@@ -21659,12 +21713,12 @@ msgstr "Није било могуће покренути метод двофа�
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee:191
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:170
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:132
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:133
 msgid "Two-factor authentication method was removed."
 msgstr "Метод двофакторске аутентификације је уклоњен."
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee:221
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:108
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:109
 msgid "Two-factor authentication method was set as default."
 msgstr "Метод двофакторске аутентификације је постављен као подразумеван."
 
@@ -21748,11 +21802,11 @@ msgstr "URL адреса (embeddings)"
 msgid "URL (OCR)"
 msgstr "URL (OCR)"
 
-#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkBottomDrawer.vue:137
+#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkBottomDrawer.vue:139
 msgid "Unassign owner"
 msgstr "Скини доделу власника"
 
-#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkBottomDrawer.vue:170
+#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkBottomDrawer.vue:172
 msgid "Unassign owner & move to group"
 msgstr "Скини доделу власника и пребаци у групу"
 
@@ -21771,11 +21825,14 @@ msgid "Uncheck item"
 msgstr "Одзначи задатак"
 
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco:12
+#: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/operators/within-last-relative.ts:45
 msgid "Unit"
 msgstr "Јединица"
 
+#: app/assets/javascripts/app/views/profile/devices.jst.eco:22
 #: app/frontend/apps/desktop/components/CommonHistoryFlyout/useHistoryEvents.ts:39
 #: app/frontend/apps/desktop/components/CommonHistoryFlyout/utils/eventHelpers.ts:11
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:128
 #: app/models/user_device/notification_presenter.rb:11
 msgid "Unknown"
 msgstr "Непознато"
@@ -21809,11 +21866,11 @@ msgstr "Развежи објекат"
 msgid "Unlock"
 msgstr "Откључај"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:235
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReplyPinned.vue:112
 msgid "Unpin this panel"
 msgstr "Откачи овај панел"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:276
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailScrollToBottomButton.vue:33
 msgid "Unread messages count"
 msgstr "Број непрочитаних порука"
 
@@ -21833,9 +21890,9 @@ msgstr "Несачуване измене"
 msgid "Unseen notifications count"
 msgstr "Број непрочитаних обавештења"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:566
-#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:264
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:328
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:575
+#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:268
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:332
 msgid "Unselect option"
 msgstr "Опозови избор опције"
 
@@ -21878,12 +21935,12 @@ msgstr ""
 "Већ %s% овог језика је преведено. Молимо помозите нам да побољшамо Zammad и "
 "заокружимо превод."
 
-#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:89
+#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:93
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket_summary.coffee:6
 msgid "Upcoming Events"
 msgstr "Предстојећи догађаји"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummary.vue:96
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummary.vue:110
 msgid "Upcoming events"
 msgstr "Предстојећи догађаји"
 
@@ -22177,17 +22234,17 @@ msgstr ""
 msgid "Updating Database"
 msgstr "Освежавање базе података"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:76
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:77
 msgid "Updating the order of your ticket overviews failed."
 msgstr "Чување редоследа ваших прегледа тикета није успело."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:244
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:245
 msgid "Updating your calendar subscription settings failed."
 msgstr "Није успело чување ваших подешавања претплате календарских тикета."
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco:18
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco:9
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:359
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:367
 msgid "Upload"
 msgstr "Отпреми"
 
@@ -22295,7 +22352,7 @@ msgstr "Користи се било где"
 msgid "Used anywhere (admin only)"
 msgstr "Користи се било где (само за администраторе)"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:145
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:152
 msgid "Used devices"
 msgstr "Коришћени уређаји"
 
@@ -22498,7 +22555,7 @@ msgid "UserDevice could not be found."
 msgstr "Кориснички уређај није пронађен."
 
 #: app/assets/javascripts/app/models/webhook.coffee:12
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue:78
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue:80
 msgid "Username"
 msgstr "Корисничко име"
 
@@ -22535,8 +22592,9 @@ msgstr "Корисничко име проксија за везу."
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/kayako.ts:17
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/otrs.ts:17
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/zendesk.ts:17
-#: app/frontend/apps/mobile/pages/search/plugins/user.ts:9 db/seeds/groups.rb:5
-#: db/seeds/permissions.rb:11
+#: app/frontend/apps/mobile/pages/search/plugins/user.ts:9
+#: app/frontend/shared/components/Form/fields/FieldEditor/extensions/UserMention.ts:66
+#: db/seeds/groups.rb:5 db/seeds/permissions.rb:11
 msgid "Users"
 msgstr "Корисници"
 
@@ -22575,7 +22633,7 @@ msgstr ""
 "колеге** и освежити њихове тикете (уколико је организација постављена на "
 "„заједничку”, што је могуће одредити по свакој организацији)."
 
-#: app/frontend/shared/components/CommonUserAvatar/CommonUserAvatar.vue:117
+#: app/frontend/shared/components/CommonUserAvatar/CommonUserAvatar.vue:118
 #: db/seeds/object_manager_attributes.rb:1526
 msgid "VIP"
 msgstr "VIP"
@@ -22604,6 +22662,7 @@ msgstr "Неуспешна валидација: %{errors}"
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:109
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco:101
 #: app/assets/javascripts/app/views/settings/form.jst.eco:7
+#: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/operators/within-last-relative.ts:39
 msgid "Value"
 msgstr "Вредност"
 
@@ -23083,7 +23142,7 @@ msgstr "Радни ток"
 msgid "Workflows"
 msgstr "Радни токови"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:104
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:112
 msgid "Would you like to give us feedback on the BETA UI?"
 msgstr "Да ли желите да дате мишљење о BETA интерфејсу?"
 
@@ -23155,7 +23214,7 @@ msgid "Yes, add attachments now"
 msgstr "Да, додај прилог одмах"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:5
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:438
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:452
 msgid "Yes, open the checklist"
 msgstr "Да, прикажи списак"
 
@@ -23171,7 +23230,7 @@ msgstr "Немате довољен приступ овом објекту (%s).
 msgid "You are on waiting list position <strong>%s</strong>."
 msgstr "Ви сте тренутно <strong>%s.</strong> у реду за чекање."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:78
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:86
 msgid "You are part of the BETA UI feedback program."
 msgstr "Учествујете у програму BETA интерфејса."
 
@@ -23196,7 +23255,7 @@ msgstr "Добијате ово зато што сте власник овог �
 msgid "You are receiving this because you were mentioned in this ticket."
 msgstr "Добијате ово зато што сте поменути у овом тикету."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:37
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:38
 msgid "You can always re-join later."
 msgstr "Увек можете поново приступити."
 
@@ -23302,7 +23361,7 @@ msgstr ""
 "функције претраге, као и било који други тикет."
 
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:4
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:169
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:170
 msgid ""
 "You can generate a personal access token for each application you use that "
 "needs access to the Zammad API."
@@ -23310,7 +23369,7 @@ msgstr ""
 "Можете генерисати лични приступни кључ за сваку апликацију коју користите а "
 "којој је неопходан приступ Zammad API."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLocale.vue:33
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLocale.vue:42
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:159
 msgid "You can help translating Zammad."
 msgstr "Можете помоћи око Zammad превода."
@@ -23409,7 +23468,7 @@ msgstr ""
 "на систему који је већ у продукцији без било каквог губитка података."
 
 #: app/assets/javascripts/app/controllers/_plugin/navigation.coffee:185
-#: app/frontend/apps/desktop/components/BetaUi/composables/useBetaUi.ts:80
+#: app/frontend/apps/desktop/components/BetaUi/composables/useBetaUi.ts:73
 msgid ""
 "You can switch between the old and the New BETA UI at any moment in the "
 "Profile settings > New BETA UI section."
@@ -23548,7 +23607,7 @@ msgstr "Морате да дозволите приступ вашој каме�
 msgid "You have unchecked items in the checklist."
 msgstr "Имате неодзначене задатке на списку."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:433
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:447
 msgid ""
 "You have unchecked items in the checklist. Do you want to handle them before "
 "closing this ticket?"
@@ -23686,23 +23745,23 @@ msgstr ""
 msgid "Your answer will be submitted to Zammad GmbH in an anonymized way."
 msgstr "Ваш одговор ће бити анонимно послат Zammad GmbH."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:172
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:173
 msgid "Your avatar"
 msgstr "Ваш аватар"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:228
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:229
 msgid "Your avatar has been changed."
 msgstr "Ваш аватар је промењен."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:260
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:261
 msgid "Your avatar has been deleted."
 msgstr "Ваш аватар је обрисан."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:172
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:173
 msgid "Your avatar has been uploaded."
 msgstr "Није било могуће отпремити ваш аватар."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:252
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:253
 msgid "Your calendar subscription settings were updated."
 msgstr "Ваша подешавања претплате календарских тикета су сачувана."
 
@@ -23731,7 +23790,7 @@ msgid "Your feedback could not be recorded, please try again later."
 msgstr ""
 "Ваше мишљење није могло бити снимљено, молимо покушајте поново касније."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLocale.vue:23
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLocale.vue:32
 msgid "Your language"
 msgstr "Ваш језик"
 
@@ -23743,7 +23802,7 @@ msgstr "Ваш лични приступни кључ"
 msgid "Your rating of the new BETA UI"
 msgstr "Ваша оцена новог BETA интерфејса"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:28
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:29
 msgid "Your theme has been updated."
 msgstr "Ваш избор теме је освежен."
 
@@ -24099,7 +24158,7 @@ msgstr "не садржи све"
 
 #: lib/validations/object_manager/attribute_validator/external_data_source.rb:19
 msgid "contains an invalid \"label\" or \"value\" entry"
-msgstr ""
+msgstr "садржи неважећи унос „label” или „value”"
 
 #: lib/validations/object_manager/attribute_validator/option.rb:23
 msgid "contains invalid option: %{option}"
@@ -24114,6 +24173,7 @@ msgstr "не садржи"
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:32
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:216
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:59
+#: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/operators/contains-one.ts:6
 msgid "contains one"
 msgstr "садржи једно"
 
@@ -24180,6 +24240,12 @@ msgstr "датум не може бити пре објављеног"
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee:76
 msgid "day"
 msgstr "дан"
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/operators/within-last-relative.ts:10
+#, fuzzy
+#| msgid "Day(s)"
+msgid "day(s)"
+msgstr "Дан(и)"
 
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee:76
 msgid "days"
@@ -24288,7 +24354,7 @@ msgstr "нпр. user@example.com"
 msgid "e.g."
 msgstr "нпр."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue:45
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue:46
 msgid "e.g. Easter holiday"
 msgstr "нпр. Ускршњи празници"
 
@@ -24447,10 +24513,11 @@ msgid "hour"
 msgstr "сат"
 
 #: app/assets/javascripts/app/lib/mixins/time_accounting_unit.coffee:9
+#: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/operators/within-last-relative.ts:9
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:47
-#: app/frontend/shared/entities/ticket/composables/useTicketAccountedTime.ts:19
+#: app/frontend/shared/entities/ticket/composables/useTicketAccountedTime.ts:16
 msgid "hour(s)"
-msgstr "сат(a)"
+msgstr "сат(и)"
 
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee:98
 #: app/assets/javascripts/app/views/sla/index.jst.eco:37
@@ -24559,6 +24626,10 @@ msgstr "у сатима"
 msgid "in process"
 msgstr "у обради"
 
+#: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/operators/in-range.ts:6
+msgid "in range"
+msgstr "у опсегу"
+
 #: app/assets/javascripts/app/controllers/_ui_element/active.coffee:5
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1434
 #: app/assets/javascripts/app/models/webhook.coffee:38
@@ -24580,6 +24651,7 @@ msgstr "интерна база података"
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:28
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:96
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:55
+#: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/operators/is.ts:6
 msgid "is"
 msgstr "је"
 
@@ -24776,6 +24848,10 @@ msgstr "пронађен(a/их) резултат(а)"
 msgid "matches regex"
 msgstr "задовољава регуларни израз"
 
+#: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/operators/in-range.ts:35
+msgid "max"
+msgstr "макс."
+
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco:69
 #: app/assets/javascripts/app/views/cti/caller_log_avatar.jst.eco:2
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco:23
@@ -24795,13 +24871,18 @@ msgstr "спојено са"
 msgid "message"
 msgstr "порука"
 
+#: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/operators/in-range.ts:29
+msgid "min"
+msgstr "мин."
+
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee:120
 msgid "minute"
 msgstr "минут"
 
 #: app/assets/javascripts/app/lib/mixins/time_accounting_unit.coffee:17
+#: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/operators/within-last-relative.ts:8
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:51
-#: app/frontend/shared/entities/ticket/composables/useTicketAccountedTime.ts:23
+#: app/frontend/shared/entities/ticket/composables/useTicketAccountedTime.ts:20
 msgid "minute(s)"
 msgstr "минут(а)"
 
@@ -24809,9 +24890,15 @@ msgstr "минут(а)"
 msgid "minutes"
 msgstr "минут(а)"
 
+#: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/operators/within-last-relative.ts:12
+#, fuzzy
+#| msgid "Month(s)"
+msgid "month(s)"
+msgstr "Месец(и)"
+
 #: lib/validations/object_manager/attribute_validator/external_data_source.rb:13
 msgid "must be a hash with \"label\" and \"value\" keys"
-msgstr ""
+msgstr "мора да буде структура са кључевима „label” и „value”"
 
 #: app/models/knowledge_base.rb:244
 msgid "must be a valid path or domain"
@@ -24902,7 +24989,7 @@ msgstr "нови,beta,интерфејс,изглед"
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketSubscribers.vue:56
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:82
 #: app/frontend/shared/components/ObjectAttributes/attributes/AttributeBoolean/AttributeBoolean.vue:13
-#: app/frontend/shared/entities/object-attributes/form/resolver/fields/active.ts:15
+#: app/frontend/shared/entities/object-attributes/form/resolver/fields/active.ts:13
 #: db/seeds/settings.rb:615
 msgid "no"
 msgstr "не"
@@ -25004,6 +25091,10 @@ msgstr "или"
 msgid "or sign in using"
 msgstr "или се пријави путем"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:131
+msgid "or use the reply actions on articles."
+msgstr "или користите акције одговора на чланцима."
+
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/ticketOverviews.ts:25
 msgid "order,sort,overview,ticket,sorting"
 msgstr "редослед,сортирање,преглед,тикет,разврставање"
@@ -25040,7 +25131,7 @@ msgstr "објављено"
 
 #: app/assets/javascripts/app/lib/mixins/time_accounting_unit.coffee:13
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:49
-#: app/frontend/shared/entities/ticket/composables/useTicketAccountedTime.ts:21
+#: app/frontend/shared/entities/ticket/composables/useTicketAccountedTime.ts:18
 msgid "quarter-hour(s)"
 msgstr "четврт сат(а)"
 
@@ -25128,7 +25219,7 @@ msgstr "ред"
 msgid "run macro"
 msgstr "покрени макро"
 
-#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:112
+#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:122
 msgid "second level navigation sidebar"
 msgstr "средња трака другог нивоа навигације"
 
@@ -25136,7 +25227,7 @@ msgstr "средња трака другог нивоа навигације"
 msgid "select"
 msgstr "изабери"
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:329
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:368
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:450
 msgid "select all options"
 msgstr "изабери све опције"
@@ -25408,6 +25499,12 @@ msgstr "одмор,празник,замена,одсуство"
 msgid "web"
 msgstr "веб"
 
+#: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/operators/within-last-relative.ts:11
+#, fuzzy
+#| msgid "Week(s)"
+msgid "week(s)"
+msgstr "Недеља(е)"
+
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco:15
 msgid "welcome message"
 msgstr "порука добродошлице"
@@ -25430,6 +25527,7 @@ msgstr "биће обрисано"
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:71
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
+#: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/operators/within-last-relative.ts:21
 msgid "within last (relative)"
 msgstr "у последњих (релативно)"
 
@@ -25439,6 +25537,12 @@ msgstr "у последњих (релативно)"
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 msgid "within next (relative)"
 msgstr "у следећих (релативно)"
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/operators/within-last-relative.ts:13
+#, fuzzy
+#| msgid "Year(s)"
+msgid "year(s)"
+msgstr "Година(е)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/boolean.coffee:9
 #: app/assets/javascripts/app/controllers/time_accounting_types.coffee:22
@@ -25450,7 +25554,7 @@ msgstr "у следећих (релативно)"
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketSubscribers.vue:55
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:81
 #: app/frontend/shared/components/ObjectAttributes/attributes/AttributeBoolean/AttributeBoolean.vue:13
-#: app/frontend/shared/entities/object-attributes/form/resolver/fields/active.ts:14
+#: app/frontend/shared/entities/object-attributes/form/resolver/fields/active.ts:12
 #: db/seeds/object_manager_attributes.rb:1534 db/seeds/settings.rb:614
 msgid "yes"
 msgstr "да"
@@ -25494,6 +25598,18 @@ msgstr "…целог текстуалног поља"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ Време чекања данас"
+
+#~ msgid "The start date must precede or match end date."
+#~ msgstr "Датум почетка мора бити пре или исти као датум краја."
+
+#~ msgid "Remove attribute"
+#~ msgstr "Уклони атрибут"
+
+#~ msgid "Reply to customer"
+#~ msgstr "Одговори клијенту"
+
+#~ msgid "Additional ticket edit actions"
+#~ msgstr "Додатне радње уређивања тикета"
 
 #~ msgid "Max %s result(s) selected"
 #~ msgstr "%s макс. означених уноса"
@@ -25572,9 +25688,6 @@ msgstr "∅ Време чекања данас"
 
 #~ msgid "Till"
 #~ msgstr "До"
-
-#~ msgid "Hide"
-#~ msgstr "Сакриј"
 
 #~ msgid "Needed"
 #~ msgstr "Неопходно"
