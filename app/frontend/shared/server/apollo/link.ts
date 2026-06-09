@@ -7,6 +7,7 @@ import { getMainDefinition } from '@apollo/client/utilities'
 import ActionCableLink from 'graphql-ruby-client/subscriptions/ActionCableLink'
 
 import { consumer } from '#shared/server/action_cable/consumer.ts'
+import getUuid from '#shared/utils/getUuid.ts'
 
 import csrfLink from './link/csrf.ts'
 import debugLink from './link/debug.ts'
@@ -81,7 +82,9 @@ const requiresHttpLink = (op: Operation) => {
   return operationIsLoginLogout(definition)
 }
 
-const actionCableLink = new ActionCableLink({ cable: consumer })
+// Because "crypto" is only available in secure context we add a fallback.
+const createChannelId = (): string => globalThis.crypto?.randomUUID?.() ?? getUuid()
+const actionCableLink = new ActionCableLink({ cable: consumer, createChannelId })
 
 const splitLink = ApolloLink.split(requiresHttpLink, httpLink, actionCableLink)
 
