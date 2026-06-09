@@ -5,7 +5,7 @@
       <%- @Icon('checkbox', 'icon-unchecked') %>
       <%- @Icon('checkbox-checked', 'icon-checked') %>
       <span class="label-text"><%- @Ti(role.displayName()) %></span>
-      <% if role.note: %><span class="help-text"><%- @T(role.note) %></span><% end %>
+      <% if role.note: %><span class="help-text"><%- @T(App.Utils.html2text(role.note)) %></span><% end %>
     </label>
   <% end %>
 </div>
