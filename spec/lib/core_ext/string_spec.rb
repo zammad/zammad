@@ -200,6 +200,19 @@ RSpec.describe String do
       TEXT
     end
 
+    it 'strips <a> elements to plain text without included references' do
+      expect(<<~HTML.chomp.html2text(true)).to eq(<<~TEXT.chomp)
+
+        <div><a href="https://zammad.org">Best Tool of the World</a>
+        some other text</div>
+        <div><a href="https://zammad.org">https://zammad.org</a></div>
+        <div>
+      HTML
+        Best Tool of the World (######LINKRAW:https://zammad.org######)some other text
+        ######LINKEXT:https://zammad.org/TEXT:https://zammad.org######
+      TEXT
+    end
+
     context 'with link_style: :markdown option' do
       it 'converts <a> elements to markdown style links' do
         html = '<p>Check out <a href="https://example.com">our website</a> for more info.</p>'
@@ -234,6 +247,28 @@ RSpec.describe String do
       it 'strips HTML tags from link text' do
         html = '<p>Check <a href="https://example.com"><strong>bold link</strong></a> out.</p>'
         expect(html.html2text(false, false, link_style: :markdown)).to eq('Check [bold link](https://example.com) out.')
+      end
+    end
+
+    context 'with link_style: :plain option' do
+      it 'converts <a> elements to plain text (string_only = false)' do
+        html = '<p>Check out <a href="https://example.com">our website</a> for more info.</p>'
+        expect(html.html2text(false, link_style: :plain)).to eq('Check out our website for more info.')
+      end
+
+      it 'converts <a> elements to plain text (string_only = true)' do
+        html = '<p>Check out <a href="https://example.com">our website</a> for more info.</p>'
+        expect(html.html2text(true, link_style: :plain)).to eq('Check out our website for more info.')
+      end
+
+      it 'converts <a> elements to plain link (w/o tags)' do
+        html = '<p>Check out our website at https://example.com for more info.</p>'
+        expect(html.html2text(true, link_style: :plain)).to eq('Check out our website at https://example.com for more info.')
+      end
+
+      it 'converts <a> elements to plain link (with tags)' do
+        html = '<p>Check out our website at <a href="https://example.com">https://example.com</a> for more info.</p>'
+        expect(html.html2text(true, link_style: :plain)).to eq('Check out our website at https://example.com for more info.')
       end
     end
 

@@ -91,7 +91,9 @@ class String
   options:
     string_only - if true, returns simplified text without link references
     strict - if true, preserves some formatting
-    link_style - :numbered (default) uses [1] references, :markdown uses [text](url) format
+    link_style - :numbered (default) uses [1] references
+                 :markdown uses [text](url) format
+                 :plain leaves link text in place if present, otherwise only the link itself
 
   returns
 
@@ -136,7 +138,9 @@ class String
           text_compare.sub!(%r{/$}, '')
         end
 
-        if link_compare.present? && text_compare.blank?
+        if link_style == :plain
+          text.presence || link.presence || ''
+        elsif link_compare.present? && text_compare.blank?
           link
         elsif (link_compare.blank? && text_compare.present?) || (link_compare && link_compare =~ %r{^mailto}i)
           text
@@ -164,6 +168,21 @@ class String
             link
           elsif link.blank? && text.present?
             text
+          else
+            ''
+          end
+        end
+      elsif link_style == :plain
+        string.gsub!(%r{<a[[:space:]]+(|\S+[[:space:]]+)href=("|')(.+?)("|')([[:space:]]*|[[:space:]]+[^>]*)>(.+?)<[[:space:]]*/a[[:space:]]*>}mxi) do |_placeholder|
+          link = $3
+          text = $6
+          text.gsub!(%r{<.+?>}, '')
+          text.presence&.strip!
+
+          if text.present?
+            text
+          elsif link.present? && text.blank?
+            link
           else
             ''
           end
