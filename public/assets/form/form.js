@@ -115,6 +115,15 @@ $(function() {
         'Your Message…': 'Vaše zpráva…',
         'Your Name': 'Vaše jméno',
       },
+      'da': {
+        'Attachments': 'Vedhæftede',
+        'Email': 'Email',
+        'Message': 'Meddelelse',
+        'Name': 'Navn',
+        'Your Email': 'Din email',
+        'Your Message…': 'Din Meddelelse…',
+        'Your Name': 'Dit navn',
+      },
       'de': {
         'Attachments': 'Anhänge',
         'Email': 'E-Mail',
@@ -312,6 +321,15 @@ $(function() {
         'Your Email': 'Ваша електронна пошта',
         'Your Message…': 'Ваше повідомлення…',
         'Your Name': 'Ваше ім\'я',
+      },
+      'vi': {
+        'Attachments': 'Các đính kèm',
+        'Email': 'E-Mail',
+        'Message': 'Thông báo',
+        'Name': 'Tên',
+        'Your Email': 'E-Mail',
+        'Your Message…': 'Thông báo',
+        'Your Name': 'Tên đầy đủ',
       },
       'zh-cn': {
         'Attachments': '附件',
