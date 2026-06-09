@@ -329,7 +329,7 @@ useOnEmitter('primary-sidebar-transition', () => initializeHeaderWidths())
           <slot :name="`column-header-${tableAttribute.name}`" :attribute="tableAttribute">
             <!-- eslint-disable vuejs-accessibility/no-static-element-interactions,vuejs-accessibility/mouse-events-have-key-events-->
             <div
-              v-tooltip.noAriaLabel="getToolbarLabel(tableAttribute)"
+              v-tooltip="getToolbarLabel(tableAttribute)"
               class="flex items-center gap-1"
               :class="[
                 cellAlignmentClasses[tableAttribute.columnPreferences?.alignContent || 'left'],

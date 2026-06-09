@@ -118,6 +118,8 @@ describe('TooltipDirective', () => {
     })
 
     it('does not show tooltip when the element is not truncated', async () => {
+      vi.useFakeTimers()
+
       const wrapper = renderComponent({
         template: `
           <div style="width: 300px; display: flex;">
@@ -136,9 +138,33 @@ describe('TooltipDirective', () => {
       await wrapper.events.hover(target)
 
       // Give the 300ms tooltip delay a chance to fire without actually showing.
-      await new Promise((resolve) => setTimeout(resolve, 350))
+      vi.advanceTimersByTime(350)
 
       expect(wrapper.queryByRole('tooltip', { hidden: true })).not.toBeInTheDocument()
+
+      vi.useRealTimers()
+    })
+  })
+
+  describe('supportive modifier', () => {
+    it('exposes the message via aria-description instead of aria-label', async () => {
+      const wrapper = renderComponent({
+        template: `
+          <div v-tooltip.supportive="'Hello, Tooltip'">Foo Test World</div>
+        `,
+      })
+
+      const target = wrapper.getByText('Foo Test World')
+
+      expect(target).not.toHaveAttribute('aria-label')
+      expect(target).toHaveAttribute('aria-description', 'Hello, Tooltip')
+
+      await wrapper.events.hover(target)
+
+      await waitFor(() => expect(wrapper.queryByText('Hello, Tooltip')).toBeInTheDocument())
+
+      // The message is a description, not an accessible name/label.
+      expect(wrapper.queryByLabelText('Hello, Tooltip')).not.toBeInTheDocument()
     })
   })
 })

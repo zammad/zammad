@@ -73,6 +73,16 @@ RSpec.describe Service::Translation::Search do
           it_behaves_like 'returns filtered result', :macro, 'name', 2
         end
 
+        context 'with custom public link' do
+          context 'with title attribute' do
+            it_behaves_like 'returns filtered result', :public_link, 'title', 2
+          end
+
+          context 'with description attribute' do
+            it_behaves_like 'returns filtered result', :public_link, 'description', 2
+          end
+        end
+
         context 'with custom object attribute' do
           before do
             create(:object_manager_attribute_select, display: "Select #{query}", data_option_options: [{ name: query, value: query }])

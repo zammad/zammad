@@ -6,8 +6,30 @@ import { useAppName } from '#shared/composables/useAppName.ts'
 import { useLocaleStore } from '#shared/stores/locale.ts'
 
 interface Modifiers {
+  /**
+   * Only show the tooltip when the target's content is actually truncated
+   */
   truncate?: boolean
+  /**
+   * Treat the tooltip as *supportive* information rather than
+   * the element's accessible name.
+   *
+   * By default the directive writes the message to `aria-label`, which becomes
+   * (or overrides) the element's accessible name. With this modifier the
+   * message is written to `aria-description` instead, so screen readers
+   * announce it *in addition to* the accessible name already provided by the
+   * element or an ancestor.
+   *
+   * Use it when the element already has an accessible name and a tooltip label
+   * would be redundant or misleading
+   */
+  supportive?: boolean
 }
+
+const TOOLTIP_MESSAGE_ATTRIBUTE = 'aria-description'
+
+const getMessageAttribute = (modifiers: Modifiers) =>
+  modifiers.supportive ? TOOLTIP_MESSAGE_ATTRIBUTE : 'aria-label'
 
 let isListeningToEvents = false
 let isTooltipInDom = false
@@ -179,7 +201,11 @@ const handleTooltipAddEvent = (event: MouseEvent | TouchEvent) => {
   if (!tooltipTargetNode) return
 
   // Do not show the tooltip if the message is absent or empty.
-  const message = tooltipTargetNode.getAttribute('aria-label')
+  //   The message lives in `aria-label`, or in `aria-description` when the
+  //   `supportive` modifier opts out of setting `aria-label`.
+  const message =
+    tooltipTargetNode.getAttribute('aria-label') ||
+    tooltipTargetNode.getAttribute(TOOLTIP_MESSAGE_ATTRIBUTE)
   if (!message) return
 
   // Do not show the tooltip if it was temporarily suspended.
@@ -268,7 +294,7 @@ export default {
     mounted: (element: HTMLDivElement, { value: message, modifiers }) => {
       if (!message) return
 
-      element.setAttribute('aria-label', message)
+      element.setAttribute(getMessageAttribute(modifiers), message)
 
       // Mobile does not have tooltips, hence we don't apply the rest of the logic
       if (useAppName() === 'mobile') return
@@ -284,16 +310,17 @@ export default {
         window.addEventListener('resize', cleanupAndAddEventListeners)
       }
     },
-    updated(element: HTMLDivElement, { value: message }) {
+    updated(element: HTMLDivElement, { value: message, modifiers }) {
+      const attribute = getMessageAttribute(modifiers)
+
       if (!message) {
-        if (element.getAttribute('aria-label')) element.removeAttribute('aria-label')
+        if (element.getAttribute(attribute)) element.removeAttribute(attribute)
         return
       }
 
       // In some cases, we update the aria-label on an interval f.e table time cells
       // We don't want to write to the DOM on every update if nothing has changed
-      if (element.getAttribute('aria-label') !== message)
-        element.setAttribute('aria-label', message)
+      if (element.getAttribute(attribute) !== message) element.setAttribute(attribute, message)
     },
     beforeUnmount(element) {
       // If we dynamically remove the element from the DOM, we need to remove it from the tooltipTargetRecords

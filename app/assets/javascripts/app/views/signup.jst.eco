@@ -13,7 +13,7 @@
     <p>
       <% for link, link_index in @public_links: %>
         <% if link_index > 0: %> | <% end %>
-        <a href="<%= link.link %>" title="<% if link.description: %><%= link.description %><% else: %><%= link.title %><% end %>"<% if link.new_tab: %> target="_blank"<% end %>><%= link.title %></a>
+        <a href="<%= link.link %>"<% if link.description: %> title="<%- @T(link.description) %>"<% end %><% if link.new_tab: %> rel="noopener noreferrer" target="_blank"<% end %>><%- @T(link.title) %></a>
       <% end %>
     </p>
   <% end %>
