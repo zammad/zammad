@@ -80,10 +80,13 @@ describe('ticket create view - user create action', () => {
 
     await view.events.type(emailField, 'foo@customer.com')
 
+    // Wait for a form updater call carrying the typed email value.
+    // This ensures FormKit has committed the input (20 ms async delay) before
+    // we submit — the initial form updater fires with data:{} and must not be
+    // mistaken for the field-change-triggered call.
     await waitFor(async () => {
-      expect((await waitForFormUpdaterQueryCalls()).length).toBeGreaterThan(
-        initialFormUpdaterCallCount,
-      )
+      const calls = await waitForFormUpdaterQueryCalls()
+      expect(calls.some((call) => call.variables.data?.email === 'foo@customer.com')).toBe(true)
     })
 
     const customerSwitch = within(flyout).queryByRole('switch', {
@@ -156,8 +159,9 @@ describe('ticket create view - user create action', () => {
     let afterEmailFormUpdaterCallCount: number
 
     await waitFor(async () => {
-      afterEmailFormUpdaterCallCount = (await waitForFormUpdaterQueryCalls()).length
-      expect(afterEmailFormUpdaterCallCount).toBeGreaterThan(initialFormUpdaterCallCount)
+      const calls = await waitForFormUpdaterQueryCalls()
+      expect(calls.some((call) => call.variables.data?.email === 'foo@customer.com')).toBe(true)
+      afterEmailFormUpdaterCallCount = calls.length
     })
 
     const customerSwitch = within(flyout).getByRole('switch', {
