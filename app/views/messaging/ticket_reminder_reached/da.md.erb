@@ -1,5 +1,5 @@
 # #{ticket.title}
-_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: Påmindelse nået!_
+_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#{config.ticket_hook}#{ticket.number}>: Påmindelse nået!_
 En sag kræver opmærksomhed: Påmindelse nået på sag (#{ticket.title}) for kunde "*#{ticket.customer.longname}*".
 
 <% if @objects[:article] %>
