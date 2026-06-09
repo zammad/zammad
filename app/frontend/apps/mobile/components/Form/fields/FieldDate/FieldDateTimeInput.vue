@@ -40,6 +40,14 @@ const config = {
   monthChangeOnScroll: false,
 }
 
+const rangeConfig = computed(() => {
+  if (!props.context.range) return false
+  return {
+    partialRange: false,
+    ...(typeof props.context.range === 'object' ? props.context.range : {}),
+  }
+})
+
 const actionRow = {
   showSelect: false,
   showCancel: false,
@@ -96,7 +104,7 @@ useEventListener('click', (e) => {
       :class="{ 'pointer-events-none': context.disabled }"
       :model-type="valueFormat"
       :disabled="context.disabled"
-      :range="context.range"
+      :range="rangeConfig"
       :partial-range="context.partialRange"
       :time-config="{
         enableTimePicker: timePicker,

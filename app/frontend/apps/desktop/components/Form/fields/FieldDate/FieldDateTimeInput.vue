@@ -42,6 +42,14 @@ const config = computed(() => ({
   keepActionRow: true,
 }))
 
+const rangeConfig = computed(() => {
+  if (!props.context.range) return false
+  return {
+    partialRange: false,
+    ...(typeof props.context.range === 'object' ? props.context.range : {}),
+  }
+})
+
 const actionRow = computed(() => ({
   showSelect: false,
   showCancel: false,
@@ -306,7 +314,7 @@ const closed = () => {
       v-model="pickerModel"
       :model-type="valueFormat"
       :disabled="context.disabled"
-      :range="context.range"
+      :range="rangeConfig"
       :partial-range="context.partialRange"
       :time-config="{
         enableTimePicker: timePicker,

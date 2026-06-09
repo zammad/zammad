@@ -147,8 +147,8 @@ importers:
         specifier: ^3.5.35
         version: 3.5.35
       '@vuepic/vue-datepicker':
-        specifier: ^13.0.0
-        version: 13.0.0(vue@3.5.35(typescript@6.0.3))
+        specifier: ^14.0.0
+        version: 14.0.0(vue@3.5.35(typescript@6.0.3))
       '@vueuse/core':
         specifier: ^14.3.0
         version: 14.3.0(vue@3.5.35(typescript@6.0.3))
@@ -1076,8 +1076,8 @@ packages:
     peerDependencies:
       postcss-selector-parser: ^7.1.1
 
-  '@date-fns/tz@1.4.1':
-    resolution: {integrity: sha512-P5LUNhtbj6YfI3iJjw5EL9eUAG6OitD0W3fWQcpQjDRc/QIsL0tRNuO1PcDvPccWL1fSTXXdE1ds+l95DV/OFA==}
+  '@date-fns/tz@1.5.0':
+    resolution: {integrity: sha512-lwYN/vDPeNRULcepoE/LO2Pgx+7/RV+S9ARfbc9lr2DtGkOD7pAiruHvbR1RX3Qyf6ja47EWJDMsNK5vK08DJg==}
 
   '@emnapi/core@1.10.0':
     resolution: {integrity: sha512-yq6OkJ4p82CAfPl0u9mQebQHKPJkY7WrIuk205cTYnYe+k2Z8YBh11FrbRG/H6ihirqcacOgl2BIO8oyMQLeXw==}
@@ -3173,8 +3173,8 @@ packages:
       '@vue/server-renderer':
         optional: true
 
-  '@vuepic/vue-datepicker@13.0.0':
-    resolution: {integrity: sha512-7emyDtXcTDn0w1+RLcyYhdZFw2pE9EGbDuyFrN3XJju8nJVPcU822M2znrzmNdZU82R5ItyBeagZBtsYzUVy3g==}
+  '@vuepic/vue-datepicker@14.0.0':
+    resolution: {integrity: sha512-zDl1U2MRk+udu0gYA3pdY2f0O+ckqUPiKgWmp7qQV3D7CRgDKYvUXFpnt+rgMQ+uLydtlRqzy4eS6nvtVjNS4A==}
     engines: {node: '>=18.12.0'}
     peerDependencies:
       vue: '>=3.5.0'
@@ -7928,7 +7928,7 @@ snapshots:
     dependencies:
       postcss-selector-parser: 7.1.1
 
-  '@date-fns/tz@1.4.1': {}
+  '@date-fns/tz@1.5.0': {}
 
   '@emnapi/core@1.10.0':
     dependencies:
@@ -9988,9 +9988,9 @@ snapshots:
     optionalDependencies:
       '@vue/server-renderer': 3.5.35(vue@3.5.35(typescript@6.0.3))
 
-  '@vuepic/vue-datepicker@13.0.0(vue@3.5.35(typescript@6.0.3))':
+  '@vuepic/vue-datepicker@14.0.0(vue@3.5.35(typescript@6.0.3))':
     dependencies:
-      '@date-fns/tz': 1.4.1
+      '@date-fns/tz': 1.5.0
       '@floating-ui/vue': 1.1.11(vue@3.5.35(typescript@6.0.3))
       '@vueuse/core': 14.3.0(vue@3.5.35(typescript@6.0.3))
       date-fns: 4.4.0

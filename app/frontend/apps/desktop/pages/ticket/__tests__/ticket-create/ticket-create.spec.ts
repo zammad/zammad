@@ -157,11 +157,9 @@ describe('ticket create view', () => {
       await view.events.click(view.getByRole('option', { name: 'pending reminder' }))
 
       // Date selection Field on pending reminder
-      await view.events.click(view.getByText('Pending till'))
+      await view.events.click(view.getByLabelText('Pending till'))
 
-      await waitFor(() => expect(view.getByRole('dialog')).toBeInTheDocument())
-
-      const dateCells: Element[] = view.getAllByRole('gridcell', { name: '29' })
+      const dateCells: Element[] = await view.findAllByRole('gridcell', { name: /29/ })
 
       await view.events.click(<Element>dateCells.at(-1))
 
