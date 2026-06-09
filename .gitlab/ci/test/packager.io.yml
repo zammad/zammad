@@ -69,3 +69,9 @@ packager.io:sles-15:
   variables:
     DISTRIBUTION: sles
     DISTRIBUTION_VERSION: '15'
+
+packager.io:sles-16:
+  extends: [.packager.io]
+  variables:
+    DISTRIBUTION: sles
+    DISTRIBUTION_VERSION: '16.0'
