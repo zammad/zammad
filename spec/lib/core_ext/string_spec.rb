@@ -251,24 +251,19 @@ RSpec.describe String do
     end
 
     context 'with link_style: :plain option' do
-      it 'converts <a> elements to plain text (string_only = false)' do
+      it 'converts <a> elements to plain text (with text)' do
         html = '<p>Check out <a href="https://example.com">our website</a> for more info.</p>'
-        expect(html.html2text(false, link_style: :plain)).to eq('Check out our website for more info.')
+        expect(html.html2text(link_style: :plain)).to eq('Check out our website for more info.')
       end
 
-      it 'converts <a> elements to plain text (string_only = true)' do
-        html = '<p>Check out <a href="https://example.com">our website</a> for more info.</p>'
-        expect(html.html2text(true, link_style: :plain)).to eq('Check out our website for more info.')
+      it 'converts <a> elements to plain link (with link)' do
+        html = '<p>Check out our website at <a href="https://example.com"> </a> for more info.</p>'
+        expect(html.html2text(link_style: :plain)).to eq('Check out our website at https://example.com for more info.')
       end
 
-      it 'converts <a> elements to plain link (w/o tags)' do
-        html = '<p>Check out our website at https://example.com for more info.</p>'
-        expect(html.html2text(true, link_style: :plain)).to eq('Check out our website at https://example.com for more info.')
-      end
-
-      it 'converts <a> elements to plain link (with tags)' do
-        html = '<p>Check out our website at <a href="https://example.com">https://example.com</a> for more info.</p>'
-        expect(html.html2text(true, link_style: :plain)).to eq('Check out our website at https://example.com for more info.')
+      it 'strips empty <a> elements' do
+        html = '<p>Check out our website <a href=" "> </a> for more info.</p>'
+        expect(html.html2text(link_style: :plain)).to eq('Check out our website for more info.')
       end
     end
 
