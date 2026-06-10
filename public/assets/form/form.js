@@ -115,6 +115,15 @@ $(function() {
         'Your Message…': 'Vaše zpráva…',
         'Your Name': 'Vaše jméno',
       },
+      'da': {
+        'Attachments': 'Vedhæftede',
+        'Email': 'Email',
+        'Message': 'Meddelelse',
+        'Name': 'Navn',
+        'Your Email': 'Din email',
+        'Your Message…': 'Din Meddelelse…',
+        'Your Name': 'Dit navn',
+      },
       'de': {
         'Attachments': 'Anhänge',
         'Email': 'E-Mail',
