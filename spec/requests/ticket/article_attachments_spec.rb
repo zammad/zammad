@@ -149,6 +149,31 @@ RSpec.describe 'Ticket Article Attachments', authenticated_as: -> { agent }, typ
       end
     end
 
+    context 'with customer trying to access internal article attachment' do
+      let(:customer) { create(:customer) }
+      let(:ticket)   { create(:ticket, group: group, customer: customer) }
+      let(:article)  { create(:ticket_article, :internal_note, ticket: ticket) }
+      let(:secret_store_file) do
+        create(:store,
+               object:      'Ticket::Article',
+               o_id:        article.id,
+               data:        'secret file content',
+               filename:    'secret.txt',
+               preferences: { 'Content-Type' => 'text/plain' })
+      end
+
+      it 'returns forbidden for the ticket customer' do
+        authenticated_as(customer)
+        get "/api/v1/ticket_attachment/#{ticket.id}/#{article.id}/#{secret_store_file.id}"
+        expect(response).to have_http_status(:forbidden)
+      end
+
+      it 'returns ok for an agent' do
+        get "/api/v1/ticket_attachment/#{ticket.id}/#{article.id}/#{secret_store_file.id}"
+        expect(response).to have_http_status(:ok)
+      end
+    end
+
     context 'when attachment actions are used' do
       it 'does test attachments for split' do
         email_file_path  = Rails.root.join('test/data/mail/mail024.box')
