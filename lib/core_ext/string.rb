@@ -138,9 +138,7 @@ class String
           text_compare.sub!(%r{/$}, '')
         end
 
-        if link_style == :plain
-          text.presence || link.presence || ''
-        elsif link_compare.present? && text_compare.blank?
+        if link_compare.present? && text_compare.blank?
           link
         elsif (link_compare.blank? && text_compare.present?) || (link_compare && link_compare =~ %r{^mailto}i)
           text
@@ -153,8 +151,7 @@ class String
         end
       end
     elsif string.scan(%r{<a[[:space:]]}i).count < 5_000
-      if link_style == :markdown
-        # Markdown style: [text](url) - always consistent format
+      if %i[plain markdown].include?(link_style)
         string.gsub!(%r{<a[[:space:]]+(|\S+[[:space:]]+)href=("|')(.+?)("|')([[:space:]]*|[[:space:]]+[^>]*)>(.+?)<[[:space:]]*/a[[:space:]]*>}mxi) do |_placeholder|
           link = $3
           text = $6
@@ -162,27 +159,16 @@ class String
           link.presence&.strip!
           text.presence&.strip!
 
-          if link.present? && text.present?
+          # Plain style: just text or link - simple format
+          if link_style == :plain
+            text.presence || link.presence || ''
+          # Markdown style: [text](url) - always consistent format
+          elsif link.present? && text.present?
             "[#{text}](#{link})"
           elsif link.present? && text.blank?
             link
           elsif link.blank? && text.present?
             text
-          else
-            ''
-          end
-        end
-      elsif link_style == :plain
-        string.gsub!(%r{<a[[:space:]]+(|\S+[[:space:]]+)href=("|')(.+?)("|')([[:space:]]*|[[:space:]]+[^>]*)>(.+?)<[[:space:]]*/a[[:space:]]*>}mxi) do |_placeholder|
-          link = $3
-          text = $6
-          text.gsub!(%r{<.+?>}, '')
-          text.presence&.strip!
-
-          if text.present?
-            text
-          elsif link.present? && text.blank?
-            link
           else
             ''
           end
