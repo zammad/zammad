@@ -28,6 +28,44 @@ RSpec.describe AttachmentsController, type: :request do
     end
   end
 
+  describe '#show (Ticket::Article)', authenticated_as: -> { agent } do
+    let(:group)    { create(:group) }
+    let(:customer) { create(:customer) }
+    let(:agent)    { create(:agent, groups: [group]) }
+    let(:ticket)   { create(:ticket, group: group, customer: customer) }
+
+    let(:public_article) { create(:ticket_article, ticket: ticket, internal: false) }
+    let(:public_store) do
+      create(:store,
+             object:      'Ticket::Article',
+             o_id:        public_article.id,
+             data:        'public data',
+             filename:    'public.txt',
+             preferences: { 'Content-Type' => 'text/plain' })
+    end
+
+    let(:internal_article) { create(:ticket_article, :internal_note, ticket: ticket) }
+    let(:internal_store) do
+      create(:store,
+             object:      'Ticket::Article',
+             o_id:        internal_article.id,
+             data:        'secret data',
+             filename:    'secret.txt',
+             preferences: { 'Content-Type' => 'text/plain' })
+    end
+
+    it 'customer cannot download internal article attachment' do
+      authenticated_as(customer)
+      get "/api/v1/attachments/#{internal_store.id}"
+      expect(response).to have_http_status(:not_found)
+    end
+
+    it 'agent downloads internal article attachment' do
+      get "/api/v1/attachments/#{internal_store.id}"
+      expect(response).to have_http_status(:ok)
+    end
+  end
+
   describe '#destroy' do
     it 'returns 404 when does not exist' do
       delete '/api/v1/attachments/123'
