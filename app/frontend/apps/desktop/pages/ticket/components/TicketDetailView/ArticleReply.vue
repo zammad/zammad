@@ -80,6 +80,8 @@ const customerReplyArticleType = computed(() =>
     v-bind="$attrs"
     :class="{ 'sticky bottom-0 z-20 self-end': pinned }"
   >
+    <slot name="leading" />
+
     <ArticleReplyPinned
       v-if="pinned"
       :has-internal-article="hasInternalArticle"

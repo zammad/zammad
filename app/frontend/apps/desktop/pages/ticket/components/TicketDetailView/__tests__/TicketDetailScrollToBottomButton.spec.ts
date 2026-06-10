@@ -24,4 +24,10 @@ describe('TicketDetailScrollToBottomButton', () => {
 
     expect(wrapper.emitted('click')).toBeTruthy()
   })
+
+  it('truncates the unread count display when it exceeds 9', () => {
+    const wrapper = renderWrapper(10)
+
+    expect(wrapper.getByRole('status', { name: 'Unread messages count' })).toHaveTextContent('9+')
+  })
 })

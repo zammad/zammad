@@ -687,25 +687,36 @@ const articleListTopPadding = ref('4rem')
 
         <TicketDetailScrollToBottomButton
           v-if="articleCount && articleCount > 0 && !isReachingBottom"
+          v-show="!isReplyPinned"
+          class="sticky bottom-4"
           :count="articleCount"
           @click="handleScrollToArticle('smooth')"
         />
 
-        <div v-show="!isLoadingArticles && isInitialSettled">
-          <ArticleReply
-            v-if="ticket?.id && isTicketEditable"
-            v-model:pinned="isReplyPinned"
-            :ticket="ticket"
-            :new-article-present="newTicketArticlePresent"
-            :create-article-type="ticket.createArticleType?.name"
-            :ticket-article-types="ticketArticleTypes"
-            :is-ticket-customer="isTicketCustomer"
-            :has-internal-article="hasInternalArticle"
-            :parent-reached-bottom-scroll="isReachingBottom"
-            @show-article-form="handleShowArticleForm"
-            @discard-form="discardReplyForm"
-          />
-        </div>
+        <ArticleReply
+          v-show="!isLoadingArticles && isInitialSettled"
+          v-if="ticket?.id && isTicketEditable"
+          v-model:pinned="isReplyPinned"
+          :ticket="ticket"
+          :new-article-present="newTicketArticlePresent"
+          :create-article-type="ticket.createArticleType?.name"
+          :ticket-article-types="ticketArticleTypes"
+          :is-ticket-customer="isTicketCustomer"
+          :has-internal-article="hasInternalArticle"
+          :parent-reached-bottom-scroll="isReachingBottom"
+          @show-article-form="handleShowArticleForm"
+          @discard-form="discardReplyForm"
+        >
+          <template #leading>
+            <TicketDetailScrollToBottomButton
+              v-if="articleCount && articleCount > 0 && !isReachingBottom"
+              v-show="isReplyPinned"
+              class="absolute -top-11"
+              :count="articleCount"
+              @click="handleScrollToArticle('smooth')"
+            />
+          </template>
+        </ArticleReply>
 
         <div id="wrapper-form-ticket-edit" class="hidden" aria-hidden="true">
           <Form
