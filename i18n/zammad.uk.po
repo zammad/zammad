@@ -2,10 +2,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-04-16 09:02+0000\n"
+"PO-Revision-Date: 2026-06-10 09:47+0000\n"
 "Last-Translator: Anntoo <jdoomm@gmail.com>\n"
 "Language-Team: Ukrainian <https://translations.zammad.org/projects/zammad/"
-"zammad-development/uk/>\n"
+"zammad-stable/uk/>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1206,7 +1206,7 @@ msgstr "API ключ"
 
 #: db/seeds/settings.rb:3529
 msgid "API Password Access"
-msgstr "Пароль доступа к API"
+msgstr "Доступ до API через пароль"
 
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:38
 msgid "API Token"
@@ -1214,7 +1214,7 @@ msgstr "API Токен"
 
 #: db/seeds/settings.rb:3504
 msgid "API Token Access"
-msgstr "API Токен доступу"
+msgstr "Доступ до API через токен"
 
 #: lib/whatsapp/webhook/payload.rb:22
 msgid "API error."
@@ -3012,7 +3012,7 @@ msgstr "У середньому: %s%"
 
 #: app/assets/javascripts/app/lib/app_post/ai_provider/azure_ai.coffee:3
 msgid "Azure AI (legacy deployment-based endpoints)"
-msgstr ""
+msgstr "Azure AI (кінцеві точки на основі застарілого розгортання)"
 
 #: db/seeds/settings.rb:3493
 msgid "BCC address for all outgoing emails"
