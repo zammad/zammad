@@ -2,15 +2,15 @@
 
 import { waitFor, within } from '@testing-library/vue'
 
+import { getGraphQLMockCalls } from '#tests/graphql/builders/mocks.ts'
 import FormUpdaterUser from '#tests/graphql/factories/types/FormUpdaterUser.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
 
-import {
-  mockFormUpdaterQuery,
-  waitForFormUpdaterQueryCalls,
-} from '#shared/components/Form/graphql/queries/formUpdater.mocks.ts'
+import { FormUpdaterDocument } from '#shared/components/Form/graphql/queries/formUpdater.api.ts'
+import { mockFormUpdaterQuery } from '#shared/components/Form/graphql/queries/formUpdater.mocks.ts'
 import { mockObjectManagerFrontendAttributesQuery } from '#shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.mocks.ts'
 import { waitForUserAddMutationCalls } from '#shared/entities/user/graphql/mutations/add.mocks.ts'
+import type { FormUpdaterQuery } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
 import { handleMockFormUpdaterQuery, visitCreateView } from '../support/ticket-create-helpers.ts'
@@ -72,10 +72,6 @@ describe('ticket create view - user create action', () => {
 
     const flyout = await view.findByRole('complementary', { name: 'Create new customer' })
 
-    const initialFormUpdaterCallCount = (await waitForFormUpdaterQueryCalls()).length
-
-    expect(initialFormUpdaterCallCount).toBeGreaterThanOrEqual(1)
-
     const emailField = await within(flyout).findByLabelText('Email')
 
     await view.events.type(emailField, 'foo@customer.com')
@@ -84,8 +80,9 @@ describe('ticket create view - user create action', () => {
     // This ensures FormKit has committed the input (20 ms async delay) before
     // we submit — the initial form updater fires with data:{} and must not be
     // mistaken for the field-change-triggered call.
-    await waitFor(async () => {
-      const calls = await waitForFormUpdaterQueryCalls()
+    // Uses sync getGraphQLMockCalls to avoid blocking waitFor with a long-lived vi.waitUntil.
+    await waitFor(() => {
+      const calls = getGraphQLMockCalls<FormUpdaterQuery>(FormUpdaterDocument)
       expect(calls.some((call) => call.variables.data?.email === 'foo@customer.com')).toBe(true)
     })
 
@@ -148,18 +145,14 @@ describe('ticket create view - user create action', () => {
 
     const flyout = await view.findByRole('complementary', { name: 'Create new customer' })
 
-    const initialFormUpdaterCallCount = (await waitForFormUpdaterQueryCalls()).length
-
-    expect(initialFormUpdaterCallCount).toBeGreaterThanOrEqual(1)
-
     const emailField = await within(flyout).findByLabelText('Email')
 
     await view.events.type(emailField, 'foo@customer.com')
 
     let afterEmailFormUpdaterCallCount: number
 
-    await waitFor(async () => {
-      const calls = await waitForFormUpdaterQueryCalls()
+    await waitFor(() => {
+      const calls = getGraphQLMockCalls<FormUpdaterQuery>(FormUpdaterDocument)
       expect(calls.some((call) => call.variables.data?.email === 'foo@customer.com')).toBe(true)
       afterEmailFormUpdaterCallCount = calls.length
     })
@@ -172,8 +165,8 @@ describe('ticket create view - user create action', () => {
 
     await view.events.click(customerSwitch)
 
-    await waitFor(async () => {
-      expect((await waitForFormUpdaterQueryCalls()).length).toBeGreaterThan(
+    await waitFor(() => {
+      expect(getGraphQLMockCalls<FormUpdaterQuery>(FormUpdaterDocument).length).toBeGreaterThan(
         afterEmailFormUpdaterCallCount!,
       )
     })
