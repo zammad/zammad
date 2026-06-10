@@ -430,7 +430,7 @@ describe('search view', () => {
           await waitForDetailSearchQueryCalls()
           await waitForNextTick()
 
-          const taskbarSidebar = view.getByRole('list', {
+          const taskbarSidebar = view.getByRole('tree', {
             name: 'User taskbar tabs',
           })
           const closeSearchTab = within(taskbarSidebar).getByRole('button', {
@@ -473,7 +473,7 @@ describe('search view', () => {
           expect(router.currentRoute.value.query).toHaveProperty('filter.0.operator')
           expect(router.currentRoute.value.query).toHaveProperty('filter.0.value')
 
-          const taskbarSidebar = view.getByRole('list', {
+          const taskbarSidebar = view.getByRole('tree', {
             name: 'User taskbar tabs',
           })
 
@@ -511,7 +511,7 @@ describe('search view', () => {
       await waitForDetailSearchQueryCalls()
       await waitForNextTick()
 
-      const taskbarSidebar = view.getByRole('list', {
+      const taskbarSidebar = view.getByRole('tree', {
         name: 'User taskbar tabs',
       })
       const taskbarTab = within(taskbarSidebar).getByRole('link')

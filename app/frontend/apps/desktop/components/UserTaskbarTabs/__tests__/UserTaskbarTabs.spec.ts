@@ -114,7 +114,7 @@ describe('UserTaskbarTabs.vue', () => {
 
     expect(wrapper.getByText('Tabs')).toBeInTheDocument()
 
-    const tab = wrapper.getByRole('listitem')
+    const tab = wrapper.getByRole('treeitem')
 
     expect(getByIconName(tab, 'check-circle-no')).toBeInTheDocument()
     expect(tab).toHaveTextContent('Welcome to Zammad!')
@@ -157,7 +157,7 @@ describe('UserTaskbarTabs.vue', () => {
 
     expect(wrapper.getByText('Tabs')).toBeInTheDocument()
 
-    const tab = wrapper.getByRole('listitem')
+    const tab = wrapper.getByRole('treeitem')
 
     expect(getByIconName(tab, 'pencil')).toBeInTheDocument()
     expect(tab).toHaveTextContent('Received call: Test title')
@@ -188,7 +188,7 @@ describe('UserTaskbarTabs.vue', () => {
 
     expect(wrapper.getByText('Tabs')).toBeInTheDocument()
 
-    const tab = wrapper.getByRole('listitem')
+    const tab = wrapper.getByRole('treeitem')
 
     expect(getAllByIconName(tab, 'x-lg')[1]).toHaveClass('text-red-500')
     expect(tab).toHaveTextContent('Access denied')
@@ -220,7 +220,7 @@ describe('UserTaskbarTabs.vue', () => {
 
     expect(wrapper.getByText('Tabs')).toBeInTheDocument()
 
-    const tab = wrapper.getByRole('listitem')
+    const tab = wrapper.getByRole('treeitem')
 
     expect(getAllByIconName(tab, 'x-lg')[1]).toHaveClass('text-red-500')
     expect(tab).toHaveTextContent('Not found')
@@ -255,7 +255,7 @@ describe('UserTaskbarTabs.vue', () => {
       name: 'List of all user taskbar tabs',
     })
 
-    const tab = getByRole(popover, 'listitem')
+    const tab = getByRole(popover, 'treeitem')
 
     expect(getByIconName(tab, 'check-circle-no')).toBeInTheDocument()
     expect(tab).toHaveTextContent('Welcome to Zammad!')
@@ -407,7 +407,7 @@ describe('UserTaskbarTabs.vue', () => {
 
     expect(wrapper.getByText('Tabs')).toBeInTheDocument()
 
-    let tabs = wrapper.getAllByRole('listitem')
+    let tabs = wrapper.getAllByRole('treeitem')
 
     expect(tabs).toHaveLength(2)
     expect(tabs[0]).toHaveTextContent('First ticket')
@@ -432,7 +432,7 @@ describe('UserTaskbarTabs.vue', () => {
       },
     })
 
-    tabs = wrapper.getAllByRole('listitem')
+    tabs = wrapper.getAllByRole('treeitem')
 
     expect(tabs).toHaveLength(2)
     expect(tabs[0]).toHaveTextContent('Second ticket')
@@ -505,13 +505,13 @@ describe('UserTaskbarTabs.vue', () => {
 
     const wrapper = await renderUserTaskbarTabs()
 
-    let tabs = wrapper.getAllByRole('listitem')
+    let tabs = wrapper.getAllByRole('treeitem')
     expect(tabs).toHaveLength(2)
     expect(tabs[0]).toHaveTextContent('First ticket')
     expect(tabs[1]).toHaveTextContent('Second ticket')
 
     // Focus on the sortable list and select the first item
-    const list = wrapper.getByRole('list', { name: 'User taskbar tabs' })
+    const list = wrapper.getByRole('tree', { name: 'User taskbar tabs' })
     list.focus()
 
     const messageNodeId = 'announcer-message'
@@ -548,7 +548,7 @@ describe('UserTaskbarTabs.vue', () => {
       ],
     })
 
-    tabs = wrapper.getAllByRole('listitem')
+    tabs = wrapper.getAllByRole('treeitem')
 
     await waitFor(() => expect(tabs[0]).toHaveTextContent('Second ticket'))
 
@@ -561,7 +561,7 @@ describe('UserTaskbarTabs.vue', () => {
 
     expect(wrapper.getByText('Tabs')).toBeInTheDocument()
 
-    const tab = wrapper.getByRole('listitem')
+    const tab = wrapper.getByRole('treeitem')
 
     await wrapper.events.click(getByRole(tab, 'button', { name: 'Close this tab' }))
 
@@ -642,7 +642,7 @@ describe('UserTaskbarTabs.vue', () => {
     await router.push('/tickets/42')
     await router.push('/tickets/create/999')
 
-    const tabs = wrapper.getAllByRole('listitem')
+    const tabs = wrapper.getAllByRole('treeitem')
 
     expect(tabs).toHaveLength(2)
 

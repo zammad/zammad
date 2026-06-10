@@ -74,6 +74,7 @@ const currentViewTitle = computed(
     v-if="taskbarTabLink"
     ref="tabLinkInstance"
     v-tooltip="currentViewTitle"
+    :aria-current="isActive ? 'page' : undefined"
     class="flex grow items-center gap-2 px-2 py-3 hover:no-underline! group-hover/tab:dark:bg-blue-900"
     :link="taskbarTabLink"
     :class="{

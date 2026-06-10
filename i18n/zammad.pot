@@ -17350,7 +17350,7 @@ msgstr ""
 msgid "The required value 'group_id' is missing."
 msgstr ""
 
-#: lib/ai/provider.rb:75
+#: lib/ai/provider.rb:79
 msgid "The response could not be processed."
 msgstr ""
 
@@ -19878,7 +19878,7 @@ msgstr ""
 msgid "User successfully unlocked!"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:271
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:272
 msgid "User taskbar tabs"
 msgstr ""
 

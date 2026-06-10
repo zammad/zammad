@@ -267,6 +267,7 @@ const { isTouchDevice } = useTouchDevice()
           <!--   eslint-disable vuejs-accessibility/no-static-element-interactions       -->
           <ul
             ref="dnd-parent"
+            role="tree"
             tabindex="0"
             :aria-label="$t('User taskbar tabs')"
             :aria-activedescendant="focusedItemId"
@@ -283,6 +284,8 @@ const { isTouchDevice } = useTouchDevice()
               v-for="(tabEntityKey, index) in dndTaskbarTabListOrder"
               :id="`item-${tabEntityKey}`"
               :key="tabEntityKey"
+              role="treeitem"
+              :aria-selected="selectedItemIndex === index"
               class="group/tab relative"
               :class="{
                 draggable: !collapsed,
@@ -304,6 +307,7 @@ const { isTouchDevice } = useTouchDevice()
                 :taskbar-tab="taskbarTabListByTabEntityKey[tabEntityKey]"
                 :taskbar-tab-link="getTaskbarTabLink(tabEntityKey)"
                 :collapsed="collapsed"
+                :is-active="index === selectedItemIndex"
                 class="group/link peer-focus-visible:trl:pl-(--tab-remove-bar-button-width) focus-visible-app-default [--tab-remove-bar-button-width:2rem] group-hover/tab:ltr:pr-(--tab-remove-bar-button-width) peer-focus-visible:ltr:pr-(--tab-remove-bar-button-width) group-hover/tab:rtl:pl-(--tab-remove-bar-button-width)"
                 :class="{
                   'rounded-none group-first/tab:rounded-t-[10px] group-last/tab:rounded-b-[10px] focus-visible:-outline-offset-1!':
