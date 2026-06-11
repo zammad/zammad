@@ -113,7 +113,7 @@ const currentVisibleHeaderHeight = computed(() => {
   return isHovering.value ? headerHeight.value : headerWithHiddenDetailsHeight.value
 })
 
-useStickyTopCalculator(currentVisibleHeaderHeight)
+useStickyTopCalculator(currentVisibleHeaderHeight, { offset: -1 }) // avoid joining with the top bar bottom border
 
 defineExpose({
   hideDetails: () => updateIsHovering(false),

@@ -12,7 +12,7 @@ interface Props {
   multiple?: boolean
   label?: string
   tabs: Tab[]
-  size?: 'medium' | 'large'
+  size?: 'small' | 'medium' | 'large'
   modelValue?: Tab['key'] | Tab['key'][]
   mode?: 'scroll' | 'overflow'
   /**

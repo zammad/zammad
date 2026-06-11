@@ -45,4 +45,15 @@ describe('Form - Field - Toggle Buttons', () => {
 
     expect(view.getByIconName('sun')).toBeInTheDocument()
   })
+
+  it('uses the field label as accessible name for the tablist', () => {
+    const view = renderToggleButtonsField({
+      options: [
+        { value: 'example', label: 'Example' },
+        { value: 'other', label: 'Other' },
+      ],
+    })
+
+    expect(view.getByRole('tablist', { name: 'Toggle Buttons' })).toBeInTheDocument()
+  })
 })

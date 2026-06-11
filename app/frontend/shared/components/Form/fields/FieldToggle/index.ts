@@ -18,6 +18,16 @@ declare module '@formkit/inputs' {
         true?: string
         false?: string
       }
+      // Optional icon shown inside the knob per state.
+      icons?: {
+        true?: string
+        false?: string
+      }
+      // Render the current variant label next to the switch.
+      inlineLabel?: boolean
+      // Invert only the visual on-state (knob side + track) without changing the value, e.g. a
+      //  visibility switch whose value is `internal` but whose "on" side should read as public.
+      invertVisual?: boolean
       size?: 'medium' | 'small'
     }
   }
@@ -27,9 +37,13 @@ declare module '@formkit/inputs' {
   }
 }
 
-const fieldDefinition = createInput(FieldToggleInput, ['variants', 'size'], {
-  features: [addLink, formUpdaterTrigger()],
-})
+const fieldDefinition = createInput(
+  FieldToggleInput,
+  ['variants', 'icons', 'inlineLabel', 'invertVisual', 'size'],
+  {
+    features: [addLink, formUpdaterTrigger()],
+  },
+)
 
 export default {
   fieldType: 'toggle',

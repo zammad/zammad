@@ -1191,6 +1191,10 @@ msgstr ""
 msgid "Add Bot"
 msgstr ""
 
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:252
+msgid "Add CC"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee:77
 #: app/assets/javascripts/app/controllers/ssl_certificate.coffee:88
 #: app/assets/javascripts/app/views/integration/smime.jst.eco:5
@@ -2161,7 +2165,7 @@ msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:223
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:326
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:283
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:317
 msgid "Attachment"
 msgstr ""
 
@@ -2750,7 +2754,7 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:90
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:246
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:30
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:235
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:269
 #: db/seeds/object_manager_attributes.rb:523
 msgid "CC"
 msgstr ""
@@ -3137,7 +3141,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:163
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:123
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:102
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:182
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:163
 msgid "Channel"
 msgstr ""
 
@@ -5882,8 +5886,7 @@ msgstr ""
 msgid "Discard snapshot"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReplyPinned.vue:105
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReplyUnpinned.vue:56
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReplyPanel.vue:131
 msgid "Discard unsaved reply"
 msgstr ""
 
@@ -8838,7 +8841,7 @@ msgstr ""
 msgid "Incomplete credentials"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:450
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:439
 msgid "Incomplete ticket checklist"
 msgstr ""
 
@@ -9014,7 +9017,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:105
 #: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:144
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:205
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:207
 msgid "Internal"
 msgstr ""
 
@@ -9710,7 +9713,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/link/kb_answer.jst.eco:24
 #: app/assets/javascripts/app/views/link/ticket/list.jst.eco:11
 #: app/frontend/apps/desktop/pages/ticket/components/TicketLinksFlyout.vue:53
-#: app/frontend/shared/components/Form/FormFieldLink.vue:18
+#: app/frontend/shared/components/Form/FormFieldLink.vue:21
 msgid "Link"
 msgstr ""
 
@@ -11630,7 +11633,7 @@ msgid "No x-zammad-session-user-id, no sender set!"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:8
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:453
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:442
 msgid "No, just close the ticket"
 msgstr ""
 
@@ -12818,7 +12821,7 @@ msgstr ""
 msgid "Pick a name for the application, and we'll give you a unique token."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReplyUnpinned.vue:63
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReplyPanel.vue:138
 msgid "Pin this panel"
 msgstr ""
 
@@ -13311,7 +13314,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:109
 #: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:139
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:210
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:208
 msgid "Public"
 msgstr ""
 
@@ -13799,13 +13802,13 @@ msgstr ""
 msgid "Replacement agent"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReplyPinned.vue:102
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReplyUnpinned.vue:53
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReplyPanel.vue:114
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:69
 #: app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts:18
 #: app/frontend/shared/entities/ticket-article/action/plugins/sms.ts:18
 #: app/frontend/shared/entities/ticket-article/action/plugins/telegram.ts:19
 #: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:74
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:361
 msgid "Reply"
 msgstr ""
 
@@ -13966,7 +13969,7 @@ msgstr ""
 msgid "Resetting the order of your ticket overviews failed."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReplyPinned.vue:83
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReplyPanel.vue:102
 msgid "Resize article panel"
 msgstr ""
 
@@ -14422,11 +14425,11 @@ msgstr ""
 msgid "Scroll to start"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonTabs/TabsScrollList.vue:255
+#: app/frontend/apps/desktop/components/CommonTabs/TabsScrollList.vue:251
 msgid "Scroll towards end"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonTabs/TabsScrollList.vue:203
+#: app/frontend/apps/desktop/components/CommonTabs/TabsScrollList.vue:200
 msgid "Scroll towards start"
 msgstr ""
 
@@ -14672,7 +14675,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:26
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:127
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:288
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:258
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:292
 #: db/seeds/permissions.rb:209
 msgid "Security"
 msgstr ""
@@ -15370,7 +15373,7 @@ msgstr ""
 msgid "Show more"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonTabs/TabsOverflowMenu.vue:85
+#: app/frontend/apps/desktop/components/CommonTabs/TabsOverflowMenu.vue:81
 msgid "Show more tabs"
 msgstr ""
 
@@ -15962,7 +15965,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:14
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:91
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:26
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:247
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:281
 msgid "Subject"
 msgstr ""
 
@@ -18539,7 +18542,7 @@ msgstr ""
 msgid "Ticket tags updated successfully."
 msgstr ""
 
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:123
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:139
 msgid "Ticket title"
 msgstr ""
 
@@ -18555,7 +18558,7 @@ msgid "Ticket update failed."
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/useTicketEditTitle.ts:26
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:542
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:531
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:161
 msgid "Ticket updated successfully."
 msgstr ""
@@ -18785,7 +18788,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:94
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:89
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:29
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:222
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:235
 #: db/seeds/object_manager_attributes.rb:496
 msgid "To"
 msgstr ""
@@ -19335,7 +19338,7 @@ msgstr ""
 msgid "Unlock"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReplyPinned.vue:112
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReplyPanel.vue:138
 msgid "Unpin this panel"
 msgstr ""
 
@@ -20098,7 +20101,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/article.jst.eco:3
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/notification.jst.eco:3
 #: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:133
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:196
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:193
 #: db/seeds/object_manager_attributes.rb:462
 msgid "Visibility"
 msgstr ""
@@ -20473,7 +20476,7 @@ msgid "Yes, add attachments now"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:5
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:452
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:441
 msgid "Yes, open the checklist"
 msgstr ""
 
@@ -20760,7 +20763,7 @@ msgstr ""
 msgid "You have unchecked items in the checklist."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:447
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:436
 msgid "You have unchecked items in the checklist. Do you want to handle them before closing this ticket?"
 msgstr ""
 
@@ -22133,7 +22136,7 @@ msgstr ""
 msgid "or sign in using"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:133
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:127
 msgid "or use the reply actions on articles."
 msgstr ""
 

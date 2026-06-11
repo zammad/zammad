@@ -10,7 +10,6 @@ import { computed, ref, toRef, useTemplateRef, watch } from 'vue'
 
 import { EnumTextDirection } from '#shared/graphql/types.ts'
 import { useLocaleStore } from '#shared/stores/locale.ts'
-import getUuid from '#shared/utils/getUuid.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import type { Tab, NavigationTab, MarkerStyle } from '#desktop/components/CommonTabs/types.ts'
@@ -30,8 +29,6 @@ const props = defineProps<Props>()
 defineOptions({
   inheritAttrs: false,
 })
-
-const labelId = getUuid()
 
 const hasMarker = computed(() => !props.multiple)
 
@@ -212,7 +209,6 @@ const everyTabHasIcon = computed(() => props.tabs.every((tab) => tab.icon))
     :aria-label="label"
     :role="containerRole"
     :aria-multiselectable="multiple || undefined"
-    :aria-labelledby="label ? labelId : undefined"
     class="relative isolate scroll-bar-hidden flex w-full snap-x flex-row items-center overflow-x-auto rounded-full [&>[data-tab]+[data-tab]]:ms-1"
   >
     <li ref="list-start" class="order-first shrink-0" role="presentation" />
@@ -227,7 +223,7 @@ const everyTabHasIcon = computed(() => props.tabs.every((tab) => tab.icon))
     >
       <slot
         :tab="tab"
-        tab-class="rounded-full! px-3.5 py-1 focus-visible-app-default focus-visible:-outline-offset-1"
+        tab-class="rounded-full! px-3 py-1 focus-visible-app-default focus-visible:-outline-offset-1"
         :can-display-icon-only="everyTabHasIcon"
       />
     </li>

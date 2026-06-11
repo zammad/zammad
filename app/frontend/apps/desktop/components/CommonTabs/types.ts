@@ -71,6 +71,6 @@ export interface TabsOptions {
 
 export type TabBaseProps<T extends Tab> = Omit<T, 'key'> & {
   tabId: T['key']
-  size: 'medium' | 'large'
+  size: 'small' | 'medium' | 'large'
   activeKeys: T['key'][]
 }

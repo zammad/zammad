@@ -5,7 +5,7 @@ import formUpdaterTrigger from '#shared/form/features/formUpdaterTrigger.ts'
 
 import FieldToggleButtonsInput from './FieldToggleButtonsInput.vue'
 
-const fieldDefinition = createInput(FieldToggleButtonsInput, ['options'], {
+const fieldDefinition = createInput(FieldToggleButtonsInput, ['options', 'size'], {
   features: [formUpdaterTrigger()],
 })
 

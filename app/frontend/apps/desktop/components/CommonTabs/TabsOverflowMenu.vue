@@ -5,7 +5,6 @@ import { computed, ref, toRef, useTemplateRef } from 'vue'
 
 import { EnumTextDirection } from '#shared/graphql/types.ts'
 import { useLocaleStore } from '#shared/stores/locale.ts'
-import getUuid from '#shared/utils/getUuid.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonPopover from '#desktop/components/CommonPopover/CommonPopover.vue'
@@ -27,8 +26,6 @@ const props = defineProps<Props>()
 defineOptions({
   inheritAttrs: false,
 })
-
-const labelId = getUuid()
 
 const containerElement = useTemplateRef<HTMLElement>('container')
 
@@ -59,7 +56,6 @@ const { popover, popoverTarget, isOpen: isPopoverOpen, toggle: togglePopover, cl
     :aria-label="label"
     :role="containerRole"
     :aria-multiselectable="multiple || undefined"
-    :aria-labelledby="label ? labelId : undefined"
     class="relative isolate scroll-bar-hidden flex snap-x flex-row items-center overflow-x-hidden [&>[data-tab]+[data-tab]]:ms-1"
   >
     <TabOverflowItem

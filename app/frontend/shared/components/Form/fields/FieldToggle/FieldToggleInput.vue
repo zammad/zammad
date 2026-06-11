@@ -3,6 +3,8 @@
 <script setup lang="ts">
 import { computed, nextTick, toRef, watch } from 'vue'
 
+import CommonIcon from '#shared/components/CommonIcon/CommonIcon.vue'
+import CommonLabel from '#shared/components/CommonLabel/CommonLabel.vue'
 import stopEvent from '#shared/utils/events.ts'
 
 import useValue from '../../composables/useValue.ts'
@@ -18,6 +20,12 @@ const props = defineProps<{
       true?: string
       false?: string
     }
+    icons?: {
+      true?: string
+      false?: string
+    }
+    inlineLabel?: boolean
+    invertVisual?: boolean
     size?: 'medium' | 'small'
   }>
 }>()
@@ -26,6 +34,32 @@ const context = toRef(props, 'context')
 const { localValue } = useValue(context)
 
 const variants = computed(() => props.context.variants || {})
+
+const variantKey = computed(() => (localValue.value ? 'true' : 'false'))
+
+// Visual on-state only: `invertVisual` flips which side the knob rests / the track fills, without
+//  touching the value, label, icon or aria-checked (which stay tied to the real value).
+const knobActive = computed(() =>
+  props.context.invertVisual ? !localValue.value : localValue.value,
+)
+
+const knobIcon = computed(() => props.context.icons?.[variantKey.value])
+
+const inlineLabel = computed(() =>
+  props.context.inlineLabel ? variants.value[variantKey.value] : undefined,
+)
+
+const stateLabelId = computed(() => `${props.context.id}-state-label`)
+
+// A bare switch only announces "on"/"off", which doesn't convey what the states mean (e.g.
+//  "Internal"/"Public"). Point `aria-describedby` at the visible state label so screen readers
+//  also announce the current variant alongside the on/off state.
+const ariaDescribedBy = computed(
+  () =>
+    [inlineLabel.value ? stateLabelId.value : undefined, props.context.describedBy]
+      .filter(Boolean)
+      .join(' ') || undefined,
+)
 
 watch(
   () => props.context.variants,
@@ -105,38 +139,53 @@ const classMap = getToggleClasses()
 </script>
 
 <template>
-  <button
-    :id="context.id"
-    type="button"
-    role="switch"
-    class="relative inline-flex flex-shrink-0 cursor-pointer items-center rounded-full formkit-disabled:pointer-events-none"
-    :class="[
-      context.classes.input,
-      classMap.track,
-      buttonSizeClasses,
-      {
-        [classMap.trackOn]: localValue,
-      },
-    ]"
-    :aria-labelledby="`label-${context.id}`"
-    :aria-disabled="disabled"
-    :aria-checked="ariaChecked"
-    :aria-describedby="context.describedBy"
-    :tabindex="context.disabled ? '-1' : '0'"
-    :v-bind="context.attrs"
-    @click="updateLocalValue"
-    @keydown.space="updateLocalValue"
-  >
-    <div
-      class="pointer-events-none inline-block transform rounded-full transition duration-200 ease-in-out"
+  <div class="flex items-center gap-2">
+    <button
+      :id="context.id"
+      type="button"
+      role="switch"
+      class="relative inline-flex shrink-0 cursor-pointer items-center rounded-full formkit-disabled:pointer-events-none"
       :class="[
-        classMap.knob,
-        knobSizeClasses,
+        context.classes.input,
+        classMap.track,
+        buttonSizeClasses,
         {
-          'ltr:translate-x-px rtl:-translate-x-px': !localValue,
-          [knobTranslateClasses]: localValue,
+          [classMap.trackOn]: knobActive,
         },
       ]"
-    ></div>
-  </button>
+      :aria-labelledby="`label-${context.id}`"
+      :aria-disabled="disabled"
+      :aria-checked="ariaChecked"
+      :aria-describedby="ariaDescribedBy"
+      :tabindex="context.disabled ? '-1' : '0'"
+      v-bind="context.attrs"
+      @click="updateLocalValue"
+      @keydown.space="updateLocalValue"
+    >
+      <div
+        class="pointer-events-none inline-flex transform items-center justify-center rounded-full transition duration-200 ease-in-out"
+        :class="[
+          classMap.knob,
+          knobSizeClasses,
+          {
+            'ltr:translate-x-px rtl:-translate-x-px': !knobActive,
+            [knobTranslateClasses]: knobActive,
+            'text-black': knobActive,
+            'text-stone-200 dark:text-neutral-500': !knobActive,
+          },
+        ]"
+      >
+        <CommonIcon v-if="knobIcon" :name="knobIcon" size="xs" decorative />
+      </div>
+    </button>
+    <CommonLabel
+      v-if="inlineLabel"
+      :id="stateLabelId"
+      class="cursor-pointer"
+      :size="context.size"
+      @click="updateLocalValue"
+    >
+      {{ $t(inlineLabel) }}
+    </CommonLabel>
+  </div>
 </template>

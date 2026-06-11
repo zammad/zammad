@@ -18,6 +18,8 @@ export const link = createSection(
         link: '$link',
         linkIcon: '$linkIcon',
         linkLabel: '$linkLabel',
+        linkSize: '$linkSize',
+        showLinkLabel: '$showLinkLabel',
         onLinkClick: '$onLinkClick',
       },
     }) as unknown as FormKitSchemaNode,

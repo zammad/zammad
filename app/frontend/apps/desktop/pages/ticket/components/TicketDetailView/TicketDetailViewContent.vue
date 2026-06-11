@@ -268,21 +268,8 @@ const formEditAttributeLocation = computed(() => {
   return '#wrapper-form-ticket-edit'
 })
 
-// Use a separate ref that lags by one post-flush tick so the Teleport target
-// is only switched after the new sub-component has mounted, avoiding an
-// orphaned teleport when ArticleReplyPinned/Unpinned swap their form div.
-const formReplyTarget = ref(
-  isReplyPinned.value ? '#ticketArticleReplyFormPinned' : '#ticketArticleReplyForm',
-)
-watch(
-  isReplyPinned,
-  (pinned) => {
-    formReplyTarget.value = pinned ? '#ticketArticleReplyFormPinned' : '#ticketArticleReplyForm'
-  },
-  { flush: 'post' },
-)
 const formArticleReplyLocation = computed(() => {
-  if (newTicketArticlePresent.value) return formReplyTarget.value
+  if (newTicketArticlePresent.value) return '#ticketArticleReplyForm'
   return '#wrapper-form-ticket-edit'
 })
 
@@ -313,7 +300,9 @@ const ticketEditSchemaData = reactive({
   formEditAttributeLocation,
   formArticleReplyLocation,
   securityIntegration,
+  isTicketCustomer,
   newTicketArticlePresent,
+  isReplyPinned,
   currentArticleType: currentSchemaArticleType,
   existingAdditionalAddArticleNotes: () => {
     return Object.keys(additionalAddArticleNotes.value).length > 0
@@ -663,7 +652,7 @@ const articleListTopPadding = ref('4rem')
       <div
         ref="content-container"
         data-test-id="ticket-detail-content-container"
-        class="@container isolate grid w-full overflow-y-auto overscroll-contain"
+        class="@container isolate grid size-full overflow-y-auto overscroll-contain"
         :class="{
           'grid-rows-[max-content_max-content_max-content]':
             !newTicketArticlePresent || !isReplyPinned,

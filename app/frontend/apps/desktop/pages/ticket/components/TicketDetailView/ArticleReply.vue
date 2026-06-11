@@ -9,8 +9,7 @@ import type { AppSpecificTicketArticleType } from '#shared/entities/ticket-artic
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 
-import ArticleReplyPinned from './ArticleReplyPinned.vue'
-import ArticleReplyUnpinned from './ArticleReplyUnpinned.vue'
+import ArticleReplyPanel from './ArticleReplyPanel.vue'
 
 interface Props {
   ticket: TicketById
@@ -82,15 +81,10 @@ const customerReplyArticleType = computed(() =>
   >
     <slot name="leading" />
 
-    <ArticleReplyPinned
-      v-if="pinned"
+    <ArticleReplyPanel
+      :is-pinned="pinned"
       :has-internal-article="hasInternalArticle"
-      @discard-form="$emit('discard-form')"
-      @toggle-pin="pinned = !pinned"
-    />
-    <ArticleReplyUnpinned
-      v-else
-      :has-internal-article="hasInternalArticle"
+      :is-ticket-customer="isTicketCustomer"
       @discard-form="$emit('discard-form')"
       @toggle-pin="pinned = !pinned"
     />

@@ -16,6 +16,9 @@ const actionPlugin: TicketArticleActionPlugin = {
         customer: ['change'],
       },
       fields: {
+        body: {
+          required: true,
+        },
         attachments: {},
       },
       internal: false,

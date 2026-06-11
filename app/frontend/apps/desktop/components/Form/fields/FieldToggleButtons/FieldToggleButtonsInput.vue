@@ -33,6 +33,8 @@ const tabs = computed<Tab[]>(() =>
     v-model="localValue"
     :class="context.classes.input"
     :aria-describedby="context.describedBy"
+    :label="context.label"
     :tabs="tabs"
+    :size="context.size"
   />
 </template>
