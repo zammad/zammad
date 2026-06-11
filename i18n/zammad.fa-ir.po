@@ -649,13 +649,13 @@ msgstr ""
 msgid "%s required!"
 msgstr "%s الزامی است!"
 
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:392
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:399
 #, fuzzy
 #| msgid "%s of my tickets escalated"
 msgid "%s result(s) selected"
 msgstr "%s عدد از تیکت‌های من بالاسپاری شد"
 
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:392
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:399
 #, fuzzy
 #| msgid "%s of my tickets escalated"
 msgid "%s result(s) selected, selection limit reached"
@@ -1043,7 +1043,7 @@ msgstr "API"
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:79
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:60
 #: app/assets/javascripts/app/controllers/ticket_zoom/attribute_bar.coffee:144
-#: app/models/ai/agent.rb:102
+#: app/models/ai/agent.rb:107
 #, fuzzy
 #| msgid "Agent"
 msgid "AI Agent"
@@ -1493,7 +1493,7 @@ msgstr "کلید منوی عملیات برای کلیدهای امنیتی"
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco:15
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:16
 #: app/frontend/apps/desktop/components/CommonTable/CommonSimpleTable.vue:100
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:382
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:389
 msgid "Actions"
 msgstr "فعالیت‌ها"
 
@@ -1738,7 +1738,7 @@ msgstr "افزودن ایمیل"
 msgid "Add empty checklist"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/FieldFilterSelectorInput.vue:547
+#: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/FieldFilterSelectorInput.vue:550
 #, fuzzy
 #| msgid "Filter"
 msgid "Add filter"
@@ -2001,7 +2001,7 @@ msgstr "تیکت‌های کارشناس"
 msgid "Agents"
 msgstr "کارشناسان"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:514
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:516
 msgid "Agents with \"%s\" permission"
 msgstr ""
 
@@ -2013,7 +2013,7 @@ msgstr ""
 msgid "Alarm"
 msgstr "آلارم"
 
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:393
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:400
 #, fuzzy
 #| msgid "%s of my tickets escalated"
 msgid "All %s result(s) selected"
@@ -4129,13 +4129,13 @@ msgid "Clear search"
 msgstr "پاک کردن جست‌وجو"
 
 #: app/frontend/apps/desktop/components/CommonTable/CellContent/BulkCheckbox.vue:61
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:416
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:423
 #: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:649
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:378
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:386
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:314
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:376
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:151
-#: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateTimeInput.vue:157
+#: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateTimeInput.vue:165
 #: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue:124
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:197
 #, fuzzy
@@ -4329,6 +4329,10 @@ msgstr ""
 #: db/seeds/settings.rb:920
 msgid "Color representation of the open ticket indicator in the sidebar."
 msgstr "استفاده از نمایشگر رنگی برای تیکت باز در پنجره کتاری."
+
+#: app/frontend/apps/desktop/components/CommonTable/HeaderResizeLine.vue:70
+msgid "Column width: %s pixels"
+msgstr ""
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:290
 #, fuzzy
@@ -5219,7 +5223,7 @@ msgstr "وضعیت کنونی"
 msgid "Current Token"
 msgstr "توکن کنونی"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:778
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:782
 #: app/assets/javascripts/app/models/ai_text_tool.coffee:20
 #: app/assets/javascripts/app/models/signature.coffee:21
 #: app/assets/javascripts/app/models/text_module.coffee:21
@@ -5312,7 +5316,7 @@ msgid "Custom instructions"
 msgstr "ترجمه سفارشی"
 
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee:208
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:512
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:514
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:14
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:28
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:14
@@ -7024,11 +7028,11 @@ msgstr "بازخورد"
 msgid "Do not change email address (%s)"
 msgstr "نام کاربری یا آدرس ایمیل خود را وارد نمائید"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:654
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:657
 msgid "Do not encrypt email"
 msgstr "عدم رمزنگاری ایمیل"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:640
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:643
 msgid "Do not sign email"
 msgstr "عدم امضای ایمیل"
 
@@ -7887,11 +7891,11 @@ msgstr ""
 msgid "Encrypt"
 msgstr "رمزگذاری"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:655
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:658
 msgid "Encrypt email (if not possible, discard notification)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:656
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:659
 msgid "Encrypt email (if not possible, send notification anyway)"
 msgstr ""
 
@@ -9061,7 +9065,7 @@ msgstr "از تاریخ"
 msgid "Frontend"
 msgstr "سمت کاربر"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:514
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:516
 #: app/assets/javascripts/app/models/group.coffee:48
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:54
 msgid "Full"
@@ -14568,7 +14572,7 @@ msgstr ""
 msgid "Overwrite draft"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:511
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:513
 #: app/assets/javascripts/app/models/ticket.coffee:11
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco:42
 #: app/frontend/apps/desktop/components/Ticket/TicketPopoverWithTrigger/TicketPopover.vue:84
@@ -15898,7 +15902,7 @@ msgstr "احراز هویت"
 msgid "Remove checklist"
 msgstr "حذف کردن"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/FieldFilterSelectorInput.vue:513
+#: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/FieldFilterSelectorInput.vue:516
 #, fuzzy
 #| msgid "Remove"
 msgid "Remove filter"
@@ -16262,7 +16266,7 @@ msgstr ""
 msgid "Resize article panel"
 msgstr "بستن برگه"
 
-#: app/frontend/apps/desktop/components/CommonTable/HeaderResizeLine.vue:125
+#: app/frontend/apps/desktop/components/CommonTable/HeaderResizeLine.vue:134
 #, fuzzy
 #| msgid "Delete File"
 msgid "Resize column"
@@ -16944,6 +16948,12 @@ msgstr "جست‌وجو یا وارد کردن آدرس ایمیل…"
 msgid "Search or enter phone number…"
 msgstr "جست‌وجو یا وارد کرد شماره تماس…"
 
+#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:665
+#, fuzzy
+#| msgid "Search result list"
+msgid "Search result for: %s"
+msgstr "فهرست نتیجه جست‌وجو"
+
 #: lib/external_data_source/errors.rb:114
 msgid ""
 "Search result label is not a string, a number or a boolean. Please provide "
@@ -17181,13 +17191,13 @@ msgstr ""
 "با افزودن URL زیر به نرم افزار تقویم خود، تیکتهای خود را در تقویم دلخواهتان "
 "ببینید."
 
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:296
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:300
 #, fuzzy
 #| msgid "Selector"
 msgid "Select"
 msgstr "انتخاب گر"
 
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:406
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:413
 #, fuzzy
 #| msgid "select all options"
 msgid "Select %s result(s)"
@@ -17210,7 +17220,7 @@ msgstr "انتخاب پیش‌نویس اشتراکی"
 msgid "Select Template"
 msgstr "انتخاب قالب"
 
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:407
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:414
 #, fuzzy
 #| msgid "select all options"
 msgid "Select all %s results"
@@ -17223,7 +17233,7 @@ msgstr "انتخاب همه اختیارات"
 msgid "Select all entries"
 msgstr "انتخاب همه اختیارات"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/FieldFilterSelectorInput.vue:543
+#: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/FieldFilterSelectorInput.vue:546
 #, fuzzy
 #| msgid "Select item"
 msgid "Select attribute"
@@ -17447,7 +17457,7 @@ msgstr "نوع فرستنده"
 msgid "Sender based on Reply-To header"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:510
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:512
 msgid "Sender of last article"
 msgstr "فرستنده آخرین بند"
 
@@ -17961,11 +17971,11 @@ msgstr ""
 msgid "Sign"
 msgstr "امضا کردن"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:641
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:644
 msgid "Sign email (if not possible, discard notification)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:642
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:645
 msgid "Sign email (if not possible, send notification anyway)"
 msgstr ""
 
@@ -18992,7 +19002,7 @@ msgstr ""
 msgid "Thanks for the feedback. Please explain what went wrong?"
 msgstr ""
 
-#: lib/validations/verify_perform_rules_validator.rb:68
+#: lib/validations/verify_perform_rules_validator.rb:75
 msgid ""
 "The \"Pending till\" attribute is required for the selected state action."
 msgstr ""
@@ -19943,7 +19953,7 @@ msgstr ""
 msgid "The requested %s could not be found."
 msgstr "نام هاست یافت نشد."
 
-#: lib/validations/verify_perform_rules_validator.rb:97
+#: lib/validations/verify_perform_rules_validator.rb:104
 msgid "The required '%{attribute}' value for %{key}, %{inner} is missing!"
 msgstr "مقدار '%{attribute}' خواسته شده برای %{key}، %{inner} وارد نشده است!"
 
@@ -20093,7 +20103,7 @@ msgstr "مولفه الزامی «مقدار» وارد نشده است."
 msgid "The required value 'group_id' is missing."
 msgstr "مولفه الزامی «شناسه گروه» وارد نشده است."
 
-#: lib/ai/provider.rb:75
+#: lib/ai/provider.rb:79
 #, fuzzy
 #| msgid "The request could not be processed."
 msgid "The response could not be processed."
@@ -21918,8 +21928,8 @@ msgstr ""
 msgid "To work on Tickets."
 msgstr "که روی پرونده ها کار میکند."
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:48
-#: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateTimeInput.vue:48
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:56
+#: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateTimeInput.vue:56
 #: public/assets/chat/chat-no-jquery.coffee:215
 #: public/assets/chat/chat.coffee:213
 msgid "Today"
@@ -22962,6 +22972,10 @@ msgstr ""
 msgid "Use the camera to take a photo for the avatar."
 msgstr ""
 
+#: app/frontend/apps/desktop/components/CommonTable/HeaderResizeLine.vue:147
+msgid "Use the left and right arrow keys to resize the column."
+msgstr ""
+
 #: db/seeds/settings.rb:2372
 msgid ""
 "Use the start time of the last customer thread (which may consist of "
@@ -23197,7 +23211,7 @@ msgstr "نام کاربری"
 msgid "User successfully unlocked!"
 msgstr "کاربر با موفقیت آنلاک شد!"
 
-#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:271
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:272
 msgid "User taskbar tabs"
 msgstr ""
 
@@ -23325,7 +23339,7 @@ msgstr ""
 msgid "Value"
 msgstr "مقدار"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:555
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:557
 msgid "Variables"
 msgstr "متغیرها"
 
@@ -23424,7 +23438,7 @@ msgstr "مشاهده در سامانه"
 msgid "Viewing ticket"
 msgstr "در حال نمایش تیکت‌"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:703
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:707
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_dialog.coffee:6
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:71
 #: app/assets/javascripts/app/lib/mixins/knowledge_base_actions.coffee:8
@@ -23848,7 +23862,7 @@ msgstr "زرد"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm.coffee:4
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee:47
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:614
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:617
 #: app/assets/javascripts/app/controllers/tag.coffee:147
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee:121
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:100
@@ -24136,7 +24150,7 @@ msgstr "شما دسترسی مدیر ندارید."
 #: app/frontend/apps/desktop/components/CommonTable/CommonAdvancedTable.vue:419
 #, fuzzy
 #| msgid "You currently don't have any tickets."
-msgid "You don't have more tickets to load."
+msgid "You don't have more items to load."
 msgstr "شما درحال حاضر هیچ تیکتی ندارید."
 
 #: app/frontend/shared/router/guards/before/permission.ts:27
@@ -24256,7 +24270,7 @@ msgid "You need to configure the Zammad endpoints in the %s:"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/CommonTable/CommonAdvancedTable.vue:415
-msgid "You reached the table limit of %s tickets (%s remaining)."
+msgid "You reached the table limit of %s items (%s remaining)."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:772
@@ -24577,7 +24591,7 @@ msgstr "افزودن گزینه"
 msgid "after (absolute)"
 msgstr "بعد از (مطلق)"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:486
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:488
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:69
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
@@ -24589,7 +24603,7 @@ msgstr "بعد از (نسبی)"
 msgid "again"
 msgstr "مجدد"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:428
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:430
 #, fuzzy
 #| msgid "Subscribe"
 msgid "all subscribers"
@@ -24657,7 +24671,7 @@ msgstr "انتخاب خودکار"
 msgid "before (absolute)"
 msgstr "قبل ( مطلق )"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:483
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:485
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:68
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
@@ -24816,7 +24830,7 @@ msgstr "%s ایجاد شد"
 msgid "current user"
 msgstr "کاربر فعلی"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:434
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:436
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:550
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:637
 msgid "current user organization"
@@ -25083,7 +25097,7 @@ msgstr "جلو"
 msgid "from"
 msgstr "از"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:488
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:490
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:73
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
@@ -25263,7 +25277,7 @@ msgstr ""
 msgid "inactive"
 msgstr "غیرفعال"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:605
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:608
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:91
 #: app/helpers/knowledge_base_visibility_note_helper.rb:25
 msgid "internal"
@@ -25510,7 +25524,7 @@ msgstr "ادغام شد"
 msgid "merged into"
 msgstr "ادغام شده در"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:624
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:627
 msgid "message"
 msgstr "پیام"
 
@@ -25775,7 +25789,7 @@ msgstr "در انتظار یادآور"
 msgid "phone"
 msgstr "تلفن"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:605
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:608
 msgid "public"
 msgstr "عمومی"
 
@@ -25987,13 +26001,13 @@ msgstr "پیامک"
 msgid "spaces are not allowed"
 msgstr "فاصله مجاز نیست"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:435
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:437
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:551
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:638
 msgid "specific organization"
 msgstr "سازمان خاص"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:424
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:426
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:545
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:633
 msgid "specific user"
@@ -26052,7 +26066,7 @@ msgstr "تیکت"
 msgid "ticket %s was merged into this ticket"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:487
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:489
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:72
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
@@ -26123,7 +26137,7 @@ msgstr "وضعیت توییتر"
 msgid "twofactor,2fa,security key,passkey,authenticator app"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:430
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:432
 msgid "unassign user"
 msgstr "عدم تخصیص کاربر"
 
@@ -26192,7 +26206,7 @@ msgstr "ایجاد خواهد شد"
 msgid "will be deleted"
 msgstr "حذف خواهد شد"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:485
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:487
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:71
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
@@ -26200,7 +26214,7 @@ msgstr "حذف خواهد شد"
 msgid "within last (relative)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:484
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:486
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:70
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52

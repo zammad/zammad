@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-06-09 11:57+0000\n"
-"Last-Translator: Anntoo <jdoomm@gmail.com>\n"
+"PO-Revision-Date: 2026-06-11 06:06+0000\n"
+"Last-Translator: Denys Kurochkin <denisku@wix.com>\n"
 "Language-Team: Ukrainian <https://translations.zammad.org/projects/zammad/"
 "zammad-development/uk/>\n"
 "Language: uk\n"
@@ -624,11 +624,11 @@ msgstr ""
 msgid "%s required!"
 msgstr "Потрібно %s!"
 
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:392
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:399
 msgid "%s result(s) selected"
 msgstr "%s результатів вибрано"
 
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:392
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:399
 msgid "%s result(s) selected, selection limit reached"
 msgstr "Вибрано %s результатів, досягнуто ліміт вибірки"
 
@@ -1061,7 +1061,7 @@ msgstr "ШІ"
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:79
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:60
 #: app/assets/javascripts/app/controllers/ticket_zoom/attribute_bar.coffee:144
-#: app/models/ai/agent.rb:102
+#: app/models/ai/agent.rb:107
 msgid "AI Agent"
 msgstr "ШІ-Агент"
 
@@ -1233,7 +1233,7 @@ msgstr "API ключ"
 
 #: db/seeds/settings.rb:3530
 msgid "API Password Access"
-msgstr "Пароль доступа к API"
+msgstr "Доступ до API через пароль"
 
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:38
 msgid "API Token"
@@ -1241,7 +1241,7 @@ msgstr "API Токен"
 
 #: db/seeds/settings.rb:3505
 msgid "API Token Access"
-msgstr "API Токен доступу"
+msgstr "Доступ до API через токен"
 
 #: lib/whatsapp/webhook/payload.rb:22
 msgid "API error."
@@ -1453,7 +1453,7 @@ msgstr "Кнопка меню дій для ключів безпеки"
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco:15
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:16
 #: app/frontend/apps/desktop/components/CommonTable/CommonSimpleTable.vue:100
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:382
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:389
 msgid "Actions"
 msgstr "Дії"
 
@@ -1694,7 +1694,7 @@ msgstr "Додати email"
 msgid "Add empty checklist"
 msgstr "Додати порожній чеклист"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/FieldFilterSelectorInput.vue:547
+#: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/FieldFilterSelectorInput.vue:550
 msgid "Add filter"
 msgstr "Додати фільтр"
 
@@ -1975,7 +1975,7 @@ msgstr "Заявки агента"
 msgid "Agents"
 msgstr "Агенти"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:514
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:516
 msgid "Agents with \"%s\" permission"
 msgstr "Агенти з дозволом \"%s\""
 
@@ -1987,7 +1987,7 @@ msgstr "Погодитися та приєднатися"
 msgid "Alarm"
 msgstr "Оповіщення"
 
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:393
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:400
 msgid "All %s result(s) selected"
 msgstr "Всі %s заявки вибрано"
 
@@ -4092,13 +4092,13 @@ msgid "Clear search"
 msgstr "Очистити пошук"
 
 #: app/frontend/apps/desktop/components/CommonTable/CellContent/BulkCheckbox.vue:61
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:416
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:423
 #: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:649
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:378
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:386
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:314
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:376
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:151
-#: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateTimeInput.vue:157
+#: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateTimeInput.vue:165
 #: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue:124
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:197
 msgid "Clear selection"
@@ -4274,6 +4274,10 @@ msgstr "До \"%s\" застосовано виділення кольором %
 #: db/seeds/settings.rb:920
 msgid "Color representation of the open ticket indicator in the sidebar."
 msgstr "Кольорове представлення індикатора відкритої заявки в бічній панелі."
+
+#: app/frontend/apps/desktop/components/CommonTable/HeaderResizeLine.vue:70
+msgid "Column width: %s pixels"
+msgstr "Ширина стовпця: %s пікселів"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:290
 msgid "Combined subscription URL"
@@ -5163,7 +5167,7 @@ msgstr "Поточний статус"
 msgid "Current Token"
 msgstr "Поточний Токен"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:778
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:782
 #: app/assets/javascripts/app/models/ai_text_tool.coffee:20
 #: app/assets/javascripts/app/models/signature.coffee:21
 #: app/assets/javascripts/app/models/text_module.coffee:21
@@ -5249,7 +5253,7 @@ msgid "Custom instructions"
 msgstr "Індивідуальні інструкції"
 
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee:208
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:512
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:514
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:14
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:28
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:14
@@ -7080,11 +7084,11 @@ msgstr "Не запитувати автоматично відгуки щодо
 msgid "Do not change email address (%s)"
 msgstr "Не змінювати адресу електронної пошти (%s)"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:654
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:657
 msgid "Do not encrypt email"
 msgstr "Не зашифровувати електронну пошту"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:640
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:643
 msgid "Do not sign email"
 msgstr "Не підписувати електронну пошту"
 
@@ -7933,11 +7937,11 @@ msgstr ""
 msgid "Encrypt"
 msgstr "Зашифрувати"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:655
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:658
 msgid "Encrypt email (if not possible, discard notification)"
 msgstr "Зашифруйте електронну пошту (якщо це неможливо, відкиньте сповіщення)"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:656
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:659
 msgid "Encrypt email (if not possible, send notification anyway)"
 msgstr ""
 "Зашифруйте електронну пошту (якщо це неможливо, все одно надішліть "
@@ -9097,7 +9101,7 @@ msgstr "Відправник"
 msgid "Frontend"
 msgstr "Інтерфейс користувача"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:514
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:516
 #: app/assets/javascripts/app/models/group.coffee:48
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:54
 msgid "Full"
@@ -14296,7 +14300,7 @@ msgstr "Перезаписати вміст"
 msgid "Overwrite draft"
 msgstr "Перезаписати чернетку"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:511
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:513
 #: app/assets/javascripts/app/models/ticket.coffee:11
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco:42
 #: app/frontend/apps/desktop/components/Ticket/TicketPopoverWithTrigger/TicketPopover.vue:84
@@ -15562,7 +15566,7 @@ msgstr "Видалити програму автентифікатор"
 msgid "Remove checklist"
 msgstr "Видалити чеклист"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/FieldFilterSelectorInput.vue:513
+#: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/FieldFilterSelectorInput.vue:516
 msgid "Remove filter"
 msgstr "Зняти фільтр"
 
@@ -15928,7 +15932,7 @@ msgstr "Відновлення порядку перегляду заявок н
 msgid "Resize article panel"
 msgstr "Змінити розмір панелі повідомлення"
 
-#: app/frontend/apps/desktop/components/CommonTable/HeaderResizeLine.vue:125
+#: app/frontend/apps/desktop/components/CommonTable/HeaderResizeLine.vue:134
 msgid "Resize column"
 msgstr "Змінити розмір стовпчика"
 
@@ -16537,6 +16541,10 @@ msgstr "Знайдіть або введіть електронну адресу
 msgid "Search or enter phone number…"
 msgstr "Знайдіть або введіть номер телефону…"
 
+#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:665
+msgid "Search result for: %s"
+msgstr "Результат пошуку для: %s"
+
 #: lib/external_data_source/errors.rb:114
 msgid ""
 "Search result label is not a string, a number or a boolean. Please provide "
@@ -16772,11 +16780,11 @@ msgstr ""
 "Переглядайте свої заявки у вашому улюбленому календарі, додавши URL-адресу "
 "підписки до додатку календаря."
 
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:296
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:300
 msgid "Select"
 msgstr "Вибрати"
 
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:406
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:413
 msgid "Select %s result(s)"
 msgstr "Вибрано %s результат(ів)"
 
@@ -16797,7 +16805,7 @@ msgstr "Виберіть спільну чернетку"
 msgid "Select Template"
 msgstr "Вибрати шаблон"
 
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:407
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:414
 msgid "Select all %s results"
 msgstr "Вибрати всі результати %s"
 
@@ -16806,7 +16814,7 @@ msgstr "Вибрати всі результати %s"
 msgid "Select all entries"
 msgstr "Вибрати всі записи"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/FieldFilterSelectorInput.vue:543
+#: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/FieldFilterSelectorInput.vue:546
 msgid "Select attribute"
 msgstr "Виберіть атрибут"
 
@@ -17010,7 +17018,7 @@ msgstr "Тип відправника"
 msgid "Sender based on Reply-To header"
 msgstr "Відправник на основі заголовка «Reply-To»"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:510
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:512
 msgid "Sender of last article"
 msgstr "Відправник останнього повідомлення"
 
@@ -17491,11 +17499,11 @@ msgstr "Вкладення на бічній панелі"
 msgid "Sign"
 msgstr "Підписати"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:641
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:644
 msgid "Sign email (if not possible, discard notification)"
 msgstr "Підписати електронну пошту (якщо це неможливо, відкинути сповіщення)"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:642
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:645
 msgid "Sign email (if not possible, send notification anyway)"
 msgstr ""
 "Підписати електронну пошту (якщо це неможливо, все одно надіслати "
@@ -18493,7 +18501,7 @@ msgstr "Дякуємо що приєдналися. Електронного л�
 msgid "Thanks for the feedback. Please explain what went wrong?"
 msgstr "Дякуємо за відгук. Поясніть, будь ласка, що пішло не так?"
 
-#: lib/validations/verify_perform_rules_validator.rb:68
+#: lib/validations/verify_perform_rules_validator.rb:75
 msgid ""
 "The \"Pending till\" attribute is required for the selected state action."
 msgstr "Атрибут \"Очікує до\" є обов'язковим для вибраної дії стану."
@@ -19462,7 +19470,7 @@ msgstr "Було перевищено ліміт запитів для цієї 
 msgid "The requested %s could not be found."
 msgstr "Запитувані %s не були знайдені."
 
-#: lib/validations/verify_perform_rules_validator.rb:97
+#: lib/validations/verify_perform_rules_validator.rb:104
 msgid "The required '%{attribute}' value for %{key}, %{inner} is missing!"
 msgstr "Необхідне значення '%{attribute}' для %{key}, %{inner} відсутнє!"
 
@@ -19617,7 +19625,7 @@ msgstr "Відсутня обов'язковий параметр значенн
 msgid "The required value 'group_id' is missing."
 msgstr "Відсутнє значення «Ідентифікатор_групи» (group_id)."
 
-#: lib/ai/provider.rb:75
+#: lib/ai/provider.rb:79
 msgid "The response could not be processed."
 msgstr "Відповідь не вдалося обробити."
 
@@ -21589,8 +21597,8 @@ msgstr "Щоб запустити тригер, будь ласка, введі�
 msgid "To work on Tickets."
 msgstr "Працювати над заявками."
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:48
-#: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateTimeInput.vue:48
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:56
+#: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateTimeInput.vue:56
 #: public/assets/chat/chat-no-jquery.coffee:215
 #: public/assets/chat/chat.coffee:213
 msgid "Today"
@@ -21642,7 +21650,7 @@ msgstr "Токен"
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:2
 #: db/seeds/permissions.rb:492
 msgid "Token Access"
-msgstr "Доступ до токенів"
+msgstr "Доступ через токен"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/tokenAccess.ts:8
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:52
@@ -22555,6 +22563,12 @@ msgstr ""
 msgid "Use the camera to take a photo for the avatar."
 msgstr "Використовуйте камеру, щоб зробити фотографію для аватара."
 
+#: app/frontend/apps/desktop/components/CommonTable/HeaderResizeLine.vue:147
+msgid "Use the left and right arrow keys to resize the column."
+msgstr ""
+"Використовуйте клавіші зі стрілками вліво та вправо, щоб змінити розмір "
+"стовпчика."
+
 #: db/seeds/settings.rb:2372
 msgid ""
 "Use the start time of the last customer thread (which may consist of "
@@ -22763,7 +22777,7 @@ msgstr "Меню користувача"
 msgid "User successfully unlocked!"
 msgstr "Користувача успішно розблоковано!"
 
-#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:271
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:272
 msgid "User taskbar tabs"
 msgstr "Вкладки панелі завдань користувача"
 
@@ -22895,7 +22909,7 @@ msgstr "Валідація не пройшла: %{errors}"
 msgid "Value"
 msgstr "Значення"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:555
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:557
 msgid "Variables"
 msgstr "Змінні"
 
@@ -22996,7 +23010,7 @@ msgstr "Переглянути це в Zammad"
 msgid "Viewing ticket"
 msgstr "Перегляд заявки"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:703
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:707
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_dialog.coffee:6
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:71
 #: app/assets/javascripts/app/lib/mixins/knowledge_base_actions.coffee:8
@@ -23442,7 +23456,7 @@ msgstr "Жовтий"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm.coffee:4
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee:47
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:614
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:617
 #: app/assets/javascripts/app/controllers/tag.coffee:147
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee:121
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:100
@@ -23758,8 +23772,8 @@ msgid "You do not have permission to update"
 msgstr "У вас немає дозволу на Оновлення"
 
 #: app/frontend/apps/desktop/components/CommonTable/CommonAdvancedTable.vue:419
-msgid "You don't have more tickets to load."
-msgstr "У вас більше немає заявок для завантаження."
+msgid "You don't have more items to load."
+msgstr "У вас немає більше елементів для завантаження."
 
 #: app/frontend/shared/router/guards/before/permission.ts:27
 msgid "You don't have the necessary permissions to access this page."
@@ -23883,8 +23897,8 @@ msgid "You need to configure the Zammad endpoints in the %s:"
 msgstr "Ви повинні налаштувати кінцеві точки Zammad у %s:"
 
 #: app/frontend/apps/desktop/components/CommonTable/CommonAdvancedTable.vue:415
-msgid "You reached the table limit of %s tickets (%s remaining)."
-msgstr "Ви досягли ліміту в %s заявок (залишилося %s)."
+msgid "You reached the table limit of %s items (%s remaining)."
+msgstr "Ви досягли ліміту таблиці у %s елементів (%s залишилося)."
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:772
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:395
@@ -24223,7 +24237,7 @@ msgstr "додати опцію"
 msgid "after (absolute)"
 msgstr "після"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:486
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:488
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:69
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
@@ -24235,7 +24249,7 @@ msgstr "після"
 msgid "again"
 msgstr "знову"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:428
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:430
 msgid "all subscribers"
 msgstr "усі відстежувачі"
 
@@ -24301,7 +24315,7 @@ msgstr "автоматичний вибір"
 msgid "before (absolute)"
 msgstr "до"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:483
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:485
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:68
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
@@ -24452,7 +24466,7 @@ msgstr "створено %s"
 msgid "current user"
 msgstr "поточний користувач"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:434
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:436
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:550
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:637
 msgid "current user organization"
@@ -24709,7 +24723,7 @@ msgstr "переслати"
 msgid "from"
 msgstr "від"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:488
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:490
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:73
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
@@ -24885,7 +24899,7 @@ msgstr "в межах"
 msgid "inactive"
 msgstr "неактивний"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:605
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:608
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:91
 #: app/helpers/knowledge_base_visibility_note_helper.rb:25
 msgid "internal"
@@ -25116,7 +25130,7 @@ msgstr "об'єднаний"
 msgid "merged into"
 msgstr "об'єднано в"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:624
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:627
 msgid "message"
 msgstr "повідомлення"
 
@@ -25370,7 +25384,7 @@ msgstr "очікує нагадування"
 msgid "phone"
 msgstr "телефон"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:605
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:608
 msgid "public"
 msgstr "публічний"
 
@@ -25574,13 +25588,13 @@ msgstr "sms"
 msgid "spaces are not allowed"
 msgstr "пробіли не дозволені"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:435
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:437
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:551
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:638
 msgid "specific organization"
 msgstr "конкретна організація"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:424
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:426
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:545
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:633
 msgid "specific user"
@@ -25637,7 +25651,7 @@ msgstr "заявка"
 msgid "ticket %s was merged into this ticket"
 msgstr "заявка %s була об'єднана з цією заявкою"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:487
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:489
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:72
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
@@ -25706,7 +25720,7 @@ msgstr "Статус twitter"
 msgid "twofactor,2fa,security key,passkey,authenticator app"
 msgstr "двофакторний, 2fa, ключ безпеки, пароль, додаток-автентифікатор"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:430
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:432
 msgid "unassign user"
 msgstr "скасувати призначення користувача"
 
@@ -25769,7 +25783,7 @@ msgstr "буде створено(а/о)"
 msgid "will be deleted"
 msgstr "буде видалено(-а)"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:485
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:487
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:71
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
@@ -25777,7 +25791,7 @@ msgstr "буде видалено(-а)"
 msgid "within last (relative)"
 msgstr "упродовж останнього (відносне)"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:484
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:486
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:70
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52

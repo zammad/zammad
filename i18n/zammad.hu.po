@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-06-08 15:29+0000\n"
-"Last-Translator: Balázs Úr <balazs@urbalazs.hu>\n"
+"PO-Revision-Date: 2026-06-10 08:05+0000\n"
+"Last-Translator: Karoly Nagy <cpt.charlesg@gmail.com>\n"
 "Language-Team: Hungarian <https://translations.zammad.org/projects/zammad/"
 "zammad-development/hu/>\n"
 "Language: hu\n"
@@ -623,11 +623,11 @@ msgstr ""
 msgid "%s required!"
 msgstr "%s kötelező!"
 
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:392
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:399
 msgid "%s result(s) selected"
 msgstr "%s találat kiválasztva"
 
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:392
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:399
 msgid "%s result(s) selected, selection limit reached"
 msgstr "%s találat kiválasztva, a kiválasztási korlát elérve"
 
@@ -1060,7 +1060,7 @@ msgstr "MI"
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:79
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:60
 #: app/assets/javascripts/app/controllers/ticket_zoom/attribute_bar.coffee:144
-#: app/models/ai/agent.rb:102
+#: app/models/ai/agent.rb:107
 msgid "AI Agent"
 msgstr "MI-ügyintéző"
 
@@ -1451,7 +1451,7 @@ msgstr "Művelet menügombja a biztonsági kulcsokhoz"
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco:15
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:16
 #: app/frontend/apps/desktop/components/CommonTable/CommonSimpleTable.vue:100
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:382
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:389
 msgid "Actions"
 msgstr "Műveletek"
 
@@ -1695,7 +1695,7 @@ msgstr "E-mail hozzáadása"
 msgid "Add empty checklist"
 msgstr "Üres ellenőrzőlista hozzáadása"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/FieldFilterSelectorInput.vue:547
+#: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/FieldFilterSelectorInput.vue:550
 msgid "Add filter"
 msgstr "Szűrő hozzáadása"
 
@@ -1972,7 +1972,7 @@ msgstr "Ügyintéző jegyei"
 msgid "Agents"
 msgstr "Ügyintézők"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:514
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:516
 msgid "Agents with \"%s\" permission"
 msgstr "„%s” jogosultsággal rendelkező ügyintézők"
 
@@ -1984,7 +1984,7 @@ msgstr "Elfogadás és csatlakozás"
 msgid "Alarm"
 msgstr "Riasztás"
 
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:393
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:400
 msgid "All %s result(s) selected"
 msgstr "Az összes %s találat kiválasztva"
 
@@ -4115,13 +4115,13 @@ msgid "Clear search"
 msgstr "Keresés törlése"
 
 #: app/frontend/apps/desktop/components/CommonTable/CellContent/BulkCheckbox.vue:61
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:416
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:423
 #: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:649
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:378
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:386
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:314
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:376
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:151
-#: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateTimeInput.vue:157
+#: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateTimeInput.vue:165
 #: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue:124
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:197
 msgid "Clear selection"
@@ -4299,6 +4299,10 @@ msgstr "%s színű kiemelés alkalmazva erre: „%s”"
 #: db/seeds/settings.rb:920
 msgid "Color representation of the open ticket indicator in the sidebar."
 msgstr "A nyitott jegy jelzőjének színábrázolása az oldalsávon."
+
+#: app/frontend/apps/desktop/components/CommonTable/HeaderResizeLine.vue:70
+msgid "Column width: %s pixels"
+msgstr ""
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:290
 msgid "Combined subscription URL"
@@ -5195,7 +5199,7 @@ msgstr "Jelenlegi állapot"
 msgid "Current Token"
 msgstr "Jelenlegi token"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:778
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:782
 #: app/assets/javascripts/app/models/ai_text_tool.coffee:20
 #: app/assets/javascripts/app/models/signature.coffee:21
 #: app/assets/javascripts/app/models/text_module.coffee:21
@@ -5284,7 +5288,7 @@ msgid "Custom instructions"
 msgstr "Egyéni utasítások"
 
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee:208
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:512
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:514
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:14
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:28
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:14
@@ -7178,11 +7182,11 @@ msgstr "Ne kérjen automatikusan visszajelzést a BÉTA felhasználói felületr
 msgid "Do not change email address (%s)"
 msgstr "Ne változtassa meg az e-mail-címet (%s)"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:654
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:657
 msgid "Do not encrypt email"
 msgstr "Ne titkosítsa az e-mailt"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:640
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:643
 msgid "Do not sign email"
 msgstr "Ne írja alá az e-mailt"
 
@@ -8038,11 +8042,11 @@ msgstr ""
 msgid "Encrypt"
 msgstr "Titkosítás"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:655
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:658
 msgid "Encrypt email (if not possible, discard notification)"
 msgstr "E-mail titkosítása (ha nem lehetséges, az értesítés elvetése)"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:656
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:659
 msgid "Encrypt email (if not possible, send notification anyway)"
 msgstr "E-mail titkosítása (ha nem lehetséges, értesítés küldése mindenképp)"
 
@@ -9203,7 +9207,7 @@ msgstr "Ettől"
 msgid "Frontend"
 msgstr "Előtétprogram"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:514
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:516
 #: app/assets/javascripts/app/models/group.coffee:48
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:54
 msgid "Full"
@@ -14396,7 +14400,7 @@ msgstr "Tartalom felülírása"
 msgid "Overwrite draft"
 msgstr "Piszkozat felülírása"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:511
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:513
 #: app/assets/javascripts/app/models/ticket.coffee:11
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco:42
 #: app/frontend/apps/desktop/components/Ticket/TicketPopoverWithTrigger/TicketPopover.vue:84
@@ -15666,7 +15670,7 @@ msgstr "Hitelesítő alkalmazás eltávolítása"
 msgid "Remove checklist"
 msgstr "Ellenőrzőlista eltávolítása"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/FieldFilterSelectorInput.vue:513
+#: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/FieldFilterSelectorInput.vue:516
 msgid "Remove filter"
 msgstr "Szűrő eltávolítása"
 
@@ -16034,7 +16038,7 @@ msgstr "A jegyáttekintések sorrendjének visszaállítása nem sikerült."
 msgid "Resize article panel"
 msgstr "Bejegyzéspanel átméretezése"
 
-#: app/frontend/apps/desktop/components/CommonTable/HeaderResizeLine.vue:125
+#: app/frontend/apps/desktop/components/CommonTable/HeaderResizeLine.vue:134
 msgid "Resize column"
 msgstr "Oszlop átméretezése"
 
@@ -16648,6 +16652,12 @@ msgstr "Keresés vagy e-mail-cím megadása…"
 msgid "Search or enter phone number…"
 msgstr "Keresés vagy telefonszám megadása…"
 
+#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:665
+#, fuzzy
+#| msgid "Search result list"
+msgid "Search result for: %s"
+msgstr "Keresési eredmény listája"
+
 #: lib/external_data_source/errors.rb:114
 msgid ""
 "Search result label is not a string, a number or a boolean. Please provide "
@@ -16886,11 +16896,11 @@ msgstr ""
 "Nézze meg jegyeit kedvenc naptárából azáltal, hogy hozzáadja a feliratkozási "
 "URL-t a naptáralkalmazásához."
 
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:296
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:300
 msgid "Select"
 msgstr "Kiválasztás"
 
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:406
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:413
 msgid "Select %s result(s)"
 msgstr "%s találat kiválasztása"
 
@@ -16911,7 +16921,7 @@ msgstr "Megosztott piszkozat kiválasztása"
 msgid "Select Template"
 msgstr "Sablon kiválasztása"
 
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:407
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:414
 msgid "Select all %s results"
 msgstr "Az összes %s találat kiválasztása"
 
@@ -16920,7 +16930,7 @@ msgstr "Az összes %s találat kiválasztása"
 msgid "Select all entries"
 msgstr "Összes bejegyzés kiválasztása"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/FieldFilterSelectorInput.vue:543
+#: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/FieldFilterSelectorInput.vue:546
 msgid "Select attribute"
 msgstr "Attribútum kiválasztása"
 
@@ -17127,7 +17137,7 @@ msgstr "Küldő típusa"
 msgid "Sender based on Reply-To header"
 msgstr "Küldő a Válaszcím fejléc alapján"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:510
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:512
 msgid "Sender of last article"
 msgstr "Az utolsó bejegyzés küldője"
 
@@ -17611,11 +17621,11 @@ msgstr "Oldalsáv mellékletei"
 msgid "Sign"
 msgstr "Aláírás"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:641
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:644
 msgid "Sign email (if not possible, discard notification)"
 msgstr "E-mail aláírása (ha nem lehetséges, akkor értesítés elvetése)"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:642
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:645
 msgid "Sign email (if not possible, send notification anyway)"
 msgstr "E-mail aláírása (ha nem lehetséges, értesítés küldése mindenképp)"
 
@@ -18621,7 +18631,7 @@ msgstr "Köszönjük, hogy csatlakozott. Az e-mail elküldve ide: „%s”."
 msgid "Thanks for the feedback. Please explain what went wrong?"
 msgstr "Köszönjük a visszajelzést. Elmagyarázná, hogy milyen probléma történt?"
 
-#: lib/validations/verify_perform_rules_validator.rb:68
+#: lib/validations/verify_perform_rules_validator.rb:75
 msgid ""
 "The \"Pending till\" attribute is required for the selected state action."
 msgstr ""
@@ -19590,7 +19600,7 @@ msgstr "A művelet kéréskorlátja túllépve."
 msgid "The requested %s could not be found."
 msgstr "A kért %s nem található."
 
-#: lib/validations/verify_perform_rules_validator.rb:97
+#: lib/validations/verify_perform_rules_validator.rb:104
 msgid "The required '%{attribute}' value for %{key}, %{inner} is missing!"
 msgstr "A szükséges „%{attribute}” érték hiányzik ennél: %{key}, %{inner}!"
 
@@ -19738,7 +19748,7 @@ msgstr "A szükséges „value” paraméter hiányzik."
 msgid "The required value 'group_id' is missing."
 msgstr "A szükséges „group_id” érték hiányzik."
 
-#: lib/ai/provider.rb:75
+#: lib/ai/provider.rb:79
 msgid "The response could not be processed."
 msgstr "A választ nem sikerült feldolgozni."
 
@@ -21732,8 +21742,8 @@ msgstr "Az előnézet aktiválásához adjon meg néhány keresési kifejezést 
 msgid "To work on Tickets."
 msgstr "Jegyekkel való munkavégzéshez."
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:48
-#: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateTimeInput.vue:48
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:56
+#: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateTimeInput.vue:56
 #: public/assets/chat/chat-no-jquery.coffee:215
 #: public/assets/chat/chat.coffee:213
 msgid "Today"
@@ -22698,6 +22708,10 @@ msgstr ""
 msgid "Use the camera to take a photo for the avatar."
 msgstr "A kamera használata, hogy fényképet készítsen a profilképhez."
 
+#: app/frontend/apps/desktop/components/CommonTable/HeaderResizeLine.vue:147
+msgid "Use the left and right arrow keys to resize the column."
+msgstr ""
+
 #: db/seeds/settings.rb:2372
 msgid ""
 "Use the start time of the last customer thread (which may consist of "
@@ -22907,7 +22921,7 @@ msgstr "Felhasználói menü"
 msgid "User successfully unlocked!"
 msgstr "A felhasználó sikeresen feloldva!"
 
-#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:271
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:272
 msgid "User taskbar tabs"
 msgstr "Felhasználói tálcalapok"
 
@@ -23039,7 +23053,7 @@ msgstr "Az ellenőrzés nem sikerült: %{errors}"
 msgid "Value"
 msgstr "Érték"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:555
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:557
 msgid "Variables"
 msgstr "Változók"
 
@@ -23140,7 +23154,7 @@ msgstr "Nézze meg ezt a Zammad rendszerben"
 msgid "Viewing ticket"
 msgstr "Jegy megtekintése"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:703
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:707
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_dialog.coffee:6
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:71
 #: app/assets/javascripts/app/lib/mixins/knowledge_base_actions.coffee:8
@@ -23579,7 +23593,7 @@ msgstr "Sárga"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm.coffee:4
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee:47
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:614
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:617
 #: app/assets/javascripts/app/controllers/tag.coffee:147
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee:121
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:100
@@ -23895,7 +23909,9 @@ msgid "You do not have permission to update"
 msgstr "Nincs jogosultsága a frissítéshez"
 
 #: app/frontend/apps/desktop/components/CommonTable/CommonAdvancedTable.vue:419
-msgid "You don't have more tickets to load."
+#, fuzzy
+#| msgid "You don't have more tickets to load."
+msgid "You don't have more items to load."
 msgstr "Nincsenek további betöltendő jegyei."
 
 #: app/frontend/shared/router/guards/before/permission.ts:27
@@ -24018,7 +24034,9 @@ msgid "You need to configure the Zammad endpoints in the %s:"
 msgstr "Be kell állítani a Zammad-végpontokat a(z) %s rendszerben:"
 
 #: app/frontend/apps/desktop/components/CommonTable/CommonAdvancedTable.vue:415
-msgid "You reached the table limit of %s tickets (%s remaining)."
+#, fuzzy
+#| msgid "You reached the table limit of %s tickets (%s remaining)."
+msgid "You reached the table limit of %s items (%s remaining)."
 msgstr "Elérte a(z) %s jegyből álló táblázatkorlátot (%s van hátra)."
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:772
@@ -24359,7 +24377,7 @@ msgstr "lehetőség hozzáadása"
 msgid "after (absolute)"
 msgstr "utána (abszolút)"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:486
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:488
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:69
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
@@ -24371,7 +24389,7 @@ msgstr "utána (relatív)"
 msgid "again"
 msgstr "újra"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:428
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:430
 msgid "all subscribers"
 msgstr "összes feliratkozó"
 
@@ -24438,7 +24456,7 @@ msgstr "automatikus kiválasztás"
 msgid "before (absolute)"
 msgstr "előtte (abszolút)"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:483
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:485
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:68
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
@@ -24589,7 +24607,7 @@ msgstr "létrehozva: %s"
 msgid "current user"
 msgstr "jelenlegi felhasználó"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:434
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:436
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:550
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:637
 msgid "current user organization"
@@ -24628,10 +24646,8 @@ msgid "day"
 msgstr "nap"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/operators/within-last-relative.ts:10
-#, fuzzy
-#| msgid "Day(s)"
 msgid "day(s)"
-msgstr "Nap"
+msgstr "nap"
 
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee:76
 msgid "days"
@@ -24849,7 +24865,7 @@ msgstr "továbbítás"
 msgid "from"
 msgstr "ettől"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:488
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:490
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:73
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
@@ -25026,7 +25042,7 @@ msgstr "tartományban"
 msgid "inactive"
 msgstr "inaktív"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:605
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:608
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:91
 #: app/helpers/knowledge_base_visibility_note_helper.rb:25
 msgid "internal"
@@ -25255,7 +25271,7 @@ msgstr "egyesítve"
 msgid "merged into"
 msgstr "egyesítve ebbe"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:624
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:627
 msgid "message"
 msgstr "üzenet"
 
@@ -25279,8 +25295,6 @@ msgid "minutes"
 msgstr "perc"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/operators/within-last-relative.ts:12
-#, fuzzy
-#| msgid "Month(s)"
 msgid "month(s)"
 msgstr "hónap"
 
@@ -25510,7 +25524,7 @@ msgstr "emlékeztető függőben"
 msgid "phone"
 msgstr "telefon"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:605
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:608
 msgid "public"
 msgstr "nyilvános"
 
@@ -25715,13 +25729,13 @@ msgstr "SMS"
 msgid "spaces are not allowed"
 msgstr "szóközök nem engedélyezettek"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:435
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:437
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:551
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:638
 msgid "specific organization"
 msgstr "bizonyos szervezet"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:424
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:426
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:545
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:633
 msgid "specific user"
@@ -25778,7 +25792,7 @@ msgstr "jegy"
 msgid "ticket %s was merged into this ticket"
 msgstr "a(z) %s jegy egyesítve lett ebbe a jegybe"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:487
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:489
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:72
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
@@ -25852,7 +25866,7 @@ msgstr "Twitter állapot"
 msgid "twofactor,2fa,security key,passkey,authenticator app"
 msgstr "kétfaktoros,2fa,biztonsági kulcs,jelkulcs,hitelesítő alkalmazás"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:430
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:432
 msgid "unassign user"
 msgstr "felhasználó hozzárendelésének feloldása"
 
@@ -25894,10 +25908,8 @@ msgid "web"
 msgstr "web"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/operators/within-last-relative.ts:11
-#, fuzzy
-#| msgid "Week(s)"
 msgid "week(s)"
-msgstr "Hét"
+msgstr "hét"
 
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco:15
 msgid "welcome message"
@@ -25917,7 +25929,7 @@ msgstr "létrehozásra kerül"
 msgid "will be deleted"
 msgstr "törlésre kerül"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:485
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:487
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:71
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
@@ -25925,7 +25937,7 @@ msgstr "törlésre kerül"
 msgid "within last (relative)"
 msgstr "az utolsón belül (relatív)"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:484
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:486
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:70
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
@@ -25933,10 +25945,8 @@ msgid "within next (relative)"
 msgstr "a következőn belül (relatív)"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/operators/within-last-relative.ts:13
-#, fuzzy
-#| msgid "Year(s)"
 msgid "year(s)"
-msgstr "Év"
+msgstr "év"
 
 #: app/assets/javascripts/app/controllers/_ui_element/boolean.coffee:9
 #: app/assets/javascripts/app/controllers/time_accounting_types.coffee:22

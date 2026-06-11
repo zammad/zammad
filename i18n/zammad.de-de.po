@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-06-09 11:57+0000\n"
-"Last-Translator: Ralf Schmid <rsc@zammad.com>\n"
+"PO-Revision-Date: 2026-06-11 06:06+0000\n"
+"Last-Translator: Martin Gruner <mg@zammad.com>\n"
 "Language-Team: German <https://translations.zammad.org/projects/zammad/"
 "zammad-development/de/>\n"
 "Language: de-de\n"
@@ -621,11 +621,11 @@ msgstr ""
 msgid "%s required!"
 msgstr "%s wird benötigt!"
 
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:392
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:399
 msgid "%s result(s) selected"
 msgstr "%s Ergebnis(se) ausgewählt"
 
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:392
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:399
 msgid "%s result(s) selected, selection limit reached"
 msgstr "%s Ergebnis(se) ausgewählt, Auswahl-Limit erreicht"
 
@@ -1008,7 +1008,7 @@ msgid ""
 "A related knowledge base answer is being generated. You will be notified "
 "once the draft is ready."
 msgstr ""
-"Eine zugehörige Knowledge Base-Antwort wird derzeit erstellt. Sie werden "
+"Eine zugehörige Knowledge Base Antwort wird derzeit erstellt. Sie werden "
 "benachrichtigt, sobald der Entwurf fertig ist."
 
 #: app/assets/javascripts/app/views/dashboard/first_steps_test_ticket_finish.jst.eco:1
@@ -1061,7 +1061,7 @@ msgstr "KI"
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:79
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:60
 #: app/assets/javascripts/app/controllers/ticket_zoom/attribute_bar.coffee:144
-#: app/models/ai/agent.rb:102
+#: app/models/ai/agent.rb:107
 msgid "AI Agent"
 msgstr "KI-Agent"
 
@@ -1370,7 +1370,7 @@ msgstr "Zeit erfassen"
 #: app/assets/javascripts/app/views/time_accounting/accounted_time.jst.eco:2
 #: app/graphql/gql/types/overview_type.rb:101
 msgid "Accounted Time"
-msgstr "Berechnete Zeit"
+msgstr "Erfasste Zeiten"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:74
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:147
@@ -1453,7 +1453,7 @@ msgstr "Schaltfläche Aktionsmenü für Sicherheits-Schlüssel"
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco:15
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:16
 #: app/frontend/apps/desktop/components/CommonTable/CommonSimpleTable.vue:100
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:382
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:389
 msgid "Actions"
 msgstr "Aktionen"
 
@@ -1694,7 +1694,7 @@ msgstr "E-Mail hinzufügen"
 msgid "Add empty checklist"
 msgstr "Leere Checkliste hinzufügen"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/FieldFilterSelectorInput.vue:547
+#: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/FieldFilterSelectorInput.vue:550
 msgid "Add filter"
 msgstr "Filter hinzufügen"
 
@@ -1973,7 +1973,7 @@ msgstr "Agenten-Tickets"
 msgid "Agents"
 msgstr "Agenten"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:514
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:516
 msgid "Agents with \"%s\" permission"
 msgstr "Agenten mit \"%s\"-Berechtigung"
 
@@ -1985,7 +1985,7 @@ msgstr "Zustimmen & mitmachen"
 msgid "Alarm"
 msgstr "Alarm"
 
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:393
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:400
 msgid "All %s result(s) selected"
 msgstr "Alle %s Ergebnisse ausgewählt"
 
@@ -4112,13 +4112,13 @@ msgid "Clear search"
 msgstr "Suche löschen"
 
 #: app/frontend/apps/desktop/components/CommonTable/CellContent/BulkCheckbox.vue:61
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:416
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:423
 #: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:649
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:378
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:386
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:314
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:376
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:151
-#: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateTimeInput.vue:157
+#: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateTimeInput.vue:165
 #: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue:124
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:197
 msgid "Clear selection"
@@ -4295,6 +4295,10 @@ msgstr "Hervorhebung mit Farbe %s auf \"%s\" angewendet"
 #: db/seeds/settings.rb:920
 msgid "Color representation of the open ticket indicator in the sidebar."
 msgstr "Farbdarstellung des offenen Tickets in der Sidebar."
+
+#: app/frontend/apps/desktop/components/CommonTable/HeaderResizeLine.vue:70
+msgid "Column width: %s pixels"
+msgstr "Spaltenbreite: %s Pixel"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:290
 msgid "Combined subscription URL"
@@ -5188,7 +5192,7 @@ msgstr "Aktueller Status"
 msgid "Current Token"
 msgstr "Aktueller Token"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:778
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:782
 #: app/assets/javascripts/app/models/ai_text_tool.coffee:20
 #: app/assets/javascripts/app/models/signature.coffee:21
 #: app/assets/javascripts/app/models/text_module.coffee:21
@@ -5276,7 +5280,7 @@ msgid "Custom instructions"
 msgstr "Benutzerdefinierte Anweisungen"
 
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee:208
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:512
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:514
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:14
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:28
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:14
@@ -7137,11 +7141,11 @@ msgstr "Nicht automatisch nach Feedback zur BETA-UI fragen"
 msgid "Do not change email address (%s)"
 msgstr "E-Mail-Adresse nicht ändern (%s)"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:654
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:657
 msgid "Do not encrypt email"
 msgstr "E-Mail nicht verschlüsseln"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:640
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:643
 msgid "Do not sign email"
 msgstr "E-Mail nicht signieren"
 
@@ -7996,11 +8000,11 @@ msgstr ""
 msgid "Encrypt"
 msgstr "Verschlüsseln"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:655
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:658
 msgid "Encrypt email (if not possible, discard notification)"
 msgstr "E-Mail verschlüsseln (Benachrichtigung verwerfen, falls nicht möglich)"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:656
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:659
 msgid "Encrypt email (if not possible, send notification anyway)"
 msgstr ""
 "E-Mail verschlüsseln (Benachrichtigung dennoch senden, falls nicht möglich)"
@@ -9172,7 +9176,7 @@ msgstr "Von"
 msgid "Frontend"
 msgstr "Frontend"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:514
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:516
 #: app/assets/javascripts/app/models/group.coffee:48
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:54
 msgid "Full"
@@ -11116,7 +11120,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee:28
 msgid "Knowledge Base Answer could not be created"
-msgstr "Knowledge Base-Antwort konnte nicht erstellt werden"
+msgstr "Knowledge Base Antwort konnte nicht erstellt werden"
 
 #: db/seeds/permissions.rb:389
 msgid "Knowledge Base Editor"
@@ -14380,7 +14384,7 @@ msgstr "Inhalt überschreiben"
 msgid "Overwrite draft"
 msgstr "Entwurf überschreiben"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:511
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:513
 #: app/assets/javascripts/app/models/ticket.coffee:11
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco:42
 #: app/frontend/apps/desktop/components/Ticket/TicketPopoverWithTrigger/TicketPopover.vue:84
@@ -15663,7 +15667,7 @@ msgstr "Authentifizierungs-App entfernen"
 msgid "Remove checklist"
 msgstr "Checkliste entfernen"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/FieldFilterSelectorInput.vue:513
+#: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/FieldFilterSelectorInput.vue:516
 msgid "Remove filter"
 msgstr "Filter entfernen"
 
@@ -16030,7 +16034,7 @@ msgstr ""
 msgid "Resize article panel"
 msgstr "Größe des Artikel-Bereichs ändern"
 
-#: app/frontend/apps/desktop/components/CommonTable/HeaderResizeLine.vue:125
+#: app/frontend/apps/desktop/components/CommonTable/HeaderResizeLine.vue:134
 msgid "Resize column"
 msgstr "Spaltengröße ändern"
 
@@ -16642,6 +16646,10 @@ msgstr "Suchen oder E-Mail-Adresse angeben…"
 msgid "Search or enter phone number…"
 msgstr "Suchen oder Telefonnummer angeben…"
 
+#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:665
+msgid "Search result for: %s"
+msgstr "Suchergebnis für: %s"
+
 #: lib/external_data_source/errors.rb:114
 msgid ""
 "Search result label is not a string, a number or a boolean. Please provide "
@@ -16885,11 +16893,11 @@ msgstr ""
 "Zeigen Sie die Tickets in Ihrem Kalender an, indem Sie die Abonnement-URL zu "
 "Ihrer Kalender-App hinzufügen."
 
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:296
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:300
 msgid "Select"
 msgstr "Auswahl"
 
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:406
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:413
 msgid "Select %s result(s)"
 msgstr "%s Ergebnis(se) auswählen"
 
@@ -16910,7 +16918,7 @@ msgstr "Gemeinsamen Entwurf auswählen"
 msgid "Select Template"
 msgstr "Vorlage wählen"
 
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:407
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:414
 msgid "Select all %s results"
 msgstr "Alle %s Ergebnisse auswählen"
 
@@ -16919,7 +16927,7 @@ msgstr "Alle %s Ergebnisse auswählen"
 msgid "Select all entries"
 msgstr "Alle Einträge auswählen"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/FieldFilterSelectorInput.vue:543
+#: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/FieldFilterSelectorInput.vue:546
 msgid "Select attribute"
 msgstr "Attribut auswählen"
 
@@ -17129,7 +17137,7 @@ msgstr "Absender-Typ"
 msgid "Sender based on Reply-To header"
 msgstr "Absender basierend auf Reply-To-Header"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:510
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:512
 msgid "Sender of last article"
 msgstr "Sender des letzten Artikels"
 
@@ -17614,11 +17622,11 @@ msgstr "Sidebar Anhänge"
 msgid "Sign"
 msgstr "Signieren"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:641
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:644
 msgid "Sign email (if not possible, discard notification)"
 msgstr "E-Mail signieren (Benachrichtigung verwerfen, falls nicht möglich)"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:642
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:645
 msgid "Sign email (if not possible, send notification anyway)"
 msgstr ""
 "E-Mail signieren (Benachrichtigung dennoch senden, falls nicht möglich)"
@@ -18625,7 +18633,7 @@ msgstr ""
 "Danke für Ihre Rückmeldung. Können Sie bitte erläutern, was schiefgelaufen "
 "ist?"
 
-#: lib/validations/verify_perform_rules_validator.rb:68
+#: lib/validations/verify_perform_rules_validator.rb:75
 msgid ""
 "The \"Pending till\" attribute is required for the selected state action."
 msgstr ""
@@ -19626,7 +19634,7 @@ msgstr "Die Anfrage-Begrenzung für diesen Vorgang wurde überschritten."
 msgid "The requested %s could not be found."
 msgstr "Das angeforderte %s konnte nicht gefunden werden."
 
-#: lib/validations/verify_perform_rules_validator.rb:97
+#: lib/validations/verify_perform_rules_validator.rb:104
 msgid "The required '%{attribute}' value for %{key}, %{inner} is missing!"
 msgstr "Der erforderliche '%{attribute}' Wert für %{key}, %{inner} fehlt!"
 
@@ -19774,7 +19782,7 @@ msgstr "Der erforderliche Parameter 'value' fehlt."
 msgid "The required value 'group_id' is missing."
 msgstr "Der erforderliche Wert 'group_id' fehlt."
 
-#: lib/ai/provider.rb:75
+#: lib/ai/provider.rb:79
 msgid "The response could not be processed."
 msgstr "Die Antwort konnte nicht verarbeitet werden."
 
@@ -21788,8 +21796,8 @@ msgstr ""
 msgid "To work on Tickets."
 msgstr "Für die Arbeit an Tickets."
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:48
-#: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateTimeInput.vue:48
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:56
+#: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateTimeInput.vue:56
 #: public/assets/chat/chat-no-jquery.coffee:215
 #: public/assets/chat/chat.coffee:213
 msgid "Today"
@@ -22718,7 +22726,7 @@ msgstr "Hochladen…"
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco:3
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco:12
 msgid "Usage"
-msgstr "Verbrauch"
+msgstr "Verwendung"
 
 #: lib/excel_sheet/ai/analytics/with_usage.rb:42
 msgid "Usages count"
@@ -22765,6 +22773,12 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue:145
 msgid "Use the camera to take a photo for the avatar."
 msgstr "Verwenden Sie die Kamera, um ein Foto für den Avatar zu machen."
+
+#: app/frontend/apps/desktop/components/CommonTable/HeaderResizeLine.vue:147
+msgid "Use the left and right arrow keys to resize the column."
+msgstr ""
+"Verwenden Sie die linke und rechte Pfeiltaste, um die Größe der Spalte zu "
+"ändern."
 
 #: db/seeds/settings.rb:2372
 msgid ""
@@ -22975,7 +22989,7 @@ msgstr "Benutzermenü"
 msgid "User successfully unlocked!"
 msgstr "Benutzer erfolgreich entsperrt!"
 
-#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:271
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:272
 msgid "User taskbar tabs"
 msgstr "Tabs in der Taskleiste des Benutzers"
 
@@ -23108,7 +23122,7 @@ msgstr "Prüfung fehlgeschlagen: %{errors}"
 msgid "Value"
 msgstr "Wert"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:555
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:557
 msgid "Variables"
 msgstr "Variablen"
 
@@ -23209,7 +23223,7 @@ msgstr "In Zammad anzeigen"
 msgid "Viewing ticket"
 msgstr "Ticket ansehen"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:703
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:707
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_dialog.coffee:6
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:71
 #: app/assets/javascripts/app/lib/mixins/knowledge_base_actions.coffee:8
@@ -23648,7 +23662,7 @@ msgstr "Gelb"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm.coffee:4
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee:47
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:614
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:617
 #: app/assets/javascripts/app/controllers/tag.coffee:147
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee:121
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:100
@@ -23848,7 +23862,7 @@ msgstr "Sie können die Gruppe nicht mehr einsehen."
 
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/knowledge-base-answer.ts:20
 msgid "You can no longer see the knowledge base answer."
-msgstr "Sie können die Knowledge Base-Antwort nicht mehr sehen."
+msgstr "Sie können die Knowledge Base Antwort nicht mehr sehen."
 
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/organization.ts:18
 msgid "You can no longer see the organization."
@@ -23972,8 +23986,8 @@ msgid "You do not have permission to update"
 msgstr "Sie haben keine Berechtigung zur Aktualisierung"
 
 #: app/frontend/apps/desktop/components/CommonTable/CommonAdvancedTable.vue:419
-msgid "You don't have more tickets to load."
-msgstr "Es gibt keine weiteren Tickets mehr zu laden."
+msgid "You don't have more items to load."
+msgstr "Es gibt keine weiteren Elemente mehr zu laden."
 
 #: app/frontend/shared/router/guards/before/permission.ts:27
 msgid "You don't have the necessary permissions to access this page."
@@ -24097,8 +24111,9 @@ msgid "You need to configure the Zammad endpoints in the %s:"
 msgstr "Diese Zammad-Endpunkte müssen in %s konfigurieren werden:"
 
 #: app/frontend/apps/desktop/components/CommonTable/CommonAdvancedTable.vue:415
-msgid "You reached the table limit of %s tickets (%s remaining)."
-msgstr "Sie haben das Tabellenlimit von %s Tickets erreicht (%s verbleibend)."
+msgid "You reached the table limit of %s items (%s remaining)."
+msgstr ""
+"Sie haben das Tabellenlimit von %s Elementen erreicht (%s verbleibend)."
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:772
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:395
@@ -24443,7 +24458,7 @@ msgstr "Option hinzufügen"
 msgid "after (absolute)"
 msgstr "nach (absolut)"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:486
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:488
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:69
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
@@ -24455,7 +24470,7 @@ msgstr "nach (relativ)"
 msgid "again"
 msgstr "erneut"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:428
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:430
 msgid "all subscribers"
 msgstr "alle Abonnenten"
 
@@ -24521,7 +24536,7 @@ msgstr "automatisch auswählen"
 msgid "before (absolute)"
 msgstr "vor (absolut)"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:483
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:485
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:68
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
@@ -24672,7 +24687,7 @@ msgstr "%s erstellt"
 msgid "current user"
 msgstr "aktueller Benutzer"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:434
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:436
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:550
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:637
 msgid "current user organization"
@@ -24931,7 +24946,7 @@ msgstr "weiterleiten"
 msgid "from"
 msgstr "von"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:488
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:490
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:73
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
@@ -25107,7 +25122,7 @@ msgstr "im Bereich"
 msgid "inactive"
 msgstr "nicht aktiv"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:605
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:608
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:91
 #: app/helpers/knowledge_base_visibility_note_helper.rb:25
 msgid "internal"
@@ -25337,7 +25352,7 @@ msgstr "zusammengefasst"
 msgid "merged into"
 msgstr "zusammengefasst zu"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:624
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:627
 msgid "message"
 msgstr "Nachricht"
 
@@ -25588,7 +25603,7 @@ msgstr "warten auf Erinnerung"
 msgid "phone"
 msgstr "Telefon"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:605
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:608
 msgid "public"
 msgstr "öffentlich"
 
@@ -25792,13 +25807,13 @@ msgstr "SMS"
 msgid "spaces are not allowed"
 msgstr "Leerzeichen sind nicht erlaubt"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:435
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:437
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:551
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:638
 msgid "specific organization"
 msgstr "spezifische Organisation"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:424
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:426
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:545
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:633
 msgid "specific user"
@@ -25855,7 +25870,7 @@ msgstr "Ticket"
 msgid "ticket %s was merged into this ticket"
 msgstr "Ticket %s wurde zu diesem Ticket zusammengefasst"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:487
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:489
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:72
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
@@ -25927,7 +25942,7 @@ msgstr ""
 "Zweifaktor,2fa,2FA,Sicherheitsschlüssel,Sicherheits-"
 "Schlüssel,Passkey,Authentifizierungs-app"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:430
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:432
 msgid "unassign user"
 msgstr "Benutzerzuweisung entfernen"
 
@@ -25990,7 +26005,7 @@ msgstr "wird erstellt"
 msgid "will be deleted"
 msgstr "wird gelöscht"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:485
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:487
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:71
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
@@ -25998,7 +26013,7 @@ msgstr "wird gelöscht"
 msgid "within last (relative)"
 msgstr "innerhalb letzter (relativ)"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:484
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:486
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:70
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
