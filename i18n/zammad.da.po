@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-06-10 09:47+0000\n"
+"PO-Revision-Date: 2026-06-11 06:06+0000\n"
 "Last-Translator: Thomas Meijer <tvm@bizconnect.dk>\n"
 "Language-Team: Danish <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/da/>\n"
@@ -5491,6 +5491,8 @@ msgid ""
 "Define the extraction rules for the AI agent, e.g. how to identify target "
 "text. For examples, please refer to our documentation."
 msgstr ""
+"Definér udtrækningsreglerne for AI-agenten, f.eks. hvordan måltext "
+"identificeres. Se vores dokumentation for eksempler."
 
 #: db/seeds/settings.rb:1001
 msgid "Define the maximum number of ticket shown in overviews."
@@ -5502,10 +5504,12 @@ msgid ""
 "multiple occurrences of the target text. For examples, please refer to our "
 "documentation."
 msgstr ""
+"Definér prioriteringsreglerne for AI-agenten, f.eks. hvordan der vælges "
+"mellem flere forekomster af målteksten. Se vores dokumentation for eksempler."
 
 #: app/models/ai/agent/type/ticket_text_extractor.rb:124
 msgid "Define which ticket article(s) should be analyzed."
-msgstr ""
+msgstr "Definér hvilke sagsartikler der skal analyseres."
 
 #: db/seeds/settings.rb:3675
 msgid "Defines Elasticsearch SSL verification."
@@ -7617,6 +7621,7 @@ msgid ""
 "Enable or disable AI generation of knowledge base answers from ticket "
 "content."
 msgstr ""
+"Aktivér eller deaktivér AI-generering af vidensbasesvar fra sagsindhold."
 
 #: db/seeds/settings.rb:6040
 msgid ""
@@ -7936,7 +7941,7 @@ msgstr "Indtast koden fra din to-faktor godkendelses-app."
 
 #: app/models/ai/agent/type/ticket_text_extractor.rb:33
 msgid "Enter the extraction rules for the AI agent."
-msgstr ""
+msgstr "Indtast udtrækningsreglerne for AI-agenten."
 
 #: app/models/ai/agent/type/custom_ai_agent.rb:37
 msgid "Enter the instruction for the AI agent."
@@ -7960,7 +7965,7 @@ msgstr ""
 
 #: app/models/ai/agent/type/ticket_text_extractor.rb:111
 msgid "Enter the priority rules for the AI agent."
-msgstr ""
+msgstr "Indtast prioriteringsreglerne for AI-agenten."
 
 #: app/models/ai/agent/type/custom_ai_agent.rb:28
 msgid "Enter the role description of the AI agent."
@@ -8455,7 +8460,7 @@ msgstr "Kunne ikke finde backup på kanalen!"
 #: app/assets/javascripts/app/models/online_notification_standalone.coffee:15
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/online-notification-standalone.ts:37
 msgid "Failed to generate knowledge base draft for \"%s\": %s"
-msgstr ""
+msgstr "Kunne ikke generere vidensbasekladde for \"%s\": %s"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleMediaError.vue:33
 msgid "Failed to load content."
@@ -9174,7 +9179,7 @@ msgstr "Gå hjem"
 
 #: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkEntityCard.vue:88
 msgid "Go inside group"
-msgstr ""
+msgstr "Gå ind i gruppe"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStatus.vue:233
 msgid "Go to login"
@@ -9636,19 +9641,19 @@ msgstr "Fremhævningsindstillinger"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/useArticleHighlights/useArticleHighlightsSelection.ts:265
 msgid "Highlight removed from \"%s\""
-msgstr ""
+msgstr "Fremhævning fjernet fra \"%s\""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/useArticleHighlights/useArticleHighlightsA11y.ts:81
 msgid "Highlighted text"
-msgstr ""
+msgstr "Fremhævet tekst"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/HighlightMenu.vue:93
 msgid "Highlighter color: %s"
-msgstr ""
+msgstr "Fremhævningsfarve: %s"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/HighlightMenu.vue:156
 msgid "Highlighting is active. Select content in the ticket article to apply."
-msgstr ""
+msgstr "Fremhævning er aktiv. Markér indhold i sagsartiklen for at anvende."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/HighlightMenu.vue:158
 msgid "Highlighting is inactive."
@@ -10102,6 +10107,8 @@ msgid ""
 "In the trigger context, the last article will always be the one that "
 "activated the trigger."
 msgstr ""
+"I udløserkonteksten vil den seneste artikel altid være den der aktiverede "
+"udløseren."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue:73
 msgid "Inactive"
@@ -10832,6 +10839,8 @@ msgid ""
 "Knowledge Base Answer Generation allows agents to generate a knowledge base "
 "answer in draft state from a solved ticket."
 msgstr ""
+"Vidensbase-svar generering giver agenter mulighed for at generere et "
+"vidensbasesvar i kladdestatus fra en løst sag."
 
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee:28
 msgid "Knowledge Base Answer could not be created"
@@ -10870,7 +10879,7 @@ msgstr "Vidensbase kladde kunne ikke oprettes."
 #: app/graphql/gql/mutations/ticket/ai_assistance/enqueue_knowledge_base_answer.rb:18
 #: app/services/service/ticket/ai_assistance/create_knowledge_base_answer.rb:44
 msgid "Knowledge base is unavailable or not properly configured."
-msgstr ""
+msgstr "Vidensbasen er utilgængelig eller ikke korrekt konfigureret."
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:3
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:8
@@ -10949,7 +10958,7 @@ msgstr "Seneste eksterne artikel"
 
 #: app/assets/javascripts/app/models/ai_text_tool.coffee:28
 msgid "Last Feedback Reset"
-msgstr ""
+msgstr "Seneste feedback-nulstilling"
 
 #: app/assets/javascripts/app/controllers/widget/placeholder.coffee:109
 msgid "Last Internal Article"
@@ -11117,7 +11126,7 @@ msgstr "Begræns antallet af sager pr. dag"
 
 #: app/models/ai/agent/type/ticket_text_extractor.rb:64
 msgid "Limit values and provide optional descriptions"
-msgstr ""
+msgstr "Begræns værdier og angiv valgfrie beskrivelser"
 
 #: app/frontend/apps/mobile/pages/home/components/TicketOverviewEditItem.vue:88
 msgid "Limited visibility"
@@ -11262,7 +11271,7 @@ msgstr "Liste over installerede udvidelser"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem/IssueTrackerBadgeList.vue:14
 msgid "List of issue labels"
-msgstr ""
+msgstr "Liste over sagsetiketter"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:212
 msgid "List of shortcuts"
@@ -11446,7 +11455,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:384
 msgid "Mailbox type"
-msgstr ""
+msgstr "Postkassetype"
 
 #: app/frontend/apps/desktop/components/layout/LayoutPage.vue:90
 msgid "Main sidebar"
@@ -11546,7 +11555,7 @@ msgstr "Administrér WhatsApp-kanalen i dit system."
 
 #: db/seeds/permissions.rb:535
 msgid "Manage access to New BETA UI switch."
-msgstr ""
+msgstr "Administrér adgang til ny BETA UI-skift."
 
 #: db/seeds/permissions.rb:330
 msgid "Manage active user sessions of your system."
@@ -11565,6 +11574,8 @@ msgid ""
 "Manage applications that can use Zammad as an OAuth provider and "
 "applications that you've authorized to use your account."
 msgstr ""
+"Administrér programmer der kan bruge Zammad som OAuth-udbyder, og programmer "
+"du har givet tilladelse til at bruge din konto."
 
 #: db/seeds/permissions.rb:198
 msgid "Manage branding settings of your system."
@@ -11572,11 +11583,11 @@ msgstr "Administrer branding-indstillinger for dit system."
 
 #: db/seeds/permissions.rb:66
 msgid "Manage calendars of your system."
-msgstr ""
+msgstr "Administrér dit systems kalendere."
 
 #: db/seeds/permissions.rb:144
 msgid "Manage chat channel of your system."
-msgstr ""
+msgstr "Administrér dit systems chatkanal."
 
 #: db/seeds/permissions.rb:204
 msgid "Manage core system settings."
@@ -11584,19 +11595,19 @@ msgstr "Administrér centrale systemindstillinger."
 
 #: db/seeds/permissions.rb:294
 msgid "Manage core workflows of your system."
-msgstr ""
+msgstr "Administrér centrale arbejdsgange i dit system."
 
 #: db/seeds/permissions.rb:132
 msgid "Manage email channel of your system."
-msgstr ""
+msgstr "Administrér dit systems emailkanal."
 
 #: db/seeds/permissions.rb:126
 msgid "Manage form channel of your system."
-msgstr ""
+msgstr "Administrér dit systems formularkanal."
 
 #: db/seeds/permissions.rb:18
 msgid "Manage groups of your system."
-msgstr ""
+msgstr "Administrér dit systems grupper."
 
 #: db/seeds/permissions.rb:264
 msgid "Manage integrations of your system."
@@ -11604,19 +11615,19 @@ msgstr "Administrér integrationer i dit system."
 
 #: db/seeds/permissions.rb:312
 msgid "Manage maintenance mode of your system."
-msgstr ""
+msgstr "Administrér vedligeholdelsestilstand i dit system."
 
 #: db/seeds/permissions.rb:318
 msgid "Manage monitoring of your system."
-msgstr ""
+msgstr "Administrér overvågning i dit system."
 
 #: db/seeds/permissions.rb:276
 msgid "Manage object attributes of your system."
-msgstr ""
+msgstr "Administrér objektattributter i dit system."
 
 #: db/seeds/permissions.rb:324
 msgid "Manage packages of your system."
-msgstr ""
+msgstr "Administrér pakker i dit system."
 
 #: db/seeds/permissions.rb:490
 msgid "Manage personal API tokens."
@@ -11624,7 +11635,7 @@ msgstr "Administrér personlige API-tokens."
 
 #: db/seeds/permissions.rb:438
 msgid "Manage personal appearance settings."
-msgstr ""
+msgstr "Administrér personlige udseendeindstillinger."
 
 #: db/seeds/permissions.rb:452
 msgid "Manage personal avatar settings."
@@ -11632,7 +11643,7 @@ msgstr "Administrér personlige avatarindstillinger."
 
 #: db/seeds/permissions.rb:524
 msgid "Manage personal calendar."
-msgstr ""
+msgstr "Administrér personlig kalender."
 
 #: db/seeds/permissions.rb:483
 msgid "Manage personal devices and sessions."
@@ -11644,7 +11655,7 @@ msgstr "Administrér personlige sprogindstillinger."
 
 #: db/seeds/permissions.rb:497
 msgid "Manage personal linked accounts."
-msgstr ""
+msgstr "Administrér personlige sammenkædede konti."
 
 #: db/seeds/permissions.rb:504
 msgid "Manage personal notifications settings."
@@ -11656,7 +11667,7 @@ msgstr "Administrér personlige fraværsindstillinger."
 
 #: db/seeds/permissions.rb:514
 msgid "Manage personal overviews."
-msgstr ""
+msgstr "Administrér personlige oversigter."
 
 #: db/seeds/permissions.rb:431
 msgid "Manage personal settings."
@@ -11668,11 +11679,11 @@ msgstr "Administrér personlige to-faktor godkendelsesmetoder."
 
 #: db/seeds/permissions.rb:84
 msgid "Manage public links of your system."
-msgstr ""
+msgstr "Administrér offentlige links i dit system."
 
 #: db/seeds/permissions.rb:102
 msgid "Manage report profiles of your system."
-msgstr ""
+msgstr "Administrér rapportprofiler i dit system."
 
 #: db/seeds/permissions.rb:24
 msgid "Manage roles of your system."
@@ -11680,7 +11691,7 @@ msgstr "Administrer roller i dit system."
 
 #: db/seeds/permissions.rb:96
 msgid "Manage schedulers of your system."
-msgstr ""
+msgstr "Administrér planlæggere i dit system."
 
 #: db/seeds/permissions.rb:210
 msgid "Manage security settings of your system."
@@ -11688,11 +11699,11 @@ msgstr "Administrer sikkerhedsindstillingerne for dit system."
 
 #: db/seeds/permissions.rb:336
 msgid "Manage system report of your system."
-msgstr ""
+msgstr "Administrér systemrapport i dit system."
 
 #: db/seeds/permissions.rb:42
 msgid "Manage text modules of your system."
-msgstr ""
+msgstr "Administrér tekstmoduler i dit system."
 
 #: db/seeds/permissions.rb:222
 msgid "Manage ticket auto assignment settings of your system."
@@ -11708,7 +11719,7 @@ msgstr "Administrér indstillinger for detektering af dubletsager i dit system."
 
 #: db/seeds/permissions.rb:48
 msgid "Manage ticket macros of your system."
-msgstr ""
+msgstr "Administrér sagsmakroer i dit system."
 
 #: db/seeds/permissions.rb:36
 msgid "Manage ticket overviews of your system."
@@ -11732,15 +11743,15 @@ msgstr "Administrér sagsresumering i dit system."
 
 #: db/seeds/permissions.rb:60
 msgid "Manage ticket tags of your system."
-msgstr ""
+msgstr "Administrér sagstags i dit system."
 
 #: db/seeds/permissions.rb:54
 msgid "Manage ticket templates of your system."
-msgstr ""
+msgstr "Administrér sagsskabeloner i dit system."
 
 #: db/seeds/permissions.rb:108
 msgid "Manage time accounting settings of your system."
-msgstr ""
+msgstr "Administrér tidsregistreringsindstillinger i dit system."
 
 #: db/seeds/permissions.rb:300
 msgid "Manage translations of your system."
@@ -11748,15 +11759,15 @@ msgstr "Administrer oversættelser af dit system."
 
 #: db/seeds/permissions.rb:78
 msgid "Manage triggers of your system."
-msgstr ""
+msgstr "Administrér udløsere i dit system."
 
 #: db/seeds/permissions.rb:120
 msgid "Manage web channel of your system."
-msgstr ""
+msgstr "Administrér webkanal i dit system."
 
 #: db/seeds/permissions.rb:90
 msgid "Manage webhooks of your system."
-msgstr ""
+msgstr "Administrér webhooks i dit system."
 
 #: db/seeds/permissions.rb:246
 msgid "Manage writing assistant text tools of your system."
@@ -11778,7 +11789,7 @@ msgstr "Administration"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:162
 msgid "Manually open chat"
-msgstr ""
+msgstr "Åbn chat manuelt"
 
 #: app/assets/javascripts/app/views/import/otrs.jst.eco:97
 msgid ""
@@ -11788,6 +11799,11 @@ msgid ""
 "a new philosophy of your ticket attributes / tags compared to your current "
 "use of dynamic fields in OTRS."
 msgstr ""
+"Der blev fundet mange dynamiske felter. Dette er ikke et almindeligt mønster "
+"i Zammad, som anvender en anden tilgang til sagsattributter. Zammad bruger "
+"også tags ud over brugerdefinerede felter til at klassificere sager. Denne "
+"forskel kan skabe en ny filosofi for dine sagsattributter / tags "
+"sammenlignet med din nuværende brug af dynamiske felter i OTRS."
 
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco:22
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:60
@@ -11795,7 +11811,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:58
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:163
 msgid "Mapping"
-msgstr ""
+msgstr "Mapping"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
 #: app/assets/javascripts/app/controllers/report.coffee:221
@@ -11823,11 +11839,11 @@ msgstr "Match alle (AND)"
 
 #: app/assets/javascripts/app/models/postmaster_filter.coffee:9
 msgid "Match all of the following"
-msgstr ""
+msgstr "Match alle af følgende"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:535
 msgid "Match any (OR)"
-msgstr ""
+msgstr "Match ét af (OR)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:536
 msgid "Match none (NOT)"
@@ -11836,7 +11852,7 @@ msgstr "Match ingen (NOT)"
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:38
 #: db/seeds/settings.rb:2808
 msgid "Match tickets in following states"
-msgstr ""
+msgstr "Match sager i følgende statusser"
 
 #: app/assets/javascripts/app/lib/app_post/iconset_picker.coffee:13
 msgid "Material"
@@ -11860,7 +11876,7 @@ msgstr "%s sager valgt"
 
 #: app/models/object_manager/attribute/data_option_validator.rb:35
 msgid "Max length must be an integer."
-msgstr ""
+msgstr "Maks. længde skal være et heltal."
 
 #: app/assets/javascripts/app/models/chat.coffee:253
 #: app/assets/javascripts/app/views/channel/topics.jst.eco:7
@@ -11877,7 +11893,7 @@ msgstr "Max. længde"
 
 #: db/seeds/settings.rb:3175
 msgid "Max. length of the subject in an email reply."
-msgstr ""
+msgstr "Maks. længde på emnefeltet i et emailsvar."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:379
 msgid "Maximal"
@@ -11885,15 +11901,15 @@ msgstr "Maksimal"
 
 #: app/models/object_manager/attribute/data_option_validator.rb:109
 msgid "Maximal value must be an integer"
-msgstr ""
+msgstr "Maksimal værdi skal være et heltal"
 
 #: app/models/object_manager/attribute/data_option_validator.rb:114
 msgid "Maximal value must be higher than -2147483648"
-msgstr ""
+msgstr "Maksimal værdi skal være højere end -2147483648"
 
 #: app/models/object_manager/attribute/data_option_validator.rb:132
 msgid "Maximal value must be higher than or equal to minimal value"
-msgstr ""
+msgstr "Maksimal værdi skal være højere end eller lig med minimal værdi"
 
 #: app/models/object_manager/attribute/data_option_validator.rb:119
 msgid "Maximal value must be lower than 2147483648"

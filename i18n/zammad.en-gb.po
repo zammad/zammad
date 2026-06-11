@@ -2,10 +2,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-04-15 09:02+0000\n"
+"PO-Revision-Date: 2026-06-11 06:06+0000\n"
 "Last-Translator: Andi Chandler <andi@gowling.com>\n"
 "Language-Team: English (United Kingdom) <https://translations.zammad.org/"
-"projects/zammad/zammad-development/en_GB/>\n"
+"projects/zammad/zammad-stable/en_GB/>\n"
 "Language: en-gb\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -883,10 +883,8 @@ msgstr ""
 "**email notifications**."
 
 #: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkCursorPreview.vue:81
-#, fuzzy
-#| msgid "%s more"
 msgid "+ %s more"
-msgstr "%s more"
+msgstr "+ %s more"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleFooter.vue:30
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:215
@@ -3266,7 +3264,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/online_notification_standalone.coffee:12
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/online-notification-standalone.ts:28
 msgid "Bulk action completed for |%s| ticket(s): %s successful, %s failed"
-msgstr ""
+msgstr "Bulk action completed for |%s| ticket(s): %s successful, %s failed"
 
 #: app/assets/javascripts/app/lib/mixins/ticket_mass_updatable.coffee:22
 msgid "Bulk action executed!"
@@ -4403,7 +4401,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/agent_ticket_view/bulk.jst.eco:4
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:64
 msgid "Confirmation"
-msgstr ""
+msgstr "Confirmation"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/delete.coffee:13
 msgid "Confirmation failed."
@@ -4734,6 +4732,7 @@ msgstr ""
 msgid ""
 "Could not send user verification email because import_mode setting is on."
 msgstr ""
+"Could not send user verification email because import_mode setting is on."
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee:228
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:88
@@ -4743,7 +4742,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/widget/link.coffee:69
 #: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee:120
 msgid "Couldn't save changes"
-msgstr ""
+msgstr "Couldn't save changes"
 
 #: app/assets/javascripts/app/views/tag/table.jst.eco:5
 msgid "Count"
@@ -4892,7 +4891,7 @@ msgstr ""
 
 #: app/frontend/apps/mobile/components/CommonTicketCreateLink/CommonTicketCreateLink.vue:11
 msgid "Create new ticket"
-msgstr ""
+msgstr "Create new ticket"
 
 #: app/frontend/apps/mobile/entities/organization/composables/useOrganizationTicketsCount.ts:17
 msgid "Create new ticket for this organization"
@@ -5674,7 +5673,7 @@ msgstr ""
 
 #: db/seeds/settings.rb:5564
 msgid "Defines if Knowledge Base navbar button is enabled."
-msgstr ""
+msgstr "Defines if Knowledge Base navbar button is enabled."
 
 #: db/seeds/settings.rb:4916
 msgid "Defines if LDAP is enabled or not."
@@ -6121,7 +6120,7 @@ msgstr ""
 
 #: db/seeds/settings.rb:121
 msgid "Defines the logo of the application, shown in the web interface."
-msgstr ""
+msgstr "Defines the logo of the application, shown in the web interface."
 
 #: db/seeds/settings.rb:3290
 msgid "Defines the maximum accepted email size in MB."
@@ -6383,7 +6382,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:111
 msgid "Delete immediately"
-msgstr ""
+msgstr "Delete immediately"
 
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:41
 #, fuzzy
@@ -7448,6 +7447,9 @@ msgid ""
 "administrators get logged out_ and _only administrators can start a new "
 "session_."
 msgstr ""
+"Enable or disable the maintenance mode of Zammad. If enabled, _all non-"
+"administrators get logged out_ and _only administrators can start a new "
+"session_."
 
 #: db/seeds/settings.rb:40
 msgid ""
@@ -7513,7 +7515,7 @@ msgstr ""
 
 #: db/seeds/settings.rb:973
 msgid "Enables display of ticket priority icons in UI."
-msgstr ""
+msgstr "Enables display of ticket priority icons in UI."
 
 #: db/seeds/settings.rb:793
 msgid "Enables preview of attachments."
@@ -7695,7 +7697,7 @@ msgstr ""
 
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:301
 msgid "Enter link URL"
-msgstr ""
+msgstr "Enter link URL"
 
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/recovery_codes.coffee:6
 #: app/frontend/apps/desktop/pages/authentication/components/LoginRecoveryCode.vue:30
@@ -7710,7 +7712,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco:8
 #: app/assets/javascripts/app/views/import/kayako.jst.eco:8
 msgid "Enter the Subdomain of your %s system"
-msgstr ""
+msgstr "Enter the Subdomain of your %s system"
 
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco:8
 msgid "Enter the URL of your %s system"
@@ -8714,7 +8716,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee:136
 #: app/assets/javascripts/app/lib/app_post/ajax.coffee:91
 msgid "General communication error, maybe internet is not available!"
-msgstr ""
+msgstr "General communication error, maybe the Internet is not available!"
 
 #: app/assets/javascripts/app/controllers/api.coffee:180
 msgid "Generate Access Token for |%s|"
@@ -8898,7 +8900,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:105
 #: app/assets/javascripts/app/views/signup/verify.jst.eco:10
 msgid "Go Back"
-msgstr ""
+msgstr "Go Back"
 
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfigurationWizard.vue:62
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue:85
@@ -8945,7 +8947,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco:8
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:142
 msgid "Google Authenticator"
-msgstr ""
+msgstr "Google Authenticator"
 
 #: app/assets/javascripts/app/views/google/app_config.jst.eco:9
 msgid "Google Client ID"
@@ -9166,7 +9168,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/authentication/views/Login.vue:269
 #: app/frontend/apps/mobile/pages/authentication/views/Login.vue:133
 msgid "Having problems?"
-msgstr ""
+msgstr "Having problems?"
 
 #: app/assets/javascripts/app/views/widget/payload_example.jst.eco:8
 msgid "Header"
@@ -9365,7 +9367,7 @@ msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/useArticleHighlights/useArticleHighlightsA11y.ts:81
 msgid "Highlighted text"
-msgstr ""
+msgstr "Highlighted text"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/HighlightMenu.vue:93
 msgid "Highlighter color: %s"
@@ -9581,6 +9583,8 @@ msgid ""
 "If the sender is an agent, set the first user in the recipient list as the "
 "customer."
 msgstr ""
+"If the sender is an agent, set the first user in the recipient list as the "
+"customer."
 
 #: db/seeds/settings.rb:3473
 msgid "If this regex matches, no notification will be sent by the sender."
@@ -9633,6 +9637,8 @@ msgid ""
 "If you want to open the chat by clicking a button, set the option §show§ to "
 "§false§ and add the class §open-zammad-chat§ to the button."
 msgstr ""
+"If you want to open the chat by clicking a button, set the option §show§ to §"
+"false§ and add the class §open-zammad-chat§ to the button."
 
 #: app/assets/javascripts/app/views/getting_started/email_pre_configured.jst.eco:13
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmailPreConfigured.vue:69
@@ -9827,7 +9833,7 @@ msgstr ""
 
 #: db/seeds/object_manager_attributes.rb:134
 msgid "Incident"
-msgstr ""
+msgstr "Incident"
 
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:208
 msgid "Include all users in nested groups of this group"
@@ -9991,7 +9997,7 @@ msgstr ""
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:50
 msgid "Insert row below"
-msgstr ""
+msgstr "Insert row below"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:308
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:329
@@ -10805,7 +10811,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/ticket/components/TicketLinksFlyout.vue:53
 #: app/frontend/shared/components/Form/FormFieldLink.vue:18
 msgid "Link"
-msgstr ""
+msgstr "Link"
 
 #: app/assets/javascripts/app/views/import/otrs.jst.eco:21
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceOTRS.vue:35
@@ -11054,6 +11060,7 @@ msgstr ""
 msgid ""
 "Login failed. Please double-check your two-factor authentication method."
 msgstr ""
+"Login failed. Please double-check your two-factor authentication method."
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco:14
 #: app/frontend/apps/mobile/pages/authentication/components/LoginFooter.vue:20
@@ -22774,7 +22781,7 @@ msgstr ""
 
 #: db/seeds/object_manager_attributes.rb:1316
 msgid "Zip"
-msgstr "Postcode"
+msgstr "Zip"
 
 #. This is the template file app/views/mailer/email_oversized/en.txt.erb in ERB/Text format.
 #. Please make sure to translate it to a valid corresponding output structure.

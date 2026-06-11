@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-06-10 09:47+0000\n"
-"Last-Translator: Anntoo <jdoomm@gmail.com>\n"
+"PO-Revision-Date: 2026-06-11 06:06+0000\n"
+"Last-Translator: Denys Kurochkin <denisku@wix.com>\n"
 "Language-Team: Ukrainian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/uk/>\n"
 "Language: uk\n"
@@ -21436,7 +21436,7 @@ msgstr "Токен"
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:2
 #: db/seeds/permissions.rb:489
 msgid "Token Access"
-msgstr "Доступ до токенів"
+msgstr "Доступ через токен"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/tokenAccess.ts:8
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:51

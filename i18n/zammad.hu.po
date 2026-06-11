@@ -2,10 +2,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-04-14 06:04+0000\n"
-"Last-Translator: Karoly Nagy <cpt.charlesg@gmail.com>\n"
+"PO-Revision-Date: 2026-06-11 06:06+0000\n"
+"Last-Translator: Balázs Úr <balazs@urbalazs.hu>\n"
 "Language-Team: Hungarian <https://translations.zammad.org/projects/zammad/"
-"zammad-development/hu/>\n"
+"zammad-stable/hu/>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -103,10 +103,10 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
-"#{config.ticket_hook}#{ticket.number}>: eszkalálódott: "
-"#{ticket.escalation_at}_\n"
-"„#{ticket.customer.longname}” jegye (#{ticket.title}) eszkalálva van "
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#"
+"{config.ticket_hook}#{ticket.number}>: eszkalálva ekkor: #"
+"{ticket.escalation_at}_\n"
+"„#{ticket.customer.longname}” jegye (#{ticket.title}) eszkalálva lett "
 "ekkortól: „#{ticket.escalation_at}”!\n"
 "\n"
 "<% if @objects[:article] %>\n"
@@ -130,9 +130,9 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
-"#{config.ticket_hook}#{ticket.number}>: utoljára frissítve: "
-"#{ticket.updated_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#"
+"{config.ticket_hook}#{ticket.number}>: utoljára frissítve ekkor: #"
+"{ticket.updated_at}_\n"
 "* Csoport: #{ticket.group.name}\n"
 "* Tulajdonos: #{ticket.owner.fullname}\n"
 "* Állapot: #{t(ticket.state.name)}\n"
@@ -156,10 +156,10 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
-"#{config.ticket_hook}#{ticket.number}>: Emlékeztető elérve!_\n"
-"Egy jegy figyelmet igényel: emlékeztető elérve „*#{ticket.customer.longname}"
-"*” ügyfél (#{ticket.title}) jegynél.\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#"
+"{config.ticket_hook}#{ticket.number}>: Emlékeztető elérve!_\n"
+"Egy jegy figyelmet igényel: emlékeztető elérve a(z) „*#"
+"{ticket.customer.longname}*” ügyfelű (#{ticket.title}) jegynél.\n"
 "\n"
 "<% if @objects[:article] %>\n"
 "#{article.body_as_text}\n"
@@ -213,11 +213,11 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
-"#{config.ticket_hook}#{ticket.number}>: eszkalálódni fog ekkor: "
-"#{ticket.escalation_at}_\n"
-"„#{ticket.customer.longname}” ügyfél jegye (#{ticket.title}) eszkalálódni "
-"fog ekkor: „#{ticket.escalation_at}”!\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#"
+"{config.ticket_hook}#{ticket.number}>: eszkalálódni fog ekkor: #"
+"{ticket.escalation_at}_\n"
+"A(z) „#{ticket.customer.longname}” ügyféltől származó jegy (#{ticket.title}) "
+"eszkalálódni fog ekkor: „#{ticket.escalation_at}”!\n"
 "\n"
 "<% if @objects[:article] %>\n"
 "#{article.body_as_text}\n"
@@ -496,7 +496,7 @@ msgstr "%s nappal ezelőtt"
 
 #: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:60
 msgid "%s deselected."
-msgstr "%s kijelölése megszüntetve."
+msgstr "%s kiválasztása megszüntetve."
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:695
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:260
@@ -627,7 +627,7 @@ msgstr "%s találat kiválasztva"
 #: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:53
 msgid "%s selected. Use arrow keys to choose drop position, then press Space."
 msgstr ""
-"%s kijelölve. Használja a nyílbillentyűket az ejtés helyének "
+"%s kiválasztva. Használja a nyílbillentyűket az ejtés helyének "
 "kiválasztásához, majd nyomja meg a Szóköz billentyűt."
 
 #: app/assets/javascripts/app/models/user.coffee:212
@@ -738,7 +738,7 @@ msgstr "A(z) %{name} egy foglalt szó"
 
 #: app/models/setting/validation/sso_trusted_ips.rb:9
 msgid "'%s' is not a valid IP address or CIDR range."
-msgstr "'%s' érvénytelen IP cím vagy CIDR tartomány."
+msgstr "A(z) „%s” nem érvényes IP-cím vagy CIDR-tartomány."
 
 #: app/frontend/apps/mobile/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue:63
 msgid "(state: %s)"
@@ -822,7 +822,7 @@ msgstr ""
 
 #: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkCursorPreview.vue:81
 msgid "+ %s more"
-msgstr "+ %s további"
+msgstr "+%s további"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleFooter.vue:30
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:215
@@ -1052,11 +1052,11 @@ msgstr "MI-ügyintézők"
 
 #: db/seeds/settings.rb:6169
 msgid "AI Knowledge Base Answer from Ticket"
-msgstr "MI tudásbázis válasz a jegyből"
+msgstr "MI-tudásbázisválasz a jegyből"
 
 #: db/seeds/permissions.rb:257
 msgid "AI Knowledge Base Answers"
-msgstr "MI tudásbázis válaszok"
+msgstr "MI-tudásbázisválaszok"
 
 #: db/seeds/permissions.rb:233
 msgid "AI Provider"
@@ -2046,7 +2046,7 @@ msgstr ""
 
 #: app/models/ai/agent/type/ticket_text_extractor.rb:65
 msgid "All values will be considered for extracted text from tickets."
-msgstr "Az összes érték figyelembe lesz véve a jegyekből kinyert szöveghez."
+msgstr "Az összes érték figyelembe lesz véve a jegyekből kinyert szövegnél."
 
 #: app/models/ai/agent/type/ticket_categorizer.rb:65
 msgid "Allow AI Agent to select multiple categories from all possible values."
@@ -3026,7 +3026,7 @@ msgstr "Átlag: %s%"
 
 #: app/assets/javascripts/app/lib/app_post/ai_provider/azure_ai.coffee:3
 msgid "Azure AI (legacy deployment-based endpoints)"
-msgstr ""
+msgstr "Azure MI (örökölt, üzembe állítás alapú végpontok)"
 
 #: db/seeds/settings.rb:3493
 msgid "BCC address for all outgoing emails"
@@ -3944,7 +3944,7 @@ msgid ""
 "as that would comprise the context provided to the AI agent."
 msgstr ""
 "Annak kiválasztása, hogy mely attribútumértékek lesznek figyelembe véve a "
-"jegyekből kinyert szövegekhez. Ha bizonyos lehetőségekre szeretné "
+"jegyekből való szövegkinyeréskor. Ha bizonyos lehetőségekre szeretné "
 "korlátozni, akkor válasszon ki legalább kettőt az alábbiak közül. Győződjön "
 "meg arról, hogy a lehetőségeknek egyértelmű neveik és esetlegesen megadott "
 "leírásaik legyenek, mivel ez alkotná az MI-ügyintézőnek szolgáltatott "
@@ -4258,8 +4258,8 @@ msgid ""
 "Comma-separated list of trusted proxy IP addresses or CIDR ranges for SSO "
 "header acceptance."
 msgstr ""
-"Vesszővel elválasztott lista a megbízható proxy IP címekről vagy CIDR "
-"tartományokról az SSO fejléc elfogadásához."
+"Megbízható proxy IP-címek vagy CIDR-tartományok vesszővel elválasztott "
+"listája az SSO-fejléc elfogadásához."
 
 #: app/models/tag/item.rb:4
 msgid "Commas and stars are not allowed in name."
@@ -4383,7 +4383,7 @@ msgstr "Jelszó megerősítése"
 
 #: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkConfirmation.vue:29
 msgid "Confirm bulk action"
-msgstr "Tömeges művelet megerősítése"
+msgstr "Tömeges művelet jóváhagyása"
 
 #: app/frontend/apps/mobile/components/CommonConfirmation/CommonConfirmation.vue:46
 msgid "Confirm dialog"
@@ -4888,9 +4888,9 @@ msgstr ""
 "\n"
 "Példák a kódrészletekre:\n"
 "\n"
-"* Üdvözöljük Mrs. #{ticket.customer.lastname},\n"
-"* Üdvözöljük Mr. #{ticket.customer.lastname},\n"
-"* Üdvözöljük #{ticket.customer.firstname},\n"
+"* Tisztelt #{ticket.customer.lastname} Asszony!\n"
+"* Tisztelt #{ticket.customer.lastname} Úr!\n"
+"* Kedves #{ticket.customer.firstname}!\n"
 "* A nevem #{user.firstname},\n"
 "\n"
 "Természetesen használhat többsoros kódrészleteket is.\n"
@@ -4901,7 +4901,7 @@ msgstr ""
 "ticket.customer.lastname)\n"
 "* ticket.owner (például ticket.owner.firstname, ticket.owner.lastname)\n"
 "* ticket.organization (például ticket.organization.name)\n"
-"* user (például user.keresztnév, user.email)\n"
+"* user (például user.firstname, user.email)\n"
 "\n"
 "Egy listából a helykitöltők kiválasztásához csak írja be a következőt: „::”."
 
@@ -5577,8 +5577,8 @@ msgid ""
 "Define the extraction rules for the AI agent, e.g. how to identify target "
 "text. For examples, please refer to our documentation."
 msgstr ""
-"Határozza meg a MI-ügyintéző kinyerési szabályait, pl. hogyan azonosítsa a "
-"célszöveget. Példákért tekintse meg a dokumentációnkat."
+"A kinyerési szabályok meghatározása az MI-ügyintéző számára, például hogyan "
+"kell azonosítani a célszöveget. A példákért olvassa el a dokumentációnkat."
 
 #: db/seeds/settings.rb:1001
 msgid "Define the maximum number of ticket shown in overviews."
@@ -5591,13 +5591,13 @@ msgid ""
 "multiple occurrences of the target text. For examples, please refer to our "
 "documentation."
 msgstr ""
-"Határozza meg a MI-ügyintéző priorizálási szabályait, pl. hogyan válasszon a "
-"célszöveg többszöri előfordulásai közül. Példákért tekintse meg a "
-"dokumentációnkat."
+"A rangsorolási szabályok meghatározása az MI-ügyintéző számára, például "
+"hogyan kell választani a célszöveg több előfordulása közül. A példákért "
+"olvassa el a dokumentációnkat."
 
 #: app/models/ai/agent/type/ticket_text_extractor.rb:124
 msgid "Define which ticket article(s) should be analyzed."
-msgstr "Meghatározza, hogy mely jegy bejegyzések kerülnek elemzésre."
+msgstr "Annak meghatározása, hogy mely jegybejegyzéseket kell elemezni."
 
 #: db/seeds/settings.rb:3675
 msgid "Defines Elasticsearch SSL verification."
@@ -6837,12 +6837,12 @@ msgstr "Leírás (magyarázó szövegként jelenik meg a képernyőolvasók szá
 
 #: app/frontend/apps/desktop/components/CommonTable/CommonSimpleTable.vue:76
 msgid "Deselect all entries"
-msgstr "Összes bejegyzések kijelölésének megszüntetése"
+msgstr "Összes bejegyzés kiválasztásának megszüntetése"
 
 #: app/frontend/apps/desktop/components/CommonTable/CellContent/CellCheckbox.vue:45
 #: app/frontend/apps/desktop/components/CommonTable/CommonSimpleTable.vue:133
 msgid "Deselect this entry"
-msgstr "A bejegyzés kijelölésének megszüntetése"
+msgstr "A bejegyzés kiválasztásának megszüntetése"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:17
 #: app/assets/javascripts/app/views/channel/form.jst.eco:25
@@ -7254,7 +7254,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:45
 msgid "Download feedback report"
-msgstr "Visszajelzés jelentés letöltése"
+msgstr "Visszajelzési jelentés letöltése"
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:105
 msgid "Download original email"
@@ -7795,8 +7795,8 @@ msgid ""
 "Enable or disable AI generation of knowledge base answers from ticket "
 "content."
 msgstr ""
-"Engedélyezze vagy letiltja a tudásbázis válaszok MI által történő "
-"generálását a jegyek tartalmából."
+"A jegy tartalmából mesterséges intelligencia által előállított tudásbázis-"
+"válaszok létrehozásának engedélyezése vagy letiltása."
 
 #: db/seeds/settings.rb:6040
 msgid ""
@@ -7883,11 +7883,11 @@ msgid ""
 "ranges from which authentication headers (%s, %s, %s) are accepted. Leave "
 "empty to accept from any IP (not recommended for production)."
 msgstr ""
-"%s felhasználói hitelesítő gomb engedélyezése. A gomb felhasználói "
-"interakció esetén átirányít az /auth/sso oldalra. Állítsa be a megbízható "
-"proxy IP címeket vagy CIDR tartományokat, amelyekből a hitelesítési fejlécek "
-"(%s, %s, %s) elfogadottak. Hagyja üresen, ha bármilyen IP címről elfogadott "
-"(éles környezetben nem ajánlott)."
+"Engedélyezi a(z) %s használatával történő felhasználó-hitelesítés gombját. A "
+"gomb az /auth/sso oldalra fog átirányítani a felhasználó interakciója során. "
+"Állítson be megbízható proxy IP-címeket vagy CIDR-tartományokat, amelyről a "
+"hitelesítési fejlécek (%s, %s, %s) elfogadottak. Hagyja üresen, hogy bármely "
+"IP-címről elfogadja a fejléceket (nem ajánlott produktív rendszernél)."
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee:62
 msgid "Enables console logging."
@@ -8019,11 +8019,11 @@ msgstr "Titkosítás:"
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco:15
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco:22
 msgid "End date"
-msgstr "Befejező dátum"
+msgstr "Befejezési dátum"
 
 #: app/assets/javascripts/app/views/generic/business_hours.jst.eco:24
 msgid "End time"
-msgstr "Befejező idő"
+msgstr "Befejezési idő"
 
 #: app/assets/javascripts/app/models/webhook.coffee:8
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco:16
@@ -8150,7 +8150,7 @@ msgstr ""
 
 #: app/models/ai/agent/type/ticket_text_extractor.rb:111
 msgid "Enter the priority rules for the AI agent."
-msgstr "Adja meg a prioritás szabályokat az MI-ügyintézőnek."
+msgstr "Adja meg a prioritási szabályokat az MI-ügyintézőnek."
 
 #: app/models/ai/agent/type/custom_ai_agent.rb:28
 msgid "Enter the role description of the AI agent."
@@ -8370,7 +8370,7 @@ msgstr "Eszkalációs idők"
 
 #: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:130
 msgid "Escape pressed. No item selected."
-msgstr "Az Escape lenyomva. Nincs kijelölve elem."
+msgstr "Az Escape lenyomva. Nincs kiválasztva elem."
 
 #: app/frontend/apps/desktop/components/CommonCalendarPreviewFlyout/CommonCalendarPreviewFlyout.vue:51
 msgid "Event ending"
@@ -8647,8 +8647,7 @@ msgstr "Nem sikerült biztonsági mentést találni a csatornán!"
 #: app/assets/javascripts/app/models/online_notification_standalone.coffee:15
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/online-notification-standalone.ts:37
 msgid "Failed to generate knowledge base draft for \"%s\": %s"
-msgstr ""
-"Nem sikerült létrehozni a tudásbázis tervezetét a következőhöz: \"%s\": %s"
+msgstr "Nem sikerült előállítani a(z) „%s” tudásbázis-piszkozatát: %s"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleMediaError.vue:33
 msgid "Failed to load content."
@@ -9371,7 +9370,7 @@ msgstr "Ugrás a kezdőlapra"
 
 #: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkEntityCard.vue:88
 msgid "Go inside group"
-msgstr "Belépés a csoportba"
+msgstr "Ugrás a csoportba"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStatus.vue:233
 msgid "Go to login"
@@ -9835,7 +9834,7 @@ msgstr "Kiemelés ikonja"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/HighlightMenu.vue:95
 msgid "Highlight options"
-msgstr "Kiemelési lehetőségek"
+msgstr "Kiemelés beállításai"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/useArticleHighlights/useArticleHighlightsSelection.ts:265
 msgid "Highlight removed from \"%s\""
@@ -10316,8 +10315,8 @@ msgid ""
 "In the trigger context, the last article will always be the one that "
 "activated the trigger."
 msgstr ""
-"A trigger kontextusában az utolsó bejegyzés mindig az lesz, amelyik "
-"aktiválta a triggert."
+"Az eseményindító környezetében az utolsó bejegyzés lesz mindig az, amely "
+"aktiválta az eseményindítót."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue:73
 msgid "Inactive"
@@ -10679,7 +10678,7 @@ msgstr "Érvénytelen GitLab-problémahivatkozás formátum"
 #: lib/external_credential/facebook.rb:42 lib/external_credential/google.rb:39
 #: lib/external_credential/microsoft_base.rb:67
 msgid "Invalid OAuth state parameter."
-msgstr "Érvénytelen OAuth állapot paraméter."
+msgstr "Érvénytelen OAuth-állapotparaméter."
 
 #: app/services/service/system/run_auto_wizard.rb:11
 msgid "Invalid auto wizard file."
@@ -10703,7 +10702,7 @@ msgstr "Érvénytelen i-doit-beállítás (hiányzó végpont vagy API-token)."
 
 #: app/services/service/knowledge_base/create_answer_from_ai_result.rb:39
 msgid "Invalid knowledge base locale."
-msgstr "Érvénytelen tudásbázis nyelv."
+msgstr "Érvénytelen tudásbázis területi beállítás."
 
 #: app/controllers/tickets_controller.rb:193
 msgid "Invalid link structure"
@@ -10989,7 +10988,7 @@ msgstr "Csak váltson vissza"
 
 #: app/assets/javascripts/app/controllers/_ai/kb_answer_from_ticket.coffee:43
 msgid "KB Answer Generation"
-msgstr "Tudásbázis válasz generálás"
+msgstr "Tudásbázis-válasz előállítása"
 
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/kayako.ts:11
 msgid "Kayako"
@@ -11047,24 +11046,24 @@ msgstr "Tudásbázisválasz"
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee:26
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/knowledge-base-answer.ts:27
 msgid "Knowledge Base Answer \"|%s|\" has been created"
-msgstr "\"|%s|\" tudásbázis válasz létrehozva"
+msgstr "A(z) „|%s|” tudásbázisválasz létrehozva"
 
 #: app/assets/javascripts/app/controllers/_ai/kb_answer_from_ticket.coffee:4
 #: app/assets/javascripts/app/views/ai/kb_answer_from_ticket.jst.eco:7
 msgid "Knowledge Base Answer Generation"
-msgstr "Tudásbázis válasz generálás"
+msgstr "Tudásbázisválasz előállítása"
 
 #: app/assets/javascripts/app/controllers/_ai/kb_answer_from_ticket.coffee:5
 msgid ""
 "Knowledge Base Answer Generation allows agents to generate a knowledge base "
 "answer in draft state from a solved ticket."
 msgstr ""
-"A tudásbázis válaszgenerálás lehetővé teszi az ügyintézők számára, hogy egy "
-"megoldott jegyből tudásbázis válasz vázlatot generáljanak."
+"A tudásbázisválasz előállítása lehetővé teszi az ügyintézőknek, hogy "
+"tudásbázisválaszt állítsanak elő piszkozati állapotban egy megoldott jegyből."
 
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee:28
 msgid "Knowledge Base Answer could not be created"
-msgstr "Tudásbázist választ nem sikerült létrehozni"
+msgstr "A tudásbázisválaszt nem sikerült létrehozni"
 
 #: db/seeds/permissions.rb:386
 msgid "Knowledge Base Editor"
@@ -11093,13 +11092,13 @@ msgstr "Tudásbázis többnyelvű támogatása"
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketAIKnowledgeBaseAnswers.vue:45
 #: app/services/service/ticket/ai_assistance/create_knowledge_base_answer.rb:21
 msgid "Knowledge base draft could not be generated."
-msgstr "Tudásbázis piszkozatot nem sikerült generálni."
+msgstr "A tudásbázis-piszkozatot nem sikerült előállítani."
 
 #: app/controllers/ticket/knowledge_base_answers_controller.rb:14
 #: app/graphql/gql/mutations/ticket/ai_assistance/enqueue_knowledge_base_answer.rb:18
 #: app/services/service/ticket/ai_assistance/create_knowledge_base_answer.rb:44
 msgid "Knowledge base is unavailable or not properly configured."
-msgstr "A tudásbázis nem érhető el vagy nincs megfelelően konfigurálva."
+msgstr "A tudásbázis nem érhető el vagy nincs megfelelően beállítva."
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:3
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:8
@@ -11178,7 +11177,7 @@ msgstr "Utolsó külső bejegyzés"
 
 #: app/assets/javascripts/app/models/ai_text_tool.coffee:28
 msgid "Last Feedback Reset"
-msgstr "Utolsó visszajelzés törlés"
+msgstr "Utolsó visszajelzés-visszaállítás"
 
 #: app/assets/javascripts/app/controllers/widget/placeholder.coffee:109
 msgid "Last Internal Article"
@@ -11713,7 +11712,9 @@ msgstr "A rendszer MI-ügyintézőinek kezelése."
 
 #: db/seeds/permissions.rb:258
 msgid "Manage AI generation of knowledge base answers from tickets."
-msgstr "Jegyből tudásbázis válaszok MI generálásának kezelése."
+msgstr ""
+"A jegyekből származó tudásbázisválaszok mesterséges intelligenciával történő "
+"előállításának kezelése."
 
 #: db/seeds/permissions.rb:234
 msgid "Manage AI provider of your system."
@@ -13191,7 +13192,7 @@ msgstr "Nincsenek piszkozatok"
 #: app/graphql/gql/mutations/ticket/ai_assistance/enqueue_knowledge_base_answer.rb:26
 #: app/services/service/ticket/ai_assistance/create_knowledge_base_answer.rb:94
 msgid "No editable knowledge base categories available."
-msgstr "Nincsenek szerkeszthető tudásbázis kategóriák."
+msgstr "Nem érhetők el szerkeszthető tudásbázis-kategóriák."
 
 #: app/controllers/users_controller.rb:275
 msgid "No email!"
@@ -13236,7 +13237,7 @@ msgstr "Nincsenek elérhető elemek"
 #: app/services/service/knowledge_base/create_answer_from_ai_result.rb:38
 #: app/services/service/ticket/ai_assistance/create_knowledge_base_answer.rb:57
 msgid "No knowledge base locale configured."
-msgstr "Nincs beállítva tudásbázis nyelv."
+msgstr "Nincs tudásbázis területi beállítás beállítva."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee:193
 msgid "No linked issues"
@@ -13248,7 +13249,7 @@ msgstr "Még nincsenek hivatkozások hozzáadva."
 
 #: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkTopDrawer.vue:150
 msgid "No macros available for selected tickets"
-msgstr "Nem érhető el markó a kiválasztott jegyekhez"
+msgstr "Nem érhetők el makrók a kiválasztott jegyekhez"
 
 #: app/assets/javascripts/app/views/ticket_overview/batch_overlay_macro.jst.eco:4
 msgid "No macros available."
@@ -13388,7 +13389,7 @@ msgstr "Nincs felhasználó-létrehozás bejelentkezéskor"
 
 #: app/services/service/knowledge_base/create_answer_from_ai_result.rb:62
 msgid "No valid knowledge base category provided."
-msgstr "Nincs megadva érvényes tudásbázis kategória."
+msgstr "Nem lett érvényes tudásbázis-kategória megadva."
 
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/webhook_not_available.jst.eco:1
 msgid ""
@@ -15041,7 +15042,7 @@ msgstr "Prioritás ikon"
 
 #: app/models/ai/agent/type/ticket_text_extractor.rb:108
 msgid "Priority rules"
-msgstr "Prioritás szabályok"
+msgstr "Prioritási szabályok"
 
 #: db/seeds/settings.rb:1979
 msgid "Private key (PEM)"
@@ -15459,15 +15460,16 @@ msgid ""
 "Related knowledge base answer creation has already been started for current "
 "ticket."
 msgstr ""
-"A kapcsolódó tudásbázis válasz létrehozása már elkezdődött az aktuális "
-"jegyhez."
+"A kapcsolódó tudásbázisválasz létrehozása már el lett indítva a jelenlegi "
+"jegynél."
 
 #: app/graphql/gql/mutations/ticket/ai_assistance/enqueue_knowledge_base_answer.rb:31
 msgid ""
 "Related knowledge base answer creation has already been started for given "
 "ticket."
 msgstr ""
-"A kapcsolódó tudásbázis válasz létrehozása már elkezdődött az adott jegyhez."
+"A kapcsolódó tudásbázisválasz létrehozása már el lett indítva a megadott "
+"jegynél."
 
 #: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:153
 msgid "Related tickets"
@@ -15734,7 +15736,7 @@ msgstr "Kérés módszere"
 
 #: db/seeds/object_manager_attributes.rb:136
 msgid "Request for Change"
-msgstr "Változáskérés"
+msgstr "Változáskérelem"
 
 #: app/assets/javascripts/app/views/admin_password_auth/request.jst.eco:4
 #: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue:59
@@ -15799,7 +15801,7 @@ msgstr "A jelszó visszaállítása nem sikerült!"
 
 #: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:52
 msgid "Reset feedback"
-msgstr "Visszajelzés törlése"
+msgstr "Visszajelzés visszaállítása"
 
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee:35
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:136
@@ -16219,7 +16221,7 @@ msgstr "SSO"
 
 #: app/controllers/sessions_controller.rb:262
 msgid "SSO request from untrusted IP address."
-msgstr "SSO kérés nem megbízható IP címről."
+msgstr "SSO-kérés nem megbízható IP-címről."
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:419
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:206
@@ -16720,7 +16722,7 @@ msgid ""
 "reload and try again. Reloading in %s second(s)…"
 msgstr ""
 "A biztonsági token ellenőrzése nem sikerült. Ez csak ideiglenes lehet, "
-"kérjük töltse be újra és próbálja meg ismét. Újratöltés %s másodperc múlva…"
+"töltse újra az oldalt, és próbálja meg újra. Újratöltés %s másodperc múlva…"
 
 #: lib/external_data_source/errors.rb:28
 msgid "See HTTPLog for details."
@@ -16827,8 +16829,8 @@ msgstr "Válassza ki a jegy ügyfelét, vagy hozzon létre egyet."
 #: app/models/ai/agent/type/ticket_text_extractor.rb:130
 msgid "Select the ticket article(s) that should be analyzed by the AI agent."
 msgstr ""
-"Azon jegy bejegyzések kiválasztása, amely értékét az MI-ügyintézőnek "
-"elemeznie kell."
+"Azon jegybejegyzések kiválasztása, amelyeket az MI-ügyintézőnek elemeznie "
+"kell."
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:146
 msgid "Select the type of ticket your are creating"
@@ -17120,7 +17122,7 @@ msgstr "Alapértelmezés beállítása az utókövetésekhez"
 #: app/assets/javascripts/app/controllers/ticket_priority.coffee:26
 #: app/assets/javascripts/app/controllers/ticket_state.coffee:30
 msgid "Set default for new tickets"
-msgstr "Alapértelmezés beállítás az új jegyekhez"
+msgstr "Alapértelmezés beállítása az új jegyekhez"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:65
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:81
@@ -17760,7 +17762,7 @@ msgstr "Kezdési és befejezési dátum"
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco:11
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco:18
 msgid "Start date"
-msgstr "Kezdő dátum"
+msgstr "Kezdési dátum"
 
 #: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:67
 msgid "Start editing"
@@ -17794,7 +17796,7 @@ msgstr "Új beszélgetés indítása"
 
 #: app/assets/javascripts/app/views/generic/business_hours.jst.eco:21
 msgid "Start time"
-msgstr "Kezdő idő"
+msgstr "Kezdési idő"
 
 #: app/frontend/apps/desktop/components/Search/QuickSearch/QuickSearch.vue:231
 msgid "Start typing e.g. the name of a ticket, an organization or a user."
@@ -18276,7 +18278,7 @@ msgstr "Cél"
 
 #: app/models/ai/agent/type/ticket_text_extractor.rb:45
 msgid "Target Attribute for Extracted Text"
-msgstr "Cél attribútum a kinyert szöveghez"
+msgstr "Célattribútum a kinyert szöveghez"
 
 #: app/assets/javascripts/app/controllers/translation.coffee:83
 msgid "Target Language"
@@ -19332,15 +19334,15 @@ msgid ""
 "The provided endpoint is invalid, it could not be resolved to a safe IP "
 "address."
 msgstr ""
-"A megadott végpont érvénytelen, nem lehet feloldani biztonságos IP címre."
+"A megadott végpont érvénytelen, nem sikerült feloldani biztonságos IP-címre."
 
 #: app/models/webhook.rb:55
 msgid "The provided endpoint is invalid, it points to a link-local IP address."
-msgstr "A megadott végpont érvénytelen, helyi IP címre mutat."
+msgstr "A megadott végpont érvénytelen, kapcsolatszintű IP-címre mutat."
 
 #: app/models/webhook.rb:53
 msgid "The provided endpoint is invalid, it points to a loopback IP address."
-msgstr "A megadott végpont érvénytelen, loopback IP címre mutat."
+msgstr "A megadott végpont érvénytelen, visszacsatolási IP-címre mutat."
 
 #: app/models/webhook.rb:47
 msgid "The provided endpoint is invalid, no hostname was specified."
@@ -19577,9 +19579,9 @@ msgid ""
 "tickets. Make sure to include a couple of example formats, and any "
 "additional instructions necessary."
 msgstr ""
-"A szabályok utasítják a MI-ügyintézőt, hogy hogyan nyerje ki a szöveget a "
-"bejövő jegyekből. Ügyeljen arra, hogy mellékeljen néhány példa formátumot és "
-"minden további szükséges utasítást."
+"A szabályok utasítják az MI-ügyintézőt, hogy hogyan kell kinyerni a szöveget "
+"a beérkező jegyekből. Győződjön meg arról, hogy mellékelt-e néhány "
+"példaformátumot és a további szükséges utasításokat."
 
 #: app/models/ai/agent/type/ticket_text_extractor.rb:112
 msgid ""
@@ -19587,9 +19589,9 @@ msgid ""
 "extracted text. Make sure to include a couple of example formats, and any "
 "additional instructions necessary."
 msgstr ""
-"A szabályok utasítják a MI-ügyintézőt, hogy hogyan rangsorolja a kinyert "
-"szöveg többszörös találatait. Feltétlenül adjon meg néhány példa formátumot "
-"és minden további szükséges utasítást."
+"A szabályok utasítják az MI-ügyintézőt, hogy hogyan kell rangsorolni a "
+"kinyert szöveg több egyezését. Győződjön meg arról, hogy mellékelt-e néhány "
+"példaformátumot és a további szükséges utasításokat."
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:107
 msgid "The seconds overlay"
@@ -20677,8 +20679,8 @@ msgid ""
 "This type of AI agent can extract text from incoming tickets based on custom "
 "rules and store it into an object attribute."
 msgstr ""
-"Az ilyen típusú MI-ügyintéző kinyerhet szöveget a bejövő jegyekből egyedi "
-"szabályok szerint és eltárolhatja egy attribútum objektumba."
+"Az ilyen típusú MI-ügyintéző kinyerheti a szöveget a bejövő jegyekből az "
+"egyéni szabályok alapján, és eltárolhatja azt egy objektumattribútumban."
 
 #: app/models/ai/agent/type/ticket_title_rewriter.rb:10
 msgid ""
@@ -20952,7 +20954,7 @@ msgstr ""
 
 #: app/models/ai/agent/type/ticket_text_extractor.rb:11
 msgid "Ticket Text Extractor"
-msgstr "Jegy szöveg kinyerő"
+msgstr "Jegyszövegkinyerő"
 
 #: app/models/ai/agent/type/ticket_title_rewriter.rb:6
 msgid "Ticket Title Rewriter"
@@ -21532,7 +21534,7 @@ msgstr "DE/DU mód be- és kikapcsolása"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue:167
 msgid "Toggle article meta information"
-msgstr "Bejegyzés metainformációinak be- és kikapcsolása"
+msgstr "Bejegyzés metaadat-információinak be- és kikapcsolása"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:443
 msgid "Toggle dark mode"
@@ -21722,7 +21724,7 @@ msgstr ""
 
 #: db/seeds/settings.rb:5814
 msgid "Trusted SSO Proxy IPs"
-msgstr "Megbízható SSO proxy IP címek"
+msgstr "Megbízható SSO-proxy IP-címek"
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/try_another_method.jst.eco:2
 msgid "Try Another Method"
@@ -21953,7 +21955,7 @@ msgstr "URL (OCR)"
 
 #: app/controllers/first_steps_controller.rb:206 db/seeds/overviews.rb:32
 msgid "Unassigned & Open Tickets"
-msgstr "Nem hozzárendelt és nyitott jegyek"
+msgstr "Hozzárendelés nélküli és nyitott jegyek"
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:23
 #: app/assets/javascripts/app/views/google/list.jst.eco:16
@@ -21961,8 +21963,8 @@ msgstr "Nem hozzárendelt és nyitott jegyek"
 #: app/assets/javascripts/app/views/microsoft_graph/list.jst.eco:17
 msgid "Unassigned email addresses, assign them to a channel or delete them."
 msgstr ""
-"Nem hozzárendelt e-mail-címek, rendelje hozzá azokat egy csatornához, vagy "
-"törölje azokat."
+"Hozzárendelés nélküli e-mail-címek, rendelje hozzá azokat egy csatornához, "
+"vagy törölje azokat."
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/show_row.jst.eco:26
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:59
@@ -22035,7 +22037,7 @@ msgstr "Olvasatlan értesítések száma"
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:260
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:315
 msgid "Unselect option"
-msgstr "Lehetőség kijelölésének megszüntetése"
+msgstr "Lehetőség kiválasztásának megszüntetése"
 
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee:744
 msgid "Unset default"
@@ -23530,7 +23532,7 @@ msgstr "Többé nem láthatja a csoportot."
 
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/knowledge-base-answer.ts:20
 msgid "You can no longer see the knowledge base answer."
-msgstr "Többé nem láthatja a tudásbázis választ."
+msgstr "Többé nem láthatja a tudásbázisválaszt."
 
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/organization.ts:18
 msgid "You can no longer see the organization."
@@ -23954,11 +23956,11 @@ msgstr ""
 
 #: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkConfirmation.vue:46
 msgid "You’re about to apply a macro to %s tickets. Do you want to continue?"
-msgstr "Makró futtatására készül %s jegyen. Folytatni szeretné?"
+msgstr "Arra készül, hogy makrót alkalmazzon %s jegyre. Szeretné folytatni?"
 
 #: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkConfirmation.vue:50
 msgid "You’re about to assign %s tickets. Do you want to continue?"
-msgstr "%s jegy hozzárendelésére készül. Folytatni szeretné?"
+msgstr "Arra készül, hogy %s jegyet rendeljen hozzá. Szeretné folytatni?"
 
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco:31
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:91

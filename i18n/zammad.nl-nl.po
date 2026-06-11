@@ -2,16 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-03-16 09:00+0000\n"
-"Last-Translator: Colin Andries <colin.andries@bisdomantwerpen.be>\n"
+"PO-Revision-Date: 2026-06-11 06:06+0000\n"
+"Last-Translator: kurtjaspaert-stack <kurt.jaspaert@gmail.com>\n"
 "Language-Team: Dutch <https://translations.zammad.org/projects/zammad/zammad-"
-"development/nl/>\n"
+"stable/nl/>\n"
 "Language: nl-nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.11.4\n"
+"X-Generator: Weblate 5.16.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -700,6 +700,8 @@ msgstr "%s van mijn tickets escaleerden"
 #: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:53
 msgid "%s selected. Use arrow keys to choose drop position, then press Space."
 msgstr ""
+"%s geselecteerd. Gebruik de pijltjestoetsen om de positie te kiezen en druk "
+"vervolgens op de spatiebalk."
 
 #: app/assets/javascripts/app/models/user.coffee:212
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/user.ts:25
@@ -809,7 +811,7 @@ msgstr "%{name} is een gereserveerd woord"
 
 #: app/models/setting/validation/sso_trusted_ips.rb:9
 msgid "'%s' is not a valid IP address or CIDR range."
-msgstr ""
+msgstr "'%s' is geen geldig IP adres of CIDR range."
 
 #: app/frontend/apps/mobile/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue:63
 msgid "(state: %s)"
@@ -1215,14 +1217,17 @@ msgid ""
 "AI agents enable streamlined processing powered by artificial intelligence. "
 "You can execute AI agents via triggers or schedulers."
 msgstr ""
+"AI agents maken geautomatiseerde verwerking mogelijk met behulp van "
+"kunstmatige intelligentie. U kunt AI-agents uitvoeren via triggers of "
+"geplande taken."
 
 #: app/services/service/ai_assistance/text_tools.rb:22
 msgid "AI assistance text tool is inactive."
-msgstr ""
+msgstr "De AI-assistentieteksttool is uitgeschakeld."
 
 #: app/services/service/ai_assistance/text_tools.rb:21
 msgid "AI assistance text tool is invalid."
-msgstr ""
+msgstr "De teksttool voor AI-assistentie is ongeldig."
 
 #: lib/excel_sheet/ai/analytics/errors.rb:4
 #, fuzzy
@@ -1244,7 +1249,7 @@ msgstr "Het verstrekte token is ongeldig."
 
 #: app/models/setting/validation/ai_provider_config.rb:6
 msgid "AI provider Ollama URL is not set"
-msgstr ""
+msgstr "Ai aanbieder Ollama URL is niet ingesteld"
 
 #: app/models/setting/validation/ai_provider_config.rb:70
 #, fuzzy
@@ -1297,7 +1302,7 @@ msgstr "Het verstrekte token is ongeldig."
 
 #: lib/ai/service.rb:14
 msgid "AI service result is missing expected keys"
-msgstr ""
+msgstr "Het resultaat van de AI-service mist de verwachte sleutels"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/ticket-summary.ts:11
 #, fuzzy
@@ -1349,7 +1354,7 @@ msgstr "API error."
 
 #: lib/ai/provider/concerns/handles_response.rb:14
 msgid "API server error - please try again"
-msgstr ""
+msgstr "API server error - probeer opnieuw aub"
 
 #: app/assets/javascripts/app/views/generic/text_tools_modal.jst.eco:10
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_ticket_summary.jst.eco:7
@@ -2093,11 +2098,11 @@ msgstr "Behandelaren"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:514
 msgid "Agents with \"%s\" permission"
-msgstr ""
+msgstr "Agenten met \"%s\" toestemming"
 
 #: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:103
 msgid "Agree & join"
-msgstr ""
+msgstr "Mee eens en doe mee"
 
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco:27
 msgid "Alarm"
@@ -2160,7 +2165,7 @@ msgstr "Alle tickets"
 
 #: app/models/ai/agent/type/ticket_categorizer.rb:51
 msgid "All categories will be considered for categorizing tickets."
-msgstr ""
+msgstr "Alle categorieën worden meegenomen bij het categoriseren van tickets."
 
 #: public/assets/chat/views/waiting.eco:7
 msgid "All colleagues are busy."
@@ -2180,11 +2185,11 @@ msgstr ""
 
 #: app/models/ai/agent/type/ticket_group_dispatcher.rb:24
 msgid "All groups will be considered for dispatching tickets."
-msgstr ""
+msgstr "Alle groepen zullen worden meegenomen bij het verdelen van tickets."
 
 #: app/models/ai/agent/type/ticket_prioritizer.rb:29
 msgid "All priorities will be considered for prioritizing tickets."
-msgstr ""
+msgstr "Alle prioriteiten worden meegenomen bij het prioriteren van tickets."
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:38
 #: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue:56
@@ -2200,10 +2205,12 @@ msgstr ""
 #: app/models/ai/agent/type/ticket_text_extractor.rb:65
 msgid "All values will be considered for extracted text from tickets."
 msgstr ""
+"Alle waarden worden meegenomen bij het extraheren van tekst uit tickets."
 
 #: app/models/ai/agent/type/ticket_categorizer.rb:65
 msgid "Allow AI Agent to select multiple categories from all possible values."
 msgstr ""
+"Laat de AI-agent meerdere categorieën kiezen uit alle mogelijke waarden."
 
 #: db/seeds/settings.rb:6060
 msgid ""
