@@ -44,6 +44,10 @@ module CreatesTicketArticles # rubocop:disable Metrics/ModuleLength
       clean_params[:internal] = false
     end
 
+    if Ticket::Article::Type.lookup(id: clean_params[:type_id])&.name == 'email' && ticket.group.email_address.blank?
+      raise Exceptions::UnprocessableContent, __('This group has no email address configured for outgoing communication.')
+    end
+
     article                                    = Ticket::Article.new(clean_params)
     article.ticket_id                          = ticket.id
     article.check_mentions_raises_error        = true

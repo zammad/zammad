@@ -178,7 +178,7 @@ const saveTicketForm = async (formData: FormSubmitData<TicketUpdateFormData>) =>
     if (errors instanceof UserError) {
       notify({
         id: 'ticket-update-error',
-        message: errors.generalErrors[0],
+        message: errors.getFirstErrorMessage(),
         type: NotificationTypes.Error,
       })
     }

@@ -2976,4 +2976,37 @@ RSpec.describe 'Ticket', type: :request do
       end
     end
   end
+
+  describe 'group with no email address configured' do
+    let(:group)  { create(:group, email_address: nil) }
+    let(:agent)  { create(:agent, groups: [group]) }
+    let(:ticket) { create(:ticket, group: group) }
+
+    context 'POST /api/v1/ticket_articles', authenticated_as: -> { agent } do
+      it 'returns an unprocessable content error with a descriptive message' do
+        post '/api/v1/ticket_articles',
+             params: { ticket_id: ticket.id, body: 'some body', type: 'email', to: 'customer@example.com' },
+             as:     :json
+
+        expect(response).to have_http_status(:unprocessable_content)
+        expect(json_response['error']).to eq('This group has no email address configured for outgoing communication.')
+      end
+    end
+
+    context 'POST /api/v1/tickets', authenticated_as: -> { agent } do
+      it 'returns an unprocessable content error with a descriptive message' do
+        post '/api/v1/tickets',
+             params: {
+               title:    'a ticket',
+               group:    group.name,
+               article:  { body: 'some body', type: 'email', to: 'customer@example.com' },
+               customer: agent.email,
+             },
+             as:     :json
+
+        expect(response).to have_http_status(:unprocessable_content)
+        expect(json_response['error']).to eq('This group has no email address configured for outgoing communication.')
+      end
+    end
+  end
 end
