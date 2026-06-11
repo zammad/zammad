@@ -105,10 +105,12 @@ class Checklist < ApplicationModel
     ActiveRecord::Base.transaction do
       Checklist.create!(name: template.name, ticket:)
         .tap do |checklist|
-          sorted_item_ids = template
-            .items
-            .map { |elem| checklist.items.create!(text: elem.text, initial_clone: true) }
-            .pluck(:id)
+          sorted_item_ids = template.sorted_items.map do |template_item|
+            checklist.items.create!(
+              text:          template_item.text,
+              initial_clone: true,
+            ).id
+          end
 
           checklist.update! sorted_item_ids:
         end
