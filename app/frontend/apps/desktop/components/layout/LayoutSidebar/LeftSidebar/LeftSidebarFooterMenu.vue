@@ -3,13 +3,17 @@
 <script setup lang="ts">
 import { FormKit } from '@formkit/vue'
 
+import { useTouchDevice } from '#shared/composables/useTouchDevice.ts'
+
 import { useBetaUi } from '#desktop/components/BetaUi/composables/useBetaUi.ts'
 import { showFeedbackConsent } from '#desktop/components/BetaUi/composables/useBetaUiFeedbackConsent.ts'
 import { useFeedbackDialog } from '#desktop/components/BetaUi/FeedbackDialog/useFeedbackDialog.ts'
 import CollapseButton from '#desktop/components/CollapseButton/CollapseButton.vue'
 import AvatarMenu from '#desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/AvatarMenu.vue'
 import MenuContainer from '#desktop/components/layout/LayoutSidebar/LeftSidebar/MenuContainer/MenuContainer.vue'
-import { SidebarName, useSidebarDisplay } from '#desktop/components/layout/useSidebarDisplay.ts'
+import { useSidebarDisplay } from '#desktop/components/layout/useSidebarDisplay.ts'
+
+import { SidebarName } from '../../types.ts'
 
 const { isSidebarCollapsed, toggleSidebar } = useSidebarDisplay(SidebarName.Primary)
 
@@ -22,6 +26,8 @@ const {
 } = useBetaUi()
 
 const { openFeedbackDialog } = useFeedbackDialog()
+
+const { isTouchDevice } = useTouchDevice()
 </script>
 
 <template>
@@ -66,14 +72,16 @@ const { openFeedbackDialog } = useFeedbackDialog()
 
       <div class="flex gap-2" :class="{ 'mx-auto mb-0.5 flex-col!': isSidebarCollapsed }">
         <CollapseButton
-          class="lg:hidden"
           owner-id="primary-sidebar"
           no-padded
           visible
           size="large"
           variant="tertiary-gray"
           :collapsed="isSidebarCollapsed"
-          :class="isSidebarCollapsed ? 'order-last' : 'order-first'"
+          :class="[
+            isSidebarCollapsed ? 'order-last' : 'order-first',
+            { 'lg:hidden': !isTouchDevice },
+          ]"
           :collapse-label="$t('Collapse sidebar')"
           :expand-label="$t('Expand sidebar')"
           @toggle-collapse="toggleSidebar"

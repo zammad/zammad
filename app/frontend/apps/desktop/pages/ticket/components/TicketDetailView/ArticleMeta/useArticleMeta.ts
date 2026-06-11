@@ -44,6 +44,24 @@ const addNewFields = (fields: ChannelMetaField[], article: Ref<TicketArticle>) =
   return fields
 }
 
+const getMetaAddressLabel = (
+  address: TicketArticle['from'] | TicketArticle['to'] | TicketArticle['cc'],
+) => {
+  if (!address) return undefined
+
+  if (address.parsed?.length) {
+    return address.parsed
+      .map((entry) =>
+        [entry.name, entry.emailAddress ? `<${entry.emailAddress}>` : null]
+          .filter(Boolean)
+          .join(' '),
+      )
+      .join(', ')
+  }
+
+  return address.raw
+}
+
 export const useArticleMeta = (article: Ref<TicketArticle>) => {
   const links = computed(() => article.value.preferences?.links || [])
   const fields = computed(() => {
@@ -68,6 +86,7 @@ export const useArticleMeta = (article: Ref<TicketArticle>) => {
         props: {
           metaHeader: 'from',
         },
+        value: getMetaAddressLabel(article.value.from),
         show: () => !!(article.value.from?.parsed?.length || article.value.from?.raw),
         order: 200,
       },
@@ -78,6 +97,7 @@ export const useArticleMeta = (article: Ref<TicketArticle>) => {
         props: {
           metaHeader: 'to',
         },
+        value: getMetaAddressLabel(article.value.to),
         show: () => !!(article.value.to?.parsed?.length || article.value.to?.raw),
         order: 300,
       },
@@ -88,6 +108,7 @@ export const useArticleMeta = (article: Ref<TicketArticle>) => {
         props: {
           metaHeader: 'cc',
         },
+        value: getMetaAddressLabel(article.value.cc),
         show: () => !!(article.value.cc?.parsed?.length || article.value.cc?.raw),
         order: 350,
       },

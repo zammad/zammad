@@ -18,18 +18,18 @@ const { fields } = useArticleMeta(toRef(props, 'article'))
 </script>
 
 <template>
-  <div class="grid grid-cols-[max-content_1fr] gap-x-3 gap-y-2 rounded-t-xl p-3">
+  <div class="grid w-full grid-cols-[max-content_minmax(0,1fr)] gap-x-3 gap-y-2 rounded-t-xl p-3">
     <template v-for="(field, index) in fields" :key="`${field.label}-${index}`">
       <CommonLabel class="ms-auto self-start">{{ $t(field.label) }} </CommonLabel>
 
       <div class="flex items-center gap-2">
         <Component
           :is="field.component || CommonLabel"
-          v-tooltip.truncate="field.value"
+          v-tooltip.supportive="field.value"
           :prefix-icon="field.icon && !field.component ? field.icon : undefined"
           v-bind="field.props || {}"
           :context="{ field, article }"
-          class="text-black! dark:text-white!"
+          class="max-w-full shrink text-black! dark:text-white!"
         >
           {{ field.value }}
         </Component>

@@ -1,8 +1,11 @@
 <!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
+import { useTouchDevice } from '#shared/composables/useTouchDevice.ts'
+
 import CollapseButton from '#desktop/components/CollapseButton/CollapseButton.vue'
-import { SidebarName, useSidebarDisplay } from '#desktop/components/layout/useSidebarDisplay.ts'
+import { SidebarName } from '#desktop/components/layout/types.ts'
+import { useSidebarDisplay } from '#desktop/components/layout/useSidebarDisplay.ts'
 
 import { useTicketSidebar } from '../composables/useTicketSidebar.ts'
 
@@ -30,6 +33,8 @@ const maybeToggleAndSwitchSidebar = (newSidebar: string) => {
 
   switchSidebar(newSidebar)
 }
+
+const { isTouchDevice } = useTouchDevice()
 </script>
 
 <template>
@@ -54,7 +59,8 @@ const maybeToggleAndSwitchSidebar = (newSidebar: string) => {
       />
 
       <CollapseButton
-        class="mt-auto lg:hidden"
+        class="mt-auto"
+        :class="{ 'lg:hidden': !isTouchDevice }"
         owner-id="content-sidebar"
         visible
         no-padded

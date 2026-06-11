@@ -6,7 +6,8 @@ import { renderComponent } from '#tests/support/components/index.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
 
-import { isSidebarCollapsed, SidebarName } from '#desktop/components/layout/useSidebarDisplay.ts'
+import { SidebarName } from '#desktop/components/layout/types.ts'
+import { useSidebarDisplay } from '#desktop/components/layout/useSidebarDisplay.ts'
 
 import LeftSidebarFooterMenu from '../LeftSidebarFooterMenu.vue'
 
@@ -25,7 +26,7 @@ describe('layout sidebar footer menu', () => {
       lastname: 'Doe',
       firstname: 'John',
     })
-    isSidebarCollapsed[SidebarName.Primary].value = false
+    useSidebarDisplay(SidebarName.Primary).toggleSidebar(false)
     isSmallScreen.value = false
   })
 
@@ -33,6 +34,7 @@ describe('layout sidebar footer menu', () => {
     const view = renderComponent(LeftSidebarFooterMenu, {
       router: true,
       form: true,
+      store: true,
     })
 
     expect(view.getByText('JD')).toBeInTheDocument()
@@ -42,7 +44,7 @@ describe('layout sidebar footer menu', () => {
   })
 
   it('renders small user avatar in collapsed mode', async () => {
-    isSidebarCollapsed[SidebarName.Primary].value = true
+    useSidebarDisplay(SidebarName.Primary).toggleSidebar(true)
 
     const view = renderComponent(LeftSidebarFooterMenu, {
       router: true,
@@ -56,7 +58,7 @@ describe('layout sidebar footer menu', () => {
 
   it('renders the inline collapse button on smaller screens', async () => {
     isSmallScreen.value = true
-    isSidebarCollapsed[SidebarName.Primary].value = true
+    useSidebarDisplay(SidebarName.Primary).toggleSidebar(true)
 
     const view = renderComponent(LeftSidebarFooterMenu, {
       router: true,

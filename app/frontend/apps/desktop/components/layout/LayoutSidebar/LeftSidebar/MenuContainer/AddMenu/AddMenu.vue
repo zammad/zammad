@@ -5,7 +5,8 @@ import { computed } from 'vue'
 
 import CommonActionMenu from '#desktop/components/CommonActionMenu/CommonActionMenu.vue'
 import menuItems from '#desktop/components/layout/LayoutSidebar/LeftSidebar/MenuContainer/AddMenu/plugins/index.ts'
-import { SidebarName, useSidebarDisplay } from '#desktop/components/layout/useSidebarDisplay.ts'
+import { SidebarName } from '#desktop/components/layout/types.ts'
+import { useSidebarDisplay } from '#desktop/components/layout/useSidebarDisplay.ts'
 
 const { isSidebarCollapsed } = useSidebarDisplay(SidebarName.Primary)
 

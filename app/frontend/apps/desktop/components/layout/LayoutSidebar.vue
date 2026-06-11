@@ -4,14 +4,16 @@
 import { useActiveElement } from '@vueuse/core'
 import { computed, useTemplateRef, watch } from 'vue'
 
+import { useTouchDevice } from '#shared/composables/useTouchDevice.ts'
+
 import CollapseButton from '#desktop/components/CollapseButton/CollapseButton.vue'
-import { useCollapseHandler } from '#desktop/components/CollapseButton/useCollapseHandler.ts'
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import ResizeLine from '#desktop/components/ResizeLine/ResizeLine.vue'
 import { useResizeLine } from '#desktop/components/ResizeLine/useResizeLine.ts'
+import { useAppBreakpoints } from '#desktop/composables/responsiveness/useAppBreakpoints.ts'
 
-import { SidebarPosition } from './types.ts'
-import { isSidebarCollapsed, SidebarName } from './useSidebarDisplay.ts'
+import { SidebarName, SidebarPosition } from './types.ts'
+import { useSidebarDisplay } from './useSidebarDisplay.ts'
 
 interface Props {
   name: SidebarName
@@ -22,6 +24,10 @@ interface Props {
   collapsible?: boolean
   iconCollapsed?: string
   position?: SidebarPosition
+  /**
+   * Allow resizing will always be false on smaller screens,
+   * @see useAppBreakpoints().isSmallScreen
+   */
   resizable?: boolean
   id: string
   noPadding?: boolean
@@ -47,16 +53,14 @@ const emit = defineEmits<{
   expand: []
 }>()
 
-const { toggleCollapse, isCollapsed } = useCollapseHandler(
-  {
-    collapse: () => emit('collapse'),
-    expand: () => emit('expand'),
-  },
-  {
-    name: props.name,
-    isCollapsed: isSidebarCollapsed[props.name],
-  },
-)
+const { isSidebarCollapsed, toggleSidebar } = useSidebarDisplay(props.name)
+
+const onToggleSidebar = () => {
+  const isCollapsed = toggleSidebar()
+
+  if (isCollapsed) emit('collapse')
+  else emit('expand')
+}
 
 const backgroundVariantClass = computed(() => {
   switch (props.backgroundVariant) {
@@ -108,6 +112,12 @@ const collapseButtonClass = computed(() => {
 
   return ''
 })
+
+const { isSmallScreen } = useAppBreakpoints()
+
+const isResizable = computed(() => props.resizable && !isSmallScreen.value)
+
+const { isTouchDevice } = useTouchDevice()
 </script>
 
 <template>
@@ -116,26 +126,26 @@ const collapseButtonClass = computed(() => {
     class="relative flex max-h-screen flex-col overflow-y-clip border-neutral-100 dark:border-gray-900"
     :class="[
       {
-        'py-3': isCollapsed && !noPadding,
+        'py-3': isSidebarCollapsed && !noPadding,
         'border-s': position === SidebarPosition.End,
       },
       backgroundVariantClass,
     ]"
   >
     <CommonButton
-      v-if="iconCollapsed && isCollapsed"
+      v-if="iconCollapsed && isSidebarCollapsed"
       class="mx-auto"
       size="large"
       data-test-id="action-button"
       variant="neutral"
       :icon="iconCollapsed"
-      @click="toggleCollapse()"
+      @click="onToggleSidebar()"
     />
     <div
       v-else
       class="flex h-full max-w-full flex-col overflow-x-hidden"
       :class="{
-        'px-3 py-2.5': !isCollapsed && !noPadding,
+        'px-3 py-2.5': !isSidebarCollapsed && !noPadding,
         'overflow-y-hidden': noScroll,
         'overflow-y-auto': !noScroll,
         'border-e border-neutral-100 dark:border-gray-900':
@@ -144,11 +154,11 @@ const collapseButtonClass = computed(() => {
           backgroundVariant === 'secondary' && SidebarPosition.End,
       }"
     >
-      <slot v-bind="{ isCollapsed, toggleCollapse }" />
+      <slot v-bind="{ isCollapsed: isSidebarCollapsed, toggleCollapse: onToggleSidebar }" />
     </div>
 
     <ResizeLine
-      v-if="resizable"
+      v-if="isResizable"
       ref="resize-line"
       :label="$t('Resize sidebar')"
       class="absolute z-30 has-[+div:hover]:opacity-100"
@@ -167,15 +177,15 @@ const collapseButtonClass = computed(() => {
         min: minWidth,
         current: currentWidth,
       }"
-      :disabled="isCollapsed"
+      :disabled="isSidebarCollapsed"
       @mousedown-event="startResizing"
       @touchstart-event="startResizing"
       @dblclick-event="$emit('reset-width')"
     />
 
     <CollapseButton
-      v-if="collapsible"
-      :collapsed="isCollapsed"
+      v-if="collapsible && !isTouchDevice"
+      :collapsed="isSidebarCollapsed"
       :owner-id="id"
       class="absolute top-12.25 z-30 hidden peer-hover:opacity-100 lg:flex"
       :inverse="position === SidebarPosition.End"
@@ -189,15 +199,15 @@ const collapseButtonClass = computed(() => {
           'ltr:left-0 ltr:-translate-x-[calc(100%-10px)] rtl:right-0 rtl:translate-x-[calc(100%-10px)]':
             position === SidebarPosition.End,
           'ltr:translate-x-[calc(100%-7.5px)] rtl:-translate-x-[calc(100%-7.5px)]':
-            isCollapsed && position === SidebarPosition.Start,
+            isSidebarCollapsed && position === SidebarPosition.Start,
           'ltr:-translate-x-[calc(100%-7.5px)] rtl:translate-x-[calc(100%-7.5px)]':
-            isCollapsed && position === SidebarPosition.End,
+            isSidebarCollapsed && position === SidebarPosition.End,
         },
         classes?.collapseButton || '',
       ]"
       :button-class="collapseButtonClass"
       @click="(node: MouseEvent) => (node.target as HTMLButtonElement)?.blur()"
-      @toggle-collapse="toggleCollapse"
+      @toggle-collapse="onToggleSidebar"
     />
   </aside>
 </template>

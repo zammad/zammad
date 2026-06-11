@@ -8,7 +8,6 @@ import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
 
 import LayoutPage from '#desktop/components/layout/LayoutPage.vue'
-import { SidebarName, isSidebarCollapsed } from '#desktop/components/layout/useSidebarDisplay.ts'
 
 import '#tests/graphql/builders/mocks.ts'
 
@@ -39,10 +38,6 @@ vi.mock(
 )
 
 describe('LayoutPage', () => {
-  beforeEach(() => {
-    isSidebarCollapsed[SidebarName.Primary].value = false
-  })
-
   afterEach(() => {
     localStorage.clear()
   })

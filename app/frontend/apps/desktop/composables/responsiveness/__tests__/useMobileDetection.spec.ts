@@ -85,6 +85,7 @@ describe('useMobileDetection', () => {
     mockMatchMedia(false)
     notifyMock.mockReset()
     removeNotificationMock.mockReset()
+    localStorage.clear()
   })
 
   it('removes the notification immediately on non-mobile screen size', async () => {
@@ -103,19 +104,56 @@ describe('useMobileDetection', () => {
     renderApp()
 
     await waitFor(() => {
-      expect(notifyMock).toHaveBeenCalledWith({
-        id: 'mobile-screen-size',
-        type: NotificationTypes.Warn,
-        message:
-          "This screen size isn't fully supported for the desktop layout. For the best experience, switch to the mobile layout.",
-        persistent: true,
-      })
+      expect(notifyMock).toHaveBeenCalledWith(
+        expect.objectContaining({
+          id: 'mobile-screen-size',
+          type: NotificationTypes.Warn,
+          message:
+            'The desktop layout works best on wider screens. Current screen width may not display all desktop content optimally.',
+          persistent: true,
+          // closeCallback() {},
+        }),
+      )
     })
 
     expect(removeNotificationMock).not.toHaveBeenCalled()
   })
 
   it('shows warning notification only once per session', async () => {
+    renderApp()
+
+    triggerMatchMediaChange(true)
+
+    await waitFor(() => {
+      expect(notifyMock).toHaveBeenCalledTimes(1)
+    })
+
+    triggerMatchMediaChange(false)
+
+    await waitForNextTick()
+
+    expect(removeNotificationMock).toHaveBeenCalledWith('mobile-screen-size')
+
+    triggerMatchMediaChange(true)
+
+    await waitForNextTick()
+
+    expect(notifyMock).toHaveBeenCalledTimes(1)
+  })
+
+  it('does not show the notification if it has already been shown in a previous session', async () => {
+    localStorage.setItem('hasShownWarningNotificationForSmallScreen', 'true')
+
+    renderApp()
+
+    triggerMatchMediaChange(true)
+
+    await waitForNextTick()
+
+    expect(notifyMock).not.toHaveBeenCalled()
+  })
+
+  it('only asks once per session if notification is not closed by the user', async () => {
     renderApp()
 
     triggerMatchMediaChange(true)

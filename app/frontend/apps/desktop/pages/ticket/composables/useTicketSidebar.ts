@@ -6,7 +6,8 @@ import { computed, ref, watch, type InjectionKey, type Ref } from 'vue'
 
 import emitter from '#shared/utils/emitter.ts'
 
-import { SidebarName } from '#desktop/components/layout/useSidebarDisplay.ts'
+import { SidebarName } from '#desktop/components/layout/types.ts'
+import { useSidebarDisplay } from '#desktop/components/layout/useSidebarDisplay.ts'
 
 import { useTicketSidebarPlugins } from '../components/TicketSidebar/plugins/index.ts'
 
@@ -29,9 +30,12 @@ export const useProvideTicketSidebar = (context: Ref<TicketSidebarContext>) => {
     shownSidebars.value[sidebar] = false
   }
 
+  const { toggleSidebar } = useSidebarDisplay(SidebarName.TicketContent)
+
   const switchSidebar = (newSidebar: string) => {
     switchedSidebar.value = newSidebar
-    emitter.emit('expand-collapsed-content', SidebarName.TicketContent)
+
+    toggleSidebar(false)
   }
 
   const sidebarPlugins = useTicketSidebarPlugins(context.value.screenType)

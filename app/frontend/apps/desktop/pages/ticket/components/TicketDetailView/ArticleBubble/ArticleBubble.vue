@@ -100,10 +100,8 @@ const { showPreview } = useFilePreviewViewer(
     <UserPopoverWithTrigger
       class="absolute! bottom-0"
       :class="{
-        'ltr:-right-2.5 ltr:translate-x-full rtl:-left-2.5 rtl:-translate-x-full':
-          position === 'right',
-        'ltr:-left-2.5 ltr:-translate-x-full rtl:-right-2.5 rtl:translate-x-full':
-          position === 'left',
+        '-inset-e-2.5 ltr:translate-x-full rtl:-translate-x-full': position === 'right',
+        '-inset-s-2.5 ltr:-translate-x-full rtl:translate-x-full': position === 'left',
       }"
       :user="article.author"
       :popover-config="{
@@ -128,7 +126,7 @@ const { showPreview } = useFilePreviewViewer(
       <div
         :id="metaInformationRegionId"
         :aria-hidden="!showMetaInformation"
-        class="grid w-full grid-rows-[0fr] overflow-hidden"
+        class="grid max-w-full grid-rows-[0fr] overflow-hidden"
       >
         <Transition name="pseudo-transition">
           <ArticleBubbleHeader

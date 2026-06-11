@@ -19,7 +19,8 @@ import UserTaskbarTabs from '#desktop/components/UserTaskbarTabs/UserTaskbarTabs
 import { useAppBreakpoints } from '#desktop/composables/responsiveness/useAppBreakpoints.ts'
 import { useResizeGridColumns } from '#desktop/composables/useResizeGridColumns.ts'
 
-import { SidebarName, useSidebarDisplay } from './useSidebarDisplay.ts'
+import { SidebarName } from './types.ts'
+import { useSidebarDisplay } from './useSidebarDisplay.ts'
 
 const config = toRef(useApplicationStore(), 'config')
 
@@ -72,19 +73,19 @@ const onResetWidth = () => {
 
 onBeforeMount(() => {
   // On the smallest screen (<768px) the primary nav is collapsed by default.
-  if (isSmallestScreen.value) togglePrimaryNavSidebar(true)
+  if (isSmallestScreen.value) togglePrimaryNavSidebar(true, { storage: 'session' })
 
   // When the content sidebar expands on a small screen, collapse the primary nav.
   watch(isContentSidebarCollapsed, (isCollapsed) => {
     if (!isSmallScreen.value || isCollapsed) return
 
-    togglePrimaryNavSidebar(true)
+    togglePrimaryNavSidebar(true, { storage: 'session' })
   })
 
   watch(isSmallestScreen, (isSmallest) => {
     if (!isSmallest) return
 
-    togglePrimaryNavSidebar(true)
+    togglePrimaryNavSidebar(true, { storage: 'session' })
   })
 })
 </script>

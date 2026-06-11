@@ -1,14 +1,17 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { renderComponent } from '#tests/support/components/index.ts'
+import { initializeStore } from '#tests/support/components/initializeStore.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
 
 import AdminMenu from '#desktop/components/layout/LayoutSidebar/LeftSidebar/MenuContainer/AdminMenu/AdminMenu.vue'
-import { isSidebarCollapsed, SidebarName } from '#desktop/components/layout/useSidebarDisplay.ts'
+import { useSidebarDisplayStore } from '#desktop/components/layout/stores/sidebarDisplay.ts'
+import { SidebarName } from '#desktop/components/layout/types.ts'
 
 describe('AdminMenu', () => {
   beforeEach(() => {
-    isSidebarCollapsed[SidebarName.Primary].value = true
+    initializeStore()
+    useSidebarDisplayStore().setCollapsed(SidebarName.Primary, true)
   })
 
   describe('create ticket action button', () => {

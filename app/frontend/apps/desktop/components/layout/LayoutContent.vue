@@ -15,11 +15,12 @@ import type { NavigationTab } from '#desktop/components/CommonTabs/types.ts'
 import LayoutBottomBar from '#desktop/components/layout/LayoutBottomBar.vue'
 import LayoutMain from '#desktop/components/layout/LayoutMain.vue'
 import LayoutSidebar from '#desktop/components/layout/LayoutSidebar.vue'
-import { SidebarName, useSidebarDisplay } from '#desktop/components/layout/useSidebarDisplay.ts'
+import { useSidebarDisplay } from '#desktop/components/layout/useSidebarDisplay.ts'
 import { useAppBreakpoints } from '#desktop/composables/responsiveness/useAppBreakpoints.ts'
 import { useResizeGridColumns } from '#desktop/composables/useResizeGridColumns.ts'
 
 import {
+  SidebarName,
   SidebarPosition,
   type BackgroundVariant,
   type ContentAlignment,
@@ -92,18 +93,18 @@ const { isSidebarCollapsed: isContentSidebarCollapsed, toggleSidebar: toggleCont
 watch(isPrimaryNavSidebarCollapsed, (isCollapsed) => {
   if (!isSmallScreen.value || isCollapsed) return
 
-  toggleContentSidebar(true)
+  toggleContentSidebar(true, { storage: 'session' })
 })
 
 watch(isSmallScreen, (smallScreen) => {
   if (!smallScreen) return
 
-  if (!isContentSidebarCollapsed.value) toggleContentSidebar(true)
+  if (!isContentSidebarCollapsed.value) toggleContentSidebar(true, { storage: 'session' })
 })
 
 onBeforeMount(() => {
   // When the screen shrinks into the small viewport(<1024px) and both sidebars are open, close this one.
-  if (isSmallScreen.value) toggleContentSidebar(true)
+  if (isSmallScreen.value) toggleContentSidebar(true, { storage: 'session' })
 })
 </script>
 

@@ -84,7 +84,6 @@ const { updateTitle } = useTicketEditTitle(ticketId)
           size="xl"
           required
           block
-          :class="{ 'min-w-md': !isUpdatingTitle }"
           :disabled="!ticket.policy.update || hideDetails"
           :value="ticket.title"
           :classes="{

@@ -2,7 +2,7 @@
 
 <script setup lang="ts">
 import LayoutSidebar from '#desktop/components/layout/LayoutSidebar.vue'
-import { SidebarName } from '#desktop/components/layout/useSidebarDisplay.ts'
+import { SidebarName } from '#desktop/components/layout/types.ts'
 import PersonalSettingSidebar from '#desktop/pages/personal-setting/components/PersonalSettingSidebar.vue'
 
 import { usePersonalSettingStore } from '../stores/personalSetting.ts'

@@ -1,28 +1,26 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { computed, ref } from 'vue'
+import { isEqual } from 'lodash-es'
+import { computed, toRef } from 'vue'
 
-export enum SidebarName {
-  Primary = 'primary',
-  TicketContent = 'ticket-content',
-  TicketOverviews = 'ticket-overviews',
-  PersonalSetting = 'personal-setting',
-}
+import { useSidebarDisplayStore } from '#desktop/components/layout/stores/sidebarDisplay.ts'
 
-export const isSidebarCollapsed = {
-  [SidebarName.Primary]: ref(false),
-  [SidebarName.TicketContent]: ref(false),
-  [SidebarName.TicketOverviews]: ref(false), // Are not collapsible
-  [SidebarName.PersonalSetting]: ref(false), // Are not collapsible
-}
+import { SidebarName, type ToggleOptions } from './types.ts'
 
 export const useSidebarDisplay = (name: SidebarName) => {
-  const toggleSidebar = (value?: boolean) => {
-    isSidebarCollapsed[name].value = value ?? !isSidebarCollapsed[name].value
-  }
+  const store = useSidebarDisplayStore()
+  const currentCollapsed = toRef(store, 'currentCollapsed')
 
   return {
-    isSidebarCollapsed: computed(() => isSidebarCollapsed[name].value),
-    toggleSidebar,
+    isSidebarCollapsed: computed<boolean>((previousCollapsed) => {
+      const updatedCollapsed = currentCollapsed.value[name]
+
+      if (previousCollapsed && isEqual(previousCollapsed, updatedCollapsed))
+        return previousCollapsed
+
+      return updatedCollapsed
+    }),
+    toggleSidebar: (value?: boolean, options?: ToggleOptions) =>
+      store.toggleSidebar(name, value, options),
   }
 }
