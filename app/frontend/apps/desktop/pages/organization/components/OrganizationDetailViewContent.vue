@@ -114,7 +114,7 @@ organizationTicketsSubscription.onResult(({ data }) => {
           :content-container-element="contentContainerElement"
         />
         <section
-          class="mx-auto grid w-full max-w-5xl min-w-xs grid-cols-1 gap-6 p-3 @xl:min-w-sm @xl:grid-cols-2 @xl:p-6"
+          class="mx-auto grid w-full max-w-5xl min-w-xs grid-cols-1 gap-6 px-5.5 py-3 @2xl:grid-cols-2"
         >
           <div class="flex flex-col gap-6 self-start">
             <CommonSectionContainer
@@ -168,7 +168,6 @@ organizationTicketsSubscription.onResult(({ data }) => {
               hasPermission('ticket.agent') &&
               (organization.ticketsCount?.open || organization.ticketsCount?.closed)
             "
-            class="w-full self-start @xl:w-fit"
             :label="__('Organization tickets')"
           >
             <OrganizationRelatedTickets :organization="organization" />
@@ -177,7 +176,7 @@ organizationTicketsSubscription.onResult(({ data }) => {
           <OrganizationTicketBarChart
             v-if="hasPermission('ticket.agent')"
             ref="chart"
-            class="w-fit @xl:col-span-2"
+            class="@2xl:col-span-2"
             :organization-id="organizationId"
           />
         </section>

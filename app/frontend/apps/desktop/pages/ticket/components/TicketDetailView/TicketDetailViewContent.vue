@@ -635,8 +635,6 @@ const onEditFormSettled = () => {
     { immediate: true },
   )
 }
-
-const articleListTopPadding = ref('4rem')
 </script>
 
 <template>
@@ -665,9 +663,6 @@ const articleListTopPadding = ref('4rem')
         />
 
         <ArticleList
-          :style="{
-            'padding-top': articleListTopPadding,
-          }"
           :is-loading-articles="isLoadingArticles"
           @scroll-to-end="handleInitialScrollToEnd"
         />

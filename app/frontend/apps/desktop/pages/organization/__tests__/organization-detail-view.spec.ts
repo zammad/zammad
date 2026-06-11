@@ -213,14 +213,14 @@ describe('Organization Detail View', () => {
 
       const { view, header } = await visitOrganizationView()
 
-      expect(within(header).getByRole('menuitem', { name: 'New user' })).toBeVisible()
+      expect(within(header).getByRole('button', { name: 'New user' })).toBeVisible()
 
-      await view.events.click(within(header).getByRole('button', { name: 'Action menu button' }))
+      await view.events.click(within(header).getByRole('button', { name: 'Additional actions' }))
 
-      const actionPopover = await view.findByRole('region', { name: 'Action menu button' })
+      const actionPopover = await view.findByRole('region', { name: 'Additional actions' })
 
-      expect(within(actionPopover).getByRole('menuitem', { name: 'Edit' })).toBeVisible()
-      expect(within(actionPopover).getByRole('menuitem', { name: 'History' })).toBeVisible()
+      expect(within(actionPopover).getByRole('button', { name: 'Edit' })).toBeVisible()
+      expect(within(actionPopover).getByRole('button', { name: 'History' })).toBeVisible()
     })
 
     it('displays actions for admin users', async () => {
@@ -228,15 +228,15 @@ describe('Organization Detail View', () => {
 
       const { view, header } = await visitOrganizationView()
 
-      expect(within(header).getByRole('menuitem', { name: 'New user' })).toBeVisible()
+      expect(within(header).getByRole('button', { name: 'New user' })).toBeVisible()
 
-      await view.events.click(within(header).getByRole('button', { name: 'Action menu button' }))
+      await view.events.click(within(header).getByRole('button', { name: 'Additional actions' }))
 
-      const actionPopover = await view.findByRole('region', { name: 'Action menu button' })
+      const actionPopover = await view.findByRole('region', { name: 'Additional actions' })
 
-      expect(within(actionPopover).getByRole('menuitem', { name: 'Edit' })).toBeVisible()
+      expect(within(actionPopover).getByRole('button', { name: 'Edit' })).toBeVisible()
 
-      expect(within(actionPopover).getByRole('menuitem', { name: 'History' })).toBeVisible()
+      expect(within(actionPopover).getByRole('button', { name: 'History' })).toBeVisible()
     })
   })
 

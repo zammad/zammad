@@ -98,9 +98,9 @@ describe('Organization Detail View - Edit Organization', () => {
 
     const { view } = await visitOrganizationView()
 
-    await view.events.click(view.getByRole('button', { name: 'Action menu button' }))
+    await view.events.click(view.getByRole('button', { name: 'Additional actions' }))
 
-    const popover = await view.findByRole('region', { name: 'Action menu button' })
+    const popover = await view.findByRole('region', { name: 'Additional actions' })
 
     await view.events.click(within(popover).getByRole('button', { name: 'Edit' }))
 

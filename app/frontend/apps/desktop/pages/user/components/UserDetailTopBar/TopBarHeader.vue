@@ -62,7 +62,7 @@ const router = useRouter()
 <template>
   <header
     class="border-b border-neutral-100 bg-neutral-50 dark:border-gray-900 dark:bg-gray-500"
-    :class="hideDetails ? 'p-2' : 'p-3'"
+    :class="hideDetails ? 'p-2' : 'px-5.5 py-3'"
   >
     <template v-if="hideDetails">
       <div class="mx-auto flex w-full max-w-266">
@@ -70,7 +70,8 @@ const router = useRouter()
       </div>
     </template>
     <template v-else>
-      <CommonBreadcrumb :items="breadcrumbItems" size="small" emphasize-last-item>
+      <!-- h-6 because of ticket detail view has action which add a additional height to the breadcrumbs -->
+      <CommonBreadcrumb class="flex h-6" :items="breadcrumbItems" size="small" emphasize-last-item>
         <template #trailing>
           <CommonButton
             v-if="userDisplayName"
@@ -84,7 +85,7 @@ const router = useRouter()
         </template>
       </CommonBreadcrumb>
 
-      <div class="mx-auto mt-3 flex w-full max-w-278 @md:h-21">
+      <div class="mx-auto mt-3 flex w-full max-w-278">
         <UserInfo
           :user="user"
           size="normal"
@@ -95,24 +96,25 @@ const router = useRouter()
           no-link
         >
           <template #actions>
-            <div role="menubar" class="flex items-center @md:gap-1.5 ltr:ml-auto rtl:mr-auto">
+            <div role="toolbar" class="flex shrink-0 items-center gap-1.5 ltr:ml-auto rtl:mr-auto">
               <CommonButton
                 v-for="action in allowedTopLevelActions"
                 :key="action.key"
-                role="menuitem"
-                class="h-9!"
+                class="aspect-square w-auto! rounded-lg! px-2! -outline-offset-1! @3xl:aspect-auto @3xl:rounded-md! @3xl:px-2.5! @3xl:py-1.5!"
                 no-truncate
                 :prefix-icon="action.icon"
                 :aria-label="$t(action.label)"
                 @click="action?.onClick?.(user, router)"
               >
-                <span class="sr-only w-fit @md:not-sr-only @md:block @md:w-full @md:truncate">
+                <span class="sr-only shrink-0 text-xs! @3xl:not-sr-only">
                   {{ $t(action.label) }}
                 </span>
               </CommonButton>
               <CommonActionMenu
-                button-size="large"
-                role="menuitem"
+                button-size="medium"
+                role="presentation"
+                class="flex! h-full items-center"
+                :custom-menu-button-label="$t('Additional actions')"
                 no-single-action-mode
                 :actions="secondLevelActions"
                 :entity="user"

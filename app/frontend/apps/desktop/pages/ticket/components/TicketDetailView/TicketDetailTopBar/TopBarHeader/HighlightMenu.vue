@@ -83,10 +83,10 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div :data-id="`highlight-menu-wrapper`" class="flex">
+  <div data-id="highlight-menu-wrapper" class="flex">
     <SplitButton
-      class="h-full!"
       :class="{ [activeColorClass]: isActive }"
+      class="flex aspect-square size-7.5! p-0!"
       variant="tertiary-light"
       size="small"
       :tooltip="
@@ -103,7 +103,7 @@ onUnmounted(() => {
       <CommonIcon
         :class="{ [activeColorSwatchClass]: !isActive }"
         decorative
-        size="xs"
+        size="tiny"
         :name="isEraserActive ? 'eraser-fill' : 'highlighter2'"
       />
 

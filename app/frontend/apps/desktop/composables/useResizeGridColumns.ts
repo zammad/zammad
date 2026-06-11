@@ -66,11 +66,11 @@ export const useResizeGridColumns = (
 
     if (position === SidebarPosition.End)
       return {
-        gridTemplateColumns: `1fr ${width}px`,
+        gridTemplateColumns: `minmax(0, 1fr) ${width}px`,
       }
 
     return {
-      gridTemplateColumns: `${width}px 1fr`,
+      gridTemplateColumns: `${width}px minmax(0, 1fr)`,
     }
   })
 

@@ -55,8 +55,8 @@ const items = computed(() => [
 
 const headerClasses = computed(() =>
   props.hideDetails
-    ? ['ticket-detail-grid-compact grid-rows-[1fr_auto] items-center py-2 px-3 @3xl:px-10']
-    : ['ticket-detail-grid-full grid-cols-2 gap-y-2.5 p-3'],
+    ? ['ticket-detail-grid-compact grid-rows-[1fr_auto] items-center p-2']
+    : ['ticket-detail-grid-full grid-cols-2 gap-y-2.5 px-5.5 py-3'],
 )
 </script>
 
@@ -98,7 +98,6 @@ const headerClasses = computed(() =>
     <TicketInformation
       :hide-details="hideDetails"
       :style="{ gridArea: hideDetails ? 'breadcrumbs' : 'info' }"
-      :class="{ 'mx-0 @3xl:mx-10': !hideDetails }"
     />
   </header>
 </template>

@@ -119,9 +119,7 @@ customerTicketsSubscription.onResult(({ data }) => {
           :user-display-name="userDisplayName"
           :content-container-element="contentContainerElement"
         />
-        <section
-          class="mx-auto grid w-full max-w-5xl min-w-xs grid-cols-1 gap-6 p-3 @xl:min-w-sm @xl:grid-cols-2 @xl:p-6"
-        >
+        <section class="mx-auto grid max-w-5xl grid-cols-1 gap-6 px-5.5 py-3 @2xl:grid-cols-2">
           <div class="flex flex-col gap-6 self-start">
             <CommonSectionContainer
               v-if="user?.hasSecondaryOrganizations"
@@ -156,7 +154,6 @@ customerTicketsSubscription.onResult(({ data }) => {
               hasPermission('ticket.agent') &&
               (user.ticketsCount?.open || user.ticketsCount?.closed)
             "
-            class="w-full self-start @xl:w-fit"
             :label="__('Related tickets')"
           >
             <template v-if="user.organization">
@@ -184,7 +181,7 @@ customerTicketsSubscription.onResult(({ data }) => {
             v-if="hasPermission('ticket.agent')"
             ref="chart"
             :user-id="userId"
-            class="w-fit @xl:col-span-2"
+            class="@2xl:col-span-2"
           />
         </section>
       </div>

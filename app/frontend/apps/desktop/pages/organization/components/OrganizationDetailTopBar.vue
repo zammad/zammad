@@ -113,7 +113,7 @@ useStickyTopCalculator(currentVisibleHeaderHeight, { offset: 7 })
 <template>
   <header
     ref="header-with-hidden-details"
-    class="absolute top-0 right-0 left-0 z-30 h-17 w-full border-b border-neutral-100 bg-neutral-50/80 p-3 backdrop-blur-2xs dark:border-gray-900 dark:bg-gray-500/80"
+    class="absolute top-0 right-0 left-0 z-30 w-full border-b border-neutral-100 bg-neutral-50/80 p-2 backdrop-blur-2xs dark:border-gray-900 dark:bg-gray-500/80"
     :class="{ '-z-10! opacity-0': isHovering }"
     :style="{
       transform: `translateY(${absoluteContainerOffset})`,
@@ -129,7 +129,7 @@ useStickyTopCalculator(currentVisibleHeaderHeight, { offset: 7 })
   <header
     ref="header-with-details"
     data-test-id="organization-detail-top-bar"
-    class="sticky z-20 min-w-xs border-b border-neutral-100 bg-neutral-50/80 p-3 backdrop-blur-2xs @md:h-34 dark:border-gray-900 dark:bg-gray-500/80"
+    class="sticky z-20 border-b border-neutral-100 bg-neutral-50/80 px-5.5 py-3 backdrop-blur-2xs dark:border-gray-900 dark:bg-gray-500/80"
     :class="{
       'transition-[top]': isHovering,
     }"
@@ -138,7 +138,8 @@ useStickyTopCalculator(currentVisibleHeaderHeight, { offset: 7 })
     }"
     v-on="containerEventHandlers"
   >
-    <CommonBreadcrumb :items="breadcrumbItems" size="small" emphasize-last-item>
+    <!-- h-6 because of ticket detail view has action which add a additional height to the breadcrumbs -->
+    <CommonBreadcrumb class="flex h-6" :items="breadcrumbItems" size="small" emphasize-last-item>
       <template #trailing>
         <CommonButton
           v-if="organizationDisplayName"
@@ -151,7 +152,7 @@ useStickyTopCalculator(currentVisibleHeaderHeight, { offset: 7 })
         />
       </template>
     </CommonBreadcrumb>
-    <div class="mx-auto mt-3 flex w-full max-w-278 @md:h-21">
+    <div class="mx-auto mt-3 flex w-full max-w-278">
       <OrganizationInfo
         :organization="organization"
         responsive
@@ -161,24 +162,25 @@ useStickyTopCalculator(currentVisibleHeaderHeight, { offset: 7 })
         no-link
       >
         <template #actions>
-          <div role="menubar" class="flex items-center @md:gap-1.5 ltr:ml-auto rtl:mr-auto">
+          <div role="toolbar" class="flex items-center gap-1.5 ltr:ml-auto rtl:mr-auto">
             <CommonButton
               v-for="action in allowedTopLevelActions"
               :key="action.key"
-              role="menuitem"
-              class="h-9!"
+              class="aspect-square w-auto! rounded-lg! px-2! outline-offset-0! @3xl:aspect-auto @3xl:rounded-md! @3xl:px-2.5! @3xl:py-1.5!"
               no-truncate
               :prefix-icon="action.icon"
               @click="action?.onClick?.(organization, router)"
             >
-              <span class="sr-only w-fit @md:not-sr-only @md:block @md:w-full @md:truncate">
+              <span class="sr-only shrink-0 text-xs! @3xl:not-sr-only">
                 {{ $t(action.label) }}
               </span>
             </CommonButton>
             <CommonActionMenu
-              button-size="large"
+              button-size="medium"
+              role="presentation"
+              class="flex! h-full items-center"
+              :custom-menu-button-label="$t('Additional actions')"
               :entity="organization"
-              role="menuitem"
               no-single-action-mode
               :actions="secondLevelActions"
             />

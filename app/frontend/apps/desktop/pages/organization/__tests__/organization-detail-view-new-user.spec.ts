@@ -105,7 +105,7 @@ describe('Organization Detail View - New User', () => {
 
     const { view, header } = await visitOrganizationView()
 
-    await view.events.click(within(header).getByRole('menuitem', { name: 'New user' }))
+    await view.events.click(within(header).getByRole('button', { name: 'New user' }))
 
     const flyout = await view.findByRole('complementary', { name: 'New user' })
 
