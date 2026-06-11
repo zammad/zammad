@@ -106,7 +106,7 @@ class Checklist < ApplicationModel
       Checklist.create!(name: template.name, ticket:)
         .tap do |checklist|
           sorted_item_ids = template
-            .items
+            .sorted_items
             .map { |elem| checklist.items.create!(text: elem.text, initial_clone: true) }
             .pluck(:id)
 
