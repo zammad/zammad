@@ -176,6 +176,8 @@ class TicketArticlesController < ApplicationController
       authorize!(ticket, :show?)
     end
 
+    authorize!(article, :show?)
+
     list = article.attachments || []
     access = false
     list.each do |item|
