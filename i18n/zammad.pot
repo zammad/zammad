@@ -14410,7 +14410,7 @@ msgstr ""
 msgid "Scroll down to see new messages"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailScrollToBottomButton.vue:21
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailScrollToBottomButton.vue:25
 msgid "Scroll to bottom"
 msgstr ""
 
@@ -19339,7 +19339,7 @@ msgstr ""
 msgid "Unpin this panel"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailScrollToBottomButton.vue:33
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailScrollToBottomButton.vue:37
 msgid "Unread messages count"
 msgstr ""
 
@@ -22133,7 +22133,7 @@ msgstr ""
 msgid "or sign in using"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:131
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:133
 msgid "or use the reply actions on articles."
 msgstr ""
 
