@@ -1,17 +1,18 @@
 # Breaking Changes
 
-## 7.2
+## 7.1
 
-### Elasticsearch 7 no longer supported
+### Elasticsearch 7 deprecated
 
-Elasticsearch 7 has reached end of life and is no longer supported. Zammad now
-requires **Elasticsearch 8** or later.
+Elasticsearch 7 has reached end of life and is now deprecated.
 
-⚠️ Please upgrade your Elasticsearch installation before updating to Zammad 7.2.
+⚠️ A future version of Zammad now requires **Elasticsearch 8** or later.
 
 ### Calendar iCal feed must be a URL
 
 Calendars can no longer be configured with a local file path as the iCal feed source. Only HTTP/HTTPS URLs are accepted.
+
+Local file path support is now deprecated. In a future release of Zammad, this functionality will be removed.
 
 ⚠️ If you previously used a local `.ics`
 file path, host the file on an HTTP server and update the calendar's iCal feed URL accordingly.
