@@ -1,6 +1,8 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { waitFor } from '@testing-library/vue'
+import { waitFor } from '#tests/support/vitest-wrapper.ts'
+
+import { MOBILE_SLUG } from '#desktop/composables/responsiveness/useMobileNavigation.ts'
 
 import continueToMobileItem from '../continue-to-mobile.ts'
 
@@ -25,6 +27,16 @@ describe('avatar menu continue-to-mobile plugin', () => {
   beforeEach(() => {
     setIsMobile(false)
     localStorage.removeItem('forceDesktopApp')
+
+    Object.defineProperty(window, 'location', {
+      configurable: true,
+      writable: true,
+      value: {
+        ...window.location,
+        pathname: '/desktop',
+        href: '/desktop',
+      },
+    })
   })
 
   it('is hidden by default on non-mobile devices', () => {
@@ -46,14 +58,19 @@ describe('avatar menu continue-to-mobile plugin', () => {
     expect(continueToMobileItem.show?.()).toBeTruthy()
   })
 
-  it('clears forced desktop mode when clicked', async () => {
+  it('clears forced desktop mode and navigates to mobile when clicked', async () => {
     setIsMobile(false)
+
     localStorage.setItem('forceDesktopApp', 'true')
 
     continueToMobileItem.onClick?.()
 
     await waitFor(() => {
       expect(localStorage.getItem('forceDesktopApp')).toBeNull()
+    })
+
+    await waitFor(() => {
+      expect(window.location.href).toBe(MOBILE_SLUG)
     })
   })
 })

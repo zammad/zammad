@@ -15,9 +15,10 @@ export default <AvatarMenuPlugin>{
   icon: 'mobile',
   link: MOBILE_SLUG,
   onClick: () => {
-    const { clearForceDesktopApp } = useMobileNavigation()
+    const { clearForceDesktopApp, continueToMobile } = useMobileNavigation()
 
     clearForceDesktopApp()
+    continueToMobile()
   },
   show: () => {
     const { forceDesktopApp } = useMobileNavigation()
