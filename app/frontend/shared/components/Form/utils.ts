@@ -34,7 +34,23 @@ export const clearMessage = (node: FormKitNode, key: string) => {
 
 export const setErrors = (node: FormKitNode, errors: MutationSendError) => {
   if (errors instanceof UserError) {
-    node.setErrors(errors.generalErrors as string[], errors.getFieldErrorList())
+    // Route field errors to the matching node. Try a depth-first name search
+    // first (handles fields nested inside FormKit group nodes, e.g. multi-step
+    // forms), then fall back to node.at() for dot-path addresses like
+    // "inbound.adapter". Errors that cannot be resolved to a field node are
+    // promoted to form-level errors so they are never silently dropped.
+    const unresolvedErrors: string[] = []
+
+    Object.entries(errors.getFieldErrorList()).forEach(([fieldName, message]) => {
+      const fieldNode = node.find(fieldName, 'name') ?? node.at(fieldName)
+      if (fieldNode && fieldNode !== node) {
+        fieldNode.setErrors([message])
+      } else {
+        unresolvedErrors.push(message)
+      }
+    })
+
+    node.setErrors([...(errors.generalErrors as string[]), ...unresolvedErrors])
     return
   }
 

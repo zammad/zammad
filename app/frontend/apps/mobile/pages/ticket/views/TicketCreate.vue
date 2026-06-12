@@ -74,6 +74,22 @@ const redirectAfterCreate = (internalId?: number) => {
 
 const { createTicket, isTicketCustomer } = useTicketCreate(form, redirectAfterCreate)
 
+const submitTicket = async (formData: FormSubmitData<TicketFormData>) => {
+  const result = await createTicket(formData)
+
+  // After a failed mutation with field errors, navigate to the first step that
+  // contains an error so the user sees it without having to go back manually.
+  await nextTick()
+  const stepWithErrors = stepNames.value.find(
+    (stepName) => (allSteps.value[stepName]?.errorCount ?? 0) > 0,
+  )
+  if (stepWithErrors && stepWithErrors !== activeStep.value) {
+    setMultiStep(stepWithErrors)
+  }
+
+  return result
+}
+
 const getFormSchemaGroupSection = (
   stepName: string,
   sectionTitle: string,
@@ -513,7 +529,7 @@ export default {
       :form-updater-id="EnumFormUpdaterId.FormUpdaterUpdaterTicketCreate"
       should-autofocus
       use-object-attributes
-      @submit="createTicket($event as FormSubmitData<TicketFormData>)"
+      @submit="submitTicket($event as FormSubmitData<TicketFormData>)"
     />
   </div>
   <footer

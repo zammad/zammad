@@ -754,6 +754,11 @@ class App.TicketCreate extends App.Controller
       target: e.target
     )
 
+    # prevent email ticket submission when the selected group has no email address
+    if @groupEmailMissingForEmailOut()
+      errors = errors || {}
+      errors['group_id'] = __('This group has no email address configured for outgoing communication.')
+
     # show errors in form
     if !_.isEmpty(errors)
       @log 'error', errors
@@ -833,6 +838,14 @@ class App.TicketCreate extends App.Controller
       @formEnable(e)
       return
     @formEnable(@$('.js-submit'), 'button')
+
+  groupEmailMissingForEmailOut: =>
+    return false if @currentChannel() isnt 'email-out'
+    params = @params()
+    return false unless params.group_id
+    group = App.Group.find(params.group_id)
+    group? && !group.email_address_id
+
 
 class Router extends App.ControllerPermanent
   @requiredPermission: 'ticket.agent'
