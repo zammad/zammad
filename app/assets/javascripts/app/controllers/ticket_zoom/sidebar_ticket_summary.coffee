@@ -57,6 +57,18 @@ class App.SidebarTicketSummary extends App.Controller
       @loadSummarization()
     )
 
+    @controllerBind('ui::ticket::sidebarToggleTab', (data) =>
+      return if not @parent?.activeState
+      return if @summarizeOnTicketShow()
+      return if data.name is @sidebarItem()?.name
+
+      # Reset activation flag when sidebar tab is switched to any other (#6131).
+      #   Do this only:
+      #   - For the currently active ticket
+      #   - If the summary is not set to be generated on ticket show
+      @summaryActivated = false
+    )
+
   isLoadSummaryNow: =>
     if @summarizeOnTicketShow()
       !!@parent?.activeState

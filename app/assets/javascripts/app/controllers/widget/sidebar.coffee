@@ -149,6 +149,8 @@ class App.Sidebar extends App.Controller
       if itemLocal && itemLocal.name && itemLocal.name is @currentTab && item.shown
         item.shown()
 
+    App.Event.trigger('ui::sidebar::toggleTab', { name })
+
     # show sidebar if not shown
     @showSidebar()
 
