@@ -400,7 +400,7 @@ export const useTicketEditForm = (
               class: {
                 if: '$currentArticleType.internal',
                 then: 'relative z-0 m-[5px] rounded-b-xl bg-stripes outline outline-1 outline-blue-700 before:rounded-b-2xl',
-                else: 'rounded-b-xl bg-neutral-50 p-[5px] dark:bg-gray-500',
+                else: 'rounded-b-2xl bg-neutral-50 p-[5px] dark:bg-gray-500',
               },
             },
             children: [
