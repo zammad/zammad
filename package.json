@@ -82,7 +82,7 @@
     "minimatch": "^10.2.5",
     "mock-apollo-client": "^1.4.0",
     "oxfmt": "^0.53.0",
-    "oxlint": "^1.68.0",
+    "oxlint": "^1.69.0",
     "regenerator-runtime": "^0.14.1",
     "stylelint": "^17.13.0",
     "stylelint-config-recommended-scss": "^17.0.1",
