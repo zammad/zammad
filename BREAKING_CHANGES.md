@@ -17,6 +17,10 @@ Local file path support is now deprecated. In a future release of Zammad, this f
 ⚠️ If you previously used a local `.ics`
 file path, host the file on an HTTP server and update the calendar's iCal feed URL accordingly.
 
+### Exceptions::UnprocessableEntity error is deprecated in favor of Exceptions::UnprocessableContent
+
+Exceptions::UnprocessableEntity will be removed in Zammad 8.0
+
 ## 7.0
 
 ### MySQL support removed, database related application settings deprecated
