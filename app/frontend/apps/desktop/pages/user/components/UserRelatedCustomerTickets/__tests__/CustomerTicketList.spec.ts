@@ -103,6 +103,7 @@ const renderCustomerTicketList = async (ticketCount: number, props?: Partial<Pro
     router: true,
   })
 
+  await vi.dynamicImportSettled()
   await flushPromises()
 
   return view
@@ -110,6 +111,7 @@ const renderCustomerTicketList = async (ticketCount: number, props?: Partial<Pro
 
 describe('CustomerTicketList.vue', () => {
   afterEach(async () => {
+    await vi.dynamicImportSettled()
     await flushPromises()
   })
 

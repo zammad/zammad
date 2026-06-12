@@ -80,6 +80,7 @@ const renderOrganizationTicketList = async (ticketCount: number, props?: Partial
     router: true,
   })
 
+  await vi.dynamicImportSettled()
   await flushPromises()
 
   return view
@@ -87,6 +88,7 @@ const renderOrganizationTicketList = async (ticketCount: number, props?: Partial
 
 describe('OrganizationTicketList.vue', () => {
   afterEach(async () => {
+    await vi.dynamicImportSettled()
     await flushPromises()
   })
 
