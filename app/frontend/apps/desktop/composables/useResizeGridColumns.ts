@@ -29,10 +29,10 @@ export const useResizeGridColumns = (
 
   const { isSmallScreen } = useAppBreakpoints()
 
-  const storageId = `${sidebarName}-sidebar-width`
+  const storage = `${sidebarName}-sidebar-width`
 
   const persistedSidebarWidth = sidebarName
-    ? useLocalStorage(storageId, defaultSidebarWidth)
+    ? useLocalStorage(storage, defaultSidebarWidth)
     : ref(defaultSidebarWidth)
 
   const currentSidebarWidth: Ref<number> = ref(defaultSidebarWidth)
@@ -57,6 +57,15 @@ export const useResizeGridColumns = (
   setupSidebarWidth()
 
   watch(isSmallScreen, setupSidebarWidth)
+
+  // Sync currentSidebarWidth when localStorage changes in another window/tab.
+  // useLocalStorage already reacts to cross-tab storage events, but currentSidebarWidth
+  // is a separate ref that is only initialized once, so we need to keep it in sync.
+  watch(persistedSidebarWidth, (newWidth) => {
+    if (isSmallScreen.value) return
+
+    currentSidebarWidth.value = newWidth
+  })
 
   const { width: screenWidth } = useWindowSize()
   const maxWidth = computed(() => screenWidth.value / 3)

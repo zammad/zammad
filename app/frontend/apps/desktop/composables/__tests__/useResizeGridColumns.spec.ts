@@ -133,4 +133,24 @@ describe('useResizeGridColumns', () => {
 
     expect(gridColumns.value).toEqual({ gridTemplateColumns: '312px minmax(0, 1fr)' })
   })
+
+  it('syncs width when localStorage is updated externally (cross-tab sync)', async () => {
+    localStorage.setItem(`${SidebarName.Primary}-sidebar-width`, '250')
+    const { gridColumns } = useResizeGridColumns(SidebarName.Primary)
+
+    expect(gridColumns.value).toEqual({ gridTemplateColumns: '250px minmax(0, 1fr)' })
+
+    // Simulate another tab writing directly to localStorage.
+    localStorage.setItem(`${SidebarName.Primary}-sidebar-width`, '280')
+    window.dispatchEvent(
+      new StorageEvent('storage', {
+        key: `${SidebarName.Primary}-sidebar-width`,
+        newValue: '280',
+        storageArea: localStorage,
+      }),
+    )
+    await nextTick()
+
+    expect(gridColumns.value).toEqual({ gridTemplateColumns: '280px minmax(0, 1fr)' })
+  })
 })
