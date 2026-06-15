@@ -10,6 +10,7 @@ module Channel::Filter::FollowUpAssignment
     return if ticket.blank?
     return if ticket.state.state_type.name != 'closed'
     return if ticket.group.follow_up_assignment
+    return if mail[:'x-zammad-out-of-office']
 
     mail[:'x-zammad-ticket-followup-owner'] = User.lookup(id: 1).login
 
