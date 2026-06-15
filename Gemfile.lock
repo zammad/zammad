@@ -128,8 +128,8 @@ GEM
     autoprefixer-rails (10.4.21.0)
       execjs (~> 2)
     aws-eventstream (1.4.0)
-    aws-partitions (1.1258.0)
-    aws-sdk-core (3.251.0)
+    aws-partitions (1.1260.0)
+    aws-sdk-core (3.252.0)
       aws-eventstream (~> 1, >= 1.3.0)
       aws-partitions (~> 1, >= 1.992.0)
       aws-sigv4 (~> 1.9)
@@ -160,7 +160,7 @@ GEM
       tzinfo
     bootsnap (1.24.6)
       msgpack (~> 1.2)
-    brakeman (8.0.4)
+    brakeman (8.0.5)
       racc
     browser (6.2.0)
     builder (3.3.0)
@@ -175,7 +175,7 @@ GEM
       rack-test (>= 0.6.3)
       regexp_parser (>= 1.5, < 3.0)
       xpath (~> 3.2)
-    cbor (0.5.10.2)
+    cbor (0.5.10.3)
     cgi (0.5.1)
     childprocess (5.1.0)
       logger (~> 1.5)
@@ -302,7 +302,7 @@ GEM
       ostruct
     globalid (1.3.0)
       activesupport (>= 6.1)
-    google-protobuf (4.35.0)
+    google-protobuf (4.35.1)
       bigdecimal
       rake (~> 13.3)
     graphql (2.6.3)
@@ -317,8 +317,8 @@ GEM
     hashdiff (1.2.1)
     hashie (5.1.0)
       logger
-    hiredis-client (0.29.0)
-      redis-client (= 0.29.0)
+    hiredis-client (0.30.0)
+      redis-client (= 0.30.0)
     htmlentities (4.4.2)
     http_parser.rb (0.8.1)
     httparty (0.24.2)
@@ -350,7 +350,7 @@ GEM
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
     jmespath (1.6.2)
-    json (2.19.8)
+    json (2.19.9)
     json-jwt (1.17.1)
       activesupport (>= 4.2)
       aes_key_wrap
@@ -393,7 +393,6 @@ GEM
       net-imap
       net-pop
       net-smtp
-    mapping (1.1.3)
     marcel (1.2.1)
     matrix (0.4.3)
     messagebird-rest (5.0.0)
@@ -406,7 +405,7 @@ GEM
     mini_mime (1.1.5)
     mini_portile2 (2.8.9)
     minitest (5.27.0)
-    msgpack (1.8.1)
+    msgpack (1.8.3)
     multi_json (1.21.1)
     multi_xml (0.9.1)
       bigdecimal (>= 3.1, < 5)
@@ -428,7 +427,7 @@ GEM
     net-smtp (0.5.1)
       net-protocol
     nio4r (2.7.5)
-    nkf (0.2.0)
+    nkf (0.3.0)
     nokogiri (1.19.3)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
@@ -445,14 +444,14 @@ GEM
       auth-sanitizer (~> 0.1, >= 0.1.3)
       cgi
       version_gem (~> 1.1, >= 1.1.9)
-    oauth2 (2.0.22)
+    oauth2 (2.0.23)
       auth-sanitizer (~> 0.2, >= 0.2.1)
       faraday (>= 0.17.3, < 4.0)
       jwt (>= 1.0, < 4.0)
       logger (~> 1.2)
       multi_xml (~> 0.5)
       rack (>= 1.2, < 4)
-      snaky_hash (~> 2.0, >= 2.0.5)
+      snaky_hash (~> 2.0, >= 2.0.6)
       version_gem (~> 1.1, >= 1.1.11)
     omniauth (2.1.4)
       hashie (>= 3.4.6)
@@ -634,7 +633,7 @@ GEM
       tsort
     redis (5.4.1)
       redis-client (>= 0.22.0)
-    redis-client (0.29.0)
+    redis-client (0.30.0)
       connection_pool
     regexp_parser (2.12.0)
     reline (0.6.3)
@@ -722,13 +721,12 @@ GEM
       rexml
     rubyntlm (0.6.5)
       base64
-    rubyzip (3.3.1)
+    rubyzip (3.4.0)
     safety_net_attestation (0.5.0)
       jwt (>= 2.0, < 4.0)
-    samovar (2.4.1)
+    samovar (2.4.2)
       console (~> 1.0)
-      mapping (~> 1.0)
-    sass-embedded (1.100.0)
+    sass-embedded (1.101.0)
       google-protobuf (~> 4.31)
       rake (>= 13)
     securerandom (0.4.1)
@@ -738,8 +736,8 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 4.0)
       websocket (~> 1.0)
-    shoulda-matchers (7.0.1)
-      activesupport (>= 7.1)
+    shoulda-matchers (8.0.1)
+      activesupport (>= 7.2)
     simple_po_parser (1.1.6)
     simpleidn (0.2.3)
     slack-ruby-client (3.1.0)
@@ -750,7 +748,7 @@ GEM
       hashie
       logger
     slop (3.6.0)
-    snaky_hash (2.0.5)
+    snaky_hash (2.0.6)
       hashie (>= 0.1.0, < 6)
       version_gem (>= 1.1.8, < 3)
     sprockets (4.2.2)
@@ -810,7 +808,7 @@ GEM
       activemodel (>= 3.0.0)
       public_suffix
     vcr (6.4.0)
-    version_gem (1.1.11)
+    version_gem (1.1.12)
     viewpoint (1.2.0)
       httpclient
       logging
