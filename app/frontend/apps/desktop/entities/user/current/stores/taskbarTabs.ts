@@ -434,9 +434,17 @@ export const useUserCurrentTaskbarTabsStore = defineStore('userCurrentTaskbarTab
 
     if (silenceError) silenceTaskbarDeleteError = true
 
+    const tabEntityKey = taskbarTabList.value.find(
+      (taskbarTab) => taskbarTab.taskbarTabId === taskbarTabId,
+    )?.tabEntityKey
+
     taskbarDeleteMutation
       .send({
         id: taskbarTabId,
+      })
+      .then(() => {
+        // Drop the stored context, it is no longer needed once the tab is gone.
+        if (tabEntityKey) delete taskbarTabContexts.value[tabEntityKey]
       })
       .catch(() => {
         taskbarTabIDsInDeletion.value = taskbarTabIDsInDeletion.value.filter(
