@@ -108,7 +108,7 @@
     "@floating-ui/vue": "^1.1.11",
     "@formkit/core": "^2.0.0",
     "@formkit/dev": "^2.0.0",
-    "@formkit/drag-and-drop": "^0.5.3",
+    "@formkit/drag-and-drop": "^0.6.0",
     "@formkit/i18n": "^2.0.0",
     "@formkit/inputs": "^2.0.0",
     "@formkit/rules": "^2.0.0",
