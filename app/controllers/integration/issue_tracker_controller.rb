@@ -52,8 +52,8 @@ class Integration::IssueTrackerController < ApplicationController
 
   def update
     ticket = Ticket.find(params[:ticket_id])
+    authorize!(ticket, :agent_read_access?)
     ticket.with_lock do
-      authorize!(ticket, :agent_read_access?)
       ticket.preferences[integration_type.to_sym] ||= {}
       ticket.preferences[integration_type.to_sym][:issue_links] = Array(params[:issue_links]).uniq
       ticket.save!
