@@ -64,9 +64,9 @@
     "@typescript-eslint/eslint-plugin": "^8.61.0",
     "@typescript-eslint/parser": "^8.61.0",
     "@vitejs/plugin-vue": "^6.0.7",
-    "@vue/compiler-dom": "^3.5.35",
+    "@vue/compiler-dom": "^3.5.38",
     "@vue/eslint-config-typescript": "^14.8.0",
-    "@vue/server-renderer": "^3.5.35",
+    "@vue/server-renderer": "^3.5.38",
     "@vue/test-utils": "^2.4.11",
     "eslint": "^10.5.0",
     "eslint-config-prettier": "^10.1.8",
@@ -100,7 +100,7 @@
     "vite-plugin-pwa": "^1.3.0",
     "vite-plugin-ruby": "^5.2.2",
     "vitest": "^4.1.8",
-    "vue-tsc": "^3.3.3"
+    "vue-tsc": "^3.3.5"
   },
   "dependencies": {
     "@apollo/client": "3.13.9",
@@ -148,7 +148,7 @@
     "@tiptap/suggestion": "3.26.1",
     "@tiptap/vue-3": "3.26.1",
     "@vue/apollo-composable": "^4.2.2",
-    "@vue/runtime-core": "^3.5.35",
+    "@vue/runtime-core": "^3.5.38",
     "@vuepic/vue-datepicker": "^14.0.0",
     "@vueuse/core": "^14.3.0",
     "@vueuse/router": "^14.3.0",
@@ -174,7 +174,7 @@
     "ua-parser-js": "^2.0.10",
     "uuid": "^14.0.0",
     "vite-bundle-visualizer": "^1.2.1",
-    "vue": "^3.5.35",
+    "vue": "^3.5.38",
     "vue-advanced-cropper": "^2.8.9",
     "vue-easy-lightbox": "1.19.0",
     "vue-echarts": "^8.0.1",
