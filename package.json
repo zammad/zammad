@@ -157,7 +157,7 @@
     "date-fns": "^4.4.0",
     "echarts": "^6.1.0",
     "graphql": "^16.14.2",
-    "graphql-ruby-client": "^1.15.0",
+    "graphql-ruby-client": "^1.15.1",
     "graphql-tag": "^2.12.6",
     "linkify-string": "^4.3.3",
     "linkifyjs": "^4.3.3",
