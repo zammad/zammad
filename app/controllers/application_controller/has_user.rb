@@ -62,8 +62,11 @@ module ApplicationController::HasUser
 
   def current_user_set(user, auth_type = 'session')
     session[:user_id] = user.id
-    @_auth_type = auth_type
-    @_current_user = user
+
+    @_auth_type      = auth_type
+    @_current_user   = user
+    @_user_on_behalf = nil
+
     set_user
   end
 
