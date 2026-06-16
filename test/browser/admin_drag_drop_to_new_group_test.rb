@@ -41,7 +41,7 @@ class AdminDragDropToNewGroupTest < TestCase
   def add_group
     name = "dndgroup-#{SecureRandom.uuid}"
 
-    click(css: '.user-menu a[title=Admin')
+    click(css: '.user-menu a[title="Administration"]')
     click(css: '.content.active a[href="#manage/groups"]')
     click(css: '.content.active a[data-type="new"]')
 
