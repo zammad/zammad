@@ -14434,11 +14434,11 @@ msgstr ""
 msgid "Scroll to start"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonTabs/TabsScrollList.vue:251
+#: app/frontend/apps/desktop/components/CommonTabs/TabsScrollList.vue:264
 msgid "Scroll towards end"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonTabs/TabsScrollList.vue:200
+#: app/frontend/apps/desktop/components/CommonTabs/TabsScrollList.vue:213
 msgid "Scroll towards start"
 msgstr ""
 
