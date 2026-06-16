@@ -21969,10 +21969,6 @@ msgstr ""
 msgid "note"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:6
-msgid "notification"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:102
 msgid "notification sent to '%s'"
 msgstr ""
