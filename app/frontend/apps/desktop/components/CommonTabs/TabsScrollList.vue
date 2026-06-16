@@ -6,10 +6,11 @@ import {
   useResizeObserver,
   type UseElementVisibilityOptions,
 } from '@vueuse/core'
-import { computed, ref, toRef, useTemplateRef, watch } from 'vue'
+import { computed, onUnmounted, ref, toRef, useTemplateRef, watch } from 'vue'
 
 import { EnumTextDirection } from '#shared/graphql/types.ts'
 import { useLocaleStore } from '#shared/stores/locale.ts'
+import { waitForAnimationFrame } from '#shared/utils/helpers.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import type { Tab, NavigationTab, MarkerStyle } from '#desktop/components/CommonTabs/types.ts'
@@ -118,13 +119,25 @@ const centerActiveTab = (behavior: ScrollBehavior) => {
 
 // We don't apply transition before we have the calculation
 // to prevent this flash of transition initially
-const enableTransitionsAfterPaint = () => {
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
-      transitionsEnabled.value = true
-    })
-  })
+let transitionAbortController: AbortController | null = null
+
+const enableTransitionsAfterPaint = async () => {
+  transitionAbortController?.abort()
+  transitionAbortController = new AbortController()
+  const { signal } = transitionAbortController
+
+  await waitForAnimationFrame()
+  if (signal.aborted) return
+
+  await waitForAnimationFrame()
+  if (signal.aborted) return
+
+  transitionsEnabled.value = true
 }
+
+onUnmounted(() => {
+  transitionAbortController?.abort()
+})
 
 const stopWatcher = watch(selectedIndex, measureMarker, { flush: 'post' })
 if (!hasMarker.value) stopWatcher()

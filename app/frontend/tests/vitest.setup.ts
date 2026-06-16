@@ -124,10 +124,9 @@ globalThis.ClipboardItem = class {
 
 require.extensions['.css'] = () => ({})
 
-globalThis.requestAnimationFrame = (cb) => {
-  setTimeout(cb, 0)
-  return 0
-}
+globalThis.requestAnimationFrame = (cb) => setTimeout(cb, 0)
+
+globalThis.cancelAnimationFrame = (id) => clearTimeout(id)
 
 globalThis.scrollTo = vi.fn()
 globalThis.matchMedia = (media: string) => ({
