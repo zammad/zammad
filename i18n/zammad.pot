@@ -1406,7 +1406,6 @@ msgstr ""
 msgid "Address of the proxy server for http and https resources."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_default_navbar.coffee:13
 #: db/seeds/roles.rb:5
 msgid "Admin"
 msgstr ""
@@ -1441,6 +1440,7 @@ msgstr ""
 msgid "Admin password login instructions were sent to your email address."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_default_navbar.coffee:13
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/MenuContainer/AdminMenu/plugins/admin.ts:9
 msgid "Administration"
 msgstr ""
@@ -3128,7 +3128,7 @@ msgstr ""
 msgid "Changes could not be loaded."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:105
+#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:106
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee:103
 msgid "Changes could not be saved."
 msgstr ""
@@ -20190,7 +20190,7 @@ msgstr ""
 msgid "Web (in)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:118
+#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:119
 #: app/assets/javascripts/app/controllers/knowledge_base/server_snippet.coffee:2
 msgid "Web Server Configuration"
 msgstr ""
@@ -22111,10 +22111,6 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/note.ts:6
 #: db/seeds/ticket_article_types.rb:13
 msgid "note"
-msgstr ""
-
-#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:6
-msgid "notification"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:102
