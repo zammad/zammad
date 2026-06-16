@@ -11745,6 +11745,10 @@ msgstr ""
 msgid "Notification sender"
 msgstr ""
 
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:14
+msgid "Notification sent to"
+msgstr ""
+
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:167
 msgid "Notification settings could not be reset."
 msgstr ""
@@ -21963,6 +21967,10 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/note.ts:6
 #: db/seeds/ticket_article_types.rb:13
 msgid "note"
+msgstr ""
+
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:6
+msgid "notification"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:102

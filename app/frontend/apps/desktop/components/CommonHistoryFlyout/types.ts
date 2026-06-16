@@ -16,6 +16,7 @@ export interface EventActionContent {
   additionalDetails?: string | null
   showSeparator?: boolean | null
   link?: string | null
+  sentenceDescription?: string | null
 }
 
 export interface EventActionOutput extends EventActionContent {
