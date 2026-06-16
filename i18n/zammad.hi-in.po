@@ -1002,7 +1002,7 @@ msgstr "समय लेखा"
 msgid "AI Service Name"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket_summary.coffee:121
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket_summary.coffee:133
 #, fuzzy
 #| msgid "Ticket update"
 msgid "AI Summary"
@@ -1568,6 +1568,12 @@ msgstr "लिंक जोड़ें"
 msgid "Add Bot"
 msgstr "बॉट जोड़ें"
 
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:252
+#, fuzzy
+#| msgid "Add Link"
+msgid "Add CC"
+msgstr "लिंक जोड़ें"
+
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee:77
 #: app/assets/javascripts/app/controllers/ssl_certificate.coffee:88
 #: app/assets/javascripts/app/views/integration/smime.jst.eco:5
@@ -1621,7 +1627,7 @@ msgstr "एक व्यक्तिगत एक्सेस टोकन ज�
 msgid "Add a data privacy deletion task"
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:279
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:295
 #, fuzzy
 #| msgid "Add Tag"
 msgid "Add a message"
@@ -1782,11 +1788,18 @@ msgstr ""
 msgid "Additional Channels"
 msgstr "अतिरिक्त चैनल"
 
+#: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailTopBar.vue:182
+#: app/frontend/apps/desktop/pages/user/components/UserDetailTopBar/TopBarHeader.vue:117
+#, fuzzy
+#| msgid "Notifications"
+msgid "Additional actions"
+msgstr " सूचनाएं"
+
 #: db/seeds/settings.rb:3338
 msgid "Additional follow-up detection"
 msgstr "Additional follow-up detection"
 
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:214
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:230
 #, fuzzy
 #| msgid "Notifications"
 msgid "Additional information"
@@ -2189,7 +2202,7 @@ msgstr ""
 msgid "An open-source monitoring tool."
 msgstr ""
 
-#: app/frontend/shared/components/Form/utils.ts:41
+#: app/frontend/shared/components/Form/utils.ts:57
 msgid "An unexpected error has occurred."
 msgstr ""
 
@@ -2542,7 +2555,7 @@ msgstr ""
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:54
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:63
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:34
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:420
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:436
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:254
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:41
 msgid "Are you sure? You have unsaved changes that will get lost."
@@ -2600,8 +2613,8 @@ msgstr " सूचनाएं"
 msgid "Article could not be deleted."
 msgstr "% s ऑब्जेक्ट (s) बनाए जाते हैं।"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue:136
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleHeader.vue:25
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue:134
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleHeader.vue:28
 #, fuzzy
 #| msgid "Notifications"
 msgid "Article meta information"
@@ -2730,8 +2743,8 @@ msgid "Attached Files"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:223
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:326
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:283
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:342
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:322
 msgid "Attachment"
 msgstr ""
 
@@ -3096,7 +3109,7 @@ msgid "BCC address for all outgoing emails"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/beta_ui.coffee:2
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarFooterMenu.vue:39
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarFooterMenu.vue:45
 msgid "BETA UI"
 msgstr ""
 
@@ -3395,11 +3408,11 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:58
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:34
 #: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:181
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:85
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:105
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:90
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:246
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:262
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:30
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:235
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:274
 #: db/seeds/object_manager_attributes.rb:523
 msgid "CC"
 msgstr ""
@@ -3843,9 +3856,9 @@ msgstr ""
 #: app/assets/javascripts/app/models/email_address.coffee:34
 #: app/assets/javascripts/app/models/postmaster_filter.coffee:8
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:163
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:102
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:123
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:102
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:182
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:163
 msgid "Channel"
 msgstr ""
 
@@ -4349,9 +4362,9 @@ msgstr "बंद टिकटें"
 msgid "Closing time"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:183
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarFooterMenu.vue:77
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar.vue:65
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:193
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarFooterMenu.vue:85
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar.vue:71
 #, fuzzy
 #| msgid "Content"
 msgid "Collapse sidebar"
@@ -4691,7 +4704,7 @@ msgstr "अंतर्वस्तु"
 msgid "Content preview could not be generated."
 msgstr "% s ऑब्जेक्ट (s) बनाए जाते हैं।"
 
-#: app/frontend/apps/desktop/components/layout/LayoutContent.vue:178
+#: app/frontend/apps/desktop/components/layout/LayoutContent.vue:179
 #, fuzzy
 #| msgid "Content"
 msgid "Content sidebar"
@@ -4730,7 +4743,7 @@ msgstr "अंतर्वस्तु"
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue:46
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSource.vue:52
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmail.vue:136
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:534
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:550
 msgid "Continue"
 msgstr "जारी रखें"
 
@@ -4809,7 +4822,7 @@ msgstr " पासवर्ड रीसेट"
 msgid "Copy current object number (e. g. Ticket#) to clipboard"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailTopBar.vue:145
+#: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailTopBar.vue:146
 #, fuzzy
 #| msgid "No %s configured."
 msgid "Copy organization display name"
@@ -4855,7 +4868,7 @@ msgstr ""
 msgid "Copy token"
 msgstr " पासवर्ड रीसेट"
 
-#: app/frontend/apps/desktop/pages/user/components/UserDetailTopBar/TopBarHeader.vue:77
+#: app/frontend/apps/desktop/pages/user/components/UserDetailTopBar/TopBarHeader.vue:78
 #, fuzzy
 #| msgid "No %s configured."
 msgid "Copy user display name"
@@ -4990,7 +5003,7 @@ msgstr "देश"
 #: app/frontend/apps/desktop/entities/user/composables/useUserCreate.ts:75
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:114
 #: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:311
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:485
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:501
 msgid "Create"
 msgstr "बनाएँ"
 
@@ -5150,7 +5163,7 @@ msgid "Create tag"
 msgstr "बनाएँ"
 
 #: app/frontend/apps/mobile/pages/ticket/routes.ts:64
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:485
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:501
 #, fuzzy
 #| msgid "Create"
 msgid "Create ticket"
@@ -5234,7 +5247,7 @@ msgstr "संगठन के टिकट"
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco:23
 #: app/controllers/time_accountings_controller.rb:116
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:116
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:54
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:72
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/TicketSimpleTable.vue:37
 #: app/frontend/shared/entities/organization/stores/objectAttributes.ts:24
 #: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:102
@@ -5272,7 +5285,7 @@ msgid "Created by"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:24
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:460
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:476
 #, fuzzy
 #| msgid "Tickets of Organization"
 msgid "Creating new tickets via web is disabled."
@@ -6926,7 +6939,7 @@ msgstr ""
 msgid "Detected Language"
 msgstr "भाषा"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:95
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:116
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:94
 #, fuzzy
 #| msgid "Language"
@@ -7065,7 +7078,7 @@ msgstr "बनाएँ"
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:65
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:59
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:36
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:422
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:438
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:256
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:43
 #, fuzzy
@@ -7079,8 +7092,7 @@ msgstr "अपने सहेजे न गए परिवर्तनों �
 msgid "Discard snapshot"
 msgstr "बनाएँ"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReplyPinned.vue:105
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReplyUnpinned.vue:56
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReplyPanel.vue:137
 #, fuzzy
 #| msgid "Discard your unsaved changes."
 msgid "Discard unsaved reply"
@@ -7516,7 +7528,7 @@ msgstr " जवाब दे दो"
 msgid "Edit security keys"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation.vue:100
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation.vue:95
 #, fuzzy
 #| msgid "Ticket update"
 msgid "Edit ticket title"
@@ -8556,9 +8568,9 @@ msgstr "टिकटें"
 msgid "Expand draft into well-written section"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:184
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarFooterMenu.vue:78
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar.vue:66
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:194
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarFooterMenu.vue:86
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar.vue:72
 #, fuzzy
 #| msgid "Content"
 msgid "Expand sidebar"
@@ -8784,7 +8796,7 @@ msgstr "फ़रवरी"
 
 #: app/assets/javascripts/app/models/ai_text_tool.coffee:27
 #: app/assets/javascripts/app/views/channel/form.jst.eco:34
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarFooterMenu.vue:55
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarFooterMenu.vue:61
 msgid "Feedback"
 msgstr ""
 
@@ -9057,7 +9069,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:43
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:39
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:23
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:459
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:475
 #: app/frontend/shared/errors/useErrorHandler.ts:29
 #: app/frontend/shared/router/guards/before/permission.ts:26
 msgid "Forbidden"
@@ -9213,7 +9225,7 @@ msgstr "शुक्रवार"
 #: app/assets/javascripts/app/models/ticket_article.coffee:7
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco:13
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:16
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:65
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:83
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:87
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:28
 msgid "From"
@@ -9911,7 +9923,7 @@ msgstr ""
 msgid "Hide"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarFooterMenu.vue:62
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarFooterMenu.vue:68
 msgid "Hide BETA UI switch"
 msgstr ""
 
@@ -10520,7 +10532,7 @@ msgstr "ग्राहक"
 msgid "Incomplete credentials"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:450
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:439
 #, fuzzy
 #| msgid "Customer"
 msgid "Incomplete ticket checklist"
@@ -10734,7 +10746,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:105
 #: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:144
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:205
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:207
 msgid "Internal"
 msgstr ""
 
@@ -11519,7 +11531,7 @@ msgstr "दृश्यता"
 #: app/assets/javascripts/app/views/link/kb_answer.jst.eco:24
 #: app/assets/javascripts/app/views/link/ticket/list.jst.eco:11
 #: app/frontend/apps/desktop/pages/ticket/components/TicketLinksFlyout.vue:53
-#: app/frontend/shared/components/Form/FormFieldLink.vue:18
+#: app/frontend/shared/components/Form/FormFieldLink.vue:21
 msgid "Link"
 msgstr ""
 
@@ -11857,7 +11869,7 @@ msgstr ""
 msgid "Mailbox type"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/layout/LayoutPage.vue:102
+#: app/frontend/apps/desktop/components/layout/LayoutPage.vue:103
 msgid "Main sidebar"
 msgstr ""
 
@@ -12950,7 +12962,7 @@ msgid "Navigate to %s"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:137
-#: app/frontend/apps/desktop/components/PageNavigation/PageNavigation.vue:43
+#: app/frontend/apps/desktop/components/PageNavigation/PageNavigation.vue:41
 msgid "Navigation"
 msgstr ""
 
@@ -13773,7 +13785,7 @@ msgid "No x-zammad-session-user-id, no sender set!"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:8
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:453
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:442
 #, fuzzy
 #| msgid "You have closed a ticket"
 msgid "No, just close the ticket"
@@ -13965,6 +13977,12 @@ msgstr " अधिसूचना प्रेषक"
 #, fuzzy
 #| msgid "Notification Sender"
 msgid "Notification sender"
+msgstr " अधिसूचना प्रेषक"
+
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:14
+#, fuzzy
+#| msgid "Notification Sender"
+msgid "Notification sent to"
 msgstr " अधिसूचना प्रेषक"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:169
@@ -14367,7 +14385,7 @@ msgstr " नोट बॉक्स खोलें"
 msgid "Open questions"
 msgstr "विकल्प"
 
-#: app/frontend/apps/desktop/components/PageNavigation/PageNavigation.vue:53
+#: app/frontend/apps/desktop/components/PageNavigation/PageNavigation.vue:51
 #, fuzzy
 #| msgid "Open Ticket# %s"
 msgid "Open quick search"
@@ -14604,7 +14622,7 @@ msgstr " संस्था का नाम"
 msgid "Organization support"
 msgstr " संगठन का समर्थन"
 
-#: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailViewContent.vue:172
+#: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailViewContent.vue:171
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:79
 #, fuzzy
 #| msgid "Organizations"
@@ -15175,7 +15193,7 @@ msgstr ""
 msgid "Pick a name for the application, and we'll give you a unique token."
 msgstr " आवेदन के लिए एक नाम चुनें, और हम आपको एक अनूठा टोकन देंगे।"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReplyUnpinned.vue:63
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReplyPanel.vue:144
 msgid "Pin this panel"
 msgstr ""
 
@@ -15736,7 +15754,7 @@ msgstr " प्रॉक्सी पता।"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:109
 #: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:139
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:210
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:208
 msgid "Public"
 msgstr " जनता"
 
@@ -16074,7 +16092,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/link/ticket/list.jst.eco:1
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:129
-#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:160
+#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:157
 #, fuzzy
 #| msgid "Create"
 msgid "Related tickets"
@@ -16347,13 +16365,13 @@ msgstr " प्रतिस्थापन"
 msgid "Replacement agent"
 msgstr " प्रतिस्थापन"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReplyPinned.vue:102
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReplyUnpinned.vue:53
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReplyPanel.vue:114
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:69
 #: app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts:18
 #: app/frontend/shared/entities/ticket-article/action/plugins/sms.ts:18
 #: app/frontend/shared/entities/ticket-article/action/plugins/telegram.ts:19
 #: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:74
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:366
 #, fuzzy
 #| msgid "reply"
 msgid "Reply"
@@ -16579,7 +16597,7 @@ msgstr ""
 msgid "Resetting the order of your ticket overviews failed."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReplyPinned.vue:83
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReplyPanel.vue:102
 #, fuzzy
 #| msgid "Close"
 msgid "Resize article panel"
@@ -16599,7 +16617,7 @@ msgstr ""
 msgid "Resize side panel"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:153
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:163
 msgid "Resize sidebar"
 msgstr ""
 
@@ -17071,7 +17089,7 @@ msgstr ""
 msgid "Scroll down to see new messages"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailScrollToBottomButton.vue:21
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailScrollToBottomButton.vue:25
 msgid "Scroll to bottom"
 msgstr ""
 
@@ -17083,11 +17101,11 @@ msgstr ""
 msgid "Scroll to start"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonTabs/TabsScrollList.vue:255
+#: app/frontend/apps/desktop/components/CommonTabs/TabsScrollList.vue:251
 msgid "Scroll towards end"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonTabs/TabsScrollList.vue:203
+#: app/frontend/apps/desktop/components/CommonTabs/TabsScrollList.vue:200
 msgid "Scroll towards start"
 msgstr ""
 
@@ -17372,7 +17390,7 @@ msgstr "खोजें"
 
 #: app/frontend/apps/desktop/components/User/UserPopoverWithTrigger/UserPopover.vue:75
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:112
-#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:128
+#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:126
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue:94
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:133
 #: db/seeds/object_manager_attributes.rb:1187
@@ -17403,8 +17421,8 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:191
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:26
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:127
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:288
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:258
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:304
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:297
 #: db/seeds/permissions.rb:209
 msgid "Security"
 msgstr ""
@@ -17608,7 +17626,7 @@ msgstr ""
 msgid "Select the ticket article(s) that should be analyzed by the AI agent."
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:146
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:162
 msgid "Select the type of ticket your are creating"
 msgstr ""
 
@@ -17893,7 +17911,7 @@ msgstr ""
 msgid "Set Up"
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:120
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:136
 msgid "Set a title for your ticket"
 msgstr ""
 
@@ -18222,7 +18240,7 @@ msgstr ""
 msgid "Show more"
 msgstr "प्रारूप"
 
-#: app/frontend/apps/desktop/components/CommonTabs/TabsOverflowMenu.vue:85
+#: app/frontend/apps/desktop/components/CommonTabs/TabsOverflowMenu.vue:81
 #, fuzzy
 #| msgid "Draft"
 msgid "Show more tabs"
@@ -18908,7 +18926,7 @@ msgstr "मार्ग"
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:14
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:91
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:26
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:247
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:286
 msgid "Subject"
 msgstr "विषय"
 
@@ -19625,7 +19643,7 @@ msgid ""
 "Please click \"Reauthenticate\" to keep it working."
 msgstr ""
 
-#: app/frontend/apps/desktop/stores/theme.ts:41
+#: app/frontend/apps/desktop/stores/theme.ts:43
 #, fuzzy
 #| msgid "%s Object(s) are updated."
 msgid "The appearance could not be updated."
@@ -19933,6 +19951,12 @@ msgid ""
 "purpose and behavior."
 msgstr ""
 
+#: app/frontend/apps/desktop/composables/responsiveness/useMobileDetection.ts:32
+msgid ""
+"The desktop layout works best on wider screens. Current screen width may not "
+"display all desktop content optimally."
+msgstr ""
+
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:72
 #, fuzzy
 #| msgid "%s Object(s) are created."
@@ -20237,7 +20261,7 @@ msgstr "% s ऑब्जेक्ट (s) बनाए जाते हैं।"
 #: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:549
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_new.coffee:69
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee:93
-#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:820
+#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:825
 #: app/assets/javascripts/app/controllers/customer_ticket_create.coffee:193
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:272
 #: app/assets/javascripts/app/controllers/object_manager.coffee:265
@@ -21476,6 +21500,8 @@ msgstr " पासवर्ड में 2 निचले और 2 ऊपरी
 msgid "This field was configured incorrectly and can't be submitted."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:760
+#: app/controllers/concerns/creates_ticket_articles.rb:43
 #: app/graphql/gql/mutations/ticket/concerns/handles_group.rb:24
 msgid "This group has no email address configured for outgoing communication."
 msgstr ""
@@ -21623,12 +21649,6 @@ msgstr ""
 msgid ""
 "This resource cannot be locked, because it has already been locked by "
 "another process."
-msgstr ""
-
-#: app/frontend/apps/desktop/composables/responsiveness/useMobileDetection.ts:29
-msgid ""
-"This screen size isn't fully supported for the desktop layout. For the best "
-"experience, switch to the mobile layout."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/github.coffee:6
@@ -21819,7 +21839,7 @@ msgstr "गुरूवार"
 msgid "Ticket"
 msgstr "टिकट"
 
-#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:793
+#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:798
 msgid "Ticket %s created!"
 msgstr "टिकट% s बनाया गया!"
 
@@ -22243,7 +22263,7 @@ msgstr "% s ऑब्जेक्ट (s) बनाए जाते हैं।"
 msgid "Ticket tags updated successfully."
 msgstr "टेस्ट रन सफल रहा।"
 
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:123
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:139
 #, fuzzy
 #| msgid "Ticket update"
 msgid "Ticket title"
@@ -22263,7 +22283,7 @@ msgid "Ticket update failed."
 msgstr "टिकट अपडेट"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/useTicketEditTitle.ts:26
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:542
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:531
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:161
 #, fuzzy
 #| msgid "The test run was successful."
@@ -22521,7 +22541,7 @@ msgstr "समय"
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco:10
 #: app/controllers/time_accountings_controller.rb:85
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/TicketSimpleTable.vue:34
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:136
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:152
 #: app/graphql/gql/types/overview_type.rb:92
 #: db/seeds/object_manager_attributes.rb:34 lib/excel_sheet/ticket.rb:24
 msgid "Title"
@@ -22536,10 +22556,10 @@ msgstr "रूप का शीर्षक"
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco:18
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:52
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:28
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:75
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:94
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:89
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:29
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:222
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:235
 #: db/seeds/object_manager_attributes.rb:496
 msgid "To"
 msgstr "को"
@@ -22644,7 +22664,7 @@ msgstr ""
 msgid "Toggle AM/PM mode"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue:167
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue:165
 #, fuzzy
 #| msgid "Notifications"
 msgid "Toggle article meta information"
@@ -23203,11 +23223,11 @@ msgstr " कोई बात नहीं"
 msgid "Unlock"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReplyPinned.vue:112
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReplyPanel.vue:144
 msgid "Unpin this panel"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailScrollToBottomButton.vue:33
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailScrollToBottomButton.vue:37
 #, fuzzy
 #| msgid "New User Accounts"
 msgid "Unread messages count"
@@ -23306,7 +23326,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:9
 #: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyoutActionFooter.vue:9
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketAgentUpdateButton.vue:117
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:81
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:82
 msgid "Update"
 msgstr "अद्यतनीकरण"
 
@@ -23868,7 +23888,7 @@ msgid "User mailbox"
 msgstr "उपयोगकर्ता नाम / ईमेल"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:201
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/AvatarMenu.vue:44
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/AvatarMenu.vue:45
 #, fuzzy
 #| msgid "Username"
 msgid "User menu"
@@ -24139,7 +24159,7 @@ msgstr "नये टिकट "
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/article.jst.eco:3
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/notification.jst.eco:3
 #: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:133
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:196
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:193
 #: db/seeds/object_manager_attributes.rb:462
 msgid "Visibility"
 msgstr "दृश्यता"
@@ -24600,7 +24620,7 @@ msgid "Yes, add attachments now"
 msgstr " अपलोड करने के लिए अनुलग्नक विकल्प जोड़ें।"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:5
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:452
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:441
 #, fuzzy
 #| msgid "Remove"
 msgid "Yes, open the checklist"
@@ -24982,7 +25002,7 @@ msgstr ""
 msgid "You have unchecked items in the checklist."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:447
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:436
 #, fuzzy
 #| msgid "Sure to delete this object?"
 msgid ""
@@ -25019,7 +25039,7 @@ msgstr "आपको% s में Zammad समापन बिंदु को 
 msgid "You reached the table limit of %s items (%s remaining)."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:772
+#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:777
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:395
 #, fuzzy
 #| msgid ""
@@ -26515,6 +26535,12 @@ msgstr "सेट नहीं (परिभाषित नहीं)"
 msgid "note"
 msgstr " ध्यान दें"
 
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:6
+#, fuzzy
+#| msgid "Notification"
+msgid "notification"
+msgstr " अधिसूचना"
+
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:102
 #, fuzzy
 #| msgid "Notification Sender"
@@ -26565,7 +26591,7 @@ msgstr "या"
 msgid "or sign in using"
 msgstr "या उपयोग में साइन इन करें"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:131
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:127
 #, fuzzy
 #| msgid "Sure to delete this object?"
 msgid "or use the reply actions on articles."
