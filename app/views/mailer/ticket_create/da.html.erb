@@ -1,0 +1,24 @@
+Ny sag (#{ticket.title})
+
+<div>Hej #{recipient.firstname},</div>
+<br>
+<div>Den nye sag (#{ticket.title}) er oprettet af "<b>#{current_user.longname}</b>".</div>
+<br>
+<div>
+Gruppe: #{ticket.group.name}<br>
+Ejer: #{ticket.owner.fullname}<br>
+Status: #{t(ticket.state.name)}<br>
+</div>
+<br>
+<% if @objects[:article] %>
+<div>
+Information:
+<blockquote type="cite">
+#{article.body_as_html}
+</blockquote>
+</div>
+<% end %>
+<br>
+<div>
+<a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">Se dette i #{config.product_name}</a>
+</div>
