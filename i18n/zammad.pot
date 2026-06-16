@@ -702,7 +702,7 @@ msgstr ""
 msgid "AI Service Name"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket_summary.coffee:121
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket_summary.coffee:133
 msgid "AI Summary"
 msgstr ""
 
@@ -1246,7 +1246,7 @@ msgstr ""
 msgid "Add a data privacy deletion task"
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:279
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:295
 msgid "Add a message"
 msgstr ""
 
@@ -1377,8 +1377,8 @@ msgstr ""
 msgid "Additional Channels"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailTopBar.vue:180
-#: app/frontend/apps/desktop/pages/user/components/UserDetailTopBar/TopBarHeader.vue:116
+#: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailTopBar.vue:182
+#: app/frontend/apps/desktop/pages/user/components/UserDetailTopBar/TopBarHeader.vue:117
 msgid "Additional actions"
 msgstr ""
 
@@ -1386,7 +1386,7 @@ msgstr ""
 msgid "Additional follow-up detection"
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:214
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:230
 msgid "Additional information"
 msgstr ""
 
@@ -1715,7 +1715,7 @@ msgstr ""
 msgid "An open-source monitoring tool."
 msgstr ""
 
-#: app/frontend/shared/components/Form/utils.ts:41
+#: app/frontend/shared/components/Form/utils.ts:57
 msgid "An unexpected error has occurred."
 msgstr ""
 
@@ -2006,7 +2006,7 @@ msgstr ""
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:54
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:63
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:34
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:420
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:436
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:254
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:41
 msgid "Are you sure? You have unsaved changes that will get lost."
@@ -2169,8 +2169,8 @@ msgid "Attached Files"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:223
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:326
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:317
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:342
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:322
 msgid "Attachment"
 msgstr ""
 
@@ -2757,9 +2757,9 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:181
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:105
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:90
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:246
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:262
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:30
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:269
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:274
 #: db/seeds/object_manager_attributes.rb:523
 msgid "CC"
 msgstr ""
@@ -3909,7 +3909,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue:46
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSource.vue:52
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmail.vue:136
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:534
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:550
 msgid "Continue"
 msgstr ""
 
@@ -3982,7 +3982,7 @@ msgstr ""
 msgid "Copy current object number (e. g. Ticket#) to clipboard"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailTopBar.vue:145
+#: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailTopBar.vue:146
 msgid "Copy organization display name"
 msgstr ""
 
@@ -4018,7 +4018,7 @@ msgstr ""
 msgid "Copy token"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/user/components/UserDetailTopBar/TopBarHeader.vue:77
+#: app/frontend/apps/desktop/pages/user/components/UserDetailTopBar/TopBarHeader.vue:78
 msgid "Copy user display name"
 msgstr ""
 
@@ -4136,7 +4136,7 @@ msgstr ""
 #: app/frontend/apps/desktop/entities/user/composables/useUserCreate.ts:75
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:114
 #: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:311
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:485
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:501
 msgid "Create"
 msgstr ""
 
@@ -4254,7 +4254,7 @@ msgid "Create tag"
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/routes.ts:64
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:485
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:501
 msgid "Create ticket"
 msgstr ""
 
@@ -4365,7 +4365,7 @@ msgid "Created by"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:24
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:460
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:476
 msgid "Creating new tickets via web is disabled."
 msgstr ""
 
@@ -5881,7 +5881,7 @@ msgstr ""
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:65
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:59
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:36
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:422
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:438
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:256
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:43
 msgid "Discard changes"
@@ -5891,7 +5891,7 @@ msgstr ""
 msgid "Discard snapshot"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReplyPanel.vue:131
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReplyPanel.vue:137
 msgid "Discard unsaved reply"
 msgstr ""
 
@@ -6247,7 +6247,7 @@ msgstr ""
 msgid "Edit security keys"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation.vue:100
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation.vue:95
 msgid "Edit ticket title"
 msgstr ""
 
@@ -7551,7 +7551,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:43
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:39
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:23
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:459
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:475
 #: app/frontend/shared/errors/useErrorHandler.ts:29
 #: app/frontend/shared/router/guards/before/permission.ts:26
 msgid "Forbidden"
@@ -11813,6 +11813,10 @@ msgstr ""
 msgid "Notification sender"
 msgstr ""
 
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:14
+msgid "Notification sent to"
+msgstr ""
+
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:169
 msgid "Notification settings could not be reset."
 msgstr ""
@@ -12826,7 +12830,7 @@ msgstr ""
 msgid "Pick a name for the application, and we'll give you a unique token."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReplyPanel.vue:138
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReplyPanel.vue:144
 msgid "Pin this panel"
 msgstr ""
 
@@ -13813,7 +13817,7 @@ msgstr ""
 #: app/frontend/shared/entities/ticket-article/action/plugins/sms.ts:18
 #: app/frontend/shared/entities/ticket-article/action/plugins/telegram.ts:19
 #: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:74
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:361
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:366
 msgid "Reply"
 msgstr ""
 
@@ -14679,8 +14683,8 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:191
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:26
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:127
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:288
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:292
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:304
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:297
 #: db/seeds/permissions.rb:209
 msgid "Security"
 msgstr ""
@@ -14849,7 +14853,7 @@ msgstr ""
 msgid "Select the ticket article(s) that should be analyzed by the AI agent."
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:146
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:162
 msgid "Select the type of ticket your are creating"
 msgstr ""
 
@@ -15099,7 +15103,7 @@ msgstr ""
 msgid "Set Up"
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:120
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:136
 msgid "Set a title for your ticket"
 msgstr ""
 
@@ -15970,7 +15974,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:14
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:91
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:26
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:281
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:286
 msgid "Subject"
 msgstr ""
 
@@ -16569,7 +16573,7 @@ msgstr ""
 msgid "The app configuration has changed since this channel was authenticated. Please click \"Reauthenticate\" to keep it working."
 msgstr ""
 
-#: app/frontend/apps/desktop/stores/theme.ts:41
+#: app/frontend/apps/desktop/stores/theme.ts:43
 msgid "The appearance could not be updated."
 msgstr ""
 
@@ -16790,7 +16794,7 @@ msgstr ""
 msgid "The description defines the role of the AI agent. It is used to describe its purpose and behavior."
 msgstr ""
 
-#: app/frontend/apps/desktop/composables/responsiveness/useMobileDetection.ts:30
+#: app/frontend/apps/desktop/composables/responsiveness/useMobileDetection.ts:32
 msgid "The desktop layout works best on wider screens. Current screen width may not display all desktop content optimally."
 msgstr ""
 
@@ -17022,7 +17026,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:549
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_new.coffee:69
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee:93
-#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:820
+#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:825
 #: app/assets/javascripts/app/controllers/customer_ticket_create.coffee:193
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:272
 #: app/assets/javascripts/app/controllers/object_manager.coffee:265
@@ -18000,6 +18004,8 @@ msgstr ""
 msgid "This field was configured incorrectly and can't be submitted."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:760
+#: app/controllers/concerns/creates_ticket_articles.rb:43
 #: app/graphql/gql/mutations/ticket/concerns/handles_group.rb:24
 msgid "This group has no email address configured for outgoing communication."
 msgstr ""
@@ -18251,7 +18257,7 @@ msgstr ""
 msgid "Ticket"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:793
+#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:798
 msgid "Ticket %s created!"
 msgstr ""
 
@@ -18774,7 +18780,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco:10
 #: app/controllers/time_accountings_controller.rb:85
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/TicketSimpleTable.vue:34
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:136
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:152
 #: app/graphql/gql/types/overview_type.rb:92
 #: db/seeds/object_manager_attributes.rb:34
 #: lib/excel_sheet/ticket.rb:24
@@ -19343,7 +19349,7 @@ msgstr ""
 msgid "Unlock"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReplyPanel.vue:138
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReplyPanel.vue:144
 msgid "Unpin this panel"
 msgstr ""
 
@@ -19428,7 +19434,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:9
 #: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyoutActionFooter.vue:9
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketAgentUpdateButton.vue:117
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:81
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:82
 msgid "Update"
 msgstr ""
 
@@ -20794,7 +20800,7 @@ msgstr ""
 msgid "You reached the table limit of %s items (%s remaining)."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:772
+#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:777
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:395
 msgid "You used %s in the text but no attachment could be found. Do you want to continue?"
 msgstr ""
@@ -22096,6 +22102,10 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/note.ts:6
 #: db/seeds/ticket_article_types.rb:13
 msgid "note"
+msgstr ""
+
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:6
+msgid "notification"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:102

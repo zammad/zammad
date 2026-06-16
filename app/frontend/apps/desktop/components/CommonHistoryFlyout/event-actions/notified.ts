@@ -4,13 +4,14 @@ import type { EventActionModule } from '../types.ts'
 
 export default <EventActionModule>{
   name: 'notification',
-  actionName: 'notification',
+  actionName: __('notification'),
   content: (event) => {
     const notification = event.changes?.to as string
 
     const match = notification.match(/^(?<email>[^(]+)\((?<details>[^)]+)\)$/)
 
     return {
+      sentenceDescription: __('Notification sent to'),
       details: match?.groups?.email,
       additionalDetails: match?.groups?.details,
     }
