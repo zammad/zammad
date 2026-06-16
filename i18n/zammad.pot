@@ -3128,7 +3128,7 @@ msgstr ""
 msgid "Changes could not be loaded."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:84
+#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:105
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee:103
 msgid "Changes could not be saved."
 msgstr ""
@@ -5468,6 +5468,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee:715
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee:125
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:188
+#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:78
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee:9
 #: app/assets/javascripts/app/controllers/package.coffee:54
 #: app/assets/javascripts/app/controllers/user.coffee:101
@@ -13666,6 +13667,10 @@ msgstr ""
 msgid "Remove %s"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:82
+msgid "Remove Language"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee:53
 msgid "Remove a configured two-factor authentication method"
 msgstr ""
@@ -13765,6 +13770,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee:80
 msgid "Removes the shadows for a flat look."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:79
+msgid "Removing %s language(s) will permanently delete all translation(s) related to them. Enter \"%s\" to confirm."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:33
@@ -20181,7 +20190,7 @@ msgstr ""
 msgid "Web (in)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:97
+#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:118
 #: app/assets/javascripts/app/controllers/knowledge_base/server_snippet.coffee:2
 msgid "Web Server Configuration"
 msgstr ""
