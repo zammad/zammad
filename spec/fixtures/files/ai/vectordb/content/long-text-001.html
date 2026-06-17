@@ -1,0 +1,234 @@
+<h1>How to Test with RSpec and Capybara</h1>
+<p>We assume you are using our recommended <a href="../development_environment/devcontainer-setup.md">Devcontainer Setup</a>
+and are starting from <code>develop</code> branch.</p>
+<p>Switching between running tests and doing development work (by running <code>dev</code> from <code>/bin</code>)
+should be effortless without any issues.</p>
+<p>RSpec is the recommended way of writing back end tests for Zammad,
+and in combination with Capybara also Selenium based end-to-end tests.</p>
+<p>This page explains some Zammad specific extensions that make testing easier.</p>
+<h2>Running</h2>
+<p>To run tests you need to first ensure the <code>test</code> database and all assets are in the expected state:</p>
+<pre><code class="language-sh">RAILS_ENV=test bundle exec rake db:drop db:create zammad:ci:test:prepare
+RAILS_ENV=test rails assets:precompile
+</code></pre>
+<p>Now, running a single test can be done via the following command:</p>
+<pre><code class="language-sh">bundle exec rspec spec/system/ticket/zoom_spec.rb
+</code></pre>
+<p>Note that it's also possible to run a specific test case by including the line number in the command:</p>
+<pre><code class="language-sh">bundle exec rspec spec/system/ticket/zoom_spec.rb:1072
+</code></pre>
+<p>If you would like to specify the used browser for Capybara end-to-end tests, simply set the <code>SELENIUM_BROWSER</code> environment
+variable:</p>
+<pre><code class="language-sh">SELENIUM_BROWSER=firefox bundle exec rspec spec/system/ticket/zoom_spec.rb
+</code></pre>
+<p>Also running failed tests only is possible with the option <code>--only-failures</code>.</p>
+<pre><code class="language-sh">bundle exec rspec --only-failures spec/system/ticket/zoom_spec.rb
+</code></pre>
+<h2>Default RSpec Environment</h2>
+<p>RSpec will populate the database at startup. These users are available in any test right away:</p>
+<ul>
+<li>admin: <code>admin@example.com</code></li>
+<li>agent: <code>agent1@example.com</code></li>
+<li>client: <code>nicole.braun@zammad.org</code></li>
+</ul>
+<h2>Re-initialize database</h2>
+<p>To reset an existing development database (without running <code>auto_wizard</code>)</p>
+<ul>
+<li><a href="../development_environment/development-workflow.md#database-tasks">Run db:init again</a></li>
+</ul>
+<h2>RSpec Meta Attributes</h2>
+<h3><code>authenticated_as</code></h3>
+<p>Manages logging in.</p>
+<p>Example usage: <code>Rspec.describe :example, authenticated_as: true</code></p>
+<p>Takes boolean, symbol or lambda. Symbol is a method name to be executed. Works for RSpec's <code>let</code> too! Lambda or
+referenced method are expected to return <code>User</code> object or a boolean.</p>
+<p><code>true</code> is the default value. It logs in with <code>admin@example.com</code> admin user. If a <code>User</code> is returned, it attempts to
+login with it. <code>false</code> causes to skip logging in altogether.</p>
+<p>Lambda or referenced method is evaluated before web page is loaded. Thus this is a good place to prepare for the test.
+For example to set <code>Setting</code>.</p>
+<h3><code>time_zone</code></h3>
+<p>Allows to set custom time zone. Takes Rails timezone names. Beware that it sets timezone for the server process.
+Browser in CI is not affected.</p>
+<p>Example usage: <code>Rspec.describe :example, time_zone: 'Vilnius/Lithuania'</code></p>
+<h3><code>db_strategy: :reset</code></h3>
+<p>RSpec resets database using transaction after each example. But PostgreSQL can't handle some changes (e.g. altering schema)
+this way. Use <code>db_strategy: :reset</code> to reset database schema after each example.</p>
+<p>Example usage: <code>Rspec.describe :example, db_strategy: :reset</code></p>
+<h3><code>type: :db_migration</code></h3>
+<p>By using <code>type: :db_migration</code>, you can test database migrations.</p>
+<p>Be aware: names of migration class and <code>Rspec.describe</code> block must be the same.</p>
+<p>Explanation:
+Usually <code>describe</code> needs a to be valid class name or any string.
+But <code>type: :db_migration</code> is a bit more sensitive.
+Since <code>migrate</code> method relies on <code>described_class</code> to properly load migration class, use and run it in tests directly.</p>
+<p>For example, if your migration class looks like this:</p>
+<pre><code class="language-ruby"># db/migrate/20240101000000_this_name_needs_to_match.rb
+class ThisNameNeedsToMatch &lt; ActiveRecord::Migration[8.0]
+</code></pre>
+<p>Then in your test you need to have the same name in <code>Rspec.describe</code> block, so it can properly load the migration class.</p>
+<pre><code class="language-ruby"># spec/db/migrate/this_name_needs_to_match_spec.rb
+RSpec.describe ThisNameNeedsToMatch, type: :db_migration do
+</code></pre>
+<p>Run <code>migrate</code> to execute the migration</p>
+<pre><code class="language-ruby">it "test migration changes" do
+  expect { migrate }
+    .to change { object.something }
+    .to(false)
+end
+</code></pre>
+<h3><code>performs_jobs</code></h3>
+<p>ActiveJob background jobs are not performed automatically outside of <code>spec/jobs</code>! If you want to run <code>performs_jobs</code> in
+other Specs, please do following:</p>
+<pre><code class="language-ruby">context 'example', performs_jobs: true
+</code></pre>
+<h3><code>required_envs</code></h3>
+<p>Checks if required ENVs are present. Raises error if one of them is missing. Since most ENV variables are credentials
+for 3rd party services, given variables are filtered from VCR cassettes too.</p>
+<pre><code class="language-ruby">context 'example', required_envs: %w[FACEBOOK_ADMIN_USER_ID FACEBOOK_ADMIN_FIRSTNAME]
+</code></pre>
+<h2>Capybara Helpers</h2>
+<h3><code>await_empty_ajax_queue</code></h3>
+<p>Forces test to wait for JQuery ajax requests to finish. After the last request is finished, it waits for another 0.5s.
+Effectively giving time for response to render. Great to use in <code>TicketZoom</code> and other complicated views.</p>
+<p>Even if nothing is being loaded, it causes 0.5s pause!</p>
+<p>Example usage:</p>
+<pre><code class="language-ruby">it 'example' do
+  visit ticket_url
+  await_empty_ajax_queue
+  expect(page).to have_css('#css')
+end
+</code></pre>
+<h3><code>ensure_websocket</code></h3>
+<p>Waits till connection to websocket is established. Sometimes actions rely on Websocket. But Capybara may be too fast
+and execution action before Websocket is established</p>
+<pre><code class="language-ruby">it 'example' do
+  visit ticket_url
+  ensure_websocket
+  expect(page).to have_css('#css')
+end
+</code></pre>
+<h3><code>authenticated_as</code></h3>
+<p>As the default the login in selenium will be simulated and not the real form in the frontend.</p>
+<p>With the <code>authentication_type</code> it's possible to switch to the real form with he value <code>form</code>.</p>
+<h3><code>current_user_id</code></h3>
+<p>Returns ID of the current session user</p>
+<h3><code>current_user</code></h3>
+<p>Returns current session user object</p>
+<h3><code>in_modal</code></h3>
+<p>Waits for modal to load, wraps in <code>within</code> and waits for modal to close</p>
+<pre><code class="language-ruby">it 'example' do
+  click 'open modal'
+  in_modal do
+    do_something_in_modal
+  end
+
+  expect
+end
+</code></pre>
+<p>When <code>expect</code> is called in the given block, <code>in_modal</code> does not wait for modal to close. It assumes the intention was
+to test something in the modal and closing it is not relevant.</p>
+<h3><code>wait</code></h3>
+<p>Wait for block to return expected value. Supports <code>#until</code>, <code>#until_appears</code>, <code>#until_disappears</code>, <code>#until_constant</code></p>
+<h2>Capybara Selectors</h2>
+<h3><code>have_* / have_no_*</code></h3>
+<p>Capybara selectors wait for few seconds to see if expectation is fulfilled or not. Thus
+<code>expect(page).to have_no_selector()</code> is much much faster than <code>expect(page).not_to have_selector()</code></p>
+<h3><code>active_content</code></h3>
+<p>Selects content (right-hand) tab</p>
+<h3><code>active_ticket_article</code></h3>
+<p>Selects a given ticket article with ID. Great to wait for TicketZoom to (re)load!</p>
+<p>Example usage: <code>find :active_ticket_article, 123</code></p>
+<h3>Advanced usage of <code>find</code></h3>
+<p><code>find</code> may take <code>text:</code> attribute. Then it filters the list of elements by text they contain</p>
+<p><code>find '.popular_class', text: 'value'</code></p>
+<p><code>find</code> also allows to manually check elements before returning</p>
+<p><code>find('.popular_class') { |elem| process(elem) }</code></p>
+<h3>Form helpers for the new stack</h3>
+<h4>Finding fields</h4>
+<p>FormKit-based fields have a custom implementation, so a number of helpers is provided to make it easier to find them
+via their labels:</p>
+<pre><code class="language-ruby">find_input('Title')
+find_select('Owner')
+find_treeselect('Category')
+find_autocomplete('Customer')
+find_editor('Text')
+find_datepicker('Pending till')
+</code></pre>
+<p>Radio fields do not have textual labels, so they can be found via their identifiers instead:</p>
+<pre><code class="language-ruby">find_radio('articleSenderType')
+</code></pre>
+<p>In case of ambiguous labels, make sure to pass <code>exact_text</code> option:</p>
+<pre><code class="language-ruby">find_datepicker(nil, exact_text: 'Date')
+</code></pre>
+<h3>Executing actions on fields</h3>
+<p>Returned form field elements have some special syntactic sugar that provide actions depending on the type of the field:</p>
+<pre><code class="language-ruby">find_input('Title').type('Foo Bar')
+find_editor('Text').type('Lorem ipsum dolor sit amet.')
+
+find_radio('articleSenderType').select_choice('Outbound Call')
+
+find_datepicker('Date Picker').select_date(Date.tomorrow)
+find_datepicker('Pending till').select_datetime('2023-01-01T09:00:00.000Z')
+find_datepicker('Date').type_date(Date.today)
+find_datepicker('Date Time').type_datetime(DateTime.now)
+
+find_select('Owner').select_option('Test Admin Agent')
+find_select('Multi Select').select_options(['Option 1', 'Option 2'])
+find_treeselect('Tree Select').select_option('Parent 1::Option A')
+find_treeselect('Multi Tree Select').select_options(['Parent 1::Option A', 'Parent 2::Option C'])
+
+find_treeselect('Tree Select').search_for_option('Parent 1::Option A')
+find_autocomplete('Customer').search_for_option(customer.email, label: customer.fullname)
+find_autocomplete('Tags').search_for_options([tag_1, tag_2, tag_3])
+
+find_toggle('Boolean').toggle
+find_toggle('Boolean').toggle_on
+find_toggle('Boolean').toggle_off
+</code></pre>
+<p>To wait for a custom GraphQL response in autocomplete fields, you can provide expected <code>gql_filename</code> and/or
+<code>gql_number</code> arguments:</p>
+<pre><code class="language-ruby">find_autocomplete('Custom').search_for_option('foo', gql_filename: 'shared/entities/user/graphql/queries/user.graphql', gql_number: 4)
+</code></pre>
+<p>Clearing selections and input is also possible, if the field supports it:</p>
+<pre><code class="language-ruby">find_select('Select').clear_selection
+find_treeselect('Tree Select').clear_selection
+find_autocomplete('Auto Complete').clear_selection
+find_editor('Text').clear
+find_datepicker('Date Picker').clear
+</code></pre>
+<p>All custom actions are chainable, in the same way as other Capybara actions:</p>
+<pre><code class="language-ruby">find_treeselect('Tree Select').clear_selection.search_for_option('Option C')
+find_autocomplete('Tags').search_for_options([tag_1, tag_2, tag_3]).select_options(%w[foo bar])
+</code></pre>
+<h3>Form context</h3>
+<p>In order to stabilize multiple field interactions, actions can be executed within the same form context:</p>
+<pre><code class="language-ruby">within_form(form_updater_gql_number: 2) do
+  find_autocomplete('CC').search_for_options([email_address_1, email_address_2])
+  find_autocomplete('Tags').search_for_options([tag_1, tag_2, tag_3]).select_options(%w[foo bar])
+  find_editor('Text').type(body)
+end
+</code></pre>
+<p>Within the same context all form updater responses (Core Workflow) are automatically tracked and waited on, as well as
+multiple types of GraphQL responses behind the autocomplete fields. To define a custom starting form updater response
+number, use the <code>form_updater_gql_number</code> argument.</p>
+<h3>Custom matchers</h3>
+<p>A number of useful test matchers is also available, including their negated versions:</p>
+<pre><code class="language-ruby">expect(find_select('Select')).to have_selected_option('Option 1')
+expect(find_select('Select')).to have_no_selected_option('Option 2')
+expect(find_select('Multi Select')).to have_selected_options(['Option 1', 'Option 2'])
+expect(find_treeselect('Tree Select')).to have_selected_option_with_parent('Parent 1::Option A')
+expect(find_editor('Text')).to have_text_value('foo bar')
+expect(find_editor('Text')).to have_text_value('', exact: true)
+expect(find_editor('Text')).to have_data_value('&lt;p&gt;foo bar&lt;/p&gt;')
+expect(find_datepicker('Date')).to have_date(Date.today)
+expect(find_datepicker('Date Time')).to have_datetime(DateTime.now)
+expect(find_toggle('Boolean')).to be_toggled_on
+</code></pre>
+<h2>Email tests</h2>
+<p>Email importing issues are covered by the test that compares the raw email content with the expected parsed content. The
+test is located in <code>spec/models/channel/email_parser_spec.rb</code>. Search for <code>when checking a bunch of stored emails</code> RSpec
+context. It loops over sample emails in <code>test/data/mail</code> folder.</p>
+<p>To add a new email test case, use <code>rake zammad:email_parser:debug:generate_yml[/path/to/file.eml]</code>. It will copy the
+file to the appropriate location and generate an accompanying YAML file with the expected content. Please adjust the
+total count of the test emails in the same spec file few lines below the test case.</p>
+<p>To regenerate all YAML content files for existing emails, use <code>rake zammad:email_parser:debug:regenerate_all_ymls</code>.</p>

@@ -1,0 +1,137 @@
+<h1>Arbeiten an Tickets<a class="headerlink" href="#work-with-tickets" title="Link zu dieser Überschrift">¶</a></h1>
+<p>Sie haben den Weg zu einem existierenden Ticket gefunden, herzlichen Glückwunsch! Schauen wir uns nun an, was Sie alles tun können.</p>
+<p>Im Allgemeinen bedeutet die Bearbeitung bestehender Tickets, dass Sie die Kundenkorrespondenz in Form eines Verlaufs in der Ticket-Detailansicht führen. Jedes Mal, wenn Sie ein Ticket öffnen, erscheint ein neuer Tab in Ihrer <a class="reference internal" href="../advanced/tabs.html"><span class="doc">Navigationsleiste</span></a> auf der linken Seite. Um einen Tab zu schließen (im Sinne von aus der Navigationsleiste entfernen, nicht den Status des Tickets auf geschlossen setzen), klicken Sie einfach auf die Schaltfläche <code class="docutils literal notranslate"><span class="pre">X</span></code> im Tab. Zammad speichert automatisch Ihre Änderungen in geöffneten Tabs, unabhängig davon, ob Sie die Änderungen bereits angewendet haben oder nur etwas bearbeitet haben und zu einem anderen Tab gewechselt sind. Das bedeutet, dass es kein Problem ist, ein neues Ticket zu erstellen, während Sie an einem bestehenden Ticket arbeiten. Wechseln Sie einfach zurück in den anderen Tab.</p>
+<p>Für die meisten Änderungen (außer z.B. Tags oder Titel ändern) ist eine explizite Aktualisierung des Tickets erforderlich. Klicken Sie dazu auf die Schaltfläche <strong>Aktualisieren</strong> auf der rechten Seite der Fußleiste, wenn Sie mit Ihren Änderungen zufrieden sind.</p>
+<div class="section" id="changing-ticket-attributes">
+<h2>Ticket-Attribute ändern<a class="headerlink" href="#changing-ticket-attributes" title="Link zu dieser Überschrift">¶</a></h2>
+<p>Wie Sie vielleicht wissen, gibt es zusätzliche Ticket-Attribute wie Gruppe, Priorität und Besitzer, die Sie einstellen können. Wenn Sie <a class="reference internal" href="ticket-basics.html"><span class="doc">Ticket-Grundlagen</span></a> noch nicht gelesen haben, schauen Sie sich die Seite an.</p>
+</div>
+<div class="section" id="create-a-new-article">
+<h2>Einen neuen Artikel erstellen<a class="headerlink" href="#create-a-new-article" title="Link zu dieser Überschrift">¶</a></h2>
+<p>Egal, ob Sie einen komplett neuen Artikel erstellen oder auf einen Kundenartikel antworten, Sie können aus verschiedenen Artikeltypen wählen:</p>
+<ul class="simple">
+<li><p><strong>Notiz</strong>: Schreiben Sie eine Erinnerung für sich und andere Agenten, stellen Sie einem Kollegen eine Frage, indem Sie einen Benutzer erwähnen, oder fügen Sie dem Ticket neue Informationen hinzu. Die Standardsichtbarkeit ist „intern“, was bedeutet, dass Ihr Kunde die Notiz nicht sehen kann.</p></li>
+<li><p><strong>Anruf</strong>: Notieren Sie eine Zusammenfassung eines Telefonats, das Sie mit dem Kunden geführt haben.</p></li>
+<li><p><strong>E-Mail</strong>: Senden Sie eine E-Mail an eine beliebige Person aus dem Ticket. Der Name des Tickets wird für den Betreff der E-Mail verwendet (klicken Sie auf den Titel, um ihn <a class="reference internal" href="#rename-ticket"><span class="std std-ref">umzubenennen</span></a>).</p></li>
+</ul>
+<p>Um einen anderen Artikeltyp zu wählen, klicken Sie auf das Notizsymbol und wählen Sie einen anderen Typ:</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/article-type-switcher.png"><img alt="Der Screenshot zeigt die Schaltfläche für den Wechsel des Artikeltyps." src="../_images/article-type-switcher.png" style="width: 219.1px; height: 132.29999999999998px;"></a>
+</div>
+<p>Klicken Sie auf die Schloss-Schaltfläche 🔒, um die Sichtbarkeit eines Artikels zu ändern. Die interne Sichtbarkeit ist als gestrichelte Umrandung in hellroter Farbe gekennzeichnet.</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/follow-up-mark-internal.png"><img alt="Der Screenshot zeigt den Artikel-Editor mit der hervorgehobenen Schloss-Schaltfläche zum Ändern der Sichtbarkeit eines Artikels." src="../_images/follow-up-mark-internal.png" style="width: 70%;"></a>
+</div>
+<p>Der Artikel-Editor ist ein Rich-Text-Editor. Das bedeutet, Sie können:</p>
+<ul>
+<li><p>Kopieren und Einfügen (oder Ziehen und Ablegen) von formatiertem Text, Bildern und Dateianhängen.</p></li>
+<li><p>Formatieren Sie den Text mit den eingebauten <a class="reference internal" href="../advanced/keyboard-shortcuts.html"><span class="doc">Tastaturkürzeln</span></a> oder markieren Sie den Text und wählen Sie aus den Formatierungsoptionen im Kontextmenü. Dieses Menü erscheint automatisch bei der Auswahl von Text und sieht wie folgt aus:</p>
+<div class="figure align-default">
+<img alt="Screenshot zeigt das Kontextmenü des Editors zum Formatieren von Text." src="../_images/editor-bubble-menu.png">
+</div>
+</li>
+<li><p>Verwenden Sie <a class="reference internal" href="../advanced/text-modules.html"><span class="doc">Textbausteine</span></a> durch Eingabe von <kbd class="kbd docutils literal notranslate">:</kbd> <kbd class="kbd docutils literal notranslate">:</kbd>, was eine enorme Zeitersparnis sein kann.</p></li>
+<li><p><a class="reference internal" href="../advanced/suggested-workflows.html#mentions"><span class="std std-ref">Erwähnen Sie Kollegen</span></a>, indem Sie <kbd class="kbd docutils literal notranslate">@</kbd> <kbd class="kbd docutils literal notranslate">@</kbd> gefolgt von dem Namen eingeben, um eine Frage zu stellen oder sie zu benachrichtigen.</p></li>
+</ul>
+<p>Jeder neue Artikel erscheint am Ende der Konversation, d.h. unterhalb der bestehenden Artikel. Um detaillierte Informationen zu einer Nachricht zu sehen, klicken Sie einfach auf einen Artikel (1). Dadurch öffnen sich zusätzliche Metainformationen (2):</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/article-details.png"><img alt="Der Screenshot zeigt die Detailansicht eines Artikels." src="../_images/article-details.png" style="width: 70%;"></a>
+</div>
+<p>Sie fragen sich vielleicht, wie Sie Artikel löschen können. Die Antwort ist, dass Sie nur Artikel löschen können, die Sie selbst erstellt haben und die nicht älter als 10 Minuten sind. Um die Schaltfläche <strong>Löschen</strong> für Artikel eine Kommunikationstyps (E-Mails, Anrufe) zu sehen, muss ihre Sichtbarkeit zunächst auf intern umgestellt werden.</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/delete-article.png"><img alt="Der Screenshot zeigt einen internen Artikel mit hervorgehobener Lösch-Schaltfläche." src="../_images/delete-article.png" style="width: 50%;"></a>
+</div>
+<div class="section" id="add-an-article-from-scratch">
+<h3>Leeren Artikel hinzufügen<a class="headerlink" href="#add-an-article-from-scratch" title="Link zu dieser Überschrift">¶</a></h3>
+<p>Klicken Sie auf das Textfeld am unteren Rand der Ticket-Detailansicht, das mit <strong>Notiz schreiben oder Datei wählen…</strong> beschriftet ist, um einen Artikel hinzuzufügen. Standardmäßig ist der Artikeltyp „Notiz“ ausgewählt und die Sichtbarkeit ist auf „intern“ eingestellt.</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/new-article-box.png"><img alt="../_images/new-article-box.png" src="../_images/new-article-box.png" style="width: 70%;"></a>
+</div>
+</div>
+<div class="section" id="respond-to-an-article">
+<h3>Auf einen Artikel antworten<a class="headerlink" href="#respond-to-an-article" title="Link zu dieser Überschrift">¶</a></h3>
+<p>Um einen Artikel weiterzuleiten oder zu beantworten, verwenden Sie eine der Antwortschaltflächen unter einem Artikel. Das Verhalten ist ähnlich wie bei einem E-Mail-Client.</p>
+<ul class="simple">
+<li><p><strong>Antworten</strong>: Ermöglicht Ihnen, auf den Artikel zu antworten. Der Empfänger wird automatisch gesetzt. Die Antwort wird über denselben Kanal wie die ursprüngliche Nachricht gesendet. Auf diese Weise können Sie ganz einfach eine Antwort an einen Kunden oder an Dritte senden, falls diese beteiligt sind.</p></li>
+<li><p><strong>Allen antworten</strong>: Wie oben, jedoch werden alle Empfängeradressen aus der ursprünglichen Nachricht als Empfänger für Ihren neuen Artikel verwendet. Nur für E-Mail-Kanäle verfügbar.</p></li>
+<li><p><strong>Weiterleiten</strong>: Damit können Sie die ursprüngliche Nachricht an einen beliebigen Empfänger weiterleiten. Die ursprüngliche Nachricht und die Anhänge sind in Ihrem neuen Artikel enthalten.</p></li>
+</ul>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/follow-up-reply-button.png"><img alt="Screenshot zeigt Antwortschaltflächen unterhalb eines Artikels." src="../_images/follow-up-reply-button.png" style="width: 70%;"></a>
+</div>
+<p>Zammad ermöglicht es Ihnen sogar, Text aus einem bestehenden Artikel zu <strong>zitieren</strong>. Dies ist besonders hilfreich, wenn sich eine Antwort auf verschiedene Teile der ursprünglichen Nachricht bezieht oder der Text ziemlich lang ist. Diese Funktion ist auf Artikel des Typs Kommunikation wie E-Mail beschränkt, bei denen die Antwortschaltflächen verfügbar sind.</p>
+<p>Um Text zu zitieren, markieren Sie einfach den Text, den Sie zitieren möchten (1), und verwenden Sie die Funktion <strong>Antworten</strong> oder <strong>Allen antworten</strong> (2):</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/quote-mark-text.png"><img alt="Der Screenshot zeigt einen Artikel mit markiertem Text und hervorgehobenen Antwortaktionen." src="../_images/quote-mark-text.png" style="width: 70%;"></a>
+</div>
+<p>Dadurch wird der markierte Text mit einem Zeitstempel in Ihren Artikel-Editor eingefügt, wo Sie ihn beantworten können. Beispiel:</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/quote-reply.png"><img alt="Der Screenshot zeigt einen Artikel mit markiertem Text und hervorgehobenen Antwortaktionen." src="../_images/quote-reply.png" style="width: 70%;"></a>
+</div>
+<p>Sie können die Zitierfunktion sogar mehrfach verwenden, um verschiedene Teile des Textes zu zitieren. Wählen Sie einfach einen anderen Teil des Textes aus, klicken Sie auf die gleiche Antwortaktion wie zuvor und er wird als weiteres Zitat in Ihren Editor eingefügt. Sie können Zitate mit <kbd class="kbd docutils literal notranslate">enter</kbd> oder <kbd class="kbd docutils literal notranslate">shift</kbd> + <kbd class="kbd docutils literal notranslate">enter</kbd> im Editor trennen.</p>
+</div>
+</div>
+<div class="section" id="rename-a-ticket">
+<span id="rename-ticket"></span><h2>Ein Ticket umbenennen<a class="headerlink" href="#rename-a-ticket" title="Link zu dieser Überschrift">¶</a></h2>
+<p>Um ein Ticket umzubenennen, klicken Sie einfach auf den Titel in der Header-Leiste oben und beginnen Sie zu tippen. Dieser Titel wird in der E-Mail-Kommunikation als Betreff verwendet und erscheint an verschiedenen Stellen, z.B. in Übersichten.</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/settings-rename-ticket.png"><img alt="../_images/settings-rename-ticket.png" src="../_images/settings-rename-ticket.png" style="width: 70%;"></a>
+</div>
+</div>
+<div class="section" id="copy-ticket-number">
+<h2>Ticket-Nummer kopieren<a class="headerlink" href="#copy-ticket-number" title="Link zu dieser Überschrift">¶</a></h2>
+<p>Wenn Sie die Ticket-Nummer häufig benötigen (z.B. um sie in eine externe Chat-App einzufügen), verwenden Sie das 🗊 Symbol neben dem Ticket-Titel, um die Ticket-Nummer in Ihre Zwischenablage zu kopieren. Dies umfasst die vollständige Ticket-Kennung einschließlich des Ticket-Hooks, z.B. <code class="docutils literal notranslate"><span class="pre">Ticket#50071</span></code>. Falls Sie im Ticket nach unten gescrollt haben, finden Sie die Schaltfläche auf der linken Seite der Header-Leiste.</p>
+<p>Aber halt, dafür gibt es sogar ein <a class="reference internal" href="../advanced/keyboard-shortcuts.html"><span class="doc">Tastaturkürzel</span></a>. Drücken Sie einfach <kbd class="kbd docutils literal notranslate">.</kbd> und die Ticket-Nummer wird in Ihre Zwischenablage kopiert. Um auch den Titel des Tickets zu übernehmen, drücken Sie zweimal <kbd class="kbd docutils literal notranslate">.</kbd>. Beispiel: <code class="docutils literal notranslate"><span class="pre">Ticket#50071:</span> <span class="pre">Kaffeemühle</span> <span class="pre">kaputt</span></code>.</p>
+</div>
+<div class="section" id="simultaneous-ticket-processing">
+<h2>Gleichzeitige Ticketbearbeitung<a class="headerlink" href="#simultaneous-ticket-processing" title="Link zu dieser Überschrift">¶</a></h2>
+<p id="caution-im-working-here">Es kann vorkommen, dass zwei oder mehr Agenten ein Ticket gleichzeitig öffnen. Um Bearbeitungskonflikte zu vermeiden und zu verhindern, dass Kunden widersprüchliche Antworten erhalten, zeigt Ihnen Zammad an, wer das Ticket gerade anschaut oder bearbeitet. Sie finden diese Information in der unteren Leiste, wo die Avatare aller Agenten angezeigt werden. Klären Sie mit Ihren Kollegen, wer das Ticket bearbeitet, um solche Probleme zu vermeiden.</p>
+<p>Je nach zusätzlichem Icon und ob der Avatar abgedunkelt ist, bedeutet dies:</p>
+<ul class="simple">
+<li><p>Avatar: Ein anderer Agent sieht sich das Ticket an.</p></li>
+<li><p>Abgedunkelter Avatar: Ein anderer Agent hat das Ticket geöffnet, sieht es aber gerade nicht aktiv an.</p></li>
+<li><p>Avatar mit Stiftsymbol: Ein anderer Agent arbeitet gerade aktiv an diesem Ticket.</p></li>
+</ul>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/follow-up-conflict-detection.png"><img alt="Konfliktbenachrichtigung für Ticket" src="../_images/follow-up-conflict-detection.png" style="width: 70%;"></a>
+</div>
+</div>
+<div class="section" id="ticket-actions">
+<h2>Ticket-Aktionen<a class="headerlink" href="#ticket-actions" title="Link zu dieser Überschrift">¶</a></h2>
+<p id="ticket-submenu">Zusätzliche Aktionen sind im Untermenü des Tickets verfügbar. Sie finden es in der Seitenleiste des Tickets. Um es zu öffnen, klicken Sie auf die Überschrift <strong>Ticket ▾</strong>, um weitere Aktionen aufzurufen.</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/settings-ticket-submenu.png"><img alt="Ticket Untermenü" src="../_images/settings-ticket-submenu.png" style="width: 40%;"></a>
+</div>
+<dl class="simple">
+<dt>Historie</dt><dd><p>Zeigt eine umfassende Liste der Aktualisierungen an, die von beliebigen Nutzern seit der Erstellung des Tickets vorgenommen wurden. Nützlich, um zu prüfen, wer was wann gemacht hat.</p>
+</dd>
+<dt>Zusammenfassen</dt><dd><p>Verschieben Sie alle Nachrichten/Notizen in ein anderes Ticket. Nützlich, wenn Sie mehr als ein Ticket zu einem einzelnen Kundenproblem haben. Siehe <a class="reference internal" href="../advanced/ticket-actions/merge.html"><span class="doc">Zusammenfassung von Tickets</span></a> für weitere Informationen.</p>
+</dd>
+<dt>Kunden ändern</dt><dd><p>Weisen Sie dem Ticket einen anderen Kunden zu.</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="monitoring-ticket-escalations">
+<h2>Überwachung von Ticket-Eskalationen<a class="headerlink" href="#monitoring-ticket-escalations" title="Link zu dieser Überschrift">¶</a></h2>
+<p>Service Level Agreements (SLAs) gewährleisten eine zeitnahe Beantwortung von Kundenanfragen. Ihr Administrator legt diese Ziele fest - z.B. die Beantwortung aller Anfragen innerhalb von acht Stunden - mit optionalen individuellen Fristen für bestimmte Kunden. Wenn eine solche Frist überschritten wird, eskaliert das Ticket.</p>
+<p>Zammad benachrichtigt Sie standardmäßig, wenn sich Tickets den Eskalationsfristen nähern oder diese überschreiten. Konfigurieren Sie diese Benachrichtigungen in Ihren <a class="reference internal" href="../extras/profile-and-settings.html"><span class="doc">Profileinstellungen</span></a>. Zammad liefert auch eine Standardübersicht namens „Eskalierte Tickets“. Diese Übersicht enthält bereits eskalierte Tickets und Tickets, bei denen eine Eskalation innerhalb der nächsten 10 Minuten zu erwarten ist.</p>
+<p>SLA-relevante Tickets zeigen einen Zeitstempel in der Kopfzeile des Tickets an. Bewegen Sie den Mauszeiger über diesen Zeitstempel, um alle Eskalationsstufen und Fristen in einem Popup zu sehen. Es zeigt alle bevorstehenden oder überschrittenen Eskalationszeiten auf der Grundlage Ihrer SLA-Konfiguration an:</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/show-escalation-times.png"><img alt="Screenshot zeigt detaillierte Eskalationsinformationen beim Überfahren des Eskalations-Hinweises." src="../_images/show-escalation-times.png" style="width: 70%;"></a>
+</div>
+<div class="admonition hint">
+<p class="admonition-title">Hinweis</p>
+<p>Die Eskalationszeiten werden auf der Grundlage Ihrer Geschäftszeiten berechnet. Das heißt, wenn Ihre Geschäftszeiten um 9:00 Uhr beginnen, ein Ticket um 7:00 Uhr erstellt wird und Sie eine Frist von 1 Stunde haben, eskaliert es um 10:00 Uhr, sofern es nicht früher gelöst wird.</p>
+</div>
+<p>Die SLA-Funktion erfordert eine Konfiguration durch Ihren Administrator. Falls Sie keine Eskalations-Zeitstempel sehen, ist entweder das Ticket nicht SLA-relevant oder die Funktion ist nicht konfiguriert. Admins finden in der <a class="reference external" href="https://admin-docs.zammad.org/en/latest/manage/slas.html">Admin-SLA-Dokumentation</a> mehr Informationen.</p>
+</div>
+<div class="section" id="highlight-text-in-a-ticket">
+<h2>Text in einem Ticket hervorheben<a class="headerlink" href="#highlight-text-in-a-ticket" title="Link zu dieser Überschrift">¶</a></h2>
+<p>Verwenden Sie das Textmarker-Werkzeug in der oberen rechten Ecke, um wichtigen Text zu markieren. Bei dieser Funktion geht es nicht darum, Text im Editor zu markieren, um ihn an Kunden zu senden. Es geht nur darum, wichtige Teile für andere Agenten zu markieren.</p>
+<p>Markieren Sie zunächst den Text, den Sie hervorheben möchten, und klicken Sie dann auf die Stift-Schaltfläche. Wenn Sie eine andere Farbe verwenden wollen, öffnen Sie das Farbmenü, indem Sie auf den Pfeil auf der rechten Seite der Schaltfläche klicken. Um die Hervorhebung zu entfernen, klicken Sie mit markiertem Text erneut auf die Schaltfläche.</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/settings-highlight-text.png"><img alt="Textmarker für Ticket" src="../_images/settings-highlight-text.png" style="width: 70%;"></a>
+</div>
+<hr class="docutils">
+<p>Sie kennen nun die Grundlagen und wissen, wie man mit Tickets im Allgemeinen arbeitet. Es gibt jedoch noch viele weitere Funktionen in Zammad, die für Ihre tägliche Arbeit sehr nützlich sein können. Werfen Sie einen Blick auf die Bereiche <strong>Weiterführende Themen</strong> und <strong>Extras</strong> im linken Navigationsmenü, unter denen Sie weitere Informationen finden können.</p>
+</div>
