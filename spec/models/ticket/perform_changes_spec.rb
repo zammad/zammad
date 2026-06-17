@@ -26,7 +26,7 @@ RSpec.describe 'Ticket::PerformChanges', :aggregate_failures do
 
       it 'raises an error' do
         expect { object.perform_changes(performable, 'trigger', object, User.first) }
-          .to raise_error(RuntimeError, 'The given trigger contains invalid attributes, stopping!')
+          .to raise_error(RuntimeError, 'The given trigger contains invalid attributes: foobar, stopping!')
       end
     end
 

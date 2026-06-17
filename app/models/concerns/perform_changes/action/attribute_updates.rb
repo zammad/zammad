@@ -43,7 +43,8 @@ class PerformChanges::Action::AttributeUpdates < PerformChanges::Action
   end
 
   def valid_attributes!
-    raise "The given #{origin} contains invalid attributes, stopping!" if execution_data.keys.any? { |key| !attribute_valid?(key) }
+    invalid_attributes = execution_data.keys.reject { |key| attribute_valid?(key) }
+    raise "The given #{origin} contains invalid attributes: #{invalid_attributes.join(', ')}, stopping!" if invalid_attributes.any?
 
     true
   end
