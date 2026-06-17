@@ -53,6 +53,16 @@ RSpec.describe PerformChanges::Action::AttributeUpdates, type: :model do
       end
     end
 
+    context 'when execution_data contains invalid attributes' do
+      let(:context_data)   { {} }
+      let(:execution_data) { { 'nonexistent_column' => { 'value' => 'foo' } } }
+
+      it 'raises an error mentioning the origin and the invalid attribute' do
+        expect { action.execute }
+          .to raise_error('The given trigger contains invalid attributes: nonexistent_column, stopping!')
+      end
+    end
+
     context 'when tags are provided' do
       # `tag_add` writes to ticket history via a polymorphic `sourceable` association,
       #   which requires a real ActiveRecord instance (an `instance_double` raises
