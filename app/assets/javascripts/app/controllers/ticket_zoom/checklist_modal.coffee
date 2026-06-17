@@ -8,7 +8,6 @@ class App.TicketZoomChecklistModal extends App.ControllerModal
     text: __('No, just close the ticket')
   }]
   head: __('Incomplete Ticket Checklist')
-  small: true
 
   events:
     'submit form':                        'submit'
