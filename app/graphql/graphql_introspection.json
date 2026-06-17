@@ -25980,6 +25980,18 @@
               "deprecationReason": null
             },
             {
+              "name": "issueType",
+              "description": "The issue type of the issue",
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "TicketExternalReferencesIssueTrackerItemIssueType",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "labels",
               "description": "The labels of the issue",
               "args": [],
@@ -26098,6 +26110,45 @@
                 "kind": "OBJECT",
                 "name": "TicketExternalReferencesIssueTrackerItem",
                 "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
+          "name": "TicketExternalReferencesIssueTrackerItemIssueType",
+          "description": "The issue type of the Issue tracker item",
+          "fields": [
+            {
+              "name": "color",
+              "description": "The GitHub color identifier of the issue type (e.g. PURPLE, RED)",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "name",
+              "description": "The name of the issue type",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
               },
               "isDeprecated": false,
               "deprecationReason": null

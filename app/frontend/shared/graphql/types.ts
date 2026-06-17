@@ -4739,6 +4739,8 @@ export type TicketExternalReferencesIssueTrackerItem = {
   assignees?: Maybe<Array<Scalars['String']['output']>>;
   /** The issue ID from the external issue tracker */
   issueId: Scalars['Int']['output'];
+  /** The issue type of the issue */
+  issueType?: Maybe<TicketExternalReferencesIssueTrackerItemIssueType>;
   /** The labels of the issue */
   labels?: Maybe<Array<TicketExternalReferencesIssueTrackerItemLabel>>;
   /** The milestone of the issue */
@@ -4758,6 +4760,15 @@ export type TicketExternalReferencesIssueTrackerItemAddPayload = {
   errors?: Maybe<Array<UserError>>;
   /** The added issue tracker item */
   issueTrackerItem?: Maybe<TicketExternalReferencesIssueTrackerItem>;
+};
+
+/** The issue type of the Issue tracker item */
+export type TicketExternalReferencesIssueTrackerItemIssueType = {
+  __typename?: 'TicketExternalReferencesIssueTrackerItemIssueType';
+  /** The GitHub color identifier of the issue type (e.g. PURPLE, RED) */
+  color?: Maybe<Scalars['String']['output']>;
+  /** The name of the issue type */
+  name: Scalars['String']['output'];
 };
 
 /** The labels of the Issue tracker item */
@@ -7009,7 +7020,7 @@ export type TicketExternalReferencesIssueTrackerItemAddMutationVariables = Exact
 }>;
 
 
-export type TicketExternalReferencesIssueTrackerItemAddMutation = { __typename?: 'Mutations', ticketExternalReferencesIssueTrackerItemAdd?: { __typename?: 'TicketExternalReferencesIssueTrackerItemAddPayload', issueTrackerItem?: { __typename?: 'TicketExternalReferencesIssueTrackerItem', assignees?: Array<string> | null, issueId: number, milestone?: string | null, state: EnumTicketExternalReferencesIssueTrackerItemState, title: string, url: string, labels?: Array<{ __typename?: 'TicketExternalReferencesIssueTrackerItemLabel', color: string, textColor: string, title: string }> | null } | null, errors?: Array<{ __typename?: 'UserError', message: string, messagePlaceholder?: Array<string> | null, field?: string | null, exception?: EnumUserErrorException | null }> | null } | null };
+export type TicketExternalReferencesIssueTrackerItemAddMutation = { __typename?: 'Mutations', ticketExternalReferencesIssueTrackerItemAdd?: { __typename?: 'TicketExternalReferencesIssueTrackerItemAddPayload', issueTrackerItem?: { __typename?: 'TicketExternalReferencesIssueTrackerItem', assignees?: Array<string> | null, issueId: number, milestone?: string | null, state: EnumTicketExternalReferencesIssueTrackerItemState, title: string, url: string, issueType?: { __typename?: 'TicketExternalReferencesIssueTrackerItemIssueType', color?: string | null, name: string } | null, labels?: Array<{ __typename?: 'TicketExternalReferencesIssueTrackerItemLabel', color: string, textColor: string, title: string }> | null } | null, errors?: Array<{ __typename?: 'UserError', message: string, messagePlaceholder?: Array<string> | null, field?: string | null, exception?: EnumUserErrorException | null }> | null } | null };
 
 export type TicketExternalReferencesIssueTrackerItemRemoveMutationVariables = Exact<{
   issueTrackerLink: Scalars['UriHttpString']['input'];
@@ -7090,7 +7101,7 @@ export type TicketExternalReferencesIssueTrackerItemListQueryVariables = Exact<{
 }>;
 
 
-export type TicketExternalReferencesIssueTrackerItemListQuery = { __typename?: 'Queries', ticketExternalReferencesIssueTrackerItemList: Array<{ __typename?: 'TicketExternalReferencesIssueTrackerItem', assignees?: Array<string> | null, issueId: number, milestone?: string | null, state: EnumTicketExternalReferencesIssueTrackerItemState, title: string, url: string, labels?: Array<{ __typename?: 'TicketExternalReferencesIssueTrackerItemLabel', color: string, textColor: string, title: string }> | null }> };
+export type TicketExternalReferencesIssueTrackerItemListQuery = { __typename?: 'Queries', ticketExternalReferencesIssueTrackerItemList: Array<{ __typename?: 'TicketExternalReferencesIssueTrackerItem', assignees?: Array<string> | null, issueId: number, milestone?: string | null, state: EnumTicketExternalReferencesIssueTrackerItemState, title: string, url: string, issueType?: { __typename?: 'TicketExternalReferencesIssueTrackerItemIssueType', color?: string | null, name: string } | null, labels?: Array<{ __typename?: 'TicketExternalReferencesIssueTrackerItemLabel', color: string, textColor: string, title: string }> | null }> };
 
 export type TicketHistoryQueryVariables = Exact<{
   ticketId: Scalars['ID']['input'];

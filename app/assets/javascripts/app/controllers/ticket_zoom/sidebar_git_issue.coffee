@@ -1,3 +1,20 @@
+ISSUE_TYPE_BG =
+  BLUE:   { light: '#0075CA', dark: '#1A6FE0' }
+  GRAY:   { light: '#57606A', dark: '#6B7782' }
+  GREEN:  { light: '#1A7F37', dark: '#238636' }
+  ORANGE: { light: '#BC4C00', dark: '#B45309' }
+  PINK:   { light: '#BF4B8A', dark: '#BF4B8A' }
+  PURPLE: { light: '#8250DF', dark: '#8250DF' }
+  RED:    { light: '#CF222E', dark: '#DA3633' }
+  TEAL:   { light: '#1B7C83', dark: '#0E7490' }
+  YELLOW: { light: '#9A6700', dark: '#8A6500' }
+
+resolveIssueTypeColors = (colorKey) ->
+  mode  = document.documentElement.dataset.theme || 'light'
+  entry = ISSUE_TYPE_BG[colorKey] || ISSUE_TYPE_BG.GRAY
+  bg    = entry[mode] || entry.light
+  { bg: bg, text: '#FFFFFF' }
+
 class App.SidebarGitIssue extends App.Controller
   provider: '_need_to_be_defined_' # GitLab
   urlPlaceholder: '_need_to_be_defined_' # https://git.example.com/group1/project1/-/issues/1
@@ -108,8 +125,13 @@ class App.SidebarGitIssue extends App.Controller
       @showEmpty()
       return
 
+    issues = @issueLinkData.map (issue) ->
+      return issue unless issue.issue_type
+      resolved = resolveIssueTypeColors(issue.issue_type.color)
+      $.extend(true, {}, issue, { issue_type: $.extend({}, issue.issue_type, resolved) })
+
     list = $(App.view('ticket_zoom/sidebar_git_issue')(
-      issues: @issueLinkData
+      issues: issues
     ))
     list.on('click', '.js-delete', (e) =>
       e.preventDefault()

@@ -11,6 +11,10 @@ mutation ticketExternalReferencesIssueTrackerItemAdd(
     issueTrackerItem {
       assignees
       issueId
+      issueType {
+        color
+        name
+      }
       labels {
         color
         textColor

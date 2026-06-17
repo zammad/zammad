@@ -23,6 +23,7 @@ RSpec.describe 'GitHub', authenticated_as: :agent, required_envs: %w[GITHUB_ENDP
       title:      'GitHub integration',
       url:        ENV['GITHUB_ISSUE_LINK'],
       icon_state: 'closed',
+      issue_type: nil,
       milestone:  '4.0',
       assignees:  ['Thorsten'],
       labels:     [
