@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-06-15 22:02+0000\n"
+"PO-Revision-Date: 2026-06-17 09:31+0000\n"
 "Last-Translator: Thomas Meijer <tvm@bizconnect.dk>\n"
 "Language-Team: Danish <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/da/>\n"
@@ -1076,7 +1076,7 @@ msgstr "AI-udbyderens Model er ikke indstillet"
 msgid "AI Service Name"
 msgstr "AI-tjenestenavn"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket_summary.coffee:110
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket_summary.coffee:122
 msgid "AI Summary"
 msgstr "AI-Opsummering"
 
@@ -1621,7 +1621,7 @@ msgstr "Tilføj en personlig adgangstoken"
 msgid "Add a data privacy deletion task"
 msgstr "Tilføj en privatlivs-slette opgave"
 
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:279
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:295
 msgid "Add a message"
 msgstr "Tilføj besked"
 
@@ -1752,7 +1752,7 @@ msgstr "Canales adicionales"
 msgid "Additional follow-up detection"
 msgstr "Yderligere opfølgningsdetektering"
 
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:214
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:230
 msgid "Additional information"
 msgstr "Yderligere Information"
 
@@ -2154,7 +2154,7 @@ msgstr "Der opstod en fejl: %s"
 msgid "An open-source monitoring tool."
 msgstr "Et open source overvågningsværktøj."
 
-#: app/frontend/shared/components/Form/utils.ts:41
+#: app/frontend/shared/components/Form/utils.ts:57
 msgid "An unexpected error has occurred."
 msgstr "Der er opstået en uventet fejl."
 
@@ -2492,7 +2492,7 @@ msgstr "Er du sikker? Der er lavet ændringer, som vi gå tabt."
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:54
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:63
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:34
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:420
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:436
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:254
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:41
 msgid "Are you sure? You have unsaved changes that will get lost."
@@ -2664,7 +2664,7 @@ msgid "Attached Files"
 msgstr "Vedhæftede Filer"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:221
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:326
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:342
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:279
 msgid "Attachment"
 msgstr "Vedhæftning"
@@ -3306,7 +3306,7 @@ msgstr "CA"
 #: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:179
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:85
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:90
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:246
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:262
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:30
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:232
 #: db/seeds/object_manager_attributes.rb:523
@@ -4545,7 +4545,7 @@ msgstr "Kontekst menu"
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue:46
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSource.vue:52
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmail.vue:136
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:534
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:550
 msgid "Continue"
 msgstr "Fortsæt"
 
@@ -4788,7 +4788,7 @@ msgstr "Land"
 #: app/frontend/apps/desktop/entities/user/composables/useUserCreate.ts:78
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:114
 #: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:309
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:485
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:501
 msgid "Create"
 msgstr "Opret"
 
@@ -4949,7 +4949,7 @@ msgid "Create tag"
 msgstr "Opret tag"
 
 #: app/frontend/apps/mobile/pages/ticket/routes.ts:64
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:485
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:501
 msgid "Create ticket"
 msgstr "Opret sag"
 
@@ -5059,7 +5059,7 @@ msgid "Created by"
 msgstr "Oprettet af"
 
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:24
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:460
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:476
 msgid "Creating new tickets via web is disabled."
 msgstr "Oprettelse af nye sager gennem web er deaktiveret."
 
@@ -6924,7 +6924,7 @@ msgstr "Kassér artikel"
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:65
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:59
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:36
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:422
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:438
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:256
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:43
 msgid "Discard changes"
@@ -8816,7 +8816,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:42
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:38
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:23
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:459
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:475
 #: app/frontend/shared/errors/useErrorHandler.ts:29
 #: app/frontend/shared/router/guards/before/permission.ts:26
 msgid "Forbidden"
@@ -12763,8 +12763,8 @@ msgstr ""
 "\n"
 "<div>Hej #{recipient.firstname},</div>\n"
 "<br>\n"
-"<div>Den nye sag (#{ticket.title}) er oprettet af \"<b>#"
-"{current_user.longname}</b>\".</div>\n"
+"<div>Den nye sag (#{ticket.title}) er oprettet af "
+"\"<b>#{current_user.longname}</b>\".</div>\n"
 "<br>\n"
 "<div>\n"
 "Gruppe: #{ticket.group.name}<br>\n"
@@ -13385,6 +13385,10 @@ msgstr "Notifikation læst"
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue:39
 msgid "Notification sender"
 msgstr "Notifikationsafsender"
+
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:14
+msgid "Notification sent to"
+msgstr "Notifikation sendt til"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:167
 msgid "Notification settings could not be reset."
@@ -14648,7 +14652,8 @@ msgstr ""
 
 #: app/controllers/knowledge_base/manage_controller.rb:20
 msgid "Please submit custom address before generating the snippet"
-msgstr "Indsend venligst den brugerdefinerede adresse inden udklippet genereres"
+msgstr ""
+"Indsend venligst den brugerdefinerede adresse inden udklippet genereres"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupAutomated/GuidedSetupAutomatedInfo.vue:11
 msgid "Please use the provided URL."
@@ -15681,8 +15686,8 @@ msgstr ""
 "\n"
 "<div>Hej #{user.firstname},</div>\n"
 "<br>\n"
-"<div>Vi har modtaget en anmodning om at nulstille adgangskoden til din #"
-"{config.product_name} konto <b>#{user.login}</b>.</div>\n"
+"<div>Vi har modtaget en anmodning om at nulstille adgangskoden til din "
+"#{config.product_name} konto <b>#{user.login}</b>.</div>\n"
 "<br>\n"
 "<div>Vil du nulstille din adgangskode, klik på linket nedenfor (eller kopiér "
 "og indsæt URL'en i din browser):</div>\n"
@@ -16472,7 +16477,7 @@ msgstr "Sekundære organisationer kan ikke inkludere den primære organisation."
 #: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:189
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:26
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:127
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:288
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:304
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:254
 #: db/seeds/permissions.rb:209
 msgid "Security"
@@ -16657,7 +16662,7 @@ msgstr "Vælg sagens kunde eller opret en ny."
 msgid "Select the ticket article(s) that should be analyzed by the AI agent."
 msgstr "Vælg de sagsartikler der skal analyseres af AI-agenten."
 
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:146
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:162
 msgid "Select the type of ticket your are creating"
 msgstr "Vælg typen af sag du opretter"
 
@@ -16898,7 +16903,7 @@ msgstr "Aktive Forbindelser"
 msgid "Set Up"
 msgstr "Konfigurér"
 
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:120
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:136
 msgid "Set a title for your ticket"
 msgstr "Angiv en titel til din sag"
 
@@ -17160,11 +17165,11 @@ msgstr "Vis authenticator-appens hemmelighed"
 
 #: db/seeds/settings.rb:5839
 msgid "Show calendar weeks in the picker of date/datetime fields"
-msgstr ""
+msgstr "Vis kalenderuger i vælgeren til dato/dato-og-tidsfelter"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:150
 msgid "Show chat automatically"
-msgstr ""
+msgstr "Vis chat automatisk"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSharedDraftConflictDialog.vue:70
 msgid "Show draft"
@@ -17173,19 +17178,19 @@ msgstr "Vis kladde"
 #: app/assets/javascripts/app/views/generic/reference_list.jst.eco:22
 #: app/assets/javascripts/app/views/generic/ticket_list.jst.eco:41
 msgid "Show less"
-msgstr ""
+msgstr "Vis færre"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:36
 msgid "Show matching ticket(s) in the warning"
-msgstr ""
+msgstr "Vis matchende sag(er) i advarslen"
 
 #: db/seeds/settings.rb:2775
 msgid "Show matching tickets in the warning"
-msgstr ""
+msgstr "Vis matchende sager i advarslen"
 
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketArticleContext.ts:80
 msgid "Show meta data"
-msgstr ""
+msgstr "Vis metadata"
 
 #: app/frontend/apps/desktop/components/CommonShowMoreButton/CommonShowMoreButton.vue:17
 msgid "Show more"
@@ -17193,7 +17198,7 @@ msgstr "Vis mere"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:252
 msgid "Show next tab"
-msgstr ""
+msgstr "Vis næste fane"
 
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationButton.vue:11
 msgid "Show notifications"
@@ -17204,6 +17209,8 @@ msgid ""
 "Show password login for users on login page. Disabling only takes effect if "
 "third-party authentication is enabled."
 msgstr ""
+"Vis adgangskodelogin for brugere på login-siden. Deaktivering træder kun i "
+"kraft hvis tredjeparts-godkendelse er aktiveret."
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:278
 msgid "Show previous tab"
@@ -17213,10 +17220,12 @@ msgstr "Vis forrige fane"
 msgid ""
 "Show the BETA switch between the old and the new UI in the primary navigation"
 msgstr ""
+"Vis BETA-skiftet mellem den gamle og nye brugergrænseflade i den primære "
+"navigation"
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee:43
 msgid "Show the chat when ready."
-msgstr ""
+msgstr "Vis chatten når den er klar."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewHeader.vue:104
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationView.vue:78
@@ -17234,11 +17243,11 @@ msgstr "Vis sagsvisere"
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco:6
 #: db/seeds/settings.rb:4092
 msgid "Show time accounting dialog when updating matching tickets."
-msgstr ""
+msgstr "Show time accounting dialog when updating matching tickets."
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco:82
 msgid "Show title in form."
-msgstr ""
+msgstr "Vis titel i formular."
 
 #: db/seeds/settings.rb:2758
 msgid "Show to user roles"
@@ -17256,19 +17265,19 @@ msgstr "Vis sporingssager"
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:120
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco:110
 msgid "Shown records in caller log."
-msgstr ""
+msgstr "Viste poster i opkaldslog."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:95
 msgid "Shown when the chat is closed."
-msgstr ""
+msgstr "Vises når chatten er lukket."
 
 #: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:360
 msgid "Side panel footer"
-msgstr ""
+msgstr "Sidepanelets sidefod"
 
 #: db/seeds/settings.rb:791
 msgid "Sidebar Attachments"
-msgstr ""
+msgstr "Sidebjælkens Vedhæftninger"
 
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco:44
 #: app/assets/javascripts/app/views/integration/pgp_group.jst.eco:5
@@ -17277,15 +17286,15 @@ msgstr ""
 #: app/frontend/apps/desktop/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:57
 #: app/frontend/apps/mobile/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:41
 msgid "Sign"
-msgstr ""
+msgstr "Signér"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:641
 msgid "Sign email (if not possible, discard notification)"
-msgstr ""
+msgstr "Signér email (hvis ikke muligt, kassér notifikation)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:642
 msgid "Sign email (if not possible, send notification anyway)"
-msgstr ""
+msgstr "Signér email (hvis ikke muligt, send notifikation alligevel)"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:76
 #: app/frontend/shared/composables/useArticleSecurity.ts:143
@@ -17360,7 +17369,7 @@ msgstr "Signaturer"
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:162
 #: app/frontend/shared/composables/useArticleSecurity.ts:143
 msgid "Signed"
-msgstr ""
+msgstr "Signeret"
 
 #: db/seeds/settings.rb:1961
 msgid "Signing & Encrypting"
@@ -17376,12 +17385,12 @@ msgstr "Lignende sager fundet"
 
 #: app/assets/javascripts/app/lib/app_post/iconset_picker.coffee:21
 msgid "Simple Line Icons"
-msgstr ""
+msgstr "Simple Line Icons"
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco:22
 #: db/seeds/settings.rb:379
 msgid "Simple Storage (S3)"
-msgstr ""
+msgstr "Simple Storage (S3)"
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco:9
 msgid "Simple Storage Service (S3)"
@@ -17389,7 +17398,7 @@ msgstr "Simple Storage Service (S3)"
 
 #: app/models/store/provider/s3/config.rb:35
 msgid "Simple Storage Service configuration not found or invalid."
-msgstr ""
+msgstr "Simple Storage Service-konfiguration ikke fundet eller ugyldig."
 
 #: app/models/store/provider/s3.rb:96
 msgid ""
@@ -17399,15 +17408,15 @@ msgstr ""
 
 #: app/models/store/provider/s3.rb:72
 msgid "Simple Storage Service not reachable."
-msgstr ""
+msgstr "Simple Storage Service er ikke tilgængelig."
 
 #: db/seeds/settings.rb:1817
 msgid "Sina Weibo"
-msgstr ""
+msgstr "Sina Weibo"
 
 #: db/seeds/settings.rb:1817
 msgid "Sina Weibo Open Portal"
-msgstr ""
+msgstr "Sina Weibo Open Portal"
 
 #: public/assets/chat/views/customer_timeout.eco:5
 msgid ""
@@ -17432,11 +17441,11 @@ msgstr "Felt til valg af enkelt træ"
 
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco:5
 msgid "Sipgate"
-msgstr ""
+msgstr "Sipgate"
 
 #: db/seeds/settings.rb:1701
 msgid "Site"
-msgstr ""
+msgstr "Websted"
 
 #: app/assets/javascripts/app/controllers/_channel/email_archive.coffee:9
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:10
@@ -17473,26 +17482,29 @@ msgid ""
 "Some system settings have changed, Zammad is restarting. Please wait until "
 "Zammad is back again."
 msgstr ""
+"Nogle systemindstillinger er ændret, Zammad genstarter. Vent venligst til "
+"Zammad er klar igen."
 
 #: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:80
 msgid "Some system settings have changed, please restart all Zammad processes!"
 msgstr ""
+"Nogle systemindstillinger er ændret, genstart venligst alle Zammad-processer!"
 
 #: app/frontend/shared/errors/useErrorHandler.ts:35
 msgid "Something went wrong."
-msgstr ""
+msgstr "Noget gik galt."
 
 #: app/frontend/shared/errors/useErrorHandler.ts:35
 msgid "Something went wrong. Received message: %s"
-msgstr ""
+msgstr "Noget gik galt. Modtaget besked: %s"
 
 #: app/frontend/shared/form/i18n/locales.ts:37
 msgid "Sorry, not all fields are filled out correctly."
-msgstr ""
+msgstr "Beklager, ikke alle felter er udfyldt korrekt."
 
 #: app/assets/javascripts/app/views/cti/not_configured.jst.eco:4
 msgid "Sorry, there is currently no CTI backend enabled."
-msgstr ""
+msgstr "Beklager, der er i øjeblikket ingen CTI-backend aktiveret."
 
 #: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:262
 msgid "Sort by %s ascending"
@@ -17507,10 +17519,13 @@ msgid ""
 "Sortable list focused. Use up and down arrows to navigate items. Press Space "
 "to select an item and again on another item to swap them."
 msgstr ""
+"Sorterbar liste fokuseret. Brug pil op og pil ned til at navigere mellem "
+"elementer. Tryk på Mellemrum for at vælge et element og igen på et andet "
+"element for at bytte dem."
 
 #: app/frontend/apps/desktop/composables/dragAndDrop/useAccessibleDragAndDrop.ts:50
 msgid "Sorted %s in user taskbar list to position %s."
-msgstr ""
+msgstr "Sorterede %s i brugerens proceslinje-liste til position %s."
 
 #: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:40
 #: app/assets/javascripts/app/models/overview.coffee:23
@@ -17536,12 +17551,14 @@ msgstr "Kilder"
 
 #: db/seeds/settings.rb:2213
 msgid "Special character required"
-msgstr ""
+msgstr "Specialtegn påkrævet"
 
 #: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:273
 msgid ""
 "Specify which folder to fetch from, or leave empty to fetch from ||inbox||."
 msgstr ""
+"Angiv hvilken mappe der skal hentes fra, eller lad feltet stå tomt for at "
+"hente fra ||inbox||."
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/split.ts:11
 msgid "Split"
@@ -17553,15 +17570,15 @@ msgstr "Opdel celler"
 
 #: db/seeds/groups.rb:7
 msgid "Standard Group/Pool for Tickets."
-msgstr ""
+msgstr "Standardgruppe/-pulje for sager."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/reader_list_controller.coffee:34
 msgid "Start Editing"
-msgstr ""
+msgstr "Start redigering"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue:50
 msgid "Start and end date"
-msgstr ""
+msgstr "Start- og slutdato"
 
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco:11
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco:18
@@ -17586,7 +17603,7 @@ msgstr "Start import fra kilde"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco:92
 msgid "Start modal dialog for form."
-msgstr ""
+msgstr "Start modaldialog til formular."
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco:51
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco:49
@@ -17605,10 +17622,11 @@ msgstr "Starttid"
 #: app/frontend/apps/desktop/components/Search/QuickSearch/QuickSearch.vue:231
 msgid "Start typing e.g. the name of a ticket, an organization or a user."
 msgstr ""
+"Begynd at skrive f.eks. navnet på en sag, en organisation eller en bruger."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:107
 msgid "Start typing to find the ticket to merge into."
-msgstr ""
+msgstr "Begynd at skrive for at finde den sag der skal flettes med."
 
 #: app/frontend/apps/desktop/pages/search/components/SearchEmptyMessage.vue:38
 msgid "Start typing to get the search results."
@@ -17621,11 +17639,11 @@ msgstr "Begynd at skrive for at søge efter tekstmoduler…"
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js:763
 #: app/frontend/shared/components/Form/fields/FieldEditor/extensions/UserMention.ts:67
 msgid "Start typing to search for users…"
-msgstr ""
+msgstr "Begynd at skrive for at søge efter brugere…"
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js:658
 msgid "Start typing to search in Knowledge Base…"
-msgstr ""
+msgstr "Begynd at skrive for at søge i Vidensbasen…"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/extensions/KnowledgeBaseSuggestion.ts:60
 msgid "Start typing to search in knowledge base…"
@@ -17648,7 +17666,7 @@ msgstr "Begynd at skrive for at søge eller indtast en emailadresse…"
 #: app/frontend/apps/desktop/components/Form/fields/FieldTags/FieldTagsWrapper.vue:37
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:385
 msgid "Start typing to search…"
-msgstr ""
+msgstr "Begynd at skrive for at søge…"
 
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:28
 msgid "Started"
@@ -17689,7 +17707,7 @@ msgstr "Statusikon"
 
 #: db/seeds/settings.rb:5467
 msgid "Stats Backend"
-msgstr ""
+msgstr "Statistik-backend"
 
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco:24
 #: app/assets/javascripts/app/views/integration/idoit_object_result.jst.eco:10
@@ -17725,19 +17743,19 @@ msgstr "Bliv på fane"
 
 #: app/frontend/apps/mobile/components/CommonStepper/CommonStepperStep.vue:49
 msgid "Step %s is completed"
-msgstr ""
+msgstr "Trin %s er fuldført"
 
 #: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco:6
 msgid "Step 1 of 3: WhatsApp Business Cloud API"
-msgstr ""
+msgstr "Trin 1 af 3: WhatsApp Business Cloud API"
 
 #: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco:6
 msgid "Step 2 of 3: WhatsApp Business Phone Number"
-msgstr ""
+msgstr "Trin 2 af 3: WhatsApp Business Telefonnummer"
 
 #: app/assets/javascripts/app/views/whatsapp/account_webhook.jst.eco:6
 msgid "Step 3 of 3: WhatsApp Business Webhook"
-msgstr ""
+msgstr "Trin 3 af 3: WhatsApp Business Webhook"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee:63
 #: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:24
@@ -17767,16 +17785,18 @@ msgstr "Gemmer AI-udbyderens konfiguration."
 
 #: db/seeds/settings.rb:5106
 msgid "Stores the GitHub configuration."
-msgstr ""
+msgstr "Gemmer GitHub-konfigurationen."
 
 #: db/seeds/settings.rb:5064
 msgid "Stores the GitLab configuration."
-msgstr ""
+msgstr "Gemmer GitLab-konfigurationen."
 
 #: db/seeds/settings.rb:6126
 msgid ""
 "Stores the ticket summarization options (e.g. which content is visible)."
 msgstr ""
+"Gemmer indstillingerne for sagsresumé (f.eks. hvilket indhold der er synligt)"
+"."
 
 #: db/seeds/object_manager_attributes.rb:1276
 msgid "Street"
@@ -17803,6 +17823,9 @@ msgid ""
 "message ID in references header if no follow-up was recognized using default "
 "settings."
 msgstr ""
+"Emne og referencer - Yderligere søgning efter samme artikelemne og samme "
+"besked-ID i referencer-headeren hvis ingen opfølgning blev genkendt med "
+"standardindstillingerne."
 
 #: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:406
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee:2
@@ -17857,11 +17880,11 @@ msgstr "Tilmeld mig"
 
 #: app/assets/javascripts/app/views/generic/ical_feed.jst.eco:29
 msgid "Subscribe to iCalendar feed"
-msgstr ""
+msgstr "Abonnér på iCalendar-feed"
 
 #: app/assets/javascripts/app/views/generic/ical_feed.jst.eco:8
 msgid "Subscribe to public holidays in"
-msgstr ""
+msgstr "Abonnér på helligdage i"
 
 #: app/assets/javascripts/app/views/generic/notification_matrix.jst.eco:7
 msgid "Subscribed Tickets"
@@ -17886,7 +17909,7 @@ msgstr "Abonnementsindstillinger"
 
 #: db/seeds/ai/text_tools.rb:98
 msgid "Summarize section to about half its current size"
-msgstr ""
+msgstr "Sammenfat afsnittet til cirka halvdelen af dets nuværende størrelse"
 
 #: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:42
 #: db/seeds/object_manager_attributes.rb:2461
@@ -17919,19 +17942,19 @@ msgstr "Søndag"
 
 #: db/seeds/settings.rb:5554
 msgid "Support of multilingual Knowledge Base."
-msgstr ""
+msgstr "Understøttelse af flersproget vidensbase."
 
 #: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:78
 msgid "Swapped %s with %s. %s moved to position %s."
-msgstr ""
+msgstr "Byttede %s med %s. %s flyttet til position %s."
 
 #: app/assets/javascripts/app/views/keyboard_shortcuts.jst.eco:16
 msgid "Switch back to old layout"
-msgstr ""
+msgstr "Skift tilbage til gammelt layout"
 
 #: app/assets/javascripts/app/views/keyboard_shortcuts.jst.eco:14
 msgid "Switch to new layout"
-msgstr ""
+msgstr "Skift til nyt layout"
 
 #: app/frontend/apps/desktop/pages/authentication/views/Login.vue:322
 msgid "Switch to old interface"
@@ -17939,12 +17962,12 @@ msgstr "Skift til gammel brugergrænseflade"
 
 #: db/seeds/schedulers.rb:133
 msgid "Sync calendars with iCal feeds."
-msgstr ""
+msgstr "Synkronisér kalendere med iCal-feeds."
 
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco:32
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:48
 msgid "Sync with computer"
-msgstr ""
+msgstr "Synkronisér med computer"
 
 #: app/assets/javascripts/app/controllers/_manage/system.coffee:3
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:37
@@ -17957,7 +17980,7 @@ msgstr "System"
 
 #: db/seeds/settings.rb:3250
 msgid "System Address Display Name"
-msgstr ""
+msgstr "Systemadressens visningsnavn"
 
 #: db/seeds/settings.rb:17
 msgid "System Init Done"
@@ -17989,6 +18012,8 @@ msgid ""
 "System supports only one locale for knowledge base. Upgrade your plan to use "
 "more locales."
 msgstr ""
+"Systemet understøtter kun én sprogindstilling til vidensbasen. Opgradér din "
+"plan for at bruge flere sprogindstillinger."
 
 #: app/assets/javascripts/app/views/translation/description.jst.eco:5
 msgid ""
@@ -17996,12 +18021,15 @@ msgid ""
 "public platform %l. It sports a very convenient user interface based on "
 "Weblate, give it a try!"
 msgstr ""
+"Systemtekster kan bidrage til og deles med fællesskabet på vores offentlige "
+"platform %l. Den har en meget praktisk brugergrænseflade baseret på Weblate, "
+"prøv det!"
 
 #: db/seeds/settings.rb:5627
 msgid ""
 "System-wide configuration of the query polling mechanism for ticket "
 "overviews."
-msgstr ""
+msgstr "Systemdækkende konfiguration af polling-mekanismen til sagsoversigter."
 
 #: db/seeds/settings.rb:262
 msgid "SystemID"
@@ -18009,7 +18037,7 @@ msgstr "System-ID"
 
 #: db/seeds/settings.rb:3014
 msgid "Tab behaviour after ticket action"
-msgstr ""
+msgstr "Fanefunktion efter sagshandling"
 
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee:133
 msgid "Tab has changed, do you really want to close it?"
@@ -18021,7 +18049,7 @@ msgstr "Tabel indstillinger"
 
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:257
 msgid "Tabs"
-msgstr ""
+msgstr "Faner"
 
 #: app/assets/javascripts/app/views/widget/tag.jst.eco:1
 msgid "Tag"
@@ -18059,10 +18087,12 @@ msgid ""
 "Take Reply-To header as sender/from of email and use the real name of origin "
 "from."
 msgstr ""
+"Brug Reply-To header som afsender/fra i email og anvend det rigtige navn fra "
+"origin."
 
 #: db/seeds/settings.rb:3380
 msgid "Take Reply-To header as sender/from of email."
-msgstr ""
+msgstr "Brug Reply-To header som afsender/fra i email."
 
 #: app/assets/javascripts/app/views/knowledge_base/public_menu_form_item.jst.eco:16
 msgid "Target"
@@ -18070,7 +18100,7 @@ msgstr "Mål"
 
 #: app/models/ai/agent/type/ticket_text_extractor.rb:42
 msgid "Target Attribute for Extracted Text"
-msgstr ""
+msgstr "Målattribut for udtrukket tekst"
 
 #: app/assets/javascripts/app/controllers/translation.coffee:83
 msgid "Target Language"
@@ -18148,6 +18178,16 @@ msgid ""
 "<br>\n"
 "<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
+"Test Sag!\n"
+"\n"
+"<div>Kære #{agent.firstname},</div>\n"
+"<br>\n"
+"<div>Dette er en <b>testsag</b>. Jeg er en kunde og jeg har brug for hjælp! "
+":)</div>\n"
+"<br>\n"
+"<div>#{customer.fullname}</div>\n"
+"<br>\n"
+"<div>Dit #{config.product_name} team</div>\n"
 
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee:398
 msgid "Test message from Zammad"
@@ -18215,11 +18255,11 @@ msgstr "Tekst eller sags-id"
 
 #: app/assets/javascripts/app/views/translation/description.jst.eco:12
 msgid "Text with disabled inline translations looks like"
-msgstr ""
+msgstr "Tekst med deaktiverede inline oversættelser ser sådan ud"
 
 #: app/assets/javascripts/app/views/translation/description.jst.eco:13
 msgid "Text with enabled inline translations looks like"
-msgstr ""
+msgstr "Tekst med aktiverede inline oversættelser ser sådan ud"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:37
 msgid "Textarea field"
@@ -18228,7 +18268,7 @@ msgstr "Tekstområde felt"
 #: app/assets/javascripts/app/views/ai/ai_feedback_widget.jst.eco:27
 #: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:122
 msgid "Thank you for your feedback."
-msgstr ""
+msgstr "Tak for din feedback."
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco:50
 msgid ""
@@ -18238,17 +18278,17 @@ msgstr "Tak for din forespørgsel (#%s)! Vi vil kontakte dig hurtigst muligt."
 #: app/assets/javascripts/app/views/signup/verify.jst.eco:5
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:122
 msgid "Thanks for joining. Email sent to \"%s\"."
-msgstr ""
+msgstr "Tak fordi du tilmeldte dig. Email sendt til \"%s\"."
 
 #: app/assets/javascripts/app/views/ai/ai_feedback_widget.jst.eco:39
 #: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:107
 msgid "Thanks for the feedback. Please explain what went wrong?"
-msgstr ""
+msgstr "Tak for din feedback. Beskriv venligst hvad der gik galt?"
 
 #: lib/validations/verify_perform_rules_validator.rb:68
 msgid ""
 "The \"Pending till\" attribute is required for the selected state action."
-msgstr ""
+msgstr "Attributten \"Afventer til\" er påkrævet for den valgte statushandling."
 
 #: lib/secure_mailing/pgp/tool/exec/agent.rb:13
 msgid "The 'gpg-agent' process could not be stopped."
@@ -18256,7 +18296,7 @@ msgstr "Processen 'gpg-agent' kunne ikke stoppes."
 
 #: app/controllers/concerns/handles_oidc_authorization.rb:19
 msgid "The 'logout_token' does not contain any session information."
-msgstr ""
+msgstr "'logout_token' indeholder ingen sessionsinformation."
 
 #: app/controllers/concerns/handles_oidc_authorization.rb:16
 msgid "The 'logout_token' is invalid."
@@ -18268,6 +18308,8 @@ msgid ""
 "The 24 hour customer service window is now closed, no further WhatsApp "
 "messages can be sent."
 msgstr ""
+"24-timers kundeservicevinduet er nu lukket, der kan ikke sendes flere "
+"WhatsApp-beskeder."
 
 #: lib/monitoring_helper/health_checker/ai_provider_accessible.rb:21
 msgid "The AI Provider is not accessible."
@@ -18300,6 +18342,7 @@ msgstr "OTRS importen fejlede."
 #: app/services/service/system/import/apply_otrs_configuration.rb:78
 msgid "The OTRS migrator plugin is not accessible. Please verify the API key."
 msgstr ""
+"OTRS-migrator-pluginnet er ikke tilgængeligt. Verificér venligst API-nøglen."
 
 #: lib/secure_mailing/pgp/tool/error.rb:106
 msgid "The PGP email recipient is invalid."
@@ -18351,11 +18394,11 @@ msgstr "PGP-signaturen er ugyldig."
 
 #: lib/secure_mailing/pgp/tool/error.rb:97
 msgid "The PGP signature key has been revoked."
-msgstr ""
+msgstr "PGP-signaturnøglen er blevet tilbagekaldt."
 
 #: lib/monitoring_helper/health_checker/s3_storage_availability.rb:12
 msgid "The Simple Storage Service is not available."
-msgstr ""
+msgstr "Simple Storage Servicen er ikke tilgængelig."
 
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee:159
 msgid "The Telegram bot could not be saved."
@@ -18375,15 +18418,15 @@ msgstr ""
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:58
 msgid "The URL of this installation of Zammad."
-msgstr ""
+msgstr "URL'en for denne Zammad-installation."
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco:25
 msgid "The URL to this installation of Zammad."
-msgstr ""
+msgstr "URL'en til denne Zammad-installation."
 
 #: lib/whatsapp/webhook/configuration.rb:25
 msgid "The WhatsApp channel webhook configuration could not be verified."
-msgstr ""
+msgstr "WhatsApp-kanalens webhook-konfiguration kunne ikke verificeres."
 
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:159
 msgid "The WhatsApp connection could not be saved."
@@ -18412,7 +18455,7 @@ msgstr "Kontolinket blev fjernet med succes!"
 #: app/assets/javascripts/app/views/channel_account/admin_consent.jst.eco:2
 #: app/assets/javascripts/app/views/exchange/admin_consent.jst.eco:2
 msgid "The admin consent request was sent to your administrator."
-msgstr ""
+msgstr "Anmodningen om administratorgodkendelse er sendt til din administrator."
 
 #: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue:78
 msgid "The admin password auth email could not be sent."
@@ -18423,6 +18466,8 @@ msgid ""
 "The app configuration has changed since this channel was authenticated. "
 "Please click \"Reauthenticate\" to keep it working."
 msgstr ""
+"Appkonfigurationen er ændret siden denne kanal blev godkendt. Klik på "
+"\"Godkend igen\" for at bevare funktionaliteten."
 
 #: app/frontend/apps/desktop/stores/theme.ts:41
 msgid "The appearance could not be updated."
@@ -18433,7 +18478,7 @@ msgstr "Udseendet kunne ikke opdateres."
 #: app/frontend/apps/desktop/entities/two-factor-configuration/plugins/security-keys.ts:32
 #: app/frontend/shared/entities/two-factor/plugins/security-keys.ts:22
 msgid "The application is not running in a secure context."
-msgstr ""
+msgstr "Applikationen kører ikke i en sikker kontekst."
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/articleDelete.ts:22
 msgid "The article could not be deleted."
@@ -18449,11 +18494,13 @@ msgstr "Artiklen kunne ikke angives som offentlig."
 
 #: app/controllers/ticket_articles_controller.rb:161
 msgid "The article does not belong to the specified ticket."
-msgstr ""
+msgstr "Artiklen tilhører ikke den angivne sag."
 
 #: app/assets/javascripts/app/views/getting_started/auto_wizard_enabled.jst.eco:6
 msgid "The auto wizard is enabled. Please use the provided auto wizard url."
 msgstr ""
+"Automatisk guide er aktiveret. Brug venligst den angivne automatiske guide-"
+"URL."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:252
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:129
@@ -18478,6 +18525,8 @@ msgid ""
 "The browser is outdated. It does not support WebSocket - the technology we "
 "use for the chat."
 msgstr ""
+"Browseren er forældet. Den understøtter ikke WebSocket, som er den teknologi "
+"vi bruger til chatten."
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:93
 msgid "The calendar icon"
@@ -18489,7 +18538,7 @@ msgstr "Certifikatet kunne ikke parses."
 
 #: app/models/setting/validation/saml/security.rb:75
 msgid "The certificate does not match the given private key."
-msgstr ""
+msgstr "Certifikatet matcher ikke den angivne private nøgle."
 
 #: lib/secure_mailing/smime/security_options.rb:39
 msgid ""
@@ -18508,7 +18557,7 @@ msgstr "Certifikatet til %s blev ikke fundet."
 
 #: app/models/smime_certificate.rb:59
 msgid "The certificate for this private key could not be found."
-msgstr ""
+msgstr "Certifikatet til denne private nøgle kunne ikke findes."
 
 #: lib/secure_mailing/smime/incoming.rb:69
 msgid "The certificate for verification could not be found."
@@ -18520,7 +18569,7 @@ msgstr "Certifikatet kan ikke bruges (f.eks. udløbet)."
 
 #: app/models/setting/validation/saml/security.rb:63
 msgid "The certificate is not usable due to being a CA certificate."
-msgstr ""
+msgstr "Certifikatet kan ikke bruges da det er et CA-certifikat."
 
 #: app/models/setting/validation/saml/security.rb:65
 msgid "The certificate is not usable for signing and encryption."
@@ -18531,18 +18580,25 @@ msgid ""
 "The certificate is not valid for S/MIME usage. Please check the certificate "
 "format."
 msgstr ""
+"The certificate is not valid for S/MIME usage. Please check the certificate "
+"format."
 
 #: lib/certificate/x509/smime.rb:66
 msgid ""
 "The certificate is not valid for S/MIME usage. Please check the key usage, "
 "subject alternative name and public key cryptographic algorithm."
 msgstr ""
+"Certifikatet er ikke gyldigt til S/MIME-brug. Kontrollér venligst "
+"nøgleanvendelse, alternativt emnenavn og den offentlige nøgles "
+"kryptografiske algoritme."
 
 #: lib/certificate/x509/ssl.rb:16
 msgid ""
 "The certificate is not valid for SSL usage. Please check e.g. the validity "
 "period or the extensions."
 msgstr ""
+"Certifikatet er ikke gyldigt til SSL-brug. Kontrollér venligst f.eks. "
+"gyldighedsperioden eller udvidelserne."
 
 #: app/assets/javascripts/app/views/integration/exchange_certificate_issue.jst.eco:10
 msgid ""
@@ -18550,6 +18606,10 @@ msgid ""
 "hackers to steal your credentials. If you are sure that you are using a self-"
 "signed certificate, you can press \"Proceed\". Otherwise, please \"Cancel\"."
 msgstr ""
+"Certifikatet for domænet |%s| kunne ikke verificeres. Dette kan give hackere "
+"mulighed for at stjæle dine legitimationsoplysninger. Er du sikker på at du "
+"bruger et selvsigneret certifikat, kan du trykke på \"Fortsæt\". Ellers skal "
+"du trykke på \"Annullér\"."
 
 #: lib/secure_mailing/smime/security_options.rb:68
 msgid "The certificates for %s were found."
@@ -18570,17 +18630,19 @@ msgstr "Certifikaterne til %s blev ikke fundet."
 #: app/assets/javascripts/app/controllers/knowledge_base/public_menu_form.coffee:68
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/attachments.coffee:143
 msgid "The changes could not be saved."
-msgstr ""
+msgstr "Ændringerne kunne ikke gemmes."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:215
 msgid "The chat is turned off."
-msgstr ""
+msgstr "Chatten er slukket."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:151
 msgid ""
 "The chat will show up once the connection to the server got established and "
 "if there is an operator online to chat with."
 msgstr ""
+"Chatten vises når forbindelsen til serveren er etableret og der er en "
+"operatør online til at chatte med."
 
 #: app/graphql/gql/mutations/ticket/checklist/add.rb:13
 #: app/graphql/gql/mutations/ticket/checklist/base.rb:7
@@ -18596,10 +18658,12 @@ msgid ""
 "The chosen unit will be used for display only and will not affect stored "
 "values."
 msgstr ""
+"The chosen unit will be used for display only and will not affect stored "
+"values."
 
 #: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:104
 msgid "The configuration of Zammad has changed, please reload your browser."
-msgstr ""
+msgstr "Konfigurationen af Zammad er ændret, genindlæs venligst din browser."
 
 #: app/frontend/shared/composables/useAppMaintenanceCheck.ts:117
 msgid ""
@@ -18609,7 +18673,7 @@ msgstr ""
 
 #: app/frontend/apps/mobile/composables/useConnection.ts:18
 msgid "The connection to the server was lost."
-msgstr ""
+msgstr "Forbindelsen til serveren blev mistet."
 
 #: app/controllers/import_freshdesk_controller.rb:141
 #: app/controllers/import_otrs_controller.rb:20
@@ -18938,7 +19002,7 @@ msgstr "Det nye sagsnummer kunne ikke genereres."
 #: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:549
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_new.coffee:69
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee:93
-#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:820
+#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:825
 #: app/assets/javascripts/app/controllers/customer_ticket_create.coffee:193
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:272
 #: app/assets/javascripts/app/controllers/object_manager.coffee:265
@@ -20016,6 +20080,8 @@ msgstr "Dette felt må ikke indeholde mere end %s karakterer."
 msgid "This field was configured incorrectly and can't be submitted."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:760
+#: app/controllers/concerns/creates_ticket_articles.rb:43
 #: app/graphql/gql/mutations/ticket/concerns/handles_group.rb:24
 msgid "This group has no email address configured for outgoing communication."
 msgstr ""
@@ -20334,7 +20400,7 @@ msgstr "Torsdag"
 msgid "Ticket"
 msgstr "Sager"
 
-#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:793
+#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:798
 msgid "Ticket %s created!"
 msgstr "Sag %s oprettet!"
 
@@ -20917,7 +20983,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco:10
 #: app/controllers/time_accountings_controller.rb:85
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/TicketSimpleTable.vue:34
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:136
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:152
 #: app/graphql/gql/types/overview_type.rb:92
 #: db/seeds/object_manager_attributes.rb:34 lib/excel_sheet/ticket.rb:24
 msgid "Title"
@@ -23167,7 +23233,7 @@ msgstr ""
 msgid "You reached the table limit of %s items (%s remaining)."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:772
+#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:777
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:395
 msgid ""
 "You used %s in the text but no attachment could be found. Do you want to "

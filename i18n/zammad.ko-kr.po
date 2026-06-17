@@ -1154,7 +1154,7 @@ msgstr "AI 제공자 토큰이 설정되지 않았습니다"
 msgid "AI Service Name"
 msgstr "AI 서비스 이름"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket_summary.coffee:110
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket_summary.coffee:122
 #, fuzzy
 #| msgid "Summary"
 msgid "AI Summary"
@@ -1727,7 +1727,7 @@ msgstr "개인 액세스 토큰 추가"
 msgid "Add a data privacy deletion task"
 msgstr "데이터 프라이버시 삭제 작업 추가"
 
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:279
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:295
 msgid "Add a message"
 msgstr "메세지 추가"
 
@@ -1860,7 +1860,7 @@ msgstr "추가 채널"
 msgid "Additional follow-up detection"
 msgstr "추가 후속 감지"
 
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:214
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:230
 msgid "Additional information"
 msgstr "추가 정보"
 
@@ -2265,7 +2265,7 @@ msgstr "오류가 발생했습니다: %s"
 msgid "An open-source monitoring tool."
 msgstr "오픈-소스 모니터링 도구."
 
-#: app/frontend/shared/components/Form/utils.ts:41
+#: app/frontend/shared/components/Form/utils.ts:57
 msgid "An unexpected error has occurred."
 msgstr "예상치 못한 에러가 발생했습니다."
 
@@ -2606,7 +2606,7 @@ msgstr "정말 진행하시겠습니까? 저장되지 않은 변경사항이 손
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:54
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:63
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:34
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:420
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:436
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:254
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:41
 msgid "Are you sure? You have unsaved changes that will get lost."
@@ -2782,7 +2782,7 @@ msgid "Attached Files"
 msgstr "첨부 파일"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:221
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:326
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:342
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:279
 msgid "Attachment"
 msgstr "첨부 파일"
@@ -3432,7 +3432,7 @@ msgstr "CA"
 #: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:179
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:85
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:90
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:246
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:262
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:30
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:232
 #: db/seeds/object_manager_attributes.rb:523
@@ -4689,7 +4689,7 @@ msgstr "컨텍스트 메뉴"
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue:46
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSource.vue:52
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmail.vue:136
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:534
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:550
 msgid "Continue"
 msgstr "계속"
 
@@ -4940,7 +4940,7 @@ msgstr "국가"
 #: app/frontend/apps/desktop/entities/user/composables/useUserCreate.ts:78
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:114
 #: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:309
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:485
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:501
 msgid "Create"
 msgstr "생성"
 
@@ -5104,7 +5104,7 @@ msgid "Create tag"
 msgstr "에서 만든"
 
 #: app/frontend/apps/mobile/pages/ticket/routes.ts:64
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:485
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:501
 msgid "Create ticket"
 msgstr "테스트 Ticket 만들기"
 
@@ -5214,7 +5214,7 @@ msgid "Created by"
 msgstr "생성자"
 
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:24
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:460
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:476
 msgid "Creating new tickets via web is disabled."
 msgstr "웹을 통한 새 티켓 생성이 비활성화되어 있습니다."
 
@@ -7037,7 +7037,7 @@ msgstr "아티클 버리기"
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:65
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:59
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:36
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:422
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:438
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:256
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:43
 msgid "Discard changes"
@@ -8956,7 +8956,7 @@ msgstr "이 에이전트를 실행하려면 트리거나 스케줄러에 연결�
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:42
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:38
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:23
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:459
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:475
 #: app/frontend/shared/errors/useErrorHandler.ts:29
 #: app/frontend/shared/router/guards/before/permission.ts:26
 msgid "Forbidden"
@@ -13589,6 +13589,12 @@ msgstr "알림 읽음"
 msgid "Notification sender"
 msgstr "알림 발신자"
 
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:14
+#, fuzzy
+#| msgid "notification sent to '%s'"
+msgid "Notification sent to"
+msgstr "'%s'에게 알림 전송됨"
+
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:167
 msgid "Notification settings could not be reset."
 msgstr "알림 설정을 재설정할 수 없습니다."
@@ -16730,7 +16736,7 @@ msgstr "보조 조직에는 주 조직을 포함할 수 없습니다."
 #: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:189
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:26
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:127
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:288
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:304
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:254
 #: db/seeds/permissions.rb:209
 msgid "Security"
@@ -16925,7 +16931,7 @@ msgstr "티켓의 고객을 선택하거나 새로 만드세요."
 msgid "Select the ticket article(s) that should be analyzed by the AI agent."
 msgstr "AI 에이전트에 의해 값이 자동으로 설정될 속성을 선택하세요."
 
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:146
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:162
 msgid "Select the type of ticket your are creating"
 msgstr "생성할 티켓 유형 선택"
 
@@ -17180,7 +17186,7 @@ msgstr "세션"
 msgid "Set Up"
 msgstr "설정"
 
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:120
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:136
 msgid "Set a title for your ticket"
 msgstr "티켓 제목 설정"
 
@@ -19331,7 +19337,7 @@ msgstr "새 티켓 번호를 생성할 수 없습니다."
 #: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:549
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_new.coffee:69
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee:93
-#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:820
+#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:825
 #: app/assets/javascripts/app/controllers/customer_ticket_create.coffee:193
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:272
 #: app/assets/javascripts/app/controllers/object_manager.coffee:265
@@ -20465,6 +20471,8 @@ msgstr "이 필드는 %s자를 초과할 수 없습니다."
 msgid "This field was configured incorrectly and can't be submitted."
 msgstr "이 필드가 잘못 구성되어 제출할 수 없습니다."
 
+#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:760
+#: app/controllers/concerns/creates_ticket_articles.rb:43
 #: app/graphql/gql/mutations/ticket/concerns/handles_group.rb:24
 msgid "This group has no email address configured for outgoing communication."
 msgstr "이 그룹에는 발신 통신을 위한 이메일 주소가 구성되어 있지 않습니다."
@@ -20833,7 +20841,7 @@ msgstr "목요일"
 msgid "Ticket"
 msgstr "Ticket"
 
-#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:793
+#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:798
 msgid "Ticket %s created!"
 msgstr "티켓 %s이(가) 생성되었습니다!"
 
@@ -21484,7 +21492,7 @@ msgstr "타이밍"
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco:10
 #: app/controllers/time_accountings_controller.rb:85
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/TicketSimpleTable.vue:34
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:136
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:152
 #: app/graphql/gql/types/overview_type.rb:92
 #: db/seeds/object_manager_attributes.rb:34 lib/excel_sheet/ticket.rb:24
 msgid "Title"
@@ -23927,7 +23935,7 @@ msgstr "%s에서 Zammad 엔드포인트를 구성해야 합니다:"
 msgid "You reached the table limit of %s items (%s remaining)."
 msgstr "테이블 제한인 %s개의 티켓에 도달했습니다 (%s개 남음)."
 
-#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:772
+#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:777
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:395
 msgid ""
 "You used %s in the text but no attachment could be found. Do you want to "

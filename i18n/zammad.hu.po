@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-06-11 06:06+0000\n"
+"PO-Revision-Date: 2026-06-17 09:31+0000\n"
 "Last-Translator: Balázs Úr <balazs@urbalazs.hu>\n"
 "Language-Team: Hungarian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/hu/>\n"
@@ -623,10 +623,8 @@ msgid "%s result(s) selected"
 msgstr "%s találat kiválasztva"
 
 #: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:388
-#, fuzzy
-#| msgid "%s result(s) selected"
 msgid "%s result(s) selected, selection limit reached"
-msgstr "%s találat kiválasztva"
+msgstr "%s találat kiválasztva, a kiválasztási korlát elérve"
 
 #: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:53
 msgid "%s selected. Use arrow keys to choose drop position, then press Space."
@@ -654,10 +652,8 @@ msgid "%s ticket(s) selected"
 msgstr "%s jegy kiválasztva"
 
 #: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:70
-#, fuzzy
-#| msgid "%s ticket(s) selected"
 msgid "%s ticket(s) selected, selection limit reached"
-msgstr "%s jegy kiválasztva"
+msgstr "%s jegy kiválasztva, a kiválasztási korlát elérve"
 
 #: app/assets/javascripts/app/views/ticket_zoom/meta.jst.eco:30
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList/ReferencingTicketsBadgePopover.vue:63
@@ -1006,6 +1002,8 @@ msgid ""
 "A related knowledge base answer is being generated. You will be notified "
 "once the draft is ready."
 msgstr ""
+"Egy kapcsolódó tudásbázisválasz előállítása folyamatban van. Értesítve lesz, "
+"amint a piszkozat elkészül."
 
 #: app/assets/javascripts/app/views/dashboard/first_steps_test_ticket_finish.jst.eco:1
 msgid ""
@@ -1092,7 +1090,7 @@ msgstr "Az MI-szolgáltató modellje nincs beállítva"
 msgid "AI Service Name"
 msgstr "MI-szolgáltatás neve"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket_summary.coffee:110
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket_summary.coffee:122
 msgid "AI Summary"
 msgstr "MI-összefoglaló"
 
@@ -1141,10 +1139,8 @@ msgid "AI assistance text tool is invalid."
 msgstr "Az MI-asszisztens szövegeszköz érvénytelen."
 
 #: app/assets/javascripts/app/views/link/kb_answer.jst.eco:22
-#, fuzzy
-#| msgid "draft"
 msgid "AI draft"
-msgstr "piszkozat"
+msgstr "MI-piszkozat"
 
 #: lib/excel_sheet/ai/analytics/errors.rb:4
 msgid "AI error log"
@@ -1568,10 +1564,8 @@ msgid "Add"
 msgstr "Hozzáadás"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketAIKnowledgeBaseAnswers.vue:67
-#, fuzzy
-#| msgid "Apply draft"
 msgid "Add AI draft"
-msgstr "Piszkozat alkalmazása"
+msgstr "MI-piszkozat hozzáadása"
 
 #: app/assets/javascripts/app/views/channel_account/list.jst.eco:131
 #: app/assets/javascripts/app/views/exchange/token_information.jst.eco:7
@@ -1639,7 +1633,7 @@ msgstr "Személyes hozzáférési token hozzáadása"
 msgid "Add a data privacy deletion task"
 msgstr "Adatvédelmi törlési feladat hozzáadása"
 
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:279
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:295
 msgid "Add a message"
 msgstr "Üzenet hozzáadása"
 
@@ -1759,10 +1753,8 @@ msgstr ""
 "csevegést."
 
 #: app/models/ai/agent/type/ticket_tagger.rb:164
-#, fuzzy
-#| msgid "Update existing records"
 msgid "Add to existing tags"
-msgstr "Meglévő bejegyzések frissítése"
+msgstr "Hozzáadás meglévő címkékhez"
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:158
 msgid "Add unordered list"
@@ -1776,7 +1768,7 @@ msgstr "További csatornák"
 msgid "Additional follow-up detection"
 msgstr "További utókövetés-észlelés"
 
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:214
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:230
 msgid "Additional information"
 msgstr "További információk"
 
@@ -2186,7 +2178,7 @@ msgstr "Hiba történt: %s"
 msgid "An open-source monitoring tool."
 msgstr "Egy nyílt forráskódú felügyeleti eszköz."
 
-#: app/frontend/shared/components/Form/utils.ts:41
+#: app/frontend/shared/components/Form/utils.ts:57
 msgid "An unexpected error has occurred."
 msgstr "Váratlan hiba történt."
 
@@ -2528,7 +2520,7 @@ msgstr "Biztos benne? Olyan változtatásai vannak, amelyek el fognak veszni."
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:54
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:63
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:34
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:420
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:436
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:254
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:41
 msgid "Are you sure? You have unsaved changes that will get lost."
@@ -2668,10 +2660,8 @@ msgstr ""
 "szükséges a felhasználóhoz."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/new_controller.coffee:44
-#, fuzzy
-#| msgid "at least one letter is required"
 msgid "At least one locale is required."
-msgstr "legalább egy betű szükséges"
+msgstr "Legalább egy területi beállítás szükséges."
 
 #: app/models/postmaster_filter.rb:29
 msgid "At least one match rule is required, but none was provided."
@@ -2705,7 +2695,7 @@ msgid "Attached Files"
 msgstr "Csatolt fájlok"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:221
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:326
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:342
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:279
 msgid "Attachment"
 msgstr "Melléklet"
@@ -2998,6 +2988,8 @@ msgid ""
 "Available tags are limited to existing in the manage tags section. AI agent "
 "won't be able to generate new ones. %l"
 msgstr ""
+"Az elérhető címkék a címkék kezelése szakaszban lévőkre vannak korlátozva. A "
+"MI-ügyintéző nem fog tudni újakat előállítani. %l"
 
 #: db/seeds/settings.rb:889
 msgid "Available types for a new ticket"
@@ -3357,7 +3349,7 @@ msgstr "CA"
 #: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:179
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:85
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:90
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:246
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:262
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:30
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:232
 #: db/seeds/object_manager_attributes.rb:523
@@ -3945,6 +3937,8 @@ msgid ""
 "Choose whether the suggested tags are added to or replace the existing tags "
 "on the ticket."
 msgstr ""
+"Annak kiválasztása, hogy a javasolt címkék hozzá legyenek-e adva a jegy "
+"meglévő címkéihez, vagy lecseréljék-e azokat."
 
 #: app/models/ai/agent/type/ticket_categorizer.rb:43
 msgid ""
@@ -4274,7 +4268,7 @@ msgstr "A nyitott jegy jelzőjének színábrázolása az oldalsávon."
 
 #: app/frontend/apps/desktop/components/CommonTable/HeaderResizeLine.vue:70
 msgid "Column width: %s pixels"
-msgstr ""
+msgstr "Oszlopszélesség: %s képpont"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:285
 msgid "Combined subscription URL"
@@ -4398,6 +4392,8 @@ msgid ""
 "Configure the way required number of resulting tags are added or replaced in "
 "the ticket tags list."
 msgstr ""
+"Annak a módjának a beállítása, hogy az eredményül kapott címkék szükséges "
+"menyisége hogyan legyen hozzáadva vagy cserélve a jegycímkék listájában."
 
 #: db/seeds/permissions.rb:6
 msgid "Configure your system."
@@ -4615,7 +4611,7 @@ msgstr "Helyi menü"
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue:46
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSource.vue:52
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmail.vue:136
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:534
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:550
 msgid "Continue"
 msgstr "Folytatás"
 
@@ -4865,7 +4861,7 @@ msgstr "Ország"
 #: app/frontend/apps/desktop/entities/user/composables/useUserCreate.ts:78
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:114
 #: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:309
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:485
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:501
 msgid "Create"
 msgstr "Létrehozás"
 
@@ -5030,7 +5026,7 @@ msgid "Create tag"
 msgstr "Címke létrehozása"
 
 #: app/frontend/apps/mobile/pages/ticket/routes.ts:64
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:485
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:501
 msgid "Create ticket"
 msgstr "Jegy létrehozása"
 
@@ -5140,7 +5136,7 @@ msgid "Created by"
 msgstr "Létrehozta"
 
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:24
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:460
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:476
 msgid "Creating new tickets via web is disabled."
 msgstr "A weben keresztüli új jegyek létrehozása le van tiltva."
 
@@ -5515,10 +5511,8 @@ msgid "Default caller ID for outbound calls."
 msgstr "Alapértelmezett hívóazonosító a kimenő hívásokhoz."
 
 #: app/assets/javascripts/app/models/ticket_state.coffee:42
-#, fuzzy
-#| msgid "Default for new tickets"
 msgid "Default for closed tickets"
-msgstr "Alapértelmezett az új jegyekhez"
+msgstr "Alapértelmezett a lezárt jegyekhez"
 
 #: app/assets/javascripts/app/models/ticket_state.coffee:35
 msgid "Default for follow-ups"
@@ -5605,7 +5599,7 @@ msgstr ""
 
 #: app/models/ai/agent/type/ticket_tagger.rb:115
 msgid "Define rules for adding tags in the system."
-msgstr ""
+msgstr "Szabályok meghatározása a címkéknek a rendszerbe való hozzáadásához."
 
 #: db/seeds/settings.rb:2617
 msgid "Define the default agent notifications for new users."
@@ -7090,7 +7084,7 @@ msgstr "Bejegyzés elvetése"
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:65
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:59
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:36
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:422
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:438
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:256
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:43
 msgid "Discard changes"
@@ -7323,10 +7317,8 @@ msgid "Drafts"
 msgstr "Piszkozatok"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketAgentUpdateButton.vue:114
-#, fuzzy
-#| msgid "Create Macros"
 msgid "Drafts & macros"
-msgstr "Makrók létrehozása"
+msgstr "Piszkozatok és makrók"
 
 #: app/frontend/apps/desktop/composables/dragAndDrop/useAccessibleDragAndDrop.ts:68
 msgid "Drag ended for %s."
@@ -8530,10 +8522,8 @@ msgid "Execute planned jobs."
 msgstr "Tervezett feladatok végrehajtása."
 
 #: app/assets/javascripts/app/views/ticket_overview/batch_overlay.jst.eco:23
-#, fuzzy
-#| msgid "Confirm bulk action"
 msgid "Executing bulk action…"
-msgstr "Tömeges művelet jóváhagyása"
+msgstr "Tömeges művelet végrehajtása…"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:22
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:34
@@ -9012,7 +9002,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:42
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:38
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:23
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:459
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:475
 #: app/frontend/shared/errors/useErrorHandler.ts:29
 #: app/frontend/shared/router/guards/before/permission.ts:26
 msgid "Forbidden"
@@ -9207,7 +9197,7 @@ msgstr "Általános kommunikációs hiba, talán az internet nem érhető el!"
 
 #: app/models/ai/agent/type/ticket_tagger.rb:126
 msgid "General tagging principles"
-msgstr ""
+msgstr "Általános címkézési irányelvek"
 
 #: app/assets/javascripts/app/controllers/api.coffee:180
 msgid "Generate Access Token for |%s|"
@@ -10517,10 +10507,8 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:2
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_video.coffee:2
-#, fuzzy
-#| msgid "Insert table"
 msgid "Insert"
-msgstr "Táblázat beszúrása"
+msgstr "Beszúrás"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:221
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:218
@@ -10829,10 +10817,8 @@ msgid "Invalid video URL"
 msgstr "Érvénytelen videó-URL"
 
 #: app/helpers/knowledge_base_top_bar_helper.rb:32
-#, fuzzy
-#| msgid "Invite"
 msgid "Invisible"
-msgstr "Meghívás"
+msgstr "Láthatatlan"
 
 #: app/assets/javascripts/app/controllers/layout_ref.coffee:650
 msgid "Invitation sent to %s"
@@ -11124,10 +11110,8 @@ msgid "Knowledge Base multilingual support"
 msgstr "Tudásbázis többnyelvű támogatása"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/extensions/KnowledgeBaseSuggestion.ts:59
-#, fuzzy
-#| msgid "Knowledge Base active"
 msgid "Knowledge base articles"
-msgstr "A tudásbázis aktív"
+msgstr "Tudásbázis-bejegyzések"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketAIKnowledgeBaseAnswers.vue:48
 #: app/services/service/ticket/ai_assistance/create_knowledge_base_answer.rb:21
@@ -11545,10 +11529,8 @@ msgstr "Betöltés"
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMore.vue:27
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSeparatorMore.vue:18
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketList.vue:132
-#, fuzzy
-#| msgid "load %s more"
 msgid "Load %s more"
-msgstr "további %s betöltése"
+msgstr "További %s betöltése"
 
 #: app/frontend/shared/form/i18n/locales.ts:61
 msgid "Load more"
@@ -12947,10 +12929,8 @@ msgid "New tab"
 msgstr "Új lap"
 
 #: app/models/ai/agent/type/ticket_tagger.rb:145
-#, fuzzy
-#| msgid "New Category"
 msgid "New tags strategy"
-msgstr "Új kategória"
+msgstr "Új címkék stratégiája"
 
 #: app/assets/javascripts/app/controllers/text_module.coffee:35
 msgid "New text module"
@@ -13311,6 +13291,9 @@ msgid ""
 "No proxy for these comma-separated addresses. Supports wildcards like "
 "*.example.com. Note: Loopback addresses are always excluded from proxying."
 msgstr ""
+"Nincs proxy ezekhez a vesszővel elválasztott címekhez. Támogatja a "
+"helyettesítő karaktereket, mint például *.example.com. Megjegyzés: a "
+"visszacsatolási címek mindig kizárásra kerülnek a proxyzásból."
 
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue:260
 msgid "No recent searches"
@@ -13625,6 +13608,10 @@ msgstr "Értesítés elolvasva"
 msgid "Notification sender"
 msgstr "Értesítés küldője"
 
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:14
+msgid "Notification sent to"
+msgstr "az értesítés elküldve ide:"
+
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:167
 msgid "Notification settings could not be reset."
 msgstr "Az értesítési beállításokat nem sikerült visszaállítani."
@@ -13680,14 +13667,12 @@ msgid "Number"
 msgstr "Szám"
 
 #: app/models/ai/agent/type/ticket_tagger.rb:174
-#, fuzzy
-#| msgid "Number"
 msgid "Number of tags"
-msgstr "Szám"
+msgstr "Címkék száma"
 
 #: app/models/ai/agent/type/ticket_tagger.rb:178
 msgid "Number of tags the AI agent may assign."
-msgstr ""
+msgstr "Címkék száma, amennyit az MI-ügyintéző hozzárendelhet."
 
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:12
 msgid "OAuth"
@@ -13958,7 +13943,7 @@ msgstr "Megnyitás új lapon"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:258
 msgid "Open in primary locale"
-msgstr ""
+msgstr "Megnyitás az elsődleges területi beállításban"
 
 #: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:65
 msgid "Open link"
@@ -15094,10 +15079,8 @@ msgid "Priority rules"
 msgstr "Prioritási szabályok"
 
 #: app/models/ai/agent/type/ticket_tagger.rb:135
-#, fuzzy
-#| msgid "Priority rules"
 msgid "Priority tagging rules"
-msgstr "Prioritási szabályok"
+msgstr "Prioritáscímkézési szabályok"
 
 #: db/seeds/settings.rb:1980
 msgid "Private key (PEM)"
@@ -15257,20 +15240,16 @@ msgid "Publish Article"
 msgstr "Bejegyzés közzététele"
 
 #: app/helpers/knowledge_base_top_bar_helper.rb:34
-#, fuzzy
-#| msgid "published"
 msgid "Published"
-msgstr "közzétéve"
+msgstr "Közzétéve"
 
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco:15
 msgid "Published at"
 msgstr "Közzétéve"
 
 #: app/views/knowledge_base/public/answers/show.html.erb:41
-#, fuzzy
-#| msgid "Published %s"
 msgid "Published: %s"
-msgstr "A(z) %s közzétéve"
+msgstr "Közzétéve: %s"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/highlighter.coffee:28
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/useArticleHighlights/useArticleHighlightsA11y.ts:15
@@ -15460,7 +15439,7 @@ msgstr "Rekurzív jegy eseményindítók"
 #: app/frontend/apps/mobile/pages/authentication/after-auth/plugins/doorkeeperReturnTo.ts:11
 #: app/frontend/apps/mobile/pages/authentication/components/AfterAuth/DoorkeeperReturnTo.vue:18
 msgid "Redirecting to authorization…"
-msgstr ""
+msgstr "Átirányítás a felhatalmazáshoz…"
 
 #: app/models/system_report/plugin/redis.rb:4
 msgid "Redis version"
@@ -15513,10 +15492,8 @@ msgstr "Kapcsolódó objektum típusa"
 
 #: app/assets/javascripts/app/views/link/kb_answer.jst.eco:1
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:138
-#, fuzzy
-#| msgid "Related Answers"
 msgid "Related knowledge"
-msgstr "Kapcsolódó válaszok"
+msgstr "Kapcsolódó tudás"
 
 #: app/controllers/ticket/knowledge_base_answers_controller.rb:50
 msgid ""
@@ -15734,16 +15711,12 @@ msgstr "Átrendezés"
 
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:3
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_video.coffee:3
-#, fuzzy
-#| msgid "Replacement"
 msgid "Replace"
-msgstr "Helyettesítés"
+msgstr "Csere"
 
 #: app/models/ai/agent/type/ticket_tagger.rb:166
-#, fuzzy
-#| msgid "Replacement agent"
 msgid "Replace existing tags with"
-msgstr "Helyettesítő ügyintéző"
+msgstr "Meglévő címkék cseréje ezzel"
 
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco:26
 msgid "Replacement"
@@ -15771,10 +15744,8 @@ msgid "Reply allowed only for open tickets"
 msgstr "Válasz csak nyitott jegyeknél engedélyezett"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:61
-#, fuzzy
-#| msgid "sent to the customer"
 msgid "Reply to customer"
-msgstr "elküldve az ügyfélnek"
+msgstr "Válasz az ügyfélnek"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:478
 msgid "Reply to last article"
@@ -16471,16 +16442,12 @@ msgid "Scroll to bottom"
 msgstr "Görgetés az aljára"
 
 #: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/components/BulkScrollButton.vue:24
-#, fuzzy
-#| msgid "Scroll down"
 msgid "Scroll to end"
-msgstr "Görgessen le"
+msgstr "Görgetés a végére"
 
 #: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/components/BulkScrollButton.vue:24
-#, fuzzy
-#| msgid "Scroll to bottom"
 msgid "Scroll to start"
-msgstr "Görgetés az aljára"
+msgstr "Görgetés az elejére"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:169
 #: app/assets/javascripts/app/controllers/clues/first_steps_clues.coffee:32
@@ -16618,10 +16585,8 @@ msgid "Search or enter phone number…"
 msgstr "Keresés vagy telefonszám megadása…"
 
 #: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:442
-#, fuzzy
-#| msgid "Search result list"
 msgid "Search result for: %s"
-msgstr "Keresési eredmény listája"
+msgstr "Keresési eredmények erre: %s"
 
 #: lib/external_data_source/errors.rb:114
 msgid ""
@@ -16742,7 +16707,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:189
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:26
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:127
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:288
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:304
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:254
 #: db/seeds/permissions.rb:209
 msgid "Security"
@@ -16866,10 +16831,8 @@ msgid "Select"
 msgstr "Kiválasztás"
 
 #: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:402
-#, fuzzy
-#| msgid "Select all %s results"
 msgid "Select %s result(s)"
-msgstr "Az összes %s találat kiválasztása"
+msgstr "%s találat kiválasztása"
 
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee:38
 msgid "Select All"
@@ -16931,7 +16894,7 @@ msgstr ""
 "Azon jegybejegyzések kiválasztása, amelyeket az MI-ügyintézőnek elemeznie "
 "kell."
 
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:146
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:162
 msgid "Select the type of ticket your are creating"
 msgstr "A létrehozni kívánt jegy típusának kiválasztása"
 
@@ -17173,7 +17136,7 @@ msgstr "Munkamenetek"
 msgid "Set Up"
 msgstr "Beállítás"
 
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:120
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:136
 msgid "Set a title for your ticket"
 msgstr "Cím beállítása a jegyhez"
 
@@ -17215,10 +17178,8 @@ msgstr ""
 "A kimenő hívások hívóazonosítójának beállítása a cél-hívóazonosító alapján."
 
 #: app/assets/javascripts/app/controllers/ticket_state.coffee:50
-#, fuzzy
-#| msgid "Set default for new tickets"
 msgid "Set default for closed tickets"
-msgstr "Alapértelmezés beállítása az új jegyekhez"
+msgstr "Alapértelmezés beállítása a lezárt jegyekhez"
 
 #: app/assets/javascripts/app/controllers/ticket_state.coffee:40
 msgid "Set default for follow-ups"
@@ -18348,10 +18309,8 @@ msgid "Tag \"%s\" already exists."
 msgstr "A(z) „%s” címke már létezik."
 
 #: app/models/ai/agent/type/ticket_tagger.rb:160
-#, fuzzy
-#| msgid "Assignment Timeout"
 msgid "Tag assignment mode"
-msgstr "Hozzárendelés időkorlátja"
+msgstr "Címke-hozzárendelési mód"
 
 #: app/assets/javascripts/app/controllers/chat.coffee:560
 #: app/assets/javascripts/app/controllers/tag.coffee:3
@@ -18579,6 +18538,7 @@ msgstr "Köszönjük a visszajelzést. Elmagyarázná, hogy milyen probléma tö
 msgid ""
 "The \"Pending till\" attribute is required for the selected state action."
 msgstr ""
+"A „Várakozás eddig” attribútum szükséges a kiválasztott állapotművelethez."
 
 #: lib/secure_mailing/pgp/tool/exec/agent.rb:13
 msgid "The 'gpg-agent' process could not be stopped."
@@ -18759,6 +18719,8 @@ msgid ""
 "The app configuration has changed since this channel was authenticated. "
 "Please click \"Reauthenticate\" to keep it working."
 msgstr ""
+"Az alkalmazás beállításai megváltoztak, mióta ez a csatorna hitelesítve "
+"lett. Kattintson az „Újrahitelesítés” gombra a működés fenntartásához."
 
 #: app/frontend/apps/desktop/stores/theme.ts:41
 msgid "The appearance could not be updated."
@@ -19327,7 +19289,7 @@ msgstr "Az új jegyszámot nem sikerült előállítani."
 #: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:549
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_new.coffee:69
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee:93
-#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:820
+#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:825
 #: app/assets/javascripts/app/controllers/customer_ticket_create.coffee:193
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:272
 #: app/assets/javascripts/app/controllers/object_manager.coffee:265
@@ -19404,6 +19366,8 @@ msgid ""
 "The priority rules instruct the AI agent on how to add tags for incoming "
 "tickets."
 msgstr ""
+"A prioritási szabályok utasítják az MI-ügyintézőt, hogy hogyan kell címkéket "
+"adni a beérkező jegyekhez."
 
 #: lib/secure_mailing/pgp/incoming.rb:304
 msgid "The private PGP key could not be found."
@@ -19704,6 +19668,8 @@ msgstr "Az újra megpróbált biztonsági folyamat sikertelen volt!"
 #: app/models/ai/agent/type/ticket_tagger.rb:130
 msgid "The rules instruct the AI agent on how tags are used in the system."
 msgstr ""
+"A szabályok utasítják az MI-ügyintézőt, hogy a címkék hogyan vannak "
+"használva a rendszerben."
 
 #: app/models/ai/agent/type/ticket_text_extractor.rb:31
 msgid ""
@@ -19730,6 +19696,9 @@ msgid ""
 "The rules instruct the AI agent on when to generate new tags and when to "
 "prefer tags from existing tags list."
 msgstr ""
+"A szabályok utasítják az MI-ügyintézőt, hogy mikor kell új címkéket "
+"előállítani, és mikor kell előnyben részesíteni a meglévő címkék listájából "
+"származó címkéket."
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:107
 msgid "The seconds overlay"
@@ -20503,6 +20472,8 @@ msgstr "Ez a mező nem tartalmazhat több mint %s karaktert."
 msgid "This field was configured incorrectly and can't be submitted."
 msgstr "Ez a mező helytelenül lett konfigurálva, és nem lehet elküldeni."
 
+#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:760
+#: app/controllers/concerns/creates_ticket_articles.rb:43
 #: app/graphql/gql/mutations/ticket/concerns/handles_group.rb:24
 msgid "This group has no email address configured for outgoing communication."
 msgstr ""
@@ -20836,14 +20807,10 @@ msgstr ""
 "alapján."
 
 #: app/models/ai/agent/type/ticket_tagger.rb:53
-#, fuzzy
-#| msgid ""
-#| "This type of AI agent can prioritize incoming tickets based on their "
-#| "content."
 msgid ""
 "This type of AI agent can suggest tags for tickets based on their content."
 msgstr ""
-"Az ilyen típusú MI-ügyintéző rangsorolhatja a bejövő jegyeket a tartalmuk "
+"Az ilyen típusú MI-ügyintéző címkéket javasolhat a jegyekhez a tartalmuk "
 "alapján."
 
 #: app/policies/ticket/shared_draft_start_policy.rb:26
@@ -20909,7 +20876,7 @@ msgstr "csütörtök"
 msgid "Ticket"
 msgstr "Jegy"
 
-#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:793
+#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:798
 msgid "Ticket %s created!"
 msgstr "A(z) %s jegy létrehozva!"
 
@@ -21102,10 +21069,8 @@ msgstr ""
 "verziójával, nyitott kérdésekkel és közelgő eseményekkel."
 
 #: app/models/ai/agent/type/ticket_tagger.rb:49
-#, fuzzy
-#| msgid "Ticket Owner"
 msgid "Ticket Tagger"
-msgstr "Jegytulajdonos"
+msgstr "Jegycímkéző"
 
 #: app/models/ai/agent/type/ticket_text_extractor.rb:11
 msgid "Ticket Text Extractor"
@@ -21553,7 +21518,7 @@ msgstr "Időzítés"
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco:10
 #: app/controllers/time_accountings_controller.rb:85
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/TicketSimpleTable.vue:34
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:136
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:152
 #: app/graphql/gql/types/overview_type.rb:92
 #: db/seeds/object_manager_attributes.rb:34 lib/excel_sheet/ticket.rb:24
 msgid "Title"
@@ -21790,10 +21755,8 @@ msgid "Total display of the number of objects in a grouping."
 msgstr "A csoportosításban lévő objektumok számának összesített megjelenítése."
 
 #: app/models/ai/agent/type/ticket_tagger.rb:165
-#, fuzzy
-#| msgid "Ticket could not be created."
 msgid "Total shouldn't exceed"
-msgstr "A jegyet nem sikerült létrehozni."
+msgstr "Az összesen nem léheti túl"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_escalation.jst.eco:12
 msgid "Total: %s"
@@ -22115,14 +22078,12 @@ msgid "URL (OCR)"
 msgstr "URL (OCR)"
 
 #: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkBottomDrawer.vue:137
-#, fuzzy
-#| msgid "unassign user"
 msgid "Unassign owner"
-msgstr "felhasználó hozzárendelésének feloldása"
+msgstr "Tulajdonos hozzárendelésének megszüntetése"
 
 #: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkBottomDrawer.vue:170
 msgid "Unassign owner & move to group"
-msgstr ""
+msgstr "Tulajdonos hozzárendelésének megszüntetése és áthelyezés csoportba"
 
 #: app/controllers/first_steps_controller.rb:206 db/seeds/overviews.rb:32
 msgid "Unassigned & Open Tickets"
@@ -22275,22 +22236,16 @@ msgid "Update"
 msgstr "Frissítés"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee:139
-#, fuzzy
-#| msgid "Update Time"
 msgid "Update & Archive"
-msgstr "Frissítési idő"
+msgstr "Frissítés és archiválás"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee:131
-#, fuzzy
-#| msgid "Update In Min"
 msgid "Update & Internal"
-msgstr "Frissítés percben"
+msgstr "Frissítés és belső"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee:135
-#, fuzzy
-#| msgid "Update as closed"
 msgid "Update & Publish"
-msgstr "Frissítés, amint lezárásra került"
+msgstr "Frissítés és közzététel"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:38
 msgid "Update Database"
@@ -22653,7 +22608,7 @@ msgstr "A kamera használata, hogy fényképet készítsen a profilképhez."
 
 #: app/frontend/apps/desktop/components/CommonTable/HeaderResizeLine.vue:147
 msgid "Use the left and right arrow keys to resize the column."
-msgstr ""
+msgstr "Használja a bal és jobb nyílbillentyűt az oszlop átméretezéséhez."
 
 #: db/seeds/settings.rb:2372
 msgid ""
@@ -23110,10 +23065,8 @@ msgid "Visibility"
 msgstr "Láthatóság"
 
 #: app/helpers/knowledge_base_top_bar_helper.rb:32
-#, fuzzy
-#| msgid "Visibility"
 msgid "Visible"
-msgstr "Láthatóság"
+msgstr "Látható"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:110
 msgid "Visible to everyone"
@@ -23853,10 +23806,8 @@ msgid "You do not have permission to update"
 msgstr "Nincs jogosultsága a frissítéshez"
 
 #: app/frontend/apps/desktop/components/CommonTable/CommonAdvancedTable.vue:419
-#, fuzzy
-#| msgid "You don't have more tickets to load."
 msgid "You don't have more items to load."
-msgstr "Nincsenek további betöltendő jegyei."
+msgstr "Nincsenek további betöltendő elemei."
 
 #: app/frontend/shared/router/guards/before/permission.ts:27
 msgid "You don't have the necessary permissions to access this page."
@@ -23978,12 +23929,10 @@ msgid "You need to configure the Zammad endpoints in the %s:"
 msgstr "Be kell állítani a Zammad-végpontokat a(z) %s rendszerben:"
 
 #: app/frontend/apps/desktop/components/CommonTable/CommonAdvancedTable.vue:415
-#, fuzzy
-#| msgid "You reached the table limit of %s tickets (%s remaining)."
 msgid "You reached the table limit of %s items (%s remaining)."
-msgstr "Elérte a(z) %s jegyből álló táblázatkorlátot (%s van hátra)."
+msgstr "Elérte a(z) %s elemből álló táblázatkorlátot (%s van hátra)."
 
-#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:772
+#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:777
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:395
 msgid ""
 "You used %s in the text but no attachment could be found. Do you want to "
@@ -24506,7 +24455,7 @@ msgstr "egyiket sem tartalmazza"
 
 #: lib/validations/object_manager/attribute_validator/external_data_source.rb:19
 msgid "contains an invalid \"label\" or \"value\" entry"
-msgstr ""
+msgstr "érvénytelen „label” vagy „value” bejegyzést tartalmaz"
 
 #: lib/validations/object_manager/attribute_validator/option.rb:23
 msgid "contains invalid option: %{option}"
@@ -24840,11 +24789,11 @@ msgstr "elérte a figyelmeztetést"
 
 #: app/helpers/knowledge_base_visibility_note_helper.rb:38
 msgid "hidden, no published answers"
-msgstr ""
+msgstr "rejtett, nincsenek közzétett válaszok"
 
 #: app/helpers/knowledge_base_visibility_note_helper.rb:36
 msgid "hidden, visible only internally"
-msgstr ""
+msgstr "rejtett, csak belsőleg látható"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:40
 msgid "hide"
@@ -25216,7 +25165,7 @@ msgstr "perc"
 
 #: lib/validations/object_manager/attribute_validator/external_data_source.rb:13
 msgid "must be a hash with \"label\" and \"value\" keys"
-msgstr ""
+msgstr "„label” vagy „value” kulccsal rendelkező kivonatnak kell lennie"
 
 #: app/models/knowledge_base.rb:244
 msgid "must be a valid path or domain"
@@ -25344,10 +25293,8 @@ msgid "none"
 msgstr "nincs"
 
 #: app/helpers/knowledge_base_visibility_note_helper.rb:27
-#, fuzzy
-#| msgid "published"
 msgid "not published"
-msgstr "közzétéve"
+msgstr "nincs közzétéve"
 
 #: app/assets/javascripts/app/controllers/cti.coffee:162
 msgid "not reached"
