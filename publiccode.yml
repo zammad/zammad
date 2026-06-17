@@ -77,6 +77,17 @@ description:
   de:
     genericName: "Helpdesk-Software"
     shortDescription: "Zammad ist ein webbasiertes Open-Source-Helpdesk-/Kundensupport-System."
+    features:
+      - "Ticket-Management mit Echtzeit-Updates, SLA und Eskalationen"
+      - "Multi-Kanal-Support: E-Mail, Chat, Telefon, WhatsApp, Facebook, Telegram und weitere"
+      - "KI-Funktionen: Ticket-Zusammenfassung, KI-Agenten und Schreibassistent"
+      - "Volltext-Suche über alle Inhalte"
+      - "Wissensbank / FAQ-System"
+      - "Rollen- und Rechteverwaltung sowie SSO (SAML, OpenID Connect)"
+      - "REST-API, Webhooks und zahlreiche Integrationen (LDAP, Microsoft 365, GitHub, GitLab)"
+      - "Zwei-Faktor-Authentifizierung, S/MIME und PGP-Verschlüsselung"
+      - "Core Workflows, Textbausteine und anpassbare Felder"
+      - "Reporting, Zeiterfassung und Statistiken"
     longDescription: >
       # Willkommen bei Zammad
 
@@ -107,6 +118,17 @@ description:
   en:
     genericName: "Helpdesk software"
     shortDescription: "Zammad is a web based open source helpdesk/customer support system."
+    features:
+      - "Ticket management with real-time updates, SLA and escalations"
+      - "Multi-channel support: email, chat, phone, WhatsApp, Facebook, Telegram and more"
+      - "AI features: ticket summary, AI agents and writing assistant"
+      - "Full-text search across all content"
+      - "Knowledge base / FAQ system"
+      - "Role and permission management with SSO (SAML, OpenID Connect)"
+      - "REST API, webhooks and integrations (LDAP, Microsoft 365, GitHub, GitLab)"
+      - "Two-factor authentication, S/MIME and PGP encryption"
+      - "Core workflows, text modules and custom fields"
+      - "Reporting, time accounting and statistics"
     longDescription: >
       # Welcome to Zammad
 
