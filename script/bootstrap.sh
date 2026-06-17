@@ -2,6 +2,7 @@
 
 bundle install --jobs 8
 
+rm -f db/schema.rb
 rm -rf tmp/cache*
 
 export Z_LOCALES='en-us:de-de'
