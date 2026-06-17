@@ -230,7 +230,7 @@ describe('CommonAdvancedTable', () => {
 
     const withTooltip = wrapper.getByText('Tooltip-enabled cell text')
 
-    expect(withTooltip).toHaveAttribute('data-tooltip', 'true')
+    expect(withTooltip).toHaveAttribute('data-tooltip', 'truncate')
     expect(withTooltip).toHaveAttribute('aria-label', 'Tooltip-enabled cell text')
 
     const withoutTooltip = wrapper.getByText('Cell text without tooltip')

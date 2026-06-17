@@ -145,7 +145,7 @@ describe('TicketList', () => {
     const titleCell = await wrapper.findByRole('cell', { name: ticket.title })
     const titleLink = within(titleCell).getByRole('link')
 
-    expect(titleLink).toHaveAttribute('data-tooltip', 'true')
+    expect(titleLink).toHaveAttribute('data-tooltip', 'truncate')
     expect(titleLink).toHaveAttribute('aria-label', ticket.title)
   })
 

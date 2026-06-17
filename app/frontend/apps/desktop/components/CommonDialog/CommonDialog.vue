@@ -161,11 +161,11 @@ const transition = VITE_TEST_MODE
             </slot>
             <CommonButton
               v-if="!noClose"
+              v-tooltip="$t('Close dialog')"
               class="ms-auto"
               variant="neutral"
               size="medium"
               icon="x-lg"
-              :aria-label="$t('Close dialog')"
               @click="close()"
             />
           </div>

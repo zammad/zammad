@@ -85,13 +85,13 @@ onUnmounted(() => {
 <template>
   <div data-id="highlight-menu-wrapper" class="flex">
     <SplitButton
+      :tooltip="
+        isEraserActive ? $t('Remove highlight') : $t('Highlighter color: %s', $t(activeColorLabel))
+      "
       :class="{ [activeColorClass]: isActive }"
       class="flex aspect-square size-7.5! p-0!"
       variant="tertiary-light"
       size="small"
-      :tooltip="
-        isEraserActive ? __('Remove highlight') : $t('Highlighter color: %s', $t(activeColorLabel))
-      "
       :addon-label="__('Highlight options')"
       :aria-pressed="isActive"
       aria-describedby="highlight-menu-description"

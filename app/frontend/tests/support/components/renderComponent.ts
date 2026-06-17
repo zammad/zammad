@@ -35,7 +35,7 @@ import { initializeTwoFactorPlugins } from '#shared/entities/two-factor/composab
 import { buildFormKitPluginConfig } from '#shared/form/index.ts'
 import { i18n } from '#shared/i18n.ts'
 import applicationConfigPlugin from '#shared/plugins/applicationConfigPlugin.ts'
-import tooltip from '#shared/plugins/directives/tooltip/index.ts'
+import TooltipPlugin from '#shared/plugins/directives/tooltip/index.ts'
 import { setCurrentRouter } from '#shared/router/router.ts'
 import { initializeWalker } from '#shared/router/walker.ts'
 import type { AppName } from '#shared/types/app.ts'
@@ -160,7 +160,9 @@ const defaultWrapperOptions: ExtendedMountingOptions<unknown> = {
       CommonBadge,
     },
     stubs: {},
-    directives: { [tooltip.name]: tooltip.directive },
+    directives: {
+      [TooltipPlugin.name]: TooltipPlugin.directive,
+    },
     plugins,
   },
 }

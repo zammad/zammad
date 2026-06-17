@@ -56,9 +56,10 @@ export default async function mountApp(): Promise<void> {
   initializeGlobalComponentStyles()
   initializeGlobalComponents(app)
   initializeGlobalProperties(app)
-  initializeGlobalDirectives(app)
   initializeMobileVisuals()
   initializeStoreSubscriptions()
+
+  initializeGlobalDirectives(app)
 
   const session = useSessionStore()
   const authentication = useAuthenticationStore()

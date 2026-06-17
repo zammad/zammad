@@ -17,8 +17,12 @@ export interface Props {
   icon?: string
   suffixIcon?: string
   iconClass?: string
-  tooltip?: string
   noTruncate?: boolean
+  /**
+   * Prop needs to be set when we use a non template style e.g formkit schema
+   * else prefer to use directive binding
+   */
+  tooltip?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -158,7 +162,7 @@ const iconSizeClass = computed(() => {
 
 <template>
   <button
-    v-tooltip="tooltip ? $t(tooltip) : undefined"
+    v-tooltip="tooltip ? $t(tooltip) : null"
     class="inline-flex h-min min-h-min shrink-0 flex-nowrap items-center justify-center gap-x-1 border-0 font-normal shadow-none transition-transform duration-200 hover:outline-1 hover:outline-offset-1 hover:outline-blue-600 focus:outline-0 focus:hover:outline-1 focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 focus:active:scale-[95%] dark:hover:outline-blue-900"
     :class="[
       ...variantClasses,

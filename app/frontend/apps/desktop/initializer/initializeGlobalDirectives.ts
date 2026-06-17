@@ -2,10 +2,10 @@
 
 import { type App } from 'vue'
 
-import { initializeTooltipDirective } from '#shared/initializer/initializeDirectives.ts'
+import tooltip from '#shared/plugins/directives/tooltip/index.ts'
 
 const initializeGlobalDirectives = (app: App) => {
-  initializeTooltipDirective(app)
+  app.directive(tooltip.name, tooltip.directive)
 }
 
 export default initializeGlobalDirectives

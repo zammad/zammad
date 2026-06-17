@@ -212,12 +212,12 @@ const { tabs, activeTab } = usePersonalSettingTabs()
             />
             <CommonButton
               v-else-if="action.onClick && action.show?.(item)"
+              v-tooltip="$t((action?.ariaLabel as Function)(item))"
               :icon="action.icon"
               :disabled="loading"
               :class="{ 'bg-transparent!': action.variant === 'danger' }"
               size="medium"
               :variant="action.variant"
-              :tooltip="(action?.ariaLabel as Function)(item)"
               @click="action.onClick?.(item)"
             />
           </template>

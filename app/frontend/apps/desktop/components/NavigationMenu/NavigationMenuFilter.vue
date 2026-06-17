@@ -5,7 +5,6 @@ import { useActiveElement, useMagicKeys, onClickOutside } from '@vueuse/core'
 import { nextTick, ref, watchEffect, useTemplateRef } from 'vue'
 
 import CommonIcon from '#shared/components/CommonIcon/CommonIcon.vue'
-import { i18n } from '#shared/i18n.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import { useTransitionConfig } from '#desktop/composables/useTransitionConfig.ts'
@@ -83,10 +82,10 @@ const { durations } = useTransitionConfig()
     <Transition name="fade-move" :duration="durations.normal">
       <CommonButton
         v-if="filterFieldOpen"
+        v-tooltip="$t('Clear filter')"
         icon="x-lg"
         variant="neutral"
         class="hover:text-black hover:outline-hidden hover:outline-transparent hover:dark:text-white"
-        :aria-label="i18n.t('Clear filter')"
         @click="closeFilterField"
       />
     </Transition>

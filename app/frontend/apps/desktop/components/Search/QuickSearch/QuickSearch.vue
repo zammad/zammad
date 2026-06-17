@@ -176,7 +176,7 @@ const { resetQuickSearchInputField } = useQuickSearchInput()
                     </span>
                   </CommonLabel>
                   <CommonButton
-                    :aria-label="$t('Delete this recent search')"
+                    v-tooltip="$t('Delete this recent search')"
                     :class="{
                       'opacity-0 transition-opacity': !isTouchDevice,
                     }"

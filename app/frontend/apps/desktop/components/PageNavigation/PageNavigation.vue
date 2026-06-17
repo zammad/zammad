@@ -45,10 +45,10 @@ const permittedRoutes = computed(() =>
             <li class="flex justify-center">
               <CommonButton
                 v-if="collapsed"
+                v-tooltip="$t('Open quick search')"
                 class="shrink-0 text-neutral-400 hover:outline-blue-900"
                 size="large"
                 variant="neutral"
-                :aria-label="$t('Open quick search')"
                 icon="search"
                 @click="openSearch"
               />

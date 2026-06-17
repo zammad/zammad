@@ -32,11 +32,11 @@ onKeyDown('Escape', cancelBulkAction)
         <CommonLabel size="xl" tag="h3">{{ $t('Confirm bulk action') }}</CommonLabel>
       </div>
       <CommonButton
+        v-tooltip="$t('Close dialog')"
         class="ms-auto"
         variant="neutral"
         size="medium"
         icon="x-lg"
-        :aria-label="$t('Close dialog')"
         @click="cancelBulkAction"
       />
     </div>

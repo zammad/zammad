@@ -252,19 +252,19 @@ const ensureGranularOrFullAccess = (
         </template>
       </FormKit>
       <CommonButton
+        v-tooltip="$t('Remove')"
         class="shrink-0 text-gray-300 dark:text-neutral-400"
         icon="dash-circle"
         size="medium"
-        :tooltip="__('Remove')"
         :disabled="hasLastGroupPermission"
         :tabindex="hasLastGroupPermission ? '-1' : '0'"
         @click="removeGroupPermission(index)"
       />
       <CommonButton
+        v-tooltip="$t('Add')"
         class="me-2.5 shrink-0 text-gray-300 dark:text-neutral-400"
         icon="plus-circle"
         size="medium"
-        :tooltip="__('Add')"
         :disabled="hasNoMoreGroups"
         :tabindex="hasNoMoreGroups ? '-1' : '0'"
         @click="addGroupPermission(index + 1)"

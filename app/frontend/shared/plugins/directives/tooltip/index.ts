@@ -1,89 +1,70 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { type ObjectDirective } from 'vue'
+import { useEventListener } from '@vueuse/core'
+import { effectScope, h, render, type AppContext, type FunctionDirective, type VNode } from 'vue'
 
-import { useAppName } from '#shared/composables/useAppName.ts'
 import { useLocaleStore } from '#shared/stores/locale.ts'
 
-interface Modifiers {
-  /**
-   * Only show the tooltip when the target's content is actually truncated
-   */
-  truncate?: boolean
-  /**
-   * Treat the tooltip as *supportive* information rather than
-   * the element's accessible name.
-   *
-   * By default the directive writes the message to `aria-label`, which becomes
-   * (or overrides) the element's accessible name. With this modifier the
-   * message is written to `aria-description` instead, so screen readers
-   * announce it *in addition to* the accessible name already provided by the
-   * element or an ancestor.
-   *
-   * Use it when the element already has an accessible name and a tooltip label
-   * would be redundant or misleading
-   */
-  supportive?: boolean
-}
+import type { TooltipModifiers } from './types'
 
-const TOOLTIP_MESSAGE_ATTRIBUTE = 'aria-description'
+const getMessageAttribute = (modifiers: TooltipModifiers) =>
+  modifiers.supportive ? 'aria-description' : 'aria-label'
 
-const getMessageAttribute = (modifiers: Modifiers) =>
-  modifiers.supportive ? TOOLTIP_MESSAGE_ATTRIBUTE : 'aria-label'
-
-let isListeningToEvents = false
-let isTooltipInDom = false
+let isTooltipShown = false
 let hasHoverOnNode = false
 let currentEvent: MouseEvent | TouchEvent | null = null
 let tooltipTimeout: NodeJS.Timeout | null = null
+let tooltipAnimateTimeout: NodeJS.Timeout | null = null
+let isListeningToEvents = false
 
-let tooltipRecordsCount = 0
+const tooltipScope = effectScope(true)
 
-let tooltipTargetRecords: WeakMap<HTMLElement, { modifiers: Modifiers }> = new WeakMap()
+// A single tooltip node is rendered once and then reused. Showing and hiding only
+//   mutate this node, instead of mounting/unmounting it on every hover. `appContext`
+//   ties the node to the app
+let appContext: AppContext | null = null
+let tooltipVNode: VNode | null = null
+let tooltipMessageVNode: VNode | null = null
 
-const removeTooltips = () => {
-  document.querySelectorAll('[role="tooltip"]').forEach((node) => node?.remove())
-  isTooltipInDom = false
+const ensureTooltipNode = () => {
+  if (!tooltipVNode) {
+    tooltipMessageVNode = h('p')
+    tooltipVNode = h(
+      'div',
+      {
+        role: 'tooltip',
+        class: 'tooltip',
+        style: { display: 'none', pointerEvents: 'none' },
+      },
+      [tooltipMessageVNode],
+    )
+    tooltipVNode.appContext = appContext
+
+    render(tooltipVNode, document.querySelector('body')!)
+  }
+
+  return {
+    tooltip: tooltipVNode.el as HTMLElement,
+    message: tooltipMessageVNode!.el as HTMLElement,
+  }
 }
 
-const addModifierRecord = (element: HTMLDivElement, modifiers: Modifiers) => {
-  if (tooltipTargetRecords.has(element)) return
+const hideTooltip = () => {
+  if (tooltipAnimateTimeout) clearTimeout(tooltipAnimateTimeout)
 
-  tooltipRecordsCount += 1
-  tooltipTargetRecords.set(element, {
-    modifiers,
-  })
-}
+  isTooltipShown = false
 
-const removeModifierRecord = (element: HTMLDivElement) => {
-  if (!tooltipTargetRecords.has(element)) return
-  tooltipRecordsCount -= 1
-  tooltipTargetRecords.delete(element)
-}
+  const tooltip = tooltipVNode?.el as HTMLElement | undefined
+  if (!tooltip) return
 
-const getModifierRecord = ($el: HTMLDivElement) => {
-  return tooltipTargetRecords.get($el) || null
-}
+  tooltip.classList.remove('tooltip-animate')
+  tooltip.style.display = 'none'
 
-const createTooltip = ({ top, left }: { top: string; left: string }, message: string) => {
-  const tooltipNode = document.createElement('div')
-  tooltipNode.classList.add('tooltip')
-
-  tooltipNode.style.top = top
-  tooltipNode.style.left = left
-  tooltipNode.setAttribute('aria-hidden', 'true')
-  tooltipNode.setAttribute('role', 'tooltip')
-
-  // Set the max-width to half of the available width
-  const availableWidth = window.innerWidth / 2
-  tooltipNode.style.maxWidth = `${availableWidth}px`
-
-  const tooltipMessageNode = document.createElement('p')
-  tooltipMessageNode.textContent = message
-
-  tooltipNode.insertAdjacentElement('afterbegin', tooltipMessageNode)
-
-  return tooltipNode
+  // Drop the role and message so the hidden node is invisible to assistive
+  //   technology (and DOM queries) while it is not shown.
+  tooltip.removeAttribute('role')
+  tooltip.removeAttribute('aria-hidden')
+  if (tooltipMessageVNode?.el) (tooltipMessageVNode.el as HTMLElement).textContent = ''
 }
 
 const getLeftBasedOnLanguage = (clientX: number, tooltipRectangle: DOMRect) => {
@@ -113,54 +94,53 @@ const getLeftBasedOnLanguage = (clientX: number, tooltipRectangle: DOMRect) => {
   return left
 }
 
-const addTooltip = (
-  targetNode: HTMLDivElement,
-  message: string,
-  {
-    event,
-  }: {
-    event: MouseEvent | TouchEvent
-  },
-) => {
-  if (!event) return
-
-  const tooltipNode = createTooltip({ top: '0px', left: '0px' }, message)
-  document.body.appendChild(tooltipNode) // Temporarily add to DOM to calculate dimensions
-
-  const tooltipRectangle = tooltipNode.getBoundingClientRect()
-
-  let top: string
-  let left: string
-  if (!event) return
+const getTooltipPosition = (event: MouseEvent | TouchEvent, tooltipRectangle: DOMRect) => {
   if ('touches' in event) {
-    const { clientX, clientY } = event.touches[0]
+    const clientX = event.touches[0]?.clientX ?? 0
+    const clientY = event.touches[0]?.clientY ?? 0
 
-    top = `${clientY}px`
-    left = getLeftBasedOnLanguage(clientX, tooltipRectangle)
-  } else {
-    const { clientX, clientY } = event
-    const verticalThreshold = 10 // native tooltip has an extra threshold of ~ 10px
-    const thresholdToBottom = 30
-
-    const availableSpaceBelow = window.innerHeight - clientY - thresholdToBottom
-
-    // If the tooltip is to close to the bottom of the viewport, show it above the target
-    if (availableSpaceBelow < tooltipRectangle.height) {
-      top = `${clientY - verticalThreshold - tooltipRectangle.height}px`
-    } else {
-      top = `${clientY + verticalThreshold}px`
-    }
-    left = getLeftBasedOnLanguage(clientX, tooltipRectangle)
+    return { top: `${clientY}px`, left: getLeftBasedOnLanguage(clientX, tooltipRectangle) }
   }
 
-  tooltipNode.style.top = top
-  tooltipNode.style.left = left
+  const { clientX, clientY } = event
+  const verticalThreshold = 10 // native tooltip has an extra threshold of ~ 10px
+  const thresholdToBottom = 30
 
-  document.body.insertAdjacentElement('beforeend', tooltipNode)
+  const availableSpaceBelow = window.innerHeight - clientY - thresholdToBottom
 
-  setTimeout(() => {
-    tooltipNode.classList.add('tooltip-animate')
-  }, 500) // Add animation after 500ms same as for delay
+  // If the tooltip is too close to the bottom of the viewport, show it above the target
+  const top =
+    availableSpaceBelow < tooltipRectangle.height
+      ? `${clientY - verticalThreshold - tooltipRectangle.height}px`
+      : `${clientY + verticalThreshold}px`
+
+  return { top, left: getLeftBasedOnLanguage(clientX, tooltipRectangle) }
+}
+
+const showTooltip = (message: string, event: MouseEvent | TouchEvent | null) => {
+  if (!event) return
+
+  const { tooltip, message: messageNode } = ensureTooltipNode()
+
+  messageNode.textContent = message
+  tooltip.setAttribute('role', 'tooltip')
+  tooltip.setAttribute('aria-hidden', 'true')
+
+  // Reset to a measurable, unanimated state before positioning.
+  tooltip.classList.remove('tooltip-animate')
+  tooltip.style.display = ''
+  tooltip.style.maxWidth = `${window.innerWidth / 2}px` // half of the available width
+  tooltip.style.top = '0px'
+  tooltip.style.left = '0px'
+
+  const { top, left } = getTooltipPosition(event, tooltip.getBoundingClientRect())
+  tooltip.style.top = top
+  tooltip.style.left = left
+
+  isTooltipShown = true
+
+  // Fade in after the same delay as before (matches the native-like reveal).
+  tooltipAnimateTimeout = setTimeout(() => tooltip.classList.add('tooltip-animate'), 500)
 }
 
 const isContentTruncated = (element: HTMLElement) => {
@@ -175,24 +155,11 @@ const isContentTruncated = (element: HTMLElement) => {
   return parentElement.offsetWidth < parentElement.scrollWidth
 }
 
-const evaluateModifiers = (element: HTMLElement, options?: Modifiers) => {
-  const modifications = {
-    isTruncated: false,
-    top: false,
-  }
-
-  if (options?.truncate) {
-    modifications.isTruncated = isContentTruncated(element)
-  }
-
-  return modifications
-}
-
 const findTooltipTarget = (element: HTMLDivElement | null): HTMLDivElement | null =>
   element?.closest('[data-tooltip]') || null
 
 const handleTooltipAddEvent = (event: MouseEvent | TouchEvent) => {
-  if (isTooltipInDom) removeTooltips() // Remove tooltips if there is already one set in the DOM
+  if (isTooltipShown) hideTooltip() // Hide a tooltip that is already shown.
 
   if (!event.target) return
 
@@ -205,7 +172,7 @@ const handleTooltipAddEvent = (event: MouseEvent | TouchEvent) => {
   //   `supportive` modifier opts out of setting `aria-label`.
   const message =
     tooltipTargetNode.getAttribute('aria-label') ||
-    tooltipTargetNode.getAttribute(TOOLTIP_MESSAGE_ATTRIBUTE)
+    tooltipTargetNode.getAttribute('aria-description')
   if (!message) return
 
   // Do not show the tooltip if it was temporarily suspended.
@@ -213,21 +180,20 @@ const handleTooltipAddEvent = (event: MouseEvent | TouchEvent) => {
   if (tooltipTargetNode.closest('.no-tooltip')) return
 
   hasHoverOnNode = true // Set it to capture mousemove event
+  currentEvent = event
 
-  const tooltipRecord = getModifierRecord(tooltipTargetNode)
-
-  const { isTruncated } = evaluateModifiers(tooltipTargetNode, tooltipRecord?.modifiers)
-
-  // If the content gets truncated and the modifier is set to only show the tooltip on truncation
-  if (!isTruncated && tooltipRecord?.modifiers.truncate) return
+  // With the `truncate` modifier, only show the tooltip when the content is truncated.
+  //   The modifier is persisted on the element as `data-tooltip="truncate"`.
+  if (
+    tooltipTargetNode.getAttribute('data-tooltip') === 'truncate' &&
+    !isContentTruncated(tooltipTargetNode)
+  )
+    return
 
   if (tooltipTimeout) clearTimeout(tooltipTimeout)
 
   tooltipTimeout = setTimeout(() => {
-    addTooltip(tooltipTargetNode, message as string, {
-      event: currentEvent as MouseEvent,
-    })
-    isTooltipInDom = true
+    showTooltip(message, currentEvent)
   }, 300) // Sets a delay before showing tooltip as native
 }
 
@@ -237,111 +203,61 @@ const handleEvent = (event: MouseEvent | TouchEvent) => {
 
 const handleTooltipRemoveEvent = () => {
   if (tooltipTimeout) clearTimeout(tooltipTimeout)
-  if (isTooltipInDom) removeTooltips()
+  hasHoverOnNode = false
+  currentEvent = null
+
+  if (isTooltipShown) hideTooltip()
 }
 
-const addEventListeners = () => {
-  window.addEventListener('scroll', handleTooltipRemoveEvent, {
-    passive: true,
-    capture: true,
-  }) // important to catch scroll event in capturing phase
+const startListeningToEvents = () => {
+  if (isListeningToEvents) return
+  isListeningToEvents = true
 
-  window.addEventListener('touchstart', handleTooltipAddEvent, {
-    passive: true,
-  })
-  window.addEventListener('touchmove', handleEvent, {
-    passive: true,
-  })
-  window.addEventListener('touchcancel', handleTooltipRemoveEvent, {
-    passive: true,
-  })
-
-  window.addEventListener('mouseover', handleTooltipAddEvent, {
-    passive: true,
-  })
-  window.addEventListener('mousemove', handleEvent, {
-    passive: true,
-  })
-  window.addEventListener('mouseout', handleTooltipRemoveEvent, {
-    passive: true,
-  })
-  window.addEventListener('mousedown', handleTooltipRemoveEvent, {
-    passive: true,
+  tooltipScope.run(() => {
+    useEventListener(window, 'scroll', handleTooltipRemoveEvent, { passive: true, capture: true })
+    useEventListener(window, ['mouseover', 'touchstart'], handleTooltipAddEvent, { passive: true })
+    useEventListener(window, ['mousemove', 'touchmove'], handleEvent, { passive: true })
+    useEventListener(
+      window,
+      ['mouseout', 'mousedown', 'touchcancel', 'resize'],
+      handleTooltipRemoveEvent,
+      { passive: true },
+    )
   })
 }
 
-const cleanupEventHandlers = () => {
-  window.removeEventListener('touchstart', handleTooltipAddEvent)
-  window.removeEventListener('touchmove', handleEvent)
-  window.removeEventListener('touchcancel', handleTooltipRemoveEvent)
-
-  window.removeEventListener('mouseover', handleTooltipAddEvent)
-  window.removeEventListener('mousemove', handleEvent)
-  window.removeEventListener('mouseout', handleTooltipRemoveEvent)
-  window.removeEventListener('mousedown', handleTooltipRemoveEvent)
-
-  window.removeEventListener('scroll', handleTooltipRemoveEvent)
+const options = {
+  hideTooltip: false,
 }
 
-const cleanupAndAddEventListeners = () => {
-  cleanupEventHandlers()
-  addEventListeners()
+// A function directive runs the same callback on `mounted` and `updated` —
+//  The tooltip system is an app-lifetime singleton
+const tooltipDirective: FunctionDirective<HTMLDivElement, unknown, keyof TooltipModifiers> = (
+  element,
+  { value, modifiers, instance },
+) => {
+  if (typeof value !== 'string') return
+
+  const attribute = getMessageAttribute(modifiers)
+
+  // In some cases the message is updated on an interval (e.g. table time cells), so
+  //   only write to the DOM when it actually changed.
+  if (element.getAttribute(attribute) !== value) element.setAttribute(attribute, value)
+
+  // Everything below only needs to take effect once
+  appContext ??= instance?.$.appContext ?? null
+
+  if (options?.hideTooltip) return
+
+  element.setAttribute('data-tooltip', modifiers.truncate ? 'truncate' : 'true')
+  startListeningToEvents()
+}
+
+export const setOptions = (newOptions: typeof options) => {
+  Object.assign(options, newOptions)
 }
 
 export default {
   name: 'tooltip',
-  directive: {
-    mounted: (element: HTMLDivElement, { value: message, modifiers }) => {
-      if (!message) return
-
-      element.setAttribute(getMessageAttribute(modifiers), message)
-
-      // Mobile does not have tooltips, hence we don't apply the rest of the logic
-      if (useAppName() === 'mobile') return
-
-      element.setAttribute('data-tooltip', 'true')
-
-      addModifierRecord(element, modifiers)
-
-      if (!isListeningToEvents) {
-        addEventListeners()
-        isListeningToEvents = true
-        // Resize we cannot add it into the cleanup function
-        window.addEventListener('resize', cleanupAndAddEventListeners)
-      }
-    },
-    updated(element: HTMLDivElement, { value: message, modifiers }) {
-      const attribute = getMessageAttribute(modifiers)
-
-      if (!message) {
-        if (element.getAttribute(attribute)) element.removeAttribute(attribute)
-        return
-      }
-
-      // In some cases, we update the aria-label on an interval f.e table time cells
-      // We don't want to write to the DOM on every update if nothing has changed
-      if (element.getAttribute(attribute) !== message) element.setAttribute(attribute, message)
-    },
-    beforeUnmount(element) {
-      // If we dynamically remove the element from the DOM, we need to remove it from the tooltipTargetRecords
-      removeModifierRecord(element)
-
-      // If there are no more elements with the tooltip directive, remove event listeners
-      if (tooltipRecordsCount !== 1) return
-
-      // Cleanup only on the last element
-      if (isTooltipInDom) removeTooltips()
-
-      if (isListeningToEvents) cleanupEventHandlers()
-
-      isListeningToEvents = false
-      tooltipTargetRecords = new WeakMap()
-      tooltipRecordsCount = 0
-
-      window.removeEventListener('resize', cleanupAndAddEventListeners)
-    },
-  },
-} as {
-  name: string
-  directive: ObjectDirective
+  directive: tooltipDirective,
 }

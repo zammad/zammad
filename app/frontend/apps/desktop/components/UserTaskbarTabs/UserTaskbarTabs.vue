@@ -235,6 +235,7 @@ const { isTouchDevice } = useTouchDevice()
         <CommonButton
           id="user-taskbar-tabs-popover-button"
           ref="popoverTarget"
+          v-tooltip="$t('List of all user taskbar tabs')"
           class="text-neutral-400 hover:outline-blue-900"
           icon="card-list"
           size="large"
@@ -242,7 +243,6 @@ const { isTouchDevice } = useTouchDevice()
           :aria-controls="popoverIsOpen ? 'user-taskbar-tabs-popover' : undefined"
           aria-haspopup="true"
           :aria-expanded="popoverIsOpen"
-          :tooltip="__('List of all user taskbar tabs')"
           :class="{
             'bg-blue-800! text-white!': popoverIsOpen,
           }"
