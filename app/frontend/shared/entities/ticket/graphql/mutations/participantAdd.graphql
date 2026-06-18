@@ -1,0 +1,13 @@
+mutation ticketParticipantAdd($ticketId: ID!, $userId: ID!) {
+  ticketParticipantAdd(ticketId: $ticketId, userId: $userId) {
+    participant {
+      id
+      firstname
+      lastname
+      email
+    }
+    errors {
+      ...errors
+    }
+  }
+}

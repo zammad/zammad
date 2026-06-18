@@ -736,6 +736,8 @@ GEM
     sass-embedded (1.101.0)
       google-protobuf (~> 4.31)
       rake (>= 13)
+    sassc (2.4.0)
+      ffi (~> 1.9)
     securerandom (0.4.1)
     selenium-webdriver (4.46.0)
       base64 (~> 0.2)
@@ -980,6 +982,7 @@ DEPENDENCIES
   rubocop-rspec
   rubocop-rspec_rails
   ruby-keycloak-admin
+  sassc (~> 2.4)
   selenium-webdriver
   shoulda-matchers
   simpleidn

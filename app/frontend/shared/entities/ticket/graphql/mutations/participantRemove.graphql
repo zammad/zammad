@@ -1,0 +1,8 @@
+mutation ticketParticipantRemove($ticketId: ID!, $userId: ID!) {
+  ticketParticipantRemove(ticketId: $ticketId, userId: $userId) {
+    success
+    errors {
+      ...errors
+    }
+  }
+}
