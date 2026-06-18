@@ -31,6 +31,7 @@ RSpec.describe Service::Ticket::ExternalReferences::IssueTracker::TicketList, in
               icon_state: 'closed',
               milestone:  '4.0',
               assignees:  ['Thorsten'],
+              issue_type: nil,
               labels:     [
                 {
                   color:      '#84b6eb',
