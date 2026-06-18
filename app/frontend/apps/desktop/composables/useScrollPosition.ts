@@ -22,23 +22,23 @@ export const useScrollPosition = (scrollContainer?: ShallowRef<HTMLElement | nul
   onBeforeRouteLeave(storeScrollPosition)
   onBeforeRouteUpdate(storeScrollPosition)
 
-  const scrollIntoView = (
+  const scrollIntoView = async (
     block: 'start' | 'end',
-    options: { behavior: 'instant' | 'smooth' } = { behavior: 'smooth' },
+    options: { behavior: ScrollOptions['behavior'] } = { behavior: 'smooth' },
   ) => {
     const { behavior } = options
 
-    nextTick(() => {
-      waitForAnimationFrame().then(() => {
-        const container = scrollContainer?.value
-        if (!container || !container?.scrollTo) return
+    await nextTick()
+    await waitForAnimationFrame()
 
-        const top = block === 'start' ? 0 : container.scrollHeight
-        container?.scrollTo({
-          behavior,
-          top,
-        })
-      })
+    const container = scrollContainer?.value
+    if (!container || !container?.scrollTo) return
+
+    const top = block === 'start' ? 0 : container.scrollHeight
+
+    container?.scrollTo({
+      behavior,
+      top,
     })
   }
 

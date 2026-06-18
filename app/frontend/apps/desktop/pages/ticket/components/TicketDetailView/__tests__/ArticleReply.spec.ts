@@ -1,10 +1,12 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { within } from '@testing-library/vue'
+import { computed } from 'vue'
 
 import { renderComponent } from '#tests/support/components/index.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
 
+import * as useTicketView from '#shared/entities/ticket/composables/useTicketView.ts'
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
@@ -99,8 +101,13 @@ describe('ArticleReply', () => {
   })
 
   it('shows add reply button for customers without hint text', () => {
+    vi.spyOn(useTicketView, 'useTicketView').mockReturnValue({
+      isTicketAgent: computed(() => false),
+      isTicketCustomer: computed(() => true),
+      isTicketEditable: computed(() => true),
+    })
+
     const wrapper = renderArticleReply({
-      isTicketCustomer: true,
       ticketArticleTypes: [
         ...defaultTicketArticleTypes,
         {
@@ -119,6 +126,8 @@ describe('ArticleReply', () => {
 
     expect(wrapper.queryByRole('button', { name: 'Add internal note' })).not.toBeInTheDocument()
     expect(wrapper.queryByText('or use the reply actions on articles.')).not.toBeInTheDocument()
+
+    vi.resetAllMocks()
   })
 
   it('can display and pin reply form', async () => {

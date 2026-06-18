@@ -3,7 +3,7 @@
 <script setup lang="ts">
 import { whenever } from '@vueuse/shared'
 import { unionBy } from 'lodash-es'
-import { computed, nextTick } from 'vue'
+import { computed, nextTick, useTemplateRef } from 'vue'
 import { useRoute } from 'vue-router'
 
 import { edgesToArray, waitForAnimationFrame, waitForElement } from '#shared/utils/helpers.ts'
@@ -15,14 +15,18 @@ import SystemMessage from '#desktop/pages/ticket/components/TicketDetailView/Sys
 import { useArticleContext } from '#desktop/pages/ticket/composables/useArticleContext.ts'
 import { useTicketArticleRows } from '#desktop/pages/ticket/composables/useTicketArticlesRows.ts'
 
+import { useActiveArticle } from './useActiveArticle.ts'
+
 interface Props {
   isLoadingArticles: boolean
+  scrollContainer?: HTMLElement | null
+  unreadArticleIds?: Set<string>
 }
 
-defineProps<Props>()
+const props = defineProps<Props>()
 
 const emit = defineEmits<{
-  'scroll-to-end': []
+  'scroll-to-end': [isPermalink: boolean]
 }>()
 
 const PAGE_SIZE = 100
@@ -54,6 +58,10 @@ const nextFetchCount = computed(() => {
 
 const { rows } = useTicketArticleRows(articles, leadingNodesCount, totalCount)
 
+const articleElements = useTemplateRef<HTMLElement[]>('article-elements')
+
+const { topHeaderHeight } = useActiveArticle(rows, articleElements, () => props.scrollContainer)
+
 const loadPrevious = async () => {
   await context.articlesQuery.fetchMore({
     variables: {
@@ -76,9 +84,7 @@ const getArticleElement = async (key: string): Promise<Element | null> => {
   return waitForElement(`#article-${row.key}`)
 }
 
-const hasMoreButton = computed(() => {
-  return !!rows.value.find((elem) => elem.type === 'more')
-})
+const hasMoreButton = computed(() => rows.value.some((elem) => elem.type === 'more'))
 
 const getPreviousArticleElement = async (key: string): Promise<Element | null> => {
   const elem = await getArticleElement(key)
@@ -87,6 +93,34 @@ const getPreviousArticleElement = async (key: string): Promise<Element | null> =
 
   await loadPrevious()
   return getPreviousArticleElement(key)
+}
+
+const ARTICLE_GAP = 40
+
+const scrollElementToContainerTop = (
+  targetElement: Element,
+  behavior: ScrollBehavior = 'instant',
+) => {
+  const listScrollContainer =
+    props.scrollContainer ??
+    (targetElement.closest('[class*="overflow-y-auto"]') as HTMLElement | null)
+
+  if (listScrollContainer) {
+    const headerOffset = Math.max(0, parseInt(topHeaderHeight.value || '0', 10)) + ARTICLE_GAP
+    const containerRect = listScrollContainer.getBoundingClientRect()
+    const elementRect = targetElement.getBoundingClientRect()
+    const relativeTop = elementRect.top - containerRect.top - headerOffset
+    const scrollTop = listScrollContainer.scrollTop + relativeTop
+
+    listScrollContainer.scrollTo({
+      top: Math.max(0, scrollTop),
+      behavior,
+    })
+
+    return
+  }
+
+  targetElement.scrollIntoView({ behavior, block: 'start' })
 }
 
 const scrollToArticle = async () => {
@@ -103,36 +137,66 @@ const scrollToArticle = async () => {
 
     targetElement = await waitForElement(`#article-${targetRow?.key}`)
 
-    return emit('scroll-to-end')
+    emit('scroll-to-end', false)
+    return
   }
 
-  const listScrollContainer = targetElement.closest('[class*="overflow-y-auto"]') as HTMLElement
+  scrollElementToContainerTop(targetElement)
+  emit('scroll-to-end', true)
+}
 
-  if (listScrollContainer) {
-    const containerRect = listScrollContainer.getBoundingClientRect()
-    const elementRect = targetElement.getBoundingClientRect()
-    const relativeTop = elementRect.top - containerRect.top
-    const scrollTop = listScrollContainer.scrollTop + relativeTop
+// Navigate between article-bubbles relative to the visible content edge
+// (container top + sticky header height). DOM positions are read live at call
+// time so stale cached values are never used.
+// "next"     → first article whose top starts below the reference edge.
+// "previous" → last article whose top starts above it (a partially scrolled
+//   article first snaps its own top back into view before stepping further up).
+// Returns false when there is no candidate, letting the caller scroll all the
+// way to the very top/bottom.
+const goToAdjacentArticle = (direction: 'next' | 'previous' | 'unread') => {
+  const container = props.scrollContainer
 
-    return listScrollContainer.scrollTo({
-      top: Math.max(0, scrollTop),
-      behavior: 'instant',
-    })
+  if (!container || !rows.value.length) return false
+
+  const headerOffset = Math.max(0, parseInt(topHeaderHeight.value || '0', 10)) + ARTICLE_GAP
+  const referenceTop = container.getBoundingClientRect().top + headerOffset
+
+  // Tolerance so an article already resting exactly at the reference edge is
+  // not picked as its own previous/next target (sub-pixel offsets after snapping).
+  const EPSILON = 2
+
+  const candidates = rows.value.flatMap((row) => {
+    const el = articleElements.value?.find((e) => e.id === `article-${row.key}`)
+
+    return el ? [{ el, top: el.getBoundingClientRect().top, row }] : []
+  })
+
+  const findTarget = {
+    unread: () =>
+      candidates.find(({ row }) => 'article' in row && props.unreadArticleIds?.has(row.article.id)),
+    next: () => candidates.find(({ top }) => top - referenceTop > EPSILON),
+    previous: () => candidates.findLast(({ top }) => top - referenceTop < -EPSILON),
   }
 
-  targetElement?.scrollIntoView({ behavior: 'instant', block: 'start' })
+  const target = findTarget[direction]()
+
+  if (!target) return false
+
+  scrollElementToContainerTop(target.el, 'smooth')
+  return true
 }
 
 // Afterwards the useScrollPosition hook takes care of the position
 whenever(
   () => rows.value.length > 0,
-  () => {
-    nextTick(() => {
-      waitForAnimationFrame().then(() => scrollToArticle())
-    })
+  async () => {
+    await Promise.allSettled([nextTick(), waitForAnimationFrame()])
+    await scrollToArticle()
   },
   { once: true, immediate: true },
 )
+
+defineExpose({ goToAdjacentArticle })
 </script>
 
 <template>
@@ -145,6 +209,7 @@ whenever(
       <article
         v-for="(row, rowIndex) in rows"
         :id="`article-${row.key}`"
+        ref="article-elements"
         :key="row.key"
         :aria-setsize="totalCount"
         :aria-posinset="rowIndex + 1"

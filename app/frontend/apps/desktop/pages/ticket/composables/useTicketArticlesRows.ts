@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { controlledComputed } from '@vueuse/shared'
+import { computedWithControl } from '@vueuse/shared'
 
 import type { TicketArticle } from '#shared/entities/ticket/types.ts'
 
@@ -37,7 +37,7 @@ export const useTicketArticleRows = (
   leadingNodesCount: Ref<number>,
   totalCount: Ref<number>,
 ) => {
-  const rows = controlledComputed(articles, () => {
+  const rows = computedWithControl(articles, () => {
     const needMoreButton = articles.value.length < totalCount.value
 
     return articles.value.reduce((memo, article, index) => {

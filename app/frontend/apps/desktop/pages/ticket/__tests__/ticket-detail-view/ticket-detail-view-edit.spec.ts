@@ -955,8 +955,10 @@ describe('Ticket detail view', () => {
 
       await waitForNextTick(true)
 
+      const toolbar = view.getByRole('toolbar', { name: 'Ticket actions' })
+
       // Discard changes inside the reply form
-      await view.events.click(view.getByRole('button', { name: 'Add internal note' }))
+      await view.events.click(within(toolbar).getByRole('button', { name: 'Add internal note' }))
 
       await waitFor(() => expect(view.queryByRole('textbox', { name: 'Text' })).toBeInTheDocument())
 
@@ -978,7 +980,7 @@ describe('Ticket detail view', () => {
         ).not.toBeInTheDocument()
       })
 
-      await view.events.click(view.getByRole('button', { name: 'Add internal note' }))
+      await view.events.click(within(toolbar).getByRole('button', { name: 'Add internal note' }))
 
       await view.events.click(view.getByRole('button', { name: 'Discard unsaved reply' }))
 
