@@ -84,9 +84,8 @@ class Transaction::Notification
     mention_users = Mention.where(mentionable_type: @item[:object], mentionable_id: @item[:object_id]).map(&:user)
     if mention_users.present?
 
-      # only notify if read permission on group are given
       mention_users.each do |mention_user|
-        next if !mention_user.group_access?(ticket.group_id, 'read')
+        next if !mention_user_eligible?(mention_user, ticket)
 
         possible_recipients.push mention_user
         @recipients_reason[mention_user.id] = __('You are receiving this because you were mentioned in this ticket.')
@@ -118,11 +117,27 @@ class Transaction::Notification
     recipients_reason_by_notifications_settings(possible_recipients)
   end
 
+  def mention_user_eligible?(mention_user, ticket)
+    # Agent mentions: require group read access
+    if mention_user.permissions?('ticket.agent')
+      return mention_user.group_access?(ticket.group_id, 'read')
+    end
+
+    # Non-agent mentions (participants): gated by feature flag (Defense-in-Depth)
+    return false if !Setting.get('ticket_participants_enabled')
+
+    true
+  end
+
   def recipients_reason_by_notifications_settings(possible_recipients)
     already_checked_recipient_ids = {}
     possible_recipients.each do |user|
       result = NotificationFactory::Mailer.notification_settings(user, ticket, @item[:type])
-      next if !result
+      if !result
+        next if !Setting.get('ticket_participants_enabled')
+        next if !ticket.mentions.exists?(user: user)
+        result = { user: user, channels: { 'email' => true } }
+      end
       next if already_checked_recipient_ids[user.id]
 
       already_checked_recipient_ids[user.id] = true
@@ -181,6 +196,13 @@ class Transaction::Notification
     end
 
     if channels['email'] && user.email.present?
+      # Guard: non-agents (participants, customers) must not receive internal article content via email
+      if article&.internal? && !user.permissions?('ticket.agent')
+        used_channels.push 'email'
+        add_recipient_list_to_history(ticket, user, used_channels, @item[:type])
+        return
+      end
+
       used_channels.push 'email'
 
       send_to_single_recipient_email(user, ticket, article, changes)
