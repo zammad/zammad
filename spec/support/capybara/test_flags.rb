@@ -42,6 +42,16 @@ module TestFlags
   def wait_for_form_autofocus(form)
     wait_for_test_flag("#{form}.focused")
   end
+
+  def wait_for_editor_ready(editor)
+    wait_for_test_flag(editor_test_flag(editor, 'ready'))
+  end
+
+  def editor_test_flag(editor, state)
+    input = editor.respond_to?(:input_element) ? editor.input_element : editor
+
+    "#{input['data-form-id']}.#{input['name']}.editor.#{state}"
+  end
 end
 
 RSpec.configure do |config|

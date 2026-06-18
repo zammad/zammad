@@ -1379,11 +1379,7 @@ const initializeFormSchema = () => {
             },
             skipSubscription: 'userCurrentTaskbarItemStateUpdates',
             skipSubscriptionAddCallback: (variables: FormUpdaterQueryVariables) => {
-              return (
-                !variables.meta.initial &&
-                !variables.meta.reset &&
-                !variables.meta.additionalData.applyTaskbarState
-              )
+              return !variables.meta.initial && !variables.meta.additionalData?.applyTaskbarState
             },
           },
           fetchPolicy: 'no-cache',

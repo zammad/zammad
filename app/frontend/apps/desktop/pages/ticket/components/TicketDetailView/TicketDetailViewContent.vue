@@ -397,11 +397,8 @@ const errorCallback = (errorHandler: GraphQLHandlerError) =>
   errorHandler.type !== GraphQLErrorTypes.Forbidden &&
   errorHandler.type !== GraphQLErrorTypes.RecordNotFound
 
-const { isTicketFormGroupValid, initialTicketValue, editTicket } = useTicketEdit(
-  ticket,
-  form,
-  errorCallback,
-)
+const { isTicketFormGroupValid, initialTicketValue, editTicket, buildTicketResetValues } =
+  useTicketEdit(ticket, form, errorCallback)
 
 const { openReplyForm } = useTicketArticleReplyAction(form, showTicketArticleReplyForm)
 
@@ -550,15 +547,21 @@ const submitEditTicket = async (formData: FormSubmitData<TicketUpdateFormData>) 
 
         // Reset article form after ticket update and reset form.
         newTicketArticlePresent.value = false
+        currentArticleType.value = undefined
 
         return {
           reset: (values: FormSubmitData<TicketUpdateFormData>, formNodeValues: FormValues) => {
             nextTick(() => {
-              if (!formNodeValues) return
+              if (!formNodeValues || !ticket.value) return
 
+              // Seed the ticket group from the persisted entity, so server-side
+              // changes (e.g. the automatic new->open transition) are reflected
+              // instead of the submitted values. Only the form-only fields and
+              // the article reset come from values.
               formReset({
+                object: ticket.value,
                 values: {
-                  ticket: formNodeValues.ticket,
+                  ...buildTicketResetValues(ticket.value),
                   article: ticketArticleDefaultValues,
                 },
               })

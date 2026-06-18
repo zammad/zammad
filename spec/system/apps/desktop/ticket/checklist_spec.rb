@@ -54,8 +54,9 @@ RSpec.describe 'Desktop > Ticket > Checklist', app: :desktop_view, authenticated
     using_session :agent2 do
       login(username: other_agent.login, password: 'test')
 
-      find('[role="searchbox"]').fill_in(with: it_title.first(5))
-      click_on it_title
+      visit "/tickets/#{Ticket.last.id}"
+      wait_for_form_to_settle("form-ticket-edit-#{Ticket.last.id}")
+
       add_article_to_it_ticket
       check_all_checkboxes
       close_ticket
@@ -161,11 +162,19 @@ RSpec.describe 'Desktop > Ticket > Checklist', app: :desktop_view, authenticated
   end
 
   def close_ticket
-    find('button[aria-label="Ticket"]').click
+    dismiss_notification
+
+    find('#ticketSidebar + div button[aria-label="Ticket"]').click
 
     find_select('State').select_option('closed')
 
     click_on 'Update'
+  end
+
+  def dismiss_notification
+    find('button[aria-label="Hide notification"]', wait: 0).click
+  rescue Capybara::ElementNotFound
+    nil
   end
 
   def close_and_verify

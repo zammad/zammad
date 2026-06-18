@@ -1,7 +1,11 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import type { FormRef } from '#shared/components/Form/types.ts'
-import { EnumTaskbarStateUpdate, type FormUpdaterQueryVariables } from '#shared/graphql/types.ts'
+import {
+  EnumTaskbarStateUpdate,
+  type FormUpdaterQueryVariables,
+  type UserCurrentTaskbarItemStateUpdatesSubscription,
+} from '#shared/graphql/types.ts'
 import SubscriptionHandler from '#shared/server/apollo/handler/SubscriptionHandler.ts'
 import type { FormUpdaterOptions } from '#shared/types/form.ts'
 
@@ -23,8 +27,21 @@ export const useTaskbarTabStateUpdates = (
       () => ({
         enabled: !!currentTaskbarTabId.value,
         context: {
-          skipSubscriptionCallback: (variables: FormUpdaterQueryVariables) => {
-            return variables.meta.additionalData.taskbarId === currentTaskbarTabId.value
+          skipSubscriptionCallback: (
+            variables: FormUpdaterQueryVariables,
+            result?: { data?: UserCurrentTaskbarItemStateUpdatesSubscription | null },
+          ) => {
+            if (variables.meta.additionalData?.taskbarId !== currentTaskbarTabId.value) {
+              return false
+            }
+
+            const stateUpdateType = result?.data?.userCurrentTaskbarItemStateUpdates.stateUpdateType
+
+            if (variables.meta.reset) {
+              return stateUpdateType === EnumTaskbarStateUpdate.Reset
+            }
+
+            return stateUpdateType === EnumTaskbarStateUpdate.Changed
           },
         },
       }),

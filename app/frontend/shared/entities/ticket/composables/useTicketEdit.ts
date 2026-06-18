@@ -43,6 +43,21 @@ export const useTicketEdit = (
 ) => {
   const initialTicketValue = ref<FormValues>()
 
+  // Values that must be seeded explicitly on a ticket form reset: the form-only
+  // fields and the owner_id (system user is represented as null in the form).
+  // All other ticket fields should come from the entity object, so server-side
+  // changes (e.g. the automatic new->open transition on a reply) are reflected.
+  const buildTicketResetValues = (ticketValue: TicketById): FormValues => {
+    const { internalId: ownerInternalId } = ticketValue.owner
+
+    return {
+      id: ticketValue.id,
+      shared_draft_id: undefined,
+      owner_id: ownerInternalId === 1 ? null : ownerInternalId,
+      isDefaultFollowUpStateSet: undefined, // the default value for reset situations.
+    }
+  }
+
   const mutationUpdate = new MutationHandler(useTicketUpdateMutation(), {
     errorCallback,
     errorNotificationMessage: __('Ticket update failed.'),
@@ -76,16 +91,15 @@ export const useTicketEdit = (
     () => {
       if (!ticket.value) return
 
-      const { internalId: ownerInternalId } = ticket.value.owner
-
-      initialTicketValue.value = {
-        id: ticket.value.id,
-        shared_draft_id: undefined,
-        owner_id: ownerInternalId === 1 ? null : ownerInternalId,
-        isDefaultFollowUpStateSet: undefined, // the default value for reset situations.
-      }
+      initialTicketValue.value = buildTicketResetValues(ticket.value)
 
       if (!form.value?.formInitialSettled) return
+
+      // Skip the refresh while the own update mutation is running - the form
+      // is still dirty with the submitted values and the success handling
+      // resets it with the fresh entity data afterwards. A refresh at this
+      // point would send the outdated values to the form updater again.
+      if (mutationUpdate.loading().value) return
 
       form.value?.resetForm(
         {
@@ -208,5 +222,6 @@ export const useTicketEdit = (
     initialTicketValue,
     isTicketFormGroupValid,
     editTicket,
+    buildTicketResetValues,
   }
 }

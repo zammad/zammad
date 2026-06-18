@@ -32,6 +32,7 @@ import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
 import { getButtonGroup } from '#shared/components/ObjectAttributes/attributes/AttributeRichtext/initializeRichtextButtons.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
 import { htmlCleanup } from '#shared/utils/htmlCleanup.ts'
+import testFlags from '#shared/utils/testFlags.ts'
 
 import { TableKitExtensionName } from './extensions/TableKit.ts'
 import { useInlineMode } from './useInlineMode.ts'
@@ -288,6 +289,8 @@ onUnmounted(() => {
 const focusEditor = () => {
   const view = editor.value?.view
   view?.focus()
+
+  testFlags.set(`${props.context.formId}.${props.context.node.name}.editor.focused`)
 }
 
 // focus editor when clicked on its label
@@ -333,6 +336,8 @@ onMounted(() => {
   onLoad.length = 0
 
   if (VITE_TEST_MODE) {
+    testFlags.set(`${props.context.formId}.${props.context.node.name}.editor.ready`)
+
     if (!('editors' in globalThis)) Object.defineProperty(globalThis, 'editors', { value: {} })
     Object.defineProperty(Reflect.get(globalThis, 'editors'), props.context.node.name, {
       value: editor.value,
