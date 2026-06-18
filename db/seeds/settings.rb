@@ -6349,87 +6349,15 @@ Setting.create_if_not_exists(
   preferences: {
     permission:  ['admin.knowledge_base'],
     validations: ['Setting::Validation::KbSelfHostedVideoServers'],
-  },
-  frontend:    true,
 )
 
-Setting.create_if_not_exists(
-  title:       __('Vector DB'),
-  name:        'vectordb_enabled',
-  area:        'VectorDB',
-  description: __('Enable or disable the vector database, which is used for storing and retrieving vectorized data. Elasticsearch is used as the vector database backend.'),
+  title:       __("'Ticket Participants'"),
+  name:        "ticket_participants_enabled",
+  area:        "Ticket::Participants",
+  description: __("Enable the participant feature. Allows adding additional customers as participants on tickets."),
   options:     {},
   state:       false,
-  frontend:    false,
-)
-
-Setting.create_if_not_exists(
-  title:       __('Vector DB knowledge base categories'),
-  name:        'vectordb_knowledge_base_category_ids',
-  area:        'VectorDB::KnowledgeBase',
-  description: __('Defines which knowledge base categories are included in the vector database.'),
-  state:       [],
-  frontend:    false,
-)
-
-Setting.create_if_not_exists(
-  title:       __('Vector DB knowledge base chunking strategy'),
-  name:        'vectordb_knowledge_base_chunking_strategy',
-  area:        'VectorDB::KnowledgeBase',
-  description: __('Defines the chunking strategy for the knowledge base vector database.'),
-  options:     {
-    form: [
-      {
-        display: '',
-        null:    true,
-        name:    'vectordb_knowledge_base_chunking_strategy',
-        tag:     'select',
-        options: {
-          'recursive' => __('Recursive hierarchical chunking'),
-          'sentence'  => __('Sentence-based chunking'),
-        },
-      },
-    ],
-  },
-  state:       'sentence',
-  frontend:    false,
-)
-
-# TODO: Unused in desktop view, drop later.
-Setting.create_if_not_exists(
-  title:       __('Richtext Bubble Menu'),
-  name:        'ui_richtext_bubble_menu',
-  area:        'UI::Richtext',
-  description: __('Defines if the bubble menu feature of the richtext editor is enabled. Note that this setting will be ignored if the writing assistant is turned on.'),
-  options:     {
-    form: [
-      {
-        display:   '',
-        null:      true,
-        name:      'ui_richtext_bubble_menu',
-        tag:       'boolean',
-        translate: true,
-        options:   {
-          true  => 'yes',
-          false => 'no',
-        },
-      },
-    ],
-  },
-  state:       true,
   preferences: {
-    permission: ['admin.ui'],
-  },
-  frontend:    true,
-)
-
-Setting.create_if_not_exists(
-  title:       __('Packages Token'),
-  name:        'packages_token',
-  area:        'Core',
-  description: __('This setting defines the token to access the support.zammad.com instance for package remote commands.'),
-  options:     {},
-  state:       '',
-  preferences: { online_service_disable: true, permission: ['admin.package'] },
+    permission: ["admin.ticket"],
   frontend:    false,
 )

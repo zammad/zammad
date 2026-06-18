@@ -30,6 +30,8 @@ class TicketPolicy < ApplicationPolicy
         sql.push('tickets.customer_id = ?')
         bind.push(user.id)
 
+        append_participant_scope!(sql, bind)
+
         if user.all_organization_ids.present?
           Organization.where(id: user.all_organization_ids).select(&:shared).each do |organization|
             sql.push('tickets.organization_id = ?')
@@ -48,6 +50,20 @@ class TicketPolicy < ApplicationPolicy
       return false if args.first.to_s == 'resolve' && instance_of?(TicketPolicy::BaseScope)
 
       super
+    end
+
+    private
+
+    def append_participant_scope!(sql, bind)
+      return if !Setting.get('ticket_participants_enabled')
+
+      participant_ticket_ids = Mention.joins(:user)
+                                      .where(mentionable_type: 'Ticket', user_id: user.id, users: { active: true })
+                                      .pluck(:mentionable_id)
+      return if participant_ticket_ids.blank?
+
+      sql.push('tickets.id IN (?)')
+      bind.push(participant_ticket_ids)
     end
   end
 end

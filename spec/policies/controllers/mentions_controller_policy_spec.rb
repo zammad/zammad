@@ -42,6 +42,48 @@ describe Controllers::MentionsControllerPolicy do
       it { is_expected.to forbid_actions %i[index create] }
     end
 
+    context 'with customer access and user_id parameter (R2: customer cannot add other)' do
+      before { ticket.update! customer: user }
+
+      let(:params) do
+        {
+          mentionable_type: 'Ticket',
+          mentionable_id:   ticket.id,
+          user_id:          999_999
+        }
+      end
+
+      it { is_expected.to forbid_action :create }
+    end
+
+    context 'with agent read access and user_id parameter (R5: read-only agent cannot add other)' do
+      before { user.user_groups.create! group: ticket.group, access: 'read' }
+
+      let(:params) do
+        {
+          mentionable_type: 'Ticket',
+          mentionable_id:   ticket.id,
+          user_id:          999_999
+        }
+      end
+
+      it { is_expected.to forbid_action :create }
+    end
+
+    context 'with agent change access and user_id parameter (R1: agent can add other)' do
+      before { user.user_groups.create! group: ticket.group, access: 'full' }
+
+      let(:params) do
+        {
+          mentionable_type: 'Ticket',
+          mentionable_id:   ticket.id,
+          user_id:          999_999
+        }
+      end
+
+      it { is_expected.to permit_action :create }
+    end
+
     context 'with no access' do
       it { is_expected.to forbid_actions %i[index create] }
     end
@@ -87,7 +129,21 @@ describe Controllers::MentionsControllerPolicy do
     context 'when another user\'s mention exists' do
       let(:mention_user) { create(:user) }
 
-      it { is_expected.to forbid_action :destroy }
+      context 'when user has agent change access (R6: agent can remove other)' do
+        before { user.user_groups.create! group: ticket.group, access: 'full' }
+
+        it { is_expected.to permit_action :destroy }
+      end
+
+      context 'when user has agent read-only access (R8: read-only agent cannot remove other)' do
+        before { user.user_groups.create! group: ticket.group, access: 'read' }
+
+        it { is_expected.to forbid_action :destroy }
+      end
+
+      context 'when user has no agent access (R7: customer cannot remove other)' do
+        it { is_expected.to forbid_action :destroy }
+      end
     end
 
     context 'when mention does not exist' do

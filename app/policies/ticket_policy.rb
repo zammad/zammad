@@ -91,6 +91,7 @@ class TicketPolicy < ApplicationPolicy
     # situation, because agenr read permission should win over the general customer permission.
     return true if agent_update_access?
     return false if agent_read_access?
+    return false if participant?
 
     customer_access?
   end
@@ -104,6 +105,8 @@ class TicketPolicy < ApplicationPolicy
   def customer_access?
     return false if !user.permissions?('ticket.customer')
     return customer_field_scope if customer?
+
+    return customer_field_scope if participant?
 
     shared_organization?
   end
@@ -119,6 +122,14 @@ class TicketPolicy < ApplicationPolicy
     return false if !record.organization.shared?
 
     customer_field_scope
+  end
+
+  def participant?
+    return false if !Setting.get('ticket_participants_enabled')
+    return false if !user.active?
+    record.respond_to?(:participant_ids) && record.participant_ids.include?(user.id)
+  rescue NoMethodError
+    false
   end
 
   def customer_field_scope

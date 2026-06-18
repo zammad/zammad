@@ -72,7 +72,39 @@ class Mention < ApplicationModel
   # @param user
   # @return Boolean
   def self.subscribe!(object, user, sourceable: nil)
-    object.mentions.create!(user: user, sourceable: sourceable) if !subscribed?(object, user)
+    # Best-effort cap on customer participants, no lock — acceptable for MVP
+    if object.is_a?(Ticket) && Setting.get('ticket_participants_enabled')
+      agent_user_ids = User.with_permissions('ticket.agent').pluck(:id)
+      participant_count = object.mentions
+        .joins(:user)
+        .where(users: { active: true })
+        .where.not(user_id: agent_user_ids)
+        .count
+      if participant_count >= 50 && !subscribed?(object, user)
+        raise Exceptions::UnprocessableContent,
+              __('Maximum of 50 participants per ticket reached.')
+      end
+    end
+
+    is_new = !subscribed?(object, user)
+    object.mentions.create!(user: user, sourceable: sourceable) if is_new
+    if object.is_a?(Ticket) && is_new
+      # Run the standard notification pipeline for the newly added participant.
+      # This goes through Transaction::Notification which respects user
+      # notification_config preferences, channel selection, and filtering.
+      item = {
+        object:     object.class.name,
+        object_id:  object.id,
+        type:       'update',
+        user_id:    UserInfo.current_user_id || 1,
+        changes:    { title: [object.title, object.title] },
+      }
+      begin
+        Transaction::Notification.new(item, {}).perform
+      rescue => e
+        Rails.logger.warn "Participant notification delivery failed: #{e.message}"
+      end
+    end
 
     true
   end
@@ -111,7 +143,11 @@ class Mention < ApplicationModel
   def self.mentionable?(object, user)
     case object
     when Ticket
-      TicketPolicy.new(user, object).agent_read_access?
+      policy = TicketPolicy.new(user, object)
+      return true if policy.agent_read_access?
+      return false if !Setting.get('ticket_participants_enabled')
+      return false if !user.permissions?('ticket.customer')
+      true
     else
       false
     end

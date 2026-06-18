@@ -657,6 +657,14 @@ returns a hex color code
     mentions.pluck(:user_id)
   end
 
+  def participant_ids
+    @participant_ids ||= mentions.joins(:user)
+                                 .where(users: { active: true })
+                                 .pluck(:user_id)
+  rescue NoMethodError
+    []
+  end
+
   def ai_summary_unread?(user, ai_analytics_run)
     return false if !ai_analytics_run
 
