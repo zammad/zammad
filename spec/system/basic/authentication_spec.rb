@@ -33,8 +33,12 @@ RSpec.describe 'Authentication', type: :system do
     cookie = cookie('^_zammad.+?')
     expect(cookie[:expires]).to be_truthy
 
+    await_empty_ajax_queue
     logout
-    expect_current_route 'login'
+    # After remember-me logout, an in-flight AJAX request with the invalidated
+    # session cookie can trigger #session_invalid before the redirect to #login
+    # completes. Both routes display the login page, so both are acceptable.
+    expect(page).to have_current_path(%r{/#(?:login|session_invalid)}, url: true)
 
     # Check that cookies has no longer a expire date after logout.
     cookie = cookie('^_zammad.+?')

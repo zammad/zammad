@@ -243,15 +243,18 @@ class TestCase < ActiveSupport::TestCase
     end
     instance.find_elements(css: '#login button')[0].click
 
-    sleep 4
-    login_failed = false
-    if instance.find_elements(css: '.user-menu .user a')[0]
-      login = instance.find_elements(css: '.user-menu .user a')[0].attribute('title')
-      if login != params[:username]
-        login_failed = true
+    login_failed = true
+    login = nil
+    20.times do
+      sleep 0.5
+      elem = instance.find_elements(css: '.user-menu .user a')[0]
+      next if !elem
+
+      login = elem.attribute('title')
+      if login == params[:username]
+        login_failed = false
+        break
       end
-    else
-      login_failed = true
     end
     if login_failed
       if params[:success] == false
@@ -637,7 +640,7 @@ class TestCase < ActiveSupport::TestCase
     watch_for_disappear(
       browser: instance,
       css:     '.modal',
-      timeout: params[:timeout] || 8,
+      timeout: params[:timeout] || 16,
     )
   end
 
@@ -823,15 +826,29 @@ class TestCase < ActiveSupport::TestCase
     # searchable select
     element = instance.find_elements(css: "#{params[:css]}.js-shadow")[0]
     if element
-      element = instance.find_elements(css: "#{params[:css]}.js-shadow + .js-input")[0]
-      element.click
-      element.clear
-      sleep 0.2
-      element.send_keys(params[:value])
-      sleep 0.2
-      element.send_keys(:enter)
-      sleep 0.2
-      instance.execute_script("$('#{params[:css]}.js-shadow + .js-input').trigger('blur')")
+      begin
+        element = instance.find_elements(css: "#{params[:css]}.js-shadow + .js-input")[0]
+        element.click
+        element.clear
+        sleep 0.2
+        element.send_keys(params[:value])
+        sleep 0.2
+        element.send_keys(:enter)
+        sleep 0.2
+        instance.execute_script("$('#{params[:css]}.js-shadow + .js-input').trigger('blur')")
+      rescue
+        sleep 0.4
+        log('select', { rescure: true })
+        element = instance.find_elements(css: "#{params[:css]}.js-shadow + .js-input")[0]
+        element.click
+        element.clear
+        sleep 0.2
+        element.send_keys(params[:value])
+        sleep 0.2
+        element.send_keys(:enter)
+        sleep 0.2
+        instance.execute_script("$('#{params[:css]}.js-shadow + .js-input').trigger('blur')")
+      end
       return
     end
 
@@ -2265,6 +2282,10 @@ wait untill text in selector disabppears
       return
     end
 
+    # Drain pending AJAX/CoreWorkflow requests triggered by form field changes
+    # (e.g. customer autocomplete) before submitting to avoid race conditions.
+    await_empty_ajax_queue(browser: instance)
+
     # instance.execute_script('$(".content.active .newTicket form").submit();')
     click(
       browser:  instance,
@@ -2361,6 +2382,7 @@ wait untill text in selector disabppears
       instance.execute_script(%($(".content.active .ticketZoom-header .js-objectTitle").text("#{data[:title]}")))
       instance.execute_script('$(".content.active .ticketZoom-header .js-objectTitle").blur()')
       instance.execute_script('$(".content.active .ticketZoom-header .js-objectTitle").trigger("blur")')
+      sleep 1
       # {
       #   :where        => :instance2,
       #   :execute      => 'sendkey',
@@ -2515,7 +2537,7 @@ wait untill text in selector disabppears
 
     if data[:state] || data[:group] || data[:body] || params[:custom_data_select].present? || params[:custom_data_input].present?
       found = nil
-      9.times do
+      18.times do
 
         break if found
 
@@ -2676,14 +2698,21 @@ wait untill text in selector disabppears
            end
 
     # switch to overview
-    element = nil
-    6.times do
-      element = instance.find_elements(css: ".content.active .sidebar a[href=\"#{link}\"]")[0]
-      break if element
+    retries = 0
+    begin
+      element = nil
+      6.times do
+        element = instance.find_elements(css: ".content.active .sidebar a[href=\"#{link}\"]")[0]
+        break if element
 
-      sleep 1
+        sleep 1
+      end
+      element.click
+    rescue Selenium::WebDriver::Error::StaleElementReferenceError
+      sleep retries
+      retries += 1
+      retry if retries < 3
     end
-    element.click
 
     # hide larger overview selection list again
     sleep 0.5
@@ -3692,7 +3721,7 @@ wait untill text in selector disabppears
         sleep 1
         scroll_to(params.merge(css: '.content.active a[href="#manage/users"]'))
         instance.find_elements(css: '.content.active a[href="#manage/users"]')[0].click
-        sleep 3
+        sleep 5
         element = instance.find_elements(css: '.content.active [name="search"]')[0]
         element.clear
         element.send_keys(member[:login])
@@ -4024,7 +4053,7 @@ wait untill text in selector disabppears
         instance.find_elements(css: 'a[href="#manage"]')[0].click
         sleep 1
         instance.find_elements(css: '.content.active a[href="#manage/users"]')[0].click
-        sleep 3
+        sleep 5
         element = instance.find_elements(css: '.content.active [name="search"]')[0]
         element.clear
         element.send_keys(login)

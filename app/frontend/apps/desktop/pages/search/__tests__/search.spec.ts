@@ -7,6 +7,7 @@ import { getTestRouter } from '#tests/support/components/renderComponent.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
+import { waitUntil } from '#tests/support/vitest-wrapper.ts'
 
 import { mockFormUpdaterQuery } from '#shared/components/Form/graphql/queries/formUpdater.mocks.ts'
 import useMetaTitle from '#shared/composables/useMetaTitle.ts'
@@ -430,28 +431,35 @@ describe('search view', () => {
           await waitForDetailSearchQueryCalls()
           await waitForNextTick()
 
+          // The filter badge appearing confirms hasActiveFilters is true, meaning
+          // the object-attributes query has resolved and URL filters are decoded.
+          // waitForNextTick(true) (nextTick + setTimeout) flushes all pending
+          // Vue renders including the Teleport defer cycle, ensuring dirty:true
+          // has reached UserTaskbarTabRemove before we click close.
+          const searchContainer = view.getByTestId('search-container')
+          await waitUntil(
+            () => within(searchContainer).queryByRole('button', { name: '1 filter(s)' }) !== null,
+          )
+          await waitForNextTick(true)
+
           const taskbarSidebar = view.getByRole('tree', {
             name: 'User taskbar tabs',
           })
           const closeSearchTab = within(taskbarSidebar).getByRole('button', {
             name: 'Close this tab',
           })
+
           await view.events.click(closeSearchTab)
 
-          await waitFor(() => {
-            expect(view.queryByRole('button', { name: 'Discard changes' })).toBeInTheDocument()
-          })
+          await waitUntil(() => view.queryByRole('button', { name: 'Discard changes' }) !== null)
 
           const confirmationButton = view.getByRole('button', { name: 'Discard changes' })
           await view.events.click(confirmationButton)
 
-          await waitFor(() => {
-            expect(
-              within(taskbarSidebar).queryByRole('button', {
-                name: 'Close this tab',
-              }),
-            ).not.toBeInTheDocument()
-          })
+          // After deletion the taskbar <ul> is detached from the DOM (Teleport
+          // unmounts when hasTaskbarTabs becomes false), so we must query the
+          // live document rather than the stale taskbarSidebar reference.
+          await waitUntil(() => view.queryByRole('button', { name: 'Close this tab' }) === null)
         })
 
         it('prompts for confirmation, but cancels, before closing search tab when some client side filtering is configured', async () => {
@@ -464,6 +472,12 @@ describe('search view', () => {
           const view = await visitSearchViewWithTicketTitleFilter('test')
 
           await waitForDetailSearchQueryCalls()
+          await waitForNextTick()
+
+          const searchContainer = view.getByTestId('search-container')
+          await waitUntil(
+            () => within(searchContainer).queryByRole('button', { name: '1 filter(s)' }) !== null,
+          )
           await waitForNextTick()
 
           const router = getTestRouter()
@@ -482,9 +496,7 @@ describe('search view', () => {
           })
           await view.events.click(closeSearchTab)
 
-          await waitFor(() => {
-            expect(view.queryByRole('button', { name: 'Cancel & go back' })).toBeInTheDocument()
-          })
+          await waitUntil(() => view.queryByRole('button', { name: 'Cancel & go back' }) !== null)
 
           const confirmationButton = view.getByRole('button', { name: 'Cancel & go back' })
           await view.events.click(confirmationButton)

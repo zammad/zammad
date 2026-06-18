@@ -48,6 +48,7 @@ RSpec.describe 'Ticket zoom > Checklist', authenticated_as: :authenticate, curre
   end
 
   it 'does show handle subscriptions for badge when sidebar is not opened' do
+    ensure_websocket(check_if_pinged: false)
     create(:checklist, ticket: ticket)
     expect(page).to have_css(".tabsSidebar-tab[data-tab='checklist'] .js-tabCounter", text: ticket.checklist.items.count)
   end

@@ -308,8 +308,7 @@ RSpec.describe 'Ticket Summary', authenticated_as: :authenticate, type: :system 
         # Reload the app to ensure the summary subscriptions are not set up
         refresh
 
-        allow(Service::Ticket::AIAssistance::Summarize).to receive(:execute).and_call_original
-
+        allow(Service::Ticket::AIAssistance::Summarize).to receive(:execute)
         visit "ticket/zoom/#{ticket.id}"
 
         within :active_content do
@@ -327,8 +326,7 @@ RSpec.describe 'Ticket Summary', authenticated_as: :authenticate, type: :system 
       it 'makes a request for a summary on clicking on sidebar' do
         visit '#dashboard'
 
-        allow(Service::Ticket::AIAssistance::Summarize).to receive(:execute).and_call_original
-
+        allow(Service::Ticket::AIAssistance::Summarize).to receive(:execute)
         visit "ticket/zoom/#{ticket.id}"
 
         expect(page).to have_text ticket.title
@@ -351,8 +349,7 @@ RSpec.describe 'Ticket Summary', authenticated_as: :authenticate, type: :system 
       it 'uses the group setting over the default' do
         visit '#dashboard'
 
-        allow(Service::Ticket::AIAssistance::Summarize).to receive(:execute).and_call_original
-
+        allow(Service::Ticket::AIAssistance::Summarize).to receive(:execute)
         visit "ticket/zoom/#{ticket.id}"
 
         expect(page).to have_text ticket.title

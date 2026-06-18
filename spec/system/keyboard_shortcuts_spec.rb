@@ -97,9 +97,8 @@ RSpec.describe 'Keyboard Shortcuts', type: :system do
     context 'for Logout' do
       before do
         visit '/'
-        within :active_content, '.dashboard' do
-          send_keys([:shift, 'l'])
-        end
+        find(:active_content, '.dashboard').click
+        send_keys([:shift, 'l'])
       end
 
       it 'goes to sign in page' do

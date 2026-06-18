@@ -142,6 +142,15 @@ RSpec.describe 'Mobile > Ticket > Article actions', app: :mobile, authenticated_
             select_text('.Content')
           }
         end
+        let(:after_click) do
+          lambda {
+            # Wait for form initialization before checking the signature flag.
+            # Without this, the editor may not be editable yet when addSignature
+            # is called, causing the flag to never be set (known race condition).
+            wait_for_form_updater
+            wait_for_test_flag('editor.signatureAdd')
+          }
+        end
         let(:current_text) { "#{article.body}\n\n#{agent.firstname}\nSignature!" }
         let(:result_text)  do
           start_with("<p dir=\"auto\">This is a note<br dir=\"auto\"></p><blockquote dir=\"auto\" type=\"cite\"><p dir=\"auto\">#{article.body}</p></blockquote><p dir=\"auto\"></p>#{signature_html}")

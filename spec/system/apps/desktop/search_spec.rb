@@ -46,7 +46,9 @@ RSpec.describe 'Desktop > Search', app: :desktop_view, authenticated_as: :authen
       click_on 'detailed search'
     end
 
-    wait.until { current_url.include?("search/#{CGI.escapeURIComponent(customer.fullname)}") }
+    # CGI.escapeURIComponent encodes apostrophes as %27, but Vue Router's
+    # encodeURI does not. Decode the URL before comparing to handle both.
+    wait.until { CGI.unescape(current_url).include?("/search/#{customer.fullname}") }
 
     within 'main' do
       find('[role="tab"]', text: 'User').click

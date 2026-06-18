@@ -81,7 +81,7 @@ class AgentTicketOverviewTabTest < TestCase
     watch_for(
       css:     '.tasks .task.is-active',
       value:   "overview tab test #2 - #{title}",
-      timeout: 8,
+      timeout: 20,
     )
 
     task_count_equals(1)

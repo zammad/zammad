@@ -192,6 +192,10 @@ RSpec.describe 'Expert conditions in Manage > Overviews', type: :system do
             priority_condition = find('.js-filterElement:nth-child(3)')
             priority_height = priority_condition.native.size.height.to_i
 
+            # Ensure the draggable is fully inside the viewport so Selenium does not raise
+            # MoveTargetOutOfBoundsError when the condition list grows beyond the viewport height.
+            scroll_into_view(state_condition_draggable, position: :center)
+
             # Drag the state condition right above the priority, but drop it to the same subclause.
             #   Move the cursor vertically for the whole height of the priority element.
             #   Also, slightly move the cursor to the right, but more than the width of a single level constant (27px).
@@ -246,6 +250,10 @@ RSpec.describe 'Expert conditions in Manage > Overviews', type: :system do
             state_condition_draggable = find('.js-filterElement:nth-child(4) .draggable')
             priority_condition = find('.js-filterElement:nth-child(3)')
             priority_height = priority_condition.native.size.height.to_i
+
+            # Ensure the draggable is fully inside the viewport so Selenium does not raise
+            # MoveTargetOutOfBoundsError when the condition list grows beyond the viewport height.
+            scroll_into_view(state_condition_draggable, position: :center)
 
             # Drag the state condition above the priority, but drop it on the same level as the subclause to break it.
             #   Move the cursor vertically for the whole height of the priority element.

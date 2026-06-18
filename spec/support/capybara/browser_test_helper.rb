@@ -124,8 +124,8 @@ module BrowserTestHelper
     wait(5).until do
       page.evaluate_script('App.Ajax.queue().length === 0 && $.active === 0 && Object.keys(App.FormHandlerCoreWorkflow.getRequests()).length === 0').eql? true
     end
-  rescue Selenium::WebDriver::Error::TimeoutError
-    nil # There may be cases when the default wait time is not enough.
+  rescue Selenium::WebDriver::Error::TimeoutError, Selenium::WebDriver::Error::JavascriptError
+    nil # Page may navigate away mid-check (e.g. SAML redirect), making App undefined.
   end
 
   # Moves the mouse from its current position by the given offset.

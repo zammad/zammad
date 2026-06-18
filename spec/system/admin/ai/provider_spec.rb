@@ -168,9 +168,11 @@ RSpec.describe 'AI > Provider', authenticated_as: :admin, type: :system do
         setup_ai_provider('zammad_ai', token: '456', ocr_active: true)
 
         within :active_content do
+          # Wait for the subscription push: Token disappears when switching to Zammad AI.
+          # This must be first so subsequent assertions see the post-update DOM.
+          expect(page).to have_no_field('Token')
           check_switch_field_value('ai_provider', true)
           check_select_field_value('provider', 'zammad_ai')
-          expect(page).to have_no_field('Token')
           check_switch_field_value('ocr_active', true)
         end
       end

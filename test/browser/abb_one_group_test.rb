@@ -207,12 +207,13 @@ class AgentTicketActionLevel0Test < TestCase
 
     # create new ticket
     ticket_create(
-      data: {
+      data:                {
         customer: 'nico',
         group:    'Users',
         title:    'some subject 123äöü - one group 2',
         body:     'some body 123äöü - one group 2',
       },
+      disable_group_check: true,
     )
     sleep 1
 

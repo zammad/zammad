@@ -71,6 +71,10 @@ RSpec.describe 'Chat Handling', type: :system do
 
       click '.active .js-acceptChat'
 
+      # Wait for the chat window to render after accepting before checking its content.
+      # have_no_css passes immediately when the window hasn't rendered yet, so check
+      # for presence first to avoid a false-positive synchronisation point.
+      expect(page).to have_css('.active .chat-window .js-body')
       expect(page).to have_no_css('.active .chat-window .chat-status.is-modified')
       check_content('.active .chat-window .js-body', chat_url)
 
@@ -108,6 +112,9 @@ RSpec.describe 'Chat Handling', type: :system do
 
       click '.active .js-acceptChat'
 
+      # Same false-positive risk as in the agent-side test: have_no_css passes
+      # immediately before the window renders, so wait for the body first.
+      expect(page).to have_css('.active .chat-window .js-body')
       expect(page).to have_no_css('.active .chat-window .chat-status.is-modified')
 
       # Keep focus outside of chat window to check .chat-status.is-modified later.
@@ -147,6 +154,7 @@ RSpec.describe 'Chat Handling', type: :system do
 
       click '.active .js-acceptChat'
 
+      expect(page).to have_css('.active .chat-window .js-body')
       expect(page).to have_css('.active .chat-window .chat-status')
     end
   end

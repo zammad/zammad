@@ -2,7 +2,7 @@
 
 RSpec.configure do |config|
   config.after(:each, type: :system) do
-    next if page.driver.browser.browser != :chrome
+    next if !page.driver.browser.respond_to?(:browser) || page.driver.browser.browser != :chrome
 
     logs   = page.driver.browser.logs.get(:browser)
     errors = logs.select { |m| m.level == 'SEVERE' && m.to_s =~ %r{EvalError|InternalError|RangeError|ReferenceError|SyntaxError|TypeError|URIError|E60(0|1)} }
