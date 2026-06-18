@@ -181,9 +181,36 @@ function initialise_database () {
   zammad run rake db:seed
 }
 
+function remove_deprecated_files () {
+  # RPM-based upgrades run %post before removing old-only files, so stale
+  # source files from the previous package version are still present when
+  # Rails boots for db:migrate. Remove known removed files explicitly.
+  # Files listed here were removed in the given release and must be cleaned
+  # up on RPM-based systems before migrations run.
+  if [ "${OS}" == "DEBIAN" ]; then
+    return 0
+  fi
+
+  echo "# Removing deprecated source files from previous package versions..."
+
+  # Removed in 7.1
+  rm -f \
+    "${ZAMMAD_DIR}/app/graphql/gql/concerns/handles_possible_objects.rb" \
+    "${ZAMMAD_DIR}/app/models/channel/filter/match/email_regex.rb" \
+    "${ZAMMAD_DIR}/app/services/service/base_with_current_user.rb" \
+    "${ZAMMAD_DIR}/lib/core_ext/action_dispatch/middleware/cookies.rb" \
+    "${ZAMMAD_DIR}/lib/core_ext/rack/utils.rb" \
+    "${ZAMMAD_DIR}/lib/core_ext/saas/interpolation.rb" \
+    "${ZAMMAD_DIR}/lib/core_ext/saas/lexer.rb" \
+    "${ZAMMAD_DIR}/lib/core_ext/saas/media.rb" \
+    "${ZAMMAD_DIR}/lib/core_ext/saas/selector.rb" \
+    "${ZAMMAD_DIR}/lib/core_ext/saas/static_parser.rb" \
+    "${ZAMMAD_DIR}/lib/core_ext/saas/string_interpolation.rb"
+}
+
 function update_database () {
   echo "# database.yml found. Updating db..."
-  zammad run rake db:migrate
+  zammad run rake db:migrate || exit 1
 }
 
 function update_translations () {
@@ -379,6 +406,8 @@ function zammad_packages_reinstall_all () {
 function update_or_install () {
 
   if [ -f ${ZAMMAD_DIR}/config/database.yml ]; then
+    remove_deprecated_files
+
     echo "# Clear cache..."
     zammad run rails r Rails.cache.clear
 
