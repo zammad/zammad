@@ -4,8 +4,8 @@
 > Empfehlungen der Einzeldokumente 00–14 bei Widersprüchen. Die Einzeldokumente bleiben
 > als Hintergrund/Herleitung gültig, aber **dieses Dokument hat Vorrang.**
 >
-> **Stand:** 18.06.2026 · **HEAD-Referenz:** `8b7102c` (letzter Feature-Commit, Badge).
-> Tatsächlicher Branch-HEAD inkl. MASTER-Pflege: `83a534c`. WSL2 + Mirror synchron auf `83a534c`.
+> **Stand:** 18.06.2026 · **HEAD:** `9f29974` (erster Squash-Commit) · Branch-HEAD: `0b41740`
+> WSL2 + Mirror synchron auf `0b41740` (gesquasht, 5 Commits).
 > **Branch:** `feature/ticket-participants`
 > **Status:** Produkt 1 + 2 INTERN VOLLSTÄNDIG. Beide UIs (Vue + alt) funktional, browser-verifiziert.
 > Internal-Mail-Guard (gefixt, Mailcatcher-verifiziert, Umgehungspfad ausgeschlossen).
