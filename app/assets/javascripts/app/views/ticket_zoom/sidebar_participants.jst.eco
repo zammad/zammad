@@ -1,0 +1,26 @@
+<div class="participants-widget">
+  <% if @canAdd and @searchShown: %>
+    <div class="js-participant-search" style="margin-bottom:8px;">
+      <input type="text" class="js-search-input" placeholder="<%- @T('Search users...') %>" style="width:100%;padding:4px;box-sizing:border-box;">
+      <div class="js-search-results" style="max-height:200px;overflow-y:auto;margin-top:4px;"></div>
+    </div>
+  <% end %>
+
+  <div class="participants-list">
+    <% if @mentions.length == 0: %>
+      <div class="text-muted" style="padding:4px 0;"><%- @T('No participants yet.') %></div>
+    <% else: %>
+      <% for mention in @mentions: %>
+        <div class="participant-item" data-mention-id="<%= mention.id %>" data-user-id="<%= mention.user_id %>" style="padding:4px 0;border-bottom:1px solid #f0f0f0;display:flex;align-items:center;">
+          <% if mention.user: %>
+            <span class="avatar avatar--small" style="margin-right:6px;"><%- mention.user.avatar(24) %></span>
+            <span class="participant-name" style="flex:1;"><%- "#{mention.user.firstname || ''} #{mention.user.lastname || ''}".trim() %></span>
+          <% end %>
+          <% if @canAdd: %>
+            <span class="js-remove-participant participant-remove" data-mention-id="<%= mention.id %>" style="cursor:pointer;color:#999;padding:2px 6px;" title="<%- @T('Remove participant') %>">✕</span>
+          <% end %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>

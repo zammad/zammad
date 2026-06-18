@@ -112,13 +112,89 @@ RSpec.describe 'Mention', aggregate_failures: true, authenticated_as: :user, typ
         expect(response).to have_http_status(:forbidden)
       end
     end
+
+    context 'with participants feature (Agent-Add-Other via user_id)' do
+      let(:customer) { create(:customer) }
+      let(:agent_user) { create(:agent_and_customer, groups: [other_ticket.group]) }
+
+      before do
+        Setting.set('ticket_participants_enabled', true)
+        agent_user.group_names_access_map = { other_ticket.group.name => 'full' }
+      end
+
+      after do
+        Setting.set('ticket_participants_enabled', false)
+      end
+
+      it 'R1: agent with group-change adds customer → 201', authenticated_as: :agent_user do
+        params_with_user = params.merge(user_id: customer.id)
+
+        expect { post '/api/v1/mentions', params: params_with_user, as: :json }
+          .to change { other_ticket.mentions.reload.count }.to(1)
+
+        expect(response).to have_http_status(:created)
+        expect(other_ticket.mentions.last.user_id).to eq(customer.id)
+      end
+
+      it 'R3: agent adds non-customer → 422', authenticated_as: :agent_user do
+        non_customer = create(:agent, groups: [other_ticket.group])
+        params_with_user = params.merge(user_id: non_customer.id)
+
+        post '/api/v1/mentions', params: params_with_user, as: :json
+
+        expect(response).to have_http_status(:unprocessable_content)
+      end
+
+      it 'R4: agent adds beyond cap 50 → 422', authenticated_as: :agent_user do
+        # Create 50 existing customer participants
+        50.times do
+          c = create(:customer)
+          create(:mention, mentionable: other_ticket, user: c)
+        end
+
+        new_customer = create(:customer)
+        params_with_user = params.merge(user_id: new_customer.id)
+
+        post '/api/v1/mentions', params: params_with_user, as: :json
+
+        expect(response).to have_http_status(:unprocessable_content)
+      end
+
+      it 'R5-integration: agent with only group-read adds customer → 403', authenticated_as: :agent_user do
+        agent_user.group_names_access_map = { other_ticket.group.name => 'read' }
+        params_with_user = params.merge(user_id: customer.id)
+
+        post '/api/v1/mentions', params: params_with_user, as: :json
+
+        expect(response).to have_http_status(:forbidden)
+      end
+
+      it 'Self-Subscribe ANCHOR: existing POST without user_id still works', authenticated_as: :agent_user do
+        expect { post '/api/v1/mentions', params: params, as: :json }
+          .to change { other_ticket.mentions.reload.count }.to(1)
+
+        expect(response).to have_http_status(:created)
+      end
+    end
   end
 
   describe 'DELETE /api/v1/mentions/:id' do
-    before { mention }
+    let(:agent_with_change) { create(:agent_and_customer, groups: [ticket.group]) }
+    let(:agent_readonly)    { create(:agent_and_customer) }
+
+    before do
+      mention
+      agent_with_change.group_names_access_map = { ticket.group.name => 'full' }
+      agent_readonly.group_names_access_map    = { ticket.group.name => 'read' }
+      Setting.set('ticket_participants_enabled', true)
+    end
+
+    after do
+      Setting.set('ticket_participants_enabled', false)
+    end
 
     context 'when user has agent access' do
-      it 'deletes mention' do
+      it 'deletes own mention' do
         expect { delete "/api/v1/mentions/#{mention.id}", as: :json }
           .to change { ticket.mentions.reload.count }.by(-1)
 
@@ -133,10 +209,17 @@ RSpec.describe 'Mention', aggregate_failures: true, authenticated_as: :user, typ
         expect(response).to have_http_status(:forbidden)
       end
 
-      it 'does not allow to delete mention of another user' do
-        create(:mention, mentionable: ticket, user: other_user)
+      it 'RR1: agent with group-change removes other participant → 200', authenticated_as: :agent_with_change do
+        other_mention = create(:mention, mentionable: ticket, user: other_user)
 
-        other_mention = Mention.last
+        expect { delete "/api/v1/mentions/#{other_mention.id}", as: :json }
+          .to change { ticket.mentions.reload.count }.by(-1)
+
+        expect(response).to have_http_status(:ok)
+      end
+
+      it 'RR3: agent with only group-read removes other → 403', authenticated_as: :agent_readonly do
+        other_mention = create(:mention, mentionable: ticket, user: other_user)
 
         delete "/api/v1/mentions/#{other_mention.id}", as: :json
 
@@ -145,6 +228,8 @@ RSpec.describe 'Mention', aggregate_failures: true, authenticated_as: :user, typ
     end
 
     context 'when user has no access' do
+      let(:customer_user) { create(:customer) }
+
       before do
         user.user_groups.first.destroy!
       end
@@ -155,9 +240,25 @@ RSpec.describe 'Mention', aggregate_failures: true, authenticated_as: :user, typ
         expect(response).to have_http_status(:forbidden)
       end
 
-      it 'allows to delete mention on object user no longer has access to' do
+      it 'allows to delete own mention on object user no longer has group access to (self-removal still works)' do
         expect { delete "/api/v1/mentions/#{mention.id}", as: :json }
           .to change { ticket.mentions.reload.count }.to(0)
+
+        expect(response).to have_http_status(:ok)
+      end
+
+      it 'RR2: customer removes other participant → 403' do
+        customer_mention = create(:mention, mentionable: ticket, user: customer_user)
+
+        expect { delete "/api/v1/mentions/#{customer_mention.id}", as: :json }
+          .not_to change { ticket.mentions.reload.count }
+
+        expect(response).to have_http_status(:forbidden)
+      end
+
+      it 'RR4: customer removes own mention (self-removal) → 200' do
+        expect { delete "/api/v1/mentions/#{mention.id}", as: :json }
+          .to change { ticket.mentions.reload.count }.by(-1)
 
         expect(response).to have_http_status(:ok)
       end
