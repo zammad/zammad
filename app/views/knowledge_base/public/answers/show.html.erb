@@ -41,6 +41,34 @@ data-available-locales="<%= @object_locales.map(&:locale).join(',') %>">
           <%= raw zt 'Published: %s', human_time_tag([@object.published_at, @object.translation.updated_at].max) %>
         </div>
       <% end %>
+
+      <% if @object_previous || @object_next %>
+        <div class="article-nav-adjacent">
+          <% if @object_previous %>
+            <div class="article-nav-adjacent-previous">
+              <%= link_to custom_path_if_needed(breadcrumb_path_for(@object_previous), @knowledge_base), title: @object_previous.translation.title do %>
+                <%= icon 'double-arrow-left' %>
+                <!-- placeholder for RTL -->
+                <%= icon 'double-arrow-right' %>
+                <!-- placeholder for RTL end -->
+                <span><%= @object_previous.translation.title %></span>
+              <% end %>
+            </div>
+          <% end %>
+
+          <% if @object_next %>
+            <div class="article-nav-adjacent-next">
+              <%= link_to custom_path_if_needed(breadcrumb_path_for(@object_next), @knowledge_base), title: @object_next.translation.title do %>
+                <span><%= @object_next.translation.title %></span>
+                <%= icon 'double-arrow-right' %>
+                <!-- placeholder for RTL -->
+                <%= icon 'double-arrow-left' %>
+                <!-- placeholder for RTL end -->
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
     </div>
   </article>
 </main>

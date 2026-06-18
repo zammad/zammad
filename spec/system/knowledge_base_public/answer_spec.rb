@@ -139,6 +139,40 @@ RSpec.describe 'Public Knowledge Base answer', type: :system do
     end
   end
 
+  context 'previous and next answers link' do
+    before do
+      published_answer
+      published_answer_in_subcategory
+      published_answer_in_other_category
+    end
+
+    it 'has previous and next links' do
+      visit help_answer_path(locale_name, subcategory, published_answer_in_subcategory)
+
+      expect(page).to have_css('h1', text: published_answer_in_subcategory.translations.first.title)
+      expect(page).to have_no_css('.article-nav-adjacent-previous')
+
+      click '.article-nav-adjacent-next a'
+
+      expect(page).to have_css('h1', text: published_answer.translations.first.title)
+
+      expect(page).to have_text(published_answer_in_subcategory.translations.first.title)
+      expect(page).to have_text(published_answer_in_other_category.translations.first.title)
+
+      click '.article-nav-adjacent-next a'
+
+      expect(page).to have_css('h1', text: published_answer_in_other_category.translations.first.title)
+
+      expect(page).to have_text(published_answer.translations.first.title)
+      expect(page).to have_no_css('.article-nav-adjacent-next')
+
+      click '.article-nav-adjacent-previous a'
+      click '.article-nav-adjacent-previous a'
+
+      expect(page).to have_css('h1', text: published_answer_in_subcategory.translations.first.title)
+    end
+  end
+
   def open_answer(answer, locale: primary_locale.system_locale.locale)
     visit help_answer_path(locale, answer.category, answer)
   end

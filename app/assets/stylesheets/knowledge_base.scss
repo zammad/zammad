@@ -949,6 +949,65 @@ b {
   color: gray;
 }
 
+.article-nav-adjacent {
+  margin-top: 1em;
+  font-size: 0.865em;
+  display: flex;
+  justify-content: space-between;
+  column-gap: 20px;
+  width: 100%;
+
+  a {
+    text-decoration: none;
+    color: $light-color;
+    fill: $light-color;
+    width: 100%;
+    display: flex;
+    gap: .5em;
+    align-items: center;
+
+    span {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+
+  a:hover {
+    color: $dark-color;
+    fill: $dark-color;
+  }
+
+  .article-nav-adjacent-previous {
+    @include bidi-style(text-align, left, text-align, right);
+
+    min-width: 0;
+
+    .icon-double-arrow-left {
+      @include bidi-style(display, inherit, display, none);
+    }
+
+    .icon-double-arrow-right {
+      @include bidi-style(display, none, display, inherit);
+    }
+  }
+
+  .article-nav-adjacent-next {
+    @include bidi-style(margin-left, auto, margin-right, inherit);
+    @include bidi-style(text-align, right, text-align, left);
+
+    min-width: 0;
+
+    .icon-double-arrow-left {
+      @include bidi-style(display, none, display, inherit);
+    }
+
+    .icon-double-arrow-right {
+      @include bidi-style(display, inherit, display, none);
+    }
+  }
+}
+
 .article-content {
   display: block;
   overflow-wrap: anywhere;
