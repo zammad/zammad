@@ -44,6 +44,30 @@ RSpec.describe Cti::CallerId do
       end
     end
 
+    context 'for strings containing a phone number with forward slash separator' do
+      it 'returns the number in an array' do
+        expect(described_class.extract_numbers('030/1234567')).to eq(['49301234567'])
+      end
+
+      it 'handles forward slash with country code' do
+        expect(described_class.extract_numbers('+49 30/123456')).to eq(['4930123456'])
+      end
+
+      it 'handles forward slash combined with hyphen' do
+        expect(described_class.extract_numbers('030/1234567-0')).to eq(['493012345670'])
+      end
+    end
+
+    context 'for strings containing date-formatted values' do
+      it 'does not extract a date with slashes as a phone number' do
+        expect(described_class.extract_numbers('12/12/2024')).to be_empty
+      end
+
+      it 'does not extract a date embedded in text as a phone number' do
+        expect(described_class.extract_numbers('Ticket erstellt am 12/12/2024 um 10:00 Uhr')).to be_empty
+      end
+    end
+
     context 'for strings containing US-formatted numbers' do
       it 'returns the numbers in an array correctly' do
         expect(described_class.extract_numbers(<<~INPUT.chomp)).to eq(%w[19494310000 19494310001])
@@ -66,6 +90,14 @@ RSpec.describe Cti::CallerId do
 
     it 'strips hyphens' do
       expect(described_class.normalize_number('1-888-407-4747')).to eq('18884074747')
+    end
+
+    it 'strips forward slashes' do
+      expect(described_class.normalize_number('030/1234567')).to eq('49301234567')
+    end
+
+    it 'returns nil for inputs with multiple forward slashes (date-like)' do
+      expect(described_class.normalize_number('12/12/2024')).to be_nil
     end
 
     it 'strips leading pluses' do
