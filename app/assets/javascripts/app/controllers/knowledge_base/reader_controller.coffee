@@ -105,6 +105,15 @@ class App.KnowledgeBaseReaderController extends App.Controller
     body = @prepareVideos(body)
 
     @answerBody.html(body)
+    @bindInlineImagePreview()
+
+  bindInlineImagePreview: ->
+    @answerBody.find('img').not ->
+      $(@).closest('a').length > 0
+    .addClass('is-previewable')
+    .on('click', (e) =>
+      @imageView(e)
+    )
 
   prepareLinks: (input) ->
     input = $($.parseHTML(input))

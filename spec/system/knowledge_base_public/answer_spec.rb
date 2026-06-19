@@ -19,6 +19,26 @@ RSpec.describe 'Public Knowledge Base answer', type: :system do
       end
     end
 
+    context 'image content' do
+      before do
+        published_answer_with_image
+      end
+
+      it 'opens inline images in a preview overlay' do
+        visit help_answer_path(primary_locale.system_locale.locale, category, published_answer_with_image)
+
+        find('.article-content img').click
+
+        within '.kb-image-preview' do
+          expect(page).to have_css('img.kb-image-preview-image')
+          expect(page).to have_link('Download')
+          click_on 'Close'
+        end
+
+        expect(page).to have_no_css('.kb-image-preview')
+      end
+    end
+
     context 'publishing time' do
       it 'shown for published item' do
         open_answer published_answer

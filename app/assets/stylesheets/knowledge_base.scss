@@ -1012,6 +1012,10 @@ b {
   display: block;
   overflow-wrap: anywhere;
 
+  img.is-previewable {
+    cursor: zoom-in;
+  }
+
   p,
   ol,
   ul {
@@ -1114,6 +1118,48 @@ b {
     border: none;
     border-top: 1px solid hsl(210, 14%, 91%);
   }
+}
+
+.knowledge-base-article-content img.is-previewable {
+  cursor: zoom-in;
+}
+
+.kb-image-preview-open {
+  overflow: hidden;
+}
+
+.kb-image-preview {
+  position: fixed;
+  z-index: 1000;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem;
+  background: hsla(209, 26%, 98%, 0.94);
+
+  @include phone {
+    padding: 1rem;
+  }
+}
+
+.kb-image-preview-controls {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.kb-image-preview-image {
+  width: auto;
+  max-width: 100%;
+  max-height: calc(100vh - 9rem);
+  padding: 10px;
+  border: 1px solid $border;
+  border-radius: 2px;
+  background: white;
+  box-shadow: $dropshadow;
 }
 
 .article-tags {
