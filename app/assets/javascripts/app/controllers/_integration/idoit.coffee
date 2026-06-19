@@ -70,6 +70,8 @@ class Form extends App.Controller
         method: 'cmdb.object_types'
         api_token: @config.api_token
         endpoint: @config.endpoint
+        username: @config.username
+        password: @config.password
         client_id: @config.client_id
         verify_ssl: @config.verify_ssl
       )

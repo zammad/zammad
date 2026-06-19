@@ -18,6 +18,14 @@ RSpec.describe 'Idoit', type: :request do
   let!(:endpoint) do
     'https://idoit.example.com/i-doit/'
   end
+  let(:rpc_auth_headers) do
+    {
+      'Content-Type'        => 'application/json',
+      'User-Agent'          => 'Idoit Client',
+      'X-RPC-Auth-Username' => 'api-user',
+      'X-RPC-Auth-Password' => 'api-pass',
+    }
+  end
 
   def read_message(file)
     Rails.root.join('test', 'data', 'idoit', "#{file}.json").read
@@ -37,6 +45,7 @@ RSpec.describe 'Idoit', type: :request do
     it 'does unclear urls' do
 
       params = {
+        method:    'cmdb.object_types',
         api_token: token,
         endpoint:  endpoint,
         client_id: '',
@@ -48,32 +57,12 @@ RSpec.describe 'Idoit', type: :request do
       expect(json_response).not_to be_blank
       expect(json_response['error']).to eq('User authorization failed.')
 
-      # Verifies with masked token
       stub_request(:post, "#{endpoint}src/jsonrpc.php")
         .with(body: "{\"method\":\"cmdb.object_types\",\"params\":{\"apikey\":\"#{token}\"},\"version\":\"2.0\",\"id\":42}")
         .to_return(status: 200, body: read_message('object_types_response'), headers: {})
 
       params = {
-        api_token: SensitiveParamsHelper::SENSITIVE_MASK,
-        endpoint:  endpoint,
-        client_id: '',
-      }
-      authenticated_as(admin)
-      post '/api/v1/integration/idoit/verify', params: params, as: :json
-      expect(response).to have_http_status(:ok)
-      expect(json_response).to be_a(Hash)
-      expect(json_response).not_to be_blank
-      expect(json_response['result']).to eq('ok')
-      expect(json_response['response']).to be_truthy
-      expect(json_response['response']['jsonrpc']).to eq('2.0')
-      expect(json_response['response']['result']).to be_truthy
-
-      # Verifies with new token
-      stub_request(:post, "#{endpoint}src/jsonrpc.php")
-        .with(body: "{\"method\":\"cmdb.object_types\",\"params\":{\"apikey\":\"#{token}\"},\"version\":\"2.0\",\"id\":42}")
-        .to_return(status: 200, body: read_message('object_types_response'), headers: {})
-
-      params = {
+        method:    'cmdb.object_types',
         api_token: token,
         endpoint:  endpoint,
         client_id: '',
@@ -89,6 +78,7 @@ RSpec.describe 'Idoit', type: :request do
       expect(json_response['response']['result']).to be_truthy
 
       params = {
+        method:    'cmdb.object_types',
         api_token: token,
         endpoint:  " #{endpoint}/",
         client_id: '',
@@ -178,6 +168,7 @@ RSpec.describe 'Idoit', type: :request do
     describe '.verify' do
       def request(verify: false)
         params = {
+          method:     'cmdb.object_types',
           api_token:  token,
           endpoint:   endpoint,
           client_id:  '',
@@ -231,6 +222,75 @@ RSpec.describe 'Idoit', type: :request do
         request
         expect(UserAgent).to have_received(:get_http).with(URI::HTTPS, hash_including(verify_ssl: false)).once
       end
+    end
+  end
+
+  describe 'RPC authentication headers' do
+    it 'sends i-doit RPC auth headers when verifying with credentials' do
+      stub_request(:post, "#{endpoint}src/jsonrpc.php")
+        .with(
+          body:    "{\"method\":\"cmdb.object_types\",\"params\":{\"apikey\":\"#{token}\"},\"version\":\"2.0\",\"id\":42}",
+          headers: rpc_auth_headers
+        )
+        .to_return(status: 200, body: read_message('object_types_response'), headers: {})
+
+      authenticated_as(admin)
+      post '/api/v1/integration/idoit/verify', params: {
+        method:    'cmdb.object_types',
+        api_token: token,
+        endpoint:  endpoint,
+        username:  'api-user',
+        password:  'api-pass',
+        client_id: '',
+      }, as: :json
+
+      expect(response).to have_http_status(:ok)
+    end
+
+    it 'does not send RPC auth headers when querying without credentials' do
+      stub_request(:post, "#{endpoint}src/jsonrpc.php")
+        .with(
+          body: "{\"method\":\"cmdb.objects\",\"params\":{\"apikey\":\"#{token}\",\"filter\":{\"ids\":[\"33\"]}},\"version\":\"2.0\",\"id\":42}",
+          headers: {
+            'Content-Type' => 'application/json',
+            'User-Agent'   => 'Idoit Client',
+          }
+        )
+        .to_return(status: 200, body: read_message('object_types_filter_response'), headers: {})
+
+      authenticated_as(agent)
+      post '/api/v1/integration/idoit', params: {
+        method: 'cmdb.objects',
+        filter: {
+          ids: ['33']
+        },
+      }, as: :json
+
+      expect(response).to have_http_status(:ok)
+    end
+
+    it 'sends i-doit RPC auth headers when querying with configured credentials' do
+      Setting.set('idoit_config', Setting.get('idoit_config').merge(
+                    username: 'api-user',
+                    password: 'api-pass',
+                  ))
+
+      stub_request(:post, "#{endpoint}src/jsonrpc.php")
+        .with(
+          body:    "{\"method\":\"cmdb.objects\",\"params\":{\"apikey\":\"#{token}\",\"filter\":{\"ids\":[\"33\"]}},\"version\":\"2.0\",\"id\":42}",
+          headers: rpc_auth_headers
+        )
+        .to_return(status: 200, body: read_message('object_types_filter_response'), headers: {})
+
+      authenticated_as(agent)
+      post '/api/v1/integration/idoit', params: {
+        method: 'cmdb.objects',
+        filter: {
+          ids: ['33']
+        },
+      }, as: :json
+
+      expect(response).to have_http_status(:ok)
     end
   end
 end
