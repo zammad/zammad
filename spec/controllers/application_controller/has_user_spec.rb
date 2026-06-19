@@ -18,6 +18,27 @@ RSpec.describe ApplicationController::HasUser, type: :controller do
     UserInfo.current_token = nil
   end
 
+  describe '#set_user' do
+    before do
+      allow(controller).to receive(:request_header_from).and_return(customer.email)
+    end
+
+    # When current_user_set resets @_user_on_behalf = nil (so impersonate! runs fresh in set_user),
+    # a stale UserInfo.current_token from a previous thread-pool request must not bleed into the
+    # permissions? check - otherwise an admin whose token lacks admin.user would be denied.
+    context 'when UserInfo.current_token is set to a stale token that lacks admin.user (simulates thread-pool reuse)' do
+      let(:stale_token) { create(:token, user: agent, permissions: %w[ticket.agent]) }
+
+      before { UserInfo.current_token = stale_token }
+
+      it 'clears the stale token before the impersonation permission check so the admin can impersonate', :aggregate_failures do
+        expect { controller.send(:current_user_set, admin, 'token_auth') }
+          .not_to raise_error
+        expect(controller.send(:current_user_on_behalf)).to eq(customer)
+      end
+    end
+  end
+
   describe '#current_user_set' do
     before do
       # Make the From header visible without a live rack request

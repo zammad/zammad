@@ -77,6 +77,7 @@ module ApplicationController::HasUser
     # because current_token is used in UserInfo.current_user_id= and it needs to be set before.
     # If current_user is set before current_token, then UserInfo.current_user_id= will use the old token
     # instead of the new one, which can cause issues with token-based authentication.
+    UserInfo.current_token   = nil
     UserInfo.current_token   = current_user_on_behalf ? nil : @_token
     UserInfo.current_user_id = current_user&.id || 1
   end
