@@ -106,4 +106,18 @@ RSpec.describe 'User password reset verify endpoint', authenticated_as: false, t
       it_behaves_like 'returning failure', notice: 'Invalid password'
     end
   end
+
+  # https://github.com/zammad/zammad/issues/6199
+  context 'when user tries to verify with a token and too unsafe password multiple times', :rack_attack do
+    let(:password) { 'short' }
+    let(:params)   { { token:, password: } }
+
+    it 'allows multiple attempts' do
+      4.times do
+        post api_v1_users_password_reset_verify_path, params:
+      end
+
+      expect(json_response).to include({ 'message' => 'failed', 'notice' => include(start_with('Invalid password')) })
+    end
+  end
 end
