@@ -178,6 +178,8 @@ class SessionsController < ApplicationController
       return false
     end
 
+    raise Exceptions::UnprocessableContent, __('User is inactive.') if !user.active
+
     # remember original user
     session[:switched_from_user_id] ||= current_user.id
 
