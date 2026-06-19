@@ -100,6 +100,8 @@ class LongPollingController < ApplicationController
     return if !params[:client_id]
 
     cid = params[:client_id].to_s
+    return if !Sessions.valid_client_id?(cid)
+
     session_data = Sessions.get(cid)
     return if !session_data
 
