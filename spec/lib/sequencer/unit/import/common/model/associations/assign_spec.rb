@@ -12,6 +12,25 @@ RSpec.describe Sequencer::Unit::Import::Common::Model::Associations::Assign, seq
     }
   end
 
+  context 'when dry_run is true and associations would change the instance' do
+    let(:instance)     { create(:user) }
+    let(:action)       { :unchanged }
+    let(:associations) do
+      alt_org = Organization.where.not(id: instance.organization_id.to_i).pluck(:id).sample
+      { organization_id: alt_org }
+    end
+    let(:parameters) { super().merge(dry_run: true) }
+
+    it 'promotes action to :updated' do
+      expect(process(parameters)).to include(action: :updated)
+    end
+
+    it 'does not assign associations to the instance' do
+      process(parameters)
+      expect(instance.changes).not_to include(:organization_id)
+    end
+  end
+
   context 'when given an `associations` hash that changes the instance' do
     let(:instance)     { create(:user) }
     let(:action)       { :created }

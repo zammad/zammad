@@ -47,6 +47,26 @@ RSpec.describe 'Ldap', type: :request do
     end
   end
 
+  describe 'job_try' do
+    context 'with masked password' do
+      let!(:ldap_source) do
+        create(:ldap_source, :with_config).tap do |ls|
+          ls.preferences[:bind_pw] = 'stored_password'
+          ls.save!
+        end
+      end
+      let(:params) { { ldap_source_id: ldap_source.id, bind_pw: SensitiveParamsHelper::SENSITIVE_MASK } }
+
+      it 'stores the unmasked password in the job payload' do
+        authenticated_as(admin)
+
+        post '/api/v1/integration/ldap/job_try', params: params, as: :json
+
+        expect(ImportJob.last.payload.dig(:ldap_config, :bind_pw)).to eq('stored_password')
+      end
+    end
+  end
+
   describe 'bind' do
     let(:params) { { bind_pw: 'test' } }
 

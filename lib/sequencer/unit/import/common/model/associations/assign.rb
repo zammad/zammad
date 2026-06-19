@@ -7,11 +7,12 @@ class Sequencer::Unit::Import::Common::Model::Associations::Assign < Sequencer::
   provides :action
 
   def process
-    return if dry_run
     return if instance.blank?
     return if associations.blank? && log_associations_error
 
     register_changes
+    return if dry_run
+
     instance.assign_attributes(associations)
   rescue => e
     handle_failure(e)
