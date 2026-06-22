@@ -853,6 +853,8 @@ class App.TicketZoom extends App.Controller
     if _.isEmpty(contentKeys)
       delete articleDiff.type
       delete articleDiff.internal
+    else
+      articleDiff.internal = currentParams.article.internal
 
     {
       ticket:  @forRemoveMeta(App.Utils.formDiff(currentParams.ticket, currentStore.ticket))
