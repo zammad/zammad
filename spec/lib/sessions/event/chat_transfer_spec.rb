@@ -4,15 +4,16 @@ require 'rails_helper'
 
 RSpec.describe Sessions::Event::ChatTransfer do
   let(:client_id)          { SecureRandom.uuid }
+  let(:customer_client_id) { SecureRandom.uuid }
   let(:chat)               { Chat.first }
   let(:chat_transfer_into) { Chat.create!(name: 'chat 2', updated_by_id: 1, created_by_id: 1) }
   let(:chat_session) do
-    Sessions.create('customer_session_id', { 'id' => customer.id }, {})
-    Sessions.queue('customer_session_id')
+    Sessions.create(customer_client_id, { 'id' => customer.id }, {})
+    Sessions.queue(customer_client_id)
     Chat::Session.create(
       chat_id:     chat.id,
       user_id:     nil,
-      preferences: { participants: ['customer_session_id'] },
+      preferences: { participants: [customer_client_id] },
       state:       'running',
     )
   end
@@ -68,7 +69,7 @@ RSpec.describe Sessions::Event::ChatTransfer do
     it 'send out chat_session_notice to customer and agent and set chat session to waiting' do
       expect(subject_as_agent.run).to be_nil
 
-      messages_to_customer = Sessions.queue('customer_session_id')
+      messages_to_customer = Sessions.queue(customer_client_id)
       expect(messages_to_customer.count).to eq(1)
       expect(messages_to_customer[0]).to eq(
         'event' => 'chat_session_notice',
