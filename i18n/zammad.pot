@@ -1312,7 +1312,7 @@ msgstr ""
 msgid "Add image"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/FloatingToolbar.vue:55
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/FloatingToolbar.vue:65
 #: app/frontend/shared/entities/ticket-article/action/plugins/note.ts:15
 msgid "Add internal note"
 msgstr ""
@@ -1343,7 +1343,7 @@ msgstr ""
 msgid "Add phone call"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/FloatingToolbar.vue:55
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/FloatingToolbar.vue:65
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:36
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue:88
 #: app/frontend/shared/entities/ticket-article/action/plugins/web.ts:13
@@ -2009,7 +2009,7 @@ msgstr ""
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:63
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:34
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:436
-#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:254
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:259
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:41
 msgid "Are you sure? You have unsaved changes that will get lost."
 msgstr ""
@@ -2109,12 +2109,12 @@ msgstr ""
 msgid "Assigned"
 msgstr ""
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_git_issue.jst.eco:24
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:77
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_git_issue.jst.eco:30
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:96
 msgid "Assignee"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:77
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:96
 msgid "Assignees"
 msgstr ""
 
@@ -3461,7 +3461,7 @@ msgstr ""
 msgid "Click here to set up a two-factor authentication method."
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorInput.vue:48
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorInput.vue:49
 msgid "Click to edit…"
 msgstr ""
 
@@ -4188,7 +4188,7 @@ msgstr ""
 msgid "Create a shared draft"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/knowledge_base/reader_controller.coffee:210
+#: app/assets/javascripts/app/controllers/knowledge_base/reader_controller.coffee:219
 msgid "Create a translation"
 msgstr ""
 
@@ -4366,7 +4366,7 @@ msgstr ""
 msgid "Created by"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee:30
+#: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee:29
 msgid "Created within last 14 days"
 msgstr ""
 
@@ -5477,7 +5477,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:78
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee:9
 #: app/assets/javascripts/app/controllers/package.coffee:54
-#: app/assets/javascripts/app/controllers/user.coffee:101
+#: app/assets/javascripts/app/controllers/user.coffee:102
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:90
 #: app/assets/javascripts/app/lib/mixins/knowledge_base_actions.coffee:26
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:80
@@ -5889,7 +5889,7 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:59
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:36
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:438
-#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:256
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:261
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:43
 msgid "Discard changes"
 msgstr ""
@@ -6118,7 +6118,7 @@ msgstr ""
 msgid "Drafts & macros"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee:32
+#: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee:31
 msgid "Drafts only"
 msgstr ""
 
@@ -8857,7 +8857,7 @@ msgstr ""
 msgid "Incomplete credentials"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:461
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:473
 msgid "Incomplete ticket checklist"
 msgstr ""
 
@@ -9079,7 +9079,7 @@ msgstr ""
 msgid "Invalid GitHub configuration (missing endpoint or api_token)."
 msgstr ""
 
-#: lib/github/linked_issue.rb:115
+#: lib/github/linked_issue.rb:130
 msgid "Invalid GitHub issue link format"
 msgstr ""
 
@@ -9265,7 +9265,7 @@ msgstr ""
 msgid "Issue URL"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:52
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:62
 msgid "Issue status"
 msgstr ""
 
@@ -9494,8 +9494,8 @@ msgstr ""
 msgid "Label"
 msgstr ""
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_git_issue.jst.eco:30
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:81
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_git_issue.jst.eco:36
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:100
 msgid "Labels"
 msgstr ""
 
@@ -9774,7 +9774,7 @@ msgstr ""
 msgid "Link already exists"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee:26
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee:43
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerLinkFlyout.vue:69
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList.vue:272
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/TicketSidebarGitHub/TicketSidebarGitHub.vue:70
@@ -9887,10 +9887,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee:190
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee:183
-#: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee:127
+#: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee:125
 #: app/assets/javascripts/app/controllers/password_reset.coffee:92
 #: app/assets/javascripts/app/controllers/ssl_certificate.coffee:46
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee:87
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee:104
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee:76
 #: app/assets/javascripts/app/controllers/widget/payload_example.coffee:34
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee:61
@@ -10112,7 +10112,7 @@ msgstr ""
 msgid "Manage Telegram channel of your system."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/user.coffee:86
+#: app/assets/javascripts/app/controllers/user.coffee:87
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee:4
 msgid "Manage Two-Factor Authentication"
 msgstr ""
@@ -10675,8 +10675,8 @@ msgstr ""
 msgid "Migrator can't read OTRS output!"
 msgstr ""
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_git_issue.jst.eco:18
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:71
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_git_issue.jst.eco:24
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:90
 msgid "Milestone"
 msgstr ""
 
@@ -11494,7 +11494,7 @@ msgstr ""
 msgid "No knowledge base locale configured."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee:193
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee:215
 msgid "No linked issues"
 msgstr ""
 
@@ -11649,7 +11649,7 @@ msgid "No x-zammad-session-user-id, no sender set!"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:8
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:464
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:476
 msgid "No, just close the ticket"
 msgstr ""
 
@@ -11716,7 +11716,7 @@ msgstr ""
 msgid "Not authorized (token expired)!"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/knowledge_base/reader_controller.coffee:208
+#: app/assets/javascripts/app/controllers/knowledge_base/reader_controller.coffee:217
 msgid "Not available in selected language"
 msgstr ""
 
@@ -14280,7 +14280,7 @@ msgstr ""
 msgid "SSO"
 msgstr ""
 
-#: app/controllers/sessions_controller.rb:262
+#: app/controllers/sessions_controller.rb:264
 msgid "SSO request from untrusted IP address."
 msgstr ""
 
@@ -14446,7 +14446,7 @@ msgid "Scroll to end"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/components/BulkScrollButton.vue:24
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/FloatingToolbar.vue:68
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/FloatingToolbar.vue:86
 msgid "Scroll to start"
 msgstr ""
 
@@ -16227,7 +16227,7 @@ msgstr ""
 msgid "Tag assignment mode"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee:38
+#: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee:37
 msgid "Tagged %s"
 msgstr ""
 
@@ -16994,7 +16994,7 @@ msgstr ""
 msgid "The installed attachment plugin could not handle the request payload. Ensure that the correct attachment plugin is installed (ingest-attachment)."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee:79
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee:96
 msgid "The issue could not be saved."
 msgstr ""
 
@@ -17069,7 +17069,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_settings/form.coffee:91
 #: app/assets/javascripts/app/controllers/object_manager.coffee:331
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee:142
-#: app/assets/javascripts/app/controllers/user.coffee:235
+#: app/assets/javascripts/app/controllers/user.coffee:236
 msgid "The object could not be updated."
 msgstr ""
 
@@ -17592,7 +17592,7 @@ msgstr ""
 msgid "The two-factor authentication method \"%s\" was removed for this user."
 msgstr ""
 
-#: app/controllers/sessions_controller.rb:251
+#: app/controllers/sessions_controller.rb:253
 #: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:32
 #: app/services/service/user/two_factor/initiate_method_configuration.rb:6
 #: app/services/service/user/two_factor/verify_method_configuration.rb:15
@@ -17624,7 +17624,7 @@ msgstr ""
 msgid "The user's 'preferred_username' could not be extracted from 'id_token'."
 msgstr ""
 
-#: app/controllers/sessions_controller.rb:247
+#: app/controllers/sessions_controller.rb:249
 #: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:27
 msgid "The username or password is incorrect."
 msgstr ""
@@ -18460,7 +18460,7 @@ msgstr ""
 msgid "Ticket Trigger Loop Protection Articles per Ticket"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/FloatingToolbar.vue:50
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/FloatingToolbar.vue:59
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:96
 msgid "Ticket actions"
 msgstr ""
@@ -18589,13 +18589,13 @@ msgstr ""
 msgid "Ticket update"
 msgstr ""
 
-#: app/frontend/shared/entities/ticket/composables/useTicketEdit.ts:48
+#: app/frontend/shared/entities/ticket/composables/useTicketEdit.ts:63
 msgid "Ticket update failed."
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/useTicketEditTitle.ts:26
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:553
-#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:161
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:565
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:162
 msgid "Ticket updated successfully."
 msgstr ""
 
@@ -19261,7 +19261,9 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:11
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco:11
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:57
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_git_issue.jst.eco:18
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:100
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:79
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:110
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:211
 #: db/seeds/object_manager_attributes.rb:129
@@ -19362,7 +19364,7 @@ msgstr ""
 msgid "Unless you already have it, install one of the following authenticator apps on your mobile device:"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:65
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:75
 msgid "Unlink issue"
 msgstr ""
 
@@ -19370,7 +19372,7 @@ msgstr ""
 msgid "Unlink object"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/user.coffee:109
+#: app/assets/javascripts/app/controllers/user.coffee:110
 msgid "Unlock"
 msgstr ""
 
@@ -19378,7 +19380,7 @@ msgstr ""
 msgid "Unpin this panel"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/FloatingToolbar.vue:93
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/FloatingToolbar.vue:116
 msgid "Unread messages count"
 msgstr ""
 
@@ -19624,7 +19626,7 @@ msgstr ""
 msgid "Updated ticket article (#{ticket.title})\n\n<div>Hi #{recipient.firstname},</div>\n<br>\n<div>\n<%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') %> reacted with a <%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'emoji') %> to message from #{article.created_by.fullname}:\n</div>\n<br>\n<% if @objects[:article] %>\n  <div>\n    <blockquote type=\"cite\">\n    #{article.body_as_html}\n    </blockquote>\n  </div>\n<% end %>\n<br>\n<div>\n  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/#{article.id}\" target=\"zammad_app\">View this in #{config.product_name}</a>\n</div>\n"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee:31
+#: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee:30
 msgid "Updated within last 3 days"
 msgstr ""
 
@@ -19892,6 +19894,7 @@ msgstr ""
 msgid "User is inactive"
 msgstr ""
 
+#: app/controllers/sessions_controller.rb:165
 #: app/frontend/apps/desktop/components/Search/QuickSearch/entities/User.vue:25
 msgid "User is inactive."
 msgstr ""
@@ -19917,7 +19920,7 @@ msgstr ""
 msgid "User menu"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/user.coffee:123
+#: app/assets/javascripts/app/controllers/user.coffee:124
 msgid "User successfully unlocked!"
 msgstr ""
 
@@ -19925,7 +19928,7 @@ msgstr ""
 msgid "User taskbar tabs"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/user.coffee:220
+#: app/assets/javascripts/app/controllers/user.coffee:221
 msgid "User updated successfully."
 msgstr ""
 
@@ -20516,7 +20519,7 @@ msgid "Yes, add attachments now"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:5
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:463
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:475
 msgid "Yes, open the checklist"
 msgstr ""
 
@@ -20699,7 +20702,7 @@ msgstr ""
 msgid "You can use the following script to post the data to %s."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/user.coffee:150
+#: app/assets/javascripts/app/controllers/user.coffee:151
 msgid "You cannot view or change the group permissions of an inactive user. Activate them first to manage their permissions."
 msgstr ""
 
@@ -20803,7 +20806,7 @@ msgstr ""
 msgid "You have unchecked items in the checklist."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:458
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:470
 msgid "You have unchecked items in the checklist. Do you want to handle them before closing this ticket?"
 msgstr ""
 
@@ -21873,7 +21876,7 @@ msgstr ""
 msgid "is too short (minimum is 1 character)"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:53
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:63
 msgid "issue status: %s"
 msgstr ""
 
