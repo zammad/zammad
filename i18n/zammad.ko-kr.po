@@ -1669,7 +1669,7 @@ msgstr "어댑터"
 #: app/assets/javascripts/app/views/profile/linked_accounts.jst.eco:15
 #: app/assets/javascripts/app/views/tag/index.jst.eco:24
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/show.jst.eco:19
-#: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:267
+#: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:264
 #: app/frontend/shared/form/i18n/locales.ts:25
 msgid "Add"
 msgstr "더하다"
@@ -1820,6 +1820,7 @@ msgstr "제목 추가"
 msgid "Add image"
 msgstr "이미지 추가"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/FloatingToolbar.vue:55
 #: app/frontend/shared/entities/ticket-article/action/plugins/note.ts:15
 msgid "Add internal note"
 msgstr "내부 메모 추가"
@@ -1850,6 +1851,7 @@ msgstr "번호 매기기 목록 추가"
 msgid "Add phone call"
 msgstr "전화 통화 추가"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/FloatingToolbar.vue:55
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:36
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue:88
 #: app/frontend/shared/entities/ticket-article/action/plugins/web.ts:13
@@ -1918,7 +1920,6 @@ msgstr "주소"
 msgid "Address of the proxy server for http and https resources."
 msgstr "HTTP와 HTTPS 리소스를 위한 프록시 서버 주소."
 
-#: app/assets/javascripts/app/controllers/_default_navbar.coffee:13
 #: db/seeds/roles.rb:5
 msgid "Admin"
 msgstr "관리자"
@@ -1956,6 +1957,7 @@ msgstr "관리자 비밀번호 로그인"
 msgid "Admin password login instructions were sent to your email address."
 msgstr "관리자 비밀번호 로그인 안내가 이메일 주소로 전송되었습니다."
 
+#: app/assets/javascripts/app/controllers/_default_navbar.coffee:13
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/MenuContainer/AdminMenu/plugins/admin.ts:9
 msgid "Administration"
 msgstr "관리"
@@ -2497,7 +2499,7 @@ msgstr "현재 기본값을 모든 에이전트에게 적용"
 msgid "Apply draft"
 msgstr "초안 적용"
 
-#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue:76
+#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue:75
 msgid "Apply filter…"
 msgstr "필터 적용…"
 
@@ -2956,7 +2958,7 @@ msgstr "인증이 불가능합니다 (서비스에서 제공하지 않음)"
 
 #: app/controllers/application_controller/authenticates.rb:17
 #: app/graphql/gql/context/current_user_aware.rb:7
-#: app/policies/pundit_policy.rb:18 lib/user_context.rb:26
+#: app/policies/pundit_policy.rb:18 lib/user_context.rb:37
 msgid "Authentication required"
 msgstr "인증이 필요합니다"
 
@@ -3220,7 +3222,7 @@ msgstr "배경색"
 
 #: app/assets/javascripts/app/controllers/import_freshdesk.coffee:156
 #: app/assets/javascripts/app/controllers/import_kayako.coffee:158
-#: app/assets/javascripts/app/controllers/import_otrs.coffee:154
+#: app/assets/javascripts/app/controllers/import_otrs.coffee:155
 #: app/assets/javascripts/app/controllers/import_zendesk.coffee:156
 msgid ""
 "Background process did not start or has not finished! Please contact your "
@@ -3862,7 +3864,7 @@ msgstr "변경사항"
 msgid "Changes could not be loaded."
 msgstr "변경사항을 불러올 수 없습니다."
 
-#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:84
+#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:106
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee:103
 msgid "Changes could not be saved."
 msgstr "변경사항을 저장할 수 없습니다."
@@ -4197,7 +4199,7 @@ msgstr ""
 msgid "Clear all filters"
 msgstr "필터 지우기"
 
-#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue:89
+#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue:85
 msgid "Clear filter"
 msgstr "필터 지우기"
 
@@ -4325,8 +4327,8 @@ msgstr "참가자가 오프라인인 채팅 세션을 종료합니다."
 msgid "Close current tab"
 msgstr "현재 탭 닫기"
 
-#: app/frontend/apps/desktop/components/CommonDialog/CommonDialog.vue:168
-#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkConfirmation.vue:39
+#: app/frontend/apps/desktop/components/CommonDialog/CommonDialog.vue:164
+#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkConfirmation.vue:35
 msgid "Close dialog"
 msgstr "대화 상자 닫기"
 
@@ -4732,7 +4734,7 @@ msgstr "콘텐츠"
 msgid "Context"
 msgstr "컨텍스트"
 
-#: app/frontend/apps/desktop/components/SplitButton/SplitButton.vue:118
+#: app/frontend/apps/desktop/components/SplitButton/SplitButton.vue:107
 msgid "Context menu"
 msgstr "컨텍스트 메뉴"
 
@@ -5271,6 +5273,10 @@ msgstr "생성 시점:"
 msgid "Created by"
 msgstr "생성자"
 
+#: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee:30
+msgid "Created within last 14 days"
+msgstr ""
+
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:24
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:476
 msgid "Creating new tickets via web is disabled."
@@ -5320,7 +5326,7 @@ msgstr "현재 비밀번호"
 msgid "Current state of configured settings (excluding passwords and tokens)"
 msgstr "구성된 설정의 현재 상태(비밀번호 및 토큰 제외)"
 
-#: app/controllers/application_controller/has_user.rb:43
+#: app/controllers/application_controller/has_user.rb:57
 msgid "Current user has no permission to use 'From'/'X-On-Behalf-Of'!"
 msgstr "현재 사용자에게 'From'/'X-On-Behalf-Of' 사용 권한이 없습니다!"
 
@@ -6641,6 +6647,7 @@ msgstr "일치하는 티켓이 있을 때 경고를 받을 사용자 역할을 �
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee:715
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee:125
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:188
+#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:78
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee:9
 #: app/assets/javascripts/app/controllers/package.coffee:54
 #: app/assets/javascripts/app/controllers/user.coffee:101
@@ -7336,6 +7343,12 @@ msgstr "초안들"
 #| msgid "Create Macros"
 msgid "Drafts & macros"
 msgstr "매크로 만들기"
+
+#: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee:32
+#, fuzzy
+#| msgid "Drafts"
+msgid "Drafts only"
+msgstr "초안들"
 
 #: app/frontend/apps/desktop/composables/dragAndDrop/useAccessibleDragAndDrop.ts:68
 msgid "Drag ended for %s."
@@ -9895,7 +9908,7 @@ msgstr ""
 msgid "Highlighted text"
 msgstr "하이라이트"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/HighlightMenu.vue:93
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/HighlightMenu.vue:89
 #, fuzzy
 #| msgid "Highlight color"
 msgid "Highlighter color: %s"
@@ -10452,7 +10465,7 @@ msgstr "미완료 체크리스트 항목"
 msgid "Incomplete credentials"
 msgstr "자격 증명이 완전하지 않습니다"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:439
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:461
 #, fuzzy
 #| msgid "Incomplete Ticket Checklist"
 msgid "Incomplete ticket checklist"
@@ -11543,7 +11556,7 @@ msgstr "LinkedIn 앱 자격 증명"
 msgid "LinkedIn Developer Site"
 msgstr "LinkedIn 개발자 사이트"
 
-#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:245
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:238
 msgid "List of all user taskbar tabs"
 msgstr "모든 사용자 작업 표시줄 탭 목록"
 
@@ -11593,7 +11606,7 @@ msgstr "로딩에 실패했습니다. 나중에 다시 시도해주세요."
 
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee:190
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee:183
-#: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee:103
+#: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee:127
 #: app/assets/javascripts/app/controllers/password_reset.coffee:92
 #: app/assets/javascripts/app/controllers/ssl_certificate.coffee:46
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee:87
@@ -12737,7 +12750,7 @@ msgstr "%s로 이동"
 msgid "Navigation"
 msgstr "내비게이션"
 
-#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue:77
+#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue:76
 msgid "Navigation filter"
 msgstr "내비게이션 필터"
 
@@ -13428,7 +13441,7 @@ msgstr "아직 공유 초안 없음"
 
 #: app/controllers/organizations_controller.rb:107
 #: app/controllers/text_modules_controller.rb:75
-#: app/controllers/ticket_articles_controller.rb:243
+#: app/controllers/ticket_articles_controller.rb:245
 #: app/controllers/tickets_controller.rb:459
 #: app/controllers/users_controller.rb:559
 msgid "No source data submitted!"
@@ -13496,7 +13509,7 @@ msgid "No x-zammad-session-user-id, no sender set!"
 msgstr "x-zammad-session-user-id가 없고 발신자가 설정되지 않았습니다!"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:8
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:442
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:464
 msgid "No, just close the ticket"
 msgstr "아니요, 티켓만 닫기"
 
@@ -13790,7 +13803,7 @@ msgstr "확인, 토큰을 복사했습니다"
 msgid "OK, I've saved my recovery codes"
 msgstr "확인, 복구 코드를 저장했습니다"
 
-#: app/assets/javascripts/app/controllers/import_otrs.coffee:175
+#: app/assets/javascripts/app/controllers/import_otrs.coffee:176
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/otrs.ts:11
 msgid "OTRS"
 msgstr "OTRS"
@@ -14031,7 +14044,7 @@ msgstr "노트 상자 열기"
 msgid "Open questions"
 msgstr "열린 질문"
 
-#: app/frontend/apps/desktop/components/PageNavigation/PageNavigation.vue:51
+#: app/frontend/apps/desktop/components/PageNavigation/PageNavigation.vue:48
 msgid "Open quick search"
 msgstr "빠른 검색 열기"
 
@@ -15673,7 +15686,7 @@ msgstr "원격"
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco:25
 #: app/assets/javascripts/app/views/profile/devices.jst.eco:15
 #: app/assets/javascripts/app/views/profile/password.jst.eco:81
-#: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:258
+#: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:255
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationPasswordCheck.vue:59
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:149
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:178
@@ -15684,6 +15697,12 @@ msgstr "제거"
 #: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:178
 msgid "Remove %s"
 msgstr "%s 제거"
+
+#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:82
+#, fuzzy
+#| msgid "Remove image"
+msgid "Remove Language"
+msgstr "이미지 제거"
 
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee:53
 msgid "Remove a configured two-factor authentication method"
@@ -15726,7 +15745,7 @@ msgstr "항목 제거"
 msgid "Remove formatting"
 msgstr "서식 제거"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/HighlightMenu.vue:93
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/HighlightMenu.vue:89
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/useHighlightMenuState.ts:21
 #, fuzzy
 #| msgid "Remove checklist"
@@ -15795,6 +15814,12 @@ msgstr "서식 제거"
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee:80
 msgid "Removes the shadows for a flat look."
 msgstr "평평한 모양을 위해 그림자를 제거합니다."
+
+#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:79
+msgid ""
+"Removing %s language(s) will permanently delete all translation(s) related "
+"to them. Enter \"%s\" to confirm."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:33
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:372
@@ -16556,10 +16581,6 @@ msgstr "%s개의 새 답변을 보려면 아래로 스크롤"
 msgid "Scroll down to see new messages"
 msgstr "새 메시지를 보려면 아래로 스크롤"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailScrollToBottomButton.vue:25
-msgid "Scroll to bottom"
-msgstr ""
-
 #: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/components/BulkScrollButton.vue:24
 #, fuzzy
 #| msgid "Scroll down"
@@ -16567,18 +16588,19 @@ msgid "Scroll to end"
 msgstr "아래로 스크롤"
 
 #: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/components/BulkScrollButton.vue:24
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/FloatingToolbar.vue:68
 #, fuzzy
 #| msgid "Scroll down"
 msgid "Scroll to start"
 msgstr "아래로 스크롤"
 
-#: app/frontend/apps/desktop/components/CommonTabs/TabsScrollList.vue:251
+#: app/frontend/apps/desktop/components/CommonTabs/TabsScrollList.vue:264
 #, fuzzy
 #| msgid "Scroll down"
 msgid "Scroll towards end"
 msgstr "아래로 스크롤"
 
-#: app/frontend/apps/desktop/components/CommonTabs/TabsScrollList.vue:200
+#: app/frontend/apps/desktop/components/CommonTabs/TabsScrollList.vue:213
 #, fuzzy
 #| msgid "Scroll down"
 msgid "Scroll towards start"
@@ -18362,6 +18384,12 @@ msgstr "구독 설정"
 msgid "Subscription settings"
 msgstr "구독 설정"
 
+#: app/assets/javascripts/app/views/knowledge_base/search_field_widget.jst.eco:12
+#, fuzzy
+#| msgid "Recent searches"
+msgid "Suggested searches"
+msgstr "최근 검색"
+
 #: db/seeds/ai/text_tools.rb:98
 msgid "Summarize section to about half its current size"
 msgstr "섹션을 현재 크기의 약 절반으로 요약"
@@ -18522,6 +18550,12 @@ msgstr "태그 \"%s\"이(가) 이미 존재합니다."
 #| msgid "Assignment Timeout"
 msgid "Tag assignment mode"
 msgstr "지정 시간 초과"
+
+#: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee:38
+#, fuzzy
+#| msgid "created %s"
+msgid "Tagged %s"
+msgstr "%s 생성됨"
 
 #: app/assets/javascripts/app/controllers/chat.coffee:560
 #: app/assets/javascripts/app/controllers/tag.coffee:3
@@ -19290,7 +19324,7 @@ msgstr "봇에서 파일을 가져올 수 없습니다."
 msgid "The file could not be uploaded."
 msgstr "파일을 업로드할 수 없습니다."
 
-#: app/controllers/ticket_articles_controller.rb:175
+#: app/controllers/ticket_articles_controller.rb:177
 msgid "The file does not belong to the specified article."
 msgstr "파일이 지정된 게시물에 속하지 않습니다."
 
@@ -19544,7 +19578,7 @@ msgstr "테스트 실행 성공했습니다."
 msgid "The personal access token could not be deleted."
 msgstr "%s 객체 (들)이 생성된다."
 
-#: app/controllers/ticket_articles_controller.rb:283
+#: app/controllers/ticket_articles_controller.rb:285
 msgid ""
 "The preview cannot be generated. The format is corrupted or not supported."
 msgstr "미리보기를 생성할 수 없습니다. 형식이 손상되었거나 지원되지 않습니다."
@@ -19555,7 +19589,7 @@ msgid ""
 "tickets."
 msgstr ""
 
-#: lib/secure_mailing/pgp/incoming.rb:302
+#: lib/secure_mailing/pgp/incoming.rb:304
 msgid "The private PGP key could not be found."
 msgstr "%s 객체 (들) 업데이트됩니다."
 
@@ -19678,7 +19712,7 @@ msgid ""
 msgstr ""
 "제공자 구성이 없습니다. |AI > 제공자|에서 진행하기 전에 제공자를 설정하세요."
 
-#: lib/secure_mailing/pgp/incoming.rb:302
+#: lib/secure_mailing/pgp/incoming.rb:304
 msgid "The public PGP key could not be found."
 msgstr "공개 PGP 키를 찾을 수 없습니다."
 
@@ -19838,7 +19872,7 @@ msgstr "필수 매개변수 'signup'이(가) 없습니다."
 msgid "The required parameter 'ticket_number' is missing."
 msgstr "필수 매개변수 'ticket_number'이(가) 없습니다."
 
-#: app/models/concerns/perform_changes/action/attribute_updates.rb:148
+#: app/models/concerns/perform_changes/action/attribute_updates.rb:149
 msgid "The required parameter 'user_id' is missing."
 msgstr "필수 매개변수 'user_id'이(가) 없습니다."
 
@@ -19854,7 +19888,7 @@ msgstr "필수 값 'group_id'이(가) 없습니다."
 msgid "The response could not be processed."
 msgstr "응답을 처리할 수 없습니다."
 
-#: app/controllers/ticket_articles_controller.rb:274
+#: app/controllers/ticket_articles_controller.rb:276
 msgid "The retried attachment download failed."
 msgstr "재시도한 첨부 파일 다운로드가 실패했습니다."
 
@@ -20212,7 +20246,7 @@ msgstr ""
 "간이 걸릴 수 있으니 커피 한 잔을 준비하세요. 현재 알려진 수를 초과하면 총 티"
 "켓 수가 업데이트됩니다."
 
-#: app/models/calendar.rb:303
+#: app/models/calendar.rb:314
 msgid "There are no business hours configured."
 msgstr "영업 시간이 구성되지 않았습니다."
 
@@ -20400,7 +20434,7 @@ msgid "This Writing Assistant Tool translates the selected text into English."
 msgstr ""
 "이 작성 도우미 도구는 선택한 텍스트를 단순화하고 이해도를 향상시킵니다."
 
-#: app/controllers/ticket_articles_controller.rb:195
+#: app/controllers/ticket_articles_controller.rb:197
 msgid "This article does not have a raw copy available."
 msgstr "이 게시물에는 원본 복사본을 사용할 수 없습니다."
 
@@ -21195,6 +21229,7 @@ msgstr "티켓 트리거 루프 보호 게시물 총계"
 msgid "Ticket Trigger Loop Protection Articles per Ticket"
 msgstr "티켓당 티켓 트리거 루프 보호 게시물"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/FloatingToolbar.vue:50
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:96
 msgid "Ticket actions"
 msgstr "티켓 작업"
@@ -21382,7 +21417,7 @@ msgid "Ticket update failed."
 msgstr "티켓 업데이트 실패."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/useTicketEditTitle.ts:26
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:531
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:553
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:161
 msgid "Ticket updated successfully."
 msgstr "티켓이 성공적으로 업데이트되었습니다."
@@ -21507,7 +21542,7 @@ msgstr "나에게 할당된 티켓: %s / %s"
 msgid "Tickets bulk edit"
 msgstr "티켓 대량 수정"
 
-#: app/controllers/ticket_articles_controller.rb:236
+#: app/controllers/ticket_articles_controller.rb:238
 #: app/controllers/tickets_controller.rb:452
 msgid "Tickets can only be imported if system is in import mode."
 msgstr "시스템이 가져오기 모드일 때만 티켓을 가져올 수 있습니다."
@@ -21817,7 +21852,7 @@ msgstr "토큰 액세스"
 msgid "Token access"
 msgstr "토큰 액세스"
 
-#: app/models/token/permissions.rb:20
+#: app/models/token/permissions.rb:22
 msgid "Token authorization failed."
 msgstr "토큰 인증에 실패했습니다."
 
@@ -22274,7 +22309,7 @@ msgstr "잠금 해제"
 msgid "Unpin this panel"
 msgstr "이 패널 고정 해제"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailScrollToBottomButton.vue:37
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/FloatingToolbar.vue:93
 #, fuzzy
 #| msgid "Usages count"
 msgid "Unread messages count"
@@ -22656,6 +22691,10 @@ msgstr ""
 "#{article.id}\" target=\"zammad_app\">#{config.product_name}에서 보기</a>\n"
 "</div>\n"
 
+#: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee:31
+msgid "Updated within last 3 days"
+msgstr ""
+
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:45
 msgid "Updating Database"
 msgstr "데이터베이스 업데이트 중"
@@ -22874,7 +22913,7 @@ msgstr "사용자 불일치"
 msgid "User Organization Selector - email"
 msgstr "사용자 조직 선택기 - 이메일"
 
-#: app/models/user/permissions.rb:48
+#: app/models/user/permissions.rb:50
 msgid "User authorization failed."
 msgstr "사용자 인증에 실패했습니다."
 
@@ -23280,7 +23319,7 @@ msgstr "웹"
 msgid "Web (in)"
 msgstr "웹 (수신)"
 
-#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:97
+#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:119
 #: app/assets/javascripts/app/controllers/knowledge_base/server_snippet.coffee:2
 msgid "Web Server Configuration"
 msgstr "웹 서버 구성"
@@ -23658,7 +23697,7 @@ msgid "Yes, add attachments now"
 msgstr "예, 지금 첨부 파일 추가"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:5
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:441
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:463
 msgid "Yes, open the checklist"
 msgstr "예, 체크리스트 열기"
 
@@ -24047,7 +24086,7 @@ msgstr "웹캠 액세스를 허용해야 합니다."
 msgid "You have unchecked items in the checklist."
 msgstr "체크리스트에 선택 해제된 항목이 있습니다."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:436
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:458
 msgid ""
 "You have unchecked items in the checklist. Do you want to handle them before "
 "closing this ticket?"
@@ -24443,7 +24482,7 @@ msgstr ""
 msgid "anonymized tracked usage time of the new UI"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue:70
+#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue:69
 msgid "apply filter"
 msgstr "필터 적용"
 
@@ -25506,12 +25545,6 @@ msgstr "설정되지 않음 (정의되지 않음)"
 msgid "note"
 msgstr "노트"
 
-#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:6
-#, fuzzy
-#| msgid "Notification"
-msgid "notification"
-msgstr "알림"
-
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:102
 msgid "notification sent to '%s'"
 msgstr "'%s'에게 알림 전송됨"
@@ -25554,7 +25587,7 @@ msgstr "또는"
 msgid "or sign in using"
 msgstr "또는 다음을 사용하여 로그인"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:127
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:101
 #, fuzzy
 #| msgid "Are you sure to remove this article?"
 msgid "or use the reply actions on articles."
@@ -26066,6 +26099,11 @@ msgstr "…전체 텍스트 영역의"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ 오늘 대기 시간"
+
+#, fuzzy
+#~| msgid "Notification"
+#~ msgid "notification"
+#~ msgstr "알림"
 
 #~ msgid "The start date must precede or match end date."
 #~ msgstr "시작 날짜는 종료 날짜보다 앞서거나 같아야 합니다."

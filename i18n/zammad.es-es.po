@@ -1668,7 +1668,7 @@ msgstr "Adaptador"
 #: app/assets/javascripts/app/views/profile/linked_accounts.jst.eco:15
 #: app/assets/javascripts/app/views/tag/index.jst.eco:24
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/show.jst.eco:19
-#: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:267
+#: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:264
 #: app/frontend/shared/form/i18n/locales.ts:25
 msgid "Add"
 msgstr "Añadir"
@@ -1819,6 +1819,7 @@ msgstr "Añadir título"
 msgid "Add image"
 msgstr "Añadir imagen"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/FloatingToolbar.vue:55
 #: app/frontend/shared/entities/ticket-article/action/plugins/note.ts:15
 msgid "Add internal note"
 msgstr "Añadir nota interna"
@@ -1849,6 +1850,7 @@ msgstr "Añadir una lista ordenada"
 msgid "Add phone call"
 msgstr "Añadir llamada telefónica"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/FloatingToolbar.vue:55
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:36
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue:88
 #: app/frontend/shared/entities/ticket-article/action/plugins/web.ts:13
@@ -1917,7 +1919,6 @@ msgstr "Dirección"
 msgid "Address of the proxy server for http and https resources."
 msgstr "Dirección del servidor proxy para recursos http y https."
 
-#: app/assets/javascripts/app/controllers/_default_navbar.coffee:13
 #: db/seeds/roles.rb:5
 msgid "Admin"
 msgstr "Administrar"
@@ -1953,6 +1954,7 @@ msgstr ""
 "Se han enviado las instrucciones de inicio de sesión con la contraseña de "
 "administrador a su dirección de correo electrónico."
 
+#: app/assets/javascripts/app/controllers/_default_navbar.coffee:13
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/MenuContainer/AdminMenu/plugins/admin.ts:9
 msgid "Administration"
 msgstr "Administración"
@@ -2508,7 +2510,7 @@ msgstr "Aplicar los valores por defecto actuales a todos los agentes"
 msgid "Apply draft"
 msgstr "Aplicar borrador"
 
-#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue:76
+#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue:75
 msgid "Apply filter…"
 msgstr "Aplicar filtro…"
 
@@ -2973,7 +2975,7 @@ msgstr "Autenticación no es posible (no es ofrecida por el servicio)"
 
 #: app/controllers/application_controller/authenticates.rb:17
 #: app/graphql/gql/context/current_user_aware.rb:7
-#: app/policies/pundit_policy.rb:18 lib/user_context.rb:26
+#: app/policies/pundit_policy.rb:18 lib/user_context.rb:37
 msgid "Authentication required"
 msgstr "Autenticación requerida"
 
@@ -3235,7 +3237,7 @@ msgstr "Color de fondo"
 
 #: app/assets/javascripts/app/controllers/import_freshdesk.coffee:156
 #: app/assets/javascripts/app/controllers/import_kayako.coffee:158
-#: app/assets/javascripts/app/controllers/import_otrs.coffee:154
+#: app/assets/javascripts/app/controllers/import_otrs.coffee:155
 #: app/assets/javascripts/app/controllers/import_zendesk.coffee:156
 msgid ""
 "Background process did not start or has not finished! Please contact your "
@@ -3872,7 +3874,7 @@ msgstr "Modificaciones"
 msgid "Changes could not be loaded."
 msgstr "Las modificaciones no ha podido ser cargadas."
 
-#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:84
+#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:106
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee:103
 msgid "Changes could not be saved."
 msgstr "Los cambios no se han guardado."
@@ -4221,7 +4223,7 @@ msgstr ""
 msgid "Clear all filters"
 msgstr "Borrar filtro"
 
-#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue:89
+#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue:85
 msgid "Clear filter"
 msgstr "Borrar filtro"
 
@@ -4350,8 +4352,8 @@ msgstr ""
 msgid "Close current tab"
 msgstr "Cerrar pestaña actual"
 
-#: app/frontend/apps/desktop/components/CommonDialog/CommonDialog.vue:168
-#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkConfirmation.vue:39
+#: app/frontend/apps/desktop/components/CommonDialog/CommonDialog.vue:164
+#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkConfirmation.vue:35
 msgid "Close dialog"
 msgstr "Cerrar diálogo"
 
@@ -4755,7 +4757,7 @@ msgstr "Contenidos"
 msgid "Context"
 msgstr "Contexto"
 
-#: app/frontend/apps/desktop/components/SplitButton/SplitButton.vue:118
+#: app/frontend/apps/desktop/components/SplitButton/SplitButton.vue:107
 msgid "Context menu"
 msgstr "Menú contextual"
 
@@ -5310,6 +5312,10 @@ msgstr "Creado en:"
 msgid "Created by"
 msgstr "Creado por"
 
+#: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee:30
+msgid "Created within last 14 days"
+msgstr ""
+
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:24
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:476
 msgid "Creating new tickets via web is disabled."
@@ -5360,7 +5366,7 @@ msgid "Current state of configured settings (excluding passwords and tokens)"
 msgstr ""
 "Estado actual de los ajustes configurados (excepto contraseñas y tokens)"
 
-#: app/controllers/application_controller/has_user.rb:43
+#: app/controllers/application_controller/has_user.rb:57
 msgid "Current user has no permission to use 'From'/'X-On-Behalf-Of'!"
 msgstr "El usuario actual no tiene permiso para utilizar 'De'/'X-En-Nombre-De!"
 
@@ -6803,6 +6809,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee:715
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee:125
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:188
+#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:78
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee:9
 #: app/assets/javascripts/app/controllers/package.coffee:54
 #: app/assets/javascripts/app/controllers/user.coffee:101
@@ -7516,6 +7523,12 @@ msgstr "Borradores"
 #| msgid "Create Macros"
 msgid "Drafts & macros"
 msgstr "Crear Macros"
+
+#: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee:32
+#, fuzzy
+#| msgid "Drafts"
+msgid "Drafts only"
+msgstr "Borradores"
 
 #: app/frontend/apps/desktop/composables/dragAndDrop/useAccessibleDragAndDrop.ts:68
 #, fuzzy
@@ -10213,7 +10226,7 @@ msgstr ""
 msgid "Highlighted text"
 msgstr "Destaque"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/HighlightMenu.vue:93
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/HighlightMenu.vue:89
 #, fuzzy
 #| msgid "Highlight color"
 msgid "Highlighter color: %s"
@@ -10800,7 +10813,7 @@ msgstr "Ítems de la lista de comprobación incompletos"
 msgid "Incomplete credentials"
 msgstr "Credenciales incompletas"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:439
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:461
 #, fuzzy
 #| msgid "Incomplete Ticket Checklist"
 msgid "Incomplete ticket checklist"
@@ -11927,7 +11940,7 @@ msgstr "Credenciales de la Aplicación Linkedln"
 msgid "LinkedIn Developer Site"
 msgstr "Sitio de LinkedIn para programadores"
 
-#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:245
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:238
 msgid "List of all user taskbar tabs"
 msgstr "Lista de todas las pestañas de la barra de tareas del usuario"
 
@@ -11978,7 +11991,7 @@ msgstr "Carga fallida, por favor intente de nuevo más tarde."
 
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee:190
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee:183
-#: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee:103
+#: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee:127
 #: app/assets/javascripts/app/controllers/password_reset.coffee:92
 #: app/assets/javascripts/app/controllers/ssl_certificate.coffee:46
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee:87
@@ -13151,7 +13164,7 @@ msgstr "Navegar a %s"
 msgid "Navigation"
 msgstr "Navegación"
 
-#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue:77
+#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue:76
 msgid "Navigation filter"
 msgstr "Filtro de navegación"
 
@@ -13871,7 +13884,7 @@ msgstr "Aún no hay borradores compartidos"
 
 #: app/controllers/organizations_controller.rb:107
 #: app/controllers/text_modules_controller.rb:75
-#: app/controllers/ticket_articles_controller.rb:243
+#: app/controllers/ticket_articles_controller.rb:245
 #: app/controllers/tickets_controller.rb:459
 #: app/controllers/users_controller.rb:559
 msgid "No source data submitted!"
@@ -13943,7 +13956,7 @@ msgstr ""
 "remitente!"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:8
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:442
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:464
 msgid "No, just close the ticket"
 msgstr "No, sólo cierra el ticket"
 
@@ -14249,7 +14262,7 @@ msgstr "De acuerdo, he copiado mi token"
 msgid "OK, I've saved my recovery codes"
 msgstr "De acuerdo, he guardado mis códigos de recuperación"
 
-#: app/assets/javascripts/app/controllers/import_otrs.coffee:175
+#: app/assets/javascripts/app/controllers/import_otrs.coffee:176
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/otrs.ts:11
 msgid "OTRS"
 msgstr "OTRS"
@@ -14512,7 +14525,7 @@ msgstr "Abrir el cuaderno de notas"
 msgid "Open questions"
 msgstr "Opciones"
 
-#: app/frontend/apps/desktop/components/PageNavigation/PageNavigation.vue:51
+#: app/frontend/apps/desktop/components/PageNavigation/PageNavigation.vue:48
 #, fuzzy
 #| msgid "Open Ticket# %s"
 msgid "Open quick search"
@@ -16234,7 +16247,7 @@ msgstr "Remoto"
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco:25
 #: app/assets/javascripts/app/views/profile/devices.jst.eco:15
 #: app/assets/javascripts/app/views/profile/password.jst.eco:81
-#: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:258
+#: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:255
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationPasswordCheck.vue:59
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:149
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:178
@@ -16245,6 +16258,12 @@ msgstr "Eliminar"
 #: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:178
 msgid "Remove %s"
 msgstr "Eliminar %s"
+
+#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:82
+#, fuzzy
+#| msgid "Remove image"
+msgid "Remove Language"
+msgstr "Eliminar imagen"
 
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee:53
 msgid "Remove a configured two-factor authentication method"
@@ -16287,7 +16306,7 @@ msgstr "Borrar item"
 msgid "Remove formatting"
 msgstr "Eliminar formato"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/HighlightMenu.vue:93
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/HighlightMenu.vue:89
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/useHighlightMenuState.ts:21
 #, fuzzy
 #| msgid "Remove checklist"
@@ -16356,6 +16375,12 @@ msgstr "Elimina el formateo"
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee:80
 msgid "Removes the shadows for a flat look."
 msgstr "Elimina las sombras para una apariencia plana."
+
+#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:79
+msgid ""
+"Removing %s language(s) will permanently delete all translation(s) related "
+"to them. Enter \"%s\" to confirm."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:33
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:372
@@ -17138,10 +17163,6 @@ msgstr "Desplácese hacia abajo para ver %s nuevas respuestas"
 msgid "Scroll down to see new messages"
 msgstr "Desplace hacia abajo para ver nuevos mensajes"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailScrollToBottomButton.vue:25
-msgid "Scroll to bottom"
-msgstr ""
-
 #: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/components/BulkScrollButton.vue:24
 #, fuzzy
 #| msgid "Scroll down"
@@ -17149,18 +17170,19 @@ msgid "Scroll to end"
 msgstr "Desplácese hacia abajo"
 
 #: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/components/BulkScrollButton.vue:24
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/FloatingToolbar.vue:68
 #, fuzzy
 #| msgid "Scroll down"
 msgid "Scroll to start"
 msgstr "Desplácese hacia abajo"
 
-#: app/frontend/apps/desktop/components/CommonTabs/TabsScrollList.vue:251
+#: app/frontend/apps/desktop/components/CommonTabs/TabsScrollList.vue:264
 #, fuzzy
 #| msgid "Scroll down"
 msgid "Scroll towards end"
 msgstr "Desplácese hacia abajo"
 
-#: app/frontend/apps/desktop/components/CommonTabs/TabsScrollList.vue:200
+#: app/frontend/apps/desktop/components/CommonTabs/TabsScrollList.vue:213
 #, fuzzy
 #| msgid "Scroll down"
 msgid "Scroll towards start"
@@ -19069,6 +19091,12 @@ msgstr "Configuración de suscripciones"
 msgid "Subscription settings"
 msgstr "Ajustes de suscripción"
 
+#: app/assets/javascripts/app/views/knowledge_base/search_field_widget.jst.eco:12
+#, fuzzy
+#| msgid "Last searches"
+msgid "Suggested searches"
+msgstr "Últimas búsquedas"
+
 #: db/seeds/ai/text_tools.rb:98
 #, fuzzy
 msgid "Summarize section to about half its current size"
@@ -19241,6 +19269,12 @@ msgstr "La etiqueta \"%s\" ya existe."
 #| msgid "Assignment Timeout"
 msgid "Tag assignment mode"
 msgstr "Tiempo de espera de asignación"
+
+#: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee:38
+#, fuzzy
+#| msgid "created %s"
+msgid "Tagged %s"
+msgstr "%s creado"
 
 #: app/assets/javascripts/app/controllers/chat.coffee:560
 #: app/assets/javascripts/app/controllers/tag.coffee:3
@@ -20053,7 +20087,7 @@ msgstr "No se pudo obtener el archivo del bot."
 msgid "The file could not be uploaded."
 msgstr "No se pudo subir el archivo."
 
-#: app/controllers/ticket_articles_controller.rb:175
+#: app/controllers/ticket_articles_controller.rb:177
 msgid "The file does not belong to the specified article."
 msgstr "El archivo no pertenece al artículo especificado."
 
@@ -20317,7 +20351,7 @@ msgstr ""
 msgid "The personal access token could not be deleted."
 msgstr "No se ha podido eliminar el token de acceso personal."
 
-#: app/controllers/ticket_articles_controller.rb:283
+#: app/controllers/ticket_articles_controller.rb:285
 msgid ""
 "The preview cannot be generated. The format is corrupted or not supported."
 msgstr ""
@@ -20330,7 +20364,7 @@ msgid ""
 "tickets."
 msgstr ""
 
-#: lib/secure_mailing/pgp/incoming.rb:302
+#: lib/secure_mailing/pgp/incoming.rb:304
 msgid "The private PGP key could not be found."
 msgstr "No se ha podido encontrar la clave PGP privada."
 
@@ -20459,7 +20493,7 @@ msgstr ""
 "Falta la configuración del proveedor. Por favor, configure el proveedor "
 "antes de continuar en |IA > Proveedores|."
 
-#: lib/secure_mailing/pgp/incoming.rb:302
+#: lib/secure_mailing/pgp/incoming.rb:304
 msgid "The public PGP key could not be found."
 msgstr "No se ha podido encontrar la clave pública PGP."
 
@@ -20625,7 +20659,7 @@ msgstr "Falta el parámetro requerido 'signup'."
 msgid "The required parameter 'ticket_number' is missing."
 msgstr "Falta el parámetro requerido 'ticket_number'."
 
-#: app/models/concerns/perform_changes/action/attribute_updates.rb:148
+#: app/models/concerns/perform_changes/action/attribute_updates.rb:149
 msgid "The required parameter 'user_id' is missing."
 msgstr "Falta el parámetro requerido 'user_id'."
 
@@ -20643,7 +20677,7 @@ msgstr "Falta el valor requerido 'group_id'."
 msgid "The response could not be processed."
 msgstr "No se pudo procesar la solicitud."
 
-#: app/controllers/ticket_articles_controller.rb:274
+#: app/controllers/ticket_articles_controller.rb:276
 msgid "The retried attachment download failed."
 msgstr "La descarga de archivos adjuntos reintentada ha fallado."
 
@@ -21045,7 +21079,7 @@ msgstr ""
 "algún tiempo, es mejor tomar una taza de café. El número total de tickets se "
 "actualiza tan pronto como se supera el número actualmente conocido."
 
-#: app/models/calendar.rb:303
+#: app/models/calendar.rb:314
 msgid "There are no business hours configured."
 msgstr "No se ha configurado un horario de atención."
 
@@ -21239,7 +21273,7 @@ msgstr ""
 "Esta herramienta de ayuda a la redacción traduce el texto seleccionado al "
 "inglés."
 
-#: app/controllers/ticket_articles_controller.rb:195
+#: app/controllers/ticket_articles_controller.rb:197
 #, fuzzy
 #| msgid "This article is not part of the ticket."
 msgid "This article does not have a raw copy available."
@@ -22125,6 +22159,7 @@ msgstr "Artículos de protección del bucle Total"
 msgid "Ticket Trigger Loop Protection Articles per Ticket"
 msgstr "Ticket Trigger Loop Protección Artículos por Ticket"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/FloatingToolbar.vue:50
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:96
 msgid "Ticket actions"
 msgstr "Acciones de ticket"
@@ -22314,7 +22349,7 @@ msgid "Ticket update failed."
 msgstr "Error en la actualización del ticket."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/useTicketEditTitle.ts:26
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:531
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:553
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:161
 msgid "Ticket updated successfully."
 msgstr "Ticket actualizado con éxito."
@@ -22442,7 +22477,7 @@ msgstr "Tickets asignados a mi: %s of %s"
 msgid "Tickets bulk edit"
 msgstr "Ticket actualizado"
 
-#: app/controllers/ticket_articles_controller.rb:236
+#: app/controllers/ticket_articles_controller.rb:238
 #: app/controllers/tickets_controller.rb:452
 msgid "Tickets can only be imported if system is in import mode."
 msgstr ""
@@ -22770,7 +22805,7 @@ msgstr "Token de acceso"
 msgid "Token access"
 msgstr "Token de acceso"
 
-#: app/models/token/permissions.rb:20
+#: app/models/token/permissions.rb:22
 msgid "Token authorization failed."
 msgstr "Autorización de token fallida."
 
@@ -23251,7 +23286,7 @@ msgstr "Desbloquear"
 msgid "Unpin this panel"
 msgstr "Desanclar este panel"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailScrollToBottomButton.vue:37
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/FloatingToolbar.vue:93
 #, fuzzy
 #| msgid "New User Accounts"
 msgid "Unread messages count"
@@ -23639,6 +23674,10 @@ msgstr ""
 "target=\"zammad_app\">Más detalles en #{config.product_name}</a>\n"
 "</div>\n"
 
+#: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee:31
+msgid "Updated within last 3 days"
+msgstr ""
+
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:45
 msgid "Updating Database"
 msgstr "Actualizando Base de daros"
@@ -23872,7 +23911,7 @@ msgstr "Discordancia de usuario"
 msgid "User Organization Selector - email"
 msgstr "Selector de organización para el usuario - dirección de correo"
 
-#: app/models/user/permissions.rb:48
+#: app/models/user/permissions.rb:50
 msgid "User authorization failed."
 msgstr "Autorización de usuario fallida."
 
@@ -24299,7 +24338,7 @@ msgstr "Web"
 msgid "Web (in)"
 msgstr "Web (entrante)"
 
-#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:97
+#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:119
 #: app/assets/javascripts/app/controllers/knowledge_base/server_snippet.coffee:2
 msgid "Web Server Configuration"
 msgstr "Configuración de servidor web"
@@ -24698,7 +24737,7 @@ msgid "Yes, add attachments now"
 msgstr "Sí, añadir archivos adjuntos ahora"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:5
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:441
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:463
 msgid "Yes, open the checklist"
 msgstr "Sí, abra la lista de comprobación"
 
@@ -25111,7 +25150,7 @@ msgstr "Debe conceder acceso a su webcam."
 msgid "You have unchecked items in the checklist."
 msgstr "Tiene elementos sin marcar en la lista de comprobación."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:436
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:458
 msgid ""
 "You have unchecked items in the checklist. Do you want to handle them before "
 "closing this ticket?"
@@ -25540,7 +25579,7 @@ msgstr ""
 msgid "anonymized tracked usage time of the new UI"
 msgstr "seguimiento anónimo del tiempo de uso de la nueva interfaz de usuario"
 
-#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue:70
+#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue:69
 msgid "apply filter"
 msgstr "aplicar filtro"
 
@@ -26623,12 +26662,6 @@ msgstr "no configurado (no definido)"
 msgid "note"
 msgstr "nota"
 
-#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:6
-#, fuzzy
-#| msgid "Notification"
-msgid "notification"
-msgstr "Notificación"
-
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:102
 msgid "notification sent to '%s'"
 msgstr "notificación enviada a '%s'"
@@ -26671,7 +26704,7 @@ msgstr "o"
 msgid "or sign in using"
 msgstr "o inicie sesión usando"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:127
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:101
 #, fuzzy
 #| msgid "Are you sure to remove this article?"
 msgid "or use the reply actions on articles."
@@ -27188,6 +27221,11 @@ msgstr "...de toda la zona de texto"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ tiempo de espera de hoy"
+
+#, fuzzy
+#~| msgid "Notification"
+#~ msgid "notification"
+#~ msgstr "Notificación"
 
 #~ msgid "The start date must precede or match end date."
 #~ msgstr "La fecha de inicio debe preceder o coincidir con la fecha final."

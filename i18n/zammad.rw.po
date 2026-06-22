@@ -1590,7 +1590,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/profile/linked_accounts.jst.eco:15
 #: app/assets/javascripts/app/views/tag/index.jst.eco:24
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/show.jst.eco:19
-#: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:267
+#: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:264
 #: app/frontend/shared/form/i18n/locales.ts:25
 msgid "Add"
 msgstr "ongera"
@@ -1761,6 +1761,7 @@ msgstr "ongeraho ikimenyetso "
 msgid "Add image"
 msgstr "ongeraho ikimenyetso "
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/FloatingToolbar.vue:55
 #: app/frontend/shared/entities/ticket-article/action/plugins/note.ts:15
 #, fuzzy
 #| msgid "Add a Note"
@@ -1801,6 +1802,7 @@ msgstr "tunganya  nk'urutonde rwasabwe"
 msgid "Add phone call"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/FloatingToolbar.vue:55
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:36
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue:88
 #: app/frontend/shared/entities/ticket-article/action/plugins/web.ts:13
@@ -1880,7 +1882,6 @@ msgstr "umwirondoro"
 msgid "Address of the proxy server for http and https resources."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_default_navbar.coffee:13
 #: db/seeds/roles.rb:5
 msgid "Admin"
 msgstr "umuyobozi"
@@ -1926,6 +1927,7 @@ msgstr ""
 "Twohereje amabwiriza yo kongera gusubiramo ijambo ry'ibanga kuri umwirondoro "
 "wa interineti wawe "
 
+#: app/assets/javascripts/app/controllers/_default_navbar.coffee:13
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/MenuContainer/AdminMenu/plugins/admin.ts:9
 #, fuzzy
 #| msgid "Administrator Account"
@@ -2462,7 +2464,7 @@ msgstr ""
 msgid "Apply draft"
 msgstr "saba"
 
-#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue:76
+#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue:75
 #, fuzzy
 #| msgid "Apply"
 msgid "Apply filter…"
@@ -2972,7 +2974,7 @@ msgstr ""
 
 #: app/controllers/application_controller/authenticates.rb:17
 #: app/graphql/gql/context/current_user_aware.rb:7
-#: app/policies/pundit_policy.rb:18 lib/user_context.rb:26
+#: app/policies/pundit_policy.rb:18 lib/user_context.rb:37
 msgid "Authentication required"
 msgstr ""
 
@@ -3265,7 +3267,7 @@ msgstr "ibara fatizo/ry'inyuma"
 
 #: app/assets/javascripts/app/controllers/import_freshdesk.coffee:156
 #: app/assets/javascripts/app/controllers/import_kayako.coffee:158
-#: app/assets/javascripts/app/controllers/import_otrs.coffee:154
+#: app/assets/javascripts/app/controllers/import_otrs.coffee:155
 #: app/assets/javascripts/app/controllers/import_zendesk.coffee:156
 msgid ""
 "Background process did not start or has not finished! Please contact your "
@@ -3973,7 +3975,7 @@ msgstr "impinduka"
 msgid "Changes could not be loaded."
 msgstr " ikintu %s cyakozwe  (ibintu %s byakozwe)"
 
-#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:84
+#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:106
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee:103
 #, fuzzy
 #| msgid "%s Object(s) are created."
@@ -4314,7 +4316,7 @@ msgstr ""
 msgid "Clear all filters"
 msgstr "abahamagaye"
 
-#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue:89
+#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue:85
 #, fuzzy
 #| msgid "Caller log"
 msgid "Clear filter"
@@ -4452,8 +4454,8 @@ msgstr ""
 msgid "Close current tab"
 msgstr "funga ahagaragara hagezweho"
 
-#: app/frontend/apps/desktop/components/CommonDialog/CommonDialog.vue:168
-#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkConfirmation.vue:39
+#: app/frontend/apps/desktop/components/CommonDialog/CommonDialog.vue:164
+#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkConfirmation.vue:35
 #, fuzzy
 #| msgid "Confirm/submit dialog"
 msgid "Close dialog"
@@ -4898,7 +4900,7 @@ msgstr "ibirimo"
 msgid "Context"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/SplitButton/SplitButton.vue:118
+#: app/frontend/apps/desktop/components/SplitButton/SplitButton.vue:107
 #, fuzzy
 #| msgid "Content"
 msgid "Context menu"
@@ -5465,6 +5467,10 @@ msgstr "byahimbwe kuwa"
 msgid "Created by"
 msgstr "byahimbwe na"
 
+#: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee:30
+msgid "Created within last 14 days"
+msgstr ""
+
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:24
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:476
 #, fuzzy
@@ -5518,7 +5524,7 @@ msgstr "ijambo ry'ibanga ukoresha ubu"
 msgid "Current state of configured settings (excluding passwords and tokens)"
 msgstr ""
 
-#: app/controllers/application_controller/has_user.rb:43
+#: app/controllers/application_controller/has_user.rb:57
 msgid "Current user has no permission to use 'From'/'X-On-Behalf-Of'!"
 msgstr ""
 
@@ -6868,6 +6874,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee:715
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee:125
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:188
+#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:78
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee:9
 #: app/assets/javascripts/app/controllers/package.coffee:54
 #: app/assets/javascripts/app/controllers/user.coffee:101
@@ -7639,6 +7646,12 @@ msgstr "Inyandikomushinga"
 #| msgid "Create Macros"
 msgid "Drafts & macros"
 msgstr "guhimba birambuye"
+
+#: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee:32
+#, fuzzy
+#| msgid "Draft"
+msgid "Drafts only"
+msgstr "Inyandikomushinga"
 
 #: app/frontend/apps/desktop/composables/dragAndDrop/useAccessibleDragAndDrop.ts:68
 msgid "Drag ended for %s."
@@ -10421,7 +10434,7 @@ msgstr ""
 msgid "Highlighted text"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/HighlightMenu.vue:93
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/HighlightMenu.vue:89
 msgid "Highlighter color: %s"
 msgstr ""
 
@@ -11034,7 +11047,7 @@ msgstr "Guhanga umukiriya mushya"
 msgid "Incomplete credentials"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:439
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:461
 #, fuzzy
 #| msgid "Create new Customer"
 msgid "Incomplete ticket checklist"
@@ -12208,7 +12221,7 @@ msgstr "ibyangombwa by'ibanga bya Linkedin"
 msgid "LinkedIn Developer Site"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:245
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:238
 msgid "List of all user taskbar tabs"
 msgstr ""
 
@@ -12261,7 +12274,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee:190
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee:183
-#: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee:103
+#: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee:127
 #: app/assets/javascripts/app/controllers/password_reset.coffee:92
 #: app/assets/javascripts/app/controllers/ssl_certificate.coffee:46
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee:87
@@ -13596,7 +13609,7 @@ msgstr "Kunyura mu ngingo"
 msgid "Navigation"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue:77
+#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue:76
 #, fuzzy
 #| msgid "Bulk action executed!"
 msgid "Navigation filter"
@@ -14347,7 +14360,7 @@ msgstr "Bisangiwe"
 
 #: app/controllers/organizations_controller.rb:107
 #: app/controllers/text_modules_controller.rb:75
-#: app/controllers/ticket_articles_controller.rb:243
+#: app/controllers/ticket_articles_controller.rb:245
 #: app/controllers/tickets_controller.rb:459
 #: app/controllers/users_controller.rb:559
 msgid "No source data submitted!"
@@ -14417,7 +14430,7 @@ msgid "No x-zammad-session-user-id, no sender set!"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:8
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:442
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:464
 #, fuzzy
 #| msgid "You have closed a ticket"
 msgid "No, just close the ticket"
@@ -14740,7 +14753,7 @@ msgstr "OK, Nakoze kopi y'íkimenyesto cyanjye"
 msgid "OK, I've saved my recovery codes"
 msgstr "OK, Nakoze kopi y'íkimenyesto cyanjye"
 
-#: app/assets/javascripts/app/controllers/import_otrs.coffee:175
+#: app/assets/javascripts/app/controllers/import_otrs.coffee:176
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/otrs.ts:11
 msgid "OTRS"
 msgstr ""
@@ -15021,7 +15034,7 @@ msgstr "fungura agasanduku k inyandiko"
 msgid "Open questions"
 msgstr "amahitamo"
 
-#: app/frontend/apps/desktop/components/PageNavigation/PageNavigation.vue:51
+#: app/frontend/apps/desktop/components/PageNavigation/PageNavigation.vue:48
 #, fuzzy
 #| msgid "Open Ticket# %s"
 msgid "Open quick search"
@@ -16838,7 +16851,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco:25
 #: app/assets/javascripts/app/views/profile/devices.jst.eco:15
 #: app/assets/javascripts/app/views/profile/password.jst.eco:81
-#: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:258
+#: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:255
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationPasswordCheck.vue:59
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:149
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:178
@@ -16850,6 +16863,12 @@ msgstr "vanaho"
 #, fuzzy
 #| msgid "Remove"
 msgid "Remove %s"
+msgstr "vanaho"
+
+#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:82
+#, fuzzy
+#| msgid "Remove"
+msgid "Remove Language"
 msgstr "vanaho"
 
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee:53
@@ -16907,7 +16926,7 @@ msgstr "vanaho"
 msgid "Remove formatting"
 msgstr "ikuraho imiterere"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/HighlightMenu.vue:93
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/HighlightMenu.vue:89
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/useHighlightMenuState.ts:21
 #, fuzzy
 #| msgid "Remove"
@@ -16990,6 +17009,12 @@ msgstr "ikuraho imiterere"
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee:80
 msgid "Removes the shadows for a flat look."
 msgstr "ivanaho ibicucucu ku migaragarire irambuye"
+
+#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:79
+msgid ""
+"Removing %s language(s) will permanently delete all translation(s) related "
+"to them. Enter \"%s\" to confirm."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:33
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:372
@@ -17779,10 +17804,6 @@ msgstr "manuka hasi kugira ngo ubone ubutumwa bushya"
 msgid "Scroll down to see new messages"
 msgstr "manuka hasi kugira ngo ubone ubutumwa bushya"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailScrollToBottomButton.vue:25
-msgid "Scroll to bottom"
-msgstr ""
-
 #: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/components/BulkScrollButton.vue:24
 #, fuzzy
 #| msgid "Move up and down"
@@ -17790,18 +17811,19 @@ msgid "Scroll to end"
 msgstr "kwimura hejuru no hasi"
 
 #: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/components/BulkScrollButton.vue:24
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/FloatingToolbar.vue:68
 #, fuzzy
 #| msgid "Move up and down"
 msgid "Scroll to start"
 msgstr "kwimura hejuru no hasi"
 
-#: app/frontend/apps/desktop/components/CommonTabs/TabsScrollList.vue:251
+#: app/frontend/apps/desktop/components/CommonTabs/TabsScrollList.vue:264
 #, fuzzy
 #| msgid "Move up and down"
 msgid "Scroll towards end"
 msgstr "kwimura hejuru no hasi"
 
-#: app/frontend/apps/desktop/components/CommonTabs/TabsScrollList.vue:200
+#: app/frontend/apps/desktop/components/CommonTabs/TabsScrollList.vue:213
 #, fuzzy
 #| msgid "Move up and down"
 msgid "Scroll towards start"
@@ -19816,6 +19838,12 @@ msgstr "igenamiterere ryífatabuguzi"
 msgid "Subscription settings"
 msgstr "igenamiterere ryífatabuguzi"
 
+#: app/assets/javascripts/app/views/knowledge_base/search_field_widget.jst.eco:12
+#, fuzzy
+#| msgid "Last sync"
+msgid "Suggested searches"
+msgstr "guhuza biheruka"
+
 #: db/seeds/ai/text_tools.rb:98
 msgid "Summarize section to about half its current size"
 msgstr ""
@@ -19986,6 +20014,12 @@ msgstr " ikintu%s cyasibwe(ibintu %s byasibwe)"
 #| msgid "Assignment Timeout"
 msgid "Tag assignment mode"
 msgstr "igihe cyagenwe cyarangiye"
+
+#: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee:38
+#, fuzzy
+#| msgid "created"
+msgid "Tagged %s"
+msgstr "cyaremwe"
 
 #: app/assets/javascripts/app/controllers/chat.coffee:560
 #: app/assets/javascripts/app/controllers/tag.coffee:3
@@ -20832,7 +20866,7 @@ msgstr ""
 msgid "The file could not be uploaded."
 msgstr " ikintu %s cyakozwe  (ibintu %s byakozwe)"
 
-#: app/controllers/ticket_articles_controller.rb:175
+#: app/controllers/ticket_articles_controller.rb:177
 msgid "The file does not belong to the specified article."
 msgstr ""
 
@@ -21140,7 +21174,7 @@ msgstr "Igeragezwa ryagenze neza"
 msgid "The personal access token could not be deleted."
 msgstr " ikintu %s cyakozwe  (ibintu %s byakozwe)"
 
-#: app/controllers/ticket_articles_controller.rb:283
+#: app/controllers/ticket_articles_controller.rb:285
 msgid ""
 "The preview cannot be generated. The format is corrupted or not supported."
 msgstr ""
@@ -21151,7 +21185,7 @@ msgid ""
 "tickets."
 msgstr ""
 
-#: lib/secure_mailing/pgp/incoming.rb:302
+#: lib/secure_mailing/pgp/incoming.rb:304
 #, fuzzy
 #| msgid "%s Object(s) are updated."
 msgid "The private PGP key could not be found."
@@ -21263,7 +21297,7 @@ msgid ""
 "proceeding in |AI > Providers|."
 msgstr ""
 
-#: lib/secure_mailing/pgp/incoming.rb:302
+#: lib/secure_mailing/pgp/incoming.rb:304
 #, fuzzy
 #| msgid "%s Object(s) are updated."
 msgid "The public PGP key could not be found."
@@ -21431,7 +21465,7 @@ msgstr ""
 msgid "The required parameter 'ticket_number' is missing."
 msgstr ""
 
-#: app/models/concerns/perform_changes/action/attribute_updates.rb:148
+#: app/models/concerns/perform_changes/action/attribute_updates.rb:149
 msgid "The required parameter 'user_id' is missing."
 msgstr ""
 
@@ -21449,7 +21483,7 @@ msgstr ""
 msgid "The response could not be processed."
 msgstr " ikintu %s cyakozwe  (ibintu %s byakozwe)"
 
-#: app/controllers/ticket_articles_controller.rb:274
+#: app/controllers/ticket_articles_controller.rb:276
 msgid "The retried attachment download failed."
 msgstr ""
 
@@ -21848,7 +21882,7 @@ msgstr ""
 "byaba byiza ufashe agakombe k'ikawa. Umubare wose wa tike wivugurura ako "
 "kanya iyo umubare uzwi ubu urenze"
 
-#: app/models/calendar.rb:303
+#: app/models/calendar.rb:314
 msgid "There are no business hours configured."
 msgstr ""
 
@@ -22050,7 +22084,7 @@ msgstr ""
 msgid "This Writing Assistant Tool translates the selected text into English."
 msgstr ""
 
-#: app/controllers/ticket_articles_controller.rb:195
+#: app/controllers/ticket_articles_controller.rb:197
 #, fuzzy
 #| msgid "Defines the state of auto closed tickets."
 msgid "This article does not have a raw copy available."
@@ -22887,6 +22921,7 @@ msgstr ""
 msgid "Ticket Trigger Loop Protection Articles per Ticket"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/FloatingToolbar.vue:50
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:96
 #, fuzzy
 #| msgid "Ticket escalation"
@@ -23092,7 +23127,7 @@ msgid "Ticket update failed."
 msgstr "kuvugurura tike"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/useTicketEditTitle.ts:26
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:531
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:553
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:161
 #, fuzzy
 #| msgid "The test run was successful."
@@ -23203,7 +23238,7 @@ msgstr "amatike nahawe: %s ya %s"
 msgid "Tickets bulk edit"
 msgstr "kuvugurura tike"
 
-#: app/controllers/ticket_articles_controller.rb:236
+#: app/controllers/ticket_articles_controller.rb:238
 #: app/controllers/tickets_controller.rb:452
 msgid "Tickets can only be imported if system is in import mode."
 msgstr ""
@@ -23537,7 +23572,7 @@ msgstr "Uburyo/ikimenyetso cyo kwinjira ahantu"
 msgid "Token access"
 msgstr "Uburyo/ikimenyetso cyo kwinjira ahantu"
 
-#: app/models/token/permissions.rb:20
+#: app/models/token/permissions.rb:22
 #, fuzzy
 #| msgid "Authentication"
 msgid "Token authorization failed."
@@ -24044,7 +24079,7 @@ msgstr ""
 msgid "Unpin this panel"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailScrollToBottomButton.vue:37
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/FloatingToolbar.vue:93
 #, fuzzy
 #| msgid "New User Accounts"
 msgid "Unread messages count"
@@ -24379,6 +24414,10 @@ msgid ""
 "</div>\n"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee:31
+msgid "Updated within last 3 days"
+msgstr ""
+
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:45
 msgid "Updating Database"
 msgstr "Kuvugurra/Gushyira ku gihe amakuru abitse "
@@ -24606,7 +24645,7 @@ msgstr ""
 msgid "User Organization Selector - email"
 msgstr ""
 
-#: app/models/user/permissions.rb:48
+#: app/models/user/permissions.rb:50
 #, fuzzy
 #| msgid "Resend verification email"
 msgid "User authorization failed."
@@ -25063,7 +25102,7 @@ msgstr "urubuga rwa murandasi"
 msgid "Web (in)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:97
+#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:119
 #: app/assets/javascripts/app/controllers/knowledge_base/server_snippet.coffee:2
 msgid "Web Server Configuration"
 msgstr ""
@@ -25448,7 +25487,7 @@ msgid "Yes, add attachments now"
 msgstr "ongeraho uburyo bwo komekaho umugereka kugira ngo wohereze"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:5
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:441
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:463
 #, fuzzy
 #| msgid "Remove"
 msgid "Yes, open the checklist"
@@ -25834,7 +25873,7 @@ msgstr ""
 msgid "You have unchecked items in the checklist."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:436
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:458
 #, fuzzy
 #| msgid "Sure to delete this object?"
 msgid ""
@@ -26260,7 +26299,7 @@ msgstr ""
 msgid "anonymized tracked usage time of the new UI"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue:70
+#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue:69
 #, fuzzy
 #| msgid "Caller log"
 msgid "apply filter"
@@ -27409,12 +27448,6 @@ msgstr "Ntabwo byashyizweho"
 msgid "note"
 msgstr "inyandiko"
 
-#: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:6
-#, fuzzy
-#| msgid "Notification"
-msgid "notification"
-msgstr "Kumenyesha"
-
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:102
 #, fuzzy
 #| msgid "Notification Sender"
@@ -27465,7 +27498,7 @@ msgstr "Cyangwa"
 msgid "or sign in using"
 msgstr "cyangwa winjire ukoresheje "
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:127
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:101
 #, fuzzy
 #| msgid "Sure to delete this object?"
 msgid "or use the reply actions on articles."
@@ -28030,6 +28063,11 @@ msgstr "umwandiko wose"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "igihe cyo gutegereza uyu munsi"
+
+#, fuzzy
+#~| msgid "Notification"
+#~ msgid "notification"
+#~ msgstr "Kumenyesha"
 
 #, fuzzy
 #~| msgid "Remove"
