@@ -133,7 +133,7 @@ class KnowledgeBasesController < KnowledgeBase::BaseController
 
   # assets for users who don't have KB permissions
   def public_assets
-    return [] if !Setting.get('kb_active_publicly')
+    return {} if !Setting.get('kb_active_publicly')
 
     ApplicationModel::CanAssets.reduce(KnowledgeBase.active, {}, :public)
   end

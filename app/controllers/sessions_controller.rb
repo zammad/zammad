@@ -333,6 +333,9 @@ class SessionsController < ApplicationController
     # Announce searchable models to the front end.
     config['models_searchable'] = Models.searchable.map(&:to_s)
 
+    # Announce Elasticsearch availability to the front end.
+    config['es_enabled'] = SearchIndexBackend.enabled?
+
     # remember if we can switch back to user
     if session[:switched_from_user_id]
       config['switch_back_to_possible'] = true

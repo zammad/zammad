@@ -2,6 +2,18 @@
 
 ## 7.2
 
+### Knowledge Base search index: new `publication_state` field
+
+Issue #6142 adds a "Suggested searches" shortcut menu to the Knowledge Base search.
+A new `publication_state` field is now indexed for `KnowledgeBase::Answer::Translation`,
+reflecting the answer's current state (draft, internal, published, archived).
+
+To enable this field, a search index rebuild is required:
+
+`zammad run rake zammad:searchindex:rebuild`
+
+Without a rebuild, `publication_state:draft` queries return no results.
+
 ### Elasticsearch 7 no longer supported
 
 Elasticsearch 7 has reached end of life and is no longer supported. Zammad now

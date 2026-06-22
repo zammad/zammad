@@ -42,11 +42,15 @@ class KnowledgeBase::Answer::Translation < ApplicationModel
   def search_index_attribute_lookup(include_references: true)
     attrs = super
 
-    attrs['title']      = ActionController::Base.helpers.strip_tags(title)
-    attrs['content']    = content&.search_index_attribute_lookup
-    attrs['scope_id']   = answer.category_id
-    attrs['tags']       = answer.tag_list
-    attrs['attachment'] = answer.search_index_attachments_lookup(attrs.to_json.bytesize)
+    attrs['title']             = ActionController::Base.helpers.strip_tags(title)
+    attrs['content']           = content&.search_index_attribute_lookup
+    attrs['scope_id']          = answer.category_id
+    attrs['tags']              = answer.tag_list
+    attrs['attachment']        = answer.search_index_attachments_lookup(attrs.to_json.bytesize)
+
+    # Index the answer's publication state for the `publication_state:`
+    # search syntax.
+    attrs['publication_state'] = answer_publication_state
 
     attrs
   end
@@ -104,4 +108,10 @@ class KnowledgeBase::Answer::Translation < ApplicationModel
         .where(knowledge_base_answers: { category_id: scope })
     end
   }
+
+  private
+
+  def answer_publication_state
+    answer.can_be_published_aasm.calculated_state
+  end
 end

@@ -87,4 +87,41 @@ RSpec.describe KnowledgeBase::Answer::Translation, current_user_id: 1, type: :mo
       end
     end
   end
+
+  describe '#search_index_attribute_lookup' do
+    include_context 'basic Knowledge Base'
+
+    it 'sets search index attributes from translation and answer' do
+      answer = create(:knowledge_base_answer, :published, :with_tag, tag_names: ['example-tag'], category: category)
+      attrs  = answer.translations.first.search_index_attribute_lookup
+
+      expect(attrs).to include(
+        'title'             => answer.translations.first.title,
+        'scope_id'          => category.id,
+        'tags'              => include('example-tag'),
+        'created_at'        => answer.translations.first.created_at,
+        'updated_at'        => answer.translations.first.updated_at,
+        'publication_state' => :published,
+      )
+    end
+
+    describe 'answer state reflected in search index' do
+      %i[draft internal published archived].each do |state|
+        it "returns '#{state}' for #{state} answer" do
+          answer = create(:knowledge_base_answer, state, category: category)
+          attrs  = answer.translations.first.search_index_attribute_lookup
+
+          expect(attrs['publication_state']).to eq(state)
+        end
+      end
+
+      it 'is consistent with CanBePublished::StateMachine#calculated_state' do
+        answer = create(:knowledge_base_answer, :published, category: category)
+        attrs  = answer.translations.first.search_index_attribute_lookup
+
+        expect(attrs['publication_state'])
+          .to eq(answer.can_be_published_aasm.calculated_state)
+      end
+    end
+  end
 end

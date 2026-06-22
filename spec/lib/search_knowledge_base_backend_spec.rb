@@ -38,7 +38,7 @@ RSpec.describe SearchKnowledgeBaseBackend do
 
         before do
           published_answer
-          handle_elasticsearch(true)
+          searchindex_model_reload([KnowledgeBase::Translation, KnowledgeBase::Category::Translation, KnowledgeBase::Answer::Translation])
         end
 
         # https://github.com/zammad/zammad/issues/3070
@@ -61,6 +61,86 @@ RSpec.describe SearchKnowledgeBaseBackend do
           it 'lists item with an attachment' do
             expect(instance.search('Suspendisse', user: user)).to be_present
           end
+        end
+      end
+    end
+
+    describe '#search with shortcut queries' do
+      let(:ai_generated_answer) { create(:knowledge_base_answer, :published, :with_tag, tag_names: ['ai-generated'], category: category) }
+
+      let(:recently_created) { travel_to(2.days.ago) { create(:knowledge_base_answer, :published, category: category) } }
+
+      let(:old_answer) { travel_to(30.days.ago) { create(:knowledge_base_answer, :published, category: category) } }
+
+      let(:recently_updated) do
+        travel_to(30.days.ago) { create(:knowledge_base_answer, :published, category: category) }.tap do |answer|
+          travel_to(1.day.ago) { answer.translations.first.touch }
+        end
+      end
+
+      before do
+        draft_answer
+        published_answer
+        ai_generated_answer
+        recently_created
+        old_answer
+        recently_updated
+        searchindex_model_reload([KnowledgeBase::Translation, KnowledgeBase::Category::Translation, KnowledgeBase::Answer::Translation])
+      end
+
+      describe 'publication_state:draft' do
+        let(:query)  { 'publication_state:draft' }
+        let(:result) { instance.search(query, user: user) }
+        let(:ids)    { result.pluck(:id).map(&:to_i) }
+
+        it 'finds drafts' do
+          expect(ids).to include(draft_answer.id)
+        end
+
+        it 'excludes published answers' do
+          expect(ids).not_to include(published_answer.id)
+        end
+      end
+
+      describe 'tags:ai-generated' do
+        let(:query)  { 'tags:ai-generated' }
+        let(:result) { instance.search(query, user: user) }
+        let(:ids)    { result.pluck(:id).map(&:to_i) }
+
+        it 'finds ai-generated answers' do
+          expect(ids).to include(ai_generated_answer.id)
+        end
+
+        it 'excludes untagged answers' do
+          expect(ids).not_to include(published_answer.id)
+        end
+      end
+
+      describe 'created_at:>now-14d' do
+        let(:query)  { 'created_at:>now-14d' }
+        let(:result) { instance.search(query, user: user) }
+        let(:ids)    { result.pluck(:id).map(&:to_i) }
+
+        it 'finds recently created answers' do
+          expect(ids).to include(recently_created.id)
+        end
+
+        it 'excludes old answers' do
+          expect(ids).not_to include(old_answer.id)
+        end
+      end
+
+      describe 'updated_at:>now-3d' do
+        let(:query)  { 'updated_at:>now-3d' }
+        let(:result) { instance.search(query, user: user) }
+        let(:ids)    { result.pluck(:id).map(&:to_i) }
+
+        it 'finds recently updated answers' do
+          expect(ids).to include(recently_updated.id)
+        end
+
+        it 'excludes old answers' do
+          expect(ids).not_to include(old_answer.id)
         end
       end
     end

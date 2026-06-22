@@ -4366,6 +4366,10 @@ msgstr ""
 msgid "Created by"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee:30
+msgid "Created within last 14 days"
+msgstr ""
+
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:24
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:476
 msgid "Creating new tickets via web is disabled."
@@ -6112,6 +6116,10 @@ msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketAgentUpdateButton.vue:114
 msgid "Drafts & macros"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee:32
+msgid "Drafts only"
 msgstr ""
 
 #: app/frontend/apps/desktop/composables/dragAndDrop/useAccessibleDragAndDrop.ts:68
@@ -9879,7 +9887,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee:190
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee:183
-#: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee:103
+#: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee:127
 #: app/assets/javascripts/app/controllers/password_reset.coffee:92
 #: app/assets/javascripts/app/controllers/ssl_certificate.coffee:46
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee:87
@@ -16070,6 +16078,10 @@ msgstr ""
 msgid "Subscription settings"
 msgstr ""
 
+#: app/assets/javascripts/app/views/knowledge_base/search_field_widget.jst.eco:12
+msgid "Suggested searches"
+msgstr ""
+
 #: db/seeds/ai/text_tools.rb:98
 msgid "Summarize section to about half its current size"
 msgstr ""
@@ -16213,6 +16225,10 @@ msgstr ""
 
 #: app/models/ai/agent/type/ticket_tagger.rb:160
 msgid "Tag assignment mode"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee:38
+msgid "Tagged %s"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/chat.coffee:560
@@ -19606,6 +19622,10 @@ msgstr ""
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/ticket_article_update_reaction/en.html.erb
 msgid "Updated ticket article (#{ticket.title})\n\n<div>Hi #{recipient.firstname},</div>\n<br>\n<div>\n<%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') %> reacted with a <%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'emoji') %> to message from #{article.created_by.fullname}:\n</div>\n<br>\n<% if @objects[:article] %>\n  <div>\n    <blockquote type=\"cite\">\n    #{article.body_as_html}\n    </blockquote>\n  </div>\n<% end %>\n<br>\n<div>\n  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/#{article.id}\" target=\"zammad_app\">View this in #{config.product_name}</a>\n</div>\n"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee:31
+msgid "Updated within last 3 days"
 msgstr ""
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:45
