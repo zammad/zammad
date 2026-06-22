@@ -20,6 +20,18 @@ RSpec.describe TicketAIAssistanceGenerateKnowledgeBaseAnswerJob, type: :job do
     end
   end
 
+  describe 'enqueuing' do
+    let(:ticket)            { create(:ticket) }
+    let(:user)              { create(:agent) }
+    let(:knowledge_base_id) { 123 }
+
+    # The mutation hands `context.current_user` (a UserContext) to perform_later, so that argument
+    # must survive ActiveJob serialization (regression: "Unsupported argument type: User").
+    it 'accepts a UserContext as the user argument' do
+      expect { described_class.new(ticket, UserContext.new(user), knowledge_base_id).serialize }.not_to raise_error
+    end
+  end
+
   describe '#perform' do
     let(:ticket)            { create(:ticket) }
     let(:user)              { create(:user) }

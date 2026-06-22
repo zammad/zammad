@@ -18,6 +18,17 @@ RSpec.describe UserContext do
     end
   end
 
+  describe 'ActiveJob serialization' do
+    let(:user)  { create(:user) }
+    let(:token) { nil }
+
+    it 'serializes via the underlying user GlobalID and resolves back to the User', :aggregate_failures do
+      serialized = ActiveJob::Arguments.serialize([user_context])
+      expect(serialized).to eq([{ '_aj_globalid' => user.to_global_id.to_s }])
+      expect(ActiveJob::Arguments.deserialize(serialized).first).to eq(user)
+    end
+  end
+
   describe '#permissions?' do
     context 'when user with ticket.agent permission' do
       let(:user)  { create(:user, roles: create_list(:role, 1, :agent)) }
