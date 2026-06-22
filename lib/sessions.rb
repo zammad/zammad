@@ -20,6 +20,8 @@ returns
 =end
 
   def self.create(client_id, session, meta)
+    return if !valid_client_id?(client_id)
+
     # collect session data
     meta[:last_ping] = Time.now.utc.to_i
     data = {
@@ -71,7 +73,13 @@ returns
 =end
 
   def self.session_exists?(client_id)
+    return false if !valid_client_id?(client_id)
+
     @store.session_exists?(client_id)
+  end
+
+  def self.valid_client_id?(client_id)
+    client_id.present? && client_id.match?(%r{\A[a-f0-9-]+\z})
   end
 
 =begin
@@ -130,6 +138,8 @@ returns
 =end
 
   def self.destroy(client_id)
+    return if !valid_client_id?(client_id)
+
     @store.destroy(client_id)
   end
 
@@ -170,6 +180,8 @@ returns
 =end
 
   def self.touch(client_id)
+    return false if !valid_client_id?(client_id)
+
     data = get(client_id)
     return false if !data
 
@@ -199,6 +211,8 @@ returns
 =end
 
   def self.get(client_id)
+    return if !valid_client_id?(client_id)
+
     @store.get client_id
   end
 
@@ -215,6 +229,8 @@ returns
 =end
 
   def self.send(client_id, data) # rubocop:disable Zammad/ForbidDefSend
+    return false if !valid_client_id?(client_id)
+
     @store.send_data(client_id, data)
   end
 
@@ -319,6 +335,8 @@ returns
 =end
 
   def self.queue(client_id)
+    return [] if !valid_client_id?(client_id)
+
     @store.queue(client_id)
   end
 

@@ -14,9 +14,9 @@ class Sessions::Store::File
   end
 
   def create(client_id, content)
-    path         = "#{@path}/#{client_id}"
-    path_tmp     = "#{@path}/tmp/#{client_id}"
-    session_file = "#{path_tmp}/session"
+    path         = safe_session_path(client_id)
+    path_tmp     = File.join(@path, 'tmp', File.basename(path))
+    session_file = File.join(path_tmp, 'session')
 
     # store session data in session file
     FileUtils.mkpath path_tmp
@@ -49,7 +49,7 @@ class Sessions::Store::File
   end
 
   def session_exists?(client_id)
-    session_dir = "#{@path}/#{client_id}"
+    session_dir = safe_session_path(client_id)
     return false if !File.exist?(session_dir)
 
     session_file = "#{session_dir}/session"
@@ -59,8 +59,7 @@ class Sessions::Store::File
   end
 
   def destroy(client_id)
-    # single sessions worker
-    path = "#{@path}/#{client_id}"
+    path = safe_session_path(client_id)
     FileUtils.rm_rf path
 
     # forked sessions workers
@@ -68,12 +67,12 @@ class Sessions::Store::File
   end
 
   def set(client_id, data)
-    path = "#{@path}/#{client_id}"
+    path = safe_session_path(client_id)
     write_with_lock("#{path}/session", data.to_json)
   end
 
   def get(client_id)
-    session_dir  = "#{@path}/#{client_id}"
+    session_dir  = safe_session_path(client_id)
     session_file = "#{session_dir}/session"
     data         = nil
 
@@ -109,7 +108,7 @@ class Sessions::Store::File
   end
 
   def queue(client_id)
-    path  = "#{@path}/#{client_id}/"
+    path  = "#{safe_session_path(client_id)}/"
     data  = []
     files = []
     Dir.foreach(path) do |entry|
@@ -234,6 +233,19 @@ class Sessions::Store::File
 
   private
 
+  # safe_session_path validates the client_id and resolves the path, acting as
+  # defense-in-depth against path traversal. While the Sessions module validates
+  # client_id before calling the store, this method ensures the file store can
+  # stand on its own as a secure layer regardless of the caller.
+  def safe_session_path(client_id)
+    raise ArgumentError, "Invalid client_id: #{client_id}" if !Sessions.valid_client_id?(client_id)
+
+    path = File.expand_path(client_id, @path)
+    raise ArgumentError, "Path traversal detected for client_id: #{client_id}" if !path.start_with?("#{@path}/")
+
+    path
+  end
+
   def write_with_lock(filename, data)
     File.open(filename, 'ab') do |file|
       file.flock(File::LOCK_EX)
@@ -290,7 +302,7 @@ class Sessions::Store::File
   end
 
   def new_message_filename_for(client_id)
-    path     = "#{@path}/#{client_id}/"
+    path     = "#{safe_session_path(client_id)}/"
     filename = "send-#{Time.now.utc.to_f}"
     location = "#{path}#{filename}"
     check    = true

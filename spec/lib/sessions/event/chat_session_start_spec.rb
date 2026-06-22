@@ -3,15 +3,16 @@
 require 'rails_helper'
 
 RSpec.describe Sessions::Event::ChatSessionStart do
-  let(:client_id) { SecureRandom.uuid }
-  let(:chat)      { Chat.first }
+  let(:client_id)          { SecureRandom.uuid }
+  let(:customer_client_id) { SecureRandom.uuid }
+  let(:chat)               { Chat.first }
   let(:chat_session) do
-    Sessions.create('customer_session_id', { 'id' => customer.id }, {})
-    Sessions.queue('customer_session_id')
+    Sessions.create(customer_client_id, { 'id' => customer.id }, {})
+    Sessions.queue(customer_client_id)
     Chat::Session.create(
       chat_id:     chat.id,
       user_id:     nil,
-      preferences: { participants: ['customer_session_id'] },
+      preferences: { participants: [customer_client_id] },
       state:       'waiting',
     )
   end
@@ -114,7 +115,7 @@ RSpec.describe Sessions::Event::ChatSessionStart do
     it 'send out chat_session_start to customer and agent' do
       expect(subject_as_agent.run).to be_nil
 
-      messages_to_customer = Sessions.queue('customer_session_id')
+      messages_to_customer = Sessions.queue(customer_client_id)
       expect(messages_to_customer.count).to eq(1)
       expect(messages_to_customer[0]).to eq(
         'event' => 'chat_session_start',
@@ -138,7 +139,7 @@ RSpec.describe Sessions::Event::ChatSessionStart do
             'user_id'     => agent.id,
             'state'       => 'running',
             'preferences' => hash_including(
-              'participants' => ['customer_session_id', client_id]
+              'participants' => [customer_client_id, client_id]
             ),
             'id'          => chat_session.id,
             'chat_id'     => chat_session.chat_id,
@@ -158,7 +159,7 @@ RSpec.describe Sessions::Event::ChatSessionStart do
       agent.save!
       expect(subject_as_agent.run).to be_nil
 
-      messages_to_customer = Sessions.queue('customer_session_id')
+      messages_to_customer = Sessions.queue(customer_client_id)
       expect(messages_to_customer.count).to eq(1)
       expect(messages_to_customer[0]).to eq(
         'event' => 'chat_session_start',
@@ -182,7 +183,7 @@ RSpec.describe Sessions::Event::ChatSessionStart do
             'user_id'     => agent.id,
             'state'       => 'running',
             'preferences' => hash_including(
-              'participants' => ['customer_session_id', client_id]
+              'participants' => [customer_client_id, client_id]
             ),
             'id'          => chat_session.id,
             'chat_id'     => chat_session.chat_id,
@@ -198,7 +199,7 @@ RSpec.describe Sessions::Event::ChatSessionStart do
     it 'send out chat_session_start to customer and agent with already created messages' do
       chat_message_history
       expect(subject_as_agent.run).to be_nil
-      messages_to_customer = Sessions.queue('customer_session_id')
+      messages_to_customer = Sessions.queue(customer_client_id)
       expect(messages_to_customer.count).to eq(0)
 
       messages_to_agent = Sessions.queue(client_id)
@@ -210,7 +211,7 @@ RSpec.describe Sessions::Event::ChatSessionStart do
             'user_id'     => agent.id,
             'state'       => 'running',
             'preferences' => hash_including(
-              'participants' => ['customer_session_id', client_id]
+              'participants' => [customer_client_id, client_id]
             ),
             'messages'    => array_including(
               hash_including(
