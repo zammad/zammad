@@ -17,6 +17,10 @@ class AI::Provider::Mistral < AI::Provider
     'mistral-embed' => 1024
   }.freeze
 
+  EMBEDDING_INPUT_LIMITS = {
+    'mistral-embed' => 8192
+  }.freeze
+
   def self.ping!(config)
     response = UserAgent.get(
       "#{MISTRAL_API_BASE_URL}/models",

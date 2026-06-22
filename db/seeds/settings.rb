@@ -6187,6 +6187,38 @@ Setting.create_if_not_exists(
   frontend:    true,
 )
 
+Setting.create_if_not_exists(
+  title:       __('Vector DB knowledge base categories'),
+  name:        'vectordb_knowledge_base_category_ids',
+  area:        'VectorDB::KnowledgeBase',
+  description: __('Defines which knowledge base categories are included in the vector database. Leave empty to include answers from all categories.'),
+  state:       [],
+  frontend:    false,
+)
+
+Setting.create_if_not_exists(
+  title:       __('Vector DB knowledge base chunking strategy'),
+  name:        'vectordb_knowledge_base_chunking_strategy',
+  area:        'VectorDB::KnowledgeBase',
+  description: __('Defines the chunking strategy for the knowledge base vector database.'),
+  options:     {
+    form: [
+      {
+        display: '',
+        null:    true,
+        name:    'vectordb_knowledge_base_chunking_strategy',
+        tag:     'select',
+        options: {
+          'recursive' => __('Recursive hierarchical chunking'),
+          'sentence'  => __('Sentence-based chunking'),
+        },
+      },
+    ],
+  },
+  state:       'sentence',
+  frontend:    false,
+)
+
 # TODO: Unused in desktop view, drop later.
 Setting.create_if_not_exists(
   title:       __('Richtext Bubble Menu'),

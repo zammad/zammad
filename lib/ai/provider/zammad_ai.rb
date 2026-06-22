@@ -11,6 +11,10 @@ class AI::Provider::ZammadAI < AI::Provider
     'mxbai-embed-large' => 1024
   }.freeze
 
+  EMBEDDING_INPUT_LIMITS = {
+    'mxbai-embed-large' => 512
+  }.freeze
+
   def self.base_url(config)
     ENV['ZAMMAD_AI_API_URL'] || config[:url] || ZAMMAD_AI_API_BASE_URL
   end

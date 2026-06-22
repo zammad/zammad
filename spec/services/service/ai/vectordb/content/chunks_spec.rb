@@ -3,10 +3,11 @@
 require 'rails_helper'
 
 RSpec.describe Service::AI::VectorDB::Content::Chunks do
-  subject(:result) { described_class.execute(content:, content_meta_headers:, strategy:, options:) }
+  subject(:result) { described_class.execute(content:, content_meta_headers:, strategy:, model_max_tokens:, options:) }
 
   let(:content_meta_headers) { [] }
   let(:strategy)             { :sentence }
+  let(:model_max_tokens)     { nil }
   let(:options)              { {} }
 
   # Each short sentence used in these tests is 3 tokens:
@@ -38,11 +39,23 @@ RSpec.describe Service::AI::VectorDB::Content::Chunks do
       end
     end
 
+    context 'when the model ceiling is below the strategy default' do
+      let(:content)          { 'Dogs run. Cats jump. Birds fly. Fish swim.' }
+      let(:model_max_tokens) { 8 }
+
+      it 'caps chunks at the model ceiling rather than the strategy default', :aggregate_failures do
+        expect(result.length).to be > 1
+        expect(result).to all(satisfy { |chunk|
+          described_class::Strategy::Base.estimate_tokens(chunk) <= 8
+        })
+      end
+    end
+
     context 'when overlap is configured' do
       # 3 tokens/sentence; budget=8 fits 2 sentences per chunk;
-      # overlap_amount=0.5 → overlap_budget=4, which fits exactly 1 sentence (3 tokens).
+      # overlap_tokens=4 fits exactly 1 sentence (3 tokens).
       let(:content) { 'Dogs run. Cats jump. Birds fly. Fish swim.' }
-      let(:options) { { max_tokens_per_chunk: 8, overlap_amount: 0.5 } }
+      let(:options) { { max_tokens_per_chunk: 8, overlap_tokens: 4 } }
 
       it 'carries the tail of each chunk into the next one' do
         expect(result).to eq([
@@ -83,6 +96,15 @@ RSpec.describe Service::AI::VectorDB::Content::Chunks do
     context 'when an unknown strategy is given' do
       let(:content)  { 'Hello.' }
       let(:strategy) { :unknown }
+
+      it 'raises an ArgumentError' do
+        expect { result }.to raise_error(ArgumentError)
+      end
+    end
+
+    context 'when a disallowed strategy is given' do
+      let(:content)  { 'Hello.' }
+      let(:strategy) { :base_text }
 
       it 'raises an ArgumentError' do
         expect { result }.to raise_error(ArgumentError)

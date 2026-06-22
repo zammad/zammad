@@ -3,6 +3,17 @@
 class Service::AI::VectorDB::Content::Chunks::Strategy::Base
   SUBWORD_LENGTH = 5
 
+  # Default chunk size and overlap, in tokens. The strategy owns these (a caller may override via
+  # options); the embedding model's input limit (model_max_tokens) is only a hard ceiling that caps
+  # them — it does not drive the chunk size.
+  DEFAULT_MAX_TOKENS     = 512
+  DEFAULT_OVERLAP_TOKENS = 50
+
+  # Fraction of the token budget used as the packing target. Kept below 1.0 because estimate_tokens
+  # can undercount dense Latin text (compounded German, inflected Polish) by up to ~1.8×; staying at
+  # 0.7 gives enough headroom while using more of the available context than 0.5 did.
+  SAFETY_FRACTION = 0.7
+
   # Approximate the embedding-model token count without a tokenizer dependency: scan the text into
   # whitespace-free runs and size each by character density. Deliberately conservative (errs toward
   # over-counting) so it never undercounts the safety-critical cases (CJK, long digit/symbol blobs).
@@ -22,15 +33,33 @@ class Service::AI::VectorDB::Content::Chunks::Strategy::Base
     end
   end
 
-  attr_reader :content, :content_meta_headers, :options
+  attr_reader :content, :content_meta_headers, :options, :model_max_tokens
 
-  def initialize(content:, content_meta_headers:, options:)
+  # @param model_max_tokens [Integer, nil] the embedding model's hard input limit. Only caps the
+  #   chunk size; nil means "no ceiling" (use the strategy default / override as-is).
+  def initialize(content:, content_meta_headers:, options:, model_max_tokens: nil)
     @content              = content
     @content_meta_headers = content_meta_headers
     @options              = options
+    @model_max_tokens     = model_max_tokens
   end
 
   def execute
     raise NotImplementedError
+  end
+
+  private
+
+  # The per-chunk size: the strategy default (caller-overridable via options[:max_tokens_per_chunk]),
+  # capped by the model's hard ceiling when one is given. The strategy decides the size; the model
+  # only sets an upper bound.
+  def resolved_max_tokens
+    [options.fetch(:max_tokens_per_chunk, self.class::DEFAULT_MAX_TOKENS), model_max_tokens].compact.min
+  end
+
+  # Absolute overlap (tokens) carried across chunk boundaries — a roughly fixed amount of context
+  # (a sentence or two), never more than half a chunk.
+  def resolved_overlap_tokens
+    options.fetch(:overlap_tokens, self.class::DEFAULT_OVERLAP_TOKENS).clamp(0, resolved_max_tokens / 2)
   end
 end

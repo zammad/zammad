@@ -37,12 +37,17 @@ class AI::VectorDB
       index: index_name,
       body:  {
         mappings: {
-          properties: {
+          date_detection:    false,
+          dynamic_templates: [
+            { metadata_dates:   { path_match: 'metadata.*_at', mapping: { type: 'date' } } },
+            { metadata_strings: { path_match: 'metadata.*', match_mapping_type: 'string', mapping: { type: 'keyword' } } },
+          ],
+          properties:        {
             content:     { type: 'text' },
             object_id:   { type: 'keyword' },
             object_name: { type: 'keyword' },
-            embedding:   { type: 'dense_vector', dims: dimensions, index: true, similarity: 'l2_norm' },
-            metadata:    { type: 'object', enabled: false }
+            embedding:   { type: 'dense_vector', dims: dimensions, index: true, similarity: 'cosine' },
+            metadata:    { type: 'object', dynamic: true }
           }
         }
       }
@@ -55,7 +60,7 @@ class AI::VectorDB
   def create(content:, object_id:, object_name:, embedding:, metadata: {})
     index_exists
 
-    return if client.exists?(index: index_name, id: build_identifier(object_name:, object_id:))
+    return if client.exists?(index: index_name, id: build_identifier(object_name:, object_id:, content:))
 
     upsert(object_id:, object_name:, content:, embedding:, metadata:) # rubocop:disable Rails/SkipsModelValidations
   end
@@ -65,7 +70,7 @@ class AI::VectorDB
 
     client.index(
       index: index_name,
-      id:    build_identifier(object_name:, object_id:),
+      id:    build_identifier(object_name:, object_id:, content:),
       body:  {
         content:     content,
         object_id:   object_id,
@@ -76,25 +81,101 @@ class AI::VectorDB
     )
   end
 
+  def update_metadata(object_id:, object_name:, metadata:)
+    index_exists
+
+    client.update_by_query(
+      index: index_name,
+      body:  {
+        query:  {
+          bool: {
+            filter: [
+              { term: { object_id: } },
+              { term: { object_name: } }
+            ]
+          }
+        },
+        script: {
+          source: 'ctx._source.metadata = params.metadata',
+          params: { metadata: }
+        }
+      }
+    ).body
+  end
+
   def update(object_id:, object_name:, content:, embedding:, metadata: {})
     index_exists
 
-    id = build_identifier(object_name:, object_id:)
+    id = build_identifier(object_name:, object_id:, content:)
     client.update(index: index_name, id: id, body: { content:, embedding:, metadata: })
   end
 
-  def find(object_id:, object_name:)
-    id = build_identifier(object_name:, object_id:)
+  def find(object_id:, object_name:, content: nil)
+    if !content.nil?
+      id = build_identifier(object_name:, object_id:, content:)
+      return client.get(index: index_name, id: id)
+    end
 
-    client.get(index: index_name, id: id)
+    client.search(
+      index: index_name,
+      body:  {
+        size:  10_000,
+        query: {
+          bool: {
+            filter: [
+              { term: { object_id: } },
+              { term: { object_name: } }
+            ]
+          }
+        }
+      }
+    ).body.dig('hits', 'hits')
   end
 
-  def destroy(object_id:, object_name:)
-    id = build_identifier(object_name:, object_id:)
+  # Ids of all indexed chunks for one document. `_source: false` keeps the payload tiny (just ids).
+  def document_ids(object_id:, object_name:)
+    client.search(
+      index: index_name,
+      body:  {
+        size:    10_000,
+        _source: false,
+        query:   {
+          bool: {
+            filter: [
+              { term: { object_id: } },
+              { term: { object_name: } }
+            ]
+          }
+        }
+      }
+    ).body.dig('hits', 'hits').pluck('_id')
+  end
 
-    return if !client.exists?(index: index_name, id:)
+  def delete(id:)
+    client.delete(index: index_name, id:)
+  end
 
-    client.delete(index: index_name, id: id)
+  def destroy(object_id:, object_name:, content: nil)
+    if !content.nil?
+      id = build_identifier(object_name:, object_id:, content:)
+      return if !client.exists?(index: index_name, id:)
+
+      return client.delete(index: index_name, id: id)
+    end
+
+    client.delete_by_query(
+      index: index_name,
+      body:  {
+        query: {
+          bool: {
+            filter: [
+              { term: { object_id: } },
+              { term: { object_name: } }
+            ]
+          }
+        }
+      }
+    )
   end
 
   def drop
@@ -140,8 +221,8 @@ class AI::VectorDB
     @index_name ||= "#{Setting.get('es_index')}_#{Rails.env}_ai_embeddings"
   end
 
-  def build_identifier(object_name:, object_id:)
-    "#{object_name}-#{object_id}"
+  def build_identifier(object_name:, object_id:, content:)
+    "#{object_name}-#{object_id}-#{Digest::SHA256.hexdigest(content)}"
   end
 
   def create_client

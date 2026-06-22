@@ -787,6 +787,7 @@ msgstr ""
 #: app/graphql/gql/mutations/ticket/ai_assistance/summarize.rb:15
 #: app/services/service/ai/agent/run.rb:15
 #: app/services/service/ai/vectordb/base.rb:12
+#: app/services/service/ai/vectordb/embedding.rb:26
 #: app/services/service/ai_assistance/text_tools.rb:19
 #: app/services/service/ticket/ai_assistance/generate_knowledge_base_answer_content.rb:14
 #: app/services/service/ticket/ai_assistance/summarize.rb:16
@@ -3849,7 +3850,7 @@ msgstr ""
 msgid "Connection test successful"
 msgstr ""
 
-#: lib/ai/vectordb.rb:153
+#: lib/ai/vectordb.rb:184
 msgid "Connection to Elasticsearch Vector DB failed"
 msgstr ""
 
@@ -5040,7 +5041,7 @@ msgstr ""
 msgid "Defines if the application is in developer mode (all users have the same password and password reset will work without email delivery)."
 msgstr ""
 
-#: db/seeds/settings.rb:6187
+#: db/seeds/settings.rb:6219
 msgid "Defines if the bubble menu feature of the richtext editor is enabled. Note that this setting will be ignored if the writing assistant is turned on."
 msgstr ""
 
@@ -5264,6 +5265,10 @@ msgstr ""
 msgid "Defines the backend service for ticket article language detection."
 msgstr ""
 
+#: db/seeds/settings.rb:6196
+msgid "Defines the chunking strategy for the knowledge base vector database."
+msgstr ""
+
 #: db/seeds/settings.rb:2901
 msgid "Defines the configuration how many articles can be created in a minute range globally."
 msgstr ""
@@ -5451,6 +5456,10 @@ msgstr ""
 
 #: db/seeds/settings.rb:2778
 msgid "Defines whether the matching tickets are shown in case of already existing tickets."
+msgstr ""
+
+#: db/seeds/settings.rb:6187
+msgid "Defines which knowledge base categories are included in the vector database. Leave empty to include answers from all categories."
 msgstr ""
 
 #: db/seeds/settings.rb:3167
@@ -6314,7 +6323,7 @@ msgstr ""
 msgid "Elasticsearch Total Payload Size"
 msgstr ""
 
-#: lib/ai/vectordb.rb:170
+#: lib/ai/vectordb.rb:201
 msgid "Elasticsearch index does not exist"
 msgstr ""
 
@@ -8839,7 +8848,7 @@ msgstr ""
 msgid "Including private key."
 msgstr ""
 
-#: lib/ai/vectordb.rb:163
+#: lib/ai/vectordb.rb:194
 msgid "Incompatible Elasticsearch version"
 msgstr ""
 
@@ -13537,6 +13546,10 @@ msgstr ""
 msgid "Recursive Ticket Triggers"
 msgstr ""
 
+#: db/seeds/settings.rb:6205
+msgid "Recursive hierarchical chunking"
+msgstr ""
+
 #: app/frontend/apps/desktop/pages/authentication/after-auth/plugins/doorkeeperReturnTo.ts:11
 #: app/frontend/apps/desktop/pages/authentication/components/AfterAuth/DoorkeeperReturnTo.vue:18
 #: app/frontend/apps/mobile/pages/authentication/after-auth/plugins/doorkeeperReturnTo.ts:11
@@ -14080,7 +14093,7 @@ msgstr ""
 msgid "Rewrite complex section and make it easy to understand"
 msgstr ""
 
-#: db/seeds/settings.rb:6184
+#: db/seeds/settings.rb:6216
 msgid "Richtext Bubble Menu"
 msgstr ""
 
@@ -15052,6 +15065,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/maintenance.coffee:99
 msgid "Sent successfully!"
+msgstr ""
+
+#: db/seeds/settings.rb:6206
+msgid "Sentence-based chunking"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
@@ -17390,7 +17407,7 @@ msgstr ""
 msgid "The required value 'group_id' is missing."
 msgstr ""
 
-#: lib/ai/provider.rb:79
+#: lib/ai/provider.rb:84
 msgid "The response could not be processed."
 msgstr ""
 
@@ -20041,6 +20058,14 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:557
 msgid "Variables"
+msgstr ""
+
+#: db/seeds/settings.rb:6184
+msgid "Vector DB knowledge base categories"
+msgstr ""
+
+#: db/seeds/settings.rb:6193
+msgid "Vector DB knowledge base chunking strategy"
 msgstr ""
 
 #: app/assets/javascripts/app/views/package.jst.eco:49

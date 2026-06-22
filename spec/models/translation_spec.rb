@@ -331,4 +331,5 @@ RSpec.describe Translation do
       expect(described_class.translate_all('en')).to eq({})
     end
   end
+
 end

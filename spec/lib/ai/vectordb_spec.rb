@@ -149,43 +149,81 @@ RSpec.describe AI::VectorDB, :aggregate_failures do
     let(:object_id)   { 1 }
     let(:object_name) { 'ticket' }
 
-    context 'when no document is found' do
-      before do
-        allow(instance).to receive(:client)
-          .and_return(instance_double(Elasticsearch::Client, indices: instance_double(Elasticsearch::API::Indices::Actions)))
-        allow(instance.client.indices).to receive(:exists?).with(index: instance.index_name)
-          .and_return(true)
-        allow(instance.client).to receive_messages(exists?: false, get: nil)
+    context 'when content is given' do
+      let(:content) { 'test content' }
+
+      context 'when no document is found' do
+        before do
+          allow(instance).to receive(:client)
+            .and_return(instance_double(Elasticsearch::Client, indices: instance_double(Elasticsearch::API::Indices::Actions)))
+          allow(instance.client.indices).to receive(:exists?).with(index: instance.index_name)
+            .and_return(true)
+          allow(instance.client).to receive_messages(exists?: false, get: nil)
+        end
+
+        it 'returns nil' do
+          expect(instance.find(object_id:, object_name:, content:)).to be_nil
+        end
       end
 
-      it 'returns nil' do
-        expect(instance.find(object_id:, object_name:)).to be_nil
+      context 'when document is found' do
+        let(:document) do
+          {
+            _id:     "#{object_name}-#{object_id}",
+            _index:  instance.index_name,
+            _source: {
+              object_id:,
+              object_name:,
+              content:     'test content',
+              embedding:   [0.1, 0.2, 0.3],
+              metadata:    {}
+            }
+          }
+        end
+
+        before do
+          allow(instance).to receive(:client)
+            .and_return(instance_double(Elasticsearch::Client, indices: instance_double(Elasticsearch::API::Indices::Actions)))
+          allow(instance.client).to receive_messages(exists?: true, get: document)
+        end
+
+        it 'returns the document' do
+          expect(instance.find(object_id:, object_name:, content:)).to eq(document)
+          expect(instance.client).to have_received(:get).with(
+            index: instance.index_name,
+            id:    "#{object_name}-#{object_id}-#{Digest::SHA256.hexdigest(content)}"
+          )
+        end
       end
     end
 
-    context 'when document is found' do
-      let(:document) do
-        {
-          _id:     "#{object_name}-#{object_id}",
-          _index:  instance.index_name,
-          _source: {
-            object_id:,
-            object_name:,
-            content:     'test content',
-            embedding:   [0.1, 0.2, 0.3],
-            metadata:    {}
-          }
-        }
-      end
+    context 'when content is not given' do
+      let(:search_response) { { 'hits' => { 'hits' => [{ '_id' => 'ticket-1-abc' }] } } }
 
       before do
         allow(instance).to receive(:client)
-          .and_return(instance_double(Elasticsearch::Client, indices: instance_double(Elasticsearch::API::Indices::Actions)))
-        allow(instance.client).to receive_messages(exists?: true, get: document)
+          .and_return(instance_double(Elasticsearch::Client))
+        allow(instance.client).to receive(:search).and_return(double(body: search_response))
       end
 
-      it 'returns the document' do
-        expect(instance.find(object_id:, object_name:)).to eq(document)
+      it 'searches by object_id and object_name and returns all results' do
+        result = instance.find(object_id:, object_name:)
+
+        expect(instance.client).to have_received(:search).with(
+          index: instance.index_name,
+          body:  {
+            size:  10_000,
+            query: {
+              bool: {
+                filter: [
+                  { term: { object_id:   object_id } },
+                  { term: { object_name: object_name } }
+                ]
+              }
+            }
+          }
+        )
+        expect(result).to eq(search_response.dig('hits', 'hits'))
       end
     end
   end
@@ -194,31 +232,61 @@ RSpec.describe AI::VectorDB, :aggregate_failures do
     let(:object_id)   { 1 }
     let(:object_name) { 'ticket' }
 
-    context 'when document does not exist' do
-      before do
-        allow(instance).to receive(:client)
-          .and_return(instance_double(Elasticsearch::Client, indices: instance_double(Elasticsearch::API::Indices::Actions)))
-        allow(instance.client.indices).to receive(:exists?).with(index: instance.index_name)
-          .and_return(true)
-        allow(instance.client).to receive_messages(exists?: false, delete: nil)
+    context 'when content is given' do
+      let(:content) { 'test content' }
+
+      context 'when document does not exist' do
+        before do
+          allow(instance).to receive(:client)
+            .and_return(instance_double(Elasticsearch::Client, indices: instance_double(Elasticsearch::API::Indices::Actions)))
+          allow(instance.client.indices).to receive(:exists?).with(index: instance.index_name)
+            .and_return(true)
+          allow(instance.client).to receive_messages(exists?: false, delete: nil)
+        end
+
+        it 'returns nil' do
+          expect(instance.destroy(object_id:, object_name:, content:)).to be_nil
+        end
       end
 
-      it 'returns nil' do
-        expect(instance.destroy(object_id:, object_name:)).to be_nil
+      context 'when document exists' do
+        before do
+          allow(instance).to receive(:client)
+            .and_return(instance_double(Elasticsearch::Client, indices: instance_double(Elasticsearch::API::Indices::Actions)))
+          allow(instance.client.indices).to receive(:exists?).with(index: instance.index_name)
+            .and_return(true)
+          allow(instance.client).to receive_messages(exists?: true, delete: true)
+        end
+
+        it 'deletes the document successfully' do
+          expect(instance.destroy(object_id:, object_name:, content:)).to be_truthy
+        end
       end
     end
 
-    context 'when document exists' do
+    context 'when content is not given' do
       before do
         allow(instance).to receive(:client)
-          .and_return(instance_double(Elasticsearch::Client, indices: instance_double(Elasticsearch::API::Indices::Actions)))
-        allow(instance.client.indices).to receive(:exists?).with(index: instance.index_name)
-          .and_return(true)
-        allow(instance.client).to receive_messages(exists?: true, delete: true)
+          .and_return(instance_double(Elasticsearch::Client))
+        allow(instance.client).to receive(:delete_by_query).and_return(true)
       end
 
-      it 'deletes the document successfully' do
-        expect(instance.destroy(object_id:, object_name:)).to be_truthy
+      it 'deletes all entries matching object_id and object_name' do
+        instance.destroy(object_id:, object_name:)
+
+        expect(instance.client).to have_received(:delete_by_query).with(
+          index: instance.index_name,
+          body:  {
+            query: {
+              bool: {
+                filter: [
+                  { term: { object_id:   object_id } },
+                  { term: { object_name: object_name } }
+                ]
+              }
+            }
+          }
+        )
       end
     end
   end

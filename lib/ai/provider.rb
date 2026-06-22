@@ -8,6 +8,12 @@ class AI::Provider
 
   EMBEDDING_SIZES = {}.freeze
 
+  EMBEDDING_INPUT_LIMITS = {}.freeze
+
+  # Conservative input-token limit for an embedding model not listed in EMBEDDING_INPUT_LIMITS —
+  # favours safety (smaller chunks that fit small-context models) over granularity.
+  DEFAULT_EMBEDDING_INPUT_LIMIT = 512
+
   # AI inference is slow; provide dedicated timeout knobs so admins can extend them for large prompts,
   # reasoning models, or slow self-hosted endpoints without raising the global HTTP timeouts.
   REQUEST_TIMEOUT_OPTIONS = {
@@ -95,6 +101,14 @@ class AI::Provider
   # @return [Array<Array<Numeric>>] an array of embedding vectors corresponding to the inputs
   def bulk_embed(input:)
     embeddings(input: Array(input))
+  end
+
+  # Maximum number of input tokens the configured embedding model accepts. Used to size chunks so
+  # no chunk overruns the model (see Service::AI::VectorDB::Content::Chunks). Unknown models fall back conservatively.
+  #
+  # @return [Integer] the model's input token limit
+  def embedding_input_limit
+    self.class::EMBEDDING_INPUT_LIMITS.fetch(options[:embedding_model], DEFAULT_EMBEDDING_INPUT_LIMIT)
   end
 
   def metadata

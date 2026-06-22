@@ -19,6 +19,10 @@ class AI::Provider::OpenAI < AI::Provider
     'text-embedding-3-small' => 1536
   }.freeze
 
+  EMBEDDING_INPUT_LIMITS = {
+    'text-embedding-3-small' => 8191
+  }.freeze
+
   def self.ping!(config)
     response = UserAgent.get(
       "#{OPENAI_API_BASE_URL}/models",

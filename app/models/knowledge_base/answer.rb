@@ -28,6 +28,15 @@ class KnowledgeBase::Answer < ApplicationModel
 
   acts_as_list scope: :category, top_of_list: 0
 
+  VECTOR_INDEX_METADATA_ATTRIBUTES = %w[category_id internal_at published_at archived_at].freeze
+
+  after_commit do
+    next if !Service::AI::VectorDB::Available.execute(ping: false)
+    next if !previous_changes.keys.intersect?(VECTOR_INDEX_METADATA_ATTRIBUTES)
+
+    touch_translations
+  end
+
   # Provide consistent naming with KB category
   #
   # Originally this used alias_attribute. But alias_attribute for relations for deprecated in Rails 7.1 and removed in 7.2

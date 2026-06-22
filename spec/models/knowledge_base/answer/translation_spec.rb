@@ -124,4 +124,43 @@ RSpec.describe KnowledgeBase::Answer::Translation, current_user_id: 1, type: :mo
       end
     end
   end
+
+  describe '#vector_index_data' do
+    subject(:translation) { create(:knowledge_base_answer_translation) }
+
+    it 'returns a hash with content, content_meta_headers, and metadata' do
+      data = translation.vector_index_data
+
+      expect(data).to be_a(Hash)
+        .and have_key(:content)
+        .and have_key(:content_meta_headers)
+        .and have_key(:metadata)
+    end
+
+    it 'includes cleaned up content body' do
+      translation.content.update(body: '<p>Test <b>content</b></p>')
+
+      data = translation.vector_index_data
+
+      expect(data[:content]).to eq('Test content')
+    end
+
+    it 'includes title in content_meta_headers' do
+      data = translation.vector_index_data
+
+      expect(data[:content_meta_headers]).to include(translation.title)
+    end
+
+    it 'includes locale in metadata' do
+      data = translation.vector_index_data
+
+      expect(data[:metadata][:locale]).to eq(translation.kb_locale.system_locale.locale)
+    end
+
+    it 'includes category_id in metadata' do
+      data = translation.vector_index_data
+
+      expect(data[:metadata][:category_id]).to eq(translation.answer.category_id)
+    end
+  end
 end
