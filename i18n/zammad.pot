@@ -17681,7 +17681,7 @@ msgstr ""
 msgid "There are more than 1000 tickets in the Zendesk system. Due to API rate limit restrictions, Zammad can't get the exact number of tickets yet and has to fetch them in batches of 1000. This might take some time, better grab a cup of coffee. The total number of tickets gets updated as soon as the currently known number is surpassed."
 msgstr ""
 
-#: app/models/calendar.rb:314
+#: app/models/calendar.rb:310
 msgid "There are no business hours configured."
 msgstr ""
 
@@ -21985,6 +21985,10 @@ msgstr ""
 
 #: lib/validations/object_manager/attribute_validator/external_data_source.rb:13
 msgid "must be a hash with \"label\" and \"value\" keys"
+msgstr ""
+
+#: app/models/calendar.rb:244
+msgid "must be a valid HTTP(S) URL"
 msgstr ""
 
 #: app/models/knowledge_base.rb:244

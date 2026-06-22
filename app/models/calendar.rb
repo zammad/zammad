@@ -10,6 +10,7 @@ class Calendar < ApplicationModel
 
   validates :name, uniqueness: { case_sensitive: false }
   validate :validate_hours
+  validate :validate_ical_url_format
 
   before_save :ensure_public_holidays_details, :fetch_ical
 
@@ -137,7 +138,7 @@ returns
 =end
 
   def self.sync
-    Calendar.find_each(&:sync)
+    Calendar.find_each(&:sync_ical)
     true
   end
 
@@ -154,12 +155,8 @@ returns
 
 =end
 
-  def sync(without_save = nil)
+  def sync_ical(without_save = nil)
     return if !ical_url
-
-    if ical_url.present? && ical_url.to_s !~ %r{^http}i
-      Rails.logger.warn(__("Calendar ID #{id} uses a local file path as ical_url ('#{ical_url}'). This is deprecated and will be removed in a future version. Use http(s) URLs instead."))
-    end
 
     # only sync every 5 days
     if id
@@ -222,20 +219,10 @@ returns
   end
 
   def self.fetch_parse(location)
-    if location.match?(%r{^http}i)
-      result = UserAgent.get(location, {}, { validate_safety: { allow_private: true } })
-      if !result.success?
-        raise result.error
-      end
+    result = UserAgent.get(location, {}, { validate_safety: { allow_private: true } })
+    raise result.error if !result.success?
 
-      cal_file = result.body
-    else
-      ActiveSupport::Deprecation.new.warn(
-        'Local file paths for Calendar.ical_url are deprecated and will be removed in a future version. ' \
-        'Use http(s) URLs instead.'
-      )
-      cal_file = File.read(location)
-    end
+    cal_file = result.body
 
     cals = Icalendar::Calendar.parse(cal_file)
     cal = cals.first
@@ -358,6 +345,13 @@ returns
     end
   end
 
+  def validate_ical_url_format
+    return if ical_url.blank?
+    return if ical_url.to_s.match?(%r{\Ahttps?://}i)
+
+    errors.add(:ical_url, __('must be a valid HTTP(S) URL'))
+  end
+
   private
 
   # if changed calendar is default, set all others default to false
@@ -398,7 +392,9 @@ returns
 
   # fetch ical feed
   def fetch_ical
-    sync(true)
+    return true if !ical_url_changed?
+
+    sync_ical(true)
     true
   end
 

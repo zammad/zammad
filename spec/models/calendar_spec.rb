@@ -111,7 +111,7 @@ RSpec.describe Calendar, type: :model do
     end
   end
 
-  describe '#sync' do
+  describe '#sync_ical' do
     subject(:calendar) do
       create(:calendar, ical_url: 'http://test/calendar1.ics', default: false)
     end
@@ -129,20 +129,20 @@ RSpec.describe Calendar, type: :model do
       it 'writes #public_holidays to the cache (valid for 1 day)' do
         expect(Rails.cache.read("CalendarIcal::#{calendar.id}")).to be_nil
 
-        expect { calendar.sync }
+        expect { calendar.sync_ical }
           .to change { Rails.cache.read("CalendarIcal::#{calendar.id}") }
           .to(calendar.attributes.slice('public_holidays', 'ical_url').symbolize_keys)
       end
 
       context 'and neither current date nor iCal URL have changed' do
         it 'is idempotent' do
-          expect { calendar.sync }
+          expect { calendar.sync_ical }
             .not_to change(calendar, :public_holidays)
         end
 
         it 'does not create a background job for escalation rebuild' do
           calendar # create and sync (1 inital background job is created)
-          expect { calendar.sync } # a second sync right after calendar create
+          expect { calendar.sync_ical } # a second sync right after calendar create
             .to not_change { Delayed::Job.count }
         end
       end
@@ -154,12 +154,12 @@ RSpec.describe Calendar, type: :model do
         end
 
         it 'is idempotent' do
-          expect { calendar.sync }
+          expect { calendar.sync_ical }
             .not_to change(calendar, :public_holidays)
         end
 
         it 'does not create a background job for escalation rebuild' do
-          expect { calendar.sync }
+          expect { calendar.sync_ical }
             .not_to change(Delayed::Job, :count)
         end
       end
@@ -172,7 +172,7 @@ RSpec.describe Calendar, type: :model do
         end
 
         it 'appends newly computed event data to #public_holidays' do
-          expect { calendar.sync }.to change(calendar, :public_holidays).to(
+          expect { calendar.sync_ical }.to change(calendar, :public_holidays).to(
             '2016-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => feed },
             '2017-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => feed },
             '2018-12-24' => { 'active' => true, 'summary' => 'Christmas1', 'feed' => feed },
@@ -182,7 +182,7 @@ RSpec.describe Calendar, type: :model do
         end
 
         it 'does create a background job for escalation rebuild' do
-          expect { calendar.sync }.to have_enqueued_job(TicketEscalationRebuildJob)
+          expect { calendar.sync_ical }.to have_enqueued_job(TicketEscalationRebuildJob)
         end
       end
 
@@ -209,7 +209,7 @@ RSpec.describe Calendar, type: :model do
           stub_request(:get, 'http://test/calendar_duplicate_check.ics')
             .to_return(body: Rails.root.join('test/data/calendar/calendar_duplicate_check.ics').read)
           calendar.assign_attributes(ical_url: 'http://test/calendar_duplicate_check.ics')
-          calendar.sync
+          calendar.sync_ical
         end
 
         it 'does not create duplicate events' do
@@ -218,6 +218,29 @@ RSpec.describe Calendar, type: :model do
             '2019-04-22' => { 'active' => true, 'feed' => feed, 'summary' => 'Ostermontag' },
           )
         end
+      end
+    end
+  end
+
+  describe '#fetch_ical' do
+    subject(:calendar) do
+      create(:calendar, ical_url: 'http://test/calendar1.ics', default: false)
+    end
+
+    before do
+      allow(HostnameSafetyCheck).to receive(:validate!).and_return(true)
+      stub_request(:get, 'http://test/calendar1.ics')
+        .to_return(body: Rails.root.join('test/data/calendar/calendar1.ics').read)
+    end
+
+    context 'when ical_url has not changed' do
+      it 'does not sync on save' do
+        calendar # force creation before setting expectation
+        allow(described_class).to receive(:fetch_parse).and_call_original
+
+        calendar.update!(name: "#{calendar.name} updated")
+
+        expect(described_class).not_to have_received(:fetch_parse)
       end
     end
   end
@@ -496,7 +519,7 @@ RSpec.describe Calendar, type: :model do
     end
   end
 
-  describe '#sync error handling' do
+  describe '#sync_ical error handling' do
     let(:calendar) { create(:calendar) }
 
     it 'logs errors to last_log on invalid HTTP response' do
@@ -504,7 +527,7 @@ RSpec.describe Calendar, type: :model do
       allow(UserAgent).to receive(:get).and_return(error)
 
       calendar.update_column(:ical_url, 'https://example.com/cal.ics')
-      expect { calendar.sync }.not_to raise_error
+      expect { calendar.sync_ical }.not_to raise_error
       expect(calendar.last_log).to include('No such file')
     end
 
@@ -514,8 +537,34 @@ RSpec.describe Calendar, type: :model do
       )
 
       calendar.update_column(:ical_url, 'http://127.0.0.1/cal.ics')
-      expect { calendar.sync }.not_to raise_error
+      expect { calendar.sync_ical }.not_to raise_error
       expect(calendar.last_log).to include('The hostname is a loopback IP')
+    end
+  end
+
+  describe '#validate_ical_url_format' do
+    it 'accepts a blank ical_url' do
+      expect(build(:calendar, ical_url: nil)).to be_valid
+    end
+
+    it 'accepts an https URL' do
+      expect(build(:calendar, ical_url: 'https://example.com/cal.ics')).to be_valid
+    end
+
+    it 'accepts an http URL' do
+      expect(build(:calendar, ical_url: 'http://example.com/cal.ics')).to be_valid
+    end
+
+    it 'rejects a local file path' do
+      calendar = build(:calendar, ical_url: '/etc/passwd')
+      expect(calendar).not_to be_valid
+      expect(calendar.errors[:ical_url]).to be_present
+    end
+
+    it 'rejects a plain string without scheme' do
+      calendar = build(:calendar, ical_url: 'example.com/cal.ics')
+      expect(calendar).not_to be_valid
+      expect(calendar.errors[:ical_url]).to be_present
     end
   end
 end
