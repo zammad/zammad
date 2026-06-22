@@ -7,6 +7,14 @@
 # to the underlying User instance in the Policy
 class UserContext < Delegator
 
+  # Allow a UserContext to be handed to a background job exactly like the User it wraps (e.g. a
+  # GraphQL mutation enqueuing a job with `context.current_user`). ActiveJob serializes record
+  # arguments via `case/when GlobalID::Identification`, a C-level ancestry check that ignores our
+  # `is_a?` override — so the delegator must actually include the module. It then serializes through
+  # the delegated `to_global_id` (the user's GID) and resolves back to the User on the other side.
+  # Without this, `perform_later(…, context.current_user, …)` raises "Unsupported argument type: User".
+  include GlobalID::Identification
+
   def initialize(user, token = nil) # rubocop:disable Lint/MissingSuper
     @user  = user
     @token = token
