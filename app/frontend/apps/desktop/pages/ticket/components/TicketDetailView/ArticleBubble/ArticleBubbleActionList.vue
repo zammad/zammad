@@ -120,7 +120,7 @@ const actions = computed(() => {
 <template>
   <div
     v-if="isTicketEditable"
-    class="absolute bottom-0 flex w-fit translate-y-1/2 items-center gap-1 ltr:right-3 rtl:left-3"
+    class="absolute bottom-0 flex w-fit translate-y-1/2 items-center gap-1 ltr:right-3 rtl:left-3 print:hidden"
     :class="{ 'ltr:left-3 rtl:right-3': position === 'left' }"
   >
     <div

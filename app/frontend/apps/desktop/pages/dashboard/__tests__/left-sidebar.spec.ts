@@ -35,7 +35,7 @@ describe('Left sidebar', () => {
       const aside = view.getByRole('complementary')
 
       expect(aside.parentElement).toHaveStyle({
-        gridTemplateColumns: '225px minmax(0, 1fr)',
+        '--grid-columns': '225px minmax(0, 1fr)',
       })
     })
 
@@ -46,7 +46,7 @@ describe('Left sidebar', () => {
       const aside = view.getByRole('complementary')
 
       expect(aside.parentElement).toHaveStyle({
-        gridTemplateColumns: '216px minmax(0, 1fr)',
+        '--grid-columns': '216px minmax(0, 1fr)',
       })
     })
 
@@ -62,7 +62,7 @@ describe('Left sidebar', () => {
       await view.events.click(collapseButton)
 
       expect(aside.parentElement).toHaveStyle({
-        gridTemplateColumns: '56px minmax(0, 1fr)',
+        '--grid-columns': '56px minmax(0, 1fr)',
       })
 
       const expandButton = getAllByRole(aside, 'button', {
@@ -72,7 +72,7 @@ describe('Left sidebar', () => {
       await view.events.click(expandButton)
 
       expect(aside.parentElement).toHaveStyle({
-        gridTemplateColumns: '225px minmax(0, 1fr)',
+        '--grid-columns': '225px minmax(0, 1fr)',
       })
     })
 
@@ -84,7 +84,7 @@ describe('Left sidebar', () => {
       const aside = view.getByRole('complementary')
 
       expect(aside.parentElement).toHaveStyle({
-        gridTemplateColumns: '56px minmax(0, 1fr)',
+        '--grid-columns': '56px minmax(0, 1fr)',
       })
     })
 
@@ -99,7 +99,7 @@ describe('Left sidebar', () => {
       await fireEvent.mouseUp(document, { clientX: 216 })
 
       expect(aside.parentElement).toHaveStyle({
-        gridTemplateColumns: '216px minmax(0, 1fr)',
+        '--grid-columns': '216px minmax(0, 1fr)',
       })
     })
 
@@ -114,7 +114,7 @@ describe('Left sidebar', () => {
       await view.events.dblClick(resizeHandle)
 
       expect(aside.parentElement).toHaveStyle({
-        gridTemplateColumns: '225px minmax(0, 1fr)',
+        '--grid-columns': '225px minmax(0, 1fr)',
       })
     })
   })

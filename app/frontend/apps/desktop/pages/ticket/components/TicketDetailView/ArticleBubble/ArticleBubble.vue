@@ -115,7 +115,7 @@ const { showPreview } = useFilePreviewViewer(
     />
 
     <div
-      class="grid w-full grid-rows-[0fr] overflow-hidden rounded-xl transition-[grid-template-rows]"
+      class="grid w-full grid-rows-[0fr] overflow-hidden rounded-xl transition-[grid-template-rows] print:grid-rows-[1fr]"
       :class="[
         {
           'grid-rows-[1fr]': showMetaInformation,
@@ -130,9 +130,13 @@ const { showPreview } = useFilePreviewViewer(
       >
         <Transition name="pseudo-transition">
           <ArticleBubbleHeader
-            v-if="showMetaInformation"
+            class="print:block print:border-b print:border-black"
             :aria-label="$t('Article meta information')"
-            :class="headerAndIconBarBackgroundClass"
+            :hidden="!showMetaInformation"
+            :class="[
+              headerAndIconBarBackgroundClass,
+              { 'print:border-dashed!': hasInternalNote, hidden: !showMetaInformation },
+            ]"
             :show-meta-information="showMetaInformation"
             :position="position"
             :article="article"
@@ -150,7 +154,7 @@ const { showPreview } = useFilePreviewViewer(
       <ArticleBubbleMediaError :article="article" />
 
       <div
-        class="relative isolate"
+        class="relative isolate print:nth-2:rounded-t-xl"
         :class="{
           'nth-2:rounded-t-xl': !showMetaInformation,
           'nth-2:ltr:rounded-br-none nth-2:ltr:rounded-bl-xl nth-2:rtl:rounded-br-xl nth-2:rtl:rounded-bl-none':
@@ -183,6 +187,7 @@ const { showPreview } = useFilePreviewViewer(
       </div>
 
       <ArticleBubbleBlockedContentWarning
+        class="print:pt-3"
         :class="[
           dividerClass,
           bodyClasses,

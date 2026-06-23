@@ -94,7 +94,7 @@ watch(
               'border-b-0': idxRecord !== entry.records.length - 1,
               'border-t-0': idxRecord === entry.records.length - 1 && entry.records.length > 1,
             }"
-            class="rounded-lg rounded-tl-none border border-neutral-100 bg-blue-200 pb-1 dark:border-gray-700 dark:bg-gray-700"
+            class="rounded-lg rounded-tl-none border border-neutral-100 bg-blue-200 pb-1 dark:border-gray-700 dark:bg-gray-700 print:border-black"
           >
             <HistoryEventIssuer :issuer="record.issuer as HistoryRecordIssuer" />
 

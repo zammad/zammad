@@ -123,7 +123,7 @@ const { isTouchDevice } = useTouchDevice()
 <template>
   <aside
     :id="id"
-    class="relative flex max-h-screen flex-col overflow-y-clip border-neutral-100 dark:border-gray-900"
+    class="relative flex max-h-screen flex-col overflow-y-clip border-neutral-100 dark:border-gray-900 print:hidden"
     :class="[
       {
         'py-3': isSidebarCollapsed && !noPadding,

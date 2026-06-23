@@ -688,7 +688,7 @@ const handleShowArticleForm = (
       <div
         ref="content-container"
         data-test-id="ticket-detail-content-container"
-        class="@container isolate grid size-full overflow-y-auto overscroll-contain"
+        class="@container isolate grid size-full overflow-y-auto overscroll-contain print:h-auto print:overflow-y-visible"
         :class="{
           'grid-rows-[0_max-content_max-content_max-content]':
             !newTicketArticlePresent || !isReplyPinned,
@@ -716,6 +716,7 @@ const handleShowArticleForm = (
           v-show="!isLoadingArticles && isInitialSettled"
           v-if="ticket?.id && isTicketEditable"
           v-model:pinned="isReplyPinned"
+          class="print:hidden"
           :ticket="ticket"
           :ticket-article-types="ticketArticleTypes"
           :new-article-present="newTicketArticlePresent"
@@ -744,7 +745,10 @@ const handleShowArticleForm = (
 
         <CommonIndicator v-if="newTicketArticlePresent" v-model="isReachingBottom" />
 
-        <div v-if="!newTicketArticlePresent || !isReplyPinned" class="sticky bottom-3 h-0">
+        <div
+          v-if="!newTicketArticlePresent || !isReplyPinned"
+          class="sticky bottom-3 h-0 print:hidden"
+        >
           <FloatingToolbar
             :ticket="ticket"
             :ticket-article-types="ticketArticleTypes"

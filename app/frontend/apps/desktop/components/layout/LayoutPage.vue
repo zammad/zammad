@@ -92,9 +92,11 @@ onBeforeMount(() => {
 
 <template>
   <div
-    class="grid h-full max-h-full overflow-y-clip duration-100"
+    :style="{
+      '--grid-columns': gridColumns,
+    }"
     :class="{ 'transition-none': noTransition }"
-    :style="gridColumns"
+    class="grid h-full max-h-full grid-cols-(--grid-columns) overflow-y-clip duration-100 print:h-auto print:max-h-none print:grid-cols-1 print:overflow-visible"
   >
     <LayoutSidebar
       id="primary-sidebar"

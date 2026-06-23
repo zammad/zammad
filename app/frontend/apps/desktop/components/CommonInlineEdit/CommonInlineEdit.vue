@@ -322,7 +322,7 @@ defineExpose({
       <CommonInlineEditButtons
         :submit-label="submitLabel"
         :cancel-label="cancelLabel"
-        class="absolute inset-e-0 z-10"
+        class="absolute inset-e-0 z-10 print:hidden"
         :submit-disabled="!isValid"
         @submit="submitEdit"
         @cancel="stopEditing()"

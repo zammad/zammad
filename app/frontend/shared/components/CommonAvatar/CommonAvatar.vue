@@ -63,7 +63,7 @@ const classMap = getAvatarClasses()
 
 <template>
   <span
-    class="relative flex shrink-0 items-center justify-center rounded-full bg-cover bg-center select-none"
+    class="relative flex shrink-0 items-center justify-center rounded-full bg-cover bg-center select-none print:before:content-[attr(data-initials)]"
     :class="[sizeClasses, classMap.base]"
     :style="{
       backgroundImage: image ? `url(${image})` : undefined,
@@ -73,6 +73,7 @@ const classMap = getAvatarClasses()
     :aria-label="avatarLabel"
     :aria-hidden="decorative ? 'true' : undefined"
     data-test-id="common-avatar"
+    :data-initials="icon ? undefined : initials"
   >
     <CommonIcon
       v-if="vipIcon"
@@ -84,7 +85,9 @@ const classMap = getAvatarClasses()
     />
     <CommonIcon v-if="icon" :name="icon" :size="iconSize" />
     <slot v-else>
-      {{ image ? '' : initials }}
+      <span class="print:hidden">
+        {{ image ? '' : initials }}
+      </span>
     </slot>
   </span>
 </template>

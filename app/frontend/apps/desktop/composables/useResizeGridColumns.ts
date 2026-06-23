@@ -70,18 +70,15 @@ export const useResizeGridColumns = (
   const { width: screenWidth } = useWindowSize()
   const maxWidth = computed(() => screenWidth.value / 3)
 
-  const gridColumns = computed(() => {
-    const width = isSidebarCollapsed.value ? SIDEBAR_COLLAPSED_WIDTH : currentSidebarWidth.value
+  const currentWidth = computed(() =>
+    isSidebarCollapsed.value ? SIDEBAR_COLLAPSED_WIDTH : currentSidebarWidth.value,
+  )
 
-    if (position === SidebarPosition.End)
-      return {
-        gridTemplateColumns: `minmax(0, 1fr) ${width}px`,
-      }
-
-    return {
-      gridTemplateColumns: `${width}px minmax(0, 1fr)`,
-    }
-  })
+  const gridColumns = computed(() =>
+    position === SidebarPosition.End
+      ? `minmax(0, 1fr) ${currentWidth.value}px`
+      : `${currentWidth.value}px minmax(0, 1fr)`,
+  )
 
   const resizeSidebar = (width: number) => {
     if (isSmallScreen.value) return resetSidebarWidth()

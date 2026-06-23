@@ -34,7 +34,7 @@ const sizeClasses = computed(() => {
         v-for="(item, idx) in items"
         :key="item.label as string"
         class="flex items-center"
-        :class="lastItemClasses"
+        :class="[lastItemClasses, { 'print:hidden': idx === 0 }]"
       >
         <CommonIcon
           v-if="item.icon"

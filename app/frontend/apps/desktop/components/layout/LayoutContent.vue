@@ -111,13 +111,20 @@ onBeforeMount(() => {
 <template>
   <div class="flex h-full max-h-screen flex-col">
     <div
-      class="grid h-full duration-100"
+      :style="
+        $slots.sideBar && showSidebar
+          ? {
+              '--grid-columns': gridColumns,
+            }
+          : undefined
+      "
+      class="grid h-full duration-100 print:grid-cols-1"
       :class="{
+        'grid-cols-(--grid-columns)': $slots.sideBar && showSidebar,
         'transition-none': noTransition,
-        'max-h-[calc(100%-3.5rem)]': $slots.bottomBar,
+        'max-h-[calc(100%-3.5rem)] print:max-h-none': $slots.bottomBar,
         'max-h-screen': !$slots.bottomBar,
       }"
-      :style="$slots.sideBar && showSidebar ? gridColumns : undefined"
     >
       <LayoutMain
         ref="layout-main"
@@ -127,7 +134,7 @@ onBeforeMount(() => {
       >
         <div
           data-test-id="layout-wrapper"
-          class="flex h-full grow flex-col gap-3"
+          class="flex h-full grow flex-col gap-3 print:h-auto"
           :class="contentAlignmentClass"
           :style="{ maxWidth }"
         >

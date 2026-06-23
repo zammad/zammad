@@ -46,40 +46,32 @@ describe('useResizeGridColumns', () => {
     expect(useSidebarDisplayStore().persistedCollapsed[SidebarName.Primary]).toBe(false)
     expect(useSidebarDisplayStore().sessionCollapsed[SidebarName.Primary]).toBe(false)
 
-    expect(gridColumns.value).toEqual({
-      gridTemplateColumns: `${DEFAULT_START_SIDEBAR_WIDTH}px minmax(0, 1fr)`,
-    })
+    expect(gridColumns.value).toEqual(`${DEFAULT_START_SIDEBAR_WIDTH}px minmax(0, 1fr)`)
   })
 
   test('collapsed state', () => {
     useSidebarDisplayStore().setCollapsed(SidebarName.Primary, true)
 
-    expect(gridColumns.value).toEqual({
-      gridTemplateColumns: `${SIDEBAR_COLLAPSED_WIDTH}px minmax(0, 1fr)`,
-    })
+    expect(gridColumns.value).toEqual(`${SIDEBAR_COLLAPSED_WIDTH}px minmax(0, 1fr)`)
   })
 
   test('expanded state', () => {
     useSidebarDisplayStore().setCollapsed(SidebarName.Primary, false)
 
-    expect(gridColumns.value).toEqual({
-      gridTemplateColumns: `${DEFAULT_START_SIDEBAR_WIDTH}px minmax(0, 1fr)`,
-    })
+    expect(gridColumns.value).toEqual(`${DEFAULT_START_SIDEBAR_WIDTH}px minmax(0, 1fr)`)
   })
 
   test('resizeSidebar', () => {
     resizeSidebar(300)
 
-    expect(gridColumns.value).toEqual({ gridTemplateColumns: '300px minmax(0, 1fr)' })
+    expect(gridColumns.value).toEqual('300px minmax(0, 1fr)')
   })
 
   test('resetSidebarWidth', () => {
     resizeSidebar(300)
     resetSidebarWidth()
 
-    expect(gridColumns.value).toEqual({
-      gridTemplateColumns: `${DEFAULT_START_SIDEBAR_WIDTH}px minmax(0, 1fr)`,
-    })
+    expect(gridColumns.value).toEqual(`${DEFAULT_START_SIDEBAR_WIDTH}px minmax(0, 1fr)`)
   })
 
   it('persists width in local storage', () => {
@@ -87,9 +79,7 @@ describe('useResizeGridColumns', () => {
   })
 
   it('defaults to start position (left)', () => {
-    expect(gridColumns.value).toEqual({
-      gridTemplateColumns: `${DEFAULT_START_SIDEBAR_WIDTH}px minmax(0, 1fr)`,
-    })
+    expect(gridColumns.value).toEqual(`${DEFAULT_START_SIDEBAR_WIDTH}px minmax(0, 1fr)`)
 
     expect(minSidebarWidth).toEqual(MINIMUM_START_SIDEBAR_WIDTH)
   })
@@ -100,9 +90,7 @@ describe('useResizeGridColumns', () => {
       SidebarPosition.End,
     )
 
-    expect(gridColumns.value).toEqual({
-      gridTemplateColumns: `minmax(0, 1fr) ${DEFAULT_END_SIDEBAR_WIDTH}px`,
-    })
+    expect(gridColumns.value).toEqual(`minmax(0, 1fr) ${DEFAULT_END_SIDEBAR_WIDTH}px`)
 
     expect(minSidebarWidth).toEqual(MINIMUM_END_SIDEBAR_WIDTH)
   })
@@ -112,33 +100,29 @@ describe('useResizeGridColumns', () => {
 
     const { gridColumns, resizeSidebar } = useResizeGridColumns(SidebarName.Primary)
 
-    expect(gridColumns.value).toEqual({ gridTemplateColumns: '312px minmax(0, 1fr)' })
+    expect(gridColumns.value).toEqual('312px minmax(0, 1fr)')
 
     smallScreen.value = true
     await nextTick()
 
-    expect(gridColumns.value).toEqual({
-      gridTemplateColumns: `${DEFAULT_START_SIDEBAR_WIDTH}px minmax(0, 1fr)`,
-    })
+    expect(gridColumns.value).toEqual(`${DEFAULT_START_SIDEBAR_WIDTH}px minmax(0, 1fr)`)
 
     resizeSidebar(330)
 
     expect(localStorage.getItem(`${SidebarName.Primary}-sidebar-width`)).toEqual('312')
-    expect(gridColumns.value).toEqual({
-      gridTemplateColumns: `${DEFAULT_START_SIDEBAR_WIDTH}px minmax(0, 1fr)`,
-    })
+    expect(gridColumns.value).toEqual(`${DEFAULT_START_SIDEBAR_WIDTH}px minmax(0, 1fr)`)
 
     smallScreen.value = false
     await nextTick()
 
-    expect(gridColumns.value).toEqual({ gridTemplateColumns: '312px minmax(0, 1fr)' })
+    expect(gridColumns.value).toEqual('312px minmax(0, 1fr)')
   })
 
   it('syncs width when localStorage is updated externally (cross-tab sync)', async () => {
     localStorage.setItem(`${SidebarName.Primary}-sidebar-width`, '250')
     const { gridColumns } = useResizeGridColumns(SidebarName.Primary)
 
-    expect(gridColumns.value).toEqual({ gridTemplateColumns: '250px minmax(0, 1fr)' })
+    expect(gridColumns.value).toEqual('250px minmax(0, 1fr)')
 
     // Simulate another tab writing directly to localStorage.
     localStorage.setItem(`${SidebarName.Primary}-sidebar-width`, '280')
@@ -151,6 +135,6 @@ describe('useResizeGridColumns', () => {
     )
     await nextTick()
 
-    expect(gridColumns.value).toEqual({ gridTemplateColumns: '280px minmax(0, 1fr)' })
+    expect(gridColumns.value).toEqual('280px minmax(0, 1fr)')
   })
 })

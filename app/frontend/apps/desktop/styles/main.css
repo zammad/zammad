@@ -122,6 +122,26 @@
   ::highlight(highlight-purple) {
     background-color: var(--article-highlight-purple);
   }
+
+  @media print {
+    ::highlight(highlight-yellow),
+    ::highlight(highlight-green),
+    ::highlight(highlight-blue),
+    ::highlight(highlight-pink),
+    ::highlight(highlight-purple) {
+      background-color: transparent;
+    }
+  }
+
+  @media print {
+    body * {
+      color: var(--color-black) !important;
+    }
+
+    p {
+      break-inside: avoid;
+    }
+  }
 }
 
 @layer components {
@@ -670,6 +690,11 @@
       & .print-area {
         @apply visible fixed inset-0;
       }
+    }
+
+    /* When a flyout is open, hide page content. */
+    body:has(aside[id^='flyout-']:not(.hidden)) #main-content > :not(aside) {
+      display: none !important;
     }
   }
 }

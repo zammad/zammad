@@ -56,13 +56,13 @@ const items = computed(() => [
 const headerClasses = computed(() =>
   props.hideDetails
     ? ['ticket-detail-grid-compact grid-rows-[1fr_auto] items-center p-2']
-    : ['ticket-detail-grid-full grid-cols-2 gap-y-2.5 px-5.5 py-3'],
+    : ['ticket-detail-grid-full grid-cols-2 gap-y-2.5 px-5.5 print:px-3 py-3'],
 )
 </script>
 
 <template>
   <header
-    class="grid border-b border-neutral-100 bg-neutral-50 dark:border-gray-900 dark:bg-gray-500"
+    class="grid border-b border-neutral-100 bg-neutral-50 dark:border-gray-900 dark:bg-gray-500 print:border-b-0"
     :class="headerClasses"
   >
     <CommonBreadcrumb
@@ -80,7 +80,7 @@ const headerClasses = computed(() =>
           variant="secondary"
           icon="files"
           size="small"
-          class="ms-1"
+          class="ms-1 print:hidden"
           @click="copyTicketNumberToClipboard"
         />
       </template>
@@ -88,7 +88,7 @@ const headerClasses = computed(() =>
 
     <div
       v-if="isTicketAgent && isTicketEditable"
-      class="justify-self-end"
+      class="justify-self-end print:hidden"
       :style="{ gridTemplate: 'actions' }"
     >
       <!-- Div because we add soon more actions here  -->
