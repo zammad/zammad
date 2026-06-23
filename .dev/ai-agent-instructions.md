@@ -80,6 +80,8 @@ You MUST read the relevant file(s) below before responding when working on that 
   mutations, queries, and subscriptions
 - `.dev/agent_docs/frontend_patterns.md` — Vue component conventions,
   composables, routing, and the form system
+- `.dev/agent_docs/frontend_addon_layer.md` — How an addon extends the Vue
+  frontend via the build-time weave (Vapor-safe, multi-addon)
 - `.dev/agent_docs/testing.md` — How to write and run backend and frontend tests
 - `.dev/agent_docs/service_patterns.md` — Service object conventions and structure
 - `.dev/agent_docs/database_migrations.md` — How to write migrations and work

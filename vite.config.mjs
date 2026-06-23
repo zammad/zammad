@@ -13,6 +13,8 @@ import VuePlugin from '@vitejs/plugin-vue'
 import { defineConfig } from 'vite'
 import { VitePWA } from 'vite-plugin-pwa'
 
+import { discoverAddonWeaveRules } from './app/frontend/build/addonWeave/discoverRules.mjs'
+import addonWeavePlugin from './app/frontend/build/addonWeave/plugin.mjs'
 import svgIconsPlugin from './app/frontend/build/iconsPlugin.mjs'
 
 const dir = dirname(fileURLToPath(import.meta.url))
@@ -21,13 +23,19 @@ const SSL_PATH = resolve(homedir(), '.local/state/localhost.rb')
 
 const isEnvBooleanSet = (value) => ['true', '1'].includes(value)
 
-export default defineConfig(({ mode, command }) => {
+export default defineConfig(async ({ mode, command }) => {
   const isTesting = ['test', 'cypress'].includes(mode)
   const isBuild = command === 'build'
 
   const require = createRequire(import.meta.url)
 
+  // Build-time addon weave: discover every installed addon's *.weave.mjs manifest
+  // and rewrite the targeted core SFC source before the Vue compiler runs.
+  const addonWeaveRules = await discoverAddonWeaveRules()
+
   const plugins = [
+    // enforce: 'pre' → runs before VuePlugin compiles the SFC.
+    addonWeavePlugin(addonWeaveRules),
     tailwindcss(),
     VuePlugin({
       template: {

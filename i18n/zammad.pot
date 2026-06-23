@@ -787,7 +787,7 @@ msgstr ""
 #: app/graphql/gql/mutations/ticket/ai_assistance/summarize.rb:15
 #: app/services/service/ai/agent/run.rb:15
 #: app/services/service/ai/vectordb/base.rb:12
-#: app/services/service/ai/vectordb/embedding.rb:26
+#: app/services/service/ai/vectordb/embedding.rb:32
 #: app/services/service/ai_assistance/text_tools.rb:19
 #: app/services/service/ticket/ai_assistance/generate_knowledge_base_answer_content.rb:14
 #: app/services/service/ticket/ai_assistance/summarize.rb:16
@@ -2293,7 +2293,7 @@ msgstr ""
 #: app/controllers/application_controller/authenticates.rb:17
 #: app/graphql/gql/context/current_user_aware.rb:7
 #: app/policies/pundit_policy.rb:18
-#: lib/user_context.rb:37
+#: lib/user_context.rb:44
 msgid "Authentication required"
 msgstr ""
 
@@ -3850,7 +3850,7 @@ msgstr ""
 msgid "Connection test successful"
 msgstr ""
 
-#: lib/ai/vectordb.rb:184
+#: lib/ai/vectordb.rb:233
 msgid "Connection to Elasticsearch Vector DB failed"
 msgstr ""
 
@@ -6323,7 +6323,7 @@ msgstr ""
 msgid "Elasticsearch Total Payload Size"
 msgstr ""
 
-#: lib/ai/vectordb.rb:201
+#: lib/ai/vectordb.rb:250
 msgid "Elasticsearch index does not exist"
 msgstr ""
 
@@ -8848,7 +8848,7 @@ msgstr ""
 msgid "Including private key."
 msgstr ""
 
-#: lib/ai/vectordb.rb:194
+#: lib/ai/vectordb.rb:243
 msgid "Incompatible Elasticsearch version"
 msgstr ""
 
@@ -14399,7 +14399,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_integration/github.coffee:63
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee:80
 #: app/assets/javascripts/app/controllers/_integration/idoit.coffee:93
-#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:1209
+#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:1211
 msgid "Saving failed."
 msgstr ""
 
@@ -16477,7 +16477,7 @@ msgstr ""
 msgid "The API token could not be found."
 msgstr ""
 
-#: lib/ai/vectordb.rb:52
+#: lib/ai/vectordb.rb:57
 msgid "The Elasticsearch index could not be created"
 msgstr ""
 
