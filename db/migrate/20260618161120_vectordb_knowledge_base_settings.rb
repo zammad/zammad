@@ -9,7 +9,7 @@ class VectorDBKnowledgeBaseSettings < ActiveRecord::Migration[8.0]
       title:       'Vector DB knowledge base categories',
       name:        'vectordb_knowledge_base_category_ids',
       area:        'VectorDB::KnowledgeBase',
-      description: 'Defines which knowledge base categories are included in the vector database. Leave empty to include answers from all categories.',
+      description: 'Defines which knowledge base categories are included in the vector database.',
       state:       [],
       frontend:    false,
     )

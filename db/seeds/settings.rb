@@ -6191,7 +6191,7 @@ Setting.create_if_not_exists(
   title:       __('Vector DB knowledge base categories'),
   name:        'vectordb_knowledge_base_category_ids',
   area:        'VectorDB::KnowledgeBase',
-  description: __('Defines which knowledge base categories are included in the vector database. Leave empty to include answers from all categories.'),
+  description: __('Defines which knowledge base categories are included in the vector database.'),
   state:       [],
   frontend:    false,
 )

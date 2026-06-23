@@ -5459,7 +5459,7 @@ msgid "Defines whether the matching tickets are shown in case of already existin
 msgstr ""
 
 #: db/seeds/settings.rb:6187
-msgid "Defines which knowledge base categories are included in the vector database. Leave empty to include answers from all categories."
+msgid "Defines which knowledge base categories are included in the vector database."
 msgstr ""
 
 #: db/seeds/settings.rb:3167
