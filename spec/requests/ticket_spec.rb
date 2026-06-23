@@ -1856,6 +1856,62 @@ RSpec.describe 'Ticket', type: :request do
       expect(online_notification.reload.seen).to be true
     end
 
+    describe 'X-Zammad-Suppress-Notifications header' do
+      let(:other_agent) { create(:agent, groups: [ticket_group]) }
+      let(:ticket) do
+        create(:ticket, group: ticket_group, owner: other_agent, customer_id: customer.id,
+               updated_by_id: other_agent.id, created_by_id: other_agent.id)
+      end
+
+      before do
+        allow(TransactionDispatcher).to receive(:commit).and_call_original
+        ticket # ensure ticket is created before authenticated_as sets up headers
+      end
+
+      it 'passes disable_notification: true to dispatcher when header is set' do
+        authenticated_as(agent)
+
+        put "/api/v1/tickets/#{ticket.id}",
+            params:  { title: 'Updated title' },
+            headers: { 'X-Zammad-Suppress-Notifications' => 'true' },
+            as:      :json
+
+        expect(TransactionDispatcher).to have_received(:commit).with(hash_including(disable_notification: true)).at_least(:once)
+      end
+
+      it 'does not pass disable_notification when header is absent' do
+        authenticated_as(agent)
+
+        put "/api/v1/tickets/#{ticket.id}",
+            params: { title: 'Updated title' },
+            as:     :json
+
+        expect(TransactionDispatcher).not_to have_received(:commit).with(hash_including(disable_notification: true))
+      end
+
+      it 'suppresses notifications on article create when header is set' do
+        authenticated_as(agent)
+
+        post '/api/v1/ticket_articles',
+             params:  { ticket_id: ticket.id, body: 'note', type: 'note', sender: 'Agent' },
+             headers: { 'X-Zammad-Suppress-Notifications' => 'true' },
+             as:      :json
+
+        expect(TransactionDispatcher).to have_received(:commit).with(hash_including(disable_notification: true)).at_least(:once)
+      end
+
+      it 'ignores the header for customers — only agents can suppress notifications' do
+        authenticated_as(customer)
+
+        post '/api/v1/ticket_articles',
+             params:  { ticket_id: ticket.id, body: 'note', type: 'note', sender: 'Customer' },
+             headers: { 'X-Zammad-Suppress-Notifications' => 'true' },
+             as:      :json
+
+        expect(TransactionDispatcher).not_to have_received(:commit).with(hash_including(disable_notification: true))
+      end
+    end
+
     it 'does ticket split with html - check attachments (05.01)' do
       ticket = create(
         :ticket,
