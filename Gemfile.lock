@@ -256,10 +256,10 @@ GEM
     elastic-transport (8.5.2)
       faraday (< 3)
       multi_json
-    elasticsearch (9.4.1)
+    elasticsearch (9.4.3)
       elastic-transport (~> 8.3)
-      elasticsearch-api (= 9.4.1)
-    elasticsearch-api (9.4.1)
+      elasticsearch-api (= 9.4.3)
+    elasticsearch-api (9.4.3)
       base64
       multi_json
     em-websocket (0.5.3)
