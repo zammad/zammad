@@ -260,6 +260,12 @@ export const weaveSource = (code, rule, id) => {
 }
 
 export default function addonWeavePlugin(rules = []) {
+  // No addons → no work. Omit the transform hook entirely so the bundler never
+  // calls into this plugin (and never marshals every module's source across the
+  // boundary just to skip it) — that overhead otherwise dominates plugin time on
+  // addon-free builds, even though there is nothing to do.
+  if (rules.length === 0) return { name: 'zammad:addon-weave' }
+
   return {
     name: 'zammad:addon-weave',
     enforce: 'pre',

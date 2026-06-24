@@ -265,6 +265,11 @@ describe('addon weave plugin (AST-based)', () => {
     )
   })
 
+  it('installs no transform hook when there are no addon rules', () => {
+    // Addon-free builds must pay zero per-module cost (no hook → no source marshalling).
+    expect(addonWeavePlugin([]).transform).toBeUndefined()
+  })
+
   it('detects conflicting edits ACROSS rules (multi-addon)', () => {
     // Addon A decorates the avatar; addon B replaces it — must fail, not silently
     // drop A's edit.
