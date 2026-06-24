@@ -9,6 +9,14 @@
       "matchStrings": ["DEVCONTAINERS_CLI_VERSION: '(?<currentValue>[^']+)'"],
       "depNameTemplate": "@devcontainers/cli",
       "datasourceTemplate": "npm"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^lib/form_spam_protection/captcha/.*\\.rb$/"
+      ],
+      "matchStrings": ["cdn\\.jsdelivr\\.net/npm/(?<depName>[^@]+)@(?<currentValue>[^/]+)/"],
+      "datasourceTemplate": "npm"
     }
   ],
   "bundler": {

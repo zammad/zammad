@@ -386,8 +386,7 @@ $(function() {
   }
 
   Plugin.prototype.init = function () {
-    var _this = this,
-      params = {}
+    var _this = this
 
     _this.log('debug', 'init', this._src)
 
@@ -420,11 +419,28 @@ $(function() {
     _this.log('debug', 'endpoint_config: ' + _this.endpoint_config)
     _this.log('debug', 'endpoint_submit: ' + _this.endpoint_submit)
 
-    // load config
+    // Inline forms load the config now; modal forms load it when opened, so each
+    // modal open gets a fresh single-use captcha challenge (and token).
+    if (!this.options.modal) {
+      _this.loadConfig()
+      _this.render()
+    }
+    else {
+      this.$element.off('click.zammad-form').on('click.zammad-form', function (e) {
+        e.preventDefault()
+        _this.render()
+        return true
+      })
+    }
+  }
+
+  // fetch the form configuration (endpoint, token, spam protection) from the server
+  Plugin.prototype.loadConfig = function() {
+    var _this = this
+    var params = {}
     if (this.options.test) {
       params.test = true
     }
-
     params.fingerprint = this.fingerprint()
 
     $.ajax({
@@ -436,6 +452,7 @@ $(function() {
     }).done(function(data) {
       _this.log('debug', 'config:', data)
       _this._config = data
+      _this.applySpamProtection()
     }).fail(function(jqXHR, textStatus, errorThrown) {
       if (jqXHR.status == 401) {
         _this.log('error', 'Faild to load form config, wrong authentication data!')
@@ -447,21 +464,7 @@ $(function() {
         _this.log('error', 'Faild to load form config!')
       }
       _this.noConfig()
-    });
-
-    // show form
-    if (!this.options.modal) {
-      _this.render()
-    }
-
-    // bind form on call
-    else {
-      this.$element.off('click.zammad-form').on('click.zammad-form', function (e) {
-        e.preventDefault()
-        _this.render()
-        return true
-      })
-    }
+    })
   }
 
   // load css
@@ -478,21 +481,57 @@ $(function() {
   Plugin.prototype.submit = function() {
     var _this = this
 
-    // check min modal open time
-    if (_this.modalOpenTime) {
-      var currentTime = new Date().getTime()
-      var diff = currentTime - _this.modalOpenTime.getTime()
-      _this.log('debug', 'currentTime', currentTime)
-      _this.log('debug', 'modalOpenTime', _this.modalOpenTime.getTime())
-      _this.log('debug', 'diffTime', diff)
-      if (diff < 1000*10) {
-        alert('Sorry, you look like a robot!')
-        return
-      }
-    }
-
     // disable form
     _this.$form.find('button').prop('disabled', true)
+
+    // score-based captcha (reCAPTCHA v3 / Enterprise): fetch a fresh token, then send
+    if (_this._scoreCaptcha) {
+      _this.executeScoreCaptcha(function() { _this.sendSubmit() })
+      return
+    }
+
+    _this.sendSubmit()
+  }
+
+  // fetch a token from an invisible score-based provider, fill the hidden field, then continue
+  Plugin.prototype.executeScoreCaptcha = function(done) {
+    var _this = this
+    var captcha = _this._scoreCaptcha
+    var provider = _this.resolveGlobal(captcha.global)
+
+    if (!provider || typeof provider.execute !== 'function') {
+      // provider script not ready; let the server reject it as spam
+      done()
+      return
+    }
+
+    var run = function() {
+      provider.execute(captcha.site_key, { action: captcha.action || 'submit' }).then(function(token) {
+        _this.$form.find('[name="' + captcha.response_field + '"]').val(token)
+        done()
+      }).catch(function() { done() })
+    }
+
+    if (typeof provider.ready === 'function') {
+      provider.ready(run)
+    } else {
+      run()
+    }
+  }
+
+  // resolve a dotted global path (e.g. "grecaptcha.enterprise") from window
+  Plugin.prototype.resolveGlobal = function(path) {
+    var obj = window
+    var parts = (path || '').split('.')
+    for (var i = 0; i < parts.length; i++) {
+      if (!obj) return null
+      obj = obj[parts[i]]
+    }
+    return obj
+  }
+
+  Plugin.prototype.sendSubmit = function() {
+    var _this = this
 
     $.ajax({
       method: 'post',
@@ -515,8 +554,9 @@ $(function() {
           // Deprecated code, can be removed in future versions:
           _this.$form.find('[name=' + key + ']').closest('.form-group').addClass('has-error')
         })
-        if (data.errors.token) {
-          alert(data.errors.token)
+        var alertMessage = data.errors.token || data.errors.spam
+        if (alertMessage) {
+          alert(alertMessage)
         }
         _this.$form.find('button').prop('disabled', false)
         return
@@ -563,12 +603,117 @@ $(function() {
     }
   }
 
+  // inject honeypot field and captcha widget into the rendered form (idempotent;
+  // safe to call again when the config is refreshed, e.g. on each modal open)
+  Plugin.prototype.applySpamProtection = function() {
+    var _this = this
+    if (!_this.$form) {
+      return
+    }
+
+    // clear any previous injection so a refreshed config (new captcha challenge) re-renders cleanly
+    _this.$form.find('.zammad-form-honeypot, .zammad-form-captcha, .js-zammad-form-score').remove()
+    _this._scoreCaptcha = null
+
+    var config = _this._config.spam_protection
+    if (!config) {
+      return
+    }
+
+    var $anchor = _this.$form.find('button[type=submit]')
+
+    // honeypot: an off-screen field that real users never fill in
+    if (config.honeypot && config.honeypot.field) {
+      var honeypot = $('<div class="zammad-form-honeypot" aria-hidden="true" style="position:absolute;left:-9999px;top:-9999px;height:0;overflow:hidden;"><input type="text" name="' + config.honeypot.field + '" tabindex="-1" autocomplete="off" value=""></div>')
+      _this.insertSpamElement(honeypot, $anchor)
+    }
+
+    if (config.captcha) {
+      _this.renderCaptcha(config.captcha, $anchor)
+    }
+  }
+
+  Plugin.prototype.insertSpamElement = function($element, $anchor) {
+    if ($anchor && $anchor.length) {
+      $element.insertBefore($anchor)
+    } else {
+      this.$form.append($element)
+    }
+  }
+
+  // render the configured captcha provider widget
+  Plugin.prototype.renderCaptcha = function(captcha, $anchor) {
+    var _this = this
+
+    // score-based, invisible captcha (reCAPTCHA v3 / Enterprise): no visible widget,
+    // a fresh token is fetched on submit via the provider's execute() call.
+    if (captcha.type === 'score') {
+      var $token = $('<input type="hidden" class="js-zammad-form-score" name="' + captcha.response_field + '" value="">')
+      _this.insertSpamElement($token, $anchor)
+      _this._scoreCaptcha = captcha
+      _this.loadScript(captcha.script_url, false)
+      return
+    }
+
+    var $container = $('<div class="zammad-form-captcha"></div>')
+    _this.insertSpamElement($container, $anchor)
+
+    // ALTCHA uses a custom element with an inline, signed proof-of-work challenge
+    if (captcha.type === 'altcha') {
+      var $altcha = $('<altcha-widget hidefooter></altcha-widget>')
+      $altcha.attr('name', captcha.response_field)
+      $altcha.attr('auto', 'onload')
+      // v3: the widget fetches a fresh, single-use challenge from the server URL.
+      // In the admin preview (test mode) the channel may still be disabled, so carry
+      // the test flag through or the challenge endpoint would answer 403.
+      var challengeUrl = captcha.challenge_url
+      if (_this.options.test) {
+        challengeUrl += (challengeUrl.indexOf('?') === -1 ? '?' : '&') + 'test=1'
+      }
+      $altcha.attr('challenge', challengeUrl)
+      $container.append($altcha)
+      _this.loadScript(captcha.script_url, true)
+      return
+    }
+
+    // token-based providers with a visible widget (Turnstile, hCaptcha, Friendly Captcha)
+    var $widget = $('<div class="' + captcha.widget_class + '" data-sitekey="' + captcha.site_key + '"></div>')
+    $container.append($widget)
+
+    // When the provider script is already loaded (e.g. a modal opened after an inline form
+    // loaded it), the one-time auto-scan won't pick up this late widget, so initialize it
+    // explicitly. Otherwise load the script and let it render the widget on load.
+    var provider = _this.resolveGlobal(captcha.global)
+    if (provider && captcha.widget_instance && typeof provider.WidgetInstance === 'function') {
+      // Friendly Captcha's widget has no render(); late widgets need an explicit WidgetInstance.
+      new provider.WidgetInstance($widget[0], { sitekey: captcha.site_key, startMode: 'auto' })
+    } else if (provider && typeof provider.render === 'function') {
+      provider.render($widget[0], { sitekey: captcha.site_key })
+    } else {
+      _this.loadScript(captcha.script_url, false)
+    }
+  }
+
+  // load an external script once
+  Plugin.prototype.loadScript = function(url, isModule) {
+    if (document.querySelector('script[src="' + url + '"]')) {
+      return
+    }
+    var script = document.createElement('script')
+    script.src = url
+    script.async = true
+    script.defer = true
+    if (isModule) {
+      script.type = 'module'
+    }
+    document.head.appendChild(script)
+  }
+
   // render form
   Plugin.prototype.render = function(e) {
     var _this = this
     _this.closeModal()
-    _this.modalOpenTime = new Date()
-    _this.log('debug', 'modalOpenTime:', _this.modalOpenTime)
+    _this._scoreCaptcha = null
 
     var element = "<div class=\"" + _this.options.prefixCSS + "modal\">\
       <div class=\"" + _this.options.prefixCSS + "modal-backdrop js-zammad-form-modal-backdrop\"></div>\
@@ -617,6 +762,15 @@ $(function() {
 
     this.$modal = $element
     this.$form  = $form
+
+    // Modal forms refresh the config on every open so the captcha challenge/token
+    // is fresh (a reused single-use challenge would be rejected as a replay).
+    if (this.options.modal) {
+      _this.loadConfig()
+    }
+
+    // honeypot / captcha (applied now if config is ready, and again when loadConfig resolves)
+    _this.applySpamProtection()
 
     // bind on close
     $element.find('.js-zammad-form-modal-backdrop').off('click.zammad-form').on('click.zammad-form', function (e) {

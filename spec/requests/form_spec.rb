@@ -192,6 +192,174 @@ RSpec.describe 'Form', type: :request do
       expect(response).to have_http_status(:forbidden)
     end
 
+    describe 'spam protection' do
+      let(:fingerprint) { SecureRandom.hex(40) }
+      let(:token)       { json_response['token'] }
+
+      before do
+        Setting.set('form_ticket_create', true)
+        post '/api/v1/form_config', params: { fingerprint: }, as: :json
+      end
+
+      def submit(extra = {})
+        post '/api/v1/form_submit', params: {
+          fingerprint:,
+          token:,
+          name:        'Bob Smith',
+          email:       'discard@zammad.com',
+          title:       'test',
+          body:        'hello',
+        }.merge(extra), as: :json
+      end
+
+      it 'exposes the honeypot configuration via form_config' do
+        expect(json_response.dig('spam_protection', 'honeypot', 'field')).to eq(FormSpamProtection::Honeypot::FIELD_NAME)
+      end
+
+      it 'rejects submissions that fill in the honeypot field' do
+        submit(FormSpamProtection::Honeypot::FIELD_NAME => 'http://spam.example.com')
+
+        expect(response).to have_http_status(:ok)
+        expect(json_response.dig('errors', 'spam')).to be_present
+        expect(json_response['ticket']).to be_nil
+      end
+
+      context 'with a configured captcha provider' do
+        before do
+          Setting.set('form_ticket_create_captcha_provider', 'turnstile')
+          Setting.set('form_ticket_create_captcha_options', { 'sitekey' => 'k', 'secret' => 's' })
+          allow(UserAgent).to receive(:post).and_return(
+            instance_double(UserAgent::Result, success?: true, code: 200, body: { success: captcha_success }.to_json)
+          )
+        end
+
+        context 'when the captcha verification fails' do
+          let(:captcha_success) { false }
+
+          it 'rejects the submission' do
+            submit('cf-turnstile-response': 'token')
+
+            expect(json_response.dig('errors', 'spam')).to be_present
+            expect(json_response['ticket']).to be_nil
+          end
+        end
+
+        context 'when the captcha verification succeeds' do
+          let(:captcha_success) { true }
+
+          it 'creates the ticket' do
+            submit('cf-turnstile-response': 'token')
+
+            expect(json_response.dig('ticket', 'number')).to be_present
+          end
+        end
+
+        context 'when a field is invalid' do
+          let(:captcha_success) { true }
+
+          it 'returns the field error without consuming the captcha', :aggregate_failures do
+            submit('cf-turnstile-response': 'token', email: 'invalid')
+
+            expect(json_response.dig('errors', 'email')).to be_present
+            expect(json_response.dig('errors', 'spam')).to be_nil
+            expect(UserAgent).not_to have_received(:post)
+          end
+        end
+
+        context 'when the honeypot is filled in' do
+          let(:captcha_success) { true }
+
+          it 'rejects via the honeypot without verifying the captcha', :aggregate_failures do
+            submit('cf-turnstile-response': 'token', FormSpamProtection::Honeypot::FIELD_NAME => 'spam')
+
+            expect(json_response.dig('errors', 'spam')).to be_present
+            expect(json_response['ticket']).to be_nil
+            expect(UserAgent).not_to have_received(:post)
+          end
+        end
+      end
+
+      # ALTCHA verifies in-process (no external service), so the full flow can be
+      # exercised end-to-end: fetch a challenge, solve it like the browser widget
+      # would, submit, and create a ticket.
+      context 'with the ALTCHA provider (proof-of-work, verified in-process)' do
+        before do
+          Setting.set('form_ticket_create_captcha_provider', 'altcha')
+          token # memoize the form token before the challenge request replaces the response
+        end
+
+        def solved_altcha
+          get '/api/v1/form_captcha_challenge', as: :json
+          expect(response).to have_http_status(:ok)
+
+          challenge = json_response
+          expect(challenge).to include('maxnumber', 'salt', 'challenge')
+
+          number = (0..challenge['maxnumber']).find { |n| Digest::SHA256.hexdigest("#{challenge['salt']}#{n}") == challenge['challenge'] }
+
+          Base64.strict_encode64({
+            algorithm: challenge['algorithm'],
+            challenge: challenge['challenge'],
+            number:,
+            salt:      challenge['salt'],
+            signature: challenge['signature'],
+          }.to_json)
+        end
+
+        it 'creates a ticket for a correctly solved challenge', :aggregate_failures do
+          submit(altcha: solved_altcha)
+
+          expect(json_response.dig('errors', 'spam')).to be_nil
+          expect(json_response.dig('ticket', 'number')).to be_present
+        end
+
+        it 'rejects a submission with no solved challenge', :aggregate_failures do
+          submit
+
+          expect(json_response.dig('errors', 'spam')).to be_present
+          expect(json_response['ticket']).to be_nil
+        end
+
+        it 'rejects a replayed solution', :aggregate_failures do
+          payload = solved_altcha
+
+          submit(altcha: payload)
+          expect(json_response.dig('ticket', 'number')).to be_present
+
+          submit(altcha: payload)
+          expect(json_response.dig('errors', 'spam')).to be_present
+        end
+      end
+    end
+
+    describe 'CAPTCHA challenge endpoint' do
+      it 'serves a signed challenge for a provider that issues one (ALTCHA)', :aggregate_failures do
+        Setting.set('form_ticket_create', true)
+        Setting.set('form_ticket_create_captcha_provider', 'altcha')
+        get '/api/v1/form_captcha_challenge', as: :json
+
+        expect(response).to have_http_status(:ok)
+        expect(json_response).to include('algorithm' => 'SHA-256')
+        expect(json_response['salt']).to be_present
+        expect(json_response['signature']).to be_present
+      end
+
+      it 'is not found when the provider issues no server-side challenge' do
+        Setting.set('form_ticket_create', true)
+        Setting.set('form_ticket_create_captcha_provider', 'turnstile')
+        get '/api/v1/form_captcha_challenge', as: :json
+
+        expect(response).to have_http_status(:not_found)
+      end
+
+      it 'is forbidden when the form is disabled' do
+        Setting.set('form_ticket_create', false)
+        get '/api/v1/form_captcha_challenge', as: :json
+
+        expect(response).to have_http_status(:forbidden)
+      end
+    end
+
     describe 'form_allowed_params Setting', db_strategy: :reset do
       let(:fingerprint) { SecureRandom.hex(40) }
       let(:token)       { json_response['token'] }

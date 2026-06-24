@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class SystemReport::Plugin::Setting < SystemReport::Plugin
-  SENSITIVE_SETTING_NAMES = %w[secret auth_ password pw credential endpoint_key _config _token recovery_codes pwd].freeze
+  SENSITIVE_SETTING_NAMES = %w[secret auth_ password pw credential endpoint_key _config _token recovery_codes pwd captcha_options].freeze
 
   DESCRIPTION = __('Current state of configured settings (excluding passwords and tokens)').freeze
 

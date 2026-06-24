@@ -22,6 +22,88 @@
     </fieldset>
   </form>
 
+  <h2><%- @T('Spam protection') %></h2>
+  <form class="js-spamProtection">
+    <fieldset>
+      <div class="input form-group">
+        <label class="inline-label">
+          <span class="checkbox-replacement checkbox-replacement--inline">
+            <input type="checkbox" name="form_ticket_create_honeypot" value="true" <% if @honeypot: %>checked<% end %>>
+            <%- @Icon('checkbox', 'icon-unchecked') %>
+            <%- @Icon('checkbox-checked', 'icon-checked') %>
+          </span>
+          <%- @T('Enable honeypot protection (an invisible field that traps automated submissions).') %>
+        </label>
+      </div>
+
+      <div class="input form-group">
+        <div class="formGroup-label">
+          <label for="form-captcha-provider"><%- @T('CAPTCHA provider') %></label>
+        </div>
+        <div class="controls controls--select">
+          <select id="form-captcha-provider" class="form-control" name="form_ticket_create_captcha_provider">
+            <% for option in @captchaProviders: %>
+              <option value="<%= option.value %>" <% if option.value is @captchaProvider: %>selected<% end %>><%- @T(option.label) %></option>
+            <% end %>
+          </select>
+          <%- @Icon('arrow-down') %>
+        </div>
+      </div>
+
+      <div class="js-captchaSiteKey <% if not @captchaNeedsSiteKey: %>hide<% end %>">
+        <div class="input form-group">
+          <div class="formGroup-label">
+            <label for="form-captcha-site-key"><%- @T('Site key') %></label>
+          </div>
+          <div class="controls">
+            <input type="text" id="form-captcha-site-key" name="sitekey" value="<%= @captchaSiteKey %>">
+          </div>
+        </div>
+      </div>
+
+      <div class="js-captchaSecret <% if not @captchaNeedsSecret: %>hide<% end %>">
+        <div class="input form-group">
+          <div class="formGroup-label">
+            <label for="form-captcha-secret"><%- @T('Secret') %></label>
+          </div>
+          <div class="controls">
+            <input type="password" id="form-captcha-secret" name="secret" value="<%= @captchaSecret %>" autocomplete="off">
+          </div>
+        </div>
+      </div>
+
+      <div class="js-captchaEnterprise <% if not @captchaIsEnterprise: %>hide<% end %>">
+        <div class="input form-group">
+          <div class="formGroup-label">
+            <label for="form-captcha-project-id"><%- @T('Project ID') %></label>
+          </div>
+          <div class="controls">
+            <input type="text" id="form-captcha-project-id" name="project_id" value="<%= @captchaProjectId %>">
+          </div>
+        </div>
+        <div class="input form-group">
+          <div class="formGroup-label">
+            <label for="form-captcha-api-key"><%- @T('API key') %></label>
+          </div>
+          <div class="controls">
+            <input type="password" id="form-captcha-api-key" name="api_key" value="<%= @captchaApiKey %>" autocomplete="off">
+          </div>
+        </div>
+      </div>
+
+      <div class="js-captchaScore <% if not @captchaNeedsScore: %>hide<% end %>">
+        <div class="input form-group">
+          <div class="formGroup-label">
+            <label for="form-captcha-min-score"><%- @T('Minimum score') %></label>
+          </div>
+          <div class="controls">
+            <input type="text" id="form-captcha-min-score" name="min_score" value="<%= @captchaMinScore %>" placeholder="0.5">
+          </div>
+        </div>
+      </div>
+    </fieldset>
+  </form>
+
   <h2><%- @T('Designer') %></h2>
   <form class="js-paramsDesigner">
 

@@ -11,6 +11,10 @@
   margin-bottom: 15px;
 }
 
+.zammad-form-captcha {
+  margin-bottom: 15px;
+}
+
 .zammad-form-control {
   display: block;
   width: 100%;

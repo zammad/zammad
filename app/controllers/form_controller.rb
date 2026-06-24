@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class FormController < ApplicationController
-  prepend_before_action -> { authorize! }, only: %i[configuration submit]
+  prepend_before_action -> { authorize! }, only: %i[configuration submit captcha_challenge]
 
   skip_before_action :verify_csrf_token
   before_action :cors_preflight_check
@@ -18,9 +18,10 @@ class FormController < ApplicationController
     endpoint = "#{http_type}://#{fqdn}#{api_path}/form_submit"
 
     result = {
-      enabled:  Setting.get('form_ticket_create'),
-      endpoint: endpoint,
-      token:    token_gen(params[:fingerprint])
+      enabled:         Setting.get('form_ticket_create'),
+      endpoint:        endpoint,
+      token:           token_gen(params[:fingerprint]),
+      spam_protection: FormSpamProtection.frontend_config,
     }
 
     if authorized?(policy_record, :test?)
@@ -34,8 +35,24 @@ class FormController < ApplicationController
     return if !fingerprint_exists?
     return if !token_valid?(params[:token], params[:fingerprint])
 
+    submission = spam_protection_submission
+
+    # Stateless checks (honeypot) first: reject obvious bots before the
+    # (potentially expensive) field validation, and without consuming anything.
+    if !FormSpamProtection.verify_request(submission)
+      render json: spam_protection_error, status: :ok
+      return
+    end
+
     if (errors = validate_params) && errors.present?
       render json: { errors: }, status: :ok
+      return
+    end
+
+    # Verify the single-use CAPTCHA only after the rest of the form is valid, so an
+    # invalid field does not consume a solved challenge and break the next attempt.
+    if !FormSpamProtection.verify_challenge(submission)
+      render json: spam_protection_error, status: :ok
       return
     end
 
@@ -58,6 +75,17 @@ class FormController < ApplicationController
       }
     }
     render json: result, status: :ok
+  end
+
+  # Serves a fresh, signed challenge for the configured CAPTCHA provider (e.g. ALTCHA)
+  # for the widget to fetch and solve. Providers whose challenges come from their own
+  # service (Turnstile, hCaptcha, …) issue no challenge here, so this returns 404.
+  def captcha_challenge
+    challenge = FormSpamProtection::Captcha.configured_provider&.challenge
+
+    return head :not_found if challenge.nil?
+
+    render json: challenge, status: :ok
   end
 
   private
@@ -112,6 +140,14 @@ class FormController < ApplicationController
       raise Exceptions::NotAuthorized
     end
     true
+  end
+
+  def spam_protection_submission
+    FormSpamProtection::Submission.new(params:, request:)
+  end
+
+  def spam_protection_error
+    { errors: { spam: __('Your submission could not be verified. Please make sure you completed any verification challenge and try again.') } }
   end
 
   def fingerprint_exists?
