@@ -412,8 +412,8 @@ importers:
         specifier: ^4.3.1
         version: 4.3.1
       timezone-mock:
-        specifier: ^1.4.2
-        version: 1.4.2
+        specifier: ^1.4.3
+        version: 1.4.3
       type-fest:
         specifier: ^5.7.0
         version: 5.7.0
@@ -6475,8 +6475,8 @@ packages:
     resolution: {integrity: sha512-YBGpG4bWsHoPvofT6y/5iqulfXIiIErl5B0LdtHT1mGXDFTAhhRrbUpTvBgYbovr+3cKblya2WAOcpoy90XguA==}
     engines: {node: '>=16'}
 
-  timezone-mock@1.4.2:
-    resolution: {integrity: sha512-RgPQkSrARNHBnchuFpjrYf97uWgEaseCXK2asSeGcgUzRUO3cBR9Zu0uO1z2Eyi/TQsQtHIvQLi0br30COHWUA==}
+  timezone-mock@1.4.3:
+    resolution: {integrity: sha512-sO5xj1j5bXgKPgUzbM/t0l2O3hZ2F22cczYRo7Kj2Pm8wfbMMw3ohyAunBBP0Vltkd4X3tF0rFu0WAlGvAClGg==}
 
   tinybench@2.9.0:
     resolution: {integrity: sha512-0+DUvqWMValLmha6lr4kD8iAMK1HzV0/aKnCtWb9v9641TnP/MFb7Pc2bxoxQjTXAErryXVgUOfv2YqNllqGeg==}
@@ -13840,7 +13840,7 @@ snapshots:
 
   timeout-signal@2.0.0: {}
 
-  timezone-mock@1.4.2: {}
+  timezone-mock@1.4.3: {}
 
   tinybench@2.9.0: {}
 
