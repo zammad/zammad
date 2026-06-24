@@ -13,7 +13,7 @@ class SecureMailing::PGP::Outgoing < SecureMailing::Backend::HandlerOutgoing
     construct_signed_mail
   rescue => e
     log('sign', 'failed', e.message)
-    raise
+    raise SigningError, e.message
   end
 
   def encrypt(data)

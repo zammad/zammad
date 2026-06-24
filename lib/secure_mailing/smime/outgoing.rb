@@ -6,17 +6,13 @@ class SecureMailing::SMIME::Outgoing < SecureMailing::Backend::HandlerOutgoing
   end
 
   def signed
-    from       = mail.from.first
-    cert_model = SMIMECertificate.find_by_email_address(from, filter: { key: 'private', usage: :signature, ignore_usable: true }).first
-    raise "Unable to find ssl private key for '#{from}'" if !cert_model
-    raise "Expired certificate for #{from} (fingerprint #{cert_model.fingerprint}) with #{cert_model.parsed.not_before} to #{cert_model.parsed.not_after}" if !security[:sign][:allow_expired] && !cert_model.parsed.usable?
-
+    cert_model  = signing_certificate
     private_key = OpenSSL::PKey::RSA.new(cert_model.private_key, cert_model.private_key_secret)
 
     Mail.new(OpenSSL::PKCS7.write_smime(OpenSSL::PKCS7.sign(cert_model.parsed, private_key, mail.encoded, chain(cert_model), OpenSSL::PKCS7::DETACHED)))
   rescue => e
     log('sign', 'failed', e.message)
-    raise
+    raise SigningError, e.message
   end
 
   def chain(cert)
@@ -53,6 +49,15 @@ class SecureMailing::SMIME::Outgoing < SecureMailing::Backend::HandlerOutgoing
   end
 
   private
+
+  def signing_certificate
+    from       = mail.from.first
+    cert_model = SMIMECertificate.find_by_email_address(from, filter: { key: 'private', usage: :signature, ignore_usable: true }).first
+    raise "Unable to find ssl private key for '#{from}'" if !cert_model
+    raise "Expired certificate for #{from} (fingerprint #{cert_model.fingerprint}) with #{cert_model.parsed.not_before} to #{cert_model.parsed.not_after}" if !security[:sign][:allow_expired] && !cert_model.parsed.usable?
+
+    cert_model
+  end
 
   def certificates
     certificates = []

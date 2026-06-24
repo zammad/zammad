@@ -86,7 +86,7 @@ RSpec.describe SecureMailing::PGP, :aggregate_failures do
           let(:system_email_address) { expired_email_address }
 
           it 'raises exception' do
-            expect { build_mail }.to raise_error ActiveRecord::RecordNotFound
+            expect { build_mail }.to raise_error SecureMailing::Backend::Handler::SigningError
           end
 
           it_behaves_like 'HttpLog writer', 'failed'
@@ -95,7 +95,7 @@ RSpec.describe SecureMailing::PGP, :aggregate_failures do
 
       context 'when no private key is present' do
         it 'raises exception' do
-          expect { build_mail }.to raise_error ActiveRecord::RecordNotFound
+          expect { build_mail }.to raise_error SecureMailing::Backend::Handler::SigningError
         end
 
         it_behaves_like 'HttpLog writer', 'failed'

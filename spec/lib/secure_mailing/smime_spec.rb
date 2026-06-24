@@ -96,7 +96,7 @@ RSpec.describe SecureMailing::SMIME do
           let(:system_email_address) { expired_email_address }
 
           it 'raises exception' do
-            expect { build_mail }.to raise_error RuntimeError
+            expect { build_mail }.to raise_error SecureMailing::Backend::Handler::SigningError
           end
 
           it_behaves_like 'HttpLog writer', 'failed'
@@ -188,7 +188,7 @@ RSpec.describe SecureMailing::SMIME do
         end
 
         it 'raises exception' do
-          expect { build_mail }.to raise_error RuntimeError
+          expect { build_mail }.to raise_error SecureMailing::Backend::Handler::SigningError
         end
 
         it_behaves_like 'HttpLog writer', 'failed'

@@ -1,6 +1,8 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class NotificationFactory::Mailer
+  NotificationSender = Struct.new(:email)
+  private_constant :NotificationSender
 
 =begin
 
@@ -166,20 +168,87 @@ returns
       return false
     end
 
-    channel.deliver(
-      {
-        # in_reply_to: in_reply_to,
-        from:         sender,
-        to:           data[:recipient][:email],
-        subject:      data[:subject],
-        message_id:   data[:message_id],
-        references:   data[:references],
-        body:         data[:body],
-        content_type: content_type,
-        attachments:  data[:attachments],
-      },
-      true
+    mail_params = {
+      from:         sender,
+      to:           data[:recipient][:email],
+      subject:      data[:subject],
+      message_id:   data[:message_id],
+      references:   data[:references],
+      body:         data[:body],
+      content_type: content_type,
+      attachments:  data[:attachments],
+      security:     secure_mailing_security(sender, data[:recipient]),
+    }
+
+    if mail_params[:security]
+      begin
+        return channel.deliver(mail_params, true)
+      rescue SecureMailing::Backend::Handler::SigningError => e
+        # Only signing failures fall back to unsigned delivery: a system
+        # notification must not be blocked by a broken signing backend, and no
+        # confidentiality is lost (notifications are signed, never encrypted).
+        # Transport errors are not caught here; they propagate instead of
+        # triggering a pointless second delivery attempt.
+        Rails.logger.warn "Signing notification to #{data[:recipient][:email]} failed (#{e.message}), sending unsigned..."
+      end
+    end
+
+    channel.deliver(mail_params.except(:security), true)
+  end
+
+  def self.secure_mailing_security(sender, recipient)
+    return if !Setting.get('smime_sign_system_notifications') && !Setting.get('pgp_sign_system_notifications')
+
+    notification_sender = build_notification_sender(sender) or return
+
+    secure_mailing_security_for(
+      SecureMailing::SMIME,
+      SecureMailing::SMIME::NotificationOptions,
+      signing_setting: 'smime_sign_system_notifications',
+      sender:          notification_sender,
+      recipient:       recipient,
+    ) || secure_mailing_security_for(
+      SecureMailing::PGP,
+      SecureMailing::PGP::NotificationOptions,
+      signing_setting: 'pgp_sign_system_notifications',
+      sender:          notification_sender,
+      recipient:       recipient,
     )
+  end
+
+  def self.secure_mailing_security_for(backend, notification_options, signing_setting:, sender:, recipient:)
+    return if !Setting.get(signing_setting)
+    return if !backend.active?
+
+    security = notification_options.process(
+      from:       sender,
+      recipients: [recipient[:email]],
+      perform:    {
+        sign:    true,
+        encrypt: false,
+      },
+    )
+
+    return if !security[:sign][:success]
+
+    security
+  rescue SecureMailing::Backend::Handler::SigningError => e
+    Rails.logger.warn "Unable to sign system notification from #{sender.email} to #{recipient[:email]} with #{notification_options}: #{e.message}"
+    nil
+  end
+
+  def self.build_notification_sender(sender)
+    NotificationSender.new(sender_email_address(sender))
+  rescue => e
+    Rails.logger.warn "Failed to parse notification sender address '#{sender}': #{e.message}"
+    nil
+  end
+
+  def self.sender_email_address(sender)
+    address = Mail::AddressList.new(sender).addresses.first
+    raise ArgumentError, "No email address could be parsed from '#{sender}'." if address.nil?
+
+    address.address
   end
 
 =begin
