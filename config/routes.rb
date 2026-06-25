@@ -16,11 +16,7 @@ Rails.application.routes.draw do
   dir = File.expand_path(__dir__)
   files = Dir.glob("#{dir}/routes/*.rb")
   files.each do |file|
-    if Rails.configuration.enable_reloading
-      load file
-    else
-      require_dependency file
-    end
+    load file
   end
 
   match '*a', to: 'errors#routing', via: %i[get post put delete options]

@@ -1,6 +1,6 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-require_dependency 'tasks/zammad/command.rb'
+require 'tasks/zammad/command'
 
 module Tasks
   module Zammad

@@ -1,6 +1,6 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-require_dependency 'tasks/zammad/email_parser/failed_email/base.rb'
+require 'tasks/zammad/email_parser/failed_email/base'
 
 module Tasks
   module Zammad
