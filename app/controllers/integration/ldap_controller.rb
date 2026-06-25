@@ -6,6 +6,7 @@ class Integration::LdapController < ApplicationController
   prepend_before_action :authenticate_and_authorize!
 
   SENSITIVE_FIELDS = [:bind_pw].freeze
+  IMPORT_JOB_SENSITIVE_FIELDS = %w[payload.ldap_config.bind_pw].freeze
 
   EXCEPTIONS_SPECIAL_TREATMENT = {
     '48, Inappropriate Authentication' => {}, # workaround for issue #1114

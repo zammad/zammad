@@ -64,6 +64,15 @@ RSpec.describe 'Ldap', type: :request do
 
         expect(ImportJob.last.payload.dig(:ldap_config, :bind_pw)).to eq('stored_password')
       end
+
+      it 'masks the password in the job_try GET response' do
+        authenticated_as(admin)
+
+        post '/api/v1/integration/ldap/job_try', params: params, as: :json
+        get '/api/v1/integration/ldap/job_try', params: { finished: 'true' }, as: :json
+
+        expect(json_response.dig('payload', 'ldap_config', 'bind_pw')).to eq(SensitiveParamsHelper::SENSITIVE_MASK)
+      end
     end
   end
 

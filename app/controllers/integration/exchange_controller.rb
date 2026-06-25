@@ -5,6 +5,8 @@ class Integration::ExchangeController < ApplicationController
 
   prepend_before_action :authenticate_and_authorize!
 
+  IMPORT_JOB_SENSITIVE_FIELDS = %w[payload.ews_config.password payload.ews_config.access_token].freeze
+
   def index
     assets = {}
     external_credential_ids = []
@@ -67,7 +69,6 @@ class Integration::ExchangeController < ApplicationController
       ews_attributes: params[:attributes].permit!.to_h,
       ews_folder_ids: params[:folders],
       ews_config:     ews_config,
-      params:         params,
     }
   end
 
