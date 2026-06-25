@@ -42,6 +42,8 @@ class Validations::ObjectManager::AttributeValidator::Option < Validations::Obje
   end
 
   def available_options
-    @available_options ||= attribute.data_option[:historical_options]
+    @available_options ||=
+      attribute.data_option[:historical_options].presence ||
+      ObjectManager::Attribute.data_options_hash(attribute.data_option[:options] || {})
   end
 end
