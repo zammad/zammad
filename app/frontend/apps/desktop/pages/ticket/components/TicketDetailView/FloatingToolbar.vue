@@ -60,7 +60,7 @@ const { defaultArticleType } = useArticleReply(
     class="grid w-fit gap-1 rounded-(--toolbar-radius) border border-neutral-100 bg-neutral-75/80 p-(--toolbar-p) backdrop-blur-xs [--toolbar-p:0.25rem] [--toolbar-radius:0.75rem] dark:border-gray-900 dark:bg-gray-500/80"
   >
     <Transition name="collapse-height">
-      <div v-if="!isReachingBottom && !newArticlePresent && defaultArticleType">
+      <div v-if="!isReachingBottom && !newArticlePresent && defaultArticleType" class="flex">
         <CommonButton
           v-tooltip="isAgentUser ? $t('Add internal note') : $t('Add reply')"
           size="medium"
@@ -80,7 +80,7 @@ const { defaultArticleType } = useArticleReply(
 
     <Transition name="collapse-height">
       <div v-if="!isReachingTop">
-        <div class="min-h-0">
+        <div class="flex min-h-0">
           <CommonButton
             ref="scroll-up-button"
             v-tooltip="$t('Scroll to start')"
@@ -96,7 +96,7 @@ const { defaultArticleType } = useArticleReply(
 
     <Transition name="collapse-height">
       <div v-if="!isReachingBottom">
-        <div class="relative inline-block min-h-0">
+        <div class="relative flex min-h-0">
           <CommonButton
             ref="scroll-down-button"
             v-tooltip="$t(showUnreadCount ? 'Scroll to unread article' : 'Scroll to end')"
