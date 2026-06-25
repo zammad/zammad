@@ -11,10 +11,13 @@ RSpec.describe Validations::ObjectManager::AttributeValidator::Option, applicati
     )
   end
 
-  let(:record) { build(:user) }
+  let(:record)        { build(:user) }
+  let(:run_migration) { true }
 
   before do
     attribute
+    next if !run_migration
+
     ObjectManager::Attribute.migration_execute
     attribute.reload
   end
@@ -23,6 +26,20 @@ RSpec.describe Validations::ObjectManager::AttributeValidator::Option, applicati
     let(:attribute) { create(:object_manager_attribute_select) }
 
     it_behaves_like 'validate backend'
+  end
+
+  context 'when historical_options are not yet populated (migration pending)' do
+    let(:run_migration) { false }
+
+    context 'with select attribute having numeric option values' do
+      let(:attribute) { create(:object_manager_attribute_select, data_option_options: { '2025' => '2025', '2026' => '2026' }) }
+
+      context 'when value matches an existing option' do
+        let(:value) { '2025' }
+
+        it_behaves_like 'a validation without errors'
+      end
+    end
   end
 
   context 'when validation should not be performed' do
@@ -60,6 +77,16 @@ RSpec.describe Validations::ObjectManager::AttributeValidator::Option, applicati
       let(:value) { 'invalid_key' }
 
       it_behaves_like 'a validation without errors'
+    end
+
+    context 'when options use numeric values' do
+      let(:attribute) { create(:object_manager_attribute_select, data_option_options: { '2025' => '2025', '2026' => '2026' }) }
+
+      context 'when value matches a numeric option' do
+        let(:value) { '2025' }
+
+        it_behaves_like 'a validation without errors'
+      end
     end
   end
 
