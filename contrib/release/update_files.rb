@@ -21,7 +21,7 @@ Rails.root.join('VERSION').write("#{new_version}\n")
 changelog = <<~CHANGELOG
   # Change Log for Zammad #{new_version}
 
-  - [Release notes](https://zammad.com/en/product/releases/zammad-#{new_version.tr('.', '-').sub(%r{-0$}, '')})
+  - [Release notes](https://zammad.com/en/product/releases/#{new_version.tr('.', '-').sub(%r{-0$}, '')})
   - [Breaking changes](BREAKING_CHANGES.md##{new_version_major}#{new_version_minor})
   - [Implemented enhancements](https://github.com/zammad/zammad/issues?q=is%3Aclosed+milestone%3A#{new_version_major}.#{new_version_minor}+(-type%3ABug+AND+-label%3Abug))
   - [Closed bugs](https://github.com/zammad/zammad/issues?q=is%3Aclosed+milestone%3A#{new_version_major}.#{new_version_minor}+(type%3ABug+OR+label%3Abug))
