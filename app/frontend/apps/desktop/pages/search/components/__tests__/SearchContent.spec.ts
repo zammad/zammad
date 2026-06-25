@@ -127,6 +127,29 @@ describe('SearchContent', () => {
     )
   })
 
+  it('keeps the previous results visible while a new search term loads', async () => {
+    // Regression (#1290): changing the search term must not blank the list.
+    // The previous result stays rendered until the next response arrives, so
+    // the list never flashes empty (a skeleton/empty frame) in between.
+    mockTicketSearchResult(1, [createSampleTicket(469, 'Ticket A')])
+
+    const wrapper = renderSearchContent({ searchTerm: 'aaa' })
+
+    expect(await wrapper.findByText('Ticket A')).toBeInTheDocument()
+
+    // The next search term resolves to a different result.
+    mockTicketSearchResult(1, [createSampleTicket(470, 'Ticket B')])
+
+    await wrapper.rerender({ searchTerm: 'bbb' })
+
+    // While the new query is in flight, the previous result must remain visible.
+    expect(wrapper.getByText('Ticket A')).toBeInTheDocument()
+
+    // Once the new response resolves it replaces the previous result.
+    expect(await wrapper.findByText('Ticket B')).toBeInTheDocument()
+    expect(wrapper.queryByText('Ticket A')).not.toBeInTheDocument()
+  })
+
   it('supports optional ticket priority column', async () => {
     mockApplicationConfig({
       ui_ticket_priority_icons: true,

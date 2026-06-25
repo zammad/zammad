@@ -387,7 +387,12 @@ const detailSearchHeaders = computed(() =>
 const searchEntityCurrentCounts = ref<Partial<Record<EnumSearchableModels, number>>>({})
 
 watch(searchResult, (result) => {
-  if (result) searchEntityCurrentCounts.value[selectedEntity.value] = result.search.totalCount
+  // Keep the previous result while the next response is in flight: under
+  // cache-and-network Apollo can momentarily yield `undefined`, and copying that
+  // through would flash the list empty until the new result arrives.
+  if (!result) return
+
+  searchEntityCurrentCounts.value[selectedEntity.value] = result.search.totalCount
   currentSearchResult.value = result
 })
 
@@ -399,7 +404,14 @@ watch(currentSearchCountsResult, (countsResult) => {
   })
 })
 
-const isLoading = detailSearchQuery.loadingWithoutCachedResult()
+// Show the loading state only when there is nothing to display yet (first
+// search, entity switch). While a previous result is remembered we keep it on
+// screen instead of swapping in the skeleton — otherwise the list would flash
+// hidden on every search-term / filter change while the next response loads.
+const detailSearchLoading = detailSearchQuery.loadingWithoutCachedResult()
+const isLoading = computed(
+  () => currentSearchResult.value === undefined && detailSearchLoading.value,
+)
 
 // Real total for the visible entity — not just the items loaded into the table.
 const searchResultTotalCount = computed(() => currentSearchResult.value?.search.totalCount ?? 0)
@@ -444,6 +456,11 @@ const resort = (column: string, direction: EnumOrderDirection) => {
 }
 
 const fetchNextPage = async () => {
+  // Don't paginate a retained (stale) result while the new first page is still
+  // loading — it would fetch page 2 of the new query before page 1, mixing or
+  // skipping results.
+  if (detailSearchLoading.value) return
+
   offset.value += PAGE_SIZE
 
   loadingNewPage.value = true
@@ -504,7 +521,6 @@ const setNewSearchState = (searchTerm: string) => {
   checkedTicketIds.value.clear()
   selectAllActive.value = false
   bulkContext.value = { searchQuery: searchTerm, searchFilter: currentFilterSelector.value }
-  currentSearchResult.value = undefined
 }
 
 // Conditions under which each query needs to be running. Detail looks at
@@ -522,6 +538,12 @@ watch(
   (current, previous) => {
     setNewSearchState(current.search)
 
+    // Clear the displayed result only on entity switch — the previous entity's
+    // rows can't render under the new entity's columns. For search-term / filter
+    // changes we keep the previous result so the list doesn't flash empty while
+    // the next response is in flight.
+    if (previous && previous.onlyIn !== current.onlyIn) currentSearchResult.value = undefined
+
     if (!previous) return
 
     resetPagination({
@@ -529,26 +551,6 @@ watch(
       onlyIn: previous.onlyIn,
       filter: previous.filter,
     })
-
-    // After a stop/start cycle with the same entity (e.g. clear search term then
-    // retype the same term), Vue Apollo retains the cached value in the result ref
-    // without triggering a reactive change. The watch(searchResult) callback therefore
-    // won't fire and currentSearchResult would be stuck on undefined, so we sync manually!
-    if (previous.onlyIn === current.onlyIn)
-      nextTick(() => {
-        // Only restore when the query is still supposed to be running — i.e. the
-        // user retyped the same term.  If shouldDetailRun is false (search was
-        // cleared) we must not re-populate from the retained cache value.
-        if (
-          shouldDetailRun.value &&
-          currentSearchResult.value === undefined &&
-          searchResult.value !== undefined
-        ) {
-          currentSearchResult.value = searchResult.value
-          searchEntityCurrentCounts.value[selectedEntity.value] =
-            searchResult.value.search.totalCount
-        }
-      })
   },
   { immediate: true },
 )
