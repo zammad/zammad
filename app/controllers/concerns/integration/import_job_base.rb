@@ -3,6 +3,8 @@
 module Integration::ImportJobBase
   extend ActiveSupport::Concern
 
+  IMPORT_JOB_SENSITIVE_FIELDS = [].freeze
+
   def job_try_index
     job_index(
       dry_run:       true,
@@ -76,4 +78,9 @@ module Integration::ImportJobBase
     end
   end
 
+  def sensitive_attributes(_input, object)
+    return self.class::IMPORT_JOB_SENSITIVE_FIELDS if object.is_a?(ImportJob)
+
+    super
+  end
 end
