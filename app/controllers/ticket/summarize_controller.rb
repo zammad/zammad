@@ -8,6 +8,7 @@ class Ticket::SummarizeController < ApplicationController
     Service::CheckFeatureEnabled.execute(name: 'ai_provider', custom_error_message: __('AI provider is not configured.'))
 
     authorize!(ticket, :agent_read_access?)
+    return render json: { result: nil } if !summary_enabled?
 
     if regeneration_of
       authorize!(regeneration_of, :show?)
@@ -58,9 +59,15 @@ class Ticket::SummarizeController < ApplicationController
   def enqueue_job
     # Trigger background job to generate summary...
     TicketAIAssistanceSummarizeJob
-      .perform_later(ticket, current_user.locale, regeneration_of:)
+      .perform_later(ticket, current_user.locale, current_user:, regeneration_of:)
 
     render json: { result: nil }
+  end
+
+  def summary_enabled?
+    Service::Ticket::AIAssistance::SummaryEnabled
+      .with_current_user(current_user)
+      .execute(ticket:)
   end
 
   def return_stored_result(ai_result)

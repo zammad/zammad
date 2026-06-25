@@ -42,6 +42,26 @@ RSpec.describe 'Ticket Summarize API endpoints', authenticated_as: :user, perfor
     context 'when user has agent access' do
       before { user.groups << ticket.group }
 
+      context 'when the ticket summary selector does not match' do
+        before do
+          Setting.set('ai_assistance_ticket_summary_selector', {
+                        'condition' => {
+                          'ticket.priority_id' => {
+                            'operator' => 'is',
+                            'value'    => [Ticket::Priority.find_by(name: '3 high').id.to_s],
+                          },
+                        },
+                      })
+        end
+
+        it 'does not enqueue summary generation job', :aggregate_failures do
+          make_request
+
+          expect(json_response).to eq({ 'result' => nil })
+          expect(TicketAIAssistanceSummarizeJob).not_to have_been_enqueued
+        end
+      end
+
       context 'when cache is present' do
         let(:result) do
           {
@@ -97,7 +117,7 @@ RSpec.describe 'Ticket Summarize API endpoints', authenticated_as: :user, perfor
             make_request
 
             expect(TicketAIAssistanceSummarizeJob)
-              .to have_been_enqueued.with(ticket, user.locale, regeneration_of: ai_analytics_run)
+              .to have_been_enqueued.with(ticket, user.locale, current_user: user, regeneration_of: ai_analytics_run)
           end
 
         end
@@ -168,7 +188,7 @@ RSpec.describe 'Ticket Summarize API endpoints', authenticated_as: :user, perfor
           make_request
 
           expect(TicketAIAssistanceSummarizeJob)
-            .to have_been_enqueued.with(ticket, user.locale, regeneration_of: nil)
+            .to have_been_enqueued.with(ticket, user.locale, current_user: user, regeneration_of: nil)
         end
 
         it 'returns empty result' do

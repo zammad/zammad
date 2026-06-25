@@ -13,6 +13,7 @@ RSpec.describe 'Ticket Summary', authenticated_as: :authenticate, type: :system 
   let(:initial_cache_key)                              { "ticket_summary_#{ticket.id}" }
   let(:updated_cache_key)                              { "ticket_summary_#{ticket.id}_2" }
   let(:ticket_summary_generation)                      { 'on_ticket_detail_opening' }
+  let(:ticket_summary_selector)                        { {} }
 
   let(:initial_content) do
     {
@@ -58,6 +59,7 @@ RSpec.describe 'Ticket Summary', authenticated_as: :authenticate, type: :system 
                   customer_sentiment: true,
                   generate_on:        ticket_summary_generation
                 })
+    Setting.set('ai_assistance_ticket_summary_selector', ticket_summary_selector)
 
     article
 
@@ -196,17 +198,17 @@ RSpec.describe 'Ticket Summary', authenticated_as: :authenticate, type: :system 
       end
     end
 
-    context 'when summary is disabled for the group' do
-      let(:ticket) { create(:ticket).tap { |t| t.group.update!(summary_generation: 'disabled') } }
-
-      it 'does not show sidebar' do
-        expect(page).to have_text(ticket.title)
-          .and have_no_css('.tabsSidebar-tab[data-tab=summary]')
+    context 'when the ticket summary selector does not match' do
+      let(:ticket_summary_selector) do
+        {
+          'condition' => {
+            'ticket.priority_id' => {
+              'operator' => 'is',
+              'value'    => [Ticket::Priority.find_by(name: '3 high').id.to_s],
+            },
+          },
+        }
       end
-    end
-
-    context 'when global default is disabled and group uses global default' do
-      let(:ticket_summary_generation) { 'disabled' }
 
       it 'does not show sidebar' do
         expect(page).to have_text(ticket.title)

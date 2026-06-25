@@ -9,6 +9,13 @@ RSpec.describe 'Manage > AI > Ticket Summary', type: :system do
 
     before { visit '/#ai/ticket_summary' }
 
+    it 'displays summary selector before summary generation' do
+      within(:active_content) do
+        expect(page).to have_text(%r{Summary Selector.*Summary Generation}m)
+        expect(page).to have_text('Defines which tickets can use the ticket summary sidebar.')
+      end
+    end
+
     it 'displays the ticket summary service options and can change them' do
       within(:active_content) do
         find('label', text: 'Open Questions').click
@@ -36,12 +43,27 @@ RSpec.describe 'Manage > AI > Ticket Summary', type: :system do
       end
     end
 
-    it 'can set the global generation to disabled' do
+    it 'can configure the ticket summary selector' do
       within(:active_content) do
-        select('Hide ticket summary sidebar', from: 'generate_on')
-        click_on('Submit')
+        find('.js-filterElement .js-attributeSelector select')
+          .find('option', text: 'Priority')
+          .select_option
 
-        expect(Setting.get('ai_assistance_ticket_summary_config')).to include(generate_on: 'disabled')
+        find('.js-filterElement .js-value select')
+          .find('option', text: '3 high')
+          .select_option
+
+        click_on 'Save'
+
+        expect(Setting.get('ai_assistance_ticket_summary_selector'))
+          .to eq({
+                   'condition' => {
+                     'ticket.priority_id' => {
+                       'operator' => 'is',
+                       'value'    => ['3'],
+                     },
+                   },
+                 })
       end
     end
 

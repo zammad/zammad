@@ -8,6 +8,7 @@ export interface ConfigList {
   ai_assistance_text_tools_fixed_instructions: string
   ai_assistance_ticket_summary: boolean
   ai_assistance_ticket_summary_config: unknown
+  ai_assistance_ticket_summary_selector: unknown
   ai_provider: boolean
   api_password_access?: boolean | null
   api_token_access?: boolean | null

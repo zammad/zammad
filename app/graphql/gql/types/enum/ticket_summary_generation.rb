@@ -7,6 +7,5 @@ module Gql::Types::Enum
     value 'global_default', 'Use global default setting.'
     value 'on_ticket_detail_opening', 'On ticket detail opening'
     value 'on_ticket_summary_sidebar_activation', 'On ticket summary sidebar activation'
-    value 'disabled', 'AI summary disabled.'
   end
 end

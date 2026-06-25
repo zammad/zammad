@@ -21,6 +21,11 @@ RSpec.describe Ticket::AssetsAll do
     let(:other_ticket)     { create(:ticket, group:) }
 
     before do
+      allow(AI::Provider::ZammadAI).to receive(:ping!).and_return(true)
+
+      setup_ai_provider
+      Setting.set('ai_assistance_ticket_summary', true)
+
       ticket && draft && article_email && article_internal && checklist
 
       ticket.tag_add(tag_name)
@@ -51,6 +56,14 @@ RSpec.describe Ticket::AssetsAll do
         objects = [ticket, article_internal, article_email, draft, checklist, mention, other_ticket]
 
         expect(assets).to include_assets_of(objects)
+      end
+
+      it 'does not include AI summary enabled state as top-level response metadata' do
+        expect(instance.all_assets).not_to have_key(:ai_summary_enabled)
+      end
+
+      it 'includes AI summary enabled state below the ticket asset' do
+        expect(instance.all_assets.dig(:assets, Ticket.to_app_model, ticket.id, 'ai_summary_enabled')).to be(true)
       end
     end
 
@@ -84,6 +97,14 @@ RSpec.describe Ticket::AssetsAll do
         agent_only_objects = [article_internal, checklist, other_ticket]
 
         expect(assets).not_to include_assets_of(agent_only_objects)
+      end
+
+      it 'does not include AI summary enabled state as top-level response metadata' do
+        expect(instance.all_assets).not_to have_key(:ai_summary_enabled)
+      end
+
+      it 'marks AI summary disabled below the ticket asset' do
+        expect(instance.all_assets.dig(:assets, Ticket.to_app_model, ticket.id, 'ai_summary_enabled')).to be(false)
       end
     end
   end

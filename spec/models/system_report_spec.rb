@@ -232,6 +232,7 @@ RSpec.describe SystemReport, current_user_id: 1, type: :model do
           'ui_desktop_beta_switch',
           'ai_assistance_text_tools',
           'ai_assistance_ticket_summary',
+          'ai_assistance_ticket_summary_selector',
           'ai_assistance_text_tools_fixed_instructions',
           'ai_assistance_kb_answer_from_ticket_generation',
           'ai_provider',

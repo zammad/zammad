@@ -122,6 +122,6 @@ class TicketPolicy < ApplicationPolicy
   end
 
   def customer_field_scope
-    @customer_field_scope ||= ApplicationPolicy::FieldScope.new(deny: %i[ai_agent_running time_unit time_units_per_type checklist referencing_checklist_tickets ai_stored_results])
+    @customer_field_scope ||= ApplicationPolicy::FieldScope.new(deny: %i[ai_agent_running ai_summary_enabled time_unit time_units_per_type checklist referencing_checklist_tickets ai_stored_results])
   end
 end

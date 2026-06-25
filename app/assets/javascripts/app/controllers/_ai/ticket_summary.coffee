@@ -6,6 +6,8 @@ class App.TicketSummary extends App.ControllerAIFeatureBase
     'change .js-aiAssistanceTicketSummarySetting input': 'toggleAIAssistanceTicketSummarySetting'
     'change .checkbox--service input': 'toggleService'
     'submit .js-ticketSummaryGenerationConfig': 'selectGenerationConfig'
+    'click .js-ticketSummarySelectorSave': 'saveTicketSummarySelector'
+    'click .js-ticketSummarySelectorReset': 'resetTicketSummarySelector'
 
   elements:
     '.js-aiAssistanceTicketSummarySetting input': 'aiAssistanceTicketSummarySetting'
@@ -25,6 +27,8 @@ class App.TicketSummary extends App.ControllerAIFeatureBase
             field.val(value)
           else
             field.prop('checked', value)
+      else if data.name == 'ai_assistance_ticket_summary_selector'
+        @render()
     )
 
   showAlert: ->
@@ -53,10 +57,6 @@ class App.TicketSummary extends App.ControllerAIFeatureBase
           name: __('On ticket summary sidebar activation')
           value: 'on_ticket_summary_sidebar_activation'
         },
-        {
-          name: __('Hide ticket summary sidebar')
-          value: 'disabled'
-        },
       ]
       translate: true
     )
@@ -64,6 +64,20 @@ class App.TicketSummary extends App.ControllerAIFeatureBase
     content.find('.js-ticketSummaryGenerationConfigSelect').html(select)
 
     @html content
+
+    configure_attributes = [
+      { name: 'condition', display: __('Conditions for affected objects'), tag: 'ticket_selector', null: false, preview: false, action: false, hasChanged: false, article: false, hasRegexOperators: true },
+    ]
+
+    selector = App.Setting.get('ai_assistance_ticket_summary_selector') || {}
+    @ticketSummarySelector = new App.ControllerForm(
+      el: @$('.js-ticketSummarySelector')
+      model:
+        configure_attributes: configure_attributes,
+      params:
+        condition: selector.condition
+      autofocus: false
+    )
 
     @renderAlert()
 
@@ -123,6 +137,17 @@ class App.TicketSummary extends App.ControllerAIFeatureBase
     config['generate_on'] = value
 
     App.Setting.set('ai_assistance_ticket_summary_config', config, failLocal: @failLocal, notify: true)
+
+  saveTicketSummarySelector: (e) =>
+    e.preventDefault()
+
+    params = @formParam(@ticketSummarySelector.form)
+    App.Setting.set('ai_assistance_ticket_summary_selector', { condition: params.condition }, failLocal: @failLocal, notify: true)
+
+  resetTicketSummarySelector: (e) ->
+    e.preventDefault()
+
+    App.Setting.set('ai_assistance_ticket_summary_selector', {}, failLocal: @failLocal, notify: true)
 
   failLocal: =>
     @render()

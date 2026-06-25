@@ -39,7 +39,18 @@
   </div>
 
   <div>
-    <h2 id="generation-config-label"><%- @T('Summary Generation') %></h3>
+    <h2><%- @T('Summary Selector') %></h2>
+    <p class="help-text"><%- @T('Defines which tickets can use the ticket summary sidebar.') %></p>
+
+    <form class="settings-entry">
+      <div class="js-ticketSummarySelector"></div>
+      <button type="submit" class="btn btn--primary js-ticketSummarySelectorSave"><%- @T('Save') %></button>
+      <button type="submit" class="btn btn--danger js-ticketSummarySelectorReset"><%- @T('Reset') %></button>
+    </form>
+  </div>
+
+  <div>
+    <h2 id="generation-config-label"><%- @T('Summary Generation') %></h2>
     <p id="generation-config-description" class="help-text"><%- @T('Defines global configuration when the summary will be generated in the ticket zoom.') %></p>
 
     <form class="js-ticketSummaryGenerationConfig ticket-summary-generation-form" id="ticket_summary_generation_action">

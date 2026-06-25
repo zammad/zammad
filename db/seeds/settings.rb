@@ -6250,6 +6250,24 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
+  title:       __('Ticket Summary Selector'),
+  name:        'ai_assistance_ticket_summary_selector',
+  area:        'AI::Assistance',
+  description: __('Enable ticket summary for following matching tickets.'),
+  options:     {
+    form: [
+      {},
+    ],
+  },
+  preferences: {
+    authentication: true,
+    permission:     ['admin.ai_assistance_ticket_summary'],
+  },
+  state:       {},
+  frontend:    true,
+)
+
+Setting.create_if_not_exists(
   title:       __('Writing Assistant'),
   name:        'ai_assistance_text_tools',
   area:        'AI::Assistance',

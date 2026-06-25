@@ -1991,6 +1991,10 @@ RSpec.describe Ticket, type: :model do
       expect(ticket.group).to be_present
       expect(ticket.assets({}).deep_symbolize_keys.keys).not_to include(:TicketPriority, :Role, :TicketState, :Group)
     end
+
+    it 'does not include AI summary enabled state by default' do
+      expect(ticket.assets({}).dig(:Ticket, ticket.id)).not_to have_key('ai_summary_enabled')
+    end
   end
 
   describe '#ai_summary_unread?' do

@@ -46,20 +46,7 @@ const summaryConfig = computed(
   () => config.value.ai_assistance_ticket_summary_config as SummaryConfig,
 )
 
-const isDisabledForGroup = computed(() => {
-  const groupSummaryGenerationOption = ticket.value?.group?.summaryGeneration
-
-  if (groupSummaryGenerationOption === EnumTicketSummaryGeneration.Disabled) return true
-
-  return (
-    groupSummaryGenerationOption === EnumTicketSummaryGeneration.GlobalDefault &&
-    summaryConfig.value?.generate_on === EnumTicketSummaryGeneration.Disabled
-  )
-})
-
 const runWhenSidebarIsActive = computed(() => {
-  if (isDisabledForGroup.value) return false
-
   const groupSummaryGenerationOption = ticket.value?.group.summaryGeneration
 
   if (groupSummaryGenerationOption === EnumTicketSummaryGeneration.GlobalDefault) {
@@ -79,12 +66,7 @@ const isProviderConfigured = computed(() => !!config.value.ai_provider)
 
 const isEnabled = computed(
   () =>
-    !!(
-      ticket.value &&
-      ticket.value?.state.name !== 'merged' &&
-      config.value.ai_assistance_ticket_summary &&
-      !isDisabledForGroup.value
-    ),
+    !!(ticket.value && config.value.ai_assistance_ticket_summary && ticket.value.aiSummaryEnabled),
 )
 
 const headings = computed<SummaryItem[]>(() => [
@@ -126,7 +108,6 @@ const generationError = ref<AsyncExecutionError | null>(null)
 const analyticsMeta = ref<AiAnalyticsMetadata | null>()
 
 const isCurrentTicketSummaryUnread = computed(() => analyticsMeta.value?.isUnread)
-const isTicketStateMerged = computed(() => ticket.value?.state.name === 'merged')
 
 const { updateSummaryGenerating, isSummaryGenerating } = useTicketSummaryGenerating()
 
@@ -135,7 +116,6 @@ const ticketSummaryHandler = new MutationHandler(useTicketAiAssistanceSummarizeM
 const showUpdateIndicator = computed(
   () =>
     !!isCurrentTicketSummaryUnread.value &&
-    !isTicketStateMerged.value &&
     !isSummaryGenerating.value &&
     runWhenSidebarIsActive.value,
 )

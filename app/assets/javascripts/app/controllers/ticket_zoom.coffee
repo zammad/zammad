@@ -164,6 +164,7 @@ class App.TicketZoom extends App.Controller
 
     attributes_to_ignore_for_notify = [
       'ai_agent_running',
+      'ai_summary_enabled',
       'updated_by_id',
       'updated_at',
     ]
@@ -214,6 +215,7 @@ class App.TicketZoom extends App.Controller
 
     # get ticket
     @ticket         = App.Ticket.fullLocal(@ticket_id)
+    @ticket.ai_summary_enabled = @currentTicketRaw.ai_summary_enabled
     @ticket.article = undefined
     @view           = @ticket.currentView()
     @readable       = @ticket.userGroupAccess('read')

@@ -122,6 +122,7 @@ export const createDummyTicket = <R = TicketQuery['ticket']>(options?: {
   preferences?: TicketQuery['ticket']['preferences']
   sharedDraftZoomId?: number
   aiAgentRunning?: TicketQuery['ticket']['aiAgentRunning']
+  aiSummaryEnabled?: TicketQuery['ticket']['aiSummaryEnabled']
   escalationAt?: TicketQuery['ticket']['escalationAt']
   firstResponseEscalationAt?: TicketQuery['ticket']['firstResponseEscalationAt']
   updateEscalationAt?: TicketQuery['ticket']['updateEscalationAt']
@@ -169,5 +170,6 @@ export const createDummyTicket = <R = TicketQuery['ticket']>(options?: {
       ? convertToGraphQLId('Ticket::SharedDraftZoom', options.sharedDraftZoomId)
       : null,
     aiAgentRunning: options?.aiAgentRunning,
+    aiSummaryEnabled: options?.aiSummaryEnabled ?? true,
   }) as R
 }

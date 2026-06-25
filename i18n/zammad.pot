@@ -677,7 +677,7 @@ msgstr ""
 msgid "AI Agents"
 msgstr ""
 
-#: db/seeds/settings.rb:6274
+#: db/seeds/settings.rb:6292
 msgid "AI Knowledge Base Answer from Ticket"
 msgstr ""
 
@@ -702,7 +702,7 @@ msgstr ""
 msgid "AI Service Name"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket_summary.coffee:133
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket_summary.coffee:132
 msgid "AI Summary"
 msgstr ""
 
@@ -790,7 +790,7 @@ msgstr ""
 #: app/services/service/ai/vectordb/embedding.rb:32
 #: app/services/service/ai_assistance/text_tools.rb:19
 #: app/services/service/ticket/ai_assistance/generate_knowledge_base_answer_content.rb:14
-#: app/services/service/ticket/ai_assistance/summarize.rb:16
+#: app/services/service/ticket/ai_assistance/summarize.rb:18
 msgid "AI provider is not configured."
 msgstr ""
 
@@ -3686,6 +3686,7 @@ msgstr ""
 msgid "Compose your message…"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:69
 #: app/assets/javascripts/app/controllers/_manage/ticket_auto_assignment.coffee:25
 #: app/assets/javascripts/app/controllers/time_accounting_settings.coffee:26
 #: app/assets/javascripts/app/models/job.coffee:9
@@ -3963,7 +3964,7 @@ msgstr ""
 msgid "Contributing Translations"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:80
+#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:94
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket_summary.coffee:4
 msgid "Conversation Summary"
 msgstr ""
@@ -3972,7 +3973,7 @@ msgstr ""
 msgid "Conversation is transferred into another chat. Please stay tuned."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummary.vue:98
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummary.vue:80
 msgid "Conversation summary"
 msgstr ""
 
@@ -4531,12 +4532,12 @@ msgstr ""
 msgid "Customer Chat"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:73
+#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:87
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket_summary.coffee:3
 msgid "Customer Intent"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:99
+#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:113
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket_summary.coffee:7
 msgid "Customer Sentiment"
 msgstr ""
@@ -4545,7 +4546,7 @@ msgstr ""
 msgid "Customer and agent ratio (role based user counts)"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummary.vue:93
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummary.vue:75
 msgid "Customer intent"
 msgstr ""
 
@@ -4553,7 +4554,7 @@ msgstr ""
 msgid "Customer selection based on sender and receiver list"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummary.vue:116
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummary.vue:98
 msgid "Customer sentiment"
 msgstr ""
 
@@ -4942,7 +4943,7 @@ msgstr ""
 msgid "Defines endpoint of Elasticsearch."
 msgstr ""
 
-#: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:43
+#: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:54
 msgid "Defines global configuration when the summary will be generated in the ticket zoom."
 msgstr ""
 
@@ -5070,7 +5071,7 @@ msgstr ""
 msgid "Defines if the application is in developer mode (all users have the same password and password reset will work without email delivery)."
 msgstr ""
 
-#: db/seeds/settings.rb:6323
+#: db/seeds/settings.rb:6341
 msgid "Defines if the bubble menu feature of the richtext editor is enabled. Note that this setting will be ignored if the writing assistant is turned on."
 msgstr ""
 
@@ -5298,7 +5299,7 @@ msgstr ""
 msgid "Defines the backend service for ticket article language detection."
 msgstr ""
 
-#: db/seeds/settings.rb:6300
+#: db/seeds/settings.rb:6318
 msgid "Defines the chunking strategy for the knowledge base vector database."
 msgstr ""
 
@@ -5342,7 +5343,7 @@ msgstr ""
 msgid "Defines the duration of customer activity (in seconds) on a call until the user profile dialog is shown."
 msgstr ""
 
-#: db/seeds/settings.rb:6263
+#: db/seeds/settings.rb:6281
 msgid "Defines the fixed instructions that guide the AI Writing Assistant on e.g. how to format its output."
 msgstr ""
 
@@ -5491,7 +5492,7 @@ msgstr ""
 msgid "Defines whether the matching tickets are shown in case of already existing tickets."
 msgstr ""
 
-#: db/seeds/settings.rb:6291
+#: db/seeds/settings.rb:6309
 msgid "Defines which knowledge base categories are included in the vector database."
 msgstr ""
 
@@ -5505,6 +5506,10 @@ msgstr ""
 
 #: db/seeds/settings.rb:2710
 msgid "Defines which ticket attributes are checked before creating a ticket."
+msgstr ""
+
+#: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:43
+msgid "Defines which tickets can use the ticket summary sidebar."
 msgstr ""
 
 #: db/seeds/settings.rb:2761
@@ -6598,7 +6603,7 @@ msgstr ""
 msgid "Enable if you want to quote the full email in your answer. The quoted email will be put at the end of your answer. If you just want to quote a certain phrase, just mark the text and press reply (this feature is always available)."
 msgstr ""
 
-#: db/seeds/settings.rb:6277
+#: db/seeds/settings.rb:6295
 msgid "Enable or disable AI generation of knowledge base answers from ticket content."
 msgstr ""
 
@@ -6618,7 +6623,7 @@ msgstr ""
 msgid "Enable or disable the ticket summary."
 msgstr ""
 
-#: db/seeds/settings.rb:6249
+#: db/seeds/settings.rb:6267
 msgid "Enable or disable the writing assistant text tools."
 msgstr ""
 
@@ -6628,6 +6633,10 @@ msgstr ""
 
 #: db/seeds/settings.rb:2556
 msgid "Enable ticket auto assignment."
+msgstr ""
+
+#: db/seeds/settings.rb:6249
+msgid "Enable ticket summary for following matching tickets."
 msgstr ""
 
 #: db/seeds/settings.rb:4113
@@ -8395,11 +8404,6 @@ msgstr ""
 msgid "Hide notification"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:57
-#: db/seeds/object_manager_attributes.rb:2479
-msgid "Hide ticket summary sidebar"
-msgstr ""
-
 #: app/assets/javascripts/app/models/ticket_priority.coffee:7
 msgid "High priority"
 msgstr ""
@@ -9721,7 +9725,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:66
 #: app/assets/javascripts/app/controllers/_ai/kb_answer_from_ticket.coffee:30
 #: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:34
-#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:40
+#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:44
 msgid "Legal Information"
 msgstr ""
 
@@ -11726,7 +11730,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee:9
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_unit.coffee:55
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:65
-#: app/graphql/gql/types/ticket_type.rb:109
+#: app/graphql/gql/types/ticket_type.rb:110
 #: db/seeds/settings.rb:1966
 msgid "None"
 msgstr ""
@@ -12068,12 +12072,12 @@ msgstr ""
 msgid "On %s, %s wrote:"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:49
+#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:53
 #: db/seeds/object_manager_attributes.rb:2471
 msgid "On ticket detail opening"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:53
+#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:57
 #: db/seeds/object_manager_attributes.rb:2475
 msgid "On ticket summary sidebar activation"
 msgstr ""
@@ -12168,7 +12172,7 @@ msgstr ""
 msgid "Open %s"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:87
+#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:101
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket_summary.coffee:5
 msgid "Open Questions"
 msgstr ""
@@ -12211,7 +12215,7 @@ msgstr ""
 msgid "Open note box"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummary.vue:104
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummary.vue:86
 msgid "Open questions"
 msgstr ""
 
@@ -13356,23 +13360,23 @@ msgstr ""
 msgid "Protocol"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:82
+#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:96
 msgid "Provide a summary of the conversation between customer and support agent."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:75
+#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:89
 msgid "Provide a summary of the problem the customer needs to get resolved."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:89
+#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:103
 msgid "Provide a summary of the questions raised in the conversation."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:95
+#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:109
 msgid "Provide a summary of the upcoming events based on the conversation."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:101
+#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:115
 msgid "Provide an assessment of the customer sentiment based on the conversation."
 msgstr ""
 
@@ -13611,7 +13615,7 @@ msgstr ""
 msgid "Recursive Ticket Triggers"
 msgstr ""
 
-#: db/seeds/settings.rb:6309
+#: db/seeds/settings.rb:6327
 msgid "Recursive hierarchical chunking"
 msgstr ""
 
@@ -14012,6 +14016,7 @@ msgid "Resend verification email"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/translation.coffee:99
+#: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:48
 #: app/assets/javascripts/app/views/monitoring.jst.eco:22
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco:18
 #: app/assets/javascripts/app/views/settings/ticket_duplicate_detection.jst.eco:15
@@ -14158,7 +14163,7 @@ msgstr ""
 msgid "Rewrite complex section and make it easy to understand"
 msgstr ""
 
-#: db/seeds/settings.rb:6320
+#: db/seeds/settings.rb:6338
 msgid "Richtext Bubble Menu"
 msgstr ""
 
@@ -14386,6 +14391,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:215
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee:155
+#: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:47
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco:73
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:133
 #: app/assets/javascripts/app/views/integration/github.jst.eco:21
@@ -14468,7 +14474,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_integration/github.coffee:63
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee:80
 #: app/assets/javascripts/app/controllers/_integration/idoit.coffee:93
-#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:1211
+#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:1213
 msgid "Saving failed."
 msgstr ""
 
@@ -15140,7 +15146,7 @@ msgstr ""
 msgid "Sent successfully!"
 msgstr ""
 
-#: db/seeds/settings.rb:6310
+#: db/seeds/settings.rb:6328
 msgid "Sentence-based chunking"
 msgstr ""
 
@@ -16198,9 +16204,13 @@ msgstr ""
 msgid "Summarize section to about half its current size"
 msgstr ""
 
-#: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:42
+#: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:53
 #: db/seeds/object_manager_attributes.rb:2461
 msgid "Summary Generation"
+msgstr ""
+
+#: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:42
+msgid "Summary Selector"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:22
@@ -18553,6 +18563,10 @@ msgstr ""
 msgid "Ticket Summary Config"
 msgstr ""
 
+#: db/seeds/settings.rb:6246
+msgid "Ticket Summary Selector"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:3
 msgid "Ticket Summary provides the functionality to summarize the current ticket state. It will provide a new sidebar which contains information to reduce reading time in the ticket with a summarized version of the problem, open questions and upcoming events."
 msgstr ""
@@ -19558,12 +19572,12 @@ msgstr ""
 msgid "Up to %s% of this language is already translated. Please help to make Zammad even better and complete the translation."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:93
+#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:107
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket_summary.coffee:6
 msgid "Upcoming Events"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummary.vue:110
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummary.vue:92
 msgid "Upcoming events"
 msgstr ""
 
@@ -20160,11 +20174,11 @@ msgstr ""
 msgid "Variables"
 msgstr ""
 
-#: db/seeds/settings.rb:6288
+#: db/seeds/settings.rb:6306
 msgid "Vector DB knowledge base categories"
 msgstr ""
 
-#: db/seeds/settings.rb:6297
+#: db/seeds/settings.rb:6315
 msgid "Vector DB knowledge base chunking strategy"
 msgstr ""
 
@@ -20589,11 +20603,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:25
 #: db/seeds/permissions.rb:245
-#: db/seeds/settings.rb:6246
+#: db/seeds/settings.rb:6264
 msgid "Writing Assistant"
 msgstr ""
 
-#: db/seeds/settings.rb:6260
+#: db/seeds/settings.rb:6278
 msgid "Writing Assistant Fixed Instructions"
 msgstr ""
 
@@ -20793,7 +20807,7 @@ msgstr ""
 msgid "You can open the Keyboard Shortcuts dialog here and view the new and improved layout, or revert to the old one if you prefer it."
 msgstr ""
 
-#: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:49
+#: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:60
 msgid "You can overwrite this setting for specific groups in the group manager. %l"
 msgstr ""
 

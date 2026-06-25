@@ -6237,12 +6237,6 @@
               "description": "On ticket summary sidebar activation",
               "isDeprecated": false,
               "deprecationReason": null
-            },
-            {
-              "name": "disabled",
-              "description": "AI summary disabled.",
-              "isDeprecated": false,
-              "deprecationReason": null
             }
           ],
           "possibleTypes": null
@@ -21920,6 +21914,18 @@
             {
               "name": "aiAgentRunning",
               "description": "Returns true if an AI agent is running for this ticket",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "aiSummaryEnabled",
+              "description": "Returns true if the AI summary is enabled for this ticket",
               "args": [],
               "type": {
                 "kind": "SCALAR",
