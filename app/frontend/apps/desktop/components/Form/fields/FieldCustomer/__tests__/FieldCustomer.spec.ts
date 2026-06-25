@@ -16,7 +16,6 @@ import { testOptions } from '#desktop/components/Form/fields/FieldCustomer/__tes
 
 const wrapperParameters = {
   form: true,
-  formField: true,
   router: true,
   dialog: true,
   store: true,

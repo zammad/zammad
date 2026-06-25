@@ -20,7 +20,6 @@ const renderDateField = async (props: Record<string, unknown> = {}, options: any
     },
     ...options,
     form: true,
-    formField: true,
   })
 }
 

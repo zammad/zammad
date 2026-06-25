@@ -459,7 +459,6 @@ describe('common object attributes interface', () => {
       },
       router: true,
       form: true,
-      formField: true,
       store: true,
     })
 

@@ -95,7 +95,6 @@ const testValue = {
 
 const wrapperParameters = {
   form: true,
-  formField: true,
 }
 
 const renderNotificationsInput = async (props: Record<string, unknown> = {}) => {

@@ -12,7 +12,6 @@ import type { FormKitExtendableSchemaRoot, FormKitFrameworkContext } from '@form
 
 const wrapperParameters = {
   form: true,
-  formField: true,
 }
 
 const renderKit = (props: any = {}) => {

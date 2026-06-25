@@ -7,7 +7,6 @@ import { renderComponent } from '#tests/support/components/index.ts'
 
 const wrapperParameters = {
   form: true,
-  formField: true,
 }
 
 describe('Form - Field - Group (Formkit-BuildIn)', () => {

@@ -30,7 +30,6 @@ const testOptions: SetRequired<SelectOption, 'label'>[] = [
 
 const wrapperParameters = {
   form: true,
-  formField: true,
   dialog: true,
 }
 

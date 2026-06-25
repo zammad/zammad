@@ -75,7 +75,6 @@ const renderFilterSelector = (value = initialValue, options: RenderOptions = {})
       value,
     },
     form: true,
-    formField: true,
   })
 
 describe('Fields - FieldFilterSelector', () => {

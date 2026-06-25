@@ -12,7 +12,6 @@ import { i18n } from '#shared/i18n.ts'
 
 const wrapperParameters = {
   form: true,
-  formField: true,
 }
 
 describe('Form - Field - Textarea (Formkit-BuildIn)', () => {

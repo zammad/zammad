@@ -11,7 +11,6 @@ import { waitForNextTick } from '#tests/support/utils.ts'
 const renderToggle = (props: any = {}) => {
   return renderComponent(FormKit, {
     form: true,
-    formField: true,
     props: {
       name: 'toggle',
       type: 'toggle',
@@ -180,7 +179,6 @@ describe('FieldToggle', () => {
       },
       {
         form: true,
-        formField: true,
       },
     )
 

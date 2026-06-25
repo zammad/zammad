@@ -66,7 +66,6 @@ const testOptions: AutocompleteSearchOrganizationEntry[] = [
 
 const wrapperParameters = {
   form: true,
-  formField: true,
   router: true,
   dialog: true,
   store: true,

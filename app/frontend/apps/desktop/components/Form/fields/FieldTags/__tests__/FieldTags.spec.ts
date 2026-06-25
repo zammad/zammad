@@ -31,7 +31,6 @@ const testOptions: AutocompleteSearchEntry[] = [
 
 const wrapperParameters = {
   form: true,
-  formField: true,
   router: true,
   store: true,
 }

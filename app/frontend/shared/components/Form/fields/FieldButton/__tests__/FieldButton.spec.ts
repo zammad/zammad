@@ -7,7 +7,6 @@ import type { ExtendedMountingOptions } from '#tests/support/components/index.ts
 
 const wrapperParameters = {
   form: true,
-  formField: true,
 }
 
 const renderButton = (options: ExtendedMountingOptions<unknown> = {}) => {

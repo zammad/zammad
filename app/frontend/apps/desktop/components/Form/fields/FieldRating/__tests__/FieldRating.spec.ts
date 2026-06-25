@@ -12,7 +12,6 @@ import { useLocaleStore } from '#shared/stores/locale.ts'
 const renderRatingField = (props: any = {}) => {
   return renderComponent(FormKit, {
     form: true,
-    formField: true,
     props: {
       id: 'rating',
       type: 'rating',

@@ -32,7 +32,6 @@ describe('testing a list of tickets', () => {
         hiddenColumns: [],
       },
       form: true,
-      formField: true,
       router: true,
       store: true,
     })

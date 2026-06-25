@@ -8,7 +8,6 @@ import { renderComponent } from '#tests/support/components/index.ts'
 const renderToggleButtonsField = (props: any = {}) => {
   return renderComponent(FormKit, {
     form: true,
-    formField: true,
     props: {
       id: 'toggleButtons',
       type: 'toggleButtons',
