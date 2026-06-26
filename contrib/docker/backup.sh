@@ -7,6 +7,7 @@ set -o pipefail
 : "${RESTORE_DIR:=/var/tmp/zammad/restore}"
 : "${BACKUP_TIME:=03:00}"
 : "${BACKUP_ON_START:=true}"
+: "${BACKUP_ONCE:=false}"
 : "${HOLD_DAYS:=10}"
 
 # See DOCKERFILE for environment variables.
@@ -111,6 +112,13 @@ if [ -d "${RESTORE_DIR}" ] && [ -n "$(ls "${RESTORE_DIR}")" ]; then
   perform_restore
 else
   check_zammad_ready
+
+  if [ "${BACKUP_ONCE}" = "true" ]; then
+    echo "Performing a single backup…"
+    zammad_backup
+    exit 0
+  fi
+
   echo "Starting backup loop…"
   zammad_backup_loop
 fi
