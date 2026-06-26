@@ -9434,6 +9434,10 @@ msgstr ""
 msgid "Invalid security code! Please try again with a new code."
 msgstr ""
 
+#: lib/secure_mailing/pgp/tool/data.rb:71
+msgid "Invalid signature format: expected a PGP signature"
+msgstr ""
+
 #: app/controllers/integration/cti_controller.rb:41
 #: app/controllers/integration/placetel_controller.rb:40
 #: app/controllers/integration/sipgate_controller.rb:40
@@ -11773,7 +11777,7 @@ msgstr ""
 msgid "No entries"
 msgstr ""
 
-#: app/controllers/integration/exchange_controller.rb:58
+#: app/controllers/integration/exchange_controller.rb:60
 msgid "No entries were found in the selected folder(s)."
 msgstr ""
 
@@ -11795,7 +11799,7 @@ msgstr ""
 msgid "No filter was configured."
 msgstr ""
 
-#: app/controllers/integration/exchange_controller.rb:45
+#: app/controllers/integration/exchange_controller.rb:47
 msgid "No folders were found for the given user credentials."
 msgstr ""
 
@@ -12916,6 +12920,10 @@ msgstr ""
 msgid "PGP integration"
 msgstr ""
 
+#: lib/secure_mailing/pgp/tool/data.rb:85
+msgid "PGP signature does not cover the displayed message body"
+msgstr ""
+
 #: db/seeds/settings.rb:5880
 msgid "PGP signing for system notifications"
 msgstr ""
@@ -13377,7 +13385,7 @@ msgstr ""
 msgid "Please select a ticket to merge into."
 msgstr ""
 
-#: app/controllers/integration/exchange_controller.rb:52
+#: app/controllers/integration/exchange_controller.rb:54
 msgid "Please select at least one folder."
 msgstr ""
 

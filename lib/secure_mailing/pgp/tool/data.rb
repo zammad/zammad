@@ -58,18 +58,31 @@ module SecureMailing::PGP::Tool::Data
         signature_file.write(signature)
         signature_file.close
 
-        # Inline (opaque) signatures embed the signed data inside the PGP message.
-        # gpg --verify accepts only the signature file in that case; passing a
-        # separate data file would cause gpg to treat it as a detached signature
-        # and fail with a format error.
-        if signature.to_s.strip.start_with?('-----BEGIN PGP MESSAGE-----')
-          gpg('verify', options:, arguments: [signature_file.path])
-        else
+        if signature.to_s.include?('-----BEGIN PGP SIGNATURE-----')
+          # Standard RFC 3156 detached signature: GPG verifies against the supplied data.
           verify_with_data_file(options, data, signature_file.path)
+        elsif signature.to_s.include?('-----BEGIN PGP MESSAGE-----')
+          # Non-standard opaque (inline) signature: GPG verifies the content embedded
+          # inside the blob, not the supplied data. We must also check that the embedded
+          # content matches the displayed body to prevent signature substitution attacks
+          # where an attacker reuses an old opaque signed message for arbitrary content.
+          verify_opaque_signature(options, data, signature_file.path)
+        else
+          raise __('Invalid signature format: expected a PGP signature')
         end
       ensure
         signature_file.unlink
       end
+    end
+
+    def verify_opaque_signature(options, data, signature_file_path)
+      result = gpg('verify', options:, arguments: [signature_file_path])
+
+      extraction = gpg('decrypt', options: options + ['--skip-verify'], arguments: [signature_file_path])
+
+      return result if extraction.stdout.strip == data.strip
+
+      raise __('PGP signature does not cover the displayed message body')
     end
 
     def verify_with_data_file(options, data, signature_file_path)
