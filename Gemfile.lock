@@ -352,7 +352,7 @@ GEM
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
     jmespath (1.6.2)
-    json (2.19.9)
+    json (2.20.0)
     json-jwt (1.17.1)
       activesupport (>= 4.2)
       aes_key_wrap
@@ -677,7 +677,7 @@ GEM
     rubocop-ast (1.49.1)
       parser (>= 3.3.7.2)
       prism (~> 1.7)
-    rubocop-capybara (2.23.0)
+    rubocop-capybara (3.0.0)
       lint_roller (~> 1.1)
       rubocop (~> 1.81)
     rubocop-factory_bot (2.28.0)
