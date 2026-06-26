@@ -90,7 +90,6 @@
     "stylelint-config-standard": "^40.0.0",
     "stylelint-config-standard-scss": "^17.0.0",
     "stylelint-scss": "^7.2.0",
-    "svg-baker": "^1.7.0",
     "svgo": "^4.0.1",
     "tailwindcss": "^4.3.1",
     "timezone-mock": "^1.4.3",

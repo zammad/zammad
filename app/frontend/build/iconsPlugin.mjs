@@ -1,21 +1,29 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { readFileSync } from 'node:fs'
+import { readFile } from 'node:fs/promises'
 import { basename } from 'node:path'
 
-import SVGCompiler from 'svg-baker'
 import { optimize } from 'svgo'
 
 /**
- * @param {string} filepath
+ * Wrap an optimized <svg> string as a sprite <symbol>, preserving geometry.
+ * @param {string} svg
+ * @param {string} name
  * @returns {string}
  */
-const optimizeSvg = (filepath) => {
-  const content = readFileSync(filepath, 'utf-8')
-  const result = optimize(content, {
-    plugins: [{ name: 'preset-default' }],
-  })
-  return result.data || content
+const svgToSymbol = (svg, name) => {
+  const open = svg.match(/<svg\b[^>]*>/)
+  if (!open) throw new Error(`No <svg> root found for icon "${name}"`)
+
+  const geometry = ['viewBox'] // ignore width/height, as they are not needed for <symbol> and can break scaling
+    .map((attr) => open[0].match(new RegExp(`\\s${attr}="[^"]*"`)))
+    .filter(Boolean)
+    .map((match) => match[0])
+    .join('')
+
+  const inner = svg.slice(open.index + open[0].length).replace(/<\/svg>\s*$/, '')
+
+  return `<symbol id="icon-${name}"${geometry}>${inner}</symbol>`
 }
 
 export default () => ({
@@ -23,22 +31,37 @@ export default () => ({
   enforce: 'pre',
   /**
    * @param {string} id
-   * @returns {{code: string}}
+   * @returns {Promise<{code: string} | undefined>}
    */
   async load(id) {
-    if (id.endsWith('.svg?symbol')) {
-      const filepath = id.replace(/\?.*$/, '')
-      const svgContent = optimizeSvg(filepath)
-      const compiler = new SVGCompiler()
-      const name = basename(filepath).split('.')[0]
-      const symbol = await compiler.addSymbol({
-        id: `icon-${name}`,
-        content: svgContent,
+    if (!id.endsWith('.svg?symbol')) return undefined
+
+    const filepath = id.replace(/\?.*$/, '')
+    // Re-run this hook when the source SVG changes (HMR / watch mode).
+    this.addWatchFile(filepath)
+
+    const name = basename(filepath, '.svg')
+    const content = await readFile(filepath, 'utf-8')
+
+    let data
+    try {
+      // prefixIds runs after preset-default so it prefixes the ids that
+      // cleanupIds minified (a -> icon-<name>_a). All symbols are merged into
+      // a single DOM sprite (see injectIcons.ts), so per-symbol prefixes are
+      // what keep gradient/clipPath ids collision-free.
+      ;({ data } = optimize(content, {
         path: filepath,
-      })
-      return {
-        code: `export default \`${symbol.render()}\``,
-      }
+        plugins: [
+          { name: 'preset-default' },
+          { name: 'prefixIds', params: { prefix: `icon-${name}`, delim: '_' } },
+        ],
+      }))
+    } catch (error) {
+      throw new Error(`Failed to optimize SVG "${filepath}": ${error.message}`)
     }
+
+    // JSON.stringify avoids breaking the module if SVG content contains
+    // backticks, ${ or backslashes.
+    return { code: `export default ${JSON.stringify(svgToSymbol(data, name))}` }
   },
 })
