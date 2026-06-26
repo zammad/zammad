@@ -27,6 +27,7 @@ import { useScrollPosition } from '#desktop/composables/useScrollPosition.ts'
 import { useTicketByOrganizationUpdatesSubscription } from '#desktop/entities/ticket/graphql/subscriptions/ticketByOrganizationUpdates.api.ts'
 
 import OrganizationDetailTopBar from './OrganizationDetailTopBar.vue'
+import OrganizationDetailViewContentSkeleton from './OrganizationDetailViewContentSkeleton.vue'
 import OrganizationRelatedTickets from './OrganizationRelatedTickets.vue'
 
 interface Props {
@@ -106,7 +107,11 @@ organizationTicketsSubscription.onResult(({ data }) => {
     content-alignment="center"
     no-scrollable
   >
-    <CommonLoader class="mt-8" :loading="loadingWithoutCachedResult">
+    <CommonLoader class="size-full" :loading="loadingWithoutCachedResult">
+      <template #skeleton>
+        <OrganizationDetailViewContentSkeleton />
+      </template>
+
       <div ref="content-container" class="@container size-full overflow-y-auto">
         <OrganizationDetailTopBar
           :organization="organization"

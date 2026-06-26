@@ -25,6 +25,7 @@ import { useUserCurrentTaskbarTabsStore } from '#desktop/entities/user/current/s
 import UserTaskbarTabForbidden from './UserTaskbarTabForbidden.vue'
 import UserTaskbarTabNotFound from './UserTaskbarTabNotFound.vue'
 import UserTaskbarTabRemove from './UserTaskbarTabRemove.vue'
+import UserTaskbarTabsSkeleton from './UserTaskbarTabsSkeleton.vue'
 
 export interface Props {
   collapsed?: boolean
@@ -213,6 +214,9 @@ const { isTouchDevice } = useTouchDevice()
 
 <template>
   <CommonLoader no-transition :loading="loading">
+    <template #skeleton>
+      <UserTaskbarTabsSkeleton :collapsed="collapsed" />
+    </template>
     <div
       v-if="hasTaskbarTabs"
       class="flex flex-col overflow-y-hidden"

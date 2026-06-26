@@ -31,6 +31,7 @@ import { useFlyout } from '#desktop/components/CommonFlyout/useFlyout.ts'
 import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
 import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
 
+import PersonalSettingAvatarSkeleton from '../components/PersonalSettingAvatarSkeleton.vue'
 import { useBreadcrumb } from '../composables/useBreadcrumb.ts'
 import { usePersonalSettingTabs } from '../composables/usePersonalSettingTabs.ts'
 import { useUserCurrentAvatarSelectMutation } from '../graphql/mutations/userCurrentAvatarSelect.api.ts'
@@ -299,6 +300,10 @@ const { tabs, activeTab } = usePersonalSettingTabs()
     width="narrow"
   >
     <CommonLoader :loading="avatarListQueryLoading">
+      <template #skeleton>
+        <PersonalSettingAvatarSkeleton />
+      </template>
+
       <div class="mb-4">
         <CommonLabel class="mt-0.5! mb-1 block!">{{ $t('Your avatar') }} </CommonLabel>
 
@@ -314,7 +319,7 @@ const { tabs, activeTab } = usePersonalSettingTabs()
                 <CommonUserAvatar
                   :class="{ 'avatar-selected': avatar.default }"
                   :entity="user"
-                  class="!flex border-neutral-100 dark:border-gray-900"
+                  class="flex! border-neutral-100 dark:border-gray-900"
                   size="large"
                   initials-only
                   personal
@@ -331,7 +336,7 @@ const { tabs, activeTab } = usePersonalSettingTabs()
                   <CommonAvatar
                     :class="{ 'avatar-selected': avatar.default }"
                     :image="`${apiUrl}/users/image/${avatar.imageHash}`"
-                    class="!flex border-neutral-100 dark:border-gray-900"
+                    class="flex! border-neutral-100 dark:border-gray-900"
                     size="large"
                   >
                   </CommonAvatar>
@@ -340,7 +345,7 @@ const { tabs, activeTab } = usePersonalSettingTabs()
                   v-if="avatar.deletable"
                   v-tooltip="$t('Delete this avatar')"
                   :class="{ 'opacity-0 transition-opacity': !isTouchDevice }"
-                  class="absolute -end-2 -top-1 text-white group-hover/avatar:opacity-100 focus:opacity-100"
+                  class="absolute -inset-e-2 -top-1 text-white group-hover/avatar:opacity-100 focus:opacity-100"
                   icon="x-lg"
                   size="small"
                   variant="remove"

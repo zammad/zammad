@@ -19,6 +19,7 @@ import CommonEmptyMessage from '#desktop/components/CommonEmptyMessage/CommonEmp
 import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
 import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
 import { UserCurrentOverviewOrderingUpdatesDocument } from '#desktop/entities/ticket/graphql/subscriptions/userCurrentOverviewOrderingUpdates.api.ts'
+import PersonalSettingOverviewsSkeleton from '#desktop/pages/personal-setting/components/PersonalSettingOverviewsSkeleton.vue'
 
 import PersonalSettingOverviewOrder, {
   type OverviewItem,
@@ -125,6 +126,10 @@ const { tabs, activeTab } = usePersonalSettingTabs()
     width="narrow"
   >
     <CommonLoader no-transition class="mt-5 mb-3" :loading="overviewListQueryLoading">
+      <template #skeleton>
+        <PersonalSettingOverviewsSkeleton />
+      </template>
+
       <div v-if="overviewList.length" class="mb-4">
         <CommonLabel id="label-ticket-overview-order" class="mt-0.5! mb-1 block!"
           >{{ $t('Order of ticket overviews') }}

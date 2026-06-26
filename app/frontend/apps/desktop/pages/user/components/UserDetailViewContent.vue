@@ -23,6 +23,7 @@ import UserTicketBarChart from '#desktop/components/Ticket/TicketBarChart/UserTi
 import { usePage } from '#desktop/composables/usePage.ts'
 import { useScrollPosition } from '#desktop/composables/useScrollPosition.ts'
 import { useTicketByCustomerUpdatesSubscription } from '#desktop/entities/ticket/graphql/subscriptions/ticketByCustomerUpdates.api.ts'
+import UserDetailViewContentSkeleton from '#desktop/pages/user/components/UserDetailViewContentSkeleton.vue'
 
 import UserDetailTopBar from './UserDetailTopBar.vue'
 import UserRelatedCustomerTickets from './UserRelatedCustomerTickets.vue'
@@ -112,7 +113,11 @@ customerTicketsSubscription.onResult(({ data }) => {
     content-alignment="center"
     no-scrollable
   >
-    <CommonLoader class="mt-8" :loading="loadingWithoutCachedResult">
+    <CommonLoader class="size-full" :loading="loadingWithoutCachedResult">
+      <template #skeleton>
+        <UserDetailViewContentSkeleton />
+      </template>
+
       <div ref="content-container" class="@container size-full overflow-y-auto">
         <UserDetailTopBar
           :user="user"

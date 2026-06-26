@@ -3,6 +3,7 @@
 <script setup lang="ts">
 import { computed, onBeforeMount, ref, watch } from 'vue'
 
+import { useReducedMotion } from '#shared/composables/useReducedMotion.ts'
 import emitter from '#shared/utils/emitter.ts'
 
 import { useTransitionConfig } from '#desktop//composables/useTransitionConfig.ts'
@@ -80,7 +81,7 @@ const {
   resetSidebarWidth,
 } = useResizeGridColumns(SidebarName.TicketContent, SidebarPosition.End)
 
-const { durations } = useTransitionConfig()
+const { transitions } = useTransitionConfig()
 
 const { isSmallScreen } = useAppBreakpoints()
 // Needed to make the breakpoint detection work within the layout, which is relevant for the sidebar display behavior
@@ -106,6 +107,8 @@ onBeforeMount(() => {
   // When the screen shrinks into the small viewport(<1024px) and both sidebars are open, close this one.
   if (isSmallScreen.value) toggleContentSidebar(true, { storage: 'session' })
 })
+
+const { hasReducedMotion } = useReducedMotion()
 </script>
 
 <template>
@@ -121,8 +124,8 @@ onBeforeMount(() => {
       class="grid h-full duration-100 print:grid-cols-1"
       :class="{
         'grid-cols-(--grid-columns)': $slots.sideBar && showSidebar,
-        'transition-none': noTransition,
-        'max-h-[calc(100%-3.5rem)] print:max-h-none': $slots.bottomBar,
+        'transition-none': noTransition || hasReducedMotion,
+        'max-h-[calc(100%-3.5rem)]': $slots.bottomBar,
         'max-h-screen': !$slots.bottomBar,
       }"
     >
@@ -168,7 +171,7 @@ onBeforeMount(() => {
             </div>
           </div>
 
-          <Transition :duration="durations.normal" name="fade" mode="out-in">
+          <Transition :name="transitions.fade" mode="out-in">
             <slot v-if="!showInlineHelp" />
             <slot v-else name="helpPage">
               <CommonHelpText :help-text="helpText" />

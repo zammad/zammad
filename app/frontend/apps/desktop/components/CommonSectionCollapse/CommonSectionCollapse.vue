@@ -5,6 +5,7 @@ import { computed, ref, watch } from 'vue'
 
 import CollapseButton from '#desktop/components/CollapseButton/CollapseButton.vue'
 import { useTransitionCollapse } from '#desktop/composables/useTransitionCollapse.ts'
+import { useTransitionConfig } from '#desktop/composables/useTransitionConfig.ts'
 
 export interface Props {
   id: string
@@ -43,8 +44,8 @@ const toggleCollapse = (collapse?: boolean) => {
   return isCollapsed.value ? emit('collapse') : emit('expand')
 }
 
-const { collapseDuration, collapseEnter, collapseAfterEnter, collapseLeave } =
-  useTransitionCollapse()
+const { transitions } = useTransitionConfig()
+const { collapseEnter, collapseAfterEnter, collapseLeave } = useTransitionCollapse()
 
 watch(
   modelValue,
@@ -107,8 +108,7 @@ watch(
       />
     </header>
     <Transition
-      name="collapse"
-      :duration="collapseDuration"
+      :name="transitions.collapse"
       @enter="collapseEnter"
       @after-enter="collapseAfterEnter"
       @leave="collapseLeave"

@@ -8,6 +8,7 @@ import type { AppSpecificTicketArticleType } from '#shared/entities/ticket-artic
 import { useSessionStore } from '#shared/stores/session.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
+import { useTransitionConfig } from '#desktop/composables/useTransitionConfig.ts'
 
 import { useArticleReply } from './useArticleReply.ts'
 
@@ -49,6 +50,8 @@ const { defaultArticleType } = useArticleReply(
   toRef(props, 'ticket'),
   toRef(props, 'ticketArticleTypes'),
 )
+
+const { transitions } = useTransitionConfig()
 </script>
 
 <template>
@@ -59,7 +62,7 @@ const { defaultArticleType } = useArticleReply(
     :aria-label="$t('Ticket actions')"
     class="grid w-fit gap-1 rounded-(--toolbar-radius) border border-neutral-100 bg-neutral-75/80 p-(--toolbar-p) backdrop-blur-xs [--toolbar-p:0.25rem] [--toolbar-radius:0.75rem] dark:border-gray-900 dark:bg-gray-500/80"
   >
-    <Transition name="collapse-height">
+    <Transition :name="transitions.collapseHeight">
       <div v-if="!isReachingBottom && !newArticlePresent && defaultArticleType" class="flex">
         <CommonButton
           v-tooltip="isAgentUser ? $t('Add internal note') : $t('Add reply')"
@@ -78,7 +81,7 @@ const { defaultArticleType } = useArticleReply(
       </div>
     </Transition>
 
-    <Transition name="collapse-height">
+    <Transition :name="transitions.collapseHeight">
       <div v-if="!isReachingTop">
         <div class="flex min-h-0">
           <CommonButton
@@ -94,7 +97,7 @@ const { defaultArticleType } = useArticleReply(
       </div>
     </Transition>
 
-    <Transition name="collapse-height">
+    <Transition :name="transitions.collapseHeight">
       <div v-if="!isReachingBottom">
         <div class="relative flex min-h-0">
           <CommonButton

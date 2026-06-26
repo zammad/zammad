@@ -1,19 +1,36 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { useTransitionConfig } from '../useTransitionConfig.ts'
+import { camelCase } from 'lodash-es'
+import { ref } from 'vue'
+
+import { useTransitionConfig, TransitionName } from '../useTransitionConfig.ts'
+
+const hasReducedMotion = ref(false)
+
+vi.mock('#shared/composables/useReducedMotion.ts', () => ({
+  useReducedMotion: () => ({ hasReducedMotion }),
+}))
 
 describe('useTransitionConfig', () => {
-  it('sets transition time to undefined in test environment', () => {
-    const { durations } = useTransitionConfig()
-
-    expect(durations.normal?.enter).toBe(300)
-    expect(durations.normal?.leave).toBe(200)
+  afterEach(() => {
+    hasReducedMotion.value = false
   })
 
-  it('returns 0 for short and veryShort timings in test environment', () => {
-    const { timings } = useTransitionConfig()
+  it('returns actual transition names without reduced motion', () => {
+    const { transitions } = useTransitionConfig()
 
-    expect(timings.short).toBe(200)
-    expect(timings.veryShort).toBe(100)
+    Object.entries(TransitionName).forEach(([key, name]) => {
+      expect(transitions.value[camelCase(key)]).toBe(name)
+    })
+  })
+
+  it('returns undefined for transition names with reduced motion', () => {
+    hasReducedMotion.value = true
+
+    const { transitions } = useTransitionConfig()
+
+    Object.keys(TransitionName).forEach((key) => {
+      expect(transitions.value[camelCase(key)]).toBeUndefined()
+    })
   })
 })

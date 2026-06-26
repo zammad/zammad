@@ -28,6 +28,7 @@ import type { FormSubmitData, FormValues } from '#shared/components/Form/types.t
 import { useForm } from '#shared/components/Form/useForm.ts'
 import { setErrors } from '#shared/components/Form/utils.ts'
 import { useConfirmation } from '#shared/composables/useConfirmation.ts'
+import { useReducedMotion } from '#shared/composables/useReducedMotion.ts'
 import {
   useTicketMacros,
   macroScreenBehaviourMapping,
@@ -79,8 +80,10 @@ import { type TicketSidebarContext, TicketSidebarScreenType } from '../../types/
 import TicketSidebar from '../TicketSidebar.vue'
 
 import ArticleList from './ArticleList.vue'
+import ArticleListSkeleton from './ArticleListSkeleton.vue'
 import ArticleReply from './ArticleReply.vue'
 import TicketDetailTopBar from './TicketDetailTopBar/TicketDetailTopBar.vue'
+import TicketDetailTopBarSkeleton from './TicketDetailTopBar/TicketDetailTopBarSkeleton.vue'
 import { useUnreadArticle } from './useUnreadArticle.ts'
 interface Props {
   internalId: string
@@ -153,9 +156,11 @@ usePage({
 
 const { scrollIntoView: scrollToArticle } = useScrollPosition(contentContainerElement)
 
+const { scrollBehavior } = useReducedMotion()
+
 const handleScrollToArticleEnds = async (
   block: 'start' | 'end' = 'end',
-  behavior: ScrollToOptions['behavior'] = 'smooth',
+  behavior: ScrollToOptions['behavior'] = scrollBehavior.value,
 ) => scrollToArticle(block, { behavior })
 
 const articleListInstance = useTemplateRef('article-list')
@@ -684,23 +689,29 @@ const handleShowArticleForm = (
     content-alignment="center"
     no-scrollable
   >
-    <CommonLoader class="mt-8" :loading="!ticket">
-      <div
-        ref="content-container"
-        data-test-id="ticket-detail-content-container"
-        class="@container isolate grid size-full overflow-y-auto overscroll-contain print:h-auto print:overflow-y-visible"
-        :class="{
-          'grid-rows-[0_max-content_max-content_max-content]':
-            !newTicketArticlePresent || !isReplyPinned,
-          'grid-rows-[0_max-content_1fr_max-content]': newTicketArticlePresent && isReplyPinned,
-        }"
-      >
-        <CommonIndicator v-model="isReachingTop" />
+    <div
+      ref="content-container"
+      data-test-id="ticket-detail-content-container"
+      class="@container isolate grid size-full overflow-y-auto overscroll-contain print:h-auto print:overflow-y-visible"
+      :class="{
+        'grid-rows-[0_max-content_max-content_max-content]':
+          !newTicketArticlePresent || !isReplyPinned,
+        'grid-rows-[0_max-content_1fr_max-content]': newTicketArticlePresent && isReplyPinned,
+      }"
+    >
+      <CommonIndicator v-model="isReachingTop" />
 
-        <TicketDetailTopBar
-          ref="detail-top-bar"
-          :content-container-element="contentContainerElement"
-        />
+      <TicketDetailTopBarSkeleton v-if="!ticket" />
+      <TicketDetailTopBar
+        v-else
+        ref="detail-top-bar"
+        :content-container-element="contentContainerElement"
+      />
+
+      <CommonLoader :loading="isLoadingArticles">
+        <template #skeleton>
+          <ArticleListSkeleton />
+        </template>
 
         <ArticleList
           ref="article-list"
@@ -709,88 +720,88 @@ const handleShowArticleForm = (
           :unread-article-ids="unreadArticleIds"
           @scroll-to-end="handleInitialScrollToEnd"
         />
+      </CommonLoader>
 
-        <CommonIndicator v-if="!newTicketArticlePresent" v-model="isReachingBottom" />
+      <CommonIndicator v-if="!newTicketArticlePresent" v-model="isReachingBottom" />
 
-        <ArticleReply
-          v-show="!isLoadingArticles && isInitialSettled"
-          v-if="ticket?.id && isTicketEditable"
-          v-model:pinned="isReplyPinned"
-          class="print:hidden"
-          :ticket="ticket"
-          :ticket-article-types="ticketArticleTypes"
-          :new-article-present="newTicketArticlePresent"
-          :create-article-type="ticket.createArticleType?.name"
-          :has-internal-article="hasInternalArticle"
-          :parent-reached-bottom-scroll="isReachingBottom"
-          @show-article-form="handleShowArticleForm"
-          @discard-form="discardReplyForm"
-        >
-          <template #leading>
-            <FloatingToolbar
-              :ticket="ticket"
-              :ticket-article-types="ticketArticleTypes"
-              :is-reaching-top="isReachingTop"
-              :is-reaching-bottom="isReachingBottom"
-              :unread-article-count="articleCount"
-              :new-article-present="newTicketArticlePresent"
-              class="absolute inset-e-1 -top-3 -translate-y-full @6xl:inset-e-3"
-              @show-article-form="handleShowArticleForm"
-              @scroll-to-end="handleScrollToArticleEnds"
-              @scroll-to-start="handleScrollToArticleEnds('start')"
-              @scroll-to-unread-article="handleScrollToUnreadArticle"
-            />
-          </template>
-        </ArticleReply>
-
-        <CommonIndicator v-if="newTicketArticlePresent" v-model="isReachingBottom" />
-
-        <div
-          v-if="!newTicketArticlePresent || !isReplyPinned"
-          class="sticky bottom-3 h-0 print:hidden"
-        >
+      <ArticleReply
+        v-show="!isLoadingArticles && isInitialSettled"
+        v-if="ticket?.id && isTicketEditable"
+        v-model:pinned="isReplyPinned"
+        class="print:hidden"
+        :ticket="ticket"
+        :ticket-article-types="ticketArticleTypes"
+        :new-article-present="newTicketArticlePresent"
+        :create-article-type="ticket.createArticleType?.name"
+        :has-internal-article="hasInternalArticle"
+        :parent-reached-bottom-scroll="isReachingBottom"
+        @show-article-form="handleShowArticleForm"
+        @discard-form="discardReplyForm"
+      >
+        <template #leading>
           <FloatingToolbar
             :ticket="ticket"
             :ticket-article-types="ticketArticleTypes"
-            :is-reaching-bottom="isReachingBottom"
             :is-reaching-top="isReachingTop"
+            :is-reaching-bottom="isReachingBottom"
             :unread-article-count="articleCount"
             :new-article-present="newTicketArticlePresent"
-            class="absolute inset-e-1 bottom-0 @6xl:inset-e-3"
+            class="absolute inset-e-1 -top-3 -translate-y-full @6xl:inset-e-3"
             @show-article-form="handleShowArticleForm"
             @scroll-to-end="handleScrollToArticleEnds"
             @scroll-to-start="handleScrollToArticleEnds('start')"
             @scroll-to-unread-article="handleScrollToUnreadArticle"
           />
-        </div>
+        </template>
+      </ArticleReply>
 
-        <div id="wrapper-form-ticket-edit" class="hidden" aria-hidden="true">
-          <Form
-            v-if="ticket?.id && initialTicketValue"
-            :id="`form-ticket-edit-${internalId}`"
-            ref="form"
-            :form-id="currentTaskbarTabFormId"
-            :schema="ticketEditSchema"
-            :disabled="!isTicketEditable"
-            :flatten-form-groups="['ticket']"
-            :hidden-form-groups="hiddenFormGroups"
-            :handlers="[articleTypeHandler(), signatureHandling('body')]"
-            :form-kit-plugins="[articleTypeSelectHandler]"
-            :schema-data="ticketEditSchemaData"
-            :initial-values="initialTicketValue"
-            :initial-entity-object="ticket"
-            :form-updater-id="EnumFormUpdaterId.FormUpdaterUpdaterTicketEdit"
-            :form-updater-additional-params="formAdditionalRouteQueryParams"
-            use-object-attributes
-            :schema-component-library="{
-              Teleport: markRaw(Teleport) as unknown as Component,
-            }"
-            @submit="submitEditTicket($event as FormSubmitData<TicketUpdateFormData>)"
-            @settled="onEditFormSettled"
-          />
-        </div>
+      <CommonIndicator v-if="newTicketArticlePresent" v-model="isReachingBottom" />
+
+      <div
+        v-if="ticket && (!newTicketArticlePresent || !isReplyPinned)"
+        class="sticky bottom-3 h-0 print:hidden"
+      >
+        <FloatingToolbar
+          :ticket="ticket"
+          :ticket-article-types="ticketArticleTypes"
+          :is-reaching-bottom="isReachingBottom"
+          :is-reaching-top="isReachingTop"
+          :unread-article-count="articleCount"
+          :new-article-present="newTicketArticlePresent"
+          class="absolute inset-e-1 bottom-0 @6xl:inset-e-3"
+          @show-article-form="handleShowArticleForm"
+          @scroll-to-end="handleScrollToArticleEnds"
+          @scroll-to-start="handleScrollToArticleEnds('start')"
+          @scroll-to-unread-article="handleScrollToUnreadArticle"
+        />
       </div>
-    </CommonLoader>
+
+      <div id="wrapper-form-ticket-edit" class="hidden" aria-hidden="true">
+        <Form
+          v-if="ticket?.id && initialTicketValue"
+          :id="`form-ticket-edit-${internalId}`"
+          ref="form"
+          :form-id="currentTaskbarTabFormId"
+          :schema="ticketEditSchema"
+          :disabled="!isTicketEditable"
+          :flatten-form-groups="['ticket']"
+          :hidden-form-groups="hiddenFormGroups"
+          :handlers="[articleTypeHandler(), signatureHandling('body')]"
+          :form-kit-plugins="[articleTypeSelectHandler]"
+          :schema-data="ticketEditSchemaData"
+          :initial-values="initialTicketValue"
+          :initial-entity-object="ticket"
+          :form-updater-id="EnumFormUpdaterId.FormUpdaterUpdaterTicketEdit"
+          :form-updater-additional-params="formAdditionalRouteQueryParams"
+          use-object-attributes
+          :schema-component-library="{
+            Teleport: markRaw(Teleport) as unknown as Component,
+          }"
+          @submit="submitEditTicket($event as FormSubmitData<TicketUpdateFormData>)"
+          @settled="onEditFormSettled"
+        />
+      </div>
+    </div>
     <!-- Render underlying components only when the ticket is available to avoid providing undefined ticket context -->
     <template v-if="!!ticket" #sideBar>
       <TicketSidebar :context="sidebarContext" />

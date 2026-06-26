@@ -17,6 +17,7 @@ import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import { useFlyout } from '#desktop/components/CommonFlyout/useFlyout.ts'
 import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
 import IssueTrackerItem from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue'
+import IssueTrackerListSkeleton from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerListSkeleton.vue'
 import { useTicketExternalIssueTracker } from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/useTicketExternalIssueTracker.ts'
 import type { ExternalReferencesFormValues } from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/types.ts'
 import { useTicketExternalReferencesIssueTrackerItemAddMutation } from '#desktop/pages/ticket/graphql/mutations/ticketExternalReferencesIssueTrackerItemAdd.api.ts'
@@ -261,6 +262,10 @@ defineExpose({
 
 <template>
   <CommonLoader :loading="isLoadingIssues" :error="error">
+    <template #skeleton>
+      <IssueTrackerListSkeleton />
+    </template>
+
     <div class="space-y-6">
       <CommonButton
         v-if="showEmptyState"

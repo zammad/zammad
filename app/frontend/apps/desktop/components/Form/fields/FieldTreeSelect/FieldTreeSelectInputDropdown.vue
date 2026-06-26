@@ -20,6 +20,7 @@ import testFlags from '#shared/utils/testFlags.ts'
 
 import { useCommonSelect } from '#desktop/components/CommonSelect/useCommonSelect.ts'
 import { useTransitionCollapse } from '#desktop/composables/useTransitionCollapse.ts'
+import { useTransitionConfig } from '#desktop/composables/useTransitionConfig.ts'
 
 import FieldTreeSelectInputDropdownItem from './FieldTreeSelectInputDropdownItem.vue'
 
@@ -382,8 +383,8 @@ const highlightedOptions = computed(() =>
   }),
 )
 
-const { collapseDuration, collapseEnter, collapseAfterEnter, collapseLeave } =
-  useTransitionCollapse()
+const { transitions } = useTransitionConfig()
+const { collapseEnter, collapseAfterEnter, collapseLeave } = useTransitionCollapse()
 
 const hasTopElement = computed(
   () => !!(props.currentPath.length || (props.multiple && hasMoreSelectableOptions)),
@@ -399,8 +400,8 @@ const hasTopElement = computed(
   />
   <Teleport to="body">
     <Transition
-      :name="isTargetVisible ? 'collapse' : 'none'"
-      :duration="collapseDuration"
+      :name="transitions.collapse"
+      :appear="isTargetVisible"
       @enter="collapseEnter"
       @after-enter="collapseAfterEnter"
       @leave="collapseLeave"

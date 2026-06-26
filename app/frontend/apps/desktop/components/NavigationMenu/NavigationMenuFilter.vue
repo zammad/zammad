@@ -41,7 +41,7 @@ watchEffect(() => {
   closeFilterField()
 })
 
-const { durations } = useTransitionConfig()
+const { transitions } = useTransitionConfig()
 </script>
 
 <template>
@@ -79,7 +79,7 @@ const { durations } = useTransitionConfig()
       type="text"
       role="searchbox"
     />
-    <Transition name="fade-move" :duration="durations.normal">
+    <Transition :name="transitions.fadeMove">
       <CommonButton
         v-if="filterFieldOpen"
         v-tooltip="$t('Clear filter')"

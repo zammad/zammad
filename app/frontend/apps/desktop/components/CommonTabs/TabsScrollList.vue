@@ -8,6 +8,7 @@ import {
 } from '@vueuse/core'
 import { computed, onUnmounted, ref, toRef, useTemplateRef, watch } from 'vue'
 
+import { useReducedMotion } from '#shared/composables/useReducedMotion.ts'
 import { EnumTextDirection } from '#shared/graphql/types.ts'
 import { useLocaleStore } from '#shared/stores/locale.ts'
 import { waitForAnimationFrame } from '#shared/utils/helpers.ts'
@@ -142,7 +143,9 @@ onUnmounted(() => {
 const stopWatcher = watch(selectedIndex, measureMarker, { flush: 'post' })
 if (!hasMarker.value) stopWatcher()
 
-watch(activeTabIndex, () => centerActiveTab('smooth'), { flush: 'post' })
+const { scrollBehavior } = useReducedMotion()
+
+watch(activeTabIndex, () => centerActiveTab(scrollBehavior.value), { flush: 'post' })
 
 watch(
   () => props.tabs,
@@ -189,7 +192,7 @@ const beginScroll = (direction: 'start' | 'end') => {
     scrollAmount = -scrollAmount
   }
 
-  containerElement.value.scrollBy({ left: scrollAmount, behavior: 'smooth' })
+  containerElement.value.scrollBy({ left: scrollAmount, behavior: scrollBehavior.value })
 }
 
 const iconNamePerDirection = (isLtr: boolean, direction: 'start' | 'end') => {

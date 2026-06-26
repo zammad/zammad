@@ -3,6 +3,7 @@
 import { nextTick, onActivated, ref, type ShallowRef } from 'vue'
 import { onBeforeRouteLeave, onBeforeRouteUpdate } from 'vue-router'
 
+import { useReducedMotion } from '#shared/composables/useReducedMotion.ts'
 import { waitForAnimationFrame } from '#shared/utils/helpers.ts'
 
 export const useScrollPosition = (scrollContainer?: ShallowRef<HTMLElement | null>) => {
@@ -22,9 +23,11 @@ export const useScrollPosition = (scrollContainer?: ShallowRef<HTMLElement | nul
   onBeforeRouteLeave(storeScrollPosition)
   onBeforeRouteUpdate(storeScrollPosition)
 
+  const { scrollBehavior } = useReducedMotion()
+
   const scrollIntoView = async (
     block: 'start' | 'end',
-    options: { behavior: ScrollOptions['behavior'] } = { behavior: 'smooth' },
+    options: { behavior: ScrollOptions['behavior'] } = { behavior: scrollBehavior.value },
   ) => {
     const { behavior } = options
 

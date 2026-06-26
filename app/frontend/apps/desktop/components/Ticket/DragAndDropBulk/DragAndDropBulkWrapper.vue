@@ -5,6 +5,7 @@ import { useElementHover } from '@vueuse/core'
 import { computed, ref, toRef, useTemplateRef, watch } from 'vue'
 
 import CommonOverlayContainer from '#desktop/components/CommonOverlayContainer/CommonOverlayContainer.vue'
+import { useTransitionConfig } from '#desktop/composables/useTransitionConfig.ts'
 import { useTicketBulkUpdateStore } from '#desktop/entities/user/current/stores/ticketBulkUpdate.ts'
 
 import DragAndDropBulkBottomDrawer from './DragAndDropBulkBottomDrawer.vue'
@@ -28,8 +29,8 @@ const props = defineProps<Props>()
 const bulkTopDrawerElement = useTemplateRef<HTMLElement>('bulk-top-drawer')
 const bulkBottomDrawerElement = useTemplateRef<HTMLElement>('bulk-bottom-drawer')
 
-const isTopBarHoveredRaw = useElementHover(bulkTopDrawerElement, {})
-const isBottomBarHoveredRaw = useElementHover(bulkBottomDrawerElement, {})
+const isTopBarHoveredRaw = useElementHover(bulkTopDrawerElement)
+const isBottomBarHoveredRaw = useElementHover(bulkBottomDrawerElement)
 
 const lockedTopBarHovered = ref(false)
 const lockedBottomBarHovered = ref(false)
@@ -62,10 +63,12 @@ const isBottomBarHovered = computed(() =>
 const centerIsHovered = computed(() => isTopBarHovered.value || isBottomBarHovered.value)
 
 const confirmationPending = toRef(useTicketBulkUpdateStore(), 'confirmationPending')
+
+const { transitions } = useTransitionConfig()
 </script>
 
 <template>
-  <transition name="fade" appear>
+  <Transition :name="transitions.fade" appear>
     <CommonOverlayContainer
       class="fixed inset-0 top-0 isolate z-51 size-full"
       :class="{ 'cursor-grabbing': !confirmationPending && previewData }"
@@ -96,7 +99,7 @@ const confirmationPending = toRef(useTicketBulkUpdateStore(), 'confirmationPendi
           }"
         />
 
-        <transition name="fade-quick">
+        <Transition :name="transitions.fadeQuick">
           <section
             v-if="!dropSuccessTargetEntity"
             class="absolute inset-1/2 flex w-full -translate-y-1/2 items-center gap-10 px-10 text-white! before:grow before:border before:border-dashed after:grow after:border after:border-dashed ltr:-translate-x-1/2 rtl:translate-x-1/2"
@@ -114,9 +117,9 @@ const confirmationPending = toRef(useTicketBulkUpdateStore(), 'confirmationPendi
               <CommonIcon name="arrow-up-short" />
             </div>
           </section>
-        </transition>
+        </Transition>
 
-        <transition name="fade-up">
+        <Transition :name="transitions.fadeUp">
           <DragAndDropBulkBottomDrawer
             v-show="!isTopBarHovered"
             ref="bulk-bottom-drawer"
@@ -127,8 +130,8 @@ const confirmationPending = toRef(useTicketBulkUpdateStore(), 'confirmationPendi
               'translate-y-full delay-300': dropSuccessTargetEntity,
             }"
           />
-        </transition>
+        </Transition>
       </template>
     </CommonOverlayContainer>
-  </transition>
+  </Transition>
 </template>

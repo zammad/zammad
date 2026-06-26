@@ -25,6 +25,7 @@ import { useFlyout } from '#desktop/components/CommonFlyout/useFlyout.ts'
 import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
 import type { MenuItem } from '#desktop/components/CommonPopoverMenu/types.ts'
 import CommonSimpleTable from '#desktop/components/CommonTable/CommonSimpleTable.vue'
+import CommonTableSkeleton from '#desktop/components/CommonTable/Skeleton/CommonTableSkeleton.vue'
 import type { TableSimpleHeader, TableItem } from '#desktop/components/CommonTable/types.ts'
 import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
 
@@ -198,6 +199,10 @@ const { tabs, activeTab } = usePersonalSettingTabs()
     </template>
 
     <CommonLoader :loading="accessTokenListLoading">
+      <template #skeleton>
+        <CommonTableSkeleton :columns="5" :rows="3" has-actions />
+      </template>
+
       <div class="mb-4">
         <CommonSimpleTable
           :headers="tableHeaders"

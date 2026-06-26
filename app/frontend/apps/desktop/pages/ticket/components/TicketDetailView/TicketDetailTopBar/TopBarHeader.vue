@@ -15,7 +15,7 @@ import { useTicketInformation } from '#desktop/pages/ticket/composables/useTicke
 import { useTicketNumber } from '#desktop/pages/ticket/composables/useTicketNumber.ts'
 
 interface Props {
-  hideDetails: boolean
+  hideDetails?: boolean
 }
 
 const props = defineProps<Props>()

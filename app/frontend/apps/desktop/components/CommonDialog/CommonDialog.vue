@@ -16,6 +16,7 @@ import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonOverlayContainer from '#desktop/components/CommonOverlayContainer/CommonOverlayContainer.vue'
 import { useAppBreakpoints } from '#desktop/composables/responsiveness/useAppBreakpoints.ts'
 import { getRouteIdentifier } from '#desktop/composables/useOverlayContainer.ts'
+import { useTransitionConfig } from '#desktop/composables/useTransitionConfig.ts'
 
 import CommonDialogActionFooter, {
   type Props as ActionFooterProps,
@@ -112,22 +113,12 @@ onMounted(() => {
   })
 })
 
-// It is the same as flyout, but could be changed in the future?
-const transition = VITE_TEST_MODE
-  ? undefined
-  : {
-      enterActiveClass: 'duration-300 ease-out',
-      enterFromClass: 'opacity-0 rtl:-translate-x-3/4 ltr:translate-x-3/4',
-      enterToClass: 'opacity-100 rtl:-translate-x-0 ltr:translate-x-0',
-      leaveActiveClass: 'duration-200 ease-in',
-      leaveFromClass: 'opacity-100 rtl:-translate-x-0 ltr:translate-x-0',
-      leaveToClass: 'opacity-0 rtl:-translate-x-3/4 ltr:translate-x-3/4',
-    }
+const { transitions } = useTransitionConfig()
 </script>
 
 <template>
   <!--  `display:none` to prevent showing up inactive dialog for cached instance -->
-  <Transition :appear="isActive" v-bind="transition">
+  <Transition :name="transitions.fade" :appear="isActive">
     <!-- We use teleport here to  center it to target node and increase z index on fullscreen to avoid clicking collapse and resize buttons -->
     <Teleport :to="isFullscreen ? '#app' : '#main-content'">
       <CommonOverlayContainer

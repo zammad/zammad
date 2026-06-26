@@ -20,6 +20,7 @@ import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
 import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
 import type { MenuItem } from '#desktop/components/CommonPopoverMenu/types.ts'
 import CommonSimpleTable from '#desktop/components/CommonTable/CommonSimpleTable.vue'
+import CommonTableSkeleton from '#desktop/components/CommonTable/Skeleton/CommonTableSkeleton.vue'
 import type { TableSimpleHeader, TableItem } from '#desktop/components/CommonTable/types.ts'
 import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
 
@@ -146,7 +147,11 @@ const { tabs, activeTab } = usePersonalSettingTabs()
     width="narrow"
     provide-default
   >
-    <CommonLoader :loading="deviceListQueryLoading">
+    <CommonLoader class="w-full" :loading="deviceListQueryLoading">
+      <template #skeleton>
+        <CommonTableSkeleton :columns="3" :rows="5" has-actions />
+      </template>
+
       <div class="mb-4">
         <CommonSimpleTable
           :caption="$t('Used devices')"

@@ -23,6 +23,7 @@ import testFlags from '#shared/utils/testFlags.ts'
 
 import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
 import { useTransitionCollapse } from '#desktop/composables/useTransitionCollapse.ts'
+import { useTransitionConfig } from '#desktop/composables/useTransitionConfig.ts'
 
 import CommonSelectItem from './CommonSelectItem.vue'
 import { useCommonSelect } from './useCommonSelect.ts'
@@ -355,8 +356,8 @@ const emptyLabelText = computed(() => {
   return props.filter ? __('No results found') : props.emptyInitialLabelText
 })
 
-const { collapseDuration, collapseEnter, collapseAfterEnter, collapseLeave } =
-  useTransitionCollapse()
+const { transitions } = useTransitionConfig()
+const { collapseEnter, collapseAfterEnter, collapseLeave } = useTransitionCollapse()
 
 const dropdownActions = computed(() => {
   return [
@@ -416,8 +417,8 @@ const goToChildPage = ({ option, noFocus }: { option: AutoCompleteOption; noFocu
   />
   <Teleport to="body">
     <Transition
-      :name="isTargetVisible ? 'collapse' : 'none'"
-      :duration="collapseDuration"
+      :name="transitions.collapse"
+      :appear="isTargetVisible"
       @enter="collapseEnter"
       @after-enter="collapseAfterEnter"
       @leave="collapseLeave"
@@ -480,7 +481,7 @@ const goToChildPage = ({ option, noFocus }: { option: AutoCompleteOption; noFocu
               tabindex="-1"
               class="w-full overflow-y-auto"
             >
-              <Transition name="none" mode="out-in">
+              <Transition mode="out-in">
                 <div v-if="options.length">
                   <CommonSelectItem
                     v-for="option in filter ? highlightedOptions : options"
@@ -501,22 +502,8 @@ const goToChildPage = ({ option, noFocus }: { option: AutoCompleteOption; noFocu
                   />
                 </div>
 
-                <div v-else-if="isLoading" class="flex items-center">
-                  <CommonLoader
-                    v-if="!options.length"
-                    class="ltr:ml-2 rtl:mr-2"
-                    size="small"
-                    loading
-                  />
-                  <CommonSelectItem
-                    :option="{
-                      label: __('Loading…'),
-                      value: '',
-                      disabled: true,
-                    }"
-                    no-selection-indicator
-                    no-interaction
-                  />
+                <div v-else-if="isLoading" class="px-2.5 py-2.5">
+                  <CommonLoader class="w-full" size="small" loading />
                 </div>
                 <CommonSelectItem
                   v-else-if="!options.length"

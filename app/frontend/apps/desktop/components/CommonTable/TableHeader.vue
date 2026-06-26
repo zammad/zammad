@@ -105,7 +105,9 @@ const setHeaderWidths = (reset?: boolean) => {
     shouldReset = true
 
   props.tableAttributes.forEach((tableAttribute) => {
-    const header = document.getElementById(`${tableAttribute.name}-header`)
+    const header = tableElement.value?.querySelector<HTMLElement>(
+      `[id="${tableAttribute.name}-header"]`,
+    )
     if (!header) return
 
     if (shouldReset) {
@@ -140,7 +142,9 @@ const calculateHeaderWidths = () => {
   const headerWidths: Record<string, number> = {}
 
   props.tableAttributes.forEach((tableAttribute) => {
-    const headerWidth = document.getElementById(`${tableAttribute.name}-header`)?.clientWidth
+    const headerWidth = tableElement.value?.querySelector<HTMLElement>(
+      `[id="${tableAttribute.name}-header"]`,
+    )?.clientWidth
 
     if (!headerWidth) return
 

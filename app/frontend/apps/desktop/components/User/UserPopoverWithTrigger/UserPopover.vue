@@ -11,6 +11,7 @@ import type { User } from '#shared/graphql/types.ts'
 import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
 import { normalizeEdges } from '#shared/utils/helpers.ts'
 
+import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
 import CommonSimpleEntityList from '#desktop/components/CommonSimpleEntityList/CommonSimpleEntityList.vue'
 import { EntityType } from '#desktop/components/CommonSimpleEntityList/types.ts'
 import UserInfo from '#desktop/components/User/UserInfo.vue'
@@ -53,8 +54,12 @@ const goToUserProfile = () => {
 
 <template>
   <section ref="popover-section" data-type="popover" class="space-y-2 p-3">
-    <UserPopoverSkeleton :loading="loading">
-      <template v-if="user">
+    <CommonLoader no-transition :loading="loading">
+      <template #skeleton>
+        <UserPopoverSkeleton />
+      </template>
+
+      <div v-if="user" class="space-y-2">
         <UserInfo :user="user" :no-link="noProfileLink" />
 
         <ObjectAttributes
@@ -76,7 +81,7 @@ const goToUserProfile = () => {
           :entity="secondaryOrganizations"
           @load-more="goToUserProfile"
         />
-      </template>
-    </UserPopoverSkeleton>
+      </div>
+    </CommonLoader>
   </section>
 </template>

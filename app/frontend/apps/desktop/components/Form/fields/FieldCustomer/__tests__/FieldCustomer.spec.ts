@@ -85,7 +85,7 @@ describe('Form - Field - Customer - Features', () => {
 
     expect(wrapper.queryByRole('button', { name: 'add new email address' })).not.toBeInTheDocument()
 
-    expect(wrapper.getByTestId('select-item')).toHaveTextContent('Loading…')
+    expect(wrapper.getAllByRole('progressbar', { name: 'Content loader' })).toHaveLength(3)
 
     await wrapper.events.type(filterElement, '@bar.tld')
 

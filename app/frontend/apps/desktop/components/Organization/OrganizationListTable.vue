@@ -5,6 +5,7 @@ import { EnumObjectManagerObjects, type Organization } from '#shared/graphql/typ
 import { getIdFromGraphQLId } from '#shared/graphql/utils.ts'
 import type { ObjectWithId } from '#shared/types/utils.ts'
 
+import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
 import CommonAdvancedTable from '#desktop/components/CommonTable/CommonAdvancedTable.vue'
 import CommonTableSkeleton from '#desktop/components/CommonTable/Skeleton/CommonTableSkeleton.vue'
 
@@ -26,11 +27,15 @@ const { goToItem, goToItemLinkColumn, loadMore, resort, storageKeyId } = useList
 </script>
 
 <template>
-  <CommonTableSkeleton
-    :loading="loading"
-    :loading-new-page="loadingNewPage"
-    :rows="skeletonLoadingCount"
-  >
+  <CommonLoader :loading="loading">
+    <template #skeleton>
+      <CommonTableSkeleton
+        :columns="headers.length"
+        :load-more="loadingNewPage"
+        :rows="skeletonLoadingCount"
+      />
+    </template>
+
     <slot v-if="!loading && !items.length" name="empty-list" />
 
     <div v-else-if="items.length">
@@ -60,5 +65,5 @@ const { goToItem, goToItemLinkColumn, loadMore, resort, storageKeyId } = useList
         @sort="resort"
       />
     </div>
-  </CommonTableSkeleton>
+  </CommonLoader>
 </template>

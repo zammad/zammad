@@ -82,7 +82,6 @@ describe('Ticket detail view - history', () => {
 
     await waitFor(() => expect(within(flyout).getByText('Created')).toBeInTheDocument())
 
-    expect(within(flyout).getByText('Created')).toBeInTheDocument()
     expect(within(flyout).getByText('John Doe')).toBeInTheDocument()
     expect(within(flyout).getByText('2021-09-29 14:00')).toBeInTheDocument()
   })

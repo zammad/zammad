@@ -132,7 +132,7 @@ const goToLogin = () => {
 
 <template>
   <LayoutPublicPage box-size="medium" :title="__('Choose your new password')">
-    <CommonLoader :loading="loading" :error="errorMessage" />
+    <CommonLoader intermediate :loading="loading" :error="errorMessage" />
     <Form
       v-if="canResetPassword"
       id="password-reset-verify"

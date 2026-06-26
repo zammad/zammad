@@ -3,6 +3,7 @@
 <script setup lang="ts">
 import { computed, nextTick, onMounted, shallowRef, useTemplateRef, unref } from 'vue'
 
+import { useReducedMotion } from '#shared/composables/useReducedMotion.ts'
 import { useAiAnalyticsUsageMutation } from '#shared/graphql/mutations/aiAnalyticsUsage.api.ts'
 import type { AiAnalyticsMetadata, AiAnalyticsUsageInput } from '#shared/graphql/types.ts'
 import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
@@ -42,6 +43,8 @@ const submitPositiveFeedback = async () => {
   emit('rated')
 }
 
+const { scrollBehavior } = useReducedMotion()
+
 const submitNegativeFeedback = async () => {
   await submitUsage({ rating: false })
   uiState.value = 'comment'
@@ -51,7 +54,7 @@ const submitNegativeFeedback = async () => {
   const commentContainer = unref(commentFieldElement)
   const textarea = commentContainer!.querySelector('textarea') as HTMLTextAreaElement
 
-  textarea.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+  textarea.scrollIntoView({ behavior: scrollBehavior.value, block: 'nearest' })
   textarea.focus()
 }
 

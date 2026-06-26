@@ -42,6 +42,7 @@ import ResizeLine from '#desktop/components/ResizeLine/ResizeLine.vue'
 import { useResizeLine } from '#desktop/components/ResizeLine/useResizeLine.ts'
 import { useAppBreakpoints } from '#desktop/composables/responsiveness/useAppBreakpoints.ts'
 import { getRouteIdentifier } from '#desktop/composables/useOverlayContainer.ts'
+import { useTransitionConfig } from '#desktop/composables/useTransitionConfig.ts'
 
 import CommonFlyoutActionFooter from './CommonFlyoutActionFooter.vue'
 import { closeFlyout } from './useFlyout.ts'
@@ -303,21 +304,11 @@ onMounted(() => {
   })
 })
 
-// It is the same as dialog, but could be changed in the future?
-const transition = VITE_TEST_MODE
-  ? undefined
-  : {
-      enterActiveClass: 'duration-300 ease-out',
-      enterFromClass: 'opacity-0 rtl:-translate-x-3/4 ltr:translate-x-3/4',
-      enterToClass: 'opacity-100 rtl:-translate-x-0 ltr:translate-x-0',
-      leaveActiveClass: 'duration-200 ease-in',
-      leaveFromClass: 'opacity-100 rtl:-translate-x-0 ltr:translate-x-0',
-      leaveToClass: 'opacity-0 rtl:-translate-x-3/4 ltr:translate-x-3/4',
-    }
+const { transitions } = useTransitionConfig()
 </script>
 
 <template>
-  <Transition :appear="isActive" v-bind="transition">
+  <Transition :name="transitions.slide" :appear="isActive">
     <!--  `display:none` to prevent showing up inactive flyout for cached instance -->
     <!-- Below `lg` (1024px) the flyout switches to a dialog-like fullscreen layout, which also keeps the large size of 800px from ever being out of the viewport on initial render. -->
     <CommonOverlayContainer

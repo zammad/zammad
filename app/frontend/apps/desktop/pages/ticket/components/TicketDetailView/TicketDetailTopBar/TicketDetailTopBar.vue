@@ -5,6 +5,7 @@ import { useElementSize } from '@vueuse/core'
 import { computed, toRef, useTemplateRef, type Ref } from 'vue'
 
 import CommonAlert from '#shared/components/CommonAlert/CommonAlert.vue'
+import { useReducedMotion } from '#shared/composables/useReducedMotion.ts'
 import { useTicketChannel } from '#shared/entities/ticket/composables/useTicketChannel.ts'
 import { useTicketView } from '#shared/entities/ticket/composables/useTicketView.ts'
 
@@ -118,6 +119,8 @@ useStickyTopCalculator(currentVisibleHeaderHeight, { offset: -1 }) // avoid join
 defineExpose({
   hideDetails: () => updateIsHovering(false),
 })
+
+const { hasReducedMotion } = useReducedMotion()
 </script>
 
 <template>
@@ -135,7 +138,7 @@ defineExpose({
       <TopBarHeader
         :class="[headerBaseClasses, headerBackgroundClasses(true), 'p-3']"
         aria-hidden="true"
-        :hide-details="true"
+        hide-details
       />
       <CommonAlert :class="alertWithBlurClasses" :variant="channelAlert?.variant">
         {{ $t(channelAlert?.text, channelAlert?.textPlaceholder) }}
@@ -151,10 +154,7 @@ defineExpose({
       }"
       v-on="containerEventHandlers"
     >
-      <TopBarHeader
-        :class="[headerBaseClasses, headerBackgroundClasses(false), 'p-3']"
-        :hide-details="false"
-      />
+      <TopBarHeader :class="[headerBaseClasses, headerBackgroundClasses(false), 'p-3']" />
       <CommonAlert
         ref="alert"
         class="print:hidden"
@@ -176,7 +176,7 @@ defineExpose({
         { '-z-10! opacity-0': isHovering },
       ]"
       aria-hidden="true"
-      :hide-details="true"
+      hide-details
       data-test-id="ticket-detail-top-bar-clipped-details"
       :style="{
         transform: `translateY(${absoluteContainerOffset})`,
@@ -190,9 +190,8 @@ defineExpose({
       :class="[
         headerBaseClasses,
         headerBackgroundClasses(true),
-        { 'transition-[top]': isHovering },
+        { 'transition-[top]': isHovering && !hasReducedMotion },
       ]"
-      :hide-details="false"
       data-test-id="ticket-detail-top-bar-full-details"
       :style="{
         top: stickyContainerTop,

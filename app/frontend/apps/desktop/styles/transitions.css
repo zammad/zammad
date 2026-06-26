@@ -1,3 +1,7 @@
+/*
+ * Don't forget to add the mapping to the TransitionName enum in useTransitionConfig.ts when adding a new transition.
+ */
+
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.3s ease;
@@ -128,4 +132,48 @@
 .collapse-height-enter-to,
 .collapse-height-leave-from {
   grid-template-rows: 1fr;
+}
+
+.slide-enter-active {
+  transition-timing-function: var(--ease-out);
+}
+
+.slide-enter-from {
+  opacity: 0;
+  translate: calc(3 / 4 * 100%) var(--tw-translate-y);
+
+  [dir='rtl'] & {
+    translate: calc(-3 / 4 * 100%) var(--tw-translate-y);
+  }
+}
+
+.slide-enter-to {
+  opacity: 1;
+  translate: 0 var(--tw-translate-y);
+
+  [dir='rtl'] & {
+    translate: -0 var(--tw-translate-y);
+  }
+}
+
+.slide-leave-active {
+  transition-timing-function: var(--ease-in);
+}
+
+.slide-leave-from {
+  opacity: 1;
+  translate: 0 var(--tw-translate-y);
+
+  [dir='rtl'] & {
+    translate: -0 var(--tw-translate-y);
+  }
+}
+
+.slide-leave-to {
+  opacity: 0;
+  translate: calc(3 / 4 * 100%) var(--tw-translate-y);
+
+  [dir='rtl'] & {
+    translate: calc(-3 / 4 * 100%) var(--tw-translate-y);
+  }
 }

@@ -6,6 +6,7 @@ import { computed, ref } from 'vue'
 import { useMacros } from '#shared/entities/macro/composables/useMacros.ts'
 
 import type { Props as ParentProps } from '#desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkWrapper.vue'
+import { useTransitionConfig } from '#desktop/composables/useTransitionConfig.ts'
 
 import { useTicketBulkEdit } from '../TicketBulkEditFlyout/useTicketBulkEdit.ts'
 
@@ -31,14 +32,17 @@ const list = computed(() =>
     type: DragAndDropBulkEntityType.Macro,
   })),
 )
+
 const scrollPosition = ref(0)
+
+const { transitions } = useTransitionConfig()
 </script>
 
 <template>
   <header class="w-full">
     <BulkAvatarSkeleton v-if="!macrosLoaded" />
 
-    <transition v-else mode="out-in" name="fade-down">
+    <Transition v-else :name="transitions.fadeDown" mode="out-in">
       <div
         v-if="!isActive && macros?.length"
         class="flex h-52 w-full items-center justify-center py-3"
@@ -71,6 +75,6 @@ const scrollPosition = ref(0)
           $t('No macros available for selected tickets')
         }}</CommonLabel>
       </div>
-    </transition>
+    </Transition>
   </header>
 </template>

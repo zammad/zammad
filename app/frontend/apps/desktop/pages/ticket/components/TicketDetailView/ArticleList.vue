@@ -6,6 +6,7 @@ import { unionBy } from 'lodash-es'
 import { computed, nextTick, useTemplateRef } from 'vue'
 import { useRoute } from 'vue-router'
 
+import { useReducedMotion } from '#shared/composables/useReducedMotion.ts'
 import { edgesToArray, waitForAnimationFrame, waitForElement } from '#shared/utils/helpers.ts'
 
 import ArticleBubble from '#desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue'
@@ -145,6 +146,8 @@ const scrollToArticle = async () => {
   emit('scroll-to-end', true)
 }
 
+const { scrollBehavior } = useReducedMotion()
+
 // Navigate between article-bubbles relative to the visible content edge
 // (container top + sticky header height). DOM positions are read live at call
 // time so stale cached values are never used.
@@ -182,7 +185,7 @@ const goToAdjacentArticle = (direction: 'next' | 'previous' | 'unread') => {
 
   if (!target) return false
 
-  scrollElementToContainerTop(target.el, 'smooth')
+  scrollElementToContainerTop(target.el, scrollBehavior.value)
   return true
 }
 

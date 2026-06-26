@@ -6,6 +6,7 @@ import { computed, toRef, useTemplateRef, type Ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 import { useCopyToClipboard } from '#shared/composables/useCopyToClipboard.ts'
+import { useReducedMotion } from '#shared/composables/useReducedMotion.ts'
 import type { Organization } from '#shared/graphql/types.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
@@ -108,6 +109,8 @@ const currentVisibleHeaderHeight = computed(() => {
 
 // 7px is needed to compensate some overlap
 useStickyTopCalculator(currentVisibleHeaderHeight, { offset: 7 })
+
+const { hasReducedMotion } = useReducedMotion()
 </script>
 
 <template>
@@ -131,7 +134,7 @@ useStickyTopCalculator(currentVisibleHeaderHeight, { offset: 7 })
     data-test-id="organization-detail-top-bar"
     class="sticky z-20 border-b border-neutral-100 bg-neutral-50/80 px-5.5 py-3 backdrop-blur-2xs dark:border-gray-900 dark:bg-gray-500/80"
     :class="{
-      'transition-[top]': isHovering,
+      'transition-[top]': isHovering && !hasReducedMotion,
     }"
     :style="{
       top: stickyContainerTop,

@@ -5,6 +5,7 @@ import { type MaybeElementRef, useCurrentElement, type VueInstance } from '@vueu
 import { delay } from 'lodash-es'
 import { onBeforeMount, ref, toRef, useTemplateRef, watch } from 'vue'
 
+import { useReducedMotion } from '#shared/composables/useReducedMotion.ts'
 import { useTrapTab } from '#shared/composables/useTrapTab.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
 import emitter from '#shared/utils/emitter.ts'
@@ -88,6 +89,8 @@ onBeforeMount(() => {
     togglePrimaryNavSidebar(true, { storage: 'session' })
   })
 })
+
+const { hasReducedMotion } = useReducedMotion()
 </script>
 
 <template>
@@ -95,7 +98,7 @@ onBeforeMount(() => {
     :style="{
       '--grid-columns': gridColumns,
     }"
-    :class="{ 'transition-none': noTransition }"
+    :class="{ 'transition-none': noTransition || hasReducedMotion }"
     class="grid h-full max-h-full grid-cols-(--grid-columns) overflow-y-clip duration-100 print:h-auto print:max-h-none print:grid-cols-1 print:overflow-visible"
   >
     <LayoutSidebar

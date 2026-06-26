@@ -18,6 +18,7 @@ import type { MenuItem } from '#desktop/components/CommonPopoverMenu/types.ts'
 import ChecklistEmptyTemplates from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistEmptyTemplates.vue'
 import ChecklistItems from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue'
 import ChecklistTemplates from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistTemplates.vue'
+import TicketSidebarChecklistContentSkeleton from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContentSkeleton.vue'
 import type { AddNewChecklistInput } from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/types.ts'
 import { useChecklistTemplates } from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/useChecklistTemplates.ts'
 import { useTicketChecklist } from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/useTicketChecklist.ts'
@@ -396,6 +397,10 @@ const { isLoadingTemplates, checklistTemplatesMenuItems } =
     :icon="sidebarPlugin.icon"
   >
     <CommonLoader :loading="isLoadingChecklist">
+      <template #skeleton>
+        <TicketSidebarChecklistContentSkeleton />
+      </template>
+
       <div class="flex flex-col gap-3">
         <ChecklistItems
           v-if="checklist"

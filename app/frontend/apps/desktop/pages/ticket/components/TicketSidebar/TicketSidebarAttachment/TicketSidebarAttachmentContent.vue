@@ -14,6 +14,8 @@ import type { TicketSidebarContentProps } from '#desktop/pages/ticket/types/side
 
 import TicketSidebarContent from '../TicketSidebarContent.vue'
 
+import TicketSidebarAttachmentContentSkeleton from './TicketSidebarAttachmentContentSkeleton.vue'
+
 interface Props extends TicketSidebarContentProps {
   ticketAttachments: Attachment[]
   loading: boolean
@@ -37,6 +39,10 @@ const { showPreview } = useFilePreviewViewer(computed(() => attachmentsWithUrls.
     :icon="sidebarPlugin.icon"
   >
     <CommonLoader :loading="loading">
+      <template #skeleton>
+        <TicketSidebarAttachmentContentSkeleton />
+      </template>
+
       <div
         v-if="ticketAttachments && ticketAttachments.length > 0"
         class="flex flex-col rounded-lg bg-blue-200 p-1 text-gray-100 dark:bg-gray-700 dark:text-neutral-400"

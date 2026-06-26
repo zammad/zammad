@@ -61,7 +61,7 @@ const router = useRouter()
 
 <template>
   <header
-    class="border-b border-neutral-100 bg-neutral-50 dark:border-gray-900 dark:bg-gray-500"
+    class="border-b border-neutral-100 dark:border-gray-900"
     :class="hideDetails ? 'p-2' : 'px-5.5 py-3'"
   >
     <template v-if="hideDetails">
