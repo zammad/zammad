@@ -344,13 +344,13 @@ importers:
         version: 10.1.8(eslint@10.5.0(jiti@2.6.1))
       eslint-import-resolver-typescript:
         specifier: ^4.4.5
-        version: 4.4.5(eslint-plugin-import-x@4.16.2(@typescript-eslint/utils@8.62.0(eslint@10.5.0(jiti@2.6.1))(typescript@6.0.3))(eslint@10.5.0(jiti@2.6.1)))(eslint@10.5.0(jiti@2.6.1))
+        version: 4.4.5(eslint-plugin-import-x@4.17.0(@typescript-eslint/utils@8.62.0(eslint@10.5.0(jiti@2.6.1))(typescript@6.0.3))(eslint@10.5.0(jiti@2.6.1)))(eslint@10.5.0(jiti@2.6.1))
       eslint-plugin-import-x:
-        specifier: ^4.16.2
-        version: 4.16.2(@typescript-eslint/utils@8.62.0(eslint@10.5.0(jiti@2.6.1))(typescript@6.0.3))(eslint@10.5.0(jiti@2.6.1))
+        specifier: ^4.17.0
+        version: 4.17.0(@typescript-eslint/utils@8.62.0(eslint@10.5.0(jiti@2.6.1))(typescript@6.0.3))(eslint@10.5.0(jiti@2.6.1))
       eslint-plugin-oxlint:
-        specifier: ^1.70.0
-        version: 1.70.0(oxlint@1.70.0)
+        specifier: ^1.71.0
+        version: 1.71.0(oxlint@1.70.0)
       eslint-plugin-security:
         specifier: ^4.0.1
         version: 4.0.1
@@ -2107,9 +2107,6 @@ packages:
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [x64]
     os: [win32]
-
-  '@package-json/types@0.0.12':
-    resolution: {integrity: sha512-uu43FGU34B5VM9mCNjXCwLaGHYjXdNincqKLaraaCW+7S2+SmiBg1Nv8bPnmschrIfZmfKNY9f3fC376MRrObw==}
 
   '@pinia/testing@1.0.3':
     resolution: {integrity: sha512-g+qR49GNdI1Z8rZxKrQC3GN+LfnGTNf5Kk8Nz5Cz6mIGva5WRS+ffPXQfzhA0nu6TveWzPNYTjGl4nJqd3Cu9Q==}
@@ -4030,8 +4027,8 @@ packages:
       eslint-plugin-import-x:
         optional: true
 
-  eslint-plugin-import-x@4.16.2:
-    resolution: {integrity: sha512-rM9K8UBHcWKpzQzStn1YRN2T5NvdeIfSVoKu/lKF41znQXHAUcBbYXe5wd6GNjZjTrP7viQ49n1D83x/2gYgIw==}
+  eslint-plugin-import-x@4.17.0:
+    resolution: {integrity: sha512-aM7V25Bg6YuYxtEhwjafzfS0NTMds1D2PMQI0K4KqJxQJRtkP4CO+MQTWRdBq2qAnmPxTxLevhXUBtByxJqS1w==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
     peerDependencies:
       '@typescript-eslint/utils': ^8.56.0
@@ -4043,10 +4040,10 @@ packages:
       eslint-import-resolver-node:
         optional: true
 
-  eslint-plugin-oxlint@1.70.0:
-    resolution: {integrity: sha512-SmpX0KdQptEzGm98wEEUR2BFAQTCTyXVdxlMkTOetxRak4NWb6GsYtHvU+Xh9AvnOKBzmO0ikPjxEG30pkmNUg==}
+  eslint-plugin-oxlint@1.71.0:
+    resolution: {integrity: sha512-940aSzHoks+uIlVEoUGIXdtHmrs9ewoeN+r0CrSN4UnkoYIfy4lUPNp21JuwfzNrZ5NCBH3CBmG+ugS+2CXtsw==}
     peerDependencies:
-      oxlint: ~1.70.0
+      oxlint: ~1.71.0
 
   eslint-plugin-security@4.0.1:
     resolution: {integrity: sha512-/lZCkOxPOWaf1jXAqgICrS8St3BMBccIPvhOSUYuV6VCr1o5nFVG998FnTLt6w2Nxb8Uo0nM8fzmnhp+GY/aEg==}
@@ -8633,8 +8630,6 @@ snapshots:
   '@oxlint/binding-win32-x64-msvc@1.70.0':
     optional: true
 
-  '@package-json/types@0.0.12': {}
-
   '@pinia/testing@1.0.3(pinia@3.0.4(typescript@6.0.3)(vue@3.5.38(typescript@6.0.3)))':
     dependencies:
       pinia: 3.0.4(typescript@6.0.3)(vue@3.5.38(typescript@6.0.3))
@@ -10659,7 +10654,7 @@ snapshots:
     optionalDependencies:
       unrs-resolver: 1.11.1
 
-  eslint-import-resolver-typescript@4.4.5(eslint-plugin-import-x@4.16.2(@typescript-eslint/utils@8.62.0(eslint@10.5.0(jiti@2.6.1))(typescript@6.0.3))(eslint@10.5.0(jiti@2.6.1)))(eslint@10.5.0(jiti@2.6.1)):
+  eslint-import-resolver-typescript@4.4.5(eslint-plugin-import-x@4.17.0(@typescript-eslint/utils@8.62.0(eslint@10.5.0(jiti@2.6.1))(typescript@6.0.3))(eslint@10.5.0(jiti@2.6.1)))(eslint@10.5.0(jiti@2.6.1)):
     dependencies:
       debug: 4.4.3
       eslint: 10.5.0(jiti@2.6.1)
@@ -10670,14 +10665,13 @@ snapshots:
       tinyglobby: 0.2.17
       unrs-resolver: 1.11.1
     optionalDependencies:
-      eslint-plugin-import-x: 4.16.2(@typescript-eslint/utils@8.62.0(eslint@10.5.0(jiti@2.6.1))(typescript@6.0.3))(eslint@10.5.0(jiti@2.6.1))
+      eslint-plugin-import-x: 4.17.0(@typescript-eslint/utils@8.62.0(eslint@10.5.0(jiti@2.6.1))(typescript@6.0.3))(eslint@10.5.0(jiti@2.6.1))
     transitivePeerDependencies:
       - supports-color
 
-  eslint-plugin-import-x@4.16.2(@typescript-eslint/utils@8.62.0(eslint@10.5.0(jiti@2.6.1))(typescript@6.0.3))(eslint@10.5.0(jiti@2.6.1)):
+  eslint-plugin-import-x@4.17.0(@typescript-eslint/utils@8.62.0(eslint@10.5.0(jiti@2.6.1))(typescript@6.0.3))(eslint@10.5.0(jiti@2.6.1)):
     dependencies:
-      '@package-json/types': 0.0.12
-      '@typescript-eslint/types': 8.60.1
+      '@typescript-eslint/types': 8.61.1
       comment-parser: 1.4.6
       debug: 4.4.3
       eslint: 10.5.0(jiti@2.6.1)
@@ -10692,7 +10686,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-plugin-oxlint@1.70.0(oxlint@1.70.0):
+  eslint-plugin-oxlint@1.71.0(oxlint@1.70.0):
     dependencies:
       jsonc-parser: 3.3.1
       oxlint: 1.70.0
