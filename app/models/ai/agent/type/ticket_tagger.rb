@@ -171,6 +171,7 @@ New Tag Normalization:
             help:       __('Choose whether the suggested tags are added to or replace the existing tags on the ticket.'),
             noHints:    true,
             item_class: 'formGroup--halfSize',
+            translate:  true,
           },
           {
             name:       'type_enrichment_data::number_of_tags',
