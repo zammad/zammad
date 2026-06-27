@@ -21,11 +21,8 @@ class Service::GeoCalendar::Zammad
         "#{host}#{url}",
         {},
         {
-          json:          true,
-          open_timeout:  2,
-          read_timeout:  4,
-          total_timeout: 12,
-          verify_ssl:    true,
+          json:       true,
+          verify_ssl: true,
         },
       )
       if !response.success? && response.code.to_s !~ %r{^40.$}

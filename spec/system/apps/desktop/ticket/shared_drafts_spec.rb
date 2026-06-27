@@ -23,13 +23,21 @@ RSpec.describe 'Desktop > Ticket > Shared Drafts', app: :desktop_view, authentic
     end
 
     def close_tab
+      return if page.has_no_css?('#taskbarTabListExpanded', wait: 0)
+
       within '#taskbarTabListExpanded' do
         find('li', text: ticket.title).find('button[aria-label="Close this tab"]', visible: :all).click
       end
     end
 
+    def dismiss_notification
+      find('button[aria-label="Hide notification"]', wait: 0).click
+    rescue Capybara::ElementNotFound
+      nil
+    end
+
     it 'works correctly', performs_jobs: true do
-      click_on 'Add phone call'
+      click_on 'Add internal note'
 
       wait_for_form_updater(2)
 
@@ -39,7 +47,7 @@ RSpec.describe 'Desktop > Ticket > Shared Drafts', app: :desktop_view, authentic
       end
 
       # Create draft
-      click_on('Additional ticket edit actions')
+      click_on('Drafts & macros')
       click_on('Save as draft')
 
       wait_for_gql('shared/entities/ticket-shared-draft-zoom/graphql/mutations/ticketSharedDraftZoomCreate.graphql')
@@ -51,19 +59,17 @@ RSpec.describe 'Desktop > Ticket > Shared Drafts', app: :desktop_view, authentic
       click_on('Discard your unsaved changes')
       click_on('Discard changes')
 
-      wait_for_form_updater(6)
-
       click_on('Add internal note')
 
-      wait_for_form_updater(7)
+      wait_for_form_updater(5)
 
-      within_form(form_updater_gql_number: 7) do
+      within_form(form_updater_gql_number: 5) do
         find_editor('Text').type("Can we send this to the customer?  @@#{agent2.firstname}")
       end
 
       find('li', text: agent2.fullname).click
 
-      wait_for_form_updater(9)
+      wait_for_form_updater(7)
 
       click_on('Update')
 
@@ -79,6 +85,7 @@ RSpec.describe 'Desktop > Ticket > Shared Drafts', app: :desktop_view, authentic
         login(username: agent2.login, password: 'test')
 
         # Open ticket from notifications.
+        dismiss_notification
         click_on 'Show notifications'
         find('a', text: "#{agent1.fullname} updated ticket").click
 
@@ -87,7 +94,7 @@ RSpec.describe 'Desktop > Ticket > Shared Drafts', app: :desktop_view, authentic
         wait_for_form_to_settle("form-ticket-edit-#{ticket.id}")
 
         # Modify draft
-        click_on('Add phone call')
+        click_on('Add internal note')
 
         wait_for_form_updater(2)
 
@@ -105,7 +112,7 @@ RSpec.describe 'Desktop > Ticket > Shared Drafts', app: :desktop_view, authentic
           find_editor('Text').clear.type('article text content - now with modification')
         end
 
-        click_on('Additional ticket edit actions')
+        click_on('Drafts & macros')
         click_on('Save as draft')
         click_on('Overwrite draft')
 
@@ -146,7 +153,7 @@ RSpec.describe 'Desktop > Ticket > Shared Drafts', app: :desktop_view, authentic
       wait_for_form_to_settle("form-ticket-edit-#{ticket.id}")
 
       # Apply the draft
-      click_on('Add phone call')
+      click_on('Add internal note')
 
       wait_for_form_updater(2)
 

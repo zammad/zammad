@@ -1,0 +1,19 @@
+#{config.product_name} ورود از دستگاه جدید
+
+<div>سلام #{user.firstname}،</div>
+<br>
+<div>به نظر می‌رسد که شما در تاریخ "#{user_device.created_at}" با <b>استفاده از دستگاه جدیدی</b> وارد حساب خود شده‌اید:</div>
+<br>
+<div>
+دستگاه شما: #{user_device.name}<br>
+موقعیت شما (نسبی): #{user_device.location}<br>
+آی‌پی شما: #{user_device.ip}<br>
+</div>
+<br>
+<div>دستگاه شما به لیست دستگاه‌های شناخته شده شما اضافه شده است، که می‌توانید در اینجا مشاهده کنید:</div>
+<br>
+<div><a href="#{config.http_type}://#{config.fqdn}/#profile/devices">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>
+<br>
+<div>اگر این کار شما نبوده، لطفاً دستگاه را حذف کنید، رمز عبور حساب خود را تغییر دهید، و با مدیر سیستم خود تماس بگیرید. ممکن است شخصی به طور غیرمجاز به حساب شما دسترسی پیدا کرده باشد.</div>
+<br>
+<div>تیم #{config.product_name} شما</div>

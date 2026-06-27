@@ -10,10 +10,7 @@ class Service::GeoLocation::Osm
       url,
       {},
       {
-        open_timeout:  2,
-        read_timeout:  4,
-        total_timeout: 4,
-        verify_ssl:    true,
+        verify_ssl: true,
       },
     )
     return if !response.success?
@@ -34,11 +31,8 @@ class Service::GeoLocation::Osm
       url,
       {},
       {
-        json:          true,
-        open_timeout:  2,
-        read_timeout:  4,
-        total_timeout: 4,
-        verify_ssl:    true,
+        json:       true,
+        verify_ssl: true,
       },
     )
     return if !response.success?

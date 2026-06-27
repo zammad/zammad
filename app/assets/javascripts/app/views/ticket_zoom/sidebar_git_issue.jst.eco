@@ -13,6 +13,12 @@
         #<%= issue.id %> <%= issue.title %>
       </a>
     </div>
+  <% if issue.issue_type: %>
+    <div class="sidebar-block">
+      <label><%- @T('Type') %></label>
+      <span class="badge" style="color: <%- issue.issue_type.text %>; background-color: <%- issue.issue_type.bg %>"><%= issue.issue_type.name %></span>
+    </div>
+  <% end %>
   <% if issue.milestone: %>
     <div class="sidebar-block">
       <label><%- @T('Milestone') %></label>

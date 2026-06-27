@@ -12,6 +12,7 @@ describe('CommonButton.vue', () => {
 
     expect(button).toHaveAttribute('type', 'button')
     expect(button).toHaveClasses(['inline-flex', 'bg-transparent'])
+    expect(view.container.querySelector('.truncate')).toBeInTheDocument()
   })
 
   it('renders default slot as the button label', async () => {
@@ -141,5 +142,17 @@ describe('CommonButton.vue', () => {
     expect(view.getByIconName('logo')).toBeInTheDocument()
 
     expect(view.queryByRole('button', { name: 'foobar' })).not.toBeInTheDocument()
+  })
+
+  it('supports noTruncate prop', async () => {
+    const view = renderComponent(CommonButton, {
+      props: {
+        noTruncate: true,
+      },
+      slots: {
+        default: 'Button Text',
+      },
+    })
+    expect(view.container.querySelector('.truncate')).not.toBeInTheDocument()
   })
 })

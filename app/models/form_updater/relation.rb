@@ -3,7 +3,7 @@
 class FormUpdater::Relation
   attr_reader :context, :current_user, :data, :filter_ids
 
-  def initialize(context:, current_user:, data: {}, filter_ids: [])
+  def initialize(context:, current_user:, data: {}, filter_ids: nil)
     @context = context
     @current_user = current_user
     @data = data
@@ -30,14 +30,22 @@ class FormUpdater::Relation
     raise NotImplementedError
   end
 
+  # Scope of items returned when no explicit filter_ids are supplied. Default
+  # is "nothing" — subclasses opt in by returning the set of items the
+  # current user is allowed to see (e.g. via policy scope or a permission-
+  # restricted association). Used by the advanced search filter form updater
+  # so each filter field is pre-populated with everything the user could pick.
+  #
+  # TODO: a separate admin-context scope (unrestricted by current_user) will
+  # be needed for the future admin interface — out of scope for now.
+  def default_scope
+    relation_type.none
+  end
+
   def items
     @items ||= begin
-      if filter_ids
-        relation_type.where(id: filter_ids).reorder(order)
-      else
-        # Currently the default is an empty array, later we need some good solution for the admin area.
-        []
-      end
+      scope = filter_ids.nil? ? default_scope : relation_type.where(id: filter_ids)
+      scope.reorder(order)
     end
   end
 end

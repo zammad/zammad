@@ -19,11 +19,13 @@ import CommonEmptyMessage from '#desktop/components/CommonEmptyMessage/CommonEmp
 import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
 import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
 import { UserCurrentOverviewOrderingUpdatesDocument } from '#desktop/entities/ticket/graphql/subscriptions/userCurrentOverviewOrderingUpdates.api.ts'
+import PersonalSettingOverviewsSkeleton from '#desktop/pages/personal-setting/components/PersonalSettingOverviewsSkeleton.vue'
 
 import PersonalSettingOverviewOrder, {
   type OverviewItem,
 } from '../components/PersonalSettingOverviewOrder.vue'
 import { useBreadcrumb } from '../composables/useBreadcrumb.ts'
+import { usePersonalSettingTabs } from '../composables/usePersonalSettingTabs.ts'
 import { useUserCurrentOverviewResetOrderMutation } from '../graphql/mutations/userCurrentOverviewResetOrder.api.ts'
 import { useUserCurrentOverviewUpdateOrderMutation } from '../graphql/mutations/userCurrentOverviewUpdateOrder.api.ts'
 import { useUserCurrentOverviewListQuery } from '../graphql/queries/userCurrentOverviewList.api.ts'
@@ -112,11 +114,22 @@ const confirmResetOverviewOrder = async () => {
 
   if (confirmed) resetOverviewOrder()
 }
+
+const { tabs, activeTab } = usePersonalSettingTabs()
 </script>
 
 <template>
-  <LayoutContent :breadcrumb-items="breadcrumbItems" width="narrow">
+  <LayoutContent
+    :active-tab="activeTab"
+    :tabs="tabs"
+    :breadcrumb-items="breadcrumbItems"
+    width="narrow"
+  >
     <CommonLoader no-transition class="mt-5 mb-3" :loading="overviewListQueryLoading">
+      <template #skeleton>
+        <PersonalSettingOverviewsSkeleton />
+      </template>
+
       <div v-if="overviewList.length" class="mb-4">
         <CommonLabel id="label-ticket-overview-order" class="mt-0.5! mb-1 block!"
           >{{ $t('Order of ticket overviews') }}

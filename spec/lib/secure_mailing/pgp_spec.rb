@@ -86,7 +86,7 @@ RSpec.describe SecureMailing::PGP, :aggregate_failures do
           let(:system_email_address) { expired_email_address }
 
           it 'raises exception' do
-            expect { build_mail }.to raise_error ActiveRecord::RecordNotFound
+            expect { build_mail }.to raise_error SecureMailing::Backend::Handler::SigningError
           end
 
           it_behaves_like 'HttpLog writer', 'failed'
@@ -95,7 +95,7 @@ RSpec.describe SecureMailing::PGP, :aggregate_failures do
 
       context 'when no private key is present' do
         it 'raises exception' do
-          expect { build_mail }.to raise_error ActiveRecord::RecordNotFound
+          expect { build_mail }.to raise_error SecureMailing::Backend::Handler::SigningError
         end
 
         it_behaves_like 'HttpLog writer', 'failed'
@@ -349,6 +349,27 @@ RSpec.describe SecureMailing::PGP, :aggregate_failures do
           end
         end
 
+        context 'when body is tampered after signing' do
+          let(:mail) do
+            pgp_mail = build_mail
+            # The content part is base64-encoded; flip the first character to invalidate the
+            # signature while keeping the original (now mismatched) detached signature.
+            encoded_body = Base64.encode64(raw_body).strip
+            tampered_encoded_body = encoded_body.dup.tap { |s| s[0] = s[0] == 'V' ? 'W' : 'V' }
+            tampered_raw = pgp_mail.to_s.sub(encoded_body, tampered_encoded_body)
+
+            mail = Channel::EmailParser.new.parse(tampered_raw)
+            SecureMailing.incoming(mail)
+
+            mail
+          end
+
+          it 'rejects the invalid signature' do
+            expect(mail['x-zammad-article-preferences'][:security][:sign][:success]).to be false
+            expect(mail['x-zammad-article-preferences'][:security][:sign][:comment]).to be_present
+          end
+        end
+
         context 'when key is expired' do
           let(:mail) do
             # Import a mail which was created with a now expired key.
@@ -369,6 +390,38 @@ RSpec.describe SecureMailing::PGP, :aggregate_failures do
             expect(mail['x-zammad-article-preferences'][:security][:encryption][:success]).to be false
             expect(mail['x-zammad-article-preferences'][:security][:encryption][:comment]).to be_nil
           end
+        end
+      end
+
+      context 'when sender public key is not present' do
+        let!(:sender_pgp_key) { create(:pgp_key, :with_private, fixture: sender_email_address) }
+
+        let(:security_preferences) do
+          {
+            type:       'PGP',
+            sign:       {
+              success: true,
+            },
+            encryption: {
+              success: false,
+            },
+          }
+        end
+
+        let(:mail) do
+          pgp_mail = build_mail
+          mail = Channel::EmailParser.new.parse(pgp_mail.to_s)
+          sender_pgp_key.destroy!
+          SecureMailing.incoming(mail)
+          mail
+        end
+
+        it 'does not verify' do
+          expect(mail[:body]).to include(raw_body)
+          expect(mail['x-zammad-article-preferences'][:security][:sign][:success]).to be false
+          expect(mail['x-zammad-article-preferences'][:security][:sign][:comment]).to eq('The public PGP key could not be found.')
+          expect(mail['x-zammad-article-preferences'][:security][:encryption][:success]).to be false
+          expect(mail['x-zammad-article-preferences'][:security][:encryption][:comment]).to be_nil
         end
       end
     end

@@ -7,7 +7,12 @@ RSpec.describe 'Manage > AI > Knowledge Base Answer Generation', type: :system d
   context 'with knowledge base answer generation setting', authenticated_as: :admin do
     let(:admin) { create(:admin) }
 
-    before { visit '/#ai/kb_answer_from_ticket' }
+    before do
+      # Permission ships inactive — re-enable so the admin section is reachable.
+      Permission.find_by(name: 'admin.ai_assistance_kb_answer_from_ticket_generation').update!(active: true)
+
+      visit '/#ai/kb_answer_from_ticket'
+    end
 
     it 'can toggle the knowledge base answer generation setting' do
       within(:active_content) do

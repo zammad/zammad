@@ -46,7 +46,9 @@ RSpec.describe 'Desktop > Search', app: :desktop_view, authenticated_as: :authen
       click_on 'detailed search'
     end
 
-    wait.until { current_url.include?("search/#{CGI.escapeURIComponent(customer.fullname)}") }
+    # CGI.escapeURIComponent encodes apostrophes as %27, but Vue Router's
+    # encodeURI does not. Decode the URL before comparing to handle both.
+    wait.until { CGI.unescape(current_url).include?("/search/#{customer.fullname}") }
 
     within 'main' do
       find('[role="tab"]', text: 'User').click
@@ -58,16 +60,16 @@ RSpec.describe 'Desktop > Search', app: :desktop_view, authenticated_as: :authen
 
       expect(page).to have_text('No search results for this query.')
 
-      click_on 'Clear search'
+      find('[role="button"][aria-label="Clear search"]').click
 
-      expect(page).to have_text('Start typing to get the search results.')
+      expect(page).to have_text('Start typing or apply filters to get the search results.')
 
       find('[role="searchbox"][aria-label="Search…"').fill_in with: "state.name: closed AND article.from: #{agent.fullname} AND customer.firstname: #{customer.firstname}"
 
       click_on old_ticket.number
     end
 
-    wait.until { current_url.end_with?("tickets/#{old_ticket.id}") }
+    wait.until { current_url.include?("/tickets/#{old_ticket.id}") }
 
     within 'main' do
       expect(page).to have_text(agent.fullname)
@@ -79,7 +81,7 @@ RSpec.describe 'Desktop > Search', app: :desktop_view, authenticated_as: :authen
     end
 
     within 'main' do
-      click_on 'Add reply'
+      click_on 'Add internal note'
       find_editor('Text').type(answer)
 
       wait_for_form_updater

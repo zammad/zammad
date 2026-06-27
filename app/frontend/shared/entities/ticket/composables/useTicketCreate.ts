@@ -23,6 +23,12 @@ import type { TicketFormData } from '../types.ts'
 import type { ApolloError } from '@apollo/client/core'
 import type { Ref } from 'vue'
 
+const {
+  missingBodyAttachmentReference,
+  bodyAttachmentReferenceConfirmation,
+  skipAttachmentReferenceCheck,
+} = useCheckBodyAttachmentReference()
+
 export const useTicketCreate = (
   form: Ref<FormRef | undefined>,
   redirectAfterCreate: (internalId?: number) => void,
@@ -46,6 +52,7 @@ export const useTicketCreate = (
       // Treat this as successful, because it happens when you create a ticket inside a group, where you only
       // have create permission, but not view permission.
       if (graphQLErrors?.extensions?.type === GraphQLErrorTypes.Forbidden) {
+        skipAttachmentReferenceCheck.value = false
         notifySuccess()
 
         return () => redirectAfterCreate()
@@ -73,9 +80,6 @@ export const useTicketCreate = (
   const ticketCreateMutation = new MutationHandler(useTicketCreateMutation({}), {
     errorShowNotification: false,
   })
-
-  const { missingBodyAttachmentReference, bodyAttachmentReferenceConfirmation } =
-    useCheckBodyAttachmentReference()
 
   const getCustomerVariable = (customerId: string) => {
     return isGraphQLId(customerId) ? { id: customerId } : { email: customerId }
@@ -158,6 +162,10 @@ export const useTicketCreate = (
       .send({ input })
       .then((result) => {
         if (result?.ticketCreate?.ticket) {
+          // Reset missingBodyAttachmentReference confirmation prompts
+          // after successful ticket create
+          skipAttachmentReferenceCheck.value = false
+
           notifySuccess()
 
           return () => {

@@ -152,13 +152,13 @@ function create_postgresql_db () {
   ${INIT_CMD} restart postgresql
 
   echo "# Creating zammad postgresql user"
-  echo "CREATE USER \"${DB_USER}\" WITH PASSWORD '${DB_PASS}';" | su - postgres -c psql
+  echo "CREATE USER \"${DB_USER}\" WITH PASSWORD '${DB_PASS}';" | runuser -u postgres -- psql
 
   echo "# Creating zammad postgresql db"
-  su - postgres -c "createdb -E UTF8 ${DB} -O ${DB_USER}"
+  runuser -u postgres -- createdb -E UTF8 "${DB}" -O "${DB_USER}"
 
   echo "# Grant privileges to new postgresql user"
-  echo "GRANT ALL PRIVILEGES ON DATABASE \"${DB}\" TO \"${DB_USER}\";" | su - postgres -c psql
+  echo "GRANT ALL PRIVILEGES ON DATABASE \"${DB}\" TO \"${DB_USER}\";" | runuser -u postgres -- psql
 }
 
 function update_database_yml () {
@@ -181,9 +181,36 @@ function initialise_database () {
   zammad run rake db:seed
 }
 
+function remove_deprecated_files () {
+  # RPM-based upgrades run %post before removing old-only files, so stale
+  # source files from the previous package version are still present when
+  # Rails boots for db:migrate. Remove known removed files explicitly.
+  # Files listed here were removed in the given release and must be cleaned
+  # up on RPM-based systems before migrations run.
+  if [ "${OS}" == "DEBIAN" ]; then
+    return 0
+  fi
+
+  echo "# Removing deprecated source files from previous package versions..."
+
+  # Removed in 7.1
+  rm -f \
+    "${ZAMMAD_DIR}/app/graphql/gql/concerns/handles_possible_objects.rb" \
+    "${ZAMMAD_DIR}/app/models/channel/filter/match/email_regex.rb" \
+    "${ZAMMAD_DIR}/app/services/service/base_with_current_user.rb" \
+    "${ZAMMAD_DIR}/lib/core_ext/action_dispatch/middleware/cookies.rb" \
+    "${ZAMMAD_DIR}/lib/core_ext/rack/utils.rb" \
+    "${ZAMMAD_DIR}/lib/core_ext/saas/interpolation.rb" \
+    "${ZAMMAD_DIR}/lib/core_ext/saas/lexer.rb" \
+    "${ZAMMAD_DIR}/lib/core_ext/saas/media.rb" \
+    "${ZAMMAD_DIR}/lib/core_ext/saas/selector.rb" \
+    "${ZAMMAD_DIR}/lib/core_ext/saas/static_parser.rb" \
+    "${ZAMMAD_DIR}/lib/core_ext/saas/string_interpolation.rb"
+}
+
 function update_database () {
   echo "# database.yml found. Updating db..."
-  zammad run rake db:migrate
+  zammad run rake db:migrate || exit 1
 }
 
 function update_translations () {
@@ -220,6 +247,8 @@ function create_webserver_config () {
 }
 
 function enforce_redis () {
+  # For details, see https://github.com/zammad/zammad/issues/5269
+
   REDIS_URL=$(zammad config:get REDIS_URL)
   if [ -n "${REDIS_URL}" ]; then
     echo "# REDIS_URL variable set to ${REDIS_URL}."
@@ -248,7 +277,21 @@ function enforce_redis () {
       REDIS_PID=$(fuser 6379/tcp 2> /dev/null)
       if [ -z "${REDIS_PID}" ]; then
         echo -e "# No running instance of Redis detected.\n# Creating systemd-service: redis@zammad.service."
-        [[ -f '/etc/redis/zammad.conf' ]] || cp /etc/redis/default.conf.example /etc/redis/zammad.conf
+        if [[ ! -f '/etc/redis/zammad.conf' ]]; then
+          # redis7 (SLES 15) ships default.conf.example; redis 8+ (SLES 16) ships redis.default.conf.template.
+          local redis_conf_src
+          if [[ -f '/etc/redis/redis.default.conf.template' ]]; then
+            redis_conf_src='/etc/redis/redis.default.conf.template'
+          elif [[ -f '/etc/redis/default.conf.example' ]]; then
+            redis_conf_src='/etc/redis/default.conf.example'
+          else
+            echo "ERROR - No Redis configuration template found in /etc/redis/. Please create /etc/redis/zammad.conf manually."
+            echo "Alternatively, point Zammad to an existing Redis server with: zammad config:set REDIS_URL=redis://your.redis.server:6379"
+            echo "Please fix these issues, then run the package installation again."
+            exit 1
+          fi
+          cp "${redis_conf_src}" /etc/redis/zammad.conf
+        fi
         echo "# Ensuring correct file permissions for /etc/redis/zammad.conf."
         [[ $(stat -c "%U %G" /etc/redis/zammad.conf) == "root redis" ]] || chown root:redis /etc/redis/zammad.conf
         REDIS_SERVICE_NAME=redis@zammad.service
@@ -257,10 +300,14 @@ function enforce_redis () {
         echo "# Redis service ${REDIS_SERVICE_NAME} detected."
       fi
   else
-      REDIS_SERVICE_NAME="redis"
+      if command -v valkey-server > /dev/null 2>&1; then
+        REDIS_SERVICE_NAME="valkey"
+      else
+        REDIS_SERVICE_NAME="redis"
+      fi
   fi
 
-  if command -v redis-server > /dev/null 2>&1; then
+  if command -v redis-server > /dev/null 2>&1 || command -v valkey-server > /dev/null 2>&1; then
     echo "# Creating Redis bootstart"
     ${INIT_CMD} enable ${REDIS_SERVICE_NAME}
 
@@ -359,6 +406,8 @@ function zammad_packages_reinstall_all () {
 function update_or_install () {
 
   if [ -f ${ZAMMAD_DIR}/config/database.yml ]; then
+    remove_deprecated_files
+
     echo "# Clear cache..."
     zammad run rails r Rails.cache.clear
 
@@ -414,8 +463,11 @@ function final_message () {
     echo -e "	firewall-cmd --zone=public --add-service=https --permanent"
     echo -e "	firewall-cmd --reload\n"
   elif [ "${OS}" == "SUSE" ]; then
-    echo -e "\n Make sure that the firewall is not blocking port 80 & 443!\n"
-    echo -e "Use 'yast firewall' or 'SuSEfirewall2' commands to configure it"
+    echo -e "\n Remember to enable firewall rules!\n"
+    echo -e "Use the following commands:"
+    echo -e "	firewall-cmd --zone=public --add-service=http --permanent"
+    echo -e "	firewall-cmd --zone=public --add-service=https --permanent"
+    echo -e "	firewall-cmd --reload\n"
   fi
   echo -e "####################################################################################"
 }

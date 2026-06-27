@@ -33,6 +33,7 @@ import { useAppUsageStore } from '#desktop/stores/appUsage.ts'
 
 import { useBetaUi } from './components/BetaUi/composables/useBetaUi.ts'
 import { useBetaUiFeedbackRouteGuard } from './components/BetaUi/composables/useBetaUiFeedbackRouteGuard.ts'
+import { useMobileDetection } from './composables/responsiveness/useMobileDetection.ts'
 
 const router = useRouter()
 
@@ -107,6 +108,7 @@ watch(
     initializeDefaultObjectAttributes()
     useAppUsageStore()
     useTicketBulkUpdateStore()
+    useMobileDetection()
   },
   { immediate: true },
 )

@@ -131,6 +131,7 @@ export const Table = TableTipTap.extend({
           }
         },
         destroy() {
+          cleanupTriggers(editor.options.element as HTMLElement)
           const { triggerComponent } = pluginKey.getState(editor.state)
           triggerComponent?.destroy()
         },

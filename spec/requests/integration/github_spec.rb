@@ -4,7 +4,7 @@ require 'rails_helper'
 
 # rubocop:disable RSpec/StubbedMock,RSpec/MessageSpies
 
-RSpec.describe 'GitHub', required_envs: %w[GITHUB_ENDPOINT GITHUB_APITOKEN], type: :request do
+RSpec.describe 'GitHub', authenticated_as: :agent, required_envs: %w[GITHUB_ENDPOINT GITHUB_APITOKEN], type: :request do
 
   let(:token)    { 't0k3N' }
   let(:endpoint) { 'https://api.github.com/graphql' }
@@ -13,7 +13,7 @@ RSpec.describe 'GitHub', required_envs: %w[GITHUB_ENDPOINT GITHUB_APITOKEN], typ
     create(:admin, groups: Group.all)
   end
 
-  let!(:agent) do
+  let(:agent) do
     create(:agent, groups: Group.all)
   end
 
@@ -23,6 +23,7 @@ RSpec.describe 'GitHub', required_envs: %w[GITHUB_ENDPOINT GITHUB_APITOKEN], typ
       title:      'GitHub integration',
       url:        ENV['GITHUB_ISSUE_LINK'],
       icon_state: 'closed',
+      issue_type: nil,
       milestone:  '4.0',
       assignees:  ['Thorsten'],
       labels:     [
@@ -52,7 +53,7 @@ RSpec.describe 'GitHub', required_envs: %w[GITHUB_ENDPOINT GITHUB_APITOKEN], typ
         endpoint:  endpoint,
         api_token: token,
       }
-      authenticated_as(agent)
+
       post '/api/v1/integration/github/verify', params: params, as: :json
       expect(response).to have_http_status(:forbidden)
       expect(json_response).to be_a(Hash)
@@ -88,7 +89,7 @@ RSpec.describe 'GitHub', required_envs: %w[GITHUB_ENDPOINT GITHUB_APITOKEN], typ
         params = {
           links: [ ENV['GITHUB_ISSUE_LINK'] ],
         }
-        authenticated_as(agent)
+
         instance = instance_double(GitHub)
         expect(GitHub).to receive(:new).and_return instance
         expect(instance).to receive(:issues_by_urls).and_return(
@@ -108,6 +109,16 @@ RSpec.describe 'GitHub', required_envs: %w[GITHUB_ENDPOINT GITHUB_APITOKEN], typ
       end
     end
 
+    context 'when agent has no access to the ticket', required_envs: nil do
+      it 'does not query ticket issues for inaccessible ticket' do
+        inaccessible_group  = create(:group)
+        inaccessible_ticket = create(:ticket, group: inaccessible_group)
+
+        post '/api/v1/integration/github', params: { ticket_id: inaccessible_ticket.id }, as: :json
+        expect(response).to have_http_status(:forbidden)
+      end
+    end
+
     it 'does save ticket issues' do
       ticket = create(:ticket, group: Group.first)
 
@@ -115,7 +126,7 @@ RSpec.describe 'GitHub', required_envs: %w[GITHUB_ENDPOINT GITHUB_APITOKEN], typ
         ticket_id:   ticket.id,
         issue_links: [ ENV['GITHUB_ISSUE_LINK'] ],
       }
-      authenticated_as(agent)
+
       post '/api/v1/integration/github_ticket_update', params: params, as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response).to be_a(Hash)

@@ -18,9 +18,10 @@ const { links } = usePublicLinks(props.screen)
   >
     <template v-for="link in links" :key="link.id">
       <CommonLink
+        v-tooltip.supportive="link.description && $t(link.description)"
         :link="link.link"
-        :title="link.description"
         :open-in-new-tab="link.newTab"
+        rel="noopener noreferrer"
         class="my-1 px-2"
         size="medium"
       >

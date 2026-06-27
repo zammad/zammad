@@ -5,16 +5,6 @@ import { renderComponent } from '#tests/support/components/index.ts'
 import CommonIndicator from '#desktop/components/CommonIndicator/CommonIndicator.vue'
 
 describe('CommonIndicator', () => {
-  it('renders the component with slot content', () => {
-    const view = renderComponent(CommonIndicator, {
-      slots: {
-        default: 'Test content',
-      },
-    })
-
-    expect(view.getByText('Test content')).toBeInTheDocument()
-  })
-
   it('uses intersection observer to track visibility', async () => {
     const intersecting = { value: false }
 
@@ -25,15 +15,11 @@ describe('CommonIndicator', () => {
           intersecting.value = value
         },
       },
-      slots: {
-        default: 'Indicator content',
-      },
     })
 
-    const indicator = view.container.querySelector('div')
+    const indicator = view.container.querySelector('span')
     expect(indicator).toBeInTheDocument()
-
-    expect(view.getByText('Indicator content')).toBeInTheDocument()
+    expect(indicator).toHaveClass('h-px')
   })
 
   it('updates v-model when intersection changes', async () => {
@@ -46,9 +32,6 @@ describe('CommonIndicator', () => {
       props: {
         modelValue,
         'onUpdate:modelValue': onUpdateModelValue,
-      },
-      slots: {
-        default: 'Content',
       },
     })
 

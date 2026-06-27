@@ -67,13 +67,14 @@ const onKeydown = (event: KeyboardEvent) => emit('keydown', event)
 </script>
 
 <template>
-  <div class="inline-flex grow items-center justify-start gap-1 text-sm" :class="wrapperClass">
+  <div class="inline-flex grow items-center justify-start gap-2 text-sm" :class="wrapperClass">
     <CommonIcon
       class="shrink-0 fill-stone-200 dark:fill-neutral-500"
       size="tiny"
       name="search"
       decorative
     />
+    <slot name="prefix" />
     <div class="relative inline-flex grow overflow-clip">
       <div class="grow">
         <input
@@ -82,7 +83,7 @@ const onKeydown = (event: KeyboardEvent) => emit('keydown', event)
           v-bind="$attrs"
           :placeholder="i18n.t(placeholder)"
           :aria-label="$t('Search…')"
-          class="w-full min-w-16 text-black outline-hidden dark:text-white"
+          class="w-full text-black outline-hidden dark:text-white"
           :class="{
             'bg-blue-200 dark:bg-gray-700': !alternativeBackground,
             'bg-neutral-50 dark:bg-gray-500': alternativeBackground,
@@ -110,12 +111,9 @@ const onKeydown = (event: KeyboardEvent) => emit('keydown', event)
     <div class="flex shrink-0 items-center gap-1">
       <slot name="controls" />
       <CommonIcon
-        class="fill-stone-200 hover:fill-black focus-visible:rounded-xs focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 dark:fill-neutral-500 dark:hover:fill-white"
-        :class="{
-          invisible: !filter?.length,
-        }"
+        v-if="filter?.length"
+        class="fill-stone-200 focus-visible-app-default outline-0 hover:fill-black focus-visible:rounded-xs dark:fill-neutral-500 dark:hover:fill-white"
         :aria-label="$t('Clear search')"
-        :aria-hidden="!filter?.length ? 'true' : undefined"
         name="backspace2"
         size="xs"
         role="button"

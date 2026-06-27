@@ -39,7 +39,7 @@ export const initializeGlobalComponentStyles = () => {
   })
 
   initializeAvatarClasses({
-    base: 'border border-neutral-100 dark:border-gray-900 text-black',
+    base: 'border border-neutral-100 dark:border-gray-900 print:border-black text-black',
     vipOrganization: 'text-neutral-400',
     vipUser: 'text-yellow-300',
   })

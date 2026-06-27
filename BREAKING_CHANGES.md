@@ -1,5 +1,70 @@
 # Breaking Changes
 
+## 7.2
+
+### Knowledge Base search index: new `publication_state` field
+
+Issue #6142 adds a "Suggested searches" shortcut menu to the Knowledge Base search.
+A new `publication_state` field is now indexed for `KnowledgeBase::Answer::Translation`,
+reflecting the answer's current state (draft, internal, published, archived).
+
+To enable this field, a search index rebuild is required:
+
+`zammad run rake zammad:searchindex:rebuild`
+
+Without a rebuild, `publication_state:draft` queries return no results.
+
+### Elasticsearch 7 no longer supported
+
+Elasticsearch 7 has reached end of life and is no longer supported. Zammad now
+requires **Elasticsearch 8** or later.
+
+⚠️ Please upgrade your Elasticsearch installation before updating to Zammad 7.2.
+
+### Calendar iCal feed must be a URL
+
+The functionality of using local file paths for calendars iCal feed source was removed.
+
+### Deprecated `es-ca` locale inactivated
+
+The deprecated `es-ca` locale (Catalan) is no longer offered for selection.
+Users still set to `es-ca` are automatically migrated to the proper `ca`
+locale. Existing Knowledge Base locales referencing `es-ca` are left
+untouched and must be migrated manually due to the URL change.
+
+### Stricter default Content-Security-Policy
+
+A new `frame-ancestors 'self'` directive was added to the default
+Content-Security-Policy header.
+
+⚠️ Setups that previously allowed the Zammad web interface to be embedded in
+an `<iframe>` on a different origin by overriding the `X-Frame-Options` header
+at the reverse proxy will now be blocked again by the new `frame-ancestors 'self'`
+CSP directive. To re-enable embedding from trusted origins, the `frame-ancestors`
+directive of the `Content-Security-Policy` response header must be adjusted at
+the reverse proxy as well.
+
+## 7.1
+
+### Elasticsearch 7 deprecated
+
+Elasticsearch 7 has reached end of life and is now deprecated.
+
+⚠️ A future version of Zammad now requires **Elasticsearch 8** or later.
+
+### Calendar iCal feed must be a URL
+
+Calendars can no longer be configured with a local file path as the iCal feed source. Only HTTP/HTTPS URLs are accepted.
+
+Local file path support is now deprecated. In a future release of Zammad, this functionality will be removed.
+
+⚠️ If you previously used a local `.ics`
+file path, host the file on an HTTP server and update the calendar's iCal feed URL accordingly.
+
+### Exceptions::UnprocessableEntity error is deprecated in favor of Exceptions::UnprocessableContent
+
+Exceptions::UnprocessableEntity will be removed in Zammad 8.0
+
 ## 7.0
 
 ### MySQL support removed, database related application settings deprecated

@@ -9,7 +9,6 @@ import { waitForNextTick, waitForTimeout } from '#tests/support/utils.ts'
 
 const wrapperParameters = {
   form: true,
-  formField: true,
 }
 
 const defaultProps: {

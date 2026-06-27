@@ -102,8 +102,8 @@ describe('article reply hint note', () => {
 
     expect(within(complementary).queryByText('Public note hint.')).not.toBeInTheDocument()
 
+    // Toggling the visibility switch flips the internal note to public.
     await view.events.click(within(complementary).getByLabelText('Visibility'))
-    await view.events.click(await view.findByRole('option', { name: 'Public' }))
     await getNode('form-ticket-edit-1')?.settled
 
     expect(await within(complementary).findByText('Public note hint.')).toBeVisible()

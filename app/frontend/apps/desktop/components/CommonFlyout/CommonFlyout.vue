@@ -40,7 +40,9 @@ import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonOverlayContainer from '#desktop/components/CommonOverlayContainer/CommonOverlayContainer.vue'
 import ResizeLine from '#desktop/components/ResizeLine/ResizeLine.vue'
 import { useResizeLine } from '#desktop/components/ResizeLine/useResizeLine.ts'
+import { useAppBreakpoints } from '#desktop/composables/responsiveness/useAppBreakpoints.ts'
 import { getRouteIdentifier } from '#desktop/composables/useOverlayContainer.ts'
+import { useTransitionConfig } from '#desktop/composables/useTransitionConfig.ts'
 
 import CommonFlyoutActionFooter from './CommonFlyoutActionFooter.vue'
 import { closeFlyout } from './useFlyout.ts'
@@ -112,6 +114,14 @@ whenever(isActive, () => {
   emit('activated')
 })
 
+// On smaller screens the flyout behaves like a dialog: it fills the whole
+// viewport (covering the sidebars), gets a small inset around the viewport,
+// fully rounded corners and resizing is disabled (no multitasking in this
+// mode).
+const { isSmallScreen } = useAppBreakpoints()
+
+const isFullscreen = computed(() => props.fullscreen || isSmallScreen.value)
+
 const {
   isDirty: isFormDirty,
   isDisabled: isFormDisabled,
@@ -174,6 +184,10 @@ const leftSidebarWidth = leftSideBarKey ? useLocalStorage(leftSideBarKey, 0) : s
 const { width: screenWidth } = useWindowSize()
 // Calculate the viewport width minus the left sidebar width and a threshold gap
 const flyoutMaxWidth = computed(() => screenWidth.value - leftSidebarWidth.value - gap)
+
+const displayedFlyoutWidth = computed(() =>
+  Math.min(flyoutContainerWidth.value, flyoutMaxWidth.value),
+)
 
 if (props.persistResizeWidth) {
   flyoutContainerWidth = useLocalStorage(`${flyoutId}-width`, flyoutSize[props.size || 'medium'])
@@ -290,39 +304,35 @@ onMounted(() => {
   })
 })
 
-// It is the same as dialog, but could be changed in the future?
-const transition = VITE_TEST_MODE
-  ? undefined
-  : {
-      enterActiveClass: 'duration-300 ease-out',
-      enterFromClass: 'opacity-0 rtl:-translate-x-3/4 ltr:translate-x-3/4',
-      enterToClass: 'opacity-100 rtl:-translate-x-0 ltr:translate-x-0',
-      leaveActiveClass: 'duration-200 ease-in',
-      leaveFromClass: 'opacity-100 rtl:-translate-x-0 ltr:translate-x-0',
-      leaveToClass: 'opacity-0 rtl:-translate-x-3/4 ltr:translate-x-3/4',
-    }
+const { transitions } = useTransitionConfig()
 </script>
 
 <template>
-  <Transition :appear="isActive" v-bind="transition">
+  <Transition :name="transitions.slide" :appear="isActive">
     <!--  `display:none` to prevent showing up inactive flyout for cached instance -->
+    <!-- Below `lg` (1024px) the flyout switches to a dialog-like fullscreen layout, which also keeps the large size of 800px from ever being out of the viewport on initial render. -->
     <CommonOverlayContainer
       :id="flyoutId"
       ref="flyout-container"
       tag="aside"
       tabindex="-1"
-      class="overflow-clip-x fixed top-0 bottom-0 z-40 flex max-h-dvh min-w-min flex-col border-y border-neutral-100 bg-neutral-50 ltr:right-0 ltr:rounded-l-xl ltr:border-l rtl:left-0 rtl:rounded-r-xl rtl:border-r dark:border-gray-900 dark:bg-gray-500"
+      class="fixed z-40 flex max-h-dvh min-w-min flex-col border-neutral-100 bg-neutral-50 dark:border-gray-900 dark:bg-gray-500 print:static print:h-auto print:max-h-none print:border-none"
+      :style="{ '--flyout-container-width': `${displayedFlyoutWidth}px` }"
       :no-close-on-backdrop-click="noCloseOnBackdropClick"
       :show-backdrop="showBackdrop && isActive"
-      :style="{ width: `${flyoutContainerWidth}px` }"
-      :class="{ 'transition-all': !isResizing, hidden: !isActive }"
-      :fullscreen="fullscreen"
+      :class="[
+        { 'transition-all': !isResizing, hidden: !isActive },
+        isSmallScreen
+          ? 'inset-6 w-auto overflow-hidden rounded-xl border print:inset-0'
+          : 'overflow-clip-x inset-y-0 inset-e-0 w-full rounded-s-xl border-y border-s lg:w-(--flyout-container-width) print:w-full',
+      ]"
+      :fullscreen="isFullscreen"
       :aria-labelledby="`${flyoutId}-title`"
       @click-background="close()"
     >
       <header
         ref="header"
-        class="sticky top-0 flex items-center border-b border-neutral-100 border-b-transparent bg-neutral-50 p-3 ltr:rounded-tl-xl rtl:rounded-tr-xl dark:bg-gray-500"
+        class="sticky top-0 flex items-center border-b border-neutral-100 border-b-transparent bg-neutral-50 p-3 ltr:rounded-tl-xl rtl:rounded-tr-xl dark:bg-gray-500 print:static print:border-none print:px-0"
         :class="{
           'border-b-neutral-100 dark:border-b-gray-900': !arrivedState.top && isContentOverflowing,
         }"
@@ -341,7 +351,7 @@ const transition = VITE_TEST_MODE
           </CommonLabel>
         </slot>
         <CommonButton
-          class="ltr:ml-auto rtl:mr-auto"
+          class="ltr:ml-auto rtl:mr-auto print:hidden"
           variant="neutral"
           size="medium"
           :aria-label="$t('Close side panel')"
@@ -350,7 +360,11 @@ const transition = VITE_TEST_MODE
         />
       </header>
 
-      <div ref="content" class="h-full overflow-y-scroll px-3" v-bind="$attrs">
+      <div
+        ref="content"
+        class="h-full overflow-y-scroll px-3 print:h-auto print:overflow-y-visible print:px-0"
+        v-bind="$attrs"
+      >
         <slot />
       </div>
 
@@ -358,7 +372,7 @@ const transition = VITE_TEST_MODE
         v-if="$slots.footer || !hideFooter"
         ref="footer"
         :aria-label="$t('Side panel footer')"
-        class="sticky bottom-0 border-t border-t-transparent bg-neutral-50 p-3 ltr:rounded-bl-xl rtl:rounded-br-xl dark:bg-gray-500"
+        class="sticky bottom-0 border-t border-t-transparent bg-neutral-50 p-3 ltr:rounded-bl-xl rtl:rounded-br-xl dark:bg-gray-500 print:static print:border-black"
         :class="{
           'border-t-neutral-100 dark:border-t-gray-900':
             !arrivedState.bottom && isContentOverflowing,
@@ -366,6 +380,7 @@ const transition = VITE_TEST_MODE
       >
         <slot name="footer" v-bind="{ action, close }">
           <CommonFlyoutActionFooter
+            class="print:hidden"
             v-bind="footerActionOptions"
             :form-node-id="formNodeId"
             :is-form-disabled="isFormDisabled"
@@ -379,7 +394,7 @@ const transition = VITE_TEST_MODE
         v-if="resizable"
         ref="resize-handle"
         :label="$t('Resize side panel')"
-        class="absolute top-2 h-[calc(100%-16px)] overflow-clip ltr:left-px ltr:-translate-x-1/2 rtl:right-px rtl:translate-x-1/2"
+        class="absolute inset-s-px top-2 hidden h-[calc(100%-16px)] overflow-clip lg:flex ltr:-translate-x-1/2 rtl:translate-x-1/2 print:hidden"
         orientation="vertical"
         :values="{
           current: flyoutContainerWidth,

@@ -48,6 +48,21 @@ export class FieldResolverAutocompletionExternalDataSource extends FieldResolver
       },
     }
   }
+
+  public override getFieldFilterOperators() {
+    return ['is']
+  }
+
+  filterAutocompleteType = 'externalDataSource'
+
+  public override getFilterOperatorProps() {
+    return {
+      is: {
+        object: this.object,
+        attributeName: this.name,
+      },
+    }
+  }
 }
 
 export default <FieldResolverModule>{

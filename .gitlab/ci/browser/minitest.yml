@@ -1,0 +1,9 @@
+minitest:chrome:
+  extends:
+    - .template_browser-core_chrome
+  parallel: 8
+
+minitest:firefox:
+  extends:
+    - .template_browser-core_firefox
+  parallel: 8

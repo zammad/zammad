@@ -43,7 +43,7 @@ const label = computed(() => {
     }"
     tabindex="0"
     :aria-selected="selected"
-    class="focus:bg-blue-highlight flex h-[58px] cursor-pointer items-center self-stretch px-4 py-5 text-base leading-[19px] text-white first:rounded-t-xl last:rounded-b-xl focus:outline-hidden"
+    class="flex h-[58px] cursor-pointer items-center self-stretch px-4 py-5 text-base leading-[19px] text-white first:rounded-t-xl last:rounded-b-xl focus:bg-blue-highlight focus:outline-hidden"
     role="option"
     :data-value="option.value"
     @click="select(option)"

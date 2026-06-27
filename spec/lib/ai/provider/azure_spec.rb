@@ -3,6 +3,7 @@
 require 'rails_helper'
 require_relative 'shared_examples/ping'
 require_relative 'shared_examples/check_temperature_support'
+require_relative 'shared_examples/embed'
 
 # TODO: Add AZURE_URL_EMBEDDINGS when needed.
 RSpec.describe AI::Provider::Azure, integration: true, required_envs: %w[AZURE_TOKEN AZURE_URL_COMPLETIONS AZURE_HOST], use_vcr: true do
@@ -21,43 +22,50 @@ RSpec.describe AI::Provider::Azure, integration: true, required_envs: %w[AZURE_T
                       url_completions: ENV['AZURE_URL_COMPLETIONS'],)
     # TODO: Enable it when needed.
     # url_embeddings:  ENV['AZURE_URL_EMBEDDINGS']
+
+    VCR.configure do |c|
+      c.filter_sensitive_data('AZURE.HOST') { URI.parse(ENV['AZURE_URL_COMPLETIONS']).host }
+    end
   end
 
   include_examples 'provider/ping!'
   include_examples 'provider/check_temperature_support'
+  include_examples 'provider/embed_not_implemented'
 
-  it 'does exchange data with azure ai endpoint' do
-    expect(ai_provider.ask(prompt_system:, prompt_user:)).to match({ 'connected' => 'true' })
-  end
-
-  context 'when API is faulty' do
-    it 'raises an error' do
-      allow(UserAgent).to receive(:post).and_return(
-        UserAgent::Result.new(
-          error:   '',
-          success: false,
-          code:    400,
-        )
-      )
-
-      expect do
-        ai_provider.ask(prompt_system:, prompt_user:)
-      end.to raise_error(AI::Provider::ResponseError, 'Invalid request - please check your input')
+  describe '#ask' do
+    it 'does exchange data with azure ai endpoint' do
+      expect(ai_provider.ask(prompt_system:, prompt_user:)).to match({ 'connected' => 'true' })
     end
-  end
 
-  context 'when metadata is extracted' do
-    it 'stores metadata from response', :aggregate_failures do
-      ai_provider.ask(prompt_system:, prompt_user:)
+    context 'when API is faulty' do
+      it 'raises an error' do
+        allow(UserAgent).to receive(:post).and_return(
+          UserAgent::Result.new(
+            error:   '',
+            success: false,
+            code:    400,
+          )
+        )
 
-      metadata = ai_provider.metadata
+        expect do
+          ai_provider.ask(prompt_system:, prompt_user:)
+        end.to raise_error(AI::Provider::ResponseError, 'Invalid request - please check your input')
+      end
+    end
 
-      expect(metadata).to include(
-        model:             be_present,
-        prompt_tokens:     be_a(Numeric),
-        completion_tokens: be_a(Numeric),
-        total_tokens:      be_a(Numeric)
-      )
+    context 'when metadata is extracted' do
+      it 'stores metadata from response', :aggregate_failures do
+        ai_provider.ask(prompt_system:, prompt_user:)
+
+        metadata = ai_provider.metadata
+
+        expect(metadata).to include(
+          model:             be_present,
+          prompt_tokens:     be_a(Numeric),
+          completion_tokens: be_a(Numeric),
+          total_tokens:      be_a(Numeric)
+        )
+      end
     end
   end
 end

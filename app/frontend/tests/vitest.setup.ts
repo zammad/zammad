@@ -69,6 +69,7 @@ Object.defineProperty(Node.prototype, 'getClientRects', {
 Object.defineProperty(Element.prototype, 'scroll', { value: vi.fn() })
 Object.defineProperty(Element.prototype, 'scrollBy', { value: vi.fn() })
 Object.defineProperty(Element.prototype, 'scrollIntoView', { value: vi.fn() })
+Object.defineProperty(Element.prototype, 'scrollTo', { value: vi.fn() })
 
 const descriptor = Object.getOwnPropertyDescriptor(HTMLImageElement.prototype, 'src')!
 
@@ -123,10 +124,9 @@ globalThis.ClipboardItem = class {
 
 require.extensions['.css'] = () => ({})
 
-globalThis.requestAnimationFrame = (cb) => {
-  setTimeout(cb, 0)
-  return 0
-}
+globalThis.requestAnimationFrame = (cb) => setTimeout(cb, 0)
+
+globalThis.cancelAnimationFrame = (id) => clearTimeout(id)
 
 globalThis.scrollTo = vi.fn()
 globalThis.matchMedia = (media: string) => ({
@@ -287,9 +287,6 @@ expect.extend({
     return (toBeDisabled as any).call(this, received, ...args)
   },
 })
-
-process.on('uncaughtException', (e) => console.log('Uncaught Exception', e))
-process.on('unhandledRejection', (e) => console.log('Unhandled Rejection', e))
 
 declare module 'vitest' {
   interface TestContext {

@@ -1,7 +1,7 @@
 <!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, toRef } from 'vue'
 
 import {
   EnumTicketExternalReferencesIssueTrackerItemState,
@@ -11,6 +11,8 @@ import {
 import ExternalReferenceContent from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/ExternalReferenceContent.vue'
 import ExternalReferenceLink from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/ExternalReferenceLink.vue'
 import IssueTrackerBadgeList from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem/IssueTrackerBadgeList.vue'
+import { resolveIssueTypeColors } from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem/issueTypeColors.ts'
+import { useThemeStore } from '#desktop/stores/theme.ts'
 
 interface Props {
   issue: TicketExternalReferencesIssueTrackerItem
@@ -22,6 +24,14 @@ const props = defineProps<Props>()
 defineEmits<{
   unlink: [TicketExternalReferencesIssueTrackerItem]
 }>()
+
+const isDarkMode = toRef(useThemeStore(), 'isDarkMode')
+
+const issueTypeStyle = computed(() => {
+  if (!props.issue.issueType) return {}
+  const { bg, text } = resolveIssueTypeColors(props.issue.issueType.color, isDarkMode.value)
+  return { backgroundColor: bg, color: text }
+})
 
 const issueStateColor = computed(() => {
   if (props.issue.state === EnumTicketExternalReferencesIssueTrackerItemState.Open) {
@@ -55,7 +65,7 @@ const issueStateName = computed(() => {
       size="small"
     />
 
-    <div class="grow space-y-2.5">
+    <div class="min-w-0 grow space-y-2.5">
       <ExternalReferenceLink
         :id="issue.issueId"
         :is-editable="isEditable"
@@ -65,6 +75,15 @@ const issueStateName = computed(() => {
         :tooltip="$t('Unlink issue')"
         @remove="$emit('unlink', issue)"
       />
+
+      <ExternalReferenceContent v-if="issue.issueType" :label="$t('Type')">
+        <CommonBadge
+          :style="issueTypeStyle"
+          class="max-w-full self-start truncate !rounded-full border-neutral-100 ltr:border rtl:border dark:border-gray-900"
+        >
+          {{ issue.issueType.name }}
+        </CommonBadge>
+      </ExternalReferenceContent>
 
       <ExternalReferenceContent
         v-if="issue.milestone"

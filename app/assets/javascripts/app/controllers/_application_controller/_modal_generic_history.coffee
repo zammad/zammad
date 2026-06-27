@@ -100,7 +100,7 @@ class App.GenericHistory extends App.ControllerModal
       content = ''
       if item.type is 'notification'
         content = App.i18n.translateContent( "notification sent to '%s'", item.value_to )
-      if item.type is 'email'
+      else if item.type is 'email'
         content = App.i18n.translateContent( "email sent to '%s'", item.value_to )
       else if item.type is 'time_trigger_performed'
         message = switch item.value_from

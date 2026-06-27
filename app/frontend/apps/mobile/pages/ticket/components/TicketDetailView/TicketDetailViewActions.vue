@@ -52,7 +52,7 @@ const scrollDown = () => {
           >
             <button
               v-if="canScrollDown"
-              class="bg-blue relative flex h-8 cursor-pointer items-center rounded-2xl px-2 transition"
+              class="relative flex h-8 cursor-pointer items-center rounded-2xl bg-blue px-2 transition"
               :aria-label="
                 newRepliesCount
                   ? $t('Scroll down to see %s new replies', newRepliesCount)
@@ -65,7 +65,7 @@ const scrollDown = () => {
                 v-if="newRepliesCount"
                 aria-hidden="true"
                 data-test-id="new-replies-count"
-                class="bg-yellow absolute top-0 z-10 h-4 min-w-[1rem] rounded-full px-1 text-center text-xs text-black ltr:ml-4 rtl:mr-4"
+                class="absolute top-0 z-10 h-4 min-w-[1rem] rounded-full bg-yellow px-1 text-center text-xs text-black ltr:ml-4 rtl:mr-4"
               >
                 {{ newRepliesCount }}
               </span>
@@ -103,7 +103,7 @@ const scrollDown = () => {
             <span
               role="status"
               :aria-label="$t('Validation failed')"
-              class="bg-red absolute bottom-7 h-5 w-5 cursor-pointer rounded-full text-center text-xs leading-5 text-black ltr:right-2 rtl:left-2"
+              class="absolute bottom-7 h-5 w-5 cursor-pointer rounded-full bg-red text-center text-xs leading-5 text-black ltr:right-2 rtl:left-2"
             >
               <CommonIcon class="mx-auto h-5" name="close" size="tiny" decorative />
             </span>

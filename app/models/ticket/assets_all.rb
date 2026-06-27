@@ -11,9 +11,7 @@ class Ticket::AssetsAll
   def all_assets(assets = {})
     attributes_to_change = get_attributes_to_change(assets)
 
-    all_assets = compile_assets(attributes_to_change[:assets])
-
-    response(all_assets, attributes_to_change)
+    response(compile_assets(attributes_to_change[:assets]), attributes_to_change)
   end
 
   private
@@ -27,6 +25,8 @@ class Ticket::AssetsAll
     if (draft = ticket.shared_draft) && Ticket::SharedDraftZoomPolicy.new(user, draft).show?
       assets = draft.assets(assets)
     end
+
+    add_ai_summary_enabled(assets)
 
     if Setting.get('checklist') && user.permissions?('ticket.agent')
       ticket.checklist&.assets(assets)
@@ -53,6 +53,24 @@ class Ticket::AssetsAll
       time_accountings:   time_accountings,
       form_meta:          attributes_to_change[:form_meta],
     }
+  end
+
+  def add_ai_summary_enabled(assets)
+    ticket_assets = assets[Ticket.to_app_model]
+    return if ticket_assets.blank?
+
+    ticket_asset = ticket_assets[ticket.id]
+    return if ticket_asset.blank?
+
+    ticket_assets[ticket.id] = ticket_asset.merge('ai_summary_enabled' => ai_summary_enabled)
+  end
+
+  def ai_summary_enabled
+    return false if !TicketPolicy.new(user, ticket).agent_read_access?
+
+    Service::Ticket::AIAssistance::SummaryEnabled
+      .with_current_user(user)
+      .execute(ticket:)
   end
 
   def get_attributes_to_change(assets)

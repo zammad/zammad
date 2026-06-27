@@ -16,44 +16,8 @@
   after_script:
     - .gitlab/packager.io/cleanup.sh
 
-packager.io:debian-11:
+packager.io:
   extends: [.packager.io]
-  variables:
-    DISTRIBUTION: debian
-    DISTRIBUTION_VERSION: '11'
-
-packager.io:debian-12:
-  extends: [.packager.io]
-  variables:
-    DISTRIBUTION: debian
-    DISTRIBUTION_VERSION: '12'
-
-packager.io:debian-13:
-  extends: [.packager.io]
-  variables:
-    DISTRIBUTION: debian
-    DISTRIBUTION_VERSION: '13'
-
-packager.io:ubuntu-22.04:
-  extends: [.packager.io]
-  variables:
-    DISTRIBUTION: ubuntu
-    DISTRIBUTION_VERSION: '22.04'
-
-packager.io:ubuntu-24.04:
-  extends: [.packager.io]
-  variables:
-    DISTRIBUTION: ubuntu
-    DISTRIBUTION_VERSION: '24.04'
-
-packager.io:rhel-9:
-  extends: [.packager.io]
-  variables:
-    DISTRIBUTION: rhel
-    DISTRIBUTION_VERSION: '9'
-
-packager.io:sles-15:
-  extends: [.packager.io]
-  variables:
-    DISTRIBUTION: sles
-    DISTRIBUTION_VERSION: '15'
+  parallel:
+    matrix:
+      - DISTRO: [debian-11, debian-12, debian-13, ubuntu-22.04, ubuntu-24.04, ubuntu-26.04, rhel-9, rhel-10, sles-15, sles-16.0]

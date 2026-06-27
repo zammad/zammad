@@ -5,6 +5,7 @@ import { computed, toRef } from 'vue'
 
 import type { UserTaskbarItemEntitySearch } from '#shared/graphql/types.ts'
 
+import { useSearchTitle } from '#desktop/components/Search/composables/useSearchTitle.ts'
 import { useUserTaskbarTab } from '#desktop/composables/useUserTaskbarTab.ts'
 
 import type { UserTaskbarTabEntityProps } from '../types.ts'
@@ -13,9 +14,11 @@ const props = defineProps<UserTaskbarTabEntityProps<UserTaskbarItemEntitySearch>
 
 const { tabLinkInstance, taskbarTabActive } = useUserTaskbarTab(toRef(props, 'taskbarTab'))
 
-const currentTitle = computed(
-  () => props.context?.query || props.taskbarTab.entity?.query || __('Extended search'),
+const filterCount = computed<number>(() => props.taskbarTab.entity?.filterCount ?? 0)
+const currentSearchTerm = computed(
+  () => (props.context?.query as string) || props.taskbarTab.entity?.query || '',
 )
+const { searchTitle: currentTitle } = useSearchTitle(currentSearchTerm, filterCount)
 </script>
 
 <template>
@@ -24,6 +27,7 @@ const currentTitle = computed(
     ref="tabLinkInstance"
     class="flex grow items-center gap-2 rounded-md px-2 py-3 group-hover/tab:bg-blue-600 hover:no-underline! focus-visible:rounded-md focus-visible:outline-hidden group-hover/tab:dark:bg-blue-900"
     :link="taskbarTabLink"
+    :aria-current="isActive ? 'page' : undefined"
     :class="{
       'bg-blue-800!': taskbarTabActive,
     }"

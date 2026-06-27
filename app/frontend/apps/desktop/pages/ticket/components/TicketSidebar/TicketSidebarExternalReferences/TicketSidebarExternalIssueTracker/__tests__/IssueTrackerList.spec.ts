@@ -18,6 +18,7 @@ const mockedIssues = [
   {
     assignees: ['Benjamin Foo'],
     issueId: 356,
+    issueType: { name: 'Story', color: 'PURPLE' },
     labels: [
       {
         color: '#009966',
@@ -27,15 +28,70 @@ const mockedIssues = [
     ],
     milestone: 'Frontend refactoring',
     state: EnumTicketExternalReferencesIssueTrackerItemState.Open,
-    title: 'Example issue for GitLab integration',
-    url: 'https://git.zammad.com/zammad/zammad/-/issues/123',
+    title: 'Example issue for GitHub integration',
+    url: 'https://github.com/zammad/zammad/issues/123',
   },
 ]
 
 describe('IssueTrackerWrapper', () => {
-  it('renders issues correctly', async () => {
+  it('renders GitHub issues correctly including issue type', async () => {
     mockTicketExternalReferencesIssueTrackerItemListQuery({
       ticketExternalReferencesIssueTrackerItemList: mockedIssues,
+    })
+
+    const wrapper = renderComponent(IssueTrackerList, {
+      props: {
+        screenType: TicketSidebarScreenType.TicketDetailView,
+        isTicketEditable: true,
+        trackerType: EnumTicketExternalReferencesIssueTrackerType.Github,
+        flyoutConfig: {
+          name: 'link-github-issue',
+          icon: 'github',
+          label: __('GitHub: Link issue'),
+          inputPlaceholder: 'https://github.com/organization/repository/issues/42',
+        },
+        issueLinks: ['https://github.com/zammad/zammad/issues/356'],
+        form: {},
+        ticketId: convertToGraphQLId('Ticket', '1'),
+      },
+      router: true,
+    })
+
+    const link = await wrapper.findByRole('link', {
+      name: '#356 Example issue for GitHub integration',
+    })
+
+    expect(link).toHaveTextContent('#356 Example issue for GitHub integration')
+    expect(link).toHaveAttribute('href', 'https://github.com/zammad/zammad/issues/123')
+
+    expect(wrapper.getByText('Type')).toBeInTheDocument()
+    const issueTypeBadge = wrapper.getByText('Story')
+    expect(issueTypeBadge).toBeInTheDocument()
+    expect(issueTypeBadge).toHaveStyle('background-color: #8250DF') // PURPLE light-mode
+    expect(issueTypeBadge).toHaveStyle('color: #FFFFFF')
+
+    expect(wrapper.getByText('Assignee')).toBeInTheDocument()
+    expect(wrapper.getByText('Benjamin Foo')).toBeInTheDocument()
+
+    expect(wrapper.getByText('Milestone')).toBeInTheDocument()
+    expect(wrapper.getByText('Frontend refactoring')).toBeInTheDocument()
+
+    expect(wrapper.getByText('Labels')).toBeInTheDocument()
+
+    const issueLabelList = wrapper.getByRole('list', {
+      name: 'List of issue labels',
+    })
+
+    const item = within(issueLabelList).getByRole('listitem')
+
+    expect(item).toHaveStyle('background-color: #009966')
+    expect(item).toHaveStyle('color: #FFFFFF')
+    expect(item).toHaveTextContent('New tech stack')
+  })
+
+  it('renders GitLab issues correctly without issue type', async () => {
+    mockTicketExternalReferencesIssueTrackerItemListQuery({
+      ticketExternalReferencesIssueTrackerItemList: [{ ...mockedIssues[0], issueType: null }],
     })
 
     const wrapper = renderComponent(IssueTrackerList, {
@@ -56,30 +112,9 @@ describe('IssueTrackerWrapper', () => {
       router: true,
     })
 
-    const link = await wrapper.findByRole('link', {
-      name: '#356 Example issue for GitLab integration',
-    })
+    await wrapper.findByRole('link', { name: '#356 Example issue for GitHub integration' })
 
-    expect(link).toHaveTextContent('#356 Example issue for GitLab integration')
-    expect(link).toHaveAttribute('href', 'https://git.zammad.com/zammad/zammad/-/issues/123')
-
-    expect(wrapper.getByText('Assignee')).toBeInTheDocument()
-    expect(wrapper.getByText('Benjamin Foo')).toBeInTheDocument()
-
-    expect(wrapper.getByText('Milestone')).toBeInTheDocument()
-    expect(wrapper.getByText('Frontend refactoring')).toBeInTheDocument()
-
-    expect(wrapper.getByText('Labels')).toBeInTheDocument()
-
-    const issueLabelList = wrapper.getByRole('list', {
-      name: 'List of issue labels',
-    })
-
-    const item = within(issueLabelList).getByRole('listitem')
-
-    expect(item).toHaveStyle('background-color: #009966')
-    expect(item).toHaveStyle('color: #FFFFFF')
-    expect(item).toHaveTextContent('New tech stack')
+    expect(wrapper.queryByText('Type')).not.toBeInTheDocument()
   })
 
   it('separates assignees with comma if there are multiple', async () => {

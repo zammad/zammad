@@ -29,4 +29,21 @@ describe('FieldResolverAutocompletionCustomer', () => {
       internal: true,
     })
   })
+
+  it('exposes the is operator and customer autocomplete for advanced filters', () => {
+    const fieldResolver = new FieldResolverAutocompletionCustomer(EnumObjectManagerObjects.Ticket, {
+      dataType: 'user_autocompletion',
+      name: 'customer_id',
+      display: 'Customer',
+      // Mirrors the seed: customer_id is a User-relation attribute. The
+      // autocomplete picker is derived from the relation via the FieldResolver
+      // default — this resolver only needs to declare the operator.
+      dataOption: { relation: 'User' },
+      isInternal: true,
+    })
+
+    expect(fieldResolver.getFieldFilterOperators()).toEqual(['is'])
+    expect(fieldResolver.getFilterAutocompleteType()).toBe('customer')
+    expect(fieldResolver.getFilterRelation()).toBe('User')
+  })
 })

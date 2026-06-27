@@ -1,17 +1,23 @@
 <!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
+import { useTouchDevice } from '#shared/composables/useTouchDevice.ts'
+
+import CollapseButton from '#desktop/components/CollapseButton/CollapseButton.vue'
+import { SidebarName } from '#desktop/components/layout/types.ts'
+import { useSidebarDisplay } from '#desktop/components/layout/useSidebarDisplay.ts'
+
 import { useTicketSidebar } from '../composables/useTicketSidebar.ts'
 
 import type { TicketSidebarContext } from '../types/sidebar.ts'
 
 interface Props {
   context: TicketSidebarContext
-  isCollapsed: boolean
-  toggleCollapse: () => void
 }
 
-const props = defineProps<Props>()
+defineProps<Props>()
+
+const { isSidebarCollapsed, toggleSidebar } = useSidebarDisplay(SidebarName.TicketContent)
 
 const {
   activeSidebar,
@@ -23,17 +29,20 @@ const {
 } = useTicketSidebar()
 
 const maybeToggleAndSwitchSidebar = (newSidebar: string) => {
-  if (props.isCollapsed) props.toggleCollapse()
+  if (isSidebarCollapsed.value) toggleSidebar()
+
   switchSidebar(newSidebar)
 }
+
+const { isTouchDevice } = useTouchDevice()
 </script>
 
 <template>
   <div class="flex h-full justify-end">
-    <div v-show="!isCollapsed" id="ticketSidebar" class="flex grow flex-col" />
+    <div v-show="!isSidebarCollapsed" id="ticketSidebar" class="flex grow flex-col" />
     <div
       class="flex flex-col items-center gap-2.5 border-neutral-100 px-2.5 py-3 transition-[border] dark:border-gray-900"
-      :class="{ 'border-s': !isCollapsed }"
+      :class="{ 'border-s': !isSidebarCollapsed }"
     >
       <component
         :is="sidebarPlugin.component"
@@ -47,6 +56,21 @@ const maybeToggleAndSwitchSidebar = (newSidebar: string) => {
         @click="maybeToggleAndSwitchSidebar"
         @show="showSidebar(sidebar as string)"
         @hide="hideSidebar(sidebar as string)"
+      />
+
+      <CollapseButton
+        class="mt-auto"
+        :class="{ 'lg:hidden': !isTouchDevice }"
+        owner-id="content-sidebar"
+        visible
+        no-padded
+        size="large"
+        variant="tertiary-gray"
+        inverse
+        :collapsed="isSidebarCollapsed"
+        :collapse-label="$t('Collapse sidebar')"
+        :expand-label="$t('Expand sidebar')"
+        @toggle-collapse="toggleSidebar"
       />
     </div>
   </div>

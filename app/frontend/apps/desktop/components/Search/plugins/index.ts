@@ -23,6 +23,8 @@ export const sortedByNamePlugins = searchPlugins.sort((a, b) => a.name.localeCom
 
 export const searchPluginByName = keyBy(searchPlugins, 'name')
 
+export const getSearchPlugin = (name: string) => searchPluginByName[name]
+
 export const useSearchPlugins = () => {
   const { hasPermission } = useSessionStore()
 

@@ -88,6 +88,7 @@ export interface TableAttribute {
     link?: Pick<CommonLinkProps, 'internal' | 'openInNewTab'> & {
       getLink: (item: TableAdvancedItem, tableAttribute: TableAttribute) => string
     }
+    tooltip?: (item: TableAdvancedItem) => string | undefined
   }
   dataType: ObjectAttribute['dataType']
   dataOption?: ObjectAttribute['dataOption']

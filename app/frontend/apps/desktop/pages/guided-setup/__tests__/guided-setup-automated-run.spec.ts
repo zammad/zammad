@@ -45,7 +45,6 @@ describe('guided setup automated run', () => {
       await vi.advanceTimersByTimeAsync(0)
 
       expect(view.getByText('Automated setup')).toBeInTheDocument()
-      expect(view.getByIconName('spinner')).toBeInTheDocument()
 
       expect(
         view.getByText('The system was configured successfully. You are being redirected.'),

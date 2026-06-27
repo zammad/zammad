@@ -14,6 +14,7 @@ module Gql::Types::Ticket
     field :ignore_escalation, Boolean, null: false
     field :default_create, Boolean, null: false
     field :default_follow_up, Boolean, null: false
+    field :default_close, Boolean, null: false
     field :active, Boolean, null: false
   end
 end

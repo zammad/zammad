@@ -35,7 +35,6 @@ const testOptionsWithDescription: SetRequired<ToggleListOption, 'label'>[] = [
 
 const wrapperParameters = {
   form: true,
-  formField: true,
   dialog: true,
 }
 

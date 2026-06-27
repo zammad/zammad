@@ -10,4 +10,8 @@ class FormUpdater::Relation::TicketState < FormUpdater::Relation
   def order
     { name: :asc }
   end
+
+  def default_scope
+    relation_type.where(active: true)
+  end
 end

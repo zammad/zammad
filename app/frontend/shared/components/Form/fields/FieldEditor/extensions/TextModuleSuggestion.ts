@@ -72,6 +72,9 @@ export default (context: Ref<FormFieldContext<FieldEditorProps>>) => {
     suggestion: buildMentionSuggestion({
       activator: ACTIVATOR,
       type: 'text',
+      label: __('Text modules'),
+      placeholder: __('Start typing to search for text modules…'),
+      showsDefaultList: true,
       insert(item: MentionTextItem) {
         return htmlCleanup(item.renderedContent || '')
       },

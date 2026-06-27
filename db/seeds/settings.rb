@@ -3162,6 +3162,54 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
+  title:       __('Honeypot spam protection'),
+  name:        'form_ticket_create_honeypot',
+  area:        'Form::SpamProtection',
+  description: __('Adds an invisible field to the web form and rejects submissions that fill it in, which automated clients tend to do.'),
+  options:     {
+    form: [
+      {
+        display: '',
+        null:    true,
+        name:    'form_ticket_create_honeypot',
+        tag:     'boolean',
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  state:       true,
+  preferences: {
+    permission: ['admin.channel_formular'],
+  },
+  frontend:    false,
+)
+Setting.create_if_not_exists(
+  title:       __('CAPTCHA provider'),
+  name:        'form_ticket_create_captcha_provider',
+  area:        'Form::SpamProtection',
+  description: __('Defines the CAPTCHA provider used to protect the web form. Leave empty to disable. The list of available providers is derived from the registered FormSpamProtection::Captcha backends.'),
+  state:       '',
+  preferences: {
+    permission: ['admin.channel_formular'],
+  },
+  frontend:    false,
+)
+Setting.create_if_not_exists(
+  title:       __('CAPTCHA provider options'),
+  name:        'form_ticket_create_captcha_options',
+  area:        'Form::SpamProtection',
+  description: __('Stores the credentials (e.g. site key and secret) of the selected CAPTCHA provider.'),
+  state:       {},
+  preferences: {
+    permission: ['admin.channel_formular'],
+  },
+  frontend:    false,
+)
+
+Setting.create_if_not_exists(
   title:       __('Form Allowed Parameters'),
   name:        'form_allowed_params',
   area:        'Form::API',
@@ -4267,7 +4315,7 @@ Setting.create_if_not_exists(
 )
 Setting.create_if_not_exists(
   title:       __('Defines postmaster filter.'),
-  name:        '0009_postmaster_filter_follow_up_assignment',
+  name:        '0010_postmaster_filter_follow_up_assignment',
   area:        'Postmaster::PreFilter',
   description: __('Defines postmaster filter to set the owner (based on group follow up assignment).'),
   options:     {},
@@ -4339,7 +4387,7 @@ Setting.create_if_not_exists(
 )
 Setting.create_if_not_exists(
   title:       __('Defines postmaster filter.'),
-  name:        '0030_postmaster_filter_out_of_office_check',
+  name:        '0009_postmaster_filter_out_of_office_check',
   area:        'Postmaster::PreFilter',
   description: __('Defines postmaster filter to identify out-of-office emails for follow-up detection and keeping current ticket state.'),
   options:     {},
@@ -5736,6 +5784,34 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
+  title:       __('S/MIME signing for system notifications'),
+  name:        'smime_sign_system_notifications',
+  area:        'Integration::SMIME',
+  description: __('Defines if system notification emails are S/MIME signed.'),
+  options:     {
+    form: [
+      {
+        display: '',
+        null:    true,
+        name:    'smime_sign_system_notifications',
+        tag:     'boolean',
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  state:       false,
+  preferences: {
+    prio:       3,
+    permission: ['admin.integration'],
+  },
+  # No real-time WebSocket broadcast needed for this admin toggle.
+  frontend:    false,
+)
+
+Setting.create_if_not_exists(
   title:       __('PGP integration'),
   name:        'pgp_integration',
   area:        'Integration::Switch',
@@ -5775,6 +5851,34 @@ Setting.create_if_not_exists(
     permission: ['admin.integration'],
   },
   frontend:    true,
+)
+
+Setting.create_if_not_exists(
+  title:       __('PGP signing for system notifications'),
+  name:        'pgp_sign_system_notifications',
+  area:        'Integration::PGP',
+  description: __('Defines if system notification emails are PGP signed.'),
+  options:     {
+    form: [
+      {
+        display: '',
+        null:    true,
+        name:    'pgp_sign_system_notifications',
+        tag:     'boolean',
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  state:       false,
+  preferences: {
+    prio:       3,
+    permission: ['admin.integration'],
+  },
+  # No real-time WebSocket broadcast needed for this admin toggle.
+  frontend:    false,
 )
 
 Setting.create_if_not_exists(
@@ -6146,6 +6250,24 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
+  title:       __('Ticket Summary Selector'),
+  name:        'ai_assistance_ticket_summary_selector',
+  area:        'AI::Assistance',
+  description: __('Enable ticket summary for following matching tickets.'),
+  options:     {
+    form: [
+      {},
+    ],
+  },
+  preferences: {
+    authentication: true,
+    permission:     ['admin.ai_assistance_ticket_summary'],
+  },
+  state:       {},
+  frontend:    true,
+)
+
+Setting.create_if_not_exists(
   title:       __('Writing Assistant'),
   name:        'ai_assistance_text_tools',
   area:        'AI::Assistance',
@@ -6185,6 +6307,38 @@ Setting.create_if_not_exists(
     permission:     ['admin.ai_assistance_kb_answer_from_ticket_generation'],
   },
   frontend:    true,
+)
+
+Setting.create_if_not_exists(
+  title:       __('Vector DB knowledge base categories'),
+  name:        'vectordb_knowledge_base_category_ids',
+  area:        'VectorDB::KnowledgeBase',
+  description: __('Defines which knowledge base categories are included in the vector database.'),
+  state:       [],
+  frontend:    false,
+)
+
+Setting.create_if_not_exists(
+  title:       __('Vector DB knowledge base chunking strategy'),
+  name:        'vectordb_knowledge_base_chunking_strategy',
+  area:        'VectorDB::KnowledgeBase',
+  description: __('Defines the chunking strategy for the knowledge base vector database.'),
+  options:     {
+    form: [
+      {
+        display: '',
+        null:    true,
+        name:    'vectordb_knowledge_base_chunking_strategy',
+        tag:     'select',
+        options: {
+          'recursive' => __('Recursive hierarchical chunking'),
+          'sentence'  => __('Sentence-based chunking'),
+        },
+      },
+    ],
+  },
+  state:       'sentence',
+  frontend:    false,
 )
 
 # TODO: Unused in desktop view, drop later.

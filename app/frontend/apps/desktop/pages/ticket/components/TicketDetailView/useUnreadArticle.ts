@@ -3,18 +3,20 @@
 import { computed, reactive, watch, type Ref } from 'vue'
 
 export const useUnreadArticle = <T>({ cleanupDependency }: { cleanupDependency: Ref<T> }) => {
-  const newArticleIds = reactive(new Set())
+  const unreadArticleIds = reactive<Set<string>>(new Set())
+
+  const clearUnreadArticles = () => unreadArticleIds.clear()
 
   watch(cleanupDependency, () => {
-    if (!newArticleIds.size) return
-    newArticleIds.clear()
+    if (!unreadArticleIds.size) return
+    clearUnreadArticles()
   })
 
-  const addUnreadArticle = (articleId: string) => newArticleIds.add(articleId)
+  const addUnreadArticle = (articleId: string) => unreadArticleIds.add(articleId)
 
-  const hasUnreadArticle = computed(() => newArticleIds.size > 0)
+  const hasUnreadArticle = computed(() => unreadArticleIds.size > 0)
 
-  const articleCount = computed(() => newArticleIds.size)
+  const articleCount = computed(() => unreadArticleIds.size)
 
-  return { articleCount, hasUnreadArticle, addUnreadArticle }
+  return { articleCount, hasUnreadArticle, addUnreadArticle, unreadArticleIds, clearUnreadArticles }
 }

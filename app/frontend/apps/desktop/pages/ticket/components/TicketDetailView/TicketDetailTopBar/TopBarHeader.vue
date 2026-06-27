@@ -15,7 +15,7 @@ import { useTicketInformation } from '#desktop/pages/ticket/composables/useTicke
 import { useTicketNumber } from '#desktop/pages/ticket/composables/useTicketNumber.ts'
 
 interface Props {
-  hideDetails: boolean
+  hideDetails?: boolean
 }
 
 const props = defineProps<Props>()
@@ -31,11 +31,6 @@ const { ticketNumber, ticketNumberWithTicketHook } = useTicketNumber(ticket)
 const config = toRef(useApplicationStore(), 'config')
 
 const copyTicketNumberToClipboard = () => {
-  console.debug(
-    'copyTicketNumberToClipboard called',
-    ticketNumberWithTicketHook.value,
-    ticket.value?.internalId,
-  )
   if (!ticketNumberWithTicketHook.value || !ticket.value?.internalId) return
 
   copyToClipboard([
@@ -47,7 +42,6 @@ const copyTicketNumberToClipboard = () => {
 }
 
 const items = computed(() => [
-  // :TODO Adjust navigations currently two h1 are present
   {
     label: 'Tickets',
     to: { name: 'ticket-list' },
@@ -59,17 +53,17 @@ const items = computed(() => [
   },
 ])
 
-const detailViewActiveClasses = computed(() => {
-  if (props.hideDetails)
-    return ['ticket-detail-grid-compact gap-x-2 grid-cols-[1fr_max-content] items-center p-2 px-10']
-  return [' ticket-detail-grid-full grid-cols-2 gap-y-2.5']
-})
+const headerClasses = computed(() =>
+  props.hideDetails
+    ? ['ticket-detail-grid-compact grid-rows-[1fr_auto] items-center p-2']
+    : ['ticket-detail-grid-full grid-cols-2 gap-y-2.5 px-5.5 print:px-3 py-3'],
+)
 </script>
 
 <template>
   <header
-    class="grid border-b border-neutral-100 bg-neutral-50 p-3 dark:border-gray-900 dark:bg-gray-500"
-    :class="detailViewActiveClasses"
+    class="grid border-b border-neutral-100 bg-neutral-50 dark:border-gray-900 dark:bg-gray-500 print:border-b-0"
+    :class="headerClasses"
   >
     <CommonBreadcrumb
       v-if="!hideDetails"
@@ -86,22 +80,24 @@ const detailViewActiveClasses = computed(() => {
           variant="secondary"
           icon="files"
           size="small"
-          class="ms-1"
+          class="ms-1 print:hidden"
           @click="copyTicketNumberToClipboard"
         />
       </template>
     </CommonBreadcrumb>
 
-    <HighlightMenu
+    <div
       v-if="isTicketAgent && isTicketEditable"
-      class="justify-self-end"
+      class="justify-self-end print:hidden"
       :style="{ gridTemplate: 'actions' }"
-    />
+    >
+      <!-- Div because we add soon more actions here  -->
+      <HighlightMenu />
+    </div>
 
     <TicketInformation
       :hide-details="hideDetails"
       :style="{ gridArea: hideDetails ? 'breadcrumbs' : 'info' }"
-      :class="{ 'mx-10': !hideDetails }"
     />
   </header>
 </template>
@@ -110,10 +106,12 @@ const detailViewActiveClasses = computed(() => {
 .ticket-detail-grid-full {
   grid-template-areas:
     'breadcrumbs actions'
-    'info   info';
+    'info        info';
 }
 
 .ticket-detail-grid-compact {
-  grid-template-areas: 'breadcrumbs actions';
+  grid-template-areas:
+    'breadcrumbs'
+    'actions';
 }
 </style>

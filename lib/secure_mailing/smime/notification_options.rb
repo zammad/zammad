@@ -10,6 +10,8 @@ class SecureMailing::SMIME::NotificationOptions < SecureMailing::Backend::Handle
     return if !from_certificate.parsed.usable?
 
     security_options[:sign] = { success: true }
+  rescue OpenSSL::OpenSSLError => e
+    raise SecureMailing::Backend::Handler::SigningError, e.message
   end
 
   def check_encrypt

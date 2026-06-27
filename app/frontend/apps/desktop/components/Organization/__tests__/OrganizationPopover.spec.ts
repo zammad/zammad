@@ -40,5 +40,6 @@ describe('OrganizationPopover', () => {
 
     vi.useRealTimers()
     vi.resetAllMocks()
+    await vi.dynamicImportSettled()
   })
 })

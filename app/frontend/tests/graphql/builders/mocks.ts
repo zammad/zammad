@@ -396,6 +396,7 @@ const createMockClient = () => {
   const client = new ApolloClient({
     cache,
     link,
+    devtools: { enabled: false },
   })
   provideApolloClient(client)
   return client

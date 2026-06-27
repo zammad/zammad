@@ -1,0 +1,92 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.anthropic.com/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"max_tokens":1024,"messages":[{"role":"user","content":"This is a
+        connection test. Return in unprettified JSON ''{ \"connected\": \"true\" }''
+        if you got the message. Respond in plain JSON format only and do not wrap
+        it in code block markers."}],"model":"claude-sonnet-4-6","stream":false,"system":"","temperature":0.0}'
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Zammad User Agent
+      Host:
+      - api.anthropic.com
+      Anthropic-Version:
+      - '2023-06-01'
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Content-Type:
+      - application/json; charset=utf-8
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 09 Jun 2026 14:37:13 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Anthropic-Ratelimit-Input-Tokens-Limit:
+      - '800000'
+      Anthropic-Ratelimit-Input-Tokens-Remaining:
+      - '800000'
+      Anthropic-Ratelimit-Input-Tokens-Reset:
+      - '2026-06-09T14:37:13Z'
+      Anthropic-Ratelimit-Output-Tokens-Limit:
+      - '160000'
+      Anthropic-Ratelimit-Output-Tokens-Remaining:
+      - '160000'
+      Anthropic-Ratelimit-Output-Tokens-Reset:
+      - '2026-06-09T14:37:13Z'
+      Anthropic-Ratelimit-Requests-Limit:
+      - '2000'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '1999'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2026-06-09T14:37:12Z'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '960000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '960000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2026-06-09T14:37:13Z'
+      Request-Id:
+      - req_011CbsrZWVoZYpuhpuRNv2EQ
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Anthropic-Organization-Id:
+      - 43c97a25-c30d-4a1b-bb31-5a928256fe18
+      Traceresponse:
+      - 00-955efe7d2310e6981f3deb7dc8c957db-e65b057c8399eaa3-01
+      Server:
+      - cloudflare
+      Vary:
+      - Accept-Encoding
+      Set-Cookie:
+      - _cfuvid=Bs7h6DQqptV_HDoeuv30QubZ26.fbSnrx18d5t3kSJ0-1781015832.449077-1.0.1.1-ZtgfinULSlUI6n4Y9mis261M7w4mWPbY6FXNhNVZ76g;
+        HttpOnly; SameSite=None; Secure; Path=/; Domain=api.anthropic.com
+      X-Robots-Tag:
+      - none
+      Cf-Cache-Status:
+      - DYNAMIC
+      Content-Security-Policy:
+      - default-src 'none'; frame-ancestors 'none'
+      Cf-Ray:
+      - a090df78ce86c9e2-VNO
+    body:
+      encoding: ASCII-8BIT
+      string: '{"model":"claude-sonnet-4-6","id":"msg_01YUyEXc5KYXpi4qSWvqVz5T","type":"message","role":"assistant","content":[{"type":"text","text":"{
+        \"connected\": \"true\" }"}],"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":52,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":11,"service_tier":"standard","inference_geo":"global"}}'
+  recorded_at: Tue, 09 Jun 2026 14:37:13 GMT
+recorded_with: VCR 6.4.0

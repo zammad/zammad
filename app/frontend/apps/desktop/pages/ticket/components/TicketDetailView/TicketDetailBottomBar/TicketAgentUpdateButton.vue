@@ -111,7 +111,7 @@ const actionItems = computed(() => {
     type="button"
     :disabled="disabled"
     :items="actionItems"
-    :addon-label="__('Additional ticket edit actions')"
+    :addon-label="__('Drafts & macros')"
     @click="$emit('submit', $event)"
   >
     {{ $t('Update') }}

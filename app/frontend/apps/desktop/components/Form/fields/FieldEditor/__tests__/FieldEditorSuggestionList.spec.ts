@@ -14,6 +14,12 @@ import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
 import FieldEditorSuggestionList from '../FieldEditorSuggestionList.vue'
 
+const baseProps = {
+  label: 'Suggestions',
+  placeholder: 'Start typing to search…',
+  listboxId: 'mention-listbox-test',
+}
+
 describe('component for rendering suggestions', () => {
   it('renders knowledge base article', () => {
     const items: MentionKnowledgeBaseItem[] = [
@@ -76,6 +82,7 @@ describe('component for rendering suggestions', () => {
         items,
         type: 'knowledge-base',
         command: vi.fn(),
+        ...baseProps,
       },
     })
 
@@ -106,6 +113,7 @@ describe('component for rendering suggestions', () => {
         items,
         type: 'text',
         command: vi.fn(),
+        ...baseProps,
       },
     })
 
@@ -128,6 +136,7 @@ describe('component for rendering suggestions', () => {
         items,
         type: 'text',
         command: vi.fn(),
+        ...baseProps,
       },
     })
 
@@ -155,6 +164,7 @@ describe('component for rendering suggestions', () => {
         items,
         type: 'user',
         command: vi.fn(),
+        ...baseProps,
       },
     })
 
@@ -188,6 +198,7 @@ describe('component for rendering suggestions', () => {
         items,
         type: 'user',
         command: vi.fn(),
+        ...baseProps,
       },
     })
 
@@ -233,6 +244,7 @@ describe('actions in list', () => {
           items,
           type: 'user',
           command,
+          ...baseProps,
         },
       },
     )
@@ -296,5 +308,69 @@ describe('actions in list', () => {
     await triggerKey('Tab')
 
     expect(command).toHaveBeenCalledWith(items[0])
+  })
+})
+
+describe('accessibility (combobox + listbox wiring)', () => {
+  const items: MentionTextItem[] = [
+    {
+      name: 'Greeting',
+      keywords: 'hi',
+      renderedContent: 'Hello',
+      id: convertToGraphQLId('TextModule', 1),
+    },
+    {
+      name: 'Farewell',
+      keywords: 'bye',
+      renderedContent: 'Goodbye',
+      id: convertToGraphQLId('TextModule', 2),
+    },
+  ]
+
+  it('uses the label prop as the listbox aria-label', () => {
+    const view = renderComponent(FieldEditorSuggestionList, {
+      props: {
+        query: 'g',
+        items,
+        type: 'text',
+        command: vi.fn(),
+        ...baseProps,
+        label: 'Text modules',
+      },
+    })
+
+    expect(view.getByRole('listbox', { name: 'Text modules' })).toBeInTheDocument()
+  })
+
+  it('shows loading instead of "no results" while the user is still typing', async () => {
+    const view = renderComponent(FieldEditorSuggestionList, {
+      props: { query: 'a', items: [], type: 'text', command: vi.fn(), ...baseProps },
+    })
+
+    expect(view.getByText('No results found')).toBeInTheDocument()
+
+    // Typing another character changes the query → treated as "still typing".
+    await view.rerender({ query: 'ab', items: [], type: 'text', command: vi.fn(), ...baseProps })
+
+    expect(view.queryByText('No results found')).not.toBeInTheDocument()
+    expect(view.getByText('Loading…')).toBeInTheDocument()
+  })
+
+  it('uses the listboxId prop to scope option ids', () => {
+    const view = renderComponent(FieldEditorSuggestionList, {
+      props: {
+        query: 'g',
+        items,
+        type: 'text',
+        command: vi.fn(),
+        ...baseProps,
+        listboxId: 'custom-listbox',
+      },
+    })
+
+    expect(view.getByRole('listbox')).toHaveAttribute('id', 'custom-listbox')
+    const options = view.getAllByRole('option')
+    expect(options[0]).toHaveAttribute('id', 'custom-listbox-option-0')
+    expect(options[1]).toHaveAttribute('id', 'custom-listbox-option-1')
   })
 })

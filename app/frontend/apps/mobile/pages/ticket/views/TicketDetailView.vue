@@ -16,7 +16,7 @@ import {
   useNotifications,
 } from '#shared/components/CommonNotifications/index.ts'
 import Form from '#shared/components/Form/Form.vue'
-import type { FormSubmitData, FormValues } from '#shared/components/Form/types.ts'
+import type { FormSubmitData } from '#shared/components/Form/types.ts'
 import { useForm } from '#shared/components/Form/useForm.ts'
 import { useConfirmation } from '#shared/composables/useConfirmation.ts'
 import { useOnlineNotificationSeen } from '#shared/composables/useOnlineNotification/useOnlineNotificationSeen.ts'
@@ -88,7 +88,8 @@ const formVisible = computed(() => formLocation.value !== 'body')
 
 const { form, canSubmit, isDirty, formSubmit, formReset } = useForm()
 
-const { initialTicketValue, isTicketFormGroupValid, editTicket } = useTicketEdit(ticket, form)
+const { initialTicketValue, isTicketFormGroupValid, editTicket, buildTicketResetValues } =
+  useTicketEdit(ticket, form)
 
 const {
   currentArticleType,
@@ -165,10 +166,14 @@ const saveTicketForm = async (formData: FormSubmitData<TicketUpdateFormData>) =>
       newTicketArticlePresent.value = false
 
       return {
-        reset: (values: FormSubmitData<TicketUpdateFormData>, formNodeValues: FormValues) => {
+        reset: () => {
           nextTick(() => {
             closeArticleReplyDialog().then(() => {
-              formReset({ values: { ticket: formNodeValues.ticket } })
+              if (!ticket.value) return
+
+              // Seed the ticket group from the persisted entity, so server-side
+              // changes (e.g. the automatic new->open transition) are reflected.
+              formReset({ object: ticket.value, values: buildTicketResetValues(ticket.value) })
             })
           })
         },
@@ -178,7 +183,7 @@ const saveTicketForm = async (formData: FormSubmitData<TicketUpdateFormData>) =>
     if (errors instanceof UserError) {
       notify({
         id: 'ticket-update-error',
-        message: errors.generalErrors[0],
+        message: errors.getFirstErrorMessage(),
         type: NotificationTypes.Error,
       })
     }

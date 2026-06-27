@@ -66,6 +66,28 @@ class App.KnowledgeBaseForm extends App.Controller
     params         = @formParam(formController.form)
 
     @prepareParams(params, formController.screen)
+
+    deletedLocaleAttrs = (params.kb_locales_attributes || []).filter (attr) -> attr._destroy is '1'
+
+    if deletedLocaleAttrs.length > 0
+      @confirmLocaleDeletion(deletedLocaleAttrs, formController, params)
+    else
+      @performSubmit(params, formController)
+
+  confirmLocaleDeletion: (deletedLocaleAttrs, formController, params) ->
+    safeWord = __('Delete')
+    message  = App.i18n.translatePlain('Removing %s language(s) will permanently delete all translation(s) related to them. Enter "%s" to confirm.', deletedLocaleAttrs.length, App.i18n.translatePlain(safeWord).toUpperCase())
+
+    new App.ControllerConfirmDelete(
+      head:         __('Remove Language')
+      safeWord:     safeWord
+      fieldDisplay: message
+      callback: (modal) =>
+        modal.close()
+        @performSubmit(params, formController)
+    )
+
+  performSubmit: (params, formController) ->
     @formDisable(@el)
 
     formController.hideAlert()

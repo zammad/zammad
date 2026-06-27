@@ -19,7 +19,7 @@ export const useClearFormInput = (formRef: Ref<FormRef | undefined>, fieldName: 
     if (!inputField) return
 
     requestAnimationFrame(() => {
-      inputField.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+      inputField.scrollIntoView({ behavior: 'auto', block: 'nearest' })
       inputField.focus()
     })
   }

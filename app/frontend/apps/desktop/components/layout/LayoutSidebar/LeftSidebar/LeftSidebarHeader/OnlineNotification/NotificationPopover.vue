@@ -8,6 +8,7 @@ import type { OnlineNotification } from '#shared/graphql/types.ts'
 import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
 import NotificationHeader from '#desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationPopover/NotificationHeader.vue'
 import NotificationList from '#desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationPopover/NotificationList.vue'
+import NotificationListSkeleton from '#desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationPopover/NotificationListSkeleton.vue'
 import { useElementScroll } from '#desktop/composables/useElementScroll.ts'
 
 interface Props {
@@ -31,7 +32,7 @@ const { reachedTop, isScrollable } = useElementScroll(sectionElement as Ref<HTML
 </script>
 
 <template>
-  <section ref="section" class="scroll max-h-full w-[400px] overflow-y-auto">
+  <section ref="section" class="scroll max-h-full w-100 overflow-y-auto">
     <NotificationHeader
       class="sticky top-0 z-10 mb-2 bg-neutral-50 px-3 py-3 dark:bg-gray-500"
       :class="{
@@ -40,7 +41,11 @@ const { reachedTop, isScrollable } = useElementScroll(sectionElement as Ref<HTML
       :has-unseen-notification="hasUnseenNotification"
       @mark-all="$emit('seen-all')"
     />
-    <CommonLoader :loading="loading">
+    <CommonLoader class="px-2.5 pb-2.5" :loading="loading">
+      <template #skeleton>
+        <NotificationListSkeleton v-for="n in 3" :key="n" />
+      </template>
+
       <NotificationList
         :class="{ 'ltr:pr-5 rtl:pl-5': isScrollable }"
         :list="notificationList"

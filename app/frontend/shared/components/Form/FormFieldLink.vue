@@ -11,29 +11,42 @@ withDefaults(
     link: RouteLocationRaw
     linkIcon?: string
     linkLabel?: string
+    // Render the label as visible text next to the icon instead of only as a tooltip.
+    showLinkLabel?: boolean
     onLinkClick?: (e: MouseEvent) => void
+    linkSize?: 'small' | 'medium' | 'large'
   }>(),
   {
     linkIcon: 'form-field-link',
     linkLabel: __('Link'),
+    showLinkLabel: false,
+    linkSize: 'large',
   },
 )
 
 const classMap = getFieldLinkClasses()
+
+const iconClassMap = {
+  small: 'xs',
+  medium: 'tiny',
+  large: 'small',
+} as const
 </script>
 
 <template>
   <div v-if="link" :class="classMap.container">
     <div :class="classMap.base" class="flex h-full items-center focus:outline-hidden">
       <CommonLink
-        v-tooltip="$t(linkLabel)"
+        v-tooltip="showLinkLabel ? undefined : $t(linkLabel)"
         :link="link"
-        :class="classMap.link"
+        :class="[classMap.link, { 'text-nowrap': showLinkLabel }]"
         class="flex items-center justify-center"
+        :size="linkSize"
         open-in-new-tab
         @click="onLinkClick"
       >
-        <CommonIcon :name="linkIcon" size="small" decorative />
+        <CommonIcon v-if="linkIcon" :name="linkIcon" :size="iconClassMap[linkSize]" decorative />
+        <span v-if="showLinkLabel">{{ $t(linkLabel) }}</span>
       </CommonLink>
     </div>
   </div>

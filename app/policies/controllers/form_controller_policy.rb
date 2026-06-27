@@ -11,6 +11,10 @@ class Controllers::FormControllerPolicy < Controllers::ApplicationControllerPoli
     authorized?
   end
 
+  def captcha_challenge?
+    authorized?
+  end
+
   def test?
     record.params[:test] && user&.permissions?('admin.channel_formular')
   end

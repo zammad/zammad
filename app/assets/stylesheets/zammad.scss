@@ -1510,6 +1510,15 @@ pre code {
     background: var(--ai-assist-pink);
     color: var(--text-active);
   }
+
+  &.badge--new {
+    color: hsl(45, 98%, 17%);
+    background: var(--ok-color);
+  }
+
+  &.badge--closed {
+    background: var(--supergood-color);
+  }
 }
 
 .key-value {
@@ -2430,6 +2439,11 @@ fieldset > .form-group {
   margin-bottom: 0;
 }
 
+// Form channel spam protection: stacked fields with a medium control width.
+.js-spamProtection .controls {
+  max-width: 32rem;
+}
+
 .controls--select {
   position: relative;
 }
@@ -2787,6 +2801,7 @@ input.has-error {
 }
 
 .help-inline:not(:empty) {
+  display: block;
   color: var(--danger-color);
   padding: 2px;
   font-size: 13px;
@@ -2977,6 +2992,57 @@ input.has-error {
       fill: var(--text-muted);
       opacity: 0.5;
     }
+  }
+
+  .searchfield-shortcut {
+    position: absolute;
+
+    @include bidi-style(right, 0, left, auto);
+
+    top: 0;
+    height: 100%;
+    width: 50px;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .btn {
+      width: 28px;
+      height: 28px;
+      padding: 4px;
+      display: flex !important;
+      align-items: center;
+      justify-content: center;
+      background: transparent !important;
+      border: 1px solid var(--border) !important;
+      border-radius: 50% !important;
+      box-shadow: none !important;
+
+      .icon {
+        width: 16px;
+        height: 16px;
+        fill: var(--text-muted);
+      }
+
+      &:hover {
+        border-color: var(--border-highlight) !important;
+        box-shadow: 0 0 4px 0 var(--shadow-highlight) !important;
+      }
+
+      &:focus-visible {
+        border-color: var(--border-highlight) !important;
+        box-shadow: 0 0 4px 0 var(--shadow-highlight) !important;
+      }
+    }
+  }
+
+  &.has-shortcut .empty-search {
+    @include bidi-style(right, 30px, left, auto);
+  }
+
+  &.has-shortcut input[type='search'] {
+    @include bidi-style(padding-right, 80px, padding-left, 0);
   }
 }
 
@@ -12619,7 +12685,8 @@ output {
   color: var(--text-inverted);
   padding: 0 14px 11px;
   position: absolute;
-  min-width: 0;
+  min-width: 0; /* for unsupported browsers that don't support max-content below */
+  min-width: max-content;
   cursor: default;
 
   &.datepicker-rtl {
@@ -12651,6 +12718,7 @@ output {
   th,
   td {
     border: none;
+    background: transparent;
   }
 
   .next,
@@ -13932,6 +14000,35 @@ output {
 
   &.is-visible {
     display: block;
+  }
+
+  &.is-loading {
+    cursor: default;
+
+    .batch-overlay-circle,
+    .batch-overlay-cancel,
+    .batch-overlay-box {
+      visibility: hidden !important;
+    }
+  }
+
+  &-loading {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    align-items: center;
+
+    .is-loading & {
+      display: flex;
+    }
+  }
+
+  &-loading-label {
+    @include bidi-style(margin-left, 10px, margin-right, 0);
+
+    margin-top: 1px;
   }
 
   &-backdrop {

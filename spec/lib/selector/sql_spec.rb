@@ -332,6 +332,34 @@ RSpec.describe Selector::Sql do
         end
       end
 
+      describe "operator 'matches'" do
+        let(:operator) { 'matches' }
+
+        context 'with matching string' do
+          let(:value) { 'Some' }
+
+          include_examples 'finds the ticket'
+        end
+
+        context 'with matching upcased string' do
+          let(:value) { 'SOME' }
+
+          include_examples 'finds the ticket'
+        end
+
+        context 'with non-matching string' do
+          let(:value) { 'Other' }
+
+          include_examples 'does not find the ticket'
+        end
+
+        context 'with wildcard matching' do
+          let(:value) { 'som*' }
+
+          include_examples 'finds the ticket'
+        end
+      end
+
       describe "operator 'contains not'" do
         let(:operator) { 'contains not' }
 
@@ -707,6 +735,94 @@ RSpec.describe Selector::Sql do
         end
       end
 
+    end
+
+    describe 'integer fields', db_strategy: :reset do
+      let(:attribute)                    { create(:object_manager_attribute_integer, object_name: 'Ticket') }
+      let(:additional_ticket_attributes) { { attribute.name => 3 } }
+      let(:name)                         { "ticket.#{attribute.name}" }
+
+      before do
+        attribute
+        ObjectManager::Attribute.migration_execute
+        ticket
+      end
+
+      describe "operator 'in range'" do
+        let(:operator) { 'in range' }
+        let(:value)    { %w[1 5] }
+
+        include_examples 'finds the ticket'
+
+        context 'when value is out of range' do
+          let(:value) { %w[4 5] }
+
+          include_examples 'does not find the ticket'
+        end
+
+        context 'when the edges are equal' do
+          let(:value) { %w[3 3] }
+
+          include_examples 'finds the ticket'
+        end
+
+        context 'when the upper edge is empty' do
+          let(:value) { ['3', ''] }
+
+          include_examples 'finds the ticket'
+        end
+
+        context 'when the lower edge is empty' do
+          let(:value) { ['', '3'] }
+
+          include_examples 'finds the ticket'
+        end
+
+        context 'when both values are empty' do
+          let(:value) { ['', nil] }
+
+          it 'raises an error' do
+            expect { Ticket.selectors(condition, { current_user: agent }) }.to raise_error(RuntimeError)
+          end
+        end
+
+        context 'when value is of wrong type' do
+          let(:value) { '3' }
+
+          it 'raises an error' do
+            expect { Ticket.selectors(condition, { current_user: agent }) }.to raise_error(RuntimeError)
+          end
+        end
+      end
+    end
+
+    describe 'accounted time' do
+      let(:name)                         { 'ticket.time_unit' }
+      let(:additional_ticket_attributes) { { 'time_unit' => 10.5 } }
+
+      describe "operator 'in range'" do
+        let(:operator) { 'in range' }
+        let(:value)    { %w[10 11] }
+
+        before do
+          ticket
+        end
+
+        include_examples 'finds the ticket'
+
+        context 'when value is out of range' do
+          let(:value) { %w[10.75 11] }
+
+          include_examples 'does not find the ticket'
+        end
+
+        context 'when value is negative' do
+          let(:additional_ticket_attributes) { { 'time_unit' => '-0.5' } }
+          let(:value)                        { ['-1', '0'] }
+
+          include_examples 'finds the ticket'
+        end
+      end
     end
 
     describe 'complex conditions' do

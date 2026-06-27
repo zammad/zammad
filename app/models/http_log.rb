@@ -50,6 +50,7 @@ optional you can put the max oldest chat entries as argument
       'GitLab'             => 'admin.integration',
       'idoit'              => 'admin.integration',
       'ldap'               => 'admin.integration',
+      'MicrosoftGraph'     => 'admin.channel_microsoft_graph',
       'PGP'                => 'admin.integration',
       'placetel'           => 'admin.integration',
       'S/MIME'             => 'admin.integration',

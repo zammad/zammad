@@ -84,7 +84,9 @@ const onCloseSelectDropdown = async () => {
 // eslint-disable-next-line vue/no-mutating-props
 Object.assign(props.context, {
   actions,
-  defaultFilter: '*', // show tag recommendations on initial opening
+  // Show tag recommendations on initial opening unless the caller has its own
+  // policy (e.g. the search filter, which deliberately starts empty).
+  defaultFilter: props.context.defaultFilter ?? '*',
   emptyInitialLabelText,
   multiple: props.context.multiple ?? true,
   gqlQuery: AutocompleteSearchTagDocument,

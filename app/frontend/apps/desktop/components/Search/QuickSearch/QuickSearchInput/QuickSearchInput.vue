@@ -65,7 +65,7 @@ useOnEmitter('reset-quick-search-field', () => resetInput())
     />
     <CommonButton
       v-if="isSearchActive"
-      :aria-label="$t('Reset search')"
+      v-tooltip="$t('Reset search')"
       icon="x-lg"
       variant="neutral"
       @click="resetInput"

@@ -476,7 +476,7 @@ RSpec.describe FilterProcessor, type: :channel_filter do
 
       it 'logs info message', aggregate_failures: true do
         expect(Rails.logger).to have_received(:info).with(no_args) do |&block|
-          expect(block.call).to match(%r{matching: key 'subject' contains 'Anvil'})
+          expect(block.call).to include("matching: key 'subject' contains 'Anvil'")
         end
       end
     end
@@ -488,7 +488,7 @@ RSpec.describe FilterProcessor, type: :channel_filter do
 
       it 'logs info message', aggregate_failures: true do
         expect(Rails.logger).to have_received(:info).with(no_args) do |&block|
-          expect(block.call).to match(%r{matching: key 'from' contains not 'buggs'})
+          expect(block.call).to include("matching: key 'from' contains not 'buggs'")
         end
       end
     end
@@ -500,7 +500,7 @@ RSpec.describe FilterProcessor, type: :channel_filter do
 
       it 'logs debug messages', aggregate_failures: true do
         expect(Rails.logger).to have_received(:debug).with(no_args) do |&block|
-          expect(block.call).to match(%r{not matching: key 'from' contains 'buggs'})
+          expect(block.call).to include("not matching: key 'from' contains 'buggs'")
         end
       end
     end
@@ -512,7 +512,7 @@ RSpec.describe FilterProcessor, type: :channel_filter do
 
       it 'logs debug messages', aggregate_failures: true do
         expect(Rails.logger).to have_received(:debug).with(no_args) do |&block|
-          expect(block.call).to match(%r{not matching: key 'subject' contains not 'Anvil'})
+          expect(block.call).to include("not matching: key 'subject' contains not 'Anvil'")
         end
       end
     end

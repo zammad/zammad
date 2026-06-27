@@ -55,6 +55,7 @@ class BackgroundServices::Service::ProcessScheduledJobs::JobExecutor
     error_description = e.is_a?(StandardError) ? 'error' : 'a non standard error'
 
     Rails.logger.error "execute #{job.method} (try_count #{try_count}) exited with #{error_description} #{e.inspect} in: #{since_started} seconds."
+    Rails.logger.error e.backtrace.join("\n")
   end
 
   def mark_as_started

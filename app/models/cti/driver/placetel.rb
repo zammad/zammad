@@ -94,17 +94,14 @@ class Cti::Driver::Placetel < Cti::Driver::Base
       PLACETEL_SIP_USERS_URL,
       {},
       {
-        headers:       {
+        headers:    {
           Authorization: "Bearer #{@config[:api_token]}",
         },
-        log:           {
+        log:        {
           facility: 'placetel',
         },
-        json:          true,
-        open_timeout:  4,
-        read_timeout:  6,
-        total_timeout: 6,
-        verify_ssl:    true,
+        json:       true,
+        verify_ssl: true,
       },
     )
 

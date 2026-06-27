@@ -23,13 +23,13 @@ module FormUpdater::Concerns::PreparesTicketSignature
     end
 
     # Fake a ticket object for create screen if a group is present (#4448).
-    object = Struct.new(:group).new(group) if object.nil?
+    ticket = object || Struct.new(:group).new(group)
 
     result['body'][:signature] = {
       internalId:   group_signature.id,
       renderedBody: NotificationFactory::Renderer.new(
-        objects:  { user: current_user, ticket: object },
-        template: group_signature.body,
+        objects:  { user: current_user, ticket: },
+        template: group_signature.body_with_urls,
         escape:   false
       ).render(debug_errors: false),
     }

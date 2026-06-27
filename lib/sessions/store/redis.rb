@@ -24,9 +24,25 @@ class Sessions::Store::Redis
   end
 
   def destroy(client_id)
+    @redis.del client_messages_key(client_id)
+
+    # single sessions worker
     @redis.srem? SESSIONS_KEY, client_id
     @redis.del client_session_key(client_id)
-    @redis.del client_messages_key(client_id)
+
+    # forked sessions workers
+    @redis.scan_each(match: node_client_session_key('*', client_id), count: 1) do |key|
+      captures = key.match(%r{#{NODES_KEY}/([^/]+)/sessions/#{client_id}})
+
+      if captures
+        node_id = captures[1]
+
+        @redis.del key
+        @redis.srem? node_sessions_key(node_id), client_id
+      end
+
+      break
+    end
   end
 
   def set(client_id, data)

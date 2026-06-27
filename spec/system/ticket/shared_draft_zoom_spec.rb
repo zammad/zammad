@@ -202,7 +202,7 @@ RSpec.describe 'Ticket Shared Draft Zoom', authenticated_as: :authenticate, type
         click '.js-submit'
       end
 
-      expect(draft.reload.new_article[:body]).to match %r{another reply}
+      expect(draft.reload.new_article[:body]).to include('another reply')
     end
 
     context 'draft saved' do
@@ -231,7 +231,7 @@ RSpec.describe 'Ticket Shared Draft Zoom', authenticated_as: :authenticate, type
         click '.js-openDropdownMacro'
         click :draft_save_button
 
-        expect(draft.reload.new_article[:body]).to match %r{draft here}
+        expect(draft.reload.new_article[:body]).to include('draft here')
       end
 
       it 'shows overwrite warning when draft edited after loading' do
@@ -243,7 +243,7 @@ RSpec.describe 'Ticket Shared Draft Zoom', authenticated_as: :authenticate, type
           click '.js-submit'
         end
 
-        expect(draft.reload.new_article[:body]).to match %r{another reply}
+        expect(draft.reload.new_article[:body]).to include('another reply')
       end
     end
   end

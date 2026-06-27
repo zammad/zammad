@@ -31,7 +31,9 @@ import { useFlyout } from '#desktop/components/CommonFlyout/useFlyout.ts'
 import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
 import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
 
+import PersonalSettingAvatarSkeleton from '../components/PersonalSettingAvatarSkeleton.vue'
 import { useBreadcrumb } from '../composables/useBreadcrumb.ts'
+import { usePersonalSettingTabs } from '../composables/usePersonalSettingTabs.ts'
 import { useUserCurrentAvatarSelectMutation } from '../graphql/mutations/userCurrentAvatarSelect.api.ts'
 import {
   useUserCurrentAvatarListQuery,
@@ -286,11 +288,22 @@ const activeAvatarButtonClass = (active: boolean) => {
     'outline-blue-800 hover:outline-blue-800': active,
   }
 }
+
+const { tabs, activeTab } = usePersonalSettingTabs()
 </script>
 
 <template>
-  <LayoutContent :breadcrumb-items="breadcrumbItems" width="narrow">
+  <LayoutContent
+    :active-tab="activeTab"
+    :tabs="tabs"
+    :breadcrumb-items="breadcrumbItems"
+    width="narrow"
+  >
     <CommonLoader :loading="avatarListQueryLoading">
+      <template #skeleton>
+        <PersonalSettingAvatarSkeleton />
+      </template>
+
       <div class="mb-4">
         <CommonLabel class="mt-0.5! mb-1 block!">{{ $t('Your avatar') }} </CommonLabel>
 
@@ -306,7 +319,7 @@ const activeAvatarButtonClass = (active: boolean) => {
                 <CommonUserAvatar
                   :class="{ 'avatar-selected': avatar.default }"
                   :entity="user"
-                  class="!flex border-neutral-100 dark:border-gray-900"
+                  class="flex! border-neutral-100 dark:border-gray-900"
                   size="large"
                   initials-only
                   personal
@@ -323,16 +336,16 @@ const activeAvatarButtonClass = (active: boolean) => {
                   <CommonAvatar
                     :class="{ 'avatar-selected': avatar.default }"
                     :image="`${apiUrl}/users/image/${avatar.imageHash}`"
-                    class="!flex border-neutral-100 dark:border-gray-900"
+                    class="flex! border-neutral-100 dark:border-gray-900"
                     size="large"
                   >
                   </CommonAvatar>
                 </button>
                 <CommonButton
                   v-if="avatar.deletable"
-                  :aria-label="$t('Delete this avatar')"
+                  v-tooltip="$t('Delete this avatar')"
                   :class="{ 'opacity-0 transition-opacity': !isTouchDevice }"
-                  class="absolute -end-2 -top-1 text-white group-hover/avatar:opacity-100 focus:opacity-100"
+                  class="absolute -inset-e-2 -top-1 text-white group-hover/avatar:opacity-100 focus:opacity-100"
                   icon="x-lg"
                   size="small"
                   variant="remove"

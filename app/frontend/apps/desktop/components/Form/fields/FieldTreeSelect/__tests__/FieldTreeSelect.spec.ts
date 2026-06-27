@@ -73,7 +73,6 @@ const testOptions: TreeSelectOption[] = [
 
 const wrapperParameters = {
   form: true,
-  formField: true,
   store: true,
 }
 

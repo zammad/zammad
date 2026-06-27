@@ -4,14 +4,23 @@
 import { computed } from 'vue'
 
 import type { Sizes } from '#shared/components/CommonIcon/types.ts'
+import CommonProgressBar from '#shared/components/CommonProgressBar/CommonProgressBar.vue'
 import { useDebouncedLoading } from '#shared/composables/useDebouncedLoading.ts'
 import { markup } from '#shared/utils/markup.ts'
+
+import CommonSkeleton from '#desktop/components/CommonSkeleton/CommonSkeleton.vue'
+import { useTransitionConfig } from '#desktop/composables/useTransitionConfig.ts'
 
 interface Props {
   loading?: boolean
   error?: string | null
   size?: Sizes
   noTransition?: boolean
+  /**
+   * When an intermediate state is ongoing
+   * User filling out a passkey, where we don't have a clear content to emulate with a skeleton
+   */
+  intermediate?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -19,7 +28,7 @@ const props = withDefaults(defineProps<Props>(), {
   noTransition: true, // TODO: disable it for now by default, until we have a clear picture for that.
 })
 
-const { debouncedLoading: isSpinnerVisible } = useDebouncedLoading({
+const { debouncedLoading } = useDebouncedLoading({
   isLoading: computed(() => props.loading ?? false),
 })
 
@@ -42,6 +51,8 @@ const minHeightClass = computed(() => {
       return 'min-h-12'
   }
 })
+
+const { transitions } = useTransitionConfig()
 </script>
 
 <script lang="ts">
@@ -51,21 +62,23 @@ export default {
 </script>
 
 <template>
-  <Transition :name="noTransition ? 'none' : 'fade'" mode="out-in">
+  <Transition :name="noTransition ? undefined : transitions.fade" mode="out-in">
     <div
-      v-if="isSpinnerVisible"
+      v-if="debouncedLoading"
       v-bind="$attrs"
-      class="flex items-center justify-center"
+      class="flex flex-col gap-4"
       :class="minHeightClass"
       role="status"
     >
-      <CommonIcon
-        class="fill-yellow-300"
-        name="spinner"
-        :size="size"
-        animation="spin"
-        :label="__('Loading…')"
-      />
+      <CommonProgressBar v-if="intermediate" />
+      <slot v-else name="skeleton">
+        <CommonSkeleton
+          v-for="i in 3"
+          :key="i"
+          :style="{ 'animation-delay': `${i * 0.1}s` }"
+          class="h-4 w-full"
+        />
+      </slot>
     </div>
     <div v-else-if="loading" v-bind="$attrs" :class="minHeightClass" />
     <CommonAlert v-else-if="error" v-bind="$attrs" variant="danger">

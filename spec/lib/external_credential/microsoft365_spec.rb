@@ -140,6 +140,36 @@ RSpec.describe ExternalCredential::Microsoft365 do
       end
     end
 
+    context 'when running as an online service with a multi_tenant_app credential (PKCE)' do
+      let(:code_verifier) { 'test_code_verifier' }
+
+      let(:request_payload) do
+        {
+          'client_secret' => client_secret,
+          'code'          => authorization_code,
+          'grant_type'    => 'authorization_code',
+          'client_id'     => client_id,
+          'redirect_uri'  => ExternalCredential.callback_url(provider),
+          'code_verifier' => code_verifier,
+        }
+      end
+
+      before do
+        Setting.set('system_online_service', true)
+
+        stub_request(:post, token_url)
+          .with(body: hash_including(request_payload))
+          .to_return(status: 200, body: token_response_payload.to_json, headers: {})
+
+        create(:external_credential, name: provider, credentials: { client_id: client_id, client_secret: client_secret, multi_tenant_app: true })
+      end
+
+      it 'forwards code_verifier to the token request' do
+        channel = described_class.link_account(request_token, authorization_payload.merge(code_verifier: code_verifier))
+        expect(channel).to be_a(Channel)
+      end
+    end
+
     context 'when OAuth state is invalid' do
       it 'raises an error' do
         expect do
@@ -178,7 +208,7 @@ RSpec.describe ExternalCredential::Microsoft365 do
       end
 
       context '500 Internal Server Error' do
-        let(:response_status) { 500 }
+        let(:response_status)   { 500 }
         let(:response_payload)  { nil }
         let(:exception_message) { 'Request failed! (code: 500)' }
 
@@ -323,6 +353,34 @@ RSpec.describe ExternalCredential::Microsoft365 do
 
       expect(request[:authorize_url]).to eq("#{authorize_url}&state=#{state}")
       expect(request[:request_token]).to eq(state)
+      expect(request).not_to have_key(:code_verifier)
+    end
+
+    context 'when running as an online service with a multi_tenant_app credential (PKCE)' do
+      let(:verifier)             { 'test_code_verifier' }
+      let(:expected_challenge)   { Base64.urlsafe_encode64(Digest::SHA256.digest(verifier), padding: false) }
+      let(:authorize_url_pkce)   { "https://login.microsoftonline.com/common/oauth2/v2.0/authorize?access_type=offline&client_id=#{client_id}&code_challenge=#{expected_challenge}&code_challenge_method=S256&prompt=login&redirect_uri=http%3A%2F%2Fzammad.example.com%2Fapi%2Fv1%2Fexternal_credentials%2Fmicrosoft365%2Fcallback&response_type=code&scope=https%3A%2F%2Foutlook.office.com%2FIMAP.AccessAsUser.All+https%3A%2F%2Foutlook.office.com%2FSMTP.Send+offline_access+openid+profile+email&state=#{state}" }
+
+      before do
+        Setting.set('system_online_service', true)
+        allow(described_class).to receive(:generate_code_verifier).and_return(verifier)
+      end
+
+      it 'returns code_verifier and adds code_challenge with S256 method to the URL', :aggregate_failures do
+        microsoft365 = create(:external_credential, name: provider, credentials: { client_id: client_id, client_secret: client_secret, multi_tenant_app: true })
+        request      = described_class.request_account_to_link(microsoft365.credentials)
+
+        expect(request[:authorize_url]).to eq(authorize_url_pkce)
+        expect(request[:request_token]).to eq(state)
+        expect(request[:code_verifier]).to eq(verifier)
+      end
+
+      it 'does not enable PKCE when multi_tenant_app is false' do
+        microsoft365 = create(:external_credential, name: provider, credentials: { client_id: client_id, client_secret: client_secret, multi_tenant_app: false })
+        request      = described_class.request_account_to_link(microsoft365.credentials)
+
+        expect(request).not_to have_key(:code_verifier)
+      end
     end
 
     context 'errors' do
@@ -380,6 +438,25 @@ RSpec.describe ExternalCredential::Microsoft365 do
     it 'generates valid URL with tenant' do
       url = described_class.generate_authorize_url({ client_id: client_id, client_tenant: 'tenant' }, state: state)
       expect(url).to eq("#{authorize_url_with_tenant}&state=#{state}")
+    end
+
+    it 'includes code_challenge and S256 method when given' do
+      url = described_class.generate_authorize_url({ client_id: client_id }, state: state, code_challenge: 'abc123')
+      expect(url).to include('code_challenge=abc123', 'code_challenge_method=S256')
+    end
+  end
+
+  describe '.authorize_tokens_params' do
+    let(:credentials) { { client_id: client_id, client_secret: client_secret } }
+
+    it 'omits code_verifier when none is given' do
+      params = described_class.authorize_tokens_params(credentials, authorization_code)
+      expect(params).not_to have_key(:code_verifier)
+    end
+
+    it 'includes code_verifier when given' do
+      params = described_class.authorize_tokens_params(credentials, authorization_code, code_verifier: 'verifier_value')
+      expect(params[:code_verifier]).to eq('verifier_value')
     end
   end
 

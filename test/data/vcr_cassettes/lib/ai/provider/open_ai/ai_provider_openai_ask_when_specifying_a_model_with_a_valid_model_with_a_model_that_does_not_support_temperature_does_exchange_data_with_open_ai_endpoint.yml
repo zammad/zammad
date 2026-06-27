@@ -1,0 +1,121 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.openai.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-5","messages":[{"role":"user","content":"This is a connection
+        test. Return in unprettified JSON ''{ \"connected\": \"true\" }'' if you got
+        the message. Respond in plain JSON format only and do not wrap it in code
+        block markers."}],"response_format":{"type":"json_object"},"stream":false,"store":false}'
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Zammad User Agent
+      Host:
+      - api.openai.com
+      Content-Type:
+      - application/json; charset=utf-8
+      Authorization:
+      - Bearer <OPEN_AI_TOKEN>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 09 Jun 2026 14:38:41 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Cf-Ray:
+      - a090e18b1ab2c9d5-VNO
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Access-Control-Expose-Headers:
+      - CF-Ray
+      - CF-Ray
+      - X-Request-ID
+      Openai-Organization:
+      - zammad-gmbh
+      Openai-Processing-Ms:
+      - '3624'
+      Openai-Project:
+      - proj_3ITPzFJI71Ao0y739ux6T85o
+      Openai-Version:
+      - '2020-10-01'
+      X-Openai-Proxy-Wasm:
+      - v0.1
+      X-Ratelimit-Limit-Requests:
+      - '5000'
+      X-Ratelimit-Limit-Tokens:
+      - '2000000'
+      X-Ratelimit-Remaining-Requests:
+      - '4999'
+      X-Ratelimit-Remaining-Tokens:
+      - '1999953'
+      X-Ratelimit-Reset-Requests:
+      - 12ms
+      X-Ratelimit-Reset-Tokens:
+      - 1ms
+      X-Request-Id:
+      - req_f6f6516bd50c444eba9b79d5b343503a
+      Set-Cookie:
+      - __cf_bm=82lVqoa0TqjtATVrThsdkcNxKxTX3gbz_voNx1enSts-1781015917.2956421-1.0.1.1-RR5qf1i2E88d7IbbODWcbGANbXTAjfhysPCyxO9zubWIorpq.n3WKzs9GknUY2iK2zlrNYtcI6M4mWEF6fuNTZhoxgB03sl0l8FN5mXs_ULKLOqohk0XKtxxybH_ROGF;
+        HttpOnly; SameSite=None; Secure; Path=/; Domain=api.openai.com; Expires=Tue,
+        09 Jun 2026 15:08:41 GMT
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "id": "chatcmpl-Dort7sLdIL1SO0oybn4QJKhDKNoAf",
+          "object": "chat.completion",
+          "created": 1781015917,
+          "model": "gpt-5-2025-08-07",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{ \"connected\": \"true\" }",
+                "refusal": null,
+                "annotations": []
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 50,
+            "completion_tokens": 273,
+            "total_tokens": 323,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 256,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": null
+        }
+  recorded_at: Tue, 09 Jun 2026 14:38:41 GMT
+recorded_with: VCR 6.4.0

@@ -10,6 +10,9 @@ import { waitFor } from '#tests/support/vitest-wrapper.ts'
 
 import { mockLogoutMutation } from '#shared/graphql/mutations/logout.mocks.ts'
 
+import { useSidebarDisplayStore } from '#desktop/components/layout/stores/sidebarDisplay.ts'
+import { SidebarName } from '#desktop/components/layout/types.ts'
+
 describe('Left sidebar', () => {
   beforeEach(() => {
     mockUserCurrent({
@@ -32,19 +35,18 @@ describe('Left sidebar', () => {
       const aside = view.getByRole('complementary')
 
       expect(aside.parentElement).toHaveStyle({
-        gridTemplateColumns: '260px 1fr',
+        '--grid-columns': '225px minmax(0, 1fr)',
       })
     })
 
     it('restores stored width', async () => {
-      localStorage.setItem('gid://zammad/User/999-left-sidebar-width', '216')
-
+      localStorage.setItem('primary-sidebar-width', '216')
       const view = await visitView('/')
 
       const aside = view.getByRole('complementary')
 
       expect(aside.parentElement).toHaveStyle({
-        gridTemplateColumns: '216px 1fr',
+        '--grid-columns': '216px minmax(0, 1fr)',
       })
     })
 
@@ -52,36 +54,37 @@ describe('Left sidebar', () => {
       const view = await visitView('/')
 
       const aside = view.getByRole('complementary')
-      const collapseButton = getByRole(aside, 'button', {
+      // one button has display none it's for smaller screens
+      const collapseButton = getAllByRole(aside, 'button', {
         name: 'Collapse sidebar',
-      })
+      })[0]
 
       await view.events.click(collapseButton)
 
       expect(aside.parentElement).toHaveStyle({
-        gridTemplateColumns: '56px 1fr',
+        '--grid-columns': '56px minmax(0, 1fr)',
       })
 
-      const expandButton = getByRole(aside, 'button', {
+      const expandButton = getAllByRole(aside, 'button', {
         name: 'Expand sidebar',
-      })
+      })[0]
 
       await view.events.click(expandButton)
 
       expect(aside.parentElement).toHaveStyle({
-        gridTemplateColumns: '260px 1fr',
+        '--grid-columns': '225px minmax(0, 1fr)',
       })
     })
 
-    it('restores collapsed state width', async () => {
-      localStorage.setItem('gid://zammad/User/999-left-sidebar-collapsed', 'true')
+    it('renders collapsed width when collapsed state is active', async () => {
+      useSidebarDisplayStore().setCollapsed(SidebarName.Primary, true)
 
       const view = await visitView('/')
 
       const aside = view.getByRole('complementary')
 
       expect(aside.parentElement).toHaveStyle({
-        gridTemplateColumns: '56px 1fr',
+        '--grid-columns': '56px minmax(0, 1fr)',
       })
     })
 
@@ -96,12 +99,12 @@ describe('Left sidebar', () => {
       await fireEvent.mouseUp(document, { clientX: 216 })
 
       expect(aside.parentElement).toHaveStyle({
-        gridTemplateColumns: '216px 1fr',
+        '--grid-columns': '216px minmax(0, 1fr)',
       })
     })
 
     it('supports resetting', async () => {
-      localStorage.setItem('gid://zammad/User/999-left-sidebar-width', '216')
+      localStorage.setItem('primary-sidebar-width', '216')
 
       const view = await visitView('/')
 
@@ -111,7 +114,7 @@ describe('Left sidebar', () => {
       await view.events.dblClick(resizeHandle)
 
       expect(aside.parentElement).toHaveStyle({
-        gridTemplateColumns: '260px 1fr',
+        '--grid-columns': '225px minmax(0, 1fr)',
       })
     })
   })
@@ -126,7 +129,7 @@ describe('Left sidebar', () => {
       async ({ collapsed }) => {
         mockPermissions(['user_preferences', 'ticket.agent', 'admin'])
 
-        localStorage.setItem('gid://zammad/User/999-left-sidebar-collapsed', String(collapsed))
+        useSidebarDisplayStore().setCollapsed(SidebarName.Primary, collapsed)
 
         const expectedMenuItems = [
           'Admin documentation',

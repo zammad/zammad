@@ -31,8 +31,7 @@ RSpec.describe 'Desktop > Login', app: :desktop_view, authenticated_as: false, t
 
       expect(page).to have_css("[aria-label=\"#{user.fullname}\"]")
 
-      find("[aria-label=\"#{user.fullname}\"]").click
-      click_on('Sign out')
+      logout
 
       expect(page).to have_text('Sign in')
     end

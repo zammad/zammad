@@ -111,4 +111,25 @@ RSpec.describe 'CanSearch', searchindex: true, type: :model do
     expect(search(params.merge(offset: 2))[:object_ids].map(&:to_i)).to eq([ids[2]])
     expect(search(params.merge(offset: 2))[:total_count]).to eq(4)
   end
+
+  it 'does search by blank query and condition when search_by_index is enabled', :aggregate_failures do
+    ids = roles[0..3].map(&:id)
+    params = { query: nil, search_by_index: true, limit: 10, condition: { 'role.id' => { 'operator' => 'is', 'value' => ids.map(&:to_s) } }, sort_by: 'id', order_by: 'asc' }
+
+    allow(SearchIndexBackend).to receive(:search_by_index).and_call_original
+
+    expect(search(params)[:object_ids].map(&:to_i)).to eq(ids)
+    expect(search(params)[:total_count]).to eq(4)
+    expect(SearchIndexBackend).to have_received(:search_by_index).with(nil, 'Role', hash_including(search_by_index: true)).at_least(:once)
+  end
+
+  it 'falls back to SQL for blank query without search_by_index flag', :aggregate_failures do
+    ids = roles[0..3].map(&:id)
+    params = { query: '', limit: 10, condition: { 'role.id' => { 'operator' => 'is', 'value' => ids.map(&:to_s) } }, sort_by: 'id', order_by: 'asc' }
+
+    allow(SearchIndexBackend).to receive(:search_by_index).and_call_original
+
+    expect(search(params)[:object_ids].map(&:to_i)).to eq(ids)
+    expect(SearchIndexBackend).not_to have_received(:search_by_index)
+  end
 end

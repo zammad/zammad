@@ -35,9 +35,9 @@ const csrfToken = getCSRFToken()
   <form role="form" method="post" :action="url">
     <input type="hidden" name="authenticity_token" :value="csrfToken" />
     <CommonButton
+      v-tooltip="$t(buttonLabel)"
       type="submit"
       :class="buttonClass"
-      :aria-label="buttonLabel"
       :size="buttonSize"
       :variant="buttonVariant"
       :disabled="disabled"

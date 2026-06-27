@@ -11,7 +11,6 @@ import Form from '#shared/components/Form/Form.vue'
 const renderSecurityField = (props: any = {}) => {
   return renderComponent(FormKit, {
     form: true,
-    formField: true,
     props: {
       id: 'security',
       type: 'security',
@@ -235,7 +234,6 @@ describe('FieldSecurity', () => {
     const onSubmit = vi.fn()
     const view = renderComponent(Form, {
       form: true,
-      formField: true,
       props: {
         onSubmit,
         schema: [

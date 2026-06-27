@@ -238,8 +238,9 @@ describe('NotificationList', () => {
       },
     })
 
+    // gap is css based -> You can no longer see the ticket. in 18 hours
     expect(wrapper.getByRole('listitem')).toHaveTextContent(
-      'You can no longer see the ticket. in 18 hours',
+      'You can no longer see the ticket.in 18 hours',
     )
 
     expect(wrapper.getAllByIconName('x-lg')).toHaveLength(2)

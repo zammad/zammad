@@ -1,5 +1,5 @@
 class App.TicketState extends App.Model
-  @configure 'TicketState', 'name', 'state_type_id', 'next_state_id', 'default_create', 'default_follow_up', 'ignore_escalation', 'note', 'active', 'updated_at'
+  @configure 'TicketState', 'name', 'state_type_id', 'next_state_id', 'default_create', 'default_follow_up', 'default_close', 'ignore_escalation', 'note', 'active', 'updated_at'
   @extend Spine.Model.Ajax
   @url: @apiPath + '/ticket_states'
   @configure_attributes = [
@@ -29,7 +29,7 @@ A ticket's state is used to categorize and manage the lifecycle of a ticket or c
       active: (object) ->
         object.default_create
       attribute: 'name'
-      class: 'primary'
+      class: 'new'
     },
     {
       display: __('Default for follow-ups')
@@ -37,7 +37,14 @@ A ticket's state is used to categorize and manage the lifecycle of a ticket or c
         object.default_follow_up
       attribute: 'name'
       class: 'primary'
-    }
+    },
+    {
+      display: __('Default for closed tickets')
+      active: (object) ->
+        object.default_close
+      attribute: 'name'
+      class: 'closed'
+    },
   ]
 
   @byCategory: (category) ->

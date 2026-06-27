@@ -30,6 +30,8 @@ RSpec.describe Gql::Queries::User::Current::Device::List, type: :graphql do
     before do
       create(:user_device, user_id: agent.id)
       create(:user_device, user_id: agent.id, location_details: { city_name: 'Berlin' })
+      create(:user_device, user_id: agent.id, location: 'unknown', location_details: { city_name: 'Paris' })
+      create(:user_device, user_id: agent.id, location: 'unknown')
       gql.execute(query, variables: { fingerprint: 'dummy' })
     end
 
@@ -49,9 +51,10 @@ RSpec.describe Gql::Queries::User::Current::Device::List, type: :graphql do
 
     context 'when user is authenticated', :aggregate_failures, authenticated_as: :agent do
       it 'returns a list of devices' do
-        expect(gql.result.data.length).to eq(2)
-        # This works because the devices list is ordered by updated_at.
-        expect(gql.result.data.first['location']).to include(', Berlin')
+        expect(gql.result.data.length).to eq(4)
+        # Devices are ordered by updated_at, so the most recently created comes first.
+        expect(gql.result.data.pluck('location'))
+          .to eq(['unknown', 'Paris', 'some location, Berlin', 'some location'])
       end
     end
   end

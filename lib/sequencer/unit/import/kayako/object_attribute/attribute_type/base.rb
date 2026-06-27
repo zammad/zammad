@@ -1,11 +1,12 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Sequencer::Unit::Import::Kayako::ObjectAttribute::AttributeType::Base
-  attr_reader :attribute, :default_language
+  attr_reader :attribute, :default_language, :model_class
 
-  def initialize(attribute, default_language)
+  def initialize(attribute, default_language, model_class = nil)
     @attribute = attribute
     @default_language = default_language
+    @model_class = model_class
   end
 
   def config
@@ -29,37 +30,29 @@ class Sequencer::Unit::Import::Kayako::ObjectAttribute::AttributeType::Base
   private
 
   def screens
-    default = {
-      view: {
-        '-all-' => {
-          shown: true,
-          null:  true,
-        },
-        Customer: {
-          shown: attribute['is_visible_to_customers'],
-          null:  true,
-        },
-      },
-      edit: {
-        '-all-' => {
-          shown: true,
-          null:  true,
-        },
-        Customer: {
-          shown: attribute['is_customer_editable'],
-          null:  !attribute['is_required_for_customers'],
-        },
-      }
+    return ticket_screens if model_class.to_s == 'Ticket'
+
+    {
+      create: { '-all-' => { shown: true } },
+      edit:   { '-all-' => { shown: true } },
+      view:   { '-all-' => { shown: true } },
+    }
+  end
+
+  def ticket_screens
+    customer = {
+      shown:    attribute['is_customer_editable'] ? true : false,
+      required: attribute['is_required_for_customers'] ? true : false,
+    }
+    agent = {
+      shown:    true,
+      required: attribute['is_required_for_agents'] ? true : false,
     }
 
-    if attribute['is_required_for_agents']
-      default[:edit]['ticket.agent'] = {
-        shown:    true,
-        required: true,
-      }
-    end
-
-    default
+    {
+      create_middle: { 'ticket.customer' => customer, 'ticket.agent' => agent },
+      edit:          { 'ticket.customer' => customer, 'ticket.agent' => agent },
+    }
   end
 
   def data_option

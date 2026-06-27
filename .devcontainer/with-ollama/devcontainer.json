@@ -6,6 +6,18 @@
   "service": "devcontainer",
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
   "features": {
+    "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
+      "moby": false
+    },
+    "ghcr.io/devcontainers-extra/features/shellcheck:1": {},
+    "ghcr.io/devcontainers/features/node:2": {
+      "installYarnUsingApt": "false"
+    },
+    "ghcr.io/rails/devcontainer/features/postgres-client": {},
+    "ghcr.io/devcontainers-extra/features/apt-get-packages": {
+      "packages": "curl gnupg libimlib2-dev"
+    },
+    "ghcr.io/devcontainers/features/go:1": {},
     "../features/zammad-deps": {},
     "../features/add-bin-path": {
       "addBinPath": "/workspaces/${localWorkspaceFolderBasename}/bin"
@@ -17,12 +29,22 @@
       "source": "node-modules",
       "target": "/workspaces/${localWorkspaceFolderBasename}/node_modules",
       "type": "volume"
+    },
+    {
+      "source": "pnpm-store",
+      "target": "/workspaces/${localWorkspaceFolderBasename}/.pnpm-store",
+      "type": "volume"
     }
   ],
   "containerEnv": {
     "OLLAMA_API_URL": "http://ollama:11434"
   },
-  "forwardPorts": [3000, 3001, 3036, 6042],
+  "forwardPorts": [
+    3000,
+    3001,
+    3036,
+    6042
+  ],
   "postCreateCommand": "/workspaces/${localWorkspaceFolderBasename}/.devcontainer/post_create.sh",
   "postStartCommand": "git config --global --add safe.directory /workspaces/${localWorkspaceFolderBasename}"
 }

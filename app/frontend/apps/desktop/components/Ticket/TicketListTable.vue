@@ -12,6 +12,7 @@ import { getIdFromGraphQLId } from '#shared/graphql/utils.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
 import type { ObjectWithId } from '#shared/types/utils.ts'
 
+import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
 import CommonAdvancedTable from '#desktop/components/CommonTable/CommonAdvancedTable.vue'
 import CommonTableSkeleton from '#desktop/components/CommonTable/Skeleton/CommonTableSkeleton.vue'
 import CommonTicketPriorityIndicatorIcon from '#desktop/components/CommonTicketPriorityIndicator/CommonTicketPriorityIndicatorIcon.vue'
@@ -78,11 +79,17 @@ const userPopoverSlots: {
 </script>
 
 <template>
-  <CommonTableSkeleton
-    :loading="loading"
-    :loading-new-page="loadingNewPage"
-    :rows="skeletonLoadingCount"
-  >
+  <CommonLoader :loading="loading">
+    <template #skeleton>
+      <CommonTableSkeleton
+        :columns="headers.length"
+        :has-bulk-action="bulkEditActive"
+        :load-more="loadingNewPage"
+        :rows="skeletonLoadingCount"
+        :column-widths="[48, 144, 112, 192, 128, 80, 96]"
+      />
+    </template>
+
     <slot v-if="!loading && !items.length" name="empty-list" />
 
     <div v-else-if="items.length">
@@ -137,6 +144,7 @@ const userPopoverSlots: {
           title: {
             columnPreferences: {
               link: goToItemLinkColumn,
+              tooltip: (item) => (item as TicketByList).title,
             },
           },
           number: {
@@ -236,5 +244,5 @@ const userPopoverSlots: {
         </template>
       </CommonAdvancedTable>
     </div>
-  </CommonTableSkeleton>
+  </CommonLoader>
 </template>

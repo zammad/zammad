@@ -1,0 +1,70 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.anthropic.com/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"max_tokens":1024,"messages":[{"role":"user","content":"This is a
+        connection test. Return in unprettified JSON ''{ \"connected\": \"true\" }''
+        if you got the message. Respond in plain JSON format only and do not wrap
+        it in code block markers."}],"model":"nonexisting-model","stream":false,"system":"","temperature":0.0}'
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Zammad User Agent
+      Host:
+      - api.anthropic.com
+      Anthropic-Version:
+      - '2023-06-01'
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Content-Type:
+      - application/json; charset=utf-8
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Date:
+      - Tue, 09 Jun 2026 14:37:15 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Should-Retry:
+      - 'false'
+      Request-Id:
+      - req_011CbsrZgoBWTR6DG1SXCuWJ
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Anthropic-Organization-Id:
+      - 43c97a25-c30d-4a1b-bb31-5a928256fe18
+      Traceresponse:
+      - 00-af054476fbd6b8e4ad6662870bdd74ff-0ce6684c595dfff7-01
+      Server:
+      - cloudflare
+      Vary:
+      - Accept-Encoding
+      Set-Cookie:
+      - _cfuvid=WYJ6t.MpjZlhvLTtpI6.kPJw3_bl24409BGY3d.70iE-1781015834.86001-1.0.1.1-xAbZYUXS_l7uq9hpEKn3JdXHUpW7Zv8mv6IgETF0YtI;
+        HttpOnly; SameSite=None; Secure; Path=/; Domain=api.anthropic.com
+      X-Robots-Tag:
+      - none
+      Cf-Cache-Status:
+      - DYNAMIC
+      Content-Security-Policy:
+      - default-src 'none'; frame-ancestors 'none'
+      Cf-Ray:
+      - a090df87db6cbc0f-VNO
+    body:
+      encoding: ASCII-8BIT
+      string: '{"type":"error","error":{"type":"not_found_error","message":"model:
+        nonexisting-model"},"request_id":"req_011CbsrZgoBWTR6DG1SXCuWJ"}'
+  recorded_at: Tue, 09 Jun 2026 14:37:14 GMT
+recorded_with: VCR 6.4.0

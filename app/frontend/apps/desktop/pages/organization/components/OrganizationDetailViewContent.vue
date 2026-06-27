@@ -27,6 +27,7 @@ import { useScrollPosition } from '#desktop/composables/useScrollPosition.ts'
 import { useTicketByOrganizationUpdatesSubscription } from '#desktop/entities/ticket/graphql/subscriptions/ticketByOrganizationUpdates.api.ts'
 
 import OrganizationDetailTopBar from './OrganizationDetailTopBar.vue'
+import OrganizationDetailViewContentSkeleton from './OrganizationDetailViewContentSkeleton.vue'
 import OrganizationRelatedTickets from './OrganizationRelatedTickets.vue'
 
 interface Props {
@@ -106,14 +107,20 @@ organizationTicketsSubscription.onResult(({ data }) => {
     content-alignment="center"
     no-scrollable
   >
-    <CommonLoader class="mt-8" :loading="loadingWithoutCachedResult">
-      <div ref="content-container" class="h-full w-full overflow-y-auto">
+    <CommonLoader class="size-full" :loading="loadingWithoutCachedResult">
+      <template #skeleton>
+        <OrganizationDetailViewContentSkeleton />
+      </template>
+
+      <div ref="content-container" class="@container size-full overflow-y-auto">
         <OrganizationDetailTopBar
           :organization="organization"
           :organization-display-name="organizationDisplayName"
           :content-container-element="contentContainerElement"
         />
-        <section class="mx-auto grid w-full max-w-5xl grid-cols-2 gap-6 p-6">
+        <section
+          class="mx-auto grid w-full max-w-5xl min-w-xs grid-cols-1 gap-6 px-5.5 py-3 @2xl:grid-cols-2"
+        >
           <div class="flex flex-col gap-6 self-start">
             <CommonSectionContainer
               v-if="organizationMembers?.totalCount > 0"
@@ -166,7 +173,6 @@ organizationTicketsSubscription.onResult(({ data }) => {
               hasPermission('ticket.agent') &&
               (organization.ticketsCount?.open || organization.ticketsCount?.closed)
             "
-            class="self-start"
             :label="__('Organization tickets')"
           >
             <OrganizationRelatedTickets :organization="organization" />
@@ -175,7 +181,7 @@ organizationTicketsSubscription.onResult(({ data }) => {
           <OrganizationTicketBarChart
             v-if="hasPermission('ticket.agent')"
             ref="chart"
-            class="col-span-2"
+            class="@2xl:col-span-2"
             :organization-id="organizationId"
           />
         </section>

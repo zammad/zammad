@@ -13,6 +13,7 @@ RSpec.describe 'Ticket Summary', authenticated_as: :authenticate, type: :system 
   let(:initial_cache_key)                              { "ticket_summary_#{ticket.id}" }
   let(:updated_cache_key)                              { "ticket_summary_#{ticket.id}_2" }
   let(:ticket_summary_generation)                      { 'on_ticket_detail_opening' }
+  let(:ticket_summary_selector)                        { {} }
 
   let(:initial_content) do
     {
@@ -58,6 +59,7 @@ RSpec.describe 'Ticket Summary', authenticated_as: :authenticate, type: :system 
                   customer_sentiment: true,
                   generate_on:        ticket_summary_generation
                 })
+    Setting.set('ai_assistance_ticket_summary_selector', ticket_summary_selector)
 
     article
 
@@ -195,6 +197,24 @@ RSpec.describe 'Ticket Summary', authenticated_as: :authenticate, type: :system 
           .and have_no_css('.tabsSidebar-tab[data-tab=summary]')
       end
     end
+
+    context 'when the ticket summary selector does not match' do
+      let(:ticket_summary_selector) do
+        {
+          'condition' => {
+            'ticket.priority_id' => {
+              'operator' => 'is',
+              'value'    => [Ticket::Priority.find_by(name: '3 high').id.to_s],
+            },
+          },
+        }
+      end
+
+      it 'does not show sidebar' do
+        expect(page).to have_text(ticket.title)
+          .and have_no_css('.tabsSidebar-tab[data-tab=summary]')
+      end
+    end
   end
 
   describe 'Indicator', performs_jobs: true do
@@ -290,8 +310,7 @@ RSpec.describe 'Ticket Summary', authenticated_as: :authenticate, type: :system 
         # Reload the app to ensure the summary subscriptions are not set up
         refresh
 
-        allow(Service::Ticket::AIAssistance::Summarize).to receive(:execute).and_call_original
-
+        allow(Service::Ticket::AIAssistance::Summarize).to receive(:execute)
         visit "ticket/zoom/#{ticket.id}"
 
         within :active_content do
@@ -309,8 +328,7 @@ RSpec.describe 'Ticket Summary', authenticated_as: :authenticate, type: :system 
       it 'makes a request for a summary on clicking on sidebar' do
         visit '#dashboard'
 
-        allow(Service::Ticket::AIAssistance::Summarize).to receive(:execute).and_call_original
-
+        allow(Service::Ticket::AIAssistance::Summarize).to receive(:execute)
         visit "ticket/zoom/#{ticket.id}"
 
         expect(page).to have_text ticket.title
@@ -333,8 +351,7 @@ RSpec.describe 'Ticket Summary', authenticated_as: :authenticate, type: :system 
       it 'uses the group setting over the default' do
         visit '#dashboard'
 
-        allow(Service::Ticket::AIAssistance::Summarize).to receive(:execute).and_call_original
-
+        allow(Service::Ticket::AIAssistance::Summarize).to receive(:execute)
         visit "ticket/zoom/#{ticket.id}"
 
         expect(page).to have_text ticket.title

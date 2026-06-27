@@ -363,20 +363,24 @@ export const useUserCurrentTaskbarTabsStore = defineStore('userCurrentTaskbarTab
     taskbarTabId: ID,
     taskbarTab: UserTaskbarTab,
     state?: Record<string, unknown>,
+    sendOptions?: Parameters<typeof taskbarUpdateMutation.send>[1],
   ) => {
     taskbarUpdateMutation
-      .send({
-        id: taskbarTabId,
-        input: {
-          app: EnumTaskbarApp.Desktop,
-          callback: taskbarTab.type,
-          key: taskbarTab.tabEntityKey,
-          notify: !!taskbarTab.notify,
-          state,
-          prio: taskbarTab.order,
-          dirty: taskbarTab.dirty,
+      .send(
+        {
+          id: taskbarTabId,
+          input: {
+            app: EnumTaskbarApp.Desktop,
+            callback: taskbarTab.type,
+            key: taskbarTab.tabEntityKey,
+            notify: !!taskbarTab.notify,
+            state,
+            prio: taskbarTab.order,
+            dirty: taskbarTab.dirty,
+          },
         },
-      })
+        sendOptions,
+      )
       .catch(() => {})
   }
 
@@ -430,9 +434,17 @@ export const useUserCurrentTaskbarTabsStore = defineStore('userCurrentTaskbarTab
 
     if (silenceError) silenceTaskbarDeleteError = true
 
+    const tabEntityKey = taskbarTabList.value.find(
+      (taskbarTab) => taskbarTab.taskbarTabId === taskbarTabId,
+    )?.tabEntityKey
+
     taskbarDeleteMutation
       .send({
         id: taskbarTabId,
+      })
+      .then(() => {
+        // Drop the stored context, it is no longer needed once the tab is gone.
+        if (tabEntityKey) delete taskbarTabContexts.value[tabEntityKey]
       })
       .catch(() => {
         taskbarTabIDsInDeletion.value = taskbarTabIDsInDeletion.value.filter(

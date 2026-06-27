@@ -16,6 +16,7 @@ import type { TicketSidebarPlugin } from '#desktop/pages/ticket/components/Ticke
 import TicketSidebarContent from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarContent.vue'
 import ExternalReferenceContent from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/ExternalReferenceContent.vue'
 import ExternalReferenceLink from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/ExternalReferenceLink.vue'
+import TicketSidebarIdoitContentSkeleton from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContentSkeleton.vue'
 import type { FormDataRecords } from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/types.ts'
 import { useIdoitCacheHandlers } from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/useIdoitCacheHandlers.ts'
 import { useIdoitFormHelpers } from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/useIdoitFormHelpers.ts'
@@ -189,6 +190,10 @@ if (props.ticketId) {
     </CommonButton>
 
     <CommonLoader v-if="objectIds?.length" :loading="isLoading" :error="error">
+      <template #skeleton>
+        <TicketSidebarIdoitContentSkeleton />
+      </template>
+
       <div class="space-y-6" tabindex="-1">
         <div
           v-for="object in objectList"

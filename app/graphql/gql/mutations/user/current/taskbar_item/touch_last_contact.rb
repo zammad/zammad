@@ -5,7 +5,7 @@ module Gql::Mutations
 
     description 'Update last_contact_at for a taskbar item of the currently logged-in user'
 
-    argument :id, GraphQL::Types::ID, required: true, loads: Gql::Types::User::TaskbarItemType, as: :taskbar_item, description: 'The taskbar item ID'
+    argument :id, GraphQL::Types::ID, required: true, loads: Gql::Types::User::TaskbarItemType, as: :taskbar_item, loads_pundit_method: :update?, description: 'The taskbar item ID'
 
     field :taskbar_item, Gql::Types::User::TaskbarItemType, description: 'The updated taskbar item.'
 

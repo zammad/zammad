@@ -87,9 +87,9 @@ describe('Organization Detail View - History Flyout', () => {
     const main = view.getByRole('main')
     const header = within(main).getByTestId('organization-detail-top-bar')
 
-    await view.events.click(within(header).getByRole('button', { name: 'Action menu button' }))
+    await view.events.click(within(header).getByRole('button', { name: 'Additional actions' }))
 
-    const actionPopover = await view.findByRole('region', { name: 'Action menu button' })
+    const actionPopover = await view.findByRole('region', { name: 'Additional actions' })
     await view.events.click(within(actionPopover).getByRole('button', { name: 'History' }))
 
     expect(await view.findByRole('heading', { name: 'History', level: 2 })).toBeVisible()
@@ -145,8 +145,8 @@ describe('Organization Detail View - History Flyout', () => {
       const main = view.getByRole('main')
       const header = within(main).getByTestId('organization-detail-top-bar')
 
-      await view.events.click(within(header).getByRole('button', { name: 'Action menu button' }))
-      const actionPopover = await view.findByRole('region', { name: 'Action menu button' })
+      await view.events.click(within(header).getByRole('button', { name: 'Additional actions' }))
+      const actionPopover = await view.findByRole('region', { name: 'Additional actions' })
       await view.events.click(within(actionPopover).getByRole('button', { name: 'History' }))
 
       const flyout = await view.findByRole('complementary', { name: 'History' })

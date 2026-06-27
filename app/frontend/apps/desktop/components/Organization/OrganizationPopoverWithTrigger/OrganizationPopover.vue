@@ -11,6 +11,7 @@ import type { Organization } from '#shared/graphql/types.ts'
 import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
 import { normalizeEdges } from '#shared/utils/helpers.ts'
 
+import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
 import CommonSimpleEntityList from '#desktop/components/CommonSimpleEntityList/CommonSimpleEntityList.vue'
 import { EntityType } from '#desktop/components/CommonSimpleEntityList/types.ts'
 import OrganizationInfo from '#desktop/components/Organization/OrganizationInfo.vue'
@@ -54,8 +55,12 @@ const goToOrganizationProfile = () => {
 
 <template>
   <section ref="popover-section" data-type="popover" class="space-y-2 p-3">
-    <OrganizationPopoverSkeleton :loading="loading">
-      <template v-if="organization">
+    <CommonLoader no-transition :loading="loading">
+      <template #skeleton>
+        <OrganizationPopoverSkeleton />
+      </template>
+
+      <div v-if="organization" class="space-y-2">
         <OrganizationInfo :organization="organization" no-link />
 
         <ObjectAttributes
@@ -76,7 +81,7 @@ const goToOrganizationProfile = () => {
           no-collapse
           @load-more="goToOrganizationProfile"
         />
-      </template>
-    </OrganizationPopoverSkeleton>
+      </div>
+    </CommonLoader>
   </section>
 </template>

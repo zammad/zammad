@@ -15,7 +15,7 @@ export const staticObjectAttributes: EntityStaticObjectAttributes = {
       dataOption: {
         relation: 'User',
       },
-      dataType: 'autocomplete',
+      dataType: 'autocompletion_ajax',
       isStatic: true,
       isInternal: true,
     },
@@ -32,7 +32,7 @@ export const staticObjectAttributes: EntityStaticObjectAttributes = {
       dataOption: {
         relation: 'User',
       },
-      dataType: 'autocomplete',
+      dataType: 'autocompletion_ajax',
       isStatic: true,
       isInternal: true,
     },

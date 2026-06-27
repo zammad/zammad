@@ -133,6 +133,255 @@ RSpec.describe NotificationFactory::Mailer do
       it 'returns a Mail::Message' do
         expect(result).to be_a(Mail::Message)
       end
+
+      context 'without system notification signing enabled' do
+        before do
+          Setting.set('smime_sign_system_notifications', false)
+          Setting.set('pgp_sign_system_notifications', false)
+        end
+
+        it 'does not parse the notification sender for secure mailing' do
+          allow(described_class).to receive(:sender_email_address).and_call_original
+
+          result
+
+          expect(described_class).not_to have_received(:sender_email_address)
+        end
+      end
+
+      context 'with active S/MIME integration' do
+        before do
+          SMIMECertificate.destroy_all
+
+          Setting.set('smime_integration', true)
+          Setting.set('smime_sign_system_notifications', false)
+          Setting.set('pgp_integration', false)
+          Setting.set('notification_sender', 'Zammad Helpdesk <smime1@example.com>')
+        end
+
+        context 'without system notification signing enabled' do
+          before do
+            create(:smime_certificate, :with_private, fixture: 'smime1@example.com')
+          end
+
+          it 'sends system notifications unsigned' do
+            expect(result.mime_type).to eq('text/plain')
+          end
+        end
+
+        context 'with signing certificate for notification sender' do
+          before do
+            Setting.set('smime_sign_system_notifications', true)
+            create(:smime_certificate, :with_private, fixture: 'smime1@example.com')
+          end
+
+          it 'signs system notifications' do
+            expect(result.mime_type).to eq('multipart/signed')
+          end
+        end
+
+        context 'without signing certificate for notification sender' do
+          before do
+            Setting.set('smime_sign_system_notifications', true)
+          end
+
+          it 'sends system notifications unsigned' do
+            expect(result.mime_type).to eq('text/plain')
+          end
+        end
+      end
+
+      context 'with active PGP integration' do
+        before do
+          PGPKey.destroy_all
+
+          Setting.set('smime_integration', false)
+          Setting.set('pgp_integration', true)
+          Setting.set('pgp_sign_system_notifications', false)
+          Setting.set('notification_sender', 'Zammad Helpdesk <pgp1@example.com>')
+        end
+
+        context 'without system notification signing enabled' do
+          before do
+            create(:pgp_key, :with_private, fixture: 'pgp1@example.com')
+          end
+
+          it 'sends system notifications unsigned' do
+            expect(result.mime_type).to eq('text/plain')
+          end
+        end
+
+        context 'with signing key for notification sender' do
+          before do
+            Setting.set('pgp_sign_system_notifications', true)
+            create(:pgp_key, :with_private, fixture: 'pgp1@example.com')
+          end
+
+          it 'signs system notifications' do
+            expect(result.mime_type).to eq('multipart/signed')
+          end
+        end
+
+        context 'without signing key for notification sender' do
+          before do
+            Setting.set('pgp_sign_system_notifications', true)
+          end
+
+          it 'sends system notifications unsigned' do
+            expect(result.mime_type).to eq('text/plain')
+          end
+        end
+
+        context 'without an available PGP backend' do
+          before do
+            Setting.set('pgp_sign_system_notifications', true)
+            allow(SecureMailing::PGP).to receive(:active?).and_return(false)
+          end
+
+          it 'sends system notifications unsigned' do
+            expect(result.mime_type).to eq('text/plain')
+          end
+        end
+      end
+
+      context 'with S/MIME and PGP signing enabled' do
+        before do
+          SMIMECertificate.destroy_all
+          PGPKey.destroy_all
+
+          Setting.set('smime_integration', true)
+          Setting.set('smime_sign_system_notifications', true)
+          Setting.set('pgp_integration', true)
+          Setting.set('pgp_sign_system_notifications', true)
+          Setting.set('notification_sender', 'Zammad Helpdesk <pgp+smime-sender@example.com>')
+        end
+
+        context 'with S/MIME certificate and PGP key for notification sender' do
+          before do
+            create(:smime_certificate, :with_private, fixture: 'pgp+smime-sender@example.com')
+            create(:pgp_key, :with_private, fixture: 'pgp+smime-sender@example.com')
+          end
+
+          it 'prefers S/MIME signing' do
+            expect(result.content_type).to match(SecureMailing::SMIME::Incoming::EXPRESSION_SIGNATURE)
+          end
+        end
+
+        context 'with only a PGP key for notification sender' do
+          before do
+            create(:pgp_key, :with_private, fixture: 'pgp+smime-sender@example.com')
+          end
+
+          it 'falls back to PGP signing' do
+            expect(result.content_type).to include(SecureMailing::PGP::Incoming::SIGNATURE_CONTENT_TYPE)
+          end
+        end
+      end
+
+      context 'system notification signing edge cases' do
+        before do
+          Setting.set('pgp_integration', false)
+          Setting.set('pgp_sign_system_notifications', false)
+        end
+
+        context 'with PGP signing enabled but integration disabled' do
+          before do
+            Setting.set('pgp_sign_system_notifications', true)
+            Setting.set('notification_sender', 'Zammad Helpdesk <pgp1@example.com>')
+            create(:pgp_key, :with_private, fixture: 'pgp1@example.com')
+          end
+
+          it 'delivers unsigned without crash' do
+            expect(result.mime_type).to eq('text/plain')
+          end
+        end
+
+        context 'with S/MIME signing' do
+          before do
+            Setting.set('smime_sign_system_notifications', true)
+            Setting.set('notification_sender', 'Zammad Helpdesk <smime1@example.com>')
+          end
+
+          context 'with integration disabled' do
+            before do
+              create(:smime_certificate, :with_private, fixture: 'smime1@example.com')
+            end
+
+            it 'delivers unsigned without crash' do
+              expect(result.mime_type).to eq('text/plain')
+            end
+          end
+
+          context 'when signing fails during delivery' do
+            before do
+              Setting.set('smime_integration', true)
+              create(:smime_certificate, :with_private, fixture: 'smime1@example.com')
+            end
+
+            it 'falls back to unsigned delivery and logs a warning' do
+              allow(Rails.logger).to receive(:warn)
+              call_count = 0
+              allow_any_instance_of(Channel).to receive(:deliver) do |_channel, _params, _notification|
+                call_count += 1
+                raise SecureMailing::Backend::Handler::SigningError, 'Simulated signing failure' if call_count == 1
+
+                Mail::Message.new
+              end
+              expect(result).to be_a(Mail::Message)
+              expect(Rails.logger).to have_received(:warn)
+                .with(%r{Signing notification.*failed.*sending unsigned})
+            end
+          end
+
+          context 'when the transport fails during delivery' do
+            before do
+              Setting.set('smime_integration', true)
+              create(:smime_certificate, :with_private, fixture: 'smime1@example.com')
+            end
+
+            it 'propagates the error instead of retrying unsigned' do
+              deliver_calls = 0
+              allow_any_instance_of(Channel).to receive(:deliver) do |_channel, _params, _notification|
+                deliver_calls += 1
+                raise StandardError, 'Connection refused'
+              end
+
+              expect { result }.to raise_error(StandardError, 'Connection refused')
+              expect(deliver_calls).to eq(1)
+            end
+          end
+
+          context 'when SigningError is raised during secure mailing check' do
+            before do
+              Setting.set('smime_integration', true)
+              allow(SecureMailing::SMIME::NotificationOptions).to receive(:process)
+                .and_raise(SecureMailing::Backend::Handler::SigningError, 'corrupt certificate')
+            end
+
+            it 'logs a warning and delivers unsigned' do
+              allow(Rails.logger).to receive(:warn)
+              expect(result.mime_type).to eq('text/plain')
+              expect(Rails.logger).to have_received(:warn)
+                .with(%r{Unable to sign system notification})
+            end
+          end
+        end
+
+        context 'with malformed notification sender address' do
+          before do
+            Setting.set('smime_sign_system_notifications', true)
+            Setting.set('smime_integration', true)
+            Setting.set('notification_sender', 'invalid without angle brackets')
+          end
+
+          it 'falls back to unsigned delivery and logs a warning' do
+            allow(Rails.logger).to receive(:warn)
+            expect(result.mime_type).to eq('text/plain')
+            expect(Rails.logger).to have_received(:warn)
+              .with(%r{Failed to parse notification sender address})
+          end
+        end
+      end
     end
 
     context 'recipient without email address' do
@@ -141,6 +390,38 @@ RSpec.describe NotificationFactory::Mailer do
       it 'raises Exceptions::UnprocessableContent' do
         expect { result }.to raise_error(Exceptions::UnprocessableContent)
       end
+    end
+  end
+
+  describe '#sender_email_address' do
+    it 'returns the address for a valid sender' do
+      expect(described_class.sender_email_address('Zammad Helpdesk <helpdesk@example.com>')).to eq('helpdesk@example.com')
+    end
+
+    it 'raises ArgumentError when the value parses to zero addresses' do
+      expect { described_class.sender_email_address('Group: ;') }.to raise_error(ArgumentError, %r{No email address could be parsed})
+    end
+
+    it 'raises ArgumentError for a blank sender' do
+      expect { described_class.sender_email_address('') }.to raise_error(ArgumentError, %r{No email address could be parsed})
+    end
+  end
+
+  describe '#build_notification_sender' do
+    it 'builds a sender for a valid address' do
+      expect(described_class.build_notification_sender('Zammad Helpdesk <helpdesk@example.com>').email).to eq('helpdesk@example.com')
+    end
+
+    it 'returns nil and logs a warning when the value parses to zero addresses' do
+      allow(Rails.logger).to receive(:warn)
+      expect(described_class.build_notification_sender('Group: ;')).to be_nil
+      expect(Rails.logger).to have_received(:warn).with(%r{Failed to parse notification sender address})
+    end
+
+    it 'returns nil and logs a warning for a malformed address' do
+      allow(Rails.logger).to receive(:warn)
+      expect(described_class.build_notification_sender('invalid without angle brackets')).to be_nil
+      expect(Rails.logger).to have_received(:warn).with(%r{Failed to parse notification sender address})
     end
   end
 

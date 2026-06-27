@@ -16,6 +16,8 @@ import CommonSimpleTable from '#desktop/components/CommonTable/CommonSimpleTable
 import type { TableSimpleHeader } from '#desktop/components/CommonTable/types'
 import { useCalendarIcsFileEventsQuery } from '#desktop/entities/calendar/ics-file/graphql/queries/events.api.ts'
 
+import CommonTableSkeleton from '../CommonTable/Skeleton/CommonTableSkeleton.vue'
+
 interface Props {
   fileId: string
   fileType: string
@@ -92,6 +94,10 @@ const downloadCalendar = () => {
     @action="downloadCalendar"
   >
     <CommonLoader :loading="calendarEventsQueryLoading">
+      <template #skeleton>
+        <CommonTableSkeleton :rows="3" :columns="tableHeaders.length" />
+      </template>
+
       <CommonSimpleTable
         :caption="__('Preview calendar')"
         class="mb-4 w-full"

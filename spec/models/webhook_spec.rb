@@ -258,5 +258,17 @@ RSpec.describe Webhook, type: :model do
           )
       end
     end
+
+    context 'when referenced as one of multiple webhooks' do
+      let!(:trigger) { create(:trigger, perform: { 'notification.webhook' => { 'webhook_id' => [webhook.id.to_s, '999'] } }) }
+
+      it 'raises error with details' do
+        expect { webhook.destroy }
+          .to raise_exception(
+            be_an_instance_of(Exceptions::UnprocessableContent)
+            .and(have_attributes(content: eq(["Trigger / #{trigger.name} (##{trigger.id})"])))
+          )
+      end
+    end
   end
 end

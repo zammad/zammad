@@ -911,6 +911,14 @@ RSpec.describe UserAgent, :aggregate_failures do
         end
       end
 
+      context 'when request was a redirect' do
+        let(:response) { Net::HTTPFound.new('/', '302', 'Found') }
+
+        it 'does not create a log entry' do
+          expect(HttpLog).not_to have_received(:create)
+        end
+      end
+
       context 'when request was not successful' do
         let(:response) { Net::HTTPNotFound.new('/', '404', 'Not Found') }
 

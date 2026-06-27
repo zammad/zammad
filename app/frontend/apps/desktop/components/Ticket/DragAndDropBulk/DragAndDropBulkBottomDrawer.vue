@@ -2,6 +2,7 @@
 
 <script setup lang="ts">
 import { useTimeoutFn } from '@vueuse/core'
+import { isEqual } from 'lodash-es'
 import { computed, ref, shallowRef, watch } from 'vue'
 
 import { useFormUpdaterQuery } from '#shared/components/Form/graphql/queries/formUpdater.api.ts'
@@ -10,10 +11,12 @@ import {
   type FormUpdaterMetaInput,
   type FormUpdaterQueryVariables,
 } from '#shared/graphql/types.ts'
+import { i18n } from '#shared/i18n/index.ts'
 import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
 
 import type { Props as ParentProps } from '#desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkWrapper.vue'
 import { useTicketBulkEdit } from '#desktop/components/Ticket/TicketBulkEditFlyout/useTicketBulkEdit.ts'
+import { useTransitionConfig } from '#desktop/composables/useTransitionConfig.ts'
 
 import BulkAvatarSkeleton from './components/BulkAvatarSkeleton.vue'
 import BulkEntityCard from './components/BulkEntityCard.vue'
@@ -129,12 +132,12 @@ const {
   getSelectedOptionParentsPath,
 } = useGroupWithFlatSelectOptions(groupOptions)
 
-const topLevelList = computed(() => {
+const topLevelList = computed<BulkScrollListItem[]>((currentList) => {
   const list: BulkScrollListItem[] = []
 
   list.push({
     internalId: 1,
-    label: __('Unassign owner'),
+    label: i18n.t('Unassign owner'),
     type: DragAndDropBulkEntityType.Owner,
   })
 
@@ -158,16 +161,16 @@ const topLevelList = computed(() => {
       })),
     )
 
-  return list
+  return currentList && isEqual(currentList, list) ? currentList : list
 })
 
-const groupMembers = computed(() => {
+const groupMembers = computed<BulkScrollListItem[]>((currentList) => {
   const list: BulkScrollListItem[] = []
 
   list.push({
     internalId: 1,
     groupInternalId: selectedGroupInternalId.value!,
-    label: __('Unassign owner & move to group'),
+    label: i18n.t('Unassign owner & move to group'),
     type: DragAndDropBulkEntityType.Owner,
   })
 
@@ -181,7 +184,7 @@ const groupMembers = computed(() => {
     })),
   )
 
-  return list
+  return currentList && isEqual(currentList, list) ? currentList : list
 })
 
 const goInsideGroup = (internalId: number) => {
@@ -194,13 +197,15 @@ const goInsideGroup = (internalId: number) => {
 }
 
 const scrollPosition = ref(0)
+
+const { transitions } = useTransitionConfig()
 </script>
 
 <template>
   <footer class="w-full" :class="{ 'h-74': isActive }">
     <BulkAvatarSkeleton v-if="isLoading && !result?.formUpdater" />
 
-    <transition v-else mode="out-in" name="fade-up">
+    <Transition v-else :name="transitions.fadeUp" mode="out-in">
       <div
         v-if="!isActive && groupOptions?.length"
         class="flex h-52 w-full items-center justify-center py-3"
@@ -213,13 +218,7 @@ const scrollPosition = ref(0)
       </div>
 
       <div v-else class="relative isolate w-full overflow-y-clip bg-blue-200 dark:bg-gray-500">
-        <transition
-          mode="out-in"
-          enter-from-class="-translate-y-full "
-          leave-to-class="translate-y-full "
-          enter-active-class="transition-transform"
-          leave-active-class="transition-transform"
-        >
+        <Transition :name="transitions.fadeDown" mode="out-in">
           <div
             v-if="isInsideGroup"
             class="grid w-full grid-rows-[repeat(2,auto)] justify-stretch gap-3 px-3"
@@ -260,8 +259,8 @@ const scrollPosition = ref(0)
               @go-inside-group="goInsideGroup"
             />
           </div>
-        </transition>
+        </Transition>
       </div>
-    </transition>
+    </Transition>
   </footer>
 </template>

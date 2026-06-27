@@ -22,6 +22,13 @@ export class FieldResolverDateTime extends FieldResolver {
       },
     }
   }
+
+  public override getFieldFilterOperators() {
+    // Absolute range (`in range`, blank-able from/to bounds) plus the relative
+    // `within last (relative)` operator — both consumed unchanged by the
+    // backend selectors of the same name.
+    return ['in range', 'within last (relative)']
+  }
 }
 
 export default <FieldResolverModule>{

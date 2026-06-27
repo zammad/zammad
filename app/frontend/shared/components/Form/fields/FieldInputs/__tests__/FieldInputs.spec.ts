@@ -8,7 +8,6 @@ import { waitForTimeout } from '#tests/support/utils.ts'
 
 const wrapperParameters = {
   form: true,
-  formField: true,
   unmount: false,
 }
 

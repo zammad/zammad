@@ -102,6 +102,7 @@ AAAFoAAAAAAAAAkAAAAAEAAACQAAAAAQADk=" })
       expect(described_class.facility_to_permission('webhook')).to eq('admin.webhook')
       expect(described_class.facility_to_permission('cti')).to eq('admin.integration')
       expect(described_class.facility_to_permission('AI::Provider')).to eq('admin.ai_provider')
+      expect(described_class.facility_to_permission('MicrosoftGraph')).to eq('admin.channel_microsoft_graph')
       expect(described_class.facility_to_permission('WhatsApp::Business')).to eq('admin.channel_whatsapp')
     end
 
@@ -118,11 +119,12 @@ AAAFoAAAAAAAAAkAAAAAEAAACQAAAAAQADk=" })
   describe '.facilities_by_permission' do
     it 'returns a hash grouped by permissions with facilities' do
       expect(described_class.facilities_by_permission).to include(
-        'admin.ai_provider'      => include('AI::Provider'),
-        'admin.integration'      => include('GitHub'),
-        'admin.security'         => include('SAML'),
-        'admin.webhook'          => include('webhook'),
-        'admin.channel_whatsapp' => include('WhatsApp::Business')
+        'admin.ai_provider'             => include('AI::Provider'),
+        'admin.integration'             => include('GitHub'),
+        'admin.security'                => include('SAML'),
+        'admin.webhook'                 => include('webhook'),
+        'admin.channel_microsoft_graph' => include('MicrosoftGraph'),
+        'admin.channel_whatsapp'        => include('WhatsApp::Business')
       )
     end
   end

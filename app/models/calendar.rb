@@ -10,6 +10,7 @@ class Calendar < ApplicationModel
 
   validates :name, uniqueness: { case_sensitive: false }
   validate :validate_hours
+  validate :validate_ical_url_format
 
   before_save :ensure_public_holidays_details, :fetch_ical
 
@@ -137,7 +138,7 @@ returns
 =end
 
   def self.sync
-    Calendar.find_each(&:sync)
+    Calendar.find_each(&:sync_ical)
     true
   end
 
@@ -154,7 +155,7 @@ returns
 
 =end
 
-  def sync(without_save = nil)
+  def sync_ical(without_save = nil)
     return if !ical_url
 
     # only sync every 5 days
@@ -218,19 +219,16 @@ returns
   end
 
   def self.fetch_parse(location)
-    if location.match?(%r{^http}i)
-      result = UserAgent.get(location)
-      if !result.success?
-        raise result.error
-      end
+    result = UserAgent.get(location, {}, { validate_safety: { allow_private: true } })
+    raise result.error if !result.success?
 
-      cal_file = result.body
-    else
-      cal_file = File.read(location)
-    end
+    cal_file = result.body
 
     cals = Icalendar::Calendar.parse(cal_file)
     cal = cals.first
+
+    return {} if cal.nil?
+
     events = {}
     cal.events.each do |event|
       if event.rrule.present?
@@ -347,6 +345,13 @@ returns
     end
   end
 
+  def validate_ical_url_format
+    return if ical_url.blank?
+    return if ical_url.to_s.match?(%r{\Ahttps?://}i)
+
+    errors.add(:ical_url, __('must be a valid HTTP(S) URL'))
+  end
+
   private
 
   # if changed calendar is default, set all others default to false
@@ -387,7 +392,9 @@ returns
 
   # fetch ical feed
   def fetch_ical
-    sync(true)
+    return true if !ical_url_changed?
+
+    sync_ical(true)
     true
   end
 

@@ -1,12 +1,14 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
+import { flushPromises } from '@vue/test-utils'
+import { createPinia, setActivePinia } from 'pinia'
 
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
 import { waitFor } from '#tests/support/vitest-wrapper.ts'
 
 import { useBetaUi } from '#desktop/components/BetaUi/composables/useBetaUi.ts'
+import { useAppUsageStore } from '#desktop/stores/appUsage.ts'
 
 const waitForConfirmationMock = vi.fn().mockImplementation(() => true)
 
@@ -34,6 +36,7 @@ vi.mock(
 )
 
 describe('useNewBetaUi', () => {
+  beforeEach(() => setActivePinia(createPinia()))
   afterAll(() => vi.clearAllMocks())
 
   describe('betaUiSwitchEnabled', () => {
@@ -88,6 +91,8 @@ describe('useNewBetaUi', () => {
 
   describe('toggleBetaUiSwitch', () => {
     beforeEach(() => {
+      setActivePinia(createPinia())
+
       vi.doMock('#shared/utils/pwa.ts')
       Object.defineProperty(window, 'location', {
         value: {
@@ -98,28 +103,28 @@ describe('useNewBetaUi', () => {
       })
     })
 
-    it('sets switchValue and hasFeedbackConsent to undefined', () => {
+    it('sets switchValue and hasFeedbackConsent to null', () => {
       const { hasFeedbackConsent, switchValue, toggleBetaUiSwitch } = useBetaUi()
 
-      expect(switchValue.value).not.toBe(undefined)
-      expect(hasFeedbackConsent.value).not.toBe(undefined)
+      expect(switchValue.value).not.toBe(null)
+      expect(hasFeedbackConsent.value).not.toBe(null)
 
       toggleBetaUiSwitch()
 
-      expect(switchValue.value).toBe(undefined)
-      expect(hasFeedbackConsent.value).toBe(undefined)
+      expect(switchValue.value).toBe(null)
+      expect(hasFeedbackConsent.value).toBe(null)
     })
 
-    it('supports skipping setting hasFeedbackConsent to undefined', () => {
+    it('supports skipping setting hasFeedbackConsent to null', () => {
       const { hasFeedbackConsent, switchValue, toggleBetaUiSwitch } = useBetaUi()
 
-      expect(switchValue.value).not.toBe(undefined)
-      expect(hasFeedbackConsent.value).not.toBe(undefined)
+      expect(switchValue.value).not.toBe(null)
+      expect(hasFeedbackConsent.value).not.toBe(null)
 
       toggleBetaUiSwitch('/', true)
 
-      expect(switchValue.value).toBe(undefined)
-      expect(hasFeedbackConsent.value).not.toBe(undefined)
+      expect(switchValue.value).toBe(null)
+      expect(hasFeedbackConsent.value).not.toBe(null)
     })
 
     it('redirects to root URL', () => {
@@ -130,6 +135,34 @@ describe('useNewBetaUi', () => {
       toggleBetaUiSwitch()
 
       expect(window.location.href).toBe('/')
+    })
+
+    it('does not re-trigger milestone dialog after switching back to old UI', async () => {
+      // Regression test: previously, resetMilestoneHistory() in clearSwitchAndRedirect
+      // used a separate useLocalStorage instance. VueUse synced instances via StorageEvent,
+      // which caused the store's milestoneHistory ref to reset to {all: false} while
+      // totalAppUsageTime remained above the milestone threshold - flipping
+      // shouldTriggerMilestoneDialog back to true immediately after the switch.
+      localStorage.setItem('app-usage-total-time', `${5 * 60 * 60 * 1000}`)
+      localStorage.setItem(
+        'app-usage-milestones-trigger-history',
+        JSON.stringify({ '1h': true, '5h': true, '20h': false }),
+      )
+
+      const appUsage = useAppUsageStore()
+
+      // Sanity: 5h usage, milestone already seen - dialog must not show.
+      expect(appUsage.currentMilestoneKey).toBe('5h')
+      expect(appUsage.shouldTriggerMilestoneDialog).toBe(false)
+
+      const { toggleBetaUiSwitch } = useBetaUi()
+      toggleBetaUiSwitch('/', true)
+
+      await flushPromises()
+
+      // Both counters must be reset and the dialog must not re-trigger.
+      expect(appUsage.totalAppUsageTime).toBe(0)
+      expect(appUsage.shouldTriggerMilestoneDialog).toBe(false)
     })
 
     it('clears usage states', async () => {
@@ -146,9 +179,7 @@ describe('useNewBetaUi', () => {
 
       toggleBetaUiSwitch('/', true)
 
-      await waitFor(() =>
-        expect(localStorage.getItem('app-usage-total-time')).toBe(`${1 * 60 * 60 * 1000}`),
-      )
+      await waitFor(() => expect(localStorage.getItem('app-usage-total-time')).toBe('0'))
 
       expect(localStorage.getItem('app-usage-milestones-trigger-history')).toBe(
         JSON.stringify({
@@ -184,6 +215,8 @@ describe('useNewBetaUi', () => {
 })
 
 describe('toggleDismissBetaUiSwitch', () => {
+  beforeEach(() => setActivePinia(createPinia()))
+
   it('toggles dismissValue', () => {
     localStorage.setItem('beta-ui-switch-dismiss', 'false')
 

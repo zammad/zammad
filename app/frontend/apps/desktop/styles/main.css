@@ -9,14 +9,14 @@
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] * ));
 
-:root {
-  /* LIMITED support -> opt-in modern browsers @see https://developer.mozilla.org/en-US/docs/Web/CSS/interpolate-size */
-
-  /* allows animating of intrinsic absolute <-> relative units */
-  interpolate-size: allow-keywords;
-}
-
 @layer base {
+  :root {
+    /* LIMITED support -> opt-in modern browsers @see https://developer.mozilla.org/en-US/docs/Web/CSS/interpolate-size */
+
+    /* allows animating of intrinsic absolute <-> relative units */
+    interpolate-size: allow-keywords;
+  }
+
   /* Override autofill styles in Firefox. */
   :-moz-autofill {
     background: transparent;
@@ -29,9 +29,11 @@
     caret-color: var(--color-black);
   }
 
-  [data-theme='dark'] :-webkit-autofill {
-    -webkit-text-fill-color: var(--color-white);
-    caret-color: var(--color-white);
+  @variant dark {
+    :-webkit-autofill {
+      -webkit-text-fill-color: var(--color-white);
+      caret-color: var(--color-white);
+    }
   }
 
   /* No-op animation for hooking into autofill mechanism in Webkit-based browsers. */
@@ -39,8 +41,24 @@
     animation-name: onAutoFillStart;
   }
 
+  @keyframes onAutoFillStart {
+    from {
+    }
+
+    to {
+    }
+  }
+
   :not(:-webkit-autofill) {
     animation-name: onAutoFillEnd;
+  }
+
+  @keyframes onAutoFillEnd {
+    from {
+    }
+
+    to {
+    }
   }
 
   /* Better-looking typography on high-density screens. */
@@ -52,19 +70,76 @@
     @apply text-blue-800 hover:text-blue-850 hover:underline focus-visible:rounded-xs focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 hover:dark:text-blue-600;
   }
 
-  @keyframes onAutoFillStart {
-    from {
-    }
+  input::placeholder,
+  textarea::placeholder {
+    @apply text-stone-200 dark:text-neutral-500;
+  }
 
-    to {
+  button,
+  [role='button'] {
+    cursor: pointer;
+  }
+
+  /*
+  * CSS Custom Highlight API – article body text highlights.
+  * ::highlight() inherits CSS custom properties from the cascade, so dark-mode
+  * overrides defined in @variant dark block are picked up automatically.
+  */
+  :root {
+    --article-highlight-yellow: var(--color-yellow-200);
+    --article-highlight-green: var(--color-green-350);
+    --article-highlight-blue: var(--color-blue-550);
+    --article-highlight-pink: var(--color-pink-150);
+    --article-highlight-purple: var(--color-purple-100);
+  }
+
+  @variant dark {
+    &:root {
+      --article-highlight-yellow: var(--color-yellow-750);
+      --article-highlight-green: var(--color-green-700);
+      --article-highlight-blue: var(--color-blue-875);
+      --article-highlight-pink: var(--color-pink-700);
+      --article-highlight-purple: var(--color-purple-700);
     }
   }
 
-  @keyframes onAutoFillEnd {
-    from {
+  ::highlight(highlight-yellow) {
+    background-color: var(--article-highlight-yellow);
+  }
+
+  ::highlight(highlight-green) {
+    background-color: var(--article-highlight-green);
+  }
+
+  ::highlight(highlight-blue) {
+    background-color: var(--article-highlight-blue);
+  }
+
+  ::highlight(highlight-pink) {
+    background-color: var(--article-highlight-pink);
+  }
+
+  ::highlight(highlight-purple) {
+    background-color: var(--article-highlight-purple);
+  }
+
+  @media print {
+    ::highlight(highlight-yellow),
+    ::highlight(highlight-green),
+    ::highlight(highlight-blue),
+    ::highlight(highlight-pink),
+    ::highlight(highlight-purple) {
+      background-color: transparent;
+    }
+  }
+
+  @media print {
+    body * {
+      color: var(--color-black) !important;
     }
 
-    to {
+    p {
+      break-inside: avoid;
     }
   }
 }
@@ -74,11 +149,6 @@
     grid-column: span 2;
   }
 
-  input::placeholder,
-  textarea::placeholder {
-    @apply text-stone-200 dark:text-neutral-500;
-  }
-
   /*
     Responsive multi-column mode for form groups:
     - compatibility layer for object attributes and form columns via legacy `.formGroup--halfSize` class
@@ -86,18 +156,11 @@
   */
   .form-group .formkit-outer {
     /* All fields default to full-width. */
-    @apply col-span-2;
+    @apply col-span-full;
 
     /* Optional single-column style for configured fields (medium+ breakpoint). */
     &.form-group-single-column {
-      @apply @md/form-group:col-span-1;
-    }
-
-    /* Force full-width style for specific fields. */
-    &[data-type='editor'],
-    &[data-type='file'],
-    &:last-of-type:nth-of-type(odd) {
-      @apply @md/form-group:col-span-2;
+      @apply @md:col-span-1;
     }
   }
 
@@ -107,36 +170,18 @@
     - container query via optional TW `@container/object-attributes` class
   */
   .object-attributes .object-attribute {
-    @apply col-span-2 @md/object-attributes:col-span-1;
+    @apply col-span-full @md/object-attributes:col-span-1;
 
     /* Optional full-width style for configured attributes. */
     &.object-attribute-spanned-column,
     &:last-of-type:nth-of-type(odd) {
-      @apply @md/object-attributes:col-span-2;
+      @apply @md/object-attributes:col-span-full;
     }
   }
 
   /*
     Use specific selector for dirty flag styling due to nested FormKit fields.
   */
-  [data-theme='dark']
-    .form-group.form-group-mark-dirty
-    > .formkit-outer[data-dirty]
-    > .formkit-block
-    > .formkit-wrapper
-    > .formkit-inner {
-    &::before {
-      background: repeating-linear-gradient(
-          45deg,
-          var(--color-gray-200),
-          var(--color-gray-200) 5px,
-          transparent 5px,
-          transparent 10px
-        )
-        repeat center;
-    }
-  }
-
   .form-group.form-group-mark-dirty
     > .formkit-outer[data-dirty]
     > .formkit-block
@@ -145,7 +190,7 @@
     @apply relative;
 
     &::before {
-      @apply absolute start-px top-px bottom-px w-[7px] rounded-ss-lg rounded-es-lg content-[''];
+      @apply absolute inset-s-px top-px bottom-px w-1.75 rounded-ss-lg rounded-es-lg content-[''];
 
       background: repeating-linear-gradient(
           45deg,
@@ -162,6 +207,25 @@
         transparent 0.4rem,
         transparent
       );
+    }
+  }
+
+  @variant dark {
+    .form-group.form-group-mark-dirty
+      > .formkit-outer[data-dirty]
+      > .formkit-block
+      > .formkit-wrapper
+      > .formkit-inner {
+      &::before {
+        background: repeating-linear-gradient(
+            45deg,
+            var(--color-gray-200),
+            var(--color-gray-200) 5px,
+            transparent 5px,
+            transparent 10px
+          )
+          repeat center;
+      }
     }
   }
 
@@ -277,7 +341,7 @@
       @apply my-2 h-px border-none bg-stone-200 text-[0px] dark:bg-neutral-500;
     }
 
-    [data-theme='dark'] & {
+    @variant dark {
       /* neutral 1 */
       [style*='color:rgb(102, 102, 102)'],
       [style*='color: rgb(102, 102, 102)'] {
@@ -451,12 +515,24 @@
     z-index: -10;
   }
 
+  @variant dark {
+    .bg-stripes::before {
+      background-image: repeating-linear-gradient(
+        45deg,
+        var(--color-blue-700),
+        var(--color-blue-700) 5px,
+        var(--color-blue-900) 5px,
+        var(--color-blue-900) 10px
+      );
+    }
+  }
+
   .progress-bar {
     &.progress-bar--primary {
       --pb-fill: var(--color-blue-800);
       --pb-track: var(--color-blue-200);
 
-      [data-theme='dark'] & {
+      @variant dark {
         --pb-track: var(--color-gray-700);
       }
     }
@@ -465,7 +541,7 @@
       --pb-fill: var(--color-black);
       --pb-track: rgba(0, 0, 0, 0.1);
 
-      [data-theme='dark'] & {
+      @variant dark {
         --pb-fill: var(--color-white);
         --pb-track: rgba(255, 255, 255, 0.1);
       }
@@ -516,16 +592,111 @@
       animation: progress-loading 5s ease-in-out infinite;
     }
   }
-}
 
-[data-theme='dark'] .bg-stripes::before {
-  background-image: repeating-linear-gradient(
-    45deg,
-    var(--color-blue-700),
-    var(--color-blue-700) 5px,
-    var(--color-blue-900) 5px,
-    var(--color-blue-900) 10px
-  );
+  @keyframes progress-loading {
+    50% {
+      background-position-x: -115%;
+    }
+  }
+
+  .select-scroll-shadows {
+    max-height: 85px;
+    margin: -7px 0;
+    padding: 7px 0;
+
+    /*
+      All background layers are needed to properly display scroll shadows on both light and dark themes:
+      - scroll cover top
+      - scroll cover bottom
+      - scroll shadow top
+      - scroll shadow bottom
+
+      The radial shadow gradients create a smooth fade-out of the shadow at the top and bottom edges,
+      while the linear cover gradients ensure that the shadow is visible only when the content is not scrolled
+      all the way to the top or bottom.
+
+      Due to the `background` directive overriding all background-related properties, we need to repeat the entire
+      positioning declaration for both themes (dark/light) and styles (base/alt).
+    */
+    &.select-scroll-shadows--base {
+      background:
+        linear-gradient(rgb(237, 241, 242) 30%, transparent) center top,
+        linear-gradient(transparent, rgb(237, 241, 242) 70%) center bottom,
+        radial-gradient(farthest-side at 50% 0, rgba(35, 162, 205, 0.5), transparent) center top,
+        radial-gradient(farthest-side at 50% 100%, rgba(35, 162, 205, 0.5), transparent) center
+          bottom;
+      background-repeat: no-repeat;
+      background-size:
+        100% 40px,
+        100% 40px,
+        100% 14px,
+        100% 14px;
+      background-attachment: local, local, scroll, scroll;
+
+      @variant dark {
+        background:
+          linear-gradient(rgb(38, 38, 39) 30%, transparent) center top,
+          linear-gradient(transparent, rgb(38, 38, 39) 70%) center bottom,
+          radial-gradient(farthest-side at 50% 0, rgba(35, 162, 205, 0.5), transparent) center top,
+          radial-gradient(farthest-side at 50% 100%, rgba(35, 162, 205, 0.5), transparent) center
+            bottom;
+        background-repeat: no-repeat;
+        background-size:
+          100% 40px,
+          100% 40px,
+          100% 14px,
+          100% 14px;
+        background-attachment: local, local, scroll, scroll;
+      }
+    }
+
+    &.select-scroll-shadows--alt {
+      background:
+        linear-gradient(rgb(250, 250, 250) 30%, transparent) center top,
+        linear-gradient(transparent, rgb(250, 250, 250) 70%) center bottom,
+        radial-gradient(farthest-side at 50% 0, rgba(35, 162, 205, 0.5), transparent) center top,
+        radial-gradient(farthest-side at 50% 100%, rgba(35, 162, 205, 0.5), transparent) center
+          bottom;
+      background-repeat: no-repeat;
+      background-size:
+        100% 40px,
+        100% 40px,
+        100% 14px,
+        100% 14px;
+      background-attachment: local, local, scroll, scroll;
+
+      @variant dark {
+        background:
+          linear-gradient(rgb(50, 50, 52) 30%, transparent) center top,
+          linear-gradient(transparent, rgb(50, 50, 52) 70%) center bottom,
+          radial-gradient(farthest-side at 50% 0, rgba(35, 162, 205, 0.5), transparent) center top,
+          radial-gradient(farthest-side at 50% 100%, rgba(35, 162, 205, 0.5), transparent) center
+            bottom;
+        background-repeat: no-repeat;
+        background-size:
+          100% 40px,
+          100% 40px,
+          100% 14px,
+          100% 14px;
+        background-attachment: local, local, scroll, scroll;
+      }
+    }
+  }
+
+  @media print {
+    [data-print-mode='true'] body {
+      @apply invisible;
+
+      & .print-area {
+        @apply visible fixed inset-0;
+      }
+    }
+
+    /* When a flyout is open, hide page content. */
+    body:has(aside[id^='flyout-']:not(.hidden)) #main-content > :not(aside) {
+      display: none !important;
+    }
+  }
 }
 
 @utility group-block {
@@ -582,58 +753,21 @@
   }
 }
 
+@keyframes gradient-vertical {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 0 -200%;
+  }
+}
+
 @utility animate-ai-stripe {
   &::before {
     animation: gradient 2s infinite;
     animation-fill-mode: forwards;
     animation-timing-function: linear;
-  }
-}
-
-/*
- * CSS Custom Highlight API – article body text highlights.
- * ::highlight() inherits CSS custom properties from the cascade, so dark-mode
- * overrides defined on [data-theme='dark'] are picked up automatically.
- */
-:root {
-  --article-highlight-yellow: var(--color-yellow-200);
-  --article-highlight-green: var(--color-green-350);
-  --article-highlight-blue: var(--color-blue-550);
-  --article-highlight-pink: var(--color-pink-150);
-  --article-highlight-purple: var(--color-purple-100);
-}
-
-[data-theme='dark'] {
-  --article-highlight-yellow: var(--color-yellow-750);
-  --article-highlight-green: var(--color-green-700);
-  --article-highlight-blue: var(--color-blue-875);
-  --article-highlight-pink: var(--color-pink-700);
-  --article-highlight-purple: var(--color-purple-700);
-}
-
-::highlight(highlight-yellow) {
-  background-color: var(--article-highlight-yellow);
-}
-
-::highlight(highlight-green) {
-  background-color: var(--article-highlight-green);
-}
-
-::highlight(highlight-blue) {
-  background-color: var(--article-highlight-blue);
-}
-
-::highlight(highlight-pink) {
-  background-color: var(--article-highlight-pink);
-}
-
-::highlight(highlight-purple) {
-  background-color: var(--article-highlight-purple);
-}
-
-@keyframes progress-loading {
-  50% {
-    background-position-x: -115%;
   }
 }
 
@@ -647,37 +781,11 @@
   }
 }
 
-@keyframes gradient-vertical {
-  0% {
-    background-position: 0 0;
-  }
-
-  100% {
-    background-position: 0 -200%;
-  }
-}
-
 /* https://developer.mozilla.org/en-US/docs/Web/CSS/word-break#break-word */
 @utility break-word {
   overflow-wrap: anywhere !important;
 }
 
-/* Uses to be in the @layer utilities */
-@media print {
-  [data-print-mode='true'] body {
-    @apply invisible;
-
-    & .print-area {
-      @apply visible fixed inset-0;
-    }
-  }
-}
-
 @utility focus-visible-app-default {
   @apply focus:outline-transparent focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800;
-}
-
-button,
-[role='button'] {
-  cursor: pointer;
 }

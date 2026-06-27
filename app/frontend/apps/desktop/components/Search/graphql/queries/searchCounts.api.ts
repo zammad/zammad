@@ -6,8 +6,8 @@ import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;
 
 export const SearchCountsDocument = gql`
-    query searchCounts($search: String!, $onlyIn: [EnumSearchableModels!]!) {
-  searchCounts(search: $search, onlyIn: $onlyIn) {
+    query searchCounts($search: String!, $onlyIn: [EnumSearchableModels!]!, $filters: [SelectorObjectInput!]) {
+  searchCounts(search: $search, onlyIn: $onlyIn, filters: $filters) {
     model
     totalCount
   }

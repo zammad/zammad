@@ -145,7 +145,7 @@ RSpec.describe MonitoringHelper::AmountCheck do
       end
 
       it 'returns error when check fails' do
-        expect(instance.send(:check_single_row, check, 4)).to include(state: 'warning', count: 5, message: match(%r{was exceeded with}))
+        expect(instance.send(:check_single_row, check, 4)).to include(state: 'warning', count: 5, message: include('was exceeded with'))
       end
     end
 
@@ -157,7 +157,7 @@ RSpec.describe MonitoringHelper::AmountCheck do
       end
 
       it 'returns error when check fails' do
-        expect(instance.send(:check_single_row, check, 10)).to include(state: 'critical', count: 5, message: match(%r{was undercut by}))
+        expect(instance.send(:check_single_row, check, 10)).to include(state: 'critical', count: 5, message: include('was undercut by'))
       end
     end
   end

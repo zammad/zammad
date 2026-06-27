@@ -20,6 +20,9 @@ class KnowledgeBase::Answer::Translation < ApplicationModel
   belongs_to                    :content, class_name: 'KnowledgeBase::Answer::Translation::Content', inverse_of: :translation, dependent: :destroy
   accepts_nested_attributes_for :content, update_only: true
 
+  # Embedding cache rows are cleaned up with the record they belong to.
+  has_many :ai_stored_results, class_name: 'AI::StoredResult', as: :related_object, dependent: :destroy
+
   validates :title,        presence: true, length: { maximum: 250 }
   validates :kb_locale_id, uniqueness: { case_sensitive: true, scope: :answer_id }
 
@@ -42,33 +45,64 @@ class KnowledgeBase::Answer::Translation < ApplicationModel
   def search_index_attribute_lookup(include_references: true)
     attrs = super
 
-    attrs['title']      = ActionController::Base.helpers.strip_tags(title)
-    attrs['content']    = content&.search_index_attribute_lookup
-    attrs['scope_id']   = answer.category_id
-    attrs['tags']       = answer.tag_list
-    attrs['attachment'] = answer.search_index_attachments_lookup(attrs.to_json.bytesize)
+    attrs['title']             = ActionController::Base.helpers.strip_tags(title)
+    attrs['content']           = content&.search_index_attribute_lookup
+    attrs['scope_id']          = answer.category_id
+    attrs['tags']              = answer.tag_list
+    attrs['attachment']        = answer.search_index_attachments_lookup(attrs.to_json.bytesize)
+
+    # Index the answer's publication state for the `publication_state:`
+    # search syntax.
+    attrs['publication_state'] = answer_publication_state
 
     attrs
   end
 
+  scope :vector_index_scope, lambda {
+    relevant_category_ids = Setting.get('vectordb_knowledge_base_category_ids')
+
+    answer_scope = KnowledgeBase::Answer.internal
+
+    # For now only explicitly enabled categories are indexed.
+    return answer_scope.none if relevant_category_ids.blank?
+
+    answer_scope = answer_scope.where(category: relevant_category_ids)
+
+    joins(:answer).merge(answer_scope).includes(:content, :kb_locale)
+  }
+
   def vector_index_data
     {
-      content:  "#{title}\n#{content.body.html2text}",
-      metadata: {
-        locale:      kb_locale.system_locale.locale,
-        category_id: answer.category_id,
+      content:              ::Text::ContentCleanup.new(content: content.body).cleanup,
+      content_meta_headers: [title],
+      metadata:             {
+        locale:             kb_locale.system_locale.locale,
+        category_id:        answer.category_id,
+        visible_internally: answer.visible_internally?,
       },
     }
+  end
+
+  def vector_index_content_changed?
+    # Title is prepended to every chunk as a header, so a title change requires re-embedding. The
+    # body lives on the associated content record and is invisible here, so that change arrives via
+    # the vector_index_content_dirty flag (set in Content#touch_translation). Everything else
+    # (locale, category, visibility) is metadata only and handled by the cheap update path.
+    vector_index_content_dirty || previous_changes.key?('title')
   end
 
   def vector_indexing_for_record?
     return false if !answer.visible_internally?
 
-    # For now only explicitly enabled categories or all are indexed.
-    relevant_categorie_ids = ENV.fetch('VECTOR_INDEX_FOR_KNOWLEDGE_BASE_CATEGORY_IDS', nil)
-    return false if relevant_categorie_ids&.split(',')&.exclude?(answer.category_id.to_s)
+    # For now only explicitly enabled categories are indexed.
+    relevant_category_ids = Setting.get('vectordb_knowledge_base_category_ids')
+    return false if relevant_category_ids.blank? || relevant_category_ids.map(&:to_i).exclude?(answer.category_id)
 
     true
+  end
+
+  def vector_index_chunking_strategy
+    Setting.get('vectordb_knowledge_base_chunking_strategy')&.to_sym
   end
 
   def inline_linked_objects
@@ -104,4 +138,10 @@ class KnowledgeBase::Answer::Translation < ApplicationModel
         .where(knowledge_base_answers: { category_id: scope })
     end
   }
+
+  private
+
+  def answer_publication_state
+    answer.can_be_published_aasm.calculated_state
+  end
 end

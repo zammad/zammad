@@ -16,6 +16,7 @@ interface Props {
   noLink?: boolean
   titleSize?: Sizes
   titleClass?: string
+  responsive?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -40,7 +41,11 @@ const { organizationDisplayName } = useOrganizationEntity(toRef(props, 'organiza
       }"
       :link="!dense && !noLink ? `/organizations/${organization.internalId}` : undefined"
     >
-      <CommonOrganizationAvatar :entity="organization as AvatarOrganization" :size="size" />
+      <CommonOrganizationAvatar
+        :entity="organization as AvatarOrganization"
+        :responsive="responsive"
+        :size="size"
+      />
     </component>
     <component
       :is="nameComponent"

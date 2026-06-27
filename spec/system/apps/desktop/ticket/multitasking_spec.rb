@@ -64,7 +64,7 @@ RSpec.describe 'Desktop > Ticket > Multitasking', app: :desktop_view, authentica
     visit "/tickets/#{ticket.id}"
     visit "/tickets/#{other_ticket.id}"
 
-    click_on('Add phone call')
+    click_on('Add internal note')
     within_form do
       find_editor('Text').type('Call content here')
     end

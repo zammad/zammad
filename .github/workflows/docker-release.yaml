@@ -26,7 +26,7 @@ jobs:
     runs-on: ${{ matrix.runs-on.runner }}
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
             fetch-depth: 0
 
@@ -93,7 +93,7 @@ jobs:
           - image: index.docker.io/${{ github.repository_owner }}/zammad-docker-compose
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
             fetch-depth: 0
 

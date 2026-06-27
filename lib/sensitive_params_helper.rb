@@ -69,15 +69,11 @@ class SensitiveParamsHelper
   end
 
   def unmask_single_attribute(attr, params, original_data)
-    # binding.pry
     *path, key = attr.to_s.split('.')
 
     hash = path.blank? ? params : params.dig(*path)
-    # binding.pry
 
     return if !hash || hash[key] != SENSITIVE_MASK
-
-    # binding.pry
 
     hash[key] = original_data.dig(*path, key)
   end

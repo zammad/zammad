@@ -36,7 +36,7 @@ export default defineConfigWithVueTs(
     'app/frontend/build/mocksGraphqlPlugin.js',
     '.eslint-plugin-zammad/lib/index.js',
     '.eslint-plugin-zammad/tests/**/*.js',
-    'public/assets/tests/*.js',
+    'public/assets/tests/**/*.js',
   ]),
 
   // Base Vue and TypeScript configs - these handle parsing automatically
@@ -77,7 +77,7 @@ export default defineConfigWithVueTs(
       'vue/v-bind-style': ['error', 'shorthand'],
       'vue/v-on-style': ['error', 'shorthand'],
       'vue/v-slot-style': ['error', 'shorthand'],
-      'vue/custom-event-name-casing': ['error', 'kebab-case'],
+      'vue/custom-event-name-casing': ['error', 'kebab-case', { ignores: ['/^update:/'] }],
       'vue/attribute-hyphenation': 'error',
     },
   },

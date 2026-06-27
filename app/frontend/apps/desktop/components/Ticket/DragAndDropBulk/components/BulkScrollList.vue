@@ -5,6 +5,7 @@ import { useEventListener } from '@vueuse/core'
 import { useIntervalFn, whenever, type Pausable } from '@vueuse/shared'
 import { computed, onMounted, ref, toRef, useTemplateRef, watch } from 'vue'
 
+import { useReducedMotion } from '#shared/composables/useReducedMotion.ts'
 import { EnumTextDirection } from '#shared/graphql/types.ts'
 import { useLocaleStore } from '#shared/stores/locale.ts'
 
@@ -83,13 +84,15 @@ let scrollIntervalFn: Pausable
 
 const scrollInterval = ref(500)
 
+const { scrollBehavior } = useReducedMotion()
+
 const scrollByStep = (scrollAmount: number) => {
   if (!scrollContainer.value) return
   if (!isLtrLocale.value) {
     scrollAmount = -scrollAmount
   }
 
-  scrollContainer.value.scrollBy({ left: scrollAmount, behavior: 'smooth' })
+  scrollContainer.value.scrollBy({ left: scrollAmount, behavior: scrollBehavior.value })
 
   calculateScrollButtonStart()
   calculateScrollButtonEnd()

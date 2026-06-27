@@ -35,7 +35,7 @@ import { initializeTwoFactorPlugins } from '#shared/entities/two-factor/composab
 import { buildFormKitPluginConfig } from '#shared/form/index.ts'
 import { i18n } from '#shared/i18n.ts'
 import applicationConfigPlugin from '#shared/plugins/applicationConfigPlugin.ts'
-import tooltip from '#shared/plugins/directives/tooltip/index.ts'
+import TooltipPlugin from '#shared/plugins/directives/tooltip/index.ts'
 import { setCurrentRouter } from '#shared/router/router.ts'
 import { initializeWalker } from '#shared/router/walker.ts'
 import type { AppName } from '#shared/types/app.ts'
@@ -110,7 +110,6 @@ export interface ExtendedMountingOptions<Props> extends ComponentMountingOptions
   confirmation?: boolean
   form?: boolean
   provide?: DependencyProvideApi
-  formField?: boolean
   unmount?: boolean
   dialog?: boolean
   flyout?: boolean
@@ -160,7 +159,9 @@ const defaultWrapperOptions: ExtendedMountingOptions<unknown> = {
       CommonBadge,
     },
     stubs: {},
-    directives: { [tooltip.name]: tooltip.directive },
+    directives: {
+      [TooltipPlugin.name]: TooltipPlugin.directive,
+    },
     plugins,
   },
 }
@@ -282,7 +283,9 @@ let formInitialized = false
 const initializeForm = () => {
   if (formInitialized) return
 
-  plugins.push([formPlugin, buildFormKitPluginConfig(undefined, formFields)])
+  // Commit input values synchronously in tests (no FormKit debounce `delay`), so
+  // submits read settled values instead of racing the form's async settle.
+  plugins.push([formPlugin, buildFormKitPluginConfig({ delay: 0 }, formFields)])
   defaultWrapperOptions.shallow = false
 
   formInitialized = true
@@ -484,13 +487,6 @@ const renderComponent = <Props>(
     setupCommonVisualConfig(wrapperOptions.visuals)
   } else {
     initDefaultVisuals()
-  }
-
-  if (wrapperOptions.form && wrapperOptions.formField) {
-    defaultWrapperOptions.props ||= {}
-
-    // Reset the default of 20ms for testing.
-    defaultWrapperOptions.props.delay = 0
   }
 
   if (wrapperOptions.plugins) {

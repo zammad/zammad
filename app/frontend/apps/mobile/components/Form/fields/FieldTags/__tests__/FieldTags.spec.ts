@@ -31,7 +31,6 @@ const renderFieldTags = (props: Partial<FieldTagsContext> = {}) => {
 
   return renderComponent(FormKit, {
     form: true,
-    formField: true,
     dialog: true,
     props: {
       type: 'tags',

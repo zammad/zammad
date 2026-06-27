@@ -27,6 +27,8 @@ import { useBreadcrumb } from '#desktop/pages/personal-setting/composables/useBr
 import { useUserCurrentRemoveLinkedAccountMutation } from '#desktop/pages/personal-setting/graphql/mutations/userCurrentLinkedAccount.api.ts'
 import type { LinkedAccountTableItem } from '#desktop/pages/personal-setting/types/linked-accounts.ts'
 
+import { usePersonalSettingTabs } from '../composables/usePersonalSettingTabs.ts'
+
 defineOptions({
   beforeRouteEnter() {
     const { hasEnabledProviders } = useThirdPartyAuthentication()
@@ -179,10 +181,17 @@ const tableActions = computed((): MenuItem[] => [
     show: (provider) => !provider?.username,
   },
 ])
+
+const { tabs, activeTab } = usePersonalSettingTabs()
 </script>
 
 <template>
-  <LayoutContent :breadcrumb-items="breadcrumbItems" width="narrow">
+  <LayoutContent
+    :active-tab="activeTab"
+    :tabs="tabs"
+    :breadcrumb-items="breadcrumbItems"
+    width="narrow"
+  >
     <CommonSimpleTable
       :caption="$t('Linked accounts')"
       :headers="tableHeaders"
@@ -203,12 +212,12 @@ const tableActions = computed((): MenuItem[] => [
             />
             <CommonButton
               v-else-if="action.onClick && action.show?.(item)"
+              v-tooltip="$t((action?.ariaLabel as Function)(item))"
               :icon="action.icon"
               :disabled="loading"
               :class="{ 'bg-transparent!': action.variant === 'danger' }"
               size="medium"
               :variant="action.variant"
-              :aria-label="(action?.ariaLabel as Function)(item)"
               @click="action.onClick?.(item)"
             />
           </template>

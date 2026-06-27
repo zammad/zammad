@@ -99,6 +99,9 @@ const actions = computed<MenuItem[]>(() => [
       :object="customer"
       :skip-attributes="['firstname', 'lastname', 'organization_id', 'organization_ids']"
       :inline-editable="{ note: useUserNoteUpdateMutation }"
+      :style="{
+        '--top-header-height': '-4.5px', // Needed to offset the negative vertical margin of the inline editor and not receive the global header height as top value
+      }"
     />
 
     <CommonSimpleEntityList

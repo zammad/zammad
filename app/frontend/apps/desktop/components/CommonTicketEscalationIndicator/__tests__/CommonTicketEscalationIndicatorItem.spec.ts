@@ -21,7 +21,7 @@ describe('CommonTicketEscalationIndicatorItem.vue', () => {
       },
     })
 
-    expect(wrapper.getByText('1 month ago')).toHaveClass('text-red-500')
+    expect(wrapper.getByText('1 month ago').parentElement).toHaveClass('text-red-500')
   })
 
   it('renders future time as warning', () => {
@@ -32,7 +32,7 @@ describe('CommonTicketEscalationIndicatorItem.vue', () => {
       },
     })
 
-    expect(wrapper.getByText('in 1 month')).toHaveClass('text-yellow-600')
+    expect(wrapper.getByText('in 1 month').parentElement).toHaveClass('text-yellow-600')
   })
 
   it('does not render label without valid time', () => {

@@ -29,7 +29,7 @@ describe('testing ticket a11y', () => {
     mockTicketsByOverview([])
     const view = await visitView('/tickets/view')
 
-    expect(view.container).toBeAccessible()
+    await expect(view.container).toBeAccessible()
   })
 
   test('ticket detail view has no accessibility violations', async () => {
@@ -43,7 +43,7 @@ describe('testing ticket a11y', () => {
 
     await waitUntilTicketLoaded()
 
-    expect(view.container).toBeAccessible()
+    await expect(view.container).toBeAccessible()
   })
 
   test('ticket organization information has no accessibility violations', async () => {
@@ -55,13 +55,11 @@ describe('testing ticket a11y', () => {
     mockGraphQLSubscription(OrganizationUpdatesDocument)
     const mockAttributes = mockOrganizationObjectAttributes()
 
-    await visitView('/tickets/1/information/organization')
+    const view = await visitView('/tickets/1/information/organization')
 
     await waitUntil(() => mockApi.calls.resolve && mockAttributes.calls.resolve)
 
-    const view = await visitView('/tickets/1/information/organization')
-
-    expect(view.container).toBeAccessible()
+    await expect(view.container).toBeAccessible()
   })
 
   test('ticket user information has no accessibility violations', async () => {
@@ -71,12 +69,10 @@ describe('testing ticket a11y', () => {
       skipMockOnlineNotificationSeen: true,
     })
 
-    await visitView('/tickets/1/information/customer')
+    const view = await visitView('/tickets/1/information/customer')
 
     await waitUntilApisResolved(mockUser, mockAttributes)
 
-    const view = await visitView('/tickets/1/information/customer')
-
-    expect(view.container).toBeAccessible()
+    await expect(view.container).toBeAccessible()
   })
 })

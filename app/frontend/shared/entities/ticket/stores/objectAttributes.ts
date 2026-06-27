@@ -12,7 +12,7 @@ export const staticObjectAttributes: EntityStaticObjectAttributes = {
     {
       name: 'time_unit',
       display: __('Accounted time'),
-      dataType: 'time_unit',
+      dataType: 'integer', // :TODO in the desktop app it is float
       isStatic: true,
       isInternal: true,
     },

@@ -6,7 +6,7 @@ class Controllers::KnowledgeBase::AnswersControllerPolicy < Controllers::Knowled
   end
 
   def create?
-    verify_category(__method__)
+    verify_category(:update?)
   end
 
   def update?

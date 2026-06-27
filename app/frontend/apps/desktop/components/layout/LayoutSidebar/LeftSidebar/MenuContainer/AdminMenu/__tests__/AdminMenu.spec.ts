@@ -1,20 +1,24 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { computed } from 'vue'
-
 import { renderComponent } from '#tests/support/components/index.ts'
+import { initializeStore } from '#tests/support/components/initializeStore.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
 
 import AdminMenu from '#desktop/components/layout/LayoutSidebar/LeftSidebar/MenuContainer/AdminMenu/AdminMenu.vue'
-import { COLLAPSED_STATE_KEY } from '#desktop/components/layout/LayoutSidebar/LeftSidebar/useCollapsedState.ts'
+import { useSidebarDisplayStore } from '#desktop/components/layout/stores/sidebarDisplay.ts'
+import { SidebarName } from '#desktop/components/layout/types.ts'
 
 describe('AdminMenu', () => {
+  beforeEach(() => {
+    initializeStore()
+    useSidebarDisplayStore().setCollapsed(SidebarName.Primary, true)
+  })
+
   describe('create ticket action button', () => {
     it('renders setting button', () => {
       mockPermissions(['admin.monitoring'])
 
       const wrapper = renderComponent(AdminMenu, {
-        provide: [[COLLAPSED_STATE_KEY, computed(() => true)]],
         router: true,
       })
 
@@ -25,7 +29,6 @@ describe('AdminMenu', () => {
       mockPermissions(['ticket.agent'])
 
       const wrapper = renderComponent(AdminMenu, {
-        provide: [[COLLAPSED_STATE_KEY, computed(() => true)]],
         router: true,
       })
 

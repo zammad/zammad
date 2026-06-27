@@ -112,7 +112,7 @@ onMounted(() => {
       <CommonLabel>
         {{ $t(message) }}
       </CommonLabel>
-      <CommonLoader v-if="state === 'loading'" class="mt-9 mb-3" loading />
+      <CommonLoader v-if="state === 'loading'" loading class="mt-9 mb-3" intermediate />
       <CommonIcon
         v-else-if="state === 'success'"
         class="mx-auto mt-9 mb-3 fill-green-500"

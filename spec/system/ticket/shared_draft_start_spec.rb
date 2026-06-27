@@ -167,7 +167,7 @@ RSpec.describe 'Ticket Shared Draft Start', authenticated_as: :authenticate, typ
         click '.js-update'
       end
 
-      expect(draft.reload.content['body']).to match %r{add update}
+      expect(draft.reload.content['body']).to include('add update')
     end
 
     it 'changes name' do

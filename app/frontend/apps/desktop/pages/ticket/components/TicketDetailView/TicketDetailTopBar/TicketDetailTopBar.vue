@@ -5,9 +5,11 @@ import { useElementSize } from '@vueuse/core'
 import { computed, toRef, useTemplateRef, type Ref } from 'vue'
 
 import CommonAlert from '#shared/components/CommonAlert/CommonAlert.vue'
+import { useReducedMotion } from '#shared/composables/useReducedMotion.ts'
 import { useTicketChannel } from '#shared/entities/ticket/composables/useTicketChannel.ts'
 import { useTicketView } from '#shared/entities/ticket/composables/useTicketView.ts'
 
+import { useStickyTopCalculator } from '#desktop/components/Form/fields/FieldEditor/useStickyTopCalculator.ts'
 import { useElementScroll } from '#desktop/composables/useElementScroll.ts'
 import { useTopBarHeaderHover } from '#desktop/composables/useTopBarHeaderHover.ts'
 import TopBarHeader from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader.vue'
@@ -24,14 +26,32 @@ const { isTicketAgent, isTicketEditable } = useTicketView(ticket)
 const { hasChannelAlert, channelAlert } = useTicketChannel(ticket)
 
 const headerElement = useTemplateRef('header')
-const wrapperElement = useTemplateRef('wrapper')
+const headerWithHiddenDetails = useTemplateRef('header-with-hidden-details')
 
 const { height: headerHeight } = useElementSize(headerElement, undefined, {
   box: 'border-box',
 })
+const { height: headerWithHiddenDetailsHeight } = useElementSize(
+  headerWithHiddenDetails,
+  undefined,
+  {
+    box: 'border-box',
+  },
+)
+
+const wrapperElement = useTemplateRef('wrapper')
+const wrapperWithHiddenDetails = useTemplateRef('wrapper-with-hidden-details')
+
 const { height: wrapperHeight } = useElementSize(wrapperElement, undefined, {
   box: 'border-box',
 })
+const { height: wrapperWithHiddenDetailsHeight } = useElementSize(
+  wrapperWithHiddenDetails,
+  undefined,
+  {
+    box: 'border-box',
+  },
+)
 const { height: alertHeight } = useElementSize(useTemplateRef('alert'), undefined, {
   box: 'border-box',
 })
@@ -86,15 +106,28 @@ const alertBaseClasses = 'rounded-none px-14 md:grid-cols-none md:justify-center
 
 const alertWithBlurClasses = `${alertBaseClasses} opacity-95 backdrop-blur-2xs`
 
+const currentVisibleHeaderHeight = computed(() => {
+  if (shouldShowChannelAlert.value) {
+    return isHovering.value ? wrapperHeight.value : wrapperWithHiddenDetailsHeight.value
+  }
+
+  return isHovering.value ? headerHeight.value : headerWithHiddenDetailsHeight.value
+})
+
+useStickyTopCalculator(currentVisibleHeaderHeight, { offset: -1 }) // avoid joining with the top bar bottom border
+
 defineExpose({
   hideDetails: () => updateIsHovering(false),
 })
+
+const { hasReducedMotion } = useReducedMotion()
 </script>
 
 <template>
   <template v-if="shouldShowChannelAlert">
     <div
-      class="absolute top-0 right-0 left-0 z-10"
+      ref="wrapper-with-hidden-details"
+      class="absolute inset-x-0 top-0 z-10 print:hidden"
       data-test-id="ticket-detail-top-bar-clipped-details"
       :style="{
         transform: `translateY(${absoluteContainerOffset})`,
@@ -105,7 +138,7 @@ defineExpose({
       <TopBarHeader
         :class="[headerBaseClasses, headerBackgroundClasses(true), 'p-3']"
         aria-hidden="true"
-        :hide-details="true"
+        hide-details
       />
       <CommonAlert :class="alertWithBlurClasses" :variant="channelAlert?.variant">
         {{ $t(channelAlert?.text, channelAlert?.textPlaceholder) }}
@@ -114,18 +147,20 @@ defineExpose({
 
     <div
       ref="wrapper"
-      class="sticky top-0 right-0 left-0 z-30 w-full"
+      class="sticky inset-x-0 top-0 z-30 w-full"
       data-test-id="ticket-detail-top-bar-full-details"
       :style="{
         top: stickyContainerTop,
       }"
       v-on="containerEventHandlers"
     >
-      <TopBarHeader
-        :class="[headerBaseClasses, headerBackgroundClasses(false), 'p-3']"
-        :hide-details="false"
-      />
-      <CommonAlert ref="alert" :class="alertBaseClasses" :variant="channelAlert?.variant">
+      <TopBarHeader :class="[headerBaseClasses, headerBackgroundClasses(false), 'p-3']" />
+      <CommonAlert
+        ref="alert"
+        class="print:hidden"
+        :class="alertBaseClasses"
+        :variant="channelAlert?.variant"
+      >
         {{ $t(channelAlert?.text, channelAlert?.textPlaceholder) }}
       </CommonAlert>
     </div>
@@ -133,14 +168,15 @@ defineExpose({
 
   <template v-else>
     <TopBarHeader
-      class="absolute top-0 right-0 left-0 z-30 p-3"
+      ref="header-with-hidden-details"
+      class="absolute inset-x-0 top-0 z-30 print:z-30! print:hidden"
       :class="[
         headerBaseClasses,
         headerBackgroundClasses(true),
         { '-z-10! opacity-0': isHovering },
       ]"
       aria-hidden="true"
-      :hide-details="true"
+      hide-details
       data-test-id="ticket-detail-top-bar-clipped-details"
       :style="{
         transform: `translateY(${absoluteContainerOffset})`,
@@ -148,16 +184,14 @@ defineExpose({
       }"
       v-on="containerEventHandlers"
     />
-
     <TopBarHeader
       ref="header"
-      class="sticky top-0 right-0 left-0 z-10 w-full p-3"
+      class="sticky inset-x-0 top-0 z-10 w-full print:static"
       :class="[
         headerBaseClasses,
         headerBackgroundClasses(true),
-        { 'transition-[top]': isHovering },
+        { 'transition-[top]': isHovering && !hasReducedMotion },
       ]"
-      :hide-details="false"
       data-test-id="ticket-detail-top-bar-full-details"
       :style="{
         top: stickyContainerTop,

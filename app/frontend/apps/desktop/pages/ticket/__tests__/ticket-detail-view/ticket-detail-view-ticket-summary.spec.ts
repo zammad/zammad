@@ -522,6 +522,31 @@ describe('Ticket detail view - Ticket summary', () => {
     expect(view.queryByRole('button', { name: 'AI summary' })).not.toBeInTheDocument()
   })
 
+  it('hides sidebar when summary is not enabled for the ticket', async () => {
+    mockPermissions(['ticket.agent'])
+
+    mockApplicationConfig({
+      ai_provider: true,
+      ai_assistance_ticket_summary: true,
+      ai_assistance_ticket_summary_config: {
+        open_questions: true,
+        upcoming_events: true,
+        customer_sentiment: true,
+        generate_on: EnumTicketSummaryGeneration.OnTicketDetailOpening,
+      },
+    })
+
+    mockTicketQuery({
+      ticket: createDummyTicket({
+        aiSummaryEnabled: false,
+      }),
+    })
+
+    const view = await visitView('/tickets/1')
+
+    expect(view.queryByRole('button', { name: 'AI summary' })).not.toBeInTheDocument()
+  })
+
   describe('ticket summary generation is set to "OnTicketSummarySidebarActivation"', () => {
     it('does not generate summary on ticket detail opening', async () => {
       mockPermissions(['ticket.agent'])

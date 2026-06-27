@@ -1,11 +1,11 @@
 <!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 
 import CollapseButton from '#desktop/components/CollapseButton/CollapseButton.vue'
-import { useCollapseHandler } from '#desktop/components/CollapseButton/useCollapseHandler.ts'
 import { useTransitionCollapse } from '#desktop/composables/useTransitionCollapse.ts'
+import { useTransitionConfig } from '#desktop/composables/useTransitionConfig.ts'
 
 export interface Props {
   id: string
@@ -27,16 +27,25 @@ const modelValue = defineModel<boolean>({
 })
 
 const emit = defineEmits<{
-  collapse: [boolean]
-  expand: [boolean]
+  collapse: []
+  expand: []
 }>()
 
 const headerId = computed(() => `${props.id}-header`)
 
-const { toggleCollapse, isCollapsed } = useCollapseHandler(emit)
+const isCollapsed = ref(false)
 
-const { collapseDuration, collapseEnter, collapseAfterEnter, collapseLeave } =
-  useTransitionCollapse()
+const toggleCollapse = (collapse?: boolean) => {
+  const nextCollapsed = collapse ?? !isCollapsed.value
+
+  if (nextCollapsed === isCollapsed.value) return
+
+  isCollapsed.value = nextCollapsed
+  return isCollapsed.value ? emit('collapse') : emit('expand')
+}
+
+const { transitions } = useTransitionConfig()
+const { collapseEnter, collapseAfterEnter, collapseLeave } = useTransitionCollapse()
 
 watch(
   modelValue,
@@ -99,8 +108,7 @@ watch(
       />
     </header>
     <Transition
-      name="collapse"
-      :duration="collapseDuration"
+      :name="transitions.collapse"
       @enter="collapseEnter"
       @after-enter="collapseAfterEnter"
       @leave="collapseLeave"

@@ -20,6 +20,10 @@ export class FieldResolverRichtext extends FieldResolver {
       },
     }
   }
+
+  public override getFieldFilterOperators() {
+    return ['matches']
+  }
 }
 
 export default <FieldResolverModule>{

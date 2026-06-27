@@ -470,13 +470,15 @@ RSpec.describe Selector::Base, searchindex: true do
     expect(result[:count]).to eq(0)
   end
 
-  describe 'Report profile terminates with error if today is used as timestamp for condition #4901' do
+  describe 'Datetime operators' do
+    let(:created_at) { 1.day.ago.iso8601 }
+
     before do
-      ticket_1.update(created_at: 1.day.ago)
+      ticket_1.update(created_at:)
       searchindex_model_reload([Ticket])
     end
 
-    it 'does support today operator', :aggregate_failures do
+    it 'does support today operator (#4901)', :aggregate_failures do
       condition = {
         operator:   'AND',
         conditions: [
@@ -493,10 +495,60 @@ RSpec.describe Selector::Base, searchindex: true do
       result = SearchIndexBackend.selectors('Ticket', condition, { current_user: agent })
       expect(result[:count]).to eq(2)
     end
+
+    describe 'when in range' do
+      it 'does match the ticket', :aggregate_failures do
+        condition = {
+          operator:   'AND',
+          conditions: [
+            {
+              name:     'ticket.title',
+              operator: 'is',
+              value:    ticket_1.title,
+            },
+            {
+              name:     'ticket.created_at',
+              operator: 'in range',
+              value:    [created_at, created_at],
+            },
+          ]
+        }
+
+        count, = Ticket.selectors(condition, { current_user: agent })
+        expect(count).to eq(1)
+
+        result = SearchIndexBackend.selectors('Ticket', condition, { current_user: agent })
+        expect(result[:count]).to eq(1)
+      end
+
+      it 'does not match the ticket', :aggregate_failures do
+        condition = {
+          operator:   'AND',
+          conditions: [
+            {
+              name:     'ticket.title',
+              operator: 'is',
+              value:    ticket_1.title,
+            },
+            {
+              name:     'ticket.created_at',
+              operator: 'in range',
+              value:    ['', 2.days.ago.iso8601],
+            },
+          ]
+        }
+
+        count, = Ticket.selectors(condition, { current_user: agent })
+        expect(count).to eq(0)
+
+        result = SearchIndexBackend.selectors('Ticket', condition, { current_user: agent })
+        expect(result[:count]).to eq(0)
+      end
+    end
   end
 
   describe 'Trigger do not allow "Multi-Tree-Select" Fields on Organization and User Level as If Condition #4504', db_strategy: :reset do
-    let(:field_name) { SecureRandom.uuid }
+    let(:field_name)   { SecureRandom.uuid }
     let(:organization) { create(:organization, field_name => ['Incident', 'Incident::Hardware']) }
     let(:customer)     { create(:customer, organization: organization, field_name => ['Incident', 'Incident::Hardware']) }
     let(:ticket)       { create(:ticket, title: 'bli', group: Group.first, customer: customer, field_name => ['Incident', 'Incident::Hardware']) }
@@ -769,6 +821,68 @@ RSpec.describe Selector::Base, searchindex: true do
               name:     'ticket.title',
               operator: 'ends with one of',
               value:    ['ubx'],
+            },
+          ]
+        }
+
+        count, = Ticket.selectors(condition, { current_user: agent })
+        expect(count).to eq(0)
+
+        result = SearchIndexBackend.selectors('Ticket', condition, { current_user: agent })
+        expect(result[:count]).to eq(0)
+      end
+    end
+  end
+
+  describe 'Text input operators', db_strategy: :reset do
+    let(:field_name) { SecureRandom.hex(8) }
+    let(:ticket)     { create(:ticket, title: SecureRandom.uuid, group: Group.first, owner: agent_owner, customer: default_customer, field_name => 'foobar') }
+
+    before do
+      create(:object_manager_attribute_text, object_name: 'Ticket', name: field_name)
+      ObjectManager::Attribute.migration_execute
+      ticket
+      searchindex_model_reload([Ticket])
+    end
+
+    describe 'when matches' do
+      it 'does match the ticket', :aggregate_failures do
+        condition = {
+          operator:   'AND',
+          conditions: [
+            {
+              name:     'ticket.title',
+              operator: 'is',
+              value:    ticket.title,
+            },
+            {
+              name:     "ticket.#{field_name}",
+              operator: 'matches',
+              value:    'foo*',
+            },
+          ]
+        }
+
+        count, = Ticket.selectors(condition, { current_user: agent })
+        expect(count).to eq(1)
+
+        result = SearchIndexBackend.selectors('Ticket', condition, { current_user: agent })
+        expect(result[:count]).to eq(1)
+      end
+
+      it 'does not match the ticket', :aggregate_failures do
+        condition = {
+          operator:   'AND',
+          conditions: [
+            {
+              name:     'ticket.title',
+              operator: 'is',
+              value:    ticket.title,
+            },
+            {
+              name:     "ticket.#{field_name}",
+              operator: 'matches',
+              value:    'bar*',
             },
           ]
         }
@@ -1483,6 +1597,56 @@ RSpec.describe Selector::Base, searchindex: true do
         expect(result[:count]).to eq(0)
       end
     end
+
+    describe 'when in range' do
+      it 'does match the ticket', :aggregate_failures do
+        condition = {
+          operator:   'AND',
+          conditions: [
+            {
+              name:     'ticket.title',
+              operator: 'is',
+              value:    ticket.title,
+            },
+            {
+              name:     "ticket.#{field_name}",
+              operator: 'in range',
+              value:    [42, 42],
+            },
+          ]
+        }
+
+        count, = Ticket.selectors(condition, { current_user: agent })
+        expect(count).to eq(1)
+
+        result = SearchIndexBackend.selectors('Ticket', condition, { current_user: agent })
+        expect(result[:count]).to eq(1)
+      end
+
+      it 'does not match the ticket', :aggregate_failures do
+        condition = {
+          operator:   'AND',
+          conditions: [
+            {
+              name:     'ticket.title',
+              operator: 'is',
+              value:    ticket.title,
+            },
+            {
+              name:     "ticket.#{field_name}",
+              operator: 'in range',
+              value:    ['', '41'],
+            },
+          ]
+        }
+
+        count, = Ticket.selectors(condition, { current_user: agent })
+        expect(count).to eq(0)
+
+        result = SearchIndexBackend.selectors('Ticket', condition, { current_user: agent })
+        expect(result[:count]).to eq(0)
+      end
+    end
   end
 
   describe 'Report Profile with selector "starts with one of" on text objects results in "unknown operator" #5198' do
@@ -1651,6 +1815,34 @@ RSpec.describe Selector::Base, searchindex: true do
         result = SearchIndexBackend.selectors('Ticket', condition)
         expect(result[:count]).to eq(1)
       end
+    end
+  end
+
+  describe 'Wildcard keyword search is case sensitive #6125', :aggregate_failures do
+    let(:ticket) { create(:ticket, title: 'This is a Test Ticket') }
+
+    before do
+      ticket
+      searchindex_model_reload([Ticket])
+    end
+
+    it 'matches in case-insensitive manner' do
+      condition = {
+        operator:   'AND',
+        conditions: [
+          {
+            name:     'ticket.title',
+            operator: 'contains',
+            value:    'test',
+          },
+        ]
+      }
+
+      count, = Ticket.selectors(condition)
+      expect(count).to eq(1)
+
+      result = SearchIndexBackend.selectors('Ticket', condition)
+      expect(result[:count]).to eq(1)
     end
   end
 end

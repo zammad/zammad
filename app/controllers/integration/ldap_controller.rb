@@ -54,9 +54,9 @@ class Integration::LdapController < ApplicationController
   private
 
   def payload_dry_run
-    payload = unmask_sensitive_params(super, LdapSource.find_by(id: params[:ldap_source_id]))
+    payload = unmask_sensitive_params(super, LdapSource.find_by(id: params[:ldap_source_id])&.preferences)
     {
-      ldap_config: payload
+      ldap_config: payload.symbolize_keys
     }
   end
 end

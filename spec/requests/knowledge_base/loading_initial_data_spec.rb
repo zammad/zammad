@@ -59,4 +59,14 @@ RSpec.describe 'KnowledgeBase loading initial data', authenticated_as: :current_
   describe 'for guests without authorization' do
     it { expect(response).to have_http_status(:forbidden) }
   end
+
+  describe 'when elasticsearch is disabled', searchindex: false do
+    before do
+      post '/api/v1/knowledge_bases/init'
+    end
+
+    let(:current_user) { create(:admin) }
+
+    it { expect(response).to have_http_status(:ok) }
+  end
 end

@@ -11,6 +11,24 @@ RSpec.describe 'Knowledge Base Locale Answer Reader', time_zone: 'Europe/London'
       published_answer.translations.first.update! created_at: date, updated_at: date
     end
 
+    context 'image content' do
+      it 'opens inline images in the existing image preview modal' do
+        open_answer published_answer_with_image
+
+        within :active_content do
+          find('.knowledge-base-article-content img').click
+        end
+
+        in_modal do
+          expect(page).to have_css('div.imagePreview img')
+          expect(page).to have_css('.js-cancel')
+          expect(page).to have_css('.js-submit')
+
+          page.find('.js-cancel').click
+        end
+      end
+    end
+
     context 'state' do
       it 'shown as "Draft" for draft' do
         open_answer draft_answer

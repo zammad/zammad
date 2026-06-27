@@ -30,6 +30,8 @@ import { useUserCurrentNotificationPreferencesResetMutation } from '#desktop/pag
 import { useUserCurrentNotificationPreferencesUpdateMutation } from '#desktop/pages/personal-setting/graphql/mutations/userCurrentNotificationPreferencesUpdate.api.ts'
 import type { NotificationFormData } from '#desktop/pages/personal-setting/types/notifications.ts'
 
+import { usePersonalSettingTabs } from '../composables/usePersonalSettingTabs.ts'
+
 const { breadcrumbItems } = useBreadcrumb(__('Notifications'))
 
 const user = toRef(useSessionStore(), 'user')
@@ -188,10 +190,17 @@ const onResetToDefaultSettings = async () => {
       loading.value = false
     })
 }
+
+const { tabs, activeTab } = usePersonalSettingTabs()
 </script>
 
 <template>
-  <LayoutContent :breadcrumb-items="breadcrumbItems" width="narrow">
+  <LayoutContent
+    :active-tab="activeTab"
+    :tabs="tabs"
+    :breadcrumb-items="breadcrumbItems"
+    width="narrow"
+  >
     <div class="mb-4">
       <Form
         id="notifications-form"

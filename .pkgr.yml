@@ -14,8 +14,22 @@ targets:
       - shared-mime-info
       - redis
     build_dependencies:
-      - https://download.fedoraproject.org/pub/epel/9/Everything/x86_64/Packages/i/imlib2-1.7.4-1.el9.x86_64.rpm
-      - https://download.fedoraproject.org/pub/epel/9/Everything/x86_64/Packages/i/imlib2-devel-1.7.4-1.el9.x86_64.rpm
+      # EPEL packages can only be installed after enabling the EPEL repo (see before.sh).
+      - epel-release
+      - shared-mime-info
+  centos-10:
+    dependencies:
+      - curl
+      - elasticsearch
+      - nginx
+      - postgresql-server
+      - epel-release
+      - imlib2
+      - shared-mime-info
+      - valkey
+    build_dependencies:
+      # EPEL packages can only be installed after enabling the EPEL repo (see before.sh).
+      - epel-release
       - shared-mime-info
   debian-11:
     dependencies:
@@ -82,6 +96,19 @@ targets:
       - libimlib2
       - libimlib2-dev
       - shared-mime-info
+  ubuntu-26.04:
+    dependencies:
+      - curl
+      - elasticsearch|elasticsearch-oss
+      - nginx|apache2
+      - postgresql
+      - libimlib2
+      - shared-mime-info
+      - redis-server
+    build_dependencies:
+      - libimlib2
+      - libimlib2-dev
+      - shared-mime-info
   sles-15:
     dependencies:
       - curl
@@ -106,6 +133,30 @@ targets:
       - https://rpmfind.net/linux/opensuse/distribution/leap/15.6/repo/oss/x86_64/imlib2-devel-1.4.10-1.28.x86_64.rpm
       - https://rpmfind.net/linux/opensuse/distribution/leap/15.6/repo/oss/x86_64/imlib2-filters-1.4.10-1.28.x86_64.rpm
       - https://rpmfind.net/linux/opensuse/distribution/leap/15.6/repo/oss/x86_64/libImlib2-1-1.4.10-1.28.x86_64.rpm
+      - shared-mime-info
+  sles-16:
+    dependencies:
+      - curl
+      - elasticsearch
+      - nginx
+      - postgresql-server
+      - libImlib2-1
+      - imlib2
+      - shared-mime-info
+      - redis
+      # We need the fuser binary from the psmisc package to detect the running redis systemd service.
+      # Because on SUSE systems, this service is arbitrarily named (e.g.) redis@foobar.service
+      # So we cannot hardcode the service name as we do for other supported distros.
+      - psmisc
+      - procps
+    build_dependencies:
+      # Add packages required for build that are not in the official SLES repo.
+      # Direct URLs must be used since we cannot add repos on packager.io
+      #   (would require a paid SLES account and credential management on packager.io).
+      - https://rpmfind.net/linux/opensuse/distribution/leap/16.0/repo/oss/x86_64/imlib2-1.12.3-160000.3.2.x86_64.rpm
+      - https://rpmfind.net/linux/opensuse/distribution/leap/16.0/repo/oss/x86_64/imlib2-devel-1.12.3-160000.3.2.x86_64.rpm
+      - https://rpmfind.net/linux/opensuse/distribution/leap/16.0/repo/oss/x86_64/imlib2-filters-1.12.3-160000.3.2.x86_64.rpm
+      - https://rpmfind.net/linux/opensuse/distribution/leap/16.0/repo/oss/x86_64/libImlib2-1-1.12.3-160000.3.2.x86_64.rpm
       - shared-mime-info
 before:
   - contrib/packager.io/before.sh

@@ -51,9 +51,6 @@ RSpec.describe 'Form', authenticated_as: true, type: :system do
         fill_in 'Message', with: 'message here'
         fill_in 'Email', with: 'somebody@notexistinginanydomainspacealsonothere.nowhere'
 
-        # We need to wait 10 seconds, because otherwise we are detected as a robot.
-        sleep 10
-
         click_on 'Submit'
 
         expect(page).to have_css('.has-error [name=email]').and have_no_button(type: 'submit', disabled: true)
@@ -62,25 +59,14 @@ RSpec.describe 'Form', authenticated_as: true, type: :system do
   end
 
   shared_examples 'submitting valid form fields' do
-    it 'submits form filled slowly succesfully' do
+    it 'submits the form successfully' do
       within form_context do
         fill_in 'Name', with: 'some sender'
         fill_in 'Message', with: 'message here'
         fill_in 'Email', with: 'discard@discard.zammad.org'
-        sleep 10
         click_on 'Submit'
 
         expect(page).to have_text('Thank you for your inquiry')
-      end
-    end
-
-    it 'fails to submit form filled too fast' do
-      within form_context do
-        fill_in 'Name', with: 'some sender'
-        fill_in 'Message', with: 'message here'
-        fill_in 'Email', with: 'discard@discard.zammad.org'
-        click_on 'Submit'
-        accept_alert('Sorry, you look like a robot!')
       end
     end
   end
@@ -91,7 +77,6 @@ RSpec.describe 'Form', authenticated_as: true, type: :system do
         fill_in 'Name', with: 'some sender'
         fill_in 'Message', with: 'message here'
         fill_in 'Email', with: 'discard@discard.zammad.org'
-        sleep 10
         # Avoid await_empty_ajax_queue.
         execute_script('$("button:submit").trigger("click")')
         accept_alert('The form could not be submitted!')
@@ -207,6 +192,67 @@ RSpec.describe 'Form', authenticated_as: true, type: :system do
         let(:email_input) { '#zammad-form-email-inline' }
 
         it_behaves_like 'submitting fails due to throttling'
+      end
+
+      context 'with honeypot protection' do
+        let(:form_context) { form_inline_selector }
+        let(:honeypot)     { "#{form_inline_selector} input[name='#{FormSpamProtection::Honeypot::FIELD_NAME}']" }
+
+        before do
+          Setting.set('form_ticket_create_honeypot', true)
+          visit path
+        end
+
+        it 'injects the off-screen honeypot field into the form' do
+          expect(page).to have_css(honeypot, visible: :all)
+        end
+
+        it 'rejects a submission that fills the honeypot field' do
+          within form_context do
+            fill_in 'Name', with: 'some sender'
+            fill_in 'Email', with: 'discard@discard.zammad.org'
+            fill_in 'Message', with: 'message here'
+          end
+
+          # the field is off-screen, so set it the way an automated client would
+          execute_script("document.querySelector(\"#{honeypot}\").value = 'http://spam.example.com'")
+
+          accept_alert do
+            within(form_context) { click_on 'Submit' }
+          end
+
+          expect(page).to have_no_text('Thank you for your inquiry')
+        end
+      end
+
+      context 'with a CAPTCHA provider configured' do
+        let(:form_context) { form_inline_selector }
+
+        context 'when it renders a widget (Turnstile)' do
+          before do
+            Setting.set('form_ticket_create_captcha_provider', 'turnstile')
+            Setting.set('form_ticket_create_captcha_options', { 'sitekey' => 'site', 'secret' => 'secret' })
+            visit path
+          end
+
+          it 'injects the widget container with the configured site key' do
+            expect(page).to have_css("#{form_inline_selector} .cf-turnstile[data-sitekey='site']", visible: :all)
+          end
+        end
+
+        context 'when it is ALTCHA (server-issued challenge)' do
+          before do
+            Setting.set('form_ticket_create_captcha_provider', 'altcha')
+            visit path
+          end
+
+          it 'injects the widget pointed at the challenge endpoint', :aggregate_failures do
+            expect(page).to have_css("#{form_inline_selector} altcha-widget", visible: :all)
+
+            challenge = find("#{form_inline_selector} altcha-widget", visible: :all)['challenge']
+            expect(challenge).to end_with('/form_captcha_challenge')
+          end
+        end
       end
     end
 

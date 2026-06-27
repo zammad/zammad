@@ -385,16 +385,17 @@ module CommonActions
 
   # Scroll into view with javscript.
   #
-  # @param position [Symbol] :top or :bottom, position of the scroll into view
+  # @param position [Symbol] :top, :bottom, or :center, position of the scroll into view
   #
   # scroll_into_view('button.js-submit)
   #
   def scroll_into_view(css_selector_or_elem, position: :top)
+    js_arg = position == :center ? "{block:'center',inline:'nearest'}" : (position == :top).to_s
     case css_selector_or_elem
     when ZammadCapybaraElementDelegator, Capybara::Node::Element
-      css_selector_or_elem.execute_script("this.scrollIntoView(#{position == :top})")
+      css_selector_or_elem.execute_script("this.scrollIntoView(#{js_arg})")
     else
-      page.execute_script("document.querySelector('#{css_selector_or_elem}').scrollIntoView(#{position == :top})")
+      page.execute_script("document.querySelector('#{css_selector_or_elem}').scrollIntoView(#{js_arg})")
     end
     sleep 0.3
   end

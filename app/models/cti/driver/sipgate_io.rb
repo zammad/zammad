@@ -38,16 +38,13 @@ class Cti::Driver::SipgateIo < Cti::Driver::Base
       url,
       {},
       {
-        user:          @config[:api_user],
-        password:      @config[:api_password],
-        log:           {
+        user:       @config[:api_user],
+        password:   @config[:api_password],
+        log:        {
           facility: 'sipgate.io',
         },
-        json:          true,
-        open_timeout:  4,
-        read_timeout:  6,
-        total_timeout: 6,
-        verify_ssl:    true,
+        json:       true,
+        verify_ssl: true,
       },
     )
 

@@ -11,7 +11,6 @@ import { waitForNextTick } from '#tests/support/utils.ts'
 const renderToggle = (props: any = {}) => {
   return renderComponent(FormKit, {
     form: true,
-    formField: true,
     props: {
       name: 'toggle',
       type: 'toggle',
@@ -105,6 +104,61 @@ describe('FieldToggle', () => {
     expect(toggle.getByLabelText('Toggle')).not.toBeChecked()
   })
 
+  test('renders the current variant label inline and updates it on toggle', async () => {
+    const view = renderToggle({ value: false, inlineLabel: true })
+
+    expect(view.getByText('no')).toBeInTheDocument()
+
+    await view.events.click(view.getByLabelText('Toggle'))
+
+    expect(view.getByText('yes')).toBeInTheDocument()
+  })
+
+  test('describes the switch with the current state label for screen readers', async () => {
+    const view = renderToggle({ value: false, inlineLabel: true })
+    const switcher = view.getByLabelText('Toggle')
+
+    // The switch's accessible name stays the field label; the current variant is exposed as a
+    //  description so screen readers announce what the on/off state means.
+    expect(switcher.getAttribute('aria-describedby')?.split(' ')).toContain(view.getByText('no').id)
+
+    await view.events.click(switcher)
+
+    expect(switcher.getAttribute('aria-describedby')?.split(' ')).toContain(
+      view.getByText('yes').id,
+    )
+  })
+
+  test('renders an icon inside the knob per state', async () => {
+    const view = renderToggle({
+      value: false,
+      icons: { true: 'lock', false: 'unlock' },
+    })
+
+    expect(view.getByIconName('unlock')).toBeInTheDocument()
+
+    await view.events.click(view.getByLabelText('Toggle'))
+
+    expect(view.getByIconName('lock')).toBeInTheDocument()
+  })
+
+  test('invertVisual flips only the visual on-state, not the value', async () => {
+    const view = renderToggle({ value: true, invertVisual: true })
+    const switcher = view.getByLabelText('Toggle')
+    const knob = switcher.firstElementChild as HTMLElement
+
+    // The value (and thus aria-checked) still reflects `true`...
+    expect(switcher).toBeChecked()
+    // ...but the knob visually rests in the OFF (left) position because `invertVisual` is set.
+    expect(knob.className).toContain('translate-x-px')
+
+    await view.events.click(switcher)
+
+    // Toggling to `false` keeps aria-checked in sync with the value and slides the knob ON.
+    expect(switcher).not.toBeChecked()
+    expect(knob.className).toContain('translate-x-[17px]')
+  })
+
   test('can use model-value to toggle', async () => {
     const toggled = ref(false)
 
@@ -125,7 +179,6 @@ describe('FieldToggle', () => {
       },
       {
         form: true,
-        formField: true,
       },
     )
 

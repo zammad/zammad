@@ -10,7 +10,6 @@ import CommonPopover, {
   type Props as CommonPopoverProps,
 } from '#desktop/components/CommonPopover/CommonPopover.vue'
 import { usePopover } from '#desktop/components/CommonPopover/usePopover.ts'
-import { useTransitionConfig } from '#desktop/composables/useTransitionConfig.ts'
 
 export interface Props extends Omit<CommonPopoverProps, 'owner'> {
   triggerLink?: string
@@ -54,16 +53,17 @@ onLongPress(popoverTarget, () => {
   open()
 })
 
-const { timings } = useTransitionConfig()
-
+// NB: We purposefully don't use `useDelayTimings` values here, because they may be 0 for users with reduced motion
+//   preferences. This delay is meant to prevent accidental popover opening/closing when the user is moving their mouse
+//   across the screen,  and it's not related to transitions. We want it to be a small, but noticeable delay always.
 const isPopoverHovered = useElementHover(popoverElement, {
-  delayEnter: timings.veryShort,
-  delayLeave: timings.short,
+  delayEnter: 100,
+  delayLeave: 200,
 })
 
 const isPopoverTargetHovered = useElementHover(popoverTarget, {
-  delayEnter: timings.veryShort,
-  delayLeave: timings.short,
+  delayEnter: 100,
+  delayLeave: 200,
 })
 
 watch([isPopoverHovered, isPopoverTargetHovered], ([isPopoverHovered, isPopoverTargetHovered]) => {

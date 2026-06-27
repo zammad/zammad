@@ -14,6 +14,8 @@ module Gql::Mutations
       Service::CheckFeatureEnabled.execute(name: 'ai_assistance_ticket_summary')
       Service::CheckFeatureEnabled.execute(name: 'ai_provider', custom_error_message: __('AI provider is not configured.'))
 
+      return empty_result if !summary_enabled?(ticket)
+
       if regeneration_of
         return enqueue_job(ticket, regeneration_of:)
       end
@@ -35,13 +37,31 @@ module Gql::Mutations
 
     private
 
+    def summary_enabled?(ticket)
+      Service::Ticket::AIAssistance::SummaryEnabled
+        .with_current_user(context.current_user)
+        .execute(ticket:)
+    end
+
     def enqueue_job(ticket, regeneration_of: nil)
       # Trigger background job to generate the summary.
-      TicketAIAssistanceSummarizeJob.perform_later(ticket, context.current_user.locale, regeneration_of:)
+      TicketAIAssistanceSummarizeJob.perform_later(
+        ticket,
+        context.current_user.locale,
+        current_user:    context.current_user,
+        regeneration_of:,
+      )
 
       {
         summary: nil,
         reason:  nil,
+      }
+    end
+
+    def empty_result
+      {
+        summary:   nil,
+        analytics: nil,
       }
     end
 

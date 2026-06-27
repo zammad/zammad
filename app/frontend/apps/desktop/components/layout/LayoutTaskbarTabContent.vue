@@ -93,5 +93,5 @@ provideCurrentTaskbarTab({
     <CommonError :options="pageError" authenticated />
   </LayoutMain>
   <slot v-else-if="showContent && pageError !== undefined" />
-  <div v-else class="flex h-full w-full grow flex-col bg-blue-50 dark:bg-gray-800"></div>
+  <div v-else class="flex h-full w-full grow flex-col bg-blue-50 dark:bg-gray-800" />
 </template>

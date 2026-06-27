@@ -113,6 +113,27 @@ RSpec.describe(FormUpdater::Updater::Ticket::Edit) do
       end
     end
 
+    context 'when rendering signature variables for an existing ticket' do
+      let(:customer) { create(:customer, firstname: 'Elvis') }
+      let(:ticket)   { create(:ticket, group:, customer:, title: 'Test ticket') }
+      let(:id)       { Gql::ZammadSchema.id_from_object(ticket) }
+      let(:data)     { { 'group_id' => group.id } }
+      let(:signature_body) do
+        'Test ticket: id=#{ticket.id} number=#{ticket.number} title=#{ticket.title} customer=#{ticket.customer.firstname}' # rubocop:disable Lint/InterpolationCheck
+      end
+
+      before do
+        group.update!(signature: create(:signature, body: signature_body))
+      end
+
+      it 'uses the real ticket object for template rendering', :aggregate_failures do
+        expected_signature = "Test ticket: id=#{ticket.id} number=#{ticket.number} title=#{ticket.title} customer=#{ticket.customer.firstname}"
+
+        expect(resolved_result.authorized?).to be(true)
+        expect(resolved_result.resolve[:fields].dig('body', :signature, :renderedBody)).to eq(expected_signature)
+      end
+    end
+
     context 'when ticket has object attribute value with a historical value', db_strategy: :reset do
       let(:field_name) { SecureRandom.uuid }
       let(:screens) do

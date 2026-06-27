@@ -6,6 +6,7 @@ import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
 export type SelectOptionSorting = 'label' | 'value'
 
 export type SelectContext = FormFieldContext<{
+  autoOpenDropdown?: boolean
   clearable?: boolean
   historicalOptions: Record<string, string>
   multiple?: boolean

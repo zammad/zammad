@@ -33,6 +33,14 @@ class FormUpdater::Relation::Group < FormUpdater::Relation
     { name: :asc }
   end
 
+  def default_scope
+    # Non-agent / admin handling is intentionally deferred — see the
+    # FormUpdater::Relation#default_scope TODO.
+    return super if !current_user.permissions?('ticket.agent')
+
+    current_user.groups_access('read')
+  end
+
   def display_name(item)
     item.name_last
   end

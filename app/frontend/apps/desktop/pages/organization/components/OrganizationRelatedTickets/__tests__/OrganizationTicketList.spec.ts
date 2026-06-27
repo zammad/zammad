@@ -80,12 +80,18 @@ const renderOrganizationTicketList = async (ticketCount: number, props?: Partial
     router: true,
   })
 
+  await vi.dynamicImportSettled()
   await flushPromises()
 
   return view
 }
 
 describe('OrganizationTicketList.vue', () => {
+  afterEach(async () => {
+    await vi.dynamicImportSettled()
+    await flushPromises()
+  })
+
   it('render heading with a ticket count', async () => {
     const view = await renderOrganizationTicketList(5)
 
@@ -140,9 +146,9 @@ describe('OrganizationTicketList.vue', () => {
 
     expect(calls).toHaveLength(1)
 
-    emitter.emit(`organization-ticket-list-refetch:${organization.internalId}`)
+    emitter.emit(`organization-ticket-list-refetch:${organization.id}`)
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(calls).toHaveLength(2)
     })
   })

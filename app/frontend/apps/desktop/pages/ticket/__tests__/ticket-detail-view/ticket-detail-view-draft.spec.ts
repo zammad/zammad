@@ -46,7 +46,7 @@ describe('Ticket detail view - draft handling', () => {
 
       const view = await visitView('/tickets/1')
 
-      const actionMenu = await view.findByLabelText('Additional ticket edit actions')
+      const actionMenu = await view.findByLabelText('Drafts & macros')
 
       await view.events.click(actionMenu)
 
@@ -77,7 +77,7 @@ describe('Ticket detail view - draft handling', () => {
       const view = await visitView('/tickets/1')
       await flushPromises()
 
-      const actionMenu = await view.findByLabelText('Additional ticket edit actions')
+      const actionMenu = await view.findByLabelText('Drafts & macros')
 
       await view.events.click(actionMenu)
 
@@ -250,7 +250,7 @@ describe('Ticket detail view - draft handling', () => {
 
       const view = await visitView('/tickets/1')
 
-      expect(view.queryByLabelText('Additional ticket edit actions')).not.toBeInTheDocument()
+      expect(view.queryByLabelText('Drafts & macros')).not.toBeInTheDocument()
     })
   })
 })

@@ -5,14 +5,23 @@ module Gql::Types::Input::Ticket
     description 'Represents the selector for bulk ticket update.'
 
     argument :entity_ids, [GraphQL::Types::ID], required: false, description: 'The tickets to be updated'
+
     argument :overview_id, GraphQL::Types::ID, required: false, loads: Gql::Types::OverviewType, description: 'Ticket overview for selecting tickets'
+
     argument :search_query, String, required: false, description: 'Search query to filter tickets'
+    argument :search_filter, Gql::Types::Input::Selector::NodeInputType, required: false, description: 'Advanced search filters as selector conditions'
 
     def prepare
       hash = to_h
 
-      if !hash.slice(:entity_ids, :overview, :search_query).values.one?(&:present?)
-        raise GraphQL::ExecutionError, 'Exactly one of entity_ids, overview_id, or search_query must be provided.' # rubocop:disable Zammad/DetectTranslatableString
+      selector_groups_present = [
+        hash[:entity_ids].present?,
+        hash[:overview].present?,
+        hash.slice(:search_query, :search_filter).values.any?(&:present?),
+      ].count(true)
+
+      if selector_groups_present != 1
+        raise GraphQL::ExecutionError, 'Exactly one of entity_ids, overview_id, or pair of search_query and/or search_filter must be provided.' # rubocop:disable Zammad/DetectTranslatableString
       end
 
       if hash[:entity_ids].try(:any?)

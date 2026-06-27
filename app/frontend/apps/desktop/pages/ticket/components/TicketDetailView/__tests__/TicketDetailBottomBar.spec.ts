@@ -143,7 +143,7 @@ describe('TicketDetailBottomBar', () => {
 
       const wrapper = renderTicketDetailBottomBar()
 
-      const actionMenu = await wrapper.findByLabelText('Additional ticket edit actions')
+      const actionMenu = await wrapper.findByLabelText('Drafts & macros')
 
       await wrapper.events.click(actionMenu)
 
@@ -166,7 +166,7 @@ describe('TicketDetailBottomBar', () => {
         wrapper.queryByRole('button', { name: 'Discard your unsaved changes' }),
       ).not.toBeInTheDocument()
 
-      expect(wrapper.queryByLabelText('Additional ticket edit actions')).not.toBeInTheDocument()
+      expect(wrapper.queryByLabelText('Drafts & macros')).not.toBeInTheDocument()
     })
 
     it('reloads macro query if subscription is triggered', async () => {
@@ -240,7 +240,7 @@ describe('TicketDetailBottomBar', () => {
 
       const wrapper = renderTicketDetailBottomBar()
 
-      const actionMenu = await wrapper.findByLabelText('Additional ticket edit actions')
+      const actionMenu = await wrapper.findByLabelText('Drafts & macros')
 
       await wrapper.events.click(actionMenu)
 
@@ -270,7 +270,7 @@ describe('TicketDetailBottomBar', () => {
       })
 
       const addonButton = wrapper.getByRole('button', {
-        name: 'Additional ticket edit actions',
+        name: 'Drafts & macros',
       })
 
       await wrapper.events.click(addonButton)

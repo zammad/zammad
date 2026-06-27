@@ -1,25 +1,11 @@
 <!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed } from 'vue'
-
-import { useDebouncedLoading } from '#shared/composables/useDebouncedLoading.ts'
-
 import CommonSkeleton from '#desktop/components/CommonSkeleton/CommonSkeleton.vue'
-
-interface Props {
-  loading?: boolean
-}
-
-const props = defineProps<Props>()
-
-const { debouncedLoading } = useDebouncedLoading({
-  isLoading: computed(() => props.loading ?? false),
-})
 </script>
 
 <template>
-  <div v-if="loading || debouncedLoading" :class="{ invisible: !debouncedLoading }">
+  <div>
     <div class="grid grid-cols-[max-content_1fr] grid-rows-2 gap-2">
       <!--   :TODO label for screen reader? or to many translation strings    -->
       <CommonSkeleton
@@ -44,5 +30,4 @@ const { debouncedLoading } = useDebouncedLoading({
       <CommonSkeleton :style="{ 'animation-delay': `${1}s` }" class="h-6 w-full" />
     </div>
   </div>
-  <slot v-else />
 </template>

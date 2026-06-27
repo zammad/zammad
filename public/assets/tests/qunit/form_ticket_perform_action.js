@@ -698,7 +698,8 @@ QUnit.test( "ticket_perform_action check when there's an available webhook", ass
   var test_params = {
     'ticket_perform_action7': {
       'notification.webhook': {
-        'webhook_id': 'c-1'
+        'webhook_id': ['c-1'],
+        'webhook_id_completion': ''
       }
     }
   }
@@ -708,7 +709,7 @@ QUnit.test( "ticket_perform_action check when there's an available webhook", ass
   var noticeMessage = el.find('.controls.js-webhooks').text()
   assert.notEqual(noticeMessage, testNoticeMessage, 'form does not show notice message when webhook is available')
 
-  var noticeMessage = el.find('.controls.js-webhooks select option').eq(1).text()
+  var noticeMessage = el.find('.controls.js-webhooks select option').eq(0).text()
   assert.equal(noticeMessage, 'Webhook test (https://target.example.com/webhook)', 'form shows available webhook when webhook is available')
 });
 

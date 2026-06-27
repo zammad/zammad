@@ -9,9 +9,11 @@ const { createdAt } = defineProps<Props>()
 </script>
 
 <template>
-  <div class="flex border-neutral-100 bg-blue-50 dark:border-gray-900 dark:bg-gray-500">
+  <div
+    class="flex border-neutral-100 bg-blue-50 dark:border-gray-900 dark:bg-gray-500 print:border-black"
+  >
     <div
-      class="flex-initial rounded-t-lg border border-b-0 border-neutral-100 bg-blue-200 dark:border-gray-700 dark:bg-gray-700"
+      class="flex-initial rounded-t-lg border border-b-0 border-neutral-100 bg-blue-200 dark:border-gray-700 dark:bg-gray-700 print:border-black"
     >
       <CommonLabel
         class="m-1 rounded p-1 text-black dark:text-white"

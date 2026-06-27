@@ -41,8 +41,8 @@ const backgroundVariantClasses = computed(() => {
       backgroundVariantClasses,
       {
         'p-4': !noPadding,
-        'overflow-y-auto': !noScrollable,
-        'overflow-y-hidden': noScrollable,
+        'overflow-y-auto print:h-auto print:overflow-y-visible': !noScrollable,
+        'overflow-y-hidden print:h-auto print:overflow-y-visible': noScrollable,
       },
     ]"
   >

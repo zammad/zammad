@@ -32,11 +32,7 @@ RSpec.describe 'Desktop > Ticket > Online Notifications', app: :desktop_view, au
         expect(page).to have_text("#{agent_b.fullname} updated ticket")
         click_on 'mark all as read'
         wait_for_mutation('onlineNotificationMarkAllAsSeen')
-      end
 
-      find('button[aria-label="Show notifications"]').click
-
-      within('[role="region"]') do
         expect(page).to have_css('a', text: "#{agent_b.fullname} updated ticket", style: { opacity: '0.3' })
       end
 

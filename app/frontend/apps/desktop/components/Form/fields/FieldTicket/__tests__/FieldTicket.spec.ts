@@ -83,7 +83,6 @@ const testOptions: AutocompleteSearchTicketQuery['autocompleteSearchTicket'][0][
 
 const wrapperParameters = {
   form: true,
-  formField: true,
   router: true,
   store: true,
 }

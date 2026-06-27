@@ -46,8 +46,11 @@ const outputAbsoluteDate = computed(() => {
     v-tooltip="i18n.dateTime(dateTime)"
     :datetime="dateTime"
     data-test-id="date-time-relative"
+    class="flex gap-1 print:after:content-[attr(aria-label)]"
   >
     <slot name="prefix" />
-    {{ i18n.relativeDateTime(dateTime) }}
+    <span class="print:hidden">
+      {{ i18n.relativeDateTime(dateTime) }}
+    </span>
   </time>
 </template>

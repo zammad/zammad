@@ -5,19 +5,20 @@ import { until } from '@vueuse/core'
 import { computed } from 'vue'
 
 import CommonEmptyMessage from '#desktop/components/CommonEmptyMessage/CommonEmptyMessage.vue'
+import type { NavigationTab } from '#desktop/components/CommonTabs/types.ts'
 import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
 import LayoutSidebar from '#desktop/components/layout/LayoutSidebar.vue'
+import { SidebarName } from '#desktop/components/layout/types.ts'
 import DragAndDropBulkWrapper from '#desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkWrapper.vue'
 import { useDragAndDropBulk } from '#desktop/components/Ticket/DragAndDropBulk/useDragAndDropBulk.ts'
 import TicketBulkEditButton from '#desktop/components/Ticket/TicketBulkEditButton.vue'
 import { useTicketBulkEdit } from '#desktop/components/Ticket/TicketBulkEditFlyout/useTicketBulkEdit.ts'
-import { usePage } from '#desktop/composables/usePage.ts'
 import TicketList from '#desktop/pages/ticket-overviews/components/TicketList.vue'
 import TicketOverviewsSidebar from '#desktop/pages/ticket-overviews/components/TicketOverviewsSidebar.vue'
 import { useTicketOverviews } from '#desktop/pages/ticket-overviews/composables/useTicketOverviews.ts'
 
 interface Props {
-  overviewLink: string
+  overviewLink?: string
 }
 
 const props = defineProps<Props>()
@@ -68,9 +69,21 @@ defineOptions({
   },
 })
 
-const { overviewsByLink, hasOverviews, overviewsTicketCountById } = useTicketOverviews()
+const { overviews, overviewsByLink, hasOverviews, overviewsTicketCountById } = useTicketOverviews()
 
-const currentOverview = computed(() => overviewsByLink.value[props.overviewLink])
+const currentOverview = computed(() => overviewsByLink.value[props.overviewLink || ''])
+
+const overviewsTabs = computed<NavigationTab[]>(() =>
+  overviews.value?.map((item) => ({
+    label: item.name,
+    key: item.id,
+    default: item.link === props.overviewLink,
+    count: overviewsTicketCountById.value[item.id],
+    link: item.link,
+  })),
+)
+
+const activeTab = computed(() => currentOverview.value?.id || '')
 
 const currentOverviewCount = computed(
   () => overviewsTicketCountById.value[currentOverview.value?.id],
@@ -94,31 +107,30 @@ const {
   cursorPosition,
   dragPreviewData,
   dropSuccessTargetEntity,
-  reactivateListeners,
-  deactivateListeners,
 } = useDragAndDropBulk({
   checkedTicketIds,
   bulkSelector,
 })
-
-usePage({ onReactivate: reactivateListeners, onDeactivated: deactivateListeners })
 </script>
 
 <template>
-  <div class="h-full" :class="{ 'grid grid-cols-[260px_1fr]': hasOverviews }">
+  <div class="h-full" :class="{ 'grid grid-cols-1 lg:grid-cols-[260px_1fr]': hasOverviews }">
     <LayoutSidebar
       v-if="hasOverviews"
       id="ticket-overviews"
+      class="hidden lg:flex"
       :aria-label="$t('second level navigation sidebar')"
       background-variant="secondary"
-      name="overviews"
+      :name="SidebarName.TicketOverviews"
     >
       <TicketOverviewsSidebar />
     </LayoutSidebar>
 
     <LayoutContent
       class="relative"
+      :active-tab="activeTab"
       :breadcrumb-items="currentOverview ? breadcrumbItems : undefined"
+      :tabs="overviewsTabs"
       no-scrollable
       content-padding
     >

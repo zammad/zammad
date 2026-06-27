@@ -18,6 +18,22 @@ export class FieldResolverTreeselect extends FieldResolverSelect {
 
   multiFieldAttributeType = 'multi_tree_select'
 
+  public override getFilterOperatorProps() {
+    const props = super.getFilterOperatorProps()
+
+    // Override only `<filterOperatorName>.type`; preserve any other operator
+    // props the parent declared. Reading `filterOperatorName` (rather than
+    // hardcoding `is`) keeps the multi-treeselect subclass working when it
+    // switches to `contains one`.
+    return {
+      ...props,
+      [this.filterOperatorName]: {
+        ...props?.[this.filterOperatorName],
+        type: 'treeselect',
+      },
+    }
+  }
+
   mappedOptions(): ObjectTreeSelectOption[] {
     const mapTreeSelectOptions = (options: ObjectAttributeTreeSelectOption[]) => {
       return options.reduce(

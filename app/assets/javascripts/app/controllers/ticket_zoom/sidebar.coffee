@@ -4,6 +4,13 @@ class App.TicketZoomSidebar extends App.ControllerObserver
     customer_id: true
     organization_id: true
 
+  constructor: ->
+    super
+
+    @controllerBind('ui::sidebar::toggleTab', (data) ->
+      App.Event.trigger('ui::ticket::sidebarToggleTab', { name: data.name })
+    )
+
   release: =>
     super
     if @sidebarBackends

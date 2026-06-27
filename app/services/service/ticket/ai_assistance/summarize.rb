@@ -4,6 +4,8 @@ class Service::Ticket::AIAssistance::Summarize < Service::Base
 
   attr_reader :ticket, :locale, :persistence_strategy, :regeneration_of
 
+  requires_current_user!
+
   # @param persistence_strategy [Symbol, NilClass] @see AI::Service#initialize
   def initialize(ticket:, locale: nil, regeneration_of: nil, persistence_strategy: :stored_or_request)
     @ticket               = ticket
@@ -16,6 +18,7 @@ class Service::Ticket::AIAssistance::Summarize < Service::Base
     Service::CheckFeatureEnabled.execute(name: 'ai_assistance_ticket_summary')
     Service::CheckFeatureEnabled.execute(name: 'ai_provider', custom_error_message: __('AI provider is not configured.'))
 
+    return if !Service::Ticket::AIAssistance::SummaryEnabled.with_current_user(current_user).execute(ticket:)
     return if ticket.articles.none?
 
     articles = ticket.articles.without_system_notifications

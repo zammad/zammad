@@ -8,6 +8,19 @@ class AI::Provider
 
   EMBEDDING_SIZES = {}.freeze
 
+  EMBEDDING_INPUT_LIMITS = {}.freeze
+
+  # Conservative input-token limit for an embedding model not listed in EMBEDDING_INPUT_LIMITS —
+  # favours safety (smaller chunks that fit small-context models) over granularity.
+  DEFAULT_EMBEDDING_INPUT_LIMIT = 512
+
+  # AI inference is slow; provide dedicated timeout knobs so admins can extend them for large prompts,
+  # reasoning models, or slow self-hosted endpoints without raising the global HTTP timeouts.
+  REQUEST_TIMEOUT_OPTIONS = {
+    read_timeout:  ENV.fetch('ZAMMAD_HTTP_AI_READ_TIMEOUT', 300).to_i,
+    total_timeout: ENV.fetch('ZAMMAD_HTTP_AI_TOTAL_TIMEOUT', 300).to_i,
+  }.freeze
+
   attr_accessor :config, :options, :response_metadata
 
   def initialize(config: {}, options: {})
@@ -15,6 +28,10 @@ class AI::Provider
 
     if @config[:model] && !options[:model]
       options[:model] = @config[:model]
+    end
+
+    if @config[:embedding_model] && !options[:embedding_model]
+      options[:embedding_model] = @config[:embedding_model]
     end
 
     @options = self.class::DEFAULT_OPTIONS.merge(options.compact.deep_symbolize_keys)
@@ -70,8 +87,28 @@ class AI::Provider
     end
   end
 
+  # Fetches the embedding for a single input. For multiple inputs, use bulk_embed.
+  #
+  # @param input [String] the input to embed
+  # @return [Array<Numeric>] the embedding vector for the input
   def embed(input:)
-    embeddings(input:)
+    embeddings(input:).first
+  end
+
+  # Fetches embeddings for multiple inputs.
+  #
+  # @param input [Array<String>] the inputs to embed
+  # @return [Array<Array<Numeric>>] an array of embedding vectors corresponding to the inputs
+  def bulk_embed(input:)
+    embeddings(input: Array(input))
+  end
+
+  # Maximum number of input tokens the configured embedding model accepts. Used to size chunks so
+  # no chunk overruns the model (see Service::AI::VectorDB::Content::Chunks). Unknown models fall back conservatively.
+  #
+  # @return [Integer] the model's input token limit
+  def embedding_input_limit
+    self.class::EMBEDDING_INPUT_LIMITS.fetch(options[:embedding_model], DEFAULT_EMBEDDING_INPUT_LIMIT)
   end
 
   def metadata

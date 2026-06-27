@@ -2,6 +2,7 @@
 
 import { getByIconName } from '#tests/support/components/iconQueries.ts'
 import { renderComponent } from '#tests/support/components/index.ts'
+import { waitForNextTick } from '#tests/support/utils.ts'
 
 import CommonLoader from '../CommonLoader.vue'
 
@@ -20,20 +21,6 @@ describe('CommonLoader.vue', () => {
     expect(wrapper.queryByRole('status')).not.toBeInTheDocument()
   })
 
-  it('renders loading animation with loading prop set', async () => {
-    const wrapper = renderComponent(CommonLoader, {
-      props: {
-        loading: true,
-      },
-    })
-
-    vi.advanceTimersByTime(300)
-
-    const loader = await wrapper.findByRole('status')
-
-    expect(getByIconName(loader, 'spinner')).toBeInTheDocument()
-  })
-
   it('hides loading animation when loading prop is unset', async () => {
     const wrapper = renderComponent(CommonLoader, {
       props: {
@@ -43,15 +30,17 @@ describe('CommonLoader.vue', () => {
 
     vi.advanceTimersByTime(300)
 
-    const loader = await wrapper.findByRole('status')
+    const loader = await wrapper.findAllByRole('progressbar')
 
-    expect(loader).toBeInTheDocument()
+    expect(loader).toHaveLength(3)
 
     await wrapper.rerender({
       loading: false,
     })
 
-    expect(loader).not.toBeInTheDocument()
+    await waitForNextTick()
+
+    expect(wrapper.queryByRole('progressbar')).not.toBeInTheDocument()
   })
 
   it('renders alert if error prop is supplied', async () => {
@@ -77,5 +66,18 @@ describe('CommonLoader.vue', () => {
     expect(wrapper.baseElement).toHaveTextContent('foobar')
     expect(wrapper.queryByRole('status')).not.toBeInTheDocument()
     expect(wrapper.queryByRole('alert')).not.toBeInTheDocument()
+  })
+
+  it('allows rendering of an intermediate loading', async () => {
+    const wrapper = renderComponent(CommonLoader, {
+      props: {
+        loading: true,
+        intermediate: true,
+      },
+    })
+
+    vi.advanceTimersByTime(300)
+
+    expect(await wrapper.findByLabelText('Indicating progress')).toBeInTheDocument()
   })
 })

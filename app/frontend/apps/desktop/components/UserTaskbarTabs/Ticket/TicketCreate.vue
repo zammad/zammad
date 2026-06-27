@@ -37,6 +37,7 @@ const { currentViewTitle } = useTicketCreateTitle(currentTitle, currentArticleTy
       'group-focus-visible/link:text-white': collapsed,
       'rounded-lg!': !collapsed,
     }"
+    :aria-current="isActive ? 'page' : undefined"
     :link="taskbarTabLink"
     internal
   >

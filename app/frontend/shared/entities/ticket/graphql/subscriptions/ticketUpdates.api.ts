@@ -13,6 +13,7 @@ export const TicketUpdatesDocument = gql`
   ticketUpdates(ticketId: $ticketId, initial: $initial) {
     ticket {
       ...ticketAttributes
+      aiSummaryEnabled
       createArticleType {
         id
         name

@@ -2,13 +2,14 @@
 
 import { useEventListener, useTimeoutFn, type Fn } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
-import { onMounted, ref, toRef } from 'vue'
+import { computed, ref, toRef, toValue, watch } from 'vue'
 
 import { useTouchDevice } from '#shared/composables/useTouchDevice.ts'
 import { EnumTicketStateColorCode, type TicketBulkPerformInput } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import emitter from '#shared/utils/emitter.ts'
 
+import { useKeepAliveHooks } from '#desktop/composables/useKeepAliveHooks.ts'
 import { useTicketBulkUpdate } from '#desktop/entities/ticket/composables/useTicketBulkUpdate.ts'
 import {
   BULK_CONFIRMATION_THRESHOLD,
@@ -17,7 +18,12 @@ import {
 
 import { DragAndDropBulkEntityType } from './types.ts'
 
-import type { BulkData, DragAndDropBulkOptions, DragPreviewData } from './types.ts'
+import type {
+  BulkData,
+  DragAndDropBulkArgs,
+  DragAndDropBulkOptions,
+  DragPreviewData,
+} from './types.ts'
 
 const LONG_PRESS_DURATION = 200
 const MOVE_THRESHOLD_PX = 5
@@ -39,7 +45,10 @@ const capturePreviewData = (row: HTMLElement): DragPreviewData => {
   return { stateColorCode, priorityUiColor, columnText: firstTextCell?.textContent?.trim() ?? '' }
 }
 
-export const useDragAndDropBulk = ({ checkedTicketIds, bulkSelector }: DragAndDropBulkOptions) => {
+export const useDragAndDropBulk = (
+  { checkedTicketIds, bulkSelector }: DragAndDropBulkArgs,
+  options: DragAndDropBulkOptions = { enabled: true },
+) => {
   const bulkUpdateStore = useTicketBulkUpdateStore()
   const isBulkTaskRunning = toRef(useTicketBulkUpdateStore(), 'isRunning')
   const { requestBulkConfirmation } = bulkUpdateStore
@@ -53,12 +62,12 @@ export const useDragAndDropBulk = ({ checkedTicketIds, bulkSelector }: DragAndDr
   const cursorPosition = ref<{ x: number; y: number }>({ x: 0, y: 0 })
   const dropSuccessTargetEntity = ref<BulkData | null>(null)
 
-  // Track both conditions: long press elapsed AND pointer moved enough.
+  // Track both conditions: long press elapsed AND mouse moved enough.
   const longPressElapsed = ref(false)
   const hasMovedEnough = ref(false)
   const startPosition = ref<{ x: number; y: number } | null>(null)
 
-  const getItemIdFromEvent = (event: PointerEvent): ID | null => {
+  const getItemIdFromEvent = (event: MouseEvent): ID | null => {
     const row = (event.target as HTMLElement).closest<HTMLElement>('[data-item-id]')
 
     // if ticket policy update is not given the the row is disabled
@@ -144,9 +153,7 @@ export const useDragAndDropBulk = ({ checkedTicketIds, bulkSelector }: DragAndDr
     stopDropSuccessTimer()
     clearDropSuccessAnimation()
 
-    if (longPressedItemId.value) {
-      checkedTicketIds.value.delete(longPressedItemId.value)
-    }
+    if (longPressedItemId.value) checkedTicketIds.value.delete(longPressedItemId.value)
 
     longPressedItemId.value = null
     dragPreviewData.value = null
@@ -220,10 +227,8 @@ export const useDragAndDropBulk = ({ checkedTicketIds, bulkSelector }: DragAndDr
 
   let listeners: Fn[]
 
-  // We need this because of the keep alive cache
-  // the events are fired though the component is not active anymore
-  const reactivateListeners = () => {
-    const removePointerDown = useEventListener(document, 'pointerdown', (event: PointerEvent) => {
+  const activateListeners = () => {
+    const removeMouseDown = useEventListener(document, 'mousedown', (event: MouseEvent) => {
       if (event.button !== 0) return // Only respond to primary button.
 
       const itemId = getItemIdFromEvent(event)
@@ -236,8 +241,11 @@ export const useDragAndDropBulk = ({ checkedTicketIds, bulkSelector }: DragAndDr
       startLongPress()
     })
 
-    const removePointerMove = useEventListener(document, 'pointermove', (event: PointerEvent) => {
+    const removeMouseMove = useEventListener(document, 'mousemove', (event: MouseEvent) => {
       if (isActive.value) {
+        // Detect mouse button release that occurred outside the window.
+        if ((event.buttons & 1) === 0) return cancelDragAndDrop()
+
         cursorPosition.value = { x: event.clientX, y: event.clientY }
       }
 
@@ -253,8 +261,8 @@ export const useDragAndDropBulk = ({ checkedTicketIds, bulkSelector }: DragAndDr
       tryActivate()
     })
 
-    const removePointerup = useEventListener(document, 'pointerup', async (event) => {
-      // Ignore pointer events while waiting for the user to confirm/cancel.
+    const removeMouseUp = useEventListener(document, 'mouseup', async (event: MouseEvent) => {
+      // Ignore mouse events while waiting for the user to confirm/cancel.
       if (confirmationPending.value) return
       if (dropSuccessTargetEntity.value) return
 
@@ -297,29 +305,40 @@ export const useDragAndDropBulk = ({ checkedTicketIds, bulkSelector }: DragAndDr
       if (event.target.closest('table [data-item-id]')) event.preventDefault()
     })
 
-    // Cancel if pointer leaves the window or the page loses focus.
-    const removePointerCancel = useEventListener(document, 'pointercancel', resetState)
-    const removePointerLeave = useEventListener(document, 'pointerleave', resetState)
-    const removeWindowBlur = useEventListener(window, 'blur', resetState)
-    const removeVisibilityChange = useEventListener(document, 'visibilitychange', () => {
-      if (document.visibilityState === 'hidden') resetState()
+    // If the cursor re-enters the document without the button held,
+    // the release happened outside — cancel the active drag.
+    const removeMouseEnter = useEventListener(document, 'mouseenter', (event: MouseEvent) => {
+      if (isActive.value && (event.buttons & 1) === 0) cancelDragAndDrop()
     })
 
+    const removeWindowBlur = useEventListener(window, 'blur', cancelDragAndDrop)
+    const removeVisibilityChange = useEventListener(document, 'visibilitychange', () => {
+      if (document.visibilityState === 'hidden') cancelDragAndDrop()
+    })
+
+    // Listen in the capture phase so the keystroke is caught before it can be
+    // stopped by `@keydown.stop` on focusable cell content (e.g. link columns),
+    // which would otherwise stop the event during bubbling.
+    const removeEscapeKey = useEventListener(
+      document,
+      'keydown',
+      (event: KeyboardEvent) => {
+        if (event.key === 'Escape' && isActive.value) cancelDragAndDrop()
+      },
+      { capture: true },
+    )
+
     return [
-      removePointerDown,
-      removePointerMove,
-      removePointerup,
+      removeMouseDown,
+      removeMouseMove,
+      removeMouseUp,
       removeDragstart,
-      removePointerCancel,
-      removePointerLeave,
+      removeMouseEnter,
       removeWindowBlur,
       removeVisibilityChange,
+      removeEscapeKey,
     ]
   }
-
-  onMounted(() => {
-    listeners = reactivateListeners()
-  })
 
   const deactivateListeners = () => {
     if (!listeners) return
@@ -327,13 +346,44 @@ export const useDragAndDropBulk = ({ checkedTicketIds, bulkSelector }: DragAndDr
     listeners.forEach((remove) => remove())
   }
 
+  const reactivateListeners = () => {
+    // Remove first previous filters in case they exist
+    // to make sure they are registered always on the correct instance
+    if (listeners) deactivateListeners()
+
+    listeners = activateListeners()
+
+    return listeners
+  }
+
+  const isEnabled = computed(() => toValue(options.enabled))
+
+  watch(isEnabled, (enabled) => {
+    if (enabled) return reactivateListeners()
+
+    deactivateListeners()
+    cancelDragAndDrop()
+  })
+
+  useKeepAliveHooks({
+    onInitialActivated() {
+      if (isEnabled.value) reactivateListeners()
+    },
+    onReactivated() {
+      if (isEnabled.value) reactivateListeners()
+    },
+    onDeactivated() {
+      if (!isEnabled.value) return
+
+      deactivateListeners()
+      cancelDragAndDrop()
+    },
+  })
+
   return {
     isActive,
-    reactivateListeners,
-    deactivateListeners,
     cursorPosition,
     dragPreviewData,
     dropSuccessTargetEntity,
-    cancelDragAndDrop,
   }
 }

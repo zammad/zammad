@@ -91,7 +91,6 @@ const mockClient = () => {
 
 const wrapperParameters = {
   form: true,
-  formField: true,
   router: true,
   dialog: true,
   store: true,

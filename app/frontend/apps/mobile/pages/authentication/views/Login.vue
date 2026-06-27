@@ -132,7 +132,7 @@ const showError = (error: UserError) => {
       >
         {{ $t('Having problems?') }}
         <button
-          class="text-gray cursor-pointer pb-2 leading-4 font-medium"
+          class="cursor-pointer pb-2 leading-4 font-medium text-gray"
           @click.prevent="updateState('2fa-select')"
         >
           {{ $t('Try another method') }}
@@ -151,17 +151,17 @@ const showError = (error: UserError) => {
           )
         }}
       </p>
-      <CommonLink link="/#admin_password_auth" class="text-gray font-medium" @click="forceDesktop">
+      <CommonLink link="/#admin_password_auth" class="font-medium text-gray" @click="forceDesktop">
         {{ $t('Request the password login here.') }}
       </CommonLink>
     </section>
     <div
       v-if="loginFlow.state !== 'credentials' && !hasAlternativeLoginMethod"
-      class="text-gray pb-2 leading-4 font-medium"
+      class="pb-2 leading-4 font-medium text-gray"
     >
       {{ $t('Contact the administrator if you have any problems logging in.') }}
     </div>
-    <CommonLink link="/#login" class="text-gray leading-4 font-medium" @click="forceDesktop">
+    <CommonLink link="/#login" class="leading-4 font-medium text-gray" @click="forceDesktop">
       {{ $t('Continue to desktop') }}
     </CommonLink>
     <nav
@@ -173,7 +173,7 @@ const showError = (error: UserError) => {
           :link="link.link"
           :title="link.description"
           :open-in-new-tab="link.newTab"
-          class="text-gray leading-4 font-medium tracking-wide after:ml-1 after:font-medium after:text-gray-200 after:content-['|'] last:after:content-none"
+          class="leading-4 font-medium tracking-wide text-gray after:ml-1 after:font-medium after:text-gray-200 after:content-['|'] last:after:content-none"
         >
           {{ $t(link.title) }}
         </CommonLink>

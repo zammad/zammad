@@ -64,6 +64,7 @@ class User extends App.ControllerSubContent
               display: __('View from user\'s perspective')
               icon: 'switchView '
               class: 'create js-switchTo'
+              available: (user) -> user.active
               callback: (id) =>
                 @disconnectClient()
                 $('#app').hide().attr('style', 'display: none!important')

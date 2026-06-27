@@ -1,0 +1,82 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.mistral.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"mistral-large-2512","messages":[{"role":"user","content":"This
+        is a connection test. Return in unprettified JSON ''{ \"connected\": \"true\"
+        }'' if you got the message. Respond in plain JSON format only and do not wrap
+        it in code block markers."}],"response_format":{"type":"json_object"}}'
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Zammad User Agent
+      Host:
+      - api.mistral.ai
+      Content-Type:
+      - application/json; charset=utf-8
+      Authorization:
+      - Bearer <MISTRAL_API_KEY>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 09 Jun 2026 14:37:52 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Mistral-Correlation-Id:
+      - '019eacd1-8142-78b9-ae1d-15827c891d12'
+      X-Kong-Request-Id:
+      - '019eacd1-8142-78b9-ae1d-15827c891d12'
+      X-Ratelimit-Limit-Tokens-Minute:
+      - '250000'
+      X-Ratelimit-Remaining-Tokens-Minute:
+      - '249948'
+      X-Ratelimit-Tokens-Query-Cost:
+      - '52'
+      X-Ratelimit-Limit-Req-Minute:
+      - '4'
+      X-Ratelimit-Remaining-Req-Minute:
+      - '3'
+      X-Envoy-Upstream-Service-Time:
+      - '357'
+      Server:
+      - cloudflare
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Kong-Upstream-Latency:
+      - '358'
+      X-Kong-Proxy-Latency:
+      - '15'
+      Set-Cookie:
+      - __cf_bm=mmfRCMiisqYQyrmbhvazQUcD6YQs7WMjdPo2l8PsxCU-1781015871.7904215-1.0.1.1-nYIjw_cIsp7Oyyb_mf4k9wpjj17Z7eEYWl2yqX27dBNfLVO94OLosaWrxxj3xBC8u6fLE30y4DThtw3XMOBzg5HCnbb51RK6Q_MMkl895zuLfq_3QhWOBIcxXq4I50iI;
+        HttpOnly; SameSite=None; Secure; Path=/; Domain=mistral.ai; Expires=Tue, 09
+        Jun 2026 15:07:52 GMT
+      - _cfuvid=LpM5JDSJGobbSJCvYJZJ.UIuenKGJEirv432cuF7fJQ-1781015871.7904215-1.0.1.1-8gV4ncOGYnXXl3YHKqmZP3bKvgovejZMRYjSzcTzc4k;
+        HttpOnly; SameSite=None; Secure; Path=/; Domain=mistral.ai
+      X-Content-Type-Options:
+      - nosniff
+      Cf-Cache-Status:
+      - DYNAMIC
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      Cf-Ray:
+      - a090e06eaba9bc10-VNO
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"5fc4c4483e6f44f88a9cb54d946b65d6","created":1781015871,"model":"mistral-large-2512","usage":{"prompt_tokens":46,"total_tokens":52,"completion_tokens":6,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"{\"connected\":\"true\"}"}}]}'
+  recorded_at: Tue, 09 Jun 2026 14:37:52 GMT
+recorded_with: VCR 6.4.0

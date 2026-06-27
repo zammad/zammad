@@ -20,6 +20,6 @@ describe('testing search a11y', () => {
 
     await waitUntil(() => mockSearchApi.calls.resolve)
 
-    expect(view.container).toBeAccessible()
+    await expect(view.container).toBeAccessible()
   })
 })

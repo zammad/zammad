@@ -1,0 +1,72 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://ai.zammad.com/api/v1/features/generic
+    body:
+      encoding: UTF-8
+      string: '{"system_prompt":"","prompt":"This is a connection test. Return in
+        unprettified JSON ''{ \"connected\": \"true\" }'' if you got the message.
+        Respond in plain JSON format only and do not wrap it in code block markers."}'
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Zammad User Agent
+      Host:
+      - ai.zammad.com
+      Content-Type:
+      - application/json; charset=utf-8
+      Authorization:
+      - Bearer <ZAMMAD_AI_TOKEN>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Tue, 09 Jun 2026 14:38:45 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Frame-Options:
+      - DENY
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - '0'
+      X-Content-Type-Options:
+      - nosniff
+      - nosniff
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      Vary:
+      - Accept
+      Etag:
+      - W/"e544834cd4ddb660ba2168c7a793cbaa"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Content-Security-Policy:
+      - 'default-src ''self'' https:; font-src ''self'' https: data:; img-src ''self''
+        https: data:; object-src ''none''; script-src ''self'' https: ''nonce-'';
+        style-src ''self'' https: ''nonce-'''
+      X-Request-Id:
+      - 84e9d768-d0a9-437a-bfeb-2a8f7ac17da8
+      X-Runtime:
+      - '0.753533'
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains
+    body:
+      encoding: ASCII-8BIT
+      string: '[{"model":"mistral-small3.2:24b","created_at":"2026-06-09 14:38:45
+        UTC","response":"{\"connected\": \"true\"}","done":true,"uuid":"3eb89098-703c-49d7-9fc7-b1fdea18d9c6"}]'
+  recorded_at: Tue, 09 Jun 2026 14:38:45 GMT
+recorded_with: VCR 6.4.0

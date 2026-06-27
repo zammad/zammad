@@ -1,17 +1,21 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { within } from '@testing-library/vue'
+import { flushPromises } from '@vue/test-utils'
+import { computed } from 'vue'
 
 import renderComponent from '#tests/support/components/renderComponent.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
 
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
 import { SYSTEM_USER_ID, SYSTEM_USER_INTERNAL_ID } from '#shared/utils/constants.ts'
 
 import {
   mockUserInfoForPopoverQuery,
   waitForUserInfoForPopoverQueryCalls,
 } from '../UserPopoverWithTrigger/graphql/queries/userInfoForPopover.mocks.ts'
+import UserPopover from '../UserPopoverWithTrigger/UserPopover.vue'
 import UserPopoverWithTrigger, { type Props } from '../UserPopoverWithTrigger.vue'
 
 const dummyUser = {
@@ -93,13 +97,26 @@ describe('UserPopover', () => {
   })
 
   it('shows a skeleton when user info is not available', async () => {
-    const wrapper = renderUserPopover()
+    vi.useFakeTimers()
 
-    await wrapper.events.hover(wrapper.getByRole('img', { name: `Avatar (${dummyUser.fullname})` }))
+    vi.spyOn(QueryHandler.prototype, 'loadingWithoutCachedResult').mockReturnValue(
+      computed(() => true),
+    )
 
-    const popover = await wrapper.findByRole('region')
-    // :TODO a11y testing
-    expect(await within(popover).findAllByRole('progressbar')).toHaveLength(10)
+    const wrapper = renderComponent(UserPopover, {
+      props: { userAvatar: dummyUser },
+      router: true,
+      form: true,
+    })
+
+    await flushPromises()
+    await vi.advanceTimersByTimeAsync(0)
+
+    expect(wrapper.getAllByRole('progressbar')).toHaveLength(10)
+
+    vi.useRealTimers()
+    vi.resetAllMocks()
+    await vi.dynamicImportSettled()
   })
 
   it('opens and shows the displays a user popover', async () => {

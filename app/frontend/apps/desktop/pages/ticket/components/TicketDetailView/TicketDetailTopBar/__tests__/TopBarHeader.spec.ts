@@ -94,4 +94,30 @@ describe('TopBarHeader', () => {
       },
     ])
   })
+
+  it('renders flex-col on narrow container when hideDetails=false', () => {
+    const view = renderTopBarHeader()
+    const avatar = view.getAllByTestId('common-avatar')[0]
+    let container = avatar.parentElement
+
+    while (container && !container.classList.contains('flex-col')) {
+      container = container.parentElement
+    }
+
+    expect(container).not.toBeNull()
+    expect(container).toHaveClass('flex-col')
+  })
+
+  it('renders @3xl:flex-row on wide container when hideDetails=false', () => {
+    const view = renderTopBarHeader()
+    const avatar = view.getAllByTestId('common-avatar')[0]
+    let container = avatar.parentElement
+
+    while (container && !container.classList.contains('flex-col')) {
+      container = container.parentElement
+    }
+
+    expect(container).not.toBeNull()
+    expect(container).toHaveClass('@3xl:flex-row')
+  })
 })

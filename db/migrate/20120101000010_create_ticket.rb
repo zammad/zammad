@@ -20,6 +20,7 @@ class CreateTicket < ActiveRecord::Migration[4.2]
       t.column :ignore_escalation,    :boolean,             null: false, default: false
       t.column :default_create,       :boolean,             null: false, default: false
       t.column :default_follow_up,    :boolean,             null: false, default: false
+      t.column :default_close,        :boolean,             null: false, default: false
       t.column :note,                 :string, limit: 250,  null: true
       t.column :active,               :boolean,             null: false, default: true
       t.column :updated_by_id,        :integer,             null: false
@@ -29,6 +30,7 @@ class CreateTicket < ActiveRecord::Migration[4.2]
     add_index :ticket_states, [:name], unique: true
     add_index :ticket_states, [:default_create]
     add_index :ticket_states, [:default_follow_up]
+    add_index :ticket_states, [:default_close]
     add_foreign_key :ticket_states, :ticket_state_types, column: :state_type_id
     add_foreign_key :ticket_states, :users, column: :created_by_id
     add_foreign_key :ticket_states, :users, column: :updated_by_id

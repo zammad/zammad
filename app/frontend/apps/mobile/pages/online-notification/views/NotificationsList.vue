@@ -89,7 +89,7 @@ const haveUnread = computed(() => (unseenCount.value ? unseenCount.value > 0 : f
         Maybe disabled state that it can not be clicked twice or hidding the action completley. -->
       <div
         v-if="haveUnread"
-        class="text-blue flex flex-1 cursor-pointer justify-center px-4 py-3 text-base"
+        class="flex flex-1 cursor-pointer justify-center px-4 py-3 text-base text-blue"
         :class="{ 'text-red': markingAsSeen }"
         role="button"
         tabindex="0"

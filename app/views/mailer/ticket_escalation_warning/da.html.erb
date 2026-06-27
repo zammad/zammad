@@ -1,0 +1,18 @@
+Sag vil eskalere (#{ticket.title})
+
+<div>Hej #{recipient.firstname},</div>
+<br>
+<div>Sagen (#{ticket.title}) fra "<b>#{ticket.customer.longname}</b>" vil eskalere kl. "#{ticket.escalation_at}"!</div>
+<br>
+<% if @objects[:article] %>
+  <div>
+  Information:
+  <blockquote type="cite">
+  #{article.body_as_html}
+  </blockquote>
+  </div>
+<% end %>
+<br>
+<div>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">Se dette i #{config.product_name}</a>
+</div>

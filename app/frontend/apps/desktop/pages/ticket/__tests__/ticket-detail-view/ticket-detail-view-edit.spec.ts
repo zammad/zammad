@@ -314,9 +314,9 @@ describe('Ticket detail view', () => {
 
       await getNode('form-ticket-edit-1')?.settled
 
-      expect(getByLabelText(complementary, 'Visibility')).toHaveTextContent('Internal')
+      expect(getByLabelText(complementary, 'Visibility')).toBeChecked()
 
-      expect(view.getByTestId('article-reply-stripes-panel')).toHaveClass('bg-stripes')
+      expect(view.getByTestId('article-reply-internal-indicator')).toHaveClass('bg-stripes')
 
       const editor = await view.findByRole('textbox', { name: 'Text' })
 
@@ -462,6 +462,65 @@ describe('Ticket detail view', () => {
           }),
         }),
       )
+    })
+
+    it('hides CC behind an "Add CC" link until revealed', async () => {
+      mockTicketQuery({
+        ticket: createDummyTicket({
+          group: {
+            id: convertToGraphQLId('Group', 1),
+            emailAddress: {
+              name: 'Zammad Helpdesk',
+              emailAddress: 'zammad@localhost',
+            },
+          },
+          articleType: 'email',
+          defaultPolicy: {
+            update: true,
+            agentReadAccess: true,
+          },
+        }),
+      })
+
+      mockTicketArticlesQuery({
+        articles: {
+          totalCount: 1,
+          edges: [
+            {
+              node: createDummyArticle({
+                articleType: 'email',
+                internal: false,
+              }),
+            },
+          ],
+        },
+      })
+
+      mockFormUpdaterQuery({
+        formUpdater: {
+          fields: {},
+          flags: {
+            newArticlePresent: false,
+          },
+        },
+      })
+
+      const view = await visitView('/tickets/1')
+
+      const articles = await view.findAllByRole('article')
+
+      await view.events.click(await within(articles[0]).findByRole('button', { name: 'Reply' }))
+
+      // Recipient is visible by default; CC stays hidden behind the "Add CC" link.
+      expect(await view.findByLabelText('To')).toBeInTheDocument()
+      expect(view.getByLabelText('CC').closest('.formkit-outer')).toHaveClass('hidden')
+
+      await view.events.click(view.getByRole('link', { name: 'Add CC' }))
+
+      // Revealing CC unhides the field, focuses it, and removes the link.
+      expect(view.getByLabelText('CC').closest('.formkit-outer')).not.toHaveClass('hidden')
+      expect(view.getByLabelText('CC')).toHaveFocus()
+      expect(view.queryByRole('link', { name: 'Add CC' })).not.toBeInTheDocument()
     })
 
     it('forwards to an article', async () => {
@@ -631,7 +690,7 @@ describe('Ticket detail view', () => {
 
       await getNode('form-ticket-edit-1')?.settled
 
-      await view.events.click(await view.findByRole('button', { name: 'Add phone call' }))
+      await view.events.click(await view.findByRole('button', { name: 'Add internal note' }))
 
       expect(await view.findByRole('heading', { level: 2, name: 'Reply' })).toBeInTheDocument()
 
@@ -751,7 +810,7 @@ describe('Ticket detail view', () => {
       await getNode('form-ticket-edit-1')?.settled
 
       // Discard changes inside the reply form
-      await view.events.click(await view.findByRole('button', { name: 'Add phone call' }))
+      await view.events.click(await view.findByRole('button', { name: 'Add internal note' }))
 
       expect(await view.findByRole('heading', { level: 2, name: 'Reply' })).toBeInTheDocument()
 
@@ -896,8 +955,10 @@ describe('Ticket detail view', () => {
 
       await waitForNextTick(true)
 
+      const toolbar = view.getByRole('toolbar', { name: 'Ticket actions' })
+
       // Discard changes inside the reply form
-      await view.events.click(view.getByRole('button', { name: 'Add reply' }))
+      await view.events.click(within(toolbar).getByRole('button', { name: 'Add internal note' }))
 
       await waitFor(() => expect(view.queryByRole('textbox', { name: 'Text' })).toBeInTheDocument())
 
@@ -919,7 +980,7 @@ describe('Ticket detail view', () => {
         ).not.toBeInTheDocument()
       })
 
-      await view.events.click(view.getByRole('button', { name: 'Add reply' }))
+      await view.events.click(within(toolbar).getByRole('button', { name: 'Add internal note' }))
 
       await view.events.click(view.getByRole('button', { name: 'Discard unsaved reply' }))
 

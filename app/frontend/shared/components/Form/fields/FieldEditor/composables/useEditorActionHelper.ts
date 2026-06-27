@@ -7,7 +7,7 @@ import type { ShallowRef } from 'vue'
 export default function useEditorActionHelper(editor: ShallowRef<Editor | undefined>) {
   const focused = (fn: (commands: ChainedCommands) => ChainedCommands | null | void) => {
     return () => {
-      if (!editor.value) return
+      if (!editor.value || editor.value.isDestroyed) return
       const chain = editor.value.chain().focus()
       fn(chain)?.run()
     }
@@ -17,7 +17,7 @@ export default function useEditorActionHelper(editor: ShallowRef<Editor | undefi
     !!editor.value?.isActive(type, attributes)
 
   const canExecute = (func: keyof CanCommands) => {
-    if (!editor.value) return false
+    if (!editor.value || editor.value.isDestroyed) return false
     return !!editor.value?.can()[func](null as never, null as never)
   }
 

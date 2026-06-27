@@ -11,30 +11,29 @@ import CommonSectionCollapse from '#desktop/components/CommonSectionCollapse/Com
 import { sortedFirstLevelRoutes } from '#desktop/components/PageNavigation/firstLevelRoutes.ts'
 
 import CommonButton from '../CommonButton/CommonButton.vue'
+import { SidebarName } from '../layout/types.ts'
+import { useSidebarDisplay } from '../layout/useSidebarDisplay.ts'
 
 interface Props {
   collapsed?: boolean
 }
 
-//*
-// IMPORTANT: This is just a temporary implementation please replace and adapt it later
-// *//
 defineProps<Props>()
 
 const router = useRouter()
 
-const { userId, hasPermission } = useSessionStore()
+const { hasPermission } = useSessionStore()
+
+const { toggleSidebar } = useSidebarDisplay(SidebarName.Primary)
 
 const openSearch = () => {
-  emitter.emit('expand-collapsed-content', `${userId}-left`)
+  toggleSidebar(false)
   nextTick(() => emitter.emit('focus-quick-search-field'))
 }
 
-const permittedRoutes = computed(() => {
-  return sortedFirstLevelRoutes.filter((route) => {
-    return hasPermission(route.meta.requiredPermission)
-  })
-})
+const permittedRoutes = computed(() =>
+  sortedFirstLevelRoutes.filter((route) => hasPermission(route.meta.requiredPermission)),
+)
 </script>
 
 <template>
@@ -46,10 +45,10 @@ const permittedRoutes = computed(() => {
             <li class="flex justify-center">
               <CommonButton
                 v-if="collapsed"
+                v-tooltip="$t('Open quick search')"
                 class="shrink-0 text-neutral-400 hover:outline-blue-900"
                 size="large"
                 variant="neutral"
-                :aria-label="$t('Open quick search')"
                 icon="search"
                 @click="openSearch"
               />

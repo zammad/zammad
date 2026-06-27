@@ -1856,6 +1856,62 @@ RSpec.describe 'Ticket', type: :request do
       expect(online_notification.reload.seen).to be true
     end
 
+    describe 'X-Zammad-Suppress-Notifications header' do
+      let(:other_agent) { create(:agent, groups: [ticket_group]) }
+      let(:ticket) do
+        create(:ticket, group: ticket_group, owner: other_agent, customer_id: customer.id,
+               updated_by_id: other_agent.id, created_by_id: other_agent.id)
+      end
+
+      before do
+        allow(TransactionDispatcher).to receive(:commit).and_call_original
+        ticket # ensure ticket is created before authenticated_as sets up headers
+      end
+
+      it 'passes disable_notification: true to dispatcher when header is set' do
+        authenticated_as(agent)
+
+        put "/api/v1/tickets/#{ticket.id}",
+            params:  { title: 'Updated title' },
+            headers: { 'X-Zammad-Suppress-Notifications' => 'true' },
+            as:      :json
+
+        expect(TransactionDispatcher).to have_received(:commit).with(hash_including(disable_notification: true)).at_least(:once)
+      end
+
+      it 'does not pass disable_notification when header is absent' do
+        authenticated_as(agent)
+
+        put "/api/v1/tickets/#{ticket.id}",
+            params: { title: 'Updated title' },
+            as:     :json
+
+        expect(TransactionDispatcher).not_to have_received(:commit).with(hash_including(disable_notification: true))
+      end
+
+      it 'suppresses notifications on article create when header is set' do
+        authenticated_as(agent)
+
+        post '/api/v1/ticket_articles',
+             params:  { ticket_id: ticket.id, body: 'note', type: 'note', sender: 'Agent' },
+             headers: { 'X-Zammad-Suppress-Notifications' => 'true' },
+             as:      :json
+
+        expect(TransactionDispatcher).to have_received(:commit).with(hash_including(disable_notification: true)).at_least(:once)
+      end
+
+      it 'ignores the header for customers — only agents can suppress notifications' do
+        authenticated_as(customer)
+
+        post '/api/v1/ticket_articles',
+             params:  { ticket_id: ticket.id, body: 'note', type: 'note', sender: 'Customer' },
+             headers: { 'X-Zammad-Suppress-Notifications' => 'true' },
+             as:      :json
+
+        expect(TransactionDispatcher).not_to have_received(:commit).with(hash_including(disable_notification: true))
+      end
+    end
+
     it 'does ticket split with html - check attachments (05.01)' do
       ticket = create(
         :ticket,
@@ -2973,6 +3029,39 @@ RSpec.describe 'Ticket', type: :request do
           .to change { ticket.reload.title }
           .and not_change { ticket.reload.state }
           .and not_change { ticket.reload.priority }
+      end
+    end
+  end
+
+  describe 'group with no email address configured' do
+    let(:group)  { create(:group, email_address: nil) }
+    let(:agent)  { create(:agent, groups: [group]) }
+    let(:ticket) { create(:ticket, group: group) }
+
+    context 'POST /api/v1/ticket_articles', authenticated_as: -> { agent } do
+      it 'returns an unprocessable content error with a descriptive message' do
+        post '/api/v1/ticket_articles',
+             params: { ticket_id: ticket.id, body: 'some body', type: 'email', to: 'customer@example.com' },
+             as:     :json
+
+        expect(response).to have_http_status(:unprocessable_content)
+        expect(json_response['error']).to eq('This group has no email address configured for outgoing communication.')
+      end
+    end
+
+    context 'POST /api/v1/tickets', authenticated_as: -> { agent } do
+      it 'returns an unprocessable content error with a descriptive message' do
+        post '/api/v1/tickets',
+             params: {
+               title:    'a ticket',
+               group:    group.name,
+               article:  { body: 'some body', type: 'email', to: 'customer@example.com' },
+               customer: agent.email,
+             },
+             as:     :json
+
+        expect(response).to have_http_status(:unprocessable_content)
+        expect(json_response['error']).to eq('This group has no email address configured for outgoing communication.')
       end
     end
   end

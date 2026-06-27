@@ -8,6 +8,7 @@ class App.KnowledgeBaseSearchFieldWidget extends App.Controller
   events:
     'input .js-searchField':       'input'
     'click .js-emptySearchButton': 'clear'
+    'click .js-shortcut':          'executeShortcutSearch'
 
   isActive:  false
 
@@ -21,13 +22,34 @@ class App.KnowledgeBaseSearchFieldWidget extends App.Controller
   willStart:        null
   didEnd:           null
 
+  shortcuts: ->
+    aiKbEnabled = App.Config.get('ai_assistance_kb_answer_from_ticket_generation')
+
+    shortcuts = [
+      { query: 'created_at:>now-14d',     label: __('Created within last 14 days') }
+      { query: 'updated_at:>now-3d',      label: __('Updated within last 3 days') }
+      { query: 'publication_state:draft', label: __('Drafts only') }
+    ]
+
+    if aiKbEnabled
+      shortcuts.splice(2, 0, {
+        query: 'tags:ai-generated'
+        label: App.i18n.translateContent('Tagged %s', 'ai-generated')
+      })
+
+    shortcuts
+
   constructor: ->
     super
 
     @cache = {}
 
+    if App.Config.get('es_enabled')
+      @el.addClass('has-shortcut')
+
     @html App.view('knowledge_base/search_field_widget')(
       placeholder_suffix: @context?.guaranteedTitle(@kb_locale.id)
+      shortcuts:          @shortcuts()
     )
 
   clear: ->
@@ -115,3 +137,9 @@ class App.KnowledgeBaseSearchFieldWidget extends App.Controller
     @searchField
       .val(decodeURIComponent(query))
       .trigger('input')
+
+  executeShortcutSearch: (e) ->
+    e.preventDefault()
+    @$('[data-toggle="dropdown"]').dropdown('toggle')
+    query = $(e.currentTarget).data('query')
+    @startSearch(query)

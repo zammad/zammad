@@ -23,31 +23,42 @@ const { updateTitle } = useTicketEditTitle(ticketId)
 </script>
 
 <template>
+  <!-- 1152px is the max width of the ArticleList -> max-w-6x and  48px is padding-->
+  <!-- 1152 - 48*2 = 1056  -->
+  <!-- 66rem for the middle grid to align with the content area -->
   <div
     v-if="ticket"
-    class="grid grid-cols-[max-content_1fr] gap-4"
-    :class="{ 'items-center gap-3': hideDetails }"
+    class="grid grid-cols-[1fr_minmax(0,66rem)_1fr] gap-4"
+    :class="{ 'items-center gap-3': hideDetails, 'px-6': !hideDetails }"
   >
-    <div class="flex" :class="{ 'mt-1': !hideDetails }">
+    <div class="flex w-full flex-col gap-1.5 @3xl:mt-1 @3xl:flex-row @3xl:justify-end @3xl:gap-0">
       <UserPopoverWithTrigger
         v-if="ticket.customer"
         class="z-11 h-min"
         :avatar-config="{
+          responsive: true,
           size: hideDetails ? 'medium' : 'normal',
+        }"
+        :popover-config="{
+          placement: 'arrowStart',
         }"
         :user="ticket.customer"
       />
       <OrganizationPopoverWithTrigger
         v-if="ticket.organization"
-        class="ltr:-translate-x- z-10 h-min ltr:-translate-x-1.5 rtl:translate-x-1.5"
+        class="h-min @3xl:ltr:-translate-x-1.5 @3xl:rtl:translate-x-1.5"
         :avatar-config="{
+          responsive: true,
           size: hideDetails ? 'medium' : 'normal',
+        }"
+        :popover-config="{
+          placement: 'arrowStart',
         }"
         :organization="ticket.organization"
       />
     </div>
 
-    <div class="min-w-0 grow basis-full">
+    <div class="w-full grow justify-self-center">
       <div
         class="flex flex-col justify-center"
         :class="{

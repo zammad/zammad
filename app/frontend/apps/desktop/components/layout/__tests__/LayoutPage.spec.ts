@@ -38,16 +38,21 @@ vi.mock(
 )
 
 describe('LayoutPage', () => {
+  afterEach(() => {
+    localStorage.clear()
+  })
+
   it('expands search and focus quick search input', async () => {
     const wrapper = renderComponent(LayoutPage, {
       router: true,
       form: true,
     })
 
+    // one button has display none it's for smaller screens
     await wrapper.events.click(
-      wrapper.getByRole('button', {
+      wrapper.getAllByRole('button', {
         name: 'Collapse sidebar',
-      }),
+      })[0],
     )
 
     expect(

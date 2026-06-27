@@ -39,9 +39,17 @@ class Validations::VerifyPerformRulesValidator < ActiveModel::EachValidator
       next if !value[key].is_a? Hash
 
       attrs.each do |attr|
-        result << [key, attr] if value[key][attr].blank?
+        result << [key, attr] if blank_attribute?(value[key][attr])
       end
     end
+  end
+
+  # A multi-value action (e.g. webhook_id / ai_agent_id) is missing when it has no
+  #   non-blank entries, since blank entries are dropped at runtime and schedule nothing.
+  def blank_attribute?(attribute_value)
+    return attribute_value.compact_blank.blank? if attribute_value.is_a?(Array)
+
+    attribute_value.blank?
   end
 
   def check_specific_present(record, attribute, value)

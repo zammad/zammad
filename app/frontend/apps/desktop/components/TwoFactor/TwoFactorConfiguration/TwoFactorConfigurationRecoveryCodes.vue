@@ -116,7 +116,7 @@ defineExpose({
     </template>
     <template v-else>
       <CommonLabel class="mx-auto my-3">{{ $t('Generating recovery codes…') }}</CommonLabel>
-      <CommonLoader class="my-3" :loading="loading" :error="error" />
+      <CommonLoader class="my-3" intermediate :loading="loading" :error="error" />
     </template>
   </div>
 </template>

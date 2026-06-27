@@ -10,7 +10,7 @@ App.Config.set('User', {
   class:  'user'
 }, 'NavBarRight' )
 
-App.Config.set('Admin', { prio: 9000, parent: '', name: __('Admin'), translate: true, target: '#manage', icon: 'cog', permission: ['admin.*'] }, 'NavBarRight')
+App.Config.set('Admin', { prio: 9000, parent: '', name: __('Administration'), translate: true, target: '#manage', icon: 'cog', permission: ['admin.*'] }, 'NavBarRight')
 App.Config.set('New', { prio: 20000, parent: '', name: __('New'), translate: true, target: '#new', class: 'add', icon: 'plus' }, 'NavBarRight')
 App.Config.set('Misc', { prio: 90000, parent: '', name: __('Tools'), translate: true, target: '#tools', child: true, class: 'tools' }, 'NavBar')
 # only for testing

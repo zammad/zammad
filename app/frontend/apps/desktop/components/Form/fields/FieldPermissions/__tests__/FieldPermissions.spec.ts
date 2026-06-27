@@ -51,7 +51,6 @@ const testOptions: PermissionsParentOption[] = [
 
 const wrapperParameters = {
   form: true,
-  formField: true,
 }
 
 const renderPermissions = async (props: Record<string, unknown> = {}) => {

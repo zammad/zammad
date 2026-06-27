@@ -25,7 +25,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Mon, 27 Oct 2025 10:06:41 GMT
+      - Tue, 09 Jun 2026 14:38:43 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -47,21 +47,21 @@ http_interactions:
       Vary:
       - Accept
       Etag:
-      - W/"5bdbeba07fdbf4c76ad71a9049b85bbe"
+      - W/"b7e6f07008b737e1ee45b7215fa4b363"
       Cache-Control:
       - max-age=0, private, must-revalidate
-      X-Request-Id:
-      - 023ec25a-d1f4-4e9a-adfe-2a79cd95be89
-      X-Runtime:
-      - '0.003264'
-      Strict-Transport-Security:
-      - max-age=63072000
-      - max-age=63072000; includeSubDomains
       Content-Security-Policy:
-      - default-src 'self'; script-src 'self'; img-src 'self'; style-src 'self' 'unsafe-inline';base-uri
-        'self';form-action 'self'; frame-src 'none';
+      - 'default-src ''self'' https:; font-src ''self'' https: data:; img-src ''self''
+        https: data:; object-src ''none''; script-src ''self'' https: ''nonce-'';
+        style-src ''self'' https: ''nonce-'''
+      X-Request-Id:
+      - af866d69-61e7-4372-9ebe-0d1217282e2f
+      X-Runtime:
+      - '0.003153'
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains
     body:
-      encoding: ASCII-8BIT
-      string: '{"current_user":{"id":2,"email":"me@zammad.com","firstname":"Martin","lastname":"Edenhofer","login_failed_count":0,"login_at":"2025-10-18T12:10:10.962Z","platform_admin":true,"organization_admin":false,"active":true,"created_by_id":1,"created_at":"2025-08-21T09:38:47.872Z","updated_at":"2025-10-18T12:10:10.985Z","organization_id":null}}'
-  recorded_at: Mon, 27 Oct 2025 10:06:41 GMT
-recorded_with: VCR 6.3.1
+      encoding: UTF-8
+      string: '{"current_user":{"id":"\u003cID\u003e","email":"\u003cEMAIL\u003e"}}'
+  recorded_at: Tue, 09 Jun 2026 14:38:43 GMT
+recorded_with: VCR 6.4.0

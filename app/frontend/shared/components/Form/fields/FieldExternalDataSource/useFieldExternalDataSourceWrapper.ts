@@ -14,7 +14,7 @@ export const useFieldExternalDataSourceWrapper = (
   const additionalQueryParams = () => {
     const additionalQueryParams: Record<string, JsonValue> = {
       object: context.value.object,
-      attributeName: context.value.node.name,
+      attributeName: context.value.attributeName ?? context.value.node.name,
     }
 
     const { searchTemplateRenderContext, formId, object } = context.value
@@ -51,6 +51,7 @@ export const useFieldExternalDataSourceWrapper = (
 
     // use getter to return new value each time
     get clearValue() {
+      if (context.value.multiple) return []
       return {}
     },
 

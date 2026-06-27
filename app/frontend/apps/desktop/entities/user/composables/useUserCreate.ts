@@ -22,9 +22,6 @@ const userCreateFormSchema = defineFormSchema([
   {
     isLayout: true,
     component: 'FormGroup',
-    props: {
-      class: '@container/form-group',
-    },
     children: buildUserSchema('create'),
   },
 ])

@@ -200,6 +200,19 @@ RSpec.describe String do
       TEXT
     end
 
+    it 'strips <a> elements to plain text without included references' do
+      expect(<<~HTML.chomp.html2text(true)).to eq(<<~TEXT.chomp)
+
+        <div><a href="https://zammad.org">Best Tool of the World</a>
+        some other text</div>
+        <div><a href="https://zammad.org">https://zammad.org</a></div>
+        <div>
+      HTML
+        Best Tool of the World (######LINKRAW:https://zammad.org######)some other text
+        ######LINKEXT:https://zammad.org/TEXT:https://zammad.org######
+      TEXT
+    end
+
     context 'with link_style: :markdown option' do
       it 'converts <a> elements to markdown style links' do
         html = '<p>Check out <a href="https://example.com">our website</a> for more info.</p>'
@@ -234,6 +247,23 @@ RSpec.describe String do
       it 'strips HTML tags from link text' do
         html = '<p>Check <a href="https://example.com"><strong>bold link</strong></a> out.</p>'
         expect(html.html2text(false, false, link_style: :markdown)).to eq('Check [bold link](https://example.com) out.')
+      end
+    end
+
+    context 'with link_style: :plain option' do
+      it 'converts <a> elements to plain text (with text)' do
+        html = '<p>Check out <a href="https://example.com">our website</a> for more info.</p>'
+        expect(html.html2text(link_style: :plain)).to eq('Check out our website for more info.')
+      end
+
+      it 'converts <a> elements to plain link (with link)' do
+        html = '<p>Check out our website at <a href="https://example.com"> </a> for more info.</p>'
+        expect(html.html2text(link_style: :plain)).to eq('Check out our website at https://example.com for more info.')
+      end
+
+      it 'strips empty <a> elements' do
+        html = '<p>Check out our website <a href=" "> </a> for more info.</p>'
+        expect(html.html2text(link_style: :plain)).to eq('Check out our website for more info.')
       end
     end
 
@@ -1822,7 +1852,7 @@ RSpec.describe String do
               --no not match--
 
               Bob Smith
-              From: Martin Edenhofer via Zammad Support [mailto:support@zammad.inc]
+              From: Example Support [mailto:support@example.com]
               Sent: Donnerstag, 2. April 2015 10:00
               lalala</div>
             SRC
@@ -1831,7 +1861,7 @@ RSpec.describe String do
               --no not match--
 
               Bob Smith
-              #{marker}From: Martin Edenhofer via Zammad Support [mailto:support@zammad.inc]
+              #{marker}From: Example Support [mailto:support@example.com]
               Sent: Donnerstag, 2. April 2015 10:00
               lalala</div>
             MARKED
@@ -1846,7 +1876,7 @@ RSpec.describe String do
               --no not match--
 
               Bob Smith
-              Von: Martin Edenhofer via Zammad Support [mailto:support@zammad.inc]
+              Von: Example Support [mailto:support@example.com]
               Gesendet: Donnerstag, 2. April 2015 10:00
               Betreff: lalala
 
@@ -1856,7 +1886,7 @@ RSpec.describe String do
               --no not match--
 
               Bob Smith
-              #{marker}Von: Martin Edenhofer via Zammad Support [mailto:support@zammad.inc]
+              #{marker}Von: Example Support [mailto:support@example.com]
               Gesendet: Donnerstag, 2. April 2015 10:00
               Betreff: lalala
 
@@ -1873,7 +1903,7 @@ RSpec.describe String do
               --no not match--
 
               Bob Smith
-              De : Martin Edenhofer via Zammad Support [mailto:support@zammad.inc]
+              De : Example Support [mailto:support@example.com]
               Envoyé : mercredi 29 avril 2015 17:31
               Objet : lalala
 
@@ -1884,13 +1914,48 @@ RSpec.describe String do
               --no not match--
 
               Bob Smith
-              #{marker}De : Martin Edenhofer via Zammad Support [mailto:support@zammad.inc]
+              #{marker}De : Example Support [mailto:support@example.com]
               Envoyé : mercredi 29 avril 2015 17:31
               Objet : lalala
 
             MARKED
           end
         end
+      end
+
+      it 'keeps processing if one of the regexps throw a timeout error' do
+        # This mock raises an error when sub! is called with a specific regex.
+        # This allow to simulate only one of the given regexes failing
+        # while the rest of operation is still working.
+        allow_any_instance_of(described_class)
+          .to receive(:sub!)
+          .and_wrap_original do |original, *args, &block|
+            if args.first.try(:source) == '<p>[[:space:]]*(--|__)'
+              raise Regexp::TimeoutError
+            end
+
+            original.call(*args, &block)
+          end
+
+        expect(<<~SRC.chomp.signature_identify('html', true)).to eq(<<~MARKED.chomp)
+          test 123test 123\u0020
+
+          --no not match--
+
+          Bob Smith
+          <br><b>From: </b> Example Support [mailto:support@example.com]
+          Sent: Donnerstag, 2. April 2015 10:00
+          lalala</div>
+        SRC
+          test 123test 123\u0020
+
+          --no not match--
+
+          Bob Smith
+          #{marker}<br><b>From: </b> Example Support [mailto:support@example.com]
+          Sent: Donnerstag, 2. April 2015 10:00
+          lalala</div>
+        MARKED
       end
     end
   end

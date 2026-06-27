@@ -6,10 +6,11 @@ class PerformChanges::Action::DataPrivacyDeletionTask < PerformChanges::Action
   end
 
   def execute(...)
-    DataPrivacyTask.create(
-      deletable:     record,
+    DataPrivacyTask.create_with(
       created_by_id: 1,
       updated_by_id: 1
+    ).find_or_create_by(
+      deletable: record,
     )
   end
 end

@@ -103,12 +103,18 @@ const renderCustomerTicketList = async (ticketCount: number, props?: Partial<Pro
     router: true,
   })
 
+  await vi.dynamicImportSettled()
   await flushPromises()
 
   return view
 }
 
 describe('CustomerTicketList.vue', () => {
+  afterEach(async () => {
+    await vi.dynamicImportSettled()
+    await flushPromises()
+  })
+
   it('render heading with a ticket count', async () => {
     const view = await renderCustomerTicketList(5)
 
@@ -175,9 +181,9 @@ describe('CustomerTicketList.vue', () => {
 
     expect(calls).toHaveLength(1)
 
-    emitter.emit(`customer-ticket-list-refetch:${customer.internalId}`)
+    emitter.emit(`customer-ticket-list-refetch:${customer.id}`)
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(calls).toHaveLength(2)
     })
   })

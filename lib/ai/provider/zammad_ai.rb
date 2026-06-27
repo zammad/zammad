@@ -3,6 +3,49 @@
 class AI::Provider::ZammadAI < AI::Provider
   ZAMMAD_AI_API_BASE_URL = 'https://ai.zammad.com'.freeze
 
+  DEFAULT_OPTIONS = {
+    embedding_model: 'mxbai-embed-large',
+  }.freeze
+
+  EMBEDDING_SIZES = {
+    'mxbai-embed-large' => 1024
+  }.freeze
+
+  EMBEDDING_INPUT_LIMITS = {
+    'mxbai-embed-large' => 512
+  }.freeze
+
+  def self.base_url(config)
+    ENV['ZAMMAD_AI_API_URL'] || config[:url] || ZAMMAD_AI_API_BASE_URL
+  end
+
+  def self.token(config)
+    ENV['ZAMMAD_AI_TOKEN'] || config[:token]
+  end
+
+  def self.ping!(config)
+    response = UserAgent.get(
+      "#{base_url(config)}/api/v1/me",
+      {},
+      {
+        **REQUEST_TIMEOUT_OPTIONS,
+        verify_ssl:   true,
+        bearer_token: token(config),
+        json:         true,
+        log:          {
+          facility:          'AI::Provider',
+          log_only_on_error: true,
+        },
+      },
+    )
+
+    validate_response!(response)
+
+    nil
+  end
+
+  private
+
   def chat(prompt_system:, prompt_user:, prompt_image:)
     service_name = options[:service_name] || 'generic'
 
@@ -23,13 +66,11 @@ class AI::Provider::ZammadAI < AI::Provider
       "#{self.class.base_url(config)}/api/v1/features/#{service_name.underscore}",
       request_body,
       {
-        open_timeout:  4,
-        read_timeout:  60,
-        verify_ssl:    true,
-        bearer_token:  self.class.token(config),
-        total_timeout: 60,
-        json:          true,
-        log:           {
+        **REQUEST_TIMEOUT_OPTIONS,
+        verify_ssl:   true,
+        bearer_token: self.class.token(config),
+        json:         true,
+        log:          {
           facility: 'AI::Provider',
         },
       },
@@ -41,43 +82,6 @@ class AI::Provider::ZammadAI < AI::Provider
     data.first['response']
   end
 
-  def embeddings(input:)
-    raise NotImplementedError, 'not implemented yet due to missing API'
-  end
-
-  def self.ping!(config)
-    response = UserAgent.get(
-      "#{base_url(config)}/api/v1/me",
-      {},
-      {
-        open_timeout:  4,
-        read_timeout:  60,
-        verify_ssl:    true,
-        bearer_token:  token(config),
-        total_timeout: 60,
-        json:          true,
-        log:           {
-          facility:          'AI::Provider',
-          log_only_on_error: true,
-        },
-      },
-    )
-
-    validate_response!(response)
-
-    nil
-  end
-
-  def self.base_url(config)
-    ENV['ZAMMAD_AI_API_URL'] || config[:url] || ZAMMAD_AI_API_BASE_URL
-  end
-
-  def self.token(config)
-    ENV['ZAMMAD_AI_TOKEN'] || config[:token]
-  end
-
-  private
-
   def extract_response_metadata(data)
     @response_metadata = {
       model:             data.first['model'],
@@ -85,5 +89,32 @@ class AI::Provider::ZammadAI < AI::Provider
       completion_tokens: data.first.dig('usage', 'completion_tokens'),
       total_tokens:      data.first.dig('usage', 'total_tokens'),
     }
+  end
+
+  def embeddings(input:)
+    request_body = { input: }
+
+    if options[:embedding_model]
+      request_body[:llm] = options[:embedding_model]
+    end
+
+    response = UserAgent.post(
+      "#{self.class.base_url(config)}/api/v1/features/embed",
+      request_body,
+      {
+        **REQUEST_TIMEOUT_OPTIONS,
+        verify_ssl:   true,
+        bearer_token: self.class.token(config),
+        json:         true,
+        log:          {
+          facility: 'AI::Provider',
+        },
+      },
+    )
+
+    data = validate_response!(response)
+    extract_response_metadata(data)
+
+    data.first['embeddings']
   end
 end

@@ -138,14 +138,36 @@ const useSelectOptions = <T extends SelectOption[] | FlatSelectOption[] | AutoCo
     }
 
     const selectedValues = cloneDeep(currentValue.value) || []
-    const optionIndex = selectedValues.indexOf(option.value)
+
+    const optionIndex = selectedValues.findIndex((selectedValue: AllowedSelectValue) => {
+      if (typeof selectedValue === 'object' && selectedValue !== null && 'value' in selectedValue) {
+        return selectedValue.value === option.value
+      }
+
+      return selectedValue === option.value
+    })
+
     if (optionIndex !== -1) selectedValues.splice(optionIndex, 1)
     else selectedValues.push(valueBuilder(option))
+
     selectedValues.sort(
-      (a: string | number, b: string | number) =>
-        sortedOptions.value.findIndex((option) => option.value === a) -
-        sortedOptions.value.findIndex((option) => option.value === b),
+      (a: AllowedSelectValue, b: AllowedSelectValue) =>
+        sortedOptions.value.findIndex((option) => {
+          if (typeof a === 'object' && a !== null && 'value' in a) {
+            return a.value === option.value
+          }
+
+          return a === option.value
+        }) -
+        sortedOptions.value.findIndex((option) => {
+          if (typeof b === 'object' && b !== null && 'value' in b) {
+            return b.value === option.value
+          }
+
+          return b === option.value
+        }),
     )
+
     context.value.node.input(selectedValues)
   }
 

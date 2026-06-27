@@ -13,9 +13,10 @@ import {
 import { useFeedbackDialog } from '#desktop/components/BetaUi/FeedbackDialog/useFeedbackDialog.ts'
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
-import { useAppUsage } from '#desktop/composables/BetaUi/useAppUsage.ts'
+import { useAppUsageStore } from '#desktop/stores/appUsage.ts'
 
 import { useBreadcrumb } from '../composables/useBreadcrumb.ts'
+import { usePersonalSettingTabs } from '../composables/usePersonalSettingTabs.ts'
 
 const { breadcrumbItems } = useBreadcrumb(__('New BETA UI'))
 
@@ -31,7 +32,7 @@ const { openFeedbackDialog } = useFeedbackDialog()
 
 const { waitForConfirmation } = useConfirmation()
 
-const { setNeverAskAgainForTimedFeedback, neverAskAgainForTimedFeedback } = useAppUsage()
+const { setNeverAskAgainForTimedFeedback, neverAskAgainForTimedFeedback } = useAppUsageStore()
 
 const leaveFeedbackProgram = () => {
   waitForConfirmation(__('You can always re-join later.'), {
@@ -42,10 +43,17 @@ const leaveFeedbackProgram = () => {
     if (confirmed) handleFeedbackConsent(false)
   })
 }
+
+const { tabs, activeTab } = usePersonalSettingTabs()
 </script>
 
 <template>
-  <LayoutContent :breadcrumb-items="breadcrumbItems" width="full">
+  <LayoutContent
+    :active-tab="activeTab"
+    :tabs="tabs"
+    :breadcrumb-items="breadcrumbItems"
+    width="full"
+  >
     <div class="mb-2 flex flex-col gap-4">
       <FormKit
         type="toggle"

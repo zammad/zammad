@@ -6,6 +6,7 @@ import { computed, toRef, useTemplateRef, type Ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 import { useCopyToClipboard } from '#shared/composables/useCopyToClipboard.ts'
+import { useReducedMotion } from '#shared/composables/useReducedMotion.ts'
 import type { Organization } from '#shared/graphql/types.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
@@ -13,6 +14,7 @@ import { useSessionStore } from '#shared/stores/session.ts'
 import CommonActionMenu from '#desktop/components/CommonActionMenu/CommonActionMenu.vue'
 import CommonBreadcrumb from '#desktop/components/CommonBreadcrumb/CommonBreadcrumb.vue'
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
+import { useStickyTopCalculator } from '#desktop/components/Form/fields/FieldEditor/useStickyTopCalculator.ts'
 import OrganizationInfo from '#desktop/components/Organization/OrganizationInfo.vue'
 import { useElementScroll } from '#desktop/composables/useElementScroll.ts'
 import { useTopBarHeaderHover } from '#desktop/composables/useTopBarHeaderHover.ts'
@@ -54,13 +56,22 @@ const copyOrganizationDisplayNameToClipboard = () => {
 const { y } = useElementScroll(toRef(props, 'contentContainerElement') as Ref<HTMLDivElement>)
 const { width } = useElementSize(toRef(props, 'contentContainerElement'))
 
-const headerElement = useTemplateRef('header')
+const headerWithDetailsElement = useTemplateRef('header-with-details')
+const headerWithHiddenDetailsElement = useTemplateRef('header-with-hidden-details')
 
-const { height: headerHeight } = useElementSize(headerElement, undefined, {
+const { height: headerWithDetailsHeight } = useElementSize(headerWithDetailsElement, undefined, {
   box: 'border-box',
 })
 
-const { containerEventHandlers, isHovering } = useTopBarHeaderHover([headerElement])
+const { height: headerWithHiddenDetailsHeight } = useElementSize(
+  headerWithHiddenDetailsElement,
+  undefined,
+  {
+    box: 'border-box',
+  },
+)
+
+const { containerEventHandlers, isHovering } = useTopBarHeaderHover([headerWithDetailsElement])
 
 const containerWidth = computed(() => (width.value ? `${width.value}px` : 'auto'))
 
@@ -68,14 +79,14 @@ const containerWidth = computed(() => (width.value ? `${width.value}px` : 'auto'
 const NEGATIVE_PADDING = -30
 
 const absoluteContainerOffset = computed(() => {
-  const offset = y.value - (headerHeight.value + NEGATIVE_PADDING)
+  const offset = y.value - (headerWithDetailsHeight.value + NEGATIVE_PADDING)
   return `${offset > 0 ? 0 : offset}px`
 })
 
 const stickyContainerTop = computed(() => {
   if (isHovering.value) return '0px'
-  if (y.value < headerHeight.value) return `-${y.value}px`
-  return `-${headerHeight.value}px`
+  if (y.value < headerWithDetailsHeight.value) return `-${y.value}px`
+  return `-${headerWithDetailsHeight.value}px`
 })
 
 const { topLevelActions, secondLevelActions } = initializeActionPlugins()
@@ -91,11 +102,21 @@ const allowedTopLevelActions = computed(() =>
 )
 
 const router = useRouter()
+
+const currentVisibleHeaderHeight = computed(() => {
+  return isHovering.value ? headerWithDetailsHeight.value : headerWithHiddenDetailsHeight.value
+})
+
+// 7px is needed to compensate some overlap
+useStickyTopCalculator(currentVisibleHeaderHeight, { offset: 7 })
+
+const { hasReducedMotion } = useReducedMotion()
 </script>
 
 <template>
   <header
-    class="absolute top-0 right-0 left-0 z-30 h-17 w-full border-b border-neutral-100 bg-neutral-50/80 p-3 backdrop-blur-2xs dark:border-gray-900 dark:bg-gray-500/80"
+    ref="header-with-hidden-details"
+    class="absolute top-0 right-0 left-0 z-30 w-full border-b border-neutral-100 bg-neutral-50/80 p-2 backdrop-blur-2xs dark:border-gray-900 dark:bg-gray-500/80"
     :class="{ '-z-10! opacity-0': isHovering }"
     :style="{
       transform: `translateY(${absoluteContainerOffset})`,
@@ -109,18 +130,19 @@ const router = useRouter()
     </div>
   </header>
   <header
-    ref="header"
+    ref="header-with-details"
     data-test-id="organization-detail-top-bar"
-    class="sticky z-20 h-34 border-b border-neutral-100 bg-neutral-50/80 p-3 backdrop-blur-2xs dark:border-gray-900 dark:bg-gray-500/80"
+    class="sticky z-20 border-b border-neutral-100 bg-neutral-50/80 px-5.5 py-3 backdrop-blur-2xs dark:border-gray-900 dark:bg-gray-500/80"
     :class="{
-      'transition-[top]': isHovering,
+      'transition-[top]': isHovering && !hasReducedMotion,
     }"
     :style="{
       top: stickyContainerTop,
     }"
     v-on="containerEventHandlers"
   >
-    <CommonBreadcrumb :items="breadcrumbItems" size="small" emphasize-last-item>
+    <!-- h-6 because of ticket detail view has action which add a additional height to the breadcrumbs -->
+    <CommonBreadcrumb class="flex h-6" :items="breadcrumbItems" size="small" emphasize-last-item>
       <template #trailing>
         <CommonButton
           v-if="organizationDisplayName"
@@ -133,29 +155,35 @@ const router = useRouter()
         />
       </template>
     </CommonBreadcrumb>
-    <div class="mx-auto mt-3 flex h-21 w-full max-w-278 pe-17">
+    <div class="mx-auto mt-3 flex w-full max-w-278">
       <OrganizationInfo
         :organization="organization"
+        responsive
         size="normal"
         title-size="xl"
         title-class="font-medium"
         no-link
       >
         <template #actions>
-          <div role="menubar" class="flex items-center gap-1.5 ltr:ml-auto rtl:mr-auto">
+          <div role="toolbar" class="flex items-center gap-1.5 ltr:ml-auto rtl:mr-auto">
             <CommonButton
               v-for="action in allowedTopLevelActions"
               :key="action.key"
-              role="menuitem"
+              class="aspect-square w-auto! rounded-lg! px-2! outline-offset-0! @3xl:aspect-auto @3xl:rounded-md! @3xl:px-2.5! @3xl:py-1.5!"
+              no-truncate
               :prefix-icon="action.icon"
               @click="action?.onClick?.(organization, router)"
             >
-              {{ $t(action.label) }}
+              <span class="sr-only shrink-0 text-xs! @3xl:not-sr-only">
+                {{ $t(action.label) }}
+              </span>
             </CommonButton>
             <CommonActionMenu
-              button-size="large"
+              button-size="medium"
+              role="presentation"
+              class="flex! h-full items-center"
+              :custom-menu-button-label="$t('Additional actions')"
               :entity="organization"
-              role="menuitem"
               no-single-action-mode
               :actions="secondLevelActions"
             />

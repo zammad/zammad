@@ -55,7 +55,7 @@ scms:
       token: '{{ requiredEnv "RENOVATE_TOKEN" }}'
       username: 'renovate'
       branch: "develop"
-      workingbranchprefix: "renovate/updatecli"
+      workingbranchprefix: "private/updatecli"
       workingbranchseparator: "/"
 
 actions:

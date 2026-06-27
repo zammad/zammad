@@ -22,6 +22,7 @@ import { GraphQLErrorTypes } from '#shared/types/error.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
+import { useTransitionConfig } from '#desktop/composables/useTransitionConfig.ts'
 import { usePasswordCheckTwoFactor } from '#desktop/entities/two-factor-configuration/composables/usePasswordCheckTwoFactor.ts'
 
 import type { TwoFactorConfigurationComponentPropsWithRequiredToken } from '../types.ts'
@@ -199,10 +200,12 @@ defineExpose({
   form,
   footerActionOptions,
 })
+
+const { transitions } = useTransitionConfig()
 </script>
 
 <template>
-  <CommonLoader :loading="loading" :error="initiationError" />
+  <CommonLoader :loading="loading" :error="initiationError" intermediate />
   <div v-show="!loading" class="space-y-2 text-sm text-gray-100 dark:text-neutral-400">
     <CommonLabel
       >{{ $t('To set up an authenticator app for your account, follow the steps below:') }}
@@ -235,7 +238,7 @@ defineExpose({
           aria-haspopup="true"
           data-test-id="secret-overlay"
           aria-controls="qr-code-secret-overlay"
-          class="relative mx-auto w-fit cursor-pointer rounded-lg hover:outline hover:outline-1 hover:outline-offset-1 hover:outline-blue-600 focus:outline focus:outline-1 focus:outline-offset-1 focus:outline-blue-800 has-[button:hover,span:hover]:outline-0 dark:hover:outline-blue-900"
+          class="relative mx-auto w-fit cursor-pointer rounded-lg hover:outline-1 hover:outline-offset-1 hover:outline-blue-600 focus:outline-1 focus:outline-offset-1 focus:outline-blue-800 has-[button:hover,span:hover]:outline-0 dark:hover:outline-blue-900"
           @click="toggleSecretCodeOverlay"
           @keydown.enter="toggleSecretCodeOverlay"
         >
@@ -245,7 +248,7 @@ defineExpose({
             role="img"
             :aria-label="$t('Authenticator app QR code')"
           />
-          <Transition name="fade">
+          <Transition :name="transitions.fade">
             <div
               v-show="showSecretOverlay"
               id="qr-code-secret-overlay"

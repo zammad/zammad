@@ -30,7 +30,6 @@ const testOptions: SetRequired<Partial<AutocompleteSearchRecipientEntry>, 'label
 
 const wrapperParameters = {
   form: true,
-  formField: true,
   router: true,
   store: true,
 }

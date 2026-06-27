@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :ai_agent, class: 'AI::Agent', aliases: %i[ai/agent] do
-    name { Faker::Lorem.unique.sentence(word_count: 3) }
+    sequence(:name) { |n| "AI Agent #{n}" }
 
     created_by_id { 1 }
     updated_by_id { 1 }

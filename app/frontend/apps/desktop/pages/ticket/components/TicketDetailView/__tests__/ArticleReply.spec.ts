@@ -1,13 +1,57 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { within } from '@testing-library/vue'
+import { computed } from 'vue'
 
 import { renderComponent } from '#tests/support/components/index.ts'
+import { waitForNextTick } from '#tests/support/utils.ts'
 
+import * as useTicketView from '#shared/entities/ticket/composables/useTicketView.ts'
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
 import ArticleReply from '../ArticleReply.vue'
+
+const defaultTicketArticleTypes = [
+  {
+    value: 'note',
+    label: 'Note',
+    buttonLabel: 'Add internal note',
+    icon: 'note',
+    fields: { attachments: {}, body: { required: true } },
+    view: { agent: ['change'] },
+    internal: true,
+  },
+  {
+    value: 'phone',
+    label: 'Phone',
+    buttonLabel: 'Add phone call',
+    icon: 'phone',
+    fields: { attachments: {}, body: { required: true } },
+    view: { agent: ['change'] },
+    internal: false,
+  },
+  {
+    value: 'email',
+    label: 'Email',
+    buttonLabel: 'Add email',
+    icon: 'mail',
+    view: { agent: ['change'] },
+    fields: {
+      to: { required: true },
+      cc: {},
+      body: { required: true },
+      subtype: {},
+      attachments: {},
+      security: {},
+    },
+    internal: false,
+    onDeselected: vi.fn(),
+    onOpened: vi.fn(),
+    onSelected: vi.fn(),
+    performReply: vi.fn(),
+  },
+]
 
 const renderArticleReply = (props: Record<string, unknown> = {}) =>
   renderComponent(ArticleReply, {
@@ -26,82 +70,64 @@ const renderArticleReply = (props: Record<string, unknown> = {}) =>
           agentReadAccess: true,
         },
       }),
-      ticketArticleTypes: [
-        {
-          value: 'note',
-          label: 'Note',
-          buttonLabel: 'Add internal note',
-          icon: 'note',
-          fields: { attachments: {}, body: { required: true } },
-          view: { agent: ['change'] },
-          internal: true,
-        },
-        {
-          value: 'phone',
-          label: 'Phone',
-          buttonLabel: 'Add phone call',
-          icon: 'phone',
-          fields: { attachments: {}, body: { required: true } },
-          view: { agent: ['change'] },
-          internal: false,
-        },
-        {
-          value: 'email',
-          label: 'Email',
-          buttonLabel: 'Add email',
-          icon: 'mail',
-          view: { agent: ['change'] },
-          fields: {
-            to: { required: true },
-            cc: {},
-            body: { required: true },
-            subtype: {},
-            attachments: {},
-            security: {},
-          },
-          internal: false,
-          onDeselected: vi.fn(),
-          onOpened: vi.fn(),
-          onSelected: vi.fn(),
-          performReply: vi.fn(),
-        },
-      ],
+      ticketArticleTypes: defaultTicketArticleTypes,
       parentReachedBottomScroll: false,
       ...props,
     },
   })
 
 describe('ArticleReply', () => {
-  it('shows common article action buttons', () => {
+  afterEach(() => {
+    localStorage.clear()
+  })
+
+  it('shows add note button and hint text for agents', () => {
     const wrapper = renderArticleReply()
 
     expect(wrapper.getByRole('button', { name: 'Add internal note' })).toBeInTheDocument()
 
-    expect(wrapper.getByIconName('pencil-square')).toBeInTheDocument()
+    expect(wrapper.getByText('or use the reply actions on articles.')).toBeInTheDocument()
 
-    expect(wrapper.getByRole('button', { name: 'Add phone call' })).toBeInTheDocument()
-
-    expect(wrapper.getByIconName('telephone')).toBeInTheDocument()
+    expect(wrapper.queryByRole('button', { name: 'Add phone call' })).not.toBeInTheDocument()
   })
 
-  it('shows primary article reply action button for tickets created by phone', () => {
+  it('shows add note button for agents regardless of ticket create article type', () => {
     const wrapper = renderArticleReply({
       createArticleType: 'phone',
     })
 
-    expect(wrapper.getByRole('button', { name: 'Add reply' })).toBeInTheDocument()
-
-    expect(wrapper.getByIconName('envelope')).toBeInTheDocument()
+    expect(wrapper.getByRole('button', { name: 'Add internal note' })).toBeInTheDocument()
+    expect(wrapper.queryByRole('button', { name: 'Add reply' })).not.toBeInTheDocument()
   })
 
-  it('shows primary article reply action button for tickets created by web', () => {
+  it('shows add reply button for customers without hint text', () => {
+    vi.spyOn(useTicketView, 'useTicketView').mockReturnValue({
+      isTicketAgent: computed(() => false),
+      isTicketCustomer: computed(() => true),
+      isTicketEditable: computed(() => true),
+    })
+
     const wrapper = renderArticleReply({
-      createArticleType: 'web',
+      ticketArticleTypes: [
+        ...defaultTicketArticleTypes,
+        {
+          value: 'web',
+          label: 'Web',
+          buttonLabel: 'Add reply',
+          icon: 'web',
+          fields: { attachments: {}, body: { required: true } },
+          view: { agent: ['change'] },
+          internal: false,
+        },
+      ],
     })
 
     expect(wrapper.getByRole('button', { name: 'Add reply' })).toBeInTheDocument()
 
-    expect(wrapper.getByIconName('envelope')).toBeInTheDocument()
+    expect(wrapper.queryByRole('button', { name: 'Add internal note' })).not.toBeInTheDocument()
+    expect(wrapper.queryByText('or use the reply actions on articles.')).not.toBeInTheDocument()
+
+    vi.resetAllMocks()
   })
 
   it('can display and pin reply form', async () => {
@@ -135,30 +161,61 @@ describe('ArticleReply', () => {
     expect(complementary).toHaveAttribute('aria-expanded', 'true')
   })
 
-  it('renders striped border for internal articles', async () => {
+  it('does not reset pinned state when form is closed and reopened', async () => {
     const wrapper = renderArticleReply({
       newArticlePresent: true,
-      hasInternalArticle: true,
     })
 
-    expect(wrapper.getByTestId('article-reply-stripes-panel')).toHaveClass('bg-stripes')
-    expect(wrapper.getByTestId('article-reply-stripes-panel')).not.toHaveClass('border-stripes')
+    const complementary = wrapper.getByRole('complementary', { name: 'Reply' })
+
+    await wrapper.events.click(wrapper.getByRole('button', { name: 'Pin this panel' }))
+    expect(complementary).toHaveAttribute('aria-expanded', 'false')
+
+    await wrapper.rerender({ newArticlePresent: false })
+    await wrapper.rerender({ newArticlePresent: true })
+
+    expect(complementary).toHaveAttribute('aria-expanded', 'false')
+  })
+
+  describe('scroll behavior on article form open', () => {
+    beforeEach(() => {
+      vi.clearAllMocks()
+    })
+
+    it('scrolls article panel into view when opening unpinned', async () => {
+      vi.useFakeTimers()
+
+      const wrapper = renderArticleReply({ newArticlePresent: false })
+
+      await wrapper.rerender({ newArticlePresent: true })
+      await waitForNextTick()
+      vi.runAllTimers()
+
+      expect(Element.prototype.scrollIntoView).toHaveBeenCalled()
+
+      vi.useRealTimers()
+    })
+
+    it('does not scroll article panel into view when opening pinned', async () => {
+      const wrapper = renderArticleReply({ newArticlePresent: false, pinned: true })
+
+      await wrapper.rerender({ newArticlePresent: true })
+
+      expect(Element.prototype.scrollIntoView).not.toHaveBeenCalled()
+    })
+  })
+
+  it('switches between unpinned and pinned panels via the actions', async () => {
+    const wrapper = renderArticleReply({ newArticlePresent: true })
+
+    expect(wrapper.getByRole('button', { name: 'Pin this panel' })).toBeInTheDocument()
 
     await wrapper.events.click(wrapper.getByRole('button', { name: 'Pin this panel' }))
 
-    expect(wrapper.getByTestId('article-reply-stripes-panel')).not.toHaveClass('bg-stripes')
-    expect(wrapper.getByTestId('article-reply-stripes-panel')).toHaveClass('border-stripes')
-
-    await wrapper.rerender({
-      hasInternalArticle: false,
-    })
-
-    expect(wrapper.getByTestId('article-reply-stripes-panel')).not.toHaveClass('bg-stripes')
-    expect(wrapper.getByTestId('article-reply-stripes-panel')).not.toHaveClass('border-stripes')
+    expect(wrapper.getByRole('button', { name: 'Unpin this panel' })).toBeInTheDocument()
 
     await wrapper.events.click(wrapper.getByRole('button', { name: 'Unpin this panel' }))
 
-    expect(wrapper.getByTestId('article-reply-stripes-panel')).not.toHaveClass('bg-stripes')
-    expect(wrapper.getByTestId('article-reply-stripes-panel')).not.toHaveClass('border-stripes')
+    expect(wrapper.getByRole('button', { name: 'Pin this panel' })).toBeInTheDocument()
   })
 })

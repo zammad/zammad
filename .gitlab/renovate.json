@@ -1,5 +1,24 @@
 {
-  "enabledManagers": ["bundler", "npm", "github-actions"],
+  "enabledManagers": ["bundler", "npm", "github-actions", "devcontainer", "custom.regex"],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^\\.gitlab/ci/.*\\.yml$/"
+      ],
+      "matchStrings": ["DEVCONTAINERS_CLI_VERSION: '(?<currentValue>[^']+)'"],
+      "depNameTemplate": "@devcontainers/cli",
+      "datasourceTemplate": "npm"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^lib/form_spam_protection/captcha/.*\\.rb$/"
+      ],
+      "matchStrings": ["cdn\\.jsdelivr\\.net/npm/(?<depName>[^@]+)@(?<currentValue>[^/]+)/"],
+      "datasourceTemplate": "npm"
+    }
+  ],
   "bundler": {
     "lockFileMaintenance": {
       "enabled": true,
@@ -7,6 +26,11 @@
       "branchTopic": "lock-file-maintenance-ruby",
       "commitMessageExtra": "(Ruby)"
     }
+  },
+  "devcontainer": {
+    "managerFilePatterns": [
+      "/^\\.devcontainer/[^/]+/devcontainer\\.json$/"
+    ]
   },
   "npm": {
     "lockFileMaintenance": {
@@ -16,10 +40,15 @@
       "commitMessageExtra": "(JS)"
     }
   },
+  "minimumReleaseAge": "3 days",
   "packageRules": [
     {
+      "matchManagers": ["devcontainer"],
+      "assignees": ["fl"]
+    },
+    {
       "matchCategories": ["ci"],
-      "assignees": ["mg"]
+      "assignees": ["fl"]
     },
     {
       "matchCategories": ["ruby"],

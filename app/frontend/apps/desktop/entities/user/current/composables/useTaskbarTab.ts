@@ -82,22 +82,27 @@ export const useTaskbarTab = (context?: Ref<TaskbarTabContext>) => {
   const { updateTaskbarTab, deleteTaskbarTab } = useUserCurrentTaskbarTabsStore()
 
   // Keep track of the passed context and update the store state accordingly.
-  if (context) {
+  // Key off the static entity key (available synchronously) instead of the
+  // async taskbar tab, so the context is stored even if the taskbar data
+  // loads after the context has already settled.
+  if (context && currentTaskbarEntityKey) {
     watch(
       context,
       (newValue) => {
-        if (!currentTaskbarTab.value?.tabEntityKey) return
-
-        taskbarTabContexts.value[currentTaskbarTab.value.tabEntityKey] = newValue
+        taskbarTabContexts.value[currentTaskbarEntityKey] = newValue
       },
       { immediate: true },
     )
   }
 
-  const currentTaskbarTabUpdate = (taskbarTab: UserTaskbarTab, state?: Record<string, unknown>) => {
+  const currentTaskbarTabUpdate = (
+    taskbarTab: UserTaskbarTab,
+    state?: Record<string, unknown>,
+    sendOptions?: Parameters<typeof updateTaskbarTab>[3],
+  ) => {
     if (!currentTaskbarTabId.value) return
 
-    updateTaskbarTab(currentTaskbarTabId.value, taskbarTab, state)
+    updateTaskbarTab(currentTaskbarTabId.value, taskbarTab, state, sendOptions)
   }
 
   watch(

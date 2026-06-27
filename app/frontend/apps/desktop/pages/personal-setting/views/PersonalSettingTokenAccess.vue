@@ -25,11 +25,13 @@ import { useFlyout } from '#desktop/components/CommonFlyout/useFlyout.ts'
 import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
 import type { MenuItem } from '#desktop/components/CommonPopoverMenu/types.ts'
 import CommonSimpleTable from '#desktop/components/CommonTable/CommonSimpleTable.vue'
+import CommonTableSkeleton from '#desktop/components/CommonTable/Skeleton/CommonTableSkeleton.vue'
 import type { TableSimpleHeader, TableItem } from '#desktop/components/CommonTable/types.ts'
 import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
 
 import { useCheckTokenAccess } from '../composables/permission/useCheckTokenAccess.ts'
 import { useBreadcrumb } from '../composables/useBreadcrumb.ts'
+import { usePersonalSettingTabs } from '../composables/usePersonalSettingTabs.ts'
 import { UserCurrentAccessTokenUpdatesDocument } from '../graphql/subscriptions/userCurrentAccessTokenUpdates.api.ts'
 
 defineOptions({
@@ -170,10 +172,14 @@ const helpText = computed(() => [
   ),
   i18n.t("Pick a name for the application, and we'll give you a unique token."),
 ])
+
+const { tabs, activeTab } = usePersonalSettingTabs()
 </script>
 
 <template>
   <LayoutContent
+    :active-tab="activeTab"
+    :tabs="tabs"
     :help-text="helpText"
     :show-inline-help="!currentAccessTokenPresent && !accessTokenListLoading"
     :breadcrumb-items="breadcrumbItems"
@@ -193,6 +199,10 @@ const helpText = computed(() => [
     </template>
 
     <CommonLoader :loading="accessTokenListLoading">
+      <template #skeleton>
+        <CommonTableSkeleton :columns="5" :rows="3" has-actions />
+      </template>
+
       <div class="mb-4">
         <CommonSimpleTable
           :headers="tableHeaders"

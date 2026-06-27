@@ -10,6 +10,7 @@ export interface ToggleButtonsOption extends FormKitOptionsItem<string> {
 
 export type FieldToggleButtonsContext = {
   options: ToggleButtonsOption
+  size?: 'small' | 'medium' | 'large'
 }
 
 export interface FieldToggleButtonsProps {

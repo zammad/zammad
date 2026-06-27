@@ -8,7 +8,6 @@ import { renderComponent } from '#tests/support/components/index.ts'
 const renderToggleButtonsField = (props: any = {}) => {
   return renderComponent(FormKit, {
     form: true,
-    formField: true,
     props: {
       id: 'toggleButtons',
       type: 'toggleButtons',
@@ -44,5 +43,16 @@ describe('Form - Field - Toggle Buttons', () => {
     expect(node.context?.value).toEqual('example')
 
     expect(view.getByIconName('sun')).toBeInTheDocument()
+  })
+
+  it('uses the field label as accessible name for the tablist', () => {
+    const view = renderToggleButtonsField({
+      options: [
+        { value: 'example', label: 'Example' },
+        { value: 'other', label: 'Other' },
+      ],
+    })
+
+    expect(view.getByRole('tablist', { name: 'Toggle Buttons' })).toBeInTheDocument()
   })
 })

@@ -1,8 +1,7 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { within } from '@testing-library/vue'
-import { flushPromises } from '@vue/test-utils'
-import { computed } from 'vue'
+import { computed, nextTick } from 'vue'
 
 import ticketObjectAttributes from '#tests/graphql/factories/fixtures/ticket-object-attributes.ts'
 import renderComponent from '#tests/support/components/renderComponent.ts'
@@ -68,6 +67,11 @@ describe('TicketList', () => {
   })
 
   describe('loading states', () => {
+    afterEach(() => {
+      vi.useRealTimers()
+      vi.resetAllMocks()
+    })
+
     it('displays the skeleton for the table on initial load', async () => {
       vi.useFakeTimers()
       mockDefaultTicketsCachedByOverview({ totalCount: 207 })
@@ -90,16 +94,16 @@ describe('TicketList', () => {
         form: true,
       })
 
-      // Something needs to be resolved beforehand in the microtask queue,
-      await flushPromises()
+      // Allow Vue's reactivity and async composables to initialize before
+      // advancing fake timers. nextTick uses Promise.resolve() and works
+      // correctly with fake timers, unlike flushPromises() which relies on
+      // setImmediate (faked by vi.useFakeTimers()).
+      await nextTick()
 
       // Advance timers to trigger the debounced loading state
       await vi.advanceTimersByTimeAsync(0)
 
       expect(wrapper.getAllByLabelText('Content loader').length).toBeGreaterThan(0)
-
-      vi.useRealTimers()
-      vi.resetAllMocks()
     })
   })
 
@@ -127,6 +131,22 @@ describe('TicketList', () => {
     expect(wrapper.getByRole('cell', { name: ticket.group.name! })).toBeInTheDocument()
 
     expect(wrapper.getAllByRole('cell', { name: ticket.state.name })).toHaveLength(2) // state is shown as text and as color indicator
+  })
+
+  it('exposes a tooltip with the full title on the title cell', async () => {
+    vi.useRealTimers()
+
+    const ticket = createDummyTicket({ title: 'A rather long ticket title' })
+
+    applyMocks(ticket)
+
+    const { wrapper } = renderTicketList()
+
+    const titleCell = await wrapper.findByRole('cell', { name: ticket.title })
+    const titleLink = within(titleCell).getByRole('link')
+
+    expect(titleLink).toHaveAttribute('data-tooltip', 'truncate')
+    expect(titleLink).toHaveAttribute('aria-label', ticket.title)
   })
 
   it('shows priority icon if flag is set', async () => {

@@ -17,6 +17,7 @@ export interface ExternalDataSourceProps {
   context: FormFieldContext<
     AutoCompleteProps & {
       object: EnumObjectManagerObjects
+      attributeName?: string
       options?: AutoCompleteExternalDataSourceOption[]
       searchTemplateRenderContext?: (
         formId: string,

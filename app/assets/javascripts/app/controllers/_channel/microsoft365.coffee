@@ -10,7 +10,21 @@ class App.ChannelMicrosoft365 extends App.ControllerTabs
       {
         name:       __('Accounts'),
         target:     'c-account',
-        controller: ChannelAccountOverview,
+        controller: App.ChannelAccountOverview,
+        params:
+          channelKey:             'microsoft365'
+          channelAreaName:        'Microsoft365::Account'
+          externalCredentialName: 'microsoft365'
+          viewNamespace:          'microsoft365'
+          legacyUrls:             true
+          hasAdminConsent:        true
+          hasRollbackMigration:   true
+          hasErrorCodeHandling:   true
+          hasMigrationRedirect:   true
+          hasInboundEditRedirect: true
+          appConfigClass:         AppConfig
+          groupEditClass:         ChannelGroupEdit
+          inboundEditClass:       ChannelInboundEdit
       },
       {
         name:       __('Filter'),
@@ -36,259 +50,6 @@ class App.ChannelMicrosoft365 extends App.ControllerTabs
     }
 
     @render()
-
-class ChannelAccountOverview extends App.ControllerSubContent
-  @requiredPermission: 'admin.channel_microsoft365'
-  events:
-    'click .js-new':                'new'
-    'click .js-admin-consent':      'adminConsent'
-    'click .js-delete':             'delete'
-    'click .js-reauthenticate':     'reauthenticate'
-    'click .js-configApp':          'configApp'
-    'click .js-disable':            'disable'
-    'click .js-enable':             'enable'
-    'click .js-channelGroupChange': 'groupChange'
-    'click .js-editInbound':        'editInbound'
-    'click .js-rollbackMigration':  'rollbackMigration'
-    'click .js-emailAddressNew':    'emailAddressNew'
-    'click .js-emailAddressEdit':   'emailAddressEdit'
-    'click .js-emailAddressDelete': 'emailAddressDelete',
-
-  constructor: ->
-    super
-
-    @interval(@load, 30000)
-    @load()
-
-  load: (reset_channel_id = false) =>
-    if reset_channel_id
-      @channel_id = undefined
-      @navigate '#channels/microsoft365'
-
-    @startLoading()
-    @ajax(
-      id:   'microsoft365_index'
-      type: 'GET'
-      url:  "#{@apiPath}/channels_microsoft365"
-      processData: true
-      success: (data, status, xhr) =>
-        @stopLoading()
-        App.Collection.loadAssets(data.assets)
-        @callbackUrl = data.callback_url
-        @render(data)
-    )
-
-  render: (data) =>
-
-    # if no microsoft365 app is registered, show intro
-    external_credential = App.ExternalCredential.findByAttribute('name', 'microsoft365')
-    if !external_credential
-      @html App.view('microsoft365/index')()
-      if @channel_id
-        @configApp()
-      return
-
-    channels = []
-    for channel_id in data.channel_ids
-      channel = App.Channel.find(channel_id)
-      if channel.group_id
-        channel.group = App.Group.find(channel.group_id)
-      else
-        channel.group = '-'
-
-      email_addresses = App.EmailAddress.search(filter: { channel_id: channel.id })
-      channel.email_addresses = email_addresses
-
-      channels.push channel
-
-    # on a channel migration we need to auto redirect
-    # the user to the "Add Account" functionality after
-    # the filled up the external credentials
-    if @channel_id
-      item = App.Channel.find(@channel_id)
-      if item && item.area != 'Microsoft365::Account'
-        @new()
-        return
-
-    # get all unlinked email addresses
-    not_used_email_addresses = []
-    for email_address_id in data.not_used_email_address_ids
-      not_used_email_addresses.push App.EmailAddress.find(email_address_id)
-
-    @html App.view('microsoft365/list')(
-      channels: channels
-      external_credential: external_credential
-      not_used_email_addresses: not_used_email_addresses
-    )
-
-    # on a channel creation we will auto open the edit
-    # dialog after the redirect back to zammad to optional
-    # change the inbound configuration, but not for
-    # migrated channel because we guess that the inbound configuration
-    # is already correct for them.
-    if @channel_id
-      item = App.Channel.find(@channel_id)
-      if item && item.area == 'Microsoft365::Account' && item.options && item.options.backup_imap_classic is undefined && not @error_code
-        @editInbound(undefined, @channel_id, true, true)
-        @channel_id = undefined
-
-    if @error_code is 'AADSTS65004'
-      @error_code = undefined
-      new App.AdminConsentInfo(container: @container, type: 'microsoft365')
-
-    if @error_code is 'user_mismatch'
-      @error_code = undefined
-      new App.UserMismatchInfo(container: @container, type: 'microsoft365', item: item)
-
-    if @error_code is 'duplicate_email_address'
-      @error_code = undefined
-      new App.DuplicateEmailAddressInfo(container: @container, type: 'microsoft365', emailAddress: if @param then decodeURIComponent(@param))
-
-  show: (params) =>
-    for key, value of params
-      if key isnt 'el' && key isnt 'shown' && key isnt 'match'
-        @[key] = value
-
-  configApp: =>
-    new AppConfig(
-      container: @el.parents('.content')
-      callbackUrl: @callbackUrl
-      load: @load
-    )
-
-  new: (e) ->
-    window.location.href = "#{@apiPath}/external_credentials/microsoft365/link_account"
-
-  adminConsent: (e) ->
-    window.location.href = "#{@apiPath}/external_credentials/microsoft365/link_account?prompt=consent"
-
-  delete: (e) =>
-    e.preventDefault()
-    id   = $(e.target).closest('.action').data('id')
-    new App.ControllerConfirm(
-      message:     __('Are you sure?')
-      buttonClass: 'btn--danger'
-      callback: =>
-        @ajax(
-          id:   'microsoft365_delete'
-          type: 'DELETE'
-          url:  "#{@apiPath}/channels_microsoft365"
-          data: JSON.stringify(id: id)
-          processData: true
-          success: =>
-            @load()
-        )
-      container: @el.closest('.content')
-    )
-
-  reauthenticate: (e) =>
-    e.preventDefault()
-    id                   = $(e.target).closest('.action').data('id')
-    window.location.href = "#{@apiPath}/external_credentials/microsoft365/link_account?channel_id=#{id}"
-
-  disable: (e) =>
-    e.preventDefault()
-    id   = $(e.target).closest('.action').data('id')
-    @ajax(
-      id:   'microsoft365_disable'
-      type: 'POST'
-      url:  "#{@apiPath}/channels_microsoft365_disable"
-      data: JSON.stringify(id: id)
-      processData: true
-      success: =>
-        @load()
-    )
-
-  enable: (e) =>
-    e.preventDefault()
-    id   = $(e.target).closest('.action').data('id')
-    @ajax(
-      id:   'microsoft365_enable'
-      type: 'POST'
-      url:  "#{@apiPath}/channels_microsoft365_enable"
-      data: JSON.stringify(id: id)
-      processData: true
-      success: =>
-        @load()
-    )
-
-  editInbound: (e, channel_id, set_active, redirect = false) =>
-    if !channel_id
-      e.preventDefault()
-      channel_id = $(e.target).closest('.action').data('id')
-    item = App.Channel.find(channel_id)
-    new ChannelInboundEdit(
-      container: @el.closest('.content')
-      item: item
-      callback: @load
-      set_active: set_active
-      redirect: redirect
-    )
-
-  rollbackMigration: (e) =>
-    e.preventDefault()
-    id   = $(e.target).closest('.action').data('id')
-    @ajax(
-      id:   'microsoft365_rollback_migration'
-      type: 'POST'
-      url:  "#{@apiPath}/channels_microsoft365_rollback_migration"
-      data: JSON.stringify(id: id)
-      processData: true
-      success: =>
-        @load()
-        @notify
-          type: 'success'
-          msg:  __('Rollback of channel migration succeeded!')
-      error: (data) =>
-        @notify
-          type: 'error'
-          msg:  __('Failed to roll back the migration of the channel!')
-    )
-
-  groupChange: (e) =>
-    e.preventDefault()
-    id   = $(e.target).closest('.action').data('id')
-    item = App.Channel.find(id)
-    new ChannelGroupEdit(
-      container: @el.closest('.content')
-      item: item
-      callback: @load
-    )
-
-  emailAddressNew: (e) =>
-    e.preventDefault()
-    channel_id = $(e.target).closest('.action').data('id')
-    new App.ControllerGenericNew(
-      pageData:
-        object: __('Email Address')
-      genericObject: 'EmailAddress'
-      container: @el.closest('.content')
-      item:
-        channel_id: channel_id
-      callback: @load
-    )
-
-  emailAddressEdit: (e) =>
-    e.preventDefault()
-    id = $(e.target).closest('li').data('id')
-    new App.ControllerGenericEdit(
-      pageData:
-        object: __('Email Address')
-      genericObject: 'EmailAddress'
-      container: @el.closest('.content')
-      id: id
-      callback: @load
-    )
-
-  emailAddressDelete: (e) =>
-    e.preventDefault()
-    id = $(e.target).closest('li').data('id')
-    item = App.EmailAddress.find(id)
-    new App.ControllerGenericDestroyConfirm(
-      item: item
-      container: @el.closest('.content')
-      callback: @load
-    )
 
 class ChannelInboundEdit extends App.ControllerModal
   @include App.DestinationGroupEmailAddressesMixin
@@ -502,56 +263,5 @@ class AppConfig extends App.ControllerModal
         @formEnable(e)
         @el.find('.alert--danger').removeClass('hide').text(data.error || __('App could not be verified.'))
     )
-
-class App.AdminConsentInfo extends App.ControllerModal
-  buttonClose: true
-  small: true
-  buttonSubmit: __('Close')
-  head: __('Admin Consent')
-
-  content: ->
-    App.view('microsoft365/admin_consent')()
-
-  onSubmit: =>
-    @close()
-
-  onClosed: =>
-    return if not @type
-
-    @navigate "#channels/#{@type}"
-
-class App.UserMismatchInfo extends App.ControllerModal
-  buttonClose: true
-  small: true
-  buttonSubmit: __('Close')
-  head: __('User Mismatch')
-
-  content: ->
-    App.view('microsoft365/user_mismatch')(item: @item)
-
-  onSubmit: =>
-    @close()
-
-  onClosed: =>
-    return if not @type
-
-    @navigate "#channels/#{@type}"
-
-class App.DuplicateEmailAddressInfo extends App.ControllerModal
-  buttonClose: true
-  small: true
-  buttonSubmit: __('Close')
-  head: __('Duplicate Email Address')
-
-  content: ->
-    App.view('microsoft365/duplicate_email_address')(emailAddress: @emailAddress)
-
-  onSubmit: =>
-    @close()
-
-  onClosed: =>
-    return if not @type
-
-    @navigate "#channels/#{@type}"
 
 App.Config.set('microsoft365', { prio: 5200, name: __('Microsoft 365 IMAP Email'), parent: '#channels', target: '#channels/microsoft365', controller: App.ChannelMicrosoft365, permission: ['admin.channel_microsoft365'] }, 'NavBarAdmin')

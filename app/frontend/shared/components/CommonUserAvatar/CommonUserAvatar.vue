@@ -23,6 +23,7 @@ import type { AvatarSize } from '../CommonAvatar/index.ts'
 export interface Props {
   entity: AvatarUser
   size?: AvatarSize
+  responsive?: boolean
   personal?: boolean
   decorative?: boolean
   initialsOnly?: boolean
@@ -145,6 +146,7 @@ const indicatorSize = computed(() => indicatorSizes[props.size])
     <CommonAvatar
       :initials="initials"
       :size="size"
+      :responsive="responsive"
       :icon="icon"
       :class="className"
       :image="image"
@@ -155,7 +157,7 @@ const indicatorSize = computed(() => indicatorSizes[props.size])
     <div
       v-if="indicator"
       v-tooltip="indicatorLabel"
-      class="absolute end-0 bottom-0 flex translate-y-1 items-center justify-center rounded-full bg-blue-200 p-[3px] outline-1 -outline-offset-1 outline-neutral-100 ltr:translate-x-2 rtl:-translate-x-2 dark:bg-gray-700 dark:outline-gray-900"
+      class="absolute inset-e-0 bottom-0 flex translate-y-1 items-center justify-center rounded-full bg-blue-200 p-0.75 outline-1 -outline-offset-1 outline-neutral-100 ltr:translate-x-2 rtl:-translate-x-2 dark:bg-gray-700 dark:outline-gray-900"
     >
       <CommonIcon
         :class="indicatorClass"

@@ -4,3 +4,23 @@
 <a class="empty-search js-emptySearchButton">
   <%- @Icon('diagonal-cross') %>
 </a>
+<% if @C('es_enabled'): %>
+<div class="dropdown dropdown--actions js-shortcutsDropdown searchfield-shortcut">
+  <button type="button" class="btn btn--action btn--only-icon"
+          data-toggle="dropdown"
+          aria-expanded="false"
+          title="<%- @Ti('Suggested searches') %>">
+    <%- @Icon('lightbulb') %>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-right" role="menu">
+    <li class="dropdown-header"><%- @T('Suggested searches') %></li>
+    <% for shortcut in @shortcuts: %>
+    <li role="presentation">
+      <a class="js-shortcut" data-query="<%- shortcut.query %>" role="menuitem" tabindex="-1">
+        <%- shortcut.label %>
+      </a>
+    </li>
+    <% end %>
+  </ul>
+</div>
+<% end %>

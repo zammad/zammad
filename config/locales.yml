@@ -62,7 +62,7 @@
 - locale: es-ca
   alias: ''
   name: Català - Catalan (deprecated, please use Català instead)
-  active: true
+  active: false
   dir: ltr
 - locale: es-co
   alias: ''

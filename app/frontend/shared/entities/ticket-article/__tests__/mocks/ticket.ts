@@ -3,7 +3,7 @@
 import { nullableMock } from '#tests/support/utils.ts'
 
 import type { TicketQuery } from '#shared/graphql/types.ts'
-import { EnumTicketStateColorCode } from '#shared/graphql/types.ts'
+import { EnumTicketStateColorCode, EnumTicketSummaryGeneration } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
 export const mockTicketCreateDate = new Date(2011, 11, 11, 11, 11, 11, 11)
@@ -71,6 +71,7 @@ export const defaultGroup = {
   name: 'Test Agents',
   emailAddress: null,
   sharedDrafts: true,
+  summaryGeneration: EnumTicketSummaryGeneration.GlobalDefault,
 }
 
 export const defaultPriority = {
@@ -121,6 +122,7 @@ export const createDummyTicket = <R = TicketQuery['ticket']>(options?: {
   preferences?: TicketQuery['ticket']['preferences']
   sharedDraftZoomId?: number
   aiAgentRunning?: TicketQuery['ticket']['aiAgentRunning']
+  aiSummaryEnabled?: TicketQuery['ticket']['aiSummaryEnabled']
   escalationAt?: TicketQuery['ticket']['escalationAt']
   firstResponseEscalationAt?: TicketQuery['ticket']['firstResponseEscalationAt']
   updateEscalationAt?: TicketQuery['ticket']['updateEscalationAt']
@@ -168,5 +170,6 @@ export const createDummyTicket = <R = TicketQuery['ticket']>(options?: {
       ? convertToGraphQLId('Ticket::SharedDraftZoom', options.sharedDraftZoomId)
       : null,
     aiAgentRunning: options?.aiAgentRunning,
+    aiSummaryEnabled: options?.aiSummaryEnabled ?? true,
   }) as R
 }

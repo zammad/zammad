@@ -16,6 +16,10 @@ class GitHub
            title
            state
            url
+           issueType {
+             name
+             color
+           }
            milestone {
              title
            }
@@ -60,6 +64,7 @@ class GitHub
         title:      @result['title'],
         url:        @result['url'],
         icon_state: STATES_MAPPING.fetch(@result['state'], @result['state']),
+        issue_type: issue_type,
         milestone:  milestone,
         assignees:  assignees,
         labels:     labels,
@@ -97,6 +102,16 @@ class GitHub
       # Return the color with better contrast.
       #   https://stackoverflow.com/a/3943023
       relative_luminance > 0.179 ? '#000000' : '#FFFFFF'
+    end
+
+    def issue_type
+      name = @result.dig('issueType', 'name')
+      return if name.nil?
+
+      {
+        name:  name,
+        color: @result.dig('issueType', 'color'),
+      }
     end
 
     def milestone

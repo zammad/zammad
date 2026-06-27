@@ -2,14 +2,18 @@
 
 import { waitFor, within } from '@testing-library/vue'
 
+import ticketObjectAttributes from '#tests/graphql/factories/fixtures/ticket-object-attributes.ts'
 import { getTestRouter } from '#tests/support/components/renderComponent.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
+import { waitUntil } from '#tests/support/vitest-wrapper.ts'
 
 import { mockFormUpdaterQuery } from '#shared/components/Form/graphql/queries/formUpdater.mocks.ts'
+import useMetaTitle from '#shared/composables/useMetaTitle.ts'
+import { mockObjectManagerFrontendAttributesQuery } from '#shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.mocks.ts'
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
-import type { Ticket } from '#shared/graphql/types.ts'
+import { EnumSearchableModels, type Ticket } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
 import {
@@ -30,226 +34,522 @@ const visitSearchView = async (searchTerm = 'test') => {
   return { view, searchContainer }
 }
 
+const visitSearchViewWithTicketTitleFilter = async (value: string) => {
+  const encodedValue = encodeURIComponent(value)
+
+  return visitView(
+    `/search/test?entity=Ticket&filter.0.name=ticket.title&filter.0.operator=matches&filter.0.value=${encodedValue}`,
+  )
+}
+
+const visitSearchViewWithTicketTitleFilterAndNoSearchTerm = async (value: string) => {
+  const encodedValue = encodeURIComponent(value)
+
+  return visitView(
+    `/search?entity=Ticket&filter.0.name=ticket.title&filter.0.operator=matches&filter.0.value=${encodedValue}`,
+  )
+}
+
 let ticket: Ticket
 
 describe('search view', () => {
-  beforeEach(() => {
-    mockPermissions(['ticket.agent'])
+  describe('agent user', () => {
+    beforeEach(() => {
+      mockPermissions(['ticket.agent'])
 
-    ticket = createDummyTicket()
+      ticket = createDummyTicket()
 
-    mockDetailSearchQuery({
-      search: {
-        totalCount: 1,
-        items: [ticket],
-      },
-    })
-  })
-
-  it('renders view correctly', async () => {
-    const { searchContainer } = await visitSearchView()
-
-    expect(within(searchContainer).getByRole('searchbox', { name: 'Search…' })).toHaveDisplayValue(
-      'test',
-    )
-  })
-
-  it('write quick search input correctly to the search view input', async () => {
-    const { searchContainer, view } = await visitSearchView()
-
-    const primaryNavigationSidebar = view.getByRole('complementary', {
-      name: 'Main sidebar',
+      mockDetailSearchQuery({
+        search: {
+          totalCount: 1,
+          items: [ticket],
+        },
+      })
+      useMetaTitle().initializeMetaTitle()
     })
 
-    const quickSearchInput = within(primaryNavigationSidebar).getByRole('searchbox')
+    it('renders view correctly', async () => {
+      const { searchContainer, view } = await visitSearchView()
 
-    await view.events.type(quickSearchInput, 'fooBar')
-    await view.events.keyboard('{Enter}')
-
-    await waitFor(() =>
       expect(
         within(searchContainer).getByRole('searchbox', { name: 'Search…' }),
-      ).toHaveDisplayValue('fooBar'),
-    )
+      ).toHaveDisplayValue('test')
 
-    const router = getTestRouter()
-
-    await waitFor(() =>
-      expect(router.currentRoute.value.fullPath).toBe('/search/fooBar?entity=Ticket'),
-    )
-
-    const mocks = await waitForDetailSearchQueryCalls()
-
-    expect(mocks.at(0)?.variables).toEqual({
-      limit: 30,
-      onlyIn: 'Ticket',
-      search: 'test',
+      expect(view.getByRole('tablist', { name: 'Search entity' })).toBeInTheDocument()
+      expect(view.getByRole('tablist', { name: 'Search entity' })).toBeInTheDocument()
     })
 
-    expect(view.getByRole('table')).toBeInTheDocument()
-  })
+    it('write quick search input correctly to the search view input', async () => {
+      const { searchContainer, view } = await visitSearchView()
 
-  it('selects a ticket for bulk edit', async () => {
-    mockFormUpdaterQuery({
-      formUpdater: {
-        fields: {
-          group_id: {
-            options: [
-              {
-                value: 2,
-                label: 'test group',
-              },
-            ],
-          },
-          owner_id: {
-            options: [
-              {
-                value: 3,
-                label: 'Test Admin Agent',
-              },
-            ],
-          },
-          state_id: {
-            options: [
-              {
-                value: 4,
-                label: 'closed',
-              },
-            ],
-          },
-          pending_time: {
-            show: false,
+      const primaryNavigationSidebar = view.getByRole('complementary', {
+        name: 'Main sidebar',
+      })
+      const quickSearchInput = within(primaryNavigationSidebar).getByRole('searchbox')
+
+      await view.events.type(quickSearchInput, 'fooBar')
+      await view.events.keyboard('{Enter}')
+
+      await waitFor(() =>
+        expect(
+          within(searchContainer).getByRole('searchbox', { name: 'Search…' }),
+        ).toHaveDisplayValue('fooBar'),
+      )
+
+      const router = getTestRouter()
+
+      await waitFor(() =>
+        expect(router.currentRoute.value.fullPath).toBe('/search/fooBar?entity=Ticket'),
+      )
+
+      const mocks = await waitForDetailSearchQueryCalls()
+
+      expect(mocks.at(0)?.variables).toEqual({
+        filter: null,
+        limit: 30,
+        onlyIn: 'Ticket',
+        search: 'test',
+      })
+
+      expect(view.getByRole('table')).toBeInTheDocument()
+    })
+
+    it('selects a ticket for bulk edit', async () => {
+      mockFormUpdaterQuery({
+        formUpdater: {
+          fields: {
+            group_id: {
+              options: [
+                {
+                  value: 2,
+                  label: 'test group',
+                },
+              ],
+            },
+            owner_id: {
+              options: [
+                {
+                  value: 3,
+                  label: 'Test Admin Agent',
+                },
+              ],
+            },
+            state_id: {
+              options: [
+                {
+                  value: 4,
+                  label: 'closed',
+                },
+              ],
+            },
+            pending_time: {
+              show: false,
+            },
           },
         },
-      },
-    })
+      })
 
-    const { view } = await visitSearchView()
+      const { view } = await visitSearchView()
 
-    expect(view.queryByRole('button', { name: 'Bulk actions' })).not.toBeInTheDocument()
+      expect(view.queryByRole('button', { name: 'Bulk actions' })).not.toBeInTheDocument()
 
-    const mainContent = view.getByRole('main')
+      const mainContent = view.getByRole('main')
 
-    const checkboxes = within(mainContent).getAllByRole('checkbox', {
-      name: 'Select this entry',
-    })
+      const checkboxes = within(mainContent).getAllByRole('checkbox', {
+        name: 'Select this entry',
+      })
 
-    await view.events.click(checkboxes[0])
+      await view.events.click(checkboxes[0])
 
-    await view.events.click(await view.findByRole('button', { name: 'Bulk actions' }))
+      await view.events.click(await view.findByRole('button', { name: 'Bulk actions' }))
 
-    expect(
-      await view.findByRole('complementary', { name: 'Tickets bulk edit' }),
-    ).toBeInTheDocument()
+      expect(
+        await view.findByRole('complementary', { name: 'Tickets bulk edit' }),
+      ).toBeInTheDocument()
 
-    const ticketState = await view.findByLabelText('State')
+      const ticketState = await view.findByLabelText('State')
 
-    await view.events.click(ticketState)
+      await view.events.click(ticketState)
 
-    expect(await view.findByRole('menu')).toBeInTheDocument()
+      expect(await view.findByRole('menu')).toBeInTheDocument()
 
-    await view.events.click(view.getByRole('option', { name: 'closed' }))
+      await view.events.click(view.getByRole('option', { name: 'closed' }))
 
-    mockTicketUpdateBulkMutation({
-      ticketUpdateBulk: {
-        async: false,
-        total: 1,
-        failedCount: 0,
-        inaccessibleTicketIds: [],
-        invalidTicketIds: [],
-      },
-    })
-
-    await view.events.click(view.getByRole('button', { name: 'Apply' }))
-
-    const calls = await waitForTicketUpdateBulkMutationCalls()
-
-    expect(calls.at(-1)?.variables).toEqual({
-      perform: {
-        input: {
-          article: null,
-          stateId: convertToGraphQLId('Ticket::State', 4),
+      mockTicketUpdateBulkMutation({
+        ticketUpdateBulk: {
+          async: false,
+          total: 1,
+          failedCount: 0,
+          inaccessibleTicketIds: [],
+          invalidTicketIds: [],
         },
-      },
-      selector: {
-        entityIds: [ticket.id],
-      },
-    })
+      })
 
-    expect(await waitForDetailSearchQueryCalls()).toHaveLength(2)
-    expect(await waitForSearchCountsQueryCalls()).toHaveLength(2)
-  })
+      await view.events.click(view.getByRole('button', { name: 'Apply' }))
 
-  it('resets checked tickets on text input', async () => {
-    mockFormUpdaterQuery({
-      formUpdater: {
-        fields: {
-          group_id: {
-            options: [
-              {
-                value: 2,
-                label: 'test group',
-              },
-            ],
-          },
-          owner_id: {
-            options: [
-              {
-                value: 3,
-                label: 'Test Admin Agent',
-              },
-            ],
-          },
-          state_id: {
-            options: [
-              {
-                value: 4,
-                label: 'closed',
-              },
-            ],
-          },
-          pending_time: {
-            show: false,
+      const calls = await waitForTicketUpdateBulkMutationCalls()
+
+      expect(calls.at(-1)?.variables).toEqual({
+        perform: {
+          input: {
+            article: null,
+            stateId: convertToGraphQLId('Ticket::State', 4),
           },
         },
-      },
-    })
-    const { view } = await visitSearchView()
+        selector: {
+          entityIds: [ticket.id],
+        },
+      })
 
-    await waitForDetailSearchQueryCalls()
-    await waitForNextTick()
-
-    const mainContent = view.getByRole('main')
-
-    const checkboxes = within(mainContent).getAllByRole('checkbox', {
-      name: 'Select this entry',
+      expect(await waitForDetailSearchQueryCalls()).toHaveLength(2)
+      expect(await waitForSearchCountsQueryCalls()).toHaveLength(2)
     })
 
-    expect(
-      within(mainContent).queryByRole('checkbox', {
-        name: 'Deselect this entry',
-      }),
-    ).not.toBeInTheDocument()
+    it('resets checked tickets on text input', async () => {
+      mockFormUpdaterQuery({
+        formUpdater: {
+          fields: {
+            group_id: {
+              options: [
+                {
+                  value: 2,
+                  label: 'test group',
+                },
+              ],
+            },
+            owner_id: {
+              options: [
+                {
+                  value: 3,
+                  label: 'Test Admin Agent',
+                },
+              ],
+            },
+            state_id: {
+              options: [
+                {
+                  value: 4,
+                  label: 'closed',
+                },
+              ],
+            },
+            pending_time: {
+              show: false,
+            },
+          },
+        },
+      })
+      const { view } = await visitSearchView()
 
-    await view.events.click(checkboxes[0])
+      await waitForDetailSearchQueryCalls()
+      await waitForNextTick()
 
-    expect(
-      await within(mainContent).findByRole('checkbox', {
-        name: 'Deselect this entry',
-      }),
-    ).toBeInTheDocument()
+      const mainContent = view.getByRole('main')
 
-    await view.events.type(
-      within(mainContent).getByRole('searchbox', { name: 'Search…' }),
-      'more text',
-    )
+      const checkboxes = within(mainContent).getAllByRole('checkbox', {
+        name: 'Select this entry',
+      })
 
-    await waitFor(() =>
       expect(
         within(mainContent).queryByRole('checkbox', {
           name: 'Deselect this entry',
         }),
-      ).not.toBeInTheDocument(),
-    )
+      ).not.toBeInTheDocument()
+
+      await view.events.click(checkboxes[0])
+
+      expect(
+        await within(mainContent).findByRole('checkbox', {
+          name: 'Deselect this entry',
+        }),
+      ).toBeInTheDocument()
+
+      await view.events.type(
+        within(mainContent).getByRole('searchbox', { name: 'Search…' }),
+        'more text',
+      )
+
+      await waitFor(() =>
+        expect(
+          within(mainContent).queryByRole('checkbox', {
+            name: 'Deselect this entry',
+          }),
+        ).not.toBeInTheDocument(),
+      )
+    })
+
+    describe('advanced search filters', () => {
+      it('switches entity tab and updates URL entity query param', async () => {
+        const { view } = await visitSearchView()
+
+        await waitForDetailSearchQueryCalls()
+        await waitForNextTick()
+
+        await view.events.click(view.getByRole('tab', { name: 'Organization' }))
+
+        const router = getTestRouter()
+
+        await waitFor(() =>
+          expect(router.currentRoute.value.query.entity).toBe(EnumSearchableModels.Organization),
+        )
+      })
+
+      describe('client-side filtering', () => {
+        beforeEach(() => {
+          mockObjectManagerFrontendAttributesQuery({
+            objectManagerFrontendAttributes: ticketObjectAttributes(),
+          })
+        })
+
+        it('applies indexed filter query params to detail search query variables', async () => {
+          mockDetailSearchQuery({
+            search: {
+              totalCount: 2,
+              items: [
+                {
+                  ...ticket,
+                  id: convertToGraphQLId('Ticket', 10),
+                  internalId: 10,
+                  title: 'Alpha ticket',
+                },
+                {
+                  ...ticket,
+                  id: convertToGraphQLId('Ticket', 20),
+                  internalId: 20,
+                  title: 'Beta ticket',
+                },
+              ],
+            },
+          })
+
+          await visitSearchViewWithTicketTitleFilter('Alpha')
+
+          const calls = await waitForDetailSearchQueryCalls()
+
+          expect(calls[0].variables.filter).toEqual({
+            operator: 'AND',
+            conditions: [
+              {
+                name: 'ticket.title',
+                operator: 'matches',
+                value: 'Alpha',
+              },
+            ],
+          })
+        })
+
+        it('shows filter count badge when a filter query param is active', async () => {
+          const view = await visitSearchViewWithTicketTitleFilter('test')
+
+          const searchContainer = view.getByTestId('search-container')
+
+          await waitForDetailSearchQueryCalls()
+          await waitForNextTick()
+
+          await waitFor(() =>
+            expect(
+              within(searchContainer).getByRole('button', { name: '1 filter(s)' }),
+            ).toBeInTheDocument(),
+          )
+        })
+
+        it('only reports a count for the visible entity when a filter is set on it', async () => {
+          mockDetailSearchQuery({
+            search: {
+              totalCount: 7,
+              items: [ticket],
+            },
+          })
+
+          const view = await visitSearchViewWithTicketTitleFilterAndNoSearchTerm('foo')
+
+          await waitForDetailSearchQueryCalls()
+          await waitForNextTick()
+
+          expect(view.getByRole('tab', { name: 'Ticket' })).toHaveTextContent('7')
+          expect(view.getByRole('tab', { name: 'User' })).toHaveTextContent('-')
+          expect(view.getByRole('tab', { name: 'Organization' })).toHaveTextContent('-')
+        })
+
+        it('applies clears filters from route when badge button "clear all filters" is clicked', async () => {
+          mockDetailSearchQuery({
+            search: {
+              totalCount: 1,
+              items: [ticket],
+            },
+          })
+          const view = await visitSearchViewWithTicketTitleFilter('test')
+
+          const searchContainer = view.getByTestId('search-container')
+
+          await waitForDetailSearchQueryCalls()
+          await waitForNextTick()
+
+          const router = getTestRouter()
+
+          await waitFor(() => {
+            expect(
+              within(searchContainer).getByRole('button', { name: 'Clear all filters' }),
+            ).toBeInTheDocument()
+            expect(router.currentRoute.value.query.entity).toBe(EnumSearchableModels.Ticket)
+            expect(router.currentRoute.value.query).toHaveProperty('filter.0.name')
+            expect(router.currentRoute.value.query).toHaveProperty('filter.0.operator')
+            expect(router.currentRoute.value.query).toHaveProperty('filter.0.value')
+          })
+
+          const badgeClearButton = within(searchContainer).getByRole('button', {
+            name: 'Clear all filters',
+          })
+
+          await view.events.click(badgeClearButton)
+          await waitForNextTick()
+
+          await waitFor(() => {
+            expect(view.queryByRole('button', { name: 'Clear all' })).toBeInTheDocument()
+          })
+
+          const confirmationButton = view.getByRole('button', { name: 'Clear all' })
+          await view.events.click(confirmationButton)
+
+          await waitFor(() => {
+            expect(router.currentRoute.value.query.entity).toBe(EnumSearchableModels.Ticket)
+            expect(router.currentRoute.value.query).not.toHaveProperty('filter.0.name')
+            expect(router.currentRoute.value.query).not.toHaveProperty('filter.0.operator')
+            expect(router.currentRoute.value.query).not.toHaveProperty('filter.0.value')
+          })
+        })
+
+        it('prompts for confirmation before closing search tab when some client side filtering is configured', async () => {
+          mockDetailSearchQuery({
+            search: {
+              totalCount: 1,
+              items: [ticket],
+            },
+          })
+          const view = await visitSearchViewWithTicketTitleFilter('test')
+
+          await waitForDetailSearchQueryCalls()
+          await waitForNextTick()
+
+          // The filter badge appearing confirms hasActiveFilters is true, meaning
+          // the object-attributes query has resolved and URL filters are decoded.
+          // waitForNextTick(true) (nextTick + setTimeout) flushes all pending
+          // Vue renders including the Teleport defer cycle, ensuring dirty:true
+          // has reached UserTaskbarTabRemove before we click close.
+          const searchContainer = view.getByTestId('search-container')
+          await waitUntil(
+            () => within(searchContainer).queryByRole('button', { name: '1 filter(s)' }) !== null,
+          )
+          await waitForNextTick(true)
+
+          const taskbarSidebar = view.getByRole('tree', {
+            name: 'User taskbar tabs',
+          })
+          const closeSearchTab = within(taskbarSidebar).getByRole('button', {
+            name: 'Close this tab',
+          })
+
+          await view.events.click(closeSearchTab)
+
+          await waitUntil(() => view.queryByRole('button', { name: 'Discard changes' }) !== null)
+
+          const confirmationButton = view.getByRole('button', { name: 'Discard changes' })
+          await view.events.click(confirmationButton)
+
+          // After deletion the taskbar <ul> is detached from the DOM (Teleport
+          // unmounts when hasTaskbarTabs becomes false), so we must query the
+          // live document rather than the stale taskbarSidebar reference.
+          await waitUntil(() => view.queryByRole('button', { name: 'Close this tab' }) === null)
+        })
+
+        it('prompts for confirmation, but cancels, before closing search tab when some client side filtering is configured', async () => {
+          mockDetailSearchQuery({
+            search: {
+              totalCount: 1,
+              items: [ticket],
+            },
+          })
+          const view = await visitSearchViewWithTicketTitleFilter('test')
+
+          await waitForDetailSearchQueryCalls()
+          await waitForNextTick()
+
+          const searchContainer = view.getByTestId('search-container')
+          await waitUntil(
+            () => within(searchContainer).queryByRole('button', { name: '1 filter(s)' }) !== null,
+          )
+          await waitForNextTick()
+
+          const router = getTestRouter()
+
+          expect(router.currentRoute.value.query.entity).toBe(EnumSearchableModels.Ticket)
+          expect(router.currentRoute.value.query).toHaveProperty('filter.0.name')
+          expect(router.currentRoute.value.query).toHaveProperty('filter.0.operator')
+          expect(router.currentRoute.value.query).toHaveProperty('filter.0.value')
+
+          const taskbarSidebar = view.getByRole('tree', {
+            name: 'User taskbar tabs',
+          })
+
+          const closeSearchTab = within(taskbarSidebar).getByRole('button', {
+            name: 'Close this tab',
+          })
+          await view.events.click(closeSearchTab)
+
+          await waitUntil(() => view.queryByRole('button', { name: 'Cancel & go back' }) !== null)
+
+          const confirmationButton = view.getByRole('button', { name: 'Cancel & go back' })
+          await view.events.click(confirmationButton)
+
+          await waitFor(() => {
+            expect(
+              within(taskbarSidebar).queryByRole('button', {
+                name: 'Close this tab',
+              }),
+            ).toBeInTheDocument()
+            expect(router.currentRoute.value.query.entity).toBe(EnumSearchableModels.Ticket)
+            expect(router.currentRoute.value.query).toHaveProperty('filter.0.name')
+            expect(router.currentRoute.value.query).toHaveProperty('filter.0.operator')
+            expect(router.currentRoute.value.query).toHaveProperty('filter.0.value')
+          })
+        })
+      })
+    })
+
+    it('wires the search title into the taskbar tab and page title', async () => {
+      const searchTerm = 'search-test'
+      const { view } = await visitSearchView(searchTerm)
+
+      await waitForDetailSearchQueryCalls()
+      await waitForNextTick()
+
+      const taskbarSidebar = view.getByRole('tree', {
+        name: 'User taskbar tabs',
+      })
+      const taskbarTab = within(taskbarSidebar).getByRole('link')
+
+      await waitFor(() => expect(taskbarTab).toHaveTextContent(searchTerm))
+      await waitFor(() => expect(document.title).toEqual(`Zammad - ${searchTerm}`))
+    })
+  })
+
+  describe('customer user', () => {
+    it('does not load filters or show advanced search controls', async () => {
+      mockDetailSearchQuery({
+        search: {
+          totalCount: 1,
+          items: [createDummyTicket({ title: 'test' })],
+        },
+      })
+      mockPermissions(['ticket.customer'])
+
+      const view = await visitSearchViewWithTicketTitleFilter('Alpha')
+
+      const calls = await waitForDetailSearchQueryCalls()
+
+      expect(calls[0].variables.filter).toEqual(null)
+
+      expect(view.queryByRole('button', { name: '1 filter(s)' })).not.toBeInTheDocument()
+    })
   })
 })

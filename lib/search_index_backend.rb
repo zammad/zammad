@@ -248,7 +248,7 @@ It should get used in batches to prevent performance issues on entities which ha
       },
     }
 
-    response = make_request(url, data: data, method: :post, read_timeout: 10.minutes)
+    response = make_request(url, data: data, method: :post, request_type: :reindex)
     if !response.success?
       Rails.logger.error humanized_error(
         verb:     'GET',
@@ -384,7 +384,7 @@ remove whole data from index
 =end
 
   def self.search_by_index(query, index, options = {})
-    return if query.blank?
+    return if query.blank? && !options[:search_by_index]
 
     action = '_search'
     if options[:only_total_count].present?
@@ -395,16 +395,22 @@ remove whole data from index
     return if url.blank?
 
     # real search condition
-    condition = {
-      'query_string' => {
-        'query'            => append_wildcard_to_simple_query(query),
-        'time_zone'        => Setting.get('timezone_default'),
-        'default_operator' => 'AND',
-        'analyze_wildcard' => true,
-      }
-    }
+    condition = if query.blank?
+                  {
+                    match_all: {},
+                  }
+                else
+                  {
+                    'query_string' => {
+                      'query'            => append_wildcard_to_simple_query(query),
+                      'time_zone'        => Setting.get('timezone_default'),
+                      'default_operator' => 'AND',
+                      'analyze_wildcard' => true,
+                    }
+                  }
+                end
 
-    if (fields = options.dig(:query_fields_by_indexes, index.to_sym))
+    if query.present? && (fields = options.dig(:query_fields_by_indexes, index.to_sym))
       condition['query_string']['fields'] = fields
     end
 
@@ -809,21 +815,23 @@ helper method for making HTTP calls
 @param url [String] url
 @option params [Hash] :data is a payload hash
 @option params [Symbol] :method is a HTTP method
-@option params [Integer] :open_timeout is HTTP request open timeout
-@option params [Integer] :read_timeout is HTTP request read timeout
+@option params [Symbol] :request_type selects the timeout profile; use `:reindex` for long-running reindex operations
 
 @return UserAgent response
 
 =end
-  def self.make_request(url, data: {}, method: :get, open_timeout: 8, read_timeout: 180)
+  def self.make_request(url, data: {}, method: :get, request_type: :default)
     Rails.logger.debug { "# curl -X #{method} \"#{url}\" " }
     Rails.logger.debug { "-d '#{data.to_json}'" } if data.present?
 
+    read_timeout, total_timeout = timeouts_for(request_type)
+
     options = {
       json:              true,
-      open_timeout:      open_timeout,
+      # Elasticsearch is typically a local service, so a dead instance should be detected quickly.
+      open_timeout:      8,
       read_timeout:      read_timeout,
-      total_timeout:     (open_timeout + read_timeout + 60),
+      total_timeout:     total_timeout,
       open_socket_tries: 3,
       user:              Setting.get('es_user'),
       password:          Setting.get('es_password'),
@@ -835,6 +843,21 @@ helper method for making HTTP calls
     Rails.logger.debug { "# #{response.code}" }
 
     response
+  end
+
+  def self.timeouts_for(request_type)
+    case request_type
+    when :reindex
+      [
+        ENV.fetch('ZAMMAD_HTTP_ELASTICSEARCH_REINDEX_READ_TIMEOUT', 600).to_i,
+        ENV.fetch('ZAMMAD_HTTP_ELASTICSEARCH_REINDEX_TOTAL_TIMEOUT', 600).to_i,
+      ]
+    else
+      [
+        ENV.fetch('ZAMMAD_HTTP_ELASTICSEARCH_READ_TIMEOUT', 180).to_i,
+        ENV.fetch('ZAMMAD_HTTP_ELASTICSEARCH_TOTAL_TIMEOUT', 180).to_i,
+      ]
+    end
   end
 
 =begin
@@ -897,7 +920,7 @@ helper method for making HTTP calls and raising error if response was not succes
         result[:properties][key] = {
           type: 'flattened',
         }
-      elsif value.type == :string && value.limit && value.limit <= 5000
+      elsif value.type == :string && (value.array || (value.limit && value.limit <= 5000))
         result[:properties][key] = {
           type:   string_type,
           fields: {

@@ -163,7 +163,7 @@ RSpec.describe 'System > Objects', type: :system do
       end
 
       # Check that the options were correctly saved.
-      expect(ObjectManager::Attribute.last.data_option[:options][-2..]).to eq(
+      expect(object_attribute.reload.data_option[:options][-2..]).to eq(
         [
           {
             'name'  => 'new tree option 0',
@@ -454,7 +454,7 @@ RSpec.describe 'System > Objects', type: :system do
                                 'maxlength'  => 255,
                                 'translate'  => false }
 
-      expect(ObjectManager::Attribute.last.data_option).to eq(expected_data_options)
+      expect(ObjectManager::Attribute.find_by(name: 'tree1').data_option).to eq(expected_data_options)
     end
 
     it 'checks smart defaults for select field' do
@@ -482,7 +482,7 @@ RSpec.describe 'System > Objects', type: :system do
         '2' => 'special 2',
       }
 
-      expect(ObjectManager::Attribute.last.data_option['options']).to eq(expected_data_options)
+      expect(ObjectManager::Attribute.find_by(name: 'select1').data_option['options']).to eq(expected_data_options)
     end
 
     it 'checks smart defaults for multiselect field' do
@@ -510,7 +510,7 @@ RSpec.describe 'System > Objects', type: :system do
         '2' => 'special 2',
       }
 
-      expect(ObjectManager::Attribute.last.data_option['options']).to eq(expected_data_options)
+      expect(ObjectManager::Attribute.find_by(name: 'multiselect1').data_option['options']).to eq(expected_data_options)
     end
 
     it 'checks smart defaults for boolean field' do
@@ -526,7 +526,7 @@ RSpec.describe 'System > Objects', type: :system do
         false => 'HELL NOO',
       }
 
-      expect(ObjectManager::Attribute.last.data_option['options']).to eq(expected_data_options)
+      expect(ObjectManager::Attribute.find_by(name: 'bool1').data_option['options']).to eq(expected_data_options)
     end
 
     it 'checks default boolean value visibility' do
@@ -799,8 +799,8 @@ RSpec.describe 'System > Objects', type: :system do
     let(:link_prefix) { "#{Setting.get('http_type')}://#{Setting.get('fqdn')}/#user/profile/" }
 
     before do
-      users
-      searchindex_model_reload([User])
+      users.each(&:search_index_update_backend)
+      SearchIndexBackend.refresh
     end
 
     shared_examples 'showing preview table below data options' do

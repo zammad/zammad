@@ -8,17 +8,38 @@ RSpec.describe Gql::Queries::Search, type: :graphql do
     let(:group)        { create(:group) }
     let(:organization) { create(:organization, name: search) }
     let(:agent)        { create(:agent, firstname: search, groups: [ticket.group]) }
+    let(:tag1)         { Faker::Lorem.unique.word }
+    let(:tag2)         { Faker::Lorem.unique.word }
     let!(:ticket)     do
       create(:ticket, title: search, organization: organization).tap do |ticket|
         # Article required to find ticket via SQL
         create(:ticket_article, ticket: ticket)
+
+        ticket.tag_add(tag1, 1)
+        ticket.tag_add(tag2, 1)
       end
     end
     let(:search)    { SecureRandom.uuid }
     let(:query)     do
       <<~QUERY
-        query search($search: String!, $onlyIn: EnumSearchableModels!, $orderBy: String, $orderDirection: EnumOrderDirection, $offset: Int = 0, $limit: Int = 10) {
-          search(search: $search, onlyIn: $onlyIn, orderBy: $orderBy, orderDirection: $orderDirection, offset: $offset, limit: $limit) {
+        query search(
+          $search: String
+          $onlyIn: EnumSearchableModels!
+          $filter: SelectorNodeInput
+          $orderBy: String
+          $orderDirection: EnumOrderDirection
+          $offset: Int = 0
+          $limit: Int = 10
+        ) {
+          search(
+            search: $search
+            onlyIn: $onlyIn
+            filter: $filter
+            orderBy: $orderBy
+            orderDirection: $orderDirection
+            offset: $offset
+            limit: $limit
+          ) {
             totalCount
             items {
               ... on Ticket {
@@ -81,7 +102,7 @@ RSpec.describe Gql::Queries::Search, type: :graphql do
           let(:order_by) { 'nonexisting' }
 
           it 'raises an error' do
-            expect(gql.result.error_message).to eq("Found invalid column 'nonexisting' for sorting.")
+            expect(gql.result.error_message).to eq(__("Found invalid column 'nonexisting' for sorting."))
           end
         end
 
@@ -125,6 +146,52 @@ RSpec.describe Gql::Queries::Search, type: :graphql do
 
     context 'without search index' do
       include_examples 'test search query'
+
+      context 'with an advanced tags filter', authenticated_as: :agent do
+        let(:variables) do
+          {
+            onlyIn: 'Ticket',
+            filter: {
+              operator:   'AND',
+              conditions: [
+                { name: 'ticket.tags', operator: 'contains one', value: [tag1, tag2] },
+              ],
+            },
+          }
+        end
+
+        let(:expected_result) do
+          { 'items' => [{ '__typename' => 'Ticket', 'number' => ticket.number, 'title' => ticket.title }], 'totalCount' => 1 }
+        end
+
+        it 'finds expected objects via the filter' do
+          expect(gql.result.data).to eq(expected_result)
+        end
+      end
+
+      context 'with a scalar (non-array) tags filter value', authenticated_as: :agent do
+        # The array-to-string transform only runs for array values; a scalar
+        # value must pass through untouched instead of raising on `.join`.
+        let(:variables) do
+          {
+            onlyIn: 'Ticket',
+            filter: {
+              operator:   'AND',
+              conditions: [
+                { name: 'ticket.tags', operator: 'contains one', value: tag1 },
+              ],
+            },
+          }
+        end
+
+        let(:expected_result) do
+          { 'items' => [{ '__typename' => 'Ticket', 'number' => ticket.number, 'title' => ticket.title }], 'totalCount' => 1 }
+        end
+
+        it 'finds expected objects without raising' do
+          expect(gql.result.data).to eq(expected_result)
+        end
+      end
     end
 
     context 'with search index', searchindex: true do
@@ -133,6 +200,57 @@ RSpec.describe Gql::Queries::Search, type: :graphql do
       end
 
       include_examples 'test search query'
+
+      context 'with an advanced filter and no search term', authenticated_as: :agent do
+        let(:variables) do
+          {
+            onlyIn: 'Ticket',
+            filter: {
+              operator:   'AND',
+              conditions: [
+                { name: 'ticket.title', operator: 'is', value: ticket.title },
+              ],
+            },
+          }
+        end
+
+        let(:expected_result) do
+          { 'items' => [{ '__typename' => 'Ticket', 'number' => ticket.number, 'title' => ticket.title }], 'totalCount' => 1 }
+        end
+
+        it 'finds expected objects via the filter' do
+          expect(gql.result.data).to eq(expected_result)
+        end
+      end
+
+      context 'with a deeply nested advanced filter', authenticated_as: :agent do
+        let(:variables) do
+          {
+            onlyIn: 'Ticket',
+            filter: deep_nested_filter,
+          }
+        end
+
+        let(:deep_nested_filter) do
+          filter = {
+            operator:   'AND',
+            conditions: [{ name: 'ticket.title', operator: 'is', value: ticket.title }],
+          }
+
+          3.times do
+            filter = {
+              operator:   'AND',
+              conditions: [filter],
+            }
+          end
+
+          filter
+        end
+
+        it 'rejects the filter' do
+          expect(gql.result.error_message).to eq('Selector exceeded maximum nesting depth.')
+        end
+      end
     end
 
     it_behaves_like 'graphql responds with error if unauthenticated'

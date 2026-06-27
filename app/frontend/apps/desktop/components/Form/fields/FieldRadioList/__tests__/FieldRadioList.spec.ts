@@ -35,7 +35,6 @@ const testOptionsWithDescription: SetRequired<RadioListOption, 'label'>[] = [
 
 const wrapperParameters = {
   form: true,
-  formField: true,
   dialog: true,
 }
 

@@ -73,6 +73,7 @@ describe('TicketInformationBadgeList', () => {
 
     const badges = wrapper.getAllByTestId('common-badge')
 
-    expect(badges.at(2)).toHaveTextContent('Created 13 years ago')
+    // gap is css based -> Created 13 years ago
+    expect(badges.at(2)).toHaveTextContent('Created13 years ago')
   })
 })

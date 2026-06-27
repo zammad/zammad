@@ -22,7 +22,11 @@ const metaFieldContainerClasses = computed(() =>
 </script>
 
 <template>
-  <header :class="metaFieldContainerClasses" :aria-label="$t('Article meta information')">
+  <header
+    class="min-w-0"
+    :class="metaFieldContainerClasses"
+    :aria-label="$t('Article meta information')"
+  >
     <ArticleBubbleMetaFields :article="article" class="px-6 py-3" />
   </header>
 </template>

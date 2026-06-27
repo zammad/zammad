@@ -10,6 +10,7 @@ import type {
   MatchedFlatSelectOption,
 } from '#shared/components/Form/fields/FieldTreeSelect/types.ts'
 import { useFocusWhenTyping } from '#shared/composables/useFocusWhenTyping.ts'
+import { useOnEmitter } from '#shared/composables/useOnEmitter.ts'
 import { useTrapTab } from '#shared/composables/useTrapTab.ts'
 import { useTraverseOptions } from '#shared/composables/useTraverseOptions.ts'
 import { i18n } from '#shared/i18n.ts'
@@ -19,6 +20,7 @@ import testFlags from '#shared/utils/testFlags.ts'
 
 import { useCommonSelect } from '#desktop/components/CommonSelect/useCommonSelect.ts'
 import { useTransitionCollapse } from '#desktop/composables/useTransitionCollapse.ts'
+import { useTransitionConfig } from '#desktop/composables/useTransitionConfig.ts'
 
 import FieldTreeSelectInputDropdownItem from './FieldTreeSelectInputDropdownItem.vue'
 
@@ -130,7 +132,7 @@ const openDropdown = (bounds: UseElementBoundingReturn, height: Ref<number>) => 
   inputElementBounds = bounds
   windowHeight = toRef(height)
   instances.value.forEach((instance) => {
-    if (instance.isOpen) instance.closeDropdown()
+    if (instance.isOpen.value) instance.closeDropdown()
   })
   showDropdown.value = true
   lastFocusableOutsideElement = getActiveElement()
@@ -145,6 +147,15 @@ const openDropdown = (bounds: UseElementBoundingReturn, height: Ref<number>) => 
     })
   })
 }
+
+// In case the dropdown is open and the layout changes, we need to update the position of the dropdown just in case.
+useOnEmitter('resize-layout', () => {
+  if (!showDropdown.value) return
+
+  nextTick(() => {
+    inputElementBounds?.update()
+  })
+})
 
 const moveFocusToDropdown = (lastOption = false) => {
   // Focus selected or first available option.
@@ -372,8 +383,8 @@ const highlightedOptions = computed(() =>
   }),
 )
 
-const { collapseDuration, collapseEnter, collapseAfterEnter, collapseLeave } =
-  useTransitionCollapse()
+const { transitions } = useTransitionConfig()
+const { collapseEnter, collapseAfterEnter, collapseLeave } = useTransitionCollapse()
 
 const hasTopElement = computed(
   () => !!(props.currentPath.length || (props.multiple && hasMoreSelectableOptions)),
@@ -389,8 +400,8 @@ const hasTopElement = computed(
   />
   <Teleport to="body">
     <Transition
-      :name="isTargetVisible ? 'collapse' : 'none'"
-      :duration="collapseDuration"
+      :name="transitions.collapse"
+      :appear="isTargetVisible"
       @enter="collapseEnter"
       @after-enter="collapseAfterEnter"
       @leave="collapseLeave"

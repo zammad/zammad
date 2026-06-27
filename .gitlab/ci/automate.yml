@@ -23,7 +23,7 @@
     ZAMMAD_SAFE_MODE: 1
   script:
     - bundle exec rails generate zammad:translation_catalog --full
-    - (cd public/assets/chat && pnpm exec gulp build)
+    - pnpm --dir public/assets/chat exec gulp build
     - git status
     - git config user.email "noreply@weblate.org"
     - git config user.name "Weblate"

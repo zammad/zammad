@@ -8,6 +8,7 @@ export default function register(config: InMemoryCacheConfig) {
   return registerOffsetStylePagination(config, 'search', [
     'onlyIn',
     'search',
+    'filter',
     'orderBy',
     'orderDirection',
   ])

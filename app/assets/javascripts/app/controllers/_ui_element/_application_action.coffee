@@ -298,11 +298,13 @@ class App.UiElement.ApplicationAction
     selection
 
   # disable - if we only have one attribute
+  # Scope to the row actions only, otherwise the unrelated token remove buttons
+  #   (`.token-close.js-remove`) of multi-select value fields get disabled too.
   @disableRemoveForOneAttribute: (elementFull) ->
     if elementFull.find('.js-attributeSelector select').length > 1
-      elementFull.find('.js-remove').removeClass('is-disabled')
+      elementFull.find('.js-rowActions .js-remove').removeClass('is-disabled')
     else
-      elementFull.find('.js-remove').addClass('is-disabled')
+      elementFull.find('.js-rowActions .js-remove').addClass('is-disabled')
 
   @updateAttributeSelectors: (elementFull) ->
 
@@ -573,15 +575,16 @@ class App.UiElement.ApplicationAction
 
       notificationElement.find('.js-recipient select').replaceWith(selectionRecipient)
 
+      # meta.webhook_id was a single id in the past (single-select); the multi select
+      #   handles both a single id and an array, and always submits an array.
       if App.Webhook.search(filter: { active: true }).length isnt 0 || !_.isEmpty(meta.webhook_id)
-        webhookSelection = App.UiElement.select.render(
+        webhookSelection = App.UiElement.multi_tree_select.render(
           name: "#{name}::webhook_id"
-          multiple: false
+          multiple: true
           null: false
           relation: 'Webhook'
           value: meta.webhook_id
           translate: false
-          nulloption: true
         )
       else
         webhookSelection = App.view('generic/ticket_perform_action/webhook_not_available')( attribute: attribute )
@@ -672,15 +675,16 @@ class App.UiElement.ApplicationAction
       meta: meta || {}
     ))
 
+    # meta.ai_agent_id was a single id in the past (single-select); the multi select
+    #   handles both a single id and an array, and always submits an array.
     aiAgentSelection = if App.AIAgent.search(filter: { active: true }).length isnt 0 || !_.isEmpty(meta.ai_agent_id)
-      App.UiElement.select.render(
+      App.UiElement.multi_tree_select.render(
         name: "#{name}::ai_agent_id"
-        multiple: false
+        multiple: true
         null: false
         relation: 'AIAgent'
         value: meta.ai_agent_id
         translate: false
-        nulloption: true
       )
     else
       App.view('generic/ticket_perform_action/ai_agent_not_available')( attribute: attribute )

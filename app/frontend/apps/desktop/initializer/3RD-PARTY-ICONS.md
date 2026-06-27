@@ -59,6 +59,7 @@
 - `assets/key.svg`
 - `assets/keyboard.svg`
 - `assets/lock.svg`
+- `assets/lock-fill.svg`
 - `assets/paperclip.svg`
 - `assets/patch-check.svg`
 - `assets/pencil-square.svg`
@@ -67,7 +68,9 @@
 - `assets/phone.svg`
 - `assets/pin-angle.svg`
 - `assets/pin.svg`
+- `assets/plus.svg`
 - `assets/plus-circle.svg`
+- `assets/plus-square.svg`
 - `assets/printer.svg`
 - `assets/question-circle.svg`
 - `assets/quote.svg`

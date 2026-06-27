@@ -19,9 +19,6 @@ const organizationEditFormSchema = defineFormSchema([
   {
     isLayout: true,
     component: 'FormGroup',
-    props: {
-      class: '@container/form-group',
-    },
     children: buildOrganizationSchema('edit'),
   },
 ])

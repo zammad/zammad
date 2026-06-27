@@ -27,7 +27,7 @@ class Channel::Driver::Sms::Massenversand
 
     return if Setting.get('developer_mode')
 
-    response = Faraday.get(url).body
+    response = UserAgent.get(url).body
     return if response.match?('OK')
 
     message = "Received non-OK response from gateway URL '#{url}'"

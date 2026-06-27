@@ -9,6 +9,10 @@ query ticketExternalReferencesIssueTrackerItemList(
   ) {
     assignees
     issueId
+    issueType {
+      color
+      name
+    }
     labels {
       color
       textColor

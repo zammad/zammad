@@ -15,9 +15,16 @@ module ApplicationController::HandlesTransitions
 
     yield
 
-    TransactionDispatcher.commit
+    TransactionDispatcher.commit(transaction_dispatch_options)
     PushMessages.finish
   ensure
     ApplicationHandleInfo.current = nil
+  end
+
+  def transaction_dispatch_options
+    return {} if !current_user&.permissions?(%w[ticket.agent admin])
+    return {} if !request.headers['X-Zammad-Suppress-Notifications'].to_s.casecmp?('true')
+
+    { disable_notification: true }
   end
 end

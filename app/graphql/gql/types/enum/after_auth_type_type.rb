@@ -4,7 +4,7 @@ module Gql::Types::Enum
   class AfterAuthTypeType < BaseEnum
     description 'Possible AfterAuth message types'
 
-    Auth::AfterAuth.backends.each do |klass|
+    Auth::AfterAuth.backends.sort_by(&:type).each do |klass|
       value klass.type, klass.type
     end
   end

@@ -3,6 +3,7 @@
 require 'rails_helper'
 require_relative 'shared_examples/ping'
 require_relative 'shared_examples/check_temperature_support'
+require_relative 'shared_examples/embed'
 
 RSpec.describe AI::Provider::OpenAI, integration: true, required_envs: %w[OPEN_AI_TOKEN], use_vcr: true do
   subject(:ai_provider) { described_class.new(options: { json_response: true }) }
@@ -20,85 +21,88 @@ RSpec.describe AI::Provider::OpenAI, integration: true, required_envs: %w[OPEN_A
 
   include_examples 'provider/ping!'
   include_examples 'provider/check_temperature_support'
+  include_examples 'provider/embed', dimensions: 1536
 
-  context 'when specifying a model' do
-    context 'without a model' do
-      it 'does exchange data with open ai endpoint' do
-        expect(ai_provider.ask(prompt_system:, prompt_user:)).to match({ 'connected' => 'true' })
-      end
-    end
-
-    context 'with a valid model' do
-      before do
-        Setting.set('ai_provider_config', Setting.get('ai_provider_config').merge(model: 'gpt-4.1'))
-      end
-
-      it 'does exchange data with open ai endpoint' do
-        expect(ai_provider.ask(prompt_system:, prompt_user:)).to match({ 'connected' => 'true' })
-      end
-
-      context 'with a model that does not support temperature' do
-        before do
-          Setting.set('ai_provider_config', Setting.get('ai_provider_config').merge(model: 'gpt-5'))
-        end
-
+  describe '#ask' do
+    context 'when specifying a model' do
+      context 'without a model' do
         it 'does exchange data with open ai endpoint' do
           expect(ai_provider.ask(prompt_system:, prompt_user:)).to match({ 'connected' => 'true' })
         end
       end
 
-      context 'with model_temperature_support flag set to false' do
+      context 'with a valid model' do
         before do
-          Setting.set('ai_provider_config', Setting.get('ai_provider_config').merge(model_temperature_support: false))
+          Setting.set('ai_provider_config', Setting.get('ai_provider_config').merge(model: 'gpt-4.1'))
         end
 
-        it 'does exchange data with open ai endpoint without temperature' do
+        it 'does exchange data with open ai endpoint' do
           expect(ai_provider.ask(prompt_system:, prompt_user:)).to match({ 'connected' => 'true' })
         end
+
+        context 'with a model that does not support temperature' do
+          before do
+            Setting.set('ai_provider_config', Setting.get('ai_provider_config').merge(model: 'gpt-5'))
+          end
+
+          it 'does exchange data with open ai endpoint' do
+            expect(ai_provider.ask(prompt_system:, prompt_user:)).to match({ 'connected' => 'true' })
+          end
+        end
+
+        context 'with model_temperature_support flag set to false' do
+          before do
+            Setting.set('ai_provider_config', Setting.get('ai_provider_config').merge(model_temperature_support: false))
+          end
+
+          it 'does exchange data with open ai endpoint without temperature' do
+            expect(ai_provider.ask(prompt_system:, prompt_user:)).to match({ 'connected' => 'true' })
+          end
+        end
+      end
+
+      context 'with an invalid model' do
+        before do
+          Setting.set('ai_provider_config', Setting.get('ai_provider_config').merge(model: 'nonexisting-model'))
+        end
+
+        it 'raises an error' do
+          expect do
+            ai_provider.ask(prompt_system:, prompt_user:)
+          end.to raise_error(AI::Provider::ResponseError, 'Not found - resource not found')
+        end
       end
     end
 
-    context 'with an invalid model' do
-      before do
-        Setting.set('ai_provider_config', Setting.get('ai_provider_config').merge(model: 'nonexisting-model'))
-      end
-
+    context 'when API is faulty' do
       it 'raises an error' do
+        allow(UserAgent).to receive(:post).and_return(
+          UserAgent::Result.new(
+            error:   '',
+            success: false,
+            code:    400,
+          )
+        )
+
         expect do
           ai_provider.ask(prompt_system:, prompt_user:)
-        end.to raise_error(AI::Provider::ResponseError, 'Not found - resource not found')
+        end.to raise_error(AI::Provider::ResponseError, 'Invalid request - please check your input')
       end
     end
-  end
 
-  context 'when API is faulty' do
-    it 'raises an error' do
-      allow(UserAgent).to receive(:post).and_return(
-        UserAgent::Result.new(
-          error:   '',
-          success: false,
-          code:    400,
-        )
-      )
-
-      expect do
+    context 'when metadata is extracted' do
+      it 'stores metadata from response' do
         ai_provider.ask(prompt_system:, prompt_user:)
-      end.to raise_error(AI::Provider::ResponseError, 'Invalid request - please check your input')
-    end
-  end
 
-  context 'when metadata is extracted' do
-    it 'stores metadata from response' do
-      ai_provider.ask(prompt_system:, prompt_user:)
+        metadata = ai_provider.metadata
 
-      metadata = ai_provider.metadata
-
-      expect(metadata).to include(
-        model:             be_present,
-        prompt_tokens:     be_a(Numeric),
-        completion_tokens: be_a(Numeric),
-        total_tokens:      be_a(Numeric)
-      )
+        expect(metadata).to include(
+          model:             be_present,
+          prompt_tokens:     be_a(Numeric),
+          completion_tokens: be_a(Numeric),
+          total_tokens:      be_a(Numeric)
+        )
+      end
     end
   end
 end

@@ -179,13 +179,15 @@ returns
       # see specs for example
       return [] if !text.is_a?(String)
 
-      text.scan(%r{([\d\s\-(|)]{6,26})}).map do |match|
+      text.scan(%r{([\d\s\-(|)/]{6,26})}).filter_map do |match|
         normalize_number(match[0])
       end
     end
 
     def self.normalize_number(number)
       number = number.gsub(%r{[\s-]}, '')
+      return nil if number.count('/') > 1
+
       number.gsub!(%r{^(00)?(\+?\d\d)\(0?(\d*)\)}, '\\1\\2\\3')
       number.gsub!(%r{\D}, '')
       case number

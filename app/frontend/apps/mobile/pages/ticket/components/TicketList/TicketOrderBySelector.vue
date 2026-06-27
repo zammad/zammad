@@ -102,7 +102,7 @@ const advanceFocus = (event: KeyboardEvent, idx: number) => {
         aria-haspopup="dialog"
         :aria-expanded="expanded"
         :aria-label="accessibilityLabel"
-        class="text-blue flex cursor-pointer items-center gap-1 overflow-hidden whitespace-nowrap"
+        class="flex cursor-pointer items-center gap-1 overflow-hidden whitespace-nowrap text-blue"
         data-test-id="column"
         @click="open"
         @keydown.space.prevent="open"

@@ -1,3 +1,7 @@
+/*
+ * Don't forget to add the mapping to the TransitionName enum in useTransitionConfig.ts when adding a new transition.
+ */
+
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.3s ease;
@@ -76,6 +80,23 @@
   opacity: 0;
 }
 
+.collapse-height-enter-active,
+.collapse-height-leave-active {
+  display: grid;
+  overflow: hidden;
+  transition: grid-template-rows 150ms ease;
+}
+
+.collapse-height-enter-from,
+.collapse-height-leave-to {
+  grid-template-rows: 0fr;
+}
+
+.collapse-height-enter-to,
+.collapse-height-leave-from {
+  grid-template-rows: 1fr;
+}
+
 .pseudo-transition-enter-active,
 .pseudo-transition-leave-active {
   transition: transform 0.3s ease;
@@ -94,4 +115,65 @@
 .slide-down-enter-from,
 .slide-down-leave-to {
   transform: translateY(-100%);
+}
+
+.collapse-height-enter-active,
+.collapse-height-leave-active {
+  display: grid;
+  overflow: hidden;
+  transition: grid-template-rows 150ms ease;
+}
+
+.collapse-height-enter-from,
+.collapse-height-leave-to {
+  grid-template-rows: 0fr;
+}
+
+.collapse-height-enter-to,
+.collapse-height-leave-from {
+  grid-template-rows: 1fr;
+}
+
+.slide-enter-active {
+  transition-timing-function: var(--ease-out);
+}
+
+.slide-enter-from {
+  opacity: 0;
+  translate: calc(3 / 4 * 100%) var(--tw-translate-y);
+
+  [dir='rtl'] & {
+    translate: calc(-3 / 4 * 100%) var(--tw-translate-y);
+  }
+}
+
+.slide-enter-to {
+  opacity: 1;
+  translate: 0 var(--tw-translate-y);
+
+  [dir='rtl'] & {
+    translate: -0 var(--tw-translate-y);
+  }
+}
+
+.slide-leave-active {
+  transition-timing-function: var(--ease-in);
+}
+
+.slide-leave-from {
+  opacity: 1;
+  translate: 0 var(--tw-translate-y);
+
+  [dir='rtl'] & {
+    translate: -0 var(--tw-translate-y);
+  }
+}
+
+.slide-leave-to {
+  opacity: 0;
+  translate: calc(3 / 4 * 100%) var(--tw-translate-y);
+
+  [dir='rtl'] & {
+    translate: calc(-3 / 4 * 100%) var(--tw-translate-y);
+  }
 }

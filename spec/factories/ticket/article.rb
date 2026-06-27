@@ -114,7 +114,7 @@ FactoryBot.define do
       trait :inbound do
         transient do
           sender_name  { 'Customer' }
-          username     { Faker::Twitter.screen_name }
+          username     { Faker::X.unique.screen_name }
           sender_id    { Faker::Number.unique.number(digits: 18) }
           recipient_id { Faker::Number.unique.number(digits: 19) }
         end
@@ -150,7 +150,7 @@ FactoryBot.define do
 
       trait :outbound do
         transient do
-          username     { Faker::Twitter.screen_name }
+          username     { Faker::X.unique.screen_name }
           sender_id    { Faker::Number.unique.number(digits: 18) }
           recipient_id { Faker::Number.unique.number(digits: 19) }
         end

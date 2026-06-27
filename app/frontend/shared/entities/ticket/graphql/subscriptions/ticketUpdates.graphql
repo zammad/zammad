@@ -2,6 +2,7 @@ subscription ticketUpdates($ticketId: ID!, $initial: Boolean = false) {
   ticketUpdates(ticketId: $ticketId, initial: $initial) {
     ticket {
       ...ticketAttributes
+      aiSummaryEnabled
       createArticleType {
         id
         name

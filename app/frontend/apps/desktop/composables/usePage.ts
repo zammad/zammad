@@ -1,64 +1,52 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-// Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
-
-import {
-  computed,
-  onActivated,
-  onDeactivated,
-  ref,
-  watch,
-  type ComputedRef,
-  type Ref,
-  type WatchHandle,
-} from 'vue'
+import { computed, shallowRef, watch, type ComputedRef, type Ref, type WatchHandle } from 'vue'
 
 import useMetaTitle from '#shared/composables/useMetaTitle.ts'
 
+import { useKeepAliveHooks } from './useKeepAliveHooks.ts'
+
 interface PageOptions {
-  pageActive?: Ref<boolean>
-  metaTitle?: ComputedRef<string>
+  metaTitle?: Ref<string> | ComputedRef<string>
+  noTranslateMetaTitle?: Ref<boolean> | ComputedRef<boolean>
   onReactivate?: () => void
   onDeactivated?: () => void
 }
 
 export const usePage = (pageOptions: PageOptions = {}) => {
-  const pageActive = pageOptions.pageActive || ref(true)
+  const pageActive = shallowRef(true)
 
   const pageInactive = computed(() => !pageActive.value)
 
-  const { metaTitle, onReactivate } = pageOptions
+  const { metaTitle, noTranslateMetaTitle, onReactivate } = pageOptions
 
   let stopMetaTitleWatcher: WatchHandle | undefined
 
   const { setViewTitle } = useMetaTitle()
 
-  onActivated(() => {
-    // When it's already true, it means it's the first time, because onActivated is also called on the
-    // first mount.
-    if (pageActive.value !== true) {
+  useKeepAliveHooks({
+    onReactivated() {
       onReactivate?.()
-    }
+    },
+    onActivated() {
+      pageActive.value = true
 
-    pageActive.value = true
+      if (!metaTitle) return
 
-    if (metaTitle) {
       stopMetaTitleWatcher = watch(
         metaTitle,
         (newValue) => {
-          setViewTitle(newValue)
+          if (noTranslateMetaTitle) setViewTitle(newValue, !noTranslateMetaTitle.value)
+          else setViewTitle(newValue)
         },
         { immediate: true },
       )
-    }
-  })
-
-  onDeactivated(() => {
-    pageActive.value = false
-
-    stopMetaTitleWatcher?.()
-
-    pageOptions.onDeactivated?.()
+    },
+    onDeactivated() {
+      pageActive.value = false
+      stopMetaTitleWatcher?.()
+      pageOptions.onDeactivated?.()
+    },
   })
 
   return {

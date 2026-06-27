@@ -7,7 +7,15 @@ class KnowledgeBase::Public::AnswersController < KnowledgeBase::Public::BaseCont
     @object          = find_answer(@category&.answers, params[:answer])
     @object_locales  = find_locales(@object)
 
-    render_alternative if @object.blank?
+    if @object.blank?
+      render_alternative
+      return
+    end
+
+    adjacent_answer = KnowledgeBase::AdjacentAnswer.new(@object.translation, user: current_user)
+
+    @object_next     = adjacent_answer.next
+    @object_previous = adjacent_answer.previous
   end
 
   private

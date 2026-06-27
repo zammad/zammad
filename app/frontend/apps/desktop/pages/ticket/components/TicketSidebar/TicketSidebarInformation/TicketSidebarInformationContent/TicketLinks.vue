@@ -18,6 +18,7 @@ import CommonDivider from '#desktop/components/CommonDivider/CommonDivider.vue'
 import { useFlyout } from '#desktop/components/CommonFlyout/useFlyout.ts'
 import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
 import TicketPopoverWithTrigger from '#desktop/components/Ticket/TicketPopoverWithTrigger.vue'
+import TicketLinksSkeleton from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinksSkeleton.vue'
 import { useObjectLinks } from '#desktop/pages/ticket/composables/useObjectLinks.ts'
 import { useLinkRemoveMutation } from '#desktop/pages/ticket/graphql/mutations/linkRemove.api.ts'
 import { LinkListDocument } from '#desktop/pages/ticket/graphql/queries/linkList.api.ts'
@@ -112,6 +113,10 @@ defineExpose({ hasLinks })
 
 <template>
   <CommonLoader :loading="linkListIsLoading">
+    <template #skeleton>
+      <TicketLinksSkeleton />
+    </template>
+
     <div class="flex flex-col gap-2">
       <div
         v-if="hasLinks"

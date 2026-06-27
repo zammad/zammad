@@ -163,7 +163,7 @@ RSpec.describe 'Desktop > Overviews > Bulk Actions', app: :desktop_view, authent
     end
 
     within 'aside[role="complementary"]' do
-      click 'button[aria-label="Context menu"]'
+      click 'button[aria-label="Macros"]'
     end
 
     # NB: Due to popover menus being mounted to the end of the document body, we need the scope outside of the flyout

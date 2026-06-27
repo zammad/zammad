@@ -4947,6 +4947,12 @@
           "interfaces": null,
           "enumValues": [
             {
+              "name": "DoorkeeperReturnTo",
+              "description": "DoorkeeperReturnTo",
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "TwoFactorConfiguration",
               "description": "TwoFactorConfiguration",
               "isDeprecated": false,
@@ -5352,6 +5358,12 @@
             },
             {
               "name": "FormUpdater__Updater__Organization__Edit",
+              "description": null,
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "FormUpdater__Updater__Search__AdvancedFilters",
               "description": null,
               "isDeprecated": false,
               "deprecationReason": null
@@ -17593,13 +17605,9 @@
                   "name": "search",
                   "description": "What to search for",
                   "type": {
-                    "kind": "NON_NULL",
-                    "name": null,
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "String",
-                      "ofType": null
-                    }
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
                   },
                   "defaultValue": null
                 },
@@ -17656,6 +17664,16 @@
                     "ofType": null
                   },
                   "defaultValue": null
+                },
+                {
+                  "name": "filter",
+                  "description": "Advanced filters as selector conditions",
+                  "type": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "SelectorNodeInput",
+                    "ofType": null
+                  },
+                  "defaultValue": null
                 }
               ],
               "type": {
@@ -17678,13 +17696,9 @@
                   "name": "search",
                   "description": "What to search for",
                   "type": {
-                    "kind": "NON_NULL",
-                    "name": null,
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "String",
-                      "ofType": null
-                    }
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
                   },
                   "defaultValue": null
                 },
@@ -17705,6 +17719,24 @@
                           "name": "EnumSearchableModels",
                           "ofType": null
                         }
+                      }
+                    }
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "filters",
+                  "description": "Per-object advanced filters as selector conditions",
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "name": null,
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "SelectorObjectInput",
+                        "ofType": null
                       }
                     }
                   },
@@ -19593,6 +19625,128 @@
           ],
           "inputFields": null,
           "interfaces": [],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "SelectorNodeInput",
+          "description": "Selector node: either a single condition (name/operator/value) or a subclause (operator/conditions).",
+          "fields": null,
+          "inputFields": [
+            {
+              "name": "operator",
+              "description": "Block operator (AND/OR/NOT) for subclauses or the condition operator (e.g. \"is\", \"contains\") for single conditions.",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "conditions",
+              "description": "Nested conditions, present on subclauses only.",
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "SelectorNodeInput",
+                    "ofType": null
+                  }
+                }
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "name",
+              "description": "Target attribute, e.g. \"ticket.title\", conditions only.",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "value",
+              "description": "Condition value (primitive or array), conditions only.",
+              "type": {
+                "kind": "SCALAR",
+                "name": "JSON",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "preCondition",
+              "description": "Optional pre-condition (e.g. \"current_user.id\", \"not_set\"), conditions only.",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "range",
+              "description": "Optional range unit for relative time operators (e.g. \"minute\", \"day\"), conditions only.",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "defaultValue": null
+            }
+          ],
+          "interfaces": null,
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "SelectorObjectInput",
+          "description": "Per-object selector, pairing a searchable model with its selector conditions.",
+          "fields": null,
+          "inputFields": [
+            {
+              "name": "object",
+              "description": "Searchable model the selector applies to, e.g. Ticket",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "ENUM",
+                  "name": "EnumSearchableModels",
+                  "ofType": null
+                }
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "selector",
+              "description": "Selector conditions to apply for the given object",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "SelectorNodeInput",
+                  "ofType": null
+                }
+              },
+              "defaultValue": null
+            }
+          ],
+          "interfaces": null,
           "enumValues": null,
           "possibleTypes": null
         },
@@ -21760,6 +21914,18 @@
             {
               "name": "aiAgentRunning",
               "description": "Returns true if an AI agent is running for this ticket",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "aiSummaryEnabled",
+              "description": "Returns true if the AI summary is enabled for this ticket",
               "args": [],
               "type": {
                 "kind": "SCALAR",
@@ -24346,6 +24512,16 @@
                 "ofType": null
               },
               "defaultValue": null
+            },
+            {
+              "name": "searchFilter",
+              "description": "Advanced search filters as selector conditions",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "SelectorNodeInput",
+                "ofType": null
+              },
+              "defaultValue": null
             }
           ],
           "interfaces": null,
@@ -25810,6 +25986,18 @@
               "deprecationReason": null
             },
             {
+              "name": "issueType",
+              "description": "The issue type of the issue",
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "TicketExternalReferencesIssueTrackerItemIssueType",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "labels",
               "description": "The labels of the issue",
               "args": [],
@@ -25928,6 +26116,45 @@
                 "kind": "OBJECT",
                 "name": "TicketExternalReferencesIssueTrackerItem",
                 "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
+          "name": "TicketExternalReferencesIssueTrackerItemIssueType",
+          "description": "The issue type of the Issue tracker item",
+          "fields": [
+            {
+              "name": "color",
+              "description": "The GitHub color identifier of the issue type (e.g. PURPLE, RED)",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "name",
+              "description": "The name of the issue type",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
               },
               "isDeprecated": false,
               "deprecationReason": null
@@ -26393,6 +26620,16 @@
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "searchFilter",
+              "description": "Advanced search filters as selector conditions",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "SelectorNodeInput",
                 "ofType": null
               },
               "defaultValue": null
@@ -27473,6 +27710,22 @@
                 "kind": "OBJECT",
                 "name": "User",
                 "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "defaultClose",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Boolean",
+                  "ofType": null
+                }
               },
               "isDeprecated": false,
               "deprecationReason": null
@@ -29818,7 +30071,7 @@
           "fields": [
             {
               "name": "tokens",
-              "description": "List of acess tokens for the user",
+              "description": "List of access tokens for the user",
               "args": [],
               "type": {
                 "kind": "LIST",
@@ -30980,6 +31233,18 @@
               "type": {
                 "kind": "ENUM",
                 "name": "EnumTaskbarStateUpdate",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "taskbarItem",
+              "description": "The updated taskbar item, so consumers can apply the new state directly (e.g. cross-tab search sync)",
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "UserTaskbarItem",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -33588,6 +33853,30 @@
           "name": "UserTaskbarItemEntitySearch",
           "description": "Entity representing taskbar item search",
           "fields": [
+            {
+              "name": "filterCount",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "filters",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
             {
               "name": "model",
               "description": null,

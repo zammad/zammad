@@ -28,6 +28,7 @@
     "unicorn/no-thenable": "off",
     "vitest/expect-expect": "off",
     "vitest/no-conditional-expect": "off",
+    "vitest/no-standalone-expect": "off",
     "vitest/require-mock-type-parameters": "off",
     "vitest/valid-expect": "off",
     "vitest/warn-todo": "warn"

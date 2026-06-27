@@ -58,7 +58,11 @@ class KnowledgeBase::Answer::Translation::Content < ApplicationModel
   def touch_translation
     return if !translation.persisted?
 
-    translation&.touch # rubocop:disable Rails/SkipsModelValidations
+    # The body is the translation's embedded content but lives here, so it never shows up in the
+    # translation's own previous_changes. Flag it so the vector index routes to the full re-embed
+    # path rather than a metadata-only update.
+    translation.vector_index_content_dirty = true
+    translation.touch # rubocop:disable Rails/SkipsModelValidations
   end
 
   before_save :sanitize_body

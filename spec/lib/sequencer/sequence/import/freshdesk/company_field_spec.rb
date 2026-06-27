@@ -39,6 +39,15 @@ RSpec.describe Sequencer::Sequence::Import::Freshdesk::CompanyField, sequencer: 
       it 'adds custom fields' do
         expect { process(process_payload) }.to change(Organization, :column_names).by(['custom_dropdown'])
       end
+
+      it 'sets create, edit and view screens for Organization fields' do
+        process(process_payload)
+        expect(ObjectManager::Attribute.get(object: 'Organization', name: 'custom_dropdown').screens).to eq(
+          'create' => { '-all-' => { 'shown' => true } },
+          'edit'   => { '-all-' => { 'shown' => true } },
+          'view'   => { '-all-' => { 'shown' => true } },
+        )
+      end
     end
 
     context 'when fields are invalid' do

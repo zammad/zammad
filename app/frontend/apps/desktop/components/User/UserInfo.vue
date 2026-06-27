@@ -17,6 +17,7 @@ import OrganizationPopoverWithTrigger from '#desktop/components/Organization/Org
 interface Props {
   user: Partial<User>
   live?: AvatarUserLive
+  responsive?: boolean
   size?: 'small' | 'normal'
   dense?: boolean
   noLink?: boolean
@@ -51,64 +52,74 @@ const { organizationDisplayName } = useOrganizationEntity(organization)
       }"
       :link="!dense && !noLink ? `/users/${getIdFromGraphQLId(user.id!)}` : undefined"
     >
-      <CommonUserAvatar v-if="user" :entity="user as AvatarUser" :live="live" :size="size" />
+      <CommonUserAvatar
+        v-if="user"
+        :entity="user as AvatarUser"
+        :live="live"
+        :responsive="responsive"
+        :size="size"
+      />
     </component>
-    <div class="flex flex-col justify-center gap-px">
-      <component
-        :is="nameComponent"
-        v-if="dense"
-        class="text-sm leading-snug"
-        :class="{ group: !noLink }"
-        :link="!noLink ? `/users/${getIdFromGraphQLId(user.id!)}` : undefined"
-      >
+    <!-- max-w-5xl - p-3 =  max-w-244 because section in @see UserDetailViewContent section -->
+    <!-- So we are in the same constraint -->
+    <div class="flex w-full max-w-244 justify-between">
+      <div class="flex flex-col justify-center gap-px">
+        <component
+          :is="nameComponent"
+          v-if="dense"
+          class="text-sm leading-snug"
+          :class="{ group: !noLink }"
+          :link="!noLink ? `/users/${getIdFromGraphQLId(user.id!)}` : undefined"
+        >
+          <CommonLabel
+            :class="{
+              [`${titleClass}`]: titleClass,
+              'text-blue-800! group-hover:text-blue-850! group-hover:dark:text-blue-600!': !noLink,
+            }"
+            class="line-clamp-2! break-word"
+            :size="titleSize ? titleSize : labelSize"
+          >
+            {{ userDisplayName }}
+          </CommonLabel>
+        </component>
         <CommonLabel
-          :class="{
-            [`${titleClass}`]: titleClass,
-            'text-blue-800! group-hover:text-blue-850! group-hover:dark:text-blue-600!': !noLink,
-          }"
-          class="line-clamp-2! break-word"
+          v-else
           :size="titleSize ? titleSize : labelSize"
+          class="line-clamp-2! break-all text-gray-300! dark:text-neutral-400!"
+          :class="titleClass"
         >
           {{ userDisplayName }}
         </CommonLabel>
-      </component>
-      <CommonLabel
-        v-else
-        :size="titleSize ? titleSize : labelSize"
-        class="line-clamp-1! break-word text-gray-300! dark:text-neutral-400!"
-        :class="titleClass"
-      >
-        {{ userDisplayName }}
-      </CommonLabel>
 
-      <OrganizationPopoverWithTrigger
-        v-if="!dense && user.organization && hasOrganizationPopover"
-        class="rounded-sm outline-offset-1 focus-visible:outline-2!"
-        :popover-config="{ orientation: 'left' }"
-        :organization="user.organization"
-        z-index="52"
-        trigger-link-class="self-start"
-        trigger-link-active-class="outline-2! outline-blue-800! hover:outline-blue-800!"
-      >
-        <CommonLabel
-          class="line-clamp-2! break-word text-blue-800! hover:text-blue-850! hover:dark:text-blue-600!"
-          :size="labelSize"
+        <OrganizationPopoverWithTrigger
+          v-if="!dense && user.organization && hasOrganizationPopover"
+          class="rounded-sm outline-offset-1 focus-visible:outline-2!"
+          :popover-config="{ orientation: 'left' }"
+          :organization="user.organization"
+          z-index="52"
+          trigger-link-class="self-start"
+          trigger-link-active-class="outline-2! outline-blue-800! hover:outline-blue-800!"
         >
-          {{ organizationDisplayName }}
-        </CommonLabel>
-      </OrganizationPopoverWithTrigger>
-      <CommonLink
-        v-else-if="!dense && user.organization"
-        :link="`/organizations/${user.organization?.internalId}`"
-      >
-        <CommonLabel
-          class="line-clamp-2! break-word text-blue-800! hover:text-blue-850! hover:dark:text-blue-600!"
-          :size="labelSize"
+          <CommonLabel
+            class="line-clamp-2! break-word text-blue-800! hover:text-blue-850! hover:dark:text-blue-600!"
+            :size="labelSize"
+          >
+            {{ organizationDisplayName }}
+          </CommonLabel>
+        </OrganizationPopoverWithTrigger>
+        <CommonLink
+          v-else-if="!dense && user.organization"
+          :link="`/organizations/${user.organization?.internalId}`"
         >
-          {{ organizationDisplayName }}
-        </CommonLabel>
-      </CommonLink>
+          <CommonLabel
+            class="line-clamp-2! break-word text-blue-800! hover:text-blue-850! hover:dark:text-blue-600!"
+            :size="labelSize"
+          >
+            {{ organizationDisplayName }}
+          </CommonLabel>
+        </CommonLink>
+      </div>
+      <slot name="actions" />
     </div>
-    <slot name="actions" />
   </div>
 </template>

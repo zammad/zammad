@@ -62,7 +62,6 @@ const testOptions = [
 
 const wrapperParameters = {
   form: true,
-  formField: true,
   store: true,
   dialog: true,
 }

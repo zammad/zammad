@@ -35,6 +35,8 @@ import { useLocaleStore } from '#shared/stores/locale.ts'
 import stopEvent from '#shared/utils/events.ts'
 import testFlags from '#shared/utils/testFlags.ts'
 
+import { useAppBreakpoints } from '#desktop/composables/responsiveness/useAppBreakpoints.ts'
+import { useDelayTimings } from '#desktop/composables/useDelayTimings.ts'
 import { useTransitionConfig } from '#desktop/composables/useTransitionConfig.ts'
 
 import { usePopoverInstances } from './usePopoverInstances.ts'
@@ -64,6 +66,8 @@ const emit = defineEmits<{
   close: []
 }>()
 
+const { isSmallScreen } = useAppBreakpoints()
+
 const popoverElement = useTemplateRef('popover')
 
 const showPopover = ref(false)
@@ -89,7 +93,9 @@ const overflowOrientation = ref<Orientation | null>(null)
 const autoOrientation = computed(() => {
   if (overflowOrientation.value) return overflowOrientation.value
 
-  if (props.orientation === 'autoVertical') {
+  // ignore (auto-)Horizontal in favor for autoVertical on small screens
+  // since there is no enough space for left and right placement
+  if (props.orientation === 'autoVertical' || isSmallScreen.value) {
     return hasDirectionUp.value ? 'top' : 'bottom'
   }
 
@@ -392,11 +398,12 @@ const openPopoverWithHoverCheck = () => {
   openPopoverImmediate()
 }
 
-const { durations, timings } = useTransitionConfig()
+const { timings } = useDelayTimings()
+const { transitions } = useTransitionConfig()
 
 const { start: startOpenTimeout, stop: cancelOpenPopover } = useTimeoutFn(
   openPopoverWithHoverCheck,
-  timings.veryShort,
+  timings.value.veryShort,
   { immediate: false },
 )
 
@@ -448,21 +455,21 @@ useOnEmitter('close-popover', () => {
 // We resize the sidebar but since it is a grid we are changing css values
 // Only changes on the window size and element bounding are detected
 // In this cases we need to trigger a manual update
-useOnEmitter('resize-element', () => {
+useOnEmitter('resize-layout', () => {
   if (showPopover.value && targetElementBounds.value) closePopover()
 })
 </script>
 
 <template>
   <Teleport to="body">
-    <Transition name="fade" :duration="durations.normal">
+    <Transition :name="transitions.fade">
       <div
         v-if="persistent"
         v-show="showPopover"
         :id="id"
         ref="popover"
         role="region"
-        class="popover fixed flex"
+        class="popover fixed flex print:hidden"
         :class="[classes.base]"
         :style="popoverStyle"
         :aria-labelledby="owner && '$el' in owner ? owner.$el?.id : owner?.id"
@@ -482,7 +489,7 @@ useOnEmitter('resize-element', () => {
         :id="id"
         ref="popover"
         role="region"
-        class="popover fixed flex"
+        class="popover fixed flex print:hidden"
         :class="[classes.base]"
         :style="popoverStyle"
         :aria-labelledby="owner && '$el' in owner ? owner.$el?.id : owner?.id"

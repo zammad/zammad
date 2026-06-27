@@ -21,6 +21,13 @@ module Exceptions
     end
   end
 
+  class UnprocessableEntity < UnprocessableContent
+    def initialize(...)
+      ActiveSupport::Deprecation.new.warn('Exceptions::UnprocessableEntity is deprecated and will be removed in Zammad 8.0. Please use Exceptions::UnprocessableContent instead.')
+      super
+    end
+  end
+
   class InvalidAttribute < StandardError
     attr_reader :attribute
 

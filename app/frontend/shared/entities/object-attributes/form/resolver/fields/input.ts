@@ -21,6 +21,16 @@ export class FieldResolverInput extends FieldResolver {
     }
   }
 
+  get filterable() {
+    return this.attributeConfig.type !== 'password'
+  }
+
+  public override getFieldFilterOperators() {
+    if (!this.filterable) return
+
+    return ['matches']
+  }
+
   public fieldTypeAttributes() {
     const props: FormFieldAdditionalProps = {
       maxlength: this.attributeConfig.maxlength,

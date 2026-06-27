@@ -127,7 +127,7 @@ class UserAgent
 
   def self.log(url, request, response, options)
     return if !options[:log]
-    return if options[:log][:log_only_on_error] && response.is_a?(Net::HTTPSuccess)
+    return if options[:log][:log_only_on_error] && (response.is_a?(Net::HTTPSuccess) || response.is_a?(Net::HTTPRedirection))
 
     # request
     request_data = {
@@ -321,7 +321,7 @@ class UserAgent
 
     # start http call
     begin
-      total_timeout = options[:total_timeout] || 60
+      total_timeout = options[:total_timeout] || ENV.fetch('ZAMMAD_HTTP_TOTAL_TIMEOUT', 60).to_i
 
       handled_open_timeout(options[:open_socket_tries]) do
         Timeout.timeout(total_timeout) do

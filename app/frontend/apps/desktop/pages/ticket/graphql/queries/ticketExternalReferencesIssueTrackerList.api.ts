@@ -13,6 +13,10 @@ export const TicketExternalReferencesIssueTrackerItemListDocument = gql`
   ) {
     assignees
     issueId
+    issueType {
+      color
+      name
+    }
     labels {
       color
       textColor

@@ -59,7 +59,7 @@ describe('search view', () => {
       },
     })
 
-    const view = await visitView('/search')
+    const view = await visitView('/search/Nicole')
 
     await expect(view.container).toBeAccessible()
   })

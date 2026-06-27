@@ -109,6 +109,7 @@
 **/node_modules
 yarn-error.log
 .yarn/cache
+/.pnpm-store
 
 # Cypress
 .dev/cypress/screenshots/*

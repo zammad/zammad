@@ -43,6 +43,25 @@ RSpec.describe Service::Search do
       end
     end
 
+    context 'with :per_object_conditions option' do
+      let(:options) do
+        {
+          per_object_conditions: {
+            User         => { operator: 'AND', conditions: [{ name: 'user.firstname', operator: 'is', value: query }] },
+            Organization => { operator: 'AND', conditions: [{ name: 'organization.name', operator: 'is', value: 'no_match' }] },
+          }
+        }
+      end
+
+      it 'applies each condition to its matching object and processes objects without one normally' do
+        expect(service_result.result).to include(
+          User         => include(objects: [customer], total_count: 1),
+          Organization => include(objects: be_blank, total_count: 0),
+          Ticket       => include(objects: be_blank, total_count: 0)
+        )
+      end
+    end
+
     context 'with :only_ids option' do
       let(:options) { { only_ids: true } }
 

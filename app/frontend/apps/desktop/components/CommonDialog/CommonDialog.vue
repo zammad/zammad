@@ -14,7 +14,9 @@ import { getFirstFocusableElement } from '#shared/utils/getFocusableElements.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonOverlayContainer from '#desktop/components/CommonOverlayContainer/CommonOverlayContainer.vue'
+import { useAppBreakpoints } from '#desktop/composables/responsiveness/useAppBreakpoints.ts'
 import { getRouteIdentifier } from '#desktop/composables/useOverlayContainer.ts'
+import { useTransitionConfig } from '#desktop/composables/useTransitionConfig.ts'
 
 import CommonDialogActionFooter, {
   type Props as ActionFooterProps,
@@ -62,6 +64,10 @@ const isActive = computed(() =>
   props.fullscreen ? true : routeIdentifier === getRouteIdentifier(router.currentRoute.value),
 )
 
+const { isSmallScreen } = useAppBreakpoints()
+
+const isFullscreen = computed(() => props.fullscreen || isSmallScreen.value)
+
 const dialogElement = useTemplateRef<HTMLElement>('dialog')
 const footerElement = useTemplateRef('footer')
 const contentElement = useTemplateRef('content')
@@ -107,30 +113,20 @@ onMounted(() => {
   })
 })
 
-// It is the same as flyout, but could be changed in the future?
-const transition = VITE_TEST_MODE
-  ? undefined
-  : {
-      enterActiveClass: 'duration-300 ease-out',
-      enterFromClass: 'opacity-0 rtl:-translate-x-3/4 ltr:translate-x-3/4',
-      enterToClass: 'opacity-100 rtl:-translate-x-0 ltr:translate-x-0',
-      leaveActiveClass: 'duration-200 ease-in',
-      leaveFromClass: 'opacity-100 rtl:-translate-x-0 ltr:translate-x-0',
-      leaveToClass: 'opacity-0 rtl:-translate-x-3/4 ltr:translate-x-3/4',
-    }
+const { transitions } = useTransitionConfig()
 </script>
 
 <template>
   <!--  `display:none` to prevent showing up inactive dialog for cached instance -->
-  <Transition :appear="isActive" v-bind="transition">
+  <Transition :name="transitions.fade" :appear="isActive">
     <!-- We use teleport here to  center it to target node and increase z index on fullscreen to avoid clicking collapse and resize buttons -->
-    <Teleport :to="fullscreen ? '#app' : '#main-content'">
+    <Teleport :to="isFullscreen ? '#app' : '#main-content'">
       <CommonOverlayContainer
         :id="dialogId"
         tag="div"
         disable-teleport
-        class="absolute top-[50%] z-50 h-full w-full translate-y-[-50%] ltr:left-[50%] ltr:translate-x-[-50%] rtl:right-[50%] rtl:-translate-x-[-50%]"
-        :class="{ 'z-40': fullscreen, hidden: !isActive }"
+        class="absolute top-[50%] z-50 size-full translate-y-[-50%] ltr:left-[50%] ltr:translate-x-[-50%] rtl:right-[50%] rtl:-translate-x-[-50%]"
+        :class="{ 'z-40': isFullscreen, hidden: !isActive }"
         role="dialog"
         backdrop-class="z-40"
         :show-backdrop="isActive"
@@ -143,7 +139,7 @@ const transition = VITE_TEST_MODE
           :is="wrapperTag"
           ref="dialog"
           data-common-dialog
-          class="absolute top-1/2 z-50 flex min-w-lg -translate-y-1/2 flex-col gap-3 rounded-xl border border-neutral-100 bg-neutral-50 p-3 ltr:left-1/2 ltr:-translate-x-1/2 rtl:right-1/2 rtl:translate-x-1/2 dark:border-gray-900 dark:bg-gray-500"
+          class="absolute top-1/2 z-50 flex w-max max-w-full -translate-y-1/2 flex-col gap-3 rounded-xl border border-neutral-100 bg-neutral-50 p-3 md:min-w-lg ltr:left-1/2 ltr:-translate-x-1/2 rtl:right-1/2 rtl:translate-x-1/2 dark:border-gray-900 dark:bg-gray-500"
         >
           <div class="flex items-center justify-between bg-neutral-50 dark:bg-gray-500">
             <slot name="header">
@@ -156,11 +152,11 @@ const transition = VITE_TEST_MODE
             </slot>
             <CommonButton
               v-if="!noClose"
+              v-tooltip="$t('Close dialog')"
               class="ms-auto"
               variant="neutral"
               size="medium"
               icon="x-lg"
-              :aria-label="$t('Close dialog')"
               @click="close()"
             />
           </div>

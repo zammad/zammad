@@ -1,0 +1,7 @@
+---
+allowBuilds:
+  cypress: true
+  sharp: true
+
+# Restore old default behavior like in pnpm v10.
+verifyDepsBeforeRun: false

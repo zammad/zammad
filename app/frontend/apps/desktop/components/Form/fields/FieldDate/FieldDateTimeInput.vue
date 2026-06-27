@@ -3,8 +3,7 @@
 <!-- eslint-disable zammad/zammad-detect-translatable-string -->
 
 <script setup lang="ts">
-import { getNode, type FormKitNode } from '@formkit/core'
-import { VueDatePicker } from '@vuepic/vue-datepicker'
+import { VueDatePicker, WeekStart } from '@vuepic/vue-datepicker'
 import { isValid, format, formatISO, parse, parseISO } from 'date-fns'
 import { isEqual } from 'lodash-es'
 import { computed, nextTick, toRef, watch, useTemplateRef } from 'vue'
@@ -14,7 +13,7 @@ import useValue from '#shared/components/Form/composables/useValue.ts'
 import type { DateTimeContext } from '#shared/components/Form/fields/FieldDate/types.ts'
 import { useDateFnsLocale } from '#shared/components/Form/fields/FieldDate/useDateFnsLocale.ts'
 import { useDateTime } from '#shared/components/Form/fields/FieldDate/useDateTime.ts'
-import dateRange from '#shared/form/validation/rules/date-range.ts'
+import { usePickerModel } from '#shared/components/Form/fields/FieldDate/usePickerModel.ts'
 import { i18n } from '#shared/i18n.ts'
 import testFlags from '#shared/utils/testFlags.ts'
 
@@ -30,14 +29,26 @@ const props = defineProps<Props>()
 
 const contextReactive = toRef(props, 'context')
 
-const { localValue } = useValue(contextReactive)
+const { hasValue, localValue } = useValue(contextReactive)
 
 const { ariaLabels, displayFormat, is24, maxDate, minDate, timePicker, valueFormat } =
   useDateTime(contextReactive)
 
+// Shared model handling: drops a half-selected range when `partialRange` is
+// false so only a complete range reaches the form value.
+const { pickerModel } = usePickerModel(contextReactive, localValue)
+
 const config = computed(() => ({
   keepActionRow: true,
 }))
+
+const rangeConfig = computed(() => {
+  if (!props.context.range) return false
+  return {
+    partialRange: false,
+    ...(typeof props.context.range === 'object' ? props.context.range : {}),
+  }
+})
 
 const actionRow = computed(() => ({
   showSelect: false,
@@ -216,18 +227,10 @@ watch(
   },
 )
 
-const dateRangeValidation = (value: (string | undefined)[]) => {
-  if (value.includes(undefined)) return false
-  if (dateRange.rule({ value } as FormKitNode<string[]>)) return true
-
-  const node = getNode(contextReactive.value.id)
-  if (!node) return
-
-  // Manually set validation error message.
-  node.setErrors(i18n.t(dateRange.localeMessage()))
-
-  return false
-}
+// A typed range only commits once both bounds are present; a reversed range is
+// allowed through and reordered by the `healDateRange` field feature, so no
+// ordering error is raised.
+const dateRangeValidation = (value: (string | undefined)[]) => !value.includes(undefined)
 
 watch(masked, (newValue) => {
   // empty input
@@ -308,10 +311,11 @@ const closed = () => {
     <!-- eslint-disable vuejs-accessibility/aria-props   -->
     <VueDatePicker
       ref="picker"
-      v-model="localValue"
+      v-model="pickerModel"
       :model-type="valueFormat"
       :disabled="context.disabled"
-      :range="context.range"
+      :range="rangeConfig"
+      :partial-range="context.partialRange"
       :time-config="{
         enableTimePicker: timePicker,
         is24: is24,
@@ -336,6 +340,7 @@ const closed = () => {
         name: context.node.name,
         clearable: !!context.clearable,
       }"
+      :week-start="WeekStart.Monday"
       auto-apply
       offset="12"
       @open="open"
@@ -347,11 +352,20 @@ const closed = () => {
           :id="context.id"
           ref="el"
           :name="context.node.name"
-          :class="context.classes.input"
+          :class="[
+            context.classes.input,
+            'grow-0',
+            {
+              'w-[calc(100%-3rem)]!': context.clearable && hasValue,
+              'w-[calc(100%-1.5rem)]!': !context.clearable || !hasValue,
+            },
+          ]"
           :disabled="context.disabled"
           :aria-describedby="context.describedBy"
           v-bind="context.attrs"
           type="text"
+          @keydown.enter.prevent="pickerInstance?.openMenu()"
+          @keydown.esc.prevent="pickerInstance?.closeMenu()"
         />
       </template>
       <template #input-icon>
@@ -364,13 +378,15 @@ const closed = () => {
       </template>
       <template #clear-icon>
         <CommonIcon
-          class="me-3"
+          class="me-3 focus-visible-app-default focus-visible:rounded-xs"
           name="x-lg"
           size="xs"
           tabindex="0"
           role="button"
           :aria-label="$t('Clear selection')"
           @click.stop="pickerInstance?.clearValue()"
+          @keydown.enter.prevent="pickerInstance?.clearValue()"
+          @keydown.space.prevent="pickerInstance?.clearValue()"
         />
       </template>
       <template #clock-icon>
@@ -396,7 +412,7 @@ const closed = () => {
 </template>
 
 <style scoped>
-:deep(.dp__theme_light) {
+:deep(.dp--theme-light) {
   --dp-background-color: var(--color-white);
   --dp-text-color: var(--color-black);
   --dp-hover-color: var(--color-blue-600);
@@ -429,9 +445,11 @@ const closed = () => {
     color: var(--color-black);
   }
 
-  .dp__btn,
-  .dp__calendar_item,
-  .dp__action_button {
+  .dp--btn,
+  .dp--btn-base,
+  .dp--overlay-col,
+  .dp--calendar-item,
+  .dp--action-button {
     &:hover {
       outline-color: var(--color-blue-600);
     }
@@ -441,14 +459,14 @@ const closed = () => {
     }
   }
 
-  .dp__button,
-  .dp__action_button {
+  .dp--button,
+  .dp--action-button {
     color: var(--color-gray-300);
     background: var(--color-green-200);
   }
 }
 
-:deep(.dp__theme_dark) {
+:deep(.dp--theme-dark) {
   --dp-background-color: var(--color-gray-500);
   --dp-text-color: var(--color-white);
   --dp-hover-color: var(--color-blue-900);
@@ -481,9 +499,11 @@ const closed = () => {
     color: var(--color-white);
   }
 
-  .dp__btn,
-  .dp__calendar_item,
-  .dp__action_button {
+  .dp--btn,
+  .dp--btn-base,
+  .dp--overlay-col,
+  .dp--calendar-item,
+  .dp--action-button {
     &:hover {
       outline-color: var(--color-blue-900);
     }
@@ -493,14 +513,14 @@ const closed = () => {
     }
   }
 
-  .dp__button,
-  .dp__action_button {
+  .dp--button,
+  .dp--action-button {
     color: var(--color-neutral-400);
     background: var(--color-gray-600);
   }
 }
 
-:deep(.dp__main) {
+:deep(.dp--main) {
   --dp-font-family: var(--default-font-family);
   --dp-border-radius: 0.5rem;
   --dp-cell-border-radius: 0.375rem;
@@ -525,7 +545,7 @@ const closed = () => {
   --dp-preview-font-size: 0.75rem;
   --dp-time-font-size: 1rem;
 
-  .dp__input_icon {
+  .dp--input-icon {
     left: unset;
     right: 0.625rem;
 
@@ -535,12 +555,12 @@ const closed = () => {
     }
   }
 
-  .dp__input_icon_pad {
+  .dp--input-icon-pad {
     padding-inline-start: var(--dp-common-padding);
     padding-inline-end: var(--dp-input-icon-padding);
   }
 
-  .dp__input_wrap {
+  .dp--input-wrap {
     display: flex;
   }
 
@@ -558,32 +578,34 @@ const closed = () => {
     max-width: none;
   }
 
-  .dp__inner_nav:hover,
-  .dp__month_year_select:hover,
-  .dp__year_select:hover,
-  .dp__date_hover:hover,
-  .dp__inc_dec_button {
+  .dp--inner-nav:hover,
+  .dp--month-year-select:hover,
+  .dp--year-select:hover,
+  .dp--date-hoverable:hover,
+  .dp--inc-dec-button {
     background: transparent;
     transition: none;
   }
 
-  .dp__date_hover.dp__cell_offset:hover {
+  .dp--date-hoverable.dp--cell-offset:hover {
     color: var(--dp-secondary-color);
   }
 
-  .dp__menu_inner {
+  .dp--menu-inner {
     padding-bottom: 0;
   }
 
-  .dp__action_row {
+  .dp--action-row {
     padding-top: 0;
     margin-top: 0.125rem;
   }
 
-  .dp__btn,
-  .dp__button,
-  .dp__calendar_item,
-  .dp__action_button {
+  .dp--btn,
+  .dp--btn-base,
+  .dp--button,
+  .dp--overlay-col,
+  .dp--calendar-item,
+  .dp--action-button {
     transition: none;
     border-radius: 0.375rem;
     outline-color: transparent;
@@ -601,35 +623,43 @@ const closed = () => {
     }
   }
 
-  .dp__calendar_row {
+  .dp--overlay-col {
+    &:hover {
+      outline-width: 0;
+    }
+
+    &:focus {
+      outline-offset: -1px;
+    }
+  }
+
+  .dp--calendar-row {
     gap: 0.375rem;
   }
 
-  .dp__month_year_wrap {
+  .dp--month-year-wrap {
     gap: 0.5rem;
   }
 
-  .dp__time_col {
+  .dp--time-col {
     gap: 0.75rem;
   }
 
-  .dp__today {
+  .dp--today {
     border: none;
     color: var(--color-blue-800);
 
-    &.dp__range_start,
-    &.dp__range_end,
-    &.dp__active_date {
+    &.dp--active {
       color: var(--color-white);
     }
   }
 
-  .dp__action_buttons {
+  .dp--action-buttons {
     margin-inline-start: 0;
     flex-grow: 1;
   }
 
-  .dp__action_button {
+  .dp--action-button {
     margin-inline-start: 0;
     transition: none;
     flex-grow: 1;
@@ -638,59 +668,55 @@ const closed = () => {
     border-radius: 0.375rem;
   }
 
-  .dp__action_cancel {
+  .dp--action-cancel {
     border: 0;
   }
 
-  .dp--arrow-btn-nav .dp__inner_nav {
+  .dp--arrow-btn-nav .dp--inner-nav {
     color: var(--color-blue-800);
   }
 
-  .dp__overlay_container {
+  .dp--overlay-container {
     padding-bottom: 0.5rem;
   }
 
-  .dp__overlay_container + .dp__button,
-  .dp__overlay_row + .dp__button {
+  .dp--overlay-container + .dp--button,
+  .dp--overlay-row + .dp--button {
     width: auto;
     margin: 0.5rem;
   }
 
-  .dp__overlay_container + .dp__button {
+  .dp--overlay-container + .dp--button {
     width: calc(var(--dp-menu-min-width));
   }
 
-  .dp__time_display {
+  .dp--time-display {
     transition: none;
     padding: 0.5rem;
   }
 
-  .dp__range_start,
-  .dp__range_end,
-  .dp__range_between {
+  .dp--range-between {
     transition: none;
     border: none;
     border-radius: 0.375rem;
   }
 
-  .dp__range_between:hover {
+  .dp--range-between:hover {
     background: var(--dp-range-between-dates-background-color);
     color: var(--dp-range-between-dates-text-color);
   }
 
-  .dp__range_end,
-  .dp__range_start,
-  .dp__active_date {
-    &.dp__cell_offset {
+  .dp--active {
+    &.dp--cell-offset {
       color: var(--dp-primary-text-color);
     }
   }
 
-  .dp__calendar_header {
+  .dp--calendar-header {
     font-weight: 400;
     text-transform: uppercase;
 
-    .dp__calendar_header_item {
+    .dp--calendar-header-item {
       padding-left: 0;
       padding-right: 0;
     }

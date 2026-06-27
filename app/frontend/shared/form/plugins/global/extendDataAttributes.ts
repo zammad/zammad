@@ -74,6 +74,16 @@ const extendDataAttribues = (node: FormKitNode) => {
       },
     },
   })
+
+  extendSchemaDefinition(node, 'inner', {
+    attrs: {
+      'data-alternative-background': {
+        if: '$alternativeBackground === true',
+        then: 'true',
+        else: undefined,
+      },
+    },
+  })
 }
 
 export default extendDataAttribues

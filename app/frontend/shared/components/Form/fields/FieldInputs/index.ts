@@ -35,6 +35,7 @@ Object.keys(inputFieldDefinitionList).forEach((inputType) => {
   initializeFieldDefinition(
     inputFieldDefinitionList[inputType],
     {
+      props: ['alternativeBackground'],
       features: [
         addLink,
         addSubmitEvent,

@@ -227,15 +227,15 @@ describe('User Detail View', () => {
         const main = view.getByRole('main')
         const header = within(main).getByTestId('user-detail-top-bar')
 
-        expect(within(header).getByRole('menuitem', { name: 'New ticket' })).toBeVisible()
+        expect(within(header).getByRole('button', { name: 'New ticket' })).toBeVisible()
 
-        await view.events.click(within(header).getByRole('button', { name: 'Action menu button' }))
+        await view.events.click(within(header).getByRole('button', { name: 'Additional actions' }))
 
-        const actionPopover = await view.findByRole('region', { name: 'Action menu button' })
+        const actionPopover = await view.findByRole('region', { name: 'Additional actions' })
 
-        expect(within(actionPopover).getByRole('menuitem', { name: 'Edit' })).toBeVisible()
-        expect(within(actionPopover).getByRole('menuitem', { name: 'History' })).toBeVisible()
-        expect(within(header).queryByRole('menuitem', { name: 'Delete' })).not.toBeInTheDocument()
+        expect(within(actionPopover).getByRole('button', { name: 'Edit' })).toBeVisible()
+        expect(within(actionPopover).getByRole('button', { name: 'History' })).toBeVisible()
+        expect(within(header).queryByRole('button', { name: 'Delete' })).not.toBeInTheDocument()
       })
 
       it('displays actions for admin users', async () => {
@@ -246,9 +246,9 @@ describe('User Detail View', () => {
         const main = view.getByRole('main')
         const header = within(main).getByTestId('user-detail-top-bar')
 
-        await view.events.click(within(header).getByRole('button', { name: 'Action menu button' }))
+        await view.events.click(within(header).getByRole('button', { name: 'Additional actions' }))
 
-        const actionPopover = await view.findByRole('region', { name: 'Action menu button' })
+        const actionPopover = await view.findByRole('region', { name: 'Additional actions' })
         expect(within(actionPopover).getByRole('menuitem', { name: 'Delete' })).toBeVisible()
       })
 
@@ -258,9 +258,9 @@ describe('User Detail View', () => {
         const main = view.getByRole('main')
         const header = within(main).getByTestId('user-detail-top-bar')
 
-        await view.events.click(within(header).getByRole('button', { name: 'Action menu button' }))
+        await view.events.click(within(header).getByRole('button', { name: 'Additional actions' }))
 
-        const actionPopover = await view.findByRole('region', { name: 'Action menu button' })
+        const actionPopover = await view.findByRole('region', { name: 'Additional actions' })
 
         expect(
           within(actionPopover).getByRole('menuitem', { name: 'Resend verification email' }),

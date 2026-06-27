@@ -12,6 +12,7 @@ export const TicketDocument = gql`
     query ticket($ticketId: ID!) {
   ticket(ticketId: $ticketId) {
     ...ticketAttributes
+    aiSummaryEnabled
     createArticleType {
       id
       name

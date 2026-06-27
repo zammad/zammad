@@ -216,9 +216,19 @@ RSpec.describe 'Ticket > Update > Simultaneously with two different user', perfo
         check_taskbar_tab(ticket.id, title: 'TTTsome level 2 <b>subject</b> 123äöü')
 
         expect(page).to have_css('.js-textarea', text: 'some other note')
+
+        # Wait for the title-save AJAX to complete from the browser's perspective
+        # before checking the DB, so all cascading requests finish first.
+        await_empty_ajax_queue
+
+        # Wait for the title to be persisted server-side before leaving this
+        # session, ensuring the ActionCable push to the first browser is sent.
+        wait.until { ticket.reload.title == 'TTTsome level 2 <b>subject</b> 123äöü' }
       end
 
-      expect(page).to have_css('.js-objectTitle', text: 'TTTsome level 2 <b>subject</b> 123äöü')
+      # The ActionCable push + first-browser AJAX re-fetch can take several
+      # seconds under CI load, so give it more room than the default 16 s.
+      expect(page).to have_css('.js-objectTitle', text: 'TTTsome level 2 <b>subject</b> 123äöü', wait: 30)
       expect(page).to have_css('.js-textarea', text: 'some note')
 
       check_taskbar_tab(ticket.id, title: 'TTTsome level 2 <b>subject</b> 123äöü', modified: true)

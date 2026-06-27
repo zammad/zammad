@@ -195,9 +195,9 @@ returns
       params = search_build_params(params)
 
       # try search index backend
-      # we only search in elastic search when we have a query present
+      # we only search in elastic search when we have a query present or if search_by_index is explicitly set to true
       # else we try to use the database result, since it is more up to date
-      object_ids, object_count = if SearchIndexBackend.enabled? && include?(HasSearchIndexBackend) && params[:query]&.delete('*').present?
+      object_ids, object_count = if SearchIndexBackend.enabled? && include?(HasSearchIndexBackend) && (params[:query]&.delete('*').present? || params[:search_by_index].present?)
                                    search_es(params)
                                  else
                                    search_sql(params)
@@ -239,6 +239,7 @@ returns
       params[:limit]     ||= 50
       params[:offset]   = params[:offset].presence || params[:from].presence || 0
       params[:full]     = !params.key?(:full) || ActiveModel::Type::Boolean.new.cast(params[:full])
+      params[:search_by_index] = ActiveModel::Type::Boolean.new.cast(params[:search_by_index])
       params[:sort_by]  = sql_helper.get_sort_by(params, search_default_sort_by)
       params[:order_by] = sql_helper.get_order_by(params, search_default_order_by)
 

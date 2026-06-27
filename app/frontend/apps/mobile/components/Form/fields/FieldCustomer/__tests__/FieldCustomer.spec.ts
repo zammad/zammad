@@ -49,7 +49,6 @@ const mockQueryResult = (input: { query: string; limit: number }): AutocompleteS
 
 const wrapperParameters = {
   form: true,
-  formField: true,
   router: true,
   dialog: true,
   store: true,

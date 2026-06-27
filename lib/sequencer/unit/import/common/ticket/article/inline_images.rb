@@ -41,9 +41,9 @@ class Sequencer::Unit::Import::Common::Ticket::Article::InlineImages < Sequencer
       image_url,
       {},
       {
-        open_timeout: 20,
-        read_timeout: 240,
-        verify_ssl:   true,
+        read_timeout:  ENV.fetch('ZAMMAD_HTTP_IMPORT_ATTACHMENT_READ_TIMEOUT', 240).to_i,
+        total_timeout: ENV.fetch('ZAMMAD_HTTP_IMPORT_ATTACHMENT_TOTAL_TIMEOUT', 240).to_i,
+        verify_ssl:    true,
       },
     )
 

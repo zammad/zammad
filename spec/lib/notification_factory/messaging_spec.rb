@@ -58,9 +58,9 @@ RSpec.describe NotificationFactory::Messaging do
       it 'returns a hash with body: <article editor, changes, & body>' do
         expect(template[:body])
           .to match(%r{Updated by #{current_user.fullname}})
-          .and match(%r{state: aaa -> bbb})
-          .and match(%r{group: xxx -> yyy})
-          .and match(%r{pending_time: 04/01/2019 12:00 pm \(Europe/Berlin\) -> 04/02/2019  1:00 am \(Europe/Berlin\)})
+          .and include('state: aaa -> bbb')
+          .and include('group: xxx -> yyy')
+          .and include('pending_time: 04/01/2019 12:00 pm (Europe/Berlin) -> 04/02/2019  1:00 am (Europe/Berlin)')
           .and match(%r{#{article.body}\z})
       end
     end
@@ -90,7 +90,7 @@ RSpec.describe NotificationFactory::Messaging do
       it 'returns a hash with body: <ticket customer, escalation time, & body>' do
         expect(template[:body])
           .to match(%r{The ticket \(#{ticket.title}\) from "#{ticket.customer.fullname}"})
-          .and match(%r{escalated since "04/01/2019 12:00 pm \(Europe/Berlin\)"!})
+          .and include('escalated since "04/01/2019 12:00 pm (Europe/Berlin)"!')
       end
     end
   end

@@ -38,7 +38,7 @@ Permission.create_if_not_exists(
 )
 Permission.create_if_not_exists(
   name:        'admin.text_module',
-  label:       __('Text modules'),
+  label:       __('Text Modules'),
   description: __('Manage text modules of your system.'),
   preferences: { prio: 1060 }
 )
@@ -252,11 +252,14 @@ Permission.create_if_not_exists(
   description: __('Manage AI agents of your system.'),
   preferences: { prio: 1336 }
 )
+# Temporarily disabled - to be re-enabled via migration once the related
+# auditing/duplicate-detection UX is in place.
 Permission.create_if_not_exists(
   name:        'admin.ai_assistance_kb_answer_from_ticket_generation',
   label:       __('AI Knowledge Base Answers'),
   description: __('Manage AI generation of knowledge base answers from tickets.'),
-  preferences: { prio: 1337 }
+  preferences: { prio: 1337 },
+  active:      false,
 )
 Permission.create_if_not_exists(
   name:        'admin.integration',

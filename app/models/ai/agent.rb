@@ -75,13 +75,19 @@ class AI::Agent < ApplicationModel
   ensures_no_related_objects_path(*PERFORMABLE_PATH)
 
   class << self
-    def from_performable(input)
-      where(active: true).find_by id: from_performable_id(input)
+    # All active agents referenced by the performable (supports multiple agents per trigger/job).
+    def all_from_performable(input)
+      where(active: true, id: from_performable_ids(input))
     end
 
-    def from_performable_id(input)
+    # Reads the configured agent id(s) from the perform hash. The value was a single
+    #   id in the past (single-select) and is an array now, so we normalize to an array.
+    #   Ids are cast to integers because they may be stored as integers (created via
+    #   API/seeds) or strings (created via the UI); normalizing avoids treating a mere
+    #   type change as a real change (spurious touches).
+    def from_performable_ids(input)
       data = input.respond_to?(:perform) ? input.perform : input
-      data.dig(*PERFORMABLE_PATH)
+      Array.wrap(data&.dig(*PERFORMABLE_PATH)).compact_blank.map(&:to_i).uniq
     end
 
     # Used by ObjectManager::Attribute.attribute_to_references_hash to

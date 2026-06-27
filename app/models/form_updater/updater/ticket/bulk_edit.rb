@@ -28,7 +28,7 @@ class FormUpdater::Updater::Ticket::BulkEdit < FormUpdater::Updater
   def perform_payload
     payload = super
 
-    input = meta[:additional_data]&.slice('entityIds', 'overviewId', 'searchQuery') || {}
+    input = meta[:additional_data]&.slice('entityIds', 'overviewId', 'searchQuery', 'searchFilter') || {}
     return payload if input.blank?
 
     # Normalize selector keys, since they are passed via arbitrary metadata structure.
@@ -57,8 +57,9 @@ class FormUpdater::Updater::Ticket::BulkEdit < FormUpdater::Updater
       end
     elsif input['overviewId'].present?
       selector[:overview] = Gql::ZammadSchema.authorized_object_from_id(input['overviewId'], type: ::Overview, user: current_user, query: :use?)
-    elsif input['searchQuery'].present?
+    elsif input['searchQuery'].present? || input['searchFilter'].present?
       selector[:search_query] = input['searchQuery']
+      selector[:search_filter] = input['searchFilter']
     end
 
     selector

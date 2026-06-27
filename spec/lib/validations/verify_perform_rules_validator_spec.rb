@@ -51,6 +51,29 @@ RSpec.describe Validations::VerifyPerformRulesValidator do
         errors: include(have_attributes(message: match(%r{The required 'sample' value for article.note, internal is missing!})))
       )
     end
+
+    it 'is valid when a multi-value action contains entries' do
+      instance.sample = { 'notification.webhook' => { 'webhook_id' => %w[1 2] } }
+      expect(instance).to be_valid
+    end
+
+    it 'is invalid when a multi-value action is an empty array' do
+      instance.sample = { 'ai.ai_agent' => { 'ai_agent_id' => [] } }
+      instance.valid?
+
+      expect(instance.errors).to have_attributes(
+        errors: include(have_attributes(message: match(%r{The required 'sample' value for ai.ai_agent, ai_agent_id is missing!})))
+      )
+    end
+
+    it 'is invalid when a multi-value action contains only blank entries' do
+      instance.sample = { 'notification.webhook' => { 'webhook_id' => [''] } }
+      instance.valid?
+
+      expect(instance.errors).to have_attributes(
+        errors: include(have_attributes(message: match(%r{The required 'sample' value for notification.webhook, webhook_id is missing!})))
+      )
+    end
   end
 
   context 'when validating presence with precondition' do

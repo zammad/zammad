@@ -67,7 +67,6 @@ const renderForm = () => {
       mutation: useMutationOrganizationUpdate,
     },
     form: true,
-    formField: true,
     confirmation: true,
   })
   return {

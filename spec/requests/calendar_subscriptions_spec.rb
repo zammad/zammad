@@ -75,7 +75,7 @@ RSpec.describe 'iCal endpoints', type: :request do
     it 'returns the desired calendar file' do
       get '/ical/tickets', headers: { 'REQUEST_METHOD' => 'PROPFIND' }
 
-      expect(response.body).to match(%r{BEGIN:VCALENDAR})
+      expect(response.body).to include('BEGIN:VCALENDAR')
     end
   end
 

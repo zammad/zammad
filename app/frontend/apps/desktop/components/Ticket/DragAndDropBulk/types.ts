@@ -3,11 +3,15 @@
 import type { AvatarUser } from '#shared/components/CommonUserAvatar/types.ts'
 import type { EnumTicketStateColorCode, TicketBulkSelectorInput } from '#shared/graphql/types.ts'
 
-import type { Ref } from 'vue'
+import type { MaybeRefOrGetter, Ref } from 'vue'
 
-export interface DragAndDropBulkOptions {
+export interface DragAndDropBulkArgs {
   checkedTicketIds: Ref<Set<ID>>
   bulkSelector: Ref<TicketBulkSelectorInput>
+}
+
+export interface DragAndDropBulkOptions {
+  enabled?: MaybeRefOrGetter<boolean>
 }
 
 export enum DragAndDropBulkEntityType {

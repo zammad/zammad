@@ -37,7 +37,7 @@ defineEmits<{
       :to="fullscreen ? '#app' : teleportTo"
     >
       <div
-        class="absolute top-0 right-0 bottom-0 left-0 z-30 h-full w-full bg-alpha-900"
+        class="absolute top-0 right-0 bottom-0 left-0 z-30 h-full w-full bg-alpha-900 print:hidden"
         :class="backdropClass"
         role="presentation"
         tabindex="-1"

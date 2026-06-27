@@ -17,12 +17,13 @@ import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
 import CommonSectionContainer from '#desktop/components/CommonSectionContainer/CommonSectionContainer.vue'
 import CommonSimpleEntityList from '#desktop/components/CommonSimpleEntityList/CommonSimpleEntityList.vue'
 import { EntityType } from '#desktop/components/CommonSimpleEntityList/types.ts'
-import CommonTabGroup from '#desktop/components/CommonTabGroup/CommonTabGroup.vue'
+import CommonTabGroup from '#desktop/components/CommonTabs/CommonTabGroup/CommonTabGroup.vue'
 import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
 import UserTicketBarChart from '#desktop/components/Ticket/TicketBarChart/UserTicketBarChart.vue'
 import { usePage } from '#desktop/composables/usePage.ts'
 import { useScrollPosition } from '#desktop/composables/useScrollPosition.ts'
 import { useTicketByCustomerUpdatesSubscription } from '#desktop/entities/ticket/graphql/subscriptions/ticketByCustomerUpdates.api.ts'
+import UserDetailViewContentSkeleton from '#desktop/pages/user/components/UserDetailViewContentSkeleton.vue'
 
 import UserDetailTopBar from './UserDetailTopBar.vue'
 import UserRelatedCustomerTickets from './UserRelatedCustomerTickets.vue'
@@ -112,14 +113,18 @@ customerTicketsSubscription.onResult(({ data }) => {
     content-alignment="center"
     no-scrollable
   >
-    <CommonLoader class="mt-8" :loading="loadingWithoutCachedResult">
-      <div ref="content-container" class="h-full w-full overflow-y-auto">
+    <CommonLoader class="size-full" :loading="loadingWithoutCachedResult">
+      <template #skeleton>
+        <UserDetailViewContentSkeleton />
+      </template>
+
+      <div ref="content-container" class="@container size-full overflow-y-auto">
         <UserDetailTopBar
           :user="user"
           :user-display-name="userDisplayName"
           :content-container-element="contentContainerElement"
         />
-        <section class="mx-auto grid w-full max-w-5xl grid-cols-2 gap-6 p-6">
+        <section class="mx-auto grid max-w-5xl grid-cols-1 gap-6 px-5.5 py-3 @2xl:grid-cols-2">
           <div class="flex flex-col gap-6 self-start">
             <CommonSectionContainer
               v-if="user?.hasSecondaryOrganizations"
@@ -154,7 +159,6 @@ customerTicketsSubscription.onResult(({ data }) => {
               hasPermission('ticket.agent') &&
               (user.ticketsCount?.open || user.ticketsCount?.closed)
             "
-            class="self-start"
             :label="__('Related tickets')"
           >
             <template v-if="user.organization">
@@ -182,7 +186,7 @@ customerTicketsSubscription.onResult(({ data }) => {
             v-if="hasPermission('ticket.agent')"
             ref="chart"
             :user-id="userId"
-            class="col-span-2"
+            class="@2xl:col-span-2"
           />
         </section>
       </div>

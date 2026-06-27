@@ -1,0 +1,72 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.mistral.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"nonexisting-model","messages":[{"role":"user","content":"This
+        is a connection test. Return in unprettified JSON ''{ \"connected\": \"true\"
+        }'' if you got the message. Respond in plain JSON format only and do not wrap
+        it in code block markers."}],"response_format":{"type":"json_object"}}'
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Zammad User Agent
+      Host:
+      - api.mistral.ai
+      Content-Type:
+      - application/json; charset=utf-8
+      Authorization:
+      - Bearer <MISTRAL_API_KEY>
+  response:
+    status:
+      code: 400
+      message: Bad Request
+    headers:
+      Date:
+      - Tue, 09 Jun 2026 14:38:21 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '135'
+      Connection:
+      - keep-alive
+      Mistral-Correlation-Id:
+      - '019eacd1-f644-7714-8ce8-7f61a6a0d69e'
+      X-Kong-Request-Id:
+      - '019eacd1-f644-7714-8ce8-7f61a6a0d69e'
+      X-Envoy-Upstream-Service-Time:
+      - '27'
+      Server:
+      - cloudflare
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Kong-Upstream-Latency:
+      - '28'
+      X-Kong-Proxy-Latency:
+      - '40'
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - __cf_bm=STNVBt5F6UhRPEgBhk3y7_4saVdy1Rl1.gR.movIF0I-1781015901.7324443-1.0.1.1-yePeGgfsg1NQi1roBnK6Ixcn37AmzBMzNPw9CB6EHmYwuo3DUftwNZyNQz0qfmWUHgRLbHbZgeKycm23eBO0WVxvpMCzIAMIzSRlNUP3lyTAV1z9bL56c7QmmcF5IdhU;
+        HttpOnly; SameSite=None; Secure; Path=/; Domain=mistral.ai; Expires=Tue, 09
+        Jun 2026 15:08:21 GMT
+      - _cfuvid=MW9zXS.5f8lCJptfflr4xHWQYGQXdd1R_xOwT8b2Rtk-1781015901.7324443-1.0.1.1-SvSn.GUlUIzE6RD4IuAIsCVhtuMBEmyP_DKdc4AsUDI;
+        HttpOnly; SameSite=None; Secure; Path=/; Domain=mistral.ai
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Cf-Ray:
+      - a090e129d877f4b6-VNO
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: UTF-8
+      string: '{"object":"error","message":"Invalid model: nonexisting-model","type":"invalid_model","param":null,"code":"1500","raw_status_code":400}'
+  recorded_at: Tue, 09 Jun 2026 14:38:21 GMT
+recorded_with: VCR 6.4.0

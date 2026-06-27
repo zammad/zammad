@@ -12,6 +12,7 @@ RSpec.describe GitHub, integration: true, required_envs: %w[GITHUB_ENDPOINT GITH
       title:      'GitHub integration',
       url:        ENV['GITHUB_ISSUE_LINK'],
       icon_state: 'closed',
+      issue_type: nil,
       milestone:  '4.0',
       assignees:  ['Thorsten'],
       labels:     [

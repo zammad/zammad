@@ -115,7 +115,7 @@ describe('User detail view: Create new ticket', () => {
       },
     })
 
-    await view.events.click(within(header).getByRole('menuitem', { name: 'New ticket' }))
+    await view.events.click(within(header).getByRole('button', { name: 'New ticket' }))
 
     const calls = await waitForFormUpdaterQueryCalls()
 

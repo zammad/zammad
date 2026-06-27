@@ -31,9 +31,11 @@ const fieldDefinition = createInput(
   FieldTreeSelectInput,
   [
     'alternativeBackground',
+    'autoOpenDropdown',
     'clearable',
     'historicalOptions',
     'multiple',
+    'noAutoPreselect',
     'noFiltering',
     'noOptionsLabelTranslation',
     'options',

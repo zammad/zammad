@@ -19,6 +19,7 @@ export type MatchedFlatSelectOption = FlatSelectOption & {
 }
 
 export interface TreeSelectProps {
+  autoOpenDropdown?: boolean
   clearable?: boolean
   historicalOptions?: Record<string, string>
   multiple?: boolean
