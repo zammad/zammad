@@ -6989,6 +6989,10 @@ msgstr ""
 msgid "Error fetching i-doit information. Please contact your administrator."
 msgstr ""
 
+#: lib/secure_mailing/smime/incoming.rb:99
+msgid "Error while verifying signature, please contact your administrator."
+msgstr ""
+
 #: db/seeds/overviews.rb:160
 msgid "Escalated Tickets"
 msgstr ""
