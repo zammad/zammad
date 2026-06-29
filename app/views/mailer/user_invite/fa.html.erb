@@ -1,0 +1,13 @@
+دعوت به #{config.product_name} در #{config.fqdn}
+
+<div>سلام #{user.firstname}،</div>
+<br>
+<div>من (#{current_user.firstname} #{current_user.lastname}) شما را به #{config.product_name} - پلتفرم پشتیبانی مشتری ما دعوت می‌کنم.</div>
+<br>
+<div>برای تنظیم رمز عبور خود <a href="#{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.token}">اینجا</a> کلیک کنید.</div>
+<br>
+<div>لذت ببرید،</div>
+<br>
+<div>#{current_user.firstname} #{current_user.lastname}</div>
+<br>
+<div>تیم #{config.product_name} شما</div>

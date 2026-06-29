@@ -1,6 +1,6 @@
 # #{ticket.title}
-_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: یادآوری رسید!_
-یک بلیط نیاز به توجه دارد: یادآوری به آن رسید (#{ticket.title}) با مشتری "*#{ticket.customer.longname}*".
+_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#{config.ticket_hook}#{ticket.number}>: یادآوری فرا رسید!_
+تیکت نیاز به توجه دارد: یادآوری برای (#{ticket.title}) با مشتری "*#{ticket.customer.longname}*" فرا رسید.
 
 <% if @objects[:article] %>
 #{article.body_as_text}

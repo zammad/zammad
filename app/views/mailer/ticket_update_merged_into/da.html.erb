@@ -1,0 +1,11 @@
+Sag (#{ticket.title}) er flettet med en anden sag
+
+<div>Hej #{recipient.firstname},</div>
+<br>
+<div>
+Sagen (#{ticket.title}) er flettet med en anden sag af "<b>#{current_user.longname}</b>".
+</div>
+<br>
+<div>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">Se dette i #{config.product_name}</a>
+</div>

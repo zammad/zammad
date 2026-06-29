@@ -2260,7 +2260,7 @@ msgstr ""
 #: app/controllers/application_controller/authenticates.rb:17
 #: app/graphql/gql/context/current_user_aware.rb:7
 #: app/policies/pundit_policy.rb:18
-#: lib/user_context.rb:37
+#: lib/user_context.rb:44
 msgid "Authentication required"
 msgstr ""
 
@@ -5426,7 +5426,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:188
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee:9
 #: app/assets/javascripts/app/controllers/package.coffee:54
-#: app/assets/javascripts/app/controllers/user.coffee:101
+#: app/assets/javascripts/app/controllers/user.coffee:102
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:90
 #: app/assets/javascripts/app/lib/mixins/knowledge_base_actions.coffee:26
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:80
@@ -10037,7 +10037,7 @@ msgstr ""
 msgid "Manage Telegram channel of your system."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/user.coffee:86
+#: app/assets/javascripts/app/controllers/user.coffee:87
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee:4
 msgid "Manage Two-Factor Authentication"
 msgstr ""
@@ -11803,11 +11803,11 @@ msgstr ""
 msgid "Number"
 msgstr ""
 
-#: app/models/ai/agent/type/ticket_tagger.rb:174
+#: app/models/ai/agent/type/ticket_tagger.rb:175
 msgid "Number of tags"
 msgstr ""
 
-#: app/models/ai/agent/type/ticket_tagger.rb:178
+#: app/models/ai/agent/type/ticket_tagger.rb:179
 msgid "Number of tags the AI agent may assign."
 msgstr ""
 
@@ -14192,7 +14192,7 @@ msgstr ""
 msgid "SSO"
 msgstr ""
 
-#: app/controllers/sessions_controller.rb:262
+#: app/controllers/sessions_controller.rb:264
 msgid "SSO request from untrusted IP address."
 msgstr ""
 
@@ -14298,7 +14298,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_integration/github.coffee:63
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee:80
 #: app/assets/javascripts/app/controllers/_integration/idoit.coffee:93
-#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:1209
+#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:1211
 msgid "Saving failed."
 msgstr ""
 
@@ -16940,7 +16940,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_settings/form.coffee:91
 #: app/assets/javascripts/app/controllers/object_manager.coffee:331
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee:142
-#: app/assets/javascripts/app/controllers/user.coffee:235
+#: app/assets/javascripts/app/controllers/user.coffee:236
 msgid "The object could not be updated."
 msgstr ""
 
@@ -17249,7 +17249,7 @@ msgstr ""
 msgid "The required parameter 'ticket_number' is missing."
 msgstr ""
 
-#: app/models/concerns/perform_changes/action/attribute_updates.rb:148
+#: app/models/concerns/perform_changes/action/attribute_updates.rb:149
 msgid "The required parameter 'user_id' is missing."
 msgstr ""
 
@@ -17467,7 +17467,7 @@ msgstr ""
 msgid "The two-factor authentication method \"%s\" was removed for this user."
 msgstr ""
 
-#: app/controllers/sessions_controller.rb:251
+#: app/controllers/sessions_controller.rb:253
 #: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:32
 #: app/services/service/user/two_factor/initiate_method_configuration.rb:6
 #: app/services/service/user/two_factor/verify_method_configuration.rb:15
@@ -17499,7 +17499,7 @@ msgstr ""
 msgid "The user's 'preferred_username' could not be extracted from 'id_token'."
 msgstr ""
 
-#: app/controllers/sessions_controller.rb:247
+#: app/controllers/sessions_controller.rb:249
 #: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:27
 msgid "The username or password is incorrect."
 msgstr ""
@@ -19239,7 +19239,7 @@ msgstr ""
 msgid "Unlink object"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/user.coffee:109
+#: app/assets/javascripts/app/controllers/user.coffee:110
 msgid "Unlock"
 msgstr ""
 
@@ -19757,6 +19757,7 @@ msgstr ""
 msgid "User is inactive"
 msgstr ""
 
+#: app/controllers/sessions_controller.rb:165
 #: app/frontend/apps/desktop/components/Search/QuickSearch/entities/User.vue:25
 msgid "User is inactive."
 msgstr ""
@@ -19782,7 +19783,7 @@ msgstr ""
 msgid "User menu"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/user.coffee:123
+#: app/assets/javascripts/app/controllers/user.coffee:124
 msgid "User successfully unlocked!"
 msgstr ""
 
@@ -19790,7 +19791,7 @@ msgstr ""
 msgid "User taskbar tabs"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/user.coffee:220
+#: app/assets/javascripts/app/controllers/user.coffee:221
 msgid "User updated successfully."
 msgstr ""
 
@@ -20563,7 +20564,7 @@ msgstr ""
 msgid "You can use the following script to post the data to %s."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/user.coffee:150
+#: app/assets/javascripts/app/controllers/user.coffee:151
 msgid "You cannot view or change the group permissions of an inactive user. Activate them first to manage their permissions."
 msgstr ""
 
