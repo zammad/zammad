@@ -132,7 +132,6 @@ const { showPreview } = useFilePreviewViewer(
           <ArticleBubbleHeader
             class="print:block print:border-b print:border-black"
             :aria-label="$t('Article meta information')"
-            :hidden="!showMetaInformation"
             :class="[
               headerAndIconBarBackgroundClass,
               { 'print:border-dashed!': hasInternalNote, hidden: !showMetaInformation },

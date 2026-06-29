@@ -20,12 +20,16 @@ defineEmits<{
     <div class="line-more-wrapper flex w-full max-w-md flex-col gap-3 px-5 text-center">
       <CommonButton
         variant="tertiary"
-        class="self-center"
+        class="self-center print:hidden"
         :disabled="disabled"
         @click="$emit('load-more')"
       >
         {{ $t('Load %s more', nextFetchCount) }}
       </CommonButton>
+
+      <CommonLabel tag="p" class="hidden! print:block!">
+        {{ $t('Hidden articles: %s', nextFetchCount) }}
+      </CommonLabel>
     </div>
   </div>
 </template>
