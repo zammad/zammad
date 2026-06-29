@@ -250,7 +250,7 @@ RSpec.describe SecureMailing::PGP::Tool, :aggregate_failures do
     end
 
     context 'with an invalid signature' do
-      let(:signature) { 'invalid' }
+      let(:signature) { "-----BEGIN PGP SIGNATURE-----\n\nnotvalidbase64!!!\n-----END PGP SIGNATURE-----\n" }
 
       it 'raises an error' do
         expect { verify }.to raise_error(SecureMailing::PGP::Tool::Error::NoData)
@@ -262,6 +262,40 @@ RSpec.describe SecureMailing::PGP::Tool, :aggregate_failures do
 
       it 'raises an error' do
         expect { verify }.to raise_error(SecureMailing::PGP::Tool::Error::NoPublicKey)
+      end
+    end
+
+    context 'with an opaque PGP message as signature with invalid content' do
+      let(:signature) { "-----BEGIN PGP MESSAGE-----\n\nfakedata\n-----END PGP MESSAGE-----\n" }
+
+      it 'raises an error because GPG rejects the malformed payload' do
+        expect { verify }.to raise_error(SecureMailing::PGP::Tool::Error::NoData)
+      end
+    end
+
+    context 'with a prefixed opaque PGP message as signature' do
+      let(:signature) { "noise\n-----BEGIN PGP MESSAGE-----\n\nfakedata\n-----END PGP MESSAGE-----\n" }
+
+      it 'raises an error even when the opaque header is not at the start' do
+        expect { verify }.to raise_error(SecureMailing::PGP::Tool::Error::NoData)
+      end
+    end
+
+    context 'with a valid opaque signature covering the correct data' do
+      let(:signature) { FIXTURES_FILES_PATH.join('zammad@localhost.data.opaque.asc').read }
+
+      it 'verifies successfully' do
+        expect { verify }.not_to raise_error
+        expect(verify.stderr).to include('Good signature')
+      end
+    end
+
+    context 'with a valid opaque signature covering different data' do
+      let(:data)      { 'Attacker-controlled body content.' }
+      let(:signature) { FIXTURES_FILES_PATH.join('zammad@localhost.data.opaque.asc').read }
+
+      it 'raises an error because the signature does not cover the displayed body' do
+        expect { verify }.to raise_error(RuntimeError, 'PGP signature does not cover the displayed message body')
       end
     end
   end
