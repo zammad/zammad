@@ -54,6 +54,12 @@ class HtmlSanitizer
         cid        = generate_cid
         attachment = Store.find(attachment_id)
 
+        # Check if the current user is present
+        # To allow operations in userless context, e.g. command line
+        if UserInfo.current_user_id
+          Pundit.authorize(UserInfo.current_user, attachment, :show?)
+        end
+
         @attachments_inline.push attachment(attachment.content, attachment.filename, cid, mime_type: attachment.preferences['Mime-Type'], content_type: attachment.preferences['Content-Type'])
         node['src'] = "cid:#{cid}"
       end
