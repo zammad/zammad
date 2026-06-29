@@ -24,8 +24,9 @@ RSpec.describe HtmlSanitizer::Scrubber::InlineImages do
       end
 
       context 'when uploaded image is handled' do
-        let(:input)  { "<img src='/api/v1/attachments/#{Store.last.id}'>" }
-        let(:target) { %r{<img src="cid:.+?">} }
+        let(:input)         { "<img src='/api/v1/attachments/#{Store.last.id}'>" }
+        let(:target)        { %r{<img src="cid:.+?">} }
+        let(:created_by_id) { 1 }
 
         before do
           form_id = SecureRandom.uuid
@@ -35,21 +36,45 @@ RSpec.describe HtmlSanitizer::Scrubber::InlineImages do
           file_content = Base64.strict_encode64('file1')
 
           UploadCache.new(form_id).tap do |cache|
-            cache.add(
-              data:          file_content,
-              filename:      file_name,
-              preferences:   { 'Content-Type' => file_type },
-              created_by_id: 1,
-            )
+            UserInfo.with_user_id(created_by_id) do
+              cache.add(
+                data:          file_content,
+                filename:      file_name,
+                preferences:   { 'Content-Type' => file_type },
+                created_by_id: created_by_id
+              )
+            end
           end
         end
 
         it { is_expected.to match target }
 
-        it 'adds attachment to scrubber' do
-          actual
+        context 'when current user is not present' do
+          it 'adds attachment to scrubber' do
+            actual
 
-          expect(scrubber.attachments_inline).to match_array(include(filename: 'file1.png'))
+            expect(scrubber.attachments_inline).to match_array(include(filename: 'file1.png'))
+          end
+        end
+
+        context 'when current user is present', current_user_id: -> { user.id } do
+          let(:user) { create(:agent) }
+
+          context 'when the user has access to the attachment' do
+            let(:created_by_id) { user.id }
+
+            it 'adds attachment to scrubber' do
+              actual
+
+              expect(scrubber.attachments_inline).to match_array(include(filename: 'file1.png'))
+            end
+          end
+
+          context 'when the user does not have access to the attachment' do
+            it 'raises an error' do
+              expect { actual }.to raise_error(Pundit::NotAuthorizedError)
+            end
+          end
         end
       end
 
