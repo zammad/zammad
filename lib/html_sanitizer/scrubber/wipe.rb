@@ -276,7 +276,7 @@ class HtmlSanitizer
       end
 
       def remote_url?(string)
-        string.downcase.start_with?('http://', 'https://', 'ftp://', '//')
+        string.downcase.start_with?('http:', 'https:', 'ftp:', '//')
       end
 
       def unsafe_api_path?(string)

@@ -134,6 +134,39 @@ RSpec.describe HtmlSanitizer::Scrubber::Wipe do
       end
     end
 
+    context 'when src uses http: scheme without slashes' do
+      let(:input)  { '<img src="http:attacker.example/pixel.gif">' }
+      let(:target) { '' }
+
+      it { is_expected.to eq target }
+
+      it 'does mark remote content as removed' do
+        expect { actual }.to change(scrubber, :remote_content_removed).from(false).to(true)
+      end
+    end
+
+    context 'when src uses https: scheme without slashes' do
+      let(:input)  { '<img src="https:attacker.example/pixel.gif">' }
+      let(:target) { '' }
+
+      it { is_expected.to eq target }
+
+      it 'does mark remote content as removed' do
+        expect { actual }.to change(scrubber, :remote_content_removed).from(false).to(true)
+      end
+    end
+
+    context 'when srcset uses http: scheme without slashes' do
+      let(:input)  { '<img srcset="http:attacker.example/pixel.gif 1x">' }
+      let(:target) { '' }
+
+      it { is_expected.to eq target }
+
+      it 'does mark remote content as removed' do
+        expect { actual }.to change(scrubber, :remote_content_removed).from(false).to(true)
+      end
+    end
+
     context 'when has a remote srcset without src' do
       let(:input)  { '<img srcset="https://tracking.example.com/pixel.gif">' }
       let(:target) { '' }
