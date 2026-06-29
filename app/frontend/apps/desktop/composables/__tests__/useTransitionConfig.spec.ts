@@ -30,7 +30,8 @@ describe('useTransitionConfig', () => {
     const { transitions } = useTransitionConfig()
 
     Object.keys(TransitionName).forEach((key) => {
-      expect(transitions.value[camelCase(key)]).toBeUndefined()
+      if (key === 'Collapse') expect(transitions.value[camelCase(key)]).toBe('fade-quick')
+      else expect(transitions.value[camelCase(key)]).toBeUndefined()
     })
   })
 })

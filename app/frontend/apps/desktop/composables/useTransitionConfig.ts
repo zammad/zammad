@@ -21,6 +21,20 @@ export enum TransitionName {
   SlideDown = 'slide-down',
 }
 
+// `undefined` means that the transition should be disabled when reduced motion is preferred.
+const REDUCED_MOTION_TRANSITION_MAP: Record<string, string | undefined> = {
+  collapse: 'fade-quick', // keep in place in order to fix the issue with common select options not being shown
+  'collapse-height': undefined,
+  fade: undefined,
+  'fade-absolute': undefined,
+  'fade-down': undefined,
+  'fade-move': undefined,
+  'fade-quick': undefined,
+  'fade-up': undefined,
+  slide: undefined,
+  'slide-down': undefined,
+}
+
 export const useTransitionConfig = () => {
   const { hasReducedMotion } = useReducedMotion()
 
@@ -31,7 +45,7 @@ export const useTransitionConfig = () => {
     Object.fromEntries(
       Object.entries(TransitionName).map(([key, name]) => [
         camelCase(key),
-        hasReducedMotion.value ? undefined : name,
+        hasReducedMotion.value ? REDUCED_MOTION_TRANSITION_MAP[name] : name,
       ]),
     ),
   )

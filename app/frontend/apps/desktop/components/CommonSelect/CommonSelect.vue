@@ -488,7 +488,10 @@ const goToChildPage = ({ option, noFocus }: { option: AutoCompleteOption; noFocu
                     :key="String(option.value)"
                     :class="{
                       'first:rounded-t-lg':
-                        hasDirectionUp && !isChildPage && (!multiple || !hasMoreSelectableOptions),
+                        hasDirectionUp &&
+                        !isChildPage &&
+                        !dropdownActions.length &&
+                        (!multiple || !hasMoreSelectableOptions),
                       'last:rounded-b-lg': !hasDirectionUp,
                     }"
                     :selected="isCurrentValue(option.value)"

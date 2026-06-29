@@ -402,7 +402,7 @@ defineExpose({
       <CommonLabel v-if="state === 'register' && loading" class="mx-auto my-3">{{
         $t('Getting key information from the browser…')
       }}</CommonLabel>
-      <CommonLoader class="my-3" :loading="loading" :error="error" intermediate />
+      <CommonLoader class="my-3" :loading="loading" :error="error" />
     </template>
   </div>
 </template>

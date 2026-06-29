@@ -77,12 +77,7 @@ watch(
     <CommonLoader :loading="isLoadingHistory" no-transition>
       <template #skeleton>
         <div class="w-full space-y-8 ltr:left-0 rtl:right-0">
-          <CommonHistoryFlyoutSkeleton
-            v-for="n in 3"
-            :key="n"
-            :style="{ 'animation-delay': `${n * 0.1}s` }"
-            :line="5 - n"
-          />
+          <CommonHistoryFlyoutSkeleton v-for="n in 3" :key="n" :line="5 - n" />
         </div>
       </template>
       <div ref="history-container">

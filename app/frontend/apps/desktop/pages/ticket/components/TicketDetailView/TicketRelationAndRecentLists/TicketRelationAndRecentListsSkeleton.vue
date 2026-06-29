@@ -9,7 +9,7 @@ import CommonTableSkeleton from '#desktop/components/CommonTable/Skeleton/Common
   <div class="space-y-6">
     <section v-for="table in 2" :key="table">
       <CommonSkeleton class="mb-2 h-4 w-44" />
-      <CommonTableSkeleton :columns="6" :rows="4" />
+      <CommonTableSkeleton :columns="6" :column-widths="[25, 355, 355, 355, 355, 355]" :rows="4" />
     </section>
   </div>
 </template>

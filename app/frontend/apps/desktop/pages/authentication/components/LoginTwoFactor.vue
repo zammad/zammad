@@ -167,7 +167,7 @@ onMounted(async () => {
       {{ $t(twoFactorLoginOptions.helpMessage) }}
     </CommonLabel>
 
-    <CommonLoader class="mt-8 mb-3" :loading="loading" :error="error" intermediate />
+    <CommonLoader class="mt-8 mb-3" :loading="loading" :error="error" />
 
     <CommonButton
       v-if="!loading && canRetry"

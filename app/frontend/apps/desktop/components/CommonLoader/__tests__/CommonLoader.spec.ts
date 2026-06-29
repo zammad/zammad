@@ -67,17 +67,4 @@ describe('CommonLoader.vue', () => {
     expect(wrapper.queryByRole('status')).not.toBeInTheDocument()
     expect(wrapper.queryByRole('alert')).not.toBeInTheDocument()
   })
-
-  it('allows rendering of an intermediate loading', async () => {
-    const wrapper = renderComponent(CommonLoader, {
-      props: {
-        loading: true,
-        intermediate: true,
-      },
-    })
-
-    vi.advanceTimersByTime(300)
-
-    expect(await wrapper.findByLabelText('Indicating progress')).toBeInTheDocument()
-  })
 })

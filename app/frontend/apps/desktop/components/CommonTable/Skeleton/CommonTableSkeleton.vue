@@ -1,6 +1,8 @@
 <!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
+import { computed } from 'vue'
+
 import CommonSkeleton from '#desktop/components/CommonSkeleton/CommonSkeleton.vue'
 import { MINIMUM_COLUMN_WIDTH } from '#desktop/components/CommonTable/types.ts'
 
@@ -34,6 +36,10 @@ const getColumnStyle = (index: number): { width: string } => {
   )
   return { width: `${px}px` }
 }
+
+const totalColumns = computed(
+  () => props.columns + (props.hasBulkAction ? 1 : 0) + (props.hasActions ? 1 : 0),
+)
 </script>
 
 <template>
@@ -42,17 +48,17 @@ const getColumnStyle = (index: number): { width: string } => {
       <tr v-if="!loadMore">
         <th v-if="hasBulkAction" class="w-6">
           <div class="flex items-center px-3 py-2.5 ltr:pr-0 rtl:pl-0">
-            <CommonSkeleton alternative-background class="size-4" />
+            <CommonSkeleton class="size-4" />
           </div>
         </th>
         <th v-for="n in columns" :key="n" :style="getColumnStyle(n - 1)">
           <div class="flex items-center p-2.5">
-            <CommonSkeleton alternative-background class="h-2 w-full max-w-16" />
+            <CommonSkeleton class="h-2 w-full max-w-16" />
           </div>
         </th>
         <th v-if="hasActions" class="w-10">
           <div class="flex items-center p-2.5">
-            <CommonSkeleton alternative-background class="size-4" />
+            <CommonSkeleton class="size-4" />
           </div>
         </th>
       </tr>
@@ -62,22 +68,12 @@ const getColumnStyle = (index: number): { width: string } => {
       <tr
         v-for="n in rows"
         :key="n"
-        class="odd:bg-blue-200 odd:dark:bg-gray-700"
+        class="odd:bg-blue-200 even:invisible odd:dark:bg-gray-700"
         :style="{ clipPath: 'xywh(0 0 100% 100% round 0.375rem)' }"
       >
-        <td v-if="hasBulkAction" class="w-8">
-          <div class="flex size-full items-center px-3 py-2.5 ltr:pr-0 rtl:pl-0">
-            <CommonSkeleton alternative-background class="size-4" />
-          </div>
-        </td>
-        <td v-for="m in columns" :key="m" class="h-10" :style="getColumnStyle(m - 1)">
-          <div class="flex size-full items-center p-2">
-            <CommonSkeleton alternative-background class="h-2 w-full" />
-          </div>
-        </td>
-        <td v-if="hasActions" class="size-10">
-          <div class="flex size-full items-center p-2.5">
-            <CommonSkeleton alternative-background class="size-4" />
+        <td :colspan="totalColumns">
+          <div class="h-10 px-3 py-2.5">
+            <CommonSkeleton class="size-full" />
           </div>
         </td>
       </tr>

@@ -16,6 +16,11 @@ defineProps<{
       <CommonSkeleton class="h-3 w-full max-w-30" />
     </div>
 
-    <CommonSkeleton v-for="n in line" :key="n" class="h-3 w-full max-w-xl" />
+    <CommonSkeleton
+      v-for="n in line"
+      :key="n"
+      class="h-3 max-w-xl"
+      :style="{ width: `${Math.max(100 - n * 25, 25)}%` }"
+    />
   </div>
 </template>

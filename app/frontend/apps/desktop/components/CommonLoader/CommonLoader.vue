@@ -4,7 +4,6 @@
 import { computed } from 'vue'
 
 import type { Sizes } from '#shared/components/CommonIcon/types.ts'
-import CommonProgressBar from '#shared/components/CommonProgressBar/CommonProgressBar.vue'
 import { useDebouncedLoading } from '#shared/composables/useDebouncedLoading.ts'
 import { markup } from '#shared/utils/markup.ts'
 
@@ -16,11 +15,6 @@ interface Props {
   error?: string | null
   size?: Sizes
   noTransition?: boolean
-  /**
-   * When an intermediate state is ongoing
-   * User filling out a passkey, where we don't have a clear content to emulate with a skeleton
-   */
-  intermediate?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -70,8 +64,7 @@ export default {
       :class="minHeightClass"
       role="status"
     >
-      <CommonProgressBar v-if="intermediate" />
-      <slot v-else name="skeleton">
+      <slot name="skeleton">
         <CommonSkeleton
           v-for="i in 3"
           :key="i"

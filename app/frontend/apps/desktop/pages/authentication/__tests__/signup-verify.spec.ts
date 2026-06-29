@@ -43,9 +43,9 @@ describe('signup verify view', () => {
     await flushPromises()
     await vi.advanceTimersByTimeAsync(0)
 
-    const loader = await view.findByRole('progressbar')
+    const loader = await view.findAllByRole('progressbar')
 
-    expect(loader).toBeInTheDocument()
+    expect(loader).toHaveLength(3)
     resolve(null)
     vi.resetAllMocks()
   })

@@ -4,6 +4,7 @@
 import { computed, defineAsyncComponent, ref } from 'vue'
 
 import { useAttachments } from '#shared/composables/useAttachments.ts'
+import { useReducedMotion } from '#shared/composables/useReducedMotion.ts'
 import type { TicketArticle } from '#shared/entities/ticket/types.ts'
 import { EnumTicketArticleSenderName } from '#shared/graphql/types.ts'
 
@@ -82,6 +83,8 @@ const inlineImages = ref<ViewerFile[]>([])
 const { showPreview } = useFilePreviewViewer(
   computed(() => [...inlineImages.value, ...articleAttachments.value]),
 )
+
+const { hasReducedMotion } = useReducedMotion()
 </script>
 
 <template>
@@ -119,6 +122,7 @@ const { showPreview } = useFilePreviewViewer(
       :class="[
         {
           'grid-rows-[1fr]': showMetaInformation,
+          'transition-none': hasReducedMotion,
         },
         articleWrapperBorderClass,
       ]"

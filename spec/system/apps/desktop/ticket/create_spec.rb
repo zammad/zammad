@@ -11,6 +11,7 @@ RSpec.describe 'Desktop > Ticket > Create', app: :desktop_view, authenticated_as
 
   context 'when creating a ticket' do
     before do
+      customer
       visit '/ticket/create'
       wait_for_form_to_settle('ticket-create')
     end
