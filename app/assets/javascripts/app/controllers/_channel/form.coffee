@@ -6,7 +6,7 @@ class ChannelForm extends App.ControllerSubContent
     'change form.js-paramsDesigner': 'updateParamsDesigner'
     'keyup form.js-paramsDesigner': 'updateParamsDesigner'
     'change .js-formSetting input': 'toggleFormSetting'
-    'change .js-paramsSetting input': 'updateGroup'
+    'change .js-paramsSetting .js-shadow': 'updateGroup'
     'change .js-spamProtection [name=form_ticket_create_honeypot]': 'toggleHoneypot'
     'change .js-spamProtection [name=form_ticket_create_captcha_provider]': 'updateCaptchaProvider'
     'change .js-spamProtection [name=sitekey]': 'updateCaptchaOptions'
@@ -138,11 +138,11 @@ class ChannelForm extends App.ControllerSubContent
 
   toggleFormSetting: =>
     value = @formSetting.prop('checked')
-    App.Setting.set('form_ticket_create', value)
+    App.Setting.set('form_ticket_create', value, doneLocal: @notifySaved)
 
   updateGroup: =>
     value = @paramsSetting.find('[name=group_id]').val()
-    App.Setting.set('form_ticket_create_group_id', value)
+    App.Setting.set('form_ticket_create_group_id', value, doneLocal: @notifySaved)
 
   captchaNeedsSiteKey: (provider) ->
     provider isnt '' and provider isnt 'altcha'
@@ -156,12 +156,17 @@ class ChannelForm extends App.ControllerSubContent
   captchaNeedsScore: (provider) ->
     provider in ['recaptcha', 'recaptcha_enterprise']
 
+  notifySaved: =>
+    @notify
+      type: 'success'
+      msg: __('Update successful.')
+
   toggleHoneypot: (e) ->
-    App.Setting.set('form_ticket_create_honeypot', $(e.currentTarget).prop('checked'))
+    App.Setting.set('form_ticket_create_honeypot', $(e.currentTarget).prop('checked'), doneLocal: @notifySaved)
 
   updateCaptchaProvider: (e) =>
     provider = $(e.currentTarget).val()
-    App.Setting.set('form_ticket_create_captcha_provider', provider)
+    App.Setting.set('form_ticket_create_captcha_provider', provider, doneLocal: @notifySaved)
 
     # clear the previous provider's credentials so they are neither shown nor kept
     for name in ['sitekey', 'secret', 'project_id', 'api_key', 'min_score']
@@ -183,6 +188,6 @@ class ChannelForm extends App.ControllerSubContent
     minScore = parseFloat(@$('.js-spamProtection [name=min_score]:visible').val())
     options.min_score = minScore if not isNaN(minScore) and minScore >= 0 and minScore <= 1
 
-    App.Setting.set('form_ticket_create_captcha_options', options)
+    App.Setting.set('form_ticket_create_captcha_options', options, doneLocal: @notifySaved)
 
 App.Config.set('Form', { prio: 2000, name: __('Form'), parent: '#channels', target: '#channels/form', controller: ChannelForm, permission: ['admin.channel_formular'] }, 'NavBarAdmin')
