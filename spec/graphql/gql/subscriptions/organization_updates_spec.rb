@@ -9,8 +9,8 @@ RSpec.describe Gql::Subscriptions::OrganizationUpdates, type: :graphql do
   let(:mock_channel) { build_mock_channel }
   let(:subscription) do
     <<~QUERY
-      subscription organizationUpdates($organizationId: ID!) {
-        organizationUpdates(organizationId: $organizationId) {
+      subscription organizationUpdates($organizationId: ID!, $initial: Boolean = false) {
+        organizationUpdates(organizationId: $organizationId, initial: $initial) {
           organization {
             name
           }
@@ -26,6 +26,14 @@ RSpec.describe Gql::Subscriptions::OrganizationUpdates, type: :graphql do
   shared_examples 'subscribes and receives updates' do
     it 'subscribes' do
       expect(gql.result.data).to eq({ 'organization' => nil })
+    end
+
+    context 'with initial data' do
+      let(:variables) { { organizationId: gql.id(organization), initial: true } }
+
+      it 'subscribes with initial data' do
+        expect(gql.result.data[:organization][:name]).to eq(organization.name)
+      end
     end
 
     it 'receives organization updates' do

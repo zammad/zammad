@@ -17,10 +17,7 @@ export default function registerIncomingQueryMerge(
     read(_, { args, toReference }) {
       if (!args) return undefined
 
-      let { id } = args
-      if (!('id' in args)) {
-        id = args[fieldName][`${fieldName}Id`]
-      }
+      const id = args.id ?? args[`${fieldName}Id`]
 
       if (!id) return undefined
 

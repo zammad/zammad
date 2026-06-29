@@ -2,14 +2,23 @@
 
 module Gql::Subscriptions
   class OrganizationUpdates < BaseSubscription
+    description 'Updates to organization records'
+
+    include Gql::Subscriptions::Concerns::CanInitialResult
+
+    unique_argument_id_key 'organizationId'
 
     argument :organization_id, GraphQL::Types::ID, loads: Gql::Types::OrganizationType, description: 'Organization identifier'
 
-    description 'Updates to organization records'
-
     field :organization, Gql::Types::OrganizationType, description: 'Updated organization'
 
-    def update(organization:)
+    def subscribe(organization:, initial:)
+      return {} if !initial
+
+      { organization: }
+    end
+
+    def update(organization:, initial:)
       { organization: object }
     end
   end

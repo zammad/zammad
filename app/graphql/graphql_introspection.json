@@ -20127,6 +20127,20 @@
               "description": "Updates to organization records",
               "args": [
                 {
+                  "name": "initial",
+                  "description": "Return initial data by subscribing",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Boolean",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": "false"
+                },
+                {
                   "name": "organizationId",
                   "description": "Organization identifier",
                   "type": {

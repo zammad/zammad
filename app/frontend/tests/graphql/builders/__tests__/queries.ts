@@ -109,7 +109,7 @@ export const TestTicketArticlesMultiple = gql`
 
 export const TestUserDocument = gql`
   query user($userId: ID) {
-    user(user: { userId: $userId }) {
+    user(userId: $userId) {
       id
       fullname
     }

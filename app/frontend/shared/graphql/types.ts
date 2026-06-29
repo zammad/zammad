@@ -3761,6 +3761,7 @@ export type SubscriptionsLinkUpdatesArgs = {
 
 /** All available subscriptions */
 export type SubscriptionsOrganizationUpdatesArgs = {
+  initial?: Scalars['Boolean']['input'];
   organizationId: Scalars['ID']['input'];
 };
 
@@ -7469,6 +7470,7 @@ export type OrganizationUpdatesSubscriptionVariables = Exact<{
   organizationId: Scalars['ID']['input'];
   first?: InputMaybe<Scalars['Int']['input']>;
   after?: InputMaybe<Scalars['String']['input']>;
+  initial?: InputMaybe<Scalars['Boolean']['input']>;
 }>;
 
 
