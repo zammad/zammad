@@ -40,7 +40,7 @@ jobs:
           cache: 'pnpm'
       - name: Cache Rubygems
         id: cache-bundler
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: vendor/bundle
           key: ${{ runner.os }}-cache-bundler-${{ hashFiles('Gemfile.lock') }}
@@ -48,7 +48,7 @@ jobs:
         run: .github/workflows/ci/pre.sh
       - name: Cache ESLint
         id: cache-eslint
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: tmp/cache/.eslintcache.js
           key: ${{ runner.os }}-cache-eslint-${{ hashFiles('pnpm-lock.yaml') }}
