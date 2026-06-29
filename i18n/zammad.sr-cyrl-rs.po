@@ -1764,7 +1764,6 @@ msgstr "Адреса"
 msgid "Address of the proxy server for http and https resources."
 msgstr "Адреса прокси сервера за http и https ресурсе."
 
-#: app/assets/javascripts/app/controllers/_default_navbar.coffee:13
 #: db/seeds/roles.rb:5
 msgid "Admin"
 msgstr "Администрација"
@@ -1800,6 +1799,7 @@ msgstr ""
 "Упутство за пријављивање привременом лозинком администратора послато је на "
 "вашу имејл адресу."
 
+#: app/assets/javascripts/app/controllers/_default_navbar.coffee:13
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/MenuContainer/AdminMenu/plugins/admin.ts:9
 msgid "Administration"
 msgstr "Администрација"

@@ -1923,7 +1923,6 @@ msgstr "Heimilisfang"
 msgid "Address of the proxy server for http and https resources."
 msgstr "Vistfang vefsels fyrir http og https auðlindir."
 
-#: app/assets/javascripts/app/controllers/_default_navbar.coffee:13
 #: db/seeds/roles.rb:5
 msgid "Admin"
 msgstr "Kerfisstjóri"
@@ -1965,6 +1964,7 @@ msgstr ""
 "Leiðbeiningar fyrir innskráningu kerfisstjóra með lykilorði hafa verið "
 "sendar á netfangið þitt."
 
+#: app/assets/javascripts/app/controllers/_default_navbar.coffee:13
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/MenuContainer/AdminMenu/plugins/admin.ts:9
 msgid "Administration"
 msgstr "Kerfisumsjón"

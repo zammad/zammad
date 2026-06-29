@@ -1880,7 +1880,6 @@ msgstr "주소"
 msgid "Address of the proxy server for http and https resources."
 msgstr "HTTP와 HTTPS 리소스를 위한 프록시 서버 주소."
 
-#: app/assets/javascripts/app/controllers/_default_navbar.coffee:13
 #: db/seeds/roles.rb:5
 msgid "Admin"
 msgstr "관리자"
@@ -1918,6 +1917,7 @@ msgstr "관리자 비밀번호 로그인"
 msgid "Admin password login instructions were sent to your email address."
 msgstr "관리자 비밀번호 로그인 안내가 이메일 주소로 전송되었습니다."
 
+#: app/assets/javascripts/app/controllers/_default_navbar.coffee:13
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/MenuContainer/AdminMenu/plugins/admin.ts:9
 msgid "Administration"
 msgstr "관리"

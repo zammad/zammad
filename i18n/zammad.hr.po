@@ -1860,7 +1860,6 @@ msgstr "Adresa"
 msgid "Address of the proxy server for http and https resources."
 msgstr "Adresa proxy poslužitelja za http i https resurse."
 
-#: app/assets/javascripts/app/controllers/_default_navbar.coffee:13
 #: db/seeds/roles.rb:5
 msgid "Admin"
 msgstr "Admin"
@@ -1895,6 +1894,7 @@ msgid "Admin password login instructions were sent to your email address."
 msgstr ""
 "Upute za prijavu administratorskom lozinkom su poslane na Vašu e-mail adresu."
 
+#: app/assets/javascripts/app/controllers/_default_navbar.coffee:13
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/MenuContainer/AdminMenu/plugins/admin.ts:9
 msgid "Administration"
 msgstr "Administracija"

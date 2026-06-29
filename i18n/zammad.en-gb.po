@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-06-11 06:06+0000\n"
+"PO-Revision-Date: 2026-06-18 22:02+0000\n"
 "Last-Translator: Andi Chandler <andi@gowling.com>\n"
 "Language-Team: English (United Kingdom) <https://translations.zammad.org/"
 "projects/zammad/zammad-stable/en_GB/>\n"
@@ -1846,7 +1846,6 @@ msgstr "Address"
 msgid "Address of the proxy server for http and https resources."
 msgstr "Address of the proxy server for http and https resources."
 
-#: app/assets/javascripts/app/controllers/_default_navbar.coffee:13
 #: db/seeds/roles.rb:5
 msgid "Admin"
 msgstr "Admin"
@@ -1880,6 +1879,7 @@ msgstr "Admin password login"
 msgid "Admin password login instructions were sent to your email address."
 msgstr "Admin password login instructions were sent to your email address."
 
+#: app/assets/javascripts/app/controllers/_default_navbar.coffee:13
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/MenuContainer/AdminMenu/plugins/admin.ts:9
 msgid "Administration"
 msgstr "Administration"
@@ -11967,7 +11967,7 @@ msgstr ""
 
 #: app/models/report.rb:67
 msgid "Moved out"
-msgstr ""
+msgstr "Moved out"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:61
 msgid "Multiple selection field"
@@ -12423,10 +12423,8 @@ msgid ""
 msgstr ""
 
 #: app/frontend/apps/desktop/entities/ticket/composables/useTicketCreateTitle.ts:23
-#, fuzzy
-#| msgid "%s tickets"
 msgid "New ticket: %s"
-msgstr "%s tickets"
+msgstr "New ticket: %s"
 
 #: app/frontend/apps/desktop/entities/user/composables/useUserCreate.ts:69
 #: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailTopBar/actions/newUser.ts:13
@@ -12899,7 +12897,7 @@ msgstr ""
 
 #: app/controllers/application_controller/authenticates.rb:82
 msgid "Not authorized (token expired)!"
-msgstr ""
+msgstr "Not authorised (token expired)!"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/reader_controller.coffee:208
 msgid "Not available in selected language"
@@ -13015,7 +13013,7 @@ msgstr ""
 
 #: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:14
 msgid "Notification sent to"
-msgstr ""
+msgstr "Notification sent to"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:167
 msgid "Notification settings could not be reset."
@@ -13266,6 +13264,7 @@ msgstr ""
 msgid ""
 "Only packages from known, trusted, and verified sources should be installed."
 msgstr ""
+"Only packages from known, trusted, and verified sources should be installed."
 
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco:37
 #: app/assets/javascripts/app/views/time_accounting/by_customer.jst.eco:23
@@ -13653,7 +13652,7 @@ msgstr "Out of office settings have been saved successfully"
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:72
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco:25
 msgid "Outbound"
-msgstr ""
+msgstr "Outbound"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:140
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:150
@@ -14193,6 +14192,8 @@ msgid ""
 "Please note that this attribute is deprecated within one of the next "
 "versions of Zammad. Use the IDP certificate instead."
 msgstr ""
+"Please note that this attribute is deprecated within one of the next "
+"versions of Zammad. Use the IDP certificate instead."
 
 #: app/frontend/apps/desktop/components/CommonError/CommonError.vue:41
 msgid "Please proceed to login"
@@ -14291,7 +14292,7 @@ msgstr ""
 
 #: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:88
 msgid "Positive feedback"
-msgstr ""
+msgstr "Positive feedback"
 
 #: app/models/system_report/plugin/postgre_sql.rb:4
 msgid "PostgresSQL server version"
@@ -14558,7 +14559,7 @@ msgstr ""
 
 #: db/seeds/settings.rb:553
 msgid "Proxy Password"
-msgstr ""
+msgstr "Proxy Password"
 
 #: db/seeds/settings.rb:504
 msgid "Proxy Settings"
@@ -14627,7 +14628,7 @@ msgstr ""
 
 #: db/seeds/settings.rb:3740
 msgid "Puts Zammad into import mode (disables some triggers)."
-msgstr ""
+msgstr "Puts Zammad into import mode (disables some triggers)."
 
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco:21
 msgid "Queue"
@@ -15071,7 +15072,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:3
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_video.coffee:3
 msgid "Replace"
-msgstr ""
+msgstr "Replace"
 
 #: app/models/ai/agent/type/ticket_tagger.rb:166
 msgid "Replace existing tags with"

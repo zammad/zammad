@@ -1829,7 +1829,6 @@ msgstr "Địa chỉ"
 msgid "Address of the proxy server for http and https resources."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_default_navbar.coffee:13
 #: db/seeds/roles.rb:5
 msgid "Admin"
 msgstr "Quản trị"
@@ -1871,6 +1870,7 @@ msgstr "Mật khẩu"
 msgid "Admin password login instructions were sent to your email address."
 msgstr "Chúng tôi đã gửi hướng dẫn đặt lại mật khẩu vào email của bạn. "
 
+#: app/assets/javascripts/app/controllers/_default_navbar.coffee:13
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/MenuContainer/AdminMenu/plugins/admin.ts:9
 #, fuzzy
 #| msgid "Administrator Account"

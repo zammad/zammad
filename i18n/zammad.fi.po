@@ -1897,7 +1897,6 @@ msgstr "Osoite"
 msgid "Address of the proxy server for http and https resources."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_default_navbar.coffee:13
 #: db/seeds/roles.rb:5
 msgid "Admin"
 msgstr "Ylläpito"
@@ -1943,6 +1942,7 @@ msgstr ""
 "Ohjeet salasanan vaihtamiseksi on lähetetty säköpostiisi. Tarkista myös "
 "roskapostikansio, mikäli viestiä ei näy saapuneissa viesteissä."
 
+#: app/assets/javascripts/app/controllers/_default_navbar.coffee:13
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/MenuContainer/AdminMenu/plugins/admin.ts:9
 #, fuzzy
 #| msgid "Administrator Account"

@@ -1795,7 +1795,6 @@ msgstr "Adres"
 msgid "Address of the proxy server for http and https resources."
 msgstr "Http ve https kaynakları için proxy sunucusunun adresi."
 
-#: app/assets/javascripts/app/controllers/_default_navbar.coffee:13
 #: db/seeds/roles.rb:5
 msgid "Admin"
 msgstr "Yönetici"
@@ -1829,6 +1828,7 @@ msgstr "Yönetici şifre girişi"
 msgid "Admin password login instructions were sent to your email address."
 msgstr "Yönetici şifresi giriş talimatları e-posta adresinize gönderildi."
 
+#: app/assets/javascripts/app/controllers/_default_navbar.coffee:13
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/MenuContainer/AdminMenu/plugins/admin.ts:9
 msgid "Administration"
 msgstr "Yönetim"

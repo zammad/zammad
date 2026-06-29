@@ -1879,7 +1879,6 @@ msgstr "Dirección"
 msgid "Address of the proxy server for http and https resources."
 msgstr "Dirección del servidor proxy para recursos http y https."
 
-#: app/assets/javascripts/app/controllers/_default_navbar.coffee:13
 #: db/seeds/roles.rb:5
 msgid "Admin"
 msgstr "Administrar"
@@ -1915,6 +1914,7 @@ msgstr ""
 "Se han enviado las instrucciones de inicio de sesión con la contraseña de "
 "administrador a su dirección de correo electrónico."
 
+#: app/assets/javascripts/app/controllers/_default_navbar.coffee:13
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/MenuContainer/AdminMenu/plugins/admin.ts:9
 msgid "Administration"
 msgstr "Administración"

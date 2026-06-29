@@ -1893,7 +1893,6 @@ msgstr "Direcció"
 msgid "Address of the proxy server for http and https resources."
 msgstr "Address of the proxy server for http and https resources."
 
-#: app/assets/javascripts/app/controllers/_default_navbar.coffee:13
 #: db/seeds/roles.rb:5
 msgid "Admin"
 msgstr "Admin"
@@ -1941,6 +1940,7 @@ msgstr ""
 "Hem enviat instruccions de restabliment de contrasenya a la seva adreça de "
 "correu electrònic."
 
+#: app/assets/javascripts/app/controllers/_default_navbar.coffee:13
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/MenuContainer/AdminMenu/plugins/admin.ts:9
 #, fuzzy
 #| msgid "Administrator Account"

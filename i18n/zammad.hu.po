@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-06-17 09:31+0000\n"
+"PO-Revision-Date: 2026-06-22 22:02+0000\n"
 "Last-Translator: Balázs Úr <balazs@urbalazs.hu>\n"
 "Language-Team: Hungarian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/hu/>\n"
@@ -1788,7 +1788,6 @@ msgstr "Cím"
 msgid "Address of the proxy server for http and https resources."
 msgstr "A HTTP- és HTTPS-erőforrások proxy-kiszolgálójának címe."
 
-#: app/assets/javascripts/app/controllers/_default_navbar.coffee:13
 #: db/seeds/roles.rb:5
 msgid "Admin"
 msgstr "Adminisztrátor"
@@ -1824,6 +1823,7 @@ msgstr ""
 "Az adminisztrátori jelszavas bejelentkezési utasítások elküldésre kerültek "
 "az e-mail-címére."
 
+#: app/assets/javascripts/app/controllers/_default_navbar.coffee:13
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/MenuContainer/AdminMenu/plugins/admin.ts:9
 msgid "Administration"
 msgstr "Adminisztráció"
@@ -2627,11 +2627,11 @@ msgstr "Hozzárendelt"
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_git_issue.jst.eco:24
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:77
 msgid "Assignee"
-msgstr "Hozzárendelő"
+msgstr "Hozzárendelt személy"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:77
 msgid "Assignees"
-msgstr "Hozzárendelők"
+msgstr "Hozzárendelt személyek"
 
 #: db/seeds/object_manager_attributes.rb:2138
 msgid "Assignment Timeout"
@@ -3753,7 +3753,7 @@ msgstr "Csatorna"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_channel_distribution.jst.eco:3
 msgid "Channel Distribution"
-msgstr "Csatornaelosztás"
+msgstr "Csatornaeloszlás"
 
 #: app/assets/javascripts/app/controllers/manage.coffee:43
 msgid "Channels"
@@ -8544,7 +8544,7 @@ msgstr "Meglévő jegyek (nyitott)"
 
 #: db/seeds/ai/text_tools.rb:64
 msgid "Expand draft into well-written section"
-msgstr "Vázlat kibővítése jól megírt szakasszá"
+msgstr "Piszkozat kibővítése jól megírt szöveggé"
 
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:187
 msgid "Expand sidebar"
@@ -8896,7 +8896,7 @@ msgstr "Első válaszidő"
 
 #: db/seeds/ai/text_tools.rb:4
 msgid "Fix spelling and grammar"
-msgstr "Helyesírás és nyelvtan javítása"
+msgstr "Helyesírási és nyelvtani hibák kijavítása"
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:3
 msgid "Fixed Email Accounts"
@@ -11436,7 +11436,7 @@ msgstr "A hivatkozás már létezik"
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/TicketSidebarGitHub/TicketSidebarGitHub.vue:70
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/TicketSidebarGitLab/TicketSidebarGitLab.vue:70
 msgid "Link issue"
-msgstr "Probléma összekapcsolása"
+msgstr "Probléma hozzákapcsolása"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:168
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:144
@@ -13610,7 +13610,7 @@ msgstr "Értesítés küldője"
 
 #: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:14
 msgid "Notification sent to"
-msgstr "az értesítés elküldve ide:"
+msgstr "Értesítés elküldve ide:"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:167
 msgid "Notification settings could not be reset."
@@ -14647,7 +14647,7 @@ msgstr "Telefon (kimenő)"
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:125
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco:115
 msgid "Phone Extension to Agent Mapping"
-msgstr "Telefonmellék az ügyintéző-leképezéshez"
+msgstr "Telefonmellék ügyintézőre való leképezése"
 
 #: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco:14
 msgid "Phone number"
@@ -18156,7 +18156,7 @@ msgstr "Feliratkozás beállításai"
 
 #: db/seeds/ai/text_tools.rb:98
 msgid "Summarize section to about half its current size"
-msgstr "Az összefoglaló szakasz mérete közel fele a jelenlegi méretének"
+msgstr "Szakasz összefoglalása a jelenlegi méretének körülbelül felére"
 
 #: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:42
 #: db/seeds/object_manager_attributes.rb:2461

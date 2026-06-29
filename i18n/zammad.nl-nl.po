@@ -1941,7 +1941,6 @@ msgstr "Adres"
 msgid "Address of the proxy server for http and https resources."
 msgstr "Adres van de proxy voor http en https bronnen."
 
-#: app/assets/javascripts/app/controllers/_default_navbar.coffee:13
 #: db/seeds/roles.rb:5
 msgid "Admin"
 msgstr "Beheerder"
@@ -1983,6 +1982,7 @@ msgstr ""
 "Er zijn inloginstructies voor het beheerderswachtwoord naar je e-mailadres "
 "verzonden."
 
+#: app/assets/javascripts/app/controllers/_default_navbar.coffee:13
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/MenuContainer/AdminMenu/plugins/admin.ts:9
 msgid "Administration"
 msgstr "Beheer"

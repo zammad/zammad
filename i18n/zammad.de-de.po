@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-06-11 18:09+0000\n"
-"Last-Translator: Gerrit <github@gmail.arghs.de>\n"
+"PO-Revision-Date: 2026-06-25 22:02+0000\n"
+"Last-Translator: Ralf Schmid <rsc@zammad.com>\n"
 "Language-Team: German <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/de/>\n"
 "Language: de-de\n"
@@ -1787,7 +1787,6 @@ msgstr "Adresse"
 msgid "Address of the proxy server for http and https resources."
 msgstr "Adresse des Proxy-Servers für HTTP- und HTTPS-Ressourcen."
 
-#: app/assets/javascripts/app/controllers/_default_navbar.coffee:13
 #: db/seeds/roles.rb:5
 msgid "Admin"
 msgstr "Admin"
@@ -1823,6 +1822,7 @@ msgstr ""
 "Hinweise zur Passwort-Anmeldung für den Administrator wurden an Ihre E-Mail-"
 "Adresse gesendet."
 
+#: app/assets/javascripts/app/controllers/_default_navbar.coffee:13
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/MenuContainer/AdminMenu/plugins/admin.ts:9
 msgid "Administration"
 msgstr "Administration"
@@ -13591,8 +13591,6 @@ msgid "Notification sender"
 msgstr "Benachrichtigungs-Absender"
 
 #: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:14
-#, fuzzy
-#| msgid "notification sent to '%s'"
 msgid "Notification sent to"
 msgstr "Benachrichtigung gesendet an '%s'"
 
@@ -24656,7 +24654,7 @@ msgstr "absteigend"
 
 #: app/frontend/apps/desktop/components/Search/QuickSearch/QuickSearchResultList/QuickSearchResultList.vue:106
 msgid "detailed search"
-msgstr "Erweiterte Suche"
+msgstr "erweiterte Suche"
 
 #: db/seeds/settings.rb:1207
 msgid "developer password"

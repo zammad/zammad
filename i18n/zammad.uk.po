@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-06-12 22:02+0000\n"
+"PO-Revision-Date: 2026-06-17 22:02+0000\n"
 "Last-Translator: Anntoo <jdoomm@gmail.com>\n"
 "Language-Team: Ukrainian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/uk/>\n"
@@ -1785,7 +1785,6 @@ msgstr "Адреса"
 msgid "Address of the proxy server for http and https resources."
 msgstr "Адреса проксі-сервера для HTTP та HTTPS ресурсів."
 
-#: app/assets/javascripts/app/controllers/_default_navbar.coffee:13
 #: db/seeds/roles.rb:5
 msgid "Admin"
 msgstr "Адміністратор"
@@ -1821,6 +1820,7 @@ msgstr ""
 "Інструкції щодо входу в систему з паролем адміністратора були надіслані на "
 "Вашу електронну адресу."
 
+#: app/assets/javascripts/app/controllers/_default_navbar.coffee:13
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/MenuContainer/AdminMenu/plugins/admin.ts:9
 msgid "Administration"
 msgstr "Адміністрування"
@@ -13512,10 +13512,8 @@ msgid "Notification sender"
 msgstr "Відправник сповіщення"
 
 #: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:14
-#, fuzzy
-#| msgid "notification sent to '%s'"
 msgid "Notification sent to"
-msgstr "сповіщення надіслано до '%s'"
+msgstr "Повідомлення надіслано"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:167
 msgid "Notification settings could not be reset."

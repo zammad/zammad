@@ -1754,7 +1754,6 @@ msgstr "Ünvan"
 msgid "Address of the proxy server for http and https resources."
 msgstr "Http və https mənbələri üçün proxy server ünvanı."
 
-#: app/assets/javascripts/app/controllers/_default_navbar.coffee:13
 #: db/seeds/roles.rb:5
 msgid "Admin"
 msgstr "Admin"
@@ -1798,6 +1797,7 @@ msgstr ""
 "Administrator şifrəsini daxil etmək üçün təlimatlar e-poçt ünvanınıza "
 "göndərildi."
 
+#: app/assets/javascripts/app/controllers/_default_navbar.coffee:13
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/MenuContainer/AdminMenu/plugins/admin.ts:9
 #, fuzzy
 #| msgid "Administrator Account"

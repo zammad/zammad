@@ -1899,7 +1899,6 @@ msgstr "Morada"
 msgid "Address of the proxy server for http and https resources."
 msgstr "Endereço do servidor proxy para recursos http e https."
 
-#: app/assets/javascripts/app/controllers/_default_navbar.coffee:13
 #: db/seeds/roles.rb:5
 msgid "Admin"
 msgstr "Administrador"
@@ -1935,6 +1934,7 @@ msgstr ""
 "As instruções de início de sessão com a palavra-passe de administrador foram "
 "enviadas para o seu endereço de email."
 
+#: app/assets/javascripts/app/controllers/_default_navbar.coffee:13
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/MenuContainer/AdminMenu/plugins/admin.ts:9
 msgid "Administration"
 msgstr "Administração"
