@@ -437,10 +437,10 @@ msgstr "%s (메서드)"
 msgid "%s (option)"
 msgstr "%s (옵션)"
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:321
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:322
 #: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:565
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:261
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:353
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:354
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:145
 #: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue:97
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:112
@@ -462,7 +462,7 @@ msgstr "%s 속성"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist/show.coffee:34
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/title_edit.jst.eco:6
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:48
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:49
 msgid "%s Checklist"
 msgstr "%s 체크리스트"
 
@@ -683,13 +683,13 @@ msgstr ""
 msgid "%s required!"
 msgstr "%S가 필요합니다!"
 
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:399
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:403
 #, fuzzy
 #| msgid "%s tickets selected"
 msgid "%s result(s) selected"
 msgstr "%s 선택된 티켓"
 
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:399
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:403
 #, fuzzy
 #| msgid "%s tickets selected"
 msgid "%s result(s) selected, selection limit reached"
@@ -1030,7 +1030,7 @@ msgstr ""
 "담원이 이메일을 작성할 때나 트리거가 자동 회신을 보낼 때 사용되는 주소를 의미"
 "합니다"
 
-#: db/seeds/settings.rb:4017
+#: db/seeds/settings.rb:4065
 msgid "A list of active import backends that gets scheduled automatically."
 msgstr "자동으로 스케줄되는 활성 가져오기 백엔드 목록."
 
@@ -1130,7 +1130,7 @@ msgstr "AI 에이전트"
 msgid "AI Agents"
 msgstr "AI 에이전트"
 
-#: db/seeds/settings.rb:6170
+#: db/seeds/settings.rb:6292
 #, fuzzy
 #| msgid "Knowledge Base Answer"
 msgid "AI Knowledge Base Answer from Ticket"
@@ -1146,7 +1146,7 @@ msgstr "지식 베이스 답변"
 msgid "AI Provider"
 msgstr "AI 제공자"
 
-#: db/seeds/settings.rb:6093
+#: db/seeds/settings.rb:6197
 msgid "AI Provider Config"
 msgstr "AI 제공자 구성"
 
@@ -1161,7 +1161,7 @@ msgstr "AI 제공자 토큰이 설정되지 않았습니다"
 msgid "AI Service Name"
 msgstr "AI 서비스 이름"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket_summary.coffee:133
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket_summary.coffee:132
 #, fuzzy
 #| msgid "Summary"
 msgid "AI Summary"
@@ -1227,7 +1227,7 @@ msgstr "초안"
 msgid "AI error log"
 msgstr "AI 에러 로그"
 
-#: db/seeds/settings.rb:6076
+#: db/seeds/settings.rb:6180
 msgid "AI provider"
 msgstr "AI 제공자"
 
@@ -1268,9 +1268,10 @@ msgstr "AI 제공자가 없습니다"
 #: app/graphql/gql/mutations/ticket/ai_assistance/summarize.rb:15
 #: app/services/service/ai/agent/run.rb:15
 #: app/services/service/ai/vectordb/base.rb:12
+#: app/services/service/ai/vectordb/embedding.rb:32
 #: app/services/service/ai_assistance/text_tools.rb:19
 #: app/services/service/ticket/ai_assistance/generate_knowledge_base_answer_content.rb:14
-#: app/services/service/ticket/ai_assistance/summarize.rb:16
+#: app/services/service/ticket/ai_assistance/summarize.rb:18
 msgid "AI provider is not configured."
 msgstr "AI 제공자가 구성되지 않았습니다."
 
@@ -1318,7 +1319,7 @@ msgstr "API"
 msgid "API Key"
 msgstr "API 키"
 
-#: db/seeds/settings.rb:3530
+#: db/seeds/settings.rb:3578
 msgid "API Password Access"
 msgstr "API 비밀번호 액세스"
 
@@ -1326,13 +1327,19 @@ msgstr "API 비밀번호 액세스"
 msgid "API Token"
 msgstr "API 토큰"
 
-#: db/seeds/settings.rb:3505
+#: db/seeds/settings.rb:3553
 msgid "API Token Access"
 msgstr "API 토큰 액세스"
 
 #: lib/whatsapp/webhook/payload.rb:22
 msgid "API error."
 msgstr "로그아웃 API 오류."
+
+#: app/assets/javascripts/app/views/channel/form.jst.eco:86
+#, fuzzy
+#| msgid "API Key"
+msgid "API key"
+msgstr "API 키"
 
 #: lib/ai/provider/concerns/handles_response.rb:14
 msgid "API server error - please try again"
@@ -1360,8 +1367,8 @@ msgstr "API 서버를 사용할 수 없습니다 - 나중에 다시 시도해 �
 msgid "API token"
 msgstr "API 토큰"
 
-#: app/assets/javascripts/app/controllers/_channel/form.coffee:50
-#: app/assets/javascripts/app/views/channel/form.jst.eco:127
+#: app/assets/javascripts/app/controllers/_channel/form.coffee:85
+#: app/assets/javascripts/app/views/channel/form.jst.eco:209
 msgid "Accept Data Privacy Policy & Acceptable Use Policy"
 msgstr "데이터 프라이버시 정책 및 허용 가능한 이용 정책에 동의"
 
@@ -1548,7 +1555,7 @@ msgstr "보안 키용 작업 메뉴 버튼"
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco:15
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:16
 #: app/frontend/apps/desktop/components/CommonTable/CommonSimpleTable.vue:100
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:389
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:393
 msgid "Actions"
 msgstr "활동들"
 
@@ -1640,8 +1647,8 @@ msgstr "활성 타입"
 msgid "Adapter"
 msgstr "어댑터"
 
-#: app/assets/javascripts/app/controllers/_integration/pgp.coffee:90
-#: app/assets/javascripts/app/controllers/_integration/smime.coffee:75
+#: app/assets/javascripts/app/controllers/_integration/pgp.coffee:95
+#: app/assets/javascripts/app/controllers/_integration/smime.coffee:80
 #: app/assets/javascripts/app/controllers/ssl_certificate.coffee:86
 #: app/assets/javascripts/app/views/calendar/holiday_selector.jst.eco:38
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:143
@@ -1701,7 +1708,7 @@ msgstr "봇 추가"
 msgid "Add CC"
 msgstr "전체 추가"
 
-#: app/assets/javascripts/app/controllers/_integration/smime.coffee:77
+#: app/assets/javascripts/app/controllers/_integration/smime.coffee:82
 #: app/assets/javascripts/app/controllers/ssl_certificate.coffee:88
 #: app/assets/javascripts/app/views/integration/smime.jst.eco:5
 msgid "Add Certificate"
@@ -1711,12 +1718,12 @@ msgstr "인증서 추가"
 msgid "Add Key"
 msgstr "키 추가"
 
-#: app/assets/javascripts/app/controllers/_integration/smime.coffee:120
+#: app/assets/javascripts/app/controllers/_integration/smime.coffee:125
 #: app/assets/javascripts/app/views/integration/smime.jst.eco:6
 msgid "Add Private Key"
 msgstr "프라이빗 키 추가"
 
-#: app/assets/javascripts/app/controllers/_integration/pgp.coffee:92
+#: app/assets/javascripts/app/controllers/_integration/pgp.coffee:97
 msgid "Add Public or Private Key"
 msgstr "공개 또는 프라이빗 키 추가"
 
@@ -1756,7 +1763,7 @@ msgstr "데이터 프라이버시 삭제 작업 추가"
 msgid "Add a message"
 msgstr "메세지 추가"
 
-#: app/assets/javascripts/app/views/channel/form.jst.eco:123
+#: app/assets/javascripts/app/views/channel/form.jst.eco:205
 msgid "Add agreement text before submit."
 msgstr "제출 전에 동의 문구 추가."
 
@@ -1772,7 +1779,7 @@ msgstr "알림 및 에스컬레이션 Ticket 보류에 알람을 추가합니다
 msgid "Add all values"
 msgstr "모든 값 추가"
 
-#: app/assets/javascripts/app/views/channel/form.jst.eco:112
+#: app/assets/javascripts/app/views/channel/form.jst.eco:194
 msgid "Add attachment option to upload."
 msgstr "업로드 첨부 파일 옵션을 추가합니다."
 
@@ -1795,7 +1802,7 @@ msgid "Add email"
 msgstr "이메일 추가"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/start.jst.eco:5
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:426
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:431
 msgid "Add empty checklist"
 msgstr "빈 체크리스트 추가"
 
@@ -1820,13 +1827,13 @@ msgstr "제목 추가"
 msgid "Add image"
 msgstr "이미지 추가"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/FloatingToolbar.vue:55
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/FloatingToolbar.vue:68
 #: app/frontend/shared/entities/ticket-article/action/plugins/note.ts:15
 msgid "Add internal note"
 msgstr "내부 메모 추가"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:300
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:158
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:163
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:297
 #: app/frontend/shared/components/Form/fields/FieldEditor/features/link/LinkForm.vue:173
 msgid "Add link"
@@ -1851,7 +1858,7 @@ msgstr "번호 매기기 목록 추가"
 msgid "Add phone call"
 msgstr "전화 통화 추가"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/FloatingToolbar.vue:55
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/FloatingToolbar.vue:68
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:36
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue:88
 #: app/frontend/shared/entities/ticket-article/action/plugins/web.ts:13
@@ -1889,14 +1896,14 @@ msgstr "순서 없는 목록 추가"
 msgid "Additional Channels"
 msgstr "추가 채널"
 
-#: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailTopBar.vue:182
+#: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailTopBar.vue:185
 #: app/frontend/apps/desktop/pages/user/components/UserDetailTopBar/TopBarHeader.vue:117
 #, fuzzy
 #| msgid "Additional information"
 msgid "Additional actions"
 msgstr "추가 정보"
 
-#: db/seeds/settings.rb:3338
+#: db/seeds/settings.rb:3386
 msgid "Additional follow-up detection"
 msgstr "추가 후속 감지"
 
@@ -1904,7 +1911,7 @@ msgstr "추가 후속 감지"
 msgid "Additional information"
 msgstr "추가 정보"
 
-#: app/frontend/apps/desktop/components/layout/LayoutPublicPage/LayoutPublicPage.vue:59
+#: app/frontend/apps/desktop/components/layout/LayoutPublicPage/LayoutPublicPage.vue:63
 msgid "Additional information and links"
 msgstr "추가 정보와 링크"
 
@@ -1919,6 +1926,12 @@ msgstr "주소"
 #: db/seeds/settings.rb:507
 msgid "Address of the proxy server for http and https resources."
 msgstr "HTTP와 HTTPS 리소스를 위한 프록시 서버 주소."
+
+#: db/seeds/settings.rb:3167
+msgid ""
+"Adds an invisible field to the web form and rejects submissions that fill it "
+"in, which automated clients tend to do."
+msgstr ""
 
 #: db/seeds/roles.rb:5
 msgid "Admin"
@@ -2056,11 +2069,11 @@ msgstr "나이"
 msgid "Agent"
 msgstr "에이전트"
 
-#: db/seeds/settings.rb:3251
+#: db/seeds/settings.rb:3299
 msgid "Agent Name"
 msgstr "에이전트 이름"
 
-#: db/seeds/settings.rb:3251
+#: db/seeds/settings.rb:3299
 msgid "Agent Name + FromSeparator + System Address Display Name"
 msgstr "상담원 이름 + FromSeparator + 시스템 주소 표시 이름"
 
@@ -2068,7 +2081,7 @@ msgstr "상담원 이름 + FromSeparator + 시스템 주소 표시 이름"
 msgid "Agent chat"
 msgstr "에이전트 채팅"
 
-#: db/seeds/settings.rb:3605
+#: db/seeds/settings.rb:3653
 msgid "Agent idle timeout"
 msgstr "상담원 유휴 시간 제한"
 
@@ -2100,7 +2113,7 @@ msgstr ""
 msgid "Alarm"
 msgstr "알람"
 
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:400
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:404
 #, fuzzy
 #| msgid "%s tickets selected"
 msgid "All %s result(s) selected"
@@ -2160,7 +2173,7 @@ msgstr "모든 카테고리가 티켓 분류에 고려됩니다."
 msgid "All colleagues are busy."
 msgstr "모든 동료가 바쁩니다."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:134
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:135
 msgid ""
 "All computers and browsers from which you logged in to Zammad appear here."
 msgstr "Zammad에 로그인했던 모든 컴퓨터와 브라우저가 여기에 표시됩니다."
@@ -2198,7 +2211,7 @@ msgid "Allow AI Agent to select multiple categories from all possible values."
 msgstr ""
 "AI 에이전트가 가능한 모든 값에서 여러 카테고리를 선택할 수 있도록 허용합니다."
 
-#: db/seeds/settings.rb:6061
+#: db/seeds/settings.rb:6165
 msgid ""
 "Allow admins to manage availability and access to the desktop BETA UI switch."
 msgstr ""
@@ -2231,11 +2244,11 @@ msgstr "특정 기간 내에 티켓을 다시 열 수 있도록 허용합니다.
 msgid "Allow users to add new tags."
 msgstr "사용자가 새 태그를 추가 할 수 있습니다."
 
-#: db/seeds/settings.rb:4182
+#: db/seeds/settings.rb:4230
 msgid "Allow users to create new tags."
 msgstr "사용자가 새 태그를 생성할 수 있도록 허용합니다."
 
-#: db/seeds/settings.rb:6052
+#: db/seeds/settings.rb:6156
 msgid "Allow users to switch automatically to the new desktop UI."
 msgstr "사용자가 새 데스크톱 UI로 자동 전환할 수 있도록 허용합니다."
 
@@ -2252,7 +2265,7 @@ msgstr "허용할 웹사이트(세미콜론(;)으로 구분)"
 msgid "Also notify via email"
 msgstr "또한 이메일을 통해 통지"
 
-#: db/seeds/settings.rb:5210
+#: db/seeds/settings.rb:5258
 msgid ""
 "Alternative FQDN for callbacks if you operate Zammad in an internal network."
 msgstr "내부 네트워크에서 Zammad를 운영하는 경우 콜백에 사용할 대체 FQDN."
@@ -2601,7 +2614,7 @@ msgstr "\"%s\"의 기본값 설정을 해제하시겠습니까?"
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee:67
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:68
 #: app/assets/javascripts/app/controllers/_integration/exchange.coffee:179
-#: app/assets/javascripts/app/controllers/_integration/pgp.coffee:234
+#: app/assets/javascripts/app/controllers/_integration/pgp.coffee:239
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee:66
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:130
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:191
@@ -2653,7 +2666,7 @@ msgstr "정말 진행하시겠습니까? 저장되지 않은 변경사항이 손
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:63
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:34
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:436
-#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:254
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:259
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:41
 msgid "Are you sure? You have unsaved changes that will get lost."
 msgstr "정말 진행하시겠습니까? 저장되지 않은 변경사항이 손실됩니다."
@@ -2742,7 +2755,7 @@ msgstr "후속 작업 할당"
 msgid "Assign signup roles"
 msgstr "가입 역할 할당"
 
-#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkBottomDrawer.vue:213
+#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkBottomDrawer.vue:216
 #: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkConfirmation.vue:68
 #, fuzzy
 #| msgid "assign tickets"
@@ -2757,12 +2770,12 @@ msgstr "사용자의 도메인을 기반으로 사용자를 할당합니다."
 msgid "Assigned"
 msgstr "할당"
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_git_issue.jst.eco:24
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:77
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_git_issue.jst.eco:30
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:96
 msgid "Assignee"
 msgstr "담당자"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:77
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:96
 msgid "Assignees"
 msgstr "담당자들"
 
@@ -2833,7 +2846,7 @@ msgstr "첨부 파일"
 msgid "Attachment"
 msgstr "첨부 파일"
 
-#: db/seeds/settings.rb:3352
+#: db/seeds/settings.rb:3400
 msgid "Attachment - Search for follow-up also in attachments."
 msgstr "첨부 파일 - 첨부 파일에서도 후속 작업을 검색합니다."
 
@@ -2958,7 +2971,7 @@ msgstr "인증이 불가능합니다 (서비스에서 제공하지 않음)"
 
 #: app/controllers/application_controller/authenticates.rb:17
 #: app/graphql/gql/context/current_user_aware.rb:7
-#: app/policies/pundit_policy.rb:18 lib/user_context.rb:37
+#: app/policies/pundit_policy.rb:18 lib/user_context.rb:44
 msgid "Authentication required"
 msgstr "인증이 필요합니다"
 
@@ -2968,7 +2981,7 @@ msgstr "%s을 통해 인증"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee:4
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/authenticator_app.coffee:5
-#: db/seeds/settings.rb:5899
+#: db/seeds/settings.rb:6003
 msgid "Authenticator App"
 msgstr "인증 앱"
 
@@ -2976,12 +2989,12 @@ msgstr "인증 앱"
 msgid "Authenticator app"
 msgstr "인증 앱"
 
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:246
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:249
 msgid "Authenticator app QR code"
 msgstr "인증 앱 QR 코드"
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco:24
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:257
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:260
 msgid "Authenticator app secret"
 msgstr "인증 앱 비밀키"
 
@@ -2999,7 +3012,7 @@ msgid "Authorization failed"
 msgstr "권한 부여에 실패했습니다"
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco:11
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:147
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:148
 msgid "Authy"
 msgstr "Authy"
 
@@ -3017,7 +3030,7 @@ msgstr "자동 할당 제외 사용자"
 msgid "Auto Assignment Selector"
 msgstr "자동 할당 선택자"
 
-#: db/seeds/settings.rb:6038
+#: db/seeds/settings.rb:6142
 msgid "Auto Shutdown"
 msgstr "자동 종료"
 
@@ -3025,7 +3038,7 @@ msgstr "자동 종료"
 msgid "Auto Wizard"
 msgstr "자동 마법사"
 
-#: db/seeds/settings.rb:4533
+#: db/seeds/settings.rb:4581
 msgid "Auto close"
 msgstr "자동 닫기"
 
@@ -3033,7 +3046,7 @@ msgstr "자동 닫기"
 msgid "Auto create"
 msgstr "자동 생성"
 
-#: db/seeds/settings.rb:4559
+#: db/seeds/settings.rb:4607
 msgid "Auto-close state"
 msgstr "자동 닫기 상태"
 
@@ -3129,7 +3142,7 @@ msgstr "새 티켓에 사용 가능한 유형"
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco:3
 #: app/assets/javascripts/app/views/profile/imageCropper.jst.eco:3
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/avatar.ts:6
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:47
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:48
 #: app/frontend/apps/mobile/pages/account/routes.ts:28
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:120
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:167
@@ -3170,7 +3183,7 @@ msgstr "평균 : %s%"
 msgid "Azure AI (legacy deployment-based endpoints)"
 msgstr ""
 
-#: db/seeds/settings.rb:3494
+#: db/seeds/settings.rb:3542
 msgid "BCC address for all outgoing emails"
 msgstr "모든 발신 이메일의 BCC 주소"
 
@@ -3193,8 +3206,8 @@ msgstr "BETA UI 일러스트레이션"
 
 #: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:397
 #: app/assets/javascripts/app/views/generic/object_search/item_organization_members.jst.eco:5
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:448
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:429
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:449
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:430
 msgid "Back"
 msgstr "뒤로"
 
@@ -3206,8 +3219,8 @@ msgstr "내 보기로 돌아가기"
 msgid "Back to overview"
 msgstr "개요로 돌아가기"
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:448
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:429
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:449
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:430
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue:181
 msgid "Back to previous page"
 msgstr "이전 페이지로 돌아가기"
@@ -3310,7 +3323,7 @@ msgstr "바인드 비밀번호"
 msgid "Bind User"
 msgstr "바인드 사용자"
 
-#: db/seeds/settings.rb:3471
+#: db/seeds/settings.rb:3519
 msgid "Block Notifications"
 msgstr "블록 알림"
 
@@ -3348,7 +3361,7 @@ msgstr "파란색"
 msgid "Body"
 msgstr "본문"
 
-#: db/seeds/settings.rb:3351
+#: db/seeds/settings.rb:3399
 msgid "Body - Search for follow-up also in mail body."
 msgstr "본문 - 메일 본문에서도 후속 작업을 검색합니다."
 
@@ -3435,7 +3448,7 @@ msgstr "업무 시간"
 msgid "But it's only available in these languages:"
 msgstr "하지만 다음 언어로만 제공됩니다:"
 
-#: db/seeds/settings.rb:3341
+#: db/seeds/settings.rb:3389
 msgid ""
 "By default, the follow-up check is done via the subject of an email. This "
 "setting lets you add more fields for which the follow-up check will be "
@@ -3467,6 +3480,17 @@ msgstr ""
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:13
 msgid "CA"
 msgstr "CA"
+
+#: app/assets/javascripts/app/views/channel/form.jst.eco:41
+#: db/seeds/settings.rb:3189
+#, fuzzy
+#| msgid "AI provider"
+msgid "CAPTCHA provider"
+msgstr "AI 제공자"
+
+#: db/seeds/settings.rb:3200
+msgid "CAPTCHA provider options"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee:18
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:501
@@ -3510,19 +3534,19 @@ msgstr "CTI"
 msgid "CTI (generic)"
 msgstr "CTI (일반)"
 
-#: db/seeds/settings.rb:5269
+#: db/seeds/settings.rb:5317
 msgid "CTI Token"
 msgstr "CTI 토큰"
 
-#: db/seeds/settings.rb:5256
+#: db/seeds/settings.rb:5304
 msgid "CTI config"
 msgstr "CTI 설정"
 
-#: db/seeds/settings.rb:5290
+#: db/seeds/settings.rb:5338
 msgid "CTI customer last activity"
 msgstr "CTI 고객 마지막 활동"
 
-#: db/seeds/settings.rb:5228
+#: db/seeds/settings.rb:5276
 msgid "CTI integration"
 msgstr "CTI 통합"
 
@@ -3587,7 +3611,7 @@ msgstr "발신자 로그"
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee:240
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco:7
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue:115
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:371
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:376
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:205
 msgid "Camera"
 msgstr "카메라"
@@ -3998,7 +4022,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/checklist_template.coffee:3
 #: app/assets/javascripts/app/views/checklist_template/index.jst.eco:7
-#: db/seeds/permissions.rb:344 db/seeds/settings.rb:6011
+#: db/seeds/permissions.rb:344 db/seeds/settings.rb:6115
 msgid "Checklists"
 msgstr "체크섬"
 
@@ -4006,11 +4030,11 @@ msgstr "체크섬"
 msgid "Checkmk"
 msgstr "Checkmk"
 
-#: db/seeds/settings.rb:4680
+#: db/seeds/settings.rb:4728
 msgid "Checkmk integration"
 msgstr "Checkmk 통합"
 
-#: db/seeds/settings.rb:4801
+#: db/seeds/settings.rb:4849
 msgid "Checkmk token"
 msgstr "Checkmk 토큰"
 
@@ -4026,7 +4050,7 @@ msgstr "하위"
 msgid "Choose date"
 msgstr "탭 닫기"
 
-#: app/assets/javascripts/app/views/integration/pgp.jst.eco:10
+#: app/assets/javascripts/app/views/integration/pgp.jst.eco:24
 msgid ""
 "Choose the default behavior of the PGP integration on per group basis. If "
 "signing or encrypting is not possible, the setting has no effect. Agents can "
@@ -4036,7 +4060,7 @@ msgstr ""
 "이 설정은 효과가 없습니다. 에이전트는 항상 각 게시물에 대해 동작을 수동으로 "
 "변경할 수 있습니다."
 
-#: app/assets/javascripts/app/views/integration/smime.jst.eco:11
+#: app/assets/javascripts/app/views/integration/smime.jst.eco:25
 msgid ""
 "Choose the default behavior of the S/MIME integration on per group basis. If "
 "signing or encrypting is not possible, the setting has no effect. Agents can "
@@ -4217,7 +4241,7 @@ msgid "Clear search"
 msgstr "검색 지우기"
 
 #: app/frontend/apps/desktop/components/CommonTable/CellContent/BulkCheckbox.vue:61
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:423
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:427
 #: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:649
 #: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:386
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:314
@@ -4240,11 +4264,11 @@ msgstr "값 지우기"
 msgid "Clearbit"
 msgstr "Clearbit"
 
-#: db/seeds/settings.rb:5392
+#: db/seeds/settings.rb:5440
 msgid "Clearbit config"
 msgstr "Clearbit 설정"
 
-#: db/seeds/settings.rb:5366
+#: db/seeds/settings.rb:5414
 msgid "Clearbit integration"
 msgstr "Clearbit 통합"
 
@@ -4256,7 +4280,7 @@ msgstr "여기를 클릭하세요"
 msgid "Click here to set up a two-factor authentication method."
 msgstr "이중 인증 방법을 설정하려면 여기를 클릭하세요."
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorInput.vue:48
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorInput.vue:49
 msgid "Click to edit…"
 msgstr "편집하려면 클릭하세요…"
 
@@ -4327,12 +4351,12 @@ msgstr "참가자가 오프라인인 채팅 세션을 종료합니다."
 msgid "Close current tab"
 msgstr "현재 탭 닫기"
 
-#: app/frontend/apps/desktop/components/CommonDialog/CommonDialog.vue:164
+#: app/frontend/apps/desktop/components/CommonDialog/CommonDialog.vue:155
 #: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkConfirmation.vue:35
 msgid "Close dialog"
 msgstr "대화 상자 닫기"
 
-#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:366
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:357
 msgid "Close side panel"
 msgstr "사이드 패널 닫기"
 
@@ -4388,6 +4412,10 @@ msgstr "닫힌 티켓"
 msgid "Closing time"
 msgstr "마감 시간"
 
+#: lib/form_spam_protection/captcha/turnstile.rb:11
+msgid "Cloudflare Turnstile"
+msgstr ""
+
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:193
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarFooterMenu.vue:85
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar.vue:71
@@ -4414,7 +4442,7 @@ msgstr ""
 msgid "Combined subscription URL"
 msgstr "통합 구독 URL"
 
-#: db/seeds/settings.rb:5818
+#: db/seeds/settings.rb:5922
 msgid ""
 "Comma-separated list of trusted proxy IP addresses or CIDR ranges for SSO "
 "header acceptance."
@@ -4456,7 +4484,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/security_keys.coffee:6
 #: app/frontend/shared/entities/two-factor/plugins/security-keys.ts:10
-#: db/seeds/settings.rb:5891
+#: db/seeds/settings.rb:5995
 msgid "Complete the sign-in with your security key."
 msgstr "보안 키로 로그인을 완료하세요."
 
@@ -4472,6 +4500,7 @@ msgstr "완료된 작업"
 msgid "Compose your message…"
 msgstr "메시지를 작성하세요…"
 
+#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:69
 #: app/assets/javascripts/app/controllers/_manage/ticket_auto_assignment.coffee:25
 #: app/assets/javascripts/app/controllers/time_accounting_settings.coffee:26
 #: app/assets/javascripts/app/models/job.coffee:9
@@ -4686,7 +4715,7 @@ msgstr "연결 재설정됨"
 msgid "Connection test successful"
 msgstr "연결 테스트 성공"
 
-#: lib/ai/vectordb.rb:153
+#: lib/ai/vectordb.rb:233
 msgid "Connection to Elasticsearch Vector DB failed"
 msgstr "Elasticsearch Vector DB 연결 실패"
 
@@ -4715,7 +4744,7 @@ msgstr "콘텐츠 로더"
 msgid "Content preview could not be generated."
 msgstr "콘텐츠 미리보기를 생성할 수 없습니다."
 
-#: app/frontend/apps/desktop/components/layout/LayoutContent.vue:179
+#: app/frontend/apps/desktop/components/layout/LayoutContent.vue:189
 msgid "Content sidebar"
 msgstr "콘텐츠 사이드바"
 
@@ -4778,7 +4807,7 @@ msgstr "모바일로 계속"
 msgid "Contributing Translations"
 msgstr "번역 기여"
 
-#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:80
+#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:94
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket_summary.coffee:4
 msgid "Conversation Summary"
 msgstr "대화 요약"
@@ -4787,7 +4816,7 @@ msgstr "대화 요약"
 msgid "Conversation is transferred into another chat. Please stay tuned."
 msgstr "대화가 다른 채팅으로 전송되었습니다. 잠시만 기다려주세요."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummary.vue:98
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummary.vue:80
 #, fuzzy
 #| msgid "Conversation Summary"
 msgid "Conversation summary"
@@ -4825,13 +4854,13 @@ msgstr "코드 복사"
 msgid "Copy current object number (e. g. Ticket#) to clipboard"
 msgstr "현재 개체 번호(예: Ticket#)를 클립보드에 복사"
 
-#: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailTopBar.vue:146
+#: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailTopBar.vue:149
 #, fuzzy
 #| msgid "Copy Secret"
 msgid "Copy organization display name"
 msgstr "시크릿 복사"
 
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:266
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:269
 #, fuzzy
 #| msgid "Copy Secret"
 msgid "Copy secret"
@@ -5091,7 +5120,7 @@ msgstr "관리자 인터페이스에서 새 템플릿을 만드세요."
 msgid "Create a shared draft"
 msgstr "에서 만든"
 
-#: app/assets/javascripts/app/controllers/knowledge_base/reader_controller.coffee:210
+#: app/assets/javascripts/app/controllers/knowledge_base/reader_controller.coffee:219
 msgid "Create a translation"
 msgstr "번역 생성"
 
@@ -5198,7 +5227,7 @@ msgstr "생성:"
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:14
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco:20
 #: app/frontend/apps/desktop/components/Ticket/TicketBarChart/useTicketStatsChart.ts:94
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:93
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:94
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList.vue:35
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:124
 #: app/models/report.rb:22
@@ -5273,7 +5302,7 @@ msgstr "생성 시점:"
 msgid "Created by"
 msgstr "생성자"
 
-#: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee:30
+#: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee:29
 msgid "Created within last 14 days"
 msgstr ""
 
@@ -5342,13 +5371,13 @@ msgstr "현재 역할에 할당된 개요가 없습니다. 관리자에게 문�
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/attribute_bar.coffee:145
 #: app/frontend/apps/desktop/components/AiAgent/AiAgentPopoverWithTrigger.vue:27
-#: app/frontend/apps/desktop/components/Ticket/TicketListTable.vue:220
+#: app/frontend/apps/desktop/components/Ticket/TicketListTable.vue:227
 #: app/frontend/apps/mobile/components/Ticket/TicketItem.vue:35
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue:41
 msgid "Currently processing this ticket…"
 msgstr "현재 이 티켓을 처리 중입니다…"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:156
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:161
 #: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:161
 msgid ""
 "Currently, no overviews are assigned to your roles. Please contact your "
@@ -5420,12 +5449,12 @@ msgstr "고객"
 msgid "Customer Chat"
 msgstr "고객 채팅"
 
-#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:73
+#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:87
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket_summary.coffee:3
 msgid "Customer Intent"
 msgstr "고객 의도"
 
-#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:99
+#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:113
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket_summary.coffee:7
 msgid "Customer Sentiment"
 msgstr "고객 감정"
@@ -5434,17 +5463,17 @@ msgstr "고객 감정"
 msgid "Customer and agent ratio (role based user counts)"
 msgstr "고객 및 에이전트 비율(역할 기반 사용자 수)"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummary.vue:93
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummary.vue:75
 #, fuzzy
 #| msgid "Customer Intent"
 msgid "Customer intent"
 msgstr "고객 의도"
 
-#: db/seeds/settings.rb:3395
+#: db/seeds/settings.rb:3443
 msgid "Customer selection based on sender and receiver list"
 msgstr "송신자와 수신자 목록을 기반으로 고객 선택"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummary.vue:116
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummary.vue:98
 #, fuzzy
 #| msgid "Customer Sentiment"
 msgid "Customer sentiment"
@@ -5615,8 +5644,8 @@ msgstr "복호화가 성공했습니다."
 msgid "Default"
 msgstr "기본"
 
-#: app/assets/javascripts/app/views/integration/pgp.jst.eco:9
-#: app/assets/javascripts/app/views/integration/smime.jst.eco:10
+#: app/assets/javascripts/app/views/integration/pgp.jst.eco:23
+#: app/assets/javascripts/app/views/integration/smime.jst.eco:24
 msgid "Default Behavior"
 msgstr "기본 동작"
 
@@ -5624,7 +5653,7 @@ msgstr "기본 동작"
 msgid "Default Notifications"
 msgstr "기본 알림"
 
-#: db/seeds/settings.rb:3627
+#: db/seeds/settings.rb:3675
 msgid "Default Screen"
 msgstr "기본 화면"
 
@@ -5636,7 +5665,7 @@ msgstr "기본 티켓 에이전트 알림"
 msgid "Default at Signup"
 msgstr "회원 가입시 기본"
 
-#: db/seeds/settings.rb:4206
+#: db/seeds/settings.rb:4254
 msgid "Default calendar tickets subscriptions"
 msgstr "기본 캘린더 티켓 구독"
 
@@ -5684,38 +5713,38 @@ msgid ""
 "executives)."
 msgstr "특정 사용자 (예 : 임원)에 대한 \"자동 할당\"의 예외를 정의합니다."
 
-#: db/seeds/settings.rb:3730
+#: db/seeds/settings.rb:3778
 msgid "Define if asciifolding analyzer should be used in Elasticsearch."
 msgstr "Elasticsearch에서 asciifolding 분석기를 사용할지 정의합니다."
 
-#: db/seeds/settings.rb:3694
+#: db/seeds/settings.rb:3742
 msgid "Define max. attachment size for Elasticsearch."
 msgstr "Elasticsearch의 최대 첨부 파일 크기를 정의합니다."
 
-#: db/seeds/settings.rb:3703
+#: db/seeds/settings.rb:3751
 msgid "Define max. payload size for Elasticsearch."
 msgstr "Elasticsearch의 최대 페이로드 크기를 정의합니다."
 
-#: db/seeds/settings.rb:3721
+#: db/seeds/settings.rb:3769
 msgid "Define model configuration for Elasticsearch."
 msgstr "Elasticsearch의 모델 구성을 정의합니다."
 
-#: db/seeds/settings.rb:3712
+#: db/seeds/settings.rb:3760
 msgid "Define pipeline name for Elasticsearch."
 msgstr "Elasticsearch의 파이프라인 이름을 정의합니다."
 
-#: db/seeds/settings.rb:4352
+#: db/seeds/settings.rb:4400
 msgid ""
 "Define postmaster filter to check if follow-ups get created (based on admin "
 "settings)."
 msgstr ""
 "후속 조치가 생성되는지 확인할 postmaster 필터를 정의합니다(관리자 설정 기반)."
 
-#: db/seeds/settings.rb:4289
+#: db/seeds/settings.rb:4337
 msgid "Define postmaster filter to import archive mailboxes."
 msgstr "아카이브 사서함을 가져올 postmaster 필터를 정의합니다."
 
-#: db/seeds/settings.rb:4286
+#: db/seeds/settings.rb:4334
 msgid "Define postmaster filter."
 msgstr "postmaster 필터를 정의합니다."
 
@@ -5760,27 +5789,27 @@ msgstr ""
 msgid "Define which ticket article(s) should be analyzed."
 msgstr "티켓을 생성하기 전에 확인할 티켓 속성을 정의합니다."
 
-#: db/seeds/settings.rb:3676
+#: db/seeds/settings.rb:3724
 msgid "Defines Elasticsearch SSL verification."
 msgstr "Elasticsearch SSL 검증을 정의합니다."
 
-#: db/seeds/settings.rb:3667
+#: db/seeds/settings.rb:3715
 msgid "Defines Elasticsearch index name."
 msgstr "Elasticsearch 인덱스 이름을 정의합니다."
 
-#: db/seeds/settings.rb:3943
+#: db/seeds/settings.rb:3991
 msgid "Defines Freshdesk endpoint authentication API key."
 msgstr "Freshdesk 엔드포인트 인증 API 키를 정의합니다."
 
-#: db/seeds/settings.rb:3658
+#: db/seeds/settings.rb:3706
 msgid "Defines HTTP basic auth password of Elasticsearch."
 msgstr "Elasticsearch의 HTTP 기본 인증 비밀번호를 정의합니다."
 
-#: db/seeds/settings.rb:3649
+#: db/seeds/settings.rb:3697
 msgid "Defines HTTP basic auth user of Elasticsearch."
 msgstr "Elasticsearch의 HTTP 기본 인증 사용자를 정의합니다."
 
-#: db/seeds/settings.rb:3850
+#: db/seeds/settings.rb:3898
 msgid ""
 "Defines HTTP basic authentication password (only if OTRS is protected via "
 "HTTP basic auth)."
@@ -5788,7 +5817,7 @@ msgstr ""
 "HTTP 기본 인증 비밀번호를 정의합니다(OTRS가 HTTP 기본 인증으로 보호되는 경우"
 "에만)."
 
-#: db/seeds/settings.rb:3831
+#: db/seeds/settings.rb:3879
 msgid ""
 "Defines HTTP basic authentication user (only if OTRS is protected via HTTP "
 "basic auth)."
@@ -5796,43 +5825,43 @@ msgstr ""
 "HTTP 기본 인증 사용자를 정의합니다(OTRS가 HTTP 기본 인증으로 보호되는 경우에"
 "만)."
 
-#: db/seeds/settings.rb:3998
+#: db/seeds/settings.rb:4046
 msgid "Defines Kayako endpoint authentication password."
 msgstr "Kayako 엔드포인트 인증 비밀번호를 정의합니다."
 
-#: db/seeds/settings.rb:3980
+#: db/seeds/settings.rb:4028
 msgid "Defines Kayako endpoint authentication user."
 msgstr "Kayako 엔드포인트 인증 사용자를 정의합니다."
 
-#: db/seeds/settings.rb:3812
+#: db/seeds/settings.rb:3860
 msgid "Defines OTRS endpoint authentication key."
 msgstr "OTRS 엔드포인트 인증 키를 정의합니다."
 
-#: db/seeds/settings.rb:3887
+#: db/seeds/settings.rb:3935
 msgid "Defines Zendesk endpoint authentication API key."
 msgstr "Zendesk 엔드포인트 인증 API 키를 정의합니다."
 
-#: db/seeds/settings.rb:3906
+#: db/seeds/settings.rb:3954
 msgid "Defines Zendesk endpoint authentication user."
 msgstr "Zendesk 엔드포인트 인증 사용자를 정의합니다."
 
-#: db/seeds/settings.rb:3925
+#: db/seeds/settings.rb:3973
 msgid ""
 "Defines a Freshdesk endpoint to import users, tickets, states, and articles."
 msgstr ""
 "사용자, 티켓, 상태 및 게시물을 가져올 Freshdesk 엔드포인트를 정의합니다."
 
-#: db/seeds/settings.rb:3962
+#: db/seeds/settings.rb:4010
 msgid ""
 "Defines a Kayako endpoint to import users, tickets, states, and articles."
 msgstr "사용자, 티켓, 상태 및 게시물을 가져올 Kayako 엔드포인트를 정의합니다."
 
-#: db/seeds/settings.rb:3869
+#: db/seeds/settings.rb:3917
 msgid ""
 "Defines a Zendesk endpoint to import users, tickets, states, and articles."
 msgstr "사용자, 티켓, 상태 및 게시물을 가져올 Zendesk 엔드포인트를 정의합니다."
 
-#: db/seeds/settings.rb:5470
+#: db/seeds/settings.rb:5518
 msgid "Defines a dashboard stats backend that gets scheduled automatically."
 msgstr "자동으로 예약되는 대시보드 통계 백엔드를 정의합니다."
 
@@ -5861,7 +5890,7 @@ msgstr "하루에 웹 양식을 통해 생성할 수 있는 티켓 수의 제한
 msgid "Defines after how many failed logins accounts will be deactivated."
 msgstr "로그인 실패 횟수 후 계정이 비활성화됩니다."
 
-#: db/seeds/settings.rb:3794
+#: db/seeds/settings.rb:3842
 msgid ""
 "Defines an OTRS endpoint to import users, tickets, states, and articles."
 msgstr "사용자, 티켓, 상태 및 게시물을 가져올 OTRS 엔드포인트를 정의합니다."
@@ -5884,15 +5913,15 @@ msgstr ""
 "티켓 테이블에서 이 우선순위의 선택적 아이콘을 정의합니다. 중요는 느낌표로, 낮"
 "은 우선순위는 아래쪽 화살표로 표시됩니다."
 
-#: db/seeds/settings.rb:3685
+#: db/seeds/settings.rb:3733
 msgid "Defines attachment extensions which will be ignored by Elasticsearch."
 msgstr "Elasticsearch에서 무시할 첨부 파일 확장자를 정의합니다."
 
-#: db/seeds/settings.rb:3640
+#: db/seeds/settings.rb:3688
 msgid "Defines endpoint of Elasticsearch."
 msgstr "Elasticsearch의 엔드포인트를 정의합니다."
 
-#: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:43
+#: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:54
 msgid ""
 "Defines global configuration when the summary will be generated in the "
 "ticket zoom."
@@ -5906,7 +5935,7 @@ msgstr ""
 "고객이 웹 인터페이스에서 티켓을 생성할 수 있는 그룹을 정의합니다. 아무것도 선"
 "택하지 않으면 모든 그룹을 사용할 수 있습니다."
 
-#: db/seeds/settings.rb:3241
+#: db/seeds/settings.rb:3289
 msgid ""
 "Defines how the From field of emails (sent from answers and email tickets) "
 "should look like."
@@ -5931,23 +5960,23 @@ msgstr ""
 "웹소켓 서버에 연결하는 방법을 정의합니다. 프로덕션 기본값은 \"websocket\"이"
 "고 CI에서는 \"websocketPort\"를 사용합니다"
 
-#: db/seeds/settings.rb:4683
+#: db/seeds/settings.rb:4731
 msgid "Defines if Checkmk (https://checkmk.com/) is enabled or not."
 msgstr "Checkmk(https://checkmk.com/) 사용 여부를 정의합니다."
 
-#: db/seeds/settings.rb:5369
+#: db/seeds/settings.rb:5417
 msgid "Defines if Clearbit (http://www.clearbit.com) is enabled or not."
 msgstr "Clearbit(http://www.clearbit.com) 사용 여부를 정의합니다."
 
-#: db/seeds/settings.rb:4970
+#: db/seeds/settings.rb:5018
 msgid "Defines if Exchange is enabled or not."
 msgstr "Exchange 사용 여부를 정의합니다."
 
-#: db/seeds/settings.rb:4487
+#: db/seeds/settings.rb:4535
 msgid "Defines if Icinga (http://www.icinga.org) is enabled or not."
 msgstr "Icinga(http://www.icinga.org) 사용 여부를 정의합니다."
 
-#: db/seeds/settings.rb:5580
+#: db/seeds/settings.rb:5628
 msgid ""
 "Defines if Knowledge Base navbar button is enabled for users without "
 "Knowledge Base permission."
@@ -5955,31 +5984,31 @@ msgstr ""
 "지식베이스 권한이 없는 사용자에게도 지식베이스 내비게이션 버튼을 표시할지 정"
 "의합니다."
 
-#: db/seeds/settings.rb:5565
+#: db/seeds/settings.rb:5613
 msgid "Defines if Knowledge Base navbar button is enabled."
 msgstr "지식베이스 내비게이션 버튼 활성화 여부를 정의합니다."
 
-#: db/seeds/settings.rb:4917
+#: db/seeds/settings.rb:4965
 msgid "Defines if LDAP is enabled or not."
 msgstr "LDAP 사용 여부를 정의합니다."
 
-#: db/seeds/settings.rb:4816
+#: db/seeds/settings.rb:4864
 msgid "Defines if Monit (https://mmonit.com/monit/) is enabled or not."
 msgstr "Monit(https://mmonit.com/monit/) 사용 여부를 정의합니다."
 
-#: db/seeds/settings.rb:4585
+#: db/seeds/settings.rb:4633
 msgid "Defines if Nagios (http://www.nagios.org) is enabled or not."
 msgstr "Nagios(http://www.nagios.org) 사용 여부를 정의합니다."
 
-#: db/seeds/settings.rb:5735
+#: db/seeds/settings.rb:5811
 msgid "Defines if PGP encryption is enabled or not."
 msgstr "PGP 암호화를 사용할지 여부를 정의합니다."
 
-#: db/seeds/settings.rb:5306
+#: db/seeds/settings.rb:5354
 msgid "Defines if Placetel (http://www.placetel.de) is enabled or not."
 msgstr "Placetel(http://www.placetel.de) 사용 여부를 정의합니다."
 
-#: db/seeds/settings.rb:5693
+#: db/seeds/settings.rb:5741
 msgid "Defines if S/MIME encryption is enabled or not."
 msgstr "S/MIME 암호화 사용 여부를 정의합니다."
 
@@ -5995,7 +6024,7 @@ msgstr "애플리케이션을 초기화 모드로 둘지 정의합니다."
 msgid "Defines if application is used as online service."
 msgstr "애플리케이션을 온라인 서비스로 사용할지 정의합니다."
 
-#: db/seeds/settings.rb:5842
+#: db/seeds/settings.rb:5946
 msgid ""
 "Defines if calendar weeks are shown in the picker of date/datetime fields to "
 "easily select the correct date."
@@ -6003,11 +6032,11 @@ msgstr ""
 "날짜/시간 필드 선택기에서 주차를 표시해 올바른 날짜를 쉽게 선택할 수 있게 할"
 "지 정의합니다."
 
-#: db/seeds/settings.rb:5231
+#: db/seeds/settings.rb:5279
 msgid "Defines if generic CTI integration is enabled or not."
 msgstr "범용 CTI 통합 사용 여부를 정의합니다."
 
-#: db/seeds/settings.rb:5934
+#: db/seeds/settings.rb:6038
 msgid ""
 "Defines if recovery codes can be used by users in the event they lose access "
 "to other two-factor authentication methods."
@@ -6015,25 +6044,37 @@ msgstr ""
 "다른 2단계 인증 방법에 접근할 수 없게 되었을 때 사용자가 복구 코드를 쓸 수 있"
 "는지 정의합니다."
 
-#: db/seeds/settings.rb:5148
+#: db/seeds/settings.rb:5196
 msgid "Defines if sipgate.io (http://www.sipgate.io) is enabled or not."
 msgstr "sipgate.io(http://www.sipgate.io) 사용 여부를 정의합니다."
 
-#: db/seeds/settings.rb:6079
+#: db/seeds/settings.rb:5853
+#, fuzzy
+#| msgid "Defines if the time accounting types are enabled."
+msgid "Defines if system notification emails are PGP signed."
+msgstr "시간 정산 유형을 활성화할지 정의합니다."
+
+#: db/seeds/settings.rb:5783
+#, fuzzy
+#| msgid "Defines if the time accounting types are enabled."
+msgid "Defines if system notification emails are S/MIME signed."
+msgstr "시간 정산 유형을 활성화할지 정의합니다."
+
+#: db/seeds/settings.rb:6183
 msgid "Defines if the AI provider is configured."
 msgstr "AI 공급자가 구성되었는지 정의합니다."
 
-#: db/seeds/settings.rb:5079
+#: db/seeds/settings.rb:5127
 msgid ""
 "Defines if the GitHub (http://www.github.com) integration is enabled or not."
 msgstr "GitHub(http://www.github.com) 통합 사용 여부를 정의합니다."
 
-#: db/seeds/settings.rb:5037
+#: db/seeds/settings.rb:5085
 msgid ""
 "Defines if the GitLab (http://www.gitlab.com) integration is enabled or not."
 msgstr "GitLab(http://www.gitlab.com) 통합 사용 여부를 정의합니다."
 
-#: db/seeds/settings.rb:5777
+#: db/seeds/settings.rb:5881
 msgid "Defines if the PGP recipient alias configuration is enabled or not."
 msgstr "PGP 수신자 별칭 구성을 활성화할지 여부를 정의합니다."
 
@@ -6053,7 +6094,7 @@ msgstr ""
 "애플리케이션을 개발자 모드로 둘지 정의합니다(모든 사용자가 동일한 비밀번호를 "
 "사용하고 이메일 전송 없이 비밀번호 재설정이 동작)."
 
-#: db/seeds/settings.rb:6187
+#: db/seeds/settings.rb:6341
 msgid ""
 "Defines if the bubble menu feature of the richtext editor is enabled. Note "
 "that this setting will be ignored if the writing assistant is turned on."
@@ -6061,7 +6102,7 @@ msgstr ""
 "리치 텍스트 편집기의 버블 메뉴 기능을 활성화할지 정의합니다. 글쓰기 도우미가 "
 "켜져 있으면 이 설정은 무시됩니다."
 
-#: db/seeds/settings.rb:5986
+#: db/seeds/settings.rb:6090
 msgid ""
 "Defines if the change of the primary organization of a user will update the "
 "100 most recent tickets for this user as well."
@@ -6085,7 +6126,7 @@ msgid ""
 "organization widget."
 msgstr "사용자/조직 위젯 결과에 이메일을 표시할지 정의합니다."
 
-#: db/seeds/settings.rb:4997
+#: db/seeds/settings.rb:5045
 msgid ""
 "Defines if the i-doit (https://www.i-doit.org/) integration is enabled or "
 "not."
@@ -6104,17 +6145,17 @@ msgstr ""
 "티켓 조건 편집기에서 트리거와 티켓 자동 할당을 위한 정규식 연산자를 지원할지 "
 "정의합니다."
 
-#: db/seeds/settings.rb:4146
+#: db/seeds/settings.rb:4194
 msgid "Defines if the time accounting types are enabled."
 msgstr "시간 정산 유형을 활성화할지 정의합니다."
 
-#: db/seeds/settings.rb:5902
+#: db/seeds/settings.rb:6006
 msgid ""
 "Defines if the two-factor authentication method authenticator app is enabled "
 "or not."
 msgstr "2단계 인증 방법 중 인증 앱 사용 여부를 정의합니다."
 
-#: db/seeds/settings.rb:5870
+#: db/seeds/settings.rb:5974
 msgid ""
 "Defines if the two-factor authentication method security keys is enabled or "
 "not."
@@ -6124,16 +6165,16 @@ msgstr "2단계 인증 방법 중 보안 키 사용 여부를 정의합니다."
 msgid "Defines if tickets can be created via web form."
 msgstr "웹 양식을 통해 티켓을 생성할 수 있는지 정의합니다."
 
-#: db/seeds/settings.rb:4536
+#: db/seeds/settings.rb:4584
 msgid "Defines if tickets should be closed if service is recovered."
 msgstr "서비스가 복구되면 티켓을 닫을지 여부를 정의합니다."
 
-#: db/seeds/settings.rb:4388
+#: db/seeds/settings.rb:4436
 msgid "Defines postmaster filter for filters managed via admin interface."
 msgstr ""
 "관리자 인터페이스에서 관리하는 항목을 위한 포스트마스터 필터를 정의합니다."
 
-#: db/seeds/settings.rb:4298
+#: db/seeds/settings.rb:4346
 msgid ""
 "Defines postmaster filter to check if email has been created by Zammad "
 "itself and will set the article sender."
@@ -6141,7 +6182,7 @@ msgstr ""
 "이메일이 Zammad에서 생성된 것인지 확인하고 기사 발신자를 설정하는 포스트마스"
 "터 필터를 정의합니다."
 
-#: db/seeds/settings.rb:4307
+#: db/seeds/settings.rb:4355
 msgid ""
 "Defines postmaster filter to check if the email is a self-created "
 "notification email, then ignore it to prevent email loops."
@@ -6149,17 +6190,17 @@ msgstr ""
 "이메일이 자체 생성된 알림인지 확인하고 그렇다면 이메일 루프를 막기 위해 무시"
 "하는 포스트마스터 필터를 정의합니다."
 
-#: db/seeds/settings.rb:4334
+#: db/seeds/settings.rb:4382
 msgid "Defines postmaster filter to handle secure mailing."
 msgstr "보안 메일을 처리하는 포스트마스터 필터를 정의합니다."
 
-#: db/seeds/settings.rb:4451
+#: db/seeds/settings.rb:4499
 msgid ""
 "Defines postmaster filter to identify Jira mails for correct follow-ups."
 msgstr ""
 "올바른 후속 처리를 위해 Jira 메일을 식별하는 포스트마스터 필터를 정의합니다."
 
-#: db/seeds/settings.rb:4433
+#: db/seeds/settings.rb:4481
 msgid ""
 "Defines postmaster filter to identify ServiceNow mails for correct follow-"
 "ups."
@@ -6167,7 +6208,7 @@ msgstr ""
 "올바른 후속 처리를 위해 ServiceNow 메일을 식별하는 포스트마스터 필터를 정의합"
 "니다."
 
-#: db/seeds/settings.rb:4244
+#: db/seeds/settings.rb:4292
 msgid ""
 "Defines postmaster filter to identify auto responses to prevent auto replies "
 "from Zammad."
@@ -6175,18 +6216,18 @@ msgstr ""
 "자동 회신을 식별해 Zammad에서 자동 회신을 보내지 않도록 하는 포스트마스터 필"
 "터를 정의합니다."
 
-#: db/seeds/settings.rb:4262
+#: db/seeds/settings.rb:4310
 msgid ""
 "Defines postmaster filter to identify follow-up ticket for merged tickets."
 msgstr "병합된 티켓의 후속 티켓을 식별하는 포스트마스터 필터를 정의합니다."
 
-#: db/seeds/settings.rb:4253
+#: db/seeds/settings.rb:4301
 msgid ""
 "Defines postmaster filter to identify follow-ups (based on admin settings)."
 msgstr ""
 "관리자 설정을 기준으로 후속 티켓을 식별하는 포스트마스터 필터를 정의합니다."
 
-#: db/seeds/settings.rb:4343
+#: db/seeds/settings.rb:4391
 msgid ""
 "Defines postmaster filter to identify out-of-office emails for follow-up "
 "detection and keeping current ticket state."
@@ -6194,7 +6235,7 @@ msgstr ""
 "부재중 이메일을 식별해 후속 여부를 감지하고 현재 티켓 상태를 유지하는 포스트"
 "마스터 필터를 정의합니다."
 
-#: db/seeds/settings.rb:4370
+#: db/seeds/settings.rb:4418
 msgid ""
 "Defines postmaster filter to identify postmaster bounces; and disables "
 "sending notification if delivery fails permanently."
@@ -6202,7 +6243,7 @@ msgstr ""
 "포스트마스터 바운스를 식별하고, 영구적으로 배달이 실패하면 알림 전송을 중단하"
 "는 포스트마스터 필터를 정의합니다."
 
-#: db/seeds/settings.rb:4361
+#: db/seeds/settings.rb:4409
 #, fuzzy
 #| msgid ""
 #| "Defines postmaster filter to identify postmaster bounces; and handles "
@@ -6214,7 +6255,7 @@ msgstr ""
 "포스트마스터 바운스를 식별해 원본 티켓의 후속으로 처리하는 포스트마스터 필터"
 "를 정의합니다."
 
-#: db/seeds/settings.rb:4379
+#: db/seeds/settings.rb:4427
 msgid ""
 "Defines postmaster filter to identify postmaster bounces; and reopens "
 "tickets if delivery fails permanently."
@@ -6222,19 +6263,19 @@ msgstr ""
 "포스트마스터 바운스를 식별해 영구적으로 배달이 실패할 경우 티켓을 다시 여는 "
 "포스트마스터 필터를 정의합니다."
 
-#: db/seeds/settings.rb:4325
+#: db/seeds/settings.rb:4373
 msgid "Defines postmaster filter to identify sender user."
 msgstr "발신 사용자를 식별하는 포스트마스터 필터를 정의합니다."
 
-#: db/seeds/settings.rb:4316
+#: db/seeds/settings.rb:4364
 msgid "Defines postmaster filter to identify session user."
 msgstr "세션 사용자를 식별하는 포스트마스터 필터를 정의합니다."
 
-#: db/seeds/settings.rb:4478
+#: db/seeds/settings.rb:4526
 msgid "Defines postmaster filter to identify ticket group."
 msgstr "티켓 그룹을 식별하는 포스트마스터 필터를 정의합니다."
 
-#: db/seeds/settings.rb:4415
+#: db/seeds/settings.rb:4463
 msgid ""
 "Defines postmaster filter to manage Checkmk (http://mathias-kettner.com/"
 "check_mk.html) emails."
@@ -6242,28 +6283,28 @@ msgstr ""
 "Checkmk(http://mathias-kettner.com/check_mk.html) 이메일을 처리하는 포스트마"
 "스터 필터를 정의합니다."
 
-#: db/seeds/settings.rb:4397
+#: db/seeds/settings.rb:4445
 msgid ""
 "Defines postmaster filter to manage Icinga (http://www.icinga.org) emails."
 msgstr ""
 "Icinga(http://www.icinga.org) 이메일을 처리하는 포스트마스터 필터를 정의합니"
 "다."
 
-#: db/seeds/settings.rb:4424
+#: db/seeds/settings.rb:4472
 msgid ""
 "Defines postmaster filter to manage Monit (https://mmonit.com/monit/) emails."
 msgstr ""
 "Monit(https://mmonit.com/monit/) 이메일을 처리하는 포스트마스터 필터를 정의합"
 "니다."
 
-#: db/seeds/settings.rb:4406
+#: db/seeds/settings.rb:4454
 msgid ""
 "Defines postmaster filter to manage Nagios (http://www.nagios.org) emails."
 msgstr ""
 "Nagios(http://www.nagios.org) 이메일을 처리하는 포스트마스터 필터를 정의합니"
 "다."
 
-#: db/seeds/settings.rb:4235
+#: db/seeds/settings.rb:4283
 msgid ""
 "Defines postmaster filter to remove X-Zammad headers from untrustworthy "
 "sources."
@@ -6271,14 +6312,14 @@ msgstr ""
 "신뢰할 수 없는 소스의 X-Zammad 헤더를 제거하는 포스트마스터 필터를 정의합니"
 "다."
 
-#: db/seeds/settings.rb:4271
+#: db/seeds/settings.rb:4319
 msgid ""
 "Defines postmaster filter to set the owner (based on group follow up "
 "assignment)."
 msgstr ""
 "그룹 후속 배정을 기준으로 소유자를 설정하는 포스트마스터 필터를 정의합니다."
 
-#: db/seeds/settings.rb:4280
+#: db/seeds/settings.rb:4328
 msgid ""
 "Defines postmaster filter to set the sender/from of emails based on reply-to "
 "header."
@@ -6286,7 +6327,7 @@ msgstr ""
 "Reply-To 헤더를 기준으로 이메일 발신자를 설정하는 포스트마스터 필터를 정의합"
 "니다."
 
-#: db/seeds/settings.rb:4469
+#: db/seeds/settings.rb:4517
 msgid ""
 "Defines postmaster filter which sets the articles visibility to internal if "
 "it is a rely to an internal article or the last outgoing email is internal."
@@ -6294,7 +6335,7 @@ msgstr ""
 "내부 기사에 대한 답장이거나 마지막 발신 이메일이 내부용이면 게시물 가시성을 "
 "내부로 설정하는 포스트마스터 필터를 정의합니다."
 
-#: db/seeds/settings.rb:4232
+#: db/seeds/settings.rb:4280
 msgid "Defines postmaster filter."
 msgstr "포스트마스터 필터를 정의합니다."
 
@@ -6302,35 +6343,42 @@ msgstr "포스트마스터 필터를 정의합니다."
 msgid "Defines pretty date format."
 msgstr "보기 쉬운 날짜 형식을 정의합니다."
 
-#: db/seeds/settings.rb:5459
+#: db/seeds/settings.rb:5507
 msgid "Defines processing timeout for the html sanitizer."
 msgstr "HTML 살균기의 처리 제한 시간을 정의합니다."
 
-#: db/seeds/settings.rb:5118
+#: db/seeds/settings.rb:5166
 msgid "Defines sync transaction backend."
 msgstr "동기화 트랜잭션 백엔드를 정의합니다."
 
-#: db/seeds/settings.rb:5447
+#: db/seeds/settings.rb:3192
+msgid ""
+"Defines the CAPTCHA provider used to protect the web form. Leave empty to "
+"disable. The list of available providers is derived from the registered "
+"FormSpamProtection::Captcha backends."
+msgstr ""
+
+#: db/seeds/settings.rb:5495
 msgid "Defines the CSS font information for HTML emails."
 msgstr "HTML 이메일에 사용할 CSS 글꼴 정보를 정의합니다."
 
-#: db/seeds/settings.rb:5259
+#: db/seeds/settings.rb:5307
 msgid "Defines the CTI config."
 msgstr "CTI 구성을 정의합니다."
 
-#: db/seeds/settings.rb:4804
+#: db/seeds/settings.rb:4852
 msgid "Defines the Checkmk token for allowing updates."
 msgstr "업데이트를 허용할 Checkmk 토큰을 정의합니다."
 
-#: db/seeds/settings.rb:5395
+#: db/seeds/settings.rb:5443
 msgid "Defines the Clearbit config."
 msgstr "Clearbit 구성을 정의합니다."
 
-#: db/seeds/settings.rb:4957
+#: db/seeds/settings.rb:5005
 msgid "Defines the Exchange OAuth config."
 msgstr "Exchange OAuth 구성을 정의합니다."
 
-#: db/seeds/settings.rb:4944
+#: db/seeds/settings.rb:4992
 msgid "Defines the Exchange config."
 msgstr "Exchange 구성을 정의합니다."
 
@@ -6338,19 +6386,19 @@ msgstr "Exchange 구성을 정의합니다."
 msgid "Defines the HTTP protocol of your instance."
 msgstr "인스턴스의 HTTP 프로토콜을 정의합니다."
 
-#: db/seeds/settings.rb:5763
+#: db/seeds/settings.rb:5839
 msgid "Defines the PGP config."
 msgstr "PGP 구성을 정의합니다."
 
-#: db/seeds/settings.rb:5334
+#: db/seeds/settings.rb:5382
 msgid "Defines the Placetel config."
 msgstr "Placetel 구성을 정의합니다."
 
-#: db/seeds/settings.rb:5721
+#: db/seeds/settings.rb:5769
 msgid "Defines the S/MIME config."
 msgstr "S/MIME 구성을 정의합니다."
 
-#: db/seeds/settings.rb:5436
+#: db/seeds/settings.rb:5484
 msgid "Defines the agent limit."
 msgstr "에이전트 한도를 정의합니다."
 
@@ -6384,6 +6432,10 @@ msgstr "사용자와 조직 이미지 조회에 사용할 백엔드를 정의합
 msgid "Defines the backend service for ticket article language detection."
 msgstr "티켓 아티클 언어를 감지할 백엔드 서비스를 정의합니다."
 
+#: db/seeds/settings.rb:6318
+msgid "Defines the chunking strategy for the knowledge base vector database."
+msgstr ""
+
 #: db/seeds/settings.rb:2901
 msgid ""
 "Defines the configuration how many articles can be created in a minute range "
@@ -6396,16 +6448,16 @@ msgid ""
 "per ticket."
 msgstr "티켓별로 분당 생성할 수 있는 아티클 수를 정의합니다."
 
-#: db/seeds/settings.rb:4128
+#: db/seeds/settings.rb:4176
 msgid ""
 "Defines the custom unit to be shown next to the time accounting input field."
 msgstr "시간 정산 입력 필드 옆에 표시할 사용자 지정 단위를 정의합니다."
 
-#: db/seeds/settings.rb:4209
+#: db/seeds/settings.rb:4257
 msgid "Defines the default calendar tickets subscription settings."
 msgstr "캘린더 티켓 구독의 기본 설정을 정의합니다."
 
-#: db/seeds/settings.rb:3630
+#: db/seeds/settings.rb:3678
 msgid "Defines the default screen."
 msgstr "기본 화면을 정의합니다."
 
@@ -6417,7 +6469,7 @@ msgstr "시스템 기본 언어를 정의합니다."
 msgid "Defines the default system timezone."
 msgstr "시스템 기본 표준시간대를 정의합니다."
 
-#: db/seeds/settings.rb:4164
+#: db/seeds/settings.rb:4212
 msgid "Defines the default time accounting type."
 msgstr "기본 시간 정산 유형을 정의합니다."
 
@@ -6425,7 +6477,7 @@ msgstr "기본 시간 정산 유형을 정의합니다."
 msgid "Defines the default visibility for new notes."
 msgstr "새 메모의 기본 가시성을 정의합니다."
 
-#: db/seeds/settings.rb:5293
+#: db/seeds/settings.rb:5341
 msgid ""
 "Defines the duration of customer activity (in seconds) on a call until the "
 "user profile dialog is shown."
@@ -6433,7 +6485,7 @@ msgstr ""
 "통화 중 고객 활동으로 간주할 시간(초)을 정의하며, 이 시간이 지나면 사용자 프"
 "로필 대화 상자가 표시됩니다."
 
-#: db/seeds/settings.rb:6159
+#: db/seeds/settings.rb:6281
 msgid ""
 "Defines the fixed instructions that guide the AI Writing Assistant on e.g. "
 "how to format its output."
@@ -6448,7 +6500,7 @@ msgstr ""
 "시스템의 정규화된 도메인 이름을 정의합니다. 이 값은 애플리케이션 전반의 메시"
 "지에서 #{setting.fqdn} 변수로 사용되어 시스템 내 티켓 링크를 생성합니다."
 
-#: db/seeds/settings.rb:4732
+#: db/seeds/settings.rb:4780
 msgid "Defines the group of created tickets."
 msgstr "생성된 티켓의 그룹을 정의합니다."
 
@@ -6456,11 +6508,11 @@ msgstr "생성된 티켓의 그룹을 정의합니다."
 msgid "Defines the group of tickets created via web form."
 msgstr "웹 양식으로 생성된 티켓을 배정할 그룹을 정의합니다."
 
-#: db/seeds/settings.rb:5024
+#: db/seeds/settings.rb:5072
 msgid "Defines the i-doit config."
 msgstr "i-doit 구성을 정의합니다."
 
-#: db/seeds/settings.rb:4030
+#: db/seeds/settings.rb:4078
 msgid "Defines the log levels for various logging actions of the Sequencer."
 msgstr "시퀀서의 다양한 로깅 작업에 사용할 로그 레벨을 정의합니다."
 
@@ -6468,7 +6520,7 @@ msgstr "시퀀서의 다양한 로깅 작업에 사용할 로그 레벨을 정�
 msgid "Defines the logo of the application, shown in the web interface."
 msgstr "웹 인터페이스에 표시되는 응용 프로그램의 로고를 정의합니다."
 
-#: db/seeds/settings.rb:3291
+#: db/seeds/settings.rb:3339
 msgid "Defines the maximum accepted email size in MB."
 msgstr "허용되는 최대 이메일 크기(MB)를 정의합니다."
 
@@ -6502,23 +6554,23 @@ msgstr "웹소켓 서버 포트를 정의합니다."
 msgid "Defines the random application secret."
 msgstr "애플리케이션의 임의 시크릿을 정의합니다."
 
-#: db/seeds/settings.rb:4513
+#: db/seeds/settings.rb:4561
 msgid "Defines the sender email address of Icinga emails."
 msgstr "Icinga 이메일에 사용할 발신 주소를 정의합니다."
 
-#: db/seeds/settings.rb:4611
+#: db/seeds/settings.rb:4659
 msgid "Defines the sender email address of Nagios emails."
 msgstr "Nagios 이메일에 사용할 발신 주소를 정의합니다."
 
-#: db/seeds/settings.rb:4709
+#: db/seeds/settings.rb:4757
 msgid "Defines the sender email address of the service emails."
 msgstr "서비스 전자 메일의 보낸 사람의 이메일 주소를 정의합니다."
 
-#: db/seeds/settings.rb:3451
+#: db/seeds/settings.rb:3499
 msgid "Defines the sender of email notifications."
 msgstr "전자 메일 알림의 보낸 사람을 정의합니다."
 
-#: db/seeds/settings.rb:3269
+#: db/seeds/settings.rb:3317
 msgid ""
 "Defines the separator between the agent's real name and the given group "
 "email address."
@@ -6533,11 +6585,11 @@ msgstr ""
 "사용자 비활성 시 세션 타임아웃을 정의합니다. 할당된 권한 중 가장 큰 타임아웃"
 "이 적용되고, 그렇지 않으면 기본값이 사용됩니다."
 
-#: db/seeds/settings.rb:5197
+#: db/seeds/settings.rb:5245
 msgid "Defines the sipgate.io config."
 msgstr "sipgate.io 구성을 정의합니다."
 
-#: db/seeds/settings.rb:4562
+#: db/seeds/settings.rb:4610
 msgid "Defines the state of auto-closed tickets."
 msgstr "자동으로 닫힌 티켓의 상태를 정의합니다."
 
@@ -6558,28 +6610,28 @@ msgstr "티켓 작업 후 탭 동작을 정의합니다."
 msgid "Defines the ticket states used for lookups."
 msgstr "조회에 사용할 티켓 상태를 정의합니다."
 
-#: db/seeds/settings.rb:5592
+#: db/seeds/settings.rb:5640
 msgid "Defines the timeframe during which a self-created note can be deleted."
 msgstr "직접 작성한 노트를 삭제할 수 있는 시간 범위를 정의합니다."
 
-#: db/seeds/settings.rb:5348
+#: db/seeds/settings.rb:5396
 msgid "Defines the token for Placetel."
 msgstr "Placetel 토큰을 정의합니다."
 
-#: db/seeds/settings.rb:5139
+#: db/seeds/settings.rb:5187
 msgid ""
 "Defines the transaction backend to detect customer signatures in emails."
 msgstr "이메일에서 고객 서명을 감지할 트랜잭션 백엔드를 정의합니다."
 
-#: db/seeds/settings.rb:5121
+#: db/seeds/settings.rb:5169
 msgid "Defines the transaction backend to execute triggers."
 msgstr "트리거를 실행할 트랜잭션 백엔드를 정의합니다."
 
-#: db/seeds/settings.rb:5130
+#: db/seeds/settings.rb:5178
 msgid "Defines the transaction backend to send agent notifications."
 msgstr "상담원 알림을 전송할 트랜잭션 백엔드를 정의합니다."
 
-#: db/seeds/settings.rb:5417
+#: db/seeds/settings.rb:5465
 msgid ""
 "Defines the transaction backend which detects caller IDs in objects and "
 "stores them for CTI lookups."
@@ -6587,11 +6639,11 @@ msgstr ""
 "객체에서 발신자 ID를 감지해 CTI 조회용으로 저장하는 트랜잭션 백엔드를 정의합"
 "니다."
 
-#: db/seeds/settings.rb:5426
+#: db/seeds/settings.rb:5474
 msgid "Defines the transaction backend which executes time based triggers."
 msgstr "시간 기반 트리거를 실행할 트랜잭션 백엔드를 정의합니다."
 
-#: db/seeds/settings.rb:5408
+#: db/seeds/settings.rb:5456
 msgid ""
 "Defines the transaction backend which will enrich customer and organization "
 "information from Clearbit (http://www.clearbit.com)."
@@ -6600,7 +6652,7 @@ msgstr ""
 "백엔드를 정의합니다."
 
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco:14
-#: db/seeds/settings.rb:4110
+#: db/seeds/settings.rb:4158
 msgid "Defines the unit to be shown next to the time accounting input field."
 msgstr "시간 정산 입력 필드 옆에 표시할 단위를 정의합니다."
 
@@ -6614,7 +6666,7 @@ msgid ""
 "Defines the warning title that is shown when a matching ticket is present."
 msgstr "일치하는 티켓이 있을 때 표시할 경고 제목을 정의합니다."
 
-#: db/seeds/settings.rb:5127
+#: db/seeds/settings.rb:5175
 msgid "Defines transaction backend."
 msgstr "트랜잭션 백엔드를 정의합니다."
 
@@ -6625,17 +6677,28 @@ msgid ""
 msgstr ""
 "이미 존재하는 티켓이 있을 때 일치하는 티켓을 표시할지 여부를 정의합니다."
 
-#: db/seeds/settings.rb:3167
+#: db/seeds/settings.rb:6309
+msgid ""
+"Defines which knowledge base categories are included in the vector database."
+msgstr ""
+
+#: db/seeds/settings.rb:3215
 msgid "Defines which parameters are allowed to be submitted via the form API."
 msgstr ""
 
-#: db/seeds/settings.rb:6070
+#: db/seeds/settings.rb:6174
 msgid "Defines which roles are allowed to access the desktop BETA UI switch."
 msgstr ""
 
 #: db/seeds/settings.rb:2710
 msgid "Defines which ticket attributes are checked before creating a ticket."
 msgstr "티켓을 생성하기 전에 확인할 티켓 속성을 정의합니다."
+
+#: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:43
+#, fuzzy
+#| msgid "Defines if tickets can be created via web form."
+msgid "Defines which tickets can use the ticket summary sidebar."
+msgstr "웹 양식을 통해 티켓을 생성할 수 있는지 정의합니다."
 
 #: db/seeds/settings.rb:2761
 msgid ""
@@ -6650,7 +6713,7 @@ msgstr "일치하는 티켓이 있을 때 경고를 받을 사용자 역할을 �
 #: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:78
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee:9
 #: app/assets/javascripts/app/controllers/package.coffee:54
-#: app/assets/javascripts/app/controllers/user.coffee:101
+#: app/assets/javascripts/app/controllers/user.coffee:102
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:90
 #: app/assets/javascripts/app/lib/mixins/knowledge_base_actions.coffee:26
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:80
@@ -6801,19 +6864,19 @@ msgstr "행 삭제"
 msgid "Delete table"
 msgstr "테이블 삭제"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:146
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:147
 msgid "Delete this access token"
 msgstr "이 액세스 토큰 삭제"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:341
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:346
 msgid "Delete this avatar"
 msgstr "이 아바타 삭제"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:112
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:113
 msgid "Delete this device"
 msgstr "이 기기 삭제"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:138
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:143
 msgid "Delete this link"
 msgstr "이 링크 삭제"
 
@@ -6896,7 +6959,7 @@ msgid "Deselect this entry"
 msgstr "이 항목 선택 해제"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:17
-#: app/assets/javascripts/app/views/channel/form.jst.eco:25
+#: app/assets/javascripts/app/views/channel/form.jst.eco:107
 msgid "Designer"
 msgstr "디자이너"
 
@@ -6904,19 +6967,19 @@ msgstr "디자이너"
 msgid "Desktop"
 msgstr "데스크톱"
 
-#: db/seeds/settings.rb:6049
+#: db/seeds/settings.rb:6153
 #, fuzzy
 #| msgid "New BETA UI Switch"
 msgid "Desktop BETA UI Switch"
 msgstr "새 BETA UI 전환"
 
-#: db/seeds/settings.rb:6058
+#: db/seeds/settings.rb:6162
 #, fuzzy
 #| msgid "UI Desktop Beta Switch"
 msgid "Desktop BETA UI Switch Admin Menu"
 msgstr "UI 데스크톱 베타 전환"
 
-#: db/seeds/settings.rb:6067
+#: db/seeds/settings.rb:6171
 #, fuzzy
 #| msgid "UI Desktop Beta Switch"
 msgid "Desktop BETA UI Switch Roles"
@@ -6973,14 +7036,14 @@ msgstr "개발자 시스템"
 msgid "Device"
 msgstr "기기"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:80
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:81
 msgid "Device has been revoked."
 msgstr "기기가 해지되었습니다."
 
 #: app/assets/javascripts/app/controllers/_profile/devices.coffee:3
 #: app/assets/javascripts/app/views/profile/devices.jst.eco:2
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/devices.ts:6
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:32
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:33
 #: db/seeds/permissions.rb:485
 msgid "Devices"
 msgstr "장치"
@@ -7103,7 +7166,7 @@ msgstr "아티클 버리기"
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:59
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:36
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:438
-#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:256
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:261
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:43
 msgid "Discard changes"
 msgstr "변경 사항 버리기"
@@ -7178,7 +7241,7 @@ msgstr "이메일을 암호화하지 않음"
 msgid "Do not sign email"
 msgstr "이메일에 서명하지 않음"
 
-#: db/seeds/settings.rb:5996
+#: db/seeds/settings.rb:6100
 msgid "Do not update any tickets."
 msgstr "티켓을 업데이트하지 않습니다."
 
@@ -7222,7 +7285,7 @@ msgstr "문서 파일"
 msgid "Domain"
 msgstr "도메인"
 
-#: app/assets/javascripts/app/controllers/_integration/pgp.coffee:122
+#: app/assets/javascripts/app/controllers/_integration/pgp.coffee:127
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco:14
 msgid "Domain Alias"
 msgstr "도메인 별칭"
@@ -7231,7 +7294,7 @@ msgstr "도메인 별칭"
 msgid "Domain based assignment"
 msgstr "도메인 기반 할당"
 
-#: app/assets/javascripts/app/views/channel/form.jst.eco:102
+#: app/assets/javascripts/app/views/channel/form.jst.eco:184
 msgid ""
 "Don't load CSS for form. You need to generate your own CSS for the form."
 msgstr ""
@@ -7250,7 +7313,7 @@ msgstr "완료"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_image_view.coffee:4
 #: app/assets/javascripts/app/views/system_report.jst.eco:20
-#: app/frontend/apps/desktop/components/CommonCalendarPreviewFlyout/CommonCalendarPreviewFlyout.vue:87
+#: app/frontend/apps/desktop/components/CommonCalendarPreviewFlyout/CommonCalendarPreviewFlyout.vue:89
 msgid "Download"
 msgstr "다운로드"
 
@@ -7344,7 +7407,7 @@ msgstr "초안들"
 msgid "Drafts & macros"
 msgstr "매크로 만들기"
 
-#: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee:32
+#: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee:31
 #, fuzzy
 #| msgid "Drafts"
 msgid "Drafts only"
@@ -7354,7 +7417,7 @@ msgstr "초안들"
 msgid "Drag ended for %s."
 msgstr "%s에 대한 드래그가 종료되었습니다."
 
-#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkWrapper.vue:112
+#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkWrapper.vue:115
 #, fuzzy
 #| msgid "drag here to cancel"
 msgid "Drag here to cancel"
@@ -7517,51 +7580,51 @@ msgstr "고객 편집"
 msgid "Editor"
 msgstr "편집자"
 
-#: db/seeds/settings.rb:3727
+#: db/seeds/settings.rb:3775
 msgid "Elasticsearch Asciifolding Configuration"
 msgstr "Elasticsearch Asciifolding 구성"
 
-#: db/seeds/settings.rb:3682
+#: db/seeds/settings.rb:3730
 msgid "Elasticsearch Attachment Extensions"
 msgstr "Elasticsearch 첨부 파일 확장자"
 
-#: db/seeds/settings.rb:3691
+#: db/seeds/settings.rb:3739
 msgid "Elasticsearch Attachment Size"
 msgstr "Elasticsearch 첨부 파일 크기"
 
-#: db/seeds/settings.rb:3664
+#: db/seeds/settings.rb:3712
 msgid "Elasticsearch Endpoint Index"
 msgstr "Elasticsearch 엔드포인트 인덱스"
 
-#: db/seeds/settings.rb:3655
+#: db/seeds/settings.rb:3703
 msgid "Elasticsearch Endpoint Password"
 msgstr "Elasticsearch 엔드포인트 비밀번호"
 
-#: db/seeds/settings.rb:3637
+#: db/seeds/settings.rb:3685
 msgid "Elasticsearch Endpoint URL"
 msgstr "Elasticsearch 엔드포인트 URL"
 
-#: db/seeds/settings.rb:3646
+#: db/seeds/settings.rb:3694
 msgid "Elasticsearch Endpoint User"
 msgstr "Elasticsearch 엔드포인트 사용자"
 
-#: db/seeds/settings.rb:3718
+#: db/seeds/settings.rb:3766
 msgid "Elasticsearch Model Configuration"
 msgstr "Elasticsearch 모델 구성"
 
-#: db/seeds/settings.rb:3709
+#: db/seeds/settings.rb:3757
 msgid "Elasticsearch Pipeline Name"
 msgstr "Elasticsearch 파이프라인 이름"
 
-#: db/seeds/settings.rb:3673
+#: db/seeds/settings.rb:3721
 msgid "Elasticsearch SSL verification"
 msgstr "Elasticsearch SSL 검증"
 
-#: db/seeds/settings.rb:3700
+#: db/seeds/settings.rb:3748
 msgid "Elasticsearch Total Payload Size"
 msgstr "Elasticsearch 총 페이로드 크기"
 
-#: lib/ai/vectordb.rb:170
+#: lib/ai/vectordb.rb:250
 msgid "Elasticsearch index does not exist"
 msgstr "Elasticsearch 인덱스가 존재하지 않습니다"
 
@@ -7771,11 +7834,11 @@ msgstr "비어 있는 개요"
 msgid "Enable"
 msgstr "사용"
 
-#: db/seeds/settings.rb:3578
+#: db/seeds/settings.rb:3626
 msgid "Enable Chat"
 msgstr "채팅 사용"
 
-#: app/assets/javascripts/app/views/api.jst.eco:33 db/seeds/settings.rb:3533
+#: app/assets/javascripts/app/views/api.jst.eco:33 db/seeds/settings.rb:3581
 msgid ""
 "Enable REST API access using the username/email address and password for the "
 "authentication user."
@@ -7790,7 +7853,7 @@ msgstr ""
 "토큰(사용자 이름/이메일과 비밀번호 대신)을 사용해 REST API를 활성화합니다. 모"
 "든 사용자가 프로필에서 자신의 액세스 토큰을 만들어야 합니다."
 
-#: db/seeds/settings.rb:3508
+#: db/seeds/settings.rb:3556
 msgid ""
 "Enable REST API using tokens (not username/email address and password). Each "
 "user needs to create its own access tokens in user profile."
@@ -7798,7 +7861,7 @@ msgstr ""
 "토큰(사용자 이름/이메일과 비밀번호 대신)을 사용해 REST API를 활성화합니다. "
 "각 사용자는 프로필에서 자신의 액세스 토큰을 만들어야 합니다."
 
-#: db/seeds/settings.rb:5931
+#: db/seeds/settings.rb:6035
 msgid "Enable Recovery Codes"
 msgstr "복구 코드 활성화"
 
@@ -7822,13 +7885,19 @@ msgstr "일치하는 후속 티켓에 대한 자동 할당을 활성화합니다
 msgid "Enable automatic assignment the first time an agent opens a ticket."
 msgstr "상담원이 티켓을 처음 열 때 자동으로 배정되도록 합니다."
 
-#: db/seeds/settings.rb:6014
+#: db/seeds/settings.rb:6118
 msgid "Enable checklists."
 msgstr "체크리스트를 활성화합니다."
 
-#: app/assets/javascripts/app/views/channel/form.jst.eco:72
+#: app/assets/javascripts/app/views/channel/form.jst.eco:154
 msgid "Enable debugging for implementation."
 msgstr "구현을위한 디버깅을 활성화합니다."
+
+#: app/assets/javascripts/app/views/channel/form.jst.eco:35
+msgid ""
+"Enable honeypot protection (an invisible field that traps automated "
+"submissions)."
+msgstr ""
 
 #: db/seeds/settings.rb:767
 msgid ""
@@ -7849,13 +7918,13 @@ msgstr ""
 "가됩니다. 특정 문구만 인용하려면 텍스트를 선택하고 ‘답장’을 누르면 됩니다(이 "
 "기능은 항상 사용할 수 있습니다)."
 
-#: db/seeds/settings.rb:6173
+#: db/seeds/settings.rb:6295
 msgid ""
 "Enable or disable AI generation of knowledge base answers from ticket "
 "content."
 msgstr ""
 
-#: db/seeds/settings.rb:6041
+#: db/seeds/settings.rb:6145
 msgid ""
 "Enable or disable self-shutdown of Zammad processes after significant "
 "configuration changes. This should only be used if the controlling process "
@@ -7882,11 +7951,11 @@ msgstr ""
 "Zammad의 유지 관리 모드를 켜거나 끕니다. 켜면 비관리자는 모두 로그아웃되고 관"
 "리자만 새 세션을 시작할 수 있습니다."
 
-#: db/seeds/settings.rb:6112
+#: db/seeds/settings.rb:6216
 msgid "Enable or disable the ticket summary."
 msgstr "티켓 요약 기능을 켜거나 끕니다."
 
-#: db/seeds/settings.rb:6145
+#: db/seeds/settings.rb:6267
 msgid "Enable or disable the writing assistant text tools."
 msgstr "글쓰기 도우미 텍스트 도구를 켜거나 끕니다."
 
@@ -7898,7 +7967,13 @@ msgstr "베타 전환 배너를 표시합니다"
 msgid "Enable ticket auto assignment."
 msgstr "티켓 자동 할당을 활성화합니다."
 
-#: db/seeds/settings.rb:4065
+#: db/seeds/settings.rb:6249
+#, fuzzy
+#| msgid "Enable auto assignment for following matching tickets."
+msgid "Enable ticket summary for following matching tickets."
+msgstr "일치하는 후속 티켓에 대한 자동 할당을 활성화합니다."
+
+#: db/seeds/settings.rb:4113
 msgid "Enable time accounting."
 msgstr "시간 정산을 활성화합니다."
 
@@ -7906,7 +7981,7 @@ msgstr "시간 정산을 활성화합니다."
 msgid "Enable/disable inline translations"
 msgstr "인라인 번역을 활성화 / 비활성화"
 
-#: db/seeds/settings.rb:3581
+#: db/seeds/settings.rb:3629
 msgid "Enable/disable online chat."
 msgstr "온라인 채팅을 켜거나 끕니다."
 
@@ -7926,7 +8001,7 @@ msgid ""
 msgstr ""
 "같은 속성의 티켓이 있을 때 티켓 생성 과정에서 사용자에게 경고를 표시합니다."
 
-#: db/seeds/settings.rb:5788
+#: db/seeds/settings.rb:5892
 msgid ""
 "Enables button for user authentication via %s. The button will redirect to /"
 "auth/sso on user interaction. Configure trusted proxy IP addresses or CIDR "
@@ -8083,11 +8158,11 @@ msgstr "엔드 포인트"
 msgid "Endpoint Settings"
 msgstr "엔드포인트 설정"
 
-#: db/seeds/settings.rb:5958
+#: db/seeds/settings.rb:6062
 msgid "Enforce the setup of the two-factor authentication"
 msgstr "2단계 인증 설정을 강제합니다"
 
-#: db/seeds/settings.rb:5965
+#: db/seeds/settings.rb:6069
 msgid "Enforced for user roles"
 msgstr "강제 적용할 사용자 역할"
 
@@ -8113,7 +8188,7 @@ msgstr "개인 키 비밀을 입력하세요"
 msgid "Enter Title…"
 msgstr "제목을 입력하세요…"
 
-#: app/assets/javascripts/app/controllers/_integration/pgp.coffee:125
+#: app/assets/javascripts/app/controllers/_integration/pgp.coffee:130
 msgid ""
 "Enter a domain name that will be associated with this key, e.g. example.com."
 msgstr "이 키에 연결할 도메인 이름을 입력하세요(예: example.com)."
@@ -8196,7 +8271,7 @@ msgid "Enter the role description of the AI agent."
 msgstr "AI 에이전트의 역할 설명을 입력하세요."
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco:28
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:275
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:278
 msgid "Enter the security code generated by the authenticator app:"
 msgstr "인증 앱이 생성한 보안 코드를 입력하세요:"
 
@@ -8408,25 +8483,25 @@ msgstr "에스컬레이션 시간"
 msgid "Escape pressed. No item selected."
 msgstr "Esc 키가 눌렸습니다. 선택된 항목이 없습니다."
 
-#: app/frontend/apps/desktop/components/CommonCalendarPreviewFlyout/CommonCalendarPreviewFlyout.vue:51
+#: app/frontend/apps/desktop/components/CommonCalendarPreviewFlyout/CommonCalendarPreviewFlyout.vue:53
 #, fuzzy
 #| msgid "Event Ending"
 msgid "Event ending"
 msgstr "이벤트 종료"
 
-#: app/frontend/apps/desktop/components/CommonCalendarPreviewFlyout/CommonCalendarPreviewFlyout.vue:42
+#: app/frontend/apps/desktop/components/CommonCalendarPreviewFlyout/CommonCalendarPreviewFlyout.vue:44
 #, fuzzy
 #| msgid "Event Location"
 msgid "Event location"
 msgstr "이벤트 위치"
 
-#: app/frontend/apps/desktop/components/CommonCalendarPreviewFlyout/CommonCalendarPreviewFlyout.vue:46
+#: app/frontend/apps/desktop/components/CommonCalendarPreviewFlyout/CommonCalendarPreviewFlyout.vue:48
 #, fuzzy
 #| msgid "Event Starting"
 msgid "Event starting"
 msgstr "이벤트 시작"
 
-#: app/frontend/apps/desktop/components/CommonCalendarPreviewFlyout/CommonCalendarPreviewFlyout.vue:38
+#: app/frontend/apps/desktop/components/CommonCalendarPreviewFlyout/CommonCalendarPreviewFlyout.vue:40
 #, fuzzy
 #| msgid "Event Summary"
 msgid "Event summary"
@@ -8494,15 +8569,15 @@ msgstr "예외 사용자"
 msgid "Exchange"
 msgstr "Exchange"
 
-#: db/seeds/settings.rb:4954
+#: db/seeds/settings.rb:5002
 msgid "Exchange OAuth"
 msgstr "Exchange OAuth"
 
-#: db/seeds/settings.rb:4941
+#: db/seeds/settings.rb:4989
 msgid "Exchange config"
 msgstr "Exchange 구성"
 
-#: db/seeds/settings.rb:4967
+#: db/seeds/settings.rb:5015
 msgid "Exchange integration"
 msgstr "Exchange 통합"
 
@@ -8591,7 +8666,7 @@ msgstr "만료일"
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:19
 #: app/assets/javascripts/app/views/profile/token_access_create.jst.eco:10
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:15
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:98
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:99
 msgid "Expires"
 msgstr "만료"
 
@@ -8677,11 +8752,11 @@ msgstr "Facebook 피드 게시물"
 msgid "Failed Tasks"
 msgstr "실패한 작업"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:132
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:133
 msgid "Failed to add new checklist item."
 msgstr "새 체크리스트 항목을 추가하지 못했습니다."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:145
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:146
 msgid "Failed to delete checklist item."
 msgstr "체크리스트 항목을 삭제하지 못했습니다."
 
@@ -8703,7 +8778,7 @@ msgstr "콘텐츠를 불러오지 못했습니다."
 msgid "Failed to roll back the migration of the channel!"
 msgstr "채널 마이그레이션을 롤백하지 못했습니다!"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:137
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:138
 msgid "Failed to save checklist order."
 msgstr "체크리스트 순서를 저장하지 못했습니다."
 
@@ -8717,11 +8792,11 @@ msgstr "체크리스트 항목 순서를 저장하지 못했습니다. 다시 �
 msgid "Failed to send email to \"%s\". Please contact an administrator."
 msgstr "이메일 전송에 실패했습니다 \"%\". 관리자에게 연락해 주세요."
 
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:188
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:189
 msgid "Failed to set up QR code. Please try again."
 msgstr "QR 코드를 설정하지 못했습니다. 다시 시도하세요."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:141
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:142
 msgid "Failed to update checklist item."
 msgstr "체크리스트 항목을 업데이트하지 못했습니다."
 
@@ -8762,7 +8837,7 @@ msgid "February"
 msgstr "2월"
 
 #: app/assets/javascripts/app/models/ai_text_tool.coffee:27
-#: app/assets/javascripts/app/views/channel/form.jst.eco:34
+#: app/assets/javascripts/app/views/channel/form.jst.eco:116
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarFooterMenu.vue:61
 msgid "Feedback"
 msgstr "피드백"
@@ -8771,7 +8846,7 @@ msgstr "피드백"
 msgid "Feedback & Logs"
 msgstr "피드백 & 로그"
 
-#: app/assets/javascripts/app/views/channel/form.jst.eco:34
+#: app/assets/javascripts/app/views/channel/form.jst.eco:116
 msgid "Feedback Form"
 msgstr "피드백 폼"
 
@@ -9039,7 +9114,7 @@ msgstr "이 에이전트를 실행하려면 트리거나 스케줄러에 연결�
 #: app/frontend/apps/desktop/components/layout/LayoutTaskbarTabContent.vue:62
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue:39
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue:32
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:43
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:44
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:39
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:23
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:475
@@ -9073,7 +9148,7 @@ msgstr "비밀번호를 잊어 버렸습니까?"
 msgid "Form"
 msgstr "형태"
 
-#: db/seeds/settings.rb:3164
+#: db/seeds/settings.rb:3212
 msgid "Form Allowed Parameters"
 msgstr ""
 
@@ -9185,6 +9260,10 @@ msgstr "금"
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:56
 msgid "Friday"
 msgstr "금요일"
+
+#: lib/form_spam_protection/captcha/friendly_captcha.rb:13
+msgid "Friendly Captcha"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee:10
 #: app/assets/javascripts/app/models/ticket_article.coffee:7
@@ -9303,7 +9382,7 @@ msgstr "시작하기"
 
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/authenticator_app.coffee:6
 #: app/frontend/shared/entities/two-factor/plugins/authenticator-app.ts:10
-#: db/seeds/settings.rb:5923
+#: db/seeds/settings.rb:6027
 msgid "Get the security code from the authenticator app on your device."
 msgstr "기기에서 인증 앱을 열어 보안 코드를 가져오세요."
 
@@ -9333,11 +9412,11 @@ msgstr "GitHub 앱 자격 증명"
 msgid "GitHub OAuth Applications"
 msgstr "GitHub OAuth 애플리케이션"
 
-#: db/seeds/settings.rb:5103
+#: db/seeds/settings.rb:5151
 msgid "GitHub config"
 msgstr "GitHub 구성"
 
-#: db/seeds/settings.rb:5076
+#: db/seeds/settings.rb:5124
 msgid "GitHub integration"
 msgstr "GitHub 통합"
 
@@ -9366,11 +9445,11 @@ msgstr "GitLab 앱 자격 증명"
 msgid "GitLab Applications"
 msgstr "GitLab 애플리케이션"
 
-#: db/seeds/settings.rb:5061
+#: db/seeds/settings.rb:5109
 msgid "GitLab config"
 msgstr "GitLab 구성"
 
-#: db/seeds/settings.rb:5034
+#: db/seeds/settings.rb:5082
 msgid "GitLab integration"
 msgstr "GitLab 통합"
 
@@ -9416,7 +9495,7 @@ msgstr "지정한 시간대가 유효하지 않습니다."
 msgid "Go Back"
 msgstr "돌아 가기"
 
-#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkBottomDrawer.vue:230
+#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkBottomDrawer.vue:227
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfigurationWizard.vue:62
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue:85
 #: app/frontend/apps/mobile/components/CommonBackButton/CommonBackButton.vue:41
@@ -9462,7 +9541,7 @@ msgid "Google App Credentials"
 msgstr "Google 앱 자격 증명"
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco:8
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:142
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:143
 msgid "Google Authenticator"
 msgstr "Google Authenticator"
 
@@ -9478,6 +9557,14 @@ msgstr "Google 클라이언트 시크릿"
 #: db/seeds/permissions.rb:149
 msgid "Google Email"
 msgstr "Google 이메일"
+
+#: lib/form_spam_protection/captcha/recaptcha.rb:18
+msgid "Google reCAPTCHA"
+msgstr ""
+
+#: lib/form_spam_protection/captcha/recaptcha_enterprise.rb:17
+msgid "Google reCAPTCHA Enterprise"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/navigation.coffee:188
 #: app/assets/javascripts/app/views/clues/clues_content.jst.eco:17
@@ -9606,11 +9693,11 @@ msgstr "그룹은 …"
 msgid "HMAC SHA1 Signature Token"
 msgstr "HMAC SHA1 서명 토큰"
 
-#: db/seeds/settings.rb:5444
+#: db/seeds/settings.rb:5492
 msgid "HTML Email CSS Font"
 msgstr "HTML 이메일 CSS 글꼴"
 
-#: db/seeds/settings.rb:5456
+#: db/seeds/settings.rb:5504
 msgid "HTML Sanitizer Processing Timeout"
 msgstr "HTML 살균기 처리 제한 시간"
 
@@ -9853,6 +9940,12 @@ msgstr ""
 msgid "Hi! Which one of our products?"
 msgstr "안녕하세요! 어떤 제품이 궁금하신가요?"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMore.vue:31
+#, fuzzy
+#| msgid "New Ticket: %s"
+msgid "Hidden articles: %s"
+msgstr "새 티켓: %s"
+
 #: app/frontend/shared/components/CommonNotifications/CommonNotificationsItem.vue:85
 msgid "Hide"
 msgstr ""
@@ -9872,13 +9965,6 @@ msgstr "인증기 앱 시크리 숨기기"
 #| msgid "Notification"
 msgid "Hide notification"
 msgstr "공고"
-
-#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:57
-#: db/seeds/object_manager_attributes.rb:2479
-#, fuzzy
-#| msgid "On ticket summary sidebar activation"
-msgid "Hide ticket summary sidebar"
-msgstr "티켓 요약 사이드바 활성화 시"
 
 #: app/assets/javascripts/app/models/ticket_priority.coffee:7
 msgid "High priority"
@@ -9924,11 +10010,11 @@ msgstr ""
 msgid "Highlighting is inactive."
 msgstr "조직이 비활성화되었습니다."
 
-#: db/seeds/settings.rb:5608
+#: db/seeds/settings.rb:5656
 msgid "Highlights if the note a user is writing is public or private"
 msgstr "사용자가 작성 중인 노트가 공개인지 비공개인지 강조 표시합니다"
 
-#: db/seeds/settings.rb:5605
+#: db/seeds/settings.rb:5653
 msgid "Hint for adding an article to an existing ticket."
 msgstr "기존 티켓에 아티클을 추가할 때 표시할 힌트입니다."
 
@@ -9936,7 +10022,7 @@ msgstr "기존 티켓에 아티클을 추가할 때 표시할 힌트입니다."
 #: app/assets/javascripts/app/controllers/organization_profile/action_row.coffee:28
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee:114
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:62
-#: app/frontend/apps/desktop/components/CommonHistoryFlyout/CommonHistoryFlyout.vue:70
+#: app/frontend/apps/desktop/components/CommonHistoryFlyout/CommonHistoryFlyout.vue:71
 #: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailTopBar/actions/history.ts:13
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:71
 #: app/frontend/apps/desktop/pages/user/components/UserDetailTopBar/actions/history.ts:13
@@ -9958,6 +10044,10 @@ msgstr "휴일을 iCalendar 피드"
 #: app/frontend/apps/mobile/pages/home/views/Home.vue:61
 msgid "Home"
 msgstr "홈"
+
+#: db/seeds/settings.rb:3164
+msgid "Honeypot spam protection"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:416
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:331
@@ -10034,7 +10124,7 @@ msgid "How to use it"
 msgstr "이것을 어떻게 사용 하는가"
 
 #: app/assets/javascripts/app/views/integration/idoit_object_result.jst.eco:8
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:208
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:213
 msgid "ID"
 msgstr "ID"
 
@@ -10066,7 +10156,7 @@ msgstr "IMAP"
 msgid "Icinga"
 msgstr "Icinga"
 
-#: db/seeds/settings.rb:4484
+#: db/seeds/settings.rb:4532
 msgid "Icinga integration"
 msgstr "Icinga 통합"
 
@@ -10091,7 +10181,7 @@ msgstr "식별자"
 msgid "Identifier of the chat topic."
 msgstr "채팅 주제의 식별자입니다."
 
-#: db/seeds/settings.rb:3608
+#: db/seeds/settings.rb:3656
 msgid "Idle timeout in seconds until agent is set offline automatically."
 msgstr "상담원을 자동으로 오프라인 처리하기까지의 유휴 시간(초)입니다."
 
@@ -10126,7 +10216,7 @@ msgid ""
 "automatically."
 msgstr "호스트와 서비스가 다시 복구되는 경우, Ticket은 자동으로 종료됩니다."
 
-#: db/seeds/settings.rb:3398
+#: db/seeds/settings.rb:3446
 msgid ""
 "If the sender is an agent, set the first user in the recipient list as the "
 "customer."
@@ -10134,7 +10224,7 @@ msgstr ""
 "보낸 사람이 대리인 인 경우, 고객과받는 사람 목록의 첫 번째 사용자를 설정합니"
 "다."
 
-#: db/seeds/settings.rb:3474
+#: db/seeds/settings.rb:3522
 msgid "If this regex matches, no notification will be sent by the sender."
 msgstr "이 정규식과 일치하는 경우, 통지는 송신자가 전송되지 않습니다."
 
@@ -10210,7 +10300,7 @@ msgstr "추가 이메일 주소를 사용하려면 나중에 구성할 수 있�
 msgid "Ignore Escalation"
 msgstr "단계적 확대"
 
-#: db/seeds/settings.rb:3768
+#: db/seeds/settings.rb:3816
 msgid "Ignore Escalation/SLA Information"
 msgstr "에스컬레이션/SLA 정보를 무시"
 
@@ -10218,7 +10308,7 @@ msgstr "에스컬레이션/SLA 정보를 무시"
 msgid "Ignore Message"
 msgstr "메시지 무시"
 
-#: db/seeds/settings.rb:3771
+#: db/seeds/settings.rb:3819
 msgid "Ignore escalation/SLA information for import."
 msgstr "가져오기 시 에스컬레이션/SLA 정보를 무시합니다."
 
@@ -10276,51 +10366,51 @@ msgstr "%s 가져오기"
 msgid "Import API key could not be extracted from URL."
 msgstr "URL에서 가져오기 API 키를 추출할 수 없습니다."
 
-#: db/seeds/settings.rb:3940
+#: db/seeds/settings.rb:3988
 msgid "Import API key for requesting the Freshdesk API"
 msgstr "Freshdesk API 호출에 사용할 가져오기 API 키"
 
-#: db/seeds/settings.rb:3884
+#: db/seeds/settings.rb:3932
 msgid "Import API key for requesting the Zendesk API"
 msgstr "Zendesk API 호출에 사용할 가져오기 API 키"
 
-#: db/seeds/settings.rb:3759
+#: db/seeds/settings.rb:3807
 msgid "Import Backend"
 msgstr "가져오기 백엔드"
 
-#: db/seeds/settings.rb:4014
+#: db/seeds/settings.rb:4062
 msgid "Import Backends"
 msgstr "가져오기 백엔드"
 
-#: db/seeds/settings.rb:3791
+#: db/seeds/settings.rb:3839
 msgid "Import Endpoint"
 msgstr "가져 오기 엔드 포인트"
 
-#: db/seeds/settings.rb:3809
+#: db/seeds/settings.rb:3857
 msgid "Import Key"
 msgstr "키 가져 오기"
 
-#: db/seeds/settings.rb:3737
+#: db/seeds/settings.rb:3785
 msgid "Import Mode"
 msgstr "가져 오기 모드"
 
-#: db/seeds/settings.rb:3847
+#: db/seeds/settings.rb:3895
 msgid "Import Password for HTTP basic authentication"
 msgstr "HTTP 기본 인증용 가져오기 비밀번호"
 
-#: db/seeds/settings.rb:3995
+#: db/seeds/settings.rb:4043
 msgid "Import Password for requesting the Kayako API"
 msgstr "Kayako API 호출용 가져오기 비밀번호"
 
-#: db/seeds/settings.rb:3828
+#: db/seeds/settings.rb:3876
 msgid "Import User for HTTP basic authentication"
 msgstr "HTTP 기본 인증용 가져오기 사용자"
 
-#: db/seeds/settings.rb:3977
+#: db/seeds/settings.rb:4025
 msgid "Import User for requesting the Kayako API"
 msgstr "Kayako API 호출용 가져오기 사용자"
 
-#: db/seeds/settings.rb:3903
+#: db/seeds/settings.rb:3951
 msgid "Import User for requesting the Zendesk API"
 msgstr "Zendesk API 호출용 가져오기 사용자"
 
@@ -10447,7 +10537,7 @@ msgstr "에스컬레이션, 새/열림, 보류 티켓을 모두 포함합니다.
 msgid "Including private key."
 msgstr "개인 키 포함."
 
-#: lib/ai/vectordb.rb:163
+#: lib/ai/vectordb.rb:243
 msgid "Incompatible Elasticsearch version"
 msgstr "호환되지 않는 Elasticsearch 버전입니다"
 
@@ -10465,7 +10555,7 @@ msgstr "미완료 체크리스트 항목"
 msgid "Incomplete credentials"
 msgstr "자격 증명이 완전하지 않습니다"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:461
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:478
 #, fuzzy
 #| msgid "Incomplete Ticket Checklist"
 msgid "Incomplete ticket checklist"
@@ -10715,7 +10805,7 @@ msgstr "GitHub GraphQL API 토큰이 유효하지 않습니다"
 msgid "Invalid GitHub configuration (missing endpoint or api_token)."
 msgstr "GitHub 구성이 잘못되었습니다(endpoint 또는 api_token 누락)."
 
-#: lib/github/linked_issue.rb:115
+#: lib/github/linked_issue.rb:130
 msgid "Invalid GitHub issue link format"
 msgstr "GitHub 이슈 링크 형식이 잘못되었습니다"
 
@@ -10837,7 +10927,7 @@ msgid "Invalid request - please check your input"
 msgstr "잘못된 요청입니다 - 입력값을 확인하세요"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee:104
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:131
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:132
 msgid "Invalid security code! Please try again with a new code."
 msgstr "보안 코드가 잘못되었습니다. 새 코드로 다시 시도하세요."
 
@@ -10948,7 +11038,7 @@ msgstr "Ionicons"
 msgid "Issue URL"
 msgstr "이슈 URL"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:52
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:62
 msgid "Issue status"
 msgstr "이슈 상태"
 
@@ -11140,15 +11230,15 @@ msgstr "지식 베이스 피드"
 msgid "Knowledge Base Reader"
 msgstr "지식 베이스 읽기 권한자"
 
-#: db/seeds/settings.rb:5562
+#: db/seeds/settings.rb:5610
 msgid "Knowledge Base active"
 msgstr "지식 베이스 활성화"
 
-#: db/seeds/settings.rb:5577
+#: db/seeds/settings.rb:5625
 msgid "Knowledge Base active publicly"
 msgstr "지식 베이스 공개 활성화"
 
-#: db/seeds/settings.rb:5551
+#: db/seeds/settings.rb:5599
 msgid "Knowledge Base multilingual support"
 msgstr "지식 베이스 다국어 지원"
 
@@ -11181,7 +11271,7 @@ msgstr "LDAP"
 msgid "LDAP Host"
 msgstr "LDAP 호스트"
 
-#: db/seeds/settings.rb:4914
+#: db/seeds/settings.rb:4962
 msgid "LDAP integration"
 msgstr "LDAP 통합"
 
@@ -11193,8 +11283,8 @@ msgstr "사용자 관리를 위한 LDAP 통합."
 msgid "Label"
 msgstr "레이블"
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_git_issue.jst.eco:30
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:81
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_git_issue.jst.eco:36
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:100
 msgid "Labels"
 msgstr "레이블"
 
@@ -11329,7 +11419,7 @@ msgid "Last sync at:"
 msgstr "마지막 동기화 시점:"
 
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:20
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:103
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:104
 msgid "Last used"
 msgstr "마지막 사용"
 
@@ -11363,7 +11453,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:66
 #: app/assets/javascripts/app/controllers/_ai/kb_answer_from_ticket.coffee:30
 #: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:34
-#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:40
+#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:44
 #, fuzzy
 #| msgid "Information"
 msgid "Legal Information"
@@ -11484,20 +11574,20 @@ msgstr "링크가 성공적으로 추가되었습니다"
 msgid "Link already exists"
 msgstr "링크가 이미 존재합니다"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee:26
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee:43
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerLinkFlyout.vue:69
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList.vue:272
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList.vue:277
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/TicketSidebarGitHub/TicketSidebarGitHub.vue:70
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/TicketSidebarGitLab/TicketSidebarGitLab.vue:70
 msgid "Link issue"
 msgstr "이슈 연결"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:168
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:144
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:145
 msgid "Link objects"
 msgstr "객체 연결"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:87
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:88
 msgid "Link removed successfully"
 msgstr "링크가 성공적으로 제거되었습니다"
 
@@ -11556,7 +11646,7 @@ msgstr "LinkedIn 앱 자격 증명"
 msgid "LinkedIn Developer Site"
 msgstr "LinkedIn 개발자 사이트"
 
-#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:238
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:242
 msgid "List of all user taskbar tabs"
 msgstr "모든 사용자 작업 표시줄 탭 목록"
 
@@ -11604,12 +11694,12 @@ msgstr "콘텐츠 로딩 중"
 msgid "Loading failed, please try again later."
 msgstr "로딩에 실패했습니다. 나중에 다시 시도해주세요."
 
-#: app/assets/javascripts/app/controllers/_integration/pgp.coffee:190
-#: app/assets/javascripts/app/controllers/_integration/smime.coffee:183
-#: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee:127
+#: app/assets/javascripts/app/controllers/_integration/pgp.coffee:195
+#: app/assets/javascripts/app/controllers/_integration/smime.coffee:188
+#: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee:125
 #: app/assets/javascripts/app/controllers/password_reset.coffee:92
 #: app/assets/javascripts/app/controllers/ssl_certificate.coffee:46
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee:87
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee:104
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee:76
 #: app/assets/javascripts/app/controllers/widget/payload_example.coffee:34
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee:61
@@ -11619,8 +11709,6 @@ msgstr "로딩에 실패했습니다."
 #: app/assets/javascripts/app/lib/app_post/task_manager/singleton.coffee:55
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js:664
 #: app/assets/javascripts/app/views/generic/page_loading.jst.eco:3
-#: app/frontend/apps/desktop/components/CommonLoader/CommonLoader.vue:67
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:513
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:69
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:56
 #: app/frontend/shared/form/i18n/locales.ts:57 app/views/init/index.html.erb:34
@@ -11655,7 +11743,7 @@ msgstr "실행 변경의 로컬화"
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco:6
 #: app/assets/javascripts/app/views/profile/devices.jst.eco:13
 #: app/assets/javascripts/app/views/session.jst.eco:10
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:99
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:100
 msgid "Location"
 msgstr "위치"
 
@@ -11760,7 +11848,7 @@ msgstr ""
 msgid "Mailbox type"
 msgstr "사서함 유형"
 
-#: app/frontend/apps/desktop/components/layout/LayoutPage.vue:103
+#: app/frontend/apps/desktop/components/layout/LayoutPage.vue:108
 msgid "Main sidebar"
 msgstr "메인 사이드바"
 
@@ -11851,7 +11939,7 @@ msgstr "태그 관리"
 msgid "Manage Telegram channel of your system."
 msgstr "시스템의 Telegram 채널을 관리합니다."
 
-#: app/assets/javascripts/app/controllers/user.coffee:86
+#: app/assets/javascripts/app/controllers/user.coffee:87
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee:4
 msgid "Manage Two-Factor Authentication"
 msgstr "이중 인증 관리"
@@ -12187,7 +12275,7 @@ msgstr "최대 동시 채팅 수"
 msgid "Max. length"
 msgstr "최대 길이"
 
-#: db/seeds/settings.rb:3176
+#: db/seeds/settings.rb:3224
 msgid "Max. length of the subject in an email reply."
 msgstr "이메일 회신의 제목 최대 길이."
 
@@ -12211,7 +12299,7 @@ msgstr "최대값은 최소값보다 크거나 같아야 합니다"
 msgid "Maximal value must be lower than 2147483648"
 msgstr "최대값은 2147483648보다 작아야 합니다"
 
-#: db/seeds/settings.rb:3288
+#: db/seeds/settings.rb:3336
 msgid "Maximum Email Size"
 msgstr "최대 이메일 크기"
 
@@ -12270,8 +12358,8 @@ msgstr "미디어 다운로드가 성공했습니다."
 #: app/assets/javascripts/app/views/organization_profile/object.jst.eco:20
 #: app/assets/javascripts/app/views/popover/organization.jst.eco:6
 #: app/assets/javascripts/app/views/widget/organization.jst.eco:29
-#: app/frontend/apps/desktop/components/Organization/OrganizationPopoverWithTrigger/OrganizationPopover.vue:74
-#: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailViewContent.vue:122
+#: app/frontend/apps/desktop/components/Organization/OrganizationPopoverWithTrigger/OrganizationPopover.vue:79
+#: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailViewContent.vue:127
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarOrganization/TicketSidebarOrganizationContent.vue:71
 #: app/frontend/apps/mobile/components/Organization/OrganizationMembersList.vue:36
 msgid "Members"
@@ -12335,7 +12423,7 @@ msgstr "메시지"
 msgid "Message Status"
 msgstr "메시지 상태"
 
-#: app/assets/javascripts/app/views/channel/form.jst.eco:47
+#: app/assets/javascripts/app/views/channel/form.jst.eco:129
 msgid "Message after sending form"
 msgstr "양식 전송 후 메시지"
 
@@ -12406,7 +12494,7 @@ msgid "Microsoft Application Registration Portal"
 msgstr "Microsoft 애플리케이션 등록 포털"
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco:15
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:152
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:153
 msgid "Microsoft Authenticator"
 msgstr "Microsoft Authenticator"
 
@@ -12439,8 +12527,8 @@ msgstr "%s에 대한 마이그레이션 플러그인"
 msgid "Migrator can't read OTRS output!"
 msgstr "마이그레이터가 OTRS 출력을 읽을 수 없습니다!"
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_git_issue.jst.eco:18
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:71
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_git_issue.jst.eco:24
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:90
 msgid "Milestone"
 msgstr "마일스톤"
 
@@ -12466,6 +12554,12 @@ msgstr "최소값은 2147483648보다 작아야 합니다"
 
 #: db/seeds/settings.rb:2121
 msgid "Minimum length"
+msgstr "최소 길이"
+
+#: app/assets/javascripts/app/views/channel/form.jst.eco:97
+#, fuzzy
+#| msgid "Minimum length"
+msgid "Minimum score"
 msgstr "최소 길이"
 
 #: app/assets/javascripts/app/views/generic/timer.jst.eco:21
@@ -12521,7 +12615,7 @@ msgstr "월요일"
 msgid "Monit"
 msgstr "Monit"
 
-#: db/seeds/settings.rb:4813
+#: db/seeds/settings.rb:4861
 msgid "Monit integration"
 msgstr "Monit 통합"
 
@@ -12531,7 +12625,7 @@ msgstr "Monit 통합"
 msgid "Monitoring"
 msgstr "모니터링"
 
-#: db/seeds/settings.rb:3556
+#: db/seeds/settings.rb:3604
 msgid "Monitoring Token"
 msgstr "모니터링 토큰"
 
@@ -12561,7 +12655,7 @@ msgid "More ticket overviews"
 msgstr "더 많은 티켓 개요"
 
 #: app/assets/javascripts/app/views/profile/devices.jst.eco:14
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:104
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:105
 msgid "Most recent activity"
 msgstr "최근 활동"
 
@@ -12648,7 +12742,7 @@ msgstr "처리 중인 내 티켓"
 msgid "Nagios"
 msgstr "Nagios"
 
-#: db/seeds/settings.rb:4582
+#: db/seeds/settings.rb:4630
 msgid "Nagios integration"
 msgstr "Nagios 통합"
 
@@ -12714,8 +12808,8 @@ msgstr "Nagios 통합"
 #: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue:30
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:111
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:28
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:94
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:83
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:95
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:84
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:180
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout/IdoitObjectList.vue:20
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:163
@@ -12732,7 +12826,7 @@ msgstr "이름 식별자 형식"
 msgid "Name for this security key"
 msgstr "이 보안 키의 이름"
 
-#: app/assets/javascripts/app/views/channel/form.jst.eco:39
+#: app/assets/javascripts/app/views/channel/form.jst.eco:121
 msgid "Name of form submit button"
 msgstr "양식 제출 버튼 이름"
 
@@ -12779,7 +12873,7 @@ msgstr "session_id가 필요합니다."
 msgid "Need user_id or organization_id as param"
 msgstr "user_id 또는 organization_id 매개변수가 필요합니다"
 
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:95
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:98
 #, fuzzy
 #| msgid "Negative Feedback"
 msgid "Negative feedback"
@@ -12917,7 +13011,7 @@ msgid "New Source"
 msgstr "새 소스"
 
 #: app/assets/javascripts/app/views/tag/index.jst.eco:14
-#: db/seeds/settings.rb:4179
+#: db/seeds/settings.rb:4227
 msgid "New Tags"
 msgstr "새 태그"
 
@@ -12990,7 +13084,7 @@ msgid "New password"
 msgstr "새 비밀번호"
 
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:126
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:195
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:196
 #, fuzzy
 #| msgid "New Personal Access Token"
 msgid "New personal access token"
@@ -13232,7 +13326,7 @@ msgstr "사용 가능한 매크로 없음."
 msgid "No answers"
 msgstr "답변 없음"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarAttachment/TicketSidebarAttachmentContent.vue:56
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarAttachment/TicketSidebarAttachmentContent.vue:62
 msgid "No attached files"
 msgstr "첨부 파일 없음"
 
@@ -13249,7 +13343,7 @@ msgid "No certificate found."
 msgstr "인증서를 찾을 수 없습니다."
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/start.jst.eco:3
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:435
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:440
 msgid "No checklist added to this ticket yet."
 msgstr "아직 이 티켓에 체크리스트가 추가되지 않았습니다."
 
@@ -13262,7 +13356,7 @@ msgstr "아직 체크리스트 항목이 없습니다"
 msgid "No checklist templates have been created yet."
 msgstr "아직 체크리스트 템플릿이 생성되지 않았습니다."
 
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:112
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:115
 #, fuzzy
 #| msgid "No Comment"
 msgid "No comment"
@@ -13340,15 +13434,15 @@ msgstr "사용 가능한 매크로 없음."
 msgid "No knowledge base locale configured."
 msgstr "필터가 구성되지 않았습니다."
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee:193
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee:215
 msgid "No linked issues"
 msgstr "연결된 이슈 없음"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:153
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:158
 msgid "No links added yet."
 msgstr "아직 링크가 추가되지 않았습니다."
 
-#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkTopDrawer.vue:71
+#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkTopDrawer.vue:75
 #, fuzzy
 #| msgid "Not available in selected language"
 msgid "No macros available for selected tickets"
@@ -13366,7 +13460,7 @@ msgstr "멤버를 찾을 수 없음"
 msgid "No organizations found"
 msgstr "조직을 찾을 수 없음"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:153
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:158
 #: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:158
 #, fuzzy
 #| msgid "No Overviews"
@@ -13401,10 +13495,10 @@ msgid "No results for this query."
 msgstr "이 쿼리에 대한 결과 없음."
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js:716
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:354
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:355
 #: app/frontend/apps/desktop/components/CommonSimpleEntityList/plugins/ticket.ts:8
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:70
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:490
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:491
 #: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenu.vue:90
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout/IdoitObjectList.vue:38
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:378
@@ -13509,7 +13603,7 @@ msgid "No x-zammad-session-user-id, no sender set!"
 msgstr "x-zammad-session-user-id가 없고 발신자가 설정되지 않았습니다!"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:8
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:464
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:481
 msgid "No, just close the ticket"
 msgstr "아니요, 티켓만 닫기"
 
@@ -13520,7 +13614,7 @@ msgstr "아니요, 괜찮습니다"
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee:9
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_unit.coffee:55
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:65
-#: app/graphql/gql/types/ticket_type.rb:109 db/seeds/settings.rb:1966
+#: app/graphql/gql/types/ticket_type.rb:110 db/seeds/settings.rb:1966
 msgid "None"
 msgstr "없음"
 
@@ -13575,7 +13669,7 @@ msgstr "권한 없음(기능 사용 불가)"
 msgid "Not authorized (token expired)!"
 msgstr "권한 없음(토큰 만료)!"
 
-#: app/assets/javascripts/app/controllers/knowledge_base/reader_controller.coffee:208
+#: app/assets/javascripts/app/controllers/knowledge_base/reader_controller.coffee:217
 msgid "Not available in selected language"
 msgstr "선택한 언어로 사용할 수 없음"
 
@@ -13670,7 +13764,7 @@ msgstr "알림:"
 msgid "Notification"
 msgstr "알림"
 
-#: db/seeds/settings.rb:3448
+#: db/seeds/settings.rb:3496
 msgid "Notification Sender"
 msgstr "알림 발신자"
 
@@ -13752,13 +13846,13 @@ msgstr "11월"
 msgid "Number"
 msgstr "번호"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:174
+#: app/models/ai/agent/type/ticket_tagger.rb:175
 #, fuzzy
 #| msgid "Number"
 msgid "Number of tags"
 msgstr "번호"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:178
+#: app/models/ai/agent/type/ticket_tagger.rb:179
 msgid "Number of tags the AI agent may assign."
 msgstr ""
 
@@ -13885,12 +13979,12 @@ msgstr "Ollama"
 msgid "On %s, %s wrote:"
 msgstr "%s에서 %s님이 작성:"
 
-#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:49
+#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:53
 #: db/seeds/object_manager_attributes.rb:2471
 msgid "On ticket detail opening"
 msgstr "티켓 상세 열기 시"
 
-#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:53
+#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:57
 #: db/seeds/object_manager_attributes.rb:2475
 msgid "On ticket summary sidebar activation"
 msgstr "티켓 요약 사이드바 활성화 시"
@@ -13993,7 +14087,7 @@ msgstr "열기"
 msgid "Open %s"
 msgstr "%s 열기"
 
-#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:87
+#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:101
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket_summary.coffee:5
 msgid "Open Questions"
 msgstr "열린 질문"
@@ -14038,7 +14132,7 @@ msgstr "매크로 선택 열기"
 msgid "Open note box"
 msgstr "노트 상자 열기"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummary.vue:104
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummary.vue:86
 #, fuzzy
 #| msgid "Open Questions"
 msgid "Open questions"
@@ -14085,7 +14179,7 @@ msgid "Open tickets"
 msgstr "열린 티켓"
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco:21
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:230
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:233
 msgid "Open your authenticator app and scan the QR code below:"
 msgstr "인증 앱을 열고 아래 QR 코드를 스캔하세요:"
 
@@ -14113,7 +14207,7 @@ msgstr "운영 체제"
 
 #: app/assets/javascripts/app/views/agent_ticket_view/content.jst.eco:7
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:223
-#: app/assets/javascripts/app/views/channel/form.jst.eco:60
+#: app/assets/javascripts/app/views/channel/form.jst.eco:142
 #: app/assets/javascripts/app/views/object_manager/screens.jst.eco:7
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco:42
 #: app/assets/javascripts/app/views/settings/ticket_number_date.jst.eco:2
@@ -14164,7 +14258,7 @@ msgstr "개요 순서"
 msgid "Order of overviews"
 msgstr "개요 순서"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:130
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:135
 msgid "Order of ticket overviews"
 msgstr "티켓 개요 순서"
 
@@ -14190,10 +14284,10 @@ msgstr "티켓 개요 순서"
 #: app/controllers/time_accountings_controller.rb:93
 #: app/frontend/apps/desktop/components/Search/plugins/organization.ts:14
 #: app/frontend/apps/desktop/components/Ticket/TicketPopoverWithTrigger/TicketPopover.vue:97
-#: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailTopBar.vue:34
+#: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailTopBar.vue:35
 #: app/frontend/apps/desktop/pages/organization/routes.ts:9
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/organization.ts:13
-#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:78
+#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:79
 #: app/frontend/apps/mobile/pages/organization/routes.ts:8
 #: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue:30
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/plugins/organization.ts:6
@@ -14239,7 +14333,7 @@ msgstr "조직 이름"
 msgid "Organization support"
 msgstr "조직 지원"
 
-#: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailViewContent.vue:171
+#: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailViewContent.vue:176
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:79
 msgid "Organization tickets"
 msgstr "조직 티켓"
@@ -14418,7 +14512,7 @@ msgstr "개요: %s"
 #: app/assets/javascripts/app/controllers/overview.coffee:3
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee:258
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/ticketOverviews.ts:6
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:32
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:33
 #: app/frontend/apps/desktop/pages/ticket-overviews/routes.ts:17
 #: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:94
 #: db/seeds/permissions.rb:35
@@ -14471,17 +14565,23 @@ msgstr ""
 msgid "PGP"
 msgstr "PGP"
 
-#: db/seeds/settings.rb:5774
+#: db/seeds/settings.rb:5878
 msgid "PGP Recipient Alias Configuration"
 msgstr "PGP 수신자 별칭 구성"
 
-#: db/seeds/settings.rb:5760
+#: db/seeds/settings.rb:5836
 msgid "PGP config"
 msgstr "PGP 구성"
 
-#: db/seeds/settings.rb:5732
+#: db/seeds/settings.rb:5808
 msgid "PGP integration"
 msgstr "PGP 통합"
+
+#: db/seeds/settings.rb:5850
+#, fuzzy
+#| msgid "Unread notifications"
+msgid "PGP signing for system notifications"
+msgstr "읽지 않은 알림"
 
 #: db/seeds/settings.rb:2092
 msgid "PKCE"
@@ -14645,7 +14745,7 @@ msgstr "클립보드에서 붙여넣기(일반 텍스트)"
 msgid "Paste in CSV data"
 msgstr "CSV 데이터 붙여넣기"
 
-#: app/assets/javascripts/app/controllers/_integration/pgp.coffee:106
+#: app/assets/javascripts/app/controllers/_integration/pgp.coffee:111
 msgid "Paste key"
 msgstr "키 붙여넣기"
 
@@ -14703,7 +14803,7 @@ msgstr "티켓 조회 권한 수준"
 #: app/assets/javascripts/app/models/role.coffee:7
 #: app/assets/javascripts/app/views/object_manager/screens.jst.eco:5
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:17
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:88
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:89
 msgid "Permissions"
 msgstr "권한"
 
@@ -14715,11 +14815,11 @@ msgstr "개인 액세스 토큰"
 msgid "Personal Settings"
 msgstr "개인 설정"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:132
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:133
 msgid "Personal access token has been deleted."
 msgstr "개인 액세스 토큰이 삭제되었습니다."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:206
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:211
 #, fuzzy
 #| msgid "Personal Access Tokens"
 msgid "Personal access tokens"
@@ -14758,7 +14858,7 @@ msgid "Phone number is already in use by another WhatsApp account."
 msgstr "전화번호가 다른 WhatsApp 계정에서 이미 사용 중입니다."
 
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:7
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:172
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:173
 msgid "Pick a name for the application, and we'll give you a unique token."
 msgstr "애플리케이션 이름을 선택하시면 고유한 토큰을 제공해드립니다."
 
@@ -14786,15 +14886,15 @@ msgstr "AI 생성 텍스트 자리표시자"
 msgid "Placetel"
 msgstr "Placetel"
 
-#: db/seeds/settings.rb:5345
+#: db/seeds/settings.rb:5393
 msgid "Placetel Token"
 msgstr "Placetel 토큰"
 
-#: db/seeds/settings.rb:5331
+#: db/seeds/settings.rb:5379
 msgid "Placetel config"
 msgstr "Placetel 구성"
 
-#: db/seeds/settings.rb:5303
+#: db/seeds/settings.rb:5351
 msgid "Placetel integration"
 msgstr "Placetel 통합"
 
@@ -14979,7 +15079,7 @@ msgstr "스니펫을 생성하기 전에 사용자 지정 주소를 제출하세
 msgid "Please use the provided URL."
 msgstr "제공된 URL을 사용하세요."
 
-#: app/frontend/apps/desktop/components/CommonSkeleton/CommonSkeleton.vue:30
+#: app/frontend/apps/desktop/components/CommonSkeleton/CommonSkeleton.vue:31
 msgid "Please wait until content is loaded"
 msgstr "콘텐츠가 로드될 때까지 기다려주세요"
 
@@ -15006,7 +15106,7 @@ msgstr "포트"
 msgid "Position"
 msgstr "위치"
 
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:88
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:91
 #, fuzzy
 #| msgid "Positive Feedback"
 msgid "Positive feedback"
@@ -15036,7 +15136,7 @@ msgstr "Postmaster 필터"
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco:22
 #: app/assets/javascripts/app/views/signup.jst.eco:23
 #: app/assets/javascripts/app/views/signup/verify.jst.eco:26
-#: app/frontend/apps/desktop/components/layout/LayoutPublicPage/LayoutPublicPage.vue:68
+#: app/frontend/apps/desktop/components/layout/LayoutPublicPage/LayoutPublicPage.vue:72
 #: app/frontend/apps/mobile/pages/authentication/components/LoginFooter.vue:22
 msgid "Powered by"
 msgstr "Powered by"
@@ -15055,7 +15155,7 @@ msgid "Prefer color scheme as indicated by the operating system."
 msgstr "운영 체제에서 표시한 색 구성표를 선호합니다."
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco:34
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:294
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:297
 msgid "Press the button below to finish the setup."
 msgstr "설정을 완료하려면 아래 버튼을 누르세요."
 
@@ -15063,7 +15163,7 @@ msgstr "설정을 완료하려면 아래 버튼을 누르세요."
 msgid "Pretty Date"
 msgstr "예쁜 날짜"
 
-#: app/assets/javascripts/app/controllers/_integration/pgp.coffee:292
+#: app/assets/javascripts/app/controllers/_integration/pgp.coffee:297
 msgid ""
 "Pretty Good Privacy (PGP) enables you to send digitally signed and encrypted "
 "messages."
@@ -15082,7 +15182,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:845
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:20
-#: app/assets/javascripts/app/views/channel/form.jst.eco:135
+#: app/assets/javascripts/app/views/channel/form.jst.eco:217
 #: app/assets/javascripts/app/views/generic/application_selector.jst.eco:15
 #: app/assets/javascripts/app/views/generic/attachments.jst.eco:31
 #: app/assets/javascripts/app/views/profile/imageCropper.jst.eco:5
@@ -15100,7 +15200,7 @@ msgstr "%s 미리보기"
 msgid "Preview Width"
 msgstr "미리보기 너비"
 
-#: app/frontend/apps/desktop/components/CommonCalendarPreviewFlyout/CommonCalendarPreviewFlyout.vue:85
+#: app/frontend/apps/desktop/components/CommonCalendarPreviewFlyout/CommonCalendarPreviewFlyout.vue:87
 #, fuzzy
 #| msgid "Preview Calendar"
 msgid "Preview calendar"
@@ -15171,7 +15271,7 @@ msgstr "우선순위"
 msgid "Priority"
 msgstr "우선순위"
 
-#: app/frontend/apps/desktop/components/Ticket/TicketListTable.vue:105
+#: app/frontend/apps/desktop/components/Ticket/TicketListTable.vue:112
 #, fuzzy
 #| msgid "Priority Icon"
 msgid "Priority icon"
@@ -15245,6 +15345,10 @@ msgstr "프로필 설정"
 msgid "Profiles"
 msgstr "프로필"
 
+#: app/assets/javascripts/app/views/channel/form.jst.eco:78
+msgid "Project ID"
+msgstr ""
+
 #: db/seeds/settings.rb:2102
 msgid ""
 "Proof Key for Code Exchange is currently only supporting SHA256 as code "
@@ -15256,24 +15360,24 @@ msgstr ""
 msgid "Protocol"
 msgstr "프로토콜"
 
-#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:82
+#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:96
 msgid ""
 "Provide a summary of the conversation between customer and support agent."
 msgstr "고객과 지원 에이전트 간의 대화 요약을 제공합니다."
 
-#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:75
+#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:89
 msgid "Provide a summary of the problem the customer needs to get resolved."
 msgstr "고객이 해결해야 할 문제의 요약을 제공합니다."
 
-#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:89
+#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:103
 msgid "Provide a summary of the questions raised in the conversation."
 msgstr "대화에서 제기된 질문의 요약을 제공합니다."
 
-#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:95
+#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:109
 msgid "Provide a summary of the upcoming events based on the conversation."
 msgstr "대화를 기반으로 예정된 이벤트의 요약을 제공합니다."
 
-#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:101
+#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:115
 msgid ""
 "Provide an assessment of the customer sentiment based on the conversation."
 msgstr "대화를 기반으로 고객 감정 평가를 제공합니다."
@@ -15371,7 +15475,7 @@ msgstr ""
 "로그인 페이지에 메시지를 넣습니다. 변경하려면 아래 텍스트 영역을 클릭하고 인"
 "라인으로 변경하세요."
 
-#: db/seeds/settings.rb:3740
+#: db/seeds/settings.rb:3788
 msgid "Puts Zammad into import mode (disables some triggers)."
 msgstr "Zammad를 가져오기 모드로 전환합니다(일부 트리거 비활성화)."
 
@@ -15459,7 +15563,7 @@ msgstr "최근 고객 티켓"
 msgid "Recent Logs"
 msgstr "최근 로그"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketRelationAndRecentLists/TicketRelationAndRecentLists.vue:56
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketRelationAndRecentLists/TicketRelationAndRecentLists.vue:61
 #, fuzzy
 #| msgid "Recent Customer Tickets"
 msgid "Recent customer tickets"
@@ -15495,7 +15599,7 @@ msgstr "최근에 닫힌 항목이 성공적으로 지워졌습니다."
 msgid "Recently viewed"
 msgstr "최근에 본"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketRelationAndRecentLists/TicketRelationAndRecentLists.vue:64
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketRelationAndRecentLists/TicketRelationAndRecentLists.vue:69
 #, fuzzy
 #| msgid "Recently Viewed Tickets"
 msgid "Recently viewed tickets"
@@ -15545,6 +15649,10 @@ msgstr ""
 msgid "Recursive Ticket Triggers"
 msgstr "재귀 티켓 트리거"
 
+#: db/seeds/settings.rb:6327
+msgid "Recursive hierarchical chunking"
+msgstr ""
+
 #: app/frontend/apps/desktop/pages/authentication/after-auth/plugins/doorkeeperReturnTo.ts:11
 #: app/frontend/apps/desktop/pages/authentication/components/AfterAuth/DoorkeeperReturnTo.vue:18
 #: app/frontend/apps/mobile/pages/authentication/after-auth/plugins/doorkeeperReturnTo.ts:11
@@ -15556,12 +15664,12 @@ msgstr ""
 msgid "Redis version"
 msgstr "Redis 버전"
 
-#: db/seeds/settings.rb:3350
+#: db/seeds/settings.rb:3398
 msgid ""
 "References - Search for follow-up also in In-Reply-To or References headers."
 msgstr "참조 - In-Reply-To 또는 References 헤더에서도 후속 작업을 검색합니다."
 
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:128
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:131
 msgid "Regenerate"
 msgstr "재생성"
 
@@ -15620,7 +15728,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/link/ticket/list.jst.eco:1
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:129
-#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:157
+#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:162
 #, fuzzy
 #| msgid "Create ticket"
 msgid "Related tickets"
@@ -15729,7 +15837,7 @@ msgid "Remove authenticator app"
 msgstr "인증 앱 제거"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:38
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:379
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:380
 msgid "Remove checklist"
 msgstr "체크리스트 제거"
 
@@ -15822,7 +15930,7 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:33
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:372
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:373
 msgid "Rename checklist"
 msgstr "체크리스트 이름 변경"
 
@@ -15958,11 +16066,11 @@ msgid "Required parameter 'profile' is missing."
 msgstr "필수 매개변수 'profile'이 누락되었습니다."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:178
-#: app/assets/javascripts/app/views/channel/form.jst.eco:147
+#: app/assets/javascripts/app/views/channel/form.jst.eco:229
 msgid "Requirements"
 msgstr "요구사항"
 
-#: db/seeds/settings.rb:5961
+#: db/seeds/settings.rb:6065
 msgid ""
 "Requires the setup of the two-factor authentication for certain user roles."
 msgstr "특정 사용자 역할에 대해 이중 인증 설정이 필요합니다."
@@ -15976,6 +16084,7 @@ msgid "Resend verification email"
 msgstr "확인 이메일 다시 보내기"
 
 #: app/assets/javascripts/app/controllers/translation.coffee:99
+#: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:48
 #: app/assets/javascripts/app/views/monitoring.jst.eco:22
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco:18
 #: app/assets/javascripts/app/views/settings/ticket_duplicate_detection.jst.eco:15
@@ -16000,7 +16109,7 @@ msgid "Reset feedback"
 msgstr "부정적 피드백"
 
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee:35
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:146
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:151
 msgid "Reset overview order"
 msgstr "개요 순서 재설정"
 
@@ -16113,7 +16222,7 @@ msgstr ""
 "<br>\n"
 "<div>#{config.product_name} 팀</div>\n"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:92
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:93
 msgid "Resetting the order of your ticket overviews failed."
 msgstr "티켓 개요 순서 재설정에 실패했습니다."
 
@@ -16129,7 +16238,7 @@ msgstr "열 크기 조정"
 msgid "Resize frame"
 msgstr "프레임 크기 조정"
 
-#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:400
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:396
 msgid "Resize side panel"
 msgstr "사이드 패널 크기 조정"
 
@@ -16165,7 +16274,7 @@ msgstr "결과 구조"
 msgid "Result:"
 msgstr "결과:"
 
-#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:613
+#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:615
 msgid "Results"
 msgstr "결과"
 
@@ -16200,7 +16309,7 @@ msgstr "WhatsApp를 통해 전송된 미디어 다운로드 재시도에 실패�
 msgid "Rewrite complex section and make it easy to understand"
 msgstr "복잡한 섹션을 다시 작성하여 이해하기 쉽게 만들기"
 
-#: db/seeds/settings.rb:6184
+#: db/seeds/settings.rb:6338
 msgid "Richtext Bubble Menu"
 msgstr "리치텍스트 버블 메뉴"
 
@@ -16259,7 +16368,7 @@ msgid "Run every %s at %s in %s time"
 msgstr "%s마다 %s에 %s 시간으로 실행"
 
 #: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkConfirmation.vue:67
-#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkTopDrawer.vue:49
+#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkTopDrawer.vue:53
 #, fuzzy
 #| msgid "run macro"
 msgid "Run macro"
@@ -16294,17 +16403,21 @@ msgstr ""
 "S/MIME(Secure/Multipurpose Internet Mail Extensions)은 디지털 서명 및 암호화"
 "된 메시지를 보내기 위해 널리 사용되는 방법(또는 더 정확히는 프로토콜)입니다."
 
-#: db/seeds/settings.rb:5718
+#: db/seeds/settings.rb:5766
 msgid "S/MIME config"
 msgstr "S/MIME 구성"
 
-#: app/assets/javascripts/app/controllers/_integration/smime.coffee:253
+#: app/assets/javascripts/app/controllers/_integration/smime.coffee:258
 msgid "S/MIME enables you to send digitally signed and encrypted messages."
 msgstr "S/MIME을 사용하면 디지털 서명 및 암호화된 메시지를 보낼 수 있습니다."
 
-#: db/seeds/settings.rb:5690
+#: db/seeds/settings.rb:5738
 msgid "S/MIME integration"
 msgstr "S/MIME 통합"
+
+#: db/seeds/settings.rb:5780
+msgid "S/MIME signing for system notifications"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:106
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:94
@@ -16402,11 +16515,11 @@ msgstr "SSL/STARTTLS"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:111
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:101
-#: db/seeds/settings.rb:5806
+#: db/seeds/settings.rb:5910
 msgid "SSO"
 msgstr "SSO"
 
-#: app/controllers/sessions_controller.rb:262
+#: app/controllers/sessions_controller.rb:264
 msgid "SSO request from untrusted IP address."
 msgstr ""
 
@@ -16430,6 +16543,7 @@ msgstr "토요일"
 
 #: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:215
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee:155
+#: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:47
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco:73
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:133
 #: app/assets/javascripts/app/views/integration/github.jst.eco:21
@@ -16522,7 +16636,7 @@ msgstr "저장된 조건"
 #: app/assets/javascripts/app/controllers/_integration/github.coffee:63
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee:80
 #: app/assets/javascripts/app/controllers/_integration/idoit.coffee:93
-#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:1209
+#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:1213
 msgid "Saving failed."
 msgstr "저장에 실패했습니다."
 
@@ -16588,19 +16702,19 @@ msgid "Scroll to end"
 msgstr "아래로 스크롤"
 
 #: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/components/BulkScrollButton.vue:24
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/FloatingToolbar.vue:68
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/FloatingToolbar.vue:89
 #, fuzzy
 #| msgid "Scroll down"
 msgid "Scroll to start"
 msgstr "아래로 스크롤"
 
-#: app/frontend/apps/desktop/components/CommonTabs/TabsScrollList.vue:264
+#: app/frontend/apps/desktop/components/CommonTabs/TabsScrollList.vue:267
 #, fuzzy
 #| msgid "Scroll down"
 msgid "Scroll towards end"
 msgstr "아래로 스크롤"
 
-#: app/frontend/apps/desktop/components/CommonTabs/TabsScrollList.vue:213
+#: app/frontend/apps/desktop/components/CommonTabs/TabsScrollList.vue:216
 #, fuzzy
 #| msgid "Scroll down"
 msgid "Scroll towards start"
@@ -16612,7 +16726,7 @@ msgstr "아래로 스크롤"
 #: app/assets/javascripts/app/views/integration/idoit_object_selector.jst.eco:3
 #: app/assets/javascripts/app/views/knowledge_base/search_field_widget.jst.eco:1
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco:4
-#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:611
+#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:613
 #: app/frontend/apps/mobile/pages/search/routes.ts:8
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue:220
 msgid "Search"
@@ -16636,7 +16750,7 @@ msgstr "검색 URL이 누락되었습니다."
 msgid "Search URL is unsafe."
 msgstr "검색 URL이 유효하지 않습니다."
 
-#: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailViewContent.vue:152
+#: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailViewContent.vue:157
 #: app/frontend/apps/desktop/pages/organization/components/OrganizationRelatedTickets/OrganizationTicketList.vue:94
 #: app/frontend/apps/desktop/pages/user/components/UserRelatedCustomerTickets/CustomerTicketList.vue:100
 #, fuzzy
@@ -16750,7 +16864,7 @@ msgstr "검색하거나 이메일 주소 입력…"
 msgid "Search or enter phone number…"
 msgstr "검색하거나 전화번호 입력…"
 
-#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:665
+#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:667
 #, fuzzy
 #| msgid "Search result list"
 msgid "Search result for: %s"
@@ -16835,9 +16949,9 @@ msgstr "검색 결과 값 키 \"%s\"을(를) 찾을 수 없습니다."
 msgid "Search…"
 msgstr "검색…"
 
-#: app/frontend/apps/desktop/components/User/UserPopoverWithTrigger/UserPopover.vue:75
+#: app/frontend/apps/desktop/components/User/UserPopoverWithTrigger/UserPopover.vue:80
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:112
-#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:126
+#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:131
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue:94
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:133
 #: db/seeds/object_manager_attributes.rb:1187
@@ -16853,6 +16967,12 @@ msgstr "보조 조직은 주 조직이 지정된 경우에만 허용됩니다."
 #: app/models/user.rb:688
 msgid "Secondary organizations cannot include the primary organization."
 msgstr "보조 조직에는 주 조직을 포함할 수 없습니다."
+
+#: app/assets/javascripts/app/views/channel/form.jst.eco:67
+#, fuzzy
+#| msgid "App Secret"
+msgid "Secret"
+msgstr "앱 시크릿"
 
 #: app/assets/javascripts/app/controllers/_manage/security.coffee:3
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco:34
@@ -16887,11 +17007,11 @@ msgstr "보안 키"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee:4
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/security_keys.coffee:5
-#: db/seeds/settings.rb:5867
+#: db/seeds/settings.rb:5971
 msgid "Security Keys"
 msgstr "보안 키"
 
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:286
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:289
 #: app/frontend/apps/desktop/pages/authentication/components/LoginTwoFactor.vue:46
 #: app/frontend/apps/mobile/pages/authentication/components/LoginTwoFactor.vue:53
 #, fuzzy
@@ -16987,13 +17107,13 @@ msgid ""
 "subscription URL to your calendar app."
 msgstr "캘린더 앱에 구독 URL을 추가하여 즐겨찾는 캘린더에서 티켓을 확인하세요."
 
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:300
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:304
 #, fuzzy
 #| msgid "Selector"
 msgid "Select"
 msgstr "선택자"
 
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:413
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:417
 #, fuzzy
 #| msgid "Select all entries"
 msgid "Select %s result(s)"
@@ -17016,7 +17136,7 @@ msgstr "공유 초안 선택"
 msgid "Select Template"
 msgstr "템플릿 선택"
 
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:414
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:418
 #, fuzzy
 #| msgid "Select all entries"
 msgid "Select all %s results"
@@ -17071,7 +17191,7 @@ msgstr "AI 에이전트에 의해 값이 자동으로 설정될 속성을 선택
 msgid "Select the type of ticket your are creating"
 msgstr "생성할 티켓 유형 선택"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:310
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:315
 msgid "Select this avatar"
 msgstr "이 아바타 선택"
 
@@ -17134,8 +17254,8 @@ msgstr ""
 msgid "Selects the ticket number generator module."
 msgstr "티켓 번호 생성기 모듈을 선택합니다."
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:477
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:454
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:478
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:455
 #: app/frontend/apps/mobile/components/CommonSelect/CommonSelect.vue:197
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:287
 #: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue:171
@@ -17207,11 +17327,11 @@ msgid ""
 "hour window is about to expire."
 msgstr "24시간 창이 만료되기 전에 고객에게 자동 알림을 보내 답변을 요청합니다."
 
-#: db/seeds/settings.rb:3421
+#: db/seeds/settings.rb:3469
 msgid "Send postmaster mail if mail too large"
 msgstr "메일이 너무 크면 postmaster 메일 보내기"
 
-#: db/seeds/settings.rb:3424
+#: db/seeds/settings.rb:3472
 msgid "Send postmaster reject mail to sender of mail if mail is too large."
 msgstr "메일이 너무 크면 메일 발신자에게 postmaster 거부 메일 보내기."
 
@@ -17223,16 +17343,16 @@ msgstr "클라이언트에게 보내기"
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:51
 #: app/models/channel/driver/sms/massenversand.rb:45
 #: app/models/channel/driver/sms/message_bird.rb:92
-#: app/models/channel/driver/sms/twilio.rb:106 db/seeds/settings.rb:3238
+#: app/models/channel/driver/sms/twilio.rb:106 db/seeds/settings.rb:3286
 #: lib/excel_sheet/ticket.rb:32
 msgid "Sender"
 msgstr "발신자"
 
-#: db/seeds/settings.rb:3238
+#: db/seeds/settings.rb:3286
 msgid "Sender Format"
 msgstr "발신자 형식"
 
-#: db/seeds/settings.rb:3266
+#: db/seeds/settings.rb:3314
 msgid "Sender Format Separator"
 msgstr "발신자 형식 구분자"
 
@@ -17241,7 +17361,7 @@ msgstr "발신자 형식 구분자"
 msgid "Sender Type"
 msgstr "발신자 유형"
 
-#: db/seeds/settings.rb:3367
+#: db/seeds/settings.rb:3415
 msgid "Sender based on Reply-To header"
 msgstr "Reply-To 헤더 기반 발신자"
 
@@ -17271,6 +17391,10 @@ msgstr "전송 중…"
 msgid "Sent successfully!"
 msgstr "성공적으로 전송되었습니다!"
 
+#: db/seeds/settings.rb:6328
+msgid "Sentence-based chunking"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
 #: app/assets/javascripts/app/controllers/report.coffee:221
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
@@ -17285,14 +17409,14 @@ msgstr "여러 값을 ;로 구분"
 msgid "September"
 msgstr "9월"
 
-#: db/seeds/settings.rb:4027
+#: db/seeds/settings.rb:4075
 msgid "Sequencer log level"
 msgstr "시퀀서 로그 수준"
 
 #: app/assets/javascripts/app/controllers/_integration/exchange.coffee:409
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:499
-#: app/assets/javascripts/app/controllers/_integration/pgp.coffee:252
-#: app/assets/javascripts/app/controllers/_integration/smime.coffee:215
+#: app/assets/javascripts/app/controllers/_integration/pgp.coffee:257
+#: app/assets/javascripts/app/controllers/_integration/smime.coffee:220
 #: app/assets/javascripts/app/controllers/ssl_certificate.coffee:78
 msgid "Server operation failed."
 msgstr "서버 작업에 실패했습니다."
@@ -17340,7 +17464,7 @@ msgstr "설정"
 msgid "Set a title for your ticket"
 msgstr "티켓 제목 설정"
 
-#: db/seeds/settings.rb:5433
+#: db/seeds/settings.rb:5481
 msgid "Set agent limit"
 msgstr "에이전트 제한 설정"
 
@@ -17366,7 +17490,7 @@ msgstr "인증 앱을 기본값으로 설정"
 msgid "Set available ticket types"
 msgstr "사용 가능한 티켓 유형 설정"
 
-#: db/seeds/settings.rb:3762
+#: db/seeds/settings.rb:3810
 msgid "Set backend which is being used for import."
 msgstr "가져오기에 사용할 백엔드 설정."
 
@@ -17401,7 +17525,7 @@ msgstr "발신 발신자 ID 설정"
 msgid "Set security keys as default"
 msgstr "보안 키를 기본값으로 설정"
 
-#: db/seeds/settings.rb:5595
+#: db/seeds/settings.rb:5643
 #, fuzzy
 #| msgid ""
 #| "Set timeframe in seconds. If it's set to 0 you can delete notes without "
@@ -17421,7 +17545,7 @@ msgstr "내부로 설정"
 msgid "Set to public"
 msgstr "공개로 설정"
 
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:159
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:160
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:60
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:151
 msgid "Set up"
@@ -17457,7 +17581,7 @@ msgstr "이중 인증 설정"
 msgid "Set up two-factor authentication: %s"
 msgstr "이중 인증 설정"
 
-#: db/seeds/settings.rb:3370
+#: db/seeds/settings.rb:3418
 msgid ""
 "Set/overwrite sender/from of email based on \"Reply-To\" header. Useful to "
 "set correct customer if email is received from a third-party system on "
@@ -17606,7 +17730,7 @@ msgstr "모두 보기…"
 msgid "Show authenticator app secret"
 msgstr "인증 앱 비밀번호 표시"
 
-#: db/seeds/settings.rb:5839
+#: db/seeds/settings.rb:5943
 msgid "Show calendar weeks in the picker of date/datetime fields"
 msgstr "날짜/날짜시간 필드 선택기에서 캘린더 주 표시"
 
@@ -17694,11 +17818,11 @@ msgid "Show ticket viewers"
 msgstr "티켓 조회자 표시"
 
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco:6
-#: db/seeds/settings.rb:4092
+#: db/seeds/settings.rb:4140
 msgid "Show time accounting dialog when updating matching tickets."
 msgstr "일치하는 티켓 업데이트 시 시간 회계 대화상자 표시."
 
-#: app/assets/javascripts/app/views/channel/form.jst.eco:82
+#: app/assets/javascripts/app/views/channel/form.jst.eco:164
 msgid "Show title in form."
 msgstr "양식에 제목 표시."
 
@@ -17724,7 +17848,7 @@ msgstr "발신자 로그에 표시된 레코드."
 msgid "Shown when the chat is closed."
 msgstr "채팅이 닫힐 때 표시."
 
-#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:379
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:374
 msgid "Side panel footer"
 msgstr "사이드 패널 푸터"
 
@@ -17740,6 +17864,11 @@ msgstr "사이드바 첨부 파일"
 #: app/frontend/apps/mobile/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:41
 msgid "Sign"
 msgstr "서명"
+
+#: app/assets/javascripts/app/views/integration/pgp.jst.eco:18
+#: app/assets/javascripts/app/views/integration/smime.jst.eco:19
+msgid "Sign built-in system notification emails if possible."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:644
 msgid "Sign email (if not possible, discard notification)"
@@ -17781,6 +17910,13 @@ msgstr "다음을 사용하여 로그인"
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:179
 msgid "Sign out"
 msgstr "로그아웃"
+
+#: app/assets/javascripts/app/views/integration/pgp.jst.eco:16
+#: app/assets/javascripts/app/views/integration/smime.jst.eco:17
+#, fuzzy
+#| msgid "Signature verification failed! %s"
+msgid "Sign system notification emails"
+msgstr "서명 확인에 실패했습니다! %s"
 
 #: app/assets/javascripts/app/controllers/signup.coffee:18
 #: app/frontend/apps/desktop/pages/authentication/routes.ts:98
@@ -17898,6 +18034,12 @@ msgstr "Sipgate"
 msgid "Site"
 msgstr "사이트"
 
+#: app/assets/javascripts/app/views/channel/form.jst.eco:56
+#, fuzzy
+#| msgid "Paste key"
+msgid "Site key"
+msgstr "키 붙여넣기"
+
 #: app/assets/javascripts/app/controllers/_channel/email_archive.coffee:9
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:10
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco:127
@@ -17959,13 +18101,13 @@ msgstr "죄송합니다. 모든 필드가 올바르게 입력되지 않았습니
 msgid "Sorry, there is currently no CTI backend enabled."
 msgstr "죄송합니다. 현재 활성화된 CTI 백엔드가 없습니다."
 
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:273
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:277
 #, fuzzy
 #| msgid "Sorted ascending"
 msgid "Sort by %s ascending"
 msgstr "오름차순 정렬"
 
-#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:277
+#: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:281
 #, fuzzy
 #| msgid "Sorted descending"
 msgid "Sort by %s descending"
@@ -18008,6 +18150,12 @@ msgstr "소스"
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:24
 msgid "Sources"
 msgstr "소스"
+
+#: app/assets/javascripts/app/views/channel/form.jst.eco:25
+#, fuzzy
+#| msgid "Save Notifications"
+msgid "Spam protection"
+msgstr "알림 저장"
 
 #: db/seeds/settings.rb:2213
 msgid "Special character required"
@@ -18069,7 +18217,7 @@ msgstr "%s에서 가져오기 시작"
 msgid "Start import from source"
 msgstr "소스에서 가져오기 시작"
 
-#: app/assets/javascripts/app/views/channel/form.jst.eco:92
+#: app/assets/javascripts/app/views/channel/form.jst.eco:174
 msgid "Start modal dialog for form."
 msgstr "양식 모달 대화상자 시작"
 
@@ -18135,7 +18283,7 @@ msgstr "검색하거나 전화번호를 입력하려면 입력을 시작하세�
 msgid "Start typing to search or enter an email address…"
 msgstr "검색하거나 이메일 주소를 입력하려면 입력을 시작하세요…"
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:64
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:65
 #: app/frontend/apps/desktop/components/Form/fields/FieldCustomer/FieldCustomerWrapper.vue:116
 #: app/frontend/apps/desktop/components/Form/fields/FieldTags/FieldTagsWrapper.vue:37
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:385
@@ -18175,13 +18323,13 @@ msgstr "가져오기 시작 중…"
 msgid "State"
 msgstr "상태"
 
-#: app/frontend/apps/desktop/components/Ticket/TicketListTable.vue:121
+#: app/frontend/apps/desktop/components/Ticket/TicketListTable.vue:128
 #, fuzzy
 #| msgid "State Icon"
 msgid "State icon"
 msgstr "상태 아이콘"
 
-#: db/seeds/settings.rb:5467
+#: db/seeds/settings.rb:5515
 msgid "Stats Backend"
 msgstr "통계 백엔드"
 
@@ -18189,7 +18337,7 @@ msgstr "통계 백엔드"
 #: app/assets/javascripts/app/views/integration/idoit_object_result.jst.eco:10
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco:14
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout/IdoitObjectList.vue:24
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:210
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:215
 msgid "Status"
 msgstr "상태"
 
@@ -18257,19 +18405,25 @@ msgstr "저장 방법"
 msgid "Store"
 msgstr "저장소"
 
-#: db/seeds/settings.rb:6096
+#: db/seeds/settings.rb:6200
 msgid "Stores the AI provider configuration."
 msgstr "AI 제공자 구성을 저장합니다."
 
-#: db/seeds/settings.rb:5106
+#: db/seeds/settings.rb:5154
 msgid "Stores the GitHub configuration."
 msgstr "GitHub 구성을 저장합니다."
 
-#: db/seeds/settings.rb:5064
+#: db/seeds/settings.rb:5112
 msgid "Stores the GitLab configuration."
 msgstr "GitLab 구성을 저장합니다."
 
-#: db/seeds/settings.rb:6126
+#: db/seeds/settings.rb:3203
+msgid ""
+"Stores the credentials (e.g. site key and secret) of the selected CAPTCHA "
+"provider."
+msgstr ""
+
+#: db/seeds/settings.rb:6230
 msgid ""
 "Stores the ticket summarization options (e.g. which content is visible)."
 msgstr "티켓 요약 옵션을 저장합니다(예: 표시되는 콘텐츠)."
@@ -18293,7 +18447,7 @@ msgstr "거리"
 msgid "Subject"
 msgstr "제목"
 
-#: db/seeds/settings.rb:3353
+#: db/seeds/settings.rb:3401
 msgid ""
 "Subject & References - Additional search for same article subject and same "
 "message ID in references header if no follow-up was recognized using default "
@@ -18308,7 +18462,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/widget/button_with_dropdown.coffee:12
 #: app/assets/javascripts/app/views/admin_password_auth/request.jst.eco:9
 #: app/assets/javascripts/app/views/beta_ui.jst.eco:20
-#: app/assets/javascripts/app/views/channel/form.jst.eco:42
+#: app/assets/javascripts/app/views/channel/form.jst.eco:124
 #: app/assets/javascripts/app/views/knowledge_base/vertical_form.jst.eco:6
 #: app/assets/javascripts/app/views/password/reset.jst.eco:9
 #: app/assets/javascripts/app/views/password/reset_change.jst.eco:9
@@ -18335,7 +18489,7 @@ msgstr "제출"
 msgid "Submit Comment"
 msgstr "댓글 제출"
 
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:115
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:118
 #, fuzzy
 #| msgid "Submit Comment"
 msgid "Submit comment"
@@ -18394,9 +18548,15 @@ msgstr "최근 검색"
 msgid "Summarize section to about half its current size"
 msgstr "섹션을 현재 크기의 약 절반으로 요약"
 
-#: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:42
+#: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:53
 #: db/seeds/object_manager_attributes.rb:2461
 msgid "Summary Generation"
+msgstr "요약 생성"
+
+#: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:42
+#, fuzzy
+#| msgid "Summary Generation"
+msgid "Summary Selector"
 msgstr "요약 생성"
 
 #: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:22
@@ -18423,7 +18583,7 @@ msgstr "일"
 msgid "Sunday"
 msgstr "일요일"
 
-#: db/seeds/settings.rb:5554
+#: db/seeds/settings.rb:5602
 msgid "Support of multilingual Knowledge Base."
 msgstr "다국어 지식 베이스 지원"
 
@@ -18461,13 +18621,20 @@ msgstr "컴퓨터와 동기화"
 msgid "System"
 msgstr "시스템"
 
-#: db/seeds/settings.rb:3250
+#: db/seeds/settings.rb:3298
 msgid "System Address Display Name"
 msgstr "시스템 주소 표시 이름"
 
 #: db/seeds/settings.rb:17
 msgid "System Init Done"
 msgstr "시스템 초기화 완료"
+
+#: app/assets/javascripts/app/views/integration/pgp.jst.eco:9
+#: app/assets/javascripts/app/views/integration/smime.jst.eco:10
+#, fuzzy
+#| msgid "Host Notification"
+msgid "System Notifications"
+msgstr "호스트 알림"
 
 #: app/assets/javascripts/app/controllers/system_report.coffee:3
 #: app/assets/javascripts/app/views/system_report.jst.eco:2
@@ -18509,7 +18676,7 @@ msgstr ""
 "시스템 번역은 공개 플랫폼 %l에서 커뮤니티와 기여하고 공유할 수 있습니다. "
 "Weblate 기반의 편리한 사용자 인터페이스를 제공하니 한번 사용해보세요!"
 
-#: db/seeds/settings.rb:5627
+#: db/seeds/settings.rb:5675
 msgid ""
 "System-wide configuration of the query polling mechanism for ticket "
 "overviews."
@@ -18533,7 +18700,7 @@ msgstr "탭이 변경되었습니다. 정말 닫으시겠습니까?"
 msgid "Table options"
 msgstr "옵션 추가"
 
-#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:257
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:261
 msgid "Tabs"
 msgstr "탭"
 
@@ -18551,7 +18718,7 @@ msgstr "태그 \"%s\"이(가) 이미 존재합니다."
 msgid "Tag assignment mode"
 msgstr "지정 시간 초과"
 
-#: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee:38
+#: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee:37
 #, fuzzy
 #| msgid "created %s"
 msgid "Tagged %s"
@@ -18574,7 +18741,7 @@ msgstr "%s 생성됨"
 msgid "Tags"
 msgstr "태그"
 
-#: db/seeds/settings.rb:3381
+#: db/seeds/settings.rb:3429
 msgid ""
 "Take Reply-To header as sender/from of email and use the real name of origin "
 "from."
@@ -18582,7 +18749,7 @@ msgstr ""
 "Reply-To 헤더를 이메일의 발신자/보낸 사람으로 사용하고 원본의 실제 이름을 사"
 "용합니다."
 
-#: db/seeds/settings.rb:3380
+#: db/seeds/settings.rb:3428
 msgid "Take Reply-To header as sender/from of email."
 msgstr "Reply-To 헤더를 이메일의 발신자/보낸 사람으로 사용합니다."
 
@@ -18758,11 +18925,11 @@ msgid "Textarea field"
 msgstr "텍스트 영역 필드"
 
 #: app/assets/javascripts/app/views/ai/ai_feedback_widget.jst.eco:27
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:122
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:125
 msgid "Thank you for your feedback."
 msgstr "피드백을 주셔서 감사합니다."
 
-#: app/assets/javascripts/app/views/channel/form.jst.eco:50
+#: app/assets/javascripts/app/views/channel/form.jst.eco:132
 msgid ""
 "Thank you for your inquiry (#%s)! We'll contact you as soon as possible."
 msgstr "문의해 주셔서 감사합니다 (#%s)! 가능한 한 빨리 연락드리겠습니다."
@@ -18773,7 +18940,7 @@ msgid "Thanks for joining. Email sent to \"%s\"."
 msgstr "가입해 주셔서 감사합니다. 이메일을 \"%s\"로 보냈습니다."
 
 #: app/assets/javascripts/app/views/ai/ai_feedback_widget.jst.eco:39
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:107
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:110
 msgid "Thanks for the feedback. Please explain what went wrong?"
 msgstr "피드백을 주셔서 감사합니다. 무엇이 잘못되었는지 설명해 주시겠습니까?"
 
@@ -18817,7 +18984,7 @@ msgstr "AI 제공자가 구성되지 않았습니다."
 msgid "The API token could not be found."
 msgstr "API 토큰을 찾을 수 없습니다."
 
-#: lib/ai/vectordb.rb:52
+#: lib/ai/vectordb.rb:57
 msgid "The Elasticsearch index could not be created"
 msgstr "Elasticsearch 인덱스를 생성할 수 없습니다"
 
@@ -18994,7 +19161,7 @@ msgid "The auto wizard is enabled. Please use the provided auto wizard url."
 msgstr ""
 "자동 마법사가 활성화되어 있습니다. 제공된 자동 마법사 URL을 사용하세요."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:253
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:254
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:129
 msgid "The avatar could not be deleted."
 msgstr "아바타를 삭제할 수 없습니다."
@@ -19003,11 +19170,11 @@ msgstr "아바타를 삭제할 수 없습니다."
 msgid "The avatar could not be fetched."
 msgstr "아바타를 가져올 수 없습니다."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:219
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:220
 msgid "The avatar could not be selected."
 msgstr "아바타를 선택할 수 없습니다."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:160
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:161
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:82
 msgid "The avatar could not be uploaded."
 msgstr "아바타를 업로드할 수 없습니다."
@@ -19248,7 +19415,7 @@ msgid ""
 "display all desktop content optimally."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:72
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:73
 msgid "The device could not be deleted."
 msgstr "기기를 삭제할 수 없습니다."
 
@@ -19423,7 +19590,7 @@ msgid "The image is invalid."
 msgstr "이미지가 유효하지 않습니다."
 
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee:39
-#: app/assets/javascripts/app/controllers/_integration/smime.coffee:111
+#: app/assets/javascripts/app/controllers/_integration/smime.coffee:116
 #: app/assets/javascripts/app/controllers/ssl_certificate.coffee:113
 #: app/assets/javascripts/app/controllers/widget/import.coffee:64
 #: app/assets/javascripts/app/controllers/widget/import_try_result.coffee:62
@@ -19456,7 +19623,7 @@ msgstr ""
 "설치된 첨부 파일 플러그인이 요청 페이로드를 처리할 수 없습니다. 올바른 첨부 "
 "파일 플러그인(ingest-attachment)이 설치되어 있는지 확인하세요."
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee:79
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee:96
 msgid "The issue could not be saved."
 msgstr "이슈를 저장할 수 없습니다."
 
@@ -19533,7 +19700,7 @@ msgstr "%s 객체 (들) 업데이트됩니다."
 #: app/assets/javascripts/app/controllers/_settings/form.coffee:91
 #: app/assets/javascripts/app/controllers/object_manager.coffee:331
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee:142
-#: app/assets/javascripts/app/controllers/user.coffee:235
+#: app/assets/javascripts/app/controllers/user.coffee:236
 msgid "The object could not be updated."
 msgstr "%s 객체 (들) 업데이트됩니다."
 
@@ -19541,7 +19708,7 @@ msgstr "%s 객체 (들) 업데이트됩니다."
 msgid "The online notification could not be marked as seen."
 msgstr "%s 객체 (들) 업데이트됩니다."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:101
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:102
 msgid "The order of your ticket overviews was reset."
 msgstr "The order of your ticket overviews was reset."
 
@@ -19574,7 +19741,7 @@ msgstr "비밀번호가 유효하지 않습니다."
 msgid "The password reset request was successful."
 msgstr "테스트 실행 성공했습니다."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:124
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:125
 msgid "The personal access token could not be deleted."
 msgstr "%s 객체 (들)이 생성된다."
 
@@ -19884,7 +20051,7 @@ msgstr "필수 매개변수 'value'이(가) 없습니다."
 msgid "The required value 'group_id' is missing."
 msgstr "필수 값 'group_id'이(가) 없습니다."
 
-#: lib/ai/provider.rb:79
+#: lib/ai/provider.rb:84
 msgid "The response could not be processed."
 msgstr "응답을 처리할 수 없습니다."
 
@@ -20064,12 +20231,12 @@ msgstr "대상 티켓 번호를 찾을 수 없습니다."
 msgid "The test run was successful."
 msgstr "테스트 실행이 성공했습니다."
 
-#: db/seeds/settings.rb:3219
+#: db/seeds/settings.rb:3267
 msgid ""
 "The text at the beginning of the subject in an email forward, e. g. FWD."
 msgstr "이메일 전달 시 제목 앞에 붙는 텍스트입니다. 예: FWD."
 
-#: db/seeds/settings.rb:3197
+#: db/seeds/settings.rb:3245
 msgid ""
 "The text at the beginning of the subject in an email reply, e.g. RE, AW, or "
 "AS."
@@ -20134,7 +20301,7 @@ msgstr "이중 인증이 아직 구성되지 않았습니다."
 msgid "The two-factor authentication method \"%s\" was removed for this user."
 msgstr "이 사용자에 대해 이중 인증 방법 \"%s\"이(가) 제거되었습니다."
 
-#: app/controllers/sessions_controller.rb:251
+#: app/controllers/sessions_controller.rb:253
 #: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:32
 #: app/services/service/user/two_factor/initiate_method_configuration.rb:6
 #: app/services/service/user/two_factor/verify_method_configuration.rb:15
@@ -20170,7 +20337,7 @@ msgstr "사용자 토큰을 생성할 수 없습니다."
 msgid "The user's 'preferred_username' could not be extracted from 'id_token'."
 msgstr "사용자의 'preferred_username'을(를) 'id_token'에서 추출할 수 없습니다."
 
-#: app/controllers/sessions_controller.rb:247
+#: app/controllers/sessions_controller.rb:249
 #: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:27
 msgid "The username or password is incorrect."
 msgstr "사용자 이름 또는 비밀번호가 올바르지 않습니다."
@@ -20246,7 +20413,7 @@ msgstr ""
 "간이 걸릴 수 있으니 커피 한 잔을 준비하세요. 현재 알려진 수를 초과하면 총 티"
 "켓 수가 업데이트됩니다."
 
-#: app/models/calendar.rb:314
+#: app/models/calendar.rb:310
 msgid "There are no business hours configured."
 msgstr "영업 시간이 구성되지 않았습니다."
 
@@ -20460,8 +20627,8 @@ msgid ""
 "once the chat connection is established."
 msgstr "이 클래스는 초기화 시 버튼에 추가되며 채팅 연결이 설정되면 제거됩니다."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:161
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:211
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:166
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:216
 msgid "This device"
 msgstr "이 기기"
 
@@ -21122,11 +21289,11 @@ msgstr "티켓 번호 증가 날짜"
 msgid "Ticket Number ignore system_id"
 msgstr "티켓 번호 system_id 무시"
 
-#: db/seeds/settings.rb:5983
+#: db/seeds/settings.rb:6087
 msgid "Ticket Organization Reassignment"
 msgstr "티켓 조직 재할당"
 
-#: db/seeds/settings.rb:5624
+#: db/seeds/settings.rb:5672
 msgid "Ticket Overview Query Polling"
 msgstr "티켓 개요 쿼리 폴링"
 
@@ -21168,15 +21335,15 @@ msgstr "티켓 상태"
 msgid "Ticket States"
 msgstr "티켓 상태"
 
-#: db/seeds/settings.rb:3216
+#: db/seeds/settings.rb:3264
 msgid "Ticket Subject Forward"
 msgstr "티켓 제목 전달"
 
-#: db/seeds/settings.rb:3194
+#: db/seeds/settings.rb:3242
 msgid "Ticket Subject Reply"
 msgstr "티켓 제목 답글"
 
-#: db/seeds/settings.rb:3173
+#: db/seeds/settings.rb:3221
 msgid "Ticket Subject Size"
 msgstr "티켓 제목 크기"
 
@@ -21186,13 +21353,19 @@ msgstr "Ticket 구독"
 
 #: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:2
 #: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:7
-#: db/seeds/permissions.rb:239 db/seeds/settings.rb:6109
+#: db/seeds/permissions.rb:239 db/seeds/settings.rb:6213
 msgid "Ticket Summary"
 msgstr "티켓 요약"
 
-#: db/seeds/settings.rb:6123
+#: db/seeds/settings.rb:6227
 msgid "Ticket Summary Config"
 msgstr "티켓 요약 구성"
+
+#: db/seeds/settings.rb:6246
+#, fuzzy
+#| msgid "Ticket Selector"
+msgid "Ticket Summary Selector"
+msgstr "Ticket 선택기"
 
 #: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:3
 msgid ""
@@ -21229,7 +21402,7 @@ msgstr "티켓 트리거 루프 보호 게시물 총계"
 msgid "Ticket Trigger Loop Protection Articles per Ticket"
 msgstr "티켓당 티켓 트리거 루프 보호 게시물"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/FloatingToolbar.vue:50
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/FloatingToolbar.vue:62
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:96
 msgid "Ticket actions"
 msgstr "티켓 작업"
@@ -21412,13 +21585,13 @@ msgstr "티켓 제목"
 msgid "Ticket update"
 msgstr "티켓 업데이트"
 
-#: app/frontend/shared/entities/ticket/composables/useTicketEdit.ts:48
+#: app/frontend/shared/entities/ticket/composables/useTicketEdit.ts:63
 msgid "Ticket update failed."
 msgstr "티켓 업데이트 실패."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/useTicketEditTitle.ts:26
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:553
-#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:161
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:570
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:162
 msgid "Ticket updated successfully."
 msgstr "티켓이 성공적으로 업데이트되었습니다."
 
@@ -21572,27 +21745,27 @@ msgstr "시각"
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:134
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:12
 #: app/assets/javascripts/app/controllers/time_accounting.coffee:3
-#: db/seeds/permissions.rb:107 db/seeds/settings.rb:4062
+#: db/seeds/permissions.rb:107 db/seeds/settings.rb:4110
 msgid "Time Accounting"
 msgstr "시간 회계"
 
-#: db/seeds/settings.rb:4125
+#: db/seeds/settings.rb:4173
 msgid "Time Accounting Custom Unit"
 msgstr "시간 회계 사용자 지정 단위"
 
-#: db/seeds/settings.rb:4161
+#: db/seeds/settings.rb:4209
 msgid "Time Accounting Default Type"
 msgstr "시간 회계 기본 유형"
 
-#: db/seeds/settings.rb:4089
+#: db/seeds/settings.rb:4137
 msgid "Time Accounting Selector"
 msgstr "시간 회계 선택기"
 
-#: db/seeds/settings.rb:4143
+#: db/seeds/settings.rb:4191
 msgid "Time Accounting Types"
 msgstr "시간 회계 유형"
 
-#: db/seeds/settings.rb:4107
+#: db/seeds/settings.rb:4155
 msgid "Time Accounting Unit"
 msgstr "시간 회계 단위"
 
@@ -21678,7 +21851,7 @@ msgstr "타이밍"
 msgid "Title"
 msgstr "제목"
 
-#: app/assets/javascripts/app/views/channel/form.jst.eco:31
+#: app/assets/javascripts/app/views/channel/form.jst.eco:113
 msgid "Title of the form"
 msgstr "양식의 제목"
 
@@ -21695,7 +21868,7 @@ msgstr "양식의 제목"
 msgid "To"
 msgstr "에"
 
-#: db/seeds/settings.rb:3497
+#: db/seeds/settings.rb:3545
 msgid ""
 "To archive all outgoing emails from Zammad to external, you can store a BCC "
 "email address here."
@@ -21770,7 +21943,7 @@ msgstr "목록에서 자리 표시자를 선택하려면 \"::\"을(를) 입력�
 msgid "To set up Authenticator App for your account, follow the steps below:"
 msgstr "계정에 인증 앱을 설정하려면 아래 단계를 따르세요:"
 
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:208
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:211
 #, fuzzy
 #| msgid ""
 #| "To set up Authenticator App for your account, follow the steps below:"
@@ -21797,7 +21970,7 @@ msgstr "오늘"
 msgid "Toggle AM/PM mode"
 msgstr "AM/PM 모드 전환"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue:165
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue:168
 #, fuzzy
 #| msgid "Article meta information"
 msgid "Toggle article meta information"
@@ -21807,7 +21980,7 @@ msgstr "기사 메타 정보"
 msgid "Toggle dark mode"
 msgstr "다크 모드 전환"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldPermissions/FieldPermissionsInput.vue:161
+#: app/frontend/apps/desktop/components/Form/fields/FieldPermissions/FieldPermissionsInput.vue:162
 #, fuzzy
 #| msgid "Toggle Group"
 msgid "Toggle group"
@@ -21846,7 +22019,7 @@ msgid "Token Access"
 msgstr "토큰 액세스"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/tokenAccess.ts:8
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:52
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:53
 #, fuzzy
 #| msgid "Token Access"
 msgid "Token access"
@@ -21856,15 +22029,15 @@ msgstr "토큰 액세스"
 msgid "Token authorization failed."
 msgstr "토큰 인증에 실패했습니다."
 
-#: db/seeds/settings.rb:5272
+#: db/seeds/settings.rb:5320
 msgid "Token for CTI."
 msgstr "CTI용 토큰."
 
-#: db/seeds/settings.rb:5176
+#: db/seeds/settings.rb:5224
 msgid "Token for Sipgate."
 msgstr "Sipgate용 토큰."
 
-#: db/seeds/settings.rb:3559
+#: db/seeds/settings.rb:3607
 msgid "Token for monitoring."
 msgstr "모니터링용 토큰."
 
@@ -21872,7 +22045,7 @@ msgstr "모니터링용 토큰."
 msgid "Token is invalid!"
 msgstr "토큰이 유효하지 않습니다!"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:44
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:45
 msgid "Token-based API access has been disabled by the administrator."
 msgstr "토큰 기반 API 액세스가 관리자에 의해 비활성화되었습니다."
 
@@ -22002,7 +22175,7 @@ msgstr ""
 "간 이벤트로 활성화된 트리거는 특정 시간에 도달했을 때 실행됩니다(예: 대기 시"
 "간, 에스컬레이션)."
 
-#: db/seeds/settings.rb:5815
+#: db/seeds/settings.rb:5919
 msgid "Trusted SSO Proxy IPs"
 msgstr ""
 
@@ -22169,7 +22342,7 @@ msgstr "이중 인증 방법이 성공적으로 설정되었습니다."
 msgid "Two-factor method could not be configured."
 msgstr "이중 인증 방법을 구성할 수 없습니다."
 
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:110
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:111
 msgid "Two-factor method has been configured successfully."
 msgstr "이중 인증 방법이 성공적으로 구성되었습니다."
 
@@ -22188,9 +22361,11 @@ msgstr "이중 인증 방법이 성공적으로 구성되었습니다."
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:11
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco:11
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:57
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_git_issue.jst.eco:18
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:100
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:79
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:110
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:211
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:216
 #: db/seeds/object_manager_attributes.rb:129
 msgid "Type"
 msgstr "유형"
@@ -22240,13 +22415,13 @@ msgstr "URL (임베딩)"
 msgid "URL (OCR)"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkBottomDrawer.vue:139
+#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkBottomDrawer.vue:140
 #, fuzzy
 #| msgid "unassign user"
 msgid "Unassign owner"
 msgstr "사용자 할당 해제"
 
-#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkBottomDrawer.vue:172
+#: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkBottomDrawer.vue:173
 msgid "Unassign owner & move to group"
 msgstr ""
 
@@ -22272,7 +22447,7 @@ msgstr "단위"
 #: app/assets/javascripts/app/views/profile/devices.jst.eco:22
 #: app/frontend/apps/desktop/components/CommonHistoryFlyout/useHistoryEvents.ts:39
 #: app/frontend/apps/desktop/components/CommonHistoryFlyout/utils/eventHelpers.ts:11
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:128
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:129
 #: app/models/user_device/notification_presenter.rb:11
 msgid "Unknown"
 msgstr "알 수 없음"
@@ -22286,22 +22461,22 @@ msgid "Unknown error: Could not create a ticket from this email."
 msgstr "알 수 없는 오류: 이 이메일에서 티켓을 생성할 수 없습니다."
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco:5
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:215
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:218
 msgid ""
 "Unless you already have it, install one of the following authenticator apps "
 "on your mobile device:"
 msgstr ""
 "이미 가지고 있지 않은 경우 모바일 기기에 다음 인증 앱 중 하나를 설치하세요:"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:65
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:75
 msgid "Unlink issue"
 msgstr "이슈 연결 해제"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:204
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:209
 msgid "Unlink object"
 msgstr "객체 연결 해제"
 
-#: app/assets/javascripts/app/controllers/user.coffee:109
+#: app/assets/javascripts/app/controllers/user.coffee:110
 msgid "Unlock"
 msgstr "잠금 해제"
 
@@ -22309,7 +22484,7 @@ msgstr "잠금 해제"
 msgid "Unpin this panel"
 msgstr "이 패널 고정 해제"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/FloatingToolbar.vue:93
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/FloatingToolbar.vue:119
 #, fuzzy
 #| msgid "Usages count"
 msgid "Unread messages count"
@@ -22382,12 +22557,12 @@ msgstr ""
 "이 언어의 최대 %s%%가 이미 번역되었습니다. Zammad을 더욱 개선하고 번역을 완성"
 "하는 데 도움을 주세요."
 
-#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:93
+#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:107
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket_summary.coffee:6
 msgid "Upcoming Events"
 msgstr "예정된 이벤트"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummary.vue:110
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummary.vue:92
 #, fuzzy
 #| msgid "Upcoming Events"
 msgid "Upcoming events"
@@ -22396,8 +22571,8 @@ msgstr "예정된 이벤트"
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:89
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee:88
 #: app/assets/javascripts/app/views/agent_ticket_view/bulk.jst.eco:12
-#: app/assets/javascripts/app/views/integration/pgp.jst.eco:12
-#: app/assets/javascripts/app/views/integration/smime.jst.eco:13
+#: app/assets/javascripts/app/views/integration/pgp.jst.eco:26
+#: app/assets/javascripts/app/views/integration/smime.jst.eco:27
 #: app/assets/javascripts/app/views/knowledge_base/content.jst.eco:25
 #: app/assets/javascripts/app/views/session.jst.eco:12
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:66
@@ -22488,7 +22663,7 @@ msgstr "공유 초안 업데이트"
 msgid "Update successful."
 msgstr "업데이트 성공."
 
-#: db/seeds/settings.rb:5995
+#: db/seeds/settings.rb:6099
 msgid "Update the most recent tickets."
 msgstr "가장 최근 티켓을 업데이트합니다."
 
@@ -22691,7 +22866,7 @@ msgstr ""
 "#{article.id}\" target=\"zammad_app\">#{config.product_name}에서 보기</a>\n"
 "</div>\n"
 
-#: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee:31
+#: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee:30
 msgid "Updated within last 3 days"
 msgstr ""
 
@@ -22699,7 +22874,7 @@ msgstr ""
 msgid "Updating Database"
 msgstr "데이터베이스 업데이트 중"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:77
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:78
 msgid "Updating the order of your ticket overviews failed."
 msgstr "티켓 개요 순서 업데이트에 실패했습니다."
 
@@ -22709,7 +22884,7 @@ msgstr "캘린더 구독 설정 업데이트에 실패했습니다."
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco:18
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco:9
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:367
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:372
 msgid "Upload"
 msgstr "업로드"
 
@@ -22727,7 +22902,7 @@ msgstr "개인 키 업로드"
 msgid "Upload image"
 msgstr "이미지 업로드"
 
-#: app/assets/javascripts/app/controllers/_integration/pgp.coffee:99
+#: app/assets/javascripts/app/controllers/_integration/pgp.coffee:104
 msgid "Upload key"
 msgstr "키 업로드"
 
@@ -22822,7 +22997,7 @@ msgstr "어디서든 사용"
 msgid "Used anywhere (admin only)"
 msgstr "어디서든 사용 (관리자만)"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:152
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:157
 msgid "Used devices"
 msgstr "사용된 기기"
 
@@ -22882,7 +23057,7 @@ msgstr "티켓을 볼 때 사용"
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:117
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:73
 #: app/frontend/apps/desktop/pages/user/components/UserDetailTopBar/TopBarHeader.vue:27
-#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:36
+#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:37
 #: app/frontend/apps/desktop/pages/user/routes.ts:9
 #: app/frontend/apps/mobile/pages/user/routes.ts:7
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:32
@@ -22978,6 +23153,7 @@ msgstr "사용자가 유휴 상태입니다"
 msgid "User is inactive"
 msgstr "사용자가 비활성 상태입니다"
 
+#: app/controllers/sessions_controller.rb:165
 #: app/frontend/apps/desktop/components/Search/QuickSearch/entities/User.vue:25
 msgid "User is inactive."
 msgstr "사용자가 비활성 상태입니다."
@@ -23003,15 +23179,15 @@ msgstr "사용자 사서함"
 msgid "User menu"
 msgstr "사용자 메뉴"
 
-#: app/assets/javascripts/app/controllers/user.coffee:123
+#: app/assets/javascripts/app/controllers/user.coffee:124
 msgid "User successfully unlocked!"
 msgstr "사용자가 성공적으로 잠금 해제되었습니다!"
 
-#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:272
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:276
 msgid "User taskbar tabs"
 msgstr "사용자 작업 표시줄 탭"
 
-#: app/assets/javascripts/app/controllers/user.coffee:220
+#: app/assets/javascripts/app/controllers/user.coffee:221
 msgid "User updated successfully."
 msgstr "사용자가 성공적으로 업데이트되었습니다."
 
@@ -23140,6 +23316,18 @@ msgstr "값"
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:557
 msgid "Variables"
 msgstr "변수"
+
+#: db/seeds/settings.rb:6306
+#, fuzzy
+#| msgid "Inserts knowledge base answer"
+msgid "Vector DB knowledge base categories"
+msgstr "지식 베이스 답변을 삽입"
+
+#: db/seeds/settings.rb:6315
+#, fuzzy
+#| msgid "Access to the knowledge base interface."
+msgid "Vector DB knowledge base chunking strategy"
+msgstr "지식 삭제 지식 베이스 인터페이스에 대한 접근 권한."
 
 #: app/assets/javascripts/app/views/package.jst.eco:49
 msgid "Vendor"
@@ -23627,11 +23815,11 @@ msgid "Would you like to give us feedback on the BETA UI?"
 msgstr "피드백 보내기"
 
 #: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:25
-#: db/seeds/permissions.rb:245 db/seeds/settings.rb:6142
+#: db/seeds/permissions.rb:245 db/seeds/settings.rb:6264
 msgid "Writing Assistant"
 msgstr "작성 도우미"
 
-#: db/seeds/settings.rb:6156
+#: db/seeds/settings.rb:6278
 msgid "Writing Assistant Fixed Instructions"
 msgstr "작성 도우미 고정 지침"
 
@@ -23697,7 +23885,7 @@ msgid "Yes, add attachments now"
 msgstr "예, 지금 첨부 파일 추가"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:5
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:463
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:480
 msgid "Yes, open the checklist"
 msgstr "예, 체크리스트 열기"
 
@@ -23836,7 +24024,7 @@ msgstr ""
 "을 찾을 수 있습니다."
 
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:4
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:170
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:171
 msgid ""
 "You can generate a personal access token for each application you use that "
 "needs access to the Zammad API."
@@ -23905,7 +24093,7 @@ msgstr ""
 "여기서 키보드 단축키 대화 상자를 열고 새로 개선된 레이아웃을 보거나 원하는 경"
 "우 이전 레이아웃으로 되돌릴 수 있습니다."
 
-#: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:49
+#: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:60
 msgid ""
 "You can overwrite this setting for specific groups in the group manager. %l"
 msgstr "그룹 관리자에서 특정 그룹에 대해 이 설정을 덮어쓸 수 있습니다. %l"
@@ -23959,7 +24147,7 @@ msgstr ""
 msgid "You can use the following script to post the data to %s."
 msgstr "%s에 데이터를 게시하려면 다음 스크립트를 사용할 수 있습니다."
 
-#: app/assets/javascripts/app/controllers/user.coffee:150
+#: app/assets/javascripts/app/controllers/user.coffee:151
 msgid ""
 "You cannot view or change the group permissions of an inactive user. "
 "Activate them first to manage their permissions."
@@ -23990,7 +24178,7 @@ msgstr "관리자 권한이 없습니다."
 msgid "You do not have permission to update"
 msgstr "업데이트할 권한이 없습니다"
 
-#: app/frontend/apps/desktop/components/CommonTable/CommonAdvancedTable.vue:419
+#: app/frontend/apps/desktop/components/CommonTable/CommonAdvancedTable.vue:434
 #, fuzzy
 #| msgid "You don't have more tickets to load."
 msgid "You don't have more items to load."
@@ -24086,7 +24274,7 @@ msgstr "웹캠 액세스를 허용해야 합니다."
 msgid "You have unchecked items in the checklist."
 msgstr "체크리스트에 선택 해제된 항목이 있습니다."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:458
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:475
 msgid ""
 "You have unchecked items in the checklist. Do you want to handle them before "
 "closing this ticket?"
@@ -24099,7 +24287,7 @@ msgstr ""
 msgid "You must protect your account with two-factor authentication."
 msgstr "이중 인증으로 계정을 보호해야 합니다."
 
-#: app/assets/javascripts/app/views/channel/form.jst.eco:151
+#: app/assets/javascripts/app/views/channel/form.jst.eco:233
 #, fuzzy
 #| msgid ""
 #| "You need to add the following Javascript code snippet to your web page:"
@@ -24115,7 +24303,7 @@ msgstr "%s 웹 인터페이스에서 Zammad 엔드포인트를 구성해야 합�
 msgid "You need to configure the Zammad endpoints in the %s:"
 msgstr "%s에서 Zammad 엔드포인트를 구성해야 합니다:"
 
-#: app/frontend/apps/desktop/components/CommonTable/CommonAdvancedTable.vue:415
+#: app/frontend/apps/desktop/components/CommonTable/CommonAdvancedTable.vue:430
 #, fuzzy
 #| msgid "You reached the table limit of %s tickets (%s remaining)."
 msgid "You reached the table limit of %s items (%s remaining)."
@@ -24223,19 +24411,19 @@ msgstr "계정이 확인되지 않았습니다. 확인 이메일의 링크를 �
 msgid "Your answer will be submitted to Zammad GmbH in an anonymized way."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:173
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:174
 msgid "Your avatar"
 msgstr "아바타"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:229
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:230
 msgid "Your avatar has been changed."
 msgstr "아바타가 변경되었습니다."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:261
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:262
 msgid "Your avatar has been deleted."
 msgstr "아바타가 삭제되었습니다."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:173
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:174
 msgid "Your avatar has been uploaded."
 msgstr "아바타가 업로드되었습니다."
 
@@ -24283,6 +24471,12 @@ msgstr "개인 액세스 토큰"
 msgid "Your rating of the new BETA UI"
 msgstr ""
 
+#: app/controllers/form_controller.rb:146
+msgid ""
+"Your submission could not be verified. Please make sure you completed any "
+"verification challenge and try again."
+msgstr ""
+
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:29
 msgid "Your theme has been updated."
 msgstr "테마가 업데이트되었습니다."
@@ -24305,7 +24499,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:91
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:134
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco:124
-#: app/frontend/apps/desktop/components/layout/LayoutPublicPage/LayoutPublicPage.vue:90
+#: app/frontend/apps/desktop/components/layout/LayoutPublicPage/LayoutPublicPage.vue:94
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:78
 #: app/frontend/apps/mobile/pages/authentication/components/LoginFooter.vue:24
 msgid "Zammad"
@@ -24315,7 +24509,7 @@ msgstr "Zammad"
 msgid "Zammad AI"
 msgstr "Zammad AI"
 
-#: app/assets/javascripts/app/views/channel/form.jst.eco:148
+#: app/assets/javascripts/app/views/channel/form.jst.eco:230
 msgid ""
 "Zammad Forms requires jQuery. If you don't already use it on your website, "
 "you can add it like this:"
@@ -25025,11 +25219,11 @@ msgstr ""
 msgid "i-doit"
 msgstr "i-doit"
 
-#: db/seeds/settings.rb:5021
+#: db/seeds/settings.rb:5069
 msgid "i-doit config"
 msgstr "i-doit 구성"
 
-#: db/seeds/settings.rb:4994
+#: db/seeds/settings.rb:5042
 msgid "i-doit integration"
 msgstr "i-doit 통합"
 
@@ -25273,7 +25467,7 @@ msgstr "너무 짧습니다 (최소 %{count}자)"
 msgid "is too short (minimum is 1 character)"
 msgstr "너무 짧습니다 (최소 1자)"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:53
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:63
 msgid "issue status: %s"
 msgstr "이슈 상태: %s"
 
@@ -25390,6 +25584,12 @@ msgstr "개월"
 #: lib/validations/object_manager/attribute_validator/external_data_source.rb:13
 msgid "must be a hash with \"label\" and \"value\" keys"
 msgstr ""
+
+#: app/models/calendar.rb:244
+#, fuzzy
+#| msgid "is not a valid URL"
+msgid "must be a valid HTTP(S) URL"
+msgstr "유효한 URL이 아닙니다"
 
 #: app/models/knowledge_base.rb:244
 msgid "must be a valid path or domain"
@@ -25574,7 +25774,7 @@ msgstr "열린 티켓"
 msgid "optional"
 msgstr "선택 사항"
 
-#: app/assets/javascripts/app/controllers/_integration/pgp.coffee:144
+#: app/assets/javascripts/app/controllers/_integration/pgp.coffee:149
 #: app/assets/javascripts/app/views/integration/smime_certificate_add.jst.eco:14
 #: app/assets/javascripts/app/views/integration/smime_private_key_add.jst.eco:15
 #: app/assets/javascripts/app/views/ssl_certificate_binary_or_text.jst.eco:11
@@ -25725,8 +25925,8 @@ msgstr "2단계 탐색 사이드바"
 msgid "select"
 msgstr "선택"
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:368
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:450
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:369
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:451
 msgid "select all options"
 msgstr "모든 옵션 선택"
 
@@ -25735,7 +25935,7 @@ msgstr "모든 옵션 선택"
 msgid "select attachment…"
 msgstr "첨부 파일 선택…"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:450
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:451
 msgid "select visible options"
 msgstr "표시된 옵션 선택"
 
@@ -25791,19 +25991,19 @@ msgstr "더 보기"
 msgid "shown"
 msgstr "표시됨"
 
-#: db/seeds/settings.rb:5173
+#: db/seeds/settings.rb:5221
 msgid "sipgate.io Token"
 msgstr "sipgate.io 토큰"
 
-#: db/seeds/settings.rb:5207
+#: db/seeds/settings.rb:5255
 msgid "sipgate.io alternative FQDN"
 msgstr "sipgate.io 대체 FQDN"
 
-#: db/seeds/settings.rb:5194
+#: db/seeds/settings.rb:5242
 msgid "sipgate.io config"
 msgstr "sipgate.io 구성"
 
-#: db/seeds/settings.rb:5145
+#: db/seeds/settings.rb:5193
 msgid "sipgate.io integration"
 msgstr "sipgate.io 통합"
 
@@ -26099,6 +26299,11 @@ msgstr "…전체 텍스트 영역의"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ 오늘 대기 시간"
+
+#, fuzzy
+#~| msgid "On ticket summary sidebar activation"
+#~ msgid "Hide ticket summary sidebar"
+#~ msgstr "티켓 요약 사이드바 활성화 시"
 
 #, fuzzy
 #~| msgid "Notification"
