@@ -19653,6 +19653,7 @@ msgid "Update shared draft"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ai/provider.coffee:365
+#: app/assets/javascripts/app/controllers/_channel/form.coffee:162
 #: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee:81
 #: app/assets/javascripts/app/controllers/_profile/language.coffee:64
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:48
