@@ -1,0 +1,21 @@
+From: Zammad Helpdesk <smime-sender-ca@example.com>
+To: Nicole Braun <nicole.braun@zammad.org>
+Subject: S/MIME Test - Wrong MIME Type (Sign)
+MIME-Version: 1.0
+Content-Type: multipart/mixed; protocol="application/x-pkcs7-signature"; micalg="sha-256"; boundary="----CF44B159E97057C3DDADAAFD1466CF9A"
+
+------CF44B159E97057C3DDADAAFD1466CF9A
+Content-Type: text/plain
+
+Some text
+
+Test Admin Agent
+
+--
+Super Support - Waterford Business Park
+5201 Blue Lagoon Drive - 8th Floor & 9th Floor - Miami, 33126 USA
+Email: hot@example.com - Web: [1] http://www.example.com/
+--
+
+------CF44B159E97057C3DDADAAFD1466CF9A--
+

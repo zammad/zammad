@@ -92,6 +92,13 @@ class SecureMailing::SMIME::Incoming < SecureMailing::Backend::HandlerIncoming
       comment:   comment,
       success:   success,
     )
+  rescue OpenSSL::PKCS7::PKCS7Error => e
+    Rails.logger.error "Error while verifying mail with S/MIME signature: #{e}"
+    set_article_preferences(
+      operation: :sign,
+      comment:   __('Error while verifying signature, please contact your administrator.'),
+      success:   false,
+    )
   end
 
   def verify_certificate_chain(certificates)
