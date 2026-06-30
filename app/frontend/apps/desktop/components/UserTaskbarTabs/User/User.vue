@@ -30,6 +30,8 @@ new SubscriptionHandler(
       userId: user.value!.id,
       initial: true,
       secondaryOrganizationsCount: SECONDARY_ORGANIZATIONS_FETCH_COUNT,
+      // Prime the same fields the detail view reads, so it resolves from cache.
+      hasOrganizationCounts: true,
     }),
     () => ({
       // NB: User detail view has its own subscription handling, avoid double subscriptions.
