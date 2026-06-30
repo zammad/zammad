@@ -8,6 +8,7 @@
 //= link application-print.css
 //= link print.css
 //= link knowledge_base.css
+//= link knowledge_base_custom.css
 //= link knowledge_base_public.js
 //= link knowledge_base_public_polyfills.js
 //= link ie11CustomProperties.min.js

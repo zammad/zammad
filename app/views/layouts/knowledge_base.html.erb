@@ -18,6 +18,9 @@
 <%= stylesheet_link_tag 'font.css', media: 'all' %>
 <%= stylesheet_link_tag 'knowledge_base.css', media: 'all' %>
 <%= render 'knowledge_base/public/inline_stylesheet', knowledge_base: @knowledge_base, locale: system_locale_via_uri  %>
+<% if Rails.application.config.knowledge_base_custom_css_present %>
+  <%= stylesheet_link_tag 'knowledge_base_custom.css', media: 'all' %>
+<% end %>
 <%= canonical_link_tag @knowledge_base, @category, @object %>
 
 <div class="wrapper js-wrapper">
