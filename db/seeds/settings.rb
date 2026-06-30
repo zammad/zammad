@@ -787,6 +787,7 @@ Setting.create_if_not_exists(
   },
   frontend:    true
 )
+# TODO: Deprecated in desktop view, drop later when we drop legacy stack.
 Setting.create_if_not_exists(
   title:       __('Sidebar Attachments'),
   name:        'ui_ticket_zoom_attachments_preview',

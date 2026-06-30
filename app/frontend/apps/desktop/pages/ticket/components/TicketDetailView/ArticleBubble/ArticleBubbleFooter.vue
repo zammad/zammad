@@ -38,7 +38,6 @@ defineEmits<{
       :download-url="attachment.downloadUrl"
       :preview-url="attachment.preview"
       :file="attachment"
-      :no-preview="!$c.ui_ticket_zoom_attachments_preview"
       no-remove
       @preview="($event, type) => $emit('preview', type, attachment)"
     />

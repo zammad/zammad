@@ -63,7 +63,6 @@ describe('component for displaying text article', () => {
     })
 
     mockApplicationConfig({
-      ui_ticket_zoom_attachments_preview: true,
       api_path: '/api',
       'active_storage.content_types_allowed_inline': [
         'image/webp',

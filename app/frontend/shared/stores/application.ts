@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { defineStore } from 'pinia'
-import { computed, effectScope, ref, type Ref } from 'vue'
+import { computed, effectScope, ref } from 'vue'
 
 import { useNotifications } from '#shared/components/CommonNotifications/index.ts'
 import { useApplicationLoaded } from '#shared/composables/useApplicationLoaded.ts'
@@ -71,7 +71,7 @@ export const useApplicationStore = defineStore(
       testFlags.set('applicationLoaded.loaded')
     }
 
-    const config = ref<Record<string, unknown>>({})
+    const config = ref<ConfigList>({} as ConfigList)
 
     const initializeConfigUpdateSubscription = (): void => {
       const scope = effectScope()
@@ -110,7 +110,7 @@ export const useApplicationStore = defineStore(
     }
 
     const resetAndGetConfig = async (): Promise<void> => {
-      config.value = {}
+      config.value = {} as ConfigList
 
       await getConfig()
     }
@@ -137,7 +137,7 @@ export const useApplicationStore = defineStore(
       loaded,
       loading,
       setLoaded,
-      config: config as unknown as Ref<ConfigList>,
+      config,
       initializeConfigUpdateSubscription,
       getConfig,
       resetAndGetConfig,

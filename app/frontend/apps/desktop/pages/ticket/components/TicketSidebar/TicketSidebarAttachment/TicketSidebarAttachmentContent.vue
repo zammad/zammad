@@ -53,7 +53,6 @@ const { showPreview } = useFilePreviewViewer(computed(() => attachmentsWithUrls.
           :download-url="attachment.downloadUrl"
           :preview-url="attachment.preview"
           :file="attachment"
-          :no-preview="!$c.ui_ticket_zoom_attachments_preview"
           no-remove
           @preview="($event, type) => showPreview(type, attachment)"
         />

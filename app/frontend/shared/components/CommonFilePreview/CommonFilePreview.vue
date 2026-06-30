@@ -24,7 +24,6 @@ export interface Props {
   previewUrl?: string
   loading?: boolean
 
-  noPreview?: boolean
   noRemove?: boolean
 
   wrapperClass?: string
@@ -106,7 +105,7 @@ const classMap = getFilePreviewClasses()
     :class="[classMap.wrapper, wrapperClass]"
   >
     <button
-      v-if="!noPreview && canPreview"
+      v-if="canPreview"
       v-tooltip="$t('Preview %s', props.file.name)"
       class="flex h-9 w-9 shrink-0 items-center justify-center rounded"
       :class="[{ border: canPreview !== 'image' }, classMap.preview]"
