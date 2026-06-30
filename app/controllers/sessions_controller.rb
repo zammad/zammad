@@ -346,6 +346,11 @@ class SessionsController < ApplicationController
       config['session_id'] = session.id.public_id
     end
 
+    # In development, prefer this process's own websocket port over the stored setting.
+    if Rails.env.development? && ENV['ZAMMAD_WEBSOCKET_PORT'].present?
+      config['websocket_port'] = ENV['ZAMMAD_WEBSOCKET_PORT']
+    end
+
     config['core_workflow_config'] = CoreWorkflow.config
     config['icons_url']            = icons_url
 

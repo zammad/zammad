@@ -53,16 +53,20 @@ Rails.application.config.content_security_policy do |policy| # rubocop:disable M
 
   if Rails.env.development?
     websocket_uris = proc do
+      # Match the websocket port the frontend actually uses (per-process ENV in dev,
+      #   see SessionsController#config_frontend), falling back to the stored setting.
+      websocket_port = ENV['ZAMMAD_WEBSOCKET_PORT'].presence || Setting.get('websocket_port')
+
       [
         "ws://#{ViteRuby.config.host_with_port}",
-        "ws://#{ViteRuby.config.host}:#{Setting.get('websocket_port')}",
+        "ws://#{ViteRuby.config.host}:#{websocket_port}",
         "ws://#{ViteRuby.config.host}:#{ENV['ZAMMAD_RAILS_PORT'] || 3000}/cable",
 
         # Include localhost URIs as well, to cover local setups where ViteRuby is configured to use another hostname.
         *(if ViteRuby.config.host != 'localhost'
             [
               "ws://localhost:#{ViteRuby.config.port}",
-              "ws://localhost:#{Setting.get('websocket_port')}",
+              "ws://localhost:#{websocket_port}",
               "ws://localhost:#{ENV['ZAMMAD_RAILS_PORT'] || 3000}/cable",
             ]
           end)
