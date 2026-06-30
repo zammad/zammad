@@ -7,7 +7,7 @@
 // PolicyTicket,
 import { generateObjectData } from '#tests/graphql/builders/index.ts'
 
-import type { Ticket } from '#shared/graphql/types.ts'
+import type { TicketById } from '#shared/entities/ticket/types.ts'
 // import type { AppName } from '#shared/types/app.ts'
 import type { DeepPartial } from '#shared/types/utils.ts'
 
@@ -27,8 +27,8 @@ import type { DeepPartial } from '#shared/types/utils.ts'
 //   onDispose: vi.fn(),
 // }
 
-export const createTicket = (defaults?: DeepPartial<Ticket>) =>
-  generateObjectData<Ticket>('Ticket', defaults)
+export const createTicket = (defaults?: DeepPartial<TicketById>): TicketById =>
+  generateObjectData<TicketById>('Ticket', defaults)
 
 // export const createEligibleTicketArticleReplyData = (
 //   type: string,

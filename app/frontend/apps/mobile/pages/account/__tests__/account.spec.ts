@@ -17,6 +17,7 @@ import { useLocaleStore } from '#shared/stores/locale.ts'
 
 const locales: Record<string, LocalesQuery['locales'][number]> = {
   de: {
+    __typename: 'Locale',
     locale: 'de-de',
     name: 'Deutsch',
     dir: EnumTextDirection.Ltr,
@@ -24,6 +25,7 @@ const locales: Record<string, LocalesQuery['locales'][number]> = {
     active: true,
   },
   ar: {
+    __typename: 'Locale',
     locale: 'ar',
     name: 'Arabic',
     dir: EnumTextDirection.Rtl,

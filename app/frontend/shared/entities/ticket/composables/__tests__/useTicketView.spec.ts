@@ -5,12 +5,12 @@ import { ref } from 'vue'
 import { generateObjectData } from '#tests/graphql/builders/index.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
 
-import type { Ticket } from '#shared/graphql/types.ts'
+import type { TicketById } from '#shared/entities/ticket/types.ts'
 
 import { useTicketView } from '../useTicketView.ts'
 
-const ticketDefault = generateObjectData<Ticket>('Ticket')
-const ticket = ref<Ticket | undefined>(ticketDefault)
+const ticketDefault = generateObjectData<TicketById>('Ticket')
+const ticket = ref<TicketById | undefined>(ticketDefault)
 
 describe('useTicketView', () => {
   it('check agent permission', () => {

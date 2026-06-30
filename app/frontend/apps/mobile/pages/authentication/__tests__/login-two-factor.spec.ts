@@ -13,6 +13,7 @@ import { LoginDocument } from '#shared/graphql/mutations/login.api.ts'
 import { EnumTwoFactorAuthenticationMethod, type LoginMutation } from '#shared/graphql/types.ts'
 
 const twoFactorAuthentication = () => ({
+  __typename: 'UserLoginTwoFactorMethods' as const,
   availableTwoFactorAuthenticationMethods: [EnumTwoFactorAuthenticationMethod.AuthenticatorApp],
   defaultTwoFactorAuthenticationMethod: EnumTwoFactorAuthenticationMethod.AuthenticatorApp,
   recoveryCodesAvailable: false,
@@ -123,6 +124,7 @@ describe('two factor login flow', () => {
   describe('show "try another method"', () => {
     it.each([
       {
+        __typename: 'UserLoginTwoFactorMethods' as const,
         availableTwoFactorAuthenticationMethods: [
           EnumTwoFactorAuthenticationMethod.AuthenticatorApp,
         ],
@@ -132,6 +134,7 @@ describe('two factor login flow', () => {
         available: false,
       },
       {
+        __typename: 'UserLoginTwoFactorMethods' as const,
         availableTwoFactorAuthenticationMethods: [
           EnumTwoFactorAuthenticationMethod.AuthenticatorApp,
         ],

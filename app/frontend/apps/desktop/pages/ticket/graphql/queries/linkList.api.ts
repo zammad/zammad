@@ -10,6 +10,7 @@ export const LinkListDocument = gql`
   linkList(objectId: $objectId, targetType: $targetType) {
     type
     item {
+      __typename
       ... on Ticket {
         id
         internalId

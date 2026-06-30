@@ -8,6 +8,7 @@ import {
   type TicketArticlesQuery,
 } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+import type { DeepPartial } from '#shared/types/utils.ts'
 
 import type { LastArrayElement } from 'type-fest'
 
@@ -23,9 +24,9 @@ type ArticleNode = LastArrayElement<TicketArticlesQuery['articles']['edges']>['n
 
 export const articleContent = (
   id: number,
-  mockedArticleData: Partial<ArticleNode>,
+  mockedArticleData: DeepPartial<ArticleNode>,
 ): ArticleNode => {
-  return {
+  return nullableMock<ArticleNode>({
     __typename: 'TicketArticle',
     id: convertToGraphQLId('TicketArticle', id),
     internalId: id,
@@ -40,8 +41,13 @@ export const articleContent = (
       firstname: 'John',
       lastname: 'Doe',
       fullname: 'John Doe',
+      email: 'john.doe@example.com',
       active: true,
       image: null,
+      vip: false,
+      outOfOffice: false,
+      outOfOfficeStartAt: null,
+      outOfOfficeEndAt: null,
       authorizations: [],
     },
     internal: false,
@@ -53,28 +59,29 @@ export const articleContent = (
     type: {
       __typename: 'TicketArticleType',
       name: 'article',
+      communication: false,
     },
     contentType: 'text/html',
     attachmentsWithoutInline: [],
     preferences: {},
     ...mockedArticleData,
-  }
+  })
 }
 
 export const mockArticleQuery = (
-  firstArticles: Partial<ArticleNode>,
-  articles: Partial<ArticleNode>[] = [],
+  firstArticles: DeepPartial<ArticleNode>,
+  articles: DeepPartial<ArticleNode>[] = [],
   totalCount = articles.length + 1,
 ): TicketArticlesQuery => {
   const articleNodes = articles.map((article, index) => {
-    return {
+    return nullableMock<TicketArticleEdge>({
       __typename: 'TicketArticleEdge',
       node: articleContent(article.internalId ?? index + 1, article),
       cursor: `MI${index}`,
-    } as TicketArticleEdge
+    })
   })
 
-  return nullableMock({
+  return nullableMock<TicketArticlesQuery>({
     firstArticles: {
       __typename: 'TicketArticleConnection',
       edges: [

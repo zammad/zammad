@@ -4,17 +4,20 @@ import { computed, toRef, type Ref } from 'vue'
 
 import { useApplicationStore } from '#shared/stores/application.ts'
 
-import type { TicketById } from '../types.ts'
+import type { TicketLabel } from '../types.ts'
 
-export const useTicketNumberAndTitle = (ticket?: Ref<Partial<TicketById> | undefined>) => {
+export const useTicketNumberAndTitle = (ticket?: Ref<TicketLabel | undefined>) => {
   const config = toRef(useApplicationStore(), 'config')
 
-  const getTicketNumberWithHook = (ticketNumber?: number | string) => {
+  const getTicketNumberWithHook = (ticketNumber?: number | string | null) => {
     if (!ticketNumber) return ''
     return `${config.value.ticket_hook}${ticketNumber}`
   }
 
-  const getTicketNumberWithTitle = (ticketNumber?: number | string, ticketTitle?: string) => {
+  const getTicketNumberWithTitle = (
+    ticketNumber?: number | string | null,
+    ticketTitle?: string | null,
+  ) => {
     if (!ticketNumber || !ticketTitle) return ''
     return `${getTicketNumberWithHook(ticketNumber)} - ${ticketTitle}`
   }

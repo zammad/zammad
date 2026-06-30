@@ -14,6 +14,7 @@ export const QuickSearchDocument = gql`
   ) {
     totalCount
     items {
+      __typename
       ... on Organization {
         id
         internalId
@@ -25,6 +26,7 @@ export const QuickSearchDocument = gql`
   quickSearchTickets: search(search: $search, onlyIn: Ticket, limit: $limit) {
     totalCount
     items {
+      __typename
       ... on Ticket {
         id
         internalId
@@ -41,6 +43,7 @@ export const QuickSearchDocument = gql`
   quickSearchUsers: search(search: $search, onlyIn: User, limit: $limit) {
     totalCount
     items {
+      __typename
       ... on User {
         id
         internalId

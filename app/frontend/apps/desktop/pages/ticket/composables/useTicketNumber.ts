@@ -2,10 +2,10 @@
 
 import { computed, toRef, type Ref } from 'vue'
 
-import type { TicketById } from '#shared/entities/ticket/types.ts'
+import type { TicketLabel } from '#shared/entities/ticket/types.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
 
-export const useTicketNumber = (ticket: Ref<TicketById | undefined>) => {
+export const useTicketNumber = (ticket: Ref<TicketLabel | undefined>) => {
   const ticketNumber = computed(() => ticket?.value?.number?.toString())
 
   const config = toRef(useApplicationStore(), 'config')

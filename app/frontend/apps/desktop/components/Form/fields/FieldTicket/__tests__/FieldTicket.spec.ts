@@ -29,10 +29,12 @@ const testOptions: AutocompleteSearchTicketQuery['autocompleteSearchTicket'][0][
     disabled: false,
     icon: null,
     ticket: nullableMock({
+      __typename: 'Ticket',
       id: convertToGraphQLId('Ticket', 1),
       internalId: 1,
       number: '123456',
       state: nullableMock({
+        __typename: 'TicketState' as const,
         id: convertToGraphQLId('TicketState', 1),
         name: 'open',
       }),
@@ -49,10 +51,12 @@ const testOptions: AutocompleteSearchTicketQuery['autocompleteSearchTicket'][0][
     disabled: false,
     icon: null,
     ticket: nullableMock({
+      __typename: 'Ticket',
       id: convertToGraphQLId('Ticket', 2),
       internalId: 1,
       number: '55555',
       state: nullableMock({
+        __typename: 'TicketState' as const,
         id: convertToGraphQLId('TicketState', 1),
         name: 'open',
       }),
@@ -69,10 +73,12 @@ const testOptions: AutocompleteSearchTicketQuery['autocompleteSearchTicket'][0][
     disabled: false,
     icon: null,
     ticket: nullableMock({
+      __typename: 'Ticket',
       id: convertToGraphQLId('Ticket', 3),
       internalId: 1,
       number: '99999',
       state: nullableMock({
+        __typename: 'TicketState' as const,
         id: convertToGraphQLId('TicketState', 1),
         name: 'open',
       }),

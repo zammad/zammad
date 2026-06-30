@@ -4,6 +4,7 @@
 # app/frontend/shared/server/apollo/cache/initializer/history.ts
 
 fragment HistoryIssuer on HistoryRecordIssuer {
+  __typename
   ... on User {
     id
     internalId
@@ -41,6 +42,7 @@ fragment HistoryIssuer on HistoryRecordIssuer {
 }
 
 fragment HistoryEventObject on HistoryRecordEventObject {
+  __typename
   ... on Checklist {
     id
     name

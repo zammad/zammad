@@ -17,6 +17,7 @@ describe('localeFinder', () => {
 
   const locales = [
     {
+      __typename: 'Locale' as const,
       active: true,
       alias: 'de',
       dir: EnumTextDirection.Ltr,
@@ -24,6 +25,7 @@ describe('localeFinder', () => {
       name: 'Deutsch',
     },
     {
+      __typename: 'Locale' as const,
       active: true,
       alias: 'es',
       dir: EnumTextDirection.Ltr,
@@ -31,6 +33,7 @@ describe('localeFinder', () => {
       name: 'Español',
     },
     {
+      __typename: 'Locale' as const,
       active: true,
       alias: '',
       dir: EnumTextDirection.Ltr,
@@ -52,6 +55,7 @@ describe('localeFinder', () => {
   it('returns default locale for no match', () => {
     windowSpy.mockImplementation(() => ['sv-SV'])
     expect(localeForBrowserLanguage(locales)).toStrictEqual({
+      __typename: 'Locale',
       active: true,
       alias: 'en',
       dir: EnumTextDirection.Ltr,

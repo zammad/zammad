@@ -5,7 +5,36 @@ import type { Organization } from '#shared/graphql/types.ts'
 export const useFieldOrganizationOption = (
   organization: Organization,
 ): AutoCompleteOrganizationOption => ({
+  __typename: 'AutocompleteSearchOrganizationEntry',
   value: organization.internalId,
   label: organization.name as string,
-  organization,
+  labelPlaceholder: null,
+  heading: null,
+  headingPlaceholder: null,
+  disabled: false,
+  icon: null,
+  organization: {
+    __typename: 'Organization',
+    id: organization.id,
+    internalId: organization.internalId,
+    name: organization.name,
+    shared: organization.shared,
+    domain: organization.domain,
+    domainAssignment: organization.domainAssignment,
+    active: organization.active,
+    note: organization.note,
+    vip: organization.vip,
+    objectAttributeValues: organization.objectAttributeValues?.map(
+      ({ attribute, value, renderedLink }) => ({
+        __typename: 'ObjectAttributeValue',
+        value,
+        renderedLink,
+        attribute: {
+          __typename: 'ObjectManagerFrontendAttribute',
+          name: attribute.name,
+          display: attribute.display,
+        },
+      }),
+    ),
+  },
 })

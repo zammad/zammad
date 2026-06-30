@@ -233,9 +233,11 @@ describe('TicketSidebarSummary', () => {
   it('hides sidebar when ticket got merged', async () => {
     const wrapper = renderRenderTicketSidebarSummary({
       state: {
+        __typename: 'TicketState',
         name: 'merged',
         id: convertToGraphQLId('State', 5),
         stateType: {
+          __typename: 'TicketStateType',
           id: convertToGraphQLId('StateType', 6),
           name: 'merged',
         },

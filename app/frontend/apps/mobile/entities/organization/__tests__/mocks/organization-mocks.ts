@@ -12,7 +12,7 @@ import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import type { ConfidentTake } from '#shared/types/utils.ts'
 
 export const defaultOrganization = (): ConfidentTake<OrganizationQuery, 'organization'> =>
-  nullableMock({
+  nullableMock<ConfidentTake<OrganizationQuery, 'organization'>>({
     __typename: 'Organization',
     id: convertToGraphQLId('Organization', 100),
     internalId: 100,

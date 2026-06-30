@@ -12,8 +12,8 @@ import { useTicketSidebar } from '#desktop/pages/ticket/composables/useTicketSid
 const { ticket } = useTicketInformation()
 const ticketSidebar = useTicketSidebar()
 
-const referencingTickets = computed(
-  () => ticket?.value?.referencingChecklistTickets as ReferencingTicket[],
+const referencingTickets = computed<ReferencingTicket[]>(
+  () => ticket?.value?.referencingChecklistTickets ?? [],
 )
 
 const checklist = computed(() => ticket?.value?.checklist)

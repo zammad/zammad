@@ -10,8 +10,10 @@ export const SearchTaskbarItemStateUpdatesDocument = gql`
   userCurrentTaskbarItemStateUpdates(taskbarItemId: $taskbarItemId) {
     stateUpdateType
     taskbarItem {
+      __typename
       id
       entity {
+        __typename
         ... on UserTaskbarItemEntitySearch {
           query
           model

@@ -7,6 +7,7 @@ query autocompleteSearchGeneric($input: AutocompleteSearchGenericInput!, $member
     headingPlaceholder
     disabled
     object {
+      __typename
       ... on User {
         id
         internalId
@@ -23,6 +24,7 @@ query autocompleteSearchGeneric($input: AutocompleteSearchGenericInput!, $member
         active
         vip
         organization {
+          __typename
           id
           internalId
           name
@@ -44,6 +46,7 @@ query autocompleteSearchGeneric($input: AutocompleteSearchGenericInput!, $member
         allMembers(first: $membersCount) {
           edges {
             node {
+              __typename
               id
               internalId
               login

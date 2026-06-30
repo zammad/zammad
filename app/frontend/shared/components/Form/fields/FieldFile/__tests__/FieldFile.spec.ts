@@ -278,8 +278,10 @@ describe('Fields - FieldFile', () => {
     const file = new File([], 'foo.png', { type: 'image/png' })
     const uploadedFileQuery: FormUploadCacheAddMutation = {
       formUploadCacheAdd: {
+        __typename: 'FormUploadCacheAddPayload',
         uploadedFiles: [
           {
+            __typename: 'StoredFile',
             id: '1',
             name: file.name,
             size: file.size,

@@ -10,6 +10,7 @@ export const SearchDocument = gql`
   search(search: $search, onlyIn: $onlyIn, limit: $limit) {
     totalCount
     items {
+      __typename
       ... on Ticket {
         id
         internalId

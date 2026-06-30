@@ -2,9 +2,12 @@
 
 import { createPinia, setActivePinia } from 'pinia'
 
+import { nullableMock } from '#tests/support/utils.ts'
+
 import { errorOptions } from '#shared/router/error.ts'
 import { useAuthenticationStore } from '#shared/stores/authentication.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
+import type { UserData } from '#shared/types/store.ts'
 
 import permissionGuard from '../permission.ts'
 
@@ -60,14 +63,16 @@ describe('permissionGuard', () => {
     } as RouteLocationNormalized
 
     useAuthenticationStore().authenticated = true
-    useSessionStore().user = {
+    useSessionStore().user = nullableMock<UserData>({
+      __typename: 'User',
       id: '123',
       internalId: 1,
       permissions: {
+        __typename: 'UserPermission',
         names: ['example.view'],
       },
       objectAttributeValues: [],
-    }
+    })
 
     const result = permissionGuard(to, from, vi.fn())
 
@@ -99,14 +104,16 @@ describe('permissionGuard', () => {
     } as RouteLocationNormalized
 
     useAuthenticationStore().authenticated = true
-    useSessionStore().user = {
+    useSessionStore().user = nullableMock<UserData>({
+      __typename: 'User',
       id: '123',
       internalId: 1,
       permissions: {
+        __typename: 'UserPermission',
         names: ['ticket.agent'],
       },
       objectAttributeValues: [],
-    }
+    })
 
     const result = permissionGuard(to, from, vi.fn())
 

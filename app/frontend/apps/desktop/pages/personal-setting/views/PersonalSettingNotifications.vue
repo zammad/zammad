@@ -86,7 +86,8 @@ const schema = defineFormSchema([
 ])
 
 const initialFormValues = computed<NotificationFormData>((oldValues) => {
-  const { notificationConfig = {}, notificationSound = {} } = user.value?.personalSettings || {}
+  const notificationConfig = user.value?.personalSettings?.notificationConfig
+  const notificationSound = user.value?.personalSettings?.notificationSound
 
   const values: NotificationFormData = {
     group_ids: notificationConfig?.groupIds ?? [],

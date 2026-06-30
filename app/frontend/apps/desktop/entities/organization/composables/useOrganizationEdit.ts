@@ -3,10 +3,9 @@
 import type { FormSchemaField } from '#shared/components/Form/types.ts'
 import { useOrganizationFormSchema } from '#shared/entities/organization/composables/useOrganizationFormSchema.ts'
 import { useOrganizationUpdateMutation } from '#shared/entities/organization/graphql/mutations/update.api.ts'
+import type { EditableOrganization } from '#shared/entities/organization/types.ts'
 import { defineFormSchema } from '#shared/form/defineFormSchema.ts'
-import type { OrganizationQuery } from '#shared/graphql/types.ts'
 import { EnumFormUpdaterId, EnumObjectManagerObjects } from '#shared/graphql/types.ts'
-import type { ConfidentTake } from '#shared/types/utils.ts'
 
 import { openFlyout } from '#desktop/components/CommonFlyout/useFlyout.ts'
 import { useFlyoutObjectForm } from '#desktop/components/CommonFlyoutObjectForm/useFlyoutObjectForm.ts'
@@ -46,7 +45,7 @@ const buildOrganizationEditFormChangeFields = (): Record<string, Partial<FormSch
 }
 
 export const openOrganizationEditFlyout = async (
-  organization: ConfidentTake<OrganizationQuery, 'organization'>,
+  organization: EditableOrganization,
   options?: { title: string },
 ) => {
   const formChangeFields = buildOrganizationEditFormChangeFields()

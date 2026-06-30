@@ -15,6 +15,7 @@ export const AutocompleteSearchGenericDocument = gql`
     headingPlaceholder
     disabled
     object {
+      __typename
       ... on User {
         id
         internalId
@@ -31,6 +32,7 @@ export const AutocompleteSearchGenericDocument = gql`
         active
         vip
         organization {
+          __typename
           id
           internalId
           name
@@ -52,6 +54,7 @@ export const AutocompleteSearchGenericDocument = gql`
         allMembers(first: $membersCount) {
           edges {
             node {
+              __typename
               id
               internalId
               login

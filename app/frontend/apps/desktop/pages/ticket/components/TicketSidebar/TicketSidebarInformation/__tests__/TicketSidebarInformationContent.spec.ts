@@ -118,6 +118,7 @@ describe('TicketSidebarInformationContent', () => {
       const wrapper = renderInformationSidebar({
         ...defaultTicket,
         policy: {
+          __typename: 'PolicyTicket',
           update: false,
           agentReadAccess: true,
         },
@@ -138,6 +139,7 @@ describe('TicketSidebarInformationContent', () => {
       const wrapper = renderInformationSidebar({
         ...defaultTicket,
         policy: {
+          __typename: 'PolicyTicket',
           update: true,
           agentReadAccess: false,
         },

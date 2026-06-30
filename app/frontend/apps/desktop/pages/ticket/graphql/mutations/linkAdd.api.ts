@@ -11,6 +11,7 @@ export const LinkAddDocument = gql`
     link {
       type
       item {
+        __typename
         ... on Ticket {
           id
           internalId

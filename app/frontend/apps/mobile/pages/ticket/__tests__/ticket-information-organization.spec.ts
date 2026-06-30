@@ -101,8 +101,10 @@ describe('static organization', () => {
       ...organization,
       allMembers: {
         ...organization.allMembers,
+        __typename: 'UserConnection',
         edges: organization.allMembers?.edges || [],
         pageInfo: {
+          __typename: 'PageInfo',
           endCursor: null,
         },
         totalCount: 2,

@@ -2,6 +2,7 @@ query quickSearch($search: String!, $limit: Int = 10) {
   quickSearchOrganizations: search(search: $search, onlyIn: Organization, limit: $limit) {
     totalCount
     items {
+      __typename
       ... on Organization {
         id
         internalId
@@ -13,6 +14,7 @@ query quickSearch($search: String!, $limit: Int = 10) {
   quickSearchTickets: search(search: $search, onlyIn: Ticket, limit: $limit) {
     totalCount
     items {
+      __typename
       ... on Ticket {
         id
         internalId
@@ -29,6 +31,7 @@ query quickSearch($search: String!, $limit: Int = 10) {
   quickSearchUsers: search(search: $search, onlyIn: User, limit: $limit) {
     totalCount
     items {
+      __typename
       ... on User {
         id
         internalId

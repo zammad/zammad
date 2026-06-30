@@ -18,6 +18,7 @@ query detailSearch(
   ) {
     totalCount
     items {
+      __typename
       ... on Ticket {
         id
         internalId

@@ -13,6 +13,7 @@ import { EnumTwoFactorAuthenticationMethod, type LoginMutation } from '#shared/g
 import { GraphQLErrorTypes } from '#shared/types/error.ts'
 
 const twoFactorAuthentication = () => ({
+  __typename: 'UserLoginTwoFactorMethods' as const,
   availableTwoFactorAuthenticationMethods: [EnumTwoFactorAuthenticationMethod.AuthenticatorApp],
   defaultTwoFactorAuthenticationMethod: EnumTwoFactorAuthenticationMethod.AuthenticatorApp,
   recoveryCodesAvailable: false,
@@ -148,6 +149,7 @@ describe('two-factor login flow', () => {
   describe('alternative two-factor methods', () => {
     it.each([
       {
+        __typename: 'UserLoginTwoFactorMethods' as const,
         availableTwoFactorAuthenticationMethods: [
           EnumTwoFactorAuthenticationMethod.AuthenticatorApp,
         ],
@@ -157,6 +159,7 @@ describe('two-factor login flow', () => {
         available: false,
       },
       {
+        __typename: 'UserLoginTwoFactorMethods' as const,
         availableTwoFactorAuthenticationMethods: [
           EnumTwoFactorAuthenticationMethod.AuthenticatorApp,
         ],
@@ -166,6 +169,7 @@ describe('two-factor login flow', () => {
         available: true,
       },
       {
+        __typename: 'UserLoginTwoFactorMethods' as const,
         availableTwoFactorAuthenticationMethods: [
           EnumTwoFactorAuthenticationMethod.AuthenticatorApp,
           EnumTwoFactorAuthenticationMethod.SecurityKeys,

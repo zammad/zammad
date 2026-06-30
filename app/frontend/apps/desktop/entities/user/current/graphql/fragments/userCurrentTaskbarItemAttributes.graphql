@@ -5,6 +5,7 @@ fragment userCurrentTaskbarItemAttributes on UserTaskbarItem {
   formId
   formNewArticlePresent
   entity {
+    __typename
     ... on Ticket {
       ...ticketTaskbarTabAttributes
     }

@@ -2,13 +2,14 @@
 
 import { FormUpdaterDocument } from '#shared/components/Form/graphql/queries/formUpdater.api.ts'
 import type { FormUpdaterQuery } from '#shared/graphql/types.ts'
+import type { DeepPartial } from '#shared/types/utils.ts'
 
 import { mockGraphQLApi } from '../mock-graphql-api.ts'
 
-export const mockFormUpdater = (formUpdater?: FormUpdaterQuery) => {
+export const mockFormUpdater = (formUpdater?: DeepPartial<FormUpdaterQuery>) => {
   return mockGraphQLApi(FormUpdaterDocument).willResolve(
     formUpdater || {
-      formUpdater: {},
+      formUpdater: { __typename: 'FormUpdaterResult' },
     },
   )
 }

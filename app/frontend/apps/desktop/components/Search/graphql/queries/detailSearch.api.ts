@@ -18,6 +18,7 @@ export const DetailSearchDocument = gql`
   ) {
     totalCount
     items {
+      __typename
       ... on Ticket {
         id
         internalId

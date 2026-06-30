@@ -28,6 +28,7 @@ export default defineConfigWithVueTs(
   globalIgnores([
     'app/frontend/**/graphql/**/*.ts',
     '!app/frontend/tests/graphql/**/*.ts',
+    'app/frontend/shared/graphql/schema-types.ts',
     'app/frontend/shared/graphql/types.ts',
     'app/frontend/shared/types/config.ts',
     'tmp/**/*',

@@ -5,12 +5,14 @@ import type { SecurityValue } from '#shared/components/Form/fields/FieldSecurity
 import type { FormFieldValue } from '#shared/components/Form/types.ts'
 import type { TicketArticleFormValues } from '#shared/entities/ticket-article/action/plugins/types.ts'
 import {
-  type TicketQuery,
+  type EnumSecurityOption,
+  type EnumTaskbarApp,
+  type EnumTicketStateColorCode,
+  type ReferencingTicketFragment,
   type TicketArticlesQuery,
   type TicketLiveUser,
+  type TicketQuery,
   type TicketsCachedByOverviewQuery,
-  type EnumTaskbarApp,
-  type EnumSecurityOption,
 } from '#shared/graphql/types.ts'
 import type { ConfidentTake, PartialRequired } from '#shared/types/utils.ts'
 
@@ -44,6 +46,20 @@ export type TicketByList = NonNullable<
 >[number]['node']
 
 export type TicketArticle = ConfidentTake<TicketArticlesQuery, 'articles.edges.node'>
+
+export interface TicketLabel {
+  id?: string
+  internalId?: number
+  number?: number | string | null
+  title?: string | null
+  createdAt?: string | null
+  stateColorCode?: EnumTicketStateColorCode | null
+  state?: {
+    name?: string | null
+  } | null
+}
+
+export type ReferencingTicket = ReferencingTicketFragment
 
 export interface TicketCustomerUpdateFormData {
   customer_id: number

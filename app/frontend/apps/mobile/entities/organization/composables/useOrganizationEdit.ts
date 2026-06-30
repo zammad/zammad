@@ -4,10 +4,9 @@ import { reactive } from 'vue'
 
 import type { FormSchemaField } from '#shared/components/Form/types.ts'
 import { useOrganizationUpdateMutation } from '#shared/entities/organization/graphql/mutations/update.api.ts'
+import type { EditableOrganization } from '#shared/entities/organization/types.ts'
 import { defineFormSchema } from '#shared/form/defineFormSchema.ts'
-import type { OrganizationQuery } from '#shared/graphql/types.ts'
 import { EnumFormUpdaterId, EnumObjectManagerObjects } from '#shared/graphql/types.ts'
-import type { ConfidentTake } from '#shared/types/utils.ts'
 
 import { useDialogObjectForm } from '#mobile/components/CommonDialogObjectForm/useDialogObjectForm.ts'
 
@@ -36,9 +35,7 @@ export const useOrganizationEdit = () => {
     { showDirtyMark: true },
   )
 
-  const openEditOrganizationDialog = async (
-    organization: ConfidentTake<OrganizationQuery, 'organization'>,
-  ) => {
+  const openEditOrganizationDialog = async (organization: EditableOrganization) => {
     const formChangeFields = reactive<Record<string, Partial<FormSchemaField>>>({
       domain: {
         required: !!organization.domainAssignment,

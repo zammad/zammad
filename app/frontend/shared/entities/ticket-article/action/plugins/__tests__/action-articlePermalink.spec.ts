@@ -3,7 +3,7 @@
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { setupView } from '#tests/support/mock-user.ts'
 
-import { type TicketView } from '#shared/entities/ticket/types.ts'
+import { type TicketArticle, type TicketView } from '#shared/entities/ticket/types.ts'
 
 import { createTicketArticle, createTestArticleActions, createTicket } from './utils.ts'
 
@@ -51,7 +51,7 @@ describe('article permanent link action', () => {
 
     const articlePermalink = actions.find((action) => action.name === 'article-permalink')
 
-    articlePermalink?.perform?.(ticket, article, {} as TicketArticlePerformOptions)
+    articlePermalink?.perform?.(ticket, article as TicketArticle, {} as TicketArticlePerformOptions)
 
     expect(copyToClipboardMock).toHaveBeenCalledWith(
       `https://example.com/desktop/tickets/${ticket.internalId}/${article.internalId}`,

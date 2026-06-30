@@ -3,8 +3,9 @@
 import { flushPromises } from '@vue/test-utils'
 
 import { initializePiniaStore } from '#tests/support/components/renderComponent.ts'
+import { nullableMock } from '#tests/support/utils.ts'
 
-import type { Locale } from '#shared/graphql/types.ts'
+import type { LocalesQuery } from '#shared/graphql/types.ts'
 import { useLocaleStore } from '#shared/stores/locale.ts'
 
 import { useDateFnsLocale, importDateFnsLocale } from '../useDateFnsLocale.ts'
@@ -33,9 +34,10 @@ describe('useDateFnsLocale', () => {
   it('returns the correct date-fns locale based on the current locale store value', async () => {
     const locale = useLocaleStore()
 
-    locale.localeData = {
+    locale.localeData = nullableMock<LocalesQuery['locales'][number]>({
+      __typename: 'Locale',
       locale: 'en-gb',
-    } as Locale
+    })
 
     const { dateFnsLocale } = useDateFnsLocale()
 
@@ -47,9 +49,10 @@ describe('useDateFnsLocale', () => {
   it('returns the fallback en-US locale if the current locale is unsupported', async () => {
     const locale = useLocaleStore()
 
-    locale.localeData = {
+    locale.localeData = nullableMock<LocalesQuery['locales'][number]>({
+      __typename: 'Locale',
       locale: 'xx-xx',
-    } as Locale
+    })
 
     const { dateFnsLocale } = useDateFnsLocale()
 

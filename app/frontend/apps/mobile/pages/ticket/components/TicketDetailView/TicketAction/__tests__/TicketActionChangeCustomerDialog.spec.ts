@@ -8,7 +8,10 @@ import { mockPermissions } from '#tests/support/mock-permissions.ts'
 import { nullableMock, waitUntil } from '#tests/support/utils.ts'
 
 import { AutocompleteSearchUserDocument } from '#shared/components/Form/fields/FieldCustomer/graphql/queries/autocompleteSearch/user.api.ts'
-import type { AutocompleteSearchUserQuery } from '#shared/graphql/types.ts'
+import type {
+  AutocompleteSearchUserEntry,
+  AutocompleteSearchUserQuery,
+} from '#shared/graphql/types.ts'
 import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
 
 import { mockTicketObjectAttributesGql } from '#mobile/entities/ticket/__tests__/mocks/ticket-mocks.ts'
@@ -33,39 +36,40 @@ const mockUpdateMutationHandler = () => {
 
 const defaultAutoCompleteSearchUserResult = (
   hasSecondaryOrganizations = false,
-): AutocompleteSearchUserQuery => ({
-  autocompleteSearchUser: [
-    nullableMock({
-      value: 2,
-      label: 'Nicole Braun',
-      labelPlaceholder: null,
-      heading: 'Zammad Foundation',
-      headingPlaceholder: null,
-      disabled: null,
-      icon: null,
-      user: {
-        id: 'gid://zammad/User/2',
-        internalId: 2,
-        firstname: 'Nicole',
-        lastname: 'Braun',
-        fullname: 'Nicole Braun',
-        image: null,
-        objectAttributeValues: [],
-        organization: {
-          id: 'gid://zammad/Organization/1',
-          internalId: 1,
-          name: 'Zammad Foundation',
-          active: true,
+): AutocompleteSearchUserQuery =>
+  nullableMock<AutocompleteSearchUserQuery>({
+    autocompleteSearchUser: [
+      nullableMock<AutocompleteSearchUserEntry>({
+        value: 2,
+        label: 'Nicole Braun',
+        labelPlaceholder: null,
+        heading: 'Zammad Foundation',
+        headingPlaceholder: null,
+        disabled: null,
+        icon: null,
+        user: {
+          id: 'gid://zammad/User/2',
+          internalId: 2,
+          firstname: 'Nicole',
+          lastname: 'Braun',
+          fullname: 'Nicole Braun',
+          image: null,
           objectAttributeValues: [],
-          __typename: 'Organization',
+          organization: {
+            id: 'gid://zammad/Organization/1',
+            internalId: 1,
+            name: 'Zammad Foundation',
+            active: true,
+            objectAttributeValues: [],
+            __typename: 'Organization',
+          },
+          hasSecondaryOrganizations,
+          __typename: 'User',
         },
-        hasSecondaryOrganizations,
-        __typename: 'User',
-      },
-      __typename: 'AutocompleteSearchUserEntry',
-    }),
-  ],
-})
+        __typename: 'AutocompleteSearchUserEntry',
+      }),
+    ],
+  })
 
 const mockCustomerQueryResult = (autoCompleteSearchUserResult?: AutocompleteSearchUserQuery[]) => {
   return mockGraphQLApi(AutocompleteSearchUserDocument).willResolve(
@@ -149,9 +153,9 @@ describe('TicketAction - change customer dialog', () => {
   test('show organization field for customers with multiple organization (and also hide again)', async () => {
     const mockCustomer = mockCustomerQueryResult([
       defaultAutoCompleteSearchUserResult(true),
-      {
+      nullableMock<AutocompleteSearchUserQuery>({
         autocompleteSearchUser: [
-          nullableMock({
+          nullableMock<AutocompleteSearchUserEntry>({
             value: 200,
             label: 'John Doe',
             labelPlaceholder: null,
@@ -181,7 +185,7 @@ describe('TicketAction - change customer dialog', () => {
             __typename: 'AutocompleteSearchUserEntry',
           }),
         ],
-      },
+      }),
     ])
 
     const view = renderComponent(TicketActionChangeCustomerDialog, {

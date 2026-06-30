@@ -340,6 +340,7 @@ describe('calling API to retry encryption', () => {
       encryptionSuccess: false,
       signingMessage: 'The certificate for verification could not be found.',
       signingSuccess: false,
+      type: EnumSecurityStateType.Smime,
     }
 
     const { waitUntilTicketLoaded } = mockTicketDetailViewGql({
@@ -399,6 +400,7 @@ describe('calling API to retry encryption', () => {
       encryptionSuccess: false,
       signingMessage: 'The certificate for verification could not be found.',
       signingSuccess: false,
+      type: EnumSecurityStateType.Smime,
     }
 
     const { waitUntilTicketLoaded } = mockTicketDetailViewGql({
@@ -459,9 +461,12 @@ describe('remote content removal', () => {
     }
     article.attachmentsWithoutInline = [
       {
+        __typename: 'StoredFile',
         id: convertToGraphQLId('Store', 1),
         internalId: 1,
         name: 'message',
+        size: null,
+        type: null,
         preferences: {
           'original-format': true,
         },
@@ -951,6 +956,7 @@ it('correctly redirects from ticket hash-based routes with other ids', async () 
       defaultArticles(),
       {
         articles: {
+          __typename: 'TicketArticleConnection',
           edges: [],
           pageInfo: {
             endCursor: null,

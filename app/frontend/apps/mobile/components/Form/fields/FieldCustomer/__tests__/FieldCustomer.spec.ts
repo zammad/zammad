@@ -20,8 +20,20 @@ import type { FormKitNode } from '@formkit/core'
 
 const mockQueryResult = (input: { query: string; limit: number }): AutocompleteSearchUserQuery => {
   const options = testOptions.map((option) =>
-    nullableMock({
+    nullableMock<AutocompleteSearchUserEntry>({
       ...option,
+      user: {
+        ...option.user,
+        __typename: 'User',
+        id: String(option.user.id),
+        organization: option.user.organization
+          ? {
+              ...option.user.organization,
+              __typename: 'Organization',
+              id: String(option.user.organization.id),
+            }
+          : null,
+      },
       labelPlaceholder: null,
       headingPlaceholder: null,
       disabled: null,
@@ -39,12 +51,12 @@ const mockQueryResult = (input: { query: string; limit: number }): AutocompleteS
   // Search across options via their de-accented labels.
   const filteredOptions = options.filter(
     (option) =>
-      filterRegex.test(deaccent(option.label)) || filterRegex.test(deaccent(option.heading)),
+      filterRegex.test(deaccent(option.label)) || filterRegex.test(deaccent(option.heading || '')),
   ) as unknown as AutocompleteSearchUserEntry[]
 
-  return {
+  return nullableMock<AutocompleteSearchUserQuery>({
     autocompleteSearchUser: filteredOptions.slice(0, input.limit ?? 25),
-  }
+  })
 }
 
 const wrapperParameters = {

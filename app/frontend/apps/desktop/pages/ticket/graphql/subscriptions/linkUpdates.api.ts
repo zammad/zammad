@@ -10,6 +10,7 @@ export const LinkUpdatesDocument = gql`
   linkUpdates(objectId: $objectId, targetType: $targetType) {
     links {
       item {
+        __typename
         ... on Ticket {
           id
           internalId

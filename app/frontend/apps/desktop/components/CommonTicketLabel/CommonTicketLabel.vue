@@ -4,13 +4,13 @@
 import { computed } from 'vue'
 
 import { useTicketNumberAndTitle } from '#shared/entities/ticket/composables/useTicketNumberAndTitle.ts'
-import type { TicketById } from '#shared/entities/ticket/types.ts'
+import type { TicketLabel } from '#shared/entities/ticket/types.ts'
 import { EnumTicketStateColorCode } from '#shared/graphql/types.ts'
 
 import CommonTicketStateIndicatorIcon from '#desktop/components/CommonTicketStateIndicator/CommonTicketStateIndicatorIcon.vue'
 
 interface Props {
-  ticket?: Partial<TicketById> | null
+  ticket?: TicketLabel | null
   unauthorized?: boolean
   noLink?: boolean
   noWrap?: boolean

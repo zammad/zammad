@@ -23,6 +23,7 @@ const localeForBrowserLanguage = (
   }
 
   return {
+    __typename: 'Locale',
     locale: 'en-us',
     alias: 'en',
     // eslint-disable-next-line zammad/zammad-detect-translatable-string

@@ -3,7 +3,7 @@
 import '#tests/graphql/builders/mocks.ts'
 import { renderComponent, type ExtendedMountingOptions } from '#tests/support/components/index.ts'
 import { mockRouterHooks } from '#tests/support/mock-vue-router.ts'
-import { waitForNextTick } from '#tests/support/utils.ts'
+import { nullableMock, waitForNextTick } from '#tests/support/utils.ts'
 
 import type { TicketByList } from '#shared/entities/ticket/types.ts'
 import { EnumTicketStateColorCode } from '#shared/graphql/types.ts'
@@ -37,7 +37,8 @@ const renderListTable = async (
 const tableHeaders = ['title', 'owner', 'state', 'stateIcon', 'priority']
 
 const tableItems: TicketByList[] = [
-  {
+  nullableMock<TicketByList>({
+    __typename: 'Ticket',
     id: convertToGraphQLId('Ticket', 1),
     title: 'Dummy ticket',
     owner: {
@@ -59,6 +60,7 @@ const tableItems: TicketByList[] = [
       __typename: 'TicketPriority',
       id: convertToGraphQLId('TicketPriority', 3),
       name: '3 high',
+      uiColor: null,
     },
     createdAt: '2021-01-01T12:00:00Z',
     internalId: 0,
@@ -66,20 +68,20 @@ const tableItems: TicketByList[] = [
     updatedAt: '',
     stateColorCode: EnumTicketStateColorCode.Closed,
     customer: {
-      __typename: undefined,
+      __typename: 'User',
       id: '',
       fullname: undefined,
     },
     group: {
-      __typename: undefined,
+      __typename: 'Group',
       id: '',
       name: undefined,
     },
     policy: {
-      __typename: undefined,
+      __typename: 'PolicyTicket',
       update: false,
     },
-  },
+  }),
 ]
 
 describe('TicketListTable', () => {

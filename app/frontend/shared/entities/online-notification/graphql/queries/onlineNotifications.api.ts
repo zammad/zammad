@@ -32,6 +32,7 @@ export const OnlineNotificationsDocument = gql`
           createdByAi
         }
         metaObject {
+          __typename
           ... on Ticket {
             id
             internalId
@@ -55,6 +56,7 @@ export const OnlineNotificationsDocument = gql`
             id
             internalId
             data {
+              __typename
               ... on OnlineNotificationStandaloneBulkJobData {
                 total
                 failedCount

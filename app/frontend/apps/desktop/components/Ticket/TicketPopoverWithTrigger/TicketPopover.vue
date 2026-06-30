@@ -5,13 +5,8 @@ import { computed } from 'vue'
 
 import ObjectAttributes from '#shared/components/ObjectAttributes/ObjectAttributes.vue'
 import { useObjectAttributes } from '#shared/entities/object-attributes/composables/useObjectAttributes.ts'
-import type { TicketById } from '#shared/entities/ticket/types.ts'
-import {
-  EnumObjectManagerObjects,
-  type Organization,
-  type Ticket,
-  type User,
-} from '#shared/graphql/types.ts'
+import type { TicketById, TicketLabel } from '#shared/entities/ticket/types.ts'
+import { EnumObjectManagerObjects, type Organization, type User } from '#shared/graphql/types.ts'
 import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
 import { SYSTEM_USER_ID } from '#shared/utils/constants.ts'
 
@@ -25,7 +20,7 @@ import { useTicketInfoForPopoverQuery } from './graphql/queries/ticketInfoForPop
 import TicketPopoverSkeleton from './skeleton/TicketPopoverSkeleton.vue'
 
 interface Props {
-  ticket: Partial<Ticket | TicketById>
+  ticket: TicketLabel
 }
 
 const props = defineProps<Props>()

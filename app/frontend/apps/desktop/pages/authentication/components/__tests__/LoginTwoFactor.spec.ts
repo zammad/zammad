@@ -10,12 +10,15 @@ import securityKeys from '#shared/entities/two-factor/plugins/security-keys.ts'
 import type { TwoFactorPlugin, TwoFactorSetupResult } from '#shared/entities/two-factor/types.ts'
 import { TwoFactorMethodInitiateAuthenticationDocument } from '#shared/graphql/mutations/twoFactorMethodInitiateAuthentication.api.ts'
 import type { TwoFactorMethodInitiateAuthenticationMutation } from '#shared/graphql/types.ts'
+import type { DeepPartial } from '#shared/types/utils.ts'
 import { createDeferred } from '#shared/utils/helpers.ts'
 
 import LoginTwoFactor from '../LoginTwoFactor.vue'
 
 const prepareInitialData = (
-  data: TwoFactorMethodInitiateAuthenticationMutation['twoFactorMethodInitiateAuthentication'],
+  data: DeepPartial<
+    TwoFactorMethodInitiateAuthenticationMutation['twoFactorMethodInitiateAuthentication']
+  >,
 ) => {
   mockGraphQLResult<TwoFactorMethodInitiateAuthenticationMutation>(
     TwoFactorMethodInitiateAuthenticationDocument,

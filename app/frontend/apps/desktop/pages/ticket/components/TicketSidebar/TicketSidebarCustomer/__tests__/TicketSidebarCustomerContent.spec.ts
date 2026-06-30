@@ -203,6 +203,7 @@ describe('TicketSidebarCustomerContent.vue', () => {
         {
           ...defaultTicket,
           policy: {
+            __typename: 'PolicyTicket',
             update: false,
             agentReadAccess: true,
           },

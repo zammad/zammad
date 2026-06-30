@@ -23,6 +23,7 @@ import {
   type ObjectManagerFrontendAttributesPayload,
   type FormUpdaterQuery,
 } from '#shared/graphql/types.ts'
+import type { DeepPartial } from '#shared/types/utils.ts'
 
 import { FormUpdaterDocument } from '../../../graphql/queries/formUpdater.api.ts'
 import additionalFrontendObjectAttributes from '../../mocks/additionalFrontendObjectAttributes.json'
@@ -205,7 +206,7 @@ const mergedObjectAttributes = mergeFrontendObjectAttributes(
 )
 
 const renderForm = async (
-  formUpdaterQueryResponse: FormUpdaterQuery | FormUpdaterQuery[],
+  formUpdaterQueryResponse: DeepPartial<FormUpdaterQuery> | DeepPartial<FormUpdaterQuery>[],
   options: ExtendedMountingOptions<Props> = {},
   objectManagerFrontendAttributes = mergedObjectAttributes,
 ) => {

@@ -2,8 +2,14 @@
 
 import { nullableMock } from '#tests/support/utils.ts'
 
-import type { AutocompleteSearchGenericEntry } from '#shared/graphql/types.ts'
+import type { AutocompleteSearchGenericQuery } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+
+type AutocompleteSearchGenericEntry =
+  AutocompleteSearchGenericQuery['autocompleteSearchGeneric'][number]
+type GenericEntryObject = NonNullable<AutocompleteSearchGenericEntry['object']>
+type GenericUser = Extract<GenericEntryObject, { __typename: 'User' }>
+type GenericOrganization = Extract<GenericEntryObject, { __typename: 'Organization' }>
 
 export const testOptions: AutocompleteSearchGenericEntry[] = [
   {
@@ -14,8 +20,7 @@ export const testOptions: AutocompleteSearchGenericEntry[] = [
     heading: 'Zammad Foundation',
     headingPlaceholder: [],
     disabled: false,
-    icon: null,
-    object: nullableMock({
+    object: nullableMock<GenericUser>({
       __typename: 'User',
       id: convertToGraphQLId('User', 2),
       internalId: 2,
@@ -31,12 +36,6 @@ export const testOptions: AutocompleteSearchGenericEntry[] = [
       outOfOfficeEndAt: null,
       active: true,
       vip: false,
-      createdAt: '2022-11-30T12:40:15Z',
-      updatedAt: '2022-11-30T12:40:15Z',
-      policy: {
-        update: true,
-        destroy: false,
-      },
       organization: null,
       hasSecondaryOrganizations: false,
     }),
@@ -49,8 +48,7 @@ export const testOptions: AutocompleteSearchGenericEntry[] = [
     heading: '%s people',
     headingPlaceholder: ['1'],
     disabled: true,
-    icon: null,
-    object: nullableMock({
+    object: nullableMock<GenericOrganization>({
       __typename: 'Organization',
       id: convertToGraphQLId('Organization', 1),
       internalId: 1,
@@ -61,7 +59,7 @@ export const testOptions: AutocompleteSearchGenericEntry[] = [
         edges: [
           {
             __typename: 'UserEdge',
-            node: nullableMock({
+            node: nullableMock<GenericUser>({
               __typename: 'User',
               id: convertToGraphQLId('User', 1),
               internalId: 1,
@@ -77,28 +75,9 @@ export const testOptions: AutocompleteSearchGenericEntry[] = [
               outOfOfficeEndAt: null,
               active: true,
               vip: false,
-              createdAt: '2022-11-30T12:40:15Z',
-              updatedAt: '2022-11-30T12:40:15Z',
-              policy: {
-                update: true,
-                destroy: false,
-              },
             }),
-            cursor: 'MH',
           },
         ],
-        pageInfo: {
-          hasNextPage: false,
-          hasPreviousPage: false,
-          startCursor: 'MH',
-        },
-        totalCount: 1,
-      },
-      createdAt: '2022-11-30T12:40:15Z',
-      updatedAt: '2022-11-30T12:40:15Z',
-      policy: {
-        update: true,
-        destroy: false,
       },
     }),
   },

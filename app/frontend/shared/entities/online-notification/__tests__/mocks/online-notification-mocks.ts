@@ -3,6 +3,7 @@
 import { nullableMock } from '#tests/support/utils.ts'
 
 import type { OnlineNotificationsQuery, Scalars } from '#shared/graphql/types.ts'
+import type { DeepPartial } from '#shared/types/utils.ts'
 
 import type { LastArrayElement } from 'type-fest'
 
@@ -12,13 +13,14 @@ type OnlineNotificationNode = LastArrayElement<
 
 export const mockOnlineNotification = (
   id: Scalars['ID']['output'],
-  mockNotification: Partial<OnlineNotificationNode>,
+  mockNotification: DeepPartial<OnlineNotificationNode>,
 ): OnlineNotificationNode => {
-  return {
+  return nullableMock<OnlineNotificationNode>({
     __typename: 'OnlineNotification',
     seen: false,
     createdAt: new Date().toISOString(),
     createdBy: {
+      __typename: 'User',
       id: '123',
       fullname: 'Full Name',
       lastname: 'Name',
@@ -26,6 +28,8 @@ export const mockOnlineNotification = (
       email: 'email@example.org',
       vip: false,
       outOfOffice: false,
+      outOfOfficeStartAt: null,
+      outOfOfficeEndAt: null,
       active: true,
       image: null,
     },
@@ -43,11 +47,11 @@ export const mockOnlineNotification = (
     },
     id,
     ...mockNotification,
-  }
+  })
 }
 
 export const mockOnlineNotificationQuery = (
-  mockNotifications: Array<Partial<OnlineNotificationNode>>,
+  mockNotifications: Array<DeepPartial<OnlineNotificationNode>>,
 ): OnlineNotificationsQuery => {
   const edges = mockNotifications.map((item, index) => {
     const id = index + 1

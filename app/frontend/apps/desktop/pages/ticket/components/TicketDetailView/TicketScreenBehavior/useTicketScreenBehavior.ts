@@ -2,7 +2,6 @@
 
 import { computed, toRef, type Ref } from 'vue'
 
-import type { TicketById } from '#shared/entities/ticket/types.ts'
 import { EnumTicketScreenBehavior } from '#shared/graphql/types.ts'
 import { useWalker } from '#shared/router/walker.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
@@ -34,7 +33,13 @@ export const useTicketScreenBehavior = (currentTaskbarTabId: Ref<string | undefi
     ticket,
   }: {
     screenBehaviour?: EnumTicketScreenBehavior
-    ticket: TicketById
+    ticket: {
+      state: {
+        stateType: {
+          name: string
+        }
+      }
+    }
   }) => {
     const currentScreenBehaviour = screenBehaviour || secondaryAction.value
 

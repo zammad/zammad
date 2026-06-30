@@ -4,6 +4,7 @@ import { flushPromises } from '@vue/test-utils'
 import { ref } from 'vue'
 
 import { renderComponent } from '#tests/support/components/index.ts'
+import { nullableMock } from '#tests/support/utils.ts'
 
 import type {
   MentionKnowledgeBaseItem,
@@ -22,7 +23,7 @@ const baseProps = {
 
 describe('component for rendering suggestions', () => {
   it('renders knowledge base article', () => {
-    const items: MentionKnowledgeBaseItem[] = [
+    const items = nullableMock<MentionKnowledgeBaseItem[]>([
       {
         __typename: 'KnowledgeBaseAnswerTranslation',
         id: convertToGraphQLId('KnowledgeBaseAnswerTranslation', 1),
@@ -74,7 +75,7 @@ describe('component for rendering suggestions', () => {
           },
         ],
       },
-    ]
+    ])
 
     const view = renderComponent(FieldEditorSuggestionList, {
       props: {
@@ -98,14 +99,14 @@ describe('component for rendering suggestions', () => {
   })
 
   it('renders text item', () => {
-    const items: MentionTextItem[] = [
+    const items = nullableMock<MentionTextItem[]>([
       {
         name: 'Text Item',
         keywords: 'key',
         renderedContent: 'content',
         id: convertToGraphQLId('TextModule', 1),
       },
-    ]
+    ])
 
     const view = renderComponent(FieldEditorSuggestionList, {
       props: {
@@ -121,14 +122,14 @@ describe('component for rendering suggestions', () => {
   })
 
   it('renders text item with spaces in search query', () => {
-    const items: MentionTextItem[] = [
+    const items = nullableMock<MentionTextItem[]>([
       {
         name: 'the best',
         keywords: 'best',
         renderedContent: 'wishing you all the best',
         id: convertToGraphQLId('TextModule', 1),
       },
-    ]
+    ])
 
     const view = renderComponent(FieldEditorSuggestionList, {
       props: {
@@ -144,7 +145,7 @@ describe('component for rendering suggestions', () => {
   })
 
   it('renders user mention', () => {
-    const items: MentionUserItem[] = [
+    const items = nullableMock<MentionUserItem[]>([
       {
         id: convertToGraphQLId('User', 1),
         fullname: 'John Doe',
@@ -156,7 +157,7 @@ describe('component for rendering suggestions', () => {
         fullname: 'Nicole Braun',
         internalId: 2,
       },
-    ]
+    ])
 
     const view = renderComponent(FieldEditorSuggestionList, {
       props: {
@@ -178,7 +179,7 @@ describe('component for rendering suggestions', () => {
   })
 
   it('renders user mention with spaces in search query', () => {
-    const items: MentionUserItem[] = [
+    const items = nullableMock<MentionUserItem[]>([
       {
         id: convertToGraphQLId('User', 1),
         fullname: 'John Doe',
@@ -190,7 +191,7 @@ describe('component for rendering suggestions', () => {
         fullname: 'Nicole Braun',
         internalId: 2,
       },
-    ]
+    ])
 
     const view = renderComponent(FieldEditorSuggestionList, {
       props: {
@@ -209,7 +210,7 @@ describe('component for rendering suggestions', () => {
 })
 
 describe('actions in list', () => {
-  const items: MentionUserItem[] = [
+  const items = nullableMock<MentionUserItem[]>([
     {
       id: convertToGraphQLId('User', 1),
       fullname: 'John Doe',
@@ -225,7 +226,7 @@ describe('actions in list', () => {
       fullname: 'Erik Wise',
       internalId: 3,
     },
-  ]
+  ])
 
   const renderList = () => {
     const listExposed = ref<{
@@ -312,7 +313,7 @@ describe('actions in list', () => {
 })
 
 describe('accessibility (combobox + listbox wiring)', () => {
-  const items: MentionTextItem[] = [
+  const items = nullableMock<MentionTextItem[]>([
     {
       name: 'Greeting',
       keywords: 'hi',
@@ -325,7 +326,7 @@ describe('accessibility (combobox + listbox wiring)', () => {
       renderedContent: 'Goodbye',
       id: convertToGraphQLId('TextModule', 2),
     },
-  ]
+  ])
 
   it('uses the label prop as the listbox aria-label', () => {
     const view = renderComponent(FieldEditorSuggestionList, {

@@ -25,8 +25,13 @@ const mockQueryResult = (input: {
   limit: number
 }): AutocompleteSearchOrganizationQuery => {
   const options = testOptions.map((option) =>
-    nullableMock({
+    nullableMock<AutocompleteSearchOrganizationEntry>({
       ...option,
+      organization: {
+        ...option.organization,
+        __typename: 'Organization',
+        id: String(option.organization.id),
+      },
       labelPlaceholder: null,
       headingPlaceholder: null,
       disabled: null,
@@ -44,12 +49,12 @@ const mockQueryResult = (input: {
   // Search across options via their de-accented labels.
   const filteredOptions = options.filter(
     (option) =>
-      filterRegex.test(deaccent(option.label)) || filterRegex.test(deaccent(option.heading)),
+      filterRegex.test(deaccent(option.label)) || filterRegex.test(deaccent(option.heading || '')),
   ) as unknown as AutocompleteSearchOrganizationEntry[]
 
-  return {
+  return nullableMock<AutocompleteSearchOrganizationQuery>({
     autocompleteSearchOrganization: filteredOptions.slice(0, input.limit ?? 25),
-  }
+  })
 }
 
 const wrapperParameters = {

@@ -164,7 +164,10 @@ export const useSessionStore = defineStore(
     const setUserPreference = (key: string, value: JsonValue) => {
       if (!user.value) return
 
-      user.value.preferences[key] = value
+      user.value.preferences = {
+        ...user.value.preferences,
+        [key]: value,
+      }
 
       return user.value
     }

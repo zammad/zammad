@@ -16,6 +16,7 @@ import {
   type TicketChecklistUpdatesSubscription,
 } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+import type { DeepPartial } from '#shared/types/utils.ts'
 import '#tests/graphql/builders/mocks.ts'
 
 import { waitForTicketChecklistAddMutationCalls } from '#desktop/pages/ticket/graphql/mutations/ticketChecklistAdd.mocks.ts'
@@ -76,63 +77,78 @@ const templateMocks: Partial<ChecklistTemplate>[] = [
   },
 ]
 
-const checklistItemsMock: Partial<ChecklistItem>[] = [
-  {
+const checklistItemsMock: ChecklistItem[] = [
+  nullableMock<ChecklistItem>({
     __typename: 'ChecklistItem',
     id: convertToGraphQLId('Checklist::Item', 1),
     text: 'Checklist item A',
     checked: false,
     ticketReference: null,
-  },
-  {
+  }),
+  nullableMock<ChecklistItem>({
     __typename: 'ChecklistItem',
     id: convertToGraphQLId('Checklist::Item', 2),
     text: 'Checklist item B',
     checked: false,
     ticketReference: null,
-  },
+  }),
 ]
+
+type TicketChecklist = NonNullable<
+  TicketChecklistUpdatesSubscription['ticketChecklistUpdates']['ticketChecklist']
+>
 
 // Overrides the default checklist values if set to null, checklist will be empty
 const mockChecklistUpdateSubscription = async (
-  partialTicketChecklist: Partial<
-    TicketChecklistUpdatesSubscription['ticketChecklistUpdates']['ticketChecklist']
-  > | null,
+  partialTicketChecklist: DeepPartial<TicketChecklist> | null,
 ) => {
   if (partialTicketChecklist === null) {
-    await getTicketChecklistUpdatesSubscriptionHandler().trigger({
-      ticketChecklistUpdates: {
-        ticketChecklist: null,
-      },
-    })
+    await getTicketChecklistUpdatesSubscriptionHandler().trigger(
+      nullableMock<TicketChecklistUpdatesSubscription>({
+        ticketChecklistUpdates: {
+          __typename: 'TicketChecklistUpdatesPayload',
+          removedTicketChecklist: null,
+          ticketChecklist: null,
+        },
+      }),
+    )
     return
   }
 
-  const ticketChecklist = {
+  const ticketChecklist = nullableMock<TicketChecklist>({
+    __typename: 'Checklist',
     completed: false,
+    incomplete: 2,
     name: 'Checklist title',
     id: convertToGraphQLId('Checklist', 1),
     items: [
       {
+        __typename: 'ChecklistItem',
         checked: false,
         id: convertToGraphQLId('Checklist::Item', 1),
         text: 'Checklist item A',
+        ticketReference: null,
       },
       {
+        __typename: 'ChecklistItem',
         checked: false,
         id: convertToGraphQLId('Checklist::Item', 2),
         text: 'Checklist item B',
+        ticketReference: null,
       },
     ],
     ...partialTicketChecklist,
-  }
-
-  await getTicketChecklistUpdatesSubscriptionHandler().trigger({
-    ticketChecklistUpdates: {
-      removedTicketChecklist: null,
-      ticketChecklist,
-    },
   })
+
+  await getTicketChecklistUpdatesSubscriptionHandler().trigger(
+    nullableMock<TicketChecklistUpdatesSubscription>({
+      ticketChecklistUpdates: {
+        __typename: 'TicketChecklistUpdatesPayload',
+        removedTicketChecklist: null,
+        ticketChecklist,
+      },
+    }),
+  )
 }
 
 const openMenuAndClickAction = async (

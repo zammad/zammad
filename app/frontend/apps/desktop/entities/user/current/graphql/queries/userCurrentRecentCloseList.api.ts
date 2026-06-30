@@ -8,6 +8,7 @@ export type ReactiveFunction<TParam> = () => TParam;
 export const UserCurrentRecentCloseListDocument = gql`
     query userCurrentRecentCloseList($limit: Int) {
   userCurrentRecentCloseList(limit: $limit) {
+    __typename
     ... on Ticket {
       id
       internalId

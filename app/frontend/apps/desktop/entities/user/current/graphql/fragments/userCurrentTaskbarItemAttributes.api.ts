@@ -10,6 +10,7 @@ export const UserCurrentTaskbarItemAttributesFragmentDoc = gql`
   formId
   formNewArticlePresent
   entity {
+    __typename
     ... on Ticket {
       ...ticketTaskbarTabAttributes
     }

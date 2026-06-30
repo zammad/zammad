@@ -5,10 +5,12 @@ import { getAllByRole, waitFor } from '@testing-library/vue'
 import { getByIconName } from '#tests/support/components/iconQueries.ts'
 import { renderComponent } from '#tests/support/components/index.ts'
 import { mockGraphQLApi } from '#tests/support/mock-graphql-api.ts'
+import { nullableMock } from '#tests/support/utils.ts'
 
 import { ObjectManagerFrontendAttributesDocument } from '#shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.api.ts'
 import type { TicketArticle } from '#shared/entities/ticket/types.ts'
-import { EnumSecurityStateType, type TicketArticleSecurityState } from '#shared/graphql/types.ts'
+import { EnumSecurityStateType } from '#shared/graphql/types.ts'
+import type { DeepPartial } from '#shared/types/utils.ts'
 
 import { ticketArticleObjectAttributes } from '#mobile/entities/ticket/__tests__/mocks/ticket-mocks.ts'
 import { defaultArticles } from '#mobile/pages/ticket/__tests__/mocks/detail-view.ts'
@@ -17,6 +19,7 @@ import ArticleMetadataDialog from '../ArticleMetadataDialog.vue'
 
 // parsed is tested in unit test
 const getAddress = (raw: string) => ({
+  __typename: 'AddressesField' as const,
   raw,
   parsed: null,
 })
@@ -43,7 +46,9 @@ describe('visuals for metadata', () => {
       cc: getAddress('Joe Mike <joe.mike@zammad.org>'),
       replyTo: getAddress('Arthur Miller <arthur.miller@zammad.org>'),
       type: {
+        __typename: 'TicketArticleType',
         name: 'email',
+        communication: true,
       },
       detectedLanguage: 'de',
       createdAt,
@@ -114,14 +119,17 @@ describe('visuals for metadata', () => {
 })
 
 describe('rendering security field', () => {
-  const mockArticle = (security: TicketArticleSecurityState): TicketArticle => ({
-    ...defaultArticles().firstArticles!.edges[0].node,
-    internalId: 1,
-    securityState: {
-      __typename: 'TicketArticleSecurityState',
-      ...security,
-    },
-  })
+  const mockArticle = (
+    security: DeepPartial<NonNullable<TicketArticle['securityState']>>,
+  ): TicketArticle =>
+    nullableMock<TicketArticle>({
+      ...defaultArticles().firstArticles!.edges[0].node,
+      internalId: 1,
+      securityState: {
+        __typename: 'TicketArticleSecurityState',
+        ...security,
+      },
+    })
 
   describe('renders type', () => {
     it('renders S/MIME type when provided', () => {

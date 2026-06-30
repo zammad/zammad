@@ -140,7 +140,7 @@ const address = {
 }
 
 export const defaultArticles = (): TicketArticlesQuery =>
-  nullableMock({
+  nullableMock<TicketArticlesQuery>({
     firstArticles: {
       __typename: 'TicketArticleConnection',
       edges: [

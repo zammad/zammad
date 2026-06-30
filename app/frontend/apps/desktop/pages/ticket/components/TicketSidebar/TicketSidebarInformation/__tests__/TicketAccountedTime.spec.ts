@@ -14,31 +14,37 @@ const createTimeAccountingTicket = (
 
 const timeUnitsPerType = [
   {
+    __typename: 'TicketTimeAccountingTypeSum' as const,
     name: 'None',
     timeUnit: 6,
     timeUnitDisplay: '6.00',
   },
   {
+    __typename: 'TicketTimeAccountingTypeSum' as const,
     name: 'Finance',
     timeUnit: 5,
     timeUnitDisplay: '5.00',
   },
   {
+    __typename: 'TicketTimeAccountingTypeSum' as const,
     name: 'Business',
     timeUnit: 4,
     timeUnitDisplay: '4.00',
   },
   {
+    __typename: 'TicketTimeAccountingTypeSum' as const,
     name: 'Development',
     timeUnit: 3,
     timeUnitDisplay: '3.00',
   },
   {
+    __typename: 'TicketTimeAccountingTypeSum' as const,
     name: 'Testing',
     timeUnit: 2,
     timeUnitDisplay: '2.00',
   },
   {
+    __typename: 'TicketTimeAccountingTypeSum' as const,
     name: 'Foo',
     timeUnit: 1,
     timeUnitDisplay: '1.00',

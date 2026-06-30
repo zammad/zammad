@@ -40,7 +40,7 @@ const router = useRouter()
 const goToUserProfile = () => {
   if (!props.filters.customerId) return
 
-  router.push(`/users/${getIdFromGraphQLId(props.filters.customerId)}`)
+  router.push(`/users/${getIdFromGraphQLId(String(props.filters.customerId))}`)
 }
 </script>
 

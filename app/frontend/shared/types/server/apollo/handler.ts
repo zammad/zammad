@@ -49,11 +49,12 @@ export type OperationMutationOptions<TResult, TVariables> =
   | ReactiveFunction<UseMutationOptions<TResult, TVariables>>
 
 export type OperationMutationFunction<
-  TResult = OperationMutationResult,
   // oxlint-disable-next-line no-explicit-any
-  TVariables = any,
+  TResult = any,
+  // oxlint-disable-next-line no-explicit-any
+  TVariables extends OperationVariables = any,
 > = (
-  options: OperationMutationOptions<TResult, TVariables>,
+  options?: OperationMutationOptions<TResult, TVariables>,
 ) => UseMutationReturn<TResult, TVariables>
 
 export type OperationQueryFunction<

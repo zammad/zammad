@@ -4,7 +4,7 @@ import { getNode } from '@formkit/core'
 
 import { renderComponent } from '#tests/support/components/index.ts'
 import { mockRouterHooks } from '#tests/support/mock-vue-router.ts'
-import { waitForNextTick } from '#tests/support/utils.ts'
+import { nullableMock, waitForNextTick } from '#tests/support/utils.ts'
 
 import { waitForTicketSharedDraftStartCreateMutationCalls } from '#shared/entities/ticket-shared-draft-start/graphql/mutations/ticketSharedDraftStartCreate.mocks.ts'
 import { useTicketSharedDraftStartDeleteMutation } from '#shared/entities/ticket-shared-draft-start/graphql/mutations/ticketSharedDraftStartDelete.api.ts'
@@ -34,6 +34,36 @@ vi.mock('#desktop/components/CommonFlyout/useFlyout.ts', async (importOriginal) 
 })
 
 mockRouterHooks()
+
+type SharedDraftStartItem = TicketSharedDraftStartListQuery['ticketSharedDraftStartList'][number]
+
+const sharedDraftStart = (
+  id: number,
+  name: string,
+  updatedAt: string,
+  updatedBy?: {
+    id: number
+    firstname: string
+    lastname: string
+    fullname: string
+  },
+): SharedDraftStartItem =>
+  nullableMock<SharedDraftStartItem>({
+    __typename: 'TicketSharedDraftStart',
+    id: convertToGraphQLId('Ticket::SharedDraftStart', id),
+    name,
+    updatedAt,
+    updatedBy: updatedBy
+      ? {
+          __typename: 'User',
+          id: convertToGraphQLId('User', updatedBy.id),
+          internalId: updatedBy.id,
+          firstname: updatedBy.firstname,
+          lastname: updatedBy.lastname,
+          fullname: updatedBy.fullname,
+        }
+      : null,
+  })
 
 const renderTicketSidebarSharedDraftStartContent = async (
   sharedDraftStartList: TicketSharedDraftStartListQuery['ticketSharedDraftStartList'],
@@ -83,37 +113,19 @@ describe('TicketSidebarSharedDraftStartContent.vue', () => {
   it('renders non-empty shared draft list', async () => {
     const wrapper = await renderTicketSidebarSharedDraftStartContent(
       [
-        {
-          id: convertToGraphQLId('Ticket::SharedDraftStart', 1),
-          name: 'Test shared draft 1',
-          updatedAt: '2024-07-03T13:48:09Z',
-          updatedBy: {
-            __typename: 'User',
-            id: convertToGraphQLId('User', 2),
-            internalId: 2,
-            firstname: 'Erika',
-            lastname: 'Mustermann',
-            fullname: 'Erika Mustermann',
-          },
-        },
-        {
-          id: convertToGraphQLId('Ticket::SharedDraftStart', 2),
-          name: 'Test shared draft 2',
-          updatedAt: '2024-07-03T13:30:00Z',
-          updatedBy: {
-            __typename: 'User',
-            id: convertToGraphQLId('User', 3),
-            internalId: 3,
-            firstname: 'Max',
-            lastname: 'Mustermann',
-            fullname: 'Max Mustermann',
-          },
-        },
-        {
-          id: convertToGraphQLId('Ticket::SharedDraftStart', 3),
-          name: 'Test shared draft 3',
-          updatedAt: '2024-07-02T12:00:00Z',
-        },
+        sharedDraftStart(1, 'Test shared draft 1', '2024-07-03T13:48:09Z', {
+          id: 2,
+          firstname: 'Erika',
+          lastname: 'Mustermann',
+          fullname: 'Erika Mustermann',
+        }),
+        sharedDraftStart(2, 'Test shared draft 2', '2024-07-03T13:30:00Z', {
+          id: 3,
+          firstname: 'Max',
+          lastname: 'Mustermann',
+          fullname: 'Max Mustermann',
+        }),
+        sharedDraftStart(3, 'Test shared draft 3', '2024-07-02T12:00:00Z'),
       ],
       {
         formValues: {
@@ -140,19 +152,12 @@ describe('TicketSidebarSharedDraftStartContent.vue', () => {
   it('supports previewing shared draft', async () => {
     const wrapper = await renderTicketSidebarSharedDraftStartContent(
       [
-        {
-          id: convertToGraphQLId('Ticket::SharedDraftStart', 1),
-          name: 'Test shared draft 1',
-          updatedAt: '2024-07-03T13:48:09Z',
-          updatedBy: {
-            __typename: 'User',
-            id: convertToGraphQLId('User', 2),
-            internalId: 2,
-            firstname: 'Erika',
-            lastname: 'Mustermann',
-            fullname: 'Erika Mustermann',
-          },
-        },
+        sharedDraftStart(1, 'Test shared draft 1', '2024-07-03T13:48:09Z', {
+          id: 2,
+          firstname: 'Erika',
+          lastname: 'Mustermann',
+          fullname: 'Erika Mustermann',
+        }),
       ],
       {
         formValues: {
@@ -230,19 +235,12 @@ describe('TicketSidebarSharedDraftStartContent.vue', () => {
   it('supports updating existing shared draft', async () => {
     const wrapper = await renderTicketSidebarSharedDraftStartContent(
       [
-        {
-          id: convertToGraphQLId('Ticket::SharedDraftStart', 1),
-          name: 'Test shared draft 1',
-          updatedAt: '2024-07-03T13:48:09Z',
-          updatedBy: {
-            __typename: 'User',
-            id: convertToGraphQLId('User', 2),
-            internalId: 2,
-            firstname: 'Erika',
-            lastname: 'Mustermann',
-            fullname: 'Erika Mustermann',
-          },
-        },
+        sharedDraftStart(1, 'Test shared draft 1', '2024-07-03T13:48:09Z', {
+          id: 2,
+          firstname: 'Erika',
+          lastname: 'Mustermann',
+          fullname: 'Erika Mustermann',
+        }),
       ],
       {
         formValues: {

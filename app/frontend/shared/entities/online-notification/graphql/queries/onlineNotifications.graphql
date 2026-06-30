@@ -24,6 +24,7 @@ query onlineNotifications {
           createdByAi
         }
         metaObject {
+          __typename
           ... on Ticket {
             id
             internalId
@@ -47,6 +48,7 @@ query onlineNotifications {
             id
             internalId
             data {
+              __typename
               ... on OnlineNotificationStandaloneBulkJobData {
                 total
                 failedCount
