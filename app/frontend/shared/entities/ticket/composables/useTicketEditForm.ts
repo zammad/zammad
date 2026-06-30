@@ -339,6 +339,27 @@ export const useTicketEditForm = (
     },
   ]
 
+  const articleHint = {
+    if: '$existingAdditionalAddArticleNotes() && $getAdditionalAddArticleNote($currentArticleType) !== undefined',
+    isLayout: true,
+    component: 'CommonAlert',
+    props: {
+      variant: 'warning',
+      class: isMobileApp ? 'col-span-full rounded-b-none' : 'col-span-full', // safe because it's not dynamic
+    },
+    children: [
+      {
+        isLayout: true,
+        element: 'div',
+        attrs: {
+          // We convert light weight markup
+          // The input is not sanitized and relies on the administrator to provide safe content
+          innerHTML: '$markup($t($getAdditionalAddArticleNote($currentArticleType)))',
+        },
+      },
+    ],
+  }
+
   // Desktop reply box = one flex column whose header + body borders form a single outline. The
   //  header border is open at the bottom; the body continues it (public) or replaces it with the
   //  `bg-stripes` indicator (internal). The body's 5px margin/padding offsets the stripe's outward
@@ -411,7 +432,7 @@ export const useTicketEditForm = (
                   class:
                     '@container grid grid-cols-2 gap-x-3 gap-y-2 rounded-b-xl bg-neutral-50 p-2 dark:bg-gray-500',
                 },
-                children: bodyFields,
+                children: [articleHint, ...bodyFields],
               },
             ],
           },
@@ -423,7 +444,7 @@ export const useTicketEditForm = (
   // Mobile stacks the channel, visibility and body fields flat in the form grid; desktop uses the
   //  single connected reply box above.
   const replyBoxFields = isMobileApp
-    ? [articleTypeField, internalField, ...bodyFields]
+    ? [articleHint, articleTypeField, internalField, ...bodyFields]
     : [desktopReplyBox]
 
   const articleSchema = {
@@ -433,27 +454,6 @@ export const useTicketEditForm = (
     name: 'article',
     isGroupOrList: true,
     children: [
-      {
-        if: '$existingAdditionalAddArticleNotes() && $getAdditionalAddArticleNote($currentArticleType) !== undefined',
-        isLayout: true,
-        component: 'CommonAlert',
-        props: {
-          variant: 'warning',
-          class: 'col-span-full',
-        },
-        children: [
-          {
-            isLayout: true,
-            element: 'div',
-            attrs: {
-              // We convert light weight markup
-              // The input is not sanitized and relies on the administrator to provide safe content
-              innerHTML: '$markup($t($getAdditionalAddArticleNote($currentArticleType)))',
-            },
-            children: '',
-          },
-        ],
-      },
       {
         type: 'hidden',
         name: 'inReplyTo',
