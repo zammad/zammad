@@ -5,13 +5,40 @@ require 'rails_helper'
 RSpec.describe Service::AI::VectorDB::Available do
   subject(:service_result) { described_class.execute }
 
-  before do
-    setup_ai_provider('open_ai')
+  context 'when the vector database is disabled' do
+    it 'returns false' do
+      expect(service_result).to be_falsey
+    end
   end
 
-  it 'Checks if vector database is available' do
-    allow_any_instance_of(AI::VectorDB).to receive(:ping?).and_return(:ping)
+  context 'when the vector database is enabled' do
+    before do
+      Setting.set('vectordb_enabled', true)
+    end
 
-    expect(service_result).to be :ping
+    it 'returns false' do
+      expect(service_result).to be_falsey
+    end
+
+    context 'when the AI provider is configured' do
+      before do
+        setup_ai_provider('zammad_ai')
+      end
+
+      context 'with ping enabled' do
+        it 'returns true' do
+          allow_any_instance_of(AI::VectorDB).to receive(:ping?).and_return(:ping)
+          expect(service_result).to be_truthy
+        end
+      end
+
+      context 'with ping disabled' do
+        subject(:service_result) { described_class.execute(ping: false) }
+
+        it 'returns true' do
+          expect(service_result).to be_truthy
+        end
+      end
+    end
   end
 end

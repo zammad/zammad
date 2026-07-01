@@ -61,7 +61,8 @@ class KnowledgeBase::Answer::Translation < ApplicationModel
   scope :vector_index_scope, lambda {
     relevant_category_ids = Setting.get('vectordb_knowledge_base_category_ids')
 
-    answer_scope = KnowledgeBase::Answer.internal
+    # PoC: index drafts too (not only internally-visible answers), but still exclude archived ones.
+    answer_scope = KnowledgeBase::Answer.date_later_or_nil(:archived_at, Time.zone.now)
 
     # For now only explicitly enabled categories are indexed.
     return answer_scope.none if relevant_category_ids.blank?
@@ -76,6 +77,7 @@ class KnowledgeBase::Answer::Translation < ApplicationModel
       content:              ::Text::ContentCleanup.new(content: content.body).cleanup,
       content_meta_headers: [title],
       metadata:             {
+        answer_id:          answer_id,
         locale:             kb_locale.system_locale.locale,
         category_id:        answer.category_id,
         visible_internally: answer.visible_internally?,
@@ -92,7 +94,8 @@ class KnowledgeBase::Answer::Translation < ApplicationModel
   end
 
   def vector_indexing_for_record?
-    return false if !answer.visible_internally?
+    # PoC: index drafts too (visible_internally? guard omitted for now), but not archived answers.
+    return false if answer.archived_at&.past?
 
     # For now only explicitly enabled categories are indexed.
     relevant_category_ids = Setting.get('vectordb_knowledge_base_category_ids')

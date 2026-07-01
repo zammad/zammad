@@ -141,6 +141,36 @@ RSpec.describe Service::AI::Ticket::PreProcessArticleContent do
       end
     end
 
+    context 'when OCR is skipped' do
+      subject(:service_result) { described_class.execute(articles: ticket.articles.without_system_notifications, skip_ocr: true) }
+
+      it 'strips inline images and does not return image attachments' do
+        expect(service_result).to contain_exactly(
+          include(
+            sender_type: ticket.articles.first.sender.name,
+            sender_name: ticket.articles.first.author.fullname,
+            created_at:  ticket.articles.first.created_at,
+            visibility:  'public',
+            text:        'some text',
+          ),
+          include(
+            sender_type: ticket.articles.second.sender.name,
+            sender_name: ticket.articles.second.author.fullname,
+            created_at:  ticket.articles.second.created_at,
+            visibility:  'public',
+            text:        'some text',
+          ),
+          include(
+            sender_type: ticket.articles.third.sender.name,
+            sender_name: ticket.articles.third.author.fullname,
+            created_at:  ticket.articles.third.created_at,
+            visibility:  'public',
+            text:        'some text',
+          )
+        )
+      end
+    end
+
     context 'with skip_quotes_strip_first_article option', aggregate_failures: true do
       subject(:service_result) { described_class.execute(articles:, skip_quotes_strip_first_article: true) }
 

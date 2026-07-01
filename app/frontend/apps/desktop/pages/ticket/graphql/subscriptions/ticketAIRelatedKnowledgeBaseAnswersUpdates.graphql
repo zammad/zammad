@@ -1,0 +1,6 @@
+subscription ticketAIRelatedKnowledgeBaseAnswersUpdates($ticketId: ID!) {
+  ticketAIRelatedKnowledgeBaseAnswersUpdates(ticketId: $ticketId) {
+    ticketId
+    error
+  }
+}

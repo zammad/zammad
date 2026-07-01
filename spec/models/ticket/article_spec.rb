@@ -772,11 +772,14 @@ RSpec.describe Ticket::Article, type: :model do
     let(:article_1) { create(:ticket_article, :system_outbound_email, ticket:) }
     let(:article_2) { create(:ticket_article, :inbound_web, ticket:) }
     let(:article_3) { create(:ticket_article, :outbound_email, ticket:) }
+    let(:article_4) { create(:ticket_article, :internal_note, ticket:) }
+    let(:article_5) { create(:ticket_article, :system_note, ticket:) }
+    let(:article_6) { create(:ticket_article, :system_delivery_message, ticket:) }
 
-    before { article_1 && article_2 && article_3 }
+    before { article_1 && article_2 && article_3 && article_4 && article_5 && article_6 }
 
-    it 'filters out System articles' do
-      expect(ticket.articles.without_system_notifications).to contain_exactly(article_2, article_3)
+    it 'filters out certain system articles' do
+      expect(ticket.articles.without_system_notifications).to contain_exactly(article_2, article_3, article_4, article_5)
     end
   end
 

@@ -76,7 +76,8 @@ class Ticket::Article < ApplicationModel
     system_sender = Ticket::Article::Sender.lookup(name: 'System')
     note_type = Ticket::Article::Type.lookup(name: 'note')
 
-    where('sender_id != ? OR type_id = ?', system_sender.id, note_type.id)
+    where('sender_id != ? OR (type_id = ? AND (preferences IS NULL OR preferences NOT LIKE ?))',
+          system_sender.id, note_type.id, '%delivery_message%')
   }
 
   scope :non_system, -> { where.not(sender: Ticket::Article::Sender.lookup(name: 'System')) }

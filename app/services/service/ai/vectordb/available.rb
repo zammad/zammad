@@ -9,6 +9,7 @@ module Service::AI::VectorDB
     end
 
     def execute
+      return false if !Service::CheckFeatureEnabled.execute(name: 'vectordb_enabled', exception: false)
       return false if !Service::CheckFeatureEnabled.execute(name: 'ai_provider', exception: false)
       return true if !ping
 

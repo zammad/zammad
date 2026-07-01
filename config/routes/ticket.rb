@@ -77,4 +77,7 @@ Zammad::Application.routes.draw do
 
   # generate knowledge base answer (AI)
   match api_path + '/tickets/:id/knowledge_base_answers', to: 'ticket/knowledge_base_answers#create', via: :post
+
+  # related knowledge base answers via vector search (AI)
+  match api_path + '/tickets/:id/related_knowledge_base_answers', to: 'ticket/related_knowledge_base_answers#fetch', via: :post
 end

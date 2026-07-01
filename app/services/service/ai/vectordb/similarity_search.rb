@@ -2,20 +2,27 @@
 
 module Service::AI::VectorDB
   class SimilaritySearch < Service::AI::VectorDB::Base
-    attr_reader :text
+    attr_reader :text, :embedding, :k, :filter
 
-    def initialize(text:)
-      @text = text
+    def initialize(text: nil, embedding: nil, k: 2, filter: {}) # rubocop:disable Naming/MethodParameterName
+      @text      = text
+      @embedding = embedding
+      @k         = k
+      @filter    = filter
     end
 
     def execute
       ai_vector_db.ping!
 
-      # First we need to embed the text.
-      embedding = AI::Provider.current.new.embed(input: text)
+      # Search the vector database for the most similar items, using the given embedding or embedding
+      # the text on the fly. The filter restricts candidates to documents the caller may see.
+      ai_vector_db.knn(embedding: query_embedding, k:, filter:)
+    end
 
-      # Then we need to search the vector database for the most similar items.
-      ai_vector_db.knn(embedding:, k: 2)
+    private
+
+    def query_embedding
+      embedding || AI::Provider.current.new.embed(input: text)
     end
   end
 end

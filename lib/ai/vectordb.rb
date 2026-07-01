@@ -8,9 +8,18 @@ class AI::VectorDB
 
   def config
     @config ||= {
-      host:     Setting.get('es_url'),
-      user:     Setting.get('es_user'),
-      password: Setting.get('es_password')
+      host:              Setting.get('es_url'),
+      user:              Setting.get('es_user'),
+      password:          Setting.get('es_password'),
+      # Bound connect/read like SearchIndexBackend so a dead or slow Elasticsearch is detected
+      # quickly instead of blocking the request thread (e.g. on the availability ping). Same literal
+      # open_timeout and the same operator-tunable read timeout env as SearchIndexBackend.
+      transport_options: {
+        request: {
+          open_timeout: 8,
+          timeout:      ENV.fetch('ZAMMAD_HTTP_ELASTICSEARCH_READ_TIMEOUT', 180).to_i,
+        },
+      },
     }
   end
 
@@ -194,16 +203,18 @@ class AI::VectorDB
       num_candidates: k * 10
     }
     ##
-    # Only one-dimensional filter with a single key-value (field name, value
-    # string) pair is supported.
+    # Restricts the kNN candidates to matching documents (a pre-filter, so the nearest *allowed*
+    # neighbours are returned rather than dropping disallowed hits afterwards). Each key becomes a
+    # `term` clause for a scalar value or a `terms` clause for an array; multiple keys are combined
+    # with AND.
     #
     # Example:
-    #   AI::VectorDB::Elasticsearch.nearest_neighbours(
+    #   AI::VectorDB.knn(
     #     embedding: [1, 2, 3],
-    #     limit: 5,
-    #     filter: { object_name: 'Ticket' }
+    #     k:         5,
+    #     filter:    { object_name: 'KnowledgeBase::Answer::Translation', object_id: [1, 2, 3] }
     #   )
-    knn[:filter] = { term: filter } if filter.present?
+    knn[:filter] = build_filter(filter) if filter.present?
 
     client.search(
       index: index_name,
@@ -216,6 +227,14 @@ class AI::VectorDB
   end
 
   # private class methods
+
+  def build_filter(filter)
+    clauses = filter.map do |field, value|
+      value.is_a?(Array) ? { terms: { field => value } } : { term: { field => value } }
+    end
+
+    clauses.one? ? clauses.first : { bool: { filter: clauses } }
+  end
 
   def index_name
     @index_name ||= "#{Setting.get('es_index')}_#{Rails.env}_ai_embeddings"

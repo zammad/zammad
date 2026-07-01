@@ -5,11 +5,13 @@ class Service::AI::Ticket::PreProcessArticleContent < Service::Base
   MARKER_START     = "[OCR_TEXT_START]\n".freeze
   MARKER_END       = "\n[OCR_TEXT_END]".freeze
 
-  attr_reader :articles, :skip_quotes_strip_first_article
+  attr_reader :articles, :skip_quotes_strip_first_article, :skip_ocr, :link_style
 
-  def initialize(articles:, skip_quotes_strip_first_article: false)
-    @articles = articles
+  def initialize(articles:, skip_quotes_strip_first_article: false, skip_ocr: false, link_style: :markdown)
+    @articles                        = articles
     @skip_quotes_strip_first_article = skip_quotes_strip_first_article
+    @skip_ocr                        = skip_ocr
+    @link_style                      = link_style
   end
 
   def execute
@@ -23,7 +25,7 @@ class Service::AI::Ticket::PreProcessArticleContent < Service::Base
   private
 
   def ocr_active?
-    Setting.get('ai_provider_config')[:ocr_active]
+    !skip_ocr && Setting.get('ai_provider_config')[:ocr_active]
   end
 
   def non_plain_article?(article)
@@ -99,7 +101,7 @@ class Service::AI::Ticket::PreProcessArticleContent < Service::Base
   end
 
   def strip_html_and_maybe_remove_quotes(text, article)
-    text_for_quote_removal = non_plain_article?(article) ? text.html2text(link_style: :markdown) : text
+    text_for_quote_removal = non_plain_article?(article) ? text.html2text(link_style:) : text
     if article.type == Ticket::Article::Type.lookup(name: 'email') && (!skip_quotes_strip_first_article || article.id != first_article_id)
       Text::QuoteRemover
         .new(text: text_for_quote_removal, remove_signatures: true)

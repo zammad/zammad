@@ -1,0 +1,25 @@
+query ticketAIRelatedKnowledgeBaseAnswers($ticketId: ID!) {
+  ticketAIRelatedKnowledgeBaseAnswers(ticketId: $ticketId) {
+    pending
+    answers {
+      score
+      translation {
+        id
+        title
+        answer {
+          id
+          category {
+            knowledgeBase {
+              id
+            }
+          }
+        }
+        kbLocale {
+          systemLocale {
+            locale
+          }
+        }
+      }
+    }
+  }
+}

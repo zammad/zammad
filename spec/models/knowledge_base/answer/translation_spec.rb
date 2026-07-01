@@ -162,5 +162,11 @@ RSpec.describe KnowledgeBase::Answer::Translation, current_user_id: 1, type: :mo
 
       expect(data[:metadata][:category_id]).to eq(translation.answer.category_id)
     end
+
+    it 'includes answer_id in metadata' do
+      data = translation.vector_index_data
+
+      expect(data[:metadata][:answer_id]).to eq(translation.answer_id)
+    end
   end
 end

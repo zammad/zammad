@@ -6311,6 +6311,16 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
+  title:       __('Vector DB'),
+  name:        'vectordb_enabled',
+  area:        'VectorDB',
+  description: __('Enable or disable the vector database, which is used for storing and retrieving vectorized data. Elasticsearch is used as the vector database backend.'),
+  options:     {},
+  state:       false,
+  frontend:    false,
+)
+
+Setting.create_if_not_exists(
   title:       __('Vector DB knowledge base categories'),
   name:        'vectordb_knowledge_base_category_ids',
   area:        'VectorDB::KnowledgeBase',

@@ -16,6 +16,30 @@
     </li>
   <% end %>
 </ol>
+<% if @suggestionsEnabled: %>
+  <label><%- @T('Suggested by AI') %></label>
+  <% if not @suggestionsLoaded: %>
+    <p class="text-muted"><%- @T('Searching for related answers…') %></p>
+  <% else if @suggestionsError: %>
+    <p class="text-muted"><%- @T('The suggestions could not be generated.') %></p>
+    <button type="button" class="btn btn--text js-kb-suggestions-retry"><%- @T('Retry') %></button>
+  <% else if @suggestions.length is 0: %>
+    <p class="text-muted"><%- @T('No related knowledge base answers found.') %></p>
+  <% else: %>
+    <ol class="tasks tasks--standalone">
+      <% for item in @suggestions: %>
+        <li class="task">
+          <div class="icon-holder">
+            <%- @Icon('knowledge-base') %>
+          </div>
+          <div class="task-text">
+            <a class="name kb-answer-popover" data-id="<%- item.id %>" href="<%- item.url %>"><%= item.title %></a>
+          </div>
+        </li>
+      <% end %>
+    </ol>
+  <% end %>
+<% end %>
 <% if @editable: %>
   <div class="text-muted horizontal <%= if @aiEnabled then 'justify-between' else 'justify-end' %> center gap-16">
     <% if @aiEnabled: %>

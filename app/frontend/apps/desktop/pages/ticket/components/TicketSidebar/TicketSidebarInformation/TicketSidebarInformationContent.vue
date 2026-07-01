@@ -22,6 +22,7 @@ import TicketSidebarContent from '../TicketSidebarContent.vue'
 
 import TicketAccountedTime from './TicketSidebarInformationContent/TicketAccountedTime.vue'
 import TicketAIKnowledgeBaseAnswers from './TicketSidebarInformationContent/TicketAIKnowledgeBaseAnswers.vue'
+import TicketAISuggestedKnowledgeBaseAnswers from './TicketSidebarInformationContent/TicketAISuggestedKnowledgeBaseAnswers.vue'
 import TicketLinks from './TicketSidebarInformationContent/TicketLinks.vue'
 import TicketSubscribers from './TicketSidebarInformationContent/TicketSubscribers.vue'
 import TicketTags from './TicketSidebarInformationContent/TicketTags.vue'
@@ -38,13 +39,25 @@ const { isTicketAgent, isTicketEditable } = useTicketView(ticket)
 const config = toRef(useApplicationStore(), 'config')
 const { hasPermission } = useSessionStore()
 
-const showAIKnowledgeBaseAnswers = computed(
+const showAIKnowledgeBaseDraft = computed(
   () =>
     isTicketAgent.value &&
     hasPermission('knowledge_base.editor') &&
     config.value.kb_active &&
     config.value.ai_provider &&
     config.value.ai_assistance_kb_answer_from_ticket_generation,
+)
+
+const showAISuggestedKnowledgeBaseAnswers = computed(
+  () =>
+    isTicketAgent.value &&
+    hasPermission('knowledge_base.*') &&
+    config.value.kb_active &&
+    config.value.ai_provider,
+)
+
+const showRelatedKnowledge = computed(
+  () => showAIKnowledgeBaseDraft.value || showAISuggestedKnowledgeBaseAnswers.value,
 )
 
 const ticketMergeFlyoutName = 'ticket-merge'
@@ -132,12 +145,15 @@ const actions = computed<MenuItem[]>(() => [
     </CommonSectionCollapse>
 
     <CommonSectionCollapse
-      v-if="showAIKnowledgeBaseAnswers"
+      v-if="showRelatedKnowledge"
       id="ticket-ai-knowledge-base-answers"
       v-model="persistentStates.collapseKnowledgeBase"
       :title="__('Related knowledge')"
     >
-      <TicketAIKnowledgeBaseAnswers />
+      <div class="flex flex-col gap-3">
+        <TicketAISuggestedKnowledgeBaseAnswers v-if="showAISuggestedKnowledgeBaseAnswers" />
+        <TicketAIKnowledgeBaseAnswers v-if="showAIKnowledgeBaseDraft" />
+      </div>
     </CommonSectionCollapse>
 
     <CommonSectionCollapse

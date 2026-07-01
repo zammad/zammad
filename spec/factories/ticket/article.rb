@@ -91,6 +91,27 @@ FactoryBot.define do
       end
     end
 
+    trait :system_note do
+      transient do
+        type_name   { 'note' }
+        sender_name { 'System' }
+      end
+    end
+
+    trait :system_delivery_message do
+      transient do
+        type_name   { 'note' }
+        sender_name { 'System' }
+      end
+
+      preferences do
+        {
+          delivery_message: true,
+          notification:     true,
+        }
+      end
+    end
+
     factory :twitter_article do
       transient do
         type_name   { 'twitter status' }

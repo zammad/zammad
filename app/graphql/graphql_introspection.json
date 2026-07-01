@@ -17943,6 +17943,37 @@
               "deprecationReason": null
             },
             {
+              "name": "ticketAIRelatedKnowledgeBaseAnswers",
+              "description": "Find knowledge base answers related to a ticket via vector similarity search",
+              "args": [
+                {
+                  "name": "ticketId",
+                  "description": "The ticket to find related knowledge base answers for",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "ID",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "TicketAIRelatedKnowledgeBaseAnswersResult",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "ticketArticles",
               "description": "Fetch ticket articles by ticket ID",
               "args": [
@@ -20280,6 +20311,37 @@
                 "ofType": {
                   "kind": "OBJECT",
                   "name": "TicketAIAssistanceSummaryUpdatesPayload",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "ticketAIRelatedKnowledgeBaseAnswersUpdates",
+              "description": "Ping that the related knowledge base answers for a ticket may have changed",
+              "args": [
+                {
+                  "name": "ticketId",
+                  "description": "Ticket identifier",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "ID",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "TicketAIRelatedKnowledgeBaseAnswersUpdatesPayload",
                   "ofType": null
                 }
               },
@@ -22920,6 +22982,131 @@
               "type": {
                 "kind": "OBJECT",
                 "name": "TicketAIAssistanceSummary",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
+          "name": "TicketAIRelatedKnowledgeBaseAnswer",
+          "description": "A knowledge base answer related to a ticket, found via vector similarity search",
+          "fields": [
+            {
+              "name": "score",
+              "description": "Relevance score of the match (higher is more relevant)",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Float",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "translation",
+              "description": "The matching knowledge base answer translation",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "KnowledgeBaseAnswerTranslation",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
+          "name": "TicketAIRelatedKnowledgeBaseAnswersResult",
+          "description": "Result of a related knowledge base answers search for a ticket",
+          "fields": [
+            {
+              "name": "answers",
+              "description": "The related knowledge base answers, ordered by relevance. Null while the ticket summary is still being generated.",
+              "args": [],
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "TicketAIRelatedKnowledgeBaseAnswer",
+                    "ofType": null
+                  }
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "pending",
+              "description": "Whether the ticket summary the search relies on is still being generated. Subscribe to the ping and refetch when it arrives.",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Boolean",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
+          "name": "TicketAIRelatedKnowledgeBaseAnswersUpdatesPayload",
+          "description": "Autogenerated return type of TicketAIRelatedKnowledgeBaseAnswersUpdates.",
+          "fields": [
+            {
+              "name": "error",
+              "description": "Set when the embedding could not be produced; the client shows the error state instead of re-running the search",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "ticketId",
+              "description": "Identifier of the ticket whose related knowledge base answers may have changed (null on subscribe)",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "ID",
                 "ofType": null
               },
               "isDeprecated": false,

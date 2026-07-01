@@ -893,6 +893,13 @@ export type TemplatesQueryVariables = Exact<{
 
 export type TemplatesQuery = { templates: Array<{ __typename: 'Template', id: string, name: string }> };
 
+export type TicketAiRelatedKnowledgeBaseAnswersQueryVariables = Exact<{
+  ticketId: string | number;
+}>;
+
+
+export type TicketAiRelatedKnowledgeBaseAnswersQuery = { ticketAIRelatedKnowledgeBaseAnswers: { __typename: 'TicketAIRelatedKnowledgeBaseAnswersResult', pending: boolean, answers: Array<{ __typename: 'TicketAIRelatedKnowledgeBaseAnswer', score: number, translation: { __typename: 'KnowledgeBaseAnswerTranslation', id: string, title: string, answer: { __typename: 'KnowledgeBaseAnswer', id: string, category: { __typename: 'KnowledgeBaseCategory', knowledgeBase: { __typename: 'KnowledgeBase', id: string } } }, kbLocale: { __typename: 'KnowledgeBaseLocale', systemLocale: { __typename: 'Locale', locale: string } } } }> | null | undefined } };
+
 export type TicketAttachmentsQueryVariables = Exact<{
   ticketId: string | number;
 }>;
@@ -1000,6 +1007,13 @@ export type TicketAiAssistanceSummaryUpdatesSubscriptionVariables = Exact<{
 
 
 export type TicketAiAssistanceSummaryUpdatesSubscription = { ticketAIAssistanceSummaryUpdates: { __typename: 'TicketAIAssistanceSummaryUpdatesPayload', summary: { __typename: 'TicketAIAssistanceSummary', customerRequest: string | null | undefined, conversationSummary: Array<string> | null | undefined, openQuestions: Array<string> | null | undefined, upcomingEvents: Array<string> | null | undefined, customerMood: string | null | undefined, customerEmotion: string | null | undefined } | null | undefined, error: { __typename: 'AsyncExecutionError', message: string, exception: string } | null | undefined, analytics: { __typename: 'AIAnalyticsMetadata', isUnread: boolean | null | undefined, run: { __typename: 'AIAnalyticsRun', id: string } | null | undefined, usage: { __typename: 'AIAnalyticsUsage', userHasProvidedFeedback: boolean | null | undefined } | null | undefined } | null | undefined } };
+
+export type TicketAiRelatedKnowledgeBaseAnswersUpdatesSubscriptionVariables = Exact<{
+  ticketId: string | number;
+}>;
+
+
+export type TicketAiRelatedKnowledgeBaseAnswersUpdatesSubscription = { ticketAIRelatedKnowledgeBaseAnswersUpdates: { __typename: 'TicketAIRelatedKnowledgeBaseAnswersUpdatesPayload', ticketId: string | null | undefined, error: string | null | undefined } };
 
 export type TicketChecklistUpdatesSubscriptionVariables = Exact<{
   ticketId: string | number;

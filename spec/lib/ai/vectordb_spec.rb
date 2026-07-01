@@ -228,6 +228,49 @@ RSpec.describe AI::VectorDB, :aggregate_failures do
     end
   end
 
+  describe '#knn' do
+    let(:embedding)       { [0.1, 0.2, 0.3] }
+    let(:search_response) { { 'hits' => { 'hits' => [] } } }
+
+    before do
+      allow(instance).to receive(:index_exists)
+      allow(instance).to receive(:client).and_return(instance_double(Elasticsearch::Client))
+      allow(instance.client).to receive(:search).and_return(double(body: search_response))
+    end
+
+    it 'searches without a filter when none is given' do
+      instance.knn(embedding:, k: 3)
+
+      expect(instance.client).to have_received(:search).with(
+        index: instance.index_name,
+        body:  { query: { knn: hash_excluding(:filter) } }
+      )
+    end
+
+    it 'builds a single term clause for a scalar filter value' do
+      instance.knn(embedding:, k: 3, filter: { object_name: 'Ticket' })
+
+      expect(instance.client).to have_received(:search).with(
+        index: instance.index_name,
+        body:  { query: { knn: hash_including(filter: { term: { object_name: 'Ticket' } }) } }
+      )
+    end
+
+    it 'combines scalar and array filter values into a bool filter (term + terms)' do
+      instance.knn(embedding:, k: 3, filter: { object_name: 'KnowledgeBase::Answer::Translation', object_id: [1, 2] })
+
+      expect(instance.client).to have_received(:search).with(
+        index: instance.index_name,
+        body:  { query: { knn: hash_including(filter: {
+                                                bool: { filter: [
+                                                  { term:  { object_name: 'KnowledgeBase::Answer::Translation' } },
+                                                  { terms: { object_id: [1, 2] } }
+                                                ] }
+                                              }) } }
+      )
+    end
+  end
+
   describe '.destroy' do
     let(:object_id)   { 1 }
     let(:object_name) { 'ticket' }
