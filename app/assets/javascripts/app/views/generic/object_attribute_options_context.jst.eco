@@ -26,7 +26,7 @@
       <tbody>
       <% for option in @optionsSelected: %>
         <tr data-id="<%= option.value %>">
-          <td><%- option.label %></td>
+          <td><%= option.label %></td>
           <% if @showDescription: %><td><textarea class="form-control js-description"><%- @T(option.description) %></textarea></td><% end %>
           <td class="<% if !@showDescription: %>settings-list-middle<% end %>">
             <a class="btn btn--text btn--primary js-remove">

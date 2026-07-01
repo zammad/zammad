@@ -626,8 +626,8 @@ QUnit.test("object_attribute_options_context select sorting check", assert => {
   )
 
   // Mock translations for the option labels.
-  var translateInlineOriginal = App.i18n.translateInline
-  App.i18n.translateInline = function (str) {
+  var translatePlainOriginal = App.i18n.translatePlain
+  App.i18n.translatePlain = function (str) {
     switch (str) {
       case 'value_1':
         return 'BBB_value_1'
@@ -636,7 +636,7 @@ QUnit.test("object_attribute_options_context select sorting check", assert => {
       case 'value_3':
         return 'AAA_value_3'
       default:
-        return translateInlineOriginal(str)
+        return translatePlainOriginal(str)
     }
   }
 
@@ -703,5 +703,74 @@ QUnit.test("object_attribute_options_context select sorting check", assert => {
     }
   })
 
-  App.i18n.translateInline = translateInlineOriginal
+  App.i18n.translatePlain = translatePlainOriginal
+});
+
+QUnit.test("object_attribute_options_context XSS escaping for option labels", assert => {
+  var xssPayload = '<img src=x onerror="window.xssLabelExecuted=true">'
+  window.xssLabelExecuted = false
+
+  // Hash-form options
+  App.ObjectManagerAttribute.refresh([{
+    name: 'xss_hash_select', object: 'Ticket', display: 'XSS Hash Select',
+    active: true, editable: true, data_type: 'select',
+    options: { 'key_xss': xssPayload }, default: '', null: true, translate: false
+  }])
+  App.Ticket.configure_attributes.push(App.ObjectManagerAttribute.findByAttribute('name', 'xss_hash_select'))
+
+  $('#forms').append('<hr><h1>object_attribute_options_context XSS (hash options)</h1><form id="form_xss1"></form>')
+  new App.ControllerForm({
+    el: $('#form_xss1'),
+    model: { configure_attributes: [{
+      name: 'xss_hash_context', display: 'XSS Hash Context',
+      tag: 'object_attribute_options_context', object_attribute_object: 'Ticket',
+      object_attribute_name: 'xss_hash_select', limit_label: 'Limit',
+      table_label: 'Selected', default: { 'key_xss': '' }, null: true
+    }]}
+  })
+
+  assert.equal($('#form_xss1').find('img').length, 0, 'hash options: XSS payload must not inject an img element')
+  assert.notOk(window.xssLabelExecuted, 'XSS payload must not execute')
+  assert.equal($('#form_xss1').find('tr[data-id="key_xss"] td:first-child').text(), xssPayload, 'hash options: selected row must display the raw label text')
+
+  // Array-form options (goes through buildFlatOptions)
+  App.ObjectManagerAttribute.refresh([{
+    name: 'xss_array_select', object: 'Ticket', display: 'XSS Array Select',
+    active: true, editable: true, data_type: 'select',
+    options: [{ name: xssPayload, value: 'key_xss_array' }], default: '', null: true, translate: false
+  }])
+  App.Ticket.configure_attributes.push(App.ObjectManagerAttribute.findByAttribute('name', 'xss_array_select'))
+
+  $('#forms').append('<hr><h1>object_attribute_options_context XSS (array options)</h1><form id="form_xss2"></form>')
+  new App.ControllerForm({
+    el: $('#form_xss2'),
+    model: { configure_attributes: [{
+      name: 'xss_array_context', display: 'XSS Array Context',
+      tag: 'object_attribute_options_context', object_attribute_object: 'Ticket',
+      object_attribute_name: 'xss_array_select', limit_label: 'Limit',
+      table_label: 'Selected', default: { 'key_xss_array': '' }, null: true
+    }]}
+  })
+
+  assert.equal($('#form_xss2').find('img').length, 0, 'array options: XSS payload must not inject an img element')
+  assert.notOk(window.xssLabelExecuted, 'XSS payload must not execute')
+  assert.equal($('#form_xss2').find('tr[data-id="key_xss_array"] td:first-child').text(), xssPayload, 'array options: selected row must display the raw label text')
+
+  // Relation-based options (labels come from displayName())
+  App.TicketPriority.refresh([{ id: 99, name: xssPayload, active: true, created_at: '2014-06-10T11:17:34.000Z' }])
+
+  $('#forms').append('<hr><h1>object_attribute_options_context XSS (relation)</h1><form id="form_xss3"></form>')
+  new App.ControllerForm({
+    el: $('#form_xss3'),
+    model: { configure_attributes: [{
+      name: 'xss_relation_context', display: 'XSS Relation Context',
+      tag: 'object_attribute_options_context', object_attribute_object: 'Ticket',
+      object_attribute_name: 'priority_id', limit_label: 'Limit',
+      table_label: 'Selected', default: { '99': '' }, null: true
+    }]}
+  })
+
+  assert.equal($('#form_xss3').find('img').length, 0, 'relation options: XSS payload must not inject an img element')
+  assert.notOk(window.xssLabelExecuted, 'XSS payload must not execute')
+  assert.equal($('#form_xss3').find('tr[data-id="99"] td:first-child').text(), xssPayload, 'relation options: selected row must display the raw label text')
 });
