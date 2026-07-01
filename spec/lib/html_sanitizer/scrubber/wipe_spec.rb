@@ -305,6 +305,28 @@ RSpec.describe HtmlSanitizer::Scrubber::Wipe do
       end
     end
 
+    context 'when srcset contains an interior-traversal api path' do
+      let(:input)  { '<img srcset="/api/v1/attachments/../signout 1x">' }
+      let(:target) { '' }
+
+      it { is_expected.to eq target }
+
+      it 'does not mark remote content as removed' do
+        expect { actual }.not_to change(scrubber, :remote_content_removed)
+      end
+    end
+
+    context 'when src contains a double-encoded traversal api path' do
+      let(:input)  { '<img src="/api/v1/attachments/%252e%252e/signout">' }
+      let(:target) { '' }
+
+      it { is_expected.to eq target }
+
+      it 'does not mark remote content as removed' do
+        expect { actual }.not_to change(scrubber, :remote_content_removed)
+      end
+    end
+
     context 'when src is a safe path-absolute URL' do
       let(:input) { "<img src='/assets/images/logo.png'>" }
 
@@ -409,6 +431,13 @@ RSpec.describe HtmlSanitizer::Scrubber::Wipe do
       '../api/v1/signout'                                   => true,
       '../api/v1/attachments/'                              => true,
       '../api/v1/attachments/1'                             => true,
+
+      # interior traversal bypass (literal, double-encoded, and backslash separator variants)
+      '/api/v1/attachments/../signout'                      => true,
+      '/api/v1/attachments/./signout'                       => true,
+      '/api/v1/ticket_attachment/../signout'                => true,
+      '/api/v1/attachments/%2e%2e/signout'                  => true,
+      '/api/v1/attachments/..\signout'                      => true,
 
       # non-api paths
       '/users/image/abc123'                                 => false,
