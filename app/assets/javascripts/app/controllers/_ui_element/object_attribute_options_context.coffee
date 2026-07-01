@@ -236,7 +236,7 @@ class App.UiElement.object_attribute_options_context extends Spine.Module
         _.map(related_object_attribute.options, (label, value) ->
           {
             value: value
-            label: if related_object_attribute.translate then App.i18n.translateInline(label) else label
+            label: if related_object_attribute.translate then App.i18n.translatePlain(label) else label
           }
         )
 
@@ -273,7 +273,7 @@ class App.UiElement.object_attribute_options_context extends Spine.Module
         label = if isTree
           App.TokenHelper.computeNameValue(option.value, isTranslated)
         else if isTranslated
-          App.i18n.translateInline(option.name or option.value)
+          App.i18n.translatePlain(option.name or option.value)
         else
           option.name or option.value
 
