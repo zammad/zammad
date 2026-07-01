@@ -153,6 +153,7 @@ class TicketArticlesController < ApplicationController
   def ticket_attachment_upload_clone_by_article
     article = Ticket::Article.find(params[:article_id])
     authorize!(article.ticket, :show?)
+    authorize!(article, :show?)
 
     render json: {
       attachments: article_attachments_clone(article),

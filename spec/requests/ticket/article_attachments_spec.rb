@@ -149,7 +149,11 @@ RSpec.describe 'Ticket Article Attachments', authenticated_as: -> { agent }, typ
       end
     end
 
-    context 'with customer trying to access internal article attachment' do
+    context 'with an internal article attachment' do
+      subject(:clone_request) do
+        post "/api/v1/ticket_attachment_upload_clone_by_article/#{article.id}", params: { form_id: SecureRandom.uuid }, as: :json
+      end
+
       let(:customer) { create(:customer) }
       let(:ticket)   { create(:ticket, group: group, customer: customer) }
       let(:article)  { create(:ticket_article, :internal_note, ticket: ticket) }
@@ -162,15 +166,32 @@ RSpec.describe 'Ticket Article Attachments', authenticated_as: -> { agent }, typ
                preferences: { 'Content-Type' => 'text/plain' })
       end
 
-      it 'returns forbidden for the ticket customer' do
-        authenticated_as(customer)
-        get "/api/v1/ticket_attachment/#{ticket.id}/#{article.id}/#{secret_store_file.id}"
-        expect(response).to have_http_status(:forbidden)
+      context 'when accessed as a customer' do
+        it 'returns forbidden for attachment download' do
+          authenticated_as(customer)
+          get "/api/v1/ticket_attachment/#{ticket.id}/#{article.id}/#{secret_store_file.id}"
+          expect(response).to have_http_status(:forbidden)
+        end
+
+        it 'returns forbidden for attachment clone' do
+          authenticated_as(customer)
+          clone_request
+          expect(response).to have_http_status(:forbidden)
+        end
       end
 
-      it 'returns ok for an agent' do
-        get "/api/v1/ticket_attachment/#{ticket.id}/#{article.id}/#{secret_store_file.id}"
-        expect(response).to have_http_status(:ok)
+      context 'when accessed as an agent' do
+        it 'returns ok for attachment download' do
+          get "/api/v1/ticket_attachment/#{ticket.id}/#{article.id}/#{secret_store_file.id}"
+          expect(response).to have_http_status(:ok)
+        end
+
+        it 'allows attachment clone' do
+          secret_store_file
+          clone_request
+          expect(response).to have_http_status(:ok)
+          expect(json_response['attachments'].pluck('filename')).to include('secret.txt')
+        end
       end
     end
 
