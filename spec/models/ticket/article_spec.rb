@@ -779,4 +779,36 @@ RSpec.describe Ticket::Article, type: :model do
       expect(ticket.articles.without_system_notifications).to contain_exactly(article_2, article_3)
     end
   end
+
+  describe '#body_rendering_error' do
+    context 'when body_rendering_error preference is set' do
+      subject(:article) { create(:ticket_article, preferences: { 'body_rendering_error' => true }) }
+
+      it 'returns true' do
+        expect(article.body_rendering_error).to be(true)
+      end
+    end
+
+    context 'when body matches UNPROCESSABLE_HTML_MSG' do
+      subject(:article) { create(:ticket_article, body: HtmlSanitizer::UNPROCESSABLE_HTML_MSG) }
+
+      it 'returns true' do
+        expect(article.body_rendering_error).to be(true)
+      end
+    end
+
+    context 'when body matches EXCESSIVE_LINKS_MSG' do
+      subject(:article) { create(:ticket_article, body: Channel::EmailParser::EXCESSIVE_LINKS_MSG) }
+
+      it 'returns true' do
+        expect(article.body_rendering_error).to be(true)
+      end
+    end
+
+    context 'when body is normal content' do
+      it 'returns false' do
+        expect(article.body_rendering_error).to be(false)
+      end
+    end
+  end
 end

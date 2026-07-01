@@ -785,6 +785,30 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
     end
   end
 
+  describe 'GET /api/v1/ticket_articles/:id', authenticated_as: :agent do
+    let(:ticket)  { create(:ticket, group: Group.first) }
+
+    context 'when body_rendering_error is present' do
+      let(:article) { create(:ticket_article, :outbound_email, ticket: ticket, body: HtmlSanitizer::UNPROCESSABLE_HTML_MSG) }
+
+      it 'includes body_rendering_error: true in the response' do
+        get "/api/v1/ticket_articles/#{article.id}", as: :json
+        expect(response).to have_http_status(:ok)
+        expect(json_response['body_rendering_error']).to be(true)
+      end
+    end
+
+    context 'when body is normal content' do
+      let(:article) { create(:ticket_article, :outbound_email, ticket: ticket) }
+
+      it 'includes body_rendering_error: false in the response' do
+        get "/api/v1/ticket_articles/#{article.id}", as: :json
+        expect(response).to have_http_status(:ok)
+        expect(json_response['body_rendering_error']).to be(false)
+      end
+    end
+  end
+
   describe 'GET /api/v1/ticket_article_plain/:id', authenticated_as: :agent do
     let(:ticket)  { create(:ticket, group: Group.first) }
     let(:article) { create(:ticket_article, ticket: ticket) }

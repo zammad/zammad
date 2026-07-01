@@ -52,6 +52,7 @@ export const articleContent = (
     },
     internal: false,
     bodyWithUrls: '<p>default body</p>',
+    bodyRenderingError: false,
     sender: {
       __typename: 'TicketArticleSender',
       name: EnumTicketArticleSenderName.Customer,

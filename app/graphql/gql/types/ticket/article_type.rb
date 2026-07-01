@@ -26,6 +26,7 @@ module Gql::Types::Ticket
     field :content_type, String, null: false
     field :body, String, null: false, description: 'Raw body as saved in the database.'
     field :body_with_urls, String, null: false, description: 'Body with cid: URLs replaced for inline images in HTML articles.'
+    field :body_rendering_error, Boolean, null: false, description: 'True when the body could not be rendered due to HTML processing issues and contains an untranslated error message.'
     field :internal, Boolean, null: false
     field :detected_language, String
 
@@ -45,6 +46,10 @@ module Gql::Types::Ticket
 
     def body_with_urls
       display_article[:body]
+    end
+
+    def body_rendering_error
+      @object.body_rendering_error
     end
 
     def attachments_without_inline

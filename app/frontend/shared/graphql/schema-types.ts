@@ -4200,6 +4200,8 @@ export type TicketArticle = {
   author: User;
   /** Raw body as saved in the database. */
   body: Scalars['String']['output'];
+  /** True when the body could not be rendered due to HTML processing issues and contains an untranslated error message. */
+  bodyRenderingError: Scalars['Boolean']['output'];
   /** Body with cid: URLs replaced for inline images in HTML articles. */
   bodyWithUrls: Scalars['String']['output'];
   cc?: Maybe<AddressesField>;

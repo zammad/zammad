@@ -49,6 +49,7 @@ fragment ticketArticleAttributes on TicketArticle {
   }
   preferences
   bodyWithUrls
+  bodyRenderingError
   internal
   createdAt
   author {

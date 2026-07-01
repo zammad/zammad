@@ -94,7 +94,9 @@ class App.ArticleViewItem extends App.ControllerObserver
           links.push link
 
     # prepare html body
-    if article.content_type is 'text/html'
+    if article.body_rendering_error
+      article['html'] = App.Utils.text2html(App.i18n.translatePlain(article.body))
+    else if article.content_type is 'text/html'
       body = article.body
 
       domBody = $('<div>').html(body)

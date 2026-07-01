@@ -8,6 +8,7 @@ import { useHtmlInlineImages } from '#shared/composables/useHtmlInlineImages.ts'
 import { useHtmlLinks } from '#shared/composables/useHtmlLinks.ts'
 import { type ImageViewerFile } from '#shared/composables/useImageViewer.ts'
 import type { TicketArticle } from '#shared/entities/ticket/types.ts'
+import { i18n } from '#shared/i18n.ts'
 import { textToHtml, ensureImagesKeepAspectRatio } from '#shared/utils/helpers.ts'
 
 import { useAnnouncer } from '#desktop/composables/accessibility/useAnnouncer.ts'
@@ -38,6 +39,9 @@ const bodyClasses = computed(() =>
 )
 
 const body = computed(() => {
+  if (props.article.bodyRenderingError) {
+    return i18n.t(props.article.bodyWithUrls)
+  }
   if (props.article.contentType !== 'text/html') {
     return textToHtml(props.article.bodyWithUrls)
   }

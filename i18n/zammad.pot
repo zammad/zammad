@@ -173,7 +173,7 @@ msgid "%s ago"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleFooter.vue:31
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:217
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:221
 msgid "%s attached files"
 msgstr ""
 
@@ -497,7 +497,7 @@ msgid "+ %s more"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleFooter.vue:30
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:216
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:220
 msgid "1 attached file"
 msgstr ""
 
@@ -2061,7 +2061,7 @@ msgstr ""
 msgid "Article Language Detection"
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:275
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:279
 msgid "Article actions"
 msgstr ""
 
@@ -2333,7 +2333,7 @@ msgstr ""
 msgid "Author"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:120
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:124
 msgid "Author name and article creation date"
 msgstr ""
 
@@ -4689,7 +4689,7 @@ msgstr ""
 msgid "Decrement seconds value"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:313
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:315
 msgid "Decryption failed!"
 msgstr ""
 
@@ -4698,7 +4698,7 @@ msgstr ""
 msgid "Decryption failed! %s"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:311
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:313
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:102
 #: app/frontend/shared/composables/useArticleSecurity.ts:110
 msgid "Decryption was successful."
@@ -6135,7 +6135,7 @@ msgstr ""
 msgid "Download raw email"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:339
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:341
 msgid "Downloading attachments…"
 msgstr ""
 
@@ -10563,7 +10563,7 @@ msgstr ""
 msgid "Maybe later"
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:80
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:81
 msgid "Me"
 msgstr ""
 
@@ -14874,21 +14874,21 @@ msgid "See HTTPLog for details."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee:71
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:467
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:469
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:111
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:162
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:269
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:166
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:273
 msgid "See less"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee:68
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:463
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:465
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:108
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:41
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco:21
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:134
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:162
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:269
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:166
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:273
 msgid "See more"
 msgstr ""
 
@@ -15136,7 +15136,7 @@ msgstr ""
 msgid "Sending Email Address"
 msgstr ""
 
-#: app/models/ticket/article.rb:332
+#: app/models/ticket/article.rb:340
 msgid "Sending an email without a valid recipient is not possible."
 msgstr ""
 
@@ -15660,7 +15660,7 @@ msgstr ""
 msgid "Signature"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:302
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:304
 msgid "Signature verification failed!"
 msgstr ""
 
@@ -17531,7 +17531,7 @@ msgstr ""
 msgid "The retried attachment download failed."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:322
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:324
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:62
 #: app/frontend/shared/composables/useArticleSecurity.ts:75
 msgid "The retried security process failed!"
@@ -17613,7 +17613,7 @@ msgstr ""
 msgid "The signature part of this PGP email is missing or has a wrong content type according to RFC 3156."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:300
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:302
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:85
 #: app/frontend/shared/composables/useArticleSecurity.ts:94
 msgid "The signature was successfully verified."
@@ -21509,7 +21509,7 @@ msgstr ""
 msgid "delete"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:172
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:174
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:18
 msgid "delivered to the customer"
 msgstr ""
@@ -22386,7 +22386,7 @@ msgstr ""
 msgid "reacted with a %s to message from %s '%s'"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:169
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:171
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:11
 msgid "read by the customer"
 msgstr ""
@@ -22484,7 +22484,7 @@ msgstr ""
 msgid "select visible options"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:175
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:177
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:22
 msgid "sent to the customer"
 msgstr ""

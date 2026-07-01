@@ -20,5 +20,9 @@ RSpec.describe 'Channel::EmailParser#reprocess_failed_articles', aggregate_failu
       Channel::EmailParser.reprocess_failed_articles
       expect(Ticket::Article.last.body).not_to eq(HtmlSanitizer::UNPROCESSABLE_HTML_MSG)
     end
+
+    it 'stores body_rendering_error in article preferences' do
+      expect(Ticket::Article.last.preferences['body_rendering_error']).to be(true)
+    end
   end
 end

@@ -9,6 +9,7 @@ import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
 
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+import { i18n } from '#shared/i18n.ts'
 import { waitForAnimationFrame } from '#shared/utils/helpers.ts'
 import { isStandalone } from '#shared/utils/pwa.ts'
 
@@ -224,6 +225,48 @@ describe('component for displaying text article', () => {
     })
 
     expect(view.container).toHaveTextContent(sample)
+  })
+
+  describe('bodyRenderingError', () => {
+    afterEach(() => {
+      i18n.setTranslationMap(new Map())
+    })
+
+    const errorMsg =
+      'This message cannot be displayed due to HTML processing issues. Download the raw message below and open it via an Email client if you still wish to view it.'
+
+    it('displays the error message when bodyRenderingError is true', () => {
+      const view = renderArticleBubble({
+        content: errorMsg,
+        contentType: 'text/html',
+        bodyRenderingError: true,
+      })
+
+      expect(view.getByText(errorMsg)).toBeInTheDocument()
+    })
+
+    it('translates the error message according to the active locale', () => {
+      i18n.setTranslationMap(
+        new Map([
+          [
+            errorMsg,
+            'Diese Nachricht kann aufgrund von HTML-Verarbeitungsproblemen nicht angezeigt werden.',
+          ],
+        ]),
+      )
+
+      const view = renderArticleBubble({
+        content: errorMsg,
+        contentType: 'text/html',
+        bodyRenderingError: true,
+      })
+
+      expect(
+        view.getByText(
+          'Diese Nachricht kann aufgrund von HTML-Verarbeitungsproblemen nicht angezeigt werden.',
+        ),
+      ).toBeInTheDocument()
+    })
   })
 
   it('renders attachments', () => {
