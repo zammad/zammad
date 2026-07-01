@@ -271,7 +271,7 @@ importers:
         specifier: ^6.0.2
         version: 6.0.2(graphql@16.14.2)
       '@graphql-codegen/typescript-operations':
-        specifier: ^6.0.4
+        specifier: ^6.0.5
         version: 6.0.5(graphql@16.14.2)
       '@graphql-codegen/typescript-vue-apollo':
         specifier: ^5.0.1

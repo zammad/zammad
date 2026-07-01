@@ -46,7 +46,7 @@
     "@graphql-codegen/introspection": "^6.0.1",
     "@graphql-codegen/near-operation-file-preset": "^5.2.1",
     "@graphql-codegen/typescript": "^6.0.2",
-    "@graphql-codegen/typescript-operations": "^6.0.4",
+    "@graphql-codegen/typescript-operations": "^6.0.5",
     "@graphql-codegen/typescript-vue-apollo": "^5.0.1",
     "@pinia/testing": "^1.0.3",
     "@sa11y/preset-rules": "^8.0.27",
