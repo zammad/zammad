@@ -281,14 +281,20 @@ class HtmlSanitizer
 
       def unsafe_api_path?(string)
 
-        # block path traversal (../, ./)
-        normalized = string.sub(%r{\A(?:\./|\.\./)+}, '')
-        return true if normalized != string
+        # Callers apply CGI.unescape once (e.g. %252e%252e → %2e%2e); a second pass here
+        # resolves any remaining percent-encoded dot-segments (%2e%2e → ..) before the check.
+        string = CGI.unescape(string)
+
+        # browsers treat \ as a path separator in special-scheme URLs, so normalize before checking
+        string = string.tr('\\', '/')
+
+        # block dot-segment traversal (. and ..) anywhere in the string
+        return true if string.match?(%r{(?:\A|/)\.\.?(?:/|\z)})
 
         # only /api/... paths are in scope; non-API paths pass through
-        return false if !normalized.match?(%r{\A/?api/}i)
+        return false if !string.match?(%r{\A/?api/}i)
 
-        stripped = normalized.delete_prefix('/')
+        stripped = string.delete_prefix('/')
 
         # allowlist: prefix match for sub-paths, equality for exact bare paths
         return false if ALLOWED_ZAMMAD_API_PATHS.any? { |path| stripped.start_with?(path) || stripped == path.delete_suffix('/') }
