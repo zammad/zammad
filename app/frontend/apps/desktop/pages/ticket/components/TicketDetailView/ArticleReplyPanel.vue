@@ -88,7 +88,7 @@ onMounted(() => {
     :class="{
       'overflow-hidden border-t border-t-neutral-300 bg-blue-200 dark:border-t-gray-900 dark:bg-gray-700':
         isPinned,
-      'relative h-fit max-w-6xl py-4': !isPinned,
+      'relative h-fit max-w-4xl py-4': !isPinned,
     }"
     :style="{
       height: isPinned ? `${articlePanelHeight}px` : undefined,
@@ -115,7 +115,7 @@ onMounted(() => {
     </h2>
     <div class="flex h-full min-h-0 grow flex-col">
       <div
-        class="mx-auto flex h-full w-full max-w-6xl grow flex-col px-12"
+        class="mx-auto flex h-full w-full max-w-4xl grow flex-col px-12"
         :class="{ 'py-3': isPinned }"
       >
         <div class="flex h-full grow flex-col" data-test-id="article-reply-stripes-panel">

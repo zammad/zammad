@@ -5,7 +5,7 @@ import { computed, provide, reactive, ref } from 'vue'
 import type { TicketQuery } from '#shared/graphql/types.ts'
 
 import type { TicketInformation } from '#desktop/entities/ticket/types.ts'
-import { items as highlightMenuItems } from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/useHighlightMenuState.ts'
+import { items as highlightMenuItems } from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/composables/useHighlightMenuState.ts'
 import { TICKET_KEY } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
 
 export const provideTicketInformationMocks = (

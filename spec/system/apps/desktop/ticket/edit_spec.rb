@@ -85,7 +85,9 @@ RSpec.describe 'Desktop > Ticket > Edit', app: :desktop_view, authenticated_as: 
       #
       # Title
       #
-      find('[aria-label="Edit ticket title"]').click
+      within '[data-test-id="ticket-detail-top-bar-full-details"]' do
+        find('[aria-label="Edit ticket title"]').click
+      end
       wait.until { page.has_css?('button[aria-label="Save changes"]') }
       send_keys ' changed', :enter
       wait_for_gql('shared/entities/ticket/graphql/mutations/titleUpdate.graphql', number: 1)

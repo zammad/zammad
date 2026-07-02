@@ -3,7 +3,7 @@
 import { useTimeout } from '@vueuse/core'
 import { ref } from 'vue'
 
-import { useHighlightMenuState } from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/useHighlightMenuState.ts'
+import { useHighlightMenuState } from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/composables/useHighlightMenuState.ts'
 
 export const useBubbleHeader = () => {
   const showMetaInformation = ref(false)

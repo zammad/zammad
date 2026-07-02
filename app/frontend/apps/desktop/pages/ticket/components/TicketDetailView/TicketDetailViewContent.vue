@@ -66,7 +66,7 @@ import { useTaskbarTabStateUpdates } from '#desktop/entities/user/current/compos
 import type { TaskbarTabContext } from '#desktop/entities/user/current/types.ts'
 import FloatingToolbar from '#desktop/pages/ticket/components/TicketDetailView/FloatingToolbar.vue'
 import TicketDetailBottomBar from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue'
-import { items as highlightMenuItems } from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/useHighlightMenuState.ts'
+import { items as highlightMenuItems } from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/composables/useHighlightMenuState.ts'
 import { useTicketScreenBehavior } from '#desktop/pages/ticket/components/TicketDetailView/TicketScreenBehavior/useTicketScreenBehavior.ts'
 
 import { ARTICLES_INFORMATION_KEY } from '../../composables/useArticleContext.ts'
@@ -156,12 +156,21 @@ usePage({
 
 const { scrollIntoView: scrollToArticle } = useScrollPosition(contentContainerElement)
 
-const { scrollBehavior } = useReducedMotion()
+const { hasReducedMotion } = useReducedMotion()
 
 const handleScrollToArticleEnds = async (
   block: 'start' | 'end' = 'end',
-  behavior: ScrollToOptions['behavior'] = scrollBehavior.value,
-) => scrollToArticle(block, { behavior })
+  behavior?: ScrollToOptions['behavior'],
+) => {
+  let scrollBehavior = behavior
+
+  if (hasReducedMotion.value) {
+    scrollBehavior = 'instant'
+  } else {
+    scrollBehavior = behavior ?? 'smooth'
+  }
+  return scrollToArticle(block, { behavior: scrollBehavior })
+}
 
 const articleListInstance = useTemplateRef('article-list')
 
@@ -199,8 +208,6 @@ onKeyStroke('ArrowRight', (event) => {
 
 const isReplyActive = computed(() => !isLoadingArticles.value && isInitialSettled.value)
 
-const ticketDetailTopBarInstance = useTemplateRef('detail-top-bar')
-
 let scrollTimeout: NodeJS.Timeout | undefined
 const scrollScope = effectScope()
 
@@ -221,7 +228,6 @@ const handleInitialScrollToEnd = (isPermalink = false) => {
           whenever(
             () => (isPermalink ? directions.top || directions.bottom : directions.top),
             () => {
-              ticketDetailTopBarInstance.value?.hideDetails()
               scrollScope.stop()
             },
           )
@@ -702,15 +708,11 @@ const handleShowArticleForm = (
       <CommonIndicator v-model="isReachingTop" />
 
       <TicketDetailTopBarSkeleton v-if="!ticket" />
-      <TicketDetailTopBar
-        v-else
-        ref="detail-top-bar"
-        :content-container-element="contentContainerElement"
-      />
+      <TicketDetailTopBar v-else :content-container-element="contentContainerElement" />
 
       <CommonLoader :loading="isLoadingArticles">
         <template #skeleton>
-          <ArticleListSkeleton />
+          <ArticleListSkeleton :article-count="ticket?.articleCount" />
         </template>
 
         <ArticleList
@@ -746,10 +748,10 @@ const handleShowArticleForm = (
             :is-reaching-bottom="isReachingBottom"
             :unread-article-count="articleCount"
             :new-article-present="newTicketArticlePresent"
-            class="absolute inset-e-1 -top-3 -translate-y-full @6xl:inset-e-3"
+            class="absolute inset-e-3 -top-3 -translate-y-full"
             @show-article-form="handleShowArticleForm"
-            @scroll-to-end="handleScrollToArticleEnds"
-            @scroll-to-start="handleScrollToArticleEnds('start')"
+            @scroll-to-end="handleScrollToArticleEnds('end', 'auto')"
+            @scroll-to-start="handleScrollToArticleEnds('start', 'auto')"
             @scroll-to-unread-article="handleScrollToUnreadArticle"
           />
         </template>
@@ -768,10 +770,10 @@ const handleShowArticleForm = (
           :is-reaching-top="isReachingTop"
           :unread-article-count="articleCount"
           :new-article-present="newTicketArticlePresent"
-          class="absolute inset-e-1 bottom-0 @6xl:inset-e-3"
+          class="absolute inset-e-3 bottom-0"
           @show-article-form="handleShowArticleForm"
-          @scroll-to-end="handleScrollToArticleEnds"
-          @scroll-to-start="handleScrollToArticleEnds('start')"
+          @scroll-to-end="handleScrollToArticleEnds('end', 'auto')"
+          @scroll-to-start="handleScrollToArticleEnds('start', 'auto')"
           @scroll-to-unread-article="handleScrollToUnreadArticle"
         />
       </div>

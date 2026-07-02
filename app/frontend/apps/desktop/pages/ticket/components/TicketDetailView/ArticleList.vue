@@ -186,6 +186,7 @@ const goToAdjacentArticle = (direction: 'next' | 'previous' | 'unread') => {
   if (!target) return false
 
   scrollElementToContainerTop(target.el, scrollBehavior.value)
+
   return true
 }
 
@@ -206,7 +207,7 @@ defineExpose({ goToAdjacentArticle })
   <section
     role="feed"
     :aria-busy="isLoadingArticles"
-    class="mx-auto w-full max-w-6xl min-w-xs space-y-10 px-12 py-3 pb-8 print:pt-0!"
+    class="mx-auto w-full max-w-4xl min-w-xs space-y-10 px-16 py-3 pb-8 print:pt-0!"
   >
     <template v-if="context.articles.value?.articles.edges && rows">
       <article

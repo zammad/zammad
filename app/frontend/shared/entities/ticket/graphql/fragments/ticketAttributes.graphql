@@ -90,6 +90,7 @@ fragment ticketAttributes on Ticket {
     name
     timeUnit
   }
+  articleCount
   subscribed
   preferences
   stateColorCode

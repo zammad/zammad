@@ -92,7 +92,10 @@ const scrollByStep = (scrollAmount: number) => {
     scrollAmount = -scrollAmount
   }
 
-  scrollContainer.value.scrollBy({ left: scrollAmount, behavior: scrollBehavior.value })
+  scrollContainer.value.scrollBy({
+    left: scrollAmount,
+    behavior: scrollBehavior.value,
+  })
 
   calculateScrollButtonStart()
   calculateScrollButtonEnd()

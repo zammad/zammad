@@ -95,6 +95,7 @@ export const TicketAttributesFragmentDoc = gql`
     name
     timeUnit
   }
+  articleCount
   subscribed
   preferences
   stateColorCode

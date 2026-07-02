@@ -5,7 +5,7 @@ import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 
 import { provideTicketInformationMocks } from '#desktop/entities/ticket/__tests__/mocks/provideTicketInformationMocks.ts'
 import { testOptionsTopBar } from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/__tests__/support/testOptions.ts'
-import TopBarHeader from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader.vue'
+import TopBarHeaderFull from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderFull.vue'
 
 const copyToClipboardMock = vi.fn()
 
@@ -13,28 +13,24 @@ vi.mock('#shared/composables/useCopyToClipboard.ts', async () => ({
   useCopyToClipboard: () => ({ copyToClipboard: copyToClipboardMock }),
 }))
 
-const renderTopBarHeader = ({
-  hideDetails = false,
+const renderTopBarHeaderFull = ({
   ticket = testOptionsTopBar,
 }: {
-  hideDetails?: boolean
   ticket?: typeof testOptionsTopBar
 } = {}) => {
   return renderComponent(
     {
-      components: { TopBarHeader },
+      components: { TopBarHeaderFull },
       setup() {
         provideTicketInformationMocks(ticket)
-
-        return { hideDetails }
       },
-      template: '<TopBarHeader :hide-details="hideDetails" />',
+      template: '<TopBarHeaderFull />',
     },
     { form: true, router: true },
   )
 }
 
-describe('TopBarHeader', () => {
+describe('TopBarHeaderFull', () => {
   beforeEach(() => {
     copyToClipboardMock.mockReset()
 
@@ -45,29 +41,22 @@ describe('TopBarHeader', () => {
     })
   })
 
-  it('shows breadcrumb and copy button in detailed mode', () => {
-    const view = renderTopBarHeader()
+  it('shows breadcrumb and copy button', () => {
+    const view = renderTopBarHeaderFull()
 
     expect(view.getByText('Tickets')).toBeInTheDocument()
     expect(view.getByText('Ticket#89001')).toBeInTheDocument()
-    expect(view.getByIconName('files')).toBeInTheDocument()
-  })
-
-  it('hides breadcrumb and copy button in compact mode', () => {
-    const view = renderTopBarHeader({ hideDetails: true })
-
-    expect(view.queryByText('Tickets')).not.toBeInTheDocument()
-    expect(view.queryByIconName('files')).not.toBeInTheDocument()
+    expect(view.getByRole('button', { name: 'Copy ticket number' })).toBeInTheDocument()
   })
 
   it('shows highlight actions for editable agent tickets', () => {
-    const view = renderTopBarHeader()
+    const view = renderTopBarHeaderFull()
 
     expect(view.getByRole('button', { name: 'Highlight options' })).toBeInTheDocument()
   })
 
   it('hides highlight actions for readonly tickets', () => {
-    const view = renderTopBarHeader({
+    const view = renderTopBarHeaderFull({
       ticket: {
         ...testOptionsTopBar,
         policy: { ...testOptionsTopBar.policy, update: false },
@@ -78,7 +67,7 @@ describe('TopBarHeader', () => {
   })
 
   it('copies ticket number with desktop link', async () => {
-    const view = renderTopBarHeader()
+    const view = renderTopBarHeaderFull()
 
     await view.events.click(view.getByIconName('files'))
 
@@ -95,8 +84,8 @@ describe('TopBarHeader', () => {
     ])
   })
 
-  it('renders flex-col on narrow container when hideDetails=false', () => {
-    const view = renderTopBarHeader()
+  it('renders flex-col on narrow container', () => {
+    const view = renderTopBarHeaderFull()
     const avatar = view.getAllByTestId('common-avatar')[0]
     let container = avatar.parentElement
 
@@ -108,8 +97,8 @@ describe('TopBarHeader', () => {
     expect(container).toHaveClass('flex-col')
   })
 
-  it('renders @3xl:flex-row on wide container when hideDetails=false', () => {
-    const view = renderTopBarHeader()
+  it('renders @5xl:flex-row on wide container', () => {
+    const view = renderTopBarHeaderFull()
     const avatar = view.getAllByTestId('common-avatar')[0]
     let container = avatar.parentElement
 
@@ -118,6 +107,6 @@ describe('TopBarHeader', () => {
     }
 
     expect(container).not.toBeNull()
-    expect(container).toHaveClass('@3xl:flex-row')
+    expect(container).toHaveClass('@5xl:flex-row')
   })
 })

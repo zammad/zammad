@@ -7,7 +7,7 @@ import { computed, onUnmounted, watch } from 'vue'
 import CommonPopoverMenu from '#desktop/components/CommonPopoverMenu/CommonPopoverMenu.vue'
 import SplitButton from '#desktop/components/SplitButton/SplitButton.vue'
 
-import { useHighlightMenuState } from './useHighlightMenuState.ts'
+import { useHighlightMenuState } from '../composables/useHighlightMenuState.ts'
 
 const { activeMenuItem, isActive, isEraserActive, setActive, selectItem, items, reset } =
   useHighlightMenuState()
@@ -89,7 +89,8 @@ onUnmounted(() => {
         isEraserActive ? $t('Remove highlight') : $t('Highlighter color: %s', $t(activeColorLabel))
       "
       :class="{ [activeColorClass]: isActive }"
-      class="flex aspect-square size-7.5! p-0!"
+      class="flex aspect-square size-7! p-0!"
+      arrow-classes="size-7!"
       variant="tertiary-light"
       size="small"
       :addon-label="__('Highlight options')"
@@ -164,8 +165,8 @@ onUnmounted(() => {
 body.cursor-highlight {
   cursor:
     image-set(
-        url('./assets/cursor/highlight-light.png') 1x,
-        url('./assets/cursor/highlight-light@2x.png') 2x
+        url('../assets/cursor/highlight-light.png') 1x,
+        url('../assets/cursor/highlight-light@2x.png') 2x
       )
       2 15,
     crosshair;
@@ -174,8 +175,8 @@ body.cursor-highlight {
 [data-theme='dark'] body.cursor-highlight {
   cursor:
     image-set(
-        url('./assets/cursor/highlight-dark.png') 1x,
-        url('./assets/cursor/highlight-dark@2x.png') 2x
+        url('../assets/cursor/highlight-dark.png') 1x,
+        url('../assets/cursor/highlight-dark@2x.png') 2x
       )
       2 15,
     crosshair;
@@ -184,8 +185,8 @@ body.cursor-highlight {
 body.cursor-eraser {
   cursor:
     image-set(
-        url('./assets/cursor/eraser-light.png') 1x,
-        url('./assets/cursor/eraser-light@2x.png') 2x
+        url('../assets/cursor/eraser-light.png') 1x,
+        url('../assets/cursor/eraser-light@2x.png') 2x
       )
       2 15,
     auto;
@@ -194,8 +195,8 @@ body.cursor-eraser {
 [data-theme='dark'] body.cursor-eraser {
   cursor:
     image-set(
-        url('./assets/cursor/eraser-dark.png') 1x,
-        url('./assets/cursor/eraser-dark@2x.png') 2x
+        url('../assets/cursor/eraser-dark.png') 1x,
+        url('../assets/cursor/eraser-dark@2x.png') 2x
       )
       2 15,
     auto;

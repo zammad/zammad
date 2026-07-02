@@ -23,11 +23,13 @@ export const useScrollPosition = (scrollContainer?: ShallowRef<HTMLElement | nul
   onBeforeRouteLeave(storeScrollPosition)
   onBeforeRouteUpdate(storeScrollPosition)
 
-  const { scrollBehavior } = useReducedMotion()
+  const { hasReducedMotion } = useReducedMotion()
 
   const scrollIntoView = async (
     block: 'start' | 'end',
-    options: { behavior: ScrollOptions['behavior'] } = { behavior: scrollBehavior.value },
+    options: { behavior: ScrollOptions['behavior'] } = {
+      behavior: hasReducedMotion.value ? 'instant' : 'smooth',
+    },
   ) => {
     const { behavior } = options
 

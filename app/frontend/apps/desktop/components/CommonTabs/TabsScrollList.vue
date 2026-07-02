@@ -145,7 +145,9 @@ if (!hasMarker.value) stopWatcher()
 
 const { scrollBehavior } = useReducedMotion()
 
-watch(activeTabIndex, () => centerActiveTab(scrollBehavior.value), { flush: 'post' })
+watch(activeTabIndex, () => centerActiveTab(scrollBehavior.value), {
+  flush: 'post',
+})
 
 watch(
   () => props.tabs,
@@ -192,7 +194,10 @@ const beginScroll = (direction: 'start' | 'end') => {
     scrollAmount = -scrollAmount
   }
 
-  containerElement.value.scrollBy({ left: scrollAmount, behavior: scrollBehavior.value })
+  containerElement.value.scrollBy({
+    left: scrollAmount,
+    behavior: scrollBehavior.value,
+  })
 }
 
 const iconNamePerDirection = (isLtr: boolean, direction: 'start' | 'end') => {

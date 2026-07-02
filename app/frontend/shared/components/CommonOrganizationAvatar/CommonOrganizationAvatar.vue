@@ -14,7 +14,7 @@ import type { AvatarSize } from '../CommonAvatar/index.ts'
 export interface Props {
   entity: AvatarOrganization
   size?: AvatarSize
-  // When `true`, `size` applies from the @3xl container breakpoint upwards and
+  // When `true`, `size` applies from the @5xl container breakpoint upwards and
   // the avatar scales down to the next smaller size below it (see CommonAvatar).
   responsive?: boolean
 }
@@ -46,20 +46,23 @@ const paddingForSize = (size?: AvatarSize) => {
   }
 }
 
+// The breakpoint here must match the avatar's size-restore breakpoint in
+// CommonAvatar (@6xl); otherwise the padding grows before the circle does and
+// squeezes the icon in the intermediate range.
 const responsivePaddingForSize = (size?: AvatarSize) => {
   switch (size) {
     case 'xs':
-      return '@3xl:p-0.5'
+      return '@5xl:p-0.5'
     case 'small':
-      return '@3xl:p-2'
+      return '@5xl:p-2'
     case 'medium':
-      return '@3xl:p-2.5'
+      return '@5xl:p-2.5'
     case 'large':
-      return '@3xl:p-4'
+      return '@5xl:p-4'
     case 'xl':
-      return '@3xl:p-6'
+      return '@5xl:p-6'
     default:
-      return '@3xl:p-3.5'
+      return '@5xl:p-3.5'
   }
 }
 

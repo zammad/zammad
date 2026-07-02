@@ -7,7 +7,7 @@ import { useBubbleHeader } from '#desktop/pages/ticket/components/TicketDetailVi
 const isActive = vi.hoisted(() => vi.fn())
 
 vi.mock(
-  '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/useHighlightMenuState.ts',
+  '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/composables/useHighlightMenuState.ts',
   () => ({
     useHighlightMenuState: () => ({
       isActive: {

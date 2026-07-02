@@ -241,4 +241,12 @@ describe('CommonInlineEdit', () => {
 
     expect(wrapper.html()).not.toContain('before:bg-neutral-50 dark:before:bg-gray-500')
   })
+
+  it('supports limiting the maximum characters', async () => {
+    const wrapper = renderInlineEdit({ maxLength: 10 })
+    await wrapper.events.click(wrapper.getByText('test value'))
+    const input = wrapper.getByRole('textbox')
+    // native input element should have maxlength attribute set
+    expect(input).toHaveAttribute('maxlength', '10')
+  })
 })

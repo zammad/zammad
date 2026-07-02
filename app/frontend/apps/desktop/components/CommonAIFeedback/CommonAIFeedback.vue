@@ -54,7 +54,10 @@ const submitNegativeFeedback = async () => {
   const commentContainer = unref(commentFieldElement)
   const textarea = commentContainer!.querySelector('textarea') as HTMLTextAreaElement
 
-  textarea.scrollIntoView({ behavior: scrollBehavior.value, block: 'nearest' })
+  textarea.scrollIntoView({
+    behavior: scrollBehavior.value,
+    block: 'nearest',
+  })
   textarea.focus()
 }
 

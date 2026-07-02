@@ -40,31 +40,31 @@ describe('useReducedMotion', () => {
 
       expect(hasReducedMotion.value).toBe(true)
     })
-  })
 
-  describe('scrollBehavior', () => {
-    it('returns "instant" in test environment', () => {
-      const { scrollBehavior } = useReducedMotion()
+    describe('scrollBehavior', () => {
+      it('returns "instant" in test environment', () => {
+        const { scrollBehavior } = useReducedMotion()
 
-      expect(scrollBehavior.value).toBe('instant')
-    })
+        expect(scrollBehavior.value).toBe('instant')
+      })
 
-    it('returns "smooth" when user has no motion preference', () => {
-      vi.stubGlobal('VITE_TEST_MODE', false)
+      it('returns "smooth" when user has no motion preference', () => {
+        vi.stubGlobal('VITE_TEST_MODE', false)
 
-      const { scrollBehavior } = useReducedMotion()
+        const { scrollBehavior } = useReducedMotion()
 
-      expect(scrollBehavior.value).toBe('smooth')
-    })
+        expect(scrollBehavior.value).toBe('smooth')
+      })
 
-    it('returns "instant" when user prefers reduced motion', () => {
-      vi.stubGlobal('VITE_TEST_MODE', false)
+      it('returns "instant" when user prefers reduced motion', () => {
+        vi.stubGlobal('VITE_TEST_MODE', false)
 
-      preferredMotion.value = 'reduce'
+        preferredMotion.value = 'reduce'
 
-      const { scrollBehavior } = useReducedMotion()
+        const { scrollBehavior } = useReducedMotion()
 
-      expect(scrollBehavior.value).toBe('instant')
+        expect(scrollBehavior.value).toBe('instant')
+      })
     })
   })
 })

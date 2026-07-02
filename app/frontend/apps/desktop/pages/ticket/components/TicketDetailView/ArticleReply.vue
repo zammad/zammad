@@ -63,7 +63,7 @@ const pinned = defineModel<boolean>('pinned')
     />
   </div>
   <div v-else-if="newArticlePresent !== undefined">
-    <div class="mx-auto flex w-full max-w-6xl flex-col items-center gap-3 px-12 pt-4 pb-6">
+    <div class="mx-auto flex w-full max-w-4xl flex-col items-center gap-3 px-12 pt-4 pb-6">
       <CommonButton
         v-if="isTicketCustomer && customerReplyArticleType"
         variant="primary"

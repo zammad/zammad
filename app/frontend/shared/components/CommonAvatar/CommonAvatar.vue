@@ -17,7 +17,7 @@ export interface Props {
   // name of the icon
   icon?: Maybe<string>
   size?: AvatarSize
-  // When `true`, `size` applies from the @3xl container breakpoint upwards and
+  // When `true`, `size` applies from the @5xl container breakpoint upwards and
   // the avatar (including its icon, vip badge and text) scales down to the next
   // smaller size below it.
   responsive?: boolean
@@ -31,12 +31,12 @@ const props = withDefaults(defineProps<Props>(), {
   initials: '??',
 })
 
-// Size the avatar renders at below the @3xl breakpoint. The larger `size` is
-// restored at @3xl through the `size-3xl-*` container-query classes below.
+// Size the avatar renders at below the @5xl breakpoint. The larger `size` is
+// restored at @5xl through the `size-5xl-*` container-query classes below.
 const baseSize = computed(() => (props.responsive ? nextSmallerAvatarSize[props.size] : props.size))
 
 const sizeClasses = computed(() =>
-  props.responsive ? [`size-${baseSize.value}`, `size-3xl-${props.size}`] : `size-${props.size}`,
+  props.responsive ? [`size-${baseSize.value}`, `size-5xl-${props.size}`] : `size-${props.size}`,
 )
 
 const iconSizes = {
@@ -161,103 +161,103 @@ const classMap = getAvatarClasses()
 
 /*
  * Responsive overrides: when the `responsive` prop is set the avatar renders at
- * the next smaller `size-*` below the @3xl container breakpoint, and is scaled
- * back up to its target size from @3xl upwards. The icon is sized via the svg's
+ * the next smaller `size-*` below the @5xl container breakpoint, and is scaled
+ * back up to its target size from @6xl upwards. The icon is sized via the svg's
  * width/height attributes, so it is matched here through CSS as well.
  */
-@container (min-width: 48rem) {
-  .size-3xl-xs {
+@container (min-width: 64rem) {
+  .size-5xl-xs {
     height: 1.5rem;
     width: 1.5rem;
     font-size: 0.75rem;
     line-height: 1.5rem;
   }
 
-  .size-3xl-xs .vip {
+  .size-5xl-xs .vip {
     transform: translateY(-0.75rem);
   }
 
-  .size-3xl-xs .icon {
+  .size-5xl-xs .icon {
     width: 0.75rem;
     height: 0.75rem;
   }
 
-  .size-3xl-small {
+  .size-5xl-small {
     height: 2rem;
     width: 2rem;
     font-size: 0.75rem;
     line-height: 2rem;
   }
 
-  .size-3xl-small .vip {
+  .size-5xl-small .vip {
     transform: translateY(-1rem);
   }
 
-  .size-3xl-small .icon {
+  .size-5xl-small .icon {
     width: 1.25rem;
     height: 1.25rem;
   }
 
-  .size-3xl-medium {
+  .size-5xl-medium {
     height: 2.5rem;
     width: 2.5rem;
     font-size: 1rem;
     line-height: 2.5rem;
   }
 
-  .size-3xl-medium .vip {
+  .size-5xl-medium .vip {
     transform: translateY(-1.25rem);
   }
 
-  .size-3xl-medium .icon {
+  .size-5xl-medium .icon {
     width: 1.5rem;
     height: 1.5rem;
   }
 
-  .size-3xl-normal {
+  .size-5xl-normal {
     height: 3.5rem;
     width: 3.5rem;
     font-size: 1.5rem;
     line-height: 5rem;
   }
 
-  .size-3xl-normal .vip {
+  .size-5xl-normal .vip {
     transform: translateY(-1.85rem);
   }
 
-  .size-3xl-normal .icon {
+  .size-5xl-normal .icon {
     width: 2rem;
     height: 2rem;
   }
 
-  .size-3xl-large {
+  .size-5xl-large {
     height: 5rem;
     width: 5rem;
     font-size: 2.25rem;
     line-height: 5rem;
   }
 
-  .size-3xl-large .vip {
+  .size-5xl-large .vip {
     transform: translateY(-2.65rem);
   }
 
-  .size-3xl-large .icon {
+  .size-5xl-large .icon {
     width: 3rem;
     height: 3rem;
   }
 
-  .size-3xl-xl {
+  .size-5xl-xl {
     height: 9rem;
     width: 9rem;
     font-size: 3.75rem;
     line-height: 5rem;
   }
 
-  .size-3xl-xl .vip {
+  .size-5xl-xl .vip {
     transform: translateY(-4.85rem);
   }
 
-  .size-3xl-xl .icon {
+  .size-5xl-xl .icon {
     width: 6rem;
     height: 6rem;
   }

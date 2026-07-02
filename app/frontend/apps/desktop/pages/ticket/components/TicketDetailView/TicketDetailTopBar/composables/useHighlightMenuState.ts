@@ -6,7 +6,7 @@ import type { MenuItem } from '#desktop/components/CommonPopoverMenu/types.ts'
 import type { TicketInformation } from '#desktop/entities/ticket/types.ts'
 import { useTicketInformation } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
 
-import type { MenuStateUpdate } from './types'
+import type { MenuStateUpdate } from '../types'
 
 export const items: MenuItem[] = [
   { label: __('Yellow'), key: 'highlight-yellow' },

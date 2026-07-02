@@ -8,7 +8,7 @@ import { i18n } from '#shared/i18n.ts'
 import type { AnnouncerHandler } from '#desktop/composables/accessibility/types.ts'
 import { useTicketArticleHighlightedTextUpsertMutation } from '#desktop/entities/ticket-article/graphql/mutations/highlightedTextUpsert.api.ts'
 
-import { useHighlightMenuState } from '../../TicketDetailTopBar/TopBarHeader/useHighlightMenuState.ts'
+import { useHighlightMenuState } from '../../TicketDetailTopBar/composables/useHighlightMenuState.ts'
 
 import { collectCharAnchors, extractText } from './utils.ts'
 

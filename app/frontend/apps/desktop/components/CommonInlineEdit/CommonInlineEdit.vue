@@ -28,6 +28,7 @@ export interface Props {
   labelAttrs?: Record<string, string>
   label?: string
   block?: boolean
+  maxLength?: number | string
   classes?: {
     label?: string
     input?: string
@@ -292,6 +293,7 @@ defineExpose({
       <CommonLabel
         :id="id"
         ref="label"
+        v-tooltip.supportive.truncate="processedContent"
         class="z-10 wrap-break-word"
         :style="{ wordBreak: 'normal', overflowWrap: 'anywhere' }"
         v-bind="labelAttrs"
@@ -315,6 +317,7 @@ defineExpose({
           :class="[{ grow: block }, classes?.input || '']"
           :disabled="disabled || loading"
           :placeholder="placeholder"
+          :maxlength="maxLength"
           @keydown.stop.enter="handleEnterKey"
         />
       </div>

@@ -3,7 +3,7 @@
 import type { FormRefParameter } from '#shared/components/Form/types.ts'
 import type { TicketById } from '#shared/entities/ticket/types.ts'
 
-import type { MenuState } from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/types.ts'
+import type { MenuState } from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/types.ts'
 
 import type { ComputedRef, Reactive, Ref } from 'vue'
 
