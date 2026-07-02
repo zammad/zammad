@@ -56,8 +56,32 @@ AAAFoAAAAAAAAAkAAAAAEAAACQAAAAAQADk=" })
     end
 
     context 'when the input includes authorization bearer part' do
+      let(:dot_separated_bearer_token) do
+        %w[
+          eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9
+          eyJzdWIiOiJ1c2VyQGV4YW1wbGUuY29tIiwicm9sZSI6ImFwcCJ9
+          c2lnbmF0dXJl
+        ].join('.')
+      end
+
       it 'masks Bearer authorization headers' do
         bearer = 'Authorization: Bearer supersecrettoken'
+        expect(described_class.mask_sensitive_data(bearer)).to eq('Authorization: Bearer [FILTERED]')
+      end
+
+      it 'masks dot-separated Bearer authorization headers completely' do
+        bearer = "authorization: Bearer #{dot_separated_bearer_token}"
+
+        expect(described_class.mask_sensitive_data(bearer)).to eq('Authorization: Bearer [FILTERED]')
+      end
+
+      it 'masks previously partially filtered dot-separated Bearer authorization headers completely' do
+        bearer = [
+          'Authorization: Bearer [FILTERED]',
+          'eyJzdWIiOiJ1c2VyQGV4YW1wbGUuY29tIn0',
+          'c2lnbmF0dXJl',
+        ].join('.')
+
         expect(described_class.mask_sensitive_data(bearer)).to eq('Authorization: Bearer [FILTERED]')
       end
     end

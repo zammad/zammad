@@ -52,7 +52,12 @@ class HttpLog < ApplicationModel
       end
   end
 
-  BEARER_REGEX      = %r{Authorization:\s*Bearer\s+[A-Za-z0-9\-_~+/]+=*}i
+  BEARER_REGEX = %r{
+    Authorization:\s*Bearer\s+
+    (?:\[FILTERED\]|[A-Za-z0-9\-._~+/]+=*(?:\[TRUNCATED\])?)
+    (?:\.(?:[A-Za-z0-9\-._~+/]+=*(?:\[TRUNCATED\])?)?)*
+  }ix
+
   BASIC_REGEX       = %r{Authorization:\s*Basic\s+[A-Za-z0-9+/]+=*}i
   TOKEN_REGEX       = %r{(access[_-]?token|api[_-]?key|secret)(["']?\s*[:=]\s*["']?)[A-Za-z0-9\-_~+/=:.]+}ix
   COOKIE_REGEX      = %r{Cookie:\s*((?:[^=;]+=[^;]+;?\s*)+)}i
