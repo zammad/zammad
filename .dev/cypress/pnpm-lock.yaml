@@ -9,7 +9,7 @@ importers:
   .:
     devDependencies:
       '@frsource/cypress-plugin-visual-regression-diff':
-        specifier: ^4.0.1
+        specifier: ^4.0.2
         version: 4.0.2(cypress@15.18.0)
       '@testing-library/cypress':
         specifier: ^10.1.3
