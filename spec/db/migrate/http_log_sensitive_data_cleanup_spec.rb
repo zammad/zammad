@@ -12,7 +12,29 @@ RSpec.describe HttpLogSensitiveDataCleanup, :aggregate_failures, type: :db_migra
     end
   end
 
-  let!(:http_log_bearer)  { create_http_log(request: { headers: 'Authorization: Bearer supersecrettoken' }) }
+  let(:dot_separated_bearer_token) do
+    %w[
+      eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9
+      eyJzdWIiOiJ1c2VyQGV4YW1wbGUuY29tIiwicm9sZSI6ImFwcCJ9
+      c2lnbmF0dXJl
+    ].join('.')
+  end
+
+  let!(:http_log_bearer) { create_http_log(request: { headers: 'Authorization: Bearer supersecrettoken' }) }
+  let!(:http_log_dot_separated_bearer) do
+    create_http_log(request: { headers: "Authorization: Bearer #{dot_separated_bearer_token}" })
+  end
+  let!(:http_log_partially_filtered_dot_separated_bearer) do
+    create_http_log(
+      request: {
+        headers: [
+          'Authorization: Bearer [FILTERED]',
+          'eyJzdWIiOiJ1c2VyQGV4YW1wbGUuY29tIn0',
+          'c2lnbmF0dXJl',
+        ].join('.'),
+      }
+    )
+  end
   let!(:http_log_basic)   { create_http_log(request: { headers: 'Authorization: Basic dXNlcjpwYXNzd29yZA==' }) }
   let!(:http_log_token)   { create_http_log(response: { body: 'access_token="anothersecret"' }) }
   let!(:http_log_api_key) { create_http_log(response: { body: 'api_key: "key-value"' }) }
@@ -25,6 +47,9 @@ RSpec.describe HttpLogSensitiveDataCleanup, :aggregate_failures, type: :db_migra
     migrate
 
     expect(http_log_bearer.reload.request['headers']).to eq('Authorization: Bearer [FILTERED]')
+    expect(http_log_dot_separated_bearer.reload.request['headers']).to eq('Authorization: Bearer [FILTERED]')
+    expect(http_log_partially_filtered_dot_separated_bearer.reload.request['headers'])
+      .to eq('Authorization: Bearer [FILTERED]')
     expect(http_log_basic.reload.request['headers']).to eq('Authorization: Basic [FILTERED]')
     expect(http_log_token.reload.response['body']).to eq('access_token="[FILTERED]"')
     expect(http_log_api_key.reload.response['body']).to eq('api_key: "[FILTERED]"')
