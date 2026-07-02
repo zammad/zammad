@@ -12,17 +12,37 @@ require 'uri'
 # in an alphabetical order
 # because `test/browser/aaa_*` tests are required to run first
 require 'minitest'
+
+# Guard against future minitest API renames silently disabling the ordering
+# override below (minitest 6 renamed `__run` -> `run_all_suites` and the
+# per-suite `run` -> `run_suite`).
+if !(Minitest.respond_to?(:run_all_suites) && Minitest::Runnable.respond_to?(:run_suite))
+  raise "Minitest ordering patch in #{__FILE__} is out of date: expected " \
+        'Minitest.run_all_suites and Minitest::Runnable.run_suite to exist'
+end
+
 module Minitest
-  def self.__run(reporter, options)
+  def self.run_all_suites(reporter, options)
     Runnable.runnables
             .reject { |s| s.runnable_methods.empty? }
-            .map { |suite| suite.run reporter, options }
+            .map { |suite| suite.run_suite reporter, options }
   end
 end
 
 class TestCase < ActiveSupport::TestCase
 
   DEBUG = true
+
+  # Browser tests rely on alphabetical method execution order (e.g. `test_aaa_*`
+  # must run before `test_ccc_*`). Rails configures this via
+  # `config.active_support.test_order = :sorted`, but ActiveSupport's minitest 6
+  # `run_order` shim is guarded by `Minitest.respond_to?(:run_order)` — and in
+  # minitest 6 `run_order` lives on `Minitest::Runnable`, not the `Minitest`
+  # module, so the shim never activates and order falls back to `:random`.
+  # Enforce the configured order explicitly until the upstream guard is fixed.
+  def self.run_order
+    test_order
+  end
 
   setup do
     # print current test case to STDOUT
