@@ -39,6 +39,7 @@ interface Props {
   attachments: Attachment[]
   remoteContentWarning?: string
   mediaError?: boolean | null
+  bodyRenderingError?: boolean | null
   reaction?: string
 }
 
@@ -83,6 +84,9 @@ const username = computed(() => {
 })
 
 const body = computed(() => {
+  if (props.bodyRenderingError) {
+    return i18n.t(props.content)
+  }
   if (props.contentType !== 'text/html') {
     return textToHtml(props.content)
   }

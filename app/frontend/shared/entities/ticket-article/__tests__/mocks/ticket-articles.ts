@@ -55,6 +55,7 @@ export const createDummyArticle = (options?: {
   mediaErrorState?: ArticleNode['mediaErrorState']
   preferences?: ArticleNode['preferences']
   detectedLanguage?: ArticleNode['detectedLanguage']
+  bodyRenderingError?: ArticleNode['bodyRenderingError']
 }) => {
   return nullableMock({
     __typename: 'TicketArticle',
@@ -72,6 +73,7 @@ export const createDummyArticle = (options?: {
     attachmentsWithoutInline: options?.attachmentsWithoutInline || [],
     preferences: options?.preferences || {},
     bodyWithUrls: options?.bodyWithUrls || defaultBodyWithUrls,
+    bodyRenderingError: options?.bodyRenderingError || false,
     internal: !!options?.internal,
     createdAt: mockTicketCreateAtDate.toISOString(),
     author: options?.author === undefined ? defaultAuthor : options?.author,

@@ -85,6 +85,7 @@ const markSeen = (id: string) => {
           row.article.sender?.name !== EnumTicketArticleSenderName.Customer ? 'left' : 'right'
         "
         :media-error="row.article.mediaErrorState?.error"
+        :body-rendering-error="row.article.bodyRenderingError"
         :security="row.article.securityState"
         :ticket-internal-id="ticket.internalId"
         :article-id="row.article.id"

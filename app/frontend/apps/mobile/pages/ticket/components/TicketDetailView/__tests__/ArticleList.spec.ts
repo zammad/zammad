@@ -26,6 +26,7 @@ it('renders delivery messages', () => {
         delivery_message: true,
       },
       attachmentsWithoutInline: [],
+      bodyRenderingError: false,
       author: {
         __typename: 'User',
         id: convertToGraphQLId('User', 1),

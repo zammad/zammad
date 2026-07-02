@@ -53,6 +53,7 @@ export const TicketArticleAttributesFragmentDoc = gql`
   }
   preferences
   bodyWithUrls
+  bodyRenderingError
   internal
   createdAt
   author {

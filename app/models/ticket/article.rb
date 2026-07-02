@@ -310,6 +310,7 @@ returns
     new_body, new_attachments = Ticket::Article.insert_urls(self)
     attributes['body'] = new_body
     attributes['attachments'] = new_attachments.map(&:attributes_for_display)
+    attributes['body_rendering_error'] = body_rendering_error
 
     attributes
   end
@@ -334,8 +335,15 @@ returns
 
     attributes['body'] = new_body
     attributes['attachments'] = new_attachments.map(&:attributes_for_display)
+    attributes['body_rendering_error'] = body_rendering_error
 
     attributes
+  end
+
+  def body_rendering_error
+    return true if preferences['body_rendering_error']
+
+    [HtmlSanitizer::UNPROCESSABLE_HTML_MSG, Channel::EmailParser::EXCESSIVE_LINKS_MSG].include?(body)
   end
 
   private

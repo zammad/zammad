@@ -73,6 +73,7 @@ RSpec.describe Gql::Queries::Ticket::Articles, type: :graphql do
                 }
                 body
                 bodyWithUrls
+                bodyRenderingError
                 internal
                 createdAt
                 author {
@@ -270,6 +271,38 @@ RSpec.describe Gql::Queries::Ticket::Articles, type: :graphql do
 
             it 'handles empty highlight data gracefully' do
               expect(response_articles.first).to include({ 'highlightedTexts' => [] })
+            end
+          end
+        end
+
+        context 'with bodyRenderingError' do
+          context 'when body is UNPROCESSABLE_HTML_MSG (string comparison fallback)' do
+            let(:articles) { create_list(:ticket_article, 1, :outbound_email, ticket: ticket, body: HtmlSanitizer::UNPROCESSABLE_HTML_MSG) }
+
+            it 'returns bodyRenderingError as true' do
+              expect(response_articles.first).to include('bodyRenderingError' => true)
+            end
+          end
+
+          context 'when body is EXCESSIVE_LINKS_MSG (string comparison fallback)' do
+            let(:articles) { create_list(:ticket_article, 1, :outbound_email, ticket: ticket, body: Channel::EmailParser::EXCESSIVE_LINKS_MSG) }
+
+            it 'returns bodyRenderingError as true' do
+              expect(response_articles.first).to include('bodyRenderingError' => true)
+            end
+          end
+
+          context 'when body_rendering_error preference is set (preference path)' do
+            let(:articles) { create_list(:ticket_article, 1, :outbound_email, ticket: ticket, preferences: { 'body_rendering_error' => true }) }
+
+            it 'returns bodyRenderingError as true regardless of body content' do
+              expect(response_articles.first).to include('bodyRenderingError' => true)
+            end
+          end
+
+          context 'when body is normal content' do
+            it 'returns bodyRenderingError as false' do
+              expect(response_articles.first).to include('bodyRenderingError' => false)
             end
           end
         end

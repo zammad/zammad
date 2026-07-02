@@ -22857,6 +22857,22 @@
               "deprecationReason": null
             },
             {
+              "name": "bodyRenderingError",
+              "description": "True when the body could not be rendered due to HTML processing issues and contains an untranslated error message.",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Boolean",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "bodyWithUrls",
               "description": "Body with cid: URLs replaced for inline images in HTML articles.",
               "args": [],
