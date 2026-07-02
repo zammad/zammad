@@ -1,20 +1,20 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-require 'test_helper'
+require 'rails_helper'
 
-class IntegrationIcingaTest < ActiveSupport::TestCase
+RSpec.describe 'Icinga integration', :aggregate_failures do # rubocop:disable RSpec/DescribeClass
 
   # according
   # https://github.com/Icinga/icinga2/blob/master/etc/icinga2/scripts/mail-service-notification.sh
   # http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/monitoring-basics#host-states
   # http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/monitoring-basics#service-states
 
-  setup do
+  before do
     Setting.set('icinga_integration', true)
     Setting.set('icinga_sender', 'icinga2@monitoring.example.com')
   end
 
-  test 'base tests' do
+  it 'processes service and host notifications and closes tickets on recovery' do # rubocop:disable RSpec/ExampleLength
 
     # RBL check
     email_raw_string = "To: support@example.com
@@ -39,13 +39,13 @@ Host:    apn4711.dc.example.com (Display Name: \"apn4711.dc.example.com\")
 IPv4:    127.0.0.1="
 
     ticket_0, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
-    assert_equal('new', ticket_0.state.name)
-    assert(ticket_0.preferences)
-    assert(ticket_0.preferences['icinga'])
-    assert_equal('apn4711.dc.example.com (Display Name: "apn4711.dc.example.com")', ticket_0.preferences['icinga']['host'])
-    assert_equal('CHECK_RBL CRITICAL - apn4711.dc.example.com BLACKLISTED on 1 server of 38 (ix.dnsbl.example.com)', ticket_0.preferences['icinga']['info'])
-    assert_equal('RBL check (Display Name: "RBL check")', ticket_0.preferences['icinga']['service'])
-    assert_equal('CRITICAL', ticket_0.preferences['icinga']['state'])
+    expect(ticket_0.state.name).to eq('new')
+    expect(ticket_0.preferences).to be_truthy
+    expect(ticket_0.preferences['icinga']).to be_truthy
+    expect(ticket_0.preferences['icinga']['host']).to eq('apn4711.dc.example.com (Display Name: "apn4711.dc.example.com")')
+    expect(ticket_0.preferences['icinga']['info']).to eq('CHECK_RBL CRITICAL - apn4711.dc.example.com BLACKLISTED on 1 server of 38 (ix.dnsbl.example.com)')
+    expect(ticket_0.preferences['icinga']['service']).to eq('RBL check (Display Name: "RBL check")')
+    expect(ticket_0.preferences['icinga']['state']).to eq('CRITICAL')
 
     # RBL check II
     email_raw_string = "To: support@example.com
@@ -70,14 +70,14 @@ Host:    apn4711.dc.example.com (Display Name: \"apn4711.dc.example.com\")
 IPv4:    127.0.0.1="
 
     ticket_0_1, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
-    assert_equal('new', ticket_0_1.state.name)
-    assert(ticket_0_1.preferences)
-    assert(ticket_0_1.preferences['icinga'])
-    assert_equal('apn4711.dc.example.com (Display Name: "apn4711.dc.example.com")', ticket_0_1.preferences['icinga']['host'])
-    assert_equal('CHECK_RBL CRITICAL - apn4711.dc.example.com BLACKLISTED on 1 server of 38 (ix.dnsbl.example.com)', ticket_0_1.preferences['icinga']['info'])
-    assert_equal('RBL check (Display Name: "RBL check")', ticket_0_1.preferences['icinga']['service'])
-    assert_equal('CRITICAL', ticket_0_1.preferences['icinga']['state'])
-    assert_equal(ticket_0_1.id, ticket_0.id)
+    expect(ticket_0_1.state.name).to eq('new')
+    expect(ticket_0_1.preferences).to be_truthy
+    expect(ticket_0_1.preferences['icinga']).to be_truthy
+    expect(ticket_0_1.preferences['icinga']['host']).to eq('apn4711.dc.example.com (Display Name: "apn4711.dc.example.com")')
+    expect(ticket_0_1.preferences['icinga']['info']).to eq('CHECK_RBL CRITICAL - apn4711.dc.example.com BLACKLISTED on 1 server of 38 (ix.dnsbl.example.com)')
+    expect(ticket_0_1.preferences['icinga']['service']).to eq('RBL check (Display Name: "RBL check")')
+    expect(ticket_0_1.preferences['icinga']['state']).to eq('CRITICAL')
+    expect(ticket_0.id).to eq(ticket_0_1.id)
 
     email_raw_string = "To: support@example.com
 Subject: [PROBLEM] RBL check on apn4711.dc.example.com is OK!
@@ -101,14 +101,14 @@ Host:    apn4711.dc.example.com (Display Name: \"apn4711.dc.example.com\")
 IPv4:    127.0.0.1="
 
     ticket_0_2, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
-    assert_equal('closed', ticket_0_2.state.name)
-    assert(ticket_0_2.preferences)
-    assert(ticket_0_2.preferences['icinga'])
-    assert_equal('apn4711.dc.example.com (Display Name: "apn4711.dc.example.com")', ticket_0_2.preferences['icinga']['host'])
-    assert_equal('CHECK_RBL CRITICAL - apn4711.dc.example.com BLACKLISTED on 1 server of 38 (ix.dnsbl.example.com)', ticket_0_2.preferences['icinga']['info'])
-    assert_equal('RBL check (Display Name: "RBL check")', ticket_0_2.preferences['icinga']['service'])
-    assert_equal('CRITICAL', ticket_0_2.preferences['icinga']['state'])
-    assert_equal(ticket_0_2.id, ticket_0.id)
+    expect(ticket_0_2.state.name).to eq('closed')
+    expect(ticket_0_2.preferences).to be_truthy
+    expect(ticket_0_2.preferences['icinga']).to be_truthy
+    expect(ticket_0_2.preferences['icinga']['host']).to eq('apn4711.dc.example.com (Display Name: "apn4711.dc.example.com")')
+    expect(ticket_0_2.preferences['icinga']['info']).to eq('CHECK_RBL CRITICAL - apn4711.dc.example.com BLACKLISTED on 1 server of 38 (ix.dnsbl.example.com)')
+    expect(ticket_0_2.preferences['icinga']['service']).to eq('RBL check (Display Name: "RBL check")')
+    expect(ticket_0_2.preferences['icinga']['state']).to eq('CRITICAL')
+    expect(ticket_0.id).to eq(ticket_0_2.id)
 
     # matching sender - CPU Load/host.internal.loc
     email_raw_string = "To: support@example.com
@@ -137,12 +137,12 @@ Comment: [] =
 "
 
     ticket_1, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
-    assert_equal('new', ticket_1.state.name)
-    assert(ticket_1.preferences)
-    assert(ticket_1.preferences['icinga'])
-    assert_equal('host.internal.loc', ticket_1.preferences['icinga']['host'])
-    assert_equal('CPU Load', ticket_1.preferences['icinga']['service'])
-    assert_equal('WARNING', ticket_1.preferences['icinga']['state'])
+    expect(ticket_1.state.name).to eq('new')
+    expect(ticket_1.preferences).to be_truthy
+    expect(ticket_1.preferences['icinga']).to be_truthy
+    expect(ticket_1.preferences['icinga']['host']).to eq('host.internal.loc')
+    expect(ticket_1.preferences['icinga']['service']).to eq('CPU Load')
+    expect(ticket_1.preferences['icinga']['state']).to eq('WARNING')
 
     # matching sender - Disk Usage 123/host.internal.loc
     email_raw_string = "To: support@example.com
@@ -171,13 +171,13 @@ Comment: [] =
 "
 
     ticket_2, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
-    assert_equal('new', ticket_2.state.name)
-    assert(ticket_2.preferences)
-    assert(ticket_2.preferences['icinga'])
-    assert_equal('host.internal.loc', ticket_2.preferences['icinga']['host'])
-    assert_equal('Disk Usage 123', ticket_2.preferences['icinga']['service'])
-    assert_equal('WARNING', ticket_2.preferences['icinga']['state'])
-    assert_not_equal(ticket_2.id, ticket_1.id)
+    expect(ticket_2.state.name).to eq('new')
+    expect(ticket_2.preferences).to be_truthy
+    expect(ticket_2.preferences['icinga']).to be_truthy
+    expect(ticket_2.preferences['icinga']['host']).to eq('host.internal.loc')
+    expect(ticket_2.preferences['icinga']['service']).to eq('Disk Usage 123')
+    expect(ticket_2.preferences['icinga']['state']).to eq('WARNING')
+    expect(ticket_1.id).not_to eq(ticket_2.id)
 
     # matching sender - follow-up - CPU Load/host.internal.loc
     email_raw_string = "To: support@example.com
@@ -206,13 +206,13 @@ Comment: [] =
 "
 
     ticket_1_1, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
-    assert_equal('new', ticket_1_1.state.name)
-    assert(ticket_1_1.preferences)
-    assert(ticket_1_1.preferences['icinga'])
-    assert_equal('host.internal.loc', ticket_1_1.preferences['icinga']['host'])
-    assert_equal('CPU Load', ticket_1_1.preferences['icinga']['service'])
-    assert_equal('WARNING', ticket_1_1.preferences['icinga']['state'])
-    assert_equal(ticket_1.id, ticket_1_1.id)
+    expect(ticket_1_1.state.name).to eq('new')
+    expect(ticket_1_1.preferences).to be_truthy
+    expect(ticket_1_1.preferences['icinga']).to be_truthy
+    expect(ticket_1_1.preferences['icinga']['host']).to eq('host.internal.loc')
+    expect(ticket_1_1.preferences['icinga']['service']).to eq('CPU Load')
+    expect(ticket_1_1.preferences['icinga']['state']).to eq('WARNING')
+    expect(ticket_1_1.id).to eq(ticket_1.id)
 
     # matching sender - follow-up - recovery - CPU Load/host.internal.loc
     email_raw_string = "To: support@example.com
@@ -241,13 +241,13 @@ Comment: [] =
 "
 
     ticket_1_2, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
-    assert_equal(ticket_1.id, ticket_1_2.id)
-    assert_equal('closed', ticket_1_2.state.name)
-    assert(ticket_1_2.preferences)
-    assert(ticket_1_2.preferences['icinga'])
-    assert_equal('host.internal.loc', ticket_1_2.preferences['icinga']['host'])
-    assert_equal('CPU Load', ticket_1_2.preferences['icinga']['service'])
-    assert_equal('WARNING', ticket_1_2.preferences['icinga']['state'])
+    expect(ticket_1_2.id).to eq(ticket_1.id)
+    expect(ticket_1_2.state.name).to eq('closed')
+    expect(ticket_1_2.preferences).to be_truthy
+    expect(ticket_1_2.preferences['icinga']).to be_truthy
+    expect(ticket_1_2.preferences['icinga']['host']).to eq('host.internal.loc')
+    expect(ticket_1_2.preferences['icinga']['service']).to eq('CPU Load')
+    expect(ticket_1_2.preferences['icinga']['state']).to eq('WARNING')
 
     # host down
     email_raw_string = "To: support@example.com
@@ -274,13 +274,13 @@ Additional Info: CRITICAL - Host Unreachable (127.0.0.1)
 Comment: [] =
 "
     ticket_3, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
-    assert_equal('new', ticket_3.state.name)
-    assert(ticket_3.preferences)
-    assert(ticket_3.preferences['icinga'])
-    assert_equal('apn4711.dc.example.com', ticket_3.preferences['icinga']['host'])
-    assert_nil(ticket_3.preferences['icinga']['service'])
-    assert_equal('DOWN', ticket_3.preferences['icinga']['state'])
-    assert_not_equal(ticket_3.id, ticket_1.id)
+    expect(ticket_3.state.name).to eq('new')
+    expect(ticket_3.preferences).to be_truthy
+    expect(ticket_3.preferences['icinga']).to be_truthy
+    expect(ticket_3.preferences['icinga']['host']).to eq('apn4711.dc.example.com')
+    expect(ticket_3.preferences['icinga']['service']).to be_nil
+    expect(ticket_3.preferences['icinga']['state']).to eq('DOWN')
+    expect(ticket_1.id).not_to eq(ticket_3.id)
 
     # host up
     email_raw_string = "To: support@example.com
@@ -307,13 +307,13 @@ Additional Info: PING OK - Packet loss = 0%, RTA = 21.37 ms
 Comment: [] =
 "
     ticket_3_1, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
-    assert_equal(ticket_3.id, ticket_3_1.id)
-    assert_equal('closed', ticket_3_1.state.name)
-    assert(ticket_3_1.preferences)
-    assert(ticket_3_1.preferences['icinga'])
-    assert_equal('apn4711.dc.example.com', ticket_3.preferences['icinga']['host'])
-    assert_nil(ticket_3_1.preferences['icinga']['service'])
-    assert_equal('DOWN', ticket_3_1.preferences['icinga']['state'])
+    expect(ticket_3_1.id).to eq(ticket_3.id)
+    expect(ticket_3_1.state.name).to eq('closed')
+    expect(ticket_3_1.preferences).to be_truthy
+    expect(ticket_3_1.preferences['icinga']).to be_truthy
+    expect(ticket_3.preferences['icinga']['host']).to eq('apn4711.dc.example.com')
+    expect(ticket_3_1.preferences['icinga']['service']).to be_nil
+    expect(ticket_3_1.preferences['icinga']['state']).to eq('DOWN')
 
     # ping down
     email_raw_string = "To: support@example.com
@@ -332,13 +332,13 @@ Host:    apn4711.dc.example.com
 IPv4:    127.0.0.1="
 
     ticket_4, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
-    assert_equal('new', ticket_4.state.name)
-    assert(ticket_4.preferences)
-    assert(ticket_4.preferences['icinga'])
-    assert_equal('apn4711.dc.example.com', ticket_4.preferences['icinga']['host'])
-    assert_equal('Ping IPv4', ticket_4.preferences['icinga']['service'])
-    assert_equal('WARNING', ticket_4.preferences['icinga']['state'])
-    assert_not_equal(ticket_4.id, ticket_1.id)
+    expect(ticket_4.state.name).to eq('new')
+    expect(ticket_4.preferences).to be_truthy
+    expect(ticket_4.preferences['icinga']).to be_truthy
+    expect(ticket_4.preferences['icinga']['host']).to eq('apn4711.dc.example.com')
+    expect(ticket_4.preferences['icinga']['service']).to eq('Ping IPv4')
+    expect(ticket_4.preferences['icinga']['state']).to eq('WARNING')
+    expect(ticket_1.id).not_to eq(ticket_4.id)
 
     # ping up
     email_raw_string = "To: support@example.com
@@ -357,13 +357,13 @@ Host:    apn4711.dc.example.com
 IPv4:    127.0.0.1="
 
     ticket_4_1, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
-    assert_equal(ticket_4.id, ticket_4_1.id)
-    assert_equal('closed', ticket_4_1.state.name)
-    assert(ticket_4_1.preferences)
-    assert(ticket_4_1.preferences['icinga'])
-    assert_equal('apn4711.dc.example.com', ticket_4.preferences['icinga']['host'])
-    assert_equal('Ping IPv4', ticket_4.preferences['icinga']['service'])
-    assert_equal('WARNING', ticket_4_1.preferences['icinga']['state'])
+    expect(ticket_4_1.id).to eq(ticket_4.id)
+    expect(ticket_4_1.state.name).to eq('closed')
+    expect(ticket_4_1.preferences).to be_truthy
+    expect(ticket_4_1.preferences['icinga']).to be_truthy
+    expect(ticket_4.preferences['icinga']['host']).to eq('apn4711.dc.example.com')
+    expect(ticket_4.preferences['icinga']['service']).to eq('Ping IPv4')
+    expect(ticket_4_1.preferences['icinga']['state']).to eq('WARNING')
 
     # host down
     email_raw_string = "To: support@example.com
@@ -386,13 +386,13 @@ Host:    apn4709.dc.example.com
 IPv4:=09 127.0.0.1="
 
     ticket_5, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
-    assert_equal('new', ticket_5.state.name)
-    assert(ticket_5.preferences)
-    assert(ticket_5.preferences['icinga'])
-    assert_equal('apn4709.dc.example.com', ticket_5.preferences['icinga']['host'])
-    assert_nil(ticket_5.preferences['icinga']['service'])
-    assert_equal('DOWN', ticket_5.preferences['icinga']['state'])
-    assert_not_equal(ticket_5.id, ticket_1.id)
+    expect(ticket_5.state.name).to eq('new')
+    expect(ticket_5.preferences).to be_truthy
+    expect(ticket_5.preferences['icinga']).to be_truthy
+    expect(ticket_5.preferences['icinga']['host']).to eq('apn4709.dc.example.com')
+    expect(ticket_5.preferences['icinga']['service']).to be_nil
+    expect(ticket_5.preferences['icinga']['state']).to eq('DOWN')
+    expect(ticket_1.id).not_to eq(ticket_5.id)
 
     # host up
     email_raw_string = "To: support@example.com
@@ -414,17 +414,17 @@ Host:    apn4709.dc.example.com
 IPv4:=09 127.0.0.1=
 "
     ticket_5_1, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
-    assert_equal(ticket_5.id, ticket_5_1.id)
-    assert_equal('closed', ticket_5_1.state.name)
-    assert(ticket_5_1.preferences)
-    assert(ticket_5_1.preferences['icinga'])
-    assert_equal('apn4709.dc.example.com', ticket_5.preferences['icinga']['host'])
-    assert_nil(ticket_5_1.preferences['icinga']['service'])
-    assert_equal('DOWN', ticket_5_1.preferences['icinga']['state'])
+    expect(ticket_5_1.id).to eq(ticket_5.id)
+    expect(ticket_5_1.state.name).to eq('closed')
+    expect(ticket_5_1.preferences).to be_truthy
+    expect(ticket_5_1.preferences['icinga']).to be_truthy
+    expect(ticket_5.preferences['icinga']['host']).to eq('apn4709.dc.example.com')
+    expect(ticket_5_1.preferences['icinga']['service']).to be_nil
+    expect(ticket_5_1.preferences['icinga']['state']).to eq('DOWN')
 
   end
 
-  test 'not matching sender tests' do
+  it 'does not set icinga preferences when the sender does not match' do # rubocop:disable RSpec/ExampleLength
 
     # not matching sender
     email_raw_string = "To: support@example.com
@@ -453,9 +453,9 @@ Comment: [] =
 "
 
     ticket_p, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
-    assert_equal('new', ticket_p.state.name)
-    assert(ticket_p.preferences)
-    assert_not(ticket_p.preferences['icinga'])
+    expect(ticket_p.state.name).to eq('new')
+    expect(ticket_p.preferences).to be_truthy
+    expect(ticket_p.preferences['icinga']).to be_falsey
 
     Setting.set('icinga_sender', 'icinga2@monitoring.example.com')
 
@@ -486,9 +486,9 @@ Comment: [] =
 "
 
     ticket_p, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
-    assert_equal('new', ticket_p.state.name)
-    assert(ticket_p.preferences)
-    assert_not(ticket_p.preferences['icinga'])
+    expect(ticket_p.state.name).to eq('new')
+    expect(ticket_p.preferences).to be_truthy
+    expect(ticket_p.preferences['icinga']).to be_falsey
 
     # not matching sender
     email_raw_string = "To: support@example.com
@@ -517,12 +517,12 @@ Comment: [] =
 "
 
     ticket_p, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
-    assert_equal('new', ticket_p.state.name)
-    assert(ticket_p.preferences)
-    assert_not(ticket_p.preferences['icinga'])
+    expect(ticket_p.state.name).to eq('new')
+    expect(ticket_p.preferences).to be_truthy
+    expect(ticket_p.preferences['icinga']).to be_falsey
   end
 
-  test 'matching sender tests' do
+  it 'sets icinga preferences when the sender matches' do # rubocop:disable RSpec/ExampleLength
 
     # matching sender - follow-up - CPU Load/host.internal.loc
     email_raw_string = "To: support@example.com
@@ -551,12 +551,12 @@ Comment: [] =
 "
 
     ticket_1_1, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
-    assert_equal('new', ticket_1_1.state.name)
-    assert(ticket_1_1.preferences)
-    assert(ticket_1_1.preferences['icinga'])
-    assert_equal('host.internal.loc', ticket_1_1.preferences['icinga']['host'])
-    assert_equal('CPU Load', ticket_1_1.preferences['icinga']['service'])
-    assert_equal('WARNING', ticket_1_1.preferences['icinga']['state'])
+    expect(ticket_1_1.state.name).to eq('new')
+    expect(ticket_1_1.preferences).to be_truthy
+    expect(ticket_1_1.preferences['icinga']).to be_truthy
+    expect(ticket_1_1.preferences['icinga']['host']).to eq('host.internal.loc')
+    expect(ticket_1_1.preferences['icinga']['service']).to eq('CPU Load')
+    expect(ticket_1_1.preferences['icinga']['state']).to eq('WARNING')
 
     Setting.set('icinga_sender', 'icinga2@monitoring.example.com')
 
@@ -587,12 +587,12 @@ Comment: [] =
 "
 
     ticket_1_1, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
-    assert_equal('new', ticket_1_1.state.name)
-    assert(ticket_1_1.preferences)
-    assert(ticket_1_1.preferences['icinga'])
-    assert_equal('host1.internal.loc', ticket_1_1.preferences['icinga']['host'])
-    assert_equal('CPU Load', ticket_1_1.preferences['icinga']['service'])
-    assert_equal('WARNING', ticket_1_1.preferences['icinga']['state'])
+    expect(ticket_1_1.state.name).to eq('new')
+    expect(ticket_1_1.preferences).to be_truthy
+    expect(ticket_1_1.preferences['icinga']).to be_truthy
+    expect(ticket_1_1.preferences['icinga']['host']).to eq('host1.internal.loc')
+    expect(ticket_1_1.preferences['icinga']['service']).to eq('CPU Load')
+    expect(ticket_1_1.preferences['icinga']['state']).to eq('WARNING')
 
     # matching sender I
     Setting.set('icinga_sender', '(icinga2|abc123)@monitoring.example.com')
@@ -623,16 +623,16 @@ Comment: [] =
 "
 
     ticket_1_1, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
-    assert_equal('new', ticket_1_1.state.name)
-    assert(ticket_1_1.preferences)
-    assert(ticket_1_1.preferences['icinga'])
-    assert_equal('host2.internal.loc', ticket_1_1.preferences['icinga']['host'])
-    assert_equal('CPU Load', ticket_1_1.preferences['icinga']['service'])
-    assert_equal('WARNING', ticket_1_1.preferences['icinga']['state'])
+    expect(ticket_1_1.state.name).to eq('new')
+    expect(ticket_1_1.preferences).to be_truthy
+    expect(ticket_1_1.preferences['icinga']).to be_truthy
+    expect(ticket_1_1.preferences['icinga']['host']).to eq('host2.internal.loc')
+    expect(ticket_1_1.preferences['icinga']['service']).to eq('CPU Load')
+    expect(ticket_1_1.preferences['icinga']['state']).to eq('WARNING')
 
   end
 
-  test 'recover without problem tests' do
+  it 'does not create a ticket for a recovery without a preceding problem' do
 
     # host up without problem
     email_raw_string = "To: support@example.com
@@ -660,11 +660,11 @@ Comment: [] =
 "
     ticket_1, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
     ticket_count = Ticket.count
-    assert_equal(ticket_1, {})
-    assert_equal(ticket_count, Ticket.count)
+    expect(ticket_1).to eq({})
+    expect(Ticket.count).to eq(ticket_count)
   end
 
-  test 'icinga email autoclose' do
+  it 'closes the ticket automatically when the recovery email arrives' do # rubocop:disable RSpec/ExampleLength
     Setting.set('icinga_sender', 'zaihan@example.com')
     email_raw_string = 'Return-Path: <support@example.com>
 Received: from 04747418efb9 ([175.137.28.47])
@@ -701,10 +701,10 @@ IPv4:	 192.168.1.8
 
 ------MIME delimiter for sendEmail-587258.191387267--'
     ticket_0, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
-    assert_equal('new', ticket_0.state.name)
-    assert(ticket_0.preferences)
-    assert(ticket_0.preferences['icinga'])
-    assert_equal('DOWN', ticket_0.preferences['icinga']['state'])
+    expect(ticket_0.state.name).to eq('new')
+    expect(ticket_0.preferences).to be_truthy
+    expect(ticket_0.preferences['icinga']).to be_truthy
+    expect(ticket_0.preferences['icinga']['state']).to eq('DOWN')
 
     email_raw_string = 'Return-Path: <support@example.com>
 Received: from 04747418efb9 ([175.137.28.47])
@@ -742,14 +742,14 @@ IPv4:	 192.168.1.8
 ------MIME delimiter for sendEmail-322998.239033954--
     '
     ticket_1, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
-    assert_equal('closed', ticket_1.state.name)
-    assert(ticket_1.preferences)
-    assert(ticket_1.preferences['icinga'])
-    assert_equal('DOWN', ticket_1.preferences['icinga']['state'])
+    expect(ticket_1.state.name).to eq('closed')
+    expect(ticket_1.preferences).to be_truthy
+    expect(ticket_1.preferences['icinga']).to be_truthy
+    expect(ticket_1.preferences['icinga']['state']).to eq('DOWN')
 
   end
 
-  test 'match also values without new line at the end of a line' do
+  it 'matches also values without new line at the end of a line' do # rubocop:disable RSpec/ExampleLength
 
     email_raw_string = 'Return-Path: <icinga2@monitoring.example.com>
 Date: Tue, 21 Aug 2018 03:05:01 +0200
@@ -785,13 +785,13 @@ Service: OS Updates (yum)
 Host:    host.example.com'
 
     ticket_1, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
-    assert_equal('new', ticket_1.state.name)
-    assert(ticket_1.preferences)
-    assert(ticket_1.preferences['icinga'])
-    assert_equal('CRITICAL', ticket_1.preferences['icinga']['state'])
-    assert_equal('CHECK_UPDATES CRITICAL - 12 non-critical updates available', ticket_1.preferences['icinga']['info'])
-    assert_equal('OS Updates (yum)', ticket_1.preferences['icinga']['service'])
-    assert_equal('host.example.com', ticket_1.preferences['icinga']['host'])
+    expect(ticket_1.state.name).to eq('new')
+    expect(ticket_1.preferences).to be_truthy
+    expect(ticket_1.preferences['icinga']).to be_truthy
+    expect(ticket_1.preferences['icinga']['state']).to eq('CRITICAL')
+    expect(ticket_1.preferences['icinga']['info']).to eq('CHECK_UPDATES CRITICAL - 12 non-critical updates available')
+    expect(ticket_1.preferences['icinga']['service']).to eq('OS Updates (yum)')
+    expect(ticket_1.preferences['icinga']['host']).to eq('host.example.com')
 
   end
 end

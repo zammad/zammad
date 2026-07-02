@@ -104,4 +104,52 @@ RSpec.describe Sessions do
       expect(described_class.queue('../malicious')).to eq([])
     end
   end
+
+  describe 'creating and destroying a session for a real user' do
+    subject(:client_id) { '123456789' }
+
+    let(:agent) do
+      User.create_or_update(
+        login:         'session-agent-1',
+        firstname:     'Session',
+        lastname:      'Agent 1',
+        email:         'session-agent1@example.com',
+        password:      'agentpw',
+        active:        true,
+        roles:         Role.where(name: %w[Agent]),
+        groups:        Group.all,
+        updated_by_id: 1,
+        created_by_id: 1,
+      )
+    end
+
+    after do
+      described_class.destroy(client_id)
+    end
+
+    it 'creates a session, attaches the user on login, and removes it again on destroy', :aggregate_failures do
+      described_class.create(client_id, {}, { type: 'websocket' })
+
+      expect(described_class.session_exists?(client_id)).to be(true)
+
+      data = described_class.get(client_id)
+      expect(data[:meta]).to be_truthy
+      expect(data[:user]).to be_truthy
+      expect(data[:user]['id']).to be_nil
+
+      # recreate session once the user has logged in
+      described_class.create(client_id, agent.attributes, { type: 'websocket' })
+
+      expect(described_class.session_exists?(client_id)).to be(true)
+
+      data = described_class.get(client_id)
+      expect(data[:meta]).to be_truthy
+      expect(data[:user]).to be_truthy
+      expect(data[:user]['id']).to eq(agent.id)
+
+      described_class.destroy(client_id)
+
+      expect(described_class.session_exists?(client_id)).to be(false)
+    end
+  end
 end

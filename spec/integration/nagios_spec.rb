@@ -1,18 +1,18 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-require 'test_helper'
+require 'rails_helper'
 
-class IntegrationNagiosTest < ActiveSupport::TestCase
+RSpec.describe 'Nagios integration', :aggregate_failures do # rubocop:disable RSpec/DescribeClass
 
   # according
   # https://github.com/NagiosEnterprises/nagioscore/blob/754218e67653929a58938b99ef6b6039b6474fe4/sample-config/template-object/commands.cfg.in#L35
 
-  setup do
+  before do
     Setting.set('nagios_integration', true)
     Setting.set('nagios_sender', 'nagios2@monitoring.example.com')
   end
 
-  test 'base tests' do
+  it 'processes service and host notifications and closes tickets on recovery' do # rubocop:disable RSpec/ExampleLength
 
     # matching sender - CPU Load/host.internal.loc
     email_raw_string = "To: support@example.com
@@ -39,12 +39,12 @@ WARNING - load average: 3.44, 0.99, 0.35
 "
 
     ticket_1, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
-    assert_equal('new', ticket_1.state.name)
-    assert(ticket_1.preferences)
-    assert(ticket_1.preferences['nagios'])
-    assert_equal('host.internal.loc', ticket_1.preferences['nagios']['host'])
-    assert_equal('CPU Load', ticket_1.preferences['nagios']['service'])
-    assert_equal('WARNING', ticket_1.preferences['nagios']['state'])
+    expect(ticket_1.state.name).to eq('new')
+    expect(ticket_1.preferences).to be_truthy
+    expect(ticket_1.preferences['nagios']).to be_truthy
+    expect(ticket_1.preferences['nagios']['host']).to eq('host.internal.loc')
+    expect(ticket_1.preferences['nagios']['service']).to eq('CPU Load')
+    expect(ticket_1.preferences['nagios']['state']).to eq('WARNING')
 
     # matching sender - Disk Usage 123/host.internal.loc
     email_raw_string = "To: support@example.com
@@ -71,13 +71,13 @@ WARNING - load average: 3.44, 0.99, 0.35
 "
 
     ticket_2, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
-    assert_equal('new', ticket_2.state.name)
-    assert(ticket_2.preferences)
-    assert(ticket_2.preferences['nagios'])
-    assert_equal('host.internal.loc', ticket_2.preferences['nagios']['host'])
-    assert_equal('Disk Usage 123', ticket_2.preferences['nagios']['service'])
-    assert_equal('WARNING', ticket_2.preferences['nagios']['state'])
-    assert_not_equal(ticket_2.id, ticket_1.id)
+    expect(ticket_2.state.name).to eq('new')
+    expect(ticket_2.preferences).to be_truthy
+    expect(ticket_2.preferences['nagios']).to be_truthy
+    expect(ticket_2.preferences['nagios']['host']).to eq('host.internal.loc')
+    expect(ticket_2.preferences['nagios']['service']).to eq('Disk Usage 123')
+    expect(ticket_2.preferences['nagios']['state']).to eq('WARNING')
+    expect(ticket_1.id).not_to eq(ticket_2.id)
 
     # matching sender - follow-up - CPU Load/host.internal.loc
     email_raw_string = "To: support@example.com
@@ -104,13 +104,13 @@ WARNING - load average: 3.44, 0.99, 0.35
 "
 
     ticket_1_1, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
-    assert_equal('new', ticket_1_1.state.name)
-    assert(ticket_1_1.preferences)
-    assert(ticket_1_1.preferences['nagios'])
-    assert_equal('host.internal.loc', ticket_1_1.preferences['nagios']['host'])
-    assert_equal('CPU Load', ticket_1_1.preferences['nagios']['service'])
-    assert_equal('WARNING', ticket_1_1.preferences['nagios']['state'])
-    assert_equal(ticket_1.id, ticket_1_1.id)
+    expect(ticket_1_1.state.name).to eq('new')
+    expect(ticket_1_1.preferences).to be_truthy
+    expect(ticket_1_1.preferences['nagios']).to be_truthy
+    expect(ticket_1_1.preferences['nagios']['host']).to eq('host.internal.loc')
+    expect(ticket_1_1.preferences['nagios']['service']).to eq('CPU Load')
+    expect(ticket_1_1.preferences['nagios']['state']).to eq('WARNING')
+    expect(ticket_1_1.id).to eq(ticket_1.id)
 
     # matching sender - follow-up - recovery - CPU Load/host.internal.loc
     email_raw_string = "To: support@example.com
@@ -135,13 +135,13 @@ Date/Time: 2016-01-31 10:48:02 +0100
 Additional Info:
 "
     ticket_1_2, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
-    assert_equal(ticket_1.id, ticket_1_2.id)
-    assert_equal('closed', ticket_1_2.state.name)
-    assert(ticket_1_2.preferences)
-    assert(ticket_1_2.preferences['nagios'])
-    assert_equal('host.internal.loc', ticket_1_2.preferences['nagios']['host'])
-    assert_equal('CPU Load', ticket_1_2.preferences['nagios']['service'])
-    assert_equal('WARNING', ticket_1_2.preferences['nagios']['state'])
+    expect(ticket_1_2.id).to eq(ticket_1.id)
+    expect(ticket_1_2.state.name).to eq('closed')
+    expect(ticket_1_2.preferences).to be_truthy
+    expect(ticket_1_2.preferences['nagios']).to be_truthy
+    expect(ticket_1_2.preferences['nagios']['host']).to eq('host.internal.loc')
+    expect(ticket_1_2.preferences['nagios']['service']).to eq('CPU Load')
+    expect(ticket_1_2.preferences['nagios']['state']).to eq('WARNING')
 
     # host down
     email_raw_string = "To: support@example.com
@@ -168,13 +168,13 @@ Additional Info: CRITICAL - Host Unreachable (127.0.0.1)
 Comment: [] =
 "
     ticket_3, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
-    assert_equal('new', ticket_3.state.name)
-    assert(ticket_3.preferences)
-    assert(ticket_3.preferences['nagios'])
-    assert_equal('apn4711.dc.example.com', ticket_3.preferences['nagios']['host'])
-    assert_nil(ticket_3.preferences['nagios']['service'])
-    assert_equal('DOWN', ticket_3.preferences['nagios']['state'])
-    assert_not_equal(ticket_3.id, ticket_1.id)
+    expect(ticket_3.state.name).to eq('new')
+    expect(ticket_3.preferences).to be_truthy
+    expect(ticket_3.preferences['nagios']).to be_truthy
+    expect(ticket_3.preferences['nagios']['host']).to eq('apn4711.dc.example.com')
+    expect(ticket_3.preferences['nagios']['service']).to be_nil
+    expect(ticket_3.preferences['nagios']['state']).to eq('DOWN')
+    expect(ticket_1.id).not_to eq(ticket_3.id)
 
     # host up
     email_raw_string = "To: support@example.com
@@ -201,19 +201,19 @@ Additional Info: PING OK - Packet loss = 0%, RTA = 21.37 ms
 Comment: [] =
 "
     ticket_3_1, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
-    assert_equal(ticket_3.id, ticket_3_1.id)
-    assert_equal('closed', ticket_3_1.state.name)
-    assert(ticket_3_1.preferences)
-    assert(ticket_3_1.preferences['nagios'])
-    assert_equal('apn4711.dc.example.com', ticket_3.preferences['nagios']['host'])
-    assert_nil(ticket_3_1.preferences['nagios']['service'])
-    assert_equal('DOWN', ticket_3_1.preferences['nagios']['state'])
+    expect(ticket_3_1.id).to eq(ticket_3.id)
+    expect(ticket_3_1.state.name).to eq('closed')
+    expect(ticket_3_1.preferences).to be_truthy
+    expect(ticket_3_1.preferences['nagios']).to be_truthy
+    expect(ticket_3.preferences['nagios']['host']).to eq('apn4711.dc.example.com')
+    expect(ticket_3_1.preferences['nagios']['service']).to be_nil
+    expect(ticket_3_1.preferences['nagios']['state']).to eq('DOWN')
 
     # Setting.set('nagios_integration', false)
 
   end
 
-  test 'not matching sender tests' do
+  it 'does not set nagios preferences when the sender does not match' do # rubocop:disable RSpec/ExampleLength
 
     # not matching sender
     email_raw_string = "To: support@example.com
@@ -240,9 +240,9 @@ WARNING - load average: 3.44, 0.99, 0.35
 "
 
     ticket_p, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
-    assert_equal('new', ticket_p.state.name)
-    assert(ticket_p.preferences)
-    assert_not(ticket_p.preferences['nagios'])
+    expect(ticket_p.state.name).to eq('new')
+    expect(ticket_p.preferences).to be_truthy
+    expect(ticket_p.preferences['nagios']).to be_falsey
 
     Setting.set('nagios_sender', 'icinga2@monitoring.example.com')
 
@@ -271,9 +271,9 @@ WARNING - load average: 3.44, 0.99, 0.35
 "
 
     ticket_p, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
-    assert_equal('new', ticket_p.state.name)
-    assert(ticket_p.preferences)
-    assert_not(ticket_p.preferences['nagios'])
+    expect(ticket_p.state.name).to eq('new')
+    expect(ticket_p.preferences).to be_truthy
+    expect(ticket_p.preferences['nagios']).to be_falsey
 
     # not matching sender
     email_raw_string = "To: support@example.com
@@ -300,12 +300,12 @@ WARNING - load average: 3.44, 0.99, 0.35
 "
 
     ticket_p, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
-    assert_equal('new', ticket_p.state.name)
-    assert(ticket_p.preferences)
-    assert_not(ticket_p.preferences['nagios'])
+    expect(ticket_p.state.name).to eq('new')
+    expect(ticket_p.preferences).to be_truthy
+    expect(ticket_p.preferences['nagios']).to be_falsey
   end
 
-  test 'matching sender tests' do
+  it 'sets nagios preferences when the sender matches' do # rubocop:disable RSpec/ExampleLength
 
     # matching sender - follow-up - CPU Load/host.internal.loc
     email_raw_string = "To: support@example.com
@@ -332,12 +332,12 @@ WARNING - load average: 3.44, 0.99, 0.35
 "
 
     ticket_1, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
-    assert_equal('new', ticket_1.state.name)
-    assert(ticket_1.preferences)
-    assert(ticket_1.preferences['nagios'])
-    assert_equal('host.internal.loc', ticket_1.preferences['nagios']['host'])
-    assert_equal('CPU Load', ticket_1.preferences['nagios']['service'])
-    assert_equal('WARNING', ticket_1.preferences['nagios']['state'])
+    expect(ticket_1.state.name).to eq('new')
+    expect(ticket_1.preferences).to be_truthy
+    expect(ticket_1.preferences['nagios']).to be_truthy
+    expect(ticket_1.preferences['nagios']['host']).to eq('host.internal.loc')
+    expect(ticket_1.preferences['nagios']['service']).to eq('CPU Load')
+    expect(ticket_1.preferences['nagios']['state']).to eq('WARNING')
 
     Setting.set('icinga_sender', 'icinga2@monitoring.example.com')
 
@@ -366,12 +366,12 @@ WARNING - load average: 3.44, 0.99, 0.35
 "
 
     ticket_1, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
-    assert_equal('new', ticket_1.state.name)
-    assert(ticket_1.preferences)
-    assert(ticket_1.preferences['nagios'])
-    assert_equal('host1.internal.loc', ticket_1.preferences['nagios']['host'])
-    assert_equal('CPU Load', ticket_1.preferences['nagios']['service'])
-    assert_equal('WARNING', ticket_1.preferences['nagios']['state'])
+    expect(ticket_1.state.name).to eq('new')
+    expect(ticket_1.preferences).to be_truthy
+    expect(ticket_1.preferences['nagios']).to be_truthy
+    expect(ticket_1.preferences['nagios']['host']).to eq('host1.internal.loc')
+    expect(ticket_1.preferences['nagios']['service']).to eq('CPU Load')
+    expect(ticket_1.preferences['nagios']['state']).to eq('WARNING')
 
     # matching sender I
     Setting.set('icinga_sender', '(icinga2|abc123)@monitoring.example.com')
@@ -400,16 +400,16 @@ WARNING - load average: 3.44, 0.99, 0.35
 "
 
     ticket_1, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
-    assert_equal('new', ticket_1.state.name)
-    assert(ticket_1.preferences)
-    assert(ticket_1.preferences['nagios'])
-    assert_equal('host2.internal.loc', ticket_1.preferences['nagios']['host'])
-    assert_equal('CPU Load', ticket_1.preferences['nagios']['service'])
-    assert_equal('WARNING', ticket_1.preferences['nagios']['state'])
+    expect(ticket_1.state.name).to eq('new')
+    expect(ticket_1.preferences).to be_truthy
+    expect(ticket_1.preferences['nagios']).to be_truthy
+    expect(ticket_1.preferences['nagios']['host']).to eq('host2.internal.loc')
+    expect(ticket_1.preferences['nagios']['service']).to eq('CPU Load')
+    expect(ticket_1.preferences['nagios']['state']).to eq('WARNING')
 
   end
 
-  test 'recover without problem tests' do
+  it 'does not create a ticket for a recovery without a preceding problem' do
 
     # host up without problem
     email_raw_string = "To: support@example.com
@@ -437,8 +437,8 @@ Comment: [] =
 "
     ticket_1, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, email_raw_string)
     ticket_count = Ticket.count
-    assert_equal(ticket_1, {})
-    assert_equal(ticket_count, Ticket.count)
+    expect(ticket_1).to eq({})
+    expect(Ticket.count).to eq(ticket_count)
   end
 
 end

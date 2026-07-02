@@ -217,6 +217,8 @@ RSpec/SpecFilePathFormat:
     - 'spec/jobs/issue_*_spec.rb'
     - 'spec/lib/import/base_factory_spec.rb'
     - 'spec/models/knowledge_base/answer/translation/search_with_attachment_spec.rb'
+    - 'spec/models/trigger/extended_spec.rb'
+    - 'spec/models/trigger/recursive_disabled_spec.rb'
     - 'spec/models/trigger/sms_spec.rb'
 
 # This was split up into RSpec/SpecFilePathSuffix and RSpec/SpecFilePathFormat,

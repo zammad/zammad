@@ -1,2004 +1,17 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
-require 'models/application_model_examples'
-require 'models/concerns/has_xss_sanitized_note_examples'
-require 'models/concerns/touches_perform_references_examples'
 
 RSpec.describe Trigger, type: :model do
-  subject(:trigger) { create(:trigger, condition: condition, perform: perform, activator: activator, execution_condition_mode: execution_condition_mode) }
-
-  let(:activator)                { 'action' }
-  let(:execution_condition_mode) { 'selective' }
-  let(:condition) do
-    { 'ticket.action' => { 'operator' => 'is', 'value' => 'create' } }
-  end
-  let(:perform) do
-    { 'ticket.title'=>{ 'value'=>'triggered' } }
-  end
-
-  it_behaves_like 'ApplicationModel', can_assets: { selectors: %i[condition perform] }
-  it_behaves_like 'HasXssSanitizedNote', model_factory: :trigger
-  it_behaves_like 'TouchesPerformReferences'
-
-  describe 'validation' do
-    it 'uses Validations::VerifyPerformRulesValidator' do
-      expect(described_class).to have_validator(Validations::VerifyPerformRulesValidator).on(:perform)
-    end
-
-    it { is_expected.to validate_presence_of(:activator) }
-    it { is_expected.to validate_presence_of(:execution_condition_mode) }
-    it { is_expected.to validate_inclusion_of(:activator).in_array(%w[action time]) }
-    it { is_expected.to validate_inclusion_of(:execution_condition_mode).in_array(%w[selective always]) }
-  end
-
-  describe 'Send-email triggers' do
-    before do
-      described_class.destroy_all # Default DB state includes three sample triggers
-      trigger # create subject trigger
-    end
-
-    let(:perform) do
-      {
-        'notification.email' => {
-          'recipient' => 'ticket_customer',
-          'subject'   => 'foo',
-          'body'      => 'some body with &gt;snip&lt;#{article.body_as_html}&gt;/snip&lt;', # rubocop:disable Lint/InterpolationCheck
-        }
-      }
-    end
-
-    shared_examples 'include ticket attachment' do
-      context 'notification.email include_attachments' do
-        let(:perform) do
-          {
-            'notification.email' => {
-              'recipient' => 'ticket_customer',
-              'subject'   => 'Example subject',
-              'body'      => 'Example body',
-            }
-          }.deep_merge(additional_options).deep_stringify_keys
-        end
-
-        let(:ticket) { create(:ticket) }
-
-        shared_examples 'add a new article' do
-          it 'adds a new article' do
-            expect { TransactionDispatcher.commit }
-              .to change(ticket.articles, :count).by(1)
-          end
-        end
-
-        shared_examples 'add attachment to new article' do
-          include_examples 'add a new article'
-
-          it 'adds attachment to the new article' do
-            ticket && trigger
-
-            TransactionDispatcher.commit
-            article = ticket.articles.last
-
-            expect(article.type.name).to eq('email')
-            expect(article.sender.name).to eq('System')
-            expect(article.attachments.count).to eq(1)
-            expect(article.attachments[0].filename).to eq('some_file.pdf')
-            expect(article.attachments[0].preferences['Content-ID']).to eq('image/pdf@01CAB192.K8H512Y9')
-          end
-        end
-
-        shared_examples 'does not add attachment to new article' do
-          include_examples 'add a new article'
-
-          it 'does not add attachment to the new article' do
-            ticket && trigger
-
-            TransactionDispatcher.commit
-            article = ticket.articles.last
-
-            expect(article.type.name).to eq('email')
-            expect(article.sender.name).to eq('System')
-            expect(article.attachments.count).to eq(0)
-          end
-        end
-
-        context 'with include attachment present' do
-          let(:additional_options) do
-            {
-              'notification.email' => {
-                include_attachments: 'true'
-              }
-            }
-          end
-
-          context 'when ticket has an attachment' do
-
-            before do
-              UserInfo.current_user_id = 1
-              ticket_article = create(:ticket_article, ticket: ticket)
-
-              create(:store,
-                     object:      'Ticket::Article',
-                     o_id:        ticket_article.id,
-                     data:        'dGVzdCAxMjM=',
-                     filename:    'some_file.pdf',
-                     preferences: {
-                       'Content-Type': 'image/pdf',
-                       'Content-ID':   'image/pdf@01CAB192.K8H512Y9',
-                     })
-            end
-
-            include_examples 'add attachment to new article'
-          end
-
-          context 'when ticket does not have an attachment' do
-
-            include_examples 'does not add attachment to new article'
-          end
-        end
-
-        context 'with include attachment not present' do
-          let(:additional_options) do
-            {
-              'notification.email' => {
-                include_attachments: 'false'
-              }
-            }
-          end
-
-          context 'when ticket has an attachment' do
-
-            before do
-              UserInfo.current_user_id = 1
-              ticket_article = create(:ticket_article, ticket: ticket)
-
-              create(:store,
-                     object:      'Ticket::Article',
-                     o_id:        ticket_article.id,
-                     data:        'dGVzdCAxMjM=',
-                     filename:    'some_file.pdf',
-                     preferences: {
-                       'Content-Type': 'image/pdf',
-                       'Content-ID':   'image/pdf@01CAB192.K8H512Y9',
-                     })
-            end
-
-            include_examples 'does not add attachment to new article'
-          end
-
-          context 'when ticket does not have an attachment' do
-
-            include_examples 'does not add attachment to new article'
-          end
-        end
-      end
-    end
-
-    context 'for condition "ticket created"' do
-      let(:condition) do
-        { 'ticket.action' => { 'operator' => 'is', 'value' => 'create' } }
-      end
-
-      context 'when ticket is created directly' do
-        let!(:ticket) { create(:ticket) }
-
-        it 'fires (without altering ticket state)' do
-          expect { TransactionDispatcher.commit }
-            .to change(Ticket::Article, :count).by(1)
-            .and not_change { ticket.reload.state.name }.from('new')
-        end
-      end
-
-      context 'when ticket has tags' do
-        let(:tag1) { create(:'tag/item', name: 't1') }
-        let(:tag2) { create(:'tag/item', name: 't2') }
-        let(:tag3) { create(:'tag/item', name: 't3') }
-        let!(:ticket) do
-          ticket = create(:ticket)
-          create(:tag, o: ticket, tag_item: tag1)
-          create(:tag, o: ticket, tag_item: tag2)
-          create(:tag, o: ticket, tag_item: tag3)
-          ticket
-        end
-
-        let(:perform) do
-          {
-            'notification.email' => {
-              'recipient' => 'ticket_customer',
-              'subject'   => 'foo',
-              'body'      => 'some body with #{ticket.tags}', # rubocop:disable Lint/InterpolationCheck
-            }
-          }
-        end
-
-        it 'fires body with replaced tags' do
-          TransactionDispatcher.commit
-          expect(Ticket::Article.last.body).to eq('some body with t1, t2, t3')
-        end
-      end
-
-      context 'when ticket is created via Channel::EmailParser.process' do
-        before { create(:email_address, groups: [Group.first]) }
-
-        let(:raw_email) { Rails.root.join('test/data/mail/mail001.box').read }
-
-        it 'fires (without altering ticket state)' do
-          expect { Channel::EmailParser.new.process({}, raw_email) }
-            .to change(Ticket, :count).by(1)
-            .and change(Ticket::Article, :count).by(2)
-
-          expect(Ticket.last.state.name).to eq('new')
-        end
-      end
-
-      context 'when ticket is created via Channel::EmailParser.process with inline image' do
-        before { create(:email_address, groups: [Group.first]) }
-
-        let(:raw_email) { Rails.root.join('test/data/mail/mail010.box').read }
-
-        it 'fires (without altering ticket state)' do
-          expect { Channel::EmailParser.new.process({}, raw_email) }
-            .to change(Ticket, :count).by(1)
-            .and change(Ticket::Article, :count).by(2)
-
-          expect(Ticket.last.state.name).to eq('new')
-
-          article = Ticket::Article.last
-          expect(article.type.name).to eq('email')
-          expect(article.sender.name).to eq('System')
-          expect(article.attachments.count).to eq(1)
-          expect(article.attachments[0].filename).to eq('image001.jpg')
-          expect(article.attachments[0].preferences['Content-ID']).to eq('image001.jpg@01CDB132.D8A510F0')
-
-          expect(article.body).to eq(<<~RAW.chomp
-            some body with &gt;snip&lt;<div><p>Herzliche Grüße aus Oberalteich sendet Herrn Smith</p><p>&nbsp;</p><p>Sepp Smith - Dipl.Ing. agr. (FH)</p><p>Geschäftsführer der example Straubing-Bogen</p><p>Klosterhof 1 | 94327 Bogen-Oberalteich</p><p>Tel: 09422-505601 | Fax: 09422-505620</p><p><span>Internet: <a href="http://example-straubing-bogen.de/" rel="nofollow noreferrer noopener" target="_blank"><span style="color:blue;">http://example-straubing-bogen.de</span></a></span></p><p><span lang="EN-US">Facebook: </span><a href="http://facebook.de/examplesrbog" rel="nofollow noreferrer noopener" target="_blank"><span lang="EN-US" style="color:blue;">http://facebook.de/examplesrbog</span></a><span lang="EN-US"></span></p><p><b><span style="color:navy;"><img border="0" src="cid:image001.jpg@01CDB132.D8A510F0" alt="Beschreibung: Beschreibung: efqmLogo" style="width:60px;height:19px;"></span></b><b><span lang="EN-US" style="color:navy;"> - European Foundation für Quality Management</span></b><span lang="EN-US"></span></p><p><span lang="EN-US"> </span></p></div>&gt;/snip&lt;
-          RAW
-                                    )
-        end
-      end
-
-      context 'when ticket has attachments or inline images (#5918)' do
-        let(:condition) do
-          { 'ticket.action' => { 'operator' => 'is', 'value' => 'update' } }
-        end
-
-        let(:perform) do
-          { 'article.note' => { 'subject' => 'Test subject note', 'internal' => 'true', 'body' => 'some body with #{last_external_article.body_as_html}', 'include_attachments' => true } } # rubocop:disable Lint/InterpolationCheck
-        end
-
-        context 'when inline images are used' do
-          it 'does add attachments because last article has inline attachments' do
-            ticket = create(:ticket)
-            create(:ticket_article, :with_inline_attachment, ticket: ticket)
-            TransactionDispatcher.commit
-
-            UserInfo.current_user_id = 1
-            create(:ticket_article, :with_inline_attachment, ticket: ticket, body: 'Second article with inline attachments')
-
-            expect { TransactionDispatcher.commit }.to change(Ticket::Article, :count).by(1)
-
-            note = Ticket::Article.last
-            expect(note.attachments.count).to eq(1)
-          end
-
-          it 'does not add attachments from first article because perform only uses last_external_article' do
-            ticket = create(:ticket)
-            create(:ticket_article, :with_inline_attachment, ticket: ticket)
-            TransactionDispatcher.commit
-
-            UserInfo.current_user_id = 1
-            create(:ticket_article, ticket: ticket, body: 'Second article without inline attachments')
-            expect { TransactionDispatcher.commit }.to change(Ticket::Article, :count).by(1)
-
-            note = Ticket::Article.last
-            expect(note.attachments.count).to eq(0)
-          end
-        end
-
-        context 'when attachments are used' do
-          it 'does add attachments because latest article has attachments and include_attachments is activated' do
-            ticket = create(:ticket)
-            create(:ticket_article, :with_attachment, ticket: ticket)
-            TransactionDispatcher.commit
-
-            UserInfo.current_user_id = 1
-            create(:ticket_article, :with_attachment, ticket: ticket, body: 'Second article with attachments')
-
-            expect { TransactionDispatcher.commit }.to change(Ticket::Article, :count).by(1)
-
-            note = Ticket::Article.last
-            expect(note.attachments.count).to eq(1)
-          end
-
-          it 'does not add attachments from first article because attachments are only used from the latest article if activated' do
-            ticket = create(:ticket)
-            create(:ticket_article, :with_attachment, ticket: ticket)
-            TransactionDispatcher.commit
-
-            UserInfo.current_user_id = 1
-            create(:ticket_article, ticket: ticket, body: 'Second article without attachments')
-            expect { TransactionDispatcher.commit }.to change(Ticket::Article, :count).by(1)
-
-            note = Ticket::Article.last
-            expect(note.attachments.count).to eq(0)
-          end
-        end
-      end
-
-      context 'notification.email recipient' do
-        let!(:ticket)     { create(:ticket) }
-        let!(:recipient1) { create(:user, email: 'test1@zammad-test.com') }
-        let!(:recipient2) { create(:user, email: 'test2@zammad-test.com') }
-        let!(:recipient3) { create(:user, email: 'test3@zammad-test.com') }
-
-        let(:perform) do
-          {
-            'notification.email' => {
-              'recipient' => recipient,
-              'subject'   => 'Hello',
-              'body'      => 'World!'
-            }
-          }
-        end
-
-        before { TransactionDispatcher.commit }
-
-        context 'mix of recipient group keyword and single recipient users' do
-          let(:recipient) { [ 'ticket_customer', "userid_#{recipient1.id}", "userid_#{recipient2.id}", "userid_#{recipient3.id}" ] }
-
-          it 'contains all recipients' do
-            expect(ticket.articles.last.to).to eq("#{ticket.customer.email}, #{recipient1.email}, #{recipient2.email}, #{recipient3.email}")
-          end
-
-          context 'duplicate recipient' do
-            let(:recipient) { [ 'ticket_customer', "userid_#{ticket.customer.id}" ] }
-
-            it 'contains only one recipient' do
-              expect(ticket.articles.last.to).to eq(ticket.customer.email.to_s)
-            end
-          end
-        end
-
-        context 'list of single users only' do
-          let(:recipient) { [ "userid_#{recipient1.id}", "userid_#{recipient2.id}", "userid_#{recipient3.id}" ] }
-
-          it 'contains all recipients' do
-            expect(ticket.articles.last.to).to eq("#{recipient1.email}, #{recipient2.email}, #{recipient3.email}")
-          end
-
-          context 'assets' do
-            it 'resolves Users from recipient list' do
-              expect(trigger.assets({})[:User].keys).to include(recipient1.id, recipient2.id, recipient3.id)
-            end
-
-            context 'single entry' do
-
-              let(:recipient) { "userid_#{recipient1.id}" }
-
-              it 'resolves User from recipient list' do
-                expect(trigger.assets({})[:User].keys).to include(recipient1.id)
-              end
-            end
-          end
-        end
-
-        context 'recipient group keyword only' do
-          let(:recipient) { 'ticket_customer' }
-
-          it 'contains matching recipient' do
-            expect(ticket.articles.last.to).to eq(ticket.customer.email.to_s)
-          end
-        end
-      end
-
-      context 'active S/MIME integration' do
-        before do
-          Setting.set('smime_integration', true)
-
-          create(:smime_certificate, :with_private, fixture: system_email_address)
-          create(:smime_certificate, fixture: customer_email_address)
-        end
-
-        let(:system_email_address)   { 'smime1@example.com' }
-        let(:customer_email_address) { 'smime2@example.com' }
-
-        let(:email_address) { create(:email_address, email: system_email_address) }
-
-        let(:group)    { create(:group, email_address: email_address) }
-        let(:customer) { create(:customer, email: customer_email_address) }
-
-        let(:security_preferences) { Ticket::Article.last.preferences[:security] }
-
-        let(:perform) do
-          {
-            'notification.email' => {
-              'recipient' => 'ticket_customer',
-              'subject'   => 'Subject dummy.',
-              'body'      => 'Body dummy.',
-            }.merge(security_configuration)
-          }
-        end
-
-        let!(:ticket) { create(:ticket, group: group, customer: customer) }
-
-        context 'sending articles' do
-
-          before do
-            TransactionDispatcher.commit
-          end
-
-          context 'expired certificate' do
-
-            let(:system_email_address) { 'expiredsmime1@example.com' }
-
-            let(:security_configuration) do
-              {
-                'sign'       => 'always',
-                'encryption' => 'always',
-              }
-            end
-
-            it 'creates unsigned article' do
-              expect(security_preferences[:sign][:success]).to be false
-              expect(security_preferences[:encryption][:success]).to be true
-            end
-          end
-
-          context 'sign and encryption not set' do
-
-            let(:security_configuration) { {} }
-
-            it 'does not sign or encrypt' do
-              expect(security_preferences[:sign][:success]).to be false
-              expect(security_preferences[:encryption][:success]).to be false
-            end
-          end
-
-          context 'sign and encryption disabled' do
-            let(:security_configuration) do
-              {
-                'sign'       => 'no',
-                'encryption' => 'no',
-              }
-            end
-
-            it 'does not sign or encrypt' do
-              expect(security_preferences[:sign][:success]).to be false
-              expect(security_preferences[:encryption][:success]).to be false
-            end
-          end
-
-          context 'sign is enabled' do
-            let(:security_configuration) do
-              {
-                'sign'       => 'always',
-                'encryption' => 'no',
-              }
-            end
-
-            it 'signs' do
-              expect(security_preferences[:sign][:success]).to be true
-              expect(security_preferences[:encryption][:success]).to be false
-            end
-          end
-
-          context 'encryption enabled' do
-
-            let(:security_configuration) do
-              {
-                'sign'       => 'no',
-                'encryption' => 'always',
-              }
-            end
-
-            it 'encrypts' do
-              expect(security_preferences[:sign][:success]).to be false
-              expect(security_preferences[:encryption][:success]).to be true
-            end
-          end
-
-          context 'sign and encryption enabled' do
-
-            let(:security_configuration) do
-              {
-                'sign'       => 'always',
-                'encryption' => 'always',
-              }
-            end
-
-            it 'signs and encrypts' do
-              expect(security_preferences[:sign][:success]).to be true
-              expect(security_preferences[:encryption][:success]).to be true
-            end
-          end
-        end
-
-        context 'discard' do
-
-          context 'sign' do
-
-            let(:security_configuration) do
-              {
-                'sign' => 'discard',
-              }
-            end
-
-            context 'group without certificate' do
-              let(:group) { create(:group) }
-
-              it 'does not fire' do
-                expect { TransactionDispatcher.commit }
-                  .not_to change(Ticket::Article, :count)
-              end
-            end
-          end
-
-          context 'encryption' do
-
-            let(:security_configuration) do
-              {
-                'encryption' => 'discard',
-              }
-            end
-
-            context 'customer without certificate' do
-              let(:customer) { create(:customer) }
-
-              it 'does not fire' do
-                expect { TransactionDispatcher.commit }
-                  .not_to change(Ticket::Article, :count)
-              end
-            end
-          end
-
-          context 'mixed' do
-
-            context 'sign' do
-
-              let(:security_configuration) do
-                {
-                  'encryption' => 'always',
-                  'sign'       => 'discard',
-                }
-              end
-
-              context 'group without certificate' do
-                let(:group) { create(:group) }
-
-                it 'does not fire' do
-                  expect { TransactionDispatcher.commit }
-                    .not_to change(Ticket::Article, :count)
-                end
-              end
-            end
-
-            context 'encryption' do
-
-              let(:security_configuration) do
-                {
-                  'encryption' => 'discard',
-                  'sign'       => 'always',
-                }
-              end
-
-              context 'customer without certificate' do
-                let(:customer) { create(:customer) }
-
-                it 'does not fire' do
-                  expect { TransactionDispatcher.commit }
-                    .not_to change(Ticket::Article, :count)
-                end
-              end
-            end
-          end
-        end
-      end
-
-      context 'active PGP integration' do
-        before do
-          Setting.set('pgp_integration', true)
-
-          create(:pgp_key, :with_private, fixture: system_email_address)
-          create(:pgp_key, fixture: customer_email_address)
-        end
-
-        let(:system_email_address)   { 'pgp1@example.com' }
-        let(:customer_email_address) { 'pgp2@example.com' }
-
-        let(:email_address) { create(:email_address, email: system_email_address) }
-
-        let(:group)    { create(:group, email_address: email_address) }
-        let(:customer) { create(:customer, email: customer_email_address) }
-
-        let(:security_preferences) { Ticket::Article.last.preferences[:security] }
-
-        let(:perform) do
-          {
-            'notification.email' => {
-              'recipient' => 'ticket_customer',
-              'subject'   => 'Subject dummy.',
-              'body'      => 'Body dummy.',
-            }.merge(security_configuration)
-          }
-        end
-
-        let!(:ticket) { create(:ticket, group: group, customer: customer) }
-
-        context 'sending articles' do
-
-          before do
-            TransactionDispatcher.commit
-          end
-
-          context 'expired pgp key' do
-
-            let(:system_email_address) { 'expiredpgp1@example.com' }
-
-            let(:security_configuration) do
-              {
-                'sign'       => 'always',
-                'encryption' => 'always',
-              }
-            end
-
-            it 'creates unsigned article' do
-              expect(security_preferences[:sign][:success]).to be false
-              expect(security_preferences[:encryption][:success]).to be true
-            end
-          end
-
-          context 'sign and encryption not set' do
-
-            let(:security_configuration) { {} }
-
-            it 'does not sign or encrypt' do
-              expect(security_preferences[:sign][:success]).to be false
-              expect(security_preferences[:encryption][:success]).to be false
-            end
-          end
-
-          context 'sign and encryption disabled' do
-            let(:security_configuration) do
-              {
-                'sign'       => 'no',
-                'encryption' => 'no',
-              }
-            end
-
-            it 'does not sign or encrypt' do
-              expect(security_preferences[:sign][:success]).to be false
-              expect(security_preferences[:encryption][:success]).to be false
-            end
-          end
-
-          context 'sign is enabled' do
-            let(:security_configuration) do
-              {
-                'sign'       => 'always',
-                'encryption' => 'no',
-              }
-            end
-
-            it 'signs' do
-              expect(security_preferences[:sign][:success]).to be true
-              expect(security_preferences[:encryption][:success]).to be false
-            end
-          end
-
-          context 'encryption enabled' do
-
-            let(:security_configuration) do
-              {
-                'sign'       => 'no',
-                'encryption' => 'always',
-              }
-            end
-
-            it 'encrypts' do
-              expect(security_preferences[:sign][:success]).to be false
-              expect(security_preferences[:encryption][:success]).to be true
-            end
-          end
-
-          context 'sign and encryption enabled' do
-
-            let(:security_configuration) do
-              {
-                'sign'       => 'always',
-                'encryption' => 'always',
-              }
-            end
-
-            it 'signs and encrypts' do
-              expect(security_preferences[:sign][:success]).to be true
-              expect(security_preferences[:encryption][:success]).to be true
-            end
-          end
-        end
-
-        context 'discard' do
-
-          context 'sign' do
-
-            let(:security_configuration) do
-              {
-                'sign' => 'discard',
-              }
-            end
-
-            context 'group without pgp key' do
-              let(:group) { create(:group) }
-
-              it 'does not fire' do
-                expect { TransactionDispatcher.commit }
-                  .not_to change(Ticket::Article, :count)
-              end
-            end
-          end
-
-          context 'encryption' do
-
-            let(:security_configuration) do
-              {
-                'encryption' => 'discard',
-              }
-            end
-
-            context 'customer without pgp key' do
-              let(:customer) { create(:customer) }
-
-              it 'does not fire' do
-                expect { TransactionDispatcher.commit }
-                  .not_to change(Ticket::Article, :count)
-              end
-            end
-          end
-
-          context 'mixed' do
-
-            context 'sign' do
-
-              let(:security_configuration) do
-                {
-                  'encryption' => 'always',
-                  'sign'       => 'discard',
-                }
-              end
-
-              context 'group without pgp key' do
-                let(:group) { create(:group) }
-
-                it 'does not fire' do
-                  expect { TransactionDispatcher.commit }
-                    .not_to change(Ticket::Article, :count)
-                end
-              end
-            end
-
-            context 'encryption' do
-
-              let(:security_configuration) do
-                {
-                  'encryption' => 'discard',
-                  'sign'       => 'always',
-                }
-              end
-
-              context 'customer without pgp key' do
-                let(:customer) { create(:customer) }
-
-                it 'does not fire' do
-                  expect { TransactionDispatcher.commit }
-                    .not_to change(Ticket::Article, :count)
-                end
-              end
-            end
-          end
-        end
-      end
-
-      include_examples 'include ticket attachment'
-    end
-
-    context 'for condition "ticket updated"' do
-      let(:condition) do
-        { 'ticket.action' => { 'operator' => 'is', 'value' => 'update' } }
-      end
-
-      let!(:ticket) { create(:ticket).tap { TransactionDispatcher.commit } }
-
-      context 'when new article is created directly' do
-        context 'with empty #preferences hash' do
-          let!(:article) { create(:ticket_article, ticket: ticket) }
-
-          it 'fires (without altering ticket state)' do
-            expect { TransactionDispatcher.commit }
-              .to change { ticket.reload.articles.count }.by(1)
-              .and not_change { ticket.reload.state.name }.from('new')
-          end
-        end
-
-        context 'with #preferences { "send-auto-response" => false }' do
-          let!(:article) do
-            create(:ticket_article,
-                   ticket:      ticket,
-                   preferences: { 'send-auto-response' => false })
-          end
-
-          it 'does not fire' do
-            expect { TransactionDispatcher.commit }
-              .not_to change { ticket.reload.articles.count }
-          end
-        end
-      end
-
-      context 'when new article is created via Channel::EmailParser.process' do
-        context 'with a regular message' do
-          let!(:article) do
-            create(:ticket_article,
-                   ticket:     ticket,
-                   message_id: raw_email[%r{(?<=^References: )\S*}],
-                   subject:    raw_email[%r{(?<=^Subject: Re: ).*$}])
-          end
-
-          let(:raw_email) { Rails.root.join('test/data/mail/mail005.box').read }
-
-          it 'fires (without altering ticket state)' do
-            expect { Channel::EmailParser.new.process({}, raw_email) }
-              .to not_change { Ticket.count }
-              .and change { ticket.reload.articles.count }.by(2)
-              .and not_change { ticket.reload.state.name }.from('new')
-          end
-        end
-
-        context 'with delivery-failed "bounce message"' do
-          let!(:article) do
-            create(:ticket_article,
-                   ticket:     ticket,
-                   message_id: raw_email[%r{(?<=^Message-ID: )\S*}])
-          end
-
-          let(:raw_email) { Rails.root.join('test/data/mail/mail055.box').read }
-
-          it 'does not fire' do
-            expect { Channel::EmailParser.new.process({}, raw_email) }
-              .to change { ticket.reload.articles.count }.by(1)
-          end
-        end
-      end
-
-      # https://github.com/zammad/zammad/issues/3991
-      context 'when article contains a mention' do
-        let!(:article) do
-          create(:ticket_article,
-                 ticket: ticket,
-                 body:   '<a href="http:/#user/profile/1" data-mention-user-id="1" rel="nofollow noreferrer noopener" target="_blank" title="http:/#user/profile/1">Test Admin Agent</a> test<br>')
-        end
-
-        it 'fires correctly' do
-          expect { TransactionDispatcher.commit }
-            .to change { ticket.reload.articles.count }.by(1)
-        end
-      end
-    end
-
-    context 'with condition execution_time.calendar_id' do
-      let(:calendar) { create(:calendar) }
-      let(:perform) do
-        { 'ticket.title'=>{ 'value'=>'triggered' } }
-      end
-      let!(:ticket) { create(:ticket, title: 'Test Ticket') }
-
-      context 'is in working time' do
-        let(:condition) do
-          { 'ticket.state_id' => { 'operator' => 'is', 'value' => Ticket::State.pluck(:id) }, 'execution_time.calendar_id' => { 'operator' => 'is in working time', 'value' => calendar.id } }
-        end
-
-        it 'does trigger only in working time' do
-          travel_to Time.zone.parse('2020-02-12T12:00:00Z0')
-          expect { TransactionDispatcher.commit }.to change { ticket.reload.title }.to('triggered')
-        end
-
-        it 'does not trigger out of working time' do
-          travel_to Time.zone.parse('2020-02-12T02:00:00Z0')
-          TransactionDispatcher.commit
-          expect(ticket.reload.title).to eq('Test Ticket')
-        end
-      end
-
-      context 'is not in working time' do
-        let(:condition) do
-          { 'execution_time.calendar_id' => { 'operator' => 'is not in working time', 'value' => calendar.id } }
-        end
-
-        it 'does not trigger in working time' do
-          travel_to Time.zone.parse('2020-02-12T12:00:00Z0')
-          TransactionDispatcher.commit
-          expect(ticket.reload.title).to eq('Test Ticket')
-        end
-
-        it 'does trigger out of working time' do
-          travel_to Time.zone.parse('2020-02-12T02:00:00Z0')
-          expect { TransactionDispatcher.commit }.to change { ticket.reload.title }.to('triggered')
-        end
-      end
-    end
-
-    context 'with article last sender equals system address' do
-      let!(:ticket) { create(:ticket) }
-      let(:perform) do
-        {
-          'notification.email' => {
-            'recipient' => 'article_last_sender',
-            'subject'   => 'foo last sender',
-            'body'      => 'some body with &gt;snip&lt;#{article.body_as_html}&gt;/snip&lt;', # rubocop:disable Lint/InterpolationCheck
-          }
-        }
-      end
-      let(:condition) do
-        { 'ticket.state_id' => { 'operator' => 'is', 'value' => Ticket::State.pluck(:id) } }
-      end
-      let!(:system_address) do
-        create(:email_address)
-      end
-
-      context 'article with from equal to the a system address' do
-        let!(:article) do
-          create(:ticket_article,
-                 ticket: ticket,
-                 from:   system_address.email,)
-        end
-
-        it 'does not trigger because of the last article is created my system address' do
-          expect { TransactionDispatcher.commit }.not_to change { ticket.reload.articles.count }
-          expect(Ticket::Article.where(ticket: ticket).last.subject).not_to eq('foo last sender')
-          expect(Ticket::Article.where(ticket: ticket).last.to).not_to eq(system_address.email)
-        end
-      end
-
-      context 'article with reply_to equal to the a system address' do
-        let!(:article) do
-          create(:ticket_article,
-                 ticket:   ticket,
-                 from:     system_address.email,
-                 reply_to: system_address.email,)
-        end
-
-        it 'does not trigger because of the last article is created my system address' do
-          expect { TransactionDispatcher.commit }.not_to change { ticket.reload.articles.count }
-          expect(Ticket::Article.where(ticket: ticket).last.subject).not_to eq('foo last sender')
-          expect(Ticket::Article.where(ticket: ticket).last.to).not_to eq(system_address.email)
-        end
-      end
-
-      include_examples 'include ticket attachment'
-    end
-  end
-
-  context 'with pre condition current_user.id' do
-    let(:perform) do
-      { 'ticket.title'=>{ 'value'=>'triggered' } }
-    end
-
-    let(:user) do
-      user = create(:agent)
-      user.roles.first.groups << group
-      user
-    end
-
-    let(:group) { Group.first }
-
-    let(:ticket) do
-      create(:ticket,
-             title: 'Test Ticket', group: group,
-             owner_id: user.id, created_by_id: user.id, updated_by_id: user.id)
-    end
-
-    shared_examples 'successful trigger' do |attribute:|
-      let(:attribute) { attribute }
-
-      let(:condition) do
-        { attribute => { operator: 'is', pre_condition: 'current_user.id', value: '', value_completion: '' } }
-      end
-
-      it "for #{attribute}" do
-        ticket && trigger
-        expect { TransactionDispatcher.commit }.to change { ticket.reload.title }.to('triggered')
-      end
-    end
-
-    it_behaves_like 'successful trigger', attribute: 'ticket.updated_by_id'
-    it_behaves_like 'successful trigger', attribute: 'ticket.owner_id'
-  end
-
-  describe 'Multi-trigger interactions:' do
-    let(:ticket) { create(:ticket) }
-
-    context 'cascading (i.e., trigger A satisfies trigger B satisfies trigger C)' do
-      subject!(:triggers) do
-        [
-          create(:trigger, condition: initial_state, perform: first_change, name: 'A'),
-          create(:trigger, condition: first_change, perform: second_change, name: 'B'),
-          create(:trigger, condition: second_change, perform: third_change, name: 'C')
-        ]
-      end
-
-      context 'in a chain' do
-        let(:initial_state) do
-          {
-            'ticket.state_id' => {
-              'operator' => 'is',
-              'value'    => Ticket::State.lookup(name: 'new').id.to_s,
-            }
-          }
-        end
-
-        let(:first_change) do
-          {
-            'ticket.state_id' => {
-              'operator' => 'is',
-              'value'    => Ticket::State.lookup(name: 'open').id.to_s,
-            }
-          }
-        end
-
-        let(:second_change) do
-          {
-            'ticket.state_id' => {
-              'operator' => 'is',
-              'value'    => Ticket::State.lookup(name: 'closed').id.to_s,
-            }
-          }
-        end
-
-        let(:third_change) do
-          {
-            'ticket.state_id' => {
-              'operator' => 'is',
-              'value'    => Ticket::State.lookup(name: 'merged').id.to_s,
-            }
-          }
-        end
-
-        context 'in alphabetical order (by name)' do
-          it 'fires all triggers in sequence' do
-            expect { TransactionDispatcher.commit }
-              .to change { ticket.reload.state.name }.to('merged')
-          end
-        end
-
-        context 'out of alphabetical order (by name)' do
-          before do
-            triggers.first.update(name: 'E')
-            triggers.second.update(name: 'F')
-            triggers.third.update(name: 'D')
-          end
-
-          context 'with Setting ticket_trigger_recursive: true' do
-            before { Setting.set('ticket_trigger_recursive', true) }
-
-            it 'evaluates triggers in sequence, then loops back to the start and re-evalutes skipped triggers' do
-              expect { TransactionDispatcher.commit }
-                .to change { ticket.reload.state.name }.to('merged')
-            end
-          end
-
-          context 'with Setting ticket_trigger_recursive: false' do
-            before { Setting.set('ticket_trigger_recursive', false) }
-
-            it 'evaluates triggers in sequence, firing only the ones that match' do
-              expect { TransactionDispatcher.commit }
-                .to change { ticket.reload.state.name }.to('closed')
-            end
-          end
-        end
-      end
-
-      context 'in circular reference (i.e., trigger A satisfies trigger B satisfies trigger C satisfies trigger A...)' do
-        let(:initial_state) do
-          {
-            'ticket.priority_id' => {
-              'operator' => 'is',
-              'value'    => Ticket::Priority.lookup(name: '2 normal').id.to_s,
-            }
-          }
-        end
-
-        let(:first_change) do
-          {
-            'ticket.priority_id' => {
-              'operator' => 'is',
-              'value'    => Ticket::Priority.lookup(name: '3 high').id.to_s,
-            }
-          }
-        end
-
-        let(:second_change) do
-          {
-            'ticket.priority_id' => {
-              'operator' => 'is',
-              'value'    => Ticket::Priority.lookup(name: '1 low').id.to_s,
-            }
-          }
-        end
-
-        let(:third_change) do
-          {
-            'ticket.priority_id' => {
-              'operator' => 'is',
-              'value'    => Ticket::Priority.lookup(name: '2 normal').id.to_s,
-            }
-          }
-        end
-
-        context 'with Setting ticket_trigger_recursive: true' do
-          before { Setting.set('ticket_trigger_recursive', true) }
-
-          it 'fires each trigger once, without being caught in an endless loop' do
-            expect { Timeout.timeout(2) { TransactionDispatcher.commit } }
-              .to not_change { ticket.reload.priority.name }
-              .and not_raise_error
-          end
-        end
-
-        context 'with Setting ticket_trigger_recursive: false' do
-          before { Setting.set('ticket_trigger_recursive', false) }
-
-          it 'fires each trigger once, without being caught in an endless loop' do
-            expect { Timeout.timeout(2) { TransactionDispatcher.commit } }
-              .to not_change { ticket.reload.priority.name }
-              .and not_raise_error
-          end
-        end
-      end
-    end
-
-    context 'competing (i.e., trigger A un-satisfies trigger B)' do
-      subject!(:triggers) do
-        [
-          create(:trigger, condition: initial_state, perform: change_a, name: 'A'),
-          create(:trigger, condition: initial_state, perform: change_b, name: 'B')
-        ]
-      end
-
-      let(:initial_state) do
-        {
-          'ticket.state_id' => {
-            'operator' => 'is',
-            'value'    => Ticket::State.lookup(name: 'new').id.to_s,
-          }
-        }
-      end
-
-      let(:change_a) do
-        {
-          'ticket.state_id' => {
-            'operator' => 'is',
-            'value'    => Ticket::State.lookup(name: 'open').id.to_s,
-          }
-        }
-      end
-
-      let(:change_b) do
-        {
-          'ticket.priority_id' => {
-            'operator' => 'is',
-            'value'    => Ticket::Priority.lookup(name: '3 high').id.to_s,
-          }
-        }
-      end
-
-      it 'evaluates triggers in sequence, firing only the ones that match' do
-        expect { TransactionDispatcher.commit }
-          .to change { ticket.reload.state.name }.to('open')
-          .and not_change { ticket.reload.priority.name }
-      end
-    end
-  end
-
-  describe 'multiselect triggers', db_strategy: :reset do
-
-    let(:attribute_name) { 'multiselect' }
-
-    let(:condition) do
-      { "ticket.#{attribute_name}" => { 'operator' => operator, 'value' => trigger_values } }
-    end
-
-    let(:perform) do
-      { 'article.note' => { 'subject' => 'Test subject note', 'internal' => 'true', 'body' => 'Test body note' } }
-    end
-
-    before do
-      create(:object_manager_attribute_multiselect, name: attribute_name)
-      ObjectManager::Attribute.migration_execute
-
-      described_class.destroy_all # Default DB state includes three sample triggers
-      trigger # create subject trigger
-    end
-
-    context 'when ticket is updated with a multiselect trigger condition', authenticated_as: :owner, db_strategy: :reset do
-      let(:options) do
-        {
-          a: 'a',
-          b: 'b',
-          c: 'c',
-          d: 'd',
-          e: 'e',
-        }
-      end
-
-      let(:trigger_values) { %w[a b c] }
-      let(:group)          { create(:group) }
-      let(:owner)          { create(:admin, group_ids: [group.id]) }
-      let!(:ticket)        { create(:ticket, group: group,) }
-
-      before do
-        ticket.update_attribute(attribute_name, ticket_multiselect_values)
-      end
-
-      shared_examples 'updating the ticket with the trigger condition' do
-        it 'updates the ticket with the trigger condition' do
-          expect { TransactionDispatcher.commit }
-            .to change(Ticket::Article, :count).by(1)
-        end
-      end
-
-      shared_examples 'not updating the ticket with the trigger condition' do
-        it 'does not update the ticket with the trigger condition' do
-          expect { TransactionDispatcher.commit }
-            .to not_change(Ticket::Article, :count)
-        end
-      end
-
-      context "with 'contains all' used" do
-        let(:operator) { 'contains all' }
-
-        context 'when updated value is the same with trigger value' do
-          let(:ticket_multiselect_values) { trigger_values }
-
-          it_behaves_like 'updating the ticket with the trigger condition'
-        end
-
-        context 'when updated value is different from the trigger value' do
-          let(:ticket_multiselect_values) { options.values - trigger_values }
-
-          it_behaves_like 'not updating the ticket with the trigger condition'
-        end
-
-        context 'when no value is selected' do
-          let(:ticket_multiselect_values) { ['-'] }
-
-          it_behaves_like 'not updating the ticket with the trigger condition'
-        end
-
-        context 'when all value is selected' do
-          let(:ticket_multiselect_values) { options.values }
-
-          it_behaves_like 'updating the ticket with the trigger condition'
-        end
-
-        context 'when updated value contains one of the trigger value' do
-          let(:ticket_multiselect_values) { [trigger_values.first] }
-
-          it_behaves_like 'not updating the ticket with the trigger condition'
-        end
-
-        context 'when updated value does not contain one of the trigger value' do
-          let(:ticket_multiselect_values) { options.values - [trigger_values.first] }
-
-          it_behaves_like 'not updating the ticket with the trigger condition'
-        end
-      end
-
-      context "with 'contains one' used" do
-        let(:operator) { 'contains one' }
-
-        context 'when updated value is the same with trigger value' do
-          let(:ticket_multiselect_values) { trigger_values }
-
-          it_behaves_like 'updating the ticket with the trigger condition'
-        end
-
-        context 'when updated value is different from the trigger value' do
-          let(:ticket_multiselect_values) { options.values - trigger_values }
-
-          it_behaves_like 'not updating the ticket with the trigger condition'
-        end
-
-        context 'when no value is selected' do
-          let(:ticket_multiselect_values) { ['-'] }
-
-          it_behaves_like 'not updating the ticket with the trigger condition'
-        end
-
-        context 'when all value is selected' do
-          let(:ticket_multiselect_values) { options.values }
-
-          it_behaves_like 'updating the ticket with the trigger condition'
-        end
-
-        context 'when updated value contains only one of the trigger value' do
-          let(:ticket_multiselect_values) { [trigger_values.first] }
-
-          it_behaves_like 'updating the ticket with the trigger condition'
-        end
-
-        context 'when updated value does not contain one of the trigger value' do
-          let(:ticket_multiselect_values) { options.values - [trigger_values.first] }
-
-          it_behaves_like 'updating the ticket with the trigger condition'
-        end
-      end
-
-      context "with 'contains all not' used" do
-        let(:operator) { 'contains all not' }
-
-        context 'when updated value is the same with trigger value' do
-          let(:ticket_multiselect_values) { trigger_values }
-
-          it_behaves_like 'not updating the ticket with the trigger condition'
-        end
-
-        context 'when updated value is different from the trigger value' do
-          let(:ticket_multiselect_values) { options.values - trigger_values }
-
-          it_behaves_like 'updating the ticket with the trigger condition'
-        end
-
-        context 'when no value is selected' do
-          let(:ticket_multiselect_values) { ['-'] }
-
-          it_behaves_like 'updating the ticket with the trigger condition'
-        end
-
-        context 'when all value is selected' do
-          let(:ticket_multiselect_values) { options.values }
-
-          it_behaves_like 'not updating the ticket with the trigger condition'
-        end
-
-        context 'when updated value contains only one of the trigger value' do
-          let(:ticket_multiselect_values) { [trigger_values.first] }
-
-          it_behaves_like 'updating the ticket with the trigger condition'
-        end
-
-        context 'when updated value does not contain one of the trigger value' do
-          let(:ticket_multiselect_values) { options.values - [trigger_values.first] }
-
-          it_behaves_like 'updating the ticket with the trigger condition'
-        end
-      end
-
-      context "with 'contains one not' used" do
-        let(:operator) { 'contains one not' }
-
-        context 'when updated value is the same with trigger value' do
-          let(:ticket_multiselect_values) { trigger_values }
-
-          it_behaves_like 'not updating the ticket with the trigger condition'
-        end
-
-        context 'when updated value is different from the trigger value' do
-          let(:ticket_multiselect_values) { options.values - trigger_values }
-
-          it_behaves_like 'updating the ticket with the trigger condition'
-        end
-
-        context 'when no value is selected' do
-          let(:ticket_multiselect_values) { ['-'] }
-
-          it_behaves_like 'updating the ticket with the trigger condition'
-        end
-
-        context 'when all value is selected' do
-          let(:ticket_multiselect_values) { options.values }
-
-          it_behaves_like 'not updating the ticket with the trigger condition'
-        end
-
-        context 'when updated value contains only one of the trigger value' do
-          let(:ticket_multiselect_values) { [trigger_values.first] }
-
-          it_behaves_like 'not updating the ticket with the trigger condition'
-        end
-
-        context 'when updated value does not contain one of the trigger value' do
-          let(:ticket_multiselect_values) { options.values - [trigger_values.first] }
-
-          it_behaves_like 'not updating the ticket with the trigger condition'
-        end
-      end
-    end
-  end
-
-  describe 'Triggers without configured action inside condition are executed differently compared to 5.3 #4550' do
-    let(:ticket_match) { create(:ticket, group: Group.first) }
-    let(:ticket_no_match) { create(:ticket, group: Group.first, priority: Ticket::Priority.find_by(name: '1 low')) }
-    let(:condition) do
-      { 'ticket.priority_id' => { 'operator' => 'is', 'value' => Ticket::Priority.where(name: ['2 normal', '3 high']).pluck(:id).map(&:to_s) } }
-    end
-    let(:perform) do
-      { 'article.note' => { 'subject' => 'Test subject note', 'internal' => 'true', 'body' => 'Test body note' } }
-    end
-
-    shared_examples 'executing trigger when conditions match' do |execution_condition_mode:|
-      it 'does not create an article if the state changes', if: execution_condition_mode == 'selective' do
-        ticket_match.update(state: Ticket::State.find_by(name: 'closed'))
-        expect { TransactionDispatcher.commit }.not_to change(Ticket::Article, :count)
-      end
-
-      it 'does create an article if the state changes', if: execution_condition_mode == 'always' do
-        ticket_match.update(state: Ticket::State.find_by(name: 'closed'))
-        expect { TransactionDispatcher.commit }.to change(Ticket::Article, :count)
-      end
-
-      it 'does create an article if priority changes' do
-        ticket_match.update(priority: Ticket::Priority.find_by(name: '3 high'))
-        expect { TransactionDispatcher.commit }.to change(Ticket::Article, :count).by(1)
-      end
-
-      it 'does create an article if priority matches and new article is created' do
-        create(:ticket_article, ticket: ticket_match)
-        expect { TransactionDispatcher.commit }.to change(Ticket::Article, :count).by(1)
-      end
-    end
-
-    shared_examples "not executing trigger when conditions don't match" do
-      it 'does not create an article if priority does not match but new article is created' do
-        create(:ticket_article, ticket: ticket_no_match)
-        expect { TransactionDispatcher.commit }.not_to change(Ticket::Article, :count)
-      end
-
-      it 'does not create an article if priority does not match and priority changes to low' do
-        ticket_match.update(priority: Ticket::Priority.find_by(name: '1 low'))
-        expect { TransactionDispatcher.commit }.not_to change(Ticket::Article, :count)
-      end
-    end
-
-    before do
-      ticket_match
-      ticket_no_match
-      trigger
-      TransactionDispatcher.commit
-    end
-
-    context "with execution condition mode 'selective'" do
-      it_behaves_like 'executing trigger when conditions match', execution_condition_mode: 'selective'
-      it_behaves_like "not executing trigger when conditions don't match"
-    end
-
-    context "with execution condition mode 'always'" do
-      let(:execution_condition_mode) { 'always' }
-
-      it_behaves_like 'executing trigger when conditions match', execution_condition_mode: 'always'
-      it_behaves_like "not executing trigger when conditions don't match"
-    end
-  end
-
-  context 'when time events are reached', time_zone: 'Europe/London' do
-    let(:activator)   { 'time' }
-    let(:perform)     { { 'ticket.title' => { 'value' => 'triggered' } } }
-    let(:ticket)      { create(:ticket, title: 'Test Ticket', state_name: state_name, pending_time: pending_time) }
-
-    shared_examples 'getting triggered' do |attribute:, operator:, with_pending_time: false, with_escalation: false|
-      let(:attribute)    { attribute }
-      let(:condition)    { { attribute => { operator: operator } } }
-      let(:state_name)   { 'pending reminder' if with_pending_time }
-      let(:pending_time) { 1.hour.ago if with_pending_time }
-      let(:calendar)     { create(:calendar, :'24/7') }
-      let(:sla)          { create(:sla, :condition_blank, solution_time: 10, calendar: calendar) }
-
-      before do
-        sla if with_escalation
-        ticket && trigger
-        travel 1.hour if with_escalation
-      end
-
-      it "gets triggered for attribute: #{attribute}, operator: #{operator}" do
-        expect { perform_job(attribute, operator) }
-          .to change { ticket.reload.title }
-          .to('triggered')
-      end
-
-      def job_type(attribute, operator)
-        case [attribute, operator]
-        in 'ticket.pending_time', _
-          'reminder_reached'
-        in 'ticket.escalation_at', 'has reached'
-          'escalation'
-        in 'ticket.escalation_at', 'has reached warning'
-          'escalation_warning'
-        end
-      end
-
-      def perform_job(...)
-        TransactionJob.perform_now(
-          object:     'Ticket',
-          type:       job_type(...),
-          object_id:  ticket.id,
-          article_id: nil,
-          user_id:    1,
-        )
-      end
-    end
-
-    it_behaves_like 'getting triggered', attribute: 'ticket.pending_time', operator: 'has reached', with_pending_time: true
-    it_behaves_like 'getting triggered', attribute: 'ticket.escalation_at', operator: 'has reached', with_escalation: true
-    it_behaves_like 'getting triggered', attribute: 'ticket.escalation_at', operator: 'has reached warning', with_escalation: true
-  end
-
-  context 'when aticle action is set' do
-    let(:activator) { 'action' }
-    let(:perform)   { { 'ticket.title' => { 'value' => 'triggered' } } }
-    let(:ticket)    { create(:ticket, title: 'Test Ticket') }
-    let(:article)   { create(:ticket_article, ticket: ticket) }
-
-    shared_examples 'getting triggered' do |triggered:, operator:, with_article:, type:|
-      before do
-        ticket && trigger
-
-        article if with_article
-      end
-
-      let(:article_id) { with_article ? article.id : nil }
-      let(:type)       { type }
-      let(:condition) do
-        { 'article.action' => { 'operator' => operator, 'value' => 'create' } }
-      end
-
-      if triggered
-        it "gets triggered for article action created operator: #{operator}" do
-          expect { TransactionDispatcher.commit }
-            .to change { ticket.reload.title }
-            .to('triggered')
-        end
-      else
-        it "does not get triggered for article action created operator: #{operator}" do
-          expect { TransactionDispatcher.commit }
-            .not_to change { ticket.reload.title }
-        end
-      end
-    end
-
-    it_behaves_like 'getting triggered', triggered: true,  operator: 'is',     with_article: true,  type: 'update'
-    it_behaves_like 'getting triggered', triggered: false, operator: 'is not', with_article: true,  type: 'update'
-    it_behaves_like 'getting triggered', triggered: false, operator: 'is',     with_article: false, type: 'update'
-    it_behaves_like 'getting triggered', triggered: true,  operator: 'is not', with_article: false, type: 'update'
-
-    it_behaves_like 'getting triggered', triggered: true,  operator: 'is',     with_article: true,  type: 'create'
-    it_behaves_like 'getting triggered', triggered: false, operator: 'is not', with_article: true,  type: 'create'
-    it_behaves_like 'getting triggered', triggered: false, operator: 'is',     with_article: false, type: 'create'
-    it_behaves_like 'getting triggered', triggered: true,  operator: 'is not', with_article: false, type: 'create'
-  end
-
-  describe '#performed_on', current_user_id: 1 do
-    let(:ticket) { create(:ticket) }
-
-    before { ticket }
-
-    context 'given action-based trigger' do
-      let(:activator) { 'action' }
-
-      it 'does nothing' do
-        expect { trigger.performed_on(ticket, activator_type: 'reminder_reached') }
-          .not_to change(History, :count)
-      end
-    end
-
-    context 'given time-based trigger' do
-      let(:activator) { 'time' }
-
-      it 'creates history item' do
-        expect { trigger.performed_on(ticket, activator_type: 'reminder_reached') }
-          .to change(History, :count)
-          .by(1)
-      end
-    end
-  end
-
-  describe 'performable_on?', current_user_id: 1 do
-    let(:ticket) { create(:ticket) }
-
-    before { ticket }
-
-    context 'given action-based trigger' do
-      let(:activator) { 'action' }
-
-      it 'returns nil' do
-        expect(trigger.performable_on?(ticket, activator_type: 'reminder_reached'))
-          .to be_nil
-      end
-    end
-
-    context 'given time-based trigger' do
-      let(:activator) { 'time' }
-
-      it 'returns true if it was not performed yet' do
-        expect(trigger).to be_performable_on(ticket, activator_type: 'reminder_reached')
-      end
-
-      it 'returns true if it was performed yesterday' do
-        travel(-1.day) do
-          trigger.performable_on?(ticket, activator_type: 'reminder_reached')
-        end
-
-        expect(trigger).to be_performable_on(ticket, activator_type: 'reminder_reached')
-      end
-
-      it 'returns true if it was performed today on another ticket' do
-        trigger.performable_on?(create(:ticket), activator_type: 'reminder_reached')
-
-        expect(trigger).to be_performable_on(ticket, activator_type: 'reminder_reached')
-      end
-
-      it 'returns true if it was performed today by another activator' do
-        trigger.performable_on?(ticket, activator_type: 'escalation')
-
-        expect(trigger).to be_performable_on(ticket, activator_type: 'reminder_reached')
-      end
-
-      it 'returns false if it was performed today on the same ticket by the same activator and same user' do
-        trigger.performable_on?(ticket, activator_type: 'reminder_reached')
-
-        expect(trigger).not_to be_performable_on(ticket, activator_type: 'reminder_reached')
-      end
-
-      # https://github.com/zammad/zammad/issues/5655
-      it 'returns true if it was performed today and then ticket related field was changed' do
-        ticket.update(pending_time: 30.minutes.from_now)
-        trigger.performable_on?(ticket, activator_type: 'reminder_reached')
-
-        expect { ticket.update(pending_time: 1.hour.from_now) }
-          .to change { trigger.performable_on?(ticket, activator_type: 'reminder_reached') }
-          .to true
-      end
-
-      # https://github.com/zammad/zammad/issues/5655
-      it 'returns true if it was performed today and then ticket related field was changed and reverted back to original' do
-        initial_pending_time = 1.hour.from_now
-        ticket.update(pending_time: initial_pending_time)
-
-        trigger.performable_on?(ticket, activator_type: 'reminder_reached')
-
-        ticket.update(pending_time: 2.hours.from_now)
-
-        trigger.performable_on?(ticket, activator_type: 'reminder_reached')
-
-        expect { ticket.update(pending_time: initial_pending_time) }
-          .to change { trigger.performable_on?(ticket, activator_type: 'reminder_reached') }
-          .to true
-      end
-    end
-  end
-
-  describe 'Log Trigger and Scheduler in Ticket History #4604' do
-    let(:ticket) { create(:ticket) }
-
-    context 'when title attribute' do
-      it 'does create history entries for the trigger' do
-        ticket && trigger
-        TransactionDispatcher.commit
-        expect(History.last).to have_attributes(
-          o_id:       ticket.id,
-          value_to:   'triggered',
-          sourceable: trigger
-        )
-      end
-    end
-
-    context 'when group associated attribute' do
-      let(:group) { create(:group) }
-
-      let(:perform) do
-        { 'ticket.group_id'=>{ 'value'=> group.id.to_s } }
-      end
-
-      it 'does create history entries with source information' do
-        ticket && trigger
-        TransactionDispatcher.commit
-        expect(History.last).to have_attributes(
-          o_id:       ticket.id,
-          value_to:   group.name,
-          sourceable: trigger
-        )
-      end
-    end
-
-    context 'when internal note article' do
-      let(:perform) do
-        { 'article.note' => { 'subject' => 'Test subject note', 'internal' => 'true', 'body' => 'Test body note' } }
-      end
-
-      it 'does create history entries with source information' do
-        ticket && trigger
-        TransactionDispatcher.commit
-        expect(History.last).to have_attributes(
-          o_id:         Ticket::Article.last.id,
-          related_o_id: ticket.id,
-          sourceable:   trigger
-        )
-      end
-    end
-
-    context 'when email notification article' do
-      let(:perform) do
-        {
-          'notification.email' => {
-            'recipient' => 'ticket_customer',
-            'subject'   => 'foo',
-            'body'      => 'some body with &gt;snip&lt;#{article.body_as_html}&gt;/snip&lt;', # rubocop:disable Lint/InterpolationCheck
-          }
-        }
-      end
-
-      it 'does create history entries with source information' do
-        ticket && trigger
-        TransactionDispatcher.commit
-        expect(History.last).to have_attributes(
-          o_id:         Ticket::Article.last.id,
-          related_o_id: ticket.id,
-          sourceable:   trigger
-        )
-      end
-    end
-
-    context 'when tags are added' do
-      let(:tag) { SecureRandom.uuid }
-      let(:perform) do
-        { 'ticket.tags'=>{ 'operator' => 'add', 'value' => tag } }
-      end
-
-      it 'does create history entries with source information' do
-        ticket && trigger
-        TransactionDispatcher.commit
-        expect(History.last).to have_attributes(
-          history_type_id: History::Type.find_by(name: 'added').id,
-          o_id:            ticket.id,
-          sourceable:      trigger,
-          value_to:        tag,
-        )
-      end
-    end
-
-    context 'when tags are removed' do
-      let(:tag) { SecureRandom.uuid }
-      let(:perform) do
-        { 'ticket.tags'=>{ 'operator' => 'remove', 'value' => tag } }
-      end
-
-      it 'does create history entries with source information' do
-        ticket&.tag_add(tag, 1) && trigger
-        TransactionDispatcher.commit
-        expect(History.last).to have_attributes(
-          history_type_id: History::Type.find_by(name: 'removed').id,
-          o_id:            ticket.id,
-          sourceable:      trigger,
-          value_to:        tag,
-        )
-      end
-    end
-  end
-
-  describe 'Trigger fails to set custom timestamp on report #4677', db_strategy: :reset do
-    let(:field_name) { SecureRandom.uuid }
-    let(:ticket) { create(:ticket) }
-
-    let(:perform_static) do
-      { "ticket.#{field_name}" => { 'operator' => 'static', 'value' => '2023-07-18T06:00:00.000Z' } }
-    end
-    let(:perform_relative) do
-      { "ticket.#{field_name}"=>{ 'operator' => 'relative', 'value' => '1', 'range' => 'day' } }
-    end
-
-    before do
-      travel_to DateTime.new 2023, 0o7, 13, 10, 0o0
-    end
-
-    context 'when datetime' do
-      before do
-        create(:object_manager_attribute_datetime, object_name: 'Ticket', name: field_name, display: field_name)
-        ObjectManager::Attribute.migration_execute
-      end
-
-      context 'when static' do
-        let(:perform) { perform_static }
-
-        it 'does set the value' do
-          ticket && trigger
-          TransactionDispatcher.commit
-          expect(ticket.reload[field_name]).to eq(Time.zone.parse('2023-07-18T06:00:00.000Z'))
-        end
-      end
-
-      context 'when relative' do
-        let(:perform) { perform_relative }
-
-        it 'does set the value' do
-          ticket && trigger
-          TransactionDispatcher.commit
-          expect(ticket.reload[field_name]).to eq(1.day.from_now)
-        end
-      end
-    end
-
-    context 'when date' do
-      before do
-        create(:object_manager_attribute_date, object_name: 'Ticket', name: field_name, display: field_name)
-        ObjectManager::Attribute.migration_execute
-      end
-
-      context 'when static' do
-        let(:perform) { perform_static }
-
-        it 'does set the value' do
-          ticket && trigger
-          TransactionDispatcher.commit
-          expect(ticket.reload[field_name]).to eq(Time.zone.parse('2023-07-18'))
-        end
-      end
-
-      context 'when relative' do
-        let(:perform) { perform_relative }
-
-        it 'does set the value' do
-          ticket && trigger
-          TransactionDispatcher.commit
-          expect(ticket.reload[field_name]).to eq(1.day.from_now.to_date)
-        end
-      end
-    end
-  end
-
-  describe 'Trigger with new regular expression operators' do
-    let(:execution_condition_mode) { 'always' }
-
-    before do
-      ticket_match && ticket_no_match && trigger
-      TransactionDispatcher.commit
-    end
-
-    context 'when the title is used in the conditions' do
-      let(:perform) do
-        { 'ticket.title'=> { 'value'=> 'Changed by trigger' } }
-      end
-
-      context 'when the operator is "matches regex"' do
-        let(:ticket_match)    { create(:ticket, title: 'Welcome to Zammad') }
-        let(:ticket_no_match) { create(:ticket, title: 'Spam') }
-
-        let(:condition) do
-          { 'ticket.title' => { operator: 'matches regex', value: '^welcome' } }
-        end
-
-        it 'does execute the trigger and perform changes', :aggregate_failures do
-          expect(ticket_match.reload.title).to eq('Changed by trigger')
-          expect(ticket_no_match.reload.title).to eq('Spam')
-        end
-      end
-
-      context 'when the operator is "does not match regex"' do
-        let(:ticket_no_match) { create(:ticket, title: 'Welcome to Zammad') }
-        let(:ticket_match)    { create(:ticket, title: 'Spam') }
-
-        let(:condition) do
-          { 'ticket.title' => { operator: 'does not match regex', value: '^welcome' } }
-        end
-
-        it 'does not execute the trigger and perform no changes', :aggregate_failures do
-          expect(ticket_no_match.reload.title).to eq('Welcome to Zammad')
-          expect(ticket_match.reload.title).to eq('Changed by trigger')
-        end
-      end
-    end
-  end
-
-  describe 'Extend trigger conditions with an article accounted time entry flag #4760' do
-    let!(:ticket) { create(:ticket, state_name: 'pending reminder') }
-
-    before do
-      ticket && article && trigger
-    end
-
-    context 'when time accounting is present' do
-      let!(:article) { create(:ticket_time_accounting, :for_article, ticket: ticket) }
-
-      context 'with is set' do
-        let(:condition) do
-          { 'article.time_accounting'=> { 'operator' => 'is set' } }
-        end
-
-        it 'does trigger' do
-          expect { TransactionDispatcher.commit }.to change { ticket.reload.title }.to('triggered')
-        end
-      end
-
-      context 'with not set' do
-        let(:condition) do
-          { 'article.time_accounting'=> { 'operator' => 'not set' } }
-        end
-
-        it 'does not trigger' do
-          expect { TransactionDispatcher.commit }.to not_change { ticket.reload.title }
-        end
-      end
-    end
-
-    context 'when time accounting is blank' do
-      let!(:article) { create(:ticket_article, ticket: ticket) }
-
-      context 'with is set' do
-        let(:condition) do
-          { 'article.time_accounting'=> { 'operator' => 'is set' } }
-        end
-
-        it 'does trigger' do
-          expect { TransactionDispatcher.commit }.to not_change { ticket.reload.title }
-        end
-      end
-
-      context 'with not set' do
-        let(:condition) do
-          { 'article.time_accounting'=> { 'operator' => 'not set' } }
-        end
-
-        it 'does not trigger' do
-          expect { TransactionDispatcher.commit }.to change { ticket.reload.title }.to('triggered')
-        end
-      end
-    end
-  end
-
-  describe 'Organization is missing when used in expert mode conditions #5483' do
-    let(:conditions_orgs) { create_list(:organization, 3) }
-    let(:trigger)         { create(:trigger, condition: condition) }
-
-    context 'when old conditions' do
-      let(:condition) do
-        {
-          'ticket.organization_id' => {
-            'operator'         => 'is',
-            'pre_condition'    => 'specific',
-            'value'            => conditions_orgs.map { |row| row.id.to_s },
-            'value_completion' => ''
-          }
-        }
-      end
-
-      it 'does contain assets for the conditions' do
-        expect(trigger.assets({})[:Organization].keys.sort).to eq(conditions_orgs.map(&:id).sort)
-      end
-    end
-
-    context 'when new conditions' do
-      let(:condition) do
-        Selector::Base.migrate_selector({
-                                          'ticket.organization_id' => {
-                                            'operator'         => 'is',
-                                            'pre_condition'    => 'specific',
-                                            'value'            => conditions_orgs.map { |row| row.id.to_s },
-                                            'value_completion' => ''
-                                          }
-                                        })
-      end
-
-      it 'does contain assets for the conditions' do
-        expect(trigger.assets({})[:Organization].keys.sort).to eq(conditions_orgs.map(&:id).sort)
-      end
-    end
-  end
-
-  describe 'legacy ticket trigger tests' do
+  describe 'when recursive trigger execution is disabled' do
     before do
       described_class.destroy_all # Default DB state includes three sample triggers
       create(:email_address, name: 'Zammad', email: 'zammad@localhost') # gets auto-assigned to the sole existing group
-      Setting.set('ticket_trigger_recursive', true)
-
-      # XSS processing may run into a timeout on slow CI systems, so turn the timeout off for the test.
-      stub_const("#{HtmlSanitizer}::PROCESSING_TIMEOUT", nil)
+      Setting.set('ticket_trigger_recursive', false)
     end
 
-    it '1 basic' do # rubocop:disable RSpec/ExampleLength
-      described_class.create!(
+    it 'runs a full ticket/article lifecycle through multiple non-recursive triggers (tags, priority, and email notification) without loops', :aggregate_failures do # rubocop:disable RSpec/ExampleLength
+      described_class.create_or_update(
         name:                 'aaa loop check',
         condition:            {
           'article.subject' => {
@@ -2014,7 +27,7 @@ RSpec.describe Trigger, type: :model do
           'notification.email' => {
             'body'      => 'some lala',
             'recipient' => 'ticket_customer',
-            'subject'   => 'Thanks for your inquiry - loop check - only once (#{ticket.title})!', # rubocop:disable Lint/InterpolationCheck
+            'subject'   => 'Thanks for your inquiry - loop check (#{ticket.title})!',
           },
         },
         disable_notification: true,
@@ -2023,7 +36,7 @@ RSpec.describe Trigger, type: :model do
         updated_by_id:        1,
       )
 
-      described_class.create!(
+      described_class.create_or_update(
         name:                 'auto reply',
         condition:            {
           'ticket.action'   => {
@@ -2037,9 +50,9 @@ RSpec.describe Trigger, type: :model do
         },
         perform:              {
           'notification.email' => {
-            'body'      => 'some text<br>#{ticket.customer.lastname}<br>#{ticket.title}<br>#{article.body}', # rubocop:disable Lint/InterpolationCheck
+            'body'      => 'some text<br>#{ticket.customer.lastname}<br>#{ticket.title}<br>#{article.body}',
             'recipient' => 'ticket_customer',
-            'subject'   => 'Thanks for your inquiry (#{ticket.title})!', # rubocop:disable Lint/InterpolationCheck
+            'subject'   => 'Thanks for your inquiry (#{ticket.title})!',
           },
           'ticket.priority_id' => {
             'value' => Ticket::Priority.lookup(name: '3 high').id.to_s,
@@ -2055,7 +68,7 @@ RSpec.describe Trigger, type: :model do
         updated_by_id:        1,
       )
 
-      described_class.create!(
+      described_class.create_or_update(
         name:                 'auto tag 1',
         condition:            {
           'ticket.action'   => {
@@ -2082,7 +95,7 @@ RSpec.describe Trigger, type: :model do
         updated_by_id:        1,
       )
 
-      described_class.create!(
+      described_class.create_or_update(
         name:                 'auto tag 2',
         condition:            {
           'ticket.state_id' => {
@@ -2102,7 +115,7 @@ RSpec.describe Trigger, type: :model do
         updated_by_id:        1,
       )
 
-      described_class.create!(
+      described_class.create_or_update(
         name:                 'not matching',
         condition:            {
           'ticket.state_id' => {
@@ -2121,7 +134,7 @@ RSpec.describe Trigger, type: :model do
         updated_by_id:        1,
       )
 
-      described_class.create!(
+      described_class.create_or_update(
         name:                 'zzz last',
         condition:            {
           'article.subject' => {
@@ -2137,7 +150,7 @@ RSpec.describe Trigger, type: :model do
           'notification.email' => {
             'body'      => 'some lala',
             'recipient' => 'ticket_customer',
-            'subject'   => 'Thanks for your inquiry - 1234 check (#{ticket.title})!', # rubocop:disable Lint/InterpolationCheck
+            'subject'   => 'Thanks for your inquiry - 1234 check (#{ticket.title})!',
           },
         },
         disable_notification: true,
@@ -2182,22 +195,14 @@ RSpec.describe Trigger, type: :model do
       expect(ticket1.group.name).to eq('Users')
       expect(ticket1.state.name).to eq('new')
       expect(ticket1.priority.name).to eq('3 high')
-      expect(ticket1.articles.count).to eq(3)
-      expect(ticket1.tag_list).to eq(%w[aa kk should_not_loop abc])
-
-      article1 = ticket1.articles.second
+      expect(ticket1.articles.count).to eq(2)
+      expect(ticket1.tag_list).to eq(%w[aa kk abc])
+      article1 = ticket1.articles.last
       expect(article1.from).to include('Zammad <zammad@localhost>')
       expect(article1.to).to include('nicole.braun@zammad.org')
       expect(article1.subject).to include('Thanks for your inquiry (some <b>title</b>  äöüß)!')
       expect(article1.body).to include('Braun<br>some &lt;b&gt;title&lt;/b&gt;')
       expect(article1.body).to include('&gt; some message &lt;b&gt;note&lt;/b&gt;<br>&gt; new line')
-      expect(article1.content_type).to eq('text/html')
-
-      article1 = ticket1.articles.last
-      expect(article1.from).to include('Zammad <zammad@localhost>')
-      expect(article1.to).to include('nicole.braun@zammad.org')
-      expect(article1.subject).to include('Thanks for your inquiry - loop check - only once (some <b>title</b>  äöüß)!')
-      expect(article1.body).to include('some lala')
       expect(article1.content_type).to eq('text/html')
 
       ticket1.priority = Ticket::Priority.lookup(name: '2 normal')
@@ -2209,8 +214,8 @@ RSpec.describe Trigger, type: :model do
       expect(ticket1.group.name).to eq('Users')
       expect(ticket1.state.name).to eq('new')
       expect(ticket1.priority.name).to eq('2 normal')
-      expect(ticket1.articles.count).to eq(3)
-      expect(ticket1.tag_list).to eq(%w[aa kk should_not_loop abc])
+      expect(ticket1.articles.count).to eq(2)
+      expect(ticket1.tag_list).to eq(%w[aa kk abc])
 
       ticket1.state = Ticket::State.lookup(name: 'open')
       ticket1.save!
@@ -2222,8 +227,8 @@ RSpec.describe Trigger, type: :model do
       expect(ticket1.group.name).to eq('Users')
       expect(ticket1.state.name).to eq('open')
       expect(ticket1.priority.name).to eq('2 normal')
-      expect(ticket1.articles.count).to eq(3)
-      expect(ticket1.tag_list).to eq(%w[aa kk should_not_loop abc])
+      expect(ticket1.articles.count).to eq(2)
+      expect(ticket1.tag_list).to eq(%w[aa kk abc])
 
       ticket1.state = Ticket::State.lookup(name: 'new')
       ticket1.save!
@@ -2235,8 +240,8 @@ RSpec.describe Trigger, type: :model do
       expect(ticket1.group.name).to eq('Users')
       expect(ticket1.state.name).to eq('new')
       expect(ticket1.priority.name).to eq('3 high')
-      expect(ticket1.articles.count).to eq(3)
-      expect(ticket1.tag_list).to eq(%w[aa should_not_loop abc])
+      expect(ticket1.articles.count).to eq(2)
+      expect(ticket1.tag_list).to eq(%w[aa abc])
 
       ticket2 = Ticket.create!(
         title:         "some title\n äöüß",
@@ -2303,8 +308,8 @@ RSpec.describe Trigger, type: :model do
       expect(ticket3.group.name).to eq('Users')
       expect(ticket3.state.name).to eq('new')
       expect(ticket3.priority.name).to eq('3 high')
-      expect(ticket3.articles.count).to eq(4)
-      expect(ticket3.tag_list).to eq(%w[aa kk should_not_loop abc article_create_trigger])
+      expect(ticket3.articles.count).to eq(3)
+      expect(ticket3.tag_list).to eq(%w[aa kk abc article_create_trigger])
       article3 = ticket3.articles[1]
       expect(article3.from).to include('Zammad <zammad@localhost>')
       expect(article3.to).to include('nicole.braun@zammad.org')
@@ -2316,14 +321,8 @@ RSpec.describe Trigger, type: :model do
       article3 = ticket3.articles[2]
       expect(article3.from).to include('Zammad <zammad@localhost>')
       expect(article3.to).to include('nicole.braun@zammad.org')
-      expect(article3.subject).to include('Thanks for your inquiry - loop check - only once (some <b>title</b>')
-      expect(article3.body).to include('some lala')
+      expect(article3.subject).to include('Thanks for your inquiry - 1234 check (some <b>title</b>  äöüß3)!')
       expect(article3.content_type).to eq('text/html')
-      article4 = ticket3.articles[3]
-      expect(article4.from).to include('Zammad <zammad@localhost>')
-      expect(article4.to).to include('nicole.braun@zammad.org')
-      expect(article4.subject).to include('Thanks for your inquiry - 1234 check (some <b>title</b>  äöüß3)!')
-      expect(article4.content_type).to eq('text/html')
 
       Ticket::Article.create!(
         ticket_id:     ticket3.id,
@@ -2347,8 +346,8 @@ RSpec.describe Trigger, type: :model do
       expect(ticket3.group.name).to eq('Users')
       expect(ticket3.state.name).to eq('new')
       expect(ticket3.priority.name).to eq('3 high')
-      expect(ticket3.articles.count).to eq(5)
-      expect(ticket3.tag_list).to eq(%w[aa should_not_loop abc article_create_trigger])
+      expect(ticket3.articles.count).to eq(4)
+      expect(ticket3.tag_list).to eq(%w[aa abc article_create_trigger])
 
       Ticket::Article.create!(
         ticket_id:     ticket3.id,
@@ -2372,8 +371,8 @@ RSpec.describe Trigger, type: :model do
       expect(ticket3.group.name).to eq('Users')
       expect(ticket3.state.name).to eq('new')
       expect(ticket3.priority.name).to eq('3 high')
-      expect(ticket3.articles.count).to eq(6)
-      expect(ticket3.tag_list).to eq(%w[aa should_not_loop abc article_create_trigger])
+      expect(ticket3.articles.count).to eq(5)
+      expect(ticket3.tag_list).to eq(%w[aa abc article_create_trigger])
 
       Ticket::Article.create!(
         ticket_id:     ticket3.id,
@@ -2397,12 +396,12 @@ RSpec.describe Trigger, type: :model do
       expect(ticket3.group.name).to eq('Users')
       expect(ticket3.state.name).to eq('new')
       expect(ticket3.priority.name).to eq('3 high')
-      expect(ticket3.articles.count).to eq(9)
-      expect(ticket3.tag_list).to eq(%w[aa should_not_loop abc article_create_trigger])
+      expect(ticket3.articles.count).to eq(7)
+      expect(ticket3.tag_list).to eq(%w[aa abc article_create_trigger])
     end
 
-    it '2 actions - create' do # rubocop:disable RSpec/ExampleLength
-      described_class.create!(
+    it 'only executes a trigger scoped to the create action when a ticket is created, not on later updates', :aggregate_failures do # rubocop:disable RSpec/ExampleLength
+      described_class.create_or_update(
         name:                 'auto reply',
         condition:            {
           'ticket.action'   => {
@@ -2494,8 +493,8 @@ RSpec.describe Trigger, type: :model do
       expect(ticket1.articles.count).to eq(1)
     end
 
-    it '2 actions - update' do # rubocop:disable RSpec/ExampleLength
-      described_class.create!(
+    it 'only executes a trigger scoped to the update action when a ticket is updated, not on creation', :aggregate_failures do # rubocop:disable RSpec/ExampleLength
+      described_class.create_or_update(
         name:                 'auto reply',
         condition:            {
           'ticket.action'   => {
@@ -2581,9 +580,9 @@ RSpec.describe Trigger, type: :model do
       expect(ticket1.articles.count).to eq(1)
     end
 
-    it '3 auto replys' do # rubocop:disable RSpec/ExampleLength
+    it 'sends auto-reply notifications for new tickets and customer follow-ups while respecting Precedence and abuse headers', :aggregate_failures do # rubocop:disable RSpec/ExampleLength
       roles = Role.where(name: 'Customer')
-      User.create!(
+      User.create_or_update(
         login:         'postmaster@example.com',
         firstname:     'Trigger',
         lastname:      'Customer1',
@@ -2595,7 +594,7 @@ RSpec.describe Trigger, type: :model do
         updated_by_id: 1,
         created_by_id: 1,
       )
-      User.create!(
+      User.create_or_update(
         login:           'ticket-auto-reply-customer2@example.com',
         firstname:       'Trigger',
         lastname:        'Customer2',
@@ -2609,7 +608,7 @@ RSpec.describe Trigger, type: :model do
         created_by_id:   1,
       )
 
-      described_class.create!(
+      described_class.create_or_update(
         name:                 'auto reply - new ticket',
         condition:            {
           'ticket.action'   => {
@@ -2631,7 +630,6 @@ RSpec.describe Trigger, type: :model do
         },
         perform:              {
           'notification.email' => {
-            # rubocop:disable Lint/InterpolationCheck
             'body'      => '<p>Your request (Ticket##{ticket.number}) has been received and will be reviewed by our support staff.<p>
 <br/>
 <p>To provide additional information, please reply to this email or click on the following link:
@@ -2639,9 +637,8 @@ RSpec.describe Trigger, type: :model do
 </p>
 <br/>
 <p><i><a href="http://zammad.com">Zammad</a>, your customer support system</i></p>',
-            # rubocop:enable Lint/InterpolationCheck
             'recipient' => 'ticket_customer',
-            'subject'   => 'Thanks for your inquiry (#{ticket.title})', # rubocop:disable Lint/InterpolationCheck
+            'subject'   => 'Thanks for your inquiry (#{ticket.title})',
           },
         },
         disable_notification: true,
@@ -2650,7 +647,7 @@ RSpec.describe Trigger, type: :model do
         updated_by_id:        1,
       )
 
-      described_class.create!(
+      described_class.create_or_update(
         name:          'auto reply (on follow-up of tickets)',
         condition:     {
           'ticket.action'     => {
@@ -2672,7 +669,6 @@ RSpec.describe Trigger, type: :model do
         },
         perform:       {
           'notification.email' => {
-            # rubocop:disable Lint/InterpolationCheck
             'body'      => '<p>Your follow-up for (#{config.ticket_hook}##{ticket.number}) has been received and will be reviewed by our support staff.<p>
 <br/>
 <p>To provide additional information, please reply to this email or click on the following link:
@@ -2680,9 +676,8 @@ RSpec.describe Trigger, type: :model do
 </p>
 <br/>
 <p><i><a href="http://zammad.com">Zammad</a>, your customer support system</i></p>',
-            # rubocop:enable Lint/InterpolationCheck
             'recipient' => 'ticket_customer',
-            'subject'   => 'Thanks for your follow-up (#{ticket.title})', # rubocop:disable Lint/InterpolationCheck
+            'subject'   => 'Thanks for your follow-up (#{ticket.title})',
           },
         },
         active:        true,
@@ -2690,7 +685,7 @@ RSpec.describe Trigger, type: :model do
         updated_by_id: 1,
       )
 
-      described_class.create!(
+      described_class.create_or_update(
         name:                 'not matching',
         condition:            {
           'ticket.action'   => {
@@ -2704,9 +699,9 @@ RSpec.describe Trigger, type: :model do
         },
         perform:              {
           'notification.email' => {
-            'body'      => '2some text<br>#{ticket.customer.lastname}<br>#{ticket.title}', # rubocop:disable Lint/InterpolationCheck
+            'body'      => '2some text<br>#{ticket.customer.lastname}<br>#{ticket.title}',
             'recipient' => 'ticket_customer',
-            'subject'   => '2Thanks for your inquiry (#{ticket.title})!', # rubocop:disable Lint/InterpolationCheck
+            'subject'   => '2Thanks for your inquiry (#{ticket.title})!',
           },
         },
         disable_notification: true,
@@ -2729,7 +724,7 @@ RSpec.describe Trigger, type: :model do
       expect(article_p.body).not_to include('config\.')
       expect(article_p.body).to include('http://zammad.example.com')
       expect(article_p.body).not_to include('ticket.')
-      expect(article_p.body).to include(ticket_p.number)
+      expect(article_p.body).to match(ticket_p.number)
       expect(article_p.content_type).to eq('text/html')
 
       ticket_p.priority = Ticket::Priority.lookup(name: '2 normal')
@@ -2807,7 +802,7 @@ RSpec.describe Trigger, type: :model do
       expect(article_p.body).not_to include('config\.')
       expect(article_p.body).to include('http://zammad.example.com')
       expect(article_p.body).not_to include('ticket.')
-      expect(article_p.body).to include(ticket_p.number)
+      expect(article_p.body).to match(ticket_p.number)
       expect(article_p.content_type).to eq('text/html')
 
       ticket_p.state = Ticket::State.lookup(name: 'open')
@@ -2838,45 +833,34 @@ RSpec.describe Trigger, type: :model do
       expect(article_p.body).not_to include('config\.')
       expect(article_p.body).to include('http://zammad.example.com')
       expect(article_p.body).not_to include('ticket.')
-      expect(article_p.body).to include(ticket_p.number)
+      expect(article_p.body).to match(ticket_p.number)
       expect(article_p.content_type).to eq('text/html')
 
       # process mail without Precedence header
       content = Rails.root.join('test/data/ticket_trigger/mail1.box').read
-      ticket_p1, _article_p1, _user_p1, _mail = Channel::EmailParser.new.process({}, content)
+      ticket_p, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, content)
 
-      expect(ticket_p1.id).not_to eq(ticket_p.id)
-      expect(ticket_p1.state.name).to eq('new')
-      expect(ticket_p1.articles.count).to eq(2)
+      expect(ticket_p.state.name).to eq('new')
+      expect(ticket_p.articles.count).to eq(2)
 
       # process mail with Precedence header (no auto response)
       content = Rails.root.join('test/data/ticket_trigger/mail2.box').read
-      ticket_p2, _article_p2, _user_p2, _mail = Channel::EmailParser.new.process({}, content)
+      ticket_p, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, content)
 
-      expect(ticket_p1.id).not_to eq(ticket_p.id)
-      expect(ticket_p2.id).not_to eq(ticket_p.id)
-      expect(ticket_p2.id).not_to eq(ticket_p1.id)
-      expect(ticket_p2.state.name).to eq('new')
-      expect(ticket_p2.articles.count).to eq(1)
+      expect(ticket_p.state.name).to eq('new')
+      expect(ticket_p.articles.count).to eq(1)
 
       # process mail with abuse@ (no auto response)
       content = Rails.root.join('test/data/ticket_trigger/mail3.box').read
-      ticket_p3, _article_p3, _user_p3, _mail = Channel::EmailParser.new.process({}, content)
+      ticket_p, _article_p, _user_p, _mail = Channel::EmailParser.new.process({}, content)
 
-      expect(ticket_p1.id).not_to eq(ticket_p.id)
-      expect(ticket_p2.id).not_to eq(ticket_p.id)
-      expect(ticket_p3.id).not_to eq(ticket_p.id)
-      expect(ticket_p2.id).not_to eq(ticket_p1.id)
-      expect(ticket_p3.id).not_to eq(ticket_p1.id)
-      expect(ticket_p1.id).not_to eq(ticket_p2.id)
-      expect(ticket_p3.id).not_to eq(ticket_p2.id)
-      expect(ticket_p3.state.name).to eq('new')
-      expect(ticket_p3.articles.count).to eq(1)
+      expect(ticket_p.state.name).to eq('new')
+      expect(ticket_p.articles.count).to eq(1)
     end
 
-    it '4 has changed' do # rubocop:disable RSpec/ExampleLength
+    it 'fires an owner-changed trigger based on a \'has changed\' pre-condition combined with additional matching conditions', :aggregate_failures do # rubocop:disable RSpec/ExampleLength
       roles = Role.where(name: 'Customer')
-      User.create!(
+      User.create_or_update(
         login:         'postmaster@example.com',
         firstname:     'Trigger',
         lastname:      'Customer1',
@@ -2888,7 +872,7 @@ RSpec.describe Trigger, type: :model do
         updated_by_id: 1,
         created_by_id: 1,
       )
-      User.create!(
+      User.create_or_update(
         login:           'ticket-has-changed-customer2@example.com',
         firstname:       'Trigger',
         lastname:        'Customer2',
@@ -2903,7 +887,7 @@ RSpec.describe Trigger, type: :model do
       )
       groups = Group.where(name: 'Users')
       roles = Role.where(name: 'Agent')
-      agent1 = User.create!(
+      agent1 = User.create_or_update(
         login:         'agent-has-changed@example.com',
         firstname:     'Has Changed',
         lastname:      'Agent1',
@@ -2916,7 +900,7 @@ RSpec.describe Trigger, type: :model do
         updated_by_id: 1,
         created_by_id: 1,
       )
-      described_class.create!(
+      described_class.create_or_update(
         name:                 'owner update - to customer',
         condition:            {
           'ticket.owner_id' => {
@@ -2928,7 +912,6 @@ RSpec.describe Trigger, type: :model do
         },
         perform:              {
           'notification.email' => {
-            # rubocop:disable Lint/InterpolationCheck
             'body'      => '<p>The owner of ticket (Ticket##{ticket.number}) has changed.<p>
 <br/>
 <p>To provide additional information, please reply to this email or click on the following link:
@@ -2936,9 +919,8 @@ RSpec.describe Trigger, type: :model do
 </p>
 <br/>
 <p><i><a href="http://zammad.com">Zammad</a>, your customer support system</i></p>',
-            # rubocop:enable Lint/InterpolationCheck
             'recipient' => 'ticket_customer',
-            'subject'   => 'Owner has changed (#{ticket.title})', # rubocop:disable Lint/InterpolationCheck
+            'subject'   => 'Owner has changed (#{ticket.title})',
           },
         },
         disable_notification: true,
@@ -2955,7 +937,6 @@ RSpec.describe Trigger, type: :model do
       expect(ticket_p.group.name).to eq('Users')
       expect(ticket_p.state.name).to eq('new')
       expect(ticket_p.articles.count).to eq(1)
-      ticket_p.articles.last
 
       TransactionDispatcher.commit
 
@@ -2976,7 +957,7 @@ RSpec.describe Trigger, type: :model do
       expect(article_p.body).not_to include('config\.')
       expect(article_p.body).to include('http://zammad.example.com')
       expect(article_p.body).not_to include('ticket.')
-      expect(article_p.body).to include(ticket_p.number)
+      expect(article_p.body).to match(ticket_p.number)
       expect(article_p.content_type).to eq('text/html')
 
       described_class.create_or_update(
@@ -2995,7 +976,6 @@ RSpec.describe Trigger, type: :model do
         },
         perform:              {
           'notification.email' => {
-            # rubocop:disable Lint/InterpolationCheck
             'body'      => '<p>The owner of ticket (Ticket##{ticket.number}) has changed.<p>
 <br/>
 <p>To provide additional information, please reply to this email or click on the following link:
@@ -3003,9 +983,8 @@ RSpec.describe Trigger, type: :model do
 </p>
 <br/>
 <p><i><a href="http://zammad.com">Zammad</a>, your customer support system</i></p>',
-            # rubocop:enable Lint/InterpolationCheck
             'recipient' => 'ticket_customer',
-            'subject'   => 'Owner has changed (#{ticket.title})', # rubocop:disable Lint/InterpolationCheck
+            'subject'   => 'Owner has changed (#{ticket.title})',
           },
         },
         disable_notification: true,
@@ -3057,7 +1036,7 @@ RSpec.describe Trigger, type: :model do
       expect(article_p.body).not_to include('config\.')
       expect(article_p.body).to include('http://zammad.example.com')
       expect(article_p.body).not_to include('ticket.')
-      expect(article_p.body).to include(ticket_p.number)
+      expect(article_p.body).to match(ticket_p.number)
       expect(article_p.content_type).to eq('text/html')
 
       # should trigger
@@ -3081,7 +1060,6 @@ RSpec.describe Trigger, type: :model do
         },
         perform:              {
           'notification.email' => {
-            # rubocop:disable Lint/InterpolationCheck
             'body'      => '<p>The owner of ticket (Ticket##{ticket.number}) has changed.<p>
 <br/>
 <p>To provide additional information, please reply to this email or click on the following link:
@@ -3089,9 +1067,8 @@ RSpec.describe Trigger, type: :model do
 </p>
 <br/>
 <p><i><a href="http://zammad.com">Zammad</a>, your customer support system</i></p>',
-            # rubocop:enable Lint/InterpolationCheck
             'recipient' => 'ticket_customer',
-            'subject'   => 'Owner has changed (#{ticket.title})', # rubocop:disable Lint/InterpolationCheck
+            'subject'   => 'Owner has changed (#{ticket.title})',
           },
         },
         disable_notification: true,
@@ -3142,7 +1119,7 @@ RSpec.describe Trigger, type: :model do
       expect(article_p.body).not_to include('config\.')
       expect(article_p.body).to include('http://zammad.example.com')
       expect(article_p.body).not_to include('ticket.')
-      expect(article_p.body).to include(ticket_p.number)
+      expect(article_p.body).to match(ticket_p.number)
       expect(article_p.content_type).to eq('text/html')
 
       # should not trigger
@@ -3162,7 +1139,6 @@ RSpec.describe Trigger, type: :model do
         },
         perform:              {
           'notification.email' => {
-            # rubocop:disable Lint/InterpolationCheck
             'body'      => '<p>The owner of ticket (Ticket##{ticket.number}) has changed.<p>
 <br/>
 <p>To provide additional information, please reply to this email or click on the following link:
@@ -3170,9 +1146,8 @@ RSpec.describe Trigger, type: :model do
 </p>
 <br/>
 <p><i><a href="http://zammad.com">Zammad</a>, your customer support system</i></p>',
-            # rubocop:enable Lint/InterpolationCheck
             'recipient' => 'ticket_customer',
-            'subject'   => 'Owner has changed (#{ticket.title})', # rubocop:disable Lint/InterpolationCheck
+            'subject'   => 'Owner has changed (#{ticket.title})',
           },
         },
         disable_notification: true,
@@ -3197,8 +1172,8 @@ RSpec.describe Trigger, type: :model do
       expect(ticket_p.articles.count).to eq(1)
     end
 
-    it '5 notify owner' do
-      described_class.create!(
+    it 'notifies the ticket owner on eligible updates without triggering itself recursively', :aggregate_failures do
+      described_class.create_or_update(
         name:                 'aaa notify mail',
         condition:            {
           'ticket.state_id' => {
@@ -3214,7 +1189,7 @@ RSpec.describe Trigger, type: :model do
           'notification.email' => {
             'body'      => 'some lala',
             'recipient' => 'ticket_owner',
-            'subject'   => 'CC NOTE (#{ticket.title})!', # rubocop:disable Lint/InterpolationCheck
+            'subject'   => 'CC NOTE (#{ticket.title})!',
           },
         },
         disable_notification: true,
@@ -3224,7 +1199,7 @@ RSpec.describe Trigger, type: :model do
       )
       groups = Group.where(name: 'Users')
       roles = Role.where(name: 'Agent')
-      agent = User.create!(
+      agent = User.create_or_update(
         login:         'agent@example.com',
         firstname:     'Trigger',
         lastname:      'Agent1',
@@ -3288,7 +1263,7 @@ RSpec.describe Trigger, type: :model do
 
       expect(ticket1.articles.count).to eq(3)
 
-      described_class.create!(
+      described_class.create_or_update(
         name:                 'aaa notify mail 2',
         condition:            {
           'ticket.state_id' => {
@@ -3304,7 +1279,7 @@ RSpec.describe Trigger, type: :model do
           'notification.email' => {
             'body'      => 'some lala',
             'recipient' => 'ticket_owner',
-            'subject'   => 'CC NOTE (#{ticket.title})!', # rubocop:disable Lint/InterpolationCheck
+            'subject'   => 'CC NOTE (#{ticket.title})!',
           },
         },
         disable_notification: true,
@@ -3332,8 +1307,8 @@ RSpec.describe Trigger, type: :model do
       expect(ticket1.articles.count).to eq(6)
     end
 
-    it '6 owner auto assignment' do # rubocop:disable RSpec/ExampleLength
-      described_class.create!(
+    it 'automatically assigns the ticket owner to the current user on update, based on a not-set pre-condition', :aggregate_failures do # rubocop:disable RSpec/ExampleLength
+      described_class.create_or_update(
         name:                 'aaa auto assignment',
         condition:            {
           'ticket.owner_id' => {
@@ -3361,7 +1336,7 @@ RSpec.describe Trigger, type: :model do
       )
       groups = Group.where(name: 'Users')
       roles = Role.where(name: 'Agent')
-      agent = User.create!(
+      agent = User.create_or_update(
         login:         'agent@example.com',
         firstname:     'Trigger',
         lastname:      'Agent1',
@@ -3446,8 +1421,8 @@ RSpec.describe Trigger, type: :model do
 
     end
 
-    it '6.1 owner auto assignment based on organization' do # rubocop:disable RSpec/ExampleLength
-      described_class.create!(
+    it 'automatically assigns the owner to the current user based on the ticket having an organization set', :aggregate_failures do # rubocop:disable RSpec/ExampleLength
+      described_class.create_or_update(
         name:                 'aaa auto assignment',
         condition:            {
           'ticket.organization_id' => {
@@ -3475,7 +1450,7 @@ RSpec.describe Trigger, type: :model do
       )
       roles = Role.where(name: 'Agent')
       groups = Group.where(name: 'Users')
-      agent = User.create!(
+      agent = User.create_or_update(
         login:         'agent@example.com',
         firstname:     'Trigger',
         lastname:      'Agent1',
@@ -3488,7 +1463,7 @@ RSpec.describe Trigger, type: :model do
         created_by_id: 1,
       )
       roles = Role.where(name: 'Customer')
-      customer = User.create!(
+      customer = User.create_or_update(
         login:         'customer@example.com',
         firstname:     'Trigger',
         lastname:      'Customer1',
@@ -3559,8 +1534,8 @@ RSpec.describe Trigger, type: :model do
       expect(ticket1.tag_list).to eq([])
     end
 
-    it '6.2 owner auto assignment based on organization' do # rubocop:disable RSpec/ExampleLength
-      described_class.create!(
+    it 'automatically assigns the owner to the current user based on the ticket having no organization set', :aggregate_failures do # rubocop:disable RSpec/ExampleLength
+      described_class.create_or_update(
         name:                 'aaa auto assignment',
         condition:            {
           'ticket.organization_id' => {
@@ -3588,7 +1563,7 @@ RSpec.describe Trigger, type: :model do
       )
       groups = Group.where(name: 'Users')
       roles = Role.where(name: 'Agent')
-      agent = User.create!(
+      agent = User.create_or_update(
         login:         'agent@example.com',
         firstname:     'Trigger',
         lastname:      'Agent1',
@@ -3601,7 +1576,7 @@ RSpec.describe Trigger, type: :model do
         created_by_id: 1,
       )
       roles = Role.where(name: 'Customer')
-      customer = User.create!(
+      customer = User.create_or_update(
         login:         'customer@example.com',
         firstname:     'Trigger',
         lastname:      'Customer1',
@@ -3672,8 +1647,8 @@ RSpec.describe Trigger, type: :model do
       expect(ticket1.tag_list).to eq([])
     end
 
-    it '7 owner auto assignment' do # rubocop:disable RSpec/ExampleLength
-      described_class.create!(
+    it 'automatically assigns the owner based on article sender/type conditions and re-assigns correctly when the owner changes again', :aggregate_failures do # rubocop:disable RSpec/ExampleLength
+      described_class.create_or_update(
         name:                 'aaa auto assignment',
         condition:            {
           'ticket.owner_id'   => {
@@ -3705,7 +1680,7 @@ RSpec.describe Trigger, type: :model do
       )
       groups = Group.where(name: 'Users')
       roles = Role.where(name: 'Agent')
-      agent1 = User.create!(
+      agent1 = User.create_or_update(
         login:         'agent@example.com',
         firstname:     'Trigger',
         lastname:      'Agent1',
@@ -3717,11 +1692,11 @@ RSpec.describe Trigger, type: :model do
         updated_by_id: 1,
         created_by_id: 1,
       )
-      agent2 = User.create!(
-        login:         'agent2@example.com',
+      agent2 = User.create_or_update(
+        login:         'agent@example.com',
         firstname:     'Trigger',
         lastname:      'Agent2',
-        email:         'agent2@example.com',
+        email:         'agent@example.com',
         password:      'agentpw',
         active:        true,
         roles:         roles,
@@ -3858,15 +1833,15 @@ RSpec.describe Trigger, type: :model do
       ticket1.reload
       expect(ticket1.title).to eq('test 123')
       expect(ticket1.group.name).to eq('Users')
-      expect(ticket1.owner_id).to eq(agent2.id)
+      expect(ticket1.owner_id).to eq(agent1.id)
       expect(ticket1.state.name).to eq('new')
       expect(ticket1.priority.name).to eq('2 normal')
       expect(ticket1.articles.count).to eq(4)
       expect(ticket1.tag_list).to eq([])
     end
 
-    it '8 owner auto assignment' do # rubocop:disable RSpec/ExampleLength
-      described_class.create!(
+    it 'automatically assigns the owner when the ticket priority has changed and a not-set owner pre-condition matches', :aggregate_failures do # rubocop:disable RSpec/ExampleLength
+      described_class.create_or_update(
         name:                 'aaa auto assignment',
         condition:            {
           'ticket.owner_id'    => {
@@ -3900,7 +1875,7 @@ RSpec.describe Trigger, type: :model do
       )
       groups = Group.where(name: 'Users')
       roles = Role.where(name: 'Agent')
-      agent = User.create!(
+      agent = User.create_or_update(
         login:         'agent@example.com',
         firstname:     'Trigger',
         lastname:      'Agent1',
@@ -4015,8 +1990,8 @@ RSpec.describe Trigger, type: :model do
       expect(ticket1.tag_list).to eq([])
     end
 
-    it '9 vip priority set' do # rubocop:disable RSpec/ExampleLength
-      described_class.create!(
+    it 'raises ticket priority when the customer is VIP, and leaves priority unaffected for non-VIP customers', :aggregate_failures do # rubocop:disable RSpec/ExampleLength
+      described_class.create_or_update(
         name:                 'aaa vip priority',
         condition:            {
           'customer.vip' => {
@@ -4036,7 +2011,7 @@ RSpec.describe Trigger, type: :model do
       )
       groups = Group.where(name: 'Users')
       roles = Role.where(name: 'Agent')
-      agent = User.create!(
+      agent = User.create_or_update(
         login:         'agent@example.com',
         firstname:     'Trigger',
         lastname:      'Agent1',
@@ -4049,7 +2024,7 @@ RSpec.describe Trigger, type: :model do
         created_by_id: 1,
       )
       roles = Role.where(name: 'Customer')
-      customer = User.create!(
+      customer = User.create_or_update(
         login:         'customer@example.com',
         firstname:     'Trigger',
         lastname:      'Customer1',
@@ -4153,8 +2128,8 @@ RSpec.describe Trigger, type: :model do
 
     end
 
-    it '10 owner auto assignment notify to customer' do # rubocop:disable RSpec/ExampleLength
-      described_class.create!(
+    it 'notifies the customer whenever the ticket owner changes to a specific value', :aggregate_failures do # rubocop:disable RSpec/ExampleLength
+      described_class.create_or_update(
         name:                 'aaa auto assignment',
         condition:            {
           'ticket.owner_id' => {
@@ -4168,7 +2143,7 @@ RSpec.describe Trigger, type: :model do
           'notification.email' => {
             'body'      => 'some lala',
             'recipient' => 'ticket_customer',
-            'subject'   => 'NEW OWNER (#{ticket.title})!', # rubocop:disable Lint/InterpolationCheck
+            'subject'   => 'NEW OWNER (#{ticket.title})!',
           },
         },
         disable_notification: true,
@@ -4178,7 +2153,7 @@ RSpec.describe Trigger, type: :model do
       )
       groups = Group.where(name: 'Users')
       roles = Role.where(name: 'Agent')
-      agent1 = User.create!(
+      agent1 = User.create_or_update(
         login:         'agent1@example.com',
         firstname:     'Trigger',
         lastname:      'Agent1',
@@ -4190,7 +2165,7 @@ RSpec.describe Trigger, type: :model do
         updated_by_id: 1,
         created_by_id: 1,
       )
-      agent2 = User.create!(
+      agent2 = User.create_or_update(
         login:         'agent2@example.com',
         firstname:     'Trigger',
         lastname:      'Agent2',
@@ -4280,8 +2255,8 @@ RSpec.describe Trigger, type: :model do
 
     end
 
-    it '11 notify to customer on public note' do # rubocop:disable RSpec/ExampleLength
-      described_class.create!(
+    it 'notifies the customer only for public (non-internal) agent notes, not internal notes or customer articles', :aggregate_failures do # rubocop:disable RSpec/ExampleLength
+      described_class.create_or_update(
         name:                 'aaa notify to customer on public note',
         condition:            {
           'article.internal'  => {
@@ -4303,7 +2278,7 @@ RSpec.describe Trigger, type: :model do
           'notification.email' => {
             'body'      => 'some lala',
             'recipient' => 'ticket_customer',
-            'subject'   => 'UPDATE (#{ticket.title})!', # rubocop:disable Lint/InterpolationCheck
+            'subject'   => 'UPDATE (#{ticket.title})!',
           },
         },
         disable_notification: true,
@@ -4313,7 +2288,7 @@ RSpec.describe Trigger, type: :model do
       )
       groups = Group.where(name: 'Users')
       roles = Role.where(name: 'Agent')
-      agent = User.create!(
+      agent = User.create_or_update(
         login:         'agent@example.com',
         firstname:     'Trigger',
         lastname:      'Agent1',
@@ -4326,7 +2301,7 @@ RSpec.describe Trigger, type: :model do
         created_by_id: 1,
       )
       roles = Role.where(name: 'Customer')
-      customer = User.create!(
+      customer = User.create_or_update(
         login:         'customer@example.com',
         firstname:     'Trigger',
         lastname:      'Customer1',
@@ -4490,8 +2465,8 @@ RSpec.describe Trigger, type: :model do
       expect(ticket1.tag_list).to eq([])
     end
 
-    it '12 notify on owner change' do # rubocop:disable RSpec/ExampleLength
-      described_class.create!(
+    it 'notifies the customer on owner change while auto-replying to new and follow-up customer articles', :aggregate_failures do # rubocop:disable RSpec/ExampleLength
+      described_class.create_or_update(
         name:                 'aaa notify to customer on public note',
         condition:            {
           'ticket.owner_id' => {
@@ -4505,7 +2480,7 @@ RSpec.describe Trigger, type: :model do
           'notification.email' => {
             'body'      => 'some lala',
             'recipient' => 'ticket_customer',
-            'subject'   => 'UPDATE (#{ticket.title})!', # rubocop:disable Lint/InterpolationCheck
+            'subject'   => 'UPDATE (#{ticket.title})!',
           },
         },
         disable_notification: true,
@@ -4513,7 +2488,7 @@ RSpec.describe Trigger, type: :model do
         created_by_id:        1,
         updated_by_id:        1,
       )
-      described_class.create!(
+      described_class.create_or_update(
         name:          'auto reply (on new tickets)',
         condition:     {
           'ticket.action'     => {
@@ -4539,7 +2514,6 @@ RSpec.describe Trigger, type: :model do
         },
         perform:       {
           'notification.email' => {
-            # rubocop:disable Lint/InterpolationCheck
             'body'      => '<div>Your request <b>(#{config.ticket_hook}#{ticket.number})</b> has been received and will be reviewed by our support staff.</div>
     <br/>
     <div>To provide additional information, please reply to this email or click on the following link (for initial login, please request a new password):
@@ -4549,16 +2523,15 @@ RSpec.describe Trigger, type: :model do
     <div>Your #{config.product_name} Team</div>
     <br/>
     <div><i><a href="https://zammad.com">Zammad</a>, your customer support system</i></div>',
-            # rubocop:enable Lint/InterpolationCheck
             'recipient' => 'ticket_customer',
-            'subject'   => 'Thanks for your inquiry (#{ticket.title})', # rubocop:disable Lint/InterpolationCheck
+            'subject'   => 'Thanks for your inquiry (#{ticket.title})',
           },
         },
         active:        true,
         created_by_id: 1,
         updated_by_id: 1,
       )
-      described_class.create!(
+      described_class.create_or_update(
         name:          'auto reply (on follow-up of tickets)',
         condition:     {
           'ticket.action'     => {
@@ -4580,7 +2553,6 @@ RSpec.describe Trigger, type: :model do
         },
         perform:       {
           'notification.email' => {
-            # rubocop:disable Lint/InterpolationCheck
             'body'      => '<div>Your follow-up for <b>(#{config.ticket_hook}#{ticket.number})</b> has been received and will be reviewed by our support staff.</div>
     <br/>
     <div>To provide additional information, please reply to this email or click on the following link:
@@ -4590,9 +2562,8 @@ RSpec.describe Trigger, type: :model do
     <div>Your #{config.product_name} Team</div>
     <br/>
     <div><i><a href="https://zammad.com">Zammad</a>, your customer support system</i></div>',
-            # rubocop:enable Lint/InterpolationCheck
             'recipient' => 'ticket_customer',
-            'subject'   => 'Thanks for your follow-up (#{ticket.title})', # rubocop:disable Lint/InterpolationCheck
+            'subject'   => 'Thanks for your follow-up (#{ticket.title})',
           },
         },
         active:        true,
@@ -4602,7 +2573,7 @@ RSpec.describe Trigger, type: :model do
 
       groups = Group.where(name: 'Users')
       roles = Role.where(name: 'Agent')
-      agent = User.create!(
+      agent = User.create_or_update(
         login:         'agent@example.com',
         firstname:     'Trigger',
         lastname:      'Agent1',
@@ -4615,7 +2586,7 @@ RSpec.describe Trigger, type: :model do
         created_by_id: 1,
       )
       roles = Role.where(name: 'Customer')
-      customer = User.create!(
+      customer = User.create_or_update(
         login:         'customer@example.com',
         firstname:     'Trigger',
         lastname:      'Customer1',
@@ -4722,9 +2693,9 @@ RSpec.describe Trigger, type: :model do
 
     end
 
-    it '1 empty condition should not create errors' do
+    it 'raises an error when a trigger condition contains an empty value' do
       expect do
-        described_class.create!(
+        described_class.create_or_update(
           name:                 'aaa loop check',
           condition:            {
             'ticket.number' => {
@@ -4736,7 +2707,7 @@ RSpec.describe Trigger, type: :model do
             'notification.email' => {
               'body'      => 'some lala',
               'recipient' => 'ticket_customer',
-              'subject'   => 'Thanks for your inquiry - loop check (#{ticket.title})!', # rubocop:disable Lint/InterpolationCheck
+              'subject'   => 'Thanks for your inquiry - loop check (#{ticket.title})!',
             },
           },
           disable_notification: true,
@@ -4747,8 +2718,8 @@ RSpec.describe Trigger, type: :model do
       end.to raise_error(Exception)
     end
 
-    it 'article_last_sender trigger -> reply_to' do
-      described_class.create!(
+    it 'sends the \'article_last_sender\' notification to the article\'s reply_to address when present', :aggregate_failures do
+      described_class.create_or_update(
         name:                 'auto reply',
         condition:            {
           'ticket.action'   => {
@@ -4762,9 +2733,9 @@ RSpec.describe Trigger, type: :model do
         },
         perform:              {
           'notification.email' => {
-            'body'      => 'some text<br>#{ticket.customer.lastname}<br>#{ticket.title}<br>#{article.body}', # rubocop:disable Lint/InterpolationCheck
+            'body'      => 'some text<br>#{ticket.customer.lastname}<br>#{ticket.title}<br>#{article.body}',
             'recipient' => 'article_last_sender',
-            'subject'   => 'Thanks for your inquiry (#{ticket.title})!', # rubocop:disable Lint/InterpolationCheck
+            'subject'   => 'Thanks for your inquiry (#{ticket.title})!',
           },
         },
         disable_notification: true,
@@ -4804,8 +2775,8 @@ RSpec.describe Trigger, type: :model do
       expect(auto_response.to).to include('some_recipient+reply_to@example.com')
     end
 
-    it 'article_last_sender trigger -> from' do
-      described_class.create!(
+    it 'sends the \'article_last_sender\' notification to the article\'s from address when no reply_to is present', :aggregate_failures do
+      described_class.create_or_update(
         name:                 'auto reply',
         condition:            {
           'ticket.action'   => {
@@ -4819,9 +2790,9 @@ RSpec.describe Trigger, type: :model do
         },
         perform:              {
           'notification.email' => {
-            'body'      => 'some text<br>#{ticket.customer.lastname}<br>#{ticket.title}<br>#{article.body}', # rubocop:disable Lint/InterpolationCheck
+            'body'      => 'some text<br>#{ticket.customer.lastname}<br>#{ticket.title}<br>#{article.body}',
             'recipient' => 'article_last_sender',
-            'subject'   => 'Thanks for your inquiry (#{ticket.title})!', # rubocop:disable Lint/InterpolationCheck
+            'subject'   => 'Thanks for your inquiry (#{ticket.title})!',
           },
         },
         disable_notification: true,
@@ -4860,8 +2831,8 @@ RSpec.describe Trigger, type: :model do
       expect(auto_response.to).to include('some_sender+from@example.com')
     end
 
-    it 'article_last_sender trigger -> origin_by_id' do
-      described_class.create!(
+    it 'sends the \'article_last_sender\' notification to the origin_by_id user\'s email when from/reply_to are absent', :aggregate_failures do
+      described_class.create_or_update(
         name:                 'auto reply',
         condition:            {
           'ticket.action'   => {
@@ -4875,9 +2846,9 @@ RSpec.describe Trigger, type: :model do
         },
         perform:              {
           'notification.email' => {
-            'body'      => 'some text<br>#{ticket.customer.lastname}<br>#{ticket.title}<br>#{article.body}', # rubocop:disable Lint/InterpolationCheck
+            'body'      => 'some text<br>#{ticket.customer.lastname}<br>#{ticket.title}<br>#{article.body}',
             'recipient' => 'article_last_sender',
-            'subject'   => 'Thanks for your inquiry (#{ticket.title})!', # rubocop:disable Lint/InterpolationCheck
+            'subject'   => 'Thanks for your inquiry (#{ticket.title})!',
           },
         },
         disable_notification: true,
@@ -4886,7 +2857,7 @@ RSpec.describe Trigger, type: :model do
         updated_by_id:        1,
       )
       roles = Role.where(name: 'Customer')
-      customer1 = User.create!(
+      customer1 = User.create_or_update(
         login:         'customer+origin_by_id@example.com',
         firstname:     'Trigger',
         lastname:      'Customer1',
@@ -4929,8 +2900,8 @@ RSpec.describe Trigger, type: :model do
       expect(auto_response.to).to include('customer+origin_by_id@example.com')
     end
 
-    it 'article_last_sender trigger -> created_by_id' do
-      described_class.create!(
+    it 'sends the \'article_last_sender\' notification to the created_by_id user\'s email when other sender fields are absent', :aggregate_failures do
+      described_class.create_or_update(
         name:                 'auto reply',
         condition:            {
           'ticket.action'   => {
@@ -4944,9 +2915,9 @@ RSpec.describe Trigger, type: :model do
         },
         perform:              {
           'notification.email' => {
-            'body'      => 'some text<br>#{ticket.customer.lastname}<br>#{ticket.title}<br>#{article.body}', # rubocop:disable Lint/InterpolationCheck
+            'body'      => 'some text<br>#{ticket.customer.lastname}<br>#{ticket.title}<br>#{article.body}',
             'recipient' => 'article_last_sender',
-            'subject'   => 'Thanks for your inquiry (#{ticket.title})!', # rubocop:disable Lint/InterpolationCheck
+            'subject'   => 'Thanks for your inquiry (#{ticket.title})!',
           },
         },
         disable_notification: true,
@@ -4955,7 +2926,7 @@ RSpec.describe Trigger, type: :model do
         updated_by_id:        1,
       )
       roles = Role.where(name: 'Customer')
-      customer1 = User.create!(
+      customer1 = User.create_or_update(
         login:         'customer+created_by_id@example.com',
         firstname:     'Trigger',
         lastname:      'Customer1',
@@ -4997,8 +2968,8 @@ RSpec.describe Trigger, type: :model do
       expect(auto_response.to).to include('customer+created_by_id@example.com')
     end
 
-    it 'multiple recipients owner_id, article_last_sender(reply_to) trigger' do
-      described_class.create!(
+    it 'notifies both the ticket owner and the article_last_sender recipients in a single trigger', :aggregate_failures do
+      described_class.create_or_update(
         name:                 'auto reply',
         condition:            {
           'ticket.action'   => {
@@ -5012,9 +2983,9 @@ RSpec.describe Trigger, type: :model do
         },
         perform:              {
           'notification.email' => {
-            'body'      => 'some text<br>#{ticket.customer.lastname}<br>#{ticket.title}<br>#{article.body}', # rubocop:disable Lint/InterpolationCheck
+            'body'      => 'some text<br>#{ticket.customer.lastname}<br>#{ticket.title}<br>#{article.body}',
             'recipient' => %w[ticket_owner article_last_sender],
-            'subject'   => 'Thanks for your inquiry (#{ticket.title})!', # rubocop:disable Lint/InterpolationCheck
+            'subject'   => 'Thanks for your inquiry (#{ticket.title})!',
           },
         },
         disable_notification: true,
@@ -5022,7 +2993,7 @@ RSpec.describe Trigger, type: :model do
         created_by_id:        1,
         updated_by_id:        1,
       )
-      admin = User.create!(
+      admin = User.create_or_update(
         login:         'admin+owner_recipient@example.com',
         firstname:     'Role',
         lastname:      "Admin#{RSpec.current_example.description}",
@@ -5068,8 +3039,8 @@ RSpec.describe Trigger, type: :model do
       expect(auto_response.to).to include('admin+owner_recipient@example.com')
     end
 
-    it 'article_last_sender trigger -> invalid reply_to' do
-      described_class.create!(
+    it 'does not send a notification when the article\'s reply_to is not a valid email address', :aggregate_failures do
+      described_class.create_or_update(
         name:                 'auto reply',
         condition:            {
           'ticket.action'   => {
@@ -5083,9 +3054,9 @@ RSpec.describe Trigger, type: :model do
         },
         perform:              {
           'notification.email' => {
-            'body'      => 'some text<br>#{ticket.customer.lastname}<br>#{ticket.title}<br>#{article.body}', # rubocop:disable Lint/InterpolationCheck
+            'body'      => 'some text<br>#{ticket.customer.lastname}<br>#{ticket.title}<br>#{article.body}',
             'recipient' => 'article_last_sender',
-            'subject'   => 'Thanks for your inquiry (#{ticket.title})!', # rubocop:disable Lint/InterpolationCheck
+            'subject'   => 'Thanks for your inquiry (#{ticket.title})!',
           },
         },
         disable_notification: true,
@@ -5122,8 +3093,8 @@ RSpec.describe Trigger, type: :model do
       expect(ticket1.articles.count).to eq(1)
     end
 
-    it '2 loop check' do # rubocop:disable RSpec/ExampleLength
-      described_class.create!(
+    it 'does not get stuck in a notification loop when a trigger matches its own follow-up articles repeatedly, and stops after 21 iterations', :aggregate_failures do # rubocop:disable RSpec/ExampleLength
+      described_class.create_or_update(
         name:                 'aaa loop check',
         condition:            {
           'ticket.state_id'   => {
@@ -5147,7 +3118,7 @@ RSpec.describe Trigger, type: :model do
           'notification.email' => {
             'body'      => 'some lala',
             'recipient' => 'ticket_customer',
-            'subject'   => 'Thanks for your inquiry - loop check (#{ticket.title})!', # rubocop:disable Lint/InterpolationCheck
+            'subject'   => 'Thanks for your inquiry - loop check (#{ticket.title})!',
           },
         },
         disable_notification: true,
@@ -5421,8 +3392,8 @@ RSpec.describe Trigger, type: :model do
 
     end
 
-    it '3 invalid condition' do # rubocop:disable RSpec/ExampleLength
-      trigger1 = described_class.create!(
+    it 'ignores an invalid trigger condition value gracefully instead of blocking processing of other triggers', :aggregate_failures do # rubocop:disable RSpec/ExampleLength
+      trigger1 = described_class.create_or_update(
         name:                 'aaa loop check',
         condition:            {
           'ticket.action' => {
@@ -5453,7 +3424,7 @@ RSpec.describe Trigger, type: :model do
                              })
       expect(trigger1.condition['ticket.first_response_at']['value']).to eq('invalid invalid 4')
 
-      described_class.create!(
+      described_class.create_or_update(
         name:                 'auto reply',
         condition:            {
           'ticket.action'   => {
@@ -5467,9 +3438,9 @@ RSpec.describe Trigger, type: :model do
         },
         perform:              {
           'notification.email' => {
-            'body'      => 'some text<br>#{ticket.customer.lastname}<br>#{ticket.title}<br>#{article.body}', # rubocop:disable Lint/InterpolationCheck
+            'body'      => 'some text<br>#{ticket.customer.lastname}<br>#{ticket.title}<br>#{article.body}',
             'recipient' => 'ticket_customer',
-            'subject'   => 'Thanks for your inquiry (#{ticket.title})!', # rubocop:disable Lint/InterpolationCheck
+            'subject'   => 'Thanks for your inquiry (#{ticket.title})!',
           },
           'ticket.priority_id' => {
             'value' => Ticket::Priority.lookup(name: '3 high').id.to_s,
@@ -5533,8 +3504,8 @@ RSpec.describe Trigger, type: :model do
 
     end
 
-    it '4 tag based auto response' do # rubocop:disable RSpec/ExampleLength
-      described_class.create!(
+    it 'adds sender-based tags and skips the auto-reply trigger when the ticket has none of the excluded tags', :aggregate_failures do # rubocop:disable RSpec/ExampleLength
+      described_class.create_or_update(
         name:                 '100 add tag if sender 1',
         condition:            {
           'ticket.action' => {
@@ -5558,7 +3529,7 @@ RSpec.describe Trigger, type: :model do
         updated_by_id:        1,
       )
 
-      described_class.create!(
+      described_class.create_or_update(
         name:                 '200 add tag if sender 2',
         condition:            {
           'ticket.action' => {
@@ -5582,7 +3553,7 @@ RSpec.describe Trigger, type: :model do
         updated_by_id:        1,
       )
 
-      described_class.create!(
+      described_class.create_or_update(
         name:                 '300 auto reply',
         condition:            {
           'ticket.action'   => {
@@ -5601,9 +3572,9 @@ RSpec.describe Trigger, type: :model do
         },
         perform:              {
           'notification.email' => {
-            'body'      => 'some text<br>#{ticket.customer.lastname}<br>#{ticket.title}<br>#{article.body}', # rubocop:disable Lint/InterpolationCheck
+            'body'      => 'some text<br>#{ticket.customer.lastname}<br>#{ticket.title}<br>#{article.body}',
             'recipient' => 'ticket_customer',
-            'subject'   => 'Thanks for your inquiry (#{ticket.title})!', # rubocop:disable Lint/InterpolationCheck
+            'subject'   => 'Thanks for your inquiry (#{ticket.title})!',
           },
         },
         disable_notification: true,
@@ -5729,8 +3700,8 @@ RSpec.describe Trigger, type: :model do
 
     end
 
-    it 'article.body' do # rubocop:disable RSpec/ExampleLength
-      described_class.create!(
+    it 'fires or skips an auto-reply trigger based on whether the article body contains or does not contain a given string', :aggregate_failures do # rubocop:disable RSpec/ExampleLength
+      described_class.create_or_update(
         name:                 'auto reply',
         condition:            {
           'ticket.action'   => {
@@ -5748,9 +3719,9 @@ RSpec.describe Trigger, type: :model do
         },
         perform:              {
           'notification.email' => {
-            'body'      => 'some text<br>#{ticket.customer.lastname}<br>#{ticket.title}<br>#{article.body}', # rubocop:disable Lint/InterpolationCheck
+            'body'      => 'some text<br>#{ticket.customer.lastname}<br>#{ticket.title}<br>#{article.body}',
             'recipient' => 'ticket_customer',
-            'subject'   => 'Thanks for your inquiry (#{ticket.title})!', # rubocop:disable Lint/InterpolationCheck
+            'subject'   => 'Thanks for your inquiry (#{ticket.title})!',
           },
           'ticket.tags'        => {
             'operator' => 'add',
@@ -5864,9 +3835,9 @@ RSpec.describe Trigger, type: :model do
         },
         perform:              {
           'notification.email' => {
-            'body'      => 'some text<br>#{ticket.customer.lastname}<br>#{ticket.title}<br>#{article.body}', # rubocop:disable Lint/InterpolationCheck
+            'body'      => 'some text<br>#{ticket.customer.lastname}<br>#{ticket.title}<br>#{article.body}',
             'recipient' => 'ticket_customer',
-            'subject'   => 'Thanks for your inquiry (#{ticket.title})!', # rubocop:disable Lint/InterpolationCheck
+            'subject'   => 'Thanks for your inquiry (#{ticket.title})!',
           },
           'ticket.tags'        => {
             'operator' => 'add',
@@ -5964,10 +3935,10 @@ RSpec.describe Trigger, type: :model do
 
     end
 
-    it 'change owner' do # rubocop:disable RSpec/ExampleLength
+    it 'adds tags on owner change only for tickets that do not already carry the exclusion tag, avoiding infinite tag-triggered loops', :aggregate_failures do # rubocop:disable RSpec/ExampleLength
       roles = Role.where(name: 'Agent')
       groups = Group.where(name: 'Users')
-      agent1 = User.create!(
+      agent1 = User.create_or_update(
         login:         'agent-has-changed@example.com',
         firstname:     'Has Changed',
         lastname:      'Agent1',
@@ -5981,7 +3952,7 @@ RSpec.describe Trigger, type: :model do
         created_by_id: 1,
       )
 
-      agent2 = User.create!(
+      agent2 = User.create_or_update(
         login:         'agent-has-changed2@example.com',
         firstname:     'Has Changed',
         lastname:      'Agent2',
@@ -5996,7 +3967,7 @@ RSpec.describe Trigger, type: :model do
       )
 
       # multi tag trigger with changed owner
-      described_class.create!(
+      described_class.create_or_update(
         name:                 'change owner',
         condition:            {
           'ticket.owner_id' => {
@@ -6015,7 +3986,7 @@ RSpec.describe Trigger, type: :model do
           'notification.email' => {
             'body'      => 'some lala',
             'recipient' => 'ticket_customer',
-            'subject'   => 'Thanks for your inquiry - 1234 check (#{ticket.title})!', # rubocop:disable Lint/InterpolationCheck
+            'subject'   => 'Thanks for your inquiry - 1234 check (#{ticket.title})!',
           },
         },
         disable_notification: true,
@@ -6044,7 +4015,7 @@ RSpec.describe Trigger, type: :model do
           'notification.email' => {
             'body'      => 'some lala',
             'recipient' => 'ticket_customer',
-            'subject'   => 'Thanks for your inquiry - 1234 check (#{ticket.title})!', # rubocop:disable Lint/InterpolationCheck
+            'subject'   => 'Thanks for your inquiry - 1234 check (#{ticket.title})!',
           },
         },
         disable_notification: true,
@@ -6164,8 +4135,8 @@ RSpec.describe Trigger, type: :model do
 
     end
 
-    it 'trigger auto reply with umlaut in form' do
-      described_class.create!(
+    it 'extracts the reply e-mail address correctly from a from-header containing umlauts', :aggregate_failures do
+      described_class.create_or_update(
         name:                 'auto reply',
         condition:            {
           'ticket.action'   => {
@@ -6179,9 +4150,9 @@ RSpec.describe Trigger, type: :model do
         },
         perform:              {
           'notification.email' => {
-            'body'      => 'some text<br>#{ticket.customer.lastname}<br>#{ticket.title}<br>#{article.body}', # rubocop:disable Lint/InterpolationCheck
+            'body'      => 'some text<br>#{ticket.customer.lastname}<br>#{ticket.title}<br>#{article.body}',
             'recipient' => 'article_last_sender',
-            'subject'   => 'Thanks for your inquiry (#{ticket.title})!', # rubocop:disable Lint/InterpolationCheck
+            'subject'   => 'Thanks for your inquiry (#{ticket.title})!',
           },
         },
         disable_notification: true,
@@ -6238,8 +4209,8 @@ RSpec.describe Trigger, type: :model do
 
     end
 
-    it 'trigger auto reply with 2 sender addresses in form' do
-      described_class.create!(
+    it 'extracts a single reply e-mail address from a from-header containing two sender addresses', :aggregate_failures do
+      described_class.create_or_update(
         name:                 'auto reply',
         condition:            {
           'ticket.action'   => {
@@ -6253,9 +4224,9 @@ RSpec.describe Trigger, type: :model do
         },
         perform:              {
           'notification.email' => {
-            'body'      => 'some text<br>#{ticket.customer.lastname}<br>#{ticket.title}<br>#{article.body}', # rubocop:disable Lint/InterpolationCheck
+            'body'      => 'some text<br>#{ticket.customer.lastname}<br>#{ticket.title}<br>#{article.body}',
             'recipient' => 'article_last_sender',
-            'subject'   => 'Thanks for your inquiry (#{ticket.title})!', # rubocop:disable Lint/InterpolationCheck
+            'subject'   => 'Thanks for your inquiry (#{ticket.title})!',
           },
         },
         disable_notification: true,
@@ -6279,8 +4250,8 @@ RSpec.describe Trigger, type: :model do
 
     end
 
-    it 'make sure attachments should be attached with content id' do
-      described_class.create!(
+    it 'attaches inline (cid) images referenced in the notification body as email attachments', :aggregate_failures do
+      described_class.create_or_update(
         name:                 'auto reply',
         condition:            {
           'ticket.action'   => {
@@ -6294,9 +4265,9 @@ RSpec.describe Trigger, type: :model do
         },
         perform:              {
           'notification.email' => {
-            'body'      => 'some text<br>#{ticket.customer.lastname}<br>#{ticket.title}<br>#{article.body}<br><img tabindex="0" style="width: 192px; height: 192px" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQH/2wBDAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQH/wAARCADAAMADAREAAhEBAxEB/8QAHgABAAICAwEBAQAAAAAAAAAAAAcICQoFBgsDAQT/xAA7EAAABwEAAQMCAgYJAgcAAAAAAQIDBAUGBwgJERITIQoUFRciMXa1FiMyNzg5QVF3JLIYGSc1QkVh/8QAHQEBAAICAwEBAAAAAAAAAAAAAAQFAwYCBwgBCf/EAEURAAICAgEDAgMEBAkLBAMAAAECAAMEEQUGEiETMQciQQgUMlEjYXF2FTM1QnJzgZGzFjY3OFJiobGytLUXGILBJTRD/9oADAMBAAIRAxEAPwDU/G4SPARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARLM+HPi5uvNDyU5T4086cbiaXp+iTU/piTGflwM3TxYsiyv9PZx4xk+5WZ+nhzLSelk/qnGjLJslLNKT++Atjk6Wquy1z/uo">', # rubocop:disable Lint/InterpolationCheck
+            'body'      => 'some text<br>#{ticket.customer.lastname}<br>#{ticket.title}<br>#{article.body}<br><img tabindex="0" style="width: 192px; height: 192px" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQH/2wBDAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQH/wAARCADAAMADAREAAhEBAxEB/8QAHgABAAICAwEBAQAAAAAAAAAAAAcICQoFBgsDAQT/xAA7EAAABwEAAQMCAgYJAgcAAAAAAQIDBAUGBwgJERITIQoUFRciMXa1FiMyNzg5QVF3JLIYGSc1QkVh/8QAHQEBAAICAwEBAAAAAAAAAAAAAAQFAwYCBwgBCf/EAEURAAICAgEDAgMEBAkLBAMAAAECAAMEEQUGEiETMQciQQgUMlEjYXF2FTM1QnJzgZGzFjY3OFJiobGytLUXGILBJTRD/9oADAMBAAIRAxEAPwDU/G4SPARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARLM+HPi5uvNDyU5T4086cbiaXp+iTU/piTGflwM3TxYsiyv9PZx4xk+5WZ+nhzLSelk/qnGjLJslLNKT++Atjk6Wquy1z/uo">',
             'recipient' => 'article_last_sender',
-            'subject'   => 'Thanks for your inquiry (#{ticket.title})!', # rubocop:disable Lint/InterpolationCheck
+            'subject'   => 'Thanks for your inquiry (#{ticket.title})!',
           },
         },
         disable_notification: true,
@@ -6319,374 +4290,6 @@ RSpec.describe Trigger, type: :model do
       expect(article1.attachments.count).to eq(1)
       expect(article1.attachments[0].size).to eq('789')
       expect(article1.content_type).to eq('text/html')
-    end
-
-    # Issue #1316 - 'organization is not X' conditions break triggers
-    it 'NOT IN predicates handle NULL values' do
-      customer = User.create!(
-        email:         'issue_1316_test_user@zammad.org',
-        created_by_id: 1,
-        updated_by_id: 1,
-      )
-
-      described_class.create!(
-        name:          'auto reply (condition: organization-is-not)',
-        condition:     {
-          'ticket.organization_id' => {
-            'operator' => 'is not',
-            'value'    => Organization.first.id.to_s,
-          },
-        },
-        perform:       {
-          'notification.email' => {
-            'body'      => 'Lorem ipsum dolor',
-            'recipient' => 'ticket_customer',
-            'subject'   => 'Thanks for your inquiry (#{ticket.title})!', # rubocop:disable Lint/InterpolationCheck
-          },
-        },
-        active:        true,
-        created_by_id: 1,
-        updated_by_id: 1,
-      )
-
-      ticket = Ticket.create!(
-        title:         "some <b>title</b>\n äöüß",
-        group:         Group.lookup(name: 'Users'),
-        customer:      customer,
-        updated_by_id: 1,
-        created_by_id: 1,
-      )
-
-      expect(customer.organization_id).to be_nil
-      expect(ticket.reload.articles.count).to eq(0)
-
-      TransactionDispatcher.commit
-
-      expect(ticket.reload.articles.count).to eq(1)
-
-      autoreply = ticket.articles.first
-      expect(autoreply.from).to eq('Zammad <zammad@localhost>')
-      expect(autoreply.to).to eq(customer.email)
-      expect(autoreply.subject).to eq("Thanks for your inquiry (#{ticket.title})!")
-      expect(autoreply.body).to eq('Lorem ipsum dolor')
-      expect(autoreply.content_type).to eq('text/html')
-    end
-
-    it 'trigger tags and auto responder when there is an article body contains matched values' do
-      described_class.create!(
-        name:                 'detect message body',
-        condition:            {
-          'article.body' => {
-            'operator' => 'contains',
-            'value'    => 'some message',
-          },
-        },
-        perform:              {
-          'ticket.tags'        => {
-            'operator' => 'add',
-            'value'    => 'tag1, tag2',
-          },
-          'notification.email' => {
-            'body'      => 'some lala',
-            'recipient' => 'ticket_customer',
-            'subject'   => 'Thanks for your inquiry - loop check (#{ticket.title})!', # rubocop:disable Lint/InterpolationCheck
-          },
-        },
-        disable_notification: true,
-        active:               true,
-        created_by_id:        1,
-        updated_by_id:        1,
-      )
-      ticket1 = Ticket.create!(
-        title:         "some <b>title</b>\n äöüß",
-        group:         Group.lookup(name: 'Users'),
-        customer:      User.lookup(email: 'nicole.braun@zammad.org'),
-        updated_by_id: 1,
-        created_by_id: 1,
-      )
-      article1 = Ticket::Article.create!(
-        ticket_id:     ticket1.id,
-        from:          'some_sender@example.com',
-        to:            'some_recipient@example.com',
-        subject:       'some subject',
-        message_id:    'some@id',
-        body:          "some message <b>note</b>\nnew line",
-        internal:      false,
-        sender:        Ticket::Article::Sender.find_by(name: 'Agent'),
-        type:          Ticket::Article::Type.find_by(name: 'note'),
-        updated_by_id: 1,
-        created_by_id: 1,
-      )
-      ticket1.reload
-      expect(ticket1.title).to eq('some <b>title</b>  äöüß')
-      expect(ticket1.group.name).to eq('Users')
-      expect(ticket1.state.name).to eq('new')
-      expect(ticket1.priority.name).to eq('2 normal')
-      expect(ticket1.articles.count).to eq(1)
-      expect(ticket1.tag_list).to eq([])
-
-      TransactionDispatcher.commit
-
-      ticket1.reload
-      expect(ticket1.title).to eq('some <b>title</b>  äöüß')
-      expect(ticket1.group.name).to eq('Users')
-      expect(ticket1.state.name).to eq('new')
-      expect(ticket1.priority.name).to eq('2 normal')
-      expect(ticket1.articles.count).to eq(2)
-      expect(ticket1.tag_list).to eq(%w[tag1 tag2])
-
-      expect(article1.from).to include('-')
-      expect(article1.to).to include('some_recipient@example.com')
-      expect(article1.subject).to include('some subject')
-      expect(article1.body).to include("some message <b>note</b>\nnew line")
-      expect(article1.content_type).to eq('text/plain')
-    end
-
-    it 'trigger note and auto responder (correct order) when there is an article body contains matched values' do # rubocop:disable RSpec/ExampleLength
-      described_class.create!(
-        name:                 'detect message body',
-        condition:            {
-          'article.body' => {
-            'operator' => 'contains',
-            'value'    => 'some message',
-          },
-        },
-        perform:              {
-          'article.note'       => {
-            'subject'  => 'some subject! #{ticket.id}', # rubocop:disable Lint/InterpolationCheck
-            'body'     => 'I can integrate with 3rd party services at https://my.saas/foo/#{ticket.id}', # rubocop:disable Lint/InterpolationCheck
-            'internal' => 'true',
-          },
-          'notification.email' => {
-            'body'      => 'some lala',
-            'recipient' => 'ticket_customer',
-            'subject'   => 'Thanks for your inquiry - loop check (#{ticket.title})!', # rubocop:disable Lint/InterpolationCheck
-          },
-        },
-        disable_notification: true,
-        active:               true,
-        created_by_id:        1,
-        updated_by_id:        1,
-      )
-      ticket1 = Ticket.create!(
-        title:         "some <b>title</b>\n äöüß",
-        group:         Group.lookup(name: 'Users'),
-        customer:      User.lookup(email: 'nicole.braun@zammad.org'),
-        updated_by_id: 1,
-        created_by_id: 1,
-      )
-      article1 = Ticket::Article.create!(
-        ticket_id:     ticket1.id,
-        from:          'some_sender@example.com',
-        to:            'some_recipient@example.com',
-        subject:       'some subject',
-        message_id:    'some@id',
-        body:          "some message <b>note</b>\nnew line",
-        internal:      false,
-        sender:        Ticket::Article::Sender.find_by(name: 'Agent'),
-        type:          Ticket::Article::Type.find_by(name: 'note'),
-        updated_by_id: 1,
-        created_by_id: 1,
-      )
-      ticket1.reload
-      expect(ticket1.title).to eq('some <b>title</b>  äöüß')
-      expect(ticket1.group.name).to eq('Users')
-      expect(ticket1.state.name).to eq('new')
-      expect(ticket1.priority.name).to eq('2 normal')
-      expect(ticket1.articles.count).to eq(1)
-      expect(ticket1.tag_list).to eq([])
-
-      TransactionDispatcher.commit
-
-      ticket1.reload
-      expect(ticket1.title).to eq('some <b>title</b>  äöüß')
-      expect(ticket1.group.name).to eq('Users')
-      expect(ticket1.state.name).to eq('new')
-      expect(ticket1.priority.name).to eq('2 normal')
-      expect(ticket1.articles.count).to eq(3)
-      expect(ticket1.tag_list).to eq([])
-
-      expect(article1.from).to include('-')
-      expect(article1.to).to include('some_recipient@example.com')
-      expect(article1.subject).to include('some subject')
-      expect(article1.body).to include("some message <b>note</b>\nnew line")
-      expect(article1.content_type).to eq('text/plain')
-
-      article_note1 = ticket1.articles[1]
-      expect(article_note1.from).to include('-')
-      expect(article_note1.to).to be_nil
-      expect(article_note1.subject).to include("some subject! #{ticket1.id}")
-      expect(article_note1.body).to include("I can integrate with 3rd party services at <a href=\"https://my.saas/foo/#{ticket1.id}\" rel=\"nofollow noreferrer noopener\" target=\"_blank\">https://my.saas/foo/#{ticket1.id}</a>")
-      expect(article_note1.content_type).to eq('text/html')
-      expect(article_note1.internal).to be(true)
-
-      article_auto_responder1 = ticket1.articles[2]
-      expect(article_auto_responder1.from).to include('Zammad <zammad@localhost>')
-      expect(article_auto_responder1.to).to include('nicole.braun@zammad.org')
-      expect(article_auto_responder1.subject).to include('Thanks for your inquiry - loop check (some <b>title</b>  äöüß)!')
-      expect(article_auto_responder1.body).to include('some lala')
-      expect(article_auto_responder1.content_type).to eq('text/html')
-    end
-
-    it 'validates perform with article.note - should fail because of missing body' do
-      expect do
-        described_class.create!(
-          name:                 'some trigger',
-          condition:            {
-            'article.body' => {
-              'operator' => 'contains',
-              'value'    => 'some message',
-            },
-          },
-          perform:              {
-            'article.note' => {
-              'subject'  => 'some subject!',
-              'internal' => 'true',
-            },
-          },
-          disable_notification: true,
-          active:               true,
-          created_by_id:        1,
-          updated_by_id:        1,
-        )
-      end.to raise_error(Exception)
-    end
-
-    it 'validates perform with notification.email - should fail because of missing recipient' do
-      expect do
-        described_class.create!(
-          name:                 'some trigger',
-          condition:            {
-            'article.body' => {
-              'operator' => 'contains',
-              'value'    => 'some message',
-            },
-          },
-          perform:              {
-            'notification.email' => {
-              'body'      => 'some lala',
-              'recipient' => '',
-              'subject'   => 'Thanks for your inquiry - loop check (#{ticket.title})!', # rubocop:disable Lint/InterpolationCheck
-            },
-          },
-          disable_notification: true,
-          active:               true,
-          created_by_id:        1,
-          updated_by_id:        1,
-        )
-      end.to raise_error(Exception)
-    end
-
-    it 'validates perform with notification.sms - should fail because of missing recipient' do
-      expect do
-        described_class.create!(
-          name:                 'some trigger',
-          condition:            {
-            'article.body' => {
-              'operator' => 'contains',
-              'value'    => 'some message',
-            },
-          },
-          perform:              {
-            'notification.sms' => {
-              'body'      => 'some lala',
-              'recipient' => '',
-            },
-          },
-          disable_notification: true,
-          active:               true,
-          created_by_id:        1,
-          updated_by_id:        1,
-        )
-      end.to raise_error(Exception)
-    end
-
-    # 2399 - Attached images are broken on trigger reply with #{article.body_as_html}
-    it 'make sure auto reply using #{article.body_as_html} copies all articles image attachments as well' do # rubocop:disable Lint/InterpolationCheck
-      # make sure that this auto reply trigger only reacts to this particular test in order not to interfer with other auto reply tests
-      described_class.create!(
-        name:                 'auto reply with HTML quote',
-        condition:            {
-          'ticket.action'   => {
-            'operator' => 'is',
-            'value'    => 'create',
-          },
-          'ticket.state_id' => {
-            'operator' => 'is',
-            'value'    => Ticket::State.lookup(name: 'new').id.to_s,
-          },
-          'ticket.title'    => {
-            'operator' => 'contains',
-            'value'    => 'AW: OTRS / Anfrage OTRS Einführung/Präsentation [Ticket#11545]',
-          },
-        },
-        perform:              {
-          'notification.email' => {
-            'body'      => '#{article.body_as_html}', # rubocop:disable Lint/InterpolationCheck
-            'recipient' => 'article_last_sender',
-            'subject'   => 'Thanks for your inquiry (#{ticket.title})!', # rubocop:disable Lint/InterpolationCheck
-          },
-        },
-        disable_notification: true,
-        active:               true,
-        created_by_id:        1,
-        updated_by_id:        1,
-      )
-
-      ticket1, _article1, _user, _mail = Channel::EmailParser.new.process({}, Rails.root.join('test/data/mail/mail048.box').read)
-
-      expect(ticket1.title).to eq('AW: OTRS / Anfrage OTRS Einführung/Präsentation [Ticket#11545]')
-      expect(ticket1.articles.count).to eq(2)
-      expect(ticket1.articles.first.attachments.count).to eq(2)
-
-      article1 = ticket1.articles.last
-      expect(article1.subject).to include('Thanks for your inquiry (AW: OTRS / Anfrage OTRS Einführung/Präsentation [Ticket#11545])!')
-      expect(article1.attachments.count).to eq(1)
-      expect(article1.attachments[0].size).to eq('50606')
-      expect(article1.attachments[0].filename).to eq('CPG-Reklamationsmitteilung bezügl.01234567895 an Voda-28.03.2017.jpg')
-    end
-
-    # 2399 - Attached images are broken on trigger reply with #{article.body_as_html}
-    it 'make sure auto reply using #{article.body_as_html} does not copy any non-image attachments' do # rubocop:disable Lint/InterpolationCheck
-      # make sure that this auto reply trigger only reacts to this particular test in order not to interfer with other auto reply tests
-      described_class.create!(
-        name:                 'auto reply with HTML quote',
-        condition:            {
-          'ticket.action'   => {
-            'operator' => 'is',
-            'value'    => 'create',
-          },
-          'ticket.state_id' => {
-            'operator' => 'is',
-            'value'    => Ticket::State.lookup(name: 'new').id.to_s,
-          },
-          'ticket.title'    => {
-            'operator' => 'contains',
-            'value'    => 'Online-apotheke. Günstigster Preis. Ohne Rezepte',
-          },
-        },
-        perform:              {
-          'notification.email' => {
-            'body'      => '#{article.body_as_html}', # rubocop:disable Lint/InterpolationCheck
-            'recipient' => 'article_last_sender',
-            'subject'   => 'Thanks for your inquiry (#{ticket.title})!', # rubocop:disable Lint/InterpolationCheck
-          },
-        },
-        disable_notification: true,
-        active:               true,
-        created_by_id:        1,
-        updated_by_id:        1,
-      )
-
-      ticket1, _article1, _user, _mail = Channel::EmailParser.new.process({}, Rails.root.join('test/data/mail/mail069.box').read)
-
-      expect(ticket1.title).to eq('Online-apotheke. Günstigster Preis. Ohne Rezepte')
-      expect(ticket1.articles.count).to eq(2)
-      expect(ticket1.articles.first.attachments.count).to eq(1)
-
-      article1 = ticket1.articles.last
-      expect(article1.subject).to include('Thanks for your inquiry (Online-apotheke. Günstigster Preis. Ohne Rezepte)!')
-      expect(article1.attachments.count).to eq(0)
     end
   end
 end

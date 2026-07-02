@@ -116,6 +116,316 @@ RSpec.describe NotificationFactory::Mailer do
         end
       end
     end
+
+    context 'with password_reset and ticket notification templates' do
+      let(:groups) { Group.where(name: 'Users') }
+      let(:roles)  { Role.where(name: 'Agent') }
+      let(:agent1) do
+        User.create!(
+          login:         'notification-template-agent1@example.com',
+          firstname:     'Notification<b>xxx</b>',
+          lastname:      'Agent1<b>yyy</b>',
+          email:         'notification-template-agent1@example.com',
+          password:      'agentpw',
+          active:        true,
+          roles:         roles,
+          groups:        groups,
+          preferences:   {
+            locale: 'de-de',
+          },
+          updated_by_id: 1,
+          created_by_id: 1,
+        )
+      end
+      let(:agent_current_user) do
+        User.create!(
+          login:         'notification-template-current_user@example.com',
+          firstname:     'Notification Current',
+          lastname:      'User',
+          email:         'notification-template-current_user@example.com',
+          password:      'agentpw',
+          active:        true,
+          roles:         roles,
+          groups:        groups,
+          preferences:   {
+            locale: 'de-de',
+          },
+          updated_by_id: 1,
+          created_by_id: 1,
+        )
+      end
+
+      before do
+        Translation.sync_locale_from_po('de-de')
+      end
+
+      context 'with password_reset template' do
+        let(:result) do
+          described_class.template(
+            template: 'password_reset',
+            locale:   locale,
+            objects:  {
+              user: agent1,
+            },
+          )
+        end
+
+        context 'with locale de-de' do
+          let(:locale) { 'de-de' }
+
+          it 'renders the German notification', :aggregate_failures do
+            expect(result[:subject]).to include('Zurücksetzen Ihres')
+            expect(result[:body]).to include('wir haben eine Anfrage zum Zurücksetzen')
+            expect(result[:body]).to include('Ihr')
+            expect(result[:body]).to include('Notification&lt;b&gt;xxx&lt;/b&gt;')
+            expect(result[:body]).not_to include('Your')
+          end
+        end
+
+        context 'with locale de' do
+          let(:locale) { 'de' }
+
+          it 'renders the German notification', :aggregate_failures do
+            expect(result[:subject]).to include('Zurücksetzen Ihres')
+            expect(result[:body]).to include('wir haben eine Anfrage zum Zurücksetzen')
+            expect(result[:body]).to include('Ihr')
+            expect(result[:body]).to include('Notification&lt;b&gt;xxx&lt;/b&gt;')
+            expect(result[:body]).not_to include('Your')
+          end
+        end
+
+        context 'with a not existing locale' do
+          let(:locale) { 'xx-us' }
+
+          it 'falls back to the English notification', :aggregate_failures do
+            expect(result[:subject]).to include('Reset your')
+            expect(result[:body]).to include('We received a request to reset the password')
+            expect(result[:body]).to include('Your')
+            expect(result[:body]).to include('Notification&lt;b&gt;xxx&lt;/b&gt;')
+            expect(result[:body]).not_to include('Ihr')
+          end
+        end
+      end
+
+      context 'with ticket notification templates' do
+        let(:ticket) do
+          Ticket.create(
+            group_id:      Group.lookup(name: 'Users').id,
+            customer_id:   User.lookup(email: 'nicole.braun@zammad.org').id,
+            owner_id:      User.lookup(login: '-').id,
+            title:         'Welcome to Zammad!',
+            state_id:      Ticket::State.lookup(name: 'new').id,
+            priority_id:   Ticket::Priority.lookup(name: '2 normal').id,
+            updated_by_id: 1,
+            created_by_id: 1,
+          )
+        end
+        let(:result) do
+          described_class.template(
+            template: template,
+            locale:   locale,
+            objects:  {
+              ticket:       ticket,
+              article:      article,
+              recipient:    agent1,
+              current_user: agent_current_user,
+              changes:      changes,
+            },
+          )
+        end
+
+        context 'with ticket_create template' do
+          let(:template) { 'ticket_create' }
+          let(:changes)  { {} }
+          let(:article) do
+            Ticket::Article.create(
+              ticket_id:     ticket.id,
+              type_id:       Ticket::Article::Type.lookup(name: 'phone').id,
+              sender_id:     Ticket::Article::Sender.lookup(name: 'Customer').id,
+              from:          'Zammad Feedback <feedback@zammad.org>',
+              content_type:  'text/plain',
+              body:          "Welcome!\n<b>test123</b>",
+              internal:      false,
+              updated_by_id: 1,
+              created_by_id: 1,
+            )
+          end
+
+          context 'with locale xx-us' do
+            let(:locale) { 'xx-us' }
+
+            it 'renders the English notification with an escaped article body', :aggregate_failures do
+              expect(result[:subject]).to include('New ticket')
+              expect(result[:body]).to include('Notification&lt;b&gt;xxx&lt;/b&gt;')
+              expect(result[:body]).to include('has been created by')
+              expect(result[:body]).to include('&lt;b&gt;test123&lt;/b&gt;')
+              expect(result[:body]).to include('Manage your notification settings')
+              expect(result[:body]).not_to include('Dein')
+              expect(result[:body]).not_to include('longname')
+              expect(result[:body]).to include('Current User')
+            end
+          end
+
+          context 'with locale de-de' do
+            let(:locale) { 'de-de' }
+
+            it 'renders the German notification with an escaped article body', :aggregate_failures do
+              expect(result[:subject]).to include('Neues Ticket')
+              expect(result[:body]).to include('Notification&lt;b&gt;xxx&lt;/b&gt;')
+              expect(result[:body]).to include('ein neues Ticket')
+              expect(result[:body]).to include('&lt;b&gt;test123&lt;/b&gt;')
+              expect(result[:body]).to include(Translation.translate('de-de', 'Manage your notification settings'))
+              expect(result[:body]).not_to include('Your')
+              expect(result[:body]).not_to include('longname')
+              expect(result[:body]).to include('Current User')
+            end
+          end
+        end
+
+        context 'with ticket_update template' do
+          let(:template) { 'ticket_update' }
+          let(:changes) do
+            {
+              state: %w[aaa bbb],
+              group: %w[xxx yyy],
+            }
+          end
+          let(:article) do
+            Ticket::Article.create(
+              ticket_id:     ticket.id,
+              type_id:       Ticket::Article::Type.lookup(name: 'phone').id,
+              sender_id:     Ticket::Article::Sender.lookup(name: 'Customer').id,
+              from:          'Zammad Feedback <feedback@zammad.org>',
+              content_type:  'text/html',
+              body:          "Welcome!\n<b>test123</b>",
+              internal:      false,
+              updated_by_id: 1,
+              created_by_id: 1,
+            )
+          end
+
+          context 'with locale xx-us' do
+            let(:locale) { 'xx-us' }
+
+            it 'renders the English notification with an unescaped article body', :aggregate_failures do
+              expect(result[:subject]).to include('Updated ticket')
+              expect(result[:body]).to include('Notification&lt;b&gt;xxx&lt;/b&gt;')
+              expect(result[:body]).to include('has been updated by')
+              expect(result[:body]).to include('<b>test123</b>')
+              expect(result[:body]).to include('Manage your notification settings')
+              expect(result[:body]).not_to include('Dein')
+              expect(result[:body]).not_to include('longname')
+              expect(result[:body]).to include('Current User')
+            end
+          end
+
+          context 'with locale de-de' do
+            let(:locale) { 'de-de' }
+
+            it 'renders the German notification with an unescaped article body', :aggregate_failures do
+              expect(result[:subject]).to include('Aktualisiertes Ticket')
+              expect(result[:body]).to include('Notification&lt;b&gt;xxx&lt;/b&gt;')
+              expect(result[:body]).to include('wurde von')
+              expect(result[:body]).to include('<b>test123</b>')
+              expect(result[:body]).to include(Translation.translate('de-de', 'Manage your notification settings'))
+              expect(result[:body]).not_to include('Your')
+              expect(result[:body]).not_to include('longname')
+              expect(result[:body]).to include('Current User')
+            end
+          end
+
+          context 'without a given locale, with default locale de-de' do
+            let(:result) do
+              described_class.template(
+                template: template,
+                objects:  {
+                  ticket:       ticket,
+                  article:      article,
+                  recipient:    agent1,
+                  current_user: agent_current_user,
+                  changes:      changes,
+                },
+              )
+            end
+
+            before do
+              Setting.set('locale_default', 'de-de')
+            end
+
+            it 'renders the German notification', :aggregate_failures do
+              expect(result[:subject]).to include('Aktualisiertes Ticket')
+              expect(result[:body]).to include('Notification&lt;b&gt;xxx&lt;/b&gt;')
+              expect(result[:body]).to include('wurde von')
+              expect(result[:body]).to include('<b>test123</b>')
+              expect(result[:body]).to include(Translation.translate('de-de', 'Manage your notification settings'))
+              expect(result[:body]).not_to include('Your')
+              expect(result[:body]).not_to include('longname')
+              expect(result[:body]).to include('Current User')
+            end
+          end
+
+          context 'without a given locale, with a not existing default locale' do
+            let(:result) do
+              described_class.template(
+                template: template,
+                objects:  {
+                  ticket:       ticket,
+                  article:      article,
+                  recipient:    agent1,
+                  current_user: agent_current_user,
+                  changes:      changes,
+                },
+              )
+            end
+
+            before do
+              Setting.set('locale_default', 'not_existing')
+            end
+
+            it 'falls back to the English notification', :aggregate_failures do
+              expect(result[:subject]).to include('Updated ticket')
+              expect(result[:body]).to include('Notification&lt;b&gt;xxx&lt;/b&gt;')
+              expect(result[:body]).to include('has been updated by')
+              expect(result[:body]).to include('<b>test123</b>')
+              expect(result[:body]).to include('Manage your notification settings')
+              expect(result[:body]).not_to include('Dein')
+              expect(result[:body]).not_to include('longname')
+              expect(result[:body]).to include('Current User')
+            end
+          end
+
+          context 'without a given locale, with default locale pt-br' do
+            let(:result) do
+              described_class.template(
+                template: template,
+                objects:  {
+                  ticket:       ticket,
+                  article:      article,
+                  recipient:    agent1,
+                  current_user: agent_current_user,
+                  changes:      changes,
+                },
+              )
+            end
+
+            before do
+              Setting.set('locale_default', 'pt-br')
+            end
+
+            it 'renders the Portuguese notification', :aggregate_failures do
+              expect(result[:subject]).to include('atualizado')
+              expect(result[:body]).to include('Notification&lt;b&gt;xxx&lt;/b&gt;')
+              expect(result[:body]).to include('foi atualizado por')
+              expect(result[:body]).to include('<b>test123</b>')
+              expect(result[:body]).to include(Translation.translate('pt-br', 'Manage your notification settings'))
+              expect(result[:body]).not_to include('Dein')
+              expect(result[:body]).not_to include('longname')
+              expect(result[:body]).to include('Current User')
+            end
+          end
+        end
+      end
+    end
   end
 
   describe '#deliver' do
@@ -389,6 +699,383 @@ RSpec.describe NotificationFactory::Mailer do
 
       it 'raises Exceptions::UnprocessableContent' do
         expect { result }.to raise_error(Exceptions::UnprocessableContent)
+      end
+    end
+
+    context 'with content_type variations' do
+      let(:user) { User.find(2) }
+
+      context 'with a blank content_type' do
+        subject(:result) do
+          described_class.deliver(
+            recipient:    user,
+            subject:      'some subject',
+            body:         'some body',
+            content_type: '',
+          )
+        end
+
+        it 'renders a plain text mail', :aggregate_failures do
+          expect(result.to_s).to include('some body')
+          expect(result.to_s).to include('text/plain')
+          expect(result.to_s).not_to include('text/html')
+        end
+      end
+
+      context 'with a text/plain content_type' do
+        subject(:result) do
+          described_class.deliver(
+            recipient:    user,
+            subject:      'some subject',
+            body:         'some body',
+            content_type: 'text/plain',
+          )
+        end
+
+        it 'renders a plain text mail', :aggregate_failures do
+          expect(result.to_s).to include('some body')
+          expect(result.to_s).to include('text/plain')
+          expect(result.to_s).not_to include('text/html')
+        end
+      end
+
+      context 'with a text/html content_type' do
+        subject(:result) do
+          described_class.deliver(
+            recipient:    user,
+            subject:      'some subject',
+            body:         'some <span>body</span>',
+            content_type: 'text/html',
+          )
+        end
+
+        it 'renders a multipart mail with plain and html parts', :aggregate_failures do
+          expect(result.to_s).to include('some body')
+          expect(result.to_s).to include('text/plain')
+          expect(result.to_s).to include('<span>body</span>')
+          expect(result.to_s).to include('text/html')
+        end
+      end
+
+      context 'with inline and attached files' do
+        subject(:result) do
+          described_class.deliver(
+            recipient:    user,
+            subject:      'some subject',
+            body:         'some <span>body</span><img style="width: 85.5px; height: 49.5px" src="cid:15.274327094.140938@zammad.example.com">asdasd<br>',
+            content_type: 'text/html',
+            attachments:  attachments,
+          )
+        end
+
+        let(:attachments) do
+          [
+            Store.create!(
+              object:        'TestMailer',
+              o_id:          1,
+              data:          'content_file1_normally_should_be_an_image',
+              filename:      'some_file1.jpg',
+              preferences:   {
+                'Content-Type'        => 'image/jpeg',
+                'Mime-Type'           => 'image/jpeg',
+                'Content-ID'          => '15.274327094.140938@zammad.example.com',
+                'Content-Disposition' => 'inline'
+              },
+              created_by_id: 1,
+            ),
+            Store.create!(
+              object:        'TestMailer',
+              o_id:          1,
+              data:          'content_file2',
+              filename:      'some_file2.txt',
+              preferences:   {
+                'Content-Type' => 'text/stream',
+                'Mime-Type'    => 'text/stream',
+              },
+              created_by_id: 1,
+            ),
+          ]
+        end
+
+        it 'includes the inline image and the plain attachment', :aggregate_failures do
+          expect(result.to_s).to include('some body')
+          expect(result.to_s).to include('text/plain')
+          expect(result.to_s).to include('<span>body</span>')
+          expect(result.to_s).to include('text/html')
+          expect(result.to_s).to include('Content-Type: image/jpeg')
+          expect(result.to_s).to include('Content-Disposition: inline')
+          expect(result.to_s).to include('Content-ID: <15.274327094.140938@zammad.example.com>')
+          expect(result.to_s).to include('text/stream')
+          expect(result.to_s).to include('some_file2.txt')
+        end
+      end
+    end
+  end
+
+  describe '#notification_settings' do
+    let(:roles)  { Role.where(name: 'Agent') }
+    let(:groups) { Group.all }
+    let(:agent1) do
+      User.create!(
+        login:         'notification-settings-agent1@example.com',
+        firstname:     'Notification<b>xxx</b>',
+        lastname:      'Agent1',
+        email:         'notification-settings-agent1@example.com',
+        password:      'agentpw',
+        active:        true,
+        roles:         roles,
+        groups:        groups,
+        updated_by_id: 1,
+        created_by_id: 1,
+      )
+    end
+    let(:agent2) do
+      User.create!(
+        login:         'notification-settings-agent2@example.com',
+        firstname:     'Notification<b>xxx</b>',
+        lastname:      'Agent2',
+        email:         'notification-settings-agent2@example.com',
+        password:      'agentpw',
+        active:        true,
+        roles:         roles,
+        groups:        groups,
+        updated_by_id: 1,
+        created_by_id: 1,
+      )
+    end
+    let(:group_notification_setting) do
+      Group.create!(
+        name:          'NotificationSetting',
+        updated_by_id: 1,
+        created_by_id: 1,
+      )
+    end
+
+    # ticket1: 'Users' group, unowned
+    # ticket2: 'Users' group, owned by agent1
+    # ticket3: dedicated group, unowned
+    # ticket4: dedicated group, owned by agent1
+    let(:ticket1) do
+      Ticket.create(
+        group_id:      Group.lookup(name: 'Users').id,
+        customer_id:   User.lookup(email: 'nicole.braun@zammad.org').id,
+        owner_id:      User.lookup(login: '-').id,
+        title:         'Notification Settings Test 1!',
+        state_id:      Ticket::State.lookup(name: 'new').id,
+        priority_id:   Ticket::Priority.lookup(name: '2 normal').id,
+        updated_by_id: 1,
+        created_by_id: 1,
+      )
+    end
+    let(:ticket2) do
+      Ticket.create(
+        group_id:      Group.lookup(name: 'Users').id,
+        customer_id:   User.lookup(email: 'nicole.braun@zammad.org').id,
+        owner_id:      agent1.id,
+        title:         'Notification Settings Test 2!',
+        state_id:      Ticket::State.lookup(name: 'new').id,
+        priority_id:   Ticket::Priority.lookup(name: '2 normal').id,
+        updated_by_id: 1,
+        created_by_id: 1,
+      )
+    end
+    let(:ticket3) do
+      Ticket.create(
+        group_id:      group_notification_setting.id,
+        customer_id:   User.lookup(email: 'nicole.braun@zammad.org').id,
+        owner_id:      User.lookup(login: '-').id,
+        title:         'Notification Settings Test 1!',
+        state_id:      Ticket::State.lookup(name: 'new').id,
+        priority_id:   Ticket::Priority.lookup(name: '2 normal').id,
+        updated_by_id: 1,
+        created_by_id: 1,
+      )
+    end
+    let(:ticket4) do
+      Ticket.create(
+        group_id:      group_notification_setting.id,
+        customer_id:   User.lookup(email: 'nicole.braun@zammad.org').id,
+        owner_id:      agent1.id,
+        title:         'Notification Settings Test 2!',
+        state_id:      Ticket::State.lookup(name: 'new').id,
+        priority_id:   Ticket::Priority.lookup(name: '2 normal').id,
+        updated_by_id: 1,
+        created_by_id: 1,
+      )
+    end
+
+    context 'when group_ids is unset (nil) for both agents' do
+      it 'notifies both agents about all four tickets', :aggregate_failures do # rubocop:disable RSpec/ExampleLength
+        agent1.preferences[:notification_config][:group_ids] = nil
+        agent1.save
+        travel 30.seconds
+
+        result = described_class.notification_settings(agent1, ticket1, 'create')
+        expect(result[:channels][:online]).to be(true)
+        expect(result[:channels][:email]).to be(true)
+
+        result = described_class.notification_settings(agent1, ticket2, 'create')
+        expect(result[:channels][:online]).to be(true)
+        expect(result[:channels][:email]).to be(true)
+
+        result = described_class.notification_settings(agent1, ticket3, 'create')
+        expect(result[:channels][:online]).to be(true)
+        expect(result[:channels][:email]).to be(true)
+
+        result = described_class.notification_settings(agent1, ticket4, 'create')
+        expect(result[:channels][:online]).to be(true)
+        expect(result[:channels][:email]).to be(true)
+
+        agent2.preferences[:notification_config][:group_ids] = nil
+        agent2.save
+        travel 30.seconds
+
+        result = described_class.notification_settings(agent2, ticket1, 'create')
+        expect(result[:channels][:online]).to be(true)
+        expect(result[:channels][:email]).to be(true)
+
+        result = described_class.notification_settings(agent2, ticket2, 'create')
+        expect(result).to be_nil
+
+        result = described_class.notification_settings(agent2, ticket3, 'create')
+        expect(result[:channels][:online]).to be(true)
+        expect(result[:channels][:email]).to be(true)
+
+        result = described_class.notification_settings(agent2, ticket4, 'create')
+        expect(result).to be_nil
+
+        travel_back
+      end
+    end
+
+    context 'when group_ids is an empty array (no group selection) for both agents' do
+      it 'notifies both agents about all four tickets', :aggregate_failures do # rubocop:disable RSpec/ExampleLength
+        agent1.preferences[:notification_config][:group_ids] = []
+        agent1.save
+        travel 30.seconds
+
+        result = described_class.notification_settings(agent1, ticket1, 'create')
+        expect(result[:channels][:online]).to be(true)
+        expect(result[:channels][:email]).to be(true)
+
+        result = described_class.notification_settings(agent1, ticket2, 'create')
+        expect(result[:channels][:online]).to be(true)
+        expect(result[:channels][:email]).to be(true)
+
+        result = described_class.notification_settings(agent1, ticket3, 'create')
+        expect(result[:channels][:online]).to be(true)
+        expect(result[:channels][:email]).to be(true)
+
+        result = described_class.notification_settings(agent1, ticket4, 'create')
+        expect(result[:channels][:online]).to be(true)
+        expect(result[:channels][:email]).to be(true)
+
+        agent2.preferences[:notification_config][:group_ids] = []
+        agent2.save
+        travel 30.seconds
+
+        result = described_class.notification_settings(agent2, ticket1, 'create')
+        expect(result[:channels][:online]).to be(true)
+        expect(result[:channels][:email]).to be(true)
+
+        result = described_class.notification_settings(agent2, ticket2, 'create')
+        expect(result).to be_nil
+
+        result = described_class.notification_settings(agent2, ticket3, 'create')
+        expect(result[:channels][:online]).to be(true)
+        expect(result[:channels][:email]).to be(true)
+
+        result = described_class.notification_settings(agent2, ticket4, 'create')
+        expect(result).to be_nil
+
+        travel_back
+      end
+    end
+
+    context "when group_ids is ['-'] for both agents" do
+      it 'notifies both agents about all four tickets', :aggregate_failures do # rubocop:disable RSpec/ExampleLength
+        agent1.preferences[:notification_config][:group_ids] = ['-']
+        agent1.save
+        travel 30.seconds
+
+        result = described_class.notification_settings(agent1, ticket1, 'create')
+        expect(result[:channels][:online]).to be(true)
+        expect(result[:channels][:email]).to be(true)
+
+        result = described_class.notification_settings(agent1, ticket2, 'create')
+        expect(result[:channels][:online]).to be(true)
+        expect(result[:channels][:email]).to be(true)
+
+        result = described_class.notification_settings(agent1, ticket3, 'create')
+        expect(result[:channels][:online]).to be(true)
+        expect(result[:channels][:email]).to be(true)
+
+        result = described_class.notification_settings(agent1, ticket4, 'create')
+        expect(result[:channels][:online]).to be(true)
+        expect(result[:channels][:email]).to be(true)
+
+        agent2.preferences[:notification_config][:group_ids] = ['-']
+        agent2.save
+        travel 30.seconds
+
+        result = described_class.notification_settings(agent2, ticket1, 'create')
+        expect(result[:channels][:online]).to be(true)
+        expect(result[:channels][:email]).to be(true)
+
+        result = described_class.notification_settings(agent2, ticket2, 'create')
+        expect(result).to be_nil
+
+        result = described_class.notification_settings(agent2, ticket3, 'create')
+        expect(result[:channels][:online]).to be(true)
+        expect(result[:channels][:email]).to be(true)
+
+        result = described_class.notification_settings(agent2, ticket4, 'create')
+        expect(result).to be_nil
+
+        travel_back
+      end
+    end
+
+    context 'when group_ids is restricted to a dedicated group' do
+      it 'notifies only for tickets in the selected group, and for agent1 also for tickets they own', :aggregate_failures do # rubocop:disable RSpec/ExampleLength
+        agent1.preferences[:notification_config][:group_ids] = [Group.lookup(name: 'Users').id]
+        agent1.save
+        travel 30.seconds
+
+        result = described_class.notification_settings(agent1, ticket1, 'create')
+        expect(result[:channels][:online]).to be(true)
+        expect(result[:channels][:email]).to be(true)
+
+        result = described_class.notification_settings(agent1, ticket2, 'create')
+        expect(result[:channels][:online]).to be(true)
+        expect(result[:channels][:email]).to be(true)
+
+        result = described_class.notification_settings(agent1, ticket3, 'create')
+        expect(result).to be_nil
+
+        result = described_class.notification_settings(agent1, ticket4, 'create')
+        expect(result[:channels][:online]).to be(true)
+        expect(result[:channels][:email]).to be(true)
+
+        agent2.preferences[:notification_config][:group_ids] = [Group.lookup(name: 'Users').id]
+        agent2.save
+        travel 30.seconds
+
+        result = described_class.notification_settings(agent2, ticket1, 'create')
+        expect(result[:channels][:online]).to be(true)
+        expect(result[:channels][:email]).to be(true)
+
+        result = described_class.notification_settings(agent2, ticket2, 'create')
+        expect(result).to be_nil
+
+        result = described_class.notification_settings(agent2, ticket3, 'create')
+        expect(result).to be_nil
+        expect(result).to be_nil
+
+        result = described_class.notification_settings(agent2, ticket4, 'create')
+        expect(result).to be_nil
+
+        travel_back
       end
     end
   end
