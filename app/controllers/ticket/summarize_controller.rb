@@ -28,6 +28,7 @@ class Ticket::SummarizeController < ApplicationController
       # When AI analytics error ID is present, return this error message instead of enqueuing a new job.
       if params[:ai_analytics_run_error_id].present?
         ai_analytics_run_error = AI::Analytics::Run.find(params[:ai_analytics_run_error_id])
+        authorize!(ai_analytics_run_error, :show?)
 
         render json: {
           result:        nil,
