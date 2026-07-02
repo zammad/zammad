@@ -3,6 +3,8 @@
 class TicketAIAssistanceSummarizeJob < AIJob
   include HasActiveJobLock
 
+  EXISTING_ACTIVE_JOB_LOCK_BEHAVIOUR = :dismiss_running
+
   def lock_key
     "#{self.class.name}/#{arguments[0].id}/#{arguments[0].articles.without_system_notifications.last&.created_at}/#{arguments[1]}"
   end

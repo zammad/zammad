@@ -11,6 +11,8 @@
 class TicketAIRelatedKnowledgeBaseAnswersEmbedJob < AIJob
   include HasActiveJobLock
 
+  EXISTING_ACTIVE_JOB_LOCK_BEHAVIOUR = :dismiss_running
+
   def lock_key
     "#{self.class.name}/#{arguments[0].id}/#{Service::Ticket::AI::RelatedKnowledgeBaseAnswers::EmbeddingCache.version(arguments[0], arguments[2])}/#{arguments[1]}"
   end
