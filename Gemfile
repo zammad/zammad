@@ -204,7 +204,7 @@ gem 'cld'
 gem 'twitter_cldr'
 
 # AI integration
-gem 'elasticsearch', '>=8.11', '<10.0', require: false
+gem 'elasticsearch', '8.11.2', require: false
 
 # Gems used only for develop/test and not required
 # in production environments by default.

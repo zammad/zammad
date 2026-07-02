@@ -256,11 +256,10 @@ GEM
     elastic-transport (8.5.3)
       faraday (< 3)
       multi_json
-    elasticsearch (9.4.3)
+    elasticsearch (8.11.2)
       elastic-transport (~> 8.3)
-      elasticsearch-api (= 9.4.3)
-    elasticsearch-api (9.4.3)
-      base64
+      elasticsearch-api (= 8.11.2)
+    elasticsearch-api (8.11.2)
       multi_json
     em-websocket (0.5.3)
       eventmachine (>= 0.12.9)
@@ -901,7 +900,7 @@ DEPENDENCIES
   diffy
   doorkeeper
   eco
-  elasticsearch (>= 8.11, < 10.0)
+  elasticsearch (= 8.11.2)
   em-websocket
   email_address
   eventmachine
