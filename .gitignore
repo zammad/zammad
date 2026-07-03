@@ -133,3 +133,8 @@ schema.graphql
 # Dart Sass compiled output (dartsass-rails)
 /app/assets/builds/*
 !/app/assets/builds/.keep
+
+# AI Agents
+/.agents/skills
+/.claude/skills
+/.claude/settings.local.json
