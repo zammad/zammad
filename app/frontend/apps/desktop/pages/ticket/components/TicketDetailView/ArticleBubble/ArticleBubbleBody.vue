@@ -106,7 +106,7 @@ onMounted(() => {
 
 <template>
   <article
-    class="Content relative overflow-hidden p-3 transition-[padding] print:pt-3!"
+    class="Content relative overflow-hidden p-3 pb-4 transition-[padding] print:pt-3!"
     :class="[
       bodyClasses,
       {

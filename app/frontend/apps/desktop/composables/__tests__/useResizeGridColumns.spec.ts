@@ -11,6 +11,7 @@ import {
   useResizeGridColumns,
   DEFAULT_START_SIDEBAR_WIDTH,
   DEFAULT_END_SIDEBAR_WIDTH,
+  DEFAULT_SMALL_SCREEN_START_SIDEBAR_WIDTH,
   MINIMUM_END_SIDEBAR_WIDTH,
   MINIMUM_START_SIDEBAR_WIDTH,
   SIDEBAR_COLLAPSED_WIDTH,
@@ -34,6 +35,8 @@ describe('useResizeGridColumns', () => {
   )
 
   beforeEach(() => {
+    smallScreen.value = false
+    isSmallestScreen.value = false
     useSidebarDisplayStore().setCollapsed(SidebarName.Primary, false)
     resetSidebarWidth()
   })
@@ -105,12 +108,16 @@ describe('useResizeGridColumns', () => {
     smallScreen.value = true
     await nextTick()
 
-    expect(gridColumns.value).toEqual(`${DEFAULT_START_SIDEBAR_WIDTH}px minmax(0, 1fr)`)
+    expect(gridColumns.value).toEqual(
+      `${DEFAULT_SMALL_SCREEN_START_SIDEBAR_WIDTH}px minmax(0, 1fr)`,
+    )
 
     resizeSidebar(330)
 
     expect(localStorage.getItem(`${SidebarName.Primary}-sidebar-width`)).toEqual('312')
-    expect(gridColumns.value).toEqual(`${DEFAULT_START_SIDEBAR_WIDTH}px minmax(0, 1fr)`)
+    expect(gridColumns.value).toEqual(
+      `${DEFAULT_SMALL_SCREEN_START_SIDEBAR_WIDTH}px minmax(0, 1fr)`,
+    )
 
     smallScreen.value = false
     await nextTick()

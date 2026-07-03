@@ -35,7 +35,7 @@ describe('Left sidebar', () => {
       const aside = view.getByRole('complementary')
 
       expect(aside.parentElement).toHaveStyle({
-        '--grid-columns': '225px minmax(0, 1fr)',
+        '--grid-columns': '260px minmax(0, 1fr)',
       })
     })
 
@@ -72,7 +72,7 @@ describe('Left sidebar', () => {
       await view.events.click(expandButton)
 
       expect(aside.parentElement).toHaveStyle({
-        '--grid-columns': '225px minmax(0, 1fr)',
+        '--grid-columns': '260px minmax(0, 1fr)',
       })
     })
 
@@ -114,7 +114,7 @@ describe('Left sidebar', () => {
       await view.events.dblClick(resizeHandle)
 
       expect(aside.parentElement).toHaveStyle({
-        '--grid-columns': '225px minmax(0, 1fr)',
+        '--grid-columns': '260px minmax(0, 1fr)',
       })
     })
   })

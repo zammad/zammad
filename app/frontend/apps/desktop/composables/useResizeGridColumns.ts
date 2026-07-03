@@ -9,10 +9,15 @@ import { SidebarName, SidebarPosition } from '#desktop/components/layout/types.t
 import { useSidebarDisplay } from '#desktop/components/layout/useSidebarDisplay.ts'
 import { useAppBreakpoints } from '#desktop/composables/responsiveness/useAppBreakpoints.ts'
 
-export const DEFAULT_START_SIDEBAR_WIDTH = 225
-export const DEFAULT_END_SIDEBAR_WIDTH = 300
+export const DEFAULT_START_SIDEBAR_WIDTH = 260
+export const DEFAULT_END_SIDEBAR_WIDTH = 360
+
+export const DEFAULT_SMALL_SCREEN_START_SIDEBAR_WIDTH = 225
+export const DEFAULT_SMALL_SCREEN_END_SIDEBAR_WIDTH = 300
+
 export const MINIMUM_START_SIDEBAR_WIDTH = 200
 export const MINIMUM_END_SIDEBAR_WIDTH = 300
+
 export const SIDEBAR_COLLAPSED_WIDTH = 56
 
 export const useResizeGridColumns = (
@@ -21,6 +26,11 @@ export const useResizeGridColumns = (
 ) => {
   const defaultSidebarWidth =
     position === SidebarPosition.Start ? DEFAULT_START_SIDEBAR_WIDTH : DEFAULT_END_SIDEBAR_WIDTH
+
+  const defaultSmallScreenSidebarWidth =
+    position === SidebarPosition.Start
+      ? DEFAULT_SMALL_SCREEN_START_SIDEBAR_WIDTH
+      : DEFAULT_SMALL_SCREEN_END_SIDEBAR_WIDTH
 
   const minSidebarWidth =
     position === SidebarPosition.Start ? MINIMUM_START_SIDEBAR_WIDTH : MINIMUM_END_SIDEBAR_WIDTH
@@ -39,7 +49,7 @@ export const useResizeGridColumns = (
 
   const setupSidebarWidth = () => {
     currentSidebarWidth.value = isSmallScreen.value
-      ? defaultSidebarWidth
+      ? defaultSmallScreenSidebarWidth
       : persistedSidebarWidth.value
   }
 
@@ -50,7 +60,9 @@ export const useResizeGridColumns = (
   }
 
   const resetSidebarWidth = () => {
-    currentSidebarWidth.value = defaultSidebarWidth
+    currentSidebarWidth.value = isSmallScreen.value
+      ? defaultSmallScreenSidebarWidth
+      : defaultSidebarWidth
     persistSidebarWidth(defaultSidebarWidth)
   }
 
