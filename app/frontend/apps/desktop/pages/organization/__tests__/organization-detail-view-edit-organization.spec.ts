@@ -58,7 +58,7 @@ const visitOrganizationView = async () => {
   const view = await visitView(`/organizations/${organization.internalId}`)
 
   const main = view.getByRole('main')
-  const header = within(main).getByTestId('organization-detail-top-bar')
+  const header = within(main).getByTestId('organization-detail-top-bar-full-details')
 
   return { view, main, header }
 }
@@ -96,9 +96,9 @@ describe('Organization Detail View - Edit Organization', () => {
       formUpdater: FormUpdaterOrganization(),
     })
 
-    const { view } = await visitOrganizationView()
+    const { view, header } = await visitOrganizationView()
 
-    await view.events.click(view.getByRole('button', { name: 'Additional actions' }))
+    await view.events.click(within(header).getByRole('button', { name: 'Additional actions' }))
 
     const popover = await view.findByRole('region', { name: 'Additional actions' })
 

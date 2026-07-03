@@ -58,7 +58,7 @@ const visitOrganizationView = async () => {
   const view = await visitView(`/organizations/${organization.internalId}`)
 
   const main = view.getByRole('main')
-  const header = within(main).getByTestId('organization-detail-top-bar')
+  const header = within(main).getByTestId('organization-detail-top-bar-full-details')
 
   return { view, main, header }
 }

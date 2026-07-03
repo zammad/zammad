@@ -82,14 +82,16 @@ const { organizationDisplayName } = useOrganizationEntity(organization)
             {{ userDisplayName }}
           </CommonLabel>
         </component>
-        <CommonLabel
-          v-else
-          :size="titleSize ? titleSize : labelSize"
-          class="line-clamp-2! break-all text-gray-300! dark:text-neutral-400!"
-          :class="titleClass"
-        >
-          {{ userDisplayName }}
-        </CommonLabel>
+        <div v-else class="flex items-center">
+          <CommonLabel
+            :size="titleSize ? titleSize : labelSize"
+            class="line-clamp-2! break-all text-gray-300! dark:text-neutral-400!"
+            :class="titleClass"
+          >
+            {{ userDisplayName }}
+          </CommonLabel>
+          <slot name="label-trailing" />
+        </div>
 
         <OrganizationPopoverWithTrigger
           v-if="!dense && user.organization && hasOrganizationPopover"

@@ -99,7 +99,9 @@ describe('User Detail View - Edit User', () => {
 
     const view = await visitView('/users/2')
 
-    await view.events.click(view.getByRole('button', { name: 'Additional actions' }))
+    const topHeader = within(view.getByTestId('user-detail-top-bar-full-details'))
+
+    await view.events.click(topHeader.getByRole('button', { name: 'Additional actions' }))
 
     const popover = await view.findByRole('region', { name: 'Additional actions' })
 
@@ -206,7 +208,9 @@ describe('User Detail View - Edit User', () => {
 
     const view = await visitView('/users/2')
 
-    await view.events.click(view.getByRole('button', { name: 'Additional actions' }))
+    const topHeader = within(view.getByTestId('user-detail-top-bar-full-details'))
+
+    await view.events.click(topHeader.getByRole('button', { name: 'Additional actions' }))
 
     const popover = await view.findByRole('region', { name: 'Additional actions' })
 

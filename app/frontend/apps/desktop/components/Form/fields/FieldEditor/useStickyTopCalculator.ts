@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { useCssVar } from '@vueuse/core'
-import { watch, type ComputedRef } from 'vue'
+import { watch, type Ref } from 'vue'
 
 /**
  * Needs to be used whenever we have an absolute of fixed positioned element
@@ -12,7 +12,7 @@ import { watch, type ComputedRef } from 'vue'
  * of multiple instances on one screen which rely on a different value
  */
 export const useStickyTopCalculator = (
-  currentVisibleHeaderHeight: ComputedRef<number>,
+  currentVisibleHeaderHeight: Ref<number>,
   options = { offset: 0 },
 ) => {
   const topHeaderHeight = useCssVar('--top-header-height', undefined, {

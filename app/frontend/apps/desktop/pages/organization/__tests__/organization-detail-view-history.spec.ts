@@ -85,7 +85,7 @@ describe('Organization Detail View - History Flyout', () => {
     const view = await visitView(`/organizations/${organization.internalId}`)
 
     const main = view.getByRole('main')
-    const header = within(main).getByTestId('organization-detail-top-bar')
+    const header = within(main).getByTestId('organization-detail-top-bar-full-details')
 
     await view.events.click(within(header).getByRole('button', { name: 'Additional actions' }))
 
@@ -143,7 +143,7 @@ describe('Organization Detail View - History Flyout', () => {
       const view = await visitView('/organizations/2')
 
       const main = view.getByRole('main')
-      const header = within(main).getByTestId('organization-detail-top-bar')
+      const header = within(main).getByTestId('organization-detail-top-bar-full-details')
 
       await view.events.click(within(header).getByRole('button', { name: 'Additional actions' }))
       const actionPopover = await view.findByRole('region', { name: 'Additional actions' })

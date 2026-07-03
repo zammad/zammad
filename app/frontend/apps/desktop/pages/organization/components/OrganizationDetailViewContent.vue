@@ -5,6 +5,7 @@ import { computed, useTemplateRef } from 'vue'
 import { useRouter } from 'vue-router'
 
 import ObjectAttributes from '#shared/components/ObjectAttributes/ObjectAttributes.vue'
+import { useReducedMotion } from '#shared/composables/useReducedMotion.ts'
 import { useOrganizationDetail } from '#shared/entities/organization/composables/useOrganizationDetail.ts'
 import { useOrganizationEntity } from '#shared/entities/organization/composables/useOrganizationEntity.ts'
 import { useOrganizationNoteUpdateMutation } from '#shared/entities/organization/graphql/mutations/noteUpdate.api.ts'
@@ -12,9 +13,13 @@ import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import SubscriptionHandler from '#shared/server/apollo/handler/SubscriptionHandler.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
 import { GraphQLErrorTypes } from '#shared/types/error.ts'
+import { scrollIntoView } from '#shared/utils/dom.ts'
 import emitter from '#shared/utils/emitter.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
+import CommonFloatingToolbar from '#desktop/components/CommonFloatingToolbar/CommonFloatingToolbar.vue'
+import CommonIndicator from '#desktop/components/CommonIndicator/CommonIndicator.vue'
+import { useIndicator } from '#desktop/components/CommonIndicator/useIndicator.ts'
 import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
 import CommonSectionContainer from '#desktop/components/CommonSectionContainer/CommonSectionContainer.vue'
 import CommonShowMoreButton from '#desktop/components/CommonShowMoreButton/CommonShowMoreButton.vue'
@@ -97,6 +102,17 @@ organizationTicketsSubscription.onResult(({ data }) => {
 
   emitter.emit(`organization-ticket-list-refetch:${organizationId.value}`)
 })
+
+const { isIntersecting: isReachingBottom } = useIndicator()
+const { isIntersecting: isReachingTop } = useIndicator()
+
+const { hasReducedMotion } = useReducedMotion()
+
+const scrollTo = (position: 'start' | 'end' = 'end') => {
+  scrollIntoView(contentContainerElement.value, position, {
+    behavior: hasReducedMotion.value ? 'instant' : 'auto',
+  })
+}
 </script>
 
 <template>
@@ -113,6 +129,8 @@ organizationTicketsSubscription.onResult(({ data }) => {
       </template>
 
       <div ref="content-container" class="@container size-full overflow-y-auto">
+        <CommonIndicator v-model="isReachingTop" />
+
         <OrganizationDetailTopBar
           :organization="organization"
           :organization-display-name="organizationDisplayName"
@@ -185,6 +203,17 @@ organizationTicketsSubscription.onResult(({ data }) => {
             :organization-id="organizationId"
           />
         </section>
+
+        <div class="sticky bottom-3 h-0 print:hidden">
+          <CommonFloatingToolbar
+            class="absolute inset-e-3 bottom-3 print:hidden"
+            :is-reaching-bottom="isReachingBottom"
+            :is-reaching-top="isReachingTop"
+            @scroll-to-end="scrollTo()"
+            @scroll-to-start="scrollTo('start')"
+          />
+        </div>
+        <CommonIndicator v-model="isReachingBottom" />
       </div>
     </CommonLoader>
   </LayoutContent>

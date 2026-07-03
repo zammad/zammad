@@ -29,6 +29,13 @@ vi.mock('#shared/composables/useCopyToClipboard.ts', async () => ({
   useCopyToClipboard: () => ({ copyToClipboard: copyToClipboardMock }),
 }))
 
+const scrollIntoViewMock = vi.fn()
+
+vi.mock('#shared/utils/dom.ts', async (importOriginal) => ({
+  ...(await importOriginal<typeof import('#shared/utils/dom.ts')>()),
+  scrollIntoView: scrollIntoViewMock,
+}))
+
 const organizationData: Organization = {
   id: convertToGraphQLId('Organization', 1),
   internalId: 1,
@@ -147,7 +154,7 @@ const visitOrganizationView = async () => {
   const view = await visitView(`/organizations/${organizationData.internalId}`)
 
   const main = view.getByRole('main')
-  const header = within(main).getByTestId('organization-detail-top-bar')
+  const header = within(main).getByTestId('organization-detail-top-bar-full-details')
 
   return { view, main, header }
 }
@@ -537,6 +544,28 @@ describe('Organization Detail View', () => {
       })
 
       expect(calls).toHaveLength(2)
+    })
+  })
+
+  describe('Floating toolbar', () => {
+    it('scrolls the content container when scroll actions are clicked', async () => {
+      vi.stubGlobal('VITE_TEST_MODE', false)
+
+      const { main, view } = await visitOrganizationView()
+
+      const toolbar = within(main).getByRole('toolbar', { name: 'Scroll actions' })
+
+      await view.events.click(within(toolbar).getByRole('button', { name: 'Scroll to end' }))
+
+      expect(scrollIntoViewMock).toHaveBeenLastCalledWith(expect.anything(), 'end', {
+        behavior: 'auto',
+      })
+
+      await view.events.click(within(toolbar).getByRole('button', { name: 'Scroll to start' }))
+
+      expect(scrollIntoViewMock).toHaveBeenLastCalledWith(expect.anything(), 'start', {
+        behavior: 'auto',
+      })
     })
   })
 })

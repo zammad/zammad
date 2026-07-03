@@ -51,8 +51,10 @@ const { filteredMenuItems, singleMenuItemPresent, singleMenuItem } = usePopoverM
   { provides: true },
 )
 
-const entityId = computed(() => props.entity?.id || getUuid())
-const menuId = computed(() => `popover-${entityId.value}`)
+// Generated per component instance instead of derived from the entity, so
+// the same entity rendered in multiple places (e.g. compact/full headers) never ends up with duplicate DOM ids.
+const instanceId = getUuid()
+const menuId = computed(() => `popover-${instanceId}`)
 
 const singleActionAriaLabel = computed(() => {
   if (typeof singleMenuItem.value?.ariaLabel === 'function') {
@@ -124,7 +126,7 @@ const router = useRouter()
 
     <template v-else>
       <CommonButton
-        :id="`action-menu-${entityId}`"
+        :id="`action-menu-${instanceId}`"
         ref="popoverTarget"
         v-tooltip="customMenuButtonLabel || $t('Action menu button')"
         aria-haspopup="true"

@@ -202,7 +202,7 @@ describe('HighlightMenu', () => {
     it('sr-only description region has aria-live=polite', () => {
       const wrapper = renderHighlightMenu()
 
-      const liveRegion = wrapper.baseElement.querySelector('#highlight-menu-description')
+      const liveRegion = wrapper.baseElement.querySelector('[aria-live="polite"]')
 
       expect(liveRegion).toHaveAttribute('aria-live', 'polite')
     })

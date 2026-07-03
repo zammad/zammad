@@ -20,6 +20,13 @@ vi.mock('#shared/composables/useCopyToClipboard.ts', async () => ({
   useCopyToClipboard: () => ({ copyToClipboard: copyToClipboardMock }),
 }))
 
+const scrollIntoViewMock = vi.fn()
+
+vi.mock('#shared/utils/dom.ts', async (importOriginal) => ({
+  ...(await importOriginal<typeof import('#shared/utils/dom.ts')>()),
+  scrollIntoView: scrollIntoViewMock,
+}))
+
 const user: User = {
   __typename: 'User',
   id: 'gid://zammad/User/2',
@@ -175,7 +182,7 @@ describe('User Detail View', () => {
         const view = await visitView('/users/2')
 
         const main = view.getByRole('main')
-        const header = within(main).getByTestId('user-detail-top-bar')
+        const header = within(main).getByTestId('user-detail-top-bar-full-details')
         const breadcrumb = within(header).getByRole('navigation', { name: 'Breadcrumb navigation' })
         const items = within(breadcrumb).getAllByRole('listitem')
 
@@ -188,7 +195,7 @@ describe('User Detail View', () => {
         const view = await visitView('/users/2')
 
         const main = view.getByRole('main')
-        const header = within(main).getByTestId('user-detail-top-bar')
+        const header = within(main).getByTestId('user-detail-top-bar-full-details')
         const breadcrumb = within(header).getByRole('navigation', { name: 'Breadcrumb navigation' })
 
         await view.events.click(
@@ -212,7 +219,7 @@ describe('User Detail View', () => {
         const view = await visitView('/users/2')
 
         const main = view.getByRole('main')
-        const header = within(main).getByTestId('user-detail-top-bar')
+        const header = within(main).getByTestId('user-detail-top-bar-full-details')
 
         expect(within(header).getByLabelText('Avatar (Nicole Braun)')).toHaveTextContent('NB')
         expect(within(header).getByText('Nicole Braun', { selector: 'span' })).toBeVisible()
@@ -225,7 +232,7 @@ describe('User Detail View', () => {
         const view = await visitView('/users/2')
 
         const main = view.getByRole('main')
-        const header = within(main).getByTestId('user-detail-top-bar')
+        const header = within(main).getByTestId('user-detail-top-bar-full-details')
 
         expect(within(header).getByRole('button', { name: 'New ticket' })).toBeVisible()
 
@@ -244,7 +251,7 @@ describe('User Detail View', () => {
         const view = await visitView('/users/2')
 
         const main = view.getByRole('main')
-        const header = within(main).getByTestId('user-detail-top-bar')
+        const header = within(main).getByTestId('user-detail-top-bar-full-details')
 
         await view.events.click(within(header).getByRole('button', { name: 'Additional actions' }))
 
@@ -256,7 +263,7 @@ describe('User Detail View', () => {
         const view = await visitView('/users/2')
 
         const main = view.getByRole('main')
-        const header = within(main).getByTestId('user-detail-top-bar')
+        const header = within(main).getByTestId('user-detail-top-bar-full-details')
 
         await view.events.click(within(header).getByRole('button', { name: 'Additional actions' }))
 
@@ -553,6 +560,29 @@ describe('User Detail View', () => {
         })
 
         expect(calls).toHaveLength(2)
+      })
+    })
+
+    describe('Floating toolbar', () => {
+      it('scrolls the content container when scroll actions are clicked', async () => {
+        vi.stubGlobal('VITE_TEST_MODE', false)
+
+        const view = await visitView('/users/2')
+
+        const main = view.getByRole('main')
+        const toolbar = within(main).getByRole('toolbar', { name: 'Scroll actions' })
+
+        await view.events.click(within(toolbar).getByRole('button', { name: 'Scroll to end' }))
+
+        expect(scrollIntoViewMock).toHaveBeenLastCalledWith(expect.anything(), 'end', {
+          behavior: 'auto',
+        })
+
+        await view.events.click(within(toolbar).getByRole('button', { name: 'Scroll to start' }))
+
+        expect(scrollIntoViewMock).toHaveBeenLastCalledWith(expect.anything(), 'start', {
+          behavior: 'auto',
+        })
       })
     })
   })

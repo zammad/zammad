@@ -4,6 +4,8 @@
 import { onKeyStroke, useEventListener, whenever } from '@vueuse/core'
 import { computed, onUnmounted, watch } from 'vue'
 
+import getUuid from '#shared/utils/getUuid.ts'
+
 import CommonPopoverMenu from '#desktop/components/CommonPopoverMenu/CommonPopoverMenu.vue'
 import SplitButton from '#desktop/components/SplitButton/SplitButton.vue'
 
@@ -11,6 +13,8 @@ import { useHighlightMenuState } from '../composables/useHighlightMenuState.ts'
 
 const { activeMenuItem, isActive, isEraserActive, setActive, selectItem, items, reset } =
   useHighlightMenuState()
+
+const descriptionId = getUuid()
 
 // To deactivate isActive whenever we are not within the article body
 whenever(isActive, () => {
@@ -90,12 +94,12 @@ onUnmounted(() => {
       "
       :class="{ [activeColorClass]: isActive }"
       class="flex aspect-square size-7! p-0!"
-      arrow-classes="size-7!"
+      arrow-classes="size-7! py-0!"
       variant="tertiary-light"
       size="small"
       :addon-label="__('Highlight options')"
       :aria-pressed="isActive"
-      aria-describedby="highlight-menu-description"
+      :aria-describedby="descriptionId"
       caret-pointer="down"
       orientation="autoVertical"
       placement="arrowEnd"
@@ -151,7 +155,7 @@ onUnmounted(() => {
       </template>
     </SplitButton>
 
-    <div id="highlight-menu-description" class="sr-only" aria-live="polite">
+    <div :id="descriptionId" class="sr-only" aria-live="polite">
       <p>{{ $t('Selected highlight color: %s', $t(activeColorLabel)) }}</p>
       <p v-if="isActive">
         {{ $t('Highlighting is active. Select content in the ticket article to apply.') }}

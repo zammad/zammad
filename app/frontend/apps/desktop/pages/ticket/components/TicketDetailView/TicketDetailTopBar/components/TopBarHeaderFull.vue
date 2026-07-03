@@ -1,11 +1,7 @@
 <!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed, ref, toRef } from 'vue'
-
-import { useCopyToClipboard } from '#shared/composables/useCopyToClipboard.ts'
-import { useTicketView } from '#shared/entities/ticket/composables/useTicketView.ts'
-import { useApplicationStore } from '#shared/stores/application.ts'
+import { computed } from 'vue'
 
 import CommonBreadcrumb from '#desktop/components/CommonBreadcrumb/CommonBreadcrumb.vue'
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
@@ -14,34 +10,19 @@ import OrganizationPopoverWithTrigger from '#desktop/components/Organization/Org
 import UserPopoverWithTrigger from '#desktop/components/User/UserPopoverWithTrigger.vue'
 import HighlightMenu from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/HighlightMenu.vue'
 import TicketInformationBadgeList from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TicketInformationFull/TicketInformationBadgeList.vue'
-import { useTicketEditTitle } from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/composables/useTicketEditTitle.ts'
-import { useTicketInformation } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
-import { useTicketNumber } from '#desktop/pages/ticket/composables/useTicketNumber.ts'
 
-const { ticket, ticketId } = useTicketInformation()
+import { useTopBarHeader } from './useTopBarHeader.ts'
 
-const { isTicketAgent, isTicketEditable } = useTicketView(ticket)
-
-const { copyToClipboard } = useCopyToClipboard()
-
-const { ticketNumber, ticketNumberWithTicketHook } = useTicketNumber(ticket)
-
-const config = toRef(useApplicationStore(), 'config')
-
-const copyTicketNumberToClipboard = () => {
-  if (!ticketNumberWithTicketHook.value || !ticket.value?.internalId) return
-
-  copyToClipboard([
-    new ClipboardItem({
-      'text/plain': ticketNumberWithTicketHook.value,
-      'text/html': `<a href="${config.value.http_type}://${config.value.fqdn}/desktop/tickets/${ticket.value.internalId}">${ticketNumberWithTicketHook.value}</a>`,
-    }),
-  ])
-}
-
-const isUpdatingTitle = ref(false)
-
-const { updateTitle } = useTicketEditTitle(ticketId)
+const {
+  ticket,
+  ticketNumber,
+  ticketNumberWithTicketHook,
+  isTicketAgent,
+  isTicketEditable,
+  copyTicketNumberToClipboard,
+  isUpdatingTitle,
+  updateTitle,
+} = useTopBarHeader()
 
 const items = computed(() => [
   {

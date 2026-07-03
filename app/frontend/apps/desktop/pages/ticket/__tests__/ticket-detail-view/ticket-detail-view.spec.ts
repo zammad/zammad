@@ -112,7 +112,11 @@ describe('Ticket detail view', () => {
 
       const view = await visitView('/tickets/1')
 
-      expect(view.getByRole('heading', { name: 'Test Ticket', level: 2 })).toBeInTheDocument()
+      const topHeader = within(view.getByTestId('ticket-detail-top-bar-full-details'))
+
+      expect(
+        await topHeader.findByRole('heading', { name: 'Test Ticket', level: 2 }),
+      ).toBeInTheDocument()
 
       const ticketDetailHeader = view.getByTestId('ticket-detail-top-bar-full-details')
 

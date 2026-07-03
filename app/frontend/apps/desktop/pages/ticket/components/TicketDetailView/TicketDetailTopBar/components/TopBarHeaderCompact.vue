@@ -1,46 +1,24 @@
 <!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { ref, toRef } from 'vue'
-
-import { useCopyToClipboard } from '#shared/composables/useCopyToClipboard.ts'
-import { useTicketView } from '#shared/entities/ticket/composables/useTicketView.ts'
-import { useApplicationStore } from '#shared/stores/application.ts'
-
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonInlineEdit from '#desktop/components/CommonInlineEdit/CommonInlineEdit.vue'
 import OrganizationPopoverWithTrigger from '#desktop/components/Organization/OrganizationPopoverWithTrigger.vue'
 import UserPopoverWithTrigger from '#desktop/components/User/UserPopoverWithTrigger.vue'
 import HighlightMenu from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/HighlightMenu.vue'
-import { useTicketInformation } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
-import { useTicketNumber } from '#desktop/pages/ticket/composables/useTicketNumber.ts'
 
-import { useTicketEditTitle } from '../composables/useTicketEditTitle.ts'
+import { useTopBarHeader } from './useTopBarHeader.ts'
 
-const config = toRef(useApplicationStore(), 'config')
-
-const { ticket, ticketId } = useTicketInformation()
-
-const { ticketNumber, ticketNumberWithTicketHook } = useTicketNumber(ticket)
-
-const { isTicketAgent, isTicketEditable } = useTicketView(ticket)
-
-const { copyToClipboard } = useCopyToClipboard()
-
-const isUpdatingTitle = ref(false)
-
-const { updateTitle } = useTicketEditTitle(ticketId)
-
-const copyTicketNumberToClipboard = () => {
-  if (!ticketNumberWithTicketHook.value || !ticket.value?.internalId) return
-
-  copyToClipboard([
-    new ClipboardItem({
-      'text/plain': ticketNumberWithTicketHook.value,
-      'text/html': `<a href="${config.value.http_type}://${config.value.fqdn}/desktop/tickets/${ticket.value.internalId}">${ticketNumberWithTicketHook.value}</a>`,
-    }),
-  ])
-}
+const {
+  ticket,
+  ticketNumber,
+  ticketNumberWithTicketHook,
+  isTicketAgent,
+  isTicketEditable,
+  copyTicketNumberToClipboard,
+  isUpdatingTitle,
+  updateTitle,
+} = useTopBarHeader()
 </script>
 
 <template>

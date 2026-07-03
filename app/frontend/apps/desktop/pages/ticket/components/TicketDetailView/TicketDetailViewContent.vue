@@ -28,7 +28,6 @@ import type { FormSubmitData, FormValues } from '#shared/components/Form/types.t
 import { useForm } from '#shared/components/Form/useForm.ts'
 import { setErrors } from '#shared/components/Form/utils.ts'
 import { useConfirmation } from '#shared/composables/useConfirmation.ts'
-import { useReducedMotion } from '#shared/composables/useReducedMotion.ts'
 import {
   useTicketMacros,
   macroScreenBehaviourMapping,
@@ -156,21 +155,10 @@ usePage({
 
 const { scrollIntoView: scrollToArticle } = useScrollPosition(contentContainerElement)
 
-const { hasReducedMotion } = useReducedMotion()
-
 const handleScrollToArticleEnds = async (
   block: 'start' | 'end' = 'end',
-  behavior?: ScrollToOptions['behavior'],
-) => {
-  let scrollBehavior = behavior
-
-  if (hasReducedMotion.value) {
-    scrollBehavior = 'instant'
-  } else {
-    scrollBehavior = behavior ?? 'smooth'
-  }
-  return scrollToArticle(block, { behavior: scrollBehavior })
-}
+  behavior: ScrollOptions['behavior'] = 'auto',
+) => scrollToArticle(block, { behavior })
 
 const articleListInstance = useTemplateRef('article-list')
 

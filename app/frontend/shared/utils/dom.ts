@@ -1,8 +1,10 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { type MaybeRef, toValue } from 'vue'
+import { type MaybeRef, nextTick, toValue } from 'vue'
 
 import type { FormFieldValue } from '#shared/components/Form/types.ts'
+
+import { waitForAnimationFrame } from './helpers.ts'
 
 export const domFrom = (html: string, document_ = document) => {
   const dom = document_.createElement('div')
@@ -63,4 +65,27 @@ export const waitForImagesToLoad = async (container: MaybeRef) => {
   }
 
   return Promise.allSettled<null>([])
+}
+
+export const scrollIntoView = async (
+  scrollElement: MaybeRef<HTMLElement | null | undefined>,
+  block: 'start' | 'end',
+  options?: { behavior: ScrollOptions['behavior']; postFlush?: boolean },
+) => {
+  const { behavior = 'smooth', postFlush } = options || {}
+
+  if (postFlush) {
+    await nextTick()
+    await waitForAnimationFrame()
+  }
+
+  const container = toValue(scrollElement)
+  if (!container || !container?.scrollTo) return
+
+  const top = block === 'start' ? 0 : container.scrollHeight
+
+  container?.scrollTo({
+    behavior,
+    top,
+  })
 }

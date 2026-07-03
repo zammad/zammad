@@ -68,14 +68,30 @@ const { y } = useElementScroll(toRef(props, 'contentContainerElement') as Ref<HT
 
 const containerWidth = computed(() => (width.value ? `${width.value}px` : 'auto'))
 
-const absoluteContainerOffset = computed(() => {
+const compactHeaderOffset = computed(() => {
   const totalHeight = shouldShowChannelAlert.value
     ? wrapperHeight.value + alertHeight.value + NEGATIVE_PADDING
     : headerHeight.value + NEGATIVE_PADDING
-  const offset = y.value - totalHeight
 
-  return `${offset > 0 ? 0 : offset}px`
+  return y.value - totalHeight
 })
+
+const hasMeasuredCompactHeaderThreshold = computed(() => {
+  if (shouldShowChannelAlert.value) return wrapperHeight.value > 0 && alertHeight.value > 0
+
+  return headerHeight.value > 0
+})
+
+// The compact header ends up as the persistent, fully docked header once scrolled far enough,
+// while the full header slides away. Interactivity/a11y exposure is switched over at the exact
+// same point, so exactly one header is ever focusable/clickable/announced at a time.
+const isCompactHeaderVisible = computed(
+  () => hasMeasuredCompactHeaderThreshold.value && compactHeaderOffset.value > 0,
+)
+
+const absoluteContainerOffset = computed(
+  () => `${isCompactHeaderVisible.value ? 0 : compactHeaderOffset.value}px`,
+)
 
 const stickyContainerTop = computed(() => {
   const threshold = shouldShowChannelAlert.value
@@ -121,7 +137,7 @@ const { hasReducedMotion } = useReducedMotion()
     >
       <TopBarHeaderCompact
         :class="[headerBaseClasses, headerBackgroundClasses(true), 'p-3']"
-        aria-hidden="true"
+        :inert="!isCompactHeaderVisible"
       />
       <CommonAlert :class="alertWithBlurClasses" :variant="channelAlert?.variant">
         {{ $t(channelAlert?.text, channelAlert?.textPlaceholder) }}
@@ -136,7 +152,10 @@ const { hasReducedMotion } = useReducedMotion()
         top: stickyContainerTop,
       }"
     >
-      <TopBarHeaderFull :class="[headerBaseClasses, headerBackgroundClasses(false), 'p-3']" />
+      <TopBarHeaderFull
+        :class="[headerBaseClasses, headerBackgroundClasses(false), 'p-3']"
+        :inert="isCompactHeaderVisible"
+      />
       <CommonAlert
         ref="alert"
         class="print:hidden"
@@ -153,7 +172,7 @@ const { hasReducedMotion } = useReducedMotion()
       ref="header-compact"
       class="absolute inset-x-0 top-0 z-30 print:hidden"
       :class="[headerBaseClasses, headerBackgroundClasses(true)]"
-      aria-hidden="true"
+      :inert="!isCompactHeaderVisible"
       data-test-id="ticket-detail-top-bar-clipped-details"
       :style="{
         transform: `translateY(${absoluteContainerOffset})`,
@@ -168,6 +187,7 @@ const { hasReducedMotion } = useReducedMotion()
         headerBackgroundClasses(true),
         { 'transition-[top]': !hasReducedMotion },
       ]"
+      :inert="isCompactHeaderVisible"
       data-test-id="ticket-detail-top-bar-full-details"
       :style="{
         top: stickyContainerTop,
