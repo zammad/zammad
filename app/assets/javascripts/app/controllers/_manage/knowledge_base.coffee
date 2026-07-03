@@ -122,6 +122,11 @@ class App.ManageKnowledgeBase extends App.ControllerTabs
         controller: App.KnowledgeBasePublicMenuManager
         params:     _.extend({}, params, { screen: 'public_menu' })
       },{
+      name:       __('Video Servers')
+      target:     'video_servers'
+      controller: App.KnowledgeBaseVideoServersManager
+      params:     params
+      },{
         name:       __('Delete')
         target:     'delete'
         controller: App.KnowledgeBaseDelete

@@ -45,6 +45,7 @@ export interface ConfigList {
   kb_active: boolean
   kb_active_publicly: boolean
   kb_multi_lingual_support: boolean
+  kb_self_hosted_video_servers: unknown
   ldap_integration?: boolean | null
   locale_default: string
   maintenance_login: boolean

@@ -19,6 +19,19 @@ RSpec.describe 'Public Knowledge Base answer', type: :system do
       end
     end
 
+    context 'self-hosted video content' do
+      before do
+        published_answer_with_self_hosted_video
+      end
+
+      it 'shows the embedded player for a whitelisted media server' do
+        visit help_answer_path(primary_locale.system_locale.locale, category, published_answer_with_self_hosted_video)
+
+        iframe = find('iframe')
+        expect(iframe['src']).to eq('https://video.example.com/videos/embed/uuid-1')
+      end
+    end
+
     context 'image content' do
       before do
         published_answer_with_image

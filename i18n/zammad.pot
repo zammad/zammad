@@ -318,7 +318,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/meta.jst.eco:19
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStatus.vue:208
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList/ChecklistBadgeList.vue:44
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TicketInformationFull/TicketInformationBadgeList/ChecklistBadgeList.vue:44
 msgid "%s of %s"
 msgstr ""
 
@@ -384,7 +384,7 @@ msgid "%s ticket(s) selected, selection limit reached"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/meta.jst.eco:30
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList/ReferencingTicketsBadgePopover.vue:63
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TicketInformationFull/TicketInformationBadgeList/ReferencingTicketsBadgePopover.vue:63
 #: app/frontend/apps/mobile/components/Organization/OrganizationItem.vue:51
 #: app/frontend/apps/mobile/components/User/UserItem.vue:31
 msgid "%s tickets"
@@ -627,7 +627,7 @@ msgstr ""
 msgid "A queue is required!"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee:243
+#: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee:249
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketAIKnowledgeBaseAnswers.vue:40
 msgid "A related knowledge base answer is being generated. You will be notified once the draft is ready."
 msgstr ""
@@ -861,7 +861,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/generic/text_tools_modal.jst.eco:10
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_ticket_summary.jst.eco:7
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketAISuggestedKnowledgeBaseAnswers.vue:113
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketAISuggestedKnowledgeBaseAnswers.vue:130
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummaryContent.vue:91
 msgid "API server error: %s"
 msgstr ""
@@ -1381,6 +1381,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:158
 msgid "Add unordered list"
+msgstr ""
+
+#: app/assets/javascripts/app/views/knowledge_base_video_servers/index.jst.eco:4
+msgid "Add your video server address here so it can be included in the Content Security Policy exceptions. Currently supported solutions are MediaCMS and PeerTube."
 msgstr ""
 
 #: app/controllers/first_steps_controller.rb:105
@@ -1999,6 +2003,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee:34
 msgid "Are you sure? The agent default notifications settings will be reset to the system default."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/knowledge_base/video_servers_manager.coffee:59
+msgid "Are you sure? The embedded videos from this server will not be playable anymore."
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:79
@@ -2654,7 +2662,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/highlighter.coffee:20
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/useArticleHighlights/useArticleHighlightsA11y.ts:13
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/useHighlightMenuState.ts:14
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/composables/useHighlightMenuState.ts:14
 msgid "Blue"
 msgstr ""
 
@@ -3923,7 +3931,7 @@ msgstr ""
 msgid "Context"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/SplitButton/SplitButton.vue:107
+#: app/frontend/apps/desktop/components/SplitButton/SplitButton.vue:108
 msgid "Context menu"
 msgstr ""
 
@@ -4022,7 +4030,8 @@ msgstr ""
 msgid "Copy text"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader.vue:79
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderCompact.vue:56
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderFull.vue:73
 msgid "Copy ticket number"
 msgstr ""
 
@@ -4127,7 +4136,7 @@ msgid "Could not set two-factor authentication method as default"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/link.coffee:69
-#: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee:226
+#: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee:232
 msgid "Couldn't save changes"
 msgstr ""
 
@@ -4214,7 +4223,7 @@ msgstr ""
 msgid "Create a shared draft"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/knowledge_base/reader_controller.coffee:219
+#: app/assets/javascripts/app/controllers/knowledge_base/reader_controller.coffee:223
 msgid "Create a translation"
 msgstr ""
 
@@ -4317,7 +4326,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco:20
 #: app/frontend/apps/desktop/components/Ticket/TicketBarChart/useTicketStatsChart.ts:94
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:94
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList.vue:35
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TicketInformationFull/TicketInformationBadgeList.vue:35
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:124
 #: app/models/report.rb:22
 msgid "Created"
@@ -4488,7 +4497,7 @@ msgstr ""
 msgid "Custom Translation"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee:134
+#: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee:139
 #: app/assets/javascripts/app/models/knowledge_base.coffee:290
 msgid "Custom URL"
 msgstr ""
@@ -5074,7 +5083,7 @@ msgstr ""
 msgid "Defines if the application is in developer mode (all users have the same password and password reset will work without email delivery)."
 msgstr ""
 
-#: db/seeds/settings.rb:6352
+#: db/seeds/settings.rb:6366
 msgid "Defines if the bubble menu feature of the richtext editor is enabled. Note that this setting will be ignored if the writing assistant is turned on."
 msgstr ""
 
@@ -5302,7 +5311,7 @@ msgstr ""
 msgid "Defines the backend service for ticket article language detection."
 msgstr ""
 
-#: db/seeds/settings.rb:6329
+#: db/seeds/settings.rb:6343
 msgid "Defines the chunking strategy for the knowledge base vector database."
 msgstr ""
 
@@ -5495,7 +5504,7 @@ msgstr ""
 msgid "Defines whether the matching tickets are shown in case of already existing tickets."
 msgstr ""
 
-#: db/seeds/settings.rb:6320
+#: db/seeds/settings.rb:6334
 msgid "Defines which knowledge base categories are included in the vector database."
 msgstr ""
 
@@ -5522,7 +5531,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm_delete.coffee:4
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_destroy_confirm.coffee:4
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee:715
-#: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee:125
+#: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee:130
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:188
 #: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:78
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee:9
@@ -5541,6 +5550,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco:75
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco:53
 #: app/assets/javascripts/app/views/knowledge_base/public_menu_form_item.jst.eco:18
+#: app/assets/javascripts/app/views/knowledge_base_video_servers/index.jst.eco:28
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:29
 #: app/assets/javascripts/app/views/profile/devices.jst.eco:25
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:21
@@ -6272,6 +6282,10 @@ msgstr ""
 msgid "Edit Organization"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/knowledge_base/video_servers_manager.coffee:41
+msgid "Edit Video Server"
+msgstr ""
+
 #: app/frontend/apps/desktop/entities/two-factor-configuration/plugins/authenticator-app.ts:20
 msgid "Edit authenticator app"
 msgstr ""
@@ -6308,7 +6322,8 @@ msgstr ""
 msgid "Edit security keys"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation.vue:95
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderCompact.vue:117
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderFull.vue:161
 msgid "Edit ticket title"
 msgstr ""
 
@@ -6626,7 +6641,7 @@ msgstr ""
 msgid "Enable or disable the ticket summary."
 msgstr ""
 
-#: db/seeds/settings.rb:6310
+#: db/seeds/settings.rb:6324
 msgid "Enable or disable the vector database, which is used for storing and retrieving vectorized data. Elasticsearch is used as the vector database backend."
 msgstr ""
 
@@ -6919,6 +6934,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/timezone.coffee:35
 msgid "Enter time zone"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/embed_video_button.coffee:13
+msgid "Enter video URL"
 msgstr ""
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco:36
@@ -8077,7 +8096,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/highlighter.coffee:16
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/useArticleHighlights/useArticleHighlightsA11y.ts:12
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/useHighlightMenuState.ts:13
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/composables/useHighlightMenuState.ts:13
 msgid "Green"
 msgstr ""
 
@@ -8431,7 +8450,7 @@ msgstr ""
 msgid "Highlight icon"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/HighlightMenu.vue:95
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/HighlightMenu.vue:96
 msgid "Highlight options"
 msgstr ""
 
@@ -8443,15 +8462,15 @@ msgstr ""
 msgid "Highlighted text"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/HighlightMenu.vue:89
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/HighlightMenu.vue:89
 msgid "Highlighter color: %s"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/HighlightMenu.vue:156
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/HighlightMenu.vue:157
 msgid "Highlighting is active. Select content in the ticket article to apply."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/HighlightMenu.vue:158
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/HighlightMenu.vue:159
 msgid "Highlighting is inactive."
 msgstr ""
 
@@ -8498,8 +8517,10 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:331
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:80
 #: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:69
+#: app/assets/javascripts/app/controllers/knowledge_base/video_servers_manager.coffee:80
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:73
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:29
+#: app/assets/javascripts/app/views/knowledge_base_video_servers/index.jst.eco:11
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:107
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:63
 msgid "Host"
@@ -8938,7 +8959,7 @@ msgstr ""
 msgid "Incomplete credentials"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:478
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:484
 msgid "Incomplete ticket checklist"
 msgstr ""
 
@@ -9284,7 +9305,7 @@ msgstr ""
 msgid "Invalid values in step %s"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_video.coffee:40
+#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_video.coffee:78
 msgid "Invalid video URL"
 msgstr ""
 
@@ -9551,6 +9572,10 @@ msgstr ""
 #: app/graphql/gql/mutations/ticket/ai_assistance/enqueue_knowledge_base_answer.rb:18
 #: app/services/service/ticket/ai_assistance/create_knowledge_base_answer.rb:45
 msgid "Knowledge base is unavailable or not properly configured."
+msgstr ""
+
+#: db/seeds/settings.rb:6307
+msgid "Knowledge base self-hosted video servers"
 msgstr ""
 
 #: app/controllers/ticket/related_knowledge_base_answers_controller.rb:15
@@ -9938,6 +9963,10 @@ msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem/IssueTrackerBadgeList.vue:14
 msgid "List of issue labels"
+msgstr ""
+
+#: db/seeds/settings.rb:6310
+msgid "List of self-hosted video servers. This list is used for content security policy."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:212
@@ -10980,6 +11009,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:325
 #: app/assets/javascripts/app/controllers/_ui_element/object_attribute_options_context.coffee:21
 #: app/assets/javascripts/app/controllers/chat.coffee:559
+#: app/assets/javascripts/app/controllers/knowledge_base/video_servers_manager.coffee:79
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee:58
 #: app/assets/javascripts/app/models/_application_model.coffee:160
 #: app/assets/javascripts/app/models/ai_agent.coffee:6
@@ -11025,6 +11055,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:19
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:19
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco:11
+#: app/assets/javascripts/app/views/knowledge_base_video_servers/index.jst.eco:10
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:56
 #: app/assets/javascripts/app/views/package.jst.eco:47
 #: app/assets/javascripts/app/views/profile/devices.jst.eco:12
@@ -11104,7 +11135,7 @@ msgstr ""
 msgid "Need user_id or organization_id as param"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:98
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:101
 msgid "Negative feedback"
 msgstr ""
 
@@ -11278,6 +11309,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:140
 msgid "New Version"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/knowledge_base/video_servers_manager.coffee:29
+#: app/assets/javascripts/app/views/knowledge_base_video_servers/index.jst.eco:37
+msgid "New Video Server"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/webhook.coffee:31
@@ -11510,7 +11546,7 @@ msgstr ""
 msgid "No checklist templates have been created yet."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:115
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:118
 msgid "No comment"
 msgstr ""
 
@@ -11633,7 +11669,7 @@ msgid "No related article found to process the status message on."
 msgstr ""
 
 #: app/assets/javascripts/app/views/link/kb_answer.jst.eco:27
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketAISuggestedKnowledgeBaseAnswers.vue:143
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketAISuggestedKnowledgeBaseAnswers.vue:160
 msgid "No related knowledge base answers found."
 msgstr ""
 
@@ -11665,6 +11701,10 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleSecurityWarning.vue:29
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:189
 msgid "No security information available."
+msgstr ""
+
+#: app/assets/javascripts/app/views/knowledge_base_video_servers/index.jst.eco:18
+msgid "No self-hosted video servers configured yet."
 msgstr ""
 
 #: lib/sessions/event/chat_session_start.rb:23
@@ -11742,7 +11782,7 @@ msgid "No x-zammad-session-user-id, no sender set!"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:8
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:481
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:487
 msgid "No, just close the ticket"
 msgstr ""
 
@@ -11809,7 +11849,7 @@ msgstr ""
 msgid "Not authorized (token expired)!"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/knowledge_base/reader_controller.coffee:217
+#: app/assets/javascripts/app/controllers/knowledge_base/reader_controller.coffee:221
 msgid "Not available in selected language"
 msgstr ""
 
@@ -12117,6 +12157,10 @@ msgstr ""
 msgid "One of the required parameters must be provided, but none was found."
 msgstr ""
 
+#: app/models/setting/validation/kb_self_hosted_video_servers.rb:10
+msgid "One or more self-hosted video servers are invalid. Please check the host names."
+msgstr ""
+
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:50
 #: public/assets/chat/chat.coffee:207
 msgid "Online"
@@ -12214,7 +12258,7 @@ msgstr ""
 msgid "Open and closed tickets ratio (ticket counts based on state)"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList/ChecklistBadgeList.vue:31
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TicketInformationFull/TicketInformationBadgeList/ChecklistBadgeList.vue:31
 msgid "Open checklist"
 msgstr ""
 
@@ -12226,7 +12270,7 @@ msgstr ""
 msgid "Open in primary locale"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:65
+#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:66
 msgid "Open link"
 msgstr ""
 
@@ -12944,7 +12988,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/highlighter.coffee:24
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/useArticleHighlights/useArticleHighlightsA11y.ts:14
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/useHighlightMenuState.ts:15
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/composables/useHighlightMenuState.ts:15
 msgid "Pink"
 msgstr ""
 
@@ -13156,7 +13200,7 @@ msgstr ""
 msgid "Position"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:91
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:94
 msgid "Positive feedback"
 msgstr ""
 
@@ -13475,7 +13519,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/highlighter.coffee:28
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/useArticleHighlights/useArticleHighlightsA11y.ts:15
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/useHighlightMenuState.ts:16
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/composables/useHighlightMenuState.ts:16
 msgid "Purple"
 msgstr ""
 
@@ -13638,7 +13682,7 @@ msgstr ""
 msgid "Recursive Ticket Triggers"
 msgstr ""
 
-#: db/seeds/settings.rb:6338
+#: db/seeds/settings.rb:6352
 msgid "Recursive hierarchical chunking"
 msgstr ""
 
@@ -13657,7 +13701,7 @@ msgstr ""
 msgid "References - Search for follow-up also in In-Reply-To or References headers."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:131
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:134
 msgid "Regenerate"
 msgstr ""
 
@@ -13825,8 +13869,8 @@ msgstr ""
 msgid "Remove formatting"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/HighlightMenu.vue:89
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/useHighlightMenuState.ts:21
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/HighlightMenu.vue:89
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/composables/useHighlightMenuState.ts:21
 msgid "Remove highlight"
 msgstr ""
 
@@ -14164,7 +14208,7 @@ msgstr ""
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:64
 #: app/frontend/apps/desktop/pages/authentication/components/LoginTwoFactor.vue:180
 #: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue:131
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketAISuggestedKnowledgeBaseAnswers.vue:117
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketAISuggestedKnowledgeBaseAnswers.vue:134
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummaryContent.vue:96
 #: app/frontend/apps/mobile/pages/authentication/components/LoginTwoFactor.vue:183
 msgid "Retry"
@@ -14188,7 +14232,7 @@ msgstr ""
 msgid "Rewrite complex section and make it easy to understand"
 msgstr ""
 
-#: db/seeds/settings.rb:6349
+#: db/seeds/settings.rb:6363
 msgid "Richtext Bubble Menu"
 msgstr ""
 
@@ -14563,11 +14607,11 @@ msgstr ""
 msgid "Scroll to start"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonTabs/TabsScrollList.vue:267
+#: app/frontend/apps/desktop/components/CommonTabs/TabsScrollList.vue:272
 msgid "Scroll towards end"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonTabs/TabsScrollList.vue:216
+#: app/frontend/apps/desktop/components/CommonTabs/TabsScrollList.vue:221
 msgid "Scroll towards start"
 msgstr ""
 
@@ -14770,7 +14814,7 @@ msgid "Search result value key \"%s\" was not found."
 msgstr ""
 
 #: app/assets/javascripts/app/views/link/kb_answer.jst.eco:22
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketAISuggestedKnowledgeBaseAnswers.vue:125
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketAISuggestedKnowledgeBaseAnswers.vue:142
 msgid "Searching for related answers…"
 msgstr ""
 
@@ -14778,7 +14822,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax_customer_organization.coffee:18
 #: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax_external_data_source.coffee:13
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:845
-#: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee:174
+#: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee:180
 #: app/assets/javascripts/app/views/generic/icon_picker.jst.eco:9
 #: app/assets/javascripts/app/views/translation/form.jst.eco:7
 #: app/frontend/apps/desktop/components/CommonInputSearch/CommonInputSearch.vue:24
@@ -15012,7 +15056,7 @@ msgstr ""
 msgid "Selected conditions"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/HighlightMenu.vue:154
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/HighlightMenu.vue:155
 msgid "Selected highlight color: %s"
 msgstr ""
 
@@ -15059,6 +15103,10 @@ msgstr ""
 #: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue:171
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue:201
 msgid "Select…"
+msgstr ""
+
+#: app/models/setting/validation/kb_self_hosted_video_servers.rb:6
+msgid "Self-hosted video servers list must be an array."
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:78
@@ -15176,7 +15224,7 @@ msgstr ""
 msgid "Sent successfully!"
 msgstr ""
 
-#: db/seeds/settings.rb:6339
+#: db/seeds/settings.rb:6353
 msgid "Sentence-based chunking"
 msgstr ""
 
@@ -15578,11 +15626,11 @@ msgstr ""
 msgid "Show to user roles"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList/ReferencingTicketsBadgePopover.vue:34
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TicketInformationFull/TicketInformationBadgeList/ReferencingTicketsBadgePopover.vue:34
 msgid "Show tracking ticket"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList/ReferencingTicketsBadgePopover.vue:34
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TicketInformationFull/TicketInformationBadgeList/ReferencingTicketsBadgePopover.vue:34
 msgid "Show tracking tickets"
 msgstr ""
 
@@ -15908,7 +15956,7 @@ msgstr ""
 msgid "Start date"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:67
+#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:68
 msgid "Start editing"
 msgstr ""
 
@@ -16179,7 +16227,7 @@ msgstr ""
 msgid "Submit Comment"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:118
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:121
 msgid "Submit comment"
 msgstr ""
 
@@ -16227,7 +16275,7 @@ msgid "Subscription settings"
 msgstr ""
 
 #: app/assets/javascripts/app/views/link/kb_answer.jst.eco:20
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketAISuggestedKnowledgeBaseAnswers.vue:99
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketAISuggestedKnowledgeBaseAnswers.vue:116
 msgid "Suggested by AI"
 msgstr ""
 
@@ -16571,7 +16619,7 @@ msgid "Textarea field"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ai/ai_feedback_widget.jst.eco:27
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:125
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:128
 msgid "Thank you for your feedback."
 msgstr ""
 
@@ -16585,7 +16633,7 @@ msgid "Thanks for joining. Email sent to \"%s\"."
 msgstr ""
 
 #: app/assets/javascripts/app/views/ai/ai_feedback_widget.jst.eco:39
-#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:110
+#: app/frontend/apps/desktop/components/CommonAIFeedback/CommonAIFeedback.vue:113
 msgid "Thanks for the feedback. Please explain what went wrong?"
 msgstr ""
 
@@ -17661,10 +17709,11 @@ msgid "The structure is a JSON object that defines the result format to be retur
 msgstr ""
 
 #: app/assets/javascripts/app/views/link/kb_answer.jst.eco:24
+#: app/jobs/ticket_ai_related_knowledge_base_answers_embed_job.rb:27
 msgid "The suggestions could not be generated."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketAISuggestedKnowledgeBaseAnswers.vue:108
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketAISuggestedKnowledgeBaseAnswers.vue:125
 msgid "The suggestions could not be generated. Please try again later or contact your administrator."
 msgstr ""
 
@@ -18767,8 +18816,8 @@ msgstr ""
 msgid "Ticket update failed."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/useTicketEditTitle.ts:26
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:570
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/composables/useTicketEditTitle.ts:26
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:576
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:162
 msgid "Ticket updated successfully."
 msgstr ""
@@ -19187,7 +19236,7 @@ msgid "Total: %s"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/popover_provider/ticket_references_popover_provider.coffee:8
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList/ReferencingTicketsBadgePopover.vue:43
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TicketInformationFull/TicketInformationBadgeList/ReferencingTicketsBadgePopover.vue:43
 msgid "Tracked as checklist item in"
 msgstr ""
 
@@ -20218,15 +20267,15 @@ msgstr ""
 msgid "Variables"
 msgstr ""
 
-#: db/seeds/settings.rb:6307
+#: db/seeds/settings.rb:6321
 msgid "Vector DB"
 msgstr ""
 
-#: db/seeds/settings.rb:6317
+#: db/seeds/settings.rb:6331
 msgid "Vector DB knowledge base categories"
 msgstr ""
 
-#: db/seeds/settings.rb:6326
+#: db/seeds/settings.rb:6340
 msgid "Vector DB knowledge base chunking strategy"
 msgstr ""
 
@@ -20297,10 +20346,23 @@ msgstr ""
 msgid "Video"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/knowledge_base/video_servers_manager.coffee:75
+msgid "Video Server"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee:125
+#: app/assets/javascripts/app/views/knowledge_base_video_servers/index.jst.eco:2
+msgid "Video Servers"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee:62
 #: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:34
 #: lib/validations/ticket_article_validator/whatsapp_message.rb:10
 msgid "Video file"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_video.coffee:87
+msgid "Video server not allowed. Please add to the list of allowed video servers."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/api.coffee:41
@@ -20686,7 +20748,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/highlighter.coffee:12
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/useArticleHighlights/useArticleHighlightsA11y.ts:11
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/useHighlightMenuState.ts:12
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/composables/useHighlightMenuState.ts:12
 msgid "Yellow"
 msgstr ""
 
@@ -20706,7 +20768,7 @@ msgid "Yes, add attachments now"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:5
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:480
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:486
 msgid "Yes, open the checklist"
 msgstr ""
 
@@ -20993,7 +21055,7 @@ msgstr ""
 msgid "You have unchecked items in the checklist."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:475
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:481
 msgid "You have unchecked items in the checklist. Do you want to handle them before closing this ticket?"
 msgstr ""
 
@@ -21035,10 +21097,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/login.jst.eco:96
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:158
 msgid "You're already registered with your email address if you've been in touch with our Support team."
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/embed_video_button.coffee:13
-msgid "YouTube or Vimeo address"
 msgstr ""
 
 #. This is the template file app/views/mailer/password_change/en.html.erb in ERB/HTML format.
@@ -21391,7 +21449,7 @@ msgstr ""
 msgid "chat"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList/ChecklistBadgeList.vue:40
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TicketInformationFull/TicketInformationBadgeList/ChecklistBadgeList.vue:40
 msgid "checked"
 msgstr ""
 
@@ -22700,7 +22758,7 @@ msgstr ""
 msgid "token access,token,api,access token,application"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList/ChecklistBadge.vue:8
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TicketInformationFull/TicketInformationBadgeList/ChecklistBadge.vue:8
 msgid "tracked in"
 msgstr ""
 

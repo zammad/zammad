@@ -10,7 +10,7 @@ class App.UiElement.richtext.toolButtons.embed_video extends App.UiElement.richt
           name: 'link'
           display: __('Link')
           tag: 'input'
-          placeholder: __('YouTube or Vimeo address')
+          placeholder: __('Enter video URL')
         }
       ]
 

@@ -36,5 +36,9 @@ FactoryBot.define do
     trait :with_image do
       content factory: %i[knowledge_base_answer_translation_content with_image], strategy: :build
     end
+
+    trait :with_self_hosted_video do
+      content factory: %i[knowledge_base_answer_translation_content with_self_hosted_video], strategy: :build
+    end
   end
 end

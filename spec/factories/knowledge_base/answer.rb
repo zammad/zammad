@@ -37,6 +37,12 @@ FactoryBot.define do
       end
     end
 
+    trait :with_self_hosted_video do
+      transient do
+        translation_traits { [:with_self_hosted_video] }
+      end
+    end
+
     trait :with_image do
       transient do
         translation_traits { [:with_image] }

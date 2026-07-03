@@ -1,0 +1,38 @@
+<div class="settings-entry">
+  <h2><%- @T('Video Servers') %></h2>
+
+  <p class="help-text"><%- @T('Add your video server address here so it can be included in the Content Security Policy exceptions. Currently supported solutions are MediaCMS and PeerTube.') %></p>
+
+  <div class="controls">
+    <table class="settings-list">
+      <thead>
+        <tr>
+          <th width="200px"><%- @T('Name') %></th>
+          <th><%- @T('Host') %></th>
+          <th width="1%"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if _.isEmpty(@servers): %>
+          <tr><td colspan="3">
+            <p class="help-text"><%- @T('No self-hosted video servers configured yet.') %></p>
+          </td></tr>
+        <% end %>
+
+        <% for server, index in @servers: %>
+          <tr data-index="<%- index %>">
+            <td class="u-clickable js-edit" width="25%"><%= server.name %></td>
+            <td class="u-clickable js-edit"><%= server.host %></td>
+            <td class="settings-list-row-control">
+              <div class="btn btn--text btn--danger js-remove">
+                <%- @Icon('trash') %> <%- @T('Delete') %>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="btn btn--primary js-new"><%- @T('New Video Server') %></div>
+</div>

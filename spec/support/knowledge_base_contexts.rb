@@ -57,6 +57,10 @@ RSpec.shared_context 'basic Knowledge Base', current_user_id: 1 do # rubocop:dis
     create(:knowledge_base_answer, :published, :with_video, category: category)
   end
 
+  let :published_answer_with_self_hosted_video do
+    create(:knowledge_base_answer, :published, :with_self_hosted_video, category: category)
+  end
+
   let :published_answer_with_image do
     create(:knowledge_base_answer, :published, :with_image, category: category)
   end

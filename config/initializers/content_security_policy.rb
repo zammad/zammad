@@ -41,11 +41,19 @@ Rails.application.config.content_security_policy do |policy| # rubocop:disable M
 
   policy.base_uri :self, base_uri
 
+  # Allow embedding videos from the built-in providers (YouTube, Vimeo) and from
+  # any self-hosted media server the admin has whitelisted. Evaluated per request
+  # so newly whitelisted servers take effect without a restart. Returns the list
+  # of origins; CSP wraps a proc's array result into individual frame-src sources.
+  frame_src = proc do
+    VideoEmbed.frame_src
+  end
+
   policy.default_src     :self
   policy.connect_src     :self, :ws, :wss, 'https://images.zammad.com'
   policy.font_src        :self, :data
   policy.frame_ancestors :self
-  policy.frame_src       'https://www.youtube.com', 'https://player.vimeo.com'
+  policy.frame_src       frame_src
   policy.img_src         '*', :data, :blob
   policy.object_src      :none
   policy.script_src      :self, :unsafe_eval

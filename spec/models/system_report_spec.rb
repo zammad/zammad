@@ -244,7 +244,8 @@ RSpec.describe SystemReport, current_user_id: 1, type: :model do
           'vectordb_knowledge_base_category_ids',
           'vectordb_knowledge_base_chunking_strategy',
           'form_ticket_create_honeypot',
-          'form_ticket_create_captcha_provider'
+          'form_ticket_create_captcha_provider',
+          'kb_self_hosted_video_servers'
         ]
       end
 

@@ -145,6 +145,10 @@ class App.KnowledgeBaseReaderController extends App.Controller
               "https://www.youtube.com/embed/#{settings.id}"
             when 'vimeo'
               "https://player.vimeo.com/video/#{settings.id}"
+            when 'peertube'
+              "https://#{settings.host}/videos/embed/#{settings.id}"
+            when 'mediacms'
+              "https://#{settings.host}/embed?m=#{settings.id}"
       # coffeelint: enable=indentation
 
       return match unless url

@@ -6311,6 +6311,20 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
+  title:       __('Knowledge base self-hosted video servers'),
+  name:        'kb_self_hosted_video_servers',
+  area:        'Kb::Core',
+  description: __('List of self-hosted video servers. This list is used for content security policy.'),
+  options:     {},
+  state:       [],
+  preferences: {
+    permission:  ['admin.knowledge_base'],
+    validations: ['Setting::Validation::KbSelfHostedVideoServers'],
+  },
+  frontend:    true,
+)
+
+Setting.create_if_not_exists(
   title:       __('Vector DB'),
   name:        'vectordb_enabled',
   area:        'VectorDB',
