@@ -2051,4 +2051,462 @@ RSpec.describe Ticket, type: :model do
       it { is_expected.not_to be_ai_summary_unread(user, nil) }
     end
   end
+
+  describe 'article creation and state changes' do
+    before { create(:email_address) } # gets auto-assigned to the sole existing group
+
+    it 'keeps article count, contact times, first response and close time up to date', :aggregate_failures do # rubocop:disable RSpec/ExampleLength
+      ticket = described_class.create!(
+        title:         "some title\n äöüß",
+        group:         Group.lookup(name: 'Users'),
+        customer_id:   2,
+        state:         Ticket::State.lookup(name: 'new'),
+        priority:      Ticket::Priority.lookup(name: '2 normal'),
+        updated_by_id: 1,
+        created_by_id: 1,
+      )
+      expect(ticket).to be_truthy
+      expect(ticket.title).to eq('some title  äöüß')
+      expect(ticket.group.name).to eq('Users')
+      expect(ticket.state.name).to eq('new')
+
+      # create inbound article #1
+      article_inbound1 = Ticket::Article.create!(
+        ticket_id:     ticket.id,
+        from:          'some_sender@example.com',
+        to:            'some_recipient@example.com',
+        subject:       'some subject',
+        message_id:    'some@id',
+        body:          'some message article_inbound1 😍😍😍',
+        internal:      false,
+        sender:        Ticket::Article::Sender.find_by(name: 'Customer'),
+        type:          Ticket::Article::Type.find_by(name: 'email'),
+        updated_by_id: 1,
+        created_by_id: 1,
+      )
+      expect(article_inbound1.body).to eq('some message article_inbound1 😍😍😍')
+
+      ticket = described_class.find(ticket.id)
+      expect(ticket.article_count).to eq(1)
+      expect(ticket.last_contact_at.to_s).to eq(article_inbound1.created_at.to_s)
+      expect(ticket.last_contact_customer_at.to_s).to eq(article_inbound1.created_at.to_s)
+      expect(ticket.last_contact_agent_at).to be_nil
+      expect(ticket.first_response_at).to be_nil
+      expect(ticket.close_at).to be_nil
+
+      # create inbound article #2
+      travel 2.seconds
+      article_inbound2 = Ticket::Article.create!(
+        ticket_id:     ticket.id,
+        from:          'some_sender@example.com',
+        to:            'some_recipient@example.com',
+        subject:       'some subject',
+        message_id:    'some@id',
+        body:          'some message article_inbound2 😍😍😍',
+        internal:      false,
+        sender:        Ticket::Article::Sender.find_by(name: 'Customer'),
+        type:          Ticket::Article::Type.find_by(name: 'email'),
+        updated_by_id: 1,
+        created_by_id: 1,
+      )
+      expect(article_inbound2.body).to eq('some message article_inbound2 😍😍😍')
+
+      ticket = described_class.find(ticket.id)
+      expect(ticket.article_count).to eq(2)
+      expect(ticket.last_contact_at.to_s).to eq(article_inbound1.created_at.to_s)
+      expect(ticket.last_contact_customer_at.to_s).to eq(article_inbound1.created_at.to_s)
+      expect(ticket.last_contact_agent_at).to be_nil
+      expect(ticket.first_response_at).to be_nil
+      expect(ticket.close_at).to be_nil
+
+      # create note article
+      article_note = Ticket::Article.create!(
+        ticket_id:     ticket.id,
+        from:          'some person',
+        subject:       "some\nnote",
+        body:          "some\n message",
+        internal:      true,
+        sender:        Ticket::Article::Sender.find_by(name: 'Agent'),
+        type:          Ticket::Article::Type.find_by(name: 'note'),
+        updated_by_id: 1,
+        created_by_id: 1,
+      )
+      expect(article_note.subject).to eq('some note')
+      expect(article_note.body).to eq("some\n message")
+
+      ticket = described_class.find(ticket.id)
+      expect(ticket.article_count).to eq(3)
+      expect(ticket.last_contact_at.to_s).to eq(article_inbound1.created_at.to_s)
+      expect(ticket.last_contact_customer_at.to_s).to eq(article_inbound1.created_at.to_s)
+      expect(ticket.last_contact_agent_at).to be_nil
+      expect(ticket.first_response_at).to be_nil
+      expect(ticket.close_at).to be_nil
+
+      # create outbound article
+      travel 2.seconds
+      article_outbound = Ticket::Article.create!(
+        ticket_id:     ticket.id,
+        from:          'some_recipient@example.com',
+        to:            'some_sender@example.com',
+        subject:       'some subject',
+        message_id:    'some@id2',
+        body:          'some message 2',
+        internal:      false,
+        sender:        Ticket::Article::Sender.find_by(name: 'Agent'),
+        type:          Ticket::Article::Type.find_by(name: 'email'),
+        updated_by_id: 1,
+        created_by_id: 1,
+      )
+
+      ticket = described_class.find(ticket.id)
+      expect(ticket.article_count).to eq(4)
+      expect(ticket.last_contact_at.to_s).to eq(article_outbound.created_at.to_s)
+      expect(ticket.last_contact_customer_at.to_s).to eq(article_inbound1.created_at.to_s)
+      expect(ticket.last_contact_agent_at.to_s).to eq(article_outbound.created_at.to_s)
+      expect(ticket.first_response_at.to_s).to eq(article_outbound.created_at.to_s)
+      expect(ticket.close_at).to be_nil
+
+      # create inbound article #3
+      article_inbound3 = Ticket::Article.create!(
+        ticket_id:     ticket.id,
+        from:          'some_sender@example.com',
+        to:            'some_recipient@example.com',
+        subject:       'some subject',
+        message_id:    'some@id',
+        body:          'some message article_inbound3 😍😍😍',
+        internal:      false,
+        sender:        Ticket::Article::Sender.find_by(name: 'Customer'),
+        type:          Ticket::Article::Type.find_by(name: 'email'),
+        updated_by_id: 1,
+        created_by_id: 1,
+      )
+      expect(article_inbound3.body).to eq('some message article_inbound3 😍😍😍')
+
+      ticket = described_class.find(ticket.id)
+      expect(ticket.article_count).to eq(5)
+      expect(ticket.last_contact_at.to_s).to eq(article_inbound3.created_at.to_s)
+      expect(ticket.last_contact_customer_at.to_s).to eq(article_inbound3.created_at.to_s)
+      expect(ticket.last_contact_agent_at.to_s).to eq(article_outbound.created_at.to_s)
+      expect(ticket.first_response_at.to_s).to eq(article_outbound.created_at.to_s)
+      expect(ticket.close_at).to be_nil
+
+      # create inbound article #4
+      travel 2.seconds
+      article_inbound4 = Ticket::Article.create!(
+        ticket_id:     ticket.id,
+        from:          'some_sender@example.com',
+        to:            'some_recipient@example.com',
+        subject:       'some subject',
+        message_id:    'some@id',
+        body:          'some message article_inbound4 😍😍😍',
+        internal:      false,
+        sender:        Ticket::Article::Sender.find_by(name: 'Customer'),
+        type:          Ticket::Article::Type.find_by(name: 'email'),
+        updated_by_id: 1,
+        created_by_id: 1,
+      )
+      expect(article_inbound4.body).to eq('some message article_inbound4 😍😍😍')
+
+      ticket = described_class.find(ticket.id)
+      expect(ticket.article_count).to eq(6)
+      expect(ticket.last_contact_at.to_s).to eq(article_inbound3.created_at.to_s)
+      expect(ticket.last_contact_customer_at.to_s).to eq(article_inbound3.created_at.to_s)
+      expect(ticket.last_contact_agent_at.to_s).to eq(article_outbound.created_at.to_s)
+      expect(ticket.first_response_at.to_s).to eq(article_outbound.created_at.to_s)
+      expect(ticket.close_at).to be_nil
+
+      ticket.state_id = Ticket::State.find_by(name: 'closed').id
+      ticket.save
+
+      ticket = described_class.find(ticket.id)
+      expect(ticket.article_count).to eq(6)
+      expect(ticket.last_contact_at.to_s).to eq(article_inbound3.created_at.to_s)
+      expect(ticket.last_contact_customer_at.to_s).to eq(article_inbound3.created_at.to_s)
+      expect(ticket.last_contact_agent_at.to_s).to eq(article_outbound.created_at.to_s)
+      expect(ticket.first_response_at.to_s).to eq(article_outbound.created_at.to_s)
+      expect(ticket.close_at).to be_truthy
+
+      # set pending time
+      ticket.state_id     = Ticket::State.find_by(name: 'pending reminder').id
+      ticket.pending_time = Time.zone.parse('1977-10-27 22:00:00 +0000')
+      ticket.save
+
+      ticket = described_class.find(ticket.id)
+      expect(ticket.state.name).to eq('pending reminder')
+      expect(ticket.pending_time).to eq(Time.zone.parse('1977-10-27 22:00:00 +0000'))
+
+      # reset pending state, should also reset pending time
+      ticket.state_id = Ticket::State.find_by(name: 'closed').id
+      ticket.save
+
+      ticket = described_class.find(ticket.id)
+      expect(ticket.state.name).to eq('closed')
+      expect(ticket.pending_time).to be_nil
+
+      # delete article
+      article_note = Ticket::Article.create!(
+        ticket_id:     ticket.id,
+        from:          'some person',
+        subject:       'some note',
+        body:          'some message',
+        internal:      true,
+        sender:        Ticket::Article::Sender.find_by(name: 'Agent'),
+        type:          Ticket::Article::Type.find_by(name: 'note'),
+        updated_by_id: 1,
+        created_by_id: 1,
+      )
+
+      ticket = described_class.find(ticket.id)
+      expect(ticket.article_count).to eq(7)
+
+      article_note.destroy
+
+      ticket = described_class.find(ticket.id)
+      expect(ticket.article_count).to eq(6)
+
+      expect(ticket.destroy).to be_truthy
+      travel_back
+    end
+  end
+
+  describe '.process_pending' do
+    before do
+      described_class.destroy_all
+    end
+
+    it 'closes tickets with an elapsed pending time' do
+      # close all other pending close tickets first
+      described_class.where.not(pending_time: nil).each do |pending_ticket|
+        pending_ticket.state = Ticket::State.lookup(name: 'closed')
+        pending_ticket.save!
+      end
+
+      ticket = described_class.create!(
+        title:         'pending close test',
+        group:         Group.lookup(name: 'Users'),
+        customer_id:   2,
+        state:         Ticket::State.lookup(name: 'pending close'),
+        pending_time:  Time.zone.now - 60,
+        priority:      Ticket::Priority.lookup(name: '2 normal'),
+        updated_by_id: 1,
+        created_by_id: 1,
+      )
+
+      lookup_ticket = described_class.find_by('pending_time <= ?', Time.zone.now)
+      expect(lookup_ticket.id).to eq(ticket.id)
+
+      described_class.process_pending
+
+      lookup_ticket = described_class.find_by('pending_time <= ?', Time.zone.now)
+      expect(lookup_ticket).to be_nil
+    end
+  end
+
+  describe '#subject_build with different ticket hook positions' do
+    let(:subject_test_ticket) do
+      described_class.create!(
+        title:         'subject test 1',
+        group:         Group.lookup(name: 'Users'),
+        customer_id:   2,
+        state:         Ticket::State.lookup(name: 'new'),
+        priority:      Ticket::Priority.lookup(name: '2 normal'),
+        updated_by_id: 1,
+        created_by_id: 1,
+      )
+    end
+
+    context 'with default "ticket_hook_position" setting ("right")' do
+      it 'appends the ticket reference and strips surrounding whitespace', :aggregate_failures do
+        expect(subject_test_ticket.title).to eq('subject test 1')
+        expect(subject_test_ticket.subject_build('ABC subject test 1')).to eq("ABC subject test 1 [Ticket##{subject_test_ticket.number}]")
+        expect(subject_test_ticket.subject_build('ABC subject test 1', 'reply')).to eq("RE: ABC subject test 1 [Ticket##{subject_test_ticket.number}]")
+        expect(subject_test_ticket.subject_build('  ABC subject test 1', 'reply')).to eq("RE: ABC subject test 1 [Ticket##{subject_test_ticket.number}]")
+        expect(subject_test_ticket.subject_build('ABC subject test 1  ', 'reply')).to eq("RE: ABC subject test 1 [Ticket##{subject_test_ticket.number}]")
+        expect(subject_test_ticket.subject_build('ABC subject test 1  ', 'forward')).to eq("FWD: ABC subject test 1 [Ticket##{subject_test_ticket.number}]")
+        subject_test_ticket.destroy
+      end
+    end
+
+    context 'with "ticket_hook_position" setting "left"' do
+      before do
+        Setting.set('ticket_hook_position', 'left')
+      end
+
+      it 'prepends the ticket reference and strips surrounding whitespace', :aggregate_failures do
+        expect(subject_test_ticket.title).to eq('subject test 1')
+        expect(subject_test_ticket.subject_build('ABC subject test 1')).to eq("[Ticket##{subject_test_ticket.number}] ABC subject test 1")
+        expect(subject_test_ticket.subject_build('ABC subject test 1', 'reply')).to eq("RE: [Ticket##{subject_test_ticket.number}] ABC subject test 1")
+        expect(subject_test_ticket.subject_build('  ABC subject test 1', 'reply')).to eq("RE: [Ticket##{subject_test_ticket.number}] ABC subject test 1")
+        expect(subject_test_ticket.subject_build('ABC subject test 1  ', 'reply')).to eq("RE: [Ticket##{subject_test_ticket.number}] ABC subject test 1")
+        expect(subject_test_ticket.subject_build('ABC subject test 1  ', 'forward')).to eq("FWD: [Ticket##{subject_test_ticket.number}] ABC subject test 1")
+        subject_test_ticket.destroy
+      end
+    end
+
+    context 'with "ticket_hook_position" setting "none"' do
+      before do
+        Setting.set('ticket_hook_position', 'none')
+      end
+
+      it 'omits the ticket reference and strips surrounding whitespace', :aggregate_failures do
+        expect(subject_test_ticket.title).to eq('subject test 1')
+        expect(subject_test_ticket.subject_build('ABC subject test 1')).to eq('ABC subject test 1')
+        expect(subject_test_ticket.subject_build('ABC subject test 1', 'reply')).to eq('RE: ABC subject test 1')
+        expect(subject_test_ticket.subject_build('  ABC subject test 1', 'reply')).to eq('RE: ABC subject test 1')
+        expect(subject_test_ticket.subject_build('ABC subject test 1  ', 'reply')).to eq('RE: ABC subject test 1')
+        expect(subject_test_ticket.subject_build('ABC subject test 1  ', 'forward')).to eq('FWD: ABC subject test 1')
+        subject_test_ticket.destroy
+      end
+    end
+  end
+
+  describe 'follow-up recognition by ticket number' do
+    it 'finds the ticket by number for increment and date number generators', :aggregate_failures do
+      origin_backend = Setting.get('ticket_number')
+      Setting.set('ticket_number', 'Ticket::Number::Increment')
+
+      ticket1 = described_class.create!(
+        title:         'subject test 1234-1',
+        group:         Group.lookup(name: 'Users'),
+        customer_id:   2,
+        state:         Ticket::State.lookup(name: 'new'),
+        priority:      Ticket::Priority.lookup(name: '2 normal'),
+        updated_by_id: 1,
+        created_by_id: 1,
+      )
+      expect(ticket1.title).to eq('subject test 1234-1')
+      expect(ticket1.subject_build('ABC subject test 1')).to eq("ABC subject test 1 [Ticket##{ticket1.number}]")
+      expect(Ticket::Number.check("Re: Help [Ticket##{ticket1.number}]").id).to eq(ticket1.id)
+
+      Setting.set('ticket_number', 'Ticket::Number::Date')
+      ticket1 = described_class.create!(
+        title:         'subject test 1234-2',
+        group:         Group.lookup(name: 'Users'),
+        customer_id:   2,
+        state:         Ticket::State.lookup(name: 'new'),
+        priority:      Ticket::Priority.lookup(name: '2 normal'),
+        updated_by_id: 1,
+        created_by_id: 1,
+      )
+      expect(ticket1.title).to eq('subject test 1234-2')
+      expect(ticket1.subject_build('ABC subject test 1')).to eq("ABC subject test 1 [Ticket##{ticket1.number}]")
+      expect(Ticket::Number.check("Re: Help [Ticket##{ticket1.number}]").id).to eq(ticket1.id)
+
+      Setting.set('ticket_number', origin_backend)
+    end
+  end
+
+  describe 'article inline attachments' do
+    let(:ticket1) do
+      described_class.create!(
+        title:         title,
+        group:         Group.lookup(name: 'Users'),
+        customer_id:   2,
+        state:         Ticket::State.lookup(name: 'new'),
+        priority:      Ticket::Priority.lookup(name: '2 normal'),
+        updated_by_id: 1,
+        created_by_id: 1,
+      )
+    end
+    let(:article1) do
+      Ticket::Article.create!(
+        ticket_id:     ticket1.id,
+        from:          'some_sender@example.com',
+        to:            'some_recipient@example.com',
+        subject:       'some subject',
+        message_id:    'some@id',
+        content_type:  'text/html',
+        body:          body,
+        internal:      false,
+        sender:        Ticket::Article::Sender.find_by(name: 'Customer'),
+        type:          Ticket::Article::Type.find_by(name: 'email'),
+        updated_by_id: 1,
+        created_by_id: 1,
+      )
+    end
+    let(:store1) do
+      Store.create!(
+        object:        'Ticket::Article',
+        o_id:          article1.id,
+        data:          'content_file1_normally_should_be_an_image',
+        filename:      'some_file1.jpg',
+        preferences:   {
+          'Content-Type'        => 'image/jpeg',
+          'Mime-Type'           => 'image/jpeg',
+          'Content-ID'          => '15.274327094.140938@zammad.example.com',
+          'Content-Disposition' => 'inline'
+        },
+        created_by_id: 1,
+      )
+    end
+    let(:store2) do
+      Store.create!(
+        object:        'Ticket::Article',
+        o_id:          article1.id,
+        data:          'content_file2_normally_should_be_an_image',
+        filename:      'some_file2.jpg',
+        preferences:   {
+          'Content-Type'        => 'image/jpeg',
+          'Mime-Type'           => 'image/jpeg',
+          'Content-ID'          => '15.274327094.140939@zammad.example.com',
+          'Content-Disposition' => 'inline'
+        },
+        created_by_id: 1,
+      )
+    end
+    let(:store3) do
+      Store.create!(
+        object:        'Ticket::Article',
+        o_id:          article1.id,
+        data:          'content_file3',
+        filename:      'some_file3.txt',
+        preferences:   {
+          'Content-Type'        => 'text/stream',
+          'Mime-Type'           => 'text/stream',
+          'Content-ID'          => '15.274327094.99999@zammad.example.com',
+          'Content-Disposition' => 'inline'
+        },
+        created_by_id: 1,
+      )
+    end
+
+    before do
+      store1 && store2 && store3
+    end
+
+    shared_examples 'replacing inline images with attachment urls' do
+      it 'inserts attachment urls for inline images and skips non-image attachments', :aggregate_failures do
+        expect(ticket1).to be_truthy
+
+        article_attributes = article1.attributes_with_association_ids
+
+        expect(article_attributes['body']).not_to include('15.274327094.140938@zammad.example.com')
+        expect(article_attributes['body']).not_to include('15.274327094.140939@zammad.example.com')
+        expect(article_attributes['body']).not_to include('15.274327094.99999@zammad.example.com')
+        expect(article_attributes['body']).to include("api/v1/ticket_attachment/#{ticket1.id}/#{article1.id}/#{store1.id}")
+        expect(article_attributes['body']).to include("api/v1/ticket_attachment/#{ticket1.id}/#{article1.id}/#{store2.id}")
+        expect(article_attributes['body']).not_to include("api/v1/ticket_attachment/#{ticket1.id}/#{article1.id}/#{store3.id}")
+
+        attachments = Ticket::Article.find(article1.id).attachments_inline
+        expect(attachments.length).to eq(2)
+        expect(attachments.first.id).to eq(store1.id)
+
+        ticket1.destroy
+      end
+    end
+
+    context 'with style attributes on the inline images' do
+      let(:title) { 'some article helper test1' }
+      let(:body)  { 'some message article helper test1 <div><img style="width: 85.5px; height: 49.5px" src="cid:15.274327094.140938@zammad.example.com">asdasd<img src="cid:15.274327094.140939@zammad.example.com"><br>' }
+
+      include_examples 'replacing inline images with attachment urls'
+    end
+
+    context 'with size and alt attributes on the inline images' do
+      let(:title) { 'some article helper test2' }
+      let(:body)  { 'some message article helper test2 <div><img src="cid:15.274327094.140938@zammad.example.com">asdasd<img border="0" width="60" height="19" src="cid:15.274327094.140939@zammad.example.com" alt="Beschreibung: Beschreibung: efqmLogo"><br>' }
+
+      include_examples 'replacing inline images with attachment urls'
+    end
+  end
 end

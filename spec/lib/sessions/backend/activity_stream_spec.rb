@@ -25,4 +25,62 @@ RSpec.describe Sessions::Backend::ActivityStream do
       thread.join
     end
   end
+
+  describe '#push' do
+    subject(:activity_stream) { described_class.new(agent, {}, false, '123-1', 3) }
+
+    let(:agent) do
+      User.create_or_update(
+        login:         'activity-stream-agent-1',
+        firstname:     'Session',
+        lastname:      "activity stream #{SecureRandom.uuid}",
+        email:         'activity-stream-agent1@example.com',
+        password:      'agentpw',
+        active:        true,
+        roles:         Role.where(name: %w[Agent Admin]),
+        groups:        Group.all,
+        updated_by_id: 1,
+        created_by_id: 1,
+      )
+    end
+
+    before do
+      Setting.set('system_init_done', true)
+    end
+
+    it 'only pushes again once the TTL elapsed and new activity exists', :aggregate_failures do
+      # create min. one activity record
+      Group.create_or_update(
+        name:          "Random:#{SecureRandom.uuid}",
+        updated_by_id: 1,
+        created_by_id: 1,
+      )
+
+      expect(activity_stream.push).to be_present
+      travel 1.second
+
+      # next check should be empty
+      expect(activity_stream.push).to be_blank
+
+      # next check should be empty
+      travel 4.seconds
+      expect(activity_stream.push).to be_blank
+
+      agent.update!(email: 'activity-stream-agent11@example.com')
+      Ticket.create!(
+        title:         '12323',
+        group_id:      1,
+        priority_id:   1,
+        state_id:      1,
+        customer_id:   1,
+        updated_by_id: 1,
+        created_by_id: 1,
+      )
+
+      travel 4.seconds
+
+      # get as stream
+      expect(activity_stream.push).to be_present
+    end
+  end
 end

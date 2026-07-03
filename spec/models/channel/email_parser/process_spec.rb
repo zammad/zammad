@@ -1,13 +1,16 @@
-# rubocop:disable all
-require 'test_helper'
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-class EmailProcessTest < ActiveSupport::TestCase
-  test 'process simple' do
+require 'rails_helper'
+
+RSpec.describe 'Channel::EmailParser process simple', aggregate_failures: true, type: :model do
+  before do
     Ticket.destroy_all
+  end
 
-    files = [
+  let(:files) do
+    [
       {
-        data: 'From: me@example.com
+        data:    'From: me@example.com
 To: customer@example.com
 Subject: some subject
 
@@ -18,7 +21,7 @@ Some Text',
         success: true,
       },
       {
-        data: "From: my_own_zammad@example.com
+        data:    "From: my_own_zammad@example.com
 To: customer_which_is_routed_into_my_zammad@example.com
 Subject: some subject
 Message-ID: <1234@#{Setting.get('fqdn')}>
@@ -30,7 +33,7 @@ Some Text",
         success: true,
       },
       {
-        data: "From: my_own_zammad@example.com
+        data:    "From: my_own_zammad@example.com
 To: customer_which_is_routed_into_my_zammad@example.com
 Subject: some subject
 Message-ID: <1234@#{Setting.get('fqdn')}>
@@ -46,7 +49,7 @@ Some Text",
         success: false,
       },
       {
-        data: "From: me@example.com
+        data:    "From: me@example.com
 To: customer@example.com
 Subject: äöü some subject 1
 
@@ -55,21 +58,21 @@ Some Textäöü",
           trusted: false,
         },
         success: true,
-        result: {
+        result:  {
           0 => {
             priority: '2 normal',
-            title: 'äöü some subject 1',
+            title:    'äöü some subject 1',
           },
           1 => {
-            body: 'Some Textäöü',
-            sender: 'Customer',
-            type: 'email',
+            body:     'Some Textäöü',
+            sender:   'Customer',
+            type:     'email',
             internal: false,
           },
         },
       },
       {
-        data: "From: me@exampl'e.com
+        data:    "From: me@exampl'e.com
 To: customer@exampl'e.com
 Subject: äöü some subject 2
 
@@ -78,37 +81,37 @@ Some Textäöü",
           trusted: false,
         },
         success: true,
-        result: {
+        result:  {
           0 => {
             priority: '2 normal',
-            title: 'äöü some subject 2',
+            title:    'äöü some subject 2',
           },
           1 => {
-            body: 'Some Textäöü',
-            sender: 'Customer',
-            type: 'email',
+            body:     'Some Textäöü',
+            sender:   'Customer',
+            type:     'email',
             internal: false,
           },
         },
-        verify: {
+        verify:  {
           users: [
             {
               firstname: '',
-              lastname: '',
-              fullname: 'me@example.com',
-              email: 'me@example.com',
+              lastname:  '',
+              fullname:  'me@example.com',
+              email:     'me@example.com',
             },
             {
               firstname: '',
-              lastname: '',
-              fullname: 'customer@example.com',
-              email: 'customer@example.com',
+              lastname:  '',
+              fullname:  'customer@example.com',
+              email:     'customer@example.com',
             },
           ],
         },
       },
       {
-        data: "Sender: me_sender@example.com
+        data:    "Sender: me_sender@example.com
 To: customer@example.com
 Subject: äöü some subject 3
 
@@ -117,37 +120,37 @@ Some Textäöü",
           trusted: false,
         },
         success: true,
-        result: {
+        result:  {
           0 => {
             priority: '2 normal',
-            title: 'äöü some subject 3',
+            title:    'äöü some subject 3',
           },
           1 => {
-            body: 'Some Textäöü',
-            sender: 'Customer',
-            type: 'email',
+            body:     'Some Textäöü',
+            sender:   'Customer',
+            type:     'email',
             internal: false,
           },
         },
-        verify: {
+        verify:  {
           users: [
             {
               firstname: '',
-              lastname: '',
-              fullname: 'me@example.com',
-              email: 'me@example.com',
+              lastname:  '',
+              fullname:  'me@example.com',
+              email:     'me@example.com',
             },
             {
               firstname: '',
-              lastname: '',
-              fullname: 'customer@example.com',
-              email: 'customer@example.com',
+              lastname:  '',
+              fullname:  'customer@example.com',
+              email:     'customer@example.com',
             },
           ],
         },
       },
       {
-        data: "From: me@example.com
+        data:    "From: me@example.com
 To: customer@example.com
 Subject:
 
@@ -156,21 +159,21 @@ Some Textäöü without subject#1",
           trusted: false,
         },
         success: true,
-        result: {
+        result:  {
           0 => {
             priority: '2 normal',
-            title: '-',
+            title:    '-',
           },
           1 => {
-            body: 'Some Textäöü without subject#1',
-            sender: 'Customer',
-            type: 'email',
+            body:     'Some Textäöü without subject#1',
+            sender:   'Customer',
+            type:     'email',
             internal: false,
           },
         },
       },
       {
-        data: "From: me@example.com
+        data:    "From: me@example.com
 To: customer@example.com
 
 Some Textäöü without subject#2",
@@ -178,41 +181,41 @@ Some Textäöü without subject#2",
           trusted: false,
         },
         success: true,
-        result: {
+        result:  {
           0 => {
             priority: '2 normal',
-            title: '-',
+            title:    '-',
           },
           1 => {
-            body: 'Some Textäöü without subject#2',
-            sender: 'Customer',
-            type: 'email',
+            body:     'Some Textäöü without subject#2',
+            sender:   'Customer',
+            type:     'email',
             internal: false,
           },
         },
       },
       {
-        data: "From: me@example.com
+        data:    "From: me@example.com
 To: customer@example.com
 Subject: äöü some subject 3
 
 Some Textäöü".encode('ISO-8859-1'),
         success: true,
-        result: {
+        result:  {
           0 => {
             priority: '2 normal',
-            title: '??? some subject 3', # it's ok, because subject needs to be 7bit encoded
+            title:    '??? some subject 3', # it's ok, because subject needs to be 7bit encoded
           },
           1 => {
-            body: 'Some Text???', # it's ok, because no content-type is given
-            sender: 'Customer',
-            type: 'email',
+            body:     'Some Text???', # it's ok, because no content-type is given
+            sender:   'Customer',
+            type:     'email',
             internal: false,
           },
         },
       },
       {
-        data: 'From: Bob Smith <customer_with_blank_at_end@example.com>                                                                                                                          >
+        data:    'From: Bob Smith <customer_with_blank_at_end@example.com>                                                                                                                          >
 To: zammad@example.com
 Subject: abc some subject
 
@@ -221,31 +224,31 @@ Some Text with stange from line',
           trusted: false,
         },
         success: true,
-        result: {
+        result:  {
           0 => {
             priority: '2 normal',
-            title: 'abc some subject',
+            title:    'abc some subject',
           },
           1 => {
-            body: 'Some Text with stange from line',
-            sender: 'Customer',
-            type: 'email',
+            body:     'Some Text with stange from line',
+            sender:   'Customer',
+            type:     'email',
             internal: false,
           },
         },
-        verify: {
+        verify:  {
           users: [
             {
               firstname: 'Bob',
-              lastname: 'Smith',
-              fullname: 'Bob Smith',
-              email: 'customer_with_blank_at_end@example.com',
+              lastname:  'Smith',
+              fullname:  'Bob Smith',
+              email:     'customer_with_blank_at_end@example.com',
             },
           ],
         },
       },
       {
-        data: 'From: dr. daniel rodriguez <info_dr_daniel"@example.de>
+        data:    'From: dr. daniel rodriguez <info_dr_daniel"@example.de>
 To: zammad@example.com
 Subject: abc some subject
 
@@ -254,31 +257,31 @@ Some Text with stange from line',
           trusted: false,
         },
         success: true,
-        result: {
+        result:  {
           0 => {
             priority: '2 normal',
-            title: 'abc some subject',
+            title:    'abc some subject',
           },
           1 => {
-            body: 'Some Text with stange from line',
-            sender: 'Customer',
-            type: 'email',
+            body:     'Some Text with stange from line',
+            sender:   'Customer',
+            type:     'email',
             internal: false,
           },
         },
-        verify: {
+        verify:  {
           users: [
             {
               firstname: 'dr. daniel',
-              lastname: 'Rodriguez',
-              fullname: 'dr. daniel Rodriguez',
-              email: 'info_dr_daniel@example.de',
+              lastname:  'Rodriguez',
+              fullname:  'dr. daniel Rodriguez',
+              email:     'info_dr_daniel@example.de',
             },
           ],
         },
       },
       {
-        data: 'From: Dr. Daniel Rodriguez <info_dr_daniel_r"@example.de>
+        data:    'From: Dr. Daniel Rodriguez <info_dr_daniel_r"@example.de>
 To: zammad@example.com
 Subject: abc some subject
 
@@ -287,31 +290,31 @@ Some Text with stange from line',
           trusted: false,
         },
         success: true,
-        result: {
+        result:  {
           0 => {
             priority: '2 normal',
-            title: 'abc some subject',
+            title:    'abc some subject',
           },
           1 => {
-            body: 'Some Text with stange from line',
-            sender: 'Customer',
-            type: 'email',
+            body:     'Some Text with stange from line',
+            sender:   'Customer',
+            type:     'email',
             internal: false,
           },
         },
-        verify: {
+        verify:  {
           users: [
             {
               firstname: 'Dr. Daniel',
-              lastname: 'Rodriguez',
-              fullname: 'Dr. Daniel Rodriguez',
-              email: 'info_dr_daniel_r@example.de',
+              lastname:  'Rodriguez',
+              fullname:  'Dr. Daniel Rodriguez',
+              email:     'info_dr_daniel_r@example.de',
             },
           ],
         },
       },
       {
-        data: 'From: akademie@example.com> <ilka.mueller@example.com>
+        data:    'From: akademie@example.com> <ilka.mueller@example.com>
 To: zammad@example.com
 Subject: abc some subject
 
@@ -320,31 +323,31 @@ Some Text with stange from line',
           trusted: false,
         },
         success: true,
-        result: {
+        result:  {
           0 => {
             priority: '2 normal',
-            title: 'abc some subject',
+            title:    'abc some subject',
           },
           1 => {
-            body: 'Some Text with stange from line',
-            sender: 'Customer',
-            type: 'email',
+            body:     'Some Text with stange from line',
+            sender:   'Customer',
+            type:     'email',
             internal: false,
           },
         },
-        verify: {
+        verify:  {
           users: [
             {
               firstname: 'akademie@example.com>',
-              lastname: '',
-              fullname: 'akademie@example.com>',
-              email: 'ilka.mueller@example.com',
+              lastname:  '',
+              fullname:  'akademie@example.com>',
+              email:     'ilka.mueller@example.com',
             },
           ],
         },
       },
       {
-        data: 'From: yann degran <yann@example.com>
+        data:    'From: yann degran <yann@example.com>
 To: zammad@example.com
 Subject: test name in downcase #1
 
@@ -353,31 +356,31 @@ test name in downcase #1',
           trusted: false,
         },
         success: true,
-        result: {
+        result:  {
           0 => {
             priority: '2 normal',
-            title: 'test name in downcase #1',
+            title:    'test name in downcase #1',
           },
           1 => {
-            body: 'test name in downcase #1',
-            sender: 'Customer',
-            type: 'email',
+            body:     'test name in downcase #1',
+            sender:   'Customer',
+            type:     'email',
             internal: false,
           },
         },
-        verify: {
+        verify:  {
           users: [
             {
               firstname: 'Yann',
-              lastname: 'Degran',
-              fullname: 'Yann Degran',
-              email: 'yann@example.com',
+              lastname:  'Degran',
+              fullname:  'Yann Degran',
+              email:     'yann@example.com',
             },
           ],
         },
       },
       {
-        data: 'From: yann Degran <yann2@example.com>
+        data:    'From: yann Degran <yann2@example.com>
 To: zammad@example.com
 Subject: test name in downcase #2
 
@@ -386,31 +389,31 @@ test name in downcase #2',
           trusted: false,
         },
         success: true,
-        result: {
+        result:  {
           0 => {
             priority: '2 normal',
-            title: 'test name in downcase #2',
+            title:    'test name in downcase #2',
           },
           1 => {
-            body: 'test name in downcase #2',
-            sender: 'Customer',
-            type: 'email',
+            body:     'test name in downcase #2',
+            sender:   'Customer',
+            type:     'email',
             internal: false,
           },
         },
-        verify: {
+        verify:  {
           users: [
             {
               firstname: 'Yann',
-              lastname: 'Degran',
-              fullname: 'Yann Degran',
-              email: 'yann2@example.com',
+              lastname:  'Degran',
+              fullname:  'Yann Degran',
+              email:     'yann2@example.com',
             },
           ],
         },
       },
       {
-        data: 'From: YANN DEGRAN <yann3@example.com>
+        data:    'From: YANN DEGRAN <yann3@example.com>
 To: zammad@example.com
 Subject: test name in downcase #3
 
@@ -419,130 +422,130 @@ test name in downcase #3',
           trusted: false,
         },
         success: true,
-        result: {
+        result:  {
           0 => {
             priority: '2 normal',
-            title: 'test name in downcase #3',
+            title:    'test name in downcase #3',
           },
           1 => {
-            body: 'test name in downcase #3',
-            sender: 'Customer',
-            type: 'email',
+            body:     'test name in downcase #3',
+            sender:   'Customer',
+            type:     'email',
             internal: false,
           },
         },
-        verify: {
+        verify:  {
           users: [
             {
               firstname: 'Yann',
-              lastname: 'Degran',
-              fullname: 'Yann Degran',
-              email: 'yann3@example.com',
+              lastname:  'Degran',
+              fullname:  'Yann Degran',
+              email:     'yann3@example.com',
             },
           ],
         },
       },
       {
-        data: "From: Realname
+        data:    "From: Realname
 To: customer@example.com
 Subject: abc some subject
 Reply-To: \"no-reply-without-from-email@example.com\" <no-reply-without-from-email@example.com>
 
 Some Text",
         success: true,
-        result: {
+        result:  {
           0 => {
             priority: '2 normal',
-            title: 'abc some subject',
+            title:    'abc some subject',
           },
           1 => {
-            body: 'Some Text',
-            sender: 'Customer',
-            type: 'email',
+            body:     'Some Text',
+            sender:   'Customer',
+            type:     'email',
             internal: false,
           },
         },
-        verify: {
+        verify:  {
           users: [
             {
               firstname: 'no-reply-without-from-email@example.com',
-              lastname: '',
-              fullname: 'no-reply-without-from-email@example.com',
-              email: 'no-reply-without-from-email@example.com',
+              lastname:  '',
+              fullname:  'no-reply-without-from-email@example.com',
+              email:     'no-reply-without-from-email@example.com',
             },
           ],
         },
       },
       {
-        data: "From: sender@example.com
+        data:    "From: sender@example.com
 To: some_new_customer423@example.com
 Cc: some recipient <some with invalid@example.com>, max <somebody_else@example.com>
 Subject: abc some subject2
 
 Some Text",
         success: true,
-        result: {
+        result:  {
           0 => {
             priority: '2 normal',
-            title: 'abc some subject2',
+            title:    'abc some subject2',
           },
           1 => {
-            body: 'Some Text',
-            sender: 'Customer',
-            type: 'email',
+            body:     'Some Text',
+            sender:   'Customer',
+            type:     'email',
             internal: false,
           },
         },
-        verify: {
+        verify:  {
           users: [
             {
               firstname: 'Max',
-              lastname: '',
-              fullname: 'Max',
-              email: 'somebody_else@example.com',
+              lastname:  '',
+              fullname:  'Max',
+              email:     'somebody_else@example.com',
             },
             {
               firstname: '',
-              lastname: '',
-              fullname: 'some_new_customer423@example.com',
-              email: 'some_new_customer423@example.com',
+              lastname:  '',
+              fullname:  'some_new_customer423@example.com',
+              email:     'some_new_customer423@example.com',
             },
           ],
         },
       },
       {
-        data: "From: sender@example.com
+        data:    "From: sender@example.com
 To: some_new_customer424@example.com
 Subject: abc some subject3
 Reply-To: some user <no-reply-with invalid-spaces@example.com>
 
 Some Text",
         success: true,
-        result: {
+        result:  {
           0 => {
             priority: '2 normal',
-            title: 'abc some subject3',
+            title:    'abc some subject3',
           },
           1 => {
-            body: 'Some Text',
-            sender: 'Customer',
-            type: 'email',
+            body:     'Some Text',
+            sender:   'Customer',
+            type:     'email',
             internal: false,
           },
         },
-        verify: {
+        verify:  {
           users: [
             {
               firstname: '',
-              lastname: '',
-              fullname: 'some_new_customer424@example.com',
-              email: 'some_new_customer424@example.com',
+              lastname:  '',
+              fullname:  'some_new_customer424@example.com',
+              email:     'some_new_customer424@example.com',
             },
           ],
         },
       },
       {
-        data: "From: me@example.com
+        data:    "From: me@example.com
 To: Alexander Ha <service-d1@example.com>,
  Alexander Re <re-mail@example.de>, Hauke Ko
  <haukek@example.de>, Jens Ro <jrro@example.de>,
@@ -563,43 +566,43 @@ Subject: test 1
 
 test 1",
         success: true,
-        result: {
+        result:  {
           0 => {
             priority: '2 normal',
-            title: 'test 1',
+            title:    'test 1',
           },
           1 => {
-            body: 'test 1',
-            sender: 'Customer',
-            type: 'email',
+            body:     'test 1',
+            sender:   'Customer',
+            type:     'email',
             internal: false,
           },
         },
-        verify: {
+        verify:  {
           users: [
             {
               firstname: 'Alexander',
-              lastname: 'Ha',
-              fullname: 'Alexander Ha',
-              email: 'service-d1@example.com',
+              lastname:  'Ha',
+              fullname:  'Alexander Ha',
+              email:     'service-d1@example.com',
             },
             {
               firstname: 'Alexander',
-              lastname: 'Re',
-              fullname: 'Alexander Re',
-              email: 're-mail@example.de',
+              lastname:  'Re',
+              fullname:  'Alexander Re',
+              email:     're-mail@example.de',
             },
             {
               firstname: 'Ma',
-              lastname: 'Gröner',
-              fullname: 'Ma Gröner',
-              email: 'ma.g@example.com',
+              lastname:  'Gröner',
+              fullname:  'Ma Gröner',
+              email:     'ma.g@example.com',
             },
           ],
         }
       },
       {
-        data: "From: me@example.com
+        data:    "From: me@example.com
 To: customer@example.com
 Subject: Subject: =?utf-8?B?44CQ5LiT5Lia5Li65oKo5rOo5YaM6aaZ5riv5Y+K5rW35aSW5YWs5Y+477yI5aW95aSE5aSa5aSa77yJ?=
         =?utf-8?B?44CR44CA44CA44CA44CA44CA44CA44CA44CA44CA44CA44CA44CA44CA44CA44CA44CA44CA44CA44CA?=
@@ -663,29 +666,29 @@ Some Text",
           trusted: false,
         },
         success: true,
-        result: {
+        result:  {
           0 => {
             priority: '2 normal',
-            title: "Subject: 【专业为您注册香港及海外公司（好处多多）】#{'　' * 220}",
+            title:    "Subject: 【专业为您注册香港及海外公司（好处多多）】#{'　' * 220}",
           },
           1 => {
-            body: 'Some Text',
+            body:   'Some Text',
             sender: 'Customer',
-            type: 'email',
+            type:   'email',
           },
         },
       },
       {
-        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail021.box')),
+        data:    Rails.root.join('test', 'data', 'mail', 'mail021.box').read,
         success: true,
-        result: {
+        result:  {
           0 => {
             priority: '2 normal',
-            title: 'World Best DRUGS Mall For a Reasonable Price.',
+            title:    'World Best DRUGS Mall For a Reasonable Price.',
           },
           1 => {
             content_type: 'text/html',
-            body: %{<span style="color:#f9f8f7;">_________________________________________________________________________________Please beth saw his head</span>
+            body:         %(<span style="color:#f9f8f7;">_________________________________________________________________________________Please beth saw his head</span>
 <br>
 <div>
 <table border="0" cellspacing="5" style="color:#e0e7e8; background-color:#e3efef;width:85%;">
@@ -765,7 +768,7 @@ Some Text",
 </tr>
 
 </tbody></table>
-</div><span style=\"color:#f7f0f5;\">When she were there you here. Lott to need for amy said.<br>Once more than ever since matt. Lott said turning oď ered. Tell you so matt kept going.<br>Homegrown dandelions by herself into her lips. Such an excuse to stop thinking about. Leave us and be right.</span>
+</div><span style="color:#f7f0f5;">When she were there you here. Lott to need for amy said.<br>Once more than ever since matt. Lott said turning oď ered. Tell you so matt kept going.<br>Homegrown dandelions by herself into her lips. Such an excuse to stop thinking about. Leave us and be right.</span>
 <br><br>
 <hr>
 <table style="border-collapse:collapse;border:none;">
@@ -778,41 +781,41 @@ Some Text",
 <td>
 <p> Đ­ŃĐž ŃĐžĐžĐąŃĐľĐ˝Đ¸Đľ ŃĐ˛ĐžĐąĐžĐ´Đ˝Đž ĐžŃ Đ˛Đ¸ŃŃŃĐžĐ˛ Đ¸ Đ˛ŃĐľĐ´ĐžĐ˝ĐžŃĐ˝ĐžĐłĐž ĐĐ ĐąĐťĐ°ĐłĐžĐ´Đ°ŃŃ <a href="http://www.avast.com/" rel="nofollow noreferrer noopener" title="http://www.avast.com/" target="_blank">avast! Antivirus</a> ĐˇĐ°ŃĐ¸ŃĐ° Đ°ĐşŃĐ¸Đ˛Đ˝Đ°. </p></td>
 </tr>
-</tbody></table>},
-            sender: 'Customer',
-            type: 'email',
-            internal: false,
+</tbody></table>),
+            sender:       'Customer',
+            type:         'email',
+            internal:     false,
           },
         },
       },
       {
-        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail022.box')),
+        data:    Rails.root.join('test', 'data', 'mail', 'mail022.box').read,
         success: true,
-        result: {
+        result:  {
           0 => {
             priority: '2 normal',
-            title: 'P..E..N-I..S__-E N L A R-G E-M..E..N T-___P..I-L-L..S...Info.',
+            title:    'P..E..N-I..S__-E N L A R-G E-M..E..N T-___P..I-L-L..S...Info.',
           },
           1 => {
             content_type: 'text/html',
-            body: '<span style="color:#fbfaf8;">Puzzled by judith bronte dave. Melvin will want her way through with.<br>Continued adam helped charlie cried. Soon joined the master bathroom. Grinned adam rubbed his arms she nodded.<br>Freemont and they talked with beppe.<br>Thinking of bed and whenever adam.<br>Mike was too tired man to hear.</span><div style="color:#f2e9b5;">I°0<span style="color:#17133c;">P</span>QSH<span style="color:#17133c;">E</span>JlÔ<span style="color:#17133c;">N</span>wf˜<span style="color:#17133c;">Ì</span>1§3<span style="color:#17133c;">S</span>¬73<span style="color:#17133c;"> </span>Î1m<span style="color:#17133c;">E</span>bb5<span style="color:#17133c;">N</span>37¢<span style="color:#17133c;">L</span>ϖC7<span style="color:#17133c;">A</span>lFn<span style="color:#17133c;">R</span>º♦H<span style="color:#17133c;">G</span>64B<span style="color:#17133c;">É</span>4Ò¦<span style="color:#17133c;">M</span>åâ4<span style="color:#17133c;">Ê</span>zkΙ<span style="color:#17133c;">N</span>⌉7⌉<span style="color:#17133c;">T</span>BNÐ<span style="color:#17133c;"> </span>T×x<span style="color:#17133c;">P</span>Iòg<span style="color:#17133c;">I</span>ÎÃl<span style="color:#17133c;">L</span>øÕM<span style="color:#17133c;">L</span>⊥Þø<span style="color:#17133c;">S</span>aΨRBreathed adam gave the master bedroom door.<br>Better get charlie took the wall.<br>Charlotte clark smile he saw charlie.<br>Dave and leaned her tears adam.</div><span style="color:#f7f3ff;">Maybe we want any help me that.<br>Next morning charlie gazed at their father.<br>Well as though adam took out here. Melvin will be more money. Called him into this one last night.<br>Men joined the pickup truck pulled away. Chuck could make sure that.</span><span style="color:#fcecbf;"><a href="http://аоск.рф?jmlfwnwe&amp;ucwkiyyc" rel="nofollow noreferrer noopener" title="http://аоск.рф?jmlfwnwe&amp;ucwkiyyc" target="_blank"><b><span style="color:#f5e1b9;">†p­</span>C L I C K Ȟ E R E<span style="color:#f1e9ba;">EOD</span> !</b></a></span><span style="color:#f6f9fc;">Chuckled adam leaned forward and leî charlie.<br>Just then returned to believe it here.<br>Freemont and pulling out several minutes.</span>',
-            sender: 'Customer',
-            type: 'email',
-            internal: false,
+            body:         '<span style="color:#fbfaf8;">Puzzled by judith bronte dave. Melvin will want her way through with.<br>Continued adam helped charlie cried. Soon joined the master bathroom. Grinned adam rubbed his arms she nodded.<br>Freemont and they talked with beppe.<br>Thinking of bed and whenever adam.<br>Mike was too tired man to hear.</span><div style="color:#f2e9b5;">I°0<span style="color:#17133c;">P</span>QSH<span style="color:#17133c;">E</span>JlÔ<span style="color:#17133c;">N</span>wf˜<span style="color:#17133c;">Ì</span>1§3<span style="color:#17133c;">S</span>¬73<span style="color:#17133c;"> </span>Î1m<span style="color:#17133c;">E</span>bb5<span style="color:#17133c;">N</span>37¢<span style="color:#17133c;">L</span>ϖC7<span style="color:#17133c;">A</span>lFn<span style="color:#17133c;">R</span>º♦H<span style="color:#17133c;">G</span>64B<span style="color:#17133c;">É</span>4Ò¦<span style="color:#17133c;">M</span>åâ4<span style="color:#17133c;">Ê</span>zkΙ<span style="color:#17133c;">N</span>⌉7⌉<span style="color:#17133c;">T</span>BNÐ<span style="color:#17133c;"> </span>T×x<span style="color:#17133c;">P</span>Iòg<span style="color:#17133c;">I</span>ÎÃl<span style="color:#17133c;">L</span>øÕM<span style="color:#17133c;">L</span>⊥Þø<span style="color:#17133c;">S</span>aΨRBreathed adam gave the master bedroom door.<br>Better get charlie took the wall.<br>Charlotte clark smile he saw charlie.<br>Dave and leaned her tears adam.</div><span style="color:#f7f3ff;">Maybe we want any help me that.<br>Next morning charlie gazed at their father.<br>Well as though adam took out here. Melvin will be more money. Called him into this one last night.<br>Men joined the pickup truck pulled away. Chuck could make sure that.</span><span style="color:#fcecbf;"><a href="http://аоск.рф?jmlfwnwe&amp;ucwkiyyc" rel="nofollow noreferrer noopener" title="http://аоск.рф?jmlfwnwe&amp;ucwkiyyc" target="_blank"><b><span style="color:#f5e1b9;">†p­</span>C L I C K Ȟ E R E<span style="color:#f1e9ba;">EOD</span> !</b></a></span><span style="color:#f6f9fc;">Chuckled adam leaned forward and leî charlie.<br>Just then returned to believe it here.<br>Freemont and pulling out several minutes.</span>',
+            sender:       'Customer',
+            type:         'email',
+            internal:     false,
           },
         },
       },
       {
-        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail023.box')),
+        data:    Rails.root.join('test', 'data', 'mail', 'mail023.box').read,
         success: true,
-        result: {
+        result:  {
           0 => {
             priority: '2 normal',
-            title: '-',
+            title:    '-',
           },
           1 => {
-            from: 'marketingmanager@nthcpghana.com',
-            body: '机房环境法规
+            from:     'marketingmanager@nthcpghana.com',
+            body:     '机房环境法规
 Message-ID: <20140911055224675615@nthcpghana.com>
 From: =?utf-8?B?6IOh5qW35ZKM?= <marketingmanager@nthcpghana.com>
 To: <spviex@126.com>,
@@ -2407,82 +2410,82 @@ AElFTkSuQmCC
 ------=_NextPart_000_0FA8_01BB04D8.188AE890--
 
 ',
-            sender: 'Customer',
-            type: 'email',
+            sender:   'Customer',
+            type:     'email',
             internal: false,
           },
         },
       },
       {
-        data: 'From: =?UTF-8?Q?=22Frieda_H=C3=B6flich1=22?= <frieda.hoeflich1@example.com>
+        data:    'From: =?UTF-8?Q?=22Frieda_H=C3=B6flich1=22?= <frieda.hoeflich1@example.com>
 To: =?UTF-8?Q?=22Bob1=22?= <bod+frieda.hoeflich1@example.com>
 Subject: some subject frieda hoeflich1
 
 Some Text',
         success: true,
-        result: {
+        result:  {
           0 => {
             priority: '2 normal',
-            title: 'some subject frieda hoeflich1',
+            title:    'some subject frieda hoeflich1',
           },
           1 => {
             sender: 'Customer',
-            type: 'email',
+            type:   'email',
           },
         },
-        verify: {
+        verify:  {
           users: [
             {
               firstname: 'Frieda',
-              lastname: 'Höflich1',
-              fullname: 'Frieda Höflich1',
-              email: 'frieda.hoeflich1@example.com',
+              lastname:  'Höflich1',
+              fullname:  'Frieda Höflich1',
+              email:     'frieda.hoeflich1@example.com',
             },
             {
               firstname: 'Bob1',
-              lastname: '',
-              fullname: 'Bob1',
-              email: 'bod+frieda.hoeflich1@example.com',
+              lastname:  '',
+              fullname:  'Bob1',
+              email:     'bod+frieda.hoeflich1@example.com',
             },
           ],
         }
       },
       {
-        data: 'From: =?utf-8?Q?=27Frieda_H=C3=B6flich2=27?= <frieda.hoeflich2@example.com>
+        data:    'From: =?utf-8?Q?=27Frieda_H=C3=B6flich2=27?= <frieda.hoeflich2@example.com>
 To: =?utf-8?Q?=27Bob2=27?= <bod+frieda.hoeflich2@example.com>
 Subject: some subject frieda hoeflich2
 
 Some Text',
         success: true,
-        result: {
+        result:  {
           0 => {
             priority: '2 normal',
-            title: 'some subject frieda hoeflich2',
+            title:    'some subject frieda hoeflich2',
           },
           1 => {
             sender: 'Customer',
-            type: 'email',
+            type:   'email',
           },
         },
-        verify: {
+        verify:  {
           users: [
             {
               firstname: 'Frieda',
-              lastname: 'Höflich2',
-              fullname: 'Frieda Höflich2',
-              email: 'frieda.hoeflich2@example.com',
+              lastname:  'Höflich2',
+              fullname:  'Frieda Höflich2',
+              email:     'frieda.hoeflich2@example.com',
             },
             {
               firstname: 'Bob2',
-              lastname: '',
-              fullname: 'Bob2',
-              email: 'bod+frieda.hoeflich2@example.com',
+              lastname:  '',
+              fullname:  'Bob2',
+              email:     'bod+frieda.hoeflich2@example.com',
             },
           ],
         }
       },
       {
-        data: 'From: Some Body <somebody@example.com>
+        data:    'From: Some Body <somebody@example.com>
 To: Bob <bod@example.com>
 Cc: any+1@example.com
 Subject: some subject 2
@@ -2499,41 +2502,41 @@ Some Text',
           trusted: false,
         },
         success: true,
-        result: {
+        result:  {
           0 => {
-            group: 'Users',
+            group:    'Users',
             priority: '2 normal',
-            title: 'some subject 2',
+            title:    'some subject 2',
           },
           1 => {
             sender: 'Customer',
-            type: 'email',
+            type:   'email',
           },
         },
-        verify: {
+        verify:  {
           users: [
             {
               firstname: 'Some',
-              lastname: 'Body',
-              email: 'somebody@example.com',
+              lastname:  'Body',
+              email:     'somebody@example.com',
             },
             {
               firstname: 'Bob',
-              lastname: '',
-              fullname: 'Bob',
-              email: 'bod@example.com',
+              lastname:  '',
+              fullname:  'Bob',
+              email:     'bod@example.com',
             },
             {
               firstname: '',
-              lastname: '',
-              email: 'any+1@example.com',
-              fullname: 'any+1@example.com',
+              lastname:  '',
+              email:     'any+1@example.com',
+              fullname:  'any+1@example.com',
             },
           ],
         }
       },
       {
-        data: 'From: Some Body <somebody@example.com>
+        data:    'From: Some Body <somebody@example.com>
 To: Bob <bod@example.com>
 Cc: any@example.com
 Subject: some subject
@@ -2543,434 +2546,434 @@ Some Text',
           trusted: false,
         },
         success: true,
-        result: {
+        result:  {
           0 => {
-            group: 'Users',
+            group:    'Users',
             priority: '2 normal',
-            title: 'some subject',
+            title:    'some subject',
           },
           1 => {
             sender: 'Customer',
-            type: 'email',
+            type:   'email',
           },
         },
-        verify: {
+        verify:  {
           users: [
             {
               firstname: 'Some',
-              lastname: 'Body',
-              email: 'somebody@example.com',
+              lastname:  'Body',
+              email:     'somebody@example.com',
             },
             {
               firstname: 'Bob',
-              lastname: '',
-              fullname: 'Bob',
-              email: 'bod@example.com',
+              lastname:  '',
+              fullname:  'Bob',
+              email:     'bod@example.com',
             },
             {
               firstname: '',
-              lastname: '',
-              email: 'any@example.com',
-              fullname: 'any@example.com',
+              lastname:  '',
+              email:     'any@example.com',
+              fullname:  'any@example.com',
             },
           ],
         }
       },
       {
-        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail030.box')),
+        data:    Rails.root.join('test', 'data', 'mail', 'mail030.box').read,
         success: true,
-        result: {
+        result:  {
           0 => {
             priority: '2 normal',
-            title: 'Antragswesen in TesT abbilden',
+            title:    'Antragswesen in TesT abbilden',
           },
           1 => {
             sender: 'Customer',
-            type: 'email',
+            type:   'email',
           },
         },
-        verify: {
+        verify:  {
           users: [
             {
               firstname: 'Bert',
-              lastname: 'Jörg',
-              fullname: 'Bert Jörg',
-              email: 'joerg.bert@example.com',
+              lastname:  'Jörg',
+              fullname:  'Bert Jörg',
+              email:     'joerg.bert@example.com',
             },
             {
               firstname: 'Karl-Heinz',
-              lastname: 'Test',
-              fullname: 'Karl-Heinz Test',
-              email: 'karl-heinz.test@example.com',
+              lastname:  'Test',
+              fullname:  'Karl-Heinz Test',
+              email:     'karl-heinz.test@example.com',
             },
             {
               firstname: 'Manfred',
-              lastname: 'Haert',
-              email: 'manfred.haert@example.com',
-              fullname: 'Manfred Haert',
+              lastname:  'Haert',
+              email:     'manfred.haert@example.com',
+              fullname:  'Manfred Haert',
             },
           ],
         }
       },
       {
-        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail031.box')),
+        data:    Rails.root.join('test', 'data', 'mail', 'mail031.box').read,
         success: true,
-        result: {
+        result:  {
           0 => {
             priority: '2 normal',
-            title: '內應力產生与注塑工艺条件之间的关系；',
+            title:    '內應力產生与注塑工艺条件之间的关系；',
           },
           1 => {
             sender: 'Customer',
-            type: 'email',
+            type:   'email',
           },
         },
-        verify: {
+        verify:  {
           users: [
             {
               firstname: 'Bertha',
-              lastname: 'Mou',
-              fullname: 'Bertha Mou',
-              email: 'zhengkang@ha.chinamobile.com',
+              lastname:  'Mou',
+              fullname:  'Bertha Mou',
+              email:     'zhengkang@ha.chinamobile.com',
             },
           ],
         }
       },
       {
-        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail032.box')),
+        data:    Rails.root.join('test', 'data', 'mail', 'mail032.box').read,
         success: true,
-        result: {
+        result:  {
           0 => {
             priority: '2 normal',
-            title: '发现最美车间主任',
+            title:    '发现最美车间主任',
           },
           1 => {
             sender: 'Customer',
-            type: 'email',
+            type:   'email',
           },
         },
-        verify: {
+        verify:  {
           users: [
             {
               firstname: 'Dana.Qin',
-              lastname: '',
-              fullname: 'Dana.Qin',
-              email: 'dana.qin6e1@gmail.com',
+              lastname:  '',
+              fullname:  'Dana.Qin',
+              email:     'dana.qin6e1@gmail.com',
             },
           ],
         }
       },
       {
-        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail035.box')),
+        data:    Rails.root.join('test', 'data', 'mail', 'mail035.box').read,
         success: true,
-        result: {
+        result:  {
           0 => {
             priority: '2 normal',
-            title: 'Darlehen bieten jetzt bewerben',
+            title:    'Darlehen bieten jetzt bewerben',
           },
           1 => {
             sender: 'Customer',
-            type: 'email',
+            type:   'email',
           },
         },
-        verify: {
+        verify:  {
           users: [
             {
               firstname: '',
-              lastname: '',
-              fullname: 'finances8@firstfinanceloanfirm.example.com',
-              email: 'finances8@firstfinanceloanfirm.example.com',
+              lastname:  '',
+              fullname:  'finances8@firstfinanceloanfirm.example.com',
+              email:     'finances8@firstfinanceloanfirm.example.com',
             },
           ],
         }
       },
       {
-        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail037.box')),
+        data:    Rails.root.join('test', 'data', 'mail', 'mail037.box').read,
         success: true,
-        result: {
+        result:  {
           0 => {
             priority: '2 normal',
-            title: 'Example: Java 8 Neuerungen',
+            title:    'Example: Java 8 Neuerungen',
           },
           1 => {
             sender: 'Customer',
-            type: 'email',
+            type:   'email',
           },
         },
-        verify: {
+        verify:  {
           users: [
             {
               firstname: 'Example',
-              lastname: '',
-              fullname: 'Example',
-              email: 'info@example.com',
+              lastname:  '',
+              fullname:  'Example',
+              email:     'info@example.com',
             },
             {
               firstname: 'Ingo',
-              lastname: 'Best',
-              fullname: 'Ingo Best',
-              email: 'iw@example.com',
+              lastname:  'Best',
+              fullname:  'Ingo Best',
+              email:     'iw@example.com',
             },
             {
               firstname: 'Max',
-              lastname: 'Kohl | [example.com]',
-              fullname: 'Max Kohl | [example.com]',
-              email: 'kohl@example.com',
+              lastname:  'Kohl | [example.com]',
+              fullname:  'Max Kohl | [example.com]',
+              email:     'kohl@example.com',
             },
           ],
         }
       },
       {
-        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail041.box')),
+        data:    Rails.root.join('test', 'data', 'mail', 'mail041.box').read,
         success: true,
-        result: {
+        result:  {
           0 => {
             priority: '2 normal',
-            title: 'smime sign & crypt',
+            title:    'smime sign & crypt',
           },
           1 => {
             sender: 'Customer',
-            type: 'email',
+            type:   'email',
           },
         },
       },
       {
-        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail042.box')),
+        data:    Rails.root.join('test', 'data', 'mail', 'mail042.box').read,
         success: true,
-        result: {
+        result:  {
           0 => {
             priority: '2 normal',
-            title: 'pgp sign & crypt',
+            title:    'pgp sign & crypt',
           },
           1 => {
             sender: 'Customer',
-            type: 'email',
+            type:   'email',
           },
         },
       },
       {
-        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail043.box')),
+        data:    Rails.root.join('test', 'data', 'mail', 'mail043.box').read,
         success: true,
-        result: {
+        result:  {
           0 => {
             priority: '2 normal',
-            title: 'Kontakte',
+            title:    'Kontakte',
           },
           1 => {
             sender: 'Customer',
-            type: 'email',
+            type:   'email',
           },
         },
       },
       {
-        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail044.box')),
+        data:    Rails.root.join('test', 'data', 'mail', 'mail044.box').read,
         success: true,
-        result: {
+        result:  {
           0 => {
             priority: '2 normal',
-            title: '精益生产闪婚,是谁的责任',
+            title:    '精益生产闪婚,是谁的责任',
           },
           1 => {
             sender: 'Customer',
-            type: 'email',
+            type:   'email',
           },
         },
-        verify: {
+        verify:  {
           users: [
             {
               firstname: 'Clement.Si',
-              lastname: '',
-              fullname: 'Clement.Si',
-              email: 'claudia.shu@yahoo.com',
+              lastname:  '',
+              fullname:  'Clement.Si',
+              email:     'claudia.shu@yahoo.com',
             },
             {
               firstname: '',
-              lastname: '',
-              fullname: 'abuse@domain.com',
-              email: 'abuse@domain.com',
+              lastname:  '',
+              fullname:  'abuse@domain.com',
+              email:     'abuse@domain.com',
             },
           ],
         },
       },
       {
-        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail046.box')),
+        data:    Rails.root.join('test', 'data', 'mail', 'mail046.box').read,
         success: true,
-        result: {
+        result:  {
           0 => {
             priority: '2 normal',
-            title: '转发：整体提升企业服务水平',
+            title:    '转发：整体提升企业服务水平',
           },
           1 => {
-            from: '"ÎäŔźłÉ" <Glopelf7121@example.com>',
+            from:   '"ÎäŔźłÉ" <Glopelf7121@example.com>',
             sender: 'Customer',
-            type: 'email',
+            type:   'email',
           },
         },
-        verify: {
+        verify:  {
           users: [
             {
               firstname: 'ÎäŔźłÉ',
-              lastname: '',
-              fullname: 'ÎäŔźłÉ',
-              email: 'glopelf7121@example.com',
+              lastname:  '',
+              fullname:  'ÎäŔźłÉ',
+              email:     'glopelf7121@example.com',
             },
           ],
         },
       },
       {
-        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail047.box')),
+        data:    Rails.root.join('test', 'data', 'mail', 'mail047.box').read,
         success: true,
-        result: {
+        result:  {
           0 => {
             priority: '2 normal',
-            title: '-90%! Nur 3,90 statt 39,90 EUR: In-Ear-Stereo-Headset mit Bluetooth 4.1 und Magnetverschluss für Bob Max Example',
+            title:    '-90%! Nur 3,90 statt 39,90 EUR: In-Ear-Stereo-Headset mit Bluetooth 4.1 und Magnetverschluss für Bob Max Example',
           },
           1 => {
-            from: 'EXAMPLE HotPriceMail <anja.weber@example.de>',
+            from:   'EXAMPLE HotPriceMail <anja.weber@example.de>',
             sender: 'Customer',
-            type: 'email',
+            type:   'email',
           },
         },
-        verify: {
+        verify:  {
           users: [
             {
               firstname: 'Example',
-              lastname: 'HotPriceMail',
-              fullname: 'Example HotPriceMail',
-              email: 'anja.weber@example.de',
+              lastname:  'HotPriceMail',
+              fullname:  'Example HotPriceMail',
+              email:     'anja.weber@example.de',
             },
           ],
         },
       },
       {
-        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail049.box')),
+        data:    Rails.root.join('test', 'data', 'mail', 'mail049.box').read,
         success: true,
-        result: {
+        result:  {
           0 => {
             priority: '2 normal',
-            title: 'Kinderschwimmbrille ABC Little Twist: Schnell angelegt, keine verhedderten Haare (Pressemitteilung)',
+            title:    'Kinderschwimmbrille ABC Little Twist: Schnell angelegt, keine verhedderten Haare (Pressemitteilung)',
           },
           1 => {
-            from: '"Marcus Smith (ABC)" <marcus.smith@example.com>',
+            from:   '"Marcus Smith (ABC)" <marcus.smith@example.com>',
             sender: 'Customer',
-            type: 'email',
+            type:   'email',
           },
         },
-        verify: {
+        verify:  {
           users: [
             {
               firstname: 'Marcus',
-              lastname: 'Smith',
-              fullname: 'Marcus Smith',
-              email: 'marcus.smith@example.com',
+              lastname:  'Smith',
+              fullname:  'Marcus Smith',
+              email:     'marcus.smith@example.com',
             },
           ],
         },
       },
       {
-        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail052.box')),
+        data:    Rails.root.join('test', 'data', 'mail', 'mail052.box').read,
         success: true,
-        result: {
+        result:  {
           0 => {
             priority: '2 normal',
-            title: 'Undelivered Mail Returned to Sender',
+            title:    'Undelivered Mail Returned to Sender',
           },
           1 => {
-            from: 'MAILER-DAEMON@example.com (Mail Delivery System)',
+            from:   'MAILER-DAEMON@example.com (Mail Delivery System)',
             sender: 'Customer',
-            type: 'email',
+            type:   'email',
           },
         },
-        verify: {
+        verify:  {
           users: [
             {
               firstname: 'Mail',
-              lastname: 'Delivery System',
-              fullname: 'Mail Delivery System',
-              email: 'mailer-daemon@example.com',
+              lastname:  'Delivery System',
+              fullname:  'Mail Delivery System',
+              email:     'mailer-daemon@example.com',
             },
           ],
         },
       },
       {
-        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail053.box')),
+        data:    Rails.root.join('test', 'data', 'mail', 'mail053.box').read,
         success: true,
-        result: {
+        result:  {
           0 => {
             priority: '2 normal',
-            title: 'Undelivered Mail Returned to Sender',
+            title:    'Undelivered Mail Returned to Sender',
           },
           1 => {
-            from: 'MAILER-DAEMON (Mail Delivery System)',
+            from:   'MAILER-DAEMON (Mail Delivery System)',
             sender: 'Customer',
-            type: 'email',
+            type:   'email',
           },
         },
-        verify: {
+        verify:  {
           users: [
             {
               firstname: 'Mail',
-              lastname: 'Delivery System',
-              fullname: 'Mail Delivery System',
-              email: 'mailer-daemon@local',
+              lastname:  'Delivery System',
+              fullname:  'Mail Delivery System',
+              email:     'mailer-daemon@local',
             },
           ],
         },
       },
       {
-        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail060.box')),
+        data:    Rails.root.join('test', 'data', 'mail', 'mail060.box').read,
         success: true,
-        result: {
+        result:  {
           0 => {
             priority: '2 normal',
-            title: 'abc',
+            title:    'abc',
           },
           1 => {
-            from: 'Martin Edenhofer <martin@example.com>',
+            from:   'Martin Edenhofer <martin@example.com>',
             sender: 'Customer',
-            type: 'email',
-            body: "Here it goes - Ă¤ĂśĂź - ĺˇŽĺ\u0087şäşşHere it goes - äöü - hi ­",
+            type:   'email',
+            body:   "Here it goes - Ă¤ĂśĂź - ĺˇŽĺ\u0087şäşşHere it goes - äöü - hi ­",
           },
         },
-        verify: {
+        verify:  {
           users: [
             {
               firstname: 'Martin',
-              lastname: 'Edenhofer',
-              fullname: 'Martin Edenhofer',
-              email: 'martin@example.com',
+              lastname:  'Edenhofer',
+              fullname:  'Martin Edenhofer',
+              email:     'martin@example.com',
             },
           ],
         },
       },
       {
-        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail064.box')),
+        data:    Rails.root.join('test', 'data', 'mail', 'mail064.box').read,
         success: true,
-        result: {
+        result:  {
           0 => {
             priority: '2 normal',
-            title: 'AW: OTRS / Anfrage OTRS Einführung/Präsentation [Ticket#11545]',
+            title:    'AW: OTRS / Anfrage OTRS Einführung/Präsentation [Ticket#11545]',
           },
           1 => {
-            from: 'Martin Edenhofer <martin@example.de>',
+            from:   'Martin Edenhofer <martin@example.de>',
             sender: 'Customer',
-            type: 'email',
-            body: 'Enjoy!<div><br><div>-Martin<br><span class="js-signatureMarker"></span><br>--<br>Old programmers never die. They just branch to a new address.<br></div><br><div><img src="cid:485376C9-2486-4351-B932-E2010998F579@home" style="width:640px;height:425px;"></div></div>',
+            type:   'email',
+            body:   'Enjoy!<div><br><div>-Martin<br><span class="js-signatureMarker"></span><br>--<br>Old programmers never die. They just branch to a new address.<br></div><br><div><img src="cid:485376C9-2486-4351-B932-E2010998F579@home" style="width:640px;height:425px;"></div></div>',
           },
         },
-        verify: {
+        verify:  {
           users: [
             {
               firstname: 'Martin',
-              lastname: 'Edenhofer',
-              fullname: 'Martin Edenhofer',
-              email: 'martin@example.de',
+              lastname:  'Edenhofer',
+              fullname:  'Martin Edenhofer',
+              email:     'martin@example.de',
             },
           ],
         },
       },
       {
-        data: 'From: =?iso-8859-1?Q?B=FCrling,=20Andreas?= <smith@example.com>
+        data:    'From: =?iso-8859-1?Q?B=FCrling,=20Andreas?= <smith@example.com>
 Content-Type: text/plain;
   charset=iso-8859-1
 Content-Transfer-Encoding: quoted-printable
@@ -2988,16 +2991,16 @@ Mime-Version: 1.0 (Apple Message framework v1257)
 --
 Old programmers never die. They just branch to a new address.',
         success: true,
-        result: {
+        result:  {
           0 => {
             priority: '2 normal',
-            title: 'aaäöüßad asd',
+            title:    'aaäöüßad asd',
           },
           1 => {
-            from: '=?iso-8859-1?Q?B=FCrling, =20Andreas?= <smith@example.com>',
+            from:   '=?iso-8859-1?Q?B=FCrling, =20Andreas?= <smith@example.com>',
             sender: 'Customer',
-            type: 'email',
-            body: 'äöüß ad asd
+            type:   'email',
+            body:   'äöüß ad asd
 
 -Martin
 
@@ -3005,49 +3008,49 @@ Old programmers never die. They just branch to a new address.',
 Old programmers never die. They just branch to a new address.',
           },
         },
-        verify: {
+        verify:  {
           users: [
             {
               firstname: '=20Andreas?=',
-              lastname: '',
-              fullname: '=20Andreas?=',
-              email: 'smith@example.com',
+              lastname:  '',
+              fullname:  '=20Andreas?=',
+              email:     'smith@example.com',
             },
           ],
         },
       },
       {
-        data: 'From: =?windows-1258?B?VmFuZHJvbW1lLCBGculk6XJpYw==?= <fvandromme@example.com>
+        data:    'From: =?windows-1258?B?VmFuZHJvbW1lLCBGculk6XJpYw==?= <fvandromme@example.com>
 To: Example <info@example.com>
 Subject: some subject 3
 
 Some Text',
         success: true,
-        result: {
+        result:  {
           0 => {
             priority: '2 normal',
-            title: 'some subject 3',
+            title:    'some subject 3',
           },
           1 => {
-            from: '"Vandromme, Frédéric" <fvandromme@example.com>',
+            from:   '"Vandromme, Frédéric" <fvandromme@example.com>',
             sender: 'Customer',
-            type: 'email',
-            body: 'Some Text',
+            type:   'email',
+            body:   'Some Text',
           },
         },
-        verify: {
+        verify:  {
           users: [
             {
               firstname: 'Frédéric',
-              lastname: 'Vandromme',
-              fullname: 'Frédéric Vandromme',
-              email: 'fvandromme@example.com',
+              lastname:  'Vandromme',
+              fullname:  'Frédéric Vandromme',
+              email:     'fvandromme@example.com',
             },
           ],
         },
       },
       {
-        data: 'From: me@example.com
+        data:    'From: me@example.com
 To: customer@example.com
 Subject: some subject
 Content-Type: text/html; charset=us-ascii; format=flowed
@@ -3058,552 +3061,260 @@ Content-Type: text/html; charset=us-ascii; format=flowed
   </body>
 </html>',
         success: true,
-        result: {
+        result:  {
           0 => {
             priority: '2 normal',
-            title: 'some subject',
+            title:    'some subject',
           },
           1 => {
             content_type: 'text/html',
-            body: '<a href="mailto:testäöü@example.com">test</a>',
-            sender: 'Customer',
-            type: 'email',
-            internal: false,
+            body:         '<a href="mailto:testäöü@example.com">test</a>',
+            sender:       'Customer',
+            type:         'email',
+            internal:     false,
           },
         },
       },
       {
-        data: <<~RAW_MAIL.chomp,
+        data:    <<~RAW_MAIL.chomp,
           From: me@example.com
           To: Bob Smith <'customer_outlook_recipient_not_in_address_book@example.com'>
           Subject: some subject for outlook recipient issue
           Content-Type: text/html; charset=us-ascii;
 
           test
-          RAW_MAIL
+        RAW_MAIL
         success: true,
-        result: {
+        result:  {
           0 => {
             priority: '2 normal',
-            title: 'some subject for outlook recipient issue',
+            title:    'some subject for outlook recipient issue',
           },
           1 => {
             content_type: 'text/html',
-            body: 'test',
-            sender: 'Customer',
-            type: 'email',
-            internal: false,
+            body:         'test',
+            sender:       'Customer',
+            type:         'email',
+            internal:     false,
           },
         },
-        verify: {
+        verify:  {
           users: [
             {
               firstname: 'Bob',
-              lastname: 'Smith',
-              fullname: 'Bob Smith',
-              email: 'customer_outlook_recipient_not_in_address_book@example.com',
+              lastname:  'Smith',
+              fullname:  'Bob Smith',
+              email:     'customer_outlook_recipient_not_in_address_book@example.com',
             },
           ],
         },
       },
       {
-        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail067.box')),
+        data:    Rails.root.join('test', 'data', 'mail', 'mail067.box').read,
         success: true,
-        result: {
+        result:  {
           0 => {
             priority: '2 normal',
-            title: 'Testmail - Alias in info@example.de Gruppe',
+            title:    'Testmail - Alias in info@example.de Gruppe',
           },
           1 => {
-            from: 'Bob Smith | deal <info@example.de>',
-            sender: 'Customer',
-            type: 'email',
+            from:    'Bob Smith | deal <info@example.de>',
+            sender:  'Customer',
+            type:    'email',
             subject: 'Testmail - Alias in info@example.de Gruppe',
-            body: 'no visible content',
+            body:    'no visible content',
           },
         },
-        verify: {
+        verify:  {
           users: [
             {
               firstname: 'Bob',
-              lastname: 'Smith | deal',
-              fullname: 'Bob Smith | deal',
-              email: 'info@example.de',
+              lastname:  'Smith | deal',
+              fullname:  'Bob Smith | deal',
+              email:     'info@example.de',
             },
           ],
         },
       },
       { # See https://github.com/zammad/zammad/issues/2199
-        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail070.box')),
+        data:    Rails.root.join('test', 'data', 'mail', 'mail070.box').read,
         success: true,
-        result: {
+        result:  {
           1 => {
-            from: '"http.abc" <http.abc@example.com>',
+            from:   '"http.abc" <http.abc@example.com>',
             sender: 'Customer',
-            type: 'email',
+            type:   'email',
           },
         },
-        verify: {
+        verify:  {
           users: [
             {
               firstname: 'http.abc',
-              lastname: '',
-              fullname: 'http.abc',
-              email: 'http.abc@example.com',
+              lastname:  '',
+              fullname:  'http.abc',
+              email:     'http.abc@example.com',
             },
           ],
         },
       },
       { # See https://github.com/zammad/zammad/issues/2254
-        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail076.box')),
+        data:    Rails.root.join('test', 'data', 'mail', 'mail076.box').read,
         success: true,
-        result: {
+        result:  {
           1 => {
-            from: '"Millions Lottery Spain transfer"@example.com>',
+            from:   '"Millions Lottery Spain transfer"@example.com>',
             sender: 'Customer',
-            type: 'email',
+            type:   'email',
           },
         },
-        verify: {
+        verify:  {
           users: [
             {
               firstname: 'Millions',
-              lastname: 'Lottery Spain transfer@example.com>',
-              fullname: 'Millions Lottery Spain transfer@example.com>',
-              email: 'millionslotteryspaintransfer@example.com',
+              lastname:  'Lottery Spain transfer@example.com>',
+              fullname:  'Millions Lottery Spain transfer@example.com>',
+              email:     'millionslotteryspaintransfer@example.com',
             },
           ],
         },
       },
       { # See https://github.com/zammad/zammad/issues/2704
-        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail083.box')),
+        data:    Rails.root.join('test', 'data', 'mail', 'mail083.box').read,
         success: true,
-        result: {
+        result:  {
           1 => {
-            from: 'Martin Smith <martin083@example.de>',
+            from:   'Martin Smith <martin083@example.de>',
             sender: 'Customer',
-            type: 'email',
+            type:   'email',
           },
         },
-        verify: {
+        verify:  {
           users: [
             {
               firstname: 'Martin',
-              lastname: 'Smith',
-              fullname: 'Martin Smith',
-              email: 'martin083@example.de',
+              lastname:  'Smith',
+              fullname:  'Martin Smith',
+              email:     'martin083@example.de',
             },
           ],
         },
       },
       { # See https://github.com/zammad/zammad/issues/2704
-        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail084.box')),
+        data:    Rails.root.join('test', 'data', 'mail', 'mail084.box').read,
         success: true,
-        result: {
+        result:  {
           1 => {
-            from: 'Martin Smith <martin084@example.de>',
+            from:   'Martin Smith <martin084@example.de>',
             sender: 'Customer',
-            type: 'email',
+            type:   'email',
           },
         },
-        verify: {
+        verify:  {
           users: [
             {
               firstname: 'Martin',
-              lastname: 'Smith',
-              fullname: 'Martin Smith',
-              email: 'martin084@example.de',
+              lastname:  'Smith',
+              fullname:  'Martin Smith',
+              email:     'martin084@example.de',
             },
           ],
         },
       },
       { # See https://github.com/zammad/zammad/issues/2971
-        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail088.box')),
+        data:    Rails.root.join('test', 'data', 'mail', 'mail088.box').read,
         success: true,
-        result: {
+        result:  {
           1 => {
-            from: 'Martin Smith <martin088@example.de>',
+            from:   'Martin Smith <martin088@example.de>',
             sender: 'Customer',
-            type: 'email',
-            body: 'no visible content',
+            type:   'email',
+            body:   'no visible content',
           },
         },
-        verify: {
+        verify:  {
           users: [
             {
               firstname: 'Martin',
-              lastname: 'Smith',
-              fullname: 'Martin Smith',
-              email: 'martin088@example.de',
+              lastname:  'Smith',
+              fullname:  'Martin Smith',
+              email:     'martin088@example.de',
             },
           ],
         },
       },
       { # See https://github.com/zammad/zammad/issues/3293
-        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail094.box')),
+        data:    Rails.root.join('test', 'data', 'mail', 'mail094.box').read,
         success: true,
-        result: {
+        result:  {
           1 => {
-            from: '"Jo B. USER1 - Noreply 131231 23123123 123 123 123 12" <noreply@example.com>',
+            from:   '"Jo B. USER1 - Noreply 131231 23123123 123 123 123 12" <noreply@example.com>',
             sender: 'Customer',
-            type: 'email',
-            body: 'no visible content',
+            type:   'email',
+            body:   'no visible content',
           },
         },
-        verify: {
+        verify:  {
           users: [
             {
               firstname: 'Jo',
-              lastname: 'B. USER1 - Noreply 131231 23123123 123 123 123 12',
-              fullname: 'Jo B. USER1 - Noreply 131231 23123123 123 123 123 12',
-              email: 'noreply@example.com',
+              lastname:  'B. USER1 - Noreply 131231 23123123 123 123 123 12',
+              fullname:  'Jo B. USER1 - Noreply 131231 23123123 123 123 123 12',
+              email:     'noreply@example.com',
             },
           ],
         },
       },
     ]
-    assert_process(files)
   end
 
-  test 'process trusted' do
-    groups = Group.all
-    roles  = Role.where(name: 'Agent')
-    agent1 = User.create!(
-      login:         'agent1',
-      firstname:     'Firstname',
-      lastname:      'agent1',
-      email:         'agent1@example.com',
-      active:        true,
-      roles:         roles,
-      groups:        groups,
-      updated_by_id: 1,
-      created_by_id: 1,
-    )
-    roles  = Role.where(name: 'Customer')
-    customer1 = User.create!(
-      login:         'customer1',
-      firstname:     'Firstname',
-      lastname:      'customer1',
-      email:         'customer1@example.com',
-      active:        true,
-      roles:         roles,
-      updated_by_id: 1,
-      created_by_id: 1,
-    )
-
-    files = [
-      {
-        data: 'From: me@example.com
-To: customer@example.com
-Subject: some subject
-X-Zammad-Ignore: true
-
-Some Text',
-        channel: {
-          trusted: true,
-        },
-        success: false,
-      },
-      {
-        data: 'From: me@example.com
-To: customer@example.com
-Subject: some subject
-X-Zammad-Ticket-Followup-State: closed
-X-Zammad-Ticket-priority: 3 high
-X-Zammad-Ticket-owner: agent1@example.com
-X-Zammad-Article-sender: System
-x-Zammad-Article-type: phone
-x-Zammad-Article-Internal: true
-
-Some Text',
-        channel: {
-          trusted: true,
-        },
-        success: true,
-        result: {
-          0 => {
-            state: 'new',
-            priority: '3 high',
-            title: 'some subject',
-            owner: agent1,
-          },
-          1 => {
-            sender: 'System',
-            type: 'phone',
-            internal: true,
-          },
-        },
-      },
-      {
-        data: 'From: me@example.com
-To: customer@example.com
-Subject: some subject
-X-Zammad-Ticket-Followup-State: closed
-X-Zammad-Ticket-priority_id: 777777
-X-Zammad-Ticket-owner: not_existing@example.com
-X-Zammad-Article-sender_id: 999999
-x-Zammad-Article-type: phone
-x-Zammad-Article-Internal: true
-
-Some Text',
-        channel: {
-          trusted: true,
-        },
-        success: true,
-        result: {
-          0 => {
-            state: 'new',
-            priority: '2 normal',
-            title: 'some subject',
-            owner: User.find(1),
-          },
-          1 => {
-            sender: 'Customer',
-            type: 'phone',
-            internal: true,
-          },
-        },
-      },
-      {
-        data: 'From: me@example.com
-To: customer@example.com
-Subject: some subject / with customer as agent - customer can not be owner
-X-Zammad-Ticket-owner: customer1@example.com
-
-Some Text',
-        channel: {
-          trusted: true,
-        },
-        success: true,
-        result: {
-          0 => {
-            state: 'new',
-            priority: '2 normal',
-            title: 'some subject / with customer as agent - customer can not be owner',
-            owner: User.find(1),
-          },
-          1 => {
-            sender: 'Customer',
-            type: 'email',
-            internal: false,
-          },
-        },
-      },
-      {
-        data: 'From: me@example.com
-To: customer@example.com
-Subject: some subject / with agent login
-X-Zammad-Ticket-owner: agent1
-
-Some Text',
-        channel: {
-          trusted: true,
-        },
-        success: true,
-        result: {
-          0 => {
-            state: 'new',
-            priority: '2 normal',
-            title: 'some subject / with agent login',
-            owner: agent1,
-          },
-          1 => {
-            sender: 'Customer',
-            type: 'email',
-            internal: false,
-          },
-        },
-      },
-      {
-        data: 'From: me@example.com
-To: customer@example.com
-Subject: some subject / with agent email
-X-Zammad-Ticket-owner: agent1@example.com
-
-Some Text',
-        channel: {
-          trusted: true,
-        },
-        success: true,
-        result: {
-          0 => {
-            state: 'new',
-            priority: '2 normal',
-            title: 'some subject / with agent email',
-            owner: agent1,
-          },
-          1 => {
-            sender: 'Customer',
-            type: 'email',
-            internal: false,
-          },
-        },
-      },
-    ]
+  it 'processes the mails as expected' do
     assert_process(files)
-  end
-
-  test 'process not trusted' do
-    files = [
-      {
-        data: 'From: me@example.com
-To: customer@example.com
-Subject: some subject
-X-Zammad-Ticket-Followup-State: closed
-X-Zammad-Ticket-Priority: 3 high
-X-Zammad-Article-Sender: System
-x-Zammad-Article-Type: phone
-x-Zammad-Article-Internal: true
-
-Some Text',
-        channel: {
-          trusted: false,
-        },
-        success: true,
-        result: {
-          0 => {
-            state: 'new',
-            priority: '2 normal',
-            title: 'some subject',
-          },
-          1 => {
-            sender: 'Customer',
-            type: 'email',
-            internal: false,
-          },
-        },
-      },
-    ]
-    assert_process(files)
-  end
-
-  test 'process inactive group - a' do
-    group3 = Group.create_if_not_exists(
-      name: 'Test Group Inactive',
-      active: false,
-      created_by_id: 1,
-      updated_by_id: 1,
-    )
-    files = [
-      {
-        data: 'From: me@example.com
-To: customer@example.com
-Subject: some subject
-
-Some Text',
-        channel: {
-          group_id: group3.id,
-        },
-        success: true,
-        result: {
-          0 => {
-            state: 'new',
-            group: 'Users',
-            priority: '2 normal',
-            title: 'some subject',
-          },
-          1 => {
-            sender: 'Customer',
-            type: 'email',
-            internal: false,
-          },
-        },
-      },
-    ]
-    assert_process(files)
-  end
-
-  test 'process inactive group - b' do
-    group_active_map = {}
-    Group.all.each {|group|
-      group_active_map[group.id] = group.active
-      group.active = false
-      group.save
-    }
-    files = [
-      {
-        data: 'From: me@example.com
-To: customer@example.com
-Subject: some subject
-
-Some Text',
-        channel: {},
-        success: true,
-        result: {
-          0 => {
-            state: 'new',
-            group: 'Users',
-            priority: '2 normal',
-            title: 'some subject',
-          },
-          1 => {
-            sender: 'Customer',
-            type: 'email',
-            internal: false,
-          },
-        },
-      },
-    ]
-    assert_process(files)
-
-    Group.all.each {|group|
-      next if !group_active_map.key?(group.id)
-      group.active = group_active_map[group.id]
-      group.save
-    }
   end
 
   def assert_process(files)
-    files.each { |file|
-      result = Channel::EmailParser.new.process(file[:channel]||{}, file[:data], false)
+    files.each do |file|
+      result = Channel::EmailParser.new.process(file[:channel] || {}, file[:data], false)
+
       if file[:success]
-        if result && result.class == Array && result[1]
-          assert( true )
-          if file[:result]
-            [ 0, 1, 2 ].each { |level|
-              if file[:result][level]
-                file[:result][level].each { |key, value|
-                  if result[level].send(key).respond_to?('name')
-                    assert_equal(value.to_s, result[level].send(key).name)
-                  else
-                    assert_equal(value, result[level].send(key), "result check #{level}, #{key}")
-                  end
-                }
-              end
-            }
-          end
-          if file[:verify]
-            # verify if users are created
-            if file[:verify][:users]
-              file[:verify][:users].each { |user_result|
-                user = User.where(email: user_result[:email].downcase).first
-                if !user
-                  assert(false, "No user '#{user_result[:email].downcase}' found!")
-                  return
-                end
-                user_result.each { |key, value|
-                  if user.respond_to?( key)
-                    assert_equal(value, user.send(key), "user check #{ key }")
-                  else
-                    assert_equal(value, user[key], "user check #{ key }" )
-                  end
-                }
-              }
-            end
-          end
-        else
-          assert(false, 'ticket not created')
-        end
-      elsif !file[:success]
-        if result && result.class == Array && result[1]
-        puts result.inspect
-        assert(false, 'ticket should not be created but is created')
-        else
-          assert(true, 'ticket not created - nice')
-        end
+        expect(result).to be_a(Array)
+        expect(result[1]).to be_truthy, 'ticket not created'
+
+        assert_process_result(file, result)
+        assert_process_users(file)
       else
-        assert(false, 'UNKNOWN!')
+        expect(result[1]).to be_falsey, 'ticket should not be created but is created'
       end
-    }
+    end
+  end
+
+  def assert_process_result(file, result)
+    return if !file[:result]
+
+    [0, 1, 2].each do |level|
+      file[:result][level]&.each do |key, value|
+        if result[level].send(key).respond_to?(:name)
+          expect(result[level].send(key).name).to eq(value.to_s)
+        else
+          expect(result[level].send(key)).to eq(value), "result check #{level}, #{key}"
+        end
+      end
+    end
+  end
+
+  def assert_process_users(file)
+    return if !file[:verify] || !file[:verify][:users]
+
+    file[:verify][:users].each do |user_result|
+      user = User.find_by(email: user_result[:email].downcase)
+      expect(user).to be_present, "No user '#{user_result[:email].downcase}' found!"
+
+      user_result.each do |key, value|
+        if user.respond_to?(key)
+          expect(user.send(key)).to eq(value), "user check #{key}"
+        else
+          expect(user[key]).to eq(value), "user check #{key}"
+        end
+      end
+    end
   end
 end

@@ -1275,4 +1275,1282 @@ RSpec.describe Selector::Sql do
       expect(sql).to include('SELECT')
     end
   end
+
+  describe 'ticket selector' do
+    let(:group) do
+      Group.create_or_update(
+        name:          'SelectorTest',
+        updated_at:    '2015-02-05 16:37:00',
+        updated_by_id: 1,
+        created_by_id: 1,
+      )
+    end
+    let(:agent1) do
+      User.create_or_update(
+        login:         'ticket-selector-agent1@example.com',
+        firstname:     'Notification',
+        lastname:      'Agent1',
+        email:         'ticket-selector-agent1@example.com',
+        password:      'agentpw',
+        active:        true,
+        roles:         Role.where(name: 'Agent'),
+        groups:        [group],
+        updated_at:    '2015-02-05 16:37:00',
+        updated_by_id: 1,
+        created_by_id: 1,
+      )
+    end
+    let(:agent2) do
+      User.create_or_update(
+        login:         'ticket-selector-agent2@example.com',
+        firstname:     'Notification',
+        lastname:      'Agent2',
+        email:         'ticket-selector-agent2@example.com',
+        password:      'agentpw',
+        active:        true,
+        roles:         Role.where(name: 'Agent'),
+        updated_at:    '2015-02-05 16:38:00',
+        updated_by_id: 1,
+        created_by_id: 1,
+      )
+    end
+    let(:organization1) do
+      Organization.create_if_not_exists(
+        name:          'Selector Org',
+        updated_at:    '2015-02-05 16:37:00',
+        updated_by_id: 1,
+        created_by_id: 1,
+      )
+    end
+    let(:customer1) do
+      User.create_or_update(
+        login:           'ticket-selector-customer1@example.com',
+        firstname:       'Notification',
+        lastname:        'Customer1',
+        email:           'ticket-selector-customer1@example.com',
+        password:        'customerpw',
+        active:          true,
+        organization_id: organization1.id,
+        roles:           Role.where(name: 'Customer'),
+        updated_at:      '2015-02-05 16:37:00',
+        updated_by_id:   1,
+        created_by_id:   1,
+      )
+    end
+    let(:customer2) do
+      User.create_or_update(
+        login:           'ticket-selector-customer2@example.com',
+        firstname:       'Notification',
+        lastname:        'Customer2',
+        email:           'ticket-selector-customer2@example.com',
+        password:        'customerpw',
+        active:          true,
+        organization_id: nil,
+        roles:           Role.where(name: 'Customer'),
+        updated_at:      '2015-02-05 16:37:00',
+        updated_by_id:   1,
+        created_by_id:   1,
+      )
+    end
+
+    before do
+      agent1 && agent2 && customer1 && customer2
+      Ticket.where(group_id: group.id).destroy_all
+    end
+
+    describe 'ticket create' do
+      it 'matches created tickets depending on condition and current user', :aggregate_failures do # rubocop:disable RSpec/ExampleLength
+        Ticket.destroy_all
+
+        ticket1 = Ticket.create!(
+          title:         'some title1',
+          group:         group,
+          customer_id:   customer1.id,
+          owner_id:      agent1.id,
+          state:         Ticket::State.lookup(name: 'new'),
+          priority:      Ticket::Priority.lookup(name: '2 normal'),
+          created_at:    '2015-02-05 16:37:00',
+          # updated_at: '2015-02-05 17:37:00',
+          updated_by_id: 1,
+          created_by_id: 1,
+        )
+        expect(ticket1).to be_a(Ticket)
+        expect(ticket1.customer.id).to eq(customer1.id)
+        expect(ticket1.organization.id).to eq(organization1.id)
+        travel 1.second
+
+        ticket2 = Ticket.create!(
+          title:         'some title2',
+          group:         group,
+          customer_id:   customer2.id,
+          state:         Ticket::State.lookup(name: 'new'),
+          priority:      Ticket::Priority.lookup(name: '2 normal'),
+          created_at:    '2015-02-05 16:37:00',
+          # updated_at: '2015-02-05 17:37:00',
+          updated_by_id: 1,
+          created_by_id: 1,
+        )
+        expect(ticket2).to be_a(Ticket)
+        expect(ticket2.customer.id).to eq(customer2.id)
+        expect(ticket2.organization_id).to be_nil
+        travel 1.second
+
+        ticket3 = Ticket.create!(
+          title:         'some title3',
+          group:         group,
+          customer_id:   customer2.id,
+          state:         Ticket::State.lookup(name: 'open'),
+          priority:      Ticket::Priority.lookup(name: '2 normal'),
+          created_at:    '2015-02-05 16:37:00',
+          # updated_at: '2015-02-05 17:37:00',
+          updated_by_id: 1,
+          created_by_id: 1,
+        )
+        ticket3.update_columns(escalation_at: '2015-02-06 10:00:00')
+        expect(ticket3).to be_a(Ticket)
+        expect(ticket3.customer.id).to eq(customer2.id)
+        expect(ticket3.organization_id).to be_nil
+        travel 1.second
+
+        # search not matching
+        condition = {
+          'ticket.state_id' => {
+            operator: 'is',
+            value:    [99],
+          },
+        }
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: agent1)
+        expect(ticket_count).to eq(0)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: agent2)
+        expect(ticket_count).to eq(0)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer1)
+        expect(ticket_count).to eq(0)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer1)
+        expect(ticket_count).to eq(0)
+
+        # search matching with empty value / missing key
+        condition = {
+          'ticket.group_id' => {
+            operator: 'is',
+            value:    group.id,
+          },
+          'ticket.state_id' => {
+            operator: 'is',
+          },
+        }
+
+        ticket_count, = Ticket.selectors(condition, limit: 10)
+        expect(ticket_count).to be_nil
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: agent1)
+        expect(ticket_count).to be_nil
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: agent2)
+        expect(ticket_count).to be_nil
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer1)
+        expect(ticket_count).to be_nil
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer2)
+        expect(ticket_count).to be_nil
+
+        # search matching with empty value []
+        condition = {
+          'ticket.group_id' => {
+            operator: 'is',
+            value:    group.id,
+          },
+          'ticket.state_id' => {
+            operator: 'is',
+            value:    [],
+          },
+        }
+
+        ticket_count, = Ticket.selectors(condition, limit: 10)
+        expect(ticket_count).to be_nil
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: agent1)
+        expect(ticket_count).to be_nil
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: agent2)
+        expect(ticket_count).to be_nil
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer1)
+        expect(ticket_count).to be_nil
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer2)
+        expect(ticket_count).to be_nil
+
+        # search matching with empty value ''
+        condition = {
+          'ticket.group_id' => {
+            operator: 'is',
+            value:    group.id,
+          },
+          'ticket.state_id' => {
+            operator: 'is',
+          },
+        }
+
+        ticket_count, = Ticket.selectors(condition, limit: 10)
+        expect(ticket_count).to be_nil
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: agent1)
+        expect(ticket_count).to be_nil
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: agent2)
+        expect(ticket_count).to be_nil
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer1)
+        expect(ticket_count).to be_nil
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer2)
+        expect(ticket_count).to be_nil
+
+        # search matching
+        condition = {
+          'ticket.group_id' => {
+            operator: 'is',
+            value:    group.id,
+          },
+          'ticket.state_id' => {
+            operator: 'is',
+            value:    [Ticket::State.lookup(name: 'new').id],
+          },
+        }
+
+        ticket_count, = Ticket.selectors(condition, limit: 10)
+        expect(ticket_count).to eq(2)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: agent1)
+        expect(ticket_count).to eq(2)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: agent2)
+        expect(ticket_count).to eq(0)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer1)
+        expect(ticket_count).to eq(1)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer2)
+        expect(ticket_count).to eq(1)
+
+        condition = {
+          'ticket.group_id' => {
+            operator: 'is',
+            value:    group.id,
+          },
+          'ticket.state_id' => {
+            operator: 'is not',
+            value:    [Ticket::State.lookup(name: 'open').id],
+          },
+        }
+        ticket_count, = Ticket.selectors(condition, limit: 10)
+        expect(ticket_count).to eq(2)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: agent1)
+        expect(ticket_count).to eq(2)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: agent2)
+        expect(ticket_count).to eq(0)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer1)
+        expect(ticket_count).to eq(1)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer2)
+        expect(ticket_count).to eq(1)
+
+        condition = {
+          'ticket.escalation_at' => {
+            operator: 'is not',
+            value:    nil,
+          }
+        }
+        ticket_count, = Ticket.selectors(condition, limit: 10)
+        expect(ticket_count).to eq(1)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: agent1)
+        expect(ticket_count).to eq(1)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: agent2)
+        expect(ticket_count).to eq(0)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer1)
+        expect(ticket_count).to eq(0)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer2)
+        expect(ticket_count).to eq(1)
+
+        # search - created_at
+        condition = {
+          'ticket.group_id'   => {
+            operator: 'is',
+            value:    group.id,
+          },
+          'ticket.created_at' => {
+            operator: 'after (absolute)', # before (absolute)
+            value:    '2015-02-05T16:00:00.000Z',
+          },
+        }
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: agent1)
+        expect(ticket_count).to eq(3)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: agent2)
+        expect(ticket_count).to eq(0)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer1)
+        expect(ticket_count).to eq(1)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer2)
+        expect(ticket_count).to eq(2)
+
+        condition = {
+          'ticket.group_id'   => {
+            operator: 'is',
+            value:    group.id,
+          },
+          'ticket.created_at' => {
+            operator: 'after (absolute)', # before (absolute)
+            value:    '2015-02-05T18:00:00.000Z',
+          },
+        }
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: agent1)
+        expect(ticket_count).to eq(0)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: agent2)
+        expect(ticket_count).to eq(0)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer1)
+        expect(ticket_count).to eq(0)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer2)
+        expect(ticket_count).to eq(0)
+
+        condition = {
+          'ticket.group_id'   => {
+            operator: 'is',
+            value:    group.id,
+          },
+          'ticket.created_at' => {
+            operator: 'before (absolute)',
+            value:    '2015-02-05T18:00:00.000Z',
+          },
+        }
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: agent1)
+        expect(ticket_count).to eq(3)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: agent2)
+        expect(ticket_count).to eq(0)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer1)
+        expect(ticket_count).to eq(1)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer2)
+        expect(ticket_count).to eq(2)
+
+        condition = {
+          'ticket.group_id'   => {
+            operator: 'is',
+            value:    group.id,
+          },
+          'ticket.created_at' => {
+            operator: 'before (absolute)',
+            value:    '2015-02-05T16:00:00.000Z',
+          },
+        }
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: agent1)
+        expect(ticket_count).to eq(0)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: agent2)
+        expect(ticket_count).to eq(0)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer1)
+        expect(ticket_count).to eq(0)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer2)
+        expect(ticket_count).to eq(0)
+
+        condition = {
+          'ticket.group_id'   => {
+            operator: 'is',
+            value:    group.id,
+          },
+          'ticket.created_at' => {
+            operator: 'before (relative)',
+            range:    'day', # minute|hour|day|month|
+            value:    '10',
+          },
+        }
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: agent1)
+        expect(ticket_count).to eq(3)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: agent2)
+        expect(ticket_count).to eq(0)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer1)
+        expect(ticket_count).to eq(1)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer2)
+        expect(ticket_count).to eq(2)
+
+        condition = {
+          'ticket.group_id'   => {
+            operator: 'is',
+            value:    group.id,
+          },
+          'ticket.created_at' => {
+            operator: 'till (relative)',
+            range:    'year', # minute|hour|day|month|
+            value:    '10',
+          },
+        }
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: agent1)
+        expect(ticket_count).to eq(3)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: agent2)
+        expect(ticket_count).to eq(0)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer1)
+        expect(ticket_count).to eq(1)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer2)
+        expect(ticket_count).to eq(2)
+
+        condition = {
+          'ticket.group_id'   => {
+            operator: 'is',
+            value:    group.id,
+          },
+          'ticket.created_at' => {
+            operator: 'within last (relative)',
+            range:    'year', # minute|hour|day|month|
+            value:    '20',
+          },
+        }
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: agent1)
+        expect(ticket_count).to eq(3)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: agent2)
+        expect(ticket_count).to eq(0)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer1)
+        expect(ticket_count).to eq(1)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer2)
+        expect(ticket_count).to eq(2)
+
+        # search - updated_at
+        condition = {
+          'ticket.group_id'   => {
+            operator: 'is',
+            value:    group.id,
+          },
+          'ticket.updated_at' => {
+            operator: 'before (absolute)',
+            value:    1.day.from_now.iso8601,
+          },
+        }
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: agent1)
+        expect(ticket_count).to eq(3)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: agent2)
+        expect(ticket_count).to eq(0)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer1)
+        expect(ticket_count).to eq(1)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer2)
+        expect(ticket_count).to eq(2)
+
+        condition = {
+          'ticket.group_id'   => {
+            operator: 'is',
+            value:    group.id,
+          },
+          'ticket.updated_at' => {
+            operator: 'before (absolute)',
+            value:    1.day.ago.iso8601,
+          },
+        }
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: agent1)
+        expect(ticket_count).to eq(0)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: agent2)
+        expect(ticket_count).to eq(0)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer1)
+        expect(ticket_count).to eq(0)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer2)
+        expect(ticket_count).to eq(0)
+
+        condition = {
+          'ticket.group_id'   => {
+            operator: 'is',
+            value:    group.id,
+          },
+          'ticket.updated_at' => {
+            operator: 'after (absolute)',
+            value:    1.day.from_now.iso8601,
+          },
+        }
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: agent1)
+        expect(ticket_count).to eq(0)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: agent2)
+        expect(ticket_count).to eq(0)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer1)
+        expect(ticket_count).to eq(0)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer2)
+        expect(ticket_count).to eq(0)
+
+        condition = {
+          'ticket.group_id'   => {
+            operator: 'is',
+            value:    group.id,
+          },
+          'ticket.updated_at' => {
+            operator: 'after (absolute)',
+            value:    1.day.ago.iso8601,
+          },
+        }
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: agent1)
+        expect(ticket_count).to eq(3)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: agent2)
+        expect(ticket_count).to eq(0)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer1)
+        expect(ticket_count).to eq(1)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer2)
+        expect(ticket_count).to eq(2)
+
+        condition = {
+          'ticket.group_id'   => {
+            operator: 'is',
+            value:    group.id,
+          },
+          'ticket.updated_at' => {
+            operator: 'before (relative)',
+            range:    'day', # minute|hour|day|month|
+            value:    '10',
+          },
+        }
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: agent1)
+        expect(ticket_count).to eq(0)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: agent2)
+        expect(ticket_count).to eq(0)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer1)
+        expect(ticket_count).to eq(0)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer2)
+        expect(ticket_count).to eq(0)
+
+        condition = {
+          'ticket.group_id'   => {
+            operator: 'is',
+            value:    group.id,
+          },
+          'ticket.updated_at' => {
+            operator: 'till (relative)',
+            range:    'year', # minute|hour|day|month|
+            value:    '10',
+          },
+        }
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: agent1)
+        expect(ticket_count).to eq(3)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: agent2)
+        expect(ticket_count).to eq(0)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer1)
+        expect(ticket_count).to eq(1)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer2)
+        expect(ticket_count).to eq(2)
+
+        condition = {
+          'ticket.group_id'   => {
+            operator: 'is',
+            value:    group.id,
+          },
+          'ticket.updated_at' => {
+            operator: 'within last (relative)',
+            range:    'year', # minute|hour|day|month|
+            value:    '10',
+          },
+        }
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: agent1)
+        expect(ticket_count).to eq(3)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: agent2)
+        expect(ticket_count).to eq(0)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer1)
+        expect(ticket_count).to eq(1)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer2)
+        expect(ticket_count).to eq(2)
+
+        # invalid conditions
+        expect { Ticket.selectors(nil, limit: 10) }.to raise_error(RuntimeError)
+
+        # search with customers
+        condition = {
+          'ticket.group_id' => {
+            operator: 'is',
+            value:    group.id,
+          },
+          'customer.email'  => {
+            operator: 'contains',
+            value:    'ticket-selector-customer1',
+          },
+        }
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: agent1)
+        expect(ticket_count).to eq(1)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: agent2)
+        expect(ticket_count).to eq(0)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer1)
+        expect(ticket_count).to eq(1)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer2)
+        expect(ticket_count).to eq(0)
+
+        condition = {
+          'ticket.group_id' => {
+            operator: 'is',
+            value:    group.id,
+          },
+          'customer.email'  => {
+            operator: 'contains not',
+            value:    'ticket-selector-customer1-not_existing',
+          },
+        }
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: agent1)
+        expect(ticket_count).to eq(3)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: agent2)
+        expect(ticket_count).to eq(0)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer1)
+        expect(ticket_count).to eq(1)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer2)
+        expect(ticket_count).to eq(2)
+
+        # search with organizations
+        condition = {
+          'ticket.group_id'   => {
+            operator: 'is',
+            value:    group.id,
+          },
+          'organization.name' => {
+            operator: 'contains',
+            value:    'selector',
+          },
+        }
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: agent1)
+        expect(ticket_count).to eq(1)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: agent2)
+        expect(ticket_count).to eq(0)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer1)
+        expect(ticket_count).to eq(1)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer2)
+        expect(ticket_count).to eq(0)
+
+        # search with organizations
+        condition = {
+          'ticket.group_id'   => {
+            operator: 'is',
+            value:    group.id,
+          },
+          'organization.name' => {
+            operator: 'contains',
+            value:    'selector',
+          },
+          'customer.email'    => {
+            operator: 'contains',
+            value:    'ticket-selector-customer1',
+          },
+        }
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: agent1)
+        expect(ticket_count).to eq(1)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: agent2)
+        expect(ticket_count).to eq(0)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer1)
+        expect(ticket_count).to eq(1)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer2)
+        expect(ticket_count).to eq(0)
+
+        condition = {
+          'ticket.group_id'   => {
+            operator: 'is',
+            value:    group.id,
+          },
+          'organization.name' => {
+            operator: 'contains',
+            value:    'selector',
+          },
+          'customer.email'    => {
+            operator: 'contains not',
+            value:    'ticket-selector-customer1',
+          },
+        }
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: agent1)
+        expect(ticket_count).to eq(0)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: agent2)
+        expect(ticket_count).to eq(0)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer1)
+        expect(ticket_count).to eq(0)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer2)
+        expect(ticket_count).to eq(0)
+
+        # with owner/customer/org
+        condition = {
+          'ticket.group_id' => {
+            operator: 'is',
+            value:    group.id,
+          },
+          'ticket.owner_id' => {
+            operator:      'is',
+            pre_condition: 'specific',
+            value:         agent1.id,
+          },
+        }
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: agent1)
+        expect(ticket_count).to eq(1)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: agent2)
+        expect(ticket_count).to eq(0)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer1)
+        expect(ticket_count).to eq(1)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer2)
+        expect(ticket_count).to eq(0)
+
+        condition = {
+          'ticket.group_id' => {
+            operator: 'is',
+            value:    group.id,
+          },
+          'ticket.owner_id' => {
+            operator:      'is',
+            pre_condition: 'specific',
+            # value: agent1.id, # value is not set, no result should be shown
+          },
+        }
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: agent1)
+        expect(ticket_count).to be_nil
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: agent2)
+        expect(ticket_count).to be_nil
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer1)
+        expect(ticket_count).to be_nil
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer2)
+        expect(ticket_count).to be_nil
+
+        condition = {
+          'ticket.group_id' => {
+            operator: 'is',
+            value:    group.id,
+          },
+          'ticket.owner_id' => {
+            operator:      'is',
+            pre_condition: 'not_set',
+          },
+        }
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: agent1)
+        expect(ticket_count).to eq(2)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: agent2)
+        expect(ticket_count).to eq(0)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer1)
+        expect(ticket_count).to eq(0)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer2)
+        expect(ticket_count).to eq(2)
+
+        condition = {
+          'ticket.group_id' => {
+            operator: 'is',
+            value:    group.id,
+          },
+          'ticket.owner_id' => {
+            operator:      'is not',
+            pre_condition: 'not_set',
+          },
+        }
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: agent1)
+        expect(ticket_count).to eq(1)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: agent2)
+        expect(ticket_count).to eq(0)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer1)
+        expect(ticket_count).to eq(1)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer2)
+        expect(ticket_count).to eq(0)
+
+        UserInfo.current_user_id = agent1.id
+        condition = {
+          'ticket.group_id' => {
+            operator: 'is',
+            value:    group.id,
+          },
+          'ticket.owner_id' => {
+            operator:      'is',
+            pre_condition: 'current_user.id',
+          },
+        }
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: agent1)
+        expect(ticket_count).to eq(1)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10)
+        expect(ticket_count).to eq(1)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: agent2)
+        expect(ticket_count).to eq(0)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer1)
+        expect(ticket_count).to eq(0)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer2)
+        expect(ticket_count).to eq(0)
+
+        UserInfo.current_user_id = agent2.id
+        condition = {
+          'ticket.group_id' => {
+            operator: 'is',
+            value:    group.id,
+          },
+          'ticket.owner_id' => {
+            operator:      'is',
+            pre_condition: 'current_user.id',
+          },
+        }
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: agent1)
+        expect(ticket_count).to eq(1)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: agent2)
+        expect(ticket_count).to eq(0)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10)
+        expect(ticket_count).to eq(0)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer1)
+        expect(ticket_count).to eq(0)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer2)
+        expect(ticket_count).to eq(0)
+
+        UserInfo.current_user_id = customer1.id
+        condition = {
+          'ticket.group_id'    => {
+            operator: 'is',
+            value:    group.id,
+          },
+          'ticket.customer_id' => {
+            operator:      'is',
+            pre_condition: 'current_user.id',
+          },
+        }
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: agent1)
+        expect(ticket_count).to eq(0)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: agent2)
+        expect(ticket_count).to eq(0)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer1)
+        expect(ticket_count).to eq(1)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10)
+        expect(ticket_count).to eq(1)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer2)
+        expect(ticket_count).to eq(2)
+
+        UserInfo.current_user_id = customer2.id
+        condition = {
+          'ticket.group_id'    => {
+            operator: 'is',
+            value:    group.id,
+          },
+          'ticket.customer_id' => {
+            operator:      'is',
+            pre_condition: 'current_user.id',
+          },
+        }
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: agent1)
+        expect(ticket_count).to eq(0)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: agent2)
+        expect(ticket_count).to eq(0)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer1)
+        expect(ticket_count).to eq(1)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer2)
+        expect(ticket_count).to eq(2)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10)
+        expect(ticket_count).to eq(2)
+
+        UserInfo.current_user_id = customer1.id
+        condition = {
+          'ticket.group_id'        => {
+            operator: 'is',
+            value:    group.id,
+          },
+          'ticket.organization_id' => {
+            operator:      'is',
+            pre_condition: 'current_user.organization_id',
+          },
+        }
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: agent1)
+        expect(ticket_count).to eq(0)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: agent2)
+        expect(ticket_count).to eq(0)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer1)
+        expect(ticket_count).to eq(1)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10)
+        expect(ticket_count).to eq(1)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer2)
+        expect(ticket_count).to eq(0)
+
+        UserInfo.current_user_id = customer2.id
+        condition = {
+          'ticket.group_id'        => {
+            operator: 'is',
+            value:    group.id,
+          },
+          'ticket.organization_id' => {
+            operator:      'is',
+            pre_condition: 'current_user.organization_id',
+          },
+        }
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: agent1)
+        expect(ticket_count).to eq(0)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: agent2)
+        expect(ticket_count).to eq(0)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer1)
+        expect(ticket_count).to eq(1)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10, current_user: customer2)
+        expect(ticket_count).to eq(0)
+
+        ticket_count, = Ticket.selectors(condition, limit: 10)
+        expect(ticket_count).to eq(0)
+        travel_back
+      end
+    end
+
+    describe 'ticket tags filter' do
+      it 'filters tickets by tags with contains all/one operators', :aggregate_failures do
+        ticket_tags_1 = Ticket.create!(
+          title:         'some title1',
+          group:         group,
+          customer_id:   customer1.id,
+          owner_id:      agent1.id,
+          state:         Ticket::State.lookup(name: 'new'),
+          priority:      Ticket::Priority.lookup(name: '2 normal'),
+          created_at:    '2015-02-05 16:37:00',
+          updated_by_id: 1,
+          created_by_id: 1,
+        )
+        ticket_tags_2 = Ticket.create!(
+          title:         'some title1',
+          group:         group,
+          customer_id:   customer1.id,
+          owner_id:      agent1.id,
+          state:         Ticket::State.lookup(name: 'new'),
+          priority:      Ticket::Priority.lookup(name: '2 normal'),
+          created_at:    '2015-02-05 16:37:00',
+          updated_by_id: 1,
+          created_by_id: 1,
+        )
+        Ticket.create!(
+          title:         'some title1',
+          group:         group,
+          customer_id:   customer1.id,
+          owner_id:      agent1.id,
+          state:         Ticket::State.lookup(name: 'new'),
+          priority:      Ticket::Priority.lookup(name: '2 normal'),
+          created_at:    '2015-02-05 16:37:00',
+          updated_by_id: 1,
+          created_by_id: 1,
+        )
+
+        Tag.tag_add(
+          object:        'Ticket',
+          o_id:          ticket_tags_1.id,
+          item:          'contains_all_1',
+          created_by_id: 1,
+        )
+        Tag.tag_add(
+          object:        'Ticket',
+          o_id:          ticket_tags_1.id,
+          item:          'contains_all_2',
+          created_by_id: 1,
+        )
+        Tag.tag_add(
+          object:        'Ticket',
+          o_id:          ticket_tags_1.id,
+          item:          'contains_all_3',
+          created_by_id: 1,
+        )
+        Tag.tag_add(
+          object:        'Ticket',
+          o_id:          ticket_tags_2.id,
+          item:          'contains_all_3',
+          created_by_id: 1,
+        )
+
+        # search all with contains all
+        condition = {
+          'ticket.tags' => {
+            operator: 'contains all',
+            value:    'contains_all_1, contains_all_2, contains_all_3',
+          },
+        }
+        ticket_count, _tickets = Ticket.selectors(condition, limit: 10, current_user: agent1)
+        expect(ticket_count).to eq(1)
+
+        condition = {
+          'ticket.tags' => {
+            operator: 'contains all',
+            value:    'contains_all_1, contains_all_2, contains_all_3, xxx',
+          },
+        }
+        ticket_count, _tickets = Ticket.selectors(condition, limit: 10, current_user: agent1)
+        expect(ticket_count).to eq(0)
+
+        # search all with contains one
+        condition = {
+          'ticket.tags' => {
+            operator: 'contains one',
+            value:    'contains_all_1, contains_all_2, contains_all_3',
+          },
+        }
+        ticket_count, _tickets = Ticket.selectors(condition, limit: 10, current_user: agent1)
+        expect(ticket_count).to eq(2)
+
+        condition = {
+          'ticket.tags' => {
+            operator: 'contains one',
+            value:    'contains_all_1, contains_all_2'
+          },
+        }
+        ticket_count, _tickets = Ticket.selectors(condition, limit: 10, current_user: agent1)
+        expect(ticket_count).to eq(1)
+
+        # search all with contains one not
+        condition = {
+          'ticket.tags' => {
+            operator: 'contains one',
+            value:    'contains_all_1, contains_all_3'
+          },
+        }
+        ticket_count, _tickets = Ticket.selectors(condition, limit: 10, current_user: agent1)
+        expect(ticket_count).to eq(2)
+
+        condition = {
+          'ticket.tags' => {
+            operator: 'contains one',
+            value:    'contains_all_1, contains_all_2, contains_all_3'
+          },
+        }
+        ticket_count, _tickets = Ticket.selectors(condition, limit: 10, current_user: agent1)
+        expect(ticket_count).to eq(2)
+      end
+    end
+
+    describe 'ticket title with certain content' do
+      it 'matches ticket titles with special characters using contains and is operators', :aggregate_failures do
+        Ticket.create!(
+          title:         'some_title1',
+          group:         group,
+          customer_id:   customer1.id,
+          owner_id:      agent1.id,
+          state:         Ticket::State.lookup(name: 'new'),
+          priority:      Ticket::Priority.lookup(name: '2 normal'),
+          created_at:    '2015-02-05 16:37:00',
+          updated_by_id: 1,
+          created_by_id: 1,
+        )
+        Ticket.create!(
+          title:         'some::title2',
+          group:         group,
+          customer_id:   customer1.id,
+          owner_id:      agent1.id,
+          state:         Ticket::State.lookup(name: 'new'),
+          priority:      Ticket::Priority.lookup(name: '2 normal'),
+          created_at:    '2015-02-05 16:37:00',
+          updated_by_id: 1,
+          created_by_id: 1,
+        )
+        Ticket.create!(
+          title:         'some-title3',
+          group:         group,
+          customer_id:   customer1.id,
+          owner_id:      agent1.id,
+          state:         Ticket::State.lookup(name: 'new'),
+          priority:      Ticket::Priority.lookup(name: '2 normal'),
+          created_at:    '2015-02-05 16:37:00',
+          updated_by_id: 1,
+          created_by_id: 1,
+        )
+
+        # search all with contains
+        condition = {
+          'ticket.title' => {
+            operator: 'contains',
+            value:    'some_title1',
+          },
+        }
+        ticket_count, _tickets = Ticket.selectors(condition, limit: 10, current_user: agent1)
+        expect(ticket_count).to eq(1)
+
+        condition = {
+          'ticket.title' => {
+            operator: 'contains',
+            value:    'some::title2',
+          },
+        }
+        ticket_count, _tickets = Ticket.selectors(condition, limit: 10, current_user: agent1)
+        expect(ticket_count).to eq(1)
+
+        condition = {
+          'ticket.title' => {
+            operator: 'contains',
+            value:    'some-title3',
+          },
+        }
+        ticket_count, _tickets = Ticket.selectors(condition, limit: 10, current_user: agent1)
+        expect(ticket_count).to eq(1)
+
+        # search all with is
+        condition = {
+          'ticket.title' => {
+            operator: 'is',
+            value:    'some_title1',
+          },
+        }
+        ticket_count, _tickets = Ticket.selectors(condition, limit: 10, current_user: agent1)
+        expect(ticket_count).to eq(1)
+
+        condition = {
+          'ticket.title' => {
+            operator: 'is',
+            value:    'some::title2',
+          },
+        }
+        ticket_count, _tickets = Ticket.selectors(condition, limit: 10, current_user: agent1)
+        expect(ticket_count).to eq(1)
+
+        condition = {
+          'ticket.title' => {
+            operator: 'is',
+            value:    'some-title3',
+          },
+        }
+        ticket_count, _tickets = Ticket.selectors(condition, limit: 10, current_user: agent1)
+        expect(ticket_count).to eq(1)
+      end
+    end
+
+    describe 'access: "ignore"' do
+      it 'bypasses the ticket permission checks when access is set to ignore', :aggregate_failures do
+        Ticket.destroy_all
+
+        Ticket.create!(
+          title:         'some title1',
+          group:         group,
+          customer_id:   customer1.id,
+          owner_id:      agent1.id,
+          state:         Ticket::State.lookup(name: 'new'),
+          priority:      Ticket::Priority.lookup(name: '2 normal'),
+          created_at:    '2015-02-05 16:37:00',
+          updated_by_id: 1,
+          created_by_id: 1,
+        )
+
+        Ticket.create!(
+          title:         'some title2',
+          group:         group,
+          customer_id:   customer1.id,
+          owner_id:      agent1.id,
+          state:         Ticket::State.lookup(name: 'new'),
+          priority:      Ticket::Priority.lookup(name: '2 normal'),
+          created_at:    '2015-02-05 16:37:00',
+          updated_by_id: agent2.id,
+          created_by_id: 1,
+        )
+
+        condition = {
+          'ticket.title' => {
+            operator: 'contains',
+            value:    'some',
+          },
+        }
+
+        # visible by owner
+        ticket_count, _tickets = Ticket.selectors(condition, limit: 10, current_user: agent1)
+        expect(ticket_count).to eq(2)
+
+        # not visible by another agent
+        ticket_count, _tickets = Ticket.selectors(condition, limit: 10, current_user: agent2)
+        expect(ticket_count).to eq(0)
+
+        # visible by another user when access: "ignore". For example, when tickets are performed after action of another user
+        ticket_count, _tickets = Ticket.selectors(condition, limit: 10, current_user: agent2, access: 'ignore')
+        expect(ticket_count).to eq(2)
+
+        condition2 = {
+          'ticket.updated_by_id' => {
+            operator:         'is',
+            pre_condition:    'current_user.id',
+            value:            '',
+            value_completion: ''
+          }
+        }
+
+        # not visible by another agent even if matches current user precondition
+        ticket_count, _tickets = Ticket.selectors(condition2, limit: 10, current_user: agent2)
+        expect(ticket_count).to eq(0)
+
+        # visible by another user when access: "ignore" if matches current user precondition
+        ticket_count, _tickets = Ticket.selectors(condition2, limit: 10, current_user: agent2, access: 'ignore')
+        expect(ticket_count).to eq(1)
+      end
+    end
+  end
 end

@@ -283,13 +283,7 @@ Lint/InterpolationCheck:
   Description: "Raise warning for interpolation in single q strs"
   Enabled: true
   Exclude:
-    - "test/unit/email_process_auto_response_test.rb"
-    - "test/unit/email_process_bounce_delivery_permanent_failed_test.rb"
-    - "test/unit/email_process_bounce_follow_test.rb"
-    - "test/unit/notification_factory_renderer_test.rb"
-    - "test/unit/notification_factory_template_test.rb"
-    - "test/unit/ticket_trigger_test.rb"
-    - "test/unit/ticket_trigger_recursive_disabled_test.rb"
+    - "spec/models/trigger/base_spec.rb"
 
 Lint/UselessConstantScoping:
   Description: Checks for useless constant scoping.

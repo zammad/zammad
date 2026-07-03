@@ -217,6 +217,7 @@ RSpec/SpecFilePathFormat:
     - 'spec/jobs/issue_*_spec.rb'
     - 'spec/lib/import/base_factory_spec.rb'
     - 'spec/models/knowledge_base/answer/translation/search_with_attachment_spec.rb'
+    - 'spec/models/trigger/base_spec.rb'
     - 'spec/models/trigger/sms_spec.rb'
 
 # This was split up into RSpec/SpecFilePathSuffix and RSpec/SpecFilePathFormat,
@@ -383,6 +384,7 @@ RSpec/MultipleExpectations:
     - 'spec/models/ticket/overviews_spec.rb'
     - 'spec/models/ticket_spec.rb'
     - 'spec/models/translation_spec.rb'
+    - 'spec/models/trigger/base_spec.rb'
     - 'spec/models/trigger_spec.rb'
     - 'spec/models/type_lookup_spec.rb'
     - 'spec/models/user_spec.rb'
