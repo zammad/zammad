@@ -285,4 +285,47 @@ describe('addon weave plugin (AST-based)', () => {
     ])
     expect(() => plugin.transform(SFC, '/abs/CommonExample.vue')).toThrow(/conflicting weave edits/)
   })
+
+  // --- error message points at the addon manifest to fix ---
+
+  it('names the addon manifest in a rule error when one is stamped on', () => {
+    // discoverRules stamps `manifest` on each rule; a failure must point at that
+    // file, not just the core SFC, so the fix is obvious.
+    const plugin = addonWeavePlugin([
+      {
+        target: 'CommonExample.vue',
+        manifest:
+          'app/frontend/shared/addons/special_organizations/special_organizations.weave.mjs',
+        template: [{ match: { component: 'DoesNotExist' }, insertBefore: '<X />' }],
+      },
+    ] as unknown as Parameters<typeof addonWeavePlugin>[0])
+    expect(() => plugin.transform(SFC, '/abs/CommonExample.vue')).toThrow(
+      /special_organizations\.weave\.mjs/,
+    )
+  })
+
+  it('names BOTH manifests in a cross-addon overlap conflict', () => {
+    const plugin = addonWeavePlugin([
+      {
+        target: 'CommonExample.vue',
+        manifest: 'app/frontend/shared/addons/addon_a/addon_a.weave.mjs',
+        template: [{ match: { component: 'CommonAvatar' }, addAttribute: 'data-a' }],
+      },
+      {
+        target: 'CommonExample.vue',
+        manifest: 'app/frontend/shared/addons/addon_b/addon_b.weave.mjs',
+        template: [{ match: { component: 'CommonAvatar' }, replace: '<X />' }],
+      },
+    ] as unknown as Parameters<typeof addonWeavePlugin>[0])
+    expect(() => plugin.transform(SFC, '/abs/CommonExample.vue')).toThrow(/addon_a\.weave\.mjs/)
+    expect(() => plugin.transform(SFC, '/abs/CommonExample.vue')).toThrow(/addon_b\.weave\.mjs/)
+  })
+
+  it('omits the manifest pointer for hand-built rules that carry none', () => {
+    // weaveSource rules (unit-test / programmatic) have no manifest — the pointer
+    // must simply be absent, never the string "undefined".
+    expect(() =>
+      weave({ template: [{ match: { component: 'DoesNotExist' }, insertBefore: '<X />' }] }),
+    ).toThrow(/^(?!.*undefined).*no element matched/s)
+  })
 })

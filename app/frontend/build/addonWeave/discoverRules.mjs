@@ -37,6 +37,10 @@ export const discoverAddonWeaveRules = async () => {
     if (!Array.isArray(rules)) {
       throw new Error(`[addon-weave] ${manifests[i]}: default export is not an array.`)
     }
+    // Stamp each rule with the manifest it came from — a repo-relative path so
+    // plugin.mjs can point a failure straight at the addon file to fix (openable
+    // as-is), not just the core SFC the rule failed to weave into.
+    for (const rule of rules) rule.manifest = `app/frontend/${manifests[i]}`
     return rules
   })
 }

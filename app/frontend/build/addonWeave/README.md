@@ -113,7 +113,9 @@ from core.
 - A missed anchor **fails the whole build** (loud, by design) — there is no
   per-addon failure isolation, so one addon with a stale anchor blocks the build.
   That is the intended trade for a paid addon: a failed install over a silently
-  broken UI.
+  broken UI. Every rule failure names the `*.weave.mjs` file it came from (and an
+  overlap conflict names both), so the message points at the addon manifest to
+  fix, not just the core SFC the rule targeted.
 - Manifest discovery globs `app/frontend`; the real source of truth should be the
   installed-package (szpm) list.
 - `insertBefore` output is not re-indented to match surrounding siblings (valid,

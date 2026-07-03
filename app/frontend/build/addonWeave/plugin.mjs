@@ -45,6 +45,12 @@ const ADDITIVE_ACTIONS = [
 ]
 const DESTRUCTIVE_ACTIONS = ['replace', 'remove']
 
+// The `*.weave.mjs` file this rule came from — stamped on by discoverRules.mjs.
+// Appended to every rule error as a "fix this file" pointer, so a failure names
+// the addon manifest to edit, not just the core SFC it failed to weave into.
+// Empty for hand-built rules (e.g. unit tests) that carry no manifest.
+const ruleSource = (rule) => (rule.manifest ? `\n  → fix the weave rule in: ${rule.manifest}` : '')
+
 const staticAttr = (node, name) =>
   node.props.find((prop) => prop.type === NODE_TYPE_ATTRIBUTE && prop.name === name)
 
@@ -109,7 +115,8 @@ const collectRuleEdits = (descriptor, rule, id) => {
   if ('templateReplace' in rule || 'scriptSetupAppend' in rule) {
     throw new Error(
       `[addon-weave] ${id}: legacy rule format (templateReplace/scriptSetupAppend). ` +
-        `Migrate to { template: [{ match, insertBefore/insertAfter/addAttribute/wrap/replace/remove }], scriptSetup }.`,
+        `Migrate to { template: [{ match, insertBefore/insertAfter/addAttribute/wrap/replace/remove }], scriptSetup }.` +
+        ruleSource(rule),
     )
   }
 
@@ -120,7 +127,7 @@ const collectRuleEdits = (descriptor, rule, id) => {
   if (rule.scriptSetup) {
     if (!descriptor.scriptSetup) {
       throw new Error(
-        `[addon-weave] ${id}: rule has scriptSetup but the SFC has no <script setup>.`,
+        `[addon-weave] ${id}: rule has scriptSetup but the SFC has no <script setup>.${ruleSource(rule)}`,
       )
     }
     const at = descriptor.scriptSetup.loc.end.offset
@@ -130,20 +137,24 @@ const collectRuleEdits = (descriptor, rule, id) => {
   for (const op of rule.template ?? []) {
     if (!MATCH_KEYS.some((key) => op.match?.[key] != null)) {
       throw new Error(
-        `[addon-weave] ${id}: template op has no usable match (${MATCH_KEYS.join('/')}).`,
+        `[addon-weave] ${id}: template op has no usable match (${MATCH_KEYS.join('/')}).${ruleSource(rule)}`,
       )
     }
     if (!descriptor.template?.ast) {
-      throw new Error(`[addon-weave] ${id}: rule has a template op but the SFC has no <template>.`)
+      throw new Error(
+        `[addon-weave] ${id}: rule has a template op but the SFC has no <template>.${ruleSource(rule)}`,
+      )
     }
 
     const present = [...ADDITIVE_ACTIONS, ...DESTRUCTIVE_ACTIONS].filter((key) => op[key] != null)
     if (present.length === 0) {
-      throw new Error(`[addon-weave] ${id}: template op has no action.`)
+      throw new Error(`[addon-weave] ${id}: template op has no action.${ruleSource(rule)}`)
     }
     const destructive = DESTRUCTIVE_ACTIONS.filter((key) => op[key] != null)
     if (destructive.length > 0 && present.length > 1) {
-      throw new Error(`[addon-weave] ${id}: '${destructive[0]}' must be the only action on its op.`)
+      throw new Error(
+        `[addon-weave] ${id}: '${destructive[0]}' must be the only action on its op.${ruleSource(rule)}`,
+      )
     }
 
     const matched = collectElements(descriptor.template.ast).filter(
@@ -151,7 +162,7 @@ const collectRuleEdits = (descriptor, rule, id) => {
     )
     if (matched.length === 0) {
       throw new Error(
-        `[addon-weave] ${id}: no element matched ${JSON.stringify(op.match)} — cannot weave.`,
+        `[addon-weave] ${id}: no element matched ${JSON.stringify(op.match)} — cannot weave.${ruleSource(rule)}`,
       )
     }
 
@@ -169,7 +180,7 @@ const collectRuleEdits = (descriptor, rule, id) => {
       if (op.prepend || op.append) {
         if (!node.children?.length) {
           throw new Error(
-            `[addon-weave] ${id}: append/prepend needs a non-empty element; <${node.tag}> has no children.`,
+            `[addon-weave] ${id}: append/prepend needs a non-empty element; <${node.tag}> has no children.${ruleSource(rule)}`,
           )
         }
         if (op.prepend) {
@@ -186,7 +197,7 @@ const collectRuleEdits = (descriptor, rule, id) => {
         const prop = findProp(node, op.setAttribute.name)
         if (!prop) {
           throw new Error(
-            `[addon-weave] ${id}: setAttribute target not found: ${op.setAttribute.name} on <${node.tag}>.`,
+            `[addon-weave] ${id}: setAttribute target not found: ${op.setAttribute.name} on <${node.tag}>.${ruleSource(rule)}`,
           )
         }
         const text = `${op.setAttribute.name}="${op.setAttribute.value}"`
@@ -196,14 +207,16 @@ const collectRuleEdits = (descriptor, rule, id) => {
         const prop = findProp(node, op.removeAttribute)
         if (!prop) {
           throw new Error(
-            `[addon-weave] ${id}: removeAttribute target not found: ${op.removeAttribute} on <${node.tag}>.`,
+            `[addon-weave] ${id}: removeAttribute target not found: ${op.removeAttribute} on <${node.tag}>.${ruleSource(rule)}`,
           )
         }
         edits.push({ start: prop.loc.start.offset, end: prop.loc.end.offset, text: '' })
       }
       if (op.wrap) {
         if (!op.wrap.open || !op.wrap.close) {
-          throw new Error(`[addon-weave] ${id}: wrap needs both { open, close }.`)
+          throw new Error(
+            `[addon-weave] ${id}: wrap needs both { open, close }.${ruleSource(rule)}`,
+          )
         }
         edits.push({ start, end: start, text: op.wrap.open, order: 1 })
         edits.push({ start: end, end, text: op.wrap.close, order: 0 })
@@ -213,6 +226,9 @@ const collectRuleEdits = (descriptor, rule, id) => {
     }
   }
 
+  // Carry the source manifest on every edit so a cross-rule overlap can name both
+  // colliding addons, not just the core SFC.
+  for (const edit of edits) edit.manifest = rule.manifest
   return edits
 }
 
@@ -229,11 +245,23 @@ const applyEdits = (code, rawEdits, id) => {
   // the same element.
   const ascending = [...edits].sort((a, b) => a.start - b.start || a.end - b.end)
   let lastEnd = -1
+  let lastEdit = null
   for (const edit of ascending) {
     if (edit.start < lastEnd) {
-      throw new Error(`[addon-weave] ${id}: conflicting weave edits target overlapping source.`)
+      // Name both weave files involved so the collision is fixable without
+      // guessing which two addons overlap on this element.
+      const files = [...new Set([lastEdit?.manifest, edit.manifest].filter(Boolean))]
+      const from = files.length
+        ? `\n  → conflict between weave rules in: ${files.join(' and ')}`
+        : ''
+      throw new Error(
+        `[addon-weave] ${id}: conflicting weave edits target overlapping source.${from}`,
+      )
     }
-    lastEnd = Math.max(lastEnd, edit.end)
+    if (edit.end > lastEnd) {
+      lastEnd = edit.end
+      lastEdit = edit
+    }
   }
 
   // Apply right-to-left so earlier offsets stay valid. At a shared offset the sort
