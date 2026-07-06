@@ -22,6 +22,13 @@ vi.hoisted(() => {
   globalThis.__ = (source) => {
     return source
   }
+
+  // Suppress Apollo's devtools-suggestion timer. The timer fires 10 s after
+  // ApolloClient construction; if the jsdom environment is torn down first,
+  // the callback throws "ReferenceError: window is not defined". Setting
+  // __DEV__ = false makes Apollo skip the timer entirely (see connectToDevTools
+  // in @apollo/client/core). loadDevMessages/loadErrorMessages are unaffected.
+  ;(globalThis as any).__DEV__ = false
 })
 
 window.sw = new ServiceWorkerHelper()

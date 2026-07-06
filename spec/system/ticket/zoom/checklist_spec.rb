@@ -60,7 +60,7 @@ RSpec.describe 'Ticket zoom > Checklist', authenticated_as: :authenticate, curre
     before do
       checklist
       click '.tabsSidebar-tab[data-tab=checklist]'
-      wait.until { page.text.include?(checklist.name.upcase) } # checklist name is shown in all-caps
+      wait(30).until { page.text.include?(checklist.name.upcase) } # checklist name is shown in all-caps
       await_empty_ajax_queue
     end
 

@@ -226,9 +226,10 @@ RSpec.describe 'Ticket > Update > Simultaneously with two different user', perfo
         wait.until { ticket.reload.title == 'TTTsome level 2 <b>subject</b> 123äöü' }
       end
 
-      # The ActionCable push + first-browser AJAX re-fetch can take several
-      # seconds under CI load, so give it more room than the default 16 s.
-      expect(page).to have_css('.js-objectTitle', text: 'TTTsome level 2 <b>subject</b> 123äöü', wait: 30)
+      # The WebSocket push triggers fetchMayBe which delays the re-fetch by
+      # 1 s, then fires an AJAX call. WebSocket delivery + delay + AJAX can
+      # exceed 30 s on loaded CI machines, so give it 60 s.
+      expect(page).to have_css('.js-objectTitle', text: 'TTTsome level 2 <b>subject</b> 123äöü', wait: 60)
       expect(page).to have_css('.js-textarea', text: 'some note')
 
       check_taskbar_tab(ticket.id, title: 'TTTsome level 2 <b>subject</b> 123äöü', modified: true)

@@ -70,7 +70,7 @@ const testTableAction = (
     if (actionLabel === 'Merge cells' || actionLabel === 'Split cells') {
       // Not testable since we would have to select two cells, but Cypress does not support it
       // cy.findByRole('table').find('td').eq(2).selectText('left', 2)
-      cy.get(actionLabel).should('not.exist')
+      // Nothing to test here.
       return
     }
 

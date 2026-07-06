@@ -31,9 +31,10 @@ RSpec.describe ApplicationController::HasUser, type: :controller do
 
       before { UserInfo.current_token = stale_token }
 
-      it 'clears the stale token before the impersonation permission check so the admin can impersonate' do
+      it 'clears the stale token before the impersonation permission check so the admin can impersonate', :aggregate_failures do
         expect { controller.send(:current_user_set, admin, 'token_auth') }
           .not_to raise_error
+        expect(controller.send(:current_user_on_behalf)).to eq(customer)
       end
     end
   end

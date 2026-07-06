@@ -177,7 +177,7 @@ class App.CustomerChat extends App.Controller
       if App.Chat.first() && !preferences || !preferences.chat || !preferences.chat.active || _.isEmpty(preferences.chat.active)
 
         # if we only have one chat, active it automatically
-        if App.Chat.count() < 2
+        if App.Chat.count() is 1
           preferences.chat = {}
           preferences.chat.active = {}
           preferences.chat.active[App.Chat.first().id] = 'on'

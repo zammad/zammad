@@ -43,6 +43,20 @@ const rememberArticleFormData = cloneDeep({
   __init: true,
 })
 
+// A fresh reply is dirty from the start, because opening it applies programmatic values. The form
+// marks that opening phase with formNode.context._open (set while opening, cleared once it has
+// settled), so we ignore any commit during it and flag the reply as edited on the first change a
+// user makes afterwards — to any field in the article group.
+if (!props.newTicketArticlePresent && props.articleFormGroupNode) {
+  const groupNode = props.articleFormGroupNode
+  const receipt = groupNode.on('commit', () => {
+    if (groupNode.root.context?._open) return
+    firstChangeDetected.value = true
+    groupNode.off(receipt)
+  })
+  onUnmounted(() => groupNode.off(receipt))
+}
+
 const dialogFormIsDirty = computed(() => {
   if (!props.newTicketArticlePresent) return firstChangeDetected.value
 
@@ -94,29 +108,6 @@ const discardDialog = async () => {
 
 onMounted(() => {
   emit('show-article-form')
-
-  // We need a special handling for the initial reply dialog, because the article group is always dirty.
-  // Because of that we waiting on the first article type value and then that this is settled to the form group.
-  // After that we now that the next change inside the form values is a manual action and we can
-  // set the first change detected flag.
-  if (!props.newTicketArticlePresent && props.articleFormGroupNode) {
-    const articleTypeNode = props.articleFormGroupNode.find('articleType', 'name')
-
-    if (articleTypeNode) {
-      const checkForGroupChangeInitialize = articleTypeNode.on('commit', async () => {
-        props.articleFormGroupNode?.off(checkForGroupChangeInitialize)
-
-        if (!props.articleFormGroupNode) return
-
-        await props.articleFormGroupNode.settled
-
-        const checkForFirstChange = props.articleFormGroupNode.on('commit', () => {
-          firstChangeDetected.value = true
-          props.articleFormGroupNode?.off(checkForFirstChange)
-        })
-      })
-    }
-  }
 })
 
 onUnmounted(() => {

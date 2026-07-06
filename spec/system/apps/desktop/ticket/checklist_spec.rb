@@ -113,17 +113,22 @@ RSpec.describe 'Desktop > Ticket > Checklist', app: :desktop_view, authenticated
   end
 
   def add_article_to_main_ticket
-    click_on('Add internal note')
-    find_editor('Text').type('Some notes about the new employee onboarding.')
+    within 'main' do
+      find('button', text: 'Add internal note').click
+      find_editor('Text').type('Some notes about the new employee onboarding.')
+    end
 
     click_on 'Update'
     wait_for_gql('shared/entities/ticket/graphql/mutations/update.graphql')
   end
 
   def add_article_to_it_ticket
-    click_on('Add internal note')
-    find_editor('Text').type('Some notes about the new employee onboarding.')
-    find_editor('Text').type("ping @@#{agent.firstname}")
+    within 'main' do
+      find('button', text: 'Add internal note').click
+      find_editor('Text').type('Some notes about the new employee onboarding.')
+      find_editor('Text').type("ping @@#{agent.firstname}")
+    end
+
     find('li', text: agent.fullname).click
     wait_for_form_updater
 

@@ -301,11 +301,11 @@ RSpec.describe 'Mobile > Ticket > Update', app: :mobile, authenticated_as: :agen
           find_button('Go back').click
           find_button('Add reply').click
 
-          within_form(form_updater_gql_number: 1) do
-            find_editor('Text').type('Foobar')
-          end
+          # Wait for form_updater to finish populating the article group before typing.
+          wait_for_form_updater 2
+          find_editor('Text').type('Foobar')
 
-          find_button('Done').click
+          find_button('Done', disabled: false).click
 
           wait_for_form_updater 3
 
@@ -324,11 +324,11 @@ RSpec.describe 'Mobile > Ticket > Update', app: :mobile, authenticated_as: :agen
           find_button('Go back').click
           find_button('Add reply').click
 
-          within_form(form_updater_gql_number: 1) do
-            find_editor('Text').type('Foobar')
-          end
+          # Wait for form_updater to finish populating the article group before typing.
+          wait_for_form_updater 2
+          find_editor('Text').type('Foobar')
 
-          find_button('Done').click
+          find_button('Done', disabled: false).click
 
           wait_for_form_updater 3
 

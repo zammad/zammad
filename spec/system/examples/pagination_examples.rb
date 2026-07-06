@@ -117,6 +117,11 @@ RSpec.shared_examples 'pagination', authenticated_as: :authenticate do |model:, 
         search(search_query)
         wait.until { page.first('.js-pager').all('.js-page').count == 4 }
 
+        # Drain any in-flight AJAX (e.g. the first-page data load triggered by
+        # the search) before navigating to page 2, otherwise that response can
+        # race the click and reset the pager back to page 1.
+        await_empty_ajax_queue
+
         page.first('.js-page', text: '2').click
 
         await_empty_ajax_queue

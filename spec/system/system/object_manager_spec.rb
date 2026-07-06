@@ -435,6 +435,7 @@ RSpec.describe 'System > Objects', type: :system do
       end
 
       page.find('.js-submit').click
+      await_empty_ajax_queue
       expected_data_options = { 'options'    =>
                                                 [{ 'name'     => '1',
                                                    'value'    => '1',
@@ -520,6 +521,7 @@ RSpec.describe 'System > Objects', type: :system do
       page.find('select[name=data_type]').select('Boolean field')
       page.find('.js-valueFalse').set('HELL NOO')
       page.find('.js-submit').click
+      await_empty_ajax_queue
 
       expected_data_options = {
         true  => 'yes',
@@ -530,12 +532,14 @@ RSpec.describe 'System > Objects', type: :system do
     end
 
     it 'checks default boolean value visibility' do
-      fill_in 'Name', with: 'bool1'
-      find('input[name=display]').set('Bool 1')
+      in_modal do
+        fill_in 'Name', with: 'bool1'
+        find('input[name=display]').set('Bool 1')
 
-      page.find('select[name=data_type]').select('Boolean field')
-      choose('data_option::default', option: 'true')
-      page.find('.js-submit').click
+        page.find('select[name=data_type]').select('Boolean field')
+        choose('data_option::default', option: 'true')
+        page.find('.js-submit').click
+      end
 
       td = page.find(:css, 'td', text: 'bool1')
       tr = td.find(:xpath, './parent::tr')

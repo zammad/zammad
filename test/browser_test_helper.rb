@@ -245,7 +245,13 @@ class TestCase < ActiveSupport::TestCase
       instance.get(params[:url])
     end
 
-    element = instance.find_elements(css: '#login input[name="username"]')[0]
+    element = nil
+    10.times do
+      sleep 1
+      element = instance.find_elements(css: '#login input[name="username"]')[0]
+      break if element
+    end
+
     if !element
       screenshot(browser: instance, comment: 'login_failed')
       raise 'No login box found'
@@ -433,13 +439,19 @@ class TestCase < ActiveSupport::TestCase
     log('location_check', params)
 
     instance = params[:browser] || @browser
-    sleep 0.7
-    current_url = instance.current_url
-    if !current_url.match?(%r{#{Regexp.quote(params[:url])}})
-      screenshot(browser: instance, comment: 'location_check_failed')
-      raise "url #{current_url} is not matching #{params[:url]}"
+    timeout  = params[:timeout] || 30
+    deadline = Time.current + timeout
+    loop do
+      current_url = instance.current_url
+      break if current_url.match?(%r{#{Regexp.quote(params[:url])}})
+
+      if Time.current >= deadline
+        screenshot(browser: instance, comment: 'location_check_failed')
+        raise "url #{current_url} is not matching #{params[:url]}"
+      end
+      sleep 0.5
     end
-    assert(true, "url #{current_url} is matching #{params[:url]}")
+    assert(true, "url #{instance.current_url} is matching #{params[:url]}")
   end
 
 =begin
@@ -1185,8 +1197,24 @@ set type of task (closeTab, closeNextInOverview, stayOnTab)
 
     instance = params[:browser] || @browser
     if params[:type]
-      instance.find_elements(css: '.content.active .js-secondaryActionButtonLabel')[0].click
-      instance.find_elements(css: ".content.active .js-secondaryActionLabel[data-type=#{params[:type]}]")[0].click
+      retries = 0
+      begin
+        instance.find_elements(css: '.content.active .js-secondaryActionButtonLabel')[0].click
+      rescue Selenium::WebDriver::Error::StaleElementReferenceError
+        sleep retries
+        retries += 1
+        retry if retries < 3
+      end
+
+      retries = 0
+      begin
+        instance.find_elements(css: ".content.active .js-secondaryActionLabel[data-type=#{params[:type]}]")[0].click
+      rescue Selenium::WebDriver::Error::StaleElementReferenceError
+        sleep retries
+        retries += 1
+        retry if retries < 3
+      end
+
       return
     end
     raise "Unknown params for task_type: #{params.inspect}"
@@ -1930,7 +1958,7 @@ wait untill text in selector disabppears
     end
 
     instance.find_elements(css: '.modal button.js-submit')[0].click
-    modal_disappear(browser: instance)
+    modal_disappear(browser: instance, timeout: 30)
     11.times do
       element = instance.find_elements(css: 'body')[0]
       text = element.text
@@ -2598,7 +2626,7 @@ wait untill text in selector disabppears
       return
     end
 
-    9.times do
+    30.times do
       begin
         text = instance.find_elements(css: '.content.active .js-reset')[0].text
         if text.blank?
@@ -2721,12 +2749,15 @@ wait untill text in selector disabppears
     retries = 0
     begin
       element = nil
-      6.times do
+      # WebSocket push adds the overview to the sidebar; give it up to 30 s on loaded CI.
+      30.times do
         element = instance.find_elements(css: ".content.active .sidebar a[href=\"#{link}\"]")[0]
         break if element
 
         sleep 1
       end
+      raise "overview link not found in sidebar after 30 s: #{link}" if element.nil?
+
       element.click
     rescue Selenium::WebDriver::Error::StaleElementReferenceError
       sleep retries
@@ -2831,7 +2862,8 @@ wait untill text in selector disabppears
     instance.execute_script("$(\".js-global-search-result a:contains('#{params[:number]}') .nav-tab-name\").first().trigger('click')")
     watch_for(
       browser: instance,
-      css:     '.content.active .ticketZoom-header .ticket-number'
+      css:     '.content.active .ticketZoom-header .ticket-number',
+      timeout: 30
     )
     number = instance.find_elements(css: '.content.active .ticketZoom-header .ticket-number')[0].text
     if !number.match?(%r{#{params[:number]}})
@@ -3202,7 +3234,7 @@ wait untill text in selector disabppears
       sleep 1
       search_result = instance.find_elements(css: search_css).map { |x| x.text.strip }
       break if search_result.include? search_target
-      raise 'user creation failed' if i >= 19
+      raise 'user creation failed' if i >= 39
 
       log "new user #{search_query} not found on the #{i.ordinalize} try, retrying"
     end

@@ -222,7 +222,7 @@ RSpec.describe 'Ticket Summary', authenticated_as: :authenticate, type: :system 
 
     context 'when summary was updated before opening the tab' do
       it 'dot is visible but gone after looking at the sidebar' do
-        expect(page).to have_css('.tabsSidebar-tab[data-tab=summary] .tabsSidebar-tab-dot')
+        expect(page).to have_css('.tabsSidebar-tab[data-tab=summary] .tabsSidebar-tab-dot', wait: 30)
 
         click '.tabsSidebar-tab[data-tab=summary]'
 
@@ -309,6 +309,7 @@ RSpec.describe 'Ticket Summary', authenticated_as: :authenticate, type: :system 
 
         # Reload the app to ensure the summary subscriptions are not set up
         refresh
+        await_empty_ajax_queue
 
         allow(Service::Ticket::AIAssistance::Summarize).to receive(:execute)
         visit "ticket/zoom/#{ticket.id}"

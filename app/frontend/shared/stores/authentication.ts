@@ -64,7 +64,7 @@ export const useAuthenticationStore = defineStore(
       authenticated.value = false
 
       // Refresh the config after logout, to have only the non authenticated version.
-      useApplicationStore().resetAndGetConfig()
+      await useApplicationStore().resetAndGetConfig()
 
       session.initialized = false
     }

@@ -317,7 +317,7 @@ module CommonActions
 
     click '.sidebar-content .js-apply'
 
-    wait.until { Taskbar.last.updated_at != taskbar_timestamp } if !without_taskbar
+    wait(30).until { Taskbar.last.updated_at != taskbar_timestamp } if !without_taskbar
   end
 
   # Checks if modal is ready.

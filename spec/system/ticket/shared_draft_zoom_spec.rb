@@ -77,6 +77,10 @@ RSpec.describe 'Ticket Shared Draft Zoom', authenticated_as: :authenticate, type
       end
 
       it 'share button appears when other user creates draft' do
+        # Confirm WebSocket connection before creating the draft so the
+        # ChecksClientNotification broadcast is received by the browser.
+        ensure_websocket
+
         create(:ticket_shared_draft_zoom, ticket: ticket)
 
         expect(page).to have_selector :draft_share_button

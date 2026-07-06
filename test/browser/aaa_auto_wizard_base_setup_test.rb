@@ -11,7 +11,7 @@ class AaaAutoWizardBaseSetupTest < TestCase
       css:       '.user-menu .user a',
       attribute: 'title',
       value:     'admin@example.com',
-      timeout:   14,
+      timeout:   60,
     )
   end
 

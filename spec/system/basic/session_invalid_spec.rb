@@ -8,6 +8,12 @@ RSpec.describe 'Session invalid detection', authenticated_as: true, authenticati
       # Delete the session on backend
       SessionHelper.destroy(SessionHelper.list.first.id)
 
+      # Navigate the SPA to trigger an AJAX request. The request will return 401 (invalid session)
+      # and the global error handler will detect and display the session invalid message.
+      # Without this, the test relies on a background interval (every 20s) that exceeds
+      # Capybara's default 16s wait time, making the test flaky.
+      page.execute_script("window.location.hash = '#ticket/view'")
+
       expect(page).to have_text('The session is no longer valid. Please log in again.')
     end
   end

@@ -336,7 +336,9 @@ RSpec.describe 'Chat Handling', type: :system do
 
         refresh
 
-        expect(page).to have_css('.zammad-chat')
+        # After a page refresh the chat session reconnects automatically via
+        # WebSocket. The content checks below already wait for the element, so
+        # the standalone existence assertion is redundant and can race in CI.
         check_content('.zammad-chat', %r{(Hi Stranger|My Greeting)})
         check_content('.zammad-chat', 'my name is me')
 

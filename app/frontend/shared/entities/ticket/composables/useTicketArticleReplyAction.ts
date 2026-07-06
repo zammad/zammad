@@ -66,7 +66,11 @@ export const useTicketArticleReplyAction = (
 
     context?.focus()
 
-    nextTick(() => {
+    // Keep _open set until the opening has fully settled (the article defaults and their cascades,
+    // e.g. article type -> internal, are applied over several ticks). Clearing it too early would
+    // let those programmatic commits look like user edits.
+    nextTick(async () => {
+      await formNode.settled
       if (formNode.context) {
         Object.assign(formNode.context, { _open: false })
       }

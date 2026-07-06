@@ -146,6 +146,8 @@ RSpec.describe 'AI > Provider', authenticated_as: :admin, type: :system do
 
       expect(page).to have_text('AI provider disabled successfully.')
 
+      await_empty_ajax_queue
+
       check_switch_field_value('ai_provider', false)
 
       expect(Setting.get('ai_provider')).to be(false)

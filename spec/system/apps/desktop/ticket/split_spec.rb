@@ -66,7 +66,7 @@ RSpec.describe 'Desktop > Ticket > Split, Link and Subscribe', app: :desktop_vie
 
         wait_for_form_to_settle("form-ticket-edit-#{Ticket.last.id}")
 
-        click_on('Add internal note')
+        find('button', text: 'Add internal note').click
 
         within_form(form_updater_gql_number: 2) do
           find_editor('Text').type('Some reply.')

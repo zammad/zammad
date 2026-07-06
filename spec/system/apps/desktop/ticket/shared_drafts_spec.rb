@@ -37,7 +37,7 @@ RSpec.describe 'Desktop > Ticket > Shared Drafts', app: :desktop_view, authentic
     end
 
     it 'works correctly', performs_jobs: true do
-      click_on 'Add internal note'
+      find('button', text: 'Add internal note').click
 
       wait_for_form_updater(2)
 
@@ -59,7 +59,7 @@ RSpec.describe 'Desktop > Ticket > Shared Drafts', app: :desktop_view, authentic
       click_on('Discard your unsaved changes')
       click_on('Discard changes')
 
-      click_on('Add internal note')
+      find('button', text: 'Add internal note').click
 
       wait_for_form_updater(5)
 
@@ -94,7 +94,7 @@ RSpec.describe 'Desktop > Ticket > Shared Drafts', app: :desktop_view, authentic
         wait_for_form_to_settle("form-ticket-edit-#{ticket.id}")
 
         # Modify draft
-        click_on('Add internal note')
+        find('button', text: 'Add internal note').click
 
         wait_for_form_updater(2)
 
@@ -126,7 +126,7 @@ RSpec.describe 'Desktop > Ticket > Shared Drafts', app: :desktop_view, authentic
 
         wait_for_form_updater(7)
 
-        click_on('Add internal note')
+        find('button', text: 'Add internal note').click
 
         wait_for_form_updater(8)
 
@@ -153,7 +153,7 @@ RSpec.describe 'Desktop > Ticket > Shared Drafts', app: :desktop_view, authentic
       wait_for_form_to_settle("form-ticket-edit-#{ticket.id}")
 
       # Apply the draft
-      click_on('Add internal note')
+      find('button', text: 'Add internal note').click
 
       wait_for_form_updater(2)
 
