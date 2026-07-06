@@ -1,4 +1,4 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-require_dependency 'tasks/zammad/package/install.rb'
+require 'tasks/zammad/package/install'
 Tasks::Zammad::Package::Install.register_rake_task

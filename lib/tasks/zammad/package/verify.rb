@@ -1,14 +1,14 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-require 'tasks/zammad/command'
+require 'tasks/zammad/package_command'
 
 module Tasks
   module Zammad
     module Package
-      class Verify < Tasks::Zammad::Command
+      class Verify < Tasks::Zammad::PackageCommand
 
         def self.description
-          'Verfies all installed Zammad addon packages'
+          'Verifies all installed Zammad addon packages'
         end
 
         def self.task_handler

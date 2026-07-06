@@ -1,11 +1,11 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-require 'tasks/zammad/command'
+require 'tasks/zammad/package_command'
 
 module Tasks
   module Zammad
     module Package
-      class Install < Tasks::Zammad::Command
+      class Install < Tasks::Zammad::PackageCommand
 
         def self.usage
           "#{super} /path/to/package.zpm"

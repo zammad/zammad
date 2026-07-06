@@ -16201,3 +16201,23 @@ div.accounted-time-value {
     margin: 0;
   }
 }
+
+.package {
+  &-table-heading {
+    margin-top: 30px;
+  }
+
+  &-action-header {
+    width: 100px;
+  }
+
+  &-action-cell {
+    overflow: visible !important;
+    text-align: right;
+    width: 50px;
+  }
+
+  &-action-toggle {
+    padding: 0;
+  }
+}

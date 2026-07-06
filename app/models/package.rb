@@ -357,6 +357,60 @@ subsequently in a separate step.
     File.exist?('/usr/bin/zammad')
   end
 
+  def self.api_token
+    ENV['PACKAGES_TOKEN'] || Setting.get('packages_token')
+  end
+
+  def self.api_version_name
+    Rails.root.join('VERSION').read.chomp.split('.').tap { |row| row[2] = 'x' }[0..2].join('.')
+  end
+
+  def self.api_packages(params)
+    return [] if api_token.blank?
+
+    cache_key = "PackagesController/api_packages/#{api_token}/#{params.to_json}"
+    cache     = Rails.cache.read(cache_key)
+    return cache if !cache.nil?
+
+    zip_file = api_zip_packages(params)
+    return [] if zip_file.blank?
+
+    result = []
+    begin
+      Zip::File.open(zip_file.path) do |zip|
+        zip.sort.each do |entry|
+          next if !entry.name.end_with?('.zpm')
+
+          content = entry.get_input_stream.read
+          data = JSON.parse(content)
+          result << data
+        end
+      end
+    ensure
+      zip_file.close!
+    end
+
+    Rails.cache.write(cache_key, result, expires_in: 1.hour)
+    result
+  end
+
+  def self.api_packages_hash(params)
+    api_packages(params).index_by { |row| row['name'] }
+  end
+
+  def self.api_zip_packages(params)
+    require 'zip'
+
+    response = UserAgent.get('https://support.zammad.com/api/v1/addon_releases/download/organization', params, { bearer_token: api_token })
+    return if !response.code.starts_with?('2')
+
+    zip_file = Tempfile.new
+    zip_file.binmode
+    zip_file.write(response.body)
+    zip_file.rewind
+    zip_file
+  end
+
 =begin
 
 reinstall package

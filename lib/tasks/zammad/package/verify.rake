@@ -1,4 +1,4 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-require_dependency 'tasks/zammad/package/verify.rb'
+require 'tasks/zammad/package/verify'
 Tasks::Zammad::Package::Verify.register_rake_task

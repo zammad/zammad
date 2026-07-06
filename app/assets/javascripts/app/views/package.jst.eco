@@ -1,5 +1,10 @@
-<div class="page-header-title">
-  <h1><%- @T( 'Package' ) %> <small><%- @T('Management') %></small></h1>
+<div class="page-header">
+  <div class="page-header-title">
+    <h1><%- @T( 'Package' ) %> <small><%- @T('Management') %></small></h1>
+  </div>
+  <div class="page-header-meta">
+    <a data-type="settings" class="btn js-packageSettings" href="#"><%- @T('Configure') %></a>
+  </div>
 </div>
 
 <div class="page-content">
@@ -41,26 +46,111 @@
     </form>
   </p>
 
-  <table class="table table-striped table-hover">
+  <h2 class="package-table-heading"><%- @T('Installed packages') %></h2>
+
+<% if _.isEmpty(@packages): %>
+  <table class="table table--placeholder">
+    <thead><tr><th><%- @T('No Entries') %>
+  </table>
+<% else: %>
+  <table class="table table-striped">
     <thead>
       <tr>
         <th><%- @T('Name') %></th>
         <th><%- @T('Version') %></th>
         <th><%- @T('Vendor') %></th>
         <th><%- @T('State') %></th>
-        <th><%- @T('Action') %></th>
+        <th class="package-action-header"><%- @T('Action') %></th>
       </tr>
     </thead>
     <tbody>
     <% for item in @packages: %>
       <tr data-id="<%= item.id %>">
         <td><%= item.name %></td>
-        <td><%= item.version %></td>
+        <% meta = @api_package_metas[item.name]; lastLog = meta && meta.change_log && meta.change_log.length && meta.change_log[meta.change_log.length - 1] %>
+        <td><%= item.version %><% if _.contains(item.action, 'update_api'): %> <span class="badge badge--closed"<% if lastLog: %> title="<%= lastLog.content %> (<%- @Ttimestamp(lastLog.date) %>)"<% end %>><%- @T('Update to %s', meta.version) %></span><% end %></td>
         <td><% if item.url: %><a href="<%= item.url %>" target="_blank"><% end %><%= item.vendor %><% if item.url: %></a><% end %></td>
         <td><%- @T(item.state) %></td>
-        <td><% for action in item.action: %><a href="#" class="package-action btn btn--action<%= ' btn--danger' if action == 'uninstall' %>" data-type="<%= action %>"><%- @T(action) %></a><br/><% end %></td>
+        <td class="package-action-cell no-padding">
+          <div class="dropdown dropdown--actions">
+            <div class="btn btn--table btn--text btn--secondary js-action package-action-toggle" data-toggle="dropdown">
+              <%- @Icon('overflow-button') %>
+            </div>
+            <ul class="dropdown-menu dropdown-menu-right" role="menu">
+            <% for action in item.action: %>
+              <li role="presentation" class="js-packageAction" data-table-action="<%= action %>">
+                <a role="menuitem" tabindex="-1">
+                  <% if action is 'update_api': %>
+                    <span class="dropdown-iconSpacer">
+                      <%- @Icon('reload') %>
+                    </span>
+                    <%- @T('Update package') %>
+                  <% else if action is 'uninstall': %>
+                    <span class="dropdown-iconSpacer">
+                      <%- @Icon('trash') %>
+                    </span>
+                    <%- @T('Uninstall package') %>
+                    <% else: %>
+                      <%- @T(action) %>
+                    <% end %>
+                  </a>
+                </li>
+              <% end %>
+              </ul>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
+
+<% if @token_present: %>
+  <h2 class="package-table-heading"><%- @T('Available packages') %></h2>
+  <% if _.isEmpty(@api_packages_installable): %>
+  <table class="table table--placeholder">
+    <thead><tr><th><%- @T('No Entries') %>
+  </table>
+  <% else: %>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th><%- @T('Name') %></th>
+        <th><%- @T('Version') %></th>
+        <th><%- @T('Vendor') %></th>
+        <th><%- @T('State') %></th>
+        <th class="package-action-header"><%- @T('Action') %></th>
+      </tr>
+    </thead>
+    <tbody>
+    <% for name in @api_packages_installable: %>
+      <% item = @api_package_metas[name] %>
+      <tr data-id="<%= item.name %>">
+        <td><%= item.name %></td>
+        <td><%= item.version %></td>
+        <td><% if item.url: %><a href="<%= item.url %>" target="_blank"><% end %><%= item.vendor %><% if item.url: %></a><% end %></td>
+        <td><%- @T('not installed') %></td>
+        <td class="package-action-cell no-padding">
+          <div class="dropdown dropdown--actions">
+            <div class="btn btn--table btn--text btn--secondary js-action package-action-toggle" data-toggle="dropdown">
+              <%- @Icon('overflow-button') %>
+            </div>
+            <ul class="dropdown-menu dropdown-menu-right" role="menu">
+              <li role="presentation" class="js-packageAction" data-table-action="install_api">
+                <a role="menuitem" tabindex="-1">
+                  <span class="dropdown-iconSpacer">
+                    <%- @Icon('package') %>
+                  </span>
+                  <%- @T('Install package') %>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </td>
       </tr>
     <% end %>
     </tbody>
   </table>
+  <% end %>
+<% end %>
 </div>

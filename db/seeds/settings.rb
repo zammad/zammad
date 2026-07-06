@@ -6393,3 +6393,14 @@ Setting.create_if_not_exists(
   },
   frontend:    true,
 )
+
+Setting.create_if_not_exists(
+  title:       __('Packages Token'),
+  name:        'packages_token',
+  area:        'Core',
+  description: __('This setting defines the token to access the support.zammad.com instance for package remote commands.'),
+  options:     {},
+  state:       '',
+  preferences: { online_service_disable: true, permission: ['admin.package'] },
+  frontend:    false,
+)

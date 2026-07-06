@@ -1,11 +1,11 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-require 'tasks/zammad/command'
+require 'tasks/zammad/package_command'
 
 module Tasks
   module Zammad
     module Package
-      class UninstallAllFiles < Tasks::Zammad::Command
+      class UninstallAllFiles < Tasks::Zammad::PackageCommand
         def self.description
           'Uninstall all package files in the filesystem only without executing migrations'
         end

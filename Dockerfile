@@ -89,8 +89,11 @@ RUN apt-get update -qq && \
     apt-get upgrade -y && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
+# ZAMMAD_DOCKER is used by Zammad to take decisions for containerized environments,
+#   e.g. hiding the package management interface because installed packages do not persist.
 # Application variables with defaults matching the Zammad docker stack.
-ENV POSTGRESQL_DB=zammad_production \
+ENV ZAMMAD_DOCKER=true \
+    POSTGRESQL_DB=zammad_production \
     POSTGRESQL_HOST=zammad-postgresql \
     POSTGRESQL_PORT=5432 \
     POSTGRESQL_USER=zammad \

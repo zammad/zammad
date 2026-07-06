@@ -839,6 +839,7 @@ msgstr ""
 msgid "API Password Access"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/package.coffee:170
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:38
 msgid "API Token"
 msgstr ""
@@ -1027,7 +1028,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco:10
 #: app/assets/javascripts/app/views/object_manager/attribute/tree_select.jst.eco:9
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:59
-#: app/assets/javascripts/app/views/package.jst.eco:51
+#: app/assets/javascripts/app/views/package.jst.eco:63
 #: app/assets/javascripts/app/views/profile/password.jst.eco:32
 #: app/assets/javascripts/app/views/session.jst.eco:13
 #: app/assets/javascripts/app/views/tag/table.jst.eco:6
@@ -1042,7 +1043,7 @@ msgstr ""
 msgid "Action execution"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonActionMenu/CommonActionMenu.vue:129
+#: app/frontend/apps/desktop/components/CommonActionMenu/CommonActionMenu.vue:131
 msgid "Action menu button"
 msgstr ""
 
@@ -1495,7 +1496,7 @@ msgstr ""
 msgid "After approval, please re-connect your Microsoft365 mailbox."
 msgstr ""
 
-#: app/assets/javascripts/app/views/package.jst.eco:12
+#: app/assets/javascripts/app/views/package.jst.eco:17
 msgid "After installing, updating, or uninstalling packages the following commands need to be executed on the server:"
 msgstr ""
 
@@ -2455,6 +2456,10 @@ msgstr ""
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:199
 msgid "Available methods"
+msgstr ""
+
+#: app/assets/javascripts/app/views/package.jst.eco:109
+msgid "Available packages"
 msgstr ""
 
 #: app/models/ai/agent/type/ticket_tagger.rb:119
@@ -3736,8 +3741,10 @@ msgstr ""
 msgid "Configuration of performance settings via environment variables."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/package.coffee:150
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:25
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:6
+#: app/assets/javascripts/app/views/package.jst.eco:6
 msgid "Configure"
 msgstr ""
 
@@ -4020,6 +4027,7 @@ msgstr ""
 msgid "Copy current object number (e. g. Ticket#) to clipboard"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailTopBar/TopBarHeaderCompact.vue:34
 #: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailTopBar/TopBarHeaderFull.vue:47
 msgid "Copy organization display name"
 msgstr ""
@@ -4032,8 +4040,8 @@ msgstr ""
 msgid "Copy text"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderCompact.vue:56
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderFull.vue:73
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderCompact.vue:34
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderFull.vue:54
 msgid "Copy ticket number"
 msgstr ""
 
@@ -4057,7 +4065,6 @@ msgstr ""
 msgid "Copy token"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailTopBar/TopBarHeaderCompact.vue:34
 #: app/frontend/apps/desktop/pages/user/components/UserDetailTopBar/TopBarHeaderCompact.vue:34
 #: app/frontend/apps/desktop/pages/user/components/UserDetailTopBar/TopBarHeaderFull.vue:43
 msgid "Copy user display name"
@@ -4612,7 +4619,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:147
 #: app/assets/javascripts/app/controllers/dashboard.coffee:28
-#: app/assets/javascripts/app/controllers/package.coffee:43
+#: app/assets/javascripts/app/controllers/package.coffee:59
 #: app/frontend/apps/desktop/pages/dashboard/routes.ts:25
 msgid "Dashboard"
 msgstr ""
@@ -5539,7 +5546,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:188
 #: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:78
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee:9
-#: app/assets/javascripts/app/controllers/package.coffee:54
+#: app/assets/javascripts/app/controllers/package.coffee:73
 #: app/assets/javascripts/app/controllers/user.coffee:102
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:90
 #: app/assets/javascripts/app/lib/mixins/knowledge_base_actions.coffee:26
@@ -6326,8 +6333,8 @@ msgstr ""
 msgid "Edit security keys"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderCompact.vue:117
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderFull.vue:161
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderCompact.vue:95
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/TopBarHeaderFull.vue:142
 msgid "Edit ticket title"
 msgstr ""
 
@@ -8454,7 +8461,7 @@ msgstr ""
 msgid "Highlight icon"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/HighlightMenu.vue:96
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/HighlightMenu.vue:100
 msgid "Highlight options"
 msgstr ""
 
@@ -8466,15 +8473,15 @@ msgstr ""
 msgid "Highlighted text"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/HighlightMenu.vue:89
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/HighlightMenu.vue:93
 msgid "Highlighter color: %s"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/HighlightMenu.vue:157
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/HighlightMenu.vue:161
 msgid "Highlighting is active. Select content in the ticket article to apply."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/HighlightMenu.vue:159
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/HighlightMenu.vue:163
 msgid "Highlighting is inactive."
 msgstr ""
 
@@ -9104,12 +9111,20 @@ msgstr ""
 msgid "Install App"
 msgstr ""
 
-#: app/assets/javascripts/app/views/package.jst.eco:40
+#: app/assets/javascripts/app/views/package.jst.eco:45
 msgid "Install Package"
 msgstr ""
 
-#: app/assets/javascripts/app/views/package.jst.eco:32
+#: app/assets/javascripts/app/views/package.jst.eco:144
+msgid "Install package"
+msgstr ""
+
+#: app/assets/javascripts/app/views/package.jst.eco:37
 msgid "Installed"
+msgstr ""
+
+#: app/assets/javascripts/app/views/package.jst.eco:49
+msgid "Installed packages"
 msgstr ""
 
 #: app/models/ai/agent/type/custom_ai_agent.rb:34
@@ -10461,7 +10476,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/api.jst.eco:2
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:3
 #: app/assets/javascripts/app/views/data_privacy/index.jst.eco:3
-#: app/assets/javascripts/app/views/package.jst.eco:2
+#: app/assets/javascripts/app/views/package.jst.eco:3
 #: app/assets/javascripts/app/views/sla/index.jst.eco:3
 #: app/assets/javascripts/app/views/translation/index.jst.eco:4
 #: app/assets/javascripts/app/views/user.jst.eco:3
@@ -10632,7 +10647,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/popover/organization.jst.eco:6
 #: app/assets/javascripts/app/views/widget/organization.jst.eco:29
 #: app/frontend/apps/desktop/components/Organization/OrganizationPopoverWithTrigger/OrganizationPopover.vue:79
-#: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailViewContent.vue:142
+#: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailViewContent.vue:145
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarOrganization/TicketSidebarOrganizationContent.vue:71
 #: app/frontend/apps/mobile/components/Organization/OrganizationMembersList.vue:36
 msgid "Members"
@@ -11061,7 +11076,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco:11
 #: app/assets/javascripts/app/views/knowledge_base_video_servers/index.jst.eco:10
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:56
-#: app/assets/javascripts/app/views/package.jst.eco:47
+#: app/assets/javascripts/app/views/package.jst.eco:59
 #: app/assets/javascripts/app/views/profile/devices.jst.eco:12
 #: app/assets/javascripts/app/views/profile/password.jst.eco:30
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:16
@@ -11464,6 +11479,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco:6
 #: app/assets/javascripts/app/views/integration/smime_group.jst.eco:12
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco:6
+#: app/assets/javascripts/app/views/package.jst.eco:53
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:6
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco:3
 #: app/assets/javascripts/app/views/time_accounting/by_customer.jst.eco:3
@@ -12206,7 +12222,7 @@ msgstr ""
 msgid "Only available for users with shared organizations"
 msgstr ""
 
-#: app/assets/javascripts/app/views/package.jst.eco:9
+#: app/assets/javascripts/app/views/package.jst.eco:14
 msgid "Only packages from known, trusted, and verified sources should be installed."
 msgstr ""
 
@@ -12439,7 +12455,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailTopBar/TopBarHeaderFull.vue:28
 #: app/frontend/apps/desktop/pages/organization/routes.ts:9
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/organization.ts:13
-#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:83
+#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:84
 #: app/frontend/apps/mobile/pages/organization/routes.ts:8
 #: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue:30
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/plugins/organization.ts:6
@@ -12484,7 +12500,7 @@ msgstr ""
 msgid "Organization support"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailViewContent.vue:191
+#: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailViewContent.vue:194
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:79
 msgid "Organization tickets"
 msgstr ""
@@ -12717,13 +12733,25 @@ msgstr ""
 msgid "POP3"
 msgstr ""
 
-#: app/assets/javascripts/app/views/package.jst.eco:2
+#: app/assets/javascripts/app/views/package.jst.eco:3
 msgid "Package"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/package.coffee:131
+msgid "Package installed successfully."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/package.coffee:112
+msgid "Package updated successfully."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/package.coffee:3
 #: db/seeds/permissions.rb:326
 msgid "Packages"
+msgstr ""
+
+#: db/seeds/settings.rb:6390
+msgid "Packages Token"
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/table_pager.jst.eco:3
@@ -13079,6 +13107,10 @@ msgstr ""
 
 #: app/frontend/shared/form/i18n/locales.ts:342
 msgid "Please enter a valid email address."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/package.coffee:170
+msgid "Please enter the API token you received from Zammad."
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco:14
@@ -13758,7 +13790,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/link/ticket/list.jst.eco:1
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:142
-#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:177
+#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:180
 msgid "Related tickets"
 msgstr ""
 
@@ -13873,7 +13905,7 @@ msgstr ""
 msgid "Remove formatting"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/HighlightMenu.vue:89
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/HighlightMenu.vue:93
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/composables/useHighlightMenuState.ts:21
 msgid "Remove highlight"
 msgstr ""
@@ -14130,6 +14162,7 @@ msgstr ""
 msgid "Reset to default"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/package.coffee:158
 #: app/assets/javascripts/app/views/profile/notification.jst.eco:75
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:223
 msgid "Reset to default settings"
@@ -14660,7 +14693,7 @@ msgstr ""
 msgid "Search URL is unsafe."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailViewContent.vue:172
+#: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailViewContent.vue:175
 #: app/frontend/apps/desktop/pages/organization/components/OrganizationRelatedTickets/OrganizationTicketList.vue:94
 #: app/frontend/apps/desktop/pages/user/components/UserRelatedCustomerTickets/CustomerTicketList.vue:100
 msgid "Search all"
@@ -14851,7 +14884,7 @@ msgstr ""
 
 #: app/frontend/apps/desktop/components/User/UserPopoverWithTrigger/UserPopover.vue:80
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:112
-#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:146
+#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:149
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue:94
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:133
 #: db/seeds/object_manager_attributes.rb:1187
@@ -15073,7 +15106,7 @@ msgstr ""
 msgid "Selected conditions"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/HighlightMenu.vue:155
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/HighlightMenu.vue:159
 msgid "Selected highlight color: %s"
 msgstr ""
 
@@ -16077,7 +16110,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/ticket.coffee:12
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco:23
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:31
-#: app/assets/javascripts/app/views/package.jst.eco:50
+#: app/assets/javascripts/app/views/package.jst.eco:62
 #: app/graphql/gql/types/overview_type.rb:97
 #: app/views/mailer/ticket_create/fr.html.erb:10
 #: app/views/mailer/ticket_create/zh-cn.html.erb:10
@@ -16164,7 +16197,7 @@ msgstr ""
 msgid "Storage Method"
 msgstr ""
 
-#: app/assets/javascripts/app/views/package.jst.eco:33
+#: app/assets/javascripts/app/views/package.jst.eco:38
 msgid "Store"
 msgstr ""
 
@@ -17213,7 +17246,7 @@ msgstr ""
 msgid "The included security token is invalid. This may be just a temporary error, please reload your browser, and try again."
 msgstr ""
 
-#: app/assets/javascripts/app/views/package.jst.eco:7
+#: app/assets/javascripts/app/views/package.jst.eco:12
 msgid "The installation of packages comes with security implications, because arbitrary code will be executed in the context of the Zammad application."
 msgstr ""
 
@@ -17967,7 +18000,7 @@ msgstr ""
 msgid "There is no rollback of this deletion possible. If you are sure that you wish to proceed, please type \"%s\" into the input."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/package.coffee:54
+#: app/assets/javascripts/app/controllers/package.coffee:73
 msgid "There is no rollback of this deletion. If you are sure that you wish to proceed, please type \"%s\" into the input. All related data to this package will be lost."
 msgstr ""
 
@@ -18414,6 +18447,10 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_integration/placetel.coffee:6
 #: app/assets/javascripts/app/controllers/_integration/sipgate_io.coffee:6
 msgid "This service shows you contacts of incoming calls and a caller list in realtime."
+msgstr ""
+
+#: db/seeds/settings.rb:6393
+msgid "This setting defines the token to access the support.zammad.com instance for package remote commands."
 msgstr ""
 
 #: app/assets/javascripts/app/models/group.coffee:13
@@ -19578,6 +19615,10 @@ msgstr ""
 msgid "Uncheck item"
 msgstr ""
 
+#: app/assets/javascripts/app/views/package.jst.eco:92
+msgid "Uninstall package"
+msgstr ""
+
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco:12
 #: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/operators/within-last-relative.ts:45
 msgid "Unit"
@@ -19755,6 +19796,10 @@ msgstr ""
 msgid "Update existing records with the attributes specified in the import data."
 msgstr ""
 
+#: app/assets/javascripts/app/views/package.jst.eco:87
+msgid "Update package"
+msgstr ""
+
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:204
 msgid "Update shared draft"
 msgstr ""
@@ -19771,6 +19816,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_settings/area_ticket_number.coffee:123
 #: app/assets/javascripts/app/controllers/_settings/form.coffee:81
 #: app/assets/javascripts/app/controllers/maintenance.coffee:74
+#: app/assets/javascripts/app/controllers/package.coffee:200
 #: app/assets/javascripts/app/models/setting.coffee:20
 msgid "Update successful."
 msgstr ""
@@ -19782,6 +19828,10 @@ msgstr ""
 #: app/frontend/apps/desktop/components/CommonTicketEscalationIndicator/CommonTicketEscalationIndicator.vue:40
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:153
 msgid "Update time"
+msgstr ""
+
+#: app/assets/javascripts/app/views/package.jst.eco:71
+msgid "Update to %s"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ai_agent.coffee:11
@@ -20043,7 +20093,7 @@ msgstr ""
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:117
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:73
 #: app/frontend/apps/desktop/pages/user/components/UserDetailTopBar/TopBarHeaderFull.vue:24
-#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:41
+#: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:42
 #: app/frontend/apps/desktop/pages/user/routes.ts:9
 #: app/frontend/apps/mobile/pages/user/routes.ts:7
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:32
@@ -20296,7 +20346,7 @@ msgstr ""
 msgid "Vector DB knowledge base chunking strategy"
 msgstr ""
 
-#: app/assets/javascripts/app/views/package.jst.eco:49
+#: app/assets/javascripts/app/views/package.jst.eco:61
 msgid "Vendor"
 msgstr ""
 
@@ -20351,7 +20401,7 @@ msgid "Verifying…"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/version.coffee:3
-#: app/assets/javascripts/app/views/package.jst.eco:48
+#: app/assets/javascripts/app/views/package.jst.eco:60
 #: app/assets/javascripts/app/views/version.jst.eco:2
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:165
 #: lib/excel_sheet/ai/analytics/errors.rb:25
@@ -22381,6 +22431,10 @@ msgstr ""
 msgid "none"
 msgstr ""
 
+#: app/assets/javascripts/app/views/package.jst.eco:132
+msgid "not installed"
+msgstr ""
+
 #: app/helpers/knowledge_base_visibility_note_helper.rb:27
 msgid "not published"
 msgstr ""
@@ -22449,7 +22503,7 @@ msgstr ""
 msgid "or sign in using"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:101
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:109
 msgid "or use the reply actions on articles."
 msgstr ""
 

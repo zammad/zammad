@@ -1,4 +1,4 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-require_dependency 'tasks/zammad/package/precompile.rb'
+require 'tasks/zammad/package/precompile'
 Tasks::Zammad::Package::Precompile.register_rake_task
