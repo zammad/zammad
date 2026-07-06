@@ -370,7 +370,7 @@ itself was removed in the meantime.
 
 start client for browser
 
-  Sessions.thread_client(client_id)
+  Sessions.thread_client(client_id, node_id)
 
 returns
 
@@ -378,7 +378,7 @@ returns
 
 =end
 
-  def self.thread_client(client_id, try_count = 0, try_run_time = Time.now.utc, node_id)
+  def self.thread_client(client_id, node_id, try_count = 0, try_run_time = Time.now.utc)
     log('debug', "LOOP #{node_id}.#{client_id} - #{try_count}")
     begin
       Sessions::Client.new(client_id, node_id)
@@ -398,7 +398,7 @@ returns
 
       # restart job again
       if try_run_max > try_count
-        thread_client(client_id, try_count, try_run_time, node_id)
+        thread_client(client_id, node_id, try_count, try_run_time)
       end
       raise "STOP thread_client for client #{node_id}.#{client_id} after #{try_run_max} tries"
     end
