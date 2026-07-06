@@ -32,7 +32,7 @@ const { noteArticleType, customerReplyArticleType } = useArticleReply(
   toRef(props, 'ticketArticleTypes'),
 )
 
-defineEmits<{
+const emit = defineEmits<{
   'show-article-form': [
     articleType: string,
     performReply: AppSpecificTicketArticleType['performReply'],
@@ -41,6 +41,22 @@ defineEmits<{
 }>()
 
 const pinned = defineModel<boolean>('pinned')
+
+const showCustomerReplyForm = () => {
+  if (!customerReplyArticleType.value) return
+
+  emit(
+    'show-article-form',
+    customerReplyArticleType.value.articleType,
+    customerReplyArticleType.value.performReply,
+  )
+}
+
+const showNoteReplyForm = () => {
+  if (!noteArticleType.value) return
+
+  emit('show-article-form', noteArticleType.value.articleType, noteArticleType.value.performReply)
+}
 </script>
 
 <template>
@@ -69,13 +85,7 @@ const pinned = defineModel<boolean>('pinned')
         variant="primary"
         size="small"
         :prefix-icon="customerReplyArticleType.icon"
-        @click="
-          $emit(
-            'show-article-form',
-            customerReplyArticleType.articleType,
-            customerReplyArticleType.performReply,
-          )
-        "
+        @click="showCustomerReplyForm"
       >
         {{ $t(customerReplyArticleType.label) }}
       </CommonButton>
@@ -87,9 +97,7 @@ const pinned = defineModel<boolean>('pinned')
             size="small"
             data-test-id="ticket-detail-show-article-form-button"
             :prefix-icon="noteArticleType.icon"
-            @click="
-              $emit('show-article-form', noteArticleType.articleType, noteArticleType.performReply)
-            "
+            @click="showNoteReplyForm"
           >
             {{ $t(noteArticleType.label) }}
           </CommonButton>
