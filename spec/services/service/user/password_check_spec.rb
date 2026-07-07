@@ -19,6 +19,10 @@ RSpec.describe Service::User::PasswordCheck do
     it 'returns false for success and does not include token' do
       expect(service_result).to include(success: false).and(not_include(:token))
     end
+
+    it 'does not count towards the account failed login lockout' do
+      expect { service_result }.not_to change { user.reload.login_failed }
+    end
   end
 
   context 'with correct password' do

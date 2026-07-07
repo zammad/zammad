@@ -2,7 +2,7 @@
 
 class Auth
 
-  attr_reader :password, :auth_user, :two_factor_method, :two_factor_payload, :only_verify_password
+  attr_reader :password, :auth_user, :two_factor_method, :two_factor_payload, :only_verify_password, :skip_login_failed_tracking
 
   delegate :user, to: :auth_user
 
@@ -13,16 +13,21 @@ class Auth
   # Initializes a Auth object for the given user.
   #
   # @param username [String] the user name for the user object which needs an authentication.
+  # @param skip_login_failed_tracking [Boolean] opts out of counting failed attempts towards account
+  #   lockout. Only appropriate for flows that are already gated behind an existing authenticated
+  #   session (e.g. re-confirming the current password), since exempting an unauthenticated flow
+  #   would leave it brute-forceable without limit.
   #
   # @example
   #  auth = Auth.new('admin@example.com', 'some+password')
-  def initialize(username, password, two_factor_method: nil, two_factor_payload: nil, only_verify_password: false)
+  def initialize(username, password, two_factor_method: nil, two_factor_payload: nil, only_verify_password: false, skip_login_failed_tracking: false)
     @auth_user                      = username.present? ? Auth::User.new(username) : nil
     @password                       = password
     @two_factor_payload             = two_factor_payload
     @two_factor_method              = two_factor_method
     @increase_login_failed_attempts = false
     @only_verify_password           = only_verify_password
+    @skip_login_failed_tracking     = skip_login_failed_tracking
 
     return if !@two_factor_payload.is_a?(Hash)
 
@@ -52,7 +57,7 @@ class Auth
 
       if !backends.valid?
         # Failed log-in attempts are only recorded if the password backend requests so.
-        auth_user.increase_login_failed if increase_login_failed_attempts && !only_verify_password
+        auth_user.increase_login_failed if increase_login_failed_attempts && !skip_login_failed_tracking
         next false
       end
       verify_two_factor!

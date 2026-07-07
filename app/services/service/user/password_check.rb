@@ -11,7 +11,7 @@ class Service::User::PasswordCheck < Service::Base
 
   def execute
     Auth
-      .new(current_user.login, password, only_verify_password: true)
+      .new(current_user.login, password, only_verify_password: true, skip_login_failed_tracking: true)
       .valid!
 
     token = Token.create(action: 'PasswordCheck', user_id: current_user.id, persistent: false, expires_at: 1.hour.from_now)

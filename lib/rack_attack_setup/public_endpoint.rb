@@ -17,6 +17,10 @@ class RackAttackSetup
         url:   '/api/v1/users/admin_password_auth',
         field: 'username',
       },
+      {
+        url:   '/api/v1/auth/two_factor_initiate_authentication',
+        field: 'username',
+      },
     ].freeze
 
     def self.setup_ip_throttling(url)

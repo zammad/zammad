@@ -35,6 +35,14 @@ RSpec.describe 'iCal endpoints', type: :request do
         expect(response).to have_http_status(:ok)
       end
     end
+
+    context 'with an invalid password' do
+      let(:basic_auth) { ActionController::HttpAuthentication::Basic.encode_credentials(user.email, 'wrong') }
+
+      it 'increases the account failed login count, even though two-factor auth is skipped' do
+        expect { get '/ical/tickets', headers: { 'Authorization' => basic_auth } }.to change { user.reload.login_failed }.from(0).to(1)
+      end
+    end
   end
 
   describe 'time zone', authenticated_as: :user do

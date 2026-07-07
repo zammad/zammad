@@ -14,7 +14,7 @@ class RackAttackSetup
   # https://github.com/zammad/zammad/issues/6199
   def self.path_matches?(request_path, throttle_path)
     request_path_without_format = request_path.sub(%r{\.[^/]+$}, '')
-    request_path_without_format == throttle_path
+    request_path_without_format == throttle_path || request_path_without_format.start_with?("#{throttle_path}/")
   end
 
   # Normalize to protect against rate limit bypasses.

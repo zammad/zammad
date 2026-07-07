@@ -286,14 +286,18 @@ class SessionsController < ApplicationController
     end
 
     auth = Auth.new(params[:username], params[:password], only_verify_password: true)
+
     begin
       auth.valid!
+
+      two_factor_method = auth.user.auth_two_factor.authentication_method_object(params[:method])
+      raise Auth::Error::AuthenticationFailed if !two_factor_method&.enabled? || !two_factor_method&.available?
     rescue Auth::Error::AuthenticationFailed
       raise Exceptions::UnprocessableContent, __('The username or password is incorrect.')
+    rescue => e
+      logger.error(e)
+      raise Exceptions::UnprocessableContent, __('The username or password is incorrect.')
     end
-
-    two_factor_method = auth.user.auth_two_factor.authentication_method_object(params[:method])
-    raise Exceptions::UnprocessableContent, __('The two-factor authentication method is not enabled.') if !two_factor_method&.enabled? || !two_factor_method&.available?
 
     render json: two_factor_method.initiate_authentication, status: :ok
   end

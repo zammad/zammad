@@ -84,11 +84,28 @@ RSpec.describe Gql::Mutations::TwoFactorMethodInitiateAuthentication, :aggregate
         it 'fails with error message' do
           expect(graphql_response['data']['twoFactorMethodInitiateAuthentication']['errors']).to eq(
             [{
-              'message' => 'The two-factor authentication method is not enabled.',
+              'message' => 'The username or password is incorrect.',
               'field'   => nil
             }]
           )
         end
+      end
+    end
+
+    context 'with repeated invalid password attempts' do
+      let(:password) { 'invalid' }
+
+      it 'increases the account failed login count, even though only the password is verified' do
+        expect(user.reload.login_failed).to eq(1)
+      end
+    end
+
+    context 'with more attempts than the throttle allows', :rack_attack do
+      it 'blocks further requests for the same login' do
+        3.times { post '/graphql', params: { query: query, variables: variables }, as: :json }
+
+        expect(graphql_response['errors']).to be_present
+        expect(graphql_response['errors'].to_s).to include('The request limit for this operation was exceeded.')
       end
     end
   end
