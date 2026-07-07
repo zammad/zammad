@@ -757,6 +757,21 @@ RSpec.describe Ticket, type: :model do
             end
           end
         end
+
+        context 'when reopened while a permission-scoped API token is the current token (#6222)' do
+          let(:customer) { create(:customer) }
+          let(:token)    { create(:token, user: customer, permissions: ['ticket.customer']) }
+
+          before do
+            ticket.update!(state: Ticket::State.lookup(name: 'closed'))
+            allow(UserInfo).to receive_messages(current_token: token, current_user_id: customer.id)
+          end
+
+          it 'keeps the still-valid agent owner' do
+            expect { ticket.update!(state: Ticket::State.lookup(name: 'open')) }
+              .not_to change { ticket.reload.owner }
+          end
+        end
       end
     end
 

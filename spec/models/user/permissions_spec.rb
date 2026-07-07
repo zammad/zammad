@@ -45,6 +45,24 @@ RSpec.describe User::Permissions, type: :model do
     it 'returns true if user has permission' do
       expect(user).to be_permissions('ticket.agent')
     end
+
+    context 'when a permission-scoped token is the current token (#6222)' do
+      let(:token_user) { create(:agent) }
+      let(:other_user) { create(:agent) }
+      let(:token)      { create(:token, user: token_user, permissions: ['ticket.customer']) }
+
+      before do
+        allow(UserInfo).to receive(:current_token).and_return(token)
+      end
+
+      it 'narrows the token user’s own permissions to the token scope' do
+        expect(token_user).not_to be_permissions('ticket.agent')
+      end
+
+      it 'does not let the token influence another user’s intrinsic permissions' do
+        expect(other_user).to be_permissions('ticket.agent')
+      end
+    end
   end
 
   describe '#permissions!' do
