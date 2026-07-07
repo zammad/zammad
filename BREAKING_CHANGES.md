@@ -2,6 +2,15 @@
 
 ## 7.2
 
+### Deleting organizations via API by agents is deprecated
+
+`DELETE /api/v1/organizations/:id` has historically been permitted to users
+with only the `ticket.agent` permission. This is now deprecated and will be
+restricted to `admin.organization` in Zammad 7.3.
+
+⚠️ API integrations that delete organizations using an agent token should
+be updated to use an account with `admin.organization`.
+
 ### Knowledge Base search index: new `publication_state` field
 
 Issue #6142 adds a "Suggested searches" shortcut menu to the Knowledge Base search.
