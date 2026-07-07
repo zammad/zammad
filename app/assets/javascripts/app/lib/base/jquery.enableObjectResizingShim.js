@@ -135,7 +135,7 @@
     this.resizeDir = this.resizeCorner == 0 || this.resizeCorner == 3 ? -1 : 1
     this.startX = event.pageX
     this.startWidth = this.$element.width()
-    this.$clone = this.$element.clone().css({width: '', height: '', 'max-width': maxWidth}).addClass('enableObjectResizingShim-clone enableObjectResizingShim-clone--'+ this.resizeCorner)
+    this.$clone = this.$element.clone().css({width: '', height: '', 'max-height': '', 'max-width': maxWidth}).addClass('enableObjectResizingShim-clone enableObjectResizingShim-clone--'+ this.resizeCorner)
     this.$element.after(this.$clone)
     this.isResizing = true
     $(document).on('mousemove.enableObjectResizing', this.resize.bind(this))
@@ -170,7 +170,8 @@
     this.$element.css({
       width: width,
       height: height,
-      'max-width': '100%'
+      'max-width': '100%',
+      'max-height': ''
     })
     this.$clone.remove()
 
