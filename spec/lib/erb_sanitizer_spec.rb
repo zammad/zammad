@@ -256,6 +256,20 @@ RSpec.describe ErbSanitizer, :aggregate_failures do
         expect(render(payload)).to eq(payload)
       end
     end
+
+    context 'with a nested opener smuggled inside a single tag (escape-all-openers bypass)' do
+      it 'renders as literal text instead of executing the inner tag' do
+        payload = '<%<%= 1 + 1 %>'
+
+        expect(render(payload)).to eq(payload)
+      end
+
+      it 'renders as literal text for a doubly-nested opener' do
+        payload = '<%<%<%= 1 + 1 %>'
+
+        expect(render(payload)).to eq(payload)
+      end
+    end
   end
 
   describe 'parameterization' do

@@ -85,6 +85,6 @@ Every other ERB tag has its `<%` escaped to `<%%` and renders as literal text.
   end
 
   def escape_tag(tag)
-    tag.sub('<%', '<%%')
+    tag.gsub('<%', '<%%')
   end
 end
