@@ -55,7 +55,7 @@ jobs:
       - name: Lint
         run: .github/workflows/ci/lint.sh
       - name: Markdownlint
-        uses: DavidAnson/markdownlint-cli2-action@v23
+        uses: DavidAnson/markdownlint-cli2-action@v24
         with:
           globs: |
             *.md
