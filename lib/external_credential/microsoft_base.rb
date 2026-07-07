@@ -221,7 +221,6 @@ class ExternalCredential::MicrosoftBase < ExternalCredential::Base::ChannelXoaut
 
     response = UserAgent.post(uri.to_s, params)
     if response.code != 200 && response.body.blank?
-      Rails.logger.error "Request failed! (code: #{response.code})"
       raise "Request failed! (code: #{response.code})"
     end
 
@@ -262,7 +261,6 @@ class ExternalCredential::MicrosoftBase < ExternalCredential::Base::ChannelXoaut
 
     response = UserAgent.post(uri.to_s, params)
     if response.code != 200 && response.body.blank?
-      Rails.logger.error "Request failed! (code: #{response.code})"
       raise "Request failed! (code: #{response.code})"
     end
 

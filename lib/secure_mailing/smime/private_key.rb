@@ -31,7 +31,6 @@ class SecureMailing::SMIME::PrivateKey
     message = __('The private key is not valid for S/MIME usage. Please check the key cryptographic algorithm.')
 
     Rails.logger.error { "SMIME::PrivateKey: #{message}" }
-    Rails.logger.error { "SMIME::PrivateKey:\n #{@key.to_pem}" }
 
     raise Exceptions::UnprocessableContent, message
   end

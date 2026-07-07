@@ -204,13 +204,11 @@ class ExternalCredential::Google < ExternalCredential::Base::ChannelXoauth2
 
     response = UserAgent.post(uri.to_s, params)
     if response.code != 200 && response.body.blank?
-      Rails.logger.error "Request failed! (code: #{response.code})"
       raise "Request failed! (code: #{response.code})"
     end
 
     result = JSON.parse(response.body)
     if result['error'] && response.code != 200
-      Rails.logger.error "Request failed! ERROR: #{result['error']} (#{result['error_description']}, params: #{params.to_json})"
       raise "Request failed! ERROR: #{result['error']} (#{result['error_description']})"
     end
 
@@ -235,13 +233,11 @@ class ExternalCredential::Google < ExternalCredential::Base::ChannelXoauth2
 
     response = UserAgent.post(uri.to_s, params)
     if response.code != 200 && response.body.blank?
-      Rails.logger.error "Request failed! (code: #{response.code})"
       raise "Request failed! (code: #{response.code})"
     end
 
     result = JSON.parse(response.body)
     if result['error'] && response.code != 200
-      Rails.logger.error "Request failed! ERROR: #{result['error']} (#{result['error_description']}, params: #{params.to_json})"
       raise "Request failed! ERROR: #{result['error']} (#{result['error_description']})"
     end
 
@@ -257,13 +253,11 @@ class ExternalCredential::Google < ExternalCredential::Base::ChannelXoauth2
     http.use_ssl = true
     response = http.get(uri.request_uri, { 'Authorization' => "#{token[:token_type]} #{token[:access_token]}" })
     if response.code != 200 && response.body.blank?
-      Rails.logger.error "Request failed! (code: #{response.code})"
       raise "Request failed! (code: #{response.code})"
     end
 
     result = JSON.parse(response.body)
     if result['error'] && response.code != 200
-      Rails.logger.error "Request failed! ERROR: #{result['error']['message']}"
       raise "Request failed! ERROR: #{result['error']['message']}"
     end
 

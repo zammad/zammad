@@ -95,13 +95,11 @@ class ExternalCredential::Exchange
 
     response = UserAgent.post(uri.to_s, params)
     if response.code != 200 && response.body.blank?
-      Rails.logger.error "Request failed! (code: #{response.code})"
       raise "Request failed! (code: #{response.code})"
     end
 
     result = JSON.parse(response.body)
     if result['error'] && response.code != 200
-      Rails.logger.error "Request failed! ERROR: #{result['error']} (#{result['error_description']}, params: #{params.to_json})"
       raise "Request failed! ERROR: #{result['error']} (#{result['error_description']})"
     end
 
@@ -145,7 +143,7 @@ class ExternalCredential::Exchange
         url:           uri,
         status:        response.code,
         ip:            nil,
-        request:       { content: params },
+        request:       { content: params.except(:client_secret, :refresh_token) },
         response:      { content: false },
         method:        'refresh_token',
         created_by_id: 1,
@@ -166,7 +164,7 @@ class ExternalCredential::Exchange
         url:           uri,
         status:        response.code,
         ip:            nil,
-        request:       { content: params },
+        request:       { content: params.except(:client_secret, :refresh_token) },
         response:      { content: result },
         method:        'refresh_token',
         created_by_id: 1,
@@ -175,7 +173,7 @@ class ExternalCredential::Exchange
 
       config_state(response.code)
 
-      Rails.logger.error "Exchange refresh token: Request failed! ERROR: #{result['error']} (#{result['error_description']}, params: #{params.to_json})"
+      Rails.logger.error "Exchange refresh token: Request failed! ERROR: #{result['error']} (#{result['error_description']})"
       raise "Request failed! ERROR: #{result['error']} (#{result['error_description']})"
     end
 
