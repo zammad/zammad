@@ -184,19 +184,6 @@ RSpec.describe 'Ticket Create', time_zone: 'Europe/London', type: :system do
         it_behaves_like 'replacing tags in a clean form'
         it_behaves_like 'merging with existing tags in a dirty form'
       end
-
-      context 'with empty value' do
-        let(:operator) { nil }
-        let(:template_value) { nil }
-
-        it_behaves_like 'leaving tags empty in a clean form'
-
-        it 'leaves existing tags untouched in a dirty form' do
-          set_tokens_field_value('tags', %w[baz qux])
-          use_template(template)
-          check_tokens_field_value('tags', %w[baz qux])
-        end
-      end
     end
 
   end

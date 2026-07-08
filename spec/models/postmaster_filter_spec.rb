@@ -77,4 +77,34 @@ RSpec.describe PostmasterFilter, type: :model do
       end
     end
   end
+
+  describe 'validates perform before saving' do
+    let(:filter) do
+      {
+        name:          'RSpec: PostmasterFilter#perform',
+        match:         { from: { operator: 'contains', value: 'nobody@example.com' } },
+        perform:       perform,
+        channel:       'email',
+        active:        true,
+        created_by_id: 1,
+        updated_by_id: 1,
+      }
+    end
+
+    context 'when a perform action has a blank value' do
+      let(:perform) { { 'x-zammad-ticket-tags' => { 'operator' => 'add', 'value' => '' } } }
+
+      it 'is rejected' do
+        expect { described_class.create!(filter) }.to raise_error(ActiveRecord::RecordInvalid)
+      end
+    end
+
+    context 'when a perform action has a present value' do
+      let(:perform) { { 'x-zammad-ticket-tags' => { 'operator' => 'add', 'value' => 'foo' } } }
+
+      it 'is accepted' do
+        expect(described_class.create!(filter)).to be_an(described_class)
+      end
+    end
+  end
 end

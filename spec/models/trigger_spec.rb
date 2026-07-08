@@ -30,6 +30,16 @@ RSpec.describe Trigger, type: :model do
     it { is_expected.to validate_presence_of(:execution_condition_mode) }
     it { is_expected.to validate_inclusion_of(:activator).in_array(%w[action time]) }
     it { is_expected.to validate_inclusion_of(:execution_condition_mode).in_array(%w[selective always]) }
+
+    it 'rejects a tag action without a tag' do
+      trigger = build(:trigger, perform: { 'ticket.tags' => { 'operator' => 'add', 'value' => '' } })
+      expect(trigger).not_to be_valid
+    end
+
+    it 'accepts a tag action with a tag' do
+      trigger = build(:trigger, perform: { 'ticket.tags' => { 'operator' => 'add', 'value' => 'foo' } })
+      expect(trigger).to be_valid
+    end
   end
 
   describe 'Send-email triggers' do

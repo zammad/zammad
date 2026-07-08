@@ -25,8 +25,9 @@ RSpec.describe Issue4316TemplateOptionsMigration, type: :db_migration do
 
   let(:template) do
 
-    # Wrong format after initial migration from 5.2 to 5.3.
-    Template.create!(
+    # Wrong format after initial migration from 5.2 to 5.3. Skip validation, as
+    #   this simulates a raw legacy row that predates the perform-rules validation.
+    Template.new(
       name:          'new',
       options:
                      {
@@ -50,7 +51,7 @@ RSpec.describe Issue4316TemplateOptionsMigration, type: :db_migration do
                      },
       updated_by_id: 1,
       created_by_id: 1,
-    )
+    ).tap { |template| template.save!(validate: false) }
   end
 
   before do

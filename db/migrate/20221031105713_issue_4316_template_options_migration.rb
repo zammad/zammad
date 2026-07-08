@@ -7,7 +7,7 @@ class Issue4316TemplateOptionsMigration < ActiveRecord::Migration[6.1]
 
     Template.all.each do |template|
       template.options = migrate_template_options(template.options)
-      template.save!
+      template.save!(validate: false)
     end
   end
 

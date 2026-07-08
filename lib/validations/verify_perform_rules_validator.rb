@@ -11,6 +11,17 @@ class Validations::VerifyPerformRulesValidator < ActiveModel::EachValidator
     'x-zammad-ticket-customer_id' => %w[value], # PostmasterFilter
   }.freeze
 
+  # Tag actions (add/remove) split their value into a tag list; a blank value
+  #   yields an empty list and schedules nothing, so it must not be saved.
+  #   `ticket.tags` is used by Trigger/Job/Macro, the `x-zammad-*` variants by
+  #   PostmasterFilter. Other perform actions may legitimately clear a field
+  #   with a blank value, so only tag actions are checked here.
+  CHECK_TAGS_PRESENT = %w[
+    ticket.tags
+    x-zammad-ticket-tags
+    x-zammad-ticket-followup-tags
+  ].freeze
+
   CHECK_SPECIFIC_PRESENT = %w[
     ticket.customer_id
     ticket.organization_id
@@ -22,6 +33,7 @@ class Validations::VerifyPerformRulesValidator < ActiveModel::EachValidator
 
     check_present(record, attribute, value)
     check_specific_present(record, attribute, value)
+    check_tags_present(record, attribute, value)
     check_pending_time_present(record, value)
   end
 
@@ -66,6 +78,28 @@ class Validations::VerifyPerformRulesValidator < ActiveModel::EachValidator
 
       result << key if value[key]['value'].blank?
     end
+  end
+
+  def check_tags_present(record, attribute, value)
+    value.each do |key, meta|
+      next if CHECK_TAGS_PRESENT.exclude?(key.to_s.downcase)
+      next if !meta.is_a?(Hash)
+
+      add_error(record, attribute, key, 'value') if blank_tag_value?(meta['value'])
+    end
+  end
+
+  # Mirrors the runtime tag parsing (FilterProcessor#perform_filter_changes_tags,
+  #   PerformChanges::Action::AttributeUpdates#normalized_tags): split on commas,
+  #   strip, drop blanks. A value that normalizes to an empty list (nil, '',
+  #   whitespace, an empty array, or separators-only like ',, ,,') schedules
+  #   nothing and is treated as blank.
+  def blank_tag_value?(raw_value)
+    Array.wrap(raw_value)
+      .flat_map { |tag| tag.to_s.split(',') }
+      .map(&:strip)
+      .compact_blank
+      .blank?
   end
 
   def check_pending_time_present(record, value)

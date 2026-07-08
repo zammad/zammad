@@ -76,6 +76,91 @@ RSpec.describe Validations::VerifyPerformRulesValidator do
     end
   end
 
+  context 'when validating tag actions' do
+    it 'is valid when the ticket.tags value is present' do
+      instance.sample = { 'ticket.tags' => { 'operator' => 'add', 'value' => 'foo' } }
+      expect(instance).to be_valid
+    end
+
+    it 'is valid when the ticket.tags value is a non-empty array' do
+      instance.sample = { 'ticket.tags' => { 'operator' => 'add', 'value' => %w[foo bar] } }
+      expect(instance).to be_valid
+    end
+
+    it 'is invalid when the ticket.tags value is blank' do
+      instance.sample = { 'ticket.tags' => { 'operator' => 'add', 'value' => '' } }
+      instance.valid?
+
+      expect(instance.errors).to have_attributes(
+        errors: include(have_attributes(message: include("The required 'sample' value for ticket.tags, value is missing!")))
+      )
+    end
+
+    it 'is invalid when the ticket.tags value is an empty array' do
+      instance.sample = { 'ticket.tags' => { 'operator' => 'add', 'value' => [] } }
+      instance.valid?
+
+      expect(instance.errors).to have_attributes(
+        errors: include(have_attributes(message: include("The required 'sample' value for ticket.tags, value is missing!")))
+      )
+    end
+
+    it 'is valid when the tag value is present' do
+      instance.sample = { 'x-zammad-ticket-tags' => { 'operator' => 'add', 'value' => 'foo' } }
+      expect(instance).to be_valid
+    end
+
+    it 'is invalid when the tag value is blank' do
+      instance.sample = { 'x-zammad-ticket-tags' => { 'operator' => 'add', 'value' => '' } }
+      instance.valid?
+
+      expect(instance.errors).to have_attributes(
+        errors: include(have_attributes(message: include("The required 'sample' value for x-zammad-ticket-tags, value is missing!")))
+      )
+    end
+
+    it 'is invalid when the tag value only contains whitespace' do
+      instance.sample = { 'x-zammad-ticket-tags' => { 'operator' => 'add', 'value' => '   ' } }
+      instance.valid?
+
+      expect(instance.errors).to have_attributes(
+        errors: include(have_attributes(message: include("The required 'sample' value for x-zammad-ticket-tags, value is missing!")))
+      )
+    end
+
+    it 'is invalid when the tag value only contains separators' do
+      instance.sample = { 'x-zammad-ticket-tags' => { 'operator' => 'add', 'value' => ',, ,,' } }
+      instance.valid?
+
+      expect(instance.errors).to have_attributes(
+        errors: include(have_attributes(message: include("The required 'sample' value for x-zammad-ticket-tags, value is missing!")))
+      )
+    end
+
+    it 'is invalid for follow-up tags when the value is blank' do
+      instance.sample = { 'x-zammad-ticket-followup-tags' => { 'operator' => 'add', 'value' => '' } }
+      instance.valid?
+
+      expect(instance.errors).to have_attributes(
+        errors: include(have_attributes(message: include("The required 'sample' value for x-zammad-ticket-followup-tags, value is missing!")))
+      )
+    end
+
+    it 'is invalid regardless of key casing' do
+      instance.sample = { 'X-Zammad-Ticket-Tags' => { 'operator' => 'add', 'value' => '' } }
+      instance.valid?
+
+      expect(instance.errors).to have_attributes(
+        errors: include(have_attributes(message: include("The required 'sample' value for X-Zammad-Ticket-Tags, value is missing!")))
+      )
+    end
+
+    it 'does not check non-tag actions, so a blank value can clear a field' do
+      instance.sample = { 'x-zammad-ticket-note' => { 'value' => '' } }
+      expect(instance).to be_valid
+    end
+  end
+
   context 'when validating presence with precondition' do
     it 'is valid when required value for specific precondition is present' do
       instance.sample = { 'ticket.customer_id' => { 'pre_condition' => 'specific', 'value' => '123' } }

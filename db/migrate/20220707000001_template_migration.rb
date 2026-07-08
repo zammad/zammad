@@ -17,7 +17,7 @@ class TemplateMigration < ActiveRecord::Migration[6.0]
         new_options[new_key] = value
       end
       template.options = new_options
-      template.save!
+      template.save!(validate: false)
     end
 
   end
