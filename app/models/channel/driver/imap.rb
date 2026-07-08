@@ -166,11 +166,13 @@ returns
     end
 
     @imap
+  rescue => e
+    raise e.exception(humanized_error_message(e, options))
   end
 
   def setup_connection_server_log(server_settings)
     settings = [
-      "#{server_settings[:host]}/#{server_settings[:user]} port=#{server_settings[:port]}",
+      "#{server_settings[:user]}/#{server_settings[:host]} port=#{server_settings[:port]}",
       "ssl=#{server_settings[:ssl_or_starttls] == :ssl}",
       "starttls=#{server_settings[:ssl_or_starttls] == :starttls}",
       "folder=#{server_settings[:folder]}",
@@ -376,5 +378,9 @@ returns
       @imap.store(message_id, '+FLAGS', [:Deleted])
       @imap.expunge
     end
+  end
+
+  def authentication_error_class
+    Net::IMAP::NoResponseError
   end
 end

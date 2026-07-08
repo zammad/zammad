@@ -257,7 +257,7 @@ RSpec.describe Channel::Driver::Smtp do
   end
 
   describe '#deliver' do
-    let(:channel)   { create(:email_channel, :smtp) }
+    let(:channel)   { create(:email_channel, :smtp, mail_server_user: 'user@example.com') }
 
     it_behaves_like 'using BCC'
 
@@ -273,7 +273,7 @@ RSpec.describe Channel::Driver::Smtp do
           expect { channel.deliver({}) }
             .to raise_error(Channel::DeliveryError) { |error|
               expect(error.original_error.message)
-                .to eq("Network connection to 'smtp.example.com' (port 465) timed out: Could not reach server")
+                .to eq('Network connection to user@example.com/smtp.example.com timed out: Could not reach server')
             }
         end
       end
@@ -284,7 +284,7 @@ RSpec.describe Channel::Driver::Smtp do
         it 'forwards the error' do
           expect { channel.deliver({}) }
             .to raise_error(Channel::DeliveryError) { |error|
-              expect(error.original_error.message).to eq("'smtp.example.com' (port 465): custom error message")
+              expect(error.original_error.message).to eq('user@example.com/smtp.example.com: custom error message')
             }
         end
       end
@@ -308,7 +308,7 @@ RSpec.describe Channel::Driver::Smtp do
           it 'raises an error' do
             expect { channel.deliver({}, true) }
               .to raise_error(Channel::DeliveryError) { |error|
-                expect(error.original_error.message).to eq("'smtp.example.com' (port 465): smtp error")
+                expect(error.original_error.message).to eq('user@example.com/smtp.example.com: smtp error')
               }
           end
         end

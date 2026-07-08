@@ -46,12 +46,12 @@ RSpec.describe Ticket::Article::EnqueueCommunicateEmailJob, performs_jobs: true 
 
       expect(article.reload.preferences).to include(
         delivery_status:         'fail',
-        delivery_status_message: "Smtp: Network connection to '10.1.1.1' (port 25) timed out: execution expired (Net::OpenTimeout)",
+        delivery_status_message: 'Smtp: Network connection to other@example.com/10.1.1.1 timed out: execution expired (Net::OpenTimeout)',
       )
 
       expect(channel.reload).to have_attributes(
         status_out:   'error',
-        last_log_out: "Smtp: Network connection to '10.1.1.1' (port 25) timed out: execution expired (Net::OpenTimeout)",
+        last_log_out: 'Smtp: Network connection to other@example.com/10.1.1.1 timed out: execution expired (Net::OpenTimeout)',
       )
     end
   end

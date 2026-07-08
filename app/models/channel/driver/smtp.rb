@@ -117,7 +117,9 @@ class Channel::Driver::Smtp < Channel::Driver::BaseEmailOutbound
   private
 
   def server_identifier(options)
-    "'#{options[:address]}' (port #{options[:port]})"
+    return options[:address].to_s if options[:user_name].blank?
+
+    "#{options[:user_name]}/#{options[:address]}"
   end
 
   def deliver_mail_notification_silence?(e, mail)

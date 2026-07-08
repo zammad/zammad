@@ -606,4 +606,48 @@ RSpec.describe Channel::Driver::Imap, integration: true, required_envs: %w[MAIL_
 
     Channel::EmailBuild.build(**attrs).to_s
   end
+
+  describe '#setup_connection' do
+    let(:options) { { host: 'mail.example.com', user: 'test@example.com', port: 143, ssl: 'off', ssl_verify: false } }
+
+    before do
+      allow(Net::IMAP).to receive(:new).and_raise(error)
+    end
+
+    context 'when a connection timeout occurs' do
+      let(:error) { Net::OpenTimeout.new('connection timed out') }
+
+      it 'raises with a humanized message' do
+        expect { described_class.new.send(:setup_connection, options) }
+          .to raise_error(Net::OpenTimeout, 'Network connection to test@example.com/mail.example.com timed out: connection timed out')
+      end
+    end
+
+    context 'when a connection is refused' do
+      let(:error) { Errno::ECONNREFUSED.new }
+
+      it 'raises with a humanized message' do
+        expect { described_class.new.send(:setup_connection, options) }
+          .to raise_error(Errno::ECONNREFUSED, include('Network connection to test@example.com/mail.example.com could not be established'))
+      end
+    end
+
+    context 'when authentication fails' do
+      let(:error) { Net::IMAP::NoResponseError.new(double(data: double(text: 'Invalid credentials'))) }
+
+      it 'raises with a humanized message' do
+        expect { described_class.new.send(:setup_connection, options) }
+          .to raise_error(Net::IMAP::NoResponseError, include('Authentication on test@example.com/mail.example.com failed'))
+      end
+    end
+
+    context 'when an unknown error occurs' do
+      let(:error) { RuntimeError.new('something unexpected') }
+
+      it 'raises with a humanized message' do
+        expect { described_class.new.send(:setup_connection, options) }
+          .to raise_error(RuntimeError, 'test@example.com/mail.example.com: something unexpected')
+      end
+    end
+  end
 end
