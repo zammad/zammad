@@ -171,8 +171,11 @@ class Selector::SearchIndex < Selector::Base
       value_is_string = Array.wrap(data[:value]).any? { |value| value.match(%r{[[:alpha:]]}u) }
     end
 
-    klass = table.classify.safe_constantize.then { it if it&.include?(HasSearchIndexBackend) } ||
-            "#{target_class}::#{table.classify}".safe_constantize
+    # Resolve the referenced model
+    # 1. Relation like ticket.customer, ticket.owner
+    # 2. The class itself like ticket, user, organization
+    # 3. Edge cases like ticket.article
+    klass = target_class.reflect_on_association(table)&.klass || table.classify.safe_constantize || "#{target_class}::#{table.classify}".safe_constantize
 
     field_mapping    = SearchIndexBackend.get_mapping_properties_object(klass).dig(:properties, key_tmp) if klass
     field_is_keyword = field_mapping&.dig(:fields, :keyword, :type) == 'keyword'

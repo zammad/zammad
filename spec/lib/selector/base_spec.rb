@@ -547,6 +547,36 @@ RSpec.describe Selector::Base, searchindex: true do
     end
   end
 
+  describe 'Selector "contains" on relation fields (e.g. customer.email) no longer matches values containing "@" #6232' do
+    let(:customer) { create(:customer, email: 'john.doe@example.com') }
+    let(:ticket)   { create(:ticket, title: 'bli', group: Group.first, customer: customer) }
+
+    before do
+      Ticket.destroy_all
+      ticket
+      searchindex_model_reload([Ticket])
+    end
+
+    it 'matches a relation string field by a value containing "@" (wildcard on the .keyword subfield)', :aggregate_failures do
+      condition = {
+        operator:   'AND',
+        conditions: [
+          {
+            name:     'customer.email',
+            operator: 'contains',
+            value:    'john.doe@example.com',
+          },
+        ],
+      }
+
+      count, = Ticket.selectors(condition, { current_user: agent })
+      expect(count).to eq(1)
+
+      result = SearchIndexBackend.selectors('Ticket', condition, { current_user: agent })
+      expect(result[:count]).to eq(1)
+    end
+  end
+
   describe 'Trigger do not allow "Multi-Tree-Select" Fields on Organization and User Level as If Condition #4504', db_strategy: :reset do
     let(:field_name)   { SecureRandom.uuid }
     let(:organization) { create(:organization, field_name => ['Incident', 'Incident::Hardware']) }
