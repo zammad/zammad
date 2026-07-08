@@ -7,6 +7,7 @@
     "vscode": {
       "extensions": [
         "andyyaldoo.vscode-json",
+        "anthropic.claude-code",
         "bradlc.vscode-tailwindcss",
         "dariofuzinato.vue-peek",
         "davidanson.vscode-markdownlint",
@@ -16,12 +17,12 @@
         "ezforo.copy-relative-path-and-line-numbers",
         "jock.svg",
         "kaiwood.endwise",
-        "slb235.vscode-coffeelint",
         "mde.select-highlight-minimap",
         "oxc.oxc-vscode",
         "redhat.vscode-yaml",
         "shardulm94.trailing-spaces",
         "shopify.ruby-lsp",
+        "slb235.vscode-coffeelint",
         "streetsidesoftware.code-spell-checker",
         "timonwong.shellcheck",
         "vitest.explorer",

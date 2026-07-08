@@ -18,6 +18,8 @@
       "packages": "curl gnupg libimlib2-dev"
     },
     "ghcr.io/devcontainers/features/go:1": {},
+    "ghcr.io/rapidsai/devcontainers/features/gitlab-cli:latest": {},
+    "ghcr.io/anthropics/devcontainer-features/claude-code:latest": {},
     "../features/zammad-deps": {},
     "../features/add-bin-path": {
       "addBinPath": "/workspaces/${localWorkspaceFolderBasename}/bin"

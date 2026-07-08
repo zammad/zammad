@@ -1,5 +1,10 @@
 {
   "features": {
+    "ghcr.io/anthropics/devcontainer-features/claude-code:latest": {
+      "version": "1.0.5",
+      "resolved": "ghcr.io/anthropics/devcontainer-features/claude-code@sha256:cfc2e7d3e9fd3b9b01f8d5cb158508a884c8c0ede2e23ed10f32dea5d4ffe69a",
+      "integrity": "sha256:cfc2e7d3e9fd3b9b01f8d5cb158508a884c8c0ede2e23ed10f32dea5d4ffe69a"
+    },
     "ghcr.io/devcontainers-extra/features/apt-get-packages": {
       "version": "1.0.8",
       "resolved": "ghcr.io/devcontainers-extra/features/apt-get-packages@sha256:776fa11c30c50fa91d5e1bf050444b0f130827457109c349db92e8e126b750ec",
@@ -21,14 +26,19 @@
       "integrity": "sha256:d85e921f91b41340055bb12b325d9d551170ed04b3b832e33530bf42f167c032"
     },
     "ghcr.io/devcontainers/features/node:2": {
-      "version": "2.0.0",
-      "resolved": "ghcr.io/devcontainers/features/node@sha256:fedd4c11f7adfb64283b578dddc7da906728daa25fa293351c9d913231acf12f",
-      "integrity": "sha256:fedd4c11f7adfb64283b578dddc7da906728daa25fa293351c9d913231acf12f"
+      "version": "2.1.0",
+      "resolved": "ghcr.io/devcontainers/features/node@sha256:586c9a6f7dd40bd3ba2cd41e7f2f88dcc31fbe5d1442afcbf07ffbc66b686857",
+      "integrity": "sha256:586c9a6f7dd40bd3ba2cd41e7f2f88dcc31fbe5d1442afcbf07ffbc66b686857"
     },
     "ghcr.io/rails/devcontainer/features/postgres-client": {
       "version": "1.2.0",
       "resolved": "ghcr.io/rails/devcontainer/features/postgres-client@sha256:7e6b118646d6e0d82a9ec06e81ad1b5406f7042f0279d35fff3a7a612be7a050",
       "integrity": "sha256:7e6b118646d6e0d82a9ec06e81ad1b5406f7042f0279d35fff3a7a612be7a050"
+    },
+    "ghcr.io/rapidsai/devcontainers/features/gitlab-cli:latest": {
+      "version": "26.8.2",
+      "resolved": "ghcr.io/rapidsai/devcontainers/features/gitlab-cli@sha256:45b15ff1035cb7c2ac657ee069f9c548744dd6d70311f7abbd3aea12c5ec0c92",
+      "integrity": "sha256:45b15ff1035cb7c2ac657ee069f9c548744dd6d70311f7abbd3aea12c5ec0c92"
     }
   }
 }
