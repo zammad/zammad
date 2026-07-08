@@ -96,6 +96,25 @@ class Channel::Driver::BaseEmailInbound < Channel::EmailParser
 
   def fetch_wrap_up; end
 
+  def server_identifier(options)
+    "#{options[:user]}/#{options[:host]}"
+  end
+
+  def humanized_error_message(e, options)
+    identifier = server_identifier(options)
+
+    case e
+    when Net::OpenTimeout
+      "Network connection to #{identifier} timed out: #{e.message}"
+    when Errno::ECONNREFUSED
+      "Network connection to #{identifier} could not be established: #{e.message}"
+    when authentication_error_class
+      "Authentication on #{identifier} failed: #{e.message}"
+    else
+      "#{identifier}: #{e.message}"
+    end
+  end
+
   # Checks if mailbox has anything besides Zammad verification emails.
   # If any real messages exists, return the real count including messages to be ignored when importing.
   # If only verification messages found, return 0.
