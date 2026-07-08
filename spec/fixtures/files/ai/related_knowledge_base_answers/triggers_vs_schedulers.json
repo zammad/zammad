@@ -1,0 +1,28 @@
+{
+  "ticket": {
+    "title": "Customers aren't getting a confirmation email when we close their ticket",
+    "articles": [
+      "We'd like customers to automatically receive a short 'your request has been resolved' email the moment an agent sets a ticket to 'closed'. Right now nothing happens automatically at all when we close a ticket, agents have to write that message by hand every single time. Is there a way to automate this in the admin panel?",
+      "To be clear, we don't need this on a schedule or at a fixed time of day - it should fire immediately, right when the specific ticket's state changes to closed, for that one ticket only.",
+      "Just to rule it out: we're not looking for something an agent has to click or select manually either, like applying a canned response to a batch of tickets - this should happen entirely on its own once the state changes, without anyone doing anything extra at the moment of closing.",
+      "Great, that sounds like exactly what we need. One follow-up: does this only work for the 'closed' state, or could we reuse the same mechanism later for other state changes too, like when a ticket moves to 'pending customer'?"
+    ]
+  },
+  "knowledge_base_answers": [
+    {
+      "title": "Auto-replying to the customer the moment a ticket is closed",
+      "body": "Set this up as a condition-based rule that watches for the state change itself, rather than anything running on a timer. Create a new rule with the condition 'ticket state changed to closed', and give it a notification action that emails the customer with your resolution message. Because the rule reacts to the change happening on that individual ticket, the customer gets the email within moments of the agent clicking 'closed' - there's no delay, no batching with other tickets, and nothing to wait for at a particular time of day.\n\nOne thing to watch for: if your closing message could itself cause another status change (rare, but possible with some automation chains), add a guard so the same ticket doesn't re-trigger the rule and send duplicate emails. Otherwise this is a five-minute setup - condition on the state, action to notify, done. The same mechanism works for any other state change too, not just 'closed' - just swap the condition to whichever state you want to react to.",
+      "expected_match": true
+    },
+    {
+      "title": "Building a daily digest of open tickets for team leads",
+      "body": "Team leads often want a single email each morning summarizing everything still open, rather than being copied on every individual ticket event throughout the day. This is a job that runs on a fixed timetable across the whole ticket database, independent of what any one ticket is doing at that moment - typically once daily, though some teams prefer twice a day for busier queues.\n\nDefine a search for the tickets you want counted (state 'open', optionally scoped to specific Groups), attach it to a recurring job set to run at a chosen time such as 7am, and configure the email content to summarize the matching tickets - a simple count plus a table of ticket numbers and subjects works well for most teams. Because it runs on its own clock, the email always goes out at the same time regardless of how many tickets were opened or closed that day, and it reports on whatever the current state of the queue happens to be at that moment, not on any single event.",
+      "expected_match": false
+    },
+    {
+      "title": "Applying a set of changes to several tickets at once with one click",
+      "body": "When an agent needs to apply the same set of changes to a handful of tickets right now - for example setting a state, adding a note, and changing the owner all in one go - a saved shortcut lets them select the tickets and apply everything with a single click, instead of clicking through each field on every ticket individually. This only runs when an agent deliberately chooses to apply it to a specific selection; it never fires on its own in reaction to a ticket changing, and it isn't tied to any schedule either.\n\nTo create one: define the exact set of field changes you want applied (state, owner, tags, a note text, and so on), give it a clear name describing what it does, and make it available to the relevant Groups. Agents can then select one or more tickets from an overview and apply it whenever they choose to - the timing and the decision to run it are always manual, which is the key difference from anything that reacts automatically to a condition or runs on a timer.",
+      "expected_match": false
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "ticket": {
+    "title": "New agent can't see any tickets in the Support queue",
+    "articles": [
+      "Hi, we just added a new agent to the system and gave them the 'Agent' role, but they still can't see any of the tickets in the Support queue - the overview just shows up empty for them. Other agents on the same team can see those tickets fine, so it doesn't seem like a general bug. What are we missing in the setup?",
+      "Just to confirm: in the admin panel under Manage > Roles, the new user does have the 'Agent' role assigned, same as everyone else on the team. I double-checked that. I'm not sure what else controls which tickets someone can actually see.",
+      "We also checked the customer side just in case, but this new hire is an internal agent, not a customer, so I don't think that's related - the tickets they should see belong to our own Support queue, not to any particular customer's account.",
+      "For what it's worth, this person is replacing someone who left the team a few weeks ago. I'm not sure if we ever removed the old employee from anything, could that be conflicting somehow?"
+    ]
+  },
+  "knowledge_base_answers": [
+    {
+      "title": "Why a new agent sees an empty overview even with the Agent role assigned",
+      "body": "This is almost always a missing Group membership, not a Role problem. Every ticket in Zammad belongs to exactly one Group (think of a Group as a queue, mailbox, or department - 'Support', 'Sales', 'Billing', and so on), and an overview only ever shows tickets from Groups the logged-in agent is actually a member of. Having the 'Agent' role just marks someone as agent-type staff in general; it says nothing about which of the many Groups in the system they're allowed into.\n\nOpen the Support Group's settings page and check its member list - a freshly created user is very often not added to any Group at all by default, which is exactly why their overviews come back empty no matter how many tickets exist. Add the person there, tick at least 'read' access (add 'create' and 'change' too if they should be able to reply and update tickets), and save. There's no need to touch Roles at all for this - the fix lives entirely on the Group side, and it takes effect the next time the agent's overview refreshes.",
+      "expected_match": true
+    },
+    {
+      "title": "Planning a Role structure before onboarding a larger team",
+      "body": "Before adding a batch of new hires, it's worth deciding upfront which Role each person needs, since Roles decide the shape of what someone can reach across the whole system - not just tickets, but the admin area, reporting, the knowledge base editor, and so on. Most support teams only ever need two: 'Agent' for anyone handling tickets day to day, and 'Admin' for the handful of people who configure the system itself. Customer-facing staff should almost never get the Admin role just to make a small config change; instead, grant the one specific admin permission they need (e.g. managing text modules) without handing them the whole admin area.\n\nA common mistake is assuming a broader Role will also open up more of the ticket queues someone works in day to day - it won't. Role changes affect what buttons and admin sections a person sees, but nothing about which tickets show up for them; that's a separate, per-department decision made elsewhere. Keep the number of distinct Roles small (two or three is plenty for most setups) since every extra Role is one more thing to keep in sync as your permission needs evolve.",
+      "expected_match": false
+    },
+    {
+      "title": "How Organizations control which tickets customers can see from each other",
+      "body": "An Organization groups multiple customer accounts together (for example everyone with an email address at the same company), and it controls visibility on the customer side of the portal, not on the agent side. Depending on how an Organization is configured, its members can either only ever see their own individual tickets, or also see every ticket raised by colleagues in the same Organization - handy for a company where several employees jointly manage one support relationship with you.\n\nThis is entirely separate from how agents see tickets internally: an agent's access is decided by Group membership regardless of which Organization the ticket's customer belongs to, and a customer's Organization membership has no effect on any agent's queue. If a customer says they can (or can't) see a colleague's ticket, check the Organization's sharing setting; if an agent can't see a queue's tickets, that's a Group question instead.",
+      "expected_match": false
+    }
+  ]
+}

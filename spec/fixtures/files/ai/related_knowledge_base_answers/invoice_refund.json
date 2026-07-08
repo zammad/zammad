@@ -1,0 +1,29 @@
+{
+  "ticket": {
+    "title": "Charged twice for the same order",
+    "articles": [
+      "Hi, I just checked my credit card statement and it looks like I was billed twice for the same order (order #48213) on the same day. The amount is identical both times, 89.00 EUR. I only placed the order once and only received one confirmation email, so I'm pretty sure this is a duplicate charge rather than two separate purchases. Could you please check on your end and refund the extra charge? I can send a screenshot of my bank statement if that helps speed things up.",
+      "Thanks for looking into it. Just to add some context: I placed the order through the mobile app, and the checkout screen did briefly freeze after I tapped 'Pay now', so I wonder if that caused the payment to be submitted twice. I did not receive any error message telling me the payment failed, which is why I only tried once from my side.",
+      "Following up - it's been a few days now and the second charge still hasn't been reversed. Is there anything else you need from me to process the refund for the duplicate charge?",
+      "Thanks for checking. I've attached the screenshot of my card statement showing both charges on the same day, same amount, same merchant reference - hopefully that makes it quicker to confirm on your end.",
+      "One more thing: this is a one-time purchase, not a subscription, so I don't think this has anything to do with recurring billing - just wanted to rule that out in case it changes how the refund gets processed."
+    ]
+  },
+  "knowledge_base_answers": [
+    {
+      "title": "Requesting a refund for a duplicate or accidental charge",
+      "body": "If you were charged more than once for the same order, this is usually caused by a temporary network issue or a page reload during checkout, which can submit the payment request twice even though you only clicked 'Pay' once. Duplicate charges are not intentional and are always eligible for a full refund of the extra amount.\n\nTo request a refund for a duplicate charge: 1) Locate the order number and the exact amount and date of both charges on your bank or card statement. 2) Contact support with this information, ideally including a screenshot of the statement. 3) Our billing team will verify that both charges reference the same order and, once confirmed, issue a refund for the duplicate amount back to the original payment method. 4) Refunds are typically visible on your statement within 5-10 business days, depending on your bank's processing time.\n\nIf the two charges are for genuinely different orders (different order numbers or different amounts), this is not a duplicate charge and the refund process described here does not apply - please contact support separately for that case.",
+      "expected_match": true
+    },
+    {
+      "title": "Understanding the layout of your monthly invoice PDF",
+      "body": "Your monthly invoice PDF is generated automatically on the first day of each billing cycle and sent to the billing email address on file. The invoice is split into several sections: the header shows your account number and billing period; the itemized table lists every individual order placed during that period along with its order number, date, and amount; a subtotal line sums up all itemized orders; and a final section lists any applicable taxes and the grand total charged to your payment method.\n\nIf you need a copy of an older invoice, you can download it at any time from the billing section of your account under 'Invoice history', where every past invoice is archived as a PDF. If any line item on the invoice looks unfamiliar, check the order number against your order history first, since bundled or split shipments sometimes appear as separate line items on the same invoice even though they belong to one order.",
+      "expected_match": false
+    },
+    {
+      "title": "Cancelling a subscription and understanding prorated charges",
+      "body": "When you cancel a recurring subscription partway through a billing period, you may see a final prorated charge or credit rather than the full regular amount - this reflects only the days you actually used the subscription before cancellation took effect. To cancel: go to 'Subscriptions' in your account, select the plan, and choose 'Cancel subscription'. Depending on your plan, cancellation either takes effect immediately with a prorated refund for the unused period, or at the end of the current billing cycle with no further charges afterward - the confirmation screen will tell you which applies before you confirm.\n\nNote that a prorated adjustment is not the same as a duplicate charge: it is a single, smaller-than-usual amount tied to a plan change, not two identical charges for one order.",
+      "expected_match": false
+    }
+  ]
+}

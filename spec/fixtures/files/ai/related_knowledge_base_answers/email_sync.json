@@ -1,0 +1,29 @@
+{
+  "ticket": {
+    "title": "Not receiving new emails in Outlook since yesterday",
+    "articles": [
+      "Since yesterday afternoon I haven't received any new emails in Outlook on my desktop, even though I can see on my phone (using the Gmail app) that new messages are arriving in the same mailbox. Sending emails still works fine from Outlook, it's only incoming mail that seems to be stuck. I haven't changed any settings recently that I'm aware of. Could this be a problem with my account setup in Outlook, or is something wrong on your end?",
+      "I just tried 'Send/Receive All Folders' manually in Outlook and it says it completed successfully, but still no new messages show up. I also checked and I'm not near any storage quota. The account is set up as IMAP if that matters.",
+      "One more detail: I did recently change my email account password after a routine security prompt. I updated the password in the webmail login, but I'm not sure if I ever updated it inside the Outlook desktop app itself.",
+      "You're right, I just checked the account settings inside Outlook and it still had the old password saved there. I hadn't touched that screen since setting the account up originally.",
+      "I re-entered the current password in the Outlook account settings and did a manual send/receive again - new messages are now coming through immediately. Thanks for the pointer, that was exactly it."
+    ]
+  },
+  "knowledge_base_answers": [
+    {
+      "title": "Fixing an IMAP mailbox that stops receiving new mail in a desktop client",
+      "body": "When a mailbox suddenly stops receiving new messages in a desktop email client (Outlook, Thunderbird, Apple Mail, etc.) while mail still arrives correctly on other devices or in webmail, the most common cause is that the client's stored password no longer matches the current account password - for example after a routine password reset or a forced security update. Sending mail can keep working for a while even after this happens, because outgoing (SMTP) authentication is sometimes cached separately from incoming (IMAP) authentication, which is why only incoming mail appears broken at first.\n\nTo fix this: 1) Open your email account's connection settings in the desktop client. 2) Re-enter the current password for the mailbox exactly as used for webmail login. 3) Save the settings and perform a manual send/receive. 4) If the client still does not prompt for a password or continues to fail silently, remove the account from the client entirely and re-add it from scratch using the current credentials, since some clients cache failed authentication state until the account is re-added.\n\nIf re-entering the password does not resolve it, also double check that IMAP access itself is still enabled for the mailbox, since some providers disable IMAP automatically after several repeated authentication failures as a security measure.",
+      "expected_match": true
+    },
+    {
+      "title": "Clearing your browser cache to fix a login page that won't load correctly",
+      "body": "If a login page in your browser looks broken, shows outdated content, or repeatedly fails to submit even with the correct username and password, a corrupted browser cache is a common cause. Clearing the cache forces the browser to download a fresh copy of the login page instead of reusing a stale, possibly broken, cached version.\n\nTo clear your cache: 1) Open your browser's settings menu and find the privacy or history section. 2) Choose to clear browsing data, selecting 'Cached images and files' (you do not need to clear saved passwords or cookies for this). 3) Restart the browser completely, not just the tab. 4) Try loading the login page again in a fresh tab.\n\nIf clearing the cache does not help, try logging in from a private/incognito window, which starts with no cache or extensions at all - if that works, a browser extension may be interfering with the normal page instead of the cache being the issue.",
+      "expected_match": false
+    },
+    {
+      "title": "Setting up a forwarding rule to copy incoming mail to another address",
+      "body": "A forwarding rule automatically sends a copy of every incoming message from your mailbox to a second address you choose, which is useful for sharing a mailbox with a colleague or archiving mail externally. This is a deliberate, ongoing copy of everything from that point forward - it does not affect whether mail arrives in the original mailbox at all, and it has nothing to do with troubleshooting missing or delayed messages.\n\nTo set one up: 1) Open the mail rules section of your webmail settings. 2) Create a new rule with no conditions (so it applies to every message) or a specific condition if you only want certain mail forwarded. 3) Choose the 'Forward to' action and enter the destination address. 4) Save the rule - it takes effect for new mail arriving from that point on; it will not retroactively forward anything already delivered.",
+      "expected_match": false
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "ticket": {
+    "title": "Password reset link not working",
+    "articles": [
+      "Hi, I can't get back into my account. I requested a password reset a couple of days ago but never got around to using the link.",
+      "Ich habe es gerade nochmal versucht, aber der Link in der E-Mail funktioniert nicht mehr - wenn ich draufklicke, steht dort nur 'Dieser Link ist abgelaufen'. Muss ich einen komplett neuen Antrag stellen oder gibt es eine andere Möglichkeit?",
+      "Just to add in English again: the email itself is still the most recent one I received, I didn't request a second one in the meantime, so I assume that's why it's expired by now."
+    ]
+  },
+  "knowledge_base_answers": [
+    {
+      "title": "What to do when your password reset link has expired",
+      "body": "Password reset links are only valid for a limited time after they are sent, typically a set number of hours, as a security measure. If you wait too long before clicking the link, it will show an 'expired' message instead of letting you choose a new password - this is expected behavior and does not mean anything is wrong with your account.\n\nIf your link has expired, simply go back to the login page and click 'Forgot password' again to request a brand new one; the old, expired link cannot be reactivated or extended. Use the newest email you receive and click its link promptly this time. If you request several reset emails in a row, only the link in the most recently sent email will work - all earlier ones become invalid the moment a new one is requested, not just after their own timeout.",
+      "expected_match": true
+    },
+    {
+      "title": "Why your two-factor authentication code stops working after a minute",
+      "body": "Two-factor authentication codes are intentionally short-lived, usually valid for only about 30 to 60 seconds, to limit the window in which a leaked code could be misused. If you type in a code and it's rejected as invalid or expired, the most common cause is simply that too much time passed between generating the code and submitting it - open your authenticator app again for a fresh one rather than reusing an old screenshot or a code you copied earlier.\n\nAlso double-check that the clock on your phone or authenticator device is set to automatic network time; a device clock that has drifted out of sync is a common, less obvious reason codes are rejected even when entered quickly.",
+      "expected_match": false
+    }
+  ]
+}
