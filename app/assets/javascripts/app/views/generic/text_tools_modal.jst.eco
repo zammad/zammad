@@ -7,7 +7,7 @@
       <div class="alert alert--danger">
         <p><%- @T('Writing assistant could not generate text. Please try again or contact your administrator.') %></p>
         <% if @error_message: %>
-          <p><%- @T('API server error: %s', @T(@error_message)) %></p>
+          <p><%- @T('API server error: %s', @Tp(@error_message)) %></p>
         <% end %>
       </div>
 
