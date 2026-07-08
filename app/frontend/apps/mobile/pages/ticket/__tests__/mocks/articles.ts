@@ -20,7 +20,7 @@ export const mockAddress = {
   raw: '',
 }
 
-type ArticleNode = LastArrayElement<TicketArticlesQuery['articles']['edges']>['node']
+type ArticleNode = NonNullable<LastArrayElement<TicketArticlesQuery['articles']['edges']>>['node']
 
 export const articleContent = (
   id: number,

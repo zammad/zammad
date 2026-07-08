@@ -7,8 +7,8 @@ import type { DeepPartial } from '#shared/types/utils.ts'
 
 import type { LastArrayElement } from 'type-fest'
 
-type OnlineNotificationNode = LastArrayElement<
-  OnlineNotificationsQuery['onlineNotifications']['edges']
+type OnlineNotificationNode = NonNullable<
+  LastArrayElement<OnlineNotificationsQuery['onlineNotifications']['edges']>
 >['node']
 
 export const mockOnlineNotification = (

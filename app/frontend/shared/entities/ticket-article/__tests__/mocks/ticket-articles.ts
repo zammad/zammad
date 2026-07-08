@@ -41,7 +41,7 @@ export const defaultFromAddress = {
 
 export const defaultBodyWithUrls = '<p>Default test body</p>'
 
-type ArticleNode = LastArrayElement<TicketArticlesQuery['articles']['edges']>['node']
+type ArticleNode = NonNullable<LastArrayElement<TicketArticlesQuery['articles']['edges']>>['node']
 type ArticleNodeOptions = DeepPartial<ArticleNode>
 
 export const createDummyArticle = (options?: {
