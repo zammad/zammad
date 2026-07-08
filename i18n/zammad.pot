@@ -11516,7 +11516,7 @@ msgstr ""
 
 #: app/controllers/organizations_controller.rb:107
 #: app/controllers/text_modules_controller.rb:75
-#: app/controllers/ticket_articles_controller.rb:245
+#: app/controllers/ticket_articles_controller.rb:246
 #: app/controllers/tickets_controller.rb:459
 #: app/controllers/users_controller.rb:559
 msgid "No source data submitted!"
@@ -16500,7 +16500,7 @@ msgstr ""
 msgid "The article could not be set to public."
 msgstr ""
 
-#: app/controllers/ticket_articles_controller.rb:161
+#: app/controllers/ticket_articles_controller.rb:162
 msgid "The article does not belong to the specified ticket."
 msgstr ""
 
@@ -16757,7 +16757,7 @@ msgstr ""
 msgid "The file could not be uploaded."
 msgstr ""
 
-#: app/controllers/ticket_articles_controller.rb:177
+#: app/controllers/ticket_articles_controller.rb:178
 msgid "The file does not belong to the specified article."
 msgstr ""
 
@@ -16990,7 +16990,7 @@ msgstr ""
 msgid "The personal access token could not be deleted."
 msgstr ""
 
-#: app/controllers/ticket_articles_controller.rb:285
+#: app/controllers/ticket_articles_controller.rb:286
 msgid "The preview cannot be generated. The format is corrupted or not supported."
 msgstr ""
 
@@ -17270,7 +17270,7 @@ msgstr ""
 msgid "The response could not be processed."
 msgstr ""
 
-#: app/controllers/ticket_articles_controller.rb:276
+#: app/controllers/ticket_articles_controller.rb:277
 msgid "The retried attachment download failed."
 msgstr ""
 
@@ -17714,7 +17714,7 @@ msgstr ""
 msgid "This Writing Assistant Tool translates the selected text into English."
 msgstr ""
 
-#: app/controllers/ticket_articles_controller.rb:197
+#: app/controllers/ticket_articles_controller.rb:198
 msgid "This article does not have a raw copy available."
 msgstr ""
 
@@ -18550,7 +18550,7 @@ msgstr ""
 msgid "Tickets bulk edit"
 msgstr ""
 
-#: app/controllers/ticket_articles_controller.rb:238
+#: app/controllers/ticket_articles_controller.rb:239
 #: app/controllers/tickets_controller.rb:452
 msgid "Tickets can only be imported if system is in import mode."
 msgstr ""

@@ -92,6 +92,22 @@ RSpec.describe Auth do
         end
       end
 
+      context 'with valid user, invalid password and only_verify_password' do
+        let(:instance) { described_class.new(user.login, 'wrong', only_verify_password: true) }
+
+        it 'raises an error and still increases the failed login count by default' do
+          expect { instance.valid! }.to raise_error(Auth::Error::AuthenticationFailed).and(change { user.reload.login_failed }.from(0).to(1))
+        end
+
+        context 'with skip_login_failed_tracking' do
+          let(:instance) { described_class.new(user.login, 'wrong', only_verify_password: true, skip_login_failed_tracking: true) }
+
+          it 'raises an error but does not increase the failed login count' do
+            expect { instance.valid! }.to raise_error(Auth::Error::AuthenticationFailed).and(not_change { user.reload.login_failed })
+          end
+        end
+      end
+
       context 'with valid user and required two factor' do
         let!(:two_factor_pref) { create(:user_two_factor_preference, :authenticator_app, user: user) }
         let(:enabled)          { true }

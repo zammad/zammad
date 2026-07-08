@@ -40,6 +40,14 @@ RSpec.describe RackAttackSetup do
     it 'returns true when the request path has double format extension' do
       expect(described_class).to be_path_matches("#{throttle_path}.json.xml", throttle_path)
     end
+
+    it 'returns true when the request path has an additional path segment' do
+      expect(described_class).to be_path_matches("#{throttle_path}/security_keys", throttle_path)
+    end
+
+    it 'returns false when the request path merely shares a prefix without a path separator' do
+      expect(described_class).not_to be_path_matches("#{throttle_path}extra", throttle_path)
+    end
   end
 
   describe '.normalize_param' do
