@@ -26,6 +26,8 @@ class KnowledgeBase::Answer::Translation < ApplicationModel
   validates :title,        presence: true, length: { maximum: 250 }
   validates :kb_locale_id, uniqueness: { case_sensitive: true, scope: :answer_id }
 
+  before_save :set_edited_at, if: :edited?
+
   scope :neighbours_of, ->(translation) { joins(:answer).where(knowledge_base_answers: { category_id: translation.answer&.category_id }) }
 
   alias assets_essential assets
@@ -143,6 +145,16 @@ class KnowledgeBase::Answer::Translation < ApplicationModel
   }
 
   private
+
+  def edited?
+    return true if new_record?
+
+    title_changed?
+  end
+
+  def set_edited_at
+    self.edited_at = Time.zone.now
+  end
 
   def answer_publication_state
     answer.can_be_published_aasm.calculated_state

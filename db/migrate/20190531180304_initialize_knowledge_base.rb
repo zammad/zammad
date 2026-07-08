@@ -99,6 +99,8 @@ class InitializeKnowledgeBase < ActiveRecord::Migration[5.0]
       t.references :created_by, null: false, foreign_key: { to_table: :users }
       t.references :updated_by, null: false, foreign_key: { to_table: :users }
 
+      t.timestamp :edited_at, limit: 3, null: false
+
       t.timestamps limit: 3, null: false
     end
     add_index :knowledge_base_answer_translations, %i[kb_locale_id answer_id], name: 'index_kb_a_t_on_kb_locale_answer', unique: true

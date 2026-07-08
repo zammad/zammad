@@ -18,12 +18,15 @@ class KnowledgeBase::Answer < ApplicationModel
   scope :include_contents, -> { eager_load(translations: :content) }
   scope :sorted,           -> { order(position: :asc) }
 
-  scope :sorted_by_published, lambda {
-    reorder(Arel.sql('GREATEST(knowledge_base_answers.published_at, knowledge_base_answers.updated_at) DESC'))
+  scope :sorted_by_published, lambda { |system_locale_or_id|
+    localed(system_locale_or_id)
+      .reorder(Arel.sql('GREATEST(knowledge_base_answers.published_at, knowledge_base_answer_translations.edited_at) DESC'))
       .published
   }
-  scope :sorted_by_internally_published, lambda {
-    reorder(Arel.sql('GREATEST(LEAST(knowledge_base_answers.internal_at, knowledge_base_answers.published_at), knowledge_base_answers.updated_at) DESC')).internal
+  scope :sorted_by_internally_published, lambda { |system_locale_or_id|
+    localed(system_locale_or_id)
+      .reorder(Arel.sql('GREATEST(LEAST(knowledge_base_answers.internal_at, knowledge_base_answers.published_at), knowledge_base_answer_translations.edited_at) DESC'))
+      .internal
   }
 
   acts_as_list scope: :category, top_of_list: 0

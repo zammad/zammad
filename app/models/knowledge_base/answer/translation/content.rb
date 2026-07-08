@@ -55,22 +55,32 @@ class KnowledgeBase::Answer::Translation::Content < ApplicationModel
 
   private
 
-  def touch_translation
+  def sanitize_body
+    self.body = HtmlSanitizer.dynamic_image_size(body)
+  end
+
+  before_save :sanitize_body
+
+  def bump_translation_edited_at
     return if !translation.persisted?
 
     # The body is the translation's embedded content but lives here, so it never shows up in the
     # translation's own previous_changes. Flag it so the vector index routes to the full re-embed
     # path rather than a metadata-only update.
     translation.vector_index_content_dirty = true
+
+    if saved_change_to_body?
+      translation.touch(:edited_at) # rubocop:disable Rails/SkipsModelValidations
+    else
+      translation.touch # rubocop:disable Rails/SkipsModelValidations
+    end
+  end
+
+  after_save :bump_translation_edited_at
+
+  def touch_translation
     translation.touch # rubocop:disable Rails/SkipsModelValidations
   end
 
-  before_save :sanitize_body
-  after_save  :touch_translation
   after_touch :touch_translation
-
-  def sanitize_body
-    self.body = HtmlSanitizer.dynamic_image_size(body)
-  end
-
 end

@@ -1418,6 +1418,7 @@ export type KnowledgeBaseAnswerTranslation = {
   createdAt: Scalars['ISO8601DateTime']['output'];
   /** User that created this record */
   createdBy?: Maybe<User>;
+  editedAt: Scalars['ISO8601DateTime']['output'];
   id: Scalars['ID']['output'];
   /** resolver for Rails' belongs_to relationship */
   kbLocale: KnowledgeBaseLocale;

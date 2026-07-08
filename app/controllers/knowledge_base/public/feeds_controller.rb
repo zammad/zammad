@@ -8,8 +8,7 @@ class KnowledgeBase::Public::FeedsController < KnowledgeBase::Public::BaseContro
   def root
     @answers = @knowledge_base
       .answers
-      .localed(system_locale_via_uri)
-      .sorted_by_published
+      .sorted_by_published(system_locale_via_uri)
       .limit(10)
 
     @root_url = custom_path_if_needed(help_root_url, @knowledge_base, full: true)
@@ -21,8 +20,7 @@ class KnowledgeBase::Public::FeedsController < KnowledgeBase::Public::BaseContro
     @category = find_category(params[:category])
     @answers  = @category
       .self_with_children_answers
-      .localed(system_locale_via_uri)
-      .sorted_by_published
+      .sorted_by_published(system_locale_via_uri)
       .limit(10)
 
     @root_url = custom_path_if_needed(help_category_url, @knowledge_base, full: true)

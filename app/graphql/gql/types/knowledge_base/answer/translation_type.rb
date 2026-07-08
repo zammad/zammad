@@ -8,6 +8,7 @@ module Gql::Types::KnowledgeBase::Answer
 
     field :title, String, null: false
     field :maybe_locale, String, description: 'Specified only for knowledge bases with multiple locales'
+    field :edited_at, GraphQL::Types::ISO8601DateTime, null: false
 
     # Contains all categories of the answer (already translated).
     field :category_tree_translation, [Gql::Types::KnowledgeBase::Category::TranslationType], null: false

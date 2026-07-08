@@ -27,7 +27,7 @@ class App.KnowledgeBaseSearchFieldWidget extends App.Controller
 
     shortcuts = [
       { query: 'created_at:>now-14d',     label: __('Created within last 14 days') }
-      { query: 'updated_at:>now-3d',      label: __('Updated within last 3 days') }
+      { query: 'edited_at:>now-3d',       label: __('Updated within last 3 days') }
       { query: 'publication_state:draft', label: __('Drafts only') }
     ]
 

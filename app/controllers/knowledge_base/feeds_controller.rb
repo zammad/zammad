@@ -19,8 +19,7 @@ class KnowledgeBase::FeedsController < ApplicationController
             end
 
     @answers = scope
-      .localed(@locale)
-      .sorted_by_internally_published
+      .sorted_by_internally_published(@locale)
       .limit(ITEMS_IN_FEED)
 
     render :feed
@@ -38,8 +37,7 @@ class KnowledgeBase::FeedsController < ApplicationController
             end
 
     @answers = scope
-      .localed(@locale)
-      .sorted_by_internally_published
+      .sorted_by_internally_published(@locale)
       .limit(ITEMS_IN_FEED)
 
     render :feed
@@ -64,7 +62,7 @@ class KnowledgeBase::FeedsController < ApplicationController
   def granular_public_answers_ids(categories)
     @knowledge_base.answers
       .where(category_id: categories.public_reader)
-      .sorted_by_published
+      .sorted_by_published(@locale)
       .limit(ITEMS_IN_FEED)
       .pluck(:id)
   end
@@ -72,7 +70,7 @@ class KnowledgeBase::FeedsController < ApplicationController
   def granular_internal_answers_ids(categories)
     @knowledge_base.answers
       .where(category_id: categories.internally_visible)
-      .sorted_by_internally_published
+      .sorted_by_internally_published(@locale)
       .limit(ITEMS_IN_FEED)
       .pluck(:id)
   end

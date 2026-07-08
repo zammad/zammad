@@ -72,37 +72,43 @@ RSpec.describe KnowledgeBase::Answer, current_user_id: 1, type: :model do
   end
 
   describe '#sorted_by_published' do
-    it 'sorts by publishing or update date, whichever is greater' do
+    it 'sorts by publishing or translation edit date, whichever is greater' do
       described_class.destroy_all
 
-      answer1 = create(:knowledge_base_answer, published_at: 1.day.ago)
-      answer1.update! updated_at: 1.day.ago
-      answer2 = create(:knowledge_base_answer, published_at: 1.day.ago)
-      answer2.update! updated_at: 1.hour.ago
-      answer3 = create(:knowledge_base_answer, published_at: 1.minute.ago)
-      answer3.update! updated_at: 1.day.ago
+      knowledge_base = create(:knowledge_base)
+      system_locale  = knowledge_base.kb_locales.first.system_locale
 
-      expect(described_class.sorted_by_published).to contain_exactly(answer3, answer1, answer2)
+      answer1 = create(:knowledge_base_answer, knowledge_base: knowledge_base, published_at: 1.day.ago)
+      answer1.translation.update! edited_at: 1.day.ago
+      answer2 = create(:knowledge_base_answer, knowledge_base: knowledge_base, published_at: 1.day.ago)
+      answer2.translation.update! edited_at: 1.hour.ago
+      answer3 = create(:knowledge_base_answer, knowledge_base: knowledge_base, published_at: 1.minute.ago)
+      answer3.translation.update! edited_at: 1.day.ago
+
+      expect(described_class.sorted_by_published(system_locale)).to contain_exactly(answer3, answer1, answer2)
     end
   end
 
   describe '#sorted_by_internally_published' do
-    it 'sorts by internally publishing or update date, whichever is greater' do
+    it 'sorts by internally publishing or translation edit date, whichever is greater' do
       described_class.destroy_all
 
-      answer1 = create(:knowledge_base_answer, internal_at: 2.days.ago, published_at: 1.day.ago)
-      answer1.update! updated_at: 2.days.ago
-      answer2 = create(:knowledge_base_answer, published_at: 1.day.ago)
-      answer2.update! updated_at: 1.hour.ago
-      answer3 = create(:knowledge_base_answer, published_at: 30.minutes.ago)
-      answer3.update! updated_at: 1.day.ago
-      answer4 = create(:knowledge_base_answer, internal_at: 1.minute.ago)
-      answer4.update! updated_at: 1.day.ago
-      answer5 = create(:knowledge_base_answer, published_at: 1.week.ago, internal_at: nil)
-      answer5.update! updated_at: 1.week.ago
-      _answer6 = create(:knowledge_base_answer, internal_at: nil, published_at: nil)
+      knowledge_base = create(:knowledge_base)
+      system_locale  = knowledge_base.kb_locales.first.system_locale
 
-      expect(described_class.sorted_by_internally_published).to contain_exactly(answer4, answer3, answer1, answer2, answer5)
+      answer1 = create(:knowledge_base_answer, knowledge_base: knowledge_base, internal_at: 2.days.ago, published_at: 1.day.ago)
+      answer1.translation.update! edited_at: 2.days.ago
+      answer2 = create(:knowledge_base_answer, knowledge_base: knowledge_base, published_at: 1.day.ago)
+      answer2.translation.update! edited_at: 1.hour.ago
+      answer3 = create(:knowledge_base_answer, knowledge_base: knowledge_base, published_at: 30.minutes.ago)
+      answer3.translation.update! edited_at: 1.day.ago
+      answer4 = create(:knowledge_base_answer, knowledge_base: knowledge_base, internal_at: 1.minute.ago)
+      answer4.translation.update! edited_at: 1.day.ago
+      answer5 = create(:knowledge_base_answer, knowledge_base: knowledge_base, published_at: 1.week.ago, internal_at: nil)
+      answer5.translation.update! edited_at: 1.week.ago
+      _answer6 = create(:knowledge_base_answer, knowledge_base: knowledge_base, internal_at: nil, published_at: nil)
+
+      expect(described_class.sorted_by_internally_published(system_locale)).to contain_exactly(answer4, answer3, answer1, answer2, answer5)
     end
   end
 

@@ -74,7 +74,7 @@ RSpec.describe SearchKnowledgeBaseBackend do
 
       let(:recently_updated) do
         travel_to(30.days.ago) { create(:knowledge_base_answer, :published, category: category) }.tap do |answer|
-          travel_to(1.day.ago) { answer.translations.first.touch }
+          travel_to(1.day.ago) { answer.translations.first.touch(:edited_at) }
         end
       end
 
@@ -130,8 +130,8 @@ RSpec.describe SearchKnowledgeBaseBackend do
         end
       end
 
-      describe 'updated_at:>now-3d' do
-        let(:query)  { 'updated_at:>now-3d' }
+      describe 'edited_at:>now-3d' do
+        let(:query)  { 'edited_at:>now-3d' }
         let(:result) { instance.search(query, user: user) }
         let(:ids)    { result.pluck(:id).map(&:to_i) }
 

@@ -14,6 +14,37 @@ RSpec.describe KnowledgeBase::Answer::Translation, current_user_id: 1, type: :mo
   it { is_expected.to belong_to(:answer) }
   it { is_expected.to belong_to(:kb_locale) }
 
+  describe '#edited_at' do
+    let(:translation) { subject }
+
+    before { translation } # create eagerly, before travel, so timestamps have a real gap to move across
+
+    it 'is set on creation' do
+      expect(translation.edited_at).to be_present
+    end
+
+    it 'updates when the title changes' do
+      travel(1.hour) # time is frozen: if we don't travel forward, pre- and post-update values will be the same
+
+      expect { translation.update!(title: 'Updated title') }
+        .to change(translation, :edited_at)
+    end
+
+    it 'updates when the associated content body changes' do
+      travel(1.hour) # time is frozen: if we don't travel forward, pre- and post-update values will be the same
+
+      expect { translation.content.update!(body: 'Updated body') }
+        .to change { translation.reload.edited_at }
+    end
+
+    it 'does not change when the translation is merely touched (e.g. via an unrelated answer change)' do
+      travel(1.hour) # time is frozen: if we don't travel forward, pre- and post-update values will be the same
+
+      expect { translation.answer.touch }
+        .not_to change { translation.reload.edited_at }
+    end
+  end
+
   def handle_elasticsearch(enabled)
     if enabled
       searchindex_model_reload([KnowledgeBase::Translation, KnowledgeBase::Category::Translation, KnowledgeBase::Answer::Translation])

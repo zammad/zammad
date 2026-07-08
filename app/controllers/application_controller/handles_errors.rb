@@ -89,6 +89,7 @@ module ApplicationController::HandlesErrors
   end
 
   def humanize_error(e)
+    # binding.pry
     data = { error: e.message }
 
     if (base_error = e.try(:record)&.errors&.messages&.find { |key, _| key.match? %r{[\w+.]?base} }&.last&.last)
