@@ -106,6 +106,7 @@ module ApplicationController::HandlesErrors
       data[:error]       = __('Authorization failed')
       data[:error_human] = data[:error]
     elsif e.instance_of?(Exceptions::InvalidAttribute)
+      data[:error_human] = data[:error]
       data[:invalid_attribute] = { e.attribute => data[:error] }
     elsif e.is_a?(Exceptions::UnprocessableContent)
       data[:error_human] = data[:error]
