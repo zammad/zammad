@@ -547,7 +547,12 @@ class App.UiElement.ApplicationAction
       for recipient in meta.recipient
         if key is recipient
           selected = true
-      columnSelectRecipientUserOptions.push({ value: key, name: "#{user.firstname} #{user.lastname}", selected: selected })
+      u = if user instanceof App.User then user else new App.User(user)
+      columnSelectRecipientUserOptions.push
+        value: key
+        name: u.displayName()
+        selected: selected
+    columnSelectRecipientUserOptions = _.sortBy(columnSelectRecipientUserOptions,(item) -> item.name?.toLowerCase())
 
     columnSelectRecipient = new App.ColumnSelect
       attribute:

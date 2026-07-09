@@ -39,4 +39,4 @@ App.ValidUsersForTicketSelectionMethods =
     ids_in_all_groups = _.intersection(ids_by_group...)
 
     users = App.User.findAll(ids_in_all_groups)
-    _.sortBy(users, (user) -> user.firstname)
+    _.sortBy(users, (user) -> user.displayName())

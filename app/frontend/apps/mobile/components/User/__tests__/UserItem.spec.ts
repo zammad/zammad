@@ -19,12 +19,12 @@ describe('user item display', () => {
         open: 2,
         closed: 0,
       },
-      firstname: 'John',
-      lastname: 'Doe',
+      firstname: 'Nicole',
+      lastname: 'Braun',
       updatedAt: new Date(2022, 1, 1, 10, 0, 0, 0).toISOString(),
       updatedBy: {
         id: '456',
-        fullname: 'Jane Doe',
+        fullname: 'Klaus Schmidt',
       },
       organization: {
         name: 'organization',
@@ -38,11 +38,11 @@ describe('user item display', () => {
       store: true,
     })
 
-    expect(view.getByText('JD')).toBeInTheDocument() // avatar
+    expect(view.getByText('NB')).toBeInTheDocument() // avatar
     expect(view.getByText(/organization/)).toBeInTheDocument()
     expect(view.getByText(/2 tickets/)).toBeInTheDocument()
-    expect(view.getByText('John Doe')).toBeInTheDocument()
-    expect(view.getByText('edited 10 hours ago by Jane Doe')).toBeInTheDocument()
+    expect(view.getByText('Nicole Braun')).toBeInTheDocument()
+    expect(view.getByText('edited 10 hours ago by Klaus Schmidt')).toBeInTheDocument()
   })
 
   it('renders when something is missing', () => {
@@ -52,7 +52,7 @@ describe('user item display', () => {
         open: 1,
         closed: 0,
       },
-      firstname: 'John',
+      firstname: 'Nicole',
     }
 
     const view = renderComponent(UserItem, {
@@ -62,8 +62,8 @@ describe('user item display', () => {
       store: true,
     })
 
-    expect(view.getByText('JO')).toBeInTheDocument() // avatar
-    expect(view.getByText(/^John$/)).toBeInTheDocument()
+    expect(view.getByText('NI')).toBeInTheDocument() // avatar
+    expect(view.getByText(/^Nicole$/)).toBeInTheDocument()
     expect(view.getByText('1 ticket')).toBeInTheDocument()
     expect(view.queryByText(/·/)).not.toBeInTheDocument()
     expect(view.queryByTestId('stringUpdated')).not.toBeInTheDocument()

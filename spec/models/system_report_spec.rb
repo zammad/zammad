@@ -49,6 +49,7 @@ RSpec.describe SystemReport, current_user_id: 1, type: :model do
           'proxy_no',
           'core_workflow_ajax_mode',
           'ui_user_organization_selector_with_email',
+          'user_name_format',
           'ui_ticket_zoom_article_email_full_quote',
           'ui_ticket_zoom_article_email_full_quote_header',
           'ui_ticket_zoom_attachments_preview',

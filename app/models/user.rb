@@ -153,7 +153,23 @@ returns
 =end
 
   def fullname(email_fallback: true, recipient_line: false)
-    name = "#{firstname} #{lastname}".strip
+    # Email sending: always first name last name (regardless of setting)
+    format = recipient_line ? 'first_last' : Setting.get('user_name_format')
+
+    parts, separator = case format
+                       when 'last_first'
+                         [[lastname, firstname], ' ']
+                       when 'last_first_comma'
+                         [[lastname, firstname], ', ']
+                       else
+                         [[firstname, lastname], ' ']
+                       end
+
+    name = parts
+      .map { |part| part.to_s.strip }
+      .compact_blank
+      .join(separator)
+      .strip
 
     if name.blank? && email.present? && email_fallback
       return email

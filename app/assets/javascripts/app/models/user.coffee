@@ -39,6 +39,9 @@ class App.User extends App.Model
 
   initials: ->
     if @firstname && @lastname && @firstname[0] && @lastname[0]
+      format = App.Config.get('user_name_format')
+      if format && format != 'first_last'
+        return @lastname[0] + @firstname[0]
       return @firstname[0] + @lastname[0]
 
     if @firstname && @firstname[0] && !@lastname
@@ -444,52 +447,44 @@ class App.User extends App.Model
   @current: App.Session.get
 
   displayName: ->
-    if !_.isEmpty(@firstname)
-      name = @firstname
-    if !_.isEmpty(@lastname)
-      if _.isEmpty(name)
-        name = ''
-      else
-        name = name + ' '
-      name = name + @lastname
-    return name if !_.isEmpty(name)
-    if @email
-      return @email
-    if @phone
-      return @phone
-    if @mobile
-      return @mobile
-    if @login
-      return @login
-    return '-'
+    @displayNameFromParts() or @displayNameFallback()
 
   displayNameLong: ->
-    if !_.isEmpty(@firstname)
-      name = @firstname
-    if !_.isEmpty(@lastname)
-      if _.isEmpty(name)
-        name = ''
-      else
-        name = name + ' '
-      name = name + @lastname
-    if !_.isEmpty(name)
+    name = @displayNameFromParts()
+    if name
       if !_.isEmpty(@organization)
-        if typeof @organization is 'object'
-          name = "#{name} (#{@organization.name})"
+        org =
+          if typeof @organization is 'object'
+            @organization.name
+          else
+            @organization
+        org = org?.toString().trim()
+        name = "#{name} (#{org})" if org
+      else if @department
+        department = @department?.toString().trim()
+        name = "#{name} (#{department})" if department
+      return name
+    @displayNameFallback()
+
+  displayNameFromParts: ->
+    format = App.Config.get('user_name_format') or 'first_last'
+    [parts, separator] =
+      switch format
+        when 'last_first'
+          [[@lastname, @firstname], ' ']
+        when 'last_first_comma'
+          [[@lastname, @firstname], ', ']
         else
-          name = "#{name} (#{@organization})"
-      else if !_.isEmpty(@department)
-        name = "#{name} (#{@department})"
-    return name if !_.isEmpty(name)
-    if @email
-      return @email
-    if @phone
-      return @phone
-    if @mobile
-      return @mobile
-    if @login
-      return @login
-    return '-'
+          [[@firstname, @lastname], ' ']
+    cleaned = _.map(parts, (part) -> part?.toString().trim())
+    _.compact(cleaned).join(separator)
+
+  displayNameFallback: ->
+    return @email  if @email
+    return @phone  if @phone
+    return @mobile if @mobile
+    return @login  if @login
+    '-'
 
   recipientName: (ticket, withEmail = false) ->
     format        = App.Config.get('ticket_define_email_from')

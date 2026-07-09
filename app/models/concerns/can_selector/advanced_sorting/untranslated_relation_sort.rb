@@ -45,7 +45,7 @@ module CanSelector
         <<~SQL.squish
           case
           when character_length(#{quote_table_column(table_name, 'firstname')}) > 0 OR character_length(#{quote_table_column(table_name, 'lastname')}) > 0
-            THEN trim(concat(#{quote_table_column(table_name, 'firstname')}, ' ', #{quote_table_column(table_name, 'lastname')}))
+            THEN #{formatted_user_name_sql(table_name)}
           when character_length(#{quote_table_column(table_name, 'email')}) > 0 THEN #{quote_table_column(table_name, 'email')}
           when character_length(#{quote_table_column(table_name, 'phone')}) > 0 THEN #{quote_table_column(table_name, 'phone')}
           when character_length(#{quote_table_column(table_name, 'mobile')}) > 0 THEN #{quote_table_column(table_name, 'mobile')}
@@ -55,6 +55,20 @@ module CanSelector
           #{collate}
           as #{quote_column(column_name)}
         SQL
+      end
+
+      def formatted_user_name_sql(table_name)
+        firstname = "NULLIF(#{quote_table_column(table_name, 'firstname')}, '')"
+        lastname  = "NULLIF(#{quote_table_column(table_name, 'lastname')}, '')"
+
+        case Setting.get('user_name_format')
+        when 'last_first'
+          "concat_ws(' ', #{lastname}, #{firstname})"
+        when 'last_first_comma'
+          "concat_ws(', ', #{lastname}, #{firstname})"
+        else
+          "concat_ws(' ', #{firstname}, #{lastname})"
+        end
       end
 
       def assoc

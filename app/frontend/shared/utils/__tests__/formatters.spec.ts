@@ -9,13 +9,13 @@ describe('getInitials', () => {
   })
 
   it('returns two letters from firstname, if no other are present', () => {
-    expect(getInitials('John')).toBe('JO')
-    expect(getInitials('John', '', '')).toBe('JO')
+    expect(getInitials('Nicole')).toBe('NI')
+    expect(getInitials('Nicole', '', '')).toBe('NI')
   })
 
   it('returns two letters from lastname, if no other are present', () => {
-    expect(getInitials(undefined, 'Doe')).toBe('DO')
-    expect(getInitials('', 'Doe', '')).toBe('DO')
+    expect(getInitials(undefined, 'Braun')).toBe('BR')
+    expect(getInitials('', 'Braun', '')).toBe('BR')
   })
 
   it('returns two letters from email, if no other are present', () => {
@@ -24,9 +24,25 @@ describe('getInitials', () => {
   })
 
   it('returns two letters from firstname and lastname', () => {
-    expect(getInitials('John', 'Doe')).toBe('JD')
-    expect(getInitials('John', 'Doe', '')).toBe('JD')
-    expect(getInitials('John', 'Doe', 'email@mail.com')).toBe('JD')
+    expect(getInitials('Nicole', 'Braun')).toBe('NB')
+    expect(getInitials('Martina', 'Lila', '')).toBe('ML')
+    expect(getInitials('Nicole', 'Braun', 'email@mail.com')).toBe('NB')
+  })
+
+  it('returns lastname first initial for last_first format', () => {
+    expect(getInitials('Nicole', 'Braun', '', '', '', 'last_first')).toBe('BN')
+  })
+
+  it('returns lastname first initial for last_first_comma format', () => {
+    expect(getInitials('Nicole', 'Braun', '', '', '', 'last_first_comma')).toBe('BN')
+  })
+
+  it('returns firstname lastname initial for first_last format', () => {
+    expect(getInitials('Nicole', 'Braun', '', '', '', 'first_last')).toBe('NB')
+  })
+
+  it('ignores format when only one name is present', () => {
+    expect(getInitials('Nicole', '', '', '', '', 'last_first')).toBe('NI')
   })
 
   it('returns last two numbers from phone and mobile', () => {

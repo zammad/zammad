@@ -6,7 +6,7 @@ class App.Overview extends App.Model
     { name: 'name',       display: __('Name'),                tag: 'input',    type: 'text', translate: true, limit: 100, 'null': false },
     { name: 'link',       display: __('Link'),                readonly: 1 },
     { name: 'role_ids',   display: __('Available for the following roles'),    tag: 'column_select', multiple: true, null: false, relation: 'Role', translate: true },
-    { name: 'user_ids',   display: __('Restrict to only the following users'), tag: 'column_select', multiple: true, null: true,  relation: 'User', sortBy: 'firstname' },
+    { name: 'user_ids',   display: __('Restrict to only the following users'), tag: 'column_select', multiple: true, null: true,  relation: 'User', sortBy: 'displayName' },
     { name: 'organization_shared', display: __('Only available for users with shared organizations'), tag: 'select', options: { true: 'yes', false: 'no' }, translate: true, default: false, null: true },
     { name: 'out_of_office', display: __('Only available for users which are absence replacements for other users.'), tag: 'select', options: { true: 'yes', false: 'no' }, translate: true, default: false, null: true },
     { name: 'condition',  display: __('Conditions for shown tickets'), tag: 'ticket_selector', null: false, out_of_office: true },

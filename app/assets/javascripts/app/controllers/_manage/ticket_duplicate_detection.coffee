@@ -29,7 +29,7 @@ class App.SettingTicketDuplicateDetection extends App.ControllerSubContent
           options[attribute.name] = App.i18n.translateInline(attribute.display)
 
     configure_attributes = [
-      { name: 'attributes', display: __('Attributes to compare'), tag: 'column_select', multiple: true, null: false, options: options, sortBy: 'firstname' },
+      { name: 'attributes', display: __('Attributes to compare'), tag: 'column_select', multiple: true, null: false, options: options, sortBy: 'displayName' },
       { name: 'title', display: __('Warning title'), tag: 'input', null: false },
       { name: 'body', display: __('Warning message'), tag: 'textarea', null: false },
       { name: 'role_ids', display: __('Available for the following roles'), tag: 'column_select', multiple: true, null: false, relation: 'Role', translate: true },

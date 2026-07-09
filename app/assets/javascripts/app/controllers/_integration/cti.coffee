@@ -63,7 +63,7 @@ class Form extends App.Controller
 
     # placeholder
     configure_attributes = [
-      { name: 'user_ids', display: '', tag: 'column_select', multiple: true, null: true, relation: 'User', sortBy: 'firstname' },
+      { name: 'user_ids', display: '', tag: 'column_select', multiple: true, null: true, relation: 'User', sortBy: 'displayName' },
     ]
     new App.ControllerForm(
       el: @$('.js-userSelectorBlank')
@@ -100,7 +100,7 @@ class Form extends App.Controller
 
     for row in @config.notify_map
       configure_attributes = [
-        { name: 'user_ids', display: '', tag: 'column_select', multiple: true, null: true, relation: 'User', sortBy: 'firstname' },
+        { name: 'user_ids', display: '', tag: 'column_select', multiple: true, null: true, relation: 'User', sortBy: 'displayName' },
       ]
       new App.ControllerForm(
         el: @$("[name=queue][value='#{row.queue}']").closest('tr').find('.js-userSelector')

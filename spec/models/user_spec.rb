@@ -178,6 +178,19 @@ RSpec.describe User, type: :model do
 
   describe 'Instance methods:' do
 
+    describe '#fullname' do
+      before do
+        allow(Setting).to receive(:get).and_call_original
+        allow(Setting).to receive(:get).with('user_name_format').and_return('first_last')
+      end
+
+      it 'falls back to phone when name fields are nil' do
+        user = described_class.new(firstname: nil, lastname: nil, email: nil, phone: '12345', login: 'phone-only')
+
+        expect(user.fullname).to eq('12345')
+      end
+    end
+
     describe '#by_reset_token' do
       subject(:user) { token.user }
 

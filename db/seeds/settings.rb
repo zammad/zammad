@@ -253,6 +253,35 @@ Setting.create_or_update(
   state:       'relative',
   frontend:    true
 )
+Setting.create_or_update(
+  title:       __('User Name Format'),
+  name:        'user_name_format',
+  area:        'System::Branding',
+  description: __('Defines how user names are displayed in dropdowns, overviews and selection fields.'),
+  options:     {
+    form: [
+      {
+        display:   '',
+        null:      false,
+        name:      'user_name_format',
+        tag:       'select',
+        options:   {
+          first_last:       __('Firstname Lastname'),
+          last_first:       __('Lastname Firstname'),
+          last_first_comma: __('Lastname, Firstname'),
+        },
+        translate: true,
+      },
+    ],
+  },
+  preferences: {
+    render:     true,
+    prio:       11,
+    permission: ['admin.branding'],
+  },
+  state:       'first_last',
+  frontend:    true
+)
 options = {}
 (10..99).each do |item|
   options[item] = item

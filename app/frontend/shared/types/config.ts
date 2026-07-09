@@ -231,6 +231,7 @@ export interface ConfigList {
   ui_user_organization_selector_with_email?: boolean | null
   user_create_account?: boolean | null
   user_lost_password?: boolean | null
+  user_name_format: 'first_last' | 'last_first' | 'last_first_comma'
   user_show_password_login?: boolean | null
   websocket_backend: string
   websocket_port: string

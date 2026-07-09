@@ -29,6 +29,11 @@ RSpec.describe CanSelector::AdvancedSorting::UntranslatedRelationSort do
     context 'when relation is to users table' do
       let(:column) { 'customer_id' }
 
+      before do
+        allow(Setting).to receive(:get).and_call_original
+        allow(Setting).to receive(:get).with('user_name_format').and_return('first_last')
+      end
+
       it 'returns complex SQL statement' do
         expect(result).to include(
           order:  '"_advanced_sorting_tickets_customer_id" ASC',
@@ -43,6 +48,34 @@ RSpec.describe CanSelector::AdvancedSorting::UntranslatedRelationSort do
           select: include('COLLATE "de-DE-x-icu"')
         )
       end
+
+      context 'with user name formats' do
+        let(:tickets) do
+          [
+            create(:ticket, customer: create(:customer, firstname: 'Anna', lastname: 'Zulu')),
+            create(:ticket, customer: create(:customer, firstname: 'Zoe', lastname: 'Alpha')),
+            create(:ticket, customer: create(:customer, firstname: '', lastname: 'Beta')),
+          ]
+        end
+
+        it 'sorts by firstname lastname when configured', :aggregate_failures do
+          user_name_format = 'first_last'
+
+          expect(sorted_customer_names(user_name_format)).to eq(['Anna Zulu', 'Beta', 'Zoe Alpha'])
+        end
+
+        it 'sorts by lastname firstname when configured', :aggregate_failures do
+          user_name_format = 'last_first'
+
+          expect(sorted_customer_names(user_name_format)).to eq(['Alpha Zoe', 'Beta', 'Zulu Anna'])
+        end
+
+        it 'sorts by lastname comma firstname without dangling separators when configured', :aggregate_failures do
+          user_name_format = 'last_first_comma'
+
+          expect(sorted_customer_names(user_name_format)).to eq(['Alpha, Zoe', 'Beta', 'Zulu, Anna'])
+        end
+      end
     end
 
     context 'when relation is not to users table' do
@@ -56,5 +89,20 @@ RSpec.describe CanSelector::AdvancedSorting::UntranslatedRelationSort do
         )
       end
     end
+  end
+
+  def sorted_customer_names(user_name_format)
+    allow(Setting).to receive(:get).with('user_name_format').and_return(user_name_format)
+
+    ordered_tickets = Ticket
+      .where(id: tickets.map(&:id))
+      .group('tickets.id')
+      .select('tickets.*')
+      .select(Arel.sql(result[:select]))
+      .joins(result[:joins])
+      .group(result[:group])
+      .reorder(Arel.sql(result[:order]))
+
+    ordered_tickets.map { |ticket| ticket.customer.fullname }
   end
 end

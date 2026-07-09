@@ -37,13 +37,17 @@ const props = withDefaults(defineProps<Props>(), {
   size: 'medium',
 })
 
+const { backgroundColors } = getUserAvatarClasses()
+
+const appName = useAppName()
+const application = useApplicationStore()
+
 const initials = computed(() => {
   const { lastname, firstname, email, phone, mobile } = props.entity
+  const format = application.config.user_name_format as string | undefined
 
-  return getInitials(firstname, lastname, email, phone, mobile)
+  return getInitials(firstname, lastname, email, phone, mobile, format)
 })
-
-const { backgroundColors } = getUserAvatarClasses()
 
 const fullName = computed(() => {
   const { lastname, firstname, fullname } = props.entity
@@ -60,8 +64,6 @@ const colorClass = computed(() => {
 
   if (internalId === SYSTEM_USER_INTERNAL_ID) return 'bg-white'
 
-  // get color based on mod of the integer ID
-  // so it stays consistent between different interfaces and logins
   return backgroundColors[internalId % (backgroundColors.length - 1)]
 })
 
@@ -70,9 +72,6 @@ const icon = computed(() => {
   if (source && (source == 'facebook' || source == 'twitter')) return source
   return null
 })
-
-const appName = useAppName()
-const application = useApplicationStore()
 
 const image = computed(() => {
   if (icon.value || props.initialsOnly) return null
