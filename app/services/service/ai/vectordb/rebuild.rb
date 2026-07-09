@@ -11,7 +11,8 @@ module Service::AI::VectorDB
     def execute
       Service::AI::VectorDB::DropTable.execute
       Service::AI::VectorDB::CreateTable.execute
-      Service::AI::VectorDB::Reload.execute(worker:)
+      # The index was just (re)created empty, so the reload can skip the per-record membership search.
+      Service::AI::VectorDB::Reload.execute(worker:, fresh: true)
     end
   end
 end

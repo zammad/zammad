@@ -19,6 +19,6 @@ RSpec.describe Service::AI::VectorDB::Rebuild do
 
     expect(Service::AI::VectorDB::DropTable).to have_received(:execute)
     expect(Service::AI::VectorDB::CreateTable).to have_received(:execute)
-    expect(Service::AI::VectorDB::Reload).to have_received(:execute)
+    expect(Service::AI::VectorDB::Reload).to have_received(:execute).with(worker: 0, fresh: true)
   end
 end

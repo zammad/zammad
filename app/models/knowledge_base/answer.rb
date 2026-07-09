@@ -31,15 +31,6 @@ class KnowledgeBase::Answer < ApplicationModel
 
   acts_as_list scope: :category, top_of_list: 0
 
-  VECTOR_INDEX_METADATA_ATTRIBUTES = %w[category_id internal_at published_at archived_at].freeze
-
-  after_commit do
-    next if !Service::AI::VectorDB::Available.execute(ping: false)
-    next if !previous_changes.keys.intersect?(VECTOR_INDEX_METADATA_ATTRIBUTES)
-
-    touch_translations
-  end
-
   # Provide consistent naming with KB category
   #
   # Originally this used alias_attribute. But alias_attribute for relations for deprecated in Rails 7.1 and removed in 7.2
@@ -115,11 +106,21 @@ class KnowledgeBase::Answer < ApplicationModel
 
   private
 
+  # Keep each translation's indexes fresh when the answer changes (tags, category, publication
+  # state, …). Both reindex hooks live on the translation's own after_commit — the search index via
+  # HasSearchIndexBackend and the vector index via HasVectorIndex (which also gates on vector store
+  # availability) — so the answer only has to nudge its translations; no vector-specific logic here.
+  #
+  # touch_later (the deferred touch belongs_to touch: uses) instead of touch: it still bumps
+  # updated_at and fires the translation's after_commit, but skips dirty tracking — so a translation
+  # edited in the same transaction keeps its previous_changes (e.g. the title change its reindex
+  # hook inspects) instead of having them reset by this touch-back.
   def touch_translations
     translations
       .reject(&:destroyed?)
-      .each(&:touch) # touch each translation separately to trigger after_commit callbacks
+      .each(&:touch_later)
   end
+  after_save  :touch_translations
   after_touch :touch_translations
 
   class << self

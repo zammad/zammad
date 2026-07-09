@@ -17,4 +17,13 @@ RSpec.describe Service::AI::VectorDB::Reload do
 
     expect(KnowledgeBase::Answer::Translation).to have_received(:vector_index_reload).once
   end
+
+  it 'forwards the fresh flag to the per-model reload' do
+    allow_any_instance_of(AI::VectorDB).to receive(:ping!)
+    allow(KnowledgeBase::Answer::Translation).to receive(:vector_index_reload)
+
+    described_class.execute(fresh: true)
+
+    expect(KnowledgeBase::Answer::Translation).to have_received(:vector_index_reload).with(worker: 0, fresh: true)
+  end
 end

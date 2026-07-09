@@ -384,6 +384,96 @@ RSpec.describe AI::VectorDB, :aggregate_failures do
     end
   end
 
+  describe '.bulk' do
+    let(:object_id)   { 1 }
+    let(:object_name) { 'ticket' }
+    let(:embedding)   { [0.1, 0.2, 0.3] }
+    let(:client) do
+      instance_double(Elasticsearch::Client, indices: instance_double(Elasticsearch::API::Indices::Actions))
+    end
+
+    before do
+      allow(instance).to receive(:client).and_return(client)
+      allow(client.indices).to receive(:exists?).with(index: instance.index_name).and_return(true)
+      allow(client).to receive(:bulk).and_return(double(body: { 'errors' => false }))
+    end
+
+    it 'sends upserts and deletes as a single _bulk request' do
+      instance.bulk(
+        upserts: [{ object_id:, object_name:, content: 'chunk one', embedding:, metadata: { k: 'v' } }],
+        deletes: ['ticket-1-stale'],
+      )
+
+      expect(client).to have_received(:bulk).once.with(
+        index: instance.index_name,
+        body:  [
+          { index: { _id: "ticket-1-#{Digest::SHA256.hexdigest('chunk one')}" } },
+          { content: 'chunk one', object_id:, object_name:, embedding:, metadata: { k: 'v' } },
+          { delete: { _id: 'ticket-1-stale' } },
+        ],
+      )
+    end
+
+    it 'does nothing when there is nothing to write' do
+      instance.bulk(upserts: [], deletes: [])
+
+      expect(client).not_to have_received(:bulk)
+    end
+
+    it 'raises and logs only the failed items when the bulk response reports item errors', :aggregate_failures do
+      items = [
+        { 'index'  => { '_id' => 'ticket-1-ok', 'status' => 200 } },
+        { 'delete' => { '_id' => 'ticket-1-stale', 'status' => 409, 'error' => { 'type' => 'version_conflict_engine_exception' } } },
+      ]
+      allow(client).to receive(:bulk).and_return(double(body: { 'errors' => true, 'items' => items }))
+      logged = nil
+      allow(Rails.logger).to receive(:error) { |&block| logged = block&.call }
+
+      expect { instance.bulk(deletes: ['ticket-1-stale']) }.to raise_error(AI::VectorDB::Error)
+      expect(logged).to include('ticket-1-stale')
+      expect(logged).not_to include('ticket-1-ok')
+    end
+  end
+
+  describe '.update_metadata' do
+    let(:object_id)   { 1 }
+    let(:object_name) { 'ticket' }
+    let(:metadata)    { { key: 'new_value' } }
+    let(:client) do
+      instance_double(Elasticsearch::Client, indices: instance_double(Elasticsearch::API::Indices::Actions))
+    end
+
+    before do
+      allow(instance).to receive(:client).and_return(client)
+      allow(client.indices).to receive(:exists?).with(index: instance.index_name).and_return(true)
+      allow(client).to receive(:update_by_query).and_return(double(body: { 'updated' => 2, 'timed_out' => false, 'failures' => [] }))
+    end
+
+    it 'patches the metadata on every chunk of the document via update_by_query' do
+      instance.update_metadata(object_id:, object_name:, metadata:)
+
+      expect(client).to have_received(:update_by_query).once.with(
+        index: instance.index_name,
+        body:  {
+          query:  { bool: { filter: [{ term: { object_id: } }, { term: { object_name: } }] } },
+          script: { source: 'ctx._source.metadata = params.metadata', params: { metadata: } }
+        }
+      )
+    end
+
+    it 'raises when the response timed out' do
+      allow(client).to receive(:update_by_query).and_return(double(body: { 'timed_out' => true, 'failures' => [] }))
+
+      expect { instance.update_metadata(object_id:, object_name:, metadata:) }.to raise_error(AI::VectorDB::Error)
+    end
+
+    it 'raises when the response reports failures' do
+      allow(client).to receive(:update_by_query).and_return(double(body: { 'timed_out' => false, 'failures' => [{ 'cause' => 'shard failure' }] }))
+
+      expect { instance.update_metadata(object_id:, object_name:, metadata:) }.to raise_error(AI::VectorDB::Error)
+    end
+  end
+
   describe '.update' do
     let(:object_id)   { 1 }
     let(:object_name) { 'ticket' }

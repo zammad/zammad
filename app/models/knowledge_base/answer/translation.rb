@@ -87,14 +87,6 @@ class KnowledgeBase::Answer::Translation < ApplicationModel
     }
   end
 
-  def vector_index_content_changed?
-    # Title is prepended to every chunk as a header, so a title change requires re-embedding. The
-    # body lives on the associated content record and is invisible here, so that change arrives via
-    # the vector_index_content_dirty flag (set in Content#touch_translation). Everything else
-    # (locale, category, visibility) is metadata only and handled by the cheap update path.
-    vector_index_content_dirty || previous_changes.key?('title')
-  end
-
   def vector_indexing_for_record?
     # PoC: index drafts too (visible_internally? guard omitted for now), but not archived answers.
     return false if answer.archived_at&.past?
@@ -108,6 +100,23 @@ class KnowledgeBase::Answer::Translation < ApplicationModel
 
   def vector_index_chunking_strategy
     Setting.get('vectordb_knowledge_base_chunking_strategy')&.to_sym
+  end
+
+  # Answer attributes that feed this translation's vector document: category (indexing scope +
+  # metadata) and the state timestamps (drive visible_internally / archived indexing).
+  VECTOR_INDEX_ANSWER_ATTRIBUTES = %w[category_id internal_at published_at archived_at].freeze
+
+  # Did anything feeding the vector document change? Title/locale live here, the body on the content
+  # record, the rest on the answer — each is read off its own record's previous_changes. This works
+  # because Answer#touch_translations uses touch_later, which preserves previous_changes on a
+  # translation edited in the same transaction (an immediate touch would reset them). previous_changes
+  # can be stale on long-lived instances, which errs towards an extra (no-op) reindex, never a skip
+  # of a real change.
+  def vector_index_relevant_change?
+    return true if previous_changes.keys.intersect?(%w[title kb_locale_id])
+    return true if content&.previous_changes&.key?('body')
+
+    answer&.previous_changes&.keys&.intersect?(VECTOR_INDEX_ANSWER_ATTRIBUTES) || false
   end
 
   def inline_linked_objects

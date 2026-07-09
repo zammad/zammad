@@ -332,4 +332,132 @@ RSpec.describe KnowledgeBase::Answer, current_user_id: 1, type: :model do
       end
     end
   end
+
+  describe 'reindexing translations when the answer changes', performs_jobs: true do
+    before do
+      allow(Service::AI::VectorDB::Available).to receive(:execute).and_return(true)
+      allow(Service::AI::VectorDB::Document::Upsert).to receive(:execute)
+      allow(Service::AI::VectorDB::Document::Destroy).to receive(:execute)
+    end
+
+    # Regression: the metadata after_commit used to touch the translations, which touch the answer
+    # back via `belongs_to :answer, touch: true`, re-entering the answer callbacks and recursing
+    # without bound (SystemStackError).
+    it 'does not recurse while indexing a newly published answer' do
+      expect { create(:knowledge_base_answer, :published) }.not_to raise_error
+    end
+
+    it 'does not recurse on a later metadata change' do
+      answer       = create(:knowledge_base_answer, :published)
+      new_category = create(:knowledge_base_category, knowledge_base: answer.category.knowledge_base)
+
+      expect { answer.update!(category: new_category) }.not_to raise_error
+    end
+
+    it 'enqueues a reindex for each indexed translation', :aggregate_failures do
+      knowledge_base     = create(:knowledge_base)
+      alternative_locale = create(:knowledge_base_locale, knowledge_base:, system_locale: Locale.find_by(locale: 'lt'))
+      new_category       = create(:knowledge_base_category, knowledge_base:)
+      answer             = create(:knowledge_base_answer, :published, category: create(:knowledge_base_category, knowledge_base:))
+      create(:knowledge_base_answer_translation, answer:, kb_locale: alternative_locale)
+      Setting.set('vectordb_knowledge_base_category_ids', [new_category.id])
+
+      # A fresh instance, as a later request would load it. Regression: freshly loaded translations
+      # carry no previous_changes (their touch is a touch_later), so the reindex decision must come
+      # from the relevant-change check alone — a previous_changes guard would silently skip them.
+      answer = described_class.find(answer.id)
+
+      # Drop anything enqueued during setup so the expectations only see jobs from the update below.
+      clear_jobs
+      answer.update!(category: new_category)
+
+      expect(answer.translations.reload.count).to be > 1
+      answer.translations.each do |translation|
+        expect(VectorIndexJob).to have_been_enqueued.with('KnowledgeBase::Answer::Translation', translation.id)
+      end
+    end
+
+    # An answer change that doesn't feed the vector document (e.g. the internal note) still touches
+    # the translations to refresh the search index, but must not trigger a vector reindex.
+    it 'does not enqueue a reindex on a vector-irrelevant answer change' do
+      answer = create(:knowledge_base_answer, :published)
+      Setting.set('vectordb_knowledge_base_category_ids', [answer.category_id])
+
+      # A fresh instance, as a later request would load it. (On instances kept from creation the
+      # translations still carry their creation previous_changes, which errs towards reindexing.)
+      answer = described_class.find(answer.id)
+
+      expect { answer.update!(internal_note: 'changed') }.not_to have_enqueued_job(VectorIndexJob)
+    end
+
+    # Regression: the title edit's touch of the answer makes the answer touch the translation back.
+    # touch_translations uses touch_later, so the translation keeps previous_changes=[title] and the
+    # reindex fires — an immediate touch would reset them and the title change would be skipped.
+    it 'enqueues a reindex on a title change' do
+      answer = create(:knowledge_base_answer, :published)
+      Setting.set('vectordb_knowledge_base_category_ids', [answer.category_id])
+
+      expect { answer.translations.first.update!(title: 'A different title') }
+        .to have_enqueued_job(VectorIndexJob).with('KnowledgeBase::Answer::Translation', answer.translations.first.id)
+    end
+
+    it 'enqueues a reindex on a title change combined with a vector-irrelevant answer change' do
+      answer      = create(:knowledge_base_answer, :published)
+      translation = answer.translations.first
+      Setting.set('vectordb_knowledge_base_category_ids', [answer.category_id])
+
+      expect { answer.update!(internal_note: 'note', translations_attributes: [{ id: translation.id, title: 'Combined title' }]) }
+        .to have_enqueued_job(VectorIndexJob).with('KnowledgeBase::Answer::Translation', translation.id)
+    end
+
+    it 'enqueues a reindex on a body change' do
+      answer = create(:knowledge_base_answer, :published)
+      Setting.set('vectordb_knowledge_base_category_ids', [answer.category_id])
+
+      expect { answer.translations.first.content.update!(body: '<p>new body</p>') }
+        .to have_enqueued_job(VectorIndexJob).with('KnowledgeBase::Answer::Translation', answer.translations.first.id)
+    end
+
+    it 'does not enqueue a reindex for translations outside the configured categories' do
+      answer = create(:knowledge_base_answer, :published)
+      Setting.set('vectordb_knowledge_base_category_ids', [])
+
+      expect { answer.update!(category: create(:knowledge_base_category, knowledge_base: answer.category.knowledge_base)) }
+        .not_to have_enqueued_job(VectorIndexJob)
+    end
+
+    # Regression: a job enqueued while the record was indexable must not re-upsert it if the record
+    # became non-indexable before the job ran — it removes the stale document instead.
+    it 'removes instead of upserting when the record is no longer indexable at run time', :aggregate_failures do
+      answer      = create(:knowledge_base_answer, :published)
+      translation = answer.translations.first
+      Setting.set('vectordb_knowledge_base_category_ids', [answer.category_id])
+      allow(translation).to receive(:vector_index_destroy)
+
+      # The record turned non-indexable (its category was disabled) after the reindex job was enqueued.
+      Setting.set('vectordb_knowledge_base_category_ids', [])
+
+      translation.vector_index_update
+
+      expect(translation).to have_received(:vector_index_destroy)
+      expect(Service::AI::VectorDB::Document::Upsert).not_to have_received(:execute)
+    end
+  end
+
+  describe 'triggering search indexes' do
+    context 'when answer is updated' do
+      let(:answer)      { create(:knowledge_base_answer) }
+      let(:translation) { answer.translations.first }
+
+      before do
+        allow(translation).to receive(:search_index_update)
+      end
+
+      it 'triggers translation re-indexing' do
+        answer.update!(category: create(:knowledge_base_category))
+
+        expect(translation).to have_received(:search_index_update)
+      end
+    end
+  end
 end

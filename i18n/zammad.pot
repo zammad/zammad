@@ -3892,7 +3892,7 @@ msgstr ""
 msgid "Connection test successful"
 msgstr ""
 
-#: lib/ai/vectordb.rb:252
+#: lib/ai/vectordb.rb:284
 msgid "Connection to Elasticsearch Vector DB failed"
 msgstr ""
 
@@ -6394,7 +6394,7 @@ msgstr ""
 msgid "Elasticsearch Total Payload Size"
 msgstr ""
 
-#: lib/ai/vectordb.rb:269
+#: lib/ai/vectordb.rb:301
 msgid "Elasticsearch index does not exist"
 msgstr ""
 
@@ -8960,7 +8960,7 @@ msgstr ""
 msgid "Including private key."
 msgstr ""
 
-#: lib/ai/vectordb.rb:262
+#: lib/ai/vectordb.rb:294
 msgid "Incompatible Elasticsearch version"
 msgstr ""
 

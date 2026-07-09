@@ -10,23 +10,21 @@ class VectorIndexJob < ApplicationJob
   }
 
   def lock_key
-    # "VectorIndexJob/KnowledgeBase::Answer/42" — deliberately excludes the mode so a full and a
-    # metadata-only update for the same record serialize on one key (a full update covers metadata).
+    # "VectorIndexJob/KnowledgeBase::Answer::Translation/42" — one key per record, so concurrent
+    # triggers for the same record coalesce into a single reindex.
     "#{self.class.name}/#{arguments[0]}/#{arguments[1]}"
   end
 
-  def perform(object, o_id, mode = :content)
+  # `_mode` is ignored — kept so jobs enqueued before the single-mode change (which passed a mode
+  # argument) still deserialize and run after deploy.
+  def perform(object, o_id, _mode = nil)
     @object = object
     @o_id   = o_id
 
     record = @object.constantize.find_by(id: @o_id)
     return if !exists?(record)
 
-    update_vector_index(record, mode)
-  end
-
-  def update_vector_index(record, mode)
-    mode.to_sym == :metadata ? record.vector_index_update_metadata : record.vector_index_update
+    record.vector_index_update
   end
 
   private

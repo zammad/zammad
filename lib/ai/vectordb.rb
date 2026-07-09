@@ -90,26 +90,39 @@ class AI::VectorDB
     )
   end
 
-  def update_metadata(object_id:, object_name:, metadata:)
+  # Applies many writes in a single _bulk request. `upserts` is a list of
+  # { object_id:, object_name:, content:, embedding:, metadata: } (each indexed under its
+  # content-addressed id, create-or-replace); `deletes` is a list of document ids to remove.
+  def bulk(upserts: [], deletes: [])
+    return if upserts.blank? && deletes.blank?
+
     index_exists
 
-    client.update_by_query(
-      index: index_name,
-      body:  {
-        query:  {
-          bool: {
-            filter: [
-              { term: { object_id: } },
-              { term: { object_name: } }
-            ]
-          }
-        },
-        script: {
-          source: 'ctx._source.metadata = params.metadata',
-          params: { metadata: }
-        }
+    body = []
+    upserts.each do |doc|
+      body << { index: { _id: build_identifier(object_name: doc[:object_name], object_id: doc[:object_id], content: doc[:content]) } }
+      body << {
+        content:     doc[:content],
+        object_id:   doc[:object_id],
+        object_name: doc[:object_name],
+        embedding:   doc[:embedding],
+        metadata:    doc[:metadata] || {}
       }
-    ).body
+    end
+    deletes.each { |id| body << { delete: { _id: id } } }
+
+    response = client.bulk(index: index_name, body:)
+    return response if !response.body['errors']
+
+    raise_bulk_error(response)
+  end
+
+  # Logs only the items that actually failed (the response lists every operation, success included)
+  # and raises.
+  def raise_bulk_error(response)
+    failed = response.body['items'].select { |item| item.values.any? { |op| op.is_a?(Hash) && op['error'] } }
+    Rails.logger.error { "AI::VectorDB: bulk write reported item errors: #{failed}" }
+    raise AI::VectorDB::Error, 'The vector index bulk write failed' # rubocop:disable Zammad/DetectTranslatableString
   end
 
   def update(object_id:, object_name:, content:, embedding:, metadata: {})
@@ -117,6 +130,28 @@ class AI::VectorDB
 
     id = build_identifier(object_name:, object_id:, content:)
     client.update(index: index_name, id: id, body: { content:, embedding:, metadata: })
+  end
+
+  # Patches the metadata on every indexed chunk of one document in place (no re-embedding). Used when
+  # only metadata changed; the embeddings and chunk set stay as they are.
+  def update_metadata(object_id:, object_name:, metadata:)
+    index_exists
+
+    response = client.update_by_query(
+      index: index_name,
+      body:  {
+        query:  { bool: { filter: [{ term: { object_id: } }, { term: { object_name: } }] } },
+        script: { source: 'ctx._source.metadata = params.metadata', params: { metadata: } }
+      }
+    )
+    return response.body if !response.body['timed_out'] && response.body['failures'].blank?
+
+    raise_update_by_query_error(response)
+  end
+
+  def raise_update_by_query_error(response)
+    Rails.logger.error { "AI::VectorDB: metadata update reported failures: #{response.body.slice('timed_out', 'failures')}" }
+    raise AI::VectorDB::Error, 'The vector index metadata update failed' # rubocop:disable Zammad/DetectTranslatableString
   end
 
   def find(object_id:, object_name:, content: nil)

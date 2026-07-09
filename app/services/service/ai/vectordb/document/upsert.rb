@@ -5,54 +5,60 @@ module Service::AI::VectorDB::Document
   # text). Only chunks whose text is new get embedded — a batched provider round-trip; unchanged
   # chunks reuse their stored vector (skip-recalc) but are re-upserted so metadata (e.g.
   # group/category used for permission filtering) stays fresh. Chunks that vanished on the edit are
-  # removed. Chunking + embedding are details of this service; the per-vector reads/writes are
-  # AI::VectorDB primitives.
+  # removed. The whole sync — upserting the current chunks and deleting the stale ones — goes out as
+  # a single AI::VectorDB#bulk request.
   class Upsert < Service::AI::VectorDB::Base
     attr_reader :object_name, :o_id, :content, :content_meta_headers, :strategy, :metadata
 
-    def initialize(object_name:, object_id:, content:, content_meta_headers: [], strategy: :sentence, metadata: {})
-      @object_name          = object_name
-      @o_id                 = object_id
-      @content              = content.to_s
-      @content_meta_headers = content_meta_headers
-      @strategy             = strategy
-      @metadata             = metadata
+    def initialize(object_name:, object_id:, content:, content_meta_headers: [], strategy: :sentence, metadata: {}, skip_membership_check: false)
+      @object_name           = object_name
+      @o_id                  = object_id
+      @content               = content.to_s
+      @content_meta_headers  = content_meta_headers
+      @strategy              = strategy
+      @metadata              = metadata
+      @skip_membership_check = skip_membership_check
     end
 
     def execute
-      chunks  = chunk_content.uniq
-      vectors = resolve_vectors(chunks) # chunk => vector
+      chunks      = chunk_content.uniq
+      current_ids = identifiers_for(chunks)
+      # A rebuild reindexes onto a freshly created (empty) index, so the membership search would only
+      # ever come back empty and force the full path anyway — skip it and go straight to full.
+      indexed_ids = @skip_membership_check ? [] : ai_vector_db.document_ids(object_id: o_id, object_name:)
 
-      upsert_chunks(chunks, vectors)
+      # Same chunk set already indexed → the embedded text is unchanged, so only metadata can have
+      # changed. Patch it in place: no chunking churn, no embedding, no per-chunk rewrite. (A model
+      # change is handled by a rebuild, which drops the index → the ids differ → the full path runs.)
+      if current_ids.present? && current_ids.sort == indexed_ids.sort
+        ai_vector_db.update_metadata(object_id: o_id, object_name:, metadata:)
+        return
+      end
+
+      vectors = resolve_vectors(chunks) # chunk => vector
+      ai_vector_db.bulk(upserts: upserts(chunks, vectors), deletes: indexed_ids - current_ids)
       cache_vectors(vectors)
-      remove_stale(chunks)
     end
 
     private
 
     def chunk_content
-      # develop base: default to the existing :sentence strategy for now (the :recursive strategy is
-      # available too). The embedding model's input limit only caps the chunk size; the strategy
-      # picks the actual size.
+      # default to the :sentence strategy for now (the :recursive strategy is available too). The
+      # embedding model's input limit only caps the chunk size; the strategy picks the actual size.
       Service::AI::VectorDB::Content::Chunks.execute(
         content:, content_meta_headers:, strategy:,
         model_max_tokens: embedding_provider&.embedding_input_limit
       )
     end
 
-    # Deletes indexed chunks that are no longer part of the current content. Chunk ids are
-    # content-addressed, so the stale set is the indexed ids minus the current ones.
-    def remove_stale(chunks)
-      current = chunks.map { |chunk| ai_vector_db.build_identifier(object_name:, object_id: o_id, content: chunk) }
-
-      (ai_vector_db.document_ids(object_id: o_id, object_name:) - current).each do |id|
-        ai_vector_db.delete(id:)
-      end
+    def identifiers_for(chunks)
+      chunks.map { |chunk| ai_vector_db.build_identifier(object_name:, object_id: o_id, content: chunk) }
     end
 
-    def upsert_chunks(chunks, vectors)
-      chunks.each do |chunk|
-        ai_vector_db.upsert(object_id: o_id, object_name:, content: chunk, metadata:, embedding: vectors.fetch(chunk)) # rubocop:disable Rails/SkipsModelValidations
+    # One upsert op per current chunk (AI::VectorDB#bulk derives each content-addressed id).
+    def upserts(chunks, vectors)
+      chunks.map do |chunk|
+        { object_id: o_id, object_name:, content: chunk, embedding: vectors.fetch(chunk), metadata: }
       end
     end
 
