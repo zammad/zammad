@@ -2012,7 +2012,7 @@ msgstr ""
 msgid "Are you sure? The embedded videos from this server will not be playable anymore."
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:79
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:93
 msgid "Are you sure? The prepared article will be removed."
 msgstr ""
 
@@ -2024,7 +2024,7 @@ msgstr ""
 msgid "Are you sure? This recent search will be lost."
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:57
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:71
 msgid "Are you sure? You have changes that will get lost."
 msgstr ""
 
@@ -2946,7 +2946,7 @@ msgstr ""
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:244
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:265
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue:217
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:136
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:127
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:68
 #: app/frontend/shared/components/Form/fields/FieldEditor/features/ai-assistant-text-tools/AiAssistantLoadingBanner/AiAssistantLoadingBanner.vue:46
 #: app/frontend/shared/components/Form/fields/FieldEditor/features/link/LinkForm.vue:169
@@ -5950,14 +5950,14 @@ msgstr ""
 msgid "Discard Changes"
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:81
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:95
 msgid "Discard article"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:56
 #: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:434
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:65
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:59
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:73
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:36
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:438
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:261
@@ -5974,7 +5974,7 @@ msgid "Discard unsaved reply"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:58
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:162
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:153
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:134
 msgid "Discard your unsaved changes"
 msgstr ""
@@ -6093,7 +6093,7 @@ msgstr ""
 #: app/frontend/apps/mobile/components/CommonDialog/CommonDialog.vue:145
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:269
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:169
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:148
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:139
 msgid "Done"
 msgstr ""
 
@@ -9948,11 +9948,6 @@ msgstr ""
 msgid "Linked Accounts"
 msgstr ""
 
-#: app/assets/javascripts/app/views/knowledge_base/_reader_linked_tickets.jst.eco:5
-#: app/assets/javascripts/app/views/knowledge_base/sidebar/linked_tickets.jst.eco:2
-msgid "Linked Tickets"
-msgstr ""
-
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/linkedAccounts.ts:8
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue:49
 msgid "Linked accounts"
@@ -13775,6 +13770,12 @@ msgstr ""
 msgid "Related Object Type"
 msgstr ""
 
+#: app/assets/javascripts/app/views/knowledge_base/_reader_linked_tickets.jst.eco:5
+#: app/assets/javascripts/app/views/knowledge_base/sidebar/linked_tickets.jst.eco:2
+#: app/assets/javascripts/app/views/link/ticket/list.jst.eco:1
+msgid "Related Tickets"
+msgstr ""
+
 #: app/assets/javascripts/app/views/link/kb_answer.jst.eco:1
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:151
 msgid "Related knowledge"
@@ -13788,7 +13789,6 @@ msgstr ""
 msgid "Related knowledge base answer creation has already been started for given ticket."
 msgstr ""
 
-#: app/assets/javascripts/app/views/link/ticket/list.jst.eco:1
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:142
 #: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:180
 msgid "Related tickets"
@@ -20124,7 +20124,7 @@ msgstr ""
 msgid "User Organization Selector - email"
 msgstr ""
 
-#: app/models/user/permissions.rb:50
+#: app/models/user/permissions.rb:53
 msgid "User authorization failed."
 msgstr ""
 

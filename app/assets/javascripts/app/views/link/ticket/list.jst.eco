@@ -1,4 +1,4 @@
-<label><%- @T('Related tickets') %></label>
+<label><%- @T('Related Tickets') %></label>
 <% for type of @links: %>
 <% type_definition = _.find(@link_types, (elem) => elem[0] == type) || [] %>
 <div class="ticketLinks">

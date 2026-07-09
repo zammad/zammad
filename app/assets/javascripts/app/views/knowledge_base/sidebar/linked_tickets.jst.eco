@@ -1,5 +1,5 @@
 <div class="sidebar-block-header">
-  <h2><%- @T('Linked Tickets') %></h2>
+  <h2><%- @T('Related Tickets') %></h2>
 </div>
 
 <%- @V('generic/ticket_list', show_max: 5, tickets: @tickets || [], object: 'Ticket', editable: @editable) %>
