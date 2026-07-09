@@ -713,7 +713,17 @@
     if ( (!text_plain || text_plain == '') && !this.$element.find('img').get(0) ) {
       return text_plain
     }
-    return this.$element.html().trim()
+    return this.htmlWithoutResizeShim()
+  }
+
+  // Drop the resize handles and wrapper div that enableObjectResizingShim adds
+  // around a selected image (#6227): if these helper elements get saved, the
+  // sanitizer buries the image in whitespace-only divs and removes it.
+  Plugin.prototype.htmlWithoutResizeShim = function() {
+    var $clone = this.$element.clone()
+    $clone.find('div.enableObjectResizingShim-handle').remove()
+    $clone.find('img.objectResizingEditorActive').not('.enableObjectResizingShim-clone').unwrap().removeClass('objectResizingEditorActive')
+    return $clone.html().trim()
   }
 
   // log method
