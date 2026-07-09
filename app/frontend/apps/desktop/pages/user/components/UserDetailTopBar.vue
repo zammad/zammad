@@ -4,7 +4,6 @@
 import { useElementSize } from '@vueuse/core'
 import { computed, toRef, useTemplateRef, type Ref } from 'vue'
 
-import { useReducedMotion } from '#shared/composables/useReducedMotion.ts'
 import type { User } from '#shared/graphql/types.ts'
 
 import { useStickyTopCalculator } from '#desktop/components/Form/fields/FieldEditor/useStickyTopCalculator.ts'
@@ -69,8 +68,6 @@ const stickyContainerTop = computed(() => {
 
 // 7px is needed to compensate some overlap
 useStickyTopCalculator(headerWithHiddenDetailsHeight, { offset: 7 })
-
-const { hasReducedMotion } = useReducedMotion()
 </script>
 
 <template>
@@ -90,7 +87,6 @@ const { hasReducedMotion } = useReducedMotion()
   <TopBarHeaderFull
     ref="header-with-details"
     class="sticky top-0 right-0 left-0 z-20 w-full min-w-xs bg-neutral-50/80 backdrop-blur-2xs dark:bg-gray-500/80"
-    :class="{ 'transition-[top]': !hasReducedMotion }"
     :inert="isCompactHeaderVisible"
     :user="user"
     :user-display-name="userDisplayName"

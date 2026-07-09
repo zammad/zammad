@@ -5,7 +5,6 @@ import { useElementSize } from '@vueuse/core'
 import { computed, toRef, useTemplateRef, type Ref } from 'vue'
 
 import CommonAlert from '#shared/components/CommonAlert/CommonAlert.vue'
-import { useReducedMotion } from '#shared/composables/useReducedMotion.ts'
 import { useTicketChannel } from '#shared/entities/ticket/composables/useTicketChannel.ts'
 import { useTicketView } from '#shared/entities/ticket/composables/useTicketView.ts'
 
@@ -120,8 +119,6 @@ const currentVisibleHeaderHeight = computed(() => {
 })
 
 useStickyTopCalculator(currentVisibleHeaderHeight, { offset: -1 }) // avoid joining with the top bar bottom border
-
-const { hasReducedMotion } = useReducedMotion()
 </script>
 
 <template>
@@ -182,11 +179,7 @@ const { hasReducedMotion } = useReducedMotion()
     <TopBarHeaderFull
       ref="header"
       class="sticky inset-x-0 top-0 z-10 w-full print:static"
-      :class="[
-        headerBaseClasses,
-        headerBackgroundClasses(true),
-        { 'transition-[top]': !hasReducedMotion },
-      ]"
+      :class="[headerBaseClasses, headerBackgroundClasses(true)]"
       :inert="isCompactHeaderVisible"
       data-test-id="ticket-detail-top-bar-full-details"
       :style="{
