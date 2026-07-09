@@ -226,18 +226,18 @@ group :development, :test do
 
   # code QA
   gem 'brakeman', require: false
-  gem 'overcommit'
-  gem 'rubocop'
-  gem 'rubocop-capybara'
-  gem 'rubocop-factory_bot'
-  gem 'rubocop-faker'
-  gem 'rubocop-graphql'
-  gem 'rubocop-inflector'
-  gem 'rubocop-performance'
-  gem 'rubocop-rails'
-  gem 'rubocop-rake'
-  gem 'rubocop-rspec'
-  gem 'rubocop-rspec_rails'
+  gem 'overcommit', require: false
+  gem 'rubocop', require: false
+  gem 'rubocop-capybara', require: false
+  gem 'rubocop-factory_bot', require: false
+  gem 'rubocop-faker', require: false
+  gem 'rubocop-graphql', require: false
+  gem 'rubocop-inflector', require: false
+  gem 'rubocop-performance', require: false
+  gem 'rubocop-rails', require: false
+  gem 'rubocop-rake', require: false
+  gem 'rubocop-rspec', require: false
+  gem 'rubocop-rspec_rails', require: false
 
   # generate random test data
   gem 'factory_bot_rails'
@@ -266,7 +266,7 @@ group :development, :test do
   gem 'ruby-keycloak-admin'
 
   # Debugging and profiling
-  gem 'pry-doc' # This gem is very large, so don't include it in production.
+  gem 'pry-doc', require: false # This gem is very large, so don't include it in production.
 end
 
 gem 'minitest', require: false

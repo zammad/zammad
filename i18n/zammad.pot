@@ -12971,6 +12971,10 @@ msgstr ""
 msgid "Permissions"
 msgstr ""
 
+#: lib/core_ext/execjs/persistent_node_runtime.rb:124
+msgid "Persistent Node.js (V8)"
+msgstr ""
+
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:12
 msgid "Personal Access Tokens"
 msgstr ""
@@ -17383,6 +17387,10 @@ msgstr ""
 
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue:92
 msgid "The password reset request was successful."
+msgstr ""
+
+#: lib/core_ext/execjs/persistent_node_runtime.rb:144
+msgid "The persistent node process died unexpectedly."
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:125
