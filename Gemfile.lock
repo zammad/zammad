@@ -30,7 +30,7 @@ GEM
   specs:
     PoParser (3.2.8)
       simple_po_parser (~> 1.1.6)
-    aasm (5.5.2)
+    aasm (6.0.0)
       concurrent-ruby (~> 1.0)
     actioncable (8.0.5)
       actionpack (= 8.0.5)
