@@ -2135,8 +2135,7 @@ const { openFeedbackDialog } = useFeedbackDialog()
         <pre
           class="flex flex-wrap gap-5 rounded-lg bg-blue-200 p-5 font-mono text-sm text-wrap text-gray-100 dark:bg-gray-700 dark:text-neutral-400"
         >
-          {{ formValues }}</pre
-        >
+          {{ formValues }}</pre>
       </div>
 
       <section class="mb-6">
@@ -2151,8 +2150,7 @@ const { openFeedbackDialog } = useFeedbackDialog()
           <CommonTabGroup v-model="activeTab" :tabs="playgroundTabItems" select-first-by-default />
         </div>
         <pre class="mb-6 rounded bg-blue-100 px-3 py-1 font-mono text-xs dark:bg-gray-700">
-active: {{ activeTab }}</pre
-        >
+active: {{ activeTab }}</pre>
 
         <h3 class="mb-2">2. Tab Group — Multi Select (scroll, no marker)</h3>
         <p class="mb-2 text-sm text-gray-500">
@@ -2168,8 +2166,7 @@ active: {{ activeTab }}</pre
           />
         </div>
         <pre class="mb-6 rounded bg-blue-100 px-3 py-1 font-mono text-xs dark:bg-gray-700">
-active: {{ activeFilters }}</pre
-        >
+active: {{ activeFilters }}</pre>
 
         <h3 class="mb-2">3. Tab Group — Single Select (overflow menu)</h3>
         <p class="mb-2 text-sm text-gray-500">
@@ -2185,8 +2182,7 @@ active: {{ activeFilters }}</pre
           />
         </div>
         <pre class="mb-6 rounded bg-blue-100 px-3 py-1 font-mono text-xs dark:bg-gray-700">
-active: {{ activeTabOverflow }}</pre
-        >
+active: {{ activeTabOverflow }}</pre>
 
         <h3 class="mb-2">4. Tab Group — Multi Select (overflow menu)</h3>
         <p class="mb-2 text-sm text-gray-500">
@@ -2203,8 +2199,7 @@ active: {{ activeTabOverflow }}</pre
           />
         </div>
         <pre class="mb-6 rounded bg-blue-100 px-3 py-1 font-mono text-xs dark:bg-gray-700">
-active: {{ activeFiltersOverflow }}</pre
-        >
+active: {{ activeFiltersOverflow }}</pre>
 
         <h3 class="mb-2">5. Navigation Tabs — Scroll Mode</h3>
         <p class="mb-2 text-sm text-gray-500">
@@ -2219,8 +2214,7 @@ active: {{ activeFiltersOverflow }}</pre
           />
         </div>
         <pre class="mb-6 rounded bg-blue-100 px-3 py-1 font-mono text-xs dark:bg-gray-700">
-active: {{ activeNavTabScroll }}</pre
-        >
+active: {{ activeNavTabScroll }}</pre>
 
         <h3 class="mb-2">6. Navigation Tabs — Overflow Menu</h3>
         <p class="mb-2 text-sm text-gray-500">
@@ -2235,8 +2229,7 @@ active: {{ activeNavTabScroll }}</pre
           />
         </div>
         <pre class="mb-6 rounded bg-blue-100 px-3 py-1 font-mono text-xs dark:bg-gray-700">
-active: {{ activeNavTabOverflow }}</pre
-        >
+active: {{ activeNavTabOverflow }}</pre>
       </section>
 
       <h3>Split Button</h3>

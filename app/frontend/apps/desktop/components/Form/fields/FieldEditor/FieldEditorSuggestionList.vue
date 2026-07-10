@@ -85,9 +85,7 @@ const emptyMessage = computed(() => {
     <!-- eslint-disable-next-line vuejs-accessibility/interactive-supports-focus, vuejs-accessibility/click-events-have-key-events -->
     <li
       v-for="(item, index) in items as
-        | MentionKnowledgeBaseItem[]
-        | MentionTextItem[]
-        | MentionUserItem[]"
+        MentionKnowledgeBaseItem[] | MentionTextItem[] | MentionUserItem[]"
       :id="optionId(index)"
       :key="item.id"
       class="group cursor-pointer px-4 py-2 hover:bg-blue-600 dark:hover:bg-blue-900"
