@@ -104,7 +104,7 @@ RSpec.describe Ticket::Overviews do
       it 'displays the correct amount of tickets in the list' do
         result = described_class.index(user, ['my_subscribed_tickets'])
 
-        expect(result.first[:tickets].pluck(:id)).to eq([ticket_read.id, ticket_overview.id])
+        expect(result.first[:tickets].pluck(:id)).to eq([ticket_overview.id, ticket_read.id])
       end
     end
   end

@@ -94,13 +94,13 @@ Overview.create_if_not_exists(
   role_ids:  [overview_role.id],
   condition: { 'ticket.mention_user_ids'=>{ 'operator' => 'is', 'pre_condition' => 'current_user.id', 'value' => '', 'value_completion' => '' } },
   order:     {
-    by:        'created_at',
-    direction: 'ASC',
+    by:        'updated_at',
+    direction: 'DESC',
   },
   view:      {
-    d:                 %w[title customer group created_at],
-    s:                 %w[title customer group created_at],
-    m:                 %w[number title customer group created_at],
+    d:                 %w[title customer group created_at updated_by updated_at],
+    s:                 %w[title customer group created_at updated_by updated_at],
+    m:                 %w[number title customer group created_at updated_by updated_at],
     view_mode_default: 's',
   },
 )
