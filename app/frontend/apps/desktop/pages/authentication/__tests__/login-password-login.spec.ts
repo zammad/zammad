@@ -133,10 +133,14 @@ describe('password login', () => {
 
     await waitFor(() => {
       expect(
-        view.getByText(
-          'Login failed. Have you double-checked your credentials and completed the email verification step?',
-        ),
-      ).toHaveRole('alert')
+        view
+          .getAllByRole('alert')
+          .every((alert) =>
+            alert.textContent?.includes(
+              'Login failed. Have you double-checked your credentials and completed the email verification step?',
+            ),
+          ),
+      ).toBe(true)
 
       expect(username).toHaveValue('admin@example.com')
       expect(password).toHaveValue('')
