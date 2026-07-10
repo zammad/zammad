@@ -485,6 +485,21 @@ RSpec.describe 'Search', authenticated_as: :authenticate, searchindex: true, typ
     end
   end
 
+  describe 'Sidebar gets stuck with "no match" when pressing enter too quickly #4786' do
+    let(:agent)             { create(:agent, groups: Group.all) }
+    let(:authenticate_user) { agent }
+
+    it 'does not leave a stale "no match" banner in the sidebar' do
+      find('#global-search').send_keys('zzqqxxwwvvuu', :enter)
+
+      within '.detail-search' do
+        expect(page).to have_css('.js-content table.table--placeholder')
+      end
+
+      expect(page).to have_no_css('.search.open')
+    end
+  end
+
   context 'Assign user to multiple organizations #1573' do
     let(:organizations) { create_list(:organization, 20) }
     let(:customer)      { create(:customer, organization: organizations[0], organizations: organizations[1..]) }

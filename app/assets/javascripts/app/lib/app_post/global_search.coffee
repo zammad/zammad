@@ -127,3 +127,10 @@ class App.GlobalSearch extends App.Controller
 
   close: =>
     @lastParams = undefined
+
+    # cancel pending/in-flight search so a late response can not re-render after close (#4786)
+    @clearDelay('global-search-ajax')
+    @clearDelay('global-search-ajax-longer-as-expected')
+    if @ajaxRequestId
+      App.Ajax.abort(@ajaxRequestId)
+      @ajaxRequestId = undefined
