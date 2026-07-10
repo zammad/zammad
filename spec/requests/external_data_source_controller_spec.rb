@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'External Data Source', :aggregate_failures, type: :request do
-  let(:agent)          { create(:agent) }
+  let(:agent)          { create(:agent, groups: [ticket.group]) }
   let(:admin)          { create(:admin) }
   let(:object_name)    { 'Ticket' }
   let(:attribute)      { create(:object_manager_attribute_autocompletion_ajax_external_data_source, object_name:) }
@@ -55,6 +55,30 @@ RSpec.describe 'External Data Source', :aggregate_failures, type: :request do
 
           expect(response).to have_http_status(:forbidden)
           expect(json_response).to include('error' => 'Not authorized')
+        end
+      end
+
+      context 'when ticket belongs to a group the agent has no access to' do
+        let(:agent)  { create(:agent) }
+        let(:ticket) { create(:ticket, group: create(:group)) }
+
+        it 'excludes the ticket from the render context' do
+          get url, as: :json
+
+          expect(response).to have_http_status(:ok)
+          expect(ExternalDataSource).to have_received(:new).with(include(render_context: { ticket: nil, user: agent }))
+        end
+      end
+
+      context 'when group_id belongs to a group the agent has no access to' do
+        let(:other_group) { create(:group) }
+        let(:url)         { "/api/v1/external_data_source/#{attribute.object_lookup.name}/#{attribute.name}?query=abc&search_context%5Bticket_id%5D=#{ticket.id}&search_context%5Bgroup_id%5D=#{other_group.id}" }
+
+        it 'excludes the group from the render context' do
+          get url, as: :json
+
+          expect(response).to have_http_status(:ok)
+          expect(ExternalDataSource).to have_received(:new).with(include(render_context: { ticket: ticket, group: nil, user: agent }))
         end
       end
     end
@@ -113,6 +137,59 @@ RSpec.describe 'External Data Source', :aggregate_failures, type: :request do
                       ticket: a_kind_of(Ticket).and(have_attributes(customer: customer))
                     }
                   ))
+        end
+      end
+    end
+  end
+
+  context 'when authenticated as customer', authenticated_as: :customer do
+    let(:customer) { create(:customer) }
+
+    describe '#fetch' do
+      context 'when ticket belongs to another, unrelated customer' do
+        let(:ticket) { create(:ticket, customer: create(:customer)) }
+
+        it 'excludes the ticket from the render context' do
+          get url, as: :json
+
+          expect(response).to have_http_status(:ok)
+          expect(ExternalDataSource).to have_received(:new).with(include(render_context: { ticket: nil, user: customer }))
+        end
+      end
+
+      context 'when customer_id belongs to another, unrelated customer' do
+        let(:other_customer) { create(:customer) }
+        let(:url)            { "/api/v1/external_data_source/#{attribute.object_lookup.name}/#{attribute.name}?query=abc&search_context%5Bcustomer_id%5D=#{other_customer.id}" }
+
+        it 'excludes the fake ticket from the render context' do
+          get url, as: :json
+
+          expect(response).to have_http_status(:ok)
+          expect(ExternalDataSource).to have_received(:new).with(include(render_context: { user: customer }))
+        end
+      end
+
+      context 'when organization_id belongs to an unrelated organization' do
+        let(:other_organization) { create(:organization) }
+        let(:url)                { "/api/v1/external_data_source/#{attribute.object_lookup.name}/#{attribute.name}?query=abc&search_context%5Borganization_id%5D=#{other_organization.id}" }
+
+        it 'excludes the organization from the render context' do
+          get url, as: :json
+
+          expect(response).to have_http_status(:ok)
+          expect(ExternalDataSource).to have_received(:new).with(include(render_context: { organization: nil, user: customer }))
+        end
+      end
+
+      context 'when user_id belongs to an unrelated user' do
+        let(:other_user) { create(:customer) }
+        let(:url)        { "/api/v1/external_data_source/#{attribute.object_lookup.name}/#{attribute.name}?query=abc&search_context%5Buser_id%5D=#{other_user.id}" }
+
+        it 'falls back to the current user instead of exposing the unrelated user' do
+          get url, as: :json
+
+          expect(response).to have_http_status(:ok)
+          expect(ExternalDataSource).to have_received(:new).with(include(render_context: { user: customer }))
         end
       end
     end
