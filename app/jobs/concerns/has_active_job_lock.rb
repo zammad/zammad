@@ -163,7 +163,7 @@ module HasActiveJobLock
       return
     end
 
-    delayed_job = Delayed::Job.find_by('handler LIKE ?', "%#{active_job_lock.active_job_id}%")
+    delayed_job = active_job_lock.related_job
 
     if !delayed_job
       active_job_lock.transfer_to(self)

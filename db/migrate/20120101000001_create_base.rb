@@ -653,10 +653,12 @@ class CreateBase < ActiveRecord::Migration[4.2]
       t.datetime :failed_at, limit: 3          # Set when all retries have failed (actually, by default, the record is deleted instead)
       t.string   :locked_by                    # Who is working on this object (if locked)
       t.string   :queue                        # The name of the queue this job is in
+      t.string   :active_job_id                # The ActiveJob job_id extracted from handler, used for lookups instead of `handler LIKE`
       t.timestamps limit: 3, null: false
     end
 
     add_index :delayed_jobs, %i[priority run_at], name: 'delayed_jobs_priority'
+    add_index :delayed_jobs, :active_job_id
 
     create_table :external_syncs do |t|
       t.string  :source,                 limit: 100,  null: false
