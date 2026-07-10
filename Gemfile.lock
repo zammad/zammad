@@ -493,8 +493,9 @@ GEM
     omniauth-saml (2.2.5)
       omniauth (~> 2.1)
       ruby-saml (~> 1.18)
-    omniauth-twitter (1.4.0)
-      omniauth-oauth (~> 1.1)
+    omniauth-twitter (1.5.0)
+      cgi
+      omniauth-oauth (~> 1.2)
       rack
     omniauth-weibo-oauth2 (0.5.3)
       omniauth
