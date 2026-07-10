@@ -167,9 +167,23 @@ class CoreWorkflow::Result
     return false if assets == false
     return false if !@assets_in_result
 
+    set_target_object_assets
+
     @result[:assets] = assets
 
     true
+  end
+
+  # Ship the currently edited object with the result so the frontend can
+  # refresh its (potentially stale) cached copy. Without this the client
+  # falls back to an outdated value when restricting a field, which can
+  # reset e.g. the state field to the first option (#3880).
+  def set_target_object_assets
+    saved = attributes.saved_only
+    return if !saved
+    return if !saved.authorized_asset?
+
+    @assets = saved.assets(@assets)
   end
 
   def workflow_restricted_fields

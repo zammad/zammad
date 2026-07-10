@@ -2115,6 +2115,33 @@ RSpec.describe 'Ticket zoom', type: :system do
     end
   end
 
+  describe 'Changing ticket status resets state to the first dropdown option when the cached object is stale #3880', authenticated_as: :authenticate do
+    let(:ticket) { create(:ticket, group: Group.find_by(name: 'Users')) }
+
+    def authenticate
+      ticket
+      true
+    end
+
+    before do
+      visit "#ticket/zoom/#{ticket.id}"
+    end
+
+    it 'keeps the real ticket state instead of resetting to the first option' do
+      expect(page).to have_select('state_id', selected: 'new')
+
+      # Simulate a concurrent update whose websocket push has not yet reached
+      # the client (e.g. behind a reverse proxy), so the cached ticket object
+      # stays stale while the backend already sees the new state.
+      Ticket.where(id: ticket.id).update_all(state_id: Ticket::State.find_by(name: 'open').id, updated_at: Time.current)
+
+      # Trigger a Core Workflow run without touching the state field.
+      page.select '3 high', from: 'priority_id'
+
+      expect(page).to have_select('state_id', selected: 'open')
+    end
+  end
+
   describe 'Multiselect marked as dirty', authenticated_as: :authenticate, db_strategy: :reset do
     let(:field_name) { SecureRandom.uuid }
     let(:ticket)     { create(:ticket, group: Group.find_by(name: 'Users'), field_name => []) }
