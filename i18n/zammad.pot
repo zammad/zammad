@@ -1982,7 +1982,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm_delete.coffee:6
 #: app/assets/javascripts/app/controllers/_channel/_channel_account_overview.coffee:185
-#: app/assets/javascripts/app/controllers/_channel/email.coffee:145
+#: app/assets/javascripts/app/controllers/_channel/email.coffee:141
 #: app/assets/javascripts/app/controllers/_channel/facebook.coffee:99
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee:67
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:68
@@ -2282,7 +2282,9 @@ msgstr ""
 msgid "August"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_channel/_email_notification.coffee:180
 #: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:172
+#: app/assets/javascripts/app/controllers/_channel/microsoft_graph_notification.coffee:75
 msgid "Authenticate"
 msgstr ""
 
@@ -3175,7 +3177,7 @@ msgstr ""
 msgid "Changes were made that require a database update."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/email.coffee:259
+#: app/assets/javascripts/app/controllers/_channel/email.coffee:243
 #: app/assets/javascripts/app/controllers/_channel/google.coffee:55
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:60
 #: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:68
@@ -5808,7 +5810,7 @@ msgstr ""
 msgid "Desktop BETA UI Switch Roles"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/email.coffee:263
+#: app/assets/javascripts/app/controllers/_channel/email.coffee:247
 #: app/assets/javascripts/app/controllers/_channel/google.coffee:59
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:64
 #: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:72
@@ -5829,7 +5831,7 @@ msgstr ""
 msgid "Destination caller ID or queue"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/email.coffee:264
+#: app/assets/javascripts/app/controllers/_channel/email.coffee:248
 #: app/assets/javascripts/app/controllers/_channel/google.coffee:60
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:65
 #: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:73
@@ -6466,8 +6468,9 @@ msgid "Email Accounts"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/_channel_account_overview.coffee:282
-#: app/assets/javascripts/app/controllers/_channel/email.coffee:201
+#: app/assets/javascripts/app/controllers/_channel/email.coffee:197
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:126
+#: app/assets/javascripts/app/views/channel/email_notification_overview.jst.eco:50
 #: app/assets/javascripts/app/views/channel_account/list.jst.eco:96
 msgid "Email Address"
 msgstr ""
@@ -7583,7 +7586,7 @@ msgstr ""
 msgid "Focus on %s"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/email.coffee:422
+#: app/assets/javascripts/app/controllers/_channel/email.coffee:406
 #: app/assets/javascripts/app/controllers/_channel/google.coffee:61
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:66
 #: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:273
@@ -9229,7 +9232,7 @@ msgstr ""
 msgid "Invalid GitLab issue link format"
 msgstr ""
 
-#: app/controllers/external_credentials_controller.rb:71
+#: app/controllers/external_credentials_controller.rb:72
 #: lib/external_credential/exchange.rb:43
 #: lib/external_credential/facebook.rb:42
 #: lib/external_credential/google.rb:39
@@ -9501,7 +9504,7 @@ msgstr ""
 msgid "Kayako"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/email.coffee:423
+#: app/assets/javascripts/app/controllers/_channel/email.coffee:407
 #: app/assets/javascripts/app/controllers/_channel/google.coffee:62
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:67
 #: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:274
@@ -10170,7 +10173,9 @@ msgstr ""
 msgid "Macros make it easy to automate common, multi-step tasks within Zammad.\n\nYou can use macros in Zammad to automate recurring sequences, saving time (and nerves). This allows a combined sequence of actions on the ticket to be executed with just one click."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_channel/_email_notification.coffee:168
 #: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:177
+#: app/assets/javascripts/app/controllers/_channel/microsoft_graph_notification.coffee:66
 msgid "Mailbox type"
 msgstr ""
 
@@ -11531,7 +11536,7 @@ msgstr ""
 msgid "No Microsoft 365 app configured!"
 msgstr ""
 
-#: app/controllers/external_credentials_controller.rb:74
+#: app/controllers/external_credentials_controller.rb:75
 #: lib/external_credential/microsoft_graph.rb:9
 msgid "No Microsoft Graph app configured!"
 msgstr ""
@@ -15547,6 +15552,7 @@ msgstr ""
 msgid "Shared Drafts"
 msgstr ""
 
+#: app/assets/javascripts/app/views/channel/email_notification_overview.jst.eco:21
 #: app/assets/javascripts/app/views/channel_account/list.jst.eco:65
 msgid "Shared Mailbox"
 msgstr ""
@@ -15583,7 +15589,9 @@ msgstr ""
 msgid "Shared drafts are not activated for the selected group"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_channel/_email_notification.coffee:168
 #: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:177
+#: app/assets/javascripts/app/controllers/_channel/microsoft_graph_notification.coffee:66
 msgid "Shared mailbox"
 msgstr ""
 
@@ -17621,7 +17629,7 @@ msgstr ""
 msgid "The required parameter 'client_secret' is missing."
 msgstr ""
 
-#: app/controllers/external_credentials_controller.rb:75
+#: app/controllers/external_credentials_controller.rb:76
 #: lib/external_credential/exchange.rb:47
 #: lib/external_credential/google.rb:43
 #: lib/external_credential/microsoft_base.rb:80
@@ -17942,7 +17950,7 @@ msgstr ""
 msgid "The user token could not be generated."
 msgstr ""
 
-#: app/controllers/external_credentials_controller.rb:106
+#: app/controllers/external_credentials_controller.rb:107
 #: lib/external_credential/exchange.rb:55
 #: lib/external_credential/microsoft_base.rb:88
 msgid "The user's 'preferred_username' could not be extracted from 'id_token'."
@@ -18582,7 +18590,7 @@ msgstr ""
 msgid "This user is currently blocked because of too many failed login attempts."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_channel/email.coffee:264
+#: app/assets/javascripts/app/controllers/_channel/email.coffee:248
 #: app/assets/javascripts/app/controllers/_channel/google.coffee:60
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:65
 #: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:73
@@ -20275,7 +20283,9 @@ msgstr ""
 msgid "User is out of office"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_channel/_email_notification.coffee:168
 #: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:177
+#: app/assets/javascripts/app/controllers/_channel/microsoft_graph_notification.coffee:66
 msgid "User mailbox"
 msgstr ""
 
@@ -22975,7 +22985,9 @@ msgstr ""
 msgid "updated"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_channel/_email_notification.coffee:169
 #: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:178
+#: app/assets/javascripts/app/controllers/_channel/microsoft_graph_notification.coffee:67
 msgid "user@your-organization.tld"
 msgstr ""
 
