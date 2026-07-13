@@ -159,6 +159,12 @@ export default defineConfig(async ({ mode, command }) => {
     },
     server: {
       https,
+      // The HMR websocket cannot ride the Rails asset proxy (no upgrade support) — point
+      // the client directly at the Vite dev server port instead of the page origin.
+      hmr: {
+        host: process.env.VITE_RUBY_HOST || 'localhost',
+        clientPort: Number(process.env.VITE_RUBY_PORT || 3036),
+      },
       watch: {
         ignored: isTesting
           ? []
