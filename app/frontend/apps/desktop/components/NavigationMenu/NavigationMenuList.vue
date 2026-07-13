@@ -5,6 +5,7 @@ import { computed } from 'vue'
 
 import type { BadgeVariant } from '#shared/components/CommonBadge/types.ts'
 import type { Sizes } from '#shared/components/CommonLabel/types.ts'
+import { useSessionStore } from '#shared/stores/session.ts'
 
 import {
   NavigationMenuDensity,
@@ -24,7 +25,9 @@ const props = withDefaults(defineProps<Props>(), {
   countSize: 'xs',
 })
 
-const availableItems = computed(() => props.items.filter((entry) => entry.show?.() ?? true))
+const { user } = useSessionStore()
+
+const availableItems = computed(() => props.items.filter((entry) => entry.show?.(user) ?? true))
 
 const paddingClasses = computed(() =>
   props.density === NavigationMenuDensity.Dense ? 'px-2 py-1' : 'px-2 py-3',

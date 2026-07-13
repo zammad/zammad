@@ -2,7 +2,11 @@
 
 import { renderComponent } from '#tests/support/components/index.ts'
 import type { ExtendedRenderResult } from '#tests/support/components/index.ts'
+import { mockPermissions } from '#tests/support/mock-permissions.ts'
+import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
+
+import type { UserData } from '#shared/types/store.ts'
 
 import NavigationMenu from '../NavigationMenu.vue'
 
@@ -154,5 +158,76 @@ describe('menu filtering', () => {
 
     expect(view.queryByText('apply filter')).toBeInTheDocument()
     expect(view.queryByText('Personal')).toBeInTheDocument()
+  })
+})
+
+describe('menu entry visibility via "show"', () => {
+  const renderMenuWithShowEntry = () => {
+    return renderComponent(NavigationMenu, {
+      props: {
+        categories: [
+          {
+            label: 'Profile',
+            id: 'category-profile',
+            order: 1000,
+          },
+        ],
+        entries: {
+          Profile: [
+            {
+              category: {
+                label: 'Profile',
+                id: 'category-profile',
+                order: 1000,
+              },
+              label: 'New BETA UI',
+              route: {
+                path: 'new-beta-ui',
+                meta: {
+                  requiredPermission: 'user_preferences.beta_ui_switch',
+                },
+              },
+              show: (currentUser: Maybe<UserData>) =>
+                currentUser?.hasBetaUiSwitchAvailable ?? false,
+            },
+          ],
+        },
+      },
+      router: true,
+    })
+  }
+
+  it('shows the entry when the current user satisfies its "show" condition', () => {
+    mockUserCurrent({
+      hasBetaUiSwitchAvailable: true,
+    })
+
+    mockPermissions(['user_preferences.beta_ui_switch'])
+
+    const view = renderMenuWithShowEntry()
+
+    expect(view.getByText('New BETA UI')).toBeInTheDocument()
+  })
+
+  it('hides the entry when the current user does not satisfy its "show" condition', () => {
+    mockUserCurrent({
+      hasBetaUiSwitchAvailable: false,
+    })
+
+    mockPermissions(['user_preferences.beta_ui_switch'])
+
+    const view = renderMenuWithShowEntry()
+
+    expect(view.queryByText('New BETA UI')).not.toBeInTheDocument()
+  })
+
+  it('hides the entry when the current user does have required permission', () => {
+    mockUserCurrent({
+      hasBetaUiSwitchAvailable: true,
+    })
+
+    const view = renderMenuWithShowEntry()
+
+    expect(view.queryByText('New BETA UI')).not.toBeInTheDocument()
   })
 })
