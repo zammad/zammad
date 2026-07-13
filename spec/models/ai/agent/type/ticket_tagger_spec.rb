@@ -30,12 +30,11 @@ RSpec.describe AI::Agent::Type::TicketTagger, :aggregate_failures, current_user_
     context 'when tag_new is disabled' do
       before { Setting.set('tag_new', false) }
 
-      it 'omits the New Tags Rules section but keeps the base sections' do
+      it 'includes the No New Tags Rules section' do
         instruction = agent_type.execution_definition['instruction']
 
-        expect(instruction).not_to include('New Tags Rules:')
-        expect(instruction)
-          .to include('Apply the following principles when assigning tags:')
+        expect(instruction).to include('No New Tags Rules:')
+          .and include('Apply the following principles when assigning tags:')
           .and include('Language:')
           .and include('Priority Rules:')
           .and include('Tag Count & Mode:')

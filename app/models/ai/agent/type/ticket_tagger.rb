@@ -79,18 +79,23 @@ New Tag Normalization:
 
       Priority Rules:
       \#{type_enrichment_data.priority_tagging_rules}
-      <% if @objects[:type_enrichment_data].tag_new -%>
 
-      New Tags Rules:
-      \#{type_enrichment_data.tag_new_rules}
-
-      <% end -%>
       Tag Count & Mode:
       <% if @objects[:type_enrichment_data].tag_operator != 'replace' -%>
       - Keep the existing tags and add up to \#{type_enrichment_data.number_of_tags} new tags. Return no more than \#{type_enrichment_data.number_of_tags} tags.
       - Do not include current tags in the output.
       <% else -%>
       - Add up to \#{type_enrichment_data.number_of_tags} new tags. Return no more than \#{type_enrichment_data.number_of_tags} tags.
+      <% end -%>
+
+      <% if @objects[:type_enrichment_data].tag_new -%>
+      New Tags Rules:
+      \#{type_enrichment_data.tag_new_rules}
+      <% else -%>
+      No New Tags Rules:
+      - NEVER generate new tags under any circumstances.
+      - Do NOT create new tags, even if the content suggests a new topic or concept.
+      - Only pick from the list of available tags in XML.
       <% end -%>
     INSTRUCTION
   end
