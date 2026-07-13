@@ -20,11 +20,13 @@ RSpec.describe Authorization, type: :model do
         'info'        => auth_info,
         'uid'         => auth_uid,
         'provider'    => provider,
+        'extra'       => extra,
         'credentials' => auth_credentials,
       }
     end
     let(:auth_info) { {} }
     let(:auth_uid)  { SecureRandom.uuid }
+    let(:extra)     { {} }
     let(:auth_credentials) do
       {
         'token'  => '1234',
@@ -59,61 +61,82 @@ RSpec.describe Authorization, type: :model do
       end
     end
 
+    shared_examples 'does not link account with unverified email address', :aggregate_failures do
+      it 'does not link the existing account' do
+        expect { described_class.create_from_hash(auth_hash) }
+          .to raise_error(Exceptions::UnprocessableContent, %r{Email address.*is already used})
+          .and not_change(User, :count)
+
+        expect(described_class.find_by(provider: provider, uid: auth_uid)).to be_nil
+      end
+    end
+
     context 'when auth provider provides an email address' do
       let(:email) { 'john.doe@example.com' }
       let(:auth_info) do
-        {
-          'email' => email,
-        }
+        { 'email' => email }
       end
       let(:user) { create(:user, login: auth_uid, email: email) }
 
-      context 'when "github" is the provider' do
-        let(:provider) { 'github' }
+      # GitHub, GitLab, Google OAuth2, Facebook, Twitter, LinkedIn and Weibo
+      # have no reliable email-verification signal in production (see
+      # Authorization::Provider and spec/models/authorization/
+      # authorization_sso_account_linking_spec.rb for why), so they link
+      # purely on a matching email address, regardless of any
+      # "email_verified" value. This is an accepted trade-off, not an
+      # oversight - Microsoft 365 is the only provider that actually
+      # verifies (see below).
+      context 'when the provider has no email verification signal' do
+        %w[github gitlab google_oauth2 facebook twitter linkedin weibo].each do |prov|
+          context "when \"#{prov}\" is the provider" do
+            let(:provider) { prov }
 
-        include_examples 'links account with email address'
+            include_examples 'links account with email address'
+          end
+        end
       end
 
-      context 'when "gitlab" is the provider' do
-        let(:provider) { 'gitlab' }
+      context 'when microsoft_office365 id_token explicitly marks xms_edov false' do
+        let(:provider) { 'microsoft_office365' }
+        let(:extra)    { { 'id_token_claims' => { 'xms_edov' => false } } }
 
-        include_examples 'links account with email address'
+        include_examples 'does not link account with unverified email address'
       end
 
-      context 'when "facebook" is the provider' do
-        let(:provider) { 'facebook' }
-
-        include_examples 'links account with email address'
-      end
-
-      context 'when "twitter" is the provider' do
-        let(:provider) { 'twitter' }
-
-        include_examples 'links account with email address'
-      end
-
-      context 'when "linkedin" is the provider' do
-        let(:provider) { 'linkedin' }
-
-        include_examples 'links account with email address'
-      end
-
-      context 'when "microsoft_office365" is the provider' do
+      context 'when microsoft_office365 id_token has no xms_edov claim at all' do
         let(:provider) { 'microsoft_office365' }
 
         include_examples 'links account with email address'
       end
 
-      context 'when "google_oauth2" is the provider' do
-        let(:provider) { 'google_oauth2' }
+      # In testing, Azure only ever sends "xms_edov" as true or omits it -
+      # never an explicit false for an unverified domain (see
+      # authorization_sso_account_linking_spec.rb). "require_verified_email_domain"
+      # is the opt-in, fail-closed alternative for admins who've configured the
+      # "email"/"xms_edov" optional claims on the app registration: unlike the
+      # default above, a missing claim blocks linking instead of allowing it.
+      context 'when microsoft_office365 strict verification is enabled' do
+        let(:provider) { 'microsoft_office365' }
 
-        include_examples 'links account with email address'
-      end
+        before do
+          Setting.set('auth_microsoft_office365_credentials', { 'require_verified_email_domain' => true })
+        end
 
-      context 'when "weibo" is the provider' do
-        let(:provider) { 'weibo' }
+        context 'when xms_edov is true' do
+          let(:extra) { { 'id_token_claims' => { 'xms_edov' => true } } }
 
-        include_examples 'links account with email address'
+          include_examples 'links account with email address'
+        end
+
+        context 'when xms_edov is false' do
+          let(:extra) { { 'id_token_claims' => { 'xms_edov' => false } } }
+
+          include_examples 'does not link account with unverified email address'
+        end
+
+        context 'when xms_edov is absent' do
+          include_examples 'does not link account with unverified email address'
+        end
       end
     end
   end
