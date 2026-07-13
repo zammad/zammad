@@ -43,7 +43,7 @@ class ExternalDataSourceController < ApplicationController
 
       next if !param_value
 
-      memo[model.name.downcase.to_sym] = model.find_by(id: param_value)
+      memo[model.name.downcase.to_sym] = authorized_record(model, param_value)
     end
 
     result[:user] ||= current_user
@@ -54,14 +54,23 @@ class ExternalDataSourceController < ApplicationController
     result
   end
 
+  def authorized_record(model, id)
+    record = model.find_by(id:)
+
+    return if !record
+    return if !authorized?(record, :show?)
+
+    record
+  end
+
   def inject_ticket(search_context, result)
     return if result[:ticket]
     return if !search_context['customer_id']
 
-    customer = ::User.find_by(id: search_context['customer_id'])
+    customer = authorized_record(::User, search_context['customer_id'])
 
     return if !customer
 
-    result[:ticket] = ::Ticket.new(customer: customer)
+    result[:ticket] = ::Ticket.new(customer:)
   end
 end

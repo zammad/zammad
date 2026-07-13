@@ -14200,7 +14200,7 @@ msgstr ""
 msgid "SSO"
 msgstr ""
 
-#: app/controllers/sessions_controller.rb:264
+#: app/controllers/sessions_controller.rb:268
 msgid "SSO request from untrusted IP address."
 msgstr ""
 
@@ -17472,8 +17472,6 @@ msgstr ""
 msgid "The two-factor authentication method \"%s\" was removed for this user."
 msgstr ""
 
-#: app/controllers/sessions_controller.rb:253
-#: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:32
 #: app/services/service/user/two_factor/initiate_method_configuration.rb:6
 #: app/services/service/user/two_factor/verify_method_configuration.rb:15
 msgid "The two-factor authentication method is not enabled."
@@ -17504,8 +17502,8 @@ msgstr ""
 msgid "The user's 'preferred_username' could not be extracted from 'id_token'."
 msgstr ""
 
-#: app/controllers/sessions_controller.rb:249
-#: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:27
+#: app/controllers/sessions_controller.rb:253
+#: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:36
 msgid "The username or password is incorrect."
 msgstr ""
 
