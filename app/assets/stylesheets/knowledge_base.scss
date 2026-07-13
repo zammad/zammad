@@ -86,8 +86,17 @@ $dark-border: hsl(210, 14%, 91%);
   outline: none;
 }
 
+:root {
+  --font-family-base: 'Fira Sans', 'Helvetica Neue', helvetica, arial, sans-serif;
+}
+
+// Persian locale uses IRANYekanX instead of the default typeface.
+html[lang^='fa'] {
+  --font-family-base: 'IRANYekanX', 'Fira Sans', 'Helvetica Neue', helvetica, arial, sans-serif;
+}
+
 html {
-  font-family: 'Fira Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: var(--font-family-base);
   font-size: 16px;
   line-height: 1.5;
   color: $light-color;

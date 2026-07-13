@@ -38,4 +38,11 @@
   --color-green-highlight: #38ad691a;
 
   --color-orange: #f39804;
+
+  --font-sans: 'Fira Sans', 'Helvetica Neue', helvetica, arial, sans-serif;
+}
+
+/* Persian locale uses IRANYekanX instead of the default typeface. */
+html[lang='fa-ir'] {
+  --font-sans: 'IRANYekanX', 'Fira Sans', 'Helvetica Neue', helvetica, arial, sans-serif;
 }

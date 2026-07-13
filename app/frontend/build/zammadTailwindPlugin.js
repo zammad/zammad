@@ -61,7 +61,7 @@ module.exports = plugin(
     theme: {
       extend: {
         fontFamily: {
-          sans: ['"Fira Sans"', '"Helvetica Neue"', 'Helvetica', 'Arial', 'sans-serif'],
+          sans: ['var(--font-sans)'],
           mono: ['"Fira Mono"', ...defaultTheme.fontFamily.mono],
         },
         colors: {

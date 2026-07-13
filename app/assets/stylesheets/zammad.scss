@@ -11,6 +11,7 @@ $mobileNavigationWidth: 50px;
 $mobileNavigationWidthOpen: 220px;
 
 :root {
+  --font-family-base: 'Fira Sans', 'Helvetica Neue', helvetica, arial, sans-serif;
   --button-action-color: hsl(0, 0%, 60%);
   --button-background: white;
   --button-background-active: hsl(0, 0, 98%);
@@ -116,6 +117,11 @@ $mobileNavigationWidthOpen: 220px;
   --ai-assist-pink: hsl(340, 77%, 61%);
   --table-border: hsl(0, 0%, 69%);
   --table-header-background: hsla(0, 0%, 0%, 0.1);
+}
+// Persian locale uses IRANYekanX instead of the default typeface.
+// `lang` is truncated to 2 letters here (see i18n.coffee `set()`), 'fa' is the only locale with that prefix.
+html[lang^='fa'] {
+  --font-family-base: 'IRANYekanX', 'Fira Sans', 'Helvetica Neue', helvetica, arial, sans-serif;
 }
 // dark mode
 [data-theme='dark'] {
@@ -266,7 +272,7 @@ html {
 }
 
 body {
-  font-family: 'Fira Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: var(--font-family-base);
   font-weight: normal;
   font-variant-ligatures: none;
   line-height: 1.45;
@@ -1406,8 +1412,14 @@ pre code {
     width: 34px;
     justify-content: center;
 
+    @include rtl(border-left, 1px solid var(--border));
+    @include rtl(border-right, none);
+
     @include phone {
       border-top-right-radius: 5px !important;
+
+      @include rtl(border-top-right-radius, 0 !important);
+      @include rtl(border-top-left-radius, 5px !important);
     }
   }
 
@@ -1568,7 +1580,7 @@ table {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    text-align: right;
+    text-align: end;
   }
 }
 
@@ -2395,8 +2407,9 @@ fieldset > .form-group {
   width: 30px;
   height: 30px;
   position: absolute;
-  right: 0;
   top: -10px;
+
+  @include bidi-style(right, 0, left, 0);
 }
 
 .form-group .controls .richtext {

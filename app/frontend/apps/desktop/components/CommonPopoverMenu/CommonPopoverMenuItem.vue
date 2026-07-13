@@ -48,7 +48,7 @@ const iconColor = computed(() => {
   >
     <slot name="leading" />
     <CommonLabel
-      class="flex-1 gap-2 text-left"
+      class="flex-1 gap-2 text-start"
       :class="[labelClass, variantClass]"
       :prefix-icon="icon"
       :icon-color="iconColor"

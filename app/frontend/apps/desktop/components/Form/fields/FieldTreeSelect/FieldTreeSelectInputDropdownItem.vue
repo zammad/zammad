@@ -78,7 +78,7 @@ const handleNextPageOrSelect = () =>
       tabindex="0"
       data-type="option"
       data-test-id="option-button"
-      class="flex size-full items-center gap-1.5 text-left ltr:pl-2.5 rtl:pr-2.5"
+      class="flex size-full items-center gap-1.5 text-start ltr:pl-2.5 rtl:pr-2.5"
       :class="{
         'group/button focus-visible-app-default -outline-offset-1! hover:bg-blue-600 dark:hover:bg-blue-900':
           !option.disabled,
