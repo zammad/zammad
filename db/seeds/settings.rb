@@ -1808,6 +1808,19 @@ Setting.create_if_not_exists(
         placeholder: 'common',
       },
       {
+        display:   __('Require verified email domain'),
+        null:      true,
+        default:   false,
+        name:      'require_verified_email_domain',
+        tag:       'boolean',
+        options:   {
+          true  => 'yes',
+          false => 'no',
+        },
+        translate: true,
+        help:      __('Requires the "xms_edov" ID token claim (along with the "email" claim) to be present and true before trusting an incoming email address for account auto-linking. Both must first be configured as optional claims on the Azure app registration. Until that is done, enabling this blocks all Microsoft 365 account auto-linking by email.'),
+      },
+      {
         display:  __('Your callback URL'),
         null:     true,
         name:     'callback_url',

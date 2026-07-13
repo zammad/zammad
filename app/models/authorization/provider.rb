@@ -45,6 +45,13 @@ class Authorization::Provider
     User.find_by(email: info['email'].downcase)
   end
 
+  def truthy?(value)
+    return value if [true, false].include?(value)
+    return false if value.nil?
+
+    value.to_s.casecmp('true').zero?
+  end
+
   def user_create_login_lookup
     auth_hash['info']['nickname'] || auth_hash['uid']
   end
