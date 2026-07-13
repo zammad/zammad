@@ -51,7 +51,7 @@ RSpec.describe Zammad::TranslationCatalog::Extractor::Ruby do
 
   context 'with strings too long' do
     let(:string) do
-      <<~"CODE"
+      <<~CODE
         __("#{'a' * 3001}")
       CODE
     end

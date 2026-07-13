@@ -7,7 +7,7 @@ class SystemReport::Plugin::Setting < SystemReport::Plugin
 
   def fetch
     ::Setting.all.each_with_object([]) do |setting, result|
-      next if SENSITIVE_SETTING_NAMES.any? { |word| setting.name.include?(word) }
+      next if SENSITIVE_SETTING_NAMES.any? { |word| setting.name.include?(word) } # rubocop:disable Style/ArrayIntersect
 
       result << {
         name:          setting.name,

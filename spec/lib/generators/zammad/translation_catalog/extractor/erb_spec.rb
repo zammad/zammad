@@ -43,7 +43,7 @@ RSpec.describe Zammad::TranslationCatalog::Extractor::Erb do
 
   context 'with strings too long' do
     let(:string) do
-      <<~"CODE"
+      <<~CODE
         <%= t("#{'a' * 3001}") %>
       CODE
     end

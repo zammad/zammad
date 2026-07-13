@@ -112,7 +112,7 @@ class SettingsController < ApplicationController
   def sensitive_attributes(object_payload, object)
     return if object.options[:form].try(:one?) && object.options[:form].one? { |elem| elem[:tag] == 'boolean' }
 
-    if SENSITIVE_NAMES.any? { |elem| object.name.include?(elem) }
+    if SENSITIVE_NAMES.any? { |elem| object.name.include?(elem) } # rubocop:disable Style/ArrayIntersect
       return ['state_current.value']
     end
 

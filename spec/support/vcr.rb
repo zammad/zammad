@@ -18,8 +18,8 @@ VCR.configure do |config|
   config.ignore_request do |request|
     uri = URI(request.uri)
 
-    next true if VCR_IGNORE_MATCHING_HOSTS.any?     { |elem| uri.host.include? elem }
-    next true if VCR_IGNORE_MATCHING_REGEXPS.any?   { |elem| uri.host.match? elem }
+    next true if VCR_IGNORE_MATCHING_HOSTS.any? { |elem| uri.host.include? elem } # rubocop:disable Style/ArrayIntersect
+    next true if VCR_IGNORE_MATCHING_REGEXPS.any? { |elem| uri.host.match? elem }
   end
 
   config.register_request_matcher(:oauth_headers) do |r1, r2|
