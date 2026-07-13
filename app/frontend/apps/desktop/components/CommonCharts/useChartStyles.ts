@@ -6,11 +6,10 @@ import { getTailwindStyleValue } from '#shared/utils/tailwind.ts'
 
 import { useThemeStore } from '#desktop/stores/theme.ts'
 
-// eslint-disable-next-line zammad/zammad-detect-translatable-string
-const CHART_FONT_FAMILY = 'Fira Sans, Helvetica Neue, Helvetica, Arial, sans-serif'
-
 export const useChartStyles = () => {
   const isDarkMode = toRef(useThemeStore(), 'isDarkMode')
+
+  const fontFamily = getTailwindStyleValue('--font-sans')
 
   const colorMap = {
     'neutral-50': getTailwindStyleValue('--color-neutral-50'),
@@ -32,7 +31,7 @@ export const useChartStyles = () => {
   }
 
   return {
-    fontFamily: CHART_FONT_FAMILY,
+    fontFamily,
     colorMap,
     isDarkMode,
   }

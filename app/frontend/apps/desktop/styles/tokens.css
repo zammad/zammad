@@ -103,4 +103,11 @@
 
   /* Not a design token, used for calculating sticky top for the FieldEditorActionBar */
   --top-header-height: 0;
+
+  --font-sans: 'Fira Sans', 'Helvetica Neue', helvetica, arial, sans-serif;
+}
+
+/* Persian locale uses IRANYekanX instead of the default typeface. */
+html[lang='fa-ir'] {
+  --font-sans: 'IRANYekanX', 'Fira Sans', 'Helvetica Neue', helvetica, arial, sans-serif;
 }

@@ -57,3 +57,30 @@
   font-weight: 700;
   font-style: normal;
 }
+
+@font-face {
+  font-family: IRANYekanX;
+  src: url('/assets/fonts/IRANYekanXFaNum-Bold.woff2') format('woff2'),
+    url('/assets/fonts/IRANYekanXFaNum-Bold.woff') format('woff'),
+    url('/assets/fonts/IRANYekanXFaNum-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: IRANYekanX;
+  src: url('/assets/fonts/IRANYekanXFaNum-Regular.woff2') format('woff2'),
+    url('/assets/fonts/IRANYekanXFaNum-Regular.woff') format('woff'),
+    url('/assets/fonts/IRANYekanXFaNum-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: IRANYekanX;
+  src: url('/assets/fonts/IRANYekanXFaNum-Medium.woff2') format('woff2'),
+    url('/assets/fonts/IRANYekanXFaNum-Medium.woff') format('woff'),
+    url('/assets/fonts/IRANYekanXFaNum-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}

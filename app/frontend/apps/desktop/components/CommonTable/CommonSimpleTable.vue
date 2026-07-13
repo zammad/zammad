@@ -24,9 +24,9 @@ defineEmits<{
 
 //  Styling
 const cellAlignmentClasses = {
-  right: 'text-right',
+  right: 'text-end',
   center: 'text-center',
-  left: 'text-left',
+  left: 'text-start',
 }
 
 const tableHeaders = computed(() => props.headers)

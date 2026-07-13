@@ -68,7 +68,7 @@ const emit = defineEmits<{
 const cellAlignmentClasses: Record<string, string> = {
   right: 'justify-end text-end',
   center: 'justify-center text-center',
-  left: 'justify-start text-left',
+  left: 'justify-start text-start',
 }
 
 // Sorting logic

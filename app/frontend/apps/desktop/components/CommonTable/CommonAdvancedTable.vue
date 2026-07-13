@@ -40,7 +40,7 @@ const emit = defineEmits<{
 const cellAlignmentClasses = {
   right: 'justify-end text-end',
   center: 'justify-center text-center',
-  left: 'justify-start text-left',
+  left: 'justify-start text-start',
 }
 
 const { attributesLookup: objectAttributesLookup } = props.object
