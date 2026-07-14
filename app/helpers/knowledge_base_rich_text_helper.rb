@@ -33,19 +33,23 @@ module KnowledgeBaseRichTextHelper
       settings = match
         .slice(1...-1)
         .split(',')
-        .to_h { |pair| pair.split(':').map(&:strip) }
+        .to_h { |pair| pair.split(':', 2).map(&:strip) }
         .symbolize_keys
+
+      escaped_id = CGI.escape(settings[:id].to_s)
 
       url = case settings[:provider]
             when 'youtube'
-              "https://www.youtube.com/embed/#{settings[:id]}"
+              "https://www.youtube.com/embed/#{escaped_id}"
             when 'vimeo'
-              "https://player.vimeo.com/video/#{settings[:id]}"
+              "https://player.vimeo.com/video/#{escaped_id}"
             end
 
       return match if !url
 
-      "<div class='videoWrapper'><iframe allowfullscreen id='#{settings[:provider]}#{settings[:id]}' type='text/html' src='#{url}' frameborder='0'></iframe></div>"
+      id_attribute = CGI.escapeHTML("#{settings[:provider]}#{settings[:id]}")
+
+      "<div class='videoWrapper'><iframe allowfullscreen id='#{id_attribute}' type='text/html' src='#{CGI.escapeHTML(url.to_s)}' frameborder='0'></iframe></div>"
     end
   end
 
