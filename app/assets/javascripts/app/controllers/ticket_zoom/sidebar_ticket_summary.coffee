@@ -12,6 +12,10 @@ class App.SidebarTicketSummary extends App.Controller
 
     @controllerBind('config_update', @configHasChanged)
 
+    # Remember the enabled state as seen at construction time, so that
+    # 'reload' can detect transitions later on.
+    @sidebarWasEnabled = @sidebarIsEnabled()
+
     return if !@parent?.activeState
 
     @ticketZoomShown()
@@ -19,11 +23,20 @@ class App.SidebarTicketSummary extends App.Controller
   reload: =>
     return if !@parent?.currentTicketRaw
 
-    wasEnabled = @sidebarIsEnabled()
-    @ticket.ai_summary_enabled = @parent.currentTicketRaw.ai_summary_enabled
     isEnabled = @sidebarIsEnabled()
+    wasEnabled = @sidebarWasEnabled
+
+    # Update the state before triggering the event, since 'sidebarRerender' is handled
+    #   synchronously and re-enters 'reload' (via 'render') before this method returns.
+    @sidebarWasEnabled = isEnabled
 
     if wasEnabled isnt isEnabled
+      # If the summary tab is currently active and about to be removed, clear the stored
+      #   active tab so App.Sidebar falls back to another tab instead of leaving all
+      #   sidebar panes hidden (it only falls back when no active tab is stored at all).
+      if !isEnabled && @parentSidebar?.currentTab is 'summary'
+        @parentSidebar.sidebarState.active = undefined
+
       App.Event.trigger('ui::ticket::sidebarRerender', { taskKey: @taskKey })
 
   activateSummary: =>
@@ -175,7 +188,13 @@ class App.SidebarTicketSummary extends App.Controller
     return false if !App.Config.get('ai_provider')
     return false if !App.Config.get('ai_assistance_ticket_summary')
     return false if !(@ticket and @ticket.currentView() is 'agent')
-    return false if @ticket.ai_summary_enabled isnt true && @ticket.ai_summary_enabled isnt 'true'
+
+    # Read from '@parent.currentTicketRaw' (ticket_zoom's own, stable snapshot) rather than
+    #   '@ticket.ai_summary_enabled': 'App.Ticket.find'/'fullLocal' return a freshly constructed
+    #   object on every call, so a value manually assigned onto one instance (e.g. by
+    #   ticket_zoom.coffee) is not visible on another instance resolved independently here.
+    aiSummaryEnabled = @parent?.currentTicketRaw?.ai_summary_enabled
+    return false if aiSummaryEnabled isnt true && aiSummaryEnabled isnt 'true'
 
     true
 

@@ -85,6 +85,18 @@ RSpec.describe 'Ticket Summary', authenticated_as: :authenticate, type: :system 
   describe 'Sidebar' do
     before { visit "ticket/zoom/#{ticket.id}" }
 
+    context 'when reopening the ticket after closing its taskbar tab' do
+      it 'still shows the sidebar' do
+        expect(page).to have_css('.tabsSidebar-tab[data-tab=summary]')
+
+        taskbar_tab_close("Ticket-#{ticket.id}", discard_changes: false)
+
+        visit "ticket/zoom/#{ticket.id}"
+
+        expect(page).to have_css('.tabsSidebar-tab[data-tab=summary]')
+      end
+    end
+
     context 'when ai_provider is set' do
       before do
         click '.tabsSidebar-tab[data-tab=summary]'
@@ -213,6 +225,64 @@ RSpec.describe 'Ticket Summary', authenticated_as: :authenticate, type: :system 
       it 'does not show sidebar' do
         expect(page).to have_text(ticket.title)
           .and have_no_css('.tabsSidebar-tab[data-tab=summary]')
+      end
+
+      it 'shows the sidebar once the ticket starts matching, without a page refresh' do
+        expect(page).to have_no_css('.tabsSidebar-tab[data-tab=summary]')
+
+        ensure_websocket
+
+        ticket.update!(priority: Ticket::Priority.find_by(name: '3 high'))
+
+        wait.until { ticket.reload.priority.name == '3 high' }
+
+        expect(page).to have_css('.tabsSidebar-tab[data-tab=summary]')
+      end
+    end
+
+    context 'when the ticket summary selector matches' do
+      let(:ticket) { create(:ticket, priority: Ticket::Priority.find_by(name: '3 high')) }
+      let(:ticket_summary_selector) do
+        {
+          'condition' => {
+            'ticket.priority_id' => {
+              'operator' => 'is',
+              'value'    => [Ticket::Priority.find_by(name: '3 high').id.to_s],
+            },
+          },
+        }
+      end
+
+      it 'shows sidebar' do
+        expect(page).to have_css('.tabsSidebar-tab[data-tab=summary]')
+      end
+
+      it 'hides the sidebar once the ticket stops matching, without a page refresh' do
+        expect(page).to have_css('.tabsSidebar-tab[data-tab=summary]')
+
+        ensure_websocket
+
+        ticket.update!(priority: Ticket::Priority.find_by(name: '2 normal'))
+
+        wait.until { ticket.reload.priority.name == '2 normal' }
+
+        expect(page).to have_no_css('.tabsSidebar-tab[data-tab=summary]')
+      end
+
+      it 'falls back to another tab when the active summary tab stops matching' do
+        click '.tabsSidebar-tab[data-tab=summary]'
+
+        expect(page).to have_css('.tabsSidebar-tab[data-tab=summary].active')
+
+        ensure_websocket
+
+        ticket.update!(priority: Ticket::Priority.find_by(name: '2 normal'))
+
+        wait.until { ticket.reload.priority.name == '2 normal' }
+
+        expect(page).to have_no_css('.tabsSidebar-tab[data-tab=summary]')
+          .and have_css('.tabsSidebar-tab.active')
+          .and have_css('.sidebar:not(.hide)')
       end
     end
   end
