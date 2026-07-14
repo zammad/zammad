@@ -2,6 +2,10 @@
 
 class VideoEmbed
   class Peertube < Backend
+    def self.self_hosted?
+      true
+    end
+
     def embed_url
       "https://#{host}/videos/embed/#{id}"
     end

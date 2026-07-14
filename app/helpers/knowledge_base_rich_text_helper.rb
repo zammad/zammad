@@ -37,8 +37,11 @@ module KnowledgeBaseRichTextHelper
         .symbolize_keys
 
       url = VideoEmbed.embed_url(provider: settings[:provider], id: settings[:id], host: settings[:host])
+      next '' if url.blank?
 
-      "<div class='videoWrapper'><iframe allowfullscreen id='#{settings[:provider]}#{settings[:id]}' type='text/html' src='#{url}' frameborder='0'></iframe></div>"
+      id_attribute = CGI.escapeHTML("#{settings[:provider]}#{settings[:id]}")
+
+      "<div class='videoWrapper'><iframe allowfullscreen id='#{id_attribute}' type='text/html' src='#{CGI.escapeHTML(url.to_s)}' frameborder='0'></iframe></div>"
     end
   end
 

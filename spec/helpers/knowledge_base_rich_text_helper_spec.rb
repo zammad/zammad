@@ -10,6 +10,9 @@ RSpec.describe KnowledgeBaseRichTextHelper, type: :helper do
     end
 
     it 'renders a PeerTube marker' do
+      allow(Setting).to receive(:get).with('kb_self_hosted_video_servers')
+        .and_return([{ 'host' => 'video.example.com', 'name' => 'PT' }])
+
       marker = '( widget: video, provider: peertube, host: video.example.com, id: uuid-1 )'
       expect(helper.prepare_rich_text_videos(marker))
         .to include("src='https://video.example.com/videos/embed/uuid-1'")
@@ -21,6 +24,19 @@ RSpec.describe KnowledgeBaseRichTextHelper, type: :helper do
       expect(result)
         .to include("src='https://www.youtube.com/embed/aaa'")
         .and include("src='https://player.vimeo.com/video/111'")
+    end
+
+    it 'escapes an id attribute breakout attempt (attribute injection)' do
+      marker = "( widget: video, provider: youtube, id: a' srcdoc='&lt;img src=/api/v1/sessions/switch/1&gt;' b=' )"
+      result = helper.prepare_rich_text_videos(marker)
+      expect(result)
+        .to include("src='https://www.youtube.com/embed/")
+        .and satisfy { |r| r.exclude?("id='youtubea' srcdoc=") }
+    end
+
+    it 'renders nothing for an unrecognized provider' do
+      marker = '( widget: video, provider: dailymotion, id: x )'
+      expect(helper.prepare_rich_text_videos(marker)).to eq('')
     end
   end
 end

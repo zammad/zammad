@@ -21,6 +21,7 @@ RSpec.describe 'Public Knowledge Base answer', type: :system do
 
     context 'self-hosted video content' do
       before do
+        Setting.set('kb_self_hosted_video_servers', [{ 'host' => 'video.example.com', 'name' => 'Example' }])
         published_answer_with_self_hosted_video
       end
 

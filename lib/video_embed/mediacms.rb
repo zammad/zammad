@@ -2,6 +2,10 @@
 
 class VideoEmbed
   class Mediacms < Backend
+    def self.self_hosted?
+      true
+    end
+
     def embed_url
       "https://#{host}/embed?m=#{id}"
     end

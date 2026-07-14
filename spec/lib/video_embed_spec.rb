@@ -17,6 +17,17 @@ RSpec.describe VideoEmbed do
     end
 
     context 'with a self-hosted provider' do
+      let(:servers) do
+        [
+          { 'host' => 'video.example.com', 'name' => 'PT' },
+          { 'host' => 'cms.example.org', 'name' => 'CMS' },
+        ]
+      end
+
+      before do
+        allow(Setting).to receive(:get).with('kb_self_hosted_video_servers').and_return(servers)
+      end
+
       it 'builds the PeerTube embed URL when the host is whitelisted' do
         expect(described_class.embed_url(provider: 'peertube', id: 'uuid-1', host: 'video.example.com'))
           .to eq('https://video.example.com/videos/embed/uuid-1')
@@ -25,6 +36,11 @@ RSpec.describe VideoEmbed do
       it 'builds the MediaCMS embed URL when the host is whitelisted' do
         expect(described_class.embed_url(provider: 'mediacms', id: 'token1', host: 'cms.example.org'))
           .to eq('https://cms.example.org/embed?m=token1')
+      end
+
+      it 'returns nil when the host is not whitelisted' do
+        expect(described_class.embed_url(provider: 'peertube', id: 'uuid-1', host: 'evil.example.com'))
+          .to be_nil
       end
     end
 
@@ -36,6 +52,18 @@ RSpec.describe VideoEmbed do
       it 'returns escaped ID containing markup (XSS attempt)' do
         expect(described_class.embed_url(provider: 'youtube', id: %q{'"><script>alert(1)</script>}))
           .not_to include('<script>')
+      end
+
+      it 'returns nil for a self-hosted provider used without a host' do
+        expect(described_class.embed_url(provider: 'peertube', id: 'uuid-1')).to be_nil
+      end
+
+      it 'escapes a host containing an attribute breakout attempt' do
+        allow(Setting).to receive(:get).with('kb_self_hosted_video_servers')
+          .and_return([{ 'host' => "evil.com/x' onmouseover='alert(1)", 'name' => 'Evil' }])
+
+        url = described_class.embed_url(provider: 'peertube', id: 'uuid-1', host: "evil.com/x' onmouseover='alert(1)")
+        expect(url).not_to include("'")
       end
     end
   end
