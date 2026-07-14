@@ -76,9 +76,9 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#"
-"{config.ticket_hook}#{ticket.number}>: ایجاد شده توسط #"
-"{current_user.longname} در #{ticket.updated_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"#{config.ticket_hook}#{ticket.number}>: ایجاد شده توسط "
+"#{current_user.longname} در #{ticket.updated_at}_\n"
 "* گروه: #{ticket.group.name}\n"
 "* مالک: #{ticket.owner.fullname}\n"
 "* وضعیت: #{t(ticket.state.name)}\n"
@@ -103,11 +103,11 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#"
-"{config.ticket_hook}#{ticket.number}>: تشدید شده در #{ticket.escalation_at}"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"#{config.ticket_hook}#{ticket.number}>: تشدید شده در #{ticket.escalation_at}"
 "_\n"
-"تیکت (#{ticket.title}) از \"#{ticket.customer.longname}\" از \"#"
-"{ticket.escalation_at}\" تشدید شده است!\n"
+"تیکت (#{ticket.title}) از \"#{ticket.customer.longname}\" از "
+"\"#{ticket.escalation_at}\" تشدید شده است!\n"
 "\n"
 "<% if @objects[:article] %>\n"
 "#{article.body_as_text}\n"
@@ -130,9 +130,9 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#"
-"{config.ticket_hook}#{ticket.number}>: آخرین بروزرسانی در #"
-"{ticket.updated_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"#{config.ticket_hook}#{ticket.number}>: آخرین بروزرسانی در "
+"#{ticket.updated_at}_\n"
 "* گروه: #{ticket.group.name}\n"
 "* مالک: #{ticket.owner.fullname}\n"
 "* وضعیت: #{t(ticket.state.name)}\n"
@@ -156,10 +156,10 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#"
-"{config.ticket_hook}#{ticket.number}>: یادآوری فرا رسید!_\n"
-"تیکت نیاز به توجه دارد: یادآوری برای (#{ticket.title}) با مشتری \"*#"
-"{ticket.customer.longname}*\" فرا رسید.\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"#{config.ticket_hook}#{ticket.number}>: یادآوری فرا رسید!_\n"
+"تیکت نیاز به توجه دارد: یادآوری برای (#{ticket.title}) با مشتری "
+"\"*#{ticket.customer.longname}*\" فرا رسید.\n"
 "\n"
 "<% if @objects[:article] %>\n"
 "#{article.body_as_text}\n"
@@ -184,9 +184,9 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#"
-"{config.ticket_hook}#{ticket.number}>: بروزرسانی شده توسط #"
-"{current_user.longname} در #{ticket.updated_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"#{config.ticket_hook}#{ticket.number}>: بروزرسانی شده توسط "
+"#{current_user.longname} در #{ticket.updated_at}_\n"
 "<% if @objects[:changes].present? %>\n"
 "  <% @objects[:changes].each do |key, value| %>\n"
 "  * <%= t key %>: <%= h value[0] %> -> <%= h value[1] %>\n"
@@ -213,11 +213,11 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#"
-"{config.ticket_hook}#{ticket.number}>: در #{ticket.escalation_at} تشدید "
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"#{config.ticket_hook}#{ticket.number}>: در #{ticket.escalation_at} تشدید "
 "خواهد شد_\n"
-"تیکت (#{ticket.title}) از \"#{ticket.customer.longname}\" در \"#"
-"{ticket.escalation_at}\" تشدید خواهد شد!\n"
+"تیکت (#{ticket.title}) از \"#{ticket.customer.longname}\" در "
+"\"#{ticket.escalation_at}\" تشدید خواهد شد!\n"
 "\n"
 "<% if @objects[:article] %>\n"
 "#{article.body_as_text}\n"
@@ -287,8 +287,8 @@ msgstr ""
 "<div>سلام #{user.firstname}،</div>\n"
 "<br>\n"
 "<div>به نظر می‌رسد که شما از حساب کاربری خود با <b>دستگاهی شناخته شده اما از "
-"کشوری جدید</b> در تاریخ \"#{user_device.created_at}\" استفاده کرده‌اید:</div>"
-"\n"
+"کشوری جدید</b> در تاریخ \"#{user_device.created_at}\" استفاده کرده‌اید:</"
+"div>\n"
 "<br>\n"
 "<div>\n"
 "دستگاه شما: #{user_device.name}<br>\n"
@@ -299,8 +299,8 @@ msgstr ""
 "<div>کشور به لیست دستگاه‌های شناخته شده شما اضافه شده است، که می‌توانید در "
 "اینجا مشاهده کنید:</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices\">#"
-"{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/"
+"devices\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
 "<br>\n"
 "<div>اگر این کار شما نبوده، لطفاً دستگاه را حذف کنید، رمز عبور حساب خود را "
 "تغییر دهید، و با مدیر سیستم خود تماس بگیرید. ممکن است شخصی به طور غیرمجاز به "
@@ -341,8 +341,8 @@ msgstr ""
 "\n"
 "<div>سلام #{user.firstname}،</div>\n"
 "<br>\n"
-"<div>به نظر می‌رسد که شما در تاریخ \"#{user_device.created_at}\" با <b>"
-"استفاده از دستگاه جدیدی</b> وارد حساب خود شده‌اید:</div>\n"
+"<div>به نظر می‌رسد که شما در تاریخ \"#{user_device.created_at}\" با "
+"<b>استفاده از دستگاه جدیدی</b> وارد حساب خود شده‌اید:</div>\n"
 "<br>\n"
 "<div>\n"
 "دستگاه شما: #{user_device.name}<br>\n"
@@ -353,8 +353,8 @@ msgstr ""
 "<div>دستگاه شما به لیست دستگاه‌های شناخته شده شما اضافه شده است، که می‌توانید "
 "در اینجا مشاهده کنید:</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices\">#"
-"{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/"
+"devices\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
 "<br>\n"
 "<div>اگر این کار شما نبوده، لطفاً دستگاه را حذف کنید، رمز عبور حساب خود را "
 "تغییر دهید، و با مدیر سیستم خود تماس بگیرید. ممکن است شخصی به طور غیرمجاز به "
@@ -435,7 +435,7 @@ msgid "%s ago"
 msgstr "%s قبل"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleFooter.vue:31
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:217
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:221
 msgid "%s attached files"
 msgstr "%s پرونده پیوست شده"
 
@@ -762,8 +762,8 @@ msgstr ""
 "استفاده شوند. به عنوان مثال، ورودی‌هایی که مربوط به نوع \"صورتحساب\" هستند.\n"
 "\n"
 "هنگامی که ضبط نوع فعالیت را فعال می‌کنید، کاربران قادر خواهند بود نوعی را از "
-"این لیست انتخاب کنند. علاوه بر این، یک ستون با نوع فعالیت مرتبط برای یک ورودی "
-"در جدول **فعالیت** در برگه **زمان محاسبه شده** رندر خواهد شد."
+"این لیست انتخاب کنند. علاوه بر این، یک ستون با نوع فعالیت مرتبط برای یک "
+"ورودی در جدول **فعالیت** در برگه **زمان محاسبه شده** رندر خواهد شد."
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 msgid ""
@@ -820,7 +820,7 @@ msgid "+ %s more"
 msgstr "+ %s مورد دیگر"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleFooter.vue:30
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:216
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:220
 msgid "1 attached file"
 msgstr "۱ پرونده پیوست شده"
 
@@ -1827,8 +1827,8 @@ msgstr ""
 "\n"
 "<div>سلام #{user.firstname}،</div>\n"
 "<br>\n"
-"<div>ما درخواستی برای ورود مدیریتی برای حساب #{config.product_name} شما <b>#"
-"{user.login}</b> دریافت کردیم.</div>\n"
+"<div>ما درخواستی برای ورود مدیریتی برای حساب #{config.product_name} شما "
+"<b>#{user.login}</b> دریافت کردیم.</div>\n"
 "<br>\n"
 "<div>لطفاً برای ادامه روی لینک زیر کلیک کنید (یا آدرس URL را در مرورگر خود "
 "کپی و جایگذاری کنید):</div>\n"
@@ -2519,7 +2519,7 @@ msgstr "تعداد بند"
 msgid "Article Language Detection"
 msgstr "تشخیص زبان مقاله"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:275
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:279
 msgid "Article actions"
 msgstr "فعالیت‌های بند"
 
@@ -2775,7 +2775,7 @@ msgstr "تصدیق هویت امکان‌پذیر نیست"
 
 #: app/controllers/application_controller/authenticates.rb:17
 #: app/graphql/gql/context/current_user_aware.rb:7
-#: app/policies/pundit_policy.rb:18 lib/user_context.rb:37
+#: app/policies/pundit_policy.rb:18 lib/user_context.rb:44
 msgid "Authentication required"
 msgstr "تصدیق هویت الزامی است"
 
@@ -2807,7 +2807,7 @@ msgstr "رمز برنامه احراز کننده هویت"
 msgid "Author"
 msgstr "نویسنده"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:120
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:124
 msgid "Author name and article creation date"
 msgstr "نام نویسنده و تاریخ ایجاد مقاله"
 
@@ -4361,8 +4361,8 @@ msgid ""
 "<br>\n"
 "<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
-"حساب #{config.product_name} خود را تأیید کنید، #{user.firstname} #"
-"{user.lastname}\n"
+"حساب #{config.product_name} خود را تأیید کنید، #{user.firstname} "
+"#{user.lastname}\n"
 "\n"
 "<div>سلام #{user.firstname}،</div>\n"
 "<br>\n"
@@ -4828,8 +4828,8 @@ msgstr ""
 "* ticket (به عنوان مثال ticket.state، ticket.group)\n"
 "* ticket.customer (به عنوان مثال ticket.customer.firstname، "
 "ticket.customer.lastname)\n"
-"* ticket.owner (به عنوان مثال ticket.owner.firstname، ticket.owner.lastname)"
-"\n"
+"* ticket.owner (به عنوان مثال ticket.owner.firstname، "
+"ticket.owner.lastname)\n"
 "* ticket.organization (به عنوان مثال ticket.organization.name)\n"
 "* user (به عنوان مثال user.firstname، user.email)\n"
 "\n"
@@ -5343,7 +5343,7 @@ msgstr "کاهش مقدار دقیقه"
 msgid "Decrement seconds value"
 msgstr "کاهش مقدار ثانیه"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:313
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:315
 msgid "Decryption failed!"
 msgstr "رمزگشایی موفقیت‌آمیز نبود!"
 
@@ -5352,7 +5352,7 @@ msgstr "رمزگشایی موفقیت‌آمیز نبود!"
 msgid "Decryption failed! %s"
 msgstr "رمزگشایی ناموفق بود! %s"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:311
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:313
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:102
 #: app/frontend/shared/composables/useArticleSecurity.ts:110
 msgid "Decryption was successful."
@@ -5601,8 +5601,7 @@ msgstr ""
 
 #: db/seeds/settings.rb:5470
 msgid "Defines a dashboard stats backend that gets scheduled automatically."
-msgstr ""
-"یک بک‌اند آماری پیش‌خوان را تعریف می‌کند که به طور خودکار زمان‌بندی می‌شود."
+msgstr "یک بک‌اند آماری پیش‌خوان را تعریف می‌کند که به طور خودکار زمان‌بندی می‌شود."
 
 #: db/seeds/settings.rb:3124
 msgid ""
@@ -5635,8 +5634,8 @@ msgstr "پس از چند ورود ناموفق حساب کاربری غیرفع�
 msgid ""
 "Defines an OTRS endpoint to import users, tickets, states, and articles."
 msgstr ""
-"یک نقطه پایانی OTRS را برای وارد کردن کاربران، تیکت‌ها، وضعیت‌ها و مقالات تعریف "
-"می‌کند."
+"یک نقطه پایانی OTRS را برای وارد کردن کاربران، تیکت‌ها، وضعیت‌ها و مقالات "
+"تعریف می‌کند."
 
 #: app/assets/javascripts/app/models/ticket_priority.coffee:7
 msgid ""
@@ -5644,8 +5643,8 @@ msgid ""
 "priority will be rendered in an indian red, while low priority in a baby "
 "blue color."
 msgstr ""
-"یک رنگ برجسته اختیاری از این اولویت را در جداول تیکت تعریف می‌کند. اولویت بالا "
-"به رنگ قرمز هندی و اولویت پایین به رنگ آبی بچه رندر می‌شود."
+"یک رنگ برجسته اختیاری از این اولویت را در جداول تیکت تعریف می‌کند. اولویت "
+"بالا به رنگ قرمز هندی و اولویت پایین به رنگ آبی بچه رندر می‌شود."
 
 #: app/assets/javascripts/app/models/ticket_priority.coffee:8
 msgid ""
@@ -5670,8 +5669,8 @@ msgid ""
 "Defines global configuration when the summary will be generated in the "
 "ticket zoom."
 msgstr ""
-"پیکربندی سراسری را تعریف می‌کند که خلاصه در نمای بزرگنمایی تیکت چه زمانی تولید "
-"شود."
+"پیکربندی سراسری را تعریف می‌کند که خلاصه در نمای بزرگنمایی تیکت چه زمانی "
+"تولید شود."
 
 #: db/seeds/settings.rb:2992
 msgid ""
@@ -6227,9 +6226,9 @@ msgid ""
 "as a variable, #{setting.fqdn} which is found in all forms of messaging used "
 "by the application, to build links to the tickets within your system."
 msgstr ""
-"نام دامنه کاملاً واجد شرایط سیستم را تعریف می‌کند. این تنظیم به عنوان یک متغیر، "
-"#{setting.fqdn} استفاده می‌شود که در همه اشکال پیام‌رسانی استفاده شده توسط "
-"برنامه، برای ساخت پیوندهایی به تیکت‌های داخل سیستم شما یافت می‌شود."
+"نام دامنه کاملاً واجد شرایط سیستم را تعریف می‌کند. این تنظیم به عنوان یک "
+"متغیر، #{setting.fqdn} استفاده می‌شود که در همه اشکال پیام‌رسانی استفاده شده "
+"توسط برنامه، برای ساخت پیوندهایی به تیکت‌های داخل سیستم شما یافت می‌شود."
 
 #: db/seeds/settings.rb:4732
 msgid "Defines the group of created tickets."
@@ -6394,8 +6393,7 @@ msgstr "پیام هشدار را که در صورت وجود تیکت منطبق
 #: db/seeds/settings.rb:2727
 msgid ""
 "Defines the warning title that is shown when a matching ticket is present."
-msgstr ""
-"عنوان هشدار را که در صورت وجود تیکت منطبق نشان داده می‌شود تعریف می‌کند."
+msgstr "عنوان هشدار را که در صورت وجود تیکت منطبق نشان داده می‌شود تعریف می‌کند."
 
 #: db/seeds/settings.rb:5127
 msgid "Defines transaction backend."
@@ -6436,7 +6434,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:188
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee:9
 #: app/assets/javascripts/app/controllers/package.coffee:54
-#: app/assets/javascripts/app/controllers/user.coffee:101
+#: app/assets/javascripts/app/controllers/user.coffee:102
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:90
 #: app/assets/javascripts/app/lib/mixins/knowledge_base_actions.coffee:26
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:80
@@ -7076,7 +7074,7 @@ msgstr "دانلود ایمیل اصلی"
 msgid "Download raw email"
 msgstr "دانلود ایمیل خام"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:339
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:341
 msgid "Downloading attachments…"
 msgstr "بارگیری ضمیمه‌ها…"
 
@@ -7523,16 +7521,16 @@ msgid ""
 "Enable REST API using tokens (not username/email address and password). All "
 "users need to create their own access tokens in the user profile."
 msgstr ""
-"فعال کردن API REST با استفاده از توکن‌ها (نه نام کاربری/آدرس ایمیل و رمز عبور)"
-". همه کاربران باید توکن‌های دسترسی خود را در نمایه کاربر ایجاد کنند."
+"فعال کردن API REST با استفاده از توکن‌ها (نه نام کاربری/آدرس ایمیل و رمز "
+"عبور). همه کاربران باید توکن‌های دسترسی خود را در نمایه کاربر ایجاد کنند."
 
 #: db/seeds/settings.rb:3508
 msgid ""
 "Enable REST API using tokens (not username/email address and password). Each "
 "user needs to create its own access tokens in user profile."
 msgstr ""
-"فعال کردن API REST با استفاده از توکن‌ها (نه نام کاربری/آدرس ایمیل و رمز عبور)"
-". هر کاربر باید توکن‌های دسترسی خود را در نمایه کاربر ایجاد کند."
+"فعال کردن API REST با استفاده از توکن‌ها (نه نام کاربری/آدرس ایمیل و رمز "
+"عبور). هر کاربر باید توکن‌های دسترسی خود را در نمایه کاربر ایجاد کند."
 
 #: db/seeds/settings.rb:5931
 msgid "Enable Recovery Codes"
@@ -8053,6 +8051,13 @@ msgstr "خطا هنگام اجرای جادوگر خودکار."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:62
 msgid "Error fetching i-doit information. Please contact your administrator."
+msgstr "خطا در دریافت اطلاعات i-doit. لطفاً با مدیر خود تماس بگیرید."
+
+#: lib/secure_mailing/smime/incoming.rb:99
+#, fuzzy
+#| msgid ""
+#| "Error fetching i-doit information. Please contact your administrator."
+msgid "Error while verifying signature, please contact your administrator."
 msgstr "خطا در دریافت اطلاعات i-doit. لطفاً با مدیر خود تماس بگیرید."
 
 #: db/seeds/overviews.rb:160
@@ -8741,8 +8746,8 @@ msgid ""
 "For security reasons, the API token is shown only once. You'll need to save "
 "it somewhere secure before continuing."
 msgstr ""
-"به دلایل امنیتی، توکن API فقط یک بار نشان داده می‌شود. قبل از ادامه باید آن را "
-"در جایی امن ذخیره کنید."
+"به دلایل امنیتی، توکن API فقط یک بار نشان داده می‌شود. قبل از ادامه باید آن "
+"را در جایی امن ذخیره کنید."
 
 #: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:36
 #: app/assets/javascripts/app/controllers/_ai/form_handler_ai_agent_unused_warning.coffee:14
@@ -9481,8 +9486,8 @@ msgid ""
 "Here you can add further links to your public FAQ page, which will be "
 "displayed either in the header or footer."
 msgstr ""
-"در اینجا می‌توانید پیوندهای بیشتری به صفحه سوالات متداول عمومی خود اضافه کنید، "
-"که در هدر یا فوتر نمایش داده می‌شوند."
+"در اینجا می‌توانید پیوندهای بیشتری به صفحه سوالات متداول عمومی خود اضافه "
+"کنید، که در هدر یا فوتر نمایش داده می‌شوند."
 
 #: app/assets/javascripts/app/controllers/clues/first_steps_clues.coffee:16
 msgid "Here you can create new tickets and customers."
@@ -10582,8 +10587,8 @@ msgstr ""
 "\n"
 "<div>سلام #{user.firstname}،</div>\n"
 "<br>\n"
-"<div>من (#{current_user.firstname} #{current_user.lastname}) شما را به #"
-"{config.product_name} - پلتفرم پشتیبانی مشتری ما دعوت می‌کنم.</div>\n"
+"<div>من (#{current_user.firstname} #{current_user.lastname}) شما را به "
+"#{config.product_name} - پلتفرم پشتیبانی مشتری ما دعوت می‌کنم.</div>\n"
 "<br>\n"
 "<div>برای تنظیم رمز عبور خود <a href=\"#{config.http_type}://#{config.fqdn}/"
 "#password_reset_verify/#{token.token}\">اینجا</a> کلیک کنید.</div>\n"
@@ -11503,7 +11508,7 @@ msgstr "مدیریت برچسب‌ها"
 msgid "Manage Telegram channel of your system."
 msgstr "مدیریت کانال تلگرام سیستم شما."
 
-#: app/assets/javascripts/app/controllers/user.coffee:86
+#: app/assets/javascripts/app/controllers/user.coffee:87
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee:4
 msgid "Manage Two-Factor Authentication"
 msgstr "مدیریت احراز هویت دوعاملی"
@@ -11896,7 +11901,7 @@ msgstr "می"
 msgid "Maybe later"
 msgstr "شاید بعداً"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:80
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:81
 msgid "Me"
 msgstr "من"
 
@@ -12410,7 +12415,8 @@ msgstr "پارامتر fingerprint مورد نیاز است!"
 
 #: app/assets/javascripts/app/controllers/clues/first_steps_clues.coffee:41
 msgid "Need help? Check the Zammad Documentation for detailed guidance."
-msgstr "به راهنما نیاز دارید؟ برای راهنمایی دقیق، مستندات Zammad را بررسی کنید."
+msgstr ""
+"به راهنما نیاز دارید؟ برای راهنمایی دقیق، مستندات Zammad را بررسی کنید."
 
 #: lib/sessions/event/chat_base.rb:27
 msgid "Need session_id."
@@ -13256,8 +13262,8 @@ msgid ""
 msgstr ""
 "توجه: Zammad هرگز این داده‌ها را به طور خودکار ارسال نمی‌کند و این داده‌ها شامل "
 "نام‌ها یا رمزهای عبور حساب شخصی نمی‌شوند. با این حال، لطفاً پس از دانلود فایل "
-"برای جلوگیری از نشت اطلاعات شخصی که ممکن است در نظرات یا یادداشت‌ها گنجانده شود"
-"، دقت کنید."
+"برای جلوگیری از نشت اطلاعات شخصی که ممکن است در نظرات یا یادداشت‌ها گنجانده "
+"شود، دقت کنید."
 
 #: app/assets/javascripts/app/models/email_address.coffee:35
 #: app/assets/javascripts/app/models/group.coffee:14
@@ -13365,11 +13371,11 @@ msgstr "نوامبر"
 msgid "Number"
 msgstr "عدد"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:174
+#: app/models/ai/agent/type/ticket_tagger.rb:175
 msgid "Number of tags"
 msgstr "تعداد برچسب‌ها"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:178
+#: app/models/ai/agent/type/ticket_tagger.rb:179
 msgid "Number of tags the AI agent may assign."
 msgstr "تعداد برچسب‌هایی که عامل هوش مصنوعی ممکن است تعیین کند."
 
@@ -15584,8 +15590,8 @@ msgstr ""
 "<br>\n"
 "<div><a href=\"#{url}\">#{url}</a></div>\n"
 "<br>\n"
-"<div>این لینک شما را به صفحه‌ای می‌برد که می‌توانید رمز عبور خود را تغییر "
-"دهید.</div>\n"
+"<div>این لینک شما را به صفحه‌ای می‌برد که می‌توانید رمز عبور خود را تغییر دهید."
+"</div>\n"
 "<br>\n"
 "<div>اگر نمی‌خواهید رمز عبور خود را بازنشانی کنید، لطفاً این پیام را نادیده "
 "بگیرید. رمز عبور شما بازنشانی نخواهد شد.</div>\n"
@@ -15628,8 +15634,8 @@ msgstr ""
 "<br>\n"
 "<div><a href=\"#{url}\">#{url}</a></div>\n"
 "<br>\n"
-"<div>این لینک شما را به صفحه‌ای می‌برد که می‌توانید رمز عبور خود را تغییر "
-"دهید.</div>\n"
+"<div>این لینک شما را به صفحه‌ای می‌برد که می‌توانید رمز عبور خود را تغییر دهید."
+"</div>\n"
 "<br>\n"
 "<div>اگر نمی‌خواهید رمز عبور خود را بازنشانی کنید، لطفاً این پیام را نادیده "
 "بگیرید. رمز عبور شما بازنشانی نخواهد شد.</div>\n"
@@ -15930,7 +15936,7 @@ msgstr "SSL/STARTTLS"
 msgid "SSO"
 msgstr "SSO"
 
-#: app/controllers/sessions_controller.rb:262
+#: app/controllers/sessions_controller.rb:264
 msgid "SSO request from untrusted IP address."
 msgstr "درخواست SSO از آدرس IP غیرقابل اعتماد."
 
@@ -16036,7 +16042,7 @@ msgstr "شرایط ذخیره شده"
 #: app/assets/javascripts/app/controllers/_integration/github.coffee:63
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee:80
 #: app/assets/javascripts/app/controllers/_integration/idoit.coffee:93
-#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:1209
+#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:1211
 msgid "Saving failed."
 msgstr "ذخیره موفقیت‌آمیز نبود."
 
@@ -16442,21 +16448,21 @@ msgid "See HTTPLog for details."
 msgstr "برای جزئیات به HTTPLog مراجعه کنید."
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee:71
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:467
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:469
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:111
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:162
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:269
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:166
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:273
 msgid "See less"
 msgstr "نمایش کمتر"
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee:68
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:463
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:465
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:108
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:41
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco:21
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:134
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:162
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:269
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:166
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:273
 msgid "See more"
 msgstr "نمایش بیشتر"
 
@@ -16703,7 +16709,7 @@ msgstr "فرستنده آخرین بند"
 msgid "Sending Email Address"
 msgstr "آدرس ایمیل فرستنده"
 
-#: app/models/ticket/article.rb:332
+#: app/models/ticket/article.rb:340
 msgid "Sending an email without a valid recipient is not possible."
 msgstr "ارسال ایمیل بدون گیرنده معتبر امکان‌پذیر نیست."
 
@@ -16885,8 +16891,7 @@ msgstr "راه‌اندازی کلیدهای امنیتی"
 #: app/assets/javascripts/app/views/getting_started/channel.jst.eco:7
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannels.vue:30
 msgid "Set up the communication channels you want to use with your Zammad."
-msgstr ""
-"کانال‌های ارتباطی را که می‌خواهید با Zammad خود استفاده کنید تنظیم کنید."
+msgstr "کانال‌های ارتباطی را که می‌خواهید با Zammad خود استفاده کنید تنظیم کنید."
 
 #: app/assets/javascripts/app/controllers/after_auth/two_factor_configuration.coffee:2
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal.coffee:6
@@ -17225,7 +17230,7 @@ msgstr "امضا:"
 msgid "Signature"
 msgstr "امضاء"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:302
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:304
 msgid "Signature verification failed!"
 msgstr "تایید امضا موفقیت‌آمیز نبود!"
 
@@ -17396,9 +17401,9 @@ msgid ""
 "Sortable list focused. Use up and down arrows to navigate items. Press Space "
 "to select an item and again on another item to swap them."
 msgstr ""
-"لیست قابل مرتب‌سازی متمرکز شد. برای جابجایی بین آیتم‌ها از کلیدهای بالا و پایین "
-"استفاده کنید. برای انتخاب یک آیتم و دوباره روی آیتم دیگر برای جابجایی آنها، "
-"دکمه Space را فشار دهید."
+"لیست قابل مرتب‌سازی متمرکز شد. برای جابجایی بین آیتم‌ها از کلیدهای بالا و "
+"پایین استفاده کنید. برای انتخاب یک آیتم و دوباره روی آیتم دیگر برای جابجایی "
+"آنها، دکمه Space را فشار دهید."
 
 #: app/frontend/apps/desktop/composables/dragAndDrop/useAccessibleDragAndDrop.ts:50
 msgid "Sorted %s in user taskbar list to position %s."
@@ -17670,7 +17675,8 @@ msgstr "پیکربندی GitLab را ذخیره می‌کند."
 msgid ""
 "Stores the ticket summarization options (e.g. which content is visible)."
 msgstr ""
-"گزینه‌های خلاصه تیکت را ذخیره می‌کند (به عنوان مثال کدام محتوا قابل مشاهده است)."
+"گزینه‌های خلاصه تیکت را ذخیره می‌کند (به عنوان مثال کدام محتوا قابل مشاهده "
+"است)."
 
 #: db/seeds/object_manager_attributes.rb:1276
 msgid "Street"
@@ -17895,8 +17901,8 @@ msgid ""
 "Weblate, give it a try!"
 msgstr ""
 "ترجمه‌های سیستم را می‌توان در پلتفرم عمومی ما %l مشارکت داد و با جامعه به "
-"اشتراک گذاشت. این پلتفرم دارای یک رابط کاربری بسیار راحت مبتنی بر Weblate است"
-"، آن را امتحان کنید!"
+"اشتراک گذاشت. این پلتفرم دارای یک رابط کاربری بسیار راحت مبتنی بر Weblate "
+"است، آن را امتحان کنید!"
 
 #: db/seeds/settings.rb:5627
 msgid ""
@@ -18053,8 +18059,8 @@ msgstr ""
 "\n"
 "<div>عزیز #{agent.firstname}،</div>\n"
 "<br>\n"
-"<div>این یک <b>تیکت آزمایشی</b> است. من یک مشتری هستم و به کمک نیاز دارم! :)"
-"</div>\n"
+"<div>این یک <b>تیکت آزمایشی</b> است. من یک مشتری هستم و به کمک نیاز "
+"دارم! :)</div>\n"
 "<br>\n"
 "<div>#{customer.fullname}</div>\n"
 "<br>\n"
@@ -18557,16 +18563,17 @@ msgid ""
 "information for the AI agent. You can provide any object in the system, "
 "which will be included in the instruction."
 msgstr ""
-"زمینه یک شی JSON است که حاوی اطلاعات ویژگی شی اضافی برای عامل هوش مصنوعی است. "
-"شما می‌توانید هر شی در سیستم را ارائه دهید، که در دستورالعمل گنجانده می‌شود."
+"زمینه یک شی JSON است که حاوی اطلاعات ویژگی شی اضافی برای عامل هوش مصنوعی "
+"است. شما می‌توانید هر شی در سیستم را ارائه دهید، که در دستورالعمل گنجانده "
+"می‌شود."
 
 #: app/models/ai/agent/type/custom_ai_agent.rb:69
 msgid ""
 "The context is a JSON object that defines what information about the current "
 "entity will be provided to the AI agent."
 msgstr ""
-"زمینه یک شی JSON است که تعریف می‌کند چه اطلاعاتی در مورد نهاد فعلی به عامل هوش "
-"مصنوعی ارائه می‌شود."
+"زمینه یک شی JSON است که تعریف می‌کند چه اطلاعاتی در مورد نهاد فعلی به عامل "
+"هوش مصنوعی ارائه می‌شود."
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee:45
 #: app/controllers/users_controller.rb:387
@@ -18913,7 +18920,7 @@ msgstr "موضوع یافت نشد."
 #: app/assets/javascripts/app/controllers/_settings/form.coffee:91
 #: app/assets/javascripts/app/controllers/object_manager.coffee:331
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee:142
-#: app/assets/javascripts/app/controllers/user.coffee:235
+#: app/assets/javascripts/app/controllers/user.coffee:236
 msgid "The object could not be updated."
 msgstr "آبجکت قابل بروزرسانی نبود."
 
@@ -19243,7 +19250,7 @@ msgstr "پارامتر مورد نیاز 'signup' وجود ندارد."
 msgid "The required parameter 'ticket_number' is missing."
 msgstr "مولفه الزامی «ticket_number» وارد نشده است."
 
-#: app/models/concerns/perform_changes/action/attribute_updates.rb:148
+#: app/models/concerns/perform_changes/action/attribute_updates.rb:149
 msgid "The required parameter 'user_id' is missing."
 msgstr "مولفه الزامی «user_id» وارد نشده است."
 
@@ -19263,7 +19270,7 @@ msgstr "پاسخ پردازش نشد."
 msgid "The retried attachment download failed."
 msgstr "تلاش مجدد برای دانلود پیوست ناموفق بود."
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:322
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:324
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:62
 #: app/frontend/shared/composables/useArticleSecurity.ts:75
 msgid "The retried security process failed!"
@@ -19371,7 +19378,7 @@ msgstr ""
 "قسمت امضای این ایمیل PGP وجود ندارد یا دارای نوع محتوای اشتباه مطابق با RFC "
 "3156 است."
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:300
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:302
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:85
 #: app/frontend/shared/composables/useArticleSecurity.ts:94
 msgid "The signature was successfully verified."
@@ -19417,11 +19424,11 @@ msgid ""
 "you can see in the preview below. If you get in touch with the Zammad "
 "support, this JSON file is helpful identifying your issue."
 msgstr ""
-"گزارش سیستم، نسخه‌ای خلاصه‌شده از وضعیت و پیکربندی سیستم را برای اهداف پشتیبانی "
-"و تحلیل ارائه می‌دهد. می‌توانید با کلیک روی دکمهٔ دانلود، گزارش را دانلود کنید. "
-"سپس زمد یک فایل JSON ارائه می‌دهد که همان‌طور که در پیش‌نمایش زیر می‌بینید. اگر "
-"با پشتیبانی زمد تماس بگیرید، این فایل JSON برای شناسایی مشکل شما مفید خواهد "
-"بود."
+"گزارش سیستم، نسخه‌ای خلاصه‌شده از وضعیت و پیکربندی سیستم را برای اهداف "
+"پشتیبانی و تحلیل ارائه می‌دهد. می‌توانید با کلیک روی دکمهٔ دانلود، گزارش را "
+"دانلود کنید. سپس زمد یک فایل JSON ارائه می‌دهد که همان‌طور که در پیش‌نمایش زیر "
+"می‌بینید. اگر با پشتیبانی زمد تماس بگیرید، این فایل JSON برای شناسایی مشکل "
+"شما مفید خواهد بود."
 
 #: app/services/service/system/check_setup.rb:25
 msgid ""
@@ -19520,7 +19527,7 @@ msgstr "احراز هویت دو عاملی هنوز پیکربندی نشده �
 msgid "The two-factor authentication method \"%s\" was removed for this user."
 msgstr "روش احراز هویت دوعاملی «%s» برای این کاربر حذف شد."
 
-#: app/controllers/sessions_controller.rb:251
+#: app/controllers/sessions_controller.rb:253
 #: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:32
 #: app/services/service/user/two_factor/initiate_method_configuration.rb:6
 #: app/services/service/user/two_factor/verify_method_configuration.rb:15
@@ -19556,7 +19563,7 @@ msgstr "امکان ایجاد توکن کاربر وجود ندارد."
 msgid "The user's 'preferred_username' could not be extracted from 'id_token'."
 msgstr "'preferred_username' کاربر نمی‌تواند از 'id_token' استخراج شود."
 
-#: app/controllers/sessions_controller.rb:247
+#: app/controllers/sessions_controller.rb:249
 #: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:27
 msgid "The username or password is incorrect."
 msgstr "نام کاربری یا رمز اشتباه است."
@@ -19784,7 +19791,8 @@ msgstr ""
 #: lib/secure_mailing/pgp/tool/error/handler.rb:53
 msgid ""
 "This PGP email was encrypted with a potentially unknown encryption algorithm."
-msgstr "این ایمیل PGP با یک الگوریتم رمزگذاری بالقوه ناشناخته رمزگذاری شده بود."
+msgstr ""
+"این ایمیل PGP با یک الگوریتم رمزگذاری بالقوه ناشناخته رمزگذاری شده بود."
 
 #: db/seeds/ai/text_tools.rb:26
 msgid ""
@@ -19882,8 +19890,8 @@ msgstr ""
 "|ملاحظات مهم برای مدیران|\n"
 "\n"
 "- آگاهی کاربر: اطمینان حاصل کنید که کاربران نهایی درک می‌کنند که خروجی‌های هوش "
-"مصنوعی نیاز به بررسی انسانی دارند، به ویژه برای تصمیمات حیاتی (به عنوان مثال"
-"، مربوط به حقوقی، مالی، بهداشتی یا ایمنی).\n"
+"مصنوعی نیاز به بررسی انسانی دارند، به ویژه برای تصمیمات حیاتی (به عنوان "
+"مثال، مربوط به حقوقی، مالی، بهداشتی یا ایمنی).\n"
 "\n"
 "- مسئولیت پیکربندی: به عنوان یک مدیر، شما مسئول پیکربندی این ویژگی به گونه‌ای "
 "هستید که با سیاست‌های سازمان و الزامات انطباق شما هماهنگ باشد."
@@ -20614,8 +20622,8 @@ msgid ""
 "questions and upcoming events."
 msgstr ""
 "خلاصه تیکت عملکرد خلاصه کردن وضعیت فعلی تیکت را فراهم می‌کند. یک نوار کناری "
-"جدید ارائه می‌دهد که حاوی اطلاعاتی برای کاهش زمان مطالعه در تیکت با نسخه خلاصه "
-"شده مشکل، سوالات باز و رویدادهای آینده است."
+"جدید ارائه می‌دهد که حاوی اطلاعاتی برای کاهش زمان مطالعه در تیکت با نسخه "
+"خلاصه شده مشکل، سوالات باز و رویدادهای آینده است."
 
 #: app/models/ai/agent/type/ticket_tagger.rb:49
 msgid "Ticket Tagger"
@@ -20741,8 +20749,8 @@ msgstr ""
 "\n"
 "<div>سلام #{recipient.firstname}،</div>\n"
 "<br>\n"
-"<div>یک تیکت نیاز به توجه دارد: یادآوری برای (#{ticket.title}) با مشتری \"<b>"
-"#{ticket.customer.longname}</b>\" رسید.</div>\n"
+"<div>یک تیکت نیاز به توجه دارد: یادآوری برای (#{ticket.title}) با مشتری "
+"\"<b>#{ticket.customer.longname}</b>\" رسید.</div>\n"
 "<br>\n"
 "<% if @objects[:article] %>\n"
 "  <div>\n"
@@ -20848,8 +20856,8 @@ msgstr ""
 "\n"
 "<div>سلام #{recipient.firstname}،</div>\n"
 "<br>\n"
-"<div>تیکت (#{ticket.title}) از \"<b>#{ticket.customer.longname}</b>\" در \"#"
-"{ticket.escalation_at}\" تشدید خواهد شد!</div>\n"
+"<div>تیکت (#{ticket.title}) از \"<b>#{ticket.customer.longname}</b>\" در "
+"\"#{ticket.escalation_at}\" تشدید خواهد شد!</div>\n"
 "<br>\n"
 "<% if @objects[:article] %>\n"
 "  <div>\n"
@@ -21674,7 +21682,7 @@ msgstr "لغو پیوند مسئله"
 msgid "Unlink object"
 msgstr "لغو پیوند شیء"
 
-#: app/assets/javascripts/app/controllers/user.coffee:109
+#: app/assets/javascripts/app/controllers/user.coffee:110
 msgid "Unlock"
 msgstr "بازکردن قفل"
 
@@ -22036,9 +22044,9 @@ msgstr ""
 "<% end %>\n"
 "<br>\n"
 "<div>\n"
-"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/#"
-"{article.id}\" target=\"zammad_app\">این را در #{config.product_name} مشاهده "
-"کنید</a>\n"
+"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/"
+"#{article.id}\" target=\"zammad_app\">این را در #{config.product_name} "
+"مشاهده کنید</a>\n"
 "</div>\n"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:45
@@ -22319,6 +22327,7 @@ msgstr "کاربر بیکار است"
 msgid "User is inactive"
 msgstr "کاربر غیرفعال است"
 
+#: app/controllers/sessions_controller.rb:165
 #: app/frontend/apps/desktop/components/Search/QuickSearch/entities/User.vue:25
 msgid "User is inactive."
 msgstr "کاربر غیرفعال است."
@@ -22344,7 +22353,7 @@ msgstr "صندوق پستی کاربر"
 msgid "User menu"
 msgstr "منوی کاربر"
 
-#: app/assets/javascripts/app/controllers/user.coffee:123
+#: app/assets/javascripts/app/controllers/user.coffee:124
 msgid "User successfully unlocked!"
 msgstr "کاربر با موفقیت آنلاک شد!"
 
@@ -22352,7 +22361,7 @@ msgstr "کاربر با موفقیت آنلاک شد!"
 msgid "User taskbar tabs"
 msgstr "برگه‌های نوار وظیفه کاربر"
 
-#: app/assets/javascripts/app/controllers/user.coffee:220
+#: app/assets/javascripts/app/controllers/user.coffee:221
 msgid "User updated successfully."
 msgstr "کاربر با موفقیت به‌روزرسانی شد."
 
@@ -22700,8 +22709,8 @@ msgid ""
 "an HTTP(S) endpoint and relevant security settings, then configure a trigger "
 "to perform it."
 msgstr ""
-"webhook‌ها ارسال اطلاعات در مورد رویدادهای داخل Zammad به سیستم‌های شخص ثالث را "
-"از طریق HTTP(S) آسان می‌کنند.\n"
+"webhook‌ها ارسال اطلاعات در مورد رویدادهای داخل Zammad به سیستم‌های شخص ثالث "
+"را از طریق HTTP(S) آسان می‌کنند.\n"
 "\n"
 "شما می‌توانید از webhook‌ها در Zammad برای ارسال داده‌های تیکت، مقاله و پیوست "
 "در هر زمان که یک تریگر انجام می‌شود استفاده کنید. فقط webhook خود را با یک "
@@ -23276,8 +23285,8 @@ msgid ""
 "You can switch between the following backends for new attachments even on a "
 "system that is already in production without any loss of data."
 msgstr ""
-"شما می‌توانید بین بک‌اندهای زیر برای پیوست‌های جدید حتی در سیستمی که قبلاً در حال "
-"تولید است بدون هیچ از دست دادن داده‌ای جابجا شوید."
+"شما می‌توانید بین بک‌اندهای زیر برای پیوست‌های جدید حتی در سیستمی که قبلاً در "
+"حال تولید است بدون هیچ از دست دادن داده‌ای جابجا شوید."
 
 #: app/assets/javascripts/app/controllers/_plugin/navigation.coffee:185
 #: app/frontend/apps/desktop/components/BetaUi/composables/useBetaUi.ts:73
@@ -23292,7 +23301,7 @@ msgstr ""
 msgid "You can use the following script to post the data to %s."
 msgstr "شما می‌توانید از اسکریپت زیر برای ارسال داده‌ها به %s استفاده کنید."
 
-#: app/assets/javascripts/app/controllers/user.coffee:150
+#: app/assets/javascripts/app/controllers/user.coffee:151
 msgid ""
 "You cannot view or change the group permissions of an inactive user. "
 "Activate them first to manage their permissions."
@@ -23739,8 +23748,8 @@ msgstr ""
 "متاسفانه ایمیل شما با عنوان \"#{mail.subject}\" نمی‌تواند به یک یا چند گیرنده "
 "تحویل داده شود.\n"
 "\n"
-"پیام شما #{mail.msg_size} MB بود اما ما فقط پیام‌های تا #"
-"{config.postmaster_max_size} MB را می‌پذیریم.\n"
+"پیام شما #{mail.msg_size} MB بود اما ما فقط پیام‌های تا "
+"#{config.postmaster_max_size} MB را می‌پذیریم.\n"
 "\n"
 "لطفاً اندازه پیام را کاهش دهید و دوباره تلاش کنید. از درک شما متشکریم.\n"
 "\n"
@@ -24068,7 +24077,7 @@ msgstr "پیش‌فرض"
 msgid "delete"
 msgstr "حذف"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:172
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:174
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:18
 msgid "delivered to the customer"
 msgstr "رسیده به مشتری"
@@ -24915,7 +24924,7 @@ msgstr "فرارسیده"
 msgid "reacted with a %s to message from %s '%s'"
 msgstr "با یک %s به پیام از %s '%s' واکنش نشان داد"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:169
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:171
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:11
 msgid "read by the customer"
 msgstr "خوانده‌شده توسط مشتری"
@@ -25013,7 +25022,7 @@ msgstr "انتخاب فایل ضمیمه…"
 msgid "select visible options"
 msgstr "انتخاب اختیارات نمایان"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:175
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:177
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:22
 msgid "sent to the customer"
 msgstr "ارسال‌شده به مشتری"

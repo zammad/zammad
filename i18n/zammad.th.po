@@ -501,7 +501,7 @@ msgid "%s ago"
 msgstr "%s มาแล้ว"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleFooter.vue:31
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:217
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:221
 msgid "%s attached files"
 msgstr "%s ไฟล์แนบ"
 
@@ -893,7 +893,7 @@ msgid "+ %s more"
 msgstr "%s แสดงเพิ่ม"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleFooter.vue:30
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:216
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:220
 msgid "1 attached file"
 msgstr "1 ไฟล์แนบ"
 
@@ -2650,7 +2650,7 @@ msgstr "จำนวนบทความ"
 msgid "Article Language Detection"
 msgstr "การตรวจจับภาษาของบทความ"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:275
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:279
 msgid "Article actions"
 msgstr "การกระทําของบทความ"
 
@@ -2907,7 +2907,7 @@ msgstr "ไม่สามารถตรวจสอบได้ (ไม่ม�
 
 #: app/controllers/application_controller/authenticates.rb:17
 #: app/graphql/gql/context/current_user_aware.rb:7
-#: app/policies/pundit_policy.rb:18 lib/user_context.rb:37
+#: app/policies/pundit_policy.rb:18 lib/user_context.rb:44
 msgid "Authentication required"
 msgstr "ต้องการการยืนยันตัวบุคคล"
 
@@ -2941,7 +2941,7 @@ msgstr "รหัสลับของแอปตรวจสอบสิทธ
 msgid "Author"
 msgstr "ผู้แต่ง"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:120
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:124
 msgid "Author name and article creation date"
 msgstr "ชื่อผู้เขียนและวันที่สร้างบทความ"
 
@@ -5580,7 +5580,7 @@ msgstr "เฉลี่ย: %s นาที"
 msgid "Decrement seconds value"
 msgstr "การเพิ่มขึ้น (SystemID.Counter)"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:313
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:315
 msgid "Decryption failed!"
 msgstr "การถอดรหัสล้มเหลว!"
 
@@ -5589,7 +5589,7 @@ msgstr "การถอดรหัสล้มเหลว!"
 msgid "Decryption failed! %s"
 msgstr "การถอดรหัสล้มเหลว! %s"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:311
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:313
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:102
 #: app/frontend/shared/composables/useArticleSecurity.ts:110
 msgid "Decryption was successful."
@@ -6629,7 +6629,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:188
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee:9
 #: app/assets/javascripts/app/controllers/package.coffee:54
-#: app/assets/javascripts/app/controllers/user.coffee:101
+#: app/assets/javascripts/app/controllers/user.coffee:102
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:90
 #: app/assets/javascripts/app/lib/mixins/knowledge_base_actions.coffee:26
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:80
@@ -7349,7 +7349,7 @@ msgstr "อย่าเซ็นอีเมล"
 msgid "Download raw email"
 msgstr "ดาวน์โหลดรหัสส่วนตัว"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:339
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:341
 #, fuzzy
 #| msgid "select attachment…"
 msgid "Downloading attachments…"
@@ -8385,6 +8385,12 @@ msgstr "เกิดข้อผิดพลาดขณะเรียกใช
 #, fuzzy
 #| msgid "The password could not be set. Please contact your administrator."
 msgid "Error fetching i-doit information. Please contact your administrator."
+msgstr "ไม่สามารถตั้งรหัสผ่านได้ โปรดติดต่อผู้ดูแลระบบของคุณ"
+
+#: lib/secure_mailing/smime/incoming.rb:99
+#, fuzzy
+#| msgid "The password could not be set. Please contact your administrator."
+msgid "Error while verifying signature, please contact your administrator."
 msgstr "ไม่สามารถตั้งรหัสผ่านได้ โปรดติดต่อผู้ดูแลระบบของคุณ"
 
 #: db/seeds/overviews.rb:160
@@ -12128,7 +12134,7 @@ msgstr "จัดการแท็ก"
 msgid "Manage Telegram channel of your system."
 msgstr "ป้อน URL ของระบบ %s ของคุณ"
 
-#: app/assets/javascripts/app/controllers/user.coffee:86
+#: app/assets/javascripts/app/controllers/user.coffee:87
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee:4
 #, fuzzy
 #| msgid "Authentication"
@@ -12618,7 +12624,7 @@ msgstr "พฤษภาคม"
 msgid "Maybe later"
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:80
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:81
 msgid "Me"
 msgstr "เรา"
 
@@ -14234,13 +14240,13 @@ msgstr "พฤศจิกายน"
 msgid "Number"
 msgstr "ตัวเลข"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:174
+#: app/models/ai/agent/type/ticket_tagger.rb:175
 #, fuzzy
 #| msgid "Number"
 msgid "Number of tags"
 msgstr "ตัวเลข"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:178
+#: app/models/ai/agent/type/ticket_tagger.rb:179
 msgid "Number of tags the AI agent may assign."
 msgstr ""
 
@@ -17129,7 +17135,7 @@ msgstr "SSL/STARTTLS"
 msgid "SSO"
 msgstr "SSO"
 
-#: app/controllers/sessions_controller.rb:262
+#: app/controllers/sessions_controller.rb:264
 msgid "SSO request from untrusted IP address."
 msgstr ""
 
@@ -17251,7 +17257,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_integration/github.coffee:63
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee:80
 #: app/assets/javascripts/app/controllers/_integration/idoit.coffee:93
-#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:1209
+#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:1211
 msgid "Saving failed."
 msgstr ""
 
@@ -17742,21 +17748,21 @@ msgid "See HTTPLog for details."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee:71
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:467
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:469
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:111
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:162
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:269
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:166
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:273
 msgid "See less"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee:68
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:463
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:465
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:108
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:41
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco:21
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:134
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:162
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:269
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:166
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:273
 msgid "See more"
 msgstr "แสดงเพิ่ม"
 
@@ -18030,7 +18036,7 @@ msgstr ""
 msgid "Sending Email Address"
 msgstr "ที่อยู่อีเมล"
 
-#: app/models/ticket/article.rb:332
+#: app/models/ticket/article.rb:340
 msgid "Sending an email without a valid recipient is not possible."
 msgstr ""
 
@@ -18615,7 +18621,7 @@ msgstr "เซ็นกำกับ:"
 msgid "Signature"
 msgstr "ลายเซ็น"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:302
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:304
 msgid "Signature verification failed!"
 msgstr "การตรวจสอบลายเซ็นล้มเหลว!"
 
@@ -20471,7 +20477,7 @@ msgstr "ไม่พบวัตถุ"
 #: app/assets/javascripts/app/controllers/_settings/form.coffee:91
 #: app/assets/javascripts/app/controllers/object_manager.coffee:331
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee:142
-#: app/assets/javascripts/app/controllers/user.coffee:235
+#: app/assets/javascripts/app/controllers/user.coffee:236
 msgid "The object could not be updated."
 msgstr ""
 
@@ -20845,7 +20851,7 @@ msgstr ""
 msgid "The required parameter 'ticket_number' is missing."
 msgstr ""
 
-#: app/models/concerns/perform_changes/action/attribute_updates.rb:148
+#: app/models/concerns/perform_changes/action/attribute_updates.rb:149
 #, fuzzy
 #| msgid "The required parameter 'payload->class_name' is missing."
 msgid "The required parameter 'user_id' is missing."
@@ -20869,7 +20875,7 @@ msgstr "ไม่สามารถประมวลผลคำตอบได
 msgid "The retried attachment download failed."
 msgstr "การดาวน์โหลดไฟล์แนบที่ลองใหม่ล้มเหลว."
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:322
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:324
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:62
 #: app/frontend/shared/composables/useArticleSecurity.ts:75
 msgid "The retried security process failed!"
@@ -20977,7 +20983,7 @@ msgid ""
 "according to RFC 3156."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:300
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:302
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:85
 #: app/frontend/shared/composables/useArticleSecurity.ts:94
 msgid "The signature was successfully verified."
@@ -21139,7 +21145,7 @@ msgstr ""
 msgid "The two-factor authentication method \"%s\" was removed for this user."
 msgstr "กำหนดว่าการรวม i-doit (https://www.i-doit.org/) ถูกเปิดใช้งานหรือไม่"
 
-#: app/controllers/sessions_controller.rb:251
+#: app/controllers/sessions_controller.rb:253
 #: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:32
 #: app/services/service/user/two_factor/initiate_method_configuration.rb:6
 #: app/services/service/user/two_factor/verify_method_configuration.rb:15
@@ -21181,7 +21187,7 @@ msgstr "ไม่สามารถสร้างรายงานได้"
 msgid "The user's 'preferred_username' could not be extracted from 'id_token'."
 msgstr "ไม่สามารถแยก 'preferred_username' ของผู้ใช้ออกจาก 'id_token'."
 
-#: app/controllers/sessions_controller.rb:247
+#: app/controllers/sessions_controller.rb:249
 #: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:27
 #, fuzzy
 #| msgid "The required parameter 'payload->class_name' is missing."
@@ -23406,7 +23412,7 @@ msgstr "ปัญหาเกี่ยวกับลิงค์"
 msgid "Unlink object"
 msgstr "ปัญหาเกี่ยวกับลิงค์"
 
-#: app/assets/javascripts/app/controllers/user.coffee:109
+#: app/assets/javascripts/app/controllers/user.coffee:110
 msgid "Unlock"
 msgstr "ปลดล็อค"
 
@@ -24082,6 +24088,7 @@ msgstr "กรองผู้ใช้"
 msgid "User is inactive"
 msgstr "ไม่ได้ใช้งาน"
 
+#: app/controllers/sessions_controller.rb:165
 #: app/frontend/apps/desktop/components/Search/QuickSearch/entities/User.vue:25
 #, fuzzy
 #| msgid "inactive"
@@ -24117,7 +24124,7 @@ msgstr "ชื่อผู้ใช้ / อีเมล"
 msgid "User menu"
 msgstr "บัญชีผู้ใช้"
 
-#: app/assets/javascripts/app/controllers/user.coffee:123
+#: app/assets/javascripts/app/controllers/user.coffee:124
 msgid "User successfully unlocked!"
 msgstr "ปลดล็อกผู้ใช้สำเร็จแล้ว!"
 
@@ -24125,7 +24132,7 @@ msgstr "ปลดล็อกผู้ใช้สำเร็จแล้ว!"
 msgid "User taskbar tabs"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/user.coffee:220
+#: app/assets/javascripts/app/controllers/user.coffee:221
 #, fuzzy
 #| msgid "The test run was successful."
 msgid "User updated successfully."
@@ -25092,7 +25099,7 @@ msgstr ""
 msgid "You can use the following script to post the data to %s."
 msgstr "สามารถใช้สคริปต์ต่อไปนี้เพื่อโพสต์ข้อมูลไปยัง %s"
 
-#: app/assets/javascripts/app/controllers/user.coffee:150
+#: app/assets/javascripts/app/controllers/user.coffee:151
 msgid ""
 "You cannot view or change the group permissions of an inactive user. "
 "Activate them first to manage their permissions."
@@ -25874,7 +25881,7 @@ msgstr "ค่าปริยาย"
 msgid "delete"
 msgstr "ลบ"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:172
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:174
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:18
 #, fuzzy
 #| msgid "Delete Customer"
@@ -26798,7 +26805,7 @@ msgstr "ถึง"
 msgid "reacted with a %s to message from %s '%s'"
 msgstr "ตอบสนองด้วย %s ต่อข้อความจาก %s '%s'"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:169
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:171
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:11
 #, fuzzy
 #| msgid "Create new Customer"
@@ -26908,7 +26915,7 @@ msgstr "เลือกไฟล์แนบ…"
 msgid "select visible options"
 msgstr "เลือกทั้งหมด"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:175
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:177
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:22
 #, fuzzy
 #| msgid "Create new Customer"

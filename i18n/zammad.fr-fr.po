@@ -2,10 +2,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-04-14 06:04+0000\n"
+"PO-Revision-Date: 2026-07-02 22:02+0000\n"
 "Last-Translator: Anael Mobilia <contrib@anael.eu>\n"
 "Language-Team: French <https://translations.zammad.org/projects/zammad/"
-"zammad-development/fr/>\n"
+"zammad-stable/fr/>\n"
 "Language: fr-fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -436,7 +436,7 @@ msgid "%s ago"
 msgstr "il y a %s"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleFooter.vue:31
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:217
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:221
 msgid "%s attached files"
 msgstr "Fichiers joints %s"
 
@@ -837,7 +837,7 @@ msgid "+ %s more"
 msgstr "+ %s de plus"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleFooter.vue:30
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:216
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:220
 msgid "1 attached file"
 msgstr "1 pièce jointe"
 
@@ -2584,7 +2584,7 @@ msgstr "Nombre d'articles"
 msgid "Article Language Detection"
 msgstr "Détection de la langue de l'article"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:275
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:279
 msgid "Article actions"
 msgstr "Actions sur les articles"
 
@@ -2852,7 +2852,7 @@ msgstr "Authentification impossible (désactivé par le service)"
 
 #: app/controllers/application_controller/authenticates.rb:17
 #: app/graphql/gql/context/current_user_aware.rb:7
-#: app/policies/pundit_policy.rb:18 lib/user_context.rb:37
+#: app/policies/pundit_policy.rb:18 lib/user_context.rb:44
 msgid "Authentication required"
 msgstr "Authentification requise"
 
@@ -2884,7 +2884,7 @@ msgstr "Secret de l'application d'authentification"
 msgid "Author"
 msgstr "Auteur"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:120
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:124
 msgid "Author name and article creation date"
 msgstr "Nom de l'auteur et date de création de l'article"
 
@@ -4290,7 +4290,7 @@ msgstr "Indicateur de couleur des tickets ouverts dans la barre latérale."
 
 #: app/frontend/apps/desktop/components/CommonTable/HeaderResizeLine.vue:70
 msgid "Column width: %s pixels"
-msgstr ""
+msgstr "Largeur de colonne : %s pixels"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:285
 msgid "Combined subscription URL"
@@ -5474,7 +5474,7 @@ msgstr "Décrémenter la valeur des minutes"
 msgid "Decrement seconds value"
 msgstr "Décrémenter la valeur des secondes"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:313
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:315
 msgid "Decryption failed!"
 msgstr "Échec du déchiffrement !"
 
@@ -5483,7 +5483,7 @@ msgstr "Échec du déchiffrement !"
 msgid "Decryption failed! %s"
 msgstr "Le déchiffrement a échoué ! %s"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:311
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:313
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:102
 #: app/frontend/shared/composables/useArticleSecurity.ts:110
 msgid "Decryption was successful."
@@ -5880,7 +5880,7 @@ msgstr ""
 #: db/seeds/settings.rb:5565
 msgid "Defines if Knowledge Base navbar button is enabled."
 msgstr ""
-"Définit si la barre de navigation de la base de connaissance est active."
+"Définir si la barre de navigation de la base de connaissance est active."
 
 #: db/seeds/settings.rb:4917
 msgid "Defines if LDAP is enabled or not."
@@ -6422,7 +6422,7 @@ msgstr ""
 
 #: db/seeds/settings.rb:121
 msgid "Defines the logo of the application, shown in the web interface."
-msgstr "Définit le logo de l'application, affiché dans l'interface web."
+msgstr "Définir le logo de l'application, affiché dans l'interface web."
 
 #: db/seeds/settings.rb:3291
 msgid "Defines the maximum accepted email size in MB."
@@ -6628,7 +6628,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:188
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee:9
 #: app/assets/javascripts/app/controllers/package.coffee:54
-#: app/assets/javascripts/app/controllers/user.coffee:101
+#: app/assets/javascripts/app/controllers/user.coffee:102
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:90
 #: app/assets/javascripts/app/lib/mixins/knowledge_base_actions.coffee:26
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:80
@@ -7282,7 +7282,7 @@ msgstr "Télécharger l'e-mail original"
 msgid "Download raw email"
 msgstr "Télécharger l'e-mail brut"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:339
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:341
 msgid "Downloading attachments…"
 msgstr "Téléchargement des pièces jointes…"
 
@@ -8286,6 +8286,12 @@ msgid "Error fetching i-doit information. Please contact your administrator."
 msgstr ""
 "Erreur lors de la récupération des informations sur i-doit. Veuillez "
 "contacter votre administrateur."
+
+#: lib/secure_mailing/smime/incoming.rb:99
+msgid "Error while verifying signature, please contact your administrator."
+msgstr ""
+"Erreur lors de la vérification de la signature ; veuillez contacter votre "
+"administrateur."
 
 #: db/seeds/overviews.rb:160
 msgid "Escalated Tickets"
@@ -11824,7 +11830,7 @@ msgstr "Gérer les étiquettes"
 msgid "Manage Telegram channel of your system."
 msgstr "Gérer le canal Telegram de votre système."
 
-#: app/assets/javascripts/app/controllers/user.coffee:86
+#: app/assets/javascripts/app/controllers/user.coffee:87
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee:4
 msgid "Manage Two-Factor Authentication"
 msgstr "Gérer l’authentification à deux facteurs"
@@ -12221,7 +12227,7 @@ msgstr "mai"
 msgid "Maybe later"
 msgstr "Peut-être ultérieurement"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:80
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:81
 msgid "Me"
 msgstr "Moi"
 
@@ -13643,10 +13649,8 @@ msgid "Notification sender"
 msgstr "Expéditeur des notifications"
 
 #: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:14
-#, fuzzy
-#| msgid "notification sent to '%s'"
 msgid "Notification sent to"
-msgstr "notification envoyée à '%s'"
+msgstr "Notification envoyée à"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:167
 msgid "Notification settings could not be reset."
@@ -13702,13 +13706,13 @@ msgstr "novembre"
 msgid "Number"
 msgstr "Numéro"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:174
+#: app/models/ai/agent/type/ticket_tagger.rb:175
 #, fuzzy
 #| msgid "Number"
 msgid "Number of tags"
 msgstr "Numéro"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:178
+#: app/models/ai/agent/type/ticket_tagger.rb:179
 msgid "Number of tags the AI agent may assign."
 msgstr ""
 
@@ -15771,10 +15775,8 @@ msgstr "Réorganiser"
 
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:3
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_video.coffee:3
-#, fuzzy
-#| msgid "Replacement"
 msgid "Replace"
-msgstr "Remplacement"
+msgstr "Remplacer"
 
 #: app/models/ai/agent/type/ticket_tagger.rb:166
 #, fuzzy
@@ -16333,7 +16335,7 @@ msgstr "SSL/STARTTLS"
 msgid "SSO"
 msgstr "SSO"
 
-#: app/controllers/sessions_controller.rb:262
+#: app/controllers/sessions_controller.rb:264
 msgid "SSO request from untrusted IP address."
 msgstr "Requête SSO provenant d'une adresse IP non fiable."
 
@@ -16439,7 +16441,7 @@ msgstr "Conditions enregistrées"
 #: app/assets/javascripts/app/controllers/_integration/github.coffee:63
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee:80
 #: app/assets/javascripts/app/controllers/_integration/idoit.coffee:93
-#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:1209
+#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:1211
 msgid "Saving failed."
 msgstr "Échec de l'enregistrement."
 
@@ -16650,10 +16652,8 @@ msgid "Search or enter phone number…"
 msgstr "Rechercher ou saisir un numéro de téléphone…"
 
 #: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:442
-#, fuzzy
-#| msgid "Search result list"
 msgid "Search result for: %s"
-msgstr "Liste des résultats de la recherche"
+msgstr "Résultat de recherche pour : %s"
 
 #: lib/external_data_source/errors.rb:114
 msgid ""
@@ -16865,21 +16865,21 @@ msgid "See HTTPLog for details."
 msgstr "Regardez HTTPLog pour les détails."
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee:71
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:467
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:469
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:111
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:162
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:269
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:166
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:273
 msgid "See less"
 msgstr "Voir moins"
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee:68
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:463
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:465
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:108
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:41
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco:21
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:134
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:162
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:269
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:166
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:273
 msgid "See more"
 msgstr "Voir plus"
 
@@ -17133,7 +17133,7 @@ msgstr "Expéditeur du dernier article"
 msgid "Sending Email Address"
 msgstr "Adresse e-mail d'envoi"
 
-#: app/models/ticket/article.rb:332
+#: app/models/ticket/article.rb:340
 msgid "Sending an email without a valid recipient is not possible."
 msgstr "L'envoi d'un e-mail sans destinataire valide n'est pas possible."
 
@@ -17670,7 +17670,7 @@ msgstr "Signer :"
 msgid "Signature"
 msgstr "Signature"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:302
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:304
 msgid "Signature verification failed!"
 msgstr "Échec de la vérification de la signature !"
 
@@ -19411,7 +19411,7 @@ msgstr "L'objet n'a pas pu être trouvé."
 #: app/assets/javascripts/app/controllers/_settings/form.coffee:91
 #: app/assets/javascripts/app/controllers/object_manager.coffee:331
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee:142
-#: app/assets/javascripts/app/controllers/user.coffee:235
+#: app/assets/javascripts/app/controllers/user.coffee:236
 msgid "The object could not be updated."
 msgstr "L'objet n'a pas pu être mis à jour."
 
@@ -19753,7 +19753,7 @@ msgstr "Le paramètre requis 'signup' est manquant."
 msgid "The required parameter 'ticket_number' is missing."
 msgstr "Le paramètre requis 'ticket_number' est manquant."
 
-#: app/models/concerns/perform_changes/action/attribute_updates.rb:148
+#: app/models/concerns/perform_changes/action/attribute_updates.rb:149
 msgid "The required parameter 'user_id' is missing."
 msgstr "Le paramètre requis 'user_id' est manquant."
 
@@ -19773,7 +19773,7 @@ msgstr "La réponse n'a pas pu être traitée."
 msgid "The retried attachment download failed."
 msgstr "La nouvelle tentative de téléchargement de la pièce jointe a échoué."
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:322
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:324
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:62
 #: app/frontend/shared/composables/useArticleSecurity.ts:75
 msgid "The retried security process failed!"
@@ -19883,7 +19883,7 @@ msgstr ""
 "La partie signature de cet email PGP est manquante ou présente un type de "
 "contenu incorrect selon la RFC 3156."
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:300
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:302
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:85
 #: app/frontend/shared/composables/useArticleSecurity.ts:94
 msgid "The signature was successfully verified."
@@ -20043,7 +20043,7 @@ msgstr ""
 "La méthode d'authentification à deux facteurs \"%s\" a été supprimée pour "
 "cet utilisateur."
 
-#: app/controllers/sessions_controller.rb:251
+#: app/controllers/sessions_controller.rb:253
 #: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:32
 #: app/services/service/user/two_factor/initiate_method_configuration.rb:6
 #: app/services/service/user/two_factor/verify_method_configuration.rb:15
@@ -20084,7 +20084,7 @@ msgstr ""
 "Le champ 'preferred_username' de l'utilisateur n'a pas pu être extrait de "
 "'id_token'."
 
-#: app/controllers/sessions_controller.rb:247
+#: app/controllers/sessions_controller.rb:249
 #: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:27
 msgid "The username or password is incorrect."
 msgstr "Le login ou le mot de passe est incorrect."
@@ -22278,7 +22278,7 @@ msgstr "Délier l'issue"
 msgid "Unlink object"
 msgstr "Délier l'objet"
 
-#: app/assets/javascripts/app/controllers/user.coffee:109
+#: app/assets/javascripts/app/controllers/user.coffee:110
 msgid "Unlock"
 msgstr "Déverrouiller"
 
@@ -22755,7 +22755,7 @@ msgstr "Utiliser la caméra pour prendre une photo pour l'avatar."
 
 #: app/frontend/apps/desktop/components/CommonTable/HeaderResizeLine.vue:147
 msgid "Use the left and right arrow keys to resize the column."
-msgstr ""
+msgstr "Utilisez les flèches gauche et droite pour redimensionner la colonne."
 
 #: db/seeds/settings.rb:2372
 msgid ""
@@ -22937,6 +22937,7 @@ msgstr "L'utilisateur est inactif"
 msgid "User is inactive"
 msgstr "L'utilisateur est inactif"
 
+#: app/controllers/sessions_controller.rb:165
 #: app/frontend/apps/desktop/components/Search/QuickSearch/entities/User.vue:25
 msgid "User is inactive."
 msgstr "L'utilisateur est inactif."
@@ -22962,7 +22963,7 @@ msgstr "Compte de messagerie de l'utilisateur"
 msgid "User menu"
 msgstr "Menu utilisateur"
 
-#: app/assets/javascripts/app/controllers/user.coffee:123
+#: app/assets/javascripts/app/controllers/user.coffee:124
 msgid "User successfully unlocked!"
 msgstr "Utilisateur déverrouillé avec succès !"
 
@@ -22970,7 +22971,7 @@ msgstr "Utilisateur déverrouillé avec succès !"
 msgid "User taskbar tabs"
 msgstr "Onglets de la barre des tâches utilisateur"
 
-#: app/assets/javascripts/app/controllers/user.coffee:220
+#: app/assets/javascripts/app/controllers/user.coffee:221
 msgid "User updated successfully."
 msgstr "Utilisateur mis à jour."
 
@@ -23942,7 +23943,7 @@ msgstr ""
 msgid "You can use the following script to post the data to %s."
 msgstr "Vous pouvez utiliser le script suivant pour envoyer les données à %s."
 
-#: app/assets/javascripts/app/controllers/user.coffee:150
+#: app/assets/javascripts/app/controllers/user.coffee:151
 msgid ""
 "You cannot view or change the group permissions of an inactive user. "
 "Activate them first to manage their permissions."
@@ -23974,10 +23975,8 @@ msgid "You do not have permission to update"
 msgstr "Vous n'avez pas l'autorisation de mettre à jour"
 
 #: app/frontend/apps/desktop/components/CommonTable/CommonAdvancedTable.vue:419
-#, fuzzy
-#| msgid "You don't have more tickets to load."
 msgid "You don't have more items to load."
-msgstr "Vous n'avez plus de tickets à charger."
+msgstr "Vous n'avez plus d'éléments à charger."
 
 #: app/frontend/shared/router/guards/before/permission.ts:27
 msgid "You don't have the necessary permissions to access this page."
@@ -24103,10 +24102,8 @@ msgid "You need to configure the Zammad endpoints in the %s:"
 msgstr "Vous devez configurer les endpoints Zammad dans %s :"
 
 #: app/frontend/apps/desktop/components/CommonTable/CommonAdvancedTable.vue:415
-#, fuzzy
-#| msgid "You reached the table limit of %s tickets (%s remaining)."
 msgid "You reached the table limit of %s items (%s remaining)."
-msgstr "Vous avez atteint la limite du tableau de %s tickets (%s restants)."
+msgstr "Vous avez atteint la limite du tableau de %s éléments (%s restants)."
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:777
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:395
@@ -24736,7 +24733,7 @@ msgstr "défaut"
 msgid "delete"
 msgstr "supprimer"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:172
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:174
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:18
 msgid "delivered to the customer"
 msgstr "remis au client"
@@ -25589,7 +25586,7 @@ msgstr "atteint"
 msgid "reacted with a %s to message from %s '%s'"
 msgstr "a réagi avec %s au message de %s '%s'"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:169
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:171
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:11
 msgid "read by the customer"
 msgstr "lu par le client"
@@ -25689,7 +25686,7 @@ msgstr "sélectionner une pièce jointe…"
 msgid "select visible options"
 msgstr "sélectionner les options visibles"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:175
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:177
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:22
 msgid "sent to the customer"
 msgstr "envoyé au client"

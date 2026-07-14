@@ -315,7 +315,7 @@ msgid "%s ago"
 msgstr "%s yahise"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleFooter.vue:31
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:217
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:221
 #, fuzzy
 #| msgid "Attached Files"
 msgid "%s attached files"
@@ -762,7 +762,7 @@ msgid "+ %s more"
 msgstr "bona ibirenze"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleFooter.vue:30
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:216
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:220
 #, fuzzy
 #| msgid "Attached Files"
 msgid "1 attached file"
@@ -2634,7 +2634,7 @@ msgstr "kubara ingingo"
 msgid "Article Language Detection"
 msgstr "Hindura ibintu"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:275
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:279
 #, fuzzy
 #| msgid "Article Count"
 msgid "Article actions"
@@ -2928,7 +2928,7 @@ msgstr ""
 
 #: app/controllers/application_controller/authenticates.rb:17
 #: app/graphql/gql/context/current_user_aware.rb:7
-#: app/policies/pundit_policy.rb:18 lib/user_context.rb:37
+#: app/policies/pundit_policy.rb:18 lib/user_context.rb:44
 msgid "Authentication required"
 msgstr ""
 
@@ -2968,7 +2968,7 @@ msgstr "Kwemeza biturutse kuri %s"
 msgid "Author"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:120
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:124
 msgid "Author name and article creation date"
 msgstr ""
 
@@ -5748,7 +5748,7 @@ msgstr "impuzandengo muminota %s"
 msgid "Decrement seconds value"
 msgstr "impuzandengo muminota %s"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:313
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:315
 msgid "Decryption failed!"
 msgstr ""
 
@@ -5759,7 +5759,7 @@ msgstr ""
 msgid "Decryption failed! %s"
 msgstr "iyohereza ryanze"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:311
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:313
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:102
 #: app/frontend/shared/composables/useArticleSecurity.ts:110
 #, fuzzy
@@ -6808,7 +6808,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:188
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee:9
 #: app/assets/javascripts/app/controllers/package.coffee:54
-#: app/assets/javascripts/app/controllers/user.coffee:101
+#: app/assets/javascripts/app/controllers/user.coffee:102
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:90
 #: app/assets/javascripts/app/lib/mixins/knowledge_base_actions.coffee:26
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:80
@@ -7538,7 +7538,7 @@ msgstr ""
 msgid "Download raw email"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:339
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:341
 #, fuzzy
 #| msgid "select attachment..."
 msgid "Downloading attachments…"
@@ -8615,6 +8615,12 @@ msgstr ""
 #, fuzzy
 #| msgid "Unable to verify email. Please contact your administrator."
 msgid "Error fetching i-doit information. Please contact your administrator."
+msgstr "kudashobora kugenzura ubutumwa bwa murandasi .  Reba Umuyobozi "
+
+#: lib/secure_mailing/smime/incoming.rb:99
+#, fuzzy
+#| msgid "Unable to verify email. Please contact your administrator."
+msgid "Error while verifying signature, please contact your administrator."
 msgstr "kudashobora kugenzura ubutumwa bwa murandasi .  Reba Umuyobozi "
 
 #: db/seeds/overviews.rb:160
@@ -12446,7 +12452,7 @@ msgstr "Gucunga utumenyetso"
 msgid "Manage Telegram channel of your system."
 msgstr "injiza umwirondoro wa murandasi(URL) wa sisiteme yawe %s"
 
-#: app/assets/javascripts/app/controllers/user.coffee:86
+#: app/assets/javascripts/app/controllers/user.coffee:87
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee:4
 #, fuzzy
 #| msgid "Authentication"
@@ -12943,7 +12949,7 @@ msgstr "Gicurasi"
 msgid "Maybe later"
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:80
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:81
 #, fuzzy
 #| msgid "Mode"
 msgid "Me"
@@ -14595,13 +14601,13 @@ msgstr "ugushyingo"
 msgid "Number"
 msgstr "nomero"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:174
+#: app/models/ai/agent/type/ticket_tagger.rb:175
 #, fuzzy
 #| msgid "Number"
 msgid "Number of tags"
 msgstr "nomero"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:178
+#: app/models/ai/agent/type/ticket_tagger.rb:179
 msgid "Number of tags the AI agent may assign."
 msgstr ""
 
@@ -17503,7 +17509,7 @@ msgstr ""
 msgid "SSO"
 msgstr ""
 
-#: app/controllers/sessions_controller.rb:262
+#: app/controllers/sessions_controller.rb:264
 msgid "SSO request from untrusted IP address."
 msgstr ""
 
@@ -17627,7 +17633,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_integration/github.coffee:63
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee:80
 #: app/assets/javascripts/app/controllers/_integration/idoit.coffee:93
-#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:1209
+#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:1211
 #, fuzzy
 #| msgid "Bulk action executed!"
 msgid "Saving failed."
@@ -18120,21 +18126,21 @@ msgid "See HTTPLog for details."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee:71
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:467
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:469
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:111
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:162
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:269
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:166
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:273
 msgid "See less"
 msgstr "Reba bike"
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee:68
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:463
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:465
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:108
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:41
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco:21
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:134
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:162
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:269
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:166
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:273
 msgid "See more"
 msgstr "bona ibirenze"
 
@@ -18426,7 +18432,7 @@ msgstr "subiza ingingo iheruka"
 msgid "Sending Email Address"
 msgstr "adirese ya imeri"
 
-#: app/models/ticket/article.rb:332
+#: app/models/ticket/article.rb:340
 msgid "Sending an email without a valid recipient is not possible."
 msgstr ""
 
@@ -19046,7 +19052,7 @@ msgstr "injira"
 msgid "Signature"
 msgstr "umukono"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:302
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:304
 #, fuzzy
 #| msgid "Resend verification email"
 msgid "Signature verification failed!"
@@ -20942,7 +20948,7 @@ msgstr " ikintu %s cyashyizwe ku gihe  (ibintu %s byashyizwe ku gihe)"
 #: app/assets/javascripts/app/controllers/_settings/form.coffee:91
 #: app/assets/javascripts/app/controllers/object_manager.coffee:331
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee:142
-#: app/assets/javascripts/app/controllers/user.coffee:235
+#: app/assets/javascripts/app/controllers/user.coffee:236
 #, fuzzy
 #| msgid "%s Object(s) are updated."
 msgid "The object could not be updated."
@@ -21292,7 +21298,7 @@ msgstr ""
 msgid "The required parameter 'ticket_number' is missing."
 msgstr ""
 
-#: app/models/concerns/perform_changes/action/attribute_updates.rb:148
+#: app/models/concerns/perform_changes/action/attribute_updates.rb:149
 msgid "The required parameter 'user_id' is missing."
 msgstr ""
 
@@ -21314,7 +21320,7 @@ msgstr " ikintu %s cyakozwe  (ibintu %s byakozwe)"
 msgid "The retried attachment download failed."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:322
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:324
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:62
 #: app/frontend/shared/composables/useArticleSecurity.ts:75
 msgid "The retried security process failed!"
@@ -21420,7 +21426,7 @@ msgid ""
 "according to RFC 3156."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:300
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:302
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:85
 #: app/frontend/shared/composables/useArticleSecurity.ts:94
 #, fuzzy
@@ -21581,7 +21587,7 @@ msgstr ""
 msgid "The two-factor authentication method \"%s\" was removed for this user."
 msgstr "kwemeza"
 
-#: app/controllers/sessions_controller.rb:251
+#: app/controllers/sessions_controller.rb:253
 #: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:32
 #: app/services/service/user/two_factor/initiate_method_configuration.rb:6
 #: app/services/service/user/two_factor/verify_method_configuration.rb:15
@@ -21621,7 +21627,7 @@ msgstr " ikintu %s cyakozwe  (ibintu %s byakozwe)"
 msgid "The user's 'preferred_username' could not be extracted from 'id_token'."
 msgstr ""
 
-#: app/controllers/sessions_controller.rb:247
+#: app/controllers/sessions_controller.rb:249
 #: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:27
 msgid "The username or password is incorrect."
 msgstr ""
@@ -23894,7 +23900,7 @@ msgstr "Nta bibazo"
 msgid "Unlink object"
 msgstr "Nta bibazo"
 
-#: app/assets/javascripts/app/controllers/user.coffee:109
+#: app/assets/javascripts/app/controllers/user.coffee:110
 msgid "Unlock"
 msgstr ""
 
@@ -24543,6 +24549,7 @@ msgstr ""
 msgid "User is inactive"
 msgstr "kidakora"
 
+#: app/controllers/sessions_controller.rb:165
 #: app/frontend/apps/desktop/components/Search/QuickSearch/entities/User.vue:25
 #, fuzzy
 #| msgid "inactive"
@@ -24578,7 +24585,7 @@ msgstr "izina ukoresha/umwirondoro"
 msgid "User menu"
 msgstr "izina rikoreshwa"
 
-#: app/assets/javascripts/app/controllers/user.coffee:123
+#: app/assets/javascripts/app/controllers/user.coffee:124
 msgid "User successfully unlocked!"
 msgstr ""
 
@@ -24586,7 +24593,7 @@ msgstr ""
 msgid "User taskbar tabs"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/user.coffee:220
+#: app/assets/javascripts/app/controllers/user.coffee:221
 #, fuzzy
 #| msgid "The test run was successful."
 msgid "User updated successfully."
@@ -25571,7 +25578,7 @@ msgstr ""
 msgid "You can use the following script to post the data to %s."
 msgstr "Mushobora gukoresha imyandikire ikurikira mu gushyira imbonwa kuri %s"
 
-#: app/assets/javascripts/app/controllers/user.coffee:150
+#: app/assets/javascripts/app/controllers/user.coffee:151
 msgid ""
 "You cannot view or change the group permissions of an inactive user. "
 "Activate them first to manage their permissions."
@@ -26388,7 +26395,7 @@ msgstr ""
 msgid "delete"
 msgstr "hanagura"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:172
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:174
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:18
 #, fuzzy
 #| msgid "Create new Customer"
@@ -27330,7 +27337,7 @@ msgstr "byageze"
 msgid "reacted with a %s to message from %s '%s'"
 msgstr "%s zarangiye zihinduremo |%s|!"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:169
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:171
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:11
 #, fuzzy
 #| msgid "Create new Customer"
@@ -27446,7 +27453,7 @@ msgstr "Hitamo inyomeko"
 msgid "select visible options"
 msgstr "subiza"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:175
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:177
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:22
 #, fuzzy
 #| msgid "Create new Customer"

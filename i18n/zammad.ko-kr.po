@@ -498,7 +498,7 @@ msgid "%s ago"
 msgstr "%s 전"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleFooter.vue:31
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:217
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:221
 msgid "%s attached files"
 msgstr "%s 첨부 파일"
 
@@ -894,7 +894,7 @@ msgid "+ %s more"
 msgstr "%s개 더"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleFooter.vue:30
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:216
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:220
 msgid "1 attached file"
 msgstr "1개의 첨부 파일"
 
@@ -2650,7 +2650,7 @@ msgstr "기사 개수"
 msgid "Article Language Detection"
 msgstr "기사 언어 감지"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:275
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:279
 msgid "Article actions"
 msgstr "기사 작업"
 
@@ -2912,7 +2912,7 @@ msgstr "인증이 불가능합니다 (서비스에서 제공하지 않음)"
 
 #: app/controllers/application_controller/authenticates.rb:17
 #: app/graphql/gql/context/current_user_aware.rb:7
-#: app/policies/pundit_policy.rb:18 lib/user_context.rb:37
+#: app/policies/pundit_policy.rb:18 lib/user_context.rb:44
 msgid "Authentication required"
 msgstr "인증이 필요합니다"
 
@@ -2946,7 +2946,7 @@ msgstr "인증 앱 비밀키"
 msgid "Author"
 msgstr "작성자"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:120
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:124
 msgid "Author name and article creation date"
 msgstr "작성자 이름 및 기사 생성 날짜"
 
@@ -5522,7 +5522,7 @@ msgstr "분 값 감소"
 msgid "Decrement seconds value"
 msgstr "초 값 감소"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:313
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:315
 msgid "Decryption failed!"
 msgstr "복호화 실패!"
 
@@ -5531,7 +5531,7 @@ msgstr "복호화 실패!"
 msgid "Decryption failed! %s"
 msgstr "복호화 실패! %s"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:311
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:313
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:102
 #: app/frontend/shared/composables/useArticleSecurity.ts:110
 msgid "Decryption was successful."
@@ -6585,7 +6585,7 @@ msgstr "일치하는 티켓이 있을 때 경고를 받을 사용자 역할을 �
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:188
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee:9
 #: app/assets/javascripts/app/controllers/package.coffee:54
-#: app/assets/javascripts/app/controllers/user.coffee:101
+#: app/assets/javascripts/app/controllers/user.coffee:102
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:90
 #: app/assets/javascripts/app/lib/mixins/knowledge_base_actions.coffee:26
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:80
@@ -7247,7 +7247,7 @@ msgstr "원본 이메일 다운로드"
 msgid "Download raw email"
 msgstr "원시 이메일 다운로드"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:339
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:341
 msgid "Downloading attachments…"
 msgstr "첨부 파일을 다운로드하는 중…"
 
@@ -8220,6 +8220,13 @@ msgstr "자동 마법사를 실행하는 중 오류가 발생했습니다."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:62
 msgid "Error fetching i-doit information. Please contact your administrator."
+msgstr "i-doit 정보를 가져오는 중 오류가 발생했습니다. 관리자에게 문의하세요."
+
+#: lib/secure_mailing/smime/incoming.rb:99
+#, fuzzy
+#| msgid ""
+#| "Error fetching i-doit information. Please contact your administrator."
+msgid "Error while verifying signature, please contact your administrator."
 msgstr "i-doit 정보를 가져오는 중 오류가 발생했습니다. 관리자에게 문의하세요."
 
 #: db/seeds/overviews.rb:160
@@ -11754,7 +11761,7 @@ msgstr "태그 관리"
 msgid "Manage Telegram channel of your system."
 msgstr "시스템의 Telegram 채널을 관리합니다."
 
-#: app/assets/javascripts/app/controllers/user.coffee:86
+#: app/assets/javascripts/app/controllers/user.coffee:87
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee:4
 msgid "Manage Two-Factor Authentication"
 msgstr "이중 인증 관리"
@@ -12148,7 +12155,7 @@ msgstr "5월"
 msgid "Maybe later"
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:80
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:81
 msgid "Me"
 msgstr "나"
 
@@ -13649,13 +13656,13 @@ msgstr "11월"
 msgid "Number"
 msgstr "번호"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:174
+#: app/models/ai/agent/type/ticket_tagger.rb:175
 #, fuzzy
 #| msgid "Number"
 msgid "Number of tags"
 msgstr "번호"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:178
+#: app/models/ai/agent/type/ticket_tagger.rb:179
 msgid "Number of tags the AI agent may assign."
 msgstr ""
 
@@ -16290,7 +16297,7 @@ msgstr "SSL/STARTTLS"
 msgid "SSO"
 msgstr "SSO"
 
-#: app/controllers/sessions_controller.rb:262
+#: app/controllers/sessions_controller.rb:264
 msgid "SSO request from untrusted IP address."
 msgstr ""
 
@@ -16406,7 +16413,7 @@ msgstr "저장된 조건"
 #: app/assets/javascripts/app/controllers/_integration/github.coffee:63
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee:80
 #: app/assets/javascripts/app/controllers/_integration/idoit.coffee:93
-#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:1209
+#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:1211
 msgid "Saving failed."
 msgstr "저장에 실패했습니다."
 
@@ -16827,21 +16834,21 @@ msgid "See HTTPLog for details."
 msgstr "자세한 내용은 HTTPLog를 참조하세요."
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee:71
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:467
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:469
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:111
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:162
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:269
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:166
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:273
 msgid "See less"
 msgstr "간략히 보기"
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee:68
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:463
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:465
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:108
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:41
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco:21
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:134
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:162
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:269
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:166
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:273
 msgid "See more"
 msgstr "더보기"
 
@@ -17103,7 +17110,7 @@ msgstr "마지막 게시물의 발신자"
 msgid "Sending Email Address"
 msgstr "발신 이메일 주소"
 
-#: app/models/ticket/article.rb:332
+#: app/models/ticket/article.rb:340
 msgid "Sending an email without a valid recipient is not possible."
 msgstr "유효한 수신자 없이 이메일을 보낼 수 없습니다."
 
@@ -17646,7 +17653,7 @@ msgstr "서명:"
 msgid "Signature"
 msgstr "서명"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:302
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:304
 msgid "Signature verification failed!"
 msgstr "서명 확인에 실패했습니다!"
 
@@ -19356,7 +19363,7 @@ msgstr "%s 객체 (들) 업데이트됩니다."
 #: app/assets/javascripts/app/controllers/_settings/form.coffee:91
 #: app/assets/javascripts/app/controllers/object_manager.coffee:331
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee:142
-#: app/assets/javascripts/app/controllers/user.coffee:235
+#: app/assets/javascripts/app/controllers/user.coffee:236
 msgid "The object could not be updated."
 msgstr "%s 객체 (들) 업데이트됩니다."
 
@@ -19695,7 +19702,7 @@ msgstr "필수 매개변수 'signup'이(가) 없습니다."
 msgid "The required parameter 'ticket_number' is missing."
 msgstr "필수 매개변수 'ticket_number'이(가) 없습니다."
 
-#: app/models/concerns/perform_changes/action/attribute_updates.rb:148
+#: app/models/concerns/perform_changes/action/attribute_updates.rb:149
 msgid "The required parameter 'user_id' is missing."
 msgstr "필수 매개변수 'user_id'이(가) 없습니다."
 
@@ -19715,7 +19722,7 @@ msgstr "응답을 처리할 수 없습니다."
 msgid "The retried attachment download failed."
 msgstr "재시도한 첨부 파일 다운로드가 실패했습니다."
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:322
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:324
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:62
 #: app/frontend/shared/composables/useArticleSecurity.ts:75
 msgid "The retried security process failed!"
@@ -19814,7 +19821,7 @@ msgstr ""
 "이 PGP 이메일의 서명 부분이 없거나 RFC 3156에 따라 잘못된 콘텐츠 유형을 가지"
 "고 있습니다."
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:300
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:302
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:85
 #: app/frontend/shared/composables/useArticleSecurity.ts:94
 msgid "The signature was successfully verified."
@@ -19961,7 +19968,7 @@ msgstr "이중 인증이 아직 구성되지 않았습니다."
 msgid "The two-factor authentication method \"%s\" was removed for this user."
 msgstr "이 사용자에 대해 이중 인증 방법 \"%s\"이(가) 제거되었습니다."
 
-#: app/controllers/sessions_controller.rb:251
+#: app/controllers/sessions_controller.rb:253
 #: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:32
 #: app/services/service/user/two_factor/initiate_method_configuration.rb:6
 #: app/services/service/user/two_factor/verify_method_configuration.rb:15
@@ -19997,7 +20004,7 @@ msgstr "사용자 토큰을 생성할 수 없습니다."
 msgid "The user's 'preferred_username' could not be extracted from 'id_token'."
 msgstr "사용자의 'preferred_username'을(를) 'id_token'에서 추출할 수 없습니다."
 
-#: app/controllers/sessions_controller.rb:247
+#: app/controllers/sessions_controller.rb:249
 #: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:27
 msgid "The username or password is incorrect."
 msgstr "사용자 이름 또는 비밀번호가 올바르지 않습니다."
@@ -22120,7 +22127,7 @@ msgstr "이슈 연결 해제"
 msgid "Unlink object"
 msgstr "객체 연결 해제"
 
-#: app/assets/javascripts/app/controllers/user.coffee:109
+#: app/assets/javascripts/app/controllers/user.coffee:110
 msgid "Unlock"
 msgstr "잠금 해제"
 
@@ -22793,6 +22800,7 @@ msgstr "사용자가 유휴 상태입니다"
 msgid "User is inactive"
 msgstr "사용자가 비활성 상태입니다"
 
+#: app/controllers/sessions_controller.rb:165
 #: app/frontend/apps/desktop/components/Search/QuickSearch/entities/User.vue:25
 msgid "User is inactive."
 msgstr "사용자가 비활성 상태입니다."
@@ -22818,7 +22826,7 @@ msgstr "사용자 사서함"
 msgid "User menu"
 msgstr "사용자 메뉴"
 
-#: app/assets/javascripts/app/controllers/user.coffee:123
+#: app/assets/javascripts/app/controllers/user.coffee:124
 msgid "User successfully unlocked!"
 msgstr "사용자가 성공적으로 잠금 해제되었습니다!"
 
@@ -22826,7 +22834,7 @@ msgstr "사용자가 성공적으로 잠금 해제되었습니다!"
 msgid "User taskbar tabs"
 msgstr "사용자 작업 표시줄 탭"
 
-#: app/assets/javascripts/app/controllers/user.coffee:220
+#: app/assets/javascripts/app/controllers/user.coffee:221
 msgid "User updated successfully."
 msgstr "사용자가 성공적으로 업데이트되었습니다."
 
@@ -23773,7 +23781,7 @@ msgstr ""
 msgid "You can use the following script to post the data to %s."
 msgstr "%s에 데이터를 게시하려면 다음 스크립트를 사용할 수 있습니다."
 
-#: app/assets/javascripts/app/controllers/user.coffee:150
+#: app/assets/javascripts/app/controllers/user.coffee:151
 msgid ""
 "You cannot view or change the group permissions of an inactive user. "
 "Activate them first to manage their permissions."
@@ -24553,7 +24561,7 @@ msgstr "기본값"
 msgid "delete"
 msgstr "삭제"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:172
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:174
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:18
 msgid "delivered to the customer"
 msgstr "고객에게 전달됨"
@@ -25411,7 +25419,7 @@ msgstr "도달함"
 msgid "reacted with a %s to message from %s '%s'"
 msgstr "%s의 '%s' 메시지에 %s로 반응함"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:169
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:171
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:11
 msgid "read by the customer"
 msgstr "고객이 읽음"
@@ -25509,7 +25517,7 @@ msgstr "첨부 파일 선택…"
 msgid "select visible options"
 msgstr "표시된 옵션 선택"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:175
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:177
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:22
 msgid "sent to the customer"
 msgstr "고객에게 전송됨"

@@ -2,10 +2,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-04-15 09:02+0000\n"
+"PO-Revision-Date: 2026-07-02 22:02+0000\n"
 "Last-Translator: Murat Duman <mduman@metu.edu.tr>\n"
 "Language-Team: Turkish <https://translations.zammad.org/projects/zammad/"
-"zammad-development/tr/>\n"
+"zammad-stable/tr/>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -437,7 +437,7 @@ msgid "%s ago"
 msgstr "%s önce"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleFooter.vue:31
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:217
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:221
 msgid "%s attached files"
 msgstr "%s dosya ekte"
 
@@ -626,7 +626,7 @@ msgstr "%s sonuç seçildi"
 #, fuzzy
 #| msgid "%s result(s) selected"
 msgid "%s result(s) selected, selection limit reached"
-msgstr "%s sonuç seçildi"
+msgstr "%s sonuç seçildi, seçim sınırına ulaşıldı"
 
 #: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:53
 msgid "%s selected. Use arrow keys to choose drop position, then press Space."
@@ -839,7 +839,7 @@ msgid "+ %s more"
 msgstr "%s daha fazla"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleFooter.vue:30
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:216
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:220
 msgid "1 attached file"
 msgstr "1 dosya ekte"
 
@@ -2572,7 +2572,7 @@ msgstr "Yazı Sayısı"
 msgid "Article Language Detection"
 msgstr "Yazı Dili Algılama"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:275
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:279
 msgid "Article actions"
 msgstr "Yazı eylemleri"
 
@@ -2837,7 +2837,7 @@ msgstr "Kimlik doğrulama mümkün değil (hizmet tarafından sunulmuyor)"
 
 #: app/controllers/application_controller/authenticates.rb:17
 #: app/graphql/gql/context/current_user_aware.rb:7
-#: app/policies/pundit_policy.rb:18 lib/user_context.rb:37
+#: app/policies/pundit_policy.rb:18 lib/user_context.rb:44
 msgid "Authentication required"
 msgstr "Kimlik doğrulama gerekli"
 
@@ -2869,7 +2869,7 @@ msgstr "Kimlik doğrulayıcı uygulama sırrı"
 msgid "Author"
 msgstr "Yazar"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:120
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:124
 msgid "Author name and article creation date"
 msgstr "Yazar adı ve yazı oluşturulma tarihi"
 
@@ -5429,7 +5429,7 @@ msgstr "Dakika değerini azalt"
 msgid "Decrement seconds value"
 msgstr "Saniye değerini azalt"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:313
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:315
 msgid "Decryption failed!"
 msgstr "Şifre çözme başarısız oldu!"
 
@@ -5438,7 +5438,7 @@ msgstr "Şifre çözme başarısız oldu!"
 msgid "Decryption failed! %s"
 msgstr "Şifre çözme başarısız oldu! %s"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:311
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:313
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:102
 #: app/frontend/shared/composables/useArticleSecurity.ts:110
 msgid "Decryption was successful."
@@ -6574,7 +6574,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:188
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee:9
 #: app/assets/javascripts/app/controllers/package.coffee:54
-#: app/assets/javascripts/app/controllers/user.coffee:101
+#: app/assets/javascripts/app/controllers/user.coffee:102
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:90
 #: app/assets/javascripts/app/lib/mixins/knowledge_base_actions.coffee:26
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:80
@@ -7222,7 +7222,7 @@ msgstr "Orijinal epostayı indirin"
 msgid "Download raw email"
 msgstr "Ham eposta indirin"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:339
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:341
 msgid "Downloading attachments…"
 msgstr "Ekler indiriliyor…"
 
@@ -8213,6 +8213,14 @@ msgstr "Otomatik sihirbazın yürütülmesi sırasında hata oluştu."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:62
 msgid "Error fetching i-doit information. Please contact your administrator."
+msgstr ""
+"i-doit bilgileri alınırken hata oluştu. Lütfen yöneticinizle iletişime geçin."
+
+#: lib/secure_mailing/smime/incoming.rb:99
+#, fuzzy
+#| msgid ""
+#| "Error fetching i-doit information. Please contact your administrator."
+msgid "Error while verifying signature, please contact your administrator."
 msgstr ""
 "i-doit bilgileri alınırken hata oluştu. Lütfen yöneticinizle iletişime geçin."
 
@@ -11720,7 +11728,7 @@ msgstr "Manage Tags"
 msgid "Manage Telegram channel of your system."
 msgstr "Sisteminizin Telegram kanalını yönetin."
 
-#: app/assets/javascripts/app/controllers/user.coffee:86
+#: app/assets/javascripts/app/controllers/user.coffee:87
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee:4
 msgid "Manage Two-Factor Authentication"
 msgstr "İki Faktörlü Kimlik Doğrulamayı Yönet"
@@ -12114,7 +12122,7 @@ msgstr "May"
 msgid "Maybe later"
 msgstr "Belki daha sonra"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:80
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:81
 msgid "Me"
 msgstr "Ben"
 
@@ -13590,13 +13598,13 @@ msgstr "Kasım"
 msgid "Number"
 msgstr "Sayı"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:174
+#: app/models/ai/agent/type/ticket_tagger.rb:175
 #, fuzzy
 #| msgid "Number"
 msgid "Number of tags"
 msgstr "Sayı"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:178
+#: app/models/ai/agent/type/ticket_tagger.rb:179
 msgid "Number of tags the AI agent may assign."
 msgstr ""
 
@@ -16209,7 +16217,7 @@ msgstr "SSL/STARTTLS"
 msgid "SSO"
 msgstr "SSO"
 
-#: app/controllers/sessions_controller.rb:262
+#: app/controllers/sessions_controller.rb:264
 msgid "SSO request from untrusted IP address."
 msgstr "Güvenilmeyen IP adresinden gelen SSO isteği."
 
@@ -16315,7 +16323,7 @@ msgstr "Kayıtlı şartlar"
 #: app/assets/javascripts/app/controllers/_integration/github.coffee:63
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee:80
 #: app/assets/javascripts/app/controllers/_integration/idoit.coffee:93
-#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:1209
+#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:1211
 msgid "Saving failed."
 msgstr "Kaydetme başarısız oldu."
 
@@ -16732,21 +16740,21 @@ msgid "See HTTPLog for details."
 msgstr "Ayrıntılar için HTTPLog bölümüne bakın."
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee:71
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:467
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:469
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:111
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:162
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:269
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:166
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:273
 msgid "See less"
 msgstr "Daha Az Gör"
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee:68
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:463
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:465
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:108
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:41
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco:21
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:134
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:162
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:269
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:166
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:273
 msgid "See more"
 msgstr "Daha fazlasını gör"
 
@@ -16997,7 +17005,7 @@ msgstr "Son yazının göndericisi"
 msgid "Sending Email Address"
 msgstr "Gönderen Eposta Adresi"
 
-#: app/models/ticket/article.rb:332
+#: app/models/ticket/article.rb:340
 msgid "Sending an email without a valid recipient is not possible."
 msgstr "Geçerli bir alıcı olmadan e-posta göndermek mümkün değildir."
 
@@ -17528,7 +17536,7 @@ msgstr "İmzala:"
 msgid "Signature"
 msgstr "İmza"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:302
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:304
 msgid "Signature verification failed!"
 msgstr "İmza doğrulama başarısız oldu!"
 
@@ -19234,7 +19242,7 @@ msgstr "Nesne bulunamadı."
 #: app/assets/javascripts/app/controllers/_settings/form.coffee:91
 #: app/assets/javascripts/app/controllers/object_manager.coffee:331
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee:142
-#: app/assets/javascripts/app/controllers/user.coffee:235
+#: app/assets/javascripts/app/controllers/user.coffee:236
 msgid "The object could not be updated."
 msgstr "Nesne güncellenemedi."
 
@@ -19558,7 +19566,7 @@ msgstr "Gerekli 'signup' parametresi eksik."
 msgid "The required parameter 'ticket_number' is missing."
 msgstr "Gerekli 'ticket_number' parametresi eksik."
 
-#: app/models/concerns/perform_changes/action/attribute_updates.rb:148
+#: app/models/concerns/perform_changes/action/attribute_updates.rb:149
 msgid "The required parameter 'user_id' is missing."
 msgstr "Gerekli parametre 'user_id' eksik."
 
@@ -19578,7 +19586,7 @@ msgstr "Yanıt işlenemedi."
 msgid "The retried attachment download failed."
 msgstr "Yeniden denenen eklenti indirme işlemi başarısız oldu."
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:322
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:324
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:62
 #: app/frontend/shared/composables/useArticleSecurity.ts:75
 msgid "The retried security process failed!"
@@ -19686,7 +19694,7 @@ msgstr ""
 "Bu PGP e-postasının imza kısmı eksik veya RFC 3156'ya göre yanlış bir içerik "
 "türüne sahip."
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:300
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:302
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:85
 #: app/frontend/shared/composables/useArticleSecurity.ts:94
 msgid "The signature was successfully verified."
@@ -19842,7 +19850,7 @@ msgid "The two-factor authentication method \"%s\" was removed for this user."
 msgstr ""
 "Bu kullanıcı için iki faktörlü kimlik doğrulama yöntemi \"%s\" kaldırıldı."
 
-#: app/controllers/sessions_controller.rb:251
+#: app/controllers/sessions_controller.rb:253
 #: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:32
 #: app/services/service/user/two_factor/initiate_method_configuration.rb:6
 #: app/services/service/user/two_factor/verify_method_configuration.rb:15
@@ -19878,7 +19886,7 @@ msgstr "Kullanıcı belirteci oluşturulamadı."
 msgid "The user's 'preferred_username' could not be extracted from 'id_token'."
 msgstr "Kullanıcının 'preferred_username' bilgisi 'id_token'dan çıkarılamadı."
 
-#: app/controllers/sessions_controller.rb:247
+#: app/controllers/sessions_controller.rb:249
 #: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:27
 msgid "The username or password is incorrect."
 msgstr "Kullanıcı adı veya şifre yanlış."
@@ -22035,7 +22043,7 @@ msgstr "Sorunun bağlantısını kaldır"
 msgid "Unlink object"
 msgstr "Nesnenin bağlantısını kaldır"
 
-#: app/assets/javascripts/app/controllers/user.coffee:109
+#: app/assets/javascripts/app/controllers/user.coffee:110
 msgid "Unlock"
 msgstr "Kilidi aç"
 
@@ -22693,6 +22701,7 @@ msgstr "Kullanıcı işlem yapmıyor"
 msgid "User is inactive"
 msgstr "Kullanıcı etkin değil"
 
+#: app/controllers/sessions_controller.rb:165
 #: app/frontend/apps/desktop/components/Search/QuickSearch/entities/User.vue:25
 msgid "User is inactive."
 msgstr "Kullanıcı etkin değil."
@@ -22718,7 +22727,7 @@ msgstr "Kullanıcı posta kutusu"
 msgid "User menu"
 msgstr "Kullanıcı menüsü"
 
-#: app/assets/javascripts/app/controllers/user.coffee:123
+#: app/assets/javascripts/app/controllers/user.coffee:124
 msgid "User successfully unlocked!"
 msgstr "Kullanıcı kilidi başarıyla açıldı!"
 
@@ -22726,7 +22735,7 @@ msgstr "Kullanıcı kilidi başarıyla açıldı!"
 msgid "User taskbar tabs"
 msgstr "Kullanıcı görev çubuğu sekmeleri"
 
-#: app/assets/javascripts/app/controllers/user.coffee:220
+#: app/assets/javascripts/app/controllers/user.coffee:221
 msgid "User updated successfully."
 msgstr "Kullanıcı başarıyla güncellendi."
 
@@ -23684,7 +23693,7 @@ msgstr ""
 msgid "You can use the following script to post the data to %s."
 msgstr "You can use the following script to post the data to %s."
 
-#: app/assets/javascripts/app/controllers/user.coffee:150
+#: app/assets/javascripts/app/controllers/user.coffee:151
 msgid ""
 "You cannot view or change the group permissions of an inactive user. "
 "Activate them first to manage their permissions."
@@ -24471,7 +24480,7 @@ msgstr "varsayılan"
 msgid "delete"
 msgstr "delete"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:172
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:174
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:18
 msgid "delivered to the customer"
 msgstr "müşteriye teslim edildi"
@@ -25323,7 +25332,7 @@ msgstr "ulaşmış"
 msgid "reacted with a %s to message from %s '%s'"
 msgstr "'%s', %s'den gelen mesaja %s ile tepki verdi"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:169
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:171
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:11
 msgid "read by the customer"
 msgstr "müşteri tarafından okundu"
@@ -25421,7 +25430,7 @@ msgstr "eki seç…"
 msgid "select visible options"
 msgstr "görünür seçenekleri seç"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:175
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:177
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:22
 msgid "sent to the customer"
 msgstr "müşteriye gönderildi"

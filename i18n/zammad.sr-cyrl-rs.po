@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-06-17 09:31+0000\n"
+"PO-Revision-Date: 2026-07-08 12:38+0000\n"
 "Last-Translator: Dusan Vuckovic <dv@zammad.com>\n"
 "Language-Team: Serbian (Cyrillic script) <https://translations.zammad.org/"
 "projects/zammad/zammad-stable/sr_Cyrl/>\n"
@@ -435,7 +435,7 @@ msgid "%s ago"
 msgstr "пре %s"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleFooter.vue:31
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:217
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:221
 msgid "%s attached files"
 msgstr "%s прилог(а)"
 
@@ -822,7 +822,7 @@ msgid "+ %s more"
 msgstr "+ још %s"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleFooter.vue:30
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:216
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:220
 msgid "1 attached file"
 msgstr "1 приложена датотека"
 
@@ -2530,7 +2530,7 @@ msgstr "Број чланака"
 msgid "Article Language Detection"
 msgstr "Откривање језика чланка"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:275
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:279
 msgid "Article actions"
 msgstr "Радње чланака"
 
@@ -2790,7 +2790,7 @@ msgstr "Аутентификација није могућа (сервис је 
 
 #: app/controllers/application_controller/authenticates.rb:17
 #: app/graphql/gql/context/current_user_aware.rb:7
-#: app/policies/pundit_policy.rb:18 lib/user_context.rb:37
+#: app/policies/pundit_policy.rb:18 lib/user_context.rb:44
 msgid "Authentication required"
 msgstr "Неопходна аутентификација"
 
@@ -2822,7 +2822,7 @@ msgstr "Шифра апликације за аутентификацију"
 msgid "Author"
 msgstr "Аутор"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:120
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:124
 msgid "Author name and article creation date"
 msgstr "Аутор и датум креирања чланка"
 
@@ -5369,7 +5369,7 @@ msgstr "Умањи вредност минута"
 msgid "Decrement seconds value"
 msgstr "Умањи вредност секунди"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:313
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:315
 msgid "Decryption failed!"
 msgstr "Неуспело дешифровање!"
 
@@ -5378,7 +5378,7 @@ msgstr "Неуспело дешифровање!"
 msgid "Decryption failed! %s"
 msgstr "Неуспело дешифровање! %s"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:311
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:313
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:102
 #: app/frontend/shared/composables/useArticleSecurity.ts:110
 msgid "Decryption was successful."
@@ -6469,7 +6469,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:188
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee:9
 #: app/assets/javascripts/app/controllers/package.coffee:54
-#: app/assets/javascripts/app/controllers/user.coffee:101
+#: app/assets/javascripts/app/controllers/user.coffee:102
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:90
 #: app/assets/javascripts/app/lib/mixins/knowledge_base_actions.coffee:26
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:80
@@ -7114,7 +7114,7 @@ msgstr "Преузми оригинални имејл"
 msgid "Download raw email"
 msgstr "Преузми изворни имејл"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:339
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:341
 msgid "Downloading attachments…"
 msgstr "Преузимање прилога…"
 
@@ -8094,6 +8094,10 @@ msgstr "Грешка приликом извршавања аутоматско�
 msgid "Error fetching i-doit information. Please contact your administrator."
 msgstr ""
 "Грешка при учитавању i-doit података. Молимо контактирајте администратора."
+
+#: lib/secure_mailing/smime/incoming.rb:99
+msgid "Error while verifying signature, please contact your administrator."
+msgstr "Грешка при провери потписа, молимо контактирајте администратора."
 
 #: db/seeds/overviews.rb:160
 msgid "Escalated Tickets"
@@ -10370,7 +10374,7 @@ msgstr "Инсталирај пакет"
 
 #: app/assets/javascripts/app/views/package.jst.eco:32
 msgid "Installed"
-msgstr "Инсталирано"
+msgstr "Инсталиран"
 
 #: app/models/ai/agent/type/custom_ai_agent.rb:34
 msgid "Instruction"
@@ -11553,7 +11557,7 @@ msgstr "Управљање ознакама"
 msgid "Manage Telegram channel of your system."
 msgstr "Управљање Telegram каналом вашег система."
 
-#: app/assets/javascripts/app/controllers/user.coffee:86
+#: app/assets/javascripts/app/controllers/user.coffee:87
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee:4
 msgid "Manage Two-Factor Authentication"
 msgstr "Управљање двофакторском аутентификацијом"
@@ -11946,7 +11950,7 @@ msgstr "мај"
 msgid "Maybe later"
 msgstr "Можда касније"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:80
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:81
 msgid "Me"
 msgstr "Ја"
 
@@ -13419,11 +13423,11 @@ msgstr "новембар"
 msgid "Number"
 msgstr "Број"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:174
+#: app/models/ai/agent/type/ticket_tagger.rb:175
 msgid "Number of tags"
 msgstr "Број ознака"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:178
+#: app/models/ai/agent/type/ticket_tagger.rb:179
 msgid "Number of tags the AI agent may assign."
 msgstr "Број ознака које AI агент може доделити."
 
@@ -15989,7 +15993,7 @@ msgstr "SSL/STARTTLS"
 msgid "SSO"
 msgstr "SSO"
 
-#: app/controllers/sessions_controller.rb:262
+#: app/controllers/sessions_controller.rb:264
 msgid "SSO request from untrusted IP address."
 msgstr "SSO захтев са непоуздане IP адресе."
 
@@ -16095,7 +16099,7 @@ msgstr "Сачувани услови"
 #: app/assets/javascripts/app/controllers/_integration/github.coffee:63
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee:80
 #: app/assets/javascripts/app/controllers/_integration/idoit.coffee:93
-#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:1209
+#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:1211
 msgid "Saving failed."
 msgstr "Неуспешно снимање."
 
@@ -16508,21 +16512,21 @@ msgid "See HTTPLog for details."
 msgstr "Погледајте HTTPLog за детаље."
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee:71
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:467
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:469
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:111
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:162
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:269
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:166
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:273
 msgid "See less"
 msgstr "Прикажи мање"
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee:68
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:463
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:465
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:108
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:41
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco:21
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:134
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:162
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:269
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:166
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:273
 msgid "See more"
 msgstr "Прикажи више"
 
@@ -16770,7 +16774,7 @@ msgstr "Пошиљалац последњег чланка"
 msgid "Sending Email Address"
 msgstr "Имејл адреса за слање"
 
-#: app/models/ticket/article.rb:332
+#: app/models/ticket/article.rb:340
 msgid "Sending an email without a valid recipient is not possible."
 msgstr "Слање имејл поруке без исправног примаоца није могуће."
 
@@ -17298,7 +17302,7 @@ msgstr "Потпис:"
 msgid "Signature"
 msgstr "Потпис"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:302
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:304
 msgid "Signature verification failed!"
 msgstr "Неуспела потврда потписа!"
 
@@ -18998,7 +19002,7 @@ msgstr "Није пронађен објекат."
 #: app/assets/javascripts/app/controllers/_settings/form.coffee:91
 #: app/assets/javascripts/app/controllers/object_manager.coffee:331
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee:142
-#: app/assets/javascripts/app/controllers/user.coffee:235
+#: app/assets/javascripts/app/controllers/user.coffee:236
 msgid "The object could not be updated."
 msgstr "Није било могуће освежити објекат."
 
@@ -19328,7 +19332,7 @@ msgstr "Није пронађен обавезни параметар ’signup�
 msgid "The required parameter 'ticket_number' is missing."
 msgstr "Није пронађен обавезни параметар ’ticket_number’."
 
-#: app/models/concerns/perform_changes/action/attribute_updates.rb:148
+#: app/models/concerns/perform_changes/action/attribute_updates.rb:149
 msgid "The required parameter 'user_id' is missing."
 msgstr "Није пронађен обавезни параметар ’user_id’."
 
@@ -19348,7 +19352,7 @@ msgstr "Није било могуће обрадити одговор."
 msgid "The retried attachment download failed."
 msgstr "Неуспешно поновно преузимање прилога."
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:322
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:324
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:62
 #: app/frontend/shared/composables/useArticleSecurity.ts:75
 msgid "The retried security process failed!"
@@ -19458,7 +19462,7 @@ msgstr ""
 "Део потписа ове PGP имејл поруке недостаје или има погрешан тип садржаја "
 "према RFC 3156."
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:300
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:302
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:85
 #: app/frontend/shared/composables/useArticleSecurity.ts:94
 msgid "The signature was successfully verified."
@@ -19610,7 +19614,7 @@ msgstr "Двофакторска аутентификација још није 
 msgid "The two-factor authentication method \"%s\" was removed for this user."
 msgstr "Метод двофакторске аутентификације корисника „%s” је уклоњен."
 
-#: app/controllers/sessions_controller.rb:251
+#: app/controllers/sessions_controller.rb:253
 #: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:32
 #: app/services/service/user/two_factor/initiate_method_configuration.rb:6
 #: app/services/service/user/two_factor/verify_method_configuration.rb:15
@@ -19647,7 +19651,7 @@ msgid "The user's 'preferred_username' could not be extracted from 'id_token'."
 msgstr ""
 "Није било могуће издвојити корисничко ’preferred_username’ из ’id_token’."
 
-#: app/controllers/sessions_controller.rb:247
+#: app/controllers/sessions_controller.rb:249
 #: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:27
 msgid "The username or password is incorrect."
 msgstr "Корисничко име или лозинка нису исправни."
@@ -21770,7 +21774,7 @@ msgstr "Уклони извештај"
 msgid "Unlink object"
 msgstr "Развежи објекат"
 
-#: app/assets/javascripts/app/controllers/user.coffee:109
+#: app/assets/javascripts/app/controllers/user.coffee:110
 msgid "Unlock"
 msgstr "Откључај"
 
@@ -22418,6 +22422,7 @@ msgstr "Корисник је одсутан"
 msgid "User is inactive"
 msgstr "Корисник је искључен"
 
+#: app/controllers/sessions_controller.rb:165
 #: app/frontend/apps/desktop/components/Search/QuickSearch/entities/User.vue:25
 msgid "User is inactive."
 msgstr "Корисник је искључен."
@@ -22443,7 +22448,7 @@ msgstr "Корисничко поштанско сандуче"
 msgid "User menu"
 msgstr "Кориснички мени"
 
-#: app/assets/javascripts/app/controllers/user.coffee:123
+#: app/assets/javascripts/app/controllers/user.coffee:124
 msgid "User successfully unlocked!"
 msgstr "Успешно откључавање корисника!"
 
@@ -22451,7 +22456,7 @@ msgstr "Успешно откључавање корисника!"
 msgid "User taskbar tabs"
 msgstr "Кориснички прозори"
 
-#: app/assets/javascripts/app/controllers/user.coffee:220
+#: app/assets/javascripts/app/controllers/user.coffee:221
 msgid "User updated successfully."
 msgstr "Корисник је успешно освежен."
 
@@ -23391,7 +23396,7 @@ msgstr ""
 msgid "You can use the following script to post the data to %s."
 msgstr "Можете користити следећу скрипту за слање података %s."
 
-#: app/assets/javascripts/app/controllers/user.coffee:150
+#: app/assets/javascripts/app/controllers/user.coffee:151
 msgid ""
 "You cannot view or change the group permissions of an inactive user. "
 "Activate them first to manage their permissions."
@@ -24171,7 +24176,7 @@ msgstr "подразумевано"
 msgid "delete"
 msgstr "избриши"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:172
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:174
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:18
 msgid "delivered to the customer"
 msgstr "испоручено клијенту"
@@ -25018,7 +25023,7 @@ msgstr "достигнуто"
 msgid "reacted with a %s to message from %s '%s'"
 msgstr "је реаговао(ла) са %s на поруку од %s '%s'"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:169
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:171
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:11
 msgid "read by the customer"
 msgstr "прочитано од стране клијента"
@@ -25116,7 +25121,7 @@ msgstr "изабери прилог…"
 msgid "select visible options"
 msgstr "изабери видљиве опције"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:175
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:177
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:22
 msgid "sent to the customer"
 msgstr "послато клијенту"

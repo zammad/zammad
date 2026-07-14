@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-06-17 22:02+0000\n"
+"PO-Revision-Date: 2026-07-02 22:02+0000\n"
 "Last-Translator: Anntoo <jdoomm@gmail.com>\n"
 "Language-Team: Ukrainian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/uk/>\n"
@@ -437,7 +437,7 @@ msgid "%s ago"
 msgstr "%s тому"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleFooter.vue:31
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:217
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:221
 msgid "%s attached files"
 msgstr "%s вкладених файлів"
 
@@ -832,7 +832,7 @@ msgid "+ %s more"
 msgstr "+ %s більше"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleFooter.vue:30
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:216
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:220
 msgid "1 attached file"
 msgstr "1 вкладений файл"
 
@@ -2011,7 +2011,7 @@ msgstr ""
 
 #: app/models/ai/agent/type/ticket_text_extractor.rb:132
 msgid "All articles"
-msgstr "Усі повідомлення"
+msgstr "Всі статті"
 
 #: app/models/ai/agent/type/ticket_categorizer.rb:51
 msgid "All categories will be considered for categorizing tickets."
@@ -2560,7 +2560,7 @@ msgstr "Кількість повідомлень"
 msgid "Article Language Detection"
 msgstr "Визначення мови повідомлення"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:275
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:279
 msgid "Article actions"
 msgstr "Дії з повідомленням"
 
@@ -2817,7 +2817,7 @@ msgstr "Неможлива автентифікація (не пропонуєт
 
 #: app/controllers/application_controller/authenticates.rb:17
 #: app/graphql/gql/context/current_user_aware.rb:7
-#: app/policies/pundit_policy.rb:18 lib/user_context.rb:37
+#: app/policies/pundit_policy.rb:18 lib/user_context.rb:44
 msgid "Authentication required"
 msgstr "Потрібна автентифікація"
 
@@ -2849,7 +2849,7 @@ msgstr "Ключ із програми-автентифікатора"
 msgid "Author"
 msgstr "Автор"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:120
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:124
 msgid "Author name and article creation date"
 msgstr "Ім'я автора та дата створення повідомлення"
 
@@ -5417,7 +5417,7 @@ msgstr "Значення зменшення хвилин"
 msgid "Decrement seconds value"
 msgstr "Значення зменшення секунд"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:313
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:315
 msgid "Decryption failed!"
 msgstr "Дешифрування не вдалося!"
 
@@ -5426,7 +5426,7 @@ msgstr "Дешифрування не вдалося!"
 msgid "Decryption failed! %s"
 msgstr "Не вдалося дешифрувати! %s"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:311
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:313
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:102
 #: app/frontend/shared/composables/useArticleSecurity.ts:110
 msgid "Decryption was successful."
@@ -5660,22 +5660,22 @@ msgstr "Визначає користувача автентифікації к�
 msgid ""
 "Defines a Freshdesk endpoint to import users, tickets, states, and articles."
 msgstr ""
-"Визначає кінцеву точку (endpoint) Freshdesk для імпорту користувачів, "
-"заявок, станів та повідомлень."
+"Визначає кінцеву точку Freshdesk для імпорту користувачів, заявок, станів та "
+"статей."
 
 #: db/seeds/settings.rb:3962
 msgid ""
 "Defines a Kayako endpoint to import users, tickets, states, and articles."
 msgstr ""
 "Визначає кінцеву точку (endpoint) Kayako для імпорту користувачів, заявок, "
-"станів та повідомлень."
+"станів та статей."
 
 #: db/seeds/settings.rb:3869
 msgid ""
 "Defines a Zendesk endpoint to import users, tickets, states, and articles."
 msgstr ""
 "Визначає кінцеву точку (endpoint) Zendesk для імпорту користувачів, заявок, "
-"станів та повідомлень."
+"станів та статей."
 
 #: db/seeds/settings.rb:5470
 msgid "Defines a dashboard stats backend that gets scheduled automatically."
@@ -5714,8 +5714,8 @@ msgstr "Визначає, після скількох невдалих вход�
 msgid ""
 "Defines an OTRS endpoint to import users, tickets, states, and articles."
 msgstr ""
-"Визначає кінцеву точку (endpoint) OTRS для імпорту користувачів, заявок, "
-"станів та повідомлень."
+"Визначає кінцеву точку OTRS для імпорту користувачів, заявок, станів та "
+"статей."
 
 #: app/assets/javascripts/app/models/ticket_priority.coffee:7
 msgid ""
@@ -6157,9 +6157,9 @@ msgid ""
 "Defines postmaster filter which sets the articles visibility to internal if "
 "it is a rely to an internal article or the last outgoing email is internal."
 msgstr ""
-"Визначає фільтр поштового майстра, який встановлює видимість повідомлення як "
-"внутрішню, якщо вона посилається на внутрішнє повідомлення або останній "
-"вихідний лист є внутрішнім."
+"Визначає фільтр postmaster, який встановлює видимість статей на внутрішню, "
+"якщо вони посилаються на внутрішню статтю або останній вихідний електронний "
+"лист є внутрішнім."
 
 #: db/seeds/settings.rb:4232
 msgid "Defines postmaster filter."
@@ -6259,16 +6259,16 @@ msgid ""
 "Defines the configuration how many articles can be created in a minute range "
 "globally."
 msgstr ""
-"Визначає конфігурацію, скільки повідомлень може бути створено в хвилинному "
-"діапазоні по всьому світу."
+"Визначає конфігурацію, скільки статей можна створити глобально за хвилинний "
+"діапазон."
 
 #: db/seeds/settings.rb:2882
 msgid ""
 "Defines the configuration how many articles can be created in a minute range "
 "per ticket."
 msgstr ""
-"Визначає конфігурацію, скільки повідомлень може бути створено в хвилинному "
-"діапазоні для однієї заявки."
+"Визначає конфігурацію, скільки статей можна створити протягом хвилини на "
+"один запит."
 
 #: db/seeds/settings.rb:4128
 msgid ""
@@ -6547,7 +6547,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:188
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee:9
 #: app/assets/javascripts/app/controllers/package.coffee:54
-#: app/assets/javascripts/app/controllers/user.coffee:101
+#: app/assets/javascripts/app/controllers/user.coffee:102
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:90
 #: app/assets/javascripts/app/lib/mixins/knowledge_base_actions.coffee:26
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:80
@@ -7191,7 +7191,7 @@ msgstr "Завантажити оригінал листа"
 msgid "Download raw email"
 msgstr "Завантажити необроблений лист"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:339
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:341
 msgid "Downloading attachments…"
 msgstr "Завантаження вкладень…"
 
@@ -8187,6 +8187,11 @@ msgstr "Помилка під час виконання автомайстра."
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:62
 msgid "Error fetching i-doit information. Please contact your administrator."
 msgstr "Помилка отримання інформації i-doit. Зверніться до адміністратора."
+
+#: lib/secure_mailing/smime/incoming.rb:99
+msgid "Error while verifying signature, please contact your administrator."
+msgstr ""
+"Сталася помилка під час перевірки підпису. Зверніться до адміністратора."
 
 #: db/seeds/overviews.rb:160
 msgid "Escalated Tickets"
@@ -11689,7 +11694,7 @@ msgstr "Керувати тегами"
 msgid "Manage Telegram channel of your system."
 msgstr "Керування Telegram-каналом вашої системи."
 
-#: app/assets/javascripts/app/controllers/user.coffee:86
+#: app/assets/javascripts/app/controllers/user.coffee:87
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee:4
 msgid "Manage Two-Factor Authentication"
 msgstr "Керування двофакторною автентифікацією"
@@ -12087,7 +12092,7 @@ msgstr "Трав."
 msgid "Maybe later"
 msgstr "Можливо, пізніше"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:80
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:81
 msgid "Me"
 msgstr "Мені"
 
@@ -13569,11 +13574,11 @@ msgstr "Листопад"
 msgid "Number"
 msgstr "Число"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:174
+#: app/models/ai/agent/type/ticket_tagger.rb:175
 msgid "Number of tags"
 msgstr "Кількість тегів"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:178
+#: app/models/ai/agent/type/ticket_tagger.rb:179
 msgid "Number of tags the AI agent may assign."
 msgstr "Кількість тегів, які може призначити ШІ-агент."
 
@@ -16162,7 +16167,7 @@ msgstr "SSL/STARTTLS"
 msgid "SSO"
 msgstr "SSO"
 
-#: app/controllers/sessions_controller.rb:262
+#: app/controllers/sessions_controller.rb:264
 msgid "SSO request from untrusted IP address."
 msgstr "Запит SSO з неперевіреної IP-адреси."
 
@@ -16268,7 +16273,7 @@ msgstr "Збережені умови"
 #: app/assets/javascripts/app/controllers/_integration/github.coffee:63
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee:80
 #: app/assets/javascripts/app/controllers/_integration/idoit.coffee:93
-#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:1209
+#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:1211
 msgid "Saving failed."
 msgstr "Збереження не вдалося."
 
@@ -16679,21 +16684,21 @@ msgid "See HTTPLog for details."
 msgstr "Дивіться HTTPLog для отримання додаткової інформації."
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee:71
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:467
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:469
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:111
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:162
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:269
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:166
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:273
 msgid "See less"
 msgstr "Бачити менше"
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee:68
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:463
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:465
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:108
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:41
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco:21
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:134
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:162
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:269
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:166
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:273
 msgid "See more"
 msgstr "Бачити більше"
 
@@ -16939,7 +16944,7 @@ msgstr "Відправник останнього повідомлення"
 msgid "Sending Email Address"
 msgstr "Адреса вихідної електронної пошти"
 
-#: app/models/ticket/article.rb:332
+#: app/models/ticket/article.rb:340
 msgid "Sending an email without a valid recipient is not possible."
 msgstr "Відправлення листа без дійсного одержувача неможливе."
 
@@ -17471,7 +17476,7 @@ msgstr "Увійти:"
 msgid "Signature"
 msgstr "Підпис"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:302
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:304
 msgid "Signature verification failed!"
 msgstr "Перевірка підпису не вдалася!"
 
@@ -19182,7 +19187,7 @@ msgstr "Об'єкт не вдалося знайти."
 #: app/assets/javascripts/app/controllers/_settings/form.coffee:91
 #: app/assets/javascripts/app/controllers/object_manager.coffee:331
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee:142
-#: app/assets/javascripts/app/controllers/user.coffee:235
+#: app/assets/javascripts/app/controllers/user.coffee:236
 msgid "The object could not be updated."
 msgstr "Об'єкт не вдалося оновити."
 
@@ -19520,7 +19525,7 @@ msgstr "Немає обов'язкового параметра «реєстра
 msgid "The required parameter 'ticket_number' is missing."
 msgstr "Немає обов'язкового параметра «номер_заявки» (ticket_number)."
 
-#: app/models/concerns/perform_changes/action/attribute_updates.rb:148
+#: app/models/concerns/perform_changes/action/attribute_updates.rb:149
 msgid "The required parameter 'user_id' is missing."
 msgstr "Немає обов'язкового параметра «ідентифікатор_користувача» (user_id)."
 
@@ -19540,7 +19545,7 @@ msgstr "Відповідь не вдалося обробити."
 msgid "The retried attachment download failed."
 msgstr "Повторна спроба завантаження вкладення виявилася невдалою."
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:322
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:324
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:62
 #: app/frontend/shared/composables/useArticleSecurity.ts:75
 msgid "The retried security process failed!"
@@ -19652,7 +19657,7 @@ msgstr ""
 "Частина підпису цього PGP-листа відсутня або має неправильний тип вмісту "
 "відповідно до RFC 3156."
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:300
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:302
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:85
 #: app/frontend/shared/composables/useArticleSecurity.ts:94
 msgid "The signature was successfully verified."
@@ -19810,7 +19815,7 @@ msgid "The two-factor authentication method \"%s\" was removed for this user."
 msgstr ""
 "Метод двофакторної автентифікації \"%s\" було видалено для цього користувача."
 
-#: app/controllers/sessions_controller.rb:251
+#: app/controllers/sessions_controller.rb:253
 #: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:32
 #: app/services/service/user/two_factor/initiate_method_configuration.rb:6
 #: app/services/service/user/two_factor/verify_method_configuration.rb:15
@@ -19846,7 +19851,7 @@ msgstr "Токен користувача не вдалося згенерува
 msgid "The user's 'preferred_username' could not be extracted from 'id_token'."
 msgstr "Не вдалося витягти ім'я користувача 'preferred_username' з 'id_token'."
 
-#: app/controllers/sessions_controller.rb:247
+#: app/controllers/sessions_controller.rb:249
 #: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:27
 msgid "The username or password is incorrect."
 msgstr "Ім'я користувача або пароль неправильні."
@@ -20941,7 +20946,7 @@ msgstr "Переписувач назв заявки"
 
 #: db/seeds/settings.rb:2898
 msgid "Ticket Trigger Loop Protection Articles Total"
-msgstr "Захист від циклів тригерів заявок всіх повідомлень"
+msgstr "Захист від циклічного спрацювання тригера для заявок усіх типів"
 
 #: db/seeds/settings.rb:2879
 msgid "Ticket Trigger Loop Protection Articles per Ticket"
@@ -21994,7 +21999,7 @@ msgstr "Прибрати посилання на проблему"
 msgid "Unlink object"
 msgstr "Прибрати посилання на об'єкт"
 
-#: app/assets/javascripts/app/controllers/user.coffee:109
+#: app/assets/javascripts/app/controllers/user.coffee:110
 msgid "Unlock"
 msgstr "Розблокувати"
 
@@ -22475,7 +22480,7 @@ msgid ""
 "multiple articles)."
 msgstr ""
 "Використовувати час початку останнього ланцюжка повідомлень клієнтів (що "
-"може складатися з кількох повідомлень)."
+"може складатися з кількох статей)."
 
 #: db/seeds/settings.rb:2371
 msgid "Use the time of the very last customer article."
@@ -22648,6 +22653,7 @@ msgstr "Користувач простоює"
 msgid "User is inactive"
 msgstr "Користувач неактивний"
 
+#: app/controllers/sessions_controller.rb:165
 #: app/frontend/apps/desktop/components/Search/QuickSearch/entities/User.vue:25
 msgid "User is inactive."
 msgstr "Користувач неактивний."
@@ -22673,7 +22679,7 @@ msgstr "Поштова скринька користувача"
 msgid "User menu"
 msgstr "Меню користувача"
 
-#: app/assets/javascripts/app/controllers/user.coffee:123
+#: app/assets/javascripts/app/controllers/user.coffee:124
 msgid "User successfully unlocked!"
 msgstr "Користувача успішно розблоковано!"
 
@@ -22681,7 +22687,7 @@ msgstr "Користувача успішно розблоковано!"
 msgid "User taskbar tabs"
 msgstr "Вкладки панелі завдань користувача"
 
-#: app/assets/javascripts/app/controllers/user.coffee:220
+#: app/assets/javascripts/app/controllers/user.coffee:221
 msgid "User updated successfully."
 msgstr "Користувача успішно оновлено."
 
@@ -23639,7 +23645,7 @@ msgstr ""
 "Ви можете використовувати зазначений нижче сценарій для публікації даних у "
 "%s."
 
-#: app/assets/javascripts/app/controllers/user.coffee:150
+#: app/assets/javascripts/app/controllers/user.coffee:151
 msgid ""
 "You cannot view or change the group permissions of an inactive user. "
 "Activate them first to manage their permissions."
@@ -24422,7 +24428,7 @@ msgstr "за замовчуванням"
 msgid "delete"
 msgstr "видалити"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:172
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:174
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:18
 msgid "delivered to the customer"
 msgstr "доставлено клієнту"
@@ -25273,7 +25279,7 @@ msgstr "одержаний/досягнутий"
 msgid "reacted with a %s to message from %s '%s'"
 msgstr "відреагував %s на повідомлення від %s '%s'"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:169
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:171
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:11
 msgid "read by the customer"
 msgstr "прочитано клієнтом"
@@ -25371,7 +25377,7 @@ msgstr "вибрати вкладення…"
 msgid "select visible options"
 msgstr "вибрати видимі опції"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:175
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:177
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:22
 msgid "sent to the customer"
 msgstr "відправити клієнту"

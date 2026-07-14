@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-06-22 22:02+0000\n"
+"PO-Revision-Date: 2026-07-07 22:07+0000\n"
 "Last-Translator: Balázs Úr <balazs@urbalazs.hu>\n"
 "Language-Team: Hungarian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/hu/>\n"
@@ -436,7 +436,7 @@ msgid "%s ago"
 msgstr "%s ezelőtt"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleFooter.vue:31
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:217
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:221
 msgid "%s attached files"
 msgstr "%s csatolt fájl"
 
@@ -831,7 +831,7 @@ msgid "+ %s more"
 msgstr "+%s további"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleFooter.vue:30
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:216
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:220
 msgid "1 attached file"
 msgstr "1 csatolt fájl"
 
@@ -2567,7 +2567,7 @@ msgstr "Bejegyzések száma"
 msgid "Article Language Detection"
 msgstr "Bejegyzés nyelvének felismerése"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:275
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:279
 msgid "Article actions"
 msgstr "Bejegyzésműveletek"
 
@@ -2832,7 +2832,7 @@ msgstr "Hitelesítés nem lehetséges (a szolgáltatás nem biztosítja)"
 
 #: app/controllers/application_controller/authenticates.rb:17
 #: app/graphql/gql/context/current_user_aware.rb:7
-#: app/policies/pundit_policy.rb:18 lib/user_context.rb:37
+#: app/policies/pundit_policy.rb:18 lib/user_context.rb:44
 msgid "Authentication required"
 msgstr "Hitelesítés szükséges"
 
@@ -2864,7 +2864,7 @@ msgstr "Hitelesítő alkalmazás titka"
 msgid "Author"
 msgstr "Szerző"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:120
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:124
 msgid "Author name and article creation date"
 msgstr "Szerző neve és a bejegyzés létrehozásának dátuma"
 
@@ -5450,7 +5450,7 @@ msgstr "Percek értékének csökkentése"
 msgid "Decrement seconds value"
 msgstr "Másodpercek értékének csökkentése"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:313
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:315
 msgid "Decryption failed!"
 msgstr "A visszafejtés nem sikerült!"
 
@@ -5459,7 +5459,7 @@ msgstr "A visszafejtés nem sikerült!"
 msgid "Decryption failed! %s"
 msgstr "A visszafejtés nem sikerült! %s"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:311
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:313
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:102
 #: app/frontend/shared/composables/useArticleSecurity.ts:110
 msgid "Decryption was successful."
@@ -6639,7 +6639,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:188
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee:9
 #: app/assets/javascripts/app/controllers/package.coffee:54
-#: app/assets/javascripts/app/controllers/user.coffee:101
+#: app/assets/javascripts/app/controllers/user.coffee:102
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:90
 #: app/assets/javascripts/app/lib/mixins/knowledge_base_actions.coffee:26
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:80
@@ -7290,7 +7290,7 @@ msgstr "Eredeti e-mail letöltése"
 msgid "Download raw email"
 msgstr "Nyers e-mail letöltése"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:339
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:341
 msgid "Downloading attachments…"
 msgstr "Mellékletek letöltése…"
 
@@ -8288,6 +8288,11 @@ msgid "Error fetching i-doit information. Please contact your administrator."
 msgstr ""
 "Hiba az i-doit információinak letöltésekor. Vegye fel a kapcsolatot az "
 "adminisztrátorral."
+
+#: lib/secure_mailing/smime/incoming.rb:99
+msgid "Error while verifying signature, please contact your administrator."
+msgstr ""
+"Hiba az aláírás ellenőrzésekor, vegye fel a kapcsolatot az adminisztrátorral."
 
 #: db/seeds/overviews.rb:160
 msgid "Escalated Tickets"
@@ -11791,7 +11796,7 @@ msgstr "Címkék kezelése"
 msgid "Manage Telegram channel of your system."
 msgstr "A rendszer Telegram-csatornájának kezelése."
 
-#: app/assets/javascripts/app/controllers/user.coffee:86
+#: app/assets/javascripts/app/controllers/user.coffee:87
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee:4
 msgid "Manage Two-Factor Authentication"
 msgstr "Kétfaktoros hitelesítés kezelése"
@@ -12188,7 +12193,7 @@ msgstr "május"
 msgid "Maybe later"
 msgstr "Talán később"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:80
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:81
 msgid "Me"
 msgstr "Én"
 
@@ -13666,11 +13671,11 @@ msgstr "november"
 msgid "Number"
 msgstr "Szám"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:174
+#: app/models/ai/agent/type/ticket_tagger.rb:175
 msgid "Number of tags"
 msgstr "Címkék száma"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:178
+#: app/models/ai/agent/type/ticket_tagger.rb:179
 msgid "Number of tags the AI agent may assign."
 msgstr "Címkék száma, amennyit az MI-ügyintéző hozzárendelhet."
 
@@ -15772,7 +15777,7 @@ msgstr "Jelentésprofilok"
 #: app/assets/javascripts/app/controllers/report.coffee:6
 #: app/assets/javascripts/app/views/report/main.jst.eco:5
 msgid "Reporting"
-msgstr "Jelentés"
+msgstr "Jelentéskészítés"
 
 #: app/assets/javascripts/app/views/widget/http_log.jst.eco:18
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco:17
@@ -16270,7 +16275,7 @@ msgstr "SSL/STARTTLS"
 msgid "SSO"
 msgstr "SSO"
 
-#: app/controllers/sessions_controller.rb:262
+#: app/controllers/sessions_controller.rb:264
 msgid "SSO request from untrusted IP address."
 msgstr "SSO-kérés nem megbízható IP-címről."
 
@@ -16376,7 +16381,7 @@ msgstr "Mentett feltételek"
 #: app/assets/javascripts/app/controllers/_integration/github.coffee:63
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee:80
 #: app/assets/javascripts/app/controllers/_integration/idoit.coffee:93
-#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:1209
+#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:1211
 msgid "Saving failed."
 msgstr "A mentés nem sikerült."
 
@@ -16792,21 +16797,21 @@ msgid "See HTTPLog for details."
 msgstr "Nézze meg a HTTP-naplót a részletekért."
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee:71
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:467
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:469
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:111
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:162
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:269
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:166
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:273
 msgid "See less"
 msgstr "Kevesebb megtekintése"
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee:68
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:463
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:465
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:108
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:41
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco:21
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:134
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:162
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:269
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:166
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:273
 msgid "See more"
 msgstr "Több megtekintése"
 
@@ -17055,7 +17060,7 @@ msgstr "Az utolsó bejegyzés küldője"
 msgid "Sending Email Address"
 msgstr "Küldő e-mail-cím"
 
-#: app/models/ticket/article.rb:332
+#: app/models/ticket/article.rb:340
 msgid "Sending an email without a valid recipient is not possible."
 msgstr "Érvényes címzett nélkül nem lehetséges e-mailt küldeni."
 
@@ -17588,7 +17593,7 @@ msgstr "Aláírás:"
 msgid "Signature"
 msgstr "Aláírás"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:302
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:304
 msgid "Signature verification failed!"
 msgstr "Az aláírás ellenőrzése nem sikerült!"
 
@@ -18214,7 +18219,7 @@ msgstr "Naptárak szinkronizálása iCal-hírforrásokkal."
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco:32
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:48
 msgid "Sync with computer"
-msgstr "Szinkronizálás számítógéppel"
+msgstr "Szinkronizálás a számítógéppel"
 
 #: app/assets/javascripts/app/controllers/_manage/system.coffee:3
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:37
@@ -19308,7 +19313,7 @@ msgstr "Az objektum nem található."
 #: app/assets/javascripts/app/controllers/_settings/form.coffee:91
 #: app/assets/javascripts/app/controllers/object_manager.coffee:331
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee:142
-#: app/assets/javascripts/app/controllers/user.coffee:235
+#: app/assets/javascripts/app/controllers/user.coffee:236
 msgid "The object could not be updated."
 msgstr "Az objektumot nem sikerült frissíteni."
 
@@ -19639,7 +19644,7 @@ msgstr "A szükséges „signup” paraméter hiányzik."
 msgid "The required parameter 'ticket_number' is missing."
 msgstr "A szükséges „ticket_number” paraméter hiányzik."
 
-#: app/models/concerns/perform_changes/action/attribute_updates.rb:148
+#: app/models/concerns/perform_changes/action/attribute_updates.rb:149
 msgid "The required parameter 'user_id' is missing."
 msgstr "A szükséges „user_id” paraméter hiányzik."
 
@@ -19659,7 +19664,7 @@ msgstr "A választ nem sikerült feldolgozni."
 msgid "The retried attachment download failed."
 msgstr "Az újra megpróbált mellékletletöltés nem sikerült."
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:322
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:324
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:62
 #: app/frontend/shared/composables/useArticleSecurity.ts:75
 msgid "The retried security process failed!"
@@ -19775,7 +19780,7 @@ msgstr ""
 "Ennek a PGP e-mailnek az aláírási része hiányzik vagy helytelen "
 "tartalomtípussal rendelkezik az RFC 3156 szerint."
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:300
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:302
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:85
 #: app/frontend/shared/composables/useArticleSecurity.ts:94
 msgid "The signature was successfully verified."
@@ -19933,7 +19938,7 @@ msgstr ""
 "A(z) „%s” kétfaktoros hitelesítési módszer eltávolításra került ennél a "
 "felhasználónál."
 
-#: app/controllers/sessions_controller.rb:251
+#: app/controllers/sessions_controller.rb:253
 #: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:32
 #: app/services/service/user/two_factor/initiate_method_configuration.rb:6
 #: app/services/service/user/two_factor/verify_method_configuration.rb:15
@@ -19973,7 +19978,7 @@ msgstr ""
 "A felhasználó „preferred_username” értékét nem sikerült kinyerni az "
 "„id_token” értékéből."
 
-#: app/controllers/sessions_controller.rb:247
+#: app/controllers/sessions_controller.rb:249
 #: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:27
 msgid "The username or password is incorrect."
 msgstr "A felhasználónév vagy a jelszó helytelen."
@@ -22138,7 +22143,7 @@ msgstr "Probléma kapcsolatának törlése"
 msgid "Unlink object"
 msgstr "Objektum kapcsolatának törlése"
 
-#: app/assets/javascripts/app/controllers/user.coffee:109
+#: app/assets/javascripts/app/controllers/user.coffee:110
 msgid "Unlock"
 msgstr "Feloldás"
 
@@ -22790,6 +22795,7 @@ msgstr "A felhasználó tétlen"
 msgid "User is inactive"
 msgstr "A felhasználó inaktív"
 
+#: app/controllers/sessions_controller.rb:165
 #: app/frontend/apps/desktop/components/Search/QuickSearch/entities/User.vue:25
 msgid "User is inactive."
 msgstr "A felhasználó inaktív."
@@ -22815,7 +22821,7 @@ msgstr "Felhasználói postafiók"
 msgid "User menu"
 msgstr "Felhasználói menü"
 
-#: app/assets/javascripts/app/controllers/user.coffee:123
+#: app/assets/javascripts/app/controllers/user.coffee:124
 msgid "User successfully unlocked!"
 msgstr "A felhasználó sikeresen feloldva!"
 
@@ -22823,7 +22829,7 @@ msgstr "A felhasználó sikeresen feloldva!"
 msgid "User taskbar tabs"
 msgstr "Felhasználói tálcalapok"
 
-#: app/assets/javascripts/app/controllers/user.coffee:220
+#: app/assets/javascripts/app/controllers/user.coffee:221
 msgid "User updated successfully."
 msgstr "A felhasználó sikeresen frissítve."
 
@@ -23774,7 +23780,7 @@ msgid "You can use the following script to post the data to %s."
 msgstr ""
 "Használhatja a következő parancsfájlt, hogy elküldje az adatokat ide: %s."
 
-#: app/assets/javascripts/app/controllers/user.coffee:150
+#: app/assets/javascripts/app/controllers/user.coffee:151
 msgid ""
 "You cannot view or change the group permissions of an inactive user. "
 "Activate them first to manage their permissions."
@@ -24557,7 +24563,7 @@ msgstr "alapértelmezett"
 msgid "delete"
 msgstr "törlés"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:172
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:174
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:18
 msgid "delivered to the customer"
 msgstr "kézbesítve az ügyfélnek"
@@ -25407,7 +25413,7 @@ msgstr "elérte"
 msgid "reacted with a %s to message from %s '%s'"
 msgstr "reagált ezzel: %s %s „%s” üzenetére"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:169
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:171
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:11
 msgid "read by the customer"
 msgstr "az ügyfél által elolvasva"
@@ -25506,7 +25512,7 @@ msgstr "melléklet kiválasztása…"
 msgid "select visible options"
 msgstr "látható lehetőségek kiválasztása"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:175
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:177
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:22
 msgid "sent to the customer"
 msgstr "elküldve az ügyfélnek"
