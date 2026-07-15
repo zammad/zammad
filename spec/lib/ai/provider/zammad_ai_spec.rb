@@ -35,7 +35,7 @@ RSpec.describe AI::Provider::ZammadAI, integration: true, required_envs: %w[ZAMM
   end
 
   include_examples 'provider/ping!'
-  include_examples 'provider/embed', dimensions: 768
+  include_examples 'provider/embed', dimensions: 1024
 
   describe '#ask' do
     it 'does exchange data with ZammadAI endpoint' do

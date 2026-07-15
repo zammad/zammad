@@ -4,15 +4,17 @@ class AI::Provider::ZammadAI < AI::Provider
   ZAMMAD_AI_API_BASE_URL = 'https://ai.zammad.com'.freeze
 
   DEFAULT_OPTIONS = {
-    embedding_model: 'nomic-embed-text',
+    embedding_model: 'bge-m3',
   }.freeze
 
   EMBEDDING_SIZES = {
+    'bge-m3'            => 1024,
     'nomic-embed-text'  => 768,
     'mxbai-embed-large' => 1024,
   }.freeze
 
   EMBEDDING_INPUT_LIMITS = {
+    'bge-m3'            => 8192,
     'nomic-embed-text'  => 2048,
     'mxbai-embed-large' => 512,
   }.freeze

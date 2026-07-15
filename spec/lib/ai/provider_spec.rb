@@ -92,6 +92,44 @@ RSpec.describe AI::Provider do
     end
   end
 
+  describe '#embedding_input_limit' do
+    context 'when the embedding input limit option is present' do
+      subject(:ai_provider) do
+        described_class.new(
+          config: { provider: 'open_ai', token: '123', embedding_input_limit: 1024 },
+        )
+      end
+
+      it 'returns the configured input limit' do
+        expect(ai_provider.embedding_input_limit).to eq(1024)
+      end
+    end
+
+    context 'when the embedding model has a known input limit' do
+      subject(:ai_provider) do
+        AI::Provider::OpenAI.new(
+          config: { provider: 'open_ai', token: '123' },
+        )
+      end
+
+      it 'returns the input limit of the embedding model' do
+        expect(ai_provider.embedding_input_limit).to eq(8191)
+      end
+    end
+
+    context 'when the embedding model has no known input limit' do
+      subject(:ai_provider) do
+        described_class.new(
+          config: { provider: 'open_ai', token: '123', embedding_model: 'unknown-embedding-model' },
+        )
+      end
+
+      it 'returns the default input limit' do
+        expect(ai_provider.embedding_input_limit).to eq(described_class::DEFAULT_EMBEDDING_INPUT_LIMIT)
+      end
+    end
+  end
+
   describe '.ping!' do
     it 'raises an error' do
       expect { described_class.ping!(nil) }.to raise_error(RuntimeError, 'not implemented')

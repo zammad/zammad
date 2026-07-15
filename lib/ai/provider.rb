@@ -25,6 +25,7 @@ class AI::Provider
 
   def initialize(config: {}, options: {})
     @config = config.presence || Setting.get('ai_provider_config')
+    options = options.deep_symbolize_keys
 
     if @config[:model] && !options[:model]
       options[:model] = @config[:model]
@@ -34,7 +35,11 @@ class AI::Provider
       options[:embedding_model] = @config[:embedding_model]
     end
 
-    @options = self.class::DEFAULT_OPTIONS.merge(options.compact.deep_symbolize_keys)
+    if @config[:embedding_input_limit] && !options[:embedding_input_limit]
+      options[:embedding_input_limit] = @config[:embedding_input_limit]
+    end
+
+    @options = self.class::DEFAULT_OPTIONS.merge(options.compact)
 
     @response_metadata = {}
   end
@@ -108,6 +113,8 @@ class AI::Provider
   #
   # @return [Integer] the model's input token limit
   def embedding_input_limit
+    return options[:embedding_input_limit] if options[:embedding_input_limit].present?
+
     self.class::EMBEDDING_INPUT_LIMITS.fetch(options[:embedding_model], DEFAULT_EMBEDDING_INPUT_LIMIT)
   end
 

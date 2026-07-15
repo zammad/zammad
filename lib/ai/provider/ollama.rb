@@ -7,11 +7,12 @@ class AI::Provider::Ollama < AI::Provider
   DEFAULT_OPTIONS = {
     model:           'mistral-small3.2',
     temperature:     0.0,
-    embedding_model: 'all-minilm',
+    embedding_model: 'bge-m3',
   }.freeze
 
   EMBEDDING_SIZES = {
     'all-minilm'        => 384,
+    'bge-m3'            => 1024,
     'nomic-embed-text'  => 768,
     'mxbai-embed-large' => 1024,
   }.freeze
@@ -20,6 +21,7 @@ class AI::Provider::Ollama < AI::Provider
   # self-hosted models, so chunks must be sized against them (see Service::AI::VectorDB::Content::Chunks).
   EMBEDDING_INPUT_LIMITS = {
     'all-minilm'        => 256,
+    'bge-m3'            => 8192,
     'nomic-embed-text'  => 2048,
     'mxbai-embed-large' => 512,
   }.freeze
@@ -79,9 +81,11 @@ class AI::Provider::Ollama < AI::Provider
     )
 
     data = validate_response!(response)
-    # /api/embed returns one vector per input as an array; #embed/#bulk_embed use it directly. Do
-    # not collapse to the first vector — that drops the rest of a batch.
-    data['response']['embeddings']
+
+    # /api/embed returns one vector per input as an array; #embed/#bulk_embed uses it directly.
+    #   Do not collapse to the first vector, as that drops the rest of the batch.
+    #   The response may have a top-level `embeddings` key in newer Ollama versions.
+    data.dig('response', 'embeddings') || data['embeddings']
   end
 
   def self.ping!(config)
