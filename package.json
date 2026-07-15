@@ -105,7 +105,7 @@
   "dependencies": {
     "@apollo/client": "3.13.9",
     "@floating-ui/dom": "^1.7.6",
-    "@floating-ui/vue": "^2.0.0",
+    "@floating-ui/vue": "^2.0.1",
     "@formkit/core": "^2.1.0",
     "@formkit/dev": "^2.1.0",
     "@formkit/drag-and-drop": "^0.6.1",
