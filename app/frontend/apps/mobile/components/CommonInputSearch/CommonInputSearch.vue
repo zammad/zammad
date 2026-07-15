@@ -19,6 +19,10 @@ export interface CommonInputSearchExpose {
   focus(): void
 }
 
+defineOptions({
+  inheritAttrs: false,
+})
+
 const props = withDefaults(defineProps<CommonInputSearchProps>(), {
   placeholder: __('Search…'),
 })
@@ -40,16 +44,10 @@ const clearFilter = () => {
 }
 </script>
 
-<script lang="ts">
-export default {
-  inheritAttrs: false,
-}
-</script>
-
 <template>
   <div class="relative flex w-full items-center self-stretch" :class="wrapperClass">
     <CommonIcon
-      class="text-gray absolute shrink-0 ltr:left-2 rtl:right-2"
+      class="absolute shrink-0 text-gray ltr:left-2 rtl:right-2"
       size="base"
       name="search"
       decorative
@@ -59,7 +57,7 @@ export default {
       v-model="filter"
       v-bind="$attrs"
       :placeholder="i18n.t(placeholder)"
-      class="placeholder:text-gray h-12 w-full grow rounded-xl bg-gray-500 px-9 text-base focus:shadow-none focus:ring-0 focus:outline-hidden"
+      class="h-12 w-full grow rounded-xl bg-gray-500 px-9 text-base placeholder:text-gray focus:shadow-none focus:ring-0 focus:outline-hidden"
       :class="{
         'focus:border-white focus:ring-0': !noBorder,
         'focus:border-transparent': noBorder,

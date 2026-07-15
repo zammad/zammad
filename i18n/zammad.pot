@@ -3455,7 +3455,7 @@ msgid "Clear recently closed"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/CommonInputSearch/CommonInputSearch.vue:116
-#: app/frontend/shared/components/CommonInputSearch/CommonInputSearch.vue:75
+#: app/frontend/apps/mobile/components/CommonInputSearch/CommonInputSearch.vue:73
 msgid "Clear search"
 msgstr ""
 
@@ -14897,8 +14897,8 @@ msgstr ""
 #: app/assets/javascripts/app/views/translation/form.jst.eco:7
 #: app/frontend/apps/desktop/components/CommonInputSearch/CommonInputSearch.vue:24
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:124
+#: app/frontend/apps/mobile/components/CommonInputSearch/CommonInputSearch.vue:27
 #: app/frontend/apps/mobile/pages/home/views/Home.vue:63
-#: app/frontend/shared/components/CommonInputSearch/CommonInputSearch.vue:23
 msgid "Search…"
 msgstr ""
 

@@ -4,6 +4,8 @@ import { print } from 'graphql'
 
 import { AutocompleteSearchRecipientDocument } from '#shared/components/Form/fields/FieldRecipient/graphql/queries/autocompleteSearch/recipient.api.ts'
 
+import { emailFilterValueValidator, phoneFilterValueValidator } from './filterValueValidators.ts'
+
 import type { FormKitNode } from '@formkit/core'
 
 const gqlQuery = print(AutocompleteSearchRecipientDocument)
@@ -23,15 +25,13 @@ export const setAutoCompleteBehavior = (node: FormKitNode) => {
       contact: 'phone',
     }
     props.filterInputPlaceholder = __('Search or enter phone number…')
-
-    // Very rudimentary validator for the E.164 telephone number format, i.e. +499876543210.
-    props.filterInputValidation = 'matches:/^\\+?[1-9]\\d+$/'
+    props.filterValueValidator = phoneFilterValueValidator
   } else {
     props.additionalQueryParams = {
       contact: 'email',
     }
     props.filterInputPlaceholder = __('Search or enter email address…')
-    props.filterInputValidation = 'email'
+    props.filterValueValidator = emailFilterValueValidator
   }
 
   props.gqlQuery = gqlQuery

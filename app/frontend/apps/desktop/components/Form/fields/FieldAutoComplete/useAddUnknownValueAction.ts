@@ -1,8 +1,8 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { email as emailValidation } from '@formkit/rules'
 import { ref, type Ref } from 'vue'
 
+import { emailFilterValueValidator } from '#shared/components/Form/fields/FieldRecipient/features/filterValueValidators.ts'
 import stopEvent from '#shared/utils/events.ts'
 
 import type { DropdownOptionsAction } from '#desktop/components/CommonSelect/types.ts'
@@ -11,13 +11,6 @@ import type {
   ClearFilterInputFunction,
   SelectOptionFunction,
 } from '#desktop/components/Form/fields/FieldAutoComplete/types.ts'
-
-import type { FormKitNode } from '@formkit/core'
-
-export const emailFilterValueValidator = (filter: string) =>
-  emailValidation({ value: filter } as FormKitNode)
-
-export const phoneFilterValueValidator = (filter: string) => /^\+?[1-9]\d+$/.test(filter)
 
 export const useAddUnknownValueAction = (
   label?: Ref<string>,

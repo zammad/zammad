@@ -18,7 +18,7 @@ export const autoCompleteProps = [
   'defaultFilter',
   'alwaysApplyDefaultFilter',
   'filterInputPlaceholder',
-  'filterInputValidation',
+  'filterValueValidator',
   'limit',
   'multiple',
   'noOptionsLabelTranslation',

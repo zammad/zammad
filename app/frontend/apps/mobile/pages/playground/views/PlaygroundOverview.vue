@@ -241,8 +241,8 @@ const linkSchemaRaw = [
       action: '/tickets',
       actionIcon: 'new-customer',
       gqlQuery: `
-query autocompleteSearchUser($input: AutocompleteSearchInput!) {
-  autocompleteSearchUser(input: $input) {
+query autocompleteSearchGeneric($input: AutocompleteSearchGenericInput!) {
+  autocompleteSearchGeneric(input: $input) {
     value
     label
     labelPlaceholder
@@ -274,8 +274,8 @@ query autocompleteSearchUser($input: AutocompleteSearchInput!) {
     label: 'Organization',
     props: {
       gqlQuery: `
-query autocompleteSearchUser($input: AutocompleteSearchInput!) {
-  autocompleteSearchUser(input: $input) {
+query autocompleteSearchOrganization($input: AutocompleteSearchOrganizationInput!) {
+  autocompleteSearchOrganization(input: $input) {
     value
     label
     labelPlaceholder
@@ -294,7 +294,7 @@ query autocompleteSearchUser($input: AutocompleteSearchInput!) {
     label: 'Customer',
     props: {
       gqlQuery: `
-query autocompleteSearchUser($input: AutocompleteSearchInput!) {
+query autocompleteSearchUser($input: AutocompleteSearchUserInput!) {
   autocompleteSearchUser(input: $input) {
     value
     label

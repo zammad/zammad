@@ -3,9 +3,9 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
-import CommonInputSearch from '#shared/components/CommonInputSearch/CommonInputSearch.vue'
 import { useSessionStore } from '#shared/stores/session.ts'
 
+import CommonInputSearch from '#mobile/components/CommonInputSearch/CommonInputSearch.vue'
 import CommonSectionMenu from '#mobile/components/CommonSectionMenu/CommonSectionMenu.vue'
 import type { MenuItem } from '#mobile/components/CommonSectionMenu/index.ts'
 import CommonTicketCreateLink from '#mobile/components/CommonTicketCreateLink/CommonTicketCreateLink.vue'

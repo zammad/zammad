@@ -36,7 +36,7 @@ export type AutoCompleteProps = FormFieldContext<{
   defaultFilter?: string
   alwaysApplyDefaultFilter?: boolean
   filterInputPlaceholder?: string
-  filterInputValidation?: string
+  filterValueValidator?: (filter: string) => boolean
   limit?: number
   multiple?: boolean
   noOptionsLabelTranslation?: boolean

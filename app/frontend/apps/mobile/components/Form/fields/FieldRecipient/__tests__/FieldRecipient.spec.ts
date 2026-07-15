@@ -151,7 +151,7 @@ describe('Form - Field - Recipient - Features', () => {
     expect(selectOptions[0]).toHaveTextContent('foo@bar.tld')
   })
 
-  it('supports validation of filter input', async () => {
+  it('offers the unknown email value only when it is valid', async () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {
@@ -166,13 +166,12 @@ describe('Form - Field - Recipient - Features', () => {
 
     await wrapper.events.type(filterElement, 'bar')
 
-    expect(wrapper.queryByText('Please enter a valid email address.')).toBeInTheDocument()
+    // Invalid email is not offered as an unknown option.
+    expect(wrapper.queryAllByRole('option')).toHaveLength(0)
 
     await wrapper.events.clear(filterElement)
 
     await wrapper.events.type(filterElement, 'foo@bar.tld')
-
-    expect(wrapper.queryByText('Please enter a valid email address.')).not.toBeInTheDocument()
 
     const selectOptions = await wrapper.findAllByRole('option')
 
@@ -198,15 +197,12 @@ describe('Form - Field - Recipient - Features', () => {
 
     await wrapper.events.type(filterElement, 'bar')
 
-    expect(wrapper.queryByText("This field doesn't contain an allowed value.")).toBeInTheDocument()
+    // Invalid phone number is not offered as an unknown option.
+    expect(wrapper.queryAllByRole('option')).toHaveLength(0)
 
     await wrapper.events.clear(filterElement)
 
     await wrapper.events.type(filterElement, '+499876543210')
-
-    expect(
-      wrapper.queryByText("This field doesn't contain an allowed value."),
-    ).not.toBeInTheDocument()
 
     const selectOptions = await wrapper.findAllByRole('option')
 

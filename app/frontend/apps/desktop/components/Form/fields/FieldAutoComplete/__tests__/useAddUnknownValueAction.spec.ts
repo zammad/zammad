@@ -2,11 +2,7 @@
 
 import { ref } from 'vue'
 
-import {
-  emailFilterValueValidator,
-  phoneFilterValueValidator,
-  useAddUnknownValueAction,
-} from '../useAddUnknownValueAction.ts'
+import { useAddUnknownValueAction } from '../useAddUnknownValueAction.ts'
 
 import type { AutoCompleteOptionValueDictionary } from '../types.ts'
 
@@ -26,27 +22,6 @@ const testOptions: AutoCompleteOptionValueDictionary = {
 }
 
 const testEmailAddress = 'nicole.braun@zammad.org'
-const testPhoneNumber = '+490123456789'
-
-describe('emailFilterValueValidator', () => {
-  it('returns true on valid email address', async () => {
-    expect(emailFilterValueValidator(testEmailAddress)).toBe(true)
-  })
-
-  it('returns false on invalid email address', async () => {
-    expect(emailFilterValueValidator('foobar')).toBe(false)
-  })
-})
-
-describe('phoneFilterValueValidator', () => {
-  it('returns true on valid phone number', async () => {
-    expect(phoneFilterValueValidator(testPhoneNumber)).toBe(true)
-  })
-
-  it('returns false on invalid phone number', async () => {
-    expect(phoneFilterValueValidator('Zammad2024')).toBe(false)
-  })
-})
 
 describe('useAddUnknownValueAction', () => {
   it('provides default action item and search interaction event handler', async () => {

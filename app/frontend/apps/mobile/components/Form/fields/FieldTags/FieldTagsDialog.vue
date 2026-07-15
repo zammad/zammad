@@ -4,8 +4,6 @@
 import { watchIgnorable } from '@vueuse/shared'
 import { computed, ref, toRef } from 'vue'
 
-import type { CommonInputSearchExpose } from '#shared/components/CommonInputSearch/CommonInputSearch.vue'
-import CommonInputSearch from '#shared/components/CommonInputSearch/CommonInputSearch.vue'
 import {
   NotificationTypes,
   useNotifications,
@@ -18,6 +16,8 @@ import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 import stopEvent from '#shared/utils/events.ts'
 
 import CommonDialog from '#mobile/components/CommonDialog/CommonDialog.vue'
+import CommonInputSearch from '#mobile/components/CommonInputSearch/CommonInputSearch.vue'
+import type { CommonInputSearchExpose } from '#mobile/components/CommonInputSearch/CommonInputSearch.vue'
 
 interface Props {
   name: string

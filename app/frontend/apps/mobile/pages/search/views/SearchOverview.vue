@@ -6,8 +6,6 @@ import { debounce } from 'lodash-es'
 import { computed, onMounted, reactive, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
-import type { CommonInputSearchExpose } from '#shared/components/CommonInputSearch/CommonInputSearch.vue'
-import CommonInputSearch from '#shared/components/CommonInputSearch/CommonInputSearch.vue'
 import { useRecentSearches } from '#shared/composables/useRecentSearches.ts'
 import { useStickyHeader } from '#shared/composables/useStickyHeader.ts'
 import { EnumSearchableModels } from '#shared/graphql/types.ts'
@@ -15,6 +13,8 @@ import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 
 import CommonButtonGroup from '#mobile/components/CommonButtonGroup/CommonButtonGroup.vue'
 import type { CommonButtonOption } from '#mobile/components/CommonButtonGroup/types.ts'
+import CommonInputSearch from '#mobile/components/CommonInputSearch/CommonInputSearch.vue'
+import type { CommonInputSearchExpose } from '#mobile/components/CommonInputSearch/CommonInputSearch.vue'
 import CommonSectionMenu from '#mobile/components/CommonSectionMenu/CommonSectionMenu.vue'
 import type { MenuItem } from '#mobile/components/CommonSectionMenu/index.ts'
 

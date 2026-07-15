@@ -21,11 +21,11 @@ import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 
 import CommonButton from '#mobile/components/CommonButton/CommonButton.vue'
 import CommonDialog from '#mobile/components/CommonDialog/CommonDialog.vue'
+import CommonInputSearch from '#mobile/components/CommonInputSearch/CommonInputSearch.vue'
 import { closeDialog } from '#mobile/composables/useDialog.ts'
 
 import FieldAutoCompleteOptionIcon from './FieldAutoCompleteOptionIcon.vue'
 
-import type { FormKitNode } from '@formkit/core'
 import type { NameNode, OperationDefinitionNode, SelectionNode } from 'graphql'
 import type { ConcreteComponent, Ref } from 'vue'
 
@@ -57,16 +57,10 @@ const replacementLocalOptions: Ref<AutoCompleteOption[]> = ref(cloneDeep(props.o
 
 const filter = ref('')
 
-const filterInput = ref(null)
+const filterInput = ref<InstanceType<typeof CommonInputSearch>>()
 
 const focusFirstTarget = () => {
-  const filterInputFormKit = filterInput.value as null | { node: FormKitNode }
-  if (!filterInputFormKit) return
-
-  const filterInputElement = document.getElementById(filterInputFormKit.node.context?.id as string)
-  if (!filterInputElement) return
-
-  filterInputElement.focus()
+  filterInput.value?.focus()
 }
 
 const clearFilter = () => {
@@ -152,12 +146,10 @@ const autocompleteQueryResultOptions = computed(
 const autocompleteOptions = computed(() => {
   const result = cloneDeep(autocompleteQueryResultOptions.value) || []
 
-  const filterInputFormKit = filterInput.value as null | { node: FormKitNode }
-
   if (
     props.context.allowUnknownValues &&
-    filterInputFormKit &&
-    filterInputFormKit.node.context?.state.complete &&
+    trimmedFilter.value &&
+    (props.context.filterValueValidator?.(trimmedFilter.value) ?? true) &&
     !result.some((option) => option.value === trimmedFilter.value)
   ) {
     result.unshift({
@@ -270,15 +262,10 @@ useTraverseOptions(autocompleteList)
       </CommonButton>
     </template>
     <div class="w-full p-4">
-      <FormKit
+      <CommonInputSearch
         ref="filterInput"
         v-model="filter"
-        :delay="context.node.props.delay"
         :placeholder="context.filterInputPlaceholder"
-        :validation="context.filterInputValidation"
-        type="search"
-        validation-visibility="live"
-        role="searchbox"
       />
     </div>
     <div
