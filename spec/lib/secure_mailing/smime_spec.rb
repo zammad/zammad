@@ -316,6 +316,9 @@ RSpec.describe SecureMailing::SMIME do
             expect(mail[:body]).to include(raw_body)
             expect(mail['x-zammad-article-preferences'][:security][:sign][:success]).to be true
             expect(mail['x-zammad-article-preferences'][:security][:sign][:comment]).to include(expired_email_address).and include('expired')
+            # The signer certificate is also the directly-stored `existing_cert` here, so it must
+            # only be annotated once, not once from `existing_certs` and again as the signer.
+            expect(mail['x-zammad-article-preferences'][:security][:sign][:comment].scan('expired!').size).to eq(1)
             expect(mail['x-zammad-article-preferences'][:security][:encryption][:success]).to be false
             expect(mail['x-zammad-article-preferences'][:security][:encryption][:comment]).to be_nil
           end
@@ -419,6 +422,129 @@ RSpec.describe SecureMailing::SMIME do
             expect(mail['x-zammad-article-preferences'][:security][:sign][:comment]).to eq('/emailAddress=SenderCA@example.com/C=DE/ST=Berlin/L=Berlin/O=Example Security/OU=IT Department/CN=example.com')
             expect(mail['x-zammad-article-preferences'][:security][:encryption][:success]).to be false
             expect(mail['x-zammad-article-preferences'][:security][:encryption][:comment]).to be_nil
+          end
+        end
+
+        context 'forged certificate cloning a stored subject and email' do
+          let(:sender_email_address) { system_email_address }
+
+          let(:mail) do
+            smime_mail = Rails.root.join('spec/fixtures/files/smime/forged_cloned_subject.eml').read
+            mail = Channel::EmailParser.new.parse(smime_mail.to_s)
+            SecureMailing.incoming(mail)
+
+            mail
+          end
+
+          it 'does not verify, even though the forged certificate reuses the trusted subject and email' do
+            expect(mail['x-zammad-article-preferences'][:security][:sign][:success]).to be false
+            expect(mail['x-zammad-article-preferences'][:security][:sign][:comment]).to eq('The certificate for verification could not be found.')
+            expect(mail['x-zammad-article-preferences'][:security][:encryption][:success]).to be false
+            expect(mail['x-zammad-article-preferences'][:security][:encryption][:comment]).to be_nil
+          end
+        end
+
+        context 'genuinely signed mail bundling an extra forged certificate that clones a different trusted subject' do
+          before do
+            create(:smime_certificate, fixture: system_email_address)
+          end
+
+          let(:mail) do
+            smime_mail = Rails.root.join('spec/fixtures/files/smime/forged_extra_certificate.eml').read
+            mail = Channel::EmailParser.new.parse(smime_mail.to_s)
+            SecureMailing.incoming(mail)
+
+            mail
+          end
+
+          it 'does not verify, even though the message is genuinely signed by its own trusted certificate' do
+            expect(mail[:from]).to include('Attacker <smime1@example.com>')
+            expect(mail['x-zammad-article-preferences'][:security][:sign][:success]).to be false
+            expect(mail['x-zammad-article-preferences'][:security][:sign][:comment]).to eq('This message was not signed by its sender.')
+            expect(mail['x-zammad-article-preferences'][:security][:encryption][:success]).to be false
+            expect(mail['x-zammad-article-preferences'][:security][:encryption][:comment]).to be_nil
+          end
+        end
+
+        context 'excessive number of bundled certificates (potential DoS)' do
+          let(:sender_email_address) { system_email_address }
+
+          let(:mail) do
+            body       = raw_body
+            signer_key = OpenSSL::PKey::RSA.new(Rails.root.join('spec/fixtures/files/smime/smime1@example.com.key').read, '1234')
+
+            signer_cert = OpenSSL::X509::Certificate.new(Rails.root.join('spec/fixtures/files/smime/smime1@example.com.crt').read)
+
+            filler_certs = Array.new(SecureMailing::SMIME::Incoming::MAX_BUNDLED_CERTIFICATES + 1) do |i|
+              key  = OpenSSL::PKey::RSA.new(512)
+              cert = OpenSSL::X509::Certificate.new
+              cert.version     = 2
+              cert.serial      = i + 100
+              cert.subject     = OpenSSL::X509::Name.parse("/CN=filler-#{i}")
+              cert.issuer      = cert.subject
+              cert.public_key  = key.public_key
+              cert.not_before  = Time.zone.now
+              cert.not_after   = 1.hour.from_now
+              cert.sign(key, OpenSSL::Digest.new('SHA256'))
+              cert
+            end
+
+            p7         = OpenSSL::PKCS7.sign(signer_cert, signer_key, body, filler_certs, OpenSSL::PKCS7::DETACHED)
+            smime_body = OpenSSL::PKCS7.write_smime(p7, body)
+            smime_mail = "From: #{sender_email_address}\r\nTo: #{recipient_email_address}\r\nSubject: test\r\n#{smime_body}"
+
+            mail = Channel::EmailParser.new.parse(smime_mail)
+            SecureMailing.incoming(mail)
+
+            mail
+          end
+
+          it 'fails closed instead of running the expensive per-certificate check on every bundled certificate' do
+            expect(Timeout.timeout(5) { mail }).to be_present
+            expect(mail['x-zammad-article-preferences'][:security][:sign][:success]).to be false
+          end
+        end
+
+        context 'expired signer certificate trusted via a still-valid CA chain' do
+          before do
+            create(:smime_certificate, fixture: 'SenderCA')
+            create(:smime_certificate, fixture: 'SenderIntermediateCA')
+          end
+
+          let(:mail) do
+            body       = raw_body
+            inter_key  = OpenSSL::PKey::RSA.new(Rails.root.join('spec/fixtures/files/smime/SenderIntermediateCA.key').read)
+            inter_cert = OpenSSL::X509::Certificate.new(Rails.root.join('spec/fixtures/files/smime/SenderIntermediateCA.crt').read)
+
+            leaf_key = OpenSSL::PKey::RSA.new(2048)
+            leaf     = OpenSSL::X509::Certificate.new
+            leaf.version    = 2
+            leaf.serial     = 555
+            leaf.subject    = OpenSSL::X509::Name.parse('/C=DE/ST=Berlin/L=Berlin/O=Example Security/OU=IT Department/CN=example.com/emailAddress=expired-leaf@example.com')
+            leaf.issuer     = inter_cert.subject
+            leaf.public_key = leaf_key.public_key
+            leaf.not_before = Time.utc(2010, 1, 1)
+            leaf.not_after  = Time.utc(2011, 1, 1)
+
+            extension_factory = OpenSSL::X509::ExtensionFactory.new
+            extension_factory.subject_certificate = leaf
+            extension_factory.issuer_certificate  = inter_cert
+            leaf.add_extension(extension_factory.create_extension('subjectAltName', 'email:expired-leaf@example.com'))
+            leaf.sign(inter_key, OpenSSL::Digest.new('SHA256'))
+
+            p7         = OpenSSL::PKCS7.sign(leaf, leaf_key, body, [inter_cert], OpenSSL::PKCS7::DETACHED)
+            smime_body = OpenSSL::PKCS7.write_smime(p7, body)
+            smime_mail = "From: expired-leaf@example.com\r\nTo: #{recipient_email_address}\r\nSubject: test\r\n#{smime_body}"
+
+            mail = Channel::EmailParser.new.parse(smime_mail)
+            SecureMailing.incoming(mail)
+
+            mail
+          end
+
+          it 'verifies, but reports the actual signer certificate as expired' do
+            expect(mail['x-zammad-article-preferences'][:security][:sign][:success]).to be true
+            expect(mail['x-zammad-article-preferences'][:security][:sign][:comment]).to include('SenderIntermediateCA@example.com').and include('expired!')
           end
         end
       end
