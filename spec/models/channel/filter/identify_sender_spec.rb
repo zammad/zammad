@@ -98,6 +98,41 @@ RSpec.describe Channel::Filter::IdentifySender, type: :channel_filter do
       end
     end
 
+    context 'when only x-zammad-customer name headers are present (no login/email header)' do
+      let(:from_email)       { Faker::Internet.unique.email }
+      let(:from_display)     { Faker::Name.unique.name }
+      let(:customer_first)   { Faker::Name.unique.first_name }
+      let(:customer_last)    { Faker::Name.unique.last_name }
+      let(:mail_hash) do
+        {
+          'x-zammad-customer-firstname': customer_first,
+          'x-zammad-customer-lastname':  customer_last,
+          from_email:                    from_email,
+          from_display_name:             from_display,
+        }
+      end
+
+      context 'when the FROM address was already pre-created (e.g. by IdentifySessionUser) with a different name' do
+        let!(:pre_created_user) { create(:user, email: from_email, firstname: from_display, lastname: '') }
+
+        it 'applies the x-zammad name headers instead of keeping the pre-created name' do
+          filter(mail_hash)
+
+          expect(pre_created_user.reload).to have_attributes(firstname: customer_first, lastname: customer_last)
+        end
+      end
+
+      context 'when the FROM address does not exist yet' do
+        it 'creates the user with the x-zammad name headers' do
+          filter(mail_hash)
+
+          user = User.find_by(email: from_email)
+
+          expect(user).to have_attributes(firstname: customer_first, lastname: customer_last)
+        end
+      end
+    end
+
     context 'when postmaster_sender_is_agent_search_for_customer is enabled' do
       before do
         Setting.set('postmaster_sender_is_agent_search_for_customer', true)
