@@ -4,7 +4,17 @@ class SecureMailing::SMIME::Incoming < SecureMailing::Backend::HandlerIncoming
   EXPRESSION_MIME      = %r{application/(x-pkcs7|pkcs7)-mime}i
   EXPRESSION_SIGNATURE = %r{(application/(x-pkcs7|pkcs7)-signature|signed-data)}i
 
-  OPENSSL_PKCS7_VERIFY_FLAGS = OpenSSL::PKCS7::NOVERIFY | OpenSSL::PKCS7::NOINTERN
+  OPENSSL_PKCS7_VERIFY_FLAGS = OpenSSL::PKCS7::NOINTERN
+
+  # Trust a stored certificate directly (without requiring a full CA chain up to it) and
+  # do not fail chain building solely due to certificate expiry, since expired-but-trusted
+  # certificates are handled separately via `existing_cert.parsed.usable?` below.
+  OPENSSL_X509_STORE_FLAGS = OpenSSL::X509::V_FLAG_PARTIAL_CHAIN | OpenSSL::X509::V_FLAG_NO_CHECK_TIME
+
+  # Real S/MIME certificate chains are only ever a handful of certificates. This bounds how
+  # many candidates `signer_certificates` will run its expensive per-candidate check against,
+  # so a mail bundling a large number of decorative certificates cannot force excessive work.
+  MAX_BUNDLED_CERTIFICATES = 20
 
   def type
     'S/MIME'
@@ -132,6 +142,7 @@ class SecureMailing::SMIME::Incoming < SecureMailing::Backend::HandlerIncoming
 
     begin
       existing_certs_store = OpenSSL::X509::Store.new
+      existing_certs_store.flags = OPENSSL_X509_STORE_FLAGS
 
       existing_certs.each do |existing_cert|
         existing_certs_store.add_cert(existing_cert.parsed)
@@ -140,13 +151,18 @@ class SecureMailing::SMIME::Incoming < SecureMailing::Backend::HandlerIncoming
       success = verify_sign_p7enc.verify(certificates, existing_certs_store, nil, OPENSSL_PKCS7_VERIFY_FLAGS)
       return if !success
 
-      existing_certs.map do |existing_cert|
+      comment = existing_certs.map do |existing_cert|
         result = existing_cert.parsed.subject.to_s
         if !existing_cert.parsed.usable?
           result += " (Certificate #{existing_cert.fingerprint} with start date #{existing_cert.parsed.not_before} and end date #{existing_cert.parsed.not_after} expired!)"
         end
         result
       end.join(', ')
+
+      # `OPENSSL_X509_STORE_FLAGS` suppresses time-validity checking for the whole chain, not
+      # just the trust anchor, so an expired signer certificate is otherwise never reported
+      # when trust comes from a CA chain rather than a direct match against `existing_certs`.
+      comment + expired_signer_certificate_notes(existing_certs)
     rescue => e
       Rails.logger.error "Error while verifying mail with S/MIME certificate subjects: #{subjects}"
       Rails.logger.error e
@@ -156,8 +172,30 @@ class SecureMailing::SMIME::Incoming < SecureMailing::Backend::HandlerIncoming
 
   private
 
+  # Reported separately from `existing_certs` below since the actual signer certificate is
+  # only among `existing_certs` for a direct match, not when trust comes from a CA chain.
+  def expired_signer_certificate_notes(existing_certs)
+    existing_fingerprints = existing_certs.map(&:fingerprint)
+
+    signer_certificates.filter_map do |cert|
+      smime_cert = Certificate::X509::SMIME.new(cert.to_pem)
+      next if existing_fingerprints.include?(smime_cert.fingerprint)
+      next if smime_cert.usable?
+
+      " (Certificate #{smime_cert.fingerprint} with start date #{smime_cert.not_before} and end date #{smime_cert.not_after} expired!)"
+    end.join
+  end
+
   def verify_sign_p7enc
-    @verify_sign_p7enc ||= OpenSSL::PKCS7.read_smime(mail[:raw])
+    @verify_sign_p7enc ||= OpenSSL::PKCS7.read_smime(verify_sign_raw)
+  end
+
+  # Captured once, since `mail[:raw]` is overwritten in place with the decrypted/unwrapped
+  # content for wrapped mime-type S/MIME signatures (see `parse_decrypted_mail`), which would
+  # no longer be parseable as the original PKCS7 structure by the time `signer_certificates`
+  # (called later, from `sender_is_signer?`) needs to re-parse it.
+  def verify_sign_raw
+    @verify_sign_raw ||= mail[:raw]
   end
 
   def decrypt_p7enc
@@ -173,10 +211,46 @@ class SecureMailing::SMIME::Incoming < SecureMailing::Backend::HandlerIncoming
     result
   end
 
+  # Only the certificate(s) that actually produced the signature must be trusted for the
+  # sender check. `verify_sign_p7enc.certificates` also contains any other certificates the
+  # mail happens to bundle, which are attacker-controlled and must not be used to determine
+  # the signer's identity. A candidate's `issuer`/`serial` fields are attacker-suppliable and
+  # therefore not proof of authorship, so identity is established cryptographically instead:
+  # a candidate only counts as a signer if its public key actually verifies the signature.
+  # `PKCS7#verify` mutates its receiver's internal state, so each candidate is checked against
+  # its own freshly parsed PKCS7 structure instead of the shared, memoized `verify_sign_p7enc`.
+  # Memoized: this is called both from `verify_certificate_chain` (to report signer certificate
+  # expiry) and from `sender_is_signer?`, and its per-candidate check is expensive.
+  def signer_certificates
+    @signer_certificates ||= begin
+      if verify_sign_p7enc.certificates.size > MAX_BUNDLED_CERTIFICATES
+        Rails.logger.warn { "S/MIME mail #{mail[:message_id]} bundles more than #{MAX_BUNDLED_CERTIFICATES} certificates, refusing to determine its signer." }
+        []
+      else
+        signer_infos = verify_sign_p7enc.signers
+
+        # Cheap optimization for the common case: narrow down to certificates whose issuer/serial
+        # metadata matches a SignerInfo before running the expensive cryptographic check below.
+        # This is not a security boundary by itself (issuer/serial are attacker-suppliable on a
+        # self-signed certificate) — MAX_BUNDLED_CERTIFICATES above is what bounds worst-case cost.
+        candidates = verify_sign_p7enc.certificates.select do |cert|
+          signer_infos.any? { |info| info.issuer == cert.issuer && info.serial == cert.serial }
+        end
+
+        candidates.select do |cert|
+          # NOVERIFY is safe (and required) here: this only tests whether `cert`'s public key
+          # produced the signature, not whether it is trusted — trust was already established
+          # for the overall message in `verify_certificate_chain` before this is ever called.
+          OpenSSL::PKCS7.read_smime(verify_sign_raw).verify([cert], OpenSSL::X509::Store.new, nil, OpenSSL::PKCS7::NOVERIFY | OpenSSL::PKCS7::NOINTERN)
+        end
+      end
+    end
+  end
+
   def email_addresses_from_subject_alt_name
     result = []
 
-    @verify_sign_p7enc.certificates.each do |cert|
+    signer_certificates.each do |cert|
       subject_alt_name = cert.extensions.detect { |extension| extension.oid == 'subjectAltName' }
       next if subject_alt_name.nil?
 
