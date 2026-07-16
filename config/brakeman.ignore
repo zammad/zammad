@@ -78,7 +78,7 @@
       "check_name": "UnsafeReflection",
       "message": "Unsafe reflection method `constantize` called on model attribute",
       "file": "app/models/avatar.rb",
-      "line": 432,
+      "line": 433,
       "link": "https://brakemanscanner.org/docs/warning_types/remote_code_execution/",
       "code": "ObjectLookup.by_id(object_id).constantize",
       "render_path": null,
@@ -101,7 +101,7 @@
       "check_name": "Redirect",
       "message": "Possible unprotected redirect",
       "file": "app/controllers/external_credentials_controller.rb",
-      "line": 39,
+      "line": 42,
       "link": "https://brakemanscanner.org/docs/warning_types/redirect/",
       "code": "redirect_to(ExternalCredential.request_account_to_link(params[:provider].downcase, params)[:authorize_url], :allow_other_host => true)",
       "render_path": null,
@@ -214,7 +214,7 @@
       "check_name": "Deserialize",
       "message": "Use of `Marshal.load` may be dangerous",
       "file": "app/services/service/ticket/bulk/single_item_update.rb",
-      "line": 58,
+      "line": 56,
       "link": "https://brakemanscanner.org/docs/warning_types/unsafe_deserialization",
       "code": "Marshal.load(Marshal.dump(perform[:input]))",
       "render_path": null,
@@ -323,6 +323,29 @@
       "note": "Setting.where(area: 'Transaction::Backend::Sync').order(:name) returns defined Transaction backend class names"
     },
     {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "687d16bd4eea300cd239f4d6e9905bac0a8f3494d93b9bc0f6de835cb937286f",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/models/concerns/has_recursive_cte_query.rb",
+      "line": 38,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "with_recursive(name.to_sym => ([anchor, recursive])).from(\"#{name} AS #{table_name}\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "HasRecursiveCteQuery",
+        "method": "with_recursive_cte"
+      },
+      "user_input": "name",
+      "confidence": "Weak",
+      "cwe_id": [
+        89
+      ],
+      "note": "`name` is always the fixed CTE name from #recursive_tree_cte_name ('recursive_tree'), never derived from user/request input."
+    },
+    {
       "warning_type": "Remote Code Execution",
       "warning_code": 24,
       "fingerprint": "7541faf8d3249dc4ac24f9c354024614ae79b0d6cd4c057f034ea88be1154bf7",
@@ -372,34 +395,11 @@
     {
       "warning_type": "SQL Injection",
       "warning_code": 0,
-      "fingerprint": "8374304b5866de51754c98208fc3dcd434bc20e02bd4c9713f6d35f831a0ddd7",
-      "check_name": "SQL",
-      "message": "Possible SQL injection",
-      "file": "app/models/pgp_key.rb",
-      "line": 32,
-      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
-      "code": "PGPKey.where(([\"#{SqlHelper.new(:object => (PGPKey)).array_contains_one(:email_addresses, uid.downcase)} OR (? LIKE domain_alias)\", SqlHelper.quote_like(uid.downcase)] or SqlHelper.new(:object => (PGPKey)).array_contains_one(:email_addresses, uid.downcase)))",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "PGPKey",
-        "method": "PGPKey.find_all_by_uid"
-      },
-      "user_input": "SqlHelper.new(:object => (PGPKey)).array_contains_one(:email_addresses, uid.downcase)",
-      "confidence": "Medium",
-      "cwe_id": [
-        89
-      ],
-      "note": ""
-    },
-    {
-      "warning_type": "SQL Injection",
-      "warning_code": 0,
       "fingerprint": "7f248c60e38d8f73ba5f3ae896d1c9ac18e8f961c4d34a6c308deba5bf51430c",
       "check_name": "SQL",
       "message": "Possible SQL injection",
       "file": "app/models/concerns/can_search.rb",
-      "line": 309,
+      "line": 311,
       "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
       "code": "Arel.sql(\"array_position(ARRAY[#{ids.join(\",\")}]::bigint[], id::bigint)\")",
       "render_path": null,
@@ -546,7 +546,7 @@
           "type": "controller",
           "class": "KnowledgeBase::Public::AnswersController",
           "method": "show",
-          "line": 11,
+          "line": 19,
           "file": "app/controllers/knowledge_base/public/answers_controller.rb",
           "rendered": {
             "name": "knowledge_base/public/answers/show",
@@ -564,29 +564,6 @@
         79
       ],
       "note": ""
-    },
-    {
-      "warning_type": "Remote Code Execution",
-      "warning_code": 24,
-      "fingerprint": "b4e5b1ad22930f849b12cbdf519dced6ec46b6cc653504f0a8e910c0a9590d61",
-      "check_name": "UnsafeReflection",
-      "message": "Unsafe reflection method `constantize` called on model attribute",
-      "file": "app/models/object_manager/attribute.rb",
-      "line": 973,
-      "link": "https://brakemanscanner.org/docs/warning_types/remote_code_execution/",
-      "code": "ObjectLookup.by_id(object_lookup_id).constantize",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "ObjectManager::Attribute",
-        "method": "check_name"
-      },
-      "user_input": "ObjectLookup.by_id(object_lookup_id)",
-      "confidence": "Medium",
-      "cwe_id": [
-        470
-      ],
-      "note": "ObjectLookup.by_id works as designed"
     },
     {
       "warning_type": "Command Injection",
@@ -656,6 +633,29 @@
         295
       ],
       "note": "Only if requester sends `:disable_ssl_verify` param"
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "c9dde9cb384e618985afc97454d9fc91acce22023048727db337b2660b9265cc",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/models/concerns/has_recursive_cte_query.rb",
+      "line": 71,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "joins(\"INNER JOIN #{recursive_tree_cte_name} ON #{(\"#{table_name}.id = #{recursive_tree_cte_name}.parent_id\" or \"#{table_name}.parent_id = #{recursive_tree_cte_name}.id\")}\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "HasRecursiveCteQuery",
+        "method": "with_recursive_tree_cte"
+      },
+      "user_input": "recursive_tree_cte_name",
+      "confidence": "Medium",
+      "cwe_id": [
+        89
+      ],
+      "note": "`recursive_tree_cte_name` is a fixed literal ('recursive_tree') and `table_name` is the model's own Rails table name -- neither is ever derived from user/request input."
     },
     {
       "warning_type": "Remote Code Execution",
@@ -757,7 +757,7 @@
       "check_name": "Deserialize",
       "message": "Use of `Marshal.load` may be dangerous",
       "file": "app/models/core_workflow/result.rb",
-      "line": 207,
+      "line": 221,
       "link": "https://brakemanscanner.org/docs/warning_types/unsafe_deserialization",
       "code": "Marshal.load(Marshal.dump(@result.except(:rerun_count)))",
       "render_path": null,
@@ -827,7 +827,7 @@
       "check_name": "UnsafeReflection",
       "message": "Unsafe reflection method `constantize` called on model attribute",
       "file": "app/graphql/gql/resolvers/belongs_to_resolver.rb",
-      "line": 18,
+      "line": 16,
       "link": "https://brakemanscanner.org/docs/warning_types/remote_code_execution/",
       "code": "ObjectLookup.by_id(object.send(field.through_key)).constantize",
       "render_path": null,
@@ -844,5 +844,5 @@
       "note": ""
     }
   ],
-  "brakeman_version": "8.0.4"
+  "brakeman_version": "8.0.5"
 }

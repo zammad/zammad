@@ -133,6 +133,7 @@ class CreateBase < ActiveRecord::Migration[4.2]
       t.timestamps limit: 3, null: false
     end
     add_index :groups, [:name], unique: true
+    add_index :groups, :parent_id
     add_foreign_key :groups, :signatures
     add_foreign_key :groups, :email_addresses
     add_foreign_key :groups, :users, column: :created_by_id

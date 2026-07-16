@@ -59,9 +59,7 @@ class KnowledgeBase
     def scope
       return KnowledgeBase::Category.find_in_batches if categories_filter.blank?
 
-      Array(categories_filter)
-        .map(&:self_with_children)
-        .each
+      [KnowledgeBase::Category.with_recursive_tree_cte(direction: :down, seed: KnowledgeBase::Category.where(id: categories_filter))]
     end
 
     def taxonomize_category(struct, category)

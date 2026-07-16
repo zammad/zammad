@@ -138,14 +138,30 @@ class KnowledgeBase < ApplicationModel
     ChecksKbClientNotification.disable_in_all_classes!
 
     transaction do
-      # get all categories with their children and reverse to delete children first
-      categories.root.map(&:self_with_children).flatten.reverse.each(&:full_destroy!)
+      # get all categories with their children, deepest first, to delete children before parents
+      all_children
+        .reorder(KnowledgeBase::Category.recursive_tree_depth_column => :desc)
+        .each(&:full_destroy!)
       translations.each(&:destroy!)
       kb_locales.each(&:destroy!)
+
+      # `destroy!`'s `dependent: :restrict_with_exception` check on `categories` reads whatever is
+      # already cached on the association, not a fresh query — without resetting it here, a caller
+      # that touched `categories` earlier (even just `.count`) would see a stale non-empty cache and
+      # `destroy!` would wrongly raise, even though every category was just destroyed above.
+      categories.reset
       destroy!
     end
   ensure
     ChecksKbClientNotification.enable_in_all_classes!
+  end
+
+  # Returns all of this knowledge base's categories via a single recursive CTE instead of one
+  # query per tree level. Each row also carries the CTE's depth and `recursive_tree_path` columns
+  # (an array of category ids from root down to and including itself) — no custom SELECT needed,
+  # which keeps the relation aggregatable (e.g. `.count`).
+  def all_children
+    KnowledgeBase::Category.with_recursive_tree_cte(direction: :down, seed: categories.root)
   end
 
   def visible?

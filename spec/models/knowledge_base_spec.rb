@@ -61,4 +61,45 @@ RSpec.describe KnowledgeBase, type: :model do
       it { is_expected.not_to allow_values(*not_allowed_values).for(attr) }
     end
   end
+
+  describe '#full_destroy!' do
+    let(:knowledge_base) { create(:kb_category_with_tree).knowledge_base }
+
+    before { knowledge_base }
+
+    it 'destroys every category in a multi-level tree' do
+      expect { knowledge_base.full_destroy! }
+        .to change(KnowledgeBase::Category, :count).by(-knowledge_base.categories.count)
+    end
+  end
+
+  context 'with a category tree at the deepest allowed nesting (psql)' do
+    # The recursive CTE walks are capped at HasRecursiveCteQuery::MAX_DEPTH_LIMIT, which must
+    # cover every tree the business limit permits — a cap below it silently loses categories in
+    # traversal, falsely fails the circular-reference validation one level further down, and
+    # makes #full_destroy! raise ActiveRecord::DeleteRestrictionError.
+    let(:depth) { KnowledgeBase::Category.max_depth }
+
+    let!(:chain) do
+      [create(:knowledge_base_category, knowledge_base: knowledge_base)].tap do |categories|
+        (depth - 1).times do
+          child = build(:knowledge_base_category, knowledge_base: knowledge_base)
+          child.parent = categories.last
+          child.save!(validate: false) # skip validations to build the fixture fast
+          categories << child
+        end
+      end
+    end
+
+    it 'traverses, validates against, and destroys the whole tree', :aggregate_failures do
+      expect(chain.first.self_with_children.count).to eq(depth)
+
+      fresh = build(:knowledge_base_category, knowledge_base: knowledge_base)
+      fresh.parent = chain.last
+      expect(fresh.tap(&:valid?).errors[:parent_id])
+        .to contain_exactly('would exceed the allowed nesting depth') # depth limit, NOT a false circular-reference error
+
+      expect { knowledge_base.full_destroy! }.to change(KnowledgeBase::Category, :count).by(-depth)
+    end
+  end
 end

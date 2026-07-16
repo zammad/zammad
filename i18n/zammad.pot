@@ -1376,7 +1376,7 @@ msgstr ""
 msgid "Add this class to a button on your page that should open the chat."
 msgstr ""
 
-#: app/models/ai/agent/type/ticket_tagger.rb:164
+#: app/models/ai/agent/type/ticket_tagger.rb:169
 msgid "Add to existing tags"
 msgstr ""
 
@@ -2462,7 +2462,7 @@ msgstr ""
 msgid "Available packages"
 msgstr ""
 
-#: app/models/ai/agent/type/ticket_tagger.rb:119
+#: app/models/ai/agent/type/ticket_tagger.rb:124
 msgid "Available tags are limited to existing in the manage tags section. AI agent won't be able to generate new ones. %l"
 msgstr ""
 
@@ -3341,7 +3341,7 @@ msgstr ""
 msgid "Choose the group to which page posts will get added."
 msgstr ""
 
-#: app/models/ai/agent/type/ticket_tagger.rb:168
+#: app/models/ai/agent/type/ticket_tagger.rb:173
 msgid "Choose whether the suggested tags are added to or replace the existing tags on the ticket."
 msgstr ""
 
@@ -3758,7 +3758,7 @@ msgstr ""
 msgid "Configure Basic Settings"
 msgstr ""
 
-#: app/models/ai/agent/type/ticket_tagger.rb:156
+#: app/models/ai/agent/type/ticket_tagger.rb:161
 msgid "Configure the way required number of resulting tags are added or replaced in the ticket tags list."
 msgstr ""
 
@@ -4842,7 +4842,7 @@ msgstr ""
 msgid "Define queues or call destinations (whatever fits your PBX) and map your agents to it. By this, Zammad can support your agents by showing them only relevant call entries and notifications."
 msgstr ""
 
-#: app/models/ai/agent/type/ticket_tagger.rb:115
+#: app/models/ai/agent/type/ticket_tagger.rb:120
 msgid "Define rules for adding tags in the system."
 msgstr ""
 
@@ -7863,7 +7863,7 @@ msgstr ""
 msgid "General communication error, maybe internet is not available!"
 msgstr ""
 
-#: app/models/ai/agent/type/ticket_tagger.rb:126
+#: app/models/ai/agent/type/ticket_tagger.rb:131
 msgid "General tagging principles"
 msgstr ""
 
@@ -9297,19 +9297,19 @@ msgstr ""
 msgid "Invalid password, it must contain at least 2 lowercase and 2 uppercase characters!"
 msgstr ""
 
-#: lib/knowledge_base/permissions_update.rb:88
+#: lib/knowledge_base/permissions_update.rb:79
 msgid "Invalid permissions, do not lock yourself out."
 msgstr ""
 
-#: lib/knowledge_base/permissions_update.rb:115
+#: lib/knowledge_base/permissions_update.rb:106
 msgid "Invalid permissions."
 msgstr ""
 
-#: lib/knowledge_base/permissions_update.rb:117
+#: lib/knowledge_base/permissions_update.rb:108
 msgid "Invalid permissions. This role does not have access to this category because parent category is not visible for it."
 msgstr ""
 
-#: lib/knowledge_base/permissions_update.rb:115
+#: lib/knowledge_base/permissions_update.rb:106
 msgid "Invalid permissions. This role has editor access to parent category. Limiting access is not effective."
 msgstr ""
 
@@ -9535,7 +9535,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee:2
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:3
 #: app/assets/javascripts/app/models/knowledge_base.coffee:75
-#: app/models/knowledge_base.rb:218
+#: app/models/knowledge_base.rb:232
 #: db/seeds/permissions.rb:113
 msgid "Knowledge Base"
 msgstr ""
@@ -11380,7 +11380,7 @@ msgstr ""
 msgid "New tab"
 msgstr ""
 
-#: app/models/ai/agent/type/ticket_tagger.rb:145
+#: app/models/ai/agent/type/ticket_tagger.rb:150
 msgid "New tags strategy"
 msgstr ""
 
@@ -11590,7 +11590,7 @@ msgstr ""
 msgid "No content to show"
 msgstr ""
 
-#: app/models/group.rb:36
+#: app/models/group.rb:37
 msgid "No double colons (::) allowed, reserved delimiter"
 msgstr ""
 
@@ -12046,11 +12046,11 @@ msgstr ""
 msgid "Number"
 msgstr ""
 
-#: app/models/ai/agent/type/ticket_tagger.rb:175
+#: app/models/ai/agent/type/ticket_tagger.rb:180
 msgid "Number of tags"
 msgstr ""
 
-#: app/models/ai/agent/type/ticket_tagger.rb:179
+#: app/models/ai/agent/type/ticket_tagger.rb:184
 msgid "Number of tags the AI agent may assign."
 msgstr ""
 
@@ -12971,7 +12971,7 @@ msgstr ""
 msgid "Permissions"
 msgstr ""
 
-#: lib/core_ext/execjs/persistent_node_runtime.rb:124
+#: lib/core_ext/execjs/persistent_node_runtime.rb:128
 msgid "Persistent Node.js (V8)"
 msgstr ""
 
@@ -13406,7 +13406,7 @@ msgstr ""
 msgid "Priority rules"
 msgstr ""
 
-#: app/models/ai/agent/type/ticket_tagger.rb:135
+#: app/models/ai/agent/type/ticket_tagger.rb:140
 msgid "Priority tagging rules"
 msgstr ""
 
@@ -14023,7 +14023,7 @@ msgstr ""
 msgid "Replace"
 msgstr ""
 
-#: app/models/ai/agent/type/ticket_tagger.rb:166
+#: app/models/ai/agent/type/ticket_tagger.rb:171
 msgid "Replace existing tags with"
 msgstr ""
 
@@ -16502,7 +16502,7 @@ msgstr ""
 msgid "Tag \"%s\" already exists."
 msgstr ""
 
-#: app/models/ai/agent/type/ticket_tagger.rb:160
+#: app/models/ai/agent/type/ticket_tagger.rb:165
 msgid "Tag assignment mode"
 msgstr ""
 
@@ -17028,6 +17028,10 @@ msgstr ""
 msgid "The checklist feature is not active"
 msgstr ""
 
+#: app/models/group.rb:109
+msgid "The chosen parent group is part of a circular reference."
+msgstr ""
+
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco:33
 msgid "The chosen unit will be used for display only and will not affect stored values."
 msgstr ""
@@ -17389,7 +17393,7 @@ msgstr ""
 msgid "The password reset request was successful."
 msgstr ""
 
-#: lib/core_ext/execjs/persistent_node_runtime.rb:144
+#: lib/core_ext/execjs/persistent_node_runtime.rb:148
 msgid "The persistent node process died unexpectedly."
 msgstr ""
 
@@ -17401,7 +17405,7 @@ msgstr ""
 msgid "The preview cannot be generated. The format is corrupted or not supported."
 msgstr ""
 
-#: app/models/ai/agent/type/ticket_tagger.rb:139
+#: app/models/ai/agent/type/ticket_tagger.rb:144
 msgid "The priority rules instruct the AI agent on how to add tags for incoming tickets."
 msgstr ""
 
@@ -17687,7 +17691,7 @@ msgstr ""
 msgid "The retried security process failed!"
 msgstr ""
 
-#: app/models/ai/agent/type/ticket_tagger.rb:130
+#: app/models/ai/agent/type/ticket_tagger.rb:135
 msgid "The rules instruct the AI agent on how tags are used in the system."
 msgstr ""
 
@@ -17699,7 +17703,7 @@ msgstr ""
 msgid "The rules instruct the AI agent on how to prioritize multiple matches of the extracted text. Make sure to include a couple of example formats, and any additional instructions necessary."
 msgstr ""
 
-#: app/models/ai/agent/type/ticket_tagger.rb:149
+#: app/models/ai/agent/type/ticket_tagger.rb:154
 msgid "The rules instruct the AI agent on when to generate new tags and when to prefer tags from existing tags list."
 msgstr ""
 
@@ -18320,14 +18324,26 @@ msgstr ""
 msgid "This field was configured incorrectly and can't be submitted."
 msgstr ""
 
+#: app/models/group.rb:82
+msgid "This group cannot be moved into itself."
+msgstr ""
+
+#: app/models/group.rb:83
+msgid "This group cannot be moved into one of its children."
+msgstr ""
+
+#: app/models/group.rb:89
+msgid "This group exceeds the allowed nesting depth."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:760
 #: app/controllers/concerns/creates_ticket_articles.rb:43
 #: app/graphql/gql/mutations/ticket/concerns/handles_group.rb:24
 msgid "This group has no email address configured for outgoing communication."
 msgstr ""
 
-#: app/models/group.rb:83
-msgid "This group or its children exceed the allowed nesting depth."
+#: app/models/group.rb:95
+msgid "This group's children would exceed the allowed nesting depth."
 msgstr ""
 
 #: lib/email_helper/probe.rb:281
@@ -19304,7 +19320,7 @@ msgstr ""
 msgid "Total display of the number of objects in a grouping."
 msgstr ""
 
-#: app/models/ai/agent/type/ticket_tagger.rb:165
+#: app/models/ai/agent/type/ticket_tagger.rb:170
 msgid "Total shouldn't exceed"
 msgstr ""
 
@@ -21534,7 +21550,7 @@ msgstr ""
 msgid "can't be used because *_id and *_ids are not allowed"
 msgstr ""
 
-#: app/models/knowledge_base/category.rb:139
+#: app/models/knowledge_base/category.rb:151
 msgid "cannot be a subcategory of the parent category"
 msgstr ""
 
@@ -22175,6 +22191,10 @@ msgstr ""
 msgid "is not included in the list"
 msgstr ""
 
+#: app/models/knowledge_base/category.rb:168
+msgid "is part of a circular reference"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/maintenance.coffee:84
 #: app/assets/javascripts/app/models/_application_model.coffee:65
 msgid "is required"
@@ -22334,7 +22354,7 @@ msgstr ""
 msgid "must be a valid HTTP(S) URL"
 msgstr ""
 
-#: app/models/knowledge_base.rb:244
+#: app/models/knowledge_base.rb:258
 msgid "must be a valid path or domain"
 msgstr ""
 
@@ -22374,18 +22394,18 @@ msgstr ""
 msgid "must be other than %{count}"
 msgstr ""
 
-#: app/models/knowledge_base.rb:232
+#: app/models/knowledge_base.rb:246
 msgid "must begin with a slash (\"/\")"
 msgstr ""
 
 msgid "must exist"
 msgstr ""
 
-#: app/models/knowledge_base.rb:240
+#: app/models/knowledge_base.rb:254
 msgid "must not end with a slash (\"/\")"
 msgstr ""
 
-#: app/models/knowledge_base.rb:236
+#: app/models/knowledge_base.rb:250
 msgid "must not include a protocol (e.g., \"http://\" or \"https://\")"
 msgstr ""
 
@@ -22973,6 +22993,14 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:70
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 msgid "within next (relative)"
+msgstr ""
+
+#: app/models/knowledge_base/category.rb:181
+msgid "would exceed the allowed nesting depth"
+msgstr ""
+
+#: app/models/knowledge_base/category.rb:186
+msgid "would push this category's children beyond the allowed nesting depth"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/operators/within-last-relative.ts:13
