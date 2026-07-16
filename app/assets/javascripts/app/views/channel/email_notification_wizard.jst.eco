@@ -47,6 +47,9 @@
         <div class="alert alert--warning js-sslVerifyAlert hide" role="alert">
           <%- @T('Turning off SSL verification is a security risk and should be used only temporary. Use this option at your own risk!') %>
         </div>
+        <div class="alert alert--warning js-msgraphNotificationWarning hide" role="alert">
+          <%- @T('Microsoft recommends using High Volume Email (HVE) or Azure Communication Services (ACS) for system notifications. Using Microsoft Graph API for this purpose may be subject to rate limiting.') %>
+        </div>
         <div class="base-outbound-type"></div>
         <div class="base-outbound-settings"></div>
       </div>

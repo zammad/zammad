@@ -138,6 +138,7 @@ class App.ChannelEmailNotificationWizardProxy extends App.ControllerWizardModal
   toggleOutboundAdapter: =>
     @el.find('.base-outbound-settings').html('')
     adapter = @$('.js-outbound [name=adapter]').val()
+    @el.find('.js-msgraphNotificationWarning').toggleClass('hide', adapter isnt 'microsoft_graph_outbound')
     if adapter is 'smtp'
       configureAttributesOutbound = [
         { name: 'options::host',       display: __('Host'),     tag: 'input', type: 'text',     limit: 120, null: false, autocapitalize: false, autofocus: true },
