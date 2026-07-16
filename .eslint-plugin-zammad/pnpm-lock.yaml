@@ -16,8 +16,8 @@ importers:
         specifier: ^10.7.0
         version: 10.7.0(supports-color@8.1.1)
       eslint-plugin-eslint-plugin:
-        specifier: ^7.4.1
-        version: 7.4.1(eslint@10.7.0(supports-color@8.1.1))
+        specifier: ^7.4.2
+        version: 7.4.2(eslint@10.7.0(supports-color@8.1.1))
       eslint-plugin-n:
         specifier: ^18.2.2
         version: 18.2.2(eslint@10.7.0(supports-color@8.1.1))
@@ -226,8 +226,8 @@ packages:
     peerDependencies:
       eslint: '>=8'
 
-  eslint-plugin-eslint-plugin@7.4.1:
-    resolution: {integrity: sha512-qDn/je8VILWFpaDh2FAnQcvoLQmt3q0QWsBkjHF8OiECgvRWhMLazDS4igVnjxCf8GYdZCMs/SxAgYC/HjaVtQ==}
+  eslint-plugin-eslint-plugin@7.4.2:
+    resolution: {integrity: sha512-pQ9wWbz4q2CCnKHyxGceDAGQvbYAGyko/3ad33cl2BgEc331zNEU4J1DTUNpy6ldoOpfIKt7R7FDvI6ZH6zHRw==}
     engines: {node: ^20.19.0 || ^22.13.0 || >=24.0.0}
     peerDependencies:
       eslint: '>=9.0.0'
@@ -782,7 +782,7 @@ snapshots:
       eslint: 10.7.0(supports-color@8.1.1)
       eslint-compat-utils: 0.5.1(eslint@10.7.0(supports-color@8.1.1))
 
-  eslint-plugin-eslint-plugin@7.4.1(eslint@10.7.0(supports-color@8.1.1)):
+  eslint-plugin-eslint-plugin@7.4.2(eslint@10.7.0(supports-color@8.1.1)):
     dependencies:
       '@eslint-community/eslint-utils': 4.9.1(eslint@10.7.0(supports-color@8.1.1))
       eslint: 10.7.0(supports-color@8.1.1)
