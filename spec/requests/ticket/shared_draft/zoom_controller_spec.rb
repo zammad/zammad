@@ -65,7 +65,7 @@ RSpec.describe 'Ticket Shared Drafts Zoom API endpoints', authenticated_as: :age
       end
 
       it 'creates draft with attachment if does not exist' do
-        create(:store, :image, o_id: form_id)
+        create(:store, :image, o_id: form_id, created_by_id: agent.id)
 
         put path, params: params, as: :json
 
@@ -84,7 +84,7 @@ RSpec.describe 'Ticket Shared Drafts Zoom API endpoints', authenticated_as: :age
 
       it 'updates draft with attachment' do
         shared_draft = create(:ticket_shared_draft_zoom, ticket: ticket)
-        create(:store, :image, o_id: form_id)
+        create(:store, :image, o_id: form_id, created_by_id: agent.id)
 
         put path, params: params, as: :json
 
@@ -94,7 +94,7 @@ RSpec.describe 'Ticket Shared Drafts Zoom API endpoints', authenticated_as: :age
       it 'updates draft to have no attachments' do
         shared_draft = create(:ticket_shared_draft_zoom, ticket: ticket)
         create(:store, :image, o_id: shared_draft.id, object: shared_draft.class.name)
-        create(:store, :image, o_id: form_id)
+        create(:store, :image, o_id: form_id, created_by_id: agent.id)
 
         put path, params: params, as: :json
 

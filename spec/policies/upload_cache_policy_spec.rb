@@ -19,15 +19,22 @@ describe UploadCachePolicy do
     cache
   end
 
+  context 'with empty cache' do
+    let(:record)           { UploadCache.new(123) }
+    let(:effective_user)   { create(:user) }
+
+    it { is_expected.to permit_actions :add, :any, :show, :destroy, :remove_item }
+  end
+
   context 'with different user' do
     let(:effective_user) { create(:user) }
 
-    it { is_expected.to forbid_actions :show, :destroy }
+    it { is_expected.to forbid_actions :add, :any, :show, :destroy, :remove_item }
   end
 
   context 'with given user' do
     let(:effective_user) { user }
 
-    it { is_expected.to permit_actions :show, :destroy }
+    it { is_expected.to permit_actions :add, :any, :show, :destroy, :remove_item }
   end
 end

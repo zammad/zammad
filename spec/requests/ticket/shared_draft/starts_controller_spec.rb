@@ -112,7 +112,7 @@ RSpec.describe 'Ticket Shared Drafts Start API endpoints', authenticated_as: :ag
       end
 
       it 'creates draft with attachment' do
-        create(:store, :image, o_id: form_id)
+        create(:store, :image, o_id: form_id, created_by_id: agent.id)
 
         post path, params: base_params, as: :json
 
@@ -154,7 +154,7 @@ RSpec.describe 'Ticket Shared Drafts Start API endpoints', authenticated_as: :ag
       end
 
       it 'updates draft with attachment' do
-        create(:store, :image, o_id: form_id)
+        create(:store, :image, o_id: form_id, created_by_id: agent.id)
 
         expect { patch path_draft_a, params: base_params, as: :json }
           .to change { draft_a.attachments.count }

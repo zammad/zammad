@@ -4,7 +4,6 @@ class UploadCachePolicy < ApplicationPolicy
   %i[
     add?
     any?
-    attachments?
     destroy?
     remove_item?
     show?
@@ -15,9 +14,6 @@ class UploadCachePolicy < ApplicationPolicy
   private
 
   def permission?
-    attachments = record.attachments
-    return true if attachments.blank?
-
-    attachments.first.created_by_id == user.id
+    !record.attachments(created_by_id: nil).exists? || record.attachments(created_by_id: user.id).exists?
   end
 end

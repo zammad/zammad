@@ -35,7 +35,7 @@ RSpec.describe Service::Ticket::SharedDraft::Start::Update do
     end
 
     it 'copies attachments from the given form' do
-      create(:store, o_id: form_id)
+      create(:store, o_id: form_id, created_by_id: user.id)
 
       service_result
 

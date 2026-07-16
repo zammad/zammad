@@ -11,6 +11,10 @@ class Controllers::AttachmentsControllerPolicy < Controllers::ApplicationControl
     store_object_policy(store_object_owner)&.destroy?
   end
 
+  def destroy_form?
+    Pundit.policy(user, UploadCache.new(record.params[:form_id]))&.destroy?
+  end
+
   def custom_exception
     ActiveRecord::RecordNotFound.new
   end

@@ -69,13 +69,14 @@ returns
       end
   end
 
-  def attach_upload_cache(form_id, source_object_name: 'UploadCache')
+  def attach_upload_cache(form_id)
     attachments
       .reject(&:inline?)
       .each { |attachment| Store.remove_item(attachment.id) }
 
-    Store
-      .list(object: source_object_name, o_id: form_id)
+    UploadCache
+      .new(form_id)
+      .attachments
       .reject(&:inline?)
       .map do |old_attachment|
         Store.create!(

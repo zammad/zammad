@@ -30,7 +30,7 @@ RSpec.describe Service::Ticket::SharedDraft::Zoom::Update do
     end
 
     it 'copies attachments from the given form' do
-      create(:store, o_id: form_id)
+      create(:store, o_id: form_id, created_by_id: user.id)
 
       expect(Store.list(object: service_result.class.name, o_id: service_result.id))
         .to contain_exactly(have_attributes(filename: 'test.txt'))
