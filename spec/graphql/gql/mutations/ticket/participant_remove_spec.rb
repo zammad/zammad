@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Gql::Mutations::Ticket::ParticipantRemove, :aggregate_failures, type: :graphql, current_user_id: 1 do
+RSpec.describe Gql::Mutations::Ticket::ParticipantRemove, :aggregate_failures, current_user_id: 1, type: :graphql do
   let(:group)    { create(:group) }
   let(:agent)    { create(:agent, groups: [group]) }
   let(:customer) { create(:customer) }

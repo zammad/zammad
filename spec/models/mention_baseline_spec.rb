@@ -35,7 +35,7 @@ RSpec.describe Mention, type: :model do
       participant = create(:customer)
       own_ticket = create(:ticket, customer: participant, group: group)
       # Customer owns the ticket → show? true → mentionable? true
-      expect(described_class.mentionable?(own_ticket, participant)).to be_truthy
+      expect(described_class).to be_mentionable(own_ticket, participant)
     ensure
       Setting.set('ticket_participants_enabled', false)
     end
@@ -44,7 +44,7 @@ RSpec.describe Mention, type: :model do
       Setting.set('ticket_participants_enabled', true)
       stranger = create(:customer)
       # stranger does not own ticket, not participant → show? false
-      expect(described_class.mentionable?(ticket, stranger)).to be_truthy
+      expect(described_class).to be_mentionable(ticket, stranger)
     ensure
       Setting.set('ticket_participants_enabled', false)
     end
@@ -86,25 +86,24 @@ RSpec.describe Mention, type: :model do
       Setting.set('ticket_participants_enabled', true)
       stranger_ticket = create(:ticket, group: group)
       # mentionable? is true (pure target check) — but ControllerPolicy blocks self-subscribe
-      expect(described_class.mentionable?(stranger_ticket, customer)).to be_truthy
+      expect(described_class).to be_mentionable(stranger_ticket, customer)
       # The sharp assertion: self-subscribe via REST API is rejected
       policy = Controllers::MentionsControllerPolicy.new(
         customer,
-        instance_double('MentionsController', mentionable_object: stranger_ticket, params: { mentionable_type: 'Ticket' })
+        instance_double(MentionsController, mentionable_object: stranger_ticket, params: { mentionable_type: 'Ticket' })
       )
       expect(policy.create?).to be false
     ensure
       Setting.set('ticket_participants_enabled', false)
     end
 
-
     it 'G2 (NOW REAL): agent can add foreign customer as participant via subscribe!', current_user_id: 1 do
       Setting.set('ticket_participants_enabled', true)
       foreign = create(:customer)
       foreign_ticket = create(:ticket, group: group)
-      expect {
+      expect do
         described_class.subscribe!(foreign_ticket, foreign)
-      }.not_to raise_error
+      end.not_to raise_error
       expect(described_class.subscribed?(foreign_ticket, foreign)).to be true
     ensure
       Setting.set('ticket_participants_enabled', false)
@@ -112,7 +111,7 @@ RSpec.describe Mention, type: :model do
 
     it 'G3 (Anker): create_mentions? returns false for non-agent' do
       policy = TicketPolicy.new(customer, ticket)
-      expect(policy.create_mentions?).to be_falsey
+      expect(policy).not_to be_create_mentions
     end
   end
 
@@ -127,9 +126,9 @@ RSpec.describe Mention, type: :model do
       own_ticket = create(:ticket, customer: participant, group: group)
       policy = Controllers::MentionsControllerPolicy.new(
         participant,
-        instance_double('MentionsController', mentionable_object: own_ticket, params: { mentionable_type: 'Ticket' })
+        instance_double(MentionsController, mentionable_object: own_ticket, params: { mentionable_type: 'Ticket' })
       )
-      expect(policy.create?).to be_truthy
+      expect(policy).to be_create
     ensure
       Setting.set('ticket_participants_enabled', false)
     end
@@ -138,7 +137,7 @@ RSpec.describe Mention, type: :model do
       Setting.set('ticket_participants_enabled', true)
       policy = Controllers::MentionsControllerPolicy.new(
         customer,
-        instance_double('MentionsController', mentionable_object: ticket, params: { mentionable_type: 'Ticket' })
+        instance_double(MentionsController, mentionable_object: ticket, params: { mentionable_type: 'Ticket' })
       )
       expect(policy.create?).to be false
     ensure
@@ -151,8 +150,8 @@ RSpec.describe Mention, type: :model do
       Setting.set('ticket_participants_enabled', true)
       participant = create(:customer)
       own_ticket = create(:ticket, customer: participant, group: group)
-      mention = Mention.new(user: participant, mentionable: own_ticket,
-                            created_by_id: 1, updated_by_id: 1)
+      mention = described_class.new(user: participant, mentionable: own_ticket,
+                                    created_by_id: 1, updated_by_id: 1)
       expect(mention).to be_valid
     ensure
       Setting.set('ticket_participants_enabled', false)
@@ -160,10 +159,9 @@ RSpec.describe Mention, type: :model do
 
     it 'CS4 (UPDATED): non-participant customer mention now PASSES validation (pure target check)' do
       Setting.set('ticket_participants_enabled', true)
-      mention = Mention.new(user: customer, mentionable: ticket,
-                            created_by_id: 1, updated_by_id: 1)
+      mention = described_class.new(user: customer, mentionable: ticket,
+                                    created_by_id: 1, updated_by_id: 1)
       expect(mention).to be_valid
-      
     ensure
       Setting.set('ticket_participants_enabled', false)
     end
@@ -178,19 +176,18 @@ RSpec.describe Mention, type: :model do
       Setting.set('ticket_participants_enabled', true)
       participant = create(:customer)
       own_ticket = create(:ticket, customer: participant, group: group)
-      expect(described_class.mentionable?(own_ticket, participant)).to be_truthy
+      expect(described_class).to be_mentionable(own_ticket, participant)
     ensure
       Setting.set('ticket_participants_enabled', false)
     end
 
     it 'CS6 (UPDATED): trigger mentionable? now ALLOWS non-participant (pure target check)' do
       Setting.set('ticket_participants_enabled', true)
-      expect(described_class.mentionable?(ticket, customer)).to be_truthy
+      expect(described_class).to be_mentionable(ticket, customer)
     ensure
       Setting.set('ticket_participants_enabled', false)
     end
   end
-
 
   describe 'participant cap (Phase 5.1)', current_user_id: 1 do
     let(:group)   { Group.first || create(:group) }
@@ -210,7 +207,7 @@ RSpec.describe Mention, type: :model do
         own = create(:ticket, customer: c, group: group)
         described_class.subscribe!(own, c)
       end
-      expect(Mention.count).to eq 50
+      expect(described_class.count).to eq 50
     end
 
     it 'CAP2: 51st customer participant raises error' do
@@ -223,9 +220,9 @@ RSpec.describe Mention, type: :model do
         )
       end
       customer_51 = create(:customer)
-      expect {
+      expect do
         described_class.subscribe!(ticket, customer_51)
-      }.to raise_error(Exceptions::UnprocessableContent, /50 participants/)
+      end.to raise_error(Exceptions::UnprocessableContent, %r{50 participants})
     end
 
     it 'CAP3: agent mentions do NOT count toward cap' do
@@ -235,18 +232,18 @@ RSpec.describe Mention, type: :model do
       end
       customer = create(:customer)
       own = create(:ticket, customer: customer, group: group)
-      expect {
+      expect do
         described_class.subscribe!(own, customer)
-      }.not_to raise_error
+      end.not_to raise_error
     end
 
     it 'CAP4: re-subscribe of existing participant does not raise' do
       customer = create(:customer)
       own = create(:ticket, customer: customer, group: group)
       described_class.subscribe!(own, customer)
-      expect {
+      expect do
         described_class.subscribe!(own, customer)
-      }.not_to raise_error
+      end.not_to raise_error
     end
 
     it 'CAP-OFF: cap does NOT apply when Flag OFF' do
@@ -268,9 +265,9 @@ RSpec.describe Mention, type: :model do
         )
       end
       agent_and_cust = create(:agent_and_customer, groups: [group])
-      expect {
+      expect do
         described_class.subscribe!(ticket, agent_and_cust)
-      }.not_to raise_error
+      end.not_to raise_error
       expect(ticket.mentions.count).to eq 50
     end
 
@@ -280,7 +277,7 @@ RSpec.describe Mention, type: :model do
       own = create(:ticket, customer: agent_and_cust, group: group)
       described_class.subscribe!(own, agent_and_cust)
       policy = TicketPolicy.new(agent_and_cust, own)
-      expect(policy.show?).to be_truthy
+      expect(policy).to be_show
     ensure
       Setting.set('ticket_participants_enabled', false)
     end

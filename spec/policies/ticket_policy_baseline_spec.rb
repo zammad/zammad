@@ -15,7 +15,7 @@ RSpec.describe TicketPolicy, type: :policy do
 
     it 'A1: agent with read access can show?' do
       policy = described_class.new(agent, ticket)
-      expect(policy.show?).to be_truthy
+      expect(policy).to be_show
     end
 
     it 'A2: agent with full/change can update?' do

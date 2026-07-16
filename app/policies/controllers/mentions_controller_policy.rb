@@ -37,8 +37,8 @@ class Controllers::MentionsControllerPolicy < Controllers::ApplicationController
     return false if !Mention.mentionable?(record.mentionable_object, user)
 
     # Self-subscribe guard (G1): customer may only subscribe to tickets they can see
-    if user.permissions?('ticket.customer')
-      return false if !TicketPolicy.new(user, record.mentionable_object).show?
+    if user.permissions?('ticket.customer') && !TicketPolicy.new(user, record.mentionable_object).show?
+      return false
     end
 
     true

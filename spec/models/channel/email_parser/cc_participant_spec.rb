@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe "Channel::EmailParser CC and participants", :aggregate_failures, type: :model, current_user_id: 1 do
+RSpec.describe 'Channel::EmailParser CC and participants', :aggregate_failures, current_user_id: 1, type: :model do
   let(:group)      { create(:group) }
   let(:ticket)     { create(:ticket, group: group) }
   let(:customer)   { create(:customer) }

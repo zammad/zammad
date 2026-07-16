@@ -93,11 +93,11 @@ class Mention < ApplicationModel
       # This goes through Transaction::Notification which respects user
       # notification_config preferences, channel selection, and filtering.
       item = {
-        object:     object.class.name,
-        object_id:  object.id,
-        type:       'update',
-        user_id:    UserInfo.current_user_id || 1,
-        changes:    { title: [object.title, object.title] },
+        object:    object.class.name,
+        object_id: object.id,
+        type:      'update',
+        user_id:   UserInfo.current_user_id || 1,
+        changes:   { title: [object.title, object.title] },
       }
       begin
         Transaction::Notification.new(item, {}).perform
@@ -147,6 +147,7 @@ class Mention < ApplicationModel
       return true if policy.agent_read_access?
       return false if !Setting.get('ticket_participants_enabled')
       return false if !user.permissions?('ticket.customer')
+
       true
     else
       false
