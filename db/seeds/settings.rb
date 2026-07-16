@@ -6349,15 +6349,19 @@ Setting.create_if_not_exists(
   preferences: {
     permission:  ['admin.knowledge_base'],
     validations: ['Setting::Validation::KbSelfHostedVideoServers'],
+  },
+  frontend:    true,
 )
 
-  title:       __("'Ticket Participants'"),
-  name:        "ticket_participants_enabled",
-  area:        "Ticket::Participants",
-  description: __("Enable the participant feature. Allows adding additional customers as participants on tickets."),
+Setting.create_if_not_exists(
+  title:       __('Ticket Participants'),
+  name:        'ticket_participants_enabled',
+  area:        'Ticket::Participants',
+  description: __('Enable the participant feature. Allows adding additional customers as participants on tickets.'),
   options:     {},
   state:       false,
   preferences: {
-    permission: ["admin.ticket"],
+    permission: ['admin.ticket'],
+  },
   frontend:    false,
 )

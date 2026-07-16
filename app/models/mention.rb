@@ -88,10 +88,10 @@ class Mention < ApplicationModel
 
     is_new = !subscribed?(object, user)
     object.mentions.create!(user: user, sourceable: sourceable) if is_new
-    if object.is_a?(Ticket) && is_new
+    if object.is_a?(Ticket) && is_new && Setting.get('ticket_participants_enabled') && !user.permissions?('ticket.agent')
       # Notify ONLY the newly added participant (not all existing recipients).
-      # Uses the standard mailer pipeline but with participant_add flag to scope
-      # recipients to the single new user instead of all group+mention users.
+      # Gated behind feature flag + non-agent check — agent @mentions and trigger
+      # subscriptions should NOT trigger the participant-add notification.
       item = {
         object:    object.class.name,
         object_id: object.id,

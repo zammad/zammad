@@ -16,7 +16,7 @@
             <span class="avatar avatar--small" style="margin-right:6px;"><%- mention.user.avatar(24) %></span>
             <span class="participant-name" style="flex:1;"><%- "#{mention.user.firstname || ''} #{mention.user.lastname || ''}".trim() %></span>
           <% end %>
-          <% if @canAdd: %>
+          <% if @canManage: %>
             <span class="js-remove-participant participant-remove" data-mention-id="<%= mention.id %>" style="cursor:pointer;color:#999;padding:2px 6px;" title="<%- @T('Remove participant') %>">✕</span>
           <% end %>
         </div>

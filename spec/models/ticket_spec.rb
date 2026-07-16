@@ -2522,6 +2522,9 @@ RSpec.describe Ticket, type: :model do
       let(:body)  { 'some message article helper test2 <div><img src="cid:15.274327094.140938@zammad.example.com">asdasd<img border="0" width="60" height="19" src="cid:15.274327094.140939@zammad.example.com" alt="Beschreibung: Beschreibung: efqmLogo"><br>' }
 
       include_examples 'replacing inline images with attachment urls'
+    end
+  end
+
   describe '#participant_ids (PR-2)' do
     let(:customer)        { create(:customer) }
     let(:other_customer)  { create(:customer) }

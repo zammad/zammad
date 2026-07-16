@@ -58,6 +58,7 @@ class SidebarParticipants extends App.Controller
     html = App.view('ticket_zoom/sidebar_participants')(
       mentions:    participants
       canAdd:      count < SidebarParticipants::MAX_PARTICIPANTS
+      canManage:   true  # Remove always available, regardless of cap
       cap:         SidebarParticipants::MAX_PARTICIPANTS
       searchShown: searchShown
     )
