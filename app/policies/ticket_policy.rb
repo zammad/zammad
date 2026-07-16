@@ -127,6 +127,10 @@ class TicketPolicy < ApplicationPolicy
   def participant?
     return false if !Setting.get('ticket_participants_enabled')
     return false if !user.active?
+    # Agents with mentions get access through agent_access?, not participant access.
+    # This prevents agent+customer users from getting customer field-scope via mention
+    # when they have lost group access.
+    return false if user.permissions?('ticket.agent')
     record.respond_to?(:participant_ids) && record.participant_ids.include?(user.id)
   rescue NoMethodError
     false

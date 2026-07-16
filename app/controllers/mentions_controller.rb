@@ -42,6 +42,11 @@ class MentionsController < ApplicationController
       return
     end
 
+    if mentionable_object.is_a?(Ticket) && target_user.id == mentionable_object.customer_id
+      render json: { error: __('The ticket customer is already a participant.') }, status: :unprocessable_content
+      return
+    end
+
     Mention.subscribe! mentionable_object, target_user
 
     render json: true, status: :created
