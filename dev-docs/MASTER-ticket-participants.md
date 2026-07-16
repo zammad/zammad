@@ -409,3 +409,40 @@ cd C:\AI\zammad-jira-participants-analysis
 # Devcontainer: docker exec -u vscode zammad-devcontainer-devcontainer-1 bash -lc "..."
 # Serena: serena_activate_project C:\AI\zammad
 ```
+
+---
+
+## 14. PR-Status & Entscheidungsvertagung (Stand 16.07.2026)
+
+### PR #6250 bei zammad/zammad
+- **Status:** OPEN, gegen `develop`
+- **HEAD:** `2867ce6` (5 gesquashte Feature-Commits + 5 Codex-Fix-Commits)
+- **Referenz:** Issue #1307 (seit 2016 offen, exakt dieses Feature)
+
+### Codex-Review-Historie (5 Durchläufe, alle gefixt)
+| Lauf | Commit | Findings | Fix-Commit |
+|:---:|:---:|:---:|:---:|
+| 1 | ea14254 | 4 (P1+P2) | 3bfb8ac |
+| 2 | b7b1ef6 | 4 (2× P1 SyntaxError + P2) | db83427 |
+| 3 | db83427 | 4 (P1 seeds verloren + P2) | 62864dd |
+| 4 | 62864dd | 4× P2 (Cap, REST-Flag, Active, Remove-Agent) | 197b4af |
+| 5 | 197b4af | 4× P2 (Self-Subscribe-Regression, Agent-Scope, Customer-Downgrade, Sidebar-Pagination) | 2867ce6 |
+
+**Verbleibende Known-Limitation (Codex #5/4):** `mentions(first: 50)`-Query kann Participants verfehlen, wenn viele Agent-@mentions existieren. Echte Lösung braucht participant-spezifische GraphQL-Connection.
+
+### Menschliches Review (Dominik Klein, Zammad Core)
+> *"we first need to have a picture of how we see this in the core for the long run. It needs to match for the long run."*
+
+**Bedeutung:** Kein klares Nein, aber strategische Einigung vor Code nötig. Antwort von uns gesendet (Frage nach Produkt-Vision + Forum/Addon-Option).
+
+### Plugin-Umsetzung — Analyse vertagt
+**Kern-Herausforderung:** Feature braucht Kern-Modifikationen an `TicketPolicy`, `BaseScope`, `Mention`, `Transaction::Notification`. Reines Addon geht nicht.
+
+| Option | Bewertung | Status |
+|--------|:---:|:---:|
+| A: Monkey-Patch-Plugin (`prepend`) | 🟡 Update-fragil | Vertagt |
+| B: Hybrid (Plugin + minimaler Core-PR) | 🟡 Braucht trotzdem Zammad-Einigung | Vertagt |
+| C: Eigener Fork betreiben | 🟢 Vollkontrolle, Merge-Aufwand | Vertagt |
+| D: Warten auf Zammad-Foundation im Forum | 🟢 Sauberster Weg | Vertagt |
+
+**Entscheidung vertagt**, bis Zammad auf die Vision-Frage antwortet. Fork (`addipoes/zammad`) bleibt als funktionsfähige Implementierung erhalten.
