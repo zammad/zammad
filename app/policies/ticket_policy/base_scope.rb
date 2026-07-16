@@ -60,8 +60,13 @@ class TicketPolicy < ApplicationPolicy
       # (ReadScope, OverviewScope), not in ChangeScope or FullScope.
       return if %i[change full].include?(self.class::ACCESS_TYPE)
 
+      # Exclude agent users — agents get access through group access, not participant scope.
+      # A mentioned agent who loses group access should not retain read access via mentions.
+      agent_user_ids = User.with_permissions('ticket.agent').pluck(:id)
+
       participant_ticket_ids = Mention.joins(:user)
                                       .where(mentionable_type: 'Ticket', user_id: user.id, users: { active: true })
+                                      .where.not(user_id: agent_user_ids)
                                       .pluck(:mentionable_id)
       return if participant_ticket_ids.blank?
 

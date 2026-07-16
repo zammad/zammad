@@ -6,13 +6,12 @@ class Controllers::MentionsControllerPolicy < Controllers::ApplicationController
   end
 
   def create?
-    return false if !Setting.get('ticket_participants_enabled')
-
     if record.params[:user_id].present? && record.params[:user_id].to_i != user.id
-      # Agent-Add-Other: identisches Gate wie GraphQL ParticipantAdd (agent_update_access?)
+      # Agent-Add-Other: requires feature flag + identical gate as GraphQL ParticipantAdd
+      return false if !Setting.get('ticket_participants_enabled')
       TicketPolicy.new(user, record.mentionable_object).agent_update_access?
     else
-      # Self-Subscribe (unverändert): G1-Guard via object_accessible?
+      # Self-Subscribe (unverändert, works with flag off): G1-Guard via object_accessible?
       object_accessible?
     end
   end
