@@ -22,16 +22,6 @@ class Channel::Filter::IdentifySender < Channel::Filter::BaseIdentifyUser
       customer_user = User.find_by(email: mail[ :'x-zammad-customer-email' ])
     end
 
-    # When found via x-zammad headers, apply explicit name overrides if provided.
-    # IdentifySessionUser runs earlier and may have pre-created this user from the
-    # FROM address with a different name than what the x-zammad headers intend.
-    if customer_user
-      name_attrs = {}
-      name_attrs[:firstname] = sanitize_name(mail[:'x-zammad-customer-firstname']) if mail[:'x-zammad-customer-firstname'].present?
-      name_attrs[:lastname]  = sanitize_name(mail[:'x-zammad-customer-lastname']) if mail[:'x-zammad-customer-lastname'].present?
-      customer_user.update!(name_attrs) if name_attrs.present?
-    end
-
     # get correct customer
     if !customer_user && Setting.get('postmaster_sender_is_agent_search_for_customer') == true && mail[ :'x-zammad-ticket-create-article-sender' ] == 'Agent'
       # get first recipient and set customer
@@ -67,10 +57,24 @@ class Channel::Filter::IdentifySender < Channel::Filter::BaseIdentifyUser
       )
     end
 
+    # Apply explicit name overrides if provided, no matter how customer_user was
+    # resolved above. IdentifySessionUser runs earlier and may have already
+    # created/matched this user from the FROM address with a different name
+    # than what the x-zammad headers intend, and the lookups/user_create calls
+    # above only fill in a name for users that don't have one yet.
+    apply_name_headers!(customer_user, mail)
+
     create_recipients(mail)
     mail[ :'x-zammad-ticket-customer_id' ] = customer_user.id
 
     true
+  end
+
+  def self.apply_name_headers!(customer_user, mail)
+    name_attrs = {}
+    name_attrs[:firstname] = sanitize_name(mail[:'x-zammad-customer-firstname']) if mail[:'x-zammad-customer-firstname'].present?
+    name_attrs[:lastname]  = sanitize_name(mail[:'x-zammad-customer-lastname']) if mail[:'x-zammad-customer-lastname'].present?
+    customer_user.update!(name_attrs) if name_attrs.present?
   end
 
   # create to and cc user
