@@ -8,7 +8,9 @@ module KnowledgeBaseHelper
   end
 
   def custom_path_if_needed(path, knowledge_base, full: false)
-    return path if !knowledge_base.custom_address_matches?(request)
+    if !knowledge_base.custom_address_matches?(request)
+      return full ? "#{request.base_url}#{path}" : path
+    end
 
     custom_path(path, knowledge_base, full:)
   end
@@ -85,7 +87,7 @@ module KnowledgeBaseHelper
   def feeds_available(knowledge_base, parent_category, current_object)
     feeds = [{
       title: knowledge_base.translations.first.title,
-      url:   custom_path_if_needed(help_root_feed_url, knowledge_base)
+      url:   custom_path_if_needed(help_root_feed_path, knowledge_base, full: true)
     }]
 
     effective_category = [current_object, parent_category].find { |elem| elem.is_a? KnowledgeBase::Category }
@@ -93,7 +95,7 @@ module KnowledgeBaseHelper
     if effective_category
       feeds << {
         title: effective_category.translations.first.title,
-        url:   custom_path_if_needed(help_category_feed_url(system_locale_via_uri.locale, effective_category), knowledge_base)
+        url:   custom_path_if_needed(help_category_feed_path(system_locale_via_uri.locale, effective_category), knowledge_base, full: true)
       }
     end
 
