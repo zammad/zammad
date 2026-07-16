@@ -1,44 +1,12 @@
-# Injects the Email Notification section into the Microsoft 365 Graph Email
-# Accounts tab (below the channel list) and handles the OAuth redirect response
-# for the microsoft_graph_outbound adapter.
+# Handles the OAuth redirect response for the microsoft_graph_outbound adapter
+# and injects the correct form fields when that adapter is selected in the
+# Email Notification wizard.
 
 class App.MicrosoftGraphNotification extends App.Controller
   constructor: ->
     super
-    @bindGraphPageNotificationInjector()
     @bindAdapterChangeHandler()
     @bindAjaxRedirectHandler()
-
-  bindGraphPageNotificationInjector: ->
-    # After the MS Graph channel index loads and renders, append the notification
-    # section below the channel list — same position as the Email channel page.
-    $(document).ajaxComplete (event, xhr, settings) =>
-      return if !settings.url || settings.url.indexOf('channels/admin/microsoft_graph') is -1
-      # Only act on GET (index), not POST (notification/group/etc.)
-      return if settings.type isnt 'GET'
-
-      # Small delay to let render() finish painting the DOM
-      @delay(
-        ->
-          # Find the Accounts tab content on the MS Graph page
-          pageContent = $('#c-account .page-content')
-          return if !pageContent.length
-
-          # Don't inject if app is not connected (intro page shown)
-          return if !pageContent.length or pageContent.closest('.content').find('.js-new').length is 0
-
-          # Remove previous injection to avoid duplicates (re-render)
-          pageContent.closest('#c-account').find('.js-notification-section').remove()
-
-          # Create container and append after page-content
-          container = $('<div class="js-notification-section"></div>')
-          pageContent.after(container)
-
-          # Instantiate the shared notification controller
-          new App.ChannelEmailNotification(el: container)
-        200
-        'ms-graph-notification-inject'
-      )
 
   bindAdapterChangeHandler: ->
     # Inject mailbox type fields into the Email Notification wizard
