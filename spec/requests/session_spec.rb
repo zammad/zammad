@@ -403,6 +403,48 @@ RSpec.describe 'Sessions endpoints', type: :request do
     end
   end
 
+  describe 'GET /auth/:provider/callback (omniauth)' do
+    let(:user)           { create(:agent) }
+    let!(:authorization) { create(:authorization, user: user, provider: 'github', uid: '123456') }
+
+    # The provider name is arbitrary here: OmniAuth test mode injects the mock
+    # for the requested path and bypasses the registered strategy entirely, so
+    # this exercises the controller's session handling regardless of provider.
+    around do |example|
+      OmniAuth.config.test_mode = true
+      OmniAuth.config.mock_auth[:github] = OmniAuth::AuthHash.new(
+        provider:    authorization.provider,
+        uid:         authorization.uid,
+        info:        {},
+        credentials: {},
+      )
+
+      example.run
+    ensure
+      OmniAuth.config.mock_auth.delete(:github)
+      OmniAuth.config.test_mode = false
+    end
+
+    it 'redirects to the app' do
+      get '/auth/github/callback'
+
+      expect(response).to redirect_to('/#')
+    end
+
+    it 'sets the :user_id session parameter' do
+      expect { get '/auth/github/callback' }
+        .to change { request&.session&.fetch(:user_id) }.to(user.id)
+    end
+
+    # Ensures the session survives SessionHelper.cleanup_expired (2h temp-session purge)
+    # and is instead governed by the configured Session Timeout, like password/SSO logins.
+    # See https://github.com/zammad/zammad/issues/6244
+    it 'marks the session as persistent' do
+      expect { get '/auth/github/callback' }
+        .to change { request&.session&.fetch(:persistent) }.to(true)
+    end
+  end
+
   describe 'POST /auth/two_factor_itwo_factor_method_enablednitiate_authentication/:method' do
     let(:user)                       { create(:user, password: 'dummy') }
     let(:params)                     { {} }
