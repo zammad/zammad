@@ -6,6 +6,8 @@ class Controllers::MentionsControllerPolicy < Controllers::ApplicationController
   end
 
   def create?
+    return false if !Setting.get('ticket_participants_enabled')
+
     if record.params[:user_id].present? && record.params[:user_id].to_i != user.id
       # Agent-Add-Other: identisches Gate wie GraphQL ParticipantAdd (agent_update_access?)
       TicketPolicy.new(user, record.mentionable_object).agent_update_access?
@@ -22,7 +24,10 @@ class Controllers::MentionsControllerPolicy < Controllers::ApplicationController
     # Self-removal: the mentioned user can always remove themselves
     return true if mention.user_id == user.id
 
-    # Agent-removal: agent with update access can remove any participant
+    # Agent-removal: agent with update access can remove any participant,
+    # but only non-agent participants (preserve agent @mentions/subscriptions).
+    return false if mention.user.permissions?('ticket.agent')
+
     if mention.mentionable_type == 'Ticket'
       ticket = Ticket.find_by(id: mention.mentionable_id)
       return true if ticket && TicketPolicy.new(user, ticket).agent_update_access?

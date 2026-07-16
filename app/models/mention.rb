@@ -72,8 +72,18 @@ class Mention < ApplicationModel
   # @param user
   # @return Boolean
   def self.subscribe!(object, user, sourceable: nil)
-    # Best-effort cap on customer participants, no lock — acceptable for MVP
-    if object.is_a?(Ticket) && Setting.get('ticket_participants_enabled')
+    # Cap check: only applies to non-agent participants, not agent @mentions.
+    # Also validates the user is an active customer before adding.
+    if object.is_a?(Ticket) && Setting.get('ticket_participants_enabled') && !user.permissions?('ticket.agent')
+      if !user.active?
+        raise Exceptions::UnprocessableContent,
+              __('Cannot add inactive users as participants.')
+      end
+      if !user.permissions?('ticket.customer')
+        raise Exceptions::UnprocessableContent,
+              __('Only customers can be added as participants.')
+      end
+
       agent_user_ids = User.with_permissions('ticket.agent').pluck(:id)
       participant_count = object.mentions
         .joins(:user)
