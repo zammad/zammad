@@ -25,7 +25,7 @@ RSpec.describe Service::Ticket::SharedDraft::Start::Create do
     end
 
     it 'copies attachments from the given form' do
-      create(:store, o_id: form_id)
+      create(:store, o_id: form_id, created_by_id: user.id)
 
       expect(Store.list(object: service_result.class.name, o_id: service_result.id))
         .to contain_exactly(have_attributes(filename: 'test.txt'))
@@ -33,6 +33,17 @@ RSpec.describe Service::Ticket::SharedDraft::Start::Create do
 
     context 'when has inline attachments' do
       let(:content) { attributes_for(:ticket_shared_draft_start, :with_inline_image)[:content] }
+
+      before do
+        UserInfo.with_user_id(user.id) do
+          UploadCache.new(form_id).add(
+            filename:      'image1.jpeg',
+            data:          'fake-image-data',
+            preferences:   { 'Content-Disposition' => 'inline' },
+            created_by_id: user.id,
+          )
+        end
+      end
 
       it 'copies inline attachment and keeps it inline' do
         expect(Store.list(object: service_result.class.name, o_id: service_result.id))

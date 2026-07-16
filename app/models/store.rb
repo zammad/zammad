@@ -41,6 +41,7 @@ get attachment of object
     o_id: 4711,
   )
 
+  # use created_by_id: to scope to a specific owner
 returns
 
   result = [store1, store2]
@@ -57,12 +58,17 @@ returns
 
 =end
 
-  def self.list(data)
-    # search
-    store_object_id = Store::Object.lookup(name: data[:object])
-    Store.where(store_object_id: store_object_id, o_id: data[:o_id])
-                  .reorder(created_at: :asc)
+  def self.list(object: nil, o_id: nil, created_by_id: nil)
+    return Store.none if object.nil? || o_id.nil?
 
+    store_object_id = Store::Object.lookup(name: object)
+    scope = Store.where(store_object_id: store_object_id, o_id: o_id)
+
+    if created_by_id
+      scope = scope.where(created_by_id: created_by_id)
+    end
+
+    scope.reorder(created_at: :asc)
   end
 
 =begin

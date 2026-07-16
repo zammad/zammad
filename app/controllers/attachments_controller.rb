@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class AttachmentsController < ApplicationController
-  prepend_before_action :authorize!, only: %i[show destroy]
+  prepend_before_action :authorize!, only: %i[show destroy destroy_form]
   prepend_before_action :authentication_check, except: %i[show destroy]
   prepend_before_action :authentication_check_only, only: %i[show destroy]
 
@@ -29,16 +29,13 @@ class AttachmentsController < ApplicationController
                      end
     end
 
-    headers_store = {
-      'Content-Type' => content_type
-    }
-
-    store = Store.create!(
-      object:      'UploadCache',
-      o_id:        params[:form_id],
-      data:        file.read,
-      filename:    file.original_filename,
-      preferences: headers_store
+    store = UploadCache.new(params[:form_id]).add(
+      filename:      file.original_filename,
+      data:          file.read,
+      preferences:   {
+        'Content-Type' => content_type,
+      },
+      created_by_id: current_user.id,
     )
 
     render json: {
@@ -61,10 +58,7 @@ class AttachmentsController < ApplicationController
   end
 
   def destroy_form
-    Store.remove(
-      object: 'UploadCache',
-      o_id:   params[:form_id],
-    )
+    UploadCache.new(params[:form_id]).destroy
 
     render json: {
       success: true,

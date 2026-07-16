@@ -42,31 +42,50 @@ class UploadCache
 
   # Provides all Store items associated to the form_id.
   #
+  # When UserInfo.current_user_id is set, results are automatically scoped
+  # to the current user's own attachments. Pass created_by_id: explicitly
+  # to override (e.g. nil for policy checks).
+  #
   # @see Store#list
   #
   # @example
   #   attachments = UploadCache.new(form_id).attachments
   #
   # @return [Array<Store>] an enumerator of Store items
-  def attachments
+  def attachments(created_by_id: UserInfo.current_user_id)
     Store.list(
-      object: store_object,
-      o_id:   id,
+      object:        store_object,
+      o_id:          id,
+      created_by_id: created_by_id,
     )
   end
 
-  # Removes all Store items associated to the form_id.
+  # Removes Store items associated to the form_id.
   #
-  # @see Store#remove
+  # When UserInfo.current_user_id is set, only the current user's own
+  # attachments are deleted. In userless contexts (no current_user_id),
+  # all attachments for the form_id are removed.
   #
   # @example
   #   UploadCache.new(form_id).destroy
   #
   def destroy
-    Store.remove(
-      object: store_object,
-      o_id:   id,
-    )
+    user_id = UserInfo.current_user_id
+    if user_id
+      object_id = store_object_id
+      return if object_id.nil?
+
+      Store.where(
+        store_object_id: object_id,
+        o_id:            id,
+        created_by_id:   user_id,
+      ).each { |store| Store.remove_item(store.id) }
+    else
+      Store.remove(
+        object: store_object,
+        o_id:   id,
+      )
+    end
   end
 
   # Removes all Store items associated to the form_id.
@@ -105,7 +124,7 @@ class UploadCache
   end
 
   def store_object_id
-    Store::Object.lookup(name: store_object).id
+    Store::Object.lookup(name: store_object)&.id
   end
 
   # Checks if attachment is similar to the given file.
