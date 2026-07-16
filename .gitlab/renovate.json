@@ -41,24 +41,15 @@
     }
   },
   "minimumReleaseAge": "3 days",
+  "assignees": ["fl"],
   "packageRules": [
     {
-      "matchManagers": ["devcontainer"],
-      "assignees": ["fl"]
-    },
-    {
-      "matchCategories": ["ci"],
-      "assignees": ["fl"]
-    },
-    {
       "matchCategories": ["ruby"],
-      "assignees": ["fl"],
       "addLabels": ["ruby"],
       "rangeStrategy": "in-range-only"
     },
     {
       "matchCategories": ["js"],
-      "assignees": ["fl"],
       "addLabels": ["javascript"],
       "rangeStrategy": "bump"
     },
