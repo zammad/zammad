@@ -29,6 +29,15 @@ but omit it when frontend files have changed.
 - `db_strategy: :reset` — reset database after examples that modify
   the schema
 
+### System tests (Capybara + Selenium)
+
+Set `SELENIUM_BROWSER_HEADLESS=1` when running system specs — otherwise
+Selenium opens a real, visible browser window.
+
+```bash
+SELENIUM_BROWSER_HEADLESS=1 RAILS_ENV=test VITE_TEST_MODE=1 bundle exec rspec spec/system/path/to/file_spec.rb
+```
+
 ### Capybara form helpers (new frontend stack)
 
 System tests for the Vue frontend use custom helpers to interact
