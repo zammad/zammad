@@ -9,4 +9,13 @@ RSpec.describe Signature, type: :model do
   it_behaves_like 'HasCollectionUpdate', collection_factory: :signature
   it_behaves_like 'HasXssSanitizedNote', model_factory: :signature
   it_behaves_like 'Association clears cache', association: :groups
+
+  describe 'body sanitization' do
+    it 'keeps font color styling of pasted content (#6251)' do
+      signature = create(:signature, body: 'Hello <span style="color: #ff0000;">red</span> world')
+      signature.reload
+
+      expect(signature.body).to include('<span style="color: #ff0000;">red</span>')
+    end
+  end
 end
