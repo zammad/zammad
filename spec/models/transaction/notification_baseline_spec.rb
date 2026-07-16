@@ -173,4 +173,62 @@ RSpec.describe Transaction::Notification do
       expect(participant_entry[:channels]['email']).to be true
     end
   end
+
+  describe 'participant-add notification scoping (P1)' do
+    let(:group)        { create(:group) }
+    let(:agent)        { create(:agent, groups: [group]) }
+    let(:customer)     { create(:customer) }
+    let(:participant)  { create(:customer) }
+    let(:other_agent)  { create(:agent, groups: [group]) }
+    let(:ticket)       { create(:ticket, customer: customer, group: group) }
+
+    before do
+      Setting.set('ticket_participants_enabled', true)
+      # Existing mention on the ticket (another participant)
+      Mention.subscribe!(ticket, other_agent)
+      # Clear subscriptions from subscribe! side effects
+      travel 1.second
+    end
+
+    after do
+      Setting.set('ticket_participants_enabled', false)
+    end
+
+    it 'P1: participant-add notification only goes to the NEW participant, not group members' do
+      # Trigger a participant-add notification
+      TransactionDispatcher.reset
+      UserInfo.current_user_id = agent.id
+      Mention.subscribe!(ticket, participant)
+      TransactionDispatcher.commit
+      UserInfo.current_user_id = nil
+
+      # Find sent notifications for this ticket
+      notifications = Transaction::Notification.where(
+        object: 'Ticket',
+        object_id: ticket.id,
+      )
+
+      # The participant-add notification exists
+      expect(notifications).to be_present
+
+      # Get the recipients from the notification
+      item = {
+        object:    'Ticket',
+        object_id: ticket.id,
+        type:      'update',
+        user_id:   agent.id,
+        changes:   { title: [ticket.title, ticket.title] },
+      }
+      notif = Transaction::Notification.new(item, { participant_add: true, participant_add_user: participant })
+      recipients = notif.recipients_and_channels
+
+      # Only the new participant should be a recipient
+      recipient_user_ids = recipients.map { |r| r[:user].id }
+      expect(recipient_user_ids).to include(participant.id)
+
+      # Group members and other participants should NOT be notified
+      expect(recipient_user_ids).not_to include(other_agent.id)
+      expect(recipient_user_ids).not_to include(agent.id)
+    end
+  end
 end
