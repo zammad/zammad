@@ -1,3 +1,5 @@
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
+
 require 'rails_helper'
 
 RSpec.describe Gql::Mutations::Ticket::ParticipantRemove, :aggregate_failures, type: :graphql, current_user_id: 1 do
