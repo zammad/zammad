@@ -10,9 +10,6 @@ on:
       - stable
     tags:
       - '*'
-  schedule:
-    # Build for develop only once per workday to avoid hitting rate limits on docker hub.
-    - cron:  '10 6 * * 1-5'
 
 jobs:
   docker-build-image:
