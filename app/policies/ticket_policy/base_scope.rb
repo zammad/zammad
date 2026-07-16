@@ -56,6 +56,9 @@ class TicketPolicy < ApplicationPolicy
 
     def append_participant_scope!(sql, bind)
       return if !Setting.get('ticket_participants_enabled')
+      # Participant tickets are read-only: only include them in read-style scopes
+      # (ReadScope, OverviewScope), not in ChangeScope or FullScope.
+      return if %i[change full].include?(self.class::ACCESS_TYPE)
 
       participant_ticket_ids = Mention.joins(:user)
                                       .where(mentionable_type: 'Ticket', user_id: user.id, users: { active: true })

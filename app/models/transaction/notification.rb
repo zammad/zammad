@@ -76,6 +76,17 @@ class Transaction::Notification
   end
 
   def prepare_recipients_and_reasons
+    # Participant-add notification: only notify the newly added user,
+    # not all group members + existing recipients.
+    if @params[:participant_add]
+      new_user = @params[:participant_add_user]
+      if new_user
+        possible_recipients = [new_user]
+        @recipients_reason[new_user.id] = __('You have been added as a participant to this ticket.')
+      end
+      recipients_reason_by_notifications_settings(possible_recipients || [])
+      return
+    end
 
     # loop through all group users
     possible_recipients = possible_recipients_of_group(ticket.group_id)
@@ -134,8 +145,12 @@ class Transaction::Notification
     possible_recipients.each do |user|
       result = NotificationFactory::Mailer.notification_settings(user, ticket, @item[:type])
       if !result
+        # Fallback for participants (non-agent mention users) who have no notification
+        # matrix configured. Agents with nil settings should still be skipped — they
+        # have explicitly disabled notifications.
         next if !Setting.get('ticket_participants_enabled')
         next if !ticket.mentions.exists?(user: user)
+        next if user.permissions?('ticket.agent')
         result = { user: user, channels: { 'email' => true } }
       end
       next if already_checked_recipient_ids[user.id]

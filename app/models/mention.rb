@@ -89,9 +89,9 @@ class Mention < ApplicationModel
     is_new = !subscribed?(object, user)
     object.mentions.create!(user: user, sourceable: sourceable) if is_new
     if object.is_a?(Ticket) && is_new
-      # Run the standard notification pipeline for the newly added participant.
-      # This goes through Transaction::Notification which respects user
-      # notification_config preferences, channel selection, and filtering.
+      # Notify ONLY the newly added participant (not all existing recipients).
+      # Uses the standard mailer pipeline but with participant_add flag to scope
+      # recipients to the single new user instead of all group+mention users.
       item = {
         object:    object.class.name,
         object_id: object.id,
@@ -100,7 +100,10 @@ class Mention < ApplicationModel
         changes:   { title: [object.title, object.title] },
       }
       begin
-        Transaction::Notification.new(item, {}).perform
+        Transaction::Notification.new(
+          item,
+          { participant_add: true, participant_add_user: user },
+        ).perform
       rescue => e
         Rails.logger.warn "Participant notification delivery failed: #{e.message}"
       end
