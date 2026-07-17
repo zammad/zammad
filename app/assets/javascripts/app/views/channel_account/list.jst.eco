@@ -130,3 +130,5 @@
 <% end %>
   <a class="btn btn--success js-new"><%- @T('Add Account') %></a>
 </div>
+
+<div class="js-notificationSection"></div>

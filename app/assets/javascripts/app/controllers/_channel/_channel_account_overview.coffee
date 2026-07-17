@@ -130,6 +130,9 @@ class App.ChannelAccountOverview extends App.ControllerSubContent
       rollback_button_first: @rollbackButtonFirst
     )
 
+    if !App.Config.get('system_online_service')
+      new App.ChannelEmailNotification(el: @$('.js-notificationSection'))
+
     # On a channel creation, auto-open the edit dialog so the user can
     # adjust the inbound configuration. Skip for migrated channels — their
     # configuration is assumed to be correct.

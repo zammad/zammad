@@ -3,7 +3,7 @@
 class Service::System::SetEmailNotificationConfiguration < Service::Base
   # Setup Email Notification channel configuration
   #
-  # @param [String] adapter sendmail or smtp
+  # @param [String] adapter sendmail, smtp, or microsoft_graph_outbound
   # @param [Hash] new_configuration email server configuration, empty unless adapter is smtp
   # @option new_configuration [String] :host SMTP server address
   # @option new_configuration [String] :port SMTP server port
@@ -11,17 +11,18 @@ class Service::System::SetEmailNotificationConfiguration < Service::Base
   # @option new_configuration [String] :user login of SMTP server
   # @option new_configuration [String] :password of SMTP server
   # @option new_configuration [Boolean] :ssl_verify Wether SSL verification is performed
-  def initialize(adapter:, new_configuration:)
+  # @param [Hash] microsoft_graph_auth OAuth auth data (required when adapter is microsoft_graph_outbound)
+  def initialize(adapter:, new_configuration:, microsoft_graph_auth: nil)
     @adapter = adapter
     @new_configuration = new_configuration
+    @microsoft_graph_auth = microsoft_graph_auth
   end
 
   def execute
-    # There're two instances of Email::Notification for historical easons
-    # One for SMTP and one for Sendmail.
-    # However, this feature is not used anywhere.
-    # At some point it may be good to clean this up to simply use a single instance
-    # and set adapter as needed.
+    if @adapter == 'microsoft_graph_outbound' && @microsoft_graph_auth.blank?
+      raise ArgumentError, __('Microsoft Graph auth data is required for the microsoft_graph_outbound adapter.')
+    end
+
     ActiveRecord::Base.transaction do
       Channel
         .where(area: 'Email::Notification')
@@ -39,17 +40,39 @@ class Service::System::SetEmailNotificationConfiguration < Service::Base
     channel.active = is_matching_adapter
 
     if is_matching_adapter
-      channel.options = {
-        outbound: {
-          adapter: @adapter,
-          options: @new_configuration,
-        },
-      }
+      channel.options = if @adapter == 'microsoft_graph_outbound'
+                          build_microsoft_graph_options
+                        else
+                          {
+                            outbound: {
+                              adapter: @adapter,
+                              options: @new_configuration,
+                            },
+                          }
+                        end
 
       channel.status_out   = 'ok'
       channel.last_log_out = nil
     end
 
     channel.save!
+  end
+
+  def build_microsoft_graph_options
+    outbound_options = {
+      user:     @new_configuration[:user] || @new_configuration['user'],
+      password: @microsoft_graph_auth&.dig(:access_token) || @microsoft_graph_auth&.dig('access_token'),
+    }
+
+    shared_mailbox = @new_configuration[:shared_mailbox].presence || @new_configuration['shared_mailbox'].presence
+    outbound_options[:shared_mailbox] = shared_mailbox if shared_mailbox
+
+    {
+      outbound: {
+        adapter: 'microsoft_graph_outbound',
+        options: outbound_options.compact_blank,
+      },
+      auth:     @microsoft_graph_auth,
+    }
   end
 end

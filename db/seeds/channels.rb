@@ -26,3 +26,14 @@ Channel.create_if_not_exists(
   preferences: { online_service_disable: true },
   active:      true,
 )
+Channel.create_if_not_exists(
+  area:        'Email::Notification',
+  options:     {
+    outbound: {
+      adapter: 'microsoft_graph_outbound',
+      options: {},
+    },
+  },
+  preferences: { online_service_disable: true },
+  active:      false,
+)

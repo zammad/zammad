@@ -50,6 +50,36 @@ FactoryBot.define do
           }
         end
       end
+
+      trait :microsoft_graph_outbound do
+        transient do
+          microsoft_user { Faker::Internet.unique.email }
+        end
+
+        options do
+          {
+            outbound: {
+              'adapter' => 'microsoft_graph_outbound',
+              'options' => {
+                'user'     => microsoft_user,
+                'password' => 'test_access_token',
+              },
+            },
+            auth:     {
+              'type'          => 'XOAUTH2',
+              'provider'      => 'microsoft_graph',
+              'access_token'  => 'test_access_token',
+              'expires_in'    => 3599,
+              'refresh_token' => 'test_refresh_token',
+              'scope'         => 'offline_access openid profile email mail.send',
+              'token_type'    => 'Bearer',
+              'created_at'    => 30.days.ago,
+              'client_id'     => 'test_client_id',
+              'client_secret' => 'test_client_secret',
+            },
+          }
+        end
+      end
     end
 
     factory :email_channel do
