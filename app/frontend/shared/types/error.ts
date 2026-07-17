@@ -32,9 +32,9 @@ export interface GraphQLHandlerError {
 export type MutationSendError = ApolloError | UserError
 
 export enum ErrorStatusCodes {
-  'Forbidden' = 403,
-  'NotFound' = 404,
-  'InternalError' = 500,
+  Forbidden = 403,
+  NotFound = 404,
+  InternalError = 500,
 }
 
 export type UserErrors = Except<UserError, '__typename'>[]

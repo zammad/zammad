@@ -70,11 +70,10 @@ describe('Form - Field - External Data Source - Query', () => {
 
     expect(wrapper.queryByText('Start typing to search…')).not.toBeInTheDocument()
 
-    const callResult = await waitUntil(
-      () =>
-        getGraphQLMockCalls<AutocompleteSearchObjectAttributeExternalDataSourceQuery>(
-          AutocompleteSearchObjectAttributeExternalDataSourceDocument,
-        ).at(-1)!,
+    const callResult = await waitUntil(() =>
+      getGraphQLMockCalls<AutocompleteSearchObjectAttributeExternalDataSourceQuery>(
+        AutocompleteSearchObjectAttributeExternalDataSourceDocument,
+      ).at(-1)!,
     )
 
     const testOptions = callResult.result.autocompleteSearchObjectAttributeExternalDataSource

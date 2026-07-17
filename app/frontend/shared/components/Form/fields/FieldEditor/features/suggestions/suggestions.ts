@@ -28,10 +28,10 @@ interface MentionOptions<T> {
 }
 
 enum Type {
-  'BeforeStart' = 'onBeforeStart',
-  'Start' = 'onStart',
-  'BeforeUpdate' = 'onBeforeUpdate',
-  'Update' = 'onUpdate',
+  BeforeStart = 'onBeforeStart',
+  Start = 'onStart',
+  BeforeUpdate = 'onBeforeUpdate',
+  Update = 'onUpdate',
 }
 
 let listboxIdCounter = 0
