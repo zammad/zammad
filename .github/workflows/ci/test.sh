@@ -16,4 +16,4 @@ pnpm test
 
 echo "Running basic rspec tests…"
 bundle exec rake zammad:db:init
-bundle exec rspec --exclude-pattern "spec/system/**/*_spec.rb" -t ~searchindex -t ~integration -t ~required_envs
+exec bundle exec rspec --exclude-pattern "spec/system/**/*_spec.rb" -t ~searchindex -t ~integration -t ~required_envs
