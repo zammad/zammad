@@ -213,10 +213,10 @@ class Transaction::Notification
     end
 
     if channels['email'] && user.email.present?
-      # Guard: non-agents (participants, customers) must not receive internal article content via email
+      # Guard: non-agents (participants, customers) must not receive internal article content via email.
+      # Return BEFORE recording history — a skipped email must not leave a misleading
+      # audit entry claiming delivery happened.
       if article&.internal? && !user.permissions?('ticket.agent')
-        used_channels.push 'email'
-        add_recipient_list_to_history(ticket, user, used_channels, @item[:type])
         return
       end
 

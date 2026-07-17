@@ -4,10 +4,14 @@ class Controllers::MentionsControllerPolicy < Controllers::ApplicationController
   def index?
     # The mention/subscriber list is agent-only. Returning the full mention list
     # to customers would expose other participants and subscriber assets.
+    return false if !record.mentionable_object
+
     TicketPolicy.new(user, record.mentionable_object).agent_read_access?
   end
 
   def create?
+    return false if !record.mentionable_object
+
     if record.params[:user_id].present? && record.params[:user_id].to_i != user.id
       # Agent-Add-Other: requires feature flag + identical gate as GraphQL ParticipantAdd
       return false if !Setting.get('ticket_participants_enabled')

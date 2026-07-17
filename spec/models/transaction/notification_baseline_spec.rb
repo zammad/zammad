@@ -195,23 +195,9 @@ RSpec.describe Transaction::Notification do
     end
 
     it 'P1: participant-add notification only goes to the NEW participant, not group members' do
-      # Trigger a participant-add notification
-      TransactionDispatcher.reset
-      UserInfo.current_user_id = agent.id
-      Mention.subscribe!(ticket, participant)
-      TransactionDispatcher.commit
-      UserInfo.current_user_id = nil
-
-      # Find sent notifications for this ticket
-      notifications = Transaction::Notification.where(
-        object: 'Ticket',
-        object_id: ticket.id,
-      )
-
-      # The participant-add notification exists
-      expect(notifications).to be_present
-
-      # Get the recipients from the notification
+      # Build the participant-add notification service instance directly.
+      # Transaction::Notification is a service class (not ActiveRecord), so we
+      # test recipient scoping via prepare_recipients_and_reasons instead of .where.
       item = {
         object:    'Ticket',
         object_id: ticket.id,
@@ -219,7 +205,11 @@ RSpec.describe Transaction::Notification do
         user_id:   agent.id,
         changes:   { title: [ticket.title, ticket.title] },
       }
-      notif = Transaction::Notification.new(item, { participant_add: true, participant_add_user: participant })
+      notif = Transaction::Notification.new(
+        item,
+        { participant_add: true, participant_add_user: participant },
+      )
+      notif.prepare_recipients_and_reasons
       recipients = notif.recipients_and_channels
 
       # Only the new participant should be a recipient

@@ -18,5 +18,16 @@ module Gql::Types
     belongs_to :mentionable, Gql::Types::TicketType, null: false
 
     field :user_ticket_access, Gql::Types::Policy::MentionUserTicketAccessType, null: false, method: :itself
+
+    # True if this mention represents a non-agent participant (shown in the
+    # participants sidebar). Agents get access via group permissions, not via
+    # mentions, so agent mentions are excluded from the participant list.
+    # Resolved backend-side so the frontend does not need to fetch user permissions
+    # (which are only authorized for the current user).
+    field :is_participant, Boolean, null: false
+
+    def is_participant
+      !@object.user.permissions?('ticket.agent')
+    end
   end
 end

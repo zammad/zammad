@@ -35,9 +35,8 @@ export const useTicketParticipants = (ticket: Ref<TicketById | undefined>) => {
   const participants = computed(() => {
     if (!ticket.value?.mentions?.edges) return []
     return ticket.value.mentions.edges
-      // Exclude agents entirely (by role, not by current read access) — an agent
-      // who lost group read access is NOT a customer participant.
-      .filter(({ node }) => node.user.active && !node.user.permissions?.includes('ticket.agent'))
+      // Use the backend-resolved isParticipant flag (agent-safe, no permissions fetch needed)
+      .filter(({ node }) => node.user.active && node.isParticipant)
       .map(({ node }) => node.user)
   })
 

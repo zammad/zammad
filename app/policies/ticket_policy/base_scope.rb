@@ -56,9 +56,12 @@ class TicketPolicy < ApplicationPolicy
 
     def append_participant_scope!(sql, bind)
       return if !Setting.get('ticket_participants_enabled')
-      # Participant tickets are read-only: only include them in read-style scopes
-      # (ReadScope, OverviewScope), not in ChangeScope or FullScope.
-      return if %i[change full].include?(self.class::ACCESS_TYPE)
+      # Participant tickets are read-only and user-specific. Only ReadScope is safe:
+      # - ChangeScope/FullScope: participants must not edit (already blocked by change_access?)
+      # - OverviewScope: overview cache keys are not user-specific, so participant tickets
+      #   would leak across customers with the same group permissions (privacy).
+      # (Overview visibility for participants is a known limitation — see NEU-29.)
+      return if self.class::ACCESS_TYPE != :read
 
       # Exclude agent users — agents get access through group access, not participant scope.
       # A mentioned agent who loses group access should not retain read access via mentions.
