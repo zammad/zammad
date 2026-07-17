@@ -30,5 +30,26 @@ RSpec.describe HtmlSanitizer::RemoveLineBreaks do
 
       it { is_expected.to match target }
     end
+
+    describe 'keeps spans with styling (#6251)' do
+      let(:input)  { '<div>test<span style="color: #ff0000;">red</span></div>' }
+      let(:target) { '<div>test<span style="color: #ff0000;">red</span></div>' }
+
+      it { is_expected.to match target }
+    end
+
+    describe 'keeps spans with classes' do
+      let(:input)  { '<div>test<span class="js-signatureMarker">marker</span></div>' }
+      let(:target) { '<div>test<span class="js-signatureMarker">marker</span></div>' }
+
+      it { is_expected.to match target }
+    end
+
+    describe 'keeps empty signature marker spans' do
+      let(:input)  { '<div>test<span class="js-signatureMarker"></span></div>' }
+      let(:target) { '<div>test<span class="js-signatureMarker"></span></div>' }
+
+      it { is_expected.to match target }
+    end
   end
 end

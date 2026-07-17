@@ -8,6 +8,10 @@ class HtmlSanitizer
     def scrub(node)
       case node.name
       when 'span'
+        # Keep spans that carry meaningful styling (e.g. font color) or classes,
+        # otherwise the sanitizer would strip pasted/styled text down to plain text (#6251).
+        return if node['style'].present? || node.classes.any?
+
         node.children.reject { |t| SPAN_LINE_BREAKS.include?(t.text) }.each { |child| node.before child }
 
         node.remove
