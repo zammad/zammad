@@ -91,9 +91,9 @@ class TicketPolicy < ApplicationPolicy
     # situation, because agenr read permission should win over the general customer permission.
     return true if agent_update_access?
     return false if agent_read_access?
-    # The ticket customer always keeps full customer access — a stray mention row
-    # (e.g. from a trigger) must not downgrade them to read-only participant.
-    return customer_access? if customer?
+    # The ticket customer and shared-organization customers always keep full
+    # customer access — a stray mention row must not downgrade them to read-only.
+    return customer_access? if customer? || shared_organization?
     return false if participant?
 
     customer_access?
