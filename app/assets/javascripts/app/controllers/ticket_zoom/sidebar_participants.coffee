@@ -77,8 +77,11 @@ class SidebarParticipants extends App.Controller
       uid = m.user_id || m.id
       user = App.User.find(uid)
       continue if !user
+      continue if !user.active
       continue if user.permission('ticket.agent')
+      continue if !user.permission('ticket.customer')
       result.push({ id: m.id, user_id: uid, user: user })
+    result
     result
 
   showSearch: =>

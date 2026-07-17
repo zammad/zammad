@@ -9,7 +9,21 @@ class AddTicketParticipantsSettings < ActiveRecord::Migration[8.0]
       name:        'ticket_participants_enabled',
       area:        'Ticket::Base',
       description: 'Enable the participant feature. Allows adding additional customers as participants on tickets.',
-      options:     {},
+      options:     {
+        form: [
+          {
+            display:   '',
+            null:      true,
+            name:      'ticket_participants_enabled',
+            tag:       'boolean',
+            translate: true,
+            options:   {
+              true  => 'yes',
+              false => 'no',
+            },
+          },
+        ],
+      },
       state:       false,
       preferences: {
         permission: ['admin.ticket'],

@@ -29,8 +29,9 @@ class Controllers::MentionsControllerPolicy < Controllers::ApplicationController
     # Self-removal: the mentioned user can always remove themselves
     return true if mention.user_id == user.id
 
-    # Agent-removal: agent with update access can remove any participant,
-    # but only non-agent participants (preserve agent @mentions/subscriptions).
+    # Agent-removal: requires the feature flag, agent update access, and a non-agent
+    # participant target (preserve agent @mentions/subscriptions).
+    return false if !Setting.get('ticket_participants_enabled')
     return false if mention.user.permissions?('ticket.agent')
 
     if mention.mentionable_type == 'Ticket'

@@ -210,6 +210,11 @@ class Transaction::Notification
     # create online notification
     used_channels = []
 
+    # Guard: non-agents (participants, customers) must not receive internal article
+    # content via ANY channel (online or email). Block before either branch runs so
+    # no unread online notification is created for internal notes activity.
+    return if article&.internal? && !user.permissions?('ticket.agent')
+
     if channels['online']
       used_channels.push 'online'
 
@@ -217,13 +222,6 @@ class Transaction::Notification
     end
 
     if channels['email'] && user.email.present?
-      # Guard: non-agents (participants, customers) must not receive internal article content via email.
-      # Return BEFORE recording history — a skipped email must not leave a misleading
-      # audit entry claiming delivery happened.
-      if article&.internal? && !user.permissions?('ticket.agent')
-        return
-      end
-
       used_channels.push 'email'
 
       send_to_single_recipient_email(user, ticket, article, changes)

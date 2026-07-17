@@ -85,10 +85,14 @@ class Mention < ApplicationModel
       end
 
       agent_user_ids = User.with_permissions('ticket.agent').pluck(:id)
+      # Count only real participants: active non-agent users with ticket.customer role.
+      # Stale non-customer mentions do not count toward the cap.
+      customer_user_ids = User.with_permissions('ticket.customer').where(active: true).pluck(:id)
       participant_count = object.mentions
         .joins(:user)
         .where(users: { active: true })
         .where.not(user_id: agent_user_ids)
+        .where(user_id: customer_user_ids)
         .count
       if participant_count >= 50 && !subscribed?(object, user)
         raise Exceptions::UnprocessableContent,
@@ -98,10 +102,10 @@ class Mention < ApplicationModel
 
     is_new = !subscribed?(object, user)
     object.mentions.create!(user: user, sourceable: sourceable) if is_new
-    if object.is_a?(Ticket) && is_new && Setting.get('ticket_participants_enabled') && !user.permissions?('ticket.agent')
-      # Notify ONLY the newly added participant (not all existing recipients).
-      # Gated behind feature flag + non-agent check — agent @mentions and trigger
-      # subscriptions should NOT trigger the participant-add notification.
+    if object.is_a?(Ticket) && is_new && Setting.get('ticket_participants_enabled') && !user.permissions?('ticket.agent') && sourceable.nil?
+      # Notify ONLY the newly added participant via explicit UI action.
+      # Trigger/scheduler subscriptions (sourceable present) must NOT send the
+      # participant-add notification — it would mislead customers about the actor.
       item = {
         object:    object.class.name,
         object_id: object.id,
