@@ -101,6 +101,10 @@ describe('ticket create view - user create action', () => {
 
     expect(customerSwitch).not.toBeInTheDocument()
 
+    await waitFor(() => {
+      expect(within(flyout).getByRole('button', { name: 'Create' })).toBeEnabled()
+    })
+
     await view.events.click(within(flyout).getByRole('button', { name: 'Create' }))
 
     const calls = await waitForUserAddMutationCalls()
@@ -190,6 +194,10 @@ describe('ticket create view - user create action', () => {
     // Same double flush needed before clicking Create to avoid formUpdaterProcessing blocking submission.
     await flushPromises()
     await flushPromises()
+
+    await waitFor(() => {
+      expect(within(flyout).getByRole('button', { name: 'Create' })).toBeEnabled()
+    })
 
     await view.events.click(within(flyout).getByRole('button', { name: 'Create' }))
 
