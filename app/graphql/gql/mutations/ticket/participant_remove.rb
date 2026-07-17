@@ -25,6 +25,14 @@ module Gql::Mutations
         return { success: false }
       end
 
+      # Agent-removal of an agent's own @mention/subscription is forbidden —
+      # agents get access via group permissions, not via mentions, so removing
+      # their mention would silently destroy a normal subscription.
+      # Self-removal (user == current_user) is always allowed.
+      if user.id != context.current_user.id && user.permissions?('ticket.agent')
+        return { success: false }
+      end
+
       ::Mention.unsubscribe!(ticket, user)
 
       { success: true }

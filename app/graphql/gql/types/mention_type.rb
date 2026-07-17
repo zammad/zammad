@@ -30,6 +30,9 @@ module Gql::Types
       return false if @object.user.permissions?('ticket.agent')
       return false if !@object.user.active?
       return false if !@object.user.permissions?('ticket.customer')
+      # The ticket's own customer is not a participant — they already have
+      # customer access, and ParticipantAdd rejects adding them.
+      return false if @object.mentionable.is_a?(Ticket) && @object.mentionable.customer_id == @object.user.id
 
       true
     end
