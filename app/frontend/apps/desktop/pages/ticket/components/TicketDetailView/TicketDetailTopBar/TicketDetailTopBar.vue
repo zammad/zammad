@@ -136,9 +136,16 @@ useStickyTopCalculator(currentVisibleHeaderHeight, { offset: -1 }) // avoid join
         :class="[headerBaseClasses, headerBackgroundClasses(true), 'p-3']"
         :inert="!isCompactHeaderVisible"
       />
-      <CommonAlert :class="alertWithBlurClasses" :variant="channelAlert?.variant">
-        {{ $t(channelAlert?.text, channelAlert?.textPlaceholder) }}
-      </CommonAlert>
+
+      <div class="flex w-full justify-center bg-yellow-50 px-5.5 dark:bg-yellow-900">
+        <CommonAlert
+          :class="alertWithBlurClasses"
+          class="max-w-4xl px-0!"
+          :variant="channelAlert?.variant"
+        >
+          {{ $t(channelAlert?.text, channelAlert?.textPlaceholder) }}
+        </CommonAlert>
+      </div>
     </div>
 
     <div
@@ -153,14 +160,17 @@ useStickyTopCalculator(currentVisibleHeaderHeight, { offset: -1 }) // avoid join
         :class="[headerBaseClasses, headerBackgroundClasses(false), 'p-3']"
         :inert="isCompactHeaderVisible"
       />
-      <CommonAlert
-        ref="alert"
-        class="print:hidden"
-        :class="alertBaseClasses"
-        :variant="channelAlert?.variant"
-      >
-        {{ $t(channelAlert?.text, channelAlert?.textPlaceholder) }}
-      </CommonAlert>
+
+      <div class="flex w-full justify-center bg-yellow-50 px-5.5 dark:bg-yellow-900">
+        <CommonAlert
+          ref="alert"
+          class="max-w-4xl px-0! print:hidden"
+          :class="alertBaseClasses"
+          :variant="channelAlert?.variant"
+        >
+          {{ $t(channelAlert?.text, channelAlert?.textPlaceholder) }}
+        </CommonAlert>
+      </div>
     </div>
   </template>
 

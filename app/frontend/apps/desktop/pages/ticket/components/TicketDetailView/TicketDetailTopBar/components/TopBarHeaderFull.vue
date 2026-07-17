@@ -39,7 +39,7 @@ const items = computed(() => [
 
 <template>
   <header
-    class="ticket-detail-grid-full grid grid-cols-2 gap-y-2.5 border-b border-neutral-100 bg-neutral-50 p-3 dark:border-gray-900 dark:bg-gray-500 print:border-b-0 print:px-3"
+    class="ticket-detail-grid-full grid grid-cols-2 gap-y-2.5 border-b border-neutral-100 bg-neutral-50 px-5.5 py-3 dark:border-gray-900 dark:bg-gray-500 print:border-b-0 print:px-3"
   >
     <CommonBreadcrumb
       emphasize-last-item

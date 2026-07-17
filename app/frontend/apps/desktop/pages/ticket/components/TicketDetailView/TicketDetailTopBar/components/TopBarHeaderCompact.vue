@@ -23,7 +23,8 @@ const {
 
 <template>
   <header
-    class="grid grid-cols-[1fr_min-content] items-center border-b border-neutral-100 bg-neutral-50 p-3 @7xl:grid-cols-[1fr_minmax(0,56rem)_1fr] dark:border-gray-900 dark:bg-gray-500 print:hidden print:border-b-0"
+    class="grid grid-cols-[1fr_min-content] items-center border-b border-neutral-100 bg-neutral-50 px-5.5 py-3 @7xl:grid-cols-[1fr_minmax(0,53rem)_1fr] dark:border-gray-900 dark:bg-gray-500 print:hidden print:border-b-0"
+    :class="{ '@7xl:grid-cols-[1fr_minmax(0,56rem)_1fr]': ticket?.organization }"
   >
     <div class="col-start-1 row-start-1 flex items-center gap-1.5">
       <h1 class="line-clamp-1 text-xs break-all text-black dark:text-white">
@@ -47,7 +48,10 @@ const {
       v-if="ticket"
       class="col-start-1 row-start-2 grid max-w-4xl grid-cols-[1fr_minmax(0,48rem)_1fr] items-center gap-3 justify-self-center @4xl:col-span-2 @7xl:col-start-2 @7xl:row-start-1 @7xl:max-w-none @7xl:justify-self-start"
     >
-      <div class="flex justify-self-end ltr:-mr-3 @4xl:ltr:mr-0 rtl:-ml-3 @4xl:rtl:ml-0">
+      <div
+        class="flex justify-self-end @4xl:ltr:mr-0 @4xl:rtl:ml-0"
+        :class="{ 'ltr:-mr-4.5 rtl:-ml-4.5': ticket.organization }"
+      >
         <UserPopoverWithTrigger
           v-if="ticket.customer"
           class="z-11 h-min shrink-0"
