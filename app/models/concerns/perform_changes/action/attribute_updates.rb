@@ -120,8 +120,13 @@ class PerformChanges::Action::AttributeUpdates < PerformChanges::Action
   def subscribe(value)
     user = value['pre_condition'] == 'specific' ? User.find_by(id: value['value']) : User.find_by(id: user_id)
 
-    # Ignore it for non-agent users.
+    # Require both mentionability AND visibility (show?) for the target user.
+    # The participant feature relaxes mentionable? to any customer while the flag
+    # is on, but trigger subscriptions must not grant read access to customers who
+    # cannot see the ticket — that path bypasses the explicit participant-add
+    # authorization (agent_update_access?).
     return if !Mention.mentionable?(record, user)
+    return if record.is_a?(Ticket) && !TicketPolicy.new(user, record).show?
 
     Mention.subscribe! record, user, sourceable: performable
 

@@ -91,6 +91,10 @@ class TicketPolicy < ApplicationPolicy
     # situation, because agenr read permission should win over the general customer permission.
     return true if agent_update_access?
     return false if agent_read_access?
+    # The ticket customer and shared-organization customers always keep full
+    # customer access — a stray mention row must not downgrade them to read-only.
+    return customer_access? if customer? || shared_organization?
+    return false if participant?
 
     customer_access?
   end
@@ -104,6 +108,8 @@ class TicketPolicy < ApplicationPolicy
   def customer_access?
     return false if !user.permissions?('ticket.customer')
     return customer_field_scope if customer?
+
+    return customer_field_scope if participant?
 
     shared_organization?
   end
@@ -119,6 +125,21 @@ class TicketPolicy < ApplicationPolicy
     return false if !record.organization.shared?
 
     customer_field_scope
+  end
+
+  def participant?
+    return false if !Setting.get('ticket_participants_enabled')
+    return false if !user.active?
+    # Agents with mentions get access through agent_access?, not participant access.
+    # This prevents agent+customer users from getting customer field-scope via mention
+    # when they have lost group access.
+    return false if user.permissions?('ticket.agent')
+    # The ticket customer is not a participant — they already have customer access.
+    # A stray mention row must not downgrade them to read-only.
+    return false if customer?
+    record.respond_to?(:participant_ids) && record.participant_ids.include?(user.id)
+  rescue NoMethodError
+    false
   end
 
   def customer_field_scope

@@ -15,4 +15,5 @@ fragment ticketMention on Mention {
   userTicketAccess {
     agentReadAccess
   }
+  isParticipant
 }

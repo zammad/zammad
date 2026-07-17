@@ -6,7 +6,7 @@ query ticket($ticketId: ID!) {
       id
       name
     }
-    mentions(first: 20) {
+    mentions(first: 50) {
       totalCount
       edges {
         node {

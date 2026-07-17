@@ -72,7 +72,56 @@ class Mention < ApplicationModel
   # @param user
   # @return Boolean
   def self.subscribe!(object, user, sourceable: nil)
-    object.mentions.create!(user: user, sourceable: sourceable) if !subscribed?(object, user)
+    # Cap check: only applies to non-agent participants, not agent @mentions.
+    # Also validates the user is an active customer before adding.
+    if object.is_a?(Ticket) && Setting.get('ticket_participants_enabled') && !user.permissions?('ticket.agent')
+      if !user.active?
+        raise Exceptions::UnprocessableContent,
+              __('Cannot add inactive users as participants.')
+      end
+      if !user.permissions?('ticket.customer')
+        raise Exceptions::UnprocessableContent,
+              __('Only customers can be added as participants.')
+      end
+
+      agent_user_ids = User.with_permissions('ticket.agent').pluck(:id)
+      # Count only real participants: active non-agent users with ticket.customer role.
+      # Stale non-customer mentions do not count toward the cap.
+      customer_user_ids = User.with_permissions('ticket.customer').where(active: true).pluck(:id)
+      participant_count = object.mentions
+        .joins(:user)
+        .where(users: { active: true })
+        .where.not(user_id: agent_user_ids)
+        .where(user_id: customer_user_ids)
+        .count
+      if participant_count >= 50 && !subscribed?(object, user)
+        raise Exceptions::UnprocessableContent,
+              __('Maximum of 50 participants per ticket reached.')
+      end
+    end
+
+    is_new = !subscribed?(object, user)
+    object.mentions.create!(user: user, sourceable: sourceable) if is_new
+    if object.is_a?(Ticket) && is_new && Setting.get('ticket_participants_enabled') && !user.permissions?('ticket.agent') && sourceable.nil?
+      # Notify ONLY the newly added participant via explicit UI action.
+      # Trigger/scheduler subscriptions (sourceable present) must NOT send the
+      # participant-add notification — it would mislead customers about the actor.
+      item = {
+        object:    object.class.name,
+        object_id: object.id,
+        type:      'update',
+        user_id:   UserInfo.current_user_id || 1,
+        changes:   { title: [object.title, object.title] },
+      }
+      begin
+        Transaction::Notification.new(
+          item,
+          { participant_add: true, participant_add_user: user },
+        ).perform
+      rescue => e
+        Rails.logger.warn "Participant notification delivery failed: #{e.message}"
+      end
+    end
 
     true
   end
@@ -111,7 +160,12 @@ class Mention < ApplicationModel
   def self.mentionable?(object, user)
     case object
     when Ticket
-      TicketPolicy.new(user, object).agent_read_access?
+      policy = TicketPolicy.new(user, object)
+      return true if policy.agent_read_access?
+      return false if !Setting.get('ticket_participants_enabled')
+      return false if !user.permissions?('ticket.customer')
+
+      true
     else
       false
     end

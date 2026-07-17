@@ -18,7 +18,7 @@ export const TicketUpdatesDocument = gql`
         id
         name
       }
-      mentions(first: 20) {
+      mentions(first: 50) {
         totalCount
         edges {
           node {

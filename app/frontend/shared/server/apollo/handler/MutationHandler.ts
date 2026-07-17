@@ -25,19 +25,31 @@ export default class MutationHandler<
         }
 
         if (result.data) {
-          const { errors } = Object.values(result.data)[0] as {
-            errors: UserErrors
-          }
+          const firstValue = Object.values(result.data)[0] as any
+          // firstValue can be null when the mutation field returned null
+          // (e.g. exception in backend resolver). Destructure safely.
+          const errors: UserErrors | undefined = firstValue?.errors
 
           if (errors?.length) {
             const userErrors = new UserError(errors, this.handlerId)
-
             return reject(userErrors)
           }
         }
 
+        // Handle top-level GraphQL errors (e.g. exception from backend
+        // like the 50-participant cap). These are in result.errors, not
+        // in result.data.*.errors, and do not reject the promise with
+        // any errorPolicy setting (only network errors reject).
+        if ((result as any).errors?.length) {
+          const userErrors = new UserError(
+            (result as any).errors.map((e: any) => ({ message: e.message })),
+            this.handlerId,
+          )
+          return reject(userErrors)
+        }
+
         return resolve(result.data || null)
-      })
+      }).catch((err) => { return reject(err) })
     })
   }
 

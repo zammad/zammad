@@ -6433,3 +6433,30 @@ Setting.create_if_not_exists(
   preferences: { online_service_disable: true, permission: ['admin.package'] },
   frontend:    false,
 )
+
+Setting.create_if_not_exists(
+  title:       __('Ticket Participants'),
+  name:        'ticket_participants_enabled',
+  area:        'Ticket::Base',
+  description: __('Enable the participant feature. Allows adding additional customers as participants on tickets.'),
+  options:     {
+    form: [
+      {
+        display:   '',
+        null:      true,
+        name:      'ticket_participants_enabled',
+        tag:       'boolean',
+        translate: true,
+        options:   {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  state:       false,
+  preferences: {
+    permission: ['admin.ticket'],
+  },
+  frontend:    true,
+)

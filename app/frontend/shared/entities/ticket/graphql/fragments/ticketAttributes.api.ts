@@ -88,6 +88,7 @@ export const TicketAttributesFragmentDoc = gql`
   policy {
     update
     agentReadAccess
+    agentUpdateAccess
   }
   tags
   timeUnit

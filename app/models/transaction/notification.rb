@@ -76,6 +76,17 @@ class Transaction::Notification
   end
 
   def prepare_recipients_and_reasons
+    # Participant-add notification: only notify the newly added user,
+    # not all group members + existing recipients.
+    if @params[:participant_add]
+      new_user = @params[:participant_add_user]
+      if new_user
+        possible_recipients = [new_user]
+        @recipients_reason[new_user.id] = __('You have been added as a participant to this ticket.')
+      end
+      recipients_reason_by_notifications_settings(possible_recipients || [])
+      return
+    end
 
     # loop through all group users
     possible_recipients = possible_recipients_of_group(ticket.group_id)
@@ -84,9 +95,8 @@ class Transaction::Notification
     mention_users = Mention.where(mentionable_type: @item[:object], mentionable_id: @item[:object_id]).map(&:user)
     if mention_users.present?
 
-      # only notify if read permission on group are given
       mention_users.each do |mention_user|
-        next if !mention_user.group_access?(ticket.group_id, 'read')
+        next if !mention_user_eligible?(mention_user, ticket)
 
         possible_recipients.push mention_user
         @recipients_reason[mention_user.id] = __('You are receiving this because you were mentioned in this ticket.')
@@ -118,11 +128,37 @@ class Transaction::Notification
     recipients_reason_by_notifications_settings(possible_recipients)
   end
 
+  def mention_user_eligible?(mention_user, ticket)
+    # Agent mentions: require group read access
+    if mention_user.permissions?('ticket.agent')
+      return mention_user.group_access?(ticket.group_id, 'read')
+    end
+
+    # Non-agent mentions (participants): gated by feature flag + customer role.
+    # A user who lost ticket.customer must not keep receiving ticket update emails.
+    return false if !Setting.get('ticket_participants_enabled')
+    return false if !mention_user.permissions?('ticket.customer')
+
+    true
+  end
+
   def recipients_reason_by_notifications_settings(possible_recipients)
     already_checked_recipient_ids = {}
     possible_recipients.each do |user|
       result = NotificationFactory::Mailer.notification_settings(user, ticket, @item[:type])
-      next if !result
+      if !result
+        # Fallback for participants (non-agent mention users) who have no notification
+        # matrix configured. Agents with nil settings should still be skipped — they
+        # have explicitly disabled notifications.
+        next if !Setting.get('ticket_participants_enabled')
+        next if !ticket.mentions.exists?(user: user)
+        next if user.permissions?('ticket.agent')
+        # Only apply the email fallback if the user genuinely has no notification
+        # matrix at all — if they have a matrix but disabled this event/channel,
+        # respect the opt-out instead of forcing email back on.
+        next if user.preferences&.dig('notification_config', 'matrix')
+        result = { user: user, channels: { 'email' => true } }
+      end
       next if already_checked_recipient_ids[user.id]
 
       already_checked_recipient_ids[user.id] = true
@@ -173,6 +209,11 @@ class Transaction::Notification
 
     # create online notification
     used_channels = []
+
+    # Guard: non-agents (participants, customers) must not receive internal article
+    # content via ANY channel (online or email). Block before either branch runs so
+    # no unread online notification is created for internal notes activity.
+    return if article&.internal? && !user.permissions?('ticket.agent')
 
     if channels['online']
       used_channels.push 'online'

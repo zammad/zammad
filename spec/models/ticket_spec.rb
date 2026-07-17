@@ -2524,4 +2524,32 @@ RSpec.describe Ticket, type: :model do
       include_examples 'replacing inline images with attachment urls'
     end
   end
+
+  describe '#participant_ids (PR-2)' do
+    let(:customer)        { create(:customer) }
+    let(:other_customer)  { create(:customer) }
+    let(:ticket)          { create(:ticket, customer: customer) }
+
+    before do
+      Setting.set('ticket_participants_enabled', true)
+      create(:mention, mentionable: ticket, user: customer)
+      create(:mention, mentionable: ticket, user: other_customer)
+    end
+
+    after do
+      Setting.set('ticket_participants_enabled', false)
+    end
+
+    it 'AF5: includes active participants in participant_ids' do
+      expect(ticket.participant_ids).to include(customer.id, other_customer.id)
+    end
+
+    it 'AF6: excludes deactivated participants from participant_ids' do
+      other_customer.update!(active: false)
+      # Bust the memoized cache
+      ticket.instance_variable_set(:@participant_ids, nil)
+      expect(ticket.participant_ids).to include(customer.id)
+      expect(ticket.participant_ids).not_to include(other_customer.id)
+    end
+  end
 end
