@@ -75,6 +75,7 @@ describe('TicketSidebarParticipants', () => {
 
   afterEach(() => {
     vi.clearAllMocks()
+    vi.useRealTimers()
   })
 
   it('renders participant list', () => {

@@ -40,7 +40,7 @@ describe('useTicketParticipants', () => {
       expect(participants.value).toEqual([])
     })
 
-    it('filters out agents (users with userTicketAccess)', () => {
+    it('filters out agents (uses isParticipant flag)', () => {
       mockApplicationConfig({ ticket_participants_enabled: true })
       const ticket = mockTicket({
         mentions: {
@@ -49,12 +49,14 @@ describe('useTicketParticipants', () => {
               node: {
                 user: { id: '1', firstname: 'Agent', active: true },
                 userTicketAccess: { agentReadAccess: true },
+                isParticipant: false,
               },
             },
             {
               node: {
                 user: { id: '2', firstname: 'Customer', active: true },
                 userTicketAccess: { agentReadAccess: false },
+                isParticipant: true,
               },
             },
           ],

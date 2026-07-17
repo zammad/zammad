@@ -153,6 +153,10 @@ class Transaction::Notification
         next if !Setting.get('ticket_participants_enabled')
         next if !ticket.mentions.exists?(user: user)
         next if user.permissions?('ticket.agent')
+        # Only apply the email fallback if the user genuinely has no notification
+        # matrix at all — if they have a matrix but disabled this event/channel,
+        # respect the opt-out instead of forcing email back on.
+        next if user.preferences&.dig('notification_config', 'matrix')
         result = { user: user, channels: { 'email' => true } }
       end
       next if already_checked_recipient_ids[user.id]

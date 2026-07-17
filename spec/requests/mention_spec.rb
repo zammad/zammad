@@ -210,7 +210,8 @@ RSpec.describe 'Mention', aggregate_failures: true, authenticated_as: :user, typ
       end
 
       it 'RR1: agent with group-change removes other participant → 200', authenticated_as: :agent_with_change do
-        other_mention = create(:mention, mentionable: ticket, user: other_user)
+        other_participant = create(:customer)
+        other_mention = create(:mention, mentionable: ticket, user: other_participant)
 
         expect { delete "/api/v1/mentions/#{other_mention.id}", as: :json }
           .to change { ticket.mentions.reload.count }.by(-1)

@@ -27,7 +27,11 @@ module Gql::Types
     field :is_participant, Boolean, null: false
 
     def is_participant
-      !@object.user.permissions?('ticket.agent')
+      return false if @object.user.permissions?('ticket.agent')
+      return false if !@object.user.active?
+      return false if !@object.user.permissions?('ticket.customer')
+
+      true
     end
   end
 end
