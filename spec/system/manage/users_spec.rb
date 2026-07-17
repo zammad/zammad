@@ -268,6 +268,33 @@ RSpec.describe 'Manage > Users', type: :system do
       end
     end
 
+    it 'does not keep the entered password in the frontend store' do
+      in_modal do
+        fill_in 'password', with: 'vXqXseF9L2ab'
+        fill_in 'password_confirm', with: 'vXqXseF9L2ab'
+
+        click_on 'Submit'
+      end
+
+      password_hash = user.reload.password
+
+      within(:active_content) do
+        find("table tbody tr[data-id='#{user.id}']").click
+      end
+
+      in_modal do
+        expect(page).to have_field('password', with: '')
+        expect(page).to have_field('password_confirm', with: '')
+
+        fill_in 'firstname', with: 'NewFirstname'
+
+        click_on 'Submit'
+      end
+
+      expect(page).to have_text('NewFirstname')
+      expect(user.reload.password).to eq(password_hash)
+    end
+
     it 'allows to update a user with no email/first/last/phone if login is present' do
       in_modal do
         fill_in 'firstname', with: ''

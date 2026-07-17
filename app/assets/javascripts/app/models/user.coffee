@@ -3,6 +3,15 @@ class App.User extends App.Model
   @extend Spine.Model.Ajax
   @url: @apiPath + '/users'
 
+  # saving a record copies all attributes into the local store, but server responses
+  # never include the password, so it would stay there for the rest of the session -
+  # prefilled in the edit dialog and re-submitted as a password change on every
+  # subsequent update of the user
+  @bind 'save', (record) ->
+    storeRecord = App.User.irecords[record?.id]
+    return if !storeRecord
+    delete storeRecord.password
+
 #  @hasMany 'roles', 'App.Role'
   @configure_attributes = [
     { name: 'login',            display: __('Login'),         tag: 'input',    type: 'text',     limit: 100, null: false, autocapitalize: false, signup: false, quick: false, no_perform_changes: true },
