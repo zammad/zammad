@@ -13,7 +13,7 @@ RSpec.describe 'Manage > Checklists', current_user_id: 1, type: :system do
 
       find('.js-checklistSetting').click
 
-      wait.until { Setting.get('checklist') == false }
+      wait_for_setting('checklist', false)
     end
   end
 

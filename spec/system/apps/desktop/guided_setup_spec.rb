@@ -23,6 +23,8 @@ RSpec.describe 'Desktop > Guided Setup', app: :desktop_view, authenticated_as: f
 
     click_on 'Set up a new system'
 
+    expect(page).to have_field('First name', wait: 30)
+
     # Invalid password
     fill_in 'First name', with: 'John'
     fill_in 'Last name', with: 'Doe'

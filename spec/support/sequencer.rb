@@ -42,4 +42,15 @@ RSpec.configure do |config|
   config.include SequencerUnit, sequencer: :unit
   config.include SequencerSequence, sequencer: :sequence
   config.include SequencerCaller, sequencer: :caller
+
+  # Sequencer::Unit::Import::Common::ImportJob::Statistics::Store persists progress to
+  #   import_job every 10 real seconds. These sequence specs build_stubbed their import_job
+  #   (DB access forbidden), so a slow-running sequence under CI load can cross that threshold
+  #   and crash on the resulting #save! call. Freezing time to prevent this instead broke
+  #   attachment-ordering assertions elsewhere, because Store.list orders by created_at and
+  #   multiple attachments saved within the same frozen instant become unorderable ties - so
+  #   disable the periodic-save check directly instead of touching the clock.
+  config.before(:each, sequencer: :sequence) do
+    allow_any_instance_of(Sequencer::Unit::Import::Common::ImportJob::Statistics::Store).to receive(:store?).and_return(false)
+  end
 end

@@ -61,6 +61,11 @@ RSpec.describe 'Ticket Summary', authenticated_as: :authenticate, type: :system 
                 })
     Setting.set('ai_assistance_ticket_summary_selector', ticket_summary_selector)
 
+    wait_for_setting('ai_provider', true)
+    wait_for_setting('ai_assistance_ticket_summary', ai_assistance_ticket_summary)
+    wait_for_setting('ai_assistance_ticket_summary_config', ticket_summary_generation, key: 'generate_on')
+    wait_for_setting('ai_assistance_ticket_summary_selector', ticket_summary_selector)
+
     article
 
     agent

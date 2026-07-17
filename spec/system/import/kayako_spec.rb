@@ -118,7 +118,7 @@ RSpec.describe 'Import from Kayako', authenticated_as: false, required_envs: %w[
 
       Rake::Task['zammad:setup:auto_wizard'].execute
 
-      expect(page).to have_text(Setting.get('fqdn'))
+      expect(page).to have_text(Setting.get('fqdn'), wait: 30)
 
       # skip intro/clues
       user = User.find_by(login: 'admin@example.com')

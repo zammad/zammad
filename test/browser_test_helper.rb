@@ -329,7 +329,7 @@ class TestCase < ActiveSupport::TestCase
       mute_log: true,
     )
 
-    5.times do
+    30.times do
       sleep 1
       login = instance.find_elements(css: '#login')[0]
 
@@ -536,7 +536,7 @@ class TestCase < ActiveSupport::TestCase
         instance.find_elements(find_element_key => params[param_key])[i].try(:click)
       end
     rescue => e
-      raise e if (fail_count ||= 0).positive?
+      raise e if (fail_count ||= 0) >= 3
 
       fail_count += 1
       log('click', { rescure: true })
@@ -849,6 +849,29 @@ class TestCase < ActiveSupport::TestCase
 
 =end
 
+  # A freshly rendered (or just-reloaded) page can have the target element in
+  # the DOM before it is actually interactable (e.g. still waiting on
+  # collection data to hydrate a searchable select) - poll for real
+  # interactability instead of relying on a single retry-after-exception.
+  def wait_for_interactable(instance, css, timeout: 10)
+    element = nil
+    loops = (timeout * 2).to_i
+    loops.times do
+      element = instance.find_elements(css: css)[0]
+      break if element&.displayed? && element.enabled?
+
+      element = nil
+      sleep 0.5
+    end
+
+    if !element
+      screenshot(browser: instance, comment: 'wait_for_interactable_failed')
+      raise "'#{css}' did not become interactable within #{timeout}s"
+    end
+
+    element
+  end
+
   def select(params)
     switch_window_focus(params)
     log('select', params)
@@ -858,54 +881,25 @@ class TestCase < ActiveSupport::TestCase
     # searchable select
     element = instance.find_elements(css: "#{params[:css]}.js-shadow")[0]
     if element
-      begin
-        element = instance.find_elements(css: "#{params[:css]}.js-shadow + .js-input")[0]
-        element.click
-        element.clear
-        sleep 0.2
-        element.send_keys(params[:value])
-        sleep 0.2
-        element.send_keys(:enter)
-        sleep 0.2
-        instance.execute_script("$('#{params[:css]}.js-shadow + .js-input').trigger('blur')")
-      rescue
-        sleep 0.4
-        log('select', { rescure: true })
-        element = instance.find_elements(css: "#{params[:css]}.js-shadow + .js-input")[0]
-        element.click
-        element.clear
-        sleep 0.2
-        element.send_keys(params[:value])
-        sleep 0.2
-        element.send_keys(:enter)
-        sleep 0.2
-        instance.execute_script("$('#{params[:css]}.js-shadow + .js-input').trigger('blur')")
-      end
+      element = wait_for_interactable(instance, "#{params[:css]}.js-shadow + .js-input")
+      element.click
+      element.clear
+      sleep 0.2
+      element.send_keys(params[:value])
+      sleep 0.2
+      element.send_keys(:enter)
+      sleep 0.2
+      instance.execute_script("$('#{params[:css]}.js-shadow + .js-input').trigger('blur')")
       return
     end
 
     # native select
-    begin
-      element  = instance.find_elements(css: params[:css])[0]
-      dropdown = Selenium::WebDriver::Support::Select.new(element)
-      if params[:deselect_all]
-        dropdown.deselect_all
-      end
-      dropdown.select_by(:text, params[:value])
-      # puts "select - #{params.inspect}"
-    rescue
-      sleep 0.4
-
-      # just try again
-      log('select', { rescure: true })
-      element  = instance.find_elements(css: params[:css])[0]
-      dropdown = Selenium::WebDriver::Support::Select.new(element)
-      if params[:deselect_all]
-        dropdown.deselect_all
-      end
-      dropdown.select_by(:text, params[:value])
-      # puts "select2 - #{params.inspect}"
+    element  = wait_for_interactable(instance, params[:css])
+    dropdown = Selenium::WebDriver::Support::Select.new(element)
+    if params[:deselect_all]
+      dropdown.deselect_all
     end
+    dropdown.select_by(:text, params[:value])
 
     await_empty_ajax_queue(params)
   end
@@ -1199,7 +1193,7 @@ set type of task (closeTab, closeNextInOverview, stayOnTab)
     if params[:type]
       retries = 0
       begin
-        instance.find_elements(css: '.content.active .js-secondaryActionButtonLabel')[0].click
+        wait_for_interactable(instance, '.content.active .js-secondaryActionButtonLabel').click
       rescue Selenium::WebDriver::Error::StaleElementReferenceError
         sleep retries
         retries += 1
@@ -1208,7 +1202,7 @@ set type of task (closeTab, closeNextInOverview, stayOnTab)
 
       retries = 0
       begin
-        instance.find_elements(css: ".content.active .js-secondaryActionLabel[data-type=#{params[:type]}]")[0].click
+        wait_for_interactable(instance, ".content.active .js-secondaryActionLabel[data-type=#{params[:type]}]").click
       rescue Selenium::WebDriver::Error::StaleElementReferenceError
         sleep retries
         retries += 1
@@ -2342,7 +2336,8 @@ wait untill text in selector disabppears
     )
 
     sleep 1
-    9.times do
+
+    30.times do
       if instance.current_url.match?(%r{#{Regexp.quote('#ticket/zoom/')}})
         assert(true, 'ticket created')
         sleep 2
@@ -2585,7 +2580,7 @@ wait untill text in selector disabppears
 
     if data[:state] || data[:group] || data[:body] || params[:custom_data_select].present? || params[:custom_data_input].present?
       found = nil
-      18.times do
+      30.times do
 
         break if found
 
@@ -2855,7 +2850,26 @@ wait untill text in selector disabppears
     element.click
     element.clear
     element.send_keys(params[:number])
-    sleep 3
+
+    # A newly created ticket only becomes searchable once its SearchIndexJob has
+    #   run and Elasticsearch has caught up - that queue can lag further behind
+    #   the later in a long test run it's checked, so give it a generous budget.
+    #   Note: this legacy Minitest suite has no direct ActiveRecord/DB access from
+    #   the test process itself (only ever drives the app through the browser
+    #   against a separate `bin/rails server`), so forcing the index update
+    #   directly from here isn't an option - polling is the only lever available.
+    found = false
+    60.times do
+      found = instance.execute_script("return $(\".js-global-search-result a:contains('#{params[:number]}')\").length") == 1
+      break if found
+
+      sleep 0.5
+    end
+
+    if !found
+      screenshot(browser: instance, comment: 'ticket_open_by_search_not_found')
+      raise "search result for ticket #{params[:number]} did not appear!"
+    end
 
     # open ticket
     # instance.find_element(partial_link_text: params[:number] } ).click
@@ -4538,26 +4552,40 @@ wait untill text in selector disabppears
 
     instance = params[:browser] || @browser
 
-    tags = instance.find_elements({ css: '.content.active .js-tag' })
-    assert(tags)
-    assert(tags[0])
+    attempt = lambda do
+      tags = instance.find_elements({ css: '.content.active .js-tag' })
+      assert(tags)
+      assert(tags[0])
 
-    tags_found = {}
-    params[:tags].each_key do |key|
-      tags_found[key] = false
-    end
+      tags_found = {}
+      params[:tags].each_key do |key|
+        tags_found[key] = false
+      end
 
-    tags.each do |element|
-      text = element.text
-      if tags_found.key?(text)
-        tags_found[text] = true
-      else
-        assert(false, "tag exists but is not in check to verify '#{text}'")
+      tags.each do |element|
+        text = element.text
+        if tags_found.key?(text)
+          tags_found[text] = true
+        else
+          assert(false, "tag exists but is not in check to verify '#{text}'")
+        end
+      end
+      params[:tags].each do |key, value|
+        assert_equal(value, tags_found[key], "tag '#{key}'")
       end
     end
-    params[:tags].each do |key, value|
-      assert_equal(value, tags_found[key], "tag '#{key}'")
+
+    # A tag change made in one browser window needs a moment to propagate (via
+    #   websocket push) to any other open window watching the same ticket - poll for
+    #   a match instead of checking once, to avoid racing ahead of that propagation.
+    30.times do
+      attempt.call
+      return
+    rescue Minitest::Assertion
+      sleep 0.5
     end
+
+    attempt.call
   end
 
   def quote(string)

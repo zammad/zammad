@@ -1,45 +1,65 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-// import { useReactivate } from '#desktop/composables/useReactivate.ts'
-
-import { onMounted, ref } from 'vue'
+import { waitFor } from '@testing-library/vue'
+import { defineComponent } from 'vue'
 
 import renderComponent from '#tests/support/components/renderComponent.ts'
-import { waitForNextTick } from '#tests/support/utils.ts'
 
 import { useReactivate } from '#shared/composables/useReactivate.ts'
 
-describe('useReactivate', () => {
-  it('should call callbacks appropriate', () => {
-    renderComponent({
-      template: `
-    <KeepAlive>
-       <div v-if="show"/>
-    </KeepAlive>`,
-      setup() {
-        const onActivatedCallback = vi.fn()
-        const onDeactivatedCallback = vi.fn()
+const renderDummyComponent = (
+  onActivatedCallback: () => void,
+  onDeactivatedCallback: () => void,
+) => {
+  const ChildComponent = defineComponent({
+    setup() {
+      useReactivate(onActivatedCallback, onDeactivatedCallback)
 
-        const show = ref(true)
+      return () => 'Child Component'
+    },
+  })
 
-        useReactivate(onActivatedCallback, onDeactivatedCallback)
-
-        onMounted(() => {
-          // Initial mounting component should not call the callback
-          expect(onActivatedCallback).not.toHaveBeenCalled()
-
-          setTimeout(async () => {
-            show.value = false
-            await waitForNextTick()
-            expect(onDeactivatedCallback).toHaveBeenCalled()
-            show.value = true
-            await waitForNextTick()
-            expect(onActivatedCallback).toHaveBeenCalled()
-          }, 50)
-        })
-
-        return { show }
+  return renderComponent(
+    {
+      components: { ChildComponent },
+      props: {
+        visible: {
+          type: Boolean,
+          required: true,
+        },
       },
-    })
+      template: `
+      <KeepAlive>
+        <ChildComponent v-if="visible" />
+      </KeepAlive>
+    `,
+    },
+    { props: { visible: true } },
+  )
+}
+
+describe('useReactivate', () => {
+  it('does not call the activated callback on initial mount', () => {
+    const onActivatedCallback = vi.fn()
+    const onDeactivatedCallback = vi.fn()
+
+    renderDummyComponent(onActivatedCallback, onDeactivatedCallback)
+
+    expect(onActivatedCallback).not.toHaveBeenCalled()
+  })
+
+  it('calls the deactivated and activated callbacks when kept alive and reactivated', async () => {
+    const onActivatedCallback = vi.fn()
+    const onDeactivatedCallback = vi.fn()
+
+    const component = renderDummyComponent(onActivatedCallback, onDeactivatedCallback)
+
+    await component.rerender({ visible: false })
+    await waitFor(() => expect(onDeactivatedCallback).toHaveBeenCalledTimes(1))
+
+    expect(onActivatedCallback).not.toHaveBeenCalled()
+
+    await component.rerender({ visible: true })
+    await waitFor(() => expect(onActivatedCallback).toHaveBeenCalledTimes(1))
   })
 })

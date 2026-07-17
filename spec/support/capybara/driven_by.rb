@@ -85,9 +85,23 @@ RSpec.configure do |config|
     #   idle sessions which can cause 404 errors later.
     #   (see https://github.com/teamcapybara/capybara/issues/2237)
     Capybara.send(:session_pool).reverse_each do |_mode, session|
-      if !session.eql?(Capybara.current_session) || (capybara_examples_performed % 100).zero? || example.metadata[:mobile_user_agent]
-        session.quit
-      end
+      next if session.eql?(Capybara.current_session) && (capybara_examples_performed % 100).nonzero? && !example.metadata[:mobile_user_agent]
+
+      # session.quit is a real WebDriver network call with no timeout of its own - specs
+      #   using multiple sessions (e.g. chat_spec.rb's using_session :customer) have been
+      #   observed stalling the whole suite for 18+ minutes when it hangs. Bound it so a
+      #   stuck session delays things by seconds instead.
+      Timeout.timeout(10) { session.quit }
+    rescue Timeout::Error
+      Rails.logger.error "Timed out quitting Capybara session #{session.inspect}"
+
+      # Session#quit sets @driver (and @document) to nil only *after* @driver.quit returns -
+      #   if that call is the one that hung and got interrupted above, those ivars are never
+      #   reset. Session#driver then lazily recreates a driver only when @driver is nil, so
+      #   without this, the next example to touch this session would silently keep reusing
+      #   the broken driver instead of getting a fresh one.
+      session.instance_variable_set(:@driver, nil)
+      session.instance_variable_set(:@document, nil)
     end
   end
 

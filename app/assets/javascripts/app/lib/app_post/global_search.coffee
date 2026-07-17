@@ -6,9 +6,14 @@ class App.GlobalSearch extends App.Controller
     @lastParams = undefined
     @apiPath = App.Config.get('api_path')
     @ajaxId = "search-#{Math.floor( Math.random() * 999999 )}"
+    # Bumped on every new search and on close(), so a response for a search that
+    #   has since been superseded or closed can be told apart from the current one.
+    @searchGeneration = 0
 
   search: (params) =>
     query = params.query
+    @searchGeneration += 1
+    requestGeneration = @searchGeneration
 
     cacheKey = @searchResultCacheKey(query, params)
 
@@ -79,6 +84,12 @@ class App.GlobalSearch extends App.Controller
             result[klassName] = { items: item_objects, total_count: metadata.total_count }
 
           @ajaxStop(params)
+
+          # A newer search (or a close()) superseded this request while it was in
+          #   flight - rendering now would reopen/repopulate a dropdown the user
+          #   already moved on from.
+          return if requestGeneration isnt @searchGeneration
+
           @renderTry(result, query, params)
         error: =>
           @clearDelay('global-search-ajax-longer-as-expected')
@@ -126,7 +137,10 @@ class App.GlobalSearch extends App.Controller
     "#{query}-#{params.object}-#{params.offset}-#{params.orderDirection}-#{params.orderBy}"
 
   close: =>
+    if @ajaxRequestId
+      App.Ajax.abort(@ajaxRequestId)
     @lastParams = undefined
+    @searchGeneration += 1
 
     # cancel pending/in-flight search so a late response can not re-render after close (#4786)
     @clearDelay('global-search-ajax')

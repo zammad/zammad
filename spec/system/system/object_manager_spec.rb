@@ -455,6 +455,7 @@ RSpec.describe 'System > Objects', type: :system do
                                 'maxlength'  => 255,
                                 'translate'  => false }
 
+      wait(30).until { ObjectManager::Attribute.find_by(name: 'tree1')&.data_option == expected_data_options }
       expect(ObjectManager::Attribute.find_by(name: 'tree1').data_option).to eq(expected_data_options)
     end
 
@@ -476,6 +477,7 @@ RSpec.describe 'System > Objects', type: :system do
 
       page.all('.js-value')[-2].set('special 2')
       page.find('.js-submit').click
+      await_empty_ajax_queue
 
       expected_data_options = {
         '0' => '0',
@@ -483,6 +485,7 @@ RSpec.describe 'System > Objects', type: :system do
         '2' => 'special 2',
       }
 
+      wait(30).until { ObjectManager::Attribute.find_by(name: 'select1')&.data_option&.dig('options') == expected_data_options }
       expect(ObjectManager::Attribute.find_by(name: 'select1').data_option['options']).to eq(expected_data_options)
     end
 
@@ -504,6 +507,7 @@ RSpec.describe 'System > Objects', type: :system do
 
       page.all('.js-value')[-2].set('special 2')
       page.find('.js-submit').click
+      await_empty_ajax_queue
 
       expected_data_options = {
         '0' => '0',
@@ -511,6 +515,7 @@ RSpec.describe 'System > Objects', type: :system do
         '2' => 'special 2',
       }
 
+      wait(30).until { ObjectManager::Attribute.find_by(name: 'multiselect1')&.data_option&.dig('options') == expected_data_options }
       expect(ObjectManager::Attribute.find_by(name: 'multiselect1').data_option['options']).to eq(expected_data_options)
     end
 
@@ -528,6 +533,7 @@ RSpec.describe 'System > Objects', type: :system do
         false => 'HELL NOO',
       }
 
+      wait(30).until { ObjectManager::Attribute.find_by(name: 'bool1')&.data_option&.dig('options') == expected_data_options }
       expect(ObjectManager::Attribute.find_by(name: 'bool1').data_option['options']).to eq(expected_data_options)
     end
 

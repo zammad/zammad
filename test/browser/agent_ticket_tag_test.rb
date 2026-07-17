@@ -37,10 +37,7 @@ class AgentTicketTagTest < TestCase
     click(
       css: '.active .newTicket button.js-submit',
     )
-    sleep 5
-    if !@browser.current_url.match?(%r{#{Regexp.quote('#ticket/zoom/')}})
-      raise 'Unable to create ticket!'
-    end
+    location_check(url: '#ticket/zoom/')
 
     # verify tags
     tags_verify(
@@ -69,10 +66,7 @@ class AgentTicketTagTest < TestCase
     )
     click(css: '#global-search')
     click(css: '.active .newTicket button.js-submit')
-    sleep 5
-    if !@browser.current_url.match?(%r{#{Regexp.quote('#ticket/zoom/')}})
-      raise 'Unable to create ticket!'
-    end
+    location_check(url: '#ticket/zoom/')
 
     # verify tags
     tags_verify(
@@ -430,10 +424,7 @@ class AgentTicketTagTest < TestCase
     click(
       css: '.active .newTicket button.js-submit',
     )
-    sleep 5
-    if !@browser.current_url.match?(%r{#{Regexp.quote('#ticket/zoom/')}})
-      raise 'Unable to create ticket!'
-    end
+    location_check(url: '#ticket/zoom/')
 
     # verify tags
     tags_verify(

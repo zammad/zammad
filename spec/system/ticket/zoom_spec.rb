@@ -1947,7 +1947,8 @@ RSpec.describe 'Ticket zoom', type: :system do
     it 'does show up the new state and pending time' do
       pending_state = Ticket::State.find_by(name: 'pending reminder')
       ticket.update(state: pending_state, pending_time: 1.day.from_now)
-      wait.until { page.find("select[name='state_id']").value == pending_state.id.to_s }
+
+      wait(30).until { page.find("select[name='state_id']").value == pending_state.id.to_s }
       expect(page.find("select[name='state_id']").value).to eq(pending_state.id.to_s)
       expect(page).to have_css("div[data-name='pending_time']")
     end

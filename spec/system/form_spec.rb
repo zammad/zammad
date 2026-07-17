@@ -98,7 +98,7 @@ RSpec.describe 'Form', authenticated_as: true, type: :system do
 
       check_input_field_value('group_id', group.id.to_s, visible: :all)
 
-      wait.until { Setting.get('form_ticket_create_group_id') == group.id.to_s }
+      wait_for_setting('form_ticket_create_group_id', group.id.to_s)
     end
   end
 
@@ -150,7 +150,7 @@ RSpec.describe 'Form', authenticated_as: true, type: :system do
       before do
         visit 'channels/form'
         check 'form_ticket_create', allow_label_click: true
-        wait.until { Setting.get('form_ticket_create') == true }
+        wait_for_setting('form_ticket_create', true)
       end
 
       context 'when form is inline' do
@@ -260,7 +260,7 @@ RSpec.describe 'Form', authenticated_as: true, type: :system do
       before do
         visit 'channels/form'
         uncheck 'form_ticket_create', allow_label_click: true
-        wait.until { Setting.get('form_ticket_create') == false }
+        wait_for_setting('form_ticket_create', false)
         visit path
       end
 

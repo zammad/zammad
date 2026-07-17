@@ -64,6 +64,8 @@ RSpec.describe 'Manage > Integration > sipgate.io', type: :system do
         end
 
         click_on 'Save'
+
+        wait_for_setting('sipgate_config', { 'block_caller_ids' => [] }, key: 'inbound')
       end
 
       shared_examples 'not showing removed caller id details' do

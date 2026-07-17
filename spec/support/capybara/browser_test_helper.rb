@@ -97,6 +97,29 @@ module BrowserTestHelper
     Waiter.new(wait_handle)
   end
 
+  # Setting's class-level cache can serve a stale value for a while after a write
+  # (e.g. a real browser action, or this test's own Setting.set racing a concurrent
+  # reader) - wait for our own read to settle on the expected value before relying on
+  # frontend behavior that depends on it, rather than a blind sleep.
+  #
+  # Note: Setting.get round-trips hash values with string keys, even if the setting was
+  # written with symbol keys - use `key:` to compare a specific key instead of the whole
+  # hash if that's a concern.
+  #
+  # @example
+  #  wait_for_setting('icinga_sender', icinga_sender)
+  #
+  # @example
+  #  wait_for_setting('ai_assistance_ticket_summary_config', 'on_ticket_detail_opening', key: 'generate_on')
+  #
+  def wait_for_setting(name, value, key: nil)
+    wait.until do
+      current = Setting.get(name)
+      current = current[key] if key
+      current == value
+    end
+  end
+
   # This checks the number of queued AJAX requests in the frontend JS is zero.
   # It comes in handy when waiting for AJAX requests to be completed
   # before performing further actions.

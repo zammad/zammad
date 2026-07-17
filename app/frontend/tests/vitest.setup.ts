@@ -35,7 +35,9 @@ window.sw = new ServiceWorkerHelper()
 
 configure({
   testIdAttribute: 'data-test-id',
-  asyncUtilTimeout: process.env.CI ? 30_000 : 1_000,
+  // Must stay below the outer `testTimeout` (vite.config.mjs) with real margin — see
+  // tests/support/vitest-wrapper.ts for why equal values cause misleading failures.
+  asyncUtilTimeout: process.env.CI ? 20_000 : 1_000,
 })
 
 Object.defineProperty(window, 'fetch', {

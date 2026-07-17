@@ -185,18 +185,24 @@ RSpec.describe BackgroundServices do
   end
 
   describe '#restart_on_file_change' do
-    let(:config) { described_class::ServiceConfig.new(service: SampleService, disabled: false, workers: 0, worker_threads: 1) }
+    let(:config)       { described_class::ServiceConfig.new(service: SampleService, disabled: false, workers: 0, worker_threads: 1) }
+    let(:kill_tracker) { { called: false } }
 
     before do
       stub_const("#{described_class}::FILE_WATCHING_INTERVAL", 0)
-      allow(Process).to receive(:kill)
+
+      allow(Process).to receive(:kill) { kill_tracker[:called] = true }
       allow(Rails.application.config).to receive(:reloading_enabled?).and_return(true)
 
       instance.run
 
       FileUtils.touch(file)
 
-      sleep 0.1
+      # The file-watcher notices changes on its own background thread, so give it a real
+      #   chance to run instead of racing a fixed sleep against CI scheduling delays - for
+      #   the negative case, this also means waiting out the same budget without success.
+      deadline = 3.seconds.from_now
+      sleep 0.05 until kill_tracker[:called] || Time.zone.now > deadline
     end
 
     context 'when backend file changes' do

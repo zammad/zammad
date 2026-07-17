@@ -49,7 +49,20 @@ class Transaction
     interface_context_finish
 
     TransactionDispatcher.commit(options)
-    PushMessages.finish
+
+    # Sending client-facing push notifications here would still run inside the wrapping
+    #   transaction's `ensure`, i.e. before it actually commits. A browser receiving the
+    #   push can refetch the changed record before the write lands, still seeing stale
+    #   data with no automatic retry. Capture and clear the buffer now (so it can't leak
+    #   into a later transaction on this thread if this one rolls back), but defer actual
+    #   delivery until the (possibly nested) transaction has genuinely committed - if it
+    #   rolls back instead, after_commit never fires and the captured messages are simply
+    #   discarded, which is correct since nothing they describe actually happened.
+    messages = PushMessages.flush
+
+    ApplicationModel.current_transaction.after_commit do
+      PushMessages.deliver(messages)
+    end
   end
 
   def reset_user_id?

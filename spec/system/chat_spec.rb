@@ -346,6 +346,16 @@ RSpec.describe 'Chat Handling', type: :system do
       end
 
       check_content('.active .chat-window .js-body', "#{chat_url}#new_hash")
+
+      # Close the conversation instead of leaving it active - otherwise the customer
+      #   session gets torn down mid-chat by the after-each hook (rather than a clean
+      #   UI close), which can leave the conversation looking still active server-side
+      #   and intermittently block a later test's chat interactions with a stray modal.
+      using_session :customer do
+        click '.js-chat-toggle .zammad-chat-header-icon'
+      end
+
+      check_content('.active .chat-window', 'closed the conversation')
     end
   end
 

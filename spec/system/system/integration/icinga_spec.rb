@@ -20,6 +20,8 @@ RSpec.describe 'Manage > Integration > Icinga', type: :system do
         select icinga_auto_close,	from: 'icinga_auto_close'
         click_on 'Submit'
       end
+
+      wait_for_setting('icinga_sender', icinga_sender)
     end
 
     shared_examples 'showing set config' do

@@ -1,9 +1,9 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module TestFlags
-  def wait_for_test_flag(flag, skip_clearing: false)
+  def wait_for_test_flag(flag, skip_clearing: false, timeout: Capybara.default_max_wait_time)
     begin
-      wait.until { page.evaluate_script("window.testFlags && window.testFlags.get('#{flag.gsub("'", "\\'")}', #{skip_clearing})") }
+      wait(timeout).until { page.evaluate_script("window.testFlags && window.testFlags.get('#{flag.gsub("'", "\\'")}', #{skip_clearing})") }
     rescue Selenium::WebDriver::Error::TimeoutError
       raise "Test flag #{flag} not set"
     end

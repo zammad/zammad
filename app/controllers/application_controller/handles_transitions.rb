@@ -14,10 +14,9 @@ module ApplicationController::HandlesTransitions
     PushMessages.init
 
     yield
-
+  ensure
     TransactionDispatcher.commit(transaction_dispatch_options)
     PushMessages.finish
-  ensure
     ApplicationHandleInfo.current = nil
   end
 

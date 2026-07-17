@@ -37,9 +37,23 @@ module PushMessages
   end
 
   def self.finish
-    return false if !enabled?
+    deliver(flush)
+  end
 
-    Thread.current[:push_messages].each do |message|
+  # Captures and clears the buffered messages, without sending them yet.
+  #   Used to detach delivery from the buffer's lifecycle, e.g. to defer sending
+  #   until after a transaction commits while still always clearing the buffer,
+  #   regardless of whether that transaction ends up committing or rolling back.
+  def self.flush
+    return [] if !enabled?
+
+    messages = Thread.current[:push_messages]
+    Thread.current[:push_messages] = nil
+    messages
+  end
+
+  def self.deliver(messages)
+    messages.each do |message|
       if message[:type] == 'send_to'
         Sessions.send_to(message[:user_id], message[:data])
       else
@@ -50,7 +64,6 @@ module PushMessages
         )
       end
     end
-    Thread.current[:push_messages] = nil
     true
   end
 

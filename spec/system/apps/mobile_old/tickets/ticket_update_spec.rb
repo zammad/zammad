@@ -301,6 +301,8 @@ RSpec.describe 'Mobile > Ticket > Update', app: :mobile, authenticated_as: :agen
           find_button('Go back').click
           find_button('Add reply').click
 
+          wait_for_test_flag('ticket-article-reply.opened')
+
           # Wait for form_updater to finish populating the article group before typing.
           wait_for_form_updater 2
           find_editor('Text').type('Foobar')
@@ -323,6 +325,8 @@ RSpec.describe 'Mobile > Ticket > Update', app: :mobile, authenticated_as: :agen
 
           find_button('Go back').click
           find_button('Add reply').click
+
+          wait_for_test_flag('ticket-article-reply.opened')
 
           # Wait for form_updater to finish populating the article group before typing.
           wait_for_form_updater 2
