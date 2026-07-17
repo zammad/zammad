@@ -26,14 +26,18 @@ export const useTicketParticipants = (ticket: Ref<TicketById | undefined>) => {
     Boolean(application.config?.ticket_participants_enabled),
   )
 
+  // Use agent-update access (not just read) — read-only agents must not see
+  // Add/Remove controls that would fail server-side (mutations require agent_update_access?).
   const canManageParticipants = computed(() =>
-    isTicketAgent.value && isEnabled.value,
+    Boolean(ticket.value?.policy?.agentUpdateAccess) && isEnabled.value,
   )
 
   const participants = computed(() => {
     if (!ticket.value?.mentions?.edges) return []
     return ticket.value.mentions.edges
-      .filter(({ node }) => node.user.active && !node.userTicketAccess?.agentReadAccess)
+      // Exclude agents entirely (by role, not by current read access) — an agent
+      // who lost group read access is NOT a customer participant.
+      .filter(({ node }) => node.user.active && !node.user.permissions?.includes('ticket.agent'))
       .map(({ node }) => node.user)
   })
 

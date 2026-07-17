@@ -2,7 +2,9 @@
 
 class Controllers::MentionsControllerPolicy < Controllers::ApplicationControllerPolicy
   def index?
-    object_accessible?
+    # The mention/subscriber list is agent-only. Returning the full mention list
+    # to customers would expose other participants and subscriber assets.
+    TicketPolicy.new(user, record.mentionable_object).agent_read_access?
   end
 
   def create?

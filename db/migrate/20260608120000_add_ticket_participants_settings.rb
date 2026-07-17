@@ -7,7 +7,7 @@ class AddTicketParticipantsSettings < ActiveRecord::Migration[8.0]
     Setting.create_if_not_exists(
       title:       'Ticket Participants',
       name:        'ticket_participants_enabled',
-      area:        'Ticket::Participants',
+      area:        'Ticket::Base',
       description: 'Enable the participant feature. Allows adding additional customers as participants on tickets.',
       options:     {},
       state:       false,

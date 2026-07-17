@@ -134,8 +134,10 @@ class Transaction::Notification
       return mention_user.group_access?(ticket.group_id, 'read')
     end
 
-    # Non-agent mentions (participants): gated by feature flag (Defense-in-Depth)
+    # Non-agent mentions (participants): gated by feature flag + customer role.
+    # A user who lost ticket.customer must not keep receiving ticket update emails.
     return false if !Setting.get('ticket_participants_enabled')
+    return false if !mention_user.permissions?('ticket.customer')
 
     true
   end

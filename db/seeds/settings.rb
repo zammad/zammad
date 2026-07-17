@@ -6437,7 +6437,7 @@ Setting.create_if_not_exists(
 Setting.create_if_not_exists(
   title:       __('Ticket Participants'),
   name:        'ticket_participants_enabled',
-  area:        'Ticket::Participants',
+  area:        'Ticket::Base',
   description: __('Enable the participant feature. Allows adding additional customers as participants on tickets.'),
   options:     {},
   state:       false,
