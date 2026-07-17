@@ -19,5 +19,6 @@ export const TicketMentionFragmentDoc = gql`
   userTicketAccess {
     agentReadAccess
   }
+  isParticipant
 }
     `;
