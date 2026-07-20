@@ -116,12 +116,12 @@ $(function() {
         'Your Name': 'Vaše jméno',
       },
       'da': {
-        'Attachments': 'Vedhæftede',
+        'Attachments': 'Vedhæftede filer',
         'Email': 'Email',
-        'Message': 'Meddelelse',
+        'Message': 'Besked',
         'Name': 'Navn',
         'Your Email': 'Din email',
-        'Your Message…': 'Din Meddelelse…',
+        'Your Message…': 'Din besked…',
         'Your Name': 'Dit navn',
       },
       'de': {

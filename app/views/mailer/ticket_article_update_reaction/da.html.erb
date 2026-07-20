@@ -1,7 +1,7 @@
-Opdateret ticket artikel (#{ticket.title})
+Opdateret sagsartikel (#{ticket.title})
 
 <div>Hej #{recipient.firstname},</div>
-</div>
+<br>
 <div>
 <%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') %> reagerede med en <%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'emoji') %> på en besked fra #{article.created_by.fullname}:
 </div>
