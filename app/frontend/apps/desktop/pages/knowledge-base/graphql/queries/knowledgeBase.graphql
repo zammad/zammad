@@ -1,0 +1,25 @@
+query knowledgeBase($locale: String) {
+  knowledgeBase(locale: $locale) {
+    id
+    title
+    iconset
+    isPubliclyAvailable
+    isVisiblePublicly
+    kbLocales {
+      id
+      primary
+      systemLocale {
+        id
+        locale
+        name
+      }
+    }
+    currentLocale {
+      id
+      systemLocale {
+        id
+        locale
+      }
+    }
+  }
+}

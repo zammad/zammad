@@ -119,4 +119,48 @@ describe('permissionGuard', () => {
 
     expect(result).toEqual(true)
   })
+
+  it('should forbid access when canAccess returns false', () => {
+    const to = {
+      name: 'KnowledgeBase',
+      path: '/knowledge-base',
+      fullPath: '/knowledge-base',
+      meta: {
+        requiresAuth: true,
+        requiredPermission: [],
+        canAccess: () => false,
+      },
+    } as unknown as RouteLocationNormalized
+
+    useAuthenticationStore().authenticated = true
+
+    const result = permissionGuard(to, from, vi.fn())
+
+    expect(result).toEqual({
+      name: 'Error',
+      query: {
+        redirect: '1',
+      },
+      replace: true,
+    })
+  })
+
+  it('should allow access when canAccess returns true', () => {
+    const to = {
+      name: 'KnowledgeBase',
+      path: '/knowledge-base',
+      fullPath: '/knowledge-base',
+      meta: {
+        requiresAuth: true,
+        requiredPermission: [],
+        canAccess: () => true,
+      },
+    } as unknown as RouteLocationNormalized
+
+    useAuthenticationStore().authenticated = true
+
+    const result = permissionGuard(to, from, vi.fn())
+
+    expect(result).toEqual(true)
+  })
 })

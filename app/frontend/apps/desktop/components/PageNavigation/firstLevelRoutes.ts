@@ -16,6 +16,7 @@ interface PageRoute {
     icon: string
     requiredPermission: string[]
     requiresAuth: boolean
+    canAccess?: () => boolean
     [key: string]: unknown
   }
 }

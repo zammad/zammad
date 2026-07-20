@@ -1,8 +1,20 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class KnowledgeBasePolicy < ApplicationPolicy
+  USER_REQUIRED = false
+
   def show?
     access_editor? || access_reader?
+  end
+
+  # Public browsing: anyone may see an active knowledge base (content is
+  #   still scoped per user by the category/answer policies).
+  def show_public?
+    access_editor? || record.active?
+  end
+
+  def show_any?
+    show? || show_public?
   end
 
   def update?

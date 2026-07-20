@@ -9,6 +9,12 @@ export interface BreadcrumbItem {
   noOptionLabelTranslation?: boolean
   route?: Link
   icon?: string
+  iconClass?: string
   count?: number
+  /**
+   *  Display the label as a tooltip
+   *  Won't apply for the last item in the breadcrumb
+   */
+  iconOnly?: boolean
   isActive?: boolean
 }

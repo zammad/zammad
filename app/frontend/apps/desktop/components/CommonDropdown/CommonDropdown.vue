@@ -7,6 +7,7 @@ import { useRouter } from 'vue-router'
 import { EnumTextDirection } from '#shared/graphql/types.ts'
 import { i18n } from '#shared/i18n/index.ts'
 import { useLocaleStore } from '#shared/stores/locale.ts'
+import type { ButtonVariant } from '#shared/types/button.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import type { DropdownItem } from '#desktop/components/CommonDropdown/types.ts'
@@ -16,6 +17,8 @@ import CommonPopoverMenu from '#desktop/components/CommonPopoverMenu/CommonPopov
 import CommonPopoverMenuItem from '#desktop/components/CommonPopoverMenu/CommonPopoverMenuItem.vue'
 import type { MenuItem } from '#desktop/components/CommonPopoverMenu/types.ts'
 
+import type { ButtonSize } from '../CommonButton/types'
+
 interface Props {
   items: MenuItem[]
   orientation?: 'top' | 'bottom'
@@ -23,10 +26,14 @@ interface Props {
    * Will apply on the button label if v-model is not bound
    * */
   actionLabel?: string
+  variant?: ButtonVariant
+  size?: ButtonSize
 }
 
 const props = withDefaults(defineProps<Props>(), {
   orientation: 'bottom',
+  variant: 'secondary',
+  size: 'large',
 })
 
 const emit = defineEmits<{
@@ -110,33 +117,37 @@ const actionItems = computed(() =>
     <CommonPopoverMenu v-else :popover="popover" :items="actionItems" />
   </CommonPopover>
 
-  <CommonButton
-    v-bind="$attrs"
-    ref="popoverTarget"
-    class="group"
-    :class="{
-      'hover:bg-blue-600! hover:text-black dark:hover:bg-blue-900! dark:hover:text-white': !isOpen,
-      'bg-blue-800! text-white! outline! outline-offset-1! outline-blue-800! hover:bg-blue-800!':
-        isOpen,
-    }"
-    size="large"
-    variant="secondary"
-    @click="toggle"
-  >
-    <template #label>
-      <span class="truncate">
-        {{ dropdownLabel }}
-      </span>
-      <CommonIcon
-        size="small"
-        decorative
-        class="pointer-events-none shrink-0 text-stone-200 dark:text-neutral-500 dark:group-hover:text-white"
+  <div ref="popoverTarget" class="inline-flex w-min">
+    <slot name="trigger" :is-open="isOpen" :toggle="toggle" :label="dropdownLabel">
+      <CommonButton
+        v-bind="$attrs"
+        class="group"
         :class="{
-          'text-white dark:text-white': isOpen,
-          'group-hover:text-black dark:group-hover:text-white': !isOpen,
+          'hover:bg-blue-600! hover:text-black dark:hover:bg-blue-900! dark:hover:text-white':
+            !isOpen,
+          'bg-blue-800! text-white! outline! outline-offset-1! outline-blue-800! hover:bg-blue-800!':
+            isOpen,
         }"
-        name="chevron-up"
-      />
-    </template>
-  </CommonButton>
+        :size="size"
+        :variant="variant"
+        @click="toggle"
+      >
+        <template #label>
+          <span class="truncate">
+            {{ dropdownLabel }}
+          </span>
+          <CommonIcon
+            size="small"
+            decorative
+            class="pointer-events-none shrink-0 text-stone-200 dark:text-neutral-500 dark:group-hover:text-white"
+            :class="{
+              'text-white dark:text-white': isOpen,
+              'group-hover:text-black dark:group-hover:text-white': !isOpen,
+            }"
+            name="chevron-up"
+          />
+        </template>
+      </CommonButton>
+    </slot>
+  </div>
 </template>

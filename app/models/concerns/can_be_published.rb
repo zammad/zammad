@@ -47,26 +47,37 @@ module CanBePublished
     # Returns answers according to given KnowledgeBase::AccessibleCategories::CategoriesStruct
     #
     # @param [KnowledgeBase::AccessibleCategories::CategoriesStruct] accessible_categories
-    scope :visible_by_categories, lambda { |accessible_categories|
+    # @param [KnowledgeBase::Locale] kb_locale limits non-editor access to answers translated to the given locale
+    scope :visible_by_categories, lambda { |accessible_categories, kb_locale: nil|
+      reader_scope = all.internal.where(category: accessible_categories.reader)
+      public_scope = all.published.where(category: accessible_categories.public_reader)
+
+      if kb_locale
+        reader_scope = reader_scope.translated_to(kb_locale)
+        public_scope = public_scope.translated_to(kb_locale)
+      end
+
       all.where(category: accessible_categories.editor)
-        .or(all.internal.where(category: accessible_categories.reader))
-        .or(all.published.where(category: accessible_categories.public_reader))
+        .or(reader_scope)
+        .or(public_scope)
     }
 
     # Returns answers accessible to the given user
     # This method also evaluates if granular permissions are enabled
     #
     # @param [User] user
-    scope :visible_to_user, lambda { |user|
+    # @param [KnowledgeBase::Locale] kb_locale limits non-editor access to answers translated
+    #   to the given locale, mirroring the agent app (editors also see untranslated content)
+    scope :visible_to_user, lambda { |user, kb_locale: nil|
       case KnowledgeBase.access_for_user(user)
       when :granular
-        visible_by_categories(KnowledgeBase::AccessibleCategories.for_user(user))
+        visible_by_categories(KnowledgeBase::AccessibleCategories.for_user(user), kb_locale:)
       when :editor
         all
       when :reader
-        internal
+        kb_locale ? internal.translated_to(kb_locale) : internal
       else
-        published
+        kb_locale ? published.translated_to(kb_locale) : published
       end
     }
 

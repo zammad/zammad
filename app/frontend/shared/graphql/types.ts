@@ -616,6 +616,38 @@ export type SystemSetupInfoQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type SystemSetupInfoQuery = { systemSetupInfo: { __typename: 'SystemSetupInfo', status: Types.EnumSystemSetupInfoStatus, type: Types.EnumSystemSetupInfoType | null | undefined } };
 
+export type KnowledgeBaseCategoryPreInfoFragment = { __typename: 'KnowledgeBaseCategory', directAnswerCount: number, directSubcategoryCount: number, breadcrumb: Array<{ __typename: 'KnowledgeBaseCategory', id: string, title: string | null | undefined, categoryIcon: string, visibility: Types.EnumKnowledgeBaseVisibility }> };
+
+export type KnowledgeBaseQueryVariables = Exact<{
+  locale?: string | null | undefined;
+}>;
+
+
+export type KnowledgeBaseQuery = { knowledgeBase: { __typename: 'KnowledgeBase', id: string, title: string | null | undefined, iconset: string, isPubliclyAvailable: boolean, isVisiblePublicly: boolean, kbLocales: Array<{ __typename: 'KnowledgeBaseLocale', id: string, primary: boolean, systemLocale: { __typename: 'Locale', id: string, locale: string, name: string } }>, currentLocale: { __typename: 'KnowledgeBaseLocale', id: string, systemLocale: { __typename: 'Locale', id: string, locale: string } } | null | undefined } | null | undefined };
+
+export type KnowledgeBaseAnswersQueryVariables = Exact<{
+  categoryId: string | number;
+  locale?: string | null | undefined;
+  pageSize?: number | null | undefined;
+  cursor?: string | null | undefined;
+}>;
+
+
+export type KnowledgeBaseAnswersQuery = { knowledgeBaseAnswers: { __typename: 'KnowledgeBaseAnswerConnection', totalCount: number, edges: Array<{ __typename: 'KnowledgeBaseAnswerEdge', node: { __typename: 'KnowledgeBaseAnswer', id: string, title: string | null | undefined, visibility: Types.EnumKnowledgeBaseVisibility, translationMissing: boolean, position: number } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null | undefined, hasNextPage: boolean } } };
+
+export type KnowledgeBaseCategorySubcategoriesQueryVariables = Exact<{
+  categoryId?: string | number | null | undefined;
+  locale?: string | null | undefined;
+}>;
+
+
+export type KnowledgeBaseCategorySubcategoriesQuery = { knowledgeBaseCategorySubcategories: { __typename: 'KnowledgeBaseCategorySubcategoriesPayload', category: { __typename: 'KnowledgeBaseCategory', id: string, isVisiblePublicly: boolean, translationMissing: boolean, directAnswerCount: number, directSubcategoryCount: number, breadcrumb: Array<{ __typename: 'KnowledgeBaseCategory', id: string, title: string | null | undefined, categoryIcon: string, visibility: Types.EnumKnowledgeBaseVisibility }> } | null | undefined, subcategories: Array<{ __typename: 'KnowledgeBaseCategory', id: string, title: string | null | undefined, categoryIcon: string, visibility: Types.EnumKnowledgeBaseVisibility, translationMissing: boolean, answerCount: number, subcategoryCount: number, position: number, directAnswerCount: number, directSubcategoryCount: number, breadcrumb: Array<{ __typename: 'KnowledgeBaseCategory', id: string, title: string | null | undefined, categoryIcon: string, visibility: Types.EnumKnowledgeBaseVisibility }> }> } | null | undefined };
+
+export type KnowledgeBaseContentUpdatesSubscriptionVariables = Exact<{ [key: string]: never; }>;
+
+
+export type KnowledgeBaseContentUpdatesSubscription = { knowledgeBaseContentUpdates: { __typename: 'KnowledgeBaseContentUpdatesPayload', affectedCategoryIds: Array<string> | null | undefined, knowledgeBase: { __typename: 'KnowledgeBase', id: string } | null | undefined } };
+
 export type UserCalendarSubscriptionAttributesFragment = { __typename: 'UserPersonalSettingsCalendarSubscriptionsConfig', combinedUrl: string | null | undefined, globalOptions: { __typename: 'UserPersonalSettingsCalendarSubscriptionGlobalOptions', alarm: boolean | null | undefined } | null | undefined, newOpen: { __typename: 'UserPersonalSettingsCalendarSubscriptionSingle', url: string | null | undefined, options: { __typename: 'UserPersonalSettingsCalendarSubscriptionSingleOptions', own: boolean | null | undefined, notAssigned: boolean | null | undefined } | null | undefined } | null | undefined, pending: { __typename: 'UserPersonalSettingsCalendarSubscriptionSingle', url: string | null | undefined, options: { __typename: 'UserPersonalSettingsCalendarSubscriptionSingleOptions', own: boolean | null | undefined, notAssigned: boolean | null | undefined } | null | undefined } | null | undefined, escalation: { __typename: 'UserPersonalSettingsCalendarSubscriptionSingle', url: string | null | undefined, options: { __typename: 'UserPersonalSettingsCalendarSubscriptionSingleOptions', own: boolean | null | undefined, notAssigned: boolean | null | undefined } | null | undefined } | null | undefined };
 
 export type UserDeviceAttributesFragment = { __typename: 'UserDevice', id: string, userId: string, name: string, os: string | null | undefined, browser: string | null | undefined, location: string | null | undefined, deviceDetails: any, locationDetails: any, fingerprint: string | null | undefined, userAgent: string | null | undefined, ip: string | null | undefined, createdAt: string, updatedAt: string };

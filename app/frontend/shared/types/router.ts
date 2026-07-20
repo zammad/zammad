@@ -22,6 +22,9 @@ export interface RouteRecordMeta {
   title?: string
   requiresAuth: boolean
   requiredPermission: Maybe<RequiredPermission>
+  // Dynamic access gate evaluated on top of `requiredPermission` (e.g. feature
+  //   flags / config settings). Both must pass to enter/show the route.
+  canAccess?: () => boolean
   redirectToDefaultRoute?: boolean
   hasBottomNavigation?: boolean
   customBottomNavigation?: boolean

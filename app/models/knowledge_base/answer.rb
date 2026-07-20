@@ -7,6 +7,7 @@ class KnowledgeBase::Answer < ApplicationModel
   include CanBePublished
   include ChecksKbClientNotification
   include ChecksKbClientVisibility
+  include TriggersKnowledgeBaseContentUpdates
   include CanCloneAttachments
   include CanLookupSearchIndexAttributesWithAttachments
 

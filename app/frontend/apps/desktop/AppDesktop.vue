@@ -34,6 +34,8 @@ import { useAppUsageStore } from '#desktop/stores/appUsage.ts'
 import { useBetaUi } from './components/BetaUi/composables/useBetaUi.ts'
 import { useBetaUiFeedbackRouteGuard } from './components/BetaUi/composables/useBetaUiFeedbackRouteGuard.ts'
 import { useMobileDetection } from './composables/responsiveness/useMobileDetection.ts'
+import { useKnowledgeBaseAccess } from './pages/knowledge-base/composables/useKnowledgeBaseAccess.ts'
+import { useKnowledgeBaseStore } from './pages/knowledge-base/stores/knowledgeBase.ts'
 
 const router = useRouter()
 
@@ -43,6 +45,9 @@ const session = useSessionStore()
 useMetaTitle().initializeMetaTitle()
 
 const application = useApplicationStore()
+
+const { canBrowse: canBrowseKnowledgeBase } = useKnowledgeBaseAccess()
+
 onBeforeMount(() => {
   application.setLoaded()
 })
@@ -109,6 +114,15 @@ watch(
     useAppUsageStore()
     useTicketBulkUpdateStore()
     useMobileDetection()
+
+    // Preload the knowledge base base query so entering the section resolves
+    //   its default locale instantly — but only when there is a knowledge base
+    //   this user can actually browse. Defer until the initial route is
+    //   resolved so the store reads the real locale from the URL instead of
+    //   firing against the still-unresolved start location on a full reload.
+    if (canBrowseKnowledgeBase.value) {
+      router.isReady().then(() => useKnowledgeBaseStore())
+    }
   },
   { immediate: true },
 )

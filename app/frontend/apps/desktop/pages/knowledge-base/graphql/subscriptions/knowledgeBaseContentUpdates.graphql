@@ -1,0 +1,8 @@
+subscription knowledgeBaseContentUpdates {
+  knowledgeBaseContentUpdates {
+    knowledgeBase {
+      id
+    }
+    affectedCategoryIds
+  }
+}

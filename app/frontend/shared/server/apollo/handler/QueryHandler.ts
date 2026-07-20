@@ -72,6 +72,29 @@ export default class QueryHandler<
     })
   }
 
+  /**
+   * Resolves once the query has settled its first load — a result was received
+   * (or served from the cache) or it errored. Handy to await a reactive
+   * `useQuery` handler (e.g. in a route guard) before reading its result;
+   * resolves immediately when it has already settled. Unlike
+   * `watchOnceOnResult`, it also resolves on an error, so an awaiting caller
+   * never hangs.
+   */
+  public loaded(): Promise<void> {
+    const loading = this.loadingWithoutCachedResult()
+
+    if (!loading.value) return Promise.resolve()
+
+    return new Promise((resolve) => {
+      const stop = watch(loading, (isLoading) => {
+        if (isLoading) return
+
+        stop()
+        resolve()
+      })
+    })
+  }
+
   public cancel() {
     this.lastCancel?.()
   }

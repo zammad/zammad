@@ -37,6 +37,9 @@ const errorImage = computed(() => {
   <CommonLabel v-if="options?.route" class="mx-auto max-w-prose text-center" tag="p">
     {{ options.route }}
   </CommonLabel>
+  <CommonLink v-if="options?.backLink" :link="options.backLink.link" size="medium">
+    {{ $t(options.backLink.label) }}
+  </CommonLink>
   <CommonLink v-if="!authenticated" link="/login" size="medium">
     {{ $t('Please proceed to login') }}
   </CommonLink>

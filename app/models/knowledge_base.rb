@@ -4,6 +4,7 @@ class KnowledgeBase < ApplicationModel
   include HasTranslations
   include HasAgentAllowedParams
   include ChecksKbClientNotification
+  include TriggersKnowledgeBaseContentUpdates
 
   AGENT_ALLOWED_NESTED_RELATIONS = %i[translations].freeze
 

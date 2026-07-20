@@ -6,6 +6,7 @@ class KnowledgeBase::Category < ApplicationModel
   include ChecksKbClientNotification
   include ChecksKbClientVisibility
   include HasRecursiveCteQuery
+  include TriggersKnowledgeBaseContentUpdates
 
   AGENT_ALLOWED_ATTRIBUTES       = %i[knowledge_base_id parent_id category_icon].freeze
   AGENT_ALLOWED_NESTED_RELATIONS = %i[translations].freeze
@@ -131,6 +132,24 @@ class KnowledgeBase::Category < ApplicationModel
     public_content?(kb_locale)
   end
 
+  # Whether this category is visible to the given user when browsing, mirroring
+  #   KnowledgeBase::Answer.visible_to_user (editor: all, reader: internally
+  #   published content, granular: per-permission, everyone else: public content).
+  #   With a kb_locale, non-editors only count content translated to that locale,
+  #   like the agent app (editors also see untranslated content).
+  def visible_to_user?(user, kb_locale = nil)
+    case KnowledgeBase.access_for_user(user)
+    when :editor
+      true
+    when :reader
+      internal_content?(kb_locale)
+    when :granular
+      granular_visible_to_user?(user, kb_locale)
+    else
+      public_content?(kb_locale)
+    end
+  end
+
   def api_url
     Rails.application.routes.url_helpers.knowledge_base_category_path(knowledge_base, self)
   end
@@ -150,6 +169,21 @@ class KnowledgeBase::Category < ApplicationModel
   end
 
   private
+
+  # Mirrors KnowledgeBase::AccessibleCategories#taxonomize_category, with the
+  #   locale gate applied to the content-based (non-editor) accesses.
+  def granular_visible_to_user?(user, kb_locale)
+    case KnowledgeBase::EffectivePermission.new(user, self).access_effective
+    when 'editor'
+      true
+    when 'reader'
+      internal_content?(kb_locale)
+    when 'public_reader'
+      public_content?(kb_locale)
+    else
+      false
+    end
+  end
 
   def cannot_be_child_of_parent
     errors.add(:parent_id, __('cannot be a subcategory of the parent category')) if self_parent?(self)

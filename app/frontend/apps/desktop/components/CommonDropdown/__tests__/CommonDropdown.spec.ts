@@ -75,4 +75,19 @@ describe('CommonDropdown', () => {
 
     expect(await wrapper.findByRole('button', { name: dropdownItems[1].label })).toBeInTheDocument()
   })
+
+  it('supports setting custom trigger', async () => {
+    const wrapper = renderComponent(CommonDropdown, {
+      props: {
+        items: dropdownItems,
+        actionLabel: 'custom-trigger-dropdown',
+      },
+      slots: {
+        trigger: '<button>Custom Trigger</button>',
+      },
+      router: true,
+    })
+
+    expect(wrapper.getByRole('button', { name: 'Custom Trigger' })).toBeInTheDocument()
+  })
 })

@@ -12,6 +12,12 @@ module HasTranslations
 
     accepts_nested_attributes_for :translations
 
+    # returns objects having a translation in the given KnowledgeBase::Locale.
+    # Filters via a subquery (no joins), so it stays composable with .or.
+    scope :translated_to, lambda { |kb_locale|
+      where(id: translation_class.where(kb_locale: kb_locale).select(reflect_on_association(:translations).foreign_key))
+    }
+
     # returns objects with single translation according to given locale.
     # If no locale is given, defaults to Knowledge Base's primary locale
     scope :localed, lambda { |system_locale_or_id|

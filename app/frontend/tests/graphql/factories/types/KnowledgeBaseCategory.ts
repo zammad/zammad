@@ -14,5 +14,9 @@ export default (): DeepPartial<KnowledgeBaseCategory> => {
       id: convertToGraphQLId('KnowledgeBase', 999),
     },
     translations: [],
+    // Breaks the self-referential breadcrumb cycle (breadcrumb -> category ->
+    // breadcrumb -> ...), which otherwise lets the auto-mocker recurse until it
+    // overflows the stack.
+    breadcrumb: [],
   }
 }

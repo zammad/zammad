@@ -1,0 +1,23 @@
+query knowledgeBaseAnswers(
+  $categoryId: ID!
+  $locale: String
+  $pageSize: Int = 30
+  $cursor: String
+) {
+  knowledgeBaseAnswers(categoryId: $categoryId, locale: $locale, first: $pageSize, after: $cursor) {
+    totalCount
+    edges {
+      node {
+        id
+        title
+        visibility
+        translationMissing
+        position
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+  }
+}

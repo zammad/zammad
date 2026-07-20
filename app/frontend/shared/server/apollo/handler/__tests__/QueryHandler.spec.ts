@@ -190,6 +190,16 @@ describe('QueryHandler', () => {
       })
     })
 
+    it('loaded() resolves once the query has settled', async () => {
+      await scope.run(async () => {
+        const queryHandlerObject = new QueryHandler(sampleQuery({ id: 1 }))
+
+        await expect(queryHandlerObject.loaded()).resolves.toBeUndefined()
+
+        expect(queryHandlerObject.result().value).toEqual(querySampleResult)
+      })
+    })
+
     it('loaded result is also resolved after additional result call with active trigger refetch', async () => {
       await scope.run(async () => {
         const queryHandlerObject = new QueryHandler(sampleLazyQuery({ id: 1 }))
@@ -285,6 +295,14 @@ describe('QueryHandler', () => {
           const { notifications } = useNotifications()
 
           expect(notifications.value.length).toBe(1)
+        })
+      })
+
+      it('loaded() resolves even when the query errors', async () => {
+        await scope.run(async () => {
+          const queryHandlerObject = new QueryHandler(sampleQuery({ id: 1 }))
+
+          await expect(queryHandlerObject.loaded()).resolves.toBeUndefined()
         })
       })
 

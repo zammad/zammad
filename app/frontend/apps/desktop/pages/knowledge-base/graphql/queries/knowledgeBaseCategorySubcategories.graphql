@@ -1,0 +1,21 @@
+query knowledgeBaseCategorySubcategories($categoryId: ID, $locale: String) {
+  knowledgeBaseCategorySubcategories(categoryId: $categoryId, locale: $locale) {
+    category {
+      id
+      isVisiblePublicly
+      translationMissing
+      ...knowledgeBaseCategoryPreInfo
+    }
+    subcategories {
+      id
+      title
+      categoryIcon
+      visibility
+      translationMissing
+      answerCount
+      subcategoryCount
+      position
+      ...knowledgeBaseCategoryPreInfo
+    }
+  }
+}

@@ -1,0 +1,13 @@
+# Data needed to render a category's header and size its loading skeleton before
+#   its own query resolves — carried on every listed subcategory so it is cached
+#   for an instant open, and read back from the cache by id.
+fragment knowledgeBaseCategoryPreInfo on KnowledgeBaseCategory {
+  directAnswerCount
+  directSubcategoryCount
+  breadcrumb {
+    id
+    title
+    categoryIcon
+    visibility
+  }
+}

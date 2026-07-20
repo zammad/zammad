@@ -4,7 +4,7 @@ import { ref } from 'vue'
 
 import { ErrorStatusCodes } from '#shared/types/error.ts'
 
-import type { NavigationHookAfter, Router } from 'vue-router'
+import type { NavigationHookAfter, RouteLocationRaw, Router } from 'vue-router'
 
 export enum ErrorRouteType {
   PublicError = 'Error',
@@ -18,6 +18,9 @@ export interface ErrorOptions {
   statusCode: ErrorStatusCodes
   messagePlaceholder?: string[]
   route?: string
+  // Optional call-to-action back into the section the error came from (e.g. the
+  //   knowledge base root), shown as a link on the error page.
+  backLink?: { label: string; link: RouteLocationRaw }
 }
 
 const defaultOptions: ErrorOptions = {

@@ -34,7 +34,10 @@ class TransactionDispatcher
       backend = Setting.get(setting.name)
       next if params[:disable]&.include?(backend)
 
-      sync_backends.push backend.constantize
+      backend_class = resolve_backend(backend)
+      next if backend_class.nil?
+
+      sync_backends.push backend_class
     end
 
     # get uniq objects
@@ -64,6 +67,21 @@ class TransactionDispatcher
     rescue => e
       Rails.logger.error e
     end
+  end
+
+  # Resolve a configured transaction backend to its class. A backend can be
+  #   registered as a Setting but be missing from the code — e.g. after an addon
+  #   is removed, a downgrade, or divergent branches sharing a database. Skip it
+  #   with a loud log rather than letting a single stale entry take down every
+  #   request/job that dispatches transactions.
+  def self.resolve_backend(backend)
+    backend_class = backend.safe_constantize
+
+    if backend_class.nil?
+      Rails.logger.error "Transaction backend '#{backend}' is configured but not defined; skipping it."
+    end
+
+    backend_class
   end
 
 =begin

@@ -32,8 +32,15 @@ const openSearch = () => {
 }
 
 const permittedRoutes = computed(() =>
-  sortedFirstLevelRoutes.filter((route) => hasPermission(route.meta.requiredPermission)),
+  sortedFirstLevelRoutes.filter(
+    (route) => hasPermission(route.meta.requiredPermission) && (route.meta.canAccess?.() ?? true),
+  ),
 )
+
+// A first-level entry is active whenever the current route lives in its
+//   subtree, not only on an exact name match — nested pages
+const isRouteActive = (name: string) =>
+  router.currentRoute.value.matched.some((record) => record.name === name)
 </script>
 
 <template>
@@ -71,7 +78,7 @@ const permittedRoutes = computed(() =>
                 v-else
                 class="flex grow gap-2 rounded-lg px-2 py-3 text-neutral-400 focus-visible-app-default hover:bg-blue-900 hover:text-white! hover:no-underline! focus-visible:rounded-lg!"
                 :class="{
-                  'bg-blue-800! text-white!': router.currentRoute.value.name === route.name, // $route.name is not detected by ts
+                  'bg-blue-800! text-white!': isRouteActive(route.name),
                 }"
                 :link="route.path.replace(/\/:\w+/, '')"
                 exact-active-class="bg-blue-800! w-full text-white!"
