@@ -767,6 +767,65 @@ RSpec.describe Ticket::Article, type: :model do
     end
   end
 
+  describe 'attachments listing with inline images (#6254)' do
+    let(:article) do
+      create(:ticket_article,
+             type:         Ticket::Article::Type.find_by(name: 'email'),
+             content_type: 'text/html',
+             body:         '<img src="cid:15.274327094.140938@zammad.example.com"> some text',)
+    end
+
+    let!(:inline_attachment) do
+      create(:store,
+             object:      'Ticket::Article',
+             o_id:        article.id,
+             data:        'content_file1_normally_should_be_an_image',
+             filename:    'some_file1.jpg',
+             preferences: {
+               'Content-Type'        => 'image/jpeg',
+               'Mime-Type'           => 'image/jpeg',
+               'Content-ID'          => '15.274327094.140938@zammad.example.com',
+               'Content-Disposition' => 'inline',
+             })
+    end
+
+    let!(:regular_attachment) do
+      create(:store,
+             object:      'Ticket::Article',
+             o_id:        article.id,
+             data:        'content_file2',
+             filename:    'some_file2.pdf',
+             preferences: {
+               'Content-Type' => 'application/pdf',
+               'Mime-Type'    => 'application/pdf',
+             })
+    end
+
+    describe '#attributes_with_association_names' do
+      it 'keeps inline attachments in the attachments list' do
+        attributes = article.attributes_with_association_names
+
+        expect(attributes['attachments'].pluck('filename'))
+          .to contain_exactly('some_file1.jpg', 'some_file2.pdf')
+      end
+
+      it 'replaces cid references in the body' do
+        attributes = article.attributes_with_association_names
+
+        expect(attributes['body']).to include("/api/v1/ticket_attachment/#{article.ticket_id}/#{article.id}/#{inline_attachment.id}?view=inline")
+      end
+    end
+
+    describe '#attributes_with_association_ids' do
+      it 'excludes inline attachments from the attachments list' do
+        attributes = article.attributes_with_association_ids
+
+        expect(attributes['attachments'].pluck('filename'))
+          .to contain_exactly('some_file2.pdf')
+      end
+    end
+  end
+
   describe '.without_system_notifications' do
     let(:ticket)    { create(:ticket) }
     let(:article_1) { create(:ticket_article, :system_outbound_email, ticket:) }
