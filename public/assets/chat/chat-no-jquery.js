@@ -1028,13 +1028,13 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
         'Connection re-established': 'Forbindelse genoprettet',
         'Offline': 'Offline',
         'Online': 'Online',
-        'Scroll down to see new messages': 'Scroll ned for at se nye beskeder',
-        'Send': 'Afsend',
-        'Since you didn\'t respond in the last %s minutes your conversation was closed.': 'Da du ikke svarede i de sidste %s minutter, blev din samtale lukket.',
-        'Since you didn\'t respond in the last %s minutes your conversation with <strong>%s</strong> was closed.': 'Da du ikke svarede i de sidste %s minutter, blev din samtale med <strong>%s</strong> lukket.',
+        'Scroll down to see new messages': 'Rul ned for at se nye beskeder',
+        'Send': 'Send',
+        'Since you didn\'t respond in the last %s minutes your conversation was closed.': 'Da du ikke svarede inden for de sidste %s minutter, blev din samtale lukket.',
+        'Since you didn\'t respond in the last %s minutes your conversation with <strong>%s</strong> was closed.': 'Da du ikke svarede inden for de sidste %s minutter, blev din samtale med <strong>%s</strong> lukket.',
         'Start new conversation': 'Start en ny samtale',
         'Today': 'I dag',
-        'We are sorry, it is taking longer than expected to get a slot. Please try again later or send us an email. Thank you!': 'Vi beklager, det tager længere tid end forventet at finde en ledig plads. Prøv igen senere eller send os en email. Tak!',
+        'We are sorry, it is taking longer than expected to get a slot. Please try again later or send us an email. Thank you!': 'Vi beklager, det tager længere end forventet at få en ledig plads. Prøv igen senere, eller send os en email. Tak!',
         'You are on waiting list position <strong>%s</strong>.': 'Du er i kø som nummer <strong>%s</strong>.'
       },
       'de': {
@@ -1267,7 +1267,7 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
       },
       'pt-br': {
         '<strong>Chat</strong> with us!': '<strong>Converse</strong> conosco!',
-        'All colleagues are busy.': 'Nossos atendentes estão ocupados.',
+        'All colleagues are busy.': 'Todos os agentes estão ocupados.',
         'Chat closed by %s': 'Chat encerrado por %s',
         'Compose your message…': 'Escreva sua mensagem…',
         'Connecting': 'Conectando',

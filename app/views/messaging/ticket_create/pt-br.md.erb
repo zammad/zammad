@@ -1,8 +1,8 @@
 # #{ticket.title}
-_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: Criado por #{current_user.longname} em #{ticket.updated_at}_
-* #{t('Group')}: #{ticket.group.name}
-* #{t('Owner')}: #{ticket.owner.fullname}
-* #{t('State')}: #{t(ticket.state.name)}
+_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#{config.ticket_hook}#{ticket.number}>: Criado por #{current_user.longname} em #{ticket.updated_at}_
+* Grupo: #{ticket.group.name}
+* Responsável: #{ticket.owner.fullname}
+* Estado: #{t(ticket.state.name)}
 
 <% if @objects[:article] %>
 #{article.body_as_text}

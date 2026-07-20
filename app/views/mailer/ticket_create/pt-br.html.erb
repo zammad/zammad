@@ -6,7 +6,7 @@ Novo ticket (#{ticket.title})
 <br>
 <div>
 Grupo: #{ticket.group.name}<br>
-Proprietário: #{ticket.owner.fullname}<br>
+Responsável: #{ticket.owner.fullname}<br>
 State: #{t(ticket.state.name)}<br>
 </div>
 <br>
@@ -20,5 +20,5 @@ State: #{t(ticket.state.name)}<br>
 <% end %>
 <br>
 <div>
-  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">Veja mais informações no Zammad</a>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">Veja mais informações no #{config.product_name}</a>
 </div>
