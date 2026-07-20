@@ -693,7 +693,7 @@ const handleShowArticleForm = (
         'grid-rows-[0_max-content_1fr_max-content]': newTicketArticlePresent && isReplyPinned,
       }"
     >
-      <CommonIndicator v-model="isReachingTop" />
+      <CommonIndicator v-model="isReachingTop" class="translate-y-1" />
 
       <TicketDetailTopBarSkeleton v-if="!ticket" />
       <TicketDetailTopBar v-else :content-container-element="contentContainerElement" />
@@ -711,8 +711,6 @@ const handleShowArticleForm = (
           @scroll-to-end="handleInitialScrollToEnd"
         />
       </CommonLoader>
-
-      <CommonIndicator v-if="!newTicketArticlePresent" v-model="isReachingBottom" />
 
       <ArticleReply
         v-show="!isLoadingArticles && isInitialSettled"
@@ -791,6 +789,8 @@ const handleShowArticleForm = (
           @settled="onEditFormSettled"
         />
       </div>
+
+      <CommonIndicator v-if="!newTicketArticlePresent" v-model="isReachingBottom" />
     </div>
     <!-- Render underlying components only when the ticket is available to avoid providing undefined ticket context -->
     <template v-if="!!ticket" #sideBar>

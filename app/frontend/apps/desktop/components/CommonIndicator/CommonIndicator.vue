@@ -32,6 +32,6 @@ useIntersectionObserver(
 <template>
   <div aria-hidden="true" class="pointer-events-none relative h-0">
     <!-- We need a small height due to FIREFOX, chromium based browsers pick up the h-0 -->
-    <span ref="indicator" class="absolute inset-x-0 h-px" />
+    <span ref="indicator" class="absolute inset-x-0 bottom-0 h-px" />
   </div>
 </template>
