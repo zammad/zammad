@@ -308,9 +308,11 @@ returns
     attributes = super
     add_time_unit_to_attributes(attributes)
 
-    new_body, new_attachments = Ticket::Article.insert_urls(self)
+    new_body, _new_attachments = Ticket::Article.insert_urls(self)
     attributes['body'] = new_body
-    attributes['attachments'] = new_attachments.map(&:attributes_for_display)
+
+    # REST API clients rely on inline attachments being listed here, keep them (#6254)
+    attributes['attachments'] = attachments.map(&:attributes_for_display)
     attributes['body_rendering_error'] = body_rendering_error
 
     attributes
