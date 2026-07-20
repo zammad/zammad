@@ -3,12 +3,12 @@
 const { basename } = require('path')
 
 const { convertFactory } = require('@graphql-codegen/visitor-plugin-common')
-const camelCase = require('lodash/camelCase.js')
-const startCase = require('lodash/startCase.js')
 
 /** @typedef {import('graphql').OperationDefinitionNode} OperationDefinitionNode */
 
-const pascalCase = (str) => startCase(camelCase(str))
+// Only ever applied to a GraphQL operation type ('query', 'mutation',
+// 'subscription'), so a simple capitalization is sufficient.
+const pascalCase = (str) => str.charAt(0).toUpperCase() + str.slice(1)
 
 const getCompositionFunctionSuffix = (name, operationType) => {
   if (name.includes('Query') || name.includes('Mutation') || name.includes('Subscription')) {
