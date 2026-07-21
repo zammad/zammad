@@ -360,6 +360,8 @@ returns
 
   # Find a user by mobile number, either directly or by number variants stored in the Cti::CallerIds.
   def self.by_mobile(number:)
+    return if number.blank?
+
     direct_lookup = User.where(mobile: number).reorder(:updated_at).first
     return direct_lookup if direct_lookup
 

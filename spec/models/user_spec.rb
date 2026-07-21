@@ -173,6 +173,12 @@ RSpec.describe User, type: :model do
           expect(described_class.by_mobile(number: '99999999999')).to be_nil
         end
       end
+
+      context 'with a nil number' do
+        it 'returns nil without raising' do
+          expect(described_class.by_mobile(number: nil)).to be_nil
+        end
+      end
     end
   end
 
