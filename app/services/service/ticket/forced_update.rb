@@ -16,12 +16,14 @@ class Service::Ticket::ForcedUpdate < Service::Base
   end
 
   def execute
-    ApplicationHandleInfo.in_context(:forced_update) do
-      ticket.with_lock do
-        ticket.update!(update_data)
+    Transaction.execute do
+      ApplicationHandleInfo.in_context(:forced_update) do
+        ticket.with_lock do
+          ticket.update!(update_data)
+        end
       end
     end
 
-    ticket
+    ticket.reload
   end
 end

@@ -1998,6 +1998,49 @@ RSpec.describe 'Ticket', type: :request do
       end
     end
 
+    describe 'trigger results in update response' do
+      let(:ticket)        { create(:ticket, group: ticket_group, customer_id: customer.id) }
+      let(:high_priority) { Ticket::Priority.find_by(name: '3 high') }
+      let(:trigger) do
+        create(:trigger,
+               :conditionable,
+               condition_ticket_action:  :update,
+               execution_condition_mode: 'always',
+               perform:                  { 'ticket.priority_id' => { 'value' => high_priority.id.to_s } })
+      end
+
+      before do
+        ticket
+        trigger
+        # Drop buffered events from factory creation, so the request's update
+        # event is not merged into a leftover create event.
+        TransactionDispatcher.reset
+        authenticated_as(agent)
+      end
+
+      # Sync triggers are dispatched inside the endpoint's Transaction.execute,
+      # before the response is rendered - their changes must be part of it.
+      it 'returns attributes changed by triggers' do
+        put "/api/v1/tickets/#{ticket.id}", params: { title: 'trigger me' }, as: :json
+
+        expect(json_response['priority_id']).to eq(high_priority.id)
+      end
+
+      it 'returns attributes changed by triggers on title update' do
+        put "/api/v1/tickets/#{ticket.id}/update_title", params: { title: 'trigger me' }, as: :json
+
+        expect(json_response['priority_id']).to eq(high_priority.id)
+      end
+
+      it 'returns attributes changed by triggers on customer update' do
+        other_customer = create(:customer)
+
+        put "/api/v1/tickets/#{ticket.id}/update_customer", params: { customer_id: other_customer.id }, as: :json
+
+        expect(json_response['priority_id']).to eq(high_priority.id)
+      end
+    end
+
     it 'does ticket split with html - check attachments (05.01)' do
       ticket = create(
         :ticket,

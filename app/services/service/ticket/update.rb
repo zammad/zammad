@@ -15,13 +15,15 @@ class Service::Ticket::Update < Service::Base
   end
 
   def execute
-    set_core_workflow_information(ticket_data, ::Ticket, 'edit')
+    Transaction.execute do
+      set_core_workflow_information(ticket_data, ::Ticket, 'edit')
 
-    article_data = ticket_data.delete(:article)
+      article_data = ticket_data.delete(:article)
 
-    validate!(current_user, ticket, ticket_data, article_data, skip_validators, macro)
+      validate!(current_user, ticket, ticket_data, article_data, skip_validators, macro)
 
-    save_ticket!(ticket, ticket_data, article_data, macro)
+      save_ticket!(ticket, ticket_data, article_data, macro)
+    end
 
     ticket.reload
   end
