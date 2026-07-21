@@ -6,7 +6,16 @@ class TransactionDispatcher
     EventBuffer.reset('transaction')
   end
 
+  # Request-scoped default options (e.g. disable_notification from the
+  # X-Zammad-Suppress-Notifications header), merged into every commit on this
+  # thread. Without this, a nested Transaction.execute inside a controller or
+  # service would drain the event buffer before the request-level dispatch
+  # in ApplicationController::HandlesTransitions can apply these options.
+  # Stored as a callable because it is registered before authentication ran.
+  thread_cattr_accessor :request_options
+
   def self.commit(params = {})
+    params = (request_options&.call || {}).merge(params)
 
     # add attribute of interface handle (e. g. to send (no) notifications if a agent
     # is creating a ticket via application_server, but send it if it's created via
