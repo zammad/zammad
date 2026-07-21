@@ -278,6 +278,19 @@ describe('component for displaying text article', () => {
         ),
       ).toBeInTheDocument()
     })
+
+    it('escapes HTML in the body instead of rendering it', () => {
+      const view = renderArticleBubble({
+        content: '<img src=x onerror="globalThis.__xss=1">',
+        contentType: 'text/html',
+        bodyRenderingError: true,
+      })
+
+      const body = view.container.querySelector('.Content')
+
+      expect(body?.querySelector('img')).toBeNull()
+      expect(body?.textContent).toContain('<img src=x onerror="globalThis.__xss=1">')
+    })
   })
 
   it('renders attachments', () => {

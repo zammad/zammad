@@ -40,7 +40,7 @@ const bodyClasses = computed(() =>
 
 const body = computed(() => {
   if (props.article.bodyRenderingError) {
-    return i18n.t(props.article.bodyWithUrls)
+    return textToHtml(i18n.t(props.article.bodyWithUrls))
   }
   if (props.article.contentType !== 'text/html') {
     return textToHtml(props.article.bodyWithUrls)
