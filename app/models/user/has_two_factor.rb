@@ -47,6 +47,14 @@ module User::HasTwoFactor
     end
   end
 
+  def two_factor_destroy_authentication_method(method_name)
+    method = auth_two_factor.authentication_method_object(method_name)
+
+    raise Exceptions::UnprocessableContent, __('The given two-factor method does not exist.') if !method
+
+    method.destroy_user_config
+  end
+
   def two_factor_verify_configuration?(authentication_method, payload, configuration)
     auth_two_factor.verify_configuration?(authentication_method, payload, configuration)
   end

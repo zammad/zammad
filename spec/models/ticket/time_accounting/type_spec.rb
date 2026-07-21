@@ -1,9 +1,14 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
+require 'models/concerns/has_audit_logs_examples'
 
 RSpec.describe Ticket::TimeAccounting::Type, type: :model do
   subject(:time_accounting_type) { create(:ticket_time_accounting_type) }
+
+  it_behaves_like 'HasAuditLogs', update_attribute: 'active', update_value: false do
+    subject { create(:ticket_time_accounting_type) }
+  end
 
   it { is_expected.to validate_presence_of(:name) }
   it { is_expected.to validate_uniqueness_of(:name).case_insensitive }

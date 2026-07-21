@@ -4,6 +4,37 @@ require 'rails_helper'
 
 RSpec.describe 'Sessions endpoints', type: :request do
 
+  describe 'GET /api/v1/sessions/switch/:id' do
+    let(:admin) { create(:admin) }
+    let(:agent) { create(:agent) }
+
+    before do
+      authenticated_as(admin)
+      get "/api/v1/sessions/switch/#{agent.id}", as: :json
+    end
+
+    it 'creates an audit log entry' do
+      expect(AuditLog.find_by(auditable_type: 'User', auditable_id: agent.id, action_type: 'switch_to'))
+        .to have_attributes(user_id: admin.id, auditable_name: agent.fullname, source_ip: '127.0.0.1')
+    end
+  end
+
+  describe 'GET /api/v1/sessions/switch_back' do
+    let(:admin) { create(:admin) }
+    let(:agent) { create(:agent) }
+
+    before do
+      authenticated_as(admin, via: :browser)
+      get "/api/v1/sessions/switch/#{agent.id}", as: :json
+      get '/api/v1/sessions/switch_back', as: :json
+    end
+
+    it 'creates an audit log entry' do
+      expect(AuditLog.find_by(auditable_type: 'User', auditable_id: agent.id, action_type: 'switch_back_to'))
+        .to have_attributes(user_id: admin.id, auditable_name: agent.fullname, source_ip: '127.0.0.1')
+    end
+  end
+
   describe 'GET /' do
 
     let(:headers)     { {} }

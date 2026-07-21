@@ -1,9 +1,46 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
+require 'models/concerns/has_audit_logs_examples'
 
 RSpec.describe Setting, type: :model do
   subject(:setting) { create(:setting) }
+
+  it_behaves_like 'HasAuditLogs', update_attribute: 'title', update_value: 'Some updated title'
+
+  describe 'audit log masking of sensitive settings' do
+    let(:audit_log) { AuditLog.find_by(auditable_type: 'Setting', auditable_id: setting.id, action_type: 'update') }
+
+    before do
+      described_class.set('system_init_done', true)
+    end
+
+    context 'when the setting name is sensitive' do
+      subject(:setting) { create(:setting, name: 'some_secret_setting', state_current: { value: 'initial value' }) }
+
+      it 'masks the values in the snapshots' do
+        setting.update!(state_current: { value: 'updated value' })
+
+        expect(audit_log).to have_attributes(
+          value_from: include('state_current' => include('value' => SensitiveParamsHelper::SENSITIVE_MASK)),
+          value_to:   include('state_current' => include('value' => SensitiveParamsHelper::SENSITIVE_MASK)),
+        )
+      end
+    end
+
+    context 'when the setting name is not sensitive' do
+      subject(:setting) { create(:setting, name: 'some_regular_setting', state_current: { value: 'initial value' }) }
+
+      it 'keeps the values in the snapshots' do
+        setting.update!(state_current: { value: 'updated value' })
+
+        expect(audit_log).to have_attributes(
+          value_from: include('state_current' => include('value' => 'initial value')),
+          value_to:   include('state_current' => include('value' => 'updated value')),
+        )
+      end
+    end
+  end
 
   describe '.get' do
     context 'when given a valid Setting#name' do
@@ -125,6 +162,9 @@ RSpec.describe Setting, type: :model do
 
         # ensure cache is not touched by broadcasting the new value
         allow_any_instance_of(described_class).to receive(:broadcast_frontend)
+
+        # ensure cache is not re-warmed by the audit log search indexing reading settings
+        allow_any_instance_of(AuditLog).to receive(:search_index_update)
       end
 
       it 'cache is valid' do

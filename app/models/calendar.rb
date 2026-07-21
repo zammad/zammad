@@ -2,8 +2,11 @@
 
 class Calendar < ApplicationModel
   include ChecksClientNotification
+  include HasAuditLogs
   include CanUniqName
   include HasEscalationCalculationImpact
+
+  self.audit_log_attributes_ignored = %i[last_log last_sync public_holidays]
 
   store :business_hours
   store :public_holidays

@@ -1,6 +1,8 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Package < ApplicationModel
+  include HasAuditLogs
+
   @@root = Rails.root.to_s # rubocop:disable Style/ClassVars
 
 =begin

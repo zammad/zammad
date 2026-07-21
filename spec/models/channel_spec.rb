@@ -1,8 +1,10 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
+require 'models/concerns/has_audit_logs_examples'
 
 RSpec.describe Channel, type: :model do
+  it_behaves_like 'HasAuditLogs', update_attribute: 'active', update_value: false, name_attribute: 'area'
 
   describe '.fetch' do
 

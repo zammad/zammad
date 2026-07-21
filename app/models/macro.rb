@@ -2,6 +2,7 @@
 
 class Macro < ApplicationModel
   include ChecksClientNotification
+  include HasAuditLogs
   include ChecksHtmlSanitized
   include CanSeed
   include HasCollectionUpdate

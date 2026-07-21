@@ -16,6 +16,7 @@ class SearchIndexBackend
     Sla              => %w[condition],
     Template         => %w[options],
     Trigger          => %w[condition perform],
+    AuditLog         => %w[value_from value_to],
   }.freeze
 
 =begin

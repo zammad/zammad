@@ -1051,5 +1051,22 @@ class CreateBase < ActiveRecord::Migration[4.2]
 
       t.index :updated_at, order: { updated_at: :desc }
     end
+
+    create_table :audit_logs do |t|
+      t.references :user, null: true, type: :integer
+      t.string :user_fullname, limit: 255, null: true
+      t.string :action_type, limit: 100, null: false
+      t.references :auditable, polymorphic: true, null: false, type: :integer
+      t.string :auditable_name, limit: 255, null: true
+      t.jsonb :value_from, null: false, default: {}
+      t.jsonb :value_to, null: false, default: {}
+      t.string :source_ip, limit: 50, null: true
+      t.jsonb :preferences, null: false, default: {}
+
+      t.timestamps limit: 3, null: false
+
+      t.index :action_type
+      t.index :created_at
+    end
   end
 end

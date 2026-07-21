@@ -8,9 +8,24 @@ module HasRoles
 
     has_and_belongs_to_many :roles,
                             before_add:    %i[validate_agent_limit_by_role validate_roles],
-                            after_add:     %i[cache_update role_check_preference_notifications_default],
+                            after_add:     %i[cache_update role_check_preference_notifications_default audit_log_role_add],
                             before_remove: :last_admin_check_by_role,
-                            after_remove:  %i[cache_update]
+                            after_remove:  %i[cache_update audit_log_role_remove]
+
+    after_create :audit_log_roles_after_create
+  end
+
+  def audit_log_role_add(role)
+    AuditLog.log_role_assignment(user: self, role:, action_type: 'role_add')
+  end
+
+  def audit_log_role_remove(role)
+    AuditLog.log_role_assignment(user: self, role:, action_type: 'role_remove')
+  end
+
+  # role assignments of a new record fire the association callbacks before it is persisted, log them after creation
+  def audit_log_roles_after_create
+    roles.each { |role| audit_log_role_add(role) }
   end
 
   # Checks a given Group( ID) for given access(es) for the instance associated roles.

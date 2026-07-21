@@ -102,6 +102,17 @@ RSpec.describe 'ChecklistTemplates', current_user_id: 1, type: :request do
         it 'returns checklist template' do
           expect(json_response.except(:created_at, :updated_at)).to include(ChecklistTemplate.last.attributes_with_association_ids.except(:created_at, :updated_at))
         end
+
+        it 'creates a single audit log entry which already contains the item texts' do
+          checklist_template = ChecklistTemplate.last
+
+          expect(AuditLog.where(auditable: checklist_template)).to contain_exactly(
+            have_attributes(
+              action_type: 'create',
+              value_to:    include('sorted_item_names' => checklist_template.sorted_items.map(&:text)),
+            )
+          )
+        end
       end
     end
   end

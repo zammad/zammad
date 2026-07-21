@@ -6,9 +6,12 @@ class PublicLink < ApplicationModel
   include CanSelector
   include CanSearch
 
-  include CanPriorization
   include ChecksClientNotification
+  include HasAuditLogs
+  include CanPriorization
   include PublicLink::TriggersSubscriptions
+
+  self.audit_log_name_attribute = :title
 
   AVAILABLE_SCREENS = %w[login signup password_reset].freeze
 

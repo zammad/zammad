@@ -1,9 +1,25 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
+require 'models/concerns/has_audit_logs_examples'
 
 RSpec.describe PGPKey, type: :model do
   let(:user) { create(:admin) }
+
+  it_behaves_like 'HasAuditLogs', update_attribute: 'domain_alias', update_value: 'example.com'
+
+  describe 'audit log sensitive values masking' do
+    subject(:pgp_key) { create(:pgp_key) }
+
+    before do
+      Setting.set('system_init_done', true)
+    end
+
+    it 'masks key material in audit log snapshots' do
+      expect(AuditLog.find_by(auditable_type: 'PGPKey', auditable_id: pgp_key.id, action_type: 'create').value_to)
+        .to include('key' => SensitiveParamsHelper::SENSITIVE_MASK, 'passphrase' => SensitiveParamsHelper::SENSITIVE_MASK)
+    end
+  end
 
   describe '#create' do
     let(:fixture)     { 'zammad@localhost' }

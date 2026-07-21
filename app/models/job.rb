@@ -2,6 +2,7 @@
 
 class Job < ApplicationModel
   include ChecksClientNotification
+  include HasAuditLogs
   include ChecksConditionValidation
   include ChecksHtmlSanitized
   include HasTimeplan
@@ -12,6 +13,8 @@ class Job < ApplicationModel
 
   include Job::Assets
   include Job::SearchIndex
+
+  self.audit_log_attributes_ignored = %i[last_run_at next_run_at running processed matching pid]
 
   OBJECTS_BATCH_SIZE = 2_000
 

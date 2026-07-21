@@ -1,6 +1,11 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class PGPKey < ApplicationModel
+  include CanSensitiveAssets
+  include HasAuditLogs
+
+  SENSITIVE_FIELDS = %i[key passphrase].freeze
+
   default_scope { order(created_at: :desc, id: :desc) }
 
   before_validation :ensure_ascii_key, :prepare_key_info, on: :create

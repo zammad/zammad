@@ -38,6 +38,218 @@ RSpec.describe User, type: :model do
   # it_behaves_like 'CanCsvImport', unique_attributes: 'email'
   include_examples 'CanCsvImport - User specific tests'
   it_behaves_like 'HasObjectManagerAttributes'
+
+  describe 'audit log tracking of password changes' do
+    subject(:tracked_user) { create(:agent) }
+
+    let(:audit_logs) { AuditLog.where(auditable_type: 'User') }
+
+    before do
+      Setting.set('system_init_done', true)
+    end
+
+    it 'logs user creation only with the role assignment, without an attribute snapshot' do
+      tracked_user
+
+      expect(audit_logs).to contain_exactly(
+        have_attributes(
+          action_type: 'create',
+          value_from:  {},
+          value_to:    { 'roles' => ['Agent'] },
+        )
+      )
+    end
+
+    it 'does not log untracked attribute updates' do
+      tracked_user
+
+      expect { tracked_user.update!(firstname: 'Some updated firstname') }.not_to change(audit_logs, :count)
+    end
+
+    it 'logs password changes' do
+      tracked_user
+
+      expect { tracked_user.update!(password: 'someSecurePass123!') }
+        .to change(audit_logs.where(action_type: 'update', auditable_id: tracked_user.id), :count).by(1)
+    end
+
+    it 'masks the password values and records the changed attribute' do
+      tracked_user.update!(password: 'someSecurePass123!')
+
+      expect(audit_logs.find_by(action_type: 'update', auditable_id: tracked_user.id)).to have_attributes(
+        auditable_name: tracked_user.fullname,
+        value_from:     { 'password' => SensitiveParamsHelper::SENSITIVE_MASK },
+        value_to:       { 'password' => SensitiveParamsHelper::SENSITIVE_MASK },
+        preferences:    include('changed_attributes' => ['password']),
+      )
+    end
+
+    it 'logs password changes of admins' do
+      admin = create(:admin_only)
+
+      expect { admin.update!(password: 'someSecurePass123!') }
+        .to change(audit_logs.where(action_type: 'update', auditable_id: admin.id), :count).by(1)
+    end
+
+    it 'does not log password changes of customers' do
+      customer = create(:customer)
+
+      expect { customer.update!(password: 'someSecurePass123!') }.not_to change(audit_logs, :count)
+    end
+  end
+
+  describe 'audit log tracking of role assignment' do
+    subject(:user) { create(:user) }
+
+    let(:audit_logs)    { AuditLog.where(auditable: user) }
+    let(:agent_role)    { create(:role, :agent) }
+    let(:admin_role)    { create(:role, :admin) }
+    let(:customer_role) { create(:role, :customer) }
+
+    before do
+      Setting.set('system_init_done', true)
+    end
+
+    it 'logs an update entry when an agent/admin related role is assigned' do
+      expect { user.roles << agent_role }
+        .to change { audit_logs.where(action_type: 'update').count }.by(1)
+    end
+
+    it 'logs a create entry instead of an update entry when a user is created with an agent/admin related role' do
+      new_user = create(:user, roles: [agent_role])
+
+      expect(AuditLog.where(auditable: new_user)).to contain_exactly(
+        have_attributes(
+          action_type: 'create',
+          value_from:  {},
+          value_to:    { 'roles' => [agent_role.name] },
+        )
+      )
+    end
+
+    it 'includes the group permissions in the create entry' do
+      group    = create(:group)
+      new_user = create(:user, roles: [agent_role], group_names_access_map: { group.name => ['full'] })
+
+      expect(AuditLog.find_by(auditable: new_user, action_type: 'create').value_to)
+        .to include('roles' => [agent_role.name], 'group_permissions' => { group.name => ['full'] })
+    end
+
+    it 'creates no audit log entry when a user is created with only a customer role' do
+      customer_role
+
+      expect { create(:user, roles: [customer_role]) }.not_to change(AuditLog, :count)
+    end
+
+    it 'records the acting user, the auditable name and the added role names' do
+      UserInfo.with_user_id(1) { user.roles << agent_role }
+
+      expect(audit_logs.find_by(action_type: 'update')).to have_attributes(
+        auditable_name: user.fullname,
+        user_id:        1,
+        value_to:       { 'roles' => [agent_role.name] },
+      )
+    end
+
+    it 'logs added and removed roles of one update in a single entry' do
+      user.roles << agent_role
+
+      expect { user.update!(roles: [customer_role, admin_role]) }
+        .to change { audit_logs.where(action_type: 'update').count }.by(1)
+
+      expect(audit_logs.where(action_type: 'update').reorder(:id).last).to have_attributes(
+        value_from: { 'roles' => [agent_role.name] },
+        value_to:   { 'roles' => [admin_role.name] },
+      )
+    end
+
+    it 'logs the removal of a role in value_from' do
+      user.roles << agent_role
+
+      expect { user.roles.delete(agent_role) }
+        .to change { audit_logs.where(action_type: 'update').count }.by(1)
+
+      expect(audit_logs.where(action_type: 'update').reorder(:id).last).to have_attributes(
+        value_from: { 'roles' => [agent_role.name] },
+        value_to:   {},
+      )
+    end
+
+    it 'creates no audit log entry for a customer role' do
+      user
+      customer_role
+
+      expect { user.roles << customer_role }.not_to change(AuditLog, :count)
+    end
+
+    it 'logs added and removed group permissions of an update' do
+      group = create(:group)
+      agent = create(:agent, group_names_access_map: { group.name => ['read'] })
+
+      agent.update!(group_names_access_map: { group.name => ['full'] })
+
+      expect(AuditLog.where(auditable: agent, action_type: 'update').reorder(:id).last).to have_attributes(
+        value_from: { 'group_permissions' => { group.name => ['read'] } },
+        value_to:   { 'group_permissions' => { group.name => ['full'] } },
+      )
+    end
+
+    context 'when roles and group permissions change in one transaction' do
+      let(:group) { create(:group) }
+      let(:agent) { create(:agent) }
+
+      def update_user_in_one_transaction
+        agent.with_lock do
+          agent.update!(roles: agent.roles + [admin_role], group_names_access_map: { group.name => ['full'] })
+        end
+      end
+
+      it 'creates a single update entry' do
+        expect { update_user_in_one_transaction }
+          .to change { AuditLog.where(auditable: agent, action_type: 'update').count }.by(1)
+      end
+
+      it 'merges the role and group permission changes into the entry' do
+        update_user_in_one_transaction
+
+        expect(AuditLog.find_by(auditable: agent, action_type: 'update').value_to)
+          .to eq('roles' => [admin_role.name], 'group_permissions' => { group.name => ['full'] })
+      end
+    end
+  end
+
+  describe 'audit log tracking of user destruction' do
+    let(:group) { create(:group) }
+
+    before do
+      Setting.set('system_init_done', true)
+    end
+
+    it 'logs a destroy entry when an agent gets destroyed' do
+      agent = create(:agent)
+
+      expect { agent.destroy! }
+        .to change { AuditLog.where(auditable_type: 'User', auditable_id: agent.id, action_type: 'destroy').count }.by(1)
+    end
+
+    it 'records the roles and group permissions in value_from' do
+      agent = create(:agent, group_names_access_map: { group.name => ['full'] })
+      agent.destroy!
+
+      expect(AuditLog.find_by(auditable_type: 'User', auditable_id: agent.id, action_type: 'destroy')).to have_attributes(
+        auditable_name: agent.fullname,
+        value_from:     { 'roles' => ['Agent'], 'group_permissions' => { group.name => ['full'] } },
+        value_to:       {},
+      )
+    end
+
+    it 'creates no entry when a customer gets destroyed' do
+      customer = create(:customer)
+
+      expect { customer.destroy! }.not_to change(AuditLog, :count)
+    end
+  end
+
   it_behaves_like 'CanLookupSearchIndexAttributes'
   it_behaves_like 'HasTaskbars'
   it_behaves_like 'HasRecentCloses'
@@ -1127,6 +1339,7 @@ RSpec.describe User, type: :model do
         'AI::Analytics::Usage'               => { 'user_id' => 1 },
         'AI::TextTool'                       => { 'created_by_id' => 0, 'updated_by_id' => 0 },
         'ActivityStream'                     => { 'created_by_id' => 0 },
+        'AuditLog'                           => { 'user_id' => 1 },
         'StatsStore'                         => { 'created_by_id' => 0 },
         'TextModule'                         => { 'created_by_id' => 0, 'updated_by_id' => 0 },
         'Calendar'                           => { 'created_by_id' => 0, 'updated_by_id' => 0 },
@@ -1163,6 +1376,7 @@ RSpec.describe User, type: :model do
       user_overview_sorting      = create(:'user/overview_sorting', user: user)
       recent_close               = create(:recent_close, user: user)
       ai_usage                   = create(:ai_analytics_usage, user: user)
+      audit_log                  = create(:audit_log, user: user, auditable: user)
       expect(overview.reload.user_ids).to eq([user.id])
 
       # create a chat agent for admin user (id=1) before agent user
@@ -1216,6 +1430,9 @@ RSpec.describe User, type: :model do
       expect { user_overview_sorting.reload }.to raise_exception(ActiveRecord::RecordNotFound)
       expect { recent_close.reload }.to raise_exception(ActiveRecord::RecordNotFound)
       expect { ai_usage.reload }.to raise_exception(ActiveRecord::RecordNotFound)
+
+      # audit logs are kept untouched to preserve the history of deleted users
+      expect(audit_log.reload.user_id).to eq(user.id)
 
       # move ownership objects
       expect { group.reload }.to change(group, :created_by_id).to(1)

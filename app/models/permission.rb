@@ -2,8 +2,11 @@
 
 class Permission < ApplicationModel
   include ChecksClientNotification
+  include HasAuditLogs
   include ChecksHtmlSanitized
   include HasCollectionUpdate
+
+  self.audit_log_attributes_ignored = %i[preferences]
 
   has_and_belongs_to_many :roles
   store                   :preferences

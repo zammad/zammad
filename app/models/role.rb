@@ -14,13 +14,18 @@ class Role < ApplicationModel
   include CanSearch
 
   include Role::Assets
+  include Role::HasAuditLogs
 
-  has_and_belongs_to_many :users, after_add: :cache_update, after_remove: :cache_update
+  self.audit_log_attributes_ignored = %i[preferences]
+
+  has_and_belongs_to_many :users,
+                          after_add:    %i[cache_update audit_log_user_add],
+                          after_remove: %i[cache_update audit_log_user_remove]
   has_and_belongs_to_many :permissions,
                           before_add:    %i[validate_agent_limit_by_permission validate_permissions],
-                          after_add:     %i[cache_update cache_add_kb_permission],
+                          after_add:     %i[cache_update cache_add_kb_permission audit_log_permission_add],
                           before_remove: :last_admin_check_by_permission,
-                          after_remove:  %i[cache_update cache_remove_kb_permission]
+                          after_remove:  %i[cache_update cache_remove_kb_permission audit_log_permission_remove]
   validates               :name, presence: true, uniqueness: { case_sensitive: false }
   store                   :preferences
   has_many                :knowledge_base_permissions, class_name: 'KnowledgeBase::Permission', dependent: :destroy
@@ -169,7 +174,43 @@ returns
     end
   end
 
+=begin
+
+check if the role grants agent or admin access (i.e. it has the ticket.agent,
+admin or any admin.* permission)
+
+  role.grants_elevated_access?
+
+returns
+
+  true | false
+
+=end
+
+  def grants_elevated_access?
+    permissions
+      .where(active: true)
+      .exists?(['permissions.name = :agent OR permissions.name = :admin OR permissions.name LIKE :admin_sub',
+                { agent: 'ticket.agent', admin: 'admin', admin_sub: 'admin.%' }])
+  end
+
   private
+
+  def audit_log_user_add(user)
+    AuditLog.log_role_assignment(user:, role: self, action_type: 'role_add')
+  end
+
+  def audit_log_user_remove(user)
+    AuditLog.log_role_assignment(user:, role: self, action_type: 'role_remove')
+  end
+
+  def audit_log_permission_add(permission)
+    AuditLog.log_association_update(record: self, action_type: 'update', key: 'permissions', added: permission.name)
+  end
+
+  def audit_log_permission_remove(permission)
+    AuditLog.log_association_update(record: self, action_type: 'update', key: 'permissions', removed: permission.name)
+  end
 
   def validate_permissions(permission)
     Rails.logger.debug { "self permission: #{permission.id}" }

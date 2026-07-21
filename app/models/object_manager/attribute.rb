@@ -4,7 +4,10 @@ class ObjectManager::Attribute < ApplicationModel
   include HasDefaultModelUserRelations
 
   include ChecksClientNotification
+  include HasAuditLogs
   include CanSeed
+
+  self.audit_log_attributes_ignored = %i[to_create to_migrate to_delete to_config data_option_new position]
 
   DATA_TYPES = %w[
     input

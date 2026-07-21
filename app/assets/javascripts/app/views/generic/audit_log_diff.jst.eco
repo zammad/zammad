@@ -1,0 +1,9 @@
+<div class="audit-log-diff">
+  <% if _.isEmpty(@lines): %>
+    <div class="audit-log-diff-empty"><%- @T('No changes.') %></div>
+  <% else: %>
+    <% for line in @lines: %>
+      <div class="audit-log-diff-line audit-log-diff-line--<%= line.type %>"><span class="audit-log-diff-sign"><%= line.sign %></span><%= line.text %></div>
+    <% end %>
+  <% end %>
+</div>

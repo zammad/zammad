@@ -4,6 +4,7 @@ class Overview < ApplicationModel
   include HasDefaultModelUserRelations
 
   include ChecksClientNotification
+  include HasAuditLogs
   include ChecksConditionValidation
   include CanSeed
   include CanPriorization

@@ -2,7 +2,12 @@
 
 class User::TwoFactorPreference < ApplicationModel
   include HasDefaultModelUserRelations
+  include CanSensitiveAssets
+
+  include User::TwoFactorPreference::HasAuditLogs
   include User::TwoFactorPreference::TriggersSubscriptions
+
+  SENSITIVE_FIELDS = %i[configuration].freeze
 
   belongs_to :user, class_name: 'User', touch: true
 

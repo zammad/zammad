@@ -20,6 +20,15 @@ RSpec.describe 'User', authenticated_as: :admin, current_user_id: 1, type: :requ
         .to change { agent.two_factor_preferences.count }
         .to(0)
     end
+
+    it 'creates an audit log entry' do
+      two_factor_pref
+
+      delete "/api/v1/users/#{agent.id}/admin_two_factor/remove_authentication_method", params: { method: 'authenticator_app' }, as: :json
+
+      expect(AuditLog.find_by(auditable_type: 'User::TwoFactorPreference', auditable_id: two_factor_pref.id, action_type: 'destroy'))
+        .to have_attributes(user_id: admin.id, auditable_name: 'authenticator_app')
+    end
   end
 
   describe 'DELETE /users/:id/admin_two_factor/remove_all_authentication_methods' do

@@ -1,11 +1,16 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
+require 'models/concerns/has_audit_logs_examples'
 
 RSpec.describe SSLCertificate, :aggregate_failures, type: :model do
 
   let(:fixture)     { 'RootCA' }
   let(:certificate) { create(:ssl_certificate, fixture: fixture) }
+
+  it_behaves_like 'HasAuditLogs', update_attribute: 'subject', update_value: 'Some updated subject', name_attribute: 'fingerprint' do
+    subject { create(:ssl_certificate, fixture: 'RootCA') }
+  end
 
   describe '.create' do
     context 'when certificate is RootCA' do

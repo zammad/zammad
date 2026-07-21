@@ -1,6 +1,7 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
+require 'models/concerns/has_audit_logs_examples'
 require 'models/application_model_examples'
 require 'models/concerns/can_be_imported_examples'
 require 'models/concerns/has_groups_examples'
@@ -10,6 +11,8 @@ require 'models/concerns/has_xss_sanitized_note_examples'
 RSpec.describe Role do
   subject(:role) { create(:role) }
 
+  it_behaves_like 'HasAuditLogs', update_attribute: 'name', update_value: 'Some updated name'
+
   it_behaves_like 'ApplicationModel'
   it_behaves_like 'CanBeImported'
   it_behaves_like 'HasGroups', group_access_factory: :role
@@ -17,6 +20,229 @@ RSpec.describe Role do
   it_behaves_like 'HasXssSanitizedNote', model_factory: :role
   it_behaves_like 'Association clears cache', association: :permissions
   it_behaves_like 'Association clears cache', association: :users
+
+  describe '#grants_elevated_access?' do
+    it 'is true for a role with the agent permission' do
+      expect(create(:role, :agent).grants_elevated_access?).to be(true)
+    end
+
+    it 'is true for a role with the admin permission' do
+      expect(create(:role, :admin).grants_elevated_access?).to be(true)
+    end
+
+    it 'is true for a role with an admin.* sub-permission' do
+      expect(create(:role, :admin_core_workflow).grants_elevated_access?).to be(true)
+    end
+
+    it 'is false for a role with only the customer permission' do
+      expect(create(:role, :customer).grants_elevated_access?).to be(false)
+    end
+  end
+
+  describe 'audit logging of role assignment (role side)' do
+    let(:user)       { create(:user) }
+    let(:audit_logs) { AuditLog.where(auditable: user) }
+
+    before do
+      Setting.set('system_init_done', true)
+    end
+
+    context 'with an agent/admin related role' do
+      subject(:role) { create(:role, :agent) }
+
+      it 'logs an update entry for the user when assigned' do
+        expect { role.users << user }
+          .to change { audit_logs.where(action_type: 'update').count }.by(1)
+      end
+
+      it 'records the role name in value_to' do
+        role.users << user
+
+        expect(audit_logs.find_by(action_type: 'update').value_to).to eq('roles' => [role.name])
+      end
+
+      it 'logs an update entry with value_from for the user when removed' do
+        role.users << user
+        role.users.delete(user)
+
+        expect(audit_logs.reorder(:id).last).to have_attributes(
+          action_type: 'update',
+          value_from:  { 'roles' => [role.name] },
+        )
+      end
+    end
+
+    context 'with a customer role' do
+      subject(:role) { create(:role, :customer) }
+
+      it 'creates no audit log entry' do
+        user
+        role
+
+        expect { role.users << user }.not_to change(AuditLog, :count)
+      end
+    end
+  end
+
+  describe 'audit logging of permission changes' do
+    subject(:role) { create(:role) }
+
+    let(:audit_logs)   { AuditLog.where(auditable: role) }
+    let(:permission_a) { create(:permission) }
+    let(:permission_b) { create(:permission) }
+
+    # simulate a change to an existing role (assignments during role creation are not logged)
+    before do
+      Setting.set('system_init_done', true)
+      role.reload
+    end
+
+    it 'logs an update entry when a permission is added' do
+      expect { role.permissions << permission_a }
+        .to change { audit_logs.where(action_type: 'update').count }.by(1)
+    end
+
+    it 'logs added and removed permissions of one update in a single entry' do
+      role.permissions << permission_a
+
+      expect { role.update!(permissions: [permission_b]) }
+        .to change { audit_logs.where(action_type: 'update').count }.by(1)
+    end
+
+    it 'records added and removed permissions in value_to and value_from' do
+      role.permissions << permission_a
+      role.update!(permissions: [permission_b])
+
+      expect(audit_logs.reorder(:id).last).to have_attributes(
+        action_type: 'update',
+        value_from:  { 'permissions' => [permission_a.name] },
+        value_to:    { 'permissions' => [permission_b.name] },
+      )
+    end
+  end
+
+  describe 'audit logging of group permission changes' do
+    subject(:role) { create(:role, :agent) }
+
+    let(:audit_logs) { AuditLog.where(auditable: role) }
+    let(:group)      { create(:group) }
+
+    # simulate a change to an existing role (assignments during role creation are not logged)
+    before do
+      Setting.set('system_init_done', true)
+      role.reload
+      role.update!(group_names_access_map: { group.name => ['read'] })
+    end
+
+    it 'logs an update entry when the group access changes' do
+      expect { role.update!(group_names_access_map: { group.name => ['full'] }) }
+        .to change { audit_logs.where(action_type: 'update').count }.by(1)
+    end
+
+    it 'records removed and added access per group name under a group_permissions key' do
+      role.update!(group_names_access_map: { group.name => ['full'] })
+
+      expect(audit_logs.reorder(:id).last).to have_attributes(
+        action_type: 'update',
+        value_from:  { 'group_permissions' => { group.name => ['read'] } },
+        value_to:    { 'group_permissions' => { group.name => ['full'] } },
+      )
+    end
+
+    it 'creates no update entry when the role gets destroyed' do
+      expect { role.destroy! }
+        .not_to change { audit_logs.where(action_type: 'update').count }
+    end
+  end
+
+  describe 'audit logging of combined role updates' do
+    subject(:role) { create(:role, :agent) }
+
+    let(:audit_logs) { AuditLog.where(auditable: role) }
+    let(:group)      { create(:group) }
+    let(:permission) { create(:permission) }
+
+    before do
+      Setting.set('system_init_done', true)
+      role.reload
+    end
+
+    def update_role_in_one_transaction
+      role.with_lock do
+        role.update!(name: 'Some updated name', permissions: role.permissions + [permission], group_names_access_map: { group.name => ['full'] })
+      end
+    end
+
+    it 'creates a single update entry for all changes of one transaction' do
+      expect { update_role_in_one_transaction }
+        .to change { audit_logs.where(action_type: 'update').count }.by(1)
+    end
+
+    it 'merges attribute, permission and group permission changes into the entry' do
+      update_role_in_one_transaction
+
+      expect(audit_logs.find_by(action_type: 'update').value_to)
+        .to include('name' => 'Some updated name', 'permissions' => [permission.name], 'group_permissions' => { group.name => ['full'] })
+    end
+
+    it 'records the changed attributes including the association keys' do
+      update_role_in_one_transaction
+
+      expect(audit_logs.find_by(action_type: 'update').preferences['changed_attributes'])
+        .to match_array(%w[name permissions group_permissions])
+    end
+  end
+
+  describe 'audit logging of role destruction' do
+    let(:group) { create(:group) }
+
+    before do
+      Setting.set('system_init_done', true)
+    end
+
+    it 'includes the permissions and group permissions in the destroy entry' do
+      destroyed_role = create(:role, :agent, group_names_access_map: { group.name => ['full'] })
+      destroyed_role.destroy!
+
+      expect(AuditLog.find_by(auditable_type: 'Role', auditable_id: destroyed_role.id, action_type: 'destroy').value_from)
+        .to include('permissions' => ['ticket.agent'], 'group_permissions' => { group.name => ['full'] })
+    end
+  end
+
+  describe 'audit logging of role creation' do
+    let(:group) { create(:group) }
+
+    before do
+      Setting.set('system_init_done', true)
+    end
+
+    it 'includes the selected permissions in the create entry' do
+      new_role = create(:role, :agent)
+
+      expect(AuditLog.find_by(auditable: new_role, action_type: 'create').value_to)
+        .to include('permissions' => ['ticket.agent'])
+    end
+
+    it 'includes the selected group permissions in the create entry' do
+      new_role = create(:role, :agent, group_names_access_map: { group.name => ['full'] })
+
+      expect(AuditLog.find_by(auditable: new_role, action_type: 'create').value_to)
+        .to include('group_permissions' => { group.name => ['full'] })
+    end
+
+    it 'includes no permission keys when created without permissions' do
+      new_role = create(:role)
+
+      expect(AuditLog.find_by(auditable: new_role, action_type: 'create').value_to.keys)
+        .not_to include('permissions', 'group_permissions')
+    end
+
+    it 'creates no additional update entries when created with permissions and group permissions' do
+      new_role = create(:role, :agent, group_names_access_map: { group.name => ['full'] })
+
+      expect(AuditLog.where(auditable: new_role).map(&:action_type)).to eq(['create'])
+    end
+  end
 
   describe 'Default state' do
     describe 'of whole table:' do

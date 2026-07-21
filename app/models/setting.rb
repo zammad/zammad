@@ -6,6 +6,10 @@
 class Setting < ApplicationModel
   include ChecksClientNotification
 
+  include Setting::HasAuditLogs
+
+  SENSITIVE_SETTING_NAMES = %w[secret auth_ password pw credential endpoint_key _config _token recovery_codes pwd captcha_options].freeze
+
   store         :options
   store         :state_current
   store         :state_initial
@@ -125,6 +129,10 @@ reload config settings
   def self.filter_param(key, value)
     @@parameter_filter ||= ActiveSupport::ParameterFilter.new(Rails.application.config.filter_parameters)
     @@parameter_filter.filter_param(key, value)
+  end
+
+  def sensitive?
+    SENSITIVE_SETTING_NAMES.any? { |word| name.include?(word) } # rubocop:disable Style/ArrayIntersect
   end
 
   private

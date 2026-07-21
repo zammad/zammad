@@ -157,6 +157,15 @@ Scheduler.create_or_update(
   created_by_id: 1,
 )
 Scheduler.create_if_not_exists(
+  name:          __("Clean up 'AuditLog'."),
+  method:        'AuditLog.cleanup',
+  period:        1.day,
+  prio:          2,
+  active:        true,
+  updated_by_id: 1,
+  created_by_id: 1,
+)
+Scheduler.create_if_not_exists(
   name:          __("Clean up 'HttpLog'."),
   method:        'HttpLog.cleanup',
   period:        1.day,

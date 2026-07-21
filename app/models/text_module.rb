@@ -4,6 +4,7 @@ class TextModule < ApplicationModel
   include HasDefaultModelUserRelations
 
   include ChecksClientNotification
+  include HasAuditLogs
   include ChecksHtmlSanitized
   include CanCsvImport
   include HasSearchIndexBackend

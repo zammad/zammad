@@ -190,6 +190,13 @@ class SessionsController < ApplicationController
     # log new session
     user.activity_stream_log('switch to', current_user.id, true)
 
+    AuditLog.create!(
+      action_type:    'switch_to',
+      auditable:      user,
+      auditable_name: user.fullname,
+      user_id:        current_user.id,
+    )
+
     # set session user
     current_user_set(user)
 
@@ -227,6 +234,13 @@ class SessionsController < ApplicationController
 
     # log end session
     current_session_user.activity_stream_log('ended switch to', user.id, true)
+
+    AuditLog.create!(
+      action_type:    'switch_back_to',
+      auditable:      current_session_user,
+      auditable_name: current_session_user.fullname,
+      user_id:        user.id,
+    )
 
     render(
       json: {

@@ -1,8 +1,24 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
+require 'models/concerns/has_audit_logs_examples'
 
 RSpec.describe User::TwoFactorPreference, type: :model do
+  it_behaves_like 'HasAuditLogs', update_attribute: 'method', update_value: 'security_keys', name_attribute: 'method' do
+    subject { create(:user_two_factor_preference, :authenticator_app, user: create(:agent)) }
+  end
+
+  describe 'audit logging restricted by permission' do
+    before { Setting.set('system_init_done', true) }
+
+    let(:audit_logs) { AuditLog.where(auditable_type: described_class.name) }
+
+    it 'does not log 2FA changes of customers' do
+      expect { create(:user_two_factor_preference, :authenticator_app, user: create(:customer)) }
+        .not_to change(audit_logs, :count)
+    end
+  end
+
   describe 'hooks' do
     context 'when after_destroy/after_save is triggered' do
       let(:user)                         { create(:user) }

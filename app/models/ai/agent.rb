@@ -60,6 +60,7 @@ class AI::Agent < ApplicationModel
   include EnsuresNoRelatedObjects
   include AI::Agent::Assets
   include ChecksClientNotification
+  include HasAuditLogs
 
   PERFORMABLE_PATH = ['ai.ai_agent', 'ai_agent_id'].freeze
 

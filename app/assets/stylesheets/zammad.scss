@@ -16221,3 +16221,49 @@ div.accounted-time-value {
     padding: 0;
   }
 }
+
+.audit-log-diff {
+  --diff-removed-background: hsl(355, 100%, 97%);
+  --diff-removed-text: hsl(356, 73%, 41%);
+  --diff-added-background: hsl(137, 100%, 95%);
+  --diff-added-text: hsl(134, 60%, 33%);
+
+  @include dark {
+    --diff-removed-background: hsla(4, 70%, 60%, 0.15);
+    --diff-removed-text: hsl(4, 89%, 71%);
+    --diff-added-background: hsla(140, 60%, 50%, 0.15);
+    --diff-added-text: hsl(137, 55%, 62%);
+  }
+
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  font-family: monospace;
+  font-size: 12px;
+  line-height: 1.7;
+  overflow: auto;
+
+  &-line {
+    padding: 0 10px;
+    white-space: pre-wrap;
+
+    &--removed {
+      background: var(--diff-removed-background);
+      color: var(--diff-removed-text);
+    }
+
+    &--added {
+      background: var(--diff-added-background);
+      color: var(--diff-added-text);
+    }
+  }
+
+  &-sign {
+    display: inline-block;
+    width: 14px;
+  }
+
+  &-empty {
+    color: var(--text-muted);
+    padding: 10px;
+  }
+}

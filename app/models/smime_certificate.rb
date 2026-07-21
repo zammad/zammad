@@ -1,6 +1,14 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class SMIMECertificate < ApplicationModel
+  include CanSensitiveAssets
+  include HasAuditLogs
+
+  SENSITIVE_FIELDS = %i[private_key private_key_secret].freeze
+
+  self.audit_log_name_attribute = :fingerprint
+  self.audit_log_attributes_ignored = %i[pem]
+
   default_scope { order(created_at: :desc, id: :desc) }
 
   validates :fingerprint, uniqueness: { case_sensitive: true }

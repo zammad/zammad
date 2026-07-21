@@ -1,8 +1,12 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
+require 'models/concerns/has_audit_logs_examples'
 
 RSpec.describe ObjectManager::Attribute, type: :model do
+  it_behaves_like 'HasAuditLogs', update_attribute: 'display', update_value: 'Some updated display' do
+    subject { create(:object_manager_attribute_text) }
+  end
 
   describe 'callbacks' do
     context 'for setting default values on local data options' do

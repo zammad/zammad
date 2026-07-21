@@ -2,6 +2,7 @@
 
 class Template < ApplicationModel
   include ChecksClientNotification
+  include HasAuditLogs
   include HasSearchIndexBackend
   include CanSelector
   include CanSearch

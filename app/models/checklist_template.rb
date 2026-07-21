@@ -3,6 +3,7 @@
 class ChecklistTemplate < ApplicationModel
   include HasDefaultModelUserRelations
   include ChecksClientNotification
+  include ChecklistTemplate::HasAuditLogs
   include ChecklistTemplate::TriggersSubscriptions
   include ChecklistTemplate::Assets
   include CanChecklistSortedItems
@@ -17,6 +18,8 @@ class ChecklistTemplate < ApplicationModel
     end
 
     ActiveRecord::Base.transaction do
+      audit_log_remember_item_texts
+
       items.destroy_all
 
       self.sorted_item_ids = new_items

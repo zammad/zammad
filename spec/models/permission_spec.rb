@@ -1,10 +1,12 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
+require 'models/concerns/has_audit_logs_examples'
 require 'models/concerns/has_collection_update_examples'
 require 'models/concerns/has_xss_sanitized_note_examples'
 
 RSpec.describe Permission, type: :model do
+  it_behaves_like 'HasAuditLogs', update_attribute: 'label', update_value: 'Some updated label'
   it_behaves_like 'HasCollectionUpdate', collection_factory: :permission
   it_behaves_like 'HasXssSanitizedNote', model_factory: :permission, attribut_name: :description
 

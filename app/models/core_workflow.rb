@@ -2,6 +2,7 @@
 
 class CoreWorkflow < ApplicationModel
   include ChecksClientNotification
+  include HasAuditLogs
   include ChecksCoreWorkflow
   include HasSearchIndexBackend
   include CanSelector
@@ -9,6 +10,8 @@ class CoreWorkflow < ApplicationModel
 
   include CoreWorkflow::Assets
   include CoreWorkflow::Search
+
+  self.audit_log_attributes_ignored = %i[preferences]
 
   core_workflow_screens 'create', 'edit'
 

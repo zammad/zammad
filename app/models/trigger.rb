@@ -8,6 +8,7 @@ class Trigger < ApplicationModel
   include CanSelector
   include CanSearch
   include ChecksClientNotification
+  include HasAuditLogs
   include TouchesPerformReferences
 
   include Trigger::Assets

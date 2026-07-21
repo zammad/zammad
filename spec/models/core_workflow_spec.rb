@@ -1,9 +1,11 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
+require 'models/concerns/has_audit_logs_examples'
 require 'models/core_workflow/base'
 
 RSpec.describe CoreWorkflow, type: :model do
+  it_behaves_like 'HasAuditLogs', update_attribute: 'name', update_value: 'Some updated name'
   include_context 'with core workflow base'
 
   describe '.perform - No assets' do

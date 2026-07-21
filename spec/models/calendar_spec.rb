@@ -1,6 +1,7 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
+require 'models/concerns/has_audit_logs_examples'
 
 # Without `export TZ="Europe/London"` in the environment, the tests will fail. :(
 
@@ -8,6 +9,8 @@ RSpec.describe Calendar, type: :model do
   subject(:calendar) { create(:calendar) }
 
   let(:feed) { Digest::MD5.hexdigest(calendar.ical_url) }
+
+  it_behaves_like 'HasAuditLogs', update_attribute: 'name', update_value: 'Some updated name'
 
   describe 'attributes' do
     describe '#default' do

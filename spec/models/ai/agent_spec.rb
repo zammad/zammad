@@ -1,6 +1,7 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
+require 'models/concerns/has_audit_logs_examples'
 require 'models/application_model_examples'
 require 'models/concerns/has_xss_sanitized_note_examples'
 
@@ -8,6 +9,8 @@ RSpec.describe AI::Agent, aggregate_failures: true, current_user_id: 1, type: :m
   subject(:ai_agent) { create(:ai_agent, action_definition:) }
 
   let(:action_definition) { {} }
+
+  it_behaves_like 'HasAuditLogs', update_attribute: 'name', update_value: 'Some updated name'
 
   it_behaves_like 'ApplicationModel'
   it_behaves_like 'HasXssSanitizedNote', model_factory: :trigger

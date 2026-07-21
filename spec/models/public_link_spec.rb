@@ -1,9 +1,11 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
+require 'models/concerns/has_audit_logs_examples'
 require 'models/application_model_examples'
 
 RSpec.describe PublicLink, type: :model do
+  it_behaves_like 'HasAuditLogs', update_attribute: 'title', update_value: 'Some updated title', name_attribute: 'title'
   it_behaves_like 'ApplicationModel', can_param: { sample_data_attribute: :title }
 
   context 'when validating URLs' do

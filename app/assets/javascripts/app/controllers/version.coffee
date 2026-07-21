@@ -25,4 +25,4 @@ class Version extends App.ControllerSubContent
       version: @version
     )
 
-App.Config.set('Version', { prio: 3800, name: __('Version'), parent: '#system', target: '#system/version', controller: Version, permission: ['admin'] }, 'NavBarAdmin' )
+App.Config.set('Version', { prio: 3830, name: __('Version'), parent: '#system', target: '#system/version', controller: Version, permission: ['admin'] }, 'NavBarAdmin' )

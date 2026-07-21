@@ -47,6 +47,8 @@ class KnowledgeBase < ApplicationModel
   after_destroy :set_kb_active_setting
   after_save    :set_kb_active_setting
 
+  include KnowledgeBase::HasAuditLogs
+
   scope :active, -> { where(active: true) }
 
   alias assets_essential assets
@@ -138,13 +140,23 @@ class KnowledgeBase < ApplicationModel
   def full_destroy!
     ChecksKbClientNotification.disable_in_all_classes!
 
+    audit_log_name
+
     transaction do
-      # get all categories with their children, deepest first, to delete children before parents
-      all_children
-        .reorder(KnowledgeBase::Category.recursive_tree_depth_column => :desc)
-        .each(&:full_destroy!)
-      translations.each(&:destroy!)
-      kb_locales.each(&:destroy!)
+      # suppress audit log entries of the cascade, the destroy entry
+      # of the knowledge base itself is sufficient
+      AuditLog.suspend do
+        # get all categories with their children, deepest first, to delete children before parents
+        all_children
+          .reorder(KnowledgeBase::Category.recursive_tree_depth_column => :desc)
+          .each(&:full_destroy!)
+        translations.each(&:destroy!)
+        kb_locales.each(&:destroy!)
+
+        # reset the association so the dependent destroy of the knowledge base
+        # does not run the callbacks of the destroyed locales a second time
+        kb_locales.reset
+      end
 
       # `destroy!`'s `dependent: :restrict_with_exception` check on `categories` reads whatever is
       # already cached on the association, not a fresh query — without resetting it here, a caller

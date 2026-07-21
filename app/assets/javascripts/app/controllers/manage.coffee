@@ -11,6 +11,8 @@ class ManageRouter extends App.ControllerPermanent
     # check authentication
     @authenticateCheckRedirect()
 
+    if params.match && params.match[0].includes('audit_logs')
+      params.target = 'audit_logs'
     if params.search_query
       params.search_query = decodeURIComponent(params.search_query)
 
@@ -34,6 +36,9 @@ App.Config.set('channels/:target/error/:error_code/param/:param', ManageRouter, 
 App.Config.set('channels/:target/:channel_id', ManageRouter, 'Routes')
 App.Config.set('ai/:target', ManageRouter, 'Routes')
 App.Config.set('ai/:target/:page/:search_query', ManageRouter, 'Routes')
+App.Config.set('system/audit_logs', ManageRouter, 'Routes')
+App.Config.set('system/audit_logs/:page', ManageRouter, 'Routes')
+App.Config.set('system/audit_logs/:page/:search_query', ManageRouter, 'Routes')
 App.Config.set('system/:target', ManageRouter, 'Routes')
 App.Config.set('system/:target/:integration', ManageRouter, 'Routes')
 App.Config.set('system/:target/:integration/error/:error_code', ManageRouter, 'Routes')

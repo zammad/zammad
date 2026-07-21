@@ -1,6 +1,11 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class SSLCertificate < ApplicationModel
+  include HasAuditLogs
+
+  self.audit_log_name_attribute = :fingerprint
+  self.audit_log_attributes_ignored = %i[certificate]
+
   validate :valid_ssl_certificate
 
   before_validation :extract_metadata, on: :create

@@ -2,7 +2,7 @@
 
 class Transaction
   attr_reader :options
-  attr_accessor :original_user_id, :original_interface_handle, :original_interface_context
+  attr_accessor :original_user_id, :original_interface_handle, :original_interface_context, :original_audit_log_suspended
 
   def initialize(options = {})
     @options = options
@@ -33,6 +33,7 @@ class Transaction
     bulk_import_start
     interface_handle_start
     interface_context_start
+    audit_log_start
   end
 
   def start_transaction
@@ -42,6 +43,7 @@ class Transaction
   def finish_execute
     reset_user_id_finish
     bulk_import_finish
+    audit_log_finish
   end
 
   def finish_transaction
@@ -133,5 +135,23 @@ class Transaction
     return if !interface_context?
 
     ApplicationHandleInfo.context = original_interface_context
+  end
+
+  def disable_audit_log?
+    options[:disable_audit_log] == true
+  end
+
+  def audit_log_start
+    return if !disable_audit_log?
+
+    self.original_audit_log_suspended = AuditLog.suspended?
+
+    AuditLog.suspended = true
+  end
+
+  def audit_log_finish
+    return if !disable_audit_log?
+
+    AuditLog.suspended = original_audit_log_suspended
   end
 end

@@ -6,6 +6,7 @@ class Group < ApplicationModel
   include CanBeImported
   include HasActivityStreamLog
   include ChecksClientNotification
+  include HasAuditLogs
   include ChecksHtmlSanitized
   include HasHistory
   include HasObjectManagerAttributes
@@ -16,6 +17,8 @@ class Group < ApplicationModel
   include HasRecursiveCteQuery
 
   include Group::Assets
+
+  self.audit_log_attributes_ignored = %i[name_last]
 
   scope :sorted, -> { order(:name) }
 

@@ -78,6 +78,12 @@ RSpec.describe UserInfo do
       expect { described_class.reset }.to change(described_class, :current_token).to(nil)
     end
 
+    it 'clears the current ip' do
+      described_class.current_ip = '192.0.2.42'
+
+      expect { described_class.reset }.to change(described_class, :current_ip).to(nil)
+    end
+
     it 'rebuilds the assets without a user' do
       described_class.current_user_id = 99
       described_class.reset

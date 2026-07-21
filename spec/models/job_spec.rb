@@ -1,6 +1,7 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
+require 'models/concerns/has_audit_logs_examples'
 require 'models/application_model_examples'
 require 'models/concerns/has_xss_sanitized_note_examples'
 require 'models/concerns/has_timeplan_examples'
@@ -8,6 +9,19 @@ require 'models/concerns/touches_perform_references_examples'
 
 RSpec.describe Job, type: :model do
   subject(:job) { create(:job) }
+
+  it_behaves_like 'HasAuditLogs', update_attribute: 'name', update_value: 'Some updated name'
+
+  describe 'audit log ignored attributes' do
+    before { Setting.set('system_init_done', true) }
+
+    it 'creates no audit log entry for scheduler bookkeeping updates' do
+      job
+
+      expect { job.update!(running: true, last_run_at: Time.zone.now, pid: '1234') }
+        .not_to change(AuditLog.where(auditable_type: 'Job'), :count)
+    end
+  end
 
   it_behaves_like 'ApplicationModel', can_assets: { selectors: %i[condition perform] }
   it_behaves_like 'HasXssSanitizedNote', model_factory: :job

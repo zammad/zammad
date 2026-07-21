@@ -12,8 +12,19 @@ class ChecklistTemplatesController < ApplicationController
   end
 
   def create
-    checklist_template = ChecklistTemplate.create!(checklist_template_params)
-    checklist_template.replace_items!(checklist_template_items_params) if checklist_template_items_params.present?
+    checklist_template = nil
+
+    ChecklistTemplate.transaction do
+      # suspend audit logging while the record and its items are saved in two steps
+      # to get a single create entry which already contains the final sorted_item_ids
+      checklist_template = AuditLog.suspend do
+        ChecklistTemplate.create!(checklist_template_params).tap do |template|
+          template.replace_items!(checklist_template_items_params) if checklist_template_items_params.present?
+        end
+      end
+
+      checklist_template.audit_log_create
+    end
 
     render json: checklist_template.attributes_with_association_ids, status: :created
   end

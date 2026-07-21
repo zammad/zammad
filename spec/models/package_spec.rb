@@ -1,8 +1,12 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
+require 'models/concerns/has_audit_logs_examples'
 
 RSpec.describe Package, type: :model do
+  it_behaves_like 'HasAuditLogs', update_attribute: 'version', update_value: '1.0.2' do
+    subject { described_class.create!(name: 'TestPackageAuditLog', version: '1.0.1', vendor: 'Zammad Foundation', state: 'installed', created_by_id: 1, updated_by_id: 1) }
+  end
 
   # cleanup package files
   after :all do # rubocop:disable RSpec/BeforeAfterAll

@@ -21,6 +21,50 @@ RSpec.describe KnowledgeBase, type: :model do
   it { is_expected.to validate_inclusion_of(:category_layout).in_array(KnowledgeBase::LAYOUTS) }
   it { is_expected.to validate_inclusion_of(:homepage_layout).in_array(KnowledgeBase::LAYOUTS) }
 
+  describe 'audit log' do
+    before { Setting.set('system_init_done', true) }
+
+    let(:audit_logs) { AuditLog.where(auditable_type: described_class.name) }
+
+    context 'when knowledge base is created' do
+      it 'creates an audit log record' do
+        expect { knowledge_base }.to change(audit_logs.where(action_type: 'create'), :count).by(1)
+      end
+
+      it 'records the default translation title as auditable name' do
+        expect(audit_logs.find_by(action_type: 'create', auditable_id: knowledge_base.id).auditable_name)
+          .to eq(knowledge_base.translation_primary.title)
+      end
+    end
+
+    context 'when knowledge base is updated' do
+      it 'creates an audit log record' do
+        knowledge_base
+
+        expect { knowledge_base.update!(color_highlight: '#BBB') }
+          .to change(audit_logs.where(action_type: 'update', auditable_id: knowledge_base.id), :count).by(1)
+      end
+    end
+
+    context 'when knowledge base is fully destroyed' do
+      it 'creates only a single destroy entry without entries for the destroyed locales' do
+        knowledge_base
+
+        expect { knowledge_base.full_destroy! }
+          .to change(AuditLog.where(action_type: 'destroy'), :count).by(1)
+      end
+
+      it 'records the translation title as auditable name' do
+        title = knowledge_base.translation_primary.title
+
+        knowledge_base.full_destroy!
+
+        expect(audit_logs.find_by(action_type: 'destroy', auditable_id: knowledge_base.id).auditable_name)
+          .to eq(title)
+      end
+    end
+  end
+
   context 'activation' do
     it 'on by default' do
       expect(knowledge_base).to be_active
@@ -53,7 +97,7 @@ RSpec.describe KnowledgeBase, type: :model do
   end
 
   context 'acceptable colors' do
-    let(:allowed_values) { ['#aaa', '#ff0000', 'rgb(0,100,100)', 'hsl(0,100%,50%)'] }
+    let(:allowed_values)     { ['#aaa', '#ff0000', 'rgb(0,100,100)', 'hsl(0,100%,50%)'] }
     let(:not_allowed_values) { ['aaa', '#aa', '#ff000', 'rgb(0,100,100', 'def(0,100%,0.5)', 'test'] }
 
     %i[color_header color_header_link color_highlight].each do |attr|

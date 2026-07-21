@@ -80,6 +80,7 @@ module ApplicationController::HasUser
     UserInfo.reset
     UserInfo.current_token   = current_user_on_behalf ? nil : @_token
     UserInfo.current_user_id = current_user&.id || 1
+    UserInfo.current_ip      = request.remote_ip
   end
 
   # update session updated_at

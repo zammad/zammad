@@ -6,6 +6,8 @@ module CanPriorization
   included do
     before_create :fill_prio
     before_update :rearrangement
+
+    self.audit_log_attributes_ignored += %i[prio] if respond_to?(:audit_log_attributes_ignored)
   end
 
   def rearrangement

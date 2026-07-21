@@ -4,12 +4,15 @@ class AI::TextTool < ApplicationModel
   ASSETS_ANALYTICS_STATS_KEY = 'analytics_stats'.freeze
 
   include ChecksClientNotification
+  include HasAuditLogs
   include ChecksHtmlSanitized
   include HasSearchIndexBackend
   include CanSelector
   include CanSearch
   include AI::TextTool::TriggersSubscriptions
   include HasOptionalGroups
+
+  self.audit_log_attributes_ignored = %i[analytics_stats_reset_at]
 
   validates :name, presence: true, uniqueness: { case_sensitive: false }
   validates :note, length: { maximum: 250 }

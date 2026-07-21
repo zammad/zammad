@@ -334,6 +334,12 @@ Permission.create_if_not_exists(
   preferences: { prio: 1450 }
 )
 Permission.create_if_not_exists(
+  name:        'admin.audit_log',
+  label:       __('Audit Logs'),
+  description: __('Manage audit logs of your system.'),
+  preferences: { prio: 1455 }
+)
+Permission.create_if_not_exists(
   name:        'admin.system_report',
   label:       __('System Report'),
   description: __('Manage system report of your system.'),

@@ -2,6 +2,7 @@
 
 class Sla < ApplicationModel
   include ChecksClientNotification
+  include HasAuditLogs
   include ChecksConditionValidation
   include HasEscalationCalculationImpact
   include Sla::Assets

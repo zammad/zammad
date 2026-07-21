@@ -2,6 +2,7 @@
 
 class PostmasterFilter < ApplicationModel
   include ChecksHtmlSanitized
+  include HasAuditLogs
 
   store     :perform
   store     :match

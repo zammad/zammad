@@ -1,6 +1,7 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
+require 'models/concerns/has_audit_logs_examples'
 require 'models/application_model_examples'
 require 'models/concerns/has_xss_sanitized_note_examples'
 require 'models/concerns/touches_perform_references_examples'
@@ -16,6 +17,8 @@ RSpec.describe Trigger, type: :model do
   let(:perform) do
     { 'ticket.title'=>{ 'value'=>'triggered' } }
   end
+
+  it_behaves_like 'HasAuditLogs', update_attribute: 'name', update_value: 'Some updated name'
 
   it_behaves_like 'ApplicationModel', can_assets: { selectors: %i[condition perform] }
   it_behaves_like 'HasXssSanitizedNote', model_factory: :trigger

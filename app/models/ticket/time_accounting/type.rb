@@ -5,6 +5,7 @@ class Ticket::TimeAccounting::Type < ApplicationModel
 
   include ChecksHtmlSanitized
   include HasCollectionUpdate
+  include HasAuditLogs
 
   collection_push_permission('ticket.agent')
 

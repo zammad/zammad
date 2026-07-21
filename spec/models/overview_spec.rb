@@ -1,9 +1,23 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
+require 'models/concerns/has_audit_logs_examples'
 require 'models/application_model_examples'
 
 RSpec.describe Overview, type: :model do
+  it_behaves_like 'HasAuditLogs', update_attribute: 'name', update_value: 'Some updated name'
+
+  describe 'audit log ignored attributes' do
+    before { Setting.set('system_init_done', true) }
+
+    it 'creates no audit log entry for prio updates when overviews are reordered' do
+      overview = create(:overview)
+
+      expect { overview.update!(prio: 42) }
+        .not_to change(AuditLog.where(auditable_type: 'Overview'), :count)
+    end
+  end
+
   it_behaves_like 'ApplicationModel',
                   can_assets:        { associations: :users, selectors: :condition },
                   can_create_update: { unique_name: false }

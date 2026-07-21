@@ -6,6 +6,7 @@ class Signature < ApplicationModel
 
   include ChecksHtmlSanitized
   include HasCollectionUpdate
+  include HasAuditLogs
 
   has_many  :groups,  after_add: :cache_update, after_remove: :cache_update
   validates :name,    presence: true

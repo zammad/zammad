@@ -3,6 +3,10 @@
 class Channel < ApplicationModel
   include Channel::Area::Whatsapp
   include CanSensitiveAssets
+  include HasAuditLogs
+
+  self.audit_log_name_attribute = :area
+  self.audit_log_attributes_ignored = %i[status_in status_out last_log_in last_log_out preferences]
 
   SENSITIVE_FIELDS = [
     # Classic Email (IMAP, POP3, SMTP with the plain text password)

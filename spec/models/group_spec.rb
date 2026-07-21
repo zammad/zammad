@@ -1,6 +1,7 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
+require 'models/concerns/has_audit_logs_examples'
 require 'models/application_model_examples'
 require 'models/concerns/can_be_imported_examples'
 require 'models/concerns/has_object_manager_attributes_examples'
@@ -10,6 +11,19 @@ require 'models/concerns/has_image_sanitized_note_examples'
 
 RSpec.describe Group, type: :model do
   subject(:group) { create(:group) }
+
+  it_behaves_like 'HasAuditLogs', update_attribute: 'name', update_value: 'Some updated name'
+
+  describe 'audit log ignored attributes' do
+    before { Setting.set('system_init_done', true) }
+
+    it 'creates no audit log entry for note updates' do
+      group
+
+      expect { group.update!(note: 'Some updated note') }
+        .not_to change(AuditLog.where(auditable_type: 'Group'), :count)
+    end
+  end
 
   it_behaves_like 'ApplicationModel'
   it_behaves_like 'CanBeImported'

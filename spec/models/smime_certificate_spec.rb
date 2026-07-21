@@ -1,8 +1,12 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
+require 'models/concerns/has_audit_logs_examples'
 
 RSpec.describe SMIMECertificate, type: :model do
+  it_behaves_like 'HasAuditLogs', update_attribute: 'uid', update_value: 'Some updated uid', name_attribute: 'fingerprint' do
+    subject { create(:smime_certificate, fixture: 'alice@acme.corp+sign') }
+  end
 
   describe '.find_for_multiple_email_addresses' do
     let(:filter) { { key: key_filter, usage: usage_filter, ignore_usable: ignore_usable_filter } }
