@@ -135,6 +135,20 @@ describe('ArticleBubbleBody', () => {
         ),
       ).toBeInTheDocument()
     })
+
+    it('escapes HTML in the body instead of rendering it', () => {
+      const article = createDummyArticle({
+        bodyWithUrls: '<img src=x onerror="globalThis.__xss=1">',
+        contentType: 'text/html',
+        bodyRenderingError: true,
+      })
+
+      const wrapper = renderBody(article, false)
+      const body = wrapper.container.querySelector('.inner-article-body')
+
+      expect(body?.querySelector('img')).toBeNull()
+      expect(body?.textContent).toContain('<img src=x onerror="globalThis.__xss=1">')
+    })
   })
 
   describe('highlight a11y (aria-details)', () => {

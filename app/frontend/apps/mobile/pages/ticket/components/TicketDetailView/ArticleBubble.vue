@@ -85,7 +85,7 @@ const username = computed(() => {
 
 const body = computed(() => {
   if (props.bodyRenderingError) {
-    return i18n.t(props.content)
+    return textToHtml(i18n.t(props.content))
   }
   if (props.contentType !== 'text/html') {
     return textToHtml(props.content)
