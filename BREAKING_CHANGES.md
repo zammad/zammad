@@ -2,6 +2,16 @@
 
 ## 7.2
 
+### Inline attachments will be listed separately in ticket article API responses
+
+Ticket article REST API responses (e.g. `GET /api/v1/ticket_articles/{id}`) currently include
+inline image attachments in the `attachments` list. Starting with Zammad 7.3, they will no
+longer be part of the `attachments` list and will be returned in a dedicated
+`inline_attachments` key instead.
+
+⚠️ API integrations that rely on inline attachments being part of the `attachments` list
+need to be updated to read the new `inline_attachments` key.
+
 ### Deleting organizations via API by agents is deprecated
 
 `DELETE /api/v1/organizations/:id` has historically been permitted to users
