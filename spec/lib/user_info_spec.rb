@@ -64,6 +64,28 @@ RSpec.describe UserInfo do
 
   end
 
+  describe '#reset' do
+
+    it 'clears the current user id' do
+      described_class.current_user_id = 99
+
+      expect { described_class.reset }.to change(described_class, :current_user_id).to(nil)
+    end
+
+    it 'clears the current token' do
+      described_class.current_token = create(:token)
+
+      expect { described_class.reset }.to change(described_class, :current_token).to(nil)
+    end
+
+    it 'rebuilds the assets without a user' do
+      described_class.current_user_id = 99
+      described_class.reset
+
+      expect(described_class.assets.current_user_id).to be_nil
+    end
+  end
+
   describe 'with_user_id' do
 
     let(:return_value) { 'Hello World' }

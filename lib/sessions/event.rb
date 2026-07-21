@@ -23,7 +23,7 @@ class Sessions::Event
       { event: 'error', data: { error: e.message, payload: params[:payload] } }
     end
   ensure
-    UserInfo.current_user_id = nil
+    UserInfo.reset
     ActiveSupport::CurrentAttributes.clear_all
   end
 end

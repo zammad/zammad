@@ -1289,11 +1289,13 @@ RSpec.describe 'User', performs_jobs: true, type: :request do
 
           authenticated_as(admin, token:)
           get '/api/v1/users/me'
-          expect(UserInfo.current_token).to eq(token)
+          expect(UserInfo.current_token).to be_nil
+
+          allow(UserInfo).to receive(:current_token=).and_call_original
 
           authenticated_as(admin)
           get '/api/v1/users/me'
-          expect(UserInfo.current_token).to be_nil
+          expect(UserInfo).not_to have_received(:current_token=).with(token)
         end
       end
     end

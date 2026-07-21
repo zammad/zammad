@@ -186,7 +186,7 @@ class TicketArticleCommunicateEmailJob < ApplicationJob
       ticket.state = Ticket::State.find_by(default_follow_up: true)
       ticket.save!
       TransactionDispatcher.commit
-      UserInfo.current_user_id = nil
+      UserInfo.reset
     end
 
     raise error_or_message

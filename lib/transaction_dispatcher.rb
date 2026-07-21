@@ -70,7 +70,7 @@ class TransactionDispatcher
   def self.execute_single_backend(backend, item, params)
     Rails.logger.debug { "Execute single backend #{backend}" }
     begin
-      UserInfo.current_user_id = nil
+      UserInfo.reset
       integration = backend.new(item, params)
       integration.perform
     rescue => e

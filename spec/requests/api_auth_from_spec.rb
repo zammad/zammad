@@ -222,17 +222,29 @@ RSpec.describe 'Api Auth From', type: :request do
       end
 
       it 'does not set UserInfo.current_token for impersonated request' do
+        allow(UserInfo).to receive(:current_token=).and_call_original
+
         authenticated_as(admin, token: token, from: agent.email)
         get '/api/v1/users/me'
 
-        expect(UserInfo.current_token).to be_nil
+        expect(UserInfo).not_to have_received(:current_token=).with(token)
       end
 
       it 'sets UserInfo.current_token for non-impersonated request' do
+        allow(UserInfo).to receive(:current_token=).and_call_original
+
         authenticated_as(admin, token: token)
         get '/api/v1/users/me'
 
-        expect(UserInfo.current_token).to eq(token)
+        expect(UserInfo).to have_received(:current_token=).with(token).at_least(:once)
+      end
+
+      it 'resets the user context after the request', :aggregate_failures do
+        authenticated_as(admin, token: token)
+        get '/api/v1/users/me'
+
+        expect(UserInfo.current_token).to be_nil
+        expect(UserInfo.current_user_id).to be_nil
       end
     end
 

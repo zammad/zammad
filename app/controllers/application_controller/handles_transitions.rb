@@ -24,6 +24,7 @@ module ApplicationController::HandlesTransitions
 
     TransactionDispatcher.request_options = nil
     ApplicationHandleInfo.current = nil
+    UserInfo.reset
   end
 
   def transaction_dispatch_options

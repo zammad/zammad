@@ -22,6 +22,13 @@ module UserInfo
     Thread.current[:token] = token
   end
 
+  # resets the whole user context of the current thread, e.g. when a reused thread starts new work
+  def self.reset
+    # the token needs to be cleared first, current_user_id= reads it when rebuilding the assets
+    self.current_token   = nil
+    self.current_user_id = nil
+  end
+
   def self.assets
     Thread.current[:assets]
   end
