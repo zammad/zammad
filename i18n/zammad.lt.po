@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-05-30 09:02+0000\n"
-"Last-Translator: Mantas Masalskis <mantas@idev.lt>\n"
+"PO-Revision-Date: 2026-07-21 11:50+0000\n"
+"Last-Translator: Leonardas <leonardas.konosovas@paysera.net>\n"
 "Language-Team: Lithuanian <https://translations.zammad.org/projects/zammad/"
 "zammad-development/lt/>\n"
 "Language: lt\n"
@@ -1810,8 +1810,8 @@ msgstr ""
 msgid "Additional Channels"
 msgstr "Papildomi kanalai"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/TopBarHeader/TopBarHeaderCompact.vue:97
-#: app/frontend/apps/desktop/pages/knowledge-base/components/TopBarHeader/TopBarHeaderFull.vue:97
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderCompact.vue:97
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderFull.vue:97
 #: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailTopBar/TopBarHeaderCompact.vue:60
 #: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailTopBar/TopBarHeaderFull.vue:84
 #: app/frontend/apps/desktop/pages/user/components/UserDetailTopBar/TopBarHeaderCompact.vue:61
@@ -3730,8 +3730,8 @@ msgstr "Pakeisti klientą"
 msgid "Change date"
 msgstr "Keisti datą"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/TopBarHeader/TopBarHeaderCompact.vue:65
-#: app/frontend/apps/desktop/pages/knowledge-base/components/TopBarHeader/TopBarHeaderFull.vue:65
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderCompact.vue:65
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderFull.vue:65
 #, fuzzy
 #| msgid "Target Language"
 msgid "Change language"
@@ -4763,8 +4763,8 @@ msgstr "Kopijuoti kodus"
 msgid "Copy current object number (e. g. Ticket#) to clipboard"
 msgstr "Kopijuoti atidaryto objekto numerį (pvz. trikties numerį) į iškarpinę"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/TopBarHeader/TopBarHeaderCompact.vue:35
-#: app/frontend/apps/desktop/pages/knowledge-base/components/TopBarHeader/TopBarHeaderFull.vue:35
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderCompact.vue:35
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderFull.vue:35
 #, fuzzy
 #| msgid "Knowledge Base active"
 msgid "Copy knowledge base name"
@@ -11098,7 +11098,7 @@ msgstr "Raktažodžiai"
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee:2
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:3
 #: app/assets/javascripts/app/models/knowledge_base.coffee:75
-#: app/frontend/apps/desktop/pages/knowledge-base/components/TopBarHeader.vue:88
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader.vue:88
 #: app/frontend/apps/desktop/pages/knowledge-base/routes.ts:24
 #: app/models/knowledge_base.rb:233 db/seeds/permissions.rb:113
 msgid "Knowledge Base"
@@ -11166,8 +11166,8 @@ msgstr "Žinių bazė aktyvi"
 msgid "Knowledge base articles"
 msgstr "Žinių bazė aktyvi"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/TopBarHeader/TopBarHeaderCompact.vue:47
-#: app/frontend/apps/desktop/pages/knowledge-base/components/TopBarHeader/TopBarHeaderFull.vue:47
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderCompact.vue:47
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderFull.vue:47
 #, fuzzy
 #| msgid "Knowledge Base active"
 msgid "Knowledge base controls"
@@ -11184,8 +11184,8 @@ msgstr "Nepavyko sukurti žinių bazės juodraščio."
 msgid "Knowledge base is unavailable or not properly configured."
 msgstr "Žinių bazės nėra arba ji netinkamai sukonfigūruota."
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/TopBarHeader/TopBarHeaderCompact.vue:31
-#: app/frontend/apps/desktop/pages/knowledge-base/components/TopBarHeader/TopBarHeaderFull.vue:31
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderCompact.vue:31
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderFull.vue:31
 #, fuzzy
 #| msgid "Knowledge Base active"
 msgid "Knowledge base navigation"
@@ -13506,7 +13506,7 @@ msgstr "Žetono nėra!"
 #: app/assets/javascripts/app/views/knowledge_base/content.jst.eco:2
 #: app/frontend/apps/desktop/pages/knowledge-base/components/AnswerCard.vue:25
 #: app/frontend/apps/desktop/pages/knowledge-base/components/CategoryCard.vue:62
-#: app/frontend/apps/desktop/pages/knowledge-base/components/TopBarHeader.vue:282
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader.vue:282
 msgid "No translation for this locale available"
 msgstr "Vertimo į šią kalbą nėra"
 
@@ -23382,8 +23382,8 @@ msgstr "Peržiūrėti"
 msgid "View from user's perspective"
 msgstr "Rodyti kaip naudotojui"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/TopBarHeader/TopBarHeaderCompact.vue:52
-#: app/frontend/apps/desktop/pages/knowledge-base/components/TopBarHeader/TopBarHeaderFull.vue:52
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderCompact.vue:52
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderFull.vue:52
 #, fuzzy
 #| msgid "Delete Knowledge Base"
 msgid "View public knowledge base"

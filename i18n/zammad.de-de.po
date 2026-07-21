@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-07-20 11:21+0000\n"
-"Last-Translator: Ralf Schmid <rsc@zammad.com>\n"
+"PO-Revision-Date: 2026-07-21 12:00+0000\n"
+"Last-Translator: Dusan Vuckovic <dv@zammad.com>\n"
 "Language-Team: German <https://translations.zammad.org/projects/zammad/"
 "zammad-development/de/>\n"
 "Language: de-de\n"
@@ -1817,8 +1817,8 @@ msgstr ""
 msgid "Additional Channels"
 msgstr "Zusätzliche Kanäle"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/TopBarHeader/TopBarHeaderCompact.vue:97
-#: app/frontend/apps/desktop/pages/knowledge-base/components/TopBarHeader/TopBarHeaderFull.vue:97
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderCompact.vue:97
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderFull.vue:97
 #: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailTopBar/TopBarHeaderCompact.vue:60
 #: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailTopBar/TopBarHeaderFull.vue:84
 #: app/frontend/apps/desktop/pages/user/components/UserDetailTopBar/TopBarHeaderCompact.vue:61
@@ -3765,8 +3765,8 @@ msgstr "Kunden ändern"
 msgid "Change date"
 msgstr "Datum ändern"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/TopBarHeader/TopBarHeaderCompact.vue:65
-#: app/frontend/apps/desktop/pages/knowledge-base/components/TopBarHeader/TopBarHeaderFull.vue:65
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderCompact.vue:65
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderFull.vue:65
 msgid "Change language"
 msgstr "Sprache ändern"
 
@@ -4809,8 +4809,8 @@ msgstr "Codes kopieren"
 msgid "Copy current object number (e. g. Ticket#) to clipboard"
 msgstr "Kopiert aktuelle Objekt-Nummer (z. B. Ticket#) in Zwischenablage"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/TopBarHeader/TopBarHeaderCompact.vue:35
-#: app/frontend/apps/desktop/pages/knowledge-base/components/TopBarHeader/TopBarHeaderFull.vue:35
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderCompact.vue:35
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderFull.vue:35
 msgid "Copy knowledge base name"
 msgstr "Name der Knowledge Base kopieren"
 
@@ -11327,7 +11327,7 @@ msgstr "Schlüsselwörter"
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee:2
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:3
 #: app/assets/javascripts/app/models/knowledge_base.coffee:75
-#: app/frontend/apps/desktop/pages/knowledge-base/components/TopBarHeader.vue:88
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader.vue:88
 #: app/frontend/apps/desktop/pages/knowledge-base/routes.ts:24
 #: app/models/knowledge_base.rb:233 db/seeds/permissions.rb:113
 msgid "Knowledge Base"
@@ -11391,12 +11391,10 @@ msgstr "Knowledge Base Aktionen"
 msgid "Knowledge base articles"
 msgstr "Knowledge Base-Artikel"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/TopBarHeader/TopBarHeaderCompact.vue:47
-#: app/frontend/apps/desktop/pages/knowledge-base/components/TopBarHeader/TopBarHeaderFull.vue:47
-#, fuzzy
-#| msgid "Knowledge base articles"
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderCompact.vue:47
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderFull.vue:47
 msgid "Knowledge base controls"
-msgstr "Knowledge Base-Artikel"
+msgstr "Knowledge Base Bedienelemente"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketAIKnowledgeBaseAnswers.vue:48
 #: app/services/service/ticket/ai_assistance/create_knowledge_base_answer.rb:21
@@ -11410,12 +11408,10 @@ msgid "Knowledge base is unavailable or not properly configured."
 msgstr ""
 "Die Knowledge Base ist nicht verfügbar oder nicht korrekt konfiguriert."
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/TopBarHeader/TopBarHeaderCompact.vue:31
-#: app/frontend/apps/desktop/pages/knowledge-base/components/TopBarHeader/TopBarHeaderFull.vue:31
-#, fuzzy
-#| msgid "Knowledge base articles"
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderCompact.vue:31
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderFull.vue:31
 msgid "Knowledge base navigation"
-msgstr "Knowledge Base-Artikel"
+msgstr "Knowledge Base Navigation"
 
 #: db/seeds/settings.rb:6336
 msgid "Knowledge base self-hosted video servers"
@@ -13574,10 +13570,8 @@ msgid "No items available"
 msgstr "Keine Elemente verfügbar"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:184
-#, fuzzy
-#| msgid "No editable knowledge base categories available."
 msgid "No knowledge base content is available yet."
-msgstr "Keine bearbeitbaren Knowledge Base-Kategorien verfügbar."
+msgstr "Es sind noch keine Inhalte in der Knowledge Base verfügbar."
 
 #: app/services/service/knowledge_base/create_answer_from_ai_result.rb:35
 #: app/services/service/ticket/ai_assistance/create_knowledge_base_answer.rb:58
@@ -13731,7 +13725,7 @@ msgstr "Kein Token!"
 #: app/assets/javascripts/app/views/knowledge_base/content.jst.eco:2
 #: app/frontend/apps/desktop/pages/knowledge-base/components/AnswerCard.vue:25
 #: app/frontend/apps/desktop/pages/knowledge-base/components/CategoryCard.vue:62
-#: app/frontend/apps/desktop/pages/knowledge-base/components/TopBarHeader.vue:282
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader.vue:282
 msgid "No translation for this locale available"
 msgstr "Keine Übersetzung für dieses Gebietsschema verfügbar"
 
@@ -16023,10 +16017,8 @@ msgid "Remove authenticator app"
 msgstr "Authentifizierungs-App entfernen"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/CategoryCard.vue:48
-#, fuzzy
-#| msgid "Remove filter"
 msgid "Remove category"
-msgstr "Filter entfernen"
+msgstr "Kategorie entfernen"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:38
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:380
@@ -19470,7 +19462,7 @@ msgstr "Die Checklisten-Funktion ist nicht aktiv"
 
 #: app/models/group.rb:107
 msgid "The chosen parent group is part of a circular reference."
-msgstr ""
+msgstr "Die ausgewählte übergeordnete Gruppe resultiert in einem Zirkelbezug."
 
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco:33
 msgid ""
@@ -19836,10 +19828,8 @@ msgid "The issue reference could not be found."
 msgstr "Das verlinkte Issue konnte nicht gefunden werden."
 
 #: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBase.vue:42
-#, fuzzy
-#| msgid "The Knowledge Base could not be created."
 msgid "The knowledge base could not be loaded."
-msgstr "Die Knowledge Base konnte nicht erzeugt werden."
+msgstr "Die Knowledge Base konnte nicht geladen werden."
 
 #: app/frontend/shared/composables/useLocaleUpdate.ts:21
 msgid "The language could not be updated."
@@ -21103,22 +21093,18 @@ msgstr ""
 "werden."
 
 #: app/models/group.rb:80
-#, fuzzy
-#| msgid "A ticket cannot be merged into itself."
 msgid "This group cannot be moved into itself."
-msgstr "Ein Ticket kann nicht mit sich selbst zusammengefasst werden."
+msgstr "Diese Gruppe kann nicht in sich selbst verschoben werden."
 
 #: app/models/group.rb:81
 msgid "This group cannot be moved into one of its children."
 msgstr ""
+"Diese Gruppe kann nicht in eines ihrer untergeordneten Elemente verschoben "
+"werden."
 
 #: app/models/group.rb:87
-#, fuzzy
-#| msgid "This group or its children exceed the allowed nesting depth."
 msgid "This group exceeds the allowed nesting depth."
-msgstr ""
-"Diese Gruppe oder ihre Untereinträge haben die erlaubte "
-"Verschachtelungstiefe überschritten."
+msgstr "Diese Gruppe überschreitet die zulässige Verschachtelungstiefe."
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:760
 #: app/controllers/concerns/creates_ticket_articles.rb:43
@@ -21129,12 +21115,10 @@ msgstr ""
 "hinterlegt."
 
 #: app/models/group.rb:93
-#, fuzzy
-#| msgid "This group or its children exceed the allowed nesting depth."
 msgid "This group's children would exceed the allowed nesting depth."
 msgstr ""
-"Diese Gruppe oder ihre Untereinträge haben die erlaubte "
-"Verschachtelungstiefe überschritten."
+"Die untergeordneten Elemente dieser Gruppe überschreiten die zulässige "
+"Verschachtelungstiefe."
 
 #: lib/email_helper/probe.rb:281
 msgid "This host cannot be reached."
@@ -21186,16 +21170,12 @@ msgid "This item expands to show more options"
 msgstr "Dieses Element kann erweitert werden, um weitere Optionen anzuzeigen"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:51
-#, fuzzy
-#| msgid "No editable knowledge base categories available."
 msgid "This knowledge base category is not available."
-msgstr "Keine bearbeitbaren Knowledge Base-Kategorien verfügbar."
+msgstr "Diese Knowledge Base Kategorie ist nicht verfügbar."
 
 #: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBase.vue:17
-#, fuzzy
-#| msgid "Not available in selected language"
 msgid "This knowledge base is not available in the selected language."
-msgstr "Nicht in der gewählten Sprache verfügbar"
+msgstr "Die Knowledge Base ist nicht in der ausgewählten Sprache verfügbar."
 
 #: app/models/channel/email_parser.rb:11
 msgid ""
@@ -23796,12 +23776,10 @@ msgstr "Ansicht"
 msgid "View from user's perspective"
 msgstr "Aus Benutzersicht ansehen"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/TopBarHeader/TopBarHeaderCompact.vue:52
-#: app/frontend/apps/desktop/pages/knowledge-base/components/TopBarHeader/TopBarHeaderFull.vue:52
-#, fuzzy
-#| msgid "Delete Knowledge Base"
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderCompact.vue:52
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderFull.vue:52
 msgid "View public knowledge base"
-msgstr "Knowledge Base löschen"
+msgstr "Öffentliche Knowledge Base anzeigen"
 
 #: app/views/mailer/ticket_create/zh-cn.html.erb:23
 #: app/views/mailer/ticket_escalation/it.html.erb:17
@@ -25827,7 +25805,7 @@ msgstr "ist nicht in der Liste enthalten"
 
 #: app/models/knowledge_base/category.rb:199
 msgid "is part of a circular reference"
-msgstr ""
+msgstr "ist Teil einer Zirkelreferenz"
 
 #: app/assets/javascripts/app/controllers/maintenance.coffee:84
 #: app/assets/javascripts/app/models/_application_model.coffee:65
@@ -26630,20 +26608,14 @@ msgid "within next (relative)"
 msgstr "innerhalb nächster (relativ)"
 
 #: app/models/knowledge_base/category.rb:212
-#, fuzzy
-#| msgid "This group or its children exceed the allowed nesting depth."
 msgid "would exceed the allowed nesting depth"
-msgstr ""
-"Diese Gruppe oder ihre Untereinträge haben die erlaubte "
-"Verschachtelungstiefe überschritten."
+msgstr "überschreitet die zulässige Verschachtelungstiefe"
 
 #: app/models/knowledge_base/category.rb:217
-#, fuzzy
-#| msgid "This group or its children exceed the allowed nesting depth."
 msgid "would push this category's children beyond the allowed nesting depth"
 msgstr ""
-"Diese Gruppe oder ihre Untereinträge haben die erlaubte "
-"Verschachtelungstiefe überschritten."
+"die untergeordneten Elemente dieser Kategorie überschreiten die zulässige "
+"Verschachtelungstiefe"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/operators/within-last-relative.ts:13
 msgid "year(s)"

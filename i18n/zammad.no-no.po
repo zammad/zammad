@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-03-02 07:16+0000\n"
-"Last-Translator: Peter-Hans de Zwarte <peter-hans@zwarte.no>\n"
+"PO-Revision-Date: 2026-07-21 11:54+0000\n"
+"Last-Translator: Øivind Spro Heggland <oivheg@gmail.com>\n"
 "Language-Team: Norwegian Bokmål <https://translations.zammad.org/projects/"
 "zammad/zammad-development/nb_NO/>\n"
 "Language: no-no\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.11.4\n"
+"X-Generator: Weblate 5.16.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -1931,8 +1931,8 @@ msgstr ""
 msgid "Additional Channels"
 msgstr "Ekstra kanaler"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/TopBarHeader/TopBarHeaderCompact.vue:97
-#: app/frontend/apps/desktop/pages/knowledge-base/components/TopBarHeader/TopBarHeaderFull.vue:97
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderCompact.vue:97
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderFull.vue:97
 #: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailTopBar/TopBarHeaderCompact.vue:60
 #: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailTopBar/TopBarHeaderFull.vue:84
 #: app/frontend/apps/desktop/pages/user/components/UserDetailTopBar/TopBarHeaderCompact.vue:61
@@ -3989,8 +3989,8 @@ msgstr "Forandre kunde"
 msgid "Change date"
 msgstr "Endre bestilling"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/TopBarHeader/TopBarHeaderCompact.vue:65
-#: app/frontend/apps/desktop/pages/knowledge-base/components/TopBarHeader/TopBarHeaderFull.vue:65
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderCompact.vue:65
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderFull.vue:65
 #, fuzzy
 #| msgid "Language"
 msgid "Change language"
@@ -5153,8 +5153,8 @@ msgstr "Sikkerhet"
 msgid "Copy current object number (e. g. Ticket#) to clipboard"
 msgstr "Kopier gjeldende objektnummer (f.eks. saksnr.) til utklippstavlen"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/TopBarHeader/TopBarHeaderCompact.vue:35
-#: app/frontend/apps/desktop/pages/knowledge-base/components/TopBarHeader/TopBarHeaderFull.vue:35
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderCompact.vue:35
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderFull.vue:35
 #, fuzzy
 #| msgid "Knowledge Base"
 msgid "Copy knowledge base name"
@@ -12008,7 +12008,7 @@ msgstr "Nøkkelord"
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee:2
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:3
 #: app/assets/javascripts/app/models/knowledge_base.coffee:75
-#: app/frontend/apps/desktop/pages/knowledge-base/components/TopBarHeader.vue:88
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader.vue:88
 #: app/frontend/apps/desktop/pages/knowledge-base/routes.ts:24
 #: app/models/knowledge_base.rb:233 db/seeds/permissions.rb:113
 msgid "Knowledge Base"
@@ -12086,8 +12086,8 @@ msgstr "Kunnskapsbase"
 msgid "Knowledge base articles"
 msgstr "Kunnskapsbase"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/TopBarHeader/TopBarHeaderCompact.vue:47
-#: app/frontend/apps/desktop/pages/knowledge-base/components/TopBarHeader/TopBarHeaderFull.vue:47
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderCompact.vue:47
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderFull.vue:47
 #, fuzzy
 #| msgid "Knowledge Base"
 msgid "Knowledge base controls"
@@ -12106,8 +12106,8 @@ msgstr "%s objekt(er) er opprettet."
 msgid "Knowledge base is unavailable or not properly configured."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/TopBarHeader/TopBarHeaderCompact.vue:31
-#: app/frontend/apps/desktop/pages/knowledge-base/components/TopBarHeader/TopBarHeaderFull.vue:31
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderCompact.vue:31
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderFull.vue:31
 #, fuzzy
 #| msgid "Knowledge Base"
 msgid "Knowledge base navigation"
@@ -14767,7 +14767,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/knowledge_base/content.jst.eco:2
 #: app/frontend/apps/desktop/pages/knowledge-base/components/AnswerCard.vue:25
 #: app/frontend/apps/desktop/pages/knowledge-base/components/CategoryCard.vue:62
-#: app/frontend/apps/desktop/pages/knowledge-base/components/TopBarHeader.vue:282
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader.vue:282
 msgid "No translation for this locale available"
 msgstr "Ingen oversettelse er tilgjengelig for denne lokaliteten"
 
@@ -25821,8 +25821,8 @@ msgstr "Vis"
 msgid "View from user's perspective"
 msgstr "Se fra brukers perspektiv"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/TopBarHeader/TopBarHeaderCompact.vue:52
-#: app/frontend/apps/desktop/pages/knowledge-base/components/TopBarHeader/TopBarHeaderFull.vue:52
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderCompact.vue:52
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderFull.vue:52
 #, fuzzy
 #| msgid "Delete Knowledge Base"
 msgid "View public knowledge base"
