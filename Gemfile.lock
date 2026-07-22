@@ -463,7 +463,7 @@ GEM
       logger
       rack (>= 2.2.3)
       rack-protection
-    omniauth-facebook (10.0.0)
+    omniauth-facebook (11.0.0)
       bigdecimal
       omniauth-oauth2 (>= 1.2, < 3)
     omniauth-github (2.0.1)
