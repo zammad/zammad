@@ -116,6 +116,18 @@ RUN mkdir -p "/opt/zammad/storage" "/opt/zammad/tmp" && \
 # Copy built artifacts: gems, application
 COPY --chown=1000:1000 --from=build "${BUNDLE_PATH}" "${BUNDLE_PATH}"
 COPY --chown=1000:1000 --from=build /opt/zammad /opt/zammad
+
+# Remove Ruby default/bundled gems that are superseded by Bundler-managed versions from Gemfile.lock
+#   to avoid false positives in container vulnerability scanners.
+#   https://github.com/zammad/zammad/issues/6258
+RUN ruby script/build/remove_superseded_system_gems.rb
+
+# Expose the Bundler-managed gems to RubyGems via a stable path (the real directory name
+#   depends on the Ruby ABI version), so CLI tools like irb and rake also work outside of `bundle exec`.
+RUN ln -s "${BUNDLE_PATH}/ruby/$(ruby -e 'print RbConfig::CONFIG[%q(ruby_version)]')" "${BUNDLE_PATH}/ruby/current"
+ENV GEM_PATH="${BUNDLE_PATH}/ruby/current" \
+    PATH="${BUNDLE_PATH}/ruby/current/bin:${PATH}"
+
 # Backwards compatibility for older images that used /docker-entrypoint.sh
 RUN ln -s "/opt/zammad/bin/docker-entrypoint" /docker-entrypoint.sh
 
