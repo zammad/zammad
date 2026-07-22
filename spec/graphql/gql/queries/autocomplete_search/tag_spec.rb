@@ -102,6 +102,32 @@ RSpec.describe Gql::Queries::AutocompleteSearch::Tag, authenticated_as: :agent, 
       end
     end
 
+    context 'with a customer', authenticated_as: :customer do
+      let(:customer) { create(:customer) }
+
+      it 'raises authorization error' do
+        expect(gql.result.error_type).to eq(Exceptions::Forbidden)
+      end
+    end
+
+    context 'with a knowledge base editor without agent permission', authenticated_as: :kb_editor do
+      let(:role)      { create(:role, permission_names: %w[knowledge_base.editor]) }
+      let(:kb_editor) { create(:customer, roles: [role]) }
+
+      it 'finds all tags' do
+        expect(gql.result.data.length).to eq(tags.length)
+      end
+    end
+
+    context 'with an admin with tag administration permission', authenticated_as: :admin do
+      let(:role)  { create(:role, permission_names: %w[admin.tag]) }
+      let(:admin) { create(:user, roles: [role]) }
+
+      it 'finds all tags' do
+        expect(gql.result.data.length).to eq(tags.length)
+      end
+    end
+
     it_behaves_like 'graphql responds with error if unauthenticated'
   end
 end

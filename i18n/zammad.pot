@@ -3967,7 +3967,7 @@ msgstr ""
 msgid "Content loader"
 msgstr ""
 
-#: app/models/store.rb:83
+#: app/models/store.rb:88
 msgid "Content preview could not be generated."
 msgstr ""
 
@@ -7110,7 +7110,7 @@ msgstr ""
 msgid "Error fetching i-doit information. Please contact your administrator."
 msgstr ""
 
-#: lib/secure_mailing/smime/incoming.rb:99
+#: lib/secure_mailing/smime/incoming.rb:107
 msgid "Error while verifying signature, please contact your administrator."
 msgstr ""
 
@@ -9132,7 +9132,7 @@ msgstr ""
 msgid "Initiate the import process to transfer your data into Zammad. Keep track of the migration progress on this page to be notified as soon as the import is successfully finished."
 msgstr ""
 
-#: app/models/store.rb:95
+#: app/models/store.rb:100
 msgid "Inline content could not be generated."
 msgstr ""
 
@@ -17212,7 +17212,7 @@ msgstr ""
 msgid "The certificate for this private key could not be found."
 msgstr ""
 
-#: lib/secure_mailing/smime/incoming.rb:69
+#: lib/secure_mailing/smime/incoming.rb:77
 msgid "The certificate for verification could not be found."
 msgstr ""
 
@@ -17682,7 +17682,7 @@ msgstr ""
 msgid "The private PGP key could not be found."
 msgstr ""
 
-#: lib/secure_mailing/smime/incoming.rb:36
+#: lib/secure_mailing/smime/incoming.rb:44
 msgid "The private key for decryption could not be found."
 msgstr ""
 
@@ -18687,7 +18687,7 @@ msgstr ""
 msgid "This message contains images or other content hosted by an external source. It was blocked, but you can download the original formatting."
 msgstr ""
 
-#: lib/secure_mailing/smime/incoming.rb:86
+#: lib/secure_mailing/smime/incoming.rb:94
 msgid "This message was not signed by its sender."
 msgstr ""
 

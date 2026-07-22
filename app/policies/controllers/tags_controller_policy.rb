@@ -4,7 +4,7 @@ class Controllers::TagsControllerPolicy < Controllers::ApplicationControllerPoli
   default_permit!('admin.tag')
 
   def search?
-    true
+    user.permissions?(['ticket.agent', 'admin.tag', 'knowledge_base.editor'])
   end
 
   def list?
