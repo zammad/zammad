@@ -20,9 +20,27 @@ RSpec.describe 'Chat Handling', type: :system do
     end
   end
 
+  # Chat.coffee's switch() decides whether to auto-activate the (single, seeded)
+  #   chat topic or show a "select at least one chat topic" modal based on
+  #   App.Chat.count() - if that collection hasn't finished its async load yet
+  #   right after a page visit, count() is transiently 0 and the wrong modal
+  #   appears, blocking whatever click follows.
+  def wait_for_chat_topics_loaded
+    wait.until { page.evaluate_script('App.Chat.count()') > 0 }
+  end
+
   def enable_agent_chat
+    wait_for_chat_topics_loaded
+
     click agent_chat_switch_selector
     click 'a[href="#customer_chat"]'
+  end
+
+  # The accept button is always present in the DOM, but Chat.coffee only marks
+  #   it with .is-active once the agent has been notified of the waiting
+  #   customer.
+  def accept_chat
+    click '.active .js-acceptChat.is-active'
   end
 
   def open_chat_dialog
@@ -48,6 +66,7 @@ RSpec.describe 'Chat Handling', type: :system do
 
   shared_examples 'chat button is hidden after idle timeout' do
     it 'check that button is hidden after idle timeout', authenticated_as: :authenticate do
+      wait_for_chat_topics_loaded
       click agent_chat_switch_selector
 
       using_session :customer do
@@ -69,7 +88,7 @@ RSpec.describe 'Chat Handling', type: :system do
         open_chat_dialog
       end
 
-      click '.active .js-acceptChat'
+      accept_chat
 
       # Wait for the chat window to render after accepting before checking its content.
       # have_no_css passes immediately when the window hasn't rendered yet, so check
@@ -110,7 +129,7 @@ RSpec.describe 'Chat Handling', type: :system do
         open_chat_dialog
       end
 
-      click '.active .js-acceptChat'
+      accept_chat
 
       # Same false-positive risk as in the agent-side test: have_no_css passes
       # immediately before the window renders, so wait for the body first.
@@ -152,7 +171,7 @@ RSpec.describe 'Chat Handling', type: :system do
         open_chat_dialog
       end
 
-      click '.active .js-acceptChat'
+      accept_chat
 
       expect(page).to have_css('.active .chat-window .js-body')
       expect(page).to have_css('.active .chat-window .chat-status')
@@ -212,7 +231,7 @@ RSpec.describe 'Chat Handling', type: :system do
         open_chat_dialog
       end
 
-      click '.active .js-acceptChat'
+      accept_chat
 
       send_agent_message('agent is asking')
 
@@ -232,7 +251,7 @@ RSpec.describe 'Chat Handling', type: :system do
         open_chat_dialog
       end
 
-      click '.active .js-acceptChat'
+      accept_chat
 
       send_agent_message('my name is me')
 
@@ -270,8 +289,7 @@ RSpec.describe 'Chat Handling', type: :system do
         check_content('.settings', '{"event":"chat_status_customer","data":{"state":"offline"}}')
       end
 
-      click agent_chat_switch_selector
-      click 'a[href="#customer_chat"]'
+      enable_agent_chat
 
       using_session :customer do
 
@@ -320,7 +338,7 @@ RSpec.describe 'Chat Handling', type: :system do
         open_chat_dialog
       end
 
-      click '.active .js-acceptChat'
+      accept_chat
 
       expect(page).to have_css('.active .chat-window .chat-status')
 
@@ -400,6 +418,7 @@ RSpec.describe 'Chat Handling', type: :system do
   describe "Chat can't be closed after timeout #2471", authenticated_as: :authenticate do
     shared_examples 'test issue #2471' do
       it 'is able to close to the dialog after a idleTimeout happened' do
+        wait_for_chat_topics_loaded
         click agent_chat_switch_selector
         using_session :customer do
 

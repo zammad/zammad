@@ -108,8 +108,10 @@ RSpec.describe 'Manage > Users', type: :system do
 
         within(:active_content) do
           find('[data-type=new]').click
+        end
 
-          find('[name=organization_id] ~ .searchableSelect-main').fill_in with: '**'
+        in_modal do
+          find('[name=organization_id] ~ .searchableSelect-main').fill_in with: '*'
           expect(page).to have_css('ul.js-optionsList > li.js-option', minimum: 2)
           expect(page).to have_css('ul.js-optionsList > li.js-option .is-inactive', count: 1)
         end

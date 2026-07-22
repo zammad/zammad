@@ -19,7 +19,11 @@ RSpec.describe 'Online notification', type: :system do
         find("a[data-key='Ticket-#{ticket.id}']")
       end
 
-      let(:ticket) { create(:ticket, owner: session_user, group: Group.first, state_name: 'pending reminder', pending_time: 4.seconds.from_now) }
+      # "loads as pending ticket" must observe this before the deadline passes, unlike
+      #   "switches to open ticket" which can rely on have_css's own implicit wait to
+      #   observe the transition - give it more real-time margin, especially for the
+      #   nested "non-active tab" context below, which adds an extra page visit first.
+      let(:ticket) { create(:ticket, owner: session_user, group: Group.first, state_name: 'pending reminder', pending_time: 10.seconds.from_now) }
 
       it 'loads as pending ticket' do
         expect(page).to have_css('.icon.pending')
@@ -50,7 +54,7 @@ RSpec.describe 'Online notification', type: :system do
           find("a[data-key='Ticket-#{ticket.id}']")
         end
 
-        ticket.update! state: Ticket::State.lookup(name: 'pending reminder'), pending_time: 5.seconds.from_now
+        ticket.update! state: Ticket::State.lookup(name: 'pending reminder'), pending_time: 10.seconds.from_now
       end
 
       let(:ticket) { create(:ticket, owner: session_user, group: Group.first) }

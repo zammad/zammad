@@ -14,9 +14,20 @@ import { waitForUserAddMutationCalls } from '#shared/entities/user/graphql/mutat
 import type { FormUpdaterQuery } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
+import { initializeFormFields } from '#desktop/form/index.ts'
+
 import { handleMockFormUpdaterQuery, visitCreateView } from '../support/ticket-create-helpers.ts'
 
 describe('ticket create view - user create action', () => {
+  beforeAll(() => {
+    // Initialize the desktop form field classes like the real app does. The
+    // `formkit-link` marker class on the "Create new customer" link makes
+    // `useFormBlock` ignore clicks on it - without the class, the click also
+    // opens the customer_id autocomplete dropdown (500 ms debounced), which
+    // then steals the focus while we are typing into the flyout form.
+    initializeFormFields()
+  })
+
   beforeEach(() => {
     // Main form
     handleMockFormUpdaterQuery()
@@ -74,6 +85,13 @@ describe('ticket create view - user create action', () => {
     const flyout = await view.findByRole('complementary', { name: 'Create new customer' })
 
     const emailField = await within(flyout).findByLabelText('Email')
+
+    // The flyout form autofocuses its first input ("First name") asynchronously
+    // after it has settled. If we start typing before that, the autofocus steals
+    // the focus mid-typing and the remaining keystrokes are lost (userEvent types
+    // into the active element). Waiting for the autofocus also guarantees the
+    // fields are settled and visible.
+    await waitFor(() => expect(within(flyout).getByLabelText('First name')).toHaveFocus())
 
     await view.events.type(emailField, 'foo@customer.com')
 
@@ -155,6 +173,13 @@ describe('ticket create view - user create action', () => {
     const flyout = await view.findByRole('complementary', { name: 'Create new customer' })
 
     const emailField = await within(flyout).findByLabelText('Email')
+
+    // The flyout form autofocuses its first input ("First name") asynchronously
+    // after it has settled. If we start typing before that, the autofocus steals
+    // the focus mid-typing and the remaining keystrokes are lost (userEvent types
+    // into the active element). Waiting for the autofocus also guarantees the
+    // fields are settled and visible.
+    await waitFor(() => expect(within(flyout).getByLabelText('First name')).toHaveFocus())
 
     await view.events.type(emailField, 'foo@customer.com')
 

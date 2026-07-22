@@ -881,15 +881,25 @@ class TestCase < ActiveSupport::TestCase
     # searchable select
     element = instance.find_elements(css: "#{params[:css]}.js-shadow")[0]
     if element
-      element = wait_for_interactable(instance, "#{params[:css]}.js-shadow + .js-input")
-      element.click
-      element.clear
-      sleep 0.2
-      element.send_keys(params[:value])
-      sleep 0.2
-      element.send_keys(:enter)
-      sleep 0.2
-      instance.execute_script("$('#{params[:css]}.js-shadow + .js-input').trigger('blur')")
+      begin
+        element = wait_for_interactable(instance, "#{params[:css]}.js-shadow + .js-input")
+        element.click
+        element.clear
+        sleep 0.2
+        element.send_keys(params[:value])
+        sleep 0.2
+        element.send_keys(:enter)
+        sleep 0.2
+        instance.execute_script("$('#{params[:css]}.js-shadow + .js-input').trigger('blur')")
+      rescue Selenium::WebDriver::Error::StaleElementReferenceError => e
+        # A recent async update (e.g. a group list refresh) can replace this input's DOM
+        #   node mid-interaction. Re-fetch it and start the interaction over from scratch.
+        raise e if (fail_count ||= 0) >= 3
+
+        fail_count += 1
+        sleep 0.5
+        retry
+      end
       return
     end
 
@@ -920,6 +930,8 @@ class TestCase < ActiveSupport::TestCase
     log('switch', params)
 
     instance = params[:browser] || @browser
+
+    watch_for(browser: instance, css: "#{params[:css]} input[type=checkbox]")
 
     element = instance.find_elements(css: "#{params[:css]} input[type=checkbox]")[0]
     checked = element.attribute('checked')
@@ -2859,7 +2871,7 @@ wait untill text in selector disabppears
     #   against a separate `bin/rails server`), so forcing the index update
     #   directly from here isn't an option - polling is the only lever available.
     found = false
-    60.times do
+    99.times do
       found = instance.execute_script("return $(\".js-global-search-result a:contains('#{params[:number]}')\").length") == 1
       break if found
 

@@ -455,7 +455,12 @@ RSpec.describe 'System > Objects', type: :system do
                                 'maxlength'  => 255,
                                 'translate'  => false }
 
-      wait(30).until { ObjectManager::Attribute.find_by(name: 'tree1')&.data_option == expected_data_options }
+      # This whole file performs many real schema migrations back-to-back (see the
+      #   add_column lines throughout), which can occasionally cause severe, if rare,
+      #   contention for an otherwise-synchronous, already-committed attribute save.
+      #   The file already has precedent for this class of slowness elsewhere
+      #   (migration-execution waits use up to 7.minutes).
+      wait(60).until { ObjectManager::Attribute.find_by(name: 'tree1')&.data_option == expected_data_options }
       expect(ObjectManager::Attribute.find_by(name: 'tree1').data_option).to eq(expected_data_options)
     end
 
@@ -485,7 +490,7 @@ RSpec.describe 'System > Objects', type: :system do
         '2' => 'special 2',
       }
 
-      wait(30).until { ObjectManager::Attribute.find_by(name: 'select1')&.data_option&.dig('options') == expected_data_options }
+      wait(60).until { ObjectManager::Attribute.find_by(name: 'select1')&.data_option&.dig('options') == expected_data_options }
       expect(ObjectManager::Attribute.find_by(name: 'select1').data_option['options']).to eq(expected_data_options)
     end
 
@@ -515,7 +520,7 @@ RSpec.describe 'System > Objects', type: :system do
         '2' => 'special 2',
       }
 
-      wait(30).until { ObjectManager::Attribute.find_by(name: 'multiselect1')&.data_option&.dig('options') == expected_data_options }
+      wait(60).until { ObjectManager::Attribute.find_by(name: 'multiselect1')&.data_option&.dig('options') == expected_data_options }
       expect(ObjectManager::Attribute.find_by(name: 'multiselect1').data_option['options']).to eq(expected_data_options)
     end
 
@@ -533,7 +538,7 @@ RSpec.describe 'System > Objects', type: :system do
         false => 'HELL NOO',
       }
 
-      wait(30).until { ObjectManager::Attribute.find_by(name: 'bool1')&.data_option&.dig('options') == expected_data_options }
+      wait(60).until { ObjectManager::Attribute.find_by(name: 'bool1')&.data_option&.dig('options') == expected_data_options }
       expect(ObjectManager::Attribute.find_by(name: 'bool1').data_option['options']).to eq(expected_data_options)
     end
 

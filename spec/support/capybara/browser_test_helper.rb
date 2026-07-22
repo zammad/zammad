@@ -28,8 +28,10 @@ module BrowserTestHelper
     wait_time = tries
     tries += 1
 
-    Rails.logger.info "Stale element found. Retry #{tries}/retries (sleeping: #{wait_time})"
+    Rails.logger.info "Stale element found. Retry #{tries}/#{retries} (sleeping: #{wait_time})"
     sleep wait_time
+
+    retry
   end
 
   # Get the current cookies from the browser with the driver object.

@@ -50,11 +50,12 @@ RSpec.describe 'Mobile > Ticket > Article actions', app: :mobile, authenticated_
     find_button(trigger_label).click
   end
 
-  # editor.signatureAdd normally settles well within Capybara's default wait, but two
-  #   independent sources of extra work push it past that under CI load - and stack
-  #   when both apply:
+  # editor.signatureAdd normally settles well within Capybara's default wait, but a few
+  #   independent sources of extra work push it past that under CI load - the first two
+  #   stack when both apply:
   #   - converting a phone article's type to email
   #   - forwarding, which builds a quoted copy of the original message
+  #   - replying with a quoted selection of the original article's content
   def signature_add_slow_timeout
     30 # either source alone
   end
@@ -167,7 +168,7 @@ RSpec.describe 'Mobile > Ticket > Article actions', app: :mobile, authenticated_
             # Without this, the editor may not be editable yet when addSignature
             # is called, causing the flag to never be set (known race condition).
             wait_for_form_updater
-            wait_for_test_flag('editor.signatureAdd')
+            wait_for_test_flag('editor.signatureAdd', timeout: signature_add_slow_timeout)
           }
         end
         let(:current_text) { "#{article.body}\n\n#{agent.firstname}\nSignature!" }

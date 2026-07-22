@@ -433,7 +433,9 @@ RSpec.describe 'Search', authenticated_as: :authenticate, searchindex: true, typ
       end
 
       it 'does switch search results properly' do
-        page.find('.js-search').fill_in(with: '"Testing Ticket 1"')
+        # clear: :backspace paces the clear+type sequence more naturally - the default
+        #   clear strategy has occasionally dropped the first typed character here.
+        page.find('.js-search').fill_in(with: '"Testing Ticket 1"', fill_options: { clear: :backspace })
         expect(page.find('.js-tableBody')).to have_text('Testing Ticket 1')
         expect(page.find('.js-tableBody')).to have_no_text('Testing Ticket 2')
         expect(current_url).to include('Testing%20Ticket%201')
@@ -642,9 +644,8 @@ RSpec.describe 'Search', authenticated_as: :authenticate, searchindex: true, typ
         find('.js-search').fill_in with: 'Nicole'
       end
 
-      within('.table-column-head', text: 'TITLE') do
-        expect(page).to have_no_css('.table-sort-arrow')
-      end
+      expect(page).to have_css('.table-column-head', text: 'TITLE')
+      expect(page).to have_no_css('.table-column-head .table-sort-arrow')
     end
 
     it 'when changing search query after navigation away-and-back clear sorting' do
@@ -656,9 +657,8 @@ RSpec.describe 'Search', authenticated_as: :authenticate, searchindex: true, typ
         find('.js-search').fill_in with: 'Nicole'
       end
 
-      within('.table-column-head', text: 'TITLE') do
-        expect(page).to have_no_css('.table-sort-arrow')
-      end
+      expect(page).to have_css('.table-column-head', text: 'TITLE')
+      expect(page).to have_no_css('.table-column-head .table-sort-arrow')
     end
   end
 

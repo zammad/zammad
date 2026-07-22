@@ -148,6 +148,8 @@ RSpec.describe 'Ticket Shared Draft Zoom', authenticated_as: :authenticate, type
     it 'hides button when another user deletes' do
       visit "ticket/zoom/#{ticket_with_draft.id}"
 
+      ensure_websocket
+
       draft.destroy
 
       within :active_content do
