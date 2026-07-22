@@ -56,6 +56,10 @@ Writing strings that can be translated well and are a pleasure to read for the e
   `My escalated tickets`). Other pronouns should be avoided, especially when talking about the software/system itself.
   Bad: `I / we could not generate the key`. Use the passive (`The key could not be generated`) or talk about `Zammad`
   instead (`Zammad does not support OTRS BPM processes`).
+- _Use sentence case._ Capitalize titles, headings, buttons, and labels in sentence case - only the first word and
+  proper nouns. Good: `Add new ticket`, `My escalated tickets`. Bad: `Add New Ticket`. Sentence case is easier to scan
+  and reads more naturally than title case. Make sure proper nouns (`Zammad`, `LDAP`, `PGP`) stay capitalized.
+  Learn more about capitalization on [Wikipedia](https://en.wikipedia.org/wiki/Capitalization)
 
 ### Weblate Process Overview
 
