@@ -2,6 +2,7 @@
 
 module Gql::Queries
   class AutocompleteSearch::Tag < BaseQuery
+    requires_permission 'ticket.agent', 'admin.tag', 'knowledge_base.editor'
 
     description 'Search for tags'
 
