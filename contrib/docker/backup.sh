@@ -103,9 +103,6 @@ function perform_restore {
   echo "Clearing cache…"
   bundle exec rails r "Rails.cache.clear"
 
-  echo "Drop old search indexes, if any…"
-  bundle exec rake zammad:searchindex:drop || true  # Ignore failures here, e.g. if ES is not active.
-
   TIMESTAMP="$(date +'%Y%m%d%H%M%S')"
   mv "${RESTORE_DIR}" "${RESTORE_DIR}_completed_${TIMESTAMP}"
   echo "Restore directory was moved to ${RESTORE_DIR}_completed_${TIMESTAMP}. Feel free to delete it."
