@@ -6,7 +6,7 @@ set -o pipefail
 : "${BACKUP_DIR:=/var/tmp/zammad}"
 : "${RESTORE_DIR:=/var/tmp/zammad/restore}"
 : "${BACKUP_TIME:=03:00}"
-: "${BACKUP_ON_START:=true}"
+: "${BACKUP_ON_START:=false}"
 : "${BACKUP_ONCE:=false}"
 : "${HOLD_DAYS:=10}"
 
