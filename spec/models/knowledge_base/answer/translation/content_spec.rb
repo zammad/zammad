@@ -10,6 +10,20 @@ RSpec.describe KnowledgeBase::Answer::Translation::Content, current_user_id: 1, 
 
   it { is_expected.to have_one(:translation) }
 
+  # Detailed excerpt behaviour is covered in spec/models/concerns/has_excerpt_spec.rb;
+  # here we only verify the HTML body is fed through to the excerpt logic correctly.
+  describe '#body_excerpt' do
+    it 'strips HTML and preserves line breaks from block tags' do
+      content = described_class.new(body: '<p>First paragraph.</p><p>Second <b>paragraph</b>.</p>')
+
+      expect(content.body_excerpt).to eq("First paragraph.\nSecond paragraph.")
+    end
+
+    it 'returns nil when the body is nil' do
+      expect(described_class.new(body: nil).body_excerpt).to be_nil
+    end
+  end
+
   describe '#touch_translation' do
     let(:translation) { content.translation }
 

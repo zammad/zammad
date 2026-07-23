@@ -8,9 +8,9 @@ import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { EnumKnowledgeBaseVisibility } from '#shared/graphql/types.ts'
 import { convertToGraphQLId, getIdFromGraphQLId } from '#shared/graphql/utils.ts'
 
-import { mockKnowledgeBaseQuery } from '../graphql/queries/knowledgeBase.mocks.ts'
-import { mockKnowledgeBaseAnswersQuery } from '../graphql/queries/knowledgeBaseAnswers.mocks.ts'
-import { mockKnowledgeBaseCategorySubcategoriesQuery } from '../graphql/queries/knowledgeBaseCategorySubcategories.mocks.ts'
+import { mockKnowledgeBaseQuery } from '#desktop/entities/knowledge-base/graphql/queries/knowledgeBase.mocks.ts'
+import { mockKnowledgeBaseAnswersQuery } from '#desktop/entities/knowledge-base/graphql/queries/knowledgeBaseAnswers.mocks.ts'
+import { mockKnowledgeBaseCategorySubcategoriesQuery } from '#desktop/entities/knowledge-base/graphql/queries/knowledgeBaseCategorySubcategories.mocks.ts'
 
 const CATEGORY_ID = convertToGraphQLId('KnowledgeBase::Category', 1)
 
@@ -34,7 +34,7 @@ const answer = (id: number, title: string) => ({
   node: {
     id: convertToGraphQLId('KnowledgeBase::Answer', id),
     title,
-    visibility: EnumKnowledgeBaseVisibility.Public,
+    visibility: EnumKnowledgeBaseVisibility.Published,
     position: id,
   },
 })

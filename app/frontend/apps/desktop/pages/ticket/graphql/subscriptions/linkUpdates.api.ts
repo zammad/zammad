@@ -1,6 +1,7 @@
 import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
+import { KnowledgeBaseAnswerTranslationFragmentDoc } from '../../../../entities/knowledge-base/graphql/fragments/knowledgeBaseAnswerTranslation.api';
 import * as VueApolloComposable from '@vue/apollo-composable';
 import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;
@@ -22,14 +23,14 @@ export const LinkUpdatesDocument = gql`
           stateColorCode
         }
         ... on KnowledgeBaseAnswerTranslation {
-          id
+          ...knowledgeBaseAnswerTranslation
         }
       }
       type
     }
   }
 }
-    `;
+    ${KnowledgeBaseAnswerTranslationFragmentDoc}`;
 export function useLinkUpdatesSubscription(variables: Types.LinkUpdatesSubscriptionVariables | VueCompositionApi.Ref<Types.LinkUpdatesSubscriptionVariables> | ReactiveFunction<Types.LinkUpdatesSubscriptionVariables>, options: VueApolloComposable.UseSubscriptionOptions<Types.LinkUpdatesSubscription, Types.LinkUpdatesSubscriptionVariables> | VueCompositionApi.Ref<VueApolloComposable.UseSubscriptionOptions<Types.LinkUpdatesSubscription, Types.LinkUpdatesSubscriptionVariables>> | ReactiveFunction<VueApolloComposable.UseSubscriptionOptions<Types.LinkUpdatesSubscription, Types.LinkUpdatesSubscriptionVariables>> = {}) {
   return VueApolloComposable.useSubscription<Types.LinkUpdatesSubscription, Types.LinkUpdatesSubscriptionVariables>(LinkUpdatesDocument, variables, options);
 }

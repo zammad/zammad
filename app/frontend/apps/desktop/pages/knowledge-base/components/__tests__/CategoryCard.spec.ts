@@ -1,24 +1,20 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { ref } from 'vue'
-
 import { renderComponent } from '#tests/support/components/index.ts'
 
 import { EnumKnowledgeBaseVisibility } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
 import CategoryCard from '../CategoryCard.vue'
-
-vi.mock('../../stores/knowledgeBase.ts', () => ({
-  useKnowledgeBaseStore: () => ({ activeLocale: ref(undefined) }),
-}))
+import '#tests/graphql/builders/mocks.ts'
 
 const renderCard = (props = {}) =>
   renderComponent(CategoryCard, {
+    router: true,
     props: {
       id: convertToGraphQLId('KnowledgeBase::Category', 1),
       title: 'Getting Started',
-      visibility: EnumKnowledgeBaseVisibility.Public,
+      visibility: EnumKnowledgeBaseVisibility.Published,
       categoryIcon: 'headset',
       subcategoryCount: 0,
       answerCount: 0,
@@ -30,16 +26,16 @@ const renderCard = (props = {}) =>
 
 describe('CategoryCard', () => {
   it('shows the subcategory and answer count badges', () => {
-    const view = renderCard({ subcategoryCount: 3, answerCount: 7 })
+    const wrapper = renderCard({ subcategoryCount: 3, answerCount: 7 })
 
-    expect(view.getByText('3')).toBeInTheDocument()
-    expect(view.getByText('7')).toBeInTheDocument()
+    expect(wrapper.getByText('3')).toBeInTheDocument()
+    expect(wrapper.getByText('7')).toBeInTheDocument()
   })
 
   it('show the count badges when the counts are zero', () => {
-    const view = renderCard({ subcategoryCount: 0, answerCount: 0 })
+    const wrapper = renderCard({ subcategoryCount: 0, answerCount: 0 })
 
-    expect(view.getAllByText('0').length).toBe(2)
+    expect(wrapper.getAllByText('0').length).toBe(2)
   })
 
   it('renders the category icon and falls back to folder', () => {
@@ -50,21 +46,21 @@ describe('CategoryCard', () => {
   })
 
   it('passes the category visibility to the status icon', () => {
-    const view = renderCard({ visibility: EnumKnowledgeBaseVisibility.Public })
+    const wrapper = renderCard({ visibility: EnumKnowledgeBaseVisibility.Published })
 
-    expect(view.queryAllByLabelText('Public').length).toBeGreaterThan(0)
+    expect(wrapper.queryAllByLabelText('Published').length).toBeGreaterThan(0)
   })
 
   it('warns when the category has no translation in the browsed locale', () => {
-    const view = renderCard({ translationMissing: true })
+    const wrapper = renderCard({ translationMissing: true })
 
-    expect(view.getByIconName('exclamation-triangle')).toBeInTheDocument()
-    expect(view.getByLabelText('No translation for this locale available')).toBeInTheDocument()
+    expect(wrapper.getByIconName('exclamation-triangle')).toBeInTheDocument()
+    expect(wrapper.getByLabelText('No translation for this locale available')).toBeInTheDocument()
   })
 
   it('shows no translation warning when a translation exists', () => {
-    const view = renderCard({ translationMissing: false })
+    const wrapper = renderCard({ translationMissing: false })
 
-    expect(view.queryByIconName('exclamation-triangle')).not.toBeInTheDocument()
+    expect(wrapper.queryByIconName('exclamation-triangle')).not.toBeInTheDocument()
   })
 })

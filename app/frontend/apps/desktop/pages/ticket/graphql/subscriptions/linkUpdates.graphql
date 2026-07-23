@@ -14,7 +14,7 @@ subscription linkUpdates($objectId: ID!, $targetType: String!) {
           stateColorCode
         }
         ... on KnowledgeBaseAnswerTranslation {
-          id
+          ...knowledgeBaseAnswerTranslation
         }
       }
       type

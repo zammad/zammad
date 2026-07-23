@@ -11,6 +11,15 @@ import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import { useTicketInformation } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
 import { useTicketAiAssistanceEnqueueKnowledgeBaseAnswerMutation } from '#desktop/pages/ticket/graphql/mutations/ticketAIAssistanceEnqueueKnowledgeBaseAnswer.api.ts'
 
+interface Props {
+  showDraft: boolean
+  isTicketEditable: boolean
+}
+
+defineProps<Props>()
+
+const newKnowledgeBaseAnswer = defineModel<boolean>('newKnowledgeBaseAnswer')
+
 const NOTIFICATION_ID = 'ticket-ai-knowledge-base-answers-notification'
 
 const isGenerating = ref(false)
@@ -54,17 +63,29 @@ const requestDraft = async () => {
 </script>
 
 <template>
-  <div class="flex justify-end">
-    <CommonButton
-      type="button"
-      size="small"
-      prefix-icon="ai-knowledge-base"
-      icon-class="text-blue-800"
-      class="relative ai-stripe bg-green-200! text-gray-300! before:absolute before:bottom-0 before:w-[85%] hover:bg-green-200! dark:bg-gray-600! dark:text-neutral-400! dark:hover:bg-gray-600!"
-      :disabled="isGenerating"
-      @click="requestDraft"
-    >
-      {{ $t('Add AI draft') }}
-    </CommonButton>
+  <div class="flex">
+    <slot>
+      <CommonButton
+        v-if="showDraft"
+        type="button"
+        size="small"
+        prefix-icon="ai-knowledge-base"
+        icon-class="text-blue-800"
+        class="relative ai-stripe bg-green-200! text-gray-300! before:absolute before:bottom-0 before:w-[85%] hover:bg-green-200! dark:bg-gray-600! dark:text-neutral-400! dark:hover:bg-gray-600!"
+        :disabled="isGenerating"
+        @click="requestDraft"
+      >
+        {{ $t('Add AI draft') }}
+      </CommonButton>
+
+      <CommonButton
+        v-if="isTicketEditable && !newKnowledgeBaseAnswer"
+        v-tooltip="$t('Link knowledge base answer')"
+        size="medium"
+        class="ltr:ml-auto rtl:mr-auto"
+        icon="plus-square-fill"
+        @click="newKnowledgeBaseAnswer = true"
+      />
+    </slot>
   </div>
 </template>

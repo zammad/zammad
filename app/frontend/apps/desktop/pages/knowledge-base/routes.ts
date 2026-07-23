@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { useKnowledgeBaseAccess } from './composables/useKnowledgeBaseAccess.ts'
+import { useKnowledgeBaseAccess } from '../../entities/knowledge-base/composables/useKnowledgeBaseAccess.ts'
 
 import type { RouteRecordRaw } from 'vue-router'
 

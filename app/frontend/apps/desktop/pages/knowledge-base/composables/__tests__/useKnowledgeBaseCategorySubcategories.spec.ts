@@ -17,9 +17,10 @@ import {
   mockKnowledgeBaseCategorySubcategoriesQuery,
   mockKnowledgeBaseCategorySubcategoriesQueryError,
   waitForKnowledgeBaseCategorySubcategoriesQueryCalls,
-} from '../../graphql/queries/knowledgeBaseCategorySubcategories.mocks.ts'
-import { getKnowledgeBaseContentUpdatesSubscriptionHandler } from '../../graphql/subscriptions/knowledgeBaseContentUpdates.mocks.ts'
-import { useKnowledgeBaseStore } from '../../stores/knowledgeBase.ts'
+} from '#desktop/entities/knowledge-base/graphql/queries/knowledgeBaseCategorySubcategories.mocks.ts'
+import { getKnowledgeBaseContentUpdatesSubscriptionHandler } from '#desktop/entities/knowledge-base/graphql/subscriptions/knowledgeBaseContentUpdates.mocks.ts'
+
+import { useKnowledgeBaseStore } from '../../../../entities/knowledge-base/stores/knowledgeBase.ts'
 import { useKnowledgeBaseCategorySubcategories } from '../useKnowledgeBaseCategorySubcategories.ts'
 
 const KB_ID = convertToGraphQLId('KnowledgeBase', 1)
@@ -94,7 +95,7 @@ describe('useKnowledgeBaseCategorySubcategories', () => {
             id: CHILD_CATEGORY_ID,
             title: 'Billing',
             categoryIcon: 'folder',
-            visibility: EnumKnowledgeBaseVisibility.Public,
+            visibility: EnumKnowledgeBaseVisibility.Published,
             answerCount: 0,
             subcategoryCount: 0,
             position: 0,

@@ -9,10 +9,11 @@ module Gql::Types::KnowledgeBase::Answer::Translation
     description 'Knowledge Base Answer Translation Content'
 
     field :body, String
-    field :body_prepared, String
+    field :body_with_urls, String
+    field :body_excerpt, String, description: 'Short plain-text excerpt of the body (~50 words, cut on sentence boundaries).'
     field :has_attachments, Boolean, null: false, resolver_method: :attachments?
 
-    def body_prepared
+    def body_with_urls
       prepare_rich_text(object.body_with_urls)
     end
 

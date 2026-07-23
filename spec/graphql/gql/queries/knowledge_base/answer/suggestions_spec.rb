@@ -24,7 +24,8 @@ RSpec.describe Gql::Queries::KnowledgeBase::Answer::Suggestions, current_user_id
             }
             content {
               body
-              bodyPrepared
+              bodyWithUrls
+              bodyExcerpt
               hasAttachments
             }
           }
@@ -55,7 +56,8 @@ RSpec.describe Gql::Queries::KnowledgeBase::Answer::Suggestions, current_user_id
             ],
             'content'                 => {
               'body'           => knowledge_base_answer_translation.content.body,
-              'bodyPrepared'   => prepare_rich_text(knowledge_base_answer_translation.content.body_with_urls),
+              'bodyWithUrls'   => prepare_rich_text(knowledge_base_answer_translation.content.body_with_urls),
+              'bodyExcerpt'    => knowledge_base_answer_translation.content.body_excerpt,
               'hasAttachments' => true,
             },
           }

@@ -13,7 +13,12 @@ export const useKnowledgeBaseVisibility = (
       class: 'text-stone-200! dark:text-neutral-500!',
     },
     [EnumKnowledgeBaseVisibility.Internal]: { icon: 'lock-fill', class: 'text-blue-800!' },
-    [EnumKnowledgeBaseVisibility.Public]: { icon: 'unlock-fill', class: 'text-green-400!' },
+    [EnumKnowledgeBaseVisibility.Published]: { icon: 'unlock-fill', class: 'text-green-400!' },
+    // TODO: placeholder icon/color for the archived state pending design.
+    [EnumKnowledgeBaseVisibility.Archived]: {
+      icon: 'eye-slash',
+      class: 'text-stone-400! dark:text-neutral-400!',
+    },
   } as const
 
   const currentMetaClass = computed(() => {

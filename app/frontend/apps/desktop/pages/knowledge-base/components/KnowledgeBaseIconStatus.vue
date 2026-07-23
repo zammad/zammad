@@ -25,8 +25,10 @@ const tooltipText = computed(() => {
       return __('Draft')
     case EnumKnowledgeBaseVisibility.Internal:
       return __('Internal')
-    case EnumKnowledgeBaseVisibility.Public:
-      return __('Public')
+    case EnumKnowledgeBaseVisibility.Published:
+      return __('Published')
+    case EnumKnowledgeBaseVisibility.Archived:
+      return __('Archived')
     default:
       return undefined
   }

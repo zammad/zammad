@@ -273,6 +273,30 @@ export type AutocompleteSearchInput = {
   query: Scalars['String']['input'];
 };
 
+/** Type that represents an autocomplete knowledge base answer entry. */
+export type AutocompleteSearchKnowledgeBaseAnswerEntry = {
+  __typename?: 'AutocompleteSearchKnowledgeBaseAnswerEntry';
+  disabled?: Maybe<Scalars['Boolean']['output']>;
+  heading?: Maybe<Scalars['String']['output']>;
+  headingPlaceholder?: Maybe<Array<Scalars['String']['output']>>;
+  icon?: Maybe<Scalars['String']['output']>;
+  label: Scalars['String']['output'];
+  labelPlaceholder?: Maybe<Array<Scalars['String']['output']>>;
+  value: Scalars['String']['output'];
+  /** Publication state, used for the state icon in the picker */
+  visibility: EnumKnowledgeBaseVisibility;
+};
+
+/** Input fields for knowledge base answer autocomplete searches. */
+export type AutocompleteSearchKnowledgeBaseAnswerInput = {
+  /** Optional knowledge base answer translation IDs to be filtered out from results */
+  exceptAnswerIds?: InputMaybe<Array<Scalars['ID']['input']>>;
+  /** Limit for the amount of entries */
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  /** Query from the autocomplete field */
+  query: Scalars['String']['input'];
+};
+
 /** Input fields for object attribute external data source autocomplete searches. */
 export type AutocompleteSearchObjectAttributeExternalDataSourceInput = {
   /** Name of the object attribute */
@@ -901,12 +925,14 @@ export enum EnumFormUpdaterId {
 
 /** Publication state used for color-coding knowledge base content */
 export enum EnumKnowledgeBaseVisibility {
+  /** No longer published, retained for reference. */
+  Archived = 'archived',
   /** Not yet published (grey). */
   Draft = 'draft',
   /** Published internally, visible to agents (blue). */
   Internal = 'internal',
   /** Published publicly (green). */
-  Public = 'public'
+  Published = 'published'
 }
 
 /** Link type */
@@ -1475,13 +1501,17 @@ export type KnowledgeBaseAnswerTranslation = {
   updatedAt: Scalars['ISO8601DateTime']['output'];
   /** Last user that updated this record */
   updatedBy?: Maybe<User>;
+  /** Publication state of the translation's answer, used for color-coding */
+  visibility: EnumKnowledgeBaseVisibility;
 };
 
 /** Knowledge Base Answer Translation Content */
 export type KnowledgeBaseAnswerTranslationContent = {
   __typename?: 'KnowledgeBaseAnswerTranslationContent';
   body?: Maybe<Scalars['String']['output']>;
-  bodyPrepared?: Maybe<Scalars['String']['output']>;
+  /** Short plain-text excerpt of the body (~50 words, cut on sentence boundaries). */
+  bodyExcerpt?: Maybe<Scalars['String']['output']>;
+  bodyWithUrls?: Maybe<Scalars['String']['output']>;
   /** Create date/time of the record */
   createdAt: Scalars['ISO8601DateTime']['output'];
   hasAttachments: Scalars['Boolean']['output'];
@@ -3133,6 +3163,8 @@ export type Queries = {
   autocompleteSearchGeneric: Array<AutocompleteSearchGenericEntry>;
   /** Search for idoit object types */
   autocompleteSearchIdoitObjectTypes: Array<AutocompleteSearchEntry>;
+  /** Search for knowledge base answers */
+  autocompleteSearchKnowledgeBaseAnswer: Array<AutocompleteSearchKnowledgeBaseAnswerEntry>;
   /** Search for values in object attributes for external data sources */
   autocompleteSearchObjectAttributeExternalDataSource: Array<AutocompleteSearchExternalDataSourceEntry>;
   /** Search for organizations */
@@ -3293,6 +3325,12 @@ export type QueriesAutocompleteSearchGenericArgs = {
 /** All available queries */
 export type QueriesAutocompleteSearchIdoitObjectTypesArgs = {
   input: AutocompleteSearchInput;
+};
+
+
+/** All available queries */
+export type QueriesAutocompleteSearchKnowledgeBaseAnswerArgs = {
+  input: AutocompleteSearchKnowledgeBaseAnswerInput;
 };
 
 

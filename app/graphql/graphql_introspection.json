@@ -1668,6 +1668,194 @@
           "possibleTypes": null
         },
         {
+          "kind": "OBJECT",
+          "name": "AutocompleteSearchKnowledgeBaseAnswerEntry",
+          "description": "Type that represents an autocomplete knowledge base answer entry.",
+          "fields": [
+            {
+              "name": "disabled",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "heading",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "headingPlaceholder",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "icon",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "label",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "labelPlaceholder",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "value",
+              "description": null,
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "visibility",
+              "description": "Publication state, used for the state icon in the picker",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "ENUM",
+                  "name": "EnumKnowledgeBaseVisibility",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "AutocompleteSearchKnowledgeBaseAnswerInput",
+          "description": "Input fields for knowledge base answer autocomplete searches.",
+          "fields": null,
+          "inputFields": [
+            {
+              "name": "query",
+              "description": "Query from the autocomplete field",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "limit",
+              "description": "Limit for the amount of entries",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "exceptAnswerIds",
+              "description": "Optional knowledge base answer translation IDs to be filtered out from results",
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "ID",
+                    "ofType": null
+                  }
+                }
+              },
+              "defaultValue": null
+            }
+          ],
+          "interfaces": null,
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
           "kind": "INPUT_OBJECT",
           "name": "AutocompleteSearchObjectAttributeExternalDataSourceInput",
           "description": "Input fields for object attribute external data source autocomplete searches.",
@@ -5446,8 +5634,14 @@
               "deprecationReason": null
             },
             {
-              "name": "public",
+              "name": "published",
               "description": "Published publicly (green).",
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "archived",
+              "description": "No longer published, retained for reference.",
               "isDeprecated": false,
               "deprecationReason": null
             }
@@ -8644,6 +8838,22 @@
               },
               "isDeprecated": false,
               "deprecationReason": null
+            },
+            {
+              "name": "visibility",
+              "description": "Publication state of the translation's answer, used for color-coding",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "ENUM",
+                  "name": "EnumKnowledgeBaseVisibility",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
             }
           ],
           "inputFields": null,
@@ -8669,7 +8879,19 @@
               "deprecationReason": null
             },
             {
-              "name": "bodyPrepared",
+              "name": "bodyExcerpt",
+              "description": "Short plain-text excerpt of the body (~50 words, cut on sentence boundaries).",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "bodyWithUrls",
               "description": null,
               "args": [],
               "type": {
@@ -17244,6 +17466,45 @@
                     "ofType": {
                       "kind": "OBJECT",
                       "name": "AutocompleteSearchEntry",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "autocompleteSearchKnowledgeBaseAnswer",
+              "description": "Search for knowledge base answers",
+              "args": [
+                {
+                  "name": "input",
+                  "description": "The input object for the autocomplete search",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "AutocompleteSearchKnowledgeBaseAnswerInput",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "LIST",
+                  "name": null,
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "AutocompleteSearchKnowledgeBaseAnswerEntry",
                       "ofType": null
                     }
                   }

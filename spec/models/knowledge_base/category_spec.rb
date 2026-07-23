@@ -2,6 +2,7 @@
 
 require 'rails_helper'
 require 'models/concerns/checks_kb_client_notification_examples'
+require 'models/concerns/has_translations_examples'
 require 'models/contexts/factory_context'
 
 RSpec.describe KnowledgeBase::Category, current_user_id: 1, type: :model do
@@ -328,5 +329,16 @@ RSpec.describe KnowledgeBase::Category, current_user_id: 1, type: :model do
         )
       end
     end
+  end
+
+  describe 'HasTranslations' do
+    include_context 'basic Knowledge Base'
+
+    let!(:record) { category }
+    let(:add_translation) do
+      ->(locale) { create(:knowledge_base_category_translation, category: record, kb_locale: locale) }
+    end
+
+    it_behaves_like 'HasTranslations'
   end
 end

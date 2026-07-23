@@ -13,11 +13,11 @@ import type { Link } from '#shared/types/router.ts'
 import CommonActionMenu from '#desktop/components/CommonActionMenu/CommonActionMenu.vue'
 import CommonDivider from '#desktop/components/CommonDivider/CommonDivider.vue'
 import type { MenuItem } from '#desktop/components/CommonPopoverMenu/types.ts'
+import { knowledgeBaseBrowseRoute } from '#desktop/entities/knowledge-base/utils/routeLocation.ts'
 import KnowledgeBaseIconStatus from '#desktop/pages/knowledge-base/components/KnowledgeBaseIconStatus.vue'
 
-import { useKnowledgeBaseAccess } from '../composables/useKnowledgeBaseAccess.ts'
-import { useKnowledgeBaseStore } from '../stores/knowledgeBase.ts'
-import { knowledgeBaseBrowseRoute } from '../utils/routeLocation.ts'
+import { useKnowledgeBaseAccess } from '../../../entities/knowledge-base/composables/useKnowledgeBaseAccess.ts'
+import { useKnowledgeBaseStore } from '../../../entities/knowledge-base/stores/knowledgeBase.ts'
 
 import type { KnowledgeBaseCategoryCompact } from '../types.ts'
 

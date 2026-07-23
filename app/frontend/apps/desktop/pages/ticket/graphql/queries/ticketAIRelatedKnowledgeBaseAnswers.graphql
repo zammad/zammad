@@ -4,21 +4,7 @@ query ticketAIRelatedKnowledgeBaseAnswers($ticketId: ID!) {
     answers {
       score
       translation {
-        id
-        title
-        answer {
-          id
-          category {
-            knowledgeBase {
-              id
-            }
-          }
-        }
-        kbLocale {
-          systemLocale {
-            locale
-          }
-        }
+        ...knowledgeBaseAnswerTranslation
       }
     }
   }

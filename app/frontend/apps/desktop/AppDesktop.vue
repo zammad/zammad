@@ -34,8 +34,8 @@ import { useAppUsageStore } from '#desktop/stores/appUsage.ts'
 import { useBetaUi } from './components/BetaUi/composables/useBetaUi.ts'
 import { useBetaUiFeedbackRouteGuard } from './components/BetaUi/composables/useBetaUiFeedbackRouteGuard.ts'
 import { useMobileDetection } from './composables/responsiveness/useMobileDetection.ts'
-import { useKnowledgeBaseAccess } from './pages/knowledge-base/composables/useKnowledgeBaseAccess.ts'
-import { useKnowledgeBaseStore } from './pages/knowledge-base/stores/knowledgeBase.ts'
+import { useKnowledgeBaseAccess } from './entities/knowledge-base/composables/useKnowledgeBaseAccess.ts'
+import { useKnowledgeBaseStore } from './entities/knowledge-base/stores/knowledgeBase.ts'
 
 const router = useRouter()
 

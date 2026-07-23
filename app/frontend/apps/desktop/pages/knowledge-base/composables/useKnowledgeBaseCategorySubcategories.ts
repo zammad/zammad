@@ -9,11 +9,11 @@ import { getApolloClient } from '#shared/server/apollo/client.ts'
 import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
 import { ErrorStatusCodes, GraphQLErrorTypes } from '#shared/types/error.ts'
 
-import { KnowledgeBaseCategoryPreInfoFragmentDoc } from '#desktop/pages/knowledge-base/graphql/fragments/knowledgeBaseCategoryPreInfo.api.ts'
-import { useKnowledgeBaseCategorySubcategoriesQuery } from '#desktop/pages/knowledge-base/graphql/queries/knowledgeBaseCategorySubcategories.api.ts'
+import { KnowledgeBaseCategoryPreInfoFragmentDoc } from '#desktop/entities/knowledge-base/graphql/fragments/knowledgeBaseCategoryPreInfo.api.ts'
+import { useKnowledgeBaseCategorySubcategoriesQuery } from '#desktop/entities/knowledge-base/graphql/queries/knowledgeBaseCategorySubcategories.api.ts'
+import { knowledgeBaseBrowseRoute } from '#desktop/entities/knowledge-base/utils/routeLocation.ts'
 
-import { useKnowledgeBaseStore } from '../stores/knowledgeBase.ts'
-import { knowledgeBaseBrowseRoute } from '../utils/routeLocation.ts'
+import { useKnowledgeBaseStore } from '../../../entities/knowledge-base/stores/knowledgeBase.ts'
 
 import type { CategoryBreadcrumb } from '../types.ts'
 

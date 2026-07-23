@@ -8,9 +8,9 @@ import { waitFor } from '#tests/support/vitest-wrapper.ts'
 import { EnumKnowledgeBaseVisibility } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
-import { mockKnowledgeBaseQuery } from '../graphql/queries/knowledgeBase.mocks.ts'
-import { mockKnowledgeBaseAnswersQuery } from '../graphql/queries/knowledgeBaseAnswers.mocks.ts'
-import { mockKnowledgeBaseCategorySubcategoriesQuery } from '../graphql/queries/knowledgeBaseCategorySubcategories.mocks.ts'
+import { mockKnowledgeBaseQuery } from '#desktop/entities/knowledge-base/graphql/queries/knowledgeBase.mocks.ts'
+import { mockKnowledgeBaseAnswersQuery } from '#desktop/entities/knowledge-base/graphql/queries/knowledgeBaseAnswers.mocks.ts'
+import { mockKnowledgeBaseCategorySubcategoriesQuery } from '#desktop/entities/knowledge-base/graphql/queries/knowledgeBaseCategorySubcategories.mocks.ts'
 
 const CATEGORY_ID = convertToGraphQLId('KnowledgeBase::Category', 1)
 
@@ -47,7 +47,7 @@ describe('knowledge base add category card', () => {
             id: CATEGORY_ID,
             title: 'Root Category',
             categoryIcon: 'folder',
-            visibility: EnumKnowledgeBaseVisibility.Public,
+            visibility: EnumKnowledgeBaseVisibility.Published,
             answerCount: 0,
             subcategoryCount: 0,
             position: 0,

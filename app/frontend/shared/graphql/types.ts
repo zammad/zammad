@@ -156,6 +156,47 @@ export type EmailAddressesQueryVariables = Exact<{
 
 export type EmailAddressesQuery = { emailAddresses: Array<{ __typename: 'EmailAddress', name: string, email: string, active: boolean }> };
 
+export type KnowledgeBaseAnswerTranslationFragment = { __typename: 'KnowledgeBaseAnswerTranslation', id: string, title: string, visibility: Types.EnumKnowledgeBaseVisibility, content: { __typename: 'KnowledgeBaseAnswerTranslationContent', bodyExcerpt: string | null | undefined }, answer: { __typename: 'KnowledgeBaseAnswer', id: string, archivedAt: string | null | undefined, publishedAt: string | null | undefined, category: { __typename: 'KnowledgeBaseCategory', id: string, title: string | null | undefined, knowledgeBase: { __typename: 'KnowledgeBase', id: string } } }, kbLocale: { __typename: 'KnowledgeBaseLocale', systemLocale: { __typename: 'Locale', locale: string, name: string } } };
+
+export type KnowledgeBaseCategoryPreInfoFragment = { __typename: 'KnowledgeBaseCategory', directAnswerCount: number, directSubcategoryCount: number, breadcrumb: Array<{ __typename: 'KnowledgeBaseCategory', id: string, title: string | null | undefined, categoryIcon: string, visibility: Types.EnumKnowledgeBaseVisibility }> };
+
+export type AutocompleteSearchKnowledgeBaseAnswerQueryVariables = Exact<{
+  input: Types.AutocompleteSearchKnowledgeBaseAnswerInput;
+}>;
+
+
+export type AutocompleteSearchKnowledgeBaseAnswerQuery = { autocompleteSearchKnowledgeBaseAnswer: Array<{ __typename: 'AutocompleteSearchKnowledgeBaseAnswerEntry', value: string, label: string, heading: string | null | undefined, visibility: Types.EnumKnowledgeBaseVisibility }> };
+
+export type KnowledgeBaseQueryVariables = Exact<{
+  locale?: string | null | undefined;
+}>;
+
+
+export type KnowledgeBaseQuery = { knowledgeBase: { __typename: 'KnowledgeBase', id: string, title: string | null | undefined, iconset: string, isPubliclyAvailable: boolean, isVisiblePublicly: boolean, kbLocales: Array<{ __typename: 'KnowledgeBaseLocale', id: string, primary: boolean, systemLocale: { __typename: 'Locale', id: string, locale: string, name: string } }>, currentLocale: { __typename: 'KnowledgeBaseLocale', id: string, systemLocale: { __typename: 'Locale', id: string, locale: string } } | null | undefined } | null | undefined };
+
+export type KnowledgeBaseAnswersQueryVariables = Exact<{
+  categoryId: string | number;
+  locale?: string | null | undefined;
+  pageSize?: number | null | undefined;
+  cursor?: string | null | undefined;
+}>;
+
+
+export type KnowledgeBaseAnswersQuery = { knowledgeBaseAnswers: { __typename: 'KnowledgeBaseAnswerConnection', totalCount: number, edges: Array<{ __typename: 'KnowledgeBaseAnswerEdge', node: { __typename: 'KnowledgeBaseAnswer', id: string, title: string | null | undefined, visibility: Types.EnumKnowledgeBaseVisibility, translationMissing: boolean, position: number } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null | undefined, hasNextPage: boolean } } };
+
+export type KnowledgeBaseCategorySubcategoriesQueryVariables = Exact<{
+  categoryId?: string | number | null | undefined;
+  locale?: string | null | undefined;
+}>;
+
+
+export type KnowledgeBaseCategorySubcategoriesQuery = { knowledgeBaseCategorySubcategories: { __typename: 'KnowledgeBaseCategorySubcategoriesPayload', category: { __typename: 'KnowledgeBaseCategory', id: string, isVisiblePublicly: boolean, translationMissing: boolean, directAnswerCount: number, directSubcategoryCount: number, breadcrumb: Array<{ __typename: 'KnowledgeBaseCategory', id: string, title: string | null | undefined, categoryIcon: string, visibility: Types.EnumKnowledgeBaseVisibility }> } | null | undefined, subcategories: Array<{ __typename: 'KnowledgeBaseCategory', id: string, title: string | null | undefined, categoryIcon: string, visibility: Types.EnumKnowledgeBaseVisibility, translationMissing: boolean, answerCount: number, subcategoryCount: number, position: number, directAnswerCount: number, directSubcategoryCount: number, breadcrumb: Array<{ __typename: 'KnowledgeBaseCategory', id: string, title: string | null | undefined, categoryIcon: string, visibility: Types.EnumKnowledgeBaseVisibility }> }> } | null | undefined };
+
+export type KnowledgeBaseContentUpdatesSubscriptionVariables = Exact<{ [key: string]: never; }>;
+
+
+export type KnowledgeBaseContentUpdatesSubscription = { knowledgeBaseContentUpdates: { __typename: 'KnowledgeBaseContentUpdatesPayload', affectedCategoryIds: Array<string> | null | undefined, knowledgeBase: { __typename: 'KnowledgeBase', id: string } | null | undefined } };
+
 export type OrganizationHistoryQueryVariables = Exact<{
   organizationId: string | number;
 }>;
@@ -616,38 +657,6 @@ export type SystemSetupInfoQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type SystemSetupInfoQuery = { systemSetupInfo: { __typename: 'SystemSetupInfo', status: Types.EnumSystemSetupInfoStatus, type: Types.EnumSystemSetupInfoType | null | undefined } };
 
-export type KnowledgeBaseCategoryPreInfoFragment = { __typename: 'KnowledgeBaseCategory', directAnswerCount: number, directSubcategoryCount: number, breadcrumb: Array<{ __typename: 'KnowledgeBaseCategory', id: string, title: string | null | undefined, categoryIcon: string, visibility: Types.EnumKnowledgeBaseVisibility }> };
-
-export type KnowledgeBaseQueryVariables = Exact<{
-  locale?: string | null | undefined;
-}>;
-
-
-export type KnowledgeBaseQuery = { knowledgeBase: { __typename: 'KnowledgeBase', id: string, title: string | null | undefined, iconset: string, isPubliclyAvailable: boolean, isVisiblePublicly: boolean, kbLocales: Array<{ __typename: 'KnowledgeBaseLocale', id: string, primary: boolean, systemLocale: { __typename: 'Locale', id: string, locale: string, name: string } }>, currentLocale: { __typename: 'KnowledgeBaseLocale', id: string, systemLocale: { __typename: 'Locale', id: string, locale: string } } | null | undefined } | null | undefined };
-
-export type KnowledgeBaseAnswersQueryVariables = Exact<{
-  categoryId: string | number;
-  locale?: string | null | undefined;
-  pageSize?: number | null | undefined;
-  cursor?: string | null | undefined;
-}>;
-
-
-export type KnowledgeBaseAnswersQuery = { knowledgeBaseAnswers: { __typename: 'KnowledgeBaseAnswerConnection', totalCount: number, edges: Array<{ __typename: 'KnowledgeBaseAnswerEdge', node: { __typename: 'KnowledgeBaseAnswer', id: string, title: string | null | undefined, visibility: Types.EnumKnowledgeBaseVisibility, translationMissing: boolean, position: number } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null | undefined, hasNextPage: boolean } } };
-
-export type KnowledgeBaseCategorySubcategoriesQueryVariables = Exact<{
-  categoryId?: string | number | null | undefined;
-  locale?: string | null | undefined;
-}>;
-
-
-export type KnowledgeBaseCategorySubcategoriesQuery = { knowledgeBaseCategorySubcategories: { __typename: 'KnowledgeBaseCategorySubcategoriesPayload', category: { __typename: 'KnowledgeBaseCategory', id: string, isVisiblePublicly: boolean, translationMissing: boolean, directAnswerCount: number, directSubcategoryCount: number, breadcrumb: Array<{ __typename: 'KnowledgeBaseCategory', id: string, title: string | null | undefined, categoryIcon: string, visibility: Types.EnumKnowledgeBaseVisibility }> } | null | undefined, subcategories: Array<{ __typename: 'KnowledgeBaseCategory', id: string, title: string | null | undefined, categoryIcon: string, visibility: Types.EnumKnowledgeBaseVisibility, translationMissing: boolean, answerCount: number, subcategoryCount: number, position: number, directAnswerCount: number, directSubcategoryCount: number, breadcrumb: Array<{ __typename: 'KnowledgeBaseCategory', id: string, title: string | null | undefined, categoryIcon: string, visibility: Types.EnumKnowledgeBaseVisibility }> }> } | null | undefined };
-
-export type KnowledgeBaseContentUpdatesSubscriptionVariables = Exact<{ [key: string]: never; }>;
-
-
-export type KnowledgeBaseContentUpdatesSubscription = { knowledgeBaseContentUpdates: { __typename: 'KnowledgeBaseContentUpdatesPayload', affectedCategoryIds: Array<string> | null | undefined, knowledgeBase: { __typename: 'KnowledgeBase', id: string } | null | undefined } };
-
 export type UserCalendarSubscriptionAttributesFragment = { __typename: 'UserPersonalSettingsCalendarSubscriptionsConfig', combinedUrl: string | null | undefined, globalOptions: { __typename: 'UserPersonalSettingsCalendarSubscriptionGlobalOptions', alarm: boolean | null | undefined } | null | undefined, newOpen: { __typename: 'UserPersonalSettingsCalendarSubscriptionSingle', url: string | null | undefined, options: { __typename: 'UserPersonalSettingsCalendarSubscriptionSingleOptions', own: boolean | null | undefined, notAssigned: boolean | null | undefined } | null | undefined } | null | undefined, pending: { __typename: 'UserPersonalSettingsCalendarSubscriptionSingle', url: string | null | undefined, options: { __typename: 'UserPersonalSettingsCalendarSubscriptionSingleOptions', own: boolean | null | undefined, notAssigned: boolean | null | undefined } | null | undefined } | null | undefined, escalation: { __typename: 'UserPersonalSettingsCalendarSubscriptionSingle', url: string | null | undefined, options: { __typename: 'UserPersonalSettingsCalendarSubscriptionSingleOptions', own: boolean | null | undefined, notAssigned: boolean | null | undefined } | null | undefined } | null | undefined };
 
 export type UserDeviceAttributesFragment = { __typename: 'UserDevice', id: string, userId: string, name: string, os: string | null | undefined, browser: string | null | undefined, location: string | null | undefined, deviceDetails: any, locationDetails: any, fingerprint: string | null | undefined, userAgent: string | null | undefined, ip: string | null | undefined, createdAt: string, updatedAt: string };
@@ -776,7 +785,7 @@ export type LinkAddMutationVariables = Exact<{
 
 
 export type LinkAddMutation = { linkAdd: { __typename: 'LinkAddPayload', link: { __typename: 'Link', type: Types.EnumLinkType, item:
-        | { __typename: 'KnowledgeBaseAnswerTranslation', id: string }
+        | { __typename: 'KnowledgeBaseAnswerTranslation', id: string, title: string, visibility: Types.EnumKnowledgeBaseVisibility, content: { __typename: 'KnowledgeBaseAnswerTranslationContent', bodyExcerpt: string | null | undefined }, answer: { __typename: 'KnowledgeBaseAnswer', id: string, archivedAt: string | null | undefined, publishedAt: string | null | undefined, category: { __typename: 'KnowledgeBaseCategory', id: string, title: string | null | undefined, knowledgeBase: { __typename: 'KnowledgeBase', id: string } } }, kbLocale: { __typename: 'KnowledgeBaseLocale', systemLocale: { __typename: 'Locale', locale: string, name: string } } }
         | { __typename: 'Ticket', id: string, internalId: number, title: string, stateColorCode: Types.EnumTicketStateColorCode, state: { __typename: 'TicketState', id: string, name: string } }
        } | null | undefined, errors: Array<{ __typename: 'UserError', message: string, field: string | null | undefined }> | null | undefined } | null | undefined };
 
@@ -914,7 +923,7 @@ export type LinkListQueryVariables = Exact<{
 
 
 export type LinkListQuery = { linkList: Array<{ __typename: 'Link', type: Types.EnumLinkType, item:
-      | { __typename: 'KnowledgeBaseAnswerTranslation', id: string }
+      | { __typename: 'KnowledgeBaseAnswerTranslation', id: string, title: string, visibility: Types.EnumKnowledgeBaseVisibility, content: { __typename: 'KnowledgeBaseAnswerTranslationContent', bodyExcerpt: string | null | undefined }, answer: { __typename: 'KnowledgeBaseAnswer', id: string, archivedAt: string | null | undefined, publishedAt: string | null | undefined, category: { __typename: 'KnowledgeBaseCategory', id: string, title: string | null | undefined, knowledgeBase: { __typename: 'KnowledgeBase', id: string } } }, kbLocale: { __typename: 'KnowledgeBaseLocale', systemLocale: { __typename: 'Locale', locale: string, name: string } } }
       | { __typename: 'Ticket', id: string, internalId: number, title: string, stateColorCode: Types.EnumTicketStateColorCode, state: { __typename: 'TicketState', id: string, name: string } }
      }> | null | undefined };
 
@@ -930,7 +939,7 @@ export type TicketAiRelatedKnowledgeBaseAnswersQueryVariables = Exact<{
 }>;
 
 
-export type TicketAiRelatedKnowledgeBaseAnswersQuery = { ticketAIRelatedKnowledgeBaseAnswers: { __typename: 'TicketAIRelatedKnowledgeBaseAnswersResult', pending: boolean, answers: Array<{ __typename: 'TicketAIRelatedKnowledgeBaseAnswer', score: number, translation: { __typename: 'KnowledgeBaseAnswerTranslation', id: string, title: string, answer: { __typename: 'KnowledgeBaseAnswer', id: string, category: { __typename: 'KnowledgeBaseCategory', knowledgeBase: { __typename: 'KnowledgeBase', id: string } } }, kbLocale: { __typename: 'KnowledgeBaseLocale', systemLocale: { __typename: 'Locale', locale: string } } } }> | null | undefined } };
+export type TicketAiRelatedKnowledgeBaseAnswersQuery = { ticketAIRelatedKnowledgeBaseAnswers: { __typename: 'TicketAIRelatedKnowledgeBaseAnswersResult', pending: boolean, answers: Array<{ __typename: 'TicketAIRelatedKnowledgeBaseAnswer', score: number, translation: { __typename: 'KnowledgeBaseAnswerTranslation', id: string, title: string, visibility: Types.EnumKnowledgeBaseVisibility, content: { __typename: 'KnowledgeBaseAnswerTranslationContent', bodyExcerpt: string | null | undefined }, answer: { __typename: 'KnowledgeBaseAnswer', id: string, archivedAt: string | null | undefined, publishedAt: string | null | undefined, category: { __typename: 'KnowledgeBaseCategory', id: string, title: string | null | undefined, knowledgeBase: { __typename: 'KnowledgeBase', id: string } } }, kbLocale: { __typename: 'KnowledgeBaseLocale', systemLocale: { __typename: 'Locale', locale: string, name: string } } } }> | null | undefined } };
 
 export type TicketAttachmentsQueryVariables = Exact<{
   ticketId: string | number;
@@ -1021,7 +1030,7 @@ export type LinkUpdatesSubscriptionVariables = Exact<{
 
 
 export type LinkUpdatesSubscription = { linkUpdates: { __typename: 'LinkUpdatesPayload', links: Array<{ __typename: 'Link', type: Types.EnumLinkType, item:
-        | { __typename: 'KnowledgeBaseAnswerTranslation', id: string }
+        | { __typename: 'KnowledgeBaseAnswerTranslation', id: string, title: string, visibility: Types.EnumKnowledgeBaseVisibility, content: { __typename: 'KnowledgeBaseAnswerTranslationContent', bodyExcerpt: string | null | undefined }, answer: { __typename: 'KnowledgeBaseAnswer', id: string, archivedAt: string | null | undefined, publishedAt: string | null | undefined, category: { __typename: 'KnowledgeBaseCategory', id: string, title: string | null | undefined, knowledgeBase: { __typename: 'KnowledgeBase', id: string } } }, kbLocale: { __typename: 'KnowledgeBaseLocale', systemLocale: { __typename: 'Locale', locale: string, name: string } } }
         | { __typename: 'Ticket', id: string, internalId: number, title: string, stateColorCode: Types.EnumTicketStateColorCode, state: { __typename: 'TicketState', id: string, name: string } }
        }> | null | undefined } };
 

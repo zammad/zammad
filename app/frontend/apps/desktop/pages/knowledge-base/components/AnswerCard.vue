@@ -5,7 +5,7 @@ import CommonBadge from '#shared/components/CommonBadge/CommonBadge.vue'
 import CommonIcon from '#shared/components/CommonIcon/CommonIcon.vue'
 import CommonLabel from '#shared/components/CommonLabel/CommonLabel.vue'
 
-import KnowledgeBaseIconStatus from '#desktop/pages/knowledge-base/components/KnowledgeBaseIconStatus.vue'
+import KnowledgeBaseAnswerIcon from '#desktop/components/KnowledgeBaseAnswerIcon/KnowledgeBaseAnswerIcon.vue'
 
 import type { KnowledgeBaseAnswerCompact } from '../types.ts'
 
@@ -16,7 +16,7 @@ defineProps<KnowledgeBaseAnswerCompact>()
 
 <template>
   <li class="flex items-center gap-3 rounded-xl bg-blue-200 px-3 py-2.5 dark:bg-gray-500">
-    <KnowledgeBaseIconStatus name="file-richtext" size="small" :status="visibility" />
+    <KnowledgeBaseAnswerIcon :visibility="visibility" size="small" />
     <CommonLabel size="medium" class="line-clamp-1! grow">
       {{ title }}
     </CommonLabel>

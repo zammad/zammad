@@ -31,17 +31,18 @@ RSpec.describe Gql::Queries::KnowledgeBase::Answers, type: :graphql do
   context 'with an admin (editor)', authenticated_as: :admin do
     let(:admin) { create(:admin) }
 
-    it 'returns published, internal and draft answers, but not archived ones' do
+    it 'returns published, internal, draft and archived answers' do
       expect(gql.result.nodes.pluck('id'))
-        .to contain_exactly(gql.id(published_answer), gql.id(internal_answer), gql.id(draft_answer))
+        .to contain_exactly(gql.id(published_answer), gql.id(internal_answer), gql.id(draft_answer), gql.id(archived_answer))
     end
 
     it 'color-codes answers by publication state', :aggregate_failures do
       by_id = gql.result.nodes.index_by { |node| node['id'] }
 
-      expect(by_id[gql.id(published_answer)]).to include('visibility' => 'public')
+      expect(by_id[gql.id(published_answer)]).to include('visibility' => 'published')
       expect(by_id[gql.id(internal_answer)]).to include('visibility' => 'internal')
       expect(by_id[gql.id(draft_answer)]).to include('visibility' => 'draft')
+      expect(by_id[gql.id(archived_answer)]).to include('visibility' => 'archived')
     end
 
     it 'resolves the answer title from its translation' do

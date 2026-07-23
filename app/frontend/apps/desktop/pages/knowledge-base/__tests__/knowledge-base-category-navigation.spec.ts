@@ -15,15 +15,15 @@ import { GraphQLErrorTypes } from '#shared/types/error.ts'
 import {
   mockKnowledgeBaseQuery,
   mockKnowledgeBaseQueryError,
-} from '../graphql/queries/knowledgeBase.mocks.ts'
+} from '#desktop/entities/knowledge-base/graphql/queries/knowledgeBase.mocks.ts'
 import {
   mockKnowledgeBaseAnswersQuery,
   waitForKnowledgeBaseAnswersQueryCalls,
-} from '../graphql/queries/knowledgeBaseAnswers.mocks.ts'
+} from '#desktop/entities/knowledge-base/graphql/queries/knowledgeBaseAnswers.mocks.ts'
 import {
   mockKnowledgeBaseCategorySubcategoriesQuery,
   waitForKnowledgeBaseCategorySubcategoriesQueryCalls,
-} from '../graphql/queries/knowledgeBaseCategorySubcategories.mocks.ts'
+} from '#desktop/entities/knowledge-base/graphql/queries/knowledgeBaseCategorySubcategories.mocks.ts'
 
 const ROOT_CATEGORY_ID = convertToGraphQLId('KnowledgeBase::Category', 1)
 const CHILD_CATEGORY_ID = convertToGraphQLId('KnowledgeBase::Category', 2)
@@ -36,7 +36,7 @@ const category = (
   id,
   title,
   categoryIcon: 'folder',
-  visibility: EnumKnowledgeBaseVisibility.Public,
+  visibility: EnumKnowledgeBaseVisibility.Published,
   translationMissing: false,
   answerCount: counts.answerCount ?? 0,
   subcategoryCount: counts.subcategoryCount ?? 0,
@@ -46,7 +46,7 @@ const category = (
 const answer = (id: string, title: string) => ({
   id,
   title,
-  visibility: EnumKnowledgeBaseVisibility.Public,
+  visibility: EnumKnowledgeBaseVisibility.Published,
   translationMissing: false,
   position: 0,
 })

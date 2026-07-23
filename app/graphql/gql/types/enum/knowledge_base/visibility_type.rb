@@ -4,8 +4,11 @@ module Gql::Types::Enum::KnowledgeBase
   class VisibilityType < Gql::Types::Enum::BaseEnum
     description 'Publication state used for color-coding knowledge base content'
 
-    value 'draft', 'Not yet published (grey).'
-    value 'internal', 'Published internally, visible to agents (blue).'
-    value 'public', 'Published publicly (green).'
+    # The values mirror the `CanBePublished` state-machine states, so a model's
+    #   `#visibility` symbol maps straight onto this enum with no translation.
+    value 'draft', 'Not yet published (grey).', value: :draft
+    value 'internal', 'Published internally, visible to agents (blue).', value: :internal
+    value 'published', 'Published publicly (green).', value: :published
+    value 'archived', 'No longer published, retained for reference.', value: :archived
   end
 end

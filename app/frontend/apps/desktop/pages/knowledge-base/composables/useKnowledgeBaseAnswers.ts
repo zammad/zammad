@@ -7,9 +7,9 @@ import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
 import { GraphQLErrorTypes } from '#shared/types/error.ts'
 import { normalizeEdges } from '#shared/utils/helpers.ts'
 
-import { useKnowledgeBaseAnswersQuery } from '#desktop/pages/knowledge-base/graphql/queries/knowledgeBaseAnswers.api.ts'
+import { useKnowledgeBaseAnswersQuery } from '#desktop/entities/knowledge-base/graphql/queries/knowledgeBaseAnswers.api.ts'
 
-import { useKnowledgeBaseStore } from '../stores/knowledgeBase.ts'
+import { useKnowledgeBaseStore } from '../../../entities/knowledge-base/stores/knowledgeBase.ts'
 
 const ANSWERS_PAGE_SIZE = 30
 

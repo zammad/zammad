@@ -12,7 +12,7 @@ const renderCard = (props = {}) =>
     props: {
       id: convertToGraphQLId('KnowledgeBase:: Answer', 1),
       title: 'Getting Started',
-      visibility: EnumKnowledgeBaseVisibility.Public,
+      visibility: EnumKnowledgeBaseVisibility.Published,
       translationMissing: false,
       position: 0,
       ...props,
@@ -27,21 +27,21 @@ describe('AnswerCard', () => {
   })
 
   it('passes the answer visibility to the status icon', () => {
-    const view = renderCard({ visibility: EnumKnowledgeBaseVisibility.Internal })
+    const wrapper = renderCard({ visibility: EnumKnowledgeBaseVisibility.Internal })
 
-    expect(view.queryAllByLabelText('Internal').length).toBeGreaterThan(0)
+    expect(wrapper.getByIconName('kb-internal')).toBeInTheDocument()
   })
 
   it('warns when the answer has no translation in the browsed locale', () => {
-    const view = renderCard({ translationMissing: true })
+    const wrapper = renderCard({ translationMissing: true })
 
-    expect(view.getByIconName('exclamation-triangle')).toBeInTheDocument()
-    expect(view.getByLabelText('No translation for this locale available')).toBeInTheDocument()
+    expect(wrapper.getByIconName('exclamation-triangle')).toBeInTheDocument()
+    expect(wrapper.getByLabelText('No translation for this locale available')).toBeInTheDocument()
   })
 
   it('shows no translation warning when a translation exists', () => {
-    const view = renderCard({ translationMissing: false })
+    const wrapper = renderCard({ translationMissing: false })
 
-    expect(view.queryByIconName('exclamation-triangle')).not.toBeInTheDocument()
+    expect(wrapper.queryByIconName('exclamation-triangle')).not.toBeInTheDocument()
   })
 })

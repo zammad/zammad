@@ -3,6 +3,7 @@
 require 'rails_helper'
 require 'models/concerns/checks_kb_client_notification_examples'
 require 'models/concerns/has_tags_examples'
+require 'models/concerns/has_translations_examples'
 require 'models/contexts/factory_context'
 require 'models/concerns/can_lookup_search_index_attributes_with_attachments_examples'
 
@@ -15,6 +16,17 @@ RSpec.describe KnowledgeBase::Answer, current_user_id: 1, type: :model do
   include_context 'factory'
 
   it_behaves_like 'ChecksKbClientNotification'
+
+  describe 'HasTranslations' do
+    include_context 'basic Knowledge Base'
+
+    let!(:record) { create(:knowledge_base_answer, category:) }
+    let(:add_translation) do
+      ->(locale) { create(:knowledge_base_answer_translation, answer: record, kb_locale: locale) }
+    end
+
+    it_behaves_like 'HasTranslations'
+  end
 
   it { is_expected.not_to validate_presence_of(:category_id) }
   it { is_expected.to belong_to(:category) }

@@ -3,6 +3,8 @@
 module HasRichText
   extend ActiveSupport::Concern
 
+  include HasExcerpt
+
   included do
     class_attribute :has_rich_text_attributes
     self.has_rich_text_attributes = [].freeze
@@ -107,6 +109,7 @@ Checks if file is used inline
         define_method :"#{attr}_with_urls" do
           HasRichText.insert_urls(send(attr), attachments)
         end
+        has_excerpt attr
       end
     end
   end

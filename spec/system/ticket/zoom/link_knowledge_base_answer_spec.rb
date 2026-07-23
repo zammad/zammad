@@ -51,6 +51,48 @@ RSpec.describe 'Ticket zoom > Link knowledge base answer', type: :system do
     end
   end
 
+  describe 'Link an AI-suggested answer via the plus sign', authenticated_as: :authenticate do
+    let(:ticket)      { create(:ticket, group: Group.find_by(name: 'Users')) }
+    let(:translation) { published_answer.translations.first }
+
+    def authenticate
+      setup_ai_provider('zammad_ai')
+
+      allow(Service::AI::VectorDB::Available).to receive(:execute).and_return(true)
+      # The knowledge base answer factory triggers the vector index callback, which must not reach
+      # Elasticsearch in this spec.
+      allow(Service::AI::VectorDB::Available).to receive(:execute).with(ping: false).and_return(false)
+      allow(Service::Ticket::AI::RelatedKnowledgeBaseAnswers)
+        .to receive(:execute).and_return({ answers: [{ translation:, score: 0.9 }], pending: false })
+
+      true
+    end
+
+    before do
+      wait_for_setting('ai_provider', true)
+
+      visit "#ticket/zoom/#{ticket.id}"
+    end
+
+    it 'moves the suggested answer into the linked list' do
+      within :active_content, '.link_kb_answers' do
+        # The AI suggestion is offered with a one-click link (plus) control, and is not linked yet.
+        expect(page)
+          .to have_css('.js-kb-suggestion-add')
+          .and(have_text(translation.title))
+          .and(have_no_css('.js-delete'))
+
+        find('.js-kb-suggestion-add').click
+
+        # It became a permanent link (an unlink control appears) and is no longer offered as a suggestion.
+        expect(page)
+          .to have_css('.js-delete')
+          .and(have_text(translation.title))
+          .and(have_no_css('.js-kb-suggestion-add'))
+      end
+    end
+  end
+
   describe 'displaying knowledge base answer', authenticated_as: :user do
     let(:ticket)               { Ticket.first }
     let(:draft_translation)    { draft_answer.translations.first }

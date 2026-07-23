@@ -14,7 +14,7 @@ query linkList($objectId: ID!, $targetType: String!) {
         stateColorCode
       }
       ... on KnowledgeBaseAnswerTranslation {
-        id
+        ...knowledgeBaseAnswerTranslation
       }
     }
   }

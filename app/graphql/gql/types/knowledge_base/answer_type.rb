@@ -36,18 +36,6 @@ module Gql::Types::KnowledgeBase
       locale.present? && loaded_translations.none? { |translation| translation.kb_locale_id == locale.id }
     end
 
-    def visibility
-      now = Time.zone.now
-
-      if object.published_at.present? && object.published_at < now
-        'public'
-      elsif object.internal_at.present? && object.internal_at < now
-        'internal'
-      else
-        'draft'
-      end
-    end
-
     private
 
     # Eager-loaded by Service::KnowledgeBase::Answers, so title/translation_missing

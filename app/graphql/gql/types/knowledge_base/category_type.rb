@@ -44,16 +44,7 @@ module Gql::Types::KnowledgeBase
     end
 
     def visibility
-      detail = precomputed_detail
-      return detail[:visibility] if detail
-
-      if object.public_content?(kb_locale)
-        'public'
-      elsif object.internal_content?(kb_locale)
-        'internal'
-      else
-        'draft'
-      end
+      precomputed_detail&.dig(:visibility) || object.content_visibility(kb_locale)
     end
 
     def answer_count
@@ -62,7 +53,6 @@ module Gql::Types::KnowledgeBase
 
       ::KnowledgeBase::Answer
         .visible_to_user(context.current_user, kb_locale:)
-        .date_later_or_nil(:archived_at, Time.zone.now)
         .where(category_id: object.self_with_children_ids)
         .count
     end
@@ -82,7 +72,6 @@ module Gql::Types::KnowledgeBase
 
       ::KnowledgeBase::Answer
         .visible_to_user(context.current_user, kb_locale:)
-        .date_later_or_nil(:archived_at, Time.zone.now)
         .where(category_id: object.id)
         .count
     end

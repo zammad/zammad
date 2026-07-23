@@ -4,22 +4,28 @@ import { beforeEach } from 'vitest'
 import { computed, ref } from 'vue'
 
 import renderComponent from '#tests/support/components/renderComponent.ts'
+import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
 import { mockRouterHooks } from '#tests/support/mock-vue-router.ts'
 
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
+import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
 import plugin from '#desktop/pages/ticket/components/TicketSidebar/plugins/information.ts'
 import TicketSidebarInformationContent from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue'
 import { TICKET_KEY } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
 import { mockLinkListQuery } from '#desktop/pages/ticket/graphql/queries/linkList.mocks.ts'
+import { mockTicketAiRelatedKnowledgeBaseAnswersQuery } from '#desktop/pages/ticket/graphql/queries/ticketAIRelatedKnowledgeBaseAnswers.mocks.ts'
 import { TicketSidebarScreenType } from '#desktop/pages/ticket/types/sidebar.ts'
 
 const defaultTicket = createDummyTicket()
 
 mockRouterHooks()
 
-const renderInformationSidebar = (ticket = defaultTicket) =>
+const renderInformationSidebar = (
+  ticket = defaultTicket,
+  { isTicketEditable = true }: { isTicketEditable?: boolean } = {},
+) =>
   renderComponent(TicketSidebarInformationContent, {
     props: {
       context: {
@@ -38,7 +44,7 @@ const renderInformationSidebar = (ticket = defaultTicket) =>
           ticket: computed(() => ticket),
           form: ref(),
           showTicketArticleReplyForm: () => {},
-          isTicketEditable: computed(() => true),
+          isTicketEditable: computed(() => isTicketEditable),
           newTicketArticlePresent: ref(false),
           ticketInternalId: computed(() => ticket.internalId),
         },
@@ -215,6 +221,54 @@ describe('TicketSidebarInformationContent', () => {
       expect(
         wrapper.queryByRole('heading', { name: 'Accounted time', level: 3 }),
       ).not.toBeInTheDocument()
+    })
+  })
+
+  describe('related knowledge', () => {
+    // Order matters: `mockApplicationConfig` merges into the shared application store, which
+    //   isn't reset between tests in this file, so the "hides" case (asserting the section's
+    //   absence with the default/unmocked kb config) must run before any test enables it.
+    it('hides the section on a non-editable ticket with no linked or suggested answers', () => {
+      mockPermissions(['ticket.agent'])
+      mockLinkListQuery({ linkList: [] })
+
+      const wrapper = renderInformationSidebar(defaultTicket, { isTicketEditable: false })
+
+      expect(
+        wrapper.queryByRole('heading', { name: 'Related knowledge', level: 3 }),
+      ).not.toBeInTheDocument()
+    })
+
+    it('shows AI-suggested answers on a non-editable ticket with no linked answers', async () => {
+      mockPermissions(['ticket.agent', 'knowledge_base.reader'])
+      mockApplicationConfig({ kb_active: true, ai_provider: true })
+      mockLinkListQuery({ linkList: [] })
+      mockTicketAiRelatedKnowledgeBaseAnswersQuery({
+        ticketAIRelatedKnowledgeBaseAnswers: {
+          pending: false,
+          answers: [
+            {
+              score: 0.9,
+              translation: {
+                id: convertToGraphQLId('KnowledgeBase::Answer::Translation', 1),
+                title: 'Reset your password',
+                answer: {
+                  id: convertToGraphQLId('KnowledgeBase::Answer', 1),
+                  category: { knowledgeBase: { id: convertToGraphQLId('KnowledgeBase', 1) } },
+                },
+                kbLocale: { systemLocale: { locale: 'en-us' } },
+              },
+            },
+          ],
+        },
+      })
+
+      const wrapper = renderInformationSidebar(defaultTicket, { isTicketEditable: false })
+
+      expect(
+        await wrapper.findByRole('heading', { name: 'Related knowledge', level: 3 }),
+      ).toBeInTheDocument()
+      expect(await wrapper.findByText('Reset your password')).toBeInTheDocument()
     })
   })
 })

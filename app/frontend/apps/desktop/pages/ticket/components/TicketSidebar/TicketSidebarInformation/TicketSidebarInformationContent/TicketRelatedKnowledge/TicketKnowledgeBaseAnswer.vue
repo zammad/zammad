@@ -1,0 +1,54 @@
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
+
+<script setup lang="ts">
+import { computed, useTemplateRef } from 'vue'
+
+import type { KnowledgeBaseAnswerTranslationFragment } from '#shared/graphql/types.ts'
+
+import CommonPopoverWithTrigger from '#desktop/components/CommonPopover/CommonPopoverWithTrigger.vue'
+import KnowledgeBaseAnswerIcon from '#desktop/components/KnowledgeBaseAnswerIcon/KnowledgeBaseAnswerIcon.vue'
+
+import TicketKnowledgeBaseAnswerPopover from './TicketKnowledgeBaseAnswerPopover.vue'
+
+interface Props {
+  translation: KnowledgeBaseAnswerTranslationFragment
+  link?: string
+}
+
+defineProps<Props>()
+
+const popoverWithTriggerInstance = useTemplateRef('popover-with-trigger')
+
+const hasOpenedViaLongPress = computed(
+  () => popoverWithTriggerInstance.value?.hasOpenedViaLongPress,
+)
+</script>
+
+<template>
+  <li class="group flex list-none items-center gap-1.5 ltr:pr-1.5 rtl:pl-1.5">
+    <CommonPopoverWithTrigger
+      ref="popover-with-trigger"
+      :trigger-link="link"
+      orientation="left"
+      trigger-link-class="flex h-9 w-full items-center gap-1.5 rounded-md! px-1.5 hover:text-blue-850! hover:dark:text-blue-600! text-blue-800!"
+      trigger-link-active-class="outline-2! outline-blue-800! text-blue-850! dark:text-blue-600!"
+    >
+      <template #popover-content>
+        <TicketKnowledgeBaseAnswerPopover :translation="translation" />
+      </template>
+
+      <KnowledgeBaseAnswerIcon show-tooltip :visibility="translation.visibility" size="tiny" />
+
+      <CommonLabel
+        v-tooltip.supportive="translation.title"
+        class="line-clamp-1! grow text-current!"
+      >
+        {{ translation.title }}
+      </CommonLabel>
+
+      <slot name="link-trailing" />
+    </CommonPopoverWithTrigger>
+
+    <slot name="action" :has-opened-via-long-press="hasOpenedViaLongPress" />
+  </li>
+</template>

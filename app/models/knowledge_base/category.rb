@@ -128,6 +128,28 @@ class KnowledgeBase::Category < ApplicationModel
     scope.any?
   end
 
+  def archived_content?(kb_locale = nil)
+    scope = self_with_children_answers.archived
+
+    scope = scope.localed(kb_locale.system_locale) if kb_locale
+
+    scope.any?
+  end
+
+  # Highest publication state of this category's subtree content in the given
+  #   locale, expressed with the CanBePublished state vocabulary for color-coding.
+  def content_visibility(kb_locale = nil)
+    if public_content?(kb_locale)
+      :published
+    elsif internal_content?(kb_locale)
+      :internal
+    elsif archived_content?(kb_locale)
+      :archived
+    else
+      :draft
+    end
+  end
+
   def visible?(kb_locale = nil)
     public_content?(kb_locale)
   end

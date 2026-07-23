@@ -12,9 +12,14 @@ class App.WidgetLinkKbAnswer extends App.WidgetLink
     'blur .js-input':                 'didBlur'
     'click .js-kb-ai-generate':       'requestAiAnswer'
     'click .js-kb-suggestions-retry': 'retrySuggestions'
+    'click .js-kb-suggestion-add':    'linkSuggestion'
 
   constructor: ->
     super
+
+    # saveToServer and requestAiAnswer can run before any autocomplete request has set @apiPath (for
+    # example the one-click link on a suggestion), so seed it here rather than in getAjaxAttributes.
+    @apiPath = App.Config.get('api_path')
 
     return if !@suggestionsEnabled()
 
@@ -99,6 +104,13 @@ class App.WidgetLinkKbAnswer extends App.WidgetLink
     @preventDefault(e) if e
     @requestSuggestions()
 
+  # Promote an AI suggestion to a permanent link with one click (mirrors the manual "+ Link" flow,
+  # reusing #saveToServer). #saveToServer drops the linked answer from the suggestions on success.
+  linkSuggestion: (e) =>
+    @preventDefault(e)
+    e.stopPropagation()
+    @saveToServer($(e.currentTarget).data('object-id'))
+
   requestSuggestions: =>
     # The ticket zoom rebuilds the sidebar (recreating this widget) more than once on a ticket
     # switch. Debounce per ticket across instances so only the final, visible instance issues the
@@ -171,7 +183,9 @@ class App.WidgetLinkKbAnswer extends App.WidgetLink
 
     @renderPopovers()
 
-    @el.append(new App.SearchableAjaxSelect(
+    # Mount the search field next to the "+ Link" control (below "Related knowledge"), not at the
+    # very bottom of the widget, so revealing it appears where the button is.
+    @el.find('.js-kb-link-search').append(new App.SearchableAjaxSelect(
       delegate:       @
       useAjaxDetails: true
       attribute:
@@ -223,6 +237,9 @@ class App.WidgetLinkKbAnswer extends App.WidgetLink
         link_object_source_number: id
       processData: true
       success: (data, status, xhr) =>
+        # A just-linked answer is no longer a suggestion: drop it locally so it moves straight into
+        # the linked list (the backend also excludes linked answers from the next suggestions fetch).
+        @suggestions = (@suggestions or []).filter (suggestionId) -> "#{suggestionId}" isnt "#{id}"
         @fetch()
         @setInputVisible(false)
       error: (xhr, statusText, error) =>

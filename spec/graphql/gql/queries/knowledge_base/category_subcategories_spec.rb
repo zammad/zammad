@@ -49,8 +49,15 @@ RSpec.describe Gql::Queries::KnowledgeBase::CategorySubcategories, type: :graphq
       end
 
       it 'color-codes categories by their highest content visibility', :aggregate_failures do
-        expect(category_node(category)).to include('visibility' => 'public')
+        expect(category_node(category)).to include('visibility' => 'published')
         expect(category_node(other_category)).to include('visibility' => 'draft')
+      end
+
+      it 'color-codes a category with only archived content as archived' do
+        create(:knowledge_base_answer, :archived, category: other_category)
+        gql.execute(query, variables:)
+
+        expect(category_node(other_category)).to include('visibility' => 'archived')
       end
     end
 
@@ -89,7 +96,7 @@ RSpec.describe Gql::Queries::KnowledgeBase::CategorySubcategories, type: :graphq
 
       it 'returns the opened category with its breadcrumb path and content visibility' do
         expect(gql.result.data.dig('category', 'breadcrumb')).to eq(
-          [{ 'id' => gql.id(category), 'title' => category.translation_primary.title, 'visibility' => 'public' }]
+          [{ 'id' => gql.id(category), 'title' => category.translation_primary.title, 'visibility' => 'published' }]
         )
       end
 
@@ -215,7 +222,7 @@ RSpec.describe Gql::Queries::KnowledgeBase::CategorySubcategories, type: :graphq
       published_answer                             # category, public
       internal_answer                              # category, internal
       draft_answer                                 # category, draft
-      archived_answer                              # category, archived (never counted)
+      archived_answer                              # category, archived (counted for editors only)
       published_answer_in_subcategory              # subcategory, public
       create(:knowledge_base_category, parent: subcategory) # deeper descendant (no answers)
     end
@@ -223,9 +230,9 @@ RSpec.describe Gql::Queries::KnowledgeBase::CategorySubcategories, type: :graphq
     context 'with an admin (editor)', authenticated_as: :admin do
       let(:admin) { create(:admin) }
 
-      it 'counts published + internal + draft across the whole subtree, excluding archived' do
+      it 'counts published + internal + draft + archived across the whole subtree' do
         gql.execute(query, variables:)
-        expect(category_node(category)).to include('answerCount' => 4)
+        expect(category_node(category)).to include('answerCount' => 5)
       end
 
       it 'counts the visible categories across the whole subtree' do
@@ -235,9 +242,9 @@ RSpec.describe Gql::Queries::KnowledgeBase::CategorySubcategories, type: :graphq
 
       it 'counts only the immediate level for the direct counts', :aggregate_failures do
         gql.execute(query, variables:)
-        # Direct answers in the category (published + internal + draft, excluding
+        # Direct answers in the category (published + internal + draft +
         #   archived), and only its immediate child (not the deeper descendant).
-        expect(category_node(category)).to include('directAnswerCount' => 3, 'directSubcategoryCount' => 1)
+        expect(category_node(category)).to include('directAnswerCount' => 4, 'directSubcategoryCount' => 1)
       end
     end
 

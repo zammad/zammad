@@ -15,6 +15,10 @@ module CanBePublished
     can_be_published_aasm.internal? || visible?
   end
 
+  def visibility
+    can_be_published_aasm.current_state
+  end
+
   class_methods do
     def inverse_relation_name(scope_name)
       "can_be_published_#{scope_name}_#{model_name.plural}"

@@ -154,13 +154,16 @@ class Service::KnowledgeBase::CategoryContent < Service::Base
     end
   end
 
-  # Non-archived answers visible to the current user, counted per category.
+  # Answers visible to the current user, counted per category. Visibility —
+  #   including whether archived answers are counted — is delegated to
+  #   KnowledgeBase::Answer.visible_to_user: editors count all answers in their
+  #   categories (draft and archived included), while non-editors only count
+  #   published/internal content, never archived.
   #   Locale-gated for non-editors: like the agent app, readers only see answers
   #   translated to the browsed locale, while editors also see untranslated ones.
   def visible_answer_counts
     @visible_answer_counts ||= ::KnowledgeBase::Answer
       .visible_to_user(current_user, kb_locale: locale)
-      .date_later_or_nil(:archived_at, Time.zone.now)
       .where(category_id: all_category_ids)
       .group(:category_id)
       .count
@@ -198,11 +201,13 @@ class Service::KnowledgeBase::CategoryContent < Service::Base
   #   content does not count, so such categories show as draft.
   def visibility_of(id)
     if category_ids_with_published_subtree.include?(id)
-      'public'
+      :published
     elsif category_ids_with_internal_subtree.include?(id)
-      'internal'
+      :internal
+    elsif category_ids_with_archived_subtree.include?(id)
+      :archived
     else
-      'draft'
+      :draft
     end
   end
 
@@ -214,8 +219,13 @@ class Service::KnowledgeBase::CategoryContent < Service::Base
     @category_ids_with_internal_subtree ||= category_ids_with_subtree_answers(:internal)
   end
 
+  def category_ids_with_archived_subtree
+    @category_ids_with_archived_subtree ||= category_ids_with_subtree_answers(:archived)
+  end
+
   # Ids of categories whose subtree contains at least one answer in the given
-  #   publication scope (:internal or :published), translated to the browsed locale.
+  #   publication scope (:internal, :published or :archived), translated to the
+  #   browsed locale.
   def category_ids_with_subtree_answers(scope)
     answers = ::KnowledgeBase::Answer.public_send(scope)
     answers = answers.translated_to(locale) if locale

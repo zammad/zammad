@@ -45,7 +45,7 @@ describe('TicketLinks', () => {
 
     await waitForNextTick()
 
-    expect(view.getByLabelText('Add link')).toBeInTheDocument()
+    expect(view.getByLabelText('Link ticket')).toBeInTheDocument()
   })
 
   it('renders a list of links', async () => {

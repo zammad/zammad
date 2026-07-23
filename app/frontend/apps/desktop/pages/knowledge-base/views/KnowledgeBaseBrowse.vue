@@ -13,11 +13,11 @@ import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
 import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
 
 // import AddCategoryCard from '../components/AddCategoryCard.vue'
+import { useKnowledgeBaseAccess } from '../../../entities/knowledge-base/composables/useKnowledgeBaseAccess.ts'
 import CategoryCard from '../components/CategoryCard.vue'
 import KnowledgeBaseAnswerList from '../components/KnowledgeBaseAnswerList.vue'
 import KnowledgeBaseCategorySkeleton from '../components/KnowledgeBaseCategorySkeleton.vue'
 import KnowledgeBaseTopBarHeader from '../components/KnowledgeBaseTopBarHeader.vue'
-import { useKnowledgeBaseAccess } from '../composables/useKnowledgeBaseAccess.ts'
 import { useKnowledgeBaseCategorySubcategories } from '../composables/useKnowledgeBaseCategorySubcategories.ts'
 
 // The browsed locale and category come from the URL as route props (see

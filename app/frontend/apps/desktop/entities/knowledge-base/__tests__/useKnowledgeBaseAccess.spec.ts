@@ -3,7 +3,7 @@
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
 
-import { useKnowledgeBaseAccess } from '../useKnowledgeBaseAccess.ts'
+import { useKnowledgeBaseAccess } from '../composables/useKnowledgeBaseAccess.ts'
 
 describe('useKnowledgeBaseAccess', () => {
   describe('canBrowse', () => {

@@ -9060,6 +9060,17 @@ a.list-group-item.active > .badge,
   fill: hsl(1, 77%, 47%);
 }
 
+// Same icon-button style as .list-item-delete (geometry + muted default), but a positive green
+// hover colour instead of the destructive red — used to link an AI-suggested knowledge base answer.
+.list-item-add:hover .icon {
+  fill: var(--supergood-color);
+}
+
+// Separate the "Suggested by AI" section from the "+ Link" / "+ AI draft" controls above it.
+.kb-suggestions-title {
+  margin-top: 20px;
+}
+
 li.list-item-none {
   list-style-type: none;
 }

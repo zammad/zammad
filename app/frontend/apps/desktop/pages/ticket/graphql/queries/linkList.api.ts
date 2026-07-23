@@ -1,6 +1,7 @@
 import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
+import { KnowledgeBaseAnswerTranslationFragmentDoc } from '../../../../entities/knowledge-base/graphql/fragments/knowledgeBaseAnswerTranslation.api';
 import * as VueApolloComposable from '@vue/apollo-composable';
 import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;
@@ -22,12 +23,12 @@ export const LinkListDocument = gql`
         stateColorCode
       }
       ... on KnowledgeBaseAnswerTranslation {
-        id
+        ...knowledgeBaseAnswerTranslation
       }
     }
   }
 }
-    `;
+    ${KnowledgeBaseAnswerTranslationFragmentDoc}`;
 export function useLinkListQuery(variables: Types.LinkListQueryVariables | VueCompositionApi.Ref<Types.LinkListQueryVariables> | ReactiveFunction<Types.LinkListQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.LinkListQuery, Types.LinkListQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.LinkListQuery, Types.LinkListQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.LinkListQuery, Types.LinkListQueryVariables>> = {}) {
   return VueApolloComposable.useQuery<Types.LinkListQuery, Types.LinkListQueryVariables>(LinkListDocument, variables, options);
 }

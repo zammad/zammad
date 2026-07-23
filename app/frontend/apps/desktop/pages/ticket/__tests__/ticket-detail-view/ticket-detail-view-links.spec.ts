@@ -50,7 +50,7 @@ describe('Ticket detail view links', () => {
     expect(ticketMetaSidebar.getByText('Related tickets')).toBeInTheDocument()
     expect(ticketMetaSidebar.getByText('No links added yet.')).toBeInTheDocument()
 
-    await view.events.click(await view.findByRole('button', { name: 'Add link' }))
+    await view.events.click(await view.findByRole('button', { name: 'Link ticket' }))
 
     expect(await view.findByRole('heading', { name: 'Link tickets', level: 2 })).toBeInTheDocument()
 

@@ -95,6 +95,8 @@ onDeactivated(() => {
 onUnmounted(() => {
   if (isOpen.value) close()
 })
+
+defineExpose({ hasOpenedViaLongPress })
 </script>
 
 <template>

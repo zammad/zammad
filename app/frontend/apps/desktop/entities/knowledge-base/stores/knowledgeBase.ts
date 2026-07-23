@@ -9,8 +9,8 @@ import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
 
 import { useLastVisitedPath } from '#desktop/composables/useLastVisitedPath.ts'
 
-import { useKnowledgeBaseQuery } from '../graphql/queries/knowledgeBase.api.ts'
-import { useKnowledgeBaseContentUpdatesSubscription } from '../graphql/subscriptions/knowledgeBaseContentUpdates.api.ts'
+import { useKnowledgeBaseQuery } from '../graphql/queries/knowledgeBase.api'
+import { useKnowledgeBaseContentUpdatesSubscription } from '../graphql/subscriptions/knowledgeBaseContentUpdates.api'
 
 export const useKnowledgeBaseStore = defineStore('knowledgeBase', () => {
   const router = useRouter()

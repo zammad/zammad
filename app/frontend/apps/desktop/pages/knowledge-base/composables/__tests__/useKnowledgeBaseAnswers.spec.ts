@@ -14,8 +14,9 @@ import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import {
   mockKnowledgeBaseAnswersQuery,
   waitForKnowledgeBaseAnswersQueryCalls,
-} from '../../graphql/queries/knowledgeBaseAnswers.mocks.ts'
-import { getKnowledgeBaseContentUpdatesSubscriptionHandler } from '../../graphql/subscriptions/knowledgeBaseContentUpdates.mocks.ts'
+} from '#desktop/entities/knowledge-base/graphql/queries/knowledgeBaseAnswers.mocks.ts'
+import { getKnowledgeBaseContentUpdatesSubscriptionHandler } from '#desktop/entities/knowledge-base/graphql/subscriptions/knowledgeBaseContentUpdates.mocks.ts'
+
 import { useKnowledgeBaseAnswers } from '../useKnowledgeBaseAnswers.ts'
 
 const KB_ID = convertToGraphQLId('KnowledgeBase', 1)
@@ -40,7 +41,7 @@ const answer = (id: number, title: string) => ({
   node: {
     id: convertToGraphQLId('KnowledgeBase::Answer', id),
     title,
-    visibility: EnumKnowledgeBaseVisibility.Public,
+    visibility: EnumKnowledgeBaseVisibility.Published,
     position: id,
   },
 })
