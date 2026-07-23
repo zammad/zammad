@@ -1,5 +1,15 @@
 # Breaking Changes
 
+## 7.3
+
+### Enforced maintenance mode for import_mode
+
+From Zammad 7.3 onwards, if the system is running in import mode, it will automatically also run in maintenance mode.
+
+Import mode was never intended for use in productive environments.
+
+From Zammad 7.2 onwards, you will receive a warning in the "Monitoring" section if your system is still in import mode.
+
 ## 7.2
 
 ### Inline attachments will be listed separately in ticket article API responses
