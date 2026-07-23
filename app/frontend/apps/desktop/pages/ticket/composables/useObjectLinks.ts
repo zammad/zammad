@@ -18,16 +18,23 @@ import { useObjectLinkTypes } from './useObjectLinkTypes.ts'
 
 import type { Ref } from 'vue'
 
-export const useObjectLinks = (object: Ref<ObjectLike | undefined>, targetType: string) => {
+export const useObjectLinks = (
+  object: Ref<ObjectLike | undefined>,
+  targetType: string,
+  options: { enabled?: Ref<boolean> } = {},
+) => {
   const { linkTypes } = useObjectLinkTypes()
 
   const objectId = computed(() => object.value?.id)
 
   const linkListQuery = new QueryHandler(
-    useLinkListQuery(() => ({
-      objectId: objectId.value,
-      targetType,
-    })),
+    useLinkListQuery(
+      () => ({
+        objectId: objectId.value,
+        targetType,
+      }),
+      () => ({ enabled: options.enabled?.value ?? true }),
+    ),
   )
 
   const linkListQueryResult = linkListQuery.result()
@@ -70,6 +77,7 @@ export const useObjectLinks = (object: Ref<ObjectLike | undefined>, targetType: 
   const hasLinks = computed(() => linkTypesWithLinks.value.some((type) => type.links.length > 0))
 
   return {
+    links,
     linkListIsLoading: linkListQueryLoading,
     linkTypesWithLinks,
     hasLinks,

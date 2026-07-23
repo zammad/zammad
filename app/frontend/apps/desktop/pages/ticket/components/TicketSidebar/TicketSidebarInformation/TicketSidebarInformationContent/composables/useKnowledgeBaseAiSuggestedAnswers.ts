@@ -4,48 +4,12 @@ import { cloneDeep } from 'lodash-es'
 import { computed, ref, type Ref } from 'vue'
 
 import { useTicketArticleUpdatesSubscription } from '#shared/entities/ticket/graphql/subscriptions/ticketArticlesUpdates.api.ts'
-import type { KnowledgeBaseAnswerTranslationFragment } from '#shared/graphql/types.ts'
 import { QueryHandler, SubscriptionHandler } from '#shared/server/apollo/handler/index.ts'
 
-import { useLinkListQuery } from '#desktop/pages/ticket/graphql/queries/linkList.api.ts'
 import { useTicketAiRelatedKnowledgeBaseAnswersQuery } from '#desktop/pages/ticket/graphql/queries/ticketAIRelatedKnowledgeBaseAnswers.api.ts'
 import { useTicketAiRelatedKnowledgeBaseAnswersUpdatesSubscription } from '#desktop/pages/ticket/graphql/subscriptions/ticketAIRelatedKnowledgeBaseAnswersUpdates.api.ts'
 
 import type { RelatedAnswer } from '../TicketRelatedKnowledge/types.ts'
-
-export const useKnowledgeBaseLinkList = (
-  ticketId: Ref<string>,
-  { enabled }: { enabled: Ref<boolean> },
-) => {
-  // The link target class the ticket's knowledge base answer links are stored under.
-  const TARGET_TYPE = 'KnowledgeBase::Answer::Translation'
-
-  const linkListQuery = new QueryHandler(
-    useLinkListQuery(
-      () => ({
-        objectId: ticketId.value,
-        targetType: TARGET_TYPE,
-      }),
-      () => ({ enabled: enabled.value }),
-    ),
-  )
-  const linkListResult = linkListQuery.result()
-
-  const isLoading = linkListQuery.loadingWithoutCachedResult()
-
-  const linkedAnswers = computed(
-    () =>
-      (linkListResult.value?.linkList ?? []).map(
-        (link) => link.item,
-      ) as KnowledgeBaseAnswerTranslationFragment[],
-  )
-
-  const linkedAnswerIds = computed(() =>
-    (linkListResult.value?.linkList ?? []).map((link) => link.item.id),
-  )
-
-  return { linkedAnswers, linkedAnswerIds, targetType: TARGET_TYPE, isLoading }
-}
 
 export const useKnowledgeBaseAiSuggestedAnswers = (
   ticketId: Ref<string>,

@@ -20,10 +20,8 @@ import {
 } from '../../TicketDetailView/actions/useTicketHistory.ts'
 import TicketSidebarContent from '../TicketSidebarContent.vue'
 
-import {
-  useKnowledgeBaseAiSuggestedAnswers,
-  useKnowledgeBaseLinkList,
-} from './TicketSidebarInformationContent/composables/useKnowledgeBaseAnswers.ts'
+import { useKnowledgeBaseAiSuggestedAnswers } from './TicketSidebarInformationContent/composables/useKnowledgeBaseAiSuggestedAnswers.ts'
+import { useKnowledgeBaseLinkList } from './TicketSidebarInformationContent/composables/useKnowledgeBaseLinkList.ts'
 import TicketAccountedTime from './TicketSidebarInformationContent/TicketAccountedTime.vue'
 import TicketLinks from './TicketSidebarInformationContent/TicketLinks.vue'
 import TicketRelatedKnowledge from './TicketSidebarInformationContent/TicketRelatedKnowledge.vue'

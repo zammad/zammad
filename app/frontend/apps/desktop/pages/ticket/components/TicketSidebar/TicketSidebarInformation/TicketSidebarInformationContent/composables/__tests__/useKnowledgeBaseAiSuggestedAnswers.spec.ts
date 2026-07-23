@@ -17,10 +17,11 @@ import { TicketAiRelatedKnowledgeBaseAnswersDocument } from '#desktop/pages/tick
 import {
   mockTicketAiRelatedKnowledgeBaseAnswersQuery,
   mockTicketAiRelatedKnowledgeBaseAnswersQueryError,
+  waitForTicketAiRelatedKnowledgeBaseAnswersQueryCalls,
 } from '#desktop/pages/ticket/graphql/queries/ticketAIRelatedKnowledgeBaseAnswers.mocks.ts'
 import { getTicketAiRelatedKnowledgeBaseAnswersUpdatesSubscriptionHandler } from '#desktop/pages/ticket/graphql/subscriptions/ticketAIRelatedKnowledgeBaseAnswersUpdates.mocks.ts'
 
-import { useKnowledgeBaseAiSuggestedAnswers } from '../useKnowledgeBaseAnswers.ts'
+import { useKnowledgeBaseAiSuggestedAnswers } from '../useKnowledgeBaseAiSuggestedAnswers.ts'
 
 const ticketId = convertToGraphQLId('Ticket', 1)
 
@@ -182,14 +183,25 @@ describe('useKnowledgeBaseAiSuggestedAnswers', () => {
     await waitFor(() => expect(api.hasError.value).toBe(false))
   })
 
-  it('does not run the query or subscriptions when disabled', async () => {
+  it('runs the query only once enabled', async () => {
     mockTicketAiRelatedKnowledgeBaseAnswersQuery({
-      ticketAIRelatedKnowledgeBaseAnswers: { pending: false, answers: [] },
+      ticketAIRelatedKnowledgeBaseAnswers: {
+        pending: false,
+        answers: [relatedAnswer(1, 'Reset your password')],
+      },
     })
 
-    mountComposable({ enabled: false })
+    const view = mountComposable({ enabled: false })
     await flushPromises()
 
+    // Nothing fetched while disabled.
+    expect(api.answers.value).toEqual([])
     expect(getGraphQLMockCalls(TicketAiRelatedKnowledgeBaseAnswersDocument)).toHaveLength(0)
+
+    await view.rerender({ enabled: true })
+    await waitForTicketAiRelatedKnowledgeBaseAnswersQueryCalls()
+
+    await waitFor(() => expect(api.answers.value).toHaveLength(1))
+    expect(getGraphQLMockCalls(TicketAiRelatedKnowledgeBaseAnswersDocument)).toHaveLength(1)
   })
 })
