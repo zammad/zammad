@@ -23,10 +23,30 @@ returns
     store_columns.each do |column|
       next if attributes[column].blank?
 
-      attributes[column] = search_index_sanitize_store_value(attributes[column])
+      attributes[column]           = search_index_sanitize_store_value(attributes[column])
+      attributes["#{column}_text"] = search_index_store_value_as_text(attributes[column])
     end
 
     attributes
+  end
+
+=begin
+
+This function converts a store value into a searchable text representation. Hash keys and string
+values are additionally split at dots so that e.g. 'ticket.group_id' can be found by searching
+for 'group_id'.
+
+  trigger       = Trigger.find(123)
+  searched_text = trigger.search_index_store_value_as_text(trigger.condition)
+
+returns
+
+  searched_text # 'ticket.group_id ticket group_id operator is value 1 2 value_completion'
+
+=end
+
+  def search_index_store_value_as_text(data)
+    search_index_store_value_text_tokens(data).uniq.join(' ')
   end
 
 =begin
@@ -61,5 +81,22 @@ returns
     end
 
     data
+  end
+
+  private
+
+  def search_index_store_value_text_tokens(data)
+    case data
+    when Hash
+      data.flat_map do |key, value|
+        search_index_store_value_text_tokens(key.to_s) + search_index_store_value_text_tokens(value)
+      end
+    when Array
+      data.flat_map { |value| search_index_store_value_text_tokens(value) }
+    when String
+      [data, *data.split('.')].uniq.compact_blank
+    else
+      [data.to_s].compact_blank
+    end
   end
 end

@@ -45,6 +45,32 @@ RSpec.describe Trigger, type: :model do
     end
   end
 
+  describe '#search_index_attribute_lookup' do
+    let(:condition) do
+      { 'ticket.group_id' => { 'operator' => 'is', 'value' => %w[1 2], 'value_completion' => '' } }
+    end
+    let(:perform) do
+      { 'ticket.tags' => { 'operator' => 'add', 'value' => 'estest' } }
+    end
+
+    it 'adds a searchable text representation of the store columns', :aggregate_failures do
+      attributes = trigger.search_index_attribute_lookup
+
+      expect(attributes['condition_text']).to eq('ticket.group_id ticket group_id operator is value 1 2 value_completion')
+      expect(attributes['perform_text']).to eq('ticket.tags ticket tags operator add value estest')
+    end
+
+    context 'with an expert mode condition' do
+      let(:condition) do
+        { 'operator' => 'AND', 'conditions' => [ { 'name' => 'ticket.group_id', 'operator' => 'is', 'value' => %w[1] } ] }
+      end
+
+      it 'splits field names used as values' do
+        expect(trigger.search_index_attribute_lookup['condition_text']).to include('group_id')
+      end
+    end
+  end
+
   describe 'Send-email triggers' do
     before do
       described_class.destroy_all # Default DB state includes three sample triggers
