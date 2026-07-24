@@ -193,7 +193,7 @@ class SessionsController < ApplicationController
     AuditLog.create!(
       action_type:    'switch_to',
       auditable:      user,
-      auditable_name: user.fullname,
+      auditable_name: "#{current_user.fullname} → #{user.fullname}",
       user_id:        current_user.id,
     )
 
@@ -238,7 +238,7 @@ class SessionsController < ApplicationController
     AuditLog.create!(
       action_type:    'switch_back_to',
       auditable:      current_session_user,
-      auditable_name: current_session_user.fullname,
+      auditable_name: "#{current_session_user.fullname} → #{user.fullname}",
       user_id:        user.id,
     )
 

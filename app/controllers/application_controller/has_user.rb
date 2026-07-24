@@ -78,9 +78,10 @@ module ApplicationController::HasUser
     # If current_user is set before current_token, then UserInfo.current_user_id= will use the old token
     # instead of the new one, which can cause issues with token-based authentication.
     UserInfo.reset
-    UserInfo.current_token   = current_user_on_behalf ? nil : @_token
-    UserInfo.current_user_id = current_user&.id || 1
-    UserInfo.current_ip      = request.remote_ip
+    UserInfo.current_token                 = current_user_on_behalf ? nil : @_token
+    UserInfo.current_user_id               = current_user&.id || 1
+    UserInfo.current_ip                    = request.remote_ip
+    UserInfo.current_switched_from_user_id = session[:switched_from_user_id]
   end
 
   # update session updated_at

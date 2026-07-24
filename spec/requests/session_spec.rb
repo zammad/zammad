@@ -13,9 +13,13 @@ RSpec.describe 'Sessions endpoints', type: :request do
       get "/api/v1/sessions/switch/#{agent.id}", as: :json
     end
 
-    it 'creates an audit log entry' do
-      expect(AuditLog.find_by(auditable_type: 'User', auditable_id: agent.id, action_type: 'switch_to'))
-        .to have_attributes(user_id: admin.id, auditable_name: agent.fullname, source_ip: '127.0.0.1')
+    it 'creates an audit log entry with both user names' do
+      audit_log = AuditLog.find_by(auditable_type: 'User', auditable_id: agent.id, action_type: 'switch_to')
+      expect(audit_log).to have_attributes(
+        user_id:        admin.id,
+        auditable_name: "#{admin.fullname} → #{agent.fullname}",
+        source_ip:      '127.0.0.1'
+      )
     end
   end
 
@@ -29,9 +33,57 @@ RSpec.describe 'Sessions endpoints', type: :request do
       get '/api/v1/sessions/switch_back', as: :json
     end
 
-    it 'creates an audit log entry' do
-      expect(AuditLog.find_by(auditable_type: 'User', auditable_id: agent.id, action_type: 'switch_back_to'))
-        .to have_attributes(user_id: admin.id, auditable_name: agent.fullname, source_ip: '127.0.0.1')
+    it 'creates an audit log entry with both user names' do
+      audit_log = AuditLog.find_by(auditable_type: 'User', auditable_id: agent.id, action_type: 'switch_back_to')
+      expect(audit_log).to have_attributes(
+        user_id:        admin.id,
+        auditable_name: "#{agent.fullname} → #{admin.fullname}",
+        source_ip:      '127.0.0.1'
+      )
+    end
+  end
+
+  describe 'multiple consecutive switches' do
+    let(:admin)       { create(:admin) }
+    let(:other_admin) { create(:admin) }
+    let(:third_admin) { create(:admin) }
+    let(:agent)       { create(:agent) }
+
+    before do
+      authenticated_as(admin, via: :browser)
+      get "/api/v1/sessions/switch/#{other_admin.id}", as: :json
+      get "/api/v1/sessions/switch/#{third_admin.id}", as: :json
+      put "/api/v1/users/#{agent.id}", params: { active: false }, as: :json
+    end
+
+    it 'keeps the original user in the audit log entry' do
+      audit_log = AuditLog.find_by(auditable_type: 'User', auditable_id: agent.id, action_type: 'update')
+      expect(audit_log).to have_attributes(
+        user_id:       third_admin.id,
+        user_fullname: "#{admin.fullname} → #{third_admin.fullname}",
+        preferences:   include('switched_from_user_id' => admin.id, 'switched_from_user_fullname' => admin.fullname)
+      )
+    end
+  end
+
+  describe 'audit logging of actions performed while switched' do
+    let(:admin)       { create(:admin) }
+    let(:other_admin) { create(:admin) }
+    let(:agent)       { create(:agent) }
+
+    before do
+      authenticated_as(admin, via: :browser)
+      get "/api/v1/sessions/switch/#{other_admin.id}", as: :json
+      put "/api/v1/users/#{agent.id}", params: { active: false }, as: :json
+    end
+
+    it 'includes the original user in the audit log entry' do
+      audit_log = AuditLog.find_by(auditable_type: 'User', auditable_id: agent.id, action_type: 'update')
+      expect(audit_log).to have_attributes(
+        user_id:       other_admin.id,
+        user_fullname: "#{admin.fullname} → #{other_admin.fullname}",
+        preferences:   include('switched_from_user_id' => admin.id, 'switched_from_user_fullname' => admin.fullname)
+      )
     end
   end
 
