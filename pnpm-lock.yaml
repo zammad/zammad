@@ -322,10 +322,10 @@ importers:
         specifier: ^0.7.39
         version: 0.7.39
       '@typescript-eslint/eslint-plugin':
-        specifier: ^8.64.0
+        specifier: ^8.65.0
         version: 8.65.0(@typescript-eslint/parser@8.65.0(eslint@10.7.0(jiti@2.7.0)(supports-color@10.2.2))(supports-color@10.2.2)(typescript@6.0.3))(eslint@10.7.0(jiti@2.7.0)(supports-color@10.2.2))(supports-color@10.2.2)(typescript@6.0.3)
       '@typescript-eslint/parser':
-        specifier: ^8.64.0
+        specifier: ^8.65.0
         version: 8.65.0(eslint@10.7.0(jiti@2.7.0)(supports-color@10.2.2))(supports-color@10.2.2)(typescript@6.0.3)
       '@vitejs/plugin-vue':
         specifier: ^6.0.8
