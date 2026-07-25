@@ -10,5 +10,6 @@ export interface ExternalReferencesFormValues {
     [EnumTicketExternalReferencesIssueTrackerType.Github]?: string[]
     [EnumTicketExternalReferencesIssueTrackerType.Gitlab]?: string[]
     idoit?: number[] // :TODO check for key type
+    snipeit?: number[]
   }
 }

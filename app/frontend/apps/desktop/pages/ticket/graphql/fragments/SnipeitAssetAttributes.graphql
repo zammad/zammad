@@ -1,0 +1,11 @@
+fragment SnipeitAssetAttributes on TicketExternalReferencesSnipeitAsset {
+  snipeitAssetId
+  link
+  name
+  assetTag
+  serial
+  model
+  status
+  category
+  location
+}

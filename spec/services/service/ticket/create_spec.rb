@@ -251,9 +251,10 @@ RSpec.describe Service::Ticket::Create, current_user_id: -> { user.id } do
 
       before do
         ticket_data[:external_references] = {
-          gitlab: [gitlab_link],
-          github: [github_link],
-          idoit:  [42],
+          gitlab:  [gitlab_link],
+          github:  [github_link],
+          idoit:   [42],
+          snipeit: [26],
         }
       end
 
@@ -290,6 +291,27 @@ RSpec.describe Service::Ticket::Create, current_user_id: -> { user.id } do
 
         it 'adds github links' do
           expect(service_result.preferences).to eq({ 'idoit' => { 'object_ids' => [42] } })
+        end
+      end
+
+      context 'when snipeit is enabled' do
+        before do
+          Setting.set('snipeit_integration', true)
+        end
+
+        it 'adds snipeit asset ids' do
+          expect(service_result.preferences).to eq({ 'snipeit' => { 'asset_ids' => [26] } })
+        end
+      end
+
+      context 'when idoit and snipeit are enabled' do
+        before do
+          Setting.set('idoit_integration', true)
+          Setting.set('snipeit_integration', true)
+        end
+
+        it 'adds both external references' do
+          expect(service_result.preferences).to eq({ 'idoit' => { 'object_ids' => [42] }, 'snipeit' => { 'asset_ids' => [26] } })
         end
       end
     end

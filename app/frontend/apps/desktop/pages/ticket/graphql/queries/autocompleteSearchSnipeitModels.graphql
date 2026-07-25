@@ -1,0 +1,6 @@
+query autocompleteSearchSnipeitModels($input: AutocompleteSearchInput!) {
+  autocompleteSearchSnipeitModels(input: $input) {
+    value
+    label
+  }
+}

@@ -135,21 +135,27 @@ class Service::Ticket::Create < Service::Base
     return if external_references.blank?
 
     %i[github gitlab].each do |key|
-      input = external_references[key]
+      next if !external_reference_enabled?(external_references, key)
 
-      next if input.blank? || !Setting.get("#{key}_integration")
-
-      ticket_data[:preferences] ||= {}
-      ticket_data[:preferences][key] = { issue_links: input.map(&:to_s) }
+      add_external_reference_preference(ticket_data, key, { issue_links: external_references[key].map(&:to_s) })
     end
 
-    # idoit
-    idoit_object_ids = external_references[:idoit]
+    if external_reference_enabled?(external_references, :idoit)
+      add_external_reference_preference(ticket_data, :idoit, { object_ids: external_references[:idoit] })
+    end
 
-    return if idoit_object_ids.blank? || !Setting.get('idoit_integration')
+    return if !external_reference_enabled?(external_references, :snipeit)
 
+    add_external_reference_preference(ticket_data, :snipeit, { asset_ids: external_references[:snipeit] })
+  end
+
+  def external_reference_enabled?(external_references, key)
+    external_references[key].present? && Setting.get("#{key}_integration")
+  end
+
+  def add_external_reference_preference(ticket_data, key, value)
     ticket_data[:preferences] ||= {}
-    ticket_data[:preferences][:idoit] = { object_ids: idoit_object_ids }
+    ticket_data[:preferences][key] = value
   end
 
   def customer?(group_id)

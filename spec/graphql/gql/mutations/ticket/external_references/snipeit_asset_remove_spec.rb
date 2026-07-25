@@ -1,0 +1,81 @@
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
+
+require 'rails_helper'
+
+RSpec.describe Gql::Mutations::Ticket::ExternalReferences::SnipeitAssetRemove, type: :graphql do
+  let(:variables)                  { { ticketId: gql.id(ticket), snipeitAssetId: snipeit_asset_id } }
+  let(:ticket)                     { create(:ticket, preferences: { 'snipeit' => { 'asset_ids' => [42, 26] } }) }
+  let(:snipeit_asset_id)           { 26 }
+  let(:snipeit_integration_active) { true }
+
+  let(:mutation) do
+    <<~MUTATION
+      mutation ticketExternalReferencesSnipeitAssetRemove(
+        $ticketId: ID!
+        $snipeitAssetId: Int!
+      ) {
+        ticketExternalReferencesSnipeitAssetRemove(
+          ticketId: $ticketId
+          snipeitAssetId: $snipeitAssetId
+        ) {
+          success
+          errors {
+            message
+            field
+          }
+        }
+      }
+    MUTATION
+  end
+
+  before do
+    Setting.set('snipeit_integration', snipeit_integration_active)
+  end
+
+  context 'with an agent', authenticated_as: :agent do
+    let(:agent) { create(:agent) }
+
+    context 'when snipeit integration is inactive' do
+      let(:snipeit_integration_active) { false }
+
+      it 'raises an error' do
+        gql.execute(mutation, variables: variables)
+        expect(gql.result.error_type).to eq(Exceptions::Forbidden)
+      end
+    end
+
+    context 'when ticket is used' do
+      context 'when an agent has access to the ticket' do
+        let(:agent) { create(:agent, groups: [ticket.group]) }
+
+        it 'removes the snipeit asset' do
+          gql.execute(mutation, variables: variables)
+
+          expect(ticket.reload.preferences).to include(snipeit: { asset_ids: [42] })
+        end
+
+        context 'when snipeit assets are stored as strings (legacy app)' do
+          let(:ticket) { create(:ticket, preferences: { 'snipeit' => { 'asset_ids' => %w[42 26] } }) }
+
+          it 'removes the snipeit asset' do
+            gql.execute(mutation, variables: variables)
+
+            expect(ticket.reload.preferences).to include(snipeit: { asset_ids: [42] })
+          end
+        end
+      end
+
+      context 'when an agent has no access to the ticket' do
+        before { gql.execute(mutation, variables:) }
+
+        it_behaves_like 'graphql responds with error if unauthenticated'
+      end
+    end
+  end
+
+  context 'when unauthenticated' do
+    before { gql.execute(mutation, variables:) }
+
+    it_behaves_like 'graphql responds with error if unauthenticated'
+  end
+end

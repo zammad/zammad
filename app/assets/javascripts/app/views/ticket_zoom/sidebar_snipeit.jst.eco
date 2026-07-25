@@ -1,0 +1,19 @@
+<% for asset in @assets: %>
+  <div class="sidebar-block">
+    <label class="horizontal">
+      <%- @T('ID:') %> <%- @T(asset.id) %>
+      <div class="list-item-delete js-delete" data-asset-id="<%= asset.id %>" data-type="remove">
+        <%- @Icon('diagonal-cross') %>
+      </div>
+    </label>
+    <a href="<%- asset.link %>" target="_blank" title="<%= asset.name %>"><%= asset.name %><br></a>
+    <%- @T('Asset Tag:') %> <a href="<%- asset.link %>" target="_blank" title="<%- @T('Open in Snipe-IT') %>"><%= asset.asset_tag %></a><br>
+    <%- @T('Serial:') %> <span title="<%= asset.serial %>"><%= asset.serial %></span><br>
+    <% if asset.model?.name: %>
+      <%- @T('Model:') %> <span title="<%= asset.model.name %>"><%= asset.model.name %></span><br>
+    <% end %>
+    <% if asset.status_label?.name: %>
+      <%- @T('Status:') %> <span title="<%= asset.status_label.name %>"><%= asset.status_label.name %></span><br>
+    <% end %>
+  </div>
+<% end %>
