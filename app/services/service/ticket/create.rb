@@ -128,11 +128,17 @@ class Service::Ticket::Create < Service::BaseWithCurrentUser
 
     # idoit
     idoit_object_ids = external_references[:idoit]
+    if idoit_object_ids.present? && Setting.get('idoit_integration')
+      ticket_data[:preferences] ||= {}
+      ticket_data[:preferences][:idoit] = { object_ids: idoit_object_ids }
+    end
 
-    return if idoit_object_ids.blank? || !Setting.get('idoit_integration')
+    # snipeit
+    snipeit_asset_ids = external_references[:snipeit]
+    return if snipeit_asset_ids.blank? || !Setting.get('snipeit_integration')
 
     ticket_data[:preferences] ||= {}
-    ticket_data[:preferences][:idoit] = { object_ids: idoit_object_ids }
+    ticket_data[:preferences][:snipeit] = { asset_ids: snipeit_asset_ids }
   end
 
   def customer?(group_id)

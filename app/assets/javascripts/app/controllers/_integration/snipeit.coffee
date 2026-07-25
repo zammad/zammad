@@ -14,6 +14,11 @@ class Snipeit extends App.ControllerIntegrationBase
       el: @$('.js-form')
     )
 
+    new App.HttpLog(
+      el: @$('.js-log')
+      facility: 'snipeit'
+    )
+
 class Form extends App.Controller
   elements:
     '.js-sslVerifyAlert': 'sslVerifyAlert'

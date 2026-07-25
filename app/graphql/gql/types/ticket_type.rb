@@ -150,6 +150,10 @@ module Gql::Types
         output[:idoit] = @object.preferences.dig('idoit', 'object_ids')&.map(&:to_i)
       end
 
+      if Setting.get('snipeit_integration')
+        output[:snipeit] = @object.preferences.dig('snipeit', 'asset_ids')&.map(&:to_i)
+      end
+
       output.compact_blank.presence
     end
 

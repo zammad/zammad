@@ -18,5 +18,10 @@ module Gql::Types::Input::Ticket
              [Integer],
              required:    false,
              description: 'Object ids for the Idoit integration'
+
+    argument :snipeit,
+             [Integer],
+             required:    false,
+             description: 'Asset ids for the Snipe-IT integration'
   end
 end

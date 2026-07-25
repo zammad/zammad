@@ -1,0 +1,6 @@
+query autocompleteSearchSnipeitCategories ($input : AutocompleteSearchInput!){
+  autocompleteSearchSnipeitCategories(input : $input) {
+    value
+    label
+  }
+}

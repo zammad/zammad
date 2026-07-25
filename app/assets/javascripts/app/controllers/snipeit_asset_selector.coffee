@@ -15,7 +15,6 @@ class App.SnipeitAssetSelector extends App.ControllerModal
       
       # Auto-search with customer email if available (but don't show it in field)
       if controller.customerEmail
-        console.log('Snipe-IT: Searching for customer email:', controller.customerEmail)
         controller.search({ search: controller.customerEmail })
       
       searchField.on('keyup', (e) ->

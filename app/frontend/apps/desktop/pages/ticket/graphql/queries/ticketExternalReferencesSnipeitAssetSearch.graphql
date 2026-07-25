@@ -1,0 +1,6 @@
+
+query ticketExternalReferencesSnipeitAssetSearch ($categoryId: String, $modelId: String, $limit: Int!, $query: String) {
+  ticketExternalReferencesSnipeitAssetSearch(categoryId: $categoryId, modelId: $modelId, limit: $limit, query: $query) {
+    ...SnipeitAssetAttributes
+  }
+}

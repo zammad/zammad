@@ -43,17 +43,20 @@ class Integration::SnipeitController < ApplicationController
       begin
         # First, search for user by email
         users_response = ::Snipeit.query('users', { search: params[:search] })
-        
+
         if users_response && users_response['rows'].present?
           # Find exact email match
           user = users_response['rows'].find { |u| u['email']&.downcase == params[:search].downcase }
-          
+
           if user
             logger.info "Found Snipe-IT user: #{user['username']} (ID: #{user['id']}) for email #{params[:search]}"
-            
-            # Now search for hardware assigned to this user
-            hardware_response = ::Snipeit.query('hardware', { search: user['username'] })
-            
+
+            # Search for hardware assigned to this user
+            hardware_response = ::Snipeit.query('hardware', {
+              assigned_to:   user['id'],
+              assigned_type: 'App\\Models\\User',
+            })
+
             render json: {
               result: hardware_response || { total: 0, rows: [] }
             }
@@ -65,7 +68,7 @@ class Integration::SnipeitController < ApplicationController
       rescue => e
         logger.error "Failed to search user by email: #{e.message}"
       end
-      
+
       # If no user found, fall through to regular search
     end
 
@@ -74,7 +77,7 @@ class Integration::SnipeitController < ApplicationController
       filter[:search] = params[:search]
     end
 
-    response = ::Snipeit.query(params[:method], filter)
+    response = ::Snipeit.query(params[:method].presence || 'hardware', filter)
     render json: {
       result: response,
     }

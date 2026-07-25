@@ -1,0 +1,10 @@
+mutation ticketExternalReferencesSnipeitAssetAdd ($snipeitAssetIds: [Int!]!, $ticketId: ID) {
+    ticketExternalReferencesSnipeitAssetAdd(snipeitAssetIds: $snipeitAssetIds, ticketId: $ticketId) {
+      snipeitAssets {
+       ...SnipeitAssetAttributes
+      }
+      errors {
+        ...errors
+      }
+    }
+}
