@@ -122,3 +122,40 @@ Trigger.create_or_update(
   created_by_id:            1,
   updated_by_id:            1,
 )
+
+Trigger.create_or_update(
+  name:                     'approval request (notify approving lead)',
+  condition:                {
+    'ticket.action'            => {
+      'operator' => 'is',
+      'value'    => 'create',
+    },
+    'ticket.approving_lead_id' => {
+      'operator' => 'is set',
+    },
+  },
+  perform:                  {
+    'notification.email' => {
+      # rubocop:disable Lint/InterpolationCheck
+      'body'      => '<div>Hello,</div>
+<br/>
+<div>#{ticket.customer.firstname} #{ticket.customer.lastname} has created the request <b>(#{config.ticket_hook}#{ticket.number})</b> and asks for your approval.</div>
+<br/>
+<div>Subject: #{ticket.title}</div>
+<br/>
+<div>Please review the request and approve or reject it here:
+<a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}">#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}</a>
+</div>
+<br/>
+<div>Your #{config.product_name} Team</div>',
+      # rubocop:enable Lint/InterpolationCheck
+      'recipient' => 'ticket_custom_field_approving_lead_id',
+      'subject'   => 'Approval requested for #{ticket.title}', # rubocop:disable Lint/InterpolationCheck
+    },
+  },
+  activator:                'action',
+  execution_condition_mode: 'selective',
+  active:                   true,
+  created_by_id:            1,
+  updated_by_id:            1,
+)

@@ -427,6 +427,37 @@ RSpec.describe Trigger, type: :model do
             expect(ticket.articles.last.to).to eq(ticket.customer.email.to_s)
           end
         end
+
+        context 'ticket custom field user recipient (approving lead)' do
+          before do
+            create(:object_manager_attribute_user_autocompletion, object_name: 'Ticket', name: 'approving_lead_id')
+            ObjectManager::Attribute.migration_execute
+          end
+
+          let!(:ticket) { create(:ticket, approving_lead_id: recipient1.id) }
+
+          let(:recipient) { 'ticket_custom_field_approving_lead_id' }
+
+          it 'notifies the user referenced by the custom field' do
+            expect(ticket.articles.last.to).to eq(recipient1.email)
+          end
+
+          context 'when the custom field is empty' do
+            let(:ticket) { create(:ticket, approving_lead_id: nil) }
+
+            it 'sends no notification' do
+              expect(ticket.articles.count { |a| a.subject == 'Hello' }).to eq(0)
+            end
+          end
+
+          context 'when the referenced user does not exist' do
+            let(:ticket) { create(:ticket, approving_lead_id: 0) }
+
+            it 'sends no notification' do
+              expect(ticket.articles.count { |a| a.subject == 'Hello' }).to eq(0)
+            end
+          end
+        end
       end
 
       context 'active S/MIME integration' do

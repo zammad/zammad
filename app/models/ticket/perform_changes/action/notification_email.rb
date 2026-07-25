@@ -239,6 +239,8 @@ class Ticket::PerformChanges::Action::NotificationEmail < Ticket::PerformChanges
 
       Rails.logger.warn "Can't find configured #{origin} Email recipient User with ID '#{$1}'"
       nil
+    when %r{\Aticket_custom_field_(.+)\z}
+      recipients_by_type_custom_field($1)
     else
       Rails.logger.error "Unknown email notification recipient '#{recipient_type}'"
       nil
@@ -261,6 +263,24 @@ class Ticket::PerformChanges::Action::NotificationEmail < Ticket::PerformChanges
 
   def recipients_by_type_user_group_access
     User.group_access(record.group_id, 'full').sort_by(&:login).map(&:email)
+  end
+
+  # Resolves the email address of the user referenced by a ticket custom field
+  # (e.g. an "approving lead" user attribute). This allows triggers to notify a
+  # per-ticket chosen user, such as the lead who has to approve a hardware or
+  # access request, instead of a statically configured recipient.
+  def recipients_by_type_custom_field(attribute_name)
+    return nil if attribute_name.blank?
+    return nil if !record.respond_to?(attribute_name)
+
+    user_id = record.public_send(attribute_name)
+    return nil if user_id.blank?
+
+    Array(user_id).filter_map do |id|
+      next if !User.exists?(id)
+
+      user_lookup_email(id)
+    end
   end
 
   def user_lookup_email(id)

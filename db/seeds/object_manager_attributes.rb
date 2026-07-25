@@ -24,7 +24,84 @@ ObjectManager::Attribute.add(
   to_create:   false,
   to_migrate:  false,
   to_delete:   false,
-  position:    5,
+  position:    1450,
+)
+
+ObjectManager::Attribute.add(
+  force:       true,
+  object:      'Ticket',
+  name:        'approving_lead_id',
+  display:     __('Approving Lead'),
+  data_type:   'user_autocompletion',
+  data_option: {
+    relation:       'User',
+    autocapitalize: false,
+    multiple:       false,
+    guess:          false,
+    null:           true,
+    limit:          200,
+    placeholder:    __('Enter the lead who should approve this request'),
+    minLengt:       2,
+    translate:      false,
+    permission:     ['ticket.agent', 'ticket.customer'],
+  },
+  editable:    true,
+  active:      true,
+  screens:     {
+    create_middle: {
+      '-all-' => {
+        null: true,
+      },
+    },
+    edit:          {
+      '-all-' => {
+        null: true,
+      },
+    },
+  },
+  to_create:   false,
+  to_migrate:  false,
+  to_delete:   false,
+  position:    1500,
+)
+
+ObjectManager::Attribute.add(
+  force:       true,
+  object:      'Ticket',
+  name:        'approval_state',
+  display:     __('Approval State'),
+  data_type:   'select',
+  data_option: {
+    default:    'not_requested',
+    options:    {
+      'not_requested' => __('Not requested'),
+      'pending'       => __('Pending approval'),
+      'approved'      => __('Approved'),
+      'rejected'      => __('Rejected'),
+    },
+    nulloption: false,
+    multiple:   false,
+    null:       true,
+    translate:  true,
+  },
+  editable:    true,
+  active:      true,
+  screens:     {
+    create_middle: {
+      '-all-' => {
+        null: true,
+      },
+    },
+    edit:          {
+      'ticket.agent' => {
+        null: true,
+      },
+    },
+  },
+  to_create:   false,
+  to_migrate:  false,
+  to_delete:   false,
+  position:    1510,
 )
 
 ObjectManager::Attribute.add(
