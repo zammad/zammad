@@ -265,18 +265,22 @@ class Ticket::PerformChanges::Action::NotificationEmail < Ticket::PerformChanges
     User.group_access(record.group_id, 'full').sort_by(&:login).map(&:email)
   end
 
-  # Resolves the email address of the user referenced by a ticket custom field
-  # (e.g. an "approver" user attribute). This allows triggers to notify a
+  # Resolves the email address(es) of the user(s) referenced by a ticket custom
+  # field (e.g. an "approver" user attribute). This allows triggers to notify a
   # per-ticket chosen user, such as the approver who has to approve a hardware or
   # access request, instead of a statically configured recipient.
+  #
+  # Only real database columns are read (via `record[...]`, which never invokes
+  # methods), so an arbitrary/mistyped recipient configuration can never trigger
+  # an unrelated (potentially destructive) model method.
   def recipients_by_type_custom_field(attribute_name)
     return nil if attribute_name.blank?
-    return nil if !record.respond_to?(attribute_name)
+    return nil if record.class.column_names.exclude?(attribute_name)
 
-    user_id = record.public_send(attribute_name)
-    return nil if user_id.blank?
+    user_ids = record[attribute_name]
+    return nil if user_ids.blank?
 
-    Array(user_id).filter_map do |id|
+    Array(user_ids).filter_map do |id|
       next if !User.exists?(id)
 
       user_lookup_email(id)

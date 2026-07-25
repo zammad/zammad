@@ -18,7 +18,7 @@ class AddTicketApprovalAttributes < ActiveRecord::Migration[8.0]
     ObjectManager::Attribute.add(
       force:       true,
       object:      'Ticket',
-      name:        'approver_id',
+      name:        'approver',
       display:     __('Approver'),
       data_type:   'user_autocompletion',
       data_option: {
@@ -99,12 +99,14 @@ class AddTicketApprovalAttributes < ActiveRecord::Migration[8.0]
     Trigger.create_or_update(
       name:                     'approval request (notify approver)',
       condition:                {
-        'ticket.action'      => {
+        'ticket.action'   => {
           'operator' => 'is',
           'value'    => 'create',
         },
-        'ticket.approver_id' => {
-          'operator' => 'is set',
+        'ticket.approver' => {
+          'operator'      => 'is not',
+          'pre_condition' => 'not_set',
+          'value'         => '',
         },
       },
       perform:                  {
@@ -122,7 +124,7 @@ class AddTicketApprovalAttributes < ActiveRecord::Migration[8.0]
 <br/>
 <div>Your #{config.product_name} Team</div>',
           # rubocop:enable Lint/InterpolationCheck
-          'recipient' => 'ticket_custom_field_approver_id',
+          'recipient' => 'ticket_custom_field_approver',
           'subject'   => 'Approval requested for #{ticket.title}', # rubocop:disable Lint/InterpolationCheck
         },
       },

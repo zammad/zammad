@@ -126,12 +126,14 @@ Trigger.create_or_update(
 Trigger.create_or_update(
   name:                     'approval request (notify approver)',
   condition:                {
-    'ticket.action'      => {
+    'ticket.action'   => {
       'operator' => 'is',
       'value'    => 'create',
     },
-    'ticket.approver_id' => {
-      'operator' => 'is set',
+    'ticket.approver' => {
+      'operator'      => 'is not',
+      'pre_condition' => 'not_set',
+      'value'         => '',
     },
   },
   perform:                  {
@@ -149,7 +151,7 @@ Trigger.create_or_update(
 <br/>
 <div>Your #{config.product_name} Team</div>',
       # rubocop:enable Lint/InterpolationCheck
-      'recipient' => 'ticket_custom_field_approver_id',
+      'recipient' => 'ticket_custom_field_approver',
       'subject'   => 'Approval requested for #{ticket.title}', # rubocop:disable Lint/InterpolationCheck
     },
   },

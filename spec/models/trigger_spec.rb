@@ -427,35 +427,62 @@ RSpec.describe Trigger, type: :model do
             expect(ticket.articles.last.to).to eq(ticket.customer.email.to_s)
           end
         end
+      end
 
-        context 'ticket custom field user recipient (approver)' do
-          before do
-            create(:object_manager_attribute_user_autocompletion, object_name: 'Ticket', name: 'approver_id')
-            ObjectManager::Attribute.migration_execute
-          end
+      context 'notification.email recipient via ticket custom field user (approver)' do
+        let(:approver) { create(:user, email: 'approver@zammad-test.com') }
+        let(:condition) do
+          {
+            'ticket.action'   => { 'operator' => 'is', 'value' => 'create' },
+            'ticket.approver' => { 'operator' => 'is not', 'pre_condition' => 'not_set', 'value' => '' },
+          }
+        end
+        let(:perform) do
+          {
+            'notification.email' => {
+              'recipient' => 'ticket_custom_field_approver',
+              'subject'   => 'Approval',
+              'body'      => 'Please approve',
+            }
+          }
+        end
 
-          let!(:ticket) { create(:ticket, approver_id: recipient1.id) }
+        before do
+          create(:object_manager_attribute_user_autocompletion, object_name: 'Ticket', name: 'approver')
+          ObjectManager::Attribute.migration_execute
+          trigger
+        end
 
-          let(:recipient) { 'ticket_custom_field_approver_id' }
+        context 'when the custom field references an existing user' do
+          let(:ticket) { create(:ticket, approver: approver.id) }
 
           it 'notifies the user referenced by the custom field' do
-            expect(ticket.articles.last.to).to eq(recipient1.email)
+            ticket
+            TransactionDispatcher.commit
+
+            expect(ticket.reload.articles.last.to).to eq(approver.email)
           end
+        end
 
-          context 'when the custom field is empty' do
-            let(:ticket) { create(:ticket, approver_id: nil) }
+        context 'when the custom field is empty' do
+          let(:ticket) { create(:ticket, approver: nil) }
 
-            it 'sends no notification' do
-              expect(ticket.articles.count { |a| a.subject == 'Hello' }).to eq(0)
-            end
+          it 'adds no notification article' do
+            ticket
+
+            expect { TransactionDispatcher.commit }
+              .not_to change(ticket.articles, :count)
           end
+        end
 
-          context 'when the referenced user does not exist' do
-            let(:ticket) { create(:ticket, approver_id: 0) }
+        context 'when the referenced user does not exist' do
+          let(:ticket) { create(:ticket, approver: 0) }
 
-            it 'sends no notification' do
-              expect(ticket.articles.count { |a| a.subject == 'Hello' }).to eq(0)
-            end
+          it 'adds no notification article' do
+            ticket
+
+            expect { TransactionDispatcher.commit }
+              .not_to change(ticket.articles, :count)
           end
         end
       end

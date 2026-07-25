@@ -30,7 +30,7 @@ ObjectManager::Attribute.add(
 ObjectManager::Attribute.add(
   force:       true,
   object:      'Ticket',
-  name:        'approver_id',
+  name:        'approver',
   display:     __('Approver'),
   data_type:   'user_autocompletion',
   data_option: {
