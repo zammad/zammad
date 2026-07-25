@@ -47,14 +47,12 @@ class Integration::SnipeitController < ApplicationController
   end
 
   def update
-    params[:asset_ids] ||= []
     ticket = Ticket.find(params[:ticket_id])
-    ticket.with_lock do
-      authorize!(ticket, :update?)
-      ticket.preferences[:snipeit] ||= {}
-      ticket.preferences[:snipeit][:asset_ids] = Array(params[:asset_ids]).map(&:to_i).uniq
-      ticket.save!
-    end
+    authorize!(ticket, :update?)
+
+    Service::Ticket::ExternalReferences::Snipeit::LinkAssets
+      .with_current_user(current_user)
+      .execute(ticket: ticket, asset_ids: params[:asset_ids])
 
     render json: {
       result: 'ok',

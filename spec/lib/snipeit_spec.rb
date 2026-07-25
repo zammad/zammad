@@ -65,4 +65,43 @@ RSpec.describe Snipeit do
       end
     end
   end
+
+  describe '.asset_label' do
+    before do
+      stub_request(:get, "#{endpoint}api/v1/hardware/26")
+        .with(headers: { 'Authorization' => "Bearer #{token}" })
+        .to_return(status: 200, body: hardware_response, headers: { 'Content-Type' => 'application/json' })
+    end
+
+    it 'prefers the asset tag' do
+      expect(described_class.asset_label(26)).to eq('LAP001')
+    end
+
+    context 'without an asset tag' do
+      let(:hardware_response) { { id: 26, name: 'Laptop-001' }.to_json }
+
+      it 'falls back to the name' do
+        expect(described_class.asset_label(26)).to eq('Laptop-001')
+      end
+    end
+
+    context 'when the asset cannot be fetched' do
+      before do
+        stub_request(:get, "#{endpoint}api/v1/hardware/26").to_return(status: 500)
+      end
+
+      # A broken Snipe-IT connection must not stop the ticket from being saved.
+      it 'falls back to the bare id' do
+        expect(described_class.asset_label(26)).to eq('26')
+      end
+    end
+
+    context 'when the asset does not exist' do
+      let(:hardware_response) { { status: 'error', messages: 'Asset not found' }.to_json }
+
+      it 'falls back to the bare id' do
+        expect(described_class.asset_label(26)).to eq('26')
+      end
+    end
+  end
 end

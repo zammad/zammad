@@ -12,8 +12,11 @@ module Gql::Mutations
     requires_enabled_setting 'snipeit_integration', error_message: __('Snipe-IT integration is not enabled')
 
     def resolve(snipeit_asset_id:, ticket: nil)
-      ticket.preferences.dig(:snipeit, :asset_ids)&.map!(&:to_i)&.delete(snipeit_asset_id)
-      ticket.save!
+      remaining_asset_ids = Array(ticket.preferences.dig(:snipeit, :asset_ids)).map(&:to_i) - [snipeit_asset_id]
+
+      Service::Ticket::ExternalReferences::Snipeit::LinkAssets
+        .with_current_user(context.current_user)
+        .execute(ticket: ticket, asset_ids: remaining_asset_ids)
 
       { success: true }
     end

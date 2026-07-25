@@ -118,6 +118,28 @@ away instead of reporting 'not found' until the entry expires.
 
 =begin
 
+readable label for a hardware asset, for use in the ticket history
+
+  label = Snipeit.asset_label(42)
+
+Assets live in Snipe-IT, so a history entry has to carry a label of its own - the bare id
+would be meaningless once the link is gone. Falls back to the id if the asset can no longer
+be fetched, because a broken Snipe-IT connection must not stop a ticket from being saved.
+
+=end
+
+  def self.asset_label(asset_id)
+    api_asset = asset(asset_id)
+    return asset_id.to_s if api_asset.blank?
+
+    api_asset['asset_tag'].presence || api_asset['name'].presence || asset_id.to_s
+  rescue => e
+    Rails.logger.error "Failed to fetch Snipe-IT asset #{asset_id} for the ticket history: #{e.message}"
+    asset_id.to_s
+  end
+
+=begin
+
 normalize a raw Snipe-IT hardware asset into the flat structure used by the GraphQL types
 
   asset = Snipeit.normalize_asset(api_asset)

@@ -38,9 +38,9 @@ module Gql::Mutations
       end
 
       if ticket.present?
-        ticket.preferences[:snipeit] ||= {}
-        ticket.preferences[:snipeit][:asset_ids] = seen_ids
-        ticket.save!
+        Service::Ticket::ExternalReferences::Snipeit::LinkAssets
+          .with_current_user(context.current_user)
+          .execute(ticket: ticket, asset_ids: seen_ids)
       end
 
       { snipeit_assets: results }

@@ -297,10 +297,52 @@ RSpec.describe Service::Ticket::Create, current_user_id: -> { user.id } do
       context 'when snipeit is enabled' do
         before do
           Setting.set('snipeit_integration', true)
+          allow(Snipeit).to receive(:asset_label).with(26).and_return('LAP001')
         end
 
         it 'adds snipeit asset ids' do
           expect(service_result.preferences).to eq({ 'snipeit' => { 'asset_ids' => [26] } })
+        end
+
+        # Assets picked while creating the ticket are part of the ticket itself, so there is
+        # no diff for LinkAssets to work from. Without an explicit entry here, unlinking such
+        # an asset later would leave a 'removed' with no matching 'added'.
+        it 'records the initial links in the ticket history', aggregate_failures: true do
+          entries = service_result.history_get.select { |entry| entry['attribute'] == 'snipeit' }
+
+          expect(entries.length).to eq(1)
+          expect(entries.first).to include('type' => 'added', 'value_to' => 'LAP001')
+        end
+      end
+
+      context 'when snipeit assets arrive as raw preferences' do
+        before do
+          Setting.set('snipeit_integration', true)
+          allow(Snipeit).to receive(:asset_label).with(99).and_return('MON002')
+          ticket_data[:external_references] = {}
+          ticket_data[:preferences] = { snipeit: { asset_ids: [99] } }
+        end
+
+        # The legacy sidebar appends the ids to the create request instead of going through
+        # the externalReferences input, so the history has to be derived from the ticket.
+        it 'records the initial links in the ticket history' do
+          entries = service_result.history_get.select { |entry| entry['attribute'] == 'snipeit' }
+
+          expect(entries.first).to include('type' => 'added', 'value_to' => 'MON002')
+        end
+      end
+
+      context 'when snipeit is disabled but assets are passed as raw preferences' do
+        before do
+          ticket_data[:external_references] = {}
+          ticket_data[:preferences] = { snipeit: { asset_ids: [99] } }
+        end
+
+        it 'does not talk to Snipe-IT', aggregate_failures: true do
+          allow(Snipeit).to receive(:asset_label)
+
+          expect(service_result.history_get.select { |entry| entry['attribute'] == 'snipeit' }).to be_empty
+          expect(Snipeit).not_to have_received(:asset_label)
         end
       end
 
