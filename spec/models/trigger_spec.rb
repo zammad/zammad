@@ -447,9 +447,9 @@ RSpec.describe Trigger, type: :model do
           }
         end
 
+        # The `approver` user attribute (and its DB column) ship with the
+        # seeds / base migration, so it already exists here.
         before do
-          create(:object_manager_attribute_user_autocompletion, object_name: 'Ticket', name: 'approver')
-          ObjectManager::Attribute.migration_execute
           trigger
         end
 

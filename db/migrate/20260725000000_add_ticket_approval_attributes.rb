@@ -7,6 +7,7 @@ class AddTicketApprovalAttributes < ActiveRecord::Migration[8.0]
 
     UserInfo.current_user_id = 1
 
+    create_columns
     add_approver_attribute
     add_approval_state_attribute
     add_approval_trigger
@@ -14,12 +15,21 @@ class AddTicketApprovalAttributes < ActiveRecord::Migration[8.0]
 
   private
 
+  def create_columns
+    change_table :tickets, bulk: true do |t|
+      t.column :approver,       :integer,             null: true if !column_exists?(:tickets, :approver)
+      t.column :approval_state, :string, limit: 100,  null: true if !column_exists?(:tickets, :approval_state)
+    end
+
+    Ticket.reset_column_information
+  end
+
   def add_approver_attribute
     ObjectManager::Attribute.add(
       force:       true,
       object:      'Ticket',
       name:        'approver',
-      display:     __('Approver'),
+      display:     'Approver',
       data_type:   'user_autocompletion',
       data_option: {
         relation:       'User',
@@ -28,7 +38,7 @@ class AddTicketApprovalAttributes < ActiveRecord::Migration[8.0]
         guess:          false,
         null:           true,
         limit:          200,
-        placeholder:    __('Enter the approver who should approve this request'),
+        placeholder:    'Enter the approver who should approve this request',
         minLengt:       2,
         translate:      false,
         permission:     ['ticket.agent', 'ticket.customer'],
@@ -59,15 +69,15 @@ class AddTicketApprovalAttributes < ActiveRecord::Migration[8.0]
       force:       true,
       object:      'Ticket',
       name:        'approval_state',
-      display:     __('Approval State'),
+      display:     'Approval State',
       data_type:   'select',
       data_option: {
         default:    'not_requested',
         options:    {
-          'not_requested' => __('Not requested'),
-          'pending'       => __('Pending approval'),
-          'approved'      => __('Approved'),
-          'rejected'      => __('Rejected'),
+          'not_requested' => 'Not requested',
+          'pending'       => 'Pending approval',
+          'approved'      => 'Approved',
+          'rejected'      => 'Rejected',
         },
         nulloption: false,
         multiple:   false,

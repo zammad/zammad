@@ -83,6 +83,8 @@ class CreateTicket < ActiveRecord::Migration[4.2]
       t.column :escalation_at,                    :timestamp, limit: 3,   null: true
       t.column :pending_time,                     :timestamp, limit: 3,   null: true
       t.column :type,                             :string,    limit: 100, null: true
+      t.column :approver,                         :integer,               null: true
+      t.column :approval_state,                   :string,    limit: 100, null: true
       t.column :time_unit,                        :decimal, precision: 6, scale: 2, null: true
       t.column :preferences,                      :text, limit: 500.kilobytes + 1, null: true
       t.column :ai_agent_running,                 :boolean, default: false, null: false
