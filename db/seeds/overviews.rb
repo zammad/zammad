@@ -245,6 +245,10 @@ Overview.create_if_not_exists(
       operator: 'is',
       value:    Ticket::State.by_category_ids(:viewable),
     },
+    'ticket.type'           => {
+      operator: 'is',
+      value:    ['Approval Request'], # rubocop:disable Zammad/DetectTranslatableString
+    },
     'ticket.approver'       => {
       operator:      'is',
       pre_condition: 'current_user.id',

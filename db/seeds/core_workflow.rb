@@ -211,3 +211,30 @@ CoreWorkflow.create_if_not_exists(
   created_by_id:   1,
   updated_by_id:   1,
 )
+CoreWorkflow.create_if_not_exists(
+  name:               'base - show ticket approval fields for approval request type',
+  object:             'Ticket',
+  condition_saved:    {},
+  condition_selected: {
+    'ticket.type' => {
+      'operator' => 'is',
+      'value'    => ['Approval Request'], # rubocop:disable Zammad/DetectTranslatableString
+    },
+  },
+  perform:            {
+    'ticket.approver'       => {
+      'operator' => 'show',
+      'show'     => 'true',
+    },
+    'ticket.approval_state' => {
+      'operator' => 'show',
+      'show'     => 'true',
+    },
+  },
+  preferences:        {
+    'screen' => %w[create create_top create_middle create_bottom edit],
+  },
+  changeable:         false,
+  created_by_id:      1,
+  updated_by_id:      1,
+)

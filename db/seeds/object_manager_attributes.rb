@@ -47,12 +47,14 @@ ObjectManager::Attribute.add(
   screens:     {
     create_middle: {
       '-all-' => {
-        null: true,
+        null:  true,
+        shown: false,
       },
     },
     edit:          {
       '-all-' => {
-        null: true,
+        null:  true,
+        shown: false,
       },
     },
   },
@@ -87,12 +89,14 @@ ObjectManager::Attribute.add(
   screens:     {
     create_middle: {
       'ticket.agent' => {
-        null: true,
+        null:  true,
+        shown: false,
       },
     },
     edit:          {
       '-all-' => {
-        null: true,
+        null:  true,
+        shown: false,
       },
     },
   },
@@ -209,6 +213,7 @@ ObjectManager::Attribute.add(
       'Incident'           => __('Incident'),
       'Problem'            => __('Problem'),
       'Request for Change' => __('Request for Change'),
+      'Approval Request'   => __('Approval Request'),
     },
     nulloption: true,
     multiple:   false,
@@ -217,7 +222,7 @@ ObjectManager::Attribute.add(
   },
   editable:    true,
   internal:    false,
-  active:      false,
+  active:      true,
   screens:     {
     create_middle: {
       '-all-' => {

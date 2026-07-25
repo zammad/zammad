@@ -8,11 +8,13 @@ class AddTicketApprovalAttributes < ActiveRecord::Migration[8.0]
     UserInfo.current_user_id = 1
 
     create_columns
+    activate_type_attribute
     add_approver_attribute
     add_approval_state_attribute
     add_approval_trigger
     add_approval_state_note_trigger
     add_approval_state_workflow
+    add_approval_type_workflow
     add_waiting_for_approval_overview
   end
 
@@ -25,6 +27,56 @@ class AddTicketApprovalAttributes < ActiveRecord::Migration[8.0]
     end
 
     Ticket.reset_column_information
+  end
+
+  # Activate the built-in ticket "type" field and add an "Approval Request"
+  # option. The approval fields are only shown for this type (see
+  # add_approval_type_workflow). Existing installs may have customized this
+  # attribute, so only add the option if it is missing and keep other options.
+  def activate_type_attribute
+    existing = ObjectManager::Attribute.get(object: 'Ticket', name: 'type')
+    options  = existing&.data_option&.dig(:options) || existing&.data_option&.dig('options') || {
+      'Incident'           => 'Incident',
+      'Problem'            => 'Problem',
+      'Request for Change' => 'Request for Change',
+    }
+    options = options.merge('Approval Request' => 'Approval Request')
+
+    ObjectManager::Attribute.add(
+      force:       true,
+      object:      'Ticket',
+      name:        'type',
+      display:     'Type',
+      data_type:   'select',
+      data_option: {
+        default:    '',
+        options:    options,
+        nulloption: true,
+        multiple:   false,
+        null:       true,
+        translate:  true,
+      },
+      editable:    true,
+      internal:    false,
+      active:      true,
+      screens:     {
+        create_middle: {
+          '-all-' => {
+            null:       false,
+            item_class: 'column',
+          },
+        },
+        edit:          {
+          'ticket.agent' => {
+            null: false,
+          },
+        },
+      },
+      to_create:   false,
+      to_migrate:  false,
+      to_delete:   false,
+      position:    20,
+    )
   end
 
   def add_approver_attribute
@@ -48,12 +100,14 @@ class AddTicketApprovalAttributes < ActiveRecord::Migration[8.0]
       screens:     {
         create_middle: {
           '-all-' => {
-            null: true,
+            null:  true,
+            shown: false,
           },
         },
         edit:          {
           '-all-' => {
-            null: true,
+            null:  true,
+            shown: false,
           },
         },
       },
@@ -90,12 +144,14 @@ class AddTicketApprovalAttributes < ActiveRecord::Migration[8.0]
       screens:     {
         create_middle: {
           'ticket.agent' => {
-            null: true,
+            null:  true,
+            shown: false,
           },
         },
         edit:          {
           '-all-' => {
-            null: true,
+            null:  true,
+            shown: false,
           },
         },
       },
@@ -199,6 +255,36 @@ class AddTicketApprovalAttributes < ActiveRecord::Migration[8.0]
     )
   end
 
+  def add_approval_type_workflow
+    CoreWorkflow.create_if_not_exists(
+      name:               'base - show ticket approval fields for approval request type',
+      object:             'Ticket',
+      condition_saved:    {},
+      condition_selected: {
+        'ticket.type' => {
+          'operator' => 'is',
+          'value'    => ['Approval Request'],
+        },
+      },
+      perform:            {
+        'ticket.approver'       => {
+          'operator' => 'show',
+          'show'     => 'true',
+        },
+        'ticket.approval_state' => {
+          'operator' => 'show',
+          'show'     => 'true',
+        },
+      },
+      preferences:        {
+        'screen' => %w[create create_top create_middle create_bottom edit],
+      },
+      changeable:         false,
+      created_by_id:      1,
+      updated_by_id:      1,
+    )
+  end
+
   def add_waiting_for_approval_overview
     role = Role.find_by(name: 'Customer')
     return if role.blank?
@@ -212,6 +298,10 @@ class AddTicketApprovalAttributes < ActiveRecord::Migration[8.0]
         'ticket.state_id'       => {
           operator: 'is',
           value:    Ticket::State.by_category_ids(:viewable),
+        },
+        'ticket.type'           => {
+          operator: 'is',
+          value:    ['Approval Request'],
         },
         'ticket.approver'       => {
           operator:      'is',
