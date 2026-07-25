@@ -124,13 +124,13 @@ Trigger.create_or_update(
 )
 
 Trigger.create_or_update(
-  name:                     'approval request (notify approving lead)',
+  name:                     'approval request (notify approver)',
   condition:                {
-    'ticket.action'            => {
+    'ticket.action'      => {
       'operator' => 'is',
       'value'    => 'create',
     },
-    'ticket.approving_lead_id' => {
+    'ticket.approver_id' => {
       'operator' => 'is set',
     },
   },
@@ -149,7 +149,7 @@ Trigger.create_or_update(
 <br/>
 <div>Your #{config.product_name} Team</div>',
       # rubocop:enable Lint/InterpolationCheck
-      'recipient' => 'ticket_custom_field_approving_lead_id',
+      'recipient' => 'ticket_custom_field_approver_id',
       'subject'   => 'Approval requested for #{ticket.title}', # rubocop:disable Lint/InterpolationCheck
     },
   },

@@ -266,8 +266,8 @@ class Ticket::PerformChanges::Action::NotificationEmail < Ticket::PerformChanges
   end
 
   # Resolves the email address of the user referenced by a ticket custom field
-  # (e.g. an "approving lead" user attribute). This allows triggers to notify a
-  # per-ticket chosen user, such as the lead who has to approve a hardware or
+  # (e.g. an "approver" user attribute). This allows triggers to notify a
+  # per-ticket chosen user, such as the approver who has to approve a hardware or
   # access request, instead of a statically configured recipient.
   def recipients_by_type_custom_field(attribute_name)
     return nil if attribute_name.blank?

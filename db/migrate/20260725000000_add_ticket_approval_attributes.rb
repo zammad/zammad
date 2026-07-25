@@ -7,19 +7,19 @@ class AddTicketApprovalAttributes < ActiveRecord::Migration[8.0]
 
     UserInfo.current_user_id = 1
 
-    add_approving_lead_attribute
+    add_approver_attribute
     add_approval_state_attribute
     add_approval_trigger
   end
 
   private
 
-  def add_approving_lead_attribute
+  def add_approver_attribute
     ObjectManager::Attribute.add(
       force:       true,
       object:      'Ticket',
-      name:        'approving_lead_id',
-      display:     __('Approving Lead'),
+      name:        'approver_id',
+      display:     __('Approver'),
       data_type:   'user_autocompletion',
       data_option: {
         relation:       'User',
@@ -28,7 +28,7 @@ class AddTicketApprovalAttributes < ActiveRecord::Migration[8.0]
         guess:          false,
         null:           true,
         limit:          200,
-        placeholder:    __('Enter the lead who should approve this request'),
+        placeholder:    __('Enter the approver who should approve this request'),
         minLengt:       2,
         translate:      false,
         permission:     ['ticket.agent', 'ticket.customer'],
@@ -97,13 +97,13 @@ class AddTicketApprovalAttributes < ActiveRecord::Migration[8.0]
 
   def add_approval_trigger
     Trigger.create_or_update(
-      name:                     'approval request (notify approving lead)',
+      name:                     'approval request (notify approver)',
       condition:                {
-        'ticket.action'             => {
+        'ticket.action'      => {
           'operator' => 'is',
           'value'    => 'create',
         },
-        'ticket.approving_lead_id'  => {
+        'ticket.approver_id' => {
           'operator' => 'is set',
         },
       },
@@ -122,7 +122,7 @@ class AddTicketApprovalAttributes < ActiveRecord::Migration[8.0]
 <br/>
 <div>Your #{config.product_name} Team</div>',
           # rubocop:enable Lint/InterpolationCheck
-          'recipient' => 'ticket_custom_field_approving_lead_id',
+          'recipient' => 'ticket_custom_field_approver_id',
           'subject'   => 'Approval requested for #{ticket.title}', # rubocop:disable Lint/InterpolationCheck
         },
       },

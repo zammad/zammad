@@ -30,8 +30,8 @@ ObjectManager::Attribute.add(
 ObjectManager::Attribute.add(
   force:       true,
   object:      'Ticket',
-  name:        'approving_lead_id',
-  display:     __('Approving Lead'),
+  name:        'approver_id',
+  display:     __('Approver'),
   data_type:   'user_autocompletion',
   data_option: {
     relation:       'User',
@@ -40,7 +40,7 @@ ObjectManager::Attribute.add(
     guess:          false,
     null:           true,
     limit:          200,
-    placeholder:    __('Enter the lead who should approve this request'),
+    placeholder:    __('Enter the approver who should approve this request'),
     minLengt:       2,
     translate:      false,
     permission:     ['ticket.agent', 'ticket.customer'],
