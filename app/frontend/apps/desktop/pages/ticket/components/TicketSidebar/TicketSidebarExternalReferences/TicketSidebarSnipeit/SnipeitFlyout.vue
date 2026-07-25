@@ -25,6 +25,7 @@ interface Props {
   assetIds: number[]
   onSubmit: (formData: FormDataRecords) => Promise<unknown>
   icon: string
+  customerId?: string
 }
 
 const props = defineProps<Props>()
@@ -43,6 +44,7 @@ const assetSearchQuery = new QueryHandler(
       categoryId: values.value?.category as string,
       modelId: values.value?.model as string,
       query: values.value?.filter as string,
+      customerId: props.customerId,
     },
     {
       fetchPolicy: 'no-cache',
@@ -98,6 +100,7 @@ const refetchAssets = (overrides: Record<string, unknown> = {}) =>
     categoryId: values.value?.category as string,
     modelId: values.value?.model as string,
     query: values.value?.filter as string,
+    customerId: props.customerId,
     ...overrides,
   })
 

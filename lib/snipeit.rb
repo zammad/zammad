@@ -140,6 +140,50 @@ be fetched, because a broken Snipe-IT connection must not stop a ticket from bei
 
 =begin
 
+look up a Snipe-IT user by email address
+
+  user = Snipeit.user_by_email('nicole.braun@zammad.org')
+
+Snipe-IT matches 'email' exactly, unlike 'search', which would return a fuzzy page the
+wanted user may not even be part of. The find below stays as a defensive re-check.
+
+returns the raw user hash, or nil if no user has that address.
+
+=end
+
+  def self.user_by_email(email)
+    return if email.blank?
+
+    response = query('users', { email: email })
+    return if response.blank? || response['rows'].blank?
+
+    response['rows'].find { |user| user['email']&.downcase == email.downcase }
+  end
+
+=begin
+
+hardware assets currently assigned to the Snipe-IT user with the given email address
+
+  assets = Snipeit.assets_assigned_to_email('nicole.braun@zammad.org')
+
+returns an array of raw assets, or nil if no Snipe-IT user has that address - so callers
+can tell 'unknown customer' apart from 'customer without assets'.
+
+=end
+
+  def self.assets_assigned_to_email(email, limit: nil)
+    user = user_by_email(email)
+    return if user.blank?
+
+    params = { assigned_to: user['id'], assigned_type: 'App\\Models\\User' }
+    params[:limit] = limit if limit
+
+    response = query('hardware', params)
+    response.is_a?(Hash) && response['rows'].is_a?(Array) ? response['rows'] : []
+  end
+
+=begin
+
 normalize a raw Snipe-IT hardware asset into the flat structure used by the GraphQL types
 
   asset = Snipeit.normalize_asset(api_asset)

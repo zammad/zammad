@@ -3,12 +3,14 @@ query ticketExternalReferencesSnipeitAssetSearch(
   $modelId: String
   $limit: Int!
   $query: String
+  $customerId: ID
 ) {
   ticketExternalReferencesSnipeitAssetSearch(
     categoryId: $categoryId
     modelId: $modelId
     limit: $limit
     query: $query
+    customerId: $customerId
   ) {
     ...SnipeitAssetAttributes
   }

@@ -15,12 +15,14 @@ RSpec.describe Gql::Queries::Ticket::ExternalReferences::SnipeitAssetSearch, typ
         $modelId: String
         $query: String
         $limit: Int
+        $customerId: ID
       ) {
         ticketExternalReferencesSnipeitAssetSearch(
           categoryId: $categoryId
           modelId: $modelId
           query: $query
           limit: $limit
+          customerId: $customerId
         ) {
           snipeitAssetId
           name
@@ -63,6 +65,8 @@ RSpec.describe Gql::Queries::Ticket::ExternalReferences::SnipeitAssetSearch, typ
     }
   end
   let(:snipeit_integration_active) { true }
+  let(:customer)                   { create(:customer) }
+  let(:customer_variables)         { { customerId: Gql::ZammadSchema.id_from_object(customer), limit: } }
 
   context 'with an agent', authenticated_as: :agent do
     let(:agent) { create(:agent) }
@@ -123,6 +127,46 @@ RSpec.describe Gql::Queries::Ticket::ExternalReferences::SnipeitAssetSearch, typ
 
       it 'returns no assets', aggregate_failures: true do
         expect(gql.result.data).to eq([])
+      end
+    end
+
+    context 'with a customer and no filter' do
+      let(:variables) { customer_variables }
+
+      let(:setup) do
+        allow(Snipeit).to receive(:assets_assigned_to_email)
+          .with(customer.email, limit: 3).and_return([snipeit_api_asset])
+      end
+
+      it 'suggests the assets assigned to the customer' do
+        expect(gql.result.data).to eq([snipeit_asset])
+      end
+    end
+
+    context 'with a customer who is unknown to Snipe-IT' do
+      let(:variables) { customer_variables }
+
+      let(:setup) do
+        allow(Snipeit).to receive(:assets_assigned_to_email).and_return(nil)
+        allow(Snipeit).to receive(:query).with('hardware', { 'limit' => 3 }).and_return({ 'rows' => [snipeit_api_asset] })
+      end
+
+      it 'falls back to the regular search' do
+        expect(gql.result.data).to eq([snipeit_asset])
+      end
+    end
+
+    context 'with a customer and an active search query' do
+      let(:variables) { customer_variables.merge(query: 'Laptop') }
+
+      let(:setup) do
+        allow(Snipeit).to receive(:assets_assigned_to_email)
+        allow(Snipeit).to receive(:query).with('hardware', { 'limit' => 3, 'search' => 'Laptop' }).and_return({ 'rows' => [snipeit_api_asset] })
+      end
+
+      it 'searches instead of suggesting', aggregate_failures: true do
+        expect(gql.result.data).to eq([snipeit_asset])
+        expect(Snipeit).not_to have_received(:assets_assigned_to_email)
       end
     end
   end

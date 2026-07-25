@@ -30,6 +30,7 @@ interface Props {
   screenType: TicketSidebarScreenType
   isTicketEditable: boolean
   ticketId?: string
+  customerId?: string
   form?: FormRef
 }
 const props = defineProps<Props>()
@@ -132,6 +133,7 @@ const openFlyout = () =>
   open({
     assetIds: props.assetIds,
     ticketId: props.ticketId,
+    customerId: props.customerId,
     onSubmit: addAssets,
     icon: props.sidebarPlugin.icon,
   })

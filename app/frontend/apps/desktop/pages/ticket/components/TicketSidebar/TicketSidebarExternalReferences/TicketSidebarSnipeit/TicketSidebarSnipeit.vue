@@ -3,6 +3,8 @@
 <script setup lang="ts">
 import { computed, onMounted, watch, toRef } from 'vue'
 
+import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+
 import TicketSidebarSnipeitContent from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarSnipeit/TicketSidebarSnipeitContent.vue'
 import type { ExternalReferencesFormValues } from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/types.ts'
 import { usePersistentStates } from '#desktop/pages/ticket/composables/usePersistentStates.ts'
@@ -48,6 +50,17 @@ const assetIds = computed(() => {
   return props.context.ticket?.value?.preferences?.snipeit?.asset_ids || []
 })
 
+// The flyout suggests the assets assigned to the ticket customer while no filter is set.
+// On the create screen the customer only exists in the form, not on a ticket yet.
+const customerId = computed(() => {
+  if (props.context.screenType === TicketSidebarScreenType.TicketCreate) {
+    const formCustomerId = props.context.formValues?.customer_id
+    return formCustomerId ? convertToGraphQLId('User', formCustomerId as string) : undefined
+  }
+
+  return props.context.ticket?.value?.customer?.id
+})
+
 const assetBadges = computed(() =>
   assetIds.value?.length
     ? {
@@ -91,6 +104,7 @@ if (props.context.screenType === TicketSidebarScreenType.TicketDetailView) {
       v-model="persistentStates"
       :screen-type="context.screenType"
       :ticket-id="context.ticket?.value?.id"
+      :customer-id="customerId"
       :sidebar-plugin="plugin"
       :asset-ids="assetIds"
       :form="context.form"

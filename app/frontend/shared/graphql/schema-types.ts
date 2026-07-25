@@ -3634,6 +3634,7 @@ export type QueriesTicketExternalReferencesSnipeitAssetListArgs = {
 /** All available queries */
 export type QueriesTicketExternalReferencesSnipeitAssetSearchArgs = {
   categoryId?: InputMaybe<Scalars['String']['input']>;
+  customerId?: InputMaybe<Scalars['ID']['input']>;
   limit?: InputMaybe<Scalars['Int']['input']>;
   modelId?: InputMaybe<Scalars['String']['input']>;
   query?: InputMaybe<Scalars['String']['input']>;

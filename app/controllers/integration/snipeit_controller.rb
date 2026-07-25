@@ -97,33 +97,18 @@ class Integration::SnipeitController < ApplicationController
     params[:search].present? && params[:search].include?('@')
   end
 
-  # Look up the Snipe-IT user for the given customer email and return the assets assigned
-  # to them. Returns nil if no matching user exists, so that the caller falls back to a
+  # Returns nil if no Snipe-IT user has that address, so that the caller falls back to a
   # regular search.
   def assets_by_customer_email(email)
-    user = snipeit_user_by_email(email)
-    if !user
+    rows = ::Snipeit.assets_assigned_to_email(email)
+    if rows.nil?
       logger.info "No exact email match found in Snipe-IT for #{email}"
       return
     end
 
-    logger.info "Found Snipe-IT user: #{user['username']} (ID: #{user['id']}) for email #{email}"
-
-    ::Snipeit.query('hardware', {
-                      assigned_to:   user['id'],
-                      assigned_type: 'App\\Models\\User',
-                    }) || { total: 0, rows: [] }
+    { total: rows.length, rows: rows }
   rescue => e
     logger.error "Failed to search user by email: #{e.message}"
     nil
-  end
-
-  # Snipe-IT matches 'email' exactly, unlike 'search', which would return a fuzzy first page
-  # the customer may not even be part of. The find below stays as a defensive re-check.
-  def snipeit_user_by_email(email)
-    response = ::Snipeit.query('users', { email: email })
-    return if response.blank? || response['rows'].blank?
-
-    response['rows'].find { |user| user['email']&.downcase == email.downcase }
   end
 end

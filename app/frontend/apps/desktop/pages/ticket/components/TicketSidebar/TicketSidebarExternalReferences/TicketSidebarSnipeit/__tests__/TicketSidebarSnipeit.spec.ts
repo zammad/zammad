@@ -21,6 +21,7 @@ import {
   mockTicketExternalReferencesSnipeitAssetListQuery,
   mockTicketExternalReferencesSnipeitAssetListQueryError,
 } from '#desktop/pages/ticket/graphql/queries/ticketExternalReferencesSnipeitAssetList.mocks.ts'
+import { waitForTicketExternalReferencesSnipeitAssetSearchQueryCalls } from '#desktop/pages/ticket/graphql/queries/ticketExternalReferencesSnipeitAssetSearch.mocks.ts'
 import { TicketSidebarScreenType } from '#desktop/pages/ticket/types/sidebar.ts'
 
 import snipeitPlugin from '../../../plugins/snipeit.ts'
@@ -257,6 +258,24 @@ describe('TicketSidebarSnipeit', () => {
     expect(wrapper.getAllByIconName('snipeit-logo-dark')).toHaveLength(3)
 
     expect(flyout).toBeInTheDocument()
+  })
+
+  it('passes the ticket customer on to the flyout so their assets are suggested', async () => {
+    const wrapper = renderSnipeitSidebar()
+
+    await wrapper.events.click(await wrapper.findByRole('button', { name: 'Action menu button' }))
+
+    const menu = await wrapper.findByRole('menu')
+
+    await wrapper.events.click(within(menu).getByRole('button', { name: 'Link assets' }))
+
+    await wrapper.findByRole('complementary', { name: 'Snipe-IT: Link assets' })
+
+    const calls = await waitForTicketExternalReferencesSnipeitAssetSearchQueryCalls()
+
+    expect(calls.at(-1)?.variables).toEqual(
+      expect.objectContaining({ customerId: createDummyTicket().customer?.id }),
+    )
   })
 
   it('removes an asset if entries are present', async () => {

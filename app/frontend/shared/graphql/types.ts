@@ -1026,6 +1026,7 @@ export type TicketExternalReferencesSnipeitAssetSearchQueryVariables = Exact<{
   modelId?: string | null | undefined;
   limit: number;
   query?: string | null | undefined;
+  customerId?: string | number | null | undefined;
 }>;
 
 

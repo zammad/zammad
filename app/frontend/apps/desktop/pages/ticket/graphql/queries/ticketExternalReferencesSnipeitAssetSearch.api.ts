@@ -7,12 +7,13 @@ import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;
 
 export const TicketExternalReferencesSnipeitAssetSearchDocument = gql`
-    query ticketExternalReferencesSnipeitAssetSearch($categoryId: String, $modelId: String, $limit: Int!, $query: String) {
+    query ticketExternalReferencesSnipeitAssetSearch($categoryId: String, $modelId: String, $limit: Int!, $query: String, $customerId: ID) {
   ticketExternalReferencesSnipeitAssetSearch(
     categoryId: $categoryId
     modelId: $modelId
     limit: $limit
     query: $query
+    customerId: $customerId
   ) {
     ...SnipeitAssetAttributes
   }
