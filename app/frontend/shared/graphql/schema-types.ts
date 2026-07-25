@@ -359,6 +359,16 @@ export type AutocompleteSearchRecipientInput = {
   query: Scalars['String']['input'];
 };
 
+/** Input fields for Snipe-IT model autocomplete searches. */
+export type AutocompleteSearchSnipeitModelsInput = {
+  /** Snipe-IT category id to restrict the models to */
+  categoryId?: InputMaybe<Scalars['String']['input']>;
+  /** Limit for the amount of entries */
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  /** Query from the autocomplete field */
+  query: Scalars['String']['input'];
+};
+
 /** Input fields for tag autocomplete searches. */
 export type AutocompleteSearchTagInput = {
   /** Optional tags to be filtered out from results */
@@ -3386,7 +3396,7 @@ export type QueriesAutocompleteSearchSnipeitCategoriesArgs = {
 
 /** All available queries */
 export type QueriesAutocompleteSearchSnipeitModelsArgs = {
-  input: AutocompleteSearchInput;
+  input: AutocompleteSearchSnipeitModelsInput;
 };
 
 

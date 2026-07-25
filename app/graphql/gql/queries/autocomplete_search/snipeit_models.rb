@@ -5,7 +5,7 @@ module Gql::Queries
 
     description 'Search for Snipe-IT models'
 
-    argument :input, Gql::Types::Input::AutocompleteSearch::InputType, required: true, description: 'The input object for the autocomplete search'
+    argument :input, Gql::Types::Input::AutocompleteSearch::SnipeitModelsInputType, required: true, description: 'The input object for the autocomplete search'
 
     type [Gql::Types::AutocompleteSearch::EntryType], null: false
 
@@ -33,6 +33,10 @@ module Gql::Queries
 
     def build_params(input)
       params = { 'limit' => input.limit || 10 }
+
+      # Snipe-IT models belong to a category, so a selected category can narrow the list
+      # down instead of offering models which cannot hold the wanted assets.
+      params['category_id'] = input.category_id if input.category_id.present?
 
       search = normalize_query(input.query)
       params['search'] = search if search.present?

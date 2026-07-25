@@ -935,7 +935,7 @@ export type AutocompleteSearchSnipeitCategoriesQueryVariables = Exact<{
 export type AutocompleteSearchSnipeitCategoriesQuery = { autocompleteSearchSnipeitCategories: Array<{ __typename: 'AutocompleteSearchEntry', value: string, label: string }> };
 
 export type AutocompleteSearchSnipeitModelsQueryVariables = Exact<{
-  input: Types.AutocompleteSearchInput;
+  input: Types.AutocompleteSearchSnipeitModelsInput;
 }>;
 
 

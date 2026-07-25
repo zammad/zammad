@@ -106,7 +106,13 @@ onChangedField(
   useDebounceFn((query) => refetchAssets({ query: query as string }), FETCH_DEBOUNCE),
 )
 
-onChangedField('category', async (category) => refetchAssets({ categoryId: category as string }))
+onChangedField('category', async (category) => {
+  // Models belong to a category, so a model picked under the previous category would
+  // silently keep filtering the list down to nothing.
+  if (values.value?.model) updateFieldValues({ model: undefined })
+
+  return refetchAssets({ categoryId: category as string, modelId: undefined })
+})
 
 onChangedField('model', async (model) => refetchAssets({ modelId: model as string }))
 
@@ -132,6 +138,10 @@ const schema: FormSchemaNode[] = [
       gqlQuery: AutocompleteSearchSnipeitModelsDocument,
       clearable: true,
       defaultFilter: '*',
+      // Spread into the query input, so the model list follows the selected category.
+      additionalQueryParams: () => ({
+        categoryId: values.value?.category as string,
+      }),
       classes: {
         outer: 'mb-3',
       },

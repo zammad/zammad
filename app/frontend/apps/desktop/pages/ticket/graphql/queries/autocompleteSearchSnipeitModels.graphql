@@ -1,4 +1,4 @@
-query autocompleteSearchSnipeitModels($input: AutocompleteSearchInput!) {
+query autocompleteSearchSnipeitModels($input: AutocompleteSearchSnipeitModelsInput!) {
   autocompleteSearchSnipeitModels(input: $input) {
     value
     label

@@ -15,7 +15,7 @@ RSpec.describe Gql::Queries::AutocompleteSearch::SnipeitModels, authenticated_as
     let(:agent) { create(:agent) }
     let(:query) do
       <<~QUERY
-        query autocompleteSearchSnipeitModels($input: AutocompleteSearchInput!)  {
+        query autocompleteSearchSnipeitModels($input: AutocompleteSearchSnipeitModelsInput!)  {
           autocompleteSearchSnipeitModels(input: $input) {
             value
             label
@@ -77,6 +77,14 @@ RSpec.describe Gql::Queries::AutocompleteSearch::SnipeitModels, authenticated_as
 
       it 'sends no search term' do
         expect(Snipeit).to have_received(:query).with('models', { 'limit' => 10 })
+      end
+    end
+
+    context 'with a selected category' do
+      let(:variables) { { input: { query: query_string, limit: limit, categoryId: '3' } } }
+
+      it 'restricts the models to that category' do
+        expect(Snipeit).to have_received(:query).with('models', hash_including('category_id' => '3'))
       end
     end
 
