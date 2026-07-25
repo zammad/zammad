@@ -11,13 +11,16 @@ class AddTicketApprovalAttributes < ActiveRecord::Migration[8.0]
     add_approver_attribute
     add_approval_state_attribute
     add_approval_trigger
+    add_approval_state_note_trigger
+    add_approval_state_workflow
+    add_waiting_for_approval_overview
   end
 
   private
 
   def create_columns
     change_table :tickets, bulk: true do |t|
-      t.column :approver,       :integer,             null: true if !column_exists?(:tickets, :approver)
+      t.column :approver,       :string, limit: 100,  null: true if !column_exists?(:tickets, :approver)
       t.column :approval_state, :string, limit: 100,  null: true if !column_exists?(:tickets, :approval_state)
     end
 
@@ -30,18 +33,15 @@ class AddTicketApprovalAttributes < ActiveRecord::Migration[8.0]
       object:      'Ticket',
       name:        'approver',
       display:     'Approver',
-      data_type:   'user_autocompletion',
+      data_type:   'select',
       data_option: {
-        relation:       'User',
-        autocapitalize: false,
-        multiple:       false,
-        guess:          false,
-        null:           true,
-        limit:          200,
-        placeholder:    'Enter the approver who should approve this request',
-        minLengt:       2,
-        translate:      false,
-        permission:     ['ticket.agent', 'ticket.customer'],
+        default:    '',
+        relation:   'User',
+        nulloption: true,
+        multiple:   false,
+        null:       true,
+        translate:  false,
+        permission: ['ticket.agent', 'ticket.customer'],
       },
       editable:    true,
       active:      true,
@@ -83,17 +83,18 @@ class AddTicketApprovalAttributes < ActiveRecord::Migration[8.0]
         multiple:   false,
         null:       true,
         translate:  true,
+        permission: ['ticket.agent', 'ticket.customer'],
       },
       editable:    true,
       active:      true,
       screens:     {
         create_middle: {
-          '-all-' => {
+          'ticket.agent' => {
             null: true,
           },
         },
         edit:          {
-          'ticket.agent' => {
+          '-all-' => {
             null: true,
           },
         },
@@ -143,6 +144,97 @@ class AddTicketApprovalAttributes < ActiveRecord::Migration[8.0]
       active:                   true,
       created_by_id:            1,
       updated_by_id:            1,
+    )
+  end
+
+  def add_approval_state_note_trigger
+    Trigger.create_or_update(
+      name:                     'approval decision (add note to timeline)',
+      condition:                {
+        'ticket.action'         => {
+          'operator' => 'is',
+          'value'    => 'update',
+        },
+        'ticket.approval_state' => {
+          'operator' => 'has changed',
+        },
+      },
+      perform:                  {
+        'article.note' => {
+          # rubocop:disable Lint/InterpolationCheck
+          'subject'  => 'Approval state changed',
+          'body'     => 'The approval state was changed to <b>#{ticket.approval_state}</b> by #{user.firstname} #{user.lastname}.',
+          # rubocop:enable Lint/InterpolationCheck
+          'internal' => 'false',
+        },
+      },
+      activator:                'action',
+      execution_condition_mode: 'selective',
+      active:                   true,
+      created_by_id:            1,
+      updated_by_id:            1,
+    )
+  end
+
+  def add_approval_state_workflow
+    CoreWorkflow.create_if_not_exists(
+      name:            'base - restrict ticket approval state to approver',
+      object:          'Ticket',
+      condition_saved: {
+        'custom.module': {
+          operator: 'match all modules',
+          value:    [
+            'CoreWorkflow::Custom::TicketApprovalState',
+          ],
+        },
+      },
+      perform:         {
+        'custom.module': {
+          execute: ['CoreWorkflow::Custom::TicketApprovalState']
+        },
+      },
+      changeable:      false,
+      created_by_id:   1,
+      updated_by_id:   1,
+    )
+  end
+
+  def add_waiting_for_approval_overview
+    role = Role.find_by(name: 'Customer')
+    return if role.blank?
+
+    Overview.create_if_not_exists(
+      name:          'Waiting for my Approval',
+      link:          'waiting_for_my_approval',
+      prio:          1150,
+      role_ids:      [role.id],
+      condition:     {
+        'ticket.state_id'       => {
+          operator: 'is',
+          value:    Ticket::State.by_category_ids(:viewable),
+        },
+        'ticket.approver'       => {
+          operator:      'is',
+          pre_condition: 'current_user.id',
+          value:         '',
+        },
+        'ticket.approval_state' => {
+          operator: 'is',
+          value:    'pending',
+        },
+      },
+      order:         {
+        by:        'created_at',
+        direction: 'DESC',
+      },
+      view:          {
+        d:                 %w[title customer state created_at],
+        s:                 %w[number title state created_at],
+        m:                 %w[number title state created_at],
+        view_mode_default: 's',
+      },
+      created_by_id: 1,
+      updated_by_id: 1,
     )
   end
 end

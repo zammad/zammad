@@ -9,7 +9,45 @@ class CoreWorkflow::Attributes::User < CoreWorkflow::Attributes::Base
       return ticket_owner_id
     end
 
+    if @attribute[:name] == 'approver' && @attributes.payload['class_name'] == 'Ticket'
+      return ticket_approver_ids
+    end
+
     []
+  end
+
+  # Approvers are limited to active members of the ticket requester's
+  # organization, so an employee can only request approval from someone within
+  # their own organization.
+  def ticket_approver_ids
+    organization = ticket_approver_organization
+    return [''] if organization.blank?
+
+    user_ids = organization.members.where(active: true).each_with_object([]) do |user, result|
+      result << user.id
+      assets(user)
+    end
+
+    return [''] if user_ids.blank?
+
+    user_ids
+  end
+
+  def ticket_approver_organization
+    requester = ticket_approver_requester
+    requester&.organization
+  end
+
+  def ticket_approver_requester
+    params = @attributes.payload['params'] || {}
+
+    if params['customer_id'].present? && @attributes.user.permissions?('ticket.agent')
+      User.find_by(id: params['customer_id'])
+    elsif !@attributes.user.permissions?('ticket.agent') && @attributes.user.permissions?('ticket.customer')
+      @attributes.user
+    else
+      @attributes.selected&.customer
+    end
   end
 
   def group_agent_user_ids(group_id)

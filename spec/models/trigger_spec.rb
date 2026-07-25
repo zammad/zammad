@@ -903,6 +903,42 @@ RSpec.describe Trigger, type: :model do
 
       let!(:ticket) { create(:ticket).tap { TransactionDispatcher.commit } }
 
+      context 'with an article.note perform on approval_state change' do
+        let(:condition) do
+          {
+            'ticket.action'         => { 'operator' => 'is', 'value' => 'update' },
+            'ticket.approval_state' => { 'operator' => 'has changed' },
+          }
+        end
+        let(:perform) do
+          {
+            'article.note' => {
+              'subject'  => 'Approval state changed',
+              'body'     => 'The approval state was changed to #{ticket.approval_state}.', # rubocop:disable Lint/InterpolationCheck
+              'internal' => 'false',
+            }
+          }
+        end
+
+        # `approval_state` is a seeded Ticket attribute, so the column exists.
+        let!(:ticket) { create(:ticket, approval_state: 'pending').tap { TransactionDispatcher.commit } }
+
+        it 'adds a note article when approval_state changes' do
+          ticket.update!(approval_state: 'approved')
+
+          expect { TransactionDispatcher.commit }
+            .to change { ticket.reload.articles.count }.by(1)
+          expect(ticket.reload.articles.last.body).to include('approved')
+        end
+
+        it 'adds no note when approval_state does not change' do
+          ticket.update!(title: 'unrelated change')
+
+          expect { TransactionDispatcher.commit }
+            .not_to change { ticket.reload.articles.count }
+        end
+      end
+
       context 'when new article is created directly' do
         context 'with empty #preferences hash' do
           let!(:article) { create(:ticket_article, ticket: ticket) }

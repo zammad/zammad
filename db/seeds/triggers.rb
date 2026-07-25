@@ -161,3 +161,30 @@ Trigger.create_or_update(
   created_by_id:            1,
   updated_by_id:            1,
 )
+
+Trigger.create_or_update(
+  name:                     'approval decision (add note to timeline)',
+  condition:                {
+    'ticket.action'         => {
+      'operator' => 'is',
+      'value'    => 'update',
+    },
+    'ticket.approval_state' => {
+      'operator' => 'has changed',
+    },
+  },
+  perform:                  {
+    'article.note' => {
+      # rubocop:disable Lint/InterpolationCheck, Zammad/DetectTranslatableString
+      'subject'  => 'Approval state changed',
+      'body'     => 'The approval state was changed to <b>#{ticket.approval_state}</b> by #{user.firstname} #{user.lastname}.',
+      # rubocop:enable Lint/InterpolationCheck, Zammad/DetectTranslatableString
+      'internal' => 'false',
+    },
+  },
+  activator:                'action',
+  execution_condition_mode: 'selective',
+  active:                   true,
+  created_by_id:            1,
+  updated_by_id:            1,
+)

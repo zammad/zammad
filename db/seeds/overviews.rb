@@ -236,6 +236,37 @@ Overview.create_if_not_exists(
   },
 )
 Overview.create_if_not_exists(
+  name:      __('Waiting for my Approval'),
+  link:      'waiting_for_my_approval',
+  prio:      1150,
+  role_ids:  [overview_role.id],
+  condition: {
+    'ticket.state_id'       => {
+      operator: 'is',
+      value:    Ticket::State.by_category_ids(:viewable),
+    },
+    'ticket.approver'       => {
+      operator:      'is',
+      pre_condition: 'current_user.id',
+      value:         '',
+    },
+    'ticket.approval_state' => {
+      operator: 'is',
+      value:    'pending',
+    },
+  },
+  order:     {
+    by:        'created_at',
+    direction: 'DESC',
+  },
+  view:      {
+    d:                 %w[title customer state created_at],
+    s:                 %w[number title state created_at],
+    m:                 %w[number title state created_at],
+    view_mode_default: 's',
+  },
+)
+Overview.create_if_not_exists(
   name:                __('My Organization Tickets'),
   link:                'my_organization_tickets',
   prio:                1200,

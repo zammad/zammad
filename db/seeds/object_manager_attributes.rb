@@ -32,18 +32,15 @@ ObjectManager::Attribute.add(
   object:      'Ticket',
   name:        'approver',
   display:     __('Approver'),
-  data_type:   'user_autocompletion',
+  data_type:   'select',
   data_option: {
-    relation:       'User',
-    autocapitalize: false,
-    multiple:       false,
-    guess:          false,
-    null:           true,
-    limit:          200,
-    placeholder:    __('Enter the approver who should approve this request'),
-    minLengt:       2,
-    translate:      false,
-    permission:     ['ticket.agent', 'ticket.customer'],
+    default:    '',
+    relation:   'User',
+    nulloption: true,
+    multiple:   false,
+    null:       true,
+    translate:  false,
+    permission: ['ticket.agent', 'ticket.customer'],
   },
   editable:    true,
   active:      true,
@@ -83,17 +80,18 @@ ObjectManager::Attribute.add(
     multiple:   false,
     null:       true,
     translate:  true,
+    permission: ['ticket.agent', 'ticket.customer'],
   },
   editable:    true,
   active:      true,
   screens:     {
     create_middle: {
-      '-all-' => {
+      'ticket.agent' => {
         null: true,
       },
     },
     edit:          {
-      'ticket.agent' => {
+      '-all-' => {
         null: true,
       },
     },
