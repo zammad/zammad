@@ -82,6 +82,34 @@ RSpec.describe 'Monitoring', authenticated_as: :admin, type: :request do
 
       expect(json_response).to include('healthy' => false, 'message' => 'issues', 'issues' => ['issues'], 'actions' => ['actions'])
     end
+
+    context 'when the instance is running in import_mode' do
+      before do
+        Setting.set('import_mode', true)
+      end
+
+      it 'returns a warning' do
+        make_call
+
+        expect(json_response).to include(
+          'healthy' => false,
+          'issues'  => include('The instance is running in import_mode - please check the configuration if this is not intended.')
+        )
+      end
+    end
+
+    context 'when the instance is not running in import_mode' do
+      before do
+        Setting.set('import_mode', false)
+      end
+
+      it 'returns no warning' do
+        make_call
+
+        expect(json_response['issues'])
+          .not_to include('The instance is running in import_mode - please check the configuration if this is not intended.')
+      end
+    end
   end
 
   describe '#status' do

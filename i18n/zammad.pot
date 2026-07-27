@@ -13703,11 +13703,11 @@ msgstr ""
 msgid "REST API access using the username/email address and password is currently disabled. Please contact your administrator."
 msgstr ""
 
-#: app/models/audit_log.rb:74
+#: app/models/audit_log.rb:75
 msgid "Rails console"
 msgstr ""
 
-#: app/models/audit_log.rb:77
+#: app/models/audit_log.rb:78
 msgid "Rails runner"
 msgstr ""
 
@@ -16852,14 +16852,6 @@ msgstr ""
 msgid "The 24 hour customer service window is now closed, no further WhatsApp messages can be sent."
 msgstr ""
 
-#: lib/monitoring_helper/health_checker/ai_provider_accessible.rb:21
-msgid "The AI Provider is not accessible."
-msgstr ""
-
-#: lib/monitoring_helper/health_checker/ai_provider_accessible.rb:14
-msgid "The AI provider is not configured."
-msgstr ""
-
 #: app/controllers/user_access_token_controller.rb:41
 msgid "The API token could not be found."
 msgstr ""
@@ -16934,10 +16926,6 @@ msgstr ""
 
 #: lib/secure_mailing/pgp/tool/error.rb:97
 msgid "The PGP signature key has been revoked."
-msgstr ""
-
-#: lib/monitoring_helper/health_checker/s3_storage_availability.rb:12
-msgid "The Simple Storage Service is not available."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee:159

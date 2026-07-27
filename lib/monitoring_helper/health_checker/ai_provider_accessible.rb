@@ -11,14 +11,14 @@ module MonitoringHelper
         provider = AI::Provider.by_config(provider_config)
 
         if provider.nil?
-          response.issues.push __('The AI provider is not configured.')
+          response.issues.push 'The AI provider is not configured.' # rubocop:disable Zammad/DetectTranslatableString
           return
         end
 
         begin
           provider.ping!(provider_config)
         rescue AI::Provider::ResponseError
-          response.issues.push __('The AI Provider is not accessible.')
+          response.issues.push 'The AI Provider is not accessible.' # rubocop:disable Zammad/DetectTranslatableString
         end
       end
     end

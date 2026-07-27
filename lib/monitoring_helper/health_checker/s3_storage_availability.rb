@@ -9,7 +9,7 @@ module MonitoringHelper
 
         return if Store::Provider::S3.ping?
 
-        response.issues.push __('The Simple Storage Service is not available.')
+        response.issues.push 'The Simple Storage Service is not available.' # rubocop:disable Zammad/DetectTranslatableString
       end
     end
   end
