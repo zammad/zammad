@@ -388,7 +388,7 @@ importers:
         specifier: ^0.60.0
         version: 0.60.0
       oxlint:
-        specifier: ^1.74.0
+        specifier: ^1.75.0
         version: 1.75.0
       regenerator-runtime:
         specifier: ^0.14.1
