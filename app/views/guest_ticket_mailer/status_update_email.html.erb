@@ -1,0 +1,27 @@
+<div style="font-family: Inter, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto;">
+  <div style="background: linear-gradient(135deg, #1e88e5 0%, #1565c0 100%); padding: 40px; text-align: center; border-radius: 8px 8px 0 0;">
+    <h1 style="color: white; margin: 0; font-size: 28px;">Ticket Status Update</h1>
+  </div>
+
+  <div style="background: #f5f5f5; padding: 40px;">
+    <p style="font-size: 16px; margin-bottom: 20px;">Your support ticket has been updated.</p>
+
+    <div style="background: white; padding: 20px; border-radius: 4px; margin: 20px 0;">
+      <p style="margin: 0 0 10px 0; color: #999; font-size: 12px; text-transform: uppercase;">Ticket Reference</p>
+      <p style="margin: 0 0 20px 0; font-size: 20px; font-weight: bold; color: #1e88e5;"><%= @reference_number %></p>
+
+      <p style="margin: 0 0 10px 0; color: #999; font-size: 12px; text-transform: uppercase;">Current Status</p>
+      <p style="margin: 0 0 20px 0; font-size: 16px; font-weight: 500;"><%= @status.humanize %></p>
+
+      <p style="margin: 0 0 10px 0; color: #999; font-size: 12px; text-transform: uppercase;">Update</p>
+      <p style="margin: 0; color: #666; font-size: 14px;"><%= @message %></p>
+    </div>
+  </div>
+
+  <div style="background: #fafafa; padding: 20px; text-align: center; border-radius: 0 0 8px 8px; border-top: 1px solid #eee;">
+    <p style="margin: 0; font-size: 12px; color: #999;">
+      © 2024 Leasys. All rights reserved.<br/>
+      <a href="https://leasys.com" style="color: #1e88e5; text-decoration: none;">Visit our website</a>
+    </p>
+  </div>
+</div>
