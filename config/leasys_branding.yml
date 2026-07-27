@@ -1,0 +1,21 @@
+# Leasys Branding Configuration
+company_name: Leasys
+company_logo: /assets/leasys_logo.png
+company_colors:
+  primary: '#1e88e5'      # Professional blue
+  secondary: '#424242'    # Dark gray
+  accent: '#ff6f00'       # Orange accent
+  success: '#43a047'      # Green
+  warning: '#fb8c00'      # Amber
+  error: '#e53935'        # Red
+  background: '#fafafa'   # Light background
+
+theme:
+  font_family: 'Inter, sans-serif'
+  border_radius: '4px'
+  box_shadow: '0 2px 4px rgba(0,0,0,0.1)'
+  transition: 'all 0.3s ease'
+
+support_email: support@leasys.com
+support_phone: '+1-800-LEASYS'
+support_url: https://support.leasys.com

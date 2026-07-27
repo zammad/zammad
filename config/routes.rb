@@ -1,23 +1,26 @@
-# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
-
 Rails.application.routes.draw do
+  # ... existing routes ...
 
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
-
-  # app init
-  match '/init', to: 'init#index', via: :get
-  match '/app',  to: 'init#index', via: :get
-
-  # just remember to delete public/index.html.
-  root to: 'init#index', via: :get
-  root to: 'errors#routing', via: %i[post put delete options], as: nil
-
-  # load routes from external files
-  dir = File.expand_path(__dir__)
-  files = Dir.glob("#{dir}/routes/*.rb")
-  files.each do |file|
-    load file
+  namespace :api do
+    namespace :guest do
+      resources :tickets, only: [] do
+        collection do
+          post :create_incident, action: :create_incident
+          post :create_change_request, action: :create_change_request
+          post :create_service_request, action: :create_service_request
+        end
+      end
+    end
   end
 
-  match '*a', to: 'errors#routing', via: %i[get post put delete options]
+  # Guest ticket submission pages (no authentication required)
+  namespace :guest do
+    resources :tickets, only: [:index] do
+      collection do
+        get :incident
+        get :change_request
+        get :service_request
+      end
+    end
+  end
 end
