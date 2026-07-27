@@ -358,7 +358,7 @@ importers:
         specifier: ^4.17.1
         version: 4.17.1(@typescript-eslint/utils@8.65.0(eslint@10.7.0(jiti@2.7.0)(supports-color@10.2.2))(supports-color@10.2.2)(typescript@6.0.3))(eslint@10.7.0(jiti@2.7.0)(supports-color@10.2.2))(supports-color@10.2.2)
       eslint-plugin-oxlint:
-        specifier: ^1.73.0
+        specifier: ^1.75.0
         version: 1.75.0(oxlint@1.75.0)
       eslint-plugin-security:
         specifier: ^4.0.1
