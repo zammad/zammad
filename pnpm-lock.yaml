@@ -171,8 +171,8 @@ importers:
         specifier: ^16.14.2
         version: 16.14.2
       graphql-ruby-client:
-        specifier: ^1.15.1
-        version: 1.15.1(@apollo/client@3.13.9(graphql-ws@6.1.0(graphql@16.14.2)(ws@8.21.1))(graphql@16.14.2))(graphql@16.14.2)
+        specifier: ^1.15.2
+        version: 1.15.2(@apollo/client@3.13.9(graphql-ws@6.1.0(graphql@16.14.2)(ws@8.21.1))(graphql@16.14.2))(graphql@16.14.2)
       graphql-tag:
         specifier: ^2.12.6
         version: 2.12.7(graphql@16.14.2)
@@ -4244,8 +4244,8 @@ packages:
       cosmiconfig-toml-loader:
         optional: true
 
-  graphql-ruby-client@1.15.1:
-    resolution: {integrity: sha512-dSn9+zL+4Q7PxLMl8uHpj4wmZbYYer4czer3HKdU3fH25ZUSxs+t06DmjYV/1bFN7UwwLpzot2b8IrW0IyEw7g==}
+  graphql-ruby-client@1.15.2:
+    resolution: {integrity: sha512-xu4pslW6SzyDqInf0thityaSEltga0CViCg/hZh5HQtMmm0SaSHtwhJrZspjnEMukQukmOZtlzquhF+fE/7xxg==}
     engines: {node: '>=10'}
     hasBin: true
     peerDependencies:
@@ -10859,7 +10859,7 @@ snapshots:
       - typescript
       - utf-8-validate
 
-  graphql-ruby-client@1.15.1(@apollo/client@3.13.9(graphql-ws@6.1.0(graphql@16.14.2)(ws@8.21.1))(graphql@16.14.2))(graphql@16.14.2):
+  graphql-ruby-client@1.15.2(@apollo/client@3.13.9(graphql-ws@6.1.0(graphql@16.14.2)(ws@8.21.1))(graphql@16.14.2))(graphql@16.14.2):
     dependencies:
       '@apollo/client': 3.13.9(graphql-ws@6.1.0(graphql@16.14.2)(ws@8.21.1))(graphql@16.14.2)
       glob: 13.0.6
