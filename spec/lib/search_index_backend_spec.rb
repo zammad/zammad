@@ -1322,6 +1322,23 @@ RSpec.describe SearchIndexBackend do
         end
       end
     end
+
+    context 'when condition name prefix resolves to a non search index model' do
+      it 'does not raise' do
+        condition = {
+          operator:   'AND',
+          conditions: [
+            {
+              name:     'kernels.foo',
+              operator: 'contains',
+              value:    'bar',
+            },
+          ],
+        }
+
+        expect { described_class.selectors('Ticket', condition, { current_user: agent1 }) }.not_to raise_error
+      end
+    end
   end
 
   describe '.search_by_index_sort' do
