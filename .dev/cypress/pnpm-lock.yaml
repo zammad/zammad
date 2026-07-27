@@ -15,7 +15,7 @@ importers:
         specifier: ^10.1.3
         version: 10.1.3(cypress@15.19.0)
       cypress:
-        specifier: ^15.18.1
+        specifier: ^15.19.0
         version: 15.19.0
       cypress-real-events:
         specifier: ^1.15.0
