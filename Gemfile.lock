@@ -865,10 +865,11 @@ GEM
       nokogiri (~> 1.8)
     yard (0.9.45)
     zeitwerk (2.8.2)
-    zendesk_api (3.1.1)
+    zendesk_api (3.1.2)
+      base64
       faraday (> 2.0.0)
       faraday-multipart
-      hashie (>= 3.5.2, < 6.0.0)
+      hashie (>= 3.5.2)
       inflection
       mini_mime
       multipart-post (~> 2.0)
