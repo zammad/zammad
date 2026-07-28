@@ -811,11 +811,11 @@ msgstr "%s% telah dibuka kembali"
 msgid "%{model} can have full or granular access to group"
 msgstr "%{model} dapat memiliki akses penuh atau terperinci ke grup"
 
-#: app/models/object_manager/attribute.rb:624
+#: app/models/object_manager/attribute.rb:627
 msgid "%{name} already exists"
 msgstr "%{name} sudah ada"
 
-#: app/models/object_manager/attribute.rb:608
+#: app/models/object_manager/attribute.rb:611
 msgid "%{name} is a reserved word"
 msgstr "%{name} adalah kata yang telah dipesan"
 
@@ -1079,8 +1079,8 @@ msgstr ""
 msgid "A queue is required!"
 msgstr "Antrian wajib diisi!"
 
-#: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee:249
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketAIKnowledgeBaseAnswers.vue:40
+#: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee:266
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseActions.vue:49
 msgid ""
 "A related knowledge base answer is being generated. You will be notified "
 "once the draft is ready."
@@ -1127,7 +1127,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:64
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:30
-#: app/assets/javascripts/app/controllers/manage.coffee:45
+#: app/assets/javascripts/app/controllers/manage.coffee:50
 msgid "AI"
 msgstr "AI"
 
@@ -1136,7 +1136,7 @@ msgstr "AI"
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:79
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:60
 #: app/assets/javascripts/app/controllers/ticket_zoom/attribute_bar.coffee:144
-#: app/models/ai/agent.rb:107
+#: app/models/ai/agent.rb:108
 msgid "AI Agent"
 msgstr "Agen AI"
 
@@ -1229,7 +1229,7 @@ msgstr "Alat teks bantuan AI tidak aktif."
 msgid "AI assistance text tool is invalid."
 msgstr "Alat teks bantuan AI tidak valid."
 
-#: app/assets/javascripts/app/views/link/kb_answer.jst.eco:46
+#: app/assets/javascripts/app/views/link/kb_answer.jst.eco:22
 #, fuzzy
 #| msgid "draft"
 msgid "AI draft"
@@ -1360,7 +1360,7 @@ msgstr "Kesalahan server API - silakan coba lagi"
 
 #: app/assets/javascripts/app/views/generic/text_tools_modal.jst.eco:10
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_ticket_summary.jst.eco:7
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketAISuggestedKnowledgeBaseAnswers.vue:130
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiSuggested.vue:60
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummaryContent.vue:91
 #, fuzzy
 #| msgid "API server error - please try again"
@@ -1392,47 +1392,47 @@ msgstr ""
 msgid "Access denied"
 msgstr "Akses ditolak"
 
-#: db/seeds/permissions.rb:360
+#: db/seeds/permissions.rb:366
 msgid "Access the agent chat features."
 msgstr "Akses fitur obrolan agen."
 
-#: db/seeds/permissions.rb:375
+#: db/seeds/permissions.rb:381
 msgid "Access the agent phone features."
 msgstr "Akses fitur telepon agen."
 
-#: db/seeds/permissions.rb:390
+#: db/seeds/permissions.rb:396
 msgid "Access the knowledge base editor features."
 msgstr "Akses fitur editor basis pengetahuan."
 
-#: db/seeds/permissions.rb:396
+#: db/seeds/permissions.rb:402
 msgid "Access the knowledge base reader features."
 msgstr "Akses fitur pembaca basis pengetahuan."
 
-#: db/seeds/permissions.rb:418
+#: db/seeds/permissions.rb:424
 msgid "Access the tickets as agent based on group access."
 msgstr "Akses tiket sebagai agen berdasarkan akses grup."
 
-#: db/seeds/permissions.rb:427
+#: db/seeds/permissions.rb:433
 msgid "Access tickets as customer."
 msgstr "Akses tiket sebagai pelanggan."
 
-#: db/seeds/permissions.rb:351
+#: db/seeds/permissions.rb:357
 msgid "Access to the chat interface."
 msgstr "Akses ke antarmuka obrolan."
 
-#: db/seeds/permissions.rb:381
+#: db/seeds/permissions.rb:387
 msgid "Access to the knowledge base interface."
 msgstr "Akses ke antarmuka basis pengetahuan."
 
-#: db/seeds/permissions.rb:366
+#: db/seeds/permissions.rb:372
 msgid "Access to the phone interface."
 msgstr "Akses ke antarmuka telepon."
 
-#: db/seeds/permissions.rb:403
+#: db/seeds/permissions.rb:409
 msgid "Access to the report interface."
 msgstr "Akses ke antarmuka laporan."
 
-#: db/seeds/permissions.rb:409
+#: db/seeds/permissions.rb:415
 msgid "Access to the ticket interface."
 msgstr "Akses ke antarmuka tiket."
 
@@ -1484,7 +1484,7 @@ msgid "Accounted Time"
 msgstr "Waktu yang Diperhitungkan"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:74
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:163
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:186
 #: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:14
 #, fuzzy
 #| msgid "Accounted Time"
@@ -1517,6 +1517,7 @@ msgstr "Akun"
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:82
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:118
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:109
+#: app/assets/javascripts/app/models/audit_log.coffee:7
 #: app/assets/javascripts/app/models/core_workflow.coffee:11
 #: app/assets/javascripts/app/models/trigger.coffee:7
 #: app/assets/javascripts/app/views/api.jst.eco:62
@@ -1696,7 +1697,7 @@ msgstr "Adaptor"
 msgid "Add"
 msgstr "Tambah"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketAIKnowledgeBaseAnswers.vue:67
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseActions.vue:78
 #, fuzzy
 #| msgid "Apply Draft"
 msgid "Add AI draft"
@@ -1860,7 +1861,6 @@ msgid "Add internal note"
 msgstr "Tambah catatan internal"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:300
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:163
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:297
 #: app/frontend/shared/components/Form/fields/FieldEditor/features/link/LinkForm.vue:173
 msgid "Add link"
@@ -2125,7 +2125,7 @@ msgstr "Nama Agen"
 msgid "Agent Name + FromSeparator + System Address Display Name"
 msgstr "Nama Agen + FromSeparator + Nama Tampilan Alamat Sistem"
 
-#: db/seeds/permissions.rb:359
+#: db/seeds/permissions.rb:365
 msgid "Agent chat"
 msgstr "Obrolan agen"
 
@@ -2133,15 +2133,15 @@ msgstr "Obrolan agen"
 msgid "Agent idle timeout"
 msgstr "Waktu tunggu idle agen"
 
-#: app/models/role.rb:151 app/models/user.rb:779
+#: app/models/role.rb:181 app/models/user.rb:787
 msgid "Agent limit exceeded, please check your account settings."
 msgstr "Batas agen terlampaui, harap periksa pengaturan akun Anda."
 
-#: db/seeds/permissions.rb:374
+#: db/seeds/permissions.rb:380
 msgid "Agent phone"
 msgstr "Telepon agen"
 
-#: db/seeds/permissions.rb:417 db/seeds/settings.rb:1160
+#: db/seeds/permissions.rb:423 db/seeds/settings.rb:1160
 msgid "Agent tickets"
 msgstr "Tiket agen"
 
@@ -2531,7 +2531,7 @@ msgstr "Rahasia app"
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/appearance.ts:9
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/appearance.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:54
-#: db/seeds/permissions.rb:440
+#: db/seeds/permissions.rb:446
 msgid "Appearance"
 msgstr "Tampilan"
 
@@ -2631,10 +2631,13 @@ msgid "Archive ticket target state"
 msgstr "Status target tiket arsip"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:113
+#: app/frontend/apps/desktop/components/KnowledgeBaseAnswerIcon/KnowledgeBaseAnswerIcon.vue:41
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseIconStatus.vue:31
 msgid "Archived"
 msgstr "Diarsipkan"
 
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco:23
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAnswerPopover.vue:52
 msgid "Archived at"
 msgstr "Diarsipkan pada"
 
@@ -2870,7 +2873,7 @@ msgstr ""
 "Waktu tunggu penugasan dalam menit jika agen yang ditugaskan tidak "
 "mengerjakannya. Tiket akan ditampilkan sebagai tidak ditetapkan."
 
-#: app/models/user.rb:681
+#: app/models/user.rb:689
 msgid ""
 "At least one identifier (firstname, lastname, phone, mobile or email) for "
 "user is required."
@@ -2884,7 +2887,7 @@ msgstr ""
 msgid "At least one locale is required."
 msgstr "setidaknya satu huruf diperlukan"
 
-#: app/models/postmaster_filter.rb:29
+#: app/models/postmaster_filter.rb:30
 msgid "At least one match rule is required, but none was provided."
 msgstr ""
 "Setidaknya satu aturan pencocokan wajib diisi, tetapi tidak ada yang "
@@ -2894,7 +2897,7 @@ msgstr ""
 msgid "At least one object must be selected."
 msgstr "Setidaknya satu objek harus dipilih."
 
-#: app/models/role.rb:128 app/models/user.rb:758
+#: app/models/role.rb:158 app/models/user.rb:766
 msgid "At least one user needs to have admin permissions."
 msgstr "Setidaknya satu pengguna perlu memiliki izin admin."
 
@@ -2994,7 +2997,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:31
 #: app/assets/javascripts/app/models/overview.coffee:15
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:123
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:133
 msgid "Attributes"
 msgstr "Atribut"
 
@@ -3008,6 +3011,15 @@ msgstr "Atribut untuk dibandingkan"
 #: lib/validations/ticket_article_validator/whatsapp_message.rb:8
 msgid "Audio file"
 msgstr "File audio"
+
+#: app/assets/javascripts/app/controllers/audit_log.coffee:25
+msgid "Audit Log"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/audit_log.coffee:25
+#: db/seeds/permissions.rb:338
+msgid "Audit Logs"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
 #: app/assets/javascripts/app/controllers/report.coffee:221
@@ -3234,7 +3246,7 @@ msgstr "Jenis yang tersedia untuk tiket baru"
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:120
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:167
 #: app/frontend/shared/components/CommonUserAvatar/CommonUserAvatar.vue:114
-#: db/seeds/permissions.rb:454
+#: db/seeds/permissions.rb:460
 msgid "Avatar"
 msgstr "Avatar"
 
@@ -3822,7 +3834,7 @@ msgstr "Tidak dapat menghapus catatan karena %{record} yang bergantung ada"
 msgid "Cannot follow-up on a closed ticket. Please create a new ticket."
 msgstr "Tidak dapat menindaklanjuti tiket yang ditutup. Harap buat tiket baru."
 
-#: app/models/sla.rb:44
+#: app/models/sla.rb:45
 msgid "Cannot have both response time and update time."
 msgstr "Tidak dapat memiliki waktu respons dan waktu pembaruan."
 
@@ -3850,6 +3862,7 @@ msgstr "Kategori"
 
 #: app/assets/javascripts/app/models/knowledge_base_answer.coffee:51
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco:31
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAnswerPopover.vue:56
 msgid "Category"
 msgstr "Kategori"
 
@@ -3903,7 +3916,7 @@ msgstr "Ubah Kata Sandi Anda"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketChangeCustomer/TicketChangeCustomerFlyout.vue:51
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:70
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:102
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:83
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:65
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:127
 msgid "Change customer"
@@ -3931,7 +3944,7 @@ msgstr "Ubah urutan"
 msgid "Change password"
 msgstr "Ubah Kata Sandi"
 
-#: db/seeds/permissions.rb:472
+#: db/seeds/permissions.rb:478
 msgid "Change personal account password."
 msgstr "Ubah kata sandi akun pribadi."
 
@@ -3984,6 +3997,7 @@ msgstr "Mengubah reaksi menjadi %s pada pesan %s dari %s"
 msgid "Changed:"
 msgstr "Diubah:"
 
+#: app/assets/javascripts/app/models/audit_log.coffee:11
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:17
 #: app/views/mailer/ticket_update/zh-cn.html.erb:11
 #: app/views/mailer/ticket_update/zh-tw.html.erb:11
@@ -4021,7 +4035,7 @@ msgstr "Saluran"
 msgid "Channel Distribution"
 msgstr "Distribusi Saluran"
 
-#: app/assets/javascripts/app/controllers/manage.coffee:43
+#: app/assets/javascripts/app/controllers/manage.coffee:48
 msgid "Channels"
 msgstr "Saluran"
 
@@ -4078,7 +4092,7 @@ msgstr "Periksa saluran."
 msgid "Check item"
 msgstr "Periksa item"
 
-#: lib/search_index_backend.rb:458
+#: lib/search_index_backend.rb:459
 msgid "Check the response and payload for detailed information:"
 msgstr "Periksa respons dan payload untuk informasi terperinci:"
 
@@ -4108,7 +4122,7 @@ msgstr "Label Item Daftar Periksa"
 msgid "Checklist Template"
 msgstr "Template Daftar Periksa"
 
-#: app/models/checklist_template.rb:16
+#: app/models/checklist_template.rb:17
 msgid "Checklist Template items are limited to 100 items per checklist."
 msgstr ""
 "Item Template Daftar Periksa dibatasi hingga 100 item per daftar periksa."
@@ -4132,7 +4146,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/checklist_template.coffee:3
 #: app/assets/javascripts/app/views/checklist_template/index.jst.eco:7
-#: db/seeds/permissions.rb:344 db/seeds/settings.rb:6145
+#: db/seeds/permissions.rb:350 db/seeds/settings.rb:6145
 msgid "Checklists"
 msgstr "Daftar Periksa"
 
@@ -4279,19 +4293,25 @@ msgstr "Liburan Natal"
 msgid "City"
 msgstr "Kota"
 
-#: db/seeds/schedulers.rb:169
+#: db/seeds/schedulers.rb:160
+#, fuzzy
+#| msgid "Clean up 'HttpLog'."
+msgid "Clean up 'AuditLog'."
+msgstr "Bersihkan 'HttpLog'."
+
+#: db/seeds/schedulers.rb:178
 msgid "Clean up 'Cti::Log'."
 msgstr "Bersihkan 'Cti::Log'."
 
-#: db/seeds/schedulers.rb:178
+#: db/seeds/schedulers.rb:187
 msgid "Clean up 'DataPrivacyTask'."
 msgstr "Bersihkan 'DataPrivacyTask'."
 
-#: db/seeds/schedulers.rb:160
+#: db/seeds/schedulers.rb:169
 msgid "Clean up 'HttpLog'."
 msgstr "Bersihkan 'HttpLog'."
 
-#: db/seeds/schedulers.rb:187
+#: db/seeds/schedulers.rb:196
 #, fuzzy
 #| msgid "Clean up 'Cti::Log'."
 msgid "Clean up 'Ticket::DailyEventLock'."
@@ -4301,7 +4321,7 @@ msgstr "Bersihkan 'Cti::Log'."
 msgid "Clean up ActiveJob locks."
 msgstr "Bersihkan kunci ActiveJob."
 
-#: db/seeds/schedulers.rb:233
+#: db/seeds/schedulers.rb:242
 msgid "Clean up cache."
 msgstr "Bersihkan cache."
 
@@ -4317,7 +4337,7 @@ msgstr "Bersihkan sesi yang mati."
 msgid "Clean up expired sessions."
 msgstr "Bersihkan sesi yang kedaluwarsa."
 
-#: db/seeds/schedulers.rb:268
+#: db/seeds/schedulers.rb:277
 msgid "Clean up mobile taskbars."
 msgstr "Bersihkan taskbar seluler."
 
@@ -4630,6 +4650,12 @@ msgstr "Kondisi untuk objek yang terpengaruh"
 #: app/assets/javascripts/app/models/overview.coffee:12
 msgid "Conditions for shown tickets"
 msgstr "Kondisi untuk tiket yang ditampilkan"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiSuggested.vue:78
+#, fuzzy
+#| msgid "Confirm new password"
+msgid "Confidence score"
+msgstr "Konfirmasi kata sandi baru"
 
 #: app/assets/javascripts/app/controllers/widget/placeholder.coffee:137
 msgid "Config"
@@ -5129,7 +5155,7 @@ msgid "Could not set two-factor authentication method as default"
 msgstr "Tidak dapat menetapkan metode autentikasi dua faktor sebagai default"
 
 #: app/assets/javascripts/app/controllers/widget/link.coffee:69
-#: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee:232
+#: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee:249
 msgid "Couldn't save changes"
 msgstr "Tidak dapat menyimpan perubahan"
 
@@ -5393,6 +5419,7 @@ msgid "Created Internal Article"
 msgstr "Artikel Internal yang Dibuat"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee:59
+#: app/assets/javascripts/app/models/audit_log.coffee:13
 #: app/assets/javascripts/app/models/checklist.coffee:9
 #: app/assets/javascripts/app/models/checklist_item.coffee:8
 #: app/assets/javascripts/app/models/checklist_template.coffee:10
@@ -5490,7 +5517,7 @@ msgstr "Pengguna Saat Ini"
 msgid "Current password"
 msgstr "Kata sandi saat ini"
 
-#: app/models/system_report/plugin/setting.rb:6
+#: app/models/system_report/plugin/setting.rb:4
 msgid "Current state of configured settings (excluding passwords and tokens)"
 msgstr ""
 "Status saat ini dari pengaturan yang dikonfigurasi (tidak termasuk kata "
@@ -5626,7 +5653,7 @@ msgstr "Pemilihan pelanggan berdasarkan daftar pengirim dan penerima"
 msgid "Customer sentiment"
 msgstr "Sentimen Pelanggan"
 
-#: db/seeds/permissions.rb:426 db/seeds/settings.rb:1169
+#: db/seeds/permissions.rb:432 db/seeds/settings.rb:1169
 msgid "Customer tickets"
 msgstr "Tiket pelanggan"
 
@@ -7065,7 +7092,7 @@ msgstr "Hapus segera"
 msgid "Delete object"
 msgstr "Hapus Objek"
 
-#: db/seeds/schedulers.rb:196
+#: db/seeds/schedulers.rb:205
 msgid "Delete obsolete classic IMAP backup."
 msgstr "Hapus cadangan IMAP klasik yang usang."
 
@@ -7093,7 +7120,7 @@ msgstr "Hapus entri penyimpanan statistik lama."
 msgid "Delete old token entries."
 msgstr "Hapus entri token lama."
 
-#: db/seeds/schedulers.rb:224
+#: db/seeds/schedulers.rb:233
 msgid "Delete old upload cache entries."
 msgstr "Hapus entri cache unggahan lama."
 
@@ -7124,10 +7151,6 @@ msgstr "Hapus avatar ini"
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:113
 msgid "Delete this device"
 msgstr "Hapus perangkat ini"
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:143
-msgid "Delete this link"
-msgstr "Hapus tautan ini"
 
 #: app/frontend/apps/desktop/components/Search/QuickSearch/QuickSearch.vue:179
 msgid "Delete this recent search"
@@ -7294,7 +7317,7 @@ msgstr "Perangkat telah dicabut."
 #: app/assets/javascripts/app/views/profile/devices.jst.eco:2
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/devices.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:33
-#: db/seeds/permissions.rb:485
+#: db/seeds/permissions.rb:491
 msgid "Devices"
 msgstr "Perangkat"
 
@@ -7638,6 +7661,7 @@ msgstr "Mengunduh lampiran…"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:101
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:18
+#: app/frontend/apps/desktop/components/KnowledgeBaseAnswerIcon/KnowledgeBaseAnswerIcon.vue:26
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseIconStatus.vue:25
 msgid "Draft"
 msgstr "Draf"
@@ -7892,7 +7916,7 @@ msgstr "Ukuran Total Payload Elasticsearch"
 msgid "Elasticsearch index does not exist"
 msgstr "Indeks Elasticsearch tidak ada"
 
-#: lib/search_index_backend.rb:454
+#: lib/search_index_backend.rb:455
 msgid ""
 "Elasticsearch is not reachable. It's possible that it's not running. Please "
 "check whether it is installed."
@@ -7997,7 +8021,7 @@ msgstr "Akun Email"
 msgid "Email address"
 msgstr "Alamat email"
 
-#: app/models/user.rb:691
+#: app/models/user.rb:699
 msgid "Email address '%{email}' is already used for another user."
 msgstr "Alamat email '%{email}' sudah digunakan untuk pengguna lain."
 
@@ -8658,7 +8682,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee:132
 #: app/assets/javascripts/app/controllers/widget/error_modal.coffee:6
 #: app/frontend/apps/desktop/components/CommonError/CommonError.vue:30
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBase.vue:41
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBase.vue:42
 #: app/frontend/apps/mobile/pages/error/views/Error.vue:37
 #: lib/excel_sheet/ai/analytics/errors.rb:36
 msgid "Error"
@@ -8920,7 +8944,7 @@ msgstr "Jalankan perubahan pada objek"
 msgid "Execute configured macros"
 msgstr "Jalankan makro yang dikonfigurasi"
 
-#: db/seeds/schedulers.rb:205
+#: db/seeds/schedulers.rb:214
 msgid "Execute import jobs."
 msgstr "Jalankan pekerjaan impor."
 
@@ -9015,7 +9039,7 @@ msgstr "Pencarian Lanjutan"
 msgid "External data source field"
 msgstr "Bidang sumber data eksternal"
 
-#: lib/search_index_backend.rb:780
+#: lib/search_index_backend.rb:781
 msgid "Extract zammad-attachment information from arrays"
 msgstr "Ekstrak informasi zammad-attachment dari array"
 
@@ -9934,9 +9958,7 @@ msgstr "Salam"
 #: app/graphql/gql/types/overview_type.rb:95
 #: app/views/mailer/ticket_create/fr.html.erb:8
 #: app/views/mailer/ticket_create/zh-cn.html.erb:8
-#: app/views/messaging/ticket_create/pt-br.md.erb:3
 #: app/views/messaging/ticket_create/zh-tw.md.erb:3
-#: app/views/messaging/ticket_info/pt-br.md.erb:3
 #: app/views/messaging/ticket_info/zh-tw.md.erb:3
 #: db/seeds/object_manager_attributes.rb:168 db/seeds/settings.rb:3019
 #: lib/excel_sheet/ticket.rb:27
@@ -10064,7 +10086,7 @@ msgstr "Log HTTP"
 msgid "HTTP type"
 msgstr "Tipe HTTP"
 
-#: db/seeds/schedulers.rb:214
+#: db/seeds/schedulers.rb:223
 msgid "Handle data privacy tasks."
 msgstr "Tangani tugas privasi data."
 
@@ -10368,7 +10390,7 @@ msgstr "Petunjuk untuk menambahkan artikel ke tiket yang ada."
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:62
 #: app/frontend/apps/desktop/components/CommonHistoryFlyout/CommonHistoryFlyout.vue:71
 #: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailTopBar/actions/history.ts:13
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:84
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:65
 #: app/frontend/apps/desktop/pages/user/components/UserDetailTopBar/actions/history.ts:13
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:121
 msgid "History"
@@ -11123,6 +11145,7 @@ msgid "Integrity verification of the downloaded WhatsApp media failed."
 msgstr "Verifikasi integritas media WhatsApp yang diunduh gagal."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:105
+#: app/frontend/apps/desktop/components/KnowledgeBaseAnswerIcon/KnowledgeBaseAnswerIcon.vue:31
 #: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:144
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseIconStatus.vue:27
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:207
@@ -11133,7 +11156,7 @@ msgstr "Internal"
 msgid "Internal Knowledge Base feed:"
 msgstr "Feed Knowledge Base internal:"
 
-#: app/models/object_manager/attribute.rb:694
+#: app/models/object_manager/attribute.rb:697
 #, fuzzy
 #| msgid "The article could not be deleted."
 msgid "Internal attributes cannot be deleted"
@@ -11213,7 +11236,7 @@ msgstr "client_id tidak valid dalam loop penerimaan!"
 msgid "Invalid client_id received!"
 msgstr "client_id yang diterima tidak valid!"
 
-#: app/models/user.rb:630
+#: app/models/user.rb:638
 msgid "Invalid email '%{email}'"
 msgstr "Email tidak valid '%{email}'"
 
@@ -11567,7 +11590,7 @@ msgstr "Kata Kunci"
 #: app/assets/javascripts/app/models/knowledge_base.coffee:75
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader.vue:88
 #: app/frontend/apps/desktop/pages/knowledge-base/routes.ts:24
-#: app/models/knowledge_base.rb:233 db/seeds/permissions.rb:113
+#: app/models/knowledge_base.rb:244 db/seeds/permissions.rb:113
 msgid "Knowledge Base"
 msgstr "Knowledge Base"
 
@@ -11601,7 +11624,7 @@ msgstr ""
 msgid "Knowledge Base Answer could not be created"
 msgstr "Knowledge Base tidak dapat dibuat."
 
-#: db/seeds/permissions.rb:389
+#: db/seeds/permissions.rb:395
 msgid "Knowledge Base Editor"
 msgstr "Editor Knowledge Base"
 
@@ -11609,7 +11632,7 @@ msgstr "Editor Knowledge Base"
 msgid "Knowledge Base Feed"
 msgstr "Feed Knowledge Base"
 
-#: db/seeds/permissions.rb:395
+#: db/seeds/permissions.rb:401
 msgid "Knowledge Base Reader"
 msgstr "Pembaca Knowledge Base"
 
@@ -11644,7 +11667,7 @@ msgstr "Knowledge Base aktif"
 msgid "Knowledge base controls"
 msgstr "Knowledge Base aktif"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketAIKnowledgeBaseAnswers.vue:48
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseActions.vue:57
 #: app/services/service/ticket/ai_assistance/create_knowledge_base_answer.rb:21
 #, fuzzy
 #| msgid "The Knowledge Base could not be created."
@@ -11714,8 +11737,9 @@ msgstr "Tata letak halaman arahan"
 #: app/assets/javascripts/app/views/profile/language.jst.eco:3
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/locale.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLocale.vue:13
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAnswerPopover.vue:62
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:149
-#: db/seeds/permissions.rb:447
+#: db/seeds/permissions.rb:453
 msgid "Language"
 msgstr "Bahasa"
 
@@ -11955,7 +11979,7 @@ msgstr "Visibilitas Terbatas"
 #: app/assets/javascripts/app/controllers/ticket_link_add.coffee:7
 #: app/assets/javascripts/app/models/overview.coffee:7
 #: app/assets/javascripts/app/models/public_link.coffee:6
-#: app/assets/javascripts/app/views/link/kb_answer.jst.eco:48
+#: app/assets/javascripts/app/views/link/kb_answer.jst.eco:24
 #: app/assets/javascripts/app/views/link/ticket/list.jst.eco:11
 #: app/frontend/apps/desktop/pages/ticket/components/TicketLinksFlyout.vue:53
 #: app/frontend/shared/components/Form/FormFieldLink.vue:21
@@ -12011,14 +12035,17 @@ msgstr "Tautan sudah ada"
 msgid "Link issue"
 msgstr "Tautkan isu"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseActions.vue:83
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiSuggested.vue:87
+#, fuzzy
+#| msgid "Inserts knowledge base answer"
+msgid "Link knowledge base answer"
+msgstr "Menyisipkan jawaban basis pengetahuan"
+
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:168
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:145
 msgid "Link objects"
 msgstr "Tautkan objek"
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:88
-msgid "Link removed successfully"
-msgstr "Tautan berhasil dihapus"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:259
 msgid "Link template"
@@ -12031,6 +12058,7 @@ msgid "Link text"
 msgstr "Teks Tautan"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketLinksFlyout.vue:53
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:141
 msgid "Link ticket"
 msgstr "Tautkan tiket"
 
@@ -12044,10 +12072,16 @@ msgstr "Tautkan tiket"
 msgid "Link type"
 msgstr "Tipe tautan"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseLinks.vue:41
+#, fuzzy
+#| msgid "LinkedIn"
+msgid "Linked"
+msgstr "LinkedIn"
+
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:3
 #: app/assets/javascripts/app/views/popover/user.jst.eco:5
 #: app/assets/javascripts/app/views/widget/user.jst.eco:34
-#: db/seeds/permissions.rb:499
+#: db/seeds/permissions.rb:505
 msgid "Linked Accounts"
 msgstr "Akun Tertaut"
 
@@ -12301,7 +12335,7 @@ msgstr "Mode Pemeliharaan"
 msgid "Maintenance mode enabled!"
 msgstr "Mode pemeliharaan diaktifkan!"
 
-#: app/assets/javascripts/app/controllers/manage.coffee:18
+#: app/assets/javascripts/app/controllers/manage.coffee:20
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:85
 msgid "Manage"
 msgstr "Kelola"
@@ -12379,7 +12413,7 @@ msgstr "Kelola Autentikasi Dua Faktor"
 msgid "Manage WhatsApp channel of your system."
 msgstr "Kelola saluran WhatsApp sistem Anda."
 
-#: db/seeds/permissions.rb:538
+#: db/seeds/permissions.rb:544
 msgid "Manage access to New BETA UI switch."
 msgstr "Kelola akses ke sakelar UI BETA Baru."
 
@@ -12402,6 +12436,12 @@ msgid ""
 msgstr ""
 "Kelola aplikasi yang dapat menggunakan Zammad sebagai penyedia OAuth dan "
 "aplikasi yang telah Anda otorisasi untuk menggunakan akun Anda."
+
+#: db/seeds/permissions.rb:339
+#, fuzzy
+#| msgid "Manage ticket tags of your system."
+msgid "Manage audit logs of your system."
+msgstr "Kelola tag tiket sistem Anda."
 
 #: db/seeds/permissions.rb:198
 msgid "Manage branding settings of your system."
@@ -12455,51 +12495,51 @@ msgstr "Kelola atribut objek sistem Anda."
 msgid "Manage packages of your system."
 msgstr "Kelola paket sistem Anda."
 
-#: db/seeds/permissions.rb:493
+#: db/seeds/permissions.rb:499
 msgid "Manage personal API tokens."
 msgstr "Kelola token API pribadi."
 
-#: db/seeds/permissions.rb:441
+#: db/seeds/permissions.rb:447
 msgid "Manage personal appearance settings."
 msgstr "Kelola pengaturan tampilan pribadi."
 
-#: db/seeds/permissions.rb:455
+#: db/seeds/permissions.rb:461
 msgid "Manage personal avatar settings."
 msgstr "Kelola pengaturan avatar pribadi."
 
-#: db/seeds/permissions.rb:527
+#: db/seeds/permissions.rb:533
 msgid "Manage personal calendar."
 msgstr "Kelola kalender pribadi."
 
-#: db/seeds/permissions.rb:486
+#: db/seeds/permissions.rb:492
 msgid "Manage personal devices and sessions."
 msgstr "Kelola perangkat dan sesi pribadi."
 
-#: db/seeds/permissions.rb:448
+#: db/seeds/permissions.rb:454
 msgid "Manage personal language settings."
 msgstr "Kelola pengaturan bahasa pribadi."
 
-#: db/seeds/permissions.rb:500
+#: db/seeds/permissions.rb:506
 msgid "Manage personal linked accounts."
 msgstr "Kelola akun tertaut pribadi."
 
-#: db/seeds/permissions.rb:507
+#: db/seeds/permissions.rb:513
 msgid "Manage personal notifications settings."
 msgstr "Kelola pengaturan notifikasi pribadi."
 
-#: db/seeds/permissions.rb:462
+#: db/seeds/permissions.rb:468
 msgid "Manage personal out of office settings."
 msgstr "Kelola pengaturan keluar kantor pribadi."
 
-#: db/seeds/permissions.rb:517
+#: db/seeds/permissions.rb:523
 msgid "Manage personal overviews."
 msgstr "Kelola ikhtisar pribadi."
 
-#: db/seeds/permissions.rb:434
+#: db/seeds/permissions.rb:440
 msgid "Manage personal settings."
 msgstr "Kelola pengaturan pribadi."
 
-#: db/seeds/permissions.rb:479
+#: db/seeds/permissions.rb:485
 msgid "Manage personal two-factor authentication methods."
 msgstr "Kelola metode autentikasi dua faktor pribadi."
 
@@ -12523,7 +12563,7 @@ msgstr "Kelola penjadwal sistem Anda."
 msgid "Manage security settings of your system."
 msgstr "Kelola pengaturan keamanan sistem Anda."
 
-#: db/seeds/permissions.rb:339
+#: db/seeds/permissions.rb:345
 msgid "Manage system report of your system."
 msgstr "Kelola laporan sistem Anda."
 
@@ -12535,7 +12575,7 @@ msgstr "Kelola modul teks sistem Anda."
 msgid "Manage ticket auto assignment settings of your system."
 msgstr "Kelola pengaturan penugasan otomatis tiket sistem Anda."
 
-#: db/seeds/permissions.rb:345
+#: db/seeds/permissions.rb:351
 msgid "Manage ticket checklists of your system."
 msgstr "Kelola daftar periksa tiket sistem Anda."
 
@@ -12810,7 +12850,7 @@ msgstr "Sebutkan pengguna"
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee:7
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee:120
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketMerge/TicketMergeFlyout.vue:89
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:91
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:72
 msgid "Merge"
 msgstr "Gabungkan"
 
@@ -13078,7 +13118,7 @@ msgstr "Suasana Hati"
 msgid "More information can be found here."
 msgstr "Informasi lebih lanjut dapat ditemukan di sini."
 
-#: app/models/user.rb:710
+#: app/models/user.rb:718
 msgid "More than 250 secondary organizations are not allowed."
 msgstr "Lebih dari 250 organisasi sekunder tidak diizinkan."
 
@@ -13303,7 +13343,7 @@ msgstr "Perlu bantuan? Periksa Dokumentasi Zammad untuk panduan terperinci."
 msgid "Need session_id."
 msgstr "Perlu session_id."
 
-#: app/controllers/tickets_controller.rb:416
+#: app/controllers/tickets_controller.rb:418
 msgid "Need user_id or organization_id as param"
 msgstr "Perlu user_id atau organization_id sebagai parameter"
 
@@ -13377,7 +13417,7 @@ msgstr "Atribut Baru"
 msgid "New BETA UI"
 msgstr "UI BETA Baru"
 
-#: db/seeds/permissions.rb:537
+#: db/seeds/permissions.rb:543
 msgid "New BETA UI Switch"
 msgstr "Sakelar UI BETA Baru"
 
@@ -13786,6 +13826,12 @@ msgstr "Tidak ada kategori"
 msgid "No certificate found."
 msgstr "Tidak ada sertifikat yang ditemukan."
 
+#: app/assets/javascripts/app/views/generic/audit_log_diff.jst.eco:3
+#, fuzzy
+#| msgid "Save changes"
+msgid "No changes."
+msgstr "Simpan perubahan"
+
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/start.jst.eco:3
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:440
 msgid "No checklist added to this ticket yet."
@@ -13815,7 +13861,7 @@ msgstr "Tidak ada konfigurasi yang disetel."
 msgid "No content to show"
 msgstr "Tidak ada konten untuk ditampilkan"
 
-#: app/models/group.rb:37
+#: app/models/group.rb:40
 msgid "No double colons (::) allowed, reserved delimiter"
 msgstr "Tidak diperbolehkan titik dua ganda (::), pembatas yang dicadangkan"
 
@@ -13887,7 +13933,7 @@ msgstr "Tidak ada filter yang dikonfigurasi."
 msgid "No linked issues"
 msgstr "Tidak ada isu yang tertaut"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:158
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:136
 msgid "No links added yet."
 msgstr "Belum ada tautan yang ditambahkan."
 
@@ -13939,8 +13985,13 @@ msgstr "Tidak ada artikel terkait yang ditemukan untuk memproses pesan reaksi."
 msgid "No related article found to process the status message on."
 msgstr "Tidak ada artikel terkait yang ditemukan untuk memproses pesan status."
 
-#: app/assets/javascripts/app/views/link/kb_answer.jst.eco:27
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketAISuggestedKnowledgeBaseAnswers.vue:160
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge.vue:84
+#, fuzzy
+#| msgid "Inserts knowledge base answer"
+msgid "No related knowledge base answer links."
+msgstr "Menyisipkan jawaban basis pengetahuan"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiSuggested.vue:100
 #, fuzzy
 #| msgid "Inserts knowledge base answer"
 msgid "No related knowledge base answers found."
@@ -13996,7 +14047,7 @@ msgstr "Belum ada draft bersama"
 #: app/controllers/organizations_controller.rb:107
 #: app/controllers/text_modules_controller.rb:75
 #: app/controllers/ticket_articles_controller.rb:245
-#: app/controllers/tickets_controller.rb:459
+#: app/controllers/tickets_controller.rb:461
 #: app/controllers/users_controller.rb:559
 msgid "No source data submitted!"
 msgstr "Tidak ada data sumber yang dikirimkan!"
@@ -14144,7 +14195,7 @@ msgstr "Tidak dikonfigurasi"
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabNotFound.vue:36
 #: app/frontend/apps/desktop/components/layout/LayoutTaskbarTabContent.vue:70
 #: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:50
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBase.vue:16
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBase.vue:17
 #: app/frontend/shared/errors/useErrorHandler.ts:25
 #: app/frontend/shared/router/error.ts:27
 msgid "Not found"
@@ -14289,7 +14340,7 @@ msgstr "Suara notifikasi"
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/notifications.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:35
 #: app/frontend/apps/mobile/pages/online-notification/routes.ts:8
-#: db/seeds/permissions.rb:506
+#: db/seeds/permissions.rb:512
 msgid "Notifications"
 msgstr "Notifikasi"
 
@@ -14385,6 +14436,7 @@ msgstr ""
 "Proses BPM OTRS ditemukan. Mereka tidak dapat diimpor ke Zammad karena jenis "
 "alur kerja ini saat ini tidak didukung."
 
+#: app/assets/javascripts/app/models/audit_log.coffee:9
 #: app/assets/javascripts/app/models/core_workflow.coffee:7
 #: app/assets/javascripts/app/models/job.coffee:8
 #: app/assets/javascripts/app/models/object_manager_attribute.coffee:2
@@ -14407,6 +14459,12 @@ msgstr "Atribut Pengelola Objek"
 #: app/services/service/history/list.rb:58
 msgid "Object does not support history"
 msgstr "Objek tidak mendukung riwayat"
+
+#: app/assets/javascripts/app/models/audit_log.coffee:10
+#, fuzzy
+#| msgid "Object Manager"
+msgid "Object name"
+msgstr "Pengelola Objek"
 
 #: app/frontend/apps/desktop/components/layout/LayoutTaskbarTabContent.vue:73
 msgid ""
@@ -14884,7 +14942,7 @@ msgstr "Pengaturan Lainnya"
 
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:3
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco:2
-#: db/seeds/permissions.rb:461
+#: db/seeds/permissions.rb:467
 msgid "Out of Office"
 msgstr "Keluar Kantor"
 
@@ -15032,9 +15090,7 @@ msgstr "Timpa Draf"
 #: app/graphql/gql/types/overview_type.rb:96
 #: app/views/mailer/ticket_create/fr.html.erb:9
 #: app/views/mailer/ticket_create/zh-cn.html.erb:9
-#: app/views/messaging/ticket_create/pt-br.md.erb:4
 #: app/views/messaging/ticket_create/zh-tw.md.erb:4
-#: app/views/messaging/ticket_info/pt-br.md.erb:4
 #: app/views/messaging/ticket_info/zh-tw.md.erb:4
 #: db/seeds/object_manager_attributes.rb:214 lib/excel_sheet/ticket.rb:28
 msgid "Owner"
@@ -15161,7 +15217,7 @@ msgstr "Grup induk"
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/password.ts:8
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue:33
 #: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue:53
-#: db/seeds/object_manager_attributes.rb:1481 db/seeds/permissions.rb:471
+#: db/seeds/object_manager_attributes.rb:1481 db/seeds/permissions.rb:477
 msgid "Password"
 msgstr "Sandi"
 
@@ -15346,7 +15402,7 @@ msgstr "Urutan ikhtisar pribadi telah direset."
 #: app/assets/javascripts/app/controllers/cti.coffee:322
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/phone.ts:7
 #: app/frontend/shared/entities/ticket-article/action/plugins/phone.ts:12
-#: db/seeds/object_manager_attributes.rb:1018 db/seeds/permissions.rb:365
+#: db/seeds/object_manager_attributes.rb:1018 db/seeds/permissions.rb:371
 msgid "Phone"
 msgstr "Telepon"
 
@@ -15864,7 +15920,7 @@ msgid "Profile language updated successfully."
 msgstr "Bahasa profil berhasil diperbarui."
 
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/personal-settings.ts:7
-#: db/seeds/permissions.rb:433
+#: db/seeds/permissions.rb:439
 msgid "Profile settings"
 msgstr "Pengaturan profil"
 
@@ -15946,7 +16002,6 @@ msgstr "Alamat proxy"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:109
 #: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:139
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseIconStatus.vue:29
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:208
 msgid "Public"
 msgstr "Publik"
@@ -15973,6 +16028,8 @@ msgstr "Menu Publik"
 msgid "Publish Article"
 msgstr "Terbitkan Artikel"
 
+#: app/frontend/apps/desktop/components/KnowledgeBaseAnswerIcon/KnowledgeBaseAnswerIcon.vue:36
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseIconStatus.vue:29
 #: app/helpers/knowledge_base_top_bar_helper.rb:34
 #, fuzzy
 #| msgid "published"
@@ -15980,6 +16037,7 @@ msgid "Published"
 msgstr "dipublikasikan"
 
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco:15
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAnswerPopover.vue:48
 msgid "Published at"
 msgstr "Diterbitkan pada"
 
@@ -16026,6 +16084,16 @@ msgstr ""
 "ini dinonaktifkan. Silakan hubungi administrator Anda.Akses API REST "
 "menggunakan username/email address dan password saat ini dinonaktifkan. "
 "Harap hubungi administrator Anda."
+
+#: app/models/audit_log.rb:75
+msgid "Rails console"
+msgstr ""
+
+#: app/models/audit_log.rb:78
+#, fuzzy
+#| msgid "Last run"
+msgid "Rails runner"
+msgstr "Terakhir dijalankan"
 
 #: lib/ai/provider/concerns/handles_response.rb:13
 msgid "Rate limit exceeded - please wait a moment"
@@ -16251,7 +16319,7 @@ msgid "Related Tickets"
 msgstr "Tiket terkait"
 
 #: app/assets/javascripts/app/views/link/kb_answer.jst.eco:1
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:151
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:165
 #, fuzzy
 #| msgid "Related Answers"
 msgid "Related knowledge"
@@ -16269,7 +16337,7 @@ msgid ""
 "ticket."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:142
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:152
 #: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:180
 msgid "Related tickets"
 msgstr "Tiket terkait"
@@ -16830,14 +16898,14 @@ msgstr "Hasil"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee:161
 #: app/assets/javascripts/app/views/generic/text_tools_modal.jst.eco:14
-#: app/assets/javascripts/app/views/link/kb_answer.jst.eco:25
+#: app/assets/javascripts/app/views/link/kb_answer.jst.eco:34
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_ticket_summary.jst.eco:12
 #: app/assets/javascripts/app/views/widget/two_factor_login/security_keys.jst.eco:16
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationRecoveryCodes.vue:68
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:64
 #: app/frontend/apps/desktop/pages/authentication/components/LoginTwoFactor.vue:180
 #: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue:131
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketAISuggestedKnowledgeBaseAnswers.vue:134
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiSuggested.vue:64
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummaryContent.vue:96
 #: app/frontend/apps/mobile/pages/authentication/components/LoginTwoFactor.vue:183
 msgid "Retry"
@@ -17074,7 +17142,7 @@ msgstr "SSL/STARTTLS"
 msgid "SSO"
 msgstr "SSO"
 
-#: app/controllers/sessions_controller.rb:267
+#: app/controllers/sessions_controller.rb:281
 msgid "SSO request from untrusted IP address."
 msgstr ""
 
@@ -17348,6 +17416,12 @@ msgstr "Cari sumber LDAP"
 msgid "Search for activity types"
 msgstr "Cari tipe aktivitas"
 
+#: app/assets/javascripts/app/controllers/audit_log.coffee:41
+#, fuzzy
+#| msgid "Search for macros"
+msgid "Search for audit logs"
+msgstr "Cari makro"
+
 #: app/assets/javascripts/app/controllers/checklist_template.coffee:32
 msgid "Search for checklist templates"
 msgstr "Cari template daftar periksa"
@@ -17507,8 +17581,8 @@ msgstr "Kunci nilai hasil pencarian \"%s\" bukan string, angka, atau boolean."
 msgid "Search result value key \"%s\" was not found."
 msgstr "Kunci nilai hasil pencarian \"%s\" tidak ditemukan."
 
-#: app/assets/javascripts/app/views/link/kb_answer.jst.eco:22
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketAISuggestedKnowledgeBaseAnswers.vue:142
+#: app/assets/javascripts/app/views/link/kb_answer.jst.eco:31
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiSuggested.vue:105
 #, fuzzy
 #| msgid "Search for templates"
 msgid "Searching for related answers…"
@@ -17518,7 +17592,7 @@ msgstr "Cari template"
 #: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax_customer_organization.coffee:18
 #: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax_external_data_source.coffee:13
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:845
-#: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee:180
+#: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee:194
 #: app/assets/javascripts/app/views/generic/icon_picker.jst.eco:9
 #: app/assets/javascripts/app/views/translation/form.jst.eco:7
 #: app/frontend/apps/desktop/components/CommonInputSearch/CommonInputSearch.vue:24
@@ -17537,14 +17611,14 @@ msgstr "Cari…"
 msgid "Secondary organizations"
 msgstr "Organisasi sekunder"
 
-#: app/models/user.rb:698
+#: app/models/user.rb:706
 msgid ""
 "Secondary organizations are only allowed when the primary organization is "
 "given."
 msgstr ""
 "Organisasi sekunder hanya diperbolehkan jika organisasi primer diberikan."
 
-#: app/models/user.rb:704
+#: app/models/user.rb:712
 msgid "Secondary organizations cannot include the primary organization."
 msgstr "Organisasi sekunder tidak dapat menyertakan organisasi primer."
 
@@ -17965,7 +18039,7 @@ msgstr "Pengirim artikel terakhir"
 msgid "Sending Email Address"
 msgstr "Alamat Email Pengirim"
 
-#: app/models/ticket/article.rb:341
+#: app/models/ticket/article.rb:342
 msgid "Sending an email without a valid recipient is not possible."
 msgstr "Mengirim email tanpa penerima yang valid tidak mungkin."
 
@@ -18191,7 +18265,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:52
 #: app/assets/javascripts/app/controllers/_channel/web.coffee:11
 #: app/assets/javascripts/app/controllers/chat.coffee:869
-#: app/assets/javascripts/app/controllers/manage.coffee:44
+#: app/assets/javascripts/app/controllers/manage.coffee:49
 #: app/assets/javascripts/app/controllers/ticket_zoom/setting.coffee:20
 #: app/assets/javascripts/app/controllers/time_accounting.coffee:18
 #: app/assets/javascripts/app/views/channel/form.jst.eco:13
@@ -18243,7 +18317,7 @@ msgstr "Draf Bersama"
 
 #: app/controllers/tickets_controller.rb:89
 #: app/services/service/ticket/create.rb:197
-#: app/services/service/ticket/update.rb:84
+#: app/services/service/ticket/update.rb:86
 msgid "Shared draft cannot be selected for this ticket."
 msgstr "Draf bersama tidak dapat dipilih untuk tiket ini."
 
@@ -18750,6 +18824,12 @@ msgstr "Suara"
 msgid "Source"
 msgstr "Sumber"
 
+#: app/assets/javascripts/app/models/audit_log.coffee:12
+#, fuzzy
+#| msgid "Source"
+msgid "Source IP"
+msgstr "Sumber"
+
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:24
 msgid "Sources"
 msgstr "Sumber"
@@ -18890,6 +18970,7 @@ msgstr "Mulai mengetik untuk mencari atau masukkan alamat email…"
 
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:65
 #: app/frontend/apps/desktop/components/Form/fields/FieldCustomer/FieldCustomerWrapper.vue:116
+#: app/frontend/apps/desktop/components/Form/fields/FieldKnowledgeBaseAnswer/FieldKnowledgeBaseAnswerWrapper.vue:39
 #: app/frontend/apps/desktop/components/Form/fields/FieldTags/FieldTagsWrapper.vue:37
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:372
 msgid "Start typing to search…"
@@ -18920,9 +19001,7 @@ msgstr "Memulai impor…"
 #: app/graphql/gql/types/overview_type.rb:97
 #: app/views/mailer/ticket_create/fr.html.erb:10
 #: app/views/mailer/ticket_create/zh-cn.html.erb:10
-#: app/views/messaging/ticket_create/pt-br.md.erb:5
 #: app/views/messaging/ticket_create/zh-tw.md.erb:5
-#: app/views/messaging/ticket_info/pt-br.md.erb:5
 #: app/views/messaging/ticket_info/zh-tw.md.erb:5
 #: db/seeds/object_manager_attributes.rb:256 lib/excel_sheet/ticket.rb:25
 msgid "State"
@@ -19131,7 +19210,7 @@ msgstr "Tiket-Tiket Terlanggan"
 msgid "Subscribed tickets"
 msgstr "Tiket-Tiket terlanggan"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:172
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:195
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:169
 msgid "Subscribers"
 msgstr "Pelanggan"
@@ -19144,8 +19223,8 @@ msgstr "Pengaturan Langganan"
 msgid "Subscription settings"
 msgstr "Pengaturan langganan"
 
-#: app/assets/javascripts/app/views/link/kb_answer.jst.eco:20
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketAISuggestedKnowledgeBaseAnswers.vue:116
+#: app/assets/javascripts/app/views/link/kb_answer.jst.eco:29
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiSuggested.vue:47
 #, fuzzy
 #| msgid "Recent searches"
 msgid "Suggested by AI"
@@ -19227,7 +19306,7 @@ msgstr "Sinkronkan dengan komputer"
 
 #: app/assets/javascripts/app/controllers/_manage/system.coffee:3
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:37
-#: app/assets/javascripts/app/controllers/manage.coffee:46
+#: app/assets/javascripts/app/controllers/manage.coffee:51
 #: app/assets/javascripts/app/views/generic/history.jst.eco:15
 #: app/frontend/apps/desktop/components/CommonHistoryFlyout/useHistoryEvents.ts:28
 #: db/seeds/permissions.rb:203 db/seeds/ticket_article_senders.rb:5
@@ -19251,7 +19330,7 @@ msgstr "Notifikasi Host"
 
 #: app/assets/javascripts/app/controllers/system_report.coffee:3
 #: app/assets/javascripts/app/views/system_report.jst.eco:2
-#: db/seeds/permissions.rb:338
+#: db/seeds/permissions.rb:344
 msgid "System Report"
 msgstr "Laporan Sistem"
 
@@ -19349,7 +19428,7 @@ msgstr "dibuat %s"
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco:41
 #: app/assets/javascripts/app/views/tag/index.jst.eco:3
 #: app/assets/javascripts/app/views/widget/tag.jst.eco:1
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:132
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:142
 #: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue:143
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue:75
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:164
@@ -19589,14 +19668,6 @@ msgstr ""
 "Jendela layanan pelanggan 24 jam sekarang ditutup, tidak ada pesan WhatsApp "
 "lebih lanjut yang dapat dikirim."
 
-#: lib/monitoring_helper/health_checker/ai_provider_accessible.rb:21
-msgid "The AI Provider is not accessible."
-msgstr "Penyedia AI tidak dapat diakses."
-
-#: lib/monitoring_helper/health_checker/ai_provider_accessible.rb:14
-msgid "The AI provider is not configured."
-msgstr "Penyedia AI belum dikonfigurasi."
-
 #: app/controllers/user_access_token_controller.rb:41
 msgid "The API token could not be found."
 msgstr "Token API tidak dapat ditemukan."
@@ -19675,10 +19746,6 @@ msgstr "Tanda tangan PGP tidak valid."
 #: lib/secure_mailing/pgp/tool/error.rb:97
 msgid "The PGP signature key has been revoked."
 msgstr "Kunci tanda tangan PGP telah dicabut."
-
-#: lib/monitoring_helper/health_checker/s3_storage_availability.rb:12
-msgid "The Simple Storage Service is not available."
-msgstr "Layanan Penyimpanan Sederhana tidak tersedia."
 
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee:159
 msgid "The Telegram bot could not be saved."
@@ -19774,6 +19841,40 @@ msgstr "Artikel tidak dapat diatur ke publik."
 msgid "The article does not belong to the specified ticket."
 msgstr "Artikel tidak termasuk dalam tiket yang ditentukan."
 
+#: app/assets/javascripts/app/models/audit_log.coffee
+msgid ""
+"The audit log records security-relevant changes in your system: who changed "
+"what, and when.\n"
+"\n"
+"**Configuration changes** in the admin area:\n"
+"\n"
+"- Groups, roles, and permissions\n"
+"- Overviews, triggers, schedulers, macros, templates, text modules, and "
+"checklist templates\n"
+"- Channels, postmaster filters, signatures, LDAP sources, and webhooks\n"
+"- Calendars, SLAs, time accounting, core workflows, object attributes, "
+"public links, and report profiles\n"
+"- System settings and packages\n"
+"- AI agents and AI text tools\n"
+"- S/MIME, PGP, and SSL certificates\n"
+"- Knowledge bases and their languages\n"
+"\n"
+"**User account changes** (of agents and admins only):\n"
+"\n"
+"- Password changes\n"
+"- Activation and deactivation of accounts\n"
+"- Added or removed roles and group permissions\n"
+"- Two-factor authentication changes\n"
+"\n"
+"**Session events**:\n"
+"\n"
+"- Taking over another user's session via \"switch to user\" and switching "
+"back\n"
+"\n"
+"Day-to-day work such as ticket updates is not part of the audit log — it is "
+"covered by the ticket history instead."
+msgstr ""
+
 #: app/assets/javascripts/app/views/getting_started/auto_wizard_enabled.jst.eco:6
 msgid "The auto wizard is enabled. Please use the provided auto wizard url."
 msgstr ""
@@ -19828,12 +19929,12 @@ msgstr ""
 msgid "The certificate for %s was found."
 msgstr "Sertifikat untuk %s ditemukan."
 
-#: app/models/smime_certificate.rb:25
+#: app/models/smime_certificate.rb:33
 #: lib/secure_mailing/smime/security_options.rb:42
 msgid "The certificate for %s was not found."
 msgstr "Sertifikat untuk %s tidak ditemukan."
 
-#: app/models/smime_certificate.rb:59
+#: app/models/smime_certificate.rb:67
 msgid "The certificate for this private key could not be found."
 msgstr "Sertifikat untuk kunci privat ini tidak dapat ditemukan."
 
@@ -19932,7 +20033,7 @@ msgstr ""
 msgid "The checklist feature is not active"
 msgstr "Fitur ini tidak diaktifkan."
 
-#: app/models/group.rb:107
+#: app/models/group.rb:110
 msgid "The chosen parent group is part of a circular reference."
 msgstr ""
 
@@ -20186,6 +20287,7 @@ msgstr "Metode autentikasi dua faktor yang diberikan tidak dikonfigurasi."
 msgid "The given two-factor authentication method is not enabled."
 msgstr "Metode autentikasi dua faktor yang diberikan tidak diaktifkan."
 
+#: app/models/user/has_two_factor.rb:52
 #: app/services/service/user/two_factor/base.rb:13
 msgid "The given two-factor method does not exist."
 msgstr "Metode dua faktor yang diberikan tidak ada."
@@ -20256,7 +20358,7 @@ msgstr ""
 "Pemasangan paket datang dengan implikasi keamanan, karena kode arbitrer akan "
 "dieksekusi dalam konteks aplikasi Zammad."
 
-#: lib/search_index_backend.rb:456
+#: lib/search_index_backend.rb:457
 msgid ""
 "The installed attachment plugin could not handle the request payload. Ensure "
 "that the correct attachment plugin is installed (ingest-attachment)."
@@ -20277,7 +20379,7 @@ msgstr "Referensi issue sudah ada."
 msgid "The issue reference could not be found."
 msgstr "Referensi issue tidak dapat ditemukan."
 
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBase.vue:42
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBase.vue:43
 #, fuzzy
 #| msgid "The Knowledge Base could not be created."
 msgid "The knowledge base could not be loaded."
@@ -20437,7 +20539,7 @@ msgstr ""
 msgid "The product version could not be fetched."
 msgstr "Versi produk tidak dapat diambil."
 
-#: app/models/webhook.rb:77
+#: app/models/webhook.rb:80
 msgid "The provided HTTP method is invalid."
 msgstr "Metode HTTP yang diberikan tidak valid."
 
@@ -20461,7 +20563,7 @@ msgstr "Kredensial yang diberikan tidak valid."
 msgid "The provided email account is already in use."
 msgstr "Akun email yang diberikan sudah digunakan."
 
-#: app/models/webhook.rb:57
+#: app/models/webhook.rb:60
 #, fuzzy
 #| msgid ""
 #| "The provided endpoint is invalid, no http or https protocol was specified."
@@ -20472,37 +20574,37 @@ msgstr ""
 "Endpoint yang diberikan tidak valid, tidak ada protokol http atau https yang "
 "ditentukan."
 
-#: app/models/webhook.rb:55
+#: app/models/webhook.rb:58
 #, fuzzy
 #| msgid "The provided endpoint is invalid, no hostname was specified."
 msgid "The provided endpoint is invalid, it points to a link-local IP address."
 msgstr ""
 "Endpoint yang diberikan tidak valid, tidak ada nama host yang ditentukan."
 
-#: app/models/webhook.rb:53
+#: app/models/webhook.rb:56
 #, fuzzy
 #| msgid "The provided endpoint is invalid, no hostname was specified."
 msgid "The provided endpoint is invalid, it points to a loopback IP address."
 msgstr ""
 "Endpoint yang diberikan tidak valid, tidak ada nama host yang ditentukan."
 
-#: app/models/webhook.rb:47
+#: app/models/webhook.rb:50
 msgid "The provided endpoint is invalid, no hostname was specified."
 msgstr ""
 "Endpoint yang diberikan tidak valid, tidak ada nama host yang ditentukan."
 
-#: app/models/webhook.rb:46
+#: app/models/webhook.rb:49
 msgid ""
 "The provided endpoint is invalid, no http or https protocol was specified."
 msgstr ""
 "Endpoint yang diberikan tidak valid, tidak ada protokol http atau https yang "
 "ditentukan."
 
-#: app/models/webhook.rb:51
+#: app/models/webhook.rb:54
 msgid "The provided endpoint is invalid."
 msgstr "Endpoint yang diberikan tidak valid."
 
-#: app/models/postmaster_filter.rb:32
+#: app/models/postmaster_filter.rb:33
 msgid "The provided match operator is missing or invalid."
 msgstr "Operator pencocokan yang diberikan tidak ada atau tidak valid."
 
@@ -20510,7 +20612,7 @@ msgstr "Operator pencocokan yang diberikan tidak ada atau tidak valid."
 msgid "The provided password is incorrect."
 msgstr "Password yang diberikan salah."
 
-#: app/models/webhook.rb:66
+#: app/models/webhook.rb:69
 msgid "The provided payload is invalid. Please check your syntax."
 msgstr "Payload yang diberikan tidak valid. Harap periksa sintaks Anda."
 
@@ -20592,7 +20694,7 @@ msgstr "Bidang yang diperlukan 'api_token' tidak ada dalam config."
 msgid "The required field 'endpoint' is missing from the config."
 msgstr "Bidang yang diperlukan 'endpoint' tidak ada dalam config."
 
-#: app/models/postmaster_filter.rb:33
+#: app/models/postmaster_filter.rb:34
 msgid "The required match value is missing."
 msgstr "Nilai pencocokan yang diperlukan tidak ada."
 
@@ -20643,7 +20745,7 @@ msgstr "Parameter yang diperlukan 'group_id' tidak ada."
 msgid "The required parameter 'id' is missing."
 msgstr "Parameter yang diperlukan 'id' tidak ada."
 
-#: lib/search_index_backend.rb:703
+#: lib/search_index_backend.rb:704
 msgid "The required parameter 'key' is missing."
 msgstr "Parameter yang diperlukan 'key' tidak ada."
 
@@ -20651,7 +20753,7 @@ msgstr "Parameter yang diperlukan 'key' tidak ada."
 msgid "The required parameter 'link_type' is missing."
 msgstr "Parameter yang diperlukan 'link_type' tidak ada."
 
-#: app/models/text_module.rb:30
+#: app/models/text_module.rb:31
 msgid "The required parameter 'locale' is missing."
 msgstr "Parameter yang diperlukan 'locale' tidak ada."
 
@@ -20699,7 +20801,7 @@ msgstr "Parameter yang diperlukan 'ticket_number' tidak ada."
 msgid "The required parameter 'user_id' is missing."
 msgstr "Parameter yang diperlukan 'user_id' tidak ada."
 
-#: lib/search_index_backend.rb:704
+#: lib/search_index_backend.rb:705
 msgid "The required parameter 'value' is missing."
 msgstr "Parameter yang diperlukan 'value' tidak ada."
 
@@ -20823,7 +20925,7 @@ msgstr ""
 msgid "The signature was successfully verified."
 msgstr "Tanda tangan berhasil diverifikasi."
 
-#: app/controllers/tickets_controller.rb:370
+#: app/controllers/tickets_controller.rb:372
 msgid "The source ticket could not be found."
 msgstr "Tiket sumber tidak dapat ditemukan."
 
@@ -20839,14 +20941,14 @@ msgstr ""
 "Struktur adalah objek JSON yang mendefinisikan format hasil yang akan "
 "dikembalikan oleh agen AI."
 
-#: app/assets/javascripts/app/views/link/kb_answer.jst.eco:24
+#: app/assets/javascripts/app/views/link/kb_answer.jst.eco:33
 #: app/jobs/ticket_ai_related_knowledge_base_answers_embed_job.rb:27
 #, fuzzy
 #| msgid "The token could not be generated."
 msgid "The suggestions could not be generated."
 msgstr "Token tidak dapat dibuat."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketAISuggestedKnowledgeBaseAnswers.vue:125
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiSuggested.vue:55
 #, fuzzy
 #| msgid ""
 #| "The summary could not be generated. Please try again later or contact "
@@ -20906,7 +21008,7 @@ msgstr ""
 msgid "The system was configured successfully. You are being redirected."
 msgstr "Sistem berhasil dikonfigurasi. Anda sedang dialihkan."
 
-#: app/controllers/tickets_controller.rb:361
+#: app/controllers/tickets_controller.rb:363
 msgid "The target ticket number could not be found."
 msgstr "Nomor tiket target tidak dapat ditemukan."
 
@@ -20984,7 +21086,7 @@ msgstr "Autentikasi dua faktor belum dikonfigurasi."
 msgid "The two-factor authentication method \"%s\" was removed for this user."
 msgstr "Metode autentikasi dua faktor \"%s\" telah dihapus untuk pengguna ini."
 
-#: app/controllers/sessions_controller.rb:256
+#: app/controllers/sessions_controller.rb:270
 #: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:32
 #: app/services/service/user/two_factor/initiate_method_configuration.rb:6
 #: app/services/service/user/two_factor/verify_method_configuration.rb:15
@@ -21020,7 +21122,7 @@ msgstr "Token pengguna tidak dapat dibuat."
 msgid "The user's 'preferred_username' could not be extracted from 'id_token'."
 msgstr "'preferred_username' pengguna tidak dapat diekstrak dari 'id_token'."
 
-#: app/controllers/sessions_controller.rb:252
+#: app/controllers/sessions_controller.rb:266
 #: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:27
 msgid "The username or password is incorrect."
 msgstr "Nama pengguna atau password salah."
@@ -21098,7 +21200,7 @@ msgstr ""
 "baik ambil kopi. Jumlah tiket total diperbarui segera setelah jumlah tiket "
 "yang dikenal saat ini melebihi."
 
-#: app/models/calendar.rb:310
+#: app/models/calendar.rb:313
 msgid "There are no business hours configured."
 msgstr "Tidak ada jam kerja yang dikonfigurasi."
 
@@ -21118,7 +21220,7 @@ msgstr "Ada beberapa alasan mengapa obrolan tidak muncul:"
 msgid "There are too many people in the chat queue."
 msgstr "Terlalu banyak orang dalam antrian obrolan."
 
-#: app/models/pgp_key.rb:9
+#: app/models/pgp_key.rb:14
 msgid "There is already a PGP key with the same fingerprint."
 msgstr "Sudah ada kunci PGP dengan sidik jari yang sama."
 
@@ -21507,17 +21609,17 @@ msgstr "Bidang ini tidak boleh berisi lebih dari %s karakter."
 msgid "This field was configured incorrectly and can't be submitted."
 msgstr "Bidang ini dikonfigurasi dengan salah dan tidak dapat dikirim."
 
-#: app/models/group.rb:80
+#: app/models/group.rb:83
 #, fuzzy
 #| msgid "A ticket cannot be merged into itself."
 msgid "This group cannot be moved into itself."
 msgstr "Sebuah tiket tidak dapat digabungkan ke diri sendiri."
 
-#: app/models/group.rb:81
+#: app/models/group.rb:84
 msgid "This group cannot be moved into one of its children."
 msgstr ""
 
-#: app/models/group.rb:87
+#: app/models/group.rb:90
 #, fuzzy
 #| msgid "This group or its children exceed the allowed nesting depth."
 msgid "This group exceeds the allowed nesting depth."
@@ -21531,7 +21633,7 @@ msgstr ""
 "Grup ini tidak memiliki alamat email yang dikonfigurasi untuk komunikasi "
 "keluar."
 
-#: app/models/group.rb:93
+#: app/models/group.rb:96
 #, fuzzy
 #| msgid "This group or its children exceed the allowed nesting depth."
 msgid "This group's children would exceed the allowed nesting depth."
@@ -21572,7 +21674,7 @@ msgstr ""
 msgid "This is not a private PGP key."
 msgstr "Ini bukan kunci PGP privat."
 
-#: app/models/ssl_certificate.rb:11
+#: app/models/ssl_certificate.rb:16
 msgid ""
 "This is not a valid X509 certificate. Please check the certificate format."
 msgstr "Ini bukan sertifikat X509 yang valid. Harap periksa format sertifikat."
@@ -21588,7 +21690,7 @@ msgstr "Item ini dapat diperluas untuk menampilkan lebih banyak opsi"
 msgid "This knowledge base category is not available."
 msgstr "Layanan Penyimpanan Sederhana tidak tersedia."
 
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBase.vue:17
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBase.vue:18
 #, fuzzy
 #| msgid "Not available in selected language"
 msgid "This knowledge base is not available in the selected language."
@@ -22455,7 +22557,7 @@ msgid "Tickets bulk edit"
 msgstr "Edit Massal Tiket"
 
 #: app/controllers/ticket_articles_controller.rb:238
-#: app/controllers/tickets_controller.rb:452
+#: app/controllers/tickets_controller.rb:454
 msgid "Tickets can only be imported if system is in import mode."
 msgstr "Tiket hanya dapat diimpor jika sistem dalam mode impor."
 
@@ -22766,7 +22868,7 @@ msgstr "Token"
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee:3
 #: app/assets/javascripts/app/views/api.jst.eco:12
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:2
-#: db/seeds/permissions.rb:492
+#: db/seeds/permissions.rb:498
 msgid "Token Access"
 msgstr "Akses Token"
 
@@ -23036,7 +23138,7 @@ msgstr "status twitter"
 
 #: app/assets/javascripts/app/controllers/_manage/security.coffee:11
 #: app/assets/javascripts/app/views/profile/password.jst.eco:22
-#: db/seeds/permissions.rb:478
+#: db/seeds/permissions.rb:484
 msgid "Two-factor Authentication"
 msgstr "Autentikasi Dua Faktor"
 
@@ -23233,9 +23335,21 @@ msgstr ""
 msgid "Unlink issue"
 msgstr "Lepaskan tautan issue"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseLinks.vue:53
+#, fuzzy
+#| msgid "Inserts knowledge base answer"
+msgid "Unlink knowledge base answer"
+msgstr "Menyisipkan jawaban basis pengetahuan"
+
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:209
 msgid "Unlink object"
 msgstr "Lepaskan tautan objek"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:121
+#, fuzzy
+#| msgid "Link ticket"
+msgid "Unlink ticket"
+msgstr "Tautkan tiket"
 
 #: app/assets/javascripts/app/controllers/user.coffee:110
 msgid "Unlock"
@@ -23372,7 +23486,7 @@ msgstr "Perbarui Diff Dalam Min"
 msgid "Update Escalation At"
 msgstr "Perbarui Eskalasi Pada"
 
-#: db/seeds/schedulers.rb:259
+#: db/seeds/schedulers.rb:268
 #, fuzzy
 #| msgid "Update exchange oauth 2 token."
 msgid "Update Exchange OAuth2 token."
@@ -23815,6 +23929,7 @@ msgstr "Digunakan saat melihat Tiket"
 #: app/assets/javascripts/app/controllers/user.coffee:3
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:2
 #: app/assets/javascripts/app/lib/app_post/user_organization_autocompletion.coffee:2
+#: app/assets/javascripts/app/models/audit_log.coffee:8
 #: app/assets/javascripts/app/models/data_privacy_task.coffee:6
 #: app/assets/javascripts/app/models/job.coffee:8
 #: app/assets/javascripts/app/models/mention.coffee:6
@@ -25538,7 +25653,7 @@ msgstr "tugaskan tiket"
 msgid "at"
 msgstr "pada"
 
-#: app/models/object_manager/attribute.rb:604
+#: app/models/object_manager/attribute.rb:607
 msgid "at least one letter is required"
 msgstr "setidaknya satu huruf diperlukan"
 
@@ -25547,7 +25662,7 @@ msgstr "setidaknya satu huruf diperlukan"
 msgid "attachment,attached,enclosed,enclosure"
 msgstr "lampiran,terlampir,terlampir,lampiran"
 
-#: app/models/object_manager/attribute.rb:637
+#: app/models/object_manager/attribute.rb:640
 msgid "attribute is not editable"
 msgstr "atribut tidak dapat diedit"
 
@@ -25581,7 +25696,7 @@ msgstr "sibuk"
 msgid "camera,image,photo,picture"
 msgstr "kamera,gambar,foto,gambar"
 
-#: app/models/object_manager/attribute.rb:683
+#: app/models/object_manager/attribute.rb:686
 msgid ""
 "can't be altered after creation (you can delete the attribute and create "
 "another with the desired value)"
@@ -25595,17 +25710,17 @@ msgstr "tidak boleh kosong"
 msgid "can't be empty"
 msgstr "tidak boleh kosong"
 
-#: app/models/object_manager/attribute.rb:690
+#: app/models/object_manager/attribute.rb:693
 #, fuzzy
 #| msgid "can't be empty"
 msgid "can't be modified"
 msgstr "tidak boleh kosong"
 
-#: app/models/object_manager/attribute.rb:595
+#: app/models/object_manager/attribute.rb:598
 msgid "can't be used because *_id and *_ids are not allowed"
 msgstr "tidak dapat digunakan karena *_id dan *_ids tidak diizinkan"
 
-#: app/models/knowledge_base/category.rb:181
+#: app/models/knowledge_base/category.rb:202
 msgid "cannot be a subcategory of the parent category"
 msgstr "tidak dapat menjadi subkategori dari kategori induk"
 
@@ -25696,6 +25811,12 @@ msgstr "berisi satu"
 msgid "contains one not"
 msgstr "tidak berisi satu"
 
+#: app/assets/javascripts/app/models/audit_log.coffee:7
+#, fuzzy
+#| msgid "created"
+msgid "create"
+msgstr "dibuat"
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:87
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:114
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco:36
@@ -25742,11 +25863,11 @@ msgstr "unit kustom"
 msgid "d"
 msgstr "h"
 
-#: app/models/concerns/can_be_published.rb:145
+#: app/models/concerns/can_be_published.rb:149
 msgid "date must be no earlier than internal date"
 msgstr "tanggal tidak boleh lebih awal dari tanggal internal"
 
-#: app/models/concerns/can_be_published.rb:151
+#: app/models/concerns/can_be_published.rb:155
 msgid "date must be no earlier than published date"
 msgstr "tanggal tidak boleh lebih awal dari tanggal terbit"
 
@@ -25790,6 +25911,10 @@ msgstr "dikirim ke pelanggan"
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketOrderBySelector.vue:36
 msgid "descending"
 msgstr "turun"
+
+#: app/assets/javascripts/app/models/audit_log.coffee:7
+msgid "destroy"
+msgstr ""
 
 #: app/frontend/apps/desktop/components/Search/QuickSearch/QuickSearchResultList/QuickSearchResultList.vue:106
 msgid "detailed search"
@@ -26263,7 +26388,7 @@ msgstr "tidak dalam jam kerja"
 msgid "is not included in the list"
 msgstr "tidak termasuk dalam daftar"
 
-#: app/models/knowledge_base/category.rb:199
+#: app/models/knowledge_base/category.rb:220
 msgid "is part of a circular reference"
 msgstr ""
 
@@ -26295,7 +26420,7 @@ msgstr "panjangnya salah (seharusnya %{count} karakter)"
 msgid "is the wrong length (should be 1 character)"
 msgstr "panjangnya salah (seharusnya 1 karakter)"
 
-#: app/models/user.rb:895
+#: app/models/user.rb:905
 msgid "is too long"
 msgstr "terlalu panjang"
 
@@ -26429,13 +26554,13 @@ msgstr "Bulan"
 msgid "must be a hash with \"label\" and \"value\" keys"
 msgstr ""
 
-#: app/models/calendar.rb:244
+#: app/models/calendar.rb:247
 #, fuzzy
 #| msgid "is not a valid URL"
 msgid "must be a valid HTTP(S) URL"
 msgstr "bukan URL yang valid"
 
-#: app/models/knowledge_base.rb:259
+#: app/models/knowledge_base.rb:270
 msgid "must be a valid path or domain"
 msgstr "harus berupa jalur atau domain yang valid"
 
@@ -26475,18 +26600,18 @@ msgstr "harus ganjil"
 msgid "must be other than %{count}"
 msgstr "harus selain %{count}"
 
-#: app/models/knowledge_base.rb:247
+#: app/models/knowledge_base.rb:258
 msgid "must begin with a slash (\"/\")"
 msgstr "harus dimulai dengan garis miring (\"/\")"
 
 msgid "must exist"
 msgstr "harus ada"
 
-#: app/models/knowledge_base.rb:255
+#: app/models/knowledge_base.rb:266
 msgid "must not end with a slash (\"/\")"
 msgstr "tidak boleh diakhiri dengan garis miring (\"/\")"
 
-#: app/models/knowledge_base.rb:251
+#: app/models/knowledge_base.rb:262
 msgid "must not include a protocol (e.g., \"http://\" or \"https://\")"
 msgstr "tidak boleh menyertakan protokol (mis. \"http://\" atau \"https://\")"
 
@@ -26607,7 +26732,7 @@ msgstr "notifikasi,tiket"
 msgid "now"
 msgstr "sekarang"
 
-#: app/models/object_manager/attribute.rb:601
+#: app/models/object_manager/attribute.rb:604
 msgid "only lowercase letters, numbers, and '_' are allowed"
 msgstr "hanya huruf kecil, angka, dan '_' yang diizinkan"
 
@@ -26871,7 +26996,7 @@ msgstr "dilewati"
 msgid "sms"
 msgstr "sms"
 
-#: app/models/object_manager/attribute.rb:598
+#: app/models/object_manager/attribute.rb:601
 msgid "spaces are not allowed"
 msgstr "spasi tidak diizinkan"
 
@@ -26908,6 +27033,18 @@ msgstr "langganan,kalender,tiket,ical"
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:16
 msgid "support@example.com"
 msgstr "support@example.com"
+
+#: app/assets/javascripts/app/models/audit_log.coffee:7
+#, fuzzy
+#| msgid "Switch back to old layout"
+msgid "switch back to user"
+msgstr "Kembali ke tata letak lama"
+
+#: app/assets/javascripts/app/models/audit_log.coffee:7
+#, fuzzy
+#| msgid "%s switched to |%s|!"
+msgid "switch to user"
+msgstr "%s beralih ke |%s|!"
 
 #: app/assets/javascripts/app/controllers/translation.coffee:279
 msgid "system"
@@ -27030,6 +27167,12 @@ msgstr "batalkan baca-saja"
 msgid "untouched"
 msgstr "tidak tersentuh"
 
+#: app/assets/javascripts/app/models/audit_log.coffee:7
+#, fuzzy
+#| msgid "updated"
+msgid "update"
+msgstr "diperbarui"
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:88
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:115
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco:36
@@ -27091,13 +27234,13 @@ msgstr "dalam terakhir (relatif)"
 msgid "within next (relative)"
 msgstr "dalam berikutnya (relatif)"
 
-#: app/models/knowledge_base/category.rb:212
+#: app/models/knowledge_base/category.rb:233
 #, fuzzy
 #| msgid "This group or its children exceed the allowed nesting depth."
 msgid "would exceed the allowed nesting depth"
 msgstr "Grup ini atau anaknya melebihi kedalaman sarang yang diizinkan."
 
-#: app/models/knowledge_base/category.rb:217
+#: app/models/knowledge_base/category.rb:238
 #, fuzzy
 #| msgid "This group or its children exceed the allowed nesting depth."
 msgid "would push this category's children beyond the allowed nesting depth"
@@ -27163,6 +27306,21 @@ msgstr "…dari seluruh area teks"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ Waktu tunggu hari ini"
+
+#~ msgid "The AI Provider is not accessible."
+#~ msgstr "Penyedia AI tidak dapat diakses."
+
+#~ msgid "The AI provider is not configured."
+#~ msgstr "Penyedia AI belum dikonfigurasi."
+
+#~ msgid "The Simple Storage Service is not available."
+#~ msgstr "Layanan Penyimpanan Sederhana tidak tersedia."
+
+#~ msgid "Delete this link"
+#~ msgstr "Hapus tautan ini"
+
+#~ msgid "Link removed successfully"
+#~ msgstr "Tautan berhasil dihapus"
 
 #~ msgid "Linked Tickets"
 #~ msgstr "Tiket Tertaut"

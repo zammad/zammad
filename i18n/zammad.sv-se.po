@@ -807,11 +807,11 @@ msgstr "%s% har återöppnats"
 msgid "%{model} can have full or granular access to group"
 msgstr "%{model} kan ha full eller delvis åtkomst till grupp"
 
-#: app/models/object_manager/attribute.rb:624
+#: app/models/object_manager/attribute.rb:627
 msgid "%{name} already exists"
 msgstr "%{name} finns redan"
 
-#: app/models/object_manager/attribute.rb:608
+#: app/models/object_manager/attribute.rb:611
 msgid "%{name} is a reserved word"
 msgstr "%{name} är ett reserverat ord"
 
@@ -1063,8 +1063,8 @@ msgstr "En kraftfull tjänst för att ge mer informationen om dina kunder."
 msgid "A queue is required!"
 msgstr "En kö krävs!"
 
-#: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee:249
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketAIKnowledgeBaseAnswers.vue:40
+#: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee:266
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseActions.vue:49
 msgid ""
 "A related knowledge base answer is being generated. You will be notified "
 "once the draft is ready."
@@ -1110,7 +1110,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:64
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:30
-#: app/assets/javascripts/app/controllers/manage.coffee:45
+#: app/assets/javascripts/app/controllers/manage.coffee:50
 msgid "AI"
 msgstr "AI"
 
@@ -1119,7 +1119,7 @@ msgstr "AI"
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:79
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:60
 #: app/assets/javascripts/app/controllers/ticket_zoom/attribute_bar.coffee:144
-#: app/models/ai/agent.rb:107
+#: app/models/ai/agent.rb:108
 msgid "AI Agent"
 msgstr "AI Agent"
 
@@ -1205,7 +1205,7 @@ msgstr "Textverktyget för AI-assistans är inaktivt."
 msgid "AI assistance text tool is invalid."
 msgstr "Textverktyget för AI-assistans är ogiltigt."
 
-#: app/assets/javascripts/app/views/link/kb_answer.jst.eco:46
+#: app/assets/javascripts/app/views/link/kb_answer.jst.eco:22
 #, fuzzy
 #| msgid "draft"
 msgid "AI draft"
@@ -1330,7 +1330,7 @@ msgstr "API-serverfel - försök igen"
 
 #: app/assets/javascripts/app/views/generic/text_tools_modal.jst.eco:10
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_ticket_summary.jst.eco:7
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketAISuggestedKnowledgeBaseAnswers.vue:130
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiSuggested.vue:60
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummaryContent.vue:91
 msgid "API server error: %s"
 msgstr "API serverfel: %s"
@@ -1359,47 +1359,47 @@ msgstr "Acceptera dataskydds- och användningspolicyn"
 msgid "Access denied"
 msgstr "Åtkomst nekad"
 
-#: db/seeds/permissions.rb:360
+#: db/seeds/permissions.rb:366
 msgid "Access the agent chat features."
 msgstr "Få tillgång till chattfunktionerna för agenter."
 
-#: db/seeds/permissions.rb:375
+#: db/seeds/permissions.rb:381
 msgid "Access the agent phone features."
 msgstr "Få tillgång till telefonfunktioner för agent."
 
-#: db/seeds/permissions.rb:390
+#: db/seeds/permissions.rb:396
 msgid "Access the knowledge base editor features."
 msgstr "Få tillgång till redigeringsfunktionerna i Kunskapsbanken."
 
-#: db/seeds/permissions.rb:396
+#: db/seeds/permissions.rb:402
 msgid "Access the knowledge base reader features."
 msgstr "Få tillgång till kunskapsbasens läsarfunktioner."
 
-#: db/seeds/permissions.rb:418
+#: db/seeds/permissions.rb:424
 msgid "Access the tickets as agent based on group access."
 msgstr "Få tillgång till ärendena som agent baserat på gruppåtkomst."
 
-#: db/seeds/permissions.rb:427
+#: db/seeds/permissions.rb:433
 msgid "Access tickets as customer."
 msgstr "Få tillgång till ärenden som kund."
 
-#: db/seeds/permissions.rb:351
+#: db/seeds/permissions.rb:357
 msgid "Access to the chat interface."
 msgstr "Tillgång till chattgränssnittet."
 
-#: db/seeds/permissions.rb:381
+#: db/seeds/permissions.rb:387
 msgid "Access to the knowledge base interface."
 msgstr "Tillgång till gränssnittet för kunskapsbanken."
 
-#: db/seeds/permissions.rb:366
+#: db/seeds/permissions.rb:372
 msgid "Access to the phone interface."
 msgstr "Åtkomst till telefongränssnittet."
 
-#: db/seeds/permissions.rb:403
+#: db/seeds/permissions.rb:409
 msgid "Access to the report interface."
 msgstr "Åtkomst till rapportgränssnittet."
 
-#: db/seeds/permissions.rb:409
+#: db/seeds/permissions.rb:415
 msgid "Access to the ticket interface."
 msgstr "Åtkomst till ärendegränssnittet."
 
@@ -1450,7 +1450,7 @@ msgid "Accounted Time"
 msgstr "Redovisad tid"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:74
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:163
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:186
 #: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:14
 msgid "Accounted time"
 msgstr "Redovisad tid"
@@ -1481,6 +1481,7 @@ msgstr "Konton"
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:82
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:118
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:109
+#: app/assets/javascripts/app/models/audit_log.coffee:7
 #: app/assets/javascripts/app/models/core_workflow.coffee:11
 #: app/assets/javascripts/app/models/trigger.coffee:7
 #: app/assets/javascripts/app/views/api.jst.eco:62
@@ -1658,7 +1659,7 @@ msgstr "Adapter"
 msgid "Add"
 msgstr "Lägg till"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketAIKnowledgeBaseAnswers.vue:67
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseActions.vue:78
 #, fuzzy
 #| msgid "Apply draft"
 msgid "Add AI draft"
@@ -1822,7 +1823,6 @@ msgid "Add internal note"
 msgstr "Lägg till intern anteckning"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:300
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:163
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:297
 #: app/frontend/shared/components/Form/fields/FieldEditor/features/link/LinkForm.vue:173
 msgid "Add link"
@@ -2081,7 +2081,7 @@ msgstr "Handläggarnamn"
 msgid "Agent Name + FromSeparator + System Address Display Name"
 msgstr "Handläggarnamn + Frånavskiljare + Systemadressanvändarnamn"
 
-#: db/seeds/permissions.rb:359
+#: db/seeds/permissions.rb:365
 msgid "Agent chat"
 msgstr "Agentchatt"
 
@@ -2089,15 +2089,15 @@ msgstr "Agentchatt"
 msgid "Agent idle timeout"
 msgstr "Timeout för inaktiv agent"
 
-#: app/models/role.rb:151 app/models/user.rb:779
+#: app/models/role.rb:181 app/models/user.rb:787
 msgid "Agent limit exceeded, please check your account settings."
 msgstr "Handläggarbegränsning uppnådd, kontrollera dina kontoinställningar."
 
-#: db/seeds/permissions.rb:374
+#: db/seeds/permissions.rb:380
 msgid "Agent phone"
 msgstr "Agenttelefon"
 
-#: db/seeds/permissions.rb:417 db/seeds/settings.rb:1160
+#: db/seeds/permissions.rb:423 db/seeds/settings.rb:1160
 msgid "Agent tickets"
 msgstr "Agentärenden"
 
@@ -2482,7 +2482,7 @@ msgstr "App secret"
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/appearance.ts:9
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/appearance.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:54
-#: db/seeds/permissions.rb:440
+#: db/seeds/permissions.rb:446
 msgid "Appearance"
 msgstr "Utseende"
 
@@ -2576,10 +2576,13 @@ msgid "Archive ticket target state"
 msgstr "Arkiv ärendemålstatus"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:113
+#: app/frontend/apps/desktop/components/KnowledgeBaseAnswerIcon/KnowledgeBaseAnswerIcon.vue:41
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseIconStatus.vue:31
 msgid "Archived"
 msgstr "Arkiverad"
 
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco:23
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAnswerPopover.vue:52
 msgid "Archived at"
 msgstr "Arkiverat"
 
@@ -2813,7 +2816,7 @@ msgstr ""
 "Uppdragets timeout i minuter ifall tilldelad handläggare inte arbetar på "
 "den. Ärendet kommer att visas som ej tilldelad."
 
-#: app/models/user.rb:681
+#: app/models/user.rb:689
 msgid ""
 "At least one identifier (firstname, lastname, phone, mobile or email) for "
 "user is required."
@@ -2827,7 +2830,7 @@ msgstr ""
 msgid "At least one locale is required."
 msgstr "åtminstone en bokstav krävs"
 
-#: app/models/postmaster_filter.rb:29
+#: app/models/postmaster_filter.rb:30
 msgid "At least one match rule is required, but none was provided."
 msgstr "Åtminstone en regelmatchning krävs, men ingen var angiven."
 
@@ -2835,7 +2838,7 @@ msgstr "Åtminstone en regelmatchning krävs, men ingen var angiven."
 msgid "At least one object must be selected."
 msgstr "Åtminstone ett objekt måste väljas."
 
-#: app/models/role.rb:128 app/models/user.rb:758
+#: app/models/role.rb:158 app/models/user.rb:766
 msgid "At least one user needs to have admin permissions."
 msgstr "Minst en användare behöver ha admin-rättigheter."
 
@@ -2936,7 +2939,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:31
 #: app/assets/javascripts/app/models/overview.coffee:15
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:123
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:133
 msgid "Attributes"
 msgstr "Attribut"
 
@@ -2950,6 +2953,15 @@ msgstr "Attribut att jämföra"
 #: lib/validations/ticket_article_validator/whatsapp_message.rb:8
 msgid "Audio file"
 msgstr "Ljudfil"
+
+#: app/assets/javascripts/app/controllers/audit_log.coffee:25
+msgid "Audit Log"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/audit_log.coffee:25
+#: db/seeds/permissions.rb:338
+msgid "Audit Logs"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
 #: app/assets/javascripts/app/controllers/report.coffee:221
@@ -3172,7 +3184,7 @@ msgstr "Tillgängliga typer för nytt ärende"
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:120
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:167
 #: app/frontend/shared/components/CommonUserAvatar/CommonUserAvatar.vue:114
-#: db/seeds/permissions.rb:454
+#: db/seeds/permissions.rb:460
 msgid "Avatar"
 msgstr "Avatar"
 
@@ -3743,7 +3755,7 @@ msgstr "Kunde inta ta bort posten eftersom beroende %{record} finns"
 msgid "Cannot follow-up on a closed ticket. Please create a new ticket."
 msgstr "Uppföljning i ett stängt ärende är inte möjlig. Skapa ett nytt ärende."
 
-#: app/models/sla.rb:44
+#: app/models/sla.rb:45
 msgid "Cannot have both response time and update time."
 msgstr "Kan inte ha både svars och uppdateringstid."
 
@@ -3769,6 +3781,7 @@ msgstr "Kategorier"
 
 #: app/assets/javascripts/app/models/knowledge_base_answer.coffee:51
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco:31
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAnswerPopover.vue:56
 msgid "Category"
 msgstr "Kategori"
 
@@ -3822,7 +3835,7 @@ msgstr "Byt ditt lösenord"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketChangeCustomer/TicketChangeCustomerFlyout.vue:51
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:70
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:102
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:83
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:65
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:127
 msgid "Change customer"
@@ -3848,7 +3861,7 @@ msgstr "Ändra ordning"
 msgid "Change password"
 msgstr "Byt lösenord"
 
-#: db/seeds/permissions.rb:472
+#: db/seeds/permissions.rb:478
 msgid "Change personal account password."
 msgstr "Ändra Lösenord för personligt konto."
 
@@ -3901,6 +3914,7 @@ msgstr "Ändrad reaktion till %s på meddelandet %s från %s"
 msgid "Changed:"
 msgstr "Ändrad:"
 
+#: app/assets/javascripts/app/models/audit_log.coffee:11
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:17
 #: app/views/mailer/ticket_update/zh-cn.html.erb:11
 #: app/views/mailer/ticket_update/zh-tw.html.erb:11
@@ -3938,7 +3952,7 @@ msgstr "Kanal"
 msgid "Channel Distribution"
 msgstr "Kanaldistribution"
 
-#: app/assets/javascripts/app/controllers/manage.coffee:43
+#: app/assets/javascripts/app/controllers/manage.coffee:48
 msgid "Channels"
 msgstr "Kanaler"
 
@@ -3995,7 +4009,7 @@ msgstr "Kontrollera kanaler."
 msgid "Check item"
 msgstr "Markera post"
 
-#: lib/search_index_backend.rb:458
+#: lib/search_index_backend.rb:459
 msgid "Check the response and payload for detailed information:"
 msgstr "Kontrollera svar och nyttolast för detaljerad information:"
 
@@ -4025,7 +4039,7 @@ msgstr "Etikett för checklistepost"
 msgid "Checklist Template"
 msgstr "Mall för checklista"
 
-#: app/models/checklist_template.rb:16
+#: app/models/checklist_template.rb:17
 msgid "Checklist Template items are limited to 100 items per checklist."
 msgstr "Checklistmallen är begränsade till 100 poster per checklista."
 
@@ -4045,7 +4059,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/checklist_template.coffee:3
 #: app/assets/javascripts/app/views/checklist_template/index.jst.eco:7
-#: db/seeds/permissions.rb:344 db/seeds/settings.rb:6145
+#: db/seeds/permissions.rb:350 db/seeds/settings.rb:6145
 msgid "Checklists"
 msgstr "Checklistor"
 
@@ -4189,19 +4203,25 @@ msgstr "Julledighet"
 msgid "City"
 msgstr "Stad"
 
-#: db/seeds/schedulers.rb:169
+#: db/seeds/schedulers.rb:160
+#, fuzzy
+#| msgid "Clean up 'HttpLog'."
+msgid "Clean up 'AuditLog'."
+msgstr "Rensa 'HttpLog'."
+
+#: db/seeds/schedulers.rb:178
 msgid "Clean up 'Cti::Log'."
 msgstr "Rensa 'Cti::Log'."
 
-#: db/seeds/schedulers.rb:178
+#: db/seeds/schedulers.rb:187
 msgid "Clean up 'DataPrivacyTask'."
 msgstr "Rensa 'Dataskyddsuppgift'."
 
-#: db/seeds/schedulers.rb:160
+#: db/seeds/schedulers.rb:169
 msgid "Clean up 'HttpLog'."
 msgstr "Rensa 'HttpLog'."
 
-#: db/seeds/schedulers.rb:187
+#: db/seeds/schedulers.rb:196
 msgid "Clean up 'Ticket::DailyEventLock'."
 msgstr "Rensa 'Ticket::DailyEventLock'."
 
@@ -4209,7 +4229,7 @@ msgstr "Rensa 'Ticket::DailyEventLock'."
 msgid "Clean up ActiveJob locks."
 msgstr "Rensa ActiveJob-lås."
 
-#: db/seeds/schedulers.rb:233
+#: db/seeds/schedulers.rb:242
 msgid "Clean up cache."
 msgstr "Rensa cachen."
 
@@ -4225,7 +4245,7 @@ msgstr "Rensa döda sessioner."
 msgid "Clean up expired sessions."
 msgstr "Rensa utgångna sessioner."
 
-#: db/seeds/schedulers.rb:268
+#: db/seeds/schedulers.rb:277
 msgid "Clean up mobile taskbars."
 msgstr "Rensa aktivitetsfält för mobil."
 
@@ -4534,6 +4554,12 @@ msgstr "Villkor för påverkade objekt"
 #: app/assets/javascripts/app/models/overview.coffee:12
 msgid "Conditions for shown tickets"
 msgstr "Villkor för visade ärenden"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiSuggested.vue:78
+#, fuzzy
+#| msgid "Confirm new password"
+msgid "Confidence score"
+msgstr "Bekräfta nytt lösenord"
 
 #: app/assets/javascripts/app/controllers/widget/placeholder.coffee:137
 msgid "Config"
@@ -5020,7 +5046,7 @@ msgid "Could not set two-factor authentication method as default"
 msgstr "Kunde inte sätta upp två-faktorautentiseringsmetoden som standard"
 
 #: app/assets/javascripts/app/controllers/widget/link.coffee:69
-#: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee:232
+#: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee:249
 msgid "Couldn't save changes"
 msgstr "Det gick inte att spara ändringar"
 
@@ -5280,6 +5306,7 @@ msgid "Created Internal Article"
 msgstr "Skapade Intern Artikel"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee:59
+#: app/assets/javascripts/app/models/audit_log.coffee:13
 #: app/assets/javascripts/app/models/checklist.coffee:9
 #: app/assets/javascripts/app/models/checklist_item.coffee:8
 #: app/assets/javascripts/app/models/checklist_template.coffee:10
@@ -5375,7 +5402,7 @@ msgstr "Nuvarande användare"
 msgid "Current password"
 msgstr "Nuvarande lösenord"
 
-#: app/models/system_report/plugin/setting.rb:6
+#: app/models/system_report/plugin/setting.rb:4
 msgid "Current state of configured settings (excluding passwords and tokens)"
 msgstr ""
 "Aktuell status för konfigurerade inställningar (exklusive Lösenord och "
@@ -5507,7 +5534,7 @@ msgstr "Kundval baserat på avsändare och mottagare lista"
 msgid "Customer sentiment"
 msgstr "Känsla hos kunderna"
 
-#: db/seeds/permissions.rb:426 db/seeds/settings.rb:1169
+#: db/seeds/permissions.rb:432 db/seeds/settings.rb:1169
 msgid "Customer tickets"
 msgstr "Kundärenden"
 
@@ -6913,7 +6940,7 @@ msgstr "Radera omedelbart"
 msgid "Delete object"
 msgstr "Radera objekt"
 
-#: db/seeds/schedulers.rb:196
+#: db/seeds/schedulers.rb:205
 msgid "Delete obsolete classic IMAP backup."
 msgstr "Radera föråldrad klassisk IMAP backup."
 
@@ -6941,7 +6968,7 @@ msgstr "Radera gamla statistiskposter."
 msgid "Delete old token entries."
 msgstr "Radera gamla tokenposter."
 
-#: db/seeds/schedulers.rb:224
+#: db/seeds/schedulers.rb:233
 msgid "Delete old upload cache entries."
 msgstr "Radera gamla cacheposter."
 
@@ -6972,10 +6999,6 @@ msgstr "Ta bort denna avatar"
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:113
 msgid "Delete this device"
 msgstr "Ta bort den här enheten"
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:143
-msgid "Delete this link"
-msgstr "Ta bort denna länk"
 
 #: app/frontend/apps/desktop/components/Search/QuickSearch/QuickSearch.vue:179
 msgid "Delete this recent search"
@@ -7141,7 +7164,7 @@ msgstr "Enheten har återkallats."
 #: app/assets/javascripts/app/views/profile/devices.jst.eco:2
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/devices.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:33
-#: db/seeds/permissions.rb:485
+#: db/seeds/permissions.rb:491
 msgid "Devices"
 msgstr "Enheter"
 
@@ -7477,6 +7500,7 @@ msgstr "Laddar ner bilagor…"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:101
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:18
+#: app/frontend/apps/desktop/components/KnowledgeBaseAnswerIcon/KnowledgeBaseAnswerIcon.vue:26
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseIconStatus.vue:25
 msgid "Draft"
 msgstr "Utkast"
@@ -7725,7 +7749,7 @@ msgstr "Elasticsearch Total Payload Storlek"
 msgid "Elasticsearch index does not exist"
 msgstr "Elasticsearch Index existerar inte"
 
-#: lib/search_index_backend.rb:454
+#: lib/search_index_backend.rb:455
 msgid ""
 "Elasticsearch is not reachable. It's possible that it's not running. Please "
 "check whether it is installed."
@@ -7828,7 +7852,7 @@ msgstr "E-postkonto"
 msgid "Email address"
 msgstr "E-postadress"
 
-#: app/models/user.rb:691
+#: app/models/user.rb:699
 msgid "Email address '%{email}' is already used for another user."
 msgstr "E-postadress '%{email}' används redan för en annan användare."
 
@@ -8485,7 +8509,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee:132
 #: app/assets/javascripts/app/controllers/widget/error_modal.coffee:6
 #: app/frontend/apps/desktop/components/CommonError/CommonError.vue:30
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBase.vue:41
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBase.vue:42
 #: app/frontend/apps/mobile/pages/error/views/Error.vue:37
 #: lib/excel_sheet/ai/analytics/errors.rb:36
 msgid "Error"
@@ -8728,7 +8752,7 @@ msgstr "Utför ändringar på objekt"
 msgid "Execute configured macros"
 msgstr "Kör konfigurerade makron"
 
-#: db/seeds/schedulers.rb:205
+#: db/seeds/schedulers.rb:214
 msgid "Execute import jobs."
 msgstr "Utför importjobb."
 
@@ -8821,7 +8845,7 @@ msgstr "Utökad sökning"
 msgid "External data source field"
 msgstr "Externt datakällfält"
 
-#: lib/search_index_backend.rb:780
+#: lib/search_index_backend.rb:781
 msgid "Extract zammad-attachment information from arrays"
 msgstr "Extrahera zammad bilageinformation från fält"
 
@@ -9719,9 +9743,7 @@ msgstr "Hälsning"
 #: app/graphql/gql/types/overview_type.rb:95
 #: app/views/mailer/ticket_create/fr.html.erb:8
 #: app/views/mailer/ticket_create/zh-cn.html.erb:8
-#: app/views/messaging/ticket_create/pt-br.md.erb:3
 #: app/views/messaging/ticket_create/zh-tw.md.erb:3
-#: app/views/messaging/ticket_info/pt-br.md.erb:3
 #: app/views/messaging/ticket_info/zh-tw.md.erb:3
 #: db/seeds/object_manager_attributes.rb:168 db/seeds/settings.rb:3019
 #: lib/excel_sheet/ticket.rb:27
@@ -9850,7 +9872,7 @@ msgstr "HTTP Logg"
 msgid "HTTP type"
 msgstr "HTTP typ"
 
-#: db/seeds/schedulers.rb:214
+#: db/seeds/schedulers.rb:223
 msgid "Handle data privacy tasks."
 msgstr "Hantera uppgifter för dataskydd."
 
@@ -10151,7 +10173,7 @@ msgstr "Tips för att lägga till en artikel i ett befintligt ärende."
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:62
 #: app/frontend/apps/desktop/components/CommonHistoryFlyout/CommonHistoryFlyout.vue:71
 #: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailTopBar/actions/history.ts:13
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:84
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:65
 #: app/frontend/apps/desktop/pages/user/components/UserDetailTopBar/actions/history.ts:13
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:121
 msgid "History"
@@ -10897,6 +10919,7 @@ msgid "Integrity verification of the downloaded WhatsApp media failed."
 msgstr "Integritetsverifiering av det nedladdade WhatsApp-mediet misslyckades."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:105
+#: app/frontend/apps/desktop/components/KnowledgeBaseAnswerIcon/KnowledgeBaseAnswerIcon.vue:31
 #: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:144
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseIconStatus.vue:27
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:207
@@ -10907,7 +10930,7 @@ msgstr "Intern"
 msgid "Internal Knowledge Base feed:"
 msgstr "Internt kunskapsbanks-flöde:"
 
-#: app/models/object_manager/attribute.rb:694
+#: app/models/object_manager/attribute.rb:697
 #, fuzzy
 #| msgid "The article could not be deleted."
 msgid "Internal attributes cannot be deleted"
@@ -10985,7 +11008,7 @@ msgstr "Ogiltigt client_id i mottagningsloop!"
 msgid "Invalid client_id received!"
 msgstr "Ogiltigt client_id mottaget!"
 
-#: app/models/user.rb:630
+#: app/models/user.rb:638
 msgid "Invalid email '%{email}'"
 msgstr "Ogiltigt email '%{email}'"
 
@@ -11332,7 +11355,7 @@ msgstr "Nyckelord"
 #: app/assets/javascripts/app/models/knowledge_base.coffee:75
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader.vue:88
 #: app/frontend/apps/desktop/pages/knowledge-base/routes.ts:24
-#: app/models/knowledge_base.rb:233 db/seeds/permissions.rb:113
+#: app/models/knowledge_base.rb:244 db/seeds/permissions.rb:113
 msgid "Knowledge Base"
 msgstr "Kunskapsbank"
 
@@ -11366,7 +11389,7 @@ msgstr ""
 msgid "Knowledge Base Answer could not be created"
 msgstr "Kunskapsbasen kunde inte skapas."
 
-#: db/seeds/permissions.rb:389
+#: db/seeds/permissions.rb:395
 msgid "Knowledge Base Editor"
 msgstr "Kunskapsbank Redaktör"
 
@@ -11374,7 +11397,7 @@ msgstr "Kunskapsbank Redaktör"
 msgid "Knowledge Base Feed"
 msgstr "Kunskapsbankflöde"
 
-#: db/seeds/permissions.rb:395
+#: db/seeds/permissions.rb:401
 msgid "Knowledge Base Reader"
 msgstr "Kunskapsbank Läsare"
 
@@ -11409,7 +11432,7 @@ msgstr "Kunskapsbank aktiv"
 msgid "Knowledge base controls"
 msgstr "Kunskapsbank aktiv"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketAIKnowledgeBaseAnswers.vue:48
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseActions.vue:57
 #: app/services/service/ticket/ai_assistance/create_knowledge_base_answer.rb:21
 #, fuzzy
 #| msgid "The Knowledge Base could not be created."
@@ -11479,8 +11502,9 @@ msgstr "Layout för landningssida"
 #: app/assets/javascripts/app/views/profile/language.jst.eco:3
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/locale.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLocale.vue:13
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAnswerPopover.vue:62
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:149
-#: db/seeds/permissions.rb:447
+#: db/seeds/permissions.rb:453
 msgid "Language"
 msgstr "Språk"
 
@@ -11714,7 +11738,7 @@ msgstr "Begränsad synlighet"
 #: app/assets/javascripts/app/controllers/ticket_link_add.coffee:7
 #: app/assets/javascripts/app/models/overview.coffee:7
 #: app/assets/javascripts/app/models/public_link.coffee:6
-#: app/assets/javascripts/app/views/link/kb_answer.jst.eco:48
+#: app/assets/javascripts/app/views/link/kb_answer.jst.eco:24
 #: app/assets/javascripts/app/views/link/ticket/list.jst.eco:11
 #: app/frontend/apps/desktop/pages/ticket/components/TicketLinksFlyout.vue:53
 #: app/frontend/shared/components/Form/FormFieldLink.vue:21
@@ -11770,14 +11794,17 @@ msgstr "Länk finns redan"
 msgid "Link issue"
 msgstr "Länka problem"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseActions.vue:83
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiSuggested.vue:87
+#, fuzzy
+#| msgid "Inserts knowledge base answer"
+msgid "Link knowledge base answer"
+msgstr "Infoga ett kunskapsbankssvar"
+
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:168
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:145
 msgid "Link objects"
 msgstr "Länka ärenden"
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:88
-msgid "Link removed successfully"
-msgstr "Länk togs bort"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:259
 msgid "Link template"
@@ -11788,6 +11815,7 @@ msgid "Link text"
 msgstr "Länka text"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketLinksFlyout.vue:53
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:141
 msgid "Link ticket"
 msgstr "Länka ärende"
 
@@ -11799,10 +11827,16 @@ msgstr "Länka ärende"
 msgid "Link type"
 msgstr "Länktyp"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseLinks.vue:41
+#, fuzzy
+#| msgid "LinkedIn"
+msgid "Linked"
+msgstr "LinkedIn"
+
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:3
 #: app/assets/javascripts/app/views/popover/user.jst.eco:5
 #: app/assets/javascripts/app/views/widget/user.jst.eco:34
-#: db/seeds/permissions.rb:499
+#: db/seeds/permissions.rb:505
 msgid "Linked Accounts"
 msgstr "Länkade konton"
 
@@ -12055,7 +12089,7 @@ msgstr "Underhållsläge"
 msgid "Maintenance mode enabled!"
 msgstr "Underhållsläge aktiverat!"
 
-#: app/assets/javascripts/app/controllers/manage.coffee:18
+#: app/assets/javascripts/app/controllers/manage.coffee:20
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:85
 msgid "Manage"
 msgstr "Hantera"
@@ -12131,7 +12165,7 @@ msgstr "Hantera Två-faktorautentisering"
 msgid "Manage WhatsApp channel of your system."
 msgstr "Hantera WhatsApp-kanalen i ditt system."
 
-#: db/seeds/permissions.rb:538
+#: db/seeds/permissions.rb:544
 msgid "Manage access to New BETA UI switch."
 msgstr "Hantera åtkomst till nya beta UI-väljare."
 
@@ -12154,6 +12188,12 @@ msgid ""
 msgstr ""
 "Hantera program som kan använda Zammad som en OAuth-leverantör och Appar som "
 "du har gett behörighet att använda ditt konto."
+
+#: db/seeds/permissions.rb:339
+#, fuzzy
+#| msgid "Manage ticket tags of your system."
+msgid "Manage audit logs of your system."
+msgstr "Hantera ärendetaggar i ditt system."
 
 #: db/seeds/permissions.rb:198
 msgid "Manage branding settings of your system."
@@ -12207,51 +12247,51 @@ msgstr "Hantera objektattribut för ditt system."
 msgid "Manage packages of your system."
 msgstr "Hantera installationspaket i ditt system."
 
-#: db/seeds/permissions.rb:493
+#: db/seeds/permissions.rb:499
 msgid "Manage personal API tokens."
 msgstr "Hantera personliga API-tokens."
 
-#: db/seeds/permissions.rb:441
+#: db/seeds/permissions.rb:447
 msgid "Manage personal appearance settings."
 msgstr "Hantera inställningar för personligt utseende."
 
-#: db/seeds/permissions.rb:455
+#: db/seeds/permissions.rb:461
 msgid "Manage personal avatar settings."
 msgstr "Hantera inställningar för personlig avatar."
 
-#: db/seeds/permissions.rb:527
+#: db/seeds/permissions.rb:533
 msgid "Manage personal calendar."
 msgstr "Hantera personlig kalender."
 
-#: db/seeds/permissions.rb:486
+#: db/seeds/permissions.rb:492
 msgid "Manage personal devices and sessions."
 msgstr "Hantera personliga enheter och sessioner."
 
-#: db/seeds/permissions.rb:448
+#: db/seeds/permissions.rb:454
 msgid "Manage personal language settings."
 msgstr "Hantera personliga språkinställningar."
 
-#: db/seeds/permissions.rb:500
+#: db/seeds/permissions.rb:506
 msgid "Manage personal linked accounts."
 msgstr "Hantera personliga länkade konton."
 
-#: db/seeds/permissions.rb:507
+#: db/seeds/permissions.rb:513
 msgid "Manage personal notifications settings."
 msgstr "Hantera notifikationsinställningar."
 
-#: db/seeds/permissions.rb:462
+#: db/seeds/permissions.rb:468
 msgid "Manage personal out of office settings."
 msgstr "Hantera personliga inställningar för utanför kontoret."
 
-#: db/seeds/permissions.rb:517
+#: db/seeds/permissions.rb:523
 msgid "Manage personal overviews."
 msgstr "Hantera personliga översikter."
 
-#: db/seeds/permissions.rb:434
+#: db/seeds/permissions.rb:440
 msgid "Manage personal settings."
 msgstr "Hantera personliga inställningar."
 
-#: db/seeds/permissions.rb:479
+#: db/seeds/permissions.rb:485
 msgid "Manage personal two-factor authentication methods."
 msgstr "Hantera personliga metoder för tvåfaktorsautentisering."
 
@@ -12275,7 +12315,7 @@ msgstr "Hantera schemaläggare i ditt system."
 msgid "Manage security settings of your system."
 msgstr "Hantera säkerhetsinställningar för ditt system."
 
-#: db/seeds/permissions.rb:339
+#: db/seeds/permissions.rb:345
 msgid "Manage system report of your system."
 msgstr "Hantera systemrapport."
 
@@ -12288,7 +12328,7 @@ msgid "Manage ticket auto assignment settings of your system."
 msgstr ""
 "Hantera inställningar för automatisk tilldelning av ärenden i ditt system."
 
-#: db/seeds/permissions.rb:345
+#: db/seeds/permissions.rb:351
 msgid "Manage ticket checklists of your system."
 msgstr "Hantera ärendechecklistor för ditt system."
 
@@ -12563,7 +12603,7 @@ msgstr "Nämn användare"
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee:7
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee:120
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketMerge/TicketMergeFlyout.vue:89
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:91
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:72
 msgid "Merge"
 msgstr "Sammanfoga"
 
@@ -12823,7 +12863,7 @@ msgstr "Tillstånd"
 msgid "More information can be found here."
 msgstr "Mer information finns här."
 
-#: app/models/user.rb:710
+#: app/models/user.rb:718
 msgid "More than 250 secondary organizations are not allowed."
 msgstr "Fler än 250 sekundära organisationer är inte tillåtet."
 
@@ -13048,7 +13088,7 @@ msgstr "Behöver du hjälp? Se Zammad-dokumentationen för detaljerad väglednin
 msgid "Need session_id."
 msgstr "Behöver session_id."
 
-#: app/controllers/tickets_controller.rb:416
+#: app/controllers/tickets_controller.rb:418
 msgid "Need user_id or organization_id as param"
 msgstr "Behöver user_id eller organization_id som parameter"
 
@@ -13118,7 +13158,7 @@ msgstr "Nytt attribut"
 msgid "New BETA UI"
 msgstr "Nytt BETA-gränssnitt"
 
-#: db/seeds/permissions.rb:537
+#: db/seeds/permissions.rb:543
 msgid "New BETA UI Switch"
 msgstr "Nya Beta UI väljare"
 
@@ -13519,6 +13559,12 @@ msgstr "Inga kategorier"
 msgid "No certificate found."
 msgstr "Inget certifikat hittat."
 
+#: app/assets/javascripts/app/views/generic/audit_log_diff.jst.eco:3
+#, fuzzy
+#| msgid "Save changes"
+msgid "No changes."
+msgstr "Spara ändringar"
+
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/start.jst.eco:3
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:440
 msgid "No checklist added to this ticket yet."
@@ -13546,7 +13592,7 @@ msgstr "Konfiguration är inte gjord."
 msgid "No content to show"
 msgstr "Inget innehåll att visa"
 
-#: app/models/group.rb:37
+#: app/models/group.rb:40
 msgid "No double colons (::) allowed, reserved delimiter"
 msgstr "Inga dubbla kolon (::) tillåtna, reserverad avgränsare"
 
@@ -13617,7 +13663,7 @@ msgstr "Filter är inte konfigurerat."
 msgid "No linked issues"
 msgstr "Inga länkade problem"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:158
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:136
 msgid "No links added yet."
 msgstr "Inga länkar."
 
@@ -13668,8 +13714,13 @@ msgid "No related article found to process the status message on."
 msgstr ""
 "Ingen relaterad artikel hittades för att bearbeta statusmeddelandet på."
 
-#: app/assets/javascripts/app/views/link/kb_answer.jst.eco:27
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketAISuggestedKnowledgeBaseAnswers.vue:160
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge.vue:84
+#, fuzzy
+#| msgid "Inserts knowledge base answer"
+msgid "No related knowledge base answer links."
+msgstr "Infoga ett kunskapsbankssvar"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiSuggested.vue:100
 #, fuzzy
 #| msgid "Inserts knowledge base answer"
 msgid "No related knowledge base answers found."
@@ -13725,7 +13776,7 @@ msgstr "Inga delade utkast ännu"
 #: app/controllers/organizations_controller.rb:107
 #: app/controllers/text_modules_controller.rb:75
 #: app/controllers/ticket_articles_controller.rb:245
-#: app/controllers/tickets_controller.rb:459
+#: app/controllers/tickets_controller.rb:461
 #: app/controllers/users_controller.rb:559
 msgid "No source data submitted!"
 msgstr "Källdata har inte skickats!"
@@ -13873,7 +13924,7 @@ msgstr "Inte konfigurerad"
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabNotFound.vue:36
 #: app/frontend/apps/desktop/components/layout/LayoutTaskbarTabContent.vue:70
 #: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:50
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBase.vue:16
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBase.vue:17
 #: app/frontend/shared/errors/useErrorHandler.ts:25
 #: app/frontend/shared/router/error.ts:27
 msgid "Not found"
@@ -14016,7 +14067,7 @@ msgstr "Notifikationsljud"
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/notifications.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:35
 #: app/frontend/apps/mobile/pages/online-notification/routes.ts:8
-#: db/seeds/permissions.rb:506
+#: db/seeds/permissions.rb:512
 msgid "Notifications"
 msgstr "Notifieringar"
 
@@ -14110,6 +14161,7 @@ msgstr ""
 "OTRS BPM-processer kan inte importeras till Zammad eftersom vi för "
 "närvarande inte stöder denna typ av arbetsflöden."
 
+#: app/assets/javascripts/app/models/audit_log.coffee:9
 #: app/assets/javascripts/app/models/core_workflow.coffee:7
 #: app/assets/javascripts/app/models/job.coffee:8
 #: app/assets/javascripts/app/models/object_manager_attribute.coffee:2
@@ -14132,6 +14184,12 @@ msgstr "Objekthanterare attribut"
 #: app/services/service/history/list.rb:58
 msgid "Object does not support history"
 msgstr "Objektet stöder inte historik"
+
+#: app/assets/javascripts/app/models/audit_log.coffee:10
+#, fuzzy
+#| msgid "Object Manager"
+msgid "Object name"
+msgstr "Objekthanterare"
 
 #: app/frontend/apps/desktop/components/layout/LayoutTaskbarTabContent.vue:73
 msgid ""
@@ -14598,7 +14656,7 @@ msgstr "Övriga inställningar"
 
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:3
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco:2
-#: db/seeds/permissions.rb:461
+#: db/seeds/permissions.rb:467
 msgid "Out of Office"
 msgstr "Frånvarohantering"
 
@@ -14728,9 +14786,7 @@ msgstr "Skriv över utkast"
 #: app/graphql/gql/types/overview_type.rb:96
 #: app/views/mailer/ticket_create/fr.html.erb:9
 #: app/views/mailer/ticket_create/zh-cn.html.erb:9
-#: app/views/messaging/ticket_create/pt-br.md.erb:4
 #: app/views/messaging/ticket_create/zh-tw.md.erb:4
-#: app/views/messaging/ticket_info/pt-br.md.erb:4
 #: app/views/messaging/ticket_info/zh-tw.md.erb:4
 #: db/seeds/object_manager_attributes.rb:214 lib/excel_sheet/ticket.rb:28
 msgid "Owner"
@@ -14856,7 +14912,7 @@ msgstr "Föräldergrupp"
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/password.ts:8
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue:33
 #: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue:53
-#: db/seeds/object_manager_attributes.rb:1481 db/seeds/permissions.rb:471
+#: db/seeds/object_manager_attributes.rb:1481 db/seeds/permissions.rb:477
 msgid "Password"
 msgstr "Lösenord"
 
@@ -15037,7 +15093,7 @@ msgstr "Översiktsordning återställdes."
 #: app/assets/javascripts/app/controllers/cti.coffee:322
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/phone.ts:7
 #: app/frontend/shared/entities/ticket-article/action/plugins/phone.ts:12
-#: db/seeds/object_manager_attributes.rb:1018 db/seeds/permissions.rb:365
+#: db/seeds/object_manager_attributes.rb:1018 db/seeds/permissions.rb:371
 msgid "Phone"
 msgstr "Telefon"
 
@@ -15541,7 +15597,7 @@ msgid "Profile language updated successfully."
 msgstr "Profilspråket har uppdaterats."
 
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/personal-settings.ts:7
-#: db/seeds/permissions.rb:433
+#: db/seeds/permissions.rb:439
 msgid "Profile settings"
 msgstr "Profilinställningar"
 
@@ -15623,7 +15679,6 @@ msgstr "Proxyadress"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:109
 #: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:139
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseIconStatus.vue:29
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:208
 msgid "Public"
 msgstr "Publik"
@@ -15650,6 +15705,8 @@ msgstr "Publik Meny"
 msgid "Publish Article"
 msgstr "Publicera Artikeln"
 
+#: app/frontend/apps/desktop/components/KnowledgeBaseAnswerIcon/KnowledgeBaseAnswerIcon.vue:36
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseIconStatus.vue:29
 #: app/helpers/knowledge_base_top_bar_helper.rb:34
 #, fuzzy
 #| msgid "published"
@@ -15657,6 +15714,7 @@ msgid "Published"
 msgstr "publicerad"
 
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco:15
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAnswerPopover.vue:48
 msgid "Published at"
 msgstr "Publicerad"
 
@@ -15700,6 +15758,16 @@ msgid ""
 msgstr ""
 "REST API-åtkomst med användarnamnet / e-postadressen och lösenord är för "
 "närvarande inaktiverat. Kontakta din administratör."
+
+#: app/models/audit_log.rb:75
+msgid "Rails console"
+msgstr ""
+
+#: app/models/audit_log.rb:78
+#, fuzzy
+#| msgid "Last run"
+msgid "Rails runner"
+msgstr "Senast körd"
 
 #: lib/ai/provider/concerns/handles_response.rb:13
 msgid "Rate limit exceeded - please wait a moment"
@@ -15916,7 +15984,7 @@ msgid "Related Tickets"
 msgstr "Relaterade ärenden"
 
 #: app/assets/javascripts/app/views/link/kb_answer.jst.eco:1
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:151
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:165
 #, fuzzy
 #| msgid "Related Answers"
 msgid "Related knowledge"
@@ -15934,7 +16002,7 @@ msgid ""
 "ticket."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:142
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:152
 #: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:180
 msgid "Related tickets"
 msgstr "Relaterade ärenden"
@@ -16483,14 +16551,14 @@ msgstr "Resultat"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee:161
 #: app/assets/javascripts/app/views/generic/text_tools_modal.jst.eco:14
-#: app/assets/javascripts/app/views/link/kb_answer.jst.eco:25
+#: app/assets/javascripts/app/views/link/kb_answer.jst.eco:34
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_ticket_summary.jst.eco:12
 #: app/assets/javascripts/app/views/widget/two_factor_login/security_keys.jst.eco:16
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationRecoveryCodes.vue:68
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:64
 #: app/frontend/apps/desktop/pages/authentication/components/LoginTwoFactor.vue:180
 #: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue:131
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketAISuggestedKnowledgeBaseAnswers.vue:134
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiSuggested.vue:64
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummaryContent.vue:96
 #: app/frontend/apps/mobile/pages/authentication/components/LoginTwoFactor.vue:183
 msgid "Retry"
@@ -16726,7 +16794,7 @@ msgstr "SSL/STARTTLS"
 msgid "SSO"
 msgstr "SSO"
 
-#: app/controllers/sessions_controller.rb:267
+#: app/controllers/sessions_controller.rb:281
 msgid "SSO request from untrusted IP address."
 msgstr ""
 
@@ -16990,6 +17058,12 @@ msgstr "Sök efter LDAP-källor"
 msgid "Search for activity types"
 msgstr "Sök efter aktivitetstyper"
 
+#: app/assets/javascripts/app/controllers/audit_log.coffee:41
+#, fuzzy
+#| msgid "Search for macros"
+msgid "Search for audit logs"
+msgstr "Sök efter makron"
+
 #: app/assets/javascripts/app/controllers/checklist_template.coffee:32
 msgid "Search for checklist templates"
 msgstr "Sök efter mallar för checklistor"
@@ -17151,8 +17225,8 @@ msgstr ""
 msgid "Search result value key \"%s\" was not found."
 msgstr "Sökresultat värdenyckel \"%s\" hittades inte."
 
-#: app/assets/javascripts/app/views/link/kb_answer.jst.eco:22
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketAISuggestedKnowledgeBaseAnswers.vue:142
+#: app/assets/javascripts/app/views/link/kb_answer.jst.eco:31
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiSuggested.vue:105
 #, fuzzy
 #| msgid "Search for templates"
 msgid "Searching for related answers…"
@@ -17162,7 +17236,7 @@ msgstr "Sök efter mallar"
 #: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax_customer_organization.coffee:18
 #: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax_external_data_source.coffee:13
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:845
-#: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee:180
+#: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee:194
 #: app/assets/javascripts/app/views/generic/icon_picker.jst.eco:9
 #: app/assets/javascripts/app/views/translation/form.jst.eco:7
 #: app/frontend/apps/desktop/components/CommonInputSearch/CommonInputSearch.vue:24
@@ -17181,7 +17255,7 @@ msgstr "Sök …"
 msgid "Secondary organizations"
 msgstr "Sekundära organisationer"
 
-#: app/models/user.rb:698
+#: app/models/user.rb:706
 msgid ""
 "Secondary organizations are only allowed when the primary organization is "
 "given."
@@ -17189,7 +17263,7 @@ msgstr ""
 "Sekundära organisationer är endast tillåtna när den primära organisationen "
 "är angiven."
 
-#: app/models/user.rb:704
+#: app/models/user.rb:712
 msgid "Secondary organizations cannot include the primary organization."
 msgstr ""
 "Sekundära organisationer kan inte inkludera den primära organisationen."
@@ -17593,7 +17667,7 @@ msgstr "Avsändare för senaste artikeln"
 msgid "Sending Email Address"
 msgstr "Avsändande E-postadress"
 
-#: app/models/ticket/article.rb:341
+#: app/models/ticket/article.rb:342
 msgid "Sending an email without a valid recipient is not possible."
 msgstr "Det går inte att skicka ett e-postmeddelande utan en giltig mottagare."
 
@@ -17817,7 +17891,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:52
 #: app/assets/javascripts/app/controllers/_channel/web.coffee:11
 #: app/assets/javascripts/app/controllers/chat.coffee:869
-#: app/assets/javascripts/app/controllers/manage.coffee:44
+#: app/assets/javascripts/app/controllers/manage.coffee:49
 #: app/assets/javascripts/app/controllers/ticket_zoom/setting.coffee:20
 #: app/assets/javascripts/app/controllers/time_accounting.coffee:18
 #: app/assets/javascripts/app/views/channel/form.jst.eco:13
@@ -17865,7 +17939,7 @@ msgstr "Delat utkast"
 
 #: app/controllers/tickets_controller.rb:89
 #: app/services/service/ticket/create.rb:197
-#: app/services/service/ticket/update.rb:84
+#: app/services/service/ticket/update.rb:86
 msgid "Shared draft cannot be selected for this ticket."
 msgstr "Delat utkast kan inte väljas för detta ärende."
 
@@ -18359,6 +18433,12 @@ msgstr "Ljud"
 msgid "Source"
 msgstr "Ursprung"
 
+#: app/assets/javascripts/app/models/audit_log.coffee:12
+#, fuzzy
+#| msgid "Source"
+msgid "Source IP"
+msgstr "Ursprung"
+
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:24
 msgid "Sources"
 msgstr "Ursprung/källor"
@@ -18490,6 +18570,7 @@ msgstr "Börja skriva för att söka eller ange en e-postadress…"
 
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:65
 #: app/frontend/apps/desktop/components/Form/fields/FieldCustomer/FieldCustomerWrapper.vue:116
+#: app/frontend/apps/desktop/components/Form/fields/FieldKnowledgeBaseAnswer/FieldKnowledgeBaseAnswerWrapper.vue:39
 #: app/frontend/apps/desktop/components/Form/fields/FieldTags/FieldTagsWrapper.vue:37
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:372
 msgid "Start typing to search…"
@@ -18520,9 +18601,7 @@ msgstr "Startar import…"
 #: app/graphql/gql/types/overview_type.rb:97
 #: app/views/mailer/ticket_create/fr.html.erb:10
 #: app/views/mailer/ticket_create/zh-cn.html.erb:10
-#: app/views/messaging/ticket_create/pt-br.md.erb:5
 #: app/views/messaging/ticket_create/zh-tw.md.erb:5
-#: app/views/messaging/ticket_info/pt-br.md.erb:5
 #: app/views/messaging/ticket_info/zh-tw.md.erb:5
 #: db/seeds/object_manager_attributes.rb:256 lib/excel_sheet/ticket.rb:25
 msgid "State"
@@ -18727,7 +18806,7 @@ msgstr "Följda ärenden"
 msgid "Subscribed tickets"
 msgstr "Följda ärenden"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:172
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:195
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:169
 msgid "Subscribers"
 msgstr "Följare"
@@ -18740,8 +18819,8 @@ msgstr "Prenumerationsinställningar"
 msgid "Subscription settings"
 msgstr "Prenumerationsinställningar"
 
-#: app/assets/javascripts/app/views/link/kb_answer.jst.eco:20
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketAISuggestedKnowledgeBaseAnswers.vue:116
+#: app/assets/javascripts/app/views/link/kb_answer.jst.eco:29
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiSuggested.vue:47
 #, fuzzy
 #| msgid "Suggested Next Steps"
 msgid "Suggested by AI"
@@ -18823,7 +18902,7 @@ msgstr "Synkronisera med dator"
 
 #: app/assets/javascripts/app/controllers/_manage/system.coffee:3
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:37
-#: app/assets/javascripts/app/controllers/manage.coffee:46
+#: app/assets/javascripts/app/controllers/manage.coffee:51
 #: app/assets/javascripts/app/views/generic/history.jst.eco:15
 #: app/frontend/apps/desktop/components/CommonHistoryFlyout/useHistoryEvents.ts:28
 #: db/seeds/permissions.rb:203 db/seeds/ticket_article_senders.rb:5
@@ -18847,7 +18926,7 @@ msgstr "Värd Notifiering"
 
 #: app/assets/javascripts/app/controllers/system_report.coffee:3
 #: app/assets/javascripts/app/views/system_report.jst.eco:2
-#: db/seeds/permissions.rb:338
+#: db/seeds/permissions.rb:344
 msgid "System Report"
 msgstr "System Report"
 
@@ -18939,7 +19018,7 @@ msgstr "%s skapad"
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco:41
 #: app/assets/javascripts/app/views/tag/index.jst.eco:3
 #: app/assets/javascripts/app/views/widget/tag.jst.eco:1
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:132
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:142
 #: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue:143
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue:75
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:164
@@ -19177,14 +19256,6 @@ msgid ""
 msgstr ""
 "24-timmarsfönstret är nu stängt, inga fler WhatsApp meddelanden kan skickas."
 
-#: lib/monitoring_helper/health_checker/ai_provider_accessible.rb:21
-msgid "The AI Provider is not accessible."
-msgstr "AI Provider är inte tillgänglig."
-
-#: lib/monitoring_helper/health_checker/ai_provider_accessible.rb:14
-msgid "The AI provider is not configured."
-msgstr "AI-leverantören är inte konfigurerad."
-
 #: app/controllers/user_access_token_controller.rb:41
 msgid "The API token could not be found."
 msgstr "API-token kunde inte hittas."
@@ -19263,10 +19334,6 @@ msgstr "PGP signaturen är ogiltig."
 #: lib/secure_mailing/pgp/tool/error.rb:97
 msgid "The PGP signature key has been revoked."
 msgstr "PGP signaturnyckeln har återkallats."
-
-#: lib/monitoring_helper/health_checker/s3_storage_availability.rb:12
-msgid "The Simple Storage Service is not available."
-msgstr "Simple Storage Service(S3) är inte tillgängligt."
 
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee:159
 msgid "The Telegram bot could not be saved."
@@ -19362,6 +19429,40 @@ msgstr "Artikeln kunde inte sättas som publik."
 msgid "The article does not belong to the specified ticket."
 msgstr "Artikeln tillhör inte det angivna ärendet."
 
+#: app/assets/javascripts/app/models/audit_log.coffee
+msgid ""
+"The audit log records security-relevant changes in your system: who changed "
+"what, and when.\n"
+"\n"
+"**Configuration changes** in the admin area:\n"
+"\n"
+"- Groups, roles, and permissions\n"
+"- Overviews, triggers, schedulers, macros, templates, text modules, and "
+"checklist templates\n"
+"- Channels, postmaster filters, signatures, LDAP sources, and webhooks\n"
+"- Calendars, SLAs, time accounting, core workflows, object attributes, "
+"public links, and report profiles\n"
+"- System settings and packages\n"
+"- AI agents and AI text tools\n"
+"- S/MIME, PGP, and SSL certificates\n"
+"- Knowledge bases and their languages\n"
+"\n"
+"**User account changes** (of agents and admins only):\n"
+"\n"
+"- Password changes\n"
+"- Activation and deactivation of accounts\n"
+"- Added or removed roles and group permissions\n"
+"- Two-factor authentication changes\n"
+"\n"
+"**Session events**:\n"
+"\n"
+"- Taking over another user's session via \"switch to user\" and switching "
+"back\n"
+"\n"
+"Day-to-day work such as ticket updates is not part of the audit log — it is "
+"covered by the ticket history instead."
+msgstr ""
+
 #: app/assets/javascripts/app/views/getting_started/auto_wizard_enabled.jst.eco:6
 msgid "The auto wizard is enabled. Please use the provided auto wizard url."
 msgstr ""
@@ -19415,12 +19516,12 @@ msgstr "Certifikatet för %s hittades, men är inte giltigt än eller har utgåt
 msgid "The certificate for %s was found."
 msgstr "Certifikatet för %s hittades."
 
-#: app/models/smime_certificate.rb:25
+#: app/models/smime_certificate.rb:33
 #: lib/secure_mailing/smime/security_options.rb:42
 msgid "The certificate for %s was not found."
 msgstr "Certifikatet för %s hittades inte."
 
-#: app/models/smime_certificate.rb:59
+#: app/models/smime_certificate.rb:67
 msgid "The certificate for this private key could not be found."
 msgstr "Certifikatet för privat nyckel kunde inte hittas."
 
@@ -19517,7 +19618,7 @@ msgstr ""
 msgid "The checklist feature is not active"
 msgstr "Checklistfunktionen är inte aktiv"
 
-#: app/models/group.rb:107
+#: app/models/group.rb:110
 msgid "The chosen parent group is part of a circular reference."
 msgstr ""
 
@@ -19771,6 +19872,7 @@ msgstr "Den angivna metoden för två-faktorsautentisering är inte konfigurerad
 msgid "The given two-factor authentication method is not enabled."
 msgstr "Den angivna Två-faktorsautentiseringmetoden är inte aktiverad."
 
+#: app/models/user/has_two_factor.rb:52
 #: app/services/service/user/two_factor/base.rb:13
 msgid "The given two-factor method does not exist."
 msgstr "Den angivna två-faktorsmetoden existerar inte."
@@ -19841,7 +19943,7 @@ msgstr ""
 "Installationen av paket medför säkerhetsproblem, eftersom godtycklig kod "
 "kommer att exekveras i samband med Zammad-applikationen."
 
-#: lib/search_index_backend.rb:456
+#: lib/search_index_backend.rb:457
 msgid ""
 "The installed attachment plugin could not handle the request payload. Ensure "
 "that the correct attachment plugin is installed (ingest-attachment)."
@@ -19863,7 +19965,7 @@ msgstr "Ärendereferensen finns redan."
 msgid "The issue reference could not be found."
 msgstr "Det ärendereferensen kunde inte hittas."
 
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBase.vue:42
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBase.vue:43
 #, fuzzy
 #| msgid "The Knowledge Base could not be created."
 msgid "The knowledge base could not be loaded."
@@ -20024,7 +20126,7 @@ msgstr ""
 msgid "The product version could not be fetched."
 msgstr "Produktversionen kunde inte hämtas."
 
-#: app/models/webhook.rb:77
+#: app/models/webhook.rb:80
 msgid "The provided HTTP method is invalid."
 msgstr "Den angivna HTTP-metoden är ogiltig."
 
@@ -20048,7 +20150,7 @@ msgstr "De angivna autentiseringsuppgifterna är ogiltiga."
 msgid "The provided email account is already in use."
 msgstr "Den angivna e-postkontot används redan."
 
-#: app/models/webhook.rb:57
+#: app/models/webhook.rb:60
 #, fuzzy
 #| msgid ""
 #| "The provided endpoint is invalid, no http or https protocol was specified."
@@ -20058,33 +20160,33 @@ msgid ""
 msgstr ""
 "Den angivna slutpunkten är ogiltig, inget http- eller https-protokoll angavs."
 
-#: app/models/webhook.rb:55
+#: app/models/webhook.rb:58
 #, fuzzy
 #| msgid "The provided endpoint is invalid, no hostname was specified."
 msgid "The provided endpoint is invalid, it points to a link-local IP address."
 msgstr "Den angivna slutpunkten är ogiltig, inget värdnamn angavs."
 
-#: app/models/webhook.rb:53
+#: app/models/webhook.rb:56
 #, fuzzy
 #| msgid "The provided endpoint is invalid, no hostname was specified."
 msgid "The provided endpoint is invalid, it points to a loopback IP address."
 msgstr "Den angivna slutpunkten är ogiltig, inget värdnamn angavs."
 
-#: app/models/webhook.rb:47
+#: app/models/webhook.rb:50
 msgid "The provided endpoint is invalid, no hostname was specified."
 msgstr "Den angivna slutpunkten är ogiltig, inget värdnamn angavs."
 
-#: app/models/webhook.rb:46
+#: app/models/webhook.rb:49
 msgid ""
 "The provided endpoint is invalid, no http or https protocol was specified."
 msgstr ""
 "Den angivna slutpunkten är ogiltig, inget http- eller https-protokoll angavs."
 
-#: app/models/webhook.rb:51
+#: app/models/webhook.rb:54
 msgid "The provided endpoint is invalid."
 msgstr "Den angivna slutpunkten är ogiltig."
 
-#: app/models/postmaster_filter.rb:32
+#: app/models/postmaster_filter.rb:33
 msgid "The provided match operator is missing or invalid."
 msgstr "Den angivna matchningsoperatören saknas eller är ogiltig."
 
@@ -20092,7 +20194,7 @@ msgstr "Den angivna matchningsoperatören saknas eller är ogiltig."
 msgid "The provided password is incorrect."
 msgstr "Det angivna Lösenordet är felaktigt."
 
-#: app/models/webhook.rb:66
+#: app/models/webhook.rb:69
 msgid "The provided payload is invalid. Please check your syntax."
 msgstr "Den angivna payload är ogiltig. Kontrollera din syntax."
 
@@ -20174,7 +20276,7 @@ msgstr "Det obligatoriska fältet 'api_token' saknas i konfigurationen."
 msgid "The required field 'endpoint' is missing from the config."
 msgstr "Det obligatoriska fältet 'endpoint' saknas i konfigurationen."
 
-#: app/models/postmaster_filter.rb:33
+#: app/models/postmaster_filter.rb:34
 msgid "The required match value is missing."
 msgstr "Det obligatoriska matchningsvärdet saknas."
 
@@ -20225,7 +20327,7 @@ msgstr "Den obligatoriska parametern 'group_id' saknas."
 msgid "The required parameter 'id' is missing."
 msgstr "Den obligatoriska parametern 'id' saknas."
 
-#: lib/search_index_backend.rb:703
+#: lib/search_index_backend.rb:704
 msgid "The required parameter 'key' is missing."
 msgstr "Obligatorisk parameter 'key' saknas."
 
@@ -20233,7 +20335,7 @@ msgstr "Obligatorisk parameter 'key' saknas."
 msgid "The required parameter 'link_type' is missing."
 msgstr "Den obligatoriska parametern 'link_type' saknas."
 
-#: app/models/text_module.rb:30
+#: app/models/text_module.rb:31
 msgid "The required parameter 'locale' is missing."
 msgstr "Den obligatoriska parametern 'locale' saknas."
 
@@ -20281,7 +20383,7 @@ msgstr "Den nödvändiga parametern 'ticket_number' saknas."
 msgid "The required parameter 'user_id' is missing."
 msgstr "Obligatorisk parameter 'user_id' saknas."
 
-#: lib/search_index_backend.rb:704
+#: lib/search_index_backend.rb:705
 msgid "The required parameter 'value' is missing."
 msgstr "Obligatorisk parameter 'value' saknas."
 
@@ -20405,7 +20507,7 @@ msgstr ""
 msgid "The signature was successfully verified."
 msgstr "Signaturen verifierades framgångsrikt."
 
-#: app/controllers/tickets_controller.rb:370
+#: app/controllers/tickets_controller.rb:372
 msgid "The source ticket could not be found."
 msgstr "Det ursprungliga ärendet kunde inte hittas."
 
@@ -20421,14 +20523,14 @@ msgstr ""
 "Strukturen är ett JSON-objekt som definierar det resultatformat som ska "
 "returneras av AI-agenten."
 
-#: app/assets/javascripts/app/views/link/kb_answer.jst.eco:24
+#: app/assets/javascripts/app/views/link/kb_answer.jst.eco:33
 #: app/jobs/ticket_ai_related_knowledge_base_answers_embed_job.rb:27
 #, fuzzy
 #| msgid "The token could not be generated."
 msgid "The suggestions could not be generated."
 msgstr "Token kunde inte genereras."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketAISuggestedKnowledgeBaseAnswers.vue:125
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiSuggested.vue:55
 #, fuzzy
 #| msgid ""
 #| "The summary could not be generated. Please try again later or contact "
@@ -20487,7 +20589,7 @@ msgstr ""
 msgid "The system was configured successfully. You are being redirected."
 msgstr "Systemet konfigurerades framgångsrikt. Du omdirigeras."
 
-#: app/controllers/tickets_controller.rb:361
+#: app/controllers/tickets_controller.rb:363
 msgid "The target ticket number could not be found."
 msgstr "Mål-ärendenumret kunde inte hittas."
 
@@ -20566,7 +20668,7 @@ msgstr "Tvåfaktorsautentiseringen är inte konfigurerad."
 msgid "The two-factor authentication method \"%s\" was removed for this user."
 msgstr "Två-faktorautentiseringsmetoden \"%s\" togs bort för denna användaren."
 
-#: app/controllers/sessions_controller.rb:256
+#: app/controllers/sessions_controller.rb:270
 #: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:32
 #: app/services/service/user/two_factor/initiate_method_configuration.rb:6
 #: app/services/service/user/two_factor/verify_method_configuration.rb:15
@@ -20603,7 +20705,7 @@ msgid "The user's 'preferred_username' could not be extracted from 'id_token'."
 msgstr ""
 "Användarens 'preferred_username' kunde inte extraheras från 'id_token'."
 
-#: app/controllers/sessions_controller.rb:252
+#: app/controllers/sessions_controller.rb:266
 #: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:27
 msgid "The username or password is incorrect."
 msgstr "Användarnamnet eller lösenordet är felaktigt."
@@ -20680,7 +20782,7 @@ msgstr ""
 "kopp kaffe. Det totala antalet ärenden uppdateras så snart det för "
 "närvarande kända numret överträffas."
 
-#: app/models/calendar.rb:310
+#: app/models/calendar.rb:313
 msgid "There are no business hours configured."
 msgstr "Inga öppettider har konfigurerats."
 
@@ -20700,7 +20802,7 @@ msgstr "Det kan finnas flera anledningar till att chatten inte visas:"
 msgid "There are too many people in the chat queue."
 msgstr "Det är för många personer i kö för chatt."
 
-#: app/models/pgp_key.rb:9
+#: app/models/pgp_key.rb:14
 msgid "There is already a PGP key with the same fingerprint."
 msgstr "Det finns redan en PGP-nyckel med samma fingeravtryck."
 
@@ -21093,17 +21195,17 @@ msgstr "Fältet får inte innehålla mer än %s tecken."
 msgid "This field was configured incorrectly and can't be submitted."
 msgstr "Detta fält har konfigurerats felaktigt och kan inte skickas."
 
-#: app/models/group.rb:80
+#: app/models/group.rb:83
 #, fuzzy
 #| msgid "A ticket cannot be merged into itself."
 msgid "This group cannot be moved into itself."
 msgstr "Ett ärende kan inte slås ihop med sig själv."
 
-#: app/models/group.rb:81
+#: app/models/group.rb:84
 msgid "This group cannot be moved into one of its children."
 msgstr ""
 
-#: app/models/group.rb:87
+#: app/models/group.rb:90
 #, fuzzy
 #| msgid "This group or its children exceed the allowed nesting depth."
 msgid "This group exceeds the allowed nesting depth."
@@ -21117,7 +21219,7 @@ msgstr ""
 "Den här gruppen har ingen e-postadress konfigurerad för utgående "
 "kommunikation."
 
-#: app/models/group.rb:93
+#: app/models/group.rb:96
 #, fuzzy
 #| msgid "This group or its children exceed the allowed nesting depth."
 msgid "This group's children would exceed the allowed nesting depth."
@@ -21160,7 +21262,7 @@ msgstr ""
 msgid "This is not a private PGP key."
 msgstr "Detta är inte en privat PGP-nyckel."
 
-#: app/models/ssl_certificate.rb:11
+#: app/models/ssl_certificate.rb:16
 msgid ""
 "This is not a valid X509 certificate. Please check the certificate format."
 msgstr ""
@@ -21177,7 +21279,7 @@ msgstr "Denna artikel expanderar för att visa fler alternativ"
 msgid "This knowledge base category is not available."
 msgstr "Simple Storage Service(S3) är inte tillgängligt."
 
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBase.vue:17
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBase.vue:18
 #, fuzzy
 #| msgid "Not available in selected language"
 msgid "This knowledge base is not available in the selected language."
@@ -22062,7 +22164,7 @@ msgid "Tickets bulk edit"
 msgstr "Ärende massredigering"
 
 #: app/controllers/ticket_articles_controller.rb:238
-#: app/controllers/tickets_controller.rb:452
+#: app/controllers/tickets_controller.rb:454
 msgid "Tickets can only be imported if system is in import mode."
 msgstr "Ärenden kan endast importeras om systemet är i importläge."
 
@@ -22359,7 +22461,7 @@ msgstr "Token"
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee:3
 #: app/assets/javascripts/app/views/api.jst.eco:12
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:2
-#: db/seeds/permissions.rb:492
+#: db/seeds/permissions.rb:498
 msgid "Token Access"
 msgstr "Token Access"
 
@@ -22618,7 +22720,7 @@ msgstr "Twitterstatus"
 
 #: app/assets/javascripts/app/controllers/_manage/security.coffee:11
 #: app/assets/javascripts/app/views/profile/password.jst.eco:22
-#: db/seeds/permissions.rb:478
+#: db/seeds/permissions.rb:484
 msgid "Two-factor Authentication"
 msgstr "Två-faktorautentisering"
 
@@ -22814,9 +22916,21 @@ msgstr ""
 msgid "Unlink issue"
 msgstr "Problem med frånkoppling"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseLinks.vue:53
+#, fuzzy
+#| msgid "Inserts knowledge base answer"
+msgid "Unlink knowledge base answer"
+msgstr "Infoga ett kunskapsbankssvar"
+
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:209
 msgid "Unlink object"
 msgstr "Koppla bort objektet"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:121
+#, fuzzy
+#| msgid "Link ticket"
+msgid "Unlink ticket"
+msgstr "Länka ärende"
 
 #: app/assets/javascripts/app/controllers/user.coffee:110
 msgid "Unlock"
@@ -22947,7 +23061,7 @@ msgstr "Uppdatering Diff i min"
 msgid "Update Escalation At"
 msgstr "Uppdatera Eskalering"
 
-#: db/seeds/schedulers.rb:259
+#: db/seeds/schedulers.rb:268
 #, fuzzy
 #| msgid "Update exchange oauth 2 token."
 msgid "Update Exchange OAuth2 token."
@@ -23386,6 +23500,7 @@ msgstr "Används när du visar ett ärende"
 #: app/assets/javascripts/app/controllers/user.coffee:3
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:2
 #: app/assets/javascripts/app/lib/app_post/user_organization_autocompletion.coffee:2
+#: app/assets/javascripts/app/models/audit_log.coffee:8
 #: app/assets/javascripts/app/models/data_privacy_task.coffee:6
 #: app/assets/javascripts/app/models/job.coffee:8
 #: app/assets/javascripts/app/models/mention.coffee:6
@@ -25100,7 +25215,7 @@ msgstr "tilldela ärenden"
 msgid "at"
 msgstr "kl"
 
-#: app/models/object_manager/attribute.rb:604
+#: app/models/object_manager/attribute.rb:607
 msgid "at least one letter is required"
 msgstr "åtminstone en bokstav krävs"
 
@@ -25109,7 +25224,7 @@ msgstr "åtminstone en bokstav krävs"
 msgid "attachment,attached,enclosed,enclosure"
 msgstr "Bifogad fil,bifogad,bifogad,bifogad"
 
-#: app/models/object_manager/attribute.rb:637
+#: app/models/object_manager/attribute.rb:640
 msgid "attribute is not editable"
 msgstr "Attributet är inte redigerbart"
 
@@ -25143,7 +25258,7 @@ msgstr "upptagen"
 msgid "camera,image,photo,picture"
 msgstr "kamera,bild,foto,bild"
 
-#: app/models/object_manager/attribute.rb:683
+#: app/models/object_manager/attribute.rb:686
 msgid ""
 "can't be altered after creation (you can delete the attribute and create "
 "another with the desired value)"
@@ -25157,17 +25272,17 @@ msgstr "kan inte vara blank"
 msgid "can't be empty"
 msgstr "kan inte vara tom"
 
-#: app/models/object_manager/attribute.rb:690
+#: app/models/object_manager/attribute.rb:693
 #, fuzzy
 #| msgid "can't be empty"
 msgid "can't be modified"
 msgstr "kan inte vara tom"
 
-#: app/models/object_manager/attribute.rb:595
+#: app/models/object_manager/attribute.rb:598
 msgid "can't be used because *_id and *_ids are not allowed"
 msgstr "kan inte användas eftersom *_id och *_ids inte är tillåtna"
 
-#: app/models/knowledge_base/category.rb:181
+#: app/models/knowledge_base/category.rb:202
 msgid "cannot be a subcategory of the parent category"
 msgstr "får inte vara en underkategori till den överordnade kategorin"
 
@@ -25256,6 +25371,12 @@ msgstr "innehåller en"
 msgid "contains one not"
 msgstr "innehåller inte en"
 
+#: app/assets/javascripts/app/models/audit_log.coffee:7
+#, fuzzy
+#| msgid "created"
+msgid "create"
+msgstr "skapad"
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:87
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:114
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco:36
@@ -25302,11 +25423,11 @@ msgstr "Anpassad enhet"
 msgid "d"
 msgstr "d"
 
-#: app/models/concerns/can_be_published.rb:145
+#: app/models/concerns/can_be_published.rb:149
 msgid "date must be no earlier than internal date"
 msgstr "datum får inte vara tidigare än internt datum"
 
-#: app/models/concerns/can_be_published.rb:151
+#: app/models/concerns/can_be_published.rb:155
 msgid "date must be no earlier than published date"
 msgstr "datum får inte vara tidigare än publicerat datum"
 
@@ -25350,6 +25471,10 @@ msgstr "Levererat till kunden"
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketOrderBySelector.vue:36
 msgid "descending"
 msgstr "fallande"
+
+#: app/assets/javascripts/app/models/audit_log.coffee:7
+msgid "destroy"
+msgstr ""
 
 #: app/frontend/apps/desktop/components/Search/QuickSearch/QuickSearchResultList/QuickSearchResultList.vue:106
 msgid "detailed search"
@@ -25819,7 +25944,7 @@ msgstr "är inte i arbetstid"
 msgid "is not included in the list"
 msgstr "är inte i listan"
 
-#: app/models/knowledge_base/category.rb:199
+#: app/models/knowledge_base/category.rb:220
 msgid "is part of a circular reference"
 msgstr ""
 
@@ -25851,7 +25976,7 @@ msgstr "har fel längd (ska vara %{antal} tecken)"
 msgid "is the wrong length (should be 1 character)"
 msgstr "har fel längd (ska vara 1 tecken)"
 
-#: app/models/user.rb:895
+#: app/models/user.rb:905
 msgid "is too long"
 msgstr "är för lång"
 
@@ -25985,13 +26110,13 @@ msgstr "Månad(er)"
 msgid "must be a hash with \"label\" and \"value\" keys"
 msgstr ""
 
-#: app/models/calendar.rb:244
+#: app/models/calendar.rb:247
 #, fuzzy
 #| msgid "is not a valid URL"
 msgid "must be a valid HTTP(S) URL"
 msgstr "är inte en giltig URL"
 
-#: app/models/knowledge_base.rb:259
+#: app/models/knowledge_base.rb:270
 msgid "must be a valid path or domain"
 msgstr "måste vara en giltig sökväg eller domän"
 
@@ -26031,18 +26156,18 @@ msgstr "måste vara udda"
 msgid "must be other than %{count}"
 msgstr "måste vara annat än %{antal}"
 
-#: app/models/knowledge_base.rb:247
+#: app/models/knowledge_base.rb:258
 msgid "must begin with a slash (\"/\")"
 msgstr "måste börja med ett snedstreck (\"/\")"
 
 msgid "must exist"
 msgstr "måste finnas"
 
-#: app/models/knowledge_base.rb:255
+#: app/models/knowledge_base.rb:266
 msgid "must not end with a slash (\"/\")"
 msgstr "får inte avslutas med ett snedstreck (\"/\")"
 
-#: app/models/knowledge_base.rb:251
+#: app/models/knowledge_base.rb:262
 msgid "must not include a protocol (e.g., \"http://\" or \"https://\")"
 msgstr ""
 "får inte innehålla ett protokoll (t.ex. \"http://\" eller \"https://\")"
@@ -26160,7 +26285,7 @@ msgstr "notifieringar,ärenden"
 msgid "now"
 msgstr "nu"
 
-#: app/models/object_manager/attribute.rb:601
+#: app/models/object_manager/attribute.rb:604
 msgid "only lowercase letters, numbers, and '_' are allowed"
 msgstr "endast små bokstäver, siffror och '_' är tillåtna"
 
@@ -26424,7 +26549,7 @@ msgstr "skippad"
 msgid "sms"
 msgstr "sms"
 
-#: app/models/object_manager/attribute.rb:598
+#: app/models/object_manager/attribute.rb:601
 msgid "spaces are not allowed"
 msgstr "mellanslag är inte tillåtna"
 
@@ -26461,6 +26586,18 @@ msgstr "prenumeration,kalendrar,ärende,ical"
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:16
 msgid "support@example.com"
 msgstr "support@exempel.se"
+
+#: app/assets/javascripts/app/models/audit_log.coffee:7
+#, fuzzy
+#| msgid "Switch back to old layout"
+msgid "switch back to user"
+msgstr "Växla tillbaka till gammal layout"
+
+#: app/assets/javascripts/app/models/audit_log.coffee:7
+#, fuzzy
+#| msgid "%s switched to |%s|!"
+msgid "switch to user"
+msgstr "%s bytte till |%s|!"
 
 #: app/assets/javascripts/app/controllers/translation.coffee:279
 msgid "system"
@@ -26579,6 +26716,12 @@ msgstr "avaktivera skrivskyddad"
 msgid "untouched"
 msgstr "oberörd"
 
+#: app/assets/javascripts/app/models/audit_log.coffee:7
+#, fuzzy
+#| msgid "updated"
+msgid "update"
+msgstr "uppdaterad"
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:88
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:115
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco:36
@@ -26640,13 +26783,13 @@ msgstr "inom sista (relativa)"
 msgid "within next (relative)"
 msgstr "inom nästa (relativ)"
 
-#: app/models/knowledge_base/category.rb:212
+#: app/models/knowledge_base/category.rb:233
 #, fuzzy
 #| msgid "This group or its children exceed the allowed nesting depth."
 msgid "would exceed the allowed nesting depth"
 msgstr "Denna grupp eller dess barn överskrider det tillåtna nestingdjupet."
 
-#: app/models/knowledge_base/category.rb:217
+#: app/models/knowledge_base/category.rb:238
 #, fuzzy
 #| msgid "This group or its children exceed the allowed nesting depth."
 msgid "would push this category's children beyond the allowed nesting depth"
@@ -26712,6 +26855,21 @@ msgstr "...av hela textfältet"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ Väntetid idag"
+
+#~ msgid "The AI Provider is not accessible."
+#~ msgstr "AI Provider är inte tillgänglig."
+
+#~ msgid "The AI provider is not configured."
+#~ msgstr "AI-leverantören är inte konfigurerad."
+
+#~ msgid "The Simple Storage Service is not available."
+#~ msgstr "Simple Storage Service(S3) är inte tillgängligt."
+
+#~ msgid "Delete this link"
+#~ msgstr "Ta bort denna länk"
+
+#~ msgid "Link removed successfully"
+#~ msgstr "Länk togs bort"
 
 #~ msgid "Linked Tickets"
 #~ msgstr "Länkade ärenden"
