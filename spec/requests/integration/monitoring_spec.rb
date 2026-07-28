@@ -110,6 +110,53 @@ RSpec.describe 'Monitoring', authenticated_as: :admin, type: :request do
           .not_to include('The instance is running in import_mode - please check the configuration if this is not intended.')
       end
     end
+
+    context 'when the system setup is not completed' do
+      before do
+        Setting.set('system_init_done', false)
+      end
+
+      it 'returns a warning' do
+        make_call
+
+        expect(json_response).to include(
+          'healthy' => false,
+          'issues'  => include('The system setup is not completed.')
+        )
+      end
+    end
+
+    context 'when the system setup is completed' do
+      before do
+        Setting.set('system_init_done', true)
+      end
+
+      it 'returns no warning' do
+        make_call
+
+        expect(json_response['issues'])
+          .not_to include('The system setup is not completed.')
+      end
+    end
+
+    context 'when the instance is running in import_mode and the system setup is not completed' do
+      before do
+        Setting.set('import_mode', true)
+        Setting.set('system_init_done', false)
+      end
+
+      it 'returns both warnings' do
+        make_call
+
+        expect(json_response).to include(
+          'healthy' => false,
+          'issues'  => include(
+            'The instance is running in import_mode - please check the configuration if this is not intended.',
+            'The system setup is not completed.'
+          )
+        )
+      end
+    end
   end
 
   describe '#status' do
