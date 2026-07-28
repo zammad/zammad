@@ -553,7 +553,7 @@ msgstr "%s создал(а) роль |%s|"
 msgid "%s created ticket |%s|"
 msgstr "%s создал(а) заявку |%s|"
 
-#: app/assets/javascripts/app/models/user.coffee:208
+#: app/assets/javascripts/app/models/user.coffee:217
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/user.ts:21
 msgid "%s created user |%s|"
 msgstr "%s создал(а) пользователя |%s|"
@@ -585,7 +585,7 @@ msgstr ""
 "%s писем найдено в Вашем почтовом ящике. Все они будут перемещены из Вашего "
 "почтового ящика в Zammad."
 
-#: app/assets/javascripts/app/models/user.coffee:222
+#: app/assets/javascripts/app/models/user.coffee:231
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/user.ts:29
 msgid "%s ended switch to |%s|!"
 msgstr "%s завершил(а) переключение на |%s|!"
@@ -712,7 +712,7 @@ msgstr ""
 "Выбрано %s. Используйте клавиши со стрелками, чтобы выбрать место для "
 "размещения, затем нажмите пробел."
 
-#: app/assets/javascripts/app/models/user.coffee:212
+#: app/assets/javascripts/app/models/user.coffee:221
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/user.ts:25
 msgid "%s started a new session"
 msgstr "%s начал(а) новую сессию"
@@ -722,7 +722,7 @@ msgstr "%s начал(а) новую сессию"
 msgid "%s subdomain"
 msgstr "%s поддомен"
 
-#: app/assets/javascripts/app/models/user.coffee:217
+#: app/assets/javascripts/app/models/user.coffee:226
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/user.ts:27
 msgid "%s switched to |%s|!"
 msgstr "%s переключился на |%s|!"
@@ -782,7 +782,7 @@ msgstr "%s обновил(а) роль |%s|"
 msgid "%s updated ticket |%s|"
 msgstr "%s обновил(а) заявку |%s|"
 
-#: app/assets/javascripts/app/models/user.coffee:210
+#: app/assets/javascripts/app/models/user.coffee:219
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/user.ts:23
 msgid "%s updated user |%s|"
 msgstr "%s обновил(а) пользователя |%s|"
@@ -1897,7 +1897,7 @@ msgid "Add this class to a button on your page that should open the chat."
 msgstr ""
 "Добавить этот класс к кнопке на Вашей странице, которая должна открыть чат."
 
-#: app/models/ai/agent/type/ticket_tagger.rb:164
+#: app/models/ai/agent/type/ticket_tagger.rb:169
 #, fuzzy
 #| msgid "Update existing records"
 msgid "Add to existing tags"
@@ -2912,7 +2912,7 @@ msgstr "Вложения хранятся в файловой системе."
 msgid "Attendees"
 msgstr "Участники"
 
-#: app/assets/javascripts/app/models/user.coffee:12
+#: app/assets/javascripts/app/models/user.coffee:21
 #: app/frontend/apps/desktop/entities/user/composables/useUserEdit.ts:80
 #: app/frontend/apps/mobile/entities/user/composables/useUserEdit.ts:67
 msgid ""
@@ -3166,7 +3166,7 @@ msgstr "Доступно для следующих ролей"
 msgid "Available methods"
 msgstr "Доступные методы"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:119
+#: app/models/ai/agent/type/ticket_tagger.rb:124
 msgid ""
 "Available tags are limited to existing in the manage tags section. AI agent "
 "won't be able to generate new ones. %l"
@@ -3177,7 +3177,7 @@ msgid "Available types for a new ticket"
 msgstr "Доступные типы для новой заявки"
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee:3
-#: app/assets/javascripts/app/models/user.coffee:29
+#: app/assets/javascripts/app/models/user.coffee:38
 #: app/assets/javascripts/app/views/customer_chat/setting.jst.eco:22
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco:3
 #: app/assets/javascripts/app/views/profile/imageCropper.jst.eco:3
@@ -4145,7 +4145,7 @@ msgstr "Выберите группу, в которую будут добавл
 msgid "Choose the group to which page posts will get added."
 msgstr "Выберите группу, в которую будут добавляться публикации страницы."
 
-#: app/models/ai/agent/type/ticket_tagger.rb:168
+#: app/models/ai/agent/type/ticket_tagger.rb:173
 msgid ""
 "Choose whether the suggested tags are added to or replace the existing tags "
 "on the ticket."
@@ -4223,7 +4223,7 @@ msgstr "Введите свой новый пароль."
 msgid "Choose your preferred two-factor authentication method to set it up."
 msgstr "Настройте предпочтительный метод двухфакторной аутентификации."
 
-#: app/assets/javascripts/app/models/user.coffee:332
+#: app/assets/javascripts/app/models/user.coffee:341
 msgid "Christmas holiday"
 msgstr "праздник Рождества"
 
@@ -4609,7 +4609,7 @@ msgstr "Настроить приложение"
 msgid "Configure Basic Settings"
 msgstr "Настройка основных параметров"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:156
+#: app/models/ai/agent/type/ticket_tagger.rb:161
 msgid ""
 "Configure the way required number of resulting tags are added or replaced in "
 "the ticket tags list."
@@ -5335,7 +5335,7 @@ msgstr "Создана внутренняя статья"
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee:7
 #: app/assets/javascripts/app/models/organization.coffee:9
 #: app/assets/javascripts/app/models/ticket.coffee:28
-#: app/assets/javascripts/app/models/user.coffee:15
+#: app/assets/javascripts/app/models/user.coffee:24
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco:17
 #: app/assets/javascripts/app/views/widget/http_log.jst.eco:19
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco:23
@@ -5368,7 +5368,7 @@ msgstr "Создано в:"
 #: app/assets/javascripts/app/models/sla.coffee:10
 #: app/assets/javascripts/app/models/ticket.coffee:27
 #: app/assets/javascripts/app/models/ticket_article.coffee:15
-#: app/assets/javascripts/app/models/user.coffee:14
+#: app/assets/javascripts/app/models/user.coffee:23
 #: app/frontend/shared/entities/organization/stores/objectAttributes.ts:14
 #: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:91
 #: app/frontend/shared/entities/user/stores/objectAttributes.ts:14
@@ -5853,7 +5853,7 @@ msgstr ""
 "Ваших агентов, показывая им только соответствующие записи вызовов и "
 "уведомления."
 
-#: app/models/ai/agent/type/ticket_tagger.rb:115
+#: app/models/ai/agent/type/ticket_tagger.rb:120
 msgid "Define rules for adding tags in the system."
 msgstr ""
 
@@ -7655,7 +7655,7 @@ msgstr ""
 "может создать новую философию атрибутов/тегов заявок по сравнению с текущим "
 "использованием динамических полей в OTRS."
 
-#: app/assets/javascripts/app/models/user.coffee:334
+#: app/assets/javascripts/app/models/user.coffee:343
 msgid "Easter holiday"
 msgstr "Рождественские каникулы"
 
@@ -7833,7 +7833,7 @@ msgstr "Версия Elasticsearch"
 #: app/assets/javascripts/app/controllers/getting_started/channel.coffee:15
 #: app/assets/javascripts/app/models/email_address.coffee:2
 #: app/assets/javascripts/app/models/group.coffee:12
-#: app/assets/javascripts/app/models/user.coffee:11
+#: app/assets/javascripts/app/models/user.coffee:20
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:6
 #: app/assets/javascripts/app/views/import/kayako.jst.eco:42
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco:39
@@ -9229,7 +9229,7 @@ msgstr "Первые шаги"
 msgid "First article (oldest)"
 msgstr "Последняя статья"
 
-#: app/assets/javascripts/app/models/user.coffee:9
+#: app/assets/javascripts/app/models/user.coffee:18
 #: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts:14
 #: db/seeds/object_manager_attributes.rb:818
 msgid "First name"
@@ -9555,7 +9555,7 @@ msgstr "Шлюз"
 msgid "General communication error, maybe internet is not available!"
 msgstr "Общая ошибка связи, возможно интернет недоступен!"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:126
+#: app/models/ai/agent/type/ticket_tagger.rb:131
 msgid "General tagging principles"
 msgstr ""
 
@@ -9885,7 +9885,7 @@ msgid "Group needed in channel definition!"
 msgstr "Требуется группа для определения канала!"
 
 #: app/assets/javascripts/app/models/role.coffee:8
-#: app/assets/javascripts/app/models/user.coffee:13
+#: app/assets/javascripts/app/models/user.coffee:22
 #: db/seeds/object_manager_attributes.rb:1661
 msgid "Group permissions"
 msgstr "Групповые разрешения"
@@ -11688,7 +11688,7 @@ msgstr ""
 msgid "Last login"
 msgstr "Последний вход в систему"
 
-#: app/assets/javascripts/app/models/user.coffee:10
+#: app/assets/javascripts/app/models/user.coffee:19
 #: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts:23
 #: db/seeds/object_manager_attributes.rb:871
 msgid "Last name"
@@ -12061,7 +12061,7 @@ msgstr "Местонахождение внешнего файла chat.css."
 msgid "Log in to %s"
 msgstr "Войдите в %s"
 
-#: app/assets/javascripts/app/models/user.coffee:8
+#: app/assets/javascripts/app/models/user.coffee:17
 #: app/assets/javascripts/app/views/maintenance.jst.eco:25
 #: app/controllers/time_accountings_controller.rb:101
 #: db/seeds/object_manager_attributes.rb:785
@@ -13411,7 +13411,7 @@ msgstr "Новый персональный токен доступа"
 msgid "New tab"
 msgstr "Новая вкладка"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:145
+#: app/models/ai/agent/type/ticket_tagger.rb:150
 #, fuzzy
 #| msgid "New Category"
 msgid "New tags strategy"
@@ -14169,13 +14169,13 @@ msgstr "Ноябрь"
 msgid "Number"
 msgstr "Число"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:175
+#: app/models/ai/agent/type/ticket_tagger.rb:180
 #, fuzzy
 #| msgid "Number"
 msgid "Number of tags"
 msgstr "Число"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:179
+#: app/models/ai/agent/type/ticket_tagger.rb:184
 msgid "Number of tags the AI agent may assign."
 msgstr ""
 
@@ -14612,7 +14612,7 @@ msgstr "Порядок представлений заявок"
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_organization.coffee:20
 #: app/assets/javascripts/app/models/job.coffee:8
 #: app/assets/javascripts/app/models/ticket.coffee:9
-#: app/assets/javascripts/app/models/user.coffee:12
+#: app/assets/javascripts/app/models/user.coffee:21
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco:45
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco:5
 #: app/assets/javascripts/app/views/time_accounting/accounted_time.jst.eco:25
@@ -15641,7 +15641,7 @@ msgstr "Иконки приоритета заявки"
 msgid "Priority rules"
 msgstr "Приоритет"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:135
+#: app/models/ai/agent/type/ticket_tagger.rb:140
 #, fuzzy
 #| msgid "Priority"
 msgid "Priority tagging rules"
@@ -16316,7 +16316,7 @@ msgstr "Переупорядочить"
 msgid "Replace"
 msgstr "Замена"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:166
+#: app/models/ai/agent/type/ticket_tagger.rb:171
 #, fuzzy
 #| msgid "Replacement agent"
 msgid "Replace existing tags with"
@@ -18335,7 +18335,6 @@ msgstr "Найдено похожих заявок"
 msgid "Simple Line Icons"
 msgstr "Simple Line Icons"
 
-#: app/assets/javascripts/app/views/settings/storage_provider.jst.eco:22
 #: db/seeds/settings.rb:379
 msgid "Simple Storage (S3)"
 msgstr "Simple Storage (S3)"
@@ -18913,7 +18912,7 @@ msgstr "Служба изображений"
 msgid "Summary is being generated…"
 msgstr "Сводка формируется…"
 
-#: app/assets/javascripts/app/models/user.coffee:336
+#: app/assets/javascripts/app/models/user.coffee:345
 msgid "Summer holiday"
 msgstr "летние выходные"
 
@@ -19053,7 +19052,7 @@ msgstr "Тег"
 msgid "Tag \"%s\" already exists."
 msgstr "Тег \"%s\" уже существует."
 
-#: app/models/ai/agent/type/ticket_tagger.rb:160
+#: app/models/ai/agent/type/ticket_tagger.rb:165
 #, fuzzy
 #| msgid "Assignment Timeout"
 msgid "Tag assignment mode"
@@ -20121,7 +20120,7 @@ msgstr ""
 "Невозможно сформировать предпросмотр. Формат является недопустимым или не "
 "поддерживается."
 
-#: app/models/ai/agent/type/ticket_tagger.rb:139
+#: app/models/ai/agent/type/ticket_tagger.rb:144
 msgid ""
 "The priority rules instruct the AI agent on how to add tags for incoming "
 "tickets."
@@ -20459,7 +20458,7 @@ msgstr "Повторная попытка загрузки вложения не
 msgid "The retried security process failed!"
 msgstr "Сбой в процессе восстановления системы безопасности!"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:130
+#: app/models/ai/agent/type/ticket_tagger.rb:135
 msgid "The rules instruct the AI agent on how tags are used in the system."
 msgstr ""
 
@@ -20483,7 +20482,7 @@ msgstr ""
 "нескольких совпадений в извлеченном тексте. Обязательно приведите несколько "
 "примеров форматов и любые необходимые дополнительные инструкции."
 
-#: app/models/ai/agent/type/ticket_tagger.rb:149
+#: app/models/ai/agent/type/ticket_tagger.rb:154
 msgid ""
 "The rules instruct the AI agent on when to generate new tags and when to "
 "prefer tags from existing tags list."
@@ -22601,7 +22600,7 @@ msgstr "Общее количество учтенного времени"
 msgid "Total display of the number of objects in a grouping."
 msgstr "Отображение общего количества объектов в группировке."
 
-#: app/models/ai/agent/type/ticket_tagger.rb:165
+#: app/models/ai/agent/type/ticket_tagger.rb:170
 #, fuzzy
 #| msgid "Ticket could not be created."
 msgid "Total shouldn't exceed"
@@ -23246,7 +23245,7 @@ msgstr "Обновлено в"
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee:8
 #: app/assets/javascripts/app/models/organization.coffee:11
 #: app/assets/javascripts/app/models/ticket.coffee:30
-#: app/assets/javascripts/app/models/user.coffee:17
+#: app/assets/javascripts/app/models/user.coffee:26
 #: app/frontend/shared/entities/organization/stores/objectAttributes.ts:41
 #: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:120
 #: app/frontend/shared/entities/user/stores/objectAttributes.ts:44
@@ -23268,7 +23267,7 @@ msgstr "Обновлено в"
 #: app/assets/javascripts/app/models/sla.coffee:12
 #: app/assets/javascripts/app/models/ticket.coffee:29
 #: app/assets/javascripts/app/models/ticket_article.coffee:17
-#: app/assets/javascripts/app/models/user.coffee:16
+#: app/assets/javascripts/app/models/user.coffee:25
 #: app/frontend/shared/entities/organization/stores/objectAttributes.ts:31
 #: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:109
 #: app/frontend/shared/entities/user/stores/objectAttributes.ts:33
@@ -23624,7 +23623,7 @@ msgstr "Несоответствие пользователя"
 msgid "User Organization Selector - email"
 msgstr "Отборщик организации пользователя — электронная почта"
 
-#: app/models/user/permissions.rb:50
+#: app/models/user/permissions.rb:53
 msgid "User authorization failed."
 msgstr "Авторизация пользователя не удалась."
 

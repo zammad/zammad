@@ -537,7 +537,7 @@ msgstr "%s 정책 생성 |%s|"
 msgid "%s created ticket |%s|"
 msgstr "%s 의 ticket 생성 |%s|"
 
-#: app/assets/javascripts/app/models/user.coffee:208
+#: app/assets/javascripts/app/models/user.coffee:217
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/user.ts:21
 msgid "%s created user |%s|"
 msgstr "%s 유저 생성 |%s|"
@@ -567,7 +567,7 @@ msgstr ""
 "%s개의 이메일이 귀하의 사서함에서 발견되었습니다. 모두 사서함에서 Zammad로 이"
 "동됩니다."
 
-#: app/assets/javascripts/app/models/user.coffee:222
+#: app/assets/javascripts/app/models/user.coffee:231
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/user.ts:29
 msgid "%s ended switch to |%s|!"
 msgstr "%에의 종료 스위치 |%s|!"
@@ -694,7 +694,7 @@ msgstr ""
 "%s가 선택되었습니다. 화살표 키로 드롭 위치를 선택한 다음 스페이스바를 누르세"
 "요."
 
-#: app/assets/javascripts/app/models/user.coffee:212
+#: app/assets/javascripts/app/models/user.coffee:221
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/user.ts:25
 msgid "%s started a new session"
 msgstr "%s은 (는) 새로운 세션을 시작"
@@ -704,7 +704,7 @@ msgstr "%s은 (는) 새로운 세션을 시작"
 msgid "%s subdomain"
 msgstr "%s 서브도메인"
 
-#: app/assets/javascripts/app/models/user.coffee:217
+#: app/assets/javascripts/app/models/user.coffee:226
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/user.ts:27
 msgid "%s switched to |%s|!"
 msgstr "%s | %s는로 전환 |!"
@@ -763,7 +763,7 @@ msgstr "%s에 업데이트 된 역할 |%s|"
 msgid "%s updated ticket |%s|"
 msgstr "%s에 업데이트 된 티켓 |%s|"
 
-#: app/assets/javascripts/app/models/user.coffee:210
+#: app/assets/javascripts/app/models/user.coffee:219
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/user.ts:23
 msgid "%s updated user |%s|"
 msgstr "%s에 업데이트 된 사용자 |%s|"
@@ -1842,7 +1842,7 @@ msgstr "태그 추가"
 msgid "Add this class to a button on your page that should open the chat."
 msgstr "채팅을 열어야 페이지에 버튼에이 클래스를 추가합니다."
 
-#: app/models/ai/agent/type/ticket_tagger.rb:164
+#: app/models/ai/agent/type/ticket_tagger.rb:169
 #, fuzzy
 #| msgid "Update existing records"
 msgid "Add to existing tags"
@@ -2816,7 +2816,7 @@ msgstr "첨부 파일은 파일 시스템에 저장됩니다."
 msgid "Attendees"
 msgstr "참석자"
 
-#: app/assets/javascripts/app/models/user.coffee:12
+#: app/assets/javascripts/app/models/user.coffee:21
 #: app/frontend/apps/desktop/entities/user/composables/useUserEdit.ts:80
 #: app/frontend/apps/mobile/entities/user/composables/useUserEdit.ts:67
 msgid ""
@@ -3069,7 +3069,7 @@ msgstr "다음 역할에 사용 가능"
 msgid "Available methods"
 msgstr "사용 가능한 방법"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:119
+#: app/models/ai/agent/type/ticket_tagger.rb:124
 msgid ""
 "Available tags are limited to existing in the manage tags section. AI agent "
 "won't be able to generate new ones. %l"
@@ -3080,7 +3080,7 @@ msgid "Available types for a new ticket"
 msgstr "새 티켓에 사용 가능한 유형"
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee:3
-#: app/assets/javascripts/app/models/user.coffee:29
+#: app/assets/javascripts/app/models/user.coffee:38
 #: app/assets/javascripts/app/views/customer_chat/setting.jst.eco:22
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco:3
 #: app/assets/javascripts/app/views/profile/imageCropper.jst.eco:3
@@ -4014,7 +4014,7 @@ msgstr "메시지가 추가될 그룹을 선택하세요."
 msgid "Choose the group to which page posts will get added."
 msgstr "페이지 게시물이 추가될 그룹을 선택하세요."
 
-#: app/models/ai/agent/type/ticket_tagger.rb:168
+#: app/models/ai/agent/type/ticket_tagger.rb:173
 msgid ""
 "Choose whether the suggested tags are added to or replace the existing tags "
 "on the ticket."
@@ -4087,7 +4087,7 @@ msgstr "새 암호를 선택합니다."
 msgid "Choose your preferred two-factor authentication method to set it up."
 msgstr "설정할 선호하는 이중 인증 방법을 선택하세요."
 
-#: app/assets/javascripts/app/models/user.coffee:332
+#: app/assets/javascripts/app/models/user.coffee:341
 msgid "Christmas holiday"
 msgstr "크리스마스 휴가"
 
@@ -4464,7 +4464,7 @@ msgstr "앱 설정"
 msgid "Configure Basic Settings"
 msgstr "기본설정"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:156
+#: app/models/ai/agent/type/ticket_tagger.rb:161
 msgid ""
 "Configure the way required number of resulting tags are added or replaced in "
 "the ticket tags list."
@@ -5172,7 +5172,7 @@ msgstr "생성된 내부 게시물"
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee:7
 #: app/assets/javascripts/app/models/organization.coffee:9
 #: app/assets/javascripts/app/models/ticket.coffee:28
-#: app/assets/javascripts/app/models/user.coffee:15
+#: app/assets/javascripts/app/models/user.coffee:24
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco:17
 #: app/assets/javascripts/app/views/widget/http_log.jst.eco:19
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco:23
@@ -5205,7 +5205,7 @@ msgstr "생성 시점:"
 #: app/assets/javascripts/app/models/sla.coffee:10
 #: app/assets/javascripts/app/models/ticket.coffee:27
 #: app/assets/javascripts/app/models/ticket_article.coffee:15
-#: app/assets/javascripts/app/models/user.coffee:14
+#: app/assets/javascripts/app/models/user.coffee:23
 #: app/frontend/shared/entities/organization/stores/objectAttributes.ts:14
 #: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:91
 #: app/frontend/shared/entities/user/stores/objectAttributes.ts:14
@@ -5664,7 +5664,7 @@ msgstr ""
 "큐 또는 통화 대상(PBX에 맞는 것)을 정의하고 에이전트를 매핑하세요. 이를 통해 "
 "Zammad는 관련 통화 항목과 알림만 표시하여 에이전트를 지원할 수 있습니다."
 
-#: app/models/ai/agent/type/ticket_tagger.rb:115
+#: app/models/ai/agent/type/ticket_tagger.rb:120
 msgid "Define rules for adding tags in the system."
 msgstr ""
 
@@ -7339,7 +7339,7 @@ msgstr ""
 "이는 OTRS에서 동적 필드를 사용하던 방식과 다른 티켓 속성/태그 운영 철학을 만"
 "들 수 있습니다."
 
-#: app/assets/javascripts/app/models/user.coffee:334
+#: app/assets/javascripts/app/models/user.coffee:343
 msgid "Easter holiday"
 msgstr "부활절 휴일"
 
@@ -7517,7 +7517,7 @@ msgstr "Elasticsearch 버전"
 #: app/assets/javascripts/app/controllers/getting_started/channel.coffee:15
 #: app/assets/javascripts/app/models/email_address.coffee:2
 #: app/assets/javascripts/app/models/group.coffee:12
-#: app/assets/javascripts/app/models/user.coffee:11
+#: app/assets/javascripts/app/models/user.coffee:20
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:6
 #: app/assets/javascripts/app/views/import/kayako.jst.eco:42
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco:39
@@ -8837,7 +8837,7 @@ msgstr "첫 번째 단계"
 msgid "First article (oldest)"
 msgstr "마지막 게시물"
 
-#: app/assets/javascripts/app/models/user.coffee:9
+#: app/assets/javascripts/app/models/user.coffee:18
 #: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts:14
 #: db/seeds/object_manager_attributes.rb:818
 msgid "First name"
@@ -9156,7 +9156,7 @@ msgstr "게이트웨이"
 msgid "General communication error, maybe internet is not available!"
 msgstr "일반 통신 오류입니다. 인터넷 연결을 확인하세요!"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:126
+#: app/models/ai/agent/type/ticket_tagger.rb:131
 msgid "General tagging principles"
 msgstr ""
 
@@ -9481,7 +9481,7 @@ msgid "Group needed in channel definition!"
 msgstr "채널 정의에 그룹이 필요합니다!"
 
 #: app/assets/javascripts/app/models/role.coffee:8
-#: app/assets/javascripts/app/models/user.coffee:13
+#: app/assets/javascripts/app/models/user.coffee:22
 #: db/seeds/object_manager_attributes.rb:1661
 msgid "Group permissions"
 msgstr "그룹 권한"
@@ -11215,7 +11215,7 @@ msgstr "데이터베이스 객체의 마지막 생성 시점(예: 마지막 트�
 msgid "Last login"
 msgstr "마지막 로그인"
 
-#: app/assets/javascripts/app/models/user.coffee:10
+#: app/assets/javascripts/app/models/user.coffee:19
 #: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts:23
 #: db/seeds/object_manager_attributes.rb:871
 msgid "Last name"
@@ -11577,7 +11577,7 @@ msgstr "외부 chat.css 파일의 위치."
 msgid "Log in to %s"
 msgstr "%s에 로그인"
 
-#: app/assets/javascripts/app/models/user.coffee:8
+#: app/assets/javascripts/app/models/user.coffee:17
 #: app/assets/javascripts/app/views/maintenance.jst.eco:25
 #: app/controllers/time_accountings_controller.rb:101
 #: db/seeds/object_manager_attributes.rb:785
@@ -12910,7 +12910,7 @@ msgstr "새 개인 액세스 토큰"
 msgid "New tab"
 msgstr "새 탭"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:145
+#: app/models/ai/agent/type/ticket_tagger.rb:150
 #, fuzzy
 #| msgid "New Category"
 msgid "New tags strategy"
@@ -13656,13 +13656,13 @@ msgstr "11월"
 msgid "Number"
 msgstr "번호"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:175
+#: app/models/ai/agent/type/ticket_tagger.rb:180
 #, fuzzy
 #| msgid "Number"
 msgid "Number of tags"
 msgstr "번호"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:179
+#: app/models/ai/agent/type/ticket_tagger.rb:184
 msgid "Number of tags the AI agent may assign."
 msgstr ""
 
@@ -14083,7 +14083,7 @@ msgstr "티켓 개요 순서"
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_organization.coffee:20
 #: app/assets/javascripts/app/models/job.coffee:8
 #: app/assets/javascripts/app/models/ticket.coffee:9
-#: app/assets/javascripts/app/models/user.coffee:12
+#: app/assets/javascripts/app/models/user.coffee:21
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco:45
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco:5
 #: app/assets/javascripts/app/views/time_accounting/accounted_time.jst.eco:25
@@ -15087,7 +15087,7 @@ msgstr "우선순위 아이콘"
 msgid "Priority rules"
 msgstr "우선순위"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:135
+#: app/models/ai/agent/type/ticket_tagger.rb:140
 #, fuzzy
 #| msgid "Priority"
 msgid "Priority tagging rules"
@@ -15741,7 +15741,7 @@ msgstr "순서 변경"
 msgid "Replace"
 msgstr "대체자"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:166
+#: app/models/ai/agent/type/ticket_tagger.rb:171
 #, fuzzy
 #| msgid "Replacement agent"
 msgid "Replace existing tags with"
@@ -17691,7 +17691,6 @@ msgstr "유사한 티켓 발견"
 msgid "Simple Line Icons"
 msgstr "심플 라인 아이콘"
 
-#: app/assets/javascripts/app/views/settings/storage_provider.jst.eco:22
 #: db/seeds/settings.rb:379
 msgid "Simple Storage (S3)"
 msgstr "심플 스토리지 (S3)"
@@ -18250,7 +18249,7 @@ msgstr "요약 서비스"
 msgid "Summary is being generated…"
 msgstr "요약 생성 중…"
 
-#: app/assets/javascripts/app/models/user.coffee:336
+#: app/assets/javascripts/app/models/user.coffee:345
 msgid "Summer holiday"
 msgstr "여름 휴가"
 
@@ -18387,7 +18386,7 @@ msgstr "꼬리표"
 msgid "Tag \"%s\" already exists."
 msgstr "태그 \"%s\"이(가) 이미 존재합니다."
 
-#: app/models/ai/agent/type/ticket_tagger.rb:160
+#: app/models/ai/agent/type/ticket_tagger.rb:165
 #, fuzzy
 #| msgid "Assignment Timeout"
 msgid "Tag assignment mode"
@@ -19413,7 +19412,7 @@ msgid ""
 "The preview cannot be generated. The format is corrupted or not supported."
 msgstr "미리보기를 생성할 수 없습니다. 형식이 손상되었거나 지원되지 않습니다."
 
-#: app/models/ai/agent/type/ticket_tagger.rb:139
+#: app/models/ai/agent/type/ticket_tagger.rb:144
 msgid ""
 "The priority rules instruct the AI agent on how to add tags for incoming "
 "tickets."
@@ -19728,7 +19727,7 @@ msgstr "재시도한 첨부 파일 다운로드가 실패했습니다."
 msgid "The retried security process failed!"
 msgstr "재시도한 보안 프로세스가 실패했습니다!"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:130
+#: app/models/ai/agent/type/ticket_tagger.rb:135
 msgid "The rules instruct the AI agent on how tags are used in the system."
 msgstr ""
 
@@ -19746,7 +19745,7 @@ msgid ""
 "additional instructions necessary."
 msgstr ""
 
-#: app/models/ai/agent/type/ticket_tagger.rb:149
+#: app/models/ai/agent/type/ticket_tagger.rb:154
 msgid ""
 "The rules instruct the AI agent on when to generate new tags and when to "
 "prefer tags from existing tags list."
@@ -21734,7 +21733,7 @@ msgstr "차지 시간"
 msgid "Total display of the number of objects in a grouping."
 msgstr "그룹화에서 객체 수의 총 표시."
 
-#: app/models/ai/agent/type/ticket_tagger.rb:165
+#: app/models/ai/agent/type/ticket_tagger.rb:170
 #, fuzzy
 #| msgid "Ticket could not be created."
 msgid "Total shouldn't exceed"
@@ -22366,7 +22365,7 @@ msgstr "업데이트 시간"
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee:8
 #: app/assets/javascripts/app/models/organization.coffee:11
 #: app/assets/javascripts/app/models/ticket.coffee:30
-#: app/assets/javascripts/app/models/user.coffee:17
+#: app/assets/javascripts/app/models/user.coffee:26
 #: app/frontend/shared/entities/organization/stores/objectAttributes.ts:41
 #: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:120
 #: app/frontend/shared/entities/user/stores/objectAttributes.ts:44
@@ -22388,7 +22387,7 @@ msgstr "업데이트 시간"
 #: app/assets/javascripts/app/models/sla.coffee:12
 #: app/assets/javascripts/app/models/ticket.coffee:29
 #: app/assets/javascripts/app/models/ticket_article.coffee:17
-#: app/assets/javascripts/app/models/user.coffee:16
+#: app/assets/javascripts/app/models/user.coffee:25
 #: app/frontend/shared/entities/organization/stores/objectAttributes.ts:31
 #: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:109
 #: app/frontend/shared/entities/user/stores/objectAttributes.ts:33
@@ -22735,7 +22734,7 @@ msgstr "사용자 불일치"
 msgid "User Organization Selector - email"
 msgstr "사용자 조직 선택기 - 이메일"
 
-#: app/models/user/permissions.rb:50
+#: app/models/user/permissions.rb:53
 msgid "User authorization failed."
 msgstr "사용자 인증에 실패했습니다."
 

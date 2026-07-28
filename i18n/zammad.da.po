@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-07-08 12:38+0000\n"
+"PO-Revision-Date: 2026-07-26 11:10+0000\n"
 "Last-Translator: Thomas Meijer <tvm@bizconnect.dk>\n"
 "Language-Team: Danish <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/da/>\n"
@@ -183,9 +183,9 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#"
-"{config.ticket_hook}#{ticket.number}>: Opdateret af #{current_user.longname} "
-"#{ticket.updated_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"#{config.ticket_hook}#{ticket.number}>: Opdateret af "
+"#{current_user.longname} #{ticket.updated_at}_\n"
 "<% if @objects[:changes].present? %>\n"
 " <% @objects[:changes].each do |key, value| %>\n"
 " * <%= t key %>: <%= h value[0] %> -> <%= h value[1] %>\n"
@@ -472,7 +472,7 @@ msgstr "%s oprettede rolle |%s|"
 msgid "%s created ticket |%s|"
 msgstr "%s oprettet sag |%s|"
 
-#: app/assets/javascripts/app/models/user.coffee:208
+#: app/assets/javascripts/app/models/user.coffee:217
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/user.ts:21
 msgid "%s created user |%s|"
 msgstr "%s oprettet bruger |%s|"
@@ -502,7 +502,7 @@ msgstr ""
 "%s email(s) fundet i din postkasse. De vil alle blive flyttet fra din "
 "postkasse til Zammad."
 
-#: app/assets/javascripts/app/models/user.coffee:222
+#: app/assets/javascripts/app/models/user.coffee:231
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/user.ts:29
 msgid "%s ended switch to |%s|!"
 msgstr "%s afsluttet skift til |%s|!"
@@ -624,7 +624,7 @@ msgid "%s selected. Use arrow keys to choose drop position, then press Space."
 msgstr ""
 "%s valgt. Brug piletasterne til at vælge position og tryk så mellemrum."
 
-#: app/assets/javascripts/app/models/user.coffee:212
+#: app/assets/javascripts/app/models/user.coffee:221
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/user.ts:25
 msgid "%s started a new session"
 msgstr "%s startede en ny session"
@@ -634,7 +634,7 @@ msgstr "%s startede en ny session"
 msgid "%s subdomain"
 msgstr "%s subdomæne"
 
-#: app/assets/javascripts/app/models/user.coffee:217
+#: app/assets/javascripts/app/models/user.coffee:226
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/user.ts:27
 msgid "%s switched to |%s|!"
 msgstr "%s skiftede til |%s|!"
@@ -688,7 +688,7 @@ msgstr "%s opdaterede rolle |%s|"
 msgid "%s updated ticket |%s|"
 msgstr "%s opdaterede sag [%s]"
 
-#: app/assets/javascripts/app/models/user.coffee:210
+#: app/assets/javascripts/app/models/user.coffee:219
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/user.ts:23
 msgid "%s updated user |%s|"
 msgstr "%s opdaterede bruger |%s|"
@@ -1727,7 +1727,7 @@ msgstr "Tilføj tag"
 msgid "Add this class to a button on your page that should open the chat."
 msgstr "Tilføj denne klasse til en knap på din side, der skal åbne chatten."
 
-#: app/models/ai/agent/type/ticket_tagger.rb:164
+#: app/models/ai/agent/type/ticket_tagger.rb:169
 msgid "Add to existing tags"
 msgstr "Tilføj til eksisterende tags"
 
@@ -1904,7 +1904,7 @@ msgstr "Agentnavn + FromSeparator + Visningsnavn for systemadresse"
 
 #: db/seeds/permissions.rb:359
 msgid "Agent chat"
-msgstr "Agent chat"
+msgstr "Agentchat"
 
 #: db/seeds/settings.rb:3605
 msgid "Agent idle timeout"
@@ -2199,8 +2199,8 @@ msgstr ""
 "<div>Hej #{recipient.firstname},</div>\n"
 "<br>\n"
 "<div>\n"
-"En anden sag blev flettet ind i sagen (#{ticket.title}) af \"<b>#"
-"{current_user.longname}</b>\".\n"
+"En anden sag blev flettet ind i sagen (#{ticket.title}) af "
+"\"<b>#{current_user.longname}</b>\".\n"
 "</div>\n"
 "<br>\n"
 "<div>\n"
@@ -2686,7 +2686,7 @@ msgstr "Vedhæftede filer gemmes i filsystemet."
 msgid "Attendees"
 msgstr "Deltagere"
 
-#: app/assets/javascripts/app/models/user.coffee:12
+#: app/assets/javascripts/app/models/user.coffee:21
 #: app/frontend/apps/desktop/entities/user/composables/useUserEdit.ts:80
 #: app/frontend/apps/mobile/entities/user/composables/useUserEdit.ts:67
 msgid ""
@@ -2937,7 +2937,7 @@ msgstr "Tilgængeligt for følgende roller"
 msgid "Available methods"
 msgstr "Tilgængelige metoder"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:119
+#: app/models/ai/agent/type/ticket_tagger.rb:124
 msgid ""
 "Available tags are limited to existing in the manage tags section. AI agent "
 "won't be able to generate new ones. %l"
@@ -2950,7 +2950,7 @@ msgid "Available types for a new ticket"
 msgstr "Tilgængelige typer for en ny sag"
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee:3
-#: app/assets/javascripts/app/models/user.coffee:29
+#: app/assets/javascripts/app/models/user.coffee:38
 #: app/assets/javascripts/app/views/customer_chat/setting.jst.eco:22
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco:3
 #: app/assets/javascripts/app/views/profile/imageCropper.jst.eco:3
@@ -3009,11 +3009,11 @@ msgstr "BETA UI Tilgængelighed"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:73
 msgid "BETA UI feedback program"
-msgstr "BETA UI feedback program"
+msgstr "BETA-brugerflade-feedbackprogram"
 
 #: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:46
 msgid "BETA UI illustration"
-msgstr "BETA UI illustration"
+msgstr "BETA-brugerflade-illustration"
 
 #: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:397
 #: app/assets/javascripts/app/views/generic/object_search/item_organization_members.jst.eco:5
@@ -3869,7 +3869,7 @@ msgstr "Vælg den gruppe, som beskeder skal tilføjes til."
 msgid "Choose the group to which page posts will get added."
 msgstr "Vælg den gruppe, som indlæg skal tilføjes til."
 
-#: app/models/ai/agent/type/ticket_tagger.rb:168
+#: app/models/ai/agent/type/ticket_tagger.rb:173
 msgid ""
 "Choose whether the suggested tags are added to or replace the existing tags "
 "on the ticket."
@@ -3945,7 +3945,7 @@ msgid "Choose your preferred two-factor authentication method to set it up."
 msgstr ""
 "Vælg din foretrukne metode til to-faktor-godkendelse for at konfigurere den."
 
-#: app/assets/javascripts/app/models/user.coffee:332
+#: app/assets/javascripts/app/models/user.coffee:341
 msgid "Christmas holiday"
 msgstr "Juleferie"
 
@@ -4317,7 +4317,7 @@ msgstr "Konfigurér App"
 msgid "Configure Basic Settings"
 msgstr "Konfigurér grundlæggende indstillinger"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:156
+#: app/models/ai/agent/type/ticket_tagger.rb:161
 msgid ""
 "Configure the way required number of resulting tags are added or replaced in "
 "the ticket tags list."
@@ -5011,7 +5011,7 @@ msgstr "Oprettet intern artikel"
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee:7
 #: app/assets/javascripts/app/models/organization.coffee:9
 #: app/assets/javascripts/app/models/ticket.coffee:28
-#: app/assets/javascripts/app/models/user.coffee:15
+#: app/assets/javascripts/app/models/user.coffee:24
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco:17
 #: app/assets/javascripts/app/views/widget/http_log.jst.eco:19
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco:23
@@ -5044,7 +5044,7 @@ msgstr "Oprettet den:"
 #: app/assets/javascripts/app/models/sla.coffee:10
 #: app/assets/javascripts/app/models/ticket.coffee:27
 #: app/assets/javascripts/app/models/ticket_article.coffee:15
-#: app/assets/javascripts/app/models/user.coffee:14
+#: app/assets/javascripts/app/models/user.coffee:23
 #: app/frontend/shared/entities/organization/stores/objectAttributes.ts:14
 #: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:91
 #: app/frontend/shared/entities/user/stores/objectAttributes.ts:14
@@ -5507,7 +5507,7 @@ msgstr ""
 "PBX), og knyt dine agenter til dem. På den måde kan Zammad hjælpe dine "
 "agenter ved kun at vise dem relevante opkaldsposter og notifikationer."
 
-#: app/models/ai/agent/type/ticket_tagger.rb:115
+#: app/models/ai/agent/type/ticket_tagger.rb:120
 msgid "Define rules for adding tags in the system."
 msgstr "Definér regler for tilføjelse af tags i systemet."
 
@@ -6424,7 +6424,8 @@ msgstr ""
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco:14
 #: db/seeds/settings.rb:4110
 msgid "Defines the unit to be shown next to the time accounting input field."
-msgstr "Definerer enheden, der vises ved siden af inputfeltet for tidsregnskab."
+msgstr ""
+"Definerer enheden, der vises ved siden af inputfeltet for tidsregnskab."
 
 #: db/seeds/settings.rb:2744
 msgid ""
@@ -6458,7 +6459,8 @@ msgstr ""
 
 #: db/seeds/settings.rb:2710
 msgid "Defines which ticket attributes are checked before creating a ticket."
-msgstr "Definerer hvilke sagsattributter der kontrolleres, før en sag oprettes."
+msgstr ""
+"Definerer hvilke sagsattributter der kontrolleres, før en sag oprettes."
 
 #: db/seeds/settings.rb:2761
 msgid ""
@@ -7087,7 +7089,7 @@ msgstr "Download fejllogfiler"
 
 #: app/assets/javascripts/app/views/ai/provider_logs.jst.eco:7
 msgid "Download Feedback"
-msgstr "Download Feedback"
+msgstr "Download feedback"
 
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco:59
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco:37
@@ -7113,7 +7115,7 @@ msgstr "Download feedbackrapport"
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:105
 msgid "Download original email"
-msgstr "Download original email"
+msgstr "Download oprindelig email"
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:116
 msgid "Download raw email"
@@ -7210,7 +7212,7 @@ msgstr ""
 "en ny filosofi omkring dine sagsattributter/tags sammenlignet med din "
 "nuværende brug af dynamiske felter i OTRS."
 
-#: app/assets/javascripts/app/models/user.coffee:334
+#: app/assets/javascripts/app/models/user.coffee:343
 msgid "Easter holiday"
 msgstr "Påskeferie"
 
@@ -7382,7 +7384,7 @@ msgstr "Elasticsearch version"
 #: app/assets/javascripts/app/controllers/getting_started/channel.coffee:15
 #: app/assets/javascripts/app/models/email_address.coffee:2
 #: app/assets/javascripts/app/models/group.coffee:12
-#: app/assets/javascripts/app/models/user.coffee:11
+#: app/assets/javascripts/app/models/user.coffee:20
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:6
 #: app/assets/javascripts/app/views/import/kayako.jst.eco:42
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco:39
@@ -8049,7 +8051,8 @@ msgstr ""
 msgid ""
 "Enter your email address from your Kayako account which should be used for "
 "the import."
-msgstr "Skriv emailadressen for den Kayako-konto, der skal bruges til importen."
+msgstr ""
+"Skriv emailadressen for den Kayako-konto, der skal bruges til importen."
 
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue:52
 msgid ""
@@ -8673,7 +8676,7 @@ msgstr "De første trin"
 msgid "First article (oldest)"
 msgstr "Første artikel (ældst)"
 
-#: app/assets/javascripts/app/models/user.coffee:9
+#: app/assets/javascripts/app/models/user.coffee:18
 #: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts:14
 #: db/seeds/object_manager_attributes.rb:818
 msgid "First name"
@@ -8990,7 +8993,7 @@ msgstr "Gateway"
 msgid "General communication error, maybe internet is not available!"
 msgstr "Generel kommunikationsfejl, måske er der ingen internetforbindelse!"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:126
+#: app/models/ai/agent/type/ticket_tagger.rb:131
 msgid "General tagging principles"
 msgstr "Generelle tagprincipper"
 
@@ -9026,7 +9029,8 @@ msgstr "Genererer tekst…"
 
 #: app/assets/javascripts/app/controllers/_integration/cti.coffee:265
 msgid "Generic API to integrate VoIP service provider with real-time push."
-msgstr "Generisk API til integration af VoIP-tjenesteudbyder med realtids-push."
+msgstr ""
+"Generisk API til integration af VoIP-tjenesteudbyder med realtids-push."
 
 #: db/seeds/settings.rb:477
 msgid "Geo Calendar Service"
@@ -9308,7 +9312,7 @@ msgid "Group needed in channel definition!"
 msgstr "Gruppe påkrævet i kanaldefinition!"
 
 #: app/assets/javascripts/app/models/role.coffee:8
-#: app/assets/javascripts/app/models/user.coffee:13
+#: app/assets/javascripts/app/models/user.coffee:22
 #: db/seeds/object_manager_attributes.rb:1661
 msgid "Group permissions"
 msgstr "Gruppetilladelser"
@@ -9549,8 +9553,8 @@ msgid ""
 "quotation marks|| for searching phrases: §\"some phrase\"§."
 msgstr ""
 "Her kan du søge efter sager, kunder og organisationer. Brug stjernen §*§ til "
-"at finde hvad som helst, f.eks. §smi*§ eller §rosent*l§. Du kan også bruge "
-"||anførselstegn|| til at søge efter sætninger: §\"en sætning\"§."
+"at finde hvad som helst, f.eks. §smi*§ eller §rosent*l§. Du kan også bruge ||"
+"anførselstegn|| til at søge efter sætninger: §\"en sætning\"§."
 
 #: app/assets/javascripts/app/views/profile/password.jst.eco:23
 msgid ""
@@ -9873,7 +9877,8 @@ msgstr ""
 
 #: db/seeds/settings.rb:3474
 msgid "If this regex matches, no notification will be sent by the sender."
-msgstr "Hvis dette regex matcher, sendes der ingen notifikation fra afsenderen."
+msgstr ""
+"Hvis dette regex matcher, sendes der ingen notifikation fra afsenderen."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:179
 msgid ""
@@ -11022,7 +11027,7 @@ msgstr ""
 msgid "Last login"
 msgstr "Seneste login"
 
-#: app/assets/javascripts/app/models/user.coffee:10
+#: app/assets/javascripts/app/models/user.coffee:19
 #: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts:23
 #: db/seeds/object_manager_attributes.rb:871
 msgid "Last name"
@@ -11371,7 +11376,7 @@ msgstr "Lokation af en ekstern chat.css fil."
 msgid "Log in to %s"
 msgstr "Log ind på %s"
 
-#: app/assets/javascripts/app/models/user.coffee:8
+#: app/assets/javascripts/app/models/user.coffee:17
 #: app/assets/javascripts/app/views/maintenance.jst.eco:25
 #: app/controllers/time_accountings_controller.rb:101
 #: db/seeds/object_manager_attributes.rb:785
@@ -12680,7 +12685,7 @@ msgstr "Nyt personligt adgangstoken"
 msgid "New tab"
 msgstr "Ny fane"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:145
+#: app/models/ai/agent/type/ticket_tagger.rb:150
 msgid "New tags strategy"
 msgstr "Ny tagstrategi"
 
@@ -13412,11 +13417,11 @@ msgstr "November"
 msgid "Number"
 msgstr "Nummer"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:175
+#: app/models/ai/agent/type/ticket_tagger.rb:180
 msgid "Number of tags"
 msgstr "Antal tags"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:179
+#: app/models/ai/agent/type/ticket_tagger.rb:184
 msgid "Number of tags the AI agent may assign."
 msgstr "Antal tags AI-agenten må tildele."
 
@@ -13834,7 +13839,7 @@ msgstr "Rækkefølge af sagsoversigter"
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_organization.coffee:20
 #: app/assets/javascripts/app/models/job.coffee:8
 #: app/assets/javascripts/app/models/ticket.coffee:9
-#: app/assets/javascripts/app/models/user.coffee:12
+#: app/assets/javascripts/app/models/user.coffee:21
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco:45
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco:5
 #: app/assets/javascripts/app/views/time_accounting/accounted_time.jst.eco:25
@@ -14653,12 +14658,12 @@ msgstr "Positiv feedback"
 
 #: app/models/system_report/plugin/postgre_sql.rb:4
 msgid "PostgresSQL server version"
-msgstr "PostgresSQL server version"
+msgstr "PostgreSQL serverversion"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:40
 #: app/assets/javascripts/app/controllers/_channel/_email_filter.coffee:31
 msgid "Postmaster Filter"
-msgstr "Postmaster Filter"
+msgstr "Postmaster-filter"
 
 #: app/frontend/apps/desktop/components/CommonHistoryFlyout/utils/historyEventIssuerNames.ts:5
 msgid "Postmaster filter"
@@ -14811,7 +14816,7 @@ msgstr "Prioritetsikon"
 msgid "Priority rules"
 msgstr "Prioritetsregler"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:135
+#: app/models/ai/agent/type/ticket_tagger.rb:140
 msgid "Priority tagging rules"
 msgstr "Regler for prioritetsmærkning"
 
@@ -15440,7 +15445,7 @@ msgstr "Omarrangér"
 msgid "Replace"
 msgstr "Erstat"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:166
+#: app/models/ai/agent/type/ticket_tagger.rb:171
 msgid "Replace existing tags with"
 msgstr "Erstat eksisterende tags med"
 
@@ -16631,7 +16636,7 @@ msgstr "Valgte fremhævningsfarve: %s"
 
 #: lib/validations/data_privacy_task_validator.rb:57
 msgid "Selected object is already queued for deletion."
-msgstr "Selected object is already queued for deletion."
+msgstr "Det valgte objekt er allerede sat i kø til sletning."
 
 #: app/assets/javascripts/app/controllers/widget/ticket_batch.coffee:68
 msgid "Selected tickets do not match any macros."
@@ -17182,7 +17187,7 @@ msgstr "Vis hvem der ser sagen"
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco:6
 #: db/seeds/settings.rb:4092
 msgid "Show time accounting dialog when updating matching tickets."
-msgstr "Show time accounting dialog when updating matching tickets."
+msgstr "Vis tidsregnskabsdialogen når matchende sager opdateres."
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco:82
 msgid "Show title in form."
@@ -17326,7 +17331,6 @@ msgstr "Lignende sager fundet"
 msgid "Simple Line Icons"
 msgstr "Simple Line Icons"
 
-#: app/assets/javascripts/app/views/settings/storage_provider.jst.eco:22
 #: db/seeds/settings.rb:379
 msgid "Simple Storage (S3)"
 msgstr "Simple Storage (S3)"
@@ -17863,7 +17867,7 @@ msgstr "Resumétjenester"
 msgid "Summary is being generated…"
 msgstr "Resumé genereres…"
 
-#: app/assets/javascripts/app/models/user.coffee:336
+#: app/assets/javascripts/app/models/user.coffee:345
 msgid "Summer holiday"
 msgstr "Sommerferie"
 
@@ -17997,7 +18001,7 @@ msgstr "Tag"
 msgid "Tag \"%s\" already exists."
 msgstr "Tagget \"%s\" findes allerede."
 
-#: app/models/ai/agent/type/ticket_tagger.rb:160
+#: app/models/ai/agent/type/ticket_tagger.rb:165
 msgid "Tag assignment mode"
 msgstr "Tildelingstilstand for tags"
 
@@ -18516,9 +18520,7 @@ msgstr "Certifikatet kan ikke bruges til signering og kryptering."
 msgid ""
 "The certificate is not valid for S/MIME usage. Please check the certificate "
 "format."
-msgstr ""
-"The certificate is not valid for S/MIME usage. Please check the certificate "
-"format."
+msgstr "Certifikatet er ikke gyldigt til S/MIME-brug. Tjek certifikatformatet."
 
 #: lib/certificate/x509/smime.rb:66
 msgid ""
@@ -18594,8 +18596,7 @@ msgid ""
 "The chosen unit will be used for display only and will not affect stored "
 "values."
 msgstr ""
-"The chosen unit will be used for display only and will not affect stored "
-"values."
+"Den valgte enhed bruges kun til visning og påvirker ikke de gemte værdier."
 
 #: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:104
 msgid "The configuration of Zammad has changed, please reload your browser."
@@ -19040,7 +19041,7 @@ msgstr ""
 "Forhåndsvisningen kan ikke genereres. Formatet er beskadiget eller ikke "
 "understøttet."
 
-#: app/models/ai/agent/type/ticket_tagger.rb:139
+#: app/models/ai/agent/type/ticket_tagger.rb:144
 msgid ""
 "The priority rules instruct the AI agent on how to add tags for incoming "
 "tickets."
@@ -19187,7 +19188,7 @@ msgstr "Den ønskede %s kunne ikke findes."
 
 #: lib/validations/verify_perform_rules_validator.rb:97
 msgid "The required '%{attribute}' value for %{key}, %{inner} is missing!"
-msgstr "The required '%{attribute}' value for %{key}, %{inner} is missing!"
+msgstr "Den påkrævede '%{attribute}'-værdi for %{key}, %{inner} mangler!"
 
 #: lib/secure_mailing/pgp/tool/error.rb:151
 msgid "The required PGP passphrase is missing."
@@ -19347,7 +19348,7 @@ msgstr "Det gentagne forsøg på at downloade vedhæftningen mislykkedes."
 msgid "The retried security process failed!"
 msgstr "Det gentagne sikkerhedsforsøg mislykkedes!"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:130
+#: app/models/ai/agent/type/ticket_tagger.rb:135
 msgid "The rules instruct the AI agent on how tags are used in the system."
 msgstr "Reglerne instruerer AI-agenten om hvordan tags bruges i systemet."
 
@@ -19371,7 +19372,7 @@ msgstr ""
 "tekst prioriteres. Sørg for at inkludere et par eksempelformater og "
 "eventuelle yderligere instruktioner."
 
-#: app/models/ai/agent/type/ticket_tagger.rb:149
+#: app/models/ai/agent/type/ticket_tagger.rb:154
 msgid ""
 "The rules instruct the AI agent on when to generate new tags and when to "
 "prefer tags from existing tags list."
@@ -19921,7 +19922,7 @@ msgstr "Denne bot eksisterer alllerede."
 
 #: app/assets/javascripts/app/views/knowledge_base/feed_dialog.jst.eco:11
 msgid "This category including sub-categories feed:"
-msgstr "This category including sub-categories feed:"
+msgstr "Dette feed inklusive underkategorier:"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/reader_list_controller.coffee:33
 msgid "This category is empty"
@@ -20153,7 +20154,7 @@ msgstr "Denne vært kan ikke nås."
 #: app/assets/javascripts/app/views/version.jst.eco:6
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:166
 msgid "This is Zammad version %s"
-msgstr "Dette er Zammad version %s"
+msgstr "Dette er Zammad-version %s"
 
 #: app/models/ai/agent/type/custom_ai_agent.rb:10
 msgid ""
@@ -20557,8 +20558,8 @@ msgstr ""
 "<div>Hej #{recipient.firstname},</div>\n"
 "<br>\n"
 "<div>\n"
-"Sagen (#{ticket.title}) er flettet med en anden sag af \"<b>#"
-"{current_user.longname}</b>\".\n"
+"Sagen (#{ticket.title}) er flettet med en anden sag af "
+"\"<b>#{current_user.longname}</b>\".\n"
 "</div>\n"
 "<br>\n"
 "<div>\n"
@@ -21393,7 +21394,7 @@ msgstr "Samlet registreret tid"
 msgid "Total display of the number of objects in a grouping."
 msgstr "Samlet visning af antallet af objekter i en gruppering."
 
-#: app/models/ai/agent/type/ticket_tagger.rb:165
+#: app/models/ai/agent/type/ticket_tagger.rb:170
 msgid "Total shouldn't exceed"
 msgstr "Totalen bør ikke overstige"
 
@@ -21441,7 +21442,7 @@ msgstr "Oversættelser"
 #: app/frontend/apps/desktop/components/CommonHistoryFlyout/utils/historyEventIssuerNames.ts:6
 #: db/seeds/permissions.rb:77
 msgid "Trigger"
-msgstr "Trigger"
+msgstr "Udløser"
 
 #: lib/excel_sheet/ai/analytics/errors.rb:32
 #: lib/excel_sheet/ai/analytics/with_usage.rb:32
@@ -21993,7 +21994,7 @@ msgstr "Opdateret den"
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee:8
 #: app/assets/javascripts/app/models/organization.coffee:11
 #: app/assets/javascripts/app/models/ticket.coffee:30
-#: app/assets/javascripts/app/models/user.coffee:17
+#: app/assets/javascripts/app/models/user.coffee:26
 #: app/frontend/shared/entities/organization/stores/objectAttributes.ts:41
 #: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:120
 #: app/frontend/shared/entities/user/stores/objectAttributes.ts:44
@@ -22015,7 +22016,7 @@ msgstr "Opdateret den"
 #: app/assets/javascripts/app/models/sla.coffee:12
 #: app/assets/javascripts/app/models/ticket.coffee:29
 #: app/assets/javascripts/app/models/ticket_article.coffee:17
-#: app/assets/javascripts/app/models/user.coffee:16
+#: app/assets/javascripts/app/models/user.coffee:25
 #: app/frontend/shared/entities/organization/stores/objectAttributes.ts:31
 #: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:109
 #: app/frontend/shared/entities/user/stores/objectAttributes.ts:33
@@ -22065,8 +22066,8 @@ msgstr ""
 "<div>Hej #{recipient.firstname},</div>\n"
 "<br>\n"
 "<div>\n"
-"Sagen (#{ticket.title}) er opdateret af \"<b>#{current_user.longname}</b>"
-"\".\n"
+"Sagen (#{ticket.title}) er opdateret af \"<b>#{current_user.longname}</"
+"b>\".\n"
 "</div>\n"
 "<br>\n"
 "<% if @objects[:changes].present? %>\n"
@@ -22140,8 +22141,8 @@ msgstr ""
 "<% end %>\n"
 "<br>\n"
 "<div>\n"
-"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/#"
-"{article.id}\" target=\"zammad_app\">Se dette i #{config.product_name}</a>\n"
+"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/"
+"#{article.id}\" target=\"zammad_app\">Se dette i #{config.product_name}</a>\n"
 "</div>\n"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:45
@@ -22358,7 +22359,7 @@ msgstr "Brugermismatch"
 msgid "User Organization Selector - email"
 msgstr "Bruger-/organisationsvælger - email"
 
-#: app/models/user/permissions.rb:50
+#: app/models/user/permissions.rb:53
 msgid "User authorization failed."
 msgstr "Brugergodkendelse mislykkedes."
 
@@ -22729,7 +22730,7 @@ msgstr "Venter i %s"
 
 #: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:34
 msgid "Want to join the BETA UI feedback program?"
-msgstr "Vil du deltage i BETA UI-feedbackprogrammet?"
+msgstr "Vil du deltage i BETA-brugerflade-feedbackprogram?"
 
 #: app/assets/javascripts/app/views/data_privacy/preview.jst.eco:16
 msgid "Warning"
@@ -23152,7 +23153,7 @@ msgstr "Du er i kø som nummer <strong>%s</strong>."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:78
 msgid "You are part of the BETA UI feedback program."
-msgstr "Du er en del af BETA UI-feedbackprogrammet."
+msgstr "Du er en del af BETA-brugerflade-feedbackprogrammet."
 
 #: app/models/transaction/notification.rb:111
 msgid ""
@@ -23814,7 +23815,7 @@ msgstr ""
 
 #: app/models/system_report/plugin/version.rb:4
 msgid "Zammad version"
-msgstr "Zammad version"
+msgstr "Zammad-version"
 
 #: app/assets/javascripts/app/controllers/import_zendesk.coffee:191
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/zendesk.ts:11

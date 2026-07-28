@@ -375,7 +375,7 @@ msgstr "%s a créé le groupe |%s|"
 msgid "%s created ticket |%s|"
 msgstr "%s a créé le billet |%s|"
 
-#: app/assets/javascripts/app/models/user.coffee:208
+#: app/assets/javascripts/app/models/user.coffee:217
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/user.ts:21
 #, fuzzy
 #| msgid "%s created User |%s|"
@@ -415,7 +415,7 @@ msgstr ""
 "Nous avons déjà trouvé %s courriel(s) dans votre boîte aux lettres. Zammad "
 "va tout déplacer de votre boîte aux lettres vers Zammad."
 
-#: app/assets/javascripts/app/models/user.coffee:222
+#: app/assets/javascripts/app/models/user.coffee:231
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/user.ts:29
 msgid "%s ended switch to |%s|!"
 msgstr "%s a terminé le basculement vers |%s| !"
@@ -564,7 +564,7 @@ msgstr "%s de mes billet(s) escaladé(s)."
 msgid "%s selected. Use arrow keys to choose drop position, then press Space."
 msgstr ""
 
-#: app/assets/javascripts/app/models/user.coffee:212
+#: app/assets/javascripts/app/models/user.coffee:221
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/user.ts:25
 msgid "%s started a new session"
 msgstr "%s a débuté une nouvelle session"
@@ -574,7 +574,7 @@ msgstr "%s a débuté une nouvelle session"
 msgid "%s subdomain"
 msgstr ""
 
-#: app/assets/javascripts/app/models/user.coffee:217
+#: app/assets/javascripts/app/models/user.coffee:226
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/user.ts:27
 msgid "%s switched to |%s|!"
 msgstr "%s a basculé vers |%s| !"
@@ -638,7 +638,7 @@ msgstr "%s a mis à jour le groupe |%s|"
 msgid "%s updated ticket |%s|"
 msgstr "%s a mis à jour le billet |%s|"
 
-#: app/assets/javascripts/app/models/user.coffee:210
+#: app/assets/javascripts/app/models/user.coffee:219
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/user.ts:23
 msgid "%s updated user |%s|"
 msgstr "%s a mis à jour l'utilisateur |%s|"
@@ -1824,7 +1824,7 @@ msgid "Add this class to a button on your page that should open the chat."
 msgstr ""
 "Ajoutez cette classe à un bouton sur votre page qui devrait ouvrir le chat."
 
-#: app/models/ai/agent/type/ticket_tagger.rb:164
+#: app/models/ai/agent/type/ticket_tagger.rb:169
 #, fuzzy
 #| msgid "Update existing records"
 msgid "Add to existing tags"
@@ -2837,7 +2837,7 @@ msgstr ""
 msgid "Attendees"
 msgstr ""
 
-#: app/assets/javascripts/app/models/user.coffee:12
+#: app/assets/javascripts/app/models/user.coffee:21
 #: app/frontend/apps/desktop/entities/user/composables/useUserEdit.ts:80
 #: app/frontend/apps/mobile/entities/user/composables/useUserEdit.ts:67
 msgid ""
@@ -3125,7 +3125,7 @@ msgstr ""
 msgid "Available methods"
 msgstr "Supprimer"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:119
+#: app/models/ai/agent/type/ticket_tagger.rb:124
 msgid ""
 "Available tags are limited to existing in the manage tags section. AI agent "
 "won't be able to generate new ones. %l"
@@ -3136,7 +3136,7 @@ msgid "Available types for a new ticket"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee:3
-#: app/assets/javascripts/app/models/user.coffee:29
+#: app/assets/javascripts/app/models/user.coffee:38
 #: app/assets/javascripts/app/views/customer_chat/setting.jst.eco:22
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco:3
 #: app/assets/javascripts/app/views/profile/imageCropper.jst.eco:3
@@ -4155,7 +4155,7 @@ msgid "Choose the group to which page posts will get added."
 msgstr ""
 "Choisissez le groupe dans lequel les publications de page seront ajoutées."
 
-#: app/models/ai/agent/type/ticket_tagger.rb:168
+#: app/models/ai/agent/type/ticket_tagger.rb:173
 msgid ""
 "Choose whether the suggested tags are added to or replace the existing tags "
 "on the ticket."
@@ -4212,7 +4212,7 @@ msgstr "Choisissez votre nouveau mot de passe."
 msgid "Choose your preferred two-factor authentication method to set it up."
 msgstr ""
 
-#: app/assets/javascripts/app/models/user.coffee:332
+#: app/assets/javascripts/app/models/user.coffee:341
 msgid "Christmas holiday"
 msgstr "Vacances de Noël"
 
@@ -4616,7 +4616,7 @@ msgstr ""
 msgid "Configure Basic Settings"
 msgstr "Configurer la base"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:156
+#: app/models/ai/agent/type/ticket_tagger.rb:161
 msgid ""
 "Configure the way required number of resulting tags are added or replaced in "
 "the ticket tags list."
@@ -5364,7 +5364,7 @@ msgstr "Créer un billet de test"
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee:7
 #: app/assets/javascripts/app/models/organization.coffee:9
 #: app/assets/javascripts/app/models/ticket.coffee:28
-#: app/assets/javascripts/app/models/user.coffee:15
+#: app/assets/javascripts/app/models/user.coffee:24
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco:17
 #: app/assets/javascripts/app/views/widget/http_log.jst.eco:19
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco:23
@@ -5399,7 +5399,7 @@ msgstr "Créé à"
 #: app/assets/javascripts/app/models/sla.coffee:10
 #: app/assets/javascripts/app/models/ticket.coffee:27
 #: app/assets/javascripts/app/models/ticket_article.coffee:15
-#: app/assets/javascripts/app/models/user.coffee:14
+#: app/assets/javascripts/app/models/user.coffee:23
 #: app/frontend/shared/entities/organization/stores/objectAttributes.ts:14
 #: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:91
 #: app/frontend/shared/entities/user/stores/objectAttributes.ts:14
@@ -5907,7 +5907,7 @@ msgid ""
 "relevant call entries and notifications."
 msgstr ""
 
-#: app/models/ai/agent/type/ticket_tagger.rb:115
+#: app/models/ai/agent/type/ticket_tagger.rb:120
 msgid "Define rules for adding tags in the system."
 msgstr ""
 
@@ -7662,7 +7662,7 @@ msgstr ""
 "nouvelle philosophie de vos attributs/balises de billet par rapport à votre "
 "utilisation actuelle des champs dynamiques dans OTRS."
 
-#: app/assets/javascripts/app/models/user.coffee:334
+#: app/assets/javascripts/app/models/user.coffee:343
 msgid "Easter holiday"
 msgstr "Fête de Pâques"
 
@@ -7864,7 +7864,7 @@ msgstr "Dernière synchronisation"
 #: app/assets/javascripts/app/controllers/getting_started/channel.coffee:15
 #: app/assets/javascripts/app/models/email_address.coffee:2
 #: app/assets/javascripts/app/models/group.coffee:12
-#: app/assets/javascripts/app/models/user.coffee:11
+#: app/assets/javascripts/app/models/user.coffee:20
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:6
 #: app/assets/javascripts/app/views/import/kayako.jst.eco:42
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco:39
@@ -9277,7 +9277,7 @@ msgstr "Première Étape"
 msgid "First article (oldest)"
 msgstr "Article"
 
-#: app/assets/javascripts/app/models/user.coffee:9
+#: app/assets/javascripts/app/models/user.coffee:18
 #: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts:14
 #: db/seeds/object_manager_attributes.rb:818
 msgid "First name"
@@ -9628,7 +9628,7 @@ msgstr ""
 msgid "General communication error, maybe internet is not available!"
 msgstr ""
 
-#: app/models/ai/agent/type/ticket_tagger.rb:126
+#: app/models/ai/agent/type/ticket_tagger.rb:131
 msgid "General tagging principles"
 msgstr ""
 
@@ -9983,7 +9983,7 @@ msgid "Group needed in channel definition!"
 msgstr ""
 
 #: app/assets/javascripts/app/models/role.coffee:8
-#: app/assets/javascripts/app/models/user.coffee:13
+#: app/assets/javascripts/app/models/user.coffee:22
 #: db/seeds/object_manager_attributes.rb:1661
 #, fuzzy
 #| msgid "Permissions"
@@ -11870,7 +11870,7 @@ msgstr ""
 msgid "Last login"
 msgstr "Dernier lancement"
 
-#: app/assets/javascripts/app/models/user.coffee:10
+#: app/assets/javascripts/app/models/user.coffee:19
 #: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts:23
 #: db/seeds/object_manager_attributes.rb:871
 msgid "Last name"
@@ -12263,7 +12263,7 @@ msgstr "Emplacement d'un fichier chat.css externe."
 msgid "Log in to %s"
 msgstr ""
 
-#: app/assets/javascripts/app/models/user.coffee:8
+#: app/assets/javascripts/app/models/user.coffee:17
 #: app/assets/javascripts/app/views/maintenance.jst.eco:25
 #: app/controllers/time_accountings_controller.rb:101
 #: db/seeds/object_manager_attributes.rb:785
@@ -13798,7 +13798,7 @@ msgstr "Votre nouveau jeton personnel d'accès"
 msgid "New tab"
 msgstr ""
 
-#: app/models/ai/agent/type/ticket_tagger.rb:145
+#: app/models/ai/agent/type/ticket_tagger.rb:150
 #, fuzzy
 #| msgid "Category"
 msgid "New tags strategy"
@@ -14598,13 +14598,13 @@ msgstr "Novembre"
 msgid "Number"
 msgstr "Nombre"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:175
+#: app/models/ai/agent/type/ticket_tagger.rb:180
 #, fuzzy
 #| msgid "Number"
 msgid "Number of tags"
 msgstr "Nombre"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:179
+#: app/models/ai/agent/type/ticket_tagger.rb:184
 msgid "Number of tags the AI agent may assign."
 msgstr ""
 
@@ -15112,7 +15112,7 @@ msgstr "Vue d'ensemble"
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_organization.coffee:20
 #: app/assets/javascripts/app/models/job.coffee:8
 #: app/assets/javascripts/app/models/ticket.coffee:9
-#: app/assets/javascripts/app/models/user.coffee:12
+#: app/assets/javascripts/app/models/user.coffee:21
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco:45
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco:5
 #: app/assets/javascripts/app/views/time_accounting/accounted_time.jst.eco:25
@@ -16202,7 +16202,7 @@ msgstr "Priorité"
 msgid "Priority rules"
 msgstr "Priorité"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:135
+#: app/models/ai/agent/type/ticket_tagger.rb:140
 #, fuzzy
 #| msgid "Priority"
 msgid "Priority tagging rules"
@@ -16941,7 +16941,7 @@ msgstr "Ordre"
 msgid "Replace"
 msgstr "Remplacement"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:166
+#: app/models/ai/agent/type/ticket_tagger.rb:171
 #, fuzzy
 #| msgid "Replacement"
 msgid "Replace existing tags with"
@@ -19087,7 +19087,6 @@ msgstr "attribuer des billets"
 msgid "Simple Line Icons"
 msgstr ""
 
-#: app/assets/javascripts/app/views/settings/storage_provider.jst.eco:22
 #: db/seeds/settings.rb:379
 msgid "Simple Storage (S3)"
 msgstr ""
@@ -19697,7 +19696,7 @@ msgstr "Service d'imagerie"
 msgid "Summary is being generated…"
 msgstr "Le billet cible est introuvable."
 
-#: app/assets/javascripts/app/models/user.coffee:336
+#: app/assets/javascripts/app/models/user.coffee:345
 msgid "Summer holiday"
 msgstr "Vacances d'été"
 
@@ -19838,7 +19837,7 @@ msgstr "Étiquette"
 msgid "Tag \"%s\" already exists."
 msgstr "%s Objet(s) supprimé(s)"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:160
+#: app/models/ai/agent/type/ticket_tagger.rb:165
 #, fuzzy
 #| msgid "Assignment Timeout"
 msgid "Tag assignment mode"
@@ -20999,7 +20998,7 @@ msgid ""
 "The preview cannot be generated. The format is corrupted or not supported."
 msgstr ""
 
-#: app/models/ai/agent/type/ticket_tagger.rb:139
+#: app/models/ai/agent/type/ticket_tagger.rb:144
 msgid ""
 "The priority rules instruct the AI agent on how to add tags for incoming "
 "tickets."
@@ -21313,7 +21312,7 @@ msgstr ""
 msgid "The retried security process failed!"
 msgstr ""
 
-#: app/models/ai/agent/type/ticket_tagger.rb:130
+#: app/models/ai/agent/type/ticket_tagger.rb:135
 msgid "The rules instruct the AI agent on how tags are used in the system."
 msgstr ""
 
@@ -21331,7 +21330,7 @@ msgid ""
 "additional instructions necessary."
 msgstr ""
 
-#: app/models/ai/agent/type/ticket_tagger.rb:149
+#: app/models/ai/agent/type/ticket_tagger.rb:154
 msgid ""
 "The rules instruct the AI agent on when to generate new tags and when to "
 "prefer tags from existing tags list."
@@ -23445,7 +23444,7 @@ msgstr "Le temps comptabilisé\t"
 msgid "Total display of the number of objects in a grouping."
 msgstr ""
 
-#: app/models/ai/agent/type/ticket_tagger.rb:165
+#: app/models/ai/agent/type/ticket_tagger.rb:170
 #, fuzzy
 #| msgid "User could not be created."
 msgid "Total shouldn't exceed"
@@ -24131,7 +24130,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee:8
 #: app/assets/javascripts/app/models/organization.coffee:11
 #: app/assets/javascripts/app/models/ticket.coffee:30
-#: app/assets/javascripts/app/models/user.coffee:17
+#: app/assets/javascripts/app/models/user.coffee:26
 #: app/frontend/shared/entities/organization/stores/objectAttributes.ts:41
 #: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:120
 #: app/frontend/shared/entities/user/stores/objectAttributes.ts:44
@@ -24153,7 +24152,7 @@ msgstr "Mis à jour à"
 #: app/assets/javascripts/app/models/sla.coffee:12
 #: app/assets/javascripts/app/models/ticket.coffee:29
 #: app/assets/javascripts/app/models/ticket_article.coffee:17
-#: app/assets/javascripts/app/models/user.coffee:16
+#: app/assets/javascripts/app/models/user.coffee:25
 #: app/frontend/shared/entities/organization/stores/objectAttributes.ts:31
 #: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:109
 #: app/frontend/shared/entities/user/stores/objectAttributes.ts:33
@@ -24455,7 +24454,7 @@ msgstr ""
 msgid "User Organization Selector - email"
 msgstr ""
 
-#: app/models/user/permissions.rb:50
+#: app/models/user/permissions.rb:53
 #, fuzzy
 #| msgid "Server operation failed."
 msgid "User authorization failed."

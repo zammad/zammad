@@ -474,7 +474,7 @@ msgstr "%s نقش |%s| را ایجاد کرد"
 msgid "%s created ticket |%s|"
 msgstr "%s تیکت |%s| را ایجاد کرد"
 
-#: app/assets/javascripts/app/models/user.coffee:208
+#: app/assets/javascripts/app/models/user.coffee:217
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/user.ts:21
 msgid "%s created user |%s|"
 msgstr "%s کاربر |%s| را ایجاد کرد"
@@ -504,7 +504,7 @@ msgstr ""
 "%s ایمیل(های) در صندوق پست شما پیدا شد. همه آنها از صندوق پستی شما به Zammad "
 "منتقل می شوند."
 
-#: app/assets/javascripts/app/models/user.coffee:222
+#: app/assets/javascripts/app/models/user.coffee:231
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/user.ts:29
 msgid "%s ended switch to |%s|!"
 msgstr "%s سوئیچ کردن را پایان داد به |%s|!"
@@ -627,7 +627,7 @@ msgstr ""
 "%s انتخاب شد. از کلیدهای جهت‌نما برای انتخاب موقعیت رها کردن استفاده کنید، "
 "سپس دکمه Space را فشار دهید."
 
-#: app/assets/javascripts/app/models/user.coffee:212
+#: app/assets/javascripts/app/models/user.coffee:221
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/user.ts:25
 msgid "%s started a new session"
 msgstr "%s وارد سامانه شد"
@@ -637,7 +637,7 @@ msgstr "%s وارد سامانه شد"
 msgid "%s subdomain"
 msgstr "%s زیردامنه"
 
-#: app/assets/javascripts/app/models/user.coffee:217
+#: app/assets/javascripts/app/models/user.coffee:226
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/user.ts:27
 msgid "%s switched to |%s|!"
 msgstr "%s سوئیج کرد به |%s|!"
@@ -691,7 +691,7 @@ msgstr "%s نقش |%s| را به‌روز کرد"
 msgid "%s updated ticket |%s|"
 msgstr "%s تیکت |%s| را به‌روز کرد"
 
-#: app/assets/javascripts/app/models/user.coffee:210
+#: app/assets/javascripts/app/models/user.coffee:219
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/user.ts:23
 msgid "%s updated user |%s|"
 msgstr "%s کاربر |%s| را به‌روز کرد‌‌‌"
@@ -1727,7 +1727,7 @@ msgstr "افزودن برچسب"
 msgid "Add this class to a button on your page that should open the chat."
 msgstr "این کلاس را به دکمه ای که چت را باز میکند در صفحه خود اضافه کنید."
 
-#: app/models/ai/agent/type/ticket_tagger.rb:164
+#: app/models/ai/agent/type/ticket_tagger.rb:169
 msgid "Add to existing tags"
 msgstr "افزودن به برچسب‌های موجود"
 
@@ -2679,7 +2679,7 @@ msgstr "پیوست‌ها در سیستم فایل ذخیره می‌شوند."
 msgid "Attendees"
 msgstr "شرکت‌کنندگان"
 
-#: app/assets/javascripts/app/models/user.coffee:12
+#: app/assets/javascripts/app/models/user.coffee:21
 #: app/frontend/apps/desktop/entities/user/composables/useUserEdit.ts:80
 #: app/frontend/apps/mobile/entities/user/composables/useUserEdit.ts:67
 msgid ""
@@ -2926,7 +2926,7 @@ msgstr "در دسترس برای این نقش‌ها"
 msgid "Available methods"
 msgstr "روش‌های موجود"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:119
+#: app/models/ai/agent/type/ticket_tagger.rb:124
 msgid ""
 "Available tags are limited to existing in the manage tags section. AI agent "
 "won't be able to generate new ones. %l"
@@ -2939,7 +2939,7 @@ msgid "Available types for a new ticket"
 msgstr "انواع موجود برای تیکت جدید"
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee:3
-#: app/assets/javascripts/app/models/user.coffee:29
+#: app/assets/javascripts/app/models/user.coffee:38
 #: app/assets/javascripts/app/views/customer_chat/setting.jst.eco:22
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco:3
 #: app/assets/javascripts/app/views/profile/imageCropper.jst.eco:3
@@ -3856,7 +3856,7 @@ msgstr "گروهی را که پیام‌ها به آن اضافه می‌شون�
 msgid "Choose the group to which page posts will get added."
 msgstr "گروهی را که پست‌های صفحه به آن اضافه می‌شوند انتخاب کنید."
 
-#: app/models/ai/agent/type/ticket_tagger.rb:168
+#: app/models/ai/agent/type/ticket_tagger.rb:173
 msgid ""
 "Choose whether the suggested tags are added to or replace the existing tags "
 "on the ticket."
@@ -3930,7 +3930,7 @@ msgstr "یک رمزعبور جدید انتخاب کنید."
 msgid "Choose your preferred two-factor authentication method to set it up."
 msgstr "روش احراز هویت دو عاملی مورد نظر خود را برای راه‌اندازی انتخاب کنید."
 
-#: app/assets/javascripts/app/models/user.coffee:332
+#: app/assets/javascripts/app/models/user.coffee:341
 msgid "Christmas holiday"
 msgstr "تعطیلی کریسمس"
 
@@ -4302,7 +4302,7 @@ msgstr "تنظیم اپلیکیشن"
 msgid "Configure Basic Settings"
 msgstr "پیکربندی تنظیمات پایه"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:156
+#: app/models/ai/agent/type/ticket_tagger.rb:161
 msgid ""
 "Configure the way required number of resulting tags are added or replaced in "
 "the ticket tags list."
@@ -4994,7 +4994,7 @@ msgstr "بند داخلی ایجاد شده"
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee:7
 #: app/assets/javascripts/app/models/organization.coffee:9
 #: app/assets/javascripts/app/models/ticket.coffee:28
-#: app/assets/javascripts/app/models/user.coffee:15
+#: app/assets/javascripts/app/models/user.coffee:24
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco:17
 #: app/assets/javascripts/app/views/widget/http_log.jst.eco:19
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco:23
@@ -5027,7 +5027,7 @@ msgstr "ایجاد شده در:"
 #: app/assets/javascripts/app/models/sla.coffee:10
 #: app/assets/javascripts/app/models/ticket.coffee:27
 #: app/assets/javascripts/app/models/ticket_article.coffee:15
-#: app/assets/javascripts/app/models/user.coffee:14
+#: app/assets/javascripts/app/models/user.coffee:23
 #: app/frontend/shared/entities/organization/stores/objectAttributes.ts:14
 #: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:91
 #: app/frontend/shared/entities/user/stores/objectAttributes.ts:14
@@ -5488,7 +5488,7 @@ msgstr ""
 "عاملان خود را به آن نگاشت کنید. با این کار، Zammad می‌تواند با نشان دادن فقط "
 "ورودی‌ها و اعلان‌های تماس مرتبط به عاملان شما پشتیبانی کند."
 
-#: app/models/ai/agent/type/ticket_tagger.rb:115
+#: app/models/ai/agent/type/ticket_tagger.rb:120
 msgid "Define rules for adding tags in the system."
 msgstr "قوانین مربوط به افزودن برچسب‌ها در سیستم را تعریف کنید."
 
@@ -7163,7 +7163,7 @@ msgstr ""
 "استفاده می‌کند. این تفاوت می‌تواند فلسفه جدیدی از ویژگی‌ها/برچسب‌های تیکت شما در "
 "مقایسه با استفاده فعلی شما از فیلدهای پویا در OTRS ایجاد کند."
 
-#: app/assets/javascripts/app/models/user.coffee:334
+#: app/assets/javascripts/app/models/user.coffee:343
 msgid "Easter holiday"
 msgstr "تعطیلی عید پاک"
 
@@ -7335,7 +7335,7 @@ msgstr "نسخه Elasticsearch"
 #: app/assets/javascripts/app/controllers/getting_started/channel.coffee:15
 #: app/assets/javascripts/app/models/email_address.coffee:2
 #: app/assets/javascripts/app/models/group.coffee:12
-#: app/assets/javascripts/app/models/user.coffee:11
+#: app/assets/javascripts/app/models/user.coffee:20
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:6
 #: app/assets/javascripts/app/views/import/kayako.jst.eco:42
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco:39
@@ -8641,7 +8641,7 @@ msgstr "گامهای اولیه"
 msgid "First article (oldest)"
 msgstr "اولین مقاله (قدیمی‌ترین)"
 
-#: app/assets/javascripts/app/models/user.coffee:9
+#: app/assets/javascripts/app/models/user.coffee:18
 #: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts:14
 #: db/seeds/object_manager_attributes.rb:818
 msgid "First name"
@@ -8957,7 +8957,7 @@ msgstr "دروازه"
 msgid "General communication error, maybe internet is not available!"
 msgstr "خطای ارتباط عمومی، شاید اینترنت در دسترس نیست!"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:126
+#: app/models/ai/agent/type/ticket_tagger.rb:131
 msgid "General tagging principles"
 msgstr "اصول کلی برچسب‌گذاری"
 
@@ -9275,7 +9275,7 @@ msgid "Group needed in channel definition!"
 msgstr "هنگام تعریف کانال٬ گروه موردنیاز است!"
 
 #: app/assets/javascripts/app/models/role.coffee:8
-#: app/assets/javascripts/app/models/user.coffee:13
+#: app/assets/javascripts/app/models/user.coffee:22
 #: db/seeds/object_manager_attributes.rb:1661
 msgid "Group permissions"
 msgstr "دسترسی‌های گروه"
@@ -10982,7 +10982,7 @@ msgstr ""
 msgid "Last login"
 msgstr "آخرین ورود"
 
-#: app/assets/javascripts/app/models/user.coffee:10
+#: app/assets/javascripts/app/models/user.coffee:19
 #: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts:23
 #: db/seeds/object_manager_attributes.rb:871
 msgid "Last name"
@@ -11331,7 +11331,7 @@ msgstr "مکان یک فایل chat.css خارجی."
 msgid "Log in to %s"
 msgstr "ورود به %s"
 
-#: app/assets/javascripts/app/models/user.coffee:8
+#: app/assets/javascripts/app/models/user.coffee:17
 #: app/assets/javascripts/app/views/maintenance.jst.eco:25
 #: app/controllers/time_accountings_controller.rb:101
 #: db/seeds/object_manager_attributes.rb:785
@@ -12639,7 +12639,7 @@ msgstr "توکن دسترسی شخصی جدید"
 msgid "New tab"
 msgstr "برگه جدید"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:145
+#: app/models/ai/agent/type/ticket_tagger.rb:150
 msgid "New tags strategy"
 msgstr "استراتژی برچسب‌های جدید"
 
@@ -13371,11 +13371,11 @@ msgstr "نوامبر"
 msgid "Number"
 msgstr "عدد"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:175
+#: app/models/ai/agent/type/ticket_tagger.rb:180
 msgid "Number of tags"
 msgstr "تعداد برچسب‌ها"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:179
+#: app/models/ai/agent/type/ticket_tagger.rb:184
 msgid "Number of tags the AI agent may assign."
 msgstr "تعداد برچسب‌هایی که عامل هوش مصنوعی ممکن است تعیین کند."
 
@@ -13790,7 +13790,7 @@ msgstr "ترتیب نمای کلی تیکت"
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_organization.coffee:20
 #: app/assets/javascripts/app/models/job.coffee:8
 #: app/assets/javascripts/app/models/ticket.coffee:9
-#: app/assets/javascripts/app/models/user.coffee:12
+#: app/assets/javascripts/app/models/user.coffee:21
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco:45
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco:5
 #: app/assets/javascripts/app/views/time_accounting/accounted_time.jst.eco:25
@@ -14762,7 +14762,7 @@ msgstr "آیکون اولویت"
 msgid "Priority rules"
 msgstr "قوانین اولویت"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:135
+#: app/models/ai/agent/type/ticket_tagger.rb:140
 msgid "Priority tagging rules"
 msgstr "قوانین اولویت‌بندی برچسب‌ها"
 
@@ -15387,7 +15387,7 @@ msgstr "مرتب‌سازی مجدد"
 msgid "Replace"
 msgstr "جایگزینی"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:166
+#: app/models/ai/agent/type/ticket_tagger.rb:171
 msgid "Replace existing tags with"
 msgstr "جایگزینی برچسب‌های موجود با"
 
@@ -17268,7 +17268,6 @@ msgstr "تیکت‌های مشابه یافت شد"
 msgid "Simple Line Icons"
 msgstr "آیکون‌های خط ساده"
 
-#: app/assets/javascripts/app/views/settings/storage_provider.jst.eco:22
 #: db/seeds/settings.rb:379
 msgid "Simple Storage (S3)"
 msgstr "ذخیره‌سازی ساده (S3)"
@@ -17804,7 +17803,7 @@ msgstr "سرویس‌های خلاصه"
 msgid "Summary is being generated…"
 msgstr "خلاصه در حال تولید است…"
 
-#: app/assets/javascripts/app/models/user.coffee:336
+#: app/assets/javascripts/app/models/user.coffee:345
 msgid "Summer holiday"
 msgstr "تعطیلی تابستان"
 
@@ -17938,7 +17937,7 @@ msgstr "تگ"
 msgid "Tag \"%s\" already exists."
 msgstr "برچسب «%s» قبلا ایجاد شده."
 
-#: app/models/ai/agent/type/ticket_tagger.rb:160
+#: app/models/ai/agent/type/ticket_tagger.rb:165
 msgid "Tag assignment mode"
 msgstr "حالت تخصیص برچسب"
 
@@ -18970,7 +18969,7 @@ msgid ""
 "The preview cannot be generated. The format is corrupted or not supported."
 msgstr "پیش‌نمایش قابل تولید نیست. قالب خراب است یا پشتیبانی نمی‌شود."
 
-#: app/models/ai/agent/type/ticket_tagger.rb:139
+#: app/models/ai/agent/type/ticket_tagger.rb:144
 msgid ""
 "The priority rules instruct the AI agent on how to add tags for incoming "
 "tickets."
@@ -19276,7 +19275,7 @@ msgstr "تلاش مجدد برای دانلود پیوست ناموفق بود."
 msgid "The retried security process failed!"
 msgstr "فرآیند امنیتی مجدد ناموفق بود!"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:130
+#: app/models/ai/agent/type/ticket_tagger.rb:135
 msgid "The rules instruct the AI agent on how tags are used in the system."
 msgstr ""
 "قوانین به عامل هوش مصنوعی نحوه استفاده از برچسب‌ها در سیستم را آموزش می‌دهند."
@@ -19299,7 +19298,7 @@ msgstr ""
 "قوانین به عامل هوش مصنوعی نحوه اولویت‌بندی چندین تطابق از متن استخراج‌شده را "
 "آموزش می‌دهند. حتماً چند نمونه قالب و هر دستورالعمل اضافی لازم را وارد کنید."
 
-#: app/models/ai/agent/type/ticket_tagger.rb:149
+#: app/models/ai/agent/type/ticket_tagger.rb:154
 msgid ""
 "The rules instruct the AI agent on when to generate new tags and when to "
 "prefer tags from existing tags list."
@@ -21300,7 +21299,7 @@ msgstr "کل زمان محاسبه شده"
 msgid "Total display of the number of objects in a grouping."
 msgstr "نمایش کل تعداد اشیاء در یک گروه‌بندی."
 
-#: app/models/ai/agent/type/ticket_tagger.rb:165
+#: app/models/ai/agent/type/ticket_tagger.rb:170
 msgid "Total shouldn't exceed"
 msgstr "مجموع نباید بیشتر از"
 
@@ -21898,7 +21897,7 @@ msgstr "زمان به‌روزرسانی"
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee:8
 #: app/assets/javascripts/app/models/organization.coffee:11
 #: app/assets/javascripts/app/models/ticket.coffee:30
-#: app/assets/javascripts/app/models/user.coffee:17
+#: app/assets/javascripts/app/models/user.coffee:26
 #: app/frontend/shared/entities/organization/stores/objectAttributes.ts:41
 #: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:120
 #: app/frontend/shared/entities/user/stores/objectAttributes.ts:44
@@ -21920,7 +21919,7 @@ msgstr "به‌روز شده در"
 #: app/assets/javascripts/app/models/sla.coffee:12
 #: app/assets/javascripts/app/models/ticket.coffee:29
 #: app/assets/javascripts/app/models/ticket_article.coffee:17
-#: app/assets/javascripts/app/models/user.coffee:16
+#: app/assets/javascripts/app/models/user.coffee:25
 #: app/frontend/shared/entities/organization/stores/objectAttributes.ts:31
 #: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:109
 #: app/frontend/shared/entities/user/stores/objectAttributes.ts:33
@@ -22263,7 +22262,7 @@ msgstr "عدم تطابق کاربر"
 msgid "User Organization Selector - email"
 msgstr "انتخابگر سازمان کاربر - ایمیل"
 
-#: app/models/user/permissions.rb:50
+#: app/models/user/permissions.rb:53
 msgid "User authorization failed."
 msgstr "مجوز کاربر ناموفق بود."
 

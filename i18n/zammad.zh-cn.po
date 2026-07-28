@@ -536,7 +536,7 @@ msgstr "%s 创建了角色 |%s|"
 msgid "%s created ticket |%s|"
 msgstr "%s 创建了工单 |%s|"
 
-#: app/assets/javascripts/app/models/user.coffee:208
+#: app/assets/javascripts/app/models/user.coffee:217
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/user.ts:21
 msgid "%s created user |%s|"
 msgstr "%s 创建了用户 |%s|"
@@ -564,7 +564,7 @@ msgid ""
 "mailbox into Zammad."
 msgstr "在您的邮箱中找到 %s 封电子邮件。它们都会从您的邮箱移至 Zammad。"
 
-#: app/assets/javascripts/app/models/user.coffee:222
+#: app/assets/javascripts/app/models/user.coffee:231
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/user.ts:29
 msgid "%s ended switch to |%s|!"
 msgstr "%s 从 |%s| 切换回来!"
@@ -689,7 +689,7 @@ msgstr "已选择 %s 工单"
 msgid "%s selected. Use arrow keys to choose drop position, then press Space."
 msgstr "%s 已选中。使用箭头键选择放置位置，然后按空格键。"
 
-#: app/assets/javascripts/app/models/user.coffee:212
+#: app/assets/javascripts/app/models/user.coffee:221
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/user.ts:25
 msgid "%s started a new session"
 msgstr "%s 开始了新会话"
@@ -699,7 +699,7 @@ msgstr "%s 开始了新会话"
 msgid "%s subdomain"
 msgstr "%s 子域"
 
-#: app/assets/javascripts/app/models/user.coffee:217
+#: app/assets/javascripts/app/models/user.coffee:226
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/user.ts:27
 msgid "%s switched to |%s|!"
 msgstr "%s 切换为 |%s|!"
@@ -757,7 +757,7 @@ msgstr "%s 更新了角色 |%s|"
 msgid "%s updated ticket |%s|"
 msgstr "%s 修改了工单 |%s|"
 
-#: app/assets/javascripts/app/models/user.coffee:210
+#: app/assets/javascripts/app/models/user.coffee:219
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/user.ts:23
 msgid "%s updated user |%s|"
 msgstr "%s 更新了用户 |%s|"
@@ -1857,7 +1857,7 @@ msgstr "新增标签"
 msgid "Add this class to a button on your page that should open the chat."
 msgstr "将此类添加到页面上应该打开聊天的按钮。"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:164
+#: app/models/ai/agent/type/ticket_tagger.rb:169
 #, fuzzy
 #| msgid "Update existing records"
 msgid "Add to existing tags"
@@ -2836,7 +2836,7 @@ msgstr "附件存储在文件系统中。"
 msgid "Attendees"
 msgstr "参与者"
 
-#: app/assets/javascripts/app/models/user.coffee:12
+#: app/assets/javascripts/app/models/user.coffee:21
 #: app/frontend/apps/desktop/entities/user/composables/useUserEdit.ts:80
 #: app/frontend/apps/mobile/entities/user/composables/useUserEdit.ts:67
 msgid ""
@@ -3090,7 +3090,7 @@ msgstr "适用于以下角色"
 msgid "Available methods"
 msgstr "可用方法"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:119
+#: app/models/ai/agent/type/ticket_tagger.rb:124
 msgid ""
 "Available tags are limited to existing in the manage tags section. AI agent "
 "won't be able to generate new ones. %l"
@@ -3101,7 +3101,7 @@ msgid "Available types for a new ticket"
 msgstr "新工单的可用类型"
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee:3
-#: app/assets/javascripts/app/models/user.coffee:29
+#: app/assets/javascripts/app/models/user.coffee:38
 #: app/assets/javascripts/app/views/customer_chat/setting.jst.eco:22
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco:3
 #: app/assets/javascripts/app/views/profile/imageCropper.jst.eco:3
@@ -4061,7 +4061,7 @@ msgstr "选择要添加消息的组。"
 msgid "Choose the group to which page posts will get added."
 msgstr "选择将添加页面帖子的组。"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:168
+#: app/models/ai/agent/type/ticket_tagger.rb:173
 msgid ""
 "Choose whether the suggested tags are added to or replace the existing tags "
 "on the ticket."
@@ -4116,7 +4116,7 @@ msgstr "选择您的新密码。"
 msgid "Choose your preferred two-factor authentication method to set it up."
 msgstr "选择您较喜欢的双重身份验证方法进行设置。"
 
-#: app/assets/javascripts/app/models/user.coffee:332
+#: app/assets/javascripts/app/models/user.coffee:341
 msgid "Christmas holiday"
 msgstr "圣诞假期"
 
@@ -4504,7 +4504,7 @@ msgstr "配置应用"
 msgid "Configure Basic Settings"
 msgstr "基本设置"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:156
+#: app/models/ai/agent/type/ticket_tagger.rb:161
 msgid ""
 "Configure the way required number of resulting tags are added or replaced in "
 "the ticket tags list."
@@ -5226,7 +5226,7 @@ msgstr "创建外部工单"
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee:7
 #: app/assets/javascripts/app/models/organization.coffee:9
 #: app/assets/javascripts/app/models/ticket.coffee:28
-#: app/assets/javascripts/app/models/user.coffee:15
+#: app/assets/javascripts/app/models/user.coffee:24
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco:17
 #: app/assets/javascripts/app/views/widget/http_log.jst.eco:19
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco:23
@@ -5259,7 +5259,7 @@ msgstr "创建于:"
 #: app/assets/javascripts/app/models/sla.coffee:10
 #: app/assets/javascripts/app/models/ticket.coffee:27
 #: app/assets/javascripts/app/models/ticket_article.coffee:15
-#: app/assets/javascripts/app/models/user.coffee:14
+#: app/assets/javascripts/app/models/user.coffee:23
 #: app/frontend/shared/entities/organization/stores/objectAttributes.ts:14
 #: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:91
 #: app/frontend/shared/entities/user/stores/objectAttributes.ts:14
@@ -5733,7 +5733,7 @@ msgstr ""
 "定义队列或呼叫目标（适合您的PBX），并将您的代理映射到它。通过这种方式，Zammad"
 "可以通过仅向他们显示相关的呼叫条目和通知来支持您的代理。"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:115
+#: app/models/ai/agent/type/ticket_tagger.rb:120
 msgid "Define rules for adding tags in the system."
 msgstr ""
 
@@ -7382,7 +7382,7 @@ msgstr ""
 "之外，Zammad 还使用标签来对工单进行分类。与当前在 OTRS 中使用动态字段相比，这"
 "种差异可以为您的工单属性/标签创建新的理念。"
 
-#: app/assets/javascripts/app/models/user.coffee:334
+#: app/assets/javascripts/app/models/user.coffee:343
 msgid "Easter holiday"
 msgstr "復活節假期"
 
@@ -7568,7 +7568,7 @@ msgstr "Elasticsearch 版本"
 #: app/assets/javascripts/app/controllers/getting_started/channel.coffee:15
 #: app/assets/javascripts/app/models/email_address.coffee:2
 #: app/assets/javascripts/app/models/group.coffee:12
-#: app/assets/javascripts/app/models/user.coffee:11
+#: app/assets/javascripts/app/models/user.coffee:20
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:6
 #: app/assets/javascripts/app/views/import/kayako.jst.eco:42
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco:39
@@ -8907,7 +8907,7 @@ msgstr "提示"
 msgid "First article (oldest)"
 msgstr "上一篇"
 
-#: app/assets/javascripts/app/models/user.coffee:9
+#: app/assets/javascripts/app/models/user.coffee:18
 #: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts:14
 #: db/seeds/object_manager_attributes.rb:818
 msgid "First name"
@@ -9232,7 +9232,7 @@ msgstr "网关"
 msgid "General communication error, maybe internet is not available!"
 msgstr "通信错误，可能互联网不可用！"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:126
+#: app/models/ai/agent/type/ticket_tagger.rb:131
 msgid "General tagging principles"
 msgstr ""
 
@@ -9571,7 +9571,7 @@ msgid "Group needed in channel definition!"
 msgstr "频道定义中需要的组！"
 
 #: app/assets/javascripts/app/models/role.coffee:8
-#: app/assets/javascripts/app/models/user.coffee:13
+#: app/assets/javascripts/app/models/user.coffee:22
 #: db/seeds/object_manager_attributes.rb:1661
 msgid "Group permissions"
 msgstr "群组权限"
@@ -11323,7 +11323,7 @@ msgstr "最后在数据库对象的创建（例如，最后一个触发器创建
 msgid "Last login"
 msgstr "上次登录"
 
-#: app/assets/javascripts/app/models/user.coffee:10
+#: app/assets/javascripts/app/models/user.coffee:19
 #: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts:23
 #: db/seeds/object_manager_attributes.rb:871
 msgid "Last name"
@@ -11708,7 +11708,7 @@ msgstr "自定义即时聊天css样式"
 msgid "Log in to %s"
 msgstr "登录到％s"
 
-#: app/assets/javascripts/app/models/user.coffee:8
+#: app/assets/javascripts/app/models/user.coffee:17
 #: app/assets/javascripts/app/views/maintenance.jst.eco:25
 #: app/controllers/time_accountings_controller.rb:101
 #: db/seeds/object_manager_attributes.rb:785
@@ -13202,7 +13202,7 @@ msgstr "您的新個人 Access Token"
 msgid "New tab"
 msgstr "新标签"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:145
+#: app/models/ai/agent/type/ticket_tagger.rb:150
 #, fuzzy
 #| msgid "Category"
 msgid "New tags strategy"
@@ -14083,13 +14083,13 @@ msgstr "十一月"
 msgid "Number"
 msgstr "编号"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:175
+#: app/models/ai/agent/type/ticket_tagger.rb:180
 #, fuzzy
 #| msgid "Number"
 msgid "Number of tags"
 msgstr "编号"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:179
+#: app/models/ai/agent/type/ticket_tagger.rb:184
 msgid "Number of tags the AI agent may assign."
 msgstr ""
 
@@ -14579,7 +14579,7 @@ msgstr "概览"
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_organization.coffee:20
 #: app/assets/javascripts/app/models/job.coffee:8
 #: app/assets/javascripts/app/models/ticket.coffee:9
-#: app/assets/javascripts/app/models/user.coffee:12
+#: app/assets/javascripts/app/models/user.coffee:21
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco:45
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco:5
 #: app/assets/javascripts/app/views/time_accounting/accounted_time.jst.eco:25
@@ -15615,7 +15615,7 @@ msgstr "优先级"
 msgid "Priority rules"
 msgstr "优先级"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:135
+#: app/models/ai/agent/type/ticket_tagger.rb:140
 #, fuzzy
 #| msgid "Priority"
 msgid "Priority tagging rules"
@@ -16310,7 +16310,7 @@ msgstr "订单"
 msgid "Replace"
 msgstr "代理人"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:166
+#: app/models/ai/agent/type/ticket_tagger.rb:171
 #, fuzzy
 #| msgid "Replacement"
 msgid "Replace existing tags with"
@@ -18355,7 +18355,6 @@ msgstr "找到类似工单"
 msgid "Simple Line Icons"
 msgstr "简单的线图标"
 
-#: app/assets/javascripts/app/views/settings/storage_provider.jst.eco:22
 #: db/seeds/settings.rb:379
 msgid "Simple Storage (S3)"
 msgstr "简单存储（S3）"
@@ -18934,7 +18933,7 @@ msgstr "圖像服務"
 msgid "Summary is being generated…"
 msgstr "无法生成新的工单编号。"
 
-#: app/assets/javascripts/app/models/user.coffee:336
+#: app/assets/javascripts/app/models/user.coffee:345
 msgid "Summer holiday"
 msgstr "暑假"
 
@@ -19073,7 +19072,7 @@ msgstr "标签"
 msgid "Tag \"%s\" already exists."
 msgstr "标签“%s”已存在。"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:160
+#: app/models/ai/agent/type/ticket_tagger.rb:165
 #, fuzzy
 #| msgid "Assignment Timeout"
 msgid "Tag assignment mode"
@@ -20125,7 +20124,7 @@ msgid ""
 "The preview cannot be generated. The format is corrupted or not supported."
 msgstr "预览无法生成。该格式被损坏或不支持。"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:139
+#: app/models/ai/agent/type/ticket_tagger.rb:144
 msgid ""
 "The priority rules instruct the AI agent on how to add tags for incoming "
 "tickets."
@@ -20438,7 +20437,7 @@ msgstr "RETRISE附件下载失败。"
 msgid "The retried security process failed!"
 msgstr "RETRED安全过程失败了！"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:130
+#: app/models/ai/agent/type/ticket_tagger.rb:135
 msgid "The rules instruct the AI agent on how tags are used in the system."
 msgstr ""
 
@@ -20456,7 +20455,7 @@ msgid ""
 "additional instructions necessary."
 msgstr ""
 
-#: app/models/ai/agent/type/ticket_tagger.rb:149
+#: app/models/ai/agent/type/ticket_tagger.rb:154
 msgid ""
 "The rules instruct the AI agent on when to generate new tags and when to "
 "prefer tags from existing tags list."
@@ -22707,7 +22706,7 @@ msgstr "佔用時間"
 msgid "Total display of the number of objects in a grouping."
 msgstr "分组中对象数量的总显示。"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:165
+#: app/models/ai/agent/type/ticket_tagger.rb:170
 #, fuzzy
 #| msgid "%s Object(s) are created."
 msgid "Total shouldn't exceed"
@@ -23396,7 +23395,7 @@ msgstr "更新在"
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee:8
 #: app/assets/javascripts/app/models/organization.coffee:11
 #: app/assets/javascripts/app/models/ticket.coffee:30
-#: app/assets/javascripts/app/models/user.coffee:17
+#: app/assets/javascripts/app/models/user.coffee:26
 #: app/frontend/shared/entities/organization/stores/objectAttributes.ts:41
 #: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:120
 #: app/frontend/shared/entities/user/stores/objectAttributes.ts:44
@@ -23418,7 +23417,7 @@ msgstr "更新於"
 #: app/assets/javascripts/app/models/sla.coffee:12
 #: app/assets/javascripts/app/models/ticket.coffee:29
 #: app/assets/javascripts/app/models/ticket_article.coffee:17
-#: app/assets/javascripts/app/models/user.coffee:16
+#: app/assets/javascripts/app/models/user.coffee:25
 #: app/frontend/shared/entities/organization/stores/objectAttributes.ts:31
 #: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:109
 #: app/frontend/shared/entities/user/stores/objectAttributes.ts:33
@@ -23823,7 +23822,7 @@ msgstr "正则不匹配"
 msgid "User Organization Selector - email"
 msgstr "用户组织选择器 - 电子邮件"
 
-#: app/models/user/permissions.rb:50
+#: app/models/user/permissions.rb:53
 #, fuzzy
 #| msgid "Authorization failed"
 msgid "User authorization failed."

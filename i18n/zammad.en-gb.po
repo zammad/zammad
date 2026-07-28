@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-07-14 19:10+0000\n"
-"Last-Translator: Andi Chandler <andi@gowling.com>\n"
+"PO-Revision-Date: 2026-07-28 06:45+0000\n"
+"Last-Translator: Martin Gruner <mg@zammad.com>\n"
 "Language-Team: English (United Kingdom) <https://translations.zammad.org/"
 "projects/zammad/zammad-stable/en_GB/>\n"
 "Language: en-gb\n"
@@ -543,7 +543,7 @@ msgstr "%s created role |%s|"
 msgid "%s created ticket |%s|"
 msgstr "%s created ticket |%s|"
 
-#: app/assets/javascripts/app/models/user.coffee:208
+#: app/assets/javascripts/app/models/user.coffee:217
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/user.ts:21
 msgid "%s created user |%s|"
 msgstr "%s created user |%s|"
@@ -573,7 +573,7 @@ msgstr ""
 "%s email(s) were found in your mailbox. They will all be moved from your "
 "mailbox into Zammad."
 
-#: app/assets/javascripts/app/models/user.coffee:222
+#: app/assets/javascripts/app/models/user.coffee:231
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/user.ts:29
 msgid "%s ended switch to |%s|!"
 msgstr "%s ended switch to |%s|!"
@@ -698,7 +698,7 @@ msgstr ""
 "%s selected. Use the arrow keys to select the drop position, then press "
 "Space."
 
-#: app/assets/javascripts/app/models/user.coffee:212
+#: app/assets/javascripts/app/models/user.coffee:221
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/user.ts:25
 msgid "%s started a new session"
 msgstr "%s started a new session"
@@ -708,7 +708,7 @@ msgstr "%s started a new session"
 msgid "%s subdomain"
 msgstr "%s subdomain"
 
-#: app/assets/javascripts/app/models/user.coffee:217
+#: app/assets/javascripts/app/models/user.coffee:226
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/user.ts:27
 msgid "%s switched to |%s|!"
 msgstr "%s switched to |%s|!"
@@ -764,7 +764,7 @@ msgstr "%s updated role |%s|"
 msgid "%s updated ticket |%s|"
 msgstr "%s updated ticket |%s|"
 
-#: app/assets/javascripts/app/models/user.coffee:210
+#: app/assets/javascripts/app/models/user.coffee:219
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/user.ts:23
 msgid "%s updated user |%s|"
 msgstr "%s updated user |%s|"
@@ -1810,7 +1810,7 @@ msgstr "Add tag"
 msgid "Add this class to a button on your page that should open the chat."
 msgstr "Add this class to a button on your page that should open the chat."
 
-#: app/models/ai/agent/type/ticket_tagger.rb:164
+#: app/models/ai/agent/type/ticket_tagger.rb:169
 msgid "Add to existing tags"
 msgstr ""
 
@@ -2771,7 +2771,7 @@ msgstr "Attachments are stored in the filesystem."
 msgid "Attendees"
 msgstr "Attendees"
 
-#: app/assets/javascripts/app/models/user.coffee:12
+#: app/assets/javascripts/app/models/user.coffee:21
 #: app/frontend/apps/desktop/entities/user/composables/useUserEdit.ts:80
 #: app/frontend/apps/mobile/entities/user/composables/useUserEdit.ts:67
 msgid ""
@@ -3023,7 +3023,7 @@ msgstr ""
 msgid "Available methods"
 msgstr ""
 
-#: app/models/ai/agent/type/ticket_tagger.rb:119
+#: app/models/ai/agent/type/ticket_tagger.rb:124
 msgid ""
 "Available tags are limited to existing in the manage tags section. AI agent "
 "won't be able to generate new ones. %l"
@@ -3034,7 +3034,7 @@ msgid "Available types for a new ticket"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee:3
-#: app/assets/javascripts/app/models/user.coffee:29
+#: app/assets/javascripts/app/models/user.coffee:38
 #: app/assets/javascripts/app/views/customer_chat/setting.jst.eco:22
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco:3
 #: app/assets/javascripts/app/views/profile/imageCropper.jst.eco:3
@@ -3928,7 +3928,7 @@ msgstr ""
 msgid "Choose the group to which page posts will get added."
 msgstr ""
 
-#: app/models/ai/agent/type/ticket_tagger.rb:168
+#: app/models/ai/agent/type/ticket_tagger.rb:173
 msgid ""
 "Choose whether the suggested tags are added to or replace the existing tags "
 "on the ticket."
@@ -3983,7 +3983,7 @@ msgstr ""
 msgid "Choose your preferred two-factor authentication method to set it up."
 msgstr ""
 
-#: app/assets/javascripts/app/models/user.coffee:332
+#: app/assets/javascripts/app/models/user.coffee:341
 msgid "Christmas holiday"
 msgstr ""
 
@@ -4357,7 +4357,7 @@ msgstr ""
 msgid "Configure Basic Settings"
 msgstr ""
 
-#: app/models/ai/agent/type/ticket_tagger.rb:156
+#: app/models/ai/agent/type/ticket_tagger.rb:161
 msgid ""
 "Configure the way required number of resulting tags are added or replaced in "
 "the ticket tags list."
@@ -5016,7 +5016,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee:7
 #: app/assets/javascripts/app/models/organization.coffee:9
 #: app/assets/javascripts/app/models/ticket.coffee:28
-#: app/assets/javascripts/app/models/user.coffee:15
+#: app/assets/javascripts/app/models/user.coffee:24
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco:17
 #: app/assets/javascripts/app/views/widget/http_log.jst.eco:19
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco:23
@@ -5049,7 +5049,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/sla.coffee:10
 #: app/assets/javascripts/app/models/ticket.coffee:27
 #: app/assets/javascripts/app/models/ticket_article.coffee:15
-#: app/assets/javascripts/app/models/user.coffee:14
+#: app/assets/javascripts/app/models/user.coffee:23
 #: app/frontend/shared/entities/organization/stores/objectAttributes.ts:14
 #: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:91
 #: app/frontend/shared/entities/user/stores/objectAttributes.ts:14
@@ -5511,7 +5511,7 @@ msgid ""
 "relevant call entries and notifications."
 msgstr ""
 
-#: app/models/ai/agent/type/ticket_tagger.rb:115
+#: app/models/ai/agent/type/ticket_tagger.rb:120
 msgid "Define rules for adding tags in the system."
 msgstr ""
 
@@ -7049,7 +7049,7 @@ msgid ""
 "in OTRS."
 msgstr ""
 
-#: app/assets/javascripts/app/models/user.coffee:334
+#: app/assets/javascripts/app/models/user.coffee:343
 msgid "Easter holiday"
 msgstr ""
 
@@ -7223,7 +7223,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/getting_started/channel.coffee:15
 #: app/assets/javascripts/app/models/email_address.coffee:2
 #: app/assets/javascripts/app/models/group.coffee:12
-#: app/assets/javascripts/app/models/user.coffee:11
+#: app/assets/javascripts/app/models/user.coffee:20
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:6
 #: app/assets/javascripts/app/views/import/kayako.jst.eco:42
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco:39
@@ -7432,7 +7432,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco:12
 msgid "Enable automatic assignment the first time an agent opens a ticket."
-msgstr ""
+msgstr "Enable automatic assignment the first time an agent opens a ticket."
 
 #: db/seeds/settings.rb:6014
 msgid "Enable checklists."
@@ -7844,6 +7844,8 @@ msgid ""
 "Enter your email address from your Kayako account which should be used for "
 "the import."
 msgstr ""
+"Enter your email address from your Kayako account which should be used for "
+"the import."
 
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue:52
 msgid ""
@@ -8439,7 +8441,7 @@ msgstr ""
 msgid "First article (oldest)"
 msgstr "Article"
 
-#: app/assets/javascripts/app/models/user.coffee:9
+#: app/assets/javascripts/app/models/user.coffee:18
 #: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts:14
 #: db/seeds/object_manager_attributes.rb:818
 msgid "First name"
@@ -8755,7 +8757,7 @@ msgstr ""
 msgid "General communication error, maybe internet is not available!"
 msgstr "General communication error, maybe the Internet is not available!"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:126
+#: app/models/ai/agent/type/ticket_tagger.rb:131
 msgid "General tagging principles"
 msgstr ""
 
@@ -9055,7 +9057,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:53
 msgid "Group Filter"
-msgstr ""
+msgstr "Group Filter"
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:557
 msgid ""
@@ -9072,7 +9074,7 @@ msgid "Group needed in channel definition!"
 msgstr ""
 
 #: app/assets/javascripts/app/models/role.coffee:8
-#: app/assets/javascripts/app/models/user.coffee:13
+#: app/assets/javascripts/app/models/user.coffee:22
 #: db/seeds/object_manager_attributes.rb:1661
 msgid "Group permissions"
 msgstr ""
@@ -9160,7 +9162,7 @@ msgstr ""
 
 #: app/models/system_report/plugin/hardware.rb:4
 msgid "Hardware (e.g. CPU cores, memory, disk space)"
-msgstr ""
+msgstr "Hardware (e.g. CPU cores, memory, disk space)"
 
 #: app/assets/javascripts/app/models/job.coffee:18
 msgid "Has processed"
@@ -9462,7 +9464,7 @@ msgstr ""
 
 #: app/controllers/import_otrs_controller.rb:93
 msgid "Host found, but it seems to be no OTRS installation!"
-msgstr ""
+msgstr "Host found, but it seems to be no OTRS installation!"
 
 #: app/controllers/import_otrs_controller.rb:88
 msgid "Host found, but no OTRS migrator is installed!"
@@ -10042,7 +10044,7 @@ msgstr "Insert text from knowledge base answer"
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:99
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:99
 msgid "Insert text from text module"
-msgstr ""
+msgstr "Insert text from text module"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:139
 msgid ""
@@ -10717,7 +10719,7 @@ msgstr ""
 msgid "Last login"
 msgstr ""
 
-#: app/assets/javascripts/app/models/user.coffee:10
+#: app/assets/javascripts/app/models/user.coffee:19
 #: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts:23
 #: db/seeds/object_manager_attributes.rb:871
 msgid "Last name"
@@ -10734,7 +10736,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco:2
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco:2
 msgid "Last sync"
-msgstr ""
+msgstr "Last sync"
 
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:25
 msgid "Last sync at:"
@@ -10810,7 +10812,7 @@ msgstr ""
 
 #: app/models/ai/agent/type/ticket_group_dispatcher.rb:23
 msgid "Limit groups and provide optional descriptions"
-msgstr ""
+msgstr "Limit groups and provide optional descriptions"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:60
 msgid "Limit notifications to specific groups"
@@ -11078,7 +11080,7 @@ msgstr ""
 msgid "Log in to %s"
 msgstr ""
 
-#: app/assets/javascripts/app/models/user.coffee:8
+#: app/assets/javascripts/app/models/user.coffee:17
 #: app/assets/javascripts/app/views/maintenance.jst.eco:25
 #: app/controllers/time_accountings_controller.rb:101
 #: db/seeds/object_manager_attributes.rb:785
@@ -11087,7 +11089,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/public_link.coffee:9
 msgid "Login Screen"
-msgstr ""
+msgstr "Login Screen"
 
 #: lib/auth/error/authentication_failed.rb:4
 msgid ""
@@ -12304,7 +12306,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/template.coffee:25
 msgid "New Template"
-msgstr ""
+msgstr "New Template"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:190
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee:65
@@ -12379,7 +12381,7 @@ msgstr "Add a Personal Access Token"
 msgid "New tab"
 msgstr ""
 
-#: app/models/ai/agent/type/ticket_tagger.rb:145
+#: app/models/ai/agent/type/ticket_tagger.rb:150
 msgid "New tags strategy"
 msgstr ""
 
@@ -12615,7 +12617,7 @@ msgstr ""
 #: app/views/knowledge_base/public/categories/index.html.erb:16
 #: app/views/knowledge_base/public/tags/show.html.erb:15
 msgid "No content to show"
-msgstr ""
+msgstr "No content to show"
 
 #: app/models/group.rb:36
 msgid "No double colons (::) allowed, reserved delimiter"
@@ -12661,7 +12663,7 @@ msgstr ""
 
 #: app/controllers/integration/exchange_controller.rb:45
 msgid "No folders were found for the given user credentials."
-msgstr ""
+msgstr "No folders were found for the given user credentials."
 
 #: app/services/service/system/import/check_status.rb:39
 msgid "No import in progress."
@@ -12720,7 +12722,7 @@ msgstr ""
 
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue:260
 msgid "No recent searches"
-msgstr ""
+msgstr "No recent searches"
 
 #: lib/whatsapp/webhook/message/reaction.rb:13
 msgid "No related article found to process the reaction message on."
@@ -12771,7 +12773,7 @@ msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:213
 msgid "No shared drafts yet"
-msgstr ""
+msgstr "No shared drafts yet"
 
 #: app/controllers/organizations_controller.rb:107
 #: app/controllers/text_modules_controller.rb:75
@@ -12968,6 +12970,10 @@ msgid ""
 "after downloading the file to avoid leaking personal data which could be "
 "included in comments or notes."
 msgstr ""
+"Note: Zammad never sends this data automatically and this data doesn't "
+"include personal account names or passwords. However, please have a look "
+"after downloading the file to avoid leaking personal data which could be "
+"included in comments or notes."
 
 #: app/assets/javascripts/app/models/email_address.coffee:35
 #: app/assets/javascripts/app/models/group.coffee:14
@@ -13067,7 +13073,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
 msgid "November"
-msgstr ""
+msgstr "November"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket.coffee:10
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco:20
@@ -13075,11 +13081,11 @@ msgstr ""
 msgid "Number"
 msgstr ""
 
-#: app/models/ai/agent/type/ticket_tagger.rb:175
+#: app/models/ai/agent/type/ticket_tagger.rb:180
 msgid "Number of tags"
 msgstr ""
 
-#: app/models/ai/agent/type/ticket_tagger.rb:179
+#: app/models/ai/agent/type/ticket_tagger.rb:184
 msgid "Number of tags the AI agent may assign."
 msgstr ""
 
@@ -13334,7 +13340,7 @@ msgstr "Open Checklist"
 
 #: app/assets/javascripts/app/models/public_link.coffee:10
 msgid "Open in new tab"
-msgstr ""
+msgstr "Open in new tab"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:258
 msgid "Open in primary locale"
@@ -13493,7 +13499,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_organization.coffee:20
 #: app/assets/javascripts/app/models/job.coffee:8
 #: app/assets/javascripts/app/models/ticket.coffee:9
-#: app/assets/javascripts/app/models/user.coffee:12
+#: app/assets/javascripts/app/models/user.coffee:21
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco:45
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco:5
 #: app/assets/javascripts/app/views/time_accounting/accounted_time.jst.eco:25
@@ -14240,7 +14246,7 @@ msgstr ""
 
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:69
 msgid "Please select at least one ticket overview"
-msgstr ""
+msgstr "Please select at least one ticket overview"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/features/ai-assistant-text-tools/AiAssistantTextTools/AiAssistantTextTools.vue:84
 msgid "Please select some text first."
@@ -14455,7 +14461,7 @@ msgstr ""
 msgid "Priority rules"
 msgstr ""
 
-#: app/models/ai/agent/type/ticket_tagger.rb:135
+#: app/models/ai/agent/type/ticket_tagger.rb:140
 msgid "Priority tagging rules"
 msgstr ""
 
@@ -14485,7 +14491,7 @@ msgstr ""
 
 #: db/seeds/schedulers.rb:11
 msgid "Process ticket escalations."
-msgstr ""
+msgstr "Process ticket escalations."
 
 #: db/seeds/settings.rb:94
 msgid "Product Name"
@@ -14682,7 +14688,7 @@ msgstr ""
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue:44
 msgid "Reason for absence"
-msgstr ""
+msgstr "Reason for absence"
 
 #: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/SwitchBackFeedbackDialog.vue:80
 msgid "Reason to switch back"
@@ -15080,7 +15086,7 @@ msgstr ""
 msgid "Replace"
 msgstr "Replace"
 
-#: app/models/ai/agent/type/ticket_tagger.rb:166
+#: app/models/ai/agent/type/ticket_tagger.rb:171
 msgid "Replace existing tags with"
 msgstr ""
 
@@ -16882,7 +16888,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/signup.coffee:18
 #: app/frontend/apps/desktop/pages/authentication/routes.ts:98
 msgid "Sign up"
-msgstr ""
+msgstr "Sign up"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:92
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleSecurityWarning.vue:26
@@ -16937,7 +16943,6 @@ msgstr ""
 msgid "Simple Line Icons"
 msgstr ""
 
-#: app/assets/javascripts/app/views/settings/storage_provider.jst.eco:22
 #: db/seeds/settings.rb:379
 msgid "Simple Storage (S3)"
 msgstr ""
@@ -16954,6 +16959,7 @@ msgstr ""
 msgid ""
 "Simple Storage Service malfunction. Please contact your Zammad administrator."
 msgstr ""
+"Simple Storage Service malfunction. Please contact your Zammad administrator."
 
 #: app/models/store/provider/s3.rb:72
 msgid "Simple Storage Service not reachable."
@@ -17018,7 +17024,7 @@ msgstr ""
 #: app/frontend/apps/desktop/components/CommonTicketEscalationIndicator/CommonTicketEscalationIndicator.vue:44
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:157
 msgid "Solution time"
-msgstr ""
+msgstr "Solution time"
 
 #: app/assets/javascripts/app/views/translation/description.jst.eco:12
 msgid "Some Text"
@@ -17464,7 +17470,7 @@ msgstr ""
 msgid "Summary is being generated…"
 msgstr "Summary is being generated…"
 
-#: app/assets/javascripts/app/models/user.coffee:336
+#: app/assets/javascripts/app/models/user.coffee:345
 msgid "Summer holiday"
 msgstr ""
 
@@ -17599,7 +17605,7 @@ msgstr "Add Tag"
 msgid "Tag \"%s\" already exists."
 msgstr ""
 
-#: app/models/ai/agent/type/ticket_tagger.rb:160
+#: app/models/ai/agent/type/ticket_tagger.rb:165
 #, fuzzy
 #| msgid "Assignment Timeout"
 msgid "Tag assignment mode"
@@ -17873,7 +17879,7 @@ msgstr ""
 
 #: lib/secure_mailing/pgp/tool/error.rb:106
 msgid "The PGP email recipient is invalid."
-msgstr ""
+msgstr "The PGP email recipient is invalid."
 
 #: lib/secure_mailing/pgp/tool/error.rb:115
 msgid "The PGP email signer is invalid."
@@ -18301,6 +18307,8 @@ msgid ""
 "The entered user for reauthentication differs from the user that was used "
 "for setting up your Microsoft365 channel initially."
 msgstr ""
+"The entered user for reauthentication differs from the user that was used "
+"for setting up your Microsoft365 channel initially."
 
 #: app/assets/javascripts/app/controllers/_channel/facebook.coffee:183
 #: app/assets/javascripts/app/controllers/_channel/google.coffee:250
@@ -18570,7 +18578,7 @@ msgid ""
 "The preview cannot be generated. The format is corrupted or not supported."
 msgstr ""
 
-#: app/models/ai/agent/type/ticket_tagger.rb:139
+#: app/models/ai/agent/type/ticket_tagger.rb:144
 msgid ""
 "The priority rules instruct the AI agent on how to add tags for incoming "
 "tickets."
@@ -18776,7 +18784,7 @@ msgstr ""
 
 #: lib/telegram_helper.rb:56
 msgid "The required parameter 'group_id' is invalid."
-msgstr ""
+msgstr "The required parameter 'group_id' is invalid."
 
 #: lib/telegram_helper.rb:51
 msgid "The required parameter 'group_id' is missing."
@@ -18864,7 +18872,7 @@ msgstr ""
 msgid "The retried security process failed!"
 msgstr ""
 
-#: app/models/ai/agent/type/ticket_tagger.rb:130
+#: app/models/ai/agent/type/ticket_tagger.rb:135
 msgid "The rules instruct the AI agent on how tags are used in the system."
 msgstr ""
 
@@ -18882,7 +18890,7 @@ msgid ""
 "additional instructions necessary."
 msgstr ""
 
-#: app/models/ai/agent/type/ticket_tagger.rb:149
+#: app/models/ai/agent/type/ticket_tagger.rb:154
 msgid ""
 "The rules instruct the AI agent on when to generate new tags and when to "
 "prefer tags from existing tags list."
@@ -19541,7 +19549,7 @@ msgstr ""
 
 #: app/frontend/shared/form/i18n/locales.ts:442
 msgid "This field must have a value that is at least %s."
-msgstr ""
+msgstr "This field must have a value that is at least %s."
 
 #: app/frontend/shared/form/i18n/locales.ts:412
 msgid "This field must have a value that is at most %s."
@@ -20373,7 +20381,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/widget/ticket_stats.jst.eco:3
 msgid "Tickets of User"
-msgstr ""
+msgstr "Tickets of User"
 
 #: app/frontend/apps/mobile/pages/search/plugins/ticket.ts:10
 msgid "Tickets with \"%s\""
@@ -20709,7 +20717,7 @@ msgstr "Accounted Time"
 msgid "Total display of the number of objects in a grouping."
 msgstr ""
 
-#: app/models/ai/agent/type/ticket_tagger.rb:165
+#: app/models/ai/agent/type/ticket_tagger.rb:170
 msgid "Total shouldn't exceed"
 msgstr ""
 
@@ -20897,7 +20905,7 @@ msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/twitterStatus.ts:7
 msgid "Twitter status"
-msgstr ""
+msgstr "Twitter status"
 
 #: app/assets/javascripts/app/controllers/_manage/security.coffee:11
 #: app/assets/javascripts/app/views/profile/password.jst.eco:22
@@ -21052,7 +21060,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco:12
 msgid "Unit"
-msgstr ""
+msgstr "Unit"
 
 #: app/assets/javascripts/app/views/profile/devices.jst.eco:22
 #: app/frontend/apps/desktop/components/CommonHistoryFlyout/useHistoryEvents.ts:39
@@ -21312,7 +21320,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee:8
 #: app/assets/javascripts/app/models/organization.coffee:11
 #: app/assets/javascripts/app/models/ticket.coffee:30
-#: app/assets/javascripts/app/models/user.coffee:17
+#: app/assets/javascripts/app/models/user.coffee:26
 #: app/frontend/shared/entities/organization/stores/objectAttributes.ts:41
 #: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:120
 #: app/frontend/shared/entities/user/stores/objectAttributes.ts:44
@@ -21334,7 +21342,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/sla.coffee:12
 #: app/assets/javascripts/app/models/ticket.coffee:29
 #: app/assets/javascripts/app/models/ticket_article.coffee:17
-#: app/assets/javascripts/app/models/user.coffee:16
+#: app/assets/javascripts/app/models/user.coffee:25
 #: app/frontend/shared/entities/organization/stores/objectAttributes.ts:31
 #: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:109
 #: app/frontend/shared/entities/user/stores/objectAttributes.ts:33
@@ -21616,9 +21624,9 @@ msgstr "User Mismatch"
 
 #: db/seeds/settings.rb:628
 msgid "User Organization Selector - email"
-msgstr ""
+msgstr "User Organisation Selector - email"
 
-#: app/models/user/permissions.rb:50
+#: app/models/user/permissions.rb:53
 msgid "User authorization failed."
 msgstr ""
 
@@ -21715,7 +21723,7 @@ msgstr ""
 
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:271
 msgid "User taskbar tabs"
-msgstr ""
+msgstr "User taskbar tabs"
 
 #: app/assets/javascripts/app/controllers/user.coffee:221
 msgid "User updated successfully."
@@ -22364,7 +22372,7 @@ msgstr ""
 
 #: public/assets/chat/views/waiting.eco:8
 msgid "You are on waiting list position <strong>%s</strong>."
-msgstr ""
+msgstr "You are on waiting list position <strong>%s</strong>."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:78
 msgid "You are part of the BETA UI feedback program."
@@ -22387,7 +22395,7 @@ msgstr ""
 
 #: app/models/transaction/notification.rb:73
 msgid "You are receiving this because you were mentioned in this ticket."
-msgstr ""
+msgstr "You are receiving this because you were mentioned in this ticket."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:37
 msgid "You can always re-join later."
@@ -23061,7 +23069,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/overview.coffee:37
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketOrderBySelector.vue:36
 msgid "ascending"
-msgstr ""
+msgstr "ascending"
 
 #: app/assets/javascripts/app/views/ticket_overview/batch_overlay.jst.eco:11
 msgid "assign tickets"
@@ -23099,7 +23107,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:68
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 msgid "before (relative)"
-msgstr ""
+msgstr "before (relative)"
 
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco:41
 #: app/assets/javascripts/app/views/sla/index.jst.eco:45
@@ -23628,7 +23636,7 @@ msgstr ""
 
 #: app/frontend/shared/i18n/dates.ts:111
 msgid "in 1 hour"
-msgstr ""
+msgstr "in 1 hour"
 
 #: app/frontend/shared/i18n/dates.ts:118
 msgid "in 1 minute"
@@ -24243,7 +24251,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:177
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:22
 msgid "sent to the customer"
-msgstr ""
+msgstr "sent to the customer"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/devices.ts:25
 msgid "session,sessions,computer,computers,browser,browsers,access"
@@ -24313,7 +24321,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco:36
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco:4
 msgid "skipped"
-msgstr ""
+msgstr "skipped"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/sms.ts:6
 #: db/seeds/ticket_article_types.rb:4
@@ -24520,7 +24528,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:71
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 msgid "within last (relative)"
-msgstr ""
+msgstr "within last (relative)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:484
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
