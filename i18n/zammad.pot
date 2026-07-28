@@ -8817,7 +8817,7 @@ msgstr ""
 msgid "Image file"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:18
+#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:19
 #: app/assets/javascripts/app/lib/app_post/image_service.coffee:134
 #: app/assets/javascripts/app/lib/base/jquery.contenteditable.js:482
 msgid "Image file size is too large, please try inserting a smaller file."
@@ -9096,11 +9096,6 @@ msgstr ""
 msgid "Input field must be text, password, tel, fax, email or url type."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:2
-#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_video.coffee:2
-msgid "Insert"
-msgstr ""
-
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:221
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:218
 msgid "Insert code block"
@@ -9117,6 +9112,11 @@ msgstr ""
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:229
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:226
 msgid "Insert divider"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:2
+#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_video.coffee:2
+msgid "Insert element"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:210
@@ -14035,6 +14035,10 @@ msgstr ""
 msgid "Remove checklist"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:4
+msgid "Remove element"
+msgstr ""
+
 #: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/FieldFilterSelectorInput.vue:516
 msgid "Remove filter"
 msgstr ""
@@ -14140,7 +14144,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:3
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_video.coffee:3
-msgid "Replace"
+msgid "Replace element"
 msgstr ""
 
 #: app/models/ai/agent/type/ticket_tagger.rb:171
