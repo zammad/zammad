@@ -18,37 +18,37 @@ importers:
         specifier: ^2.0.1
         version: 2.0.1(vue@3.5.40(typescript@6.0.3))
       '@formkit/core':
-        specifier: ^2.1.0
+        specifier: ^2.1.2
         version: 2.1.2
       '@formkit/dev':
-        specifier: ^2.1.0
+        specifier: ^2.1.2
         version: 2.1.2
       '@formkit/drag-and-drop':
         specifier: ^0.6.1
         version: 0.6.1
       '@formkit/i18n':
-        specifier: ^2.1.0
+        specifier: ^2.1.2
         version: 2.1.2
       '@formkit/inputs':
-        specifier: ^2.1.0
+        specifier: ^2.1.2
         version: 2.1.2
       '@formkit/rules':
-        specifier: ^2.1.0
+        specifier: ^2.1.2
         version: 2.1.2
       '@formkit/tailwindcss':
-        specifier: ^2.1.0
+        specifier: ^2.1.2
         version: 2.1.2(tailwindcss@4.3.3)
       '@formkit/themes':
-        specifier: ^2.1.0
+        specifier: ^2.1.2
         version: 2.1.2
       '@formkit/utils':
-        specifier: ^2.1.0
+        specifier: ^2.1.2
         version: 2.1.2
       '@formkit/validation':
-        specifier: ^2.1.0
+        specifier: ^2.1.2
         version: 2.1.2
       '@formkit/vue':
-        specifier: ^2.1.0
+        specifier: ^2.1.2
         version: 2.1.2(vue@3.5.40(typescript@6.0.3))
       '@rails/actioncable':
         specifier: ~8.0.500
