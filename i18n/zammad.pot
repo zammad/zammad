@@ -21785,7 +21785,7 @@ msgid "contains one not"
 msgstr ""
 
 #: app/assets/javascripts/app/models/audit_log.coffee:7
-msgid "create"
+msgid "create object"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:87
@@ -21866,6 +21866,10 @@ msgstr ""
 msgid "delete"
 msgstr ""
 
+#: app/assets/javascripts/app/models/audit_log.coffee:7
+msgid "delete object"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:174
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:18
 msgid "delivered to the customer"
@@ -21875,10 +21879,6 @@ msgstr ""
 #: app/assets/javascripts/app/models/overview.coffee:38
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketOrderBySelector.vue:36
 msgid "descending"
-msgstr ""
-
-#: app/assets/javascripts/app/models/audit_log.coffee:7
-msgid "destroy"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/Search/QuickSearch/QuickSearchResultList/QuickSearchResultList.vue:106
@@ -23097,7 +23097,7 @@ msgid "untouched"
 msgstr ""
 
 #: app/assets/javascripts/app/models/audit_log.coffee:7
-msgid "update"
+msgid "update object"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:88

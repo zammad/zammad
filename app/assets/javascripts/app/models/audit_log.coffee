@@ -4,7 +4,7 @@ class App.AuditLog extends App.Model
   @url: @apiPath + '/audit_logs'
 
   @configure_attributes = [
-    { name: 'action_type',    display: __('Action'),    tag: 'select', options: { create: __('create'), update: __('update'), destroy: __('destroy'), switch_to: __('switch to user'), switch_back_to: __('switch back to user') }, translate: true, null: true },
+    { name: 'action_type',    display: __('Action'),    tag: 'select', options: { create: __('create object'), update: __('update object'), destroy: __('delete object'), switch_to: __('switch to user'), switch_back_to: __('switch back to user') }, translate: true, null: true },
     { name: 'user_fullname',  display: __('User'),      tag: 'input',  type: 'text', limit: 255, null: true },
     { name: 'auditable_type', display: __('Object'),    tag: 'input',  type: 'text', limit: 255, null: true },
     { name: 'auditable_name', display: __('Object name'), tag: 'input', type: 'text', limit: 255, null: true },
