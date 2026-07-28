@@ -2,7 +2,7 @@
 
 <div>Oi #{user.firstname},</div>
 <br>
-<div>Isto é como se você tivesse usado sua conta com um <b>dispositivo conhecido, porém, de um outro país</b> em "#{user_device.created_at}":</div>
+<div>Parece que você usou sua conta com um <b>dispositivo conhecido, mas a partir de um novo país</b> em "#{user_device.created_at}":</div>
 <br>
 <div>
 Seu dispositivo: #{user_device.name}<br>
@@ -10,10 +10,10 @@ Sua localização (relativa): #{user_device.location}<br>
 Seu IP: #{user_device.ip}<br>
 </div>
 <br>
-<div>O país foi adicionado na sua lista de dispositivos conhecidos, que pode ser visto aqui:</div>
+<div>O país foi adicionado à sua lista de dispositivos conhecidos, que você pode ver aqui:</div>
 <br>
 <div><a href="#{config.http_type}://#{config.fqdn}/#profile/devices">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>
 <br>
-<div>Se não foi você, remova o dispositivo, altere sua senha e entre em contato com o Administrador. Alguém pode ter ganho acesso não autorizado à sua conta.</div>
+<div>Se não foi você, remova o dispositivo, altere sua senha e entre em contato com o administrador. Alguém pode ter obtido acesso não autorizado à sua conta.</div>
 <br>
-<div>Time #{config.product_name}</div>
+<div>Equipe #{config.product_name}</div>

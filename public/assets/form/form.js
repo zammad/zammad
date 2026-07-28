@@ -246,8 +246,8 @@ $(function() {
         'Email': 'Email',
         'Message': 'Mensagem',
         'Name': 'Nome',
-        'Your Email': 'Seu Email',
-        'Your Message…': 'Sua Mensagem…',
+        'Your Email': 'Seu email',
+        'Your Message…': 'Sua mensagem…',
         'Your Name': 'Seu nome',
       },
       'ro': {
