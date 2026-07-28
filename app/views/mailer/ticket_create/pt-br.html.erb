@@ -7,7 +7,7 @@ Novo ticket (#{ticket.title})
 <div>
 Grupo: #{ticket.group.name}<br>
 Responsável: #{ticket.owner.fullname}<br>
-State: #{t(ticket.state.name)}<br>
+Estado: #{t(ticket.state.name)}<br>
 </div>
 <br>
 <% if @objects[:article] %>
@@ -20,5 +20,5 @@ State: #{t(ticket.state.name)}<br>
 <% end %>
 <br>
 <div>
-  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">Veja mais informações no #{config.product_name}</a>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">Veja isso em #{config.product_name}</a>
 </div>

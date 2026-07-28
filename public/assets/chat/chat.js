@@ -1254,13 +1254,13 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
         'Connection re-established': 'Conexão restabelecida',
         'Offline': 'Desconectado',
         'Online': 'Online',
-        'Scroll down to see new messages': 'Rolar para baixo para ver novas mensagems',
+        'Scroll down to see new messages': 'Role para baixo para ver novas mensagens',
         'Send': 'Enviar',
         'Since you didn\'t respond in the last %s minutes your conversation was closed.': 'Como você não respondeu nos últimos %s minutos, sua conversa foi encerrada.',
         'Since you didn\'t respond in the last %s minutes your conversation with <strong>%s</strong> was closed.': 'Como você não respondeu nos últimos %s minutos, sua conversa com <strong>%s</strong> foi encerrada.',
         'Start new conversation': 'Iniciar uma nova conversa',
         'Today': 'Hoje',
-        'We are sorry, it is taking longer than expected to get a slot. Please try again later or send us an email. Thank you!': 'Lamentamos, está demorando mais do que o esperado para conseguir uma vaga. Tente novamente mais tarde ou envie-nos um e-mail. Obrigado!',
+        'We are sorry, it is taking longer than expected to get a slot. Please try again later or send us an email. Thank you!': 'Lamentamos, está demorando mais do que o esperado para conseguir uma vaga. Tente novamente mais tarde ou envie-nos um email. Obrigado!',
         'You are on waiting list position <strong>%s</strong>.': 'Você está na posição <strong>%s</strong> da lista de espera.'
       },
       'ro': {
