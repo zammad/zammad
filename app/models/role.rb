@@ -38,6 +38,7 @@ class Role < ApplicationModel
   include ChecksCoreWorkflow
 
   core_workflow_screens 'create', 'edit'
+  core_workflow_permission 'admin.role'
 
   # ignore Users because this will lead to huge
   # results for e.g. the Customer role

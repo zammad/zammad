@@ -61,6 +61,7 @@ class Ticket < ApplicationModel
 
   core_workflow_screens 'create_middle', 'edit', 'overview_bulk'
   core_workflow_admin_screens 'create_middle', 'edit'
+  core_workflow_permission 'ticket.agent', 'ticket.customer'
 
   taskbar_entities 'TicketZoom', 'TicketCreate'
   taskbar_ignore_state_updates_entities 'TicketZoom'

@@ -40,6 +40,7 @@ class Organization < ApplicationModel
 
   core_workflow_screens 'create', 'edit'
   core_workflow_admin_screens 'create', 'edit'
+  core_workflow_permission 'ticket.agent', 'admin.organization'
 
   taskbar_entities 'OrganizationProfile'
 

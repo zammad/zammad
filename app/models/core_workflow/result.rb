@@ -5,9 +5,9 @@ class CoreWorkflow::Result
 
   MAX_RERUN = 25
 
-  attr_accessor :payload, :payload_backup, :user, :assets, :assets_in_result, :result, :rerun, :rerun_history, :form_updater, :restricted_fields
+  attr_accessor :payload, :payload_backup, :user, :assets, :assets_in_result, :result, :rerun, :rerun_history, :form_updater, :restricted_fields, :policy
 
-  def initialize(payload:, user:, assets: {}, assets_in_result: true, result: {}, form_updater: false)
+  def initialize(payload:, user:, assets: {}, assets_in_result: true, result: {}, form_updater: false, policy: true)
     if payload.respond_to?(:permit!)
       payload = payload.permit!.to_h
     end
@@ -15,16 +15,51 @@ class CoreWorkflow::Result
     raise ArgumentError, __("The required parameter 'payload->class_name' is missing.") if !payload['class_name']
     raise ArgumentError, __("The required parameter 'payload->screen' is missing.") if !payload['screen']
 
+    @user           = user
+    @policy         = policy
+    @payload        = payload
+    @payload_backup = Marshal.load(Marshal.dump(payload))
+
+    check_authorization!
+
     @restricted_fields = {}
-    @payload           = payload
-    @payload_backup    = Marshal.load(Marshal.dump(payload))
-    @user              = user
     @assets            = assets
     @assets_in_result  = assets_in_result
     @result            = result
     @form_updater      = form_updater
     @rerun             = false
     @rerun_history     = []
+
+    check_target_object_authorization!
+  end
+
+  def check_authorization!
+    return if !policy
+
+    target_class = payload['class_name'].safe_constantize
+    raise ArgumentError, __("The value of the parameter 'payload->class_name' is invalid.") if !target_class&.include?(ChecksCoreWorkflow)
+
+    return if user.blank?
+    return if user.permissions?(target_class.core_workflow_permission)
+
+    raise ArgumentError, __('The current user is not allowed to use core workflow for this object.')
+  end
+
+  # Additionally verify the referenced object against its Pundit policy so the
+  # caller cannot read a specific object they are not allowed to see.
+  def check_target_object_authorization!
+    return if !policy
+    return if user.blank?
+
+    saved = attributes.saved_only
+    return if saved.blank?
+
+    object_policy = Pundit.policy(user, saved)
+    return if object_policy.blank?
+    return if !object_policy.respond_to?(:show?)
+    return if object_policy.show?
+
+    raise ArgumentError, __('The current user is not allowed to access the referenced object.')
   end
 
   def attributes

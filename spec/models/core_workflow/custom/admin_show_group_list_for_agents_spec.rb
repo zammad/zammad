@@ -6,6 +6,8 @@ require 'models/core_workflow/base'
 RSpec.describe CoreWorkflow::Custom::AdminShowGroupListForAgents, type: :model do
   include_context 'with core workflow base'
 
+  let(:action_user) { create(:admin, groups: [ticket.group]) }
+
   describe 'For Users' do
     context 'when creating' do
       let(:user_agent) { create(:agent) }

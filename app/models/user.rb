@@ -77,6 +77,7 @@ class User < ApplicationModel
 
   core_workflow_screens 'create', 'edit', 'invite_agent'
   core_workflow_admin_screens 'create', 'edit'
+  core_workflow_permission 'ticket.agent', 'admin.user'
 
   taskbar_entities 'UserProfile'
 

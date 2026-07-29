@@ -631,7 +631,7 @@ msgstr ""
 msgid "A test ticket has been created, you can find it in your overview \"%s\" %l."
 msgstr ""
 
-#: app/models/ticket.rb:300
+#: app/models/ticket.rb:301
 msgid "A ticket cannot be merged into itself."
 msgstr ""
 
@@ -1555,8 +1555,8 @@ msgstr ""
 msgid "Agent idle timeout"
 msgstr ""
 
-#: app/models/role.rb:181
-#: app/models/user.rb:788
+#: app/models/role.rb:182
+#: app/models/user.rb:789
 msgid "Agent limit exceeded, please check your account settings."
 msgstr ""
 
@@ -2214,7 +2214,7 @@ msgstr ""
 msgid "Assignment timeout in minutes if assigned agent is not working on it. Ticket will be shown as unassigend."
 msgstr ""
 
-#: app/models/user.rb:690
+#: app/models/user.rb:691
 msgid "At least one identifier (firstname, lastname, phone, mobile or email) for user is required."
 msgstr ""
 
@@ -2230,8 +2230,8 @@ msgstr ""
 msgid "At least one object must be selected."
 msgstr ""
 
-#: app/models/role.rb:158
-#: app/models/user.rb:767
+#: app/models/role.rb:159
+#: app/models/user.rb:768
 msgid "At least one user needs to have admin permissions."
 msgstr ""
 
@@ -3094,7 +3094,7 @@ msgstr ""
 msgid "Cannot follow-up on a closed ticket. Please create a new ticket."
 msgstr ""
 
-#: app/models/sla.rb:45
+#: app/models/sla.rb:46
 msgid "Cannot have both response time and update time."
 msgstr ""
 
@@ -6738,7 +6738,7 @@ msgstr ""
 msgid "Email address"
 msgstr ""
 
-#: app/models/user.rb:700
+#: app/models/user.rb:701
 msgid "Email address '%{email}' is already used for another user."
 msgstr ""
 
@@ -9565,7 +9565,7 @@ msgstr ""
 msgid "Invalid client_id received!"
 msgstr ""
 
-#: app/models/user.rb:639
+#: app/models/user.rb:640
 msgid "Invalid email '%{email}'"
 msgstr ""
 
@@ -9740,7 +9740,7 @@ msgstr ""
 msgid "It is not possible to delete your current account."
 msgstr ""
 
-#: app/models/ticket.rb:298
+#: app/models/ticket.rb:299
 msgid "It is not possible to merge into an already merged ticket."
 msgstr ""
 
@@ -11331,7 +11331,7 @@ msgstr ""
 msgid "More information can be found here."
 msgstr ""
 
-#: app/models/user.rb:719
+#: app/models/user.rb:720
 msgid "More than 250 secondary organizations are not allowed."
 msgstr ""
 
@@ -12017,7 +12017,7 @@ msgstr ""
 msgid "No content to show"
 msgstr ""
 
-#: app/models/group.rb:40
+#: app/models/group.rb:41
 msgid "No double colons (::) allowed, reserved delimiter"
 msgstr ""
 
@@ -12231,7 +12231,7 @@ msgstr ""
 msgid "No translation for this locale available"
 msgstr ""
 
-#: app/models/ticket.rb:423
+#: app/models/ticket.rb:424
 msgid "No triggers active"
 msgstr ""
 
@@ -15508,11 +15508,11 @@ msgstr ""
 msgid "Secondary organizations"
 msgstr ""
 
-#: app/models/user.rb:707
+#: app/models/user.rb:708
 msgid "Secondary organizations are only allowed when the primary organization is given."
 msgstr ""
 
-#: app/models/user.rb:713
+#: app/models/user.rb:714
 msgid "Secondary organizations cannot include the primary organization."
 msgstr ""
 
@@ -17664,7 +17664,7 @@ msgstr ""
 msgid "The checklist feature is not active"
 msgstr ""
 
-#: app/models/group.rb:110
+#: app/models/group.rb:111
 msgid "The chosen parent group is part of a circular reference."
 msgstr ""
 
@@ -17711,6 +17711,14 @@ msgstr ""
 #: app/controllers/users_controller.rb:387
 #: app/graphql/gql/mutations/user/current/change_password.rb:29
 msgid "The current password you provided is incorrect."
+msgstr ""
+
+#: app/models/core_workflow/result.rb:61
+msgid "The current user is not allowed to access the referenced object."
+msgstr ""
+
+#: app/models/core_workflow/result.rb:45
+msgid "The current user is not allowed to use core workflow for this object."
 msgstr ""
 
 #: app/services/service/ai/vectordb/create_table.rb:21
@@ -18663,6 +18671,10 @@ msgstr ""
 msgid "The username or password is incorrect."
 msgstr ""
 
+#: app/models/core_workflow/result.rb:40
+msgid "The value of the parameter 'payload->class_name' is invalid."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_ai/knowledge_base_features.coffee:133
 msgid "The vector index could not be updated."
 msgstr ""
@@ -19078,15 +19090,15 @@ msgstr ""
 msgid "This field was configured incorrectly and can't be submitted."
 msgstr ""
 
-#: app/models/group.rb:83
+#: app/models/group.rb:84
 msgid "This group cannot be moved into itself."
 msgstr ""
 
-#: app/models/group.rb:84
+#: app/models/group.rb:85
 msgid "This group cannot be moved into one of its children."
 msgstr ""
 
-#: app/models/group.rb:90
+#: app/models/group.rb:91
 msgid "This group exceeds the allowed nesting depth."
 msgstr ""
 
@@ -19096,7 +19108,7 @@ msgstr ""
 msgid "This group has no email address configured for outgoing communication."
 msgstr ""
 
-#: app/models/group.rb:96
+#: app/models/group.rb:97
 msgid "This group's children would exceed the allowed nesting depth."
 msgstr ""
 
@@ -23098,7 +23110,7 @@ msgstr ""
 msgid "is the wrong length (should be 1 character)"
 msgstr ""
 
-#: app/models/user.rb:906
+#: app/models/user.rb:907
 msgid "is too long"
 msgstr ""
 

@@ -31,6 +31,7 @@ class Group < ApplicationModel
 
   core_workflow_screens 'create', 'edit'
   core_workflow_admin_screens 'create', 'edit'
+  core_workflow_permission 'admin.group'
 
   before_validation :ensure_name_last_and_parent, :check_parent_not_in_subtree, :check_max_depth, :check_parent_reaches_root
 

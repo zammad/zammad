@@ -6,6 +6,8 @@ require 'models/core_workflow/base'
 RSpec.describe CoreWorkflow::Custom::AdminGroupParentId, type: :model do
   include_context 'with core workflow base'
 
+  let(:action_user) { create(:admin, groups: [ticket.group]) }
+
   context 'when editing an existing group' do
     let(:group) { create(:group) }
     let(:payload) do

@@ -13,6 +13,7 @@ class Sla < ApplicationModel
   include ChecksCoreWorkflow
 
   core_workflow_screens 'create', 'edit'
+  core_workflow_permission 'admin.sla'
 
   validates  :name, presence: true, uniqueness: { case_sensitive: false }
 

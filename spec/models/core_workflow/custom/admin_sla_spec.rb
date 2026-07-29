@@ -6,6 +6,8 @@ require 'models/core_workflow/base'
 RSpec.describe CoreWorkflow::Custom::AdminSla, type: :model do
   include_context 'with core workflow base'
 
+  let(:action_user) { create(:admin, groups: [ticket.group]) }
+
   let(:payload) do
     base_payload.merge(
       'screen'     => 'edit',

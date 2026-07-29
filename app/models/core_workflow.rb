@@ -14,6 +14,7 @@ class CoreWorkflow < ApplicationModel
   self.audit_log_attributes_ignored = %i[preferences]
 
   core_workflow_screens 'create', 'edit'
+  core_workflow_permission 'admin.core_workflow'
 
   default_scope { order(:priority, :id) }
   scope :active, -> { where(active: true) }
@@ -56,8 +57,8 @@ Runs the core workflow engine based on the current state of the object.
 
 =end
 
-  def self.perform(payload:, user:, assets: {}, assets_in_result: true, result: {}, form_updater: false)
-    CoreWorkflow::Result.new(payload: payload, user: user, assets: assets, assets_in_result: assets_in_result, result: result, form_updater: form_updater).run
+  def self.perform(payload:, user:, assets: {}, assets_in_result: true, result: {}, form_updater: false, policy: true)
+    CoreWorkflow::Result.new(payload: payload, user: user, assets: assets, assets_in_result: assets_in_result, result: result, form_updater: form_updater, policy: policy).run
   rescue => e
     return {} if e.is_a?(ArgumentError)
     raise e if !Rails.env.production?
@@ -107,7 +108,7 @@ Match payload selected data:
 
 =end
 
-  def self.matches_selector?(user:, selector:, id: nil, class_name: 'Ticket', params: {}, screen: 'edit', request_id: 'ChecksCoreWorkflow.validate_workflows', event: 'core_workflow', check: 'saved')
+  def self.matches_selector?(user:, selector:, id: nil, class_name: 'Ticket', params: {}, screen: 'edit', request_id: 'ChecksCoreWorkflow.validate_workflows', event: 'core_workflow', check: 'saved', policy: false)
     if id.present?
       params['id'] = id
     end
@@ -118,7 +119,7 @@ Match payload selected data:
                                'class_name' => class_name,
                                'screen'     => screen,
                                'params'     => params,
-                             }, user: user, assets: false, assets_in_result: false).matches_selector?(selector: selector, check: check)
+                             }, user: user, assets: false, assets_in_result: false, policy: policy).matches_selector?(selector: selector, check: check)
   rescue => e
     return {} if e.is_a?(ArgumentError)
     raise e if !Rails.env.production?
