@@ -10489,7 +10489,7 @@ msgstr "Bildtjänst"
 msgid "Image file"
 msgstr "Image fil"
 
-#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:18
+#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:19
 #: app/assets/javascripts/app/lib/app_post/image_service.coffee:134
 #: app/assets/javascripts/app/lib/base/jquery.contenteditable.js:482
 msgid "Image file size is too large, please try inserting a smaller file."
@@ -10787,13 +10787,6 @@ msgstr ""
 "Inmatningsfältet måste vara av typen text, lösenord, tel, fax, E-post eller "
 "URL."
 
-#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:2
-#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_video.coffee:2
-#, fuzzy
-#| msgid "Insert table"
-msgid "Insert"
-msgstr "Infoga tabell"
-
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:221
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:218
 msgid "Insert code block"
@@ -10811,6 +10804,13 @@ msgstr "Infoga kolumn före"
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:226
 msgid "Insert divider"
 msgstr "Infoga avdelare"
+
+#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:2
+#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_video.coffee:2
+#, fuzzy
+#| msgid "Insert table"
+msgid "Insert element"
+msgstr "Infoga tabell"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:210
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:207
@@ -16120,6 +16120,12 @@ msgstr "Ta bort post"
 msgid "Remove checklist"
 msgstr "Ta bort checklista"
 
+#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:4
+#, fuzzy
+#| msgid "Remove method"
+msgid "Remove element"
+msgstr "Ta bort metod"
+
 #: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/FieldFilterSelectorInput.vue:516
 #, fuzzy
 #| msgid "Remove item"
@@ -16233,7 +16239,7 @@ msgstr "Ändra ordning"
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_video.coffee:3
 #, fuzzy
 #| msgid "Replacement"
-msgid "Replace"
+msgid "Replace element"
 msgstr "Ersättning"
 
 #: app/models/ai/agent/type/ticket_tagger.rb:171
@@ -25373,9 +25379,9 @@ msgstr "innehåller inte en"
 
 #: app/assets/javascripts/app/models/audit_log.coffee:7
 #, fuzzy
-#| msgid "created"
-msgid "create"
-msgstr "skapad"
+#| msgid "Create new object"
+msgid "create object"
+msgstr "Skapa nytt objekt"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:87
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:114
@@ -25461,6 +25467,12 @@ msgstr "standard"
 msgid "delete"
 msgstr "radera"
 
+#: app/assets/javascripts/app/models/audit_log.coffee:7
+#, fuzzy
+#| msgid "Delete object"
+msgid "delete object"
+msgstr "Radera objekt"
+
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:174
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:18
 msgid "delivered to the customer"
@@ -25471,10 +25483,6 @@ msgstr "Levererat till kunden"
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketOrderBySelector.vue:36
 msgid "descending"
 msgstr "fallande"
-
-#: app/assets/javascripts/app/models/audit_log.coffee:7
-msgid "destroy"
-msgstr ""
 
 #: app/frontend/apps/desktop/components/Search/QuickSearch/QuickSearchResultList/QuickSearchResultList.vue:106
 msgid "detailed search"
@@ -26718,9 +26726,9 @@ msgstr "oberörd"
 
 #: app/assets/javascripts/app/models/audit_log.coffee:7
 #, fuzzy
-#| msgid "updated"
-msgid "update"
-msgstr "uppdaterad"
+#| msgid "Delete object"
+msgid "update object"
+msgstr "Radera objekt"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:88
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:115
@@ -26855,6 +26863,26 @@ msgstr "...av hela textfältet"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ Väntetid idag"
+
+#, fuzzy
+#~| msgid "Insert table"
+#~ msgid "Insert"
+#~ msgstr "Infoga tabell"
+
+#, fuzzy
+#~| msgid "Replacement"
+#~ msgid "Replace"
+#~ msgstr "Ersättning"
+
+#, fuzzy
+#~| msgid "created"
+#~ msgid "create"
+#~ msgstr "skapad"
+
+#, fuzzy
+#~| msgid "updated"
+#~ msgid "update"
+#~ msgstr "uppdaterad"
 
 #~ msgid "The AI Provider is not accessible."
 #~ msgstr "AI Provider är inte tillgänglig."

@@ -10011,7 +10011,7 @@ msgstr "圖像服務"
 msgid "Image file"
 msgstr "圖像檔案"
 
-#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:18
+#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:19
 #: app/assets/javascripts/app/lib/app_post/image_service.coffee:134
 #: app/assets/javascripts/app/lib/base/jquery.contenteditable.js:482
 msgid "Image file size is too large, please try inserting a smaller file."
@@ -10297,13 +10297,6 @@ msgstr "無法產生內嵌內容。"
 msgid "Input field must be text, password, tel, fax, email or url type."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:2
-#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_video.coffee:2
-#, fuzzy
-#| msgid "Insert table"
-msgid "Insert"
-msgstr "插入表格"
-
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:221
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:218
 msgid "Insert code block"
@@ -10321,6 +10314,13 @@ msgstr ""
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:226
 msgid "Insert divider"
 msgstr "插入分隔線"
+
+#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:2
+#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_video.coffee:2
+#, fuzzy
+#| msgid "Insert table"
+msgid "Insert element"
+msgstr "插入表格"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:210
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:207
@@ -15530,6 +15530,12 @@ msgstr "移除項目"
 msgid "Remove checklist"
 msgstr "移除確認清單"
 
+#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:4
+#, fuzzy
+#| msgid "Remove method"
+msgid "Remove element"
+msgstr "移除方法"
+
 #: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/FieldFilterSelectorInput.vue:516
 #, fuzzy
 #| msgid "Remove item"
@@ -15643,7 +15649,7 @@ msgstr "重新排序"
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_video.coffee:3
 #, fuzzy
 #| msgid "Replacement"
-msgid "Replace"
+msgid "Replace element"
 msgstr "職務代理"
 
 #: app/models/ai/agent/type/ticket_tagger.rb:171
@@ -24918,9 +24924,9 @@ msgstr "一個都不含"
 
 #: app/assets/javascripts/app/models/audit_log.coffee:7
 #, fuzzy
-#| msgid "created"
-msgid "create"
-msgstr "建立於"
+#| msgid "Create new object"
+msgid "create object"
+msgstr "建立新物件"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:87
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:114
@@ -25006,6 +25012,12 @@ msgstr "預設"
 msgid "delete"
 msgstr "删除"
 
+#: app/assets/javascripts/app/models/audit_log.coffee:7
+#, fuzzy
+#| msgid "Delete object"
+msgid "delete object"
+msgstr "刪除物件"
+
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:174
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:18
 msgid "delivered to the customer"
@@ -25018,10 +25030,6 @@ msgstr "删除客户"
 #| msgid "pending"
 msgid "descending"
 msgstr "待處理"
-
-#: app/assets/javascripts/app/models/audit_log.coffee:7
-msgid "destroy"
-msgstr ""
 
 #: app/frontend/apps/desktop/components/Search/QuickSearch/QuickSearchResultList/QuickSearchResultList.vue:106
 msgid "detailed search"
@@ -26312,9 +26320,9 @@ msgstr "原封不動的"
 
 #: app/assets/javascripts/app/models/audit_log.coffee:7
 #, fuzzy
-#| msgid "updated"
-msgid "update"
-msgstr "已更新"
+#| msgid "Delete object"
+msgid "update object"
+msgstr "刪除物件"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:88
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:115
@@ -26459,6 +26467,26 @@ msgstr "...整個文字區域"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ 今日等待時間"
+
+#, fuzzy
+#~| msgid "Insert table"
+#~ msgid "Insert"
+#~ msgstr "插入表格"
+
+#, fuzzy
+#~| msgid "Replacement"
+#~ msgid "Replace"
+#~ msgstr "職務代理"
+
+#, fuzzy
+#~| msgid "created"
+#~ msgid "create"
+#~ msgstr "建立於"
+
+#, fuzzy
+#~| msgid "updated"
+#~ msgid "update"
+#~ msgstr "已更新"
 
 #~ msgid "The AI Provider is not accessible."
 #~ msgstr "無法存取AI提供者。"

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-07-27 09:10+0000\n"
-"Last-Translator: Ralf Schmid <rsc@zammad.com>\n"
+"PO-Revision-Date: 2026-07-29 05:32+0000\n"
+"Last-Translator: Martin Gruner <mg@zammad.com>\n"
 "Language-Team: German <https://translations.zammad.org/projects/zammad/"
 "zammad-development/de/>\n"
 "Language: de-de\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.16.2\n"
+"X-Generator: Weblate 2026.7.1\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -1857,7 +1857,7 @@ msgid ""
 msgstr ""
 "Fügt dem Webformular ein unsichtbares Feld hinzu und lehnt die Übermittlung "
 "ab, wenn dieses Feld ausgefüllt wird. Dies ist bei automatisierten Clients "
-"häufig der Fall ist."
+"häufig der Fall."
 
 #: db/seeds/roles.rb:5
 msgid "Admin"
@@ -3456,7 +3456,7 @@ msgstr "CAPTCHA-Anbieter"
 
 #: db/seeds/settings.rb:3230
 msgid "CAPTCHA provider options"
-msgstr "CAPTCHA-Anbieter Optionen"
+msgstr "Optionen des CAPTCHA-Anbieters"
 
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee:18
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:501
@@ -6084,12 +6084,12 @@ msgstr "Definiert, ob sipgate.io (http://www.sipgate.io) verwendet wird."
 #: db/seeds/settings.rb:5883
 msgid "Defines if system notification emails are PGP signed."
 msgstr ""
-"Legt fest, ob Systembenachrichtigungen per E-Mail mit PGP signiert sind."
+"Legt fest, ob Systembenachrichtigungen per E-Mail mit PGP signiert werden."
 
 #: db/seeds/settings.rb:5813
 msgid "Defines if system notification emails are S/MIME signed."
 msgstr ""
-"Legt fest, ob Systembenachrichtigungen per E-Mail mit S/MIME signiert sind."
+"Legt fest, ob Systembenachrichtigungen per E-Mail mit S/MIME signiert werden."
 
 #: db/seeds/settings.rb:6213
 msgid "Defines if the AI provider is configured."
@@ -6494,7 +6494,7 @@ msgstr "Definiert den Backend-Service für die Erkennung der Artikelsprache."
 #: db/seeds/settings.rb:6372
 msgid "Defines the chunking strategy for the knowledge base vector database."
 msgstr ""
-"Definiert die Chunkingstrategie für die Knowledge Base Vektordatenbank."
+"Definiert die Chunkingstrategie für die Knowledge Base-Vektordatenbank."
 
 #: db/seeds/settings.rb:2931
 msgid ""
@@ -8072,7 +8072,7 @@ msgstr "Automatische Ticket-Zuweisung aktivieren."
 #: db/seeds/settings.rb:6279
 msgid "Enable ticket summary for following matching tickets."
 msgstr ""
-"Aktivieren Sie die Zusammenfassung für Tickets, die mit folgendem "
+"Aktivieren Sie die Zusammenfassung für Tickets, die mit Folgendem "
 "übereinstimmen."
 
 #: db/seeds/settings.rb:4143
@@ -10477,7 +10477,7 @@ msgstr "Bilder-Service"
 msgid "Image file"
 msgstr "Bilddatei"
 
-#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:18
+#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:19
 #: app/assets/javascripts/app/lib/app_post/image_service.coffee:134
 #: app/assets/javascripts/app/lib/base/jquery.contenteditable.js:482
 msgid "Image file size is too large, please try inserting a smaller file."
@@ -10784,11 +10784,6 @@ msgstr ""
 "Das Eingabefeld muss vom Typ Text, Passwort, Telefon, Fax, E-Mail oder URL "
 "sein."
 
-#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:2
-#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_video.coffee:2
-msgid "Insert"
-msgstr "Einfügen"
-
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:221
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:218
 msgid "Insert code block"
@@ -10806,6 +10801,11 @@ msgstr "Spalte davor einfügen"
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:226
 msgid "Insert divider"
 msgstr "Trenner einfügen"
+
+#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:2
+#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_video.coffee:2
+msgid "Insert element"
+msgstr "Element einfügen"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:210
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:207
@@ -11404,7 +11404,7 @@ msgstr "Mehrsprachige Unterstützung der Knowledge Base"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:201
 msgid "Knowledge base actions"
-msgstr "Knowledge Base Aktionen"
+msgstr "Knowledge Base-Aktionen"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/extensions/KnowledgeBaseSuggestion.ts:59
 msgid "Knowledge base articles"
@@ -11413,7 +11413,7 @@ msgstr "Knowledge Base-Artikel"
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderCompact.vue:47
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderFull.vue:47
 msgid "Knowledge base controls"
-msgstr "Knowledge Base Bedienelemente"
+msgstr "Knowledge Base-Bedienelemente"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseActions.vue:57
 #: app/services/service/ticket/ai_assistance/create_knowledge_base_answer.rb:21
@@ -11430,7 +11430,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderCompact.vue:31
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderFull.vue:31
 msgid "Knowledge base navigation"
-msgstr "Knowledge Base Navigation"
+msgstr "Knowledge Base-Navigation"
 
 #: db/seeds/settings.rb:6336
 msgid "Knowledge base self-hosted video servers"
@@ -13988,7 +13988,7 @@ msgstr "Benachrichtigungs-Absender"
 
 #: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:14
 msgid "Notification sent to"
-msgstr "Benachrichtigung gesendet an '%s'"
+msgstr "Benachrichtigung gesendet an"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:170
 msgid "Notification settings could not be reset."
@@ -16075,6 +16075,10 @@ msgstr "Kategorie entfernen"
 msgid "Remove checklist"
 msgstr "Checkliste entfernen"
 
+#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:4
+msgid "Remove element"
+msgstr "Element entfernen"
+
 #: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/FieldFilterSelectorInput.vue:516
 msgid "Remove filter"
 msgstr "Filter entfernen"
@@ -16185,8 +16189,8 @@ msgstr "Reihenfolge ändern"
 
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:3
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_video.coffee:3
-msgid "Replace"
-msgstr "Ersetzen"
+msgid "Replace element"
+msgstr "Element ersetzen"
 
 #: app/models/ai/agent/type/ticket_tagger.rb:171
 msgid "Replace existing tags with"
@@ -19572,7 +19576,8 @@ msgstr "Die Checklisten-Funktion ist nicht aktiv"
 
 #: app/models/group.rb:110
 msgid "The chosen parent group is part of a circular reference."
-msgstr "Die ausgewählte übergeordnete Gruppe resultiert in einem Zirkelbezug."
+msgstr ""
+"Die ausgewählte übergeordnete Gruppe ist Teil einer zirkulären Referenz."
 
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco:33
 msgid ""
@@ -21282,7 +21287,7 @@ msgstr "Dieses Element kann erweitert werden, um weitere Optionen anzuzeigen"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:51
 msgid "This knowledge base category is not available."
-msgstr "Diese Knowledge Base Kategorie ist nicht verfügbar."
+msgstr "Diese Knowledge Base-Kategorie ist nicht verfügbar."
 
 #: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBase.vue:18
 msgid "This knowledge base is not available in the selected language."
@@ -24677,7 +24682,7 @@ msgstr "Sie haben keine Berechtigung zur Aktualisierung"
 
 #: app/frontend/apps/desktop/components/CommonTable/CommonAdvancedTable.vue:434
 msgid "You don't have more items to load."
-msgstr "Es gibt keine weiteren Elemente mehr zu laden."
+msgstr "Es sind keine weiteren Elemente zum Laden vorhanden."
 
 #: app/frontend/shared/router/guards/before/permission.ts:34
 msgid "You don't have the necessary permissions to access this page."
@@ -25363,8 +25368,8 @@ msgid "contains one not"
 msgstr "enthält eins nicht"
 
 #: app/assets/javascripts/app/models/audit_log.coffee:7
-msgid "create"
-msgstr "erstellen"
+msgid "create object"
+msgstr "Objekt erstellen"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:87
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:114
@@ -25448,6 +25453,10 @@ msgstr "Standard"
 msgid "delete"
 msgstr "löschen"
 
+#: app/assets/javascripts/app/models/audit_log.coffee:7
+msgid "delete object"
+msgstr "Objekt löschen"
+
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:174
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:18
 msgid "delivered to the customer"
@@ -25458,10 +25467,6 @@ msgstr "dem Kunden zugestellt"
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketOrderBySelector.vue:36
 msgid "descending"
 msgstr "absteigend"
-
-#: app/assets/javascripts/app/models/audit_log.coffee:7
-msgid "destroy"
-msgstr "löschen"
 
 #: app/frontend/apps/desktop/components/Search/QuickSearch/QuickSearchResultList/QuickSearchResultList.vue:106
 msgid "detailed search"
@@ -25933,7 +25938,7 @@ msgstr "ist nicht in der Liste enthalten"
 
 #: app/models/knowledge_base/category.rb:220
 msgid "is part of a circular reference"
-msgstr "ist Teil einer Zirkelreferenz"
+msgstr "ist Teil einer zirkulären Referenz"
 
 #: app/assets/javascripts/app/controllers/maintenance.coffee:84
 #: app/assets/javascripts/app/models/_application_model.coffee:65
@@ -26092,7 +26097,7 @@ msgstr "muss ein Hash mit den Schlüsseln \"label\" und \"value\" sein"
 
 #: app/models/calendar.rb:247
 msgid "must be a valid HTTP(S) URL"
-msgstr "muss um eine gültige HTTP(S)-URL sein"
+msgstr "muss eine gültige HTTP(S)-URL sein"
 
 #: app/models/knowledge_base.rb:270
 msgid "must be a valid path or domain"
@@ -26685,8 +26690,8 @@ msgid "untouched"
 msgstr "nicht verändert"
 
 #: app/assets/javascripts/app/models/audit_log.coffee:7
-msgid "update"
-msgstr "aktualisieren"
+msgid "update object"
+msgstr "Objekt aktualisieren"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:88
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:115
@@ -26815,6 +26820,21 @@ msgstr "…des gesamten Textfelds"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ Wartezeit heute"
+
+#~ msgid "Insert"
+#~ msgstr "Einfügen"
+
+#~ msgid "Replace"
+#~ msgstr "Ersetzen"
+
+#~ msgid "create"
+#~ msgstr "erstellen"
+
+#~ msgid "destroy"
+#~ msgstr "löschen"
+
+#~ msgid "update"
+#~ msgstr "aktualisieren"
 
 #~ msgid "The AI Provider is not accessible."
 #~ msgstr "Der KI-Anbieter ist nicht erreichbar."

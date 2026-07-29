@@ -10314,7 +10314,7 @@ msgstr ""
 msgid "Image file"
 msgstr "Eelvaade"
 
-#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:18
+#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:19
 #: app/assets/javascripts/app/lib/app_post/image_service.coffee:134
 #: app/assets/javascripts/app/lib/base/jquery.contenteditable.js:482
 msgid "Image file size is too large, please try inserting a smaller file."
@@ -10628,13 +10628,6 @@ msgstr "Sisu ei ole võimalik genereerida."
 msgid "Input field must be text, password, tel, fax, email or url type."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:2
-#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_video.coffee:2
-#, fuzzy
-#| msgid "Inserts text module"
-msgid "Insert"
-msgstr "Sisestab teksti mooduli"
-
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:221
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:218
 msgid "Insert code block"
@@ -10653,6 +10646,13 @@ msgstr ""
 #, fuzzy
 #| msgid "Inserts text module"
 msgid "Insert divider"
+msgstr "Sisestab teksti mooduli"
+
+#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:2
+#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_video.coffee:2
+#, fuzzy
+#| msgid "Inserts text module"
+msgid "Insert element"
 msgstr "Sisestab teksti mooduli"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:210
@@ -16270,6 +16270,12 @@ msgstr "Eemalda"
 msgid "Remove checklist"
 msgstr "Eemalda"
 
+#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:4
+#, fuzzy
+#| msgid "Remove"
+msgid "Remove element"
+msgstr "Eemalda"
+
 #: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/FieldFilterSelectorInput.vue:516
 #, fuzzy
 #| msgid "Remove"
@@ -16406,9 +16412,9 @@ msgstr "Muuda järjestust"
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:3
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_video.coffee:3
 #, fuzzy
-#| msgid "reply"
-msgid "Replace"
-msgstr "vasta"
+#| msgid "Open Tickets"
+msgid "Replace element"
+msgstr "Minu Asendus Piletid"
 
 #: app/models/ai/agent/type/ticket_tagger.rb:171
 #, fuzzy
@@ -25634,9 +25640,9 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/audit_log.coffee:7
 #, fuzzy
-#| msgid "created"
-msgid "create"
-msgstr "loodud"
+#| msgid "Create Ticket"
+msgid "create object"
+msgstr "Loo Pilet"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:87
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:114
@@ -25726,6 +25732,12 @@ msgstr ""
 msgid "delete"
 msgstr "kustuta"
 
+#: app/assets/javascripts/app/models/audit_log.coffee:7
+#, fuzzy
+#| msgid "Create Ticket"
+msgid "delete object"
+msgstr "Loo Pilet"
+
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:174
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:18
 #, fuzzy
@@ -25738,10 +25750,6 @@ msgstr "Kustuta Klient"
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketOrderBySelector.vue:36
 msgid "descending"
 msgstr "kahanev"
-
-#: app/assets/javascripts/app/models/audit_log.coffee:7
-msgid "destroy"
-msgstr ""
 
 #: app/frontend/apps/desktop/components/Search/QuickSearch/QuickSearchResultList/QuickSearchResultList.vue:106
 msgid "detailed search"
@@ -27043,9 +27051,9 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/audit_log.coffee:7
 #, fuzzy
-#| msgid "updated"
-msgid "update"
-msgstr "uuendatud"
+#| msgid "Create Ticket"
+msgid "update object"
+msgstr "Loo Pilet"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:88
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:115
@@ -27176,6 +27184,26 @@ msgstr ""
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ Tänane ooteaeg"
+
+#, fuzzy
+#~| msgid "Inserts text module"
+#~ msgid "Insert"
+#~ msgstr "Sisestab teksti mooduli"
+
+#, fuzzy
+#~| msgid "reply"
+#~ msgid "Replace"
+#~ msgstr "vasta"
+
+#, fuzzy
+#~| msgid "created"
+#~ msgid "create"
+#~ msgstr "loodud"
+
+#, fuzzy
+#~| msgid "updated"
+#~ msgid "update"
+#~ msgstr "uuendatud"
 
 #, fuzzy
 #~| msgid "Basic Authentication"

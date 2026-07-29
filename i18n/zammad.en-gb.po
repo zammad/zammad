@@ -10229,7 +10229,7 @@ msgstr "Image Service"
 msgid "Image file"
 msgstr "Image file"
 
-#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:18
+#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:19
 #: app/assets/javascripts/app/lib/app_post/image_service.coffee:134
 #: app/assets/javascripts/app/lib/base/jquery.contenteditable.js:482
 msgid "Image file size is too large, please try inserting a smaller file."
@@ -10523,11 +10523,6 @@ msgstr "Inline content could not be generated."
 msgid "Input field must be text, password, tel, fax, email or url type."
 msgstr "Input field must be text, password, tel, fax, email or url type."
 
-#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:2
-#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_video.coffee:2
-msgid "Insert"
-msgstr "Insert"
-
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:221
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:218
 msgid "Insert code block"
@@ -10545,6 +10540,13 @@ msgstr "Insert column before"
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:226
 msgid "Insert divider"
 msgstr "Insert divider"
+
+#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:2
+#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_video.coffee:2
+#, fuzzy
+#| msgid "Insert table"
+msgid "Insert element"
+msgstr "Insert table"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:210
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:207
@@ -15749,6 +15751,12 @@ msgstr "Remove category"
 msgid "Remove checklist"
 msgstr "Remove checklist"
 
+#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:4
+#, fuzzy
+#| msgid "Remove method"
+msgid "Remove element"
+msgstr "Remove method"
+
 #: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/FieldFilterSelectorInput.vue:516
 msgid "Remove filter"
 msgstr "Remove filter"
@@ -15858,8 +15866,10 @@ msgstr "Reorder"
 
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:3
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_video.coffee:3
-msgid "Replace"
-msgstr "Replace"
+#, fuzzy
+#| msgid "Replacement"
+msgid "Replace element"
+msgstr "Replacement"
 
 #: app/models/ai/agent/type/ticket_tagger.rb:171
 msgid "Replace existing tags with"
@@ -24829,8 +24839,10 @@ msgid "contains one not"
 msgstr "contains one not"
 
 #: app/assets/javascripts/app/models/audit_log.coffee:7
-msgid "create"
-msgstr "create"
+#, fuzzy
+#| msgid "Create new object"
+msgid "create object"
+msgstr "Create new object"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:87
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:114
@@ -24914,6 +24926,12 @@ msgstr "default"
 msgid "delete"
 msgstr "delete"
 
+#: app/assets/javascripts/app/models/audit_log.coffee:7
+#, fuzzy
+#| msgid "Delete object"
+msgid "delete object"
+msgstr "Delete object"
+
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:174
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:18
 msgid "delivered to the customer"
@@ -24924,10 +24942,6 @@ msgstr "delivered to the customer"
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketOrderBySelector.vue:36
 msgid "descending"
 msgstr "descending"
-
-#: app/assets/javascripts/app/models/audit_log.coffee:7
-msgid "destroy"
-msgstr "destroy"
 
 #: app/frontend/apps/desktop/components/Search/QuickSearch/QuickSearchResultList/QuickSearchResultList.vue:106
 msgid "detailed search"
@@ -26145,8 +26159,10 @@ msgid "untouched"
 msgstr "untouched"
 
 #: app/assets/javascripts/app/models/audit_log.coffee:7
-msgid "update"
-msgstr "update"
+#, fuzzy
+#| msgid "Delete object"
+msgid "update object"
+msgstr "Delete object"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:88
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:115
@@ -26273,6 +26289,21 @@ msgstr "…of whole text area"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ Waiting time today"
+
+#~ msgid "Insert"
+#~ msgstr "Insert"
+
+#~ msgid "Replace"
+#~ msgstr "Replace"
+
+#~ msgid "create"
+#~ msgstr "create"
+
+#~ msgid "destroy"
+#~ msgstr "destroy"
+
+#~ msgid "update"
+#~ msgstr "update"
 
 #~ msgid "The AI Provider is not accessible."
 #~ msgstr "The AI Provider is not accessible."

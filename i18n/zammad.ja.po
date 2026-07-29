@@ -10952,7 +10952,7 @@ msgstr "画像サービス"
 msgid "Image file"
 msgstr "画像サービス"
 
-#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:18
+#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:19
 #: app/assets/javascripts/app/lib/app_post/image_service.coffee:134
 #: app/assets/javascripts/app/lib/base/jquery.contenteditable.js:482
 msgid "Image file size is too large, please try inserting a smaller file."
@@ -11274,13 +11274,6 @@ msgstr "%s オブジェクトを作成。"
 msgid "Input field must be text, password, tel, fax, email or url type."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:2
-#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_video.coffee:2
-#, fuzzy
-#| msgid "New text module"
-msgid "Insert"
-msgstr "次のテキストモジュール"
-
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:221
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:218
 msgid "Insert code block"
@@ -11299,6 +11292,13 @@ msgstr ""
 #, fuzzy
 #| msgid "New text module"
 msgid "Insert divider"
+msgstr "次のテキストモジュール"
+
+#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:2
+#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_video.coffee:2
+#, fuzzy
+#| msgid "New text module"
+msgid "Insert element"
 msgstr "次のテキストモジュール"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:210
@@ -17239,6 +17239,12 @@ msgstr "削除"
 msgid "Remove checklist"
 msgstr "削除"
 
+#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:4
+#, fuzzy
+#| msgid "Remove"
+msgid "Remove element"
+msgstr "削除"
+
 #: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/FieldFilterSelectorInput.vue:516
 #, fuzzy
 #| msgid "Remove"
@@ -17380,7 +17386,7 @@ msgstr "順序"
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_video.coffee:3
 #, fuzzy
 #| msgid "Replacement"
-msgid "Replace"
+msgid "Replace element"
 msgstr "置換"
 
 #: app/models/ai/agent/type/ticket_tagger.rb:171
@@ -27010,9 +27016,9 @@ msgstr "一つは含まない"
 
 #: app/assets/javascripts/app/models/audit_log.coffee:7
 #, fuzzy
-#| msgid "created"
-msgid "create"
-msgstr "作成済"
+#| msgid "Create a Test Ticket"
+msgid "create object"
+msgstr "テストチケットの作成"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:87
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:114
@@ -27102,6 +27108,12 @@ msgstr ""
 msgid "delete"
 msgstr "削除"
 
+#: app/assets/javascripts/app/models/audit_log.coffee:7
+#, fuzzy
+#| msgid "Create a Test Ticket"
+msgid "delete object"
+msgstr "テストチケットの作成"
+
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:174
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:18
 #, fuzzy
@@ -27116,10 +27128,6 @@ msgstr "カスタマー削除"
 #| msgid "pending"
 msgid "descending"
 msgstr "保留中"
-
-#: app/assets/javascripts/app/models/audit_log.coffee:7
-msgid "destroy"
-msgstr ""
 
 #: app/frontend/apps/desktop/components/Search/QuickSearch/QuickSearchResultList/QuickSearchResultList.vue:106
 #, fuzzy
@@ -28481,9 +28489,9 @@ msgstr "未着手"
 
 #: app/assets/javascripts/app/models/audit_log.coffee:7
 #, fuzzy
-#| msgid "updated"
-msgid "update"
-msgstr "更新済"
+#| msgid "Create a Test Ticket"
+msgid "update object"
+msgstr "テストチケットの作成"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:88
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:115
@@ -28634,6 +28642,26 @@ msgstr "... テキストエリア全体の"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ Waiting time today"
+
+#, fuzzy
+#~| msgid "New text module"
+#~ msgid "Insert"
+#~ msgstr "次のテキストモジュール"
+
+#, fuzzy
+#~| msgid "Replacement"
+#~ msgid "Replace"
+#~ msgstr "置換"
+
+#, fuzzy
+#~| msgid "created"
+#~ msgid "create"
+#~ msgstr "作成済"
+
+#, fuzzy
+#~| msgid "updated"
+#~ msgid "update"
+#~ msgstr "更新済"
 
 #, fuzzy
 #~| msgid "Time Accounting"

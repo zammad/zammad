@@ -10293,7 +10293,7 @@ msgstr "Сервис за слике"
 msgid "Image file"
 msgstr "Датотека слике"
 
-#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:18
+#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:19
 #: app/assets/javascripts/app/lib/app_post/image_service.coffee:134
 #: app/assets/javascripts/app/lib/base/jquery.contenteditable.js:482
 msgid "Image file size is too large, please try inserting a smaller file."
@@ -10587,11 +10587,6 @@ msgid "Input field must be text, password, tel, fax, email or url type."
 msgstr ""
 "Поље уноса мора бити типа текста, лозинке, телефона, факса, имејла или URL-а."
 
-#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:2
-#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_video.coffee:2
-msgid "Insert"
-msgstr "Додај"
-
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:221
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:218
 msgid "Insert code block"
@@ -10609,6 +10604,13 @@ msgstr "Додај колону пре"
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:226
 msgid "Insert divider"
 msgstr "Додај разделник"
+
+#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:2
+#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_video.coffee:2
+#, fuzzy
+#| msgid "Insert table"
+msgid "Insert element"
+msgstr "Додај табелу"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:210
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:207
@@ -15843,6 +15845,12 @@ msgstr "Уклони филтер"
 msgid "Remove checklist"
 msgstr "Обриши списак"
 
+#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:4
+#, fuzzy
+#| msgid "Remove method"
+msgid "Remove element"
+msgstr "Уклони метод"
+
 #: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/FieldFilterSelectorInput.vue:516
 msgid "Remove filter"
 msgstr "Уклони филтер"
@@ -15952,8 +15960,10 @@ msgstr "Измени редослед"
 
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:3
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_video.coffee:3
-msgid "Replace"
-msgstr "Замени"
+#, fuzzy
+#| msgid "Replacement"
+msgid "Replace element"
+msgstr "Замена"
 
 #: app/models/ai/agent/type/ticket_tagger.rb:171
 msgid "Replace existing tags with"
@@ -24916,9 +24926,9 @@ msgstr "не садржи једно"
 
 #: app/assets/javascripts/app/models/audit_log.coffee:7
 #, fuzzy
-#| msgid "created"
-msgid "create"
-msgstr "додато"
+#| msgid "Create new object"
+msgid "create object"
+msgstr "Додај нови објекат"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:87
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:114
@@ -25002,6 +25012,12 @@ msgstr "подразумевано"
 msgid "delete"
 msgstr "избриши"
 
+#: app/assets/javascripts/app/models/audit_log.coffee:7
+#, fuzzy
+#| msgid "Delete object"
+msgid "delete object"
+msgstr "Брисање објекта"
+
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:174
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:18
 msgid "delivered to the customer"
@@ -25012,10 +25028,6 @@ msgstr "испоручено клијенту"
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketOrderBySelector.vue:36
 msgid "descending"
 msgstr "опадајуће"
-
-#: app/assets/javascripts/app/models/audit_log.coffee:7
-msgid "destroy"
-msgstr ""
 
 #: app/frontend/apps/desktop/components/Search/QuickSearch/QuickSearchResultList/QuickSearchResultList.vue:106
 msgid "detailed search"
@@ -26240,9 +26252,9 @@ msgstr "нетакнуто"
 
 #: app/assets/javascripts/app/models/audit_log.coffee:7
 #, fuzzy
-#| msgid "updated"
-msgid "update"
-msgstr "освежено"
+#| msgid "Delete object"
+msgid "update object"
+msgstr "Брисање објекта"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:88
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:115
@@ -26375,6 +26387,22 @@ msgstr "…целог текстуалног поља"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ Време чекања данас"
+
+#~ msgid "Insert"
+#~ msgstr "Додај"
+
+#~ msgid "Replace"
+#~ msgstr "Замени"
+
+#, fuzzy
+#~| msgid "created"
+#~ msgid "create"
+#~ msgstr "додато"
+
+#, fuzzy
+#~| msgid "updated"
+#~ msgid "update"
+#~ msgstr "освежено"
 
 #~ msgid "The AI Provider is not accessible."
 #~ msgstr "AI провајдер није доступан."

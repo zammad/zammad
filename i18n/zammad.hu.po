@@ -10500,7 +10500,7 @@ msgstr "Képszolgáltatás"
 msgid "Image file"
 msgstr "Képfájl"
 
-#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:18
+#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:19
 #: app/assets/javascripts/app/lib/app_post/image_service.coffee:134
 #: app/assets/javascripts/app/lib/base/jquery.contenteditable.js:482
 msgid "Image file size is too large, please try inserting a smaller file."
@@ -10803,11 +10803,6 @@ msgstr ""
 "A beviteli mezőnek „text” (szöveg), „password” (jelszó), „tel” (telefon), "
 "„fax” (fax), „email” (e-mail) vagy „url” (URL) típusúnak kell lennie."
 
-#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:2
-#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_video.coffee:2
-msgid "Insert"
-msgstr "Beszúrás"
-
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:221
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:218
 msgid "Insert code block"
@@ -10825,6 +10820,13 @@ msgstr "Oszlop beszúrása elé"
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:226
 msgid "Insert divider"
 msgstr "Elválasztó beszúrása"
+
+#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:2
+#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_video.coffee:2
+#, fuzzy
+#| msgid "Insert table"
+msgid "Insert element"
+msgstr "Táblázat beszúrása"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:210
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:207
@@ -16082,6 +16084,12 @@ msgstr "Kategória eltávolítása"
 msgid "Remove checklist"
 msgstr "Ellenőrzőlista eltávolítása"
 
+#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:4
+#, fuzzy
+#| msgid "Remove method"
+msgid "Remove element"
+msgstr "Módszer eltávolítása"
+
 #: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/FieldFilterSelectorInput.vue:516
 msgid "Remove filter"
 msgstr "Szűrő eltávolítása"
@@ -16191,8 +16199,10 @@ msgstr "Átrendezés"
 
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:3
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_video.coffee:3
-msgid "Replace"
-msgstr "Csere"
+#, fuzzy
+#| msgid "Replacement"
+msgid "Replace element"
+msgstr "Helyettesítés"
 
 #: app/models/ai/agent/type/ticket_tagger.rb:171
 msgid "Replace existing tags with"
@@ -25278,8 +25288,10 @@ msgid "contains one not"
 msgstr "nem tartalmaz egyet"
 
 #: app/assets/javascripts/app/models/audit_log.coffee:7
-msgid "create"
-msgstr "létrehozás"
+#, fuzzy
+#| msgid "Create new object"
+msgid "create object"
+msgstr "Új objektum létrehozása"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:87
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:114
@@ -25363,6 +25375,12 @@ msgstr "alapértelmezett"
 msgid "delete"
 msgstr "törlés"
 
+#: app/assets/javascripts/app/models/audit_log.coffee:7
+#, fuzzy
+#| msgid "Delete object"
+msgid "delete object"
+msgstr "Objektum törlése"
+
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:174
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:18
 msgid "delivered to the customer"
@@ -25373,10 +25391,6 @@ msgstr "kézbesítve az ügyfélnek"
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketOrderBySelector.vue:36
 msgid "descending"
 msgstr "csökkenő"
-
-#: app/assets/javascripts/app/models/audit_log.coffee:7
-msgid "destroy"
-msgstr "megsemmisítés"
 
 #: app/frontend/apps/desktop/components/Search/QuickSearch/QuickSearchResultList/QuickSearchResultList.vue:106
 msgid "detailed search"
@@ -26604,8 +26618,10 @@ msgid "untouched"
 msgstr "érintetlen"
 
 #: app/assets/javascripts/app/models/audit_log.coffee:7
-msgid "update"
-msgstr "frissítés"
+#, fuzzy
+#| msgid "Delete object"
+msgid "update object"
+msgstr "Objektum törlése"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:88
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:115
@@ -26733,6 +26749,21 @@ msgstr "…a teljes szövegterületből"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ Várakozási idő ma"
+
+#~ msgid "Insert"
+#~ msgstr "Beszúrás"
+
+#~ msgid "Replace"
+#~ msgstr "Csere"
+
+#~ msgid "create"
+#~ msgstr "létrehozás"
+
+#~ msgid "destroy"
+#~ msgstr "megsemmisítés"
+
+#~ msgid "update"
+#~ msgstr "frissítés"
 
 #~ msgid "The AI Provider is not accessible."
 #~ msgstr "Az MI-szolgáltató nem érhető el."

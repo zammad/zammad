@@ -10523,7 +10523,7 @@ msgstr ""
 msgid "Image file"
 msgstr "Predogled"
 
-#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:18
+#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:19
 #: app/assets/javascripts/app/lib/app_post/image_service.coffee:134
 #: app/assets/javascripts/app/lib/base/jquery.contenteditable.js:482
 msgid "Image file size is too large, please try inserting a smaller file."
@@ -10841,13 +10841,6 @@ msgstr ""
 msgid "Input field must be text, password, tel, fax, email or url type."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:2
-#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_video.coffee:2
-#, fuzzy
-#| msgid "Text modules"
-msgid "Insert"
-msgstr "Tekstovni moduli"
-
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:221
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:218
 msgid "Insert code block"
@@ -10866,6 +10859,13 @@ msgstr ""
 #, fuzzy
 #| msgid "Text modules"
 msgid "Insert divider"
+msgstr "Tekstovni moduli"
+
+#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:2
+#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_video.coffee:2
+#, fuzzy
+#| msgid "Text modules"
+msgid "Insert element"
 msgstr "Tekstovni moduli"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:210
@@ -16465,6 +16465,12 @@ msgstr "Odstrani"
 msgid "Remove checklist"
 msgstr "Odstrani"
 
+#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:4
+#, fuzzy
+#| msgid "Remove"
+msgid "Remove element"
+msgstr "Odstrani"
+
 #: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/FieldFilterSelectorInput.vue:516
 #, fuzzy
 #| msgid "Remove"
@@ -16600,7 +16606,7 @@ msgstr "Spremeni vrstni red"
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_video.coffee:3
 #, fuzzy
 #| msgid "Replacement"
-msgid "Replace"
+msgid "Replace element"
 msgstr "Nadomešča"
 
 #: app/models/ai/agent/type/ticket_tagger.rb:171
@@ -25737,9 +25743,9 @@ msgstr "vsebuje enega ne"
 
 #: app/assets/javascripts/app/models/audit_log.coffee:7
 #, fuzzy
-#| msgid "created"
-msgid "create"
-msgstr "ustvarjeno"
+#| msgid "Delete Object"
+msgid "create object"
+msgstr "Izbris zapisa"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:87
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:114
@@ -25827,6 +25833,12 @@ msgstr "privzeto"
 msgid "delete"
 msgstr "izbriši"
 
+#: app/assets/javascripts/app/models/audit_log.coffee:7
+#, fuzzy
+#| msgid "Delete Object"
+msgid "delete object"
+msgstr "Izbris zapisa"
+
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:174
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:18
 msgid "delivered to the customer"
@@ -25837,10 +25849,6 @@ msgstr "dostavljeno stranki"
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketOrderBySelector.vue:36
 msgid "descending"
 msgstr "padajoče"
-
-#: app/assets/javascripts/app/models/audit_log.coffee:7
-msgid "destroy"
-msgstr ""
 
 #: app/frontend/apps/desktop/components/Search/QuickSearch/QuickSearchResultList/QuickSearchResultList.vue:106
 #, fuzzy
@@ -27158,9 +27166,9 @@ msgstr "nedotaknjeno"
 
 #: app/assets/javascripts/app/models/audit_log.coffee:7
 #, fuzzy
-#| msgid "updated"
-msgid "update"
-msgstr "posodobljeno"
+#| msgid "Delete Object"
+msgid "update object"
+msgstr "Izbris zapisa"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:88
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:115
@@ -27293,6 +27301,26 @@ msgstr "...celotnega tekstovnega polja"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ Čakalna doba - danes"
+
+#, fuzzy
+#~| msgid "Text modules"
+#~ msgid "Insert"
+#~ msgstr "Tekstovni moduli"
+
+#, fuzzy
+#~| msgid "Replacement"
+#~ msgid "Replace"
+#~ msgstr "Nadomešča"
+
+#, fuzzy
+#~| msgid "created"
+#~ msgid "create"
+#~ msgstr "ustvarjeno"
+
+#, fuzzy
+#~| msgid "updated"
+#~ msgid "update"
+#~ msgstr "posodobljeno"
 
 #, fuzzy
 #~| msgid "The login is not possible."

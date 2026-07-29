@@ -10817,7 +10817,7 @@ msgstr "Servicio de imágenes"
 msgid "Image file"
 msgstr "Archivo de imagen"
 
-#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:18
+#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:19
 #: app/assets/javascripts/app/lib/app_post/image_service.coffee:134
 #: app/assets/javascripts/app/lib/base/jquery.contenteditable.js:482
 msgid "Image file size is too large, please try inserting a smaller file."
@@ -11125,13 +11125,6 @@ msgstr ""
 "El campo de texto debe ser de tipo texto, contraseña, tel, fax, correo "
 "electrónico o url."
 
-#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:2
-#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_video.coffee:2
-#, fuzzy
-#| msgid "Insert table"
-msgid "Insert"
-msgstr "Insertar tabla"
-
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:221
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:218
 msgid "Insert code block"
@@ -11151,6 +11144,13 @@ msgstr "Insertar columna antes de"
 #| msgid "Insert inline code"
 msgid "Insert divider"
 msgstr "Insertar código en línea"
+
+#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:2
+#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_video.coffee:2
+#, fuzzy
+#| msgid "Insert table"
+msgid "Insert element"
+msgstr "Insertar tabla"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:210
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:207
@@ -16736,6 +16736,12 @@ msgstr "Borrar item"
 msgid "Remove checklist"
 msgstr "Borrar lista de comprobación"
 
+#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:4
+#, fuzzy
+#| msgid "Remove method"
+msgid "Remove element"
+msgstr "Eliminar método"
+
 #: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/FieldFilterSelectorInput.vue:516
 #, fuzzy
 #| msgid "Remove item"
@@ -16855,7 +16861,7 @@ msgstr "Reordenar"
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_video.coffee:3
 #, fuzzy
 #| msgid "Replacement"
-msgid "Replace"
+msgid "Replace element"
 msgstr "Reemplazo"
 
 #: app/models/ai/agent/type/ticket_tagger.rb:171
@@ -26487,9 +26493,9 @@ msgstr "contiene uno que no"
 
 #: app/assets/javascripts/app/models/audit_log.coffee:7
 #, fuzzy
-#| msgid "created"
-msgid "create"
-msgstr "creado"
+#| msgid "Create new object"
+msgid "create object"
+msgstr "Crear nuevo objeto"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:87
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:114
@@ -26575,6 +26581,12 @@ msgstr "por defecto"
 msgid "delete"
 msgstr "Eliminar"
 
+#: app/assets/javascripts/app/models/audit_log.coffee:7
+#, fuzzy
+#| msgid "Delete Object"
+msgid "delete object"
+msgstr "Eliminar Objeto"
+
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:174
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:18
 msgid "delivered to the customer"
@@ -26585,10 +26597,6 @@ msgstr "entregado al cliente"
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketOrderBySelector.vue:36
 msgid "descending"
 msgstr "descendente"
-
-#: app/assets/javascripts/app/models/audit_log.coffee:7
-msgid "destroy"
-msgstr ""
 
 #: app/frontend/apps/desktop/components/Search/QuickSearch/QuickSearchResultList/QuickSearchResultList.vue:106
 #, fuzzy
@@ -27862,9 +27870,9 @@ msgstr "Sin modificar"
 
 #: app/assets/javascripts/app/models/audit_log.coffee:7
 #, fuzzy
-#| msgid "updated"
-msgid "update"
-msgstr "actualizado"
+#| msgid "Delete Object"
+msgid "update object"
+msgstr "Eliminar Objeto"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:88
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:115
@@ -28004,6 +28012,26 @@ msgstr "...de toda la zona de texto"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ tiempo de espera de hoy"
+
+#, fuzzy
+#~| msgid "Insert table"
+#~ msgid "Insert"
+#~ msgstr "Insertar tabla"
+
+#, fuzzy
+#~| msgid "Replacement"
+#~ msgid "Replace"
+#~ msgstr "Reemplazo"
+
+#, fuzzy
+#~| msgid "created"
+#~ msgid "create"
+#~ msgstr "creado"
+
+#, fuzzy
+#~| msgid "updated"
+#~ msgid "update"
+#~ msgstr "actualizado"
 
 #, fuzzy
 #~| msgid "The login is not possible."
