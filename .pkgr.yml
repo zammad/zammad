@@ -129,10 +129,10 @@ targets:
       # Add packages required for build that are not in the official SLES repo.
       # Direct URLs must be used since we cannot add repos on packager.io
       #   (would require a paid SLES account and credential management on packager.io).
-      - https://rpmfind.net/linux/opensuse/distribution/leap/15.6/repo/oss/x86_64/imlib2-1.4.10-1.28.x86_64.rpm
-      - https://rpmfind.net/linux/opensuse/distribution/leap/15.6/repo/oss/x86_64/imlib2-devel-1.4.10-1.28.x86_64.rpm
-      - https://rpmfind.net/linux/opensuse/distribution/leap/15.6/repo/oss/x86_64/imlib2-filters-1.4.10-1.28.x86_64.rpm
-      - https://rpmfind.net/linux/opensuse/distribution/leap/15.6/repo/oss/x86_64/libImlib2-1-1.4.10-1.28.x86_64.rpm
+      - https://download.opensuse.org/distribution/leap/15.6/repo/oss/x86_64/imlib2-1.4.10-1.28.x86_64.rpm
+      - https://download.opensuse.org/distribution/leap/15.6/repo/oss/x86_64/imlib2-devel-1.4.10-1.28.x86_64.rpm
+      - https://download.opensuse.org/distribution/leap/15.6/repo/oss/x86_64/imlib2-filters-1.4.10-1.28.x86_64.rpm
+      - https://download.opensuse.org/distribution/leap/15.6/repo/oss/x86_64/libImlib2-1-1.4.10-1.28.x86_64.rpm
       - shared-mime-info
   sles-16:
     dependencies:
@@ -153,10 +153,10 @@ targets:
       # Add packages required for build that are not in the official SLES repo.
       # Direct URLs must be used since we cannot add repos on packager.io
       #   (would require a paid SLES account and credential management on packager.io).
-      - https://rpmfind.net/linux/opensuse/distribution/leap/16.0/repo/oss/x86_64/imlib2-1.12.3-160000.3.2.x86_64.rpm
-      - https://rpmfind.net/linux/opensuse/distribution/leap/16.0/repo/oss/x86_64/imlib2-devel-1.12.3-160000.3.2.x86_64.rpm
-      - https://rpmfind.net/linux/opensuse/distribution/leap/16.0/repo/oss/x86_64/imlib2-filters-1.12.3-160000.3.2.x86_64.rpm
-      - https://rpmfind.net/linux/opensuse/distribution/leap/16.0/repo/oss/x86_64/libImlib2-1-1.12.3-160000.3.2.x86_64.rpm
+      - https://download.opensuse.org/distribution/leap/16.0/repo/oss/x86_64/imlib2-1.12.3-160000.3.2.x86_64.rpm
+      - https://download.opensuse.org/distribution/leap/16.0/repo/oss/x86_64/imlib2-devel-1.12.3-160000.3.2.x86_64.rpm
+      - https://download.opensuse.org/distribution/leap/16.0/repo/oss/x86_64/imlib2-filters-1.12.3-160000.3.2.x86_64.rpm
+      - https://download.opensuse.org/distribution/leap/16.0/repo/oss/x86_64/libImlib2-1-1.12.3-160000.3.2.x86_64.rpm
       - shared-mime-info
 before:
   - contrib/packager.io/before.sh
