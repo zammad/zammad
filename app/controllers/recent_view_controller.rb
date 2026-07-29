@@ -65,11 +65,25 @@ curl http://localhost/api/v1/recent_view -v -u #{login}:#{password} -H "Content-
 =end
 
   def create
+    record = record_from_params
 
-    RecentView.log(params[:object], params[:o_id], current_user)
+    RecentView.log(record, current_user) if record && authorized?(record, :show?)
 
     # return result
     render json: { message: 'ok' }
   end
 
+  private
+
+  # Restrict to the object types RecentView actually supports instead of
+  # reflecting on arbitrary parameter values.
+  def record_from_params
+    klass = case params[:object]
+            when 'Ticket'       then Ticket
+            when 'User'         then User
+            when 'Organization' then Organization
+            end
+
+    klass&.lookup(id: params[:o_id])
+  end
 end

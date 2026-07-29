@@ -371,8 +371,9 @@ class CreateBase < ActiveRecord::Migration[4.2]
     end
     add_index :recent_views, [:o_id]
     add_index :recent_views, [:created_by_id]
-    add_index :recent_views, [:created_at]
     add_index :recent_views, [:recent_view_object_id]
+    add_index :recent_views, [:updated_at], order: { updated_at: :desc }
+    add_index :recent_views, %i[o_id recent_view_object_id created_by_id], name: 'index_recent_views_on_object_and_user', unique: true
     add_foreign_key :recent_views, :object_lookups, column: :recent_view_object_id
     add_foreign_key :recent_views, :users, column: :created_by_id
 

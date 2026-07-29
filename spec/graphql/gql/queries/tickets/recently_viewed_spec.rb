@@ -21,9 +21,9 @@ RSpec.describe Gql::Queries::Tickets::RecentlyViewed, type: :graphql do
   let(:user)                         { create(:agent, groups: [group]) }
 
   before do
-    RecentView.log('Ticket', ticket.id, user)
-    RecentView.log('Ticket', customer_ticket.id, user)
-    RecentView.log('Ticket', inaccessible_customer_ticket.id, user)
+    RecentView.log(ticket, user)
+    RecentView.log(customer_ticket, user)
+    RecentView.log(inaccessible_customer_ticket, user)
     gql.execute(query, variables: variables)
   end
 

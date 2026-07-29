@@ -13,6 +13,7 @@ class Organization < ApplicationModel
   include HasObjectManagerAttributes
   include HasTaskbars
   include HasRecentCloses
+  include HasRecentViews
   include CanSelector
   include CanPerformChanges
 

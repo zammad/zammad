@@ -16,6 +16,7 @@ class User < ApplicationModel
   include HasTaskbars
   include HasTwoFactor
   include HasRecentCloses
+  include HasRecentViews
   include CanSelector
   include CanPerformChanges
   include User::Assets

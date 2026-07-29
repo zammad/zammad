@@ -11,6 +11,7 @@ require 'models/concerns/has_image_sanitized_note_examples'
 require 'models/concerns/has_object_manager_attributes_examples'
 require 'models/concerns/has_taskbars_examples'
 require 'models/concerns/has_recent_closes_examples'
+require 'models/concerns/has_recent_views_examples'
 
 RSpec.describe Organization, type: :model do
   subject(:organization) { create(:organization) }
@@ -25,6 +26,7 @@ RSpec.describe Organization, type: :model do
   it_behaves_like 'HasObjectManagerAttributes'
   it_behaves_like 'HasTaskbars'
   it_behaves_like 'HasRecentCloses'
+  it_behaves_like 'HasRecentViews'
 
   describe 'Class methods:' do
     describe '.where_or_cis' do

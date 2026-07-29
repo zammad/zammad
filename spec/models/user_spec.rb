@@ -16,6 +16,7 @@ require 'models/user/can_lookup_search_index_attributes_examples'
 require 'models/user/performs_geo_lookup_examples'
 require 'models/concerns/has_taskbars_examples'
 require 'models/concerns/has_recent_closes_examples'
+require 'models/concerns/has_recent_views_examples'
 require 'models/concerns/has_two_factor_examples'
 
 RSpec.describe User, type: :model do
@@ -253,6 +254,7 @@ RSpec.describe User, type: :model do
   it_behaves_like 'CanLookupSearchIndexAttributes'
   it_behaves_like 'HasTaskbars'
   it_behaves_like 'HasRecentCloses'
+  it_behaves_like 'HasRecentViews'
   it_behaves_like 'UserPerformsGeoLookup'
   it_behaves_like 'Association clears cache', association: :roles
   it_behaves_like 'Association clears cache', association: :organizations

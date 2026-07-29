@@ -15,6 +15,7 @@ class Ticket < ApplicationModel
   include HasObjectManagerAttributes
   include HasTaskbars
   include HasRecentCloses
+  include HasRecentViews
   include Ticket::CallsStatsTicketReopenLog
   include Ticket::EnqueuesUserTicketCounterJob
   include Ticket::ResetsPendingTimeSeconds
