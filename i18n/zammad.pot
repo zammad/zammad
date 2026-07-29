@@ -631,7 +631,7 @@ msgstr ""
 msgid "A test ticket has been created, you can find it in your overview \"%s\" %l."
 msgstr ""
 
-#: app/models/ticket.rb:299
+#: app/models/ticket.rb:300
 msgid "A ticket cannot be merged into itself."
 msgstr ""
 
@@ -1482,8 +1482,8 @@ msgstr ""
 msgid "Agent idle timeout"
 msgstr ""
 
-#: app/models/role.rb:151
-#: app/models/user.rb:763
+#: app/models/role.rb:152
+#: app/models/user.rb:764
 msgid "Agent limit exceeded, please check your account settings."
 msgstr ""
 
@@ -2100,7 +2100,7 @@ msgstr ""
 msgid "Assignment timeout in minutes if assigned agent is not working on it. Ticket will be shown as unassigend."
 msgstr ""
 
-#: app/models/user.rb:665
+#: app/models/user.rb:666
 msgid "At least one identifier (firstname, lastname, phone, mobile or email) for user is required."
 msgstr ""
 
@@ -2116,8 +2116,8 @@ msgstr ""
 msgid "At least one object must be selected."
 msgstr ""
 
-#: app/models/role.rb:128
-#: app/models/user.rb:742
+#: app/models/role.rb:129
+#: app/models/user.rb:743
 msgid "At least one user needs to have admin permissions."
 msgstr ""
 
@@ -2942,7 +2942,7 @@ msgstr ""
 msgid "Cannot follow-up on a closed ticket. Please create a new ticket."
 msgstr ""
 
-#: app/models/sla.rb:44
+#: app/models/sla.rb:45
 msgid "Cannot have both response time and update time."
 msgstr ""
 
@@ -6363,7 +6363,7 @@ msgstr ""
 msgid "Email address"
 msgstr ""
 
-#: app/models/user.rb:675
+#: app/models/user.rb:676
 msgid "Email address '%{email}' is already used for another user."
 msgstr ""
 
@@ -9041,7 +9041,7 @@ msgstr ""
 msgid "Invalid client_id received!"
 msgstr ""
 
-#: app/models/user.rb:614
+#: app/models/user.rb:615
 msgid "Invalid email '%{email}'"
 msgstr ""
 
@@ -9220,7 +9220,7 @@ msgstr ""
 msgid "It is not possible to delete your current account."
 msgstr ""
 
-#: app/models/ticket.rb:297
+#: app/models/ticket.rb:298
 msgid "It is not possible to merge into an already merged ticket."
 msgstr ""
 
@@ -10719,7 +10719,7 @@ msgstr ""
 msgid "More information can be found here."
 msgstr ""
 
-#: app/models/user.rb:694
+#: app/models/user.rb:695
 msgid "More than 250 secondary organizations are not allowed."
 msgstr ""
 
@@ -11362,7 +11362,7 @@ msgstr ""
 msgid "No content to show"
 msgstr ""
 
-#: app/models/group.rb:36
+#: app/models/group.rb:37
 msgid "No double colons (::) allowed, reserved delimiter"
 msgstr ""
 
@@ -11547,7 +11547,7 @@ msgstr ""
 msgid "No translation for this locale available"
 msgstr ""
 
-#: app/models/ticket.rb:422
+#: app/models/ticket.rb:423
 msgid "No triggers active"
 msgstr ""
 
@@ -14599,11 +14599,11 @@ msgstr ""
 msgid "Secondary organizations"
 msgstr ""
 
-#: app/models/user.rb:682
+#: app/models/user.rb:683
 msgid "Secondary organizations are only allowed when the primary organization is given."
 msgstr ""
 
-#: app/models/user.rb:688
+#: app/models/user.rb:689
 msgid "Secondary organizations cannot include the primary organization."
 msgstr ""
 
@@ -16678,6 +16678,14 @@ msgstr ""
 msgid "The current password you provided is incorrect."
 msgstr ""
 
+#: app/models/core_workflow/result.rb:61
+msgid "The current user is not allowed to access the referenced object."
+msgstr ""
+
+#: app/models/core_workflow/result.rb:45
+msgid "The current user is not allowed to use core workflow for this object."
+msgstr ""
+
 #: app/services/service/ai/vectordb/create_table.rb:18
 msgid "The currently selected AI provider does not support embeddings."
 msgstr ""
@@ -17515,6 +17523,10 @@ msgstr ""
 msgid "The username or password is incorrect."
 msgstr ""
 
+#: app/models/core_workflow/result.rb:40
+msgid "The value of the parameter 'payload->class_name' is invalid."
+msgstr ""
+
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:99
 msgid "The verification email could not be resent."
 msgstr ""
@@ -17920,7 +17932,7 @@ msgstr ""
 msgid "This group has no email address configured for outgoing communication."
 msgstr ""
 
-#: app/models/group.rb:83
+#: app/models/group.rb:84
 msgid "This group or its children exceed the allowed nesting depth."
 msgstr ""
 
@@ -21723,7 +21735,7 @@ msgstr ""
 msgid "is the wrong length (should be 1 character)"
 msgstr ""
 
-#: app/models/user.rb:879
+#: app/models/user.rb:880
 msgid "is too long"
 msgstr ""
 

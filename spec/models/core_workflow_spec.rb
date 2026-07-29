@@ -14,6 +14,63 @@ RSpec.describe CoreWorkflow, type: :model do
     end
   end
 
+  describe '.perform - authorization by object' do
+    let(:unauthorized) { %r{not allowed to use core workflow} }
+
+    def build_result(user, class_name)
+      CoreWorkflow::Result.new(
+        payload: { 'event' => 'core_workflow', 'request_id' => 'default', 'class_name' => class_name, 'screen' => 'edit', 'params' => {} },
+        user:    user
+      )
+    end
+
+    it 'raises for a class that is not a core workflow object' do
+      expect { build_result(create(:admin), 'Setting') }.to raise_error(ArgumentError, %r{invalid})
+    end
+
+    context 'when the user is a customer' do
+      let(:user) { create(:customer) }
+
+      it 'allows Ticket but not User, Organization or Sla', :aggregate_failures do
+        expect { build_result(user, 'Ticket') }.not_to raise_error
+        expect { build_result(user, 'User') }.to raise_error(ArgumentError, unauthorized)
+        expect { build_result(user, 'Organization') }.to raise_error(ArgumentError, unauthorized)
+        expect { build_result(user, 'Sla') }.to raise_error(ArgumentError, unauthorized)
+      end
+    end
+
+    context 'when the user is an agent' do
+      let(:user) { create(:agent) }
+
+      it 'allows Ticket, User and Organization but not Sla', :aggregate_failures do
+        expect { build_result(user, 'Ticket') }.not_to raise_error
+        expect { build_result(user, 'User') }.not_to raise_error
+        expect { build_result(user, 'Organization') }.not_to raise_error
+        expect { build_result(user, 'Sla') }.to raise_error(ArgumentError, unauthorized)
+      end
+    end
+
+    context 'when the user is an admin' do
+      it 'allows Sla' do
+        expect { build_result(create(:admin), 'Sla') }.not_to raise_error
+      end
+    end
+
+    context 'when the object permission is relaxed but the record policy denies' do
+      let(:sla) { create(:sla) }
+
+      before do
+        allow(Sla).to receive(:core_workflow_permission).and_return(%w[admin admin.sla ticket.agent])
+      end
+
+      it 'still denies an agent via the target object policy' do
+        payload = { 'event' => 'core_workflow', 'request_id' => 'default', 'class_name' => 'Sla', 'screen' => 'edit', 'params' => { 'id' => sla.id } }
+
+        expect { CoreWorkflow::Result.new(payload: payload, user: create(:agent)) }.to raise_error(ArgumentError, %r{referenced object})
+      end
+    end
+  end
+
   describe '.matches_selector?' do
     let(:result) { described_class.matches_selector?(id: ticket.id, user: action_user, selector: condition) }
 

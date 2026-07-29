@@ -26,6 +26,12 @@ module ChecksCoreWorkflow
     def core_workflow_admin_screens(*screens)
       @core_workflow_admin_screens ||= screens
     end
+
+    # defines which permissions may use core workflow for this object; admins
+    # are always allowed, additional (lower) permissions can be granted here.
+    def core_workflow_permission(*permissions)
+      @core_workflow_permission ||= (['admin'] + permissions).uniq
+    end
   end
 
   def validate_workflows
@@ -38,7 +44,7 @@ module ChecksCoreWorkflow
                                             'class_name' => self.class.to_s,
                                             'screen'     => screen,
                                             'params'     => attributes
-                                          }, user: UserInfo.current_user, assets: false)
+                                          }, user: UserInfo.current_user, assets: false, policy: false)
 
     check_restrict_values(perform_result)
     check_mandatory(perform_result)

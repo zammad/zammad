@@ -50,5 +50,16 @@ RSpec.describe(FormUpdater::Updater::User::Edit) do
     end
   end
 
+  context 'when a customer edits their own account' do
+    let(:user)      { create(:customer) }
+    let(:edit_user) { user }
+
+    it 'resolves without raising even though core workflow is not permitted for the customer' do
+      resolved_result.authorized?
+
+      expect { resolved_result.resolve }.not_to raise_error
+    end
+  end
+
   include_examples 'FormUpdater::ChecksCoreWorkflow', object_name: 'User'
 end

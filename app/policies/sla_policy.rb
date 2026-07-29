@@ -1,0 +1,7 @@
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
+
+class SlaPolicy < ApplicationPolicy
+  def show?
+    user.permissions?('admin.sla')
+  end
+end

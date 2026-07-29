@@ -13,6 +13,7 @@ module FormUpdater::Concerns::ChecksCoreWorkflow
     return if !self.class.instance_variable_get(:@core_workflow_screen)
 
     perform_result = CoreWorkflow.perform(payload: perform_payload, user: current_user, assets: false, form_updater: true)
+    return if perform_result.blank?
 
     FormUpdater::CoreWorkflow.perform_mapping(perform_result, result, relation_fields:, object:)
 
