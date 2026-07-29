@@ -77,8 +77,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#"
-"{config.ticket_hook}#{ticket.number}>: Criado por #{current_user.longname} "
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"#{config.ticket_hook}#{ticket.number}>: Criado por #{current_user.longname} "
 "em #{ticket.updated_at}_\n"
 "* Grupo: #{ticket.group.name}\n"
 "* Responsável: #{ticket.owner.fullname}\n"
@@ -104,8 +104,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#"
-"{config.ticket_hook}#{ticket.number}>: Escalonado em #{ticket.escalation_at}"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"#{config.ticket_hook}#{ticket.number}>: Escalonado em #{ticket.escalation_at}"
 "_\n"
 "O ticket (#{ticket.title}) de \"#{ticket.customer.longname}\" está "
 "escalonado desde \"#{ticket.escalation_at}\"!\n"
@@ -131,9 +131,9 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#"
-"{config.ticket_hook}#{ticket.number}>: Última atualização em #"
-"{ticket.updated_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"#{config.ticket_hook}#{ticket.number}>: Última atualização em "
+"#{ticket.updated_at}_\n"
 "* Grupo: #{ticket.group.name}\n"
 "* Responsável: #{ticket.owner.fullname}\n"
 "* Estado: #{t(ticket.state.name)}\n"
@@ -157,8 +157,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#"
-"{config.ticket_hook}#{ticket.number}>: Lembrete atingido!_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"#{config.ticket_hook}#{ticket.number}>: Lembrete atingido!_\n"
 "Um ticket precisa de atenção: lembrete atingido para (#{ticket.title}) com o "
 "cliente \"*#{ticket.customer.longname}*\".\n"
 "\n"
@@ -185,9 +185,9 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#"
-"{config.ticket_hook}#{ticket.number}>: Atualizado por #"
-"{current_user.longname} em #{ticket.updated_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"#{config.ticket_hook}#{ticket.number}>: Atualizado por "
+"#{current_user.longname} em #{ticket.updated_at}_\n"
 "<% if @objects[:changes].present? %>\n"
 "  <% @objects[:changes].each do |key, value| %>\n"
 "  * <%= t key %>: <%= h value[0] %> -> <%= h value[1] %>\n"
@@ -214,8 +214,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#"
-"{config.ticket_hook}#{ticket.number}>: Escalonará em #{ticket.escalation_at}"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"#{config.ticket_hook}#{ticket.number}>: Escalonará em #{ticket.escalation_at}"
 "_\n"
 "O ticket (#{ticket.title}) de \"#{ticket.customer.longname}\" escalonará em "
 "\"#{ticket.escalation_at}\"!\n"
@@ -245,8 +245,8 @@ msgstr ""
 "\n"
 "<div>Oi #{user.firstname},</div>\n"
 "<br>\n"
-"<div>Parece que você vinculou sua conta <b>a um aplicativo externo</b> \"#{t"
-"(provider)}\".</div>\n"
+"<div>Parece que você vinculou sua conta <b>a um aplicativo externo</b> "
+"\"#{t(provider)}\".</div>\n"
 "<br>\n"
 "<div>Se não foi você, remova a conta vinculada do seu perfil e altere a "
 "senha do aplicativo externo. Alguém pode ter obtido acesso não autorizado à "
@@ -299,8 +299,8 @@ msgstr ""
 "<div>O país foi adicionado à sua lista de dispositivos conhecidos, que você "
 "pode ver aqui:</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices\">#"
-"{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/"
+"devices\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
 "<br>\n"
 "<div>Se não foi você, remova o dispositivo, altere sua senha e entre em "
 "contato com o administrador. Alguém pode ter obtido acesso não autorizado à "
@@ -353,8 +353,8 @@ msgstr ""
 "<div>Seu dispositivo foi adicionado à lista de dispositivos conhecidos, que "
 "você pode ver aqui:</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices\">#"
-"{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/"
+"devices\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
 "<br>\n"
 "<div>Se não foi você, remova o dispositivo, altere sua senha e entre em "
 "contato com o administrador. Alguém pode ter obtido acesso não autorizado à "
@@ -1850,8 +1850,8 @@ msgstr ""
 "\n"
 "<div>Olá #{user.firstname},</div>\n"
 "<br>\n"
-"<div>Recebemos um pedido de login de administração para a sua conta #"
-"{config.product_name} <b>#{user.login}</b>.</div>\n"
+"<div>Recebemos um pedido de login de administração para a sua conta "
+"#{config.product_name} <b>#{user.login}</b>.</div>\n"
 "<br>\n"
 "<div>Clique no link abaixo (ou copie e cole a URL no seu navegador) para "
 "prosseguir:</div>\n"
@@ -2010,7 +2010,8 @@ msgstr "Todos os artigos"
 
 #: app/models/ai/agent/type/ticket_categorizer.rb:51
 msgid "All categories will be considered for categorizing tickets."
-msgstr "Todas as categorias serão consideradas para a categorização de tickets."
+msgstr ""
+"Todas as categorias serão consideradas para a categorização de tickets."
 
 #: public/assets/chat/views/waiting.eco:7
 msgid "All colleagues are busy."
@@ -2229,8 +2230,8 @@ msgstr ""
 "<div>Oi #{recipient.firstname},</div>\n"
 "<br>\n"
 "<div>\n"
-"Outro ticket foi mesclado no ticket (#{ticket.title}) por \"<b>#"
-"{current_user.longname}</b>\".\n"
+"Outro ticket foi mesclado no ticket (#{ticket.title}) por "
+"\"<b>#{current_user.longname}</b>\".\n"
 "</div>\n"
 "<br>\n"
 "<div>\n"
@@ -3547,7 +3548,8 @@ msgid "Cannot delete category"
 msgstr "Não é possível excluir a categoria"
 
 msgid "Cannot delete record because a dependent %{record} exists"
-msgstr "Não é possível excluir o registro porque um %{record} dependente existe"
+msgstr ""
+"Não é possível excluir o registro porque um %{record} dependente existe"
 
 msgid "Cannot delete record because dependent %{record} exist"
 msgstr "Não é possível excluir o registro porque existem %{record} dependentes"
@@ -4416,13 +4418,13 @@ msgid ""
 "<br>\n"
 "<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
-"Confirme sua conta #{config.product_name}, #{user.firstname} #{user.lastname}"
-"\n"
+"Confirme sua conta #{config.product_name}, #{user.firstname} "
+"#{user.lastname}\n"
 "\n"
 "<div>Olá #{user.firstname},</div>\n"
 "<br>\n"
-"<div>Confirme seu endereço de email para completar sua conta #"
-"{config.product_name}. É fácil, basta clicar no link abaixo.</div>\n"
+"<div>Confirme seu endereço de email para completar sua conta "
+"#{config.product_name}. É fácil, basta clicar no link abaixo.</div>\n"
 "<br>\n"
 "<div><a href=\"#{url}\">#{url}</a></div>\n"
 "<br>\n"
@@ -5514,7 +5516,8 @@ msgstr ""
 
 #: db/seeds/settings.rb:3730
 msgid "Define if asciifolding analyzer should be used in Elasticsearch."
-msgstr "Defina se o analisador de asciifolding deve ser usado no Elasticsearch."
+msgstr ""
+"Defina se o analisador de asciifolding deve ser usado no Elasticsearch."
 
 #: db/seeds/settings.rb:3694
 msgid "Define max. attachment size for Elasticsearch."
@@ -6472,7 +6475,8 @@ msgstr ""
 
 #: db/seeds/settings.rb:5426
 msgid "Defines the transaction backend which executes time based triggers."
-msgstr "Define o mecanismo de transação que executa gatilhos baseados em tempo."
+msgstr ""
+"Define o mecanismo de transação que executa gatilhos baseados em tempo."
 
 #: db/seeds/settings.rb:5408
 msgid ""
@@ -9201,7 +9205,8 @@ msgstr "Integração do GitHub"
 
 #: lib/github/http_client.rb:32
 msgid "GitHub request failed. Please have a look at the log file for details."
-msgstr "Falha na requisição ao GitHub. Consulte o arquivo de log para detalhes."
+msgstr ""
+"Falha na requisição ao GitHub. Consulte o arquivo de log para detalhes."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/TicketSidebarGitHub/TicketSidebarGitHub.vue:43
 msgid "GitHub: Link issue"
@@ -9234,7 +9239,8 @@ msgstr "Integração do GitLab"
 
 #: lib/gitlab/http_client.rb:45
 msgid "GitLab request failed. Please have a look at the log file for details."
-msgstr "Falha na requisição ao GitLab. Consulte o arquivo de log para detalhes."
+msgstr ""
+"Falha na requisição ao GitLab. Consulte o arquivo de log para detalhes."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/TicketSidebarGitLab/TicketSidebarGitLab.vue:43
 msgid "GitLab: Link issue"
@@ -9366,9 +9372,7 @@ msgstr "Saudação"
 #: app/graphql/gql/types/overview_type.rb:95
 #: app/views/mailer/ticket_create/fr.html.erb:8
 #: app/views/mailer/ticket_create/zh-cn.html.erb:8
-#: app/views/messaging/ticket_create/pt-br.md.erb:3
 #: app/views/messaging/ticket_create/zh-tw.md.erb:3
-#: app/views/messaging/ticket_info/pt-br.md.erb:3
 #: app/views/messaging/ticket_info/zh-tw.md.erb:3
 #: db/seeds/object_manager_attributes.rb:168 db/seeds/settings.rb:2989
 #: lib/excel_sheet/ticket.rb:27
@@ -9659,8 +9663,8 @@ msgid ""
 "quotation marks|| for searching phrases: §\"some phrase\"§."
 msgstr ""
 "Aqui você pode procurar por tickets, clientes e organizações. Utilize o "
-"caractere asterisco §*§ para procurar por tudo. Por exemplo, §smi*§ ou §"
-"rosent*l§. Você também pode usar ||aspas duplas|| para procurar por frases, "
+"caractere asterisco §*§ para procurar por tudo. Por exemplo, §smi*§ ou "
+"§rosent*l§. Você também pode usar ||aspas duplas|| para procurar por frases, "
 "por exemplo, §\"uma frase\"§."
 
 #: app/assets/javascripts/app/views/profile/password.jst.eco:23
@@ -9701,8 +9705,8 @@ msgid ""
 "early and send your feedback on it.¶¶You can come back any time using the "
 "switch below."
 msgstr ""
-"Olá! O Zammad em breve terá uma nova interface de usuário para agentes!¶"
-"Experimente antecipadamente e envie seu feedback sobre ela.¶¶Você pode "
+"Olá! O Zammad em breve terá uma nova interface de usuário para agentes!"
+"¶Experimente antecipadamente e envie seu feedback sobre ela.¶¶Você pode "
 "voltar a qualquer momento usando o botão abaixo."
 
 #: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:57
@@ -10051,8 +10055,8 @@ msgid ""
 "If you want to open the chat by clicking a button, set the option §show§ to "
 "§false§ and add the class §open-zammad-chat§ to the button."
 msgstr ""
-"Caso queira que o chat apareça apenas ao clicar em um botão, ajuste a opção §"
-"show§ para §false§ e adicione a classe §open-zammad-chat§ ao botão."
+"Caso queira que o chat apareça apenas ao clicar em um botão, ajuste a opção "
+"§show§ para §false§ e adicione a classe §open-zammad-chat§ ao botão."
 
 #: app/assets/javascripts/app/views/getting_started/email_pre_configured.jst.eco:13
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmailPreConfigured.vue:69
@@ -10275,7 +10279,8 @@ msgstr "Incluir tickets não atribuídos na inscrição de tickets escalonados."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:100
 msgid "Include unassigned tickets in subscription for new & open tickets."
-msgstr "Incluir tickets não atribuídos na inscrição de tickets novos e abertos."
+msgstr ""
+"Incluir tickets não atribuídos na inscrição de tickets novos e abertos."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:127
 msgid "Include unassigned tickets in subscription for pending tickets."
@@ -12861,8 +12866,8 @@ msgstr ""
 "\n"
 "<div>Oi #{recipient.firstname},</div>\n"
 "<br>\n"
-"<div>Um novo ticket (#{ticket.title}) foi criado por \"<b>#"
-"{current_user.longname}</b>\".</div>\n"
+"<div>Um novo ticket (#{ticket.title}) foi criado por "
+"\"<b>#{current_user.longname}</b>\".</div>\n"
 "<br>\n"
 "<div>\n"
 "Grupo: #{ticket.group.name}<br>\n"
@@ -13118,7 +13123,8 @@ msgstr "Nenhum filtro foi configurado."
 
 #: app/controllers/integration/exchange_controller.rb:45
 msgid "No folders were found for the given user credentials."
-msgstr "Nenhuma pasta foi encontrada para as credenciais de usuário fornecidas."
+msgstr ""
+"Nenhuma pasta foi encontrada para as credenciais de usuário fornecidas."
 
 #: app/services/service/system/import/check_status.rb:39
 msgid "No import in progress."
@@ -13294,8 +13300,8 @@ msgid ""
 "No webhook available, please create a new one or activate an existing one at "
 "\"Manage > Webhook\""
 msgstr ""
-"Nenhum webhook disponível, crie um novo ou ative um existente em "
-"\"Gerenciar > Webhook\""
+"Nenhum webhook disponível, crie um novo ou ative um existente em \"Gerenciar "
+"> Webhook\""
 
 #: app/models/channel/email_parser.rb:120
 msgid "No x-zammad-session-user-id, no sender set!"
@@ -13345,7 +13351,8 @@ msgstr "Não tem permissão para acessar esta tarefa."
 
 #: app/assets/javascripts/app/views/object_manager/screens.jst.eco:29
 msgid "Not applicable to: merging, emails, form, Facebook, Telegram, SMS"
-msgstr "Não se aplica a: mesclagem, emails, formulário, Facebook, Telegram, SMS"
+msgstr ""
+"Não se aplica a: mesclagem, emails, formulário, Facebook, Telegram, SMS"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue:42
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:72
@@ -14229,9 +14236,7 @@ msgstr "Sobrescrever rascunho"
 #: app/graphql/gql/types/overview_type.rb:96
 #: app/views/mailer/ticket_create/fr.html.erb:9
 #: app/views/mailer/ticket_create/zh-cn.html.erb:9
-#: app/views/messaging/ticket_create/pt-br.md.erb:4
 #: app/views/messaging/ticket_create/zh-tw.md.erb:4
-#: app/views/messaging/ticket_info/pt-br.md.erb:4
 #: app/views/messaging/ticket_info/zh-tw.md.erb:4
 #: db/seeds/object_manager_attributes.rb:214 lib/excel_sheet/ticket.rb:28
 msgid "Owner"
@@ -14836,7 +14841,8 @@ msgstr "Webhook pré-definido para %s."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:49
 msgid "Prefer color scheme as indicated by the operating system."
-msgstr "Preferir o esquema de cores conforme indicado pelo sistema operacional."
+msgstr ""
+"Preferir o esquema de cores conforme indicado pelo sistema operacional."
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco:34
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:294
@@ -15784,16 +15790,16 @@ msgstr ""
 "\n"
 "<div>Olá #{user.firstname},</div>\n"
 "<br>\n"
-"<div>Recebemos um pedido para redefinir a senha da sua conta #"
-"{config.product_name} <b>#{user.login}</b>.</div>\n"
+"<div>Recebemos um pedido para redefinir a senha da sua conta "
+"#{config.product_name} <b>#{user.login}</b>.</div>\n"
 "<br>\n"
 "<div>Se você deseja redefinir sua senha, clique no link abaixo (ou copie e "
 "cole a URL no seu navegador):</div>\n"
 "<br>\n"
 "<div><a href=\"#{url}\">#{url}</a></div>\n"
 "<br>\n"
-"<div>Este link o levará a uma página onde você pode alterar sua senha.</div>"
-"\n"
+"<div>Este link o levará a uma página onde você pode alterar sua senha.</"
+"div>\n"
 "<br>\n"
 "<div>Se você não deseja redefinir sua senha, ignore esta mensagem. Sua senha "
 "não será redefinida.</div>\n"
@@ -15836,8 +15842,8 @@ msgstr ""
 "<br>\n"
 "<div><a href=\"#{url}\">#{url}</a></div>\n"
 "<br>\n"
-"<div>Este link o levará a uma página onde você pode alterar sua senha.</div>"
-"\n"
+"<div>Este link o levará a uma página onde você pode alterar sua senha.</"
+"div>\n"
 "<br>\n"
 "<div>Se você não deseja redefinir sua senha, ignore esta mensagem. Sua senha "
 "não será redefinida.</div>\n"
@@ -16920,7 +16926,7 @@ msgstr "Remetente do último artigo"
 msgid "Sending Email Address"
 msgstr "Endereço de email de envio"
 
-#: app/models/ticket/article.rb:340
+#: app/models/ticket/article.rb:341
 msgid "Sending an email without a valid recipient is not possible."
 msgstr "Não é possível enviar um e-mail sem um destinatário válido."
 
@@ -17800,9 +17806,7 @@ msgstr "Iniciando a importação…"
 #: app/graphql/gql/types/overview_type.rb:97
 #: app/views/mailer/ticket_create/fr.html.erb:10
 #: app/views/mailer/ticket_create/zh-cn.html.erb:10
-#: app/views/messaging/ticket_create/pt-br.md.erb:5
 #: app/views/messaging/ticket_create/zh-tw.md.erb:5
-#: app/views/messaging/ticket_info/pt-br.md.erb:5
 #: app/views/messaging/ticket_info/zh-tw.md.erb:5
 #: db/seeds/object_manager_attributes.rb:256 lib/excel_sheet/ticket.rb:25
 msgid "State"
@@ -17902,8 +17906,8 @@ msgstr "Armazena a configuração do GitLab."
 msgid ""
 "Stores the ticket summarization options (e.g. which content is visible)."
 msgstr ""
-"Armazena as opções de resumo do ticket (por exemplo, qual conteúdo é visível)"
-"."
+"Armazena as opções de resumo do ticket (por exemplo, qual conteúdo é "
+"visível)."
 
 #: db/seeds/object_manager_attributes.rb:1276
 msgid "Street"
@@ -18449,7 +18453,8 @@ msgstr "A importação do OTRS falhou."
 
 #: app/services/service/system/import/apply_otrs_configuration.rb:78
 msgid "The OTRS migrator plugin is not accessible. Please verify the API key."
-msgstr "O plugin migrador do OTRS não está acessível. Verifique a chave de API."
+msgstr ""
+"O plugin migrador do OTRS não está acessível. Verifique a chave de API."
 
 #: lib/secure_mailing/pgp/tool/error.rb:106
 msgid "The PGP email recipient is invalid."
@@ -18533,7 +18538,8 @@ msgstr "A URL desta instalação do Zammad."
 
 #: lib/whatsapp/webhook/configuration.rb:25
 msgid "The WhatsApp channel webhook configuration could not be verified."
-msgstr "A configuração do webhook do canal do WhatsApp não pôde ser verificada."
+msgstr ""
+"A configuração do webhook do canal do WhatsApp não pôde ser verificada."
 
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:159
 msgid "The WhatsApp connection could not be saved."
@@ -18566,7 +18572,8 @@ msgstr "A solicitação de consentimento foi enviada ao seu administrador."
 
 #: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue:78
 msgid "The admin password auth email could not be sent."
-msgstr "O email de autenticação de senha de administrador não pôde ser enviado."
+msgstr ""
+"O email de autenticação de senha de administrador não pôde ser enviado."
 
 #: app/assets/javascripts/app/views/channel_account/list.jst.eco:43
 msgid ""
@@ -19370,7 +19377,8 @@ msgstr "Não foi possível encontrar %s."
 
 #: lib/validations/verify_perform_rules_validator.rb:97
 msgid "The required '%{attribute}' value for %{key}, %{inner} is missing!"
-msgstr "O valor obrigatório '%{attribute}' para %{key}, %{inner} está faltando!"
+msgstr ""
+"O valor obrigatório '%{attribute}' para %{key}, %{inner} está faltando!"
 
 #: lib/secure_mailing/pgp/tool/error.rb:151
 msgid "The required PGP passphrase is missing."
@@ -20028,7 +20036,8 @@ msgstr "Não foram encontrados dados válidos do OpenPGP."
 
 #: lib/secure_mailing/pgp/security_options.rb:76
 msgid "There were PGP keys found for %s, but at least one of them has expired."
-msgstr "Foram encontradas chaves PGP para %s, mas pelo menos uma delas expirou."
+msgstr ""
+"Foram encontradas chaves PGP para %s, mas pelo menos uma delas expirou."
 
 #: lib/secure_mailing/smime/security_options.rb:66
 msgid ""
@@ -20593,7 +20602,8 @@ msgstr "Esta assinatura está inativa, não será incluída na resposta."
 #: app/services/service/user/add_first_admin.rb:14
 msgid ""
 "This system has already been configured and an administrator account exists."
-msgstr "Este sistema já foi configurado e uma conta de administrador já existe."
+msgstr ""
+"Este sistema já foi configurado e uma conta de administrador já existe."
 
 #: app/services/service/system/import/apply_configuration_base.rb:44
 #: app/services/service/system/import/run.rb:35
@@ -20756,8 +20766,8 @@ msgstr ""
 "<div>Oi #{recipient.firstname},</div>\n"
 "<br>\n"
 "<div>\n"
-"O ticket (#{ticket.title}) foi mesclado em outro ticket por \"<b>#"
-"{current_user.longname}</b>\".\n"
+"O ticket (#{ticket.title}) foi mesclado em outro ticket por "
+"\"<b>#{current_user.longname}</b>\".\n"
 "</div>\n"
 "<br>\n"
 "<div>\n"
@@ -22355,8 +22365,9 @@ msgstr ""
 "<% end %>\n"
 "<br>\n"
 "<div>\n"
-"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/#"
-"{article.id}\" target=\"zammad_app\">Ver isto no #{config.product_name}</a>\n"
+"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/"
+"#{article.id}\" target=\"zammad_app\">Ver isto no #{config.product_name}</"
+"a>\n"
 "</div>\n"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:45
@@ -22369,7 +22380,8 @@ msgstr "A atualização da ordem das visões gerais dos seus tickets falhou."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:244
 msgid "Updating your calendar subscription settings failed."
-msgstr "A atualização das configurações de assinatura do seu calendário falhou."
+msgstr ""
+"A atualização das configurações de assinatura do seu calendário falhou."
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco:18
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco:9
@@ -23841,8 +23853,8 @@ msgstr ""
 "<p>A senha da sua conta do #{config.product_name} <b>#{user.login}</b> foi "
 "alterada recentemente.</p>\n"
 "<br>\n"
-"<p>Se você não iniciou esta alteração, contate seu administrador de "
-"sistema.</p>\n"
+"<p>Se você não iniciou esta alteração, contate seu administrador de sistema."
+"</p>\n"
 "<br>\n"
 "<p>Sua equipe #{config.product_name}</p>\n"
 
@@ -24077,8 +24089,8 @@ msgstr ""
 "Infelizmente, seu email intitulado \"#{mail.subject}\" não pôde ser entregue "
 "a um ou mais destinatários.\n"
 "\n"
-"Sua mensagem era #{mail.msg_size} MB, mas só aceitamos mensagens até #"
-"{config.postmaster_max_size} MB.\n"
+"Sua mensagem era #{mail.msg_size} MB, mas só aceitamos mensagens até "
+"#{config.postmaster_max_size} MB.\n"
 "\n"
 "Reduza o tamanho da mensagem e tente novamente. Obrigado pela compreensão.\n"
 "\n"
@@ -24943,7 +24955,8 @@ msgstr "esquerda"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/linkedAccounts.ts:27
 msgid "linked accounts,facebook,github,gitlab,google,linkedin,microsoft,saml"
-msgstr "contas conectadas,facebook,github,gitlab,google,linkedin,microsoft,saml"
+msgstr ""
+"contas conectadas,facebook,github,gitlab,google,linkedin,microsoft,saml"
 
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee:120
 msgid "m"
