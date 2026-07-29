@@ -334,7 +334,7 @@ importers:
         specifier: ^3.5.40
         version: 3.5.40
       '@vue/devtools-api':
-        specifier: ^8.1.5
+        specifier: ^8.2.1
         version: 8.2.1
       '@vue/eslint-config-typescript':
         specifier: ^14.9.0
