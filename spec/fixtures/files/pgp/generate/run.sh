@@ -130,7 +130,7 @@ echo -n $KEY_FINGERPRINT > "$KEY_DIR/$EMAIL_ADDRESS.fingerprint"
 echo "Generating signed test mails (detached signature)"
 
 # shellcheck disable=SC2042
-for TEST_MAIL_KEY in mail-expired,expiredpgp1@example.com
+for TEST_MAIL_KEY in mail-expired,expiredpgp1@example.com mail-trailing-blank-line,pgp1@example.com
 do
   TEST_MAIL=${TEST_MAIL_KEY%,*}
   EMAIL_ADDRESS=${TEST_MAIL_KEY#*,}

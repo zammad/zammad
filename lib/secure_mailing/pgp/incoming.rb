@@ -148,9 +148,10 @@ class SecureMailing::PGP::Incoming < SecureMailing::Backend::HandlerIncoming
 
   def verify_data
     raw_source = mail['raw']
-    parts = raw_source.split(%r{^--#{mail[:mail_instance].boundary}\s$})[1..-2]
+    parts = raw_source.split(%r{^--#{Regexp.escape(mail[:mail_instance].boundary)}[ \t]*\r?$})[1..-2]
 
-    "#{parts[0].strip}\r\n"
+    # Only the line break of the delimiter lines must be removed, all other whitespace is part of the signed data (RFC 2046).
+    parts[0].sub(%r{\A\r?\n}, '').sub(%r{\r?\n\z}, '')
   end
 
   def decryptable?

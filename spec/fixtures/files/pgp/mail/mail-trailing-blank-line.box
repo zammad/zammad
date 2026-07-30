@@ -1,0 +1,47 @@
+Date: Tue, 28 Jul 2026 08:26:29 +0100
+From: pgp1@example.com
+To: pgp2@example.com
+Cc: pgp3@example.com
+Message-ID: <6885d9f00_140d322607069c@MacBook-Pro.fritz.box.mail>
+Mime-Version: 1.0
+Content-Type: multipart/signed;
+ boundary="--==_mimepart_6885d9f00_140d322607069c";
+ micalg=pgp-sha512;
+ protocol="application/pgp-signature"
+Content-Transfer-Encoding: 7bit
+
+This is an OpenPGP/MIME signed message (RFC 3156)
+----==_mimepart_6885d9f00_140d322607069c
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+Testing some Content
+
+
+----==_mimepart_6885d9f00_140d322607069c
+Content-Type: application/pgp-signature;
+ name=signature.asc
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+ filename=signature.asc
+Content-Description: OpenPGP digital signature
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEMzoxo/JDSpUh7Kj1Kvs2GchWMeQFAmpoWaUACgkQKvs2GchW
+MeRaoQ/+Kp5xrK8NOgzjZO3NaP8z6/a++kgkYQEqxMUg+t0v+KXZnJ3hVGw6TCCF
+qjwS2v4BkeuUnah8BGEDyMT9VGeRMSo2Wsq6bME1igPuyyxmiDiuLRz8x1FLNLyB
+/i8Y+eD1xE0Fp+CnmgGuSGNIyTLgfFZIEpGNczvLRCzmiAL3Oki9yDqLc8wJPbEx
+WR4kG+YIvNvw2e3f5B5bZRKGfomgeJwrrOEVWRyUqoAnEjedgUkWZPvODyJHMuUs
+Lb2eGv9E/ILnpixSkritfOf6PhN/9wrI9AjnNeRPiORBcdHm1F+lEvGly3oP07PH
+Ohwx6H00bfeFsRd31TYQ7tq/jBLlPt3EyxcWt9WARnyG1jMvREwywKFNAvKg5HuA
+yK2VA+4ZInmbtgTwUGCg2NINecjTgN8XtjutdD3mW20l/uDhLGTXO5UfxjlcDaah
+xkFhsilXOBwPLrP/tYEdsWRuJe3Q91W7J98p06zLH+Hp/P8WUnTz9vt2rotQxfsf
+fyZ7Zecg2h/4CByHfyQyfXgDZutwwpZ6pH4h/5Dk+gfR7u36j5HdMmuRzpoP1bna
+bFlJ6jgd3+VXu1WBbDg8d4AfVKBm2AIxmW2l53nth7mYXlclGWvpEdgBLth3vn1A
+9fP5+aFoFC2HKwL3stehNJEKhPoI1sIWKkzZsyuAaTnqhNI8ZSE=
+=25YH
+-----END PGP SIGNATURE-----
+
+----==_mimepart_6885d9f00_140d322607069c--

@@ -370,6 +370,24 @@ RSpec.describe SecureMailing::PGP, :aggregate_failures do
           end
         end
 
+        context 'when the signed part ends with a blank line' do
+          let(:mail) do
+            # Import a mail whose signed part ends with a trailing blank line, which must not be stripped before verification (#6272).
+            pgp_mail = Rails.root.join('spec/fixtures/files/pgp/mail/mail-trailing-blank-line.box').read
+
+            mail = Channel::EmailParser.new.parse(pgp_mail)
+            SecureMailing.incoming(mail)
+
+            mail
+          end
+
+          it 'verifies' do
+            expect(mail[:body]).to include(raw_body)
+            expect(mail['x-zammad-article-preferences'][:security][:sign][:success]).to be true
+            expect(mail['x-zammad-article-preferences'][:security][:sign][:comment]).to eq 'Good signature'
+          end
+        end
+
         context 'when key is expired' do
           let(:mail) do
             # Import a mail which was created with a now expired key.
