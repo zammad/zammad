@@ -29,8 +29,9 @@
     - bundle exec ruby .gitlab/configure_environment.rb
     - source .gitlab/environment.env
   zammad_db_init:
-    - echo -e "\\e[0Ksection_start:`date +%s`:zammad_db_init[collapsed=true]\\r\\e[0Kbundle exec rake zammad:db:init"
-    - bundle exec rake zammad:db:init
+    - echo -e "\\e[0Ksection_start:`date +%s`:zammad_db_init[collapsed=true]\\r\\e[0K.gitlab/init_database.sh"
+    # The script is missing if an older commit is checked out, e.g. in rspec:migration.
+    - if [ -x .gitlab/init_database.sh ]; then .gitlab/init_database.sh; else bundle exec rake zammad:db:init; fi
     - echo -e "\\e[0Ksection_end:`date +%s`:zammad_db_init\\r\\e[0K"
   zammad_db_unseeded:
     - echo -e "\\e[0Ksection_start:`date +%s`:zammad_db_unseeded[collapsed=true]\\r\\e[0Kbundle exec rake zammad:db:unseeded"

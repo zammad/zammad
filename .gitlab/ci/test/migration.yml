@@ -8,6 +8,9 @@ rspec:migration:
   services:
     - !reference [.services, postgresql]
     - !reference [.services, redis]
+  # The database must be initialized by the code of the stable branch, so the database dump
+  #   of this pipeline must not be used here.
+  dependencies: []
   before_script: []
   script:
     # First, checkout stable and set it up.

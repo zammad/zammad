@@ -1,0 +1,27 @@
+# Prepare the database once per pipeline, so that the jobs of the following stages can
+#   restore it instead of running all migrations and seeds again (see
+#   .gitlab/init_database.sh). Runs in the lint stage, so that it does not add any runtime
+#   to the pipeline and is available in the test and browser stages.
+'write database dumps':
+  stage: lint
+  extends:
+    - .job_rules_default
+  services:
+    - !reference [.services, postgresql]
+  variables:
+    ZAMMAD_SAFE_MODE: 1
+  artifacts:
+    expire_in: 1 day
+    when: on_success
+    paths:
+      - tmp/database_dumps
+  script:
+    # Without the postgresql client tools in the CI image there is nothing to do here, the
+    #   jobs then initialize their database themselves as before.
+    - if ! command -v pg_dump > /dev/null; then echo 'pg_dump is not available.'; exit 0; fi
+    # The browser tests run in production mode, all other tests in test mode.
+    - RAILS_ENV=test bundle exec rake zammad:db:init
+    - RAILS_ENV=test .gitlab/database.rb dump
+    - RAILS_ENV=production bundle exec rake zammad:db:init
+    - RAILS_ENV=production .gitlab/database.rb dump
+  after_script: []
