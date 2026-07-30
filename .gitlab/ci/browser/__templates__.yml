@@ -7,7 +7,7 @@
     RAILS_ENV: "production"
   script:
     - |
-      script/build/test_slice_tests.sh $CI_NODE_INDEX
+      script/build/test_slice_tests.rb $CI_NODE_INDEX $CI_NODE_TOTAL
       # Tests in the first slice do not expect for the auto wizard to be run.
       if [ $CI_NODE_INDEX = 1 ]
       then

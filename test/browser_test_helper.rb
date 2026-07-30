@@ -55,6 +55,28 @@ class TestCase < ActiveSupport::TestCase
       Performing test #{self.class.name}##{method_name} (#{test_file_path}:#{test_method_line}):
 
     HTML
+
+    @test_file_path  = test_file_path
+    @test_started_at = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+  end
+
+  teardown do
+    next if @test_started_at.nil?
+
+    TestCase.record_timing(@test_file_path, Process.clock_gettime(Process::CLOCK_MONOTONIC) - @test_started_at)
+  end
+
+  # Records the runtime of each test file, so that .gitlab/ci/timings/minitest.yml can
+  #   be refreshed from the artifacts of a CI pipeline.
+  def self.record_timing(file, seconds)
+    path = ENV['CI_TEST_TIMINGS_PATH']
+    return if path.blank?
+
+    @timings ||= Hash.new(0.0)
+    @timings[file] += seconds.round(1)
+
+    FileUtils.mkdir_p(File.dirname(path))
+    File.write(path, @timings.to_yaml)
   end
 
   def browser

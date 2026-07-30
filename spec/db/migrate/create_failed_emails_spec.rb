@@ -5,6 +5,11 @@ require 'rails_helper'
 RSpec.describe CreateFailedEmails, db_strategy: :reset, type: :db_migration do
   before do
     ActiveRecord::Migration[7.0].drop_table :failed_emails
+
+    # The table created by the migration has more columns than the one of freshly set up
+    #   systems (see create_base.rb), so cached column information must not be reused.
+    FailedEmail.reset_column_information
+
     # make sure folder does not exist
     FileUtils.rm_rf(dir)
   end

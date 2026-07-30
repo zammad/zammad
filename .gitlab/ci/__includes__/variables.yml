@@ -26,6 +26,9 @@ variables:
   POSTGRESQL_TAG: 'stable'
   REDIS_TAG: 'stable'
 
+  # Record the runtime of each test file, used to keep .gitlab/ci/timings/ up to date.
+  CI_TEST_TIMINGS_PATH: 'tmp/test_timings/timings.yml'
+
   # Compile assets only once.
   CI_SKIP_ASSETS_PRECOMPILE: 'true'
   # Avoid unnecessary DB resets.

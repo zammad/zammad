@@ -28,3 +28,6 @@ default:
     - .gitlab/environment_info.sh > log/environment_info.log
     # Copy logs from other containers to store them as artifacts.
     - cp /builds/*.log log/ || true
+    # Print recorded test runtimes for script/build/update_test_timings.rb. The script is
+    #   missing if an older commit is checked out, e.g. in rspec:migration.
+    - if [ -x .gitlab/print_test_timings.sh ]; then .gitlab/print_test_timings.sh; fi
