@@ -53,6 +53,15 @@ const renderSuggestions = (
       ],
     ],
     router: true,
+    // The answer popover links to the category route.
+    routerRoutes: [
+      { path: '/', name: 'Root', component: { template: '<div />' } },
+      {
+        path: '/knowledge-base/:localeCode/category/:categoryInternalId',
+        name: 'KnowledgeBaseCategory',
+        component: { template: '<div />' },
+      },
+    ],
     store: true,
   })
 
@@ -64,6 +73,13 @@ const relatedAnswer = (id: number, title: string, score = 90): RelatedAnswer => 
     id: convertToGraphQLId('KnowledgeBase::Answer::Translation', id),
     title,
     visibility: EnumKnowledgeBaseVisibility.Published,
+    categoryTreeTranslation: [
+      {
+        __typename: 'KnowledgeBaseCategoryTranslation',
+        id: convertToGraphQLId('KnowledgeBase::Category::Translation', 1),
+        title: 'Account',
+      },
+    ],
     content: {
       __typename: 'KnowledgeBaseAnswerTranslationContent',
       bodyExcerpt: null,
@@ -73,6 +89,8 @@ const relatedAnswer = (id: number, title: string, score = 90): RelatedAnswer => 
       id: convertToGraphQLId('KnowledgeBase::Answer', id),
       archivedAt: null,
       publishedAt: null,
+      internalAt: null,
+      tags: null,
       category: {
         __typename: 'KnowledgeBaseCategory',
         id: convertToGraphQLId('KnowledgeBase::Category', 1),
@@ -158,6 +176,35 @@ describe('TicketKnowledgeBaseAiSuggested', () => {
         type: 'normal',
       },
     })
+  })
+
+  it('clears the BETA UI switch when an answer link is followed', async () => {
+    localStorage.setItem('beta-ui-switch', 'true')
+
+    const wrapper = renderSuggestions({
+      answers: [relatedAnswer(1, 'Reset your password')],
+    })
+
+    await wrapper.events.click(await wrapper.findByText('Reset your password'))
+
+    // Otherwise the legacy answer view would redirect straight back to the new app.
+    await vi.waitFor(() => expect(localStorage.getItem('beta-ui-switch')).toBeNull())
+  })
+
+  it('clears the BETA UI switch when an answer link is middle-clicked (opened in a new tab)', async () => {
+    localStorage.setItem('beta-ui-switch', 'true')
+
+    const wrapper = renderSuggestions({
+      answers: [relatedAnswer(1, 'Reset your password')],
+    })
+
+    // A middle-click fires `auxclick`, not `click`.
+    await wrapper.events.pointer({
+      keys: '[MouseMiddle]',
+      target: await wrapper.findByText('Reset your password'),
+    })
+
+    await vi.waitFor(() => expect(localStorage.getItem('beta-ui-switch')).toBeNull())
   })
 
   it('hides the link action when the ticket is not editable', async () => {

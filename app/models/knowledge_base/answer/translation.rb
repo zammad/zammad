@@ -63,13 +63,13 @@ class KnowledgeBase::Answer::Translation < ApplicationModel
   scope :vector_index_scope, lambda {
     relevant_category_ids = Setting.get('vectordb_knowledge_base_category_ids')
 
-    # PoC: index drafts too (not only internally-visible answers), but still exclude archived ones.
-    answer_scope = KnowledgeBase::Answer.date_later_or_nil(:archived_at, Time.zone.now)
-
     # For now only explicitly enabled categories are indexed.
-    return answer_scope.none if relevant_category_ids.blank?
+    return none if relevant_category_ids.blank?
 
-    answer_scope = answer_scope.where(category: relevant_category_ids)
+    # Index every answer of those categories regardless of its publication state (drafts and
+    # archived ones included) — whether a user may receive it as a suggestion is decided by the
+    # search's permission filter (Service::KnowledgeBase::Answer::SimilaritySearch).
+    answer_scope = KnowledgeBase::Answer.where(category: relevant_category_ids)
 
     joins(:answer).merge(answer_scope).includes(:content, :kb_locale)
   }
@@ -88,9 +88,10 @@ class KnowledgeBase::Answer::Translation < ApplicationModel
   end
 
   def vector_indexing_for_record?
-    # PoC: index drafts too (visible_internally? guard omitted for now), but not archived answers.
-    return false if answer.archived_at&.past?
-
+    # Index answers of any publication state (drafts and archived ones included, so the
+    # visible_internally? guard is omitted); the search's permission filter decides who may receive
+    # them as a suggestion.
+    #
     # For now only explicitly enabled categories are indexed.
     relevant_category_ids = Setting.get('vectordb_knowledge_base_category_ids')
     return false if relevant_category_ids.blank? || relevant_category_ids.map(&:to_i).exclude?(answer.category_id)
@@ -103,7 +104,7 @@ class KnowledgeBase::Answer::Translation < ApplicationModel
   end
 
   # Answer attributes that feed this translation's vector document: category (indexing scope +
-  # metadata) and the state timestamps (drive visible_internally / archived indexing).
+  # metadata) and the state timestamps (drive the visible_internally metadata).
   VECTOR_INDEX_ANSWER_ATTRIBUTES = %w[category_id internal_at published_at archived_at].freeze
 
   # Did anything feeding the vector document change? Title/locale live here, the body on the content

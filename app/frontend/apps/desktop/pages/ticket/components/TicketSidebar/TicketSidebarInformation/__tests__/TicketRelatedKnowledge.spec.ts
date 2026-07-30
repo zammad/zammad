@@ -109,6 +109,13 @@ describe('TicketRelatedKnowledge', () => {
           id: convertToGraphQLId('KnowledgeBase::Answer::Translation', 1),
           title: 'Reset your password',
           visibility: EnumKnowledgeBaseVisibility.Published,
+          categoryTreeTranslation: [
+            {
+              __typename: 'KnowledgeBaseCategoryTranslation',
+              id: convertToGraphQLId('KnowledgeBase::Category::Translation', 1),
+              title: 'Account',
+            },
+          ],
           content: {
             __typename: 'KnowledgeBaseAnswerTranslationContent',
             bodyExcerpt: 'Steps to reset your password.',
@@ -118,6 +125,8 @@ describe('TicketRelatedKnowledge', () => {
             id: convertToGraphQLId('KnowledgeBase::Answer', 1),
             archivedAt: null,
             publishedAt: null,
+            internalAt: null,
+            tags: null,
             category: {
               __typename: 'KnowledgeBaseCategory',
               id: convertToGraphQLId('KnowledgeBase::Category', 1),

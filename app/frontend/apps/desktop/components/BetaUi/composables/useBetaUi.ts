@@ -16,17 +16,21 @@ export const initializeBetaUi = () => {
   const appUsage = useAppUsageStore()
   const { switchValue, betaUiSwitchAvailable } = storeToRefs(appUsage)
 
-  const clearSwitchAndRedirect = (redirectTo: string) => {
+  const clearSwitch = () => {
     switchValue.value = null
-
-    window.location.href = redirectTo
 
     appUsage.setNeverAskAgainForTimedFeedback(false)
     appUsage.resetMilestoneHistory()
     appUsage.resetTotalAppUsageTime()
   }
 
-  return { switchValue, clearSwitchAndRedirect, betaUiSwitchAvailable }
+  const clearSwitchAndRedirect = (redirectTo: string) => {
+    clearSwitch()
+
+    window.location.href = redirectTo
+  }
+
+  return { switchValue, clearSwitch, clearSwitchAndRedirect, betaUiSwitchAvailable }
 }
 
 export const useBetaUi = () => {

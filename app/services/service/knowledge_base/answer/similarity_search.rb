@@ -6,6 +6,8 @@
 # answer ids are resolved up front (visible_to_user, which encodes granular category access and the
 # publish/archive time window) and passed as a filter on the documents' metadata.answer_id, so the
 # search never returns answers the user is not allowed to see (rather than dropping them afterwards).
+# Archived answers are part of the vector index, so they are suggested to the users whose visibility
+# covers them (knowledge base editors, and granular editor categories) just like in the agent app.
 # Locale restriction is optional (off by default), as is excluding specific answer ids (e.g. answers
 # already linked to the ticket) — both are applied in the query so they do not eat into the limit.
 class Service::KnowledgeBase::Answer::SimilaritySearch < Service::Base

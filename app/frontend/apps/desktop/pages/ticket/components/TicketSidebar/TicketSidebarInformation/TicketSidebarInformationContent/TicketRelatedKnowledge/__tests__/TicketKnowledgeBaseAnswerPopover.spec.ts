@@ -25,6 +25,13 @@ const buildTranslation = (
       id: convertToGraphQLId('KnowledgeBase::Answer::Translation', 1),
       title: 'Reset your password',
       visibility: EnumKnowledgeBaseVisibility.Published,
+      categoryTreeTranslation: [
+        {
+          __typename: 'KnowledgeBaseCategoryTranslation',
+          id: convertToGraphQLId('KnowledgeBase::Category::Translation', 42),
+          title: 'Account',
+        },
+      ],
       content: {
         __typename: 'KnowledgeBaseAnswerTranslationContent',
         bodyExcerpt: 'Steps to reset your password.',
@@ -34,6 +41,8 @@ const buildTranslation = (
         id: convertToGraphQLId('KnowledgeBase::Answer', 1),
         archivedAt: null,
         publishedAt: '2024-01-01T00:00:00Z',
+        internalAt: null,
+        tags: null,
         category: {
           __typename: 'KnowledgeBaseCategory',
           id: CATEGORY_ID,
@@ -63,6 +72,8 @@ const renderPopover = (translation = buildTranslation()) =>
         name: 'KnowledgeBaseCategory',
         component: { template: '<div />' },
       },
+      // Tags link into the detailed search.
+      { path: '/search/:searchTerm?', name: 'Search', component: { template: '<div />' } },
     ],
     store: true,
   })
@@ -100,6 +111,20 @@ describe('TicketKnowledgeBaseAnswerPopover', () => {
     expect(wrapper.queryByText('Archived at')).not.toBeInTheDocument()
   })
 
+  it('hides the internally published row when the answer was never internally published', () => {
+    const wrapper = renderPopover()
+
+    expect(wrapper.queryByText('Internally published at')).not.toBeInTheDocument()
+  })
+
+  it('shows the internally published date when the answer is internally published', () => {
+    const wrapper = renderPopover(
+      buildTranslation({ answer: { internalAt: '2024-03-01T00:00:00Z' } }),
+    )
+
+    expect(wrapper.getByText('Internally published at')).toBeInTheDocument()
+  })
+
   it('shows the archived date when the answer is archived', () => {
     const wrapper = renderPopover(
       buildTranslation({ answer: { archivedAt: '2024-06-01T00:00:00Z' } }),
@@ -112,5 +137,60 @@ describe('TicketKnowledgeBaseAnswerPopover', () => {
     const wrapper = renderPopover(buildTranslation({ answer: { category: { title: null } } }))
 
     expect(wrapper.queryByText('Category')).not.toBeInTheDocument()
+  })
+
+  it('shows the full category path as a supportive tooltip on the category link', () => {
+    const wrapper = renderPopover(
+      buildTranslation({
+        categoryTreeTranslation: [
+          {
+            __typename: 'KnowledgeBaseCategoryTranslation',
+            id: convertToGraphQLId('KnowledgeBase::Category::Translation', 1),
+            title: 'Support',
+          },
+          {
+            __typename: 'KnowledgeBaseCategoryTranslation',
+            id: convertToGraphQLId('KnowledgeBase::Category::Translation', 42),
+            title: 'Account',
+          },
+        ],
+      }),
+    )
+
+    expect(wrapper.getByRole('link', { name: 'Account' })).toHaveAttribute(
+      'aria-description',
+      'Support › Account',
+    )
+  })
+
+  it('does not add a category path tooltip for a top-level category', () => {
+    const wrapper = renderPopover()
+
+    expect(wrapper.getByRole('link', { name: 'Account' })).not.toHaveAttribute('aria-description')
+  })
+
+  it('shows the tags of the answer', () => {
+    const wrapper = renderPopover(buildTranslation({ answer: { tags: ['billing', 'invoice'] } }))
+
+    expect(wrapper.getByText('Tags')).toBeInTheDocument()
+    expect(wrapper.getAllByIconName('tag')).toHaveLength(2)
+    expect(wrapper.getByRole('link', { name: 'billing' })).toBeInTheDocument()
+    expect(wrapper.getByRole('link', { name: 'invoice' })).toBeInTheDocument()
+  })
+
+  // TODO: Needs to be adjusted later to use entity=KnowledgeBase
+  it('links each tag to a tag search for tickets', () => {
+    const wrapper = renderPopover(buildTranslation({ answer: { tags: ['billing'] } }))
+
+    expect(wrapper.getByRole('link', { name: 'billing' })).toHaveAttribute(
+      'href',
+      expect.stringContaining('/search/tags:%22billing%22?entity=Ticket'),
+    )
+  })
+
+  it('hides the tags row when the answer has no tags', () => {
+    const wrapper = renderPopover()
+
+    expect(wrapper.queryByText('Tags')).not.toBeInTheDocument()
   })
 })

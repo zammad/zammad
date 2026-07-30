@@ -25,12 +25,7 @@ class Ticket::RelatedKnowledgeBaseAnswersController < ApplicationController
     translations = result[:answers].pluck(:translation)
 
     render json: {
-      result: {
-        pending:                false,
-        answer_translation_ids: translations.map(&:id),
-        # TODO(PoC): scores are returned for frontend debugging/calibration; revisit before shipping.
-        scores:                 result[:answers].to_h { |answer| [answer[:translation].id.to_s, answer[:score]] },
-      },
+      result: result_for(result[:answers], translations),
       assets: assets_for(translations),
     }
   end
@@ -39,6 +34,15 @@ class Ticket::RelatedKnowledgeBaseAnswersController < ApplicationController
 
   def ticket
     @ticket ||= Ticket.find(params[:id])
+  end
+
+  def result_for(answers, translations)
+    {
+      pending:                false,
+      answer_translation_ids: translations.map(&:id),
+      scores:                 answers.to_h { |answer| [answer[:translation].id.to_s, answer[:score]] },
+      excerpts:               translations.to_h { |translation| [translation.id.to_s, translation.content.body_excerpt] },
+    }
   end
 
   def assets_for(translations)

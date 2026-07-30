@@ -1,0 +1,96 @@
+<% hasSuggestions = @suggestionsEnabled and @suggestionsLoaded and not @suggestionsError and not _.isEmpty(@suggestions) %>
+
+<% if hasSuggestions: %>
+  <p><%- @T('Before creating a new knowledge base answer, please check whether an existing answer already covers the solution for this ticket.') %></p>
+<% end %>
+
+<% if @suggestionsEnabled: %>
+  <ol class="tasks tasks--standalone kb-answer-suggestions">
+    <% if not @suggestionsLoaded: %>
+      <li class="task">
+        <span class="text-muted"><%- @T('Searching for related answers…') %></span>
+      </li>
+    <% else if @suggestionsError: %>
+      <li class="task">
+        <div class="task-text">
+          <span class="text-muted"><%- @T('The suggestions could not be generated.') %></span>
+          <button type="button" class="btn btn--text js-kb-suggestions-retry"><%- @T('Retry') %></button>
+        </div>
+      </li>
+    <% else if _.isEmpty(@suggestions): %>
+      <li class="task">
+        <span class="text-muted"><%- @T('No existing knowledge base answers match this topic. Generate a new answer to continue.') %></span>
+      </li>
+    <% else: %>
+      <% for item in @suggestions: %>
+        <li class="task">
+          <div class="icon-holder">
+            <%- @Icon('knowledge-base') %>
+          </div>
+          <div class="task-text">
+            <div class="horizontal justify-between center">
+              <a class="name" href="<%- item.url %>"><%= item.title %></a>
+              <span class="text-muted"><%= item.score %>%</span>
+            </div>
+            <% if item.excerpt: %>
+              <span class="kb-answer-excerpt text-muted"><%= item.excerpt %></span>
+            <% end %>
+
+            <%# Dates get their own row, so an odd number of them cannot pull the attributes below up. %>
+            <% if item.internalAt or item.publishedAt or item.archivedAt: %>
+              <div class="horizontal two-columns kb-answer-attributes">
+                <% if item.internalAt: %>
+                  <div class="column">
+                    <label><%- @T('Internally published at') %></label>
+                    <%- @humanTime(item.internalAt, false, 'time', 'absolute') %>
+                  </div>
+                <% end %>
+                <% if item.publishedAt: %>
+                  <div class="column">
+                    <label><%- @T('Published at') %></label>
+                    <%- @humanTime(item.publishedAt, false, 'time', 'absolute') %>
+                  </div>
+                <% end %>
+                <% if item.archivedAt: %>
+                  <div class="column">
+                    <label><%- @T('Archived at') %></label>
+                    <%- @humanTime(item.archivedAt, false, 'time', 'absolute') %>
+                  </div>
+                <% end %>
+              </div>
+            <% end %>
+
+            <div class="horizontal two-columns kb-answer-attributes">
+              <div class="column">
+                <label><%- @T('Category') %></label>
+                <% if item.categoryUrl: %>
+                  <a href="<%- item.categoryUrl %>"><%= item.category %></a>
+                <% else: %>
+                  <%= item.category or '-' %>
+                <% end %>
+              </div>
+              <div class="column">
+                <label><%- @T('Language') %></label>
+                <%= item.language or '-' %>
+              </div>
+              <% if !_.isEmpty(item.tags): %>
+                <div class="column">
+                  <label><%- @T('Tags') %></label>
+                  <div class="kb-answer-tags">
+                    <% for tag in item.tags: %>
+                      <a href="#" class="js-tag" title="<%= tag %>"><%= tag %></a>
+                    <% end %>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </li>
+      <% end %>
+    <% end %>
+  </ol>
+<% end %>
+
+<% if hasSuggestions: %>
+  <p><%- @T('None of the existing knowledge base answers fit your ticket?') %></p>
+<% end %>

@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { cloneDeep } from 'lodash-es'
-import { computed, ref, type Ref } from 'vue'
+import { computed, ref, toValue, type MaybeRef, type Ref } from 'vue'
 
 import { useTicketArticleUpdatesSubscription } from '#shared/entities/ticket/graphql/subscriptions/ticketArticlesUpdates.api.ts'
 import { QueryHandler, SubscriptionHandler } from '#shared/server/apollo/handler/index.ts'
@@ -10,16 +10,29 @@ import { useTicketAiRelatedKnowledgeBaseAnswersQuery } from '#desktop/pages/tick
 import { useTicketAiRelatedKnowledgeBaseAnswersUpdatesSubscription } from '#desktop/pages/ticket/graphql/subscriptions/ticketAIRelatedKnowledgeBaseAnswersUpdates.api.ts'
 
 import type { RelatedAnswer } from '../TicketRelatedKnowledge/types.ts'
+import type { WatchQueryFetchPolicy } from '@apollo/client'
 
 export const useKnowledgeBaseAiSuggestedAnswers = (
   ticketId: Ref<string>,
-  { enabled }: { enabled: Ref<boolean> },
+  {
+    queryEnabled = true,
+    subscriptionEnabled = true,
+    fetchPolicy = 'cache-and-network',
+  }: {
+    queryEnabled?: MaybeRef<boolean>
+    subscriptionEnabled?: MaybeRef<boolean>
+    fetchPolicy?: MaybeRef<WatchQueryFetchPolicy>
+  } = {},
 ) => {
+  const isQueryEnabled = computed(() => toValue(queryEnabled))
+  const isSubscriptionEnabled = computed(() => toValue(subscriptionEnabled))
+  const reactiveFetchPolicy = computed(() => toValue(fetchPolicy))
+
   // Synchronous search. Reruns automatically when the ticket changes (reactive variables).
   const queryHandler = new QueryHandler(
     useTicketAiRelatedKnowledgeBaseAnswersQuery(
       () => ({ ticketId: ticketId.value }),
-      () => ({ enabled: enabled.value }),
+      () => ({ enabled: isQueryEnabled.value, fetchPolicy: reactiveFetchPolicy.value }),
     ),
     { errorShowNotification: false },
   )
@@ -71,7 +84,7 @@ export const useKnowledgeBaseAiSuggestedAnswers = (
   const pingSubscription = new SubscriptionHandler(
     useTicketAiRelatedKnowledgeBaseAnswersUpdatesSubscription(
       () => ({ ticketId: ticketId.value }),
-      () => ({ enabled: enabled.value }),
+      () => ({ enabled: isSubscriptionEnabled.value }),
     ),
     { errorShowNotification: false },
   )
@@ -95,7 +108,7 @@ export const useKnowledgeBaseAiSuggestedAnswers = (
   const articleSubscription = new SubscriptionHandler(
     useTicketArticleUpdatesSubscription(
       () => ({ ticketId: ticketId.value }),
-      () => ({ enabled: enabled.value }),
+      () => ({ enabled: isSubscriptionEnabled.value }),
     ),
     { errorShowNotification: false },
   )

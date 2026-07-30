@@ -10,7 +10,7 @@ class App.WidgetLinkKbAnswer extends App.WidgetLink
   events:
     'change .js-shadow':              'didSubmit'
     'blur .js-input':                 'didBlur'
-    'click .js-kb-ai-generate':       'requestAiAnswer'
+    'click .js-kb-ai-generate':       'openAiDraftModal'
     'click .js-kb-suggestions-retry': 'retrySuggestions'
     'click .js-kb-suggestion-add':    'linkSuggestion'
 
@@ -51,7 +51,7 @@ class App.WidgetLinkKbAnswer extends App.WidgetLink
       @requestSuggestions()
     )
 
-    @requestSuggestions()
+    @requestSuggestions() if @suggestionsVisible()
 
   getAjaxAttributes: (field, attributes) ->
     @apiPath = App.Config.get('api_path')
@@ -87,21 +87,56 @@ class App.WidgetLinkKbAnswer extends App.WidgetLink
   suggestionsEnabled: =>
     App.Config.get('ai_provider') and App.Config.get('kb_active') and @object?.currentView?() is 'agent'
 
+  # Whether the sidebar list is shown. The search itself stays available for the AI draft modal either
+  # way, which is what lets the modal run it on its own once the list is hidden.
+  suggestionsVisible: =>
+    # :TODO add missing setting (see useAiSuggestedAnswersAvailability in the desktop app)
+    @suggestionsEnabled()
+
   currentArticleIds: ->
     (App.Ticket.find(@object.id)?.article_ids or []).join(',')
 
   suggestionsForRendering: ->
     (@suggestions or [])
-      .map (id) ->
+      .map (id) =>
         if translation = App.KnowledgeBaseAnswerTranslation.fullLocal(id)
-          title: translation.title
-          id:    translation.id
-          url:   translation.uiUrl()
+          answer    = translation.parent()
+          category  = answer?.category()
+          kb_locale = App.KnowledgeBaseLocale.find(translation.kb_locale_id) if translation.kb_locale_id
+
+          title:       translation.title
+          id:          translation.id
+          url:         translation.uiUrl()
+          score:       Math.round((@suggestionScores?[id] or 0) * 100)
+          excerpt:     @suggestionExcerpts?[id] or ''
+          publishedAt: answer?.published_at
+          internalAt:  answer?.internal_at
+          archivedAt:  answer?.archived_at
+          category:    category?.guaranteedTitle(translation.kb_locale_id)
+          categoryUrl: if category and kb_locale then category.uiUrl(kb_locale)
+          language:    kb_locale?.systemLocale()?.name
+          tags:        answer?.tags
       .filter (elem) ->
         elem?
 
+  suggestionsState: =>
+    suggestionsEnabled: @suggestionsEnabled()
+    suggestions:        @suggestionsForRendering()
+    suggestionsLoaded:  @suggestionsLoaded
+    suggestionsError:   @suggestionsError
+
+  ensureSuggestions: =>
+    return if !@suggestionsEnabled()
+    return if @suggestionsRequested
+
+    @requestSuggestions()
+
   retrySuggestions: (e) =>
     @preventDefault(e) if e
+    @suggestionsLoaded = false
+    @suggestionsError  = false
+    @render()
+
     @requestSuggestions()
 
   # Promote an AI suggestion to a permanent link with one click (mirrors the manual "+ Link" flow,
@@ -112,6 +147,8 @@ class App.WidgetLinkKbAnswer extends App.WidgetLink
     @saveToServer($(e.currentTarget).data('object-id'))
 
   requestSuggestions: =>
+    @suggestionsRequested = true
+
     # The ticket zoom rebuilds the sidebar (recreating this widget) more than once on a ticket
     # switch. Debounce per ticket across instances so only the final, visible instance issues the
     # request, instead of two instances racing it and the first being canceled.
@@ -153,9 +190,11 @@ class App.WidgetLinkKbAnswer extends App.WidgetLink
           return
 
         App.Collection.loadAssets(data.assets) if data.assets
-        @suggestionsLoaded = true
-        @suggestionsError  = false
-        @suggestions       = data.result.answer_translation_ids or []
+        @suggestionsLoaded  = true
+        @suggestionsError   = false
+        @suggestions        = data.result.answer_translation_ids or []
+        @suggestionScores   = data.result.scores or {}
+        @suggestionExcerpts = data.result.excerpts or {}
         @render()
       error: =>
         @suggestionsLoaded = true
@@ -175,7 +214,7 @@ class App.WidgetLinkKbAnswer extends App.WidgetLink
       list:               @linksForRendering()
       editable:           @editable
       aiEnabled:          aiEnabled
-      suggestionsEnabled: @suggestionsEnabled()
+      suggestionsEnabled: @suggestionsVisible()
       suggestionsLoaded:  @suggestionsLoaded
       suggestionsError:   @suggestionsError
       suggestions:        @suggestionsForRendering()
@@ -199,6 +238,8 @@ class App.WidgetLinkKbAnswer extends App.WidgetLink
 
     @refreshElements()
     @searchableSelect.addClass('hidden')
+
+    @aiDraftModal?.update()
 
   didSubmit: =>
     if @shadowField.val() == ''
@@ -251,10 +292,22 @@ class App.WidgetLinkKbAnswer extends App.WidgetLink
         )
     )
 
-  requestAiAnswer: (e) ->
+  openAiDraftModal: (e) =>
     @preventDefault(e)
     e.stopPropagation()
 
+    # The sidebar list may be hidden, in which case nothing has searched yet - the modal is the one
+    # asking for the suggestions then. #render keeps the open modal in sync with the result.
+    @ensureSuggestions()
+
+    @aiDraftModal = new App.TicketZoomKnowledgeBaseAiDraftModal(
+      suggestionsState: @suggestionsState
+      onGenerate:       @generateAiAnswer
+      onRetry:          @retrySuggestions
+      onClosed:         => @aiDraftModal = undefined
+    )
+
+  generateAiAnswer: =>
     @ajax(
       id:   "knowledge_base_answer_enqueue_ai_#{@object.id}"
       type: 'POST'

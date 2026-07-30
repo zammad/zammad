@@ -5,6 +5,7 @@ import { computed, useTemplateRef } from 'vue'
 
 import type { KnowledgeBaseAnswerTranslationFragment } from '#shared/graphql/types.ts'
 
+import { prepareLegacyAppLinkNavigation } from '#desktop/components/BetaUi/utils/legacyAppLink.ts'
 import CommonPopoverWithTrigger from '#desktop/components/CommonPopover/CommonPopoverWithTrigger.vue'
 import KnowledgeBaseAnswerIcon from '#desktop/components/KnowledgeBaseAnswerIcon/KnowledgeBaseAnswerIcon.vue'
 
@@ -15,13 +16,22 @@ interface Props {
   link?: string
 }
 
-defineProps<Props>()
+const props = defineProps<Props>()
 
 const popoverWithTriggerInstance = useTemplateRef('popover-with-trigger')
 
 const hasOpenedViaLongPress = computed(
   () => popoverWithTriggerInstance.value?.hasOpenedViaLongPress,
 )
+
+// The answer view is still part of the legacy app.
+// NB: A middle-button (or other auxiliary button) activation, e.g. opening the link in a new
+//   tab, fires `auxclick` instead of `click`, so both need to be handled here.
+const onTriggerClick = () => {
+  if (!props.link) return
+
+  prepareLegacyAppLinkNavigation()
+}
 </script>
 
 <template>
@@ -32,6 +42,8 @@ const hasOpenedViaLongPress = computed(
       orientation="left"
       trigger-link-class="flex h-9 w-full items-center gap-1.5 rounded-md! px-1.5 hover:text-blue-850! hover:dark:text-blue-600! text-blue-800!"
       trigger-link-active-class="outline-2! outline-blue-800! text-blue-850! dark:text-blue-600!"
+      @click="onTriggerClick"
+      @auxclick="onTriggerClick"
     >
       <template #popover-content>
         <TicketKnowledgeBaseAnswerPopover :translation="translation" />

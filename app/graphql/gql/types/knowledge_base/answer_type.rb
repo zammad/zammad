@@ -8,11 +8,6 @@ module Gql::Types::KnowledgeBase
 
     description 'Knowledge Base Answer'
 
-    internal_fields do
-      field :promoted, Boolean
-      field :internal_note, String
-    end
-
     field :position, Integer, null: false
     field :archived_at, GraphQL::Types::ISO8601DateTime
     field :internal_at, GraphQL::Types::ISO8601DateTime
@@ -21,6 +16,8 @@ module Gql::Types::KnowledgeBase
     field :title, String, null: true, description: 'Title in the requested locale (falls back to the primary locale)'
     field :translation_missing, Boolean, null: false, description: 'Whether the requested locale has no own translation for this answer (its title is shown from a fallback locale)'
     field :visibility, Gql::Types::Enum::KnowledgeBase::VisibilityType, null: false, description: 'Publication state, used for color-coding'
+
+    field :tags, [String, { null: false }], method: :tag_list, description: 'Assigned tags'
 
     belongs_to :category, Gql::Types::KnowledgeBase::CategoryType, null: false
     belongs_to :archived_by, Gql::Types::UserType, null: true

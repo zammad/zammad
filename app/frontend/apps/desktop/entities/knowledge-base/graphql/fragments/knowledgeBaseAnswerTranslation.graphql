@@ -2,6 +2,10 @@ fragment knowledgeBaseAnswerTranslation on KnowledgeBaseAnswerTranslation {
   id
   title
   visibility
+  categoryTreeTranslation {
+    id
+    title
+  }
   content {
     bodyExcerpt
   }
@@ -9,6 +13,8 @@ fragment knowledgeBaseAnswerTranslation on KnowledgeBaseAnswerTranslation {
     id
     archivedAt
     publishedAt
+    internalAt
+    tags
     category {
       id
       title

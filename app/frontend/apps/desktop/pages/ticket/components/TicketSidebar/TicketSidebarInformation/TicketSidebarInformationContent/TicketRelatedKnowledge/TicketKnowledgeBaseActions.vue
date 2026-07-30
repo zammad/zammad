@@ -1,15 +1,11 @@
 <!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { ref } from 'vue'
-
-import { NotificationTypes } from '#shared/components/CommonNotifications/types.ts'
-import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
-import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
-
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
+import { useFlyout } from '#desktop/components/CommonFlyout/useFlyout.ts'
 import { useTicketInformation } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
-import { useTicketAiAssistanceEnqueueKnowledgeBaseAnswerMutation } from '#desktop/pages/ticket/graphql/mutations/ticketAIAssistanceEnqueueKnowledgeBaseAnswer.api.ts'
+
+import { useTicketAiAssistanceEnqueueKnowledgeBaseAnswer } from '../composables/useTicketAiAssistanceEnqueueKnowledgeBaseAnswer.ts'
 
 interface Props {
   showDraft: boolean
@@ -18,48 +14,23 @@ interface Props {
 
 defineProps<Props>()
 
-const newKnowledgeBaseAnswer = defineModel<boolean>('newKnowledgeBaseAnswer')
-
-const NOTIFICATION_ID = 'ticket-ai-knowledge-base-answers-notification'
-
-const isGenerating = ref(false)
-
 const { ticketId } = useTicketInformation()
-const { notify } = useNotifications()
 
-const requestGenerationHandler = new MutationHandler(
-  useTicketAiAssistanceEnqueueKnowledgeBaseAnswerMutation(),
-  {
-    errorShowNotification: false,
-  },
-)
+const newKnowledgeBaseAnswer = defineModel<boolean>('newKnowledgeBaseAnswer')
+const FLYOUT_NAME = 'knowledge-base-ai-draft'
 
-const requestDraft = async () => {
-  if (isGenerating.value) return
+const { open } = useFlyout({
+  name: FLYOUT_NAME,
+  component: () => import('./TicketKnowledgeBaseAiDraftFlyout.vue'),
+})
 
-  isGenerating.value = true
+const openFlyout = () =>
+  open({
+    name: FLYOUT_NAME,
+    ticketId: ticketId.value,
+  })
 
-  try {
-    await requestGenerationHandler.send({ ticketId: ticketId.value })
-
-    notify({
-      id: NOTIFICATION_ID,
-      type: NotificationTypes.Info,
-      message: __(
-        'A related knowledge base answer is being generated. You will be notified once the draft is ready.',
-      ),
-      durationMS: 8000,
-    })
-  } catch (error) {
-    notify({
-      id: NOTIFICATION_ID,
-      type: NotificationTypes.Error,
-      message: (error as Error).message || __('Knowledge base draft could not be generated.'),
-    })
-  } finally {
-    isGenerating.value = false
-  }
-}
+const { isGenerating } = useTicketAiAssistanceEnqueueKnowledgeBaseAnswer(ticketId.value)
 </script>
 
 <template>
@@ -69,15 +40,14 @@ const requestDraft = async () => {
         v-if="showDraft"
         type="button"
         size="small"
+        :disabled="isGenerating"
         prefix-icon="ai-knowledge-base"
         icon-class="text-blue-800"
         class="relative ai-stripe bg-green-200! text-gray-300! before:absolute before:bottom-0 before:w-[85%] hover:bg-green-200! dark:bg-gray-600! dark:text-neutral-400! dark:hover:bg-gray-600!"
-        :disabled="isGenerating"
-        @click="requestDraft"
+        @click="openFlyout"
       >
         {{ $t('Add AI draft') }}
       </CommonButton>
-
       <CommonButton
         v-if="isTicketEditable && !newKnowledgeBaseAnswer"
         v-tooltip="$t('Link knowledge base answer')"

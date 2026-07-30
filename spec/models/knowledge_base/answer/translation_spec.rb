@@ -200,4 +200,46 @@ RSpec.describe KnowledgeBase::Answer::Translation, current_user_id: 1, type: :mo
       expect(data[:metadata][:answer_id]).to eq(translation.answer_id)
     end
   end
+
+  describe '#vector_indexing_for_record?' do
+    let(:answer) { create(:knowledge_base_answer, :published) }
+
+    before { Setting.set('vectordb_knowledge_base_category_ids', [answer.category_id]) }
+
+    it 'indexes an answer of an enabled category' do
+      expect(answer.translations.first).to be_vector_indexing_for_record
+    end
+
+    it 'indexes an archived answer, too' do
+      archived = create(:knowledge_base_answer, :archived, category: answer.category)
+
+      expect(archived.translations.first).to be_vector_indexing_for_record
+    end
+
+    it 'does not index an answer outside the enabled categories' do
+      Setting.set('vectordb_knowledge_base_category_ids', [])
+
+      expect(answer.translations.first).not_to be_vector_indexing_for_record
+    end
+  end
+
+  describe '.vector_index_scope' do
+    let(:published_answer) { create(:knowledge_base_answer, :published) }
+    let(:archived_answer)  { create(:knowledge_base_answer, :archived, category: published_answer.category) }
+    let(:draft_answer)     { create(:knowledge_base_answer, :draft, category: published_answer.category) }
+
+    before { Setting.set('vectordb_knowledge_base_category_ids', [published_answer.category_id]) }
+
+    it 'contains the translations of the enabled categories in any publication state, archived included' do
+      expect(described_class.vector_index_scope)
+        .to include(*[published_answer, archived_answer, draft_answer].flat_map(&:translations))
+    end
+
+    it 'is empty when no category is enabled' do
+      published_answer && archived_answer
+      Setting.set('vectordb_knowledge_base_category_ids', [])
+
+      expect(described_class.vector_index_scope).to be_empty
+    end
+  end
 end

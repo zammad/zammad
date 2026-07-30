@@ -9,7 +9,7 @@ RSpec.describe Gql::Queries::KnowledgeBase::Answers, type: :graphql do
     <<~GQL
       query knowledgeBaseAnswers($categoryId: ID!, $locale: String, $first: Int) {
         knowledgeBaseAnswers(categoryId: $categoryId, locale: $locale, first: $first) {
-          edges { node { id title visibility translationMissing } }
+          edges { node { id title visibility translationMissing tags } }
           pageInfo { hasNextPage }
         }
       }
@@ -132,6 +132,24 @@ RSpec.describe Gql::Queries::KnowledgeBase::Answers, type: :graphql do
         expect(by_id[gql.id(published_answer)]).to include('translationMissing' => true)
         expect(by_id[gql.id(untranslated_answer)]).to include('translationMissing' => false)
       end
+    end
+  end
+
+  context 'with a tagged answer', authenticated_as: :admin do
+    let(:admin) { create(:admin) }
+    let(:by_id) { gql.result.nodes.index_by { |node| node['id'] } }
+
+    before do
+      published_answer_with_tag
+      gql.execute(query, variables:)
+    end
+
+    it 'exposes the assigned tags' do
+      expect(by_id[gql.id(published_answer_with_tag)]).to include('tags' => [published_answer_tag_name])
+    end
+
+    it 'exposes an empty list for an answer without tags' do
+      expect(by_id[gql.id(published_answer)]).to include('tags' => [])
     end
   end
 

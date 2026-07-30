@@ -35,13 +35,13 @@ describe('AnswerCard', () => {
   it('warns when the answer has no translation in the browsed locale', () => {
     const wrapper = renderCard({ translationMissing: true })
 
-    expect(wrapper.getByIconName('exclamation-triangle')).toBeInTheDocument()
+    expect(wrapper.getByIconName('translate')).toBeInTheDocument()
     expect(wrapper.getByLabelText('No translation for this locale available')).toBeInTheDocument()
   })
 
   it('shows no translation warning when a translation exists', () => {
     const wrapper = renderCard({ translationMissing: false })
 
-    expect(wrapper.queryByIconName('exclamation-triangle')).not.toBeInTheDocument()
+    expect(wrapper.queryByIconName('translate')).not.toBeInTheDocument()
   })
 })

@@ -28,7 +28,7 @@ defineProps<KnowledgeBaseAnswerCompact>()
       rounded
       class="flex items-center justify-center p-1!"
     >
-      <CommonIcon name="exclamation-triangle" size="xs" decorative />
+      <CommonIcon name="translate" size="xs" decorative />
     </CommonBadge>
   </li>
 </template>

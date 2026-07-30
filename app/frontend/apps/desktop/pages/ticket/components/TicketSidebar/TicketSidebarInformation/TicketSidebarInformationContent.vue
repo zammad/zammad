@@ -20,6 +20,7 @@ import {
 } from '../../TicketDetailView/actions/useTicketHistory.ts'
 import TicketSidebarContent from '../TicketSidebarContent.vue'
 
+import { useAiSuggestedAnswersAvailability } from './TicketSidebarInformationContent/composables/useAiSuggestedAnswersAvailability.ts'
 import { useKnowledgeBaseAiSuggestedAnswers } from './TicketSidebarInformationContent/composables/useKnowledgeBaseAiSuggestedAnswers.ts'
 import { useKnowledgeBaseLinkList } from './TicketSidebarInformationContent/composables/useKnowledgeBaseLinkList.ts'
 import TicketAccountedTime from './TicketSidebarInformationContent/TicketAccountedTime.vue'
@@ -101,12 +102,7 @@ const {
   enabled: isKbActive,
 })
 
-const showAiSuggestedAnswers = computed(
-  () =>
-    hasPermission('knowledge_base.*') &&
-    hasPermission('ticket.agent') &&
-    Boolean(config.value.ai_provider),
-)
+const { showAiSuggestedAnswers } = useAiSuggestedAnswersAvailability()
 
 const {
   answers: aiSuggestedAnswers,
@@ -116,7 +112,8 @@ const {
   errorDetail: aiSuggestedAnswersErrorDetail,
   retrySearch: retryAiSuggestedAnswersSearch,
 } = useKnowledgeBaseAiSuggestedAnswers(ticketId, {
-  enabled: showAiSuggestedAnswers,
+  queryEnabled: showAiSuggestedAnswers,
+  subscriptionEnabled: showAiSuggestedAnswers,
 })
 </script>
 

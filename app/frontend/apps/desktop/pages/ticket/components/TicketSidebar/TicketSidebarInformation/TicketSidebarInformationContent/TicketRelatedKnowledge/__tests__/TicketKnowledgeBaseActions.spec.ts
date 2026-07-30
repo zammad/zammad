@@ -1,25 +1,63 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { computed } from 'vue'
+import { within } from '@testing-library/vue'
+import { computed, ref } from 'vue'
 
 import renderComponent from '#tests/support/components/renderComponent.ts'
+import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
+import { mockPermissions } from '#tests/support/mock-permissions.ts'
 
 import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
+import { EnumKnowledgeBaseVisibility } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
-import { GraphQLErrorTypes } from '#shared/types/error.ts'
 
 import TicketKnowledgeBaseActions from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseActions.vue'
 import { TICKET_KEY } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
-import {
-  mockTicketAiAssistanceEnqueueKnowledgeBaseAnswerMutation,
-  mockTicketAiAssistanceEnqueueKnowledgeBaseAnswerMutationError,
-  waitForTicketAiAssistanceEnqueueKnowledgeBaseAnswerMutationCalls,
-} from '#desktop/pages/ticket/graphql/mutations/ticketAIAssistanceEnqueueKnowledgeBaseAnswer.mocks.ts'
+import { mockTicketAiRelatedKnowledgeBaseAnswersQuery } from '#desktop/pages/ticket/graphql/queries/ticketAIRelatedKnowledgeBaseAnswers.mocks.ts'
+
+vi.mock('#desktop/pages/ticket/composables/useTicketSidebar.ts', () => ({
+  useTicketSidebar: () => ({
+    activeSidebar: ref('information'),
+  }),
+}))
 
 const ticketId = convertToGraphQLId('Ticket', 1)
 
+// The flyout fetches the suggestions itself, so they are mocked on the wire (score as a ratio)
+//   instead of being handed to the actions component.
+const mockSuggestedAnswers = (titles: string[]) =>
+  mockTicketAiRelatedKnowledgeBaseAnswersQuery({
+    ticketAIRelatedKnowledgeBaseAnswers: {
+      pending: false,
+      answers: titles.map((title, index) => ({
+        score: 0.9,
+        translation: {
+          id: convertToGraphQLId('KnowledgeBase::Answer::Translation', index + 1),
+          title,
+          visibility: EnumKnowledgeBaseVisibility.Published,
+          content: { bodyExcerpt: null },
+          answer: {
+            id: convertToGraphQLId('KnowledgeBase::Answer', index + 1),
+            archivedAt: null,
+            publishedAt: null,
+            category: {
+              id: convertToGraphQLId('KnowledgeBase::Category', 1),
+              title: 'Account',
+              knowledgeBase: { id: convertToGraphQLId('KnowledgeBase', 1) },
+            },
+          },
+          kbLocale: { systemLocale: { locale: 'en-us', name: 'English' } },
+        },
+      })),
+    },
+  })
+
 const renderActions = (
-  props: { showDraft?: boolean; isTicketEditable?: boolean; newKnowledgeBaseAnswer?: boolean } = {},
+  props: Partial<{
+    showDraft: boolean
+    isTicketEditable: boolean
+    newKnowledgeBaseAnswer: boolean
+  }> = {},
 ) =>
   renderComponent(TicketKnowledgeBaseActions, {
     props: {
@@ -39,56 +77,64 @@ const renderActions = (
       ],
     ],
     router: true,
+    routerRoutes: [
+      { path: '/', name: 'Root', component: { template: '<div />' } },
+      {
+        path: '/knowledge-base/:localeCode/category/:categoryInternalId',
+        name: 'KnowledgeBaseCategory',
+        component: { template: '<div />' },
+      },
+      // Tags link into the detailed search.
+      { path: '/search/:searchTerm?', name: 'Search', component: { template: '<div />' } },
+    ],
     store: true,
+    flyout: true,
   })
 
 describe('TicketKnowledgeBaseActions', () => {
-  const notifications = useNotifications()
-
-  vi.spyOn(notifications, 'notify')
-
-  beforeEach(() => {
-    vi.clearAllMocks()
-  })
-
   describe('AI draft', () => {
-    it('triggers the generation mutation and shows an info notification on click', async () => {
-      mockTicketAiAssistanceEnqueueKnowledgeBaseAnswerMutation({
-        ticketAIAssistanceEnqueueKnowledgeBaseAnswer: {
-          success: true,
-        },
-      })
+    const notifications = useNotifications()
 
-      const wrapper = renderActions()
+    vi.spyOn(notifications, 'notify')
 
-      await wrapper.events.click(wrapper.getByRole('button', { name: 'Add AI draft' }))
-
-      expect(notifications.notify).toHaveBeenCalledWith({
-        id: 'ticket-ai-knowledge-base-answers-notification',
-        message:
-          'A related knowledge base answer is being generated. You will be notified once the draft is ready.',
-        type: 'info',
-        durationMS: 8000,
-      })
-
-      const calls = await waitForTicketAiAssistanceEnqueueKnowledgeBaseAnswerMutationCalls()
-      expect(calls.at(-1)?.variables).toEqual({ ticketId })
+    beforeEach(() => {
+      vi.clearAllMocks()
+      mockPermissions(['ticket.agent', 'knowledge_base.editor'])
+      mockApplicationConfig({ ai_provider: true })
     })
 
-    it('shows an error notification when the generation request fails', async () => {
-      mockTicketAiAssistanceEnqueueKnowledgeBaseAnswerMutationError('Generation failed', {
-        type: GraphQLErrorTypes.UnknownError,
-      })
+    it('opens the AI draft flyout with the suggested answers on click', async () => {
+      mockSuggestedAnswers(['Reset your password'])
 
       const wrapper = renderActions()
 
       await wrapper.events.click(wrapper.getByRole('button', { name: 'Add AI draft' }))
 
-      expect(notifications.notify).toHaveBeenCalledWith({
-        id: 'ticket-ai-knowledge-base-answers-notification',
-        message: 'Generation failed',
-        type: 'error',
+      const flyout = await wrapper.findByRole('complementary', {
+        name: 'Generate knowledge base answer from this ticket',
       })
+
+      // The flyout runs the search itself, so the title arrives asynchronously.
+      expect(await within(flyout).findByText('Reset your password')).toBeInTheDocument()
+
+      expect(notifications.notify).not.toHaveBeenCalled()
+    })
+
+    it('opens the flyout instead of requesting a draft directly when there are no suggested answers', async () => {
+      mockSuggestedAnswers([])
+
+      const wrapper = renderActions()
+
+      await wrapper.events.click(wrapper.getByRole('button', { name: 'Add AI draft' }))
+
+      // Generating is confirmed from inside the flyout now, never straight from this button.
+      expect(
+        await wrapper.findByRole('complementary', {
+          name: 'Generate knowledge base answer from this ticket',
+        }),
+      ).toBeInTheDocument()
+
+      expect(notifications.notify).not.toHaveBeenCalled()
     })
 
     it('hides the AI draft button when drafting is not available', () => {

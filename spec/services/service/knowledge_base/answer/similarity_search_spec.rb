@@ -119,6 +119,36 @@ RSpec.describe Service::KnowledgeBase::Answer::SimilaritySearch, :aggregate_fail
     end
   end
 
+  context 'when archived answers exist' do
+    let(:archived_answer)  { create(:knowledge_base_answer, :archived) }
+    let(:published_answer) { create(:knowledge_base_answer, :published) }
+
+    before do
+      archived_answer
+      published_answer
+    end
+
+    context 'with a knowledge base editor' do
+      let(:role) { create(:role, permission_names: %w[ticket.agent knowledge_base.editor]) }
+      let(:user) { create(:agent, roles: [role]) }
+
+      it 'searches within archived answers, too' do
+        expect(captured_search_filter[:'metadata.answer_id']).to include(archived_answer.id)
+      end
+    end
+
+    context 'with a user who may not see archived answers' do
+      let(:user) { create(:agent) }
+
+      it 'excludes them from the searched ids', :aggregate_failures do
+        filter = captured_search_filter
+
+        expect(filter[:'metadata.answer_id']).to include(published_answer.id)
+        expect(filter[:'metadata.answer_id']).not_to include(archived_answer.id)
+      end
+    end
+  end
+
   context 'when restricting to a locale' do
     let(:role)      { create(:role, permission_names: %w[knowledge_base.editor]) }
     let(:user)      { create(:agent, roles: [role]) }

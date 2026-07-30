@@ -24,12 +24,13 @@ RSpec.describe 'Ticket AI Related Knowledge Base Answers API endpoint', :aggrega
   end
 
   context 'when the search returns results' do
-    it 'returns the answers (ids + scores) and assets' do
+    it 'returns the answers (ids + scores + excerpts) and assets' do
       expect(response).to have_http_status(:ok)
       expect(json_response['result']).to eq(
         'pending'                => false,
         'answer_translation_ids' => [translation.id],
         'scores'                 => { translation.id.to_s => 0.9 },
+        'excerpts'               => { translation.id.to_s => translation.content.body_excerpt },
       )
       expect(json_response['assets']).to be_present
     end

@@ -65,7 +65,7 @@ const actions: MenuItem[] = [
         rounded
         class="absolute inset-s-3 top-3 flex aspect-square items-center justify-center p-1! group-hover:bg-black group-hover:text-blue-600 group-active:bg-white! group-hover:dark:bg-white group-hover:dark:text-blue-900"
       >
-        <CommonIcon name="exclamation-triangle" size="xs" decorative />
+        <CommonIcon name="translate" size="xs" decorative />
       </CommonBadge>
       <div class="flex min-h-26.75 flex-col items-center gap-3">
         <!-- set default icon for now -->

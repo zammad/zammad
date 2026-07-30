@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { flushPromises } from '@vue/test-utils'
-import { computed, defineComponent, ref, toRef } from 'vue'
+import { computed, defineComponent, ref, toRef, type PropType } from 'vue'
 
 import { getGraphQLMockCalls } from '#tests/graphql/builders/mocks.ts'
 import renderComponent from '#tests/support/components/renderComponent.ts'
@@ -23,6 +23,8 @@ import { getTicketAiRelatedKnowledgeBaseAnswersUpdatesSubscriptionHandler } from
 
 import { useKnowledgeBaseAiSuggestedAnswers } from '../useKnowledgeBaseAiSuggestedAnswers.ts'
 
+import type { WatchQueryFetchPolicy } from '@apollo/client'
+
 const ticketId = convertToGraphQLId('Ticket', 1)
 
 const relatedAnswer = (id: number, title: string, score = 0.9) => ({
@@ -42,19 +44,29 @@ const relatedAnswer = (id: number, title: string, score = 0.9) => ({
 
 let api: ReturnType<typeof useKnowledgeBaseAiSuggestedAnswers>
 
+interface TestProps {
+  queryEnabled?: boolean
+  subscriptionEnabled?: boolean
+  fetchPolicy?: WatchQueryFetchPolicy
+}
+
 const TestComponent = defineComponent({
   props: {
-    enabled: { type: Boolean, default: true },
+    queryEnabled: { type: Boolean, default: true },
+    subscriptionEnabled: { type: Boolean, default: true },
+    fetchPolicy: { type: String as PropType<WatchQueryFetchPolicy>, default: 'cache-and-network' },
   },
   setup(props) {
     api = useKnowledgeBaseAiSuggestedAnswers(ref(ticketId), {
-      enabled: toRef(props, 'enabled'),
+      queryEnabled: toRef(props, 'queryEnabled'),
+      subscriptionEnabled: toRef(props, 'subscriptionEnabled'),
+      fetchPolicy: toRef(props, 'fetchPolicy'),
     })
     return () => null
   },
 })
 
-const mountComposable = (props: { enabled?: boolean } = {}) =>
+const mountComposable = (props: TestProps = {}) =>
   renderComponent(TestComponent, {
     props,
     provide: [
@@ -139,6 +151,9 @@ describe('useKnowledgeBaseAiSuggestedAnswers', () => {
       },
     })
 
+    // `updateArticle` must be pinned to `null`: the auto-mocker would otherwise generate a second
+    // article, whose sender is drawn from the same small id pool and shares the cached object with
+    // `addArticle` — randomly overwriting the sender name we ask for here.
     await getTicketArticleUpdatesSubscriptionHandler().trigger({
       ticketArticleUpdates: {
         addArticle: { sender: { name: EnumTicketArticleSenderName.Customer } },
@@ -189,7 +204,7 @@ describe('useKnowledgeBaseAiSuggestedAnswers', () => {
     await waitFor(() => expect(api.hasError.value).toBe(false))
   })
 
-  it('runs the query only once enabled', async () => {
+  it('runs the query only once the query is enabled', async () => {
     mockTicketAiRelatedKnowledgeBaseAnswersQuery({
       ticketAIRelatedKnowledgeBaseAnswers: {
         pending: false,
@@ -197,17 +212,69 @@ describe('useKnowledgeBaseAiSuggestedAnswers', () => {
       },
     })
 
-    const view = mountComposable({ enabled: false })
+    const view = mountComposable({ queryEnabled: false })
     await flushPromises()
 
     // Nothing fetched while disabled.
     expect(api.answers.value).toEqual([])
     expect(getGraphQLMockCalls(TicketAiRelatedKnowledgeBaseAnswersDocument)).toHaveLength(0)
 
-    await view.rerender({ enabled: true })
+    await view.rerender({ queryEnabled: true })
     await waitForTicketAiRelatedKnowledgeBaseAnswersQueryCalls()
 
     await waitFor(() => expect(api.answers.value).toHaveLength(1))
     expect(getGraphQLMockCalls(TicketAiRelatedKnowledgeBaseAnswersDocument)).toHaveLength(1)
+  })
+
+  it('does not subscribe to updates when subscriptions are disabled', async () => {
+    // The AI draft flyout relies on this while the sidebar list is visible: that list already holds
+    //   the subscriptions and refetches into the same cache entry.
+    mockTicketAiRelatedKnowledgeBaseAnswersQuery({
+      ticketAIRelatedKnowledgeBaseAnswers: { pending: false, answers: [] },
+    })
+
+    mountComposable({ subscriptionEnabled: false })
+    await waitForTicketAiRelatedKnowledgeBaseAnswersQueryCalls()
+
+    expect(getTicketAiRelatedKnowledgeBaseAnswersUpdatesSubscriptionHandler()).toBeUndefined()
+    expect(getTicketArticleUpdatesSubscriptionHandler()).toBeUndefined()
+  })
+
+  it('serves a second consumer from the cache with a cache-first policy', async () => {
+    mockTicketAiRelatedKnowledgeBaseAnswersQuery({
+      ticketAIRelatedKnowledgeBaseAnswers: {
+        pending: false,
+        answers: [relatedAnswer(1, 'Reset your password')],
+      },
+    })
+
+    mountComposable()
+    await waitForTicketAiRelatedKnowledgeBaseAnswersQueryCalls()
+
+    mountComposable({ subscriptionEnabled: false, fetchPolicy: 'cache-first' })
+    await flushPromises()
+
+    // The second consumer sees the answers without hitting the network again.
+    expect(api.answers.value).toHaveLength(1)
+    expect(api.loading.value).toBe(false)
+    expect(getGraphQLMockCalls(TicketAiRelatedKnowledgeBaseAnswersDocument)).toHaveLength(1)
+  })
+
+  it('revalidates for a second consumer with a cache-and-network policy', async () => {
+    mockTicketAiRelatedKnowledgeBaseAnswersQuery({
+      ticketAIRelatedKnowledgeBaseAnswers: {
+        pending: false,
+        answers: [relatedAnswer(1, 'Reset your password')],
+      },
+    })
+
+    mountComposable()
+    await waitForTicketAiRelatedKnowledgeBaseAnswersQueryCalls()
+
+    mountComposable({ subscriptionEnabled: false, fetchPolicy: 'cache-and-network' })
+
+    await waitFor(() =>
+      expect(getGraphQLMockCalls(TicketAiRelatedKnowledgeBaseAnswersDocument)).toHaveLength(2),
+    )
   })
 })

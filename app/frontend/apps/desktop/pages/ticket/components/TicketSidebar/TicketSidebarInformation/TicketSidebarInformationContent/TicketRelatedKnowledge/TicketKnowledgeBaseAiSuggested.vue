@@ -1,8 +1,6 @@
 <!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { getIdFromGraphQLId } from '#shared/graphql/utils.ts'
-
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
 import { useTicketInformation } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
@@ -10,6 +8,7 @@ import { useTicketInformation } from '#desktop/pages/ticket/composables/useTicke
 import { useKnowledgeBaseAnswerLinks } from './composables/useKnowledgeBaseAnswerLinks.ts'
 import TicketKnowledgeBaseAnswer from './TicketKnowledgeBaseAnswer.vue'
 import TicketKnowledgeBaseAnswerSkeleton from './TicketKnowledgeBaseAnswerSkeleton.vue'
+import { getKnowledgeBaseAnswerLink } from './utils/knowledgeBaseAnswerLink.ts'
 
 import type { RelatedAnswer } from './types.ts'
 
@@ -30,14 +29,6 @@ defineEmits<{
 }>()
 
 const { ticketId } = useTicketInformation()
-
-const answerLink = (translation: RelatedAnswer['translation']) => {
-  const knowledgeBaseId = getIdFromGraphQLId(translation.answer.category.knowledgeBase.id)
-  const { locale } = translation.kbLocale.systemLocale
-  const answerId = getIdFromGraphQLId(translation.answer.id)
-
-  return `/#knowledge_base/${knowledgeBaseId}/locale/${locale}/answer/${answerId}`
-}
 
 const { linkAnswer } = useKnowledgeBaseAnswerLinks(ticketId.value, props.targetType)
 </script>
@@ -70,12 +61,12 @@ const { linkAnswer } = useKnowledgeBaseAnswerLinks(ticketId.value, props.targetT
         v-for="answer in answers"
         :key="answer.translation.id"
         :translation="answer.translation"
-        :link="answerLink(answer.translation)"
+        :link="getKnowledgeBaseAnswerLink(answer.translation)"
       >
         <!-- :TODO will be only shown to a user who is admin and has permission to activate AI feature, upcoming story-->
         <template #link-trailing>
           <CommonLabel
-            v-tooltip.supportive="$t('Confidence score')"
+            v-tooltip.supportive="$t('Relevance score')"
             size="small"
             class="text-stone-200! dark:text-neutral-500!"
           >

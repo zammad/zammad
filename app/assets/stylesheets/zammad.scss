@@ -6260,6 +6260,7 @@ a.list-group-item.active > .badge,
   letter-spacing: 0.05em;
 }
 
+.popover .one-column,
 .popover .two-columns,
 .popover .three-columns {
   margin-top: -8px;
@@ -9069,6 +9070,50 @@ a.list-group-item.active > .badge,
 // Separate the "Suggested by AI" section from the "+ Link" / "+ AI draft" controls above it.
 .kb-suggestions-title {
   margin-top: 20px;
+}
+
+.kb-answer-excerpt {
+  display: block;
+  margin-top: 6px;
+}
+
+.tasks--standalone.kb-answer-suggestions {
+  margin: 16px 0;
+
+  .task {
+    background: var(--background-modifier-accent);
+    border-bottom: none;
+    padding: 10px;
+    margin-bottom: 10px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.kb-answer-attributes {
+  margin-top: 18px;
+  row-gap: 8px;
+
+  // Dates live in their own row container, so a following attribute container continues the row
+  // rhythm instead of opening a new block.
+  + .kb-answer-attributes {
+    margin-top: 8px;
+  }
+
+  label {
+    margin-bottom: 1px;
+  }
+}
+
+// Tag list of a knowledge base answer (popover and AI draft modal). Flex, so the gap does the
+// spacing and no separator characters are needed between the tag links.
+.kb-answer-tags {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 8px;
+  row-gap: 2px;
 }
 
 li.list-item-none {
@@ -14921,17 +14966,23 @@ body.fit {
   flex-basis: 100%;
 }
 
+.one-column,
 .two-columns,
 .three-columns,
 .wrap {
   flex-wrap: wrap;
 }
 
+.one-column,
 .two-columns,
 .three-columns {
   @include phone {
     display: block;
   }
+}
+
+.one-column > .column {
+  width: 100%;
 }
 
 .two-columns > .column {

@@ -1429,12 +1429,12 @@ export type KnowledgeBaseAnswer = {
   internalAt?: Maybe<Scalars['ISO8601DateTime']['output']>;
   /** resolver for Rails' belongs_to relationship */
   internalBy?: Maybe<User>;
-  internalNote?: Maybe<Scalars['String']['output']>;
   position: Scalars['Int']['output'];
-  promoted?: Maybe<Scalars['Boolean']['output']>;
   publishedAt?: Maybe<Scalars['ISO8601DateTime']['output']>;
   /** resolver for Rails' belongs_to relationship */
   publishedBy?: Maybe<User>;
+  /** Assigned tags */
+  tags?: Maybe<Array<Scalars['String']['output']>>;
   /** Title in the requested locale (falls back to the primary locale) */
   title?: Maybe<Scalars['String']['output']>;
   /** Whether the requested locale has no own translation for this answer (its title is shown from a fallback locale) */

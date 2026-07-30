@@ -37,6 +37,13 @@ const linkedAnswer = (
   id: convertToGraphQLId('KnowledgeBase::Answer::Translation', id),
   title,
   visibility,
+  categoryTreeTranslation: [
+    {
+      __typename: 'KnowledgeBaseCategoryTranslation',
+      id: convertToGraphQLId('KnowledgeBase::Category::Translation', id),
+      title: 'Account',
+    },
+  ],
   content: {
     __typename: 'KnowledgeBaseAnswerTranslationContent',
     bodyExcerpt: `Excerpt for ${title}`,
@@ -46,6 +53,8 @@ const linkedAnswer = (
     id: convertToGraphQLId('KnowledgeBase::Answer', id),
     archivedAt: null,
     publishedAt: null,
+    internalAt: null,
+    tags: null,
     category: {
       __typename: 'KnowledgeBaseCategory',
       id: convertToGraphQLId('KnowledgeBase::Category', id),

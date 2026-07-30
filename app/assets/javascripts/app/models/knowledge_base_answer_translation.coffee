@@ -95,14 +95,6 @@ class App.KnowledgeBaseAnswerTranslationContent extends App.Model
       attachments: @attachments
     attributes
 
-  bodyTruncated: ->
-    string = @body.replace(/<([^>]+)>/g, '')
-
-    if string.length < 100
-      return string
-
-    string.substring(0, 100) + '...'
-
   bodyWithPublicURLs: ->
     parsed = $("<div>#{@body}</div>")
 

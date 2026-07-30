@@ -40,7 +40,10 @@
             <%- @Icon('knowledge-base') %>
           </div>
           <div class="task-text">
-            <a class="name kb-answer-popover" data-id="<%- item.id %>" href="<%- item.url %>"><%= item.title %></a>
+            <div class="horizontal justify-between center">
+              <a class="name kb-answer-popover" data-id="<%- item.id %>" href="<%- item.url %>"><%= item.title %></a>
+              <span class="text-muted"><%= item.score %>%</span>
+            </div>
           </div>
           <% if @editable: %>
             <a class="list-item-delete list-item-add js-kb-suggestion-add" data-object-id="<%= item.id %>" title="<%- @Ti('Link') %>">

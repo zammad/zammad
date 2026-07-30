@@ -9,37 +9,46 @@
 
   <hr>
 
+  <% answer = @object.parent() %>
+
   <div class="popover-block">
-    <div class="horizontal two-columns">
-      <div class="column">
-        <label><%- @T('Published at') %></label>
-        <% if time = @object.parent().published_at: %>
+    <div class="horizontal one-column">
+      <% if time = answer.internal_at: %>
+        <div class="column">
+          <label><%- @T('Internally published at') %></label>
           <%- @humanTime(time, false, 'time', 'absolute') %>
-        <% else: %>
-          -
-        <% end %>
-      </div>
-      <div class="column">
-        <label><%- @T('Archived at') %></label>
-        <% if time = @object.parent().archived_at: %>
+        </div>
+      <% end %>
+      <% if time = answer.published_at: %>
+        <div class="column">
+          <label><%- @T('Published at') %></label>
           <%- @humanTime(time, false, 'time', 'absolute') %>
-        <% else: %>
-          -
-        <% end %>
-      </div>
+        </div>
+      <% end %>
+      <% if time = answer.archived_at: %>
+        <div class="column">
+          <label><%- @T('Archived at') %></label>
+          <%- @humanTime(time, false, 'time', 'absolute') %>
+        </div>
+      <% end %>
+
       <div class="column">
         <label><%- @T('Category') %></label>
-        <a href="<%= @object.parent().category().uiUrl(App.KnowledgeBaseLocale.find(@object.kb_locale_id)) %>" title="<%= @object.parent().category().categoriesForSearch({ full: true, kb_locale: App.KnowledgeBaseLocale.find(@object.kb_locale_id) }) %>"><%= @object.parent().category().guaranteedTitle(@object.kb_locale_id) %></a>
+        <a href="<%= answer.category().uiUrl(App.KnowledgeBaseLocale.find(@object.kb_locale_id)) %>" title="<%= answer.category().categoriesForSearch({ full: true, kb_locale: App.KnowledgeBaseLocale.find(@object.kb_locale_id) }) %>"><%= answer.category().guaranteedTitle(@object.kb_locale_id) %></a>
       </div>
       <div class="column">
         <label><%- @T('Language') %></label>
         <%= App.KnowledgeBaseLocale.localeFor(@object).systemLocale().name %>
       </div>
 
-      <% if !_.isEmpty(@object.parent().tags): %>
+      <% if !_.isEmpty(answer.tags): %>
         <div class="column">
           <label><%- @T('Tags') %></label>
-          <%= @object.parent().tags.map((elem) -> "##{elem}").join(' ') %>
+          <div class="kb-answer-tags">
+            <% for tag in answer.tags: %>
+              <a href="#" class="js-tag" title="<%= tag %>"><%= tag %></a>
+            <% end %>
+          </div>
         </div>
       <% end %>
     </div>

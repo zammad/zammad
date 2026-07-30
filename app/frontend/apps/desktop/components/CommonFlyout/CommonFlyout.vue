@@ -332,9 +332,10 @@ const { transitions } = useTransitionConfig()
     >
       <header
         ref="header"
-        class="sticky top-0 flex items-center border-b border-neutral-100 border-b-transparent bg-neutral-50 p-3 ltr:rounded-tl-xl rtl:rounded-tr-xl dark:bg-gray-500 print:static print:border-none print:px-0"
+        class="sticky top-0 flex items-center border-b border-neutral-100 border-b-transparent bg-neutral-50 p-3 ltr:rounded-tl-xl rtl:rounded-tr-xl dark:bg-gray-500 print:static print:border-none! print:px-0"
         :class="{
-          'border-b-neutral-100 dark:border-b-gray-900': !arrivedState.top && isContentOverflowing,
+          'border-b-neutral-100! dark:border-b-gray-900!':
+            !arrivedState.top && isContentOverflowing,
         }"
       >
         <slot name="header">
@@ -351,10 +352,10 @@ const { transitions } = useTransitionConfig()
           </CommonLabel>
         </slot>
         <CommonButton
+          v-tooltip="$t('Close side panel')"
           class="ltr:ml-auto rtl:mr-auto print:hidden"
           variant="neutral"
           size="medium"
-          :aria-label="$t('Close side panel')"
           icon="x-lg"
           @click="close()"
         />
@@ -372,9 +373,9 @@ const { transitions } = useTransitionConfig()
         v-if="$slots.footer || !hideFooter"
         ref="footer"
         :aria-label="$t('Side panel footer')"
-        class="sticky bottom-0 border-t border-t-transparent bg-neutral-50 p-3 ltr:rounded-bl-xl rtl:rounded-br-xl dark:bg-gray-500 print:static print:border-black"
+        class="sticky bottom-0 border-t border-t-transparent bg-neutral-50 p-3 ltr:rounded-bl-xl rtl:rounded-br-xl dark:bg-gray-500 print:static print:border-black!"
         :class="{
-          'border-t-neutral-100 dark:border-t-gray-900':
+          'border-t-neutral-100! dark:border-t-gray-900!':
             !arrivedState.bottom && isContentOverflowing,
         }"
       >

@@ -6,6 +6,10 @@ export const KnowledgeBaseAnswerTranslationFragmentDoc = gql`
   id
   title
   visibility
+  categoryTreeTranslation {
+    id
+    title
+  }
   content {
     bodyExcerpt
   }
@@ -13,6 +17,8 @@ export const KnowledgeBaseAnswerTranslationFragmentDoc = gql`
     id
     archivedAt
     publishedAt
+    internalAt
+    tags
     category {
       id
       title
