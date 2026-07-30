@@ -11,6 +11,9 @@ class App.Setting extends App.Model
   @set: (name, value, options = {}) ->
     setting = App.Setting.findByAttribute('name', name)
     throw "No such setting '#{name}' found!" if !setting
+
+    setting                     = App.Setting.findNative(setting.id)
+    previousState               = $.extend(true, {}, setting.state_current)
     setting.state_current.value = value
     if !options.done
       options.done = ->
@@ -24,8 +27,17 @@ class App.Setting extends App.Model
         if options.doneLocal
           options.doneLocal(@)
 
-    if !options.fail
-      options.fail = (settings, details) ->
+    failCallback = options.fail if options.fail
+    options.fail = (settings, details) ->
+      # Restore previous state on failure, both in the record and in the frontend config.
+      #   https://github.com/zammad/zammad/issues/6273
+      setting.state_current = previousState
+      if setting.frontend
+        App.Config.set(name, setting.state_current.value)
+
+      if failCallback
+        failCallback.call(@, settings, details)
+      else
         App.Event.trigger 'notify', {
           type:    'error'
           msg:     details?.error_human || details?.error || __('The setting could not be updated.')
@@ -33,6 +45,7 @@ class App.Setting extends App.Model
         }
         if options.failLocal
           options.failLocal(@)
+
     if setting.frontend
       App.Config.set(name, value)
     setting.save(options)
