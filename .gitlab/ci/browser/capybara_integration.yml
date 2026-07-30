@@ -1,6 +1,7 @@
 capybara:integration:other:
   extends:
     - .template_browser-core_capybara_chrome
+    - .job_rules_manual_in_mr
     - .variables_idoit
     - .variables_proxy
   services:
@@ -17,6 +18,7 @@ capybara:integration:other:
 capybara:integration:saml:
   extends:
     - .template_browser-core_capybara_chrome
+    - .job_rules_manual_in_mr
     - .variables_auth
   services:
     - !reference [.services, postgresql]
@@ -30,6 +32,7 @@ capybara:integration:saml:
 .template_capybara_integration_otrs:
   extends:
     - .template_browser-core_capybara_chrome
+    - .job_rules_manual_in_mr
   variables:
     IMPORT_OTRS_ENDPOINT: "http://zammad-ci-otrsimport-app/otrs/public.pl?Action=ZammadMigrator"
   services:

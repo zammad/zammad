@@ -13,6 +13,14 @@
     - !reference [.job_rules, variable_filters]
     - when: on_success
 
+.job_rules_manual_in_mr:
+  rules:
+    - !reference [.job_rules, variable_filters]
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: manual
+      allow_failure: true
+    - when: on_success
+
 .job_rules_integration:
   rules:
     - !reference [.job_rules, variable_filters]

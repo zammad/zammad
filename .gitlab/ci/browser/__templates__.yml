@@ -23,6 +23,7 @@
       fi
       bundle exec rails test --fail-fast test/browser
 
+# minitests
 .template_browser-core_chrome:
   extends:
     - .template_browser-core
@@ -55,6 +56,7 @@
 .template_browser-core_capybara_firefox:
   extends:
     - .template_browser-core_capybara
+    - .job_rules_manual_in_mr
     - .variables_selenium_firefox
   services:
     - !reference [.services, postgresql]

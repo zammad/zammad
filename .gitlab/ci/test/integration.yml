@@ -3,7 +3,6 @@ include:
 
 .template_integration:
   extends:
-    - .job_rules_default
     - .job_rules_integration
   services:
     - !reference [.services, postgresql]

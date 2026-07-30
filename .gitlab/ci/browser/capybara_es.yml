@@ -32,3 +32,4 @@ capybara:es:chrome:
 capybara:es:firefox:
   extends:
     - .template_browser-core_capybara_firefox_es
+    - .job_rules_manual_in_mr
