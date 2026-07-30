@@ -34,17 +34,6 @@
     - !reference [.services, imap]
     - !reference [.services, redis]
 
-.template_browser-core_firefox:
-  extends:
-    - .template_browser-core
-    - .variables_selenium_firefox
-  services:
-    - !reference [.services, postgresql]
-    - !reference [.services, elasticsearch]
-    - !reference [.services, selenium-firefox]
-    - !reference [.services, imap]
-    - !reference [.services, redis]
-
 .template_browser-core_capybara:
   stage: browser
   extends:
