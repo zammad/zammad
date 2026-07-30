@@ -3,15 +3,17 @@
 class User::OverviewSortingsController < ApplicationController
   prepend_before_action :authenticate_and_authorize!
 
+  before_action :set_user_param, only: %i[create update]
+
   def index
     render json: {
       overviews:         Ticket::Overviews.all(current_user: current_user, ignore_user_conditions: true),
-      overview_sortings: User::OverviewSorting.where(user: current_user),
+      overview_sortings: overview_sortings_scope,
     }
   end
 
   def show
-    model_show_render(User::OverviewSorting, params)
+    model_show_render(overview_sortings_scope, params)
   end
 
   def create
@@ -19,12 +21,12 @@ class User::OverviewSortingsController < ApplicationController
   end
 
   def update
-    model_update_render(User::OverviewSorting, params)
+    model_update_render(overview_sortings_scope, params)
   end
 
   def destroy
     ActiveRecord::Base.transaction do
-      model_destroy_render(User::OverviewSorting, params)
+      model_destroy_render(overview_sortings_scope, params)
     end
 
     Gql::Subscriptions::User::Current::OverviewOrderingUpdates
@@ -47,5 +49,15 @@ class User::OverviewSortingsController < ApplicationController
       .trigger_by(current_user)
 
     render json: { success: true }, status: :ok
+  end
+
+  private
+
+  def set_user_param
+    params[:user_id] = current_user.id
+  end
+
+  def overview_sortings_scope
+    User::OverviewSorting.where(user: current_user)
   end
 end
