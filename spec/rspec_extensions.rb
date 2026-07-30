@@ -98,7 +98,11 @@ module RSpec
 
     def example_finished(notification)
       example = notification.example
-      file    = example.metadata[:file_path].delete_prefix('./')
+
+      # Attribute examples to the file of their top level example group, so that the
+      #   runtime of shared examples counts towards the file which includes them — only
+      #   top level files can be distributed over the slices.
+      file = example.example_group.parent_groups.last.metadata[:file_path].delete_prefix('./')
 
       @timings[file] += example.execution_result.run_time.to_f
     end

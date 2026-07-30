@@ -162,6 +162,10 @@ RSpec/ContextWording:
     - 'spec/system/ticket/shared_draft_zoom_spec.rb'
     - 'spec/system/ticket/update/full_quote_header_spec.rb'
     - 'spec/system/ticket/view_spec.rb'
+    - 'spec/system/ticket/zoom/article_actions_spec.rb'
+    - 'spec/system/ticket/zoom/article_creation_spec.rb'
+    - 'spec/system/ticket/zoom/object_attributes_spec.rb'
+    - 'spec/system/ticket/zoom/taskbar_spec.rb'
     - 'spec/system/ticket/zoom_spec.rb'
     - 'spec/system/user/profile_spec.rb'
 

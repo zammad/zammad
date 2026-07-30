@@ -1,9 +1,9 @@
 capybara:chrome:
   extends:
     - .template_browser-core_capybara_chrome
-  parallel: 8
+  parallel: 16
 
 capybara:firefox:
   extends:
     - .template_browser-core_capybara_firefox
-  parallel: 8
+  parallel: 16
