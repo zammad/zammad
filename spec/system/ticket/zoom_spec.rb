@@ -1052,40 +1052,43 @@ RSpec.describe 'Ticket zoom', type: :system do
       end
 
       it 'can subscribe and unsubscribe' do
+        # The avatar list only updates via server push - make sure the websocket
+        #   session is registered before subscribing, otherwise the push (and with
+        #   it the avatar) is lost for good.
         ensure_websocket do
           visit "ticket/zoom/#{ticket.id}"
-
-          # subscribe via sidebar
-          click '.js-subscriptions .js-subscribe input'
-          expect(page).to have_css('.js-subscriptions .js-unsubscribe input')
-          expect(page).to have_css('.js-subscriptions span.avatar')
-
-          # unsubscribe via sidebar
-          click '.js-subscriptions .js-unsubscribe input'
-          expect(page).to have_css('.js-subscriptions .js-subscribe input')
-          expect(page).to have_no_selector('.js-subscriptions span.avatar')
-
-          # subscribe via macro
-          click '.js-openDropdownMacro'
-          find(:macro, 2).click # Subscribe macro button
-          expect(page).to have_css('.js-subscriptions span.avatar')
-
-          # unsubscribe via macro
-          click '.js-openDropdownMacro'
-          find(:macro, 3).click # Unsubscribe macro button
-
-          expect(page).to have_no_selector('.js-subscriptions span.avatar')
-
-          create(:mention, mentionable: ticket, user: other_agent)
-          expect(page).to have_css('.js-subscriptions span.avatar')
-
-          # check history for mention entries
-          click 'h2.sidebar-header-headline.js-headline'
-          click 'li[data-type=ticket-history] a'
-          expect(page).to have_text("created Mention → '#{admin.firstname} #{admin.lastname}'")
-          expect(page).to have_text("removed Mention → '#{admin.firstname} #{admin.lastname}'")
-          expect(page).to have_text("created Mention → '#{other_agent.firstname} #{other_agent.lastname}'")
         end
+
+        # subscribe via sidebar
+        click '.js-subscriptions .js-subscribe input'
+        expect(page).to have_css('.js-subscriptions .js-unsubscribe input')
+        expect(page).to have_css('.js-subscriptions span.avatar')
+
+        # unsubscribe via sidebar
+        click '.js-subscriptions .js-unsubscribe input'
+        expect(page).to have_css('.js-subscriptions .js-subscribe input')
+        expect(page).to have_no_selector('.js-subscriptions span.avatar')
+
+        # subscribe via macro
+        click '.js-openDropdownMacro'
+        find(:macro, 2).click # Subscribe macro button
+        expect(page).to have_css('.js-subscriptions span.avatar')
+
+        # unsubscribe via macro
+        click '.js-openDropdownMacro'
+        find(:macro, 3).click # Unsubscribe macro button
+
+        expect(page).to have_no_selector('.js-subscriptions span.avatar')
+
+        create(:mention, mentionable: ticket, user: other_agent)
+        expect(page).to have_css('.js-subscriptions span.avatar')
+
+        # check history for mention entries
+        click 'h2.sidebar-header-headline.js-headline'
+        click 'li[data-type=ticket-history] a'
+        expect(page).to have_text("created Mention → '#{admin.firstname} #{admin.lastname}'")
+        expect(page).to have_text("removed Mention → '#{admin.firstname} #{admin.lastname}'")
+        expect(page).to have_text("created Mention → '#{other_agent.firstname} #{other_agent.lastname}'")
       end
     end
   end

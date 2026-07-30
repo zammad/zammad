@@ -400,6 +400,8 @@ RSpec.describe 'System > Objects', type: :system do
     before do
       visit '/#system/object_manager'
       page.find('.js-new').click
+
+      modal_ready
     end
 
     it 'verifies option creation order of new tree select options' do
@@ -481,6 +483,14 @@ RSpec.describe 'System > Objects', type: :system do
       end
 
       page.all('.js-value')[-2].set('special 2')
+
+      # The submit serialization relies on change events of the key fields renaming
+      #   the value fields. Wait for them to be processed before saving
+      expect(page).to have_field('name', with: 'select1')
+      expect(page).to have_field('data_option::options::0')
+        .and have_field('data_option::options::1')
+      expect(page).to have_field('data_option::options::2', with: 'special 2')
+
       page.find('.js-submit').click
       await_empty_ajax_queue
 
@@ -490,8 +500,8 @@ RSpec.describe 'System > Objects', type: :system do
         '2' => 'special 2',
       }
 
-      wait(60).until { ObjectManager::Attribute.find_by(name: 'select1')&.data_option&.dig('options') == expected_data_options }
-      expect(ObjectManager::Attribute.find_by(name: 'select1').data_option['options']).to eq(expected_data_options)
+      attribute = wait(60).until { ObjectManager::Attribute.find_by(name: 'select1') }
+      expect(attribute.data_option['options']).to eq(expected_data_options)
     end
 
     it 'checks smart defaults for multiselect field' do
@@ -511,6 +521,14 @@ RSpec.describe 'System > Objects', type: :system do
       end
 
       page.all('.js-value')[-2].set('special 2')
+
+      # The submit serialization relies on change events of the key fields renaming
+      #   the value fields. Wait for them to be processed before saving
+      expect(page).to have_field('name', with: 'multiselect1')
+      expect(page).to have_field('data_option::options::0')
+        .and have_field('data_option::options::1')
+      expect(page).to have_field('data_option::options::2', with: 'special 2')
+
       page.find('.js-submit').click
       await_empty_ajax_queue
 
@@ -520,8 +538,8 @@ RSpec.describe 'System > Objects', type: :system do
         '2' => 'special 2',
       }
 
-      wait(60).until { ObjectManager::Attribute.find_by(name: 'multiselect1')&.data_option&.dig('options') == expected_data_options }
-      expect(ObjectManager::Attribute.find_by(name: 'multiselect1').data_option['options']).to eq(expected_data_options)
+      attribute = wait(60).until { ObjectManager::Attribute.find_by(name: 'multiselect1') }
+      expect(attribute.data_option['options']).to eq(expected_data_options)
     end
 
     it 'checks smart defaults for boolean field' do
@@ -836,6 +854,9 @@ RSpec.describe 'System > Objects', type: :system do
       before do
         visit '/#system/object_manager'
         page.find('.js-new').click
+
+        modal_ready
+
         fill_in 'Name', with: 'test_json'
         set_select_field_label('data_type', 'External data source field')
         fill_in 'Search URL', with: "#{Setting.get('es_url')}/#{Setting.get('es_index')}_test_user/_search?q=\#{search.term}"

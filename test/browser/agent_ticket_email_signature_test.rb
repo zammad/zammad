@@ -275,8 +275,36 @@ class AgentTicketEmailSignatureTest < TestCase
       value: group_name2,
     )
 
+    # Wait until the unsaved group change reached the task state (autosave runs
+    #   debounced in the background) - the following reply click picks the
+    #   signature based on it and would re-apply the signature of the previous
+    #   group when it is still stale.
+    # Returns true when settled, otherwise a string naming the first unmet
+    #   precondition for the failure output.
+    task_state_updated_js = <<~JS
+      var task = App.TaskManager.all().filter(function(t) { return t.active; })[0];
+      if (!task) return 'no active task';
+
+      var group = App.Group.findByAttribute('name', '#{group_name2}');
+      if (!group) return 'group #{group_name2} not present in the frontend collection';
+
+      if (!task.state || !task.state.ticket) return 'no ticket state on active task ' + task.key;
+
+      if (task.state.ticket.group_id != group.id) return 'task state group_id is ' + task.state.ticket.group_id + ', expected ' + group.id;
+
+      return true;
+    JS
+
+    task_state_updated = false
+    60.times do
+      task_state_updated = execute(js: task_state_updated_js)
+      break if task_state_updated == true
+
+      sleep 0.5
+    end
+    raise "Unsaved group change did not reach the task state: #{task_state_updated}" if task_state_updated != true
+
     # execute reply
-    sleep 5 # time to recognice form changes
     scroll_to(
       position: 'botton',
       css:      '.active [data-type="emailReply"]',

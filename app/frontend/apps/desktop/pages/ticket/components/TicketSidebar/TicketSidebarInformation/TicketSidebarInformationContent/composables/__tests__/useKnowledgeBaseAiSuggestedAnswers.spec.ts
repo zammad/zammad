@@ -142,6 +142,12 @@ describe('useKnowledgeBaseAiSuggestedAnswers', () => {
     await getTicketArticleUpdatesSubscriptionHandler().trigger({
       ticketArticleUpdates: {
         addArticle: { sender: { name: EnumTicketArticleSenderName.Customer } },
+        // Suppress the auto-generated update article and remove article id: the
+        // update article's randomly generated sender can collide with the sender
+        // of the added article in the object cache and overwrite the mocked
+        // sender name above.
+        updateArticle: null,
+        removeArticleId: null,
       },
     })
 

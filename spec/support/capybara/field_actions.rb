@@ -38,22 +38,32 @@ module FieldActions # rubocop:disable Metrics/ModuleLength
       .click                                                            # focus
       .ancestor('.controls', order: :reverse, match: :first)            # find container
 
+    # Only click options of a settled menu - a click during the dropdown's
+    #   opening animation can silently get lost.
+    settled_menu = "[role='menu']:not(.velocity-animating)"
+
     # Try to find the option via its value.
     if tree_select_field.has_css?("[data-value='#{value}']", wait: false)
-      tree_select_field.find("[data-value='#{value}']")
+      tree_select_field.find("#{settled_menu} [data-value='#{value}']")
         .click
       return
     end
 
     # Try to find the option via its label.
     if tree_select_field.has_css?("[data-display-name='#{value}']", wait: false)
-      tree_select_field.find("[data-display-name='#{value}']")
+      tree_select_field.find("#{settled_menu} [data-display-name='#{value}']")
         .click
       return
     end
 
     path_delimiter = ' › '
-    raise Capybara::ElementNotFound if !value.match(path_delimiter)
+
+    # For plain values, wait for the dropdown to render the option instead of failing
+    #   right away, since it may not be present yet on slow machines.
+    if !value.to_s.match?(path_delimiter)
+      tree_select_field.find("#{settled_menu} [data-value='#{value}'], #{settled_menu} [data-display-name='#{value}']").click
+      return
+    end
 
     components   = value.split(path_delimiter)
     current_path = []
@@ -65,12 +75,12 @@ module FieldActions # rubocop:disable Metrics/ModuleLength
 
       # Handle last item.
       if index == components.length - 1
-        tree_select_field.find("[role='menu']:not(.velocity-animating) [data-display-name='#{display_name}']")
+        tree_select_field.find("#{settled_menu} [data-display-name='#{display_name}']")
         .click
 
       # Handle parent items.
       else
-        tree_select_field.find("[role='menu']:not(.velocity-animating) [data-display-name='#{display_name}'] .searchableSelect-option-arrow")
+        tree_select_field.find("#{settled_menu} [data-display-name='#{display_name}'] .searchableSelect-option-arrow")
           .click
       end
     end

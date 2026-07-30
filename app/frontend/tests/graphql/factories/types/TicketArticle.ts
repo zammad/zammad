@@ -13,6 +13,11 @@ export default (): DeepPartial<TicketArticle> => {
     contentType: faker.helpers.arrayElement(['text/html', 'text/plain']),
     body,
     bodyWithUrls: body,
+    // Default both attachment lists to empty: the mocker generates every schema field of the
+    // type, not just the queried ones, so leaving `attachments` out made each generated article
+    // roll 1-5 random StoredFiles for it. Tests with many articles could then exceed the
+    // mocker's 100-generated-ids-per-type loop guard.
+    attachments: [],
     attachmentsWithoutInline: [],
     sender: {
       id: convertToGraphQLId('TicketArticleSender', senderNumber + 1),

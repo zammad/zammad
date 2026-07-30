@@ -105,6 +105,9 @@ RSpec.describe 'Desktop > Overviews > Bulk Actions', app: :desktop_view, authent
       click_on 'Bulk actions'
     end
 
+    # Wait for the form to be initially settled
+    wait_for_form_to_settle('form-tickets-bulk-edit')
+
     # NB: Due to dropdown menus being mounted to the end of the document body, we need the scope outside of the flyout
     #   container here.
     find_treeselect('Group').select_option('First level support')
@@ -132,6 +135,9 @@ RSpec.describe 'Desktop > Overviews > Bulk Actions', app: :desktop_view, authent
 
       click_on 'Bulk actions'
     end
+
+    # Wait for the form to be initially settled
+    wait_for_form_to_settle('form-tickets-bulk-edit')
 
     # NB: Due to dropdown menus being mounted to the end of the document body, we need the scope outside of the flyout
     #   container here.
@@ -162,9 +168,14 @@ RSpec.describe 'Desktop > Overviews > Bulk Actions', app: :desktop_view, authent
       click_on 'Bulk actions'
     end
 
+    # Wait for the form to be initially settled
+    wait_for_form_to_settle('form-tickets-bulk-edit')
+
     within 'aside[role="complementary"]' do
       click 'button[aria-label="Macros"]'
     end
+
+    wait_for_test_flag('common-popover.opened')
 
     # NB: Due to popover menus being mounted to the end of the document body, we need the scope outside of the flyout
     #   container here.

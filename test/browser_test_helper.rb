@@ -2437,7 +2437,37 @@ wait untill text in selector disabppears
       instance.execute_script(%($(".content.active .ticketZoom-header .js-objectTitle").text("#{data[:title]}")))
       instance.execute_script('$(".content.active .ticketZoom-header .js-objectTitle").blur()')
       instance.execute_script('$(".content.active .ticketZoom-header .js-objectTitle").trigger("blur")')
-      sleep 1
+
+      # The blur triggers an immediate save of the title. Wait for the save
+      #   round trip to settle before touching the sidebar, as its response
+      #   re-renders the sidebar and can revert form changes made in the
+      #   meantime. A later websocket push can still re-render - that window
+      #   stays deliberately visible.
+      # Returns true when settled, otherwise a string naming the first unmet
+      #   precondition for the failure output.
+      title_saved_js = <<~JS
+        var task = App.TaskManager.all().filter(function(t) { return t.active; })[0];
+        if (!task || !task.key || task.key.indexOf('Ticket-') !== 0) return 'no active ticket task';
+
+        var ticket_id = task.key.substr(7);
+        if (!App.Ticket.exists(ticket_id)) return 'ticket ' + task.key + ' not present in the frontend collection';
+
+        var ticket = App.Ticket.find(ticket_id);
+        if (ticket.title !== #{data[:title].to_json}) return 'ticket title is still ' + JSON.stringify(ticket.title);
+
+        if (App.Ajax.queue().length > 0 || $.active > 0) return 'requests still in flight';
+
+        return true;
+      JS
+
+      title_saved = false
+      60.times do
+        title_saved = instance.execute_script(title_saved_js)
+        break if title_saved == true
+
+        sleep 0.5
+      end
+      raise "Title save did not settle: #{title_saved}" if title_saved != true
       # {
       #   :where        => :instance2,
       #   :execute      => 'sendkey',
@@ -3993,7 +4023,7 @@ wait untill text in selector disabppears
     end
 
     instance.find_elements(css: '.modal button.js-submit')[0].click
-    modal_disappear(browser: instance)
+    modal_disappear(browser: instance, timeout: 30)
 
     element = instance.find_elements(css: 'body')[0]
     text = element.text
@@ -4118,7 +4148,7 @@ wait untill text in selector disabppears
     end
 
     instance.find_elements(css: '.modal button.js-submit')[0].click
-    modal_disappear(browser: instance)
+    modal_disappear(browser: instance, timeout: 30)
 
     element = instance.find_elements(css: 'body')[0]
     text = element.text

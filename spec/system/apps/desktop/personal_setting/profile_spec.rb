@@ -101,8 +101,14 @@ RSpec.describe 'Desktop > Personal Setting > Profile', app: :desktop_view, authe
       click_on 'Calendar'
     end
 
+    def wait_for_subscription_url(label)
+      wait.until { find_input(label).input_element.value.presence }
+    rescue Selenium::WebDriver::Error::TimeoutError
+      raise "Subscription URL input '#{label}' was not populated"
+    end
+
     it 'user can use combined subscription URL' do
-      visit(find_input('Combined subscription URL').input_element.value)
+      visit wait_for_subscription_url('Combined subscription URL')
 
       expect(page).to have_text("new ticket: 'Normal ticket'")
       expect(page).to have_text("ticket escalation: 'Escalated ticket'")
@@ -112,7 +118,7 @@ RSpec.describe 'Desktop > Personal Setting > Profile', app: :desktop_view, authe
       find_toggle('Not assigned').toggle_on
       expect(page).to have_text('Your calendar subscription settings were updated.')
 
-      visit(find_input('Direct subscription URL').input_element.value)
+      visit wait_for_subscription_url('Direct subscription URL')
       expect(page).to have_no_text("new ticket: 'Normal ticket'")
       expect(page).to have_text("ticket escalation: 'Escalated ticket'")
     end

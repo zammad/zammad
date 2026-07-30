@@ -57,14 +57,14 @@ RSpec.describe 'Mobile > Organization > Can edit organization', app: :mobile, ty
       wait_for_form_to_settle('organization-edit')
 
       within('#dialog-organization-edit') do
-        find_input('Name').clear # does not trigger form updater for some reason
+        find_input('Name').clear # coalesces into the same debounced commit as the following `type`, so no separate form updater call is triggered
 
-        within_form do
+        within_form(form_updater_gql_number: 1) do
           find_input('Name').type('new name')
           find_input('Custom Text').type('some text')
         end
 
-        save_organization(3)
+        click('button:not(disabled)', text: 'Save')
       end
 
       wait_for_gql('shared/entities/organization/graphql/mutations/update.graphql')

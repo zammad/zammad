@@ -364,10 +364,13 @@ RSpec.describe 'Search', authenticated_as: :authenticate, searchindex: true, typ
       find('.table-column-title', text: 'GROUP').click
       find('.table-column-title', text: 'GROUP').click
 
-      actual_ids   = all('.js-tableBody tr.item').map { |row| row['data-id'].to_i }
-      expected_ids = [ticket_6, ticket_4, ticket_2, ticket_3, ticket_5, ticket_1].map(&:id)
+      actual_ids = all('.js-tableBody tr.item').map { |row| row['data-id'].to_i }
 
-      expect(actual_ids).to eq(expected_ids)
+      # Elasticsearch does not guarantee a stable tie-break order for tickets sharing the
+      # same group, so only assert that the groups themselves are ordered correctly (all
+      # group_2 tickets before all group_1 tickets), not the exact order within a group.
+      expect(actual_ids.first(3)).to match_array([ticket_6, ticket_4, ticket_2].map(&:id))
+      expect(actual_ids.last(3)).to match_array([ticket_3, ticket_5, ticket_1].map(&:id))
     end
 
   end

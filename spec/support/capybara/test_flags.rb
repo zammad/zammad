@@ -29,6 +29,21 @@ module TestFlags
 
   def wait_for_subscription_start(name, skip_clearing: true)
     wait_for_test_flag("__gql subscription #{name} start", skip_clearing: skip_clearing)
+
+    # The start flag only means the client received the initial subscription response.
+    # The server subscribes to the Redis event stream asynchronously (stream_from),
+    # so an event triggered right away can still get lost. Wait until Redis reports
+    # an active subscriber for the event stream before continuing.
+    begin
+      wait.until { graphql_event_stream_subscribed?(name) }
+    rescue Selenium::WebDriver::Error::TimeoutError
+      raise "GraphQL event stream for subscription #{name} has no subscriber"
+    end
+  end
+
+  def graphql_event_stream_subscribed?(name)
+    @redis ||= Zammad::Service::Redis.new
+    @redis.pubsub('CHANNELS', "*graphql-event:*#{name}*").any?
   end
 
   def wait_for_form_to_settle(form)
