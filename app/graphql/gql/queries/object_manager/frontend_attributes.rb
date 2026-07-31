@@ -59,7 +59,7 @@ module Gql::Queries
           name:        attribute[:name],
           display:     attribute[:display],
           data_type:   attribute[:data_type],
-          data_option: attribute[:data_option],
+          data_option: attribute.public_data_option,
           screens:     element.screens,
           is_internal: attribute[:internal],
         }

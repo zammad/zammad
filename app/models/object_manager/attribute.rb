@@ -29,6 +29,18 @@ class ObjectManager::Attribute < ApplicationModel
     active
   ].freeze
 
+  SENSITIVE_DATA_OPTIONS = %w[
+    search_url
+    search_result_list_key
+    search_result_value_key
+    search_result_label_key
+    http_basic_auth_username
+    http_basic_auth_password
+    http_basic_auth_password_confirm
+    bearer_token_auth
+    verify_ssl
+  ].freeze
+
   RESERVED_NAMES = %w[
     destroy
     true
@@ -1007,6 +1019,10 @@ is certain attribute used by triggers, overviews or schedulers
 
   def option_attribute?
     %w[select tree_select multiselect multi_tree_select].include?(data_type)
+  end
+
+  def public_data_option
+    data_option.except(*SENSITIVE_DATA_OPTIONS)
   end
 
   private
