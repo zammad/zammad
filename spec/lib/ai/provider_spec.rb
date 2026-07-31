@@ -131,8 +131,54 @@ RSpec.describe AI::Provider do
   end
 
   describe '.ping!' do
-    it 'raises an error' do
-      expect { described_class.ping!(nil) }.to raise_error(RuntimeError, 'not implemented')
+    # Providers that validate the config in check_temperature_support! do not implement it.
+    it 'does nothing by default' do
+      expect(described_class.ping!(nil)).to be_nil
+    end
+  end
+
+  # Saving a connection validates its config through one of these two methods: ping!, or
+  # check_temperature_support! for the providers that talk to the endpoint there anyway. A
+  # provider overriding neither would silently accept an unreachable endpoint or a bad token.
+  # That the implementation really issues a request is covered per provider in
+  # check_temperature_support_spec.rb and the 'provider/ping!' shared example.
+  describe 'config validation contract' do
+    let(:provider_files) { Rails.root.glob('lib/ai/provider/*.rb') }
+    let(:providers)      { provider_files.filter_map { |path| described_class.by_name(path.basename('.rb').to_s) } }
+
+    let(:validation_methods) { %i[ping! check_temperature_support!] }
+
+    it 'is fulfilled by every provider', :aggregate_failures do
+      # Every file has to resolve, otherwise a provider would be skipped instead of checked.
+      expect(providers.size).to eq(provider_files.size)
+
+      providers.each do |provider|
+        implemented = validation_methods.reject do |method|
+          provider.method(method).owner == described_class.singleton_class
+        end
+
+        expect(implemented).not_to be_empty, "#{provider} implements neither of #{validation_methods}"
+      end
+    end
+  end
+
+  describe '#log_options' do
+    let(:connection) { create(:ai_provider_connection) }
+
+    it 'attributes the HTTP log to the related object' do
+      instance = described_class.new(config: {}, related_object: connection)
+
+      expect(instance.log_options).to include(facility: 'AI::Provider', related_object: connection)
+    end
+
+    it 'omits the reference without a related object' do
+      expect(described_class.new(config: {}).log_options.keys).not_to include(:related_object)
+    end
+
+    # ping! and check_temperature_support! run before a connection exists.
+    it 'has no reference on class level' do
+      expect(described_class.log_options(only_on_error: true))
+        .to eq(facility: 'AI::Provider', log_only_on_error: true)
     end
   end
 
@@ -142,51 +188,12 @@ RSpec.describe AI::Provider do
     end
   end
 
-  describe '.by_config' do
-    it 'returns the correct class' do
-      config = { provider: 'open_ai' }
-      expect(described_class.by_config(config)).to eq(AI::Provider::OpenAI)
-    end
+  describe '#initialize' do
+    it 'ignores blank config model values so provider defaults apply', :aggregate_failures do
+      provider = AI::Provider::OpenAI.new(config: { token: 'sk-test', model: '', embedding_model: '' })
 
-    it 'returns nil when provider is blank' do
-      config = {}
-      expect(described_class.by_config(config)).to be_nil
-    end
-  end
-
-  describe '.current' do
-    before do
-      Setting.set('ai_provider_config', config, validate: false)
-      Setting.set('ai_provider', flag, validate: false)
-    end
-
-    context 'when config is provided' do
-      let(:config) { { provider: 'open_ai' } }
-
-      context 'when AI provider flag is true' do
-        let(:flag) { true }
-
-        it 'returns the correct class' do
-          expect(described_class.current).to eq(AI::Provider::OpenAI)
-        end
-      end
-
-      context 'when AI provider flag is false' do
-        let(:flag) { false }
-
-        it 'returns nil' do
-          expect(described_class.current).to be_nil
-        end
-      end
-    end
-
-    context 'when config is blank' do
-      let(:config) { {} }
-      let(:flag)   { true }
-
-      it 'returns nil' do
-        expect(described_class.current).to be_nil
-      end
+      expect(provider.options[:model]).to eq(AI::Provider::OpenAI::DEFAULT_OPTIONS[:model])
+      expect(provider.options[:embedding_model]).to eq(AI::Provider::OpenAI::DEFAULT_OPTIONS[:embedding_model])
     end
   end
 

@@ -8,7 +8,7 @@ class AI::Provider
       def model_for(prompt_image:)
         return options[:model] if !prompt_image.is_a?(::Store)
 
-        config[:ocr_model] || options[:model]
+        config[:ocr_model].presence || options[:model]
       end
     end
   end

@@ -57,15 +57,15 @@ RSpec.describe Service::AI::Agent::Run do
         }
       end
       let(:ai_result) do
-        AI::Service::Result.new(
+        Service::AI::Feature::Result[
           content:       ai_result_content,
           stored_result: nil,
           fresh:         true
-        )
+        ]
       end
 
       before do
-        allow_any_instance_of(AI::Service::AIAgent).to receive(:execute).and_return(ai_result)
+        allow_any_instance_of(Service::AI::Feature::AIAgent).to receive(:execute).and_return(ai_result)
       end
 
       it 'executes the AI agent service and applies changes to the ticket based on AI result' do
@@ -207,15 +207,15 @@ RSpec.describe Service::AI::Agent::Run do
         }
       end
       let(:ai_result) do
-        AI::Service::Result.new(
+        Service::AI::Feature::Result[
           content:       ai_result_content,
           stored_result: nil,
           fresh:         true
-        )
+        ]
       end
 
       before do
-        allow_any_instance_of(AI::Service::AIAgent).to receive(:execute).and_return(ai_result)
+        allow_any_instance_of(Service::AI::Feature::AIAgent).to receive(:execute).and_return(ai_result)
       end
 
       it 'executes with merged definitions from agent type and database' do
@@ -225,14 +225,14 @@ RSpec.describe Service::AI::Agent::Run do
 
       it 'uses merged role description from agent type and database' do
         # Spy on the AI service to verify it receives the merged definition
-        ai_service_spy = instance_double(AI::Service::AIAgent)
-        allow(AI::Service::AIAgent).to receive(:new).and_return(ai_service_spy)
+        ai_service_spy = instance_double(Service::AI::Feature::AIAgent)
+        allow(Service::AI::Feature::AIAgent).to receive(:new).and_return(ai_service_spy)
         allow(ai_service_spy).to receive(:execute).and_return(ai_result)
 
         service_result
 
         # Verify that the AI service was called with the merged definition
-        expect(AI::Service::AIAgent).to have_received(:new).with(
+        expect(Service::AI::Feature::AIAgent).to have_received(:new).with(
           hash_including(
             context_data: hash_including(
               role_description: 'You are a ticket routing specialist who analyzes ticket content and assigns tickets to the most appropriate group based on the topic and context.'
@@ -265,11 +265,11 @@ RSpec.describe Service::AI::Agent::Run do
         }
       end
       let(:ai_result) do
-        AI::Service::Result.new(
+        Service::AI::Feature::Result[
           content:       ai_result_content,
           stored_result: nil,
           fresh:         true
-        )
+        ]
       end
 
       before do
@@ -277,7 +277,7 @@ RSpec.describe Service::AI::Agent::Run do
         create(:object_manager_attribute_select, object_name: 'Ticket', name: 'custom_category', display: 'Custom Category', data_option_options: { 'technical_support' => 'Technical support', 'billing' => 'Billing', 'feature_request' => 'Feature request', 'bug_report' => 'Bug report' })
         ObjectManager::Attribute.migration_execute
 
-        allow_any_instance_of(AI::Service::AIAgent).to receive(:execute).and_return(ai_result)
+        allow_any_instance_of(Service::AI::Feature::AIAgent).to receive(:execute).and_return(ai_result)
       end
 
       it 'executes with placeholder replacement and applies categorization' do
@@ -287,14 +287,14 @@ RSpec.describe Service::AI::Agent::Run do
 
       it 'passes categories to AI service middleware' do
         # Spy on the AI service to verify it receives the categories
-        ai_service_spy = instance_double(AI::Service::AIAgent)
-        allow(AI::Service::AIAgent).to receive(:new).and_return(ai_service_spy)
+        ai_service_spy = instance_double(Service::AI::Feature::AIAgent)
+        allow(Service::AI::Feature::AIAgent).to receive(:new).and_return(ai_service_spy)
         allow(ai_service_spy).to receive(:execute).and_return(ai_result)
 
         service_result
 
         # Verify that the AI service was called with the categories in the context
-        expect(AI::Service::AIAgent).to have_received(:new).with(
+        expect(Service::AI::Feature::AIAgent).to have_received(:new).with(
           hash_including(
             context_data: hash_including(
               instruction_context: {
@@ -341,15 +341,15 @@ RSpec.describe Service::AI::Agent::Run do
         }
       end
       let(:ai_result) do
-        AI::Service::Result.new(
+        Service::AI::Feature::Result[
           content:       ai_result_content,
           stored_result: nil,
           fresh:         true
-        )
+        ]
       end
 
       before do
-        allow_any_instance_of(AI::Service::AIAgent).to receive(:execute).and_return(ai_result)
+        allow_any_instance_of(Service::AI::Feature::AIAgent).to receive(:execute).and_return(ai_result)
       end
 
       it 'applies array tags from the AI result' do
@@ -359,13 +359,13 @@ RSpec.describe Service::AI::Agent::Run do
       end
 
       it 'embeds configured guidelines into the instruction sent to the model' do
-        ai_service_spy = instance_double(AI::Service::AIAgent)
-        allow(AI::Service::AIAgent).to receive(:new).and_return(ai_service_spy)
+        ai_service_spy = instance_double(Service::AI::Feature::AIAgent)
+        allow(Service::AI::Feature::AIAgent).to receive(:new).and_return(ai_service_spy)
         allow(ai_service_spy).to receive(:execute).and_return(ai_result)
 
         service_result
 
-        expect(AI::Service::AIAgent).to have_received(:new).with(
+        expect(Service::AI::Feature::AIAgent).to have_received(:new).with(
           hash_including(
             context_data: hash_including(
               instruction: include('Use short tags.'),
@@ -379,12 +379,12 @@ RSpec.describe Service::AI::Agent::Run do
 
         before do
           ticket.tag_add('existing', 1)
-          allow(AI::Service::AIAgent).to receive(:new)
+          allow(Service::AI::Feature::AIAgent).to receive(:new)
         end
 
         it 'skips the LLM call without raising an error', :aggregate_failures do
           expect { service_result }.not_to raise_error
-          expect(AI::Service::AIAgent).not_to have_received(:new)
+          expect(Service::AI::Feature::AIAgent).not_to have_received(:new)
         end
       end
     end
@@ -421,11 +421,11 @@ RSpec.describe Service::AI::Agent::Run do
         }
       end
       let(:ai_result) do
-        AI::Service::Result.new(
+        Service::AI::Feature::Result[
           content:       ai_result_content,
           stored_result: nil,
           fresh:         true
-        )
+        ]
       end
 
       before do
@@ -433,7 +433,7 @@ RSpec.describe Service::AI::Agent::Run do
         create(:object_manager_attribute_multiselect, object_name: 'Ticket', name: 'custom_multiselect')
         ObjectManager::Attribute.migration_execute
 
-        allow_any_instance_of(AI::Service::AIAgent).to receive(:execute).and_return(ai_result)
+        allow_any_instance_of(Service::AI::Feature::AIAgent).to receive(:execute).and_return(ai_result)
       end
 
       it 'executes the AI agent service and applies multiple values to the multiselect field' do
@@ -456,7 +456,7 @@ RSpec.describe Service::AI::Agent::Run do
 
     context 'when AI service raises an exception' do
       before do
-        allow_any_instance_of(AI::Service::AIAgent).to receive(:execute).and_raise(AI::Provider::OutputFormatError, 'AI service error')
+        allow_any_instance_of(Service::AI::Feature::AIAgent).to receive(:execute).and_raise(AI::Provider::OutputFormatError, 'AI service error')
       end
 
       it 'raises the exception' do
@@ -465,7 +465,7 @@ RSpec.describe Service::AI::Agent::Run do
 
       context 'when AI service raises an response error' do
         before do
-          allow_any_instance_of(AI::Service::AIAgent).to receive(:execute).and_raise(AI::Provider::ResponseError, 'AI service error')
+          allow_any_instance_of(Service::AI::Feature::AIAgent).to receive(:execute).and_raise(AI::Provider::ResponseError, 'AI service error')
         end
 
         it 'raises the exception' do

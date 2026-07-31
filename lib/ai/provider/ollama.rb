@@ -54,9 +54,7 @@ class AI::Provider::Ollama < AI::Provider
         **REQUEST_TIMEOUT_OPTIONS,
         verify_ssl: true,
         json:       true,
-        log:        {
-          facility: 'AI::Provider',
-        },
+        log:        log_options,
       },
     )
 
@@ -77,6 +75,7 @@ class AI::Provider::Ollama < AI::Provider
         **REQUEST_TIMEOUT_OPTIONS,
         verify_ssl: true,
         json:       true,
+        log:        log_options,
       },
     )
 
@@ -88,17 +87,18 @@ class AI::Provider::Ollama < AI::Provider
     data.dig('response', 'embeddings') || data['embeddings']
   end
 
-  def self.ping!(config)
+  def self.supports_embeddings?
+    true
+  end
+
+  def self.ping!(config, related_object: nil)
     response = UserAgent.get(
       config[:url],
       {},
       {
         **REQUEST_TIMEOUT_OPTIONS,
         verify_ssl: true,
-        log:        {
-          facility:          'AI::Provider',
-          log_only_on_error: true,
-        },
+        log:        log_options(only_on_error: true, related_object:),
       },
     )
 

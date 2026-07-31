@@ -5,7 +5,7 @@ require_relative 'shared_examples/ping'
 require_relative 'shared_examples/embed'
 
 RSpec.describe AI::Provider::Mistral, integration: true, required_envs: %w[MISTRAL_API_KEY], use_vcr: true do
-  subject(:ai_provider) { described_class.new(options: { json_response: true }) }
+  subject(:ai_provider) { described_class.new(config: default_ai_provider_config, options: { json_response: true }) }
 
   let(:prompt_system)       { '' }
   let(:prompt_user)         { 'This is a connection test. Return in unprettified JSON \'{ "connected": "true" }\' if you got the message. Respond in plain JSON format only and do not wrap it in code block markers.' }
@@ -13,10 +13,6 @@ RSpec.describe AI::Provider::Mistral, integration: true, required_envs: %w[MISTR
   before do
     # Workaround, because of current rate limit from mistral side.
     sleep 5
-
-    # Ping is tested manually, so we don't need to have this in place for setting the provider.
-    setting = Setting.find_by(name: 'ai_provider_config')
-    setting.update!(preferences: {})
 
     setup_ai_provider('mistral', token: ENV['MISTRAL_API_KEY'])
   end
@@ -34,7 +30,7 @@ RSpec.describe AI::Provider::Mistral, integration: true, required_envs: %w[MISTR
 
       context 'with a valid model' do
         before do
-          Setting.set('ai_provider_config', Setting.get('ai_provider_config').merge(model: 'mistral-medium-latest'))
+          update_ai_provider_config(model: 'mistral-medium-latest')
         end
 
         it 'does exchange data with mistral endpoint' do
@@ -43,7 +39,7 @@ RSpec.describe AI::Provider::Mistral, integration: true, required_envs: %w[MISTR
 
         context 'with a model that does not support temperature' do
           before do
-            Setting.set('ai_provider_config', Setting.get('ai_provider_config').merge(model: 'gpt-5'))
+            update_ai_provider_config(model: 'gpt-5')
           end
 
           it 'raises an error for invalid model' do
@@ -56,7 +52,7 @@ RSpec.describe AI::Provider::Mistral, integration: true, required_envs: %w[MISTR
 
       context 'with an invalid model' do
         before do
-          Setting.set('ai_provider_config', Setting.get('ai_provider_config').merge(model: 'nonexisting-model'))
+          update_ai_provider_config(model: 'nonexisting-model')
         end
 
         it 'raises an error' do

@@ -1519,6 +1519,10 @@ pre code {
   &.badge--closed {
     background: var(--supergood-color);
   }
+
+  &.badge--ghost {
+    background: var(--ghost-color);
+  }
 }
 
 .key-value {
@@ -2805,6 +2809,10 @@ input.has-error {
   color: var(--danger-color);
   padding: 2px;
   font-size: 13px;
+
+  &.help-inline--warning {
+    color: var(--bad-color);
+  }
 }
 
 .zammad-form-modal-body {

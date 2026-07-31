@@ -29,7 +29,7 @@ RSpec.describe 'AI related knowledge base answers', :aggregate_failures, integra
 
     # No service wraps index creation (Service::AI::VectorDB::* all assume the index already
     # exists), so this is the one legitimate direct AI::VectorDB call in this spec.
-    provider = AI::Provider.current.new
+    provider = AI::ProviderConnection.for_embeddings(nil).provider_instance
     AI::VectorDB.new.migrate(dimensions: provider.class::EMBEDDING_SIZES.fetch(provider.options[:embedding_model]))
   end
 

@@ -2,7 +2,7 @@
 
 RSpec.shared_examples 'provider/check_temperature_support' do
   describe '.check_temperature_support!' do
-    let(:provider_config) { Setting.get('ai_provider_config') }
+    let(:provider_config) { default_ai_provider_config }
 
     context 'when API accepts temperature' do
       before do

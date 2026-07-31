@@ -16,7 +16,7 @@ class App.ControllerAIFeatureBase extends App.ControllerSubContent
       force: false
     )
 
-    @controllerBind('config_update', @aiProviderConfigHasChanged)
+    @controllerBind('config_update', @aiProviderHasChanged)
 
   showAlert: ->
     !App.Config.get('ai_provider')
@@ -31,8 +31,29 @@ class App.ControllerAIFeatureBase extends App.ControllerSubContent
     @el.find('.page-content').prepend(alertView)
     @refreshElements()
 
+  # Injects a provider modal into .page-header-meta for the given feature identifier;
+  # selecting the default entry deletes the feature's routing row. Shown only to provider
+  # administrators — the backing APIs require admin.ai_provider.
+  renderProviderModal: (identifier) =>
+    return unless identifier
+    return unless App.Config.get('ai_provider')
+    return unless @permissionCheck('admin.ai_provider')
 
-  aiProviderConfigHasChanged: (config) =>
+    @el.find('.js-featureProviderButton').remove()
+    button = $('<button />')
+      .text(App.i18n.translateInline('Provider'))
+      .addClass('btn btn--info js-featureProviderButton')
+      .off('click.ai_feature')
+      .on('click.ai_feature', (e) =>
+        e.preventDefault()
+        new App.ControllerAIFeatureProviderModal(
+          featureIdentifier: identifier
+          container: @el.closest('.content')
+        )
+      )
+    @el.find('.page-header-meta').prepend(button)
+
+  aiProviderHasChanged: (config) =>
     return if config.name isnt 'ai_provider'
 
     @renderAlert()

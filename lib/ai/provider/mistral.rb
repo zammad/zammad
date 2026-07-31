@@ -21,7 +21,11 @@ class AI::Provider::Mistral < AI::Provider
     'mistral-embed' => 8192
   }.freeze
 
-  def self.ping!(config)
+  def self.supports_embeddings?
+    true
+  end
+
+  def self.ping!(config, related_object: nil)
     response = UserAgent.get(
       "#{MISTRAL_API_BASE_URL}/models",
       {},
@@ -30,10 +34,7 @@ class AI::Provider::Mistral < AI::Provider
         verify_ssl:   true,
         bearer_token: config[:token],
         json:         true,
-        log:          {
-          facility:          'AI::Provider',
-          log_only_on_error: true,
-        },
+        log:          log_options(only_on_error: true, related_object:),
       },
     )
 
@@ -61,9 +62,7 @@ class AI::Provider::Mistral < AI::Provider
         verify_ssl:   true,
         bearer_token: config[:token],
         json:         true,
-        log:          {
-          facility: 'AI::Provider',
-        },
+        log:          log_options,
       },
     )
 
@@ -85,6 +84,7 @@ class AI::Provider::Mistral < AI::Provider
         verify_ssl:   true,
         bearer_token: config[:token],
         json:         true,
+        log:          log_options,
       },
     )
 

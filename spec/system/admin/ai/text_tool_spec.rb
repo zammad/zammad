@@ -31,6 +31,25 @@ RSpec.describe 'Manage > AI > Text Tool', type: :system do
       end
     end
 
+    context 'with a delegated administrator without provider permission' do
+      let(:role)            { create(:role, permission_names: %w[admin.ai_assistance_text_tools]) }
+      let(:delegated_admin) { create(:agent, roles: [role]) }
+
+      before do
+        setup_ai_provider
+        Setting.set('ai_assistance_text_tools', true)
+      end
+
+      it 'hides the connection selector', authenticated_as: :delegated_admin do
+        visit '/#ai/text_tools'
+
+        within :active_content do
+          expect(page).to have_css('.js-toggle-switch-ai_text_tools')
+          expect(page).to have_no_css('.js-featureConnectionSelector')
+        end
+      end
+    end
+
     context 'without provider configured' do
       before do
         unset_ai_provider
@@ -41,7 +60,7 @@ RSpec.describe 'Manage > AI > Text Tool', type: :system do
         visit '/#ai/text_tools'
 
         within('.js-missingProviderAlert') do
-          expect(page).to have_text('The provider configuration is disabled. Please set up the provider before proceeding in AI > Providers.')
+          expect(page).to have_text('The provider configuration is disabled. Before proceeding, please set up at least one provider in AI > Providers.')
         end
       end
     end

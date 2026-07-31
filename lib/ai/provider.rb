@@ -23,19 +23,26 @@ class AI::Provider
 
   attr_accessor :config, :options, :response_metadata
 
-  def initialize(config: {}, options: {})
-    @config = config.presence || Setting.get('ai_provider_config')
+  # @param related_object [ApplicationModel, NilClass] what the HTTP logs of this instance point
+  #   back at, normally the AI::ProviderConnection that built it.
+  attr_reader :related_object
+
+  def initialize(config: {}, options: {}, related_object: nil)
+    @config         = config.presence || {}
+    @related_object = related_object
+
     options = options.deep_symbolize_keys
 
-    if @config[:model] && !options[:model]
+    # .present?: a blank '' from a cleared config field must not override provider defaults.
+    if @config[:model].present? && !options[:model]
       options[:model] = @config[:model]
     end
 
-    if @config[:embedding_model] && !options[:embedding_model]
+    if @config[:embedding_model].present? && !options[:embedding_model]
       options[:embedding_model] = @config[:embedding_model]
     end
 
-    if @config[:embedding_input_limit] && !options[:embedding_input_limit]
+    if @config[:embedding_input_limit].present? && !options[:embedding_input_limit]
       options[:embedding_input_limit] = @config[:embedding_input_limit]
     end
 
@@ -44,30 +51,59 @@ class AI::Provider
     @response_metadata = {}
   end
 
+  # HTTP log options for a request of this provider, attributing the log to the related object.
+  def log_options(only_on_error: false)
+    self.class.log_options(only_on_error:, related_object:)
+  end
+
   class << self
+    # The class level checks know no connection when one is created, but do when an existing one is
+    # edited - hence the optional related object rather than none at all.
+    def log_options(only_on_error: false, related_object: nil)
+      {
+        facility:          'AI::Provider',
+        log_only_on_error: only_on_error,
+        related_object:,
+      }.compact
+    end
+
     def by_name(name)
       "AI::Provider::#{name.classify}".safe_constantize
     end
 
-    def by_config(config)
-      provider_name = config&.dig(:provider)
-      return if provider_name.blank?
-
-      by_name(provider_name)
+    # A provider validates its config with exactly one request when a connection is saved:
+    # either here, or in check_temperature_support! for providers that talk to the endpoint
+    # there anyway. Hence the no-op default — overriding both would ping twice.
+    def ping!(_config, related_object: nil)
+      nil
     end
 
-    def current
-      return nil if !Setting.get('ai_provider')
-
-      by_config(Setting.get('ai_provider_config'))
-    end
-
-    def ping!(_config)
-      raise 'not implemented'
-    end
-
-    def check_temperature_support!(_config)
+    # Detects whether the configured model accepts the temperature parameter. Providers that
+    # answer this with a real request also validate the config (they raise
+    # CheckTemperatureSupportError for anything but an unsupported temperature) and therefore
+    # do not implement ping!.
+    def check_temperature_support!(_config, related_object: nil)
       true
+    end
+
+    # True when the endpoint refused nothing but the temperature parameter. Any other failure is
+    # a config problem (wrong token, wrong URL, unreachable host) that has to surface with the
+    # mapped provider message, so the body is never trusted: on a transport error it is nil, and
+    # a proxy in between may answer with HTML.
+    def temperature_unsupported?(response)
+      data  = JSON.parse(response.body.to_s)
+      data  = data.pop if data.is_a?(Array) # some endpoints answer with an array of errors
+      error = data.is_a?(Hash) ? data['error'] : nil
+      return false if !error.is_a?(Hash)
+
+      error.values_at('type', 'param', 'code') == %w[invalid_request_error temperature unsupported_value]
+    rescue JSON::ParserError
+      false
+    end
+
+    # True when embed() is implemented; filters the Semantic Search connection dropdown.
+    def supports_embeddings?
+      false
     end
   end
 

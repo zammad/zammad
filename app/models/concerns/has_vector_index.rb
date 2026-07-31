@@ -55,6 +55,7 @@ module HasVectorIndex
       strategy:              vector_index_chunking_strategy,
       metadata:              data[:metadata] || {},
       skip_membership_check: fresh,
+      feature_identifier:    vector_index_feature_identifier,
     )
   end
 
@@ -94,5 +95,11 @@ module HasVectorIndex
 
   def vector_index_chunking_strategy
     :sentence
+  end
+
+  # The feature this record's index serves, so the embedding provider is resolved via that
+  # feature's routing (see AI::ProviderConnection.for_embeddings). nil = the `default` connection.
+  def vector_index_feature_identifier
+    nil
   end
 end

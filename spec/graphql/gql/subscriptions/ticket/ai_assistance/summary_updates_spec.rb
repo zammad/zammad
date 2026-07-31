@@ -65,11 +65,11 @@ RSpec.describe Gql::Subscriptions::Ticket::AIAssistance::SummaryUpdates, authent
       end
 
       let(:expected_result) do
-        AI::Service::Result.new(
+        Service::AI::Feature::Result[
           content:          expected_summary,
           fresh:            true,
           ai_analytics_run:
-        )
+        ]
       end
 
       let(:expected_broadcasted_summary) do

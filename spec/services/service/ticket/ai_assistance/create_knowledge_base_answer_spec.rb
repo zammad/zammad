@@ -23,11 +23,11 @@ RSpec.describe Service::Ticket::AIAssistance::CreateKnowledgeBaseAnswer do
   describe '#execute' do
     context 'when ai result contains content' do
       let(:ai_service_result) do
-        AI::Service::Result.new(
+        Service::AI::Feature::Result[
           content: {
             'title' => 'Generated draft title'
           }
-        )
+        ]
       end
 
       let(:kb_answer) { create(:knowledge_base_answer, category: knowledge_base_category) }
@@ -135,7 +135,7 @@ RSpec.describe Service::Ticket::AIAssistance::CreateKnowledgeBaseAnswer do
     end
 
     context 'when ai result content is blank' do
-      let(:ai_service_result) { AI::Service::Result.new(content: nil) }
+      let(:ai_service_result) { Service::AI::Feature::Result[content: nil] }
 
       before do
         knowledge_base_category

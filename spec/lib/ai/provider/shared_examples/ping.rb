@@ -7,7 +7,7 @@ RSpec.shared_examples 'provider/ping!' do
     end
 
     it 'does not raise and does not write to the log' do
-      described_class.ping!(Setting.get('ai_provider_config'))
+      described_class.ping!(default_ai_provider_config)
       expect(HttpLog).not_to have_received(:create)
     end
 
@@ -18,7 +18,7 @@ RSpec.shared_examples 'provider/ping!' do
       end
 
       it 'raises ResponseError with mapped error message' do
-        expect { described_class.ping!(Setting.get('ai_provider_config')) }
+        expect { described_class.ping!(default_ai_provider_config) }
           .to raise_error(AI::Provider::ResponseError, 'Invalid API key - please check your configuration')
       end
     end

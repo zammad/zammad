@@ -81,6 +81,7 @@ class AIAgent extends App.ControllerAIFeatureBase
         renderCallback: =>
           @renderPopovers()
           @renderAlert()
+          @renderProviderModal('ai_agent')
         validateOnSubmit: (params) ->
           @maybeHandleJSONParams('parse', params)
       )

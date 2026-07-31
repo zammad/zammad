@@ -26,7 +26,7 @@ RSpec.describe 'AI Assistance API endpoint', authenticated_as: :user, type: :req
       let(:text_tool) { create(:ai_text_tool) }
 
       before do
-        allow_any_instance_of(AI::Service::TextTool)
+        allow_any_instance_of(Service::AI::Feature::TextTool)
           .to receive(:execute)
           .and_return(output)
 
@@ -83,7 +83,7 @@ RSpec.describe 'AI Assistance API endpoint', authenticated_as: :user, type: :req
       let(:text_tool) { create(:ai_text_tool) }
 
       before do
-        allow_any_instance_of(AI::Service::TextTool)
+        allow_any_instance_of(Service::AI::Feature::TextTool)
           .to receive(:execute)
           .and_return(output)
       end

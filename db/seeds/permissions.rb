@@ -262,6 +262,12 @@ Permission.create_if_not_exists(
   active:      false,
 )
 Permission.create_if_not_exists(
+  name:        'admin.ai_feedback_logs',
+  label:       __('AI Feedback & Logs'),
+  description: __('Manage AI feedback and logs of your system.'),
+  preferences: { prio: 1338 }
+)
+Permission.create_if_not_exists(
   name:        'admin.integration',
   label:       __('Integrations'),
   description: __('Manage integrations of your system.'),

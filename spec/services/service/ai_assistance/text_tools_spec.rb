@@ -15,7 +15,7 @@ RSpec.describe Service::AIAssistance::TextTools do
       setup_ai_provider('open_ai')
       Setting.set('ai_assistance_text_tools', true)
 
-      allow_any_instance_of(AI::Service::TextTool)
+      allow_any_instance_of(Service::AI::Feature::TextTool)
         .to receive(:execute)
         .and_return(expected_output)
     end
@@ -49,17 +49,17 @@ RSpec.describe Service::AIAssistance::TextTools do
         let(:expected_content) { "t:#{ticket.customer.fullname} | c:#{customer.fullname} | u:#{user.fullname} | g:#{group.name} | o:#{organization.name} | m:-" }
 
         it 'renders all template variables in the instruction' do
-          ai_service_spy = instance_spy(AI::Service::TextTool)
-          allow(AI::Service::TextTool).to receive(:new).and_return(ai_service_spy)
+          ai_service_spy = instance_spy(Service::AI::Feature::TextTool)
+          allow(Service::AI::Feature::TextTool).to receive(:new).and_return(ai_service_spy)
           allow(ai_service_spy).to receive(:execute).and_return(expected_output)
 
           service_result
 
-          expect(AI::Service::TextTool).to have_received(:new).with(hash_including(
-                                                                      context_data: hash_including(
-                                                                        instruction: expected_content
-                                                                      )
-                                                                    ))
+          expect(Service::AI::Feature::TextTool).to have_received(:new).with(hash_including(
+                                                                               context_data: hash_including(
+                                                                                 instruction: expected_content
+                                                                               )
+                                                                             ))
         end
       end
 

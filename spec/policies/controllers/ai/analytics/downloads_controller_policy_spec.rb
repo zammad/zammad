@@ -16,13 +16,13 @@ describe Controllers::AI::Analytics::DownloadsControllerPolicy do
   let(:params) { {} }
 
   describe '#download?' do
-    context 'when user has admin.ai_provider permission' do
+    context 'when user has admin.ai_feedback_logs permission' do
       let(:user) { create(:admin) }
 
       it { is_expected.to permit_action(:download) }
     end
 
-    context 'when user does not have admin.ai_provider permission (agent)' do
+    context 'when user does not have admin.ai_feedback_logs permission (agent)' do
       let(:user) { create(:agent) }
 
       it { is_expected.to forbid_action(:download) }
@@ -38,7 +38,7 @@ describe Controllers::AI::Analytics::DownloadsControllerPolicy do
       let(:user) { create(:admin) }
 
       before do
-        Permission.find_by(name: 'admin.ai_provider').update!(active: false)
+        Permission.find_by(name: 'admin.ai_feedback_logs').update!(active: false)
       end
 
       it { is_expected.to forbid_action(:download) }

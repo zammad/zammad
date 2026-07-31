@@ -39,7 +39,7 @@ RSpec.describe Gql::Mutations::AIAssistance::TextTools::Run, :aggregate_failures
       Setting.set('ai_assistance_text_tools', true)
       setup_ai_provider
 
-      allow_any_instance_of(AI::Service::TextTool)
+      allow_any_instance_of(Service::AI::Feature::TextTool)
         .to receive(:execute)
         .and_return(output)
 

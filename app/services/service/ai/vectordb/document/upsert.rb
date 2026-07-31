@@ -8,9 +8,12 @@ module Service::AI::VectorDB::Document
   # removed. The whole sync — upserting the current chunks and deleting the stale ones — goes out as
   # a single AI::VectorDB#bulk request.
   class Upsert < Service::AI::VectorDB::Base
-    attr_reader :object_name, :o_id, :content, :content_meta_headers, :strategy, :metadata
+    attr_reader :object_name, :o_id, :content, :content_meta_headers, :strategy, :metadata, :feature_identifier
 
-    def initialize(object_name:, object_id:, content:, content_meta_headers: [], strategy: :sentence, metadata: {}, skip_membership_check: false)
+    # @param feature_identifier [String, Symbol, NilClass] the calling feature's identifier, so
+    #   the embedding provider is resolved via that feature's routing (see
+    #   AI::ProviderConnection.for_embeddings).
+    def initialize(object_name:, object_id:, content:, content_meta_headers: [], strategy: :sentence, metadata: {}, skip_membership_check: false, feature_identifier: nil)
       @object_name           = object_name
       @o_id                  = object_id
       @content               = content.to_s
@@ -18,6 +21,7 @@ module Service::AI::VectorDB::Document
       @strategy              = strategy
       @metadata              = metadata
       @skip_membership_check = skip_membership_check
+      @feature_identifier    = feature_identifier
     end
 
     def execute
@@ -69,7 +73,7 @@ module Service::AI::VectorDB::Document
       reused, misses = partition_cached(chunks, embedding_cache)
       return reused if misses.empty?
 
-      reused.merge(misses.zip(Service::AI::VectorDB::Embedding.execute(input: misses)).to_h)
+      reused.merge(misses.zip(Service::AI::VectorDB::Embedding.execute(input: misses, feature_identifier:)).to_h)
     end
 
     def partition_cached(chunks, cached)
@@ -98,7 +102,7 @@ module Service::AI::VectorDB::Document
     end
 
     def embedding_provider
-      @embedding_provider ||= AI::Provider.current&.new
+      @embedding_provider ||= AI::ProviderConnection.for_embeddings(feature_identifier)&.provider_instance
     end
 
     def embedding_model

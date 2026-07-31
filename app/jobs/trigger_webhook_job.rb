@@ -87,7 +87,8 @@ class TriggerWebhookJob < ApplicationJob
         bearer_token:            webhook.bearer_token,
         do_not_follow_redirects: true,
         log:                     {
-          facility: 'webhook',
+          facility:       'webhook',
+          related_object: webhook,
         },
         validate_safety:         { allow_private: true, allow_loopback: true },
       },

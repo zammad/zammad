@@ -25,15 +25,38 @@ RSpec.describe Service::Ticket::AIAssistance::GenerateKnowledgeBaseAnswerContent
     end
 
     context 'with valid ticket and articles' do
-      let(:ai_result) { AI::Service::Result.new(content: { 'title' => 'Generated title' }) }
+      let(:ai_result) { Service::AI::Feature::Result[content: { 'title' => 'Generated title' }] }
 
       before do
         create(:ticket_article, ticket:)
-        allow_any_instance_of(AI::Service::KnowledgeBaseAnswerFromTicket).to receive(:execute).and_return(ai_result)
+        allow_any_instance_of(Service::AI::Feature::KnowledgeBaseAnswerFromTicket).to receive(:execute).and_return(ai_result)
       end
 
       it 'returns AI generated content' do
         expect(service_result).to eq(ai_result)
+      end
+
+      # Until this feature has an option of its own, it follows the ticket summary one.
+      it 'requests image recognition when the ticket summary option is enabled' do
+        Setting.set(
+          'ai_assistance_ticket_summary_config',
+          Setting.get('ai_assistance_ticket_summary_config').merge('ocr_active' => true),
+        )
+        allow(Service::AI::Ticket::PreProcessArticleContent).to receive(:execute).and_return([])
+
+        service_result
+
+        expect(Service::AI::Ticket::PreProcessArticleContent)
+          .to have_received(:execute).with(hash_including(use_ocr: true))
+      end
+
+      it 'does not request image recognition while the option is disabled' do
+        allow(Service::AI::Ticket::PreProcessArticleContent).to receive(:execute).and_return([])
+
+        service_result
+
+        expect(Service::AI::Ticket::PreProcessArticleContent)
+          .to have_received(:execute).with(hash_including(use_ocr: false))
       end
     end
 

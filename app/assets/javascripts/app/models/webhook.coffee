@@ -32,6 +32,12 @@ Webhooks make it easy to send information about events within Zammad to third-pa
 You can use webhooks in Zammad to send ticket, article, and attachment data whenever a trigger is performed. Just create and configure your webhook with an HTTP(S) endpoint and relevant security settings, then configure a trigger to perform it.
 ''')
 
+  # The permission uiUrl's screen requires, so a link to it is only offered to who can follow it.
+  @uiPermission = 'admin.webhook'
+
+  uiUrl: =>
+    "#manage/webhook/1/id:#{@id}"
+
   displayName: ->
     return @name if !@endpoint
     if @active is false

@@ -4,7 +4,11 @@ class Setting::Validation::AIProvider < Setting::Validation::Base
 
   def run
     return result_success if !value
-    return result_success if value && Setting.get('ai_provider_config').present?
+    # Tolerate the pre-migration schema: on upgrades this validator runs before
+    # CreateAIProviderConnections (Issue5998AIProviderSettingValidation saves the
+    # setting earlier in the migration chain).
+    return result_success if !AI::ProviderConnection.table_exists?
+    return result_success if AI::ProviderConnection.exists?
 
     result_failed(__('AI provider is missing'))
   end

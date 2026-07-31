@@ -167,14 +167,16 @@ class UserAgent
     end
 
     record = {
-      direction: 'out',
-      facility:  options[:log][:facility],
-      url:       url,
-      status:    response_data[:code],
-      ip:        nil,
-      request:   request_data,
-      response:  response_data,
-      method:    request.method,
+      direction:      'out',
+      facility:       options[:log][:facility],
+      url:            url,
+      status:         response_data[:code],
+      ip:             nil,
+      request:        request_data,
+      response:       response_data,
+      method:         request.method,
+      # Lets the log point back at what caused the request; the caller passes the record.
+      related_object: options[:log][:related_object],
     }
     HttpLog.create(record)
   end

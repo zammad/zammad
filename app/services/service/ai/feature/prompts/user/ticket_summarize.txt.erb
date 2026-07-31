@@ -1,0 +1,20 @@
+<title><%= xml_text(@context_data[:ticket].title) %></title>
+<% @context_data[:prepared_articles]&.each do |article| -%>
+<article>
+  <sender_type><%= xml_text(article[:sender_type]) %></sender_type>
+  <sender_name><%= xml_text(article[:sender_name]) %></sender_name>
+  <created_at><%= xml_text(article[:created_at]) %></created_at>
+  <visibility><%= xml_text(article[:visibility]) %></visibility>
+  <text><%= cdata(article[:text]) %></text>
+  <%- if !article[:attachments].blank? -%>
+  <attachments>
+    <%- article[:attachments].each do |attachment| -%>
+    <attachment>
+      <ocr_text><%= cdata(attachment[:text]) %></ocr_text>
+      <content_type><%= xml_text(attachment[:type]) %></content_type>
+    </attachment>
+    <%- end -%>
+  </attachments>
+  <%- end -%>
+</article>
+<% end -%>

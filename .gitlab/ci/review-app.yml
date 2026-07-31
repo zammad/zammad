@@ -143,11 +143,27 @@
           {
             "name": "developer_mode",
             "value": true
+          },
+          {
+            "name": "ai_provider",
+            "value": true
           }
         ],
         "TextModuleLocale": {
           "Locale": "de-de"
-        }
+        },
+        "AI::ProviderConnections": [
+          {
+            "name": "zammad-ai",
+            "provider": "zammad_ai",
+            "config": {
+              "token": "dummy_token_the_real_one_is_coming_from_env_variable"
+            },
+            "default_chat": true,
+            "default_embedding": true,
+            "default_ocr": true
+          }
+        ]
       }
       JSON_FILE
   create_vhost_config:

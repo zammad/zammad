@@ -103,6 +103,12 @@ class KnowledgeBase::Answer::Translation < ApplicationModel
     Setting.get('vectordb_knowledge_base_chunking_strategy')&.to_sym
   end
 
+  # This index only serves the related-knowledge-base-answers search, so it is embedded via that
+  # feature's routing.
+  def vector_index_feature_identifier
+    Service::AI::Feature::KnowledgeBaseAnswerFromTicket.identifier
+  end
+
   # Answer attributes that feed this translation's vector document: category (indexing scope +
   # metadata) and the state timestamps (drive the visible_internally metadata).
   VECTOR_INDEX_ANSWER_ATTRIBUTES = %w[category_id internal_at published_at archived_at].freeze

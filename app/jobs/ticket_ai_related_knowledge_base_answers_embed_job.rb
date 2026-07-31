@@ -35,11 +35,12 @@ class TicketAIRelatedKnowledgeBaseAnswersEmbedJob < AIJob
   private
 
   def embedding_for_search(ticket, locale, current_user, embedding_source)
-    return Service::AI::Ticket::EmbedSummary.with_current_user(current_user).execute(ticket:, locale:) if embedding_source == :summary
+    feature_identifier = Service::AI::Feature::KnowledgeBaseAnswerFromTicket.identifier
+    return Service::AI::Ticket::EmbedSummary.with_current_user(current_user).execute(ticket:, locale:, feature_identifier:) if embedding_source == :summary
 
     # :auto - content by default, summary fallback when the content is too large
-    Service::AI::Ticket::EmbedContent.execute(ticket:)
+    Service::AI::Ticket::EmbedContent.execute(ticket:, feature_identifier:)
   rescue Service::AI::Ticket::EmbedContent::ContentTooLargeError
-    Service::AI::Ticket::EmbedSummary.with_current_user(current_user).execute(ticket:, locale:)
+    Service::AI::Ticket::EmbedSummary.with_current_user(current_user).execute(ticket:, locale:, feature_identifier:)
   end
 end

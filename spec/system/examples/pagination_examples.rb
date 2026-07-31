@@ -6,18 +6,26 @@ RSpec.shared_examples 'pagination', authenticated_as: :authenticate do |model:, 
   let(:klass)         { klass }
   let(:base_scope)    { klass.try(:changeable) || klass }
   let(:indexable)     { Models.indexable.include?(klass) }
+  let(:main_column)   { main_column }
 
   def authenticate
     create_list(model, 500, **create_params)
     true
   end
 
+  # The main column is not necessarily the first cell - a table may lead with an icon column.
+  def main_column_text(row)
+    index = page.all('.js-tableHead').index { |header| header['data-column-key'] == main_column.to_s }
+
+    page.first("#{row} td:nth-child(#{(index || 0) + 1})").text.strip
+  end
+
   def current_first_row
-    page.first('.js-tableBody tr:first-child td').text.strip
+    main_column_text('.js-tableBody tr:first-child')
   end
 
   def current_last_row
-    page.first('.js-tableBody tr:last-child td').text.strip
+    main_column_text('.js-tableBody tr:last-child')
   end
 
   def wait_until_first_and_last_changed(first_row, last_row)

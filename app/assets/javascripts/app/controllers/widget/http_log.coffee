@@ -1,6 +1,7 @@
 class App.HttpLog extends App.Controller
   events:
-    'click .js-record': 'show'
+    'click .js-relatedObject': 'openRelatedObject'
+    'click .js-record':        'show'
 
   constructor: ->
     super
@@ -23,10 +24,48 @@ class App.HttpLog extends App.Controller
     )
 
   render: =>
+    # Resolved up front rather than per row, so the view knows whether any record has a reference at
+    # all: most facilities set none, and they should not get an empty column.
+    relatedObjects = {}
+    for record in @records
+      related = @relatedObject(record)
+      relatedObjects[record.id] = related if related
+
     @html App.view('widget/http_log')(
       records: @records
       description: @description
+      relatedObjects: relatedObjects
+      hasRelatedObjects: !_.isEmpty(relatedObjects)
     )
+
+  # Names whatever caused the request, linking to its screen filtered down to that record. Works for
+  # any model providing uiUrl (see App.Model), so no facility needs special casing here.
+  relatedObject: (record) ->
+    return if !record.related_object_type or !record.related_object_id or !record.related_object_label
+
+    # The App namespace holds controllers next to the models, so resolving is not enough: App.HttpLog
+    # for example is this controller, and instantiating it here would break the whole table.
+    model = App[record.related_object_type.replace(/::/g, '')]
+    return if !model or !(model.prototype instanceof App.Model)
+
+    {
+      label: record.related_object_label
+      url:   @relatedObjectUrl(model, record.related_object_id)
+    }
+
+  # Nothing when the screen cannot be reached, leaving the reference named but unlinked: a model
+  # without its own uiUrl would only yield a dead '#', and following a link to a screen the viewer
+  # has no permission for just bounces off permissionCheckRedirect.
+  relatedObjectUrl: (model, id) ->
+    return if model.prototype.uiUrl is App.Model.prototype.uiUrl
+    return if model.uiPermission and !App.User.current()?.permission(model.uiPermission)
+
+    # uiUrl only needs the id, so an unsaved instance is enough and nothing has to be fetched.
+    new model(id: id).uiUrl()
+
+  # The row opens the log entry, so the reference has to keep its click to itself.
+  openRelatedObject: (e) ->
+    e.stopPropagation()
 
   show: (e) =>
     e.preventDefault()

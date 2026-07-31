@@ -16,13 +16,13 @@ RSpec.describe 'AI::Analytics::DownloadsController', :aggregate_failures, authen
     let(:user)             { create(:admin) }
 
     shared_examples 'handles permissions' do
-      context 'when user has admin.ai_provider permission' do
+      context 'when user has admin.ai_feedback_logs permission' do
         it 'response is success' do
           expect(response).to have_http_status(:ok)
         end
       end
 
-      context 'when user does not have admin.ai_provider permission' do
+      context 'when user does not have admin.ai_feedback_logs permission' do
         let(:user) { create(:agent) }
 
         it 'response is forbidden' do

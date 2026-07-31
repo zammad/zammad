@@ -6,7 +6,7 @@ class Service::Ticket::AIAssistance::Summarize < Service::Base
 
   requires_current_user!
 
-  # @param persistence_strategy [Symbol, NilClass] @see AI::Service#initialize
+  # @param persistence_strategy [Symbol, NilClass] @see Service::AI::Feature#initialize
   def initialize(ticket:, locale: nil, regeneration_of: nil, persistence_strategy: :stored_or_request)
     @ticket               = ticket
     @locale               = locale
@@ -24,22 +24,32 @@ class Service::Ticket::AIAssistance::Summarize < Service::Base
     articles = ticket.articles.without_system_notifications
 
     if persistence_strategy != :stored_only
-      prepared_articles = Service::AI::Ticket::PreProcessArticleContent.execute(articles:, skip_quotes_strip_first_article: true)
+      prepared_articles = Service::AI::Ticket::PreProcessArticleContent
+        .execute(
+          articles:,
+          skip_quotes_strip_first_article: true,
+          use_ocr:                         summary_config.fetch('ocr_active', false),
+          feature_identifier:              Service::AI::Feature::TicketSummarize.identifier
+        )
     end
 
-    summarize = AI::Service::TicketSummarize.new(
+    Service::AI::Feature::TicketSummarize.execute(
       current_user:,
       locale:,
       context_data:         {
         ticket:,
         articles:,
         prepared_articles:,
-        config:            Setting.get('ai_assistance_ticket_summary_config')
+        config:            summary_config
       },
       persistence_strategy:,
       regeneration_of:
     )
+  end
 
-    summarize.execute
+  private
+
+  def summary_config
+    @summary_config ||= Setting.get('ai_assistance_ticket_summary_config')
   end
 end

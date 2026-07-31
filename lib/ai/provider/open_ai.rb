@@ -23,28 +23,11 @@ class AI::Provider::OpenAI < AI::Provider
     'text-embedding-3-small' => 8191
   }.freeze
 
-  def self.ping!(config)
-    response = UserAgent.get(
-      "#{OPENAI_API_BASE_URL}/models",
-      {},
-      {
-        **REQUEST_TIMEOUT_OPTIONS,
-        verify_ssl:   true,
-        bearer_token: config[:token],
-        json:         true,
-        log:          {
-          facility:          'AI::Provider',
-          log_only_on_error: true,
-        },
-      },
-    )
-
-    validate_response!(response)
-
-    nil
+  def self.supports_embeddings?
+    true
   end
 
-  def self.check_temperature_support!(config)
+  def self.check_temperature_support!(config, related_object: nil)
     response = UserAgent.post(
       "#{OPENAI_API_BASE_URL}/chat/completions",
       {
@@ -59,23 +42,17 @@ class AI::Provider::OpenAI < AI::Provider
         verify_ssl:   true,
         bearer_token: config[:token],
         json:         true,
-        log:          {
-          facility:          'AI::Provider',
-          log_only_on_error: true,
-        },
+        log:          log_options(only_on_error: true, related_object:),
       },
     )
 
     return true if response.success?
+    return false if temperature_unsupported?(response)
 
-    data = JSON.parse(response.body)
-    message = data.dig('error', 'message')
-    type = data.dig('error', 'type')
-    param = data.dig('error', 'param')
-    code = data.dig('error', 'code')
-    return false if type == 'invalid_request_error' && param == 'temperature' && code == 'unsupported_value'
+    # Not a temperature quirk but a broken config: raise with the mapped provider message.
+    validate_response!(response)
 
-    raise message
+    true
   rescue => e
     raise CheckTemperatureSupportError, e.message
   end
@@ -104,9 +81,7 @@ class AI::Provider::OpenAI < AI::Provider
         verify_ssl:   true,
         bearer_token: config[:token],
         json:         true,
-        log:          {
-          facility: 'AI::Provider',
-        },
+        log:          log_options,
       },
     )
 
@@ -128,6 +103,7 @@ class AI::Provider::OpenAI < AI::Provider
         verify_ssl:   true,
         bearer_token: config[:token],
         json:         true,
+        log:          log_options,
       },
     )
 

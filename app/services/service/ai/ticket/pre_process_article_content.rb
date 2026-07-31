@@ -5,17 +5,22 @@ class Service::AI::Ticket::PreProcessArticleContent < Service::Base
   MARKER_START     = "[OCR_TEXT_START]\n".freeze
   MARKER_END       = "\n[OCR_TEXT_END]".freeze
 
-  attr_reader :articles, :skip_quotes_strip_first_article, :skip_ocr, :link_style
+  attr_reader :articles, :skip_quotes_strip_first_article, :use_ocr, :feature_identifier, :link_style
 
-  def initialize(articles:, skip_quotes_strip_first_article: false, skip_ocr: false, link_style: :markdown)
+  # @param use_ocr [Boolean] recognize image texts; the calling feature decides, since whether
+  #   its admins opted into image recognition is part of that feature's configuration.
+  # @param feature_identifier [String, Symbol, NilClass] the calling feature's identifier, so
+  #   OCR's provider is resolved via that feature's routing (see AI::ProviderConnection.for_ocr).
+  def initialize(articles:, skip_quotes_strip_first_article: false, use_ocr: false, feature_identifier: nil, link_style: :markdown)
     @articles                        = articles
     @skip_quotes_strip_first_article = skip_quotes_strip_first_article
-    @skip_ocr                        = skip_ocr
+    @use_ocr                         = use_ocr
+    @feature_identifier              = feature_identifier
     @link_style                      = link_style
   end
 
   def execute
-    return prepared_articles if !ocr_active?
+    return prepared_articles if !use_ocr
 
     images = collect_all_images(prepared_articles)
     image_texts = recognize_image_texts(images)
@@ -24,17 +29,13 @@ class Service::AI::Ticket::PreProcessArticleContent < Service::Base
 
   private
 
-  def ocr_active?
-    !skip_ocr && Setting.get('ai_provider_config')[:ocr_active]
-  end
-
   def non_plain_article?(article)
     article.content_type && article.content_type !~ %r{text/plain}i
   end
 
   def prepared_articles
     @prepared_articles ||= articles.map do |article|
-      if ocr_active?
+      if use_ocr
         inline_images = select_inline_image_attachments(article)
         image_attachments = select_image_attachments(article, inline_images)
       end
@@ -42,13 +43,13 @@ class Service::AI::Ticket::PreProcessArticleContent < Service::Base
       text = article.body || ''
 
       # Replace inline images in the HTML body with placeholders.
-      text = replace_inline_images_with_placeholders(text, inline_images) if ocr_active? && non_plain_article?(article)
+      text = replace_inline_images_with_placeholders(text, inline_images) if use_ocr && non_plain_article?(article)
 
       # Remove quotes and strip HTML to get plain text.
       text = strip_html_and_maybe_remove_quotes(text, article)
 
       # Remove inline images that were stripped from the body (e.g. in the quotes or signatures).
-      inline_images = remove_stripped_inline_images(inline_images, text) if ocr_active? && non_plain_article?(article)
+      inline_images = remove_stripped_inline_images(inline_images, text) if use_ocr && non_plain_article?(article)
 
       {
         id:                article.id,
@@ -128,9 +129,7 @@ class Service::AI::Ticket::PreProcessArticleContent < Service::Base
     image_texts = {}
 
     images.each do |image|
-      ocr_result = AI::Service::OCR
-          .new(context_data: { store: image }, prompt_image: image)
-          .execute
+      ocr_result = Service::AI::Feature::OCR.execute(context_data: { store: image }, prompt_image: image, additional_options: { feature_identifier: })
 
       image_texts[image.store_file_id] = ocr_result.content
     rescue

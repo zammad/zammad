@@ -749,11 +749,14 @@ class CreateBase < ActiveRecord::Migration[4.2]
       t.column :ip,                   :string, limit: 50,    null: true
       t.column :request,              :text,                 null: false
       t.column :response,             :text,                 null: false
+      t.column :related_object_type,  :string, limit: 100,   null: true
+      t.column :related_object_id,    :integer,              null: true
       t.column :updated_by_id,        :integer,              null: true
       t.column :created_by_id,        :integer,              null: true
       t.timestamps limit: 3, null: false
     end
     add_index :http_logs, [:facility]
+    add_index :http_logs, %i[related_object_type related_object_id]
     add_index :http_logs, [:created_by_id]
     add_index :http_logs, [:created_at]
     add_foreign_key :http_logs, :users, column: :created_by_id
@@ -1038,6 +1041,35 @@ class CreateBase < ActiveRecord::Migration[4.2]
 
       t.index %i[ai_analytics_run_id user_id], unique: true
       t.index %i[ai_analytics_run_id created_at], name: 'index_ai_analytics_usages_on_run_id_and_created_at'
+    end
+
+    create_table :ai_provider_connections do |t|
+      t.string  :name,              limit: 250, null: false
+      t.string  :provider,          limit: 250, null: false
+      t.jsonb   :config,                        null: false, default: {}
+      t.boolean :default_chat,                  null: false, default: false
+      t.boolean :default_embedding,             null: false, default: false
+      t.boolean :default_ocr,                   null: false, default: false
+      t.jsonb   :status,                        null: false, default: {}
+
+      t.timestamps limit: 3
+
+      t.index :name, unique: true
+      t.index :default_chat
+      t.index :default_embedding
+      t.index :default_ocr
+    end
+
+    create_table :ai_feature_providers do |t|
+      t.string :identifier, null: false
+
+      t.references :provider_connection, null: false, foreign_key: { to_table: :ai_provider_connections }
+
+      t.jsonb :options, null: false, default: {}
+
+      t.timestamps limit: 3
+
+      t.index :identifier, unique: true
     end
 
     create_table :recent_closes do |t|

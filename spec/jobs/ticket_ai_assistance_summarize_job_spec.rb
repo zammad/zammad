@@ -19,7 +19,7 @@ RSpec.describe TicketAIAssistanceSummarizeJob, type: :job do
     end
 
     context 'when Summarize service returns' do
-      let(:service_result) { AI::Service::Result.new(content:, ai_analytics_run:) }
+      let(:service_result) { Service::AI::Feature::Result[content:, ai_analytics_run:] }
       let(:content)          { nil }
       let(:ai_analytics_run) { nil }
 

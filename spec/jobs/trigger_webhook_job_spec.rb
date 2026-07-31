@@ -213,6 +213,10 @@ RSpec.describe TriggerWebhookJob, type: :job do
       end
     end
 
+    it 'attributes the HTTP log to the webhook' do
+      expect(HttpLog.last.related_object).to eq(webhook)
+    end
+
     context 'when response is a redirect' do
       let(:response_status)  { 301 }
       let(:response_headers) { { Location: 'http://redirect.target/' } }

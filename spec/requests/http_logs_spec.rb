@@ -23,6 +23,37 @@ RSpec.describe 'HTTP Logs endpoints', aggregate_failures: true, type: :request d
         expect(json_response.size).to eq(3)
       end
 
+      it 'returns the object that caused the request, including a label to link with' do
+        webhook = create(:webhook, name: 'Order system')
+        create(:http_log, facility: 'webhook', related_object: webhook)
+
+        get '/api/v1/http_logs/webhook', as: :json
+
+        expect(response).to have_http_status(:ok)
+        expect(json_response.first).to include(
+          'related_object_type'  => 'Webhook',
+          'related_object_id'    => webhook.id,
+          'related_object_label' => 'Order system',
+        )
+      end
+
+      it 'leaves the reference empty for logs without one' do
+        get '/api/v1/http_logs/cti', as: :json
+
+        expect(response).to have_http_status(:ok)
+        expect(json_response.first).to include('related_object_type' => nil, 'related_object_label' => nil)
+      end
+
+      # Logs outlive their cause: a removed addon or a renamed class must not break the log screen.
+      it 'still lists logs whose related object type cannot be resolved' do
+        create(:http_log, facility: 'cti', related_object_type: 'SomeRemovedAddon::Thing', related_object_id: 1)
+
+        get '/api/v1/http_logs/cti', as: :json
+
+        expect(response).to have_http_status(:ok)
+        expect(json_response.first).to include('related_object_label' => nil)
+      end
+
       it 'returns only logs for the requested facility' do
         get '/api/v1/http_logs/cti', as: :json
 
@@ -103,6 +134,18 @@ RSpec.describe 'HTTP Logs endpoints', aggregate_failures: true, type: :request d
         end.to change(HttpLog, :count).by(1)
 
         expect(HttpLog.last.facility).to eq('webhook')
+      end
+
+      # Only the code performing the request knows what caused it, so the API must not set it.
+      it 'ignores a reference given by the caller' do
+        organization = create(:organization)
+
+        post '/api/v1/http_logs',
+             params: payload.merge(related_object_type: 'Organization', related_object_id: organization.id),
+             as:     :json
+
+        expect(response).to have_http_status(:created)
+        expect(HttpLog.last).to have_attributes(related_object_type: nil, related_object_id: nil)
       end
     end
 

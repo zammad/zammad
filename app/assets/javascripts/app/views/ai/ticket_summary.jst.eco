@@ -63,4 +63,15 @@
       </div>
     </form>
   </div>
+
+  <div class="settings-entry">
+    <div class="page-header-title form-controls">
+      <div class="zammad-switch zammad-switch--small js-aiAssistanceTicketSummaryOCRActive">
+        <input name="enableAIAssistanceTicketSummaryOCR" type="checkbox" id="enableAIAssistanceTicketSummaryOCR" <% if @ocrActive: %>checked<% end %>>
+        <label for="enableAIAssistanceTicketSummaryOCR"></label>
+      </div>
+      <h2><%- @T('Image text recognition (OCR)') %></h2>
+    </div>
+    <small><%- @T('Recognize text content in article image attachments.') %></small>
+  </div>
 </div>

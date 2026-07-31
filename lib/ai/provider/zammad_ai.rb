@@ -27,7 +27,11 @@ class AI::Provider::ZammadAI < AI::Provider
     ENV['ZAMMAD_AI_TOKEN'] || config[:token]
   end
 
-  def self.ping!(config)
+  def self.supports_embeddings?
+    true
+  end
+
+  def self.ping!(config, related_object: nil)
     response = UserAgent.get(
       "#{base_url(config)}/api/v1/me",
       {},
@@ -36,10 +40,7 @@ class AI::Provider::ZammadAI < AI::Provider
         verify_ssl:   true,
         bearer_token: token(config),
         json:         true,
-        log:          {
-          facility:          'AI::Provider',
-          log_only_on_error: true,
-        },
+        log:          log_options(only_on_error: true, related_object:),
       },
     )
 
@@ -74,9 +75,7 @@ class AI::Provider::ZammadAI < AI::Provider
         verify_ssl:   true,
         bearer_token: self.class.token(config),
         json:         true,
-        log:          {
-          facility: 'AI::Provider',
-        },
+        log:          log_options,
       },
     )
 
@@ -110,9 +109,7 @@ class AI::Provider::ZammadAI < AI::Provider
         verify_ssl:   true,
         bearer_token: self.class.token(config),
         json:         true,
-        log:          {
-          facility: 'AI::Provider',
-        },
+        log:          log_options,
       },
     )
 

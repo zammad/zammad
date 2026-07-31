@@ -31,7 +31,7 @@ RSpec.describe 'Richtext Bubble Menu', authenticated_as: :authenticate, type: :s
   end
 
   before do
-    allow_any_instance_of(AI::Service::TextTool).to receive(:execute).and_return(output)
+    allow_any_instance_of(Service::AI::Feature::TextTool).to receive(:execute).and_return(output)
   end
 
   shared_examples 'showing text tools dropdown and replacing selected text' do

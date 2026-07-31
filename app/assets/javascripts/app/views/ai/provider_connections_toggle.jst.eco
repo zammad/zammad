@@ -1,0 +1,5 @@
+<%# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ %>
+<div class="zammad-switch zammad-switch--small js-ai-provider-toggle">
+  <input name="ai_provider" type="checkbox" id="setting-ai_provider" aria-label="<%- @T('Enable AI provider') %>" <% if @ai_provider: %>checked<% end %>>
+  <label for="setting-ai_provider" aria-hidden="true"></label>
+</div>

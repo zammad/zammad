@@ -3,31 +3,7 @@
 class AI::Provider::Azure < AI::Provider
   include AI::Provider::Concerns::HandlesOpenAIMessages
 
-  def self.ping!(config)
-    url_models = config[:url_completions].gsub(%r{/deployments/.*$}, '/v1/models')
-
-    response = UserAgent.get(
-      url_models,
-      {},
-      {
-        **REQUEST_TIMEOUT_OPTIONS,
-        verify_ssl:   true,
-        bearer_token: config[:token],
-        json:         true,
-        log:          {
-          facility:          'AI::Provider',
-          log_only_on_error: true,
-        },
-      },
-    )
-
-    # binding.pry
-    validate_response!(response)
-
-    nil
-  end
-
-  def self.check_temperature_support!(config)
+  def self.check_temperature_support!(config, related_object: nil)
     response = UserAgent.post(
       config[:url_completions],
       {
@@ -41,24 +17,17 @@ class AI::Provider::Azure < AI::Provider
         verify_ssl:   true,
         bearer_token: config[:token],
         json:         true,
-        log:          {
-          facility:          'AI::Provider',
-          log_only_on_error: true,
-        },
+        log:          log_options(only_on_error: true, related_object:),
       },
     )
 
     return true if response.success?
+    return false if temperature_unsupported?(response)
 
-    data = JSON.parse(response.body)
-    data = data.pop if data.is_a?(Array) # Handle case when response is an array of errors
-    message = data.dig('error', 'message')
-    type = data.dig('error', 'type')
-    param = data.dig('error', 'param')
-    code = data.dig('error', 'code')
-    return false if type == 'invalid_request_error' && param == 'temperature' && code == 'unsupported_value'
+    # Not a temperature quirk but a broken config: raise with the mapped provider message.
+    validate_response!(response)
 
-    raise message
+    true
   rescue => e
     raise CheckTemperatureSupportError, e.message
   end
@@ -75,7 +44,7 @@ class AI::Provider::Azure < AI::Provider
   def chat_url_for(prompt_image:)
     return config[:url_completions] if !prompt_image.is_a?(::Store)
 
-    config[:url_ocr] || config[:url_completions]
+    config[:url_ocr].presence || config[:url_completions]
   end
 
   private
@@ -100,9 +69,7 @@ class AI::Provider::Azure < AI::Provider
         verify_ssl:   true,
         bearer_token: config[:token],
         json:         true,
-        log:          {
-          facility: 'AI::Provider',
-        },
+        log:          log_options,
       },
     )
 

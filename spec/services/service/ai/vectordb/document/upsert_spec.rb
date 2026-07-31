@@ -16,16 +16,16 @@ RSpec.describe Service::AI::VectorDB::Document::Upsert, :aggregate_failures do
   let(:bulk_calls)           { [] }
   let(:metadata_patches)     { [] }
   let(:cache)                { Service::AI::VectorDB::Embedding::Cache }
-  let(:model)                { AI::Provider.current.new.options[:embedding_model] }
+  let(:model)                { AI::ProviderConnection.for_embeddings(nil).provider_instance.options[:embedding_model] }
 
   before do
-    setup_ai_provider('open_ai')
+    setup_ai_provider('open_ai', token: 'secret-token')
     allow_any_instance_of(described_class).to receive(:ai_vector_db).and_return(vector_db)
     allow(vector_db).to receive(:build_identifier) { |**args| id_for(args[:content]) }
     allow(vector_db).to receive(:bulk) { |**kwargs| bulk_calls << kwargs }
     allow(vector_db).to receive(:update_metadata) { |**kwargs| metadata_patches << kwargs }
     # One batched embedding call; returns one vector per input chunk.
-    allow(Service::AI::VectorDB::Embedding).to receive(:execute) { |input:| Array.new(input.size) { embedding } }
+    allow(Service::AI::VectorDB::Embedding).to receive(:execute) { |input:, **| Array.new(input.size) { embedding } }
   end
 
   # The content-addressed document id of a chunk, mirroring AI::VectorDB#build_identifier.
@@ -48,7 +48,7 @@ RSpec.describe Service::AI::VectorDB::Document::Upsert, :aggregate_failures do
     it 'embeds the new chunk and writes it in one bulk request' do
       upsert
 
-      expect(Service::AI::VectorDB::Embedding).to have_received(:execute).once.with(input: [content])
+      expect(Service::AI::VectorDB::Embedding).to have_received(:execute).once.with(input: [content], feature_identifier: nil)
       expect(bulk_call[:upserts]).to eq([upsert_op(content)])
       expect(bulk_call[:deletes]).to eq([])
       expect(metadata_patches).to be_empty
@@ -85,7 +85,7 @@ RSpec.describe Service::AI::VectorDB::Document::Upsert, :aggregate_failures do
     it 'removes the stale chunk and embeds + upserts the new one in one bulk request' do
       upsert
 
-      expect(Service::AI::VectorDB::Embedding).to have_received(:execute).with(input: [content])
+      expect(Service::AI::VectorDB::Embedding).to have_received(:execute).with(input: [content], feature_identifier: nil)
       expect(bulk_call[:upserts]).to eq([upsert_op(content)])
       expect(bulk_call[:deletes]).to eq([id_for('An old answer.')])
       expect(metadata_patches).to be_empty
@@ -132,7 +132,7 @@ RSpec.describe Service::AI::VectorDB::Document::Upsert, :aggregate_failures do
     it 'prefixes the headers onto the embedded and upserted chunk' do
       upsert
 
-      expect(Service::AI::VectorDB::Embedding).to have_received(:execute).once.with(input: [expected_chunk])
+      expect(Service::AI::VectorDB::Embedding).to have_received(:execute).once.with(input: [expected_chunk], feature_identifier: nil)
       expect(bulk_call[:upserts]).to eq([upsert_op(expected_chunk)])
     end
   end

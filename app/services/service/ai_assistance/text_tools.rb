@@ -21,7 +21,7 @@ class Service::AIAssistance::TextTools < Service::Base
     raise ArgumentError, __('AI assistance text tool is invalid.') if !text_tool.is_a?(AI::TextTool)
     raise ArgumentError, __('AI assistance text tool is inactive.') if !text_tool.active?
 
-    ai_text_tool_service = AI::Service::TextTool.new(
+    Service::AI::Feature::TextTool.execute(
       current_user:,
       context_data:    {
         instruction:        rendered_text_tool_instruction,
@@ -31,8 +31,6 @@ class Service::AIAssistance::TextTools < Service::Base
       },
       regeneration_of:,
     )
-
-    ai_text_tool_service.execute
   end
 
   private

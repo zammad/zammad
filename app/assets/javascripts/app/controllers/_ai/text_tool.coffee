@@ -108,6 +108,7 @@ class TextTool extends App.ControllerAIFeatureBase
 
   renderCallback: =>
     @renderAlert()
+    @renderProviderModal('text_tool')
 
     if @hasUpdatedConfig
       @hasUpdatedConfig = false

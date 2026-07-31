@@ -23,9 +23,7 @@ class AI::Provider::CustomOpenAI < AI::Provider
       **REQUEST_TIMEOUT_OPTIONS,
       verify_ssl: true,
       json:       true,
-      log:        {
-        facility: 'AI::Provider',
-      },
+      log:        log_options,
     }
 
     # Token is optional since target host might not require authentication
@@ -47,32 +45,7 @@ class AI::Provider::CustomOpenAI < AI::Provider
     raise NotImplementedError, 'not supported for custom OpenAI Compatible providers'
   end
 
-  def self.ping!(config)
-    request_options = {
-      **REQUEST_TIMEOUT_OPTIONS,
-      verify_ssl: true,
-      json:       true,
-      log:        {
-        facility:          'AI::Provider',
-        log_only_on_error: true,
-      },
-    }
-
-    # Token is optional since target host might not require authentication
-    request_options[:bearer_token] = config[:token] if config[:token].present?
-
-    response = UserAgent.get(
-      "#{config[:url]}/models",
-      {},
-      request_options,
-    )
-
-    validate_response!(response)
-
-    nil
-  end
-
-  def self.check_temperature_support!(config)
+  def self.check_temperature_support!(config, related_object: nil)
     request_body = {
       model:       config[:model],
       messages:    [{ role: 'user', content: 'Hello' }],
@@ -84,10 +57,7 @@ class AI::Provider::CustomOpenAI < AI::Provider
       **REQUEST_TIMEOUT_OPTIONS,
       verify_ssl: true,
       json:       true,
-      log:        {
-        facility:          'AI::Provider',
-        log_only_on_error: true,
-      },
+      log:        log_options(only_on_error: true, related_object:),
     }
 
     # Token is optional since target host might not require authentication
@@ -100,16 +70,12 @@ class AI::Provider::CustomOpenAI < AI::Provider
     )
 
     return true if response.success?
+    return false if temperature_unsupported?(response)
 
-    data = JSON.parse(response.body)
-    data = data.pop if data.is_a?(Array) # Handle case when response is an array of errors
-    message = data.dig('error', 'message')
-    type = data.dig('error', 'type')
-    param = data.dig('error', 'param')
-    code = data.dig('error', 'code')
-    return false if type == 'invalid_request_error' && param == 'temperature' && code == 'unsupported_value'
+    # Not a temperature quirk but a broken config: raise with the mapped provider message.
+    validate_response!(response)
 
-    raise message
+    true
   rescue => e
     raise CheckTemperatureSupportError, e.message
   end

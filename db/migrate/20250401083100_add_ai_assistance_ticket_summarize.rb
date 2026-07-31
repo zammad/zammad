@@ -46,7 +46,9 @@ class AddAIAssistanceTicketSummarize < ActiveRecord::Migration[7.2]
       preferences: {
         permission:  ['admin.ai'],
         validations: [
-          'Setting::Validation::AIProviderConfig',
+          # This validation is now gone, and replaying this migration must not constantize it
+          # (CreateAIProviderConnections drops the setting itself later in the chain).
+          # 'Setting::Validation::AIProviderConfig',
         ],
       },
       frontend:    false,

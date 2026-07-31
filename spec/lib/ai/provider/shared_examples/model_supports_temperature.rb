@@ -17,7 +17,7 @@ RSpec.shared_examples 'provider/model_supports_temperature' do
 
     context 'when model_temperature_support is false' do
       before do
-        Setting.set('ai_provider_config', Setting.get('ai_provider_config').merge(model_temperature_support: false), validate: false)
+        update_ai_provider_config(model_temperature_support: false)
       end
 
       it 'does not include temperature in the request', :aggregate_failures do

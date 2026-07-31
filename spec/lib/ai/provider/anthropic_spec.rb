@@ -5,22 +5,13 @@ require_relative 'shared_examples/ping'
 require_relative 'shared_examples/embed'
 
 RSpec.describe AI::Provider::Anthropic, integration: true, required_envs: %w[ANTHROPIC_API_KEY], use_vcr: true do
-  subject(:ai_provider) { described_class.new(options: { json_response: true }) }
+  subject(:ai_provider) { described_class.new(config: default_ai_provider_config, options: { json_response: true }) }
 
   let(:prompt_system) { '' }
   let(:prompt_user)   { 'This is a connection test. Return in unprettified JSON \'{ "connected": "true" }\' if you got the message. Respond in plain JSON format only and do not wrap it in code block markers.' }
 
   before do
-    # Ping is tested manually, so we don't need to have this in place for setting the provider.
-    setting = Setting.find_by(name: 'ai_provider_config')
-    setting.update!(preferences: {})
-
-    Setting.set('ai_provider_config', {
-                  token:    ENV['ANTHROPIC_API_KEY'],
-                  provider: 'anthropic',
-                })
-
-    Setting.set('ai_provider', true)
+    setup_ai_provider('anthropic', token: ENV['ANTHROPIC_API_KEY'])
   end
 
   include_examples 'provider/ping!'
@@ -36,7 +27,7 @@ RSpec.describe AI::Provider::Anthropic, integration: true, required_envs: %w[ANT
 
       context 'with a valid model' do
         before do
-          Setting.set('ai_provider_config', Setting.get('ai_provider_config').merge(model: 'claude-haiku-4-5'))
+          update_ai_provider_config(model: 'claude-haiku-4-5')
         end
 
         it 'does exchange data with anthropic endpoint' do
@@ -46,7 +37,7 @@ RSpec.describe AI::Provider::Anthropic, integration: true, required_envs: %w[ANT
 
       context 'with an invalid model' do
         before do
-          Setting.set('ai_provider_config', Setting.get('ai_provider_config').merge(model: 'nonexisting-model'))
+          update_ai_provider_config(model: 'nonexisting-model')
         end
 
         it 'raises an error' do

@@ -96,12 +96,91 @@ AAAFoAAAAAAAAAkAAAAAEAAACQAAAAAQADk=" })
     end
   end
 
+  describe '#related_object_label' do
+    it 'returns the name of the related object' do
+      http_log.related_object = create(:webhook, name: 'Order system')
+
+      expect(http_log.related_object_label).to eq('Order system')
+    end
+
+    it 'returns nil without a related object' do
+      expect(http_log.related_object_label).to be_nil
+    end
+
+    it 'returns nil for a related object that no longer exists' do
+      webhook = create(:webhook)
+      persisted = create(:http_log, related_object: webhook)
+      webhook.destroy!
+
+      expect(persisted.reload.related_object_label).to be_nil
+    end
+
+    # A removed addon or a renamed class leaves rows behind whose type cannot be resolved anymore.
+    it 'returns nil for a type that cannot be resolved' do
+      http_log.related_object_type = 'SomeRemovedAddon::Thing'
+      http_log.related_object_id   = 1
+
+      expect { http_log.related_object_label }.not_to raise_error
+      expect(http_log.related_object_label).to be_nil
+    end
+
+    # 'AI::Provider' resolves, but is a plain class - the association lookup would raise on it.
+    it 'returns nil for a type that resolves to something other than a model' do
+      http_log.related_object_id = 1
+
+      ['AI::Provider', 'String', 'Kernel'].each do |type|
+        http_log.related_object_type = type
+
+        expect { http_log.related_object_label }.not_to raise_error
+        expect(http_log.related_object_label).to be_nil
+      end
+    end
+  end
+
+  describe '.related_object_labels' do
+    let(:webhook)      { create(:webhook, name: 'Order system') }
+    let(:connection)   { create(:ai_provider_connection, name: 'Main OpenAI') }
+    let(:referencing)  { [create(:http_log, related_object: webhook), create(:http_log, related_object: connection)] }
+    let(:unreferenced) { create(:http_log) }
+    let(:stale)        { create(:http_log, related_object_type: 'SomeRemovedAddon::Thing', related_object_id: 1) }
+
+    it 'labels every row that has a usable reference' do
+      expect(described_class.related_object_labels(referencing))
+        .to eq(referencing.first.id => 'Order system', referencing.second.id => 'Main OpenAI')
+    end
+
+    it 'omits rows without a reference and rows whose type does not resolve' do
+      expect(described_class.related_object_labels([unreferenced, stale])).to be_empty
+    end
+
+    it 'agrees with the per row lookup' do
+      logs   = referencing + [unreferenced, stale]
+      labels = described_class.related_object_labels(logs)
+
+      expect(logs.map { |log| labels[log.id] }).to eq(logs.map(&:related_object_label))
+    end
+
+    it 'needs one query per referenced model, not one per row' do
+      logs = referencing + [create(:http_log, related_object: webhook), unreferenced, stale]
+
+      loads    = 0
+      callback = ->(*, payload) { loads += 1 if payload[:name]&.end_with?(' Load') }
+
+      ActiveSupport::Notifications.subscribed(callback, 'sql.active_record') do
+        described_class.related_object_labels(logs)
+      end
+
+      # Two referenced models (Webhook, AI::ProviderConnection) across five rows.
+      expect(loads).to eq(2)
+    end
+  end
+
   describe '.facility_to_permission' do
     it 'returns correct permission for known facility' do
       expect(described_class.facility_to_permission('GitHub')).to eq('admin.integration')
       expect(described_class.facility_to_permission('webhook')).to eq('admin.webhook')
       expect(described_class.facility_to_permission('cti')).to eq('admin.integration')
-      expect(described_class.facility_to_permission('AI::Provider')).to eq('admin.ai_provider')
+      expect(described_class.facility_to_permission('AI::Provider')).to eq('admin.ai_feedback_logs')
       expect(described_class.facility_to_permission('MicrosoftGraph')).to eq('admin.channel_microsoft_graph')
       expect(described_class.facility_to_permission('WhatsApp::Business')).to eq('admin.channel_whatsapp')
     end
@@ -119,7 +198,7 @@ AAAFoAAAAAAAAAkAAAAAEAAACQAAAAAQADk=" })
   describe '.facilities_by_permission' do
     it 'returns a hash grouped by permissions with facilities' do
       expect(described_class.facilities_by_permission).to include(
-        'admin.ai_provider'             => include('AI::Provider'),
+        'admin.ai_feedback_logs'        => include('AI::Provider'),
         'admin.integration'             => include('GitHub'),
         'admin.security'                => include('SAML'),
         'admin.webhook'                 => include('webhook'),

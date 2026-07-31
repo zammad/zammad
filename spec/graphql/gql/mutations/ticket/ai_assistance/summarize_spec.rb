@@ -49,8 +49,8 @@ RSpec.describe Gql::Mutations::Ticket::AIAssistance::Summarize, :aggregate_failu
       if expected_cache
         AI::StoredResult.create!(
           content:          expected_cache,
-          version:          AI::Service::TicketSummarize.lookup_version({ articles: ticket.articles.without_system_notifications }, Locale.find_by(locale: agent.locale)),
-          **AI::Service::TicketSummarize.lookup_attributes({ ticket: }, Locale.find_by(locale: agent.locale)),
+          version:          Service::AI::Feature::TicketSummarize.lookup_version({ articles: ticket.articles.without_system_notifications }, Locale.find_by(locale: agent.locale)),
+          **Service::AI::Feature::TicketSummarize.lookup_attributes({ ticket: }, Locale.find_by(locale: agent.locale)),
           ai_analytics_run:
         )
       end

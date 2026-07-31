@@ -32,6 +32,7 @@ class App.KbAnswerFromTicket extends App.ControllerAIFeatureBase
     )
 
     @renderAlert()
+    @renderProviderModal('knowledge_base_answer_from_ticket')
 
   toggleSetting: =>
     value = @aiAssistanceKbAnswerFromTicketSetting.prop('checked')

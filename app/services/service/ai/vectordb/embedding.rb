@@ -5,37 +5,55 @@ module Service::AI::VectorDB
   # Array returns one vector per input. Centralising embedding generation here keeps a future
   # embedding cache (skip re-embedding identical content) out of the indexing callers.
   class Embedding < Service::Base
-    attr_reader :input
+    attr_reader :input, :feature_identifier
 
     # @param input [String, Array<String>] content to embed
-    def initialize(input:)
-      @input = input
+    # @param feature_identifier [String, Symbol, NilClass] the calling feature's identifier, so
+    #   the embedding provider is resolved via that feature's routing (see
+    #   AI::ProviderConnection.for_embeddings).
+    def initialize(input:, feature_identifier: nil)
+      @input              = input
+      @feature_identifier = feature_identifier
     end
 
     # @return [Array<Numeric>] for a String input; [Array<Array<Numeric>>] for an Array input
     def execute
-      return provider.embed(input:) if !input.is_a?(Array)
+      return embed_single if !input.is_a?(Array)
       return [] if input.empty?
 
-      vectors = Array(provider.bulk_embed(input:))
+      connection.record_call do
+        vectors = Array(provider.bulk_embed(input:))
 
-      # Fail loudly on a silent partial failure, so no blank vector ever gets indexed.
-      if vectors.size != input.size || vectors.any?(&:blank?)
-        raise "Embedding provider returned #{vectors.size} usable vectors for #{input.size} inputs"
+        # Fail loudly on a silent partial failure, so no blank vector ever gets indexed. Raised
+        # as a ResponseError inside record_call, so the health status reflects it too.
+        if vectors.size != input.size || vectors.any?(&:blank?)
+          raise AI::Provider::ResponseError, "Embedding provider returned #{vectors.size} usable vectors for #{input.size} inputs"
+        end
+
+        vectors
       end
-
-      vectors
     end
 
     private
 
-    def provider
-      @provider ||= begin
-        current = AI::Provider.current
-        raise __('AI provider is not configured.') if current.nil?
+    # A blank scalar vector is the same silent provider failure as a partial bulk result.
+    def embed_single
+      connection.record_call do
+        vector = provider.embed(input:)
 
-        current.new
+        raise AI::Provider::ResponseError, __('Embedding provider returned no usable vector') if vector.blank?
+
+        vector
       end
+    end
+
+    # The embedding provider connection; also records the call outcome as its stored health status.
+    def connection
+      @connection ||= AI::ProviderConnection.for_embeddings(feature_identifier) || raise(__('AI provider is not configured.'))
+    end
+
+    def provider
+      @provider ||= connection.provider_instance || raise(__('AI provider is not configured.'))
     end
   end
 end

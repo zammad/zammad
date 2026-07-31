@@ -4,6 +4,10 @@ class HttpLog < ApplicationModel
   store :request
   store :response
 
+  # What caused the request, e.g. the AI provider connection or the webhook that was performed.
+  # Optional: not every facility knows an object, and some requests happen before it exists.
+  belongs_to :related_object, polymorphic: true, optional: true
+
   # See https://github.com/zammad/zammad/issues/2100
   before_save :messages_to_utf8
 
@@ -11,6 +15,42 @@ class HttpLog < ApplicationModel
 
   # Make sure facility is valid if given.
   validates :facility, inclusion: { in: ->(_) { HttpLog.facilities_permission_lookup.keys } }
+
+  # The model behind related_object_type, nil if the type does not resolve to one. Logs outlive
+  # their cause, so a removed addon or a renamed class must not take the whole log screen down with
+  # it. Resolving alone is not enough, the constant has to be a model too - 'AI::Provider' for
+  # example is a plain class and would raise on the association lookup.
+  def related_object_class
+    klass = related_object_type.presence&.safe_constantize
+    return if klass.nil? || !(klass < ApplicationModel)
+
+    klass
+  end
+
+  # Human readable name of what caused the request, for the log table. Generic on purpose: any
+  # model answering to #name works, nil hides the reference.
+  def related_object_label
+    return if related_object_class.nil?
+
+    related_object.try(:name)
+  end
+
+  # Same labels as #related_object_label, but with one query per referenced model instead of one per
+  # row: the log tables poll every 20 seconds, so a per-row lookup adds up quickly.
+  #
+  # @param logs [Array<HttpLog>] the rows to label
+  # @return [Hash{Integer => String}] log id to label, missing for rows without a usable reference
+  def self.related_object_labels(logs)
+    logs
+      .select(&:related_object_class)
+      .group_by(&:related_object_class)
+      .each_with_object({}) do |(klass, grouped), result|
+        # Full records rather than a plucked column, so a model computing #name works here too.
+        records = klass.where(id: grouped.map(&:related_object_id)).index_by(&:id)
+
+        grouped.each { |log| result[log.id] = records[log.related_object_id].try(:name) }
+      end
+  end
 
   BEARER_REGEX      = %r{Authorization:\s*Bearer\s+[A-Za-z0-9\-_~+/]+=*}i
   BASIC_REGEX       = %r{Authorization:\s*Basic\s+[A-Za-z0-9+/]+=*}i
@@ -41,7 +81,7 @@ optional you can put the max oldest chat entries as argument
   # Provide a mapping of facilities to required permissions as a function to be easily extendable in custom devs.
   def self.facilities_permission_lookup
     {
-      'AI::Provider'       => 'admin.ai_provider',
+      'AI::Provider'       => 'admin.ai_feedback_logs',
       'check_mk'           => 'admin.integration',
       'clearbit'           => 'admin.integration',
       'cti'                => 'admin.integration',

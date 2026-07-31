@@ -636,7 +636,7 @@ msgstr ""
 msgid "A test ticket has been created, you can find it in your overview \"%s\" %l."
 msgstr ""
 
-#: app/models/ticket.rb:299
+#: app/models/ticket.rb:300
 msgid "A ticket cannot be merged into itself."
 msgstr ""
 
@@ -677,7 +677,11 @@ msgstr ""
 msgid "AI Agents"
 msgstr ""
 
-#: db/seeds/settings.rb:6322
+#: db/seeds/permissions.rb:266
+msgid "AI Feedback & Logs"
+msgstr ""
+
+#: db/seeds/settings.rb:6307
 msgid "AI Knowledge Base Answer from Ticket"
 msgstr ""
 
@@ -687,14 +691,6 @@ msgstr ""
 
 #: db/seeds/permissions.rb:233
 msgid "AI Provider"
-msgstr ""
-
-#: db/seeds/settings.rb:6227
-msgid "AI Provider Config"
-msgstr ""
-
-#: app/models/setting/validation/ai_provider_config.rb:71
-msgid "AI Provider Model is not set"
 msgstr ""
 
 #: lib/excel_sheet/ai/analytics/errors.rb:26
@@ -756,28 +752,15 @@ msgstr ""
 msgid "AI provider"
 msgstr ""
 
-#: app/models/setting/validation/ai_provider_config.rb:7
-msgid "AI provider Azure configuration is incomplete"
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:179
+msgid "AI provider configuration disabled successfully."
 msgstr ""
 
-#: app/models/setting/validation/ai_provider_config.rb:6
-msgid "AI provider Ollama URL is not set"
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:179
+msgid "AI provider configuration enabled successfully."
 msgstr ""
 
-#: app/models/setting/validation/ai_provider_config.rb:70
-msgid "AI provider URL is not set"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:56
-msgid "AI provider disabled successfully."
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:54
-msgid "AI provider enabled successfully."
-msgstr ""
-
-#: app/models/setting/validation/ai_provider.rb:9
-#: app/models/setting/validation/ai_provider_config.rb:75
+#: app/models/setting/validation/ai_provider.rb:13
 msgid "AI provider is missing"
 msgstr ""
 
@@ -787,24 +770,18 @@ msgstr ""
 #: app/graphql/gql/mutations/ticket/ai_assistance/enqueue_knowledge_base_answer.rb:13
 #: app/graphql/gql/mutations/ticket/ai_assistance/summarize.rb:15
 #: app/services/service/ai/agent/run.rb:15
-#: app/services/service/ai/ticket/embed_base.rb:26
+#: app/services/service/ai/feature.rb:131
+#: app/services/service/ai/feature/ocr.rb:34
+#: app/services/service/ai/ticket/embed_base.rb:28
 #: app/services/service/ai/vectordb/base.rb:12
-#: app/services/service/ai/vectordb/embedding.rb:32
+#: app/services/service/ai/vectordb/embedding.rb:43
 #: app/services/service/ai_assistance/text_tools.rb:19
 #: app/services/service/ticket/ai_assistance/generate_knowledge_base_answer_content.rb:14
 #: app/services/service/ticket/ai_assistance/summarize.rb:18
 msgid "AI provider is not configured."
 msgstr ""
 
-#: app/models/setting/validation/ai_provider_config.rb:76
-msgid "AI provider is not supported"
-msgstr ""
-
-#: app/models/setting/validation/ai_provider_config.rb:8
-msgid "AI provider token is not set"
-msgstr ""
-
-#: lib/ai/service.rb:14
+#: app/services/service/ai/feature.rb:16
 msgid "AI service result is missing expected keys"
 msgstr ""
 
@@ -831,7 +808,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/api.coffee:3
 #: app/assets/javascripts/app/views/api.jst.eco:2
-#: db/seeds/permissions.rb:272
+#: db/seeds/permissions.rb:278
 msgid "API"
 msgstr ""
 
@@ -896,47 +873,47 @@ msgstr ""
 msgid "Access denied"
 msgstr ""
 
-#: db/seeds/permissions.rb:366
+#: db/seeds/permissions.rb:372
 msgid "Access the agent chat features."
 msgstr ""
 
-#: db/seeds/permissions.rb:381
+#: db/seeds/permissions.rb:387
 msgid "Access the agent phone features."
 msgstr ""
 
-#: db/seeds/permissions.rb:396
+#: db/seeds/permissions.rb:402
 msgid "Access the knowledge base editor features."
 msgstr ""
 
-#: db/seeds/permissions.rb:402
+#: db/seeds/permissions.rb:408
 msgid "Access the knowledge base reader features."
 msgstr ""
 
-#: db/seeds/permissions.rb:424
+#: db/seeds/permissions.rb:430
 msgid "Access the tickets as agent based on group access."
 msgstr ""
 
-#: db/seeds/permissions.rb:433
+#: db/seeds/permissions.rb:439
 msgid "Access tickets as customer."
 msgstr ""
 
-#: db/seeds/permissions.rb:357
+#: db/seeds/permissions.rb:363
 msgid "Access to the chat interface."
 msgstr ""
 
-#: db/seeds/permissions.rb:387
+#: db/seeds/permissions.rb:393
 msgid "Access to the knowledge base interface."
 msgstr ""
 
-#: db/seeds/permissions.rb:372
+#: db/seeds/permissions.rb:378
 msgid "Access to the phone interface."
 msgstr ""
 
-#: db/seeds/permissions.rb:409
+#: db/seeds/permissions.rb:415
 msgid "Access to the report interface."
 msgstr ""
 
-#: db/seeds/permissions.rb:415
+#: db/seeds/permissions.rb:421
 msgid "Access to the ticket interface."
 msgstr ""
 
@@ -1544,7 +1521,7 @@ msgstr ""
 msgid "Agent Name + FromSeparator + System Address Display Name"
 msgstr ""
 
-#: db/seeds/permissions.rb:365
+#: db/seeds/permissions.rb:371
 msgid "Agent chat"
 msgstr ""
 
@@ -1553,15 +1530,15 @@ msgid "Agent idle timeout"
 msgstr ""
 
 #: app/models/role.rb:181
-#: app/models/user.rb:787
+#: app/models/user.rb:788
 msgid "Agent limit exceeded, please check your account settings."
 msgstr ""
 
-#: db/seeds/permissions.rb:380
+#: db/seeds/permissions.rb:386
 msgid "Agent phone"
 msgstr ""
 
-#: db/seeds/permissions.rb:423
+#: db/seeds/permissions.rb:429
 #: db/seeds/settings.rb:1160
 msgid "Agent tickets"
 msgstr ""
@@ -1874,7 +1851,7 @@ msgstr ""
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/appearance.ts:9
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/appearance.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:54
-#: db/seeds/permissions.rb:446
+#: db/seeds/permissions.rb:452
 msgid "Appearance"
 msgstr ""
 
@@ -2182,7 +2159,7 @@ msgstr ""
 msgid "Assignment timeout in minutes if assigned agent is not working on it. Ticket will be shown as unassigend."
 msgstr ""
 
-#: app/models/user.rb:689
+#: app/models/user.rb:690
 msgid "At least one identifier (firstname, lastname, phone, mobile or email) for user is required."
 msgstr ""
 
@@ -2199,7 +2176,7 @@ msgid "At least one object must be selected."
 msgstr ""
 
 #: app/models/role.rb:158
-#: app/models/user.rb:766
+#: app/models/user.rb:767
 msgid "At least one user needs to have admin permissions."
 msgstr ""
 
@@ -2304,7 +2281,7 @@ msgid "Audit Log"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/audit_log.coffee:25
-#: db/seeds/permissions.rb:338
+#: db/seeds/permissions.rb:344
 msgid "Audit Logs"
 msgstr ""
 
@@ -2430,7 +2407,7 @@ msgstr ""
 msgid "Auto-close state"
 msgstr ""
 
-#: lib/auto_wizard.rb:127
+#: lib/auto_wizard.rb:132
 msgid "AutoWizard is disabled"
 msgstr ""
 
@@ -2517,7 +2494,7 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:120
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:167
 #: app/frontend/shared/components/CommonUserAvatar/CommonUserAvatar.vue:114
-#: db/seeds/permissions.rb:460
+#: db/seeds/permissions.rb:466
 msgid "Avatar"
 msgstr ""
 
@@ -2572,7 +2549,7 @@ msgstr ""
 msgid "BETA UI illustration"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:397
+#: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:398
 #: app/assets/javascripts/app/views/generic/object_search/item_organization_members.jst.eco:5
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:449
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:430
@@ -2994,7 +2971,7 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:380
+#: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:381
 #: app/assets/javascripts/app/controllers/_application_controller/_modal.coffee:119
 #: app/assets/javascripts/app/views/admin_password_auth/request.jst.eco:8
 #: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco:7
@@ -3047,6 +3024,10 @@ msgstr ""
 msgid "Cannot delete record because dependent %{record} exist"
 msgstr ""
 
+#: app/models/ai/provider_connection.rb:224
+msgid "Cannot delete the Zammad AI connection on this system."
+msgstr ""
+
 #: app/policies/ticket_policy.rb:47
 msgid "Cannot follow-up on a closed ticket. Please create a new ticket."
 msgstr ""
@@ -3092,6 +3073,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/knowledge_base.coffee:246
 msgid "Category page layout"
+msgstr ""
+
+#: app/assets/javascripts/app/views/widget/http_log.jst.eco:20
+msgid "Caused by"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:39
@@ -3154,7 +3139,7 @@ msgstr ""
 msgid "Change password"
 msgstr ""
 
-#: db/seeds/permissions.rb:478
+#: db/seeds/permissions.rb:484
 msgid "Change personal account password."
 msgstr ""
 
@@ -3280,6 +3265,10 @@ msgstr ""
 msgid "Chat closed by %s"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:33
+msgid "Chat completions"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/chat.coffee:371
 msgid "Chat not answered, automatically set to offline."
 msgstr ""
@@ -3347,7 +3336,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/checklist_template.coffee:3
 #: app/assets/javascripts/app/views/checklist_template/index.jst.eco:7
-#: db/seeds/permissions.rb:350
+#: db/seeds/permissions.rb:356
 #: db/seeds/settings.rb:6145
 msgid "Checklists"
 msgstr ""
@@ -3761,7 +3750,7 @@ msgstr ""
 msgid "Compose your message…"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:69
+#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:72
 #: app/assets/javascripts/app/controllers/_manage/ticket_auto_assignment.coffee:25
 #: app/assets/javascripts/app/controllers/time_accounting_settings.coffee:26
 #: app/assets/javascripts/app/models/job.coffee:9
@@ -3813,6 +3802,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/getting_started/base.coffee:18
 msgid "Configure Basic Settings"
+msgstr ""
+
+#: app/assets/javascripts/app/models/ai_provider_connection.coffee
+msgid "Configure and manage AI providers. Each provider includes a set of credentials for one provider endpoint.\n\nAll AI features share these providers: the default provider serves every feature, unless you decide to assign a dedicated provider to a specific feature."
 msgstr ""
 
 #: app/models/ai/agent/type/ticket_tagger.rb:161
@@ -4041,7 +4034,7 @@ msgstr ""
 msgid "Contributing Translations"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:94
+#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:98
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket_summary.coffee:4
 msgid "Conversation Summary"
 msgstr ""
@@ -4137,7 +4130,7 @@ msgid "Core Workflow Ajax Mode"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee:3
-#: db/seeds/permissions.rb:296
+#: db/seeds/permissions.rb:302
 msgid "Core Workflows"
 msgstr ""
 
@@ -4436,7 +4429,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/ticket.coffee:28
 #: app/assets/javascripts/app/models/user.coffee:24
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco:17
-#: app/assets/javascripts/app/views/widget/http_log.jst.eco:19
+#: app/assets/javascripts/app/views/widget/http_log.jst.eco:22
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco:23
 #: app/controllers/time_accountings_controller.rb:116
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:116
@@ -4618,12 +4611,12 @@ msgstr ""
 msgid "Customer Chat"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:87
+#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:91
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket_summary.coffee:3
 msgid "Customer Intent"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:113
+#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:117
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket_summary.coffee:7
 msgid "Customer Sentiment"
 msgstr ""
@@ -4644,7 +4637,7 @@ msgstr ""
 msgid "Customer sentiment"
 msgstr ""
 
-#: db/seeds/permissions.rb:432
+#: db/seeds/permissions.rb:438
 #: db/seeds/settings.rb:1169
 msgid "Customer tickets"
 msgstr ""
@@ -4689,7 +4682,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:3
 #: app/assets/javascripts/app/views/data_privacy/index.jst.eco:3
-#: db/seeds/permissions.rb:308
+#: db/seeds/permissions.rb:314
 msgid "Data Privacy"
 msgstr ""
 
@@ -4846,6 +4839,14 @@ msgstr ""
 #: app/assets/javascripts/app/models/ticket_priority.coffee:26
 #: app/assets/javascripts/app/models/ticket_state.coffee:28
 msgid "Default for new tickets"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:158
+msgid "Default provider updated successfully."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_ai/ai_feature_provider_modal.coffee:67
+msgid "Default provider(s)"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:349
@@ -5161,7 +5162,7 @@ msgstr ""
 msgid "Defines if the application is in developer mode (all users have the same password and password reset will work without email delivery)."
 msgstr ""
 
-#: db/seeds/settings.rb:6395
+#: db/seeds/settings.rb:6380
 msgid "Defines if the bubble menu feature of the richtext editor is enabled. Note that this setting will be ignored if the writing assistant is turned on."
 msgstr ""
 
@@ -5389,7 +5390,7 @@ msgstr ""
 msgid "Defines the backend service for ticket article language detection."
 msgstr ""
 
-#: db/seeds/settings.rb:6372
+#: db/seeds/settings.rb:6357
 msgid "Defines the chunking strategy for the knowledge base vector database."
 msgstr ""
 
@@ -5433,7 +5434,7 @@ msgstr ""
 msgid "Defines the duration of customer activity (in seconds) on a call until the user profile dialog is shown."
 msgstr ""
 
-#: db/seeds/settings.rb:6311
+#: db/seeds/settings.rb:6296
 msgid "Defines the fixed instructions that guide the AI Writing Assistant on e.g. how to format its output."
 msgstr ""
 
@@ -5582,7 +5583,7 @@ msgstr ""
 msgid "Defines whether the matching tickets are shown in case of already existing tickets."
 msgstr ""
 
-#: db/seeds/settings.rb:6363
+#: db/seeds/settings.rb:6348
 msgid "Defines which knowledge base categories are included in the vector database."
 msgstr ""
 
@@ -5606,6 +5607,7 @@ msgstr ""
 msgid "Defines which user roles will receive a warning in case of matching tickets."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:103
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm_delete.coffee:4
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_destroy_confirm.coffee:4
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee:715
@@ -5698,7 +5700,7 @@ msgstr ""
 msgid "Delete column"
 msgstr ""
 
-#: db/seeds/permissions.rb:309
+#: db/seeds/permissions.rb:315
 msgid "Delete existing data of your system."
 msgstr ""
 
@@ -5924,7 +5926,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/profile/devices.jst.eco:2
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/devices.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:33
-#: db/seeds/permissions.rb:491
+#: db/seeds/permissions.rb:497
 msgid "Devices"
 msgstr ""
 
@@ -6184,11 +6186,11 @@ msgstr ""
 msgid "Download Certificate"
 msgstr ""
 
-#: app/assets/javascripts/app/views/ai/provider_logs.jst.eco:11
+#: app/assets/javascripts/app/views/ai/feedback_logs.jst.eco:18
 msgid "Download Error Logs"
 msgstr ""
 
-#: app/assets/javascripts/app/views/ai/provider_logs.jst.eco:7
+#: app/assets/javascripts/app/views/ai/feedback_logs.jst.eco:14
 msgid "Download Feedback"
 msgstr ""
 
@@ -6208,6 +6210,10 @@ msgstr ""
 #: app/assets/javascripts/app/views/import/otrs.jst.eco:8
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceOTRS.vue:99
 msgid "Download and install the %s Migration Plugin on your %s instance."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_ai/feedback_logs.coffee:4
+msgid "Download feedback from agents on AI features and error details about failed AI requests."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:45
@@ -6559,7 +6565,7 @@ msgstr ""
 msgid "Email address"
 msgstr ""
 
-#: app/models/user.rb:699
+#: app/models/user.rb:700
 msgid "Email address '%{email}' is already used for another user."
 msgstr ""
 
@@ -6621,6 +6627,14 @@ msgstr ""
 msgid "Emails before the cut-off time are imported as archived tickets. Emails after the cut-off time are imported as regular tickets."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:230
+msgid "Embedding Model"
+msgstr ""
+
+#: app/services/service/ai/vectordb/embedding.rb:36
+msgid "Embedding provider returned no usable vector"
+msgstr ""
+
 #: app/assets/javascripts/app/views/knowledge_base/public_menu_manager.jst.eco:21
 #: app/assets/javascripts/app/views/knowledge_base/search_field_panel.jst.eco:5
 msgid "Empty"
@@ -6638,6 +6652,10 @@ msgstr ""
 #: app/assets/javascripts/app/views/telegram/index.jst.eco:42
 #: app/assets/javascripts/app/views/whatsapp/index.jst.eco:49
 msgid "Enable"
+msgstr ""
+
+#: app/assets/javascripts/app/views/ai/provider_connections_toggle.jst.eco:3
+msgid "Enable AI provider"
 msgstr ""
 
 #: db/seeds/settings.rb:3656
@@ -6697,7 +6715,7 @@ msgstr ""
 msgid "Enable if you want to quote the full email in your answer. The quoted email will be put at the end of your answer. If you just want to quote a certain phrase, just mark the text and press reply (this feature is always available)."
 msgstr ""
 
-#: db/seeds/settings.rb:6325
+#: db/seeds/settings.rb:6310
 msgid "Enable or disable AI generation of knowledge base answers from ticket content."
 msgstr ""
 
@@ -6713,15 +6731,15 @@ msgstr ""
 msgid "Enable or disable the maintenance mode of Zammad. If enabled, all non-administrators get logged out and only administrators can start a new session."
 msgstr ""
 
-#: db/seeds/settings.rb:6246
+#: db/seeds/settings.rb:6230
 msgid "Enable or disable the ticket summary."
 msgstr ""
 
-#: db/seeds/settings.rb:6353
+#: db/seeds/settings.rb:6338
 msgid "Enable or disable the vector database, which is used for storing and retrieving vectorized data. Elasticsearch is used as the vector database backend."
 msgstr ""
 
-#: db/seeds/settings.rb:6297
+#: db/seeds/settings.rb:6282
 msgid "Enable or disable the writing assistant text tools."
 msgstr ""
 
@@ -6733,7 +6751,7 @@ msgstr ""
 msgid "Enable ticket auto assignment."
 msgstr ""
 
-#: db/seeds/settings.rb:6279
+#: db/seeds/settings.rb:6264
 msgid "Enable ticket summary for following matching tickets."
 msgstr ""
 
@@ -7480,7 +7498,7 @@ msgstr ""
 msgid "Feedback"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:22
+#: app/assets/javascripts/app/controllers/_ai/feedback_logs.coffee:3
 msgid "Feedback & Logs"
 msgstr ""
 
@@ -8335,7 +8353,7 @@ msgstr ""
 msgid "HTTP Basic Authentication username"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/widget/http_log.coffee:45
+#: app/assets/javascripts/app/controllers/widget/http_log.coffee:84
 msgid "HTTP Log"
 msgstr ""
 
@@ -8849,6 +8867,14 @@ msgstr ""
 msgid "Image preview"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:41
+msgid "Image text recognition"
+msgstr ""
+
+#: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:73
+msgid "Image text recognition (OCR)"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/import.coffee:4
 #: app/assets/javascripts/app/controllers/import_freshdesk.coffee:25
 #: app/assets/javascripts/app/controllers/import_otrs.coffee:20
@@ -9209,6 +9235,10 @@ msgstr ""
 msgid "Installed packages"
 msgstr ""
 
+#: app/assets/javascripts/app/views/ai/ai_unsupported_embedding_provider.jst.eco:6
+msgid "Instead, the default provider will be used for this purpose: %s"
+msgstr ""
+
 #: app/models/ai/agent/type/custom_ai_agent.rb:34
 msgid "Instruction"
 msgstr ""
@@ -9226,7 +9256,7 @@ msgid "Integer field"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/integrations.coffee:3
-#: db/seeds/permissions.rb:266
+#: db/seeds/permissions.rb:272
 msgid "Integrations"
 msgstr ""
 
@@ -9325,7 +9355,7 @@ msgstr ""
 msgid "Invalid client_id received!"
 msgstr ""
 
-#: app/models/user.rb:638
+#: app/models/user.rb:639
 msgid "Invalid email '%{email}'"
 msgstr ""
 
@@ -9500,7 +9530,7 @@ msgstr ""
 msgid "It is not possible to delete your current account."
 msgstr ""
 
-#: app/models/ticket.rb:297
+#: app/models/ticket.rb:298
 msgid "It is not possible to merge into an already merged ticket."
 msgstr ""
 
@@ -9569,7 +9599,7 @@ msgstr ""
 msgid "Just switch back"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/kb_answer_from_ticket.coffee:43
+#: app/assets/javascripts/app/controllers/_ai/kb_answer_from_ticket.coffee:44
 msgid "KB Answer Generation"
 msgstr ""
 
@@ -9646,7 +9676,7 @@ msgstr ""
 msgid "Knowledge Base Answer could not be created"
 msgstr ""
 
-#: db/seeds/permissions.rb:395
+#: db/seeds/permissions.rb:401
 msgid "Knowledge Base Editor"
 msgstr ""
 
@@ -9654,7 +9684,7 @@ msgstr ""
 msgid "Knowledge Base Feed"
 msgstr ""
 
-#: db/seeds/permissions.rb:401
+#: db/seeds/permissions.rb:407
 msgid "Knowledge Base Reader"
 msgstr ""
 
@@ -9699,7 +9729,7 @@ msgstr ""
 msgid "Knowledge base navigation"
 msgstr ""
 
-#: db/seeds/settings.rb:6336
+#: db/seeds/settings.rb:6321
 msgid "Knowledge base self-hosted video servers"
 msgstr ""
 
@@ -9748,7 +9778,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLocale.vue:13
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/KnowledgeBaseAnswerAttributes.vue:69
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:149
-#: db/seeds/permissions.rb:453
+#: db/seeds/permissions.rb:459
 msgid "Language"
 msgstr ""
 
@@ -9889,23 +9919,19 @@ msgstr ""
 msgid "Leave BETA UI feedback program?"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:261
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:255
 msgid "Leave empty to use URL (Completions)"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:251
-msgid "Leave empty to use the base model"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:40
 msgid "Leave program"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/_feature_base.coffee:53
+#: app/assets/javascripts/app/controllers/_ai/_feature_base.coffee:74
 #: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:66
 #: app/assets/javascripts/app/controllers/_ai/kb_answer_from_ticket.coffee:30
 #: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:34
-#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:44
+#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:47
 msgid "Legal Information"
 msgstr ""
 
@@ -10066,7 +10092,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:3
 #: app/assets/javascripts/app/views/popover/user.jst.eco:5
 #: app/assets/javascripts/app/views/widget/user.jst.eco:34
-#: db/seeds/permissions.rb:505
+#: db/seeds/permissions.rb:511
 msgid "Linked Accounts"
 msgstr ""
 
@@ -10101,7 +10127,7 @@ msgstr ""
 msgid "List of issue labels"
 msgstr ""
 
-#: db/seeds/settings.rb:6339
+#: db/seeds/settings.rb:6324
 msgid "List of self-hosted video servers. This list is used for content security policy."
 msgstr ""
 
@@ -10280,7 +10306,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/maintenance.coffee:3
 #: app/assets/javascripts/app/views/maintenance.jst.eco:3
-#: db/seeds/permissions.rb:314
+#: db/seeds/permissions.rb:320
 msgid "Maintenance"
 msgstr ""
 
@@ -10305,6 +10331,10 @@ msgstr ""
 msgid "Manage AI agents of your system."
 msgstr ""
 
+#: db/seeds/permissions.rb:267
+msgid "Manage AI feedback and logs of your system."
+msgstr ""
+
 #: db/seeds/permissions.rb:260
 msgid "Manage AI generation of knowledge base answers from tickets."
 msgstr ""
@@ -10313,7 +10343,7 @@ msgstr ""
 msgid "Manage AI provider of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:273
+#: db/seeds/permissions.rb:279
 msgid "Manage API of your system."
 msgstr ""
 
@@ -10370,11 +10400,11 @@ msgstr ""
 msgid "Manage WhatsApp channel of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:544
+#: db/seeds/permissions.rb:550
 msgid "Manage access to New BETA UI switch."
 msgstr ""
 
-#: db/seeds/permissions.rb:333
+#: db/seeds/permissions.rb:339
 msgid "Manage active user sessions of your system."
 msgstr ""
 
@@ -10390,7 +10420,7 @@ msgstr ""
 msgid "Manage applications that can use Zammad as an OAuth provider and applications that you've authorized to use your account."
 msgstr ""
 
-#: db/seeds/permissions.rb:339
+#: db/seeds/permissions.rb:345
 msgid "Manage audit logs of your system."
 msgstr ""
 
@@ -10410,7 +10440,7 @@ msgstr ""
 msgid "Manage core system settings."
 msgstr ""
 
-#: db/seeds/permissions.rb:297
+#: db/seeds/permissions.rb:303
 msgid "Manage core workflows of your system."
 msgstr ""
 
@@ -10426,71 +10456,71 @@ msgstr ""
 msgid "Manage groups of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:267
+#: db/seeds/permissions.rb:273
 msgid "Manage integrations of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:315
+#: db/seeds/permissions.rb:321
 msgid "Manage maintenance mode of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:321
+#: db/seeds/permissions.rb:327
 msgid "Manage monitoring of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:279
+#: db/seeds/permissions.rb:285
 msgid "Manage object attributes of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:327
+#: db/seeds/permissions.rb:333
 msgid "Manage packages of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:499
+#: db/seeds/permissions.rb:505
 msgid "Manage personal API tokens."
 msgstr ""
 
-#: db/seeds/permissions.rb:447
+#: db/seeds/permissions.rb:453
 msgid "Manage personal appearance settings."
 msgstr ""
 
-#: db/seeds/permissions.rb:461
+#: db/seeds/permissions.rb:467
 msgid "Manage personal avatar settings."
 msgstr ""
 
-#: db/seeds/permissions.rb:533
+#: db/seeds/permissions.rb:539
 msgid "Manage personal calendar."
 msgstr ""
 
-#: db/seeds/permissions.rb:492
+#: db/seeds/permissions.rb:498
 msgid "Manage personal devices and sessions."
 msgstr ""
 
-#: db/seeds/permissions.rb:454
+#: db/seeds/permissions.rb:460
 msgid "Manage personal language settings."
 msgstr ""
 
-#: db/seeds/permissions.rb:506
+#: db/seeds/permissions.rb:512
 msgid "Manage personal linked accounts."
 msgstr ""
 
-#: db/seeds/permissions.rb:513
+#: db/seeds/permissions.rb:519
 msgid "Manage personal notifications settings."
 msgstr ""
 
-#: db/seeds/permissions.rb:468
+#: db/seeds/permissions.rb:474
 msgid "Manage personal out of office settings."
 msgstr ""
 
-#: db/seeds/permissions.rb:523
+#: db/seeds/permissions.rb:529
 msgid "Manage personal overviews."
 msgstr ""
 
-#: db/seeds/permissions.rb:440
+#: db/seeds/permissions.rb:446
 msgid "Manage personal settings."
 msgstr ""
 
-#: db/seeds/permissions.rb:485
+#: db/seeds/permissions.rb:491
 msgid "Manage personal two-factor authentication methods."
 msgstr ""
 
@@ -10514,7 +10544,7 @@ msgstr ""
 msgid "Manage security settings of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:345
+#: db/seeds/permissions.rb:351
 msgid "Manage system report of your system."
 msgstr ""
 
@@ -10526,7 +10556,7 @@ msgstr ""
 msgid "Manage ticket auto assignment settings of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:351
+#: db/seeds/permissions.rb:357
 msgid "Manage ticket checklists of your system."
 msgstr ""
 
@@ -10542,7 +10572,7 @@ msgstr ""
 msgid "Manage ticket overviews of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:291
+#: db/seeds/permissions.rb:297
 msgid "Manage ticket priorities of your system."
 msgstr ""
 
@@ -10550,7 +10580,7 @@ msgstr ""
 msgid "Manage ticket settings of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:285
+#: db/seeds/permissions.rb:291
 msgid "Manage ticket states of your system."
 msgstr ""
 
@@ -10570,7 +10600,7 @@ msgstr ""
 msgid "Manage time accounting settings of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:303
+#: db/seeds/permissions.rb:309
 msgid "Manage translations of your system."
 msgstr ""
 
@@ -10990,8 +11020,16 @@ msgstr ""
 msgid "Mode"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:197
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:226
 msgid "Model"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:238
+msgid "Model used for image text recognition. Leave empty to use the default/base model."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:233
+msgid "Model used for vector embedding in semantic search. Leave empty to use the default/base model."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:272
@@ -11020,7 +11058,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/monitoring.coffee:3
 #: app/assets/javascripts/app/views/monitoring.jst.eco:3
-#: db/seeds/permissions.rb:320
+#: db/seeds/permissions.rb:326
 msgid "Monitoring"
 msgstr ""
 
@@ -11045,7 +11083,7 @@ msgstr ""
 msgid "More information can be found here."
 msgstr ""
 
-#: app/models/user.rb:718
+#: app/models/user.rb:719
 msgid "More than 250 secondary organizations are not allowed."
 msgstr ""
 
@@ -11145,6 +11183,7 @@ msgstr ""
 msgid "Nagios integration"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:211
 #: app/assets/javascripts/app/controllers/_application_controller/reorder_modal.coffee:13
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:325
 #: app/assets/javascripts/app/controllers/_ui_element/object_attribute_options_context.coffee:21
@@ -11153,6 +11192,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee:58
 #: app/assets/javascripts/app/models/_application_model.coffee:160
 #: app/assets/javascripts/app/models/ai_agent.coffee:6
+#: app/assets/javascripts/app/models/ai_provider_connection.coffee:8
 #: app/assets/javascripts/app/models/ai_text_tool.coffee:6
 #: app/assets/javascripts/app/models/application.coffee:7
 #: app/assets/javascripts/app/models/calendar.coffee:7
@@ -11337,7 +11377,7 @@ msgstr ""
 msgid "New BETA UI"
 msgstr ""
 
-#: db/seeds/permissions.rb:543
+#: db/seeds/permissions.rb:549
 msgid "New BETA UI Switch"
 msgstr ""
 
@@ -11383,6 +11423,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/report_profile.coffee:25
 msgid "New Profile"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:64
+msgid "New Provider"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/public_link.coffee:25
@@ -11527,7 +11571,7 @@ msgstr ""
 msgid "New user?"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:103
+#: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:104
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:113
 #: app/assets/javascripts/app/controllers/webhook.coffee:165
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee:2
@@ -11913,7 +11957,7 @@ msgstr ""
 msgid "No translation for this locale available"
 msgstr ""
 
-#: app/models/ticket.rb:422
+#: app/models/ticket.rb:423
 msgid "No triggers active"
 msgstr ""
 
@@ -12158,7 +12202,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/notifications.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:35
 #: app/frontend/apps/mobile/pages/online-notification/routes.ts:8
-#: db/seeds/permissions.rb:512
+#: db/seeds/permissions.rb:518
 msgid "Notifications"
 msgstr ""
 
@@ -12207,7 +12251,7 @@ msgstr ""
 msgid "OAuth2 token is expired!"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:244
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:235
 msgid "OCR Model"
 msgstr ""
 
@@ -12276,7 +12320,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/object_manager.coffee:334
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoit.vue:54
-#: db/seeds/permissions.rb:278
+#: db/seeds/permissions.rb:284
 msgid "Objects"
 msgstr ""
 
@@ -12307,12 +12351,12 @@ msgstr ""
 msgid "On %s, %s wrote:"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:53
+#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:56
 #: db/seeds/object_manager_attributes.rb:2471
 msgid "On ticket detail opening"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:57
+#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:60
 #: db/seeds/object_manager_attributes.rb:2475
 msgid "On ticket summary sidebar activation"
 msgstr ""
@@ -12411,7 +12455,7 @@ msgstr ""
 msgid "Open %s"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:101
+#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:105
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket_summary.coffee:5
 msgid "Open Questions"
 msgstr ""
@@ -12713,7 +12757,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:3
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco:2
-#: db/seeds/permissions.rb:467
+#: db/seeds/permissions.rb:473
 msgid "Out of Office"
 msgstr ""
 
@@ -12897,11 +12941,11 @@ msgid "Package updated successfully."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/package.coffee:3
-#: db/seeds/permissions.rb:326
+#: db/seeds/permissions.rb:332
 msgid "Packages"
 msgstr ""
 
-#: db/seeds/settings.rb:6419
+#: db/seeds/settings.rb:6404
 msgid "Packages Token"
 msgstr ""
 
@@ -12959,7 +13003,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue:33
 #: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue:53
 #: db/seeds/object_manager_attributes.rb:1481
-#: db/seeds/permissions.rb:477
+#: db/seeds/permissions.rb:483
 msgid "Password"
 msgstr ""
 
@@ -13139,7 +13183,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/phone.ts:7
 #: app/frontend/shared/entities/ticket-article/action/plugins/phone.ts:12
 #: db/seeds/object_manager_attributes.rb:1018
-#: db/seeds/permissions.rb:371
+#: db/seeds/permissions.rb:377
 msgid "Phone"
 msgstr ""
 
@@ -13256,7 +13300,7 @@ msgstr ""
 msgid "Please enter a text."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:468
+#: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:469
 #: app/assets/javascripts/app/controllers/webhook.coffee:134
 msgid "Please enter a valid JSON string."
 msgstr ""
@@ -13347,10 +13391,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:5
 msgid "Please select the authentication method that should be used to establish the connection to your Exchange server."
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:66
-msgid "Please set up the provider before proceeding under the settings tab."
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel_account/user_mismatch.jst.eco:4
@@ -13599,7 +13639,7 @@ msgid "Profile language updated successfully."
 msgstr ""
 
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/personal-settings.ts:7
-#: db/seeds/permissions.rb:439
+#: db/seeds/permissions.rb:445
 msgid "Profile settings"
 msgstr ""
 
@@ -13619,23 +13659,23 @@ msgstr ""
 msgid "Protocol"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:96
+#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:100
 msgid "Provide a summary of the conversation between customer and support agent."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:89
+#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:93
 msgid "Provide a summary of the problem the customer needs to get resolved."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:103
+#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:107
 msgid "Provide a summary of the questions raised in the conversation."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:109
+#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:113
 msgid "Provide a summary of the upcoming events based on the conversation."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:115
+#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:119
 msgid "Provide an assessment of the customer sentiment based on the conversation."
 msgstr ""
 
@@ -13648,9 +13688,19 @@ msgstr ""
 msgid "Provide specific and unambiguous instructions for the LLM to process a given text which will be part of the system prompt."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:3
+#: app/assets/javascripts/app/controllers/_ai/_feature_base.coffee:44
+#: app/assets/javascripts/app/controllers/_ai/ai_feature_provider_modal.coffee:5
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:5
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee:167
 msgid "Provider"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_ai/ai_feature_provider_modal.coffee:116
+msgid "Provider updated successfully."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:5
+msgid "Providers"
 msgstr ""
 
 #: db/seeds/settings.rb:582
@@ -13855,8 +13905,8 @@ msgstr ""
 msgid "Recipient"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:235
-msgid "Recognize image text (OCR)"
+#: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:75
+msgid "Recognize text content in article image attachments."
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco:12
@@ -13886,7 +13936,7 @@ msgstr ""
 msgid "Recursive Ticket Triggers"
 msgstr ""
 
-#: db/seeds/settings.rb:6381
+#: db/seeds/settings.rb:6366
 msgid "Recursive hierarchical chunking"
 msgstr ""
 
@@ -14336,7 +14386,7 @@ msgstr ""
 msgid "Reset search"
 msgstr ""
 
-#: app/assets/javascripts/app/models/setting.coffee:60
+#: app/assets/javascripts/app/models/setting.coffee:73
 msgid "Reset successful."
 msgstr ""
 
@@ -14457,7 +14507,7 @@ msgstr ""
 msgid "Rewrite complex section and make it easy to understand"
 msgstr ""
 
-#: db/seeds/settings.rb:6392
+#: db/seeds/settings.rb:6377
 msgid "Richtext Bubble Menu"
 msgstr ""
 
@@ -14928,6 +14978,10 @@ msgstr ""
 msgid "Search for overviews"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:57
+msgid "Search for providers"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/public_link.coffee:18
 msgid "Search for public links"
 msgstr ""
@@ -15083,11 +15137,11 @@ msgstr ""
 msgid "Secondary organizations"
 msgstr ""
 
-#: app/models/user.rb:706
+#: app/models/user.rb:707
 msgid "Secondary organizations are only allowed when the primary organization is given."
 msgstr ""
 
-#: app/models/user.rb:712
+#: app/models/user.rb:713
 msgid "Secondary organizations cannot include the primary organization."
 msgstr ""
 
@@ -15351,6 +15405,10 @@ msgstr ""
 msgid "Self-hosted video servers list must be an array."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:37
+msgid "Semantic search"
+msgstr ""
+
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:78
 #: app/assets/javascripts/app/views/customer_chat/chat_window.jst.eco:58
 #: public/assets/chat/views/chat.eco:25
@@ -15466,7 +15524,7 @@ msgstr ""
 msgid "Sent successfully!"
 msgstr ""
 
-#: db/seeds/settings.rb:6382
+#: db/seeds/settings.rb:6367
 msgid "Sentence-based chunking"
 msgstr ""
 
@@ -15524,7 +15582,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/session.coffee:3
 #: app/assets/javascripts/app/views/session.jst.eco:2
-#: db/seeds/permissions.rb:332
+#: db/seeds/permissions.rb:338
 msgid "Sessions"
 msgstr ""
 
@@ -15575,6 +15633,10 @@ msgstr ""
 msgid "Set caller ID of outbound calls based on destination caller ID."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:81
+msgid "Set default for chat completions"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/ticket_state.coffee:50
 msgid "Set default for closed tickets"
 msgstr ""
@@ -15583,9 +15645,17 @@ msgstr ""
 msgid "Set default for follow-ups"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:96
+msgid "Set default for image text recognition"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/ticket_priority.coffee:26
 #: app/assets/javascripts/app/controllers/ticket_state.coffee:30
 msgid "Set default for new tickets"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:88
+msgid "Set default for semantic search"
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:65
@@ -15648,7 +15718,6 @@ msgstr ""
 msgid "Set/overwrite sender/from of email based on \"Reply-To\" header. Useful to set correct customer if email is received from a third-party system on behalf of a customer."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:17
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:26
 #: app/assets/javascripts/app/controllers/_channel/google.coffee:40
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:40
@@ -16395,10 +16464,6 @@ msgstr ""
 msgid "Store"
 msgstr ""
 
-#: db/seeds/settings.rb:6230
-msgid "Stores the AI provider configuration."
-msgstr ""
-
 #: db/seeds/settings.rb:5184
 msgid "Stores the GitHub configuration."
 msgstr ""
@@ -16411,7 +16476,7 @@ msgstr ""
 msgid "Stores the credentials (e.g. site key and secret) of the selected CAPTCHA provider."
 msgstr ""
 
-#: db/seeds/settings.rb:6260
+#: db/seeds/settings.rb:6244
 msgid "Stores the ticket summarization options (e.g. which content is visible)."
 msgstr ""
 
@@ -16438,7 +16503,7 @@ msgstr ""
 msgid "Subject & References - Additional search for same article subject and same message ID in references header if no follow-up was recognized using default settings."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:406
+#: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:407
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee:2
 #: app/assets/javascripts/app/controllers/tag.coffee:117
 #: app/assets/javascripts/app/controllers/widget/button_with_dropdown.coffee:12
@@ -16618,7 +16683,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/system_report.coffee:3
 #: app/assets/javascripts/app/views/system_report.jst.eco:2
-#: db/seeds/permissions.rb:344
+#: db/seeds/permissions.rb:350
 msgid "System Report"
 msgstr ""
 
@@ -17020,6 +17085,10 @@ msgstr ""
 msgid "The WhatsApp webhook payload could not be validated."
 msgstr ""
 
+#: app/models/ai/provider_connection.rb:234
+msgid "The Zammad AI connection is managed by the platform and cannot be created or changed here."
+msgstr ""
+
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:82
 msgid "The access token could not be created."
 msgstr ""
@@ -17213,6 +17282,10 @@ msgstr ""
 msgid "The configuration of Zammad has changed. Please reload at your earliest."
 msgstr ""
 
+#: app/assets/javascripts/app/views/ai/ai_default_providers.jst.eco:2
+msgid "The configured AI provider(s) will be used based on their assigned default purposes:"
+msgstr ""
+
 #: app/frontend/apps/mobile/composables/useConnection.ts:18
 msgid "The connection to the server was lost."
 msgstr ""
@@ -17242,7 +17315,7 @@ msgstr ""
 msgid "The current password you provided is incorrect."
 msgstr ""
 
-#: app/services/service/ai/vectordb/create_table.rb:20
+#: app/services/service/ai/vectordb/create_table.rb:14
 msgid "The currently selected AI provider does not support embeddings."
 msgstr ""
 
@@ -17260,6 +17333,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:119
 msgid "The default font size is 12px."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:163
+msgid "The default provider could not be updated."
 msgstr ""
 
 #: app/models/ai/agent/type/custom_ai_agent.rb:81
@@ -17282,7 +17359,7 @@ msgstr ""
 msgid "The divider between TicketHook and ticket number. E. g. ': '."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:151
+#: app/assets/javascripts/app/controllers/_ai/feedback_logs.coffee:56
 #: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:90
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1674
 msgid "The download could not be started. Please try again later."
@@ -17504,7 +17581,8 @@ msgstr ""
 msgid "The new ticket number could not be generated."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:549
+#: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:550
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:336
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_new.coffee:69
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee:93
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:825
@@ -17519,6 +17597,7 @@ msgstr ""
 msgid "The object could not be found."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:397
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_edit.coffee:69
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee:265
 #: app/assets/javascripts/app/controllers/_settings/area_switch.coffee:102
@@ -17673,7 +17752,15 @@ msgid "The provided token is invalid."
 msgstr ""
 
 #: app/assets/javascripts/app/views/ai/missing_provider_alert.jst.eco:2
-msgid "The provider configuration is disabled. Please set up the provider before proceeding in |AI > Providers|."
+msgid "The provider configuration is disabled. Before proceeding, please set up at least one provider in |AI > Providers|."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_ai/ai_feature_provider_modal.coffee:124
+msgid "The provider could not be updated."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_ai/ai_feature_provider_modal.coffee:20
+msgid "The providers could not be loaded."
 msgstr ""
 
 #: lib/secure_mailing/pgp/incoming.rb:304
@@ -17851,7 +17938,7 @@ msgstr ""
 msgid "The required value 'group_id' is missing."
 msgstr ""
 
-#: lib/ai/provider.rb:89
+#: lib/ai/provider.rb:118
 msgid "The response could not be processed."
 msgstr ""
 
@@ -17893,7 +17980,7 @@ msgstr ""
 msgid "The server presented a certificate that could not be verified."
 msgstr ""
 
-#: lib/user_agent.rb:211
+#: lib/user_agent.rb:213
 msgid "The server returned a redirect response, but the current operation does not allow redirects."
 msgstr ""
 
@@ -17916,12 +18003,12 @@ msgstr ""
 msgid "The setting 'ticket_number' was not configured."
 msgstr ""
 
-#: app/assets/javascripts/app/models/setting.coffee:68
+#: app/assets/javascripts/app/models/setting.coffee:81
 msgid "The setting could not be reset."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:71
-#: app/assets/javascripts/app/models/setting.coffee:31
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:185
+#: app/assets/javascripts/app/models/setting.coffee:43
 msgid "The setting could not be updated."
 msgstr ""
 
@@ -17977,6 +18064,11 @@ msgstr ""
 
 #: app/graphql/gql/concerns/handles_password_revalidation_token.rb:13
 msgid "The supplied password revalidation token is invalid."
+msgstr ""
+
+#: app/assets/javascripts/app/views/ai/ai_unsupported_embedding_provider.jst.eco:12
+#: app/assets/javascripts/app/views/ai/missing_embedding_provider_alert.jst.eco:2
+msgid "The system currently has no default provider for semantic search. Please define a suitable provider before using this feature."
 msgstr ""
 
 #: app/assets/javascripts/app/views/system_report.jst.eco:6
@@ -18630,6 +18722,10 @@ msgstr ""
 msgid "This permission level is not available based on the current roles permissions."
 msgstr ""
 
+#: app/controllers/ai/provider_connections_controller.rb:38
+msgid "This provider does not support embeddings."
+msgstr ""
+
 #: app/services/service/execute_locked_block.rb:43
 msgid "This resource cannot be locked, because it has already been locked by another process."
 msgstr ""
@@ -18638,14 +18734,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee:6
 #: app/assets/javascripts/app/controllers/_integration/idoit.coffee:6
 msgid "This service allows you to connect %s with %s."
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:78
-msgid "This service allows you to connect Zammad with an AI provider."
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:102
-msgid "This service allows you to download feedback agents provide on AI features and error details about failed AI requests."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/beta_ui.coffee
@@ -18672,7 +18760,7 @@ msgstr ""
 msgid "This service shows you contacts of incoming calls and a caller list in realtime."
 msgstr ""
 
-#: db/seeds/settings.rb:6422
+#: db/seeds/settings.rb:6407
 msgid "This setting defines the token to access the support.zammad.com instance for package remote commands."
 msgstr ""
 
@@ -18872,7 +18960,7 @@ msgid "Ticket Owner"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_priority.coffee:16
-#: db/seeds/permissions.rb:290
+#: db/seeds/permissions.rb:296
 msgid "Ticket Priorities"
 msgstr ""
 
@@ -18901,7 +18989,7 @@ msgid "Ticket State"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_state.coffee:3
-#: db/seeds/permissions.rb:284
+#: db/seeds/permissions.rb:290
 msgid "Ticket States"
 msgstr ""
 
@@ -18924,15 +19012,15 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:2
 #: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:7
 #: db/seeds/permissions.rb:239
-#: db/seeds/settings.rb:6243
+#: db/seeds/settings.rb:6227
 msgid "Ticket Summary"
 msgstr ""
 
-#: db/seeds/settings.rb:6257
+#: db/seeds/settings.rb:6241
 msgid "Ticket Summary Config"
 msgstr ""
 
-#: db/seeds/settings.rb:6276
+#: db/seeds/settings.rb:6261
 msgid "Ticket Summary Selector"
 msgstr ""
 
@@ -19430,7 +19518,7 @@ msgstr ""
 msgid "Toggle the overlay"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:187
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:222
 #: app/assets/javascripts/app/controllers/api.coffee:11
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:48
 #: app/models/channel/driver/sms/massenversand.rb:44
@@ -19442,7 +19530,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee:3
 #: app/assets/javascripts/app/views/api.jst.eco:12
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:2
-#: db/seeds/permissions.rb:498
+#: db/seeds/permissions.rb:504
 msgid "Token Access"
 msgstr ""
 
@@ -19475,7 +19563,7 @@ msgstr ""
 msgid "Token-based API access has been disabled by the administrator."
 msgstr ""
 
-#: lib/user_agent.rb:215
+#: lib/user_agent.rb:217
 msgid "Too many redirections for the original URL, halting."
 msgstr ""
 
@@ -19544,7 +19632,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:414
 #: app/assets/javascripts/app/controllers/translation.coffee:3
 #: app/assets/javascripts/app/views/translation/index.jst.eco:4
-#: db/seeds/permissions.rb:302
+#: db/seeds/permissions.rb:308
 msgid "Translations"
 msgstr ""
 
@@ -19690,7 +19778,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/security.coffee:11
 #: app/assets/javascripts/app/views/profile/password.jst.eco:22
-#: db/seeds/permissions.rb:484
+#: db/seeds/permissions.rb:490
 msgid "Two-factor Authentication"
 msgstr ""
 
@@ -19746,12 +19834,14 @@ msgstr ""
 msgid "Two-factor method has been configured successfully."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:210
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:415
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:240
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:79
 #: app/assets/javascripts/app/controllers/translation.coffee:288
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:70
 #: app/assets/javascripts/app/models/ai_agent.coffee:7
+#: app/assets/javascripts/app/models/ai_provider_connection.coffee:9
 #: app/assets/javascripts/app/models/ticket_article.coffee:12
 #: app/assets/javascripts/app/models/ticket_state.coffee:7
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:230
@@ -19786,7 +19876,7 @@ msgstr ""
 msgid "UID Field"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:207
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:240
 #: app/assets/javascripts/app/views/api.jst.eco:63
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco:12
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:12
@@ -19803,15 +19893,15 @@ msgstr ""
 msgid "URL (AJAX endpoint)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:217
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:244
 msgid "URL (Completions)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:226
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:248
 msgid "URL (Embeddings)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:255
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:252
 msgid "URL (OCR)"
 msgstr ""
 
@@ -19855,12 +19945,20 @@ msgstr ""
 msgid "Unknown"
 msgstr ""
 
+#: app/controllers/ai/provider_connections_controller.rb:35
+msgid "Unknown default purpose."
+msgstr ""
+
 #: lib/password_policy/backend.rb:15
 msgid "Unknown error"
 msgstr ""
 
 #: app/models/failed_email.rb:7
 msgid "Unknown error: Could not create a ticket from this email."
+msgstr ""
+
+#: app/services/service/ai/provider_connection/test_connection.rb:20
+msgid "Unknown provider"
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco:5
@@ -19953,7 +20051,7 @@ msgstr ""
 msgid "Up to %s% of this language is already translated. Please help to make Zammad even better and complete the translation."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:107
+#: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:111
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket_summary.coffee:6
 msgid "Upcoming Events"
 msgstr ""
@@ -20035,7 +20133,6 @@ msgstr ""
 msgid "Update shared draft"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider.coffee:365
 #: app/assets/javascripts/app/controllers/_channel/form.coffee:162
 #: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee:81
 #: app/assets/javascripts/app/controllers/_profile/language.coffee:64
@@ -20048,7 +20145,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_settings/form.coffee:81
 #: app/assets/javascripts/app/controllers/maintenance.coffee:74
 #: app/assets/javascripts/app/controllers/package.coffee:200
-#: app/assets/javascripts/app/models/setting.coffee:20
+#: app/assets/javascripts/app/models/setting.coffee:23
 msgid "Update successful."
 msgstr ""
 
@@ -20066,6 +20163,7 @@ msgid "Update to %s"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ai_agent.coffee:11
+#: app/assets/javascripts/app/models/ai_provider_connection.coffee:10
 #: app/assets/javascripts/app/models/application.coffee:11
 #: app/assets/javascripts/app/models/calendar.coffee:14
 #: app/assets/javascripts/app/models/chat.coffee:260
@@ -20570,15 +20668,15 @@ msgstr ""
 msgid "Variables"
 msgstr ""
 
-#: db/seeds/settings.rb:6350
+#: db/seeds/settings.rb:6335
 msgid "Vector DB"
 msgstr ""
 
-#: db/seeds/settings.rb:6360
+#: db/seeds/settings.rb:6345
 msgid "Vector DB knowledge base categories"
 msgstr ""
 
-#: db/seeds/settings.rb:6369
+#: db/seeds/settings.rb:6354
 msgid "Vector DB knowledge base chunking strategy"
 msgstr ""
 
@@ -21021,11 +21119,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:25
 #: db/seeds/permissions.rb:245
-#: db/seeds/settings.rb:6294
+#: db/seeds/settings.rb:6279
 msgid "Writing Assistant"
 msgstr ""
 
-#: db/seeds/settings.rb:6308
+#: db/seeds/settings.rb:6293
 msgid "Writing Assistant Fixed Instructions"
 msgstr ""
 
@@ -21979,6 +22077,10 @@ msgstr ""
 msgid "does not match regex"
 msgstr ""
 
+#: app/assets/javascripts/app/views/ai/ai_unsupported_embedding_provider.jst.eco:3
+msgid "does not support vector embedding for semantic search"
+msgstr ""
+
 msgid "doesn't match %{attribute}"
 msgstr ""
 
@@ -22285,7 +22387,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/active.coffee:5
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1434
-#: app/assets/javascripts/app/models/webhook.coffee:38
+#: app/assets/javascripts/app/models/webhook.coffee:44
 #: app/assets/javascripts/app/views/generic/object_search/item_object.jst.eco:16
 #: app/assets/javascripts/app/views/generic/object_search/item_organization.jst.eco:4
 msgid "inactive"
@@ -22386,6 +22488,10 @@ msgstr ""
 msgid "is not a number"
 msgstr ""
 
+#: app/models/ai/provider_connection.rb:161
+msgid "is not a supported AI provider"
+msgstr ""
+
 msgid "is not a valid URL"
 msgstr ""
 
@@ -22429,7 +22535,7 @@ msgstr ""
 msgid "is the wrong length (should be 1 character)"
 msgstr ""
 
-#: app/models/user.rb:905
+#: app/models/user.rb:906
 msgid "is too long"
 msgstr ""
 
@@ -22658,7 +22764,7 @@ msgstr ""
 msgid "no issues"
 msgstr ""
 
-#: lib/ai/service/prompts/system/ticket_summarize.txt.erb:18
+#: app/services/service/ai/feature/prompts/system/ticket_summarize.txt.erb:18
 msgid "no open questions"
 msgstr ""
 
@@ -22666,7 +22772,7 @@ msgstr ""
 msgid "no unit"
 msgstr ""
 
-#: lib/ai/service/prompts/system/ticket_summarize.txt.erb:21
+#: app/services/service/ai/feature/prompts/system/ticket_summarize.txt.erb:21
 msgid "no upcoming events"
 msgstr ""
 

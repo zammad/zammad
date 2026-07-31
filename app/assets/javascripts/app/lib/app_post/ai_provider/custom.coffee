@@ -4,6 +4,6 @@ App.Config.set('custom_open_ai', {
   label:  __('Custom (OpenAI Compatible)')
   prio:   7000
   url_placeholder: 'http://localhost:1234/v1'
-  fields: ['url', 'token', 'model', 'ocr_active', 'ocr_model']
+  fields: ['url', 'token', 'model', 'ocr_model']
   required: ['model', 'url']
 }, 'AIProviders')

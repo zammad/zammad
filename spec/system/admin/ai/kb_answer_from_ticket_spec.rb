@@ -35,7 +35,7 @@ RSpec.describe 'Manage > AI > Knowledge Base Answer Generation', type: :system d
         within(:active_content) do
           click '.js-aiAssistanceKbAnswerFromTicketSetting'
 
-          expect(page).to have_text('The provider configuration is disabled. Please set up the provider before proceeding in AI > Providers.')
+          expect(page).to have_text('The provider configuration is disabled. Before proceeding, please set up at least one provider in AI > Providers.')
         end
       end
     end

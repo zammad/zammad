@@ -16,13 +16,19 @@
       <tr>
         <th width="10%"><%- @T('Direction') %>
         <th><%- @T('Request') %>
-        <th width="25%"><%- @T('Created at') %>
+<% if @hasRelatedObjects: %>
+        <th width="20%"><%- @T('Caused by') %>
+<% end %>
+        <th width="<%= if @hasRelatedObjects then '20%' else '25%' %>"><%- @T('Created at') %>
     </thead>
     <tbody>
 <% for record in @records: %>
       <tr data-id="<%= record.id %>" class="js-record">
         <td><%- @T(record.direction) %>
         <td><a href="#"><%= record.status %> <%= record.method %> <%= record.url %></a>
+<% if @hasRelatedObjects: %>
+        <td><% related = @relatedObjects[record.id] %><% if related?.url: %><a href="<%= related.url %>" class="js-relatedObject"><%= related.label %></a><% else: %><%= related?.label or '-' %><% end %>
+<% end %>
         <td><%- @humanTime(record.created_at) %>
 <% end %>
     </tbody>

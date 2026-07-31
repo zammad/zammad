@@ -1,0 +1,3 @@
+<div class="js-missingEmbeddingProviderAlert alert alert--warning">
+  <%- @T('The system currently has no default provider for semantic search. Please define a suitable provider before using this feature.') %>
+</div>

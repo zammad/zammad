@@ -16,20 +16,28 @@ class Service::Ticket::AIAssistance::GenerateKnowledgeBaseAnswerContent < Servic
     return nil if ticket.articles.none?
 
     articles = ticket.articles.without_system_notifications
-    prepared_articles = Service::AI::Ticket::PreProcessArticleContent
-      .execute(articles:, skip_quotes_strip_first_article: true)
 
-    AI::Service::KnowledgeBaseAnswerFromTicket
-      .new(
-        current_user:,
-        locale:,
-        context_data: {
-          ticket:,
-          articles:,
-          prepared_articles:,
-          category_options:
-        }
+    # Image recognition follows the ticket summary option until this feature has one of its own,
+    # which is what governed it while the pre-processing read the setting itself.
+    use_ocr = Setting.get('ai_assistance_ticket_summary_config').fetch('ocr_active', false)
+
+    prepared_articles = Service::AI::Ticket::PreProcessArticleContent
+      .execute(
+        articles:,
+        skip_quotes_strip_first_article: true,
+        use_ocr:,
+        feature_identifier:              Service::AI::Feature::KnowledgeBaseAnswerFromTicket.identifier
       )
-      .execute
+
+    Service::AI::Feature::KnowledgeBaseAnswerFromTicket.execute(
+      current_user:,
+      locale:,
+      context_data: {
+        ticket:,
+        articles:,
+        prepared_articles:,
+        category_options:
+      }
+    )
   end
 end

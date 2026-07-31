@@ -72,7 +72,7 @@ class Service::AI::Agent::Run < Service::Base
     prepared_instruction_context = context.prepare_instructions
     prepared_entity_context = context.prepare_entity
 
-    AI::Service::AIAgent.new(
+    Service::AI::Feature::AIAgent.execute(
       context_data:       {
         ai_agent:,
         ticket:,
@@ -85,7 +85,7 @@ class Service::AI::Agent::Run < Service::Base
       additional_options: {
         json_response: json_response?
       }
-    ).execute
+    )
   end
 
   def json_response?

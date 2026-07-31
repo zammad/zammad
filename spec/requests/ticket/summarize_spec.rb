@@ -77,17 +77,17 @@ RSpec.describe 'Ticket Summarize API endpoints', authenticated_as: :user, perfor
         let(:ai_analytics_run) do
           AI::Analytics::Run.create!(
             content:         result,
-            version:         AI::Service::TicketSummarize.lookup_version({ articles: ticket.articles.without_system_notifications }, Locale.find_by(locale: user.locale)),
+            version:         Service::AI::Feature::TicketSummarize.lookup_version({ articles: ticket.articles.without_system_notifications }, Locale.find_by(locale: user.locale)),
             ai_service_name: 'TicketSummarize',
-            **AI::Service::TicketSummarize.lookup_attributes({ ticket: }, Locale.find_by(locale: user.locale)),
+            **Service::AI::Feature::TicketSummarize.lookup_attributes({ ticket: }, Locale.find_by(locale: user.locale)),
           )
         end
 
         before do
           AI::StoredResult.create!(
             content:          result,
-            version:          AI::Service::TicketSummarize.lookup_version({ articles: ticket.articles.without_system_notifications }, Locale.find_by(locale: user.locale)),
-            **AI::Service::TicketSummarize.lookup_attributes({ ticket: }, Locale.find_by(locale: user.locale)),
+            version:          Service::AI::Feature::TicketSummarize.lookup_version({ articles: ticket.articles.without_system_notifications }, Locale.find_by(locale: user.locale)),
+            **Service::AI::Feature::TicketSummarize.lookup_attributes({ ticket: }, Locale.find_by(locale: user.locale)),
             ai_analytics_run:,
           )
         end

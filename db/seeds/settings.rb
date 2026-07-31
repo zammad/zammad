@@ -6231,22 +6231,6 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title:       __('AI Provider Config'),
-  name:        'ai_provider_config',
-  area:        'AI::Provider',
-  description: __('Stores the AI provider configuration.'),
-  options:     {},
-  state:       {},
-  preferences: {
-    permission:  ['admin.ai_provider'],
-    validations: [
-      'Setting::Validation::AIProviderConfig',
-    ],
-  },
-  frontend:    false,
-)
-
-Setting.create_if_not_exists(
   title:       __('Ticket Summary'),
   name:        'ai_assistance_ticket_summary',
   area:        'AI::Assistance',
@@ -6271,6 +6255,7 @@ Setting.create_if_not_exists(
     upcoming_events:    false,
     customer_sentiment: true,
     generate_on:        'on_ticket_detail_opening',
+    ocr_active:         false,
   },
   preferences: {
     authentication: true,

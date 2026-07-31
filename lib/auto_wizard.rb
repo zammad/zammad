@@ -88,11 +88,6 @@ returns
       end
     end
 
-    # set Settings
-    auto_wizard_hash['Settings']&.each do |setting_data|
-      Setting.set(setting_data['name'], setting_data['value'])
-    end
-
     # create Permissions/Organization
     model_map = {
       'Permissions'   => 'Permission',
@@ -134,12 +129,13 @@ returns
       end
     end
 
-    # create EmailAddresses/Channels/Signatures
+    # Create additional model records, if they are present in the auto wizard file.
     model_map = {
-      'Channels'       => 'Channel',
-      'EmailAddresses' => 'EmailAddress',
-      'Signatures'     => 'Signature',
-      'Groups'         => 'Group',
+      'Channels'                => 'Channel',
+      'EmailAddresses'          => 'EmailAddress',
+      'Signatures'              => 'Signature',
+      'Groups'                  => 'Group',
+      'AI::ProviderConnections' => 'AI::ProviderConnection',
     }
     model_map.each do |map_name, model|
       next if !auto_wizard_hash[map_name]
@@ -148,6 +144,12 @@ returns
         data.symbolize_keys!
         model.constantize.create_or_update_with_ref(data)
       end
+    end
+
+    # Apply settings, but only after everything else was inserted,
+    #   so we are not influenced by any model validations.
+    auto_wizard_hash['Settings']&.each do |setting_data|
+      Setting.set(setting_data['name'], setting_data['value'])
     end
 
     # reset primary key sequences

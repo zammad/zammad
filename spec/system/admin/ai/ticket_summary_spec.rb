@@ -28,6 +28,7 @@ RSpec.describe 'Manage > AI > Ticket Summary', type: :system do
                                                                          'open_questions'     => true, # false by default
                                                                          'upcoming_events'    => true, # false by default
                                                                          'customer_sentiment' => false, # true by default
+                                                                         'ocr_active'         => false, # untouched by the switches above
                                                                        })
     end
 
@@ -78,7 +79,7 @@ RSpec.describe 'Manage > AI > Ticket Summary', type: :system do
         within(:active_content) do
           click '.js-aiAssistanceTicketSummarySetting'
 
-          expect(page).to have_text('The provider configuration is disabled. Please set up the provider before proceeding in AI > Providers.')
+          expect(page).to have_text('The provider configuration is disabled. Before proceeding, please set up at least one provider in AI > Providers.')
         end
       end
     end

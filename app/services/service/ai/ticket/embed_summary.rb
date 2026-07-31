@@ -4,8 +4,8 @@ class Service::AI::Ticket::EmbedSummary < Service::AI::Ticket::EmbedBase
 
   requires_current_user!
 
-  def initialize(ticket:, locale: nil)
-    super(ticket:)
+  def initialize(ticket:, locale: nil, feature_identifier: nil)
+    super(ticket:, feature_identifier:)
     @locale = locale
   end
 
@@ -25,7 +25,7 @@ class Service::AI::Ticket::EmbedSummary < Service::AI::Ticket::EmbedBase
     content = build_content(result)
     check_content_size!(content)
 
-    Service::AI::VectorDB::Embedding.execute(input: content)
+    Service::AI::VectorDB::Embedding.execute(input: content, feature_identifier:)
   end
 
   private

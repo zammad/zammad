@@ -1,22 +1,17 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
-require_relative 'shared_examples/ping'
 require_relative 'shared_examples/check_temperature_support'
 require_relative 'shared_examples/embed'
 
 # TODO: Add AZURE_URL_EMBEDDINGS when needed.
 RSpec.describe AI::Provider::Azure, integration: true, required_envs: %w[AZURE_TOKEN AZURE_URL_COMPLETIONS AZURE_HOST], use_vcr: true do
-  subject(:ai_provider) { described_class.new(options: { json_response: true }) }
+  subject(:ai_provider) { described_class.new(config: default_ai_provider_config, options: { json_response: true }) }
 
   let(:prompt_system) { '' }
   let(:prompt_user)   { 'This is a connection test. Return in unprettified JSON \'{ "connected": "true" }\' if you got the message. Respond in plain JSON format only and do not wrap it in code block markers.' }
 
   before do
-    # Ping is tested manually, so we don't need to have this in place for setting the provider.
-    setting = Setting.find_by(name: 'ai_provider_config')
-    setting.update!(preferences: {})
-
     setup_ai_provider('azure',
                       token:           ENV['AZURE_TOKEN'],
                       url_completions: ENV['AZURE_URL_COMPLETIONS'],)
@@ -28,7 +23,6 @@ RSpec.describe AI::Provider::Azure, integration: true, required_envs: %w[AZURE_T
     end
   end
 
-  include_examples 'provider/ping!'
   include_examples 'provider/check_temperature_support'
   include_examples 'provider/embed_not_implemented'
 
