@@ -55,20 +55,24 @@ class Service::BetaUi::SendFeedback < Service::Base
   end
 
   def submit_feedback(token)
+    version = Version.get
+
     response = UserAgent.post(
       "#{api_host}/api/v1/form_submit",
       {
         fingerprint:,
         token:,
         fqdn:,
-        feedback_type: type,
-        feedback_text: comment,
+        feedback_type:       type,
+        feedback_text:       comment,
+        zammad_version:      version.split('-', 2).first || '',
+        zammad_version_full: version,
         time_spent:,
         rating:,
-        title:         fqdn,
-        body:          comment,
-        name:          BETA_UI_FEEDBACK_NAME,
-        email:         BETA_UI_FEEDBACK_EMAIL_ADDRESS,
+        title:               fqdn,
+        body:                comment,
+        name:                BETA_UI_FEEDBACK_NAME,
+        email:               BETA_UI_FEEDBACK_EMAIL_ADDRESS,
       },
       {
         verify_ssl: true,

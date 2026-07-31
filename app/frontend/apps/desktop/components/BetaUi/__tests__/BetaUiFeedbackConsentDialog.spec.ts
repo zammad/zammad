@@ -21,6 +21,12 @@ describe('BetaUiFeedbackConsentDialog.vue', () => {
       }),
     ).toBeInTheDocument()
 
+    expect(
+      wrapper.getByText(
+        'name and version of the Zammad instance with tracked usage time of the new UI.',
+      ),
+    ).toBeInTheDocument()
+
     expect(wrapper.getByText('Help us shape the future of Zammad!')).toBeInTheDocument()
     expect(wrapper.getByRole('button', { name: 'Agree & join' })).toBeInTheDocument()
     expect(wrapper.getByRole('button', { name: 'Maybe later' })).toBeInTheDocument()

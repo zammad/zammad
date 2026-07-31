@@ -82,7 +82,9 @@ const dummySchema = defineFormSchema([
           </li>
           <li>
             <CommonLabel>
-              {{ $t('name of the Zammad instance with tracked usage time of the new UI.') }}
+              {{
+                $t('name and version of the Zammad instance with tracked usage time of the new UI.')
+              }}
             </CommonLabel>
           </li>
         </ul>

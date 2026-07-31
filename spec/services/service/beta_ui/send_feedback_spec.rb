@@ -3,10 +3,12 @@
 require 'rails_helper'
 
 RSpec.describe Service::BetaUi::SendFeedback do
-  let(:type)       { 'manual_feedback' }
-  let(:comment)    { Faker::Lorem.unique.paragraph }
-  let(:time_spent) { Faker::Number.unique.between(from: 300, to: 1200) }
-  let(:rating)     { Faker::Number.unique.between(from: 1, to: 5) }
+  let(:type)                    { 'manual_feedback' }
+  let(:comment)                 { Faker::Lorem.unique.paragraph }
+  let(:time_spent)              { Faker::Number.unique.between(from: 300, to: 1200) }
+  let(:rating)                  { Faker::Number.unique.between(from: 1, to: 5) }
+  let(:version)                 { '7.2.0-abc12345.docker' }
+  let(:expected_zammad_version) { '7.2.0' }
 
   describe '#execute' do
     subject(:service_result) { described_class.execute(type:, comment:, time_spent:, rating:) }
@@ -38,6 +40,8 @@ RSpec.describe Service::BetaUi::SendFeedback do
       before do
         Setting.set('ui_desktop_beta_switch', true)
 
+        allow(Version).to receive(:get).and_return(version)
+
         fingerprint = SecureRandom.uuid
 
         allow_any_instance_of(described_class).to receive(:fingerprint).and_return(fingerprint)
@@ -51,16 +55,18 @@ RSpec.describe Service::BetaUi::SendFeedback do
 
         form_submit_args = {
           fingerprint:,
-          token:         form_config_data['token'],
-          fqdn:          Setting.get('fqdn'),
-          feedback_type: type,
-          feedback_text: comment,
+          token:               form_config_data['token'],
+          fqdn:                Setting.get('fqdn'),
+          feedback_type:       type,
+          feedback_text:       comment,
+          zammad_version:      expected_zammad_version,
+          zammad_version_full: version,
           time_spent:,
           rating:,
-          title:         Setting.get('fqdn'),
-          body:          comment,
-          name:          described_class::BETA_UI_FEEDBACK_NAME,
-          email:         described_class::BETA_UI_FEEDBACK_EMAIL_ADDRESS,
+          title:               Setting.get('fqdn'),
+          body:                comment,
+          name:                described_class::BETA_UI_FEEDBACK_NAME,
+          email:               described_class::BETA_UI_FEEDBACK_EMAIL_ADDRESS,
         }
 
         allow(UserAgent).to receive(:post).with(form_submit_route, form_submit_args, any_args).and_return(
@@ -104,6 +110,24 @@ RSpec.describe Service::BetaUi::SendFeedback do
 
         it 'raises an invalid token error' do
           expect { service_result }.to raise_error(described_class::InvalidFeedbackError)
+        end
+      end
+
+      context 'when VERSION file is empty' do
+        let(:version)                 { '' }
+        let(:expected_zammad_version) { '' }
+
+        it 'still returns success' do
+          expect(service_result).to be(true)
+        end
+      end
+
+      context 'when version has no suffix' do
+        let(:version)                 { '7.44.123' }
+        let(:expected_zammad_version) { '7.44.123' }
+
+        it 'sends the version as-is for both fields' do
+          expect(service_result).to be(true)
         end
       end
     end

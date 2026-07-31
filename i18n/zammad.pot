@@ -1551,7 +1551,7 @@ msgstr ""
 msgid "Agents with \"%s\" permission"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:103
+#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:105
 msgid "Agree & join"
 msgstr ""
 
@@ -8473,7 +8473,7 @@ msgstr ""
 msgid "Help to improve Zammad!"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:99
+#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:101
 msgid "Help us shape the future of Zammad!"
 msgstr ""
 
@@ -10770,7 +10770,7 @@ msgstr ""
 msgid "May"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:104
+#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:106
 msgid "Maybe later"
 msgstr ""
 
@@ -15512,7 +15512,7 @@ msgstr ""
 msgid "Sending an email without a valid recipient is not possible."
 msgstr ""
 
-#: app/services/service/beta_ui/send_feedback.rb:87
+#: app/services/service/beta_ui/send_feedback.rb:99
 msgid "Sending feedback failed, please try again later."
 msgstr ""
 
@@ -18737,7 +18737,7 @@ msgid "This service allows you to connect %s with %s."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/beta_ui.coffee
-msgid "This service configures the usage and consent to participate in the BETA research of the new UI.\n\nAs an administrator, you can configure which roles in your Zammad instance can get an easy access to the new UI.\n\nEach of the users can then provide consent or not for the participation in the BETA program.\n\nAnswers will be anonymized and the data collected consists of:\n- Zammad instance name\n- star rating of the new UI\n- text comments on the new UI\n- amount of tracked hours in the new UI"
+msgid "This service configures the usage and consent to participate in the BETA research of the new UI.\n\nAs an administrator, you can configure which roles in your Zammad instance can get an easy access to the new UI.\n\nEach of the users can then provide consent or not for the participation in the BETA program.\n\nAnswers will be anonymized and the data collected consists of:\n- Zammad instance name and version\n- star rating of the new UI\n- text comments on the new UI\n- amount of tracked hours in the new UI"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/exchange.coffee:6
@@ -22727,8 +22727,8 @@ msgstr ""
 msgid "my own note"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:85
-msgid "name of the Zammad instance with tracked usage time of the new UI."
+#: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:86
+msgid "name and version of the Zammad instance with tracked usage time of the new UI."
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSeparatorNew.vue:5
