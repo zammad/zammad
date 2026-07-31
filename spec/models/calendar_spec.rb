@@ -72,7 +72,7 @@ RSpec.describe Calendar, type: :model do
       end
 
       before do
-        allow(HostnameSafetyCheck).to receive(:validate!).and_return(true)
+        allow(HostnameSafetyCheck).to receive(:validate!).and_return('1.2.3.4')
         stub_request(:get, 'http://test/calendar1.ics')
           .to_return(body: Rails.root.join('test/data/calendar/calendar1.ics').read)
         stub_request(:get, 'http://test/calendar3.ics')
@@ -120,7 +120,7 @@ RSpec.describe Calendar, type: :model do
     end
 
     before do
-      allow(HostnameSafetyCheck).to receive(:validate!).and_return(true)
+      allow(HostnameSafetyCheck).to receive(:validate!).and_return('1.2.3.4')
       stub_request(:get, 'http://test/calendar1.ics')
         .to_return(body: Rails.root.join('test/data/calendar/calendar1.ics').read)
       stub_request(:get, 'http://test/calendar2.ics')
@@ -231,7 +231,7 @@ RSpec.describe Calendar, type: :model do
     end
 
     before do
-      allow(HostnameSafetyCheck).to receive(:validate!).and_return(true)
+      allow(HostnameSafetyCheck).to receive(:validate!).and_return('1.2.3.4')
       stub_request(:get, 'http://test/calendar1.ics')
         .to_return(body: Rails.root.join('test/data/calendar/calendar1.ics').read)
     end

@@ -714,6 +714,43 @@ RSpec.describe UserAgent, :aggregate_failures do
             .to have_received(:validate!)
             .with('example.com', allow_private: true)
         end
+
+        it 'pins the validated IP to the HTTP connection' do
+          resolved_ip = '93.184.216.34'
+          allow(HostnameSafetyCheck).to receive(:validate!).and_return(resolved_ip)
+
+          http_instance = instance_double(Net::HTTP).tap do |dbl|
+            allow(dbl).to receive_messages(
+              :open_timeout=    => nil,
+              :read_timeout=    => nil,
+              :set_debug_output => nil,
+              :request          => nil,
+              :proxy?           => false,
+            )
+            allow(dbl).to receive(:ipaddr=).with(resolved_ip)
+          end
+
+          allow(UserAgent::HttpClient).to receive(:get_client).and_return(Net::HTTP)
+          allow(Net::HTTP).to receive(:new).and_return(http_instance)
+
+          described_class.get(url, {}, { validate_safety: true })
+
+          expect(http_instance).to have_received(:ipaddr=).with(resolved_ip)
+        end
+
+        it 'connects to the pinned IP instead of re-resolving DNS' do
+          resolved_ip = '93.184.216.34'
+          allow(HostnameSafetyCheck).to receive(:validate!).and_return(resolved_ip)
+
+          allow(TCPSocket).to receive(:open).and_raise(StandardError)
+
+          described_class.get('http://localhost:3000/test', {}, { validate_safety: true })
+
+          expect(TCPSocket).to have_received(:open)
+            .with(resolved_ip, anything, anything, anything)
+          expect(TCPSocket).not_to have_received(:open)
+            .with(a_string_matching(%r{localhost}), anything, anything, anything)
+        end
       end
 
       context 'when safety validation is off' do

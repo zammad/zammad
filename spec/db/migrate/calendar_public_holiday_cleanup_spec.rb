@@ -41,7 +41,7 @@ RSpec.describe CalendarPublicHolidayCleanup, type: :db_migration do
   end
 
   before do
-    allow(HostnameSafetyCheck).to receive(:validate!).and_return(true)
+    allow(HostnameSafetyCheck).to receive(:validate!).and_return('1.2.3.4')
     stub_request(:get, 'http://test/calendar_duplicate_check.ics')
       .to_return(body: Rails.root.join('test/data/calendar/calendar_duplicate_check.ics').read)
 

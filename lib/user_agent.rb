@@ -301,7 +301,8 @@ class UserAgent
 
     if options[:validate_safety]
       validate_safety_options = options[:validate_safety].is_a?(Hash) ? options[:validate_safety] : nil
-      HostnameSafetyCheck.validate!(uri.hostname, **validate_safety_options)
+      resolved_ip = HostnameSafetyCheck.validate!(uri.hostname, **validate_safety_options)
+      http.ipaddr = resolved_ip if !http.proxy?
     end
 
     # set headers
