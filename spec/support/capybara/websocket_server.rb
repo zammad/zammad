@@ -42,6 +42,11 @@ RSpec.configure do |config|
     example.example.set_exception(e)
   ensure
     stop_websocket_server(ws_thread) if server_required
+
+    # The websocket server is stopped without running its disconnect handling, so the
+    #   session entries of this example would leak into the following examples and
+    #   confuse those which rely on Sessions.sessions.
+    Sessions.sessions.each { |client_id| Sessions.destroy(client_id) }
   end
 
   def stop_websocket_server(ws_thread)
