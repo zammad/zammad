@@ -217,9 +217,9 @@ RSpec.describe 'Form', authenticated_as: true, type: :system do
           # the field is off-screen, so set it the way an automated client would
           execute_script("document.querySelector(\"#{honeypot}\").value = 'http://spam.example.com'")
 
-          accept_alert do
-            within(form_context) { click_on 'Submit' }
-          end
+          # Avoid await_empty_ajax_queue.
+          execute_script('$("button:submit").trigger("click")')
+          accept_alert('Your submission could not be verified. Please make sure you completed any verification challenge and try again.')
 
           expect(page).to have_no_text('Thank you for your inquiry')
         end
