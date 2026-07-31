@@ -17,8 +17,8 @@ RSpec.describe HostnameSafetyCheck do
     let(:hostname) { 'zammad.org' }
     let(:resolved_ip) { '116.203.82.166' }
 
-    it 'returns true' do
-      expect(validate).to be(true)
+    it 'returns the resolved IP' do
+      expect(validate).to eq(resolved_ip)
     end
   end
 
@@ -29,8 +29,8 @@ RSpec.describe HostnameSafetyCheck do
     context 'when allowing private IPs' do
       let(:allow_private) { true }
 
-      it 'returns true' do
-        expect(validate).to be(true)
+      it 'returns the resolved IP' do
+        expect(validate).to eq(resolved_ip)
       end
     end
 
@@ -51,8 +51,8 @@ RSpec.describe HostnameSafetyCheck do
     context 'when allowing loopback IPs' do
       let(:allow_loopback) { true }
 
-      it 'returns true' do
-        expect(validate).to be(true)
+      it 'returns the resolved IP' do
+        expect(validate).to eq(resolved_ip)
       end
     end
 
@@ -71,8 +71,8 @@ RSpec.describe HostnameSafetyCheck do
     context 'when allowing link-local IPs' do
       let(:allow_link_local) { true }
 
-      it 'returns true' do
-        expect(validate).to be(true)
+      it 'returns the resolved IP' do
+        expect(validate).to eq(resolved_ip)
       end
     end
 

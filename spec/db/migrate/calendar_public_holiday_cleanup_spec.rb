@@ -41,6 +41,8 @@ RSpec.describe CalendarPublicHolidayCleanup, type: :db_migration do
   end
 
   before do
+    allow(HostnameSafetyCheck).to receive(:validate!).and_return('1.2.3.4')
+
     travel_to Time.zone.parse('2017-08-24T01:04:44Z0')
 
     calendar_with_public_holiday && calendar_without_public_holiday && calendar_without_ical_url && calendar_with_custom_public_holiday

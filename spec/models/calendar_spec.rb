@@ -68,7 +68,10 @@ RSpec.describe Calendar, type: :model do
         create(:calendar, ical_url: Rails.root.join('test/data/calendar/calendar1.ics'))
       end
 
-      before { travel_to Time.zone.parse('2017-08-24T01:04:44Z0') }
+      before do
+        allow(HostnameSafetyCheck).to receive(:validate!).and_return('1.2.3.4')
+        travel_to Time.zone.parse('2017-08-24T01:04:44Z0')
+      end
 
       context 'on creation' do
         it 'is computed from iCal event data (implicitly via #sync), from one year before to three years after' do
@@ -109,7 +112,10 @@ RSpec.describe Calendar, type: :model do
       create(:calendar, ical_url: Rails.root.join('test/data/calendar/calendar1.ics'), default: false)
     end
 
-    before { travel_to Time.zone.parse('2017-08-24T01:04:44Z0') }
+    before do
+      allow(HostnameSafetyCheck).to receive(:validate!).and_return('1.2.3.4')
+      travel_to Time.zone.parse('2017-08-24T01:04:44Z0')
+    end
 
     context 'when called explicitly after creation' do
       it 'writes #public_holidays to the cache (valid for 1 day)' do

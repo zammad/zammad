@@ -15,7 +15,7 @@ module HostnameSafetyCheck
   # @param allow_loopback [Boolean] Whether to allow loopback IP addresses (e.g. 127.0.0.1)
   # @param allow_link_local [Boolean] Whether to allow link-local IP addresses (e.g. 169.254.x.x)
   #
-  # @return [Boolean] true if hostname is safe, otherwise raises an error
+  # @return [String] the resolved IP address of the hostname
   # @raise [StandardError] if hostname is not safe or cannot be resolved
   def self.validate!(hostname, allow_private: false, allow_loopback: false, allow_link_local: false)
     resolved = IPSocket.getaddress(hostname)
@@ -33,7 +33,7 @@ module HostnameSafetyCheck
       raise LinkLocalIpError.new(hostname, ip)
     end
 
-    true
+    resolved
   rescue => e
     raise e if e.is_a?(SafetyError)
 
