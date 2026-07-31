@@ -35,7 +35,7 @@ class ObjectManager::Element::Backend
 
     return data if attribute.data_option.blank?
 
-    data.merge(attribute.data_option.symbolize_keys)
+    data.merge(attribute.public_data_option.symbolize_keys)
   end
 
   def default_data

@@ -572,4 +572,29 @@ RSpec.describe ObjectManager::Attribute, type: :model do
       end
     end
   end
+
+  describe '#public_data_option' do
+    let(:attribute) do
+      build(:object_manager_attribute_autocompletion_ajax_external_data_source).tap do |attribute|
+        attribute.data_option.merge!(
+          'http_basic_auth_username'         => 'user',
+          'http_basic_auth_password'         => 'secret',
+          'http_basic_auth_password_confirm' => 'secret',
+          'bearer_token_auth'                => 'token',
+          'verify_ssl'                       => false,
+        )
+      end
+    end
+
+    it 'strips the external data source credentials', :aggregate_failures do
+      expect(attribute.public_data_option.keys)
+        .not_to include('search_url', 'search_result_list_key', 'search_result_value_key', 'search_result_label_key', 'http_basic_auth_username', 'http_basic_auth_password', 'http_basic_auth_password_confirm', 'bearer_token_auth', 'verify_ssl')
+
+      expect(attribute.public_data_option).to include('null' => true)
+    end
+
+    it 'keeps the stored data option untouched' do
+      expect { attribute.public_data_option }.not_to change(attribute, :data_option)
+    end
+  end
 end

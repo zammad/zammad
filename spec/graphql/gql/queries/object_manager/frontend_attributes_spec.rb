@@ -627,6 +627,35 @@ RSpec.describe Gql::Queries::ObjectManager::FrontendAttributes, type: :graphql d
       include_context 'when fetching frontend attributes as agent and customer'
     end
 
+    context 'with an external data source attribute', authenticated_as: :user, db_strategy: :reset do
+      let(:user)   { create(:agent) }
+      let(:object) { 'Ticket' }
+      let(:object_attribute) do
+        create(:object_manager_attribute_autocompletion_ajax_external_data_source,
+               object_name:             object,
+               additional_data_options: {
+                 'http_basic_auth_username' => 'user',
+                 'http_basic_auth_password' => 'secret',
+                 'bearer_token_auth'        => 'token',
+                 'verify_ssl'               => false,
+               },
+               screens:                 { 'edit' => { 'ticket.agent' => { 'shown' => true } } })
+          .tap { ObjectManager::Attribute.migration_execute }
+      end
+
+      before do
+        object_attribute
+        gql.execute(query, variables: variables)
+      end
+
+      it 'does not return the external data source credentials' do
+        data_option = gql.result.data[:attributes].find { |attribute| attribute['name'] == object_attribute.name }['dataOption']
+
+        expect(data_option.keys)
+          .not_to include('search_url', 'search_result_list_key', 'search_result_value_key', 'search_result_label_key', 'http_basic_auth_username', 'http_basic_auth_password', 'bearer_token_auth', 'verify_ssl')
+      end
+    end
+
     context 'with object "Ticket" with agent-customer', authenticated_as: :user, db_strategy: :reset do
       let(:user)   { create(:agent_and_customer) }
       let(:object) { 'Ticket' }
