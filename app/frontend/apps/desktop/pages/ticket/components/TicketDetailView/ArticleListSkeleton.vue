@@ -9,7 +9,7 @@ const props = defineProps<{
   articleCount?: number | null
 }>()
 
-const counts = computed(() => props.articleCount ?? 6)
+const counts = computed(() => Math.min(props.articleCount ?? 25, 25))
 </script>
 
 <template>
