@@ -45,14 +45,16 @@ RSpec.describe Ticket::Article::EnqueueCommunicateEmailJob, performs_jobs: true 
       expect { perform_enqueued_jobs commit_transaction: true }.not_to raise_error
 
       expect(article.reload.preferences).to include(
-        delivery_status:         'fail',
-        delivery_status_message: 'Smtp: Network connection to other@example.com/10.1.1.1 timed out: execution expired (Net::OpenTimeout)',
+        delivery_status: 'fail',
       )
+      expect(article.reload.preferences['delivery_status_message']).to include('10.1.1.1')
+      expect(article.reload.preferences['delivery_status_message']).not_to include('other@example.com')
 
       expect(channel.reload).to have_attributes(
-        status_out:   'error',
-        last_log_out: 'Smtp: Network connection to other@example.com/10.1.1.1 timed out: execution expired (Net::OpenTimeout)',
+        status_out: 'error',
       )
+      expect(channel.reload.last_log_out).to include('10.1.1.1')
+      expect(channel.reload.last_log_out).not_to include('other@example.com')
     end
   end
 
