@@ -283,8 +283,8 @@ importers:
         specifier: ^2.0.1
         version: 2.0.1(pinia@4.0.2(@vue/devtools-api@8.2.1)(typescript@6.0.3)(vue@3.5.40(typescript@6.0.3)))
       '@sa11y/preset-rules':
-        specifier: ^8.0.27
-        version: 8.0.27
+        specifier: ^8.0.28
+        version: 8.0.28
       '@sa11y/vitest':
         specifier: ^8.0.28
         version: 8.0.28(@types/node@26.1.1)(jsdom@30.0.1)(vite@8.2.0(@types/node@26.1.1)(esbuild@0.28.1)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0))
@@ -2406,10 +2406,6 @@ packages:
     resolution: {integrity: sha512-nwWPrnkf6RlS/5b4A0aIswJUt2dvo5RH50mJg5S3unsp5efUKjJTkxZS+MLmodx7K8EhNf7DJlZFbtxmohsWhA==}
     engines: {node: ^20 || ^22 || ^24}
 
-  '@sa11y/common@8.0.27':
-    resolution: {integrity: sha512-O4zJ+424t1rcaGLEQ79NUwORkRc1whdO9EE5YA+Dr4/OpIROXCG9riTXHHVMpXzD6nK5oL1fE3ZSKMi5VEtoDg==}
-    engines: {node: ^20 || ^22 || ^24}
-
   '@sa11y/common@8.0.28':
     resolution: {integrity: sha512-DmOgo4VSpDzLmH5LRPLO5GL4NFF6D/bEe0btKFye9LzuB4uUvVQFSZ1vdiw0Y/s0ObjAaP9zwXezLFuM48LEoA==}
     engines: {node: ^20 || ^22 || ^24}
@@ -2420,10 +2416,6 @@ packages:
 
   '@sa11y/matcher@8.0.28':
     resolution: {integrity: sha512-dSd0ydSSi+F0JlMkp9n8u40P0/hLZCffrcnLxa2YWilWKOKkU6u7c5klFcTr2NGi6I06hVQ9FoWG82SGJJVkAA==}
-    engines: {node: ^20 || ^22 || ^24}
-
-  '@sa11y/preset-rules@8.0.27':
-    resolution: {integrity: sha512-XbhTGKdK85QJjm2KnQABiCMcxGtk1V6TXpHRpO5cZzjfST/PwodCky5regCzU1osVFOpbxfQblyceZmYHOLptQ==}
     engines: {node: ^20 || ^22 || ^24}
 
   '@sa11y/preset-rules@8.0.28':
@@ -8655,10 +8647,6 @@ snapshots:
       '@sa11y/preset-rules': 8.0.28
       axe-core: 4.11.1
 
-  '@sa11y/common@8.0.27':
-    dependencies:
-      axe-core: 4.11.1
-
   '@sa11y/common@8.0.28':
     dependencies:
       axe-core: 4.11.1
@@ -8674,10 +8662,6 @@ snapshots:
       '@sa11y/assert': 8.0.28
       '@sa11y/format': 8.0.28
       '@sa11y/preset-rules': 8.0.28
-
-  '@sa11y/preset-rules@8.0.27':
-    dependencies:
-      '@sa11y/common': 8.0.27
 
   '@sa11y/preset-rules@8.0.28':
     dependencies:
