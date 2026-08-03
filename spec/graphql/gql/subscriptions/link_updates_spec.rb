@@ -12,6 +12,9 @@ RSpec.describe Gql::Subscriptions::LinkUpdates, type: :graphql do
               ... on Ticket {
                 id
               }
+              ... on KnowledgeBaseAnswerTranslation {
+                id
+              }
             }
             type
           }
@@ -96,6 +99,37 @@ RSpec.describe Gql::Subscriptions::LinkUpdates, type: :graphql do
           create(:link, from: to, to: from)
           expect(mock_channel.mock_broadcasted_messages.first[:result]['data']['linkUpdates']['links']).to be_present
         end
+      end
+    end
+
+    # The subscribed target type is the class of the *other* side of the link,
+    # so a ticket subscribing to its knowledge base answer links must be
+    # notified with 'KnowledgeBase::Answer::Translation' as target type.
+    context 'when subscribing to knowledge base answer links of a ticket' do
+      let(:agent)              { create(:agent, groups: [ from_group ]) }
+      let(:answer_translation) { create(:knowledge_base_answer, :published).translation }
+      let(:link)               { nil }
+      let(:variables)          { { objectId: gql.id(from), targetType: 'KnowledgeBase::Answer::Translation' } }
+
+      let(:broadcasted_links) do
+        mock_channel.mock_broadcasted_messages.first&.dig(:result, 'data', 'linkUpdates', 'links')
+      end
+
+      it 'receives updates when an answer is linked' do
+        create(:link, from: answer_translation, to: from, link_type: 'normal')
+
+        expect(broadcasted_links).to contain_exactly(
+          include('item' => { 'id' => gql.id(answer_translation) })
+        )
+      end
+
+      it 'receives updates when an answer is unlinked' do
+        answer_link = create(:link, from: answer_translation, to: from, link_type: 'normal')
+        mock_channel.mock_broadcasted_messages.clear
+
+        answer_link.destroy
+
+        expect(broadcasted_links).to be_empty
       end
     end
   end

@@ -12,6 +12,7 @@ import {
   mockLinkListQuery,
   waitForLinkListQueryCalls,
 } from '#desktop/pages/ticket/graphql/queries/linkList.mocks.ts'
+import { getLinkUpdatesSubscriptionHandler } from '#desktop/pages/ticket/graphql/subscriptions/linkUpdates.mocks.ts'
 
 import { useKnowledgeBaseLinkList } from '../useKnowledgeBaseLinkList.ts'
 
@@ -51,6 +52,40 @@ describe('useKnowledgeBaseLinkList', () => {
       ])
       expect(linkedAnswerIds.value).toEqual([answerId(1), answerId(2)])
       expect(targetType).toBe('KnowledgeBase::Answer::Translation')
+    })
+
+    scope.stop()
+  })
+
+  it('applies link updates from the subscription without a refetch', async () => {
+    const scope = effectScope()
+
+    await scope.run(async () => {
+      mockLinkListQuery({ linkList: [linkedAnswer(1, 'Reset your password')] })
+
+      const { linkedAnswers, linkedAnswerIds } = useKnowledgeBaseLinkList(ref(ticketId), {
+        enabled: ref(true),
+      })
+
+      await waitForLinkListQueryCalls()
+      await waitFor(() => expect(linkedAnswers.value).toHaveLength(1))
+
+      await getLinkUpdatesSubscriptionHandler().trigger({
+        linkUpdates: {
+          links: [linkedAnswer(1, 'Reset your password'), linkedAnswer(3, 'Enable notifications')],
+        },
+      })
+
+      await waitFor(() => expect(linkedAnswers.value).toHaveLength(2))
+      expect(linkedAnswerIds.value).toEqual([answerId(1), answerId(3)])
+
+      await getLinkUpdatesSubscriptionHandler().trigger({
+        linkUpdates: {
+          links: [],
+        },
+      })
+
+      await waitFor(() => expect(linkedAnswers.value).toEqual([]))
     })
 
     scope.stop()

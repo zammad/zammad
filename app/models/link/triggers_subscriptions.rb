@@ -11,12 +11,16 @@ module Link::TriggersSubscriptions
 
   def trigger_subscriptions
     # Captain, oh my captain! I hate to do this, but we need to do it.
+    #
+    # Both sides of the link have to be informed, and each of them subscribes with
+    # the class of the *opposite* side as target type (e.g. a ticket linked to a
+    # knowledge base answer subscribes with 'KnowledgeBase::Answer::Translation').
     list = [
-      [ link_object_source_id, link_object_source_value ],
-      [ link_object_target_id, link_object_target_value ]
+      [ link_object_source_id, link_object_source_value, link_object_target_id ],
+      [ link_object_target_id, link_object_target_value, link_object_source_id ]
     ]
 
-    list.each do |link_object_id, link_object_value|
+    list.each do |link_object_id, link_object_value, opposite_link_object_id|
       object_class = Link::Object.find(link_object_id).name.constantize
       object = begin
         object_class.find(link_object_value)
@@ -24,7 +28,7 @@ module Link::TriggersSubscriptions
         # No need to inform a non-existing object about link changes
         next
       end
-      target_type = Link::Object.find(link_object_target_id).name
+      target_type = Link::Object.find(opposite_link_object_id).name
 
       Gql::Subscriptions::LinkUpdates
         .trigger(
