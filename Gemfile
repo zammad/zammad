@@ -32,7 +32,12 @@ gem 'thor'
 gem 'em-websocket'
 gem 'eventmachine'
 gem 'hiredis-client'
-gem 'redis'
+# Action Cable's Redis pubsub adapter declares `gem 'redis', '>= 4', '< 6'`, so
+#   activating redis 6 breaks every subscription broadcast at runtime.
+#   Rails main already reimplemented the adapter on top of redis-client, but that
+#   is not part of any 8.0.x release yet, so keep redis below 6 until we upgrade.
+#   See https://github.com/rails/rails/blob/v8.0.5.1/actioncable/lib/action_cable/subscription_adapter/redis.rb#L5
+gem 'redis', '< 6'
 
 # core - password security
 gem 'argon2'
