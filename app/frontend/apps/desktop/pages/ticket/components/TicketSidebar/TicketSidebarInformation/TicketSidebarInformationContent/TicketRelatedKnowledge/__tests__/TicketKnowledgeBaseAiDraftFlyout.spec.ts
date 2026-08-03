@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { ref } from 'vue'
+import { ref, type Ref } from 'vue'
 
 import { getGraphQLMockCalls } from '#tests/graphql/builders/mocks.ts'
 import renderComponent from '#tests/support/components/renderComponent.ts'
@@ -14,7 +14,6 @@ import { convertToGraphQLId, getIdFromGraphQLId } from '#shared/graphql/utils.ts
 import { GraphQLErrorTypes } from '#shared/types/error.ts'
 
 import TicketKnowledgeBaseAiDraftFlyout from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiDraftFlyout.vue'
-import { TICKET_SIDEBAR_SYMBOL } from '#desktop/pages/ticket/composables/useTicketSidebar.ts'
 import {
   mockTicketAiAssistanceEnqueueKnowledgeBaseAnswerMutation,
   mockTicketAiAssistanceEnqueueKnowledgeBaseAnswerMutationError,
@@ -57,11 +56,14 @@ const mockSuggestedAnswers = (answers: ReturnType<typeof relatedAnswer>[], pendi
     ticketAIRelatedKnowledgeBaseAnswers: { pending, answers },
   })
 
-const renderFlyout = (activeSidebar = 'information') =>
+// The active sidebar arrives as a getter, so the flyout keeps up with a sidebar switch while it is
+//   open — that is what hands the ownership of the live search over to it.
+const renderFlyout = (activeSidebar: Ref<string> = ref('information')) =>
   renderComponent(TicketKnowledgeBaseAiDraftFlyout, {
     props: {
       name: 'knowledge-base-ai-draft',
       ticketId,
+      activeSidebar: () => activeSidebar.value,
     },
     router: true,
     routerRoutes: [
@@ -76,14 +78,6 @@ const renderFlyout = (activeSidebar = 'information') =>
     ],
     store: true,
     flyout: true,
-    provide: [
-      [
-        TICKET_SIDEBAR_SYMBOL,
-        {
-          activeSidebar: ref(activeSidebar),
-        },
-      ],
-    ],
   })
 
 describe('TicketKnowledgeBaseAiDraftFlyout', () => {
@@ -248,7 +242,7 @@ describe('TicketKnowledgeBaseAiDraftFlyout', () => {
 
     mockSuggestedAnswers([], true)
 
-    const wrapper = renderFlyout('customer')
+    const wrapper = renderFlyout(ref('customer'))
 
     expect(await wrapper.findByLabelText('Searching for related answers…')).toBeInTheDocument()
     await waitFor(() =>
@@ -257,6 +251,35 @@ describe('TicketKnowledgeBaseAiDraftFlyout', () => {
 
     mockSuggestedAnswers([relatedAnswer(1, 'Reset your password')])
 
+    await getTicketAiRelatedKnowledgeBaseAnswersUpdatesSubscriptionHandler().trigger({
+      ticketAIRelatedKnowledgeBaseAnswersUpdates: { ticketId, error: null },
+    })
+
+    expect(await wrapper.findAllByText('Reset your password')).not.toHaveLength(0)
+  })
+
+  it('takes over the search when the sidebar is switched away while the flyout is open', async () => {
+    const activeSidebar = ref('information')
+
+    mockSuggestedAnswers([], true)
+
+    const wrapper = renderFlyout(activeSidebar)
+
+    expect(await wrapper.findByLabelText('Searching for related answers…')).toBeInTheDocument()
+    // The sidebar list still owns the live result, so the flyout only reads from its cache entry.
+    expect(getTicketAiRelatedKnowledgeBaseAnswersUpdatesSubscriptionHandler()).toBeUndefined()
+
+    activeSidebar.value = 'customer'
+
+    // The list is gone, so the flyout has to drive the search itself from now on.
+    await waitFor(() =>
+      expect(getTicketAiRelatedKnowledgeBaseAnswersUpdatesSubscriptionHandler()).toBeDefined(),
+    )
+
+    mockSuggestedAnswers([relatedAnswer(1, 'Reset your password')])
+
+    // Without the list around, only the flyout’s own ping subscription can resolve the pending
+    //   embedding — a snapshotted sidebar would leave it spinning forever.
     await getTicketAiRelatedKnowledgeBaseAnswersUpdatesSubscriptionHandler().trigger({
       ticketAIRelatedKnowledgeBaseAnswersUpdates: { ticketId, error: null },
     })
@@ -291,8 +314,8 @@ describe('TicketKnowledgeBaseAiDraftFlyout', () => {
     expect(calls.at(-1)?.variables).toEqual({ ticketId })
   })
 
-  it('shows an error notification when the generation request fails', async () => {
-    mockSuggestedAnswers([])
+  it('shows the error inside the flyout when the generation request fails', async () => {
+    mockSuggestedAnswers([relatedAnswer(1, 'Reset your password')])
 
     mockTicketAiAssistanceEnqueueKnowledgeBaseAnswerMutationError('Generation failed', {
       type: GraphQLErrorTypes.UnknownError,
@@ -300,15 +323,15 @@ describe('TicketKnowledgeBaseAiDraftFlyout', () => {
 
     const wrapper = renderFlyout()
 
-    await wrapper.events.click(wrapper.getByRole('button', { name: 'Generate' }))
+    // The flyout stays open on failure, so the error is shown in place instead of as a notification.
+    await wrapper.events.click(await wrapper.findByRole('button', { name: 'Generate' }))
 
-    await waitFor(() =>
-      expect(notifications.notify).toHaveBeenCalledWith({
-        id: 'ticket-ai-knowledge-base-answers-notification',
-        message: 'Generation failed',
-        type: 'error',
-      }),
-    )
+    expect(await wrapper.findByRole('alert')).toHaveTextContent('Generation failed')
+    expect(notifications.notify).not.toHaveBeenCalled()
+
+    // The suggestion list is replaced by the error, and generating cannot be retried.
+    expect(wrapper.queryByText('Reset your password')).not.toBeInTheDocument()
+    expect(wrapper.getByRole('button', { name: 'Generate' })).toBeDisabled()
   })
 
   it('shows empty message when no answers are found', async () => {

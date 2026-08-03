@@ -307,13 +307,17 @@ class App.WidgetLinkKbAnswer extends App.WidgetLink
       onClosed:         => @aiDraftModal = undefined
     )
 
-  generateAiAnswer: =>
+  # The modal keeps itself open until the request settled: it closes on success and renders the
+  # failure in place, so `onError` reports back instead of notifying.
+  generateAiAnswer: (onSuccess, onError) =>
     @ajax(
       id:   "knowledge_base_answer_enqueue_ai_#{@object.id}"
       type: 'POST'
       url:  "#{@apiPath}/tickets/#{@object.id}/knowledge_base_answers"
       failResponseNoTrigger: true
       success: =>
+        onSuccess?()
+
         @notify(
           type: 'success'
           msg:  __('A related knowledge base answer is being generated. You will be notified once the draft is ready.')
@@ -321,9 +325,12 @@ class App.WidgetLinkKbAnswer extends App.WidgetLink
         )
       error: (xhr) =>
         details = xhr.responseJSON || {}
+        message = details.error_message || __('Knowledge base draft could not be generated.')
+
+        return onError(message) if onError
 
         @notify(
           type: 'error'
-          msg:  details.error_message
+          msg:  message
         )
     )

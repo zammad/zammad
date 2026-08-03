@@ -22,16 +22,32 @@ class App.TicketZoomKnowledgeBaseAiDraftModal extends App.ControllerModal
     super
 
   content: ->
-    App.view('ticket_zoom/knowledge_base_ai_draft_modal')(@suggestionsState())
+    # #suggestionsState returns a fresh object on every call, so it can carry the generation state.
+    state                 = @suggestionsState()
+    state.generationError = @generationError
+
+    App.view('ticket_zoom/knowledge_base_ai_draft_modal')(state)
 
   post: ->
     @$('.js-submit').prop('disabled', @generateBlocked())
 
+  # The modal stays open until the request settled, so a failure can be shown in place instead of
+  # only as a notification the agent may miss.
   onSubmit: =>
     return if @generateBlocked()
 
-    @onGenerate()
+    @generating = true
+    @update()
+
+    @onGenerate(@generationSucceeded, @generationFailed)
+
+  generationSucceeded: =>
     @close()
+
+  generationFailed: (message) =>
+    @generating      = false
+    @generationError = message
+    @update()
 
   retrySuggestions: (e) =>
     @preventDefault(e)
@@ -46,7 +62,11 @@ class App.TicketZoomKnowledgeBaseAiDraftModal extends App.ControllerModal
     @close()
     App.GlobalSearchWidget.search(tag, 'tags')
 
+  # A failed generation is final: the error replaces the suggestions, so there is nothing left to
+  # submit until the modal is reopened.
   generateBlocked: ->
+    return true if @generating or @generationError
+
     state = @suggestionsState()
 
     state.suggestionsEnabled and !state.suggestionsLoaded

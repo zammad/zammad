@@ -1,10 +1,16 @@
-<% hasSuggestions = @suggestionsEnabled and @suggestionsLoaded and not @suggestionsError and not _.isEmpty(@suggestions) %>
+<%# A failed generation replaces the suggestions: there is nothing left to confirm. %>
+<% showSuggestions = @suggestionsEnabled and not @generationError %>
+<% hasSuggestions  = showSuggestions and @suggestionsLoaded and not @suggestionsError and not _.isEmpty(@suggestions) %>
+
+<% if @generationError: %>
+  <div class="alert alert--danger" role="alert"><%- @Tp(@generationError) %></div>
+<% end %>
 
 <% if hasSuggestions: %>
   <p><%- @T('Before creating a new knowledge base answer, please check whether an existing answer already covers the solution for this ticket.') %></p>
 <% end %>
 
-<% if @suggestionsEnabled: %>
+<% if showSuggestions: %>
   <ol class="tasks tasks--standalone kb-answer-suggestions">
     <% if not @suggestionsLoaded: %>
       <li class="task">

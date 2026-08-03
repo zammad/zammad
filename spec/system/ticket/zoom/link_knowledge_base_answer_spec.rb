@@ -157,6 +157,33 @@ RSpec.describe 'Ticket zoom > Link knowledge base answer', type: :system do
       expect(page).to have_text('A related knowledge base answer is being generated. You will be notified once the draft is ready.')
     end
 
+    context 'when the generation request fails' do
+      before do
+        allow(TicketAIAssistanceGenerateKnowledgeBaseAnswerJob).to receive(:perform_later).and_return(false)
+      end
+
+      it 'keeps the modal open and shows the error in place of the suggestions' do
+        within :active_content, '.link_kb_answers' do
+          expect(page).to have_text(translation.title)
+
+          find('.js-kb-ai-generate').click
+        end
+
+        in_modal disappears: false do
+          click '.js-submit'
+
+          expect(page)
+            .to have_css('.alert--danger', text: 'Related knowledge base answer creation has already been started for current ticket.')
+            .and(have_no_text(translation.title))
+
+          # The error is final, so the draft cannot be requested again from the open modal.
+          expect(page).to have_button('Generate', disabled: true)
+        end
+
+        expect(page).to have_no_text('A related knowledge base answer is being generated. You will be notified once the draft is ready.')
+      end
+    end
+
     context 'when the suggestions search is still running' do
       let(:search_results) { [pending_search] }
 

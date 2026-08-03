@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 
 import '#tests/graphql/builders/mocks.ts'
 import renderComponent from '#tests/support/components/renderComponent.ts'
@@ -15,6 +15,7 @@ import {
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
 import { TICKET_KEY } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
+import { TICKET_SIDEBAR_SYMBOL } from '#desktop/pages/ticket/composables/useTicketSidebar.ts'
 
 import TicketRelatedKnowledge from '../TicketSidebarInformationContent/TicketRelatedKnowledge.vue'
 
@@ -72,6 +73,8 @@ const renderRelatedKnowledge = (
           isTicketEditable: computed(() => isTicketEditable),
         },
       ],
+      // The AI draft action hands the active sidebar to the flyout it opens.
+      [TICKET_SIDEBAR_SYMBOL, { activeSidebar: ref('information') }],
     ],
   })
 }

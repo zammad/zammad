@@ -11,9 +11,14 @@ import { mockRouterHooks } from '#tests/support/mock-vue-router.ts'
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
+// The plugin registry globs all plugin modules eagerly, and the sidebar content below reaches
+//   `useTicketSidebar` (which imports the registry) again. Pull the registry in first, so the glob
+//   cannot run while `information.ts` is still initializing.
+import '#desktop/pages/ticket/components/TicketSidebar/plugins/index.ts'
 import plugin from '#desktop/pages/ticket/components/TicketSidebar/plugins/information.ts'
 import TicketSidebarInformationContent from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue'
 import { TICKET_KEY } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
+import { TICKET_SIDEBAR_SYMBOL } from '#desktop/pages/ticket/composables/useTicketSidebar.ts'
 import { mockLinkListQuery } from '#desktop/pages/ticket/graphql/queries/linkList.mocks.ts'
 import { mockTicketAiRelatedKnowledgeBaseAnswersQuery } from '#desktop/pages/ticket/graphql/queries/ticketAIRelatedKnowledgeBaseAnswers.mocks.ts'
 import { TicketSidebarScreenType } from '#desktop/pages/ticket/types/sidebar.ts'
@@ -49,6 +54,8 @@ const renderInformationSidebar = (
           ticketInternalId: computed(() => ticket.internalId),
         },
       ],
+      // The AI draft action hands the active sidebar to the flyout it opens.
+      [TICKET_SIDEBAR_SYMBOL, { activeSidebar: ref('information') }],
     ],
   })
 

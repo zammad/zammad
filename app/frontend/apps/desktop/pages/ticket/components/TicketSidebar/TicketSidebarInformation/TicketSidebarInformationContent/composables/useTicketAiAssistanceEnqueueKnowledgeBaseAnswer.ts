@@ -6,13 +6,17 @@ import { NotificationTypes } from '#shared/components/CommonNotifications/types.
 import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
 import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
 
+import { closeFlyout } from '#desktop/components/CommonFlyout/useFlyout.ts'
 import { useTicketAiAssistanceEnqueueKnowledgeBaseAnswerMutation } from '#desktop/pages/ticket/graphql/mutations/ticketAIAssistanceEnqueueKnowledgeBaseAnswer.api.ts'
+
+const NOTIFICATION_ID = 'ticket-ai-knowledge-base-answers-notification'
 
 const generations = ref(new Map<ID, Ref<boolean>>())
 
-export const useTicketAiAssistanceEnqueueKnowledgeBaseAnswer = (ticketId: ID) => {
-  const NOTIFICATION_ID = 'ticket-ai-knowledge-base-answers-notification'
-
+export const useTicketAiAssistanceEnqueueKnowledgeBaseAnswer = (
+  ticketId: ID,
+  flyoutName: string,
+) => {
   const { notify } = useNotifications()
 
   const requestGenerationHandler = new MutationHandler(
@@ -21,6 +25,8 @@ export const useTicketAiAssistanceEnqueueKnowledgeBaseAnswer = (ticketId: ID) =>
       errorShowNotification: false,
     },
   )
+
+  const errorMessage = ref<string>()
 
   const requestDraft = async () => {
     if (generations.value.get(ticketId)?.value) return
@@ -38,12 +44,11 @@ export const useTicketAiAssistanceEnqueueKnowledgeBaseAnswer = (ticketId: ID) =>
         ),
         durationMS: 8000,
       })
+
+      closeFlyout(flyoutName)
     } catch (error) {
-      notify({
-        id: NOTIFICATION_ID,
-        type: NotificationTypes.Error,
-        message: (error as Error).message || __('Knowledge base draft could not be generated.'),
-      })
+      errorMessage.value =
+        (error as Error).message || __('Knowledge base draft could not be generated.')
     } finally {
       generations.value.delete(ticketId)
     }
@@ -51,5 +56,5 @@ export const useTicketAiAssistanceEnqueueKnowledgeBaseAnswer = (ticketId: ID) =>
 
   const isGenerating = computed(() => generations.value.get(ticketId)?.value ?? false)
 
-  return { requestDraft, isGenerating }
+  return { requestDraft, isGenerating, errorMessage }
 }

@@ -6,6 +6,7 @@ import { computed, ref } from 'vue'
 import renderComponent from '#tests/support/components/renderComponent.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
+import { waitFor } from '#tests/support/vitest-wrapper.ts'
 
 import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
 import { EnumKnowledgeBaseVisibility } from '#shared/graphql/types.ts'
@@ -13,6 +14,7 @@ import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
 import TicketKnowledgeBaseActions from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseActions.vue'
 import { TICKET_KEY } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
+import { mockTicketAiAssistanceEnqueueKnowledgeBaseAnswerMutation } from '#desktop/pages/ticket/graphql/mutations/ticketAIAssistanceEnqueueKnowledgeBaseAnswer.mocks.ts'
 import { mockTicketAiRelatedKnowledgeBaseAnswersQuery } from '#desktop/pages/ticket/graphql/queries/ticketAIRelatedKnowledgeBaseAnswers.mocks.ts'
 
 vi.mock('#desktop/pages/ticket/composables/useTicketSidebar.ts', () => ({
@@ -135,6 +137,34 @@ describe('TicketKnowledgeBaseActions', () => {
       ).toBeInTheDocument()
 
       expect(notifications.notify).not.toHaveBeenCalled()
+    })
+
+    it('closes the flyout once the generation was requested', async () => {
+      mockSuggestedAnswers([])
+
+      mockTicketAiAssistanceEnqueueKnowledgeBaseAnswerMutation({
+        ticketAIAssistanceEnqueueKnowledgeBaseAnswer: { success: true },
+      })
+
+      const wrapper = renderActions()
+
+      await wrapper.events.click(wrapper.getByRole('button', { name: 'Add AI draft' }))
+
+      const flyout = await wrapper.findByRole('complementary', {
+        name: 'Generate knowledge base answer from this ticket',
+      })
+
+      await wrapper.events.click(within(flyout).getByRole('button', { name: 'Generate' }))
+
+      await waitFor(() =>
+        expect(
+          wrapper.queryByRole('complementary', {
+            name: 'Generate knowledge base answer from this ticket',
+          }),
+        ).not.toBeInTheDocument(),
+      )
+
+      expect(notifications.notify).toHaveBeenCalledWith(expect.objectContaining({ type: 'info' }))
     })
 
     it('hides the AI draft button when drafting is not available', () => {

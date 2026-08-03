@@ -4,6 +4,7 @@
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import { useFlyout } from '#desktop/components/CommonFlyout/useFlyout.ts'
 import { useTicketInformation } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
+import { useTicketSidebar } from '#desktop/pages/ticket/composables/useTicketSidebar.ts'
 
 import { useTicketAiAssistanceEnqueueKnowledgeBaseAnswer } from '../composables/useTicketAiAssistanceEnqueueKnowledgeBaseAnswer.ts'
 
@@ -24,13 +25,19 @@ const { open } = useFlyout({
   component: () => import('./TicketKnowledgeBaseAiDraftFlyout.vue'),
 })
 
+const { activeSidebar } = useTicketSidebar()
+
 const openFlyout = () =>
   open({
     name: FLYOUT_NAME,
     ticketId: ticketId.value,
+    activeSidebar: () => activeSidebar.value,
   })
 
-const { isGenerating } = useTicketAiAssistanceEnqueueKnowledgeBaseAnswer(ticketId.value)
+const { isGenerating } = useTicketAiAssistanceEnqueueKnowledgeBaseAnswer(
+  ticketId.value,
+  FLYOUT_NAME,
+)
 </script>
 
 <template>
