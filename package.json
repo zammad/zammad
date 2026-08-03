@@ -38,7 +38,7 @@
     "node": ">=24",
     "pnpm": ">=11"
   },
-  "packageManager": "pnpm@11.17.0",
+  "packageManager": "pnpm@11.18.0",
   "devDependencies": {
     "@faker-js/faker": "^10.5.0",
     "@graphql-codegen/add": "^7.1.0",
