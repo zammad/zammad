@@ -972,7 +972,7 @@ class ChannelEmailNotificationWizard extends App.ControllerWizardModal
         configure_attributes: configureAttributesOutbound
         className: ''
       params:
-        adapter: @account.outbound.adapter || 'sendmail'
+        adapter: @account.outbound.adapter
     )
     @toggleOutboundAdapter()
 

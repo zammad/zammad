@@ -4,7 +4,7 @@ module Gql::Types::Input
   class Channel::Email::OutboundConfigurationInputType < Gql::Types::BaseInputObject
     description 'Configuration for an outbound email channel.'
 
-    argument :adapter, Gql::Types::Enum::Channel::Email::OutboundAdapterType, description: 'Protocol/adapter for this email channel'
+    argument :adapter, Gql::Types::Enum::Channel::Email::OutboundAdapterType, validates: { inclusion: { in: -> { EmailHelper.available_outbound_drivers }, message: 'Unsupported outbound adapter: %{value}' } }, description: 'Protocol/adapter for this email channel'
     argument :host, String, required: false, description: 'Hostname for the email service to connect to'
     argument :port, Integer, required: false, description: 'Port for the email service to connect to'
     argument :user, String, required: false, description: 'Username for the email service to connect with'

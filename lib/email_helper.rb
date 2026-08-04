@@ -24,7 +24,8 @@ returns
 =end
 
   def self.available_driver
-    if Setting.get('system_online_service')
+    # Sendmail is unsupported in Docker and SaaS environments, so we hide it in those cases.
+    if ENV['ZAMMAD_DOCKER'].present? || Setting.get('system_online_service')
       return {
         inbound:  {
           imap: __('IMAP'),
@@ -45,6 +46,10 @@ returns
         sendmail: __('Local MTA (Sendmail/Postfix/Exim/…) - use server setup'),
       },
     }
+  end
+
+  def self.available_outbound_drivers
+    available_driver[:outbound].keys.map(&:to_s)
   end
 
 =begin

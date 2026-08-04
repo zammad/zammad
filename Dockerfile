@@ -21,10 +21,13 @@ ENV RAILS_ENV="production" \
 #   https://www.postgresql.org/download/linux/debian/
 # Use `postgresql-client` meta-package to have the latest `pg_dump` that works even with the latest PostgreSQL versions.
 #   https://github.com/zammad/zammad/issues/6009
+# Remove sendmail binary from image, as it could receive emails that will go nowhere.
 RUN apt-get update -qq && \
     apt-get install -y postgresql-common && \
     /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh -y && \
-    apt-get install --no-install-recommends -y curl libimlib2 libpq5 nginx gnupg postgresql-client && \
+    apt-get install -y --no-install-recommends curl libimlib2 libpq5 nginx gnupg postgresql-client && \
+    apt-get remove -y --purge exim4-base exim4-config bsd-mailx && \
+    apt-get autoremove -y --purge && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Throw-away stage to get the node binary

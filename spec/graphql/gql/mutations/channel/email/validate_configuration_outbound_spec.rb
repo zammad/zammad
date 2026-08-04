@@ -18,7 +18,7 @@ RSpec.describe Gql::Mutations::Channel::Email::ValidateConfigurationOutbound, ty
     QUERY
   end
 
-  let(:failing_configuration) do
+  let(:outbound_configuration) do
     {
       adapter:   'smtp',
       host:      'nonexisting.host.local',
@@ -29,10 +29,16 @@ RSpec.describe Gql::Mutations::Channel::Email::ValidateConfigurationOutbound, ty
     }
   end
 
-  let(:variables)           { { 'outboundConfiguration' => failing_configuration, emailAddress: 'some.sender@example.com' } }
+  let(:variables)           { { 'outboundConfiguration' => outbound_configuration, emailAddress: 'some.sender@example.com' } }
   let(:probe_full_response) { nil }
+  let(:docker_env)          { false }
 
   before do
+    if docker_env
+      allow(ENV).to receive(:[]).and_call_original
+      allow(ENV).to receive(:[]).with('ZAMMAD_DOCKER').and_return('true')
+    end
+
     allow(EmailHelper::Probe).to receive(:outbound).and_return(probe_full_response) if probe_full_response
     allow_any_instance_of(Channel::Driver::Smtp).to receive(:deliver).and_raise(Errno::EHOSTUNREACH)
     gql.execute(query, variables: variables)
@@ -44,8 +50,24 @@ RSpec.describe Gql::Mutations::Channel::Email::ValidateConfigurationOutbound, ty
     context 'with successful probe' do
       let(:probe_full_response) { { result: 'ok' } }
 
-      it 'finds configuration data' do
+      it 'validates configuration data' do
         expect(gql.result.data).to eq({ 'success' => true, 'errors' => nil })
+      end
+
+      context 'when outbound adapter is sendmail' do
+        let(:outbound_configuration) { { adapter: 'sendmail' } }
+
+        it 'validates configuration data' do
+          expect(gql.result.data).to eq({ 'success' => true, 'errors' => nil })
+        end
+
+        context 'when running in docker environment' do
+          let(:docker_env) { true }
+
+          it 'fails with validation error' do
+            expect(gql.result.error_message).to include('Unsupported outbound adapter: "sendmail"')
+          end
+        end
       end
     end
 

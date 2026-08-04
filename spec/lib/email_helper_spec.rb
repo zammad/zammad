@@ -233,4 +233,20 @@ RSpec.describe EmailHelper do
 
     it { is_expected.to eq(expected_result) }
   end
+
+  describe '#available_driver' do
+    subject(:result) { described_class.available_driver }
+
+    it { is_expected.to include(inbound: a_kind_of(Hash), outbound: have_key(:sendmail)) }
+
+    context 'when running in Docker' do
+      before do
+        allow(ENV).to receive(:[]).with('ZAMMAD_DOCKER').and_return('true')
+      end
+
+      it 'does not include sendmail' do
+        expect(result[:outbound]).not_to have_key(:sendmail)
+      end
+    end
+  end
 end

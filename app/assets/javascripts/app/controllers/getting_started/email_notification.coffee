@@ -54,8 +54,6 @@ class GettingStartedEmailNotification extends App.ControllerWizardFullScreen
       model:
         configure_attributes: configureAttributesOutbound
         className: ''
-      params:
-        adapter: 'sendmail'
     )
     @toggleOutboundAdapter()
 
