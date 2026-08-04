@@ -12,9 +12,6 @@ RSpec.describe 'Text Module', type: :request do
   let(:admin) do
     create(:admin)
   end
-  let(:agent) do
-    create(:agent)
-  end
   let(:customer) do
     create(:customer)
   end
@@ -102,6 +99,83 @@ RSpec.describe 'Text Module', type: :request do
       expect(text_module2.keywords).to eq('keyword2')
       expect(text_module2.content).to eq('some content<br>test123')
       expect(text_module2.active).to be_truthy
+    end
+  end
+
+  describe 'GET /api/v1/text_modules/:id' do
+    let(:accessible_group)   { create(:group) }
+    let(:inaccessible_group) { create(:group) }
+    let(:agent)              { create(:agent, groups: [accessible_group]) }
+
+    before { authenticated_as(user) }
+
+    context 'when the requester is an agent' do
+      let(:user) { agent }
+
+      it 'returns an unrestricted text module' do
+        text_module = create(:text_module)
+
+        get "/api/v1/text_modules/#{text_module.id}", as: :json
+
+        expect(response).to have_http_status(:ok)
+        expect(json_response).to include('id' => text_module.id)
+      end
+
+      it 'returns a text module restricted to an accessible group' do
+        text_module = create(:text_module, groups: [accessible_group])
+
+        get "/api/v1/text_modules/#{text_module.id}", as: :json
+
+        expect(response).to have_http_status(:ok)
+        expect(json_response).to include('id' => text_module.id)
+      end
+
+      it 'does not return a text module restricted to an inaccessible group' do
+        text_module = create(:text_module, groups: [inaccessible_group], content: 'restricted content')
+
+        get "/api/v1/text_modules/#{text_module.id}", as: :json
+
+        expect(response).to have_http_status(:forbidden)
+        expect(response.body).not_to include('restricted content')
+      end
+    end
+
+    context 'when the requester is an agent with read-only access to the group' do
+      let(:user) { create(:agent, group_names_access_map: { accessible_group.name => ['read'] }) }
+
+      it 'returns a text module restricted to that group' do
+        text_module = create(:text_module, groups: [accessible_group])
+
+        get "/api/v1/text_modules/#{text_module.id}", as: :json
+
+        expect(response).to have_http_status(:ok)
+        expect(json_response).to include('id' => text_module.id)
+      end
+    end
+
+    context 'when the requester is an admin' do
+      let(:user) { admin }
+
+      it 'returns a text module restricted to a group the admin has no access to' do
+        text_module = create(:text_module, groups: [inaccessible_group])
+
+        get "/api/v1/text_modules/#{text_module.id}", as: :json
+
+        expect(response).to have_http_status(:ok)
+        expect(json_response).to include('id' => text_module.id)
+      end
+    end
+
+    context 'when the requester is a customer' do
+      let(:user) { customer }
+
+      it 'does not return a text module' do
+        text_module = create(:text_module)
+
+        get "/api/v1/text_modules/#{text_module.id}", as: :json
+
+        expect(response).to have_http_status(:forbidden)
+      end
     end
   end
 end

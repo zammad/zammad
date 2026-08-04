@@ -70,7 +70,11 @@ curl http://localhost/api/v1/text_modules/#{id}.json -v -u #{login}:#{password}
 =end
 
   def show
-    model_show_render(TextModule, params)
+    text_module = TextModule.find(params[:id])
+
+    authorize!(text_module)
+
+    model_item_render(text_module)
   end
 
 =begin
