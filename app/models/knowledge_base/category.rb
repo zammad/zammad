@@ -103,6 +103,66 @@ class KnowledgeBase::Category < ApplicationModel
     self_with_children.pluck(:id)
   end
 
+  # Ids of every category kept out of the vector index: the configured ones plus their whole
+  # subtrees. Empty by default (#6248), since the index covers everything unless told otherwise.
+  #
+  # Exclusions are inherited, so excluding a category takes its whole subtree out of the index —
+  # moving a category under an excluded one excludes it too.
+  def self.vector_excluded_category_ids
+    excluded_category_ids = vector_excluded_setting_ids
+    return [] if excluded_category_ids.blank?
+
+    # Excluding both a category and something below it makes the subtrees overlap, hence the
+    # #distinct — and the CTE's default depth ordering has to go first, since PostgreSQL rejects
+    # DISTINCT alongside an ORDER BY expression that #pluck leaves out of the SELECT list.
+    with_recursive_tree_cte(direction: :down, seed: where(id: excluded_category_ids))
+      .reorder(nil)
+      .distinct
+      .pluck(:id)
+  end
+
+  # Whether the given category's answers belong in the vector index — the single-category question,
+  # answered from the same expanded id list as the bulk one.
+  #
+  # Walking down from the excluded roots once costs no more than walking up from the candidate (the
+  # category tree is small and the query round-trip dominates, whatever the subtree size), so there
+  # is no second, ancestor-walking implementation to keep in step with this one.
+  #
+  # @param category_or_id [KnowledgeBase::Category, Integer, String, nil] a persisted category or its
+  #   id, so callers holding only an id (e.g. an answer's category_id) do not have to load the record
+  def self.vector_indexable?(category_or_id)
+    vector_excluded_category_ids.exclude?(category_or_id.try(:id) || category_or_id.to_i)
+  end
+
+  def self.vector_excluded_setting_ids
+    Array
+      .wrap(Setting.get('vectordb_knowledge_base_excluded_category_ids'))
+      .filter_map { Integer(it, exception: false) }
+      .select(&:positive?)
+  end
+  private_class_method :vector_excluded_setting_ids
+
+  # Index the subtree when a move brings it out of an excluded branch — those answers have no
+  # documents yet, and nothing else would ever create them.
+  #
+  # The opposite direction is deliberately not handled: a move *into* an excluded branch leaves the
+  # existing documents behind, but the search filters hits by category anyway
+  # (Service::KnowledgeBase::Answer::SimilaritySearch), so they cannot surface. Purging them is not
+  # worth fanning out over the whole subtree — each answer drops its own document the next time it
+  # is edited, and a rebuild clears the rest.
+  #
+  # Both checks are asked of the two categories involved rather than of every answer below them.
+  # Reading the new state off `self` (not off `parent_id`) also covers a category excluded in its own
+  # right: its subtree stays out wherever it hangs, so there is nothing to index.
+  def vector_index_resync_subtree
+    return if !Service::AI::VectorDB::Available.execute(ping: false)
+    return if !self.class.vector_indexable?(self)
+    return if self.class.vector_indexable?(saved_change_to_parent_id.first)
+
+    VectorIndexKnowledgeBaseCategoryResyncJob.perform_later(self)
+  end
+  after_update_commit :vector_index_resync_subtree, if: :saved_change_to_parent_id?
+
   def full_destroy!
     transaction do
       answers.each(&:destroy!)

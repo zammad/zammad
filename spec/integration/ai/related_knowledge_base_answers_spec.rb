@@ -25,7 +25,6 @@ RSpec.describe 'AI related knowledge base answers', :aggregate_failures, integra
 
     setup_ai_provider('zammad_ai', token: ENV['ZAMMAD_AI_TOKEN'])
     Setting.set('vectordb_enabled', true)
-    Setting.set('vectordb_knowledge_base_category_ids', [kb_category.id])
 
     # No service wraps index creation (Service::AI::VectorDB::* all assume the index already
     # exists), so this is the one legitimate direct AI::VectorDB call in this spec.

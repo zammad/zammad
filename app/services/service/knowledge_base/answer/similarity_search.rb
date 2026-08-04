@@ -63,9 +63,18 @@ class Service::KnowledgeBase::Answer::SimilaritySearch < Service::Base
   end
 
   # The answers the user is allowed to see, identical to the regular knowledge base search
-  # (KnowledgeBase::Answer::Translation::Search#search_answer_ids_for_user).
+  # (KnowledgeBase::Answer::Translation::Search#search_answer_ids_for_user), minus the ones in a
+  # category excluded from the vector index.
+  #
+  # Excluding a category only stops *future* indexing; the documents its answers already have stay
+  # in the index until each record is touched or the index is rebuilt. Without this filter those
+  # orphans keep surfacing as suggestions, so the exclusion is enforced here too rather than trusted
+  # to the index being in sync.
   def visible_answer_ids_for_user
-    ::KnowledgeBase::Answer.visible_to_user(current_user).pluck(:id)
+    ::KnowledgeBase::Answer
+      .visible_to_user(current_user)
+      .in_vector_indexable_category
+      .pluck(:id)
   end
 
   # Returns ordered (best-first) `{ translation:, score: }` hashes.

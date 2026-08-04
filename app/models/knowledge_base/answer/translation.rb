@@ -61,15 +61,14 @@ class KnowledgeBase::Answer::Translation < ApplicationModel
   end
 
   scope :vector_index_scope, lambda {
-    relevant_category_ids = Setting.get('vectordb_knowledge_base_category_ids')
-
-    # For now only explicitly enabled categories are indexed.
-    return none if relevant_category_ids.blank?
-
-    # Index every answer of those categories regardless of its publication state (drafts and
-    # archived ones included) — whether a user may receive it as a suggestion is decided by the
-    # search's permission filter (Service::KnowledgeBase::Answer::SimilaritySearch).
-    answer_scope = KnowledgeBase::Answer.where(category: relevant_category_ids)
+    # Index every answer regardless of its publication state (drafts and archived ones included) —
+    # whether a user may receive it as a suggestion is decided by the search's permission filter
+    # (Service::KnowledgeBase::Answer::SimilaritySearch).
+    #
+    # Every category is indexed unless it (or one of its ancestors) is excluded. The bulk counterpart
+    # to #vector_indexing_for_record?: one expanded id list filters the whole reload, rather than
+    # being asked about one answer at a time.
+    answer_scope = KnowledgeBase::Answer.in_vector_indexable_category
 
     joins(:answer).merge(answer_scope).includes(:content, :kb_locale)
   }
@@ -92,11 +91,9 @@ class KnowledgeBase::Answer::Translation < ApplicationModel
     # visible_internally? guard is omitted); the search's permission filter decides who may receive
     # them as a suggestion.
     #
-    # For now only explicitly enabled categories are indexed.
-    relevant_category_ids = Setting.get('vectordb_knowledge_base_category_ids')
-    return false if relevant_category_ids.blank? || relevant_category_ids.map(&:to_i).exclude?(answer.category_id)
-
-    true
+    # Every category is indexed unless it (or one of its ancestors) is explicitly excluded. Passing
+    # the id spares this check from loading the category record just to look it up in the list.
+    KnowledgeBase::Category.vector_indexable?(answer.category_id)
   end
 
   def vector_index_chunking_strategy

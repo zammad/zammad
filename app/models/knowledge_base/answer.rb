@@ -30,6 +30,14 @@ class KnowledgeBase::Answer < ApplicationModel
       .internal
   }
 
+  # Drops the answers whose category (or one of its ancestors) is excluded from the vector index.
+  # A no-op while nothing is excluded, which is the default.
+  scope :in_vector_indexable_category, lambda {
+    excluded_category_ids = KnowledgeBase::Category.vector_excluded_category_ids
+
+    where.not(category_id: excluded_category_ids) if excluded_category_ids.present?
+  }
+
   acts_as_list scope: :category, top_of_list: 0
 
   # Provide consistent naming with KB category

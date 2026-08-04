@@ -372,7 +372,6 @@ RSpec.describe KnowledgeBase::Answer, current_user_id: 1, type: :model do
       new_category       = create(:knowledge_base_category, knowledge_base:)
       answer             = create(:knowledge_base_answer, :published, category: create(:knowledge_base_category, knowledge_base:))
       create(:knowledge_base_answer_translation, answer:, kb_locale: alternative_locale)
-      Setting.set('vectordb_knowledge_base_category_ids', [new_category.id])
 
       # A fresh instance, as a later request would load it. Regression: freshly loaded translations
       # carry no previous_changes (their touch is a touch_later), so the reindex decision must come
@@ -393,11 +392,14 @@ RSpec.describe KnowledgeBase::Answer, current_user_id: 1, type: :model do
     # the translations to refresh the search index, but must not trigger a vector reindex.
     it 'does not enqueue a reindex on a vector-irrelevant answer change' do
       answer = create(:knowledge_base_answer, :published)
-      Setting.set('vectordb_knowledge_base_category_ids', [answer.category_id])
 
       # A fresh instance, as a later request would load it. (On instances kept from creation the
       # translations still carry their creation previous_changes, which errs towards reindexing.)
       answer = described_class.find(answer.id)
+
+      # Without this the creation job stays pending and HasActiveJobLock would coalesce a wrongly
+      # enqueued reindex into it, letting this expectation pass for the wrong reason.
+      clear_jobs
 
       expect { answer.update!(internal_note: 'changed') }.not_to have_enqueued_job(VectorIndexJob)
     end
@@ -407,7 +409,11 @@ RSpec.describe KnowledgeBase::Answer, current_user_id: 1, type: :model do
     # reindex fires — an immediate touch would reset them and the title change would be skipped.
     it 'enqueues a reindex on a title change' do
       answer = create(:knowledge_base_answer, :published)
-      Setting.set('vectordb_knowledge_base_category_ids', [answer.category_id])
+
+      # Every category is indexed by default, so creating the answer already enqueued a reindex for
+      # this translation. VectorIndexJob coalesces per record (HasActiveJobLock), so that pending job
+      # would swallow the enqueue this example is asserting on.
+      clear_jobs
 
       expect { answer.translations.first.update!(title: 'A different title') }
         .to have_enqueued_job(VectorIndexJob).with('KnowledgeBase::Answer::Translation', answer.translations.first.id)
@@ -416,7 +422,7 @@ RSpec.describe KnowledgeBase::Answer, current_user_id: 1, type: :model do
     it 'enqueues a reindex on a title change combined with a vector-irrelevant answer change' do
       answer      = create(:knowledge_base_answer, :published)
       translation = answer.translations.first
-      Setting.set('vectordb_knowledge_base_category_ids', [answer.category_id])
+      clear_jobs
 
       expect { answer.update!(internal_note: 'note', translations_attributes: [{ id: translation.id, title: 'Combined title' }]) }
         .to have_enqueued_job(VectorIndexJob).with('KnowledgeBase::Answer::Translation', translation.id)
@@ -424,18 +430,30 @@ RSpec.describe KnowledgeBase::Answer, current_user_id: 1, type: :model do
 
     it 'enqueues a reindex on a body change' do
       answer = create(:knowledge_base_answer, :published)
-      Setting.set('vectordb_knowledge_base_category_ids', [answer.category_id])
+      clear_jobs
 
       expect { answer.translations.first.content.update!(body: '<p>new body</p>') }
         .to have_enqueued_job(VectorIndexJob).with('KnowledgeBase::Answer::Translation', answer.translations.first.id)
     end
 
-    it 'does not enqueue a reindex for translations outside the configured categories' do
-      answer = create(:knowledge_base_answer, :published)
-      Setting.set('vectordb_knowledge_base_category_ids', [])
+    it 'does not enqueue a reindex for translations in an excluded category' do
+      answer            = create(:knowledge_base_answer, :published)
+      excluded_category = create(:knowledge_base_category, knowledge_base: answer.category.knowledge_base)
+      Setting.set('vectordb_knowledge_base_excluded_category_ids', [excluded_category.id])
+      clear_jobs
 
-      expect { answer.update!(category: create(:knowledge_base_category, knowledge_base: answer.category.knowledge_base)) }
+      expect { answer.update!(category: excluded_category) }
         .not_to have_enqueued_job(VectorIndexJob)
+    end
+
+    # Regression: the indexing decision runs from an after_commit, so an unusable value in the
+    # exclusion setting used to raise NoMethodError out of every answer save, not just out of the
+    # vector index.
+    it 'still saves when the excluded category setting holds an unusable value' do
+      answer = create(:knowledge_base_answer, :published)
+      Setting.set('vectordb_knowledge_base_excluded_category_ids', 'nonsense')
+
+      expect { answer.update!(internal_note: 'changed') }.not_to raise_error
     end
 
     # Regression: a job enqueued while the record was indexable must not re-upsert it if the record
@@ -443,11 +461,10 @@ RSpec.describe KnowledgeBase::Answer, current_user_id: 1, type: :model do
     it 'removes instead of upserting when the record is no longer indexable at run time', :aggregate_failures do
       answer      = create(:knowledge_base_answer, :published)
       translation = answer.translations.first
-      Setting.set('vectordb_knowledge_base_category_ids', [answer.category_id])
       allow(translation).to receive(:vector_index_destroy)
 
-      # The record turned non-indexable (its category was disabled) after the reindex job was enqueued.
-      Setting.set('vectordb_knowledge_base_category_ids', [])
+      # The record turned non-indexable (its category was excluded) after the reindex job was enqueued.
+      Setting.set('vectordb_knowledge_base_excluded_category_ids', [answer.category_id])
 
       translation.vector_index_update
 

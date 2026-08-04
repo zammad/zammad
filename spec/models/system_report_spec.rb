@@ -242,7 +242,7 @@ RSpec.describe SystemReport, current_user_id: 1, type: :model do
           'ui_desktop_beta_switch_role_ids',
           'form_allowed_params',
           'vectordb_enabled',
-          'vectordb_knowledge_base_category_ids',
+          'vectordb_knowledge_base_excluded_category_ids',
           'vectordb_knowledge_base_chunking_strategy',
           'form_ticket_create_honeypot',
           'form_ticket_create_captcha_provider',

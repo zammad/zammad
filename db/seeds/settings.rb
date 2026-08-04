@@ -6362,10 +6362,10 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title:       __('Vector DB knowledge base categories'),
-  name:        'vectordb_knowledge_base_category_ids',
+  title:       __('Vector DB knowledge base excluded categories'),
+  name:        'vectordb_knowledge_base_excluded_category_ids',
   area:        'VectorDB::KnowledgeBase',
-  description: __('Defines which knowledge base categories are included in the vector database.'),
+  description: __('Defines which knowledge base categories are excluded from the vector database. Sub-categories of an excluded category are excluded as well. Note that the vector database has to be rebuilt after removing a category from this list, so that its answers get indexed.'),
   state:       [],
   frontend:    false,
 )

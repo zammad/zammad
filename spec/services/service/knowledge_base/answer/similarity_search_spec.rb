@@ -149,6 +149,73 @@ RSpec.describe Service::KnowledgeBase::Answer::SimilaritySearch, :aggregate_fail
     end
   end
 
+  # Excluding a category does not retroactively purge what is already indexed, so the search has to
+  # drop those answers itself instead of relying on the index being in sync.
+  context 'when a category is excluded from the vector index' do
+    let(:role)                { create(:role, permission_names: %w[knowledge_base.editor]) }
+    let(:user)                { create(:agent, roles: [role]) }
+    let(:knowledge_base)      { create(:knowledge_base) }
+    let(:excluded_category)   { create(:knowledge_base_category, knowledge_base:) }
+    let(:sub_category)        { create(:knowledge_base_category, knowledge_base:, parent: excluded_category) }
+    let(:kept_category)       { create(:knowledge_base_category, knowledge_base:) }
+    let(:excluded_answer)     { create(:knowledge_base_answer, :published, category: excluded_category) }
+    let(:sub_answer)          { create(:knowledge_base_answer, :published, category: sub_category) }
+    let(:kept_answer)         { create(:knowledge_base_answer, :published, category: kept_category) }
+
+    before do
+      excluded_answer
+      sub_answer
+      kept_answer
+      Setting.set('vectordb_knowledge_base_excluded_category_ids', [excluded_category.id])
+    end
+
+    it 'drops answers in the excluded category from the searched ids' do
+      expect(captured_search_filter[:'metadata.answer_id']).not_to include(excluded_answer.id)
+    end
+
+    it 'drops answers in a sub-category of the excluded category' do
+      expect(captured_search_filter[:'metadata.answer_id']).not_to include(sub_answer.id)
+    end
+
+    it 'keeps answers outside the excluded subtree' do
+      expect(captured_search_filter[:'metadata.answer_id']).to include(kept_answer.id)
+    end
+
+    it 'does not search at all when every visible answer is excluded' do
+      Setting.set('vectordb_knowledge_base_excluded_category_ids', KnowledgeBase::Category.pluck(:id))
+      allow(Service::AI::VectorDB::SimilaritySearch).to receive(:execute)
+
+      expect(service).to eq([])
+      expect(Service::AI::VectorDB::SimilaritySearch).not_to have_received(:execute)
+    end
+
+    # Granular permissions make visible_to_user build an OR group (an editor branch, a reader branch
+    # and a public one) instead of the flat relation the examples above run through. The exclusion
+    # then has to bind as one AND over the whole group — as a condition on a single branch it would
+    # let the excluded answers back in through the others. Granting the excluded category outright
+    # puts them in the widest branch, the one with nothing else to filter them out.
+    context 'with granular permissions' do
+      before do
+        KnowledgeBase::PermissionsUpdate.new(excluded_category).update!(role => 'editor')
+        KnowledgeBase::PermissionsUpdate.new(kept_category).update!(role => 'reader')
+      end
+
+      # Granular mode turns on as soon as any permission row exists; without this the examples below
+      # would quietly fall back to the flat :editor path and prove nothing about the OR group.
+      it 'takes the granular path' do
+        expect(KnowledgeBase.access_for_user(user)).to eq(:granular)
+      end
+
+      it 'drops the excluded category and its subtree, granted though they are' do
+        expect(captured_search_filter[:'metadata.answer_id']).not_to include(excluded_answer.id, sub_answer.id)
+      end
+
+      it 'keeps the granted category outside the excluded subtree' do
+        expect(captured_search_filter[:'metadata.answer_id']).to include(kept_answer.id)
+      end
+    end
+  end
+
   context 'when restricting to a locale' do
     let(:role)      { create(:role, permission_names: %w[knowledge_base.editor]) }
     let(:user)      { create(:agent, roles: [role]) }
