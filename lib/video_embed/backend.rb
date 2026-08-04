@@ -8,7 +8,7 @@ class VideoEmbed
 
     def initialize(id:, host: nil)
       @id      = CGI.escape(id.to_s)
-      @host    = host.present? ? CGI.escape(host.to_s) : nil
+      @host    = host.present? ? escape_host(host.to_s) : nil
     end
 
     # Provider key as stored in the widget marker, e.g. "youtube".
@@ -25,6 +25,21 @@ class VideoEmbed
     # The full embed URL for this provider. Must be implemented by subclasses.
     def embed_url
       raise NotImplementedError
+    end
+
+    private
+
+    # An admin-approved server may carry an explicit port (see
+    # Setting::Validation::KbSelfHostedVideoServers), which must stay a literal ":"
+    # delimiter - escaping it to "%3A" would point the iframe at a host that does not
+    # exist, and no longer match the origin allowed via VideoEmbed.frame_src. The host
+    # name itself is still escaped, so a value that somehow entered the setting without
+    # passing its validation cannot break out of the surrounding attribute.
+    def escape_host(host)
+      name, _, port = host.rpartition(':')
+      return CGI.escape(host) if name.blank? || !port.match?(%r{\A\d+\z})
+
+      "#{CGI.escape(name)}:#{port}"
     end
   end
 end

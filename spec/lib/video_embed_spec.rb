@@ -42,6 +42,28 @@ RSpec.describe VideoEmbed do
         expect(described_class.embed_url(provider: 'peertube', id: 'uuid-1', host: 'evil.example.com'))
           .to be_nil
       end
+
+      # Setting::Validation::KbSelfHostedVideoServers accepts an explicit port, which
+      # must survive into the embed URL as a literal ":" delimiter.
+      context 'when the whitelisted host carries an explicit port' do
+        let(:servers) { [{ 'host' => 'videos.example.com:8080', 'name' => 'PT' }] }
+
+        it 'keeps the port in the PeerTube embed URL' do
+          expect(described_class.embed_url(provider: 'peertube', id: 'uuid-1', host: 'videos.example.com:8080'))
+            .to eq('https://videos.example.com:8080/videos/embed/uuid-1')
+        end
+
+        it 'keeps the port in the MediaCMS embed URL' do
+          expect(described_class.embed_url(provider: 'mediacms', id: 'token1', host: 'videos.example.com:8080'))
+            .to eq('https://videos.example.com:8080/embed?m=token1')
+        end
+
+        it 'builds an embed URL whose origin is allowed by the CSP frame-src' do
+          url = described_class.embed_url(provider: 'peertube', id: 'uuid-1', host: 'videos.example.com:8080')
+
+          expect(described_class.frame_src).to include(url[%r{\Ahttps://[^/?]+}])
+        end
+      end
     end
 
     context 'with unsafe or unknown input' do
@@ -64,6 +86,16 @@ RSpec.describe VideoEmbed do
 
         url = described_class.embed_url(provider: 'peertube', id: 'uuid-1', host: "evil.com/x' onmouseover='alert(1)")
         expect(url).not_to include("'")
+      end
+
+      it 'escapes an attribute breakout attempt that also contains a colon' do
+        host = "evil.com:80/x' onmouseover='alert(1)"
+
+        allow(Setting).to receive(:get).with('kb_self_hosted_video_servers')
+          .and_return([{ 'host' => host, 'name' => 'Evil' }])
+
+        expect(described_class.embed_url(provider: 'peertube', id: 'uuid-1', host:))
+          .not_to include("'")
       end
     end
   end
