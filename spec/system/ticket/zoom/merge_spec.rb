@@ -51,5 +51,68 @@ RSpec.describe 'Ticket zoom > Merge action', type: :system do
       end
     end
 
+    context 'when merging with open taskbar tabs' do
+      let(:group)          { Group.find_by(name: 'Users') }
+      let(:customer)       { create(:customer) }
+      let(:source_ticket)  { create(:ticket, group:, customer:, title: 'Source ticket to be merged') }
+      let(:target_ticket)  { create(:ticket, group:, customer:, title: 'Target ticket of the merge') }
+      let(:source_article) { create(:ticket_article, ticket: source_ticket, body: 'Body of the merged source article') }
+
+      def merge_into(ticket)
+        find('[data-tab="ticket"] .js-actions').click
+        click('[data-type="ticket-merge"]')
+
+        in_modal do
+          find('input[name="target_ticket_number"]').fill_in with: ticket.number
+
+          expect(page).to have_no_css('.js-pager')
+
+          click('.js-submit')
+        end
+
+        await_empty_ajax_queue
+      end
+
+      before do
+        source_article
+      end
+
+      context 'when the target ticket tab is closed' do
+        before do
+          visit "#ticket/zoom/#{source_ticket.id}"
+        end
+
+        it 'replaces the source task and shows the merged article in the target ticket' do
+          merge_into(target_ticket)
+
+          expect(find('.active .ticketZoom-header .ticket-number').text).to eq(target_ticket.number)
+          expect(page).to have_css('.active .ticket-article', text: source_article.body)
+
+          within '.tasks-navigation' do
+            expect(page).to have_text(target_ticket.title)
+            expect(page).to have_no_text(source_ticket.title)
+          end
+        end
+      end
+
+      context 'when the target ticket tab is open as well' do
+        before do
+          visit "#ticket/zoom/#{target_ticket.id}"
+          visit "#ticket/zoom/#{source_ticket.id}"
+        end
+
+        it 'removes the source task and keeps the target task' do
+          merge_into(target_ticket)
+
+          expect(find('.active .ticketZoom-header .ticket-number').text).to eq(target_ticket.number)
+
+          within '.tasks-navigation' do
+            expect(page).to have_text(target_ticket.title)
+            expect(page).to have_no_text(source_ticket.title)
+          end
+        end
+      end
+    end
+
   end
 end

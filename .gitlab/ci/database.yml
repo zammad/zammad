@@ -19,9 +19,6 @@
     # Without the postgresql client tools in the CI image there is nothing to do here, the
     #   jobs then initialize their database themselves as before.
     - if ! command -v pg_dump > /dev/null; then echo 'pg_dump is not available.'; exit 0; fi
-    # The browser tests run in production mode, all other tests in test mode.
     - RAILS_ENV=test bundle exec rake zammad:db:init
     - RAILS_ENV=test .gitlab/database.rb dump
-    - RAILS_ENV=production bundle exec rake zammad:db:init
-    - RAILS_ENV=production .gitlab/database.rb dump
   after_script: []

@@ -809,6 +809,14 @@ RSpec.describe 'Ticket Create', time_zone: 'Europe/London', type: :system do
       expect(find('[name="cc"]', visible: :all).value).to eq 'asd@example.com'
     end
 
+    # Ported from test/browser/agent_ticket_create_cc_tokenizer_test.rb (#1990).
+    it 'tokenizes an entered email address' do
+      add_email 'test@example.com'
+
+      expect(page).to have_css('span.token-label', text: 'test@example.com')
+      expect(find('[name="cc"]', visible: :all).value).to eq 'test@example.com'
+    end
+
     def add_email(input)
       field = find_field('CC')
       field.fill_in with: input

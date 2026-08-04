@@ -32,6 +32,3 @@ addon:subscription:
     # Run actual subscription tests
     - (cd $SUBSCRIPTION_CHECKOUT_DIR/; find spec -type f -name "*.rb" | grep -v '/system/')
     - bundle exec rspec $(cd $SUBSCRIPTION_CHECKOUT_DIR/; find spec -type f -name "*.rb" | grep -v '/system/')
-
-    - (cd $SUBSCRIPTION_CHECKOUT_DIR/; find test -type f -name "*.rb")
-    - bundle exec ruby -Itest $(cd $SUBSCRIPTION_CHECKOUT_DIR/; find test -type f -name "*.rb")

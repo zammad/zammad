@@ -65,6 +65,31 @@ RSpec.describe 'Profile > PreferencesPermissionCheck', type: :system do
     it_behaves_like 'having profile page link to', 'Token Access'
   end
 
+  context 'when a custom role grants user_preferences.device', authenticated_as: :user do
+    let(:device_role) { create(:role, permission_names: %w[user_preferences.device]) }
+    let(:user)        { create(:customer).tap { |customer| customer.roles << device_role } }
+
+    it_behaves_like 'having profile page link to', 'Password'
+
+    it_behaves_like 'having profile page link to', 'Language'
+
+    it_behaves_like 'not having profile page link to', 'Notifications'
+
+    it_behaves_like 'not having profile page link to', 'Calendar'
+
+    it_behaves_like 'not having profile page link to', 'Token Access'
+
+    it_behaves_like 'having profile page link to', 'Devices'
+
+    context 'when the custom role is deactivated' do
+      let(:user) { super().tap { device_role.update!(active: false) } }
+
+      it_behaves_like 'having profile page link to', 'Password'
+
+      it_behaves_like 'not having profile page link to', 'Devices'
+    end
+  end
+
   context 'when logged in as customer', authenticated_as: :customer do
     it_behaves_like 'having profile page link to', 'Password'
 

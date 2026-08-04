@@ -231,7 +231,6 @@ Metrics/BlockNesting:
     - 'app/models/concerns/has_history.rb'
     - 'app/models/object_manager/attribute.rb'
     - 'lib/notification_factory/mailer.rb'
-    - 'test/browser_test_helper.rb'
 
 Metrics/CyclomaticComplexity:
   Max: 12
@@ -443,7 +442,6 @@ Metrics/PerceivedComplexity:
     - 'lib/telegram_helper.rb'
     - 'lib/transaction_dispatcher.rb'
     - 'lib/user_agent.rb'
-    - 'test/browser_test_helper.rb'
 
 Rails/CreateTableWithTimestamps:
   Exclude:
@@ -499,7 +497,6 @@ Style/OptionalBooleanParameter:
     - 'lib/sessions/backend/ticket_overview_list.rb'
     - 'lib/sessions/node.rb'
     - 'spec/support/system_init_done.rb'
-    - 'test/browser_test_helper.rb'
 
 Style/ReturnNilInPredicateMethodDefinition:
   Exclude:

@@ -216,11 +216,9 @@ gem 'elasticsearch', '8.11.2', require: false
 group :development, :test do
 
   # test frameworks
-  gem 'rails-controller-testing'
   gem 'rspec-rails'
   gem 'rspec-retry'
   gem 'shoulda-matchers'
-  gem 'test-unit'
 
   # for testing Pundit authorisation policies in RSpec
   gem 'pundit-matchers'
@@ -273,8 +271,6 @@ group :development, :test do
   # Debugging and profiling
   gem 'pry-doc', require: false # This gem is very large, so don't include it in production.
 end
-
-gem 'minitest', require: false
 
 # To permanently extend Zammad with additional gems, you can specify them in Gemfile.local.
 Dir['Gemfile.local*'].each do |file|

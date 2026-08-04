@@ -623,4 +623,70 @@ RSpec.describe 'Overview', type: :system do
       end
     end
   end
+
+  # Ported from test/browser/agent_ticket_overview_pending_til_test.rb.
+  # Regression for https://github.com/zammad/zammad/issues/2367:
+  #   the "Pending till" column of an overview must be sortable.
+  context 'when sorting by the pending till column', authenticated_as: :authenticate do
+    let(:group) { Group.find_by(name: 'Users') }
+
+    let(:overview) do
+      create(:overview,
+             condition: {
+               'ticket.state_id' => {
+                 operator: 'is',
+                 value:    Ticket::State.where(name: ['new', 'open', 'closed', 'merged', 'pending close', 'pending reminder']).pluck(:id),
+               },
+             },
+             view:      { 's' => %w[title state pending_time] })
+    end
+
+    def authenticate
+      Ticket.destroy_all
+
+      create_list(:ticket, 2, group:, state_name: 'open')
+      create_list(:ticket, 2, group:, state_name: 'pending close', pending_time: Time.zone.parse('2028-11-24 08:00'))
+
+      overview
+
+      true
+    end
+
+    it 'sorts the pending tickets to the top' do
+      visit "ticket/view/#{overview.link}"
+
+      find('[data-column-key=pending_time] .js-sort').click
+
+      within '.js-tableBody' do
+        expect(page)
+          .to have_css('tr:nth-child(1)', text: 'pending close')
+          .and have_css('tr:nth-child(2)', text: 'pending close')
+      end
+    end
+  end
+
+  # Ported from test/browser/agent_ticket_overview_group_by_organization_test.rb.
+  # Regression for https://github.com/zammad/zammad/issues/2046: special characters
+  #   in the organization group header must not be rendered HTML-encoded.
+  context 'when grouping by organization', authenticated_as: :authenticate do
+    let(:group)        { Group.find_by(name: 'Users') }
+    let(:organization) { create(:organization, name: 'äöüß & Test Organization') }
+    let(:customer)     { create(:customer, organization: organization) }
+    let(:overview)     { create(:overview, group_by: 'organization') }
+
+    def authenticate
+      Ticket.destroy_all
+
+      create(:ticket, group:, customer: customer)
+      overview
+
+      true
+    end
+
+    it 'renders the organization group header without HTML encoding' do
+      visit "ticket/view/#{overview.link}"
+
+      expect(all('.table-overview table b').map(&:text)).to include('äöüß & Test Organization')
+    end
+  end
 end

@@ -22,12 +22,11 @@ PROJECT = ENV.fetch('CI_PROJECT_ID', 'zammad%2Fzammad')
 
 # Which jobs provide the runtimes of which timings file.
 TIMINGS_FILES = {
-  '.gitlab/ci/timings/rspec.yml'    => %r{^(rspec|capybara:chrome) \d+/\d+$},
-  '.gitlab/ci/timings/minitest.yml' => %r{^minitest:chrome \d+/\d+$},
+  '.gitlab/ci/timings/rspec.yml' => %r{^(rspec|capybara:chrome) \d+/\d+$},
 }.freeze
 
 # Lines of the recorded timings YAML in the job log, e.g. 'spec/models/user_spec.rb: 12.3'.
-TIMING_LINE = %r{^(?<file>(?:spec|test)/\S+\.rb): (?<seconds>\d+(?:\.\d+)?)$}
+TIMING_LINE = %r{^(?<file>spec/\S+\.rb): (?<seconds>\d+(?:\.\d+)?)$}
 
 def api_headers
   return { 'JOB-TOKEN' => ENV['CI_JOB_TOKEN'] } if ENV['CI_JOB_TOKEN'].to_s != ''

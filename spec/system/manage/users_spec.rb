@@ -551,4 +551,46 @@ RSpec.describe 'Manage > Users', type: :system do
       )
     end
   end
+
+  # https://github.com/zammad/zammad/issues/2332
+  describe 'role filter does not offer inactive roles' do
+    let(:inactive_role) { create(:role, permission_names: %w[admin.group], active: false) }
+
+    before do
+      inactive_role
+
+      visit '#manage/users'
+    end
+
+    it 'does not show the inactive role in the role filter' do
+      within(:active_content) do
+        expect(page).to have_css('.userSearch')
+        expect(find('.userSearch')).to have_no_text(inactive_role.name)
+      end
+    end
+  end
+
+  # Ported from test/browser/manage_test.rb: a changed last name shows up in
+  #   the user list.
+  describe 'when updating the name of a user' do
+    let(:user) { create(:customer, firstname: 'Manage', lastname: 'Lastname') }
+
+    before do
+      user
+
+      visit '#manage/users'
+    end
+
+    it 'shows the changed last name in the user list' do
+      click "tr[data-id='#{user.id}']"
+
+      in_modal do
+        fill_in 'lastname', with: '2Manage Lastname 2'
+
+        click_on 'Submit'
+      end
+
+      expect(page).to have_css('table td', text: '2Manage Lastname 2')
+    end
+  end
 end

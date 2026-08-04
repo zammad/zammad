@@ -70,6 +70,11 @@ RSpec.configure do |config|
     end
 
     page.driver.browser.manage.window.resize_to(browser_width, browser_height)
+
+    # Remember the size so that additional sessions (see CommonActions#using_session)
+    #   can be brought to the same size - their windows otherwise keep the driver's
+    #   small default size.
+    @zammad_browser_window_size = [browser_width, browser_height]
   end
 
   capybara_examples_performed = 0

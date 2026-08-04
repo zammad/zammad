@@ -1,4 +1,0 @@
-minitest:chrome:
-  extends:
-    - .template_browser-core_chrome
-  parallel: 8

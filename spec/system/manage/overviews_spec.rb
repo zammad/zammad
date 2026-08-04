@@ -441,4 +441,35 @@ RSpec.describe 'Manage > Overviews', type: :system do
       expect(page).to have_css('.table-overview tbody tr.item', count: 50)
     end
   end
+
+  # Ported from test/browser/admin_overview_test.rb.
+  # Regression for https://github.com/zammad/zammad/issues/2235:
+  #   the out of office setting must be applied on submit.
+  context 'when toggling the out of office setting' do
+    let(:overview) { create(:overview) }
+
+    def toggle_out_of_office(from:, to:)
+      visit '/#manage/overviews'
+
+      click "tr[data-id='#{overview.id}']"
+
+      in_modal do
+        expect(page).to have_select('out_of_office', selected: from)
+
+        select to, from: 'out_of_office'
+
+        click_on 'Submit'
+      end
+    end
+
+    it 'persists the setting over multiple rounds' do
+      toggle_out_of_office(from: 'no', to: 'yes')
+
+      expect(overview.reload.out_of_office).to be(true)
+
+      toggle_out_of_office(from: 'yes', to: 'no')
+
+      expect(overview.reload.out_of_office).to be(false)
+    end
+  end
 end

@@ -190,6 +190,25 @@ RSpec.describe 'Ticket zoom > Taskbar', type: :system do
         expect(current_url).to include("ticket/zoom/#{ticket3.id}")
       end
 
+      # Ported from test/browser/agent_ticket_overview_tab_test.rb: closing the
+      #   ticket replaces the task with the next overview ticket instead of
+      #   accumulating tabs.
+      it 'does replace the task with the next overview ticket on ticket close' do
+        click_on ticket1.title
+        expect(current_url).to include("ticket/zoom/#{ticket1.id}")
+
+        within(:active_content) do
+          select 'closed', from: 'State'
+          click '.js-submit'
+        end
+
+        expect(current_url).to include("ticket/zoom/#{ticket2.id}")
+        expect(page).to have_css('.tasks .task.is-active', text: ticket2.title)
+
+        # The closed ticket's task was replaced, not kept as an additional tab.
+        expect(page).to have_no_css('.tasks .task', text: ticket1.title)
+      end
+
       it 'does show default stay on tab if secondary action is not given' do
         click_on ticket1.title
         refresh

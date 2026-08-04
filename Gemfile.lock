@@ -530,7 +530,6 @@ GEM
       ast (~> 2.4.1)
       racc
     pg (1.6.3)
-    power_assert (3.0.1)
     pp (0.6.4)
       prettyprint
     prettyprint (0.2.0)
@@ -604,10 +603,6 @@ GEM
       activesupport (= 8.0.5.1)
       bundler (>= 1.15.0)
       railties (= 8.0.5.1)
-    rails-controller-testing (1.0.5)
-      actionpack (>= 5.0.1.rc1)
-      actionview (>= 5.0.1.rc1)
-      activesupport (>= 5.0.1.rc1)
     rails-dom-testing (2.3.0)
       activesupport (>= 5.0.0)
       minitest
@@ -785,8 +780,6 @@ GEM
     telephone_number (1.4.25)
     terser (1.2.8)
       execjs (>= 0.3.0, < 3)
-    test-unit (3.7.8)
-      power_assert
     thor (1.5.0)
     timeout (0.6.1)
     tpm-key_attestation (0.14.1)
@@ -929,7 +922,6 @@ DEPENDENCIES
   mail
   messagebird-rest
   mime-types
-  minitest
   net-http
   net-imap
   net-ldap
@@ -962,7 +954,6 @@ DEPENDENCIES
   pundit-matchers
   rack-attack
   rails (~> 8.0.0)
-  rails-controller-testing
   rake
   rchardet (>= 1.8.0)
   redis (< 6)
@@ -992,7 +983,6 @@ DEPENDENCIES
   telegram-bot-ruby
   telephone_number
   terser
-  test-unit
   thor
   twilio-ruby
   twitter_cldr
