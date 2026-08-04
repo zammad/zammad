@@ -2,17 +2,13 @@
 
 module Service::AI::VectorDB
   class SimilaritySearch < Service::AI::VectorDB::Base
-    attr_reader :text, :embedding, :k, :filter, :feature_identifier
+    attr_reader :text, :embedding, :k, :filter
 
-    # @param feature_identifier [String, Symbol, NilClass] the calling feature's identifier, used
-    #   to resolve the embedding provider (see AI::ProviderConnection.for_embeddings) when `text`
-    #   is embedded on the fly; irrelevant when `embedding` is given directly.
-    def initialize(text: nil, embedding: nil, k: 2, filter: {}, feature_identifier: nil) # rubocop:disable Naming/MethodParameterName
-      @text               = text
-      @embedding          = embedding
-      @k                  = k
-      @filter             = filter
-      @feature_identifier = feature_identifier
+    def initialize(text: nil, embedding: nil, k: 2, filter: {}) # rubocop:disable Naming/MethodParameterName
+      @text      = text
+      @embedding = embedding
+      @k         = k
+      @filter    = filter
     end
 
     def execute
@@ -26,7 +22,7 @@ module Service::AI::VectorDB
     private
 
     def query_embedding
-      embedding || Service::AI::VectorDB::Embedding.execute(input: text, feature_identifier:)
+      embedding || Service::AI::VectorDB::Embedding.execute(input: text)
     end
   end
 end

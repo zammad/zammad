@@ -45,18 +45,11 @@ class App.ControllerAIFeatureProviderModal extends App.ControllerModal
       autofocus: true
     )
 
-    # Wire provider change after the form is in the DOM.
-    @delay =>
-      @$('[name=provider_connection_id]').on 'change', (e) =>
-        @showDefaultProviders($(e.target).val())
-        @showUnsupportedEmbeddingWarning($(e.target).val())
-
-      @showDefaultProviders(@row?.provider_connection_id)
-      @showUnsupportedEmbeddingWarning(@row?.provider_connection_id)
-
     @controller.form
 
   buildProviderAttributes: =>
+    defaultChatProvider = _.find(@providers, (provider) -> provider.default_chat)
+
     options = _.map(@providers, (c) ->
       value: c.id
       name: c.name
@@ -64,41 +57,12 @@ class App.ControllerAIFeatureProviderModal extends App.ControllerModal
 
     options.unshift(
       value: ''
-      name: App.i18n.translateInline('Default provider(s)')
+      name: App.i18n.translateInline('Default (%s)', defaultChatProvider?.name or App.i18n.translateInline('none'))
     )
 
     [
       { name: 'provider_connection_id', display: __('Provider'), tag: 'select', null: false, options: options }
     ]
-
-  showDefaultProviders: (currentId) =>
-    @helpBlock = @$('[data-attribute-name="provider_connection_id"] .help-block')
-    @helpBlock.find('.js-aiDefaultProviders').remove()
-    return if currentId
-
-    @helpBlock.append($(App.view('ai/ai_default_providers')(providers: @providers)))
-
-  showUnsupportedEmbeddingWarning: (currentId) =>
-    @helpBlock = @$('[data-attribute-name="provider_connection_id"] .help-block')
-    @helpBlock.find('.js-aiUnsupportedEmbeddingWarning').remove()
-
-    if currentId
-      providerName = _.find(@providers, (provider) -> provider.id is parseInt(currentId, 10))?.provider
-      return if not providerName
-
-      provider = App.Config.get('AIProviders')[providerName]
-      hasUnsupportedEmbeddingWarning = not provider?.supports_embeddings
-
-    defaultEmbeddingProvider = _.find(@providers, (provider) -> provider.default_embedding)
-    hasMissingDefaultWarning = not defaultEmbeddingProvider and (not currentId or hasUnsupportedEmbeddingWarning)
-
-    @helpBlock.append(
-      $(App.view('ai/ai_unsupported_embedding_provider')(
-        defaultProviderName: defaultEmbeddingProvider?.name
-        hasUnsupportedEmbeddingWarning: hasUnsupportedEmbeddingWarning
-        hasMissingDefaultWarning: hasMissingDefaultWarning
-      ))
-    )
 
   onSubmit: (e) =>
     return unless @featureIdentifier

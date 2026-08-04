@@ -62,21 +62,19 @@ RSpec.describe Service::AI::Ticket::EmbedSummary, :aggregate_failures do
       it 'embeds ticket title, customer_request, and conversation_summary' do
         service_result
         expect(Service::AI::VectorDB::Embedding).to have_received(:execute).with(
-          input:              satisfy { |content|
+          input: satisfy { |content|
             content.include?('Printer not working') &&
               content.include?('Printer keeps jamming.') &&
               content.include?('Technician was contacted.') &&
               content.include?('Issue was identified.')
           },
-          feature_identifier: nil,
         )
       end
 
       it 'excludes non-summary keys from the embedded content' do
         service_result
         expect(Service::AI::VectorDB::Embedding).to have_received(:execute).with(
-          input:              satisfy { |content| content.exclude?('en-us') },
-          feature_identifier: nil,
+          input: satisfy { |content| content.exclude?('en-us') },
         )
       end
 

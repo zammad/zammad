@@ -26,12 +26,10 @@ class Service::AI::Feature::OCR < Service::AI::Feature
 
   private
 
-  # Resolved via AI::ProviderConnection.for_ocr, routed by the calling feature's identifier
-  # (additional_options[:feature_identifier]) — never OCR's own identifier, since OCR is a
-  # capability, not a routable feature (AI::FeatureProvider excludes it from routing). Falls
-  # back to the connection flagged default_ocr, then to the default_chat connection.
+  # Resolved via AI::ProviderConnection.for_ocr, that considers default connection only,
+  #   since OCR is a capability, not a routable feature (AI::FeatureProvider excludes it from routing).
   def connection
-    @connection ||= AI::ProviderConnection.for_ocr(additional_options[:feature_identifier]) ||
+    @connection ||= AI::ProviderConnection.for_ocr ||
                     raise(__('AI provider is not configured.'))
   end
 

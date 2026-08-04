@@ -5,17 +5,11 @@ class Service::AI::Ticket::PreProcessArticleContent < Service::Base
   MARKER_START     = "[OCR_TEXT_START]\n".freeze
   MARKER_END       = "\n[OCR_TEXT_END]".freeze
 
-  attr_reader :articles, :skip_quotes_strip_first_article, :use_ocr, :feature_identifier, :link_style
+  attr_reader :articles, :skip_quotes_strip_first_article, :link_style
 
-  # @param use_ocr [Boolean] recognize image texts; the calling feature decides, since whether
-  #   its admins opted into image recognition is part of that feature's configuration.
-  # @param feature_identifier [String, Symbol, NilClass] the calling feature's identifier, so
-  #   OCR's provider is resolved via that feature's routing (see AI::ProviderConnection.for_ocr).
-  def initialize(articles:, skip_quotes_strip_first_article: false, use_ocr: false, feature_identifier: nil, link_style: :markdown)
+  def initialize(articles:, skip_quotes_strip_first_article: false, link_style: :markdown)
     @articles                        = articles
     @skip_quotes_strip_first_article = skip_quotes_strip_first_article
-    @use_ocr                         = use_ocr
-    @feature_identifier              = feature_identifier
     @link_style                      = link_style
   end
 
@@ -28,6 +22,12 @@ class Service::AI::Ticket::PreProcessArticleContent < Service::Base
   end
 
   private
+
+  def use_ocr
+    return @use_ocr if defined?(@use_ocr)
+
+    @use_ocr = AI::ProviderConnection.for_ocr.present?
+  end
 
   def non_plain_article?(article)
     article.content_type && article.content_type !~ %r{text/plain}i
@@ -129,7 +129,7 @@ class Service::AI::Ticket::PreProcessArticleContent < Service::Base
     image_texts = {}
 
     images.each do |image|
-      ocr_result = Service::AI::Feature::OCR.execute(context_data: { store: image }, prompt_image: image, additional_options: { feature_identifier: })
+      ocr_result = Service::AI::Feature::OCR.execute(context_data: { store: image }, prompt_image: image)
 
       image_texts[image.store_file_id] = ocr_result.content
     rescue

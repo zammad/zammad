@@ -28,8 +28,6 @@ class Service::Ticket::AIAssistance::Summarize < Service::Base
         .execute(
           articles:,
           skip_quotes_strip_first_article: true,
-          use_ocr:                         summary_config.fetch('ocr_active', false),
-          feature_identifier:              Service::AI::Feature::TicketSummarize.identifier
         )
     end
 

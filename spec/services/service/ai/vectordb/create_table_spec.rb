@@ -51,13 +51,13 @@ RSpec.describe Service::AI::VectorDB::CreateTable do
       end
     end
 
-    context 'when the provider does not support embeddings' do
+    context 'when no connection is flagged for embedding (e.g. the only provider does not support it)' do
       before do
         setup_ai_provider('anthropic')
       end
 
       it 'raises a migration error' do
-        expect { embedding_size }.to raise_error(AI::VectorDB::MigrationError, %r{does not support embeddings})
+        expect { embedding_size }.to raise_error(AI::VectorDB::MigrationError, %r{no selected AI provider for embeddings})
       end
     end
   end

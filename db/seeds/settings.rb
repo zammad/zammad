@@ -6268,7 +6268,6 @@ Setting.create_if_not_exists(
     upcoming_events:    false,
     customer_sentiment: true,
     generate_on:        'on_ticket_detail_opening',
-    ocr_active:         false,
   },
   preferences: {
     authentication: true,

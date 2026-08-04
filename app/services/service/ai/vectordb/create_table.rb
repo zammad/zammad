@@ -2,15 +2,6 @@
 
 module Service::AI::VectorDB
   class CreateTable < Service::AI::VectorDB::Base
-    attr_reader :feature_identifier
-
-    # @param feature_identifier [String, Symbol, NilClass] the calling feature's identifier, so
-    #   the embedding provider is resolved via that feature's routing (see
-    #   AI::ProviderConnection.for_embeddings).
-    def initialize(feature_identifier: nil)
-      @feature_identifier = feature_identifier
-    end
-
     def execute
       ai_vector_db.ping!(only_version: true)
       ai_vector_db.migrate(dimensions: embedding_size)
@@ -19,8 +10,8 @@ module Service::AI::VectorDB
     private
 
     def embedding_size
-      provider = AI::ProviderConnection.for_embeddings(feature_identifier)&.provider_instance
-      raise(AI::VectorDB::MigrationError, __('The currently selected AI provider does not support embeddings.')) if provider.nil?
+      provider = AI::ProviderConnection.for_embeddings&.provider_instance
+      raise(AI::VectorDB::MigrationError, __('The system currently has no selected AI provider for embeddings.')) if provider.nil?
 
       embedding_model = provider.options[:embedding_model] || provider.class::DEFAULT_OPTIONS[:embedding_model]
 

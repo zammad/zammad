@@ -18,8 +18,7 @@ RSpec.describe Service::AI::Ticket::EmbedContent, :aggregate_failures do
       it 'returns an embedding built from the ticket title' do
         expect(service_result).to eq(embedding)
         expect(Service::AI::VectorDB::Embedding).to have_received(:execute).with(
-          input:              include('Printer not working'),
-          feature_identifier: nil,
+          input: include('Printer not working'),
         )
       end
     end
@@ -43,7 +42,7 @@ RSpec.describe Service::AI::Ticket::EmbedContent, :aggregate_failures do
       it 'strips quotes/signatures from later articles and returns an embedding' do
         expect(service_result).to eq(embedding)
         expect(Service::AI::VectorDB::Embedding).to have_received(:execute).with(
-          input:              satisfy { |content|
+          input: satisfy { |content|
             content.include?('Hello, my printer stopped working.') &&
             content.include?('> I will send you the error next.') &&
             content.include?('Error 404, printer not found.') &&
@@ -51,7 +50,6 @@ RSpec.describe Service::AI::Ticket::EmbedContent, :aggregate_failures do
               content.exclude?('> > I will send you the error next.') &&
               content.exclude?('> Regards')
           },
-          feature_identifier: nil,
         )
       end
     end
@@ -75,13 +73,12 @@ RSpec.describe Service::AI::Ticket::EmbedContent, :aggregate_failures do
       it 'strips quotes/signatures from later articles and returns an embedding' do
         expect(service_result).to eq(embedding)
         expect(Service::AI::VectorDB::Embedding).to have_received(:execute).with(
-          input:              satisfy { |content|
+          input: satisfy { |content|
             content.include?('My printer broke.') &&
             content.include?('It shows an error.') &&
             content.include?('Error: PC load letter') &&
               content.exclude?('My printer broke previously.')
           },
-          feature_identifier: nil,
         )
       end
     end

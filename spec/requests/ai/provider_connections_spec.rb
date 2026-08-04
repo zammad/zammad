@@ -360,6 +360,30 @@ RSpec.describe 'AI::ProviderConnection', :aggregate_failures, authenticated_as: 
       conn = create(:ai_provider_connection, provider: 'open_ai')
 
       put "/api/v1/ai/provider_connections/#{conn.id}/set_default",
+          params: { default: 'embedding', enabled: true },
+          as:     :json
+
+      expect(response).to have_http_status(:ok)
+      expect(conn.reload.default_embedding?).to be true
+    end
+
+    it 'supports disabling of the default provider' do
+      conn = create(:ai_provider_connection, :default_embedding, provider: 'open_ai')
+
+      expect(conn.default_embedding?).to be true
+
+      put "/api/v1/ai/provider_connections/#{conn.id}/set_default",
+          params: { default: 'embedding', enabled: false },
+          as:     :json
+
+      expect(response).to have_http_status(:ok)
+      expect(conn.reload.default_embedding?).to be false
+    end
+
+    it 'supports omitting of the enabled parameter' do
+      conn = create(:ai_provider_connection, provider: 'open_ai')
+
+      put "/api/v1/ai/provider_connections/#{conn.id}/set_default",
           params: { default: 'embedding' },
           as:     :json
 
@@ -371,7 +395,7 @@ RSpec.describe 'AI::ProviderConnection', :aggregate_failures, authenticated_as: 
       conn = create(:ai_provider_connection, provider: 'anthropic')
 
       put "/api/v1/ai/provider_connections/#{conn.id}/set_default",
-          params: { default: 'embedding' },
+          params: { default: 'embedding', enabled: true },
           as:     :json
 
       expect(response).to have_http_status(:unprocessable_content)
@@ -384,7 +408,7 @@ RSpec.describe 'AI::ProviderConnection', :aggregate_failures, authenticated_as: 
       allow(AI::Provider::OpenAI).to receive(:check_temperature_support!).and_raise('should not be called')
 
       put "/api/v1/ai/provider_connections/#{conn.id}/set_default",
-          params: { default: 'ocr' },
+          params: { default: 'ocr', enabled: true },
           as:     :json
 
       expect(response).to have_http_status(:ok)
@@ -394,7 +418,7 @@ RSpec.describe 'AI::ProviderConnection', :aggregate_failures, authenticated_as: 
       conn = create(:ai_provider_connection)
 
       put "/api/v1/ai/provider_connections/#{conn.id}/set_default",
-          params: { default: 'nonexisting' },
+          params: { default: 'nonexisting', enabled: true },
           as:     :json
 
       expect(response).to have_http_status(:unprocessable_content)
@@ -404,7 +428,7 @@ RSpec.describe 'AI::ProviderConnection', :aggregate_failures, authenticated_as: 
       conn = create(:ai_provider_connection)
 
       put "/api/v1/ai/provider_connections/#{conn.id}/set_default",
-          params: {},
+          params: { enabled: true },
           as:     :json
 
       expect(response).to have_http_status(:unprocessable_content)

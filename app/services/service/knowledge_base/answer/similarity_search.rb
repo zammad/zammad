@@ -58,7 +58,7 @@ class Service::KnowledgeBase::Answer::SimilaritySearch < Service::Base
     filter[:'metadata.locale'] = locale if locale.present?
 
     Service::AI::VectorDB::SimilaritySearch
-      .execute(embedding:, k: limit * CANDIDATE_FACTOR, filter:, feature_identifier: Service::AI::Feature::KnowledgeBaseAnswerFromTicket.identifier)
+      .execute(embedding:, k: limit * CANDIDATE_FACTOR, filter:)
       &.dig('hits', 'hits') || []
   end
 

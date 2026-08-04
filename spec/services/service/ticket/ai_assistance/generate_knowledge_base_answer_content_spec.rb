@@ -35,29 +35,6 @@ RSpec.describe Service::Ticket::AIAssistance::GenerateKnowledgeBaseAnswerContent
       it 'returns AI generated content' do
         expect(service_result).to eq(ai_result)
       end
-
-      # Until this feature has an option of its own, it follows the ticket summary one.
-      it 'requests image recognition when the ticket summary option is enabled' do
-        Setting.set(
-          'ai_assistance_ticket_summary_config',
-          Setting.get('ai_assistance_ticket_summary_config').merge('ocr_active' => true),
-        )
-        allow(Service::AI::Ticket::PreProcessArticleContent).to receive(:execute).and_return([])
-
-        service_result
-
-        expect(Service::AI::Ticket::PreProcessArticleContent)
-          .to have_received(:execute).with(hash_including(use_ocr: true))
-      end
-
-      it 'does not request image recognition while the option is disabled' do
-        allow(Service::AI::Ticket::PreProcessArticleContent).to receive(:execute).and_return([])
-
-        service_result
-
-        expect(Service::AI::Ticket::PreProcessArticleContent)
-          .to have_received(:execute).with(hash_including(use_ocr: false))
-      end
     end
 
     context 'when ai_provider is not configured' do

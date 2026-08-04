@@ -22,19 +22,18 @@ class ProviderConnections extends App.ControllerAIFeatureBase
       headers.unshift(attribute)
       headers
 
+    # The title lands on the cell via the generic table row template, which escapes it already.
     callbackIconStatusAttribute = (value, object, attribute) ->
-      value = ' '
-      tooltip = App.Utils.htmlEscape(_.filter([object.status?.message, object.status?.at]).join(' '))
-      attribute.title = tooltip or ''
-      value = object.statusIcon()
+      attribute.title = object.statusTooltip()
+      object.statusIcon()
 
     callbackDefaultChatAttribute = (value, object) ->
       return value if !object.default_chat
-      "#{value} <span class=\"badge badge--ai\">#{App.i18n.translateInline('Chat completions')}</span>"
+      "#{value} <span class=\"badge badge--primary\">#{App.i18n.translateInline('Default')}</span>"
 
     callbackDefaultEmbeddingAttribute = (value, object) ->
       return value if !object.default_embedding
-      "#{value} <span class=\"badge badge--primary\">#{App.i18n.translateInline('Semantic search')}</span>"
+      "#{value} <span class=\"badge badge--ai\">#{App.i18n.translateInline('Semantic search')}</span>"
 
     callbackDefaultOCRAttribute = (value, object) ->
       return value if !object.default_ocr
@@ -78,25 +77,39 @@ class ProviderConnections extends App.ControllerAIFeatureBase
           customActions: [
             {
               name:      'set-default-chat'
-              display:   __('Set default for chat completions')
+              display:   __('Set as default')
               icon:      'reload'
               available: (object) -> !object.default_chat
               callback:  (id) => @setConnectionAsDefault(id, 'chat')
             }
             {
               name:      'set-default-embedding'
-              display:   __('Set default for semantic search')
-              icon:      'reload'
+              display:   __('Use for semantic search')
+              icon:      'checkmark'
               available: (object) ->
                 !object.default_embedding && App.Config.get('AIProviders')[object.provider]?.supports_embeddings
               callback:  (id) => @setConnectionAsDefault(id, 'embedding')
             }
             {
+              name:      'clear-default-embedding'
+              display:   __('Do not use for semantic search')
+              icon:      'diagonal-cross'
+              available: (object) -> object.default_embedding
+              callback:  (id) => @setConnectionAsDefault(id, 'embedding', false)
+            }
+            {
               name:      'set-default-ocr'
-              display:   __('Set default for image text recognition')
-              icon:      'reload'
+              display:   __('Use for image text recognition')
+              icon:      'checkmark'
               available: (object) -> !object.default_ocr
               callback:  (id) => @setConnectionAsDefault(id, 'ocr')
+            }
+            {
+              name:      'clear-default-ocr'
+              display:   __('Do not use for image text recognition')
+              icon:      'diagonal-cross'
+              available: (object) -> object.default_ocr
+              callback:  (id) => @setConnectionAsDefault(id, 'ocr', false)
             }
             {
               name:      'delete'
@@ -108,6 +121,7 @@ class ProviderConnections extends App.ControllerAIFeatureBase
                 new App.ControllerGenericDestroyConfirm(
                   item:      App.AIProviderConnection.find(id)
                   container: @el.closest('.content')
+                  callback:  @load
                 )
             }
           ]
@@ -143,11 +157,11 @@ class ProviderConnections extends App.ControllerAIFeatureBase
       App.view('ai/provider_connections_toggle')(ai_provider: App.Config.get('ai_provider'))
     )
 
-  setConnectionAsDefault: (id, type) =>
+  setConnectionAsDefault: (id, type, enabled = true) =>
     App.Ajax.request(
       type: 'PUT'
       url:  App.Config.get('api_path') + '/ai/provider_connections/' + id + '/set_default'
-      data: JSON.stringify(default: type)
+      data: JSON.stringify(default: type, enabled: enabled)
       success: =>
         App.AIProviderConnection.fetchFull(
           => @genericController?.render()

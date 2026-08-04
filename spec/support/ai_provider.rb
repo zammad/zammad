@@ -37,6 +37,16 @@ module AIProviderHelper
 
     AI::FeatureProvider.create!(identifier: identifier.to_s, provider_connection: connection)
   end
+
+  def set_ai_provider_default_embedding(default_embedding: true)
+    connection = AI::ProviderConnection.find_by(name: 'default')
+    connection.update!(default_embedding: default_embedding)
+  end
+
+  def set_ai_provider_default_ocr(default_ocr: true)
+    connection = AI::ProviderConnection.find_by(name: 'default')
+    connection.update!(default_ocr:)
+  end
 end
 
 RSpec.configure do |config|

@@ -9,7 +9,7 @@ class Service::AI::Ticket::EmbedContent < Service::AI::Ticket::EmbedBase
   def execute
     input = build_content
     check_content_size!(input)
-    Service::AI::VectorDB::Embedding.execute(input:, feature_identifier:)
+    Service::AI::VectorDB::Embedding.execute(input:)
   end
 
   private
@@ -22,7 +22,6 @@ class Service::AI::Ticket::EmbedContent < Service::AI::Ticket::EmbedBase
                  articles:                        ticket.articles.without_system_notifications,
                  skip_quotes_strip_first_article: true,
                  link_style:                      :plain,
-                 feature_identifier:,
                )
                .pluck(:text)
 

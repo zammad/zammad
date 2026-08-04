@@ -16,7 +16,7 @@ RSpec.describe Service::AI::VectorDB::Document::Upsert, :aggregate_failures do
   let(:bulk_calls)           { [] }
   let(:metadata_patches)     { [] }
   let(:cache)                { Service::AI::VectorDB::Embedding::Cache }
-  let(:model)                { AI::ProviderConnection.for_embeddings(nil).provider_instance.options[:embedding_model] }
+  let(:model)                { AI::ProviderConnection.for_embeddings.provider_instance.options[:embedding_model] }
 
   before do
     setup_ai_provider('open_ai', token: 'secret-token')
@@ -48,7 +48,7 @@ RSpec.describe Service::AI::VectorDB::Document::Upsert, :aggregate_failures do
     it 'embeds the new chunk and writes it in one bulk request' do
       upsert
 
-      expect(Service::AI::VectorDB::Embedding).to have_received(:execute).once.with(input: [content], feature_identifier: nil)
+      expect(Service::AI::VectorDB::Embedding).to have_received(:execute).once.with(input: [content])
       expect(bulk_call[:upserts]).to eq([upsert_op(content)])
       expect(bulk_call[:deletes]).to eq([])
       expect(metadata_patches).to be_empty
@@ -85,7 +85,7 @@ RSpec.describe Service::AI::VectorDB::Document::Upsert, :aggregate_failures do
     it 'removes the stale chunk and embeds + upserts the new one in one bulk request' do
       upsert
 
-      expect(Service::AI::VectorDB::Embedding).to have_received(:execute).with(input: [content], feature_identifier: nil)
+      expect(Service::AI::VectorDB::Embedding).to have_received(:execute).with(input: [content])
       expect(bulk_call[:upserts]).to eq([upsert_op(content)])
       expect(bulk_call[:deletes]).to eq([id_for('An old answer.')])
       expect(metadata_patches).to be_empty
@@ -132,7 +132,7 @@ RSpec.describe Service::AI::VectorDB::Document::Upsert, :aggregate_failures do
     it 'prefixes the headers onto the embedded and upserted chunk' do
       upsert
 
-      expect(Service::AI::VectorDB::Embedding).to have_received(:execute).once.with(input: [expected_chunk], feature_identifier: nil)
+      expect(Service::AI::VectorDB::Embedding).to have_received(:execute).once.with(input: [expected_chunk])
       expect(bulk_call[:upserts]).to eq([upsert_op(expected_chunk)])
     end
   end

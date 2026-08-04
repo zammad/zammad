@@ -202,15 +202,14 @@ RSpec.describe AI::ProviderConnection, type: :model do
       expect { conn.destroy }.to change(described_class, :count).by(-1)
     end
 
-    it 'does promote the next connection that supports embedding to default', :aggregate_failures do
-      default_conn = create(:ai_provider_connection, :default_embedding, provider: 'open_ai', config: { token: 'a' })
-      unsupported_conn = create(:ai_provider_connection, provider: 'anthropic', config: { token: 'b' })
-      supported_conn = create(:ai_provider_connection, provider: 'zammad_ai', config: { token: 'c' })
+    it 'does not promote a replacement when the default embedding connection is deleted', :aggregate_failures do
+      default_conn   = create(:ai_provider_connection, :default_embedding, provider: 'open_ai', config: { token: 'a' })
+      other_conn     = create(:ai_provider_connection, provider: 'zammad_ai', config: { token: 'b' })
 
       default_conn.destroy
 
-      expect(unsupported_conn.reload.default_embedding?).to be false
-      expect(supported_conn.reload.default_embedding?).to be true
+      expect(other_conn.reload.default_embedding?).to be false
+      expect(described_class.where(default_embedding: true)).to be_none
     end
   end
 
@@ -405,15 +404,11 @@ RSpec.describe AI::ProviderConnection, type: :model do
     end
 
     describe '.for_embeddings' do
-      context 'when no connection is flagged' do
-        before { connection }
-
-        it 'follows the default embedding connection' do
-          expect(described_class.for_embeddings(nil)).to eq(connection)
-        end
+      it 'does not fall back to the default chat connection' do
+        expect(described_class.for_embeddings).to be_nil
       end
 
-      context 'with a connection flagged for embedding' do
+      context 'with a connection is flagged for embedding' do
         let(:flagged) do
           create(:ai_provider_connection, :default_embedding, provider: 'ollama', config: { url: 'http://localhost:11434' })
         end
@@ -424,97 +419,56 @@ RSpec.describe AI::ProviderConnection, type: :model do
         end
 
         it 'resolves the flagged connection, not the default chat' do
-          expect(described_class.for_embeddings(nil)).to eq(flagged)
-        end
-      end
-
-      context 'with a feature routed to an embedding-capable connection' do
-        let(:routed) { create(:ai_provider_connection, :default_embedding, provider: 'open_ai', config: { token: 'sk-other' }) }
-
-        before do
-          connection
-          create(:ai_feature_provider, identifier: 'ticket_summarize', provider_connection: routed)
-        end
-
-        it 'resolves the routed connection' do
-          expect(described_class.for_embeddings(:ticket_summarize)).to eq(routed)
-        end
-      end
-
-      context 'with a feature routed to a connection that does not support embeddings' do
-        let(:default_embedding) do
-          create(:ai_provider_connection, :default_embedding, provider: 'open_ai', config: { token: 'sk-embed' })
-        end
-        let(:routed) { create(:ai_provider_connection, provider: 'anthropic', config: { token: 'sk-other' }) }
-
-        before do
-          default_embedding
-          create(:ai_feature_provider, identifier: 'ticket_summarize', provider_connection: routed)
-        end
-
-        it 'ignores the routed connection and falls back to the default embedding connection' do
-          expect(described_class.for_embeddings(:ticket_summarize)).to eq(default_embedding)
+          expect(described_class.for_embeddings).to eq(flagged)
         end
       end
 
       context 'when the AI provider is disabled' do
         before do
-          connection
+          create(:ai_provider_connection, :default_embedding)
           Setting.set('ai_provider', false)
         end
 
         it 'returns nil despite a configured connection' do
-          expect(described_class.for_embeddings(nil)).to be_nil
+          expect(described_class.for_embeddings).to be_nil
         end
       end
 
       context 'when no connection is configured at all' do
-        it 'returns nil, without falling back to default chat' do
-          expect(described_class.for_embeddings(nil)).to be_nil
-        end
-
-        it 'logs the missing default' do
-          allow(Rails.logger).to receive(:error)
-
-          described_class.for_embeddings(nil)
-
-          expect(Rails.logger).to have_received(:error)
+        it 'returns nil' do
+          expect(described_class.for_embeddings).to be_nil
         end
       end
     end
 
     describe '.for_ocr' do
       context 'with a default OCR connection' do
+        let(:flagged) { create(:ai_provider_connection, :default_ocr, provider: 'anthropic', config: { token: 'sk-other' }) }
+
         before do
           connection
+          flagged
         end
 
-        it 'resolves the default OCR connection' do
-          expect(described_class.for_ocr(nil)).to eq(connection)
+        it 'resolves the default OCR connection, not the default chat' do
+          expect(described_class.for_ocr).to eq(flagged)
         end
       end
 
-      context 'with the calling feature routed to a connection' do
-        let(:routed) { create(:ai_provider_connection, provider: 'anthropic', config: { token: 'sk-other' }) }
-
-        before do
-          connection
-          create(:ai_feature_provider, identifier: 'ticket_summarize', provider_connection: routed)
-        end
-
-        it "resolves the calling feature's routed connection over the default OCR connection" do
-          expect(described_class.for_ocr(:ticket_summarize)).to eq(routed)
+      context 'when no connection is flagged for OCR' do
+        it 'does not fall back to the default chat connection' do
+          expect(described_class.for_ocr).to be_nil
         end
       end
 
       context 'when the AI provider is disabled' do
         before do
-          create(:ai_provider_connection, :default_chat, config: { token: 'sk-test', ocr_model: 'llama3.2-vision' })
+          create(:ai_provider_connection, :default_ocr)
           Setting.set('ai_provider', false)
         end
 
         it 'returns nil despite a flagged connection' do
-          expect(described_class.for_ocr(nil)).to be_nil
+          expect(described_class.for_ocr).to be_nil
         end
       end
     end

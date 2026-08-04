@@ -37,7 +37,8 @@ class AI::ProviderConnectionsController < ApplicationController
     connection = AI::ProviderConnection.find(params[:id])
     return render_provider_error(__('This provider does not support embeddings.')) if purpose == 'embedding' && !connection.embedding_capable
 
-    connection.update!("default_#{purpose}" => true)
+    enabled = params.key?(:enabled) ? params[:enabled] : true
+    connection.update!("default_#{purpose}" => enabled)
     model_show_render(AI::ProviderConnection, params)
   end
 

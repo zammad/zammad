@@ -28,7 +28,6 @@ RSpec.describe 'Manage > AI > Ticket Summary', type: :system do
                                                                          'open_questions'     => true, # false by default
                                                                          'upcoming_events'    => true, # false by default
                                                                          'customer_sentiment' => false, # true by default
-                                                                         'ocr_active'         => false, # untouched by the switches above
                                                                        })
     end
 

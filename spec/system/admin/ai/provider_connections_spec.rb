@@ -51,7 +51,7 @@ RSpec.describe 'AI > Provider Connections', type: :system do
           expect(page).to have_text('openai')
 
           # The first connection automatically becomes the default for every mode.
-          expect(find('tr', text: 'openai')).to have_text('Chat completions')
+          expect(find('tr', text: 'openai')).to have_text('Default')
         end
 
         expect(AI::ProviderConnection.find_by(name: 'openai'))
@@ -156,7 +156,7 @@ RSpec.describe 'AI > Provider Connections', type: :system do
 
         expect(page).to have_text('Default provider updated successfully.')
 
-        expect(find('tr', text: 'second-connection')).to have_text('Chat completions')
+        expect(find('tr', text: 'second-connection')).to have_text('Default')
         expect(connection_two.reload.default_chat).to be(true)
         expect(connection_one.reload.default_chat).to be(false)
       end
@@ -222,6 +222,45 @@ RSpec.describe 'AI > Provider Connections', type: :system do
 
         expect(find('tr', text: 'second-connection')).to have_css('.icon-status.superbad-color')
         expect(find('tr', text: 'first-connection')).to have_no_css('.icon-status.superbad-color')
+      end
+
+      it 'picks up a status change without a reload' do
+        expect(find('tr', text: 'second-connection')).to have_no_css('.icon-status.superbad-color')
+
+        connection_two.record_status_error!('quota exceeded')
+
+        expect(find('tr', text: 'second-connection'))
+          .to have_css('.icon-status.superbad-color', wait: 30)
+      end
+
+      # The tooltip sits on the cell, which is the only one in the table carrying a title.
+      describe 'status badge tooltip' do
+        let(:tooltip) { find('tr', text: 'second-connection').find('td[title]')[:title] }
+
+        # The message is escaped exactly once, by the generic table row template: a raw provider
+        # message reaches the title attribute verbatim, and neither breaks out of it nor arrives
+        # HTML-encoded.
+        it 'names the error of a failed provider call' do
+          connection_two.record_status_error!('quota exceeded "<img src=x>" & more')
+
+          refresh
+
+          expect(tooltip)
+            .to match(%r{\AConnection failed\.\nquota exceeded "<img src=x>" & more\nLast status at: \S})
+        end
+
+        it 'confirms a successful provider call' do
+          connection_two.record_status_ok!
+
+          refresh
+
+          expect(tooltip).to match(%r{\AConnected\.\nLast status at: \S})
+        end
+
+        # Without this the yellow badge of a fresh or reconfigured connection reads as a warning.
+        it 'explains a connection that was never used' do
+          expect(tooltip).to eq('Provider not used at the moment.')
+        end
       end
 
       it 'deletes a connection' do

@@ -4,7 +4,6 @@ class App.TicketSummary extends App.ControllerAIFeatureBase
   requiredPermission: 'admin.ai_assistance_ticket_summary'
   events:
     'change .js-aiAssistanceTicketSummarySetting input': 'toggleAIAssistanceTicketSummarySetting'
-    'change .js-aiAssistanceTicketSummaryOCRActive input': 'toggleAIAssistanceTicketSummaryOCRActive'
     'change .checkbox--service input': 'toggleService'
     'submit .js-ticketSummaryGenerationConfig': 'selectGenerationConfig'
     'click .js-ticketSummarySelectorSave': 'saveTicketSummarySelector'
@@ -12,7 +11,6 @@ class App.TicketSummary extends App.ControllerAIFeatureBase
 
   elements:
     '.js-aiAssistanceTicketSummarySetting input': 'aiAssistanceTicketSummarySetting'
-    '.js-aiAssistanceTicketSummaryOCRActive input': 'aiAssistanceTicketSummaryOCRActive'
 
   constructor: ->
     super
@@ -42,7 +40,6 @@ class App.TicketSummary extends App.ControllerAIFeatureBase
     content = $(App.view('ai/ticket_summary')(
       description: App.i18n.translateContent(@description)
       serviceOptions: @serviceOptions(service_config)
-      ocrActive: service_config['ocr_active']
       buttons: [
         { name: __('Legal Information'), 'data-type': 'legal-information', class: 'btn--info' }
       ]
@@ -124,14 +121,6 @@ class App.TicketSummary extends App.ControllerAIFeatureBase
   toggleAIAssistanceTicketSummarySetting:  =>
     value = @aiAssistanceTicketSummarySetting.prop('checked')
     App.Setting.set('ai_assistance_ticket_summary', value, failLocal: @failLocal, doneLocal: @renderAlert, notify: true)
-
-  toggleAIAssistanceTicketSummaryOCRActive:  =>
-    value = @aiAssistanceTicketSummaryOCRActive.prop('checked')
-
-    config = App.Setting.get('ai_assistance_ticket_summary_config') || {}
-    config['ocr_active'] = value
-
-    App.Setting.set('ai_assistance_ticket_summary_config', config, failLocal: @failLocal, notify: true)
 
   toggleService: (e) ->
     value = $(e.currentTarget).prop('checked')

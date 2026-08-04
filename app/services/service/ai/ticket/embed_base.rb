@@ -3,17 +3,13 @@
 class Service::AI::Ticket::EmbedBase < Service::Base
   class ContentTooLargeError < StandardError; end
 
-  # @param feature_identifier [String, Symbol, NilClass] the calling feature's identifier, so
-  #   the embedding provider is resolved via that feature's routing (see
-  #   AI::ProviderConnection.for_embeddings).
-  def initialize(ticket:, feature_identifier: nil)
-    @ticket             = ticket
-    @feature_identifier = feature_identifier
+  def initialize(ticket:)
+    @ticket = ticket
   end
 
   private
 
-  attr_reader :ticket, :feature_identifier
+  attr_reader :ticket
 
   def check_content_size!(content)
     tokens = Service::AI::VectorDB::Content::Chunks::Strategy::Base.estimate_tokens(content)
@@ -25,7 +21,7 @@ class Service::AI::Ticket::EmbedBase < Service::Base
   end
 
   def embedding_provider
-    @embedding_provider ||= AI::ProviderConnection.for_embeddings(feature_identifier)&.provider_instance ||
+    @embedding_provider ||= AI::ProviderConnection.for_embeddings&.provider_instance ||
                             raise(__('AI provider is not configured.'))
   end
 end

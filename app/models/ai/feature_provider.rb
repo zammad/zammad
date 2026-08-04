@@ -5,8 +5,7 @@
 class AI::FeatureProvider < ApplicationModel
   # Derived from the registered AI feature services — a new service becomes routable
   # automatically. OCR is excluded: it is a capability resolved per connection
-  # (AI::ProviderConnection.for_ocr), routed by the identifier of the feature that triggered
-  # it, so a routing row targeting OCR's own identifier would never be looked up.
+  # (AI::ProviderConnection.for_ocr).
   def self.available_identifiers
     Service::AI::Feature.identifiers.map(&:to_s) - [Service::AI::Feature::OCR.identifier]
   end

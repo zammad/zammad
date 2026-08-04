@@ -5,15 +5,10 @@ module Service::AI::VectorDB
   # Array returns one vector per input. Centralising embedding generation here keeps a future
   # embedding cache (skip re-embedding identical content) out of the indexing callers.
   class Embedding < Service::Base
-    attr_reader :input, :feature_identifier
+    attr_reader :input
 
-    # @param input [String, Array<String>] content to embed
-    # @param feature_identifier [String, Symbol, NilClass] the calling feature's identifier, so
-    #   the embedding provider is resolved via that feature's routing (see
-    #   AI::ProviderConnection.for_embeddings).
-    def initialize(input:, feature_identifier: nil)
-      @input              = input
-      @feature_identifier = feature_identifier
+    def initialize(input:)
+      @input = input
     end
 
     # @return [Array<Numeric>] for a String input; [Array<Array<Numeric>>] for an Array input
@@ -49,7 +44,7 @@ module Service::AI::VectorDB
 
     # The embedding provider connection; also records the call outcome as its stored health status.
     def connection
-      @connection ||= AI::ProviderConnection.for_embeddings(feature_identifier) || raise(__('AI provider is not configured.'))
+      @connection ||= AI::ProviderConnection.for_embeddings || raise(__('AI provider is not configured.'))
     end
 
     def provider

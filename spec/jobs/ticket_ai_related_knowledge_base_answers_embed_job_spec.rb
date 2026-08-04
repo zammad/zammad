@@ -9,9 +9,6 @@ RSpec.describe TicketAIRelatedKnowledgeBaseAnswersEmbedJob, :aggregate_failures,
   let(:embedding)        { [0.1, 0.2, 0.3] }
   let(:embedding_source) { :auto }
 
-  # Passed on so the embedding provider is resolved via this feature's routing.
-  let(:feature_identifier) { Service::AI::Feature::KnowledgeBaseAnswerFromTicket.identifier }
-
   def perform
     described_class.perform_now(ticket, locale, embedding_source, current_user:)
   end
@@ -46,7 +43,7 @@ RSpec.describe TicketAIRelatedKnowledgeBaseAnswersEmbedJob, :aggregate_failures,
       it 'falls back to the summary embedding, caches it, and pings' do
         perform
 
-        expect(Service::AI::Ticket::EmbedSummary).to have_received(:execute).with(ticket:, locale:, current_user:, feature_identifier:)
+        expect(Service::AI::Ticket::EmbedSummary).to have_received(:execute).with(ticket:, locale:, current_user:)
         expect(Service::Ticket::AI::RelatedKnowledgeBaseAnswers::EmbeddingCache)
           .to have_received(:store).with(ticket:, embedding_source: :auto, locale:, embedding:)
       end
@@ -71,7 +68,7 @@ RSpec.describe TicketAIRelatedKnowledgeBaseAnswersEmbedJob, :aggregate_failures,
     it 'embeds the summary and never the content' do
       perform
 
-      expect(Service::AI::Ticket::EmbedSummary).to have_received(:execute).with(ticket:, locale:, current_user:, feature_identifier:)
+      expect(Service::AI::Ticket::EmbedSummary).to have_received(:execute).with(ticket:, locale:, current_user:)
       expect(Service::AI::Ticket::EmbedContent).not_to have_received(:execute)
       expect(Service::Ticket::AI::RelatedKnowledgeBaseAnswers::EmbeddingCache)
         .to have_received(:store).with(ticket:, embedding_source: :summary, locale:, embedding:)
