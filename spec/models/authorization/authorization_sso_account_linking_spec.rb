@@ -132,8 +132,8 @@ RSpec.describe Authorization, :aggregate_failures, type: :model do
         Setting.set('auth_microsoft_office365_credentials', { 'require_verified_email_domain' => true })
       end
 
-      context 'when xms_edov is true' do
-        let(:extra) { { 'id_token_claims' => { 'xms_edov' => true } } }
+      context 'when xms_edov is true and the "email" claim matches' do
+        let(:extra) { { 'id_token_claims' => { 'xms_edov' => true, 'email' => victim_admin.email } } }
 
         include_examples 'links by verified email (legitimate behaviour)'
       end
@@ -148,6 +148,35 @@ RSpec.describe Authorization, :aggregate_failures, type: :model do
       # real-world case of a missing claim now blocks instead of allowing.
       context 'when xms_edov is absent (the realistic attack case)' do
         include_examples 'rejecting the takeover'
+      end
+
+      # "xms_edov" vouches for the ID token's "email" claim, but the address that
+      # gets linked comes from the Graph "/me" response ("info.email"). Both are
+      # controlled by the signing-in tenant, so an attacker with a genuinely
+      # verified address of their own must not be able to have it vouch for the
+      # victim's address (see Authorization::Provider::MicrosoftOffice365).
+      context 'when xms_edov is true but the "email" claim is a different address' do
+        let(:extra) { { 'id_token_claims' => { 'xms_edov' => true, 'email' => 'attacker@attacker-tenant.com' } } }
+
+        include_examples 'rejecting the takeover'
+      end
+
+      context 'when xms_edov is true but the "email" claim is absent' do
+        let(:extra) { { 'id_token_claims' => { 'xms_edov' => true } } }
+
+        include_examples 'rejecting the takeover'
+      end
+
+      context 'when xms_edov is true but the "email" claim is blank' do
+        let(:extra) { { 'id_token_claims' => { 'xms_edov' => true, 'email' => '' } } }
+
+        include_examples 'rejecting the takeover'
+      end
+
+      context 'when xms_edov is true and the "email" claim matches in a different case' do
+        let(:extra) { { 'id_token_claims' => { 'xms_edov' => true, 'email' => victim_admin.email.upcase } } }
+
+        include_examples 'links by verified email (legitimate behaviour)'
       end
     end
 
