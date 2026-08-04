@@ -1788,7 +1788,7 @@ Setting.create_if_not_exists(
           false => 'no',
         },
         translate: true,
-        help:      __('Requires the "xms_edov" ID token claim (along with the "email" claim) to be present and true before trusting an incoming email address for account auto-linking. Both must first be configured as optional claims on the Azure app registration. Until that is done, enabling this blocks all Microsoft 365 account auto-linking by email.'),
+        help:      __('Requires the "xms_edov" ID token claim to be true, and the "email" claim to match the incoming email address, before trusting that address for account auto-linking. Both claims must first be configured as optional claims on the Azure app registration. Until that is done, enabling this blocks all Microsoft 365 account auto-linking by email.'),
       },
       {
         display:  __('Your callback URL'),

@@ -29,12 +29,38 @@ class Authorization::Provider::MicrosoftOffice365 < Authorization::Provider
   # "require_verified_email_domain" field on auth_microsoft_office365_credentials
   # - once enabled, only an explicit "true" is accepted; a missing claim (the
   # common case in the wild, per the above) blocks linking instead of allowing it.
+  # Strict mode additionally requires the "email" claim to match the address that
+  # is about to be linked, see #claim_email_verified? below.
   def email_verified?
-    xms_edov = auth_hash.dig('extra', 'id_token_claims', 'xms_edov')
-    return truthy?(xms_edov) if strict_email_verification?
+    xms_edov = id_token_claims['xms_edov']
+
+    return truthy?(xms_edov) && claim_email_verified? if strict_email_verification?
     return true if xms_edov.nil?
 
     truthy?(xms_edov)
+  end
+
+  # "xms_edov" only vouches for the ID token's own "email" claim, while the address
+  # that is actually linked comes from the Graph "/me" response
+  # (OmniAuth::Strategies::MicrosoftOffice365 builds info.email from the tenant's
+  # "mail"/"userPrincipalName" attribute). Both are controlled by the signing-in
+  # tenant and can differ, so a verified claim address must not be mistaken for
+  # verification of a *different* address - otherwise strict mode could be satisfied
+  # with a genuinely verified claim email while linking to somebody else's account.
+  #
+  # This is only enforced in strict mode: there, the "email" optional claim is a
+  # documented prerequisite, so requiring it is safe. In default mode the claim is
+  # usually absent, and treating that as "no signal" (i.e. link, as before) is the
+  # deliberate non-breaking behaviour described above.
+  def claim_email_verified?
+    claim_email = id_token_claims['email']
+    return false if claim_email.blank?
+
+    claim_email.to_s.casecmp?(info['email'].to_s)
+  end
+
+  def id_token_claims
+    auth_hash.dig('extra', 'id_token_claims') || {}
   end
 
   def strict_email_verification?
