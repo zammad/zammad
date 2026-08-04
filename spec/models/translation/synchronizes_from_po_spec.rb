@@ -225,6 +225,10 @@ RSpec.describe Translation, 'synchronizes_from_po' do
 
     after :all do # rubocop:disable RSpec/BeforeAfterAll
       FileUtils.remove(Rails.root.join('i18n/testaddon.de-de.po'))
+
+      # The synchronization above runs outside of the example transaction, so it is committed.
+      # Remove the simulated addon entries again, otherwise they leak into other specs.
+      described_class.where(synchronized_from_translation_file: 'i18n/testaddon.de-de.po').delete_all
     end
 
     it 'adds many of them' do

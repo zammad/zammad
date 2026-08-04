@@ -39,7 +39,11 @@ RSpec.describe Service::Translation::Search do
       end
 
       context 'when case sensitive should match' do
-        let(:query) { Translation.last.source.downcase }
+        # Use an own record instead of an existing one, to not depend on the current database content.
+        let(:mixed_case_translation) do
+          create(:translation, locale: locale, source: "Existing #{SecureRandom.uuid}", target: 'Vorhanden', is_synchronized_from_codebase: true)
+        end
+        let(:query) { mixed_case_translation.source.downcase }
 
         it 'returns also with case insensitive a result' do
           expect(service_result[:items].count).to eq(2)
