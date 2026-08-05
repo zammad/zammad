@@ -436,7 +436,6 @@ class Selector::SearchIndex < Selector::Base
     if query_must_not.present?
       data[:bool][:must_not] = query_must_not
     end
-    Rails.logger.debug t.inspect
     data
   end
 
