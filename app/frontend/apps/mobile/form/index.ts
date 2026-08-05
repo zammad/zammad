@@ -59,7 +59,7 @@ export const initializeFormFields = () => {
   })
 
   initializeFieldLinkClasses({
-    container: 'formkit-link flex items-center py-2',
+    container: 'flex items-center py-2',
     base: 'border-white/10 ltr:border-l ltr:pl-1 rtl:border-r rtl:pr-1',
     link: 'h-10 w-12',
   })

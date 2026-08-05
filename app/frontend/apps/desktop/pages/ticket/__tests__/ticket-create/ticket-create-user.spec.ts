@@ -14,20 +14,9 @@ import { waitForUserAddMutationCalls } from '#shared/entities/user/graphql/mutat
 import type { FormUpdaterQuery } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
-import { initializeFormFields } from '#desktop/form/index.ts'
-
 import { handleMockFormUpdaterQuery, visitCreateView } from '../support/ticket-create-helpers.ts'
 
 describe('ticket create view - user create action', () => {
-  beforeAll(() => {
-    // Initialize the desktop form field classes like the real app does. The
-    // `formkit-link` marker class on the "Create new customer" link makes
-    // `useFormBlock` ignore clicks on it - without the class, the click also
-    // opens the customer_id autocomplete dropdown (500 ms debounced), which
-    // then steals the focus while we are typing into the flyout form.
-    initializeFormFields()
-  })
-
   beforeEach(() => {
     // Main form
     handleMockFormUpdaterQuery()

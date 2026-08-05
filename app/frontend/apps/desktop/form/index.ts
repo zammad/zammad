@@ -59,7 +59,7 @@ export const initializeFormFields = () => {
   })
 
   initializeFieldLinkClasses({
-    container: 'formkit-link min-h-10 flex items-center',
+    container: 'min-h-10 flex items-center',
     base: 'ms-2',
     link: 'w-min h-min min-h-min shrink-0 flex-nowrap items-center justify-center gap-x-1 border-0 font-normal shadow-none transition-transform duration-200 hover:outline-1 hover:outline-offset-1 hover:outline-blue-600 focus:outline-0 focus:hover:outline-1 focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 focus:active:scale-[95%] dark:hover:outline-blue-900 text-blue-800 hover:text-blue-850 dark:hover:text-blue-600 p-2 rounded-lg',
   })

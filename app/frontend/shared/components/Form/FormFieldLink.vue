@@ -34,7 +34,7 @@ const iconClassMap = {
 </script>
 
 <template>
-  <div v-if="link" :class="classMap.container">
+  <div v-if="link" class="formkit-link" :class="classMap.container">
     <div :class="classMap.base" class="flex h-full items-center focus:outline-hidden">
       <CommonLink
         v-tooltip="showLinkLabel ? undefined : $t(linkLabel)"
