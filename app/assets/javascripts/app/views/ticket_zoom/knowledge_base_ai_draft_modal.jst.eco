@@ -1,5 +1,5 @@
 <%# A failed generation replaces the suggestions: there is nothing left to confirm. %>
-<% showSuggestions = @suggestionsEnabled and not @generationError %>
+<% showSuggestions = @suggestionsSearchAvailable and not @generationError %>
 <% hasSuggestions  = showSuggestions and @suggestionsLoaded and not @suggestionsError and not _.isEmpty(@suggestions) %>
 
 <% if @generationError: %>
@@ -36,7 +36,9 @@
           <div class="task-text">
             <div class="horizontal justify-between center">
               <a class="name" href="<%- item.url %>"><%= item.title %></a>
-              <span class="text-muted"><%= item.score %>%</span>
+              <% if not _.isUndefined(item.score): %>
+                <span class="text-muted"><%= item.score %>%</span>
+              <% end %>
             </div>
             <% if item.excerpt: %>
               <span class="kb-answer-excerpt text-muted"><%= item.excerpt %></span>

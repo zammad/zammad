@@ -6328,10 +6328,52 @@ Setting.create_if_not_exists(
   area:        'AI::Assistance',
   description: __('Enable or disable AI generation of knowledge base answers from ticket content.'),
   options:     {},
-  state:       false,
+  state:       true,
   preferences: {
     authentication: true,
-    permission:     ['admin.ai_assistance_kb_answer_from_ticket_generation'],
+    permission:     ['admin.ai_knowledge_base'],
+  },
+  frontend:    true,
+)
+
+Setting.create_if_not_exists(
+  title:       __('AI Knowledge Base Answer Suggestions'),
+  name:        'ai_assistance_kb_answer_suggestions',
+  area:        'AI::Assistance',
+  description: __('Enable or disable the display of AI suggested knowledge base answers in the ticket sidebar.'),
+  options:     {},
+  state:       true,
+  preferences: {
+    authentication: true,
+    permission:     ['admin.ai_knowledge_base'],
+  },
+  frontend:    true,
+)
+
+Setting.create_if_not_exists(
+  title:       __('AI Knowledge Base Answer Suggestions Relevance Score'),
+  name:        'ai_assistance_kb_answer_suggestions_relevance_score',
+  area:        'AI::Assistance',
+  description: __('Defines the minimum relevance score (in percent) a knowledge base answer must reach to be suggested in the ticket sidebar.'),
+  options:     {
+    form: [
+      {
+        display: '',
+        null:    false,
+        name:    'ai_assistance_kb_answer_suggestions_relevance_score',
+        tag:     'integer',
+        min:     0,
+        max:     100,
+      },
+    ],
+  },
+  state:       86,
+  preferences: {
+    authentication: true,
+    permission:     ['admin.ai_knowledge_base'],
+    validations:    [
+      'Setting::Validation::AIRelevanceScore',
+    ],
   },
   frontend:    true,
 )
@@ -6357,6 +6399,9 @@ Setting.create_if_not_exists(
   description: __('Enable or disable the vector database, which is used for storing and retrieving vectorized data. Elasticsearch is used as the vector database backend.'),
   options:     {},
   state:       false,
+  preferences: {
+    validations: ['Setting::Validation::VectorDB'],
+  },
   frontend:    false,
 )
 

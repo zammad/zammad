@@ -1,0 +1,3 @@
+<div class="js-missingKnowledgeBaseAlert alert alert--warning">
+  <%- @T('Knowledge base is unavailable or not properly configured.') %>
+</div>

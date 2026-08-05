@@ -93,6 +93,40 @@ RSpec.describe 'Ticket zoom > Link knowledge base answer', type: :system do
     end
   end
 
+  describe 'AI suggestions with no results', authenticated_as: :authenticate do
+    let(:ticket) { create(:ticket, group: Group.find_by(name: 'Users')) }
+
+    def authenticate
+      setup_ai_provider('zammad_ai')
+
+      allow(Service::AI::VectorDB::Available).to receive(:execute).and_return(true)
+      # The knowledge base answer factory triggers the vector index callback, which must not reach
+      # Elasticsearch in this spec.
+      allow(Service::AI::VectorDB::Available).to receive(:execute).with(ping: false).and_return(false)
+      allow(Service::Ticket::AI::RelatedKnowledgeBaseAnswers)
+        .to receive(:execute).and_return({ answers: [], pending: false })
+
+      true
+    end
+
+    before do
+      # Force the Knowledge Base into existence up front, otherwise `kb_active` may still be false
+      # when the sidebar first renders and `.link_kb_answers` never mounts at all.
+      knowledge_base
+
+      wait_for_setting('ai_provider', true)
+      wait_for_setting('kb_active', true)
+
+      visit "#ticket/zoom/#{ticket.id}"
+    end
+
+    it 'shows an empty state message in the sidebar' do
+      within :active_content, '.link_kb_answers' do
+        expect(page).to have_text('No related knowledge base answers found.')
+      end
+    end
+  end
+
   describe 'Generate knowledge base answer from a ticket', authenticated_as: :authenticate do
     let(:ticket)      { create(:ticket, group: Group.find_by(name: 'Users')) }
     let(:translation) { published_answer.translations.first }
@@ -101,12 +135,12 @@ RSpec.describe 'Ticket zoom > Link knowledge base answer', type: :system do
     let(:resolved_search) { { answers: [{ translation:, score: 0.88 }], pending: false } }
 
     # Consecutive return values for the (stubbed) suggestions search; the last one repeats.
-    let(:search_results) { [resolved_search] }
+    let(:search_results)      { [resolved_search] }
+    let(:suggestions_enabled) { true }
 
     def authenticate
-      Setting.set('ai_assistance_kb_answer_from_ticket_generation', true)
-
       setup_ai_provider('zammad_ai')
+      Setting.set('ai_assistance_kb_answer_suggestions', suggestions_enabled)
 
       allow(Service::AI::VectorDB::Available).to receive(:execute).and_return(true)
       allow(Service::AI::VectorDB::Available).to receive(:execute).with(ping: false).and_return(false)
@@ -155,6 +189,28 @@ RSpec.describe 'Ticket zoom > Link knowledge base answer', type: :system do
       end
 
       expect(page).to have_text('A related knowledge base answer is being generated. You will be notified once the draft is ready.')
+    end
+
+    context 'when suggestions in the ticket sidebar are disabled' do
+      let(:suggestions_enabled) { false }
+
+      it 'still checks for duplicate answers in the generation modal' do
+        within :active_content, '.link_kb_answers' do
+          expect(page).to have_no_text('Suggested by AI')
+          expect(Service::Ticket::AI::RelatedKnowledgeBaseAnswers).not_to have_received(:execute)
+
+          find('.js-kb-ai-generate').click
+        end
+
+        in_modal do
+          expect(page)
+            .to have_text('Generate knowledge base answer from this ticket')
+            .and(have_text(translation.title))
+            .and(have_text(translation.content.body_excerpt))
+        end
+
+        expect(Service::Ticket::AI::RelatedKnowledgeBaseAnswers).to have_received(:execute).once
+      end
     end
 
     context 'when the generation request fails' do

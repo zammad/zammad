@@ -12,7 +12,7 @@ import { getKnowledgeBaseAnswerLink } from './utils/knowledgeBaseAnswerLink.ts'
 
 import type { RelatedAnswer } from './types.ts'
 
-interface Props {
+export interface Props {
   targetType: string
   answers: RelatedAnswer[]
   loading: boolean
@@ -20,6 +20,7 @@ interface Props {
   hasError: boolean
   errorDetail: string | null
   isTicketEditable: boolean
+  showRelevanceScore: boolean
 }
 
 const props = defineProps<Props>()
@@ -63,8 +64,7 @@ const { linkAnswer } = useKnowledgeBaseAnswerLinks(ticketId.value, props.targetT
         :translation="answer.translation"
         :link="getKnowledgeBaseAnswerLink(answer.translation)"
       >
-        <!-- :TODO will be only shown to a user who is admin and has permission to activate AI feature, upcoming story-->
-        <template #link-trailing>
+        <template v-if="showRelevanceScore" #link-trailing>
           <CommonLabel
             v-tooltip.supportive="$t('Relevance score')"
             size="small"

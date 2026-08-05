@@ -136,13 +136,6 @@ class ProviderConnections extends App.ControllerAIFeatureBase
   # Provider Connections is where connections are set up, so the alert would be redundant here.
   showAlert: -> false
 
-  renderMissingEmbeddingProviderAlert: =>
-    @el.find('.js-missingEmbeddingProviderAlert').remove()
-    return if not App.AIProviderConnection.count() or _.some(App.AIProviderConnection.all(), (connection) -> connection.default_embedding)
-
-    @el.find('.page-content').prepend(App.view('ai/missing_embedding_provider_alert')())
-    @refreshElements()
-
   show: (params) =>
     for key, value of params
       if key isnt 'el' && key isnt 'shown' && key isnt 'match'

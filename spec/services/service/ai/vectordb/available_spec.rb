@@ -13,18 +13,17 @@ RSpec.describe Service::AI::VectorDB::Available do
 
   context 'when the vector database is enabled' do
     before do
+      setup_ai_provider('zammad_ai')
       Setting.set('vectordb_enabled', true)
     end
 
     it 'returns false' do
+      allow_any_instance_of(AI::VectorDB).to receive(:ping?).and_return(false)
+
       expect(service_result).to be_falsey
     end
 
     context 'when the AI provider is configured' do
-      before do
-        setup_ai_provider('zammad_ai')
-      end
-
       context 'with ping enabled' do
         it 'returns true' do
           allow_any_instance_of(AI::VectorDB).to receive(:ping?).and_return(:ping)

@@ -102,7 +102,7 @@ const {
   enabled: isKbActive,
 })
 
-const { showAiSuggestedAnswers } = useAiSuggestedAnswersAvailability()
+const { showAiSuggestedAnswers, showRelevanceScore } = useAiSuggestedAnswersAvailability()
 
 const {
   answers: aiSuggestedAnswers,
@@ -168,6 +168,7 @@ const {
         :is-link-list-loading="isKnowledgeBaseLinkListLoading"
         :show-ai-suggested-answers="showAiSuggestedAnswers"
         :ai-suggested-answers="aiSuggestedAnswers"
+        :show-relevance-score="showRelevanceScore"
         :is-ai-suggested-answers-loading="isAiSuggestedAnswersLoading"
         :is-ai-suggested-answers-pending="isAiSuggestedAnswersPending"
         :has-ai-suggested-answers-error="hasAiSuggestedAnswersError"

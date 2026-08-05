@@ -248,7 +248,11 @@ describe('TicketSidebarInformationContent', () => {
 
     it('shows AI-suggested answers on a non-editable ticket with no linked answers', async () => {
       mockPermissions(['ticket.agent', 'knowledge_base.reader'])
-      mockApplicationConfig({ kb_active: true, ai_provider: true })
+      mockApplicationConfig({
+        kb_active: true,
+        ai_provider: true,
+        ai_assistance_kb_answer_suggestions: true,
+      })
       mockLinkListQuery({ linkList: [] })
       mockTicketAiRelatedKnowledgeBaseAnswersQuery({
         ticketAIRelatedKnowledgeBaseAnswers: {

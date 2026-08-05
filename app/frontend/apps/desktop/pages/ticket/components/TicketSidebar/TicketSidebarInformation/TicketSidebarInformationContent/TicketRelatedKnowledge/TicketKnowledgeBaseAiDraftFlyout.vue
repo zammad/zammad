@@ -28,7 +28,7 @@ const {
   errorMessage: draftGenerationError,
 } = useTicketAiAssistanceEnqueueKnowledgeBaseAnswer(props.ticketId, props.name)
 
-const { showAiSuggestedAnswers } = useAiSuggestedAnswersAvailability()
+const { showAiSuggestedAnswers, showRelevanceScore } = useAiSuggestedAnswersAvailability()
 
 const isSuggestedAnswersListVisible = computed(
   () => showAiSuggestedAnswers.value && props.activeSidebar() === 'information',
@@ -115,6 +115,7 @@ const { answers, loading, pending, hasError, errorDetail, retrySearch } =
                   v-for="answer in answers"
                   :key="answer.translation.id"
                   :answer="answer"
+                  :show-relevance-score="showRelevanceScore"
                 />
               </ul>
             </div>

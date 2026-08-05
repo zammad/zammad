@@ -102,7 +102,10 @@ describe('TicketKnowledgeBaseActions', () => {
     beforeEach(() => {
       vi.clearAllMocks()
       mockPermissions(['ticket.agent', 'knowledge_base.editor'])
-      mockApplicationConfig({ ai_provider: true })
+      mockApplicationConfig({
+        ai_provider: true,
+        ai_assistance_kb_answer_suggestions: true,
+      })
     })
 
     it('opens the AI draft flyout with the suggested answers on click', async () => {

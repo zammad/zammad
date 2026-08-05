@@ -32,6 +32,8 @@
   <% else if @suggestionsError: %>
     <p class="text-muted"><%- @T('The suggestions could not be generated.') %></p>
     <button type="button" class="btn btn--text js-kb-suggestions-retry"><%- @T('Retry') %></button>
+  <% else if @suggestions.length is 0: %>
+    <p class="text-muted"><%- @T('No related knowledge base answers found.') %></p>
   <% else: %>
     <ol class="tasks tasks--standalone">
       <% for item in @suggestions: %>
@@ -42,11 +44,13 @@
           <div class="task-text">
             <div class="horizontal justify-between center">
               <a class="name kb-answer-popover" data-id="<%- item.id %>" href="<%- item.url %>"><%= item.title %></a>
-              <span class="text-muted"><%= item.score %>%</span>
+              <% if not _.isUndefined(item.score): %>
+                <span class="task-addon" title="<%- @Tp('Relevance score') %>"><%= item.score %>%</span>
+              <% end %>
             </div>
           </div>
           <% if @editable: %>
-            <a class="list-item-delete list-item-add js-kb-suggestion-add" data-object-id="<%= item.id %>" title="<%- @Ti('Link') %>">
+            <a class="task-addon list-item-add js-kb-suggestion-add" data-object-id="<%= item.id %>" title="<%- @Tp('Link') %>">
               <%- @Icon('plus') %>
             </a>
           <% end %>

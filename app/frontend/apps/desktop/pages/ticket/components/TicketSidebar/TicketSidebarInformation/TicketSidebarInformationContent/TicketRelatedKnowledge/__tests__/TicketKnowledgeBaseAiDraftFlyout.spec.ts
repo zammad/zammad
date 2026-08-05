@@ -87,9 +87,12 @@ describe('TicketKnowledgeBaseAiDraftFlyout', () => {
 
   beforeEach(() => {
     vi.clearAllMocks()
-    mockPermissions(['ticket.agent', 'knowledge_base.editor'])
+    mockPermissions(['ticket.agent', 'knowledge_base.editor', 'admin.ai_knowledge_base'])
     // The sidebar list is visible, so it owns the live search (see the query wiring below).
-    mockApplicationConfig({ ai_provider: true })
+    mockApplicationConfig({
+      ai_provider: true,
+      ai_assistance_kb_answer_suggestions: true,
+    })
   })
 
   it('shows the header title', async () => {
@@ -354,5 +357,15 @@ describe('TicketKnowledgeBaseAiDraftFlyout', () => {
         'Before creating a new knowledge base answer, please check whether an existing answer already covers the solution for this ticket.',
       ),
     ).not.toBeInTheDocument()
+  })
+
+  it('hides relevance score when the user does not have the right permissions', async () => {
+    mockPermissions(['ticket.agent', 'knowledge_base.reader'])
+
+    mockSuggestedAnswers([relatedAnswer(1, 'Reset your password', 0.88)])
+
+    const wrapper = renderFlyout()
+
+    expect(wrapper.queryByText('88%')).not.toBeInTheDocument()
   })
 })

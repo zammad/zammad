@@ -16,6 +16,12 @@ class App.ControllerAIFeatureBase extends App.ControllerSubContent
       force: false
     )
 
+    if @permissionCheck('admin.ai_provider')
+      App.AIProviderConnection.fetchFull(
+        => @renderMissingEmbeddingProviderAlert()
+        force: false
+      )
+
     @controllerBind('config_update', @aiProviderHasChanged)
 
   showAlert: ->
@@ -57,6 +63,13 @@ class App.ControllerAIFeatureBase extends App.ControllerSubContent
     return if config.name isnt 'ai_provider'
 
     @renderAlert()
+
+  renderMissingEmbeddingProviderAlert: =>
+    @el.find('.js-missingEmbeddingProviderAlert').remove()
+    return if not App.AIProviderConnection.count() or _.some(App.AIProviderConnection.all(), (connection) -> connection.default_embedding)
+
+    @el.find('.page-content').prepend(App.view('ai/missing_embedding_provider_alert')())
+    @refreshElements()
 
   legalInformation: (e) =>
     e.preventDefault()

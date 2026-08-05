@@ -21,12 +21,21 @@ class App.WidgetLinkKbAnswer extends App.WidgetLink
     # example the one-click link on a suggestion), so seed it here rather than in getAjaxAttributes.
     @apiPath = App.Config.get('api_path')
 
-    return if !@suggestionsEnabled()
+    @controllerBind('config_update', (data) =>
+      return if data.name not in ['ai_assistance_kb_answer_suggestions', 'ai_assistance_kb_answer_from_ticket_generation']
+
+      @render()
+      @ensureSuggestions() if @suggestionsVisible()
+    )
+
+    return if !@suggestionsSearchAvailable()
 
     # Ping when the embedding settled: on success re-run the (synchronous) search; on failure the job
     # reports an error flag (the old stack only shows a generic message, no cache is involved).
     @controllerBind('ticket::related_knowledge_base_answers::ping', (data) =>
       return if data.ticket_id?.toString() isnt @object.id.toString()
+
+      return if !@suggestionsVisible() and !@aiDraftModal
 
       if data.error
         @suggestions       = []
@@ -48,7 +57,7 @@ class App.WidgetLinkKbAnswer extends App.WidgetLink
       return if articleIds is @lastArticleIds
 
       @lastArticleIds = articleIds
-      @requestSuggestions()
+      @requestSuggestions() if @suggestionsVisible() or @aiDraftModal
     )
 
     @requestSuggestions() if @suggestionsVisible()
@@ -84,19 +93,16 @@ class App.WidgetLinkKbAnswer extends App.WidgetLink
       .filter (elem) ->
         elem?
 
-  suggestionsEnabled: =>
+  suggestionsSearchAvailable: =>
     App.Config.get('ai_provider') and App.Config.get('kb_active') and @object?.currentView?() is 'agent'
 
-  # Whether the sidebar list is shown. The search itself stays available for the AI draft modal either
-  # way, which is what lets the modal run it on its own once the list is hidden.
   suggestionsVisible: =>
-    # :TODO add missing setting (see useAiSuggestedAnswersAvailability in the desktop app)
-    @suggestionsEnabled()
+    @suggestionsSearchAvailable() and App.Config.get('ai_assistance_kb_answer_suggestions')
 
   currentArticleIds: ->
     (App.Ticket.find(@object.id)?.article_ids or []).join(',')
 
-  suggestionsForRendering: ->
+  suggestionsForRendering: (showScore = false) ->
     (@suggestions or [])
       .map (id) =>
         if translation = App.KnowledgeBaseAnswerTranslation.fullLocal(id)
@@ -107,7 +113,7 @@ class App.WidgetLinkKbAnswer extends App.WidgetLink
           title:       translation.title
           id:          translation.id
           url:         translation.uiUrl()
-          score:       Math.round((@suggestionScores?[id] or 0) * 100)
+          score:       if showScore then ((@suggestionScores?[id] or 0) * 100).toFixed() else undefined
           excerpt:     @suggestionExcerpts?[id] or ''
           publishedAt: answer?.published_at
           internalAt:  answer?.internal_at
@@ -120,13 +126,17 @@ class App.WidgetLinkKbAnswer extends App.WidgetLink
         elem?
 
   suggestionsState: =>
-    suggestionsEnabled: @suggestionsEnabled()
-    suggestions:        @suggestionsForRendering()
-    suggestionsLoaded:  @suggestionsLoaded
-    suggestionsError:   @suggestionsError
+    showScore = App.User.current()?.permission('admin.ai_provider,admin.ai_knowledge_base')
+
+    {
+      suggestionsSearchAvailable: @suggestionsSearchAvailable()
+      suggestions:                @suggestionsForRendering(showScore)
+      suggestionsLoaded:          @suggestionsLoaded
+      suggestionsError:           @suggestionsError
+    }
 
   ensureSuggestions: =>
-    return if !@suggestionsEnabled()
+    return if !@suggestionsSearchAvailable()
     return if @suggestionsRequested
 
     @requestSuggestions()
@@ -210,6 +220,8 @@ class App.WidgetLinkKbAnswer extends App.WidgetLink
       App.Config.get('ai_provider') &&
       user?.permission('ticket.agent+knowledge_base.editor')
 
+    showScore = user?.permission('admin.ai_provider,admin.ai_knowledge_base')
+
     @html App.view('link/kb_answer')(
       list:               @linksForRendering()
       editable:           @editable
@@ -217,7 +229,7 @@ class App.WidgetLinkKbAnswer extends App.WidgetLink
       suggestionsEnabled: @suggestionsVisible()
       suggestionsLoaded:  @suggestionsLoaded
       suggestionsError:   @suggestionsError
-      suggestions:        @suggestionsForRendering()
+      suggestions:        @suggestionsForRendering(showScore)
     )
 
     @renderPopovers()

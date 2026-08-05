@@ -21,11 +21,8 @@ class Service::KnowledgeBase::Answer::SimilaritySearch < Service::Base
   # enough for typical (1–few chunk) answers; raise it if chunk-heavy answers under-fill the limit.
   CANDIDATE_FACTOR = 6
 
-  # Minimum relevance to surface a result. A vector search always returns its nearest neighbours, so
-  # without a floor we would always show something, even for unrelated tickets. Elasticsearch maps
-  # cosine similarity to (1 + cos) / 2 in 0..1 (so ~0.5 means "unrelated"); this is a starting value
-  # that should be tuned against the embedding model in use.
-  MINIMUM_SCORE = 0.81
+  # Fallback for the configurable relevance floor below, for the case the setting holds no value.
+  DEFAULT_RELEVANCE_SCORE = 86
 
   attr_reader :embedding, :limit, :locale, :excluded_answer_ids
 
@@ -91,12 +88,24 @@ class Service::KnowledgeBase::Answer::SimilaritySearch < Service::Base
       .map { |translation| { translation:, score: scores[translation.id] } }
   end
 
+  # Minimum relevance to surface a result. A vector search always returns its nearest neighbours, so
+  # without a floor we would always show something, even for unrelated tickets. Elasticsearch maps
+  # cosine similarity to (1 + cos) / 2 in 0..1 (so ~0.5 means "unrelated"), while admins configure
+  # the threshold in percent — hence the conversion.
+  def minimum_score
+    @minimum_score ||= begin
+      configured = Setting.get('ai_assistance_kb_answer_suggestions_relevance_score')
+
+      (configured.presence || DEFAULT_RELEVANCE_SCORE).to_i / 100.0
+    end
+  end
+
   # Multiple chunks of the same translation can match; keep the best score per translation and drop
   # anything below the relevance floor.
   def best_scores_per_translation(hits)
     hits.each_with_object({}) do |hit, memo|
       score = hit['_score'].to_f
-      next if score < MINIMUM_SCORE
+      next if score < minimum_score
 
       id = hit.dig('_source', 'object_id').to_i
 

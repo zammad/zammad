@@ -14,9 +14,13 @@ export const useAiSuggestedAnswersAvailability = () => {
     () =>
       hasPermission('knowledge_base.*') &&
       hasPermission('ticket.agent') &&
-      Boolean(config.value.ai_provider),
-    // :TODO add missing setting
+      Boolean(config.value.ai_provider) &&
+      Boolean(config.value.ai_assistance_kb_answer_suggestions),
   )
 
-  return { showAiSuggestedAnswers }
+  const showRelevanceScore = computed(() =>
+    hasPermission(['admin.ai_provider', 'admin.ai_knowledge_base']),
+  )
+
+  return { showAiSuggestedAnswers, showRelevanceScore }
 }

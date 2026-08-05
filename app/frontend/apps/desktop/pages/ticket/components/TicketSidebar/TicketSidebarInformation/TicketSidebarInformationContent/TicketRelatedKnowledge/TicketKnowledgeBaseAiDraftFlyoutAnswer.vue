@@ -11,6 +11,7 @@ import type { RelatedAnswer } from './types.ts'
 
 interface Props {
   answer: RelatedAnswer
+  showRelevanceScore: boolean
 }
 
 defineProps<Props>()
@@ -45,8 +46,8 @@ defineProps<Props>()
         />
       </CommonLink>
 
-      <!-- :TODO will be only shown to a user who is admin and has permission to activate AI feature, upcoming story-->
       <CommonLabel
+        v-if="showRelevanceScore"
         v-tooltip.supportive="$t('Relevance score')"
         size="small"
         class="shrink-0 text-stone-200! dark:text-neutral-500!"

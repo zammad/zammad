@@ -18,12 +18,13 @@ import TicketNewKnowledgeBaseAnswer from './TicketRelatedKnowledge/TicketNewKnow
 
 import type { RelatedAnswer } from './TicketRelatedKnowledge/types.ts'
 
-interface Props {
+export interface Props {
   linkedAnswers: KnowledgeBaseAnswerTranslationFragment[]
   linkedAnswerIds: string[]
   targetType: string
   isLinkListLoading?: boolean
   showAiSuggestedAnswers: boolean
+  showRelevanceScore: boolean
   aiSuggestedAnswers: RelatedAnswer[]
   isAiSuggestedAnswersLoading: boolean
   isAiSuggestedAnswersPending: boolean
@@ -76,6 +77,7 @@ const showAIKnowledgeBaseDraft = computed(
           :has-error="hasAiSuggestedAnswersError"
           :error-detail="aiSuggestedAnswersErrorDetail"
           :is-ticket-editable="isTicketEditable"
+          :show-relevance-score="showRelevanceScore"
           @retry="$emit('retry-ai-suggested-answers-search')"
         />
       </div>

@@ -82,13 +82,52 @@ RSpec.describe Service::KnowledgeBase::Answer::SimilaritySearch, :aggregate_fail
       expect(service).to eq([{ translation:, score: 0.95 }])
     end
 
-    it 'ignores hits below the minimum score' do
+    it 'ignores hits below the configured relevance score' do
       stub_search([
-                    hit(answer_1.translations.first, described_class::MINIMUM_SCORE),
-                    hit(answer_2.translations.first, described_class::MINIMUM_SCORE - 0.1),
+                    hit(answer_1.translations.first, described_class::DEFAULT_RELEVANCE_SCORE / 100.0),
+                    hit(answer_2.translations.first, (described_class::DEFAULT_RELEVANCE_SCORE - 10) / 100.0),
                   ])
 
       expect(service.pluck(:translation)).to eq([answer_1.translations.first])
+    end
+
+    context 'when the configured relevance score is lowered' do
+      before { Setting.set('ai_assistance_kb_answer_suggestions_relevance_score', 70) }
+
+      it 'also surfaces the previously dropped hits' do
+        stub_search([
+                      hit(answer_1.translations.first, 0.85),
+                      hit(answer_2.translations.first, 0.75),
+                    ])
+
+        expect(service.pluck(:translation)).to contain_exactly(answer_1.translations.first, answer_2.translations.first)
+      end
+    end
+
+    context 'when the configured relevance score is raised' do
+      before { Setting.set('ai_assistance_kb_answer_suggestions_relevance_score', 95) }
+
+      it 'drops hits which passed the default threshold' do
+        stub_search([
+                      hit(answer_1.translations.first, 0.98),
+                      hit(answer_2.translations.first, 0.86),
+                    ])
+
+        expect(service.pluck(:translation)).to eq([answer_1.translations.first])
+      end
+    end
+
+    context 'when the relevance score setting holds no value' do
+      before { Setting.set('ai_assistance_kb_answer_suggestions_relevance_score', nil, validate: false) }
+
+      it 'falls back to the default threshold' do
+        stub_search([
+                      hit(answer_1.translations.first, described_class::DEFAULT_RELEVANCE_SCORE / 100.0),
+                      hit(answer_2.translations.first, (described_class::DEFAULT_RELEVANCE_SCORE - 10) / 100.0),
+                    ])
+
+        expect(service.pluck(:translation)).to eq([answer_1.translations.first])
+      end
     end
   end
 

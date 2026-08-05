@@ -52,7 +52,7 @@ export const useKnowledgeBaseAiSuggestedAnswers = (
     () =>
       search.value?.answers?.map((answer) => {
         const updatedAnswer = cloneDeep(answer)
-        updatedAnswer.score = Math.round(updatedAnswer.score * 100)
+        updatedAnswer.score = Number((updatedAnswer.score * 100).toFixed())
 
         return updatedAnswer
       }) ?? [],

@@ -8,16 +8,15 @@ import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
 
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
-import {
-  EnumKnowledgeBaseVisibility,
-  type KnowledgeBaseAnswerTranslationFragment,
-} from '#shared/graphql/types.ts'
+import { EnumKnowledgeBaseVisibility } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
 import { TICKET_KEY } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
 import { TICKET_SIDEBAR_SYMBOL } from '#desktop/pages/ticket/composables/useTicketSidebar.ts'
 
-import TicketRelatedKnowledge from '../TicketSidebarInformationContent/TicketRelatedKnowledge.vue'
+import TicketRelatedKnowledge, {
+  type Props,
+} from '../TicketSidebarInformationContent/TicketRelatedKnowledge.vue'
 
 // The detailed behavior of the pieces this component wires together (AI draft generation, AI
 //   suggestions, the answer picker, linked answers) is covered by the co-located sub-component
@@ -33,17 +32,14 @@ const enableKnowledgeBaseAi = () => {
   mockApplicationConfig({
     kb_active: true,
     ai_provider: true,
+    ai_assistance_kb_answer_suggestions: true,
     ai_assistance_kb_answer_from_ticket_generation: true,
   })
 }
 
 const renderRelatedKnowledge = (
-  props: {
+  props: Partial<Props> & {
     isTicketEditable?: boolean
-    linkedAnswers?: KnowledgeBaseAnswerTranslationFragment[]
-    linkedAnswerIds?: string[]
-    targetType?: string
-    showAiSuggestedAnswers?: boolean
   } = {},
 ) => {
   const { isTicketEditable = true, ...componentProps } = props
@@ -54,6 +50,7 @@ const renderRelatedKnowledge = (
       linkedAnswerIds: [],
       targetType: TARGET_TYPE,
       showAiSuggestedAnswers: false,
+      showRelevanceScore: false,
       aiSuggestedAnswers: [],
       isAiSuggestedAnswersLoading: false,
       isAiSuggestedAnswersPending: false,

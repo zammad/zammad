@@ -236,6 +236,8 @@ RSpec.describe SystemReport, current_user_id: 1, type: :model do
           'ai_assistance_ticket_summary_selector',
           'ai_assistance_text_tools_fixed_instructions',
           'ai_assistance_kb_answer_from_ticket_generation',
+          'ai_assistance_kb_answer_suggestions',
+          'ai_assistance_kb_answer_suggestions_relevance_score',
           'ai_provider',
           'ui_richtext_bubble_menu',
           'ui_desktop_beta_switch_admin_menu',

@@ -1,0 +1,50 @@
+<div class="page-header">
+  <div class="page-header-title">
+    <div class="zammad-switch zammad-switch--small js-vectordbEnabledSetting">
+      <input name="enableVectordb" type="checkbox" id="enableVectordb" <% if @vectordbEnabled: %>checked<% end %>>
+      <label for="enableVectordb"></label>
+    </div>
+    <h1><%- @T(@header) %><small></small></h1>
+  </div>
+  <div class="page-header-meta">
+    <% if @buttons: %>
+      <% for button in @buttons: %>
+        <a data-type="<%= button['data-type'] %>" class="btn <%= button.class %>" href="<%= button.href %>"><%- @T(button.name) %></a>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+
+<div class="page-content">
+  <p><%- @T(@description) %></p>
+
+  <h2><%- @T('AI Knowledge Base Services') %></h2>
+
+  <div class="ai-assistance-services">
+    <% for option in @serviceOptions: %>
+      <div class="checkbox checkbox--service">
+        <label class="inline-label checkbox-replacement">
+          <input type="checkbox" name="<%= option.key %>" value="true" <% if option.active: %>checked<% end %>>
+          <%- @Icon('checkbox', 'icon-unchecked') %>
+          <%- @Icon('checkbox-checked', 'icon-checked') %>
+          <span class="label-text"><%- @T(option.name) %></span>
+        </label>
+        <span class="help-text"><%- @T(option.description) %></span>
+      </div>
+    <% end %>
+  </div>
+
+  <div>
+    <h2 id="relevance-score-threshold-label"><%- @T('Relevance score threshold') %></h2>
+
+    <form class="js-kbAnswerSuggestionsRelevanceScore">
+      <div class="horizontal start">
+        <div class="form-item">
+          <div class="js-kbAnswerSuggestionsRelevanceScoreInput"></div>
+          <span class="help-block"><%- @T('Only answers reaching this relevance score are included in the list of suggestions.') %></span>
+        </div>
+        <button type="submit" class="btn btn--primary"><%- @T('Submit') %></button>
+      </div>
+    </form>
+  </div>
+</div>

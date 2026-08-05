@@ -69,4 +69,4 @@ class App.TicketZoomKnowledgeBaseAiDraftModal extends App.ControllerModal
 
     state = @suggestionsState()
 
-    state.suggestionsEnabled and !state.suggestionsLoaded
+    state.suggestionsSearchAvailable and !state.suggestionsLoaded

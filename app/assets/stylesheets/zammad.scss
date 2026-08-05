@@ -4939,6 +4939,11 @@ footer {
       @include bidi-style(margin-right, 4px, margin-left, 0);
     }
   }
+
+  .task-addon {
+    color: var(--text-muted);
+    font-size: 13px;
+  }
 }
 
 .tasks--standalone .task-text {
@@ -9046,6 +9051,7 @@ a.list-group-item.active > .badge,
   white-space: nowrap;
 }
 
+.list-item-add,
 .list-item-delete {
   padding: 0 10px;
 
@@ -9069,10 +9075,12 @@ a.list-group-item.active > .badge,
   fill: hsl(1, 77%, 47%);
 }
 
-// Same icon-button style as .list-item-delete (geometry + muted default), but a positive green
-// hover colour instead of the destructive red — used to link an AI-suggested knowledge base answer.
-.list-item-add:hover .icon {
-  fill: var(--supergood-color);
+.list-item-add:hover {
+  color: var(--supergood-color) !important;
+
+  .icon {
+    fill: var(--supergood-color);
+  }
 }
 
 // Separate the "Suggested by AI" section from the "+ Link" / "+ AI draft" controls above it.

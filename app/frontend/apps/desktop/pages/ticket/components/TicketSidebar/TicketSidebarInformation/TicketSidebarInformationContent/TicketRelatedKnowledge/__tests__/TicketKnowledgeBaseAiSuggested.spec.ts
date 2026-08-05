@@ -7,7 +7,9 @@ import renderComponent from '#tests/support/components/renderComponent.ts'
 import { EnumKnowledgeBaseVisibility } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
-import TicketKnowledgeBaseAiSuggested from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiSuggested.vue'
+import TicketKnowledgeBaseAiSuggested, {
+  type Props,
+} from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiSuggested.vue'
 import { TICKET_KEY } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
 import {
   mockLinkAddMutation,
@@ -21,16 +23,7 @@ const ticketId = convertToGraphQLId('Ticket', 1)
 
 const TARGET_TYPE = 'KnowledgeBase::Answer::Translation'
 
-const renderSuggestions = (
-  props: Partial<{
-    answers: RelatedAnswer[]
-    loading: boolean
-    pending: boolean
-    hasError: boolean
-    errorDetail: string | null
-    isTicketEditable: boolean
-  }> = {},
-) =>
+const renderSuggestions = (props: Partial<Props> = {}) =>
   renderComponent(TicketKnowledgeBaseAiSuggested, {
     props: {
       targetType: TARGET_TYPE,
@@ -40,6 +33,7 @@ const renderSuggestions = (
       hasError: false,
       errorDetail: null,
       isTicketEditable: true,
+      showRelevanceScore: false,
       ...props,
     },
     provide: [
@@ -218,5 +212,27 @@ describe('TicketKnowledgeBaseAiSuggested', () => {
     expect(
       wrapper.queryByRole('button', { name: 'Link knowledge base answer' }),
     ).not.toBeInTheDocument()
+  })
+
+  it('shows the relevance score when the user has the right permissions', async () => {
+    const wrapper = renderSuggestions({
+      answers: [relatedAnswer(1, 'Reset your password', 75)],
+      showRelevanceScore: true,
+    })
+
+    await wrapper.findByText('Reset your password')
+
+    expect(wrapper.getByText('75%')).toBeInTheDocument()
+  })
+
+  it('hides the relevance score when the user does not have the right permissions', async () => {
+    const wrapper = renderSuggestions({
+      answers: [relatedAnswer(1, 'Reset your password', 75)],
+      showRelevanceScore: false,
+    })
+
+    await wrapper.findByText('Reset your password')
+
+    expect(wrapper.queryByText('75%')).not.toBeInTheDocument()
   })
 })
