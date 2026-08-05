@@ -212,15 +212,15 @@ returns
     ticket_auto_assignment_selector = Setting.get('ticket_auto_assignment_selector')
     return if ticket_auto_assignment_selector.blank?
 
-    condition = ticket_auto_assignment_selector[:condition].merge(
-      'ticket.id' => {
-        'operator' => 'is',
-        'value'    => id,
-      }
+    ticket_count, tickets = Ticket.selectors(
+      ticket_auto_assignment_selector[:condition],
+      limit:        1,
+      current_user: user,
+      access:       'full',
+      ticket_id:    id,
     )
-
-    ticket_count, = Ticket.selectors(condition, limit: 1, current_user: user, access: 'full')
     return if ticket_count.to_i.zero?
+    return if tickets.take.id != id
 
     update!(owner: user)
   end
