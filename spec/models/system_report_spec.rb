@@ -152,6 +152,7 @@ RSpec.describe SystemReport, current_user_id: 1, type: :model do
           '0009_postmaster_filter_out_of_office_check',
           '0010_postmaster_filter_follow_up_assignment',
           '0011_postmaster_sender_based_on_reply_to',
+          '0012_postmaster_filter_attachment_reference_remove',
           '0018_postmaster_import_archive',
           '0014_postmaster_filter_own_notification_loop_detection',
           '0015_postmaster_filter_identify_session_user',

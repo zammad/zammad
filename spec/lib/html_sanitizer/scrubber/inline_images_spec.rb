@@ -78,6 +78,19 @@ RSpec.describe HtmlSanitizer::Scrubber::InlineImages do
         end
       end
 
+      context 'when uploaded image reference is surrounded by other content' do
+        let(:input)  { %(<img src="junk\n/api/v1/attachments/999999">) }
+        let(:target) { %r{<img src="junk\n/api/v1/attachments/999999">} }
+
+        it { is_expected.to match target }
+
+        it 'adds no attachment to scrubber' do
+          actual
+
+          expect(scrubber.attachments_inline).to be_blank
+        end
+      end
+
       context 'when upload failed' do
         let(:input)  { '<img src="blob:/api/v1/attachments/111">' }
         let(:target) { '' }
