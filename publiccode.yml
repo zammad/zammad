@@ -8,7 +8,7 @@ name: "Zammad"
 categories:
   - "help-desk"
 releaseDate: "2026-08-04"
-softwareVersion: "7.1.2"
+softwareVersion: "7.1.3"
 softwareType: "standalone/web"
 logo: "logo.svg"
 platforms:
