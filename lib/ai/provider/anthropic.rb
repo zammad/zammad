@@ -2,14 +2,22 @@
 
 class AI::Provider::Anthropic < AI::Provider
   include AI::Provider::Concerns::HasConfigurableModel
+  include AI::Provider::Concerns::HasModelsWithoutTemperatureFallback
 
   ANTHROPIC_API_BASE_URL = 'https://api.anthropic.com/v1'.freeze
 
   # default model also in app/assets/javascripts/app/lib/app_post/ai_provider/anthropic.coffee
   DEFAULT_OPTIONS = {
-    model:       'claude-sonnet-4-6',
-    max_tokens:  1024,
-    temperature: 0.0,
+    model:                      'claude-sonnet-4-6',
+    max_tokens:                 1024,
+    temperature:                0.0,
+    models_without_temperature: [
+      'claude-fable-5',
+      'claude-opus-4-7',
+      'claude-opus-4-8',
+      'claude-opus-5',
+      'claude-sonnet-5',
+    ],
   }.freeze
 
   def chat(prompt_system:, prompt_user:, prompt_image:)
@@ -92,6 +100,43 @@ class AI::Provider::Anthropic < AI::Provider
     validate_response!(response)
 
     nil
+  end
+
+  def self.check_temperature_support!(config)
+    response = UserAgent.post(
+      "#{ANTHROPIC_API_BASE_URL}/messages",
+      {
+        model:       config[:model] || DEFAULT_OPTIONS[:model],
+        max_tokens:  1,
+        messages:    [{ role: 'user', content: 'Hello' }],
+        temperature: DEFAULT_OPTIONS[:temperature],
+        stream:      false,
+      },
+      {
+        **REQUEST_TIMEOUT_OPTIONS,
+        verify_ssl: true,
+        headers:    headers(config),
+        json:       true,
+        log:        {
+          facility:          'AI::Provider',
+          log_only_on_error: true,
+        },
+      },
+    )
+
+    return true if response.success?
+
+    data  = JSON.parse(response.body.to_s)
+    error = data.is_a?(Hash) ? data['error'] : nil
+    return false if !error.is_a?(Hash)
+
+    # Anthropic's error body has no param/code fields like OpenAI's, so this matches on the
+    # error type plus the message mentioning temperature instead.
+    return false if error['type'] == 'invalid_request_error' && error['message'].to_s.downcase.include?('temperature')
+
+    raise error['message']
+  rescue => e
+    raise CheckTemperatureSupportError, e.message
   end
 
   def self.headers(config)

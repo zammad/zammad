@@ -2,6 +2,7 @@
 
 require 'rails_helper'
 require_relative 'shared_examples/ping'
+require_relative 'shared_examples/check_temperature_support'
 
 RSpec.describe AI::Provider::Anthropic, integration: true, required_envs: %w[ANTHROPIC_API_KEY], use_vcr: true do
   subject(:ai_provider) { described_class.new(options: { json_response: true }) }
@@ -23,6 +24,7 @@ RSpec.describe AI::Provider::Anthropic, integration: true, required_envs: %w[ANT
   end
 
   include_examples 'provider/ping!'
+  include_examples 'provider/check_temperature_support'
 
   context 'when specifying a model' do
     context 'without a model' do
