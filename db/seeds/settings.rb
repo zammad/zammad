@@ -4430,6 +4430,15 @@ Setting.create_if_not_exists(
 )
 Setting.create_if_not_exists(
   title:       __('Defines postmaster filter.'),
+  name:        '0012_postmaster_filter_attachment_reference_remove',
+  area:        'Postmaster::PreFilter',
+  description: __('Defines postmaster filter to remove references to local attachments from incoming emails.'),
+  options:     {},
+  state:       'Channel::Filter::AttachmentReferenceRemove',
+  frontend:    false
+)
+Setting.create_if_not_exists(
+  title:       __('Defines postmaster filter.'),
   name:        '0009_postmaster_filter_out_of_office_check',
   area:        'Postmaster::PreFilter',
   description: __('Defines postmaster filter to identify out-of-office emails for follow-up detection and keeping current ticket state.'),

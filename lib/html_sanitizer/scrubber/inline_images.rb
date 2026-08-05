@@ -19,7 +19,7 @@ class HtmlSanitizer
         case node['src']
         when %r{^(data:image/(jpg|jpeg|png);base64,.+?)$}i
           process_inline_image(node, $1)
-        when %r{^(?:/api/v1/attachments/)(\d+)$}
+        when %r{\A(?:/api/v1/attachments/)(\d+)\z}
           process_uploaded_image(node, $1)
         when %r{users/image/(.+)}
           process_user_avatar_image(node, $1)
