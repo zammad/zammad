@@ -31,28 +31,30 @@ class SessionTimeoutJob::Session
   end
 
   def timeout_user
-    @timeout_user ||= begin
-      permissions = user.permissions_with_child_names
-
-      result = -1
-      config.each do |key, value|
-        next if key == 'default'
-        next if permissions.exclude?(key)
-        next if value.to_i < result
-
-        result = value.to_i
-      end
-
-      if result < 1
-        result = config['default'].to_i
-      end
-
-      result
-    end
+    @timeout_user ||= self.class.timeout_for(user)
   end
 
-  def config
-    Setting.get('session_timeout')
+  # Highest session timeout (in seconds) across the user's permission groups,
+  # falling back to the configured default. Shared with SessionsController so
+  # OAuth/OIDC cookie lifetime can match the server-side session lifetime.
+  def self.timeout_for(user)
+    config      = Setting.get('session_timeout')
+    permissions = user.permissions_with_child_names
+
+    result = -1
+    config.each do |key, value|
+      next if key == 'default'
+      next if permissions.exclude?(key)
+      next if value.to_i < result
+
+      result = value.to_i
+    end
+
+    if result < 1
+      result = config['default'].to_i
+    end
+
+    result
   end
 
   def destroy

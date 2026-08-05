@@ -526,6 +526,27 @@ RSpec.describe 'Sessions endpoints', type: :request do
       expect { get '/auth/github/callback' }
         .to change { request&.session&.fetch(:persistent) }.to(true)
     end
+
+    # Without this the browser cookie is session-only, so the persistent server-side session
+    # becomes unreachable on browser restart. The cookie lifetime tracks the configured Session
+    # Timeout. See https://github.com/zammad/zammad/issues/6260
+    context 'with a configured session timeout' do
+      before { Setting.set('session_timeout', { 'default' => '0', 'ticket.agent' => 1.week.seconds.to_s }) }
+
+      it 'gives the browser cookie a lifetime matching the session timeout' do
+        expect { get '/auth/github/callback' }
+          .to change { request && request.env['rack.session.options'][:expire_after] }.to(1.week)
+      end
+    end
+
+    context 'when the session timeout is disabled' do
+      before { Setting.set('session_timeout', { 'default' => '0' }) }
+
+      it 'falls back to the SessionHelper.cleanup_expired cap' do
+        expect { get '/auth/github/callback' }
+          .to change { request && request.env['rack.session.options'][:expire_after] }.to(SessionHelper::MAX_SESSION_LIFETIME)
+      end
+    end
   end
 
   describe 'POST /auth/two_factor_itwo_factor_method_enablednitiate_authentication/:method' do

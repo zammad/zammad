@@ -1,6 +1,11 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module SessionHelper
+  # Idle window after which any session (persistent or not) is purged by .cleanup_expired.
+  # Note that this is measured from `updated_at`, so a session that keeps being used is never
+  # reaped by it; only sessions untouched for this long are.
+  MAX_SESSION_LIFETIME = 60.days
+
   def self.json_hash(user)
     collections, assets = default_collections(user)
     {
@@ -73,7 +78,7 @@ module SessionHelper
 
     # web sessions not updated the last x days
     ActiveRecord::SessionStore::Session
-      .where(updated_at: ...60.days.ago)
+      .where(updated_at: ...MAX_SESSION_LIFETIME.ago)
       .delete_all
   end
 
