@@ -78,4 +78,24 @@ RSpec.describe AI::Provider, '.check_temperature_support!' do
 
     include_examples 'a config validating temperature check'
   end
+
+  context 'with Anthropic' do
+    let(:provider) { AI::Provider::Anthropic }
+    let(:config)   { { token: 'sk-123' } }
+
+    include_examples 'a config validating temperature check'
+
+    # Anthropic's error body carries neither param nor code, so the base matcher would miss it.
+    it 'detects a rejected temperature without the param/code fields' do
+      stub_response(failed_response(400, {
+        type:  'error',
+        error: {
+          type:    'invalid_request_error',
+          message: 'temperature: Input should be less than or equal to 1',
+        },
+      }.to_json))
+
+      expect(provider.check_temperature_support!(config)).to be(false)
+    end
+  end
 end

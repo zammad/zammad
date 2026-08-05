@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
-require_relative 'shared_examples/ping'
+require_relative 'shared_examples/check_temperature_support'
 require_relative 'shared_examples/embed'
 
 RSpec.describe AI::Provider::Anthropic, integration: true, required_envs: %w[ANTHROPIC_API_KEY], use_vcr: true do
@@ -14,7 +14,7 @@ RSpec.describe AI::Provider::Anthropic, integration: true, required_envs: %w[ANT
     setup_ai_provider('anthropic', token: ENV['ANTHROPIC_API_KEY'])
   end
 
-  include_examples 'provider/ping!'
+  include_examples 'provider/check_temperature_support'
   include_examples 'provider/embed_not_implemented'
 
   describe '#ask' do

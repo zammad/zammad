@@ -7,9 +7,9 @@ RSpec.describe 'AI::ProviderConnection', :aggregate_failures, authenticated_as: 
 
   # Prevent real network calls from the provider_accessible validation.
   before do
-    # OpenAI validates the config in check_temperature_support!, the other two in ping!.
+    # OpenAI and Anthropic validate the config in check_temperature_support!, Ollama in ping!.
     allow(AI::Provider::OpenAI).to receive(:check_temperature_support!).and_return(true)
-    allow(AI::Provider::Anthropic).to receive(:ping!).and_return(nil)
+    allow(AI::Provider::Anthropic).to receive(:check_temperature_support!).and_return(true)
     allow(AI::Provider::Ollama).to receive(:ping!).and_return(nil)
   end
 
@@ -198,15 +198,12 @@ RSpec.describe 'AI::ProviderConnection', :aggregate_failures, authenticated_as: 
     it 'validates the retained config against the new provider when only the provider changes' do
       conn = create(:ai_provider_connection, name: 'conn', provider: 'open_ai', config: { token: 'kept-token' })
 
-      pinged_config = nil
-      allow(AI::Provider::Anthropic).to receive(:ping!) { |config| pinged_config = config }
-
       put "/api/v1/ai/provider_connections/#{conn.id}",
           params: { name: 'conn', provider: 'anthropic' },
           as:     :json
 
       expect(response).to have_http_status(:ok)
-      expect(pinged_config).to eq(token: 'kept-token')
+      expect(AI::Provider::Anthropic).to have_received(:check_temperature_support!).with({ token: 'kept-token' }, related_object: conn)
     end
 
     it 'stores the detected temperature support when only the provider changes' do

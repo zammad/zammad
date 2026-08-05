@@ -49,11 +49,11 @@ RSpec.describe Service::AI::ProviderConnection::TestConnection do
 
     # Providers whose check_temperature_support! does not talk to the endpoint validate in ping!.
     it 'pings providers that implement the reachability check' do
-      allow(AI::Provider::Anthropic).to receive(:ping!)
+      allow(AI::Provider::Mistral).to receive(:ping!)
 
-      described_class.execute(provider: 'anthropic', incoming_config: { 'token' => 'sk' })
+      described_class.execute(provider: 'mistral', incoming_config: { 'token' => 'sk' })
 
-      expect(AI::Provider::Anthropic).to have_received(:ping!).with({ token: 'sk' }, related_object: nil)
+      expect(AI::Provider::Mistral).to have_received(:ping!).with({ token: 'sk' }, related_object: nil)
     end
 
     # So the HTTP log of a failed test points back at the connection the admin is editing.

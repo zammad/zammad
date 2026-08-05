@@ -69,13 +69,9 @@ class AI::Provider::CustomOpenAI < AI::Provider
       request_options,
     )
 
-    return true if response.success?
-    return false if temperature_unsupported?(response)
-
-    # Not a temperature quirk but a broken config: raise with the mapped provider message.
-    validate_response!(response)
-
-    true
+    evaluate_temperature_probe!(response)
+  rescue CheckTemperatureSupportError
+    raise
   rescue => e
     raise CheckTemperatureSupportError, e.message
   end

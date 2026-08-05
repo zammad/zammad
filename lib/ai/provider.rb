@@ -101,6 +101,21 @@ class AI::Provider
       false
     end
 
+    # Shared tail of check_temperature_support! for providers that probe the endpoint with a real
+    # request: true when it succeeds outright, false when it fails solely on the temperature
+    # parameter, otherwise raises with the mapped provider message.
+    def evaluate_temperature_probe!(response)
+      return true if response.success?
+      return false if temperature_unsupported?(response)
+
+      # Not a temperature quirk but a broken config: raise with the mapped provider message.
+      validate_response!(response)
+
+      true
+    rescue => e
+      raise CheckTemperatureSupportError, e.message
+    end
+
     # True when embed() is implemented; filters the Semantic Search connection dropdown.
     def supports_embeddings?
       false
