@@ -17,6 +17,11 @@ class OmniAuth::Strategies::MicrosoftOffice365Database < OmniAuth::Strategies::M
 
     @options[:client_options][:authorize_url] = "/#{tenant}/oauth2/v2.0/authorize"
     @options[:client_options][:token_url]     = "/#{tenant}/oauth2/v2.0/token"
+
+    # Override the gem's DEFAULT_SCOPE ("openid User.Read Contacts.Read") to drop
+    # the Contacts.Read permission. Setting the scope option here makes the gem
+    # skip its `params[:scope] ||= DEFAULT_SCOPE` fallback.
+    @options[:scope] = 'openid User.Read'
   end
 
   # The gem's raw_info only calls the Graph /me REST endpoint, which never
