@@ -56,5 +56,46 @@ RSpec.describe 'Ticket: #auto_assign' do # rubocop:disable RSpec/DescribeClass
         end
       end
     end
+
+    context 'when conditions are configured via expert mode (regression test for #6279)' do
+      let(:ticket)          { create(:ticket, group: Group.first, priority: Ticket::Priority.find_by(name: '1 low')) }
+      let(:matching_ticket) { create(:ticket, group: Group.first, priority: Ticket::Priority.find_by(name: '2 normal')) }
+      let(:agent)           { create(:agent, groups: [Group.first]) }
+
+      let(:ticket_auto_assignment_condition) do
+        {
+          operator:   'OR',
+          conditions: [
+            {
+              operator:   'AND',
+              conditions: [
+                { name: 'ticket.group_id', operator: 'is', value: [Group.first.id.to_s] },
+                { name: 'ticket.priority_id', operator: 'is not', value: [Ticket::Priority.find_by(name: '1 low').id.to_s] },
+              ],
+            },
+          ],
+        }
+      end
+
+      before do
+        matching_ticket
+      end
+
+      context 'when the opened ticket does not match, but another ticket elsewhere does' do
+        it 'does not auto assign' do
+          ticket.auto_assign(agent)
+          expect(ticket.reload.owner_id).to eq(1)
+        end
+      end
+
+      context 'when the opened ticket does match' do
+        let(:ticket) { create(:ticket, group: Group.first, priority: Ticket::Priority.find_by(name: '2 normal')) }
+
+        it 'does auto assign' do
+          ticket.auto_assign(agent)
+          expect(ticket.reload.owner_id).to eq(agent.id)
+        end
+      end
+    end
   end
 end
