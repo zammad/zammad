@@ -809,6 +809,21 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
     end
   end
 
+  describe 'GET /api/v1/ticket_articles/by_ticket/:id', authenticated_as: :agent do
+    let(:ticket)    { create(:ticket, group: Group.first) }
+    let!(:articles) { create_list(:ticket_article, 2, ticket: ticket) }
+
+    context 'when requesting a full response' do
+      it 'includes assets of all articles', :aggregate_failures do
+        get "/api/v1/ticket_articles/by_ticket/#{ticket.id}", params: { full: true }, as: :json
+
+        expect(response).to have_http_status(:ok)
+        expect(json_response['record_ids']).to eq(articles.map(&:id))
+        expect(json_response['assets']['TicketArticle'].keys).to match_array(articles.map { |article| article.id.to_s })
+      end
+    end
+  end
+
   describe 'GET /api/v1/ticket_article_plain/:id', authenticated_as: :agent do
     let(:ticket)  { create(:ticket, group: Group.first) }
     let(:article) { create(:ticket_article, ticket: ticket) }

@@ -58,7 +58,7 @@ class TicketArticlesController < ApplicationController
         next if !authorized?(article, :show?)
 
         record_ids.push article.id
-        assets = article.assets({})
+        assets = article.assets(assets)
       end
       render json: {
         record_ids: record_ids,
