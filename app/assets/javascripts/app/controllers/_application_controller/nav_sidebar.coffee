@@ -1,4 +1,4 @@
-class App.ControllerNavSidbar extends App.Controller
+class App.ControllerNavSidebar extends App.Controller
   constructor: (params) ->
     super
 
@@ -93,7 +93,7 @@ class App.ControllerNavSidbar extends App.Controller
                 for permissionName in item.permission
                   if not available and @permissionCheck(permissionName)
                     available = true
-            if item.setting
+            if available and item.setting
               available = _.any item.setting, (settingName) =>
                 @Config.get(settingName)
             if available

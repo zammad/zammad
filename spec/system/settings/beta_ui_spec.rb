@@ -52,4 +52,21 @@ RSpec.describe 'Manage > Settings > BETA UI', type: :system do
       end
     end
   end
+
+  context 'when BETA UI admin menu is enabled, but admin has no BETA UI permission', authenticated_as: :authenticate do
+    let(:role) { create(:role, permission_names: %w[admin.group]) }
+    let(:user) { create(:user, roles: [role]) }
+
+    def authenticate
+      Setting.set('ui_desktop_beta_switch_admin_menu', true)
+      user
+    end
+
+    it 'does not show BETA UI menu item' do
+      within '.sidebar' do
+        expect(page).to have_link('Groups', href: '#manage/groups')
+        expect(page).to have_no_link('BETA UI', href: '#settings/beta_ui')
+      end
+    end
+  end
 end

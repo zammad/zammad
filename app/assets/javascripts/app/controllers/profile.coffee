@@ -1,4 +1,4 @@
-class App.Profile extends App.ControllerNavSidbar
+class App.Profile extends App.ControllerNavSidebar
   authenticateRequired: true
   configKey: 'NavBarProfile'
 

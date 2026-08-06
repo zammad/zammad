@@ -1,4 +1,4 @@
-class App.Manage extends App.ControllerNavSidbar
+class App.Manage extends App.ControllerNavSidebar
   authenticateRequired: true
   configKey: 'NavBarAdmin'
 
