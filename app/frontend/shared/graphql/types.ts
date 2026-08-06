@@ -936,6 +936,8 @@ export type TemplatesQuery = { templates: Array<{ __typename: 'Template', id: st
 
 export type TicketAiRelatedKnowledgeBaseAnswersQueryVariables = Exact<{
   ticketId: string | number;
+  includeDraftsAndArchived?: boolean | null | undefined;
+  includeLinkedAnswers?: boolean | null | undefined;
 }>;
 
 
@@ -1300,7 +1302,7 @@ export type OnlineNotificationsQueryVariables = Exact<{ [key: string]: never; }>
 export type OnlineNotificationsQuery = { onlineNotifications: { __typename: 'OnlineNotificationConnection', edges: Array<{ __typename: 'OnlineNotificationEdge', cursor: string, node: { __typename: 'OnlineNotification', id: string, seen: boolean, createdAt: string, typeName: string, objectName: string, createdBy: { __typename: 'User', id: string, fullname: string | null | undefined, lastname: string | null | undefined, firstname: string | null | undefined, email: string | null | undefined, vip: boolean | null | undefined, outOfOffice: boolean | null | undefined, outOfOfficeStartAt: string | null | undefined, outOfOfficeEndAt: string | null | undefined, active: boolean | null | undefined, image: string | null | undefined } | null | undefined, meta: { __typename: 'OnlineNotificationMeta', createdByAi: boolean }, metaObject:
           | { __typename: 'DataPrivacyTask' }
           | { __typename: 'Group' }
-          | { __typename: 'KnowledgeBaseAnswerTranslation', id: string, title: string, kbLocale: { __typename: 'KnowledgeBaseLocale', systemLocale: { __typename: 'Locale', locale: string } }, answer: { __typename: 'KnowledgeBaseAnswer', id: string } }
+          | { __typename: 'KnowledgeBaseAnswerTranslation', id: string, title: string, kbLocale: { __typename: 'KnowledgeBaseLocale', systemLocale: { __typename: 'Locale', locale: string } }, answer: { __typename: 'KnowledgeBaseAnswer', id: string, category: { __typename: 'KnowledgeBaseCategory', id: string, knowledgeBase: { __typename: 'KnowledgeBase', id: string } } } }
           | { __typename: 'OnlineNotificationStandalone', id: string, internalId: number, data:
               | { __typename: 'OnlineNotificationStandaloneBulkJobData', total: number, failedCount: number }
               | { __typename: 'OnlineNotificationStandaloneKbAnswerGenerationFailedData', errorMessage: string, ticketTitle: string }

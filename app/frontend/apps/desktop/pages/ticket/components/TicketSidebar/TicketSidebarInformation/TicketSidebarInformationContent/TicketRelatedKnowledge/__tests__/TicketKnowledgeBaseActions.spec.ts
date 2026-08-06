@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { within } from '@testing-library/vue'
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 
 import renderComponent from '#tests/support/components/renderComponent.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
@@ -16,12 +16,6 @@ import TicketKnowledgeBaseActions from '#desktop/pages/ticket/components/TicketS
 import { TICKET_KEY } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
 import { mockTicketAiAssistanceEnqueueKnowledgeBaseAnswerMutation } from '#desktop/pages/ticket/graphql/mutations/ticketAIAssistanceEnqueueKnowledgeBaseAnswer.mocks.ts'
 import { mockTicketAiRelatedKnowledgeBaseAnswersQuery } from '#desktop/pages/ticket/graphql/queries/ticketAIRelatedKnowledgeBaseAnswers.mocks.ts'
-
-vi.mock('#desktop/pages/ticket/composables/useTicketSidebar.ts', () => ({
-  useTicketSidebar: () => ({
-    activeSidebar: ref('information'),
-  }),
-}))
 
 const ticketId = convertToGraphQLId('Ticket', 1)
 
@@ -66,13 +60,14 @@ const renderActions = (
       showDraft: true,
       isTicketEditable: true,
       newKnowledgeBaseAnswer: false,
+      isLinkListLoading: false,
       ...props,
     },
     provide: [
       [
         TICKET_KEY,
         {
-          ticket: computed(() => ({ id: ticketId })),
+          ticket: computed(() => ({ id: ticketId, policy: { agentReadAccess: true } })),
           ticketId: computed(() => ticketId),
           ticketInternalId: computed(() => 1),
         },

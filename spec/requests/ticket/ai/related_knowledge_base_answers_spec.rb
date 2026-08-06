@@ -10,6 +10,7 @@ RSpec.describe 'Ticket AI Related Knowledge Base Answers API endpoint', :aggrega
   let(:answer)             { create(:knowledge_base_answer, :published) }
   let(:translation)        { answer.translations.first }
   let(:service_result)     { { answers: [{ translation:, score: 0.9 }], pending: false } }
+  let(:params)             { {} }
 
   before do
     setup_ai_provider('zammad_ai')
@@ -20,7 +21,7 @@ RSpec.describe 'Ticket AI Related Knowledge Base Answers API endpoint', :aggrega
     allow(Service::AI::VectorDB::Available).to receive(:execute).with(ping: false).and_return(false)
     allow(Service::Ticket::AI::RelatedKnowledgeBaseAnswers).to receive(:execute).and_return(service_result)
 
-    post "/api/v1/tickets/#{ticket.id}/related_knowledge_base_answers", as: :json
+    post "/api/v1/tickets/#{ticket.id}/related_knowledge_base_answers", params:, as: :json
   end
 
   context 'when the search returns results' do
@@ -33,6 +34,29 @@ RSpec.describe 'Ticket AI Related Knowledge Base Answers API endpoint', :aggrega
         'excerpts'               => { translation.id.to_s => translation.content.body_excerpt },
       )
       expect(json_response['assets']).to be_present
+    end
+
+    it 'searches only the internally visible answers that are not linked yet' do
+      expect(Service::Ticket::AI::RelatedKnowledgeBaseAnswers)
+        .to have_received(:execute).with(ticket:, embedding_source: nil, include_drafts_and_archived: false, include_linked_answers: false, current_user: agent)
+    end
+  end
+
+  context 'when drafts and archived answers are requested' do
+    let(:params) { { include_drafts_and_archived: true } }
+
+    it 'hands the flag to the service' do
+      expect(Service::Ticket::AI::RelatedKnowledgeBaseAnswers)
+        .to have_received(:execute).with(ticket:, embedding_source: nil, include_drafts_and_archived: true, include_linked_answers: false, current_user: agent)
+    end
+  end
+
+  context 'when the linked answers are requested' do
+    let(:params) { { include_linked_answers: true } }
+
+    it 'hands the flag to the service' do
+      expect(Service::Ticket::AI::RelatedKnowledgeBaseAnswers)
+        .to have_received(:execute).with(ticket:, embedding_source: nil, include_drafts_and_archived: false, include_linked_answers: true, current_user: agent)
     end
   end
 

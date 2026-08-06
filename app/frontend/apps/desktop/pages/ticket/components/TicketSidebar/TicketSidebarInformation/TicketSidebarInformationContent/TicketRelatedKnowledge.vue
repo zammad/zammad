@@ -8,8 +8,10 @@ import { useApplicationStore } from '#shared/stores/application.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
 
 import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
+import CommonSkeleton from '#desktop/components/CommonSkeleton/CommonSkeleton.vue'
 import { useTicketInformation } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
 
+import { useKnowledgeBaseAnswerLinks } from './TicketRelatedKnowledge/composables/useKnowledgeBaseAnswerLinks.ts'
 import TicketKnowledgeBaseActions from './TicketRelatedKnowledge/TicketKnowledgeBaseActions.vue'
 import TicketKnowledgeBaseAiSuggested from './TicketRelatedKnowledge/TicketKnowledgeBaseAiSuggested.vue'
 import TicketKnowledgeBaseAnswerSkeleton from './TicketRelatedKnowledge/TicketKnowledgeBaseAnswerSkeleton.vue'
@@ -32,16 +34,39 @@ export interface Props {
   aiSuggestedAnswersErrorDetail: string | null
 }
 
-defineProps<Props>()
+const props = defineProps<Props>()
 
-defineEmits<{
+const emit = defineEmits<{
   'retry-ai-suggested-answers-search': []
+  'refresh-ai-suggested-answers': []
 }>()
 
 const config = toRef(useApplicationStore(), 'config')
 
 const { ticketId, isTicketEditable } = useTicketInformation()
 const { hasPermission } = useSessionStore()
+
+// An already-linked answer is no suggestion. The server drops them from the search result, but that
+//   result arrives asynchronously, so keep the two lists disjoint here as well. Matched on the
+//   answer rather than the translation, mirroring the server: linking one locale covers all of them.
+const unlinkedAiSuggestedAnswers = computed(() => {
+  const linkedAnswers = new Set(props.linkedAnswers.map((translation) => translation.answer.id))
+
+  return props.aiSuggestedAnswers.filter(
+    (answer) => !linkedAnswers.has(answer.translation.answer.id),
+  )
+})
+
+const { unlinkAnswer } = useKnowledgeBaseAnswerLinks(ticketId.value, props.targetType)
+
+// Unlinking makes the answer eligible as a suggestion again, but the search that excluded it ran on
+//   the server, so it can only come back by re-running it. Nothing else about the ticket changed,
+//   which is why this refresh keeps the current suggestions on screen rather than showing a waiting
+//   state for the blink it takes.
+const handleUnlinkAnswer = async (answerId: string) => {
+  await unlinkAnswer(answerId)
+  emit('refresh-ai-suggested-answers')
+}
 
 const isNewKnowledgeBaseAnswerActive = ref(false)
 
@@ -65,13 +90,13 @@ const showAIKnowledgeBaseDraft = computed(
         <TicketKnowledgeBaseLinks
           v-if="linkedAnswers?.length"
           :linked-answers="linkedAnswers"
-          :target-type="targetType"
           :is-ticket-editable="isTicketEditable"
+          @unlink="handleUnlinkAnswer"
         />
         <TicketKnowledgeBaseAiSuggested
           v-if="showAiSuggestedAnswers"
           :target-type="targetType"
-          :answers="aiSuggestedAnswers"
+          :answers="unlinkedAiSuggestedAnswers"
           :loading="isAiSuggestedAnswersLoading"
           :pending="isAiSuggestedAnswersPending"
           :has-error="hasAiSuggestedAnswersError"
@@ -87,9 +112,15 @@ const showAIKnowledgeBaseDraft = computed(
       </CommonLabel>
 
       <template #skeleton>
-        <ul>
-          <TicketKnowledgeBaseAnswerSkeleton />
-        </ul>
+        <div
+          class="flex w-full flex-col gap-2 rounded-lg bg-blue-200 px-2.5 pt-1 pb-1.5 dark:bg-gray-700"
+        >
+          <CommonSkeleton alternative-background class="h-3 w-12" />
+          <ul class="space-y-2">
+            <TicketKnowledgeBaseAnswerSkeleton />
+            <TicketKnowledgeBaseAnswerSkeleton />
+          </ul>
+        </div>
       </template>
     </CommonLoader>
 
@@ -97,6 +128,7 @@ const showAIKnowledgeBaseDraft = computed(
       v-model:new-knowledge-base-answer="isNewKnowledgeBaseAnswerActive"
       :show-draft="showAIKnowledgeBaseDraft"
       :is-ticket-editable="isTicketEditable"
+      :is-link-list-loading="isLinkListLoading"
     >
       <template v-if="isNewKnowledgeBaseAnswerActive" #default>
         <TicketNewKnowledgeBaseAnswer

@@ -9,17 +9,26 @@
 # embedding, falling back to the summary when the content is too large. It can be forced to :summary
 # for testing (the old stack sends it as a request param, settable via App.Config.set); this is a
 # testing hook, not a real feature.
+#
+# Two flags widen the search past the sidebar suggestions, which are the answers to work on the
+# ticket with. The knowledge base answer generation asks a different question — "does an answer
+# already cover this?" — and sets both: `include_drafts_and_archived` because an unfinished or
+# retired answer counts as coverage too, `include_linked_answers` because an answer already linked to
+# the ticket covers it most of all (the sidebar leaves those out, as it lists them separately — see
+# #without_linked_answers for what that does to the result size).
 # PoC: locale restriction is tracked separately (#1418 / #231).
 class Service::Ticket::AI::RelatedKnowledgeBaseAnswers < Service::Base
   requires_current_user!
 
   RESULT_LIMIT = 3
 
-  attr_reader :ticket, :embedding_source
+  attr_reader :ticket, :embedding_source, :include_drafts_and_archived, :include_linked_answers
 
-  def initialize(ticket:, embedding_source: nil)
-    @ticket           = ticket
-    @embedding_source = embedding_source.to_s == 'summary' ? :summary : :auto
+  def initialize(ticket:, embedding_source: nil, include_drafts_and_archived: false, include_linked_answers: false)
+    @ticket                      = ticket
+    @embedding_source            = embedding_source.to_s == 'summary' ? :summary : :auto
+    @include_drafts_and_archived = include_drafts_and_archived
+    @include_linked_answers      = include_linked_answers
   end
 
   # Returns:
@@ -66,19 +75,30 @@ class Service::Ticket::AI::RelatedKnowledgeBaseAnswers < Service::Base
   private
 
   def search(embedding)
-    Service::KnowledgeBase::Answer::SimilaritySearch
+    answers = Service::KnowledgeBase::Answer::SimilaritySearch
       .with_current_user(current_user)
-      .execute(embedding:, limit: RESULT_LIMIT, excluded_answer_ids: linked_answer_ids)
+      .execute(embedding:, limit: RESULT_LIMIT, include_drafts_and_archived:)
+
+    include_linked_answers ? answers : without_linked_answers(answers)
   end
 
-  # Answers already linked to the ticket (in any locale) are no suggestion — drop them in the query
-  # so the limit still yields up to RESULT_LIMIT fresh ones.
-  def linked_answer_ids
-    linked_translation_ids = Link
-      .list(link_object: 'Ticket', link_object_value: ticket.id)
-      .select { |link| link['link_object'] == 'KnowledgeBase::Answer::Translation' }
-      .pluck('link_object_value')
+  # An answer already linked to the ticket is no suggestion, but it keeps its place among the best
+  # matches: it is dropped from what the search picked rather than kept out of the search, so a
+  # lower-ranked answer never moves up into its place. With every best match linked, the ticket has
+  # nothing left to suggest — an empty list is the right answer then.
+  def without_linked_answers(answers)
+    answers.reject { |answer| linked_answer_ids.include?(answer[:translation].answer_id) }
+  end
 
-    KnowledgeBase::Answer::Translation.where(id: linked_translation_ids).pluck(:answer_id)
+  # The answers linked to the ticket, in any locale: linking one locale covers all of them.
+  def linked_answer_ids
+    @linked_answer_ids ||= begin
+      linked_translation_ids = Link
+        .list(link_object: 'Ticket', link_object_value: ticket.id)
+        .select { |link| link['link_object'] == 'KnowledgeBase::Answer::Translation' }
+        .pluck('link_object_value')
+
+      KnowledgeBase::Answer::Translation.where(id: linked_translation_ids).pluck(:answer_id)
+    end
   end
 end

@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { ref, type Ref } from 'vue'
+import { computed, ref } from 'vue'
 
 import { getGraphQLMockCalls } from '#tests/graphql/builders/mocks.ts'
 import renderComponent from '#tests/support/components/renderComponent.ts'
@@ -30,12 +30,17 @@ import { getTicketAiRelatedKnowledgeBaseAnswersUpdatesSubscriptionHandler } from
 const ticketId = convertToGraphQLId('Ticket', 1)
 
 // The score arrives as a ratio and is turned into a percentage by the composable.
-const relatedAnswer = (id: number, title: string, score = 0.88) => ({
+const relatedAnswer = (
+  id: number,
+  title: string,
+  score = 0.88,
+  visibility = EnumKnowledgeBaseVisibility.Published,
+) => ({
   score,
   translation: {
     id: convertToGraphQLId('KnowledgeBase::Answer::Translation', id),
     title,
-    visibility: EnumKnowledgeBaseVisibility.Published,
+    visibility,
     content: { bodyExcerpt: 'Steps to solve the issue.' },
     answer: {
       id: convertToGraphQLId('KnowledgeBase::Answer', id),
@@ -56,14 +61,16 @@ const mockSuggestedAnswers = (answers: ReturnType<typeof relatedAnswer>[], pendi
     ticketAIRelatedKnowledgeBaseAnswers: { pending, answers },
   })
 
-// The active sidebar arrives as a getter, so the flyout keeps up with a sidebar switch while it is
-//   open — that is what hands the ownership of the live search over to it.
-const renderFlyout = (activeSidebar: Ref<string> = ref('information')) =>
+// The opener hands the ticket over, since a flyout cannot inject it.
+const ticketArticleCount = ref(1)
+
+const ticket = computed(() => ({ id: ticketId, articleCount: ticketArticleCount.value }))
+
+const renderFlyout = () =>
   renderComponent(TicketKnowledgeBaseAiDraftFlyout, {
     props: {
       name: 'knowledge-base-ai-draft',
-      ticketId,
-      activeSidebar: () => activeSidebar.value,
+      ticket: ticket.value,
     },
     router: true,
     routerRoutes: [
@@ -87,12 +94,9 @@ describe('TicketKnowledgeBaseAiDraftFlyout', () => {
 
   beforeEach(() => {
     vi.clearAllMocks()
+    // The relevance score is the only thing the flyout gates, and it goes by permission.
     mockPermissions(['ticket.agent', 'knowledge_base.editor', 'admin.ai_knowledge_base'])
-    // The sidebar list is visible, so it owns the live search (see the query wiring below).
-    mockApplicationConfig({
-      ai_provider: true,
-      ai_assistance_kb_answer_suggestions: true,
-    })
+    mockApplicationConfig({})
   })
 
   it('shows the header title', async () => {
@@ -178,9 +182,6 @@ describe('TicketKnowledgeBaseAiDraftFlyout', () => {
   })
 
   it('clears an embed error and re-runs the search on retry', async () => {
-    // Only reachable when the flyout owns the subscriptions, i.e. with the sidebar list hidden.
-    mockApplicationConfig({ ai_provider: false })
-
     mockSuggestedAnswers([], true)
 
     const wrapper = renderFlyout()
@@ -200,25 +201,54 @@ describe('TicketKnowledgeBaseAiDraftFlyout', () => {
     expect(wrapper.queryByText('API server error: embedding failed')).not.toBeInTheDocument()
   })
 
-  it('reads from the cache without a second request while the sidebar list owns the search', async () => {
+  it('takes in drafts, archived and linked answers, unlike the sidebar list', async () => {
     mockSuggestedAnswers([relatedAnswer(1, 'Reset your password')])
 
-    // Prime the cache the way the sidebar list would have.
+    renderFlyout()
+
+    // Whether an answer already covers the topic is also answered by an unfinished or retired one —
+    //   and by one that is already linked to the ticket, which the sidebar list leaves out.
+    const calls = await waitForTicketAiRelatedKnowledgeBaseAnswersQueryCalls()
+    expect(calls.at(-1)?.variables).toEqual({
+      ticketId,
+      includeDraftsAndArchived: true,
+      includeLinkedAnswers: true,
+    })
+  })
+
+  // That the answers of the earlier open are not rendered while this search runs comes from the
+  //   `network-only` policy, which is covered in the composable's own spec — the intermediate frame
+  //   is not observable from here.
+  it('searches again on every open, ending up with the current answers', async () => {
+    mockSuggestedAnswers([relatedAnswer(1, 'Reset your password')])
+
+    // Prime the Apollo cache the way an earlier open of the flyout would have.
     const primer = renderFlyout()
     await primer.findByText('Reset your password')
-    expect(getGraphQLMockCalls(TicketAiRelatedKnowledgeBaseAnswersDocument)).toHaveLength(1)
+    primer.unmount()
+
+    // Meanwhile the ticket moved on, so the answer of the first search no longer fits.
+    mockSuggestedAnswers([relatedAnswer(2, 'Change your email address')])
 
     const wrapper = renderFlyout()
 
-    expect(await wrapper.findAllByText('Reset your password')).toHaveLength(2)
-    expect(getGraphQLMockCalls(TicketAiRelatedKnowledgeBaseAnswersDocument)).toHaveLength(1)
-    // The sidebar list holds the subscriptions; the flyout only reads.
-    expect(getTicketAiRelatedKnowledgeBaseAnswersUpdatesSubscriptionHandler()).toBeUndefined()
+    expect(await wrapper.findByText('Change your email address')).toBeInTheDocument()
+    expect(wrapper.queryByText('Reset your password')).not.toBeInTheDocument()
+    expect(getGraphQLMockCalls(TicketAiRelatedKnowledgeBaseAnswersDocument)).toHaveLength(2)
   })
 
-  it('drives the search itself when the sidebar list is not shown', async () => {
-    mockApplicationConfig({ ai_provider: false })
+  it('marks a draft answer as such', async () => {
+    mockSuggestedAnswers([
+      relatedAnswer(1, 'Reset your password', 0.88, EnumKnowledgeBaseVisibility.Draft),
+    ])
 
+    const wrapper = renderFlyout()
+
+    expect(await wrapper.findByText('Reset your password')).toBeInTheDocument()
+    expect(wrapper.getByIconName('kb-draft')).toBeInTheDocument()
+  })
+
+  it('drives the search itself, so a pending embedding resolves', async () => {
     mockSuggestedAnswers([], true)
 
     const wrapper = renderFlyout()
@@ -227,62 +257,8 @@ describe('TicketKnowledgeBaseAiDraftFlyout', () => {
 
     mockSuggestedAnswers([relatedAnswer(1, 'Reset your password')])
 
-    // Without the sidebar list around, only the flyout’s own ping subscription can resolve this.
-    await getTicketAiRelatedKnowledgeBaseAnswersUpdatesSubscriptionHandler().trigger({
-      ticketAIRelatedKnowledgeBaseAnswersUpdates: { ticketId, error: null },
-    })
-
-    expect(await wrapper.findAllByText('Reset your password')).not.toHaveLength(0)
-  })
-
-  it('drives the search itself when the information sidebar is not selected', async () => {
-    mockSuggestedAnswers([], true)
-
-    const primer = renderFlyout()
-
-    expect(await primer.findByLabelText('Searching for related answers…')).toBeInTheDocument()
-    expect(getGraphQLMockCalls(TicketAiRelatedKnowledgeBaseAnswersDocument)).toHaveLength(1)
-
-    mockSuggestedAnswers([], true)
-
-    const wrapper = renderFlyout(ref('customer'))
-
-    expect(await wrapper.findByLabelText('Searching for related answers…')).toBeInTheDocument()
-    await waitFor(() =>
-      expect(getGraphQLMockCalls(TicketAiRelatedKnowledgeBaseAnswersDocument)).toHaveLength(2),
-    )
-
-    mockSuggestedAnswers([relatedAnswer(1, 'Reset your password')])
-
-    await getTicketAiRelatedKnowledgeBaseAnswersUpdatesSubscriptionHandler().trigger({
-      ticketAIRelatedKnowledgeBaseAnswersUpdates: { ticketId, error: null },
-    })
-
-    expect(await wrapper.findAllByText('Reset your password')).not.toHaveLength(0)
-  })
-
-  it('takes over the search when the sidebar is switched away while the flyout is open', async () => {
-    const activeSidebar = ref('information')
-
-    mockSuggestedAnswers([], true)
-
-    const wrapper = renderFlyout(activeSidebar)
-
-    expect(await wrapper.findByLabelText('Searching for related answers…')).toBeInTheDocument()
-    // The sidebar list still owns the live result, so the flyout only reads from its cache entry.
-    expect(getTicketAiRelatedKnowledgeBaseAnswersUpdatesSubscriptionHandler()).toBeUndefined()
-
-    activeSidebar.value = 'customer'
-
-    // The list is gone, so the flyout has to drive the search itself from now on.
-    await waitFor(() =>
-      expect(getTicketAiRelatedKnowledgeBaseAnswersUpdatesSubscriptionHandler()).toBeDefined(),
-    )
-
-    mockSuggestedAnswers([relatedAnswer(1, 'Reset your password')])
-
-    // Without the list around, only the flyout’s own ping subscription can resolve the pending
-    //   embedding — a snapshotted sidebar would leave it spinning forever.
+    // The widened search has its own result, so only the flyout’s own ping subscription can
+    //   resolve it — the sidebar list cannot stand in for it.
     await getTicketAiRelatedKnowledgeBaseAnswersUpdatesSubscriptionHandler().trigger({
       ticketAIRelatedKnowledgeBaseAnswersUpdates: { ticketId, error: null },
     })

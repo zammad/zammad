@@ -6,39 +6,41 @@
 # answer ids are resolved up front (visible_to_user, which encodes granular category access and the
 # publish/archive time window) and passed as a filter on the documents' metadata.answer_id, so the
 # search never returns answers the user is not allowed to see (rather than dropping them afterwards).
-# Archived answers are part of the vector index, so they are suggested to the users whose visibility
-# covers them (knowledge base editors, and granular editor categories) just like in the agent app.
+# By default only internally visible answers are searched, so drafts and archived ones are no
+# suggestion for answering a ticket; `include_drafts_and_archived` takes in those two states as well,
+# as far as the user may see them (knowledge base editors, and granular editor categories) — for
+# deciding whether an answer already covers a topic, an unfinished or retired one counts too.
 # Users without any knowledge base permission are limited to published answers, which they can read
 # on the public help site.
-# Locale restriction is optional (off by default), as is excluding specific answer ids (e.g. answers
-# already linked to the ticket) — both are applied in the query so they do not eat into the limit.
+# Locale restriction is optional (off by default) and applied in the query, so it does not eat into
+# the limit.
 class Service::KnowledgeBase::Answer::SimilaritySearch < Service::Base
   requires_current_user!
 
   DEFAULT_LIMIT = 3
 
   # Request more candidates than the limit: one answer is indexed as several chunks (deduplicated to
-  # the best score below) and some hits get dropped by the score floor. Permission/locale/exclusion
-  # filtering already happens in the query, so it does not eat into this budget. A small margin is
+  # the best score below) and some hits get dropped by the score floor. Permission and locale
+  # filtering already happen in the query, so they do not eat into this budget. A small margin is
   # enough for typical (1–few chunk) answers; raise it if chunk-heavy answers under-fill the limit.
   CANDIDATE_FACTOR = 6
 
   # Fallback for the configurable relevance floor below, for the case the setting holds no value.
   DEFAULT_RELEVANCE_SCORE = 86
 
-  attr_reader :embedding, :limit, :locale, :excluded_answer_ids
+  attr_reader :embedding, :limit, :locale, :include_drafts_and_archived
 
-  def initialize(embedding:, limit: DEFAULT_LIMIT, locale: nil, excluded_answer_ids: [])
-    @embedding           = embedding
-    @limit               = limit
-    @locale              = locale
-    @excluded_answer_ids = excluded_answer_ids
+  def initialize(embedding:, limit: DEFAULT_LIMIT, locale: nil, include_drafts_and_archived: false)
+    @embedding                   = embedding
+    @limit                       = limit
+    @locale                      = locale
+    @include_drafts_and_archived = include_drafts_and_archived
   end
 
   def execute
     return [] if embedding.blank?
 
-    visible_answer_ids = visible_answer_ids_for_user - excluded_answer_ids
+    visible_answer_ids = visible_answer_ids_for_user
     return [] if visible_answer_ids.blank?
 
     hits = search(visible_answer_ids)
@@ -62,16 +64,22 @@ class Service::KnowledgeBase::Answer::SimilaritySearch < Service::Base
   end
 
   # The answers the user is allowed to see, identical to the regular knowledge base search
-  # (KnowledgeBase::Answer::Translation::Search#search_answer_ids_for_user), minus the ones in a
-  # category excluded from the vector index.
+  # (KnowledgeBase::Answer::Translation::Search#search_answer_ids_for_user), narrowed to the
+  # internally visible ones unless drafts and archived ones were requested as well, and minus the
+  # ones in a category excluded from the vector index.
   #
   # Excluding a category only stops *future* indexing; the documents its answers already have stay
   # in the index until each record is touched or the index is rebuilt. Without this filter those
   # orphans keep surfacing as suggestions, so the exclusion is enforced here too rather than trusted
   # to the index being in sync.
   def visible_answer_ids_for_user
-    ::KnowledgeBase::Answer
-      .visible_to_user(current_user)
+    scope = ::KnowledgeBase::Answer.visible_to_user(current_user)
+
+    # `internal` covers both internally and publicly published answers, so it drops exactly the
+    # states an answer is not usable in: draft and archived.
+    scope = scope.internal if !include_drafts_and_archived
+
+    scope
       .in_vector_indexable_category
       .pluck(:id)
   end

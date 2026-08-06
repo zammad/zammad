@@ -121,9 +121,8 @@ class KnowledgeBase::Answer < ApplicationModel
   # availability) — so the answer only has to nudge its translations; no vector-specific logic here.
   #
   # touch_later (the deferred touch belongs_to touch: uses) instead of touch: it still bumps
-  # updated_at and fires the translation's after_commit, but skips dirty tracking — so a translation
-  # edited in the same transaction keeps its previous_changes (e.g. the title change its reindex
-  # hook inspects) instead of having them reset by this touch-back.
+  # updated_at and fires the translation's callbacks, but coalesces repeated touch-backs of the same
+  # translation within a transaction into a single write.
   def touch_translations
     translations
       .reject(&:destroyed?)

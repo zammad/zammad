@@ -11,8 +11,11 @@ defineProps<Props>()
 </script>
 
 <template>
-  <li class="flex h-9 list-none items-center gap-1.5 px-1.5 ltr:pr-1.5 rtl:pl-1.5">
-    <CommonSkeleton class="size-4 shrink-0 rounded-md" alternative-background />
-    <CommonSkeleton class="h-3.5 grow rounded-md" :label="label" alternative-background />
+  <li
+    :aria-label="label ? $t(label) : undefined"
+    class="flex h-9 list-none items-center gap-1.5 px-1.5 ltr:pr-1.5 rtl:pl-1.5"
+  >
+    <CommonSkeleton alternative-background rounded class="size-5 shrink-0" />
+    <CommonSkeleton alternative-background class="h-4 w-32" />
   </li>
 </template>

@@ -21,7 +21,7 @@ class Ticket::RelatedKnowledgeBaseAnswersController < ApplicationController
     # `embedding_source` is a testing hook (forces the :summary embedding); defaults to :auto.
     result = Service::Ticket::AI::RelatedKnowledgeBaseAnswers
       .with_current_user(current_user)
-      .execute(ticket:, embedding_source: params[:embedding_source])
+      .execute(ticket:, embedding_source: params[:embedding_source], include_drafts_and_archived:, include_linked_answers:)
 
     return render json: { result: { pending: true } } if result[:pending]
 
@@ -37,6 +37,18 @@ class Ticket::RelatedKnowledgeBaseAnswersController < ApplicationController
 
   def ticket
     @ticket ||= Ticket.find(params[:id])
+  end
+
+  # Drafts and archived answers are no suggestion for working on the ticket, but they do count when
+  # checking whether an answer already covers its topic (the answer generation dialog asks for them).
+  def include_drafts_and_archived
+    ActiveModel::Type::Boolean.new.cast(params[:include_drafts_and_archived]) || false
+  end
+
+  # Same for answers already linked to the ticket: the sidebar lists them on its own and leaves them
+  # out of the suggestions, the answer generation dialog wants to see them among the coverage.
+  def include_linked_answers
+    ActiveModel::Type::Boolean.new.cast(params[:include_linked_answers]) || false
   end
 
   def result_for(answers, translations)

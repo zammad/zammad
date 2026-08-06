@@ -77,6 +77,12 @@ export const OnlineNotificationsDocument = gql`
             }
             answer {
               id
+              category {
+                id
+                knowledgeBase {
+                  id
+                }
+              }
             }
           }
         }

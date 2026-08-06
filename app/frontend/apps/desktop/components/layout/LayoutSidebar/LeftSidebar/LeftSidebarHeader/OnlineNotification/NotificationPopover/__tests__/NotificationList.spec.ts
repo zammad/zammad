@@ -287,6 +287,12 @@ describe('NotificationList', () => {
                     },
                     answer: {
                       id: convertToGraphQLId('KnowledgeBase::Answer', 6),
+                      category: {
+                        id: convertToGraphQLId('KnowledgeBase::Category', 1),
+                        knowledgeBase: {
+                          id: convertToGraphQLId('KnowledgeBase', 2),
+                        },
+                      },
                     },
                   },
                 },

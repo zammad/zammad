@@ -3530,6 +3530,8 @@ export type QueriesTicketArgs = {
 
 /** All available queries */
 export type QueriesTicketAiRelatedKnowledgeBaseAnswersArgs = {
+  includeDraftsAndArchived?: InputMaybe<Scalars['Boolean']['input']>;
+  includeLinkedAnswers?: InputMaybe<Scalars['Boolean']['input']>;
   ticketId: Scalars['ID']['input'];
 };
 

@@ -1,7 +1,9 @@
 <!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed, toRef } from 'vue'
+import { toRef } from 'vue'
+
+import type { TicketById } from '#shared/entities/ticket/types.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonFlyout from '#desktop/components/CommonFlyout/CommonFlyout.vue'
@@ -16,34 +18,39 @@ import TicketKnowledgeBaseAiDraftFlyoutAnswerSkeleton from './TicketKnowledgeBas
 
 interface Props {
   name: string
-  ticketId: string
-  activeSidebar: () => string | null
+  // Handed over by the opener: a flyout renders outside the ticket detail view and cannot inject it.
+  ticket: TicketById
 }
 
 const props = defineProps<Props>()
+
+const ticketId = toRef(() => props.ticket.id)
 
 const {
   requestDraft,
   isGenerating,
   errorMessage: draftGenerationError,
-} = useTicketAiAssistanceEnqueueKnowledgeBaseAnswer(props.ticketId, props.name)
+} = useTicketAiAssistanceEnqueueKnowledgeBaseAnswer(ticketId.value, props.name)
 
-const { showAiSuggestedAnswers, showRelevanceScore } = useAiSuggestedAnswersAvailability()
-
-const isSuggestedAnswersListVisible = computed(
-  () => showAiSuggestedAnswers.value && props.activeSidebar() === 'information',
+const { showRelevanceScore } = useAiSuggestedAnswersAvailability(
+  () => props.ticket.policy.agentReadAccess,
 )
 
-// The sidebar list runs the very same search. While it is visible it owns the live result: it holds
-// the subscriptions and re-runs the query into the same cache entry we watch, so we only read from it
-// and stay in sync for free. With the list hidden the flyout is the only consumer, so it has to
-// drive the search itself — including the ping subscription that resolves a pending embedding.
+// Deciding whether to write a new answer means looking at every answer that could already cover the
+// topic — drafts and archived ones included, and the ones already linked to the ticket, which the
+// sidebar list leaves out because it shows them separately. That widens the search compared to the
+// sidebar list, so the flyout has its own result and drives it itself — including the ping
+// subscription that resolves a pending embedding.
+//
+// It searches from scratch on every open (`network-only`): the cached answers of an earlier open can
+// predate the ticket's current content, and a decision as final as "no answer covers this, write a
+// new one" must not be made on them. A short wait is the better trade here.
 const { answers, loading, pending, hasError, errorDetail, retrySearch } =
-  useKnowledgeBaseAiSuggestedAnswers(toRef(props, 'ticketId'), {
-    subscriptionEnabled: computed(() => !isSuggestedAnswersListVisible.value),
-    fetchPolicy: computed(() =>
-      isSuggestedAnswersListVisible.value ? 'cache-first' : 'cache-and-network',
-    ),
+  useKnowledgeBaseAiSuggestedAnswers(ticketId, {
+    includeDraftsAndArchived: true,
+    includeLinkedAnswers: true,
+    fetchPolicy: 'network-only',
+    articleCount: () => props.ticket.articleCount,
   })
 </script>
 

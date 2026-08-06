@@ -271,4 +271,124 @@ RSpec.describe KnowledgeBase::Answer::Translation, current_user_id: 1, type: :mo
       expect(answer.translations.first).not_to be_vector_indexing_for_record
     end
   end
+
+  describe 'scheduling the vector index update' do
+    let(:category)    { create(:knowledge_base_category) }
+    let(:answer)      { create(:knowledge_base_answer, :draft, category:) }
+    let(:translation) { answer.translations.first }
+    let(:reindexed)   { [] }
+
+    before do
+      allow(Service::AI::VectorDB::Available).to receive(:execute).and_return(true)
+      allow(VectorIndexJob).to receive(:perform_later) { |*args| reindexed << args }
+    end
+
+    # Creating the answer schedules a reindex of its own, so the examples below start from a clean
+    # log — otherwise they would pass on the create alone.
+    def reindexed_since_creation
+      translation
+      reindexed.clear
+
+      yield
+
+      reindexed
+    end
+
+    def expect_reindex_of(translation)
+      expect(reindexed).to include([described_class.to_s, translation.id])
+    end
+
+    it 'reindexes a new translation' do
+      expect_reindex_of(translation)
+    end
+
+    it 'reindexes a changed title' do
+      reindexed_since_creation { translation.update!(title: 'Changed title') }
+
+      expect_reindex_of(translation)
+    end
+
+    it 'reindexes a changed body' do
+      reindexed_since_creation { translation.content.update!(body: 'Changed body') }
+
+      expect_reindex_of(translation)
+    end
+
+    it 'reindexes a changed publication state' do
+      reindexed_since_creation { answer.update!(published_at: Time.zone.now) }
+
+      expect_reindex_of(translation)
+    end
+
+    it 'does not reindex a touch that leaves the document unchanged' do
+      expect(reindexed_since_creation { answer.tag_add('some-tag', 1) }).to be_empty
+    end
+
+    it 'removes the document of a destroyed translation' do
+      allow(Service::AI::VectorDB::Document::Destroy).to receive(:execute)
+
+      translation.destroy!
+
+      expect(Service::AI::VectorDB::Document::Destroy)
+        .to have_received(:execute).with(object_name: described_class.to_s, object_id: translation.id)
+    end
+
+    it 'keeps the document of a destroy that is rolled back' do
+      allow(Service::AI::VectorDB::Document::Destroy).to receive(:execute)
+      translation
+
+      ActiveRecord::Base.transaction do
+        translation.destroy!
+        raise ActiveRecord::Rollback
+      end
+
+      expect(Service::AI::VectorDB::Document::Destroy).not_to have_received(:execute)
+    end
+
+    it 'keeps the database deletion committed when removing the vector document fails', :aggregate_failures do
+      allow(Service::AI::VectorDB::Document::Destroy)
+        .to receive(:execute)
+        .and_raise(AI::VectorDB::Error, 'Vector store unavailable')
+
+      expect { translation.destroy! }.not_to raise_error
+      expect(described_class.exists?(translation.id)).to be(false)
+    end
+
+    it 'does not reindex a change that is rolled back' do
+      rolled_back = reindexed_since_creation do
+        ActiveRecord::Base.transaction do
+          translation.update!(title: 'Changed title')
+          raise ActiveRecord::Rollback
+        end
+      end
+
+      expect(rolled_back).to be_empty
+    end
+
+    # Tagging reloads the answer and touches its translations back, which replaces the dirty state
+    # the change was visible in — so the reindex has to be scheduled when the change happens, not
+    # when the transaction commits (Service::KnowledgeBase::CreateAnswerFromAIResult does exactly
+    # this: create the answer and tag it as `ai-generated`, in one transaction).
+    context 'when the answer is tagged in the same transaction' do
+      it 'reindexes a new translation' do
+        ActiveRecord::Base.transaction do
+          translation
+          answer.tag_add('ai-generated', 1)
+        end
+
+        expect_reindex_of(translation)
+      end
+
+      it 'reindexes a changed title' do
+        reindexed_since_creation do
+          ActiveRecord::Base.transaction do
+            translation.update!(title: 'Changed title')
+            answer.tag_add('ai-generated', 1)
+          end
+        end
+
+        expect_reindex_of(translation)
+      end
+    end
+  end
 end

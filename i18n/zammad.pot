@@ -627,7 +627,7 @@ msgstr ""
 msgid "A queue is required!"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee:335
+#: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee:423
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/composables/useTicketAiAssistanceEnqueueKnowledgeBaseAnswer.ts:43
 msgid "A related knowledge base answer is being generated. You will be notified once the draft is ready."
 msgstr ""
@@ -797,7 +797,7 @@ msgstr ""
 msgid "AI service result is missing expected keys"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiDraftFlyout.vue:110
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiDraftFlyout.vue:117
 msgid "AI suggested knowledge"
 msgstr ""
 
@@ -855,7 +855,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/generic/text_tools_modal.jst.eco:10
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_ticket_summary.jst.eco:7
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiDraftFlyout.vue:93
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiDraftFlyout.vue:100
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiSuggested.vue:52
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummaryContent.vue:91
 msgid "API server error: %s"
@@ -975,7 +975,7 @@ msgid "Accounted Time"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:74
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:184
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:185
 #: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:14
 msgid "Accounted time"
 msgstr ""
@@ -1176,7 +1176,7 @@ msgstr ""
 msgid "Add"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseActions.vue:56
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseActions.vue:57
 msgid "Add AI draft"
 msgstr ""
 
@@ -1967,7 +1967,7 @@ msgid "Archived"
 msgstr ""
 
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco:30
-#: app/assets/javascripts/app/views/ticket_zoom/knowledge_base_ai_draft_modal.jst.eco:64
+#: app/assets/javascripts/app/views/ticket_zoom/knowledge_base_ai_draft_modal.jst.eco:70
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/KnowledgeBaseAnswerAttributes.vue:64
 msgid "Archived at"
 msgstr ""
@@ -2277,7 +2277,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:31
 #: app/assets/javascripts/app/models/overview.coffee:15
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:130
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:134
 msgid "Attributes"
 msgstr ""
 
@@ -2647,7 +2647,7 @@ msgid "Bearer Token"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/knowledge_base_ai_draft_modal.jst.eco:10
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiDraftFlyout.vue:104
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiDraftFlyout.vue:111
 msgid "Before creating a new knowledge base answer, please check whether an existing answer already covers the solution for this ticket."
 msgstr ""
 
@@ -3074,7 +3074,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/knowledge_base_answer.coffee:51
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco:36
-#: app/assets/javascripts/app/views/ticket_zoom/knowledge_base_ai_draft_modal.jst.eco:73
+#: app/assets/javascripts/app/views/ticket_zoom/knowledge_base_ai_draft_modal.jst.eco:78
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/KnowledgeBaseAnswerAttributes.vue:68
 msgid "Category"
 msgstr ""
@@ -3131,7 +3131,7 @@ msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketChangeCustomer/TicketChangeCustomerFlyout.vue:51
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:70
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:84
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:82
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:65
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:127
 msgid "Change customer"
@@ -4221,8 +4221,8 @@ msgstr ""
 msgid "Could not set two-factor authentication method as default"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/widget/link.coffee:69
-#: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee:302
+#: app/assets/javascripts/app/controllers/widget/link.coffee:72
+#: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee:390
 msgid "Couldn't save changes"
 msgstr ""
 
@@ -7985,7 +7985,7 @@ msgid "General tagging principles"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/knowledge_base_ai_draft_modal.coffee:2
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiDraftFlyout.vue:54
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiDraftFlyout.vue:61
 msgid "Generate"
 msgstr ""
 
@@ -7998,7 +7998,7 @@ msgid "Generate Token"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/knowledge_base_ai_draft_modal.coffee:2
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiDraftFlyout.vue:72
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiDraftFlyout.vue:79
 msgid "Generate knowledge base answer from this ticket"
 msgstr ""
 
@@ -8636,7 +8636,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:62
 #: app/frontend/apps/desktop/components/CommonHistoryFlyout/CommonHistoryFlyout.vue:71
 #: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailTopBar/actions/history.ts:13
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:66
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:64
 #: app/frontend/apps/desktop/pages/user/components/UserDetailTopBar/actions/history.ts:13
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:121
 msgid "History"
@@ -9314,7 +9314,7 @@ msgid "Internal error"
 msgstr ""
 
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco:18
-#: app/assets/javascripts/app/views/ticket_zoom/knowledge_base_ai_draft_modal.jst.eco:52
+#: app/assets/javascripts/app/views/ticket_zoom/knowledge_base_ai_draft_modal.jst.eco:58
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/KnowledgeBaseAnswerAttributes.vue:56
 msgid "Internally published at"
 msgstr ""
@@ -9688,7 +9688,7 @@ msgid "Knowledge Base Answer"
 msgstr ""
 
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee:26
-#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/knowledge-base-answer.ts:27
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/knowledge-base-answer.ts:28
 msgid "Knowledge Base Answer \"|%s|\" has been created"
 msgstr ""
 
@@ -9745,7 +9745,7 @@ msgstr ""
 msgid "Knowledge base controls"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee:340
+#: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee:428
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/composables/useTicketAiAssistanceEnqueueKnowledgeBaseAnswer.ts:51
 #: app/services/service/ticket/ai_assistance/create_knowledge_base_answer.rb:21
 msgid "Knowledge base draft could not be generated."
@@ -9768,7 +9768,7 @@ msgid "Knowledge base self-hosted video servers"
 msgstr ""
 
 #: app/controllers/ticket/related_knowledge_base_answers_controller.rb:15
-#: app/graphql/gql/queries/ticket/ai/related_knowledge_base_answers.rb:15
+#: app/graphql/gql/queries/ticket/ai/related_knowledge_base_answers.rb:17
 msgid "Knowledge base vector search is not available."
 msgstr ""
 
@@ -9807,7 +9807,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/generic/multi_locales.jst.eco:4
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco:40
 #: app/assets/javascripts/app/views/profile/language.jst.eco:3
-#: app/assets/javascripts/app/views/ticket_zoom/knowledge_base_ai_draft_modal.jst.eco:81
+#: app/assets/javascripts/app/views/ticket_zoom/knowledge_base_ai_draft_modal.jst.eco:86
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/locale.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLocale.vue:13
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/KnowledgeBaseAnswerAttributes.vue:80
@@ -10092,7 +10092,7 @@ msgstr ""
 msgid "Link issue"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseActions.vue:60
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseActions.vue:62
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiSuggested.vue:78
 msgid "Link knowledge base answer"
 msgstr ""
@@ -10123,7 +10123,7 @@ msgstr ""
 msgid "Link type"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseLinks.vue:41
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseLinks.vue:29
 msgid "Linked"
 msgstr ""
 
@@ -10855,7 +10855,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee:7
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee:120
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketMerge/TicketMergeFlyout.vue:89
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:73
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:71
 msgid "Merge"
 msgstr ""
 
@@ -11820,7 +11820,7 @@ msgid "No entries were found in the selected folder(s)."
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/knowledge_base_ai_draft_modal.jst.eco:28
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiDraftFlyout.vue:135
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiDraftFlyout.vue:142
 msgid "No existing knowledge base answers match this topic. Generate a new answer to continue."
 msgstr ""
 
@@ -11908,13 +11908,8 @@ msgstr ""
 msgid "No related article found to process the status message on."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge.vue:86
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge.vue:111
 msgid "No related knowledge base answer links."
-msgstr ""
-
-#: app/assets/javascripts/app/views/link/kb_answer.jst.eco:36
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiSuggested.vue:91
-msgid "No related knowledge base answers found."
 msgstr ""
 
 #: app/frontend/apps/desktop/components/Search/QuickSearch/QuickSearchResultList/QuickSearchResultList.vue:152
@@ -11970,6 +11965,11 @@ msgstr ""
 #: app/controllers/tickets_controller.rb:461
 #: app/controllers/users_controller.rb:559
 msgid "No source data submitted!"
+msgstr ""
+
+#: app/assets/javascripts/app/views/link/kb_answer.jst.eco:38
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiSuggested.vue:93
+msgid "No suggestions."
 msgstr ""
 
 #: app/models/ai/agent/type/ticket_categorizer.rb:28
@@ -12045,8 +12045,8 @@ msgstr ""
 msgid "None"
 msgstr ""
 
-#: app/assets/javascripts/app/views/ticket_zoom/knowledge_base_ai_draft_modal.jst.eco:103
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiDraftFlyout.vue:124
+#: app/assets/javascripts/app/views/ticket_zoom/knowledge_base_ai_draft_modal.jst.eco:108
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiDraftFlyout.vue:131
 msgid "None of the existing knowledge base answers fit your ticket?"
 msgstr ""
 
@@ -13810,7 +13810,7 @@ msgid "Published"
 msgstr ""
 
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco:24
-#: app/assets/javascripts/app/views/ticket_zoom/knowledge_base_ai_draft_modal.jst.eco:58
+#: app/assets/javascripts/app/views/ticket_zoom/knowledge_base_ai_draft_modal.jst.eco:64
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/KnowledgeBaseAnswerAttributes.vue:60
 msgid "Published at"
 msgstr ""
@@ -14064,7 +14064,7 @@ msgstr ""
 msgid "Related knowledge base answer creation has already been started for given ticket."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:149
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:153
 #: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:180
 msgid "Related tickets"
 msgstr ""
@@ -14073,7 +14073,6 @@ msgstr ""
 msgid "Relax, your system is being set up…"
 msgstr ""
 
-#: app/assets/javascripts/app/views/link/kb_answer.jst.eco:48
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiDraftFlyoutAnswer.vue:51
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiSuggested.vue:69
 msgid "Relevance score"
@@ -14547,7 +14546,7 @@ msgstr ""
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:64
 #: app/frontend/apps/desktop/pages/authentication/components/LoginTwoFactor.vue:180
 #: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue:131
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiDraftFlyout.vue:97
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiDraftFlyout.vue:104
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiSuggested.vue:56
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummaryContent.vue:96
 #: app/frontend/apps/mobile/pages/authentication/components/LoginTwoFactor.vue:183
@@ -14776,7 +14775,7 @@ msgstr ""
 msgid "SSO"
 msgstr ""
 
-#: app/controllers/sessions_controller.rb:285
+#: app/controllers/sessions_controller.rb:288
 msgid "SSO request from untrusted IP address."
 msgstr ""
 
@@ -15174,8 +15173,8 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/link/kb_answer.jst.eco:31
 #: app/assets/javascripts/app/views/ticket_zoom/knowledge_base_ai_draft_modal.jst.eco:17
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiDraftFlyout.vue:153
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiSuggested.vue:96
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiDraftFlyout.vue:160
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiSuggested.vue:98
 msgid "Searching for related answers…"
 msgstr ""
 
@@ -15183,7 +15182,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax_customer_organization.coffee:18
 #: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax_external_data_source.coffee:13
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:845
-#: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee:245
+#: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee:330
 #: app/assets/javascripts/app/views/generic/icon_picker.jst.eco:9
 #: app/assets/javascripts/app/views/translation/form.jst.eco:7
 #: app/frontend/apps/desktop/components/CommonInputSearch/CommonInputSearch.vue:24
@@ -16430,6 +16429,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco:23
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:31
 #: app/assets/javascripts/app/views/package.jst.eco:62
+#: app/assets/javascripts/app/views/ticket_zoom/knowledge_base_ai_draft_modal.jst.eco:52
 #: app/graphql/gql/types/overview_type.rb:97
 #: app/views/mailer/ticket_create/fr.html.erb:10
 #: app/views/mailer/ticket_create/zh-cn.html.erb:10
@@ -16625,7 +16625,7 @@ msgstr ""
 msgid "Subscribed tickets"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:193
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:194
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:169
 msgid "Subscribers"
 msgstr ""
@@ -16815,9 +16815,9 @@ msgstr ""
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/tags.jst.eco:2
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco:46
 #: app/assets/javascripts/app/views/tag/index.jst.eco:3
-#: app/assets/javascripts/app/views/ticket_zoom/knowledge_base_ai_draft_modal.jst.eco:86
+#: app/assets/javascripts/app/views/ticket_zoom/knowledge_base_ai_draft_modal.jst.eco:91
 #: app/assets/javascripts/app/views/widget/tag.jst.eco:1
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:139
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:143
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/KnowledgeBaseAnswerAttributes.vue:86
 #: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue:143
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue:75
@@ -17997,7 +17997,7 @@ msgstr ""
 msgid "The required value 'group_id' is missing."
 msgstr ""
 
-#: lib/ai/provider.rb:118
+#: lib/ai/provider.rb:131
 msgid "The response could not be processed."
 msgstr ""
 
@@ -18112,7 +18112,7 @@ msgstr ""
 msgid "The suggestions could not be generated."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiDraftFlyout.vue:88
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiDraftFlyout.vue:95
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiSuggested.vue:47
 msgid "The suggestions could not be generated. Please try again later or contact your administrator."
 msgstr ""
@@ -18249,7 +18249,7 @@ msgstr ""
 msgid "The user's 'preferred_username' could not be extracted from 'id_token'."
 msgstr ""
 
-#: app/controllers/sessions_controller.rb:270
+#: app/controllers/sessions_controller.rb:273
 #: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:36
 msgid "The username or password is incorrect."
 msgstr ""
@@ -20039,7 +20039,7 @@ msgstr ""
 msgid "Unlink issue"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseLinks.vue:53
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseLinks.vue:41
 msgid "Unlink knowledge base answer"
 msgstr ""
 
@@ -20596,7 +20596,7 @@ msgstr ""
 msgid "User is inactive"
 msgstr ""
 
-#: app/controllers/sessions_controller.rb:168
+#: app/controllers/sessions_controller.rb:171
 #: app/frontend/apps/desktop/components/Search/QuickSearch/entities/User.vue:25
 msgid "User is inactive."
 msgstr ""
@@ -21371,7 +21371,7 @@ msgstr ""
 msgid "You can no longer see the group."
 msgstr ""
 
-#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/knowledge-base-answer.ts:20
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/knowledge-base-answer.ts:21
 msgid "You can no longer see the knowledge base answer."
 msgstr ""
 

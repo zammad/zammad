@@ -8,7 +8,8 @@ import type { ActivityMessageBuilder } from '../types.ts'
 
 const path = (metaObject: KnowledgeBaseAnswerTranslation) => {
   const answerId = getIdFromGraphQLId(metaObject.answer.id)
-  return `#knowledge_base/1/locale/${metaObject.kbLocale.systemLocale.locale}/answer/${answerId}`
+  const knowledgeBaseId = getIdFromGraphQLId(metaObject.answer.category.knowledgeBase.id)
+  return `#knowledge_base/${knowledgeBaseId}/locale/${metaObject.kbLocale.systemLocale.locale}/answer/${answerId}`
 }
 
 const messageText = (

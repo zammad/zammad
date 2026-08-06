@@ -1,8 +1,10 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
+import { flushPromises } from '@vue/test-utils'
 import { beforeEach } from 'vitest'
 import { computed, ref } from 'vue'
 
+import { getGraphQLMockCalls } from '#tests/graphql/builders/mocks.ts'
 import renderComponent from '#tests/support/components/renderComponent.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
@@ -19,7 +21,9 @@ import plugin from '#desktop/pages/ticket/components/TicketSidebar/plugins/infor
 import TicketSidebarInformationContent from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue'
 import { TICKET_KEY } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
 import { TICKET_SIDEBAR_SYMBOL } from '#desktop/pages/ticket/composables/useTicketSidebar.ts'
+import { LinkListDocument } from '#desktop/pages/ticket/graphql/queries/linkList.api.ts'
 import { mockLinkListQuery } from '#desktop/pages/ticket/graphql/queries/linkList.mocks.ts'
+import { TicketAiRelatedKnowledgeBaseAnswersDocument } from '#desktop/pages/ticket/graphql/queries/ticketAIRelatedKnowledgeBaseAnswers.api.ts'
 import { mockTicketAiRelatedKnowledgeBaseAnswersQuery } from '#desktop/pages/ticket/graphql/queries/ticketAIRelatedKnowledgeBaseAnswers.mocks.ts'
 import { TicketSidebarScreenType } from '#desktop/pages/ticket/types/sidebar.ts'
 
@@ -279,6 +283,37 @@ describe('TicketSidebarInformationContent', () => {
         await wrapper.findByRole('heading', { name: 'Related knowledge', level: 3 }),
       ).toBeInTheDocument()
       expect(await wrapper.findByText('Reset your password')).toBeInTheDocument()
+    })
+
+    // An agent can be the customer of a ticket in a group they have no access to. They see it in
+    //   the customer view, where the server denies both the link list and the suggestions search -
+    //   so neither may be requested.
+    it('requests nothing for an agent who only has customer access to the ticket', async () => {
+      mockPermissions(['ticket.agent', 'knowledge_base.reader'])
+      mockApplicationConfig({
+        kb_active: true,
+        ai_provider: true,
+        ai_assistance_kb_answer_suggestions: true,
+      })
+      mockLinkListQuery({ linkList: [] })
+      mockTicketAiRelatedKnowledgeBaseAnswersQuery({
+        ticketAIRelatedKnowledgeBaseAnswers: { pending: false, answers: [] },
+      })
+
+      const ticket = createDummyTicket({
+        defaultPolicy: { update: true, agentReadAccess: false },
+      })
+
+      const wrapper = renderInformationSidebar(ticket)
+
+      await flushPromises()
+
+      expect(
+        wrapper.queryByRole('heading', { name: 'Related knowledge', level: 3 }),
+      ).not.toBeInTheDocument()
+
+      expect(getGraphQLMockCalls(LinkListDocument)).toHaveLength(0)
+      expect(getGraphQLMockCalls(TicketAiRelatedKnowledgeBaseAnswersDocument)).toHaveLength(0)
     })
   })
 })

@@ -1,21 +1,17 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import {
-  EnumLinkType,
-  type LinkListQuery,
-  type TicketAiRelatedKnowledgeBaseAnswersQuery,
-} from '#shared/graphql/types.ts'
+import { EnumLinkType, type LinkListQuery } from '#shared/graphql/types.ts'
 import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
 
 import { useLinkAddMutation } from '#desktop/pages/ticket/graphql/mutations/linkAdd.api.ts'
 import { useLinkRemoveMutation } from '#desktop/pages/ticket/graphql/mutations/linkRemove.api.ts'
 import { LinkListDocument } from '#desktop/pages/ticket/graphql/queries/linkList.api.ts'
-import { TicketAiRelatedKnowledgeBaseAnswersDocument } from '#desktop/pages/ticket/graphql/queries/ticketAIRelatedKnowledgeBaseAnswers.api.ts'
 
 export const useKnowledgeBaseAnswerLinks = (ticketId: ID, targetType: string) => {
   const linkAddHandler = new MutationHandler(
     useLinkAddMutation({
-      // Add the new link to the ticket's link list right away,
+      // Add the new link to the ticket's link list right away. The AI suggestions need no update
+      //   of their own: they are rendered without the answers the link list already holds.
       update: (cache, { data }) => {
         if (!data?.linkAdd?.link) return
 
@@ -37,35 +33,6 @@ export const useKnowledgeBaseAnswerLinks = (ticketId: ID, targetType: string) =>
           linkList: [...(existingLinks?.linkList || []), newLink],
         }
         cache.writeQuery({ query: LinkListDocument, data: existingLinks, variables })
-
-        // Drop the just-linked answer from the AI suggestions cache, so it no longer shows up
-        // under "Suggested by AI" without waiting for the next refetch.
-        const aiVariables = { ticketId }
-        const existingSuggestions = cache.readQuery<TicketAiRelatedKnowledgeBaseAnswersQuery>({
-          query: TicketAiRelatedKnowledgeBaseAnswersDocument,
-          variables: aiVariables,
-        })
-
-        const suggested = existingSuggestions?.ticketAIRelatedKnowledgeBaseAnswers
-        if (!suggested?.answers?.length) return
-
-        const remainingAnswers = suggested.answers.filter(
-          (answer) => answer.translation.id !== newLink.item.id,
-        )
-
-        if (remainingAnswers.length === suggested.answers.length) return
-
-        cache.writeQuery({
-          query: TicketAiRelatedKnowledgeBaseAnswersDocument,
-          variables: aiVariables,
-          data: {
-            ...existingSuggestions,
-            ticketAIRelatedKnowledgeBaseAnswers: {
-              ...suggested,
-              answers: remainingAnswers,
-            },
-          },
-        })
       },
     }),
   )

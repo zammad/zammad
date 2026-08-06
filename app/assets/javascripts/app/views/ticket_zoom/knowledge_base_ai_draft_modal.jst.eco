@@ -44,29 +44,34 @@
               <span class="kb-answer-excerpt text-muted"><%= item.excerpt %></span>
             <% end %>
 
-            <%# Dates get their own row, so an odd number of them cannot pull the attributes below up. %>
-            <% if item.internalAt or item.publishedAt or item.archivedAt: %>
-              <div class="horizontal two-columns kb-answer-attributes">
-                <% if item.internalAt: %>
-                  <div class="column">
-                    <label><%- @T('Internally published at') %></label>
-                    <%- @humanTime(item.internalAt, false, 'time', 'absolute') %>
-                  </div>
-                <% end %>
-                <% if item.publishedAt: %>
-                  <div class="column">
-                    <label><%- @T('Published at') %></label>
-                    <%- @humanTime(item.publishedAt, false, 'time', 'absolute') %>
-                  </div>
-                <% end %>
-                <% if item.archivedAt: %>
-                  <div class="column">
-                    <label><%- @T('Archived at') %></label>
-                    <%- @humanTime(item.archivedAt, false, 'time', 'absolute') %>
-                  </div>
-                <% end %>
-              </div>
-            <% end %>
+            <%# State and dates get their own row, so an odd number of them cannot pull the attributes below up. %>
+            <%# The state is spelled out because a draft carries none of the dates. %>
+            <div class="horizontal two-columns kb-answer-attributes">
+              <% if item.state: %>
+                <div class="column">
+                  <label><%- @T('State') %></label>
+                  <span class="<%= item.stateCss %>"><%- @T(item.state) %></span>
+                </div>
+              <% end %>
+              <% if item.internalAt: %>
+                <div class="column">
+                  <label><%- @T('Internally published at') %></label>
+                  <%- @humanTime(item.internalAt, false, 'time', 'absolute') %>
+                </div>
+              <% end %>
+              <% if item.publishedAt: %>
+                <div class="column">
+                  <label><%- @T('Published at') %></label>
+                  <%- @humanTime(item.publishedAt, false, 'time', 'absolute') %>
+                </div>
+              <% end %>
+              <% if item.archivedAt: %>
+                <div class="column">
+                  <label><%- @T('Archived at') %></label>
+                  <%- @humanTime(item.archivedAt, false, 'time', 'absolute') %>
+                </div>
+              <% end %>
+            </div>
 
             <div class="horizontal two-columns kb-answer-attributes">
               <div class="column">

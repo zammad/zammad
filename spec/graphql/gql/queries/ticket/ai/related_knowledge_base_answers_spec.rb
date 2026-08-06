@@ -11,8 +11,8 @@ RSpec.describe Gql::Queries::Ticket::AI::RelatedKnowledgeBaseAnswers, authentica
   let(:variables)      { { ticketId: gql.id(ticket) } }
   let(:query) do
     <<~QUERY
-      query ticketAIRelatedKnowledgeBaseAnswers($ticketId: ID!) {
-        ticketAIRelatedKnowledgeBaseAnswers(ticketId: $ticketId) {
+      query ticketAIRelatedKnowledgeBaseAnswers($ticketId: ID!, $includeDraftsAndArchived: Boolean, $includeLinkedAnswers: Boolean) {
+        ticketAIRelatedKnowledgeBaseAnswers(ticketId: $ticketId, includeDraftsAndArchived: $includeDraftsAndArchived, includeLinkedAnswers: $includeLinkedAnswers) {
           pending
           answers {
             score
@@ -43,6 +43,29 @@ RSpec.describe Gql::Queries::Ticket::AI::RelatedKnowledgeBaseAnswers, authentica
         'pending' => false,
         'answers' => [{ 'score' => 0.9, 'translation' => { 'title' => translation.title } }],
       )
+    end
+
+    it 'searches only the internally visible answers that are not linked yet' do
+      expect(Service::Ticket::AI::RelatedKnowledgeBaseAnswers)
+        .to have_received(:execute).with(ticket:, include_drafts_and_archived: false, include_linked_answers: false, current_user: agent)
+    end
+  end
+
+  context 'when drafts and archived answers are requested' do
+    let(:variables) { { ticketId: gql.id(ticket), includeDraftsAndArchived: true } }
+
+    it 'hands the flag to the service' do
+      expect(Service::Ticket::AI::RelatedKnowledgeBaseAnswers)
+        .to have_received(:execute).with(ticket:, include_drafts_and_archived: true, include_linked_answers: false, current_user: agent)
+    end
+  end
+
+  context 'when the linked answers are requested' do
+    let(:variables) { { ticketId: gql.id(ticket), includeLinkedAnswers: true } }
+
+    it 'hands the flag to the service' do
+      expect(Service::Ticket::AI::RelatedKnowledgeBaseAnswers)
+        .to have_received(:execute).with(ticket:, include_drafts_and_archived: false, include_linked_answers: true, current_user: agent)
     end
   end
 

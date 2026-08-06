@@ -1,6 +1,8 @@
 <!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
+import { useTouchDevice } from '#shared/composables/useTouchDevice.ts'
+
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
 import { useTicketInformation } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
@@ -32,6 +34,8 @@ defineEmits<{
 const { ticketId } = useTicketInformation()
 
 const { linkAnswer } = useKnowledgeBaseAnswerLinks(ticketId.value, props.targetType)
+
+const { isTouchDevice } = useTouchDevice()
 </script>
 
 <template>
@@ -76,10 +80,13 @@ const { linkAnswer } = useKnowledgeBaseAnswerLinks(ticketId.value, props.targetT
         <template v-if="isTicketEditable" #action="{ hasOpenedViaLongPress }">
           <CommonButton
             v-tooltip="$t('Link knowledge base answer')"
-            :class="{ 'opacity-100': hasOpenedViaLongPress }"
-            class="text-blue-800! opacity-0 group-hover:opacity-100 focus-visible:opacity-100"
+            :class="{
+              'opacity-100': hasOpenedViaLongPress,
+              'opacity-0 group-hover:opacity-100 focus-visible:opacity-100': !isTouchDevice,
+            }"
+            class="text-blue-800!"
             size="small"
-            variant="tertiary"
+            variant="none"
             icon="plus-square-fill"
             @click="linkAnswer(answer.translation.id)"
           />
@@ -87,8 +94,10 @@ const { linkAnswer } = useKnowledgeBaseAnswerLinks(ticketId.value, props.targetT
       </TicketKnowledgeBaseAnswer>
     </ul>
 
+    <!-- Not "no answers found": the best matches may all be linked already, and those are listed
+    above rather than suggested again. -->
     <CommonLabel v-else size="small" class="text-stone-200! dark:text-neutral-500!">
-      {{ $t('No related knowledge base answers found.') }}
+      {{ $t('No suggestions.') }}
     </CommonLabel>
 
     <template #skeleton>

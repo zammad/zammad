@@ -69,6 +69,12 @@ query onlineNotifications {
             }
             answer {
               id
+              category {
+                id
+                knowledgeBase {
+                  id
+                }
+              }
             }
           }
         }

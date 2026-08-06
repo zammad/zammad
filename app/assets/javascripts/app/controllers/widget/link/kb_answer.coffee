@@ -1,5 +1,11 @@
+# The sidebar list and the AI draft modal each run their own suggestions search: the list offers
+# answers to work with, while the modal asks whether an answer already covers the ticket - there a
+# draft or an archived answer counts, too. The results differ, so they are kept apart per scope
+# ('sidebar' and 'modal'), and a scope nobody is watching is only invalidated instead of refetched.
 class App.WidgetLinkKbAnswer extends App.WidgetLink
   @registerPopovers 'KnowledgeBaseAnswer'
+
+  SCOPES = ['sidebar', 'modal']
 
   elements:
     '.js-add':           'addButton'
@@ -25,7 +31,7 @@ class App.WidgetLinkKbAnswer extends App.WidgetLink
       return if data.name not in ['ai_assistance_kb_answer_suggestions', 'ai_assistance_kb_answer_from_ticket_generation']
 
       @render()
-      @ensureSuggestions() if @suggestionsVisible()
+      @ensureSuggestions('sidebar') if @suggestionsVisible()
     )
 
     return if !@suggestionsSearchAvailable()
@@ -35,16 +41,23 @@ class App.WidgetLinkKbAnswer extends App.WidgetLink
     @controllerBind('ticket::related_knowledge_base_answers::ping', (data) =>
       return if data.ticket_id?.toString() isnt @object.id.toString()
 
-      return if !@suggestionsVisible() and !@aiDraftModal
-
       if data.error
-        @suggestions       = []
-        @suggestionsLoaded = true
-        @suggestionsError  = true
+        for scope in SCOPES
+          # A scope nobody watches is invalidated instead, so it searches again (rather than showing a
+          # stale error, or waiting forever on a request it will never issue) once it is shown.
+          if !@scopeWatched(scope)
+            @invalidateSuggestions(scope)
+            continue
+
+          state        = @suggestionState(scope)
+          state.ids    = []
+          state.loaded = true
+          state.error  = true
+
         @render()
         return
 
-      @requestSuggestions()
+      @refreshSuggestions()
     )
 
     # A new article changes the ticket content the search is based on, so re-run it when the article
@@ -57,10 +70,10 @@ class App.WidgetLinkKbAnswer extends App.WidgetLink
       return if articleIds is @lastArticleIds
 
       @lastArticleIds = articleIds
-      @requestSuggestions() if @suggestionsVisible() or @aiDraftModal
+      @refreshSuggestions()
     )
 
-    @requestSuggestions() if @suggestionsVisible()
+    @requestSuggestions('sidebar') if @suggestionsVisible()
 
   getAjaxAttributes: (field, attributes) ->
     @apiPath = App.Config.get('api_path')
@@ -119,8 +132,32 @@ class App.WidgetLinkKbAnswer extends App.WidgetLink
   currentArticleIds: ->
     (App.Ticket.find(@object.id)?.article_ids or []).join(',')
 
-  suggestionsForRendering: (showScore = false) ->
-    (@suggestions or [])
+  # The search state of one scope, see the class comment.
+  suggestionState: (scope) ->
+    @suggestionStates ||= {}
+    @suggestionStates[scope] ||= {
+      requested: false
+      loaded:    false
+      error:     false
+      ids:       []
+      scores:    {}
+      excerpts:  {}
+    }
+
+  # Whether the given scope is on screen, and therefore worth searching for.
+  scopeWatched: (scope) =>
+    if scope is 'modal' then Boolean(@aiDraftModal) else @suggestionsVisible()
+
+  # Its result no longer matches the ticket, so drop the whole state instead of only asking for a new
+  # search: the answers of the previous one would otherwise be rendered (and, in the modal, be
+  # confirmable with "Generate") until the new one arrives. A cleared scope shows its waiting state.
+  invalidateSuggestions: (scope) ->
+    delete @suggestionStates?[scope]
+
+  suggestionsForRendering: (scope, showScore = false) ->
+    state = @suggestionState(scope)
+
+    state.ids
       .map (id) =>
         if translation = App.KnowledgeBaseAnswerTranslation.fullLocal(id)
           answer    = translation.parent()
@@ -130,8 +167,10 @@ class App.WidgetLinkKbAnswer extends App.WidgetLink
           title:       translation.title
           id:          translation.id
           url:         @kbAnswerUrl(translation)
-          score:       if showScore then ((@suggestionScores?[id] or 0) * 100).toFixed() else undefined
-          excerpt:     @suggestionExcerpts?[id] or ''
+          score:       if showScore then ((state.scores[id] or 0) * 100).toFixed() else undefined
+          excerpt:     state.excerpts[id] or ''
+          state:       answer?.can_be_published_state()
+          stateCss:    answer?.can_be_published_state_css()
           publishedAt: answer?.published_at
           internalAt:  answer?.internal_at
           archivedAt:  answer?.archived_at
@@ -142,29 +181,56 @@ class App.WidgetLinkKbAnswer extends App.WidgetLink
       .filter (elem) ->
         elem?
 
+  # The state the AI draft modal renders from.
   suggestionsState: =>
+    state     = @suggestionState('modal')
     showScore = App.User.current()?.permission('admin.ai_provider,admin.ai_knowledge_base')
 
     {
       suggestionsSearchAvailable: @suggestionsSearchAvailable()
-      suggestions:                @suggestionsForRendering(showScore)
-      suggestionsLoaded:          @suggestionsLoaded
-      suggestionsError:           @suggestionsError
+      suggestions:                @suggestionsForRendering('modal', showScore)
+      suggestionsLoaded:          state.loaded
+      suggestionsError:           state.error
     }
 
-  ensureSuggestions: =>
+  ensureSuggestions: (scope) =>
     return if !@suggestionsSearchAvailable()
-    return if @suggestionsRequested
+    return if @suggestionState(scope).requested
 
-    @requestSuggestions()
+    @requestSuggestions(scope)
 
+  # Re-run the searches on screen; the others are invalidated, so they run again once they are shown.
+  refreshSuggestions: =>
+    for scope in SCOPES
+      if @scopeWatched(scope)
+        @requestSuggestions(scope)
+      else
+        @invalidateSuggestions(scope)
+
+  # An unlinked answer is eligible as a suggestion again, but the server dropped it from the search
+  # result, so it can only come back by re-running it (#saveToServer covers the opposite direction
+  # locally).
+  onLinkRemoved: =>
+    return if !@suggestionsSearchAvailable()
+
+    @refreshSuggestions()
+
+  # The sidebar list's retry button.
   retrySuggestions: (e) =>
     @preventDefault(e) if e
-    @suggestionsLoaded = false
-    @suggestionsError  = false
+    @retryScope('sidebar')
+
+  # The modal's retry button, which lives outside this widget's element.
+  retryModalSuggestions: =>
+    @retryScope('modal')
+
+  retryScope: (scope) ->
+    state        = @suggestionState(scope)
+    state.loaded = false
+    state.error  = false
     @render()
 
-    @requestSuggestions()
+    @requestSuggestions(scope)
 
   # Promote an AI suggestion to a permanent link with one click (mirrors the manual "+ Link" flow,
   # reusing #saveToServer). #saveToServer drops the linked answer from the suggestions on success.
@@ -173,34 +239,52 @@ class App.WidgetLinkKbAnswer extends App.WidgetLink
     e.stopPropagation()
     @saveToServer($(e.currentTarget).data('object-id'))
 
-  requestSuggestions: =>
-    @suggestionsRequested = true
+  requestSuggestions: (scope) =>
+    @suggestionState(scope).requested = true
 
     # The ticket zoom rebuilds the sidebar (recreating this widget) more than once on a ticket
-    # switch. Debounce per ticket across instances so only the final, visible instance issues the
-    # request, instead of two instances racing it and the first being canceled.
+    # switch. Debounce per ticket and scope across instances so only the final, visible instance
+    # issues the request, instead of two instances racing it and the first being canceled.
+    key = "#{@object.id}-#{scope}"
+
     App.WidgetLinkKbAnswer.suggestionsTimeouts ||= {}
-    clearTimeout(App.WidgetLinkKbAnswer.suggestionsTimeouts[@object.id])
-    @suggestionsTimeout = App.WidgetLinkKbAnswer.suggestionsTimeouts[@object.id] = setTimeout(@fetchSuggestions, 100)
+    clearTimeout(App.WidgetLinkKbAnswer.suggestionsTimeouts[key])
+
+    @suggestionsTimeouts ||= {}
+    @suggestionsTimeouts[key] = App.WidgetLinkKbAnswer.suggestionsTimeouts[key] = setTimeout((=> @fetchSuggestions(scope)), 100)
 
   releaseController: =>
-    # Cancel a still-pending debounced fetch so it cannot run after teardown. Only our own timeout,
-    # so a successor instance that already replaced it in the shared map keeps its pending request.
-    if App.WidgetLinkKbAnswer.suggestionsTimeouts?[@object.id] is @suggestionsTimeout
-      clearTimeout(@suggestionsTimeout)
-      delete App.WidgetLinkKbAnswer.suggestionsTimeouts[@object.id]
+    # Cancel still-pending debounced fetches so they cannot run after teardown. Only our own
+    # timeouts, so a successor instance that already replaced one in the shared map keeps its
+    # pending request.
+    for key, timeout of (@suggestionsTimeouts or {})
+      continue if App.WidgetLinkKbAnswer.suggestionsTimeouts?[key] isnt timeout
+
+      clearTimeout(timeout)
+      delete App.WidgetLinkKbAnswer.suggestionsTimeouts[key]
 
     super
 
-  fetchSuggestions: =>
-    url = "#{App.Config.get('api_path')}/tickets/#{@object.id}/related_knowledge_base_answers"
+  fetchSuggestions: (scope) =>
+    url    = "#{App.Config.get('api_path')}/tickets/#{@object.id}/related_knowledge_base_answers"
+    params = []
+
+    # Before generating an answer the question is whether one already covers the ticket, so the modal
+    # also asks for drafts, archived and already linked answers.
+    if scope is 'modal'
+      params.push('include_drafts_and_archived=true')
+      params.push('include_linked_answers=true')
 
     # Testing hook: force the embedding source via App.Config.set('ui_ticket_related_kb_answers_embedding_source', 'summary').
     embeddingSource = App.Config.get('ui_ticket_related_kb_answers_embedding_source')
-    url += "?embedding_source=#{embeddingSource}" if embeddingSource
+    params.push("embedding_source=#{embeddingSource}") if embeddingSource
+
+    url += "?#{params.join('&')}" if !_.isEmpty(params)
+
+    state = @suggestionState(scope)
 
     @ajax(
-      id:                    "ticket_related_kb_answers_#{@object.id}"
+      id:                    "ticket_related_kb_answers_#{@object.id}_#{scope}"
       type:                  'POST'
       url:                   url
       failResponseNoTrigger: true
@@ -210,22 +294,22 @@ class App.WidgetLinkKbAnswer extends App.WidgetLink
         # Embedding still being produced: show the waiting state. A ping (or new article) will make
         # us re-request, and the server resolves `pending` once the embed job has settled.
         if data.result.pending
-          @suggestions       = []
-          @suggestionsError  = false
-          @suggestionsLoaded = false
+          state.ids    = []
+          state.error  = false
+          state.loaded = false
           @render()
           return
 
         App.Collection.loadAssets(data.assets) if data.assets
-        @suggestionsLoaded  = true
-        @suggestionsError   = false
-        @suggestions        = data.result.answer_translation_ids or []
-        @suggestionScores   = data.result.scores or {}
-        @suggestionExcerpts = data.result.excerpts or {}
+        state.loaded   = true
+        state.error    = false
+        state.ids      = data.result.answer_translation_ids or []
+        state.scores   = data.result.scores or {}
+        state.excerpts = data.result.excerpts or {}
         @render()
       error: =>
-        @suggestionsLoaded = true
-        @suggestionsError  = true
+        state.loaded = true
+        state.error  = true
         @render()
     )
 
@@ -238,6 +322,7 @@ class App.WidgetLinkKbAnswer extends App.WidgetLink
       user?.permission('ticket.agent+knowledge_base.editor')
 
     showScore = user?.permission('admin.ai_provider,admin.ai_knowledge_base')
+    state     = @suggestionState('sidebar')
 
     @html App.view('link/kb_answer')(
       list:               @linksForRendering()
@@ -245,9 +330,9 @@ class App.WidgetLinkKbAnswer extends App.WidgetLink
       publicLinks:        @kbAnswerLinksArePublic()
       aiEnabled:          aiEnabled
       suggestionsEnabled: @suggestionsVisible()
-      suggestionsLoaded:  @suggestionsLoaded
-      suggestionsError:   @suggestionsError
-      suggestions:        @suggestionsForRendering(showScore)
+      suggestionsLoaded:  state.loaded
+      suggestionsError:   state.error
+      suggestions:        @suggestionsForRendering('sidebar', showScore)
     )
 
     @renderPopovers()
@@ -309,8 +394,11 @@ class App.WidgetLinkKbAnswer extends App.WidgetLink
       processData: true
       success: (data, status, xhr) =>
         # A just-linked answer is no longer a suggestion: drop it locally so it moves straight into
-        # the linked list (the backend also excludes linked answers from the next suggestions fetch).
-        @suggestions = (@suggestions or []).filter (suggestionId) -> "#{suggestionId}" isnt "#{id}"
+        # the linked list (the backend drops linked answers from the next suggestions fetch as well).
+        for scope in SCOPES
+          state     = @suggestionState(scope)
+          state.ids = state.ids.filter (suggestionId) -> "#{suggestionId}" isnt "#{id}"
+
         @fetch()
         @setInputVisible(false)
       error: (xhr, statusText, error) =>
@@ -326,15 +414,22 @@ class App.WidgetLinkKbAnswer extends App.WidgetLink
     @preventDefault(e)
     e.stopPropagation()
 
-    # The sidebar list may be hidden, in which case nothing has searched yet - the modal is the one
-    # asking for the suggestions then. #render keeps the open modal in sync with the result.
-    @ensureSuggestions()
+    # The modal's search is its own (it takes in drafts and archived answers), so the sidebar list
+    # cannot stand in for it. #render keeps the open modal in sync with the result.
+    @ensureSuggestions('modal')
 
     @aiDraftModal = new App.TicketZoomKnowledgeBaseAiDraftModal(
       suggestionsState: @suggestionsState
       onGenerate:       @generateAiAnswer
-      onRetry:          @retrySuggestions
-      onClosed:         => @aiDraftModal = undefined
+      onRetry:          @retryModalSuggestions
+      onClosed:         =>
+        @aiDraftModal = undefined
+
+        # A closed modal remembers nothing, so every open searches from scratch — like the desktop
+        # view's flyout. Its previous result can predate the answers the ticket has now (the draft
+        # generated from this very modal, or one someone else published meanwhile), and a decision
+        # as final as "no answer covers this, write a new one" must not be made on those.
+        @invalidateSuggestions('modal')
     )
 
   # The modal keeps itself open until the request settled: it closes on success and renders the

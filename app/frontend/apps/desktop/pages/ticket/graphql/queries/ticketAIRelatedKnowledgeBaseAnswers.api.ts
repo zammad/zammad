@@ -7,8 +7,12 @@ import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;
 
 export const TicketAiRelatedKnowledgeBaseAnswersDocument = gql`
-    query ticketAIRelatedKnowledgeBaseAnswers($ticketId: ID!) {
-  ticketAIRelatedKnowledgeBaseAnswers(ticketId: $ticketId) {
+    query ticketAIRelatedKnowledgeBaseAnswers($ticketId: ID!, $includeDraftsAndArchived: Boolean, $includeLinkedAnswers: Boolean) {
+  ticketAIRelatedKnowledgeBaseAnswers(
+    ticketId: $ticketId
+    includeDraftsAndArchived: $includeDraftsAndArchived
+    includeLinkedAnswers: $includeLinkedAnswers
+  ) {
     pending
     answers {
       score

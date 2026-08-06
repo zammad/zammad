@@ -93,6 +93,23 @@ RSpec.describe 'Ticket zoom > Link knowledge base answer', type: :system do
           .and(have_no_css('.js-kb-suggestion-add'))
       end
     end
+
+    it 'offers the answer as a suggestion again after unlinking it' do
+      within :active_content, '.link_kb_answers' do
+        find('.js-kb-suggestion-add').click
+
+        expect(page).to have_css('.js-delete').and(have_no_css('.js-kb-suggestion-add'))
+
+        find('.js-delete').click
+
+        # Linking dropped the answer from the suggestions locally, so it can only come back by
+        #   re-running the search once the link is gone.
+        expect(page)
+          .to have_css('.js-kb-suggestion-add')
+          .and(have_text(translation.title))
+          .and(have_no_css('.js-delete'))
+      end
+    end
   end
 
   describe 'AI suggestions with no results', authenticated_as: :authenticate do
@@ -124,7 +141,7 @@ RSpec.describe 'Ticket zoom > Link knowledge base answer', type: :system do
 
     it 'shows an empty state message in the sidebar' do
       within :active_content, '.link_kb_answers' do
-        expect(page).to have_text('No related knowledge base answers found.')
+        expect(page).to have_text('No suggestions.')
       end
     end
   end
@@ -173,9 +190,17 @@ RSpec.describe 'Ticket zoom > Link knowledge base answer', type: :system do
     let(:pending_search)  { { pending: true } }
     let(:resolved_search) { { answers: [{ translation:, score: 0.88 }], pending: false } }
 
-    # Consecutive return values for the (stubbed) suggestions search; the last one repeats.
-    let(:search_results)      { [resolved_search] }
+    # What the (stubbed) suggestions search currently returns. The sidebar list and the modal each run
+    # their own search, so the result is held rather than queued - a test changes it to make the next
+    # search of either scope come back differently.
+    let(:search_result)       { resolved_search }
+    let(:current_search)      { { result: search_result } }
     let(:suggestions_enabled) { true }
+
+    # The widening flags of every search, in call order: only the modal's search covers drafts and
+    # archived answers, and only it keeps the answers already linked to the ticket.
+    let(:requested_drafts_and_archived) { [] }
+    let(:requested_linked_answers)      { [] }
 
     def authenticate
       setup_ai_provider('zammad_ai')
@@ -183,8 +208,11 @@ RSpec.describe 'Ticket zoom > Link knowledge base answer', type: :system do
 
       allow(Service::AI::VectorDB::Available).to receive(:execute).and_return(true)
       allow(Service::AI::VectorDB::Available).to receive(:execute).with(ping: false).and_return(false)
-      allow(Service::Ticket::AI::RelatedKnowledgeBaseAnswers)
-        .to receive(:execute).and_return(*search_results)
+      allow(Service::Ticket::AI::RelatedKnowledgeBaseAnswers).to receive(:execute) do |**args|
+        requested_drafts_and_archived << args[:include_drafts_and_archived]
+        requested_linked_answers << args[:include_linked_answers]
+        current_search[:result]
+      end
 
       true
     end
@@ -228,6 +256,141 @@ RSpec.describe 'Ticket zoom > Link knowledge base answer', type: :system do
       end
 
       expect(page).to have_text('A related knowledge base answer is being generated. You will be notified once the draft is ready.')
+    end
+
+    # Whether an answer already covers the ticket is also answered by an unfinished or a retired one,
+    # so the modal searches wider than the sidebar list.
+    it 'lists draft answers, with their state, in the modal' do
+      draft_translation = draft_answer.translations.first
+
+      within :active_content, '.link_kb_answers' do
+        expect(page).to have_text(translation.title)
+
+        # The sidebar list offers answers to work with, so it searches the internally visible ones
+        #   that are not linked yet.
+        expect(requested_drafts_and_archived).to eq([false])
+        expect(requested_linked_answers).to eq([false])
+
+        current_search[:result] = { answers: [{ translation: draft_translation, score: 0.9 }], pending: false }
+
+        find('.js-kb-ai-generate').click
+      end
+
+      in_modal do
+        expect(page)
+          .to have_text(draft_translation.title)
+          .and(have_css('.state-draft', text: 'draft'))
+
+        click '.js-cancel'
+      end
+
+      expect(requested_drafts_and_archived).to include(true)
+      expect(requested_linked_answers).to include(true)
+
+      # Each scope keeps its own result: the draft belongs to the modal's wider search only.
+      within :active_content, '.link_kb_answers' do
+        expect(page)
+          .to have_text(translation.title)
+          .and(have_no_text(draft_translation.title))
+      end
+    end
+
+    # A reopened modal has to reflect the ticket as it is now. That its previous answers are also
+    # gone from the moment it opens (rather than lingering, confirmable with "Generate", until the
+    # fresh search lands) is not assertable from here: Capybara waits for the request to settle after
+    # the click, so it only ever observes the state afterwards.
+    it 'searches again for the modal when the ticket changed while it was closed' do
+      other_translation = published_answer_in_other_category.translations.first
+
+      within :active_content, '.link_kb_answers' do
+        expect(page).to have_text(translation.title)
+
+        find('.js-kb-ai-generate').click
+      end
+
+      in_modal do
+        expect(page).to have_text(translation.title)
+
+        click '.js-cancel'
+      end
+
+      current_search[:result] = { answers: [{ translation: other_translation, score: 0.7 }], pending: false }
+
+      create(:ticket_article, ticket:)
+
+      within :active_content, '.link_kb_answers' do
+        # The sidebar list is on screen, so it re-runs the search right away - by the time its new
+        # result is up, the closed modal has been invalidated as well.
+        expect(page).to have_text(other_translation.title)
+
+        find('.js-kb-ai-generate').click
+      end
+
+      in_modal disappears: false do
+        expect(page)
+          .to have_text(other_translation.title)
+          .and(have_no_text(translation.title))
+      end
+    end
+
+    # Generating a draft adds an answer without changing the ticket, so nothing invalidates the
+    # modal's result - it has to search again on its own, or reopening keeps showing the answers (or
+    # the empty state) from before the generation.
+    it 'searches again whenever the modal is reopened' do
+      current_search[:result] = { answers: [], pending: false }
+
+      within :active_content, '.link_kb_answers' do
+        find('.js-kb-ai-generate').click
+      end
+
+      in_modal do
+        expect(page).to have_text('No existing knowledge base answers match this topic.')
+
+        click '.js-cancel'
+      end
+
+      # What the generated draft looks like to the next search of the modal.
+      current_search[:result] = resolved_search
+
+      within :active_content, '.link_kb_answers' do
+        find('.js-kb-ai-generate').click
+      end
+
+      in_modal disappears: false do
+        expect(page).to have_text(translation.title)
+      end
+    end
+
+    # The embed job's failure ping arrives while the modal is closed, so nobody is there to show it -
+    # reopening has to search again instead of waiting on a request it will never issue.
+    it 'searches again when the modal is reopened after a failed embedding' do
+      current_search[:result] = pending_search
+
+      within :active_content, '.link_kb_answers' do
+        find('.js-kb-ai-generate').click
+      end
+
+      in_modal do
+        expect(page).to have_text('Searching for related answers…')
+
+        click '.js-cancel'
+      end
+
+      Service::Ticket::AI::RelatedKnowledgeBaseAnswers.broadcast_error(ticket, 'embedding failed')
+
+      current_search[:result] = resolved_search
+
+      within :active_content, '.link_kb_answers' do
+        # The sidebar list is on screen, so it shows the failure - and its arrival is what makes the
+        # reopened modal below search again.
+        expect(page).to have_text('The suggestions could not be generated.')
+
+        find('.js-kb-ai-generate').click
+      end
+
+      in_modal disappears: false do
+        expect(page).to have_text(translation.title)
+      end
     end
 
     context 'when suggestions in the ticket sidebar are disabled' do
@@ -280,7 +443,7 @@ RSpec.describe 'Ticket zoom > Link knowledge base answer', type: :system do
     end
 
     context 'when the suggestions search is still running' do
-      let(:search_results) { [pending_search] }
+      let(:search_result) { pending_search }
 
       it 'opens the modal and blocks the submit until the search settles' do
         within :active_content, '.link_kb_answers' do
@@ -296,7 +459,7 @@ RSpec.describe 'Ticket zoom > Link knowledge base answer', type: :system do
     end
 
     context 'when the search comes back without results' do
-      let(:search_results) { [{ answers: [], pending: false }] }
+      let(:search_result) { { answers: [], pending: false } }
 
       it 'shows the empty state and still allows generating a draft' do
         within :active_content, '.link_kb_answers' do
@@ -315,9 +478,7 @@ RSpec.describe 'Ticket zoom > Link knowledge base answer', type: :system do
 
     context 'when the search re-runs while the modal is open' do
       let(:other_translation) { published_answer_in_other_category.translations.first }
-      let(:search_results) do
-        [resolved_search, { answers: [{ translation: other_translation, score: 0.7 }], pending: false }]
-      end
+      let(:rerun_search)      { { answers: [{ translation: other_translation, score: 0.7 }], pending: false } }
 
       it 'updates the open modal' do
         within :active_content, '.link_kb_answers' do
@@ -325,6 +486,12 @@ RSpec.describe 'Ticket zoom > Link knowledge base answer', type: :system do
 
           find('.js-kb-ai-generate').click
         end
+
+        in_modal disappears: false do
+          expect(page).to have_text(translation.title)
+        end
+
+        current_search[:result] = rerun_search
 
         # A new article changes the ticket content, so the widget re-runs the search - the modal is
         # already open at that point and has to follow along instead of keeping its initial list.
@@ -338,7 +505,7 @@ RSpec.describe 'Ticket zoom > Link knowledge base answer', type: :system do
       end
 
       context 'when the re-run is still pending' do
-        let(:search_results) { [resolved_search, pending_search] }
+        let(:rerun_search) { pending_search }
 
         it 'blocks the submit until the search settles' do
           within :active_content, '.link_kb_answers' do
@@ -346,6 +513,12 @@ RSpec.describe 'Ticket zoom > Link knowledge base answer', type: :system do
 
             find('.js-kb-ai-generate').click
           end
+
+          in_modal disappears: false do
+            expect(page).to have_text(translation.title)
+          end
+
+          current_search[:result] = rerun_search
 
           create(:ticket_article, ticket:)
 

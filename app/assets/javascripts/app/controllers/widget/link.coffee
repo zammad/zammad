@@ -63,6 +63,9 @@ class App.WidgetLink extends App.Controller
       processData: true
       success: (data, status, xhr) =>
         @fetch()
+
+        # Subclasses can react to the removal, e.g. re-run a search that excluded the linked object.
+        @onLinkRemoved?()
       error: (xhr, statusText, error) =>
         @notify(
           type:      'error'

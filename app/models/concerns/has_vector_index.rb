@@ -4,27 +4,43 @@ module HasVectorIndex
   extend ActiveSupport::Concern
 
   included do
-    after_commit  :vector_index_update_later, if: :persisted?
-    after_destroy :vector_index_destroy
+    after_save  :vector_index_update_on_change
+    after_touch :vector_index_update_on_change
+
+    # After the commit, like the reindex: removing the document is a write to another store, which a
+    # rollback cannot take back — it would leave the record in place with nothing indexed for it.
+    after_destroy_commit :vector_index_destroy
   end
 
-  # Enqueue a reindex when this record changed (its own change, or a related record touched it).
-  # The reindex is a single idempotent "sync this document's chunks" operation, so being triggered
-  # more than once for the same record is harmless: the job lock coalesces duplicates and each run
-  # reads the current state.
-  def vector_index_update_later
-    return true if !Service::AI::VectorDB::Available.execute(ping: false)
-
-    # A related record can touch this one for reasons that don't affect its vector document (a tag,
-    # an attachment, an internal note, …). That touch still refreshes the search index via
-    # HasSearchIndexBackend, but the vector reindex is skipped unless something feeding the document
-    # actually changed. Models opt in by defining #vector_index_relevant_change?; the check may only
-    # err towards reindexing (an extra run is a cheap no-op — a wrongly skipped one goes stale).
-    # It must not lean on this record's own previous_changes being present — a touch_later touch
-    # (Answer#touch_translations) leaves them empty. Models without the check reindex on any change
-    # of their own.
+  # Schedule a reindex if the change that just happened feeds this record's vector document. A
+  # related record can touch this one for reasons that don't affect it (a tag, an attachment, an
+  # internal note, …); that touch still refreshes the search index via HasSearchIndexBackend, but
+  # the vector reindex is skipped unless something feeding the document actually changed. Models opt
+  # in by defining #vector_index_relevant_change?; the check may only err towards reindexing (an
+  # extra run is a cheap no-op — a wrongly skipped one goes stale). Models without the check reindex
+  # on any change of their own.
+  #
+  # The change is judged here rather than in an after_commit callback, because by commit time it is
+  # no longer visible: dirty state describes the *last* write to a record, and commit callbacks run
+  # on whichever instance wrote last. Tagging a record right after creating it in one transaction
+  # (Service::KnowledgeBase::CreateAnswerFromAIResult) reloads it and touches it back, so the create
+  # would be judged on a freshly loaded instance that never saw it — and skipped. The enqueue itself
+  # still waits for the commit, so the job never runs against data that gets rolled back.
+  def vector_index_update_on_change
     relevant = respond_to?(:vector_index_relevant_change?) ? vector_index_relevant_change? : previous_changes.present?
     return true if !relevant
+
+    ApplicationModel.current_transaction.after_commit { vector_index_update_later }
+
+    true
+  end
+
+  # Enqueue a reindex. The reindex is a single idempotent "sync this document's chunks" operation,
+  # so being triggered more than once for the same record is harmless: the job lock coalesces
+  # duplicates and each run reads the current state.
+  def vector_index_update_later
+    return true if !persisted?
+    return true if !Service::AI::VectorDB::Available.execute(ping: false)
 
     if respond_to?(:vector_indexing_for_record?) && !vector_indexing_for_record?
       vector_index_destroy
@@ -62,6 +78,9 @@ module HasVectorIndex
     return true if !Service::AI::VectorDB::Available.execute(ping: false)
 
     Service::AI::VectorDB::Document::Destroy.execute(object_name: self.class.to_s, object_id: id)
+  rescue AI::VectorDB::Error, Elastic::Transport::Transport::Error => e
+    Rails.logger.warn "Can't delete vector index document for #{self.class}.find(#{id}): #{e.message}"
+    false
   end
 
   class_methods do

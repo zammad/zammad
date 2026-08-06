@@ -5,7 +5,6 @@ import { whenever } from '@vueuse/shared'
 import { computed, type EffectScope, effectScope, ref, watch, toRef } from 'vue'
 
 import { useReactivate } from '#shared/composables/useReactivate.ts'
-import { useTicketArticleUpdatesSubscription } from '#shared/entities/ticket/graphql/subscriptions/ticketArticlesUpdates.api.ts'
 import {
   type AiAnalyticsMetadata,
   type AsyncExecutionError,
@@ -23,6 +22,7 @@ import {
 } from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/types.ts'
 import { useTicketSummaryGenerating } from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/useTicketSummaryGenerating.ts'
 import { usePersistentStates } from '#desktop/pages/ticket/composables/usePersistentStates.ts'
+import { useTicketArticleCountChange } from '#desktop/pages/ticket/composables/useTicketArticleCountChange.ts'
 import { useTicketInformation } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
 import { useTicketSidebar } from '#desktop/pages/ticket/composables/useTicketSidebar.ts'
 import { useTicketAiAssistanceSummarizeMutation } from '#desktop/pages/ticket/graphql/mutations/ticketAIAssistanceSummarize.api.ts'
@@ -165,27 +165,11 @@ whenever(isSummarySideBarActive, () => {
 const retrySummaryGeneration = () => getAIAssistanceSummary(true)
 const regenerateSummary = () => getAIAssistanceSummary(true)
 
-const activateTicketArticleUpdatesSubscription = () => {
-  const articleSubscription = new SubscriptionHandler(
-    useTicketArticleUpdatesSubscription(
-      () => ({
-        ticketId: ticketId.value,
-      }),
-      () => ({
-        enabled: isProviderConfigured.value && runWhenSidebarIsActive.value,
-      }),
-    ),
-  )
-
-  articleSubscription.onSubscribed().then(() => {
-    articleSubscription.onResult(({ data }) => {
-      const isNewArticle = data?.ticketArticleUpdates.addArticle
-
-      if (!isNewArticle || isNewArticle?.sender?.name === 'System') return
-
-      getAIAssistanceSummary()
-    })
-  })
+// A new article makes the summary outdated. The ticket already reports that through its article
+// count, so no second article subscription is opened here. #getAIAssistanceSummary keeps its own
+// conditions, and this watcher only lives as long as the scope the sidebar activates it in.
+const watchTicketArticleCount = () => {
+  useTicketArticleCountChange(() => ticket.value?.articleCount, getAIAssistanceSummary)
 }
 
 const activateTicketSummarySubscription = () => {
@@ -224,7 +208,7 @@ const activateTicketSummarySubscription = () => {
 }
 
 const activateSubscriptions = () => {
-  activateTicketArticleUpdatesSubscription()
+  watchTicketArticleCount()
   activateTicketSummarySubscription()
 }
 

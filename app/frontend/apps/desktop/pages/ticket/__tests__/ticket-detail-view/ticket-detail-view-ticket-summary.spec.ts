@@ -2,19 +2,18 @@
 
 import { within } from '@testing-library/vue'
 
+import { mockedApolloClient } from '#tests/graphql/builders/mocks.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
+import { waitFor } from '#tests/support/vitest-wrapper.ts'
 
 import { mockTicketQuery } from '#shared/entities/ticket/graphql/queries/ticket.mocks.ts'
-import { getTicketArticleUpdatesSubscriptionHandler } from '#shared/entities/ticket/graphql/subscriptions/ticketArticlesUpdates.mocks.ts'
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
 import {
-  EnumTicketArticleSenderName,
   EnumTicketSummaryGeneration,
   type TicketAiAssistanceSummaryUpdatesPayload,
-  type TicketArticleUpdatesPayload,
 } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
@@ -24,7 +23,26 @@ import {
 } from '#desktop/pages/ticket/graphql/mutations/ticketAIAssistanceSummarize.mocks.ts'
 import { getTicketAiAssistanceSummaryUpdatesSubscriptionHandler } from '#desktop/pages/ticket/graphql/subscriptions/ticketAIAssistanceSummaryUpdates.mocks.ts'
 
-import type { DeepPartial } from '@apollo/client/utilities'
+// The count the ticket's own updates subscription keeps current - that is what the summary watches,
+//   rather than opening an article subscription of its own.
+const ticketCacheId = () =>
+  mockedApolloClient.cache.identify({
+    __typename: 'Ticket',
+    id: convertToGraphQLId('Ticket', 1),
+  })
+
+const raiseArticleCount = () =>
+  mockedApolloClient.cache.modify({
+    id: ticketCacheId(),
+    fields: { articleCount: (current: number) => current + 1 },
+  })
+
+// A System article touches the ticket like any other, but it is not counted.
+const touchTicket = () =>
+  mockedApolloClient.cache.modify({
+    id: ticketCacheId(),
+    fields: { title: () => 'Touched by a system article' },
+  })
 
 const triggerSummaryUpdate = async (
   data: TicketAiAssistanceSummaryUpdatesPayload,
@@ -43,29 +61,6 @@ const triggerSummaryUpdate = async (
 
   await mockSubscription.trigger({
     ticketAIAssistanceSummaryUpdates: data,
-  })
-}
-
-const triggerArticleUpdate = async (
-  data: DeepPartial<TicketArticleUpdatesPayload>,
-  withInitialSubscription = true,
-) => {
-  const mockSubscription = await getTicketArticleUpdatesSubscriptionHandler()
-
-  if (withInitialSubscription) {
-    await mockSubscription.trigger({
-      ticketArticleUpdates: {
-        addArticle: null,
-        updateArticle: null,
-        removeArticleId: null,
-      },
-    })
-  }
-
-  await waitForNextTick()
-
-  await mockSubscription.trigger({
-    ticketArticleUpdates: data,
   })
 }
 
@@ -155,9 +150,7 @@ describe('Ticket detail view - Ticket summary', () => {
       },
     })
 
-    mockTicketQuery({
-      ticket: createDummyTicket(),
-    })
+    mockTicketQuery({ ticket: createDummyTicket() })
 
     const view = await visitView('/tickets/1')
 
@@ -169,19 +162,9 @@ describe('Ticket detail view - Ticket summary', () => {
 
     expect(await view.findByRole('heading', { name: 'Customer intent' }))
 
-    await triggerArticleUpdate({
-      addArticle: {
-        createdAt: new Date().toISOString(),
-        sender: {
-          name: EnumTicketArticleSenderName.Customer,
-        },
-        id: convertToGraphQLId('Article', 1),
-      },
-      updateArticle: null,
-      removeArticleId: null,
-    })
+    raiseArticleCount()
 
-    expect(calls).toHaveLength(numberOfCalls + 1)
+    await waitFor(() => expect(calls).toHaveLength(numberOfCalls + 1))
   })
 
   it('does not re-invoke summary update when article of type system is updated', async () => {
@@ -198,9 +181,7 @@ describe('Ticket detail view - Ticket summary', () => {
       },
     })
 
-    mockTicketQuery({
-      ticket: createDummyTicket(),
-    })
+    mockTicketQuery({ ticket: createDummyTicket() })
 
     const view = await visitView('/tickets/1')
 
@@ -212,18 +193,9 @@ describe('Ticket detail view - Ticket summary', () => {
 
     expect(await view.findByRole('heading', { name: 'Customer intent' }))
 
-    await triggerArticleUpdate(
-      {
-        addArticle: {
-          sender: {
-            name: EnumTicketArticleSenderName.System,
-          },
-        },
-        updateArticle: null,
-        removeArticleId: null,
-      },
-      false,
-    )
+    touchTicket()
+
+    await waitForNextTick()
 
     expect(calls).toHaveLength(numberOfCalls)
   })

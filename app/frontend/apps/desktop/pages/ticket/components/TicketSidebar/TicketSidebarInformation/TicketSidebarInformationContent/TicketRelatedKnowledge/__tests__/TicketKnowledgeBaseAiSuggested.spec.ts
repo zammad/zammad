@@ -184,7 +184,7 @@ describe('TicketKnowledgeBaseAiSuggested', () => {
   it('shows an empty message when there are no suggestions', async () => {
     const wrapper = renderSuggestions()
 
-    expect(await wrapper.findByText('No related knowledge base answers found.')).toBeInTheDocument()
+    expect(await wrapper.findByText('No suggestions.')).toBeInTheDocument()
   })
 
   it('links a suggested answer when its link action is clicked', async () => {

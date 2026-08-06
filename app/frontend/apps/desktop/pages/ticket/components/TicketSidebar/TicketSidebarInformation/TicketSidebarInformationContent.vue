@@ -5,7 +5,6 @@ import { computed, toRef, useTemplateRef } from 'vue'
 
 import { useTicketView } from '#shared/entities/ticket/composables/useTicketView.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
-import { useSessionStore } from '#shared/stores/session.ts'
 import type { ObjectLike } from '#shared/types/utils.ts'
 
 import { useFlyout } from '#desktop/components/CommonFlyout/useFlyout.ts'
@@ -40,7 +39,6 @@ const config = toRef(useApplicationStore(), 'config')
 const ticketLinksInstance = useTemplateRef('ticket-links')
 
 const { isTicketAgent, isTicketEditable } = useTicketView(ticket)
-const { hasPermission } = useSessionStore()
 
 const ticketMergeFlyoutName = 'ticket-merge'
 const ticketChangeCustomerFlyoutName = 'ticket-change-customer'
@@ -91,7 +89,10 @@ const actions = computed<MenuItem[]>(() => [
   },
 ])
 
-const isKbActive = computed(() => config.value.kb_active && hasPermission('ticket.agent'))
+// Agent read access is a per-ticket matter: an agent who is the customer of a ticket in a group
+//   they cannot access sees it in the customer view, where the knowledge base is not theirs to work
+//   with — and where the server would deny both the link list and the suggestions search.
+const isKbActive = computed(() => config.value.kb_active && isTicketAgent.value)
 
 const {
   linkedAnswerIds,
@@ -102,7 +103,8 @@ const {
   enabled: isKbActive,
 })
 
-const { showAiSuggestedAnswers, showRelevanceScore } = useAiSuggestedAnswersAvailability()
+const { showAiSuggestedAnswers, showRelevanceScore } =
+  useAiSuggestedAnswersAvailability(isTicketAgent)
 
 const {
   answers: aiSuggestedAnswers,
@@ -111,9 +113,11 @@ const {
   hasError: hasAiSuggestedAnswersError,
   errorDetail: aiSuggestedAnswersErrorDetail,
   retrySearch: retryAiSuggestedAnswersSearch,
+  refreshKeepingAnswers: refreshAiSuggestedAnswers,
 } = useKnowledgeBaseAiSuggestedAnswers(ticketId, {
   queryEnabled: showAiSuggestedAnswers,
   subscriptionEnabled: showAiSuggestedAnswers,
+  articleCount: () => ticket.value?.articleCount,
 })
 </script>
 
@@ -152,11 +156,7 @@ const {
     </CommonSectionCollapse>
 
     <CommonSectionCollapse
-      v-if="
-        isKbActive &&
-        isTicketAgent &&
-        (isTicketEditable || linkedAnswers.length || aiSuggestedAnswers.length)
-      "
+      v-if="isKbActive && (isTicketEditable || linkedAnswers.length || aiSuggestedAnswers.length)"
       id="ticket-ai-knowledge-base-answers"
       v-model="persistentStates.collapseKnowledgeBase"
       :title="__('Related knowledge')"
@@ -174,6 +174,7 @@ const {
         :has-ai-suggested-answers-error="hasAiSuggestedAnswersError"
         :ai-suggested-answers-error-detail="aiSuggestedAnswersErrorDetail"
         @retry-ai-suggested-answers-search="retryAiSuggestedAnswersSearch"
+        @refresh-ai-suggested-answers="refreshAiSuggestedAnswers"
       />
     </CommonSectionCollapse>
 

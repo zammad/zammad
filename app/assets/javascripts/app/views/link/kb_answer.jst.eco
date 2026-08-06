@@ -37,7 +37,8 @@
     <p class="text-muted"><%- @T('The suggestions could not be generated.') %></p>
     <button type="button" class="btn btn--text js-kb-suggestions-retry"><%- @T('Retry') %></button>
   <% else if @suggestions.length is 0: %>
-    <p class="text-muted"><%- @T('No related knowledge base answers found.') %></p>
+    <%# Not a no-answers-found message: the best matches may all be linked already, and listed above. %>
+    <p class="text-muted"><%- @T('No suggestions.') %></p>
   <% else: %>
     <ol class="tasks tasks--standalone">
       <% for item in @suggestions: %>

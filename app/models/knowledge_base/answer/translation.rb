@@ -62,8 +62,8 @@ class KnowledgeBase::Answer::Translation < ApplicationModel
 
   scope :vector_index_scope, lambda {
     # Index every answer regardless of its publication state (drafts and archived ones included) —
-    # whether a user may receive it as a suggestion is decided by the search's permission filter
-    # (Service::KnowledgeBase::Answer::SimilaritySearch).
+    # whether a user may receive it as a suggestion is decided by the search, which filters by
+    # permission and by publication state (Service::KnowledgeBase::Answer::SimilaritySearch).
     #
     # Every category is indexed unless it (or one of its ancestors) is excluded. The bulk counterpart
     # to #vector_indexing_for_record?: one expanded id list filters the whole reload, rather than
@@ -88,8 +88,8 @@ class KnowledgeBase::Answer::Translation < ApplicationModel
 
   def vector_indexing_for_record?
     # Index answers of any publication state (drafts and archived ones included, so the
-    # visible_internally? guard is omitted); the search's permission filter decides who may receive
-    # them as a suggestion.
+    # visible_internally? guard is omitted); the search decides who may receive them as a suggestion,
+    # and in which publication states.
     #
     # Every category is indexed unless it (or one of its ancestors) is explicitly excluded. Passing
     # the id spares this check from loading the category record just to look it up in the list.
@@ -105,11 +105,10 @@ class KnowledgeBase::Answer::Translation < ApplicationModel
   VECTOR_INDEX_ANSWER_ATTRIBUTES = %w[category_id internal_at published_at archived_at].freeze
 
   # Did anything feeding the vector document change? Title/locale live here, the body on the content
-  # record, the rest on the answer — each is read off its own record's previous_changes. This works
-  # because Answer#touch_translations uses touch_later, which preserves previous_changes on a
-  # translation edited in the same transaction (an immediate touch would reset them). previous_changes
-  # can be stale on long-lived instances, which errs towards an extra (no-op) reindex, never a skip
-  # of a real change.
+  # record, the rest on the answer — each is read off its own record's previous_changes, right after
+  # the write that set them (HasVectorIndex#vector_index_update_on_change). previous_changes can be
+  # stale on long-lived instances, which errs towards an extra (no-op) reindex, never a skip of a
+  # real change.
   def vector_index_relevant_change?
     return true if previous_changes.keys.intersect?(%w[title kb_locale_id])
     return true if content&.previous_changes&.key?('body')

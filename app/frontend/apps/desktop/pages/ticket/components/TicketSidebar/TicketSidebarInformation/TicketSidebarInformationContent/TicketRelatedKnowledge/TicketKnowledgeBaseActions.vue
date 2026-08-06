@@ -3,19 +3,21 @@
 <script setup lang="ts">
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import { useFlyout } from '#desktop/components/CommonFlyout/useFlyout.ts'
+import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
+import CommonSkeleton from '#desktop/components/CommonSkeleton/CommonSkeleton.vue'
 import { useTicketInformation } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
-import { useTicketSidebar } from '#desktop/pages/ticket/composables/useTicketSidebar.ts'
 
 import { useTicketAiAssistanceEnqueueKnowledgeBaseAnswer } from '../composables/useTicketAiAssistanceEnqueueKnowledgeBaseAnswer.ts'
 
 interface Props {
   showDraft: boolean
   isTicketEditable: boolean
+  isLinkListLoading: boolean
 }
 
 defineProps<Props>()
 
-const { ticketId } = useTicketInformation()
+const { ticket, ticketId } = useTicketInformation()
 
 const newKnowledgeBaseAnswer = defineModel<boolean>('newKnowledgeBaseAnswer')
 const FLYOUT_NAME = 'knowledge-base-ai-draft'
@@ -25,13 +27,12 @@ const { open } = useFlyout({
   component: () => import('./TicketKnowledgeBaseAiDraftFlyout.vue'),
 })
 
-const { activeSidebar } = useTicketSidebar()
-
+// The flyout renders outside this tree, so it cannot reach the ticket itself - it is handed over,
+// like the link flyout gets its source ticket.
 const openFlyout = () =>
   open({
     name: FLYOUT_NAME,
-    ticketId: ticketId.value,
-    activeSidebar: () => activeSidebar.value,
+    ticket,
   })
 
 const { isGenerating } = useTicketAiAssistanceEnqueueKnowledgeBaseAnswer(
@@ -55,14 +56,20 @@ const { isGenerating } = useTicketAiAssistanceEnqueueKnowledgeBaseAnswer(
       >
         {{ $t('Add AI draft') }}
       </CommonButton>
-      <CommonButton
-        v-if="isTicketEditable && !newKnowledgeBaseAnswer"
-        v-tooltip="$t('Link knowledge base answer')"
-        size="medium"
-        class="ltr:ml-auto rtl:mr-auto"
-        icon="plus-square-fill"
-        @click="newKnowledgeBaseAnswer = true"
-      />
+      <CommonLoader class="w-full" :loading="isLinkListLoading">
+        <CommonButton
+          v-if="isTicketEditable && !newKnowledgeBaseAnswer"
+          v-tooltip="$t('Link knowledge base answer')"
+          size="medium"
+          class="ltr:ml-auto rtl:mr-auto"
+          icon="plus-square-fill"
+          @click="newKnowledgeBaseAnswer = true"
+        />
+
+        <template #skeleton>
+          <CommonSkeleton class="size-8 ltr:ml-auto rtl:mr-auto" />
+        </template>
+      </CommonLoader>
     </slot>
   </div>
 </template>

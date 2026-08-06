@@ -18870,6 +18870,26 @@
                     }
                   },
                   "defaultValue": null
+                },
+                {
+                  "name": "includeDraftsAndArchived",
+                  "description": "Also search the drafts and archived answers the user may see, instead of only the internally visible ones",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Boolean",
+                    "ofType": null
+                  },
+                  "defaultValue": "false"
+                },
+                {
+                  "name": "includeLinkedAnswers",
+                  "description": "Also return answers already linked to the ticket, instead of leaving them out",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Boolean",
+                    "ofType": null
+                  },
+                  "defaultValue": "false"
                 }
               ],
               "type": {
