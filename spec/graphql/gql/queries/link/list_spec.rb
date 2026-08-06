@@ -77,4 +77,62 @@ RSpec.describe Gql::Queries::Link::List, type: :graphql do
       end
     end
   end
+
+  context 'when fetching linked knowledge base answers' do
+    let(:group)       { create(:group) }
+    let(:ticket)      { create(:ticket, group:) }
+    let(:answer)      { create(:knowledge_base_answer, :published) }
+    let(:translation) { answer.translation }
+
+    let(:variables) { { objectId: gql.id(ticket), targetType: 'KnowledgeBase::Answer::Translation' } }
+
+    let(:query) do
+      <<~QUERY
+        query linkList($objectId: ID!, $targetType: String!) {
+          linkList(objectId: $objectId, targetType: $targetType) {
+            type
+            item {
+              ... on KnowledgeBaseAnswerTranslation {
+                id
+                title
+                categoryTreeTranslation {
+                  id
+                  title
+                }
+              }
+            }
+          }
+        }
+      QUERY
+    end
+
+    before do
+      create(:link, from: ticket, to: translation, link_type: 'normal')
+      gql.execute(query, variables: variables)
+    end
+
+    # An agent without knowledge base permissions still sees published answers,
+    #   so their category tree must resolve as well (#807).
+    context 'with an agent without knowledge base permissions', authenticated_as: :authenticated do
+      let(:role)          { create(:role, permissions: Permission.where(name: 'ticket.agent')) }
+      let(:authenticated) { create(:agent, roles: [role], groups: [group]) }
+
+      let(:category_translation) { answer.category.translation_preferred(translation.kb_locale) }
+
+      it 'returns the answer including its category tree' do
+        expect(gql.result.data.first).to eq(
+          {
+            'item' => {
+              'id'                      => gql.id(translation),
+              'title'                   => translation.title,
+              'categoryTreeTranslation' => [
+                { 'id' => gql.id(category_translation), 'title' => category_translation.title },
+              ],
+            },
+            'type' => 'normal'
+          }
+        )
+      end
+    end
+  end
 end

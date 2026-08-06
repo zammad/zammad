@@ -149,6 +149,20 @@ RSpec.describe Service::KnowledgeBase::Answer::SimilaritySearch, :aggregate_fail
       expect(filter[:'metadata.answer_id']).not_to include(draft_answer.id)
     end
 
+    context 'with an agent without any knowledge base permission' do
+      let(:user)            { create(:agent, roles: [create(:role, permission_names: %w[ticket.agent])]) }
+      let(:internal_answer) { create(:knowledge_base_answer, :internal) }
+
+      before { internal_answer }
+
+      it 'searches only within published answers, which they can read on the public help site' do
+        filter = captured_search_filter
+
+        expect(filter[:'metadata.answer_id']).to include(published_answer.id)
+        expect(filter[:'metadata.answer_id']).not_to include(internal_answer.id, draft_answer.id)
+      end
+    end
+
     it 'does not search at all when the user may see no answers' do
       allow(KnowledgeBase::Answer).to receive(:visible_to_user).and_return(KnowledgeBase::Answer.none)
       allow(Service::AI::VectorDB::SimilaritySearch).to receive(:execute)

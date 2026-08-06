@@ -6,7 +6,11 @@
       	<%- @Icon('knowledge-base') %>
       </div>
       <div class="task-text">
-        <a class="name kb-answer-popover" data-id="<%- item.id %>" href="<%- item.url %>"><%= item.title %></a>
+        <a class="name kb-answer-popover horizontal center"  data-id="<%- item.id %>" href="<%- item.url %>" <% if @publicLinks: %>target="_blank"<% end %>><%= item.title %>
+          <% if @publicLinks: %>
+            <%- @Icon('external', 'kb-answer-external-icon') %>
+          <% end %>
+        </a>
       </div>
       <% if @editable: %>
         <a class="list-item-delete js-delete" data-object="KnowledgeBase::Answer::Translation" data-object-id="<%= item.id %>" data-link-type="normal">
@@ -43,7 +47,12 @@
           </div>
           <div class="task-text">
             <div class="horizontal justify-between center">
-              <a class="name kb-answer-popover" data-id="<%- item.id %>" href="<%- item.url %>"><%= item.title %></a>
+              <div class="horizontal center flex-shrink-horizontal">
+                <a class="name kb-answer-popover" data-id="<%- item.id %>" href="<%- item.url %>" <% if @publicLinks: %>target="_blank"<% end %>><%= item.title %></a>
+                <% if @publicLinks: %>
+                  <%- @Icon('external', 'kb-answer-external-icon') %>
+                <% end %>
+              </div>
               <% if not _.isUndefined(item.score): %>
                 <span class="task-addon" title="<%- @Tp('Relevance score') %>"><%= item.score %>%</span>
               <% end %>

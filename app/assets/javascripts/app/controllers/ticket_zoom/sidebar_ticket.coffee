@@ -188,13 +188,11 @@ class SidebarTicket extends App.Controller
       )
 
       # Release the previous instance so its push-event binding does not leak across re-renders /
-      # ticket switches (otherwise stale widgets re-fire the suggestions request on every ping). Done
-      # unconditionally so the cleanup still runs when the widget is no longer rendered (e.g. kb_active
-      # turned off).
+      # ticket switches (otherwise stale widgets re-fire the suggestions request on every ping).
       @linkKbAnswerWidget?.releaseController()
       @linkKbAnswerWidget = null
 
-      if @permissionCheck('knowledge_base.*') and App.Config.get('kb_active')
+      if App.Config.get('kb_active')
         @linkKbAnswerWidget = new App.WidgetLinkKbAnswer(
           el:          localEl.filter('.js-linkKbAnswers')
           object_type: 'Ticket'

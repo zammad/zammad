@@ -55,6 +55,14 @@ RSpec.describe Gql::Subscriptions::Ticket::AI::RelatedKnowledgeBaseAnswersUpdate
   context 'when the agent lacks knowledge base permission' do
     let(:agent) { create(:agent, roles: [create(:role, permission_names: %w[ticket.agent])], groups: [ticket.group]) }
 
+    it 'subscribes as well (they get published answers suggested)' do
+      expect(gql.result.data).to include('ticketId' => nil)
+    end
+  end
+
+  context 'when the user is no agent' do
+    let(:agent) { create(:customer) }
+
     it 'is forbidden' do
       expect(gql.result.error_type).to eq(Exceptions::Forbidden)
     end

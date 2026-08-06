@@ -12,7 +12,9 @@ module Gql::Subscriptions
     field :ticket_id, GraphQL::Types::ID, null: true, description: 'Identifier of the ticket whose related knowledge base answers may have changed (null on subscribe)'
     field :error, String, null: true, description: 'Set when the embedding could not be produced; the client shows the error state instead of re-running the search'
 
-    requires_permission 'knowledge_base.*'
+    # Mirrors the query: agents without knowledge base permission also get suggestions (published
+    # answers only), so they need the ping as well.
+    requires_permission 'ticket.agent'
     requires_enabled_setting 'ai_provider'
 
     def update(ticket:)

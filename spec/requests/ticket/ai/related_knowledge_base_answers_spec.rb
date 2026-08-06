@@ -61,11 +61,14 @@ RSpec.describe 'Ticket AI Related Knowledge Base Answers API endpoint', :aggrega
     end
   end
 
+  # Which answers may be suggested is up to the search (published answers only for them), so the
+  # endpoint itself stays available.
   context 'when the agent lacks knowledge base permission' do
     let(:agent) { create(:agent, roles: [create(:role, permission_names: %w[ticket.agent])], groups: [group]) }
 
-    it 'returns forbidden' do
-      expect(response).to have_http_status(:forbidden)
+    it 'returns the answers' do
+      expect(response).to have_http_status(:ok)
+      expect(json_response['result']['answer_translation_ids']).to eq([translation.id])
     end
   end
 end

@@ -743,12 +743,7 @@ pre code {
   }
 
   &--icon--last .icon {
-    @include bidi-style(
-      margin-left,
-      5px,
-      margin-right,
-      0
-    ); // so far only used in ticket_zoom secondaryAction dropup
+    @include bidi-style(margin-left, 5px, margin-right, 0); // so far only used in ticket_zoom secondaryAction dropup
   }
 
   &:focus {
@@ -9091,6 +9086,17 @@ a.list-group-item.active > .badge,
 .kb-answer-excerpt {
   display: block;
   margin-top: 6px;
+}
+
+// Marks an answer link that leaves the agent interface for the public help site (agents without
+// knowledge base permission), like the accessory icon of the navigation entry does.
+.kb-answer-external-icon {
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+  fill: var(--text-muted);
+
+  @include bidi-style(margin-left, 4px, margin-right, 0);
 }
 
 .tasks--standalone.kb-answer-suggestions {

@@ -267,7 +267,6 @@ describe('TicketSidebarInformationContent', () => {
                   id: convertToGraphQLId('KnowledgeBase::Answer', 1),
                   category: { knowledgeBase: { id: convertToGraphQLId('KnowledgeBase', 1) } },
                 },
-                kbLocale: { systemLocale: { locale: 'en-us' } },
               },
             },
           ],

@@ -8,7 +8,10 @@ module Gql::Queries
 
     type Gql::Types::Ticket::AI::RelatedKnowledgeBaseAnswersResultType, null: false
 
-    requires_permission 'knowledge_base.*'
+    # No knowledge base permission is required: which answers may be suggested is decided by the
+    # search itself (KnowledgeBase::Answer.visible_to_user), so agents without knowledge base access
+    # are suggested published answers only, which they can read on the public help site.
+    requires_permission 'ticket.agent'
     requires_enabled_setting 'ai_provider'
 
     def resolve(ticket:)

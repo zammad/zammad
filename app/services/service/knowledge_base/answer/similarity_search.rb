@@ -8,6 +8,8 @@
 # search never returns answers the user is not allowed to see (rather than dropping them afterwards).
 # Archived answers are part of the vector index, so they are suggested to the users whose visibility
 # covers them (knowledge base editors, and granular editor categories) just like in the agent app.
+# Users without any knowledge base permission are limited to published answers, which they can read
+# on the public help site.
 # Locale restriction is optional (off by default), as is excluding specific answer ids (e.g. answers
 # already linked to the ticket) — both are applied in the query so they do not eat into the limit.
 class Service::KnowledgeBase::Answer::SimilaritySearch < Service::Base

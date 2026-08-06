@@ -50,12 +50,12 @@ describe('useAiSuggestedAnswersAvailability', () => {
     expect(showAiSuggestedAnswers.value).toBe(false)
   })
 
-  it('is unavailable without knowledge base access', () => {
+  it('is available without knowledge base access', () => {
     mockPermissions(['ticket.agent'])
 
     const { showAiSuggestedAnswers } = useAiSuggestedAnswersAvailability()
 
-    expect(showAiSuggestedAnswers.value).toBe(false)
+    expect(showAiSuggestedAnswers.value).toBe(true)
   })
 
   it('is unavailable for a user who is not an agent', () => {

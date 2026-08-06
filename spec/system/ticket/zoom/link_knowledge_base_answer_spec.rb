@@ -77,9 +77,11 @@ RSpec.describe 'Ticket zoom > Link knowledge base answer', type: :system do
     it 'moves the suggested answer into the linked list' do
       within :active_content, '.link_kb_answers' do
         # The AI suggestion is offered with a one-click link (plus) control, and is not linked yet.
+        # Its relevance score is shown, because the current user is an administrator.
         expect(page)
           .to have_css('.js-kb-suggestion-add')
           .and(have_text(translation.title))
+          .and(have_text('90%'))
           .and(have_no_css('.js-delete'))
 
         find('.js-kb-suggestion-add').click
@@ -123,6 +125,43 @@ RSpec.describe 'Ticket zoom > Link knowledge base answer', type: :system do
     it 'shows an empty state message in the sidebar' do
       within :active_content, '.link_kb_answers' do
         expect(page).to have_text('No related knowledge base answers found.')
+      end
+    end
+  end
+
+  describe 'AI-suggested answers without knowledge base permission', authenticated_as: :authenticate do
+    let(:ticket)      { create(:ticket, group: Group.find_by(name: 'Users')) }
+    let(:translation) { published_answer.translations.first }
+    let(:agent)       { create(:agent, roles: [create(:role, permission_names: %w[ticket.agent])], groups: [ticket.group]) }
+
+    def authenticate
+      setup_ai_provider('zammad_ai')
+
+      allow(Service::AI::VectorDB::Available).to receive(:execute).and_return(true)
+      # The knowledge base answer factory triggers the vector index callback, which must not reach
+      # Elasticsearch in this spec.
+      allow(Service::AI::VectorDB::Available).to receive(:execute).with(ping: false).and_return(false)
+      # Only published answers are suggested to them, which the search itself takes care of.
+      allow(Service::Ticket::AI::RelatedKnowledgeBaseAnswers)
+        .to receive(:execute).and_return({ answers: [{ translation:, score: 0.9 }], pending: false })
+
+      agent
+    end
+
+    before do
+      wait_for_setting('ai_provider', true)
+      wait_for_setting('kb_active', true)
+
+      visit "#ticket/zoom/#{ticket.id}"
+    end
+
+    it 'shows the suggestion, linked to its public page' do
+      within :active_content, '.link_kb_answers' do
+        expect(page)
+          .to have_link(translation.title, href: %r{/help/#{locale_name}/#{category.id}/#{published_answer.id}$}, target: '_blank')
+          .and(have_css('.kb-answer-external-icon'))
+          # The relevance score is only shown to AI administrators.
+          .and(have_no_text('90%'))
       end
     end
   end
@@ -321,13 +360,15 @@ RSpec.describe 'Ticket zoom > Link knowledge base answer', type: :system do
   end
 
   describe 'displaying knowledge base answer', authenticated_as: :user do
-    let(:ticket)               { Ticket.first }
-    let(:draft_translation)    { draft_answer.translations.first }
-    let(:internal_translation) { internal_answer.translations.first }
+    let(:ticket)                { Ticket.first }
+    let(:draft_translation)     { draft_answer.translations.first }
+    let(:internal_translation)  { internal_answer.translations.first }
+    let(:published_translation) { published_answer.translations.first }
 
     before do
       create(:link, from: ticket, to: draft_answer.translations.first)
       create(:link, from: ticket, to: internal_answer.translations.first)
+      create(:link, from: ticket, to: published_answer.translations.first)
 
       visit "#ticket/zoom/#{ticket.id}"
     end
@@ -352,6 +393,22 @@ RSpec.describe 'Ticket zoom > Link knowledge base answer', type: :system do
           expect(page)
             .to have_no_text(draft_translation.title)
             .and(have_text(internal_translation.title))
+            .and(have_link(internal_translation.title, href: %r{#knowledge_base/}))
+            .and(have_no_css('.kb-answer-external-icon'))
+        end
+      end
+    end
+
+    context 'when user has no knowledge base permission' do
+      let(:user) { create(:agent, roles: [create(:role, permission_names: %w[ticket.agent])], groups: [ticket.group]) }
+
+      it 'shows the published answer only, linked to its public page' do
+        within '.link_kb_answers' do
+          expect(page)
+            .to have_no_text(draft_translation.title)
+            .and(have_no_text(internal_translation.title))
+            .and(have_link(published_translation.title, href: %r{/help/#{locale_name}/#{category.id}/#{published_answer.id}$}, target: '_blank'))
+            .and(have_css('.kb-answer-external-icon'))
         end
       end
     end

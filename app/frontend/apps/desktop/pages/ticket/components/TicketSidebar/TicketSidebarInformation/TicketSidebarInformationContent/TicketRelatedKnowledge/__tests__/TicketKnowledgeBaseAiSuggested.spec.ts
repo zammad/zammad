@@ -3,6 +3,7 @@
 import { computed } from 'vue'
 
 import renderComponent from '#tests/support/components/renderComponent.ts'
+import { mockPermissions } from '#tests/support/mock-permissions.ts'
 
 import { EnumKnowledgeBaseVisibility } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
@@ -55,6 +56,9 @@ const renderSuggestions = (props: Partial<Props> = {}) =>
         name: 'KnowledgeBaseCategory',
         component: { template: '<div />' },
       },
+      // Answer links leaving the app (the public answer page) resolve to the catch-all, like they
+      //   do in the real router.
+      { path: '/:pathMatch(.*)*', name: 'Error', component: { template: '<div />' } },
     ],
     store: true,
   })
@@ -103,6 +107,9 @@ describe('TicketKnowledgeBaseAiSuggested', () => {
   beforeEach(() => {
     // The link action reads/writes the ticket's link list cache.
     mockLinkListQuery({ linkList: [] })
+
+    // Knowledge base access decides where an answer link points to.
+    mockPermissions(['ticket.agent', 'knowledge_base.reader'])
   })
 
   it('renders the given answers as links', async () => {
@@ -118,6 +125,35 @@ describe('TicketKnowledgeBaseAiSuggested', () => {
       'href',
       expect.stringContaining('#knowledge_base/1/locale/en-us/answer/1'),
     )
+  })
+
+  it('links to the public answer page for a user without knowledge base permission', async () => {
+    mockPermissions(['ticket.agent'])
+
+    const wrapper = renderSuggestions({
+      answers: [relatedAnswer(1, 'Reset your password')],
+    })
+
+    // Suggested answers are published for them, so the public help site can show them - the answer
+    //   view of the agent interface cannot.
+    expect((await wrapper.findByText('Reset your password')).closest('a')).toHaveAttribute(
+      'href',
+      '/help/en-us/1/1',
+    )
+  })
+
+  it('keeps the BETA UI switch when the public answer page is opened', async () => {
+    mockPermissions(['ticket.agent'])
+    localStorage.setItem('beta-ui-switch', 'true')
+
+    const wrapper = renderSuggestions({
+      answers: [relatedAnswer(1, 'Reset your password')],
+    })
+
+    await wrapper.events.click(await wrapper.findByText('Reset your password'))
+
+    // The public answer page is not part of the legacy app, so it needs no preparation.
+    expect(localStorage.getItem('beta-ui-switch')).toBe('true')
   })
 
   it('shows a waiting message while the suggestions are still being generated', async () => {

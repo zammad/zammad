@@ -24,11 +24,12 @@ const hasOpenedViaLongPress = computed(
   () => popoverWithTriggerInstance.value?.hasOpenedViaLongPress,
 )
 
-// The answer view is still part of the legacy app.
+// The answer view is still part of the legacy app - the public answer page (where users without
+//   knowledge base permission are sent) is not, so it needs no preparation.
 // NB: A middle-button (or other auxiliary button) activation, e.g. opening the link in a new
 //   tab, fires `auxclick` instead of `click`, so both need to be handled here.
 const onTriggerClick = () => {
-  if (!props.link) return
+  if (!props.link?.startsWith('/#')) return
 
   prepareLegacyAppLinkNavigation()
 }

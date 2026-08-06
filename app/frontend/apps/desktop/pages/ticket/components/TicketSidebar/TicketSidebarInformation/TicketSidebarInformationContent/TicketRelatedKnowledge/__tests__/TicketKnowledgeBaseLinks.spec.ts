@@ -3,6 +3,7 @@
 import { computed } from 'vue'
 
 import renderComponent from '#tests/support/components/renderComponent.ts'
+import { mockPermissions } from '#tests/support/mock-permissions.ts'
 
 import {
   EnumKnowledgeBaseVisibility,
@@ -10,7 +11,6 @@ import {
 } from '#shared/graphql/types.ts'
 import { convertToGraphQLId, getIdFromGraphQLId } from '#shared/graphql/utils.ts'
 
-import { mockKnowledgeBaseQuery } from '#desktop/entities/knowledge-base/graphql/queries/knowledgeBase.mocks.ts'
 import TicketKnowledgeBaseLinks from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseLinks.vue'
 import { TICKET_KEY } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
 import {
@@ -96,14 +96,8 @@ describe('TicketKnowledgeBaseLinks', () => {
   beforeEach(() => {
     mockLinkListQuery({ linkList: [] })
 
-    // The links are built from the browsed knowledge base (its internal id and
-    //   current locale), which the store loads via this query.
-    mockKnowledgeBaseQuery({
-      knowledgeBase: {
-        id: KNOWLEDGE_BASE_ID,
-        currentLocale: { systemLocale: { locale: KNOWLEDGE_BASE_LOCALE } },
-      },
-    })
+    // Knowledge base access decides where an answer link points to.
+    mockPermissions(['ticket.agent', 'knowledge_base.reader'])
   })
 
   it('renders every linked answer as a link with its visibility icon', async () => {
@@ -119,12 +113,25 @@ describe('TicketKnowledgeBaseLinks', () => {
     expect(first.closest('a')).toHaveAttribute(
       'href',
       expect.stringContaining(
-        `#knowledge_base/${getIdFromGraphQLId(KNOWLEDGE_BASE_ID)}/locale/${KNOWLEDGE_BASE_LOCALE}/answer/${getIdFromGraphQLId(linkedAnswer(1, '').id)}`,
+        `#knowledge_base/${getIdFromGraphQLId(KNOWLEDGE_BASE_ID)}/locale/${KNOWLEDGE_BASE_LOCALE}/answer/${getIdFromGraphQLId(linkedAnswer(1, '').answer.id)}`,
       ),
     )
 
     expect(wrapper.getByIconName('kb-published')).toBeInTheDocument()
     expect(wrapper.getByIconName('kb-internal')).toBeInTheDocument()
+  })
+
+  it('links to the public answer page for a user without knowledge base permission', async () => {
+    mockPermissions(['ticket.agent'])
+
+    const wrapper = renderLinks([linkedAnswer(1, 'Reset your password')])
+
+    // Only published answers are linked for them (the backend scopes the link list), so the public
+    //   help site can show them - the answer view of the agent interface cannot.
+    expect((await wrapper.findByText('Reset your password')).closest('a')).toHaveAttribute(
+      'href',
+      '/help/en-us/1/1',
+    )
   })
 
   it('unlinks an answer when its unlink action is clicked', async () => {

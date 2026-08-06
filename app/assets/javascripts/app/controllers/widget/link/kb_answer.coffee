@@ -83,16 +83,33 @@ class App.WidgetLinkKbAnswer extends App.WidgetLink
 
   linksForRendering: ->
     @localLinks
-      .map (elem) ->
+      .map (elem) =>
         switch elem.link_object
           when 'KnowledgeBase::Answer::Translation'
             if translation = App.KnowledgeBaseAnswerTranslation.fullLocal( elem.link_object_value )
               title: translation.title
               id:    translation.id
-              url:   translation.uiUrl()
+              url:   @kbAnswerUrl(translation)
       .filter (elem) ->
         elem?
 
+  # Agents without knowledge_base.* permission can't access the internal KB route.
+  # -> Send them to the public answer page instead.
+  kbAnswerUrl: (translation) ->
+    if @kbAnswerLinksArePublic()
+      translation.publicBaseUrl()
+    else
+      translation.uiUrl()
+
+  # Public answer pages live outside of the agent interface, so their links are marked with the
+  # external icon and open in a new tab - just like the "Knowledge Base" navigation entry does for
+  # agents without knowledge base permission.
+  kbAnswerLinksArePublic: ->
+    !@permissionCheck('knowledge_base.*')
+
+  # No knowledge base permission is required: the search only suggests answers the user may see, so
+  # agents without knowledge base access are suggested published answers only (linked to their public
+  # page, see #kbAnswerUrl).
   suggestionsSearchAvailable: =>
     App.Config.get('ai_provider') and App.Config.get('kb_active') and @object?.currentView?() is 'agent'
 
@@ -112,7 +129,7 @@ class App.WidgetLinkKbAnswer extends App.WidgetLink
 
           title:       translation.title
           id:          translation.id
-          url:         translation.uiUrl()
+          url:         @kbAnswerUrl(translation)
           score:       if showScore then ((@suggestionScores?[id] or 0) * 100).toFixed() else undefined
           excerpt:     @suggestionExcerpts?[id] or ''
           publishedAt: answer?.published_at
@@ -225,6 +242,7 @@ class App.WidgetLinkKbAnswer extends App.WidgetLink
     @html App.view('link/kb_answer')(
       list:               @linksForRendering()
       editable:           @editable
+      publicLinks:        @kbAnswerLinksArePublic()
       aiEnabled:          aiEnabled
       suggestionsEnabled: @suggestionsVisible()
       suggestionsLoaded:  @suggestionsLoaded

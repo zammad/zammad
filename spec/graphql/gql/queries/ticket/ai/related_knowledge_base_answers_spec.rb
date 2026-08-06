@@ -68,8 +68,21 @@ RSpec.describe Gql::Queries::Ticket::AI::RelatedKnowledgeBaseAnswers, authentica
     end
   end
 
+  # Which answers may be suggested is up to the search (published answers only for them), so the
+  # query itself stays available.
   context 'when the agent lacks knowledge base permission' do
     let(:agent) { create(:agent, roles: [create(:role, permission_names: %w[ticket.agent])], groups: [ticket.group]) }
+
+    it 'returns the answers with their score' do
+      expect(gql.result.data).to eq(
+        'pending' => false,
+        'answers' => [{ 'score' => 0.9, 'translation' => { 'title' => translation.title } }],
+      )
+    end
+  end
+
+  context 'when the user is no agent' do
+    let(:agent) { create(:customer) }
 
     it 'is forbidden' do
       expect(gql.result.error_type).to eq(Exceptions::Forbidden)
