@@ -1,12 +1,12 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Sequencer::Unit::Jira::PermissionPresent < Sequencer::Unit::Common::Provider::Named
-  include ::Sequencer::Unit::Import::Jira::Requester
+  extend ::Sequencer::Unit::Import::Jira::Requester
 
   private
 
   def permission_present
-    data = get_json(
+    data = self.class.get_json(
       'mypermissions',
       params: {
         projectKey:  Setting.get('import_jira_project_key'),

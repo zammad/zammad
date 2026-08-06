@@ -1,12 +1,12 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Sequencer::Unit::Jira::Connected < Sequencer::Unit::Common::Provider::Named
-  include ::Sequencer::Unit::Import::Jira::Requester
+  extend ::Sequencer::Unit::Import::Jira::Requester
 
   private
 
   def connected
-    response = perform_request(
+    response = self.class.perform_request(
       method:   :get,
       api_path: 'myself',
     )
