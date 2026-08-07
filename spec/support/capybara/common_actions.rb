@@ -177,9 +177,37 @@ module CommonActions
       route = "/desktop#{route}"
     end
 
-    super(route)
+    if same_document_navigation?(route)
+      # Navigating to another hash route of the already loaded app is a
+      #   same-document navigation, which never fires a load event -
+      #   chromedriver may still wait for one and block until its page load
+      #   timeout. Set the location via JS instead, which triggers the same
+      #   hashchange without a webdriver navigation.
+      page.execute_script('window.location.href = arguments[0]', route)
+    else
+      super(route)
+    end
 
     wait_for_loading_to_complete(route: route, app: app, skip_waiting: skip_waiting)
+  end
+
+  # A hash route target stays within the same document if the app is already
+  #   loaded at the root path and only the URL fragment changes. Visiting the
+  #   identical URL again is a reload and not a same-document navigation.
+  def same_document_navigation?(route)
+    return false if !route.start_with?('/#')
+
+    current = URI.parse(current_url)
+    app     = URI.parse(app_host)
+
+    return false if current.scheme != app.scheme || current.host != app.host
+
+    server_port = Capybara.current_session.server&.port
+    return false if server_port && current.port != server_port
+
+    current.path == '/' && current.query.nil? && current.fragment != route.delete_prefix('/#')
+  rescue URI::Error
+    false
   end
 
   def wait_for_loading_to_complete(route: nil, app: self.class.metadata[:app], skip_waiting: false, wait_ws: false)

@@ -13,7 +13,7 @@ RSpec.describe 'Mobile > Ticket > Articles > Update', app: :mobile, authenticate
     before do
       visit "/tickets/#{ticket.id}"
 
-      wait_for_subscription_start('ticketArticleUpdates')
+      wait_for_subscription_start('ticketArticleUpdates', entity: ticket)
     end
 
     it 'updates article on the frontend' do

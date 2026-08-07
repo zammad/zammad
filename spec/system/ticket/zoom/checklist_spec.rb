@@ -305,10 +305,21 @@ RSpec.describe 'Ticket zoom > Checklist', authenticated_as: :authenticate, curre
           find('.articleNewEdit-body').send_keys('New article')
           select 'closed', from: 'State'
           click '.js-submit'
-          expect(page.find('.modal-body')).to have_text('You have unchecked items in the checklist')
-          page.find('.modal-footer .js-skip').click
-          expect(page.find('.modal-body')).to have_text('Accounted Time'.upcase)
-          page.find('.modal-footer .js-skip').click
+
+          # Interact via in_modal, which waits for the end of the fade animation -
+          #   a click into the still moving dialog can miss the button silently.
+          in_modal do
+            expect(page).to have_text('You have unchecked items in the checklist')
+
+            click '.js-skip'
+          end
+
+          in_modal do
+            expect(page).to have_text('Accounted Time'.upcase)
+
+            click '.js-skip'
+          end
+
           wait.until { ticket.reload.state.name == 'closed' }
         end
       end
