@@ -184,7 +184,10 @@ RSpec.describe BackgroundServices do
     end
   end
 
-  describe '#restart_on_file_change' do
+  # The file watcher thread must not survive the examples: it would keep polling all watchable
+  #   paths for the rest of the suite and crash unrelated examples when a file it just globbed
+  #   is removed again (e.g. by the package specs).
+  describe '#restart_on_file_change', ensure_threads_exited: true do
     let(:config)       { described_class::ServiceConfig.new(service: SampleService, disabled: false, workers: 0, worker_threads: 1) }
     let(:kill_tracker) { { called: false } }
 
