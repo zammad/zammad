@@ -18,23 +18,22 @@
           environment:
             - ZAMMAD_HTTP_TYPE=https
             - ZAMMAD_FQDN=${APP_FQDN}
-            - ZAMMAD_AI_TOKEN=${ZAMMAD_AI_TOKEN}
         zammad-railsserver:
+          # Value-less entry: docker compose takes the token from the job environment,
+          # so it is not written to this file. Only the services performing AI calls get it.
           environment:
-            - ZAMMAD_AI_TOKEN=${ZAMMAD_AI_TOKEN}
+            - ZAMMAD_AI_TOKEN
           ports:
             - "127.0.0.1:${APP_PORT}:3000"
         zammad-scheduler:
           environment:
-            - ZAMMAD_AI_TOKEN=${ZAMMAD_AI_TOKEN}
+            - ZAMMAD_AI_TOKEN
         zammad-websocket:
           environment:
-            - ZAMMAD_AI_TOKEN=${ZAMMAD_AI_TOKEN}
+            - ZAMMAD_AI_TOKEN
           ports:
             - "127.0.0.1:${WS_PORT}:6042"
         zammad-backup:
-          environment:
-            - ZAMMAD_AI_TOKEN=${ZAMMAD_AI_TOKEN}
           profiles:
             - do-not-start
       YML_FILE
@@ -251,7 +250,7 @@
   before_script:
     - !reference [.review_app_scripts, build_docker_compose_files]
   after_script:
-    - echo "Clean-up project build directory…"  # shell runners don't clean-up, see https://gitlab.com/gitlab-org/gitlab/-/issues/243716
+    - echo "Clean-up project build directory…" # shell runners don't clean-up, see https://gitlab.com/gitlab-org/gitlab/-/issues/243716
     - rm -rf $CI_PROJECT_DIR
     - echo "Perform docker clean-up…"
     - docker image  prune --all --force
