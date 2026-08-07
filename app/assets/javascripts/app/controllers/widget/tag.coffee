@@ -1,6 +1,7 @@
 class App.WidgetTag extends App.Controller
   editMode: false
   pendingRefresh: false
+  commitInProgress: false
   possibleTags: {}
   templateName:'widget/tag'
   elements:
@@ -83,12 +84,21 @@ class App.WidgetTag extends App.Controller
   onAddTag: (e) =>
     if e
       e.preventDefault()
-    item = @$('[name="new_tag"]').val().trim()
-    if !item
-      if @pendingRefresh
-        @fetch()
-      return
-    @add(item)
+
+    # The render() of a commit replaces the focused input, whose blur event
+    #   arrives while the commit is still being processed - do not commit the
+    #   vanishing input a second time.
+    return if @commitInProgress
+    @commitInProgress = true
+    try
+      item = @$('[name="new_tag"]').val().trim()
+      if !item
+        if @pendingRefresh
+          @fetch()
+        return
+      @add(item)
+    finally
+      @commitInProgress = false
 
   add: (items, source = '') =>
     for item in items.split(',')
