@@ -45,33 +45,17 @@ class ImportJiraController < ApplicationController
       return
     end
 
-    Setting.set('import_jira_email', params[:email])
-    Setting.set('import_jira_api_token', params[:api_token])
-    Setting.set('import_jira_project_key', params[:project_key])
+    store_credentials
 
-    connection_result = Sequencer.process('Import::Jira::ConnectionTest')
+    return if render_credentials_error(
+      !Sequencer.process('Import::Jira::ConnectionTest')[:connected],
+      __('The provided credentials are invalid.'),
+    )
 
-    if !connection_result[:connected]
-      reset_credentials
-
-      render json: {
-        result:        'invalid',
-        message_human: __('The provided credentials are invalid.'),
-      }
-      return
-    end
-
-    permission_result = Sequencer.process('Import::Jira::PermissionCheck')
-
-    if !permission_result[:permission_present]
-      reset_credentials
-
-      render json: {
-        result:        'invalid',
-        message_human: __('The account cannot browse the given Jira project.'),
-      }
-      return
-    end
+    return if render_credentials_error(
+      !Sequencer.process('Import::Jira::PermissionCheck')[:permission_present],
+      __('The account cannot browse the given Jira project.'),
+    )
 
     render json: {
       result: 'ok',
@@ -110,6 +94,24 @@ class ImportJiraController < ApplicationController
   end
 
   private
+
+  def store_credentials
+    Setting.set('import_jira_email', params[:email])
+    Setting.set('import_jira_api_token', params[:api_token])
+    Setting.set('import_jira_project_key', params[:project_key])
+  end
+
+  def render_credentials_error(failed, message_human)
+    return false if !failed
+
+    reset_credentials
+
+    render json: {
+      result:        'invalid',
+      message_human: message_human,
+    }
+    true
+  end
 
   def reset_credentials
     Setting.set('import_jira_email', nil)

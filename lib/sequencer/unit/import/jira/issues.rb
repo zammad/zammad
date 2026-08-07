@@ -38,7 +38,7 @@ class Sequencer::Unit::Import::Jira::Issues < Sequencer::Unit::Base
 
   # --- iteration -----------------------------------------------------------
 
-  def each_issue
+  def each_issue(&)
     next_page_token = nil
 
     loop do
@@ -52,7 +52,7 @@ class Sequencer::Unit::Import::Jira::Issues < Sequencer::Unit::Base
       response = post_json('search/jql', body)
       break if response.blank?
 
-      Array(response['issues']).each { |issue| yield(issue) }
+      Array(response['issues']).each(&)
 
       next_page_token = response['nextPageToken']
       break if response['isLast'] || next_page_token.blank?
@@ -128,7 +128,7 @@ class Sequencer::Unit::Import::Jira::Issues < Sequencer::Unit::Base
       break if response.blank?
 
       Array(response['comments']).each do |comment|
-        create_comment_article(ticket, issue, comment)
+        create_comment_article(ticket, comment)
       end
 
       start_at += response['maxResults'].to_i
@@ -136,7 +136,7 @@ class Sequencer::Unit::Import::Jira::Issues < Sequencer::Unit::Base
     end
   end
 
-  def create_comment_article(ticket, issue, comment)
+  def create_comment_article(ticket, comment)
     author = comment['author'] || {}
 
     ::Ticket::Article.create!(
