@@ -126,21 +126,16 @@ RSpec.describe Gql::Mutations::Organization::Update, type: :graphql do
       it 'returns updated organization object attributes' do
         oas = gql.result.data[:organization][:objectAttributeValues]
 
-        expect(oas.map { |oa| { oa['attribute']['name'] => oa['value'] } }).to eq(
-          [
-            {
-              object_attributes[:text].name => 'some test value',
-            },
-            {
-              object_attributes[:multiselect].name => %w[key_1 key_2],
-            },
-            {
-              object_attributes[:integer].name => 1337,
-            },
-            {
-              object_attributes[:boolean].name => true,
-            },
-          ]
+        # Indexed by name rather than compared as an ordered array: the resolver sorts by
+        # 'position ASC, name ASC', so equal-position attributes fall back to lexicographic
+        # name order, which is not the creation order asserted here.
+        values_by_name = oas.to_h { |oa| [oa['attribute']['name'], oa['value']] }
+
+        expect(values_by_name).to eq(
+          object_attributes[:text].name        => 'some test value',
+          object_attributes[:multiselect].name => %w[key_1 key_2],
+          object_attributes[:integer].name     => 1337,
+          object_attributes[:boolean].name     => true,
         )
       end
     end

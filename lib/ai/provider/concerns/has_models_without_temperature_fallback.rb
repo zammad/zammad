@@ -8,8 +8,8 @@ class AI::Provider
       private
 
       def model_supports_temperature?
-        # Use the dynamically detected flag if it has been set.
-        return config[:model_temperature_support] if config[:model_temperature_support].present?
+        # Honor the dynamically detected flag when it is stored (true or false).
+        return config[:model_temperature_support] if config.key?(:model_temperature_support)
 
         # Fall back to the hardcoded list for backward compatibility.
         current_model = options[:model]
