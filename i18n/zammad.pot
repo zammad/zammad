@@ -627,7 +627,7 @@ msgstr ""
 msgid "A queue is required!"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee:423
+#: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee:448
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/composables/useTicketAiAssistanceEnqueueKnowledgeBaseAnswer.ts:43
 msgid "A related knowledge base answer is being generated. You will be notified once the draft is ready."
 msgstr ""
@@ -752,7 +752,7 @@ msgstr ""
 msgid "AI assistance text tool is invalid."
 msgstr ""
 
-#: app/assets/javascripts/app/views/link/kb_answer.jst.eco:22
+#: app/assets/javascripts/app/views/link/kb_answer.jst.eco:26
 msgid "AI draft"
 msgstr ""
 
@@ -777,7 +777,7 @@ msgid "AI provider is missing"
 msgstr ""
 
 #: app/controllers/ticket/knowledge_base_answers_controller.rb:8
-#: app/controllers/ticket/related_knowledge_base_answers_controller.rb:10
+#: app/controllers/ticket/related_knowledge_base_answers_controller.rb:14
 #: app/controllers/ticket/summarize_controller.rb:8
 #: app/graphql/gql/mutations/ticket/ai_assistance/enqueue_knowledge_base_answer.rb:13
 #: app/graphql/gql/mutations/ticket/ai_assistance/summarize.rb:15
@@ -856,7 +856,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/generic/text_tools_modal.jst.eco:10
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_ticket_summary.jst.eco:7
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiDraftFlyout.vue:100
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiSuggested.vue:52
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiSuggested.vue:56
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummaryContent.vue:91
 msgid "API server error: %s"
 msgstr ""
@@ -4222,7 +4222,7 @@ msgid "Could not set two-factor authentication method as default"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/link.coffee:72
-#: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee:390
+#: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee:408
 msgid "Couldn't save changes"
 msgstr ""
 
@@ -9745,7 +9745,7 @@ msgstr ""
 msgid "Knowledge base controls"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee:428
+#: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee:453
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/composables/useTicketAiAssistanceEnqueueKnowledgeBaseAnswer.ts:51
 #: app/services/service/ticket/ai_assistance/create_knowledge_base_answer.rb:21
 msgid "Knowledge base draft could not be generated."
@@ -9767,8 +9767,8 @@ msgstr ""
 msgid "Knowledge base self-hosted video servers"
 msgstr ""
 
-#: app/controllers/ticket/related_knowledge_base_answers_controller.rb:15
-#: app/graphql/gql/queries/ticket/ai/related_knowledge_base_answers.rb:17
+#: app/controllers/ticket/related_knowledge_base_answers_controller.rb:18
+#: app/graphql/gql/queries/ticket/ai/related_knowledge_base_answers.rb:19
 msgid "Knowledge base vector search is not available."
 msgstr ""
 
@@ -10036,7 +10036,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_link_add.coffee:7
 #: app/assets/javascripts/app/models/overview.coffee:7
 #: app/assets/javascripts/app/models/public_link.coffee:6
-#: app/assets/javascripts/app/views/link/kb_answer.jst.eco:24
+#: app/assets/javascripts/app/views/link/kb_answer.jst.eco:28
 #: app/assets/javascripts/app/views/link/ticket/list.jst.eco:11
 #: app/frontend/apps/desktop/pages/ticket/components/TicketLinksFlyout.vue:53
 #: app/frontend/shared/components/Form/FormFieldLink.vue:21
@@ -10093,7 +10093,7 @@ msgid "Link issue"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseActions.vue:62
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiSuggested.vue:78
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiSuggested.vue:82
 msgid "Link knowledge base answer"
 msgstr ""
 
@@ -10123,7 +10123,7 @@ msgstr ""
 msgid "Link type"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseLinks.vue:29
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseLinks.vue:26
 msgid "Linked"
 msgstr ""
 
@@ -11967,8 +11967,8 @@ msgstr ""
 msgid "No source data submitted!"
 msgstr ""
 
-#: app/assets/javascripts/app/views/link/kb_answer.jst.eco:38
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiSuggested.vue:93
+#: app/assets/javascripts/app/views/link/kb_answer.jst.eco:41
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiSuggested.vue:100
 msgid "No suggestions."
 msgstr ""
 
@@ -12329,7 +12329,6 @@ msgstr ""
 msgid "OTRS BPM processes were found. They cannot be imported into Zammad as these kind of workflows are currently not supported."
 msgstr ""
 
-#: app/assets/javascripts/app/models/audit_log.coffee:9
 #: app/assets/javascripts/app/models/core_workflow.coffee:7
 #: app/assets/javascripts/app/models/job.coffee:8
 #: app/assets/javascripts/app/models/object_manager_attribute.coffee:2
@@ -12347,6 +12346,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/object_manager.coffee:161
 msgid "Object Manager Attributes"
+msgstr ""
+
+#: app/assets/javascripts/app/models/audit_log.coffee:9
+msgid "Object Type"
 msgstr ""
 
 #: app/services/service/history/list.rb:58
@@ -14074,7 +14077,7 @@ msgid "Relax, your system is being set up…"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiDraftFlyoutAnswer.vue:51
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiSuggested.vue:69
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiSuggested.vue:73
 msgid "Relevance score"
 msgstr ""
 
@@ -14538,7 +14541,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee:161
 #: app/assets/javascripts/app/views/generic/text_tools_modal.jst.eco:14
-#: app/assets/javascripts/app/views/link/kb_answer.jst.eco:34
+#: app/assets/javascripts/app/views/link/kb_answer.jst.eco:38
 #: app/assets/javascripts/app/views/ticket_zoom/knowledge_base_ai_draft_modal.jst.eco:23
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_ticket_summary.jst.eco:12
 #: app/assets/javascripts/app/views/widget/two_factor_login/security_keys.jst.eco:16
@@ -14547,7 +14550,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/authentication/components/LoginTwoFactor.vue:180
 #: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue:131
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiDraftFlyout.vue:104
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiSuggested.vue:56
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiSuggested.vue:60
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummaryContent.vue:96
 #: app/frontend/apps/mobile/pages/authentication/components/LoginTwoFactor.vue:183
 msgid "Retry"
@@ -15171,10 +15174,10 @@ msgstr ""
 msgid "Search result value key \"%s\" was not found."
 msgstr ""
 
-#: app/assets/javascripts/app/views/link/kb_answer.jst.eco:31
+#: app/assets/javascripts/app/views/link/kb_answer.jst.eco:35
 #: app/assets/javascripts/app/views/ticket_zoom/knowledge_base_ai_draft_modal.jst.eco:17
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiDraftFlyout.vue:160
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiSuggested.vue:98
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiSuggested.vue:105
 msgid "Searching for related answers…"
 msgstr ""
 
@@ -15182,7 +15185,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax_customer_organization.coffee:18
 #: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax_external_data_source.coffee:13
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:845
-#: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee:330
+#: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee:348
 #: app/assets/javascripts/app/views/generic/icon_picker.jst.eco:9
 #: app/assets/javascripts/app/views/translation/form.jst.eco:7
 #: app/frontend/apps/desktop/components/CommonInputSearch/CommonInputSearch.vue:24
@@ -16642,8 +16645,8 @@ msgstr ""
 msgid "Suggest matching knowledge base answers in the ticket sidebar."
 msgstr ""
 
-#: app/assets/javascripts/app/views/link/kb_answer.jst.eco:29
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiSuggested.vue:39
+#: app/assets/javascripts/app/views/link/kb_answer.jst.eco:33
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiSuggested.vue:43
 msgid "Suggested by AI"
 msgstr ""
 
@@ -17197,7 +17200,7 @@ msgid "The article does not belong to the specified ticket."
 msgstr ""
 
 #: app/assets/javascripts/app/models/audit_log.coffee
-msgid "The audit log records security-relevant changes in your system: who changed what, and when.\n\n**Configuration changes** in the admin area:\n\n- Groups, roles, and permissions\n- Overviews, triggers, schedulers, macros, templates, text modules, and checklist templates\n- Channels, postmaster filters, signatures, LDAP sources, and webhooks\n- Calendars, SLAs, time accounting, core workflows, object attributes, public links, and report profiles\n- System settings and packages\n- AI agents and AI text tools\n- S/MIME, PGP, and SSL certificates\n- Knowledge bases and their languages\n\n**User account changes** (of agents and admins only):\n\n- Password changes\n- Activation and deactivation of accounts\n- Added or removed roles and group permissions\n- Two-factor authentication changes\n\n**Session events**:\n\n- Taking over another user's session via \"switch to user\" and switching back\n\nDay-to-day work such as ticket updates is not part of the audit log — it is covered by the ticket history instead."
+msgid "The audit log records security-relevant changes in your system: who changed what, and when.\n\n**Configuration changes** in the admin area:\n\n- Groups, roles, and permissions\n- Overviews, triggers, schedulers, macros, templates, text modules, and checklist templates\n- Channels, postmaster filters, signatures, LDAP sources, and webhooks\n- Calendars, SLAs, time accounting, core workflows, object attributes, public links, and report profiles\n- System settings and packages\n- AI agents and AI text tools\n- S/MIME, PGP, and SSL certificates\n- Knowledge bases and their languages\n\n**User account changes** (of agents and admins only):\n\n- Password changes\n- Activation and deactivation of accounts\n- Added or removed roles and group permissions\n- Two-factor authentication changes\n\n**Session events**:\n\n- Taking over another user's session via \"switch to user\" and switching back\n\nAn arrow in the \"Updated by\" column (e.g. \"John Doe → Jane Doe\") indicates that the action was performed via \"switch to user\".\n\nDay-to-day work such as ticket updates is not part of the audit log — it is covered by the ticket history instead."
 msgstr ""
 
 #: app/assets/javascripts/app/views/getting_started/auto_wizard_enabled.jst.eco:6
@@ -18106,14 +18109,14 @@ msgstr ""
 msgid "The structure is a JSON object that defines the result format to be returned by the AI agent."
 msgstr ""
 
-#: app/assets/javascripts/app/views/link/kb_answer.jst.eco:33
+#: app/assets/javascripts/app/views/link/kb_answer.jst.eco:37
 #: app/assets/javascripts/app/views/ticket_zoom/knowledge_base_ai_draft_modal.jst.eco:22
 #: app/jobs/ticket_ai_related_knowledge_base_answers_embed_job.rb:27
 msgid "The suggestions could not be generated."
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiDraftFlyout.vue:95
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiSuggested.vue:47
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiSuggested.vue:51
 msgid "The suggestions could not be generated. Please try again later or contact your administrator."
 msgstr ""
 
@@ -20039,7 +20042,7 @@ msgstr ""
 msgid "Unlink issue"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseLinks.vue:41
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseLinks.vue:38
 msgid "Unlink knowledge base answer"
 msgstr ""
 
@@ -20281,6 +20284,7 @@ msgstr ""
 msgid "Updated at"
 msgstr ""
 
+#: app/assets/javascripts/app/models/audit_log.coffee:8
 #: app/assets/javascripts/app/models/calendar.coffee:14
 #: app/assets/javascripts/app/models/chat.coffee:260
 #: app/assets/javascripts/app/models/chat_sessions.coffee:11
@@ -20483,7 +20487,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/user.coffee:3
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:2
 #: app/assets/javascripts/app/lib/app_post/user_organization_autocompletion.coffee:2
-#: app/assets/javascripts/app/models/audit_log.coffee:8
 #: app/assets/javascripts/app/models/data_privacy_task.coffee:6
 #: app/assets/javascripts/app/models/job.coffee:8
 #: app/assets/javascripts/app/models/mention.coffee:6

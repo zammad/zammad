@@ -5,8 +5,8 @@ class App.AuditLog extends App.Model
 
   @configure_attributes = [
     { name: 'action_type',    display: __('Action'),    tag: 'select', options: { create: __('create object'), update: __('update object'), destroy: __('delete object'), switch_to: __('switch to user'), switch_back_to: __('switch back to user') }, translate: true, null: true },
-    { name: 'user_fullname',  display: __('User'),      tag: 'input',  type: 'text', limit: 255, null: true },
-    { name: 'auditable_type', display: __('Object'),    tag: 'input',  type: 'text', limit: 255, null: true },
+    { name: 'user_fullname',  display: __('Updated by'), tag: 'input',  type: 'text', limit: 255, null: true },
+    { name: 'auditable_type', display: __('Object Type'), tag: 'input',  type: 'text', limit: 255, null: true },
     { name: 'auditable_name', display: __('Object name'), tag: 'input', type: 'text', limit: 255, null: true },
     { name: 'diff',           display: __('Changes'),   tag: 'audit_log_diff', null: true },
     { name: 'source_ip',      display: __('Source IP'), tag: 'input',  type: 'text', limit: 50, null: true },
@@ -45,6 +45,8 @@ The audit log records security-relevant changes in your system: who changed what
 **Session events**:
 
 - Taking over another user's session via "switch to user" and switching back
+
+An arrow in the "Updated by" column (e.g. "John Doe → Jane Doe") indicates that the action was performed via "switch to user".
 
 Day-to-day work such as ticket updates is not part of the audit log — it is covered by the ticket history instead.
 ''')
