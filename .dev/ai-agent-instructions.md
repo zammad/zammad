@@ -39,6 +39,15 @@ The CoffeeScript frontend uses REST controllers.
 - Never edit translation files (`i18n/*.po`) directly —
   translations are managed via translations.zammad.org.
 
+### UI Principles
+
+- Icon-only buttons need `v-tooltip` supplying the accessible name.
+- Hover/focus-only visible actions need to display on touch fallback
+- Responsive grids should adapt to their container
+- Translatable strings: use complete, meaningful source strings,
+  sentence case for English source strings, and check for existing
+  near-duplicate strings before adding new ones.
+
 ## Essential Commands
 
 ### Backend
