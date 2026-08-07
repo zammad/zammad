@@ -53,7 +53,7 @@ QUnit.test('table test', assert => {
     console.log('colMouseout', id, e.target)
   };
 
-  new App.ControllerTable({
+  var table1 = new App.ControllerTable({
     el:       el,
     overview: ['name', 'created_at', 'active'],
     model:    App.TicketPriority,
@@ -100,6 +100,57 @@ QUnit.test('table test', assert => {
   assert.equal(el.find('tbody > tr:nth-child(2) > td:nth-child(2)').text().trim(), '10.06.2014', 'check row 2')
   assert.equal(el.find('tbody > tr:nth-child(2) > td:nth-child(3)').text().trim(), 'nicht aktiv', 'check row 2')
   assert.equal(el.find('tbody > tr:nth-child(2) > td:nth-child(4)').text().trim(), '', 'check row 2')
+
+  // regression test for #6284: a row inserted via the incremental update
+  // path (render()'s 'fullRender.contentRemoved' branch) must get the
+  // same 'cursor: pointer' styling as rows from a full render.
+  App.TicketPriority.refresh( [
+    {
+      id:         1,
+      name:       '1 low',
+      note:       'some note 1',
+      active:     true,
+      created_at: '2014-06-10T11:17:34.000Z',
+    },
+    {
+      id:         2,
+      name:       '2 normal',
+      note:       'some note 2',
+      active:     false,
+      created_at: '2014-06-10T10:17:34.000Z',
+    },
+    {
+      id:         3,
+      name:       'zzz new',
+      note:       'some note 3',
+      active:     true,
+      created_at: '2014-06-10T12:17:34.000Z',
+    },
+  ] )
+  var result = table1.update({sync: true, objects: App.TicketPriority.search({sortBy:'name', order: 'ASC'})})
+  assert.equal(result[0], 'fullRender.contentRemoved', 'row was inserted via incremental update path')
+  assert.equal(el.find('tbody > tr:nth-child(3) > td:first').text().trim(), 'zzz new', 'check inserted row')
+  assert.equal(el.find('tbody > tr:nth-child(3)').css('cursor'), 'pointer', 'inserted row has cursor style')
+  assert.equal(el.find('tbody > tr:nth-child(3) > td:nth-child(1)').css('cursor'), 'pointer', 'bound column cell of inserted row has cursor style')
+
+  // restore the original 2-record fixture so later assertions in this
+  // test (which query App.TicketPriority without filtering) are unaffected
+  App.TicketPriority.refresh( [
+    {
+      id:         1,
+      name:       '1 low',
+      note:       'some note 1',
+      active:     true,
+      created_at: '2014-06-10T11:17:34.000Z',
+    },
+    {
+      id:         2,
+      name:       '2 normal',
+      note:       'some note 2',
+      active:     false,
+      created_at: '2014-06-10T10:17:34.000Z',
+    },
+  ], {clear: true} )
 
   $('#qunit').append('<hr><h1>table simple II</h1><div id="table2"></div>')
   el = $('#table2')

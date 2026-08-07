@@ -1,4 +1,4 @@
-<tr class="item<%= ' is-inactive' if @object.active is false %><%= ' '+ @object.rowClass() if @object.rowClass %>" data-id="<%= @object.id %>">
+<tr class="item<%= ' is-inactive' if @object.active is false %><%= ' is-clickable' if @clickable %><%= ' '+ @object.rowClass() if @object.rowClass %>" data-id="<%= @object.id %>">
 <% if @sortable: %>
   <td class="table-draggable"><%- @Icon('draggable') %></td>
 <% end %>
@@ -31,7 +31,7 @@
   <%     end %>
   <%   end %>
   <% end %>
-  <td class="<% if header.parentClass: %><%= header.parentClass %><% end %> <% if header.align: %> align-<%= header.align %><% end %>" <% if header.title: %> title="<%= header.title %>"<% end %>>
+  <td class="<% if header.parentClass: %><%= header.parentClass %><% end %><% if header.clickable and (header.name isnt 'action' or @actions.length > 0): %> is-clickable<% end %> <% if header.align: %> align-<%= header.align %><% end %>" <% if header.title: %> title="<%= header.title %>"<% end %>>
     <% if header.name is 'icon': %>
         <% if @object.ai_agent_running and @object.currentView() is 'agent': %>
             <%- @Icon('task-state-ai', "#{header.class} animate-spin ") %>

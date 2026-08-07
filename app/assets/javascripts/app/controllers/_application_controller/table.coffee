@@ -359,11 +359,6 @@ class App.ControllerTable extends App.Controller
 
     @renderPager(container)
 
-    cursorMap =
-      click:    'pointer'
-      dblclick: 'pointer'
-      #mouseover: 'alias'
-
     # bind col.
     if !_.isEmpty(@bindCol)
       for name, item of @bindCol
@@ -388,17 +383,6 @@ class App.ControllerTable extends App.Controller
                   availabilityCheck = callback.available
                   callback          = callback.callback
 
-                if cursorMap[event]
-                  table.find("tbody > tr > td:nth-child(#{position})").each (i, elem) ->
-                    dom = $(elem)
-
-                    if availabilityCheck
-                      id = dom.parents('tr').data('id')
-
-                      return if !availabilityCheck(id, dom)
-
-
-                    dom.css('cursor', cursorMap[event])
                 table.on(event, "tbody > tr > td:nth-child(#{position})",
                   (e) ->
                     e.stopPropagation()
@@ -420,16 +404,6 @@ class App.ControllerTable extends App.Controller
               availabilityCheck = callback.available
               callback          = callback.callback
 
-            if cursorMap[event]
-              table.find('tbody > tr').each (i, elem) ->
-                dom = $(elem)
-
-                if availabilityCheck
-                  id = dom.data('id')
-
-                  return if !availabilityCheck(id)
-
-                dom.css( 'cursor', cursorMap[event] )
             table.on(event, 'tbody > tr',
               (e) ->
                 id = $(e.target).parents('tr').data('id')
@@ -610,7 +584,18 @@ class App.ControllerTable extends App.Controller
       position:   position
       object:     object
       actions:    actions
+      clickable:  @isRowClickable(object)
     )
+
+  # rows with a bound and available click/dblclick event get the is-clickable class (#6284)
+  isRowClickable: (object) =>
+    return false if !@bindRow?.events
+    for event, callback of @bindRow.events when event is 'click' or event is 'dblclick'
+      if typeof callback isnt 'function' and typeof callback.available is 'function'
+        return true if callback.available(object.id)
+      else
+        return true
+    false
 
   tableHeadersHasChanged: =>
     return true if @overviewAttributes isnt @lastOverview
@@ -769,6 +754,13 @@ class App.ControllerTable extends App.Controller
           click:
             callback: @toggleActionDropdown
             available: (id, elem) -> elem.find('[data-table-action]').length > 0
+
+    # mark click/dblclick bound columns, their cells get the is-clickable class (#6284)
+    for name, item of @bindCol
+      continue if !item.events
+      continue if !('click' of item.events || 'dblclick' of item.events)
+      for header in @headers when header.name in [name, "#{name}_id", "#{name}_bulkIds"]
+        header.clickable = true
 
     @calculateHeaderWidths()
     @storeHeaderWidths()

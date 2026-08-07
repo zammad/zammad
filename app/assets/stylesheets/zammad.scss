@@ -1667,6 +1667,10 @@ td.align-right {
   vertical-align: middle;
 }
 
+.table > tbody .is-clickable {
+  cursor: pointer;
+}
+
 .table-hover > tbody > tr:hover,
 .table-hover > tbody > tr.is-hover {
   background: var(--background-secondary);
