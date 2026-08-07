@@ -85,6 +85,17 @@ RSpec.describe Service::Translation::Search do
           context 'with description attribute' do
             it_behaves_like 'returns filtered result', :public_link, 'description', 2
           end
+
+          context 'with nil description on a public link' do
+            before do
+              create(:public_link, description: nil)
+              create(:public_link, description: "desc #{query}")
+            end
+
+            it 'does not crash on nil descriptions' do
+              expect { service_result }.not_to raise_error
+            end
+          end
         end
 
         context 'with custom object attribute' do

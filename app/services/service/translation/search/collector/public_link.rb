@@ -20,6 +20,6 @@ class Service::Translation::Search::Collector::PublicLink < Service::Translation
   end
 
   def link_descriptions
-    public_links.pluck(:description)
+    public_links.pluck(:description).compact
   end
 end
