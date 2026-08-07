@@ -457,10 +457,12 @@ export const useUserCurrentTaskbarTabsStore = defineStore('userCurrentTaskbarTab
   }
 
   watch(taskbarTabList, (newTaskbarTabList) => {
-    if (
-      !newTaskbarTabList ||
-      newTaskbarTabList.length <= application.config.ui_task_mananger_max_task_count
-    )
+    const maxTaskCount = application.config.ui_task_mananger_max_task_count
+
+    // Without a configured (positive) maximum there is nothing to enforce. Note that
+    // `newTaskbarTabList.length <= undefined` is always `false`, so skipping this check
+    // would otherwise make every list change fall through to the eviction logic below.
+    if (!newTaskbarTabList || !(maxTaskCount > 0) || newTaskbarTabList.length <= maxTaskCount)
       return
 
     const sortedTaskbarTabList = newTaskbarTabList

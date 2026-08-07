@@ -5,6 +5,7 @@ import { waitFor, within } from '@testing-library/vue'
 import ticketObjectAttributes from '#tests/graphql/factories/fixtures/ticket-object-attributes.ts'
 import { getTestRouter } from '#tests/support/components/renderComponent.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
+import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
 import { waitUntil } from '#tests/support/vitest-wrapper.ts'
@@ -53,6 +54,14 @@ const visitSearchViewWithTicketTitleFilterAndNoSearchTerm = async (value: string
 let ticket: Ticket
 
 describe('search view', () => {
+  beforeEach(() => {
+    // Without this, `application.config.ui_task_mananger_max_task_count` is
+    // `undefined` in tests, which breaks the taskbar's max-open-tabs guard
+    // (`length <= undefined` is always `false`) and causes it to evict the
+    // search view's own taskbar tab under load, see #taskbarTabs.ts.
+    mockApplicationConfig({ ui_task_mananger_max_task_count: 30 })
+  })
+
   describe('agent user', () => {
     beforeEach(() => {
       mockPermissions(['ticket.agent'])
