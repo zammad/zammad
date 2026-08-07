@@ -28,6 +28,9 @@ RSpec.describe UserAgent, :aggregate_failures do
   end
 
   def start_server(with_ssl: nil)
+    @auto_shutdown_before_puma = Setting.get('auto_shutdown') # rubocop:disable RSpec/InstanceVariable
+    Setting.set('auto_shutdown', false)
+
     if with_ssl.present?
       localhost_authority = Localhost::Authority.new(base_host, issuer: nil)
       localhost_authority.save # make sure the certificate is created
@@ -61,6 +64,8 @@ RSpec.describe UserAgent, :aggregate_failures do
   def stop_server
     @puma_server.stop # rubocop:disable RSpec/InstanceVariable
     @puma_thread.join # rubocop:disable RSpec/InstanceVariable
+  ensure
+    Setting.set('auto_shutdown', @auto_shutdown_before_puma) # rubocop:disable RSpec/InstanceVariable
   end
 
   shared_context 'when doing user agent tests' do
