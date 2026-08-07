@@ -22,8 +22,16 @@ RSpec.describe Gql::Subscriptions::KnowledgeBase::ContentUpdates, type: :graphql
     gql.execute(subscription, context: { channel: mock_channel })
   end
 
-  context 'with a customer (no knowledge base permission)', authenticated_as: :customer do
+  context 'without knowledge base permission', authenticated_as: :customer do
     let(:customer) { create(:customer) }
+
+    it 'rejects the subscription' do
+      expect(gql.result.error_type).to eq(Exceptions::Forbidden)
+    end
+  end
+
+  context 'with knowledge base permission (editor)', authenticated_as: :agent do
+    let(:agent) { create(:agent, roles: [create(:role, permission_names: %w[knowledge_base.editor])]) }
 
     it 'subscribes without initial data' do
       expect(gql.result.data).to eq('knowledgeBase' => nil, 'affectedCategoryIds' => nil)

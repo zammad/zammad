@@ -4,6 +4,8 @@ module Gql::Subscriptions
   class KnowledgeBase::ContentUpdates < BaseSubscription
     description 'Ping emitted when knowledge base content changes, so browse views can refetch'
 
+    requires_permission 'knowledge_base.*'
+
     field :knowledge_base, Gql::Types::KnowledgeBaseType, null: true, description: 'The active knowledge base'
     field :affected_category_ids, [GraphQL::Types::ID], null:        true,
                                                         description: 'IDs of the changed category and its ancestors (whose counts/visibility may change); empty for knowledge-base-wide changes'
