@@ -4,6 +4,6 @@ module Gql::Types::Enum
   class SystemImportSourceType < BaseEnum
     description 'Third-party system source'
 
-    build_string_list_enum %w[freshdesk kayako otrs zendesk].freeze
+    build_string_list_enum %w[freshdesk jira kayako otrs zendesk].freeze
   end
 end

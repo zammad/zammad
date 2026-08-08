@@ -142,5 +142,58 @@ RSpec.describe Gql::Mutations::System::Import::Configuration, type: :graphql do
                                            })
       end
     end
+
+    context 'with a valid Jira configuration' do
+      let(:variables) do
+        {
+          configuration: {
+            url:        'https://yours.atlassian.net',
+            username:   'jira@example.com',
+            secret:     'jira_api_token',
+            projectKey: 'LS',
+            source:     'jira'
+          }
+        }
+      end
+
+      before do
+        mock = Service::System::Import::ApplyJiraConfiguration
+        allow_any_instance_of(mock).to receive(:execute).and_return(true)
+      end
+
+      it 'succeeds' do
+        gql.execute(mutation, variables: variables)
+        expect(gql.result.data).to include({ 'success' => true })
+      end
+    end
+
+    context 'when the Jira project cannot be browsed' do
+      let(:variables) do
+        {
+          configuration: {
+            url:        'https://yours.atlassian.net',
+            username:   'jira@example.com',
+            secret:     'jira_api_token',
+            projectKey: 'LS',
+            source:     'jira'
+          }
+        }
+      end
+
+      it 'returns an error' do
+        mock = Service::System::Import::ApplyJiraConfiguration
+        error = Service::System::Import::ApplyJiraConfiguration::InaccessibleError
+        allow_any_instance_of(mock).to receive(:reachable!).and_return(nil)
+        allow_any_instance_of(mock).to receive(:accessible!).and_raise(error, 'The account cannot browse the given Jira project.')
+
+        gql.execute(mutation, variables: variables)
+        expect(gql.result.data).to include({
+                                             'errors' => [
+                                               { 'message' => 'The account cannot browse the given Jira project.', 'field' => 'secret' },
+                                               { 'message' => 'The account cannot browse the given Jira project.', 'field' => 'username' }
+                                             ]
+                                           })
+      end
+    end
   end
 end

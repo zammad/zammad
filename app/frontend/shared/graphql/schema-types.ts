@@ -1017,6 +1017,7 @@ export enum EnumSecurityStateType {
 /** Third-party system source */
 export enum EnumSystemImportSource {
   Freshdesk = 'freshdesk',
+  Jira = 'jira',
   Kayako = 'kayako',
   Otrs = 'otrs',
   Zendesk = 'zendesk'
@@ -4037,6 +4038,8 @@ export type SubscriptionsUserUpdatesArgs = {
 
 /** Third-party system configuration information */
 export type SystemImportConfigurationInput = {
+  /** Third-party system project key (e.g. Jira project to import) */
+  projectKey?: InputMaybe<Scalars['String']['input']>;
   /** Third-party system password/token */
   secret?: InputMaybe<Scalars['String']['input']>;
   /** Third-party system source */

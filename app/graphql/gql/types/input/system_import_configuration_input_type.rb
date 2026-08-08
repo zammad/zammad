@@ -9,5 +9,6 @@ module Gql::Types::Input
     argument :secret, String, 'Third-party system password/token', required: false
     argument :source, Gql::Types::Enum::SystemImportSourceType, 'Third-party system source', required: true
     argument :tls_verify, Boolean, 'Verify TLS certificate', required: false
+    argument :project_key, String, 'Third-party system project key (e.g. Jira project to import)', required: false
   end
 end
