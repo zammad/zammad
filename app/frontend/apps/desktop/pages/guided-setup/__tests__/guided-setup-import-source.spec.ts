@@ -103,6 +103,45 @@ describe('guided setup import source', () => {
       expect(view.getByRole('button', { name: 'Start import' })).toBeInTheDocument()
     })
 
+    describe('when jira import is used', () => {
+      it('shows the jira configuration form and continues to the start view', async () => {
+        mockSystemSetupInfo({
+          status: EnumSystemSetupInfoStatus.InProgress,
+          type: EnumSystemSetupInfoType.Import,
+          lockValue: 'random-uuid-lock',
+          importSource: 'jira',
+        })
+
+        const view = await visitView('/guided-setup/import/jira')
+
+        expect(view.getByText('URL')).toBeInTheDocument()
+        expect(view.getByText('Email')).toBeInTheDocument()
+        expect(view.getByText('API token')).toBeInTheDocument()
+        expect(view.getByText('Project key')).toBeInTheDocument()
+
+        await view.events.type(view.getByLabelText('URL'), 'https://yours.atlassian.net')
+        await view.events.type(view.getByLabelText('Email'), 'admin@example.com')
+        await view.events.type(view.getByLabelText('API token'), 'random-api-token')
+        await view.events.type(view.getByLabelText('Project key'), 'LS')
+
+        mockSystemImportConfigurationMutation({
+          systemImportConfiguration: {
+            success: true,
+            errors: null,
+          },
+        })
+
+        await view.events.click(view.getByRole('button', { name: 'Save and continue' }))
+
+        await waitFor(() => {
+          expect(
+            view,
+            'correctly redirects to guided setup import source jira start',
+          ).toHaveCurrentUrl('/guided-setup/import/jira/start')
+        })
+      })
+    })
+
     describe('when otrs import is used', () => {
       it('disable ssl verify for http urls', async () => {
         mockSystemSetupInfo({

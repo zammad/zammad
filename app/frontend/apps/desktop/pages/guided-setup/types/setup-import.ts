@@ -15,6 +15,7 @@ export interface ImportSourceConfigurationBase {
   url: string
   username?: string
   secret?: string
+  projectKey?: string
   sslVerify?: boolean
 }
 
@@ -30,6 +31,12 @@ export interface ImportSourceConfigurationZendeskData extends ImportSourceConfig
 export interface ImportSourceConfigurationKayakoData extends ImportSourceConfigurationBase {
   username: string
   secret: string
+}
+
+export interface ImportSourceConfigurationJiraData extends ImportSourceConfigurationBase {
+  username: string
+  secret: string
+  projectKey: string
 }
 
 export interface ImportSourceConfigurationOtrsData extends ImportSourceConfigurationBase {
