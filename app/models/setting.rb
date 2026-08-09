@@ -132,7 +132,7 @@ reload config settings
   end
 
   def sensitive?
-    SENSITIVE_SETTING_NAMES.any? { |word| name.include?(word) } # rubocop:disable Style/ArrayIntersect
+    SENSITIVE_SETTING_NAMES.any? { |word| name.include?(word) }
   end
 
   private

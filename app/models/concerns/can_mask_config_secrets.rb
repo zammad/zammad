@@ -15,7 +15,7 @@ module CanMaskConfigSecrets
   # ActionController::Parameters.
   def self.sensitive_config_attributes(object_payload)
     (object_payload[:config].try(:keys) || object_payload['config'].try(:keys) || [])
-      .select { |key| SENSITIVE_CONFIG_KEYS.any? { |secret| key.to_s.include?(secret) } } # rubocop:disable Style/ArrayIntersect -- substring match on key names, not array intersection
+      .select { |key| SENSITIVE_CONFIG_KEYS.any? { |secret| key.to_s.include?(secret) } } # -- substring match on key names, not array intersection
       .map    { |key| "config.#{key}" }
   end
 

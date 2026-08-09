@@ -44,7 +44,7 @@ module RuboCop
         def on_send(node)
           graphql_field?(node) do |field_name|
             name_string = field_name.to_s
-            next if SENSITIVE_SUBSTRINGS.none? { |needle| name_string.include?(needle) } # rubocop:disable Style/ArrayIntersect
+            next if SENSITIVE_SUBSTRINGS.none? { |needle| name_string.include?(needle) }
 
             add_offense(node.first_argument, message: format(MSG, name: name_string))
           end
