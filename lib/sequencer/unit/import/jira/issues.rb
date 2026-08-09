@@ -283,12 +283,19 @@ class Sequencer::Unit::Import::Jira::Issues < Sequencer::Unit::Base
   end
 
   def empty_stat
-    { total: 0, created: 0, updated: 0, skipped: 0, unchanged: 0, failed: 0 }
+    # `sum` is the processed count read by the guided-setup status UI, `total`
+    # is the target it is compared against to draw the progress bar.
+    { sum: 0, total: 0, created: 0, updated: 0, skipped: 0, failed: 0 }
   end
 
   def increment(model_key, field)
-    @statistics[model_key][field] += 1
-    @statistics[model_key][:total] += 1 if field != :total && model_key != 'Tickets'
+    stat = @statistics[model_key]
+    stat[field] += 1
+    stat[:sum] += 1 if field != :sum
+
+    # Only Tickets have a target total known up front (the issue count); for the
+    # other entities the total simply tracks what has been processed so far.
+    stat[:total] = stat[:sum] if model_key != 'Tickets'
   end
 
   def store_statistics
