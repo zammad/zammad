@@ -95,6 +95,25 @@
       "note": "ObjectLookup.by_id works as designed"
     },
     {
+      "warning_type": "Unmaintained Dependency",
+      "warning_code": 122,
+      "fingerprint": "21ab0fe00fdd5899ffc405cff75aadb91b805ee996a614f7e27b08a287e9062d",
+      "check_name": "EOLRails",
+      "message": "Support for Rails 8.0.5.1 ends on 2026-10-07",
+      "file": "Gemfile.lock",
+      "line": 592,
+      "link": "https://brakemanscanner.org/docs/warning_types/unmaintained_dependency/",
+      "code": null,
+      "render_path": null,
+      "location": null,
+      "user_input": null,
+      "confidence": "Weak",
+      "cwe_id": [
+        1104
+      ],
+      "note": ""
+    },
+    {
       "warning_type": "Redirect",
       "warning_code": 18,
       "fingerprint": "2ebd9f5e35ae11122d5561fdbbef7432eeef6b34d7c61249365be7dc34cbfb82",
@@ -329,7 +348,7 @@
       "check_name": "SQL",
       "message": "Possible SQL injection",
       "file": "app/models/concerns/has_recursive_cte_query.rb",
-      "line": 38,
+      "line": 40,
       "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
       "code": "with_recursive(name.to_sym => ([anchor, recursive])).from(\"#{name} AS #{table_name}\")",
       "render_path": null,
@@ -439,29 +458,6 @@
       "note": ""
     },
     {
-      "warning_type": "Remote Code Execution",
-      "warning_code": 24,
-      "fingerprint": "8db3b4731daa1ef96c53729b2fca4cc91b47af058564f61cba24833aacaa55ae",
-      "check_name": "UnsafeReflection",
-      "message": "Unsafe reflection method `constantize` called on model attribute",
-      "file": "app/jobs/transaction_job.rb",
-      "line": 25,
-      "link": "https://brakemanscanner.org/docs/warning_types/remote_code_execution/",
-      "code": "Setting.get(setting.name).constantize",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "TransactionJob",
-        "method": "perform"
-      },
-      "user_input": "Setting.get(setting.name)",
-      "confidence": "Medium",
-      "cwe_id": [
-        470
-      ],
-      "note": "Setting.where(area: 'Transaction::Backend::Async').order(:name) returns defined Transaction  backend class names"
-    },
-    {
       "warning_type": "SQL Injection",
       "warning_code": 0,
       "fingerprint": "9385240f75935e7ed242f9b52cc9471bcbb907d1990a33ec083f303d951df563",
@@ -515,7 +511,7 @@
       "check_name": "UnsafeReflection",
       "message": "Unsafe reflection method `constantize` called on model attribute",
       "file": "app/models/link/triggers_subscriptions.rb",
-      "line": 20,
+      "line": 24,
       "link": "https://brakemanscanner.org/docs/warning_types/remote_code_execution/",
       "code": "Link::Object.find(link_object_id).name.constantize",
       "render_path": null,
@@ -618,7 +614,7 @@
       "check_name": "SSLVerify",
       "message": "SSL certificate verification was bypassed",
       "file": "app/controllers/integration/exchange_controller.rb",
-      "line": 93,
+      "line": 94,
       "link": "https://brakemanscanner.org/docs/warning_types/ssl_verification_bypass/",
       "code": "Autodiscover::Client.new(:email => params[:user], :password => params[:password]).http.ssl_config.verify_mode = OpenSSL::SSL::VERIFY_NONE",
       "render_path": null,
@@ -641,7 +637,7 @@
       "check_name": "SQL",
       "message": "Possible SQL injection",
       "file": "app/models/concerns/has_recursive_cte_query.rb",
-      "line": 71,
+      "line": 68,
       "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
       "code": "joins(\"INNER JOIN #{recursive_tree_cte_name} ON #{(\"#{table_name}.id = #{recursive_tree_cte_name}.parent_id\" or \"#{table_name}.parent_id = #{recursive_tree_cte_name}.id\")}\")",
       "render_path": null,
@@ -794,29 +790,6 @@
       "cwe_id": [
         913,
         95
-      ],
-      "note": ""
-    },
-    {
-      "warning_type": "Remote Code Execution",
-      "warning_code": 24,
-      "fingerprint": "fa62d2e232a02c3e0ac7764954b85b5f199f56923dabb11bf2ff246e7cb5295a",
-      "check_name": "UnsafeReflection",
-      "message": "Unsafe reflection method `constantize` called on model attribute",
-      "file": "lib/transaction_dispatcher.rb",
-      "line": 37,
-      "link": "https://brakemanscanner.org/docs/warning_types/remote_code_execution/",
-      "code": "Setting.get(setting.name).constantize",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "TransactionDispatcher",
-        "method": "self.perform"
-      },
-      "user_input": "Setting.get(setting.name)",
-      "confidence": "Medium",
-      "cwe_id": [
-        470
       ],
       "note": ""
     },
