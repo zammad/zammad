@@ -1,4 +1,5 @@
 class App.KbPopoverProvider extends App.SingleObjectPopoverProvider
+  @permission = ['knowledge_base.reader', 'knowledge_base.editor']
   @templateName = 'kb_generic'
   @includeData = false
   displayTitleUsing: (object) ->

@@ -184,7 +184,7 @@ class App.WidgetLinkKbAnswer extends App.WidgetLink
   # The state the AI draft modal renders from.
   suggestionsState: =>
     state     = @suggestionState('modal')
-    showScore = App.User.current()?.permission('admin.ai_provider,admin.ai_knowledge_base')
+    showScore = App.User.current()?.permission(['admin.ai_provider', 'admin.ai_knowledge_base'])
 
     {
       suggestionsSearchAvailable: @suggestionsSearchAvailable()
@@ -321,7 +321,7 @@ class App.WidgetLinkKbAnswer extends App.WidgetLink
       App.Config.get('ai_provider') &&
       user?.permission('ticket.agent+knowledge_base.editor')
 
-    showScore = user?.permission('admin.ai_provider,admin.ai_knowledge_base')
+    showScore = user?.permission(['admin.ai_provider', 'admin.ai_knowledge_base'])
     state     = @suggestionState('sidebar')
 
     @html App.view('link/kb_answer')(

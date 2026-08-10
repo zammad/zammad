@@ -4,6 +4,7 @@
 import { computed, useTemplateRef } from 'vue'
 
 import type { KnowledgeBaseAnswerTranslationFragment } from '#shared/graphql/types.ts'
+import { useSessionStore } from '#shared/stores/session.ts'
 
 import { prepareLegacyAppLinkNavigation } from '#desktop/components/BetaUi/utils/legacyAppLink.ts'
 import CommonPopoverWithTrigger from '#desktop/components/CommonPopover/CommonPopoverWithTrigger.vue'
@@ -17,6 +18,11 @@ interface Props {
 }
 
 const props = defineProps<Props>()
+
+const { hasPermission } = useSessionStore()
+
+// Agents without knowledge base permission only get the plain item.
+const showPopover = computed(() => hasPermission('knowledge_base.*'))
 
 const popoverWithTriggerInstance = useTemplateRef('popover-with-trigger')
 
@@ -40,6 +46,7 @@ const onTriggerClick = () => {
     <CommonPopoverWithTrigger
       ref="popover-with-trigger"
       :trigger-link="link"
+      :disabled="!showPopover"
       orientation="left"
       trigger-link-class="flex h-9 w-full items-center gap-1.5 rounded-md! px-1.5 hover:text-blue-850! hover:dark:text-blue-600! text-blue-800!"
       trigger-link-active-class="outline-2! outline-blue-800! text-blue-850! dark:text-blue-600!"

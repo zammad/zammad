@@ -15,6 +15,10 @@ export interface Props extends Omit<CommonPopoverProps, 'owner'> {
   triggerLink?: string
   triggerLinkClass?: string
   triggerLinkActiveClass?: string
+  /**
+   * If set, the popover will not show up
+   */
+  disabled?: boolean
   noFocusStyling?: boolean
   noHoverStyling?: boolean
   noMinWidth?: boolean
@@ -48,10 +52,20 @@ onClickOutside(
 )
 
 onLongPress(popoverTarget, () => {
+  if (props.disabled) return
+
   hasOpenedViaLongPress.value = true
 
   open()
 })
+
+const onTriggerSpace = (event: KeyboardEvent) => {
+  if (props.disabled) return
+
+  event.preventDefault()
+
+  open()
+}
 
 // NB: We purposefully don't use `useDelayTimings` values here, because they may be 0 for users with reduced motion
 //   preferences. This delay is meant to prevent accidental popover opening/closing when the user is moving their mouse
@@ -102,6 +116,7 @@ defineExpose({ hasOpenedViaLongPress })
 <template>
   <!-- on long click we don't want to navigate -->
   <CommonPopover
+    v-if="!disabled"
     v-bind="$props"
     :id="uniqueId"
     ref="popover"
@@ -128,8 +143,8 @@ defineExpose({ hasOpenedViaLongPress })
     :link="triggerLink ? triggerLink : undefined"
     :disabled="(triggerLink && hasOpenedViaLongPress) || undefined"
     tabindex="0"
-    :aria-controls="uniqueId"
-    :aria-expanded="isOpen"
+    :aria-controls="disabled ? undefined : uniqueId"
+    :aria-expanded="disabled ? undefined : isOpen"
     class="group transition-none empty:hidden"
     :class="[
       triggerLinkClass ?? '',
@@ -141,7 +156,7 @@ defineExpose({ hasOpenedViaLongPress })
         'hover:outline-1 hover:outline-blue-600 hover:dark:outline-blue-900': !noHoverStyling,
       },
     ]"
-    @keydown.space.prevent="open()"
+    @keydown.space="onTriggerSpace"
     @click="hasOpenedViaLongPress && $event.preventDefault()"
   >
     <slot
