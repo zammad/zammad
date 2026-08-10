@@ -14,19 +14,19 @@ importers:
     devDependencies:
       eslint:
         specifier: ^10.8.0
-        version: 10.8.0(supports-color@8.1.1)
+        version: 10.8.1(supports-color@8.1.1)
       eslint-plugin-eslint-plugin:
         specifier: ^7.6.1
-        version: 7.6.1(eslint@10.8.0(supports-color@8.1.1))
+        version: 7.6.1(eslint@10.8.1(supports-color@8.1.1))
       eslint-plugin-n:
         specifier: ^18.2.2
-        version: 18.2.2(eslint@10.8.0(supports-color@8.1.1))
+        version: 18.3.0(eslint@10.8.1(supports-color@8.1.1))
       mocha:
         specifier: ^11.8.0
         version: 11.8.0
       vue-eslint-parser:
         specifier: ^10.4.1
-        version: 10.4.1(eslint@10.8.0(supports-color@8.1.1))(supports-color@8.1.1)
+        version: 10.4.1(eslint@10.8.1(supports-color@8.1.1))(supports-color@8.1.1)
 
 packages:
 
@@ -232,8 +232,8 @@ packages:
     peerDependencies:
       eslint: '>=9.0.0'
 
-  eslint-plugin-n@18.2.2:
-    resolution: {integrity: sha512-gOO0lIqwEjZ750kv9/SptCWArUoAZXJoBr0vYWTO2dCBxctHUXlBIigiC8xuxxr/NKqgIT6Ehz1xRcilj8a5cA==}
+  eslint-plugin-n@18.3.0:
+    resolution: {integrity: sha512-cPVguuDe6DrIPb/qUXHf8P89MaVTUmiYWwpt5gX5AILsvRIiZAxMFXcFR6QHYBksqKJpjfUBlL/RleCJUWcD7w==}
     engines: {node: ^20.19.0 || ^22.13.0 || >=24}
     peerDependencies:
       eslint: '>=8.57.1'
@@ -257,8 +257,8 @@ packages:
     resolution: {integrity: sha512-tD40eHxA35h0PEIZNeIjkHoDR4YjjJp34biM0mDvplBe//mB+IHCqHDGV7pxF+7MklTvighcCPPZC7ynWyjdTA==}
     engines: {node: ^20.19.0 || ^22.13.0 || >=24}
 
-  eslint@10.8.0:
-    resolution: {integrity: sha512-nuKKvN+oIBO0koN7Tm7dlkmnkc21mtt0QJLwAKzjLq14y6lRTdVG36MZHJ8eQHwdJMwZbQNMlPOYedMq/oVJvQ==}
+  eslint@10.8.1:
+    resolution: {integrity: sha512-wqA7W2jbsC/BnV9Iv1UZpKVFkO1AdNoSmYW8NWG4HNOBbkAMvIqDZ27pI2f07dqn583NcIC44ckjAcOXDL1QbQ==}
     engines: {node: ^20.19.0 || ^22.13.0 || >=24}
     hasBin: true
     peerDependencies:
@@ -323,8 +323,8 @@ packages:
     resolution: {integrity: sha512-DyFP3BM/3YHTQOCUL/w0OZHR0lpKeGrxotcHWcqNEdnltqFwXVfhEBQ94eIo34AfQpo0rGki4cyIiftY06h2Fg==}
     engines: {node: 6.* || 8.* || >= 10.*}
 
-  get-tsconfig@4.14.0:
-    resolution: {integrity: sha512-yTb+8DXzDREzgvYmh6s9vHsSVCHeC0G3PI5bEXNBHtmshPnO+S5O7qgLEOn0I5QvMy6kpZN8K1NKGyilLb93wA==}
+  get-tsconfig@4.14.1:
+    resolution: {integrity: sha512-Dz/6HxkrxgNehhxLVeyv8sad9UzF2xBVeaKBQNDfJ5XiSXmp2gTR0eO0RWiT2NCKS5aGP9jjkOMggTN90qU50A==}
 
   glob-parent@6.0.2:
     resolution: {integrity: sha512-XxwI8EOhVQgWp6iDL+3b0r86f4d6AX6zSU55HfB4ydCEuXLXc5FcYeOu+nnGftS4TEju/11rt4KJPTMgbfmv4A==}
@@ -611,9 +611,9 @@ packages:
 
 snapshots:
 
-  '@eslint-community/eslint-utils@4.10.1(eslint@10.8.0(supports-color@8.1.1))':
+  '@eslint-community/eslint-utils@4.10.1(eslint@10.8.1(supports-color@8.1.1))':
     dependencies:
-      eslint: 10.8.0(supports-color@8.1.1)
+      eslint: 10.8.1(supports-color@8.1.1)
       eslint-visitor-keys: 3.4.3
 
   '@eslint-community/regexpp@4.12.2': {}
@@ -770,31 +770,31 @@ snapshots:
 
   escape-string-regexp@4.0.0: {}
 
-  eslint-compat-utils@0.5.1(eslint@10.8.0(supports-color@8.1.1)):
+  eslint-compat-utils@0.5.1(eslint@10.8.1(supports-color@8.1.1)):
     dependencies:
-      eslint: 10.8.0(supports-color@8.1.1)
+      eslint: 10.8.1(supports-color@8.1.1)
       semver: 7.8.5
 
-  eslint-plugin-es-x@7.8.0(eslint@10.8.0(supports-color@8.1.1)):
+  eslint-plugin-es-x@7.8.0(eslint@10.8.1(supports-color@8.1.1)):
     dependencies:
-      '@eslint-community/eslint-utils': 4.10.1(eslint@10.8.0(supports-color@8.1.1))
+      '@eslint-community/eslint-utils': 4.10.1(eslint@10.8.1(supports-color@8.1.1))
       '@eslint-community/regexpp': 4.12.2
-      eslint: 10.8.0(supports-color@8.1.1)
-      eslint-compat-utils: 0.5.1(eslint@10.8.0(supports-color@8.1.1))
+      eslint: 10.8.1(supports-color@8.1.1)
+      eslint-compat-utils: 0.5.1(eslint@10.8.1(supports-color@8.1.1))
 
-  eslint-plugin-eslint-plugin@7.6.1(eslint@10.8.0(supports-color@8.1.1)):
+  eslint-plugin-eslint-plugin@7.6.1(eslint@10.8.1(supports-color@8.1.1)):
     dependencies:
-      '@eslint-community/eslint-utils': 4.10.1(eslint@10.8.0(supports-color@8.1.1))
-      eslint: 10.8.0(supports-color@8.1.1)
+      '@eslint-community/eslint-utils': 4.10.1(eslint@10.8.1(supports-color@8.1.1))
+      eslint: 10.8.1(supports-color@8.1.1)
       estraverse: 5.3.0
 
-  eslint-plugin-n@18.2.2(eslint@10.8.0(supports-color@8.1.1)):
+  eslint-plugin-n@18.3.0(eslint@10.8.1(supports-color@8.1.1)):
     dependencies:
-      '@eslint-community/eslint-utils': 4.10.1(eslint@10.8.0(supports-color@8.1.1))
+      '@eslint-community/eslint-utils': 4.10.1(eslint@10.8.1(supports-color@8.1.1))
       enhanced-resolve: 5.24.5
-      eslint: 10.8.0(supports-color@8.1.1)
-      eslint-plugin-es-x: 7.8.0(eslint@10.8.0(supports-color@8.1.1))
-      get-tsconfig: 4.14.0
+      eslint: 10.8.1(supports-color@8.1.1)
+      eslint-plugin-es-x: 7.8.0(eslint@10.8.1(supports-color@8.1.1))
+      get-tsconfig: 4.14.1
       globals: 15.15.0
       globrex: 0.1.2
       ignore: 5.3.2
@@ -811,9 +811,9 @@ snapshots:
 
   eslint-visitor-keys@5.0.1: {}
 
-  eslint@10.8.0(supports-color@8.1.1):
+  eslint@10.8.1(supports-color@8.1.1):
     dependencies:
-      '@eslint-community/eslint-utils': 4.10.1(eslint@10.8.0(supports-color@8.1.1))
+      '@eslint-community/eslint-utils': 4.10.1(eslint@10.8.1(supports-color@8.1.1))
       '@eslint-community/regexpp': 4.12.2
       '@eslint/config-array': 0.23.5(supports-color@8.1.1)
       '@eslint/config-helpers': 0.7.0
@@ -895,7 +895,7 @@ snapshots:
 
   get-caller-file@2.0.5: {}
 
-  get-tsconfig@4.14.0:
+  get-tsconfig@4.14.1:
     dependencies:
       resolve-pkg-maps: 1.0.0
 
@@ -1118,10 +1118,10 @@ snapshots:
     dependencies:
       punycode: 2.3.1
 
-  vue-eslint-parser@10.4.1(eslint@10.8.0(supports-color@8.1.1))(supports-color@8.1.1):
+  vue-eslint-parser@10.4.1(eslint@10.8.1(supports-color@8.1.1))(supports-color@8.1.1):
     dependencies:
       debug: 4.4.3(supports-color@8.1.1)
-      eslint: 10.8.0(supports-color@8.1.1)
+      eslint: 10.8.1(supports-color@8.1.1)
       eslint-scope: 9.1.2
       eslint-visitor-keys: 5.0.1
       espree: 11.2.0
