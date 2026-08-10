@@ -11,6 +11,9 @@ module Gql::Subscriptions
     requires_permission 'ticket.agent'
 
     def update(customer:)
+      tickets = ::Ticket.where(customer_id: customer.id)
+      return no_update if tickets.exists? && !::TicketPolicy::ReadScope.new(context.current_user).resolve.merge(tickets).exists?
+
       { list_changed: true }
     end
   end

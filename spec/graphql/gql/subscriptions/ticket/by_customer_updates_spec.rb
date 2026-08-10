@@ -13,6 +13,8 @@ RSpec.describe Gql::Subscriptions::Ticket::ByCustomerUpdates, performs_jobs: tru
     SUBSCRIPTION
   end
 
+  let(:group_a)         { create(:group) }
+  let(:group_b)         { create(:group) }
   let(:filter_customer) { create(:customer) }
   let(:variables)       { { customerId: gql.id(filter_customer) } }
   let(:mock_channel)    { build_mock_channel }
@@ -26,25 +28,125 @@ RSpec.describe Gql::Subscriptions::Ticket::ByCustomerUpdates, performs_jobs: tru
   end
 
   context 'with an agent', authenticated_as: :agent_user do
-    let(:agent_user) { create(:agent) }
+    let(:agent_user) { create(:agent, groups: [group_a]) }
 
-    before do
-      gql.execute(subscription, variables: variables, context: { channel: mock_channel })
+    context 'when the customer has no tickets' do
+      before do
+        gql.execute(subscription, variables: variables, context: { channel: mock_channel })
+      end
+
+      it 'subscribes' do
+        expect(gql.result.data).to eq({ 'listChanged' => nil })
+      end
+
+      it 'receives updates when a ticket is created in an accessible group' do
+        mock_channel.mock_broadcasted_messages.clear
+
+        create(:ticket, customer: filter_customer, group: group_a)
+
+        perform_enqueued_jobs
+
+        result = mock_channel.mock_broadcasted_messages.first.dig(:result, 'data', 'ticketByCustomerUpdates')
+        expect(result).to eq({ 'listChanged' => true })
+      end
+
+      it 'does not receive updates when a ticket is created in an inaccessible group' do
+        mock_channel.mock_broadcasted_messages.clear
+
+        create(:ticket, customer: filter_customer, group: group_b)
+
+        perform_enqueued_jobs
+
+        expect(mock_channel.mock_broadcasted_messages).to be_empty
+      end
     end
 
-    it 'subscribes' do
-      expect(gql.result.data).to eq({ 'listChanged' => nil })
+    context 'when the customer has tickets only in groups the agent can access' do
+      before do
+        create(:ticket, customer: filter_customer, group: group_a)
+        gql.execute(subscription, variables: variables, context: { channel: mock_channel })
+      end
+
+      it 'subscribes' do
+        expect(gql.result.data).to eq({ 'listChanged' => nil })
+      end
+
+      it 'receives updates when a matching ticket changes' do
+        mock_channel.mock_broadcasted_messages.clear
+
+        create(:ticket, customer: filter_customer, group: group_a)
+
+        perform_enqueued_jobs
+
+        result = mock_channel.mock_broadcasted_messages.first.dig(:result, 'data', 'ticketByCustomerUpdates')
+        expect(result).to eq({ 'listChanged' => true })
+      end
     end
 
-    it 'receives updates when a matching ticket changes' do
-      mock_channel.mock_broadcasted_messages.clear
+    context 'when the customer has tickets only in groups the agent cannot access' do
+      before do
+        create(:ticket, customer: filter_customer, group: group_b)
+        gql.execute(subscription, variables: variables, context: { channel: mock_channel })
+      end
 
-      create(:ticket, customer: filter_customer)
+      it 'subscribes' do
+        expect(gql.result.data).to eq({ 'listChanged' => nil })
+      end
 
-      perform_enqueued_jobs
+      it 'does not receive updates for inaccessible group tickets' do
+        mock_channel.mock_broadcasted_messages.clear
 
-      result = mock_channel.mock_broadcasted_messages.first.dig(:result, 'data', 'ticketByCustomerUpdates')
-      expect(result).to eq({ 'listChanged' => true })
+        create(:ticket, customer: filter_customer, group: group_b)
+
+        perform_enqueued_jobs
+
+        expect(mock_channel.mock_broadcasted_messages).to be_empty
+      end
+    end
+
+    context 'when the customer has tickets only in inaccessible groups, but in a shared organization of the agent' do
+      let(:shared_organization) { create(:organization, shared: true) }
+      let(:filter_customer)     { create(:customer, organization: shared_organization) }
+      let(:agent_user)          { create(:agent_and_customer, groups: [group_a], organization: shared_organization) }
+
+      before do
+        create(:ticket, customer: filter_customer, group: group_b)
+        gql.execute(subscription, variables: variables, context: { channel: mock_channel })
+      end
+
+      it 'receives updates for tickets readable via the shared organization' do
+        mock_channel.mock_broadcasted_messages.clear
+
+        create(:ticket, customer: filter_customer, group: group_b)
+
+        perform_enqueued_jobs
+
+        result = mock_channel.mock_broadcasted_messages.first.dig(:result, 'data', 'ticketByCustomerUpdates')
+        expect(result).to eq({ 'listChanged' => true })
+      end
+    end
+
+    context 'when the customer has tickets in both accessible and inaccessible groups' do
+      before do
+        create(:ticket, customer: filter_customer, group: group_a)
+        create(:ticket, customer: filter_customer, group: group_b)
+        gql.execute(subscription, variables: variables, context: { channel: mock_channel })
+      end
+
+      it 'subscribes' do
+        expect(gql.result.data).to eq({ 'listChanged' => nil })
+      end
+
+      it 'receives updates when at least one ticket is in an accessible group' do
+        mock_channel.mock_broadcasted_messages.clear
+
+        create(:ticket, customer: filter_customer, group: group_a)
+
+        perform_enqueued_jobs
+
+        result = mock_channel.mock_broadcasted_messages.first.dig(:result, 'data', 'ticketByCustomerUpdates')
+        expect(result).to eq({ 'listChanged' => true })
+      end
     end
   end
 
