@@ -52,7 +52,7 @@ const { isTouchDevice } = useTouchDevice()
             )
           }}
         </CommonLabel>
-        <CommonLabel v-if="errorDetail" class="text-red-500 dark:text-red-500">
+        <CommonLabel v-if="errorDetail" class="wrap-anywhere text-red-500 dark:text-red-500">
           {{ $t('API server error: %s', $t(errorDetail)) }}
         </CommonLabel>
       </div>

@@ -6,6 +6,10 @@ class AI::VectorDB
   SUPPORTED_ES_VERSION_MINIMUM   = '8.11.0'.freeze
   SUPPORTED_ES_VERSION_LESS_THAN = '10.0.0'.freeze
 
+  # An Elasticsearch transport error can carry the whole response body as its message ("[400] {…}").
+  # Keep that technical detail in the log and report an actionable message to callers instead.
+  ERROR_MESSAGE = __('Semantic search is temporarily unavailable. Please try again later.')
+
   def config
     @config ||= {
       host:              Setting.get('es_url'),
@@ -69,7 +73,7 @@ class AI::VectorDB
   def create(content:, object_id:, object_name:, embedding:, metadata: {})
     index_exists
 
-    return if client.exists?(index: index_name, id: build_identifier(object_name:, object_id:, content:))
+    return if request { client.exists?(index: index_name, id: build_identifier(object_name:, object_id:, content:)) }
 
     upsert(object_id:, object_name:, content:, embedding:, metadata:) # rubocop:disable Rails/SkipsModelValidations
   end
@@ -77,17 +81,19 @@ class AI::VectorDB
   def upsert(object_id:, object_name:, content:, embedding:, metadata: {})
     index_exists
 
-    client.index(
-      index: index_name,
-      id:    build_identifier(object_name:, object_id:, content:),
-      body:  {
-        content:     content,
-        object_id:   object_id,
-        object_name: object_name,
-        embedding:   embedding,
-        metadata:    metadata
-      }
-    )
+    request do
+      client.index(
+        index: index_name,
+        id:    build_identifier(object_name:, object_id:, content:),
+        body:  {
+          content:     content,
+          object_id:   object_id,
+          object_name: object_name,
+          embedding:   embedding,
+          metadata:    metadata
+        }
+      )
+    end
   end
 
   # Applies many writes in a single _bulk request. `upserts` is a list of
@@ -111,7 +117,7 @@ class AI::VectorDB
     end
     deletes.each { |id| body << { delete: { _id: id } } }
 
-    response = client.bulk(index: index_name, body:)
+    response = request { client.bulk(index: index_name, body:) }
     return response if !response.body['errors']
 
     raise_bulk_error(response)
@@ -129,7 +135,7 @@ class AI::VectorDB
     index_exists
 
     id = build_identifier(object_name:, object_id:, content:)
-    client.update(index: index_name, id: id, body: { content:, embedding:, metadata: })
+    request { client.update(index: index_name, id: id, body: { content:, embedding:, metadata: }) }
   end
 
   # Patches the metadata on every indexed chunk of one document in place (no re-embedding). Used when
@@ -137,13 +143,15 @@ class AI::VectorDB
   def update_metadata(object_id:, object_name:, metadata:)
     index_exists
 
-    response = client.update_by_query(
-      index: index_name,
-      body:  {
-        query:  { bool: { filter: [{ term: { object_id: } }, { term: { object_name: } }] } },
-        script: { source: 'ctx._source.metadata = params.metadata', params: { metadata: } }
-      }
-    )
+    response = request do
+      client.update_by_query(
+        index: index_name,
+        body:  {
+          query:  { bool: { filter: [{ term: { object_id: } }, { term: { object_name: } }] } },
+          script: { source: 'ctx._source.metadata = params.metadata', params: { metadata: } }
+        }
+      )
+    end
     return response.body if !response.body['timed_out'] && response.body['failures'].blank?
 
     raise_update_by_query_error(response)
@@ -157,75 +165,85 @@ class AI::VectorDB
   def find(object_id:, object_name:, content: nil)
     if !content.nil?
       id = build_identifier(object_name:, object_id:, content:)
-      return client.get(index: index_name, id: id)
+      return request { client.get(index: index_name, id: id) }
     end
 
-    client.search(
-      index: index_name,
-      body:  {
-        size:  10_000,
-        query: {
-          bool: {
-            filter: [
-              { term: { object_id: } },
-              { term: { object_name: } }
-            ]
+    response = request do
+      client.search(
+        index: index_name,
+        body:  {
+          size:  10_000,
+          query: {
+            bool: {
+              filter: [
+                { term: { object_id: } },
+                { term: { object_name: } }
+              ]
+            }
           }
         }
-      }
-    ).body.dig('hits', 'hits')
+      )
+    end
+
+    response.body.dig('hits', 'hits')
   end
 
   # Ids of all indexed chunks for one document. `_source: false` keeps the payload tiny (just ids).
   def document_ids(object_id:, object_name:)
-    client.search(
-      index: index_name,
-      body:  {
-        size:    10_000,
-        _source: false,
-        query:   {
-          bool: {
-            filter: [
-              { term: { object_id: } },
-              { term: { object_name: } }
-            ]
+    response = request do
+      client.search(
+        index: index_name,
+        body:  {
+          size:    10_000,
+          _source: false,
+          query:   {
+            bool: {
+              filter: [
+                { term: { object_id: } },
+                { term: { object_name: } }
+              ]
+            }
           }
         }
-      }
-    ).body.dig('hits', 'hits').pluck('_id')
+      )
+    end
+
+    response.body.dig('hits', 'hits').pluck('_id')
   end
 
   def delete(id:)
-    client.delete(index: index_name, id:)
+    request { client.delete(index: index_name, id:) }
   end
 
   def destroy(object_id:, object_name:, content: nil)
     if !content.nil?
       id = build_identifier(object_name:, object_id:, content:)
-      return if !client.exists?(index: index_name, id:)
+      return if !request { client.exists?(index: index_name, id:) }
 
-      return client.delete(index: index_name, id: id)
+      return request { client.delete(index: index_name, id: id) }
     end
 
-    client.delete_by_query(
-      index: index_name,
-      body:  {
-        query: {
-          bool: {
-            filter: [
-              { term: { object_id: } },
-              { term: { object_name: } }
-            ]
+    request do
+      client.delete_by_query(
+        index: index_name,
+        body:  {
+          query: {
+            bool: {
+              filter: [
+                { term: { object_id: } },
+                { term: { object_name: } }
+              ]
+            }
           }
         }
-      }
-    )
+      )
+    end
   end
 
   def drop
-    return if !client.indices.exists?(index: index_name)
+    return if !request { client.indices.exists?(index: index_name) }
 
-    client.indices.delete(index: index_name)
+    request { client.indices.delete(index: index_name) }
   end
 
   def knn(embedding:, k: 1, filter: {}) # rubocop:disable Naming/MethodParameterName
@@ -251,14 +269,18 @@ class AI::VectorDB
     #   )
     knn[:filter] = build_filter(filter) if filter.present?
 
-    client.search(
-      index: index_name,
-      body:  {
-        query: {
-          knn: knn,
+    response = request do
+      client.search(
+        index: index_name,
+        body:  {
+          query: {
+            knn: knn,
+          }
         }
-      }
-    ).body
+      )
+    end
+
+    response.body
   end
 
   # private class methods
@@ -279,6 +301,18 @@ class AI::VectorDB
     "#{object_name}-#{object_id}-#{Digest::SHA256.hexdigest(content)}"
   end
 
+  # Map request failures to a user-facing message while keeping the raw details in the log.
+  # Faraday errors are rescued alongside transport errors: elastic-transport converts its
+  # host-unreachable set (connection failure, read timeout, SSL) into transport errors, but other
+  # errors raised in the Faraday stack would otherwise pass through unmapped.
+  def request
+    yield
+  rescue Elastic::Transport::Transport::Error, Faraday::Error => e
+    Rails.logger.error { "AI::VectorDB: #{e.class.name}: #{e.message}" }
+
+    raise AI::VectorDB::Error, ERROR_MESSAGE
+  end
+
   def create_client
     client = ::Elasticsearch::Client.new(config)
     client.ping
@@ -290,17 +324,18 @@ class AI::VectorDB
   end
 
   def verify_es_version!
-    version = Gem::Version.new(client.info['version']['number'])
+    reported = request { client.info }['version']['number']
+    version = Gem::Version.new(reported)
     minimum = Gem::Version.new(SUPPORTED_ES_VERSION_MINIMUM)
     less_than = Gem::Version.new(SUPPORTED_ES_VERSION_LESS_THAN)
     return if version >= minimum && version < less_than
 
-    Rails.logger.error { "AI::VectorDB: Incompatible Elasticsearch version #{client.info['version']['number']}" }
+    Rails.logger.error { "AI::VectorDB: Incompatible Elasticsearch version #{reported}" }
     raise AI::VectorDB::Error, __('Incompatible Elasticsearch version')
   end
 
   def index_exists
-    return if client.indices.exists?(index: index_name)
+    return if request { client.indices.exists?(index: index_name) }
 
     Rails.logger.error { "AI::VectorDB: Elasticsearch Index #{index_name} does not exist" }
     raise AI::VectorDB::MigrationError, __('Elasticsearch index does not exist')

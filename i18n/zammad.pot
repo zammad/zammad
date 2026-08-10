@@ -999,7 +999,7 @@ msgstr ""
 msgid "Accounts"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/table.coffee:759
+#: app/assets/javascripts/app/controllers/_application_controller/table.coffee:744
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:123
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:82
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:118
@@ -1992,11 +1992,11 @@ msgstr ""
 msgid "Are you sure you want to reload? You have unsaved changes that will get lost"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/table.coffee:734
+#: app/assets/javascripts/app/controllers/_application_controller/table.coffee:719
 msgid "Are you sure you want to set \"%s\" as default?"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/table.coffee:750
+#: app/assets/javascripts/app/controllers/_application_controller/table.coffee:735
 msgid "Are you sure you want to unset \"%s\" as default?"
 msgstr ""
 
@@ -3579,11 +3579,11 @@ msgstr ""
 msgid "Clients"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/table.coffee:686
+#: app/assets/javascripts/app/controllers/_application_controller/table.coffee:671
 msgid "Clone"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/table.coffee:696
+#: app/assets/javascripts/app/controllers/_application_controller/table.coffee:681
 msgid "Clone: %s"
 msgstr ""
 
@@ -3962,7 +3962,7 @@ msgstr ""
 msgid "Connection test successful"
 msgstr ""
 
-#: lib/ai/vectordb.rb:284
+#: lib/ai/vectordb.rb:316
 msgid "Connection to Elasticsearch Vector DB failed"
 msgstr ""
 
@@ -5635,7 +5635,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:116
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm_delete.coffee:4
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_destroy_confirm.coffee:4
-#: app/assets/javascripts/app/controllers/_application_controller/table.coffee:715
+#: app/assets/javascripts/app/controllers/_application_controller/table.coffee:700
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee:130
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:188
 #: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:78
@@ -6494,7 +6494,7 @@ msgstr ""
 msgid "Elasticsearch Total Payload Size"
 msgstr ""
 
-#: lib/ai/vectordb.rb:301
+#: lib/ai/vectordb.rb:334
 msgid "Elasticsearch index does not exist"
 msgstr ""
 
@@ -9093,7 +9093,7 @@ msgstr ""
 msgid "Including private key."
 msgstr ""
 
-#: lib/ai/vectordb.rb:294
+#: lib/ai/vectordb.rb:327
 msgid "Incompatible Elasticsearch version"
 msgstr ""
 
@@ -15476,6 +15476,10 @@ msgstr ""
 msgid "Semantic search"
 msgstr ""
 
+#: lib/ai/vectordb.rb:10
+msgid "Semantic search is temporarily unavailable. Please try again later."
+msgstr ""
+
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:78
 #: app/assets/javascripts/app/views/customer_chat/chat_window.jst.eco:58
 #: public/assets/chat/views/chat.eco:25
@@ -15677,7 +15681,7 @@ msgid "Set as Default"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:80
-#: app/assets/javascripts/app/controllers/_application_controller/table.coffee:728
+#: app/assets/javascripts/app/controllers/_application_controller/table.coffee:713
 #: app/assets/javascripts/app/views/profile/password.jst.eco:62
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:170
 msgid "Set as default"
@@ -17035,7 +17039,7 @@ msgstr ""
 msgid "The API token could not be found."
 msgstr ""
 
-#: lib/ai/vectordb.rb:66
+#: lib/ai/vectordb.rb:69
 msgid "The Elasticsearch index could not be created"
 msgstr ""
 
@@ -20088,7 +20092,7 @@ msgstr ""
 msgid "Unselect option"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/table.coffee:744
+#: app/assets/javascripts/app/controllers/_application_controller/table.coffee:729
 msgid "Unset default"
 msgstr ""
 

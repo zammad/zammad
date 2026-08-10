@@ -269,6 +269,32 @@ RSpec.describe AI::VectorDB, :aggregate_failures do
                                               }) } }
       )
     end
+
+    # The raw message of a transport error is the whole response body ("[400] {…}"), which would end
+    # up in the ticket sidebar as the search error.
+    context 'when the search fails' do
+      let(:raw_message) { '[400] {"error":{"root_cause":[…]}}' }
+
+      shared_examples 'reporting a generic error' do |raised|
+        before do
+          allow(Rails.logger).to receive(:error)
+          allow(instance.client).to receive(:search).and_raise(raised, raw_message)
+        end
+
+        it "raises AI::VectorDB::Error without the #{raised} message, which goes to the log" do
+          expect { instance.knn(embedding:, k: 3) }
+            .to raise_error(
+              AI::VectorDB::Error,
+              'Semantic search is temporarily unavailable. Please try again later.'
+            )
+          expect(Rails.logger).to have_received(:error) { |&block| expect(block.call).to include(raw_message) }
+        end
+      end
+
+      it_behaves_like 'reporting a generic error', Elastic::Transport::Transport::Errors::BadRequest
+      it_behaves_like 'reporting a generic error', Elastic::Transport::Transport::Error
+      it_behaves_like 'reporting a generic error', Faraday::TimeoutError
+    end
   end
 
   describe '.destroy' do

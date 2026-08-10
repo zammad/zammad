@@ -452,7 +452,11 @@ describe('Ticket detail view - Ticket summary', () => {
         'The summary could not be generated. Please try again later or contact your administrator.',
       )
 
-      expect(alert).toHaveTextContent('API server error: Authentication problem with provider.')
+      const errorDetail = within(alert).getByText(
+        'API server error: Authentication problem with provider.',
+      )
+
+      expect(errorDetail).toHaveClass('wrap-anywhere')
     })
 
     it('shows no ai provider is selected', async () => {

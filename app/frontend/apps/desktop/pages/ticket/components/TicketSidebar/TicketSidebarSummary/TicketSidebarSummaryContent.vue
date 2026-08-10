@@ -87,7 +87,7 @@ const titleClass = computed(() => {
                   )
                 }}
               </CommonLabel>
-              <CommonLabel v-if="errorMessage" class="text-red-500 dark:text-red-500">
+              <CommonLabel v-if="errorMessage" class="wrap-anywhere text-red-500 dark:text-red-500">
                 {{ $t('API server error: %s', $t(errorMessage)) }}
               </CommonLabel>
             </div>
