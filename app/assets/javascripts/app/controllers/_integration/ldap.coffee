@@ -552,11 +552,6 @@ class ConnectionWizard extends App.ControllerWizardModal
           @showAlert('js-bind', __('User information could not be retrieved, please check your bind user permissions.'))
           return
 
-        if _.isEmpty(data.groups)
-          @showSlide('js-bind')
-          @showAlert('js-bind', __('Group information could not be retrieved, please check your bind user permissions.'))
-          return
-
         # update config if successful
         for key, value of params
           @wizardConfig[key] = value
