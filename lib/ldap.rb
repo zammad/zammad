@@ -147,7 +147,7 @@ class Ldap
 
     # special workaround for IBM bluepages
     # see issue #1422 for more details
-    if @host == 'bluepages.ibm.com'
+    if @host == 'bluepages.ibm.com' || ENV['ZAMMAD_LDAP_FORCE_NO_PAGE'].present?
       params[:force_no_page] = true
     end
 
