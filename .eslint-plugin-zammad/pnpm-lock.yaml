@@ -13,7 +13,7 @@ importers:
         version: 1.2.0
     devDependencies:
       eslint:
-        specifier: ^10.8.0
+        specifier: ^10.8.1
         version: 10.8.1(supports-color@8.1.1)
       eslint-plugin-eslint-plugin:
         specifier: ^7.6.1
