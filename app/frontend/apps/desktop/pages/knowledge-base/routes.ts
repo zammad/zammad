@@ -23,7 +23,7 @@ const route: RouteRecordRaw[] = [
     meta: {
       title: __('Knowledge Base'),
       icon: 'book',
-      level: 1,
+      mainNavigation: true,
       requiresAuth: true,
       requiredPermission: [],
       canAccess: () => useKnowledgeBaseAccess().canBrowse.value,

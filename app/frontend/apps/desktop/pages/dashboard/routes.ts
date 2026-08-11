@@ -32,7 +32,7 @@ if (import.meta.env.DEV || VITE_TEST_MODE) {
       icon: 'speedometer2',
       requiredPermission: ['*'],
       order: 0,
-      level: 1,
+      mainNavigation: true,
       permanentItem: true,
     },
   })

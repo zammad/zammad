@@ -34,6 +34,10 @@ export interface RouteRecordMeta {
   taskbarTabEntityKey?: string
   isTaskbarTabPossible?: (route: RouteLocationNormalizedGeneric) => boolean
   level?: number
+  // Desktop only: opts the route into the main navigation sidebar. Set
+  //   `navigationGroup` in addition to nest it under a shared parent menu.
+  mainNavigation?: boolean
+  navigationGroup?: string
   pageKey?: string
   permanentItem?: boolean
   skipRedirect?: (toRoute: RouteLocationNormalizedGeneric) => boolean

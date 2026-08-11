@@ -8,7 +8,16 @@ import { useSessionStore } from '#shared/stores/session.ts'
 import emitter from '#shared/utils/emitter.ts'
 
 import CommonSectionCollapse from '#desktop/components/CommonSectionCollapse/CommonSectionCollapse.vue'
-import { sortedFirstLevelRoutes } from '#desktop/components/PageNavigation/firstLevelRoutes.ts'
+import {
+  navigationItemClass,
+  navigationItemHighlightClass,
+} from '#desktop/components/PageNavigation/navigationItemClasses.ts'
+import {
+  navigationItems,
+  type NavigationItem,
+  type PageRoute,
+} from '#desktop/components/PageNavigation/navigationItems.ts'
+import PageNavigationGroup from '#desktop/components/PageNavigation/PageNavigationGroup.vue'
 
 import CommonButton from '../CommonButton/CommonButton.vue'
 import { SidebarName } from '../layout/types.ts'
@@ -31,13 +40,26 @@ const openSearch = () => {
   nextTick(() => emitter.emit('focus-quick-search-field'))
 }
 
-const permittedRoutes = computed(() =>
-  sortedFirstLevelRoutes.filter(
-    (route) => hasPermission(route.meta.requiredPermission) && (route.meta.canAccess?.() ?? true),
-  ),
+const isRoutePermitted = (route: PageRoute) =>
+  hasPermission(route.meta.requiredPermission) && (route.meta.canAccess?.() ?? true)
+
+// Permissions are evaluated per route, so a group disappears as soon as none
+//   of the routes targeting it are permitted.
+const permittedItems = computed(() =>
+  navigationItems.reduce<NavigationItem[]>((items, item) => {
+    if (item.type === 'route') {
+      if (isRoutePermitted(item.route)) items.push(item)
+      return items
+    }
+
+    const routes = item.routes.filter(isRoutePermitted)
+    if (routes.length) items.push({ ...item, routes })
+
+    return items
+  }, []),
 )
 
-// A first-level entry is active whenever the current route lives in its
+// A main navigation entry is active whenever the current route lives in its
 //   subtree, not only on an exact name match — nested pages
 const isRouteActive = (name: string) =>
   router.currentRoute.value.matched.some((record) => record.name === name)
@@ -61,35 +83,43 @@ const isRouteActive = (name: string) =>
               />
             </li>
             <li
-              v-for="route in permittedRoutes"
-              :key="route.path"
-              class="flex justify-center"
-              :class="{ 'not-last:mb-1.5': !collapsed }"
+              v-for="item in permittedItems"
+              :key="item.type === 'group' ? item.group.key : item.route.path"
+              class="flex"
+              :class="collapsed ? 'justify-center' : 'not-last:mb-1.5'"
             >
+              <PageNavigationGroup
+                v-if="item.type === 'group'"
+                :group="item.group"
+                :routes="item.routes"
+                :collapsed="collapsed"
+              />
               <CommonButton
-                v-if="collapsed"
+                v-else-if="collapsed"
+                v-tooltip="$t(item.route.meta.title)"
                 class="shrink-0 text-neutral-400 focus-visible-app-default hover:outline-blue-900"
                 size="large"
                 variant="neutral"
-                :icon="route.meta.icon"
-                @click="router.push(route.path.replace(/:\w+/, ''))"
+                :icon="item.route.meta.icon"
+                @click="router.push(item.route.path.replace(/:\w+/, ''))"
               />
               <CommonLink
                 v-else
-                class="flex grow gap-2 rounded-lg px-2 py-3 text-neutral-400 focus-visible-app-default hover:bg-blue-900 hover:text-white! hover:no-underline! focus-visible:rounded-lg!"
-                :class="{
-                  'bg-blue-800! text-white!': isRouteActive(route.name),
-                }"
-                :link="route.path.replace(/\/:\w+/, '')"
-                exact-active-class="bg-blue-800! w-full text-white!"
+                class="hover:no-underline! focus-visible:rounded-lg!"
+                :class="[
+                  navigationItemClass,
+                  { [navigationItemHighlightClass]: isRouteActive(item.route.name) },
+                ]"
+                :link="item.route.path.replace(/\/:\w+/, '')"
+                :exact-active-class="`w-full ${navigationItemHighlightClass}`"
                 internal
               >
                 <CommonLabel
                   class="gap-2 text-sm! text-current!"
                   size="medium"
-                  :prefix-icon="route.meta.icon"
+                  :prefix-icon="item.route.meta.icon"
                 >
-                  {{ $t(route.meta.title) }}
+                  {{ $t(item.route.meta.title) }}
                 </CommonLabel>
               </CommonLink>
             </li>

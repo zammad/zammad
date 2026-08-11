@@ -11379,7 +11379,7 @@ msgid "Navigate to %s"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:137
-#: app/frontend/apps/desktop/components/PageNavigation/PageNavigation.vue:48
+#: app/frontend/apps/desktop/components/PageNavigation/PageNavigation.vue:70
 msgid "Navigation"
 msgstr ""
 
@@ -12616,7 +12616,7 @@ msgstr ""
 msgid "Open questions"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/PageNavigation/PageNavigation.vue:55
+#: app/frontend/apps/desktop/components/PageNavigation/PageNavigation.vue:77
 msgid "Open quick search"
 msgstr ""
 
@@ -19739,6 +19739,7 @@ msgid "Too many redirections for the original URL, halting."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_default_navbar.coffee:15
+#: app/frontend/apps/desktop/components/PageNavigation/groups/tools.ts:9
 msgid "Tools"
 msgstr ""
 

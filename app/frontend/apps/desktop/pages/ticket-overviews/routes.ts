@@ -18,7 +18,7 @@ const route: RouteRecordRaw[] = [
       requiresAuth: true,
       icon: 'all-tickets',
       requiredPermission: ['ticket.agent', 'ticket.customer'],
-      level: 1,
+      mainNavigation: true,
       order: 200,
       pageKey: 'ticket-overviews',
       permanentItem: true,
