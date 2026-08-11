@@ -180,7 +180,7 @@
     "vue": "^3.5.41",
     "vue-advanced-cropper": "^2.8.9",
     "vue-easy-lightbox": "1.19.0",
-    "vue-echarts": "^8.0.1",
+    "vue-echarts": "^8.1.0",
     "vue-imask": "^7.6.1",
     "vue-router": "^5.2.0",
     "vue3-draggable-resizable": "^1.6.5",

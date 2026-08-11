@@ -231,7 +231,7 @@ importers:
         specifier: 1.19.0
         version: 1.19.0(vue@3.5.41(typescript@6.0.3))
       vue-echarts:
-        specifier: ^8.0.1
+        specifier: ^8.1.0
         version: 8.1.0(echarts@6.1.0)(vue@3.5.41(typescript@6.0.3))
       vue-imask:
         specifier: ^7.6.1
