@@ -3,6 +3,7 @@
 import { createApp } from 'vue'
 
 import '#desktop/styles/main.css'
+import '#desktop/styles/custom/index.ts'
 
 import { initializeAppName } from '#shared/composables/useAppName.ts'
 import { initializeDefaultObjectAttributes } from '#shared/entities/object-attributes/composables/useObjectAttributes.ts'

@@ -3,6 +3,7 @@
 import { createApp } from 'vue'
 
 import '#mobile/styles/main.css'
+import '#mobile/styles/custom/index.ts'
 
 import { initializeAppName } from '#shared/composables/useAppName.ts'
 import { useForceDesktop } from '#shared/composables/useForceDesktop.ts'

@@ -13,6 +13,9 @@ import LayoutHeader, { type Props as HeaderProps } from './LayoutHeader.vue'
 
 const route = useRoute()
 
+// Route-page skin scope: the active route name on the single data-zammad-target hook.
+const routeTarget = computed(() => (route.name ? String(route.name) : undefined))
+
 const title = computed(() => {
   return unref(header.value.title) || route.meta.title
 })
@@ -42,7 +45,11 @@ const { stickyStyles } = useStickyHeader([title], headerElement)
       :title="title"
       :style="stickyStyles.header"
     />
-    <main class="flex h-full flex-col" :style="showHeader ? stickyStyles.body : {}">
+    <main
+      class="flex h-full flex-col"
+      :style="showHeader ? stickyStyles.body : {}"
+      :data-zammad-target="routeTarget"
+    >
       <!-- let's see how it feels without transition -->
       <RouterView />
       <div

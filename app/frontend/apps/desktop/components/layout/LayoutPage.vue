@@ -3,7 +3,8 @@
 <script setup lang="ts">
 import { type MaybeElementRef, useCurrentElement, type VueInstance } from '@vueuse/core'
 import { delay } from 'lodash-es'
-import { onBeforeMount, ref, toRef, useTemplateRef, watch } from 'vue'
+import { computed, onBeforeMount, ref, toRef, useTemplateRef, watch } from 'vue'
+import { useRoute } from 'vue-router'
 
 import { useReducedMotion } from '#shared/composables/useReducedMotion.ts'
 import { useTrapTab } from '#shared/composables/useTrapTab.ts'
@@ -24,6 +25,11 @@ import { SidebarName } from './types.ts'
 import { useSidebarDisplay } from './useSidebarDisplay.ts'
 
 const config = toRef(useApplicationStore(), 'config')
+
+const route = useRoute()
+
+// Route-page skin scope: the active route name on the single data-zammad-target hook.
+const routeTarget = computed(() => (route.name ? String(route.name) : undefined))
 
 const noTransition = ref(false)
 
@@ -154,7 +160,7 @@ const { hasReducedMotion } = useReducedMotion()
       </template>
     </LayoutSidebar>
 
-    <div id="main-content" class="relative">
+    <div id="main-content" class="relative" :data-zammad-target="routeTarget">
       <RouterView #default="{ Component, route: currentRoute }">
         <KeepAlive :exclude="['ErrorTab']" :max="config.ui_task_mananger_max_task_count">
           <component
