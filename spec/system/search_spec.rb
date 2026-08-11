@@ -426,6 +426,45 @@ RSpec.describe 'Search', authenticated_as: :authenticate, searchindex: true, typ
     end
   end
 
+  context 'with search shortcuts' do
+    let(:agent)             { create(:agent, groups: Group.all) }
+    let(:authenticate_user) { agent }
+
+    before do
+      fill_in id: 'global-search', with: 'Testing'
+
+      click_on 'Show Search Details'
+
+      find('.detail-search .js-emptySearch').click
+    end
+
+    it 'shows the shortcuts of the active tab', :aggregate_failures do
+      within '.detail-search' do
+        find('.js-shortcutsDropdown [data-toggle="dropdown"]').click
+
+        expect(page).to have_css('.js-shortcut', text: 'New or open tickets')
+
+        # close the dropdown again, otherwise it overlays the tab bar
+        find('.js-shortcutsDropdown [data-toggle="dropdown"]').click
+
+        find('[data-tab-content=User]').click
+        find('.js-shortcutsDropdown [data-toggle="dropdown"]').click
+
+        expect(page).to have_css('.js-shortcut', text: 'VIP only')
+      end
+    end
+
+    context 'when user is customer' do
+      let(:customer)            { create(:customer) }
+      let(:authenticate_user)   { customer }
+      let(:before_authenticate) { ticket_1.update!(customer: customer) }
+
+      it 'shows no shortcuts button' do
+        expect(page).to have_no_css('.detail-search .js-shortcutsDropdown')
+      end
+    end
+  end
+
   describe 'Search is not triggered/updated if url of search is updated new search item or new search is triggered via global search #3873' do
     let(:agent)             { create(:agent, groups: Group.all) }
     let(:authenticate_user) { agent }

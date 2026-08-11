@@ -13,6 +13,11 @@ class Job extends App.ControllerSubContent
       defaultSortBy: 'name'
       searchBar: true
       searchQuery: @search_query
+      searchShortcuts: [
+        { query: 'active:true', label: __('Active only') }
+        { query: 'last_run_at:>now-24h', label: __('Run within last 24 hours') }
+        { query: 'updated_at:>now-7d', label: __('Updated within last 7 days') }
+      ]
       pageData:
         home: 'Jobs'
         object: __('Scheduler')

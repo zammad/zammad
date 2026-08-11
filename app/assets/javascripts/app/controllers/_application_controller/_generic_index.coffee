@@ -8,8 +8,14 @@ class App.ControllerGenericIndex extends App.Controller
     'click [data-type=payload]': 'payload'
     'click [data-type=import]':  'import'
     'click .js-description':     'description'
+    'click .js-shortcut':        'shortcutSearch'
     'blur .js-search':           'search'
     'input .js-search':          'search'
+
+  searchShortcuts: [
+    { query: 'created_at:>now-14d', label: __('Created within last 14 days') }
+    { query: 'updated_at:>now-3d',  label: __('Updated within last 3 days') }
+  ]
 
   constructor: ->
     super
@@ -76,6 +82,12 @@ class App.ControllerGenericIndex extends App.Controller
       =>
         @navigate "#{@pageData.pagerBaseUrl}1/#{encodeURIComponent(@searchField.val())}"
     , 300, "#{@controllerId}-render")
+
+  shortcutSearch: (e) ->
+    e.preventDefault()
+    @$('.js-shortcutsDropdown [data-toggle="dropdown"]').dropdown('toggle')
+    @searchField.val($(e.currentTarget).data('query'))
+    @search()
 
   delayedRender: =>
     @delay(@render, 300, "#{@controllerId}-render")
@@ -175,6 +187,7 @@ class App.ControllerGenericIndex extends App.Controller
         searchPlaceholder: @pageData.searchPlaceholder
         searchBar:         @searchBar
         searchQuery:       @searchQuery
+        searchShortcuts:   @searchShortcuts if App.Config.get('es_enabled')
         hideSearchBar:     _.isEmpty(@searchQuery) and _.isEmpty(objects)
         filterMenu:        @filterMenu
       )

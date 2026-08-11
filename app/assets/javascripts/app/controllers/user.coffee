@@ -30,6 +30,11 @@ class User extends App.ControllerSubContent
       defaultOrder: 'DESC'
       searchBar: true
       searchQuery: @search_query
+      searchShortcuts: [
+        { query: 'active:false', label: __('Inactive only') }
+        { query: 'vip:true', label: __('VIP only') }
+        { query: 'last_login:>now-7d', label: __('Logged in within last 7 days') }
+      ]
       filterMenu: [
         {
           name: 'Roles',

@@ -14,6 +14,11 @@ class Role extends App.ControllerSubContent
       editScreen: 'edit'
       searchBar: true
       searchQuery: @search_query
+      searchShortcuts: [
+        { query: 'active:true', label: __('Active only') }
+        { query: 'default_at_signup:true', label: __('Default at Signup') }
+        { query: 'updated_at:>now-7d', label: __('Updated within last 7 days') }
+      ]
       pageData:
         home: 'roles'
         object: __('Role')

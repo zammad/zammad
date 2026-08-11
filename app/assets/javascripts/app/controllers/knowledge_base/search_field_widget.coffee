@@ -34,7 +34,8 @@ class App.KnowledgeBaseSearchFieldWidget extends App.Controller
     if aiKbEnabled
       shortcuts.splice(2, 0, {
         query: 'tags:ai-generated'
-        label: App.i18n.translateContent('Tagged %s', 'ai-generated')
+        label: __('Tagged %s')
+        labelArgs: ['ai-generated']
       })
 
     shortcuts

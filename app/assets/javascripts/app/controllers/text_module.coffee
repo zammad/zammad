@@ -17,6 +17,11 @@ class TextModule extends App.ControllerSubContent
         )
       searchBar: true
       searchQuery: @search_query
+      searchShortcuts: [
+        { query: 'active:true', label: __('Active only') }
+        { query: 'created_at:>now-1M', label: __('Created within last month') }
+        { query: 'updated_at:>now-7d', label: __('Updated within last 7 days') }
+      ]
       pageData:
         home:      'text_modules'
         object:    __('Text module')

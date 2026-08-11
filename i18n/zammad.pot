@@ -1113,6 +1113,23 @@ msgstr ""
 msgid "Active Agents"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:56
+#: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:24
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:17
+#: app/assets/javascripts/app/controllers/group.coffee:15
+#: app/assets/javascripts/app/controllers/job.coffee:17
+#: app/assets/javascripts/app/controllers/macro.coffee:15
+#: app/assets/javascripts/app/controllers/overview.coffee:21
+#: app/assets/javascripts/app/controllers/report_profile.coffee:15
+#: app/assets/javascripts/app/controllers/role.coffee:18
+#: app/assets/javascripts/app/controllers/search.coffee:29
+#: app/assets/javascripts/app/controllers/template.coffee:15
+#: app/assets/javascripts/app/controllers/text_module.coffee:21
+#: app/assets/javascripts/app/controllers/trigger.coffee:18
+#: app/assets/javascripts/app/controllers/webhook.coffee:19
+msgid "Active only"
+msgstr ""
+
 #: app/assets/javascripts/app/views/time_accounting/accounted_time.jst.eco:16
 msgid "Activity"
 msgstr ""
@@ -1490,6 +1507,11 @@ msgstr ""
 
 #: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:238
 msgid "Advanced filters"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:18
+#: app/assets/javascripts/app/controllers/trigger.coffee:19
+msgid "Affects group field"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:63
@@ -2565,7 +2587,7 @@ msgstr ""
 msgid "BETA UI illustration"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:398
+#: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:403
 #: app/assets/javascripts/app/views/generic/object_search/item_organization_members.jst.eco:5
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:449
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:430
@@ -2987,7 +3009,7 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:381
+#: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:386
 #: app/assets/javascripts/app/controllers/_application_controller/_modal.coffee:119
 #: app/assets/javascripts/app/views/admin_password_auth/request.jst.eco:8
 #: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco:7
@@ -4488,8 +4510,26 @@ msgstr ""
 msgid "Created by"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_application_controller/_generic_index.coffee:16
 #: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee:29
+#: app/assets/javascripts/app/controllers/search.coffee:25
 msgid "Created within last 14 days"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/audit_log.coffee:40
+msgid "Created within last 24 hours"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:57
+#: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:25
+#: app/assets/javascripts/app/controllers/macro.coffee:16
+#: app/assets/javascripts/app/controllers/organization.coffee:22
+#: app/assets/javascripts/app/controllers/public_link.coffee:17
+#: app/assets/javascripts/app/controllers/report_profile.coffee:16
+#: app/assets/javascripts/app/controllers/search.coffee:36
+#: app/assets/javascripts/app/controllers/template.coffee:16
+#: app/assets/javascripts/app/controllers/text_module.coffee:22
+msgid "Created within last month"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:24
@@ -4501,7 +4541,7 @@ msgstr ""
 msgid "Creation Channels"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:56
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:61
 msgid "Creation mask"
 msgstr ""
 
@@ -4839,6 +4879,7 @@ msgstr ""
 msgid "Default Ticket Agent Notifications"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/role.coffee:19
 #: app/assets/javascripts/app/models/role.coffee:9
 msgid "Default at Signup"
 msgstr ""
@@ -5641,7 +5682,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:78
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee:9
 #: app/assets/javascripts/app/controllers/package.coffee:73
-#: app/assets/javascripts/app/controllers/user.coffee:102
+#: app/assets/javascripts/app/controllers/user.coffee:107
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:90
 #: app/assets/javascripts/app/lib/mixins/knowledge_base_actions.coffee:26
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:80
@@ -5823,6 +5864,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee:70
 msgid "Deletion failed."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/audit_log.coffee:38
+msgid "Deletions only"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view_delivery_failed.jst.eco:4
@@ -6249,7 +6294,7 @@ msgstr ""
 msgid "Download feedback from agents on AI features and error details about failed AI requests."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:45
+#: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:50
 msgid "Download feedback report"
 msgstr ""
 
@@ -6418,7 +6463,7 @@ msgstr ""
 msgid "Edit item"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:58
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:63
 msgid "Edit mask"
 msgstr ""
 
@@ -7244,7 +7289,7 @@ msgstr ""
 msgid "Example CSV file for download."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:29
+#: app/assets/javascripts/app/controllers/webhook.coffee:34
 #: app/assets/javascripts/app/controllers/widget/payload_example.coffee:5
 msgid "Example Payload"
 msgstr ""
@@ -7379,7 +7424,7 @@ msgstr ""
 msgid "Expires at"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/search.coffee:57
+#: app/assets/javascripts/app/controllers/search.coffee:80
 msgid "Extended Search"
 msgstr ""
 
@@ -8354,7 +8399,7 @@ msgstr ""
 msgid "Groups"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/group.coffee:25
+#: app/assets/javascripts/app/controllers/group.coffee:30
 msgid "Groups are …"
 msgstr ""
 
@@ -8912,9 +8957,9 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/import_freshdesk.coffee:25
 #: app/assets/javascripts/app/controllers/import_otrs.coffee:20
 #: app/assets/javascripts/app/controllers/import_zendesk.coffee:26
-#: app/assets/javascripts/app/controllers/organization.coffee:30
-#: app/assets/javascripts/app/controllers/text_module.coffee:34
-#: app/assets/javascripts/app/controllers/user.coffee:54
+#: app/assets/javascripts/app/controllers/organization.coffee:35
+#: app/assets/javascripts/app/controllers/text_module.coffee:39
+#: app/assets/javascripts/app/controllers/user.coffee:59
 #: app/assets/javascripts/app/controllers/widget/import.coffee:4
 #: app/assets/javascripts/app/controllers/widget/import_result.coffee:6
 #: app/assets/javascripts/app/controllers/widget/import_try_result.coffee:6
@@ -9017,6 +9062,11 @@ msgstr ""
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue:74
 msgid "Inactive"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/organization.coffee:20
+#: app/assets/javascripts/app/controllers/user.coffee:34
+msgid "Inactive only"
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:60
@@ -9966,9 +10016,9 @@ msgid "Leave program"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ai/_feature_base.coffee:87
-#: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:66
+#: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:71
 #: app/assets/javascripts/app/controllers/_ai/knowledge_base_features.coffee:51
-#: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:34
+#: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:39
 #: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:44
 msgid "Legal Information"
 msgstr ""
@@ -10202,7 +10252,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee:195
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee:188
-#: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee:125
+#: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee:126
 #: app/assets/javascripts/app/controllers/password_reset.coffee:92
 #: app/assets/javascripts/app/controllers/ssl_certificate.coffee:46
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee:104
@@ -10263,6 +10313,11 @@ msgstr ""
 msgid "Log in to %s"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/search.coffee:31
+#: app/assets/javascripts/app/controllers/user.coffee:36
+msgid "Logged in within last 7 days"
+msgstr ""
+
 #: app/assets/javascripts/app/models/user.coffee:17
 #: app/assets/javascripts/app/views/maintenance.jst.eco:25
 #: app/controllers/time_accountings_controller.rb:101
@@ -10280,6 +10335,10 @@ msgstr ""
 
 #: lib/auth/error/two_factor_failed.rb:4
 msgid "Login failed. Please double-check your two-factor authentication method."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/public_link.coffee:15
+msgid "Login screen links"
 msgstr ""
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco:14
@@ -10429,7 +10488,7 @@ msgstr ""
 msgid "Manage Telegram channel of your system."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/user.coffee:87
+#: app/assets/javascripts/app/controllers/user.coffee:92
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee:4
 msgid "Manage Two-Factor Authentication"
 msgstr ""
@@ -11383,7 +11442,7 @@ msgstr ""
 msgid "New & open tickets"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:69
+#: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:74
 msgid "New AI Agent"
 msgstr ""
 
@@ -11435,7 +11494,7 @@ msgstr ""
 msgid "New Deletion Task"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/group.coffee:28
+#: app/assets/javascripts/app/controllers/group.coffee:33
 msgid "New Group"
 msgstr ""
 
@@ -11443,15 +11502,15 @@ msgstr ""
 msgid "New Keyboard Shortcuts"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/macro.coffee:25
+#: app/assets/javascripts/app/controllers/macro.coffee:30
 msgid "New Macro"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/organization.coffee:31
+#: app/assets/javascripts/app/controllers/organization.coffee:36
 msgid "New Organization"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/overview.coffee:31
+#: app/assets/javascripts/app/controllers/overview.coffee:36
 msgid "New Overview"
 msgstr ""
 
@@ -11459,7 +11518,7 @@ msgstr ""
 msgid "New Priority"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/report_profile.coffee:25
+#: app/assets/javascripts/app/controllers/report_profile.coffee:30
 msgid "New Profile"
 msgstr ""
 
@@ -11467,11 +11526,11 @@ msgstr ""
 msgid "New Provider"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/public_link.coffee:25
+#: app/assets/javascripts/app/controllers/public_link.coffee:30
 msgid "New Public Link"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/role.coffee:31
+#: app/assets/javascripts/app/controllers/role.coffee:36
 msgid "New Role"
 msgstr ""
 
@@ -11479,7 +11538,7 @@ msgstr ""
 msgid "New SLA"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/job.coffee:27
+#: app/assets/javascripts/app/controllers/job.coffee:32
 msgid "New Scheduler"
 msgstr ""
 
@@ -11492,7 +11551,7 @@ msgstr ""
 msgid "New Tags"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/template.coffee:25
+#: app/assets/javascripts/app/controllers/template.coffee:30
 msgid "New Template"
 msgstr ""
 
@@ -11515,11 +11574,11 @@ msgstr ""
 msgid "New Translation"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/trigger.coffee:28
+#: app/assets/javascripts/app/controllers/trigger.coffee:33
 msgid "New Trigger"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/user.coffee:55
+#: app/assets/javascripts/app/controllers/user.coffee:60
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco:89
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco:54
 msgid "New User"
@@ -11538,20 +11597,24 @@ msgstr ""
 msgid "New Video Server"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:31
+#: app/assets/javascripts/app/controllers/webhook.coffee:36
 msgid "New Webhook"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:27
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:32
 msgid "New Workflow"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:37
+#: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:42
 msgid "New Writing Assistant Tool"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/BetaUi/composables/useBetaUiDisclaimer.ts:42
 msgid "New desktop BETA UI"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/search.coffee:24
+msgid "New or open tickets"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee:66
@@ -11576,7 +11639,7 @@ msgstr ""
 msgid "New tags strategy"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/text_module.coffee:35
+#: app/assets/javascripts/app/controllers/text_module.coffee:40
 msgid "New text module"
 msgstr ""
 
@@ -11609,9 +11672,9 @@ msgstr ""
 msgid "New user?"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:104
+#: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:109
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:113
-#: app/assets/javascripts/app/controllers/webhook.coffee:165
+#: app/assets/javascripts/app/controllers/webhook.coffee:170
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee:2
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee:120
 #: app/assets/javascripts/app/views/clues/clues_content.jst.eco:19
@@ -12612,6 +12675,10 @@ msgstr ""
 msgid "OpenID Connect Options"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/public_link.coffee:16
+msgid "Opened in new tab"
+msgstr ""
+
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue:55
 msgid "Opened in tabs"
 msgstr ""
@@ -12888,7 +12955,7 @@ msgstr ""
 msgid "Overview"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:59
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:64
 msgid "Overview bulk mask"
 msgstr ""
 
@@ -13354,8 +13421,8 @@ msgstr ""
 msgid "Please enter a text."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:469
-#: app/assets/javascripts/app/controllers/webhook.coffee:134
+#: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:474
+#: app/assets/javascripts/app/controllers/webhook.coffee:139
 msgid "Please enter a valid JSON string."
 msgstr ""
 
@@ -13517,12 +13584,12 @@ msgstr ""
 msgid "Powered by"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:35
+#: app/assets/javascripts/app/controllers/webhook.coffee:40
 #: app/assets/javascripts/app/views/pre_defined_webhook.jst.eco:5
 msgid "Pre-defined Webhook"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:291
+#: app/assets/javascripts/app/controllers/webhook.coffee:296
 msgid "Pre-defined webhook for %s."
 msgstr ""
 
@@ -14345,7 +14412,7 @@ msgstr ""
 msgid "Report Profile"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/report_profile.coffee:17
+#: app/assets/javascripts/app/controllers/report_profile.coffee:22
 #: db/seeds/permissions.rb:101
 msgid "Report Profiles"
 msgstr ""
@@ -14440,7 +14507,7 @@ msgstr ""
 msgid "Reset Password failed!"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:52
+#: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:57
 msgid "Reset feedback"
 msgstr ""
 
@@ -14605,7 +14672,7 @@ msgstr ""
 msgid "Roles"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/role.coffee:28
+#: app/assets/javascripts/app/controllers/role.coffee:33
 msgid "Roles are …"
 msgstr ""
 
@@ -14636,6 +14703,10 @@ msgstr ""
 #: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkConfirmation.vue:67
 #: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkTopDrawer.vue:53
 msgid "Run macro"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/job.coffee:18
+msgid "Run within last 24 hours"
 msgstr ""
 
 #: app/assets/javascripts/app/models/job.coffee:21
@@ -14762,6 +14833,10 @@ msgstr ""
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:104
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceOTRS.vue:62
 msgid "SSL verification"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/webhook.coffee:20
+msgid "SSL verification disabled"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:419
@@ -14906,7 +14981,7 @@ msgid "Scheduler"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:10
-#: app/assets/javascripts/app/controllers/job.coffee:19
+#: app/assets/javascripts/app/controllers/job.coffee:24
 msgid "Schedulers"
 msgstr ""
 
@@ -15008,7 +15083,7 @@ msgstr ""
 msgid "Search entity"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:59
+#: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:64
 msgid "Search for AI agents"
 msgstr ""
 
@@ -15020,7 +15095,7 @@ msgstr ""
 msgid "Search for activity types"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/audit_log.coffee:41
+#: app/assets/javascripts/app/controllers/audit_log.coffee:46
 msgid "Search for audit logs"
 msgstr ""
 
@@ -15028,20 +15103,20 @@ msgstr ""
 msgid "Search for checklist templates"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/group.coffee:18
+#: app/assets/javascripts/app/controllers/group.coffee:23
 msgid "Search for groups"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/macro.coffee:18
+#: app/assets/javascripts/app/controllers/macro.coffee:23
 msgid "Search for macros"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/organization.coffee:23
+#: app/assets/javascripts/app/controllers/organization.coffee:28
 msgid "Search for organizations"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee:31
-#: app/assets/javascripts/app/controllers/overview.coffee:24
+#: app/assets/javascripts/app/controllers/overview.coffee:29
 msgid "Search for overviews"
 msgstr ""
 
@@ -15049,27 +15124,27 @@ msgstr ""
 msgid "Search for providers"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/public_link.coffee:18
+#: app/assets/javascripts/app/controllers/public_link.coffee:23
 msgid "Search for public links"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/report_profile.coffee:18
+#: app/assets/javascripts/app/controllers/report_profile.coffee:23
 msgid "Search for report profiles"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/role.coffee:21
+#: app/assets/javascripts/app/controllers/role.coffee:26
 msgid "Search for roles"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/job.coffee:20
+#: app/assets/javascripts/app/controllers/job.coffee:25
 msgid "Search for schedulers"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/template.coffee:18
+#: app/assets/javascripts/app/controllers/template.coffee:23
 msgid "Search for templates"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/text_module.coffee:24
+#: app/assets/javascripts/app/controllers/text_module.coffee:29
 msgid "Search for text modules"
 msgstr ""
 
@@ -15081,24 +15156,24 @@ msgstr ""
 msgid "Search for ticket states"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/trigger.coffee:21
+#: app/assets/javascripts/app/controllers/trigger.coffee:26
 msgid "Search for triggers"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/user.coffee:47
+#: app/assets/javascripts/app/controllers/user.coffee:52
 #: app/assets/javascripts/app/views/user.jst.eco:15
 msgid "Search for users"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:22
+#: app/assets/javascripts/app/controllers/webhook.coffee:27
 msgid "Search for webhooks"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:20
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:25
 msgid "Search for workflows"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:27
+#: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:32
 msgid "Search for writing assistant tools"
 msgstr ""
 
@@ -15858,6 +15933,10 @@ msgstr ""
 msgid "Shared drafts are not activated for the selected group"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/group.coffee:16
+msgid "Shared drafts enabled"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:177
 msgid "Shared mailbox"
 msgstr ""
@@ -15865,6 +15944,15 @@ msgstr ""
 #: app/assets/javascripts/app/models/organization.coffee:7
 #: db/seeds/object_manager_attributes.rb:1786
 msgid "Shared organization"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/organization.coffee:21
+#: app/assets/javascripts/app/controllers/search.coffee:35
+msgid "Shared organizations"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/overview.coffee:22
+msgid "Shared with organizations"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:28
@@ -16513,6 +16601,10 @@ msgstr ""
 msgid "Stop after match"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:19
+msgid "Stop after match enabled"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_manage/system.coffee:13
 msgid "Storage"
 msgstr ""
@@ -16564,7 +16656,7 @@ msgstr ""
 msgid "Subject & References - Additional search for same article subject and same message ID in references header if no follow-up was recognized using default settings."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:407
+#: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:412
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee:2
 #: app/assets/javascripts/app/controllers/tag.coffee:117
 #: app/assets/javascripts/app/controllers/widget/button_with_dropdown.coffee:12
@@ -16654,7 +16746,10 @@ msgstr ""
 msgid "Suggested by AI"
 msgstr ""
 
+#: app/assets/javascripts/app/views/generic/admin/index.jst.eco:49
 #: app/assets/javascripts/app/views/knowledge_base/search_field_widget.jst.eco:12
+#: app/assets/javascripts/app/views/search/index.jst.eco:16
+#: app/assets/javascripts/app/views/search/shortcuts.jst.eco:2
 msgid "Suggested searches"
 msgstr ""
 
@@ -16958,7 +17053,7 @@ msgstr ""
 msgid "Text missing"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/text_module.coffee:22
+#: app/assets/javascripts/app/controllers/text_module.coffee:27
 msgid "Text module"
 msgstr ""
 
@@ -16966,7 +17061,7 @@ msgstr ""
 msgid "Text modules"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/text_module.coffee:31
+#: app/assets/javascripts/app/controllers/text_module.coffee:36
 msgid "Text modules are …"
 msgstr ""
 
@@ -17422,7 +17517,7 @@ msgid "The divider between TicketHook and ticket number. E. g. ': '."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ai/feedback_logs.coffee:56
-#: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:90
+#: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:95
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1674
 msgid "The download could not be started. Please try again later."
 msgstr ""
@@ -17643,7 +17738,7 @@ msgstr ""
 msgid "The new ticket number could not be generated."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:550
+#: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:555
 #: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:343
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_new.coffee:69
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee:93
@@ -17667,7 +17762,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_settings/form.coffee:91
 #: app/assets/javascripts/app/controllers/object_manager.coffee:331
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee:142
-#: app/assets/javascripts/app/controllers/user.coffee:236
+#: app/assets/javascripts/app/controllers/user.coffee:241
 msgid "The object could not be updated."
 msgstr ""
 
@@ -19808,7 +19903,7 @@ msgstr ""
 msgid "Turn on JavaScript to use Zammad."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/webhook.coffee:280
+#: app/assets/javascripts/app/controllers/webhook.coffee:285
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco:89
 #: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco:48
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:71
@@ -20058,7 +20153,7 @@ msgstr ""
 msgid "Unlink ticket"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/user.coffee:110
+#: app/assets/javascripts/app/controllers/user.coffee:115
 msgid "Unlock"
 msgstr ""
 
@@ -20323,8 +20418,25 @@ msgstr ""
 msgid "Updated ticket article (#{ticket.title})\n\n<div>Hi #{recipient.firstname},</div>\n<br>\n<div>\n<%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') %> reacted with a <%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'emoji') %> to message from #{article.created_by.fullname}:\n</div>\n<br>\n<% if @objects[:article] %>\n  <div>\n    <blockquote type=\"cite\">\n    #{article.body_as_html}\n    </blockquote>\n  </div>\n<% end %>\n<br>\n<div>\n  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/#{article.id}\" target=\"zammad_app\">View this in #{config.product_name}</a>\n</div>\n"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_application_controller/_generic_index.coffee:17
 #: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee:30
+#: app/assets/javascripts/app/controllers/search.coffee:26
 msgid "Updated within last 3 days"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:58
+#: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:26
+#: app/assets/javascripts/app/controllers/group.coffee:17
+#: app/assets/javascripts/app/controllers/job.coffee:19
+#: app/assets/javascripts/app/controllers/macro.coffee:17
+#: app/assets/javascripts/app/controllers/overview.coffee:23
+#: app/assets/javascripts/app/controllers/report_profile.coffee:17
+#: app/assets/javascripts/app/controllers/role.coffee:20
+#: app/assets/javascripts/app/controllers/template.coffee:17
+#: app/assets/javascripts/app/controllers/text_module.coffee:23
+#: app/assets/javascripts/app/controllers/trigger.coffee:20
+#: app/assets/javascripts/app/controllers/webhook.coffee:21
+msgid "Updated within last 7 days"
 msgstr ""
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:45
@@ -20519,6 +20631,7 @@ msgid "User (censored):"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/documentation_link.coffee:14
+#: app/assets/javascripts/app/views/search/shortcuts.jst.eco:5
 msgid "User Documentation"
 msgstr ""
 
@@ -20544,6 +20657,10 @@ msgstr ""
 
 #: app/models/user/permissions.rb:53
 msgid "User authorization failed."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/audit_log.coffee:39
+msgid "User changes only"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/getting_started/admin.coffee:108
@@ -20629,7 +20746,7 @@ msgstr ""
 msgid "User menu"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/user.coffee:124
+#: app/assets/javascripts/app/controllers/user.coffee:129
 msgid "User successfully unlocked!"
 msgstr ""
 
@@ -20637,7 +20754,7 @@ msgstr ""
 msgid "User taskbar tabs"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/user.coffee:221
+#: app/assets/javascripts/app/controllers/user.coffee:226
 msgid "User updated successfully."
 msgstr ""
 
@@ -20718,6 +20835,11 @@ msgstr ""
 #: app/frontend/shared/components/CommonUserAvatar/CommonUserAvatar.vue:117
 #: db/seeds/object_manager_attributes.rb:1526
 msgid "VIP"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/search.coffee:30
+#: app/assets/javascripts/app/controllers/user.coffee:35
+msgid "VIP only"
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco:13
@@ -20854,7 +20976,7 @@ msgstr ""
 msgid "View"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/user.coffee:64
+#: app/assets/javascripts/app/controllers/user.coffee:69
 msgid "View from user's perspective"
 msgstr ""
 
@@ -21189,11 +21311,11 @@ msgstr ""
 msgid "Woo hoo! Your password has been changed!"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:18
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:23
 msgid "Workflow"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/core_workflow.coffee:19
+#: app/assets/javascripts/app/controllers/core_workflow.coffee:24
 msgid "Workflows"
 msgstr ""
 
@@ -21201,7 +21323,7 @@ msgstr ""
 msgid "Would you like to give us feedback on the BETA UI?"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:25
+#: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:30
 #: db/seeds/permissions.rb:245
 #: db/seeds/settings.rb:6291
 msgid "Writing Assistant"
@@ -21211,11 +21333,11 @@ msgstr ""
 msgid "Writing Assistant Fixed Instructions"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:25
+#: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:30
 msgid "Writing Assistant Tool"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:26
+#: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:31
 msgid "Writing Assistant Tools"
 msgstr ""
 
@@ -21441,7 +21563,7 @@ msgstr ""
 msgid "You can use the following script to post the data to %s."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/user.coffee:151
+#: app/assets/javascripts/app/controllers/user.coffee:156
 msgid "You cannot view or change the group permissions of an inactive user. Activate them first to manage their permissions."
 msgstr ""
 

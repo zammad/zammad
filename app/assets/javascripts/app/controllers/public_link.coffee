@@ -11,6 +11,11 @@ class PublicLink extends App.ControllerSubContent
       defaultSortBy: 'prio'
       searchBar: true
       searchQuery: @search_query
+      searchShortcuts: [
+        { query: 'screen:login', label: __('Login screen links') }
+        { query: 'new_tab:true', label: __('Opened in new tab') }
+        { query: 'created_at:>now-1M', label: __('Created within last month') }
+      ]
       pageData:
         home: 'public_links'
         object: __('Public Link')

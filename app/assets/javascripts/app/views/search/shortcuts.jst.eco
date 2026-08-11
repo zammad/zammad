@@ -1,0 +1,16 @@
+<ul class="dropdown-menu dropdown-menu-right" role="menu">
+  <li class="dropdown-header"><%- @T('Suggested searches') %></li>
+  <li role="presentation">
+    <a class="searchfield-shortcut-docs flex horizontal center" href="https://user-docs.zammad.org/en/latest/advanced/search.html" target="_blank" role="menuitem" tabindex="-1">
+      <span class="flex u-textTruncate"><%- @T('User Documentation') %></span>
+      <%- @Icon('external') %>
+    </a>
+  </li>
+  <% for shortcut in @shortcuts: %>
+  <li role="presentation">
+    <a class="js-shortcut" data-query="<%- shortcut.query %>" role="menuitem" tabindex="-1">
+      <%- @T(shortcut.label, (shortcut.labelArgs || [])...) %>
+    </a>
+  </li>
+  <% end %>
+</ul>

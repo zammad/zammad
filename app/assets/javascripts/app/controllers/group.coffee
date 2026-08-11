@@ -11,6 +11,11 @@ class Group extends App.ControllerSubContent
       defaultSortBy: 'name'
       searchBar: true
       searchQuery: @search_query
+      searchShortcuts: [
+        { query: 'active:true', label: __('Active only') }
+        { query: 'shared_drafts:true', label: __('Shared drafts enabled') }
+        { query: 'updated_at:>now-7d', label: __('Updated within last 7 days') }
+      ]
       pageData:
         home: 'groups'
         object: __('Group')

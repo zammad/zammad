@@ -13,6 +13,11 @@ class CoreWorkflow extends App.ControllerSubContent
       defaultSortBy: 'priority, name'
       searchBar: true
       searchQuery: @search_query
+      searchShortcuts: [
+        { query: 'active:true', label: __('Active only') }
+        { query: 'group_id', label: __('Affects group field') }
+        { query: 'stop_after_match:true', label: __('Stop after match enabled') }
+      ]
       pageData:
         home: 'core_workflow'
         object: __('Workflow')

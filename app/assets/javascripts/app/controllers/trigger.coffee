@@ -14,6 +14,11 @@ class Trigger extends App.ControllerSubContent
       defaultSortBy: 'name'
       searchBar: true
       searchQuery: @search_query
+      searchShortcuts: [
+        { query: 'active:true', label: __('Active only') }
+        { query: 'group_id', label: __('Affects group field') }
+        { query: 'updated_at:>now-7d', label: __('Updated within last 7 days') }
+      ]
       pageData:
         home: 'triggers'
         object: __('Trigger')

@@ -3042,6 +3042,14 @@ input.has-error {
         box-shadow: 0 0 4px 0 var(--shadow-highlight) !important;
       }
     }
+
+    .searchfield-shortcut-docs {
+      color: var(--text-link);
+
+      .icon {
+        fill: currentColor;
+      }
+    }
   }
 
   &.has-shortcut .empty-search {
@@ -3049,7 +3057,7 @@ input.has-error {
   }
 
   &.has-shortcut input[type='search'] {
-    @include bidi-style(padding-right, 80px, padding-left, 0);
+    @include bidi-style(padding-right, 60px, padding-left, 0);
   }
 }
 
@@ -14067,6 +14075,10 @@ output {
 
 .detail-search-header {
   margin: 20px 0 32px;
+
+  .searchfield input[type='search']:not(.is-empty, :placeholder-shown) ~ .searchfield-shortcut {
+    display: none;
+  }
 }
 
 .batch-overlay {

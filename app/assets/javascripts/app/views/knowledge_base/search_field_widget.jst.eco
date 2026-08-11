@@ -12,15 +12,6 @@
           title="<%- @Ti('Suggested searches') %>">
     <%- @Icon('lightbulb') %>
   </button>
-  <ul class="dropdown-menu dropdown-menu-right" role="menu">
-    <li class="dropdown-header"><%- @T('Suggested searches') %></li>
-    <% for shortcut in @shortcuts: %>
-    <li role="presentation">
-      <a class="js-shortcut" data-query="<%- shortcut.query %>" role="menuitem" tabindex="-1">
-        <%- shortcut.label %>
-      </a>
-    </li>
-    <% end %>
-  </ul>
+  <%- @V('search/shortcuts', shortcuts: @shortcuts) %>
 </div>
 <% end %>

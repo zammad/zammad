@@ -16,6 +16,11 @@ class Organization extends App.ControllerSubContent
       defaultSortBy: 'name'
       searchBar: true
       searchQuery: @search_query
+      searchShortcuts: [
+        { query: 'active:false', label: __('Inactive only') }
+        { query: 'shared:true', label: __('Shared organizations') }
+        { query: 'created_at:>now-1M', label: __('Created within last month') }
+      ]
       pageData:
         home: 'organizations'
         object: __('Organization')

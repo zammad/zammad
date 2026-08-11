@@ -15,6 +15,11 @@ class Index extends App.ControllerSubContent
       defaultSortBy: 'name'
       searchBar: true
       searchQuery: @search_query
+      searchShortcuts: [
+        { query: 'active:true', label: __('Active only') }
+        { query: 'ssl_verify:false', label: __('SSL verification disabled') }
+        { query: 'updated_at:>now-7d', label: __('Updated within last 7 days') }
+      ]
       pageData:
         home: 'webhooks'
         object: __('Webhook')

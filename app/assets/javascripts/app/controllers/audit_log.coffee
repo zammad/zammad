@@ -34,6 +34,11 @@ class AuditLog extends App.ControllerSubContent
       defaultOrder: 'DESC'
       searchBar: true
       searchQuery: @search_query
+      searchShortcuts: [
+        { query: 'action_type:destroy', label: __('Deletions only') }
+        { query: 'auditable_type:User', label: __('User changes only') }
+        { query: 'created_at:>now-24h', label: __('Created within last 24 hours') }
+      ]
       pageData:
         home: 'audit_logs'
         object: __('Audit Log')
