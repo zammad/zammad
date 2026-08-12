@@ -25,11 +25,11 @@ class App.UiElement.time_range
       range = attribute.value.range
     values =
       minute: [1..120]
-      hour: [1..48]
-      day: [1..31]
-      week: [1..53]
-      month: [1..12]
-      year: [1..20]
+      hour: [1..120]
+      day: [1..120]
+      week: [1..120]
+      month: [1..120]
+      year: [1..120]
 
     element = $( App.view('generic/time_range')(attribute: attribute, ranges: ranges))
     @localRenderPulldown(element.filter('.js-valueRangeSelector'), values[range], attribute)
