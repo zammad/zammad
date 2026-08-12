@@ -44,4 +44,11 @@ class ChannelsFacebookController < ApplicationController
     render json: {}
   end
 
+  private
+
+  # The channel dialog posts back the whole channel including its masked options,
+  # so the masked tokens must be restored instead of being persisted.
+  def sensitive_attributes(_input, _object)
+    Channel::SENSITIVE_FIELDS
+  end
 end

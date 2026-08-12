@@ -26,14 +26,16 @@ class ChannelsSmsController < ApplicationController
     model_update_render(Channel, channel_params)
   end
 
+  # the channel is rendered as-is by #render, which would bypass the masking, and the
+  # frontend does not use the response - so it is not returned at all (like the siblings)
   def enable
     channel.update!(active: true)
-    render json: channel
+    render json: {}
   end
 
   def disable
     channel.update!(active: false)
-    render json: channel
+    render json: {}
   end
 
   def destroy
@@ -44,6 +46,8 @@ class ChannelsSmsController < ApplicationController
   def test
     raise __("The required parameter 'options.adapter' is missing.") if params[:options][:adapter].blank?
 
+    # the given options are used as-is on purpose, a masked token is never restored here -
+    # see the note on #sensitive_attributes
     driver = Channel.driver_class(params[:options][:adapter])
     resp   = driver.new.deliver(params[:options], test_options)
 
@@ -79,6 +83,16 @@ class ChannelsSmsController < ApplicationController
 
   def channel
     @channel ||= Channel.lookup(id: params[:id])
+  end
+
+  # The provider dialog pre-fills the token with the masked value it received via assets,
+  # so it must be restored instead of being persisted.
+  #
+  # Note that #test deliberately does not restore it: the drivers put the token into the
+  # gateway URL and echo that URL in their error messages, which #test renders back to the
+  # client - so testing an existing channel requires entering the token again.
+  def sensitive_attributes(_input, _object)
+    Channel::SENSITIVE_FIELDS
   end
 
   def test_options

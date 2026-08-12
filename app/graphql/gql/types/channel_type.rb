@@ -19,5 +19,11 @@ module Gql::Types
     field :last_log_out, String
     field :status_in, String
     field :status_out, String
+
+    # GraphQL bypasses both the REST assets (CanSensitiveAssets#self_assets) and the
+    # controller masking, so the secrets of Channel::SENSITIVE_FIELDS must be masked here.
+    def options
+      object.mask_sensitive_values({ 'options' => object.options }, object)['options']
+    end
   end
 end

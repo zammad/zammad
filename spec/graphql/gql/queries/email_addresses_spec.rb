@@ -43,4 +43,48 @@ RSpec.describe Gql::Queries::EmailAddresses, type: :graphql do
 
     it_behaves_like 'graphql responds with error if unauthenticated'
   end
+
+  context 'when fetching the channel of an EmailAddress' do
+    let(:admin)         { create(:admin) }
+    let(:channel)       { create(:email_channel, options: { inbound: { options: { password: 'inbound-secret' } }, outbound: { options: { password: 'outbound-secret' } } }) }
+    let(:email_address) { create(:email_address, channel: channel) }
+    let(:query)         do
+      <<~QUERY
+        query emailAddresses {
+          emailAddresses {
+            email
+            channel {
+              options
+            }
+          }
+        }
+      QUERY
+    end
+
+    # the query returns every email address, so the created one must be picked explicitly
+    let(:result_options) do
+      gql.result.data
+        .find { |elem| elem['email'] == email_address.email }
+        &.dig('channel', 'options')
+    end
+
+    before do
+      create(:email_address) # another address, so the lookup above cannot pass by accident
+      email_address
+      gql.execute(query)
+    end
+
+    context 'with an admin session', authenticated_as: :admin do
+      it 'masks the sensitive channel options' do
+        expect(result_options).to include(
+          'inbound'  => { 'options' => { 'password' => SensitiveParamsHelper::SENSITIVE_MASK } },
+          'outbound' => { 'options' => { 'password' => SensitiveParamsHelper::SENSITIVE_MASK } },
+        )
+      end
+
+      it 'does not modify the channel options' do
+        expect(channel.reload.options.dig('inbound', 'options', 'password')).to eq('inbound-secret')
+      end
+    end
+  end
 end
