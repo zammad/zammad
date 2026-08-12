@@ -29,7 +29,7 @@ http_interactions:
       Server:
       - nginx
       Date:
-      - Wed, 11 Mar 2026 06:59:22 GMT
+      - Wed, 12 Aug 2026 11:27:13 GMT
       Content-Type:
       - application/json; charset=utf-8
       Transfer-Encoding:
@@ -51,7 +51,7 @@ http_interactions:
       Vary:
       - Accept
       Etag:
-      - W/"416b8d975741bc94c1230c68ac16e160"
+      - W/"9a2832c56125c1b3ee593434b8e11a71"
       Cache-Control:
       - max-age=0, private, must-revalidate
       Content-Security-Policy:
@@ -59,14 +59,14 @@ http_interactions:
         https: data:; object-src ''none''; script-src ''self'' https: ''nonce-'';
         style-src ''self'' https: ''nonce-'''
       X-Request-Id:
-      - 5c41b91b-b657-40ba-8dc2-5f2c45ae6fb7
+      - 94ffc1a8-0b90-477d-a3af-da39ca7570d8
       X-Runtime:
-      - '0.403041'
+      - '0.708939'
       Strict-Transport-Security:
       - max-age=63072000; includeSubDomains
     body:
       encoding: ASCII-8BIT
-      string: '[{"model":"mistral-small3.2:24b","created_at":"2026-03-11 06:59:22
-        UTC","response":"{ \"connected\": \"true\" }","usage":{"prompt_tokens":48,"total_tokens":57,"completion_tokens":9,"prompt_tokens_details":null},"done":true,"uuid":"fbe28e0b-5c68-4462-9e99-8eb0daf81e3b"}]'
-  recorded_at: Wed, 11 Mar 2026 06:59:22 GMT
+      string: '[{"model":"gemma4:26b","created_at":"2026-08-12 11:27:13 UTC","response":"{
+        \"connected\": \"true\" }","done":true,"uuid":"03dd4ba8-bac3-4634-8ea4-9506f1e23baa"}]'
+  recorded_at: Wed, 12 Aug 2026 11:27:13 GMT
 recorded_with: VCR 6.4.0

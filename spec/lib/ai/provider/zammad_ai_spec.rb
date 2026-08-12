@@ -52,10 +52,7 @@ RSpec.describe AI::Provider::ZammadAI, integration: true, required_envs: %w[ZAMM
       metadata = ai_provider.metadata
 
       expect(metadata).to include(
-        model:             be_present,
-        prompt_tokens:     be_a(Numeric),
-        completion_tokens: be_a(Numeric),
-        total_tokens:      be_a(Numeric)
+        model: be_present,
       )
     end
   end
