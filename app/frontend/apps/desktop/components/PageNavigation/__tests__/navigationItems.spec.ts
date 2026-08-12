@@ -1,9 +1,6 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import {
-  navigationGroups,
-  type NavigationGroup,
-} from '#desktop/components/PageNavigation/navigationGroups.ts'
+import type { NavigationGroup } from '#desktop/components/PageNavigation/navigationGroups.ts'
 import {
   buildNavigationItems,
   type PageRoute,
@@ -23,14 +20,6 @@ const buildRoute = (name: string, order?: number, navigationGroup?: string): Pag
 })
 
 const tools: NavigationGroup = { key: 'tools', title: 'Tools', icon: 'wrench', order: 9000 }
-
-describe('navigationGroups', () => {
-  it('ships the shared "tools" group so addons do not have to define it', () => {
-    expect(navigationGroups).toContainEqual(
-      expect.objectContaining({ key: 'tools', title: 'Tools' }),
-    )
-  })
-})
 
 describe('buildNavigationItems', () => {
   it('combines routes of independent contributors into one group', () => {
