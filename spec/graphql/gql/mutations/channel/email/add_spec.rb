@@ -84,7 +84,7 @@ RSpec.describe Gql::Mutations::Channel::Email::Add, type: :graphql do
           host:       'nonexisting.host.local',
           port:       25,
           user:       'some@example.com',
-          password:   'password',
+          password:   SensitiveParamsHelper::SENSITIVE_MASK,
           ssl_verify: false,
         }
       }
@@ -97,7 +97,7 @@ RSpec.describe Gql::Mutations::Channel::Email::Add, type: :graphql do
           port:             993,
           ssl:              'ssl',
           user:             'some@example.com',
-          password:         'password',
+          password:         SensitiveParamsHelper::SENSITIVE_MASK,
           folder:           'some_folder',
           keep_on_server:   true,
           ssl_verify:       false,
@@ -108,10 +108,18 @@ RSpec.describe Gql::Mutations::Channel::Email::Add, type: :graphql do
       }
     end
 
+    # the passwords are masked in the response (ChannelType), but stored unmasked
     it 'creates the channel' do
       expect(gql.result.data[:channel]).to include(options: include(
         inbound: options_inbound, outbound: options_outbound
       ))
+    end
+
+    it 'stores the given passwords' do
+      expect(Channel.last.options).to include(
+        'inbound'  => include('options' => include('password' => 'password')),
+        'outbound' => include('options' => include('password' => 'password')),
+      )
     end
 
     context 'when outbound adapter is sendmail' do
