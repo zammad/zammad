@@ -960,7 +960,7 @@ msgstr "1 año atrás"
 msgid "2 hours"
 msgstr "2 horas"
 
-#: db/seeds/settings.rb:2161
+#: db/seeds/settings.rb:2174
 msgid "2 lower case and 2 upper case characters"
 msgstr "2 caracteres en minúscula y 2 caracteres en mayúscula"
 
@@ -1041,7 +1041,7 @@ msgstr ""
 "debe utilizar para los correos salientes, por ejemplo, cuando un agente "
 "redacta un correo electrónico o un disparador envía una respuesta automática."
 
-#: db/seeds/settings.rb:4017
+#: db/seeds/settings.rb:4030
 msgid "A list of active import backends that gets scheduled automatically."
 msgstr ""
 "Una lista de backends de importación activos que se programan "
@@ -1147,7 +1147,7 @@ msgstr "Agente de IA"
 msgid "AI Agents"
 msgstr "Agentes de IA"
 
-#: db/seeds/settings.rb:6170
+#: db/seeds/settings.rb:6183
 #, fuzzy
 #| msgid "Knowledge Base Answer"
 msgid "AI Knowledge Base Answer from Ticket"
@@ -1163,7 +1163,7 @@ msgstr "Respuesta de Base de Conocimientos"
 msgid "AI Provider"
 msgstr "Proveedor de IA"
 
-#: db/seeds/settings.rb:6093
+#: db/seeds/settings.rb:6106
 msgid "AI Provider Config"
 msgstr "Configuración del proveedor de IA"
 
@@ -1234,7 +1234,7 @@ msgstr "borrador"
 msgid "AI error log"
 msgstr "Registro de errores de IA"
 
-#: db/seeds/settings.rb:6076
+#: db/seeds/settings.rb:6089
 msgid "AI provider"
 msgstr "Proveedor de IA"
 
@@ -1317,7 +1317,7 @@ msgstr "API"
 msgid "API Key"
 msgstr "Clave API"
 
-#: db/seeds/settings.rb:3530
+#: db/seeds/settings.rb:3543
 msgid "API Password Access"
 msgstr "Contraseña de Acceso a API"
 
@@ -1325,7 +1325,7 @@ msgstr "Contraseña de Acceso a API"
 msgid "API Token"
 msgstr "API Token"
 
-#: db/seeds/settings.rb:3505
+#: db/seeds/settings.rb:3518
 msgid "API Token Access"
 msgstr "API Token Access"
 
@@ -1534,7 +1534,7 @@ msgstr "Botón de menú de acción para las teclas de seguridad"
 msgid "Actions"
 msgstr "Acciones"
 
-#: db/seeds/settings.rb:2856
+#: db/seeds/settings.rb:2869
 msgid "Activate the recursive processing of ticket triggers."
 msgstr "Active el procesamiento recursivo de disparadores de tickets."
 
@@ -1855,7 +1855,7 @@ msgstr "Añadir lista desordenada"
 msgid "Additional Channels"
 msgstr "Canales adicionales"
 
-#: db/seeds/settings.rb:3338
+#: db/seeds/settings.rb:3351
 msgid "Additional follow-up detection"
 msgstr "Detección adicional de seguimiento"
 
@@ -2009,11 +2009,11 @@ msgstr "Antigüedad"
 msgid "Agent"
 msgstr "Agente"
 
-#: db/seeds/settings.rb:3251
+#: db/seeds/settings.rb:3264
 msgid "Agent Name"
 msgstr "Nombre del agente"
 
-#: db/seeds/settings.rb:3251
+#: db/seeds/settings.rb:3264
 msgid "Agent Name + FromSeparator + System Address Display Name"
 msgstr ""
 "Nombre del agente + Separador de origen + Nombre para mostrar de Dirección "
@@ -2023,7 +2023,7 @@ msgstr ""
 msgid "Agent chat"
 msgstr "Chat de agente"
 
-#: db/seeds/settings.rb:3605
+#: db/seeds/settings.rb:3618
 msgid "Agent idle timeout"
 msgstr "Tiempo de espera inactivo del agente"
 
@@ -2162,7 +2162,7 @@ msgstr ""
 "Permitir al agente de IA elegir varias categorías de todos los valores "
 "posibles."
 
-#: db/seeds/settings.rb:6061
+#: db/seeds/settings.rb:6074
 msgid ""
 "Allow admins to manage availability and access to the desktop BETA UI switch."
 msgstr ""
@@ -2197,11 +2197,11 @@ msgstr "Permitir la reapertura de tickets dentro de un cierto margen temporal."
 msgid "Allow users to add new tags."
 msgstr "Permitir a los usuarios añadir nuevos tags."
 
-#: db/seeds/settings.rb:4182
+#: db/seeds/settings.rb:4195
 msgid "Allow users to create new tags."
 msgstr "Permitir a los usuarios crear nuevas etiquetas."
 
-#: db/seeds/settings.rb:6052
+#: db/seeds/settings.rb:6065
 msgid "Allow users to switch automatically to the new desktop UI."
 msgstr ""
 "Permitir a los usuarios cambiar automáticamente a la nueva interfaz de "
@@ -2221,7 +2221,7 @@ msgstr "Permitir sitios web (separados por ;)"
 msgid "Also notify via email"
 msgstr "También notificar vía email"
 
-#: db/seeds/settings.rb:5210
+#: db/seeds/settings.rb:5223
 msgid ""
 "Alternative FQDN for callbacks if you operate Zammad in an internal network."
 msgstr ""
@@ -2799,7 +2799,7 @@ msgstr "Ficheros Adjuntos"
 msgid "Attachment"
 msgstr "Adjunto(s)"
 
-#: db/seeds/settings.rb:3352
+#: db/seeds/settings.rb:3365
 msgid "Attachment - Search for follow-up also in attachments."
 msgstr "Adjunto - Buscar por seguimiento también en los adjuntos."
 
@@ -2863,7 +2863,7 @@ msgstr "Atributo"
 msgid "Attribute '%s' is required in the mapping"
 msgstr "El atributo '%s' es requerido in el mapeo"
 
-#: db/seeds/settings.rb:1947
+#: db/seeds/settings.rb:1960
 msgid ""
 "Attribute that uniquely identifies the user. If unset, the name identifier "
 "returned by the IDP is used."
@@ -2878,7 +2878,7 @@ msgid "Attributes"
 msgstr "Atributos"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:32
-#: db/seeds/settings.rb:2707
+#: db/seeds/settings.rb:2720
 msgid "Attributes to compare"
 msgstr "Atributos para comparar"
 
@@ -2939,7 +2939,7 @@ msgstr "Autenticación mediante %s"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee:4
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/authenticator_app.coffee:5
-#: db/seeds/settings.rb:5899
+#: db/seeds/settings.rb:5912
 msgid "Authenticator App"
 msgstr "Aplicación de autenticación"
 
@@ -2976,19 +2976,19 @@ msgstr "Authy"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket.coffee:11
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco:7
-#: db/seeds/settings.rb:2553
+#: db/seeds/settings.rb:2566
 msgid "Auto Assignment"
 msgstr "Auto asignación"
 
-#: db/seeds/settings.rb:2596
+#: db/seeds/settings.rb:2609
 msgid "Auto Assignment Ignored Users"
 msgstr "Asignación Automática de Usuarios Ignorados"
 
-#: db/seeds/settings.rb:2579
+#: db/seeds/settings.rb:2592
 msgid "Auto Assignment Selector"
 msgstr "Selector de Asignación Automática"
 
-#: db/seeds/settings.rb:6038
+#: db/seeds/settings.rb:6051
 msgid "Auto Shutdown"
 msgstr "Apagado automático"
 
@@ -2996,7 +2996,7 @@ msgstr "Apagado automático"
 msgid "Auto Wizard"
 msgstr "Asistente automático"
 
-#: db/seeds/settings.rb:4533
+#: db/seeds/settings.rb:4546
 msgid "Auto close"
 msgstr "Cerrar automaticamente"
 
@@ -3004,7 +3004,7 @@ msgstr "Cerrar automaticamente"
 msgid "Auto create"
 msgstr "Crear automáticamente"
 
-#: db/seeds/settings.rb:4559
+#: db/seeds/settings.rb:4572
 msgid "Auto-close state"
 msgstr "Estado de cierre automático"
 
@@ -3137,7 +3137,7 @@ msgstr "Promedio: %s%"
 msgid "Azure AI (legacy deployment-based endpoints)"
 msgstr ""
 
-#: db/seeds/settings.rb:3494
+#: db/seeds/settings.rb:3507
 msgid "BCC address for all outgoing emails"
 msgstr "Direcciones para CCO en todos los correos salientes"
 
@@ -3281,7 +3281,7 @@ msgstr "Enlazar contaseña"
 msgid "Bind User"
 msgstr "Enlazar usuario"
 
-#: db/seeds/settings.rb:3471
+#: db/seeds/settings.rb:3484
 msgid "Block Notifications"
 msgstr "Bloquear notificaciones"
 
@@ -3319,7 +3319,7 @@ msgstr "Azul"
 msgid "Body"
 msgstr "Cuerpo"
 
-#: db/seeds/settings.rb:3351
+#: db/seeds/settings.rb:3364
 msgid "Body - Search for follow-up also in mail body."
 msgstr "Cuerpo - Buscar un seguimiento también en el cuerpo del correo."
 
@@ -3404,7 +3404,7 @@ msgstr "Horas laborales"
 msgid "But it's only available in these languages:"
 msgstr "Pero sólo está disponible en estos idiomas:"
 
-#: db/seeds/settings.rb:3341
+#: db/seeds/settings.rb:3354
 msgid ""
 "By default, the follow-up check is done via the subject of an email. This "
 "setting lets you add more fields for which the follow-up check will be "
@@ -3478,19 +3478,19 @@ msgstr "CTI"
 msgid "CTI (generic)"
 msgstr "CTI (genérico)"
 
-#: db/seeds/settings.rb:5269
+#: db/seeds/settings.rb:5282
 msgid "CTI Token"
 msgstr "Token CTI"
 
-#: db/seeds/settings.rb:5256
+#: db/seeds/settings.rb:5269
 msgid "CTI config"
 msgstr "Configuración CTI"
 
-#: db/seeds/settings.rb:5290
+#: db/seeds/settings.rb:5303
 msgid "CTI customer last activity"
 msgstr "CTI última actividad del cliente"
 
-#: db/seeds/settings.rb:5228
+#: db/seeds/settings.rb:5241
 msgid "CTI integration"
 msgstr "Integraciones CTI"
 
@@ -3713,7 +3713,7 @@ msgstr "Diseño de la página de Categorías"
 msgid "Caution!"
 msgstr "¡Precaución!"
 
-#: db/seeds/settings.rb:1973
+#: db/seeds/settings.rb:1986
 msgid "Certificate (PEM)"
 msgstr "Certificado (PEM)"
 
@@ -3967,7 +3967,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/checklist_template.coffee:3
 #: app/assets/javascripts/app/views/checklist_template/index.jst.eco:7
-#: db/seeds/permissions.rb:344 db/seeds/settings.rb:6011
+#: db/seeds/permissions.rb:344 db/seeds/settings.rb:6024
 msgid "Checklists"
 msgstr "Listas de comprobación"
 
@@ -3975,15 +3975,15 @@ msgstr "Listas de comprobación"
 msgid "Checkmk"
 msgstr "Checkmk"
 
-#: db/seeds/settings.rb:4680
+#: db/seeds/settings.rb:4693
 msgid "Checkmk integration"
 msgstr "Integración Checkmk"
 
-#: db/seeds/settings.rb:4801
+#: db/seeds/settings.rb:4814
 msgid "Checkmk token"
 msgstr "Checkmk token"
 
-#: db/seeds/settings.rb:2474
+#: db/seeds/settings.rb:2487
 msgid "Checksum"
 msgstr "Suma de comprobación"
 
@@ -4201,11 +4201,11 @@ msgstr "Borrar el valor"
 msgid "Clearbit"
 msgstr "Clearbit"
 
-#: db/seeds/settings.rb:5392
+#: db/seeds/settings.rb:5405
 msgid "Clearbit config"
 msgstr "Configuración Clearbit"
 
-#: db/seeds/settings.rb:5366
+#: db/seeds/settings.rb:5379
 msgid "Clearbit integration"
 msgstr "Integración Clearbit"
 
@@ -4303,14 +4303,14 @@ msgstr "Cerrar el panel lateral"
 #: app/assets/javascripts/app/models/macro.coffee:9
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:41
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketScreenBehavior/behaviorOptions.ts:12
-#: db/seeds/settings.rb:3026
+#: db/seeds/settings.rb:3039
 msgid "Close tab"
 msgstr "Cerrar pestaña"
 
 #: app/assets/javascripts/app/models/macro.coffee:9
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:46
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketScreenBehavior/behaviorOptions.ts:16
-#: db/seeds/settings.rb:3027
+#: db/seeds/settings.rb:3040
 msgid "Close tab on ticket close"
 msgstr "Cerrar la pestaña al cerrar el ticket"
 
@@ -4374,7 +4374,7 @@ msgstr ""
 msgid "Combined subscription URL"
 msgstr "URL de suscripción combinada"
 
-#: db/seeds/settings.rb:5818
+#: db/seeds/settings.rb:5831
 msgid ""
 "Comma-separated list of trusted proxy IP addresses or CIDR ranges for SSO "
 "header acceptance."
@@ -4417,7 +4417,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/security_keys.coffee:6
 #: app/frontend/shared/entities/two-factor/plugins/security-keys.ts:10
-#: db/seeds/settings.rb:5891
+#: db/seeds/settings.rb:5904
 msgid "Complete the sign-in with your security key."
 msgstr "Complete el inicio de sesión con su llave de seguridad."
 
@@ -4671,7 +4671,7 @@ msgstr "No se pudo cargar el contenido."
 msgid "Content loader"
 msgstr "Cargador de contenido"
 
-#: app/models/store.rb:83
+#: app/models/store.rb:88
 msgid "Content preview could not be generated."
 msgstr "No se pudo generar la vista preliminar del contenido."
 
@@ -5417,7 +5417,7 @@ msgstr ""
 msgid "Customer intent"
 msgstr "Intención del cliente"
 
-#: db/seeds/settings.rb:3395
+#: db/seeds/settings.rb:3408
 msgid "Customer selection based on sender and receiver list"
 msgstr "Selección de clientes basada en la lista de emisores y receptores"
 
@@ -5517,7 +5517,7 @@ msgstr "Fecha"
 msgid "Date & time field"
 msgstr "Campo de Fecha & Hora"
 
-#: db/seeds/settings.rb:2453
+#: db/seeds/settings.rb:2466
 msgid "Date (Year.Month.Day.SystemID.Counter)"
 msgstr "Fecha (Año.Mes.Día.IDSistema.Contador)"
 
@@ -5606,11 +5606,11 @@ msgstr "Comportamiento por defecto"
 msgid "Default Notifications"
 msgstr "Notificaciones por defecto"
 
-#: db/seeds/settings.rb:3627
+#: db/seeds/settings.rb:3640
 msgid "Default Screen"
 msgstr "Pantalla por defecto"
 
-#: db/seeds/settings.rb:2614
+#: db/seeds/settings.rb:2627
 msgid "Default Ticket Agent Notifications"
 msgstr "Notificaciones de agente por defecto para casos"
 
@@ -5618,7 +5618,7 @@ msgstr "Notificaciones de agente por defecto para casos"
 msgid "Default at Signup"
 msgstr "Predeterminado en la suscripción"
 
-#: db/seeds/settings.rb:4206
+#: db/seeds/settings.rb:4219
 msgid "Default calendar tickets subscriptions"
 msgstr "Subscripciones de tickets de calendario por defecto"
 
@@ -5660,7 +5660,7 @@ msgid "Default value is required."
 msgstr "El valor por defecto es obligatorio."
 
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco:15
-#: db/seeds/settings.rb:2599
+#: db/seeds/settings.rb:2612
 msgid ""
 "Define an exception of \"automatic assignment\" for certain users (e.g. "
 "executives)."
@@ -5668,28 +5668,28 @@ msgstr ""
 "Defina una excepción de \"asignación automática\" para ciertos usuarios (por "
 "ejemplo: ejecutivos)."
 
-#: db/seeds/settings.rb:3730
+#: db/seeds/settings.rb:3743
 msgid "Define if asciifolding analyzer should be used in Elasticsearch."
 msgstr ""
 "Defina si se debe utilizar el analizador asciifolding en Elasticsearch."
 
-#: db/seeds/settings.rb:3694
+#: db/seeds/settings.rb:3707
 msgid "Define max. attachment size for Elasticsearch."
 msgstr "Definir tamaño máximo de archivo adjunto para Elasticsearch."
 
-#: db/seeds/settings.rb:3703
+#: db/seeds/settings.rb:3716
 msgid "Define max. payload size for Elasticsearch."
 msgstr "Definir tamaño máximo de \"payload\" para Elasticsearch."
 
-#: db/seeds/settings.rb:3721
+#: db/seeds/settings.rb:3734
 msgid "Define model configuration for Elasticsearch."
 msgstr "Definir la configuración del modelo para Elasticsearch."
 
-#: db/seeds/settings.rb:3712
+#: db/seeds/settings.rb:3725
 msgid "Define pipeline name for Elasticsearch."
 msgstr "Define el nombre del pipeline para Elasticsearch."
 
-#: db/seeds/settings.rb:4352
+#: db/seeds/settings.rb:4365
 msgid ""
 "Define postmaster filter to check if follow-ups get created (based on admin "
 "settings)."
@@ -5697,11 +5697,11 @@ msgstr ""
 "Definir el filtro \"postmaster\" para comprobar si se crean los seguimientos "
 "(basado en los ajustes de admin)."
 
-#: db/seeds/settings.rb:4289
+#: db/seeds/settings.rb:4302
 msgid "Define postmaster filter to import archive mailboxes."
 msgstr "Definir el filtro \"postmaster\" para importar los buzones de archivo."
 
-#: db/seeds/settings.rb:4286
+#: db/seeds/settings.rb:4299
 msgid "Define postmaster filter."
 msgstr "Definir el filtro \"postmaster\"."
 
@@ -5720,7 +5720,7 @@ msgstr ""
 msgid "Define rules for adding tags in the system."
 msgstr ""
 
-#: db/seeds/settings.rb:2617
+#: db/seeds/settings.rb:2630
 msgid "Define the default agent notifications for new users."
 msgstr "Define las notificaciones de agente por defecto para usuarios nuevos."
 
@@ -5748,27 +5748,27 @@ msgstr ""
 msgid "Define which ticket article(s) should be analyzed."
 msgstr "Define qué atributos del caso se verifican antes de crear un caso."
 
-#: db/seeds/settings.rb:3676
+#: db/seeds/settings.rb:3689
 msgid "Defines Elasticsearch SSL verification."
 msgstr "Define la verificación SSL de Elasticsearch."
 
-#: db/seeds/settings.rb:3667
+#: db/seeds/settings.rb:3680
 msgid "Defines Elasticsearch index name."
 msgstr "Define el nombre del índice para ElasticSearch."
 
-#: db/seeds/settings.rb:3943
+#: db/seeds/settings.rb:3956
 msgid "Defines Freshdesk endpoint authentication API key."
 msgstr "Define la autenticación del API key para el endpoint de Freshdesk."
 
-#: db/seeds/settings.rb:3658
+#: db/seeds/settings.rb:3671
 msgid "Defines HTTP basic auth password of Elasticsearch."
 msgstr "Define la contraseña básica de autenticación HTTP de Elasticsearch."
 
-#: db/seeds/settings.rb:3649
+#: db/seeds/settings.rb:3662
 msgid "Defines HTTP basic auth user of Elasticsearch."
 msgstr "Define la autenticación básica HTTP de usuario de Elasticsearch."
 
-#: db/seeds/settings.rb:3850
+#: db/seeds/settings.rb:3863
 msgid ""
 "Defines HTTP basic authentication password (only if OTRS is protected via "
 "HTTP basic auth)."
@@ -5776,7 +5776,7 @@ msgstr ""
 "Define la autenticación básica de la contraseña HTTP (solo si OTRS está "
 "protegido via HTTP con autenticación básica)."
 
-#: db/seeds/settings.rb:3831
+#: db/seeds/settings.rb:3844
 msgid ""
 "Defines HTTP basic authentication user (only if OTRS is protected via HTTP "
 "basic auth)."
@@ -5784,54 +5784,54 @@ msgstr ""
 "Define la autenticación básica HTTP del usuario (solo si OTRS está protegido "
 "via autenticación básica HTTP)."
 
-#: db/seeds/settings.rb:3998
+#: db/seeds/settings.rb:4011
 msgid "Defines Kayako endpoint authentication password."
 msgstr "Define la contraseña de autenticación del endpoint Kayako."
 
-#: db/seeds/settings.rb:3980
+#: db/seeds/settings.rb:3993
 msgid "Defines Kayako endpoint authentication user."
 msgstr "Define el usuario de autenticación del endpoint Kayako."
 
-#: db/seeds/settings.rb:3812
+#: db/seeds/settings.rb:3825
 msgid "Defines OTRS endpoint authentication key."
 msgstr "Define la clave de autenticación del endpoint OTRS."
 
-#: db/seeds/settings.rb:3887
+#: db/seeds/settings.rb:3900
 msgid "Defines Zendesk endpoint authentication API key."
 msgstr "Define la API key de autenticación del endpoint Zendesk."
 
-#: db/seeds/settings.rb:3906
+#: db/seeds/settings.rb:3919
 msgid "Defines Zendesk endpoint authentication user."
 msgstr "Define el usuario de autenticación del endpoint Zendesk."
 
-#: db/seeds/settings.rb:3925
+#: db/seeds/settings.rb:3938
 msgid ""
 "Defines a Freshdesk endpoint to import users, tickets, states, and articles."
 msgstr ""
 "Define un endpoint de Freshdesk para importar usuarios, tickets, estados y "
 "artículos."
 
-#: db/seeds/settings.rb:3962
+#: db/seeds/settings.rb:3975
 msgid ""
 "Defines a Kayako endpoint to import users, tickets, states, and articles."
 msgstr ""
 "Define un endpoint Kayako para importar usuarios, tickets, estados y "
 "artículos."
 
-#: db/seeds/settings.rb:3869
+#: db/seeds/settings.rb:3882
 msgid ""
 "Defines a Zendesk endpoint to import users, tickets, states, and articles."
 msgstr ""
 "Define un endpoint Zendesk para importar usuarios, tickets, estados y "
 "artículos."
 
-#: db/seeds/settings.rb:5470
+#: db/seeds/settings.rb:5483
 msgid "Defines a dashboard stats backend that gets scheduled automatically."
 msgstr ""
 "Define un backend para estadísticas del cuadro de mandos, que se ejecuta "
 "automáticamente según planificación."
 
-#: db/seeds/settings.rb:3124
+#: db/seeds/settings.rb:3137
 msgid ""
 "Defines a limit for how many tickets can be created via web form from one IP "
 "address per day."
@@ -5839,7 +5839,7 @@ msgstr ""
 "Define un límite de cuántos tickets pueden ser creados vía web desde una "
 "misma IP por día."
 
-#: db/seeds/settings.rb:3103
+#: db/seeds/settings.rb:3116
 msgid ""
 "Defines a limit for how many tickets can be created via web form from one IP "
 "address per hour."
@@ -5847,20 +5847,20 @@ msgstr ""
 "Define un límite de cuántos tickets pueden ser creados vía web desde una "
 "misma IP por hora."
 
-#: db/seeds/settings.rb:3145
+#: db/seeds/settings.rb:3158
 msgid ""
 "Defines a limit for how many tickets can be created via web form per day."
 msgstr ""
 "Define un límite de cuántos tickets pueden ser creados vía formulario web "
 "por día."
 
-#: db/seeds/settings.rb:2242
+#: db/seeds/settings.rb:2255
 msgid "Defines after how many failed logins accounts will be deactivated."
 msgstr ""
 "Define el número de intentos de conexión tras los cuales se desactivarán las "
 "cuentas."
 
-#: db/seeds/settings.rb:3794
+#: db/seeds/settings.rb:3807
 msgid ""
 "Defines an OTRS endpoint to import users, tickets, states, and articles."
 msgstr ""
@@ -5886,12 +5886,12 @@ msgstr ""
 "Importante se representará con un signo de exclamación, mientras que "
 "prioridad baja con una flecha hacia abajo."
 
-#: db/seeds/settings.rb:3685
+#: db/seeds/settings.rb:3698
 msgid "Defines attachment extensions which will be ignored by Elasticsearch."
 msgstr ""
 "Define las extensiones de los adjuntos que serán ignoradas por Elasticsearch."
 
-#: db/seeds/settings.rb:3640
+#: db/seeds/settings.rb:3653
 msgid "Defines endpoint of Elasticsearch."
 msgstr "Define un endpoint de Elasticsearch."
 
@@ -5903,7 +5903,7 @@ msgstr ""
 "Define la configuración global cuando se generará el resumen en el zoom del "
 "ticket."
 
-#: db/seeds/settings.rb:2992
+#: db/seeds/settings.rb:3005
 msgid ""
 "Defines groups for which a customer can create tickets via web interface. No "
 "selection means all groups are available."
@@ -5911,7 +5911,7 @@ msgstr ""
 "Define los grupos para los que un cliente puede generar tickets vía web. Si "
 "no se selecciona ninguna, significa que todos los grupos están disponibles."
 
-#: db/seeds/settings.rb:3241
+#: db/seeds/settings.rb:3254
 msgid ""
 "Defines how the From field of emails (sent from answers and email tickets) "
 "should look like."
@@ -5919,7 +5919,7 @@ msgstr ""
 "Define cómo debería verse el campo De de los correos electrónicos (enviados "
 "desde las respuestas y los tickets de correo electrónico)."
 
-#: db/seeds/settings.rb:2361
+#: db/seeds/settings.rb:2374
 msgid ""
 "Defines how the last customer contact time of tickets should be calculated."
 msgstr ""
@@ -5938,23 +5938,23 @@ msgstr ""
 "Define cómo alcanzar un servidor de websockets. \"websocket\" por defecto en "
 "producción, \"websocketPort\" en sistemas CI (integración continua)"
 
-#: db/seeds/settings.rb:4683
+#: db/seeds/settings.rb:4696
 msgid "Defines if Checkmk (https://checkmk.com/) is enabled or not."
 msgstr "Define si Checkmk (https://checkmk.com/) está o no habilitado."
 
-#: db/seeds/settings.rb:5369
+#: db/seeds/settings.rb:5382
 msgid "Defines if Clearbit (http://www.clearbit.com) is enabled or not."
 msgstr "Define si Clearbit (http://www.clearbit.com) está o no habilitado."
 
-#: db/seeds/settings.rb:4970
+#: db/seeds/settings.rb:4983
 msgid "Defines if Exchange is enabled or not."
 msgstr "Define si Exchange está o no habilitado."
 
-#: db/seeds/settings.rb:4487
+#: db/seeds/settings.rb:4500
 msgid "Defines if Icinga (http://www.icinga.org) is enabled or not."
 msgstr "Define si Icinga (http://www.icinga.org) está o no habilitado."
 
-#: db/seeds/settings.rb:5580
+#: db/seeds/settings.rb:5593
 msgid ""
 "Defines if Knowledge Base navbar button is enabled for users without "
 "Knowledge Base permission."
@@ -5962,36 +5962,36 @@ msgstr ""
 "Define si el botón de navegación Base de Conocimientos está habilitado para "
 "usuarios sin permiso de Base de Conocimientos."
 
-#: db/seeds/settings.rb:5565
+#: db/seeds/settings.rb:5578
 msgid "Defines if Knowledge Base navbar button is enabled."
 msgstr ""
 "Define si el botón de navegación Base de Conocimientos está habilitado."
 
-#: db/seeds/settings.rb:4917
+#: db/seeds/settings.rb:4930
 msgid "Defines if LDAP is enabled or not."
 msgstr "Define si LDAP está o no habilitado."
 
-#: db/seeds/settings.rb:4816
+#: db/seeds/settings.rb:4829
 msgid "Defines if Monit (https://mmonit.com/monit/) is enabled or not."
 msgstr "Define si Monit (https://mmonit.com/monit/) está o no habilitado."
 
-#: db/seeds/settings.rb:4585
+#: db/seeds/settings.rb:4598
 msgid "Defines if Nagios (http://www.nagios.org) is enabled or not."
 msgstr "Define si Nagios (http://www.nagios.org) está o no habilitado."
 
-#: db/seeds/settings.rb:5735
+#: db/seeds/settings.rb:5748
 msgid "Defines if PGP encryption is enabled or not."
 msgstr "Define si el cifrado PGP está activado o no."
 
-#: db/seeds/settings.rb:5306
+#: db/seeds/settings.rb:5319
 msgid "Defines if Placetel (http://www.placetel.de) is enabled or not."
 msgstr "Define si Placetel (http://www.placetel.de) está o no habilitado."
 
-#: db/seeds/settings.rb:5693
+#: db/seeds/settings.rb:5706
 msgid "Defines if S/MIME encryption is enabled or not."
 msgstr "Define si el cifrado S/MIME está o no habilitado."
 
-#: db/seeds/settings.rb:2965
+#: db/seeds/settings.rb:2978
 msgid "Defines if a customer can create tickets via the web interface."
 msgstr "Define si un cliente puede crear tickets vía web."
 
@@ -6003,7 +6003,7 @@ msgstr "Define si la aplicación está en modo de inicialización."
 msgid "Defines if application is used as online service."
 msgstr "Define si la aplicación se está usando como servicio conectado."
 
-#: db/seeds/settings.rb:5842
+#: db/seeds/settings.rb:5855
 msgid ""
 "Defines if calendar weeks are shown in the picker of date/datetime fields to "
 "easily select the correct date."
@@ -6011,11 +6011,11 @@ msgstr ""
 "Define si se muestran las semanas en el selector de fecha/hora, para "
 "facilitar la selección de la fecha correcta."
 
-#: db/seeds/settings.rb:5231
+#: db/seeds/settings.rb:5244
 msgid "Defines if generic CTI integration is enabled or not."
 msgstr "Define si la integración con CTI genérico está o no habilitada."
 
-#: db/seeds/settings.rb:5934
+#: db/seeds/settings.rb:5947
 msgid ""
 "Defines if recovery codes can be used by users in the event they lose access "
 "to other two-factor authentication methods."
@@ -6023,29 +6023,29 @@ msgstr ""
 "Define si los códigos de recuperación pueden ser utilizados por los usuarios "
 "en caso de perder su acceso a otros métodos de autenticación de doble factor."
 
-#: db/seeds/settings.rb:5148
+#: db/seeds/settings.rb:5161
 msgid "Defines if sipgate.io (http://www.sipgate.io) is enabled or not."
 msgstr "Define si sipgate.io (http://www.sipgate.io) está o no habilitado."
 
-#: db/seeds/settings.rb:6079
+#: db/seeds/settings.rb:6092
 msgid "Defines if the AI provider is configured."
 msgstr "Define si el proveedor de IA está configurado."
 
-#: db/seeds/settings.rb:5079
+#: db/seeds/settings.rb:5092
 msgid ""
 "Defines if the GitHub (http://www.github.com) integration is enabled or not."
 msgstr ""
 "Define si la integración con GitHub (http://www.github.com) está o no "
 "habilitada."
 
-#: db/seeds/settings.rb:5037
+#: db/seeds/settings.rb:5050
 msgid ""
 "Defines if the GitLab (http://www.gitlab.com) integration is enabled or not."
 msgstr ""
 "Define si la integración con GitLab (http://www.gitlab.com) está o no "
 "habilitada."
 
-#: db/seeds/settings.rb:5777
+#: db/seeds/settings.rb:5790
 msgid "Defines if the PGP recipient alias configuration is enabled or not."
 msgstr ""
 "Define si la configuración de alias de destinatario PGP está activada o no."
@@ -6067,7 +6067,7 @@ msgstr ""
 "la misma contraseña, y el restablecimiento de contraseñas funcionará sin "
 "enviar correos electrónicos)."
 
-#: db/seeds/settings.rb:6187
+#: db/seeds/settings.rb:6200
 msgid ""
 "Defines if the bubble menu feature of the richtext editor is enabled. Note "
 "that this setting will be ignored if the writing assistant is turned on."
@@ -6076,7 +6076,7 @@ msgstr ""
 "habilitada. Tenga en cuenta que esta configuración se ignorará si el "
 "asistente de escritura está activado."
 
-#: db/seeds/settings.rb:5986
+#: db/seeds/settings.rb:5999
 msgid ""
 "Defines if the change of the primary organization of a user will update the "
 "100 most recent tickets for this user as well."
@@ -6104,7 +6104,7 @@ msgstr ""
 "Define si la dirección de correo electrónico debería mostrarse en los "
 "resultados de la herramienta de usuarios/organizaciones."
 
-#: db/seeds/settings.rb:4997
+#: db/seeds/settings.rb:5010
 msgid ""
 "Defines if the i-doit (https://www.i-doit.org/) integration is enabled or "
 "not."
@@ -6112,14 +6112,14 @@ msgstr ""
 "Define si la integración con i-doit (https://www.i-doit.org/) está o no "
 "establecida."
 
-#: db/seeds/settings.rb:2388
+#: db/seeds/settings.rb:2401
 msgid ""
 "Defines if the ticket conditions editor supports complex logical expressions."
 msgstr ""
 "Define si el editor de condiciones del ticket permite expresiones lógicas "
 "complejas."
 
-#: db/seeds/settings.rb:2414
+#: db/seeds/settings.rb:2427
 msgid ""
 "Defines if the ticket conditions editor supports regular expression "
 "operators for triggers and ticket auto assignment."
@@ -6127,11 +6127,11 @@ msgstr ""
 "Define si el editor de condiciones de ticket admite operadores de "
 "expresiones regulares para disparadores y autoasignación de tickets."
 
-#: db/seeds/settings.rb:4146
+#: db/seeds/settings.rb:4159
 msgid "Defines if the time accounting types are enabled."
 msgstr "Define si los tipos de contabilidad de tiempo están habilitados."
 
-#: db/seeds/settings.rb:5902
+#: db/seeds/settings.rb:5915
 msgid ""
 "Defines if the two-factor authentication method authenticator app is enabled "
 "or not."
@@ -6139,7 +6139,7 @@ msgstr ""
 "Define si la aplicación de autenticación del método de autenticación de "
 "doble factor está habilitada o no."
 
-#: db/seeds/settings.rb:5870
+#: db/seeds/settings.rb:5883
 msgid ""
 "Defines if the two-factor authentication method security keys is enabled or "
 "not."
@@ -6147,21 +6147,21 @@ msgstr ""
 "Define si el uso de llaves de seguridad como método de doble factor de "
 "autenticación está o no habilitado."
 
-#: db/seeds/settings.rb:3046
+#: db/seeds/settings.rb:3059
 msgid "Defines if tickets can be created via web form."
 msgstr "Define si se pueden crear tickets desde un formulario web."
 
-#: db/seeds/settings.rb:4536
+#: db/seeds/settings.rb:4549
 msgid "Defines if tickets should be closed if service is recovered."
 msgstr "Define si los tickets deben cerrarse si se recupera el servicio."
 
-#: db/seeds/settings.rb:4388
+#: db/seeds/settings.rb:4401
 msgid "Defines postmaster filter for filters managed via admin interface."
 msgstr ""
 "Define el filtro del postmaster para filtros gestionados a través de la "
 "interfaz de administración."
 
-#: db/seeds/settings.rb:4298
+#: db/seeds/settings.rb:4311
 msgid ""
 "Defines postmaster filter to check if email has been created by Zammad "
 "itself and will set the article sender."
@@ -6169,7 +6169,7 @@ msgstr ""
 "Define el filtro de postmaster para comprobar si el mensaje se ha creado por "
 "Zammad y si establecerá el remitente del artículo."
 
-#: db/seeds/settings.rb:4307
+#: db/seeds/settings.rb:4320
 msgid ""
 "Defines postmaster filter to check if the email is a self-created "
 "notification email, then ignore it to prevent email loops."
@@ -6178,18 +6178,18 @@ msgstr ""
 "notificación creada automáticamente, para ignorarlo con el fin de evitar "
 "envíos recursivos."
 
-#: db/seeds/settings.rb:4334
+#: db/seeds/settings.rb:4347
 msgid "Defines postmaster filter to handle secure mailing."
 msgstr "Define el filtro de postmaster para la gestión de correo seguro."
 
-#: db/seeds/settings.rb:4451
+#: db/seeds/settings.rb:4464
 msgid ""
 "Defines postmaster filter to identify Jira mails for correct follow-ups."
 msgstr ""
 "Define el filtro de postmaster para identificar correos de Jira, para "
 "gestionar correctamente su seguimiento."
 
-#: db/seeds/settings.rb:4433
+#: db/seeds/settings.rb:4446
 msgid ""
 "Defines postmaster filter to identify ServiceNow mails for correct follow-"
 "ups."
@@ -6197,7 +6197,7 @@ msgstr ""
 "Define el filtro de postmaster para identificar correos de ServiceNow, para "
 "gestionar correctamente su seguimiento."
 
-#: db/seeds/settings.rb:4244
+#: db/seeds/settings.rb:4257
 msgid ""
 "Defines postmaster filter to identify auto responses to prevent auto replies "
 "from Zammad."
@@ -6205,21 +6205,21 @@ msgstr ""
 "Define el filtro de postmaster para identificar respuestas automáticas, con "
 "el fin de evitar respuestas automáticas desde Zammad."
 
-#: db/seeds/settings.rb:4262
+#: db/seeds/settings.rb:4275
 msgid ""
 "Defines postmaster filter to identify follow-up ticket for merged tickets."
 msgstr ""
 "Define el filtro de postmaster para identificar el ticket de seguimiento "
 "para tickets fusionados."
 
-#: db/seeds/settings.rb:4253
+#: db/seeds/settings.rb:4266
 msgid ""
 "Defines postmaster filter to identify follow-ups (based on admin settings)."
 msgstr ""
 "Define el filtro de postmaster para identificar mensajes de seguimiento "
 "(basado en configuración administrativa)."
 
-#: db/seeds/settings.rb:4343
+#: db/seeds/settings.rb:4356
 msgid ""
 "Defines postmaster filter to identify out-of-office emails for follow-up "
 "detection and keeping current ticket state."
@@ -6228,7 +6228,7 @@ msgstr ""
 "de oficina\", con el fin de gestionar correctamente el seguimiento y "
 "conservar el estado del ticket."
 
-#: db/seeds/settings.rb:4370
+#: db/seeds/settings.rb:4383
 msgid ""
 "Defines postmaster filter to identify postmaster bounces; and disables "
 "sending notification if delivery fails permanently."
@@ -6237,7 +6237,7 @@ msgstr ""
 "deshabilitar notificaciones de envío, si la entrega es fallida con carácter "
 "permanente."
 
-#: db/seeds/settings.rb:4361
+#: db/seeds/settings.rb:4374
 #, fuzzy
 #| msgid ""
 #| "Defines postmaster filter to identify postmaster bounces; and handles "
@@ -6249,7 +6249,7 @@ msgstr ""
 "Define el filtro de postmaster para identificar rechazos de mensaje, y "
 "gestionarlos como seguimiento del ticket de origen"
 
-#: db/seeds/settings.rb:4379
+#: db/seeds/settings.rb:4392
 msgid ""
 "Defines postmaster filter to identify postmaster bounces; and reopens "
 "tickets if delivery fails permanently."
@@ -6257,25 +6257,25 @@ msgstr ""
 "Define el filtro de postmaster para identificar rechazos de mensaje, y "
 "reabrir tickets si su entrega es fallida con carácter permanente."
 
-#: db/seeds/settings.rb:4325
+#: db/seeds/settings.rb:4338
 msgid "Defines postmaster filter to identify sender user."
 msgstr ""
 "Define el filtro de postmaster para identificar el usuario que remite el "
 "mensaje."
 
-#: db/seeds/settings.rb:4316
+#: db/seeds/settings.rb:4329
 msgid "Defines postmaster filter to identify session user."
 msgstr ""
 "Define el filtro del administrador de correo para identificar al usuario de "
 "la sesión."
 
-#: db/seeds/settings.rb:4478
+#: db/seeds/settings.rb:4491
 msgid "Defines postmaster filter to identify ticket group."
 msgstr ""
 "Define el filtro del postmaster de correo para identificar el grupo de "
 "tickets."
 
-#: db/seeds/settings.rb:4415
+#: db/seeds/settings.rb:4428
 msgid ""
 "Defines postmaster filter to manage Checkmk (http://mathias-kettner.com/"
 "check_mk.html) emails."
@@ -6283,28 +6283,28 @@ msgstr ""
 "Define el filtro del postmaster de correo para gestionar los correos "
 "electrónicos de Checkmk (http://mathias-kettner.com/check_mk.html)."
 
-#: db/seeds/settings.rb:4397
+#: db/seeds/settings.rb:4410
 msgid ""
 "Defines postmaster filter to manage Icinga (http://www.icinga.org) emails."
 msgstr ""
 "Define el filtro de postmaster para gestionar mensajes de Icinga (http://"
 "www.icinga.org)."
 
-#: db/seeds/settings.rb:4424
+#: db/seeds/settings.rb:4437
 msgid ""
 "Defines postmaster filter to manage Monit (https://mmonit.com/monit/) emails."
 msgstr ""
 "Define el filtro de postmaster para gestionar mensajes de Monit (https://"
 "mmonit.com/monit/)."
 
-#: db/seeds/settings.rb:4406
+#: db/seeds/settings.rb:4419
 msgid ""
 "Defines postmaster filter to manage Nagios (http://www.nagios.org) emails."
 msgstr ""
 "Define el filtro de postmaster para gestionar mensajes de Nagios (http://"
 "www.nagios.org)."
 
-#: db/seeds/settings.rb:4235
+#: db/seeds/settings.rb:4248
 msgid ""
 "Defines postmaster filter to remove X-Zammad headers from untrustworthy "
 "sources."
@@ -6312,7 +6312,7 @@ msgstr ""
 "Define el filtro de postmaster para eliminar cabeceras X-Zammad de orígenes "
 "no fiables."
 
-#: db/seeds/settings.rb:4271
+#: db/seeds/settings.rb:4284
 msgid ""
 "Defines postmaster filter to set the owner (based on group follow up "
 "assignment)."
@@ -6320,7 +6320,7 @@ msgstr ""
 "Define el filtro de postmaster para establecer el propietario (basado en la "
 "asignación de seguimiento de grupos)."
 
-#: db/seeds/settings.rb:4280
+#: db/seeds/settings.rb:4293
 msgid ""
 "Defines postmaster filter to set the sender/from of emails based on reply-to "
 "header."
@@ -6328,7 +6328,7 @@ msgstr ""
 "Define el filtro de postmaster para establecer el origen/\"desde\" de los "
 "mensajes, basándose en la cabecera reply-to."
 
-#: db/seeds/settings.rb:4469
+#: db/seeds/settings.rb:4482
 msgid ""
 "Defines postmaster filter which sets the articles visibility to internal if "
 "it is a rely to an internal article or the last outgoing email is internal."
@@ -6337,7 +6337,7 @@ msgstr ""
 "a \"interno\" si es una respuesta a un artículo interno o el último mensaje "
 "saliente es interno."
 
-#: db/seeds/settings.rb:4232
+#: db/seeds/settings.rb:4245
 msgid "Defines postmaster filter."
 msgstr "Define un filtro de postmaster."
 
@@ -6345,37 +6345,37 @@ msgstr "Define un filtro de postmaster."
 msgid "Defines pretty date format."
 msgstr "Define un formato de fecha estético."
 
-#: db/seeds/settings.rb:5459
+#: db/seeds/settings.rb:5472
 msgid "Defines processing timeout for the html sanitizer."
 msgstr "Define el tiempo de espera máximo para el limpiador HTML."
 
-#: db/seeds/settings.rb:5118
+#: db/seeds/settings.rb:5131
 msgid "Defines sync transaction backend."
 msgstr "Define el back-end de sincronización de transacciones."
 
-#: db/seeds/settings.rb:5447
+#: db/seeds/settings.rb:5460
 msgid "Defines the CSS font information for HTML emails."
 msgstr ""
 "Define los estilos CSS de fuentes tipográficas, para mensajes de correo en "
 "formato HTML."
 
-#: db/seeds/settings.rb:5259
+#: db/seeds/settings.rb:5272
 msgid "Defines the CTI config."
 msgstr "Define la configuración de CTI."
 
-#: db/seeds/settings.rb:4804
+#: db/seeds/settings.rb:4817
 msgid "Defines the Checkmk token for allowing updates."
 msgstr "Define el «token» Checkmk para actualizaciones."
 
-#: db/seeds/settings.rb:5395
+#: db/seeds/settings.rb:5408
 msgid "Defines the Clearbit config."
 msgstr "Define la configuración de Clearbit."
 
-#: db/seeds/settings.rb:4957
+#: db/seeds/settings.rb:4970
 msgid "Defines the Exchange OAuth config."
 msgstr "Define la configuración de OAuth para Exchange."
 
-#: db/seeds/settings.rb:4944
+#: db/seeds/settings.rb:4957
 msgid "Defines the Exchange config."
 msgstr "Define la configuración de Exchange."
 
@@ -6383,19 +6383,19 @@ msgstr "Define la configuración de Exchange."
 msgid "Defines the HTTP protocol of your instance."
 msgstr "Define el protocolo HTTP de su instancia."
 
-#: db/seeds/settings.rb:5763
+#: db/seeds/settings.rb:5776
 msgid "Defines the PGP config."
 msgstr "Define la configuración PGP."
 
-#: db/seeds/settings.rb:5334
+#: db/seeds/settings.rb:5347
 msgid "Defines the Placetel config."
 msgstr "Define la configuración de Placetel."
 
-#: db/seeds/settings.rb:5721
+#: db/seeds/settings.rb:5734
 msgid "Defines the S/MIME config."
 msgstr "Define la configuración de S/MIME."
 
-#: db/seeds/settings.rb:5436
+#: db/seeds/settings.rb:5449
 msgid "Defines the agent limit."
 msgstr "Define el límite de agentes."
 
@@ -6435,7 +6435,7 @@ msgstr ""
 "Define el servicio backend para la detección del idioma de los artículos de "
 "los tickets."
 
-#: db/seeds/settings.rb:2901
+#: db/seeds/settings.rb:2914
 msgid ""
 "Defines the configuration how many articles can be created in a minute range "
 "globally."
@@ -6443,7 +6443,7 @@ msgstr ""
 "Define la configuración de cuántos artículos se pueden crear en un rango de "
 "minutos de forma global."
 
-#: db/seeds/settings.rb:2882
+#: db/seeds/settings.rb:2895
 msgid ""
 "Defines the configuration how many articles can be created in a minute range "
 "per ticket."
@@ -6451,19 +6451,19 @@ msgstr ""
 "Define la configuración de cuántos artículos se pueden crear en un rango de "
 "minutos por ticket."
 
-#: db/seeds/settings.rb:4128
+#: db/seeds/settings.rb:4141
 msgid ""
 "Defines the custom unit to be shown next to the time accounting input field."
 msgstr ""
 "Define la unidad personalizada que se mostrará junto al campo de entrada de "
 "la contabilidad de tiempos."
 
-#: db/seeds/settings.rb:4209
+#: db/seeds/settings.rb:4222
 msgid "Defines the default calendar tickets subscription settings."
 msgstr ""
 "Define los ajustes de suscripción por defecto de tickets de calendario."
 
-#: db/seeds/settings.rb:3630
+#: db/seeds/settings.rb:3643
 msgid "Defines the default screen."
 msgstr "Define la pantalla por defecto."
 
@@ -6475,7 +6475,7 @@ msgstr "Define el idioma predeterminado del sistema."
 msgid "Defines the default system timezone."
 msgstr "Define el huso horario por defecto del sistema."
 
-#: db/seeds/settings.rb:4164
+#: db/seeds/settings.rb:4177
 msgid "Defines the default time accounting type."
 msgstr "Define el tipo de contabilidad horaria predeterminada."
 
@@ -6483,7 +6483,7 @@ msgstr "Define el tipo de contabilidad horaria predeterminada."
 msgid "Defines the default visibility for new notes."
 msgstr "Visibilidad por defecto para nuevas notas."
 
-#: db/seeds/settings.rb:5293
+#: db/seeds/settings.rb:5306
 msgid ""
 "Defines the duration of customer activity (in seconds) on a call until the "
 "user profile dialog is shown."
@@ -6491,7 +6491,7 @@ msgstr ""
 "Define la duración de la actividad del cliente (en segundos) en una llamada "
 "antes de mostrar el diálogo de perfil de usuario."
 
-#: db/seeds/settings.rb:6159
+#: db/seeds/settings.rb:6172
 msgid ""
 "Defines the fixed instructions that guide the AI Writing Assistant on e.g. "
 "how to format its output."
@@ -6510,19 +6510,19 @@ msgstr ""
 "formas de mensajería utilizadas por la aplicación, con el fin de construir "
 "enlaces a los tickets que se encuentran en el sistema."
 
-#: db/seeds/settings.rb:4732
+#: db/seeds/settings.rb:4745
 msgid "Defines the group of created tickets."
 msgstr "Define el grupo de tickets creados."
 
-#: db/seeds/settings.rb:3080
+#: db/seeds/settings.rb:3093
 msgid "Defines the group of tickets created via web form."
 msgstr "Define el grupo de tickets creados mediante formulario web."
 
-#: db/seeds/settings.rb:5024
+#: db/seeds/settings.rb:5037
 msgid "Defines the i-doit config."
 msgstr "Define la configuración de i-doit."
 
-#: db/seeds/settings.rb:4030
+#: db/seeds/settings.rb:4043
 msgid "Defines the log levels for various logging actions of the Sequencer."
 msgstr ""
 "Define los niveles de registro para diversas acciones de registro del "
@@ -6533,7 +6533,7 @@ msgid "Defines the logo of the application, shown in the web interface."
 msgstr ""
 "Define el logotipo de la aplicación, que se muestra en la interfaz web."
 
-#: db/seeds/settings.rb:3291
+#: db/seeds/settings.rb:3304
 msgid "Defines the maximum accepted email size in MB."
 msgstr ""
 "Define el tamaño máximo de mensaje de correo electrónico que se aceptará (en "
@@ -6555,7 +6555,7 @@ msgstr ""
 "Define el nombre de la aplicación, que se muestra en la interfaz web, en las "
 "pestañas y la barra de título del navegador web."
 
-#: db/seeds/settings.rb:2795
+#: db/seeds/settings.rb:2808
 msgid "Defines the permission level used for lookups."
 msgstr "Define el nivel de permiso empleado para búsquedas."
 
@@ -6569,28 +6569,28 @@ msgstr "Define el puerto del servidor de «websockets»."
 msgid "Defines the random application secret."
 msgstr "Define la clave secreta de la aplicación (aleatoria)."
 
-#: db/seeds/settings.rb:4513
+#: db/seeds/settings.rb:4526
 msgid "Defines the sender email address of Icinga emails."
 msgstr ""
 "Define la dirección de correo electrónico de origen remitente de mensajes de "
 "Icinga."
 
-#: db/seeds/settings.rb:4611
+#: db/seeds/settings.rb:4624
 msgid "Defines the sender email address of Nagios emails."
 msgstr ""
 "Define la dirección de correo electrónico de origen de mensajes de Nagios."
 
-#: db/seeds/settings.rb:4709
+#: db/seeds/settings.rb:4722
 msgid "Defines the sender email address of the service emails."
 msgstr ""
 "Define la dirección de correo electrónico del remitente de los correos "
 "electrónicos de servicio."
 
-#: db/seeds/settings.rb:3451
+#: db/seeds/settings.rb:3464
 msgid "Defines the sender of email notifications."
 msgstr "Define el remitente de las notificaciones por correo electrónico."
 
-#: db/seeds/settings.rb:3269
+#: db/seeds/settings.rb:3282
 msgid ""
 "Defines the separator between the agent's real name and the given group "
 "email address."
@@ -6607,11 +6607,11 @@ msgstr ""
 "los permisos asignados, se utilizará el valor de tiempo de espera más alto; "
 "de lo contrario se usara el valor predeterminado."
 
-#: db/seeds/settings.rb:5197
+#: db/seeds/settings.rb:5210
 msgid "Defines the sipgate.io config."
 msgstr "Define la configuración de sipgate.io."
 
-#: db/seeds/settings.rb:4562
+#: db/seeds/settings.rb:4575
 msgid "Defines the state of auto-closed tickets."
 msgstr "Define el estado de los tickets cerrados automáticamente."
 
@@ -6626,42 +6626,42 @@ msgstr ""
 "procesarán como seguimientos (útil cuando se comunica entre dos instancias "
 "de Zammad)."
 
-#: db/seeds/settings.rb:3017
+#: db/seeds/settings.rb:3030
 msgid "Defines the tab behaviour after a ticket action."
 msgstr ""
 "Define el comportamiento de la pestaña después de una acción del ticket."
 
-#: db/seeds/settings.rb:2812
+#: db/seeds/settings.rb:2825
 msgid "Defines the ticket states used for lookups."
 msgstr "Define los estados de casos empleados para las búsquedas."
 
-#: db/seeds/settings.rb:5592
+#: db/seeds/settings.rb:5605
 msgid "Defines the timeframe during which a self-created note can be deleted."
 msgstr ""
 "Define el espacio temporal durante el que el usuario puede eliminar sus "
 "propias notas."
 
-#: db/seeds/settings.rb:5348
+#: db/seeds/settings.rb:5361
 msgid "Defines the token for Placetel."
 msgstr "Define el «token» para Placetel."
 
-#: db/seeds/settings.rb:5139
+#: db/seeds/settings.rb:5152
 msgid ""
 "Defines the transaction backend to detect customer signatures in emails."
 msgstr ""
 "Define el back-end de transacciones para la detección de firmas de cliente "
 "en mensajes de correo electrónico."
 
-#: db/seeds/settings.rb:5121
+#: db/seeds/settings.rb:5134
 msgid "Defines the transaction backend to execute triggers."
 msgstr "Define el back-end de transacciones para ejecutar disparadores."
 
-#: db/seeds/settings.rb:5130
+#: db/seeds/settings.rb:5143
 msgid "Defines the transaction backend to send agent notifications."
 msgstr ""
 "Define el back-end de transacciones para enviar notificaciones a los agentes."
 
-#: db/seeds/settings.rb:5417
+#: db/seeds/settings.rb:5430
 msgid ""
 "Defines the transaction backend which detects caller IDs in objects and "
 "stores them for CTI lookups."
@@ -6669,12 +6669,12 @@ msgstr ""
 "Define el back-end de transacciones que detecta identificaciones de llamada "
 "(«caller ID») y los almacena para búsquedas de CTI."
 
-#: db/seeds/settings.rb:5426
+#: db/seeds/settings.rb:5439
 msgid "Defines the transaction backend which executes time based triggers."
 msgstr ""
 "Define el back-end de transacciones para ejecutar disparadores de tiempo."
 
-#: db/seeds/settings.rb:5408
+#: db/seeds/settings.rb:5421
 msgid ""
 "Defines the transaction backend which will enrich customer and organization "
 "information from Clearbit (http://www.clearbit.com)."
@@ -6683,53 +6683,53 @@ msgstr ""
 "clientes y organizaciones de Clearbit (http://www.clearbit.com)."
 
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco:14
-#: db/seeds/settings.rb:4110
+#: db/seeds/settings.rb:4123
 msgid "Defines the unit to be shown next to the time accounting input field."
 msgstr ""
 "Define la unidad que se mostrará junto al campo de entrada de la "
 "contabilidad horaria."
 
-#: db/seeds/settings.rb:2744
+#: db/seeds/settings.rb:2757
 msgid ""
 "Defines the warning message that is shown when a matching ticket is present."
 msgstr ""
 "Define el mensaje de aviso que se muestra cuando se presenta un caso que "
 "coincide."
 
-#: db/seeds/settings.rb:2727
+#: db/seeds/settings.rb:2740
 msgid ""
 "Defines the warning title that is shown when a matching ticket is present."
 msgstr ""
 "Define el título del aviso que se muestra cuando se presenta un caso que "
 "coincide."
 
-#: db/seeds/settings.rb:5127
+#: db/seeds/settings.rb:5140
 msgid "Defines transaction backend."
 msgstr "Define el back-end de transacciones."
 
-#: db/seeds/settings.rb:2778
+#: db/seeds/settings.rb:2791
 msgid ""
 "Defines whether the matching tickets are shown in case of already existing "
 "tickets."
 msgstr ""
 "Define si los casos que coinciden se muestran, en casos que ya existen."
 
-#: db/seeds/settings.rb:3167
+#: db/seeds/settings.rb:3180
 msgid "Defines which parameters are allowed to be submitted via the form API."
 msgstr "Define los parámetros que se pueden enviar por la API de formulario."
 
-#: db/seeds/settings.rb:6070
+#: db/seeds/settings.rb:6083
 #, fuzzy
 #| msgid ""
 #| "Defines which roles are allowed to access the desktop UI beta switch."
 msgid "Defines which roles are allowed to access the desktop BETA UI switch."
 msgstr "Define los roles que pueden acceder al botón de IU BETA de escritorio."
 
-#: db/seeds/settings.rb:2710
+#: db/seeds/settings.rb:2723
 msgid "Defines which ticket attributes are checked before creating a ticket."
 msgstr "Define qué atributos del caso se verifican antes de crear un caso."
 
-#: db/seeds/settings.rb:2761
+#: db/seeds/settings.rb:2774
 msgid ""
 "Defines which user roles will receive a warning in case of matching tickets."
 msgstr ""
@@ -7002,19 +7002,19 @@ msgstr "Diseñador"
 msgid "Desktop"
 msgstr "Escritorio"
 
-#: db/seeds/settings.rb:6049
+#: db/seeds/settings.rb:6062
 #, fuzzy
 #| msgid "New BETA UI Switch"
 msgid "Desktop BETA UI Switch"
 msgstr "Botón de nueva IU BETA"
 
-#: db/seeds/settings.rb:6058
+#: db/seeds/settings.rb:6071
 #, fuzzy
 #| msgid "UI Desktop BETA Switch Admin Menu"
 msgid "Desktop BETA UI Switch Admin Menu"
 msgstr "Menú de gestión del botón de la IU de escritorio BETA"
 
-#: db/seeds/settings.rb:6067
+#: db/seeds/settings.rb:6080
 #, fuzzy
 #| msgid "UI Desktop BETA Switch Roles"
 msgid "Desktop BETA UI Switch Roles"
@@ -7049,7 +7049,7 @@ msgid "Destination group > Sending email address"
 msgstr "Grupo de destino > Dirección de correo electrónico de envío"
 
 #: app/assets/javascripts/app/views/settings/ticket_duplicate_detection.jst.eco:7
-#: db/seeds/settings.rb:2681
+#: db/seeds/settings.rb:2694
 msgid "Detect Duplicate Ticket Creation"
 msgstr "Detectar creación de casos duplicados"
 
@@ -7135,7 +7135,7 @@ msgstr ""
 "¿Ha comprobado que el usuario tiene acceso al buzón? O considere eliminar "
 "este canal y cambiar a un tipo de buzón diferente. %l"
 
-#: db/seeds/settings.rb:2187
+#: db/seeds/settings.rb:2200
 msgid "Digit required"
 msgstr "Dígito requerido"
 
@@ -7259,7 +7259,7 @@ msgid "Display Zammad with the new BETA user interface"
 msgstr "Mostrar Zammad con la nueva interfaz de usuario BETA"
 
 #: app/assets/javascripts/app/models/email_address.coffee:32
-#: db/seeds/settings.rb:1895
+#: db/seeds/settings.rb:1908
 msgid "Display name"
 msgstr "Nombre para mostrar"
 
@@ -7281,7 +7281,7 @@ msgstr "No cifrar mensajes de correo electrónico"
 msgid "Do not sign email"
 msgstr "No firmar mensajes de correo electrónico"
 
-#: db/seeds/settings.rb:5996
+#: db/seeds/settings.rb:6009
 msgid "Do not update any tickets."
 msgstr "No actualice ningún ticket."
 
@@ -7626,47 +7626,47 @@ msgstr "Editar cliente"
 msgid "Editor"
 msgstr "Editor"
 
-#: db/seeds/settings.rb:3727
+#: db/seeds/settings.rb:3740
 msgid "Elasticsearch Asciifolding Configuration"
 msgstr "Configuración de Asciifolding en Elasticsearch"
 
-#: db/seeds/settings.rb:3682
+#: db/seeds/settings.rb:3695
 msgid "Elasticsearch Attachment Extensions"
 msgstr "Extensiones de adjuntos de Elasticsearch"
 
-#: db/seeds/settings.rb:3691
+#: db/seeds/settings.rb:3704
 msgid "Elasticsearch Attachment Size"
 msgstr "Tamaño de adjuntos de Elasticsearch"
 
-#: db/seeds/settings.rb:3664
+#: db/seeds/settings.rb:3677
 msgid "Elasticsearch Endpoint Index"
 msgstr "Índice de endpoint de Elasticsearch"
 
-#: db/seeds/settings.rb:3655
+#: db/seeds/settings.rb:3668
 msgid "Elasticsearch Endpoint Password"
 msgstr "Contraseña de endpoint de Elasticsearch"
 
-#: db/seeds/settings.rb:3637
+#: db/seeds/settings.rb:3650
 msgid "Elasticsearch Endpoint URL"
 msgstr "URL de endpoint de Elasticsearch"
 
-#: db/seeds/settings.rb:3646
+#: db/seeds/settings.rb:3659
 msgid "Elasticsearch Endpoint User"
 msgstr "Usuario de endpoint de Elasticsearch"
 
-#: db/seeds/settings.rb:3718
+#: db/seeds/settings.rb:3731
 msgid "Elasticsearch Model Configuration"
 msgstr "Configuración del modelo Elasticsearch"
 
-#: db/seeds/settings.rb:3709
+#: db/seeds/settings.rb:3722
 msgid "Elasticsearch Pipeline Name"
 msgstr "Nombre del pipeline de Elasticsearch"
 
-#: db/seeds/settings.rb:3673
+#: db/seeds/settings.rb:3686
 msgid "Elasticsearch SSL verification"
 msgstr "Verificación SSL de Elasticsearch"
 
-#: db/seeds/settings.rb:3700
+#: db/seeds/settings.rb:3713
 msgid "Elasticsearch Total Payload Size"
 msgstr "Tamaño total de carga útil de Elasticsearch"
 
@@ -7886,11 +7886,11 @@ msgstr "Resumen vacío"
 msgid "Enable"
 msgstr "Activar"
 
-#: db/seeds/settings.rb:3578
+#: db/seeds/settings.rb:3591
 msgid "Enable Chat"
 msgstr "Activar Chat"
 
-#: app/assets/javascripts/app/views/api.jst.eco:33 db/seeds/settings.rb:3533
+#: app/assets/javascripts/app/views/api.jst.eco:33 db/seeds/settings.rb:3546
 msgid ""
 "Enable REST API access using the username/email address and password for the "
 "authentication user."
@@ -7907,7 +7907,7 @@ msgstr ""
 "correo y contraseña). Todos los usuarios deberán crear sus propios tokens de "
 "acceso en su perfil del usuario."
 
-#: db/seeds/settings.rb:3508
+#: db/seeds/settings.rb:3521
 msgid ""
 "Enable REST API using tokens (not username/email address and password). Each "
 "user needs to create its own access tokens in user profile."
@@ -7916,11 +7916,11 @@ msgstr ""
 "y contraseña). Cada usuario deberá crear sus propios tokens de acceso en su "
 "perfil."
 
-#: db/seeds/settings.rb:5931
+#: db/seeds/settings.rb:5944
 msgid "Enable Recovery Codes"
 msgstr "Habilitar códigos de recuperación"
 
-#: db/seeds/settings.rb:2962
+#: db/seeds/settings.rb:2975
 msgid "Enable Ticket creation"
 msgstr "Habilitar creación de Ticket"
 
@@ -7932,7 +7932,7 @@ msgstr ""
 "Habilitar la selección del tipo de actividad. Esto permitiría a los agentes "
 "seleccionar uno de los tipos siguientes al añadir tiempo contabilizado."
 
-#: db/seeds/settings.rb:2582
+#: db/seeds/settings.rb:2595
 msgid "Enable auto assignment for following matching tickets."
 msgstr "Habilitar asignación automática para futuros tickets coincidentes."
 
@@ -7941,7 +7941,7 @@ msgid "Enable automatic assignment the first time an agent opens a ticket."
 msgstr ""
 "Habilitar asignación automática la primera vez que un agente abra un ticket."
 
-#: db/seeds/settings.rb:6014
+#: db/seeds/settings.rb:6027
 msgid "Enable checklists."
 msgstr "Habilitar listas de comprobación."
 
@@ -7969,13 +7969,13 @@ msgstr ""
 "desea citar una determinada frase, simplemente marque el texto y presione "
 "responder (esta característica siempre está disponible)."
 
-#: db/seeds/settings.rb:6173
+#: db/seeds/settings.rb:6186
 msgid ""
 "Enable or disable AI generation of knowledge base answers from ticket "
 "content."
 msgstr ""
 
-#: db/seeds/settings.rb:6041
+#: db/seeds/settings.rb:6054
 msgid ""
 "Enable or disable self-shutdown of Zammad processes after significant "
 "configuration changes. This should only be used if the controlling process "
@@ -8006,13 +8006,13 @@ msgstr ""
 "habilitado, se desconectará a todos los usuarios no administradores, y "
 "solamente los usuarios administradores podrán iniciar sesión."
 
-#: db/seeds/settings.rb:6112
+#: db/seeds/settings.rb:6125
 #, fuzzy
 #| msgid "Enable or disable the AI assistance ticket summary."
 msgid "Enable or disable the ticket summary."
 msgstr "Habilitar o deshabilitar el resumen de tickets de asistencia de IA."
 
-#: db/seeds/settings.rb:6145
+#: db/seeds/settings.rb:6158
 #, fuzzy
 #| msgid "Enable or disable the AI assistance text tools."
 msgid "Enable or disable the writing assistant text tools."
@@ -8022,11 +8022,11 @@ msgstr "Activar o desactivar las herramientas de texto de asistencia de IA."
 msgid "Enable the banner for the BETA switch"
 msgstr "Habilitar el banner para el interruptor BETA"
 
-#: db/seeds/settings.rb:2556
+#: db/seeds/settings.rb:2569
 msgid "Enable ticket auto assignment."
 msgstr "Habilita la asignación automática de tickets."
 
-#: db/seeds/settings.rb:4065
+#: db/seeds/settings.rb:4078
 msgid "Enable time accounting."
 msgstr "Habilitar el control de tiempo."
 
@@ -8034,7 +8034,7 @@ msgstr "Habilitar el control de tiempo."
 msgid "Enable/disable inline translations"
 msgstr "Habilitar/deshabilitar traducciones linea por linea"
 
-#: db/seeds/settings.rb:3581
+#: db/seeds/settings.rb:3594
 msgid "Enable/disable online chat."
 msgstr "Habilitar/deshabilitar chat."
 
@@ -8047,7 +8047,7 @@ msgid "Enables a sidebar to show an overview of all attachments."
 msgstr "Habilita una barra lateral con un resumen de todos los adjuntos."
 
 #: app/assets/javascripts/app/views/settings/ticket_duplicate_detection.jst.eco:12
-#: db/seeds/settings.rb:2684
+#: db/seeds/settings.rb:2697
 msgid ""
 "Enables a warning to users during ticket creation if there is an existing "
 "ticket with the same attributes."
@@ -8055,7 +8055,7 @@ msgstr ""
 "Habilita un aviso a los usuarios durante la creación del caso si hay un caso "
 "que ya existe con los mismos atributos."
 
-#: db/seeds/settings.rb:5788
+#: db/seeds/settings.rb:5801
 msgid ""
 "Enables button for user authentication via %s. The button will redirect to /"
 "auth/sso on user interaction. Configure trusted proxy IP addresses or CIDR "
@@ -8129,15 +8129,15 @@ msgstr "Habilita la autenticación del usuario mediante Linkedin."
 msgid "Enables user authentication via Microsoft 365."
 msgstr "Habilita la autenticación del usuario mediante Microsoft 365."
 
-#: db/seeds/settings.rb:2049
+#: db/seeds/settings.rb:2062
 msgid "Enables user authentication via OpenID Connect."
 msgstr "Permite la autenticación de usuarios a través de OpenID Connect."
 
-#: db/seeds/settings.rb:1891
+#: db/seeds/settings.rb:1904
 msgid "Enables user authentication via SAML."
 msgstr "Habilita la autenticación del usuario mediante SAML."
 
-#: db/seeds/settings.rb:1827
+#: db/seeds/settings.rb:1840
 msgid "Enables user authentication via Weibo."
 msgstr "Habilita la autenticación del usuario mediante Weibo."
 
@@ -8224,11 +8224,11 @@ msgstr "Endpoint"
 msgid "Endpoint Settings"
 msgstr "Ajustes de endpoint"
 
-#: db/seeds/settings.rb:5958
+#: db/seeds/settings.rb:5971
 msgid "Enforce the setup of the two-factor authentication"
 msgstr "Imponer la configuración de la autenticación de dos factores"
 
-#: db/seeds/settings.rb:5965
+#: db/seeds/settings.rb:5978
 msgid "Enforced for user roles"
 msgstr "Obligatorio para los roles de usuario"
 
@@ -8457,7 +8457,7 @@ msgstr ""
 "Error al obtener la información de i-doit. Póngase en contacto con su "
 "administrador."
 
-#: lib/secure_mailing/smime/incoming.rb:99
+#: lib/secure_mailing/smime/incoming.rb:107
 #, fuzzy
 #| msgid ""
 #| "Error fetching i-doit information. Please contact your administrator."
@@ -8686,15 +8686,15 @@ msgstr "Usuarios exentos"
 msgid "Exchange"
 msgstr "Exchange"
 
-#: db/seeds/settings.rb:4954
+#: db/seeds/settings.rb:4967
 msgid "Exchange OAuth"
 msgstr "OAuth de Exchange"
 
-#: db/seeds/settings.rb:4941
+#: db/seeds/settings.rb:4954
 msgid "Exchange config"
 msgstr "Configuración de Exchange"
 
-#: db/seeds/settings.rb:4967
+#: db/seeds/settings.rb:4980
 msgid "Exchange integration"
 msgstr "Integración con Exchange"
 
@@ -8971,7 +8971,7 @@ msgstr "Formulario de Feedback"
 msgid "Feedback Form"
 msgstr "Formulario de Feedback"
 
-#: db/seeds/settings.rb:2081
+#: db/seeds/settings.rb:2094
 #, fuzzy
 #| msgid ""
 #| "Attribute that uniquely identifies the user. If unset, the name "
@@ -9264,7 +9264,7 @@ msgstr "¿Olvidaste tu contraseña?"
 msgid "Form"
 msgstr "Formulario"
 
-#: db/seeds/settings.rb:3164
+#: db/seeds/settings.rb:3177
 msgid "Form Allowed Parameters"
 msgstr "Parámetros permitidos en formulario"
 
@@ -9506,7 +9506,7 @@ msgstr "Comenzar"
 
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/authenticator_app.coffee:6
 #: app/frontend/shared/entities/two-factor/plugins/authenticator-app.ts:10
-#: db/seeds/settings.rb:5923
+#: db/seeds/settings.rb:5936
 msgid "Get the security code from the authenticator app on your device."
 msgstr ""
 "Obtener el código de seguridad de la aplicación de autenticación de doble "
@@ -9538,11 +9538,11 @@ msgstr "Credenciales de aplicación de GitHub"
 msgid "GitHub OAuth Applications"
 msgstr "Aplicaciones de OAuth de GitHub"
 
-#: db/seeds/settings.rb:5103
+#: db/seeds/settings.rb:5116
 msgid "GitHub config"
 msgstr "Configuración de GitHub"
 
-#: db/seeds/settings.rb:5076
+#: db/seeds/settings.rb:5089
 msgid "GitHub integration"
 msgstr "Integración de GitHub"
 
@@ -9573,11 +9573,11 @@ msgstr "Credenciales de aplicación de GitLab"
 msgid "GitLab Applications"
 msgstr "Aplicaciones de GitLab"
 
-#: db/seeds/settings.rb:5061
+#: db/seeds/settings.rb:5074
 msgid "GitLab config"
 msgstr "Configuración de GitLab"
 
-#: db/seeds/settings.rb:5034
+#: db/seeds/settings.rb:5047
 msgid "GitLab integration"
 msgstr "Integración de GitLab"
 
@@ -9727,7 +9727,7 @@ msgstr "Saludo"
 #: app/views/mailer/ticket_create/zh-cn.html.erb:8
 #: app/views/messaging/ticket_create/zh-tw.md.erb:3
 #: app/views/messaging/ticket_info/zh-tw.md.erb:3
-#: db/seeds/object_manager_attributes.rb:168 db/seeds/settings.rb:2989
+#: db/seeds/object_manager_attributes.rb:168 db/seeds/settings.rb:3002
 #: lib/excel_sheet/ticket.rb:27
 msgid "Group"
 msgstr "Grupo"
@@ -9779,11 +9779,11 @@ msgid "Group permissions"
 msgstr "Permisos de grupo"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco:18
-#: db/seeds/settings.rb:2989
+#: db/seeds/settings.rb:3002
 msgid "Group selection for Ticket creation"
 msgstr "Selección de grupo para la creación de Tickets"
 
-#: db/seeds/settings.rb:3077
+#: db/seeds/settings.rb:3090
 msgid "Group selection for ticket creation"
 msgstr "Selección de grupo para la creación de tickets"
 
@@ -9819,11 +9819,11 @@ msgstr "Los grupos son …"
 msgid "HMAC SHA1 Signature Token"
 msgstr "Token de firma HMAC SHA1"
 
-#: db/seeds/settings.rb:5444
+#: db/seeds/settings.rb:5457
 msgid "HTML Email CSS Font"
 msgstr "Fuente CSS en mensaje de correo en formato HTML"
 
-#: db/seeds/settings.rb:5456
+#: db/seeds/settings.rb:5469
 msgid "HTML Sanitizer Processing Timeout"
 msgstr "Tiempo de espera máximo del limpiador de HTML"
 
@@ -10148,12 +10148,12 @@ msgstr ""
 msgid "Highlighting is inactive."
 msgstr "Nombre de la organización"
 
-#: db/seeds/settings.rb:5608
+#: db/seeds/settings.rb:5621
 msgid "Highlights if the note a user is writing is public or private"
 msgstr ""
 "Destaca si la nota que está escribiendo un usuario es pública o privada"
 
-#: db/seeds/settings.rb:5605
+#: db/seeds/settings.rb:5618
 msgid "Hint for adding an article to an existing ticket."
 msgstr "Indicio para añadir un artículo a un ticket existente."
 
@@ -10275,19 +10275,19 @@ msgstr "ID"
 msgid "ID:"
 msgstr "ID:"
 
-#: db/seeds/settings.rb:1902
+#: db/seeds/settings.rb:1915
 msgid "IDP SSO target URL"
 msgstr "URL de destino de IDP SSO"
 
-#: db/seeds/settings.rb:1910
+#: db/seeds/settings.rb:1923
 msgid "IDP Single Logout target URL"
 msgstr "URL de destino de cierre de sesión de IDP"
 
-#: db/seeds/settings.rb:1918
+#: db/seeds/settings.rb:1931
 msgid "IDP certificate"
 msgstr "Certificado de IDP"
 
-#: db/seeds/settings.rb:1926
+#: db/seeds/settings.rb:1939
 msgid "IDP certificate fingerprint"
 msgstr "Huella del certificado IDP"
 
@@ -10299,7 +10299,7 @@ msgstr "IMAP"
 msgid "Icinga"
 msgstr "Icinga"
 
-#: db/seeds/settings.rb:4484
+#: db/seeds/settings.rb:4497
 msgid "Icinga integration"
 msgstr "Integración de Icinga"
 
@@ -10315,7 +10315,7 @@ msgstr "Color de icono y enlace"
 msgid "Icon Set"
 msgstr "Conjunto de iconos"
 
-#: db/seeds/settings.rb:2060 lib/excel_sheet/ai/analytics/errors.rb:24
+#: db/seeds/settings.rb:2073 lib/excel_sheet/ai/analytics/errors.rb:24
 #: lib/excel_sheet/ai/analytics/with_usage.rb:24
 #, fuzzy
 #| msgid "Get notified"
@@ -10326,7 +10326,7 @@ msgstr "Recibir notificaciones"
 msgid "Identifier of the chat topic."
 msgstr "Identificador del asunto de chat."
 
-#: db/seeds/settings.rb:3608
+#: db/seeds/settings.rb:3621
 msgid "Idle timeout in seconds until agent is set offline automatically."
 msgstr ""
 "Tiempo de espera en segundos hasta mostrar automáticamente al agente en "
@@ -10367,7 +10367,7 @@ msgstr ""
 "Si el host y el servicio se recuperan, el ticket se podrá cerrar "
 "automáticamente."
 
-#: db/seeds/settings.rb:3398
+#: db/seeds/settings.rb:3411
 msgid ""
 "If the sender is an agent, set the first user in the recipient list as the "
 "customer."
@@ -10375,7 +10375,7 @@ msgstr ""
 "Si el emisor es un agente, fije como cliente al primer usuario de la lista "
 "de destinatarios."
 
-#: db/seeds/settings.rb:3474
+#: db/seeds/settings.rb:3487
 msgid "If this regex matches, no notification will be sent by the sender."
 msgstr ""
 "Si esta expresión regular coincide, el remitente no enviará ninguna "
@@ -10453,7 +10453,7 @@ msgstr ""
 msgid "Ignore Escalation"
 msgstr "Ignorar la escalada"
 
-#: db/seeds/settings.rb:3768
+#: db/seeds/settings.rb:3781
 msgid "Ignore Escalation/SLA Information"
 msgstr "Ignorar Información de Escalado/SLA"
 
@@ -10461,11 +10461,11 @@ msgstr "Ignorar Información de Escalado/SLA"
 msgid "Ignore Message"
 msgstr "Ignorar mensaje"
 
-#: db/seeds/settings.rb:3771
+#: db/seeds/settings.rb:3784
 msgid "Ignore escalation/SLA information for import."
 msgstr "Ignorar escalado/información de SLA en la importación."
 
-#: db/seeds/settings.rb:2833
+#: db/seeds/settings.rb:2846
 msgid "Ignore system_id"
 msgstr "Ignorar system_id"
 
@@ -10521,51 +10521,51 @@ msgstr "Importar %s"
 msgid "Import API key could not be extracted from URL."
 msgstr "No pudo extraerse la clave API de importación de la URL."
 
-#: db/seeds/settings.rb:3940
+#: db/seeds/settings.rb:3953
 msgid "Import API key for requesting the Freshdesk API"
 msgstr "Importar clave de API para la API de Freshdesk"
 
-#: db/seeds/settings.rb:3884
+#: db/seeds/settings.rb:3897
 msgid "Import API key for requesting the Zendesk API"
 msgstr "Importar clave de API para acceder al API de Zendesk"
 
-#: db/seeds/settings.rb:3759
+#: db/seeds/settings.rb:3772
 msgid "Import Backend"
 msgstr "Backend de importación"
 
-#: db/seeds/settings.rb:4014
+#: db/seeds/settings.rb:4027
 msgid "Import Backends"
 msgstr "Importar backends"
 
-#: db/seeds/settings.rb:3791
+#: db/seeds/settings.rb:3804
 msgid "Import Endpoint"
 msgstr "Importar Endpoint"
 
-#: db/seeds/settings.rb:3809
+#: db/seeds/settings.rb:3822
 msgid "Import Key"
 msgstr "Llave de Importación"
 
-#: db/seeds/settings.rb:3737
+#: db/seeds/settings.rb:3750
 msgid "Import Mode"
 msgstr "Modo de Importación"
 
-#: db/seeds/settings.rb:3847
+#: db/seeds/settings.rb:3860
 msgid "Import Password for HTTP basic authentication"
 msgstr "Importar contraseña para autenticación HTTP básica"
 
-#: db/seeds/settings.rb:3995
+#: db/seeds/settings.rb:4008
 msgid "Import Password for requesting the Kayako API"
 msgstr "Importar contraseña para acceder al API de Kayako"
 
-#: db/seeds/settings.rb:3828
+#: db/seeds/settings.rb:3841
 msgid "Import User for HTTP basic authentication"
 msgstr "Importar usuario para autenticación HTTP básica"
 
-#: db/seeds/settings.rb:3977
+#: db/seeds/settings.rb:3990
 msgid "Import User for requesting the Kayako API"
 msgstr "Importar usuario de solicitud de API de Kayako"
 
-#: db/seeds/settings.rb:3903
+#: db/seeds/settings.rb:3916
 msgid "Import User for requesting the Zendesk API"
 msgstr "Importar usuario de solicitud de API de Zendesk"
 
@@ -10725,7 +10725,7 @@ msgstr "Credenciales incompletas"
 msgid "Incomplete ticket checklist"
 msgstr "Lista de comprobación de ticket incompleto"
 
-#: db/seeds/settings.rb:2452
+#: db/seeds/settings.rb:2465
 msgid "Increment (SystemID.Counter)"
 msgstr "Incremento (SystemID.Counter)"
 
@@ -10781,7 +10781,7 @@ msgstr ""
 "el proceso de migración en esta página para recibir notificación tan pronto "
 "la importación termine correctamente."
 
-#: app/models/store.rb:95
+#: app/models/store.rb:100
 msgid "Inline content could not be generated."
 msgstr "No se pudo generar el contenido integrado."
 
@@ -11114,6 +11114,10 @@ msgid "Invalid security code! Please try again with a new code."
 msgstr ""
 "¡Código de seguridad no válido! Por favor, volver a intentar con otro código."
 
+#: lib/secure_mailing/pgp/tool/data.rb:71
+msgid "Invalid signature format: expected a PGP signature"
+msgstr ""
+
 #: app/controllers/integration/cti_controller.rb:41
 #: app/controllers/integration/placetel_controller.rb:40
 #: app/controllers/integration/sipgate_controller.rb:40
@@ -11227,7 +11231,7 @@ msgstr "URL del asunto"
 msgid "Issue status"
 msgstr "Estado del asunto"
 
-#: db/seeds/settings.rb:2068
+#: db/seeds/settings.rb:2081
 #, fuzzy
 #| msgid "Issues"
 msgid "Issuer"
@@ -11420,15 +11424,15 @@ msgstr "Feed de la Base de Conocimientos"
 msgid "Knowledge Base Reader"
 msgstr "Lector de Base de Conocimientos"
 
-#: db/seeds/settings.rb:5562
+#: db/seeds/settings.rb:5575
 msgid "Knowledge Base active"
 msgstr "Base de Conocimientos activa"
 
-#: db/seeds/settings.rb:5577
+#: db/seeds/settings.rb:5590
 msgid "Knowledge Base active publicly"
 msgstr "Base de Conocimientos activa y pública"
 
-#: db/seeds/settings.rb:5551
+#: db/seeds/settings.rb:5564
 msgid "Knowledge Base multilingual support"
 msgstr "Soporte multilenguaje en Base de Conocimientos"
 
@@ -11461,7 +11465,7 @@ msgstr "LDAP"
 msgid "LDAP Host"
 msgstr "Host LDAP"
 
-#: db/seeds/settings.rb:4914
+#: db/seeds/settings.rb:4927
 msgid "LDAP integration"
 msgstr "Integración LDAP"
 
@@ -11692,15 +11696,15 @@ msgstr "Limitar las notificaciones a grupos específicos"
 msgid "Limit priorities and provide optional descriptions"
 msgstr "Limitar prioridades y suministrar descripciones opcionalmente"
 
-#: db/seeds/settings.rb:3121
+#: db/seeds/settings.rb:3134
 msgid "Limit tickets by IP per day"
 msgstr "Limitar tickets por IP y día"
 
-#: db/seeds/settings.rb:3100
+#: db/seeds/settings.rb:3113
 msgid "Limit tickets by IP per hour"
 msgstr "Limitar tickets por IP y hora"
 
-#: db/seeds/settings.rb:3142
+#: db/seeds/settings.rb:3155
 msgid "Limit tickets per day"
 msgstr "Limitar tickets por día"
 
@@ -12469,7 +12473,7 @@ msgid "Match none (NOT)"
 msgstr "Coincidir con ninguno (NOT)"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:38
-#: db/seeds/settings.rb:2809
+#: db/seeds/settings.rb:2822
 msgid "Match tickets in following states"
 msgstr "Casos en los estados siguientes"
 
@@ -12498,7 +12502,7 @@ msgstr "Max. chats simultáneos"
 msgid "Max. length"
 msgstr "Longitud máxima"
 
-#: db/seeds/settings.rb:3176
+#: db/seeds/settings.rb:3189
 msgid "Max. length of the subject in an email reply."
 msgstr "Longitud máxima del asunto en una respuesta por correo electrónico."
 
@@ -12522,15 +12526,15 @@ msgstr "El valor máximo debe ser superior o igual al valor mínimo"
 msgid "Maximal value must be lower than 2147483648"
 msgstr "El valor máximo debe ser inferior a 2147483648"
 
-#: db/seeds/settings.rb:3288
+#: db/seeds/settings.rb:3301
 msgid "Maximum Email Size"
 msgstr "Tamaño máximo de correo electrónico"
 
-#: db/seeds/settings.rb:2917
+#: db/seeds/settings.rb:2930
 msgid "Maximum Recursive Ticket Triggers Depth"
 msgstr "Profundidad máxima de los disparadores de entradas recursivos"
 
-#: db/seeds/settings.rb:2239
+#: db/seeds/settings.rb:2252
 msgid "Maximum failed logins"
 msgstr "Cantidad máxima de inicios de sesión fallidos"
 
@@ -12538,7 +12542,7 @@ msgstr "Cantidad máxima de inicios de sesión fallidos"
 msgid "Maximum number of open tabs."
 msgstr "Número máximo de pestañas abiertas."
 
-#: db/seeds/settings.rb:2920
+#: db/seeds/settings.rb:2933
 msgid "Maximum number of recursively executed triggers."
 msgstr ""
 "Número máximo de disparadores que se pueden ejecutar de manera recursiva."
@@ -12762,7 +12766,7 @@ msgstr "¡El migrador no puede leer la salida de OTRS!"
 msgid "Milestone"
 msgstr "Hito"
 
-#: db/seeds/settings.rb:2484
+#: db/seeds/settings.rb:2497
 msgid "Min. size of number"
 msgstr "Tamaño mínimo del número"
 
@@ -12782,7 +12786,7 @@ msgstr "El valor mínimo debe ser superior a -2147483648"
 msgid "Minimal value must be lower than 2147483648"
 msgstr "El valor mínimo debe ser inferior a 2147483648"
 
-#: db/seeds/settings.rb:2121
+#: db/seeds/settings.rb:2134
 msgid "Minimum length"
 msgstr "Longitud ninima"
 
@@ -12841,7 +12845,7 @@ msgstr "Lunes"
 msgid "Monit"
 msgstr "Monit"
 
-#: db/seeds/settings.rb:4813
+#: db/seeds/settings.rb:4826
 msgid "Monit integration"
 msgstr "Integración con Monit"
 
@@ -12851,7 +12855,7 @@ msgstr "Integración con Monit"
 msgid "Monitoring"
 msgstr "Monitorización"
 
-#: db/seeds/settings.rb:3556
+#: db/seeds/settings.rb:3569
 msgid "Monitoring Token"
 msgstr "Token de monitorización"
 
@@ -12968,7 +12972,7 @@ msgstr "Mis tickets en proceso"
 msgid "Nagios"
 msgstr "Nagios"
 
-#: db/seeds/settings.rb:4582
+#: db/seeds/settings.rb:4595
 msgid "Nagios integration"
 msgstr "Integración con Nagios"
 
@@ -13043,7 +13047,7 @@ msgstr "Integración con Nagios"
 msgid "Name"
 msgstr "Nombre"
 
-#: db/seeds/settings.rb:1934
+#: db/seeds/settings.rb:1947
 msgid "Name Identifier Format"
 msgstr "Formato de identificador de nombre"
 
@@ -13241,7 +13245,7 @@ msgid "New Source"
 msgstr "Nueva fuente"
 
 #: app/assets/javascripts/app/views/tag/index.jst.eco:14
-#: db/seeds/settings.rb:4179
+#: db/seeds/settings.rb:4192
 msgid "New Tags"
 msgstr "Nuevos Tags"
 
@@ -13442,7 +13446,7 @@ msgstr "Próximo Estado"
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:52
 #: app/assets/javascripts/app/views/ticket_zoom/overview_navigator.jst.eco:12
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketScreenBehavior/behaviorOptions.ts:21
-#: db/seeds/settings.rb:3028
+#: db/seeds/settings.rb:3041
 msgid "Next in overview"
 msgstr "Siguiente en Resumen"
 
@@ -13635,7 +13639,7 @@ msgstr "¡No hay mensajes!"
 msgid "No entries"
 msgstr "Sin entradas"
 
-#: app/controllers/integration/exchange_controller.rb:58
+#: app/controllers/integration/exchange_controller.rb:60
 msgid "No entries were found in the selected folder(s)."
 msgstr "No se han encontrado entradas en la(s) carpeta(s) seleccionada(s)."
 
@@ -13652,7 +13656,7 @@ msgstr "No se permite ningún formato de archivo."
 msgid "No filter was configured."
 msgstr "No hay filtros configurados."
 
-#: app/controllers/integration/exchange_controller.rb:45
+#: app/controllers/integration/exchange_controller.rb:47
 msgid "No folders were found for the given user credentials."
 msgstr "No se han encontrado carpetas para las credenciales proporcionadas."
 
@@ -13784,7 +13788,7 @@ msgstr "Aún no hay borradores compartidos"
 
 #: app/controllers/organizations_controller.rb:107
 #: app/controllers/text_modules_controller.rb:75
-#: app/controllers/ticket_articles_controller.rb:245
+#: app/controllers/ticket_articles_controller.rb:246
 #: app/controllers/tickets_controller.rb:459
 #: app/controllers/users_controller.rb:559
 msgid "No source data submitted!"
@@ -13867,7 +13871,7 @@ msgstr "No, gracias"
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee:9
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_unit.coffee:55
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:65
-#: app/graphql/gql/types/ticket_type.rb:109 db/seeds/settings.rb:1966
+#: app/graphql/gql/types/ticket_type.rb:109 db/seeds/settings.rb:1979
 msgid "None"
 msgstr "Ninguno"
 
@@ -14025,7 +14029,7 @@ msgstr "Aviso:"
 msgid "Notification"
 msgstr "Notificación"
 
-#: db/seeds/settings.rb:3448
+#: db/seeds/settings.rb:3461
 msgid "Notification Sender"
 msgstr "Notificador de la notificación"
 
@@ -14303,11 +14307,11 @@ msgstr ""
 "Solamente un %s% de este idioma se ha traducido. Ayude a mejorar Zammad y "
 "complete la traducción."
 
-#: db/seeds/settings.rb:1969
+#: db/seeds/settings.rb:1982
 msgid "Only Encrypting"
 msgstr "Sólo Encriptación"
 
-#: db/seeds/settings.rb:1968
+#: db/seeds/settings.rb:1981
 msgid "Only Signing"
 msgstr "Sólo Firmando"
 
@@ -14481,13 +14485,13 @@ msgstr "Abrir"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:116
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:110
-#: db/seeds/settings.rb:2038
+#: db/seeds/settings.rb:2051
 #, fuzzy
 #| msgid "Connect"
 msgid "OpenID Connect"
 msgstr "Conectar"
 
-#: db/seeds/settings.rb:2046
+#: db/seeds/settings.rb:2059
 #, fuzzy
 #| msgid "Test Connection"
 msgid "OpenID Connect Options"
@@ -14875,19 +14879,23 @@ msgstr ""
 msgid "PGP"
 msgstr "PGP"
 
-#: db/seeds/settings.rb:5774
+#: db/seeds/settings.rb:5787
 msgid "PGP Recipient Alias Configuration"
 msgstr "Configuración del alias del destinatario PGP"
 
-#: db/seeds/settings.rb:5760
+#: db/seeds/settings.rb:5773
 msgid "PGP config"
 msgstr "Configuración PGP"
 
-#: db/seeds/settings.rb:5732
+#: db/seeds/settings.rb:5745
 msgid "PGP integration"
 msgstr "Integración de PGP"
 
-#: db/seeds/settings.rb:2092
+#: lib/secure_mailing/pgp/tool/data.rb:85
+msgid "PGP signature does not cover the displayed message body"
+msgstr ""
+
+#: db/seeds/settings.rb:2105
 msgid "PKCE"
 msgstr "PKCE"
 
@@ -15008,19 +15016,19 @@ msgstr "Contraseña para conexiones proxy"
 msgid "Password for proxy connection."
 msgstr "Password for proxy connection."
 
-#: db/seeds/settings.rb:2164
+#: db/seeds/settings.rb:2177
 msgid "Password needs to contain 2 lower case and 2 upper case characters."
 msgstr "La contraseña necesita contener 2 minúsculas y 2 mayúsculas."
 
-#: db/seeds/settings.rb:2190
+#: db/seeds/settings.rb:2203
 msgid "Password needs to contain at least one digit."
 msgstr "La contraseña necesita tener al menos un dígito."
 
-#: db/seeds/settings.rb:2216
+#: db/seeds/settings.rb:2229
 msgid "Password needs to contain at least one special character."
 msgstr "La contraseña debe contener al menos un caracter especial."
 
-#: db/seeds/settings.rb:2124
+#: db/seeds/settings.rb:2137
 msgid "Password needs to have at least a minimal number of characters."
 msgstr "La contraseña requiere un mínimo de caracteres."
 
@@ -15106,7 +15114,7 @@ msgid "Permanently Delete Knowledge Base"
 msgstr "Eliminar permanentemente la base de conocimiento"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:37
-#: db/seeds/settings.rb:2792
+#: db/seeds/settings.rb:2805
 msgid "Permission level for looking up tickets"
 msgstr "Nivell de permiso para buscar casos"
 
@@ -15201,15 +15209,15 @@ msgstr "Lugar reservado para texto generado por IA"
 msgid "Placetel"
 msgstr "Placetel"
 
-#: db/seeds/settings.rb:5345
+#: db/seeds/settings.rb:5358
 msgid "Placetel Token"
 msgstr "Token de Placetel"
 
-#: db/seeds/settings.rb:5331
+#: db/seeds/settings.rb:5344
 msgid "Placetel config"
 msgstr "Configuración de Placetel"
 
-#: db/seeds/settings.rb:5303
+#: db/seeds/settings.rb:5316
 msgid "Placetel integration"
 msgstr "Integración con Placetel"
 
@@ -15322,7 +15330,7 @@ msgstr ""
 "Por favor, tener en cuenta que los alias de correo han de ser configurados "
 "en el lado Microsoft 365 antes. %l"
 
-#: db/seeds/settings.rb:1931
+#: db/seeds/settings.rb:1944
 msgid ""
 "Please note that this attribute is deprecated within one of the next "
 "versions of Zammad. Use the IDP certificate instead."
@@ -15366,7 +15374,7 @@ msgstr "Seleccione una plantilla de lista de comprobación."
 msgid "Please select a ticket to merge into."
 msgstr "Seleccione un ticket con el que fusionar."
 
-#: app/controllers/integration/exchange_controller.rb:52
+#: app/controllers/integration/exchange_controller.rb:54
 msgid "Please select at least one folder."
 msgstr "Seleccione al menos una carpeta."
 
@@ -15621,11 +15629,11 @@ msgstr "Prioridad"
 msgid "Priority tagging rules"
 msgstr "Prioridad"
 
-#: db/seeds/settings.rb:1980
+#: db/seeds/settings.rb:1993
 msgid "Private key (PEM)"
 msgstr "Clave privada (PEM)"
 
-#: db/seeds/settings.rb:1987
+#: db/seeds/settings.rb:2000
 msgid "Private key secret"
 msgstr "Clave privada secreta"
 
@@ -15677,7 +15685,7 @@ msgstr "Configuración del perfil"
 msgid "Profiles"
 msgstr "Perfiles"
 
-#: db/seeds/settings.rb:2102
+#: db/seeds/settings.rb:2115
 msgid ""
 "Proof Key for Code Exchange is currently only supporting SHA256 as code "
 "challenge method."
@@ -15807,7 +15815,7 @@ msgstr ""
 "Ponga un mensaje en la página de inicio de sesión. Para cambiarla, haga clic "
 "en el área de texto de abajo y cámbiela en línea."
 
-#: db/seeds/settings.rb:3740
+#: db/seeds/settings.rb:3753
 msgid "Puts Zammad into import mode (disables some triggers)."
 msgstr "Pone Zammad en modo de importación (desactiva algunos disparadores)."
 
@@ -15990,7 +15998,7 @@ msgstr ""
 "Los códigos de recuperación se pueden usar para acceder a su cuenta en caso "
 "de perder el acceso a otros métodos de autenticación de doble factor."
 
-#: db/seeds/settings.rb:2853
+#: db/seeds/settings.rb:2866
 msgid "Recursive Ticket Triggers"
 msgstr "Disparadores de ticket recursivos"
 
@@ -16005,7 +16013,7 @@ msgstr ""
 msgid "Redis version"
 msgstr "Versión de Redis"
 
-#: db/seeds/settings.rb:3350
+#: db/seeds/settings.rb:3363
 msgid ""
 "References - Search for follow-up also in In-Reply-To or References headers."
 msgstr ""
@@ -16397,6 +16405,10 @@ msgstr "Solicite el inicio de sesión con contraseña aquí."
 msgid "Requesting the Grant"
 msgstr "Solicitando la subvención"
 
+#: db/seeds/settings.rb:1780
+msgid "Require verified email domain"
+msgstr ""
+
 #: app/controllers/reports_controller.rb:65
 msgid "Required parameter 'downloadBackendSelected' is missing."
 msgstr "El parámetro requerido 'downloadBackendSelected' no se encuentra."
@@ -16410,7 +16422,16 @@ msgstr "El parámetro requerido 'profile' no se encuentra."
 msgid "Requirements"
 msgstr "Requisitos"
 
-#: db/seeds/settings.rb:5961
+#: db/seeds/settings.rb:1790
+msgid ""
+"Requires the \"xms_edov\" ID token claim (along with the \"email\" claim) to "
+"be present and true before trusting an incoming email address for account "
+"auto-linking. Both must first be configured as optional claims on the Azure "
+"app registration. Until that is done, enabling this blocks all Microsoft 365 "
+"account auto-linking by email."
+msgstr ""
+
+#: db/seeds/settings.rb:5974
 msgid ""
 "Requires the setup of the two-factor authentication for certain user roles."
 msgstr ""
@@ -16663,7 +16684,7 @@ msgstr ""
 msgid "Rewrite complex section and make it easy to understand"
 msgstr "Reescribir sección compleja y hacerla fácil de comprender"
 
-#: db/seeds/settings.rb:6184
+#: db/seeds/settings.rb:6197
 #, fuzzy
 msgid "Richtext Bubble Menu"
 msgstr "Menú de burbuja de texto enriquecido"
@@ -16761,7 +16782,7 @@ msgstr ""
 "comúnmente aceptado (o, para ser precisos, un protocolo) para remitir "
 "mensajes firmados y cifrados digitalmente."
 
-#: db/seeds/settings.rb:5718
+#: db/seeds/settings.rb:5731
 msgid "S/MIME config"
 msgstr "Configuración de S/MIME"
 
@@ -16769,17 +16790,17 @@ msgstr "Configuración de S/MIME"
 msgid "S/MIME enables you to send digitally signed and encrypted messages."
 msgstr "S/MIME le permite enviar mensajes cifrados y firmados digitalmente."
 
-#: db/seeds/settings.rb:5690
+#: db/seeds/settings.rb:5703
 msgid "S/MIME integration"
 msgstr "Integración de S/MIME"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:106
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:94
-#: db/seeds/settings.rb:1880
+#: db/seeds/settings.rb:1893
 msgid "SAML"
 msgstr "SAML"
 
-#: db/seeds/settings.rb:1888
+#: db/seeds/settings.rb:1901
 msgid "SAML App Credentials"
 msgstr "Credenciales de aplicación SAML"
 
@@ -16869,11 +16890,11 @@ msgstr "SSL/STARTTLS"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:111
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:101
-#: db/seeds/settings.rb:5806
+#: db/seeds/settings.rb:5819
 msgid "SSO"
 msgstr "SSO"
 
-#: app/controllers/sessions_controller.rb:264
+#: app/controllers/sessions_controller.rb:268
 msgid "SSO request from untrusted IP address."
 msgstr ""
 
@@ -17014,11 +17035,11 @@ msgstr "Programador"
 msgid "Schedulers"
 msgstr "Programadores"
 
-#: db/seeds/settings.rb:2084
+#: db/seeds/settings.rb:2097
 msgid "Scopes"
 msgstr "Ámbitos"
 
-#: db/seeds/settings.rb:2089
+#: db/seeds/settings.rb:2102
 msgid ""
 "Scopes that are included, separated by a single space character. If unset, "
 "\"openid email profile\" is used."
@@ -17396,7 +17417,7 @@ msgstr "Llave de seguridad"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee:4
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/security_keys.coffee:5
-#: db/seeds/settings.rb:5867
+#: db/seeds/settings.rb:5880
 msgid "Security Keys"
 msgstr "Llaves de seguridad"
 
@@ -17710,11 +17731,11 @@ msgstr ""
 "Envíe recordatorios automáticos a los clientes pidiéndoles que respondan si "
 "el plazo de 24 horas está a punto de expirar."
 
-#: db/seeds/settings.rb:3421
+#: db/seeds/settings.rb:3434
 msgid "Send postmaster mail if mail too large"
 msgstr "Enviar correo al postmaster si el mensaje es demasiado grande"
 
-#: db/seeds/settings.rb:3424
+#: db/seeds/settings.rb:3437
 msgid "Send postmaster reject mail to sender of mail if mail is too large."
 msgstr ""
 "Enviar aviso de rechazo al remitente si el mensaje de correo es demasiado "
@@ -17728,16 +17749,16 @@ msgstr "Enviar a clientes"
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:51
 #: app/models/channel/driver/sms/massenversand.rb:45
 #: app/models/channel/driver/sms/message_bird.rb:92
-#: app/models/channel/driver/sms/twilio.rb:106 db/seeds/settings.rb:3238
+#: app/models/channel/driver/sms/twilio.rb:106 db/seeds/settings.rb:3251
 #: lib/excel_sheet/ticket.rb:32
 msgid "Sender"
 msgstr "Remitente"
 
-#: db/seeds/settings.rb:3238
+#: db/seeds/settings.rb:3251
 msgid "Sender Format"
 msgstr "Formate de Envío"
 
-#: db/seeds/settings.rb:3266
+#: db/seeds/settings.rb:3279
 msgid "Sender Format Separator"
 msgstr "Separador de formato del remitente"
 
@@ -17746,7 +17767,7 @@ msgstr "Separador de formato del remitente"
 msgid "Sender Type"
 msgstr "Tipo de remitente"
 
-#: db/seeds/settings.rb:3367
+#: db/seeds/settings.rb:3380
 msgid "Sender based on Reply-To header"
 msgstr "Remitente basado en el encabezado Reply-To"
 
@@ -17792,7 +17813,7 @@ msgstr "Separar múltiples valores con ;"
 msgid "September"
 msgstr "Septiembre"
 
-#: db/seeds/settings.rb:4027
+#: db/seeds/settings.rb:4040
 msgid "Sequencer log level"
 msgstr "Nivel de registro del secuenciador"
 
@@ -17849,7 +17870,7 @@ msgstr "Configurar"
 msgid "Set a title for your ticket"
 msgstr "Establezca un título para su ticket"
 
-#: db/seeds/settings.rb:5433
+#: db/seeds/settings.rb:5446
 msgid "Set agent limit"
 msgstr "Establecer límite de agentes"
 
@@ -17875,7 +17896,7 @@ msgstr "Establecer la aplicación de autenticación como predeterminada"
 msgid "Set available ticket types"
 msgstr "Establecer tipos de ticket disponibles"
 
-#: db/seeds/settings.rb:3762
+#: db/seeds/settings.rb:3775
 msgid "Set backend which is being used for import."
 msgstr "Establecer el backend utilizado para la importación."
 
@@ -17912,7 +17933,7 @@ msgstr "Establecer ID de llamadas salientes"
 msgid "Set security keys as default"
 msgstr "Establecer claves de seguridad como predeterminadas"
 
-#: db/seeds/settings.rb:5595
+#: db/seeds/settings.rb:5608
 #, fuzzy
 #| msgid ""
 #| "Set timeframe in seconds. If it's set to 0 you can delete notes without "
@@ -17968,7 +17989,7 @@ msgstr "Configurar autenticación de doble factor"
 msgid "Set up two-factor authentication: %s"
 msgstr "Configurar autenticación de doble factor"
 
-#: db/seeds/settings.rb:3370
+#: db/seeds/settings.rb:3383
 msgid ""
 "Set/overwrite sender/from of email based on \"Reply-To\" header. Useful to "
 "set correct customer if email is received from a third-party system on "
@@ -18126,7 +18147,7 @@ msgstr "Ver todo…"
 msgid "Show authenticator app secret"
 msgstr "Ver clave de la aplicación de autenticación"
 
-#: db/seeds/settings.rb:5839
+#: db/seeds/settings.rb:5852
 msgid "Show calendar weeks in the picker of date/datetime fields"
 msgstr "Mostrar semanas en campos de selección de fechas"
 
@@ -18149,7 +18170,7 @@ msgstr "Mostrar menos"
 msgid "Show matching ticket(s) in the warning"
 msgstr "Mostrar los casos que concuerdan en el aviso"
 
-#: db/seeds/settings.rb:2775
+#: db/seeds/settings.rb:2788
 msgid "Show matching tickets in the warning"
 msgstr "Mostrar los casos en el aviso"
 
@@ -18211,7 +18232,7 @@ msgid "Show ticket viewers"
 msgstr "Mostrar quién ve el ticket"
 
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco:6
-#: db/seeds/settings.rb:4092
+#: db/seeds/settings.rb:4105
 msgid "Show time accounting dialog when updating matching tickets."
 msgstr ""
 "Mostrar diálogo de contabilización de tiempos al actualizar tickets "
@@ -18221,7 +18242,7 @@ msgstr ""
 msgid "Show title in form."
 msgstr "Muestre el título en forma."
 
-#: db/seeds/settings.rb:2758
+#: db/seeds/settings.rb:2771
 msgid "Show to user roles"
 msgstr "Mostrar a roles de usuario"
 
@@ -18345,7 +18366,7 @@ msgstr "Firmas"
 msgid "Signed"
 msgstr "Firmado"
 
-#: db/seeds/settings.rb:1961
+#: db/seeds/settings.rb:1974
 msgid "Signing & Encrypting"
 msgstr "Firma y Encriptación"
 
@@ -18353,7 +18374,7 @@ msgstr "Firma y Encriptación"
 msgid "Signup Screen"
 msgstr "Pantalla de registro"
 
-#: db/seeds/settings.rb:2737
+#: db/seeds/settings.rb:2750
 msgid "Similar tickets found"
 msgstr "Casos parecidos encontrados"
 
@@ -18384,11 +18405,11 @@ msgstr ""
 msgid "Simple Storage Service not reachable."
 msgstr "Simple Storage Service no disponible."
 
-#: db/seeds/settings.rb:1817
+#: db/seeds/settings.rb:1830
 msgid "Sina Weibo"
 msgstr "Sina Weibo"
 
-#: db/seeds/settings.rb:1817
+#: db/seeds/settings.rb:1830
 msgid "Sina Weibo Open Portal"
 msgstr "Open Portal de Sina Weibo"
 
@@ -18541,7 +18562,7 @@ msgstr "Fuente"
 msgid "Sources"
 msgstr "Fuentes"
 
-#: db/seeds/settings.rb:2213
+#: db/seeds/settings.rb:2226
 msgid "Special character required"
 msgstr "Se requiere carácter especial"
 
@@ -18720,7 +18741,7 @@ msgstr "Estado"
 msgid "State icon"
 msgstr "Estado"
 
-#: db/seeds/settings.rb:5467
+#: db/seeds/settings.rb:5480
 msgid "Stats Backend"
 msgstr "Backend de estadísticas"
 
@@ -18754,7 +18775,7 @@ msgstr "Estado:"
 #: app/assets/javascripts/app/models/macro.coffee:9
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:58
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketScreenBehavior/behaviorOptions.ts:8
-#: db/seeds/settings.rb:3029
+#: db/seeds/settings.rb:3042
 msgid "Stay on tab"
 msgstr "Mantenerse en la pestaña"
 
@@ -18796,21 +18817,21 @@ msgstr "Método de almacenamiento"
 msgid "Store"
 msgstr "Almacenar"
 
-#: db/seeds/settings.rb:6096
+#: db/seeds/settings.rb:6109
 #, fuzzy
 #| msgid "Stores the GitHub configuration."
 msgid "Stores the AI provider configuration."
 msgstr "Almacena la configuración de GitHub."
 
-#: db/seeds/settings.rb:5106
+#: db/seeds/settings.rb:5119
 msgid "Stores the GitHub configuration."
 msgstr "Almacena la configuración de GitHub."
 
-#: db/seeds/settings.rb:5064
+#: db/seeds/settings.rb:5077
 msgid "Stores the GitLab configuration."
 msgstr "Almacena la configuración de GitLab."
 
-#: db/seeds/settings.rb:6126
+#: db/seeds/settings.rb:6139
 msgid ""
 "Stores the ticket summarization options (e.g. which content is visible)."
 msgstr ""
@@ -18836,7 +18857,7 @@ msgstr "Calle"
 msgid "Subject"
 msgstr "Asunto"
 
-#: db/seeds/settings.rb:3353
+#: db/seeds/settings.rb:3366
 msgid ""
 "Subject & References - Additional search for same article subject and same "
 "message ID in references header if no follow-up was recognized using default "
@@ -18970,7 +18991,7 @@ msgstr "Dom"
 msgid "Sunday"
 msgstr "Domingo"
 
-#: db/seeds/settings.rb:5554
+#: db/seeds/settings.rb:5567
 msgid "Support of multilingual Knowledge Base."
 msgstr "Soporte de Base de Conocimientos multilenguaje."
 
@@ -19010,7 +19031,7 @@ msgstr "Sincronizar con equipo"
 msgid "System"
 msgstr "Sistema"
 
-#: db/seeds/settings.rb:3250
+#: db/seeds/settings.rb:3263
 msgid "System Address Display Name"
 msgstr "Nombre para mostrar de la dirección del sistema"
 
@@ -19059,7 +19080,7 @@ msgstr ""
 "en nuestra plataforma pública %l. Cuenta con una interfaz de usuario muy "
 "cómoda basada en Weblate, ¡pruébala!"
 
-#: db/seeds/settings.rb:5627
+#: db/seeds/settings.rb:5640
 msgid ""
 "System-wide configuration of the query polling mechanism for ticket "
 "overviews."
@@ -19071,7 +19092,7 @@ msgstr ""
 msgid "SystemID"
 msgstr "ID del sistema"
 
-#: db/seeds/settings.rb:3014
+#: db/seeds/settings.rb:3027
 msgid "Tab behaviour after ticket action"
 msgstr "Comportamiento de la pestaña después de la acción del ticket\t"
 
@@ -19120,7 +19141,7 @@ msgstr "Tiempo de espera de asignación"
 msgid "Tags"
 msgstr "Etiquetas"
 
-#: db/seeds/settings.rb:3381
+#: db/seeds/settings.rb:3394
 msgid ""
 "Take Reply-To header as sender/from of email and use the real name of origin "
 "from."
@@ -19128,7 +19149,7 @@ msgstr ""
 "Tomar la cabecera Reply-To como remitente/destinatario del mensaje de correo "
 "y utilizar el nombre real de origen."
 
-#: db/seeds/settings.rb:3380
+#: db/seeds/settings.rb:3393
 msgid "Take Reply-To header as sender/from of email."
 msgstr ""
 "Tomar la cabecera Reply-To como remitente/destinatario de mensajes de correo."
@@ -19548,7 +19569,7 @@ msgstr "No se ha podido establecer el artículo como interno."
 msgid "The article could not be set to public."
 msgstr "No se ha podido establecer el artículo como público."
 
-#: app/controllers/ticket_articles_controller.rb:161
+#: app/controllers/ticket_articles_controller.rb:162
 msgid "The article does not belong to the specified ticket."
 msgstr "El artículo no pertenece al ticket especificado."
 
@@ -19616,7 +19637,7 @@ msgid "The certificate for this private key could not be found."
 msgstr ""
 "El certificado correspondiente a esta clave privada no se ha encontrado."
 
-#: lib/secure_mailing/smime/incoming.rb:69
+#: lib/secure_mailing/smime/incoming.rb:77
 msgid "The certificate for verification could not be found."
 msgstr "No se ha encontrado el certificado para la verificación."
 
@@ -19828,7 +19849,7 @@ msgstr ""
 msgid "The device could not be deleted."
 msgstr "No se ha podido eliminar el dispositivo."
 
-#: db/seeds/settings.rb:2308
+#: db/seeds/settings.rb:2321
 msgid "The divider between TicketHook and ticket number. E. g. ': '."
 msgstr ""
 "El divisor entre el TicketHook y el número de ticket. Por ejemplo: ' : '."
@@ -19908,7 +19929,7 @@ msgstr "No se pudo obtener el archivo del bot."
 msgid "The file could not be uploaded."
 msgstr "No se pudo subir el archivo."
 
-#: app/controllers/ticket_articles_controller.rb:177
+#: app/controllers/ticket_articles_controller.rb:178
 msgid "The file does not belong to the specified article."
 msgstr "El archivo no pertenece al artículo especificado."
 
@@ -19993,7 +20014,7 @@ msgstr "No se pudo localizar el nombre de host."
 msgid "The hours overlay"
 msgstr "La ventana superpuesta horas"
 
-#: db/seeds/settings.rb:2283
+#: db/seeds/settings.rb:2296
 msgid ""
 "The identifier for a ticket, e.g. Ticket#, Call#, MyTicket#. The default is "
 "Ticket#."
@@ -20172,7 +20193,7 @@ msgstr ""
 msgid "The personal access token could not be deleted."
 msgstr "No se ha podido eliminar el token de acceso personal."
 
-#: app/controllers/ticket_articles_controller.rb:285
+#: app/controllers/ticket_articles_controller.rb:286
 msgid ""
 "The preview cannot be generated. The format is corrupted or not supported."
 msgstr ""
@@ -20189,7 +20210,7 @@ msgstr ""
 msgid "The private PGP key could not be found."
 msgstr "No se ha podido encontrar la clave PGP privada."
 
-#: lib/secure_mailing/smime/incoming.rb:36
+#: lib/secure_mailing/smime/incoming.rb:44
 msgid "The private key for decryption could not be found."
 msgstr "No se ha podido encontrar la clave privada para el descifrado."
 
@@ -20498,7 +20519,7 @@ msgstr "Falta el valor requerido 'group_id'."
 msgid "The response could not be processed."
 msgstr "No se pudo procesar la solicitud."
 
-#: app/controllers/ticket_articles_controller.rb:276
+#: app/controllers/ticket_articles_controller.rb:277
 msgid "The retried attachment download failed."
 msgstr "La descarga de archivos adjuntos reintentada ha fallado."
 
@@ -20692,13 +20713,13 @@ msgstr "No se pudo encontrar el ticket de destino."
 msgid "The test run was successful."
 msgstr "La prueba se ha realizado con éxito."
 
-#: db/seeds/settings.rb:3219
+#: db/seeds/settings.rb:3232
 msgid ""
 "The text at the beginning of the subject in an email forward, e. g. FWD."
 msgstr ""
 "Texto al inicio del asunto en un reenvío de correo electrónico, p. ej. FWD."
 
-#: db/seeds/settings.rb:3197
+#: db/seeds/settings.rb:3210
 msgid ""
 "The text at the beginning of the subject in an email reply, e.g. RE, AW, or "
 "AS."
@@ -20774,8 +20795,6 @@ msgstr ""
 "Se eliminó el método de autenticación de doble factor \"%s\" para este "
 "usuario."
 
-#: app/controllers/sessions_controller.rb:253
-#: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:32
 #: app/services/service/user/two_factor/initiate_method_configuration.rb:6
 #: app/services/service/user/two_factor/verify_method_configuration.rb:15
 msgid "The two-factor authentication method is not enabled."
@@ -20797,7 +20816,7 @@ msgstr ""
 "No se ha podido procesar la imagen cargada. Necesita data:image en el "
 "parámetro logo o logo_resize."
 
-#: app/models/authorization/provider.rb:53
+#: app/models/authorization/provider.rb:60
 msgid "The user account does not exist. Please contact your administrator."
 msgstr ""
 "La cuenta de usuario no existe. Póngase en contacto con su administrador."
@@ -20813,8 +20832,8 @@ msgstr ""
 "No se pudo extraer el campo 'preferred_username' del usuario del elemento "
 "'id_token'."
 
-#: app/controllers/sessions_controller.rb:249
-#: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:27
+#: app/controllers/sessions_controller.rb:253
+#: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:36
 msgid "The username or password is incorrect."
 msgstr "El nombre de usuario o contraseña es incorrecto."
 
@@ -21098,7 +21117,7 @@ msgstr ""
 "Esta herramienta de ayuda a la redacción traduce el texto seleccionado al "
 "inglés."
 
-#: app/controllers/ticket_articles_controller.rb:197
+#: app/controllers/ticket_articles_controller.rb:198
 #, fuzzy
 #| msgid "This article is not part of the ticket."
 msgid "This article does not have a raw copy available."
@@ -21426,7 +21445,7 @@ msgstr ""
 "Este mensaje contiene imágenes u otros contenidos alojados en una fuente "
 "externa. Ha sido bloqueado, pero puede descargar el formato original."
 
-#: lib/secure_mailing/smime/incoming.rb:86
+#: lib/secure_mailing/smime/incoming.rb:94
 msgid "This message was not signed by its sender."
 msgstr "Este mensaje no ha sido firmado por su remitente."
 
@@ -21802,11 +21821,11 @@ msgstr "Autoasignación de tickets"
 msgid "Ticket Categorizer"
 msgstr "Ticket Cliente"
 
-#: db/seeds/settings.rb:2385
+#: db/seeds/settings.rb:2398
 msgid "Ticket Conditions Expert Mode"
 msgstr "Condiciones de ticket: Modo experto"
 
-#: db/seeds/settings.rb:2411
+#: db/seeds/settings.rb:2424
 msgid "Ticket Conditions Regular Expression Operators"
 msgstr "Condiciones de los Tickets Operadores de Expresiones Regulares"
 
@@ -21828,43 +21847,43 @@ msgstr "Detección de duplicados de tickets"
 msgid "Ticket Group Dispatcher"
 msgstr "Ticket actualizado"
 
-#: db/seeds/settings.rb:2280
+#: db/seeds/settings.rb:2293
 msgid "Ticket Hook"
 msgstr "Ticket Hook"
 
-#: db/seeds/settings.rb:2305
+#: db/seeds/settings.rb:2318
 msgid "Ticket Hook Divider"
 msgstr "Divisor de hooks de tickets"
 
-#: db/seeds/settings.rb:2326
+#: db/seeds/settings.rb:2339
 msgid "Ticket Hook Position"
 msgstr "Posición del hook"
 
-#: db/seeds/settings.rb:2358
+#: db/seeds/settings.rb:2371
 msgid "Ticket Last Contact Behaviour"
 msgstr "Último ticket procesado por el contacto"
 
-#: db/seeds/settings.rb:2437
+#: db/seeds/settings.rb:2450
 msgid "Ticket Number Format"
 msgstr "Formato de Numero de Ticket"
 
-#: db/seeds/settings.rb:2467
+#: db/seeds/settings.rb:2480
 msgid "Ticket Number Increment"
 msgstr "Incremento del número de Ticket"
 
-#: db/seeds/settings.rb:2524
+#: db/seeds/settings.rb:2537
 msgid "Ticket Number Increment Date"
 msgstr "Incremento del número de ticket por fecha"
 
-#: db/seeds/settings.rb:2826
+#: db/seeds/settings.rb:2839
 msgid "Ticket Number ignore system_id"
 msgstr "El número de ticket ignora system_id"
 
-#: db/seeds/settings.rb:5983
+#: db/seeds/settings.rb:5996
 msgid "Ticket Organization Reassignment"
 msgstr "Reasignación de organización de tickets"
 
-#: db/seeds/settings.rb:5624
+#: db/seeds/settings.rb:5637
 #, fuzzy
 #| msgid "Ticket Overview"
 msgid "Ticket Overview Query Polling"
@@ -21910,15 +21929,15 @@ msgstr "Estado del ticket"
 msgid "Ticket States"
 msgstr "Estados del ticket"
 
-#: db/seeds/settings.rb:3216
+#: db/seeds/settings.rb:3229
 msgid "Ticket Subject Forward"
 msgstr "Reenvío del asunto del ticket"
 
-#: db/seeds/settings.rb:3194
+#: db/seeds/settings.rb:3207
 msgid "Ticket Subject Reply"
 msgstr "Asunto del Ticket"
 
-#: db/seeds/settings.rb:3173
+#: db/seeds/settings.rb:3186
 msgid "Ticket Subject Size"
 msgstr "Tamaño del Asunto del Ticket"
 
@@ -21928,13 +21947,13 @@ msgstr "Suscripción a tickets"
 
 #: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:2
 #: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:7
-#: db/seeds/permissions.rb:239 db/seeds/settings.rb:6109
+#: db/seeds/permissions.rb:239 db/seeds/settings.rb:6122
 #, fuzzy
 #| msgid "Event Summary"
 msgid "Ticket Summary"
 msgstr "Resumen del evento"
 
-#: db/seeds/settings.rb:6123
+#: db/seeds/settings.rb:6136
 #, fuzzy
 #| msgid "Ticket Count"
 msgid "Ticket Summary Config"
@@ -21976,11 +21995,11 @@ msgstr "Selector de ticket"
 msgid "Ticket Title Rewriter"
 msgstr "Personas viendo el ticket"
 
-#: db/seeds/settings.rb:2898
+#: db/seeds/settings.rb:2911
 msgid "Ticket Trigger Loop Protection Articles Total"
 msgstr "Artículos de protección del bucle Total"
 
-#: db/seeds/settings.rb:2879
+#: db/seeds/settings.rb:2892
 msgid "Ticket Trigger Loop Protection Articles per Ticket"
 msgstr "Ticket Trigger Loop Protección Artículos por Ticket"
 
@@ -22295,7 +22314,7 @@ msgstr "Tickets asignados a mi: %s of %s"
 msgid "Tickets bulk edit"
 msgstr "Ticket actualizado"
 
-#: app/controllers/ticket_articles_controller.rb:238
+#: app/controllers/ticket_articles_controller.rb:239
 #: app/controllers/tickets_controller.rb:452
 msgid "Tickets can only be imported if system is in import mode."
 msgstr ""
@@ -22314,7 +22333,7 @@ msgstr "Tickets de Usuario"
 msgid "Tickets with \"%s\""
 msgstr "Tickets con \"%s\""
 
-#: db/seeds/settings.rb:2754
+#: db/seeds/settings.rb:2767
 msgid "Tickets with the same attributes were found."
 msgstr "Hallados casos con los mismos atributos."
 
@@ -22327,27 +22346,27 @@ msgstr "Fecha y hora"
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:134
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:12
 #: app/assets/javascripts/app/controllers/time_accounting.coffee:3
-#: db/seeds/permissions.rb:107 db/seeds/settings.rb:4062
+#: db/seeds/permissions.rb:107 db/seeds/settings.rb:4075
 msgid "Time Accounting"
 msgstr "Control de Tiempos"
 
-#: db/seeds/settings.rb:4125
+#: db/seeds/settings.rb:4138
 msgid "Time Accounting Custom Unit"
 msgstr "Unidad personalizada de contabilidad de tiempos"
 
-#: db/seeds/settings.rb:4161
+#: db/seeds/settings.rb:4174
 msgid "Time Accounting Default Type"
 msgstr "Contabilidad horaria predeterminada"
 
-#: db/seeds/settings.rb:4089
+#: db/seeds/settings.rb:4102
 msgid "Time Accounting Selector"
 msgstr "Selector de control de tiempo"
 
-#: db/seeds/settings.rb:4143
+#: db/seeds/settings.rb:4156
 msgid "Time Accounting Types"
 msgstr "Tipos de contabilidad de tiempos"
 
-#: db/seeds/settings.rb:4107
+#: db/seeds/settings.rb:4120
 msgid "Time Accounting Unit"
 msgstr "Unidad de contabilidad de tiempos"
 
@@ -22451,7 +22470,7 @@ msgstr "Titulo del formulario"
 msgid "To"
 msgstr "Para"
 
-#: db/seeds/settings.rb:3497
+#: db/seeds/settings.rb:3510
 msgid ""
 "To archive all outgoing emails from Zammad to external, you can store a BCC "
 "email address here."
@@ -22627,15 +22646,15 @@ msgstr "Token de acceso"
 msgid "Token authorization failed."
 msgstr "Autorización de token fallida."
 
-#: db/seeds/settings.rb:5272
+#: db/seeds/settings.rb:5285
 msgid "Token for CTI."
 msgstr "Token para CTI."
 
-#: db/seeds/settings.rb:5176
+#: db/seeds/settings.rb:5189
 msgid "Token for Sipgate."
 msgstr "Token para Sipgate."
 
-#: db/seeds/settings.rb:3559
+#: db/seeds/settings.rb:3572
 msgid "Token for monitoring."
 msgstr "Token para monitorización."
 
@@ -22779,7 +22798,7 @@ msgstr ""
 "un caso, mientras que los disparos activados por tiempo se ejecutan al "
 "llegar a esos momentos (p.e., tiempo pendiente, escalado)."
 
-#: db/seeds/settings.rb:5815
+#: db/seeds/settings.rb:5828
 msgid "Trusted SSO Proxy IPs"
 msgstr ""
 
@@ -22988,11 +23007,11 @@ msgstr "Tipo:"
 msgid "UID"
 msgstr "UID"
 
-#: db/seeds/settings.rb:1942
+#: db/seeds/settings.rb:1955
 msgid "UID Attribute Name"
 msgstr "Nombre del atributo UID"
 
-#: db/seeds/settings.rb:2076
+#: db/seeds/settings.rb:2089
 #, fuzzy
 #| msgid "Date field"
 msgid "UID Field"
@@ -23282,7 +23301,7 @@ msgstr "Actualizar borrador compartido"
 msgid "Update successful."
 msgstr "Actualización realizada."
 
-#: db/seeds/settings.rb:5995
+#: db/seeds/settings.rb:6008
 msgid "Update the most recent tickets."
 msgstr "Actualice las tickets más recientes."
 
@@ -23600,7 +23619,7 @@ msgstr "Utiliza la cámara para hacer una foto para el avatar."
 msgid "Use the left and right arrow keys to resize the column."
 msgstr ""
 
-#: db/seeds/settings.rb:2372
+#: db/seeds/settings.rb:2385
 msgid ""
 "Use the start time of the last customer thread (which may consist of "
 "multiple articles)."
@@ -23608,7 +23627,7 @@ msgstr ""
 "Usar la hora de la última conversación con el cliente (puede consistir en "
 "varios artículos)."
 
-#: db/seeds/settings.rb:2371
+#: db/seeds/settings.rb:2384
 msgid "Use the time of the very last customer article."
 msgstr "Usar la hora del último artículo del cliente."
 
@@ -23982,7 +24001,7 @@ msgstr "Correo de verificación no encontrado en el buzón."
 msgid "Verification email could not be sent."
 msgstr "No se pudo enviar el mensaje de verificación."
 
-#: db/seeds/settings.rb:1958
+#: db/seeds/settings.rb:1971
 msgid ""
 "Verification of the TLS connection to the IDP SSO target URL. Only relevant "
 "during setting up SAML authentication."
@@ -24123,12 +24142,12 @@ msgid "Warning"
 msgstr "Aviso"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:34
-#: db/seeds/settings.rb:2741
+#: db/seeds/settings.rb:2754
 msgid "Warning message"
 msgstr "Mensaje de aviso"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:33
-#: db/seeds/settings.rb:2724
+#: db/seeds/settings.rb:2737
 msgid "Warning title"
 msgstr "Título de aviso"
 
@@ -24234,11 +24253,11 @@ msgstr "Semana(s)"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:101
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:87
-#: db/seeds/settings.rb:1816
+#: db/seeds/settings.rb:1829
 msgid "Weibo"
 msgstr "Weibo"
 
-#: db/seeds/settings.rb:1824
+#: db/seeds/settings.rb:1837
 msgid "Weibo App Credentials"
 msgstr "Credenciales de aplicación de Weibo"
 
@@ -24473,13 +24492,13 @@ msgid "Would you like to give us feedback on the BETA UI?"
 msgstr "Retroalimentación"
 
 #: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:25
-#: db/seeds/permissions.rb:245 db/seeds/settings.rb:6142
+#: db/seeds/permissions.rb:245 db/seeds/settings.rb:6155
 #, fuzzy
 #| msgid "Waiting in %s"
 msgid "Writing Assistant"
 msgstr "Esperando en %s"
 
-#: db/seeds/settings.rb:6156
+#: db/seeds/settings.rb:6169
 #, fuzzy
 #| msgid "Waiting in %s"
 msgid "Writing Assistant Fixed Instructions"
@@ -25915,7 +25934,7 @@ msgstr "hora(s)"
 msgid "hours"
 msgstr "horas"
 
-#: db/seeds/settings.rb:2072
+#: db/seeds/settings.rb:2085
 #, fuzzy
 #| msgid "support@example.com"
 msgid "https://example.com"
@@ -25935,11 +25954,11 @@ msgstr ""
 msgid "i-doit"
 msgstr "i-doit"
 
-#: db/seeds/settings.rb:5021
+#: db/seeds/settings.rb:5034
 msgid "i-doit config"
 msgstr "configuración de i-doit"
 
-#: db/seeds/settings.rb:4994
+#: db/seeds/settings.rb:5007
 msgid "i-doit integration"
 msgstr "integración con i-doit"
 
@@ -26205,7 +26224,7 @@ msgstr "acaba de cambiar a"
 msgid "just now"
 msgstr "ahora mismo"
 
-#: db/seeds/settings.rb:2342
+#: db/seeds/settings.rb:2355
 msgid "left"
 msgstr "izquierda"
 
@@ -26406,7 +26425,7 @@ msgstr "no hay próximos eventos"
 #: app/assets/javascripts/app/views/integration/idoit_object_result.jst.eco:3
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:27
 #: app/assets/javascripts/app/views/widget/ticket_stats_list.jst.eco:7
-#: db/seeds/settings.rb:2344
+#: db/seeds/settings.rb:2357
 msgid "none"
 msgstr "ninguno"
 
@@ -26588,7 +26607,7 @@ msgstr "responder a todos"
 msgid "required"
 msgstr "requerido"
 
-#: db/seeds/settings.rb:2343
+#: db/seeds/settings.rb:2356
 msgid "right"
 msgstr "derecha"
 
@@ -26679,19 +26698,19 @@ msgstr "mostrar más"
 msgid "shown"
 msgstr "mostrados"
 
-#: db/seeds/settings.rb:5173
+#: db/seeds/settings.rb:5186
 msgid "sipgate.io Token"
 msgstr "Token de sipgate.io"
 
-#: db/seeds/settings.rb:5207
+#: db/seeds/settings.rb:5220
 msgid "sipgate.io alternative FQDN"
 msgstr "FQDN alternativa de sipgate.io"
 
-#: db/seeds/settings.rb:5194
+#: db/seeds/settings.rb:5207
 msgid "sipgate.io config"
 msgstr "configuración de sipgate.io"
 
-#: db/seeds/settings.rb:5145
+#: db/seeds/settings.rb:5158
 msgid "sipgate.io integration"
 msgstr "integración sipgate.io"
 

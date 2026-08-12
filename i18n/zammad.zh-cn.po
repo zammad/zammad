@@ -933,7 +933,7 @@ msgstr "1年前"
 msgid "2 hours"
 msgstr "2小时"
 
-#: db/seeds/settings.rb:2161
+#: db/seeds/settings.rb:2174
 msgid "2 lower case and 2 upper case characters"
 msgstr "两个小写字母和两个大写字母"
 
@@ -1010,7 +1010,7 @@ msgstr ""
 "群组的电子邮件地址决定了应使用哪个地址进行外发邮件，例如，当代理撰写电子邮件"
 "或触发器发送自动回复时"
 
-#: db/seeds/settings.rb:4017
+#: db/seeds/settings.rb:4030
 msgid "A list of active import backends that gets scheduled automatically."
 msgstr "自动安排的活动导入后端列表。"
 
@@ -1102,7 +1102,7 @@ msgstr "AI 客服人员"
 msgid "AI Agents"
 msgstr "AI 客服人员"
 
-#: db/seeds/settings.rb:6170
+#: db/seeds/settings.rb:6183
 #, fuzzy
 #| msgid "Knowledge Base Answer"
 msgid "AI Knowledge Base Answer from Ticket"
@@ -1118,7 +1118,7 @@ msgstr "知识库答案"
 msgid "AI Provider"
 msgstr "AI 提供商"
 
-#: db/seeds/settings.rb:6093
+#: db/seeds/settings.rb:6106
 msgid "AI Provider Config"
 msgstr "AI 提供商配置"
 
@@ -1203,7 +1203,7 @@ msgstr "草稿"
 msgid "AI error log"
 msgstr "API 错误。"
 
-#: db/seeds/settings.rb:6076
+#: db/seeds/settings.rb:6089
 #, fuzzy
 #| msgid "Provider"
 msgid "AI provider"
@@ -1304,7 +1304,7 @@ msgstr "API"
 msgid "API Key"
 msgstr "API Key"
 
-#: db/seeds/settings.rb:3530
+#: db/seeds/settings.rb:3543
 msgid "API Password Access"
 msgstr "API 密码访问"
 
@@ -1312,7 +1312,7 @@ msgstr "API 密码访问"
 msgid "API Token"
 msgstr "API Token"
 
-#: db/seeds/settings.rb:3505
+#: db/seeds/settings.rb:3518
 msgid "API Token Access"
 msgstr "API Token 访问"
 
@@ -1532,7 +1532,7 @@ msgstr "安全密钥的操作菜单按钮"
 msgid "Actions"
 msgstr "操作"
 
-#: db/seeds/settings.rb:2856
+#: db/seeds/settings.rb:2869
 msgid "Activate the recursive processing of ticket triggers."
 msgstr "激活工单触发器的递归处理。"
 
@@ -1873,7 +1873,7 @@ msgstr "添加有序列表"
 msgid "Additional Channels"
 msgstr "其他渠道"
 
-#: db/seeds/settings.rb:3338
+#: db/seeds/settings.rb:3351
 msgid "Additional follow-up detection"
 msgstr "額外追蹤後續檢查"
 
@@ -2025,11 +2025,11 @@ msgstr "总时长"
 msgid "Agent"
 msgstr "客服坐席"
 
-#: db/seeds/settings.rb:3251
+#: db/seeds/settings.rb:3264
 msgid "Agent Name"
 msgstr "客服名称"
 
-#: db/seeds/settings.rb:3251
+#: db/seeds/settings.rb:3264
 msgid "Agent Name + FromSeparator + System Address Display Name"
 msgstr "客服名称 + 来自分隔符+ 系统地址显示名称"
 
@@ -2037,7 +2037,7 @@ msgstr "客服名称 + 来自分隔符+ 系统地址显示名称"
 msgid "Agent chat"
 msgstr "客服对话"
 
-#: db/seeds/settings.rb:3605
+#: db/seeds/settings.rb:3618
 msgid "Agent idle timeout"
 msgstr "客服空闲超时"
 
@@ -2161,7 +2161,7 @@ msgstr ""
 msgid "Allow AI Agent to select multiple categories from all possible values."
 msgstr ""
 
-#: db/seeds/settings.rb:6061
+#: db/seeds/settings.rb:6074
 msgid ""
 "Allow admins to manage availability and access to the desktop BETA UI switch."
 msgstr ""
@@ -2198,11 +2198,11 @@ msgstr "允许在一定时间内重新开启工单。"
 msgid "Allow users to add new tags."
 msgstr "允许用户增加新标签."
 
-#: db/seeds/settings.rb:4182
+#: db/seeds/settings.rb:4195
 msgid "Allow users to create new tags."
 msgstr "允许用户创建新的标签。"
 
-#: db/seeds/settings.rb:6052
+#: db/seeds/settings.rb:6065
 msgid "Allow users to switch automatically to the new desktop UI."
 msgstr ""
 
@@ -2219,7 +2219,7 @@ msgstr "允许网站（以 ; 分隔）"
 msgid "Also notify via email"
 msgstr "也通过邮件通知"
 
-#: db/seeds/settings.rb:5210
+#: db/seeds/settings.rb:5223
 msgid ""
 "Alternative FQDN for callbacks if you operate Zammad in an internal network."
 msgstr "如果您在内部网络中操作 Zammad，则用于回调的替代 FQDN。"
@@ -2807,7 +2807,7 @@ msgstr "附件"
 msgid "Attachment"
 msgstr "附件"
 
-#: db/seeds/settings.rb:3352
+#: db/seeds/settings.rb:3365
 msgid "Attachment - Search for follow-up also in attachments."
 msgstr "附件 - 同时在附件中搜索跟进。"
 
@@ -2865,7 +2865,7 @@ msgstr "属性"
 msgid "Attribute '%s' is required in the mapping"
 msgstr "映射中需要属性“%s”"
 
-#: db/seeds/settings.rb:1947
+#: db/seeds/settings.rb:1960
 msgid ""
 "Attribute that uniquely identifies the user. If unset, the name identifier "
 "returned by the IDP is used."
@@ -2878,7 +2878,7 @@ msgid "Attributes"
 msgstr "属性"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:32
-#: db/seeds/settings.rb:2707
+#: db/seeds/settings.rb:2720
 msgid "Attributes to compare"
 msgstr "要比较的属性"
 
@@ -2941,7 +2941,7 @@ msgstr "通过 s% 认证"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee:4
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/authenticator_app.coffee:5
-#: db/seeds/settings.rb:5899
+#: db/seeds/settings.rb:5912
 msgid "Authenticator App"
 msgstr "验证器应用程序"
 
@@ -2980,19 +2980,19 @@ msgstr "Authy"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket.coffee:11
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco:7
-#: db/seeds/settings.rb:2553
+#: db/seeds/settings.rb:2566
 msgid "Auto Assignment"
 msgstr "自动分配"
 
-#: db/seeds/settings.rb:2596
+#: db/seeds/settings.rb:2609
 msgid "Auto Assignment Ignored Users"
 msgstr "自动分配忽略的用户"
 
-#: db/seeds/settings.rb:2579
+#: db/seeds/settings.rb:2592
 msgid "Auto Assignment Selector"
 msgstr "自动分配选择器"
 
-#: db/seeds/settings.rb:6038
+#: db/seeds/settings.rb:6051
 msgid "Auto Shutdown"
 msgstr ""
 
@@ -3000,7 +3000,7 @@ msgstr ""
 msgid "Auto Wizard"
 msgstr "自动向导"
 
-#: db/seeds/settings.rb:4533
+#: db/seeds/settings.rb:4546
 msgid "Auto close"
 msgstr "自动关闭"
 
@@ -3008,7 +3008,7 @@ msgstr "自动关闭"
 msgid "Auto create"
 msgstr "自动建立"
 
-#: db/seeds/settings.rb:4559
+#: db/seeds/settings.rb:4572
 msgid "Auto-close state"
 msgstr "自动关闭状态"
 
@@ -3147,7 +3147,7 @@ msgstr "平均: %s%"
 msgid "Azure AI (legacy deployment-based endpoints)"
 msgstr ""
 
-#: db/seeds/settings.rb:3494
+#: db/seeds/settings.rb:3507
 msgid "BCC address for all outgoing emails"
 msgstr "所有外发电子邮件的密件抄送地址"
 
@@ -3289,7 +3289,7 @@ msgstr "绑定密码"
 msgid "Bind User"
 msgstr "绑定用户"
 
-#: db/seeds/settings.rb:3471
+#: db/seeds/settings.rb:3484
 msgid "Block Notifications"
 msgstr "阻止通知"
 
@@ -3327,7 +3327,7 @@ msgstr "蓝色"
 msgid "Body"
 msgstr "正文"
 
-#: db/seeds/settings.rb:3351
+#: db/seeds/settings.rb:3364
 msgid "Body - Search for follow-up also in mail body."
 msgstr "正文 - 也在邮件正文中搜索后续。"
 
@@ -3414,7 +3414,7 @@ msgstr "工作日"
 msgid "But it's only available in these languages:"
 msgstr "但是它只在这些语言中有效："
 
-#: db/seeds/settings.rb:3341
+#: db/seeds/settings.rb:3354
 msgid ""
 "By default, the follow-up check is done via the subject of an email. This "
 "setting lets you add more fields for which the follow-up check will be "
@@ -3485,19 +3485,19 @@ msgstr "CTI"
 msgid "CTI (generic)"
 msgstr "CTI (generic)"
 
-#: db/seeds/settings.rb:5269
+#: db/seeds/settings.rb:5282
 msgid "CTI Token"
 msgstr "CTI Token"
 
-#: db/seeds/settings.rb:5256
+#: db/seeds/settings.rb:5269
 msgid "CTI config"
 msgstr "CTI 配置"
 
-#: db/seeds/settings.rb:5290
+#: db/seeds/settings.rb:5303
 msgid "CTI customer last activity"
 msgstr "CTI 客户最近一次活动"
 
-#: db/seeds/settings.rb:5228
+#: db/seeds/settings.rb:5241
 msgid "CTI integration"
 msgstr "CTI 集成"
 
@@ -3722,7 +3722,7 @@ msgstr "类别页面布局"
 msgid "Caution!"
 msgstr "警告！"
 
-#: db/seeds/settings.rb:1973
+#: db/seeds/settings.rb:1986
 msgid "Certificate (PEM)"
 msgstr "证书(PEM)"
 
@@ -4003,7 +4003,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/checklist_template.coffee:3
 #: app/assets/javascripts/app/views/checklist_template/index.jst.eco:7
-#: db/seeds/permissions.rb:344 db/seeds/settings.rb:6011
+#: db/seeds/permissions.rb:344 db/seeds/settings.rb:6024
 #, fuzzy
 #| msgid "Checksum"
 msgid "Checklists"
@@ -4013,15 +4013,15 @@ msgstr "校验"
 msgid "Checkmk"
 msgstr "校验码"
 
-#: db/seeds/settings.rb:4680
+#: db/seeds/settings.rb:4693
 msgid "Checkmk integration"
 msgstr "检查集成"
 
-#: db/seeds/settings.rb:4801
+#: db/seeds/settings.rb:4814
 msgid "Checkmk token"
 msgstr "检查令牌"
 
-#: db/seeds/settings.rb:2474
+#: db/seeds/settings.rb:2487
 msgid "Checksum"
 msgstr "校验"
 
@@ -4220,11 +4220,11 @@ msgstr "清空选项"
 msgid "Clearbit"
 msgstr "Clearbit"
 
-#: db/seeds/settings.rb:5392
+#: db/seeds/settings.rb:5405
 msgid "Clearbit config"
 msgstr "Clearbit配置"
 
-#: db/seeds/settings.rb:5366
+#: db/seeds/settings.rb:5379
 msgid "Clearbit integration"
 msgstr "Clearbit集成"
 
@@ -4319,14 +4319,14 @@ msgstr "关闭侧面板"
 #: app/assets/javascripts/app/models/macro.coffee:9
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:41
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketScreenBehavior/behaviorOptions.ts:12
-#: db/seeds/settings.rb:3026
+#: db/seeds/settings.rb:3039
 msgid "Close tab"
 msgstr "从列表关闭"
 
 #: app/assets/javascripts/app/models/macro.coffee:9
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:46
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketScreenBehavior/behaviorOptions.ts:16
-#: db/seeds/settings.rb:3027
+#: db/seeds/settings.rb:3040
 msgid "Close tab on ticket close"
 msgstr "当工单关闭时关闭tab页"
 
@@ -4394,7 +4394,7 @@ msgstr ""
 msgid "Combined subscription URL"
 msgstr "合并订阅 URL"
 
-#: db/seeds/settings.rb:5818
+#: db/seeds/settings.rb:5831
 msgid ""
 "Comma-separated list of trusted proxy IP addresses or CIDR ranges for SSO "
 "header acceptance."
@@ -4437,7 +4437,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/security_keys.coffee:6
 #: app/frontend/shared/entities/two-factor/plugins/security-keys.ts:10
-#: db/seeds/settings.rb:5891
+#: db/seeds/settings.rb:5904
 msgid "Complete the sign-in with your security key."
 msgstr "使用您的安全密钥完成登录。"
 
@@ -4694,7 +4694,7 @@ msgstr "无法加载内容。"
 msgid "Content loader"
 msgstr "内容侧边栏"
 
-#: app/models/store.rb:83
+#: app/models/store.rb:88
 msgid "Content preview could not be generated."
 msgstr "无法生成内容预览。"
 
@@ -5442,7 +5442,7 @@ msgstr "客户和代理比率（基于角色的用户计数）"
 msgid "Customer intent"
 msgstr "客户的工单"
 
-#: db/seeds/settings.rb:3395
+#: db/seeds/settings.rb:3408
 msgid "Customer selection based on sender and receiver list"
 msgstr "根據寄件人和收件人列表選擇客戶"
 
@@ -5537,7 +5537,7 @@ msgstr "日期"
 msgid "Date & time field"
 msgstr "日期和时间字段"
 
-#: db/seeds/settings.rb:2453
+#: db/seeds/settings.rb:2466
 msgid "Date (Year.Month.Day.SystemID.Counter)"
 msgstr "日期（年.月.日.系统ID.计数器）"
 
@@ -5626,11 +5626,11 @@ msgstr "默认行为"
 msgid "Default Notifications"
 msgstr "默认通知"
 
-#: db/seeds/settings.rb:3627
+#: db/seeds/settings.rb:3640
 msgid "Default Screen"
 msgstr "默认屏幕"
 
-#: db/seeds/settings.rb:2614
+#: db/seeds/settings.rb:2627
 msgid "Default Ticket Agent Notifications"
 msgstr "默认工单代理通知"
 
@@ -5638,7 +5638,7 @@ msgstr "默认工单代理通知"
 msgid "Default at Signup"
 msgstr "开放注册"
 
-#: db/seeds/settings.rb:4206
+#: db/seeds/settings.rb:4219
 msgid "Default calendar tickets subscriptions"
 msgstr "默认日历票务订阅"
 
@@ -5682,45 +5682,45 @@ msgid "Default value is required."
 msgstr "預設 caller id"
 
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco:15
-#: db/seeds/settings.rb:2599
+#: db/seeds/settings.rb:2612
 msgid ""
 "Define an exception of \"automatic assignment\" for certain users (e.g. "
 "executives)."
 msgstr "为某些用户定义“自动分配”的例外情况（例如主管）。"
 
-#: db/seeds/settings.rb:3730
+#: db/seeds/settings.rb:3743
 #, fuzzy
 #| msgid "Define pipeline name for Elasticsearch."
 msgid "Define if asciifolding analyzer should be used in Elasticsearch."
 msgstr "定义Elasticsearch的管道名称。"
 
-#: db/seeds/settings.rb:3694
+#: db/seeds/settings.rb:3707
 msgid "Define max. attachment size for Elasticsearch."
 msgstr "定义Elasticsearch的最大附件大小。"
 
-#: db/seeds/settings.rb:3703
+#: db/seeds/settings.rb:3716
 msgid "Define max. payload size for Elasticsearch."
 msgstr "定义Elasticsearch的最大有效负载大小。"
 
-#: db/seeds/settings.rb:3721
+#: db/seeds/settings.rb:3734
 msgid "Define model configuration for Elasticsearch."
 msgstr "定义 Elasticsearch 的模型配置。"
 
-#: db/seeds/settings.rb:3712
+#: db/seeds/settings.rb:3725
 msgid "Define pipeline name for Elasticsearch."
 msgstr "定义Elasticsearch的管道名称。"
 
-#: db/seeds/settings.rb:4352
+#: db/seeds/settings.rb:4365
 msgid ""
 "Define postmaster filter to check if follow-ups get created (based on admin "
 "settings)."
 msgstr "定义邮件管理员过滤器以检查是否根据管理员设置创建了后续操作。"
 
-#: db/seeds/settings.rb:4289
+#: db/seeds/settings.rb:4302
 msgid "Define postmaster filter to import archive mailboxes."
 msgstr "定义邮件管理员过滤器以导入存档邮箱。"
 
-#: db/seeds/settings.rb:4286
+#: db/seeds/settings.rb:4299
 msgid "Define postmaster filter."
 msgstr "定义邮件管理员过滤器。"
 
@@ -5737,7 +5737,7 @@ msgstr ""
 msgid "Define rules for adding tags in the system."
 msgstr ""
 
-#: db/seeds/settings.rb:2617
+#: db/seeds/settings.rb:2630
 msgid "Define the default agent notifications for new users."
 msgstr "为新用户定义默认代理通知。"
 
@@ -5765,99 +5765,99 @@ msgstr ""
 msgid "Define which ticket article(s) should be analyzed."
 msgstr "在创建机票之前，定义检查哪些票证属性。"
 
-#: db/seeds/settings.rb:3676
+#: db/seeds/settings.rb:3689
 msgid "Defines Elasticsearch SSL verification."
 msgstr "定义 Elasticsearch SSL 验证。"
 
-#: db/seeds/settings.rb:3667
+#: db/seeds/settings.rb:3680
 msgid "Defines Elasticsearch index name."
 msgstr "定义Elasticsearch索引名称。"
 
-#: db/seeds/settings.rb:3943
+#: db/seeds/settings.rb:3956
 msgid "Defines Freshdesk endpoint authentication API key."
 msgstr "定义 Freshdesk 端点身份验证 API 密钥。"
 
-#: db/seeds/settings.rb:3658
+#: db/seeds/settings.rb:3671
 msgid "Defines HTTP basic auth password of Elasticsearch."
 msgstr "定义Elasticsearch的HTTP基本认证密码。"
 
-#: db/seeds/settings.rb:3649
+#: db/seeds/settings.rb:3662
 msgid "Defines HTTP basic auth user of Elasticsearch."
 msgstr "定义Elasticsearch的HTTP基本认证用户。"
 
-#: db/seeds/settings.rb:3850
+#: db/seeds/settings.rb:3863
 msgid ""
 "Defines HTTP basic authentication password (only if OTRS is protected via "
 "HTTP basic auth)."
 msgstr "定义HTTP基本认证密码（仅在OTRS通过HTTP基本认证保护时）。"
 
-#: db/seeds/settings.rb:3831
+#: db/seeds/settings.rb:3844
 msgid ""
 "Defines HTTP basic authentication user (only if OTRS is protected via HTTP "
 "basic auth)."
 msgstr "定义HTTP基本认证密码（仅在OTRS通过HTTP基本认证保护时）。"
 
-#: db/seeds/settings.rb:3998
+#: db/seeds/settings.rb:4011
 msgid "Defines Kayako endpoint authentication password."
 msgstr "定义Kayako端点认证密码。"
 
-#: db/seeds/settings.rb:3980
+#: db/seeds/settings.rb:3993
 msgid "Defines Kayako endpoint authentication user."
 msgstr "定义 Kayako 端点认证用户。"
 
-#: db/seeds/settings.rb:3812
+#: db/seeds/settings.rb:3825
 msgid "Defines OTRS endpoint authentication key."
 msgstr "定义OTRS端点认证密钥。"
 
-#: db/seeds/settings.rb:3887
+#: db/seeds/settings.rb:3900
 msgid "Defines Zendesk endpoint authentication API key."
 msgstr "定义 Zendesk 端点身份验证 API 密钥。"
 
-#: db/seeds/settings.rb:3906
+#: db/seeds/settings.rb:3919
 msgid "Defines Zendesk endpoint authentication user."
 msgstr "定义Zendesk端点认证用户。"
 
-#: db/seeds/settings.rb:3925
+#: db/seeds/settings.rb:3938
 msgid ""
 "Defines a Freshdesk endpoint to import users, tickets, states, and articles."
 msgstr "定义一个Freshdesk端点，用于导入用户、工单、状态和文章。"
 
-#: db/seeds/settings.rb:3962
+#: db/seeds/settings.rb:3975
 msgid ""
 "Defines a Kayako endpoint to import users, tickets, states, and articles."
 msgstr "定义一个Kayako端点，用于导入用户、工单、状态和文章。"
 
-#: db/seeds/settings.rb:3869
+#: db/seeds/settings.rb:3882
 msgid ""
 "Defines a Zendesk endpoint to import users, tickets, states, and articles."
 msgstr "定义一个Zendesk端点，用于导入用户、工单、状态和文章。"
 
-#: db/seeds/settings.rb:5470
+#: db/seeds/settings.rb:5483
 msgid "Defines a dashboard stats backend that gets scheduled automatically."
 msgstr "自动安排的仪表板统计后端。"
 
-#: db/seeds/settings.rb:3124
+#: db/seeds/settings.rb:3137
 msgid ""
 "Defines a limit for how many tickets can be created via web form from one IP "
 "address per day."
 msgstr "定义了一个限制，即每天一个IP地址通过网页表单可以创建的工单数量。"
 
-#: db/seeds/settings.rb:3103
+#: db/seeds/settings.rb:3116
 msgid ""
 "Defines a limit for how many tickets can be created via web form from one IP "
 "address per hour."
 msgstr "定义了一个限制，即每小时一个IP地址通过网页表单可以创建的工单数量。"
 
-#: db/seeds/settings.rb:3145
+#: db/seeds/settings.rb:3158
 msgid ""
 "Defines a limit for how many tickets can be created via web form per day."
 msgstr "定义了一个限制，即每天可以通过网页表单创建的工单数量。"
 
-#: db/seeds/settings.rb:2242
+#: db/seeds/settings.rb:2255
 msgid "Defines after how many failed logins accounts will be deactivated."
 msgstr "定义登录失败次数后帐户将被停用。"
 
-#: db/seeds/settings.rb:3794
+#: db/seeds/settings.rb:3807
 msgid ""
 "Defines an OTRS endpoint to import users, tickets, states, and articles."
 msgstr "定义了一个OTRS端点，用于导入用户、工单、状态和文章。"
@@ -5880,11 +5880,11 @@ msgstr ""
 "在工单表中定义此优先级的可选图标。重要的将用感叹号表示，而低优先级将用向下的"
 "箭头表示。"
 
-#: db/seeds/settings.rb:3685
+#: db/seeds/settings.rb:3698
 msgid "Defines attachment extensions which will be ignored by Elasticsearch."
 msgstr "定义了Elasticsearch将忽略的附件扩展名。"
 
-#: db/seeds/settings.rb:3640
+#: db/seeds/settings.rb:3653
 msgid "Defines endpoint of Elasticsearch."
 msgstr "定义了Elasticsearch的端点。"
 
@@ -5898,20 +5898,20 @@ msgid ""
 "ticket zoom."
 msgstr "定义配置每分钟范围内每个工单可以创建多少篇文章。"
 
-#: db/seeds/settings.rb:2992
+#: db/seeds/settings.rb:3005
 msgid ""
 "Defines groups for which a customer can create tickets via web interface. No "
 "selection means all groups are available."
 msgstr ""
 "定义客户可以通过 Web 界面为其创建工单的组。没有选择的话意味着所有组都可用。"
 
-#: db/seeds/settings.rb:3241
+#: db/seeds/settings.rb:3254
 msgid ""
 "Defines how the From field of emails (sent from answers and email tickets) "
 "should look like."
 msgstr "定义电子邮件的“发件人”字段（从答案和电子邮件工单发送）的外观。"
 
-#: db/seeds/settings.rb:2361
+#: db/seeds/settings.rb:2374
 msgid ""
 "Defines how the last customer contact time of tickets should be calculated."
 msgstr "定义如何计算工单的最后客户联系时间。"
@@ -5928,57 +5928,57 @@ msgstr ""
 "定义如何连接到websocket服务器。在生产环境中，默认为\"websocket\"，在CI中为"
 "\"websocketPort\""
 
-#: db/seeds/settings.rb:4683
+#: db/seeds/settings.rb:4696
 msgid "Defines if Checkmk (https://checkmk.com/) is enabled or not."
 msgstr "定义Checkmk (https://checkmk.com/) 是否启用。"
 
-#: db/seeds/settings.rb:5369
+#: db/seeds/settings.rb:5382
 msgid "Defines if Clearbit (http://www.clearbit.com) is enabled or not."
 msgstr "定义了Clearbit (http://www.clearbit.com) 是否启用。"
 
-#: db/seeds/settings.rb:4970
+#: db/seeds/settings.rb:4983
 msgid "Defines if Exchange is enabled or not."
 msgstr "定义了Exchange是否启用。"
 
-#: db/seeds/settings.rb:4487
+#: db/seeds/settings.rb:4500
 msgid "Defines if Icinga (http://www.icinga.org) is enabled or not."
 msgstr "定义了Icinga (http://www.icinga.org) 是否启用。"
 
-#: db/seeds/settings.rb:5580
+#: db/seeds/settings.rb:5593
 msgid ""
 "Defines if Knowledge Base navbar button is enabled for users without "
 "Knowledge Base permission."
 msgstr "定义了是否为没有知识库权限的用户启用知识库导航栏按钮。"
 
-#: db/seeds/settings.rb:5565
+#: db/seeds/settings.rb:5578
 msgid "Defines if Knowledge Base navbar button is enabled."
 msgstr "定义了是否启用知识库导航栏按钮。"
 
-#: db/seeds/settings.rb:4917
+#: db/seeds/settings.rb:4930
 msgid "Defines if LDAP is enabled or not."
 msgstr "定义了LDAP是否启用。"
 
-#: db/seeds/settings.rb:4816
+#: db/seeds/settings.rb:4829
 msgid "Defines if Monit (https://mmonit.com/monit/) is enabled or not."
 msgstr "定义了Monit (https://mmonit.com/monit/) 是否启用。"
 
-#: db/seeds/settings.rb:4585
+#: db/seeds/settings.rb:4598
 msgid "Defines if Nagios (http://www.nagios.org) is enabled or not."
 msgstr "定义了Nagios (http://www.nagios.org) 是否启用。"
 
-#: db/seeds/settings.rb:5735
+#: db/seeds/settings.rb:5748
 msgid "Defines if PGP encryption is enabled or not."
 msgstr "定义是否启用 PGP 加密。"
 
-#: db/seeds/settings.rb:5306
+#: db/seeds/settings.rb:5319
 msgid "Defines if Placetel (http://www.placetel.de) is enabled or not."
 msgstr "定义了Placetel (http://www.placetel.de) 是否启用。"
 
-#: db/seeds/settings.rb:5693
+#: db/seeds/settings.rb:5706
 msgid "Defines if S/MIME encryption is enabled or not."
 msgstr "定义了S/MIME加密是否启用。"
 
-#: db/seeds/settings.rb:2965
+#: db/seeds/settings.rb:2978
 msgid "Defines if a customer can create tickets via the web interface."
 msgstr "定义客户是否可以通过 Web 界面创建工单。"
 
@@ -5990,43 +5990,43 @@ msgstr "定义应用程序是否处于初始化模式。"
 msgid "Defines if application is used as online service."
 msgstr "定义应用程序是否被用作在线服务。"
 
-#: db/seeds/settings.rb:5842
+#: db/seeds/settings.rb:5855
 msgid ""
 "Defines if calendar weeks are shown in the picker of date/datetime fields to "
 "easily select the correct date."
 msgstr "定义日期/时间字段的选择器中是否显示日历周，以便轻松选择正确的日期。"
 
-#: db/seeds/settings.rb:5231
+#: db/seeds/settings.rb:5244
 msgid "Defines if generic CTI integration is enabled or not."
 msgstr "定义是否启用通用CTI集成。"
 
-#: db/seeds/settings.rb:5934
+#: db/seeds/settings.rb:5947
 msgid ""
 "Defines if recovery codes can be used by users in the event they lose access "
 "to other two-factor authentication methods."
 msgstr "定义用户在无法访问其他两因素身份验证方法时是否可以使用恢复代码。"
 
-#: db/seeds/settings.rb:5148
+#: db/seeds/settings.rb:5161
 msgid "Defines if sipgate.io (http://www.sipgate.io) is enabled or not."
 msgstr "定义是否启用sipgate.io（http://www.sipgate.io）。"
 
-#: db/seeds/settings.rb:6079
+#: db/seeds/settings.rb:6092
 #, fuzzy
 #| msgid "The setting 'storage_provider' was not configured."
 msgid "Defines if the AI provider is configured."
 msgstr "未配置设置“ storage_provider”。"
 
-#: db/seeds/settings.rb:5079
+#: db/seeds/settings.rb:5092
 msgid ""
 "Defines if the GitHub (http://www.github.com) integration is enabled or not."
 msgstr "定义是否启用GitHub (http://www.github.com)集成。"
 
-#: db/seeds/settings.rb:5037
+#: db/seeds/settings.rb:5050
 msgid ""
 "Defines if the GitLab (http://www.gitlab.com) integration is enabled or not."
 msgstr "定义是否启用GitLab (http://www.gitlab.com)集成。"
 
-#: db/seeds/settings.rb:5777
+#: db/seeds/settings.rb:5790
 msgid "Defines if the PGP recipient alias configuration is enabled or not."
 msgstr "定义是否启用 PGP 收件人别名配置。"
 
@@ -6044,13 +6044,13 @@ msgstr ""
 "定义应用程序是否处于开发人员模式（所有用户的密码相同，且无需通过电子邮件发"
 "送，密码重置功能将正常工作）。"
 
-#: db/seeds/settings.rb:6187
+#: db/seeds/settings.rb:6200
 msgid ""
 "Defines if the bubble menu feature of the richtext editor is enabled. Note "
 "that this setting will be ignored if the writing assistant is turned on."
 msgstr ""
 
-#: db/seeds/settings.rb:5986
+#: db/seeds/settings.rb:5999
 msgid ""
 "Defines if the change of the primary organization of a user will update the "
 "100 most recent tickets for this user as well."
@@ -6072,59 +6072,59 @@ msgid ""
 "organization widget."
 msgstr "定义用户/组织小部件的结果中是否应显示电子邮件。"
 
-#: db/seeds/settings.rb:4997
+#: db/seeds/settings.rb:5010
 msgid ""
 "Defines if the i-doit (https://www.i-doit.org/) integration is enabled or "
 "not."
 msgstr "定义是否启用了i-doit（https://www.i-doit.org/）集成。"
 
-#: db/seeds/settings.rb:2388
+#: db/seeds/settings.rb:2401
 msgid ""
 "Defines if the ticket conditions editor supports complex logical expressions."
 msgstr "定义工单条件编辑器是否支持复杂的逻辑表达式。"
 
-#: db/seeds/settings.rb:2414
+#: db/seeds/settings.rb:2427
 msgid ""
 "Defines if the ticket conditions editor supports regular expression "
 "operators for triggers and ticket auto assignment."
 msgstr "定义机票条件编辑是否支持正则表达操作员进行触发器和票务自动分配。"
 
-#: db/seeds/settings.rb:4146
+#: db/seeds/settings.rb:4159
 msgid "Defines if the time accounting types are enabled."
 msgstr "定义是否启用时间统计类型。"
 
-#: db/seeds/settings.rb:5902
+#: db/seeds/settings.rb:5915
 msgid ""
 "Defines if the two-factor authentication method authenticator app is enabled "
 "or not."
 msgstr "定义是否启用了两因素身份验证方法身份验证方法。"
 
-#: db/seeds/settings.rb:5870
+#: db/seeds/settings.rb:5883
 msgid ""
 "Defines if the two-factor authentication method security keys is enabled or "
 "not."
 msgstr "定义是否启用双因素身份验证方法安全密钥。"
 
-#: db/seeds/settings.rb:3046
+#: db/seeds/settings.rb:3059
 msgid "Defines if tickets can be created via web form."
 msgstr "定义是否可以通过网页表单创建工单。"
 
-#: db/seeds/settings.rb:4536
+#: db/seeds/settings.rb:4549
 msgid "Defines if tickets should be closed if service is recovered."
 msgstr "定义如果服务恢复，是否应关闭工单。"
 
-#: db/seeds/settings.rb:4388
+#: db/seeds/settings.rb:4401
 msgid "Defines postmaster filter for filters managed via admin interface."
 msgstr "定义通过管理员界面管理的过滤器的邮件管理员过滤器。"
 
-#: db/seeds/settings.rb:4298
+#: db/seeds/settings.rb:4311
 msgid ""
 "Defines postmaster filter to check if email has been created by Zammad "
 "itself and will set the article sender."
 msgstr ""
 "定义邮件管理员过滤器以检查电子邮件是否由Zammad本身创建，并将设置文章发送者。"
 
-#: db/seeds/settings.rb:4307
+#: db/seeds/settings.rb:4320
 msgid ""
 "Defines postmaster filter to check if the email is a self-created "
 "notification email, then ignore it to prevent email loops."
@@ -6132,38 +6132,38 @@ msgstr ""
 "定义邮件管理员过滤器以检查电子邮件是否为自我创建的通知电子邮件，然后忽略它以"
 "防止电子邮件循环。"
 
-#: db/seeds/settings.rb:4334
+#: db/seeds/settings.rb:4347
 msgid "Defines postmaster filter to handle secure mailing."
 msgstr "定义邮件管理员过滤器以处理安全邮件。"
 
-#: db/seeds/settings.rb:4451
+#: db/seeds/settings.rb:4464
 msgid ""
 "Defines postmaster filter to identify Jira mails for correct follow-ups."
 msgstr "定义邮件管理员过滤器以识别Jira邮件以进行正确的后续处理。"
 
-#: db/seeds/settings.rb:4433
+#: db/seeds/settings.rb:4446
 msgid ""
 "Defines postmaster filter to identify ServiceNow mails for correct follow-"
 "ups."
 msgstr "定义邮件管理员过滤器以识别ServiceNow邮件以进行正确的后续处理。"
 
-#: db/seeds/settings.rb:4244
+#: db/seeds/settings.rb:4257
 msgid ""
 "Defines postmaster filter to identify auto responses to prevent auto replies "
 "from Zammad."
 msgstr "定义邮件管理员过滤器以识别自动响应，以防止Zammad自动回复。"
 
-#: db/seeds/settings.rb:4262
+#: db/seeds/settings.rb:4275
 msgid ""
 "Defines postmaster filter to identify follow-up ticket for merged tickets."
 msgstr "定义邮件管理员过滤器以识别合并票证的后续票证。"
 
-#: db/seeds/settings.rb:4253
+#: db/seeds/settings.rb:4266
 msgid ""
 "Defines postmaster filter to identify follow-ups (based on admin settings)."
 msgstr "定义邮件管理员过滤器以识别后续处理（基于管理员设置）。"
 
-#: db/seeds/settings.rb:4343
+#: db/seeds/settings.rb:4356
 msgid ""
 "Defines postmaster filter to identify out-of-office emails for follow-up "
 "detection and keeping current ticket state."
@@ -6171,7 +6171,7 @@ msgstr ""
 "定义邮件管理员过滤器以识别外出办公电子邮件，以便进行后续处理检测并保持当前的"
 "工单状态。"
 
-#: db/seeds/settings.rb:4370
+#: db/seeds/settings.rb:4383
 msgid ""
 "Defines postmaster filter to identify postmaster bounces; and disables "
 "sending notification if delivery fails permanently."
@@ -6179,7 +6179,7 @@ msgstr ""
 "定义邮件管理员过滤器以识别邮件管理员退信；如果永久性无法发送通知，则禁用发送"
 "通知。"
 
-#: db/seeds/settings.rb:4361
+#: db/seeds/settings.rb:4374
 #, fuzzy
 #| msgid ""
 #| "Defines postmaster filter to identify postmaster bounces; and handles "
@@ -6190,7 +6190,7 @@ msgid ""
 msgstr ""
 "定义邮件管理员过滤器以识别邮件管理员的退信；并将它们作为原始工单的后续处理"
 
-#: db/seeds/settings.rb:4379
+#: db/seeds/settings.rb:4392
 msgid ""
 "Defines postmaster filter to identify postmaster bounces; and reopens "
 "tickets if delivery fails permanently."
@@ -6198,23 +6198,23 @@ msgstr ""
 "定义邮件管理员过滤器以识别邮件管理员的退信；如果邮件永久性无法投递，则重新开"
 "启工单。"
 
-#: db/seeds/settings.rb:4325
+#: db/seeds/settings.rb:4338
 msgid "Defines postmaster filter to identify sender user."
 msgstr "定义邮件管理员过滤器以识别发件人用户。"
 
-#: db/seeds/settings.rb:4316
+#: db/seeds/settings.rb:4329
 #, fuzzy
 #| msgid "Defines postmaster filter to identify sender user."
 msgid "Defines postmaster filter to identify session user."
 msgstr "定义邮件管理员过滤器以识别发件人用户。"
 
-#: db/seeds/settings.rb:4478
+#: db/seeds/settings.rb:4491
 #, fuzzy
 #| msgid "Defines postmaster filter to identify sender user."
 msgid "Defines postmaster filter to identify ticket group."
 msgstr "定义邮件管理员过滤器以识别发件人用户。"
 
-#: db/seeds/settings.rb:4415
+#: db/seeds/settings.rb:4428
 #, fuzzy
 #| msgid ""
 #| "Defines postmaster filter to manage Monit (https://mmonit.com/monit/) "
@@ -6224,40 +6224,40 @@ msgid ""
 "check_mk.html) emails."
 msgstr "定义邮件管理员过滤器以管理Monit (https://mmonit.com/monit/) 邮件。"
 
-#: db/seeds/settings.rb:4397
+#: db/seeds/settings.rb:4410
 msgid ""
 "Defines postmaster filter to manage Icinga (http://www.icinga.org) emails."
 msgstr "定义邮件管理员过滤器来管理Icinga (http://www.icinga.org) 邮件。"
 
-#: db/seeds/settings.rb:4424
+#: db/seeds/settings.rb:4437
 msgid ""
 "Defines postmaster filter to manage Monit (https://mmonit.com/monit/) emails."
 msgstr "定义邮件管理员过滤器以管理Monit (https://mmonit.com/monit/) 邮件。"
 
-#: db/seeds/settings.rb:4406
+#: db/seeds/settings.rb:4419
 msgid ""
 "Defines postmaster filter to manage Nagios (http://www.nagios.org) emails."
 msgstr "定义邮件管理员过滤器以管理Nagios (http://www.nagios.org) 邮件。"
 
-#: db/seeds/settings.rb:4235
+#: db/seeds/settings.rb:4248
 msgid ""
 "Defines postmaster filter to remove X-Zammad headers from untrustworthy "
 "sources."
 msgstr "定义邮件管理员过滤器以从不可信任的源头移除X-Zammad头部信息。"
 
-#: db/seeds/settings.rb:4271
+#: db/seeds/settings.rb:4284
 msgid ""
 "Defines postmaster filter to set the owner (based on group follow up "
 "assignment)."
 msgstr "定义邮件管理员过滤器以设置所有者（基于组跟进分配）。"
 
-#: db/seeds/settings.rb:4280
+#: db/seeds/settings.rb:4293
 msgid ""
 "Defines postmaster filter to set the sender/from of emails based on reply-to "
 "header."
 msgstr "定义邮件管理员过滤器，根据回复头设置电子邮件的发送者/发件人。"
 
-#: db/seeds/settings.rb:4469
+#: db/seeds/settings.rb:4482
 msgid ""
 "Defines postmaster filter which sets the articles visibility to internal if "
 "it is a rely to an internal article or the last outgoing email is internal."
@@ -6265,7 +6265,7 @@ msgstr ""
 "定义邮件管理员过滤器，如果文章是对内部文章的回复，或者最后一封发出的邮件是内"
 "部邮件，那么将文章的可见性设置为内部。"
 
-#: db/seeds/settings.rb:4232
+#: db/seeds/settings.rb:4245
 msgid "Defines postmaster filter."
 msgstr "定义邮件管理员过滤器。"
 
@@ -6273,35 +6273,35 @@ msgstr "定义邮件管理员过滤器。"
 msgid "Defines pretty date format."
 msgstr "定义合适的日期格式。"
 
-#: db/seeds/settings.rb:5459
+#: db/seeds/settings.rb:5472
 msgid "Defines processing timeout for the html sanitizer."
 msgstr "定义HTML清理器的处理超时时间。"
 
-#: db/seeds/settings.rb:5118
+#: db/seeds/settings.rb:5131
 msgid "Defines sync transaction backend."
 msgstr "定义同步交易后端。"
 
-#: db/seeds/settings.rb:5447
+#: db/seeds/settings.rb:5460
 msgid "Defines the CSS font information for HTML emails."
 msgstr "定义HTML电子邮件的CSS字体信息。"
 
-#: db/seeds/settings.rb:5259
+#: db/seeds/settings.rb:5272
 msgid "Defines the CTI config."
 msgstr "定义CTI（计算机电话集成）配置。"
 
-#: db/seeds/settings.rb:4804
+#: db/seeds/settings.rb:4817
 msgid "Defines the Checkmk token for allowing updates."
 msgstr "定义了允许更新的Checkmk令牌。"
 
-#: db/seeds/settings.rb:5395
+#: db/seeds/settings.rb:5408
 msgid "Defines the Clearbit config."
 msgstr "定义Clearbit配置。"
 
-#: db/seeds/settings.rb:4957
+#: db/seeds/settings.rb:4970
 msgid "Defines the Exchange OAuth config."
 msgstr "定义 Exchange OAuth 配置。"
 
-#: db/seeds/settings.rb:4944
+#: db/seeds/settings.rb:4957
 msgid "Defines the Exchange config."
 msgstr "定义Exchange配置。"
 
@@ -6309,19 +6309,19 @@ msgstr "定义Exchange配置。"
 msgid "Defines the HTTP protocol of your instance."
 msgstr "定义实例的 HTTP 协议。"
 
-#: db/seeds/settings.rb:5763
+#: db/seeds/settings.rb:5776
 msgid "Defines the PGP config."
 msgstr "定义 PGP 配置。"
 
-#: db/seeds/settings.rb:5334
+#: db/seeds/settings.rb:5347
 msgid "Defines the Placetel config."
 msgstr "定义Placetel配置。"
 
-#: db/seeds/settings.rb:5721
+#: db/seeds/settings.rb:5734
 msgid "Defines the S/MIME config."
 msgstr "定义S/MIME配置。"
 
-#: db/seeds/settings.rb:5436
+#: db/seeds/settings.rb:5449
 msgid "Defines the agent limit."
 msgstr "定义代理限制。"
 
@@ -6353,28 +6353,28 @@ msgstr "定义用户和组织图像查找的后端。"
 msgid "Defines the backend service for ticket article language detection."
 msgstr "在票务操作后定义标签行为。"
 
-#: db/seeds/settings.rb:2901
+#: db/seeds/settings.rb:2914
 msgid ""
 "Defines the configuration how many articles can be created in a minute range "
 "globally."
 msgstr "定义全局一分钟范围内可以创建多少文章的配置。"
 
-#: db/seeds/settings.rb:2882
+#: db/seeds/settings.rb:2895
 msgid ""
 "Defines the configuration how many articles can be created in a minute range "
 "per ticket."
 msgstr "定义配置每分钟范围内每个工单可以创建多少篇文章。"
 
-#: db/seeds/settings.rb:4128
+#: db/seeds/settings.rb:4141
 msgid ""
 "Defines the custom unit to be shown next to the time accounting input field."
 msgstr "定义要在时间会计输入字段旁边显示的自定义单元。"
 
-#: db/seeds/settings.rb:4209
+#: db/seeds/settings.rb:4222
 msgid "Defines the default calendar tickets subscription settings."
 msgstr "定义默认的日历票务订阅设置。"
 
-#: db/seeds/settings.rb:3630
+#: db/seeds/settings.rb:3643
 msgid "Defines the default screen."
 msgstr "定义默认屏幕。"
 
@@ -6386,7 +6386,7 @@ msgstr "定义默认系统语言。"
 msgid "Defines the default system timezone."
 msgstr "定义系统默认时区。"
 
-#: db/seeds/settings.rb:4164
+#: db/seeds/settings.rb:4177
 msgid "Defines the default time accounting type."
 msgstr "定义默认时间统计类型。"
 
@@ -6394,14 +6394,14 @@ msgstr "定义默认时间统计类型。"
 msgid "Defines the default visibility for new notes."
 msgstr "定义新注释的默认可见性。"
 
-#: db/seeds/settings.rb:5293
+#: db/seeds/settings.rb:5306
 msgid ""
 "Defines the duration of customer activity (in seconds) on a call until the "
 "user profile dialog is shown."
 msgstr ""
 "定义客户在通话中的活动持续时间（以秒为单位），直到显示用户配置文件对话框。"
 
-#: db/seeds/settings.rb:6159
+#: db/seeds/settings.rb:6172
 msgid ""
 "Defines the fixed instructions that guide the AI Writing Assistant on e.g. "
 "how to format its output."
@@ -6416,19 +6416,19 @@ msgstr ""
 "定义系统的完全限定域名。此设置用作变量 #{setting.fqdn}，该变量可在应用程序使"
 "用的所有形式的消息传递中找到，以构建指向系统内工单的链接。"
 
-#: db/seeds/settings.rb:4732
+#: db/seeds/settings.rb:4745
 msgid "Defines the group of created tickets."
 msgstr "定义创建的工单组。"
 
-#: db/seeds/settings.rb:3080
+#: db/seeds/settings.rb:3093
 msgid "Defines the group of tickets created via web form."
 msgstr "定义通过 Web 表单创建的工单组。"
 
-#: db/seeds/settings.rb:5024
+#: db/seeds/settings.rb:5037
 msgid "Defines the i-doit config."
 msgstr "定义 i-doit 配置。"
 
-#: db/seeds/settings.rb:4030
+#: db/seeds/settings.rb:4043
 msgid "Defines the log levels for various logging actions of the Sequencer."
 msgstr "定义测序仪各种记录动作的日志级别。"
 
@@ -6436,7 +6436,7 @@ msgstr "定义测序仪各种记录动作的日志级别。"
 msgid "Defines the logo of the application, shown in the web interface."
 msgstr "修改系统显示在用户介面上的标志(Logo)."
 
-#: db/seeds/settings.rb:3291
+#: db/seeds/settings.rb:3304
 msgid "Defines the maximum accepted email size in MB."
 msgstr "定义MB中最大接受的电子邮件大小。"
 
@@ -6452,7 +6452,7 @@ msgid ""
 "title bar of the web browser."
 msgstr "定义应用程序的名称，显示在 Web 界面、选项卡和 Web 浏览器的标题栏中。"
 
-#: db/seeds/settings.rb:2795
+#: db/seeds/settings.rb:2808
 msgid "Defines the permission level used for lookups."
 msgstr "定义用于查找的权限级别。"
 
@@ -6466,23 +6466,23 @@ msgstr "定义Websocket服务器的端口。"
 msgid "Defines the random application secret."
 msgstr "定义随机应用程序秘密。"
 
-#: db/seeds/settings.rb:4513
+#: db/seeds/settings.rb:4526
 msgid "Defines the sender email address of Icinga emails."
 msgstr "定义ICINGA电子邮件的发送者电子邮件地址。"
 
-#: db/seeds/settings.rb:4611
+#: db/seeds/settings.rb:4624
 msgid "Defines the sender email address of Nagios emails."
 msgstr "定义Nagios电子邮件的发送者电子邮件地址。"
 
-#: db/seeds/settings.rb:4709
+#: db/seeds/settings.rb:4722
 msgid "Defines the sender email address of the service emails."
 msgstr "定义服务电子邮件的发件人电子邮件地址。"
 
-#: db/seeds/settings.rb:3451
+#: db/seeds/settings.rb:3464
 msgid "Defines the sender of email notifications."
 msgstr "定义电子邮件通知的发件人。"
 
-#: db/seeds/settings.rb:3269
+#: db/seeds/settings.rb:3282
 msgid ""
 "Defines the separator between the agent's real name and the given group "
 "email address."
@@ -6495,11 +6495,11 @@ msgid ""
 msgstr ""
 "定义用户不活动的会话超时。 根据分配的权限，将使用最高超时值，否则使用默认值。"
 
-#: db/seeds/settings.rb:5197
+#: db/seeds/settings.rb:5210
 msgid "Defines the sipgate.io config."
 msgstr "定义sipgate.io config。"
 
-#: db/seeds/settings.rb:4562
+#: db/seeds/settings.rb:4575
 msgid "Defines the state of auto-closed tickets."
 msgstr "定义自动关闭工单的状态。"
 
@@ -6512,46 +6512,46 @@ msgstr ""
 "定义系统标识符。每个工单都包含此 ID。这可确保只有属于您系统的工单才会作为后续"
 "处理（在两个 Zammad 实例之间进行通信时很有用）。"
 
-#: db/seeds/settings.rb:3017
+#: db/seeds/settings.rb:3030
 msgid "Defines the tab behaviour after a ticket action."
 msgstr "在票务操作后定义标签行为。"
 
-#: db/seeds/settings.rb:2812
+#: db/seeds/settings.rb:2825
 msgid "Defines the ticket states used for lookups."
 msgstr "定义用于查找的工单状态。"
 
-#: db/seeds/settings.rb:5592
+#: db/seeds/settings.rb:5605
 msgid "Defines the timeframe during which a self-created note can be deleted."
 msgstr "定义可以删除自我创建的音符的时间表。"
 
-#: db/seeds/settings.rb:5348
+#: db/seeds/settings.rb:5361
 msgid "Defines the token for Placetel."
 msgstr "定义 Placetel 的令牌。"
 
-#: db/seeds/settings.rb:5139
+#: db/seeds/settings.rb:5152
 msgid ""
 "Defines the transaction backend to detect customer signatures in emails."
 msgstr "定义交易后端以检测电子邮件中的客户签名。"
 
-#: db/seeds/settings.rb:5121
+#: db/seeds/settings.rb:5134
 msgid "Defines the transaction backend to execute triggers."
 msgstr "将事务后端定义为执行触发器。"
 
-#: db/seeds/settings.rb:5130
+#: db/seeds/settings.rb:5143
 msgid "Defines the transaction backend to send agent notifications."
 msgstr "定义交易后端以发送代理通知。"
 
-#: db/seeds/settings.rb:5417
+#: db/seeds/settings.rb:5430
 msgid ""
 "Defines the transaction backend which detects caller IDs in objects and "
 "stores them for CTI lookups."
 msgstr "定义事务后端检测对象中的呼叫者ID并将其存储以进行CTI查找。"
 
-#: db/seeds/settings.rb:5426
+#: db/seeds/settings.rb:5439
 msgid "Defines the transaction backend which executes time based triggers."
 msgstr "定义执行基于时间的触发器的事务后端。"
 
-#: db/seeds/settings.rb:5408
+#: db/seeds/settings.rb:5421
 msgid ""
 "Defines the transaction backend which will enrich customer and organization "
 "information from Clearbit (http://www.clearbit.com)."
@@ -6559,43 +6559,43 @@ msgstr ""
 "定义了从Clearbit（http://www.clearbit.com）丰富客户和组织信息的交易后端。"
 
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco:14
-#: db/seeds/settings.rb:4110
+#: db/seeds/settings.rb:4123
 msgid "Defines the unit to be shown next to the time accounting input field."
 msgstr "定义要在时间记录输入字段旁边显示的单元。"
 
-#: db/seeds/settings.rb:2744
+#: db/seeds/settings.rb:2757
 msgid ""
 "Defines the warning message that is shown when a matching ticket is present."
 msgstr "定义存在匹配票时显示的警告消息。"
 
-#: db/seeds/settings.rb:2727
+#: db/seeds/settings.rb:2740
 msgid ""
 "Defines the warning title that is shown when a matching ticket is present."
 msgstr "定义存在匹配票时显示的警告标题。"
 
-#: db/seeds/settings.rb:5127
+#: db/seeds/settings.rb:5140
 msgid "Defines transaction backend."
 msgstr "定义交易后端。"
 
-#: db/seeds/settings.rb:2778
+#: db/seeds/settings.rb:2791
 msgid ""
 "Defines whether the matching tickets are shown in case of already existing "
 "tickets."
 msgstr "定义在已经存在的门票的情况下是否显示匹配票。"
 
-#: db/seeds/settings.rb:3167
+#: db/seeds/settings.rb:3180
 msgid "Defines which parameters are allowed to be submitted via the form API."
 msgstr ""
 
-#: db/seeds/settings.rb:6070
+#: db/seeds/settings.rb:6083
 msgid "Defines which roles are allowed to access the desktop BETA UI switch."
 msgstr ""
 
-#: db/seeds/settings.rb:2710
+#: db/seeds/settings.rb:2723
 msgid "Defines which ticket attributes are checked before creating a ticket."
 msgstr "在创建机票之前，定义检查哪些票证属性。"
 
-#: db/seeds/settings.rb:2761
+#: db/seeds/settings.rb:2774
 msgid ""
 "Defines which user roles will receive a warning in case of matching tickets."
 msgstr "定义哪些用户角色将在匹配机票的情况下会收到警告。"
@@ -6869,17 +6869,17 @@ msgstr "风格设计"
 msgid "Desktop"
 msgstr "桌面"
 
-#: db/seeds/settings.rb:6049
+#: db/seeds/settings.rb:6062
 #, fuzzy
 #| msgid "New tab"
 msgid "Desktop BETA UI Switch"
 msgstr "新标签"
 
-#: db/seeds/settings.rb:6058
+#: db/seeds/settings.rb:6071
 msgid "Desktop BETA UI Switch Admin Menu"
 msgstr ""
 
-#: db/seeds/settings.rb:6067
+#: db/seeds/settings.rb:6080
 msgid "Desktop BETA UI Switch Roles"
 msgstr ""
 
@@ -6914,7 +6914,7 @@ msgid "Destination group > Sending email address"
 msgstr "目的地群組"
 
 #: app/assets/javascripts/app/views/settings/ticket_duplicate_detection.jst.eco:7
-#: db/seeds/settings.rb:2681
+#: db/seeds/settings.rb:2694
 msgid "Detect Duplicate Ticket Creation"
 msgstr "检测重复的工单创建"
 
@@ -6997,7 +6997,7 @@ msgid ""
 "this channel and switch to using a different mailbox type. %l"
 msgstr ""
 
-#: db/seeds/settings.rb:2187
+#: db/seeds/settings.rb:2200
 msgid "Digit required"
 msgstr "需要數字"
 
@@ -7120,7 +7120,7 @@ msgid "Display Zammad with the new BETA user interface"
 msgstr ""
 
 #: app/assets/javascripts/app/models/email_address.coffee:32
-#: db/seeds/settings.rb:1895
+#: db/seeds/settings.rb:1908
 msgid "Display name"
 msgstr "顯示名稱"
 
@@ -7144,7 +7144,7 @@ msgstr "不要加密电子邮件"
 msgid "Do not sign email"
 msgstr "不要签署电子邮件"
 
-#: db/seeds/settings.rb:5996
+#: db/seeds/settings.rb:6009
 msgid "Do not update any tickets."
 msgstr "不要更新任何工单。"
 
@@ -7495,49 +7495,49 @@ msgstr "编辑用户单位"
 msgid "Editor"
 msgstr "编辑者"
 
-#: db/seeds/settings.rb:3727
+#: db/seeds/settings.rb:3740
 #, fuzzy
 #| msgid "Elasticsearch Model Configuration"
 msgid "Elasticsearch Asciifolding Configuration"
 msgstr "Elasticsearch 模型配置"
 
-#: db/seeds/settings.rb:3682
+#: db/seeds/settings.rb:3695
 msgid "Elasticsearch Attachment Extensions"
 msgstr "Elasticsearch附件扩展"
 
-#: db/seeds/settings.rb:3691
+#: db/seeds/settings.rb:3704
 msgid "Elasticsearch Attachment Size"
 msgstr "Elasticsearch附件大小"
 
-#: db/seeds/settings.rb:3664
+#: db/seeds/settings.rb:3677
 msgid "Elasticsearch Endpoint Index"
 msgstr "Elasticsearch端点索引"
 
-#: db/seeds/settings.rb:3655
+#: db/seeds/settings.rb:3668
 msgid "Elasticsearch Endpoint Password"
 msgstr "Elasticsearch端点密码"
 
-#: db/seeds/settings.rb:3637
+#: db/seeds/settings.rb:3650
 msgid "Elasticsearch Endpoint URL"
 msgstr "Elasticsearch端点URL"
 
-#: db/seeds/settings.rb:3646
+#: db/seeds/settings.rb:3659
 msgid "Elasticsearch Endpoint User"
 msgstr "Elasticsearch Endpoint用户"
 
-#: db/seeds/settings.rb:3718
+#: db/seeds/settings.rb:3731
 msgid "Elasticsearch Model Configuration"
 msgstr "Elasticsearch 模型配置"
 
-#: db/seeds/settings.rb:3709
+#: db/seeds/settings.rb:3722
 msgid "Elasticsearch Pipeline Name"
 msgstr "Elasticsearch管道名称"
 
-#: db/seeds/settings.rb:3673
+#: db/seeds/settings.rb:3686
 msgid "Elasticsearch SSL verification"
 msgstr "Elasticsearch SSL验证"
 
-#: db/seeds/settings.rb:3700
+#: db/seeds/settings.rb:3713
 msgid "Elasticsearch Total Payload Size"
 msgstr "Elasticsearch总有效载荷大小"
 
@@ -7753,11 +7753,11 @@ msgstr "工单概览"
 msgid "Enable"
 msgstr "打开"
 
-#: db/seeds/settings.rb:3578
+#: db/seeds/settings.rb:3591
 msgid "Enable Chat"
 msgstr "启动对话"
 
-#: app/assets/javascripts/app/views/api.jst.eco:33 db/seeds/settings.rb:3533
+#: app/assets/javascripts/app/views/api.jst.eco:33 db/seeds/settings.rb:3546
 msgid ""
 "Enable REST API access using the username/email address and password for the "
 "authentication user."
@@ -7771,7 +7771,7 @@ msgstr ""
 "使用令牌（不是用户名/电子邮件地址和密码）启用 REST API。所有用户都需要在用户"
 "配置文件中创建自己的访问令牌。"
 
-#: db/seeds/settings.rb:3508
+#: db/seeds/settings.rb:3521
 msgid ""
 "Enable REST API using tokens (not username/email address and password). Each "
 "user needs to create its own access tokens in user profile."
@@ -7779,11 +7779,11 @@ msgstr ""
 "使用令牌启用REST API（不是用户名/电子邮件地址和密码）。每个用户都需要在用户配"
 "置文件中创建自己的访问令牌。"
 
-#: db/seeds/settings.rb:5931
+#: db/seeds/settings.rb:5944
 msgid "Enable Recovery Codes"
 msgstr "启用恢复代码"
 
-#: db/seeds/settings.rb:2962
+#: db/seeds/settings.rb:2975
 msgid "Enable Ticket creation"
 msgstr "允許透過其他網頁建立工單"
 
@@ -7793,7 +7793,7 @@ msgid ""
 "types below when adding accounted time."
 msgstr "启用活动类型选择。这将使代理在添加帐户时间时选择以下类型之一。"
 
-#: db/seeds/settings.rb:2582
+#: db/seeds/settings.rb:2595
 msgid "Enable auto assignment for following matching tickets."
 msgstr "启用自动分配以进行以下匹配票。"
 
@@ -7801,7 +7801,7 @@ msgstr "启用自动分配以进行以下匹配票。"
 msgid "Enable automatic assignment the first time an agent opens a ticket."
 msgstr "客服人员第一次打开工单时启用自动分配。"
 
-#: db/seeds/settings.rb:6014
+#: db/seeds/settings.rb:6027
 #, fuzzy
 #| msgid "Enable Chat"
 msgid "Enable checklists."
@@ -7827,13 +7827,13 @@ msgstr ""
 "啟用引用完整的電子郵件於回答中。 引用的電子郵件將放在回答的末尾。 如果您只想"
 "引用某個短語，則只需標記文本並按回覆即可 (此功能始終可用)。"
 
-#: db/seeds/settings.rb:6173
+#: db/seeds/settings.rb:6186
 msgid ""
 "Enable or disable AI generation of knowledge base answers from ticket "
 "content."
 msgstr ""
 
-#: db/seeds/settings.rb:6041
+#: db/seeds/settings.rb:6054
 msgid ""
 "Enable or disable self-shutdown of Zammad processes after significant "
 "configuration changes. This should only be used if the controlling process "
@@ -7858,11 +7858,11 @@ msgstr ""
 "启用或者禁用Zammad的维护模式。如果启用，非管理员身份的用户将会被注销登陆，只"
 "有管理员可以开启新的会话。"
 
-#: db/seeds/settings.rb:6112
+#: db/seeds/settings.rb:6125
 msgid "Enable or disable the ticket summary."
 msgstr ""
 
-#: db/seeds/settings.rb:6145
+#: db/seeds/settings.rb:6158
 msgid "Enable or disable the writing assistant text tools."
 msgstr ""
 
@@ -7870,11 +7870,11 @@ msgstr ""
 msgid "Enable the banner for the BETA switch"
 msgstr ""
 
-#: db/seeds/settings.rb:2556
+#: db/seeds/settings.rb:2569
 msgid "Enable ticket auto assignment."
 msgstr "启用机票自动分配。"
 
-#: db/seeds/settings.rb:4065
+#: db/seeds/settings.rb:4078
 msgid "Enable time accounting."
 msgstr "启用时间会计。"
 
@@ -7882,7 +7882,7 @@ msgstr "启用时间会计。"
 msgid "Enable/disable inline translations"
 msgstr "打开/关闭 用户界面翻译"
 
-#: db/seeds/settings.rb:3581
+#: db/seeds/settings.rb:3594
 msgid "Enable/disable online chat."
 msgstr "启用/禁用在线聊天。"
 
@@ -7895,13 +7895,13 @@ msgid "Enables a sidebar to show an overview of all attachments."
 msgstr "使侧边栏可以显示所有附件的概述。"
 
 #: app/assets/javascripts/app/views/settings/ticket_duplicate_detection.jst.eco:12
-#: db/seeds/settings.rb:2684
+#: db/seeds/settings.rb:2697
 msgid ""
 "Enables a warning to users during ticket creation if there is an existing "
 "ticket with the same attributes."
 msgstr "如果有具有相同属性的现有票，则在创建票证期间向用户发出警告。"
 
-#: db/seeds/settings.rb:5788
+#: db/seeds/settings.rb:5801
 msgid ""
 "Enables button for user authentication via %s. The button will redirect to /"
 "auth/sso on user interaction. Configure trusted proxy IP addresses or CIDR "
@@ -7967,17 +7967,17 @@ msgstr "通过Google启用用户身份验证。"
 msgid "Enables user authentication via Microsoft 365."
 msgstr "通过 Microsoft 365 启用用户身份验证。"
 
-#: db/seeds/settings.rb:2049
+#: db/seeds/settings.rb:2062
 #, fuzzy
 #| msgid "Enables user authentication via Weibo."
 msgid "Enables user authentication via OpenID Connect."
 msgstr "通过微博启用用户身份验证。"
 
-#: db/seeds/settings.rb:1891
+#: db/seeds/settings.rb:1904
 msgid "Enables user authentication via SAML."
 msgstr "通过SAML启用用户身份验证。"
 
-#: db/seeds/settings.rb:1827
+#: db/seeds/settings.rb:1840
 msgid "Enables user authentication via Weibo."
 msgstr "通过微博启用用户身份验证。"
 
@@ -8057,11 +8057,11 @@ msgstr "終點"
 msgid "Endpoint Settings"
 msgstr "端点设定"
 
-#: db/seeds/settings.rb:5958
+#: db/seeds/settings.rb:5971
 msgid "Enforce the setup of the two-factor authentication"
 msgstr "强制执行双因素身份验证的设置"
 
-#: db/seeds/settings.rb:5965
+#: db/seeds/settings.rb:5978
 msgid "Enforced for user roles"
 msgstr "针对用户角色强制执行"
 
@@ -8264,7 +8264,7 @@ msgstr "自动向导执行期间的错误。"
 msgid "Error fetching i-doit information. Please contact your administrator."
 msgstr "出了些问题。请联系您的管理员。"
 
-#: lib/secure_mailing/smime/incoming.rb:99
+#: lib/secure_mailing/smime/incoming.rb:107
 #, fuzzy
 #| msgid "Something went wrong. Please contact your administrator."
 msgid "Error while verifying signature, please contact your administrator."
@@ -8483,15 +8483,15 @@ msgstr "例外用户"
 msgid "Exchange"
 msgstr "交换"
 
-#: db/seeds/settings.rb:4954
+#: db/seeds/settings.rb:4967
 msgid "Exchange OAuth"
 msgstr "Exchange OAuth"
 
-#: db/seeds/settings.rb:4941
+#: db/seeds/settings.rb:4954
 msgid "Exchange config"
 msgstr "Exchange Config"
 
-#: db/seeds/settings.rb:4967
+#: db/seeds/settings.rb:4980
 msgid "Exchange integration"
 msgstr "交换集成"
 
@@ -8776,7 +8776,7 @@ msgstr "回饋意見表"
 msgid "Feedback Form"
 msgstr "回饋意見表"
 
-#: db/seeds/settings.rb:2081
+#: db/seeds/settings.rb:2094
 #, fuzzy
 #| msgid ""
 #| "Attribute that uniquely identifies the user. If unset, the name "
@@ -9060,7 +9060,7 @@ msgstr "忘记密码了吗？"
 msgid "Form"
 msgstr "表单"
 
-#: db/seeds/settings.rb:3164
+#: db/seeds/settings.rb:3177
 msgid "Form Allowed Parameters"
 msgstr ""
 
@@ -9302,7 +9302,7 @@ msgstr "开始"
 
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/authenticator_app.coffee:6
 #: app/frontend/shared/entities/two-factor/plugins/authenticator-app.ts:10
-#: db/seeds/settings.rb:5923
+#: db/seeds/settings.rb:5936
 msgid "Get the security code from the authenticator app on your device."
 msgstr "从设备上的身份验证器应用程序获取安全码。"
 
@@ -9332,11 +9332,11 @@ msgstr "GitHub 应用程序凭证"
 msgid "GitHub OAuth Applications"
 msgstr "GitHub OAuth 应用程序"
 
-#: db/seeds/settings.rb:5103
+#: db/seeds/settings.rb:5116
 msgid "GitHub config"
 msgstr "github config"
 
-#: db/seeds/settings.rb:5076
+#: db/seeds/settings.rb:5089
 msgid "GitHub integration"
 msgstr "GitHub集成"
 
@@ -9370,11 +9370,11 @@ msgstr "Gitlab应用凭据"
 msgid "GitLab Applications"
 msgstr "GitLab 应用程序"
 
-#: db/seeds/settings.rb:5061
+#: db/seeds/settings.rb:5074
 msgid "GitLab config"
 msgstr "GitLab配置"
 
-#: db/seeds/settings.rb:5034
+#: db/seeds/settings.rb:5047
 msgid "GitLab integration"
 msgstr "GitLab集成"
 
@@ -9525,7 +9525,7 @@ msgstr "问候语"
 #: app/views/mailer/ticket_create/zh-cn.html.erb:8
 #: app/views/messaging/ticket_create/zh-tw.md.erb:3
 #: app/views/messaging/ticket_info/zh-tw.md.erb:3
-#: db/seeds/object_manager_attributes.rb:168 db/seeds/settings.rb:2989
+#: db/seeds/object_manager_attributes.rb:168 db/seeds/settings.rb:3002
 #: lib/excel_sheet/ticket.rb:27
 msgid "Group"
 msgstr "组"
@@ -9575,11 +9575,11 @@ msgid "Group permissions"
 msgstr "群组权限"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco:18
-#: db/seeds/settings.rb:2989
+#: db/seeds/settings.rb:3002
 msgid "Group selection for Ticket creation"
 msgstr "工單建立的群組選擇"
 
-#: db/seeds/settings.rb:3077
+#: db/seeds/settings.rb:3090
 msgid "Group selection for ticket creation"
 msgstr "创建工单的群组选择"
 
@@ -9615,11 +9615,11 @@ msgstr "组是 …"
 msgid "HMAC SHA1 Signature Token"
 msgstr "HMAC SHA1签名令牌"
 
-#: db/seeds/settings.rb:5444
+#: db/seeds/settings.rb:5457
 msgid "HTML Email CSS Font"
 msgstr "HTML电子邮件CSS字体"
 
-#: db/seeds/settings.rb:5456
+#: db/seeds/settings.rb:5469
 msgid "HTML Sanitizer Processing Timeout"
 msgstr "HTML消毒器处理超时"
 
@@ -9917,11 +9917,11 @@ msgstr ""
 msgid "Highlighting is inactive."
 msgstr "企业名称"
 
-#: db/seeds/settings.rb:5608
+#: db/seeds/settings.rb:5621
 msgid "Highlights if the note a user is writing is public or private"
 msgstr "突出显示用户写作的注释是公共的还是私人的"
 
-#: db/seeds/settings.rb:5605
+#: db/seeds/settings.rb:5618
 msgid "Hint for adding an article to an existing ticket."
 msgstr "暗示将文章添加到现有票证上。"
 
@@ -10037,19 +10037,19 @@ msgstr "ID"
 msgid "ID:"
 msgstr "ID："
 
-#: db/seeds/settings.rb:1902
+#: db/seeds/settings.rb:1915
 msgid "IDP SSO target URL"
 msgstr "IDP SSO目标URL"
 
-#: db/seeds/settings.rb:1910
+#: db/seeds/settings.rb:1923
 msgid "IDP Single Logout target URL"
 msgstr "IDP单点注销目标URL"
 
-#: db/seeds/settings.rb:1918
+#: db/seeds/settings.rb:1931
 msgid "IDP certificate"
 msgstr "IDP证书"
 
-#: db/seeds/settings.rb:1926
+#: db/seeds/settings.rb:1939
 msgid "IDP certificate fingerprint"
 msgstr "IDP证书指纹"
 
@@ -10061,7 +10061,7 @@ msgstr "IMAP"
 msgid "Icinga"
 msgstr "Icinga"
 
-#: db/seeds/settings.rb:4484
+#: db/seeds/settings.rb:4497
 msgid "Icinga integration"
 msgstr "icinga集成"
 
@@ -10077,7 +10077,7 @@ msgstr "圖示及連結顏色"
 msgid "Icon Set"
 msgstr "圖示集"
 
-#: db/seeds/settings.rb:2060 lib/excel_sheet/ai/analytics/errors.rb:24
+#: db/seeds/settings.rb:2073 lib/excel_sheet/ai/analytics/errors.rb:24
 #: lib/excel_sheet/ai/analytics/with_usage.rb:24
 #, fuzzy
 #| msgid "Get notified"
@@ -10088,7 +10088,7 @@ msgstr "收到通知"
 msgid "Identifier of the chat topic."
 msgstr "聊天主题的标识符。"
 
-#: db/seeds/settings.rb:3608
+#: db/seeds/settings.rb:3621
 msgid "Idle timeout in seconds until agent is set offline automatically."
 msgstr "在几秒钟内空闲超时，直到自动设置代理。"
 
@@ -10122,13 +10122,13 @@ msgid ""
 "automatically."
 msgstr "如果主机和服务已恢复，则工单可以自动关闭。"
 
-#: db/seeds/settings.rb:3398
+#: db/seeds/settings.rb:3411
 msgid ""
 "If the sender is an agent, set the first user in the recipient list as the "
 "customer."
 msgstr "如果发件人是客服人员，则将收件人列表中的第一个用户设置为客户。"
 
-#: db/seeds/settings.rb:3474
+#: db/seeds/settings.rb:3487
 msgid "If this regex matches, no notification will be sent by the sender."
 msgstr "如果此正则表达式匹配，发件人将不会发送任何通知。"
 
@@ -10202,7 +10202,7 @@ msgstr "如果您想使用其他电子邮件地址，可以稍后进行配置。
 msgid "Ignore Escalation"
 msgstr "忽略升级"
 
-#: db/seeds/settings.rb:3768
+#: db/seeds/settings.rb:3781
 msgid "Ignore Escalation/SLA Information"
 msgstr "忽略 層級提升/ 服務級別協議SLA 信息"
 
@@ -10210,11 +10210,11 @@ msgstr "忽略 層級提升/ 服務級別協議SLA 信息"
 msgid "Ignore Message"
 msgstr "忽略消息"
 
-#: db/seeds/settings.rb:3771
+#: db/seeds/settings.rb:3784
 msgid "Ignore escalation/SLA information for import."
 msgstr "忽略导入的升级/SLA信息。"
 
-#: db/seeds/settings.rb:2833
+#: db/seeds/settings.rb:2846
 msgid "Ignore system_id"
 msgstr "忽略system_id"
 
@@ -10268,51 +10268,51 @@ msgstr "进口％s"
 msgid "Import API key could not be extracted from URL."
 msgstr "导入API密钥无法从URL中提取。"
 
-#: db/seeds/settings.rb:3940
+#: db/seeds/settings.rb:3953
 msgid "Import API key for requesting the Freshdesk API"
 msgstr "导入API密钥要求freshdesk API"
 
-#: db/seeds/settings.rb:3884
+#: db/seeds/settings.rb:3897
 msgid "Import API key for requesting the Zendesk API"
 msgstr "导入API密钥用于请求Zendesk API"
 
-#: db/seeds/settings.rb:3759
+#: db/seeds/settings.rb:3772
 msgid "Import Backend"
 msgstr "导入后端"
 
-#: db/seeds/settings.rb:4014
+#: db/seeds/settings.rb:4027
 msgid "Import Backends"
 msgstr "导入后端"
 
-#: db/seeds/settings.rb:3791
+#: db/seeds/settings.rb:3804
 msgid "Import Endpoint"
 msgstr "匯入Endpoint端點"
 
-#: db/seeds/settings.rb:3809
+#: db/seeds/settings.rb:3822
 msgid "Import Key"
 msgstr "匯入金鑰"
 
-#: db/seeds/settings.rb:3737
+#: db/seeds/settings.rb:3750
 msgid "Import Mode"
 msgstr "匯入模式"
 
-#: db/seeds/settings.rb:3847
+#: db/seeds/settings.rb:3860
 msgid "Import Password for HTTP basic authentication"
 msgstr "HTTP基本身份验证的导入密码"
 
-#: db/seeds/settings.rb:3995
+#: db/seeds/settings.rb:4008
 msgid "Import Password for requesting the Kayako API"
 msgstr "请求Kayako API的导入密码"
 
-#: db/seeds/settings.rb:3828
+#: db/seeds/settings.rb:3841
 msgid "Import User for HTTP basic authentication"
 msgstr "导入使用HTTP基本身份验证的用户"
 
-#: db/seeds/settings.rb:3977
+#: db/seeds/settings.rb:3990
 msgid "Import User for requesting the Kayako API"
 msgstr "导入用户请求Kayako API"
 
-#: db/seeds/settings.rb:3903
+#: db/seeds/settings.rb:3916
 msgid "Import User for requesting the Zendesk API"
 msgstr "导入用户请求Zendesk API"
 
@@ -10467,7 +10467,7 @@ msgstr "不完整的凭据"
 msgid "Incomplete ticket checklist"
 msgstr "不完整的凭据"
 
-#: db/seeds/settings.rb:2452
+#: db/seeds/settings.rb:2465
 msgid "Increment (SystemID.Counter)"
 msgstr "增量（SystemId.Counter）"
 
@@ -10522,7 +10522,7 @@ msgstr ""
 "启动导入过程将数据传输到Zammad中。跟踪此页面上的迁移进度，一旦导入成功完成，"
 "请立即通知。"
 
-#: app/models/store.rb:95
+#: app/models/store.rb:100
 msgid "Inline content could not be generated."
 msgstr "无法生成内联内容。"
 
@@ -10839,6 +10839,10 @@ msgstr "令牌无效，请联系您的管理员！"
 msgid "Invalid security code! Please try again with a new code."
 msgstr "无效的安全码！请再试一次新代码。"
 
+#: lib/secure_mailing/pgp/tool/data.rb:71
+msgid "Invalid signature format: expected a PGP signature"
+msgstr ""
+
 #: app/controllers/integration/cti_controller.rb:41
 #: app/controllers/integration/placetel_controller.rb:40
 #: app/controllers/integration/sipgate_controller.rb:40
@@ -10956,7 +10960,7 @@ msgstr "%s URL"
 msgid "Issue status"
 msgstr "消息状态"
 
-#: db/seeds/settings.rb:2068
+#: db/seeds/settings.rb:2081
 #, fuzzy
 #| msgid "no issues"
 msgid "Issuer"
@@ -11152,15 +11156,15 @@ msgstr "知识库提要"
 msgid "Knowledge Base Reader"
 msgstr "知识库读者"
 
-#: db/seeds/settings.rb:5562
+#: db/seeds/settings.rb:5575
 msgid "Knowledge Base active"
 msgstr "激活知识库"
 
-#: db/seeds/settings.rb:5577
+#: db/seeds/settings.rb:5590
 msgid "Knowledge Base active publicly"
 msgstr "激活公开知识库"
 
-#: db/seeds/settings.rb:5551
+#: db/seeds/settings.rb:5564
 msgid "Knowledge Base multilingual support"
 msgstr "知识库多语言支持"
 
@@ -11193,7 +11197,7 @@ msgstr "LDAP"
 msgid "LDAP Host"
 msgstr "LDAP 服务器"
 
-#: db/seeds/settings.rb:4914
+#: db/seeds/settings.rb:4927
 msgid "LDAP integration"
 msgstr "LDAP集成"
 
@@ -11426,15 +11430,15 @@ msgstr "将通知限制为特定组"
 msgid "Limit priorities and provide optional descriptions"
 msgstr ""
 
-#: db/seeds/settings.rb:3121
+#: db/seeds/settings.rb:3134
 msgid "Limit tickets by IP per day"
 msgstr "限制每天IP的门票"
 
-#: db/seeds/settings.rb:3100
+#: db/seeds/settings.rb:3113
 msgid "Limit tickets by IP per hour"
 msgstr "限制每小时IP的门票"
 
-#: db/seeds/settings.rb:3142
+#: db/seeds/settings.rb:3155
 msgid "Limit tickets per day"
 msgstr "每天限制门票"
 
@@ -12293,7 +12297,7 @@ msgid "Match none (NOT)"
 msgstr "匹配无（不）"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:38
-#: db/seeds/settings.rb:2809
+#: db/seeds/settings.rb:2822
 msgid "Match tickets in following states"
 msgstr "匹配符合以下条件的工单"
 
@@ -12324,7 +12328,7 @@ msgstr "最高同時文字對話"
 msgid "Max. length"
 msgstr "最大长度"
 
-#: db/seeds/settings.rb:3176
+#: db/seeds/settings.rb:3189
 msgid "Max. length of the subject in an email reply."
 msgstr "電子郵件回覆中主旨的最大長度"
 
@@ -12352,15 +12356,15 @@ msgstr "必须大于或等于％{count}"
 msgid "Maximal value must be lower than 2147483648"
 msgstr ""
 
-#: db/seeds/settings.rb:3288
+#: db/seeds/settings.rb:3301
 msgid "Maximum Email Size"
 msgstr "最大电子邮件尺寸"
 
-#: db/seeds/settings.rb:2917
+#: db/seeds/settings.rb:2930
 msgid "Maximum Recursive Ticket Triggers Depth"
 msgstr "最大递归票证触发深度"
 
-#: db/seeds/settings.rb:2239
+#: db/seeds/settings.rb:2252
 msgid "Maximum failed logins"
 msgstr "失敗登入次數上限"
 
@@ -12368,7 +12372,7 @@ msgstr "失敗登入次數上限"
 msgid "Maximum number of open tabs."
 msgstr "开放标签的最大数量。"
 
-#: db/seeds/settings.rb:2920
+#: db/seeds/settings.rb:2933
 msgid "Maximum number of recursively executed triggers."
 msgstr "最大递归执行的触发器数量。"
 
@@ -12599,7 +12603,7 @@ msgstr "迁移者无法读取OTRS输出！"
 msgid "Milestone"
 msgstr "里程碑"
 
-#: db/seeds/settings.rb:2484
+#: db/seeds/settings.rb:2497
 msgid "Min. size of number"
 msgstr "最小號碼大小"
 
@@ -12621,7 +12625,7 @@ msgstr ""
 msgid "Minimal value must be lower than 2147483648"
 msgstr ""
 
-#: db/seeds/settings.rb:2121
+#: db/seeds/settings.rb:2134
 msgid "Minimum length"
 msgstr "最小长度"
 
@@ -12680,7 +12684,7 @@ msgstr "星期一"
 msgid "Monit"
 msgstr "监视"
 
-#: db/seeds/settings.rb:4813
+#: db/seeds/settings.rb:4826
 msgid "Monit integration"
 msgstr "监测整合"
 
@@ -12690,7 +12694,7 @@ msgstr "监测整合"
 msgid "Monitoring"
 msgstr "系统监控"
 
-#: db/seeds/settings.rb:3556
+#: db/seeds/settings.rb:3569
 msgid "Monitoring Token"
 msgstr "监视令牌"
 
@@ -12819,7 +12823,7 @@ msgstr "正在处理"
 msgid "Nagios"
 msgstr "Nagios"
 
-#: db/seeds/settings.rb:4582
+#: db/seeds/settings.rb:4595
 msgid "Nagios integration"
 msgstr "纳吉奥斯整合"
 
@@ -12894,7 +12898,7 @@ msgstr "纳吉奥斯整合"
 msgid "Name"
 msgstr "名称"
 
-#: db/seeds/settings.rb:1934
+#: db/seeds/settings.rb:1947
 msgid "Name Identifier Format"
 msgstr "名称标识符格式"
 
@@ -13109,7 +13113,7 @@ msgid "New Source"
 msgstr "原文"
 
 #: app/assets/javascripts/app/views/tag/index.jst.eco:14
-#: db/seeds/settings.rb:4179
+#: db/seeds/settings.rb:4192
 msgid "New Tags"
 msgstr "新增标签"
 
@@ -13350,7 +13354,7 @@ msgstr "状态"
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:52
 #: app/assets/javascripts/app/views/ticket_zoom/overview_navigator.jst.eco:12
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketScreenBehavior/behaviorOptions.ts:21
-#: db/seeds/settings.rb:3028
+#: db/seeds/settings.rb:3041
 msgid "Next in overview"
 msgstr "回到工单概览"
 
@@ -13565,7 +13569,7 @@ msgstr "没有电子邮件！"
 msgid "No entries"
 msgstr "没有工单"
 
-#: app/controllers/integration/exchange_controller.rb:58
+#: app/controllers/integration/exchange_controller.rb:60
 msgid "No entries were found in the selected folder(s)."
 msgstr "在选定的文件夹中未发现条目。"
 
@@ -13586,7 +13590,7 @@ msgstr "不允许使用文件格式。"
 msgid "No filter was configured."
 msgstr "没有配置 Twitter 应用！"
 
-#: app/controllers/integration/exchange_controller.rb:45
+#: app/controllers/integration/exchange_controller.rb:47
 msgid "No folders were found for the given user credentials."
 msgstr "对于给定的用户凭据找不到文件夹。"
 
@@ -13732,7 +13736,7 @@ msgstr "已分享"
 
 #: app/controllers/organizations_controller.rb:107
 #: app/controllers/text_modules_controller.rb:75
-#: app/controllers/ticket_articles_controller.rb:245
+#: app/controllers/ticket_articles_controller.rb:246
 #: app/controllers/tickets_controller.rb:459
 #: app/controllers/users_controller.rb:559
 msgid "No source data submitted!"
@@ -13819,7 +13823,7 @@ msgstr "不，谢谢！"
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee:9
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_unit.coffee:55
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:65
-#: app/graphql/gql/types/ticket_type.rb:109 db/seeds/settings.rb:1966
+#: app/graphql/gql/types/ticket_type.rb:109 db/seeds/settings.rb:1979
 msgid "None"
 msgstr "无"
 
@@ -13981,7 +13985,7 @@ msgstr "注意"
 msgid "Notification"
 msgstr "通知"
 
-#: db/seeds/settings.rb:3448
+#: db/seeds/settings.rb:3461
 msgid "Notification Sender"
 msgstr "通知寄件人"
 
@@ -14286,13 +14290,13 @@ msgid ""
 "Zammad and complete the translation."
 msgstr "该语言中只有％s％已翻译。请帮助改善Zammad并完成翻译。"
 
-#: db/seeds/settings.rb:1969
+#: db/seeds/settings.rb:1982
 #, fuzzy
 #| msgid "Encrypt"
 msgid "Only Encrypting"
 msgstr "加密"
 
-#: db/seeds/settings.rb:1968
+#: db/seeds/settings.rb:1981
 #, fuzzy
 #| msgid "Sign in"
 msgid "Only Signing"
@@ -14481,13 +14485,13 @@ msgstr "处理中"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:116
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:110
-#: db/seeds/settings.rb:2038
+#: db/seeds/settings.rb:2051
 #, fuzzy
 #| msgid "Connect"
 msgid "OpenID Connect"
 msgstr "连接"
 
-#: db/seeds/settings.rb:2046
+#: db/seeds/settings.rb:2059
 #, fuzzy
 #| msgid "Test Connection"
 msgid "OpenID Connect Options"
@@ -14879,19 +14883,23 @@ msgstr "用户的所有者工单不会被删除。 所有者将映射到系统�
 msgid "PGP"
 msgstr "PGP"
 
-#: db/seeds/settings.rb:5774
+#: db/seeds/settings.rb:5787
 msgid "PGP Recipient Alias Configuration"
 msgstr "PGP收件人别名配置"
 
-#: db/seeds/settings.rb:5760
+#: db/seeds/settings.rb:5773
 msgid "PGP config"
 msgstr "PGP配置"
 
-#: db/seeds/settings.rb:5732
+#: db/seeds/settings.rb:5745
 msgid "PGP integration"
 msgstr "PGP 集成"
 
-#: db/seeds/settings.rb:2092
+#: lib/secure_mailing/pgp/tool/data.rb:85
+msgid "PGP signature does not cover the displayed message body"
+msgstr ""
+
+#: db/seeds/settings.rb:2105
 msgid "PKCE"
 msgstr ""
 
@@ -15018,19 +15026,19 @@ msgstr "代理连接的密码"
 msgid "Password for proxy connection."
 msgstr "Proxy 連接的密碼"
 
-#: db/seeds/settings.rb:2164
+#: db/seeds/settings.rb:2177
 msgid "Password needs to contain 2 lower case and 2 upper case characters."
 msgstr "密码需要包含 2 个小写字符和 2 个大写字符。"
 
-#: db/seeds/settings.rb:2190
+#: db/seeds/settings.rb:2203
 msgid "Password needs to contain at least one digit."
 msgstr "密碼必須至少包含 1個數字"
 
-#: db/seeds/settings.rb:2216
+#: db/seeds/settings.rb:2229
 msgid "Password needs to contain at least one special character."
 msgstr "密码需要至少包含一个特殊字符。"
 
-#: db/seeds/settings.rb:2124
+#: db/seeds/settings.rb:2137
 msgid "Password needs to have at least a minimal number of characters."
 msgstr "密碼必須至少包含最少幾個字符"
 
@@ -15114,7 +15122,7 @@ msgid "Permanently Delete Knowledge Base"
 msgstr "永久刪除知識庫"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:37
-#: db/seeds/settings.rb:2792
+#: db/seeds/settings.rb:2805
 msgid "Permission level for looking up tickets"
 msgstr "查找机票的许可级别"
 
@@ -15210,15 +15218,15 @@ msgstr ""
 msgid "Placetel"
 msgstr "Placetel"
 
-#: db/seeds/settings.rb:5345
+#: db/seeds/settings.rb:5358
 msgid "Placetel Token"
 msgstr "Placetel Token"
 
-#: db/seeds/settings.rb:5331
+#: db/seeds/settings.rb:5344
 msgid "Placetel config"
 msgstr "plapetel配置"
 
-#: db/seeds/settings.rb:5303
+#: db/seeds/settings.rb:5316
 msgid "Placetel integration"
 msgstr "placetel集成"
 
@@ -15323,7 +15331,7 @@ msgid ""
 "side beforehand. %l"
 msgstr ""
 
-#: db/seeds/settings.rb:1931
+#: db/seeds/settings.rb:1944
 msgid ""
 "Please note that this attribute is deprecated within one of the next "
 "versions of Zammad. Use the IDP certificate instead."
@@ -15366,7 +15374,7 @@ msgstr "请选择至少一个文件夹。"
 msgid "Please select a ticket to merge into."
 msgstr "请选择一张合并的票。"
 
-#: app/controllers/integration/exchange_controller.rb:52
+#: app/controllers/integration/exchange_controller.rb:54
 msgid "Please select at least one folder."
 msgstr "请选择至少一个文件夹。"
 
@@ -15617,11 +15625,11 @@ msgstr "优先级"
 msgid "Priority tagging rules"
 msgstr "优先级"
 
-#: db/seeds/settings.rb:1980
+#: db/seeds/settings.rb:1993
 msgid "Private key (PEM)"
 msgstr "私钥（PEM）"
 
-#: db/seeds/settings.rb:1987
+#: db/seeds/settings.rb:2000
 msgid "Private key secret"
 msgstr "私钥密码"
 
@@ -15677,7 +15685,7 @@ msgstr "代理设置"
 msgid "Profiles"
 msgstr "資料數據"
 
-#: db/seeds/settings.rb:2102
+#: db/seeds/settings.rb:2115
 msgid ""
 "Proof Key for Code Exchange is currently only supporting SHA256 as code "
 "challenge method."
@@ -15799,7 +15807,7 @@ msgid ""
 msgstr ""
 "在登录页显示一条信息. 请点击下面的绿色的横框, 输入您需要显示给用户的内容."
 
-#: db/seeds/settings.rb:3740
+#: db/seeds/settings.rb:3753
 msgid "Puts Zammad into import mode (disables some triggers)."
 msgstr "将Zammad置于导入模式（禁用某些触发器）。"
 
@@ -15982,7 +15990,7 @@ msgstr ""
 "如果您丢失了对其他两因素身份验证方法的访问，则可以使用恢复代码来访问您的帐"
 "户。"
 
-#: db/seeds/settings.rb:2853
+#: db/seeds/settings.rb:2866
 msgid "Recursive Ticket Triggers"
 msgstr "递归门票触发器"
 
@@ -15999,7 +16007,7 @@ msgstr ""
 msgid "Redis version"
 msgstr "新版本"
 
-#: db/seeds/settings.rb:3350
+#: db/seeds/settings.rb:3363
 msgid ""
 "References - Search for follow-up also in In-Reply-To or References headers."
 msgstr "参考 - 在重新或参考标题中也搜索后续行动。"
@@ -16411,6 +16419,10 @@ msgstr "在此处请求密码登录。"
 msgid "Requesting the Grant"
 msgstr "要求權限"
 
+#: db/seeds/settings.rb:1780
+msgid "Require verified email domain"
+msgstr ""
+
 #: app/controllers/reports_controller.rb:65
 msgid "Required parameter 'downloadBackendSelected' is missing."
 msgstr "缺少必需的参数“下载backendselectected”。"
@@ -16424,7 +16436,16 @@ msgstr "缺少必需的参数“配置文件”。"
 msgid "Requirements"
 msgstr "要求"
 
-#: db/seeds/settings.rb:5961
+#: db/seeds/settings.rb:1790
+msgid ""
+"Requires the \"xms_edov\" ID token claim (along with the \"email\" claim) to "
+"be present and true before trusting an incoming email address for account "
+"auto-linking. Both must first be configured as optional claims on the Azure "
+"app registration. Until that is done, enabling this blocks all Microsoft 365 "
+"account auto-linking by email."
+msgstr ""
+
+#: db/seeds/settings.rb:5974
 msgid ""
 "Requires the setup of the two-factor authentication for certain user roles."
 msgstr "需要为某些用户角色设置双因素身份验证。"
@@ -16671,7 +16692,7 @@ msgstr "通过WhatsApp失败，重试下载已发送媒体。"
 msgid "Rewrite complex section and make it easy to understand"
 msgstr ""
 
-#: db/seeds/settings.rb:6184
+#: db/seeds/settings.rb:6197
 msgid "Richtext Bubble Menu"
 msgstr ""
 
@@ -16767,7 +16788,7 @@ msgstr ""
 "S/MIME（安全/多用途互联网邮件扩展）是一种广泛接受的方法（或更准确地说，是一种"
 "协议），用于发送数字签名和加密的消息。"
 
-#: db/seeds/settings.rb:5718
+#: db/seeds/settings.rb:5731
 msgid "S/MIME config"
 msgstr "S/MIME配置"
 
@@ -16775,17 +16796,17 @@ msgstr "S/MIME配置"
 msgid "S/MIME enables you to send digitally signed and encrypted messages."
 msgstr "S/MIME 使您能够发送经过数字签名和加密的邮件。"
 
-#: db/seeds/settings.rb:5690
+#: db/seeds/settings.rb:5703
 msgid "S/MIME integration"
 msgstr "S/MIME集成"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:106
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:94
-#: db/seeds/settings.rb:1880
+#: db/seeds/settings.rb:1893
 msgid "SAML"
 msgstr "SAML"
 
-#: db/seeds/settings.rb:1888
+#: db/seeds/settings.rb:1901
 msgid "SAML App Credentials"
 msgstr "SAML应用凭据"
 
@@ -16875,11 +16896,11 @@ msgstr "SSL/StartTL"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:111
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:101
-#: db/seeds/settings.rb:5806
+#: db/seeds/settings.rb:5819
 msgid "SSO"
 msgstr "SSO"
 
-#: app/controllers/sessions_controller.rb:264
+#: app/controllers/sessions_controller.rb:268
 msgid "SSO request from untrusted IP address."
 msgstr ""
 
@@ -17024,11 +17045,11 @@ msgstr "自动任务"
 msgid "Schedulers"
 msgstr "自动任务"
 
-#: db/seeds/settings.rb:2084
+#: db/seeds/settings.rb:2097
 msgid "Scopes"
 msgstr ""
 
-#: db/seeds/settings.rb:2089
+#: db/seeds/settings.rb:2102
 msgid ""
 "Scopes that are included, separated by a single space character. If unset, "
 "\"openid email profile\" is used."
@@ -17388,7 +17409,7 @@ msgstr "安全密钥"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee:4
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/security_keys.coffee:5
-#: db/seeds/settings.rb:5867
+#: db/seeds/settings.rb:5880
 msgid "Security Keys"
 msgstr "安全密钥"
 
@@ -17698,11 +17719,11 @@ msgid ""
 "hour window is about to expire."
 msgstr "如果24小时窗口即将到期，请向客户发送自动提醒，要求他们回复。"
 
-#: db/seeds/settings.rb:3421
+#: db/seeds/settings.rb:3434
 msgid "Send postmaster mail if mail too large"
 msgstr "如果邮件太大，请发送邮政局长邮件"
 
-#: db/seeds/settings.rb:3424
+#: db/seeds/settings.rb:3437
 msgid "Send postmaster reject mail to sender of mail if mail is too large."
 msgstr "如果邮件太大，将邮政局长拒绝邮件发送给邮件发送者。"
 
@@ -17714,16 +17735,16 @@ msgstr "发送给用户"
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:51
 #: app/models/channel/driver/sms/massenversand.rb:45
 #: app/models/channel/driver/sms/message_bird.rb:92
-#: app/models/channel/driver/sms/twilio.rb:106 db/seeds/settings.rb:3238
+#: app/models/channel/driver/sms/twilio.rb:106 db/seeds/settings.rb:3251
 #: lib/excel_sheet/ticket.rb:32
 msgid "Sender"
 msgstr "寄件人"
 
-#: db/seeds/settings.rb:3238
+#: db/seeds/settings.rb:3251
 msgid "Sender Format"
 msgstr "寄件人格式"
 
-#: db/seeds/settings.rb:3266
+#: db/seeds/settings.rb:3279
 msgid "Sender Format Separator"
 msgstr "寄件人格式分隔符"
 
@@ -17732,7 +17753,7 @@ msgstr "寄件人格式分隔符"
 msgid "Sender Type"
 msgstr "发送者类型"
 
-#: db/seeds/settings.rb:3367
+#: db/seeds/settings.rb:3380
 msgid "Sender based on Reply-To header"
 msgstr "基於Reply-To標頭的寄件人"
 
@@ -17778,7 +17799,7 @@ msgstr "由;"
 msgid "September"
 msgstr "九月"
 
-#: db/seeds/settings.rb:4027
+#: db/seeds/settings.rb:4040
 msgid "Sequencer log level"
 msgstr "音序器日志级别"
 
@@ -17835,7 +17856,7 @@ msgstr "设置"
 msgid "Set a title for your ticket"
 msgstr "为您的工单设置标题"
 
-#: db/seeds/settings.rb:5433
+#: db/seeds/settings.rb:5446
 msgid "Set agent limit"
 msgstr "设定代理限制"
 
@@ -17863,7 +17884,7 @@ msgstr "验证"
 msgid "Set available ticket types"
 msgstr "设置可用票类型"
 
-#: db/seeds/settings.rb:3762
+#: db/seeds/settings.rb:3775
 msgid "Set backend which is being used for import."
 msgstr "设置用于导入的后端。"
 
@@ -17900,7 +17921,7 @@ msgstr "设置外拨主叫号码"
 msgid "Set security keys as default"
 msgstr "设为默认"
 
-#: db/seeds/settings.rb:5595
+#: db/seeds/settings.rb:5608
 #, fuzzy
 #| msgid ""
 #| "Set timeframe in seconds. If it's set to 0 you can delete notes without "
@@ -17958,7 +17979,7 @@ msgstr "设置双因素身份验证"
 msgid "Set up two-factor authentication: %s"
 msgstr "设置双因素身份验证"
 
-#: db/seeds/settings.rb:3370
+#: db/seeds/settings.rb:3383
 msgid ""
 "Set/overwrite sender/from of email based on \"Reply-To\" header. Useful to "
 "set correct customer if email is received from a third-party system on "
@@ -18119,7 +18140,7 @@ msgstr "显示全部…"
 msgid "Show authenticator app secret"
 msgstr "显示身份验证器应用程序密码"
 
-#: db/seeds/settings.rb:5839
+#: db/seeds/settings.rb:5852
 msgid "Show calendar weeks in the picker of date/datetime fields"
 msgstr "在日期/dateTime字段的选择器中显示日历周"
 
@@ -18142,7 +18163,7 @@ msgstr "显示较少"
 msgid "Show matching ticket(s) in the warning"
 msgstr "在警告中显示匹配票"
 
-#: db/seeds/settings.rb:2775
+#: db/seeds/settings.rb:2788
 msgid "Show matching tickets in the warning"
 msgstr "在警告中显示匹配的门票"
 
@@ -18201,7 +18222,7 @@ msgid "Show ticket viewers"
 msgstr "显示工单可查看的人员"
 
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco:6
-#: db/seeds/settings.rb:4092
+#: db/seeds/settings.rb:4105
 msgid "Show time accounting dialog when updating matching tickets."
 msgstr "更新匹配的工单时显示时间统计对话框。"
 
@@ -18209,7 +18230,7 @@ msgstr "更新匹配的工单时显示时间统计对话框。"
 msgid "Show title in form."
 msgstr "显示表单标题"
 
-#: db/seeds/settings.rb:2758
+#: db/seeds/settings.rb:2771
 msgid "Show to user roles"
 msgstr "向用户显示角色"
 
@@ -18335,7 +18356,7 @@ msgstr "回复签名"
 msgid "Signed"
 msgstr "签"
 
-#: db/seeds/settings.rb:1961
+#: db/seeds/settings.rb:1974
 msgid "Signing & Encrypting"
 msgstr "签名和加密"
 
@@ -18343,7 +18364,7 @@ msgstr "签名和加密"
 msgid "Signup Screen"
 msgstr "注册屏幕"
 
-#: db/seeds/settings.rb:2737
+#: db/seeds/settings.rb:2750
 msgid "Similar tickets found"
 msgstr "找到类似工单"
 
@@ -18372,11 +18393,11 @@ msgstr "简单存储服务故障。请联系您的 Zammad 管理员。"
 msgid "Simple Storage Service not reachable."
 msgstr "简单的存储服务不可到达。"
 
-#: db/seeds/settings.rb:1817
+#: db/seeds/settings.rb:1830
 msgid "Sina Weibo"
 msgstr "西娜微博"
 
-#: db/seeds/settings.rb:1817
+#: db/seeds/settings.rb:1830
 msgid "Sina Weibo Open Portal"
 msgstr "西娜微博开放门户网站"
 
@@ -18513,7 +18534,7 @@ msgstr "原文"
 msgid "Sources"
 msgstr "原文"
 
-#: db/seeds/settings.rb:2213
+#: db/seeds/settings.rb:2226
 msgid "Special character required"
 msgstr "需要特殊字符"
 
@@ -18692,7 +18713,7 @@ msgstr "状态"
 msgid "State icon"
 msgstr "状态"
 
-#: db/seeds/settings.rb:5467
+#: db/seeds/settings.rb:5480
 msgid "Stats Backend"
 msgstr "统计后端"
 
@@ -18726,7 +18747,7 @@ msgstr "状态:"
 #: app/assets/javascripts/app/models/macro.coffee:9
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:58
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketScreenBehavior/behaviorOptions.ts:8
-#: db/seeds/settings.rb:3029
+#: db/seeds/settings.rb:3042
 msgid "Stay on tab"
 msgstr "保持在列表"
 
@@ -18768,21 +18789,21 @@ msgstr "储存方法"
 msgid "Store"
 msgstr "儲存"
 
-#: db/seeds/settings.rb:6096
+#: db/seeds/settings.rb:6109
 #, fuzzy
 #| msgid "Stores the GitHub configuration."
 msgid "Stores the AI provider configuration."
 msgstr "存储GitHub配置。"
 
-#: db/seeds/settings.rb:5106
+#: db/seeds/settings.rb:5119
 msgid "Stores the GitHub configuration."
 msgstr "存储GitHub配置。"
 
-#: db/seeds/settings.rb:5064
+#: db/seeds/settings.rb:5077
 msgid "Stores the GitLab configuration."
 msgstr "存储GitLab配置。"
 
-#: db/seeds/settings.rb:6126
+#: db/seeds/settings.rb:6139
 msgid ""
 "Stores the ticket summarization options (e.g. which content is visible)."
 msgstr ""
@@ -18806,7 +18827,7 @@ msgstr "街道"
 msgid "Subject"
 msgstr "主题"
 
-#: db/seeds/settings.rb:3353
+#: db/seeds/settings.rb:3366
 msgid ""
 "Subject & References - Additional search for same article subject and same "
 "message ID in references header if no follow-up was recognized using default "
@@ -18942,7 +18963,7 @@ msgstr "日"
 msgid "Sunday"
 msgstr "星期天"
 
-#: db/seeds/settings.rb:5554
+#: db/seeds/settings.rb:5567
 msgid "Support of multilingual Knowledge Base."
 msgstr "支持多语言知识库。"
 
@@ -18982,7 +19003,7 @@ msgstr "与计算机同步"
 msgid "System"
 msgstr "系统"
 
-#: db/seeds/settings.rb:3250
+#: db/seeds/settings.rb:3263
 msgid "System Address Display Name"
 msgstr "系统地址显示名称"
 
@@ -19030,7 +19051,7 @@ msgstr ""
 "系统翻译可以在我们的公共平台 %l 上与社区贡献和共享。它具有基于 Weblate 的非常"
 "方便的用户界面，尝试一下！"
 
-#: db/seeds/settings.rb:5627
+#: db/seeds/settings.rb:5640
 msgid ""
 "System-wide configuration of the query polling mechanism for ticket "
 "overviews."
@@ -19040,7 +19061,7 @@ msgstr ""
 msgid "SystemID"
 msgstr "系统ID"
 
-#: db/seeds/settings.rb:3014
+#: db/seeds/settings.rb:3027
 msgid "Tab behaviour after ticket action"
 msgstr "门票后行为行为"
 
@@ -19089,14 +19110,14 @@ msgstr "分配超時"
 msgid "Tags"
 msgstr "标签"
 
-#: db/seeds/settings.rb:3381
+#: db/seeds/settings.rb:3394
 msgid ""
 "Take Reply-To header as sender/from of email and use the real name of origin "
 "from."
 msgstr ""
 "以电子邮件为发送者/从电子邮件中以回复为单位，并使用来自原始名称的真实名称。"
 
-#: db/seeds/settings.rb:3380
+#: db/seeds/settings.rb:3393
 msgid "Take Reply-To header as sender/from of email."
 msgstr "以电子邮件为发送者/从电子邮件中以回复为单位。"
 
@@ -19511,7 +19532,7 @@ msgstr "文章无法设置为内部可见。"
 msgid "The article could not be set to public."
 msgstr "该文章无法设置为公开。"
 
-#: app/controllers/ticket_articles_controller.rb:161
+#: app/controllers/ticket_articles_controller.rb:162
 msgid "The article does not belong to the specified ticket."
 msgstr "该文章不属于指定的票证。"
 
@@ -19577,7 +19598,7 @@ msgstr "未找到 %s 的证书。"
 msgid "The certificate for this private key could not be found."
 msgstr "找不到此私钥的证书。"
 
-#: lib/secure_mailing/smime/incoming.rb:69
+#: lib/secure_mailing/smime/incoming.rb:77
 msgid "The certificate for verification could not be found."
 msgstr "找不到用于验证的证书。"
 
@@ -19763,7 +19784,7 @@ msgstr ""
 msgid "The device could not be deleted."
 msgstr "文章不能被删除。"
 
-#: db/seeds/settings.rb:2308
+#: db/seeds/settings.rb:2321
 msgid "The divider between TicketHook and ticket number. E. g. ': '."
 msgstr "Tickethook和票证号之间的分隔线。E. g。'：'。"
 
@@ -19833,7 +19854,7 @@ msgstr "该文件无法从机器人中检索。"
 msgid "The file could not be uploaded."
 msgstr "文件无法上传。"
 
-#: app/controllers/ticket_articles_controller.rb:177
+#: app/controllers/ticket_articles_controller.rb:178
 msgid "The file does not belong to the specified article."
 msgstr "该文件不属于指定的文章。"
 
@@ -19918,7 +19939,7 @@ msgstr "找不到主机名。"
 msgid "The hours overlay"
 msgstr "打开注释输入框"
 
-#: db/seeds/settings.rb:2283
+#: db/seeds/settings.rb:2296
 msgid ""
 "The identifier for a ticket, e.g. Ticket#, Call#, MyTicket#. The default is "
 "Ticket#."
@@ -20113,7 +20134,7 @@ msgstr "密码重置请求成功。"
 msgid "The personal access token could not be deleted."
 msgstr "％s 对象已创建。"
 
-#: app/controllers/ticket_articles_controller.rb:285
+#: app/controllers/ticket_articles_controller.rb:286
 msgid ""
 "The preview cannot be generated. The format is corrupted or not supported."
 msgstr "预览无法生成。该格式被损坏或不支持。"
@@ -20128,7 +20149,7 @@ msgstr ""
 msgid "The private PGP key could not be found."
 msgstr "找不到 PGP 私钥。"
 
-#: lib/secure_mailing/smime/incoming.rb:36
+#: lib/secure_mailing/smime/incoming.rb:44
 msgid "The private key for decryption could not be found."
 msgstr "无法找到用于解密的私钥。"
 
@@ -20421,7 +20442,7 @@ msgstr "所需的值“ group_id”丢失。"
 msgid "The response could not be processed."
 msgstr "无法处理该请求。"
 
-#: app/controllers/ticket_articles_controller.rb:276
+#: app/controllers/ticket_articles_controller.rb:277
 msgid "The retried attachment download failed."
 msgstr "RETRISE附件下载失败。"
 
@@ -20600,12 +20621,12 @@ msgstr "找不到目标工单编号。"
 msgid "The test run was successful."
 msgstr "測試運行成功"
 
-#: db/seeds/settings.rb:3219
+#: db/seeds/settings.rb:3232
 msgid ""
 "The text at the beginning of the subject in an email forward, e. g. FWD."
 msgstr "电子邮件转发中主题开头的文本，例如：FWD。"
 
-#: db/seeds/settings.rb:3197
+#: db/seeds/settings.rb:3210
 msgid ""
 "The text at the beginning of the subject in an email reply, e.g. RE, AW, or "
 "AS."
@@ -20677,8 +20698,6 @@ msgstr "尚未配置两因素身份验证。"
 msgid "The two-factor authentication method \"%s\" was removed for this user."
 msgstr "验证"
 
-#: app/controllers/sessions_controller.rb:253
-#: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:32
 #: app/services/service/user/two_factor/initiate_method_configuration.rb:6
 #: app/services/service/user/two_factor/verify_method_configuration.rb:15
 msgid "The two-factor authentication method is not enabled."
@@ -20700,7 +20719,7 @@ msgid ""
 "logo_resize param."
 msgstr "％s 对象已创建。"
 
-#: app/models/authorization/provider.rb:53
+#: app/models/authorization/provider.rb:60
 #, fuzzy
 #| msgid "The password could not be set. Please contact your administrator."
 msgid "The user account does not exist. Please contact your administrator."
@@ -20717,8 +20736,8 @@ msgstr "％s 对象已创建。"
 msgid "The user's 'preferred_username' could not be extracted from 'id_token'."
 msgstr "无法从“ ID_Token”中提取用户的“ preferred_username”。"
 
-#: app/controllers/sessions_controller.rb:249
-#: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:27
+#: app/controllers/sessions_controller.rb:253
+#: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:36
 msgid "The username or password is incorrect."
 msgstr "用户名或密码不正确。"
 
@@ -21026,7 +21045,7 @@ msgstr ""
 msgid "This Writing Assistant Tool translates the selected text into English."
 msgstr ""
 
-#: app/controllers/ticket_articles_controller.rb:197
+#: app/controllers/ticket_articles_controller.rb:198
 #, fuzzy
 #| msgid "Defines the state of auto closed tickets."
 msgid "This article does not have a raw copy available."
@@ -21370,7 +21389,7 @@ msgid ""
 msgstr ""
 "此消息包含由外部源托管的图像或其他内容。它已被阻止，但您可以下载原始格式。"
 
-#: lib/secure_mailing/smime/incoming.rb:86
+#: lib/secure_mailing/smime/incoming.rb:94
 msgid "This message was not signed by its sender."
 msgstr "此消息没有由发件人签署。"
 
@@ -21724,11 +21743,11 @@ msgstr "自动分配"
 msgid "Ticket Categorizer"
 msgstr "编辑用户单位"
 
-#: db/seeds/settings.rb:2385
+#: db/seeds/settings.rb:2398
 msgid "Ticket Conditions Expert Mode"
 msgstr "门票条件专家模式"
 
-#: db/seeds/settings.rb:2411
+#: db/seeds/settings.rb:2424
 msgid "Ticket Conditions Regular Expression Operators"
 msgstr "机票条件正则表达式操作员"
 
@@ -21754,45 +21773,45 @@ msgstr "重复检测"
 msgid "Ticket Group Dispatcher"
 msgstr "工單更新"
 
-#: db/seeds/settings.rb:2280
+#: db/seeds/settings.rb:2293
 msgid "Ticket Hook"
 msgstr "工单 hook 挂钩"
 
-#: db/seeds/settings.rb:2305
+#: db/seeds/settings.rb:2318
 msgid "Ticket Hook Divider"
 msgstr "门票挂钩分隔器"
 
-#: db/seeds/settings.rb:2326
+#: db/seeds/settings.rb:2339
 msgid "Ticket Hook Position"
 msgstr "工單 hook掛鉤位置"
 
-#: db/seeds/settings.rb:2358
+#: db/seeds/settings.rb:2371
 msgid "Ticket Last Contact Behaviour"
 msgstr "工單上一次聯繫情況"
 
-#: db/seeds/settings.rb:2437
+#: db/seeds/settings.rb:2450
 msgid "Ticket Number Format"
 msgstr "工單號碼格式"
 
-#: db/seeds/settings.rb:2467
+#: db/seeds/settings.rb:2480
 msgid "Ticket Number Increment"
 msgstr "工單號碼增量"
 
-#: db/seeds/settings.rb:2524
+#: db/seeds/settings.rb:2537
 msgid "Ticket Number Increment Date"
 msgstr "票证编号增量日期"
 
-#: db/seeds/settings.rb:2826
+#: db/seeds/settings.rb:2839
 msgid "Ticket Number ignore system_id"
 msgstr "票数忽略System_ID"
 
-#: db/seeds/settings.rb:5983
+#: db/seeds/settings.rb:5996
 #, fuzzy
 #| msgid "Tickets of Organization"
 msgid "Ticket Organization Reassignment"
 msgstr "機構中的工單"
 
-#: db/seeds/settings.rb:5624
+#: db/seeds/settings.rb:5637
 #, fuzzy
 #| msgid "New Overview"
 msgid "Ticket Overview Query Polling"
@@ -21852,15 +21871,15 @@ msgstr "工單更新"
 msgid "Ticket States"
 msgstr "工單更新"
 
-#: db/seeds/settings.rb:3216
+#: db/seeds/settings.rb:3229
 msgid "Ticket Subject Forward"
 msgstr "工单主题转发"
 
-#: db/seeds/settings.rb:3194
+#: db/seeds/settings.rb:3207
 msgid "Ticket Subject Reply"
 msgstr "工單主旨回覆"
 
-#: db/seeds/settings.rb:3173
+#: db/seeds/settings.rb:3186
 msgid "Ticket Subject Size"
 msgstr "工單主旨尺寸"
 
@@ -21870,13 +21889,13 @@ msgstr "訂閱工單"
 
 #: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:2
 #: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:7
-#: db/seeds/permissions.rb:239 db/seeds/settings.rb:6109
+#: db/seeds/permissions.rb:239 db/seeds/settings.rb:6122
 #, fuzzy
 #| msgid "Ticket update"
 msgid "Ticket Summary"
 msgstr "工單更新"
 
-#: db/seeds/settings.rb:6123
+#: db/seeds/settings.rb:6136
 #, fuzzy
 #| msgid "Ticket Count"
 msgid "Ticket Summary Config"
@@ -21908,11 +21927,11 @@ msgstr "工單選擇"
 msgid "Ticket Title Rewriter"
 msgstr "新增工单概览"
 
-#: db/seeds/settings.rb:2898
+#: db/seeds/settings.rb:2911
 msgid "Ticket Trigger Loop Protection Articles Total"
 msgstr "售票扳机循环保护文章总计"
 
-#: db/seeds/settings.rb:2879
+#: db/seeds/settings.rb:2892
 msgid "Ticket Trigger Loop Protection Articles per Ticket"
 msgstr "售票扳机循环保护文章每张票"
 
@@ -22309,7 +22328,7 @@ msgstr "指派给你有 %s 笔, 共 %s 笔"
 msgid "Tickets bulk edit"
 msgstr "工單更新"
 
-#: app/controllers/ticket_articles_controller.rb:238
+#: app/controllers/ticket_articles_controller.rb:239
 #: app/controllers/tickets_controller.rb:452
 msgid "Tickets can only be imported if system is in import mode."
 msgstr "仅当系统处于导入模式时，才能导入门票。"
@@ -22326,7 +22345,7 @@ msgstr "使用者的工單"
 msgid "Tickets with \"%s\""
 msgstr "“%s”的工单"
 
-#: db/seeds/settings.rb:2754
+#: db/seeds/settings.rb:2767
 msgid "Tickets with the same attributes were found."
 msgstr "发现具有相同属性的工单。"
 
@@ -22339,33 +22358,33 @@ msgstr "时间"
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:134
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:12
 #: app/assets/javascripts/app/controllers/time_accounting.coffee:3
-#: db/seeds/permissions.rb:107 db/seeds/settings.rb:4062
+#: db/seeds/permissions.rb:107 db/seeds/settings.rb:4075
 msgid "Time Accounting"
 msgstr "工时"
 
-#: db/seeds/settings.rb:4125
+#: db/seeds/settings.rb:4138
 #, fuzzy
 #| msgid "Time Accounting"
 msgid "Time Accounting Custom Unit"
 msgstr "工时"
 
-#: db/seeds/settings.rb:4161
+#: db/seeds/settings.rb:4174
 #, fuzzy
 #| msgid "Time Accounting"
 msgid "Time Accounting Default Type"
 msgstr "工时"
 
-#: db/seeds/settings.rb:4089
+#: db/seeds/settings.rb:4102
 msgid "Time Accounting Selector"
 msgstr "时间会计选择器"
 
-#: db/seeds/settings.rb:4143
+#: db/seeds/settings.rb:4156
 #, fuzzy
 #| msgid "Time Accounting"
 msgid "Time Accounting Types"
 msgstr "工时"
 
-#: db/seeds/settings.rb:4107
+#: db/seeds/settings.rb:4120
 #, fuzzy
 #| msgid "Time Accounting"
 msgid "Time Accounting Unit"
@@ -22476,7 +22495,7 @@ msgstr "表单标题"
 msgid "To"
 msgstr "收件人"
 
-#: db/seeds/settings.rb:3497
+#: db/seeds/settings.rb:3510
 msgid ""
 "To archive all outgoing emails from Zammad to external, you can store a BCC "
 "email address here."
@@ -22649,15 +22668,15 @@ msgstr "存取權限 Token"
 msgid "Token authorization failed."
 msgstr "认证失败"
 
-#: db/seeds/settings.rb:5272
+#: db/seeds/settings.rb:5285
 msgid "Token for CTI."
 msgstr "CTI的令牌。"
 
-#: db/seeds/settings.rb:5176
+#: db/seeds/settings.rb:5189
 msgid "Token for Sipgate."
 msgstr "sipgate的象征。"
 
-#: db/seeds/settings.rb:3559
+#: db/seeds/settings.rb:3572
 msgid "Token for monitoring."
 msgstr "用于监视的令牌。"
 
@@ -22814,7 +22833,7 @@ msgstr ""
 "每当创建或更新工单时，都会执行由操作激活的触发器，而由时间事件激活的触发器会"
 "在达到特定时间（例如待处理时间、升级）时执行。"
 
-#: db/seeds/settings.rb:5815
+#: db/seeds/settings.rb:5828
 msgid "Trusted SSO Proxy IPs"
 msgstr ""
 
@@ -23032,13 +23051,13 @@ msgstr "类型"
 msgid "UID"
 msgstr "UID"
 
-#: db/seeds/settings.rb:1942
+#: db/seeds/settings.rb:1955
 #, fuzzy
 #| msgid "%s Attribute"
 msgid "UID Attribute Name"
 msgstr "%s 属性"
 
-#: db/seeds/settings.rb:2076
+#: db/seeds/settings.rb:2089
 #, fuzzy
 #| msgid "Date field"
 msgid "UID Field"
@@ -23335,7 +23354,7 @@ msgstr "应用共享草稿"
 msgid "Update successful."
 msgstr "更新成功。"
 
-#: db/seeds/settings.rb:5995
+#: db/seeds/settings.rb:6008
 #, fuzzy
 #| msgid "%s Object(s) are updated."
 msgid "Update the most recent tickets."
@@ -23691,13 +23710,13 @@ msgstr "使用相机为化身拍照。"
 msgid "Use the left and right arrow keys to resize the column."
 msgstr ""
 
-#: db/seeds/settings.rb:2372
+#: db/seeds/settings.rb:2385
 msgid ""
 "Use the start time of the last customer thread (which may consist of "
 "multiple articles)."
 msgstr "使用上一个客户线程的开始时间（可能由多个文章组成）。"
 
-#: db/seeds/settings.rb:2371
+#: db/seeds/settings.rb:2384
 msgid "Use the time of the very last customer article."
 msgstr "使用上一篇客户文章的时间。"
 
@@ -24100,7 +24119,7 @@ msgstr "验证电子邮件在邮箱中找不到。"
 msgid "Verification email could not be sent."
 msgstr "触发该通知的事件."
 
-#: db/seeds/settings.rb:1958
+#: db/seeds/settings.rb:1971
 msgid ""
 "Verification of the TLS connection to the IDP SSO target URL. Only relevant "
 "during setting up SAML authentication."
@@ -24253,14 +24272,14 @@ msgid "Warning"
 msgstr "警告"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:34
-#: db/seeds/settings.rb:2741
+#: db/seeds/settings.rb:2754
 #, fuzzy
 #| msgid "Add Tag"
 msgid "Warning message"
 msgstr "新增标签"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:33
-#: db/seeds/settings.rb:2724
+#: db/seeds/settings.rb:2737
 #, fuzzy
 #| msgid "Warning"
 msgid "Warning title"
@@ -24371,11 +24390,11 @@ msgstr "周"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:101
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:87
-#: db/seeds/settings.rb:1816
+#: db/seeds/settings.rb:1829
 msgid "Weibo"
 msgstr "微博"
 
-#: db/seeds/settings.rb:1824
+#: db/seeds/settings.rb:1837
 msgid "Weibo App Credentials"
 msgstr "微博应用凭据"
 
@@ -24610,13 +24629,13 @@ msgid "Would you like to give us feedback on the BETA UI?"
 msgstr "回饋意見"
 
 #: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:25
-#: db/seeds/permissions.rb:245 db/seeds/settings.rb:6142
+#: db/seeds/permissions.rb:245 db/seeds/settings.rb:6155
 #, fuzzy
 #| msgid "Waiting in %s"
 msgid "Writing Assistant"
 msgstr "等待％s"
 
-#: db/seeds/settings.rb:6156
+#: db/seeds/settings.rb:6169
 #, fuzzy
 #| msgid "Waiting in %s"
 msgid "Writing Assistant Fixed Instructions"
@@ -26088,7 +26107,7 @@ msgstr "小时"
 msgid "hours"
 msgstr "小时"
 
-#: db/seeds/settings.rb:2072
+#: db/seeds/settings.rb:2085
 #, fuzzy
 #| msgid "support@example.com"
 msgid "https://example.com"
@@ -26108,11 +26127,11 @@ msgstr ""
 msgid "i-doit"
 msgstr "我做"
 
-#: db/seeds/settings.rb:5021
+#: db/seeds/settings.rb:5034
 msgid "i-doit config"
 msgstr "i-doit config"
 
-#: db/seeds/settings.rb:4994
+#: db/seeds/settings.rb:5007
 msgid "i-doit integration"
 msgstr "i-doit集成"
 
@@ -26417,7 +26436,7 @@ msgstr "已修改"
 msgid "just now"
 msgstr "刚刚"
 
-#: db/seeds/settings.rb:2342
+#: db/seeds/settings.rb:2355
 msgid "left"
 msgstr "左边"
 
@@ -26629,7 +26648,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/idoit_object_result.jst.eco:3
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:27
 #: app/assets/javascripts/app/views/widget/ticket_stats_list.jst.eco:7
-#: db/seeds/settings.rb:2344
+#: db/seeds/settings.rb:2357
 msgid "none"
 msgstr "无"
 
@@ -26835,7 +26854,7 @@ msgstr "回复"
 msgid "required"
 msgstr "需要 ％s！"
 
-#: db/seeds/settings.rb:2343
+#: db/seeds/settings.rb:2356
 msgid "right"
 msgstr "正确的"
 
@@ -26934,21 +26953,21 @@ msgstr "显示更多"
 msgid "shown"
 msgstr "显示"
 
-#: db/seeds/settings.rb:5173
+#: db/seeds/settings.rb:5186
 #, fuzzy
 #| msgid "%s Api Token"
 msgid "sipgate.io Token"
 msgstr "%s Api Token"
 
-#: db/seeds/settings.rb:5207
+#: db/seeds/settings.rb:5220
 msgid "sipgate.io alternative FQDN"
 msgstr "sipgate.io替代fqdn"
 
-#: db/seeds/settings.rb:5194
+#: db/seeds/settings.rb:5207
 msgid "sipgate.io config"
 msgstr "sipgate.io config"
 
-#: db/seeds/settings.rb:5145
+#: db/seeds/settings.rb:5158
 msgid "sipgate.io integration"
 msgstr "sipgate.io集成"
 
