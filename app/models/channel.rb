@@ -16,6 +16,9 @@ class Channel < ApplicationModel
     # options.auth.access_token is also used for Facebhook (non-email)
     'options.auth.access_token', 'options.auth.refresh_token', 'options.auth.client_secret',
 
+    # Facebook page tokens, stored as an array of hashes
+    'options.pages[].access_token',
+
     # SMS (MessageBird, Masenversand, Twilio)
     'options.token',
 

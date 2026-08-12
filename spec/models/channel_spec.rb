@@ -6,6 +6,52 @@ require 'models/concerns/has_audit_logs_examples'
 RSpec.describe Channel, type: :model do
   it_behaves_like 'HasAuditLogs', update_attribute: 'active', update_value: false, name_attribute: 'area'
 
+  describe 'sensitive values masking' do
+    subject(:channel) do
+      create(:channel, area: 'Facebook::Account', options: {
+               adapter: 'facebook',
+               auth:    { access_token: 'user-token' },
+               pages:   [
+                 { id: '1', name: 'Page 1', access_token: 'page-1-token' },
+                 { id: '2', name: 'Page 2', access_token: 'page-2-token' },
+               ],
+             })
+    end
+
+    let(:masked_pages) do
+      [
+        { 'id' => '1', 'name' => 'Page 1', 'access_token' => SensitiveParamsHelper::SENSITIVE_MASK },
+        { 'id' => '2', 'name' => 'Page 2', 'access_token' => SensitiveParamsHelper::SENSITIVE_MASK },
+      ]
+    end
+
+    before do
+      Setting.set('system_init_done', true)
+    end
+
+    it 'masks the Facebook page access tokens in audit log snapshots' do
+      expect(AuditLog.find_by(auditable: channel, action_type: 'create').value_to.dig('options', 'pages'))
+        .to eq(masked_pages)
+    end
+
+    it 'masks the Facebook page access tokens in both snapshots of an update' do
+      channel.update!(options: channel.options.merge('sync' => { 'pages' => {} }))
+
+      expect(AuditLog.find_by(auditable: channel, action_type: 'update')).to have_attributes(
+        value_from: include('options' => include('pages' => masked_pages)),
+        value_to:   include('options' => include('pages' => masked_pages)),
+      )
+    end
+
+    it 'masks the Facebook page access tokens in assets' do
+      expect(channel.assets({}).dig(:Channel, channel.id, 'options', 'pages')).to eq(masked_pages)
+    end
+
+    it 'does not modify the channel options' do
+      expect { channel.assets({}) }.not_to change { channel.options.to_json }
+    end
+  end
+
   describe '.fetch' do
 
     describe '#refresh_xoauth2! fails' do

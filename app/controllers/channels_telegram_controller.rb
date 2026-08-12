@@ -4,6 +4,8 @@ class ChannelsTelegramController < ApplicationController
   prepend_before_action :authenticate_and_authorize!, except: [:webhook]
   skip_before_action :verify_csrf_token, only: [:webhook]
 
+  SENSITIVE_FIELDS = %w[api_token].freeze
+
   def index
     assets = {}
     channel_ids = []
@@ -29,7 +31,7 @@ class ChannelsTelegramController < ApplicationController
   def update
     channel = Channel.find_by(id: params[:id], area: 'Telegram::Bot')
     begin
-      channel = TelegramHelper.create_or_update_channel(params[:api_token], params, channel)
+      channel = TelegramHelper.create_or_update_channel(unmasked_api_token(channel), params, channel)
     rescue => e
       raise Exceptions::UnprocessableContent, e.message
     end
@@ -76,4 +78,19 @@ class ChannelsTelegramController < ApplicationController
     render json: {}, status: :ok
   end
 
+  private
+
+  # The bot dialog pre-fills the api token with the masked value it received via assets,
+  # so it must be restored instead of being sent to Telegram as the mask.
+  def unmasked_api_token(channel)
+    unmask_sensitive_params(params.permit!.to_h, channel&.options)['api_token']
+  end
+
+  # Masking uses dotted paths (Channel::SENSITIVE_FIELDS) for nested channel JSON responses.
+  # Unmasking uses flat keys (SENSITIVE_FIELDS) for params/channel.options hashes.
+  def sensitive_attributes(_input, object)
+    return Channel::SENSITIVE_FIELDS if object.is_a?(Channel)
+
+    SENSITIVE_FIELDS
+  end
 end
