@@ -48,7 +48,7 @@
     "@graphql-codegen/typescript": "^6.1.0",
     "@graphql-codegen/typescript-operations": "^6.1.5",
     "@graphql-codegen/typescript-vue-apollo": "^5.0.1",
-    "@graphql-codegen/visitor-plugin-common": "^7.2.3",
+    "@graphql-codegen/visitor-plugin-common": "^7.2.4",
     "@pinia/testing": "^2.0.1",
     "@sa11y/preset-rules": "^8.0.28",
     "@sa11y/vitest": "^8.0.28",
