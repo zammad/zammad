@@ -45,7 +45,7 @@ it from [source](https://github.com/ddollar/forego) or alternatively use
 
 To ensure a well-readable and maintainable code base, we're using linting tools like:
 
-- [CoffeeLint](http://www.coffeelint.org/)
+- [CoffeeLint](https://coffeelint.github.io/)
 - [Stylelint](https://stylelint.io/)
 - [ESLint](https://eslint.org/)
 - [Markdownlint](https://github.com/DavidAnson/markdownlint)

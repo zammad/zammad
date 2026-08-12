@@ -12,8 +12,8 @@ Opening directly depends on browser settings for timezone and locale. Running vi
 
 ## Tooling
 
-- [QUnit unit tests](http://qunitjs.com)
-- [Sinon mocking https](//sinonjs.org)
+- [QUnit unit tests](https://qunitjs.com/)
+- [Sinon mocking](https://sinonjs.org/)
 - [Syn events simulating](https://github.com/bitovi/syn)
 
 ## Major bits

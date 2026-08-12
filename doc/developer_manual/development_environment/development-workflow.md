@@ -104,7 +104,7 @@ Further testing:
 
 Linting ensures consistent code style and readability. They are optional but recommended:
 
-- [CoffeeLint](http://www.coffeelint.org/)
+- [CoffeeLint](https://coffeelint.github.io/)
 - [Stylelint](https://stylelint.io/)
 - [ESLint](https://eslint.org/)
 - [Markdownlint](https://github.com/DavidAnson/markdownlint)
@@ -134,7 +134,7 @@ Some tasks can be executed directly via Rails console or `rails r`:
 
 For further information see:
 
-- [Rails Console Reference](https://next.zammad.org/en/reference/console.html)
+- [Rails Console Reference](https://next.zammad.org/en/reference/rails-commands.html)
 - [Environment Variables](https://next.zammad.org/en/reference/environment-variables.html)
 
 ## Further Reading

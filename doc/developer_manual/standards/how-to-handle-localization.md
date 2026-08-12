@@ -63,7 +63,7 @@ Writing strings that can be translated well and are a pleasure to read for the e
 
 ### Weblate Process Overview
 
-- The codebase has a translation catalog file [i18n/zammad.pot](zammad.pot), which must be kept up-to-date.
+- The codebase has a translation catalog file [i18n/zammad.pot](./../../../i18n/zammad.pot), which must be kept up-to-date.
 - Weblate automatically picks this file up from git and updates its database. Now translators see the new/changed
   strings and can work on them.
 - From time to time, Weblate pushes the new/updated translations via merge request to git.
@@ -104,7 +104,7 @@ you can use this workflow:
 
 ### CoffeeScript
 
-See [i18n.coffee](app/assets/javascripts/app/lib/app_post/i18n.coffee)
+See [i18n.coffee](./../../../app/assets/javascripts/app/lib/app_post/i18n.coffee)
 
 #### Translate With Markup Support
 
