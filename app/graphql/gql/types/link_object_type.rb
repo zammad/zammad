@@ -4,6 +4,7 @@ module Gql::Types
   class LinkObjectType < Gql::Types::BaseUnion
     description 'Linkable objects'
     possible_types Gql::Types::TicketType,
-                   Gql::Types::KnowledgeBase::Answer::TranslationType
+                   Gql::Types::KnowledgeBase::Answer::TranslationType,
+                   *extension_types
   end
 end

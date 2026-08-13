@@ -337,6 +337,7 @@ GraphQL/ObjectDescription:
   Exclude:
     - "app/graphql/gql/fields/**/*" # false positive?
     - "app/graphql/gql/types/**/base_*"
+    - "app/graphql/gql/types/**/extensions/**/*" # union extension classes are no GraphQL objects
 
 # RSpec tests
 Style/NumericPredicate:

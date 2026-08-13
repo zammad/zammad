@@ -1,0 +1,11 @@
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
+# A root selection that is an inline fragment, not a field — must fail with
+# a clear message rather than a bare TypeError.
+
+query addon($search: String!) {
+  ... on Query {
+    totalCountX: search(search: $search) {
+      totalCount
+    }
+  }
+}

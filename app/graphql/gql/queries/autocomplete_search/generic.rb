@@ -9,6 +9,11 @@ module Gql::Queries
 
     type [Gql::Types::AutocompleteSearch::GenericEntryType], null: false
 
+    # Models this query can render: #label and #heading are implemented per
+    #   model below, and #label is non-nullable. Searchable models added by
+    #   extensions have no label support yet, so they must not be searched here.
+    SUPPORTED_MODELS = [::Ticket, ::User, ::Organization].freeze
+
     def resolve(input:)
       input = input.to_h
       query = input[:query]
@@ -20,7 +25,7 @@ module Gql::Queries
         .with_current_user(context.current_user)
         .execute(
           query:   query,
-          objects: input[:only_in] || Gql::Types::SearchResult::ItemType.searchable_models,
+          objects: supported_objects(input[:only_in]),
           options: { limit: limit }
         )
         .flattened
@@ -38,6 +43,14 @@ module Gql::Queries
     end
 
     private
+
+    # Only an omitted argument selects the defaults — an explicitly empty
+    #   'onlyIn' keeps its previous meaning of searching nothing.
+    def supported_objects(only_in)
+      return SUPPORTED_MODELS if only_in.nil?
+
+      only_in & SUPPORTED_MODELS
+    end
 
     def label(object)
       case object

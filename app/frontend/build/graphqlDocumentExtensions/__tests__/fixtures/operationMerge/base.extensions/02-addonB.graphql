@@ -1,0 +1,9 @@
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
+# `$search` and `$limit` clash with the base document's own variables — the
+# base definition (no default on `$limit`) must win.
+
+query searchAddonB($search: String!, $limit: Int = 99) {
+  searchAddonB: search(search: $search) {
+    totalCount
+  }
+}

@@ -1,0 +1,8 @@
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
+# `Organization` is a real schema type but NOT a member of the `Item` union —
+# this must match nothing in base.graphql (dead extension).
+
+fragment organizationDetailSearch on Organization {
+  id
+  name
+}

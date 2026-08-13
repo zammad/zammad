@@ -87,6 +87,12 @@ GraphQL contract), so an addon rarely needs anything new from core.
   it). A fresh build / CI run is unaffected.
 - Avatar/icon colors: use the desktop **design tokens** (`var(--color-…)`), not
   hard-coded hsl/rgb.
+- A **linked** package needs `PRESERVE_SYMLINKS=1` _and_ pnpm
+  `nodeLinker: hoisted`: without the first, `#shared/*` (a subpath import of
+  `app/frontend/package.json`) does not resolve from the symlinked addon file;
+  without the second, pnpm's symlinked `node_modules` breaks transitive
+  resolution. `zammad:package:pnpm_hoisted_mode` covers `assets:precompile`,
+  not `pnpm dev`.
 
 ## Honest scope
 

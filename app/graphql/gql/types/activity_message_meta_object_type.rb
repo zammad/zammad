@@ -7,6 +7,7 @@ module Gql::Types
                    Gql::Types::DataPrivacyTaskType, Gql::Types::GroupType, Gql::Types::RoleType,
                    Gql::Types::TicketType, Gql::Types::Ticket::ArticleType,
                    Gql::Types::OnlineNotificationStandaloneType,
-                   Gql::Types::KnowledgeBase::Answer::TranslationType
+                   Gql::Types::KnowledgeBase::Answer::TranslationType,
+                   *extension_types
   end
 end

@@ -1,0 +1,31 @@
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
+# Minimal schema fixture: a union-returning search field, mirroring the shape
+# of the real `search` query (SearchResult.items: [Item!]!).
+
+type Query {
+  search(search: String!, limit: Int): SearchResult
+}
+
+type SearchResult {
+  totalCount: Int
+  items: [Item!]!
+}
+
+union Item = Ticket | User
+
+type Ticket {
+  id: ID!
+  title: String
+}
+
+type User {
+  id: ID!
+  fullname: String
+}
+
+# A real schema type that is deliberately NOT a member of the `Item` union,
+# so a fragment on it can never match any selection set (dead-extension case).
+type Organization {
+  id: ID!
+  name: String
+}

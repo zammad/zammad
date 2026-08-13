@@ -25,7 +25,8 @@ export type FilterSelectorEntityOverride = Pick<FilterSelectorEntry, 'name' | 'l
 
 export type SearchPlugin = {
   name: EnumSearchableModels
-  object: EnumObjectManagerObjects
+  /** Omitted for entities without object manager attributes — such plugins must set `filtersDisabled: true`. */
+  object?: EnumObjectManagerObjects
   label: string
   priority: number // TODO I think we need two prios (because sorting is different in quick search and entity tabs in detail search)
   quickSearchResultLabel: string

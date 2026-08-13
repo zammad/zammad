@@ -3,6 +3,9 @@
 module Gql::Types
   class HistoryRecordIssuerType < Gql::Types::BaseUnion
     description 'History record issuer'
+
+    # Not extensible yet: same Apollo 'possibleTypes' coupling as
+    #   HistoryRecordEventObjectType.
     possible_types Gql::Types::UserType,
                    Gql::Types::AI::AgentType,
                    Gql::Types::TriggerType,

@@ -1,0 +1,7 @@
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
+
+query search($search: String!, $limit: Int) {
+  search(search: $search, limit: $limit) {
+    totalCount
+  }
+}

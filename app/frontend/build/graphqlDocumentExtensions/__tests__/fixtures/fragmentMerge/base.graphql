@@ -1,0 +1,14 @@
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
+
+query search($search: String!) {
+  search(search: $search) {
+    totalCount
+    items {
+      __typename
+      ... on Ticket {
+        id
+        title
+      }
+    }
+  }
+}

@@ -35,6 +35,8 @@ export default defineConfigWithVueTs(
     '**/*.snapshot.txt',
     'eslint.config.ts',
     'app/frontend/build/mocksGraphqlPlugin.js',
+    'app/frontend/build/graphqlDocumentExtensions/transform.js',
+    'app/frontend/build/graphqlDocumentExtensions/mergeDocument.js',
     '.eslint-plugin-zammad/lib/index.js',
     '.eslint-plugin-zammad/tests/**/*.js',
     'public/assets/tests/**/*.js',

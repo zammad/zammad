@@ -1,8 +1,15 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const graphqlDocumentExtensions = require('./app/frontend/build/graphqlDocumentExtensions/transform.js')
+const { graphqlDocumentExtensionsTransform } = graphqlDocumentExtensions
+
 /** @type {import('@graphql-codegen/cli').CodegenConfig['generates'][string]} */
 const mockerPreset = {
-  documents: ['app/frontend/**/{queries,mutations,subscriptions}/**/*.graphql'],
+  documents: [
+    'app/frontend/**/{queries,mutations,subscriptions}/**/*.graphql',
+    '!**/*.extensions/**',
+  ],
   preset: 'near-operation-file',
   presetConfig: {
     baseTypesPath: '~#shared/graphql/types.ts',
@@ -16,9 +23,14 @@ const mockerPreset = {
       skipValidationAgainstSchema: true,
     },
   },
+  documentTransforms: [graphqlDocumentExtensionsTransform],
 }
 
-const documents = ['app/frontend/shared/**/*.graphql', 'app/frontend/apps/**/*.graphql']
+const documents = [
+  'app/frontend/shared/**/*.graphql',
+  'app/frontend/apps/**/*.graphql',
+  '!**/*.extensions/**',
+]
 
 const scalars = {
   BinaryString: 'string',
@@ -64,6 +76,7 @@ const config = {
         },
         'typescript-operations',
       ],
+      documentTransforms: [graphqlDocumentExtensionsTransform],
     },
     './app/frontend/': {
       documents,
@@ -77,6 +90,7 @@ const config = {
       config: {
         importOperationTypesFrom: 'Types',
       },
+      documentTransforms: [graphqlDocumentExtensionsTransform],
     },
     // generate mocks
     './app/frontend/apps/': mockerPreset,

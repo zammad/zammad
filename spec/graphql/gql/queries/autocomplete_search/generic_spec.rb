@@ -87,6 +87,16 @@ RSpec.describe Gql::Queries::AutocompleteSearch::Generic, authenticated_as: :age
           expect(gql.result.data).to eq(expected_data)
         end
       end
+
+      # An omitted 'onlyIn' searches the supported models, an explicitly empty
+      #   one searches nothing.
+      context 'with an empty onlyIn' do
+        let(:only_in) { [] }
+
+        it 'returns nothing' do
+          expect(gql.result.data.length).to eq(0)
+        end
+      end
     end
 
     context 'when sending an empty search string' do

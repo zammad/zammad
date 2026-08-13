@@ -1,0 +1,19 @@
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
+# `items` (union) AND the nested `... on User` inline fragment (exact type)
+# both structurally accept a `User` fragment — only the outer one should get
+# the spread.
+
+query search($search: String!) {
+  search(search: $search) {
+    totalCount
+    items {
+      __typename
+      ... on User {
+        id
+      }
+      ... on Ticket {
+        id
+      }
+    }
+  }
+}

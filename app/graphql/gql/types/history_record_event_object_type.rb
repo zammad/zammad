@@ -3,6 +3,12 @@
 module Gql::Types
   class HistoryRecordEventObjectType < Gql::Types::BaseUnion
     description 'History record event object'
+
+    # Not extensible yet: the history fragments select on this union, so Apollo
+    #   needs every member in its hardcoded 'possibleTypes' map (see
+    #   shared/server/apollo/cache/initializer/history.ts) or it discards the
+    #   fields of an unlisted type - which an addon cannot add without editing
+    #   that core file.
     possible_types Gql::Types::UserType,
                    Gql::Types::GroupType,
                    Gql::Types::OrganizationType,

@@ -1,0 +1,8 @@
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
+# Also targets `User` — must land in `items` alongside `userBasic`, NOT
+# inside `userBasic`'s own body (they'd otherwise both match, since a
+# fragment body's type condition trivially "accepts" a same-typed fragment).
+
+fragment userExtra on User {
+  fullname
+}

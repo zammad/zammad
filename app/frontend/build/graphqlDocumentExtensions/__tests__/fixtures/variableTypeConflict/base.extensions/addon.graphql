@@ -1,0 +1,10 @@
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
+# `$limit` clashes with the base's `$limit: Int` but declares a different
+# type — must fail loudly instead of silently dropping the extension's
+# definition.
+
+query addon($search: String!, $limit: String) {
+  addonField: search(search: $search) {
+    totalCount
+  }
+}

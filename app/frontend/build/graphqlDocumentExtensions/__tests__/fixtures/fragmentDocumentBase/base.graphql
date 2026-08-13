@@ -1,0 +1,14 @@
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
+# A fragment-only base document (no operation), mirroring the shared taskbar
+# fragment `userCurrentTaskbarItemAttributes.graphql`: the union-typed
+# selection sits inside a fragment that operations import cross-file.
+
+fragment resultAttributes on SearchResult {
+  totalCount
+  items {
+    __typename
+    ... on Ticket {
+      id
+    }
+  }
+}

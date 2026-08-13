@@ -7,7 +7,8 @@ module Gql::Types::User
                    Gql::Types::OrganizationType,
                    Gql::Types::TicketType,
                    Gql::Types::User::TaskbarItemEntity::TicketCreateType,
-                   Gql::Types::User::TaskbarItemEntity::SearchType
+                   Gql::Types::User::TaskbarItemEntity::SearchType,
+                   *extension_types
 
     def self.resolve_type(obj, _context)
       return super if !obj.is_a?(Hash)

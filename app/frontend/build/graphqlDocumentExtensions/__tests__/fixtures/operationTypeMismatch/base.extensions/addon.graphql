@@ -1,0 +1,9 @@
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
+# The base document is a `query` — a `mutation` extension must fail loudly
+# rather than silently merging its selections into the query.
+
+mutation addon($search: String!) {
+  addonField: search(search: $search) {
+    totalCount
+  }
+}
