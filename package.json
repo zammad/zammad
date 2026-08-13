@@ -54,7 +54,7 @@
     "@sa11y/vitest": "^8.0.28",
     "@sinonjs/fake-timers": "^15.4.0",
     "@tailwindcss/vite": "^4.3.3",
-    "@testing-library/jest-dom": "^7.0.0",
+    "@testing-library/jest-dom": "^7.0.1",
     "@testing-library/user-event": "^14.6.3",
     "@testing-library/vue": "^8.1.0",
     "@types/lodash-es": "^4.17.12",
