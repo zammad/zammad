@@ -16,9 +16,9 @@ class AIAgent extends App.ControllerAIFeatureBase
     App.AIAgentType.fetchFull(=>
 
       callbackAgentTypeAttribute = (value, object, attribute, attributes) ->
-        return App.AIAgentType.findByAttribute('custom', true)?.displayName() or '-' if not object.agent_type
+        type = if object.agent_type then App.AIAgentType.find(object.agent_type) else App.AIAgentType.findByAttribute('custom', true)
 
-        App.AIAgentType.find(object.agent_type)?.displayName() or '-'
+        App.Utils.htmlEscape(type?.displayName()) or '-'
 
       callbackReferencesAttribute = (value, object, attribute, attributes) =>
         references = _.compact(_.map(Object.keys(@REFERENCING_OBJECTS), (key) =>
