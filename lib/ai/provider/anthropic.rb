@@ -119,7 +119,9 @@ class AI::Provider::Anthropic < AI::Provider
     data = validate_response!(response)
     extract_response_metadata(data)
 
-    data['content'].first['text']
+    # Models with extended thinking return one or more 'thinking' blocks before
+    # the 'text' block, so the answer is not necessarily the first element.
+    data['content'].find { |block| block['type'] == 'text' }&.fetch('text', nil)
   end
 
   def embeddings(input:)
