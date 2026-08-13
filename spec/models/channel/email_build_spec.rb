@@ -274,6 +274,60 @@ RSpec.describe Channel::EmailBuild, type: :model do
           it_behaves_like 'adding the email html part as an attachment'
 
           include_context 'with attachment checks'
+
+          context 'when referenced inline attachment content is missing' do
+            let(:content_id) { 'missing-inline-image@example.com' }
+            let(:mail_body)  { %(<img src="cid:#{content_id}">) }
+            let(:filename)   { 'missing-inline-image.jpg' }
+            let(:mime_type)  { 'image/jpeg' }
+            let(:store_attributes) do
+              super().merge(
+                preferences: {
+                  'Content-Type'        => mime_type,
+                  'Content-ID'          => content_id,
+                  'Content-Disposition' => 'inline',
+                }
+              )
+            end
+
+            before do
+              Store::Provider::DB.find_by!(sha: store.store_file.sha).destroy!
+              allow(Rails.logger).to receive(:error)
+            end
+
+            it 'skips the attachment' do
+              expect(mail.to_s).not_to include("Content-ID: <#{content_id}>")
+            end
+
+            it 'logs the missing content' do
+              mail
+
+              expect(Rails.logger).to have_received(:error).with(
+                "Skipping attachment #{store.id} (Store::File #{store.store_file_id}, #{filename.inspect}) because its content is missing."
+              )
+            end
+          end
+
+          context 'when regular attachment content is missing' do
+            let(:filename) { 'missing-attachment.txt' }
+
+            before do
+              Store::Provider::DB.find_by!(sha: store.store_file.sha).destroy!
+              allow(Rails.logger).to receive(:error)
+            end
+
+            it 'skips the attachment' do
+              expect(file_attachment).to be_nil
+            end
+
+            it 'logs the missing content' do
+              mail
+
+              expect(Rails.logger).to have_received(:error).with(
+                "Skipping attachment #{store.id} (Store::File #{store.store_file_id}, #{filename.inspect}) because its content is missing."
+              )
+            end
+          end
         end
       end
 
