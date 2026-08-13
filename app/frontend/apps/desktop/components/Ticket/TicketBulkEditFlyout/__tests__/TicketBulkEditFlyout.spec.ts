@@ -151,7 +151,14 @@ describe('TicketBulkEditFlyout', () => {
     await wrapper.events.click(wrapper.getByLabelText('Note'))
 
     await wrapper.events.click(await wrapper.findByLabelText('Text'))
-    await wrapper.events.type(wrapper.getByLabelText('Text'), 'Test ticket text')
+
+    // Type the note text with fake timers and flush all timers afterwards.
+    //  The editor field delays its form updater trigger by 500ms, so on a slow
+    //  machine the debounce can fire mid-typing, and the form updater roundtrip
+    //  moves the focus away from the field, swallowing the remaining keystrokes.
+    await wrapper.events.debounced(() =>
+      wrapper.events.type(wrapper.getByLabelText('Text'), 'Test ticket text'),
+    )
 
     await wrapper.events.click(wrapper.getByRole('button', { name: 'Apply' }))
 

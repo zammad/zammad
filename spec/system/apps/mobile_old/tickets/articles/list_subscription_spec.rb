@@ -192,9 +192,11 @@ RSpec.describe 'Mobile > Ticket > Articles List subscription', app: :mobile, aut
 
     expect(page).to have_no_text('new')
 
-    create_articles(1)
-
-    wait_for_ticket_articles(number: 2)
+    # Create the new article with its final body and wait until it is rendered.
+    # This guarantees that no article list update is still in flight after the article was
+    #  marked as seen, which would re-render the list without the "new" separator.
+    create(:ticket_article, ticket: ticket, body: 'Additional Reply')
+    expect(page).to have_text('Additional Reply')
 
     expect(page).to have_text('new')
 
@@ -216,8 +218,14 @@ RSpec.describe 'Mobile > Ticket > Articles List subscription', app: :mobile, aut
     # ensure we are at the bottom before creating new articles
     page.scroll_to :bottom
 
-    create_articles(2)
-    wait_for_ticket_articles(number: 2)
+    # Create the new articles one by one with their final body and wait until they are rendered.
+    # This guarantees that no article list update is still in flight after the articles were
+    #  marked as seen below, which would re-render the list without the "new" separator.
+    create(:ticket_article, ticket: ticket, body: 'Additional Reply 1')
+    expect(page).to have_text('Additional Reply 1')
+
+    create(:ticket_article, ticket: ticket, body: 'Additional Reply 2')
+    expect(page).to have_text('Additional Reply 2')
 
     expect(page).to have_text('new')
     expect(page).to have_css('[data-test-id="new-replies-count"]', text: '2')

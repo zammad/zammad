@@ -85,8 +85,7 @@ RSpec.describe Gql::Queries::AutocompleteSearch::Recipient, authenticated_as: :a
 
       context 'with phone number' do
         let(:phone_number) do
-          Faker::Config.locale = 'de'
-          Faker::PhoneNumber.cell_phone_in_e164
+          Faker::Base.with_locale('de') { Faker::PhoneNumber.cell_phone_in_e164 }
         end
         let(:recipient)    { create(:customer, phone: phone_number) }
         let(:user_contact) { 'phone' }
@@ -95,8 +94,7 @@ RSpec.describe Gql::Queries::AutocompleteSearch::Recipient, authenticated_as: :a
 
         context 'with mobile number' do
           let(:mobile) do
-            Faker::Config.locale = 'de'
-            Faker::PhoneNumber.cell_phone_in_e164
+            Faker::Base.with_locale('de') { Faker::PhoneNumber.cell_phone_in_e164 }
           end
           let(:recipient) { create(:customer, mobile: phone_number) }
 
@@ -106,12 +104,10 @@ RSpec.describe Gql::Queries::AutocompleteSearch::Recipient, authenticated_as: :a
 
       context 'with multiple phone numbers' do
         let(:phone_number) do
-          Faker::Config.locale = 'de'
-          Faker::PhoneNumber.cell_phone_in_e164
+          Faker::Base.with_locale('de') { Faker::PhoneNumber.cell_phone_in_e164 }
         end
         let(:mobile_number) do
-          Faker::Config.locale = 'de'
-          Faker::PhoneNumber.cell_phone_in_e164
+          Faker::Base.with_locale('de') { Faker::PhoneNumber.cell_phone_in_e164 }
         end
         let(:recipient)    { create(:customer, phone: phone_number, mobile: mobile_number) }
         let(:user_contact) { 'phone' }

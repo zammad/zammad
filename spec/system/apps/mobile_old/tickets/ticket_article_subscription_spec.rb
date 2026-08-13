@@ -13,6 +13,13 @@ RSpec.describe 'Mobile > Ticket > Articles > Update', app: :mobile, authenticate
     before do
       visit "/tickets/#{ticket.id}"
 
+      # Wait until the initial mutations of the ticket page have completed. The article changes
+      #  of the examples must not run while the app still has an open transaction on the shared
+      #  database connection - the article change would join that foreign transaction and its
+      #  after_commit callback, which triggers the subscription event, can get lost.
+      wait_for_mutation('ticketLiveUserUpsert')
+      wait_for_mutation('onlineNotificationSeen')
+
       wait_for_subscription_start('ticketArticleUpdates', entity: ticket)
     end
 

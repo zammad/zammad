@@ -228,7 +228,20 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
     # calculate before closing, since we cannot access it, if dialog is closed
     is_multi_select = multi_select?
 
-    select_option_by_label(label, **find_options)
+    begin
+      select_option_by_label(label, **find_options)
+    rescue Capybara::ElementNotFound, Selenium::WebDriver::Error::StaleElementReferenceError
+      # An asynchronous form re-render (e.g. the processing of a form updater response of a
+      #  previous field change) may close the dropdown again right after it was opened.
+      # In this case open the dropdown once again and retry.
+      raise if select_menu_open?
+
+      element.click
+
+      wait_for_test_flag('common-select.opened')
+
+      select_option_by_label(label, **find_options)
+    end
 
     send_keys(:escape) if is_multi_select
 
@@ -502,6 +515,15 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
     return dropdown_element if desktop_view?
 
     dialog_element
+  end
+
+  # Checks without waiting if the menu of a select field is currently shown.
+  def select_menu_open?
+    if desktop_view?
+      page.has_css?('#common-select > [role="menu"]', wait: 0)
+    else
+      page.has_css?('#common-select[role="dialog"]', wait: 0)
+    end
   end
 
   # Dropdowns are teleported to the root element, so we must search them within the document body.
