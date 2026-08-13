@@ -183,13 +183,18 @@ returns
     if mail_params[:security]
       begin
         return channel.deliver(mail_params, true)
-      rescue SecureMailing::Backend::Handler::SigningError => e
+      rescue SecureMailing::Backend::Handler::SigningError, Channel::DeliveryError => e
         # Only signing failures fall back to unsigned delivery: a system
         # notification must not be blocked by a broken signing backend, and no
         # confidentiality is lost (notifications are signed, never encrypted).
+        # Channel#deliver wraps driver exceptions in Channel::DeliveryError,
+        # so we unwrap to check for the original SigningError.
         # Transport errors are not caught here; they propagate instead of
         # triggering a pointless second delivery attempt.
-        Rails.logger.warn "Signing notification to #{data[:recipient][:email]} failed (#{e.message}), sending unsigned..."
+        signing_error = e.is_a?(Channel::DeliveryError) ? e.original_error : e
+        raise if !signing_error.is_a?(SecureMailing::Backend::Handler::SigningError)
+
+        Rails.logger.warn "Signing notification to #{data[:recipient][:email]} failed (#{signing_error.message}), sending unsigned..."
       end
     end
 

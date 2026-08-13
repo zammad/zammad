@@ -630,6 +630,30 @@ RSpec.describe NotificationFactory::Mailer do
 
             it 'falls back to unsigned delivery and logs a warning' do
               allow(Rails.logger).to receive(:warn)
+              delivered_params = []
+              allow_any_instance_of(Channel).to receive(:deliver) do |_channel, params, _notification|
+                delivered_params << params
+                if delivered_params.size == 1
+                  raise Channel::DeliveryError.new(
+                    'Simulated signing failure',
+                    SecureMailing::Backend::Handler::SigningError.new('Simulated signing failure'),
+                  )
+                end
+
+                Mail::Message.new
+              end
+              expect(result).to be_a(Mail::Message)
+              expect(delivered_params.size).to eq(2)
+              expect(delivered_params.last).not_to include(:security)
+              expect(Rails.logger).to have_received(:warn)
+                .with(%r{Signing notification.*failed.*sending unsigned})
+            end
+
+            # Defensive guard: raw SigningError cannot escape Channel#deliver in production
+            # since handle_delivery_error! wraps everything in DeliveryError. This test
+            # exists in case Channel's error contract changes.
+            it 'falls back to unsigned delivery when raw SigningError is raised' do
+              allow(Rails.logger).to receive(:warn)
               call_count = 0
               allow_any_instance_of(Channel).to receive(:deliver) do |_channel, _params, _notification|
                 call_count += 1
@@ -653,10 +677,13 @@ RSpec.describe NotificationFactory::Mailer do
               deliver_calls = 0
               allow_any_instance_of(Channel).to receive(:deliver) do |_channel, _params, _notification|
                 deliver_calls += 1
-                raise StandardError, 'Connection refused'
+                raise Channel::DeliveryError.new(
+                  'Connection refused',
+                  StandardError.new('Connection refused'),
+                )
               end
 
-              expect { result }.to raise_error(StandardError, 'Connection refused')
+              expect { result }.to raise_error(Channel::DeliveryError, 'Connection refused')
               expect(deliver_calls).to eq(1)
             end
           end
