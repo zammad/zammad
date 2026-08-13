@@ -111,12 +111,15 @@ generate email with S/MIME
         next if attachment.preferences['Content-ID'].blank?
         next if !found_content_ids[ attachment.preferences['Content-ID'] ]
 
+        content = attachment_content(attachment)
+        next if content.nil?
+
         attachment = Mail::Part.new do
           content_type attachment.preferences['Content-Type']
           content_id "<#{attachment.preferences['Content-ID']}>"
           content_disposition attachment.preferences['Content-Disposition'] || 'inline'
           content_transfer_encoding 'binary'
-          body attachment.content.force_encoding('BINARY')
+          body content.force_encoding('BINARY')
         end
         html_container.add_part attachment
       end
@@ -133,6 +136,9 @@ generate email with S/MIME
       else
         next if attachment.preferences['Content-ID'].present? && found_content_ids[ attachment.preferences['Content-ID'] ]
 
+        content = attachment_content(attachment)
+        next if content.nil?
+
         filename = attachment.filename
         encoded_filename = Mail::Encodings.decode_encode filename, :encode
         disposition = attachment.preferences['Content-Disposition'] || 'attachment'
@@ -140,7 +146,7 @@ generate email with S/MIME
         mail.attachments[attachment.filename] = {
           content_disposition: "#{disposition}; filename=\"#{encoded_filename}\"",
           content_type:        "#{content_type}; filename=\"#{encoded_filename}\"",
-          content:             attachment.content
+          content:             content
         }
       end
     end
@@ -229,4 +235,13 @@ Add/change markup to display html in any mail client nice.
     new_html.gsub!(%r{</?hr>}mxi, '<hr style="margin-top: 6px; margin-bottom: 6px; border: 0; border-top: 1px solid #dfdfdf;">')
     new_html
   end
+
+  def self.attachment_content(attachment)
+    content = attachment.content
+    return content if content
+
+    Rails.logger.error "Skipping attachment #{attachment.id} (Store::File #{attachment.store_file_id}, #{attachment.filename.inspect}) because its content is missing."
+    nil
+  end
+  private_class_method :attachment_content
 end
