@@ -1,6 +1,4 @@
 .template_integration_es:
-  extends:
-    - .job_rules_default
   services:
     - !reference [.services, postgresql]
     - !reference [.services, redis]
@@ -11,10 +9,18 @@
     - !reference [.scripts, zammad_db_init]
     - bundle exec rspec --tag searchindex --tag ~type:system
 
-# Lowest and highest supported Elasticsearch versions
+# Lowest and highest supported Elasticsearch versions. 'stable' is tested in
+#   every pipeline, 'latest' automatically only in scheduled pipelines and
+#   manually triggerable in all others.
 rspec:es:
   extends:
     - .template_integration_es
   parallel:
     matrix:
       - ELASTICSEARCH_TAG: [stable, latest]
+  rules:
+    - !reference [.job_rules, variable_filters]
+    - if: $ELASTICSEARCH_TAG == "stable"
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+    - when: manual
+      allow_failure: true
