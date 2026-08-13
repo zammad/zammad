@@ -1068,7 +1068,7 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  state:       true,
+  state:       false,
   preferences: {
     prio:       10,
     permission: ['admin.security'],

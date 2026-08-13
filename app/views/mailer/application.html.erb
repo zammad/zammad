@@ -3,48 +3,90 @@
     border-left: 2px solid blue;
     padding-left: 1em;
   }
-  .header {
-    color: #aaaaaa;
-    border-bottom-style:solid;
-    border-bottom-width:1px;
-    border-bottom-color:#aaaaaa;
+  .email-header {
     width: 100%;
     max-width: 600px;
-    padding-bottom: 6px;
-    margin-bottom: 16px;
-    padding-top: 6px;
+    border-collapse: collapse;
+  }
+  .email-header .logo img {
+    display: block;
+    max-width: 145px;
+    height: auto;
+  }
+  .email-header .help-link {
+    text-align: right;
+    vertical-align: middle;
+  }
+  .email-header .help-link a {
+    color: #009bd7;
     font-size: 16px;
+    text-decoration: none;
   }
-  .footer {
-    font-size: 10px;
-    color: #aaaaaa;
-    border-top-style:solid;
-    border-top-width:1px;
-    border-top-color:#aaaaaa;
+  .email-divider {
+    border: none;
+    border-top: 1px solid #e2e2e2;
     width: 100%;
     max-width: 600px;
-    padding-top: 6px;
-    margin-top: 16px;
-    padding-botton: 6px;
+    margin: 16px 0;
   }
-  .footer a {
-    color: #aaaaaa;
+  .btn {
+    display: inline-block;
+    background-color: #009bd7;
+    color: #ffffff !important;
+    font-size: 14px;
+    text-decoration: none;
+    padding: 10px 16px;
+    border-radius: 5px;
+  }
+  .email-footer {
+    font-size: 14px;
+    color: #7d7d7d;
+    width: 100%;
+    max-width: 600px;
+    text-align: center;
+  }
+  .email-footer .reason {
+    font-size: 10px;
+    display: block;
+    margin-bottom: 8px;
+  }
+  .email-footer strong {
+    display: block;
+    margin-bottom: 4px;
+  }
+  .email-footer a {
+    color: #7d7d7d;
+    text-decoration: underline;
   }
 </style>
 <% if @objects[:standalone] != true %>
-<div class="header">
-  <%= c 'product_name' %> <%= t 'Notification' %>
-</div>
+<table class="email-header" role="presentation" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td class="logo">
+      <img src="<%= c 'http_type' %>://<%= c 'fqdn' %>/api/v1/system_assets/product_logo/<%= c 'product_logo' %>" alt="<%= c 'product_name' %>">
+    </td>
+    <!-- No dedicated help-center page/URL exists yet, so this points at the
+         instance root - update once a real Central de Ajuda destination exists. -->
+    <td class="help-link">
+      <a href="<%= c 'http_type' %>://<%= c 'fqdn' %>">Central de Ajuda</a>
+    </td>
+  </tr>
+</table>
+<hr class="email-divider">
 <% end %>
 
 <%= d 'message', false %>
 
 <% if @objects[:standalone] != true %>
-<div class="footer">
+<hr class="email-divider">
+<div class="email-footer">
   <% if @objects[:reason] %>
-    <%= t @objects[:reason] %> |
+    <span class="reason"><%= t @objects[:reason] %></span>
   <% end %>
-  <a href="<%= c 'http_type' %>://<%= c 'fqdn' %>/#profile/notifications"><%= t 'Manage your notification settings' %></a>
-  <% if c('organization').present? %>| <%= c 'organization' %><% end %>
+  <strong>Enviado por <%= c 'product_name' %></strong>
+  <div>
+    Caso não queira mais receber estes e-mails, <a href="<%= c 'http_type' %>://<%= c 'fqdn' %>/#profile/notifications"><%= t 'clique aqui' %></a>.
+  </div>
+  <% if c('organization').present? %><div><%= c 'organization' %></div><% end %>
 </div>
 <% end %>

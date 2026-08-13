@@ -15,7 +15,7 @@ RSpec.describe NotificationFactory::Mailer do
         it 'renders correctly' do
           expect(result[:subject]).to eq('Test Ticket!')
           expect(result[:body]).to include('Your Zammad Helpdesk Team')
-          expect(result[:body]).to include('Manage your notification settings')
+          expect(result[:body]).to include('Caso não queira mais receber estes e-mails')
         end
       end
 
@@ -25,7 +25,7 @@ RSpec.describe NotificationFactory::Mailer do
         it 'renders correctly' do
           expect(result[:subject]).to eq('Test Ticket!')
           expect(result[:body]).to include('Ihr Zammad Helpdesk-Team')
-          expect(result[:body]).to include('Benachrichtigungs-Einstellungen verwalten')
+          expect(result[:body]).to include('Caso não queira mais receber estes e-mails')
         end
       end
     end

@@ -180,7 +180,12 @@ class Transaction::Notification
       send_to_single_recipient_online(user, ticket, article)
     end
 
-    if channels['email'] && user.email.present?
+    # No client in this deployment can produce an article reaction (that only
+    # happens via the WhatsApp channel webhook, see
+    # lib/whatsapp/webhook/message/reaction.rb) - there's no Setting to gate
+    # this notification type, so it's suppressed here instead of leaving it
+    # reachable through an unused channel.
+    if channels['email'] && user.email.present? && @item[:type] != 'update.reaction'
       used_channels.push 'email'
 
       send_to_single_recipient_email(user, ticket, article, changes)
