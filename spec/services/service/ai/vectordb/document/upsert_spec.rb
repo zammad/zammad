@@ -16,7 +16,7 @@ RSpec.describe Service::AI::VectorDB::Document::Upsert, :aggregate_failures do
   let(:bulk_calls)           { [] }
   let(:metadata_patches)     { [] }
   let(:cache)                { Service::AI::VectorDB::Embedding::Cache }
-  let(:model)                { AI::ProviderConnection.for_embeddings.provider_instance.options[:embedding_model] }
+  let(:model)                { AI::ProviderConnection.for_embeddings.provider_instance.embedding_model }
 
   before do
     setup_ai_provider('open_ai', token: 'secret-token')

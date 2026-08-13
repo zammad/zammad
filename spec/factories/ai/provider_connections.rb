@@ -10,8 +10,11 @@ FactoryBot.define do
       default_chat { true }
     end
 
+    # A connection serving embeddings has to name its model, so the trait brings one - an explicit
+    # `config` still has to carry it, since it replaces this one rather than merging into it.
     trait :default_embedding do
       default_embedding { true }
+      config            { { token: 'secret-token', model: 'gpt-4o', embedding_model: 'text-embedding-3-small' } }
     end
 
     trait :default_ocr do

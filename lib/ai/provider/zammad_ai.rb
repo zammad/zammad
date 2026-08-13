@@ -3,21 +3,11 @@
 class AI::Provider::ZammadAI < AI::Provider
   ZAMMAD_AI_API_BASE_URL = 'https://ai.zammad.com'.freeze
 
-  DEFAULT_OPTIONS = {
-    embedding_model: 'bge-m3',
-  }.freeze
+  DEFAULT_OPTIONS = {}.freeze
 
-  EMBEDDING_SIZES = {
-    'bge-m3'            => 1024,
-    'nomic-embed-text'  => 768,
-    'mxbai-embed-large' => 1024,
-  }.freeze
-
-  EMBEDDING_INPUT_LIMITS = {
-    'bge-m3'            => 8192,
-    'nomic-embed-text'  => 2048,
-    'mxbai-embed-large' => 512,
-  }.freeze
+  # The service serves this one model for embeddings; an admin neither picks nor sees it, so the
+  # connection stores nothing and every embedding call falls back to it.
+  EMBEDDING_MODEL_FALLBACK = 'bge-m3'.freeze
 
   def self.base_url(config)
     ENV['ZAMMAD_AI_API_URL'] || config[:url] || ZAMMAD_AI_API_BASE_URL
@@ -29,6 +19,10 @@ class AI::Provider::ZammadAI < AI::Provider
 
   def self.supports_embeddings?
     true
+  end
+
+  def self.embedding_model_fallback
+    EMBEDDING_MODEL_FALLBACK
   end
 
   def self.ping!(config, related_object: nil)
@@ -95,11 +89,10 @@ class AI::Provider::ZammadAI < AI::Provider
   end
 
   def embeddings(input:)
-    request_body = { input: }
-
-    if options[:embedding_model]
-      request_body[:llm] = options[:embedding_model]
-    end
+    # Named explicitly rather than left to the service's own default: an omitted llm would move the
+    # resolution to a model Zammad cannot see or record. Resolves to EMBEDDING_MODEL_FALLBACK,
+    # since a Zammad AI connection stores no embedding model of its own.
+    request_body = { input:, llm: embedding_model! }
 
     response = UserAgent.post(
       "#{self.class.base_url(config)}/api/v1/features/embed",

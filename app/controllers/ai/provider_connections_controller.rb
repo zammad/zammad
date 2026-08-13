@@ -38,11 +38,76 @@ class AI::ProviderConnectionsController < ApplicationController
     return render_provider_error(__('This provider does not support embeddings.')) if purpose == 'embedding' && !connection.embedding_capable
 
     enabled = params.key?(:enabled) ? params[:enabled] : true
+
+    # Serving embeddings requires a named model. Rather than reject this one-click action for a
+    # connection that predates the explicit field, it gets the provider's recommendation - the same
+    # rule the connection seeding follows. A provider with nothing to name still fails, with the
+    # validation message telling the admin to configure a model first.
+    connection.seed_embedding_default if purpose == 'embedding' && ActiveModel::Type::Boolean.new.cast(enabled)
+
     connection.update!("default_#{purpose}" => enabled)
     model_show_render(AI::ProviderConnection, params)
   end
 
+  # The models the endpoint offers, for the dialog's model dropdown, along with the defaults its
+  # empty options stand for. Answers with { models:, default_model:, recommended_embedding_model:,
+  # recommended_embedding_metadata:, error: }. A provider with no model list at all
+  # (Azure AI, Zammad AI) answers 422 - its dialog never asks. A present `error` is a listing that
+  # failed, which the wizard's credential step names as the reason it does not let the admin any
+  # further.
+  def models
+    connection = AI::ProviderConnection.find(params[:id]) if params.key?(:id)
+
+    result = Service::AI::ProviderConnection::ListModels.execute(
+      provider:        params[:provider].to_s.presence || connection&.provider,
+      incoming_config: submitted_config,
+      existing_config: connection&.config || {},
+      # Attributes the listing request's HTTP log to the connection; nil while it is being created.
+      related_object:  connection,
+    )
+
+    render json: result
+  # A failed listing is not a failed request: the dialog has to tell "the provider refused the
+  # listing" from "the endpoint rejected what you typed", and puts the reason in front of the
+  # credentials it was rejected for. Hence 200 with an error instead of a 4xx. URI::Error stands
+  # for a malformed URL, which raises out of UserAgent before its own rescue.
+  rescue AI::Provider::RequestError, AI::Provider::ResponseError, URI::Error => e
+    render json: { models: [], error: e.message }
+  end
+
+  # The dimensions and the input limit of one embedding model, for the fields the dialog fills
+  # instead of sending the admin off to research them. Only asked for where the model listing
+  # could not size the model itself - a value no source knows comes back as null, which the dialog
+  # answers with a field the admin has to fill.
+  def embedding_metadata
+    connection = AI::ProviderConnection.find(params[:id]) if params.key?(:id)
+
+    result = Service::AI::ProviderConnection::ResolveEmbeddingMetadata.execute(
+      provider:        params[:provider].to_s.presence || connection&.provider,
+      model:           params[:model].to_s,
+      incoming_config: submitted_config,
+      existing_config: connection&.config || {},
+      # Attributes the metadata request's HTTP log to the connection; nil while it is being created.
+      related_object:  connection,
+    )
+
+    render json: result
+  end
+
   private
+
+  # The submitted config, or nil when none was submitted, so the stored one is listed against
+  # unchanged. Mask sentinels in it are resolved by the service, which knows the stored config -
+  # exactly like the connection test does.
+  def submitted_config
+    return nil if !params.key?(:config)
+
+    # Anything but a hash is a malformed request rather than a config to list against, and would
+    # otherwise raise on permit!.
+    raise ActionController::ParameterMissing, :config if !params[:config].is_a?(ActionController::Parameters)
+
+    params[:config].permit!.to_h
+  end
 
   # Validates the provider endpoint is reachable before persisting, and records whether the
   # model supports the temperature parameter.

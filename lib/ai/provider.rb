@@ -6,9 +6,38 @@ class AI::Provider
 
   DEFAULT_OPTIONS = {}.freeze
 
-  EMBEDDING_SIZES = {}.freeze
+  # Known defaults of the common embedding models, shared across the providers: what a model is
+  # called does not depend on where it is served, so 'bge-m3' behind a custom OpenAI compatible
+  # endpoint resolves the same as behind Ollama. Read through known_embedding_default only.
+  EMBEDDING_SIZES = {
+    'all-minilm'             => 384,
+    'bge-m3'                 => 1024,
+    'codestral-embed'        => 1536,
+    'codestral-embed-2505'   => 1536,
+    'mistral-embed'          => 1024,
+    'mistral-embed-2312'     => 1024,
+    'mxbai-embed-large'      => 1024,
+    'nomic-embed-text'       => 768,
+    'text-embedding-3-large' => 3072,
+    'text-embedding-3-small' => 1536,
+    'text-embedding-ada-002' => 1536,
+  }.freeze
 
-  EMBEDDING_INPUT_LIMITS = {}.freeze
+  # Input token limits (context windows) of the same models. These are small for the self-hosted
+  # ones, so chunks must be sized against them (see Service::AI::VectorDB::Content::Chunks).
+  EMBEDDING_INPUT_LIMITS = {
+    'all-minilm'             => 256,
+    'bge-m3'                 => 8192,
+    'codestral-embed'        => 8192,
+    'codestral-embed-2505'   => 8192,
+    'mistral-embed'          => 8192,
+    'mistral-embed-2312'     => 8192,
+    'mxbai-embed-large'      => 512,
+    'nomic-embed-text'       => 2048,
+    'text-embedding-3-large' => 8191,
+    'text-embedding-3-small' => 8191,
+    'text-embedding-ada-002' => 8191,
+  }.freeze
 
   # Conservative input-token limit for an embedding model not listed in EMBEDDING_INPUT_LIMITS —
   # favours safety (smaller chunks that fit small-context models) over granularity.
@@ -67,8 +96,16 @@ class AI::Provider
       }.compact
     end
 
+    # The adapter for a provider key, or nil for anything that is not one. The namespace holds
+    # more than adapters (the errors, the concerns), and a key resolving to one of those would
+    # otherwise pass for a provider and only fail once a request is made against it.
+    #
+    # @return [Class, NilClass] the adapter class
     def by_name(name)
-      "AI::Provider::#{name.classify}".safe_constantize
+      klass = "AI::Provider::#{name.classify}".safe_constantize
+      return nil if !klass.is_a?(Class) || !(klass < AI::Provider)
+
+      klass
     end
 
     # A provider validates its config with exactly one request when a connection is saved:
@@ -116,9 +153,104 @@ class AI::Provider
       raise CheckTemperatureSupportError, e.message
     end
 
+    # The model a connection that names none runs on: what the dialog pre-selects, and what
+    # AI::Provider resolves to at request time via DEFAULT_OPTIONS.
+    #
+    # Read through here rather than off the option hash: the dialog learns the default from the
+    # model listing endpoint (see Service::AI::ProviderConnection::ListModels), and nothing outside
+    # the adapters should have to know that `options` is where it lives.
+    #
+    # @return [String, NilClass] the default model, nil for a provider without one
+    def default_model
+      self::DEFAULT_OPTIONS[:model]
+    end
+
     # True when embed() is implemented; filters the Semantic Search connection dropdown.
     def supports_embeddings?
       false
+    end
+
+    # The embedding model to recommend for this provider: what the connection dialog pre-selects,
+    # and what a connection that relied on the former silent fallback was backfilled with.
+    #
+    # Deliberately not part of DEFAULT_OPTIONS: that hash feeds `options`, which is what used to
+    # resolve an embedding model at request time - invisible in the admin UI and moving under the
+    # admin's feet whenever the default was bumped. The model actually used is always the one
+    # persisted in config[:embedding_model].
+    #
+    # @return [String, NilClass] the recommended model, nil for a provider with no sensible one
+    def recommended_embedding_model
+      nil
+    end
+
+    # The embedding model of a provider whose model is not part of the connection config at all:
+    # Zammad AI serves a fixed one, so the dialog shows no field for it and the connection stores
+    # nothing. The only remaining implicit resolution, and one an admin cannot influence anyway.
+    #
+    # @return [String, NilClass] the fixed model, nil for a provider whose model is configured
+    def embedding_model_fallback
+      nil
+    end
+
+    # The value the shared table of known embedding model defaults holds for a model
+    # (EMBEDDING_SIZES, EMBEDDING_INPUT_LIMITS).
+    #
+    # Everything reading those tables has to come through here, because a model name does not
+    # always match a key verbatim: Ollama identifies a model by name and tag ('bge-m3:latest'),
+    # while the tables are keyed by name alone. A miss is not harmless - it fails vector table
+    # creation (Service::AI::VectorDB::CreateTable) and silently shrinks the chunks an embedding
+    # model is fed (#embedding_input_limit).
+    #
+    # @return [Integer, NilClass] the known default, nil when the table has none for the model
+    def known_embedding_default(table, model)
+      model = model.to_s
+      return nil if model.blank?
+
+      defaults = const_get(table)
+      value    = defaults[model] || defaults[model.split(':').first]
+
+      value if value.is_a?(Integer)
+    end
+
+    # Metadata the provider serves about one specific model (Ollama's /api/show). The default is
+    # knowing nothing, so a caller moves on to the shared table of known defaults. Deliberately
+    # not a place to repeat the model listing: everything a listing carries already travels in
+    # its descriptors, in one request (see
+    # Service::AI::ProviderConnection::ResolveEmbeddingMetadata).
+    #
+    # @return [Hash] embedding_size and/or embedding_input_limit - only the reported ones
+    def embedding_model_metadata(_config, _model, related_object: nil)
+      {}
+    end
+
+    # True when the endpoint can enumerate its models, so the connection dialog can offer a
+    # dropdown. A provider without a model list keeps the plain model text field (Azure AI's
+    # deployment based endpoints, Zammad AI).
+    def supports_model_listing?
+      false
+    end
+
+    # True when the model catalogue is under the admin's own control and can change any moment
+    # (a self-hosted Ollama pulls a model in seconds, a custom endpoint deploys at will), so a
+    # cached listing goes stale much faster than the fixed catalogue of a hosted vendor. Decides
+    # how long Service::AI::ProviderConnection::ListModels may cache the listing.
+    def volatile_model_listing?
+      false
+    end
+
+    # The models the endpoint offers for the given config, normalized so a caller does not have
+    # to know any provider specifics:
+    #
+    #   { id:, capabilities: [:chat, :embedding, :vision], embedding_input_limit:,
+    #     embedding_size: }
+    #
+    # Fields the provider does not report stay nil instead of being guessed. Only called for a
+    # provider that answers supports_model_listing? with true; a listing failure surfaces as a
+    # RequestError/ResponseError like any other provider request (see Concerns::ListsModels).
+    #
+    # @return [Array<Hash>] the normalized model descriptors
+    def models(_config, related_object: nil)
+      raise NotImplementedError
     end
   end
 
@@ -159,14 +291,41 @@ class AI::Provider
     embeddings(input: Array(input))
   end
 
+  # The embedding model to embed with: the configured one, or the fixed one of a provider whose
+  # model is not configurable at all.
+  #
+  # @return [String, NilClass] the embedding model
+  def embedding_model
+    options[:embedding_model].presence || self.class.embedding_model_fallback
+  end
+
+  # Same, for the embedding request itself. Every adapter's embeddings() asks for it here, so that
+  # a missing one fails with the same message everywhere instead of each provider quietly embedding
+  # against whatever its own default or its endpoint's default happens to be - the model behind a
+  # stored vector has to be the one the admin can see in the dialog.
+  #
+  # @return [String] the embedding model
+  def embedding_model!
+    return embedding_model if embedding_model.present?
+
+    raise RequestError, __('Missing embedding model in the provider configuration')
+  end
+
   # Maximum number of input tokens the configured embedding model accepts. Used to size chunks so
   # no chunk overruns the model (see Service::AI::VectorDB::Content::Chunks). Unknown models fall back conservatively.
   #
+  # The configured limit comes out of a jsonb config, which keeps whatever was written into it -
+  # down to a string ('8192') the chunk budget cannot be compared against, or a number that is no
+  # budget at all, which the chunker raises on. AI::ProviderConnection rejects those on save, but a
+  # config predating that validation is still out there, so anything but a positive whole number
+  # falls through to what is known about the model (mirrors CreateTable's handling of the size).
+  #
   # @return [Integer] the model's input token limit
   def embedding_input_limit
-    return options[:embedding_input_limit] if options[:embedding_input_limit].present?
+    configured = Integer(options[:embedding_input_limit].to_s, exception: false)
+    return configured if configured&.positive?
 
-    self.class::EMBEDDING_INPUT_LIMITS.fetch(options[:embedding_model], DEFAULT_EMBEDDING_INPUT_LIMIT)
+    self.class.known_embedding_default(:EMBEDDING_INPUT_LIMITS, embedding_model) || DEFAULT_EMBEDDING_INPUT_LIMIT
   end
 
   def metadata

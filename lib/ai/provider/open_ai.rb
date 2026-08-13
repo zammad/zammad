@@ -4,27 +4,24 @@ class AI::Provider::OpenAI < AI::Provider
   include AI::Provider::Concerns::HandlesOpenAIMessages
   include AI::Provider::Concerns::HasConfigurableModel
   include AI::Provider::Concerns::HasModelsWithoutTemperatureFallback
+  include AI::Provider::Concerns::ListsModels
 
   OPENAI_API_BASE_URL = 'https://api.openai.com/v1'.freeze
 
-  # default model also in app/assets/javascripts/app/lib/app_post/ai_provider/open_ai.coffee
   DEFAULT_OPTIONS = {
     temperature:                0.1,
     model:                      'gpt-4.1',
-    embedding_model:            'text-embedding-3-small',
     models_without_temperature: ['gpt-5']
   }.freeze
 
-  EMBEDDING_SIZES = {
-    'text-embedding-3-small' => 1536
-  }.freeze
-
-  EMBEDDING_INPUT_LIMITS = {
-    'text-embedding-3-small' => 8191
-  }.freeze
+  RECOMMENDED_EMBEDDING_MODEL = 'text-embedding-3-small'.freeze
 
   def self.supports_embeddings?
     true
+  end
+
+  def self.recommended_embedding_model
+    RECOMMENDED_EMBEDDING_MODEL
   end
 
   def self.check_temperature_support!(config, related_object: nil)
@@ -51,6 +48,17 @@ class AI::Provider::OpenAI < AI::Provider
     raise
   rescue => e
     raise CheckTemperatureSupportError, e.message
+  end
+
+  def self.models(config, related_object: nil)
+    response = model_list_response("#{OPENAI_API_BASE_URL}/models", related_object:, bearer_token: config[:token])
+
+    data = validate_response!(response)
+
+    # OpenAI reports nothing but the ids, so the capabilities come from the heuristics.
+    normalize_models(model_list_entries!(data), 'id') do |_entry, id|
+      model_descriptor(id:)
+    end
   end
 
   private
@@ -91,7 +99,7 @@ class AI::Provider::OpenAI < AI::Provider
     response = UserAgent.post(
       "#{OPENAI_API_BASE_URL}/embeddings",
       {
-        model: options[:embedding_model] || DEFAULT_OPTIONS[:embedding_model],
+        model: embedding_model!,
         input: input,
       },
       {

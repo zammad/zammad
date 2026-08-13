@@ -101,8 +101,10 @@ module Service::AI::VectorDB::Document
       @embedding_provider ||= AI::ProviderConnection.for_embeddings&.provider_instance
     end
 
+    # Resolved through the provider, so the cache is keyed by the model that really produced the
+    # vectors - including the fixed one of a provider whose model is not part of the config.
     def embedding_model
-      @embedding_model ||= embedding_provider&.options&.dig(:embedding_model)
+      @embedding_model ||= embedding_provider&.embedding_model
     end
   end
 end

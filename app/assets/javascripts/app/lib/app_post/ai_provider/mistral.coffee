@@ -1,11 +1,10 @@
-# default model also in lib/ai/provider/mistral.rb
 App.Config.set('mistral', {
-  key:                  'mistral'
-  label:                __('Mistral AI')
-  prio:                 6000
-  fields:               ['token', 'model', 'embedding_model', 'ocr_model']
-  required:             ['token']
-  default_model:        'mistral-large-2512'
-  default_embedding_model: 'mistral-embed'
-  supports_embeddings:  true
+  key:                    'mistral'
+  label:                  __('Mistral AI')
+  prio:                   6000
+  credential_fields:      ['token']
+  model_fields:           ['model', 'embedding_model', 'embedding_size', 'embedding_input_limit', 'ocr_model']
+  required:               ['token']
+  supports_embeddings:    true
+  supports_model_listing: true
 }, 'AIProviders')

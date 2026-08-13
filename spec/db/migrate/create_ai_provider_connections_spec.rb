@@ -34,7 +34,10 @@ RSpec.describe CreateAIProviderConnections, db_strategy: :reset, type: :db_migra
 
     it 'copies the config without the provider key' do
       migrate
-      expect(AI::ProviderConnection.find_by(name: 'open_ai').config).to eq('token' => 'sk-test', 'model' => 'gpt-4o')
+      # Plus the embedding model the seeding names for the connection it flags for embeddings.
+      expect(AI::ProviderConnection.find_by(name: 'open_ai').config)
+        .to eq('token' => 'sk-test', 'model' => 'gpt-4o',
+               'embedding_model' => AI::Provider::OpenAI.recommended_embedding_model)
     end
 
     it 'seeds no per-feature routing rows (for_chat falls back to default)' do

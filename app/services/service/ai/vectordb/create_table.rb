@@ -13,11 +13,24 @@ module Service::AI::VectorDB
       provider = AI::ProviderConnection.for_embeddings&.provider_instance
       raise(AI::VectorDB::MigrationError, __('The system currently has no selected AI provider for embeddings.')) if provider.nil?
 
-      embedding_model = provider.options[:embedding_model] || provider.class::DEFAULT_OPTIONS[:embedding_model]
+      # The model the admin picked, or the fixed one of a provider that has no configurable model
+      # (Zammad AI) - but never one resolved from the adapter's request time defaults.
+      embedding_model = provider.embedding_model
+      raise(AI::VectorDB::MigrationError, __('Missing embedding model in the provider configuration')) if embedding_model.blank?
 
-      provider.config[:embedding_size].presence ||
-        provider.class::EMBEDDING_SIZES[embedding_model] ||
+      configured_embedding_size(provider.config[:embedding_size]) ||
+        provider.class.known_embedding_default(:EMBEDDING_SIZES, embedding_model) ||
         raise(AI::VectorDB::MigrationError, __('The currently selected AI provider does not support embeddings.'))
+    end
+
+    # The dialog submits the dimension as a number, but the config is jsonb and keeps whatever an
+    # API update wrote into it - down to a string ('1024'), which the index mapping cannot be built
+    # from. Anything that is not a positive whole number is no dimension at all, so it falls through
+    # to the provider's known default instead of reaching Elasticsearch.
+    def configured_embedding_size(value)
+      size = Integer(value.to_s, exception: false)
+
+      size if size&.positive?
     end
   end
 end

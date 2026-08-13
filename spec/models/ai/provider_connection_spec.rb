@@ -17,6 +17,157 @@ RSpec.describe AI::ProviderConnection, type: :model do
     it 'rejects an unknown provider' do
       expect(build(:ai_provider_connection, provider: 'does_not_exist')).not_to be_valid
     end
+
+    # The embedding model used to be resolved from the adapter at request time, so the connection
+    # serving embeddings could carry none: Setting::Validation::VectorDB kept passing and the
+    # failure only surfaced when indexing ran.
+    describe 'embedding model of the connection serving embeddings' do
+      it 'accepts a connection that names its embedding model' do
+        connection = build(:ai_provider_connection, :default_embedding, provider: 'open_ai',
+                                                                        config:   { token: 'a', embedding_model: 'text-embedding-3-small' })
+
+        expect(connection).to be_valid
+      end
+
+      it 'rejects one that does not' do
+        connection = build(:ai_provider_connection, :default_embedding, provider: 'open_ai', config: { token: 'a' })
+
+        expect(connection).not_to be_valid
+      end
+
+      it 'rejects one whose embedding model was cleared' do
+        connection = build(:ai_provider_connection, :default_embedding, provider: 'open_ai',
+                                                                        config:   { token: 'a', embedding_model: '' })
+
+        expect(connection).not_to be_valid
+      end
+
+      # The dialog clears the field, the API replaces the whole config - either way semantic search
+      # must not switch itself off behind a "successfully updated".
+      context 'with a stored connection' do
+        let(:connection) { create(:ai_provider_connection, provider: 'open_ai', config: { token: 'a' }).reload }
+
+        it 'rejects clearing its embedding model', :aggregate_failures do
+          expect(connection.update(config: { 'token' => 'a', 'embedding_model' => '' })).to be(false)
+          expect(connection.reload.default_embedding?).to be true
+        end
+
+        it 'rejects a config that no longer names it', :aggregate_failures do
+          expect(connection.update(config: { 'token' => 'a' })).to be(false)
+          expect(connection.reload.default_embedding?).to be true
+        end
+
+        # What the stale flag fix-up is for: a save that does not touch the config at all.
+        it 'drops a flag it cannot back with a model on an unrelated save', :aggregate_failures do
+          connection.update_column(:config, { 'token' => 'a' })
+
+          expect(connection.reload.update(name: 'renamed')).to be(true)
+          expect(connection.reload.default_embedding?).to be false
+        end
+      end
+
+      it 'does not ask it of a connection that serves something else' do
+        expect(build(:ai_provider_connection, provider: 'open_ai', config: { token: 'a' })).to be_valid
+      end
+
+      # remove_unsupported_embedding_default drops the flag for such a provider, so rejecting the
+      # record instead would make a provider change fail rather than turn the purpose off.
+      it 'does not ask it of a provider that cannot embed at all' do
+        connection = build(:ai_provider_connection, :default_embedding, provider: 'anthropic', config: { token: 'a' })
+
+        expect(connection).to be_valid
+      end
+
+      # Zammad AI serves a fixed model, so there is none for an admin to name.
+      it 'does not ask it of a provider whose model is not configurable' do
+        connection = build(:ai_provider_connection, :default_embedding, provider: 'zammad_ai', config: { token: 'a' })
+
+        expect(connection).to be_valid
+      end
+    end
+
+    # A dimension of zero cannot be built into a vector table, and a token budget of zero or less
+    # makes the chunker raise - both only once indexing runs, naming anything but the connection
+    # that holds the value. The dialog constrains its fields; this covers everything else.
+    describe 'embedding metadata of the connection' do
+      def connection_with(config)
+        build(:ai_provider_connection, provider: 'open_ai', config: { token: 'a', embedding_model: 'text-embedding-3-small' }.merge(config))
+      end
+
+      it 'accepts positive numbers' do
+        expect(connection_with(embedding_size: 1536, embedding_input_limit: 8191)).to be_valid
+      end
+
+      # jsonb keeps what an API write put there, and the consumers parse the number back out of it.
+      it 'accepts a number that arrived as a string' do
+        expect(connection_with(embedding_size: '1536', embedding_input_limit: '8191')).to be_valid
+      end
+
+      # A model no source could size is stored without them, and the consumers fall back.
+      it 'accepts a connection that carries neither' do
+        expect(connection_with({})).to be_valid
+      end
+
+      it 'accepts fields the dialog submitted as cleared' do
+        expect(connection_with(embedding_size: '', embedding_input_limit: '')).to be_valid
+      end
+
+      it 'rejects a negative input limit', :aggregate_failures do
+        connection = connection_with(embedding_input_limit: -1)
+
+        expect(connection).not_to be_valid
+        expect(connection.errors.full_messages).to include(a_string_matching(%r{context window size must be a positive number}i))
+      end
+
+      it 'rejects a zero input limit' do
+        expect(connection_with(embedding_input_limit: 0)).not_to be_valid
+      end
+
+      it 'rejects a negative dimension', :aggregate_failures do
+        connection = connection_with(embedding_size: -1)
+
+        expect(connection).not_to be_valid
+        expect(connection.errors.full_messages).to include(a_string_matching(%r{embedding dimensions must be a positive number}i))
+      end
+
+      it 'rejects a zero dimension' do
+        expect(connection_with(embedding_size: 0)).not_to be_valid
+      end
+
+      it 'rejects a value that is no number at all' do
+        expect(connection_with(embedding_size: 'large')).not_to be_valid
+      end
+
+      it 'rejects a fractional dimension' do
+        expect(connection_with(embedding_size: 1536.5)).not_to be_valid
+      end
+
+      it 'reports both fields at once', :aggregate_failures do
+        connection = connection_with(embedding_size: 0, embedding_input_limit: -1)
+
+        expect(connection).not_to be_valid
+        expect(connection.errors.full_messages.count { |m| m.include?('positive number') }).to eq(2)
+      end
+
+      it 'rejects an update that writes one, leaving the stored config untouched', :aggregate_failures do
+        connection = create(:ai_provider_connection, provider: 'open_ai',
+                                                     config:   { token: 'a', embedding_model: 'text-embedding-3-small', embedding_size: 1536 })
+
+        expect(connection.update(config: connection.config.merge('embedding_size' => -1))).to be(false)
+        expect(connection.reload.config['embedding_size']).to eq(1536)
+      end
+
+      # A value the API allowed in before this validation existed. Rejecting the record over it would
+      # make every later save of it fail, down to the default flag maintenance of its siblings - and
+      # both consumers fall back where the config holds no usable number.
+      it 'does not reject a save that leaves a stored one where it is' do
+        connection = create(:ai_provider_connection, provider: 'open_ai',
+                                                     config:   { token: 'a', embedding_model: 'text-embedding-3-small' })
+        connection.update_column(:config, connection.config.merge('embedding_size' => -1))
+
+        expect(connection.reload.update(name: 'renamed')).to be(true)
+      end
+    end
   end
 
   describe '#provider_klass' do
@@ -72,8 +223,8 @@ RSpec.describe AI::ProviderConnection, type: :model do
   describe 'default flag exclusivity' do
     it 'clears the default embedding flag on other connections when enabling it', :aggregate_failures do
       create(:ai_provider_connection, :default_chat)
-      first  = create(:ai_provider_connection, :default_embedding, config: { token: 'a' })
-      second = create(:ai_provider_connection, config: { token: 'b' })
+      first  = create(:ai_provider_connection, :default_embedding, config: { token: 'a', embedding_model: 'text-embedding-3-small' })
+      second = create(:ai_provider_connection, config: { token: 'b', embedding_model: 'text-embedding-3-small' })
 
       second.update!(default_embedding: true)
 
@@ -82,7 +233,7 @@ RSpec.describe AI::ProviderConnection, type: :model do
     end
 
     it 'exposes the flagged connections via .embedding_connection', :aggregate_failures do
-      embedding = create(:ai_provider_connection, :default_embedding, config: { token: 'b' })
+      embedding = create(:ai_provider_connection, :default_embedding, config: { token: 'b', embedding_model: 'text-embedding-3-small' })
 
       expect(described_class.embedding_connection).to eq(embedding)
     end
@@ -90,12 +241,16 @@ RSpec.describe AI::ProviderConnection, type: :model do
     it 'strips blank config values so they cannot override provider defaults', :aggregate_failures do
       connection = create(:ai_provider_connection, config: { token: 'a', embedding_model: '', ocr_model: '' })
 
-      expect(connection.reload.config).to eq('token' => 'a')
+      # The blank embedding model is stripped like any other; what is left is the recommendation
+      # the embedding seeding writes for the first connection, not the cleared value.
+      expect(connection.reload.config)
+        .to eq('token' => 'a', 'embedding_model' => AI::Provider::OpenAI.recommended_embedding_model)
     end
 
     it 'drops the default embedding flag when the provider changes to one without embedding support' do
       create(:ai_provider_connection, :default_chat)
-      connection = create(:ai_provider_connection, :default_embedding, provider: 'open_ai', config: { token: 'a' })
+      connection = create(:ai_provider_connection, :default_embedding, provider: 'open_ai',
+                                                                       config:   { token: 'a', embedding_model: 'text-embedding-3-small' })
 
       connection.update!(provider: 'anthropic')
 
@@ -104,11 +259,249 @@ RSpec.describe AI::ProviderConnection, type: :model do
 
     it 'keeps the default embedding flag when the provider changes to another embedding-capable one' do
       create(:ai_provider_connection, :default_chat)
-      connection = create(:ai_provider_connection, :default_embedding, provider: 'open_ai', config: { token: 'a' })
+      connection = create(:ai_provider_connection, :default_embedding, provider: 'open_ai',
+                                                                       config:   { token: 'a', embedding_model: 'text-embedding-3-small' })
 
       connection.update!(provider: 'ollama')
 
       expect(connection.reload.default_embedding?).to be true
+    end
+  end
+
+  # The very first connection is seeded as the embedding one, and serving embeddings requires a
+  # named model - so the seeding names the provider's recommendation, which is the value the former
+  # silent fallback resolved to. Only now it is visible in the dialog and recorded with the vectors.
+  describe 'embedding default seeding' do
+    # What the dialog's listing answered travels to the seeding through the very cache it reads
+    # (Service::AI::ProviderConnection::ListModels).
+    def cache_listing(provider_name, models, config:)
+      allow(AI::Provider.by_name(provider_name)).to receive(:models).and_return(models)
+
+      Service::AI::ProviderConnection::ListModels.execute(provider: provider_name, incoming_config: config)
+    end
+
+    # The same listing, cached for 90 seconds (Ollama, custom endpoints) to five minutes (hosted
+    # providers) - less than an admin may spend on the dialog, so the save has to arrive at the same
+    # answer without the catalogue. Simulated by a catalogue that expires the moment it is cached,
+    # while the verdict on the recommendation keeps its own lifetime.
+    def cache_expired_listing(provider_name, models, config:)
+      stub_const('Service::AI::ProviderConnection::ListModels::CACHE_TTL', 0)
+
+      cache_listing(provider_name, models, config:)
+    end
+
+    it 'names the recommended model where the admin named none', :aggregate_failures do
+      connection = create(:ai_provider_connection, provider: 'open_ai', config: { token: 'a' })
+
+      expect(connection.reload.default_embedding?).to be true
+      expect(connection.config['embedding_model']).to eq('text-embedding-3-small')
+    end
+
+    # The wizard deliberately leaves the field empty when the listing carries models but no fit -
+    # the seeding must not overrule that with a model the provider was seen not to serve.
+    it 'preserves the empty choice when the listing does not offer the recommendation', :aggregate_failures do
+      cache_listing('open_ai', [{ id: 'gpt-4.1', capabilities: [:chat] }], config: { 'token' => 'a' })
+
+      connection = create(:ai_provider_connection, provider: 'open_ai', config: { token: 'a' })
+
+      expect(connection.reload.default_embedding?).to be false
+      expect(connection.config).not_to have_key('embedding_model')
+    end
+
+    # The dialog's listing answered the question, and its cache running out is no permission to seed
+    # a model the endpoint was seen not to serve - the admin who leaves the empty option selected
+    # takes longer over the dialog than the catalogue lives.
+    it 'preserves the empty choice once the cached listing expired', :aggregate_failures do
+      cache_expired_listing('open_ai', [{ id: 'bge-m3', capabilities: [:embedding] }], config: { 'token' => 'a' })
+
+      connection = create(:ai_provider_connection, provider: 'open_ai', config: { token: 'a' })
+
+      expect(connection.reload.default_embedding?).to be false
+      expect(connection.config).not_to have_key('embedding_model')
+    end
+
+    it 'seeds the recommendation the listing offers', :aggregate_failures do
+      cache_listing('open_ai', [{ id: 'text-embedding-3-small', capabilities: [:embedding] }], config: { 'token' => 'a' })
+
+      connection = create(:ai_provider_connection, provider: 'open_ai', config: { token: 'a' })
+
+      expect(connection.reload.default_embedding?).to be true
+      expect(connection.config['embedding_model']).to eq('text-embedding-3-small')
+    end
+
+    # Ollama lists a model by name and tag, while the recommendation names it alone.
+    it 'resolves the listed recommendation behind a tag', :aggregate_failures do
+      cache_listing('ollama', [{ id: 'bge-m3:latest', capabilities: [:embedding] }], config: { 'url' => 'http://localhost:11434' })
+
+      connection = create(:ai_provider_connection, provider: 'ollama', config: { url: 'http://localhost:11434' })
+
+      expect(connection.reload.default_embedding?).to be true
+      expect(connection.config['embedding_model']).to eq('bge-m3')
+    end
+
+    # An Ollama with nothing pulled answers an empty listing: it serves nothing, the
+    # recommendation included - which is also why the dialog offers it no model there, and asks
+    # the admin to name one for the connection that is to serve embeddings.
+    it 'preserves the empty choice for a listing that carried nothing at all', :aggregate_failures do
+      cache_listing('ollama', [], config: { 'url' => 'http://localhost:11434' })
+
+      connection = create(:ai_provider_connection, provider: 'ollama', config: { url: 'http://localhost:11434' })
+
+      expect(connection.reload.default_embedding?).to be false
+      expect(connection.config).not_to have_key('embedding_model')
+    end
+
+    it 'keeps the model the admin named', :aggregate_failures do
+      connection = create(:ai_provider_connection, provider: 'open_ai',
+                                                   config:   { token: 'a', embedding_model: 'text-embedding-3-large' })
+
+      expect(connection.reload.default_embedding?).to be true
+      expect(connection.config['embedding_model']).to eq('text-embedding-3-large')
+    end
+
+    # Flagging it would produce a record its own validation rejects.
+    it 'leaves a provider without a recommendation unflagged', :aggregate_failures do
+      connection = create(:ai_provider_connection, provider: 'custom_open_ai',
+                                                   config:   { url: 'https://example.com/v1', model: 'gpt-4o' })
+
+      expect(connection.reload.default_embedding?).to be false
+      expect(connection.config).not_to have_key('embedding_model')
+    end
+
+    it 'leaves a provider that cannot embed unflagged' do
+      connection = create(:ai_provider_connection, provider: 'anthropic', config: { token: 'a' })
+
+      expect(connection.reload.default_embedding?).to be false
+    end
+
+    # Zammad AI serves a fixed model, so the config stays free of one.
+    it 'flags a provider whose model is not configurable without naming one', :aggregate_failures do
+      connection = create(:ai_provider_connection, provider: 'zammad_ai', config: { token: 'a' })
+
+      expect(connection.reload.default_embedding?).to be true
+      expect(connection.config).not_to have_key('embedding_model')
+    end
+
+    # The dialog submits none for it, but an API caller could - and it would then decide what the
+    # vectors are built with for a model the admin cannot see.
+    it 'drops a submitted model where the provider serves a fixed one', :aggregate_failures do
+      connection = create(:ai_provider_connection, provider: 'zammad_ai',
+                                                   config:   { token: 'a', embedding_model: 'nomic-embed-text' })
+
+      expect(connection.reload.config).not_to have_key('embedding_model')
+      expect(connection.provider_instance.embedding_model).to eq(AI::Provider::ZammadAI::EMBEDDING_MODEL_FALLBACK)
+    end
+
+    # The upgrade path of an install whose first connection was a custom endpoint: it was flagged
+    # for embeddings by the former seeding, and no model can be named for it. Keeping the flag would
+    # persist a record that the validation rejects - which then takes the next save of any sibling
+    # connection down with it, and aborted the migration that created the connection to begin with.
+    it 'clears a flag it cannot back with a model', :aggregate_failures do
+      connection = build(:ai_provider_connection, provider: 'custom_open_ai', default_embedding: true,
+                         config: { url: 'https://example.com/v1', model: 'gpt-4o' })
+
+      expect { connection.save!(validate: false) }.not_to raise_error
+
+      expect(connection.reload.default_embedding?).to be false
+    end
+  end
+
+  # The dialog leaves the model field empty where the admin accepts the recommendation its label
+  # names ('Default (text-embedding-3-small)'), while submitting the numbers that describe that very
+  # model - so the name has to be recorded along with them, on every connection rather than on the
+  # first one of the install alone, which only got it as a side effect of the embedding seeding.
+  describe 'recommended embedding model' do
+    # What the dialog's listing answered travels to the resolution through the very cache it reads
+    # (Service::AI::ProviderConnection::ListModels).
+    def cache_listing(provider_name, models, config:)
+      allow(AI::Provider.by_name(provider_name)).to receive(:models).and_return(models)
+
+      Service::AI::ProviderConnection::ListModels.execute(provider: provider_name, incoming_config: config)
+    end
+
+    # See the seeding above: the catalogue outlives neither a long dialog nor one left open, so it is
+    # cached as expired here.
+    def cache_expired_listing(provider_name, models, config:)
+      stub_const('Service::AI::ProviderConnection::ListModels::CACHE_TTL', 0)
+
+      cache_listing(provider_name, models, config:)
+    end
+
+    context 'with a connection already serving embeddings' do
+      before { create(:ai_provider_connection, :default_chat, :default_embedding, config: { token: 'a', embedding_model: 'text-embedding-3-small' }) }
+
+      it 'names it on a connection that serves something else', :aggregate_failures do
+        connection = create(:ai_provider_connection, provider: 'open_ai',
+                                                     config:   { token: 'b', embedding_size: 1536, embedding_input_limit: 8191 })
+
+        # The metadata the dialog filled for the recommendation describes the model it named, which
+        # is of no use to its consumers without the model itself.
+        expect(connection.reload.config).to include(
+          'embedding_model'       => AI::Provider::OpenAI.recommended_embedding_model,
+          'embedding_size'        => 1536,
+          'embedding_input_limit' => 8191,
+        )
+
+        # Naming it is not flagging it: the purposes of the connections stay where they were.
+        expect(connection.default_embedding?).to be false
+      end
+
+      it 'keeps the model the admin named' do
+        connection = create(:ai_provider_connection, provider: 'open_ai',
+                                                     config:   { token: 'b', embedding_model: 'text-embedding-3-large' })
+
+        expect(connection.reload.config['embedding_model']).to eq('text-embedding-3-large')
+      end
+
+      # The wizard deliberately leaves the field empty where the listing carries models but no fit,
+      # and offers no numbers for a model the endpoint was seen not to serve.
+      it 'preserves the empty choice when the listing does not offer the recommendation' do
+        cache_listing('open_ai', [{ id: 'gpt-4.1', capabilities: [:chat] }], config: { 'token' => 'b' })
+
+        connection = create(:ai_provider_connection, provider: 'open_ai', config: { token: 'b' })
+
+        expect(connection.reload.config).not_to have_key('embedding_model')
+      end
+
+      # The listing decision carries through the save, however long after it the save arrives.
+      it 'preserves the empty choice once the cached listing expired' do
+        cache_expired_listing('open_ai', [{ id: 'bge-m3', capabilities: [:embedding] }], config: { 'token' => 'b' })
+
+        connection = create(:ai_provider_connection, provider: 'open_ai', config: { token: 'b' })
+
+        expect(connection.reload.config).not_to have_key('embedding_model')
+      end
+
+      it 'leaves a provider without a recommendation unnamed' do
+        connection = create(:ai_provider_connection, provider: 'custom_open_ai',
+                                                     config:   { url: 'https://example.com/v1', model: 'gpt-4o' })
+
+        expect(connection.reload.config).not_to have_key('embedding_model')
+      end
+
+      # The edit dialog submits the same empty option, so it resolves there as well - for a
+      # connection created through the API without one, or one that predates the explicit field.
+      it 'names it on an update that rewrites the config' do
+        connection = create(:ai_provider_connection, provider: 'open_ai', config: { token: 'b' })
+        # Behind the create, which names it already: a connection whose stored config never did.
+        connection.update_column(:config, { 'token' => 'b' })
+
+        connection.reload.update!(config: { 'token' => 'c' })
+
+        expect(connection.reload.config['embedding_model']).to eq(AI::Provider::OpenAI.recommended_embedding_model)
+      end
+
+      # A save that does not write the config must not start writing one: it is what the stale flag
+      # fix-up and the default flag maintenance of a sibling connection run on, over legacy data
+      # neither of them is there to complete.
+      it 'leaves the config of a save that does not touch it alone' do
+        connection = create(:ai_provider_connection, provider: 'open_ai', config: { token: 'b' })
+        connection.update_column(:config, { 'token' => 'b' })
+
+        connection.reload.update!(name: 'renamed')
+
+        expect(connection.reload.config).to eq('token' => 'b')
+      end
     end
   end
 
@@ -203,7 +596,8 @@ RSpec.describe AI::ProviderConnection, type: :model do
     end
 
     it 'does not promote a replacement when the default embedding connection is deleted', :aggregate_failures do
-      default_conn   = create(:ai_provider_connection, :default_embedding, provider: 'open_ai', config: { token: 'a' })
+      default_conn   = create(:ai_provider_connection, :default_embedding, provider: 'open_ai',
+                                                                           config:   { token: 'a', embedding_model: 'text-embedding-3-small' })
       other_conn     = create(:ai_provider_connection, provider: 'zammad_ai', config: { token: 'b' })
 
       default_conn.destroy
@@ -410,7 +804,8 @@ RSpec.describe AI::ProviderConnection, type: :model do
 
       context 'with a connection is flagged for embedding' do
         let(:flagged) do
-          create(:ai_provider_connection, :default_embedding, provider: 'ollama', config: { url: 'http://localhost:11434' })
+          create(:ai_provider_connection, :default_embedding, provider: 'ollama',
+                                                              config:   { url: 'http://localhost:11434', embedding_model: 'bge-m3' })
         end
 
         before do
@@ -539,10 +934,11 @@ RSpec.describe AI::ProviderConnection, type: :model do
     # Each provider parses its own response shape, so the stubbed body has to be realistic enough
     # not to raise before the request is made. The assertion itself is only about the log options.
     response_bodies = {
-      AI::Provider::OpenAI   => { 'data' => [{ 'embedding' => [0.1] }] },
-      AI::Provider::Mistral  => { 'data' => [{ 'embedding' => [0.1] }] },
-      AI::Provider::Ollama   => { 'embeddings' => [[0.1]] },
-      AI::Provider::ZammadAI => [{ 'model' => 'embed-model', 'embeddings' => [[0.1]] }],
+      AI::Provider::OpenAI       => { 'data' => [{ 'embedding' => [0.1] }] },
+      AI::Provider::Mistral      => { 'data' => [{ 'embedding' => [0.1] }] },
+      AI::Provider::Ollama       => { 'embeddings' => [[0.1]] },
+      AI::Provider::ZammadAI     => [{ 'model' => 'embed-model', 'embeddings' => [[0.1]] }],
+      AI::Provider::CustomOpenAI => { 'data' => [{ 'embedding' => [0.1] }] },
     }
 
     # Fails for a newly added embedding capable provider, which then has to be added to
@@ -552,8 +948,9 @@ RSpec.describe AI::ProviderConnection, type: :model do
         .map { |const| AI::Provider.const_get(const) }
         .select { |klass| klass.respond_to?(:supports_embeddings?) && klass.supports_embeddings? }
 
-      expect(supported).to contain_exactly(AI::Provider::Mistral, AI::Provider::Ollama,
-                                           AI::Provider::OpenAI, AI::Provider::ZammadAI)
+      expect(supported).to contain_exactly(AI::Provider::CustomOpenAI, AI::Provider::Mistral,
+                                           AI::Provider::Ollama, AI::Provider::OpenAI,
+                                           AI::Provider::ZammadAI)
     end
 
     response_bodies.each do |klass, body|

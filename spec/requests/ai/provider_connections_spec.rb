@@ -77,8 +77,9 @@ RSpec.describe 'AI::ProviderConnection', :aggregate_failures, authenticated_as: 
            as:     :json
 
       expect(response).to have_http_status(:created)
+      # The first connection is seeded as the embedding one, which names the recommended model.
       expect(AI::ProviderConnection.find_by(name: 'no-config-conn').config)
-        .to eq('model_temperature_support' => true)
+        .to eq('model_temperature_support' => true, 'embedding_model' => AI::Provider::OpenAI.recommended_embedding_model)
     end
 
     it 'creates a connection named "default"' do
@@ -88,6 +89,30 @@ RSpec.describe 'AI::ProviderConnection', :aggregate_failures, authenticated_as: 
 
       expect(response).to have_http_status(:created)
       expect(json_response).to include('name' => 'default')
+    end
+
+    # The dialog constrains both fields, so this is the way an unusable one would get in - and it
+    # would only fail once indexing runs, naming anything but the connection that holds it.
+    it 'returns 422 for a non-positive embedding dimension', :aggregate_failures do
+      post '/api/v1/ai/provider_connections',
+           params: { name: 'bad-metadata', provider: 'open_ai',
+                     config: { token: 'sk-123', embedding_model: 'text-embedding-3-small', embedding_size: 0 } },
+           as:     :json
+
+      expect(response).to have_http_status(:unprocessable_content)
+      expect(json_response['error']).to include('embedding dimensions must be a positive number')
+      expect(AI::ProviderConnection.exists?(name: 'bad-metadata')).to be false
+    end
+
+    it 'returns 422 for a negative embedding input limit', :aggregate_failures do
+      post '/api/v1/ai/provider_connections',
+           params: { name: 'bad-metadata', provider: 'open_ai',
+                     config: { token: 'sk-123', embedding_model: 'text-embedding-3-small', embedding_input_limit: -1 } },
+           as:     :json
+
+      expect(response).to have_http_status(:unprocessable_content)
+      expect(json_response['error']).to include('context window size must be a positive number')
+      expect(AI::ProviderConnection.exists?(name: 'bad-metadata')).to be false
     end
 
     it 'returns 422 when provider_accessible fails' do
@@ -203,7 +228,8 @@ RSpec.describe 'AI::ProviderConnection', :aggregate_failures, authenticated_as: 
           as:     :json
 
       expect(response).to have_http_status(:ok)
-      expect(AI::Provider::Anthropic).to have_received(:check_temperature_support!).with({ token: 'kept-token' }, related_object: conn)
+      expect(AI::Provider::Anthropic).to have_received(:check_temperature_support!)
+        .with({ token: 'kept-token', embedding_model: 'text-embedding-3-small' }, related_object: conn)
     end
 
     it 'stores the detected temperature support when only the provider changes' do
@@ -225,9 +251,11 @@ RSpec.describe 'AI::ProviderConnection', :aggregate_failures, authenticated_as: 
       conn = create(:ai_provider_connection, name: 'conn', provider: 'open_ai',
                     config: { token: 'original-token' })
 
+      # The embedding model travels along, because this connection serves embeddings and a config
+      # that stops naming one is rejected - which is what the dialog submits too.
       put "/api/v1/ai/provider_connections/#{conn.id}",
           params: { name: 'conn', provider: 'open_ai',
-                    config: { token: '**********', model: 'gpt-4.1' } },
+                    config: { token: '**********', model: 'gpt-4.1', embedding_model: 'text-embedding-3-small' } },
           as:     :json
 
       expect(response).to have_http_status(:ok)
@@ -239,7 +267,8 @@ RSpec.describe 'AI::ProviderConnection', :aggregate_failures, authenticated_as: 
                     config: { token: 'old-token' })
 
       put "/api/v1/ai/provider_connections/#{conn.id}",
-          params: { name: 'conn', provider: 'open_ai', config: { token: 'new-token' } },
+          params: { name: 'conn', provider: 'open_ai',
+                    config: { token: 'new-token', embedding_model: 'text-embedding-3-small' } },
           as:     :json
 
       expect(response).to have_http_status(:ok)
@@ -255,13 +284,13 @@ RSpec.describe 'AI::ProviderConnection', :aggregate_failures, authenticated_as: 
 
       put "/api/v1/ai/provider_connections/#{conn.id}",
           params: { name: 'conn', provider: 'open_ai',
-                    config: { token: '**********', model: '' } },
+                    config: { token: '**********', model: '', embedding_model: 'text-embedding-3-small' } },
           as:     :json
 
       expect(response).to have_http_status(:ok)
       # The mask sentinel is restored from the stored token; the cleared model is dropped
       # from the tested config just like the model drops it on save.
-      expect(tested_config).to eq(token: 'old-token')
+      expect(tested_config).to eq(token: 'old-token', embedding_model: 'text-embedding-3-small')
       expect(conn.reload.config).not_to have_key('model')
     end
 
@@ -270,19 +299,21 @@ RSpec.describe 'AI::ProviderConnection', :aggregate_failures, authenticated_as: 
       conn = create(:ai_provider_connection, name: 'conn', provider: 'open_ai', config: { token: 'old-token' })
 
       put "/api/v1/ai/provider_connections/#{conn.id}",
-          params: { name: 'conn', provider: 'open_ai', config: { token: 'new-token' } },
+          params: { name: 'conn', provider: 'open_ai',
+                    config: { token: 'new-token', embedding_model: 'text-embedding-3-small' } },
           as:     :json
 
       expect(response).to have_http_status(:ok)
       expect(AI::Provider::OpenAI).to have_received(:check_temperature_support!)
-        .with({ token: 'new-token' }, related_object: conn)
+        .with({ token: 'new-token', embedding_model: 'text-embedding-3-small' }, related_object: conn)
     end
 
     it 'updates the default chat connection like any other' do
       conn = create(:ai_provider_connection, :default_chat)
 
       put "/api/v1/ai/provider_connections/#{conn.id}",
-          params: { name: 'default', provider: 'open_ai', config: { token: 'sk-new' } },
+          params: { name: 'default', provider: 'open_ai',
+                    config: { token: 'sk-new', embedding_model: 'text-embedding-3-small' } },
           as:     :json
 
       expect(response).to have_http_status(:ok)
@@ -388,6 +419,36 @@ RSpec.describe 'AI::ProviderConnection', :aggregate_failures, authenticated_as: 
       expect(conn.reload.default_embedding?).to be true
     end
 
+    # Serving embeddings requires a named model, and this is the one path that can flag a connection
+    # without going through the config dialog - so it names the recommendation itself.
+    it 'names the recommended embedding model when flagging a connection that has none', :aggregate_failures do
+      # The first connection is seeded as the embedding one; a later one names no model of its own.
+      create(:ai_provider_connection, name: 'first', provider: 'open_ai', config: { token: 'a' })
+      conn = create(:ai_provider_connection, name: 'other', provider: 'open_ai', config: { token: 'b' })
+
+      put "/api/v1/ai/provider_connections/#{conn.id}/set_default",
+          params: { default: 'embedding' },
+          as:     :json
+
+      expect(response).to have_http_status(:ok)
+      expect(conn.reload.default_embedding?).to be true
+      expect(conn.config['embedding_model']).to eq(AI::Provider::OpenAI.recommended_embedding_model)
+    end
+
+    # A custom endpoint serves whatever was deployed there, so there is nothing to name for it.
+    it 'rejects the default embedding flag where no model can be named', :aggregate_failures do
+      create(:ai_provider_connection, name: 'first', provider: 'open_ai', config: { token: 'a' })
+      conn = create(:ai_provider_connection, name: 'custom', provider: 'custom_open_ai',
+                    config: { url: 'https://example.com/v1', model: 'gpt-4o' })
+
+      put "/api/v1/ai/provider_connections/#{conn.id}/set_default",
+          params: { default: 'embedding' },
+          as:     :json
+
+      expect(response).to have_http_status(:unprocessable_content)
+      expect(conn.reload.default_embedding?).to be false
+    end
+
     it 'rejects the default embedding flag on a provider without embedding support' do
       conn = create(:ai_provider_connection, provider: 'anthropic')
 
@@ -465,11 +526,267 @@ RSpec.describe 'AI::ProviderConnection', :aggregate_failures, authenticated_as: 
     end
   end
 
+  describe '#models' do
+    # Carrying both defaults of the provider, which is what the endpoint answers with them at all:
+    # a default the listing does not have is withheld (see Service::AI::ProviderConnection::ListModels).
+    let(:models) do
+      [
+        { id: 'gpt-4.1', capabilities: ['chat'] },
+        { id: 'text-embedding-3-small', capabilities: ['embedding'] },
+      ]
+    end
+
+    before do
+      allow(AI::Provider::OpenAI).to receive(:models).and_return(models)
+    end
+
+    # The create dialog has no record yet, so it sends the credentials it collected.
+    it 'lists the models for a submitted config' do
+      post '/api/v1/ai/provider_connections/models',
+           params: { provider: 'open_ai', config: { token: 'sk-123' } },
+           as:     :json
+
+      expect(response).to have_http_status(:ok)
+      expect(json_response).to eq(
+        'models'                         => models.map(&:stringify_keys),
+        # So the dialog can name what its empty model options fall back to, without a copy of the
+        # adapter defaults in the AIProviders registry.
+        'default_model'                  => AI::Provider::OpenAI.default_model,
+        'recommended_embedding_model'    => AI::Provider::OpenAI.recommended_embedding_model,
+        # So the dialog can fill both metadata fields for the empty option that stands for the
+        # recommendation, without a request per opened dialog.
+        'recommended_embedding_metadata' => {
+          'embedding_size'        => AI::Provider::EMBEDDING_SIZES['text-embedding-3-small'],
+          'embedding_input_limit' => AI::Provider::EMBEDDING_INPUT_LIMITS['text-embedding-3-small'],
+        }
+      )
+      expect(AI::Provider::OpenAI).to have_received(:models).with({ token: 'sk-123' }, related_object: nil)
+    end
+
+    # The edit dialog renders the stored token as the mask sentinel, so listing must not send that
+    # to the provider - the admin would have to re-type a working key for no reason.
+    it 'lists with the stored token when the mask sentinel is submitted' do
+      conn = create(:ai_provider_connection, provider: 'open_ai', config: { token: 'stored-token' })
+
+      post "/api/v1/ai/provider_connections/#{conn.id}/models",
+           params: { provider: 'open_ai', config: { token: '**********', model: 'gpt-4.1' } },
+           as:     :json
+
+      expect(response).to have_http_status(:ok)
+      expect(AI::Provider::OpenAI).to have_received(:models)
+        .with({ token: 'stored-token', model: 'gpt-4.1' }, related_object: conn)
+    end
+
+    it 'lists with the stored config when none is submitted' do
+      conn = create(:ai_provider_connection, provider: 'open_ai', config: { token: 'stored-token' })
+
+      post "/api/v1/ai/provider_connections/#{conn.id}/models", as: :json
+
+      expect(AI::Provider::OpenAI).to have_received(:models)
+        .with(hash_including(token: 'stored-token'), related_object: conn)
+    end
+
+    it 'returns 404 for a nonexistent connection' do
+      post '/api/v1/ai/provider_connections/999999/models',
+           params: { config: { token: 'sk-123' } },
+           as:     :json
+
+      expect(response).to have_http_status(:not_found)
+    end
+
+    it 'returns 422 for an unknown provider' do
+      post '/api/v1/ai/provider_connections/models',
+           params: { provider: 'does_not_exist', config: { token: 'sk-123' } },
+           as:     :json
+
+      expect(response).to have_http_status(:unprocessable_content)
+    end
+
+    # The namespace holds more than adapters, and such a key used to reach the listing as if it
+    # were a provider - failing with an internal error instead of a rejected request.
+    it 'returns 422 for a provider key that resolves to something other than an adapter' do
+      post '/api/v1/ai/provider_connections/models',
+           params: { provider: 'request_error', config: { token: 'sk-123' } },
+           as:     :json
+
+      expect(response).to have_http_status(:unprocessable_content)
+    end
+
+    it 'returns 422 for a config that is not a hash' do
+      post '/api/v1/ai/provider_connections/models',
+           params: { provider: 'open_ai', config: 'sk-123' },
+           as:     :json
+
+      expect(response).to have_http_status(:unprocessable_content)
+    end
+
+    # The dialog never asks for such a provider - it has no model step - so this is a caller
+    # error, not an empty listing.
+    it 'rejects a provider without a model list' do
+      post '/api/v1/ai/provider_connections/models',
+           params: { provider: 'zammad_ai', config: { token: 'sk-123' } },
+           as:     :json
+
+      expect(response).to have_http_status(:unprocessable_content)
+      expect(json_response).to include('error' => 'This provider does not support model listing.')
+    end
+
+    # 200, not 4xx: the request was fine, the listing was not - and the dialog shows the reason.
+    it 'answers a failed listing with the provider message' do
+      allow(AI::Provider::OpenAI).to receive(:models)
+        .and_raise(AI::Provider::ResponseError, 'Invalid API key - please check your configuration')
+
+      post '/api/v1/ai/provider_connections/models',
+           params: { provider: 'open_ai', config: { token: 'sk-nope' } },
+           as:     :json
+
+      expect(response).to have_http_status(:ok)
+      expect(json_response).to eq(
+        'models' => [], 'error' => 'Invalid API key - please check your configuration'
+      )
+    end
+
+    # A malformed URL raises out of UserAgent before its own rescue, which would be a 500.
+    it 'answers a malformed URL with the error instead of failing' do
+      allow(AI::Provider::OpenAI).to receive(:models).and_raise(URI::InvalidURIError, 'bad URI')
+
+      post '/api/v1/ai/provider_connections/models',
+           params: { provider: 'open_ai', config: { token: 'sk-123', url: 'ht!tp://' } },
+           as:     :json
+
+      expect(response).to have_http_status(:ok)
+      expect(json_response).to include('error' => 'bad URI')
+    end
+
+    # The second call carries the config as the dialog resends it after a Back - grown by the
+    # model fields. The listing depends on the credentials alone, so it still hits the cache.
+    it 'answers a repeated call without asking the provider again, even as the config grows' do
+      post '/api/v1/ai/provider_connections/models',
+           params: { provider: 'open_ai', config: { token: 'sk-123' } },
+           as:     :json
+
+      post '/api/v1/ai/provider_connections/models',
+           params: { provider: 'open_ai', config: { token: 'sk-123', model: 'gpt-4.1', embedding_model: 'text-embedding-3-small' } },
+           as:     :json
+
+      expect(response).to have_http_status(:ok)
+      expect(AI::Provider::OpenAI).to have_received(:models).once
+    end
+  end
+
+  describe '#embedding_metadata' do
+    # Ollama is the provider serving per-model metadata outside its listing, so it is the one the
+    # dialog asks - the others answer from the shared table of known defaults alone.
+    before do
+      allow(AI::Provider::Ollama).to receive(:embedding_model_metadata)
+        .and_return({ embedding_size: 1024, embedding_input_limit: 8192 })
+    end
+
+    it 'resolves the metadata for a submitted config' do
+      post '/api/v1/ai/provider_connections/embedding_metadata',
+           params: { provider: 'ollama', model: 'bge-m3', config: { url: 'http://localhost:11434' } },
+           as:     :json
+
+      expect(response).to have_http_status(:ok)
+      expect(json_response).to eq('embedding_size' => 1024, 'embedding_input_limit' => 8192)
+      expect(AI::Provider::Ollama).to have_received(:embedding_model_metadata)
+        .with({ url: 'http://localhost:11434' }, 'bge-m3', related_object: nil)
+    end
+
+    it 'resolves with the stored token when the mask sentinel is submitted' do
+      conn = create(:ai_provider_connection, provider: 'ollama', config: { url: 'http://localhost:11434', token: 'stored-token' })
+
+      post "/api/v1/ai/provider_connections/#{conn.id}/embedding_metadata",
+           params: { provider: 'ollama', model: 'bge-m3', config: { url: 'http://localhost:11434', token: '**********' } },
+           as:     :json
+
+      expect(response).to have_http_status(:ok)
+      expect(AI::Provider::Ollama).to have_received(:embedding_model_metadata)
+        .with({ url: 'http://localhost:11434', token: 'stored-token' }, 'bge-m3', related_object: conn)
+    end
+
+    # The provider knows nothing about it and neither does the shared table, so the dialog has to
+    # ask the admin - null is the answer that says so.
+    it 'answers null for a model no source knows' do
+      allow(AI::Provider::Ollama).to receive(:embedding_model_metadata).and_return({})
+
+      post '/api/v1/ai/provider_connections/embedding_metadata',
+           params: { provider: 'ollama', model: 'homegrown-embed', config: { url: 'http://localhost:11434' } },
+           as:     :json
+
+      expect(response).to have_http_status(:ok)
+      expect(json_response).to eq('embedding_size' => nil, 'embedding_input_limit' => nil)
+    end
+
+    it 'falls back to the known defaults when the provider request fails' do
+      allow(AI::Provider::Ollama).to receive(:embedding_model_metadata)
+        .and_raise(AI::Provider::RequestError, 'connection refused')
+
+      post '/api/v1/ai/provider_connections/embedding_metadata',
+           params: { provider: 'ollama', model: 'bge-m3', config: { url: 'http://localhost:11434' } },
+           as:     :json
+
+      expect(response).to have_http_status(:ok)
+      expect(json_response).to eq(
+        'embedding_size'        => AI::Provider::EMBEDDING_SIZES['bge-m3'],
+        'embedding_input_limit' => AI::Provider::EMBEDDING_INPUT_LIMITS['bge-m3']
+      )
+    end
+
+    it 'returns 404 for a nonexistent connection' do
+      post '/api/v1/ai/provider_connections/999999/embedding_metadata',
+           params: { provider: 'ollama', model: 'bge-m3' },
+           as:     :json
+
+      expect(response).to have_http_status(:not_found)
+    end
+
+    it 'returns 422 for an unknown provider' do
+      post '/api/v1/ai/provider_connections/embedding_metadata',
+           params: { provider: 'does_not_exist', model: 'bge-m3' },
+           as:     :json
+
+      expect(response).to have_http_status(:unprocessable_content)
+    end
+
+    it 'returns 422 for a provider that cannot embed' do
+      post '/api/v1/ai/provider_connections/embedding_metadata',
+           params: { provider: 'anthropic', model: 'bge-m3', config: { token: 'sk-123' } },
+           as:     :json
+
+      expect(response).to have_http_status(:unprocessable_content)
+    end
+
+    it 'returns 422 when no model is given' do
+      post '/api/v1/ai/provider_connections/embedding_metadata',
+           params: { provider: 'ollama', config: { url: 'http://localhost:11434' } },
+           as:     :json
+
+      expect(response).to have_http_status(:unprocessable_content)
+    end
+  end
+
   describe 'permission' do
     let(:user) { create(:agent) }
 
     it 'returns 403 for authenticated non-admin users' do
       get '/api/v1/ai/provider_connections', as: :json
+
+      expect(response).to have_http_status(:forbidden)
+    end
+
+    it 'returns 403 for the model listing of authenticated non-admin users' do
+      post '/api/v1/ai/provider_connections/models',
+           params: { provider: 'open_ai', config: { token: 'sk-123' } },
+           as:     :json
+
+      expect(response).to have_http_status(:forbidden)
+    end
+
+    it 'returns 403 for the embedding metadata of authenticated non-admin users' do
+      post '/api/v1/ai/provider_connections/embedding_metadata',
+           params: { provider: 'ollama', model: 'bge-m3', config: { url: 'http://localhost:11434' } },
+           as:     :json
 
       expect(response).to have_http_status(:forbidden)
     end

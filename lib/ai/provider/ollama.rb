@@ -2,29 +2,22 @@
 
 class AI::Provider::Ollama < AI::Provider
   include AI::Provider::Concerns::HasConfigurableModel
+  include AI::Provider::Concerns::ListsModels
 
-  # default model also in app/assets/javascripts/app/lib/app_post/ai_provider/ollama.coffee
+  # The capabilities Ollama reports in /api/tags, mapped to the normalized ones. Everything else
+  # it lists (tools, thinking, insert) says nothing about what the model can be used for here.
+  REPORTED_CAPABILITIES = {
+    'completion' => :chat,
+    'embedding'  => :embedding,
+    'vision'     => :vision,
+  }.freeze
+
   DEFAULT_OPTIONS = {
-    model:           'mistral-small3.2',
-    temperature:     0.0,
-    embedding_model: 'bge-m3',
+    model:       'mistral-small3.2',
+    temperature: 0.0,
   }.freeze
 
-  EMBEDDING_SIZES = {
-    'all-minilm'        => 384,
-    'bge-m3'            => 1024,
-    'nomic-embed-text'  => 768,
-    'mxbai-embed-large' => 1024,
-  }.freeze
-
-  # Input token limits (context windows) of the supported embedding models. These are small for
-  # self-hosted models, so chunks must be sized against them (see Service::AI::VectorDB::Content::Chunks).
-  EMBEDDING_INPUT_LIMITS = {
-    'all-minilm'        => 256,
-    'bge-m3'            => 8192,
-    'nomic-embed-text'  => 2048,
-    'mxbai-embed-large' => 512,
-  }.freeze
+  RECOMMENDED_EMBEDDING_MODEL = 'bge-m3'.freeze
 
   def chat(prompt_system:, prompt_user:, prompt_image:)
     params = {
@@ -68,7 +61,7 @@ class AI::Provider::Ollama < AI::Provider
     response = UserAgent.post(
       "#{config[:url]}/api/embed",
       {
-        model: options[:embedding_model],
+        model: embedding_model!,
         input: input,
       },
       {
@@ -91,6 +84,16 @@ class AI::Provider::Ollama < AI::Provider
     true
   end
 
+  # The catalogue is whatever the admin pulled: `ollama pull` adds a model in seconds, and the
+  # dialog should see it without waiting out the listing cache of a hosted vendor.
+  def self.volatile_model_listing?
+    true
+  end
+
+  def self.recommended_embedding_model
+    RECOMMENDED_EMBEDDING_MODEL
+  end
+
   def self.ping!(config, related_object: nil)
     response = UserAgent.get(
       config[:url],
@@ -106,6 +109,70 @@ class AI::Provider::Ollama < AI::Provider
 
     nil
   end
+
+  def self.models(config, related_object: nil)
+    response = model_list_response("#{config[:url]}/api/tags", related_object:)
+
+    data = validate_response!(response)
+
+    # `model` is the pullable name including the tag; `name` is its alias in older versions.
+    normalize_models(model_list_entries!(data, 'models'), 'model', 'name') do |entry, id|
+      # An endpoint too old to report them answers with something else entirely, or not at all.
+      details = entry['details']
+      details = {} if !details.is_a?(Hash)
+
+      model_descriptor(
+        id:,
+        capabilities:          reported_capabilities(entry['capabilities']),
+        # Both sizes survive for an embedding model only; model_descriptor applies that rule
+        # against the capabilities it settles on, heuristics included.
+        embedding_input_limit: details['context_length'],
+        embedding_size:        details['embedding_length'],
+      )
+    end
+  end
+
+  def self.reported_capabilities(capabilities)
+    return nil if !capabilities.is_a?(Array)
+
+    capabilities.filter_map { |capability| REPORTED_CAPABILITIES[capability] }
+  end
+  private_class_method :reported_capabilities
+
+  # What Ollama itself knows about one pulled model: /api/show carries the embedding and context
+  # lengths in model_info, prefixed with the model's architecture ('bert.embedding_length',
+  # 'llama.context_length'). A metadata read like the model list, so it gets the same short
+  # timeouts and quiet logging.
+  def self.embedding_model_metadata(config, model, related_object: nil)
+    response = UserAgent.post(
+      "#{config[:url]}/api/show",
+      { model: },
+      {
+        **MODEL_LIST_TIMEOUT_OPTIONS,
+        verify_ssl: true,
+        json:       true,
+        log:        log_options(only_on_error: true, related_object:),
+      },
+    )
+
+    data = validate_response!(response)
+    data = {} if !data.is_a?(Hash)
+
+    # An endpoint too old to serve model_info answers with something else entirely.
+    info = data['model_info']
+    info = {} if !info.is_a?(Hash)
+
+    {
+      embedding_size:        integer_value(model_info_value(info, 'embedding_length')),
+      embedding_input_limit: integer_value(model_info_value(info, 'context_length')),
+    }.compact
+  end
+
+  # The value under the architecture prefixed key, without having to know the architecture.
+  def self.model_info_value(info, suffix)
+    info.find { |key, _| key.to_s.end_with?(".#{suffix}") }&.last
+  end
+  private_class_method :model_info_value
 
   private
 
