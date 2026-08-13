@@ -44,8 +44,8 @@ export interface UserTaskbarTabPlugin<T = UserTaskbarTabEntity> {
   entityType?: string
   entityDocument?: DocumentNode
   buildEntityTabKey: (route: RouteLocationNormalizedGeneric) => string
-  buildTaskbarTabEntityId: (route: RouteLocationNormalizedGeneric) => string | undefined
-  buildTaskbarTabParams: <T = Record<string, unknown>>(route: RouteLocationNormalizedGeneric) => T
+  buildTaskbarTabEntityId?: (route: RouteLocationNormalizedGeneric) => string | undefined
+  buildTaskbarTabParams?: <T = Record<string, unknown>>(route: RouteLocationNormalizedGeneric) => T
   buildTaskbarTabLink?: (entity?: T, entityKey?: string) => string | undefined
   confirmTabRemove?: boolean
   touchExistingTab?: boolean

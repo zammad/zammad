@@ -319,7 +319,7 @@ export const useUserCurrentTaskbarTabsStore = defineStore('userCurrentTaskbarTab
 
     // Add temporary in creation taskbar tab item when we have already an existing entity from the cache.
     if (entityType && entityDocument) {
-      const tabEntityInternalId = buildTaskbarTabEntityId(route)
+      const tabEntityInternalId = buildTaskbarTabEntityId?.(route)
 
       if (tabEntityInternalId) {
         const cachedEntity = getApolloClient().cache.readFragment<TaskbarItemEntity>({
@@ -345,7 +345,7 @@ export const useUserCurrentTaskbarTabsStore = defineStore('userCurrentTaskbarTab
           callback: taskbarTabEntity,
           key: tabEntityKey,
           notify: false,
-          params: buildTaskbarTabParams(route),
+          params: buildTaskbarTabParams?.(route) ?? {},
           prio: order,
         },
       })

@@ -18,7 +18,6 @@ export default <UserTaskbarTabPlugin>{
   entityType,
   entityDocument: TicketTaskbarTabAttributesFragmentDoc,
   buildEntityTabKey: () => entityType,
-  buildTaskbarTabEntityId: () => undefined,
   buildTaskbarTabParams: (route) => ({
     query: route.params.searchTerm,
     model: route.query.entity,
