@@ -28,7 +28,8 @@ RSpec.describe Gql::Types::TicketType do
     end
 
     context 'when ticket is pending' do
-      let(:ticket) { create(:ticket, state: Ticket::State.find_by(name: 'pending reminder'), pending_time: pending_time) }
+      let(:ticket)        { create(:ticket, state: Ticket::State.find_by(name: 'pending reminder'), pending_time: pending_time, escalation_at: escalation_at) }
+      let(:escalation_at) { nil }
 
       context 'with pending time in future' do
         let(:pending_time) { 1.day.from_now }
@@ -43,6 +44,34 @@ RSpec.describe Gql::Types::TicketType do
 
         it "returns 'open'" do
           expect(instance.state_color_code).to eq('open')
+        end
+      end
+
+      context 'with escalation' do
+        let(:pending_time) { 1.day.from_now }
+        let(:escalation_at) { 1.day.ago }
+
+        it "returns 'escalating'" do
+          expect(instance.state_color_code).to eq('escalating')
+        end
+      end
+    end
+
+    context 'when ticket is pending close' do
+      let(:ticket) { create(:ticket, state: Ticket::State.find_by(name: 'pending close'), escalation_at: escalation_at) }
+      let(:escalation_at) { nil }
+
+      context 'without escalation' do
+        it "returns 'pending'" do
+          expect(instance.state_color_code).to eq('pending')
+        end
+      end
+
+      context 'with escalation' do
+        let(:escalation_at) { 1.day.ago }
+
+        it "returns 'escalating'" do
+          expect(instance.state_color_code).to eq('escalating')
         end
       end
     end
