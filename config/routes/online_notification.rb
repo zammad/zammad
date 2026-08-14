@@ -5,9 +5,9 @@ Zammad::Application.routes.draw do
 
   # groups
   match api_path + '/online_notifications',                   to: 'online_notifications#index',            via: :get
+  match api_path + '/online_notifications/mark_all_as_read',  to: 'online_notifications#mark_all_as_read', via: :post
+  match api_path + '/online_notifications/clear_all',         to: 'online_notifications#clear_all',        via: :delete
   match api_path + '/online_notifications/:id',               to: 'online_notifications#show',             via: :get
   match api_path + '/online_notifications/:id',               to: 'online_notifications#update',           via: :put
   match api_path + '/online_notifications/:id',               to: 'online_notifications#destroy',          via: :delete
-  match api_path + '/online_notifications/mark_all_as_read',  to: 'online_notifications#mark_all_as_read', via: :post
-
 end

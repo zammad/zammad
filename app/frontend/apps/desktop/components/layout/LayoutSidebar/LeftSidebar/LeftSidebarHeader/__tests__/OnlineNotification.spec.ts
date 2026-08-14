@@ -2,15 +2,22 @@
 
 import { within } from '@testing-library/vue'
 
+import { getGraphQLMockCalls } from '#tests/graphql/builders/mocks.ts'
 import renderComponent from '#tests/support/components/renderComponent.ts'
 import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
-import { waitForNextTick } from '#tests/support/utils.ts'
+import { waitForNextTick, waitUntil, waitUntilSpyCalled } from '#tests/support/utils.ts'
 
 import { waitForOnlineNotificationDeleteMutationCalls } from '#shared/entities/online-notification/graphql/mutations/delete.mocks.ts'
+import { OnlineNotificationDeleteAllDocument } from '#shared/entities/online-notification/graphql/mutations/deleteAll.api.ts'
+import {
+  mockOnlineNotificationDeleteAllMutationError,
+  waitForOnlineNotificationDeleteAllMutationCalls,
+} from '#shared/entities/online-notification/graphql/mutations/deleteAll.mocks.ts'
 import { waitForOnlineNotificationMarkAllAsSeenMutationCalls } from '#shared/entities/online-notification/graphql/mutations/markAllAsSeen.mocks.ts'
 import { mockOnlineNotificationsQuery } from '#shared/entities/online-notification/graphql/queries/onlineNotifications.mocks.ts'
 import { getOnlineNotificationsCountSubscriptionHandler } from '#shared/entities/online-notification/graphql/subscriptions/onlineNotificationsCount.mocks.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+import { GraphQLErrorTypes } from '#shared/types/error.ts'
 
 import OnlineNotification from '#desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification.vue'
 
@@ -45,6 +52,33 @@ vi.mock('#shared/composables/useOnlineNotification/useOnlineNotificationSound.ts
   useOnlineNotificationSound: () => ({
     play: playSoundSpy,
     isEnabled: { value: true },
+  }),
+}))
+
+const closeWebNotificationSpy = vi.hoisted(() => vi.fn())
+const showWebNotificationSpy = vi.hoisted(() =>
+  vi.fn(() => Promise.resolve({ close: closeWebNotificationSpy })),
+)
+
+vi.mock('@vueuse/core', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@vueuse/core')>()
+
+  return {
+    ...actual,
+    useWebNotification: () => ({
+      ...actual.useWebNotification(),
+      show: showWebNotificationSpy,
+      isSupported: { value: true },
+      permissionGranted: { value: true },
+    }),
+  }
+})
+
+const waitForConfirmationMock = vi.fn().mockImplementation(() => true)
+
+vi.mock('#shared/composables/useConfirmation.ts', () => ({
+  useConfirmation: () => ({
+    waitForConfirmation: waitForConfirmationMock,
   }),
 }))
 
@@ -224,6 +258,237 @@ describe('OnlineNotification', () => {
     expect(calls.at(-1)?.variables).toEqual({
       onlineNotificationIds: [node.id],
     })
+  })
+
+  it('clears all notifications once everything is read', async () => {
+    mockOnlineNotificationsQuery({
+      onlineNotifications: {
+        edges: [
+          {
+            node: { ...node, seen: true },
+          },
+        ],
+        pageInfo: {
+          endCursor: 'Nw',
+          hasNextPage: false,
+        },
+      },
+    })
+
+    const wrapper = renderComponent(OnlineNotification, {
+      router: true,
+    })
+
+    await wrapper.events.click(wrapper.getByRole('button', { name: 'Show notifications' }))
+
+    await wrapper.events.click(await wrapper.findByRole('button', { name: 'Clear all' }))
+
+    expect(waitForConfirmationMock).toHaveBeenCalled()
+
+    const calls = await waitForOnlineNotificationDeleteAllMutationCalls()
+
+    expect(calls.at(-1)?.variables).toEqual({})
+  })
+
+  it("doesn't clear notifications when confirmation is cancelled", async () => {
+    waitForConfirmationMock.mockImplementationOnce(() => false)
+
+    mockOnlineNotificationsQuery({
+      onlineNotifications: {
+        edges: [
+          {
+            node: { ...node, seen: true },
+          },
+        ],
+        pageInfo: {
+          endCursor: 'Nw',
+          hasNextPage: false,
+        },
+      },
+    })
+
+    const wrapper = renderComponent(OnlineNotification, {
+      router: true,
+    })
+
+    await wrapper.events.click(wrapper.getByRole('button', { name: 'Show notifications' }))
+
+    await wrapper.events.click(await wrapper.findByRole('button', { name: 'Clear all' }))
+
+    expect(waitForConfirmationMock).toHaveBeenCalled()
+
+    await waitForNextTick()
+
+    expect(getGraphQLMockCalls(OnlineNotificationDeleteAllDocument)).toHaveLength(0)
+  })
+
+  it('keeps the focus away from the notification button while the confirmation is open', async () => {
+    mockOnlineNotificationsQuery({
+      onlineNotifications: {
+        edges: [
+          {
+            node: { ...node, seen: true },
+          },
+        ],
+        pageInfo: {
+          endCursor: 'Nw',
+          hasNextPage: false,
+        },
+      },
+    })
+
+    const wrapper = renderComponent(OnlineNotification, {
+      router: true,
+    })
+
+    const notificationButton = wrapper.getByRole('button', { name: 'Show notifications' })
+
+    notificationButton.focus()
+    await wrapper.events.keyboard('{Enter}')
+
+    const clearAllButton = await wrapper.findByRole('button', { name: 'Clear all' })
+
+    // The popover moves the focus into its own tab trap after opening.
+    await waitUntil(() => document.activeElement !== notificationButton)
+
+    clearAllButton.focus()
+    await wrapper.events.keyboard('{Enter}')
+
+    expect(waitForConfirmationMock).toHaveBeenCalled()
+
+    await waitForNextTick()
+    await waitForNextTick()
+
+    expect(notificationButton).not.toHaveFocus()
+  })
+
+  it('reopens the notification popover when the confirmation is cancelled', async () => {
+    waitForConfirmationMock.mockImplementationOnce(() => false)
+
+    mockOnlineNotificationsQuery({
+      onlineNotifications: {
+        edges: [
+          {
+            node: { ...node, seen: true },
+          },
+        ],
+        pageInfo: {
+          endCursor: 'Nw',
+          hasNextPage: false,
+        },
+      },
+    })
+
+    const wrapper = renderComponent(OnlineNotification, {
+      router: true,
+    })
+
+    const notificationButton = wrapper.getByRole('button', { name: 'Show notifications' })
+
+    notificationButton.focus()
+    await wrapper.events.keyboard('{Enter}')
+
+    const clearAllButton = await wrapper.findByRole('button', { name: 'Clear all' })
+
+    // The popover moves the focus into its own tab trap after opening.
+    await waitUntil(() => document.activeElement !== notificationButton)
+
+    clearAllButton.focus()
+    await wrapper.events.keyboard('{Enter}')
+
+    expect(waitForConfirmationMock).toHaveBeenCalled()
+
+    expect(await wrapper.findByRole('button', { name: 'Clear all' })).toBeInTheDocument()
+    expect(notificationButton).not.toHaveFocus()
+  })
+
+  it('keeps working when clearing all notifications fails', async () => {
+    mockOnlineNotificationDeleteAllMutationError('Something went wrong', {
+      type: GraphQLErrorTypes.UnknownError,
+    })
+
+    mockOnlineNotificationsQuery({
+      onlineNotifications: {
+        edges: [{ node }],
+        pageInfo: {
+          endCursor: 'Nw',
+          hasNextPage: false,
+        },
+      },
+    })
+
+    const wrapper = renderComponent(OnlineNotification, {
+      router: true,
+    })
+
+    // A rising unseen count shows a web notification, which is the one that must survive
+    //   the failed mutation.
+    await getOnlineNotificationsCountSubscriptionHandler().trigger({
+      onlineNotificationsCount: {
+        unseenCount: 0,
+      },
+    })
+
+    await getOnlineNotificationsCountSubscriptionHandler().trigger({
+      onlineNotificationsCount: {
+        unseenCount: 1,
+      },
+    })
+
+    await waitUntilSpyCalled(showWebNotificationSpy)
+
+    await wrapper.events.click(wrapper.getByRole('button', { name: 'Show notifications' }))
+
+    await wrapper.events.click(await wrapper.findByRole('button', { name: 'Clear all' }))
+
+    expect(waitForConfirmationMock).toHaveBeenCalled()
+
+    await waitForOnlineNotificationDeleteAllMutationCalls()
+
+    await waitForNextTick()
+    await waitForNextTick()
+
+    expect(closeWebNotificationSpy).not.toHaveBeenCalled()
+  })
+
+  it('closes open web notifications after clearing all notifications', async () => {
+    mockOnlineNotificationsQuery({
+      onlineNotifications: {
+        edges: [{ node }],
+        pageInfo: {
+          endCursor: 'Nw',
+          hasNextPage: false,
+        },
+      },
+    })
+
+    const wrapper = renderComponent(OnlineNotification, {
+      router: true,
+    })
+
+    await getOnlineNotificationsCountSubscriptionHandler().trigger({
+      onlineNotificationsCount: {
+        unseenCount: 0,
+      },
+    })
+
+    await getOnlineNotificationsCountSubscriptionHandler().trigger({
+      onlineNotificationsCount: {
+        unseenCount: 1,
+      },
+    })
+
+    await waitUntilSpyCalled(showWebNotificationSpy)
+
+    await wrapper.events.click(wrapper.getByRole('button', { name: 'Show notifications' }))
+
+    await wrapper.events.click(await wrapper.findByRole('button', { name: 'Clear all' }))
+
+    await waitForOnlineNotificationDeleteAllMutationCalls()
+
+    await waitUntilSpyCalled(closeWebNotificationSpy)
+
+    expect(closeWebNotificationSpy).toHaveBeenCalled()
   })
 
   it('removes a notification', async () => {

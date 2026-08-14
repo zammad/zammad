@@ -24,6 +24,7 @@ defineEmits<{
   seen: [OnlineNotification]
   remove: [OnlineNotification]
   'seen-all': []
+  'clear-all': []
 }>()
 
 const sectionElement = useTemplateRef('section')
@@ -39,7 +40,9 @@ const { reachedTop, isScrollable } = useElementScroll(sectionElement as Ref<HTML
         'border-b border-b-neutral-300 dark:border-b-gray-900': !reachedTop,
       }"
       :has-unseen-notification="hasUnseenNotification"
+      :has-notifications="notificationList.length > 0"
       @mark-all="$emit('seen-all')"
+      @clear-all="$emit('clear-all')"
     />
     <CommonLoader class="px-2.5 pb-2.5" :loading="loading">
       <template #skeleton>

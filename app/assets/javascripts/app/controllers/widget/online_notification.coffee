@@ -7,6 +7,7 @@ class App.OnlineNotificationWidget extends App.Controller
 
   events:
     'click .js-mark': 'markAllAsRead'
+    'click .js-clear': 'clearAll'
     'click': 'stopPropagation'
 
   elements:
@@ -15,6 +16,7 @@ class App.OnlineNotificationWidget extends App.Controller
     '.js-item': 'item'
     '.js-content': 'content'
     '.js-header': 'header'
+    '.js-clear': 'clear'
 
   constructor: ->
     super
@@ -134,9 +136,11 @@ class App.OnlineNotificationWidget extends App.Controller
     if _.isEmpty(items)
       @noNotifications.removeClass('hide')
       @el.addClass 'is-empty'
+      @clear.addClass('hide')
     else
       @noNotifications.addClass('hide')
       @el.removeClass 'is-empty'
+      @clear.removeClass('hide')
 
   markAllAsRead: (e) ->
     e.preventDefault()
@@ -149,6 +153,39 @@ class App.OnlineNotificationWidget extends App.Controller
       processData: true
       success: (data, status, xhr) =>
         @fetch()
+    )
+
+  clearAll: (e) ->
+    e.preventDefault()
+    @clearConfirmed = false
+    @hide()
+
+    new App.ControllerConfirm(
+      head: __('Clear all notifications')
+      message: __('All notifications will be deleted. This action cannot be undone.')
+      buttonSubmit: __('Delete all')
+      buttonClass: 'btn--danger'
+      small: true
+      callback: =>
+        @clearConfirmed = true
+        @ajax(
+          id:   'clearAll'
+          type: 'DELETE'
+          url:  "#{@apiPath}/online_notifications/clear_all"
+          processData: true
+          success: (data, status, xhr) =>
+            @fetch()
+          error: (xhr, statusText, error) =>
+            @notify(
+              type:      'error'
+              msg:       xhr.responseJSON?.error || __('Online notifications could not be cleared.')
+              removeAll: true
+            )
+            @fetch()
+        )
+      onClosed: =>
+        return if @clearConfirmed
+        @show()
     )
 
   fetch: =>

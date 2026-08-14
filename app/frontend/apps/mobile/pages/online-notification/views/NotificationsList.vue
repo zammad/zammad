@@ -3,6 +3,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 
+import { useConfirmation } from '#shared/composables/useConfirmation.ts'
 import { useOnlineNotificationActions } from '#shared/entities/online-notification/composables/useOnlineNotificationActions.ts'
 import { useOnlineNotificationCount } from '#shared/entities/online-notification/composables/useOnlineNotificationCount.ts'
 import { useOnlineNotificationsQuery } from '#shared/entities/online-notification/graphql/queries/onlineNotifications.api.ts'
@@ -31,7 +32,7 @@ const notifications = computed(
   () => edgesToArray(notificationsResult.value?.onlineNotifications) as OnlineNotification[],
 )
 
-const { seenNotification, markAllRead } = useOnlineNotificationActions()
+const { seenNotification, markAllRead, deleteAllNotifications } = useOnlineNotificationActions()
 
 const runSeenNotification = (id: Scalars['ID']['output']) => {
   mutationTriggered = true
@@ -52,6 +53,33 @@ const runMarkAllRead = async () => {
   await markAllRead(onlineNotificationIds)
 
   markingAsSeen.value = false
+}
+
+const clearingAll = ref(false)
+
+const { waitForConfirmation } = useConfirmation()
+
+const runClearAll = async () => {
+  const confirmed = await waitForConfirmation(
+    __('All notifications will be deleted. This action cannot be undone.'),
+    {
+      headerTitle: __('Clear all notifications'),
+      buttonLabel: __('Delete all'),
+      buttonVariant: 'danger',
+    },
+  )
+
+  if (!confirmed) return
+
+  clearingAll.value = true
+
+  mutationTriggered = true
+
+  try {
+    await deleteAllNotifications()
+  } finally {
+    clearingAll.value = false
+  }
 }
 
 const notificationRemoved = () => {
@@ -87,16 +115,26 @@ const haveUnread = computed(() => (unseenCount.value ? unseenCount.value > 0 : f
 
       <!-- TODO: Add some better solution when mark as seen is running.
         Maybe disabled state that it can not be clicked twice or hidding the action completley. -->
-      <div
-        v-if="haveUnread"
-        class="flex flex-1 cursor-pointer justify-center px-4 py-3 text-base text-blue"
-        :class="{ 'text-red': markingAsSeen }"
-        role="button"
-        tabindex="0"
-        @keydown.enter="runMarkAllRead"
-        @click="runMarkAllRead"
-      >
-        {{ $t('Mark all as read') }}
+      <div class="flex justify-center gap-6">
+        <button
+          v-if="haveUnread"
+          type="button"
+          class="cursor-pointer py-3 text-base text-blue"
+          :class="{ 'text-red': markingAsSeen }"
+          @click="runMarkAllRead"
+        >
+          {{ $t('Mark all as read') }}
+        </button>
+
+        <button
+          v-if="notifications.length"
+          type="button"
+          class="cursor-pointer py-3 text-base text-blue"
+          :class="{ 'text-red': clearingAll }"
+          @click="runClearAll"
+        >
+          {{ $t('Clear all') }}
+        </button>
       </div>
     </div>
   </CommonLoader>

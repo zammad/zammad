@@ -1,0 +1,8 @@
+mutation onlineNotificationDeleteAll {
+  onlineNotificationDeleteAll {
+    success
+    errors {
+      ...errors
+    }
+  }
+}

@@ -217,6 +217,36 @@ RSpec.describe OnlineNotificationsController, type: :request do
 
     end
 
+    shared_examples 'clearing all online notifications' do
+      let(:another_online_notification) do
+        create(:online_notification, o_id: online_notification.o_id, user_id: user_id, type_lookup_id: type_lookup_id, object_lookup_id: object_lookup_id)
+      end
+
+      before { online_notification && another_online_notification && different_online_notification && authenticated_as(user) }
+
+      context 'when clearing all online notifications' do
+        let(:path) { '/api/v1/online_notifications/clear_all' }
+
+        it 'returns a successful response' do
+          delete path, params: {}, as: :json
+
+          expect(response).to have_http_status(:ok)
+        end
+
+        it 'deletes all online notifications for the current user' do
+          delete path, params: {}, as: :json
+
+          expect(OnlineNotification.where(id: [online_notification.id, another_online_notification.id])).to be_empty
+        end
+
+        it 'keeps online notifications belonging to other users' do
+          delete path, params: {}, as: :json
+
+          expect(OnlineNotification.exists?(different_online_notification.id)).to be true
+        end
+      end
+    end
+
     shared_examples 'getting a different online notification' do
       before { authenticated_as(user) }
 
@@ -254,6 +284,8 @@ RSpec.describe OnlineNotificationsController, type: :request do
 
       it_behaves_like 'getting specific associated online notification'
 
+      it_behaves_like 'clearing all online notifications'
+
       it_behaves_like 'getting a different online notification'
     end
 
@@ -272,6 +304,8 @@ RSpec.describe OnlineNotificationsController, type: :request do
 
       it_behaves_like 'getting specific associated online notification'
 
+      it_behaves_like 'clearing all online notifications'
+
       it_behaves_like 'getting a different online notification'
     end
 
@@ -289,6 +323,8 @@ RSpec.describe OnlineNotificationsController, type: :request do
       it_behaves_like 'getting all associated online notifications'
 
       it_behaves_like 'getting specific associated online notification'
+
+      it_behaves_like 'clearing all online notifications'
 
       it_behaves_like 'getting a different online notification'
     end

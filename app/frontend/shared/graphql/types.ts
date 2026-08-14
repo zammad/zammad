@@ -1282,6 +1282,11 @@ export type OnlineNotificationDeleteMutationVariables = Exact<{
 
 export type OnlineNotificationDeleteMutation = { onlineNotificationDelete: { __typename: 'OnlineNotificationDeletePayload', success: boolean, errors: Array<{ __typename: 'UserError', message: string, messagePlaceholder: Array<string> | null | undefined, field: string | null | undefined, exception: Types.EnumUserErrorException | null | undefined }> | null | undefined } | null | undefined };
 
+export type OnlineNotificationDeleteAllMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type OnlineNotificationDeleteAllMutation = { onlineNotificationDeleteAll: { __typename: 'OnlineNotificationDeleteAllPayload', success: boolean, errors: Array<{ __typename: 'UserError', message: string, messagePlaceholder: Array<string> | null | undefined, field: string | null | undefined, exception: Types.EnumUserErrorException | null | undefined }> | null | undefined } | null | undefined };
+
 export type OnlineNotificationMarkAllAsSeenMutationVariables = Exact<{
   onlineNotificationIds: Array<string | number> | string | number;
 }>;

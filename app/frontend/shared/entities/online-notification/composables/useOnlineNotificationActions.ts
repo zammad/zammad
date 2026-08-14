@@ -14,6 +14,8 @@ import type {
 import { getApolloClient } from '#shared/server/apollo/client.ts'
 import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
 
+import { useOnlineNotificationDeleteAllMutation } from '../graphql/mutations/deleteAll.api.ts'
+
 export const useOnlineNotificationActions = () => {
   const { cache } = getApolloClient()
 
@@ -156,10 +158,35 @@ export const useOnlineNotificationActions = () => {
       .catch(() => revertCache)
   }
 
+  const deleteAllMutation = new MutationHandler(useOnlineNotificationDeleteAllMutation(), {
+    errorNotificationMessage: __('Online notifications could not be cleared.'),
+  })
+
+  const deleteAllNotifications = async () => {
+    return deleteAllMutation
+      .send({})
+      .then(() => {
+        cache.writeQuery({
+          query: OnlineNotificationsDocument,
+          data: {
+            onlineNotifications: {
+              __typename: 'OnlineNotificationConnection',
+              edges: [],
+              pageInfo: { __typename: 'PageInfo', endCursor: null, hasNextPage: false },
+            },
+          },
+        })
+
+        return true
+      })
+      .catch(() => false)
+  }
+
   return {
     seenNotification,
     deleteNotification,
     deleteNotificationMutation,
     markAllRead,
+    deleteAllNotifications,
   }
 }

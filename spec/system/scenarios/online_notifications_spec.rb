@@ -4,7 +4,8 @@ require 'rails_helper'
 
 # Ported from test/browser/agent_ticket_online_notification_test.rb as a continuous
 #   end-to-end scenario for the legacy notifications widget: empty state, live arrival,
-#   read state of single notifications, mark-all and the mixed read/unread counts.
+#   read state of single notifications, mark-all, the mixed read/unread counts and
+#   clear-all including its confirmation dialog.
 RSpec.describe 'Scenario > Online notifications widget', authenticated_as: :agent, performs_jobs: true, type: :system do
   let(:group)         { Group.find_by(name: 'Users') }
   let(:agent)         { create(:agent, groups: [group]) }
@@ -27,21 +28,24 @@ RSpec.describe 'Scenario > Online notifications widget', authenticated_as: :agen
   it 'counts, lists and marks notifications correctly' do
     visit 'dashboard'
 
-    # Empty state: no unread notifications, mark-all button hidden, no counter digit.
+    # Empty state: no unread notifications, mark-all and clear-all buttons hidden,
+    #   no counter digit.
     open_notifications
 
     expect(page).to have_css('.js-noNotifications', text: 'No unread notifications')
     expect(page).to have_css('.js-mark.hide', visible: :all)
+    expect(page).to have_css('.js-clear.hide', visible: :all)
     expect(page).to have_no_css('.js-notificationsCounter', text: %r{\d})
 
-    # A new notification arrives live: item appears, counter shows 1, mark-all appears.
+    # A new notification arrives live in the already open widget.
     notify('online notification #1')
 
     expect(page).to have_css('.js-notificationsContainer .js-item', text: 'online notification #1')
     expect(page).to have_css('.js-notificationsCounter', text: '1')
-    expect(page).to have_no_css('.js-mark.hide', visible: :all)
+    expect(page).to have_css('.js-mark', text: 'Mark all as read', visible: :visible)
+    expect(page).to have_css('.js-clear', text: 'Clear all', visible: :visible)
 
-    # A second notification: counter shows 2, both items listed.
+    # A second notification arrives.
     notify('online notification #2')
 
     expect(page).to have_css('.js-notificationsCounter', text: '2')
@@ -73,7 +77,7 @@ RSpec.describe 'Scenario > Online notifications widget', authenticated_as: :agen
     expect(page).to have_css('.js-notificationsContainer .js-item.is-inactive', count: 3)
     expect(page).to have_no_css('.js-notificationsCounter', text: %r{\d})
 
-    # A notification after mark-all: counter restarts at 1, read items stay inactive.
+    # A new notification after mark-all: read items stay listed.
     notify('online notification #4')
 
     expect(page).to have_css('.js-notificationsCounter', text: '1')
@@ -82,5 +86,43 @@ RSpec.describe 'Scenario > Online notifications widget', authenticated_as: :agen
 
     # Newest notification is listed first.
     expect(first('.js-notificationsContainer .js-item')).to have_text('online notification #4')
+
+    # Clear all closes the widget and asks for confirmation first.
+    find('.js-clear').click
+
+    expect(page).to have_no_css('.js-notificationsContainer.is-visible')
+
+    in_modal disappears: true do
+      expect(page).to have_css('.modal-header', text: 'Clear all notifications')
+      expect(page).to have_css('.modal-body', text: 'All notifications will be deleted. This action cannot be undone.')
+      expect(page).to have_css('.js-submit.btn--danger', text: 'Delete all')
+
+      find('.js-cancel').click
+    end
+
+    # Cancelling reopens the widget and keeps all notifications untouched.
+    expect(page).to have_css('.js-notificationsContainer.is-visible')
+    expect(page).to have_css('.js-notificationsContainer .js-item', count: 4)
+    expect(page).to have_css('.js-notificationsCounter', text: '1')
+    expect(OnlineNotification.where(user: agent).count).to eq(4)
+
+    # Confirming deletes all notifications and leaves the widget closed.
+    find('.js-clear').click
+
+    in_modal do
+      find('.js-submit').click
+    end
+
+    expect(page).to have_no_css('.js-notificationsContainer.is-visible')
+    expect(OnlineNotification.where(user: agent)).to be_empty
+
+    # Back to the empty state: no items, no counter digit, clear-all hidden again.
+    open_notifications
+
+    expect(page).to have_css('.js-noNotifications', text: 'No unread notifications')
+    expect(page).to have_no_css('.js-notificationsContainer .js-item')
+    expect(page).to have_css('.js-mark.hide', visible: :all)
+    expect(page).to have_css('.js-clear.hide', visible: :all)
+    expect(page).to have_no_css('.js-notificationsCounter', text: %r{\d})
   end
 end

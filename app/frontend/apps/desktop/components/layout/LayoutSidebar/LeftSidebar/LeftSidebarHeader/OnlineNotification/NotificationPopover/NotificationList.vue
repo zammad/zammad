@@ -18,7 +18,7 @@ defineEmits<{
 </script>
 
 <template>
-  <ol class="space-y-2 px-3 pb-3">
+  <ol class="divide-y divide-neutral-100 px-3 pb-3 dark:divide-gray-900">
     <li v-if="list?.length === 0">
       <CommonLabel>{{ $t('No unread notifications.') }}</CommonLabel>
     </li>

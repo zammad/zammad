@@ -158,7 +158,7 @@ curl http://localhost/api/v1/online_notifications/{id}.json -v -u #{login}:#{pas
 =begin
 
 Resource:
-PUT /api/v1/online_notifications/mark_all_as_read
+POST /api/v1/online_notifications/mark_all_as_read
 
 Payload:
 {}
@@ -179,6 +179,28 @@ curl http://localhost/api/v1/online_notifications/mark_all_as_read -v -u #{login
       .each_record do |notification|
         notification.update!(seen: true)
       end
+
+    render json: {}, status: :ok
+  end
+
+=begin
+
+Resource:
+DELETE /api/v1/online_notifications/clear_all
+
+Payload:
+{}
+
+Response:
+{}
+
+Test:
+curl http://localhost/api/v1/online_notifications/clear_all -v -u #{login}:#{password} -X DELETE -d '{}'
+
+=end
+
+  def clear_all
+    Service::OnlineNotification::DeleteAll.with_current_user(current_user).execute
 
     render json: {}, status: :ok
   end

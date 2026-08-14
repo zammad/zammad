@@ -46,7 +46,7 @@ const handleLinkClick = (event: Event, notification: OnlineNotification) => {
 </script>
 
 <template>
-  <li>
+  <li class="py-2 first:pt-0 last:pb-0">
     <div class="group isolate flex items-center justify-between gap-3">
       <component
         :is="link ? 'CommonLink' : 'div'"

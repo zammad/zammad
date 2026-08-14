@@ -6,6 +6,7 @@ import { computed, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 import { useActivityMessage } from '#shared/composables/activity-message/useActivityMessage.ts'
+import { useConfirmation } from '#shared/composables/useConfirmation.ts'
 import { useOnlineNotificationSound } from '#shared/composables/useOnlineNotification/useOnlineNotificationSound.ts'
 import { useOnlineNotificationActions } from '#shared/entities/online-notification/composables/useOnlineNotificationActions.ts'
 import { useOnlineNotificationCount } from '#shared/entities/online-notification/composables/useOnlineNotificationCount.ts'
@@ -23,7 +24,7 @@ const webNotificationList = new Map<ID, Notification>()
 
 const { unseenCount } = useOnlineNotificationCount()
 
-const { popover, popoverTarget, toggle, close } = usePopover()
+const { popover, popoverTarget, toggle, open, close } = usePopover()
 
 const { play, isEnabled } = useOnlineNotificationSound()
 
@@ -40,7 +41,10 @@ const {
   refetch,
 } = useOnlineNotificationList()
 
-const { markAllRead, deleteNotification, seenNotification } = useOnlineNotificationActions()
+const { markAllRead, deleteNotification, seenNotification, deleteAllNotifications } =
+  useOnlineNotificationActions()
+
+const { waitForConfirmation } = useConfirmation()
 
 let mutationTriggered = false
 let hasInitialCountRun = false
@@ -72,6 +76,12 @@ const removeNotification = async (notification: OnlineNotification) =>
     webNotificationList.delete(notification.id)
   })
 
+const closeWebNotifications = () => {
+  webNotificationList.forEach((notification) => notification.close())
+
+  webNotificationList.clear()
+}
+
 const runMarkAllRead = async () => {
   mutationTriggered = true
 
@@ -81,11 +91,37 @@ const runMarkAllRead = async () => {
 
   mutationTriggered = false
 
-  if (!webNotificationList.size) return
+  closeWebNotifications()
+}
 
-  webNotificationList.forEach((notification) => notification.close())
+const runClearAll = async () => {
+  // Close without restoring the focus to the owner, otherwise it would be moved back to the
+  //   notification button while the confirmation dialog is opening.
+  popover.value?.closePopover(true)
 
-  webNotificationList.clear()
+  const confirmed = await waitForConfirmation(
+    __('All notifications will be deleted. This action cannot be undone.'),
+    {
+      confirmationVariant: 'delete',
+      headerTitle: __('Clear all notifications'),
+      buttonLabel: __('Delete all'),
+    },
+  )
+
+  if (!confirmed) {
+    open()
+    return
+  }
+
+  mutationTriggered = true
+
+  try {
+    const cleared = await deleteAllNotifications()
+
+    if (cleared) closeWebNotifications()
+  } finally {
+    mutationTriggered = false
+  }
 }
 
 notificationsCountSubscription.watchOnResult(async (result) => {
@@ -183,6 +219,7 @@ defineOptions({
         @seen="runMarkAsSeen"
         @remove="removeNotification"
         @seen-all="runMarkAllRead"
+        @clear-all="runClearAll"
       />
     </CommonPopover>
   </div>

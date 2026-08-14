@@ -8,6 +8,7 @@ import { waitUntil } from '#tests/support/utils.ts'
 
 import { mockOnlineNotificationQuery } from '#shared/entities/online-notification/__tests__/mocks/online-notification-mocks.ts'
 import { OnlineNotificationDeleteDocument } from '#shared/entities/online-notification/graphql/mutations/delete.api.ts'
+import { OnlineNotificationDeleteAllDocument } from '#shared/entities/online-notification/graphql/mutations/deleteAll.api.ts'
 import { OnlineNotificationMarkAllAsSeenDocument } from '#shared/entities/online-notification/graphql/mutations/markAllAsSeen.api.ts'
 import { OnlineNotificationsDocument } from '#shared/entities/online-notification/graphql/queries/onlineNotifications.api.ts'
 import { OnlineNotificationsCountDocument } from '#shared/entities/online-notification/graphql/subscriptions/onlineNotificationsCount.api.ts'
@@ -137,6 +138,73 @@ describe('selecting a online notification', () => {
     await triggerNextOnlineNotificationCount(0)
 
     expect(view.container).not.toHaveTextContent('Mark all as read')
+  })
+
+  it('can clear all notifications', async () => {
+    const mockApi = mockGraphQLApi(OnlineNotificationsDocument).willResolve(
+      mockOnlineNotificationQuery([
+        {
+          id: '111',
+          seen: true,
+        },
+        {
+          id: '222',
+          seen: true,
+        },
+      ]),
+    )
+
+    const view = await visitView('/notifications')
+
+    await waitUntil(() => mockApi.calls.resolve)
+
+    expect(view.getAllByText('Ticket Title', { exact: false })).toHaveLength(2)
+
+    const deleteAllApi = mockGraphQLApi(OnlineNotificationDeleteAllDocument).willResolve({
+      onlineNotificationDeleteAll: {
+        errors: null,
+        success: true,
+      },
+    })
+
+    await view.events.click(view.getByText('Clear all'))
+
+    expect(view.getByText('Clear all notifications')).toBeInTheDocument()
+
+    await view.events.click(view.getByRole('button', { name: 'Delete all' }))
+
+    await waitUntil(() => deleteAllApi.calls.resolve)
+
+    expect(deleteAllApi.calls.resolve).toBe(1)
+  })
+
+  it('does not clear all notifications when the confirmation is cancelled', async () => {
+    const mockApi = mockGraphQLApi(OnlineNotificationsDocument).willResolve(
+      mockOnlineNotificationQuery([
+        {
+          id: '111',
+          seen: true,
+        },
+      ]),
+    )
+
+    const view = await visitView('/notifications')
+
+    await waitUntil(() => mockApi.calls.resolve)
+
+    const deleteAllApi = mockGraphQLApi(OnlineNotificationDeleteAllDocument).willResolve({
+      onlineNotificationDeleteAll: {
+        errors: null,
+        success: true,
+      },
+    })
+
+    await view.events.click(view.getByText('Clear all'))
+
+    await view.events.click(view.getByRole('button', { name: 'Cancel' }))
+
+    expect(deleteAllApi.calls.resolve).toBe(0)
+    expect(view.getAllByText('Ticket Title', { exact: false })).toHaveLength(1)
   })
 
   it('can not mark notification without relation behind (no longer permission) as read', async () => {
