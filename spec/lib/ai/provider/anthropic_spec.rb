@@ -72,6 +72,26 @@ RSpec.describe AI::Provider::Anthropic, integration: true, required_envs: %w[ANT
     end
   end
 
+  context 'when the response contains thinking blocks' do
+    it 'returns the content of the text block' do
+      allow(UserAgent).to receive(:post).and_return(
+        UserAgent::Result.new(
+          success: true,
+          code:    200,
+          data:    {
+            'content' => [
+              { 'type' => 'thinking', 'thinking' => '', 'signature' => 'Et...' },
+              { 'type' => 'text', 'text' => '{ "connected": "true" }' },
+            ],
+            'usage'   => { 'input_tokens' => 1, 'output_tokens' => 1 },
+          },
+        )
+      )
+
+      expect(ai_provider.ask(prompt_system:, prompt_user:)).to match({ 'connected' => 'true' })
+    end
+  end
+
   context 'when embeddings are requested' do
     it 'raises an error' do
       expect { ai_provider.embeddings(input: 'test') }.to raise_error(NotImplementedError, 'not implemented yet due to missing API')
