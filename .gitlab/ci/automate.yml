@@ -1,8 +1,24 @@
+'disable squash for weblate MRs':
+  stage: automate
+  image:
+    name: alpine/curl:latest
+    entrypoint: ['']
+  cache: []
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" && $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME =~ /weblate-merge$/ && $CI_MERGE_REQUEST_SQUASH_ON_MERGE == "true"'
+  before_script: []
+  script:
+    - echo "⚠️ Disabling squash option for this MR..."
+    - |
+      curl --fail-with-body --request PUT --header "PRIVATE-TOKEN: ${WEBLATE_ACCESS_TOKEN}" \
+        "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/merge_requests/${CI_MERGE_REQUEST_IID}?squash=false"
+    - echo "✅ Squash option successfully disabled via API."
+  after_script: []
+
 # This job will create commits in pipelines pushed from Weblate.
 # It re-generates the catalog, and any additional files such as view templates and chat assets.
 'push translations update commit':
   stage: automate
-  needs: ['write cache: ruby', 'write cache: nodejs']
   rules:
     # Don't apply job filter here.
     - if: $CI_PIPELINE_SOURCE == "merge_request_event" && $CI_COMMIT_MESSAGE =~ /Translations update from translations[.]zammad[.]org/
@@ -34,6 +50,7 @@
     - 'git commit -m "Maintenance: Update translated files and catalog"'
     - git show --stat
     - git push gitlab_origin HEAD:$CI_COMMIT_REF_NAME
+  after_script: []
 
 
 # Checks updatecli configuration and creates merge request if there are changes.
