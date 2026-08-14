@@ -605,4 +605,67 @@ RSpec.describe Taskbar, performs_jobs: true, type: :model do
       end
     end
   end
+
+  describe '.entity_key_prefix' do
+    it 'uses the class name' do
+      expect(described_class.entity_key_prefix(Ticket)).to eq('Ticket')
+    end
+
+    it 'encodes the namespace separator like the GraphQL enums do' do
+      expect(described_class.entity_key_prefix(Ticket::Article)).to eq('Ticket__Article')
+    end
+  end
+
+  describe '.entity_classes' do
+    # The registry is memoized, so a stubbed model list must not leak into the
+    #   other examples.
+    after { described_class.instance_variable_set(:@entity_classes, nil) }
+
+    it 'contains the models with taskbar support' do
+      expect(described_class.entity_classes).to include(Ticket, User, Organization)
+    end
+
+    # Without this the entries of one model would resolve to the other one.
+    #   Doubles instead of real classes, because an ApplicationModel subclass
+    #   would stay in .descendants for the rest of the process.
+    it 'raises for models with a colliding key prefix' do
+      colliding = ['SpecAddon::Entity', 'SpecAddon__Entity'].map do |name|
+        instance_double(Class, name:).tap { |model| allow(model).to receive(:include?).and_return(true) }
+      end
+
+      allow(ApplicationModel).to receive(:descendants).and_return(colliding)
+      described_class.instance_variable_set(:@entity_classes, nil)
+
+      expect { described_class.entity_classes }
+        .to raise_error(%r{Taskbar key prefix 'SpecAddon__Entity' is used by SpecAddon::Entity and SpecAddon__Entity})
+    end
+  end
+
+  describe '.entity_key' do
+    it 'combines the key prefix and the record id' do
+      ticket = create(:ticket)
+
+      expect(described_class.entity_key(ticket)).to eq("Ticket-#{ticket.id}")
+    end
+  end
+
+  describe '.entity_class_for_key_prefix' do
+    it 'resolves a known prefix' do
+      expect(described_class.entity_class_for_key_prefix('Ticket')).to eq(Ticket)
+    end
+
+    # Stubbing the class list (not the map) so the prefix is really encoded and
+    #   decoded again - a namespaced model with taskbar support only exists in
+    #   addons.
+    it 'resolves an encoded namespaced prefix' do
+      model = instance_double(Class, name: 'SpecAddon::Entity')
+      allow(described_class).to receive(:entity_classes).and_return([model])
+
+      expect(described_class.entity_class_for_key_prefix('SpecAddon__Entity')).to eq(model)
+    end
+
+    it 'returns nil for an unknown prefix' do
+      expect(described_class.entity_class_for_key_prefix('SomeLegacyEntityZoom')).to be_nil
+    end
+  end
 end

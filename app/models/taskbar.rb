@@ -95,9 +95,48 @@ class Taskbar < ApplicationModel
     end
   end
 
+  # Models with taskbar support, i.e. the classes a taskbar entry can point to.
+  def self.entity_classes
+    @entity_classes ||= begin
+      classes = ApplicationModel.descendants.select { |model| model.include?(HasTaskbars) }
+
+      # Entries of one model would resolve to the other one, so a collision must
+      #   not pass silently - an addon can add taskbar models at any time.
+      colliding = classes
+        .group_by { |model| entity_key_prefix(model) }
+        .find { |_prefix, models| models.size > 1 }
+
+      if colliding
+        raise "Taskbar key prefix '#{colliding.first}' is used by #{colliding.last.map(&:name).sort.join(' and ')}."
+      end
+
+      classes
+    end
+  end
+
+  # Key prefix used for taskbar entries of a model, e.g. 'Ticket' for
+  #   'Ticket-123' and 'ProjectBaller__Project' for a namespaced one (see
+  #   IdentifierName).
+  def self.entity_key_prefix(klass)
+    IdentifierName.encode(klass.name)
+  end
+
+  # Key of the taskbar entries for a record, e.g. 'Ticket-123'. Both stacks
+  #   build their keys this way, so an object opened in one of them shows up as
+  #   the same tab in the other.
+  def self.entity_key(record)
+    "#{entity_key_prefix(record.class)}-#{record.id}"
+  end
+
+  # Model for a taskbar key prefix, or nil for an unknown one. Resolved via the
+  #   known taskbar classes, never by constantizing the (client-provided) key.
+  def self.entity_class_for_key_prefix(prefix)
+    entity_classes.find { |model| entity_key_prefix(model) == prefix }
+  end
+
   def self.taskbar_entities
     @taskbar_entities ||= begin
-      ApplicationModel.descendants.select { |model| model.include?(HasTaskbars) }.each_with_object([]) do |model, result|
+      entity_classes.each_with_object([]) do |model, result|
         model.taskbar_entities&.each do |entity|
           result << entity
         end
@@ -107,7 +146,7 @@ class Taskbar < ApplicationModel
 
   def self.taskbar_ignore_state_updates_entities
     @taskbar_ignore_state_updates_entities ||= begin
-      ApplicationModel.descendants.select { |model| model.include?(HasTaskbars) }.each_with_object([]) do |model, result|
+      entity_classes.each_with_object([]) do |model, result|
         model.taskbar_ignore_state_updates_entities&.each do |entity|
           result << entity
         end
@@ -190,7 +229,9 @@ class Taskbar < ApplicationModel
 
   # Checks if taskbar's owner has access to the target object (Ticket, User, Organization...)
   # @return [Boolean, nil] true if the target is accessible, false if not accessible and nil for non-relatable items
-  KEY_REGEXP = %r{^(?<model>\p{Lu}\p{L}+)-(?<id>\d+)$}
+  # The model part is a key prefix as built by .entity_key_prefix, which may
+  #   contain digits and the encoded namespace separator ('Sso2__Session-1').
+  KEY_REGEXP = %r{^(?<model>\p{Lu}[\p{L}\p{N}_]+)-(?<id>\d+)$}
   def target_accessible_to_owner?
     case key.match(KEY_REGEXP)
     in model: 'Ticket', id:

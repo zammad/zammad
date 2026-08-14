@@ -28,7 +28,7 @@ destroy all taskbars for the class object id
 =end
 
   def destroy_taskbars
-    Taskbar.where(key: "#{self.class}-#{id}").destroy_all
+    Taskbar.where(key: Taskbar.entity_key(self)).destroy_all
   end
 
 end

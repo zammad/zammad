@@ -19,7 +19,7 @@ module Ticket::TriggersSubscriptions
 
     return true if real_changes.blank?
 
-    TaskbarUpdateTriggerSubscriptionsJob.perform_later("#{self.class}-#{id}", self, real_changes.keys)
+    TaskbarUpdateTriggerSubscriptionsJob.perform_later(Taskbar.entity_key(self), self, real_changes.keys)
   end
 
   TRIGGER_CHECKLIST_UPDATE_ON = %w[title group_id].freeze

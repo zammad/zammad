@@ -5,7 +5,7 @@ RSpec.shared_examples 'HasTaskbars' do
 
   describe '#destroy_taskbars' do
     it 'destroys related taskbars' do
-      taskbar = create(:taskbar, key: "#{described_class.name}-#{subject.id}")
+      taskbar = create(:taskbar, key: Taskbar.entity_key(subject))
       subject.destroy
       expect { taskbar.reload }.to raise_exception(ActiveRecord::RecordNotFound)
     end

@@ -31,7 +31,9 @@ module Gql::Types::User
     end
 
     def entity_access
-      object_entity!
+      # A tab without an entity model has no access state either - the frontend
+      #   then renders the tab content of its plugin.
+      return if object_entity!.nil?
 
       'Granted'
     rescue ActiveRecord::RecordNotFound
@@ -61,15 +63,25 @@ module Gql::Types::User
     private
 
     def object_entity!
-      klass, id = @object.key.split('-', 2)
+      key_prefix, id = @object.key.split('-', 2)
 
       # Ticket create is ...
-      return @object.state.merge({ uid: id, type: 'TicketCreate' }) if klass == 'TicketCreateScreen'
+      return @object.state.merge({ uid: id, type: 'TicketCreate' }) if key_prefix == 'TicketCreateScreen'
 
       # Search is ...
-      return @object.params.merge(@object.state).merge({ type: 'Search' }) if klass == 'Search'
+      return @object.params.merge(@object.state).merge({ type: 'Search' }) if key_prefix == 'Search'
 
-      entity = klass.constantize.find(id)
+      # No model for the prefix means the entry has no entity at all, e.g.
+      #   because it was written in a legacy key format - which is different
+      #   from a missing record, so it is no error.
+      klass = Taskbar.entity_class_for_key_prefix(key_prefix)
+      if klass.nil?
+        Rails.logger.debug { "No taskbar entity model for key prefix '#{key_prefix}'." }
+
+        return nil
+      end
+
+      entity = klass.find(id)
       Pundit.authorize(context.current_user, entity, :show?)
 
       entity

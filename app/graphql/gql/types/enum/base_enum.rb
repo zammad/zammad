@@ -20,7 +20,7 @@ module Gql::Types::Enum
     end
 
     def self.graphql_compatible_name(name)
-      name.gsub('::', '__')
+      IdentifierName.encode(name)
     end
   end
 end
