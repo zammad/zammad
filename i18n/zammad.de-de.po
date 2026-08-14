@@ -14378,7 +14378,8 @@ msgstr "PGP-Integration"
 
 #: lib/secure_mailing/pgp/tool/data.rb:85
 msgid "PGP signature does not cover the displayed message body"
-msgstr "Die PGP-Signatur bezieht sich nicht auf den angezeigten Nachrichtentext"
+msgstr ""
+"Die PGP-Signatur bezieht sich nicht auf den angezeigten Nachrichtentext"
 
 #: db/seeds/settings.rb:2105
 msgid "PKCE"
@@ -15893,7 +15894,7 @@ msgstr "Reihenfolge der Übersichten zurücksetzen"
 msgid "Reset search"
 msgstr "Suche zurücksetzen"
 
-#: app/assets/javascripts/app/models/setting.coffee:60
+#: app/assets/javascripts/app/models/setting.coffee:73
 msgid "Reset successful."
 msgstr "Erfolgreich zurückgesetzt."
 
@@ -19806,12 +19807,12 @@ msgstr "Die Einstellung 'storage_provider' wurde nicht konfiguriert."
 msgid "The setting 'ticket_number' was not configured."
 msgstr "Die Einstellung 'ticket_number' wurde nicht konfiguriert."
 
-#: app/assets/javascripts/app/models/setting.coffee:68
+#: app/assets/javascripts/app/models/setting.coffee:81
 msgid "The setting could not be reset."
 msgstr "Die Einstellung konnte nicht zurückgesetzt werden."
 
 #: app/assets/javascripts/app/controllers/_ai/provider.coffee:71
-#: app/assets/javascripts/app/models/setting.coffee:31
+#: app/assets/javascripts/app/models/setting.coffee:43
 msgid "The setting could not be updated."
 msgstr "Die Einstellung konnte nicht aktualisiert werden."
 
@@ -22391,7 +22392,7 @@ msgstr "Gemeinsamen Entwurf aktualisieren"
 #: app/assets/javascripts/app/controllers/_settings/area_ticket_number.coffee:123
 #: app/assets/javascripts/app/controllers/_settings/form.coffee:81
 #: app/assets/javascripts/app/controllers/maintenance.coffee:74
-#: app/assets/javascripts/app/models/setting.coffee:20
+#: app/assets/javascripts/app/models/setting.coffee:23
 msgid "Update successful."
 msgstr "Aktualisierung erfolgreich."
 

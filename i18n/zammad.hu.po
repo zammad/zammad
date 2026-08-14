@@ -15894,7 +15894,7 @@ msgstr "Áttekintés sorrendjének visszaállítása"
 msgid "Reset search"
 msgstr "Keresés visszaállítása"
 
-#: app/assets/javascripts/app/models/setting.coffee:60
+#: app/assets/javascripts/app/models/setting.coffee:73
 msgid "Reset successful."
 msgstr "A visszaállítás sikeres."
 
@@ -19770,12 +19770,12 @@ msgstr "A „storage_provider” beállítás nem volt beállítva."
 msgid "The setting 'ticket_number' was not configured."
 msgstr "A „ticket_number” beállítás nem volt beállítva."
 
-#: app/assets/javascripts/app/models/setting.coffee:68
+#: app/assets/javascripts/app/models/setting.coffee:81
 msgid "The setting could not be reset."
 msgstr "A beállítást nem sikerült visszaállítani."
 
 #: app/assets/javascripts/app/controllers/_ai/provider.coffee:71
-#: app/assets/javascripts/app/models/setting.coffee:31
+#: app/assets/javascripts/app/models/setting.coffee:43
 msgid "The setting could not be updated."
 msgstr "A beállítást nem sikerült frissíteni."
 
@@ -22326,7 +22326,7 @@ msgstr "Megosztott piszkozat frissítése"
 #: app/assets/javascripts/app/controllers/_settings/area_ticket_number.coffee:123
 #: app/assets/javascripts/app/controllers/_settings/form.coffee:81
 #: app/assets/javascripts/app/controllers/maintenance.coffee:74
-#: app/assets/javascripts/app/models/setting.coffee:20
+#: app/assets/javascripts/app/models/setting.coffee:23
 msgid "Update successful."
 msgstr "A frissítés sikeres."
 

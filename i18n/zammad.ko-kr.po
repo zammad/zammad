@@ -15918,7 +15918,7 @@ msgstr "개요 순서 재설정"
 msgid "Reset search"
 msgstr "검색 재설정"
 
-#: app/assets/javascripts/app/models/setting.coffee:60
+#: app/assets/javascripts/app/models/setting.coffee:73
 msgid "Reset successful."
 msgstr "재설정이 성공했습니다."
 
@@ -19806,12 +19806,12 @@ msgstr "설정 'storage_provider'이(가) 구성되지 않았습니다."
 msgid "The setting 'ticket_number' was not configured."
 msgstr "설정 'ticket_number'이(가) 구성되지 않았습니다."
 
-#: app/assets/javascripts/app/models/setting.coffee:68
+#: app/assets/javascripts/app/models/setting.coffee:81
 msgid "The setting could not be reset."
 msgstr "설정을 재설정할 수 없습니다."
 
 #: app/assets/javascripts/app/controllers/_ai/provider.coffee:71
-#: app/assets/javascripts/app/models/setting.coffee:31
+#: app/assets/javascripts/app/models/setting.coffee:43
 msgid "The setting could not be updated."
 msgstr "설정을 업데이트할 수 없습니다."
 
@@ -22322,7 +22322,7 @@ msgstr "공유 초안 업데이트"
 #: app/assets/javascripts/app/controllers/_settings/area_ticket_number.coffee:123
 #: app/assets/javascripts/app/controllers/_settings/form.coffee:81
 #: app/assets/javascripts/app/controllers/maintenance.coffee:74
-#: app/assets/javascripts/app/models/setting.coffee:20
+#: app/assets/javascripts/app/models/setting.coffee:23
 msgid "Update successful."
 msgstr "업데이트 성공."
 

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-07-06 22:07+0000\n"
-"Last-Translator: aiworker-dev <aiworker8889@hotmail.com>\n"
+"PO-Revision-Date: 2026-08-14 05:57+0000\n"
+"Last-Translator: IOANNIS KALINTIRIS <kalidiris@uop.gr>\n"
 "Language-Team: Greek <https://translations.zammad.org/projects/zammad/zammad-"
 "stable/el/>\n"
 "Language: el\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.16.2\n"
+"X-Generator: Weblate 2026.7.1\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -601,39 +601,35 @@ msgstr ""
 #: app/assets/javascripts/app/models/user.coffee:231
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/user.ts:29
 msgid "%s ended switch to |%s|!"
-msgstr "%s τελείωσε την μετάβαση σε |%s|!"
+msgstr "Το %s ολοκλήρωσε τη μετάβαση στο |%s|!"
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco:40
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco:8
 msgid "%s folders"
-msgstr "%s φάκελοι"
+msgstr "%s φακέλους"
 
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco:39
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco:8
 msgid "%s groups to %s roles assignments"
-msgstr "%s ομάδες σε %s αναθέσεις ρόλων"
+msgstr "Αντιστοιχίσεις ομάδων %s σε ρόλους %s"
 
 #: app/frontend/shared/i18n/dates.ts:110
 msgid "%s hours ago"
 msgstr "%s ώρες πριν"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/features/ai-assistant-text-tools/AiAssistantLoadingBanner/AiAssistantLoadingBanner.vue:28
-#, fuzzy
-#| msgid "%s Migration"
 msgid "%s is generating text…"
-msgstr "%s Migration"
+msgstr "Το %s δημιουργεί κείμενο…"
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:91
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:58
 #: app/assets/javascripts/app/views/channel_account/list.jst.eco:76
 msgid "%s is inactive, please select an active one."
-msgstr "Το %s είναι ανενεργό, παρακαλώ επιλέξτε ένα ενεργό."
+msgstr "Το %s είναι ανενεργό. Παρακαλώ επιλέξτε ένα ενεργό."
 
 #: app/frontend/shared/form/i18n/locales.ts:496
-#, fuzzy
-#| msgid "%s required!"
 msgid "%s is required."
-msgstr "%s required!"
+msgstr "Το %s είναι υποχρεωτικό."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee:67
 msgid "%s is sent without text caption"
@@ -648,10 +644,8 @@ msgid "%s months ago"
 msgstr "%s μήνες πριν"
 
 #: app/frontend/apps/desktop/components/Search/QuickSearch/QuickSearchResultList/QuickSearchResultList.vue:146
-#, fuzzy
-#| msgid "See more"
 msgid "%s more"
-msgstr "Προβολή περισσότερων"
+msgstr "%s επιπλέον"
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco:21
 msgid "%s object(s) have been created."
@@ -663,176 +657,151 @@ msgstr "%s Αντικείμενο(α) έχει(ουν) ενημερωθεί."
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco:18
 msgid "%s object(s) were deleted."
-msgstr "%s Αντικείμενο(α) διαγράφηκε(αν)."
+msgstr "Διαγράφηκαν %s αντικείμενα."
 
 #: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco:13
 msgid "%s object(s) will be created."
-msgstr "%s αντικείμενο(α) θα δημιουργηθεί(ούν)."
+msgstr "Θα δημιουργηθούν %s αντικείμενα."
 
 #: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco:10
 msgid "%s object(s) will be deleted."
-msgstr "%s Αντικείμενο(α) θα διαγραφεί(ούν)."
+msgstr "Θα διαγραφούν %s αντικείμενα."
 
 #: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco:16
 msgid "%s object(s) will be updated."
-msgstr "%s Αντικείμενο(α) ενημερώνεται(ονται)."
+msgstr "Θα ενημερωθούν %s αντικείμενα."
 
 #: app/assets/javascripts/app/views/ticket_zoom/meta.jst.eco:19
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStatus.vue:208
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList/ChecklistBadgeList.vue:44
-#, fuzzy
-#| msgid "Manage %s"
 msgid "%s of %s"
-msgstr "Διαχειριστείτε %s"
+msgstr "%s από %s"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco:11
-#, fuzzy
 msgid "%s of my tickets are currently in process."
-msgstr "%s από τα αιτήματά μου βρίσκονται σε εξέλιξη."
+msgstr "Το %s των αιτήσεών μου βρίσκεται αυτή τη στιγμή σε επεξεργασία."
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_escalation.jst.eco:11
-#, fuzzy
-#| msgid "%s of my tickets escalated."
 msgid "%s of my tickets escalated"
-msgstr "%s of my tickets escalated."
+msgstr "Το %s των αιτημάτων μου προωθήθηκε σε ανώτερο επίπεδο"
 
 #: app/assets/javascripts/app/views/ticket_overview/batch_overlay_user_group.jst.eco:11
 #: app/graphql/gql/queries/autocomplete_search/generic.rb:62
 msgid "%s people"
-msgstr "%s people"
+msgstr "%s άτομα"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee:53
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket-article.ts:31
-#, fuzzy
-#| msgid "%s ended switch to |%s|!"
 msgid "%s reacted with a %s to message from %s |%s|"
-msgstr "%s τελείωσε την μετάβαση σε |%s|!"
+msgstr "Ο %s αντέδρασε με ένα %s στο μήνυμα του %s |%s|"
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:49
 msgid ""
 "%s recommends using OAuth. %s announced it's going to drop Basic "
 "Authentication support in the future."
 msgstr ""
-"Η %s συνιστά τη χρήση του OAuth. Η %s ανακοίνωσε ότι πρόκειται να "
-"εγκαταλείψει την υποστήριξη της Βασικής Αυθεντικοποίησης στο μέλλον."
+"Το %s συνιστά τη χρήση του OAuth. Το %s ανακοίνωσε ότι θα καταργήσει τη "
+"στήριξη της βασικής πιστοποίησης στο μέλλον."
 
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee:65
 msgid "%s required!"
-msgstr "%s required!"
+msgstr "Απαιτείται το %s!"
 
 #: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:388
-#, fuzzy
-#| msgid "%s of my tickets escalated."
 msgid "%s result(s) selected"
-msgstr "%s of my tickets escalated."
+msgstr "Επιλέχθηκαν %s αποτελέσματα"
 
 #: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:388
-#, fuzzy
-#| msgid "%s of my tickets escalated."
 msgid "%s result(s) selected, selection limit reached"
-msgstr "%s of my tickets escalated."
+msgstr "Επιλέχθηκαν %s αποτελέσματα, επιτεύχθηκε το όριο επιλογής"
 
 #: app/frontend/apps/desktop/composables/dragAndDrop/useKeyboardKeysForDragAndDrop.ts:53
 msgid "%s selected. Use arrow keys to choose drop position, then press Space."
 msgstr ""
+"Επιλέχθηκε το %s. Χρησιμοποιήστε τα βελάκια για να επιλέξετε τη θέση "
+"απόθεσης και, στη συνέχεια, πατήστε το πλήκτρο διαστήματος."
 
 #: app/assets/javascripts/app/models/user.coffee:221
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/user.ts:25
 msgid "%s started a new session"
-msgstr "%s started a new session"
+msgstr "Το %s ξεκίνησε μια νέα συνεδρία"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco:11
 #: app/assets/javascripts/app/views/import/kayako.jst.eco:11
 msgid "%s subdomain"
-msgstr "%s subdomain"
+msgstr "υποτομέας %s"
 
 #: app/assets/javascripts/app/models/user.coffee:226
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/user.ts:27
 msgid "%s switched to |%s|!"
-msgstr "%s switched to |%s|!"
+msgstr "Το %s άλλαξε σε |%s|!"
 
 #: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:70
-#, fuzzy
-#| msgid "%s of my tickets escalated."
 msgid "%s ticket(s) selected"
-msgstr "%s of my tickets escalated."
+msgstr "Επιλέχθηκαν %s αιτήματα"
 
 #: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:70
-#, fuzzy
-#| msgid "%s of my tickets escalated."
 msgid "%s ticket(s) selected, selection limit reached"
-msgstr "%s of my tickets escalated."
+msgstr "Επιλέχθηκαν %s αιτήματα, επιτεύχθηκε το όριο επιλογής"
 
 #: app/assets/javascripts/app/views/ticket_zoom/meta.jst.eco:30
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList/ReferencingTicketsBadgePopover.vue:63
 #: app/frontend/apps/mobile/components/Organization/OrganizationItem.vue:51
 #: app/frontend/apps/mobile/components/User/UserItem.vue:31
 msgid "%s tickets"
-msgstr "%s δελτία"
+msgstr "%s αιτήματα"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketList.vue:113
 msgid "%s tickets found"
-msgstr "Βρέθηκαν %s δελτία"
+msgstr "Βρέθηκαν %s αιτήματα"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee:51
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket-article.ts:28
-#, fuzzy
-#| msgid "%s created Article for |%s|"
 msgid "%s updated article for |%s|"
-msgstr "%s δημιουργήθηκε άρθρο για |%s|"
+msgstr "%s ενημέρωσε το άρθρο για το |%s|"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee:30
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/data-privacy-task.ts:25
-#, fuzzy
-#| msgid "%s created data privacy task to delete user id |%s|"
 msgid "%s updated data privacy task to delete user ID |%s|"
 msgstr ""
-"%s δημιουργήθηκε εργασία απορρήτου δεδομένων για να διαγραφεί το "
-"αναγνωριστικό χρήστη |%s|"
+"Το %s ενημέρωσε την εργασία προστασίας δεδομένων για τη διαγραφή του "
+"αναγνωριστικού χρήστη |%s|"
 
 #: app/assets/javascripts/app/models/group.coffee:32
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/group.ts:25
-#, fuzzy
-#| msgid "%s updated Group |%s|"
 msgid "%s updated group |%s|"
-msgstr "%s updated Group |%s|"
+msgstr "%s ενημέρωσε την ομάδα |%s|"
 
 #: app/assets/javascripts/app/models/organization.coffee:89
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/organization.ts:27
-#, fuzzy
-#| msgid "%s updated Organization |%s|"
 msgid "%s updated organization |%s|"
-msgstr "%s updated Organization |%s|"
+msgstr "%s ενημέρωσε τον οργανισμό |%s|"
 
 #: app/assets/javascripts/app/models/role.coffee:29
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/role.ts:21
-#, fuzzy
-#| msgid "%s updated Role |%s|"
 msgid "%s updated role |%s|"
-msgstr "%s ενημερωμένος ρόλος |%s|"
+msgstr "%s: Ενημέρωση ρόλου |%s|"
 
 #: app/assets/javascripts/app/models/ticket.coffee:111
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:23
 msgid "%s updated ticket |%s|"
-msgstr "%s ενημερώθηκε το αίτημα |%s|"
+msgstr "%s ενημερωμένο αίτημα |%s|"
 
 #: app/assets/javascripts/app/models/user.coffee:219
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/user.ts:23
 msgid "%s updated user |%s|"
-msgstr "%s ενημερώθηκε ο Χρήστης |%s|"
+msgstr "%s ενημέρωσε τον χρήστη |%s|"
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco:34
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco:2
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco:34
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco:2
 msgid "%s user to %s user"
-msgstr "%s user to %s user"
+msgstr "Από τον χρήστη %s στον χρήστη %s"
 
 #: lib/whatsapp/webhook/message.rb:53
-#, fuzzy
-#| msgid "Channel"
 msgid "%s via WhatsApp"
-msgstr "Καναλι"
+msgstr "%s μέσω WhatsApp"
 
 #: app/frontend/shared/i18n/dates.ts:96
 msgid "%s weeks ago"
@@ -844,15 +813,15 @@ msgstr "%s έτη πριν"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco:11
 msgid "%s% are currently in process"
-msgstr "%s% βρίσκονται σε εξέλιξη"
+msgstr "Τα %s% βρίσκονται αυτή τη στιγμή σε επεξεργασία"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_reopen.jst.eco:11
 msgid "%s% have been reopened"
-msgstr "%s% έχουν ανοίξει ξανά"
+msgstr "Τα %s% έχουν ξανανοίξει"
 
 #: app/models/concerns/has_group_relation_definition.rb:51
 msgid "%{model} can have full or granular access to group"
-msgstr "%{model} μπορεί να έχει πλήρη ή πιο διαβαθμισμένη πρόσβαση στην ομάδα"
+msgstr "Το %{model} μπορεί να έχει πλήρη ή περιορισμένη πρόσβαση στην ομάδα"
 
 #: app/models/object_manager/attribute.rb:624
 msgid "%{name} already exists"
@@ -860,21 +829,19 @@ msgstr "Το %{name} υπάρχει ήδη"
 
 #: app/models/object_manager/attribute.rb:608
 msgid "%{name} is a reserved word"
-msgstr "Το %{name} είναι δεσμευμένη λέξη"
+msgstr "Το %{name} είναι μια λέξη που έχει δεσμευτεί"
 
 #: app/models/setting/validation/sso_trusted_ips.rb:9
 msgid "'%s' is not a valid IP address or CIDR range."
-msgstr ""
+msgstr "Το «%s» δεν είναι έγκυρη διεύθυνση IP ή εύρος CIDR."
 
 #: app/frontend/apps/mobile/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue:63
 msgid "(state: %s)"
 msgstr "(κατάσταση: %s)"
 
 #: app/frontend/apps/desktop/components/CommonTicketStateIndicator/CommonTicketStateIndicatorIcon.vue:58
-#, fuzzy
-#| msgid "Ticket update"
 msgid "(ticket status: %s)"
-msgstr "Ενημέρωση Αιτήματος"
+msgstr "(κατάσταση αιτήματος: %s)"
 
 #: app/assets/javascripts/app/models/ticket_time_accounting_type.coffee
 msgid ""
@@ -887,19 +854,16 @@ msgid ""
 "activity type will be rendered for an entry in the **Activity** table under "
 "the **Accounted Time** tab."
 msgstr ""
+"Οι **Τύποι δραστηριότητας** μπορούν να χρησιμοποιηθούν για την ομαδοποίηση "
+"των διαφόρων εγγραφών καταγραφής χρόνου των εισιτηρίων. Για παράδειγμα, "
+"εγγραφές που σχετίζονται με τον τύπο «Τιμολόγηση».\n"
+"\n"
+"Όταν ενεργοποιήσετε την καταγραφή του τύπου δραστηριότητας, οι χρήστες θα "
+"μπορούν να επιλέξουν έναν τύπο από αυτή τη λίστα. Επιπλέον, θα εμφανίζεται "
+"μια στήλη με τον αντίστοιχο τύπο δραστηριότητας για κάθε εγγραφή στον πίνακα "
+"**Δραστηριότητα**, στην καρτέλα **Καταγεγραμμένος χρόνος**."
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
-#, fuzzy
-#| msgid ""
-#| "** Data Privacy **, helps you to delete and verify the removal of "
-#| "existing data of the system.\n"
-#| "\n"
-#| "It can be used to delete tickets, organizations and users. The owner "
-#| "assignment will be unset in case the deleted user is an agent.\n"
-#| "\n"
-#| "Data Privacy tasks will be executed every 10 minutes. The execution might "
-#| "take some additional time depending of the number of objects that should "
-#| "get deleted."
 msgid ""
 "**Data Privacy** helps you to delete and verify the removal of existing data "
 "from the system.\n"
@@ -911,13 +875,16 @@ msgid ""
 "take some additional time depending on the number of objects that will be "
 "deleted."
 msgstr ""
-"**Ιδιωτικότητα δεδομένων**, σας βοηθά να διαγράψετε και να επαληθεύσετε την "
-"αφαίρεση των υπαρχόντων δεδομένων του συστήματος. Μπορεί να χρησιμοποιηθεί "
-"για τη διαγραφή αιτημάτων, οργανώσεων και χρηστών. Η εκχώρηση κατόχου θα "
-"καταργηθεί σε περίπτωση που ο διαγραμμένος χρήστης είναι εκπρόσωπος. Οι "
-"εργασίες απορρήτου δεδομένων θα εκτελούνται κάθε 10 λεπτά. Η εκτέλεση "
-"ενδέχεται να διαρκέσει περισσότερο χρόνο ανάλογα με τον αριθμό των "
-"αντικειμένων που πρέπει να διαγραφούν."
+"Η **Προστασία δεδομένων** σάς βοηθά να διαγράψετε και να επαληθεύσετε τη "
+"διαγραφή υπαρχόντων δεδομένων από το σύστημα.\n"
+"\n"
+"Μπορεί να χρησιμοποιηθεί για τη διαγραφή εισιτηρίων, οργανισμών και χρηστών. "
+"Η ανάθεση ιδιοκτησίας θα ακυρωθεί σε περίπτωση που ο διαγραφέντος χρήστης "
+"είναι πράκτορας.\n"
+"\n"
+"Οι εργασίες της Προστασίας δεδομένων εκτελούνται κάθε 10 λεπτά. Η εκτέλεση "
+"ενδέχεται να διαρκέσει λίγο περισσότερο, ανάλογα με τον αριθμό των "
+"αντικειμένων που θα διαγραφούν."
 
 #: app/assets/javascripts/app/models/sla.coffee
 msgid ""
@@ -935,45 +902,39 @@ msgid ""
 "displayed in a separate view in your overviews. You can also configure "
 "**email notifications**."
 msgstr ""
-"Οι **Service Level Agreements** (Συμφωνίες Επιπέδου Υπηρεσιών), σε "
-"συντομογραφία ** SLAs**, σας βοηθούν να τηρείτε συγκεκριμένους χρόνους "
-"απόκρισης για τα αιτήματα των χρηστών σας. Με αυτόν τον τρόπο μπορείτε να "
-"ορίσετε στόχους όπως η απάντηση σε κάθε ερώτηση εντός οκτώ ωρών. Εάν "
-"κινδυνεύετε να χάσετε αυτόν τον στόχο, το Zammad θα σας ειδοποιήσει. \n"
+"Οι **Συμφωνίες Επιπέδου Υπηρεσιών**, γνωστές με τη συντομογραφία **SLA**, "
+"σας βοηθούν να τηρείτε συγκεκριμένους χρόνους απόκρισης στα αιτήματα των "
+"πελατών σας. Με αυτόν τον τρόπο μπορείτε να ορίσετε στόχους, όπως η απάντηση "
+"σε κάθε αίτημα εντός οκτώ ωρών. Εάν υπάρχει κίνδυνος να μην επιτύχετε αυτόν "
+"τον στόχο, το Zammad θα σας ειδοποιήσει.\n"
 "\n"
-"Μπορείτε να ορίσετε στόχους για τρεις διαφορετικές μετρήσεις: τον **χρόνο "
-"απόκρισης** (χρόνος μεταξύ της δημιουργίας ενός αιτήματος και της πρώτης "
-"αντίδρασης ενός εκπροσώπου), τον **χρόνο ενημέρωσης** (χρόνος μεταξύ του "
-"αιτήματος ενός πελάτη και της αντίδρασης ενός εκπροσώπου) και του **χρόνου "
-"επίλυσης** (χρόνος μεταξύ της δημιουργίας και της ολοκλήρωσης ενός "
-"αιτήματος). \n"
+"Μπορείτε να ορίσετε στόχους για τρεις διαφορετικούς δείκτες: **χρόνος "
+"απόκρισης** (χρόνος που μεσολαβεί από τη δημιουργία ενός αιτήματος έως την "
+"πρώτη αντίδραση ενός υπαλλήλου), **χρόνος ενημέρωσης** (χρόνος που μεσολαβεί "
+"από το αίτημα ενός πελάτη έως την αντίδραση ενός υπαλλήλου) και **χρόνος "
+"επίλυσης** (χρόνος που μεσολαβεί από τη δημιουργία έως το κλείσιμο ενός "
+"αιτήματος).\n"
 "\n"
-"Τυχόν κλιμακούμενα αιτήματα (δηλαδή αιτήματα που έχασαν τον καθορισμένο "
-"στόχο) εμφανίζονται σε ξεχωριστή προβολή στις επισκοπήσεις σας. Μπορείτε "
-"επίσης να διαμορφώσετε **ειδοποιήσεις μέσω email**."
+"Τα αιτήματα που έχουν αναβαθμιστεί (δηλ. τα αιτήματα που δεν πέτυχαν τον "
+"καθορισμένο στόχο) εμφανίζονται σε ξεχωριστή προβολή στις επισκοπήσεις σας. "
+"Μπορείτε επίσης να ρυθμίσετε **ειδοποιήσεις μέσω email**."
 
 #: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkCursorPreview.vue:72
-#, fuzzy
-#| msgid "See more"
 msgid "+ %s more"
-msgstr "Προβολή περισσότερων"
+msgstr "+ %s ακόμα"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleFooter.vue:30
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:220
-#, fuzzy
-#| msgid "Attached Files"
 msgid "1 attached file"
-msgstr "Attached Files"
+msgstr "1 συνημμένο αρχείο"
 
 #: db/seeds/settings.rb:1104
 msgid "1 day"
 msgstr "1 ημέρα"
 
 #: app/frontend/shared/i18n/dates.ts:102
-#, fuzzy
-#| msgid "1 day"
 msgid "1 day ago"
-msgstr "1 ημέρα"
+msgstr "Πριν από 1 ημέρα"
 
 #: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/FeedbackDialog.vue:32
 #: db/seeds/settings.rb:1104
@@ -981,20 +942,16 @@ msgid "1 hour"
 msgstr "1 ώρα"
 
 #: app/frontend/shared/i18n/dates.ts:109
-#, fuzzy
-#| msgid "1 hour"
 msgid "1 hour ago"
-msgstr "1 ώρα"
+msgstr "Πριν από 1 ώρα"
 
 #: db/seeds/ticket_priorities.rb:3
 msgid "1 low"
-msgstr "Χαμηλό"
+msgstr "1 χαμηλό"
 
 #: app/frontend/shared/i18n/dates.ts:116
-#, fuzzy
-#| msgid "minute"
 msgid "1 minute ago"
-msgstr "λεπτό"
+msgstr "Πριν από 1 λεπτό"
 
 #: app/frontend/shared/i18n/dates.ts:88
 msgid "1 month ago"
@@ -1005,10 +962,8 @@ msgid "1 week"
 msgstr "1 εβδομάδα"
 
 #: app/frontend/shared/i18n/dates.ts:95
-#, fuzzy
-#| msgid "1 week"
 msgid "1 week ago"
-msgstr "1 εβδομάδα"
+msgstr "Πριν από 1 εβδομάδα"
 
 #: app/frontend/shared/i18n/dates.ts:81
 msgid "1 year ago"
@@ -1019,28 +974,24 @@ msgid "2 hours"
 msgstr "2 ώρες"
 
 #: db/seeds/settings.rb:2174
-#, fuzzy
-#| msgid "2 lower and 2 upper characters"
 msgid "2 lower case and 2 upper case characters"
-msgstr "2 μικρά και 2 κεφαλαία"
+msgstr "2 μικρά και 2 κεφαλαία γράμματα"
 
 #: db/seeds/ticket_priorities.rb:4
 msgid "2 normal"
-msgstr "Κανονικό"
+msgstr "2 κανονικά"
 
 #: db/seeds/settings.rb:1104
 msgid "2 weeks"
 msgstr "2 εβδομάδες"
 
 #: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/FeedbackDialog.vue:34
-#, fuzzy
-#| msgid "2 hours"
 msgid "20 hours"
-msgstr "2 ώρες"
+msgstr "20 ώρες"
 
 #: db/seeds/ticket_priorities.rb:5
 msgid "3 high"
-msgstr "Υψηλό"
+msgstr "3 υψηλό"
 
 #: db/seeds/settings.rb:1104
 msgid "3 weeks"
@@ -1051,15 +1002,13 @@ msgid "4 weeks"
 msgstr "4 εβδομάδες"
 
 #: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/FeedbackDialog.vue:33
-#, fuzzy
-#| msgid "2 hours"
 msgid "5 hours"
-msgstr "2 ώρες"
+msgstr "5 ώρες"
 
 #: public/assets/chat/chat-no-jquery.coffee:167
 #: public/assets/chat/chat.coffee:165
 msgid "<strong>Chat</strong> with us!"
-msgstr "<strong>Επικοινωνήστε</strong> μαζί μας!"
+msgstr "<strong>Συνομιλήστε</strong> μαζί μας!"
 
 #: app/assets/javascripts/app/models/calendar.coffee
 msgid ""
@@ -1073,17 +1022,27 @@ msgid ""
 "If you have customers with different business hours, you can create multiple "
 "calendars. Tickets are linked to calendars using **SLAs**."
 msgstr ""
+"Απαιτείται ένα **ημερολόγιο** για τον υπολογισμό των κλιμακώσεων με βάση τις "
+"ώρες λειτουργίας και για την αποστολή ειδοποιήσεων κλιμάκωσης.\n"
+"\n"
+"Ορίστε ένα **«τυποποιημένο»** ημερολόγιο που θα ισχύει σε όλο το σύστημα. Οι "
+"ειδοποιήσεις κλιμάκωσης θα αποστέλλονται στους πράκτορές σας μόνο κατά τις "
+"καθορισμένες ώρες λειτουργίας.\n"
+"\n"
+"Εάν έχετε πελάτες με διαφορετικές ώρες λειτουργίας, μπορείτε να "
+"δημιουργήσετε πολλά ημερολόγια. Τα εισιτήρια συνδέονται με τα ημερολόγια "
+"μέσω των **SLA**."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:44
 msgid "A color scheme that uses dark-colored elements on a light background."
 msgstr ""
-"Ένας συνδυασμός χρωμάτων που χρησιμοποιεί σκουρόχρωμα στοιχεία σε "
-"ανοιχτόχρωμο φόντο."
+"Ένα συνδυασμό χρωμάτων που χρησιμοποιεί σκούρα στοιχεία πάνω σε ανοιχτόχρωμο "
+"φόντο."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:39
 msgid "A color scheme that uses light-colored elements on a dark background."
 msgstr ""
-"Ένας συνδυασμός χρωμάτων που χρησιμοποιεί ανοιχτόχρωμα στοιχεία σε σκούρο "
+"Ένα συνδυασμό χρωμάτων που χρησιμοποιεί ανοιχτόχρωμα στοιχεία πάνω σε σκούρο "
 "φόντο."
 
 #: db/seeds/object_manager_attributes.rb:2286
@@ -1093,18 +1052,17 @@ msgid ""
 "auto-reply"
 msgstr ""
 "Η διεύθυνση ηλεκτρονικού ταχυδρομείου μιας ομάδας καθορίζει ποια διεύθυνση "
-"θα πρέπει να χρησιμοποιείται για εξερχόμενα μηνύματα, π.χ. όταν ένας "
-"εκπρόσωπος συντάσσει ένα μήνυμα ηλεκτρονικού ταχυδρομείου ή όταν ένα trigger "
-"στέλνει μια αυτόματη απάντηση."
+"πρέπει να χρησιμοποιείται για τα εξερχόμενα μηνύματα, π.χ. όταν ένας "
+"εκπρόσωπος συντάσσει ένα μήνυμα ηλεκτρονικού ταχυδρομείου ή όταν ένα "
+"ερέθισμα στέλνει μια αυτόματη απάντηση"
 
 #: db/seeds/settings.rb:4030
 msgid "A list of active import backends that gets scheduled automatically."
-msgstr "Μια λίστα με ενεργά backends εισαγωγών που προγραμματίζονται αυτόματα."
+msgstr "Μια λίστα ενεργών backends εισαγωγής που προγραμματίζεται αυτόματα."
 
 #: lib/validations/mention_validator.rb:7
 msgid "A mentioned user has no agent access to this ticket"
-msgstr ""
-"Ένας αναφερόμενος χρήστης δεν έχει δικαιώματα εκπροσώπου σε αυτό το εισιτήριο"
+msgstr "Ο εν λόγω χρήστης δεν διαθέτει πρόσβαση διαχειριστή σε αυτό το αίτημα"
 
 #: app/assets/javascripts/app/controllers/_plugin/session_taken_over.coffee:26
 msgid ""
@@ -1112,28 +1070,25 @@ msgid ""
 "prevent a conflict."
 msgstr ""
 "Δημιουργήθηκε μια νέα συνεδρία με τον λογαριασμό σας. Αυτή η συνεδρία θα "
-"διακοπεί για να αποφευχθεί τυχόν σύγκρουση."
+"τερματιστεί για να αποφευχθεί τυχόν σύγκρουση."
 
 #: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:141
 msgid "A new version of Zammad is available, please reload your browser."
 msgstr ""
-"Μια νέα έκδοση του Zammad είναι διαθέσιμη, παρακαλώ ανανεώστε το πρόγραμμα "
-"περιήγησής σας."
+"Είναι διαθέσιμη μια νέα έκδοση του Zammad. Παρακαλώ, ανανεώστε τη σελίδα σας."
 
 #: app/frontend/shared/composables/useAppMaintenanceCheck.ts:80
-#, fuzzy
-#| msgid "A new version of Zammad is available, please reload your browser."
 msgid ""
 "A newer version of the app is available. Please reload at your earliest."
 msgstr ""
-"Μια νέα έκδοση του Zammad είναι διαθέσιμη, παρακαλώ ανανεώστε το πρόγραμμα "
-"περιήγησής σας."
+"Υπάρχει διαθέσιμη μια νεότερη έκδοση της εφαρμογής. Παρακαλούμε να την "
+"ανανεώσετε το συντομότερο δυνατό."
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee:156
 msgid "A powerful service to get more information about your customers."
 msgstr ""
-"Μια υπηρεσία για τη λήψη περισσότερων πληροφοριών σχετικά με τους πελάτες "
-"σας."
+"Μια ισχυρή υπηρεσία που σας επιτρέπει να λαμβάνετε περισσότερες πληροφορίες "
+"για τους πελάτες σας."
 
 #: app/assets/javascripts/app/controllers/_integration/cti.coffee:209
 msgid "A queue is required!"
@@ -1145,55 +1100,54 @@ msgid ""
 "A related knowledge base answer is being generated. You will be notified "
 "once the draft is ready."
 msgstr ""
+"Δημιουργείται μια σχετική απάντηση στη βάση γνώσεων. Θα λάβετε ειδοποίηση "
+"μόλις το προσχέδιο είναι έτοιμο."
 
 #: app/assets/javascripts/app/views/dashboard/first_steps_test_ticket_finish.jst.eco:1
 msgid ""
 "A test ticket has been created, you can find it in your overview \"%s\" %l."
 msgstr ""
-"A test ticket has been created, you can find it in your overview \"%s\" %l."
+"Δημιουργήθηκε ένα αίτημα δοκιμής. Μπορείτε να το βρείτε στην επισκόπησή σας "
+"«%s» %l."
 
 #: app/models/ticket.rb:299
-#, fuzzy
-#| msgid "Choose if retweets should also be converted to tickets."
 msgid "A ticket cannot be merged into itself."
-msgstr "Επιλέξτε αν τα retweets θα πρέπει επίσης να μετατραπούν σε αιτήματα."
+msgstr "Ένα αίτημα δεν μπορεί να συγχωνευθεί με το ίδιο του το αίτημα."
 
 #: app/assets/javascripts/app/models/ticket_priority.coffee
 msgid ""
 "A ticket's priority is simply a ranking of how urgent or important it is. "
 "Different priorities allow you to see the importance of your tickets better."
 msgstr ""
-"Η προτεραιότητα ενός εισιτηρίου είναι απλώς μια κατάταξη του πόσο επείγον ή "
-"σημαντικό είναι. Η διαφοροποίηση ως προς την προτεραιότητα σας επιτρέπει να "
-"βλέπετε καλύτερα τη σημασία των εισιτηρίων σας."
+"Η προτεραιότητα ενός αιτήματος είναι απλώς μια κατάταξη που δείχνει πόσο "
+"επείγον ή σημαντικό είναι. Οι διαφορετικές προτεραιότητες σας επιτρέπουν να "
+"διακρίνετε καλύτερα τη σημασία των αιτημάτων σας."
 
 #: app/assets/javascripts/app/models/ticket_state.coffee
 msgid ""
 "A ticket's state is used to categorize and manage the lifecycle of a ticket "
 "or customer inquiry."
 msgstr ""
-"Η κατάσταση ενός εισιτηρίου χρησιμοποιείται για την κατηγοριοποίηση και τη "
-"διαχείριση του κύκλου ζωής ενός εισιτηρίου ή ενός ερωτήματος πελάτη."
+"Η κατάσταση ενός αιτήματος χρησιμοποιείται για την κατηγοριοποίηση και τη "
+"διαχείριση του κύκλου ζωής ενός αιτήματος ή ενός ερωτήματος πελάτη."
 
 #: app/assets/javascripts/app/controllers/_integration/cti.coffee:216
 msgid "A user is required!"
-msgstr "Απαιτείται ένας χρήστης!"
+msgstr "Απαιτείται χρήστης!"
 
 #: app/assets/javascripts/app/views/pre_defined_webhook.jst.eco:12
 msgid ""
 "A webhook can be fired by triggers and schedulers, don't forget to define "
 "them!"
 msgstr ""
-"Ένα webhook μπορεί να ενεργοποιηθεί από triggers και χρονοπρογραμματιστές, "
-"μην ξεχάσετε να τα ορίσετε!"
+"Ένα webhook μπορεί να ενεργοποιηθεί από εναύσματα και προγραμματιστές, μην "
+"ξεχάσετε να τα ορίσετε!"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:64
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:30
 #: app/assets/javascripts/app/controllers/manage.coffee:45
-#, fuzzy
-#| msgid "API"
 msgid "AI"
-msgstr "API"
+msgstr "Τεχνητή Νοημοσύνη"
 
 #: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:6
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:42
@@ -1201,24 +1155,18 @@ msgstr "API"
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:60
 #: app/assets/javascripts/app/controllers/ticket_zoom/attribute_bar.coffee:144
 #: app/models/ai/agent.rb:102
-#, fuzzy
-#| msgid "Agent"
 msgid "AI Agent"
-msgstr "Συνεργάτης"
+msgstr "Συνεργάτης τεχνητής νοημοσύνης"
 
 #: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:6
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/ai_agent.jst.eco:3
 #: db/seeds/permissions.rb:251
-#, fuzzy
-#| msgid "Agents"
 msgid "AI Agents"
-msgstr "Χειριστές"
+msgstr "Συνεργάτες τεχνητής νοημοσύνης"
 
 #: db/seeds/settings.rb:6183
-#, fuzzy
-#| msgid "Knowledge Base Feed"
 msgid "AI Knowledge Base Answer from Ticket"
-msgstr "Βάση γνώσεων"
+msgstr "Απάντηση από τη βάση γνώσεων τεχνητής νοημοσύνης, από το αίτημα"
 
 #: db/seeds/permissions.rb:259
 #, fuzzy
@@ -1227,10 +1175,8 @@ msgid "AI Knowledge Base Answers"
 msgstr "Διαγραφή βάσης γνώσεων"
 
 #: db/seeds/permissions.rb:233
-#, fuzzy
-#| msgid "Provider"
 msgid "AI Provider"
-msgstr "Προμηθευτής"
+msgstr "Πάροχος τεχνητής νοημοσύνης"
 
 #: db/seeds/settings.rb:6106
 #, fuzzy
@@ -1246,28 +1192,20 @@ msgstr "`Time Accounting"
 
 #: lib/excel_sheet/ai/analytics/errors.rb:26
 #: lib/excel_sheet/ai/analytics/with_usage.rb:26
-#, fuzzy
-#| msgid "Image Service"
 msgid "AI Service Name"
-msgstr "Υπηρεσία εικόνας"
+msgstr "Όνομα υπηρεσίας τεχνητής νοημοσύνης"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket_summary.coffee:122
-#, fuzzy
-#| msgid "See more"
 msgid "AI Summary"
-msgstr "Προβολή περισσότερων"
+msgstr "Περίληψη με τεχνητή νοημοσύνη"
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:82
-#, fuzzy
-#| msgid "Shared organization"
 msgid "AI Writing Assistant Tools"
-msgstr "Κοινός οργανισμός"
+msgstr "Εργαλεία τεχνητής νοημοσύνης για τη σύνταξη κειμένων"
 
 #: app/assets/javascripts/app/controllers/text_tools_modal.coffee:24
-#, fuzzy
-#| msgid "Shared organization"
 msgid "AI Writing Assistant: %s"
-msgstr "Κοινός οργανισμός"
+msgstr "Βοηθός συγγραφής με τεχνητή νοημοσύνη: %s"
 
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:2
 #: app/assets/javascripts/app/views/widget/online_notification_item.jst.eco:3
@@ -1276,52 +1214,48 @@ msgstr "Κοινός οργανισμός"
 #: app/frontend/apps/desktop/components/CommonHistoryFlyout/utils/historyEventIssuerNames.ts:7
 #: app/frontend/apps/mobile/components/AiAgent/AiAgentAvatar.vue:34
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue:44
-#, fuzzy
-#| msgid "Agent"
 msgid "AI agent"
-msgstr "Συνεργάτης"
+msgstr "Συνεργάτης τεχνητής νοημοσύνης"
 
 #: app/services/service/ai/agent/run.rb:24
 msgid "AI agent result content does not match expected result structure."
 msgstr ""
+"Το περιεχόμενο του αποτελέσματος του συνεργάτη τεχνητής νοημοσύνης δεν "
+"αντιστοιχεί στην αναμενόμενη δομή του αποτελέσματος."
 
 #: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:33
-#, fuzzy
-#| msgid "Agents"
 msgid "AI agent used in"
-msgstr "Χειριστές"
+msgstr "Συνεργάτης τεχνητής νοημοσύνης που χρησιμοποιείται σε"
 
 #: app/assets/javascripts/app/models/ai_agent.coffee
 msgid ""
 "AI agents enable streamlined processing powered by artificial intelligence. "
 "You can execute AI agents via triggers or schedulers."
 msgstr ""
+"Οι πράκτορες τεχνητής νοημοσύνης (AI) επιτρέπουν την απλοποιημένη "
+"επεξεργασία με τη βοήθεια της τεχνητής νοημοσύνης. Μπορείτε να εκτελέσετε "
+"πράκτορες τεχνητής νοημοσύνης μέσω ενεργοποιητών ή προγραμματιστών."
 
 #: app/services/service/ai_assistance/text_tools.rb:22
 msgid "AI assistance text tool is inactive."
-msgstr ""
+msgstr "Το εργαλείο υποβοήθησης κειμένου με τεχνητή νοημοσύνη είναι ανενεργό."
 
 #: app/services/service/ai_assistance/text_tools.rb:21
 msgid "AI assistance text tool is invalid."
 msgstr ""
+"Το εργαλείο κειμένου με υποστήριξη τεχνητής νοημοσύνης δεν είναι έγκυρο."
 
 #: app/assets/javascripts/app/views/link/kb_answer.jst.eco:22
-#, fuzzy
-#| msgid "draft"
 msgid "AI draft"
-msgstr "πρόχειρο"
+msgstr "Πρόχειρο κείμενο με χρήση τεχνητής νοημοσύνης"
 
 #: lib/excel_sheet/ai/analytics/errors.rb:4
-#, fuzzy
-#| msgid "Sign out"
 msgid "AI error log"
-msgstr "Εξοδος"
+msgstr "Αρχείο καταγραφής σφαλμάτων τεχνητής νοημοσύνης"
 
 #: db/seeds/settings.rb:6089
-#, fuzzy
-#| msgid "Provider"
 msgid "AI provider"
-msgstr "Προμηθευτής"
+msgstr "Πάροχος υπηρεσιών τεχνητής νοημοσύνης"
 
 #: app/models/setting/validation/ai_provider_config.rb:7
 msgid "AI provider Azure configuration is incomplete"
@@ -1351,10 +1285,8 @@ msgstr "Επιτυχής Ενημέρωση "
 
 #: app/models/setting/validation/ai_provider.rb:9
 #: app/models/setting/validation/ai_provider_config.rb:75
-#, fuzzy
-#| msgid "Provider"
 msgid "AI provider is missing"
-msgstr "Προμηθευτής"
+msgstr "Λείπει ο πάροχος τεχνητής νοημοσύνης"
 
 #: app/controllers/ticket/knowledge_base_answers_controller.rb:8
 #: app/controllers/ticket/summarize_controller.rb:8
@@ -1365,10 +1297,8 @@ msgstr "Προμηθευτής"
 #: app/services/service/ai_assistance/text_tools.rb:19
 #: app/services/service/ticket/ai_assistance/generate_knowledge_base_answer_content.rb:14
 #: app/services/service/ticket/ai_assistance/summarize.rb:16
-#, fuzzy
-#| msgid "Not configured"
 msgid "AI provider is not configured."
-msgstr "Δεν έχει διαμορφωθεί"
+msgstr "Ο πάροχος τεχνητής νοημοσύνης δεν έχει ρυθμιστεί."
 
 #: app/models/setting/validation/ai_provider_config.rb:76
 msgid "AI provider is not supported"
@@ -1381,29 +1311,25 @@ msgstr ""
 #: lib/ai/service.rb:14
 msgid "AI service result is missing expected keys"
 msgstr ""
+"Στο αποτέλεσμα της υπηρεσίας τεχνητής νοημοσύνης λείπουν τα αναμενόμενα "
+"κλειδιά"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/ticket-summary.ts:11
-#, fuzzy
-#| msgid "Ticket update"
 msgid "AI summary"
-msgstr "Ενημέρωση Αιτήματος"
+msgstr "Περίληψη με τεχνητή νοημοσύνη"
 
 #: lib/excel_sheet/ai/analytics/with_usage.rb:4
 msgid "AI usage and feedback log"
-msgstr ""
+msgstr "Αρχείο καταγραφής χρήσης και σχολίων σχετικά με την τεχνητή νοημοσύνη"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/features/ai-assistant-text-tools/AiAssistantLoadingBanner/AiAssistantLoadingBanner.vue:35
-#, fuzzy
-#| msgid "Shared organization"
 msgid "AI writing assistant"
-msgstr "Κοινός οργανισμός"
+msgstr "Βοηθός συγγραφής με τεχνητή νοημοσύνη"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:68
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:68
-#, fuzzy
-#| msgid "Shared organization"
 msgid "AI writing assistant tools"
-msgstr "Κοινός οργανισμός"
+msgstr "Εργαλεία τεχνητής νοημοσύνης για τη σύνταξη κειμένων"
 
 #: app/assets/javascripts/app/controllers/api.coffee:3
 #: app/assets/javascripts/app/views/api.jst.eco:2 db/seeds/permissions.rb:272
@@ -4134,10 +4060,8 @@ msgid "Changed reaction to %s on message %s from %s"
 msgstr "%s τελείωσε την μετάβαση σε |%s|!"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:31
-#, fuzzy
-#| msgid "Changed"
 msgid "Changed:"
-msgstr "Αλλαχθηκε"
+msgstr "Τροποποιήθηκε:"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:17
 #: app/views/mailer/ticket_update/zh-cn.html.erb:11
@@ -5470,7 +5394,7 @@ msgstr "Δημιουργία νέου πελάτη"
 
 #: app/assets/javascripts/app/lib/app_post/_object_organization_autocompletion.coffee:34
 msgid "Create new object"
-msgstr ""
+msgstr "Δημιουργία νέου αντικειμένου"
 
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco:11
 msgid "Create new records"
@@ -17365,7 +17289,7 @@ msgstr "Αρχικοποίηση"
 msgid "Reset search"
 msgstr "Αναζήτηση"
 
-#: app/assets/javascripts/app/models/setting.coffee:60
+#: app/assets/javascripts/app/models/setting.coffee:73
 #, fuzzy
 #| msgid "Connection test successful"
 msgid "Reset successful."
@@ -21588,14 +21512,14 @@ msgstr ""
 msgid "The setting 'ticket_number' was not configured."
 msgstr ""
 
-#: app/assets/javascripts/app/models/setting.coffee:68
+#: app/assets/javascripts/app/models/setting.coffee:81
 #, fuzzy
 #| msgid "%s Object(s) are updated."
 msgid "The setting could not be reset."
 msgstr "%s Object(s) are updated."
 
 #: app/assets/javascripts/app/controllers/_ai/provider.coffee:71
-#: app/assets/javascripts/app/models/setting.coffee:31
+#: app/assets/javascripts/app/models/setting.coffee:43
 #, fuzzy
 #| msgid "%s Object(s) are updated."
 msgid "The setting could not be updated."
@@ -24241,7 +24165,7 @@ msgstr "Κοινοποιημένα"
 #: app/assets/javascripts/app/controllers/_settings/area_ticket_number.coffee:123
 #: app/assets/javascripts/app/controllers/_settings/form.coffee:81
 #: app/assets/javascripts/app/controllers/maintenance.coffee:74
-#: app/assets/javascripts/app/models/setting.coffee:20
+#: app/assets/javascripts/app/models/setting.coffee:23
 msgid "Update successful."
 msgstr ""
 

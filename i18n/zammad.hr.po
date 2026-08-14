@@ -15820,7 +15820,7 @@ msgstr "Vrati izvorni raspored pregleda"
 msgid "Reset search"
 msgstr "Očisti pretraživanje"
 
-#: app/assets/javascripts/app/models/setting.coffee:60
+#: app/assets/javascripts/app/models/setting.coffee:73
 msgid "Reset successful."
 msgstr "Vraćanje na početne postavke uspjelo."
 
@@ -19682,12 +19682,12 @@ msgstr "Postavka 'storage_provider' nije konfigurirana."
 msgid "The setting 'ticket_number' was not configured."
 msgstr "Postavka 'ticket_number' nije konfigurirana."
 
-#: app/assets/javascripts/app/models/setting.coffee:68
+#: app/assets/javascripts/app/models/setting.coffee:81
 msgid "The setting could not be reset."
 msgstr "Postavku nije moguće vratiti na izvorno."
 
 #: app/assets/javascripts/app/controllers/_ai/provider.coffee:71
-#: app/assets/javascripts/app/models/setting.coffee:31
+#: app/assets/javascripts/app/models/setting.coffee:43
 msgid "The setting could not be updated."
 msgstr "Postavku nije moguće ažurirati."
 
@@ -22222,7 +22222,7 @@ msgstr "Ažuriraj zajedničku skicu"
 #: app/assets/javascripts/app/controllers/_settings/area_ticket_number.coffee:123
 #: app/assets/javascripts/app/controllers/_settings/form.coffee:81
 #: app/assets/javascripts/app/controllers/maintenance.coffee:74
-#: app/assets/javascripts/app/models/setting.coffee:20
+#: app/assets/javascripts/app/models/setting.coffee:23
 msgid "Update successful."
 msgstr "Ažuriranje je uspješno."
 

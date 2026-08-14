@@ -15829,7 +15829,7 @@ msgstr "Riepilogo ordinamento reset"
 msgid "Reset search"
 msgstr "Ripristina ricerca"
 
-#: app/assets/javascripts/app/models/setting.coffee:60
+#: app/assets/javascripts/app/models/setting.coffee:73
 msgid "Reset successful."
 msgstr "Ripristino effettuato."
 
@@ -19711,12 +19711,12 @@ msgstr "Il parametro 'storage_provider' non è stato configurato."
 msgid "The setting 'ticket_number' was not configured."
 msgstr "Il parametro 'ticket_number' non è stato configurato."
 
-#: app/assets/javascripts/app/models/setting.coffee:68
+#: app/assets/javascripts/app/models/setting.coffee:81
 msgid "The setting could not be reset."
 msgstr "Impossibile ripristinare il parametro richiesto."
 
 #: app/assets/javascripts/app/controllers/_ai/provider.coffee:71
-#: app/assets/javascripts/app/models/setting.coffee:31
+#: app/assets/javascripts/app/models/setting.coffee:43
 msgid "The setting could not be updated."
 msgstr "Impossibile aggiornare il parametro."
 
@@ -22262,7 +22262,7 @@ msgstr "Aggiorna bozza condivisa"
 #: app/assets/javascripts/app/controllers/_settings/area_ticket_number.coffee:123
 #: app/assets/javascripts/app/controllers/_settings/form.coffee:81
 #: app/assets/javascripts/app/controllers/maintenance.coffee:74
-#: app/assets/javascripts/app/models/setting.coffee:20
+#: app/assets/javascripts/app/models/setting.coffee:23
 msgid "Update successful."
 msgstr "Aggiornato con successo."
 

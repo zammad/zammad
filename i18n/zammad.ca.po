@@ -17941,7 +17941,7 @@ msgstr "Restableix la contrasenya"
 msgid "Reset search"
 msgstr "Buscar"
 
-#: app/assets/javascripts/app/models/setting.coffee:60
+#: app/assets/javascripts/app/models/setting.coffee:73
 #, fuzzy
 #| msgid "Registration successful!"
 msgid "Reset successful."
@@ -22422,14 +22422,14 @@ msgstr "The setting 'storage_provider' was not configured."
 msgid "The setting 'ticket_number' was not configured."
 msgstr "The setting 'ticket_number' was not configured."
 
-#: app/assets/javascripts/app/models/setting.coffee:68
+#: app/assets/javascripts/app/models/setting.coffee:81
 #, fuzzy
 #| msgid "%s Object(s) are updated."
 msgid "The setting could not be reset."
 msgstr "Objecte(s) %s s'han actualitzat."
 
 #: app/assets/javascripts/app/controllers/_ai/provider.coffee:71
-#: app/assets/javascripts/app/models/setting.coffee:31
+#: app/assets/javascripts/app/models/setting.coffee:43
 #, fuzzy
 #| msgid "%s Object(s) are updated."
 msgid "The setting could not be updated."
@@ -25224,7 +25224,7 @@ msgstr "Compartit"
 #: app/assets/javascripts/app/controllers/_settings/area_ticket_number.coffee:123
 #: app/assets/javascripts/app/controllers/_settings/form.coffee:81
 #: app/assets/javascripts/app/controllers/maintenance.coffee:74
-#: app/assets/javascripts/app/models/setting.coffee:20
+#: app/assets/javascripts/app/models/setting.coffee:23
 #, fuzzy
 msgid "Update successful."
 msgstr "Update successful."

@@ -16575,7 +16575,7 @@ msgstr "Endursetja lykilorð"
 msgid "Reset search"
 msgstr "Leita"
 
-#: app/assets/javascripts/app/models/setting.coffee:60
+#: app/assets/javascripts/app/models/setting.coffee:73
 msgid "Reset successful."
 msgstr "Endurstilling heppnaðist."
 
@@ -20660,12 +20660,12 @@ msgstr ""
 msgid "The setting 'ticket_number' was not configured."
 msgstr ""
 
-#: app/assets/javascripts/app/models/setting.coffee:68
+#: app/assets/javascripts/app/models/setting.coffee:81
 msgid "The setting could not be reset."
 msgstr "Ekki heppnaðist að endursetja stillinguna."
 
 #: app/assets/javascripts/app/controllers/_ai/provider.coffee:71
-#: app/assets/javascripts/app/models/setting.coffee:31
+#: app/assets/javascripts/app/models/setting.coffee:43
 msgid "The setting could not be updated."
 msgstr "Ekki heppnaðist að breyta stillingunni."
 
@@ -23199,7 +23199,7 @@ msgstr "Samnýtt"
 #: app/assets/javascripts/app/controllers/_settings/area_ticket_number.coffee:123
 #: app/assets/javascripts/app/controllers/_settings/form.coffee:81
 #: app/assets/javascripts/app/controllers/maintenance.coffee:74
-#: app/assets/javascripts/app/models/setting.coffee:20
+#: app/assets/javascripts/app/models/setting.coffee:23
 msgid "Update successful."
 msgstr ""
 

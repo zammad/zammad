@@ -16619,7 +16619,7 @@ msgstr "Alusta salasana"
 msgid "Reset search"
 msgstr "Tyhjennä haku"
 
-#: app/assets/javascripts/app/models/setting.coffee:60
+#: app/assets/javascripts/app/models/setting.coffee:73
 #, fuzzy
 #| msgid "Registration successful!"
 msgid "Reset successful."
@@ -20800,14 +20800,14 @@ msgstr ""
 msgid "The setting 'ticket_number' was not configured."
 msgstr ""
 
-#: app/assets/javascripts/app/models/setting.coffee:68
+#: app/assets/javascripts/app/models/setting.coffee:81
 #, fuzzy
 #| msgid "%s Object(s) are updated."
 msgid "The setting could not be reset."
 msgstr "Kohde päivitetty"
 
 #: app/assets/javascripts/app/controllers/_ai/provider.coffee:71
-#: app/assets/javascripts/app/models/setting.coffee:31
+#: app/assets/javascripts/app/models/setting.coffee:43
 #, fuzzy
 #| msgid "%s Object(s) are updated."
 msgid "The setting could not be updated."
@@ -23437,7 +23437,7 @@ msgstr "Jaettu"
 #: app/assets/javascripts/app/controllers/_settings/area_ticket_number.coffee:123
 #: app/assets/javascripts/app/controllers/_settings/form.coffee:81
 #: app/assets/javascripts/app/controllers/maintenance.coffee:74
-#: app/assets/javascripts/app/models/setting.coffee:20
+#: app/assets/javascripts/app/models/setting.coffee:23
 msgid "Update successful."
 msgstr ""
 

@@ -16512,7 +16512,7 @@ msgstr "Сбросить порядок представлений"
 msgid "Reset search"
 msgstr "Сбросить поиск"
 
-#: app/assets/javascripts/app/models/setting.coffee:60
+#: app/assets/javascripts/app/models/setting.coffee:73
 msgid "Reset successful."
 msgstr "Сброс прошел успешно."
 
@@ -20561,12 +20561,12 @@ msgstr "Параметр «поставщик_хранилища» (storage_prov
 msgid "The setting 'ticket_number' was not configured."
 msgstr "Параметр «номер_заявки» (ticket_number) не был настроен."
 
-#: app/assets/javascripts/app/models/setting.coffee:68
+#: app/assets/javascripts/app/models/setting.coffee:81
 msgid "The setting could not be reset."
 msgstr "Не удалось сбросить настройку."
 
 #: app/assets/javascripts/app/controllers/_ai/provider.coffee:71
-#: app/assets/javascripts/app/models/setting.coffee:31
+#: app/assets/javascripts/app/models/setting.coffee:43
 msgid "The setting could not be updated."
 msgstr "Не удалось обновить настройку."
 
@@ -23217,7 +23217,7 @@ msgstr "Обновить общий черновик"
 #: app/assets/javascripts/app/controllers/_settings/area_ticket_number.coffee:123
 #: app/assets/javascripts/app/controllers/_settings/form.coffee:81
 #: app/assets/javascripts/app/controllers/maintenance.coffee:74
-#: app/assets/javascripts/app/models/setting.coffee:20
+#: app/assets/javascripts/app/models/setting.coffee:23
 msgid "Update successful."
 msgstr "Обновление выполнено успешно."
 

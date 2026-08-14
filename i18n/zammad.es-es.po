@@ -16481,7 +16481,7 @@ msgstr "Restablecer orden de vista de resumen"
 msgid "Reset search"
 msgstr "Limpiar Búsqueda"
 
-#: app/assets/javascripts/app/models/setting.coffee:60
+#: app/assets/javascripts/app/models/setting.coffee:73
 msgid "Reset successful."
 msgstr "Reinicio correcto."
 
@@ -20596,12 +20596,12 @@ msgstr "El ajuste 'storage_provider' no se ha configurado."
 msgid "The setting 'ticket_number' was not configured."
 msgstr "El ajuste 'ticket_number' no se ha configurado."
 
-#: app/assets/javascripts/app/models/setting.coffee:68
+#: app/assets/javascripts/app/models/setting.coffee:81
 msgid "The setting could not be reset."
 msgstr "No se pudo reiniciar el ajuste."
 
 #: app/assets/javascripts/app/controllers/_ai/provider.coffee:71
-#: app/assets/javascripts/app/models/setting.coffee:31
+#: app/assets/javascripts/app/models/setting.coffee:43
 msgid "The setting could not be updated."
 msgstr "No se pudo actualizar el ajuste."
 
@@ -23297,7 +23297,7 @@ msgstr "Actualizar borrador compartido"
 #: app/assets/javascripts/app/controllers/_settings/area_ticket_number.coffee:123
 #: app/assets/javascripts/app/controllers/_settings/form.coffee:81
 #: app/assets/javascripts/app/controllers/maintenance.coffee:74
-#: app/assets/javascripts/app/models/setting.coffee:20
+#: app/assets/javascripts/app/models/setting.coffee:23
 msgid "Update successful."
 msgstr "Actualización realizada."
 

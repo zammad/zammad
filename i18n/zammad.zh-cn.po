@@ -16493,7 +16493,7 @@ msgstr "重置概览顺序"
 msgid "Reset search"
 msgstr "清除搜索"
 
-#: app/assets/javascripts/app/models/setting.coffee:60
+#: app/assets/javascripts/app/models/setting.coffee:73
 msgid "Reset successful."
 msgstr "重置成功。"
 
@@ -20517,12 +20517,12 @@ msgstr "未配置设置“ storage_provider”。"
 msgid "The setting 'ticket_number' was not configured."
 msgstr "未配置设置“ Ticket_number”。"
 
-#: app/assets/javascripts/app/models/setting.coffee:68
+#: app/assets/javascripts/app/models/setting.coffee:81
 msgid "The setting could not be reset."
 msgstr "无法重置该设置。"
 
 #: app/assets/javascripts/app/controllers/_ai/provider.coffee:71
-#: app/assets/javascripts/app/models/setting.coffee:31
+#: app/assets/javascripts/app/models/setting.coffee:43
 msgid "The setting could not be updated."
 msgstr "无法更新设置。"
 
@@ -23350,7 +23350,7 @@ msgstr "应用共享草稿"
 #: app/assets/javascripts/app/controllers/_settings/area_ticket_number.coffee:123
 #: app/assets/javascripts/app/controllers/_settings/form.coffee:81
 #: app/assets/javascripts/app/controllers/maintenance.coffee:74
-#: app/assets/javascripts/app/models/setting.coffee:20
+#: app/assets/javascripts/app/models/setting.coffee:23
 msgid "Update successful."
 msgstr "更新成功。"
 

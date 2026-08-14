@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-08-09 22:12+0000\n"
+"PO-Revision-Date: 2026-08-13 22:12+0000\n"
 "Last-Translator: Dusan Vuckovic <dv@zammad.com>\n"
 "Language-Team: Serbian (Cyrillic script) <https://translations.zammad.org/"
 "projects/zammad/zammad-stable/sr_Cyrl/>\n"
@@ -1267,7 +1267,7 @@ msgstr "Приступ функцији позива оператера."
 
 #: db/seeds/permissions.rb:390
 msgid "Access the knowledge base editor features."
-msgstr "Приступ функцији уредника базе знања."
+msgstr "Приступ функцијама уредника базе знања."
 
 #: db/seeds/permissions.rb:396
 msgid "Access the knowledge base reader features."
@@ -5851,7 +5851,7 @@ msgid ""
 "Defines if the bubble menu feature of the richtext editor is enabled. Note "
 "that this setting will be ignored if the writing assistant is turned on."
 msgstr ""
-"Одређује да ли је функција менија у облачићу уредника богатог текста "
+"Одређује да ли је функција менија у облачићу уређивача богатог текста "
 "укључена. Обратите пажњу да ће ово подешавање бити игнорисано уколико су "
 "алатке помоћника текста укључене."
 
@@ -5891,15 +5891,15 @@ msgstr ""
 msgid ""
 "Defines if the ticket conditions editor supports complex logical expressions."
 msgstr ""
-"Одређује да ли уредник услова тикета подржава комплексне логичке изразе."
+"Одређује да ли селектор услова тикета подржава комплексне логичке изразе."
 
 #: db/seeds/settings.rb:2427
 msgid ""
 "Defines if the ticket conditions editor supports regular expression "
 "operators for triggers and ticket auto assignment."
 msgstr ""
-"Одређује да ли уредник услова тикета за окидаче и аутоматску доделу подржава "
-"комплексне логичке изразе."
+"Одређује да ли селектор услова тикета за окидаче и аутоматску доделу "
+"подржава комплексне логичке изразе."
 
 #: db/seeds/settings.rb:4159
 msgid "Defines if the time accounting types are enabled."
@@ -15620,7 +15620,7 @@ msgstr "Поништи редослед прегледа"
 msgid "Reset search"
 msgstr "Поништи претрагу"
 
-#: app/assets/javascripts/app/models/setting.coffee:60
+#: app/assets/javascripts/app/models/setting.coffee:73
 msgid "Reset successful."
 msgstr "Успешно поништено."
 
@@ -19452,12 +19452,12 @@ msgstr "Подешавање ’storage_provider’ није постављен�
 msgid "The setting 'ticket_number' was not configured."
 msgstr "Подешавање ’ticket_number’ није постављено."
 
-#: app/assets/javascripts/app/models/setting.coffee:68
+#: app/assets/javascripts/app/models/setting.coffee:81
 msgid "The setting could not be reset."
 msgstr "Није било могуће поништити подешавање."
 
 #: app/assets/javascripts/app/controllers/_ai/provider.coffee:71
-#: app/assets/javascripts/app/models/setting.coffee:31
+#: app/assets/javascripts/app/models/setting.coffee:43
 msgid "The setting could not be updated."
 msgstr "Није било могуће освежити подешавање."
 
@@ -21954,7 +21954,7 @@ msgstr "Освежи заједнички нацрт"
 #: app/assets/javascripts/app/controllers/_settings/area_ticket_number.coffee:123
 #: app/assets/javascripts/app/controllers/_settings/form.coffee:81
 #: app/assets/javascripts/app/controllers/maintenance.coffee:74
-#: app/assets/javascripts/app/models/setting.coffee:20
+#: app/assets/javascripts/app/models/setting.coffee:23
 msgid "Update successful."
 msgstr "Успешно освежавање."
 
@@ -23105,7 +23105,7 @@ msgid ""
 msgstr ""
 "Алатке помоћника за писање поједностављују процес сачињавања текста чланка "
 "пре снимања или слања. По укључивању, ове алатке су директно доступне унутар "
-"уредника чланка. Моћете додати чак и прилагођене алатке за посебне потребе, "
+"уређивача чланка. Моћете додати чак и прилагођене алатке за посебне потребе, "
 "нпр. коришћењем специфичног језика одељења или фирме."
 
 #: app/assets/javascripts/app/views/generic/text_tools_modal.jst.eco:8
@@ -23371,9 +23371,9 @@ msgid ""
 "locales. Add a language below, then select it in the Knowledge Base Editor "
 "to add your translations."
 msgstr ""
-"Можете припремити различите верзије ваше базе знања за различите локале. "
-"Додајте језик испод, затим га изаберите у едитору базе знања за додавање "
-"ваших превода."
+"Можете припремити различите верзије ваше базе знања за различите језике. "
+"Додајте језик испод, затим га изаберите приликом уређивања базе знања за "
+"додавање ваших превода."
 
 #: app/assets/javascripts/app/views/login.jst.eco:98
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:163
