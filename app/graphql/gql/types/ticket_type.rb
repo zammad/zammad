@@ -96,15 +96,17 @@ module Gql::Types
     end
 
     def state_color_code
-      if %w[new open].include?(state_type_name)
-        return ticket_is_escalating? ? 'escalating' : 'open'
-      elsif state_type_name == 'pending reminder'
-        return ticket_is_over_pending_time? ? 'open' : 'pending'
-      elsif state_type_name == 'pending action'
-        return 'pending'
-      end
+      return 'escalating' if ticket_is_escalating?
 
-      'closed'
+      if %w[new open].include?(state_type_name)
+        'open'
+      elsif state_type_name == 'pending reminder'
+        ticket_is_over_pending_time? ? 'open' : 'pending'
+      elsif state_type_name == 'pending action'
+        'pending'
+      else
+        'closed'
+      end
     end
 
     def time_units_per_type

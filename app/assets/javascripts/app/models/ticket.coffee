@@ -52,13 +52,14 @@ class App.Ticket extends App.Model
   getState: ->
     type = App.TicketState.findNative(@state_id)
     stateType = App.TicketStateType.findNative(type.state_type_id)
+
+    # if ticket is escalated, state is 'escalating' regardless of state type
+    if @escalation_at && new Date( Date.parse(@escalation_at) ) < new Date
+      return 'escalating'
+
     state = 'closed'
     if stateType.name is 'new' || stateType.name is 'open'
       state = 'open'
-
-      # if ticket is escalated, overwrite state
-      if @escalation_at && new Date( Date.parse(@escalation_at) ) < new Date
-        state = 'escalating'
     else if stateType.name is 'pending reminder'
       state = 'pending'
 
@@ -78,10 +79,12 @@ class App.Ticket extends App.Model
   iconTitle: ->
     type = App.TicketState.findNative(@state_id)
     stateType = App.TicketStateType.findNative(type.state_type_id)
-    if stateType.name is 'pending reminder' && @pending_time && new Date( Date.parse(@pending_time) ) < new Date
-      return "#{App.i18n.translateInline(type.displayName())} - #{App.i18n.translateInline('reached')}"
+
+    # escalation takes precedence, consistent with getState()
     if @escalation_at && new Date( Date.parse(@escalation_at) ) < new Date
       return "#{App.i18n.translateInline(type.displayName())} - #{App.i18n.translateInline('escalated')}"
+    if stateType.name is 'pending reminder' && @pending_time && new Date( Date.parse(@pending_time) ) < new Date
+      return "#{App.i18n.translateInline(type.displayName())} - #{App.i18n.translateInline('reached')}"
     App.i18n.translateInline(type.displayName())
 
   iconTextClass: ->
