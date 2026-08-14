@@ -50,7 +50,8 @@ bundle exec rubocop --autocorrect app/path/to/file.rb                        # L
 
 ### Frontend
 
-Always use pnpm for frontend and cross-stack commands.
+Always use pnpm for frontend and cross-stack commands. Requires **Node.js ≥ 24**
+(`package.json` engines); use nvm (`nvm use 24`) if the system default is older.
 
 ```bash
 pnpm test app/frontend/path/to/file.spec.ts # Run specific Vitest test

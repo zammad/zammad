@@ -14,7 +14,15 @@ import type { DateTimeContext } from '#shared/components/Form/fields/FieldDate/t
 import { useDateFnsLocale } from '#shared/components/Form/fields/FieldDate/useDateFnsLocale.ts'
 import { useDateTime } from '#shared/components/Form/fields/FieldDate/useDateTime.ts'
 import { usePickerModel } from '#shared/components/Form/fields/FieldDate/usePickerModel.ts'
+import {
+  dateToJalali,
+  jalaliToDate,
+  jalaliMonthName,
+  JALALI_WEEKDAY_SHORT,
+  toPersianDigits,
+} from '#shared/components/Form/fields/FieldDate/jalali.ts'
 import { i18n } from '#shared/i18n.ts'
+import { useLocaleStore } from '#shared/stores/locale.ts'
 import testFlags from '#shared/utils/testFlags.ts'
 
 import { useThemeStore } from '#desktop/stores/theme.ts'
@@ -34,8 +42,6 @@ const { hasValue, localValue } = useValue(contextReactive)
 const { ariaLabels, displayFormat, is24, maxDate, minDate, timePicker, valueFormat } =
   useDateTime(contextReactive)
 
-// Shared model handling: drops a half-selected range when `partialRange` is
-// false so only a complete range reaches the form value.
 const { pickerModel } = usePickerModel(contextReactive, localValue)
 
 const config = computed(() => ({
@@ -53,8 +59,6 @@ const rangeConfig = computed(() => {
 const actionRow = computed(() => ({
   showSelect: false,
   showCancel: false,
-  // Do not show 'Today' for range selection, because it will close the picker
-  //   even if only one date was selected.
   showNow: !props.context.range,
   showPreview: false,
   nowBtnLabel: i18n.t('Today'),
@@ -70,7 +74,18 @@ const pickerInstance = useTemplateRef('picker')
 
 const isDarkMode = toRef(useThemeStore(), 'isDarkMode')
 
+// ── Jalali support ────────────────────────────────────────────────────────────
+
+const localeStore = useLocaleStore()
+const isJalaliLocale = computed(() => localeStore.localeData?.locale === 'fa-ir')
+const weekStart = computed(() => (isJalaliLocale.value ? WeekStart.Saturday : WeekStart.Monday))
+
+/**
+ * For the Jalali locale the text-field format is always yyyy/mm/dd (Jalali
+ * year/month/day).  Other locales use the locale-configured format.
+ */
 const localeFormat = computed(() => {
+  if (isJalaliLocale.value && !timePicker.value) return 'yyyy/mm/dd'
   if (timePicker.value) return i18n.getDateTimeFormat()
   return i18n.getDateFormat()
 })
@@ -91,17 +106,94 @@ const { dateFnsLocale } = useDateFnsLocale()
 // - 'P' - Meridian indicator ('am' or 'pm')
 const inputFormat = computed(() =>
   localeFormat.value
-    .replace(/dd/, '2DigitDay') // 'dd' must be replaced before 'd'
-    .replace(/MM/, '2DigitMinute') // 'MM' is used for both minute and month
-    .replace(/d/, 'dd') // treat 'd' as 'dd' to avoid conflicts with month placeholder
+    .replace(/dd/, '2DigitDay')
+    .replace(/MM/, '2DigitMinute')
+    .replace(/d/, 'dd')
     .replace(/mm/, 'MM')
-    .replace(/m/, 'MM') // treat 'm' as 'MM' to avoid conflicts with month placeholder
+    .replace(/m/, 'MM')
     .replace(/SS/, 'ss')
     .replace(/2DigitDay/, 'dd')
     .replace(/2DigitMinute/, 'mm')
     .replace(/l/, 'hh')
     .replace(/P/, 'aaa'),
 )
+
+// ── Jalali ↔ display helpers ──────────────────────────────────────────────────
+
+/**
+ * Format a Gregorian Date for display in the text input.
+ * For fa-ir: produces "yyyy/mm/dd" in the Jalali calendar.
+ * For other locales: delegates to date-fns format.
+ */
+const formatToDisplay = (date: Date): string => {
+  if (isJalaliLocale.value && !timePicker.value) {
+    const { jy, jm, jd } = dateToJalali(date)
+    return `${jy}/${String(jm).padStart(2, '0')}/${String(jd).padStart(2, '0')}`
+  }
+  return format(date, inputFormat.value)
+}
+
+/**
+ * Parse a display-format string from the text input into a Gregorian Date.
+ * For fa-ir: interprets the string as a Jalali "yyyy/mm/dd" and converts.
+ */
+const parseFromDisplay = (value: string): Date => {
+  if (isJalaliLocale.value && !timePicker.value) {
+    const parts = value.split('/')
+    if (parts.length !== 3) return new Date('invalid')
+    const [jy, jm, jd] = parts.map(Number)
+    if (!jy || !jm || !jd) return new Date('invalid')
+    return jalaliToDate(jy, jm, jd)
+  }
+  return parse(value, inputFormat.value, new Date())
+}
+
+// ── Jalali calendar navigation ────────────────────────────────────────────────
+
+/**
+ * Navigate the calendar by a Jalali month instead of a Gregorian month.
+ * `updateMonthYear` is from VueDatePicker's #month-year slot props.
+ */
+const navigateJalaliMonth = (
+  month: number,
+  year: number,
+  isNext: boolean,
+  updateMonthYear: (m: number, y: number) => void,
+) => {
+  const midDate = new Date(year, month, 15)
+  const { jy, jm } = dateToJalali(midDate)
+  let nextJy = jy
+  let nextJm = jm + (isNext ? 1 : -1)
+  if (nextJm > 12) {
+    nextJm = 1
+    nextJy++
+  }
+  if (nextJm < 1) {
+    nextJm = 12
+    nextJy--
+  }
+  const targetDate = jalaliToDate(nextJy, nextJm, 1)
+  updateMonthYear(targetDate.getMonth(), targetDate.getFullYear())
+}
+
+/**
+ * Return the Jalali month(s)/year label for the calendar header.
+ * A single Gregorian month can straddle two Jalali months; both are shown.
+ */
+const getJalaliMonthYearLabel = (month: number, year: number): string => {
+  const firstDay = new Date(year, month, 1)
+  const lastDay = new Date(year, month + 1, 0)
+  const { jy: jy1, jm: jm1 } = dateToJalali(firstDay)
+  const { jy: jy2, jm: jm2 } = dateToJalali(lastDay)
+  if (jm1 === jm2 && jy1 === jy2) {
+    return `${jalaliMonthName(jm1)} ${toPersianDigits(jy1)}`
+  }
+  // Two Jalali months visible — show both (earlier / later, Persian right-to-left)
+  const yearSuffix = jy1 !== jy2 ? ` ${toPersianDigits(jy2)}` : ''
+  return `${jalaliMonthName(jm1)} / ${jalaliMonthName(jm2)}${yearSuffix} ${toPersianDigits(jy1)}`
+}
+
+// ── IMask ─────────────────────────────────────────────────────────────────────
 
 const maskOptions = computed(() => ({
   mask: contextReactive.value.range
@@ -134,8 +226,8 @@ const maskOptions = computed(() => ({
     },
     yyyy: {
       mask: IMask.MaskedRange,
-      from: 1900,
-      to: 2100,
+      from: isJalaliLocale.value ? 1300 : 1900,
+      to: isJalaliLocale.value ? 1500 : 2100,
       placeholderChar: 'Y',
     },
     yy: {
@@ -181,6 +273,8 @@ const maskOptions = computed(() => ({
 
 const { el, masked, unmasked } = useIMask(maskOptions)
 
+// ── Model parsing/formatting (operates on the stored Gregorian value) ──────────
+
 const parseValue = (value: string) => {
   if (valueFormat.value === 'iso') return parseISO(value)
   return parse(value, valueFormat.value, new Date())
@@ -191,11 +285,13 @@ const formatValue = (value: Date) => {
   return format(value, valueFormat.value)
 }
 
+// ── Sync: localValue (Gregorian model) ↔ masked (display input) ───────────────
+
 watch(
   localValue,
   (newValue) => {
     if (!newValue) {
-      masked.value = '' // clear input
+      masked.value = ''
       return
     }
 
@@ -207,33 +303,27 @@ watch(
       const endDate = parseValue(endValue)
       if (!isValid(startDate) || !isValid(endDate)) return
 
-      const value = `${format(startDate, inputFormat.value)} - ${format(endDate, inputFormat.value)}`
+      const value = `${formatToDisplay(startDate)} - ${formatToDisplay(endDate)}`
       if (masked.value === value) return
 
-      masked.value = `${format(startDate, inputFormat.value)} - ${format(endDate, inputFormat.value)}`
-
+      masked.value = value
       return
     }
 
     const newDate = parseValue(newValue)
-    const maskedDate = parse(masked.value, inputFormat.value, new Date())
+    const maskedDate = parseFromDisplay(masked.value)
 
     if (isValid(maskedDate) && maskedDate.toISOString() === newDate.toISOString()) return
 
-    masked.value = format(newDate, inputFormat.value)
+    masked.value = formatToDisplay(newDate)
   },
-  {
-    immediate: true,
-  },
+  { immediate: true },
 )
 
-// A typed range only commits once both bounds are present; a reversed range is
-// allowed through and reordered by the `healDateRange` field feature, so no
-// ordering error is raised.
+// A typed range only commits once both bounds are present.
 const dateRangeValidation = (value: (string | undefined)[]) => !value.includes(undefined)
 
 watch(masked, (newValue) => {
-  // empty input
   if (localValue.value && (!newValue || !unmasked.value)) {
     localValue.value = null
     return
@@ -241,7 +331,7 @@ watch(masked, (newValue) => {
 
   if (contextReactive.value.range) {
     const newValues = newValue.split(' - ').map((value) => {
-      const date = parse(value, inputFormat.value, new Date())
+      const date = parseFromDisplay(value)
       if (!isValid(date)) return
       return formatValue(date)
     })
@@ -249,11 +339,10 @@ watch(masked, (newValue) => {
     if (!dateRangeValidation(newValues) || isEqual(localValue.value, newValues)) return
 
     localValue.value = newValues
-
     return
   }
 
-  const newDate = parse(newValue, inputFormat.value, new Date())
+  const newDate = parseFromDisplay(newValue)
 
   if (!isValid(newDate) || (isValid(newDate) && localValue.value === formatValue(newDate))) return
 
@@ -272,13 +361,13 @@ const closed = () => {
   })
 
   if (!localValue.value && masked.value) {
-    masked.value = '' // clear input
+    masked.value = ''
     return
   }
 
   if (contextReactive.value.range) {
     const maskedValues = masked.value.split(' - ').map((value: string) => {
-      const date = parse(value, inputFormat.value, new Date())
+      const date = parseFromDisplay(value)
       if (!isValid(date)) return
       return formatValue(date)
     })
@@ -292,17 +381,16 @@ const closed = () => {
     const endDate = parseValue(endValue)
     if (!isValid(startDate) || !isValid(endDate)) return
 
-    masked.value = `${format(startDate, inputFormat.value)} - ${format(endDate, inputFormat.value)}`
-
+    masked.value = `${formatToDisplay(startDate)} - ${formatToDisplay(endDate)}`
     return
   }
 
-  const maskedDate = parse(masked.value, inputFormat.value, new Date())
+  const maskedDate = parseFromDisplay(masked.value)
 
   if (isValid(maskedDate) && localValue.value === formatValue(maskedDate)) return
 
   const newDate = parseValue(localValue.value)
-  masked.value = format(newDate, inputFormat.value)
+  masked.value = formatToDisplay(newDate)
 }
 </script>
 
@@ -340,13 +428,78 @@ const closed = () => {
         name: context.node.name,
         clearable: !!context.clearable,
       }"
-      :week-start="WeekStart.Monday"
+      :week-start="weekStart"
       auto-apply
       offset="12"
       @open="open"
       @closed="closed"
       @blur="context.handlers.blur"
     >
+      <!-- Jalali calendar header: weekday abbreviations (Sat…Fri) -->
+      <template #calendar-header="{ day, index }">
+        {{ isJalaliLocale ? JALALI_WEEKDAY_SHORT[index] : day }}
+      </template>
+
+      <!-- Jalali month/year header with Jalali-aware prev/next navigation.
+           For non-Jalali locales the default VueDatePicker header is replicated
+           using the slot's months/years/handleMonthYearChange props. -->
+      <template
+        #month-year="{ month, year, months, updateMonthYear, handleMonthYearChange, isDisabled }"
+      >
+        <div v-if="isJalaliLocale" class="dp--month-year-wrap">
+          <button
+            type="button"
+            class="dp--btn dp--inner-nav dp--arrow-btn-nav"
+            :disabled="isDisabled(true)"
+            @click="navigateJalaliMonth(month, year, true, updateMonthYear)"
+          >
+            <CommonIcon name="chevron-left" size="xs" decorative />
+          </button>
+          <span class="dp--month-year-select font-medium">
+            {{ getJalaliMonthYearLabel(month, year) }}
+          </span>
+          <button
+            type="button"
+            class="dp--btn dp--inner-nav dp--arrow-btn-nav"
+            :disabled="isDisabled(false)"
+            @click="navigateJalaliMonth(month, year, false, updateMonthYear)"
+          >
+            <CommonIcon name="chevron-right" size="xs" decorative />
+          </button>
+        </div>
+        <!-- Non-Jalali: replicate VueDatePicker's default nav row -->
+        <div v-else class="dp--month-year-wrap">
+          <button
+            type="button"
+            class="dp--btn dp--inner-nav dp--arrow-btn-nav"
+            :disabled="isDisabled(false)"
+            @click="handleMonthYearChange(false)"
+          >
+            <CommonIcon name="chevron-left" size="xs" decorative />
+          </button>
+          <button type="button" class="dp--btn dp--month-year-select">
+            {{ months[month]?.text }}
+          </button>
+          <button type="button" class="dp--btn dp--year-select">
+            {{ year }}
+          </button>
+          <button
+            type="button"
+            class="dp--btn dp--inner-nav dp--arrow-btn-nav"
+            :disabled="isDisabled(true)"
+            @click="handleMonthYearChange(true)"
+          >
+            <CommonIcon name="chevron-right" size="xs" decorative />
+          </button>
+        </div>
+      </template>
+
+      <!-- Jalali day numbers in each calendar cell -->
+      <template #day="{ date, day }">
+        <span v-if="isJalaliLocale">{{ toPersianDigits(dateToJalali(date).jd) }}</span>
+        <span v-else>{{ day }}</span>
+      </template>
+
       <template #dp-input>
         <input
           :id="context.id"

@@ -10,7 +10,15 @@ import type { DateTimeContext } from '#shared/components/Form/fields/FieldDate/t
 import { useDateFnsLocale } from '#shared/components/Form/fields/FieldDate/useDateFnsLocale.ts'
 import { useDateTime } from '#shared/components/Form/fields/FieldDate/useDateTime.ts'
 import { usePickerModel } from '#shared/components/Form/fields/FieldDate/usePickerModel.ts'
+import {
+  dateToJalali,
+  jalaliToDate,
+  jalaliMonthName,
+  JALALI_WEEKDAY_SHORT,
+  toPersianDigits,
+} from '#shared/components/Form/fields/FieldDate/jalali.ts'
 import { i18n } from '#shared/i18n.ts'
+import { useLocaleStore } from '#shared/stores/locale.ts'
 import testFlags from '#shared/utils/testFlags.ts'
 
 import '@vuepic/vue-datepicker/dist/main.css'
@@ -30,10 +38,49 @@ const { localValue } = useValue(contextReactive)
 const { ariaLabels, displayFormat, is24, maxDate, minDate, timePicker, valueFormat } =
   useDateTime(contextReactive)
 
-// Shared model handling: drops a half-selected range when `partialRange` is
-// false so only a complete range reaches the form value — keeping the mobile
-// field consistent with desktop.
 const { pickerModel } = usePickerModel(contextReactive, localValue)
+
+// ── Jalali support ────────────────────────────────────────────────────────────
+
+const localeStore = useLocaleStore()
+const isJalaliLocale = computed(() => localeStore.localeData?.locale === 'fa-ir')
+const weekStart = computed(() => (isJalaliLocale.value ? WeekStart.Saturday : WeekStart.Monday))
+
+const navigateJalaliMonth = (
+  month: number,
+  year: number,
+  isNext: boolean,
+  updateMonthYear: (m: number, y: number) => void,
+) => {
+  const midDate = new Date(year, month, 15)
+  const { jy, jm } = dateToJalali(midDate)
+  let nextJy = jy
+  let nextJm = jm + (isNext ? 1 : -1)
+  if (nextJm > 12) {
+    nextJm = 1
+    nextJy++
+  }
+  if (nextJm < 1) {
+    nextJm = 12
+    nextJy--
+  }
+  const targetDate = jalaliToDate(nextJy, nextJm, 1)
+  updateMonthYear(targetDate.getMonth(), targetDate.getFullYear())
+}
+
+const getJalaliMonthYearLabel = (month: number, year: number): string => {
+  const firstDay = new Date(year, month, 1)
+  const lastDay = new Date(year, month + 1, 0)
+  const { jy: jy1, jm: jm1 } = dateToJalali(firstDay)
+  const { jy: jy2, jm: jm2 } = dateToJalali(lastDay)
+  if (jm1 === jm2 && jy1 === jy2) {
+    return `${jalaliMonthName(jm1)} ${toPersianDigits(jy1)}`
+  }
+  const yearSuffix = jy1 !== jy2 ? ` ${toPersianDigits(jy2)}` : ''
+  return `${jalaliMonthName(jm1)} / ${jalaliMonthName(jm2)}${yearSuffix} ${toPersianDigits(jy1)}`
+}
+
+// ── Picker visibility ─────────────────────────────────────────────────────────
 
 const config = {
   keepActionRow: true,
@@ -79,7 +126,6 @@ const collapsePicker = () => {
   })
 }
 
-// Hide calendar, if clicked outside of the picker or input.
 useEventListener('click', (e) => {
   const { target } = e
 
@@ -129,13 +175,75 @@ useEventListener('click', (e) => {
         name: context.node.name,
         clearable: !!context.clearable,
       }"
-      :week-start="WeekStart.Monday"
+      :week-start="weekStart"
       auto-apply
       dark
       @open="expandPicker"
       @close="collapsePicker"
       @blur="context.handlers.blur"
     >
+      <!-- Jalali calendar header: weekday abbreviations (Sat…Fri) -->
+      <template #calendar-header="{ day, index }">
+        {{ isJalaliLocale ? JALALI_WEEKDAY_SHORT[index] : day }}
+      </template>
+
+      <!-- Jalali month/year header with Jalali-aware prev/next navigation -->
+      <template
+        #month-year="{ month, year, months, updateMonthYear, handleMonthYearChange, isDisabled }"
+      >
+        <div v-if="isJalaliLocale" class="dp--month-year-wrap">
+          <button
+            type="button"
+            class="dp--btn dp--inner-nav dp--arrow-btn-nav"
+            :disabled="isDisabled(true)"
+            @click="navigateJalaliMonth(month, year, true, updateMonthYear)"
+          >
+            <CommonIcon name="chevron-left" size="xs" decorative />
+          </button>
+          <span class="dp--month-year-select font-medium">
+            {{ getJalaliMonthYearLabel(month, year) }}
+          </span>
+          <button
+            type="button"
+            class="dp--btn dp--inner-nav dp--arrow-btn-nav"
+            :disabled="isDisabled(false)"
+            @click="navigateJalaliMonth(month, year, false, updateMonthYear)"
+          >
+            <CommonIcon name="chevron-right" size="xs" decorative />
+          </button>
+        </div>
+        <div v-else class="dp--month-year-wrap">
+          <button
+            type="button"
+            class="dp--btn dp--inner-nav dp--arrow-btn-nav"
+            :disabled="isDisabled(false)"
+            @click="handleMonthYearChange(false)"
+          >
+            <CommonIcon name="chevron-left" size="xs" decorative />
+          </button>
+          <button type="button" class="dp--btn dp--month-year-select">
+            {{ months[month]?.text }}
+          </button>
+          <button type="button" class="dp--btn dp--year-select">
+            {{ year }}
+          </button>
+          <button
+            type="button"
+            class="dp--btn dp--inner-nav dp--arrow-btn-nav"
+            :disabled="isDisabled(true)"
+            @click="handleMonthYearChange(true)"
+          >
+            <CommonIcon name="chevron-right" size="xs" decorative />
+          </button>
+        </div>
+      </template>
+
+      <!-- Jalali day numbers in each calendar cell -->
+      <template #day="{ date, day }">
+        <span v-if="isJalaliLocale">{{ toPersianDigits(dateToJalali(date).jd) }}</span>
+        <span v-else>{{ day }}</span>
+      </template>
+
       <template #dp-input="{ value, onInput, onEnter, onTab, onBlur, onKeypress, onPaste }">
         <input
           :id="context.id"
