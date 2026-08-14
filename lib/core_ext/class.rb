@@ -13,7 +13,7 @@ class Class
 
 =begin
 
-This function returns the frontend name for the rails class (legacy). To reverse this, check ObjectLookup::app_model2class.
+This function returns the frontend name for the rails class (legacy). To reverse this, check ObjectLookup::to_class.
 
   result = Ticket::Article.to_app_model
 
