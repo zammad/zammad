@@ -8,24 +8,16 @@ import type { TopBarHeaderProps } from '../types.ts'
 
 const copyToClipboardMock = vi.fn()
 
-vi.mock('#shared/composables/useCopyToClipboard.ts', () => ({
+vi.mock('#shared/composables/useCopyToClipboard.ts', async (importOriginal) => ({
+  ...(await importOriginal<typeof import('#shared/composables/useCopyToClipboard.ts')>()),
   useCopyToClipboard: () => ({
     copyToClipboard: copyToClipboardMock,
   }),
 }))
 
-class ClipboardItemMock {
-  data: Record<string, string>
-
-  constructor(data: Record<string, string>) {
-    this.data = data
-  }
-}
-
 describe('useTopBarHeader', () => {
   beforeEach(() => {
     copyToClipboardMock.mockReset()
-    vi.stubGlobal('ClipboardItem', ClipboardItemMock)
   })
 
   it('copies markup in the title as literal text', () => {

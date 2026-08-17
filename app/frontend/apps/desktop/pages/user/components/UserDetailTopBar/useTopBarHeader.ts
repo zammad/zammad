@@ -1,7 +1,10 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 import { computed, toRef, type Ref } from 'vue'
 
-import { useCopyToClipboard } from '#shared/composables/useCopyToClipboard.ts'
+import {
+  createLinkClipboardItem,
+  useCopyToClipboard,
+} from '#shared/composables/useCopyToClipboard.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
 
@@ -16,10 +19,10 @@ export const useTopBarHeader = (props: Ref<Props>) => {
 
   const copyUserDisplayNameToClipboard = () => {
     copyToClipboard([
-      new ClipboardItem({
-        'text/plain': props.value.userDisplayName,
-        'text/html': `<a href="${config.value.http_type}://${config.value.fqdn}/desktop/users/${props.value.user.internalId}">${props.value.userDisplayName}</a>`,
-      }),
+      createLinkClipboardItem(
+        `${config.value.http_type}://${config.value.fqdn}/desktop/users/${props.value.user.internalId}`,
+        props.value.userDisplayName,
+      ),
     ])
   }
 

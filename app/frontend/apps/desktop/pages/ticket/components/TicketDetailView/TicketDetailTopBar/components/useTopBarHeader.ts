@@ -2,7 +2,10 @@
 
 import { ref, toRef } from 'vue'
 
-import { useCopyToClipboard } from '#shared/composables/useCopyToClipboard.ts'
+import {
+  createLinkClipboardItem,
+  useCopyToClipboard,
+} from '#shared/composables/useCopyToClipboard.ts'
 import { useTicketView } from '#shared/entities/ticket/composables/useTicketView.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
 
@@ -27,10 +30,10 @@ export const useTopBarHeader = () => {
     if (!ticketNumberWithTicketHook.value || !ticket.value?.internalId) return
 
     copyToClipboard([
-      new ClipboardItem({
-        'text/plain': ticketNumberWithTicketHook.value,
-        'text/html': `<a href="${config.value.http_type}://${config.value.fqdn}/desktop/tickets/${ticket.value.internalId}">${ticketNumberWithTicketHook.value}</a>`,
-      }),
+      createLinkClipboardItem(
+        `${config.value.http_type}://${config.value.fqdn}/desktop/tickets/${ticket.value.internalId}`,
+        ticketNumberWithTicketHook.value,
+      ),
     ])
   }
 

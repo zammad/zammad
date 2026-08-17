@@ -2,9 +2,13 @@
 
 import { ref } from 'vue'
 
+import { getClipboardItemData } from '#tests/support/mocks/clipboardItem.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
 
-import { useCopyToClipboard } from '#shared/composables/useCopyToClipboard.ts'
+import {
+  createLinkClipboardItem,
+  useCopyToClipboard,
+} from '#shared/composables/useCopyToClipboard.ts'
 
 const clipboardCopyMock = vi.fn()
 const clipboardCopiedMock = ref(false)
@@ -92,5 +96,38 @@ describe('useCopyToClipboard', () => {
     copyToClipboard(null)
 
     expect(clipboardCopyMock).not.toHaveBeenCalled()
+  })
+})
+
+describe('createLinkClipboardItem', () => {
+  it('copies markup in the label as literal text', () => {
+    const href = 'https://zammad.example.com/desktop/users/2'
+    const label = 'Nicole </a><strong>Braun</strong><a>'
+
+    const data = getClipboardItemData(createLinkClipboardItem(href, label))
+
+    expect(data['text/plain']).toBe(label)
+
+    const container = document.createElement('div')
+    container.innerHTML = data['text/html']
+
+    expect(container.children).toHaveLength(1)
+    expect(container.firstElementChild).toHaveProperty('tagName', 'A')
+    expect(container.querySelector('a')).toHaveTextContent(label)
+    expect(container.querySelector('strong')).not.toBeInTheDocument()
+    expect(container.querySelector('a')?.getAttribute('href')).toBe(href)
+  })
+
+  it.each([
+    ['javascript:alert(1)'],
+    ['data:text/html,<script>alert(1)</script>'],
+    ['ftp://example.com/file'],
+    ['http://'],
+  ])('falls back to a plain-text item for unsafe href %s', (href) => {
+    const label = 'Nicole Braun'
+
+    expect(getClipboardItemData(createLinkClipboardItem(href, label))).toEqual({
+      'text/plain': label,
+    })
   })
 })

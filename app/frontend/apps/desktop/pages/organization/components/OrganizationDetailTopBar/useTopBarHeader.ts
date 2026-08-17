@@ -2,7 +2,10 @@
 
 import { computed, toRef } from 'vue'
 
-import { useCopyToClipboard } from '#shared/composables/useCopyToClipboard.ts'
+import {
+  createLinkClipboardItem,
+  useCopyToClipboard,
+} from '#shared/composables/useCopyToClipboard.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
 
@@ -18,10 +21,10 @@ export const useTopBarHeader = (props: Ref<Props>) => {
 
   const copyOrganizationDisplayNameToClipboard = () => {
     copyToClipboard([
-      new ClipboardItem({
-        'text/plain': props.value.organizationDisplayName,
-        'text/html': `<a href="${config.value.http_type}://${config.value.fqdn}/desktop/organizations/${props.value.organization.internalId}">${props.value.organizationDisplayName}</a>`,
-      }),
+      createLinkClipboardItem(
+        `${config.value.http_type}://${config.value.fqdn}/desktop/organizations/${props.value.organization.internalId}`,
+        props.value.organizationDisplayName,
+      ),
     ])
   }
 
