@@ -4,6 +4,8 @@ import { getByIconName } from '#tests/support/components/iconQueries.ts'
 import { renderComponent } from '#tests/support/components/index.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 
+import { humanizeFileSize } from '#shared/utils/files.ts'
+
 import CommonFilePreview, { type Props } from '../CommonFilePreview.vue'
 
 const renderFilePreview = (props: Props & { onPreview?(event: Event): void }) => {
@@ -204,4 +206,36 @@ describe('preview file component', () => {
       expect(view.getByText(ext)).toBeInTheDocument()
     }
   })
+
+  it('falls back to the default border and size label color without contextual classes', () => {
+    const view = renderFilePreview({
+      file: { name: 'name.word', type: 'application/msword', size: 1025 },
+    })
+
+    expect(view.container.firstElementChild).toHaveClass('border-gray-300')
+    expect(view.getByText(humanizeFileSize(1025))).toHaveClass('text-white/80')
+  })
+
+  it.each([
+    ['light', 'border-black', 'text-black/60'],
+    ['dark', 'border-white/40', 'text-white/60'],
+  ])(
+    'lets contextual classes replace the default %s attachment colors',
+    (_, wrapperClass, sizeClass) => {
+      const view = renderFilePreview({
+        file: { name: 'name.word', type: 'application/msword', size: 1025 },
+        wrapperClass,
+        iconClass: wrapperClass,
+        sizeClass,
+      })
+
+      const wrapper = view.container.firstElementChild
+      expect(wrapper).toHaveClass(wrapperClass)
+      expect(wrapper).not.toHaveClass('border-gray-300')
+
+      const sizeLabel = view.getByText(humanizeFileSize(1025))
+      expect(sizeLabel).toHaveClass(sizeClass)
+      expect(sizeLabel).not.toHaveClass('text-white/80')
+    },
+  )
 })

@@ -313,7 +313,7 @@ describe('component for displaying text article', () => {
       ],
     })
 
-    expect(view.getByText('2 attached files')).toBeInTheDocument()
+    expect(view.getByText('2 attached file(s)')).toBeInTheDocument()
 
     const attachments = view.getAllByRole('link', { name: /Zammad / })
 

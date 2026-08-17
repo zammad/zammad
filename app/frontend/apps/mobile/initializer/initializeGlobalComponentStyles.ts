@@ -5,7 +5,6 @@ import { initializeAiAssistantTextToolsClasses } from '#shared/components/Form/f
 import { initializeEditorColorMenuClasses } from '#shared/components/Form/fields/FieldEditor/features/color-picker/initializeEditorColorMenuClasses.ts'
 import { initializeAlertClasses } from '#shared/initializer/initializeAlertClasses.ts'
 import { initializeAvatarClasses } from '#shared/initializer/initializeAvatarClasses.ts'
-import { initializeFilePreviewClasses } from '#shared/initializer/initializeFilePreviewClasses.ts'
 import { initializeLinkClasses } from '#shared/initializer/initializeLinkClasses.ts'
 import { initializeNotificationClasses } from '#shared/initializer/initializeNotificationClasses.ts'
 import { initializeOrganizationAvatarClasses } from '#shared/initializer/initializeOrganizationAvatarClasses.ts'
@@ -75,16 +74,6 @@ export const initializeGlobalComponentStyles = () => {
       autoButton: 'bg-gray-500 text-white',
       autoButtonIcon: 'min-[200px]:scale-150 min-[300px]:scale-200 min-[400px]:scale-250',
     },
-  })
-
-  initializeFilePreviewClasses({
-    base: 'leading-4',
-    wrapper:
-      'focus-within:bg-blue-highlight mb-2 gap-2 rounded-2xl border p-3 outline-hidden last:mb-0 border-gray-300',
-    preview: '',
-    link: '',
-    size: 'text-white/80',
-    icon: 'border-gray-300',
   })
 
   initializeAiAssistantTextToolsClasses({

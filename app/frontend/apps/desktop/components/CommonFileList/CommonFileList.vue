@@ -33,6 +33,9 @@ defineEmits<{
           @remove="$emit('remove', file)"
         />
       </li>
+      <!-- Rows that are not files yet, e.g. uploads still in flight, so that they share the
+        grid and the surface with the real ones. -->
+      <slot name="append" />
     </ul>
   </div>
 </template>

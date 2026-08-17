@@ -3,7 +3,6 @@
 <script setup lang="ts">
 import { computed, nextTick, onMounted, ref, watch } from 'vue'
 
-import CommonFilePreview from '#shared/components/CommonFilePreview/CommonFilePreview.vue'
 import CommonUserAvatar from '#shared/components/CommonUserAvatar/CommonUserAvatar.vue'
 import { useArticleToggleMore } from '#shared/composables/useArticleToggleMore.ts'
 import { useAttachments } from '#shared/composables/useAttachments.ts'
@@ -19,6 +18,8 @@ import { useSessionStore } from '#shared/stores/session.ts'
 import type { ConfidentTake } from '#shared/types/utils.ts'
 import stopEvent from '#shared/utils/events.ts'
 import { textToHtml, ensureImagesKeepAspectRatio } from '#shared/utils/helpers.ts'
+
+import CommonFilePreview from '#mobile/components/CommonFilePreview/CommonFilePreview.vue'
 
 import { useArticleSeen } from '../../composable/useArticleSeen.ts'
 
@@ -215,11 +216,7 @@ const onContextClick = () => {
         ></div>
         <div v-if="attachments.length" class="mt-1 mb-2" :class="colorsClasses.top">
           <div class="py-1 text-xs" :class="colorsClasses.amount">
-            {{
-              attachments.length === 1
-                ? $t('1 attached file')
-                : $t('%s attached files', attachments.length)
-            }}
+            {{ $t('%s attached file(s)', attachments.length) }}
           </div>
           <CommonFilePreview
             v-for="attachment of articleAttachments"

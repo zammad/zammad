@@ -82,16 +82,59 @@ describe('TicketSidebarAttachmentContent', () => {
   beforeEach(() => {
     mockApplicationConfig({
       ui_ticket_zoom_sidebar_article_attachments: true,
+      api_path: '/api',
+      'active_storage.content_types_allowed_inline': ['image/jpeg'],
     })
   })
 
   it('renders attachments', async () => {
     const wrapper = renderAttachmentContent()
 
-    expect(await wrapper.findByRole('link', { name: 'Download image010.jpg' })).toBeInTheDocument()
-    expect(await wrapper.findByRole('link', { name: 'Download Test PDF.pdf' })).toBeInTheDocument()
+    expect(await wrapper.findByRole('list', { name: 'Attached files' })).toBeInTheDocument()
+    expect(wrapper.getAllByRole('listitem')).toHaveLength(3)
+  })
+
+  it('opens previewable attachments and downloads the rest', async () => {
+    const wrapper = renderAttachmentContent()
+
+    // The image and the calendar file both have a preview, so their rows open it …
+    expect(await wrapper.findByRole('button', { name: 'Preview image010.jpg' })).toBeInTheDocument()
     expect(
-      await wrapper.findByRole('link', { name: 'Download Entsorgungstermine.ics' }),
+      await wrapper.findByRole('button', { name: 'Preview Entsorgungstermine.ics' }),
     ).toBeInTheDocument()
+
+    // … while the PDF has none, so its row is the download itself.
+    expect(await wrapper.findByRole('link', { name: 'Download Test PDF.pdf' })).toBeInTheDocument()
+  })
+
+  it('offers a download for every attachment', async () => {
+    const wrapper = renderAttachmentContent()
+
+    expect(
+      await wrapper.findByRole('link', { name: 'Download file: image010.jpg' }),
+    ).toHaveAttribute('href', '/api/attachments/316?disposition=attachment')
+  })
+
+  it('renders no list without attachments', () => {
+    const wrapper = renderComponent(TicketSidebarAttachmentContent, {
+      props: {
+        sidebarPlugin: ticketArticlAttachmentsSidebarPlugin,
+        modelValue: {},
+        ticketAttachments: [],
+        loading: false,
+        context: {
+          screenType: TicketSidebarScreenType.TicketDetailView,
+          formValues: {},
+          toggleCollapse: () => {},
+          isCollapsed: false,
+        },
+      },
+      router: true,
+      form: true,
+      dialog: true,
+    })
+
+    expect(wrapper.queryByRole('list')).not.toBeInTheDocument()
+    expect(wrapper.getByText('No attached files')).toBeInTheDocument()
   })
 })

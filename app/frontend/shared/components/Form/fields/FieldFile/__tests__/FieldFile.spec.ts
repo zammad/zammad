@@ -302,7 +302,7 @@ describe('Fields - FieldFile', () => {
     mockAdd.spies.resolve.mockResolvedValue(promise)
 
     await view.events.upload(view.getByTestId('fileInput'), [file])
-    expect(await view.findByLabelText("File 'foo.png' is uploading")).toBeInTheDocument()
+    expect(await view.findByLabelText('Uploading file: foo.png')).toBeInTheDocument()
 
     resolve({ data: uploadedFileQuery })
     expect(await view.findByRole('button', { name: 'Preview foo.png' })).toBeInTheDocument()

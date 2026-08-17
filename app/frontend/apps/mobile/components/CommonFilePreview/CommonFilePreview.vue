@@ -3,12 +3,9 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 
-import { useAppName } from '#shared/composables/useAppName.ts'
-import { useSharedVisualConfig } from '#shared/composables/useSharedVisualConfig.ts'
 import { useTouchDevice } from '#shared/composables/useTouchDevice.ts'
 import type { StoredFile } from '#shared/graphql/types.ts'
 import { i18n } from '#shared/i18n.ts'
-import { getFilePreviewClasses } from '#shared/initializer/initializeFilePreviewClasses.ts'
 import {
   canDownloadFile,
   canPreviewFile,
@@ -17,6 +14,8 @@ import {
   type FilePreview,
 } from '#shared/utils/files.ts'
 import { getIconByContentType } from '#shared/utils/icons.ts'
+
+import CommonButton from '#mobile/components/CommonButton/CommonButton.vue'
 
 export interface Props {
   file: Pick<StoredFile, 'type' | 'name' | 'size'>
@@ -39,8 +38,6 @@ const emit = defineEmits<{
   preview: [$event: Event, type: FilePreview]
 }>()
 
-const appName = useAppName()
-
 const imageFailed = ref(false)
 
 const canPreview = computed(() => {
@@ -50,8 +47,8 @@ const canPreview = computed(() => {
 
   const type = canPreviewFile(file.type)
 
-  // Currently mobile allows only preview of images.
-  if (appName === 'mobile' && type !== 'image') return false
+  // Mobile allows only preview of images.
+  if (type !== 'image') return false
 
   return type
 })
@@ -79,22 +76,18 @@ const onPreviewClick = (event: Event) => {
 }
 
 const { isTouchDevice } = useTouchDevice()
-
-const { filePreview: filePreviewConfig } = useSharedVisualConfig()
-
-const classMap = getFilePreviewClasses()
 </script>
 
 <template>
   <div
-    class="group/file-preview flex w-full items-center gap-2 outline-hidden"
-    :class="[classMap.wrapper, wrapperClass]"
+    class="group/file-preview mb-2 flex w-full items-center gap-2 rounded-2xl border p-3 outline-hidden last:mb-0 focus-within:bg-blue-highlight"
+    :class="wrapperClass || 'border-gray-300'"
   >
     <button
       v-if="canPreview"
       v-tooltip="$t('Preview %s', props.file.name)"
       class="flex h-9 w-9 shrink-0 items-center justify-center rounded"
-      :class="[{ border: canPreview !== 'image' }, classMap.preview]"
+      :class="{ border: canPreview !== 'image' }"
       @click="onPreviewClick"
       @keydown.delete.prevent="$emit('remove')"
       @keydown.backspace.prevent="$emit('remove')"
@@ -115,10 +108,7 @@ const classMap = getFilePreviewClasses()
       :is="componentType"
       v-tooltip="ariaLabel"
       class="flex w-full items-center gap-2 overflow-hidden text-left outline-hidden select-none"
-      :class="{
-        'cursor-pointer': componentType !== 'div',
-        [classMap.link]: true,
-      }"
+      :class="{ 'cursor-pointer': componentType !== 'div' }"
       tabindex="0"
       :link="downloadUrl"
       :download="canDownload ? file.name : undefined"
@@ -129,30 +119,29 @@ const classMap = getFilePreviewClasses()
       <div
         v-if="!canPreview"
         class="flex h-9 w-9 items-center justify-center rounded border"
-        :class="[classMap.icon, iconClass]"
+        :class="iconClass || 'border-gray-300'"
       >
         <CommonIcon
           v-if="loading"
           size="base"
-          :label="$t('File \'%s\' is uploading', file.name)"
+          :label="$t('Uploading file: %s', file.name)"
           name="loading"
           animation="spin"
         />
         <CommonIcon v-else size="base" decorative :name="icon" />
       </div>
-      <div class="flex flex-1 flex-col overflow-hidden" :class="classMap.base">
+      <div class="flex flex-1 flex-col overflow-hidden leading-4">
         <div class="flex">
           <span class="line-clamp-1 min-w-0 break-all">{{ fileNameParts.base }}</span>
           <span v-if="fileNameParts.ext" class="shrink-0">{{ fileNameParts.ext }}</span>
         </div>
-        <span v-if="file.size" class="line-clamp-1" :class="[classMap.size, sizeClass]">
+        <span v-if="file.size" class="line-clamp-1" :class="sizeClass || 'text-white/80'">
           {{ humanizeFileSize(file.size) }}
         </span>
       </div>
     </Component>
 
-    <component
-      :is="filePreviewConfig?.buttonComponent"
+    <CommonButton
       v-if="!noRemove"
       :class="{
         'opacity-0 transition-opacity': !isTouchDevice,
@@ -161,7 +150,6 @@ const classMap = getFilePreviewClasses()
       type="button"
       icon="remove-attachment"
       :aria-label="i18n.t('Remove %s', file.name)"
-      v-bind="filePreviewConfig?.buttonProps"
       @click.stop.prevent="$emit('remove')"
       @keypress.space.prevent="$emit('remove')"
     />

@@ -34,8 +34,10 @@ const files: FileListFile[] = [
   },
 ]
 
-const renderFileList = (props: { files: FileListFile[]; label?: string; noRemove?: boolean }) =>
-  renderComponent(CommonFileList, { props, router: true, store: true })
+const renderFileList = (
+  props: { files: FileListFile[]; label?: string; noRemove?: boolean },
+  slots?: Record<string, string>,
+) => renderComponent(CommonFileList, { props, slots, router: true, store: true })
 
 describe('CommonFileList', () => {
   beforeEach(() => {
@@ -94,5 +96,20 @@ describe('CommonFileList', () => {
     const view = renderFileList({ files, noRemove: true })
 
     expect(view.queryByRole('button', { name: /^Remove/ })).not.toBeInTheDocument()
+  })
+
+  it('appends extra rows to the same grid', () => {
+    const view = renderFileList({ files }, { append: '<li>Uploading …</li>' })
+
+    // The appended row shares the list, so in-flight uploads line up with the real files
+    //   instead of sitting in a container of their own.
+    expect(view.getAllByRole('listitem')).toHaveLength(4)
+    expect(view.getByText('Uploading …')).toBeInTheDocument()
+  })
+
+  it('renders no extra rows without the append slot', () => {
+    const view = renderFileList({ files })
+
+    expect(view.getAllByRole('listitem')).toHaveLength(3)
   })
 })

@@ -4,13 +4,9 @@ import { useDropZone } from '@vueuse/core'
 import { useTemplateRef } from 'vue'
 import { toRef, computed, ref, type ComputedRef } from 'vue'
 
-import CommonFilePreview from '#shared/components/CommonFilePreview/CommonFilePreview.vue'
 import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
-import { useAppName } from '#shared/composables/useAppName.ts'
 import { useConfirmation } from '#shared/composables/useConfirmation.ts'
-import { useImageViewer } from '#shared/composables/useImageViewer.ts'
 import { useSharedVisualConfig } from '#shared/composables/useSharedVisualConfig.ts'
-import { useTraverseOptions } from '#shared/composables/useTraverseOptions.ts'
 import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
 import { convertFileList } from '#shared/utils/files.ts'
 
@@ -21,8 +17,7 @@ import { useFormUploadCacheAddMutation } from './graphql/mutations/uploadCache/a
 import { useFormUploadCacheRemoveMutation } from './graphql/mutations/uploadCache/remove.api.ts'
 import { getFileClasses } from './initializeFileClasses.ts'
 
-import type { FieldFileProps, FileUploaded } from './types.ts'
-import type { SetOptional } from 'type-fest'
+import type { FieldFileLoading, FieldFileProps, FieldFileUploaded, FileUploaded } from './types.ts'
 
 export interface Props {
   context: FormFieldContext<FieldFileProps>
@@ -46,10 +41,10 @@ const uploadFiles = computed<FileUploaded[]>({
 })
 
 const contentFiles = ref<Record<string, string>>({})
-const loadingFiles = ref<SetOptional<FileUploaded, 'id'>[]>([])
+const loadingFiles = ref<FieldFileLoading[]>([])
 
 // TODO: We improved now the upload cache endpoint also working for show, so maybe we could use this for preview.
-const uploadFilesWithContent = computed(() => {
+const uploadFilesWithContent = computed<FieldFileUploaded[]>(() => {
   return uploadFiles.value.map((file) => {
     const content = contentFiles.value[file.id]
     return { ...file, content }
@@ -192,31 +187,6 @@ const reachedUploadLimit = computed(() => {
   )
 })
 
-const bottomGradientOpacity = ref('1')
-
-const onFilesScroll = (event: UIEvent) => {
-  const target = event.target as HTMLElement
-  const scrollMin = 20
-  const bottomMax = target.scrollHeight - target.clientHeight
-  const bottomMin = bottomMax - scrollMin
-  const { scrollTop } = target
-  if (scrollTop <= bottomMin) {
-    bottomGradientOpacity.value = '1'
-    return
-  }
-  const opacityPart = (scrollTop - bottomMin) / scrollMin
-  bottomGradientOpacity.value = (1 - opacityPart).toFixed(2)
-}
-
-const { showImage } = useImageViewer(uploadFilesWithContent)
-
-const filesContainer = useTemplateRef('files-container')
-
-useTraverseOptions(filesContainer, {
-  direction: 'vertical',
-})
-
-const appName = useAppName()
 const classMap = getFileClasses()
 const { fieldFile: fieldFileConfig } = useSharedVisualConfig()
 
@@ -226,10 +196,6 @@ const showDivider = computed(() => {
     !reachedUploadLimit.value &&
     (uploadFiles.value.length || loadingFiles.value.length)
   )
-})
-
-const showGradient = computed(() => {
-  return appName === 'mobile' && (uploadFiles.value.length > 2 || loadingFiles.value.length > 2)
 })
 
 const acceptableFileTypes = computed(() => props.context.accept?.split(','))
@@ -249,49 +215,15 @@ const { isOverDropZone } = useDropZone(dropZoneElement, {
 <template>
   <div class="relative" :class="context.classes.input">
     <div ref="drop-zone">
-      <div v-if="showGradient" class="relative w-full">
-        <div class="file-list show-gradient top-gradient absolute h-5 w-full"></div>
-      </div>
-      <div
+      <component
+        :is="fieldFileConfig?.listComponent"
         v-if="uploadFiles.length || loadingFiles.length"
-        ref="files-container"
-        role="list"
-        class="overflow-auto"
-        :class="{
-          'opacity-60': !canInteract,
-          'pb-4': reachedUploadLimit,
-          [classMap.listContainer]: true,
-        }"
-        @scroll.passive="onFilesScroll($event as UIEvent)"
-      >
-        <CommonFilePreview
-          v-for="(uploadFile, idx) of uploadFilesWithContent"
-          :key="uploadFile.id || `${uploadFile.name}-${idx}`"
-          :file="uploadFile"
-          role="listitem"
-          :class="{ 'pointer-events-none opacity-75': uploadFile.isProcessing }"
-          :no-remove="uploadFile.isProcessing"
-          :loading="uploadFile.isProcessing"
-          :preview-url="uploadFile.preview || uploadFile.content"
-          :download-url="uploadFile.content"
-          @preview="canInteract && showImage(uploadFile)"
-          @remove="canInteract && removeFile(uploadFile)"
-        />
-        <CommonFilePreview
-          v-for="(uploadFile, idx) of loadingFiles"
-          :key="uploadFile.id || `${uploadFile.name}${idx}`"
-          role="listitem"
-          :file="uploadFile"
-          loading
-          no-remove
-        />
-      </div>
-      <div v-if="showGradient" class="relative w-full">
-        <div
-          class="file-list show-gradient bottom-gradient absolute h-5 w-full"
-          :style="{ opacity: bottomGradientOpacity }"
-        ></div>
-      </div>
+        :files="uploadFilesWithContent"
+        :loading-files="loadingFiles"
+        :can-interact="canInteract"
+        :class="{ 'pb-4': reachedUploadLimit }"
+        @remove="removeFile"
+      />
       <div v-if="showDivider" class="w-full px-2.5">
         <hr class="h-px w-full border-0" :class="classMap.divider" />
       </div>

@@ -6,6 +6,7 @@ import CommonButton from '#mobile/components/CommonButton/CommonButton.vue'
 import CommonSectionMenu from '#mobile/components/CommonSectionMenu/CommonSectionMenu.vue'
 import CommonSectionMenuItem from '#mobile/components/CommonSectionMenu/CommonSectionMenuItem.vue'
 import CommonSectionPopup from '#mobile/components/CommonSectionPopup/CommonSectionPopup.vue'
+import FieldFileList from '#mobile/components/Form/fields/FieldFile/FieldFileList.vue'
 
 export const initializeMobileVisuals = () => {
   setupCommonVisualConfig({
@@ -20,11 +21,9 @@ export const initializeMobileVisuals = () => {
       type: 'popup',
       component: CommonSectionPopup,
     },
-    filePreview: {
-      buttonComponent: CommonButton,
-    },
     fieldFile: {
       buttonComponent: CommonButton,
+      listComponent: FieldFileList,
     },
   })
 }

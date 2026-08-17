@@ -7,7 +7,8 @@
  *   to `useFilePreviewViewer()` — which matches files by object identity.
  */
 export interface FileListFile {
-  internalId: number
+  /** Only used to key the list; a string covers upload cache IDs, which are not numeric. */
+  internalId: number | string
   name: string
   size?: Maybe<number>
   type?: Maybe<string>

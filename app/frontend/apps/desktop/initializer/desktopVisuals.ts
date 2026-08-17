@@ -7,6 +7,7 @@ import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonInlineEditButtons from '#desktop/components/CommonInlineEditButtons/CommonInlineEditButtons.vue'
 import CommonObjectAttribute from '#desktop/components/CommonObjectAttribute/CommonObjectAttribute.vue'
 import CommonObjectAttributeContainer from '#desktop/components/CommonObjectAttribute/CommonObjectAttributeContainer.vue'
+import FieldFileList from '#desktop/components/Form/fields/FieldFile/FieldFileList.vue'
 
 export const initializeDesktopVisuals = () => {
   setupCommonVisualConfig({
@@ -23,14 +24,9 @@ export const initializeDesktopVisuals = () => {
       type: 'inline',
       component: () => null,
     },
-    filePreview: {
-      buttonComponent: CommonButton,
-      buttonProps: {
-        variant: 'remove',
-      },
-    },
     fieldFile: {
       buttonComponent: CommonButton,
+      listComponent: FieldFileList,
     },
   })
 

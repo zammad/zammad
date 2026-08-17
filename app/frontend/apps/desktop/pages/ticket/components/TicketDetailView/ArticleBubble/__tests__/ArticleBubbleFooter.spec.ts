@@ -49,6 +49,9 @@ describe('ArticleBubbleFooter', () => {
             }),
             articleAttachments: [
               {
+                internalId: 123,
+                type: 'text/plain',
+                size: 1024,
                 preview: 'http://test/attachments/123/preview',
                 inline: 'http://test/attachments/123/inline',
                 canDownload: true,
@@ -65,7 +68,16 @@ describe('ArticleBubbleFooter', () => {
       },
     )
 
-    expect(wrapper.html()).toContain('1 attached file')
-    expect(wrapper.html()).toContain('test.txt')
+    expect(wrapper.html()).toContain('1 attached file(s)')
+
+    const item = wrapper.getByRole('listitem')
+    expect(item).toHaveTextContent('test.txt')
+    expect(item).toHaveTextContent('1024 Bytes')
+
+    // Plain text has no preview, so the row is the download itself.
+    expect(wrapper.getByRole('link', { name: 'Download test.txt' })).toHaveAttribute(
+      'href',
+      'http://test/attachments/123/download',
+    )
   })
 })
