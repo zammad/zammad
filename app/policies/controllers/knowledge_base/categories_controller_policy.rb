@@ -17,6 +17,19 @@ class Controllers::KnowledgeBase::CategoriesControllerPolicy < Controllers::Know
     access(__method__)
   end
 
+  # Reordering requires editor access on the collection's owner.
+  def reorder_root_categories?
+    knowledge_base_editor?
+  end
+
+  def reorder_categories?
+    access(:update?)
+  end
+
+  def reorder_answers?
+    access(:update?)
+  end
+
   private
 
   def object
@@ -28,14 +41,16 @@ class Controllers::KnowledgeBase::CategoriesControllerPolicy < Controllers::Know
   end
 
   def verify_parent
-    if record.params[:parent_id].blank?
-      parent = KnowledgeBase.find(record.params[:knowledge_base_id])
-
-      return KnowledgeBasePolicy.new(user, parent).update?
-    end
+    return knowledge_base_editor? if record.params[:parent_id].blank?
 
     parent = KnowledgeBase::Category.find(record.params[:parent_id])
 
     KnowledgeBase::CategoryPolicy.new(user, parent).update?
+  end
+
+  def knowledge_base_editor?
+    knowledge_base = KnowledgeBase.find(record.params[:knowledge_base_id])
+
+    KnowledgeBasePolicy.new(user, knowledge_base).update?
   end
 end
