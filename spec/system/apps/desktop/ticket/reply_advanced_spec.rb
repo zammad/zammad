@@ -43,11 +43,6 @@ RSpec.describe 'Desktop > Ticket > Editor and Advanced Features', app: :desktop_
     Setting.set('time_accounting_types', true)
     Setting.set('time_accounting_unit', 'minute')
 
-    # Activating full quote makes the editor add the signature for inline
-    # quotes as a side effect, which positions the cursor correctly above the
-    # quoted block instead of inside it.
-    Setting.set('ui_ticket_zoom_article_email_full_quote', true)
-
     support_type
     consulting_type
     text_module
@@ -101,6 +96,48 @@ RSpec.describe 'Desktop > Ticket > Editor and Advanced Features', app: :desktop_
     perform_enqueued_jobs
 
     expect_subscriber_avatar(agent2)
+  end
+
+  # An inline quote gets the signature above it, a full quote below it (zammad#2319).
+  it 'adds the signature after an inline quote' do
+    cite_article_text(first_cite)
+
+    wait_for_test_flag('editor.signatureAdd')
+
+    editor = find_editor('Text')
+    wait_for_editor_ready(editor)
+
+    within(reply_form) do
+      expect(page).to have_css('[data-signature="true"]', text: agent1.fullname)
+    end
+
+    expect(editor_content.index('data-signature')).to be > editor_content.index('<blockquote')
+  end
+
+  # In the default configuration (no full quote) a reply without a selection opens with an
+  # empty body, so the signature handling is the only thing that fills the editor.
+  it 'adds the signature when replying without a selection and without full quote' do
+    within "#article-#{article.id}" do
+      find('button', exact_text: 'Reply', visible: :all).click
+    end
+
+    wait_for_test_flag('editor.signatureAdd')
+
+    editor = find_editor('Text')
+    wait_for_editor_ready(editor)
+
+    within(reply_form) do
+      expect(page).to have_css('[data-signature="true"]', text: agent1.fullname)
+      expect(page).to have_no_css('blockquote')
+    end
+
+    wait_for_test_flag(editor_test_flag(editor, 'focused'))
+    editor.input_element.send_keys('Reply above the signature.')
+
+    # The cursor has to sit above the signature, not inside or after it.
+    expect(reply_form).to have_css(
+      'p:first-of-type', text: 'Reply above the signature.'
+    )
   end
 
   # TipTap on macOS does not bind Cmd+Up / Cmd+Down to "start/end of
@@ -193,6 +230,10 @@ RSpec.describe 'Desktop > Ticket > Editor and Advanced Features', app: :desktop_
 
   def reply_form
     find('#ticketArticleReplyForm')
+  end
+
+  def editor_content
+    page.evaluate_script(%(document.querySelector('#ticketArticleReplyForm [role="textbox"]').innerHTML))
   end
 
   # Click an editor toolbar action by its accessible label, falling back to the

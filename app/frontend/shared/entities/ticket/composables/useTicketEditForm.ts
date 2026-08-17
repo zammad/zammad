@@ -4,7 +4,6 @@ import { keyBy } from 'lodash-es'
 import { computed, nextTick, ref, shallowRef, watch } from 'vue'
 
 import { EXTENSION_NAME as TEXT_TOOL_PLUGIN_NAME } from '#shared/components/Form/fields/FieldEditor/extensions/AiAssistantTextTools.ts'
-import type { FieldEditorContext } from '#shared/components/Form/fields/FieldEditor/types.ts'
 import { FormHandlerExecution } from '#shared/components/Form/types.ts'
 import type {
   ChangedField,
@@ -312,6 +311,7 @@ export const useTicketEditForm = (
         organizationId: computed(() => ticket.value?.organization?.internalId),
         contentType: editorType,
         meta: editorMeta,
+        signatureEnabled: computed(() => !!currentArticleType.value?.signature),
       },
       required: articleTypeFieldProps.body.required,
     },
@@ -500,13 +500,8 @@ export const useTicketEditForm = (
       )
         return
 
-      const body = formNode.find('body', 'name')
-      const context = {
-        body: body?.context as unknown as FieldEditorContext,
-      }
-
       if (changedField?.newValue !== changedField?.oldValue) {
-        currentArticleType.value?.onDeselected?.(ticket.value, context)
+        currentArticleType.value?.onDeselected?.(ticket.value, form.value)
       }
 
       if (!changedField?.newValue) return
@@ -514,7 +509,7 @@ export const useTicketEditForm = (
       if (!newType) return
 
       if (!formNode.context?._open) {
-        newType.onSelected?.(ticket.value, context, form.value)
+        newType.onSelected?.(ticket.value, form.value)
       }
       currentArticleType.value = newType
 
@@ -537,11 +532,7 @@ export const useTicketEditForm = (
 
       if (!articleType) return
 
-      const body = formNode.find('body', 'name') as FormKitNode
-      const context = {
-        body: body.context as unknown as FieldEditorContext,
-      }
-      articleType.onOpened?.(ticket.value, context, form.value)
+      articleType.onOpened?.(ticket.value, form.value)
     })
   }
 

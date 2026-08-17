@@ -71,6 +71,7 @@ export interface FieldEditorContext {
   focus(): void
   getEditorValue(type: EditorContentType): string
   signature?: Pick<PossibleSignature, 'internalId' | 'renderedBody'> | null
+  signatureEnabled?: boolean
 }
 
 export type EditorExtensionSet = 'basic'
@@ -83,6 +84,15 @@ export interface FieldEditorProps {
   inline?: boolean
   extensionSet?: EditorExtensionSet
   signature?: Pick<PossibleSignature, 'internalId' | 'renderedBody'> | null
+  /**
+   * Whether the current article type carries a signature. The editor reconciles its
+   * content against `signature` whenever this or `signature` changes.
+   *
+   * Must be statically declared in the field schema: engagement is decided once at
+   * editor creation. When absent, no signature handling is wired up at all and the
+   * editor never touches signature nodes (e.g. article edit forms, notes, KB).
+   */
+  signatureEnabled?: boolean
   reset?: () => void
   organizationId?: string
   /**

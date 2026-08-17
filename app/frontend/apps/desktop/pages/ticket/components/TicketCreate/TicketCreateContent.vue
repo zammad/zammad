@@ -14,7 +14,6 @@ import { useConfirmation } from '#shared/composables/useConfirmation.ts'
 import { useTicketCreate } from '#shared/entities/ticket/composables/useTicketCreate.ts'
 import { useTicketCreateArticleType } from '#shared/entities/ticket/composables/useTicketCreateArticleType.ts'
 import { useTicketFormOrganizationHandler } from '#shared/entities/ticket/composables/useTicketFormOrganizationHandler.ts'
-import { useTicketSignature } from '#shared/entities/ticket/composables/useTicketSignature.ts'
 import type { TicketFormData } from '#shared/entities/ticket/types.ts'
 import { defineFormSchema } from '#shared/form/defineFormSchema.ts'
 import {
@@ -215,6 +214,7 @@ const formSchema = defineFormSchema([
                   organizationNodeName: 'organization_id',
                 },
               },
+              signatureEnabled: computed(() => values.value.articleSenderType === 'email-out'),
             },
           },
           {
@@ -325,8 +325,6 @@ const changedFields = reactive({
   },
 })
 
-const { signatureHandling } = useTicketSignature()
-
 const tabContext = computed<TaskbarTabContext>((currentContext) => {
   if (!isInitialSettled.value) return {}
 
@@ -412,7 +410,7 @@ const submitCreateTicket = async (event: FormSubmitData<TicketFormData>) => {
         }"
         :schema-data="schemaData"
         :form-updater-id="EnumFormUpdaterId.FormUpdaterUpdaterTicketCreate"
-        :handlers="[useTicketFormOrganizationHandler(), signatureHandling('body')]"
+        :handlers="[useTicketFormOrganizationHandler()]"
         :change-fields="changedFields"
         :form-updater-additional-params="formAdditionalRouteQueryParams"
         use-object-attributes

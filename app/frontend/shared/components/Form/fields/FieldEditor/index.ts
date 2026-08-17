@@ -33,6 +33,7 @@ const fieldDefinition = createInput(
     'customerId',
     'organizationId',
     'signature',
+    'signatureEnabled',
     'meta',
     'contentType',
     'inline',

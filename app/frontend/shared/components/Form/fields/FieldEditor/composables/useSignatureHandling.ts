@@ -9,20 +9,27 @@ import testFlags from '#shared/utils/testFlags.ts'
 import type { Editor } from '@tiptap/vue-3'
 import type { ShallowRef } from 'vue'
 
+const findTopLevelSignature = (editor: Editor): { pos: number; node: ProseMirrorNode } | null => {
+  let existingSignature: { pos: number; node: ProseMirrorNode } | null = null
+
+  editor.state.doc.descendants((node, pos, parent) => {
+    if (node.type.name === 'signature' && parent?.type.name === 'doc') {
+      existingSignature = { pos, node }
+      return false
+    }
+  })
+
+  return existingSignature
+}
+
 const tryToUpsertSignature = (
   editor: ShallowRef<Editor | undefined>,
   signature: PossibleSignature,
   options: { wasFocused: boolean; currentPosition: number },
 ) => {
   const { wasFocused, currentPosition } = options
-  let existingSignature: { pos: number; node: ProseMirrorNode } | null = null
 
-  editor.value?.state.doc.descendants((node, pos, parent) => {
-    if (node.type.name === 'signature' && parent?.type.name === 'doc') {
-      existingSignature = { pos, node }
-      return false
-    }
-  })
+  const existingSignature = editor.value ? findTopLevelSignature(editor.value) : null
 
   if (existingSignature && editor.value) {
     const signatureElement = htmlCleanup(
@@ -37,7 +44,7 @@ const tryToUpsertSignature = (
 
     if (!slice) return false
 
-    const { pos, node } = existingSignature as { pos: number; node: ProseMirrorNode }
+    const { pos, node } = existingSignature
 
     editor.value.commands.insertContentAt(
       {
@@ -137,8 +144,49 @@ export const useSignatureHandling = (editor: ShallowRef<Editor | undefined>) => 
     })
   }
 
+  // Reconcile the editor document against the given target signature, so the caller
+  // never needs to know whether or when the signature was already applied.
+  const reconcileSignature = (
+    target: Pick<PossibleSignature, 'internalId' | 'renderedBody'> | null,
+    options: { resetCursor?: boolean } = {},
+  ) => {
+    if (!editor.value || editor.value.isDestroyed || !editor.value.isEditable) return
+
+    // Signature nodes are only part of the HTML extension set.
+    if (!editor.value.schema.nodes.signature) return
+
+    const existingSignature = findTopLevelSignature(editor.value)
+
+    if (!target) {
+      if (existingSignature) removeSignature()
+      return
+    }
+
+    // The same signature is already present - leave it untouched, so restored drafts
+    // and user edits inside the signature are preserved (#2319).
+    if (
+      existingSignature &&
+      String(existingSignature.node.attrs.signatureId) === String(target.internalId)
+    )
+      return
+
+    addSignature({
+      renderedBody: target.renderedBody,
+      internalId: target.internalId,
+      position: options.resetCursor ? 1 : undefined,
+    })
+
+    // addSignature positions the cursor only for an already focused editor. Set the
+    // selection also for an unfocused one, so a later focus (e.g. the queued reply
+    // form focus) lands at the document start instead of inside the applied content.
+    if (options.resetCursor && !editor.value.isFocused) {
+      editor.value.commands.setTextSelection(1)
+    }
+  }
+
   return {
     addSignature,
     removeSignature,
+    reconcileSignature,
   }
 }

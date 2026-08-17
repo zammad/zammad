@@ -2,7 +2,6 @@
 
 import type {
   EditorContentType,
-  FieldEditorContext,
   FieldEditorProps,
 } from '#shared/components/Form/fields/FieldEditor/types.ts'
 import type { FileUploaded } from '#shared/components/Form/fields/FieldFile/types.ts'
@@ -22,10 +21,6 @@ import type { AllowedFile } from '#shared/utils/files.ts'
 import type { SelectionData } from '#shared/utils/selection.ts'
 
 import type { ComputedRef } from 'vue'
-
-export interface TicketArticleSelectionOptions {
-  body: FieldEditorContext
-}
 
 export interface TicketArticleFormValues {
   articleType?: string
@@ -129,21 +124,16 @@ export interface AppSpecificTicketArticleType {
   contentType?: FieldEditorProps['contentType']
   editorMeta?: FieldEditorProps['meta']
 
-  // when clicked on type, and type is not selected, or when dialog is opened with this type
-  onOpened?(
-    ticket: TicketById,
-    options: TicketArticleSelectionOptions,
-    form: FormRef | undefined,
-  ): void
+  // Whether the article type carries the group email signature (applied by the editor itself).
+  signature?: boolean
 
-  onSelected?(
-    ticket: TicketById,
-    options: TicketArticleSelectionOptions,
-    form: FormRef | undefined,
-  ): void
+  // when clicked on type, and type is not selected, or when dialog is opened with this type
+  onOpened?(ticket: TicketById, form: FormRef | undefined): void
+
+  onSelected?(ticket: TicketById, form: FormRef | undefined): void
 
   // when clicked on other type, but this one is selected
-  onDeselected?(ticket: TicketById, options: TicketArticleSelectionOptions): void
+  onDeselected?(ticket: TicketById, form: FormRef | undefined): void
 
   updateForm?(
     formValues: FormSubmitData<TicketFormData | TicketUpdateFormData>,

@@ -138,6 +138,13 @@ const {
   inputInlineDesktopTextStyles,
 } = useInlineMode(toRef(props, 'context'), wrapperElement)
 
+// Tracks edits since the last external content write, to distinguish an opening
+//   document setup (reset the cursor on signature apply) from an in-session change
+//   like a group switch while typing (keep the cursor position). The signature
+//   apply itself also emits an editor update - it must not count as a user edit.
+let userHasEditedContent = false
+let applyingSignature = false
+
 const editor = useEditor({
   extensions: editorExtensions.value,
   textDirection: 'auto',
@@ -197,6 +204,8 @@ const editor = useEditor({
       ? htmlCleanup(currentValue.value)
       : currentValue.value,
   onUpdate({ editor }) {
+    if (!applyingSignature) userHasEditedContent = true
+
     const value = getEditorContent(editor as Editor, contentType.value)
     props.context.node.input(value)
 
@@ -244,6 +253,37 @@ watch(
   },
 )
 
+const { addSignature, removeSignature, reconcileSignature } = useSignatureHandling(editor)
+
+// Signature handling is engaged statically per editor usage: the field schema either
+//   declares the signatureEnabled prop (ticket article body) or the usage has no
+//   signature semantics at all (profile notes, KB, admin) - then nothing is wired up.
+const signatureHandlingEngaged = props.context.signatureEnabled !== undefined
+
+const signatureTarget = computed(
+  () => (props.context.signatureEnabled && props.context.signature) || null,
+)
+
+const syncSignature = (resetCursor = false) => {
+  if (!signatureHandlingEngaged) return
+
+  // The reconcile dispatches its transactions synchronously.
+  applyingSignature = true
+  try {
+    reconcileSignature(signatureTarget.value, { resetCursor })
+  } finally {
+    applyingSignature = false
+  }
+}
+
+if (signatureHandlingEngaged) {
+  // React to a late arriving signature (form updater response) and to article type or
+  //   group changes. Content writes and mount are handled at their own call sites.
+  //   On an untouched document the apply belongs to the form opening (e.g. the article
+  //   type flips to email after the reply quote was written) - reset the cursor then.
+  watch(signatureTarget, () => syncSignature(!userHasEditedContent), { flush: 'post' })
+}
+
 const setEditorContent = (
   content: string | undefined,
   contentType: EditorContentType,
@@ -267,6 +307,12 @@ const updateValueKey = props.context.node.on('input', ({ payload: newContent }) 
   if (newContent === currentContent) return
 
   setEditorContent(newContent, contentType.value, true)
+
+  // An external content write replaces the whole document and thereby destroys any
+  //   applied signature - reconcile it afterwards (e.g. reply/forward quote writes).
+  //   It also resets the edit tracking: the document is a fresh setup again.
+  userHasEditedContent = false
+  syncSignature(true)
 })
 
 // Convert the current editor content, if the content type changed from outside (e.g. form schema update).
@@ -313,8 +359,6 @@ const characters = computed(() => {
   })
 })
 
-const { addSignature, removeSignature } = useSignatureHandling(editor)
-
 const editorCustomContext = {
   _loaded: true,
   getEditorValue: (type: EditorContentType) => {
@@ -334,6 +378,10 @@ onMounted(() => {
   const onLoad = props.context.onLoad as ((context: FieldEditorContext) => void)[]
   onLoad.forEach((fn) => fn(editorCustomContext))
   onLoad.length = 0
+
+  // The editor may mount after the article form is already set up (async import,
+  //   late dialog rendering) - reconcile the signature it may have missed (#804).
+  syncSignature(true)
 
   if (VITE_TEST_MODE) {
     testFlags.set(`${props.context.formId}.${props.context.node.name}.editor.ready`)

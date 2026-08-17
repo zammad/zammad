@@ -37,7 +37,6 @@ import { useTicketEdit } from '#shared/entities/ticket/composables/useTicketEdit
 import { useTicketEditForm } from '#shared/entities/ticket/composables/useTicketEditForm.ts'
 import { useTicketLiveUserList } from '#shared/entities/ticket/composables/useTicketLiveUserList.ts'
 import { useTicketNumberAndTitle } from '#shared/entities/ticket/composables/useTicketNumberAndTitle.ts'
-import { useTicketSignature } from '#shared/entities/ticket/composables/useTicketSignature.ts'
 import type {
   TicketArticleTimeAccountingFormData,
   TicketUpdateFormData,
@@ -254,8 +253,6 @@ const {
   articleTypeSelectHandler,
   additionalAddArticleNotes,
 } = useTicketEditForm(ticket, form)
-
-const { signatureHandling } = useTicketSignature('email')
 
 const {
   isArticleFormGroupValid,
@@ -774,7 +771,7 @@ const handleShowArticleForm = (
           :disabled="!isTicketEditable"
           :flatten-form-groups="['ticket']"
           :hidden-form-groups="hiddenFormGroups"
-          :handlers="[articleTypeHandler(), signatureHandling('body')]"
+          :handlers="[articleTypeHandler()]"
           :form-kit-plugins="[articleTypeSelectHandler]"
           :schema-data="ticketEditSchemaData"
           :initial-values="initialTicketValue"

@@ -212,8 +212,8 @@ const actionPlugin: TicketArticleActionPlugin = {
       onDeselected: () => {
         deRegisterListeners()
       },
-      onSelected: (ticket, context, form) => handleAllowedBody(form),
-      onOpened: (ticket, context, form) => handleAllowedBody(form),
+      onSelected: (ticket, form) => handleAllowedBody(form),
+      onOpened: (ticket, form) => handleAllowedBody(form),
     }
     return [type]
   },
