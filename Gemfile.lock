@@ -778,7 +778,7 @@ GEM
       faraday (~> 2.0)
       faraday-multipart (~> 1.0)
       zeitwerk (~> 2.6)
-    telephone_number (1.4.25)
+    telephone_number (1.4.26)
     terser (1.2.8)
       execjs (>= 0.3.0, < 3)
     thor (1.5.0)
