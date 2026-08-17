@@ -8,7 +8,7 @@ describe Controllers::KnowledgeBase::Answer::AttachmentsControllerPolicy do
   include_context 'basic Knowledge Base'
 
   let(:record_class) { KnowledgeBase::Answer::AttachmentsController }
-  let(:params)       { { answer_id: internal_answer.id } }
+  let(:params)       { { answer_id: internal_answer.id, form_id: SecureRandom.uuid } }
 
   let(:record) do
     rec        = record_class.new
@@ -27,6 +27,27 @@ describe Controllers::KnowledgeBase::Answer::AttachmentsControllerPolicy do
     let(:user) { create(:agent) }
 
     it { is_expected.to permit_only_actions :clone_to_form }
+
+    context 'when form_id points to another users cache' do
+      let(:other_user) { create(:agent) }
+
+      before do
+        UploadCache.new(params[:form_id]).add(
+          filename:      'intruder.txt',
+          data:          'Intruder content',
+          preferences:   { 'Content-Type' => 'text/plain' },
+          created_by_id: other_user.id,
+        )
+      end
+
+      it { is_expected.to forbid_action :clone_to_form }
+    end
+
+    context 'when form_id is blank' do
+      let(:params) { { answer_id: internal_answer.id } }
+
+      it { is_expected.to forbid_action :clone_to_form }
+    end
   end
 
   context 'when user has write access to the answer' do

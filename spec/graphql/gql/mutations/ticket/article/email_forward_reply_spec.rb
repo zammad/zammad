@@ -76,6 +76,24 @@ RSpec.describe Gql::Mutations::Ticket::Article::EmailForwardReply, :aggregate_fa
       end
     end
 
+    context 'when form_id points to another users cache' do
+      let(:other_agent) { create(:agent) }
+
+      before do
+        UploadCache.new(form_id).add(
+          filename:      'intruder.txt',
+          data:          'Intruder content',
+          preferences:   { 'Content-Type' => 'text/plain' },
+          created_by_id: other_agent.id,
+        )
+      end
+
+      it 'forbids cloning attachments into another users cache' do
+        expect { gql.execute(query, variables: variables) }.not_to change(Store, :count)
+        expect(gql.result.error_type).to eq(Exceptions::Forbidden)
+      end
+    end
+
   end
 
   context 'when logged in as customer', authenticated_as: :customer do
@@ -100,7 +118,7 @@ RSpec.describe Gql::Mutations::Ticket::Article::EmailForwardReply, :aggregate_fa
     end
 
     context 'when origin_by is set' do
-      let(:user) { create(:agent) }
+      let(:user)    { create(:agent) }
       let(:article) { create(:ticket_article, origin_by: user) }
 
       let(:expected_response) do

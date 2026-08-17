@@ -8,7 +8,7 @@ describe Controllers::TicketSharedDraftZoomControllerPolicy do
   let(:record_class) { TicketSharedDraftZoomController }
   let(:ticket)       { create(:ticket) }
   let(:user)         { create(:agent) }
-  let(:params)       { { ticket_id: ticket.id } }
+  let(:params)       { { ticket_id: ticket.id, form_id: SecureRandom.uuid } }
   let(:record)       { record_class.new.tap { it.params = params } }
 
   context 'when has access to ticket' do
@@ -22,6 +22,21 @@ describe Controllers::TicketSharedDraftZoomControllerPolicy do
       let(:user) { ticket.customer }
 
       it { is_expected.to forbid_actions(:show, :create, :update, :destroy, :import_attachments) }
+    end
+
+    context 'when form_id points to another users cache' do
+      let(:other_user) { create(:agent) }
+
+      before do
+        UploadCache.new(params[:form_id]).add(
+          filename:      'intruder.txt',
+          data:          'Intruder content',
+          preferences:   { 'Content-Type' => 'text/plain' },
+          created_by_id: other_user.id,
+        )
+      end
+
+      it { is_expected.to forbid_action(:import_attachments) }
     end
   end
 

@@ -88,7 +88,9 @@ class UploadCache
     end
   end
 
-  # Removes all Store items associated to the form_id.
+  # Removes a single Store item associated to the form_id.
+  # Performs no ownership check — authorization is enforced by
+  # {UploadCachePolicy} (Pundit) and {Controllers::UploadCachesControllerPolicy}.
   #
   # @see Store#remove
   #

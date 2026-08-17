@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class AttachmentsController < ApplicationController
-  prepend_before_action :authorize!, only: %i[show destroy destroy_form]
+  prepend_before_action :authorize!, only: %i[show destroy destroy_form create]
   prepend_before_action :authentication_check, except: %i[show destroy]
   prepend_before_action :authentication_check_only, only: %i[show destroy]
 

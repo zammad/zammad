@@ -101,4 +101,60 @@ RSpec.describe Gql::Mutations::KnowledgeBase::Answer::Suggestion::Content::Trans
       end
     end
   end
+
+  # A standalone context (not nested under 'when fetching content') - that context's own
+  #   `before` unconditionally executes the mutation once against an empty cache, which would
+  #   already have cloned this same user's attachments into the cache by the time a nested
+  #   `before` here seeded the intruder file, confounding the authorization check under test.
+  context 'when form_id points to another users cache', authenticated_as: :agent do
+    let(:agent)       { create(:agent) }
+    let(:other_agent) { create(:agent) }
+
+    let(:knowledge_base_answer)             { create(:knowledge_base_answer, :published, :with_image, :with_attachment) }
+    let(:knowledge_base_answer_translation) { knowledge_base_answer.translation }
+    let(:form_id)                           { '5570fac8-8868-40b7-89e7-1cdabbd954ba' }
+
+    let(:mutation) do
+      <<~MUTATION
+        mutation knowledgeBaseAnswerSuggestionContentTransform(
+          $translationId: ID!
+          $formId: FormId!
+        ) {
+          knowledgeBaseAnswerSuggestionContentTransform(
+            translationId: $translationId
+            formId: $formId
+          ) {
+            body
+            attachments {
+              id
+              name
+              size
+              type
+              preferences
+            }
+            errors {
+              message
+              field
+            }
+          }
+        }
+      MUTATION
+    end
+
+    let(:variables) { { translationId: Gql::ZammadSchema.id_from_object(knowledge_base_answer_translation), formId: form_id } }
+
+    before do
+      UploadCache.new(form_id).add(
+        filename:      'intruder.txt',
+        data:          'Intruder content',
+        preferences:   { 'Content-Type' => 'text/plain' },
+        created_by_id: other_agent.id,
+      )
+      gql.execute(mutation, variables: variables)
+    end
+
+    it 'forbids cloning attachments into another users cache' do
+      expect(gql.result.error_type).to eq(Exceptions::Forbidden)
+    end
+  end
 end

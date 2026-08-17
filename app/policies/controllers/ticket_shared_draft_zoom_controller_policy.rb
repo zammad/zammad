@@ -18,7 +18,7 @@ class Controllers::TicketSharedDraftZoomControllerPolicy < Controllers::Applicat
   end
 
   def import_attachments?
-    access?(__method__)
+    access?(__method__) && upload_cache_access?
   end
 
   private

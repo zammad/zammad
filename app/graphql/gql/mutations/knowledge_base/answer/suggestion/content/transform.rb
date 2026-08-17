@@ -2,6 +2,8 @@
 
 module Gql::Mutations
   class KnowledgeBase::Answer::Suggestion::Content::Transform < BaseMutation
+    include Gql::Mutations::Form::UploadCache::Concerns::HandlesAuthorization
+
     description 'Transform the content of a knowledge base answer suggestion to be usable in the frontend'
 
     argument :translation_id, GraphQL::Types::ID, 'Answer translation ID to get the contents for'

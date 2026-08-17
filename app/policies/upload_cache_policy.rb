@@ -14,6 +14,6 @@ class UploadCachePolicy < ApplicationPolicy
   private
 
   def permission?
-    !record.attachments(created_by_id: nil).exists? || record.attachments(created_by_id: user.id).exists?
+    !record.attachments(created_by_id: nil).where.not(created_by_id: user.id).exists?
   end
 end

@@ -92,4 +92,50 @@ RSpec.describe Gql::Mutations::Form::UploadCache::Add, type: :graphql do
 
     it_behaves_like 'graphql responds with error if unauthenticated'
   end
+
+  context 'when adding to another users populated cache', authenticated_as: :agent do
+    let(:agent)         { create(:agent) }
+    let(:other_agent)   { create(:agent) }
+    let(:form_id)       { SecureRandom.uuid }
+    let(:file_name)     { 'intruder.txt' }
+    let(:file_type)     { 'text/plain' }
+    let(:file_content)  { 'Intruder content' }
+    let(:query) do
+      <<~QUERY
+        mutation formUploadCacheAdd($formId: FormId!, $files: [UploadFileInput!]!) {
+          formUploadCacheAdd(formId: $formId, files: $files) {
+            uploadedFiles {
+              id
+              name
+              type
+            }
+          }
+        }
+      QUERY
+    end
+    let(:variables) do
+      {
+        formId: form_id,
+        files:  [{
+          name:    file_name,
+          type:    file_type,
+          content: Base64.strict_encode64(file_content),
+        }]
+      }
+    end
+
+    before do
+      UploadCache.new(form_id).add(
+        filename:      'other_agent.txt',
+        data:          'Other agent data',
+        preferences:   { 'Content-Type' => 'text/plain' },
+        created_by_id: other_agent.id,
+      )
+      gql.execute(query, variables: variables)
+    end
+
+    it 'forbids adding to another users cache' do
+      expect(gql.result.error_type).to eq(Exceptions::Forbidden)
+    end
+  end
 end

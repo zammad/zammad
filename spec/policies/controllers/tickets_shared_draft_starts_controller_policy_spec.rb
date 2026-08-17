@@ -79,6 +79,42 @@ describe Controllers::TicketsSharedDraftStartsControllerPolicy do
   describe '#import_attachments?' do
     let(:action_name) { :import_attachments }
 
+    let(:record) do
+      rec             = record_class.new
+      rec.action_name = action_name
+      rec.params      = ActionController::Parameters.new(form_id: SecureRandom.uuid)
+      rec
+    end
+
     include_examples 'basic checks'
+
+    context 'when form_id points to another users cache' do
+      let(:form_id)     { SecureRandom.uuid }
+      let(:other_user)  { create(:agent) }
+
+      let(:user) do
+        user = create(:agent)
+        user.user_groups.create! group: create(:group), access: :full
+        user
+      end
+
+      let(:record) do
+        rec             = record_class.new
+        rec.action_name = action_name
+        rec.params      = ActionController::Parameters.new(form_id: form_id)
+        rec
+      end
+
+      before do
+        UploadCache.new(form_id).add(
+          filename:      'intruder.txt',
+          data:          'Intruder content',
+          preferences:   { 'Content-Type' => 'text/plain' },
+          created_by_id: other_user.id,
+        )
+      end
+
+      it { is_expected.to forbid_action(action_name) }
+    end
   end
 end

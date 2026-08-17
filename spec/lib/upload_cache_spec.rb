@@ -7,10 +7,8 @@ RSpec.describe UploadCache do
 
   let(:form_id) { SecureRandom.uuid }
 
-  # required for adding items to the Store
-  before { UserInfo.current_user_id = 1 }
-
   describe '#add' do
+    before { UserInfo.current_user_id = 1 }
 
     it 'adds a Store item' do
       expect do
@@ -28,8 +26,8 @@ RSpec.describe UploadCache do
   end
 
   describe '#attachments' do
-
     before do
+      UserInfo.current_user_id = 1
       upload_cache.add(
         data:        'hello world',
         filename:    'some.txt',
@@ -48,8 +46,8 @@ RSpec.describe UploadCache do
   end
 
   describe '#destroy' do
-
     before do
+      UserInfo.current_user_id = 1
       upload_cache.add(
         data:        'hello world',
         filename:    'some.txt',
@@ -73,8 +71,8 @@ RSpec.describe UploadCache do
   end
 
   describe '#remove_item' do
-
     before do
+      UserInfo.current_user_id = 1
       upload_cache.add(
         data:        'hello world',
         filename:    'some.txt',
@@ -104,6 +102,65 @@ RSpec.describe UploadCache do
 
     it 'fails for non existing UploadCache Store items' do
       expect { upload_cache.remove_item(form_id) }.to raise_error(ActiveRecord::RecordNotFound)
+    end
+  end
+
+  describe '#destroy scoping' do
+    let(:owner)    { create(:user) }
+    let(:stranger) { create(:user) }
+    let(:cache)    { described_class.new(form_id) }
+
+    before do
+      cache.add(
+        data:          'owner file',
+        filename:      'owner.txt',
+        preferences:   { 'Content-Type' => 'text/plain' },
+        created_by_id: owner.id,
+      )
+      cache.add(
+        data:          'stranger file',
+        filename:      'stranger.txt',
+        preferences:   { 'Content-Type' => 'text/plain' },
+        created_by_id: stranger.id,
+      )
+    end
+
+    it 'only removes owners own files' do
+      UserInfo.current_user_id = owner.id
+
+      cache.destroy
+
+      expect(cache.attachments(created_by_id: nil).pluck(:created_by_id)).to eq([stranger.id])
+    end
+
+    it 'removes all files when called without user context' do
+      UserInfo.current_user_id = nil
+
+      cache.destroy
+
+      expect(cache.attachments(created_by_id: nil).count).to eq(0)
+    end
+  end
+
+  describe '#remove_item (library-level, no ownership check)' do
+    let(:owner)    { create(:user) }
+    let(:stranger) { create(:user) }
+    let(:cache)    { described_class.new(form_id) }
+
+    before do
+      cache.add(
+        data:          'some file',
+        filename:      'some.txt',
+        preferences:   { 'Content-Type' => 'text/plain' },
+        created_by_id: owner.id,
+      )
+    end
+
+    it 'allows removal by any user context (library method relies on policy for auth)' do
+      store_id = cache.attachments(created_by_id: nil).first.id
+      UserInfo.current_user_id = stranger.id
+
+      expect { cache.remove_item(store_id) }.to change(Store, :count).by(-1)
     end
   end
 

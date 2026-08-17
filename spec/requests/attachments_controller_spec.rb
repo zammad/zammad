@@ -85,4 +85,44 @@ RSpec.describe AttachmentsController, type: :request do
       expect(response).to have_http_status(:ok)
     end
   end
+
+  describe '#create' do
+    let(:owner) { create(:customer) }
+    let(:attacker) { create(:customer) }
+    let(:form_id)  { SecureRandom.uuid }
+
+    it 'allows upload to own empty cache' do
+      authenticated_as(owner)
+      params = { File: fixture_file_upload('upload/hello_world.txt', 'text/plain'), form_id: form_id }
+
+      post '/api/v1/attachments', params: params
+
+      expect(response).to have_http_status(:ok)
+    end
+
+    it 'forbids upload to foreign populated cache' do
+      UploadCache.new(form_id).add(
+        filename:      'victim.txt',
+        data:          'victim data',
+        preferences:   { 'Content-Type' => 'text/plain' },
+        created_by_id: owner.id,
+      )
+
+      authenticated_as(attacker)
+      params = { File: fixture_file_upload('upload/hello_world.txt', 'text/plain'), form_id: form_id }
+
+      post '/api/v1/attachments', params: params
+
+      expect(response).to have_http_status(:not_found)
+    end
+
+    it 'forbids upload without a form_id' do
+      authenticated_as(owner)
+      params = { File: fixture_file_upload('upload/hello_world.txt', 'text/plain') }
+
+      post '/api/v1/attachments', params: params
+
+      expect(response).to have_http_status(:not_found)
+    end
+  end
 end

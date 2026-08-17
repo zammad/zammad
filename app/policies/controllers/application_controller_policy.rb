@@ -36,4 +36,15 @@ class Controllers::ApplicationControllerPolicy < ApplicationPolicy
     action_permissions_map[missing_method] || super
   end
 
+  private
+
+  # A blank form_id must never grant access - #attachments would otherwise resolve to an
+  #   empty scope, and UploadCachePolicy#permission? treats "no conflicting attachments found"
+  #   as permission granted.
+  def upload_cache_access?(action: :add?)
+    form_id = record.params[:form_id]
+    return false if form_id.blank?
+
+    Pundit.policy(user, UploadCache.new(form_id))&.public_send(action)
+  end
 end

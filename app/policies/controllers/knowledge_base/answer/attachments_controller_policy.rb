@@ -10,7 +10,7 @@ class Controllers::KnowledgeBase::Answer::AttachmentsControllerPolicy < Controll
   end
 
   def clone_to_form?
-    answer_policy.show?
+    answer_policy.show? && upload_cache_access?
   end
 
   private

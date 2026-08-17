@@ -2,6 +2,8 @@
 
 module Gql::Mutations
   class Ticket::Article::EmailForwardReply < BaseMutation
+    include Gql::Mutations::Form::UploadCache::Concerns::HandlesAuthorization
+
     description 'Prepare for a new forward or reply email article'
 
     argument :article_id, GraphQL::Types::ID, loads: Gql::Types::Ticket::ArticleType, description: 'The article to be forwarded or replied to'
