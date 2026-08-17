@@ -229,19 +229,28 @@ describe('QueryHandler', () => {
       })
     })
 
-    it('on result trigger', async () => {
+    it('registers and unregisters an onResult callback', async () => {
       await scope.run(async () => {
-        expect.assertions(1)
+        expect.assertions(2)
 
         const queryHandlerObject = new QueryHandler(sampleQuery({ id: 1 }))
+        const resultCallbackSpy = vi.fn()
 
-        queryHandlerObject.onResult((result) => {
-          if (result.data) {
-            expect(result.data).toEqual(querySampleResult)
-          }
-        })
+        const { off } = queryHandlerObject.onResult((result) => resultCallbackSpy(result))
 
         await waitFirstResult(queryHandlerObject)
+
+        expect(resultCallbackSpy).toHaveBeenCalledWith(
+          expect.objectContaining({ data: querySampleResult }),
+        )
+
+        const callbackCountBeforeOff = resultCallbackSpy.mock.calls.length
+
+        off()
+        await queryHandlerObject.refetch()
+        await waitForNextTick()
+
+        expect(resultCallbackSpy).toHaveBeenCalledTimes(callbackCountBeforeOff)
       })
     })
 

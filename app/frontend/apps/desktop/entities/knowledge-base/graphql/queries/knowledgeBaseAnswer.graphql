@@ -1,0 +1,18 @@
+query knowledgeBaseAnswer($answerId: ID!, $locale: String) {
+  knowledgeBaseAnswer(answerId: $answerId, locale: $locale) {
+    id
+    ...knowledgeBaseAnswerAttributes
+    navigation {
+      index
+      totalCount
+      previousAnswer {
+        id
+        title
+      }
+      nextAnswer {
+        id
+        title
+      }
+    }
+  }
+}

@@ -8,7 +8,7 @@ import { mockTicketQuery } from '#shared/entities/ticket/graphql/queries/ticket.
 import { createDummyArticle } from '#shared/entities/ticket-article/__tests__/mocks/ticket-articles.ts'
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
 
-import { mockLinkListQuery } from '../../graphql/queries/linkList.mocks.ts'
+import { mockLinkListQuery } from '#desktop/entities/link/graphql/queries/linkList.mocks.ts'
 
 describe('ticket detail view', () => {
   it('has no accessibility violations in main content', async () => {

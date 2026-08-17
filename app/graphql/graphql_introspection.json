@@ -8225,7 +8225,7 @@
           "fields": [
             {
               "name": "archivedAt",
-              "description": null,
+              "description": "Only for users with internal access to the category; the public site knows publication only",
               "args": [],
               "type": {
                 "kind": "SCALAR",
@@ -8248,6 +8248,30 @@
               "deprecationReason": null
             },
             {
+              "name": "attachments",
+              "description": "Files attached to the answer, sorted by file name; locale-independent, and without the inline images of the translation body",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "LIST",
+                  "name": null,
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "StoredFile",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "category",
               "description": "resolver for Rails' belongs_to relationship",
               "args": [],
@@ -8259,6 +8283,18 @@
                   "name": "KnowledgeBaseCategory",
                   "ofType": null
                 }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "content",
+              "description": "Body of the translation in the requested locale (falls back to the primary locale, like the title)",
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "KnowledgeBaseAnswerTranslationContent",
+                "ofType": null
               },
               "isDeprecated": false,
               "deprecationReason": null
@@ -8292,6 +8328,30 @@
               "deprecationReason": null
             },
             {
+              "name": "editedAt",
+              "description": "When the translation in the requested locale was last edited; only for users with internal access to the category",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "ISO8601DateTime",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "editedBy",
+              "description": "Last user that edited the translation in the requested locale; only for users with internal access to the category",
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "User",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "id",
               "description": null,
               "args": [],
@@ -8309,7 +8369,7 @@
             },
             {
               "name": "internalAt",
-              "description": null,
+              "description": "Only for users with internal access to the category; the public site knows publication only",
               "args": [],
               "type": {
                 "kind": "SCALAR",
@@ -8326,6 +8386,18 @@
               "type": {
                 "kind": "OBJECT",
                 "name": "User",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "navigation",
+              "description": "Position and neighbours of this answer within its category listing",
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "KnowledgeBaseAnswerNavigation",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -8398,6 +8470,18 @@
               "type": {
                 "kind": "SCALAR",
                 "name": "String",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "translationId",
+              "description": "ID of the translation in the requested locale (falls back to the primary locale, like the title)",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "ID",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -8567,6 +8651,81 @@
                 "ofType": {
                   "kind": "OBJECT",
                   "name": "KnowledgeBaseAnswer",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
+          "name": "KnowledgeBaseAnswerNavigation",
+          "description": "Navigation between visible answers in one category",
+          "fields": [
+            {
+              "name": "index",
+              "description": "1-based position of this answer among the visible answers of its category",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "nextAnswer",
+              "description": "Next sibling; wraps to the first answer",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "KnowledgeBaseAnswer",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "previousAnswer",
+              "description": "Previous sibling; wraps to the last answer",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "KnowledgeBaseAnswer",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "totalCount",
+              "description": "Number of answers visible to the user in this answer’s category",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
                   "ofType": null
                 }
               },
@@ -8970,6 +9129,29 @@
         },
         {
           "kind": "OBJECT",
+          "name": "KnowledgeBaseAnswerUpdatesPayload",
+          "description": "Autogenerated return type of KnowledgeBaseAnswerUpdates.",
+          "fields": [
+            {
+              "name": "answer",
+              "description": "Updated answer",
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "KnowledgeBaseAnswer",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
           "name": "KnowledgeBaseCategory",
           "description": "Knowledge Base Category",
           "fields": [
@@ -9071,6 +9253,22 @@
                 "ofType": {
                   "kind": "SCALAR",
                   "name": "Int",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "iconSet",
+              "description": "Icon font of the knowledge base this category belongs to, needed to render `categoryIcon`",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "KnowledgeBaseIconSet",
                   "ofType": null
                 }
               },
@@ -9420,7 +9618,7 @@
           "fields": [
             {
               "name": "affectedCategoryIds",
-              "description": "IDs of the changed category and its ancestors (whose counts/visibility may change); empty for knowledge-base-wide changes",
+              "description": "IDs of the changed category and its ancestors (whose counts/visibility may change), limited to the ones visible to the subscriber; empty for knowledge-base-wide changes",
               "args": [],
               "type": {
                 "kind": "LIST",
@@ -9453,6 +9651,16 @@
           ],
           "inputFields": null,
           "interfaces": [],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "SCALAR",
+          "name": "KnowledgeBaseIconSet",
+          "description": "Icon font a knowledge base renders its category icons from; one of FontAwesome, anticon, material, ionicons, Simple-Line-Icons",
+          "fields": null,
+          "inputFields": null,
+          "interfaces": null,
           "enumValues": null,
           "possibleTypes": null
         },
@@ -18042,6 +18250,47 @@
               "deprecationReason": null
             },
             {
+              "name": "knowledgeBaseAnswer",
+              "description": "Fetch a single knowledge base answer",
+              "args": [
+                {
+                  "name": "answerId",
+                  "description": "Answer to open",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "ID",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "locale",
+                  "description": "System locale code used to resolve titles",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "KnowledgeBaseAnswer",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "knowledgeBaseAnswerSuggestions",
               "description": "Suggestions for insertable knowledge base answers in a new ticket article",
               "args": [
@@ -21060,6 +21309,61 @@
                 "ofType": {
                   "kind": "OBJECT",
                   "name": "ConfigUpdatesPayload",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "knowledgeBaseAnswerUpdates",
+              "description": "Updates to a single knowledge base answer",
+              "args": [
+                {
+                  "name": "initial",
+                  "description": "Return initial data by subscribing",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Boolean",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": "false"
+                },
+                {
+                  "name": "answerId",
+                  "description": "Answer identifier",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "ID",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "locale",
+                  "description": "System locale code used to resolve titles",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "KnowledgeBaseAnswerUpdatesPayload",
                   "ofType": null
                 }
               },

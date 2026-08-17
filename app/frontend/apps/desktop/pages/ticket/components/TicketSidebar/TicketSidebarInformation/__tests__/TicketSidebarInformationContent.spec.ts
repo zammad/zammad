@@ -17,12 +17,12 @@ import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 //   `useTicketSidebar` (which imports the registry) again. Pull the registry in first, so the glob
 //   cannot run while `information.ts` is still initializing.
 import '#desktop/pages/ticket/components/TicketSidebar/plugins/index.ts'
+import { LinkListDocument } from '#desktop/entities/link/graphql/queries/linkList.api.ts'
+import { mockLinkListQuery } from '#desktop/entities/link/graphql/queries/linkList.mocks.ts'
 import plugin from '#desktop/pages/ticket/components/TicketSidebar/plugins/information.ts'
 import TicketSidebarInformationContent from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue'
 import { TICKET_KEY } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
 import { TICKET_SIDEBAR_SYMBOL } from '#desktop/pages/ticket/composables/useTicketSidebar.ts'
-import { LinkListDocument } from '#desktop/pages/ticket/graphql/queries/linkList.api.ts'
-import { mockLinkListQuery } from '#desktop/pages/ticket/graphql/queries/linkList.mocks.ts'
 import { TicketAiRelatedKnowledgeBaseAnswersDocument } from '#desktop/pages/ticket/graphql/queries/ticketAIRelatedKnowledgeBaseAnswers.api.ts'
 import { mockTicketAiRelatedKnowledgeBaseAnswersQuery } from '#desktop/pages/ticket/graphql/queries/ticketAIRelatedKnowledgeBaseAnswers.mocks.ts'
 import { TicketSidebarScreenType } from '#desktop/pages/ticket/types/sidebar.ts'
@@ -45,6 +45,19 @@ const renderInformationSidebar = (
     },
     form: true,
     router: true,
+    // Adds the answer route (related-knowledge answer links resolve to it) on top of the
+    //   suite's usual default routes - passing `routerRoutes` at all replaces them wholesale.
+    routerRoutes: [
+      { path: '/', name: 'Dashboard', component: { template: 'Welcome to zammad.' } },
+      { path: '/example', name: 'Example', component: { template: 'This is a example page.' } },
+      { path: '/:pathMatch(.*)*', name: 'Error', component: { template: 'Error page' } },
+      { path: '/search/:searchTerm?', name: 'Search', component: { template: 'search' } },
+      {
+        path: '/knowledge-base/locale/:localeCode/answer/:answerInternalId',
+        name: 'KnowledgeBaseAnswer',
+        component: { template: '<div />' },
+      },
+    ],
     provide: [
       [
         TICKET_KEY,
@@ -269,7 +282,7 @@ describe('TicketSidebarInformationContent', () => {
                 title: 'Reset your password',
                 answer: {
                   id: convertToGraphQLId('KnowledgeBase::Answer', 1),
-                  category: { knowledgeBase: { id: convertToGraphQLId('KnowledgeBase', 1) } },
+                  category: { id: convertToGraphQLId('KnowledgeBase::Category', 1) },
                 },
               },
             },

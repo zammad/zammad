@@ -14,6 +14,15 @@ RSpec.describe KnowledgeBase::Answer::Translation, current_user_id: 1, type: :mo
   it { is_expected.to belong_to(:answer) }
   it { is_expected.to belong_to(:kb_locale) }
 
+  describe '#desktop_url' do
+    let(:translation) { subject }
+
+    it 'points at the answer page of the desktop app, in the locale of this translation' do
+      expect(translation.desktop_url)
+        .to eq("/desktop/knowledge-base/locale/#{translation.kb_locale.system_locale.locale}/answer/#{translation.answer_id}")
+    end
+  end
+
   describe '#edited_at' do
     let(:translation) { subject }
 

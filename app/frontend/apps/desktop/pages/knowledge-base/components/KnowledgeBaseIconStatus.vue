@@ -3,14 +3,18 @@
 <script setup lang="ts">
 import { computed, toRef } from 'vue'
 
-import CommonIcon from '#shared/components/CommonIcon/CommonIcon.vue'
 import type { Sizes } from '#shared/components/CommonIcon/types.ts'
 import { EnumKnowledgeBaseVisibility } from '#shared/graphql/types.ts'
 
 import { useKnowledgeBaseVisibility } from '../composables/useKnowledgeBaseVisibility.ts'
 
+import KnowledgeBaseCategoryIcon from './KnowledgeBaseCategoryIcon.vue'
+
+import type { KnowledgeBaseIconSet } from '../types.ts'
+
 interface Props {
   name: string
+  set: KnowledgeBaseIconSet
   size?: Sizes
   status?: EnumKnowledgeBaseVisibility
 }
@@ -33,26 +37,29 @@ const tooltipText = computed(() => {
       return undefined
   }
 })
+
+const metaIconSize = computed(() => {
+  switch (props.size) {
+    case 'xs':
+      return { width: 6, height: 6 }
+    default:
+      return { width: 12, height: 12 }
+  }
+})
 </script>
 
 <template>
   <div v-tooltip="$t(tooltipText)" class="relative h-fit">
-    <CommonIcon
-      :name="name"
-      :size="size"
-      :class="currentMetaClass"
-      class="group-hover:text-black! group-active:text-white! group-hover:dark:text-white!"
-    />
+    <KnowledgeBaseCategoryIcon :name="name" :set="set" :size="size" :class="currentMetaClass" />
     <div
       v-if="currentMetaIcon"
-      class="absolute inset-e-0 bottom-0 flex translate-y-1 items-center justify-center rounded-full bg-blue-200 p-0.5 group-hover:bg-blue-600 group-active:bg-blue-800! ltr:translate-x-2 rtl:-translate-x-2 dark:bg-gray-500 group-hover:dark:bg-blue-900"
+      class="absolute inset-e-0 bottom-0 flex translate-y-1 items-center justify-center rounded-full bg-blue-200 p-0.5 ltr:translate-x-2 rtl:-translate-x-2 dark:bg-gray-500"
     >
       <CommonIcon
         :name="currentMetaIcon"
         decorative
-        size="xs"
+        :fixed-size="metaIconSize"
         :class="currentMetaClass"
-        class="group-hover:text-black! group-active:text-white! group-hover:dark:text-white!"
       />
     </div>
   </div>

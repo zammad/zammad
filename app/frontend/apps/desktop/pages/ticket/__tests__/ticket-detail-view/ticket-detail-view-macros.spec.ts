@@ -15,9 +15,8 @@ import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/moc
 import { mockMacrosQuery } from '#shared/graphql/queries/macros.mocks.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
+import { mockLinkListQuery } from '#desktop/entities/link/graphql/queries/linkList.mocks.ts'
 import { getUserCurrentTaskbarItemUpdatesSubscriptionHandler } from '#desktop/entities/user/current/graphql/subscriptions/userCurrentTaskbarItemUpdates.mocks.ts'
-
-import { mockLinkListQuery } from '../../graphql/queries/linkList.mocks.ts'
 
 const mockBaseQueries = () => {
   const ticket = createDummyTicket()

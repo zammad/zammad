@@ -13,7 +13,7 @@ import { mockTicketSharedDraftZoomShowQuery } from '#shared/entities/ticket-shar
 import { mockMacrosQuery } from '#shared/graphql/queries/macros.mocks.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
-import { mockLinkListQuery } from '../../graphql/queries/linkList.mocks.ts'
+import { mockLinkListQuery } from '#desktop/entities/link/graphql/queries/linkList.mocks.ts'
 
 describe('Ticket detail view - draft handling', () => {
   describe('when user is an agent', () => {

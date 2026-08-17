@@ -195,6 +195,9 @@ const getScalarValue = (
       return {}
     case 'UriHttpString':
       return faker.internet.url()
+    // TODO: Introduce a layer of abstraction for custom scalars to avoid hardcoding them here.
+    case 'KnowledgeBaseIconSet':
+      return 'FontAwesome'
     default:
       throw new Error(`not implemented for ${definition.name}`)
   }

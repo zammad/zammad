@@ -1,0 +1,12 @@
+subscription knowledgeBaseAnswerUpdates(
+  $answerId: ID!
+  $locale: String
+  $initial: Boolean = false
+) {
+  knowledgeBaseAnswerUpdates(answerId: $answerId, locale: $locale, initial: $initial) {
+    answer {
+      id
+      ...knowledgeBaseAnswerAttributes
+    }
+  }
+}

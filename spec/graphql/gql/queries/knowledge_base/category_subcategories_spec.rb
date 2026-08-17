@@ -12,6 +12,7 @@ RSpec.describe Gql::Queries::KnowledgeBase::CategorySubcategories, type: :graphq
           category { isVisiblePublicly translationMissing breadcrumb { id title visibility } }
           subcategories {
             id title visibility translationMissing answerCount subcategoryCount directAnswerCount directSubcategoryCount
+            categoryIcon iconSet
             breadcrumb { id title }
           }
         }
@@ -51,6 +52,17 @@ RSpec.describe Gql::Queries::KnowledgeBase::CategorySubcategories, type: :graphq
       it 'color-codes categories by their highest content visibility', :aggregate_failures do
         expect(category_node(category)).to include('visibility' => 'published')
         expect(category_node(other_category)).to include('visibility' => 'draft')
+      end
+
+      it 'exposes the icon set of the knowledge base the category belongs to' do
+        expect(category_node(category)).to include('iconSet' => 'FontAwesome')
+      end
+
+      it 'exposes a dashed icon set verbatim' do
+        knowledge_base.update!(iconset: 'Simple-Line-Icons')
+        gql.execute(query, variables:)
+
+        expect(category_node(category)).to include('iconSet' => 'Simple-Line-Icons')
       end
 
       it 'color-codes a category with only archived content as archived' do

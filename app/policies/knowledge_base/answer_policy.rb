@@ -3,11 +3,15 @@
 class KnowledgeBase::AnswerPolicy < ApplicationPolicy
   USER_REQUIRED = false
 
+  # A user without internal access to the category still reaches published answers —
+  #   that is the content of the public help site — but not the editorial lifecycle
+  #   around them. Expressing that as a 'FieldScope' keeps the split in one place,
+  #   instead of having consumers re-derive the category access for themselves.
   def show?
     return true if access_editor?
+    return true if access_reader? && record.visible_internally?
 
-    record.visible? ||
-      (access_reader? && record.visible_internally?)
+    record.visible? && public_field_scope
   end
 
   def show_public?
@@ -45,5 +49,11 @@ class KnowledgeBase::AnswerPolicy < ApplicationPolicy
 
   def access_reader?
     access == 'reader'
+  end
+
+  # Who edited an answer, and when it went internal or was archived, is editorial
+  #   information — the public site knows publication only.
+  def public_field_scope
+    @public_field_scope ||= ApplicationPolicy::FieldScope.new(deny: %i[internal_at archived_at edited_at edited_by])
   end
 end

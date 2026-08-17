@@ -11,7 +11,6 @@ import { convertToGraphQLId, getIdFromGraphQLId } from '#shared/graphql/utils.ts
 
 import TicketKnowledgeBaseLinks from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseLinks.vue'
 
-const KNOWLEDGE_BASE_ID = convertToGraphQLId('KnowledgeBase', 1)
 const KNOWLEDGE_BASE_LOCALE = 'en-us'
 
 // The popover the trigger wraps reads the full translation, so give it a complete
@@ -47,7 +46,6 @@ const linkedAnswer = (
       __typename: 'KnowledgeBaseCategory',
       id: convertToGraphQLId('KnowledgeBase::Category', id),
       title: 'Account',
-      knowledgeBase: { __typename: 'KnowledgeBase', id: KNOWLEDGE_BASE_ID },
     },
   },
   kbLocale: {
@@ -66,6 +64,17 @@ const renderLinks = (
       isTicketEditable,
     },
     router: true,
+    routerRoutes: [
+      { path: '/', name: 'Root', component: { template: '<div />' } },
+      {
+        path: '/knowledge-base/locale/:localeCode/answer/:answerInternalId',
+        name: 'KnowledgeBaseAnswer',
+        component: { template: '<div />' },
+      },
+      // Answer links leaving the app (the public answer page) resolve to the catch-all, like they
+      //   do in the real router.
+      { path: '/:pathMatch(.*)*', name: 'Error', component: { template: '<div />' } },
+    ],
     store: true,
   })
 
@@ -87,9 +96,7 @@ describe('TicketKnowledgeBaseLinks', () => {
     expect(first).toBeInTheDocument()
     expect(first.closest('a')).toHaveAttribute(
       'href',
-      expect.stringContaining(
-        `#knowledge_base/${getIdFromGraphQLId(KNOWLEDGE_BASE_ID)}/locale/${KNOWLEDGE_BASE_LOCALE}/answer/${getIdFromGraphQLId(linkedAnswer(1, '').answer.id)}`,
-      ),
+      `/desktop/knowledge-base/locale/${KNOWLEDGE_BASE_LOCALE}/answer/${getIdFromGraphQLId(linkedAnswer(1, '').answer.id)}`,
     )
 
     expect(wrapper.getByIconName('kb-published')).toBeInTheDocument()

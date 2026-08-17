@@ -4,7 +4,7 @@ import { getIdFromGraphQLId } from '#shared/graphql/utils.ts'
 
 // The legacy object names the preview endpoint switches on (`params[:object]`),
 //   which are not the GraphQL/Rails class names.
-type PreviewObject = 'KnowledgeBase' | 'KnowledgeBaseCategory'
+type PreviewObject = 'KnowledgeBase' | 'KnowledgeBaseCategory' | 'KnowledgeBaseAnswer'
 
 // Build the URL of the REST preview endpoint for a knowledge base node. That
 //   endpoint mints a per-editor preview token and redirects to the public help

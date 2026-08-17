@@ -15,6 +15,16 @@ describe('knowledgeBasePreviewUrl', () => {
     expect(url).toBe('/api/v1/knowledge_bases/preview/KnowledgeBaseCategory/42/en-us')
   })
 
+  it('builds the answer preview endpoint URL', () => {
+    const url = knowledgeBasePreviewUrl(
+      'KnowledgeBaseAnswer',
+      convertToGraphQLId('KnowledgeBase::Answer', 7),
+      'en-us',
+    )
+
+    expect(url).toBe('/api/v1/knowledge_bases/preview/KnowledgeBaseAnswer/7/en-us')
+  })
+
   it('builds the knowledge base root preview endpoint URL', () => {
     const url = knowledgeBasePreviewUrl(
       'KnowledgeBase',

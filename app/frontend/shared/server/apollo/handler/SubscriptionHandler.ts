@@ -41,7 +41,7 @@ export default class SubscriptionHandler<
       result: FetchResult<TResult, Record<string, unknown>, Record<string, unknown>>,
     ) => void,
   ) {
-    this.operationResult.onResult(callback)
+    return this.operationResult.onResult(callback)
   }
 
   public async onSubscribed(): Promise<Maybe<TResult> | undefined> {

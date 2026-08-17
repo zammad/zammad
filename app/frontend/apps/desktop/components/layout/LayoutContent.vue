@@ -40,6 +40,11 @@ export interface Props {
    */
   showInlineHelp?: boolean
   showSidebar?: boolean
+  /**
+   * Identifies the content sidebar's collapsed state and persisted width, so
+   * sections using this layout do not share them.
+   */
+  sidebarName?: SidebarName
   noPadding?: boolean
   /**
    * Removes padding from main container
@@ -62,6 +67,7 @@ const props = withDefaults(defineProps<Props>(), {
   showInlineHelp: false,
   contentAlignment: 'start',
   activeTab: '',
+  sidebarName: SidebarName.TicketContent,
 })
 
 const maxWidth = computed(() => (props.width === 'narrow' ? '600px' : undefined))
@@ -79,7 +85,7 @@ const {
   gridColumns,
   resizeSidebar,
   resetSidebarWidth,
-} = useResizeGridColumns(SidebarName.TicketContent, SidebarPosition.End)
+} = useResizeGridColumns(props.sidebarName, SidebarPosition.End)
 
 const { transitions } = useTransitionConfig()
 
@@ -88,7 +94,7 @@ const { isSmallScreen } = useAppBreakpoints()
 const { isSidebarCollapsed: isPrimaryNavSidebarCollapsed } = useSidebarDisplay(SidebarName.Primary)
 
 const { isSidebarCollapsed: isContentSidebarCollapsed, toggleSidebar: toggleContentSidebar } =
-  useSidebarDisplay(SidebarName.TicketContent)
+  useSidebarDisplay(props.sidebarName)
 
 // When the primary nav expands on a small screen (<1024px), collapse the content sidebar.
 watch(isPrimaryNavSidebarCollapsed, (isCollapsed) => {
@@ -184,7 +190,7 @@ const { hasReducedMotion } = useReducedMotion()
         v-if="$slots.sideBar"
         v-show="showSidebar"
         id="content-sidebar"
-        :name="SidebarName.TicketContent"
+        :name="sidebarName"
         :position="SidebarPosition.End"
         :aria-label="$t('Content sidebar')"
         collapsible

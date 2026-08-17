@@ -50,5 +50,18 @@ RSpec.describe KnowledgeBase::Answer::Translation::Content, current_user_id: 1, 
       expect { content.save! }
         .not_to change { translation.reload.edited_at }
     end
+
+    it 'credits the editor who changed the body, not whoever last touched the translation' do
+      first_editor  = create(:agent)
+      second_editor = create(:agent)
+
+      UserInfo.current_user_id = first_editor.id
+      translation.update!(title: 'Updated title') # only touches translation directly, e.g. via its own edit
+
+      UserInfo.current_user_id = second_editor.id
+      content.update!(body: 'Updated body') # only touches content, bumped onto translation via the callback
+
+      expect(translation.reload.updated_by_id).to eq(second_editor.id)
+    end
   end
 end

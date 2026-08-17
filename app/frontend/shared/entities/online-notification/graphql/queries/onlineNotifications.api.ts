@@ -79,9 +79,6 @@ export const OnlineNotificationsDocument = gql`
               id
               category {
                 id
-                knowledgeBase {
-                  id
-                }
               }
             }
           }

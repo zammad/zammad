@@ -71,9 +71,6 @@ query onlineNotifications {
               id
               category {
                 id
-                knowledgeBase {
-                  id
-                }
               }
             }
           }

@@ -2,12 +2,31 @@
 
 import { generateObjectData } from '#tests/graphql/builders/index.ts'
 import renderComponent from '#tests/support/components/renderComponent.ts'
+import { mockPermissions } from '#tests/support/mock-permissions.ts'
 
 import type { OnlineNotificationConnection } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import { edgesToArray } from '#shared/utils/helpers.ts'
 
 import NotificationList from '#desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationPopover/NotificationList.vue'
+
+import type { RouteRecordRaw } from 'vue-router'
+
+// The router only initializes once per spec file (see renderComponent.ts), so every `router:
+//   true` call below shares this same route set - passing it just on the last one would be
+//   silently ignored.
+const routerRoutes: RouteRecordRaw[] = [
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'Error',
+    component: { template: '<div />' },
+  },
+  {
+    path: '/knowledge-base/locale/:localeCode/answer/:answerInternalId(\\d+)',
+    name: 'KnowledgeBaseAnswer',
+    component: { template: '<div />' },
+  },
+]
 
 const defaults = {
   edges: [
@@ -136,6 +155,7 @@ describe('NotificationList', () => {
         ),
       },
       router: true,
+      routerRoutes,
     })
 
     const notificationsItems = wrapper.getAllByRole('listitem')
@@ -194,6 +214,7 @@ describe('NotificationList', () => {
         list,
       },
       router: true,
+      routerRoutes,
     })
 
     await wrapper.events.click(
@@ -209,6 +230,44 @@ describe('NotificationList', () => {
     ).toHaveAttribute('aria-description', 'Remove notification')
 
     expect(wrapper.emitted('remove')).toEqual([[list[0]]])
+  })
+
+  it('marks an unseen notification as seen and emits visited when its link is clicked', async () => {
+    const list = edgesToArray(
+      generateObjectData<OnlineNotificationConnection>('OnlineNotificationConnection', defaults),
+    )
+    // The second entry (id 3, "GitLab") is unseen and has a real link (a ticket).
+    const notification = list[1]
+
+    const wrapper = renderComponent(NotificationList, {
+      props: { list },
+      router: true,
+      routerRoutes,
+    })
+
+    await wrapper.events.click(wrapper.getByRole('link', { name: /GitLab/ }))
+
+    expect(wrapper.emitted('visited')).toEqual([[notification]])
+    expect(wrapper.emitted('seen')).toEqual([[notification]])
+  })
+
+  it('does not re-emit seen for a notification that is already seen', async () => {
+    const list = edgesToArray(
+      generateObjectData<OnlineNotificationConnection>('OnlineNotificationConnection', defaults),
+    )
+    // The first entry (id 1, "Bunch of articles") is already seen.
+    const notification = list[0]
+
+    const wrapper = renderComponent(NotificationList, {
+      props: { list },
+      router: true,
+      routerRoutes,
+    })
+
+    await wrapper.events.click(wrapper.getByRole('link', { name: /Bunch of articles/ }))
+
+    expect(wrapper.emitted('visited')).toEqual([[notification]])
+    expect(wrapper.emitted('seen')).toBeUndefined()
   })
 
   it('displays inaccessible notification message', async () => {
@@ -248,6 +307,11 @@ describe('NotificationList', () => {
   })
 
   it('displays AI agent notification', async () => {
+    // The knowledge-base-answer builder checks useSessionStore().hasPermission('knowledge_base.*')
+    //   to decide between the internal route and the public help page - without a mocked
+    //   permission it defaults to no access and falls back to the help page.
+    mockPermissions(['knowledge_base.*'])
+
     const wrapper = renderComponent(NotificationList, {
       props: {
         list: edgesToArray(
@@ -289,9 +353,6 @@ describe('NotificationList', () => {
                       id: convertToGraphQLId('KnowledgeBase::Answer', 6),
                       category: {
                         id: convertToGraphQLId('KnowledgeBase::Category', 1),
-                        knowledgeBase: {
-                          id: convertToGraphQLId('KnowledgeBase', 2),
-                        },
                       },
                     },
                   },
@@ -307,8 +368,15 @@ describe('NotificationList', () => {
         ),
       },
       router: true,
+      routerRoutes,
+      store: true,
     })
 
     expect(wrapper.getByLabelText('AI agent')).toBeInTheDocument()
+
+    expect(wrapper.getByRole('link')).toHaveAttribute(
+      'href',
+      '/desktop/knowledge-base/locale/en-us/answer/6',
+    )
   })
 })

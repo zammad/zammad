@@ -9,6 +9,7 @@ export const KnowledgeBaseCategoryPreInfoFragmentDoc = gql`
     id
     title
     categoryIcon
+    iconSet
     visibility
   }
 }

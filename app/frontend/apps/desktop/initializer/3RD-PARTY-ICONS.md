@@ -1,12 +1,16 @@
 # Third Party Icons (`desktop`)
 
+- `assets/archive-fill.svg`
 - `assets/arrow-left.svg`
 - `assets/arrow-right.svg`
 - `assets/arrow-bar-left.svg`
 - `assets/arrow-bar-right.svg`
+- `assets/arrow-clockwise.svg`
+- `assets/arrow-counterclockwise.svg`
 - `assets/arrow-repeat.svg`
 - `assets/arrows-collapse.svg`
 - `assets/arrows-expand.svg`
+- `assets/arrows-fullscreen.svg`
 - `assets/book.svg`
 - `assets/box-arrow-in-right.svg`
 - `assets/box-arrow-up-right.svg`
@@ -102,6 +106,8 @@
 - `assets/x-circle.svg`
 - `assets/x-lg.svg`
 - `assets/x.svg`
+- `assets/zoom-in.svg`
+- `assets/zoom-out.svg`
   - Author: The Bootstrap Authors
   - License: MIT
   - URL: <https://github.com/twbs/icons>

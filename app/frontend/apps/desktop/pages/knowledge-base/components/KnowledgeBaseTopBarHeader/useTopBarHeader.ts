@@ -11,9 +11,14 @@ export const useTopBarHeader = (props: Ref<TopBarHeaderProps>) => {
   const copyKnowledgeBaseNameToClipboard = () => {
     if (!props.value.title) return
 
+    const anchor = document.createElement('a')
+    anchor.href = document.URL
+    anchor.textContent = props.value.title
+
     copyToClipboard([
       new ClipboardItem({
         'text/plain': props.value.title,
+        'text/html': anchor.outerHTML,
       }),
     ])
   }

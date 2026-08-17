@@ -3,6 +3,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
+import { i18n } from '#shared/i18n.ts'
 import { useLocaleStore } from '#shared/stores/locale.ts'
 
 import type { BreadcrumbItem } from './types.ts'
@@ -32,13 +33,20 @@ const sizeClasses = computed(() => {
 
   return ['text-base'] // default -> 'large'
 })
+
+const getItemLabel = (item: BreadcrumbItem) =>
+  item.noOptionLabelTranslation ? (item.label as string) : i18n.t(item.label as string)
+
+const displayItems = computed(() =>
+  props.items.map((item) => Object.assign({}, item, { displayLabel: getItemLabel(item) })),
+)
 </script>
 
 <template>
   <nav :class="sizeClasses" :aria-label="$t(label)" class="max-w-full">
     <ol class="flex">
       <li
-        v-for="(item, idx) in items"
+        v-for="(item, idx) in displayItems"
         :key="item.label as string"
         class="flex items-center"
         :class="[lastItemClasses, { 'print:hidden': idx === 0 }]"
@@ -53,7 +61,7 @@ const sizeClasses = computed(() => {
 
         <CommonLink
           v-if="item.route && item.iconOnly"
-          v-tooltip="item.noOptionLabelTranslation ? item.label : $t(item.label as string)"
+          v-tooltip="item.displayLabel"
           class="inline-flex items-center focus-visible-app-default"
           :link="item.route"
           internal
@@ -69,6 +77,7 @@ const sizeClasses = computed(() => {
 
         <CommonLink
           v-else-if="item.route"
+          v-tooltip.supportive="item.displayLabel"
           class="inline-flex items-center gap-1 focus-visible-app-default"
           :link="item.route"
           internal
@@ -82,21 +91,22 @@ const sizeClasses = computed(() => {
           />
 
           <CommonLabel class="line-clamp-1! hover:text-black hover:dark:text-white" :size="size">
-            {{ item.noOptionLabelTranslation ? item.label : $t(item.label as string) }}
+            {{ item.displayLabel }}
           </CommonLabel>
         </CommonLink>
 
         <component
-          :is="items.at(-1) === item ? 'h1' : 'span'"
+          :is="displayItems.at(-1) === item ? 'h1' : 'span'"
           v-else
+          v-tooltip.supportive="item.displayLabel"
           class="line-clamp-1"
           :class="{
             'text-black dark:text-white': item.isActive,
-            'break-all': items.at(-1) === item,
+            'break-all': displayItems.at(-1) === item,
           }"
           aria-current="page"
         >
-          {{ item.noOptionLabelTranslation ? item.label : $t(item.label as string) }}
+          {{ item.displayLabel }}
         </component>
 
         <CommonBadge
@@ -109,14 +119,14 @@ const sizeClasses = computed(() => {
         </CommonBadge>
 
         <CommonIcon
-          v-if="idx !== items.length - 1"
+          v-if="idx !== displayItems.length - 1"
           :name="locale.localeData?.dir === 'rtl' ? 'chevron-left' : 'chevron-right'"
           size="xs"
           class="mx-1 inline-flex shrink-0 text-stone-200 dark:text-neutral-500"
         />
 
         <!-- Add a slot at the end of the last item. -->
-        <slot v-if="idx === items.length - 1" name="trailing" />
+        <slot v-if="idx === displayItems.length - 1" name="trailing" />
       </li>
     </ol>
   </nav>

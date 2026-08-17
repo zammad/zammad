@@ -53,7 +53,33 @@ const route: RouteRecordRaw[] = [
         component: KnowledgeBaseBrowse,
         props: true,
       },
+      {
+        path: 'locale/:localeCode/answer/:answerInternalId(\\d+)',
+        name: 'KnowledgeBaseAnswer',
+        component: () => import('./views/KnowledgeBaseAnswer.vue'),
+        props: true,
+      },
     ],
+  },
+  {
+    // The legacy stack addresses an answer as
+    //   `#knowledge_base/<kb id>/locale/<locale>/answer/<answer id>`, and links in that shape
+    //   still arrive here — they still come from answer bodies going through useHtmlLinks() and
+    //   links copied out of the old interface. Without this they match no route and
+    //   useHtmlLinks() drops the click on the dashboard.
+    //
+    //   A redirect rather than an alias on the route above: an alias must declare the exact same
+    //   params, and this shape carries the knowledge base id — which is not needed here (there is
+    //   only ever one) and is dropped on the way to the canonical URL.
+    path: '/knowledge_base/:knowledgeBaseInternalId(\\d+)/locale/:localeCode/answer/:answerInternalId(\\d+)',
+    name: 'KnowledgeBaseAnswerLegacyUrl',
+    redirect: (to) => ({
+      name: 'KnowledgeBaseAnswer',
+      params: {
+        localeCode: to.params.localeCode,
+        answerInternalId: to.params.answerInternalId,
+      },
+    }),
   },
 ]
 

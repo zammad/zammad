@@ -1,14 +1,16 @@
 <!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed, useSlots } from 'vue'
+import { Comment, computed, useSlots } from 'vue'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import { useTransitionConfig } from '#desktop/composables/useTransitionConfig.ts'
 
 export interface Props {
-  isReachingBottom: boolean
   label?: string
+  orientation?: 'horizontal' | 'vertical'
+  size?: 'normal' | 'large'
+  isReachingBottom?: boolean
   isReachingTop?: boolean
   hidePrimaryAction?: boolean
   unreadCount?: number
@@ -16,6 +18,7 @@ export interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
+  orientation: 'vertical',
   unreadCount: 0,
   unreadTooltip: __('Scroll to unread item'),
   label: __('Scroll actions'),
@@ -33,8 +36,18 @@ const countDisplay = computed(() => (props.unreadCount > 9 ? '9+' : props.unread
 
 const showUnreadCount = computed(() => props.unreadCount > 0)
 
+// Generic actions replace the scroll controls, they are always visible.
+//   Comment-only slot content does not count, some consumers pass placeholder comments.
+const hasGenericActions = computed(() =>
+  Boolean(slots.default?.().some((vnode) => vnode.type !== Comment)),
+)
+
 const showElement = computed(
-  () => !props.isReachingBottom || !props.isReachingTop || showUnreadCount.value,
+  () =>
+    hasGenericActions.value ||
+    !props.isReachingBottom ||
+    !props.isReachingTop ||
+    showUnreadCount.value,
 )
 
 const { transitions } = useTransitionConfig()
@@ -44,17 +57,20 @@ const { transitions } = useTransitionConfig()
   <div
     v-if="showElement"
     role="toolbar"
-    aria-orientation="vertical"
+    :aria-orientation="orientation"
     :aria-label="label"
     class="grid w-fit gap-1 rounded-(--toolbar-radius) border border-neutral-100 bg-neutral-75/80 p-(--toolbar-p) backdrop-blur-xs [--toolbar-p:0.25rem] [--toolbar-radius:0.75rem] dark:border-gray-900 dark:bg-gray-500/80"
+    :class="{ 'grid-flow-col items-center': orientation === 'horizontal' }"
   >
-    <Transition :name="transitions.collapseHeight">
+    <slot />
+
+    <Transition v-if="!hasGenericActions" :name="transitions.collapseHeight">
       <div v-if="!hidePrimaryAction && slots['primary-action']" class="flex">
         <slot name="primary-action" />
       </div>
     </Transition>
 
-    <Transition :name="transitions.collapseHeight">
+    <Transition v-if="!hasGenericActions" :name="transitions.collapseHeight">
       <div v-if="!isReachingTop">
         <div class="flex min-h-0">
           <CommonButton
@@ -70,7 +86,7 @@ const { transitions } = useTransitionConfig()
       </div>
     </Transition>
 
-    <Transition :name="transitions.collapseHeight">
+    <Transition v-if="!hasGenericActions" :name="transitions.collapseHeight">
       <div v-if="!isReachingBottom">
         <div class="relative flex min-h-0">
           <CommonButton

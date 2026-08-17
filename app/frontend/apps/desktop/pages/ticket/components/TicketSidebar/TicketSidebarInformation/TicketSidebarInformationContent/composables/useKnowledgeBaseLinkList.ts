@@ -4,7 +4,7 @@ import { computed, type Ref } from 'vue'
 
 import type { KnowledgeBaseAnswerTranslationFragment } from '#shared/graphql/types.ts'
 
-import { useObjectLinks } from '#desktop/pages/ticket/composables/useObjectLinks.ts'
+import { useObjectLinks } from '#desktop/entities/link/composables/useObjectLinks.ts'
 
 export const useKnowledgeBaseLinkList = (
   ticketId: Ref<string>,

@@ -105,4 +105,36 @@ describe('CommonFloatingToolbar', () => {
 
     expect(wrapper.emitted('scroll-to-unread')).toHaveLength(1)
   })
+
+  describe('with generic actions', () => {
+    const renderGenericToolbar = (props: Partial<Props> = {}) =>
+      renderComponent(CommonFloatingToolbar, {
+        props: {
+          label: 'Image actions',
+          orientation: 'horizontal',
+          ...props,
+        },
+        slots: {
+          default: '<button>Zoom in</button>',
+        },
+      })
+
+    it('renders the given actions in place of the scroll controls', () => {
+      const wrapper = renderGenericToolbar()
+
+      expect(wrapper.getByRole('toolbar', { name: 'Image actions' })).toHaveAttribute(
+        'aria-orientation',
+        'horizontal',
+      )
+      expect(wrapper.getByRole('button', { name: 'Zoom in' })).toBeVisible()
+      expect(wrapper.queryByRole('button', { name: 'Scroll to start' })).not.toBeInTheDocument()
+      expect(wrapper.queryByRole('button', { name: 'Scroll to end' })).not.toBeInTheDocument()
+    })
+
+    it('stays visible independently of the scroll state', () => {
+      const wrapper = renderGenericToolbar({ isReachingBottom: true, isReachingTop: true })
+
+      expect(wrapper.getByRole('toolbar', { name: 'Image actions' })).toBeVisible()
+    })
+  })
 })

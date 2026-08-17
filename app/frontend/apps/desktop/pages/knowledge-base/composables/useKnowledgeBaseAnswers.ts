@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { computed, type Ref } from 'vue'
+import { computed, onScopeDispose, type Ref } from 'vue'
 
 import { usePagination } from '#shared/composables/usePagination.ts'
 import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
@@ -57,7 +57,7 @@ export const useKnowledgeBaseAnswers = (options: {
   //   category does not alter this category's direct answers.
   const { contentUpdates } = useKnowledgeBaseStore()
 
-  contentUpdates.onResult(({ data }) => {
+  const { off: stopContentUpdates } = contentUpdates.onResult(({ data }) => {
     if (!categoryId.value) return
 
     const affected = data?.knowledgeBaseContentUpdates?.affectedCategoryIds ?? []
@@ -66,8 +66,21 @@ export const useKnowledgeBaseAnswers = (options: {
     //   happened directly in this category — the payload lists the changed
     //   record's category first, then its ancestors, so a change in a
     //   descendant (this category only as an ancestor) does not match.
-    if (affected.length === 0 || affected[0] === categoryId.value) answersQuery.refetch()
+    // Pin the refetch to the current reactive args explicitly: Vue only pushes
+    //   a changed `categoryId`/`locale` into the underlying query on its next
+    //   reactivity flush, so a ping arriving in the same tick as a category or
+    //   locale switch would otherwise refetch with the args being navigated
+    //   away from.
+    if (affected.length === 0 || affected[0] === categoryId.value) {
+      answersQuery.refetch({
+        categoryId: categoryId.value as string,
+        locale: locale?.value,
+        pageSize: ANSWERS_PAGE_SIZE,
+      })
+    }
   })
+
+  onScopeDispose(stopContentUpdates)
 
   return {
     answers,

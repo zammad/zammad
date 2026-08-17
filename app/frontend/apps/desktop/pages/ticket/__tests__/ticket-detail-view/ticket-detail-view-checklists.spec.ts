@@ -21,11 +21,10 @@ import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/moc
 import { EnumUserErrorException } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
+import { mockLinkListQuery } from '#desktop/entities/link/graphql/queries/linkList.mocks.ts'
 import { mockChecklistTemplatesQuery } from '#desktop/pages/ticket/graphql/queries/checklistTemplates.mocks.ts'
 import { mockTicketChecklistQuery } from '#desktop/pages/ticket/graphql/queries/ticketChecklist.mocks.ts'
 import { getTicketChecklistUpdatesSubscriptionHandler } from '#desktop/pages/ticket/graphql/subscriptions/ticketChecklistUpdates.mocks.ts'
-
-import { mockLinkListQuery } from '../../graphql/queries/linkList.mocks.ts'
 
 describe('Ticket detail view', () => {
   beforeEach(() => {

@@ -2,10 +2,11 @@
 
 import { renderComponent } from '#tests/support/components/index.ts'
 
-import type { BreadcrumbItem } from '#desktop/components/CommonBreadcrumb/types.ts'
 import type { DropdownItem } from '#desktop/components/CommonDropdown/types.ts'
 
 import TopBarHeaderCompact from '../TopBarHeaderCompact.vue'
+
+import type { KnowledgeBaseBreadcrumbItem } from '../../../types.ts'
 
 const copyKnowledgeBaseNameToClipboard = vi.fn()
 
@@ -15,7 +16,7 @@ vi.mock('../useTopBarHeader.ts', () => ({
   }),
 }))
 
-const breadcrumbs: BreadcrumbItem[] = [
+const breadcrumbs: KnowledgeBaseBreadcrumbItem[] = [
   { label: 'Support', icon: 'book', route: '/' },
   { label: 'Some Category' },
 ]

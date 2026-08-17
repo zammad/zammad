@@ -11,13 +11,13 @@ import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/moc
 import { EnumLinkType } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
+import { mockLinkListQuery } from '#desktop/entities/link/graphql/queries/linkList.mocks.ts'
 import { mockTicketRelationAndRecentTicketListsQuery } from '#desktop/pages/ticket/graphql/queries/ticketRelationAndRecentTicketLists.mocks.ts'
 
 import {
   mockLinkAddMutation,
   waitForLinkAddMutationCalls,
 } from '../../graphql/mutations/linkAdd.mocks.ts'
-import { mockLinkListQuery } from '../../graphql/queries/linkList.mocks.ts'
 
 describe('Ticket detail view links', () => {
   it('opens the links flyout and adds a link', async () => {

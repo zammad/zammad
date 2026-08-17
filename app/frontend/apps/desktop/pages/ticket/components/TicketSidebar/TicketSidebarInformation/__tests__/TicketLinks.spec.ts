@@ -7,8 +7,8 @@ import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/moc
 import { EnumLinkType } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
-import { mockLinkListQuery } from '#desktop/pages/ticket/graphql/queries/linkList.mocks.ts'
-import { getLinkUpdatesSubscriptionHandler } from '#desktop/pages/ticket/graphql/subscriptions/linkUpdates.mocks.ts'
+import { mockLinkListQuery } from '#desktop/entities/link/graphql/queries/linkList.mocks.ts'
+import { getLinkUpdatesSubscriptionHandler } from '#desktop/entities/link/graphql/subscriptions/linkUpdates.mocks.ts'
 
 import TicketLinks, { type Props } from '../TicketSidebarInformationContent/TicketLinks.vue'
 

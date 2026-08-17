@@ -8,6 +8,7 @@ import { mockPermissions } from '#tests/support/mock-permissions.ts'
 import { EnumKnowledgeBaseVisibility } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
+import { mockLinkListQuery } from '#desktop/entities/link/graphql/queries/linkList.mocks.ts'
 import TicketKnowledgeBaseAiSuggested, {
   type Props,
 } from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiSuggested.vue'
@@ -16,7 +17,6 @@ import {
   mockLinkAddMutation,
   waitForLinkAddMutationCalls,
 } from '#desktop/pages/ticket/graphql/mutations/linkAdd.mocks.ts'
-import { mockLinkListQuery } from '#desktop/pages/ticket/graphql/queries/linkList.mocks.ts'
 
 import type { RelatedAnswer } from '../types.ts'
 
@@ -48,12 +48,17 @@ const renderSuggestions = (props: Partial<Props> = {}) =>
       ],
     ],
     router: true,
-    // The answer popover links to the category route.
+    // The answer popover links to the category route; the trigger itself links to the answer route.
     routerRoutes: [
       { path: '/', name: 'Root', component: { template: '<div />' } },
       {
         path: '/knowledge-base/:localeCode/category/:categoryInternalId',
         name: 'KnowledgeBaseCategory',
+        component: { template: '<div />' },
+      },
+      {
+        path: '/knowledge-base/locale/:localeCode/answer/:answerInternalId',
+        name: 'KnowledgeBaseAnswer',
         component: { template: '<div />' },
       },
       // Answer links leaving the app (the public answer page) resolve to the catch-all, like they
@@ -93,7 +98,6 @@ const relatedAnswer = (id: number, title: string, score = 90): RelatedAnswer => 
         __typename: 'KnowledgeBaseCategory',
         id: convertToGraphQLId('KnowledgeBase::Category', 1),
         title: 'Account',
-        knowledgeBase: { __typename: 'KnowledgeBase', id: convertToGraphQLId('KnowledgeBase', 1) },
       },
     },
     kbLocale: {
@@ -123,7 +127,7 @@ describe('TicketKnowledgeBaseAiSuggested', () => {
 
     expect(wrapper.getByText('Reset your password').closest('a')).toHaveAttribute(
       'href',
-      expect.stringContaining('#knowledge_base/1/locale/en-us/answer/1'),
+      '/desktop/knowledge-base/locale/en-us/answer/1',
     )
   })
 
@@ -140,20 +144,6 @@ describe('TicketKnowledgeBaseAiSuggested', () => {
       'href',
       '/help/en-us/1/1',
     )
-  })
-
-  it('keeps the BETA UI switch when the public answer page is opened', async () => {
-    mockPermissions(['ticket.agent'])
-    localStorage.setItem('beta-ui-switch', 'true')
-
-    const wrapper = renderSuggestions({
-      answers: [relatedAnswer(1, 'Reset your password')],
-    })
-
-    await wrapper.events.click(await wrapper.findByText('Reset your password'))
-
-    // The public answer page is not part of the legacy app, so it needs no preparation.
-    expect(localStorage.getItem('beta-ui-switch')).toBe('true')
   })
 
   it('shows a waiting message while the suggestions are still being generated', async () => {
@@ -206,35 +196,6 @@ describe('TicketKnowledgeBaseAiSuggested', () => {
         type: 'normal',
       },
     })
-  })
-
-  it('clears the BETA UI switch when an answer link is followed', async () => {
-    localStorage.setItem('beta-ui-switch', 'true')
-
-    const wrapper = renderSuggestions({
-      answers: [relatedAnswer(1, 'Reset your password')],
-    })
-
-    await wrapper.events.click(await wrapper.findByText('Reset your password'))
-
-    // Otherwise the legacy answer view would redirect straight back to the new app.
-    await vi.waitFor(() => expect(localStorage.getItem('beta-ui-switch')).toBeNull())
-  })
-
-  it('clears the BETA UI switch when an answer link is middle-clicked (opened in a new tab)', async () => {
-    localStorage.setItem('beta-ui-switch', 'true')
-
-    const wrapper = renderSuggestions({
-      answers: [relatedAnswer(1, 'Reset your password')],
-    })
-
-    // A middle-click fires `auxclick`, not `click`.
-    await wrapper.events.pointer({
-      keys: '[MouseMiddle]',
-      target: await wrapper.findByText('Reset your password'),
-    })
-
-    await vi.waitFor(() => expect(localStorage.getItem('beta-ui-switch')).toBeNull())
   })
 
   it('hides the link action when the ticket is not editable', async () => {

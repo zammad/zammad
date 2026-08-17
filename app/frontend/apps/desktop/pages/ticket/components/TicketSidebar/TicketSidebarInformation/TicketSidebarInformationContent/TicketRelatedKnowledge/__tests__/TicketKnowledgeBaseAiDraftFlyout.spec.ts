@@ -49,7 +49,6 @@ const relatedAnswer = (
       category: {
         id: convertToGraphQLId('KnowledgeBase::Category', 1),
         title: 'Account',
-        knowledgeBase: { id: convertToGraphQLId('KnowledgeBase', 1) },
       },
     },
     kbLocale: { systemLocale: { locale: 'en-us', name: 'English' } },
@@ -80,8 +79,16 @@ const renderFlyout = () =>
         name: 'KnowledgeBaseCategory',
         component: { template: '<div />' },
       },
+      {
+        path: '/knowledge-base/locale/:localeCode/answer/:answerInternalId',
+        name: 'KnowledgeBaseAnswer',
+        component: { template: '<div />' },
+      },
       // Tags link into the detailed search.
       { path: '/search/:searchTerm?', name: 'Search', component: { template: '<div />' } },
+      // Answer links leaving the app (the public answer page) resolve to the catch-all, like they
+      //   do in the real router.
+      { path: '/:pathMatch(.*)*', name: 'Error', component: { template: '<div />' } },
     ],
     store: true,
     flyout: true,
@@ -127,15 +134,26 @@ describe('TicketKnowledgeBaseAiDraftFlyout', () => {
 
     expect(wrapper.getByText('Reset your password').closest('a')).toHaveAttribute(
       'href',
-      expect.stringContaining(
-        `#knowledge_base/${getIdFromGraphQLId(convertToGraphQLId('KnowledgeBase', 1))}/locale/en-us/answer/${getIdFromGraphQLId(
-          convertToGraphQLId('KnowledgeBase::Answer', 1),
-        )}`,
-      ),
+      `/desktop/knowledge-base/locale/en-us/answer/${getIdFromGraphQLId(convertToGraphQLId('KnowledgeBase::Answer', 1))}`,
     )
     expect(wrapper.getByText('Reset your password').closest('a')).toHaveAttribute(
       'target',
       '_blank',
+    )
+  })
+
+  it('links to the public answer page for a user without knowledge base permission', async () => {
+    mockPermissions(['ticket.agent'])
+
+    mockSuggestedAnswers([relatedAnswer(1, 'Reset your password')])
+
+    const wrapper = renderFlyout()
+
+    // Suggested answers are published for them, so the public help site can show them - the answer
+    //   view of the agent interface cannot.
+    expect((await wrapper.findByText('Reset your password')).closest('a')).toHaveAttribute(
+      'href',
+      '/help/en-us/1/1',
     )
   })
 
@@ -147,19 +165,6 @@ describe('TicketKnowledgeBaseAiDraftFlyout', () => {
     expect(await wrapper.findByLabelText('Searching for related answers…')).toBeInTheDocument()
     // Three answer-shaped placeholders, so the box does not jump once the answers arrive.
     expect(wrapper.getAllByRole('listitem')).toHaveLength(3)
-  })
-
-  it('clears the BETA UI switch when an answer link is followed', async () => {
-    localStorage.setItem('beta-ui-switch', 'true')
-
-    mockSuggestedAnswers([relatedAnswer(1, 'Reset your password')])
-
-    const wrapper = renderFlyout()
-
-    await wrapper.events.click(await wrapper.findByText('Reset your password'))
-
-    // Otherwise the legacy answer view would redirect straight back to the new app.
-    await vi.waitFor(() => expect(localStorage.getItem('beta-ui-switch')).toBeNull())
   })
 
   it('shows the error detail and offers a retry when the search itself fails', async () => {

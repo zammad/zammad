@@ -63,7 +63,7 @@ const useHtmlLinks = (urlPrefix: '/desktop' | '/mobile') => {
     link.href = `${baseUrl.value}${urlPrefix}/users/${userId}`
   }
 
-  const setupLinksHandlers = (element: HTMLDivElement) => {
+  const setupLinksHandlers = (element: HTMLElement) => {
     element.querySelectorAll('a').forEach((link) => {
       if ('__handled' in link) return
       Object.defineProperty(link, '__handled', { value: true })

@@ -16,9 +16,35 @@ describe KnowledgeBase::AnswerPolicy do
   end
 
   describe '#show?' do
+    let(:editorial_fields) { %i[internal_at archived_at edited_at edited_by] }
+
+    def mock_access(access)
+      allow(policy).to receive(:access).and_return(access)
+    end
+
     context 'when visible and visible internally' do
       include_examples 'with answer visibility', visible: true, visible_internally: true
-      include_examples 'with KB policy check', editor: true, reader: true, none: true, method: :show?
+
+      it 'returns true if editor' do
+        mock_access 'editor'
+
+        expect(policy.show?).to be true
+      end
+
+      it 'returns true if reader' do
+        mock_access 'reader'
+
+        expect(policy.show?).to be true
+      end
+
+      # Published content is public; the editorial lifecycle around it is not.
+      it 'returns a field scope without the editorial fields if none' do
+        mock_access 'none'
+
+        expect(policy.show?)
+          .to permit_fields(%i[title content published_at])
+          .and forbid_fields(editorial_fields)
+      end
     end
 
     context 'when visible internally only' do

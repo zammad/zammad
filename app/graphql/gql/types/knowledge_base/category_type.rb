@@ -8,6 +8,8 @@ module Gql::Types::KnowledgeBase
     description 'Knowledge Base Category'
 
     field :category_icon, String, null: false
+    field :icon_set, Gql::Types::KnowledgeBase::IconSetType, null: false, description: 'Icon font of the knowledge base this category belongs to, needed to render `categoryIcon`'
+
     field :position, Integer, null: false
 
     field :translations, [Gql::Types::KnowledgeBase::Category::TranslationType], null: false
@@ -27,6 +29,15 @@ module Gql::Types::KnowledgeBase
 
     def translations
       ::KnowledgeBase::Category::Translation.where(category_id: object.id)
+    end
+
+    # Batched, so listing many categories of the same knowledge base does not
+    #   cause one query per category.
+    def icon_set
+      Gql::RecordLoader
+        .for(::KnowledgeBase)
+        .load(object.knowledge_base_id)
+        .then(&:iconset)
     end
 
     def title

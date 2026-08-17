@@ -11,12 +11,12 @@ import {
   mockAutocompleteSearchKnowledgeBaseAnswerQuery,
   waitForAutocompleteSearchKnowledgeBaseAnswerQueryCalls,
 } from '#desktop/entities/knowledge-base/graphql/queries/autocompleteSearch.mocks.ts'
+import { mockLinkListQuery } from '#desktop/entities/link/graphql/queries/linkList.mocks.ts'
 import TicketNewKnowledgeBaseAnswer from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketNewKnowledgeBaseAnswer.vue'
 import {
   mockLinkAddMutation,
   waitForLinkAddMutationCalls,
 } from '#desktop/pages/ticket/graphql/mutations/linkAdd.mocks.ts'
-import { mockLinkListQuery } from '#desktop/pages/ticket/graphql/queries/linkList.mocks.ts'
 
 const ticketId = convertToGraphQLId('Ticket', 1)
 const answerId = convertToGraphQLId('KnowledgeBase::Answer::Translation', 1)

@@ -32,6 +32,14 @@ export const removeSignatureFromBody = (input: FormFieldValue, placeholder: bool
   return dom.innerHTML
 }
 
+export const setAutoDirectionOnChildElements = (container: HTMLElement) => {
+  container.querySelectorAll('*').forEach((child) => {
+    if (child.hasAttribute('dir')) return
+
+    child.setAttribute('dir', 'auto')
+  })
+}
+
 /**
  * Queries all images in the container and waits for them to load.
  * */

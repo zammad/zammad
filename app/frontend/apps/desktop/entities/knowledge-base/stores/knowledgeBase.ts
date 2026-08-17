@@ -8,6 +8,7 @@ import { SubscriptionHandler } from '#shared/server/apollo/handler/index.ts'
 import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
 
 import { useLastVisitedPath } from '#desktop/composables/useLastVisitedPath.ts'
+import type { KnowledgeBaseIconSet } from '#desktop/pages/knowledge-base/types.ts'
 
 import { useKnowledgeBaseQuery } from '../graphql/queries/knowledgeBase.api'
 import { useKnowledgeBaseContentUpdatesSubscription } from '../graphql/subscriptions/knowledgeBaseContentUpdates.api'
@@ -70,11 +71,20 @@ export const useKnowledgeBaseStore = defineStore('knowledgeBase', () => {
     //   carry affected category ids and are handled by the browse queries.
     if (data?.knowledgeBaseContentUpdates?.affectedCategoryIds?.length) return
 
-    knowledgeBaseQuery.refetch()
+    // Pin the refetch to the current locale explicitly: Vue only pushes a
+    //   changed route locale into the underlying query on its next reactivity
+    //   flush, so a ping arriving in the same tick as a locale switch would
+    //   otherwise refetch with the locale being navigated away from.
+    knowledgeBaseQuery.refetch({ locale: activeLocale.value })
   })
+
+  const iconSet = computed(
+    () => (knowledgeBase.value?.iconset ?? 'FontAwesome') as KnowledgeBaseIconSet,
+  )
 
   return {
     knowledgeBase,
+    iconSet,
     loading,
     activeLocale,
     kbLocales,

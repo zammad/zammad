@@ -275,6 +275,27 @@ export const getAcceptableFileTypesString = (allowedFiles: AllowedFile[]): strin
 }
 
 /**
+ * Splits a file name into its base and its extension, so a truncated name can keep the
+ *   extension visible ("very-long-repor….pdf" instead of "very-long-report-2024-fi…").
+ */
+export const splitFileName = (fileName: string) => {
+  const name = fileName.trim() || 'file'
+  const lastDot = name.lastIndexOf('.')
+
+  // No extension if:
+  // - no dot in filename (README)
+  // - dot is first character → hidden file (.gitignore)
+  if (lastDot <= 0) {
+    return { base: name, ext: '' }
+  }
+
+  return {
+    base: name.slice(0, lastDot),
+    ext: name.slice(lastDot),
+  }
+}
+
+/**
  * @param size file size in bytes
  ** */
 export const humanizeFileSize = (size: number) => {

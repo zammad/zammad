@@ -7,7 +7,8 @@ import KnowledgeBaseIconStatus from '../KnowledgeBaseIconStatus.vue'
 const renderStatus = (props = {}) =>
   renderComponent(KnowledgeBaseIconStatus, {
     props: {
-      name: 'folder',
+      name: 'f004',
+      set: 'FontAwesome',
       ...props,
     },
   })
@@ -19,9 +20,13 @@ const statuses = [
 
 describe('KnowledgeBaseIconStatus', () => {
   it('renders the base icon with the given name', () => {
-    const wrapper = renderStatus({ name: 'folder' })
+    const wrapper = renderStatus({ name: 'f115' })
 
-    expect(wrapper.getByIconName('folder')).toBeInTheDocument()
+    const svgElement = wrapper.container.querySelector('svg')!
+
+    expect(svgElement.querySelector('use')?.getAttribute('href')).toContain(
+      'FontAwesome.svg#icon-f115',
+    )
   })
 
   it('does not render a status marker without a status', () => {
@@ -39,7 +44,7 @@ describe('KnowledgeBaseIconStatus', () => {
 
       // The status marker uses the mapped icon, and both icons share the color.
       expect(wrapper.getByIconName(icon)).toHaveClass(color)
-      expect(wrapper.getByIconName('folder')).toHaveClass(color)
+      expect(wrapper.container.querySelector('svg.icon-f004')).toHaveClass(color)
     },
   )
 

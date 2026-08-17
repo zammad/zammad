@@ -9,9 +9,8 @@ import { mockPermissions } from '#tests/support/mock-permissions.ts'
 import { mockTicketQuery } from '#shared/entities/ticket/graphql/queries/ticket.mocks.ts'
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
 
+import { mockLinkListQuery } from '#desktop/entities/link/graphql/queries/linkList.mocks.ts'
 import { mockTicketRelationAndRecentTicketListsQuery } from '#desktop/pages/ticket/graphql/queries/ticketRelationAndRecentTicketLists.mocks.ts'
-
-import { mockLinkListQuery } from '../../graphql/queries/linkList.mocks.ts'
 
 describe('Ticket detail view ticket merge', () => {
   it('allows to merge source ticket with a target ticket', async () => {

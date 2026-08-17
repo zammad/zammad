@@ -44,6 +44,14 @@ class KnowledgeBase::Answer::Translation < ApplicationModel
     [answer_id, title.parameterize].join('-')
   end
 
+  # Where this translation is read in the desktop app. Composed by hand because the app is a SPA:
+  #   Rails only serves it via the `/desktop/*path` catch-all, so there is no route helper for the
+  #   individual page. Keep in sync with the `KnowledgeBaseAnswer` route in
+  #   app/frontend/apps/desktop/pages/knowledge-base/routes.ts.
+  def desktop_url
+    "/desktop/knowledge-base/locale/#{kb_locale.system_locale.locale}/answer/#{answer_id}"
+  end
+
   def search_index_attribute_lookup(include_references: true)
     attrs = super
 

@@ -6,7 +6,7 @@ import type { RouteLocationNamedRaw } from 'vue-router'
 
 // The knowledge base root listing and a single category are two separate routes
 //   — a category carries `/category/:id` in the URL (mirroring the `/answer/:id`
-//   route added later). This picks the right target from what a caller has, so
+//   route below). This picks the right target from what a caller has, so
 //   callers don't juggle the two route names and params themselves. Omitting the
 //   locale targets the section entry, whose guard resolves the user's preferred
 //   locale (falling back to the primary, or not-found when there is none).
@@ -25,3 +25,13 @@ export const knowledgeBaseBrowseRoute = (
 
   return { name: 'KnowledgeBaseBrowse', params: localeCode ? { localeCode } : {} }
 }
+
+// An answer is addressed by its locale alone - it does not sit below the
+//   category it was browsed from (internal id in the URL, as above).
+export const knowledgeBaseAnswerRoute = (
+  localeCode: string,
+  answerId: string,
+): RouteLocationNamedRaw => ({
+  name: 'KnowledgeBaseAnswer',
+  params: { localeCode, answerInternalId: getIdFromGraphQLId(answerId) },
+})

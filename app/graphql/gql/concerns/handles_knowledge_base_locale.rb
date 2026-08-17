@@ -13,6 +13,28 @@ module Gql::Concerns::HandlesKnowledgeBaseLocale
     ::KnowledgeBase.active.first
   end
 
+  # Resolve an answer through the same availability rules as the knowledge base
+  #   browse route. Record authorization is already handled declaratively by the
+  #   GraphQL argument's `loads:` type; these additional rules are route- and
+  #   locale-specific and therefore do not belong in AnswerPolicy.
+  def resolve_browsable_knowledge_base_answer(answer, locale_code)
+    knowledge_base = answer.category.knowledge_base
+
+    if !knowledge_base.active?
+      raise ActiveRecord::RecordNotFound
+    end
+
+    store_knowledge_base_locale(knowledge_base, locale_code)
+
+    visible = ::KnowledgeBase::Answer
+      .visible_to_user(context.current_user, kb_locale: context[:knowledge_base_locale])
+      .exists?(id: answer.id)
+
+    raise Exceptions::Forbidden, "Answer #{answer.id} is not visible in the requested locale" if !visible
+
+    answer
+  end
+
   # The explicitly requested locale wins; otherwise fall back to the user's
   #   preferred locale (::KnowledgeBase::Locale.preferred already falls back to
   #   the primary/first locale). Authentication is required, so a user is present.

@@ -3,9 +3,9 @@
 import { EnumLinkType, type LinkListQuery } from '#shared/graphql/types.ts'
 import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
 
+import { LinkListDocument } from '#desktop/entities/link/graphql/queries/linkList.api.ts'
 import { useLinkAddMutation } from '#desktop/pages/ticket/graphql/mutations/linkAdd.api.ts'
 import { useLinkRemoveMutation } from '#desktop/pages/ticket/graphql/mutations/linkRemove.api.ts'
-import { LinkListDocument } from '#desktop/pages/ticket/graphql/queries/linkList.api.ts'
 
 export const useKnowledgeBaseAnswerLinks = (ticketId: ID, targetType: string) => {
   const linkAddHandler = new MutationHandler(

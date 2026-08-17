@@ -8,7 +8,7 @@ export const useHtmlInlineImages = (
   inlineImages: Ref<ImageViewerFile[]>,
   onClick: (int: number) => void,
 ) => {
-  const populateInlineImages = (element: HTMLDivElement) => {
+  const populateInlineImages = (element: HTMLElement) => {
     inlineImages.value.splice(0)
 
     element.querySelectorAll('img').forEach((image) => {

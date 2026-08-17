@@ -76,7 +76,6 @@ const buildLinkedAnswer = (
       __typename: 'KnowledgeBaseCategory',
       id: convertToGraphQLId('KnowledgeBase::Category', id),
       title: 'Account',
-      knowledgeBase: { __typename: 'KnowledgeBase', id: convertToGraphQLId('KnowledgeBase', 1) },
     },
   },
   kbLocale: {
@@ -108,6 +107,19 @@ const renderRelatedKnowledge = (
     },
     form: true,
     router: true,
+    // Adds the answer route (related-knowledge answer links resolve to it) on top of the
+    //   suite's usual default routes - passing `routerRoutes` at all replaces them wholesale.
+    routerRoutes: [
+      { path: '/', name: 'Dashboard', component: { template: 'Welcome to zammad.' } },
+      { path: '/example', name: 'Example', component: { template: 'This is a example page.' } },
+      { path: '/:pathMatch(.*)*', name: 'Error', component: { template: 'Error page' } },
+      { path: '/search/:searchTerm?', name: 'Search', component: { template: 'search' } },
+      {
+        path: '/knowledge-base/locale/:localeCode/answer/:answerInternalId',
+        name: 'KnowledgeBaseAnswer',
+        component: { template: '<div />' },
+      },
+    ],
     provide: [
       [
         TICKET_KEY,

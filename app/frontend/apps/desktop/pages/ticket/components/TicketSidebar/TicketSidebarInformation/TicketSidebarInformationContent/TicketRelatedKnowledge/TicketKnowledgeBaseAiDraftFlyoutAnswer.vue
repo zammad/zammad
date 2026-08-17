@@ -1,7 +1,6 @@
 <!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { prepareLegacyAppLinkNavigation } from '#desktop/components/BetaUi/utils/legacyAppLink.ts'
 import KnowledgeBaseAnswerIcon from '#desktop/components/KnowledgeBaseAnswerIcon/KnowledgeBaseAnswerIcon.vue'
 
 import KnowledgeBaseAnswerAttributes from './KnowledgeBaseAnswerAttributes.vue'
@@ -28,12 +27,9 @@ defineProps<Props>()
 
       <CommonLink
         :link="getKnowledgeBaseAnswerLink(answer.translation)"
-        external
         open-in-new-tab
         size="medium"
         class="flex grow items-center gap-1"
-        @click="prepareLegacyAppLinkNavigation()"
-        @auxclick="prepareLegacyAppLinkNavigation()"
       >
         <span v-tooltip="answer.translation.title" class="line-clamp-1!">
           {{ answer.translation.title }}

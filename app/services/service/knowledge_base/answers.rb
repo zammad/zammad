@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 # Returns the answers directly below a category that are visible to the current
-#   user, sorted by position. Visibility — including whether archived answers are
+#   user, in the configured listing order. Visibility — including whether archived answers are
 #   shown — is delegated to KnowledgeBase::Answer.visible_to_user: editors see
 #   all answers in their categories (archived included), while non-editors only
 #   see published/internal content, never archived.
@@ -21,7 +21,9 @@ class Service::KnowledgeBase::Answers < Service::Base
     category
       .answers
       .visible_to_user(current_user, kb_locale: locale)
-      .sorted
+      # Positions are not unique-constrained, so add id as a deterministic tie-breaker.
+      # `reorder` replaces `.sorted`'s order entirely, so both columns are listed here.
+      .reorder(position: :asc, id: :asc)
       # Eager-load so AnswerType resolves title/translation_missing per page
       #   without a per-answer query (kb_locale drives the primary fallback).
       .includes(translations: :kb_locale)

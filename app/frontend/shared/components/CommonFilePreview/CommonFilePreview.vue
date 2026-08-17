@@ -13,6 +13,7 @@ import {
   canDownloadFile,
   canPreviewFile,
   humanizeFileSize,
+  splitFileName,
   type FilePreview,
 } from '#shared/utils/files.ts'
 import { getIconByContentType } from '#shared/utils/icons.ts'
@@ -69,22 +70,7 @@ const ariaLabel = computed(() => {
   return props.file.name // cannot download and preview, probably just uploaded pdf
 })
 
-const fileNameParts = computed(() => {
-  const name = props.file.name.trim() || 'file'
-  const lastDot = name.lastIndexOf('.')
-
-  // No extension if:
-  // - no dot in filename (README)
-  // - dot is first character → hidden file (.gitignore)
-  if (lastDot <= 0) {
-    return { base: name, ext: '' }
-  }
-
-  return {
-    base: name.slice(0, lastDot),
-    ext: name.slice(lastDot),
-  }
-})
+const fileNameParts = computed(() => splitFileName(props.file.name))
 
 const onPreviewClick = (event: Event) => {
   if (!canPreview.value) return

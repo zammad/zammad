@@ -34,7 +34,7 @@ const relatedAnswer = (id: number, title: string, score = 0.9) => ({
     answer: {
       id: convertToGraphQLId('KnowledgeBase::Answer', id),
       category: {
-        knowledgeBase: { id: convertToGraphQLId('KnowledgeBase', 1) },
+        id: convertToGraphQLId('KnowledgeBase::Category', 1),
       },
     },
     kbLocale: { systemLocale: { locale: 'en-us' } },

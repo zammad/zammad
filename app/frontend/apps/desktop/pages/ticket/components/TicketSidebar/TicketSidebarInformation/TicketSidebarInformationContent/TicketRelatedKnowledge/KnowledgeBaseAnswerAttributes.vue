@@ -11,6 +11,7 @@ import type { KnowledgeBaseAnswerTranslationFragment } from '#shared/graphql/typ
 import CommonObjectAttribute from '#desktop/components/CommonObjectAttribute/CommonObjectAttribute.vue'
 import CommonObjectAttributeContainer from '#desktop/components/CommonObjectAttribute/CommonObjectAttributeContainer.vue'
 import { knowledgeBaseBrowseRoute } from '#desktop/entities/knowledge-base/utils/routeLocation.ts'
+import { tagSearchRoute } from '#desktop/entities/tags/utils/routeLocation.ts'
 
 interface Props {
   translation: KnowledgeBaseAnswerTranslationFragment
@@ -35,17 +36,6 @@ const categoryPath = computed(() => {
   if (tree.length < 2) return undefined
 
   return tree.map((categoryTranslation) => categoryTranslation.title).join(' › ')
-})
-
-// TODO: Add proper quick search handler for tag search when ready.
-const getTagSearchLink = (tag: string) => ({
-  name: 'Search',
-  params: {
-    searchTerm: `tags:"${tag}"`,
-  },
-  query: {
-    entity: 'Ticket', // TODO: when knowledge base entity is implemented in search
-  },
 })
 </script>
 
@@ -91,7 +81,7 @@ const getTagSearchLink = (tag: string) => ({
           class="flex rounded-md bg-blue-200 px-1.5 py-0.5 dark:bg-gray-700"
         >
           <CommonLabel size="small" prefix-icon="tag">
-            <CommonLink class="line-clamp-1!" size="small" :link="getTagSearchLink(tag)">
+            <CommonLink class="line-clamp-1!" size="small" :link="tagSearchRoute(tag)">
               {{ tag }}
             </CommonLink>
           </CommonLabel>

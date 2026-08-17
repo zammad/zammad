@@ -173,9 +173,9 @@ describe('SubscriptionHandler', () => {
       })
     })
 
-    it('register onResult callback', async () => {
+    it('registers and unregisters an onResult callback', async () => {
       await scope.run(async () => {
-        expect.assertions(1)
+        expect.assertions(2)
 
         const subscriptionHandlerObject = new SubscriptionHandler(sampleSubscription({ id: 1 }))
 
@@ -189,7 +189,7 @@ describe('SubscriptionHandler', () => {
 
         await subscribed
 
-        subscriptionHandlerObject.onResult((result) => {
+        const { off } = subscriptionHandlerObject.onResult((result) => {
           resultCallbackSpy(result)
         })
 
@@ -200,6 +200,11 @@ describe('SubscriptionHandler', () => {
         expect(resultCallbackSpy).toHaveBeenCalledWith({
           data: subscriptionSampleResultUpdated,
         })
+
+        off()
+        mockSubscription.next({ data: subscriptionSampleResult })
+
+        expect(resultCallbackSpy).toHaveBeenCalledTimes(1)
       })
     })
   })

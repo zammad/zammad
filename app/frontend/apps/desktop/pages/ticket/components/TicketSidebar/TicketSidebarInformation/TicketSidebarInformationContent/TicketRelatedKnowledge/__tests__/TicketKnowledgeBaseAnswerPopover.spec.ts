@@ -47,10 +47,6 @@ const buildTranslation = (
           __typename: 'KnowledgeBaseCategory',
           id: CATEGORY_ID,
           title: 'Account',
-          knowledgeBase: {
-            __typename: 'KnowledgeBase',
-            id: convertToGraphQLId('KnowledgeBase', 1),
-          },
         },
       },
       kbLocale: {

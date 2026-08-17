@@ -3,8 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe Gql::Queries::KnowledgeBase::Answer::Suggestions, current_user_id: 1, type: :graphql do
-  include KnowledgeBaseRichTextHelper
-
   context 'when searching' do
     let(:agent)    { create(:agent) }
     let(:customer) { create(:customer) }
@@ -56,7 +54,7 @@ RSpec.describe Gql::Queries::KnowledgeBase::Answer::Suggestions, current_user_id
             ],
             'content'                 => {
               'body'           => knowledge_base_answer_translation.content.body,
-              'bodyWithUrls'   => prepare_rich_text(knowledge_base_answer_translation.content.body_with_urls),
+              'bodyWithUrls'   => KnowledgeBaseRichText.prepare(knowledge_base_answer_translation.content.body_with_urls, &:desktop_url),
               'bodyExcerpt'    => knowledge_base_answer_translation.content.body_excerpt,
               'hasAttachments' => true,
             },

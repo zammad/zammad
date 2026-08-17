@@ -35,7 +35,8 @@ const category = (
 ) => ({
   id,
   title,
-  categoryIcon: 'folder',
+  categoryIcon: 'f115',
+  iconSet: 'FontAwesome',
   visibility: EnumKnowledgeBaseVisibility.Published,
   translationMissing: false,
   answerCount: counts.answerCount ?? 0,
@@ -200,7 +201,7 @@ describe('knowledge base category navigation', () => {
       .getAllByRole('navigation', { name: 'Knowledge base navigation' })
       .at(-1)!
     const rootBreadcrumbLink = await within(breadcrumb).findByRole('link', {
-      name: 'Knowledge Base',
+      name: 'Knowledge Base Home',
     })
 
     await view.events.click(rootBreadcrumbLink)

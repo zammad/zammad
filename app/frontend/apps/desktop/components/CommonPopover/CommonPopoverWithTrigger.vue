@@ -4,6 +4,7 @@
 import { onClickOutside, onLongPress, useElementHover, whenever } from '@vueuse/core'
 import { computed, onDeactivated, onUnmounted, shallowRef, watch } from 'vue'
 
+import type { Link } from '#shared/types/router.ts'
 import getUuid from '#shared/utils/getUuid.ts'
 
 import CommonPopover, {
@@ -12,7 +13,7 @@ import CommonPopover, {
 import { usePopover } from '#desktop/components/CommonPopover/usePopover.ts'
 
 export interface Props extends Omit<CommonPopoverProps, 'owner'> {
-  triggerLink?: string
+  triggerLink?: Link
   triggerLinkClass?: string
   triggerLinkActiveClass?: string
   /**

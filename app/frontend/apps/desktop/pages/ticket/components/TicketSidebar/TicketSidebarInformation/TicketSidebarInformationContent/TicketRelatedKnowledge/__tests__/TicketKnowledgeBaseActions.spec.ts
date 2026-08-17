@@ -39,7 +39,6 @@ const mockSuggestedAnswers = (titles: string[]) =>
             category: {
               id: convertToGraphQLId('KnowledgeBase::Category', 1),
               title: 'Account',
-              knowledgeBase: { id: convertToGraphQLId('KnowledgeBase', 1) },
             },
           },
           kbLocale: { systemLocale: { locale: 'en-us', name: 'English' } },
@@ -79,6 +78,11 @@ const renderActions = (
       {
         path: '/knowledge-base/:localeCode/category/:categoryInternalId',
         name: 'KnowledgeBaseCategory',
+        component: { template: '<div />' },
+      },
+      {
+        path: '/knowledge-base/locale/:localeCode/answer/:answerInternalId',
+        name: 'KnowledgeBaseAnswer',
         component: { template: '<div />' },
       },
       // Tags link into the detailed search.

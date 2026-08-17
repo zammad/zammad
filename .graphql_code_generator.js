@@ -39,6 +39,7 @@ const scalars = {
   ISO8601Date: 'string',
   ISO8601DateTime: 'string',
   JSON: 'any',
+  KnowledgeBaseIconSet: "'anticon' | 'FontAwesome' | 'material' | 'ionicons' | 'Simple-Line-Icons'",
   UriHttpString: 'string',
 }
 

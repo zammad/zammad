@@ -2,10 +2,11 @@
 
 import { renderComponent } from '#tests/support/components/index.ts'
 
-import type { BreadcrumbItem } from '#desktop/components/CommonBreadcrumb/types.ts'
 import type { DropdownItem } from '#desktop/components/CommonDropdown/types.ts'
 
 import TopBarHeaderFull from '../TopBarHeaderFull.vue'
+
+import type { KnowledgeBaseBreadcrumbItem } from '../../../types.ts'
 
 const copyKnowledgeBaseNameToClipboard = vi.fn()
 
@@ -15,7 +16,7 @@ vi.mock('../useTopBarHeader.ts', () => ({
   }),
 }))
 
-const breadcrumbs: BreadcrumbItem[] = [
+const breadcrumbs: KnowledgeBaseBreadcrumbItem[] = [
   { label: 'Support', icon: 'book', route: '/' },
   { label: 'Some Category' },
 ]
@@ -87,5 +88,28 @@ describe('TopBarHeaderFull', () => {
     await view.events.click(view.getByRole('button', { name: 'Copy knowledge base name' }))
 
     expect(copyKnowledgeBaseNameToClipboard).toHaveBeenCalled()
+  })
+
+  // The title has to sit above the content it belongs to: the browse view's card
+  //   grid is wide, the answer view's article body reads at the narrower measure.
+  it('caps the title at the wide content width by default', () => {
+    const view = renderHeader({ title: 'My Knowledge Base' })
+
+    expect(view.getByText('My Knowledge Base')).toHaveClass(
+      'max-w-[calc(var(--container-7xl)-2.750rem)]',
+    )
+  })
+
+  it('caps the title at the article reading width when asked for it', () => {
+    const view = renderHeader({ title: 'My Knowledge Base', contentWidth: 'reading' })
+
+    const title = view.getByText('My Knowledge Base')
+
+    // Same class the answer article's own reading column uses (KnowledgeBaseAnswer.vue),
+    //   so the two stay aligned at any width.
+    expect(title).toHaveClass('max-w-[calc(var(--container-3xl)+2.750rem)]', 'px-5.5')
+    // Breaks out of the header's own px-5.5 first, so the px-5.5 above is the
+    //   header's own padding, not stacked on top of it.
+    expect(title.parentElement).toHaveClass('-mx-5.5')
   })
 })

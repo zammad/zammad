@@ -68,7 +68,11 @@ class KnowledgeBase::Answer::Translation::Content < ApplicationModel
     # shows up in the translation's own changes. Touch the translation so its reindex hook fires; a
     # body change also bumps edited_at (the editorial timestamp shown in the views).
     if saved_change_to_body?
-      translation.touch(:edited_at) # rubocop:disable Rails/SkipsModelValidations
+      # `touch` writes only the given timestamp columns straight to the DB, skipping callbacks —
+      # including ChecksUserColumnsFillup#fill_up_user_update. A plain touch(:edited_at) would
+      # therefore leave updated_by_id credited to whoever last changed the title, even though this
+      # is the user who just edited the body. Save instead, so the current editor is persisted too.
+      translation.update!(edited_at: Time.zone.now)
     else
       translation.touch # rubocop:disable Rails/SkipsModelValidations
     end

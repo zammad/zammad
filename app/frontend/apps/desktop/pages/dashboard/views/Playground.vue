@@ -51,6 +51,8 @@ import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
 import SplitButton from '#desktop/components/SplitButton/SplitButton.vue'
 import ThemeSwitch from '#desktop/components/ThemeSwitch/ThemeSwitch.vue'
 import UserPopoverWithTrigger from '#desktop/components/User/UserPopoverWithTrigger.vue'
+// eslint-disable-next-line import/no-restricted-paths
+import KnowledgeBaseCategoryIcon from '#desktop/pages/knowledge-base/components/KnowledgeBaseCategoryIcon.vue'
 
 const alphabetOptions = computed(() =>
   [...Array(26).keys()].map((i) => ({
@@ -1417,6 +1419,14 @@ const { openFeedbackDialog } = useFeedbackDialog()
 <template>
   <LayoutContent>
     <div>
+      <h3>Knowledge Base Category Icons</h3>
+      <div class="mb-4 flex space-x-2 text-blue-800">
+        <KnowledgeBaseCategoryIcon name="e699" set="anticon" size="small" />
+        <KnowledgeBaseCategoryIcon name="f115" set="FontAwesome" size="small" />
+        <KnowledgeBaseCategoryIcon name="f38a" set="ionicons" size="small" />
+        <KnowledgeBaseCategoryIcon name="e94d" set="material" size="small" />
+        <KnowledgeBaseCategoryIcon name="e039" set="Simple-Line-Icons" size="small" />
+      </div>
       <h3>Notifications / Alerts</h3>
       <div class="mb-4 space-x-2">
         <CommonButton

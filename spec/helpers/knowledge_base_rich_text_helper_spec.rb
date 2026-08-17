@@ -3,6 +3,28 @@
 require 'rails_helper'
 
 RSpec.describe KnowledgeBaseRichTextHelper, type: :helper do
+  # The rewriting itself lives in KnowledgeBaseRichText (see its spec); what this module adds is
+  #   the link target of the public help pages, which needs the route helpers and `request`.
+  describe '#prepare_rich_text_links' do
+    include_context 'basic Knowledge Base'
+
+    let(:linked_answer) { create(:knowledge_base_answer, :published, category: category) }
+    let(:translation)   { linked_answer.translation_primary }
+
+    it 'resolves an answer link to its public help path' do
+      input = "<a data-target-type='knowledge-base-answer' data-target-id='#{translation.id}'>See also</a>"
+
+      expect(helper.prepare_rich_text_links(input))
+        .to include(%(href="/help/#{locale_name}/#{category.translation_primary.to_param}/#{translation.to_param}"))
+    end
+
+    it 'resolves a link to a removed answer to a placeholder' do
+      input = "<a data-target-type='knowledge-base-answer' data-target-id='9999'>See also</a>"
+
+      expect(helper.prepare_rich_text_links(input)).to include('href="#"')
+    end
+  end
+
   describe '#prepare_rich_text_videos' do
     it 'renders a legacy (host-less) YouTube marker for backward compatibility' do
       result = helper.prepare_rich_text_videos('( widget: video, provider: youtube, id: vTTzwJsHpU8 )')

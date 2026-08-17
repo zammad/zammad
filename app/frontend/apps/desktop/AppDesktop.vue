@@ -4,7 +4,6 @@
 import { onBeforeMount, watch } from 'vue'
 import { useRouter } from 'vue-router'
 
-import CommonImageViewer from '#shared/components/CommonImageViewer/CommonImageViewer.vue'
 import CommonNotifications from '#shared/components/CommonNotifications/CommonNotifications.vue'
 import DynamicInitializer from '#shared/components/DynamicInitializer/DynamicInitializer.vue'
 import useAuthenticationChanges from '#shared/composables/authentication/useAuthenticationUpdates.ts'
@@ -25,6 +24,7 @@ import {
   initializeBetaUiFeedbackConsentDialog,
 } from '#desktop/components/BetaUi/composables/useBetaUiFeedbackConsent.ts'
 import { initializeConfirmationDialog } from '#desktop/components/CommonConfirmationDialog/initializeConfirmationDialog.ts'
+import CommonImageViewer from '#desktop/components/CommonImageViewer/CommonImageViewer.vue'
 import { useConnection } from '#desktop/composables/useConnection.ts'
 import { useTicketOverviewsStore } from '#desktop/entities/ticket/stores/ticketOverviews.ts'
 import { useUserCurrentTaskbarTabsStore } from '#desktop/entities/user/current/stores/taskbarTabs.ts'

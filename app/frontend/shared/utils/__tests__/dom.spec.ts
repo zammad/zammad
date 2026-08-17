@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { domFrom, waitForImagesToLoad } from '../dom.ts'
+import { domFrom, setAutoDirectionOnChildElements, waitForImagesToLoad } from '../dom.ts'
 
 describe('domFrom', () => {
   const input = '<div>test</div>'
@@ -21,6 +21,24 @@ describe('domFrom', () => {
 
     expect(firstNode.textContent).toBe('test')
     expect(firstNode.childNodes[0]).toBeInstanceOf(Text)
+  })
+})
+
+describe('setAutoDirectionOnChildElements', () => {
+  it('sets dir="auto" on descendant elements only', () => {
+    const container = domFrom(
+      '<p>Intro</p>text<div><span>Nested</span></div><img src="inline.png">',
+    )
+
+    setAutoDirectionOnChildElements(container)
+
+    expect(container).not.toHaveAttribute('dir')
+
+    Array.from(container.children).forEach((child) => {
+      expect(child).toHaveAttribute('dir', 'auto')
+    })
+
+    expect(container.querySelector('span')).toHaveAttribute('dir', 'auto')
   })
 })
 

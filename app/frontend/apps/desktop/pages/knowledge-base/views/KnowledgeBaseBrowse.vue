@@ -12,12 +12,12 @@ import { useIndicator } from '#desktop/components/CommonIndicator/useIndicator.t
 import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
 import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
 
-// import AddCategoryCard from '../components/AddCategoryCard.vue'
+// import KnowledgeBaseAddCategoryCard from '../components/KnowledgeBaseBrowse/KnowledgeBaseAddCategoryCard.vue'
 import { useKnowledgeBaseAccess } from '../../../entities/knowledge-base/composables/useKnowledgeBaseAccess.ts'
-import CategoryCard from '../components/CategoryCard.vue'
-import KnowledgeBaseAnswerList from '../components/KnowledgeBaseAnswerList.vue'
-import KnowledgeBaseCategorySkeleton from '../components/KnowledgeBaseCategorySkeleton.vue'
-import KnowledgeBaseTopBarHeader from '../components/KnowledgeBaseTopBarHeader.vue'
+import KnowledgeBaseAnswerList from '../components/KnowledgeBaseBrowse/KnowledgeBaseAnswerList.vue'
+import KnowledgeBaseCategoryCard from '../components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue'
+import KnowledgeBaseCategoryCardSkeleton from '../components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCardSkeleton.vue'
+import KnowledgeBaseTopBarHeader from '../components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue'
 import { useKnowledgeBaseCategorySubcategories } from '../composables/useKnowledgeBaseCategorySubcategories.ts'
 
 // The browsed locale and category come from the URL as route props (see
@@ -147,7 +147,7 @@ const scrollToEnd = () => {
 
       <CommonLoader class="flex w-full items-center" :loading="loading">
         <template #skeleton>
-          <KnowledgeBaseCategorySkeleton :count="categorySkeletonCount" />
+          <KnowledgeBaseCategoryCardSkeleton :count="categorySkeletonCount" />
         </template>
 
         <!-- shrink-0 keeps the section at its full content height inside the
@@ -158,9 +158,13 @@ const scrollToEnd = () => {
           :class="{ 'flex grow flex-col': !tileCount }"
         >
           <ol class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
-            <CategoryCard v-for="category in subcategories" :key="category.id" v-bind="category" />
-            <!-- <AddCategoryCard v-if="canEdit" /> -->
-            <!-- Temporary placeholder card until AddCategoryCard is reintroduced. -->
+            <KnowledgeBaseCategoryCard
+              v-for="category in subcategories"
+              :key="category.id"
+              v-bind="category"
+            />
+            <!-- <KnowledgeBaseAddCategoryCard v-if="canEdit" /> -->
+            <!-- Temporary placeholder card until KnowledgeBaseAddCategoryCard is reintroduced. -->
             <!-- Remove the <li> below once that happens. -->
             <li
               v-if="canEdit && subcategories.length"

@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { computed, type Ref } from 'vue'
+import { computed, onScopeDispose, type Ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 import type { KnowledgeBaseCategoryPreInfoFragment } from '#shared/graphql/types.ts'
@@ -113,14 +113,21 @@ export const useKnowledgeBaseCategorySubcategories = (
   //   change deep in a child's subtree still lists that child.
   const { contentUpdates } = store
 
-  contentUpdates.onResult(({ data }) => {
+  const { off: stopContentUpdates } = contentUpdates.onResult(({ data }) => {
     // At the root there is no category id to match against, and a newly created
     //   or newly visible top-level category (e.g. after a permission change) is
     //   not yet in the displayed set — its ping carries only its own id. But any
     //   content change can shift the root listing (its top-level categories and
     //   their subtree counts), so always refetch there.
+    // Pin the refetch to the current reactive args explicitly: Vue only pushes
+    //   a changed `categoryId`/`locale` into the underlying query on its next
+    //   reactivity flush, so a ping arriving in the same tick as a category or
+    //   locale switch would otherwise refetch with the args being navigated
+    //   away from.
+    const currentArgs = { categoryId: categoryId?.value, locale: locale?.value }
+
     if (!categoryId?.value) {
-      knowledgeBaseCategorySubcategories.refetch()
+      knowledgeBaseCategorySubcategories.refetch(currentArgs)
       return
     }
 
@@ -133,9 +140,11 @@ export const useKnowledgeBaseCategorySubcategories = (
     ])
 
     if (affected.length === 0 || affected.some((id) => displayedCategoryIds.has(id))) {
-      knowledgeBaseCategorySubcategories.refetch()
+      knowledgeBaseCategorySubcategories.refetch(currentArgs)
     }
   })
+
+  onScopeDispose(stopContentUpdates)
 
   return {
     knowledgeBaseCategorySubcategories,

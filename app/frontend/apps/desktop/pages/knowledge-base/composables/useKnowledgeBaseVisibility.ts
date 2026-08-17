@@ -4,22 +4,25 @@ import { computed, toValue, type MaybeRef } from 'vue'
 
 import { EnumKnowledgeBaseVisibility } from '#shared/graphql/schema-types.ts'
 
+// Module-level so callers that only need the mapping (e.g. building a list of
+//   breadcrumb items) can read it without invoking a composable per item.
+export const knowledgeBaseVisibilityMeta = {
+  [EnumKnowledgeBaseVisibility.Draft]: {
+    icon: 'pencil-fill',
+    class: 'text-stone-200! dark:text-neutral-500!',
+  },
+  [EnumKnowledgeBaseVisibility.Internal]: { icon: 'lock-fill', class: 'text-blue-800!' },
+  [EnumKnowledgeBaseVisibility.Published]: { icon: 'unlock-fill', class: 'text-green-400!' },
+  [EnumKnowledgeBaseVisibility.Archived]: {
+    icon: 'archive-fill',
+    class: 'text-stone-400! dark:text-neutral-400!',
+  },
+} as const
+
 export const useKnowledgeBaseVisibility = (
   visibility?: MaybeRef<EnumKnowledgeBaseVisibility | undefined>,
 ) => {
-  const statusMeta = {
-    [EnumKnowledgeBaseVisibility.Draft]: {
-      icon: 'pencil-fill',
-      class: 'text-stone-200! dark:text-neutral-500!',
-    },
-    [EnumKnowledgeBaseVisibility.Internal]: { icon: 'lock-fill', class: 'text-blue-800!' },
-    [EnumKnowledgeBaseVisibility.Published]: { icon: 'unlock-fill', class: 'text-green-400!' },
-    // TODO: placeholder icon/color for the archived state pending design.
-    [EnumKnowledgeBaseVisibility.Archived]: {
-      icon: 'eye-slash',
-      class: 'text-stone-400! dark:text-neutral-400!',
-    },
-  } as const
+  const statusMeta = knowledgeBaseVisibilityMeta
 
   const currentMetaClass = computed(() => {
     const currentVisibility = toValue(visibility)

@@ -10,10 +10,9 @@ import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/moc
 import { EnumTaskbarEntity, EnumTaskbarEntityAccess } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
+import { mockLinkListQuery } from '#desktop/entities/link/graphql/queries/linkList.mocks.ts'
 import { mockUserCurrentTaskbarItemListQuery } from '#desktop/entities/user/current/graphql/queries/userCurrentTaskbarItemList.mocks.ts'
 import { getUserCurrentTaskbarItemUpdatesSubscriptionHandler } from '#desktop/entities/user/current/graphql/subscriptions/userCurrentTaskbarItemUpdates.mocks.ts'
-
-import { mockLinkListQuery } from '../../graphql/queries/linkList.mocks.ts'
 
 describe('Ticket detail view error handling', () => {
   beforeEach(() => {

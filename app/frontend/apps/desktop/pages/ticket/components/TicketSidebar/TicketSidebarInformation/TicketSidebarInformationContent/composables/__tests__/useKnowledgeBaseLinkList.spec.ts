@@ -11,8 +11,8 @@ import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import {
   mockLinkListQuery,
   waitForLinkListQueryCalls,
-} from '#desktop/pages/ticket/graphql/queries/linkList.mocks.ts'
-import { getLinkUpdatesSubscriptionHandler } from '#desktop/pages/ticket/graphql/subscriptions/linkUpdates.mocks.ts'
+} from '#desktop/entities/link/graphql/queries/linkList.mocks.ts'
+import { getLinkUpdatesSubscriptionHandler } from '#desktop/entities/link/graphql/subscriptions/linkUpdates.mocks.ts'
 
 import { useKnowledgeBaseLinkList } from '../useKnowledgeBaseLinkList.ts'
 

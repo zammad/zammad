@@ -4,7 +4,6 @@
 import { onMounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
 
-import CommonImageViewer from '#shared/components/CommonImageViewer/CommonImageViewer.vue'
 import CommonNotifications from '#shared/components/CommonNotifications/CommonNotifications.vue'
 import DynamicInitializer from '#shared/components/DynamicInitializer/DynamicInitializer.vue'
 import useAuthenticationChanges from '#shared/composables/authentication/useAuthenticationUpdates.ts'
@@ -21,6 +20,7 @@ import { useSessionStore } from '#shared/stores/session.ts'
 import { registerSW } from '#shared/sw/register.ts'
 
 import CommonConfirmation from '#mobile/components/CommonConfirmation/CommonConfirmation.vue'
+import CommonImageViewer from '#mobile/components/CommonImageViewer/CommonImageViewer.vue'
 import { useConnection } from '#mobile/composables/useConnection.ts'
 
 import { useTicketOverviewsStore } from './entities/ticket/stores/ticketOverviews.ts'

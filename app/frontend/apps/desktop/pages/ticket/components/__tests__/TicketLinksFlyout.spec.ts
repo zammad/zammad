@@ -6,11 +6,11 @@ import { waitForNextTick } from '#tests/support/utils.ts'
 
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
 
+import { mockLinkListQuery } from '#desktop/entities/link/graphql/queries/linkList.mocks.ts'
 import TicketLinksFlyout from '#desktop/pages/ticket/components/TicketLinksFlyout.vue'
 import { mockTicketRelationAndRecentTicketListsQuery } from '#desktop/pages/ticket/graphql/queries/ticketRelationAndRecentTicketLists.mocks.ts'
 
 import { waitForLinkAddMutationCalls } from '../../graphql/mutations/linkAdd.mocks.ts'
-import { mockLinkListQuery } from '../../graphql/queries/linkList.mocks.ts'
 
 describe('TicketLinksFlyout', () => {
   it('renders the flyout', async () => {
