@@ -86,6 +86,10 @@ RSpec.describe 'Desktop > Overviews > Bulk Actions', app: :desktop_view, authent
         .and have_text('I have the same problem')
     end
 
+    # NB: Wait for the ticket detail form to settle before closing its tab again, so that the number of fired form
+    #   updater requests is deterministic for the `within_form` calls below.
+    wait_for_form_to_settle("form-ticket-edit-#{similar_tickets.first.id}")
+
     within 'aside[aria-label="Main sidebar"]' do
       find('li', text: 'Similar problem')
         .find('button[aria-label="Close this tab"]', visible: :all)
@@ -110,8 +114,13 @@ RSpec.describe 'Desktop > Overviews > Bulk Actions', app: :desktop_view, authent
 
     # NB: Due to dropdown menus being mounted to the end of the document body, we need the scope outside of the flyout
     #   container here.
-    find_treeselect('Group').select_option('First level support')
-    find_select('Owner').select_option(agent1.fullname)
+    # NB: Wait for the form updater response after each selection, otherwise its processing may close the next
+    #   dropdown right after it was opened. Two form updater requests were already fired at this point: one by the
+    #   ticket detail view above and one by the initial rendering of the bulk edit form.
+    within_form(form_updater_gql_number: 2) do
+      find_treeselect('Group').select_option('First level support')
+      find_select('Owner').select_option(agent1.fullname)
+    end
 
     within 'aside[role="complementary"]' do
       find_toggle('Note').toggle_on
@@ -141,8 +150,13 @@ RSpec.describe 'Desktop > Overviews > Bulk Actions', app: :desktop_view, authent
 
     # NB: Due to dropdown menus being mounted to the end of the document body, we need the scope outside of the flyout
     #   container here.
-    find_treeselect('Group').select_option('Technical assistance')
-    find_select('Priority').select_option('3 high')
+    # NB: Seven form updater requests were already fired at this point: the two from above, one each for the group,
+    #   owner, note toggle and editor field changes of the first bulk edit round, and one by the initial rendering
+    #   of the reopened bulk edit form.
+    within_form(form_updater_gql_number: 7) do
+      find_treeselect('Group').select_option('Technical assistance')
+      find_select('Priority').select_option('3 high')
+    end
 
     within 'aside[role="complementary"]' do
       find_toggle('Note').toggle_on

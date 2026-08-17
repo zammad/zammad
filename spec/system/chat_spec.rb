@@ -49,6 +49,15 @@ RSpec.describe 'Chat Handling', type: :system do
     expect(page).to have_css('.zammad-chat-is-shown')
   end
 
+  # Closing the chat widget reconnects its websocket (onCloseAnimationEnd ->
+  #   io.reconnect()), but the widget's Io#send passes messages to ws.send
+  #   without checking readyState - a chat_session_init fired while the new
+  #   socket is still connecting is lost for good and no agent ever gets
+  #   notified. Wait for the reconnect to finish before reopening the dialog.
+  def wait_for_widget_websocket_open
+    wait.until { page.evaluate_script('chat.io.ws.readyState') == 1 }
+  end
+
   def send_customer_message(message)
     find('.zammad-chat .zammad-chat-input').send_keys(message)
     click '.zammad-chat .zammad-chat-send'
@@ -167,6 +176,8 @@ RSpec.describe 'Chat Handling', type: :system do
         click '.zammad-chat .js-chat-toggle .zammad-chat-header-icon'
 
         expect(page).to have_no_css('.zammad-chat-is-open')
+
+        wait_for_widget_websocket_open
 
         open_chat_dialog
       end

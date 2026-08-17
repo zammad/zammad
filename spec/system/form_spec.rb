@@ -4,6 +4,18 @@ require 'rails_helper'
 
 RSpec.describe 'Form', authenticated_as: true, type: :system do
 
+  # The email validation of the form submit endpoint performs live DNS lookups (check_mx: true).
+  #   The default resolver timeouts are unbounded enough that a slow or unresponsive DNS resolver
+  #   can hang the submit request beyond the Capybara wait budget, failing the examples which
+  #   expect a validation error for a non-existing domain. Bound the lookups so a misbehaving
+  #   resolver surfaces as a fast validation error instead of a hanging request.
+  around do |example|
+    EmailAddressValidator::Config.configure(dns_timeout: 5)
+    example.run
+  ensure
+    EmailAddressValidator::Config.configure(dns_timeout: nil)
+  end
+
   shared_examples 'validating form fields' do
     it 'validate name input' do
       within form_context do

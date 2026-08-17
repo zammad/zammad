@@ -66,6 +66,14 @@ RSpec.describe 'System > Objects', type: :system do
       context "for data_type '#{data_type}'" do
         before do
           visit '/#system/object_manager'
+
+          # Executing the migrations announces the required restart via a
+          #   fire-and-forget Sessions.broadcast, which only reaches websocket
+          #   sessions registered at that moment.
+          #   Wait for the websocket connection before triggering migrations,
+          #   otherwise the maintenance event is lost for good and the
+          #   'Zammad requires a restart' modal never shows up.
+          ensure_websocket
         end
 
         it 'creates and removes the field correctly' do
@@ -139,6 +147,11 @@ RSpec.describe 'System > Objects', type: :system do
       # Create the field via API.
       object_attribute
       visit '/#system/object_manager'
+
+      # Wait for the websocket connection, the maintenance events of the
+      #   migration execution below are lost otherwise.
+      ensure_websocket
+
       click 'tbody tr:last-child'
 
       in_modal do
@@ -328,6 +341,11 @@ RSpec.describe 'System > Objects', type: :system do
       # Make sure option is present in the first place.
       ticket = create(:ticket, group: Group.find_by(name: 'Users'), object_attribute.name => 'delete')
       visit "/#ticket/zoom/#{ticket.id}"
+
+      # Wait for the websocket connection, the maintenance events of the
+      #   migration execution below are lost otherwise.
+      ensure_websocket
+
       sorted_ticket_values = all("select[name=#{object_attribute.name}] option").map(&:value).reject { |x| x == '' }
       expect(sorted_ticket_values).to eq(options.keys)
       expect(find("select[name=#{object_attribute.name}] option:checked").value).to eq('delete')
