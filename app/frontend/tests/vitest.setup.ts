@@ -10,6 +10,7 @@ import { expect, vi } from 'vitest'
 import { ServiceWorkerHelper } from '#shared/utils/testSw.ts'
 
 import * as assertions from './support/assertions/index.ts'
+import { ClipboardItemMock } from './support/mocks/clipboardItem.ts'
 
 import type { TestingLibraryMatchers } from '@testing-library/jest-dom/matchers'
 
@@ -133,14 +134,7 @@ const IntersectionObserverMock = vi.fn(function () {
 globalThis.IntersectionObserver = IntersectionObserverMock as any
 
 // Mock ClipboardItem class by injecting it into the global namespace.
-globalThis.ClipboardItem = class {
-  constructor(
-    private data: Record<string, Blob | string | Promise<Blob | string>>,
-    private options: { presentationStyle: 'unspecified' | 'inline' | 'attachment' } = {
-      presentationStyle: 'unspecified',
-    },
-  ) {}
-} as any
+globalThis.ClipboardItem = ClipboardItemMock as any
 
 require.extensions['.css'] = () => ({})
 

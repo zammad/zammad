@@ -5,6 +5,27 @@ import { useClipboardItems, whenever } from '@vueuse/core'
 import { NotificationTypes } from '#shared/components/CommonNotifications/types.ts'
 import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
 
+const isSafeHref = (href: string) => {
+  try {
+    return ['http:', 'https:'].includes(new URL(href, document.baseURI).protocol)
+  } catch {
+    return false
+  }
+}
+
+export const createLinkClipboardItem = (href: string, label: string) => {
+  if (!isSafeHref(href)) return new ClipboardItem({ 'text/plain': label })
+
+  const anchor = document.createElement('a')
+  anchor.href = href
+  anchor.textContent = label
+
+  return new ClipboardItem({
+    'text/plain': label,
+    'text/html': anchor.outerHTML,
+  })
+}
+
 export const useCopyToClipboard = () => {
   const { copy: copyClipboardItems, copied: copiedToClipboard } = useClipboardItems()
   const { notify } = useNotifications()
