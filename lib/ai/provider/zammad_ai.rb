@@ -7,6 +7,13 @@ class AI::Provider::ZammadAI < AI::Provider
 
   # The service serves this one model for embeddings; an admin neither picks nor sees it, so the
   # connection stores nothing and every embedding call falls back to it.
+  #
+  # Which makes this the one embedding model that changes without a connection being saved - so
+  # nothing notices it the way a model picked in the dialog is noticed (see
+  # Service::AI::VectorDB::Reconcile, which only ever compares against a connection's stored config).
+  # Changing it leaves every install's knowledge base indexed with the previous model while its
+  # searches embed with this one, so a release that does has to ship a migration enqueuing
+  # VectorIndexRebuildJob.
   EMBEDDING_MODEL_FALLBACK = 'bge-m3'.freeze
 
   def self.base_url(config)

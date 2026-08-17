@@ -15,4 +15,13 @@ RSpec.describe Service::AI::VectorDB::DropTable do
 
     service_result
   end
+
+  # The full ping! raises where the index does not exist - which is no reason not to drop: a rebuild
+  # starts here, so the first build ever would otherwise be impossible.
+  it 'drops without requiring an index to be there', :aggregate_failures do
+    expect_any_instance_of(AI::VectorDB).to receive(:ping!).with(only_version: true)
+    expect_any_instance_of(AI::VectorDB).to receive(:drop)
+
+    service_result
+  end
 end

@@ -6400,8 +6400,18 @@ Setting.create_if_not_exists(
   options:     {},
   state:       false,
   preferences: {
-    validations: ['Setting::Validation::VectorDB'],
+    authentication: true,
+    validations:    ['Setting::Validation::VectorDB'],
   },
+  frontend:    true,
+)
+
+Setting.create_if_not_exists(
+  title:       __('Vector DB indexed embedding configuration'),
+  name:        'vectordb_indexed_embedding_configuration',
+  area:        'VectorDB',
+  description: __('Internal record of the embedding model and vector size the knowledge base index was last built with. Used to detect a stale index by comparison, without probing Elasticsearch.'),
+  state:       {},
   frontend:    false,
 )
 

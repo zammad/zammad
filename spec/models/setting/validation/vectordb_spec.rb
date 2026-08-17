@@ -27,14 +27,18 @@ RSpec.describe Setting::Validation::VectorDB do
   end
 
   context 'with a true value' do
+    # Nothing configured and AI switched off both apply here, and the missing configuration is what
+    # gets named: there is nothing to switch on yet.
     context 'when no provider connection is present' do
       it_behaves_like 'raising an error', value: true, message: 'No AI provider with a valid embedding model is configured.'
     end
 
+    # What the admin has configured is beside the point while AI is off - and telling them no
+    # embedding model is configured when one is would send them looking in the wrong place.
     context 'when a provider connection is present, but the AI provider configuration is disabled' do
-      before { create(:ai_provider_connection) }
+      before { create(:ai_provider_connection, :default_embedding, config: { token: 'a', embedding_model: 'text-embedding-3-small' }) }
 
-      it_behaves_like 'raising an error', value: true, message: 'No AI provider with a valid embedding model is configured.'
+      it_behaves_like 'raising an error', value: true, message: 'The provider configuration is disabled. Before proceeding, please enable it in AI > Providers.'
     end
 
     context 'when the configured provider cannot generate embeddings' do

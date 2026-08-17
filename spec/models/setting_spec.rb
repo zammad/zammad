@@ -293,4 +293,76 @@ RSpec.describe Setting, type: :model do
     end
   end
 
+  # A configuration change made while one of the switches was off must not be lost: re-enabling
+  # compares what the index holds against what is configured now, rather than assuming a disabled
+  # switch means nothing to reconcile.
+  describe 'vector index reconcile on a feature switch change', performs_jobs: true do
+    let(:connection) do
+      create(:ai_provider_connection, :default_embedding, provider: 'open_ai',
+                                                          config:   { token: 'a', embedding_model: 'text-embedding-3-small' })
+    end
+
+    before do
+      connection
+      # vectordb_enabled validates against a connection serving embeddings while the AI provider is
+      # on, so it is switched on and off again around that - leaving the tests below to toggle from a
+      # clean, disabled starting point. #clear_jobs afterwards, because these very saves reconcile
+      # too: what they enqueue would otherwise answer for the assertion, and the lock it leaves would
+      # have the next enqueue dismissed onto it.
+      described_class.set('ai_provider', true)
+      described_class.set('vectordb_enabled', true)
+      described_class.set('ai_provider', false)
+
+      clear_jobs
+    end
+
+    it 'enqueues a rebuild when enabling the AI provider finds the index does not match' do
+      expect { described_class.set('ai_provider', true) }.to have_enqueued_job(VectorIndexRebuildJob)
+    end
+
+    it 'does not enqueue anything when the index already matches what is configured' do
+      described_class.set('ai_provider', true)
+      Service::AI::VectorDB::Embedding::Configuration.record_indexed(Service::AI::VectorDB::Embedding::Configuration.current)
+      described_class.set('ai_provider', false)
+      clear_jobs
+
+      expect { described_class.set('ai_provider', true) }.not_to have_enqueued_job(VectorIndexRebuildJob)
+    end
+
+    it 'does not enqueue anything when disabling the AI provider' do
+      described_class.set('ai_provider', true)
+      clear_jobs
+
+      expect { described_class.set('ai_provider', false) }.not_to have_enqueued_job(VectorIndexRebuildJob)
+    end
+
+    # The admin UI posts to /ai/vector_index/sync after flipping this one, but `Setting.set` from the
+    # console or the API does not - and the first build has to happen either way.
+    context 'when the vector database switch itself is flipped' do
+      before do
+        described_class.set('ai_provider', true)
+        described_class.set('vectordb_enabled', false)
+
+        clear_jobs
+      end
+
+      it 'enqueues a rebuild when enabling it finds nothing built' do
+        expect { described_class.set('vectordb_enabled', true) }.to have_enqueued_job(VectorIndexRebuildJob)
+      end
+
+      it 'does not enqueue anything when disabling it' do
+        described_class.set('vectordb_enabled', true)
+        clear_jobs
+
+        expect { described_class.set('vectordb_enabled', false) }.not_to have_enqueued_job(VectorIndexRebuildJob)
+      end
+    end
+
+    it 'survives the setting not existing yet, as during the initial seed run' do
+      described_class.find_by(name: 'vectordb_enabled').destroy
+
+      expect { described_class.set('ai_provider', true) }.not_to raise_error
+    end
+  end
+
 end

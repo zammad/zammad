@@ -235,6 +235,7 @@ export interface ConfigList {
   user_lost_password?: boolean | null
   user_name_format: 'first_last' | 'last_first' | 'last_first_comma'
   user_show_password_login?: boolean | null
+  vectordb_enabled: boolean
   websocket_backend: string
   websocket_port: string
   [key: string]: unknown

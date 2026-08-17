@@ -172,8 +172,8 @@ msgstr ""
 msgid "%s ago"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleFooter.vue:32
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:222
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleFooter.vue:29
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:219
 msgid "%s attached file(s)"
 msgstr ""
 
@@ -759,11 +759,11 @@ msgstr ""
 msgid "AI provider"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:186
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:209
 msgid "AI provider configuration disabled successfully."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:186
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:209
 msgid "AI provider configuration enabled successfully."
 msgstr ""
 
@@ -1745,7 +1745,7 @@ msgstr ""
 msgid "An email was sent to _%s_. Click the link in the email to verify your account."
 msgstr ""
 
-#: app/models/ai/provider_connection.rb:275
+#: app/models/ai/provider_connection.rb:290
 msgid "An embedding model must be configured for the connection used for embeddings."
 msgstr ""
 
@@ -1782,7 +1782,7 @@ msgstr ""
 msgid "An unexpected error occurred during system setup."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:677
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:745
 #: lib/ai/provider/concerns/handles_response.rb:22
 msgid "An unknown error occurred"
 msgstr ""
@@ -2013,6 +2013,10 @@ msgstr ""
 msgid "Are you sure to remove this article?"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ai/embedding_rebuild_confirm.coffee:16
+msgid "Are you sure you want to change the embedding configuration?"
+msgstr ""
+
 #: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:147
 msgid "Are you sure you want to delete \"%s\"?"
 msgstr ""
@@ -2132,7 +2136,7 @@ msgstr ""
 msgid "Article Language Detection"
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:279
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:275
 msgid "Article actions"
 msgstr ""
 
@@ -2609,7 +2613,7 @@ msgid "BETA UI illustration"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:403
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:725
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:793
 #: app/assets/javascripts/app/views/generic/object_search/item_organization_members.jst.eco:5
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:449
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:430
@@ -3085,7 +3089,7 @@ msgstr ""
 msgid "Cannot delete record because dependent %{record} exist"
 msgstr ""
 
-#: app/models/ai/provider_connection.rb:419
+#: app/models/ai/provider_connection.rb:434
 msgid "Cannot delete the Zammad AI connection on this system."
 msgstr ""
 
@@ -3268,7 +3272,7 @@ msgstr ""
 msgid "Changes could not be loaded."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:143
+#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:147
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee:103
 msgid "Changes could not be saved."
 msgstr ""
@@ -4076,7 +4080,7 @@ msgstr ""
 msgid "Context menu"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:348
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:388
 msgid "Context window size"
 msgstr ""
 
@@ -4906,7 +4910,7 @@ msgid "Default"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ai/ai_feature_provider_modal.coffee:60
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:451
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:491
 msgid "Default (%s)"
 msgstr ""
 
@@ -4955,7 +4959,7 @@ msgstr ""
 msgid "Default for new tickets"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:165
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:178
 msgid "Default provider updated successfully."
 msgstr ""
 
@@ -5272,7 +5276,7 @@ msgstr ""
 msgid "Defines if the application is in developer mode (all users have the same password and password reset will work without email delivery)."
 msgstr ""
 
-#: db/seeds/settings.rb:6437
+#: db/seeds/settings.rb:6447
 msgid "Defines if the bubble menu feature of the richtext editor is enabled. Note that this setting will be ignored if the writing assistant is turned on."
 msgstr ""
 
@@ -5500,7 +5504,7 @@ msgstr ""
 msgid "Defines the backend service for ticket article language detection."
 msgstr ""
 
-#: db/seeds/settings.rb:6414
+#: db/seeds/settings.rb:6424
 msgid "Defines the chunking strategy for the knowledge base vector database."
 msgstr ""
 
@@ -5697,7 +5701,7 @@ msgstr ""
 msgid "Defines whether the matching tickets are shown in case of already existing tickets."
 msgstr ""
 
-#: db/seeds/settings.rb:6405
+#: db/seeds/settings.rb:6415
 msgid "Defines which knowledge base categories are excluded from the vector database. Sub-categories of an excluded category are excluded as well. Note that the vector database has to be rebuilt after removing a category from this list, so that its answers get indexed."
 msgstr ""
 
@@ -5721,13 +5725,13 @@ msgstr ""
 msgid "Defines which user roles will receive a warning in case of matching tickets."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:116
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:129
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm_delete.coffee:4
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_destroy_confirm.coffee:4
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee:700
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee:130
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:188
-#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:115
+#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:118
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee:9
 #: app/assets/javascripts/app/controllers/package.coffee:73
 #: app/assets/javascripts/app/controllers/user.coffee:107
@@ -6222,7 +6226,7 @@ msgstr ""
 msgid "Do not update any tickets."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:109
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:122
 msgid "Do not use for image text recognition"
 msgstr ""
 
@@ -6452,7 +6456,7 @@ msgstr ""
 msgid "Easter holiday"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:564
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:632
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:60
 #: app/assets/javascripts/app/controllers/organization_profile/action_row.coffee:36
 #: app/assets/javascripts/app/controllers/tag.coffee:118
@@ -6765,11 +6769,11 @@ msgstr ""
 msgid "Emails before the cut-off time are imported as archived tickets. Emails after the cut-off time are imported as regular tickets."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:314
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:354
 msgid "Embedding Model"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:343
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:383
 msgid "Embedding dimensions"
 msgstr ""
 
@@ -9441,6 +9445,10 @@ msgstr ""
 msgid "Internal error"
 msgstr ""
 
+#: db/seeds/settings.rb:6406
+msgid "Internal record of the embedding model and vector size the knowledge base index was last built with. Used to detect a stale index by comparison, without probing Elasticsearch."
+msgstr ""
+
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco:18
 #: app/assets/javascripts/app/views/ticket_zoom/knowledge_base_ai_draft_modal.jst.eco:58
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerSidebarContent.vue:33
@@ -10098,7 +10106,7 @@ msgstr ""
 msgid "Leave BETA UI feedback program?"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:389
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:429
 msgid "Leave empty to use URL (Completions)"
 msgstr ""
 
@@ -10114,7 +10122,7 @@ msgstr ""
 msgid "Legal Information"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:346
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:386
 msgid "Length of the vectors the embedding model produces. Filled in for a model whose size is known."
 msgstr ""
 
@@ -11218,15 +11226,15 @@ msgstr ""
 msgid "Mode"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:300
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:340
 msgid "Model"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:358
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:398
 msgid "Model used for image text recognition. Leave empty to use the model of this connection."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:322
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:362
 msgid "Model used for vector embedding in semantic search. Required for the provider that serves semantic search."
 msgstr ""
 
@@ -11381,7 +11389,7 @@ msgstr ""
 msgid "Nagios integration"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:482
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:522
 #: app/assets/javascripts/app/controllers/_application_controller/reorder_modal.coffee:13
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:325
 #: app/assets/javascripts/app/controllers/_ui_element/object_attribute_options_context.coffee:21
@@ -11775,7 +11783,7 @@ msgid "New user?"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:109
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:552
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:620
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:113
 #: app/assets/javascripts/app/controllers/webhook.coffee:170
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee:2
@@ -11843,7 +11851,7 @@ msgstr ""
 msgid "No AI provider is currently set up. Please contact your administrator."
 msgstr ""
 
-#: app/models/setting/validation/vectordb.rb:10
+#: app/models/setting/validation/vectordb.rb:12
 msgid "No AI provider with a valid embedding model is configured."
 msgstr ""
 
@@ -12451,7 +12459,7 @@ msgstr ""
 msgid "Number"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:351
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:391
 msgid "Number of input tokens the embedding model takes at once. Filled in for a model whose limit is known."
 msgstr ""
 
@@ -12480,7 +12488,7 @@ msgstr ""
 msgid "OAuth2 token is expired!"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:354
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:394
 msgid "OCR Model"
 msgstr ""
 
@@ -13199,7 +13207,7 @@ msgstr ""
 msgid "Packages"
 msgstr ""
 
-#: db/seeds/settings.rb:6461
+#: db/seeds/settings.rb:6471
 msgid "Packages Token"
 msgstr ""
 
@@ -13870,6 +13878,7 @@ msgstr ""
 msgid "Problem"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ai/embedding_rebuild_confirm.coffee:14
 #: app/assets/javascripts/app/views/integration/exchange_certificate_issue.jst.eco:15
 msgid "Proceed"
 msgstr ""
@@ -14206,7 +14215,7 @@ msgstr ""
 msgid "Recursive Ticket Triggers"
 msgstr ""
 
-#: db/seeds/settings.rb:6423
+#: db/seeds/settings.rb:6433
 msgid "Recursive hierarchical chunking"
 msgstr ""
 
@@ -14365,7 +14374,7 @@ msgstr ""
 msgid "Remove %s"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:119
+#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:122
 msgid "Remove Language"
 msgstr ""
 
@@ -14482,7 +14491,7 @@ msgstr ""
 msgid "Removes the shadows for a flat look."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:116
+#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:119
 msgid "Removing %s language(s) will permanently delete all translation(s) related to them. Enter \"%s\" to confirm."
 msgstr ""
 
@@ -14794,7 +14803,7 @@ msgstr ""
 msgid "Rewrite complex section and make it easy to understand"
 msgstr ""
 
-#: db/seeds/settings.rb:6434
+#: db/seeds/settings.rb:6444
 msgid "Richtext Bubble Menu"
 msgstr ""
 
@@ -15544,7 +15553,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:469
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:111
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:166
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:273
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:269
 msgid "See less"
 msgstr ""
 
@@ -15555,7 +15564,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco:21
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:134
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:166
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:273
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:269
 msgid "See more"
 msgstr ""
 
@@ -15716,6 +15725,10 @@ msgstr ""
 msgid "Semantic search is temporarily unavailable. Please try again later."
 msgstr ""
 
+#: app/assets/javascripts/app/views/ai/embedding_rebuild_confirm.jst.eco:2
+msgid "Semantic search will stop working until another provider is selected for it."
+msgstr ""
+
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:78
 #: app/assets/javascripts/app/views/customer_chat/chat_window.jst.eco:58
 #: public/assets/chat/views/chat.eco:25
@@ -15831,7 +15844,7 @@ msgstr ""
 msgid "Sent successfully!"
 msgstr ""
 
-#: db/seeds/settings.rb:6424
+#: db/seeds/settings.rb:6434
 msgid "Sentence-based chunking"
 msgstr ""
 
@@ -16818,7 +16831,7 @@ msgid "Subject & References - Additional search for same article subject and sam
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:412
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:571
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:639
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee:2
 #: app/assets/javascripts/app/controllers/tag.coffee:117
 #: app/assets/javascripts/app/controllers/widget/button_with_dropdown.coffee:12
@@ -17409,7 +17422,7 @@ msgstr ""
 msgid "The WhatsApp webhook payload could not be validated."
 msgstr ""
 
-#: app/models/ai/provider_connection.rb:429
+#: app/models/ai/provider_connection.rb:444
 msgid "The Zammad AI connection is managed by the platform and cannot be created or changed here."
 msgstr ""
 
@@ -17639,7 +17652,7 @@ msgstr ""
 msgid "The current password you provided is incorrect."
 msgstr ""
 
-#: app/services/service/ai/vectordb/create_table.rb:22
+#: app/services/service/ai/vectordb/create_table.rb:21
 msgid "The currently selected AI provider does not support embeddings."
 msgstr ""
 
@@ -17659,7 +17672,7 @@ msgstr ""
 msgid "The default font size is 12px."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:170
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:193
 msgid "The default provider could not be updated."
 msgstr ""
 
@@ -17869,6 +17882,14 @@ msgstr ""
 msgid "The knowledge base could not be loaded."
 msgstr ""
 
+#: app/controllers/ai/vector_index_controller.rb:17
+msgid "The knowledge base index cannot be built. Please check that Elasticsearch is reachable and runs a supported version."
+msgstr ""
+
+#: app/assets/javascripts/app/views/ai/embedding_rebuild_confirm.jst.eco:3
+msgid "The knowledge base index is kept, so selecting the same provider again requires no re-index."
+msgstr ""
+
 #: app/frontend/shared/composables/useLocaleUpdate.ts:21
 msgid "The language could not be updated."
 msgstr ""
@@ -17897,7 +17918,7 @@ msgstr ""
 msgid "The minutes overlay"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:683
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:751
 msgid "The model list could not be fetched: %s"
 msgstr ""
 
@@ -17913,8 +17934,12 @@ msgstr ""
 msgid "The new ticket number could not be generated."
 msgstr ""
 
+#: app/assets/javascripts/app/views/ai/embedding_rebuild_confirm.jst.eco:6
+msgid "The number of extra AI requests will depend on the amount of indexable content."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:555
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:540
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:608
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_new.coffee:69
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee:93
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:825
@@ -17929,7 +17954,7 @@ msgstr ""
 msgid "The object could not be found."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:540
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:608
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_edit.coffee:69
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee:265
 #: app/assets/javascripts/app/controllers/_settings/area_switch.coffee:102
@@ -18083,6 +18108,10 @@ msgstr ""
 msgid "The provided token is invalid."
 msgstr ""
 
+#: app/models/setting/validation/vectordb.rb:17
+msgid "The provider configuration is disabled. Before proceeding, please enable it in AI > Providers."
+msgstr ""
+
 #: app/assets/javascripts/app/views/ai/missing_provider_alert.jst.eco:2
 msgid "The provider configuration is disabled. Before proceeding, please set up at least one provider in |AI > Providers|."
 msgstr ""
@@ -18091,11 +18120,11 @@ msgstr ""
 msgid "The provider could not be updated."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:442
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:482
 msgid "The provider offered no matching model for this field, so it has to be entered manually."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:442
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:482
 msgid "The provider offered no models to choose from, so it has to be entered manually."
 msgstr ""
 
@@ -18354,7 +18383,7 @@ msgid "The setting could not be reset."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ai/knowledge_base_features.coffee:120
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:192
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:215
 #: app/assets/javascripts/app/models/setting.coffee:43
 msgid "The setting could not be updated."
 msgstr ""
@@ -18770,6 +18799,10 @@ msgstr ""
 msgid "This category is empty"
 msgstr ""
 
+#: app/services/service/ai/provider_connection/validator/embedding_rebuild.rb:43
+msgid "This change requires the knowledge base to be indexed again."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee:92
 msgid "This class gets added to the button on initialization and will be removed once the chat connection is established."
 msgstr ""
@@ -19082,7 +19115,7 @@ msgstr ""
 msgid "This permission level is not available based on the current roles permissions."
 msgstr ""
 
-#: app/controllers/ai/provider_connections_controller.rb:38
+#: app/controllers/ai/provider_connections_controller.rb:57
 #: app/services/service/ai/provider_connection/resolve_embedding_metadata.rb:37
 msgid "This provider does not support embeddings."
 msgstr ""
@@ -19125,7 +19158,7 @@ msgstr ""
 msgid "This service shows you contacts of incoming calls and a caller list in realtime."
 msgstr ""
 
-#: db/seeds/settings.rb:6464
+#: db/seeds/settings.rb:6474
 msgid "This setting defines the token to access the support.zammad.com instance for package remote commands."
 msgstr ""
 
@@ -19196,6 +19229,10 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:65
 #: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:73
 msgid "This will adjust the corresponding setting of the destination group within the group management. A group's email address determines which address should be used for outgoing mails, e.g. when an agent is composing an email or a trigger is sending an auto-reply."
+msgstr ""
+
+#: app/assets/javascripts/app/views/ai/embedding_rebuild_confirm.jst.eco:5
+msgid "This will rebuild the vector index used for the semantic search, which may result in higher AI costs."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
@@ -19883,7 +19920,7 @@ msgstr ""
 msgid "Toggle the overlay"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:295
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:335
 #: app/assets/javascripts/app/controllers/api.coffee:11
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:48
 #: app/models/channel/driver/sms/massenversand.rb:44
@@ -20199,7 +20236,7 @@ msgstr ""
 msgid "Two-factor method has been configured successfully."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:481
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:521
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:415
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:240
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:79
@@ -20241,7 +20278,7 @@ msgstr ""
 msgid "UID Field"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:374
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:414
 #: app/assets/javascripts/app/views/api.jst.eco:63
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco:12
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:12
@@ -20258,15 +20295,15 @@ msgstr ""
 msgid "URL (AJAX endpoint)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:378
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:418
 msgid "URL (Completions)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:382
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:422
 msgid "URL (Embeddings)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:386
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:426
 msgid "URL (OCR)"
 msgstr ""
 
@@ -20310,7 +20347,7 @@ msgstr ""
 msgid "Unknown"
 msgstr ""
 
-#: app/controllers/ai/provider_connections_controller.rb:35
+#: app/controllers/ai/provider_connections_controller.rb:54
 msgid "Unknown default purpose."
 msgstr ""
 
@@ -20711,7 +20748,7 @@ msgstr ""
 msgid "Use double click to change level of the row."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:102
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:115
 msgid "Use for image text recognition"
 msgstr ""
 
@@ -21080,11 +21117,15 @@ msgstr ""
 msgid "Vector DB"
 msgstr ""
 
-#: db/seeds/settings.rb:6411
+#: db/seeds/settings.rb:6403
+msgid "Vector DB indexed embedding configuration"
+msgstr ""
+
+#: db/seeds/settings.rb:6421
 msgid "Vector DB knowledge base chunking strategy"
 msgstr ""
 
-#: db/seeds/settings.rb:6402
+#: db/seeds/settings.rb:6412
 msgid "Vector DB knowledge base excluded categories"
 msgstr ""
 
@@ -21276,7 +21317,7 @@ msgstr ""
 msgid "Web (in)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:156
+#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:160
 #: app/assets/javascripts/app/controllers/knowledge_base/server_snippet.coffee:2
 msgid "Web Server Configuration"
 msgstr ""
@@ -22903,7 +22944,7 @@ msgstr ""
 msgid "is not a number"
 msgstr ""
 
-#: app/models/ai/provider_connection.rb:223
+#: app/models/ai/provider_connection.rb:238
 msgid "is not a supported AI provider"
 msgstr ""
 
@@ -23077,7 +23118,7 @@ msgstr ""
 msgid "must be a hash with \"label\" and \"value\" keys"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:813
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:881
 msgid "must be a positive number"
 msgstr ""
 

@@ -19,6 +19,18 @@ RSpec.describe Service::AI::VectorDB::Rebuild do
 
     expect(Service::AI::VectorDB::DropTable).to have_received(:execute)
     expect(Service::AI::VectorDB::CreateTable).to have_received(:execute)
-    expect(Service::AI::VectorDB::Reload).to have_received(:execute).with(worker: 0, fresh: true)
+    expect(Service::AI::VectorDB::Reload).to have_received(:execute).with(worker: 0, fresh: true, abort_when: nil)
+  end
+
+  it 'hands the abort condition through to the reload' do
+    allow_any_instance_of(AI::VectorDB).to receive(:ping!)
+    allow(Service::AI::VectorDB::DropTable).to receive(:execute)
+    allow(Service::AI::VectorDB::CreateTable).to receive(:execute)
+    allow(Service::AI::VectorDB::Reload).to receive(:execute)
+    abort_when = -> { false }
+
+    described_class.execute(abort_when:)
+
+    expect(Service::AI::VectorDB::Reload).to have_received(:execute).with(worker: 0, fresh: true, abort_when:)
   end
 end

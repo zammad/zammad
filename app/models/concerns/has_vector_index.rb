@@ -84,7 +84,7 @@ module HasVectorIndex
   end
 
   class_methods do
-    def vector_index_reload(silent: false, worker: 0, fresh: false)
+    def vector_index_reload(silent: false, worker: 0, fresh: false, abort_when: nil)
       return if !Service::AI::VectorDB::Available.execute
 
       scope = if respond_to?(:vector_index_scope)
@@ -95,6 +95,10 @@ module HasVectorIndex
 
       scope.in_batches do |batch|
         Parallel.map(batch, { in_processes: worker }) do |record|
+          # Before the record, and outside its error wrapper: an aborted reload is obsolete, not
+          # broken, and the caller must be able to tell the two apart.
+          raise Service::AI::VectorDB::Reload::Aborted if abort_when&.call
+
           begin
             record.vector_index_update(fresh:)
           rescue => e

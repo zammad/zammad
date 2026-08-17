@@ -8215,6 +8215,10 @@ a.list-group-item.active > .badge,
   align-items: center;
 }
 
+.modal-close ~ .modal-title {
+  margin: 0 23px;
+}
+
 .ai-modal-head-icon {
   display: flex;
   align-items: center;

@@ -52,4 +52,26 @@ RSpec.describe Service::AI::VectorDB::Embedding::Cache, :aggregate_failures do
       expect(described_class.fetch(object_name:, object_id:)).to eq({})
     end
   end
+
+  describe '.purge' do
+    before do
+      described_class.write(object_name:, object_id:, model:, vectors:)
+      described_class.write(object_name:, object_id: object_id + 1, model: 'text-embedding-3-large', vectors:)
+    end
+
+    it 'removes every cached vector', :aggregate_failures do
+      described_class.purge
+
+      expect(described_class.fetch(object_name:, object_id:)).to eq({})
+      expect(described_class.fetch(object_name:, object_id: object_id + 1)).to eq({})
+    end
+
+    it 'leaves stored results that are not cached vectors alone' do
+      other = create(:ai_stored_result, identifier: 'ticket_summary')
+
+      described_class.purge
+
+      expect(other.reload).to be_present
+    end
+  end
 end

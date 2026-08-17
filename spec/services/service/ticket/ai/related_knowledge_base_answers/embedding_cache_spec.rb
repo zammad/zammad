@@ -36,4 +36,23 @@ RSpec.describe Service::Ticket::AI::RelatedKnowledgeBaseAnswers::EmbeddingCache 
   it 'is a miss when nothing is stored' do
     expect(described_class.lookup(ticket:, embedding_source:, locale:)).to be_nil
   end
+
+  describe '.purge' do
+    it 'removes every cached ticket embedding' do
+      described_class.store(ticket:, embedding_source:, locale:, embedding:)
+
+      described_class.purge
+
+      expect(described_class.lookup(ticket:, embedding_source:, locale:)).to be_nil
+    end
+
+    it 'leaves stored results that are not ticket embeddings alone' do
+      other = create(:ai_stored_result, identifier: 'ticket_summary')
+      described_class.store(ticket:, embedding_source:, locale:, embedding:)
+
+      described_class.purge
+
+      expect(other.reload).to be_present
+    end
+  end
 end

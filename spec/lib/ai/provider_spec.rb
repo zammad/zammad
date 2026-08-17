@@ -172,6 +172,34 @@ RSpec.describe AI::Provider do
     end
   end
 
+  describe '#embedding_size' do
+    def provider_with(config)
+      AI::Provider::OpenAI.new(config: { provider: 'open_ai', token: '123' }.merge(config))
+    end
+
+    it 'returns the configured dimensions' do
+      expect(provider_with(embedding_model: 'text-embedding-3-small', embedding_size: 512).embedding_size).to eq(512)
+    end
+
+    it 'falls back to what is known about the model' do
+      expect(provider_with(embedding_model: 'text-embedding-3-small').embedding_size).to eq(1536)
+    end
+
+    # The config is jsonb and keeps whatever an API update wrote into it, down to a string or a
+    # number that is no dimension at all - neither of which an index mapping can be built from.
+    it 'ignores a configured value that is no dimension' do
+      expect(provider_with(embedding_model: 'text-embedding-3-small', embedding_size: 0).embedding_size).to eq(1536)
+    end
+
+    it 'reads dimensions that arrived as a string' do
+      expect(provider_with(embedding_model: 'text-embedding-3-small', embedding_size: '512').embedding_size).to eq(512)
+    end
+
+    it 'is nothing for a model no source could size' do
+      expect(provider_with(embedding_model: 'unknown-embedding-model').embedding_size).to be_nil
+    end
+  end
+
   describe '.known_embedding_default' do
     it 'returns the value for a model that matches a key' do
       expect(AI::Provider::Ollama.known_embedding_default(:EMBEDDING_SIZES, 'bge-m3')).to eq(1024)

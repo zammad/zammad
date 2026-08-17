@@ -11,6 +11,15 @@ class Service::Ticket::AI::RelatedKnowledgeBaseAnswers::EmbeddingCache
   IDENTIFIER = 'ticket_related_knowledge_base_answers_embedding'.freeze
 
   class << self
+    # Everything cached here was produced by whatever embedding model served at the time, and is only
+    # comparable to knowledge base vectors of the same one - this is the query side of the kNN the
+    # index answers. So the whole identifier goes when the index is rebuilt (VectorIndexRebuildJob),
+    # and no search is left comparing two embedding spaces. The version above stays about the ticket:
+    # what the vectors were made with is the rebuild's business, not this key's.
+    def purge
+      AI::StoredResult.cleanup(identifier: IDENTIFIER)
+    end
+
     # The cached embedding (Array), or nil when nothing is cached for this version/source/locale yet.
     def lookup(ticket:, embedding_source:, locale:)
       AI::StoredResult

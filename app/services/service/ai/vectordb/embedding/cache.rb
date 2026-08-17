@@ -25,6 +25,17 @@ class Service::AI::VectorDB::Embedding::Cache
       AI::StoredResult.where(identifier: IDENTIFIER, related_object_type: object_name, related_object_id: object_id).delete_all
     end
 
+    # Drops every cached vector. Runs before a rebuild embeds anything: the cache a re-index starts
+    # from must hold nothing of the configuration it is replacing.
+    #
+    # The whole identifier, not the entries of some model or other - what a rebuild is for is a
+    # configuration that changed, and the rows it leaves behind are unreachable anyway (the digests
+    # are keyed by model) while outliving the index membership of their record on purpose (see
+    # Document::Destroy), so nothing else would ever clear them.
+    def purge
+      AI::StoredResult.cleanup(identifier: IDENTIFIER)
+    end
+
     # Map key for a chunk. Includes the embedding model so a model change misses (and re-embeds)
     # rather than returning a vector of the wrong model/dimension.
     def digest(text, model:)

@@ -9,46 +9,24 @@ RSpec.describe VectorIndexSyncJob, :aggregate_failures, type: :job do
     setup_ai_provider
     Setting.set('vectordb_enabled', true)
 
-    allow(Service::AI::VectorDB::Available).to receive(:execute).and_return(index_available)
-    allow(Service::AI::VectorDB::CreateTable).to receive(:execute)
-    allow(Service::AI::VectorDB::Reload).to receive(:execute)
+    # Switching it on reconciles by itself now (Setting#schedule_vector_index_reconcile) - cleared, so
+    # this spec still tests what the job does rather than what the setting already did.
+    clear_jobs
   end
 
-  context 'when the vector index exists' do
-    let(:index_available) { true }
-
-    it 'updates the existing index' do
-      perform_job
-
-      expect(Service::AI::VectorDB::CreateTable).not_to have_received(:execute)
-      expect(Service::AI::VectorDB::Reload).to have_received(:execute).with(fresh: false)
-    end
-  end
-
-  context 'when the vector index does not exist' do
-    let(:index_available) { false }
-
-    it 'creates the index and fully reindexes it' do
-      perform_job
-
-      expect(Service::AI::VectorDB::CreateTable).to have_received(:execute).once
-      expect(Service::AI::VectorDB::Reload).to have_received(:execute).with(fresh: true)
-    end
+  # The rebuild job decides for itself between a cheap reload and a full rebuild, off what the index
+  # was last built with - this only has to hand over to it.
+  it 'hands the index over to the rebuild job' do
+    expect { perform_job }.to have_enqueued_job(VectorIndexRebuildJob)
   end
 
   context 'when the vector database was disabled before the job runs' do
-    let(:index_available) { true }
-
     before do
       Setting.set('vectordb_enabled', false)
     end
 
     it 'does not change the index' do
-      perform_job
-
-      expect(Service::AI::VectorDB::Available).not_to have_received(:execute)
-      expect(Service::AI::VectorDB::CreateTable).not_to have_received(:execute)
-      expect(Service::AI::VectorDB::Reload).not_to have_received(:execute)
+      expect { perform_job }.not_to have_enqueued_job(VectorIndexRebuildJob)
     end
   end
 end

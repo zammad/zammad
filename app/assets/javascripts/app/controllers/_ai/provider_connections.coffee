@@ -95,7 +95,20 @@ class ProviderConnections extends App.ControllerAIFeatureBase
               display:   __('Do not use for semantic search')
               icon:      'diagonal-cross'
               available: (object) -> object.default_embedding
-              callback:  (id) => @setConnectionAsDefault(id, 'embedding', false)
+              # Nothing is re-embedded by this - the index is simply left where it is - so the backend
+              # raises no challenge for it and the warning is raised here, about what stops working.
+              # Only where something is running to stop: with semantic search switched off there is no
+              # index to keep and nothing to tell the admin they are losing.
+              callback:  (id) =>
+                apply = => @setConnectionAsDefault(id, 'embedding', false)
+
+                return apply() if !App.Config.get('vectordb_enabled')
+
+                confirmEmbeddingRebuild(
+                  mode:      'clear'
+                  container: @el.closest('.content')
+                  callback:  apply
+                )
             }
             {
               name:      'set-default-ocr'
@@ -150,11 +163,11 @@ class ProviderConnections extends App.ControllerAIFeatureBase
       App.view('ai/provider_connections_toggle')(ai_provider: App.Config.get('ai_provider'))
     )
 
-  setConnectionAsDefault: (id, type, enabled = true) =>
+  setConnectionAsDefault: (id, type, enabled = true, skipValidators = []) =>
     App.Ajax.request(
       type: 'PUT'
       url:  App.Config.get('api_path') + '/ai/provider_connections/' + id + '/set_default'
-      data: JSON.stringify(default: type, enabled: enabled)
+      data: JSON.stringify(default: type, enabled: enabled, skip_validators: skipValidators)
       success: =>
         App.AIProviderConnection.fetchFull(
           => @genericController?.render()
@@ -165,6 +178,16 @@ class ProviderConnections extends App.ControllerAIFeatureBase
           msg:  __('Default provider updated successfully.')
       error: (data) =>
         details = data.responseJSON || {}
+
+        # Not a failure but a question: the change costs the knowledge base its embeddings, and the
+        # backend wants to hear that the admin knows before it does it.
+        validator = embeddingRebuildChallenge(details)
+        if validator
+          return confirmEmbeddingRebuild(
+            container: @el.closest('.content')
+            callback:  => @setConnectionAsDefault(id, type, enabled, [validator])
+          )
+
         @notify
           type: 'error'
           msg:  details.error_human || details.error || __('The default provider could not be updated.')
@@ -210,6 +233,23 @@ EMBEDDING_METADATA_REQUEST_ID = 'ai_provider_connection_embedding_metadata'
 # The two fields that describe the embedding model in numbers. They belong to the model they
 # describe, so the model field decides what becomes of them (see #toggleEmbeddingMetadata).
 EMBEDDING_METADATA_FIELDS = ['config.embedding_size', 'config.embedding_input_limit']
+
+# The backend is what decides whether a change costs the knowledge base its embeddings: it answers a
+# save that would with a rejection naming the validator to skip
+# (Service::AI::ProviderConnection::Validator::EmbeddingRebuild), which is what this turns into the
+# warning - and, once the admin proceeds, sends back so the save goes through.
+#
+# The rule lives there alone on purpose. A second copy of it here would have to resolve models,
+# provider defaults and vector lengths the same way, and drift the moment either side changed.
+embeddingRebuildChallenge = (details) ->
+  details?.skip_validator
+
+confirmEmbeddingRebuild = (options) ->
+  new App.ControllerAIEmbeddingRebuildConfirm(
+    mode:      options.mode or 'rebuild'
+    container: options.container
+    callback:  options.callback
+  )
 
 # The dialog is a two step wizard - credentials first, so the model list can be fetched with them
 # before the models are offered - chained modal by modal like App.TwoFactorConfigurationModal.
@@ -514,9 +554,45 @@ ProviderConnectionFormMixin =
     @el.closest('.modal-backdrop').addClass('fade')
     @close()
 
+  # Where the save goes. Null leaves Spine to its own URL, which is every save but the one repeated
+  # after the admin confirmed what it costs - a create answers the same challenge, on the
+  # collection URL instead of a member one.
+  saveUrl: (skipValidators) ->
+    return null if _.isEmpty(skipValidators)
+
+    query = _.map(skipValidators, (validator) -> "skip_validators[]=#{encodeURIComponent(validator)}").join('&')
+    base  = App[@genericObject].url
+    base += "/#{@id}" if @id
+
+    "#{base}?#{query}"
+
+  # Whether saving this would leave the connection that serves semantic search on a provider that
+  # cannot embed at all - which stops semantic search just as surely as the explicit action does
+  # (AI::ProviderConnection#remove_unsupported_embedding_default clears the flag on the way in).
+  # Asked here rather than in the backend: nothing is re-embedded by it, so there is no rebuild for a
+  # validator to challenge - only something the admin should not discover afterwards. And only while
+  # semantic search is running: with the vector database off there is no index to lose.
+  embeddingStopsWithSave: (params) ->
+    return false if !@id
+    return false if !App.Config.get('vectordb_enabled')
+
+    connection = App[@genericObject].find(@id)
+    return false if !connection?.default_embedding
+
+    provider = params.provider or connection.provider
+    !App.Config.get('AIProviders')[provider]?.supports_embeddings
+
   # Persist the connection from everything the wizard collected, whichever step turned out to be
   # the last one. The id is what distinguishes creating from editing, here as everywhere else.
-  saveConnection: (e, params) ->
+  saveConnection: (e, params, skipValidators = [], embeddingStopConfirmed = false) ->
+    if !embeddingStopConfirmed and @embeddingStopsWithSave(params)
+      return confirmEmbeddingRebuild(
+        mode:      'clear'
+        container: @container
+        # Confirmed once, and marked as such: the condition still holds on the way back through here.
+        callback:  => @saveConnection(e, params, skipValidators, true)
+      )
+
     object = if @id then App[@genericObject].find(@id) else new App[@genericObject]()
     object.load(@structureConfigParams(params))
 
@@ -524,6 +600,11 @@ ProviderConnectionFormMixin =
 
     ui = @
     object.save(
+      # What the admin confirmed travels in the query, not as an attribute: Spine writes a saved
+      # record's attributes back onto the cached one (see its #update), and nothing takes them off
+      # again - so an attribute would keep answering for every later save of the connection in this
+      # session, and the second change would be applied without ever asking.
+      url: @saveUrl(skipValidators)
       done: ->
         ui.callback?(App[ui.genericObject].fullLocal(@id))
         ui.closeWithFade()
@@ -533,6 +614,17 @@ ProviderConnectionFormMixin =
         App[ui.genericObject].fetch(id: ui.id) if ui.id
 
         ui.formEnable(e)
+
+        # Not a failure but a question: the change costs the knowledge base its embeddings, and the
+        # backend wants to hear that the admin knows before it does it. The dialog opens on top of
+        # this step rather than replacing it, so cancelling leaves them in front of the values they
+        # entered - the point of coming back is to correct one, not to type them all again.
+        validator = embeddingRebuildChallenge(details)
+        if validator
+          return confirmEmbeddingRebuild(
+            container: ui.container
+            callback:  -> ui.saveConnection(e, params, [validator], true)
+          )
 
         if details?.invalid_attribute
           ui.formValidate(form: e.target, errors: details.invalid_attribute)

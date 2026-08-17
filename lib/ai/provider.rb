@@ -311,6 +311,22 @@ class AI::Provider
     raise RequestError, __('Missing embedding model in the provider configuration')
   end
 
+  # The length of the vectors the configured embedding model produces: what the index mapping is
+  # built with (Service::AI::VectorDB::CreateTable), and part of what decides whether a change costs
+  # the knowledge base its index (Service::AI::VectorDB::Embedding::Configuration).
+  #
+  # Read off the config rather than the options, which do not carry it, and with the same handling
+  # as #embedding_input_limit: the config is jsonb and keeps whatever was written into it, so
+  # anything but a positive whole number falls through to what is known about the model.
+  #
+  # @return [Integer, NilClass] the vector length, nil for a model no source could size
+  def embedding_size
+    configured = Integer(config[:embedding_size].to_s, exception: false)
+    return configured if configured&.positive?
+
+    self.class.known_embedding_default(:EMBEDDING_SIZES, embedding_model)
+  end
+
   # Maximum number of input tokens the configured embedding model accepts. Used to size chunks so
   # no chunk overruns the model (see Service::AI::VectorDB::Content::Chunks). Unknown models fall back conservatively.
   #

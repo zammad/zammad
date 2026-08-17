@@ -1054,5 +1054,318 @@ RSpec.describe 'AI > Provider Connections', type: :system do
         end
       end
     end
+
+    # A warning, not the gate: whether the index is actually rebuilt is decided by the backend off
+    # the embedding fingerprint, so a change made through the API or the console gets the same
+    # treatment. This is only what keeps the admin from being surprised by the bill.
+    describe 'warning before a change that costs the knowledge base its embeddings' do
+      let(:embedding_connection) do
+        create(:ai_provider_connection, :default_chat, :default_embedding, name:   'embedding-connection',
+                                                                           config: { token: 'secret-token', model: 'gpt-4o', embedding_model: 'text-embedding-3-large' })
+      end
+      # Same embedding model as the one serving semantic search, so handing it over changes nothing
+      # about the index.
+      let(:other_connection) do
+        create(:ai_provider_connection, name:   'other-connection',
+                                        config: { token: 'secret-token', model: 'gpt-4o', embedding_model: 'text-embedding-3-large' })
+      end
+      let(:differing_connection) do
+        create(:ai_provider_connection, name:   'differing-connection',
+                                        config: { token: 'secret-token', model: 'gpt-4o', embedding_model: 'text-embedding-3-small' })
+      end
+      # Whether there is an index to lose - set as the real hidden setting the validator reads, so the
+      # examples do not depend on an Elasticsearch instance holding one.
+      let(:index_exists) { true }
+
+      # The dialog stacks on top of the wizard step it was submitted from, so the admin lands back
+      # in front of their own values on Cancel rather than having to enter them again. Found by what
+      # it says rather than through #in_modal, which expects to be the only modal on the page.
+      def in_confirm_dialog(&)
+        within(find('.modal', text: 'Are you sure you want to change the embedding configuration?'), &)
+      end
+
+      # The confirmed save is asynchronous and closes the wizard when it lands - and unlike #in_modal,
+      # #in_confirm_dialog does not wait for anything to disappear. Reading the record right after the
+      # click would race the request that writes it.
+      def await_confirmed_save
+        expect(page).to have_no_css('.modal')
+      end
+
+      def open_row_action(name, action)
+        row = find('tr', text: name)
+        row.find('.js-action').click
+        row.find("[data-table-action=\"#{action}\"]").click
+      end
+
+      # Through both wizard steps to the model step, which is where the embedding model lives.
+      def edit_embedding_model(model)
+        find('td', text: 'embedding-connection').click
+
+        in_modal disappears: true do
+          click_on 'Next'
+        end
+
+        find('select[name="config.embedding_model"]').select(model)
+        click_on 'Submit'
+      end
+
+      before do
+        embedding_connection && other_connection && differing_connection
+        Setting.set('ai_provider', true)
+        Setting.set('vectordb_enabled', true)
+
+        if index_exists
+          Service::AI::VectorDB::Embedding::Configuration.record_indexed(
+            Service::AI::VectorDB::Embedding::Configuration.of(embedding_connection),
+          )
+        end
+
+        refresh
+      end
+
+      it 'warns before semantic search moves to a connection on another model' do
+        open_row_action('differing-connection', 'set-default-embedding')
+
+        in_modal disappears: false do
+          expect(page)
+            .to have_text('Are you sure you want to change the embedding configuration?')
+            .and(have_text('may result in higher AI costs'))
+        end
+      end
+
+      # Same model, same dimensions: nothing about the index changes, so nothing is worth asking.
+      it 'moves semantic search to a connection on the same model without warning', :aggregate_failures do
+        open_row_action('other-connection', 'set-default-embedding')
+
+        expect(page).to have_text('Default provider updated successfully.')
+        expect(other_connection.reload.default_embedding).to be(true)
+        expect(embedding_connection.reload.default_embedding).to be(false)
+      end
+
+      it 'sends nothing when the warning is cancelled', :aggregate_failures do
+        open_row_action('differing-connection', 'set-default-embedding')
+
+        in_modal disappears: true do
+          click_on 'Cancel & Go Back'
+        end
+
+        expect(page).to have_no_text('Default provider updated successfully.')
+        expect(differing_connection.reload.default_embedding).to be(false)
+        expect(embedding_connection.reload.default_embedding).to be(true)
+      end
+
+      it 'applies the change once the warning is confirmed', :aggregate_failures do
+        open_row_action('differing-connection', 'set-default-embedding')
+
+        in_modal disappears: true do
+          click_on 'Proceed'
+        end
+
+        expect(page).to have_text('Default provider updated successfully.')
+        expect(differing_connection.reload.default_embedding).to be(true)
+      end
+
+      # Once confirmed, the next change has to ask again: the flag travels in the query rather than on
+      # the record, so it cannot keep answering for the rest of the session.
+      context 'with a second model to change to' do
+        let(:model_list) do
+          { 'data' => [{ 'id' => 'gpt-4.1' }, { 'id' => 'text-embedding-3-small' }, { 'id' => 'text-embedding-ada-002' }] }
+        end
+
+        it 'asks again the next time the model is changed' do
+          edit_embedding_model('text-embedding-3-small')
+
+          in_confirm_dialog do
+            click_on 'Proceed'
+          end
+
+          await_confirmed_save
+
+          expect(embedding_connection.reload.config).to include('embedding_model' => 'text-embedding-3-small')
+
+          edit_embedding_model('text-embedding-ada-002')
+
+          in_confirm_dialog do
+            expect(page).to have_text('may result in higher AI costs')
+          end
+        end
+      end
+
+      # Nothing is re-embedded here - the index is simply left where it is, which is what makes
+      # selecting the same connection again free.
+      it 'warns that semantic search stops working when the default is cleared' do
+        open_row_action('embedding-connection', 'clear-default-embedding')
+
+        in_modal disappears: false do
+          expect(page)
+            .to have_text('Semantic search will stop working')
+            .and(have_no_text('may result in higher AI costs'))
+        end
+      end
+
+      it 'warns before another embedding model is saved on the semantic search connection' do
+        edit_embedding_model('text-embedding-3-small')
+
+        in_confirm_dialog do
+          expect(page).to have_text('may result in higher AI costs')
+        end
+      end
+
+      it 'saves the edited model once the warning is confirmed' do
+        edit_embedding_model('text-embedding-3-small')
+
+        in_confirm_dialog do
+          click_on 'Proceed'
+        end
+
+        await_confirmed_save
+
+        expect(embedding_connection.reload.config).to include('embedding_model' => 'text-embedding-3-small')
+      end
+
+      # Coming back to correct one field should not cost the admin the others.
+      it 'keeps the edited values when the warning is cancelled', :aggregate_failures do
+        edit_embedding_model('text-embedding-3-small')
+
+        in_confirm_dialog do
+          click_on 'Cancel & Go Back'
+        end
+
+        expect(page).to have_select('config.embedding_model', selected: 'text-embedding-3-small')
+        expect(embedding_connection.reload.config).to include('embedding_model' => 'text-embedding-3-large')
+      end
+
+      it 'saves a change that leaves the embeddings alone without warning' do
+        find('td', text: 'embedding-connection').click
+
+        in_modal disappears: true do
+          fill_in 'name', with: 'renamed-connection'
+
+          click_on 'Next'
+        end
+
+        in_modal disappears: true do
+          click_on 'Submit'
+        end
+
+        expect(embedding_connection.reload.name).to eq('renamed-connection')
+      end
+
+      it 'never warns for a connection that does not serve semantic search' do
+        find('td', text: 'other-connection').click
+
+        in_modal disappears: true do
+          click_on 'Next'
+        end
+
+        in_modal disappears: true do
+          find('select[name="config.embedding_model"]').select('text-embedding-3-small')
+
+          click_on 'Submit'
+        end
+
+        expect(other_connection.reload.config).to include('embedding_model' => 'text-embedding-3-small')
+      end
+
+      # The same outcome as the explicit "Do not use for semantic search" action, reached by editing
+      # the connection instead - so it asks the same question rather than stopping semantic search
+      # behind a "successfully updated".
+      context 'when the edit leaves semantic search on a provider that cannot embed' do
+        it 'warns, and applies the change once confirmed', :aggregate_failures do
+          find('td', text: 'embedding-connection').click
+
+          in_modal disappears: true do
+            find('select[name=provider]').select('Anthropic')
+            fill_in 'Token', with: 'test-token'
+
+            click_on 'Next'
+          end
+
+          click_on 'Submit'
+
+          # Stacked on top of the step, so it is found by what it says rather than through #in_modal.
+          in_confirm_dialog do
+            expect(page).to have_text('Semantic search will stop working')
+
+            click_on 'Proceed'
+          end
+
+          await_confirmed_save
+
+          expect(embedding_connection.reload).to have_attributes(provider: 'anthropic', default_embedding: false)
+        end
+      end
+
+      # The model is what identifies the vectors, so moving it to another provider costs no re-index
+      # and gets no warning - warning about one that will not happen is its own kind of wrong.
+      context 'when the same model moves to another provider' do
+        let(:self_hosted) { true }
+        let(:embedding_connection) do
+          create(:ai_provider_connection, :default_chat, :default_embedding, name:     'embedding-connection',
+                                                                             provider: 'ollama',
+                                                                             config:   { url: 'http://localhost:11434', embedding_model: 'bge-m3' })
+        end
+
+        it 'saves without warning' do
+          find('td', text: 'embedding-connection').click
+
+          in_modal disappears: true do
+            find('select[name=provider]').select('Zammad AI')
+            fill_in 'Token', with: 'test-token'
+
+            # Zammad AI configures no models, so its dialog is the credential step alone.
+            click_on 'Submit'
+          end
+
+          expect(embedding_connection.reload.provider).to eq('zammad_ai')
+        end
+      end
+
+      # Deleting every connection leaves the index (and what it was built with) standing, and the
+      # first connection created afterwards takes the semantic search flag automatically - the same
+      # transition as handing it over, through the create door.
+      context 'when the first connection is created while an old index is recorded' do
+        before do
+          AI::ProviderConnection.destroy_all
+
+          refresh
+        end
+
+        it 'asks, and creates the connection once confirmed', :aggregate_failures do
+          click '[data-type=new]'
+
+          in_modal disappears: true do
+            find('select[name=provider]').select('OpenAI')
+            fill_in 'name',  with: 'first-connection'
+            fill_in 'Token', with: 'test-token'
+
+            click_on 'Next'
+          end
+
+          find('select[name="config.embedding_model"]').select('text-embedding-3-small')
+          click_on 'Submit'
+
+          in_confirm_dialog do
+            click_on 'Proceed'
+          end
+
+          expect(page).to have_text('first-connection')
+          expect(AI::ProviderConnection.find_by(name: 'first-connection').default_embedding).to be(true)
+        end
+      end
+
+      # Nothing built means nothing re-created: the change simply takes effect, and the first build is
+      # what switching the vector database on pays for.
+      context 'when no index has been built yet' do
+        let(:index_exists) { false }
+
+        it 'applies the change without warning', :aggregate_failures do
+          open_row_action('differing-connection', 'set-default-embedding')
+
+          expect(page).to have_text('Default provider updated successfully.')
+          expect(differing_connection.reload.default_embedding).to be(true)
+        end
+      end
+    end
   end
 end

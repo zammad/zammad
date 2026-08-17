@@ -974,4 +974,195 @@ RSpec.describe AI::ProviderConnection, type: :model do
       end
     end
   end
+
+  # The vectors in the index belong to the configuration that produced them, so the model is where
+  # the change is noticed - the console writes these records just like the admin dialog does. What
+  # actually decides a rebuild is state, not the event: the index holds whatever
+  # Configuration.indexed records, and a save is only interesting where it leaves that stale.
+  describe 'vector index rebuild on an embedding configuration change', performs_jobs: true do
+    let(:connection) do
+      create(:ai_provider_connection, :default_embedding, provider: 'open_ai',
+                                                          config:   { token: 'secret-token', embedding_model: 'text-embedding-3-small' })
+    end
+
+    before do
+      connection
+      Setting.set('ai_provider', true)
+      Setting.set('vectordb_enabled', true)
+
+      # The index is assumed to already hold what `connection` is configured with, so only a save
+      # that actually changes something makes the examples below see a rebuild.
+      Service::AI::VectorDB::Embedding::Configuration.record_indexed(Service::AI::VectorDB::Embedding::Configuration.current)
+
+      # The setting saves above reconcile as well (Setting#schedule_vector_index_reconcile) - cleared,
+      # so their enqueue does not answer for the assertions, and the lock they leave does not have
+      # the enqueue under test dismissed onto it.
+      clear_jobs
+    end
+
+    # A plain `update!` on the record, which is exactly what a change made from `rails console` is -
+    # no controller anywhere in sight.
+    it 'rebuilds when the embedding model of the connection serving semantic search changes' do
+      expect { connection.update!(config: connection.config.merge('embedding_model' => 'text-embedding-3-large')) }
+        .to have_enqueued_job(VectorIndexRebuildJob)
+    end
+
+    # The default maintenance saves the new record again through a freshly loaded instance, and
+    # Rails runs the commit callbacks of one of those - which does not matter anymore: whichever one
+    # runs, it compares the same state (what is configured now) against the same state (what the
+    # index holds), and arrives at the same answer either way.
+    it 'rebuilds when a connection is created as the one serving semantic search' do
+      expect do
+        create(:ai_provider_connection, :default_embedding, provider: 'open_ai',
+                                                            config:   { token: 'other-token', embedding_model: 'text-embedding-3-large' })
+      end.to have_enqueued_job(VectorIndexRebuildJob)
+    end
+
+    it 'does not rebuild when the created connection serves nothing' do
+      expect { create(:ai_provider_connection, config: { token: 'other-token', embedding_model: 'text-embedding-3-large' }) }
+        .not_to have_enqueued_job(VectorIndexRebuildJob)
+    end
+
+    # after_commit runs after the last save of the transaction, so the state it reads is whatever the
+    # database holds once the whole transaction is done - not an intermediate value from a save
+    # earlier in it. Kept as a regression test: the state-based compare makes this safe by
+    # construction, with nothing here needing to track which save came first.
+    it 'rebuilds when a later save in the same transaction touches something else' do
+      expect do
+        described_class.transaction do
+          connection.update!(config: connection.config.merge('embedding_model' => 'text-embedding-3-large'))
+          connection.update!(name: 'renamed')
+        end
+      end.to have_enqueued_job(VectorIndexRebuildJob)
+    end
+
+    # Kept as a regression test: a rolled back transaction leaves no database change behind, so the
+    # next save compares against the same state as if it had never happened - nothing has to track
+    # that a rollback occurred.
+    it 'rebuilds for a change made after a rolled back one' do
+      described_class.transaction do
+        connection.update!(config: connection.config.merge('embedding_model' => 'text-embedding-3-large'))
+        raise ActiveRecord::Rollback
+      end
+
+      expect { connection.update!(config: connection.config.merge('embedding_model' => 'text-embedding-ada-002')) }
+        .to have_enqueued_job(VectorIndexRebuildJob)
+    end
+
+    it 'rebuilds when only the dimensions of the index change' do
+      expect { connection.update!(config: connection.config.merge('embedding_size' => 512)) }
+        .to have_enqueued_job(VectorIndexRebuildJob)
+    end
+
+    it 'rebuilds when a provider change brings another model with it' do
+      expect { connection.update!(provider: 'mistral', config: { token: 'secret-token', embedding_model: 'mistral-embed' }) }
+        .to have_enqueued_job(VectorIndexRebuildJob)
+    end
+
+    it 'rebuilds when semantic search moves to a connection on another model' do
+      other = create(:ai_provider_connection, config: { token: 'other-token', embedding_model: 'text-embedding-3-large' })
+
+      expect { other.update!(default_embedding: true) }
+        .to have_enqueued_job(VectorIndexRebuildJob)
+    end
+
+    it 'does not rebuild when semantic search moves to a connection on the same model' do
+      other = create(:ai_provider_connection, config: { token: 'other-token', embedding_model: 'text-embedding-3-small' })
+
+      expect { other.update!(default_embedding: true) }
+        .not_to have_enqueued_job(VectorIndexRebuildJob)
+    end
+
+    # "Do not use for semantic search" leaves the index standing, so whichever connection takes over
+    # afterwards inherits vectors it did not produce.
+    context 'when semantic search was switched off and is restored' do
+      before { connection.update!(default_embedding: false) }
+
+      # What the index holds was never touched by switching the flag off, so restoring the very
+      # configuration it was built with leaves nothing to reconcile.
+      it 'does not rebuild when restored on the same model' do
+        expect { connection.update!(default_embedding: true) }
+          .not_to have_enqueued_job(VectorIndexRebuildJob)
+      end
+
+      it 'rebuilds when restored on another model' do
+        other = create(:ai_provider_connection, config: { token: 'other-token', embedding_model: 'text-embedding-3-large' })
+
+        expect { other.update!(default_embedding: true) }
+          .to have_enqueued_job(VectorIndexRebuildJob)
+      end
+    end
+
+    # The model is what identifies the vectors, so moving it elsewhere is no reason to embed the
+    # whole knowledge base again.
+    it 'does not rebuild when the same model moves to another provider' do
+      connection.update!(provider: 'ollama', config: { url: 'http://localhost:11434', embedding_model: 'bge-m3' })
+      Service::AI::VectorDB::Embedding::Configuration.record_indexed(Service::AI::VectorDB::Embedding::Configuration.current)
+
+      expect { connection.update!(provider: 'zammad_ai', config: { token: 'secret-token' }) }
+        .not_to have_enqueued_job(VectorIndexRebuildJob)
+    end
+
+    it 'does not rebuild for a rename' do
+      expect { connection.update!(name: 'renamed') }
+        .not_to have_enqueued_job(VectorIndexRebuildJob)
+    end
+
+    it 'does not rebuild for a rotated token' do
+      expect { connection.update!(config: connection.config.merge('token' => 'rotated')) }
+        .not_to have_enqueued_job(VectorIndexRebuildJob)
+    end
+
+    it 'does not rebuild for another chat model' do
+      expect { connection.update!(config: connection.config.merge('model' => 'gpt-4.1')) }
+        .not_to have_enqueued_job(VectorIndexRebuildJob)
+    end
+
+    it 'does not rebuild for a change to a connection that serves nothing' do
+      other = create(:ai_provider_connection, config: { token: 'other-token', embedding_model: 'text-embedding-3-large' })
+
+      expect { other.update!(config: other.config.merge('embedding_model' => 'text-embedding-ada-002')) }
+        .not_to have_enqueued_job(VectorIndexRebuildJob)
+    end
+
+    # Nothing is left to embed with, so there is nothing to rebuild from either - the index is left
+    # standing rather than thrown away.
+    it 'does not rebuild when the semantic search default is cleared entirely' do
+      expect { connection.update!(default_embedding: false) }
+        .not_to have_enqueued_job(VectorIndexRebuildJob)
+    end
+
+    # Switching it back on reconciles the same way (VectorIndexSyncJob delegates to this very job),
+    # so there is nothing this hook has to do while it is off.
+    it 'does not rebuild while the vector database is switched off' do
+      Setting.set('vectordb_enabled', false)
+
+      expect { connection.update!(config: connection.config.merge('embedding_model' => 'text-embedding-3-large')) }
+        .not_to have_enqueued_job(VectorIndexRebuildJob)
+    end
+
+    # The hook only ever compares local state (what is configured vs. what the setting says the index
+    # holds) - it never talks to Elasticsearch, on any save. An outage there is entirely the job's
+    # concern, once a rebuild is actually enqueued.
+    it 'never talks to Elasticsearch' do
+      allow(AI::VectorDB).to receive(:new)
+
+      connection.update!(config: connection.config.merge('embedding_model' => 'text-embedding-3-large'))
+
+      expect(AI::VectorDB).not_to have_received(:new)
+    end
+
+    # Nothing is promoted in its place, so this leaves the index standing just like clearing the flag.
+    it 'does not rebuild when the connection serving semantic search is deleted' do
+      expect { connection.destroy! }
+        .not_to have_enqueued_job(VectorIndexRebuildJob)
+    end
+
+    it 'does not rebuild when a connection that serves nothing is deleted' do
+      other = create(:ai_provider_connection, config: { token: 'other-token', embedding_model: 'text-embedding-3-large' })
+
+      expect { other.destroy! }
+        .not_to have_enqueued_job(VectorIndexRebuildJob)
+    end
+  end
 end
