@@ -17,6 +17,17 @@ class Controllers::KnowledgeBase::AnswersControllerPolicy < Controllers::Knowled
     access(__method__)
   end
 
+  # The `has_publishing` route concern generates one action per state machine event. Deriving
+  #   the gates the same way keeps a newly added event from inheriting the base policy's
+  #   `knowledge_base.*` default, which any `knowledge_base.reader` satisfies.
+  def has_publishing_update? # rubocop:disable Naming/PredicatePrefix
+    access(:update?)
+  end
+
+  CanBePublished::StateMachine.aasm.events.each do |event|
+    define_method(:"has_publishing_#{event.name}?") { access(:update?) }
+  end
+
   private
 
   def object
