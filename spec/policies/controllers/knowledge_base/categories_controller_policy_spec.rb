@@ -22,6 +22,7 @@ describe Controllers::KnowledgeBase::CategoriesControllerPolicy do
 
     it { is_expected.to permit_action(:show) }
     it { is_expected.to forbid_actions(:create, :update, :destroy) }
+    it { is_expected.to forbid_actions(:reorder_root_categories, :reorder_categories, :reorder_answers) }
   end
 
   context 'when using granular permissions' do
@@ -40,6 +41,8 @@ describe Controllers::KnowledgeBase::CategoriesControllerPolicy do
         let(:access) { 'editor' }
 
         it { is_expected.to permit_actions(:show, :create, :update, :destroy) }
+        it { is_expected.to permit_actions(:reorder_categories, :reorder_answers) }
+        it { is_expected.to forbid_action(:reorder_root_categories) }
       end
 
       context 'when parent category is not editable' do
@@ -47,12 +50,14 @@ describe Controllers::KnowledgeBase::CategoriesControllerPolicy do
 
         it { is_expected.to permit_action(:show) }
         it { is_expected.to forbid_actions(:create, :update, :destroy) }
+        it { is_expected.to forbid_actions(:reorder_root_categories, :reorder_categories, :reorder_answers) }
       end
 
       context 'when parent category is unreachable' do
         let(:access) { 'none' }
 
         it { is_expected.to forbid_actions(:show, :create, :update, :destroy) }
+        it { is_expected.to forbid_actions(:reorder_root_categories, :reorder_categories, :reorder_answers) }
       end
     end
 
@@ -67,12 +72,14 @@ describe Controllers::KnowledgeBase::CategoriesControllerPolicy do
         let(:access) { 'editor' }
 
         it { is_expected.to permit_action(:create) }
+        it { is_expected.to permit_action(:reorder_root_categories) }
       end
 
       context 'when KB is not editable' do
         let(:access) { 'reader' }
 
         it { is_expected.to forbid_action(:create) }
+        it { is_expected.to forbid_action(:reorder_root_categories) }
       end
     end
 
@@ -87,6 +94,7 @@ describe Controllers::KnowledgeBase::CategoriesControllerPolicy do
         let(:access) { 'editor' }
 
         it { is_expected.to permit_actions(:show, :create, :update, :destroy) }
+        it { is_expected.to permit_actions(:reorder_root_categories, :reorder_categories, :reorder_answers) }
       end
 
       context 'when KB is not editable' do
@@ -94,12 +102,14 @@ describe Controllers::KnowledgeBase::CategoriesControllerPolicy do
 
         it { is_expected.to permit_action(:show) }
         it { is_expected.to forbid_actions(:create, :update, :destroy) }
+        it { is_expected.to forbid_actions(:reorder_root_categories, :reorder_categories, :reorder_answers) }
       end
 
       context 'when KB is unreachable' do
         let(:access) { 'none' }
 
         it { is_expected.to forbid_actions(:show, :create, :update, :destroy) }
+        it { is_expected.to forbid_actions(:reorder_root_categories, :reorder_categories, :reorder_answers) }
       end
     end
 
