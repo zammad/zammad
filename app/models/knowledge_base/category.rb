@@ -163,6 +163,27 @@ class KnowledgeBase::Category < ApplicationModel
   end
   after_update_commit :vector_index_resync_subtree, if: :saved_change_to_parent_id?
 
+  # The knowledge base's asset cache keeps its `category_ids` until its own `updated_at` changes
+  # (ApplicationModel::CanAssociations#attributes_with_association_ids), and adding or removing a
+  # category does not touch it — so without dropping that entry here, clients keep being served a
+  # category list from before this category existed. The admin interface reads exactly that list to
+  # decide whether an icon set switch has icons to reset, and `touch: true` on the association is no
+  # alternative: it would fire the knowledge base's own callbacks and notifications on every
+  # category write.
+  def invalidate_knowledge_base_asset_cache
+    knowledge_base&.cache_delete
+  end
+  after_commit :invalidate_knowledge_base_asset_cache, on: %i[create destroy]
+
+  # Moving a category to another knowledge base (`knowledge_base_id` is agent-writable) takes it off
+  # one category list and puts it on another, so both sides go stale.
+  def invalidate_knowledge_base_asset_caches_after_move
+    invalidate_knowledge_base_asset_cache
+
+    KnowledgeBase.find_by(id: saved_change_to_knowledge_base_id.first)&.cache_delete
+  end
+  after_update_commit :invalidate_knowledge_base_asset_caches_after_move, if: :saved_change_to_knowledge_base_id?
+
   def full_destroy!
     transaction do
       answers.each(&:destroy!)

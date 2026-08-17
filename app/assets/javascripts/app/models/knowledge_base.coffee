@@ -268,7 +268,7 @@ class App.KnowledgeBase extends App.Model
       display: __('Icon Set')
       tag:     'iconset_picker'
       style:   'block'
-      help:    __('Every category in your knowledge base should be given a unique icon for maximum visual clarity. Each set below provides a wide range of icons to choose from, but beware: You can\'t mix and match different icons from different sets. Choose carefully!')
+      help:    __('Every category in your knowledge base should be given a unique icon for maximum visual clarity. Each set below provides a wide range of icons to choose from, but beware: You can\'t mix and match different icons from different sets. Switching the set later resets all category icons to the default icon of the new set, so choose carefully!')
       null:    false
       screen:
         admin_style_iconset:

@@ -3186,6 +3186,10 @@ msgstr ""
 msgid "Change date"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:92
+msgid "Change icon set"
+msgstr ""
+
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderRow.vue:77
 msgid "Change language"
 msgstr ""
@@ -3264,7 +3268,7 @@ msgstr ""
 msgid "Changes could not be loaded."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:106
+#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:143
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee:103
 msgid "Changes could not be saved."
 msgstr ""
@@ -5723,7 +5727,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee:700
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee:130
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:188
-#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:78
+#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:115
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee:9
 #: app/assets/javascripts/app/controllers/package.coffee:73
 #: app/assets/javascripts/app/controllers/user.coffee:107
@@ -7338,7 +7342,7 @@ msgid "Event summary"
 msgstr ""
 
 #: app/assets/javascripts/app/models/knowledge_base.coffee:271
-msgid "Every category in your knowledge base should be given a unique icon for maximum visual clarity. Each set below provides a wide range of icons to choose from, but beware: You can't mix and match different icons from different sets. Choose carefully!"
+msgid "Every category in your knowledge base should be given a unique icon for maximum visual clarity. Each set below provides a wide range of icons to choose from, but beware: You can't mix and match different icons from different sets. Switching the set later resets all category icons to the default icon of the new set, so choose carefully!"
 msgstr ""
 
 #: app/assets/javascripts/app/models/trigger.coffee
@@ -8882,6 +8886,10 @@ msgstr ""
 msgid "Icon Set"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:93
+msgid "Icons cannot be carried over between icon sets. Switching the set will therefore reset all category icons to the default icon of the new set, and your current selections will be lost. Do you want to continue?"
+msgstr ""
+
 #: db/seeds/settings.rb:2103
 #: lib/excel_sheet/ai/analytics/errors.rb:24
 #: lib/excel_sheet/ai/analytics/with_usage.rb:24
@@ -9805,7 +9813,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:63
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:53
 #: app/frontend/apps/desktop/pages/knowledge-base/routes.ts:24
-#: app/models/knowledge_base.rb:244
+#: app/models/knowledge_base.rb:257
 #: db/seeds/permissions.rb:113
 msgid "Knowledge Base"
 msgstr ""
@@ -14357,7 +14365,7 @@ msgstr ""
 msgid "Remove %s"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:82
+#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:119
 msgid "Remove Language"
 msgstr ""
 
@@ -14474,7 +14482,7 @@ msgstr ""
 msgid "Removes the shadows for a flat look."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:79
+#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:116
 msgid "Removing %s language(s) will permanently delete all translation(s) related to them. Enter \"%s\" to confirm."
 msgstr ""
 
@@ -17017,7 +17025,7 @@ msgstr ""
 msgid "System information"
 msgstr ""
 
-#: app/models/knowledge_base.rb:20
+#: app/models/knowledge_base.rb:32
 msgid "System supports only one locale for knowledge base. Upgrade your plan to use more locales."
 msgstr ""
 
@@ -21268,7 +21276,7 @@ msgstr ""
 msgid "Web (in)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:119
+#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:156
 #: app/assets/javascripts/app/controllers/knowledge_base/server_snippet.coffee:2
 msgid "Web Server Configuration"
 msgstr ""
@@ -22254,7 +22262,7 @@ msgstr ""
 msgid "can't be used because *_id and *_ids are not allowed"
 msgstr ""
 
-#: app/models/knowledge_base/category.rb:258
+#: app/models/knowledge_base/category.rb:277
 msgid "cannot be a subcategory of the parent category"
 msgstr ""
 
@@ -22910,7 +22918,7 @@ msgstr ""
 msgid "is not included in the list"
 msgstr ""
 
-#: app/models/knowledge_base/category.rb:276
+#: app/models/knowledge_base/category.rb:295
 msgid "is part of a circular reference"
 msgstr ""
 
@@ -23077,7 +23085,7 @@ msgstr ""
 msgid "must be a valid HTTP(S) URL"
 msgstr ""
 
-#: app/models/knowledge_base.rb:270
+#: app/models/knowledge_base.rb:283
 msgid "must be a valid path or domain"
 msgstr ""
 
@@ -23117,18 +23125,18 @@ msgstr ""
 msgid "must be other than %{count}"
 msgstr ""
 
-#: app/models/knowledge_base.rb:258
+#: app/models/knowledge_base.rb:271
 msgid "must begin with a slash (\"/\")"
 msgstr ""
 
 msgid "must exist"
 msgstr ""
 
-#: app/models/knowledge_base.rb:266
+#: app/models/knowledge_base.rb:279
 msgid "must not end with a slash (\"/\")"
 msgstr ""
 
-#: app/models/knowledge_base.rb:262
+#: app/models/knowledge_base.rb:275
 msgid "must not include a protocol (e.g., \"http://\" or \"https://\")"
 msgstr ""
 
@@ -23731,11 +23739,11 @@ msgstr ""
 msgid "within next (relative)"
 msgstr ""
 
-#: app/models/knowledge_base/category.rb:289
+#: app/models/knowledge_base/category.rb:308
 msgid "would exceed the allowed nesting depth"
 msgstr ""
 
-#: app/models/knowledge_base/category.rb:294
+#: app/models/knowledge_base/category.rb:313
 msgid "would push this category's children beyond the allowed nesting depth"
 msgstr ""
 

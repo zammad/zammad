@@ -71,8 +71,48 @@ class App.KnowledgeBaseForm extends App.Controller
 
     if deletedLocaleAttrs.length > 0
       @confirmLocaleDeletion(deletedLocaleAttrs, formController, params)
+    else if @iconsetChangeAffectsCategories(params)
+      @confirmIconsetChange(formController, params)
     else
       @performSubmit(params, formController)
+
+  # Switching the icon set resets the icons of all existing categories server-side, because icons
+  # cannot be carried over between sets (see KnowledgeBase#reset_category_icons). Without any
+  # categories there is nothing to lose, so the change is applied right away.
+  iconsetChangeAffectsCategories: (params) ->
+    return false if !params.iconset
+    return false if params.iconset is @object().iconset
+
+    @object().category_ids?.length > 0
+
+  confirmIconsetChange: (formController, params) ->
+    confirmed = false
+
+    new App.ControllerConfirm(
+      head:      __('Change icon set')
+      message:   __('Icons cannot be carried over between icon sets. Switching the set will therefore reset all category icons to the default icon of the new set, and your current selections will be lost. Do you want to continue?')
+      container: @el.closest('.content')
+      callback: =>
+        confirmed = true
+        @performSubmit(params, formController, ->
+          # Make sure the new icon set is reflected in the knowledge base browser, which is not part of this form.
+          App.Event.trigger('ui:rerender')
+        )
+      # Covers every way out of the dialog, including the close icon and the escape key.
+      onClosed: =>
+        return if confirmed
+        @restoreIconsetSelection(formController)
+    )
+
+  # A dismissed dialog leaves the picker highlighting a set which was never saved, so the stored one
+  # is highlighted again — the same way App.IconsetPicker marks a pick, whose markup this follows.
+  # Only the picker is touched, to keep unsaved input in the other forms of the screen.
+  restoreIconsetSelection: (formController) ->
+    iconset = @object().iconset
+
+    formController.form.find('[name="iconset"]').val(iconset)
+    formController.form.find('.js-set').removeClass('is-active')
+    formController.form.find(".js-set[data-family=\"#{iconset}\"]").addClass('is-active')
 
   confirmLocaleDeletion: (deletedLocaleAttrs, formController, params) ->
     safeWord = __('Delete')
@@ -87,7 +127,7 @@ class App.KnowledgeBaseForm extends App.Controller
         @performSubmit(params, formController)
     )
 
-  performSubmit: (params, formController) ->
+  performSubmit: (params, formController, callback = null) ->
     @formDisable(@el)
 
     formController.hideAlert()
@@ -101,6 +141,7 @@ class App.KnowledgeBaseForm extends App.Controller
 
         @formEnable(@el)
         @scrollTop()
+        callback() if callback?
       error: (xhr) =>
         @formEnable(@el)
         formController.showAlert(xhr.responseJSON?.error || __('Changes could not be saved.'))

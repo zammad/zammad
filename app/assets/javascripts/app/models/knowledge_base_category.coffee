@@ -193,6 +193,8 @@ class App.KnowledgeBaseCategory extends App.Model
   objectName: ->
     'Category'
 
+  # Kept in sync with KnowledgeBase::ICONSET_DEFAULT_CATEGORY_ICONS, which applies the same defaults
+  # when an icon set switch resets the existing category icons.
   @defaultIconFor: (kb) ->
     switch kb?.iconset
       when 'FontAwesome'

@@ -106,6 +106,66 @@ RSpec.describe KnowledgeBase, type: :model do
     end
   end
 
+  describe 'category icons of a switched icon set' do
+    let!(:category)    { create(:knowledge_base_category, knowledge_base: knowledge_base, category_icon: 'f04b') }
+    let!(:subcategory) { create(:knowledge_base_category, knowledge_base: knowledge_base, parent: category, category_icon: 'f0c5') }
+
+    it 'resets the icons of all categories to the new icon set default' do
+      knowledge_base.update!(iconset: 'material')
+
+      expect([category.reload, subcategory.reload].map(&:category_icon))
+        .to eq(%w[e94d e94d])
+    end
+
+    it 'resets to a default icon which exists in the new icon set', :aggregate_failures do
+      (KnowledgeBase::ICONSETS - [knowledge_base.iconset]).each do |iconset|
+        knowledge_base.update!(iconset: iconset)
+
+        expect(category.reload.category_icon).to eq(KnowledgeBase::ICONSET_DEFAULT_CATEGORY_ICONS[iconset])
+        expect(icon_font_codepoints(iconset)).to include(category.category_icon)
+      end
+    end
+
+    it 'keeps the icons when another attribute is updated' do
+      expect { knowledge_base.update!(color_highlight: '#BBB') }
+        .not_to change { category.reload.category_icon }
+    end
+
+    # The switch repairs broken rendering, so it must not be held up by a category which some import
+    # or validation bypass left invalid in an entirely unrelated way.
+    it 'resets the icon of a category which does not pass validation' do
+      category.translations.first.update_column(:title, '')
+
+      knowledge_base.update!(iconset: 'material')
+
+      expect(category.reload.category_icon).to eq('e94d')
+    end
+
+    it 'keeps the icons of categories of another knowledge base' do
+      other_category = create(:knowledge_base_category, category_icon: 'f04b')
+
+      expect { knowledge_base.update!(iconset: 'material') }
+        .not_to change { other_category.reload.category_icon }
+    end
+
+    # Open sessions render the icons from their own copy of the category records, so a reset which
+    # does not notify them leaves the broken icons on screen until a manual reload.
+    it 'notifies clients about the changed categories', performs_jobs: true do
+      clear_jobs
+
+      knowledge_base.update!(iconset: 'material')
+
+      expect(ChecksKbClientNotificationJob)
+        .to have_been_enqueued.with('KnowledgeBase::Category', subcategory.id)
+    end
+
+    def icon_font_codepoints(iconset)
+      JSON.parse(Rails.public_path.join("assets/icon-fonts/#{iconset}.json").read)
+        .fetch('icons')
+        .pluck('unicode')
+    end
+  end
+
   describe '#full_destroy!' do
     let(:knowledge_base) { create(:kb_category_with_tree).knowledge_base }
 

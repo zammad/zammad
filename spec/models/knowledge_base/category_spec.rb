@@ -319,6 +319,52 @@ RSpec.describe KnowledgeBase::Category, current_user_id: 1, type: :model do
     end
   end
 
+  # The knowledge base asset cache survives its own `updated_at`, so nothing but this invalidation
+  # keeps `category_ids` in step — and the admin interface decides from that list whether an icon
+  # set switch has category icons to reset.
+  describe 'knowledge base asset cache' do
+    let(:knowledge_base) { create(:knowledge_base) }
+
+    def cached_category_ids
+      knowledge_base.attributes_with_association_ids['category_ids']
+    end
+
+    it 'lists a newly created category' do
+      cached_category_ids # cache the state without any category
+
+      category = create(:knowledge_base_category, knowledge_base: knowledge_base)
+
+      expect(cached_category_ids).to include(category.id)
+    end
+
+    it 'drops a destroyed category' do
+      category = create(:knowledge_base_category, knowledge_base: knowledge_base)
+      cached_category_ids # cache the state including the category
+
+      category.destroy!
+
+      expect(cached_category_ids).not_to include(category.id)
+    end
+
+    it 'lists a category moved in from another knowledge base' do
+      category = create(:knowledge_base_category)
+      cached_category_ids # cache the state without the category
+
+      category.update!(knowledge_base: knowledge_base)
+
+      expect(cached_category_ids).to include(category.id)
+    end
+
+    it 'drops a category moved out to another knowledge base' do
+      category = create(:knowledge_base_category, knowledge_base: knowledge_base)
+      cached_category_ids # cache the state including the category
+
+      category.update!(knowledge_base: create(:knowledge_base))
+
+      expect(cached_category_ids).not_to include(category.id)
+    end
+  end
+
   describe '#attributes_with_association_ids' do
     context 'when category has children' do
       subject(:kb_category_with_tree) { create(:kb_category_with_tree) }

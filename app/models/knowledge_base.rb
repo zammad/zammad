@@ -9,7 +9,20 @@ class KnowledgeBase < ApplicationModel
   AGENT_ALLOWED_NESTED_RELATIONS = %i[translations].freeze
 
   LAYOUTS = %w[grid list].freeze
-  ICONSETS = %w[FontAwesome anticon material ionicons Simple-Line-Icons].freeze
+
+  # Folder icon of each supported icon set, applied to every category whenever the icon set is
+  # switched (see #reset_category_icons). Kept in sync with
+  # `App.KnowledgeBaseCategory.defaultIconFor`, which supplies the same defaults to newly created
+  # categories in the legacy frontend.
+  ICONSET_DEFAULT_CATEGORY_ICONS = {
+    'FontAwesome'       => 'f115',
+    'anticon'           => 'e662',
+    'material'          => 'e94d',
+    'ionicons'          => 'f139',
+    'Simple-Line-Icons' => 'e039',
+  }.freeze
+
+  ICONSETS = ICONSET_DEFAULT_CATEGORY_ICONS.keys.freeze
 
   has_many                      :kb_locales, class_name: 'KnowledgeBase::Locale',
                                              inverse_of: :knowledge_base,
@@ -44,6 +57,7 @@ class KnowledgeBase < ApplicationModel
   before_validation :patch_custom_address
 
   after_create  :set_defaults
+  after_update  :reset_category_icons, if: :saved_change_to_iconset?
   after_destroy :set_kb_active_setting
   after_save    :set_kb_active_setting
 
@@ -290,5 +304,28 @@ class KnowledgeBase < ApplicationModel
   def set_kb_active_setting
     Setting.set 'kb_active', KnowledgeBase.active.exists?
     CanBePublished.update_active_publicly!
+  end
+
+  # A category stores its icon as a bare glyph codepoint of the knowledge base's icon set, so after
+  # a switch every one of them points into the new font — where the same codepoint is usually
+  # unmapped (blank glyph) or, worse, mapped to an entirely unrelated icon. The sets share no
+  # meaningful icon-to-icon mapping, so the icons cannot be carried over; resetting them all to the
+  # new set's folder icon at least keeps the knowledge base rendering, at the price of the previous
+  # (now unrepresentable) choices. Admins are warned about that beforehand in the admin interface.
+  #
+  # Updates record by record on purpose: `update_all` would skip the client notifications and
+  # content-update pings open sessions need to pick up the new icons.
+  def reset_category_icons
+    default_icon = ICONSET_DEFAULT_CATEGORY_ICONS[iconset]
+
+    categories.find_each do |category|
+      category.category_icon = default_icon
+
+      # The icon comes from the validated `iconset`, so there is nothing to validate here — while
+      # validating would drag in every unrelated rule the category and its translations have. A
+      # single category left invalid by an import or a validation bypass would then make the icon set
+      # unswitchable, of all things by aborting the very update which repairs the broken rendering.
+      category.save!(validate: false)
+    end
   end
 end
