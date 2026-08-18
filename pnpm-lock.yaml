@@ -253,7 +253,7 @@ importers:
         version: 7.4.1
     devDependencies:
       '@faker-js/faker':
-        specifier: ^10.5.0
+        specifier: ^10.6.0
         version: 10.6.0
       '@graphql-codegen/add':
         specifier: ^7.1.0

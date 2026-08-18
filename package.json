@@ -40,7 +40,7 @@
   },
   "packageManager": "pnpm@11.21.0",
   "devDependencies": {
-    "@faker-js/faker": "^10.5.0",
+    "@faker-js/faker": "^10.6.0",
     "@graphql-codegen/add": "^7.1.0",
     "@graphql-codegen/cli": "^7.2.0",
     "@graphql-codegen/introspection": "^6.1.0",
