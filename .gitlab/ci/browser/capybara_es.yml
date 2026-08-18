@@ -25,6 +25,26 @@
     - !reference [.services, selenium-firefox]
     - !reference [.services, redis]
 
+.template_browser-core_capybara_playwright_es:
+  extends:
+    - .template_browser-core_capybara_es
+    - .variables_playwright
+  services:
+    - !reference [.services, postgresql]
+    - !reference [.services, elasticsearch]
+    - !reference [.services, playwright]
+    - !reference [.services, redis]
+  # A job-level artifacts block replaces the global default one entirely -
+  #   repeat its paths and add the traces recorded by playwright_traces.rb.
+  artifacts:
+    expire_in: 1 week
+    when: on_failure
+    paths:
+      - tmp/screenshot*
+      - tmp/screenshots/*
+      - tmp/playwright-traces/*
+      - log/*.log
+
 capybara:es:chrome:
   extends:
     - .template_browser-core_capybara_chrome_es
@@ -33,3 +53,11 @@ capybara:es:firefox:
   extends:
     - .template_browser-core_capybara_firefox_es
     - .job_rules_manual_in_mr
+
+# Shadow lane for the Playwright driver evaluation, twin of capybara:es:chrome:
+#   the searchindex-tagged system specs are excluded from the main capybara
+#   lanes, so the capybara:playwright shadow lane never covers them.
+capybara:es:playwright:
+  extends:
+    - .template_browser-core_capybara_playwright_es
+  allow_failure: true

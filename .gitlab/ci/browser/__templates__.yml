@@ -25,3 +25,22 @@
     - !reference [.services, postgresql]
     - !reference [.services, selenium-firefox]
     - !reference [.services, redis]
+
+.template_browser-core_capybara_playwright:
+  extends:
+    - .template_browser-core_capybara
+    - .variables_playwright
+  services:
+    - !reference [.services, postgresql]
+    - !reference [.services, playwright]
+    - !reference [.services, redis]
+  # A job-level artifacts block replaces the global default one entirely -
+  #   repeat its paths and add the traces recorded by playwright_traces.rb.
+  artifacts:
+    expire_in: 1 week
+    when: on_failure
+    paths:
+      - tmp/screenshot*
+      - tmp/screenshots/*
+      - tmp/playwright-traces/*
+      - log/*.log

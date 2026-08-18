@@ -351,7 +351,7 @@ RSpec.describe 'Manage > Trigger', type: :system do
     it 'shows trigger placeholder in german' do
       click ".js-tableBody tr.item[data-id='#{Trigger.find_by(name: 'auto reply (on new tickets)').id}']"
       wait.until do
-        collection = page.execute_script("return $('div[contenteditable]').data().plugin_textmodule.collection")
+        collection = page.evaluate_script("$('div[contenteditable]').data().plugin_textmodule.collection")
         collection.present? && collection.any? { |row| row['name'].include?('Letzter Artikel') }
       end
     end

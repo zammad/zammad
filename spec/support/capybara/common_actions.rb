@@ -96,7 +96,10 @@ module CommonActions
   #
   # @return [String] the login of the currently logged in user.
   def current_login
-    find('.user-menu .user a')[:title]
+    # `> a` targets only the avatar link itself: during the first-login clues
+    #   intro the first clue opens the user dropdown, so a bare descendant
+    #   selector can become ambiguous with the then-visible dropdown entries.
+    find('.user-menu .user > a')[:title]
   end
 
   # Returns the User record for the currently logged in user.
@@ -314,7 +317,7 @@ module CommonActions
   def create_attribute(...)
     attribute = create(...)
     ObjectManager::Attribute.migration_execute
-    page.driver.browser.navigate.refresh
+    page.refresh
     attribute
   end
 
@@ -418,6 +421,14 @@ module CommonActions
   def ensure_browser_window_size
     expected = @zammad_browser_window_size
     return if expected.blank?
+
+    # PLAYWRIGHT PILOT: no Selenium `manage` API - use Capybara's window abstraction.
+    if page.driver.is_a?(Capybara::Playwright::Driver)
+      window = page.current_window
+      window.resize_to(*expected) if window.size != expected
+
+      return
+    end
 
     window = page.driver.browser.manage.window
     return if [window.size.width, window.size.height] == expected

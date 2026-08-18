@@ -315,8 +315,14 @@ RSpec.describe 'Ticket zoom > Article actions', type: :system do
       end
 
       def wait_for_scroll
+        element = find('.ticketZoom')
+
         wait(5, interval: 0.2).until_constant do
-          find('.ticketZoom').native.location.y
+          if page.driver.is_a?(Capybara::Playwright::Driver)
+            element.native.bounding_box&.fetch('y')
+          else
+            element.native.location.y
+          end
         end
       end
 

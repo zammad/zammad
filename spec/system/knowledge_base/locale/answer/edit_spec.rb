@@ -114,7 +114,7 @@ RSpec.describe 'Knowledge Base Locale Answer Edit', type: :system do
       find('a[data-action="link_answer"]').click
 
       within('.popover-content') do
-        find('input').fill_in with: input
+        find('input.js-input').fill_in with: input
         first('.js-option span', text: input).click
         find('[type=submit]').click
       end

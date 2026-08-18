@@ -19,6 +19,14 @@ RSpec.describe 'Ticket > Update > Email Reply', current_user_id: -> { current_us
       within(:active_content) do
         click_email_reply
 
+        # App.Utils.tokanice rebinds the recipient tokenfield's email-format check 500ms
+        # after the reply form rendered (App.Delay level 'tags'). Typing before that timer
+        # fires lands on the previous, more lenient handler, which accepts the invalid
+        # value as a token. The field exists as soon as tokanice registered the delay, so
+        # waiting for that level to drain is a deterministic replacement for sleeping.
+        expect(page).to have_css('.js-to', visible: :all)
+        wait.until { page.evaluate_script("Object.keys(App.Delay._all()['tags'] || {}).length === 0") }
+
         find('.token').double_click
         find('.js-to', visible: false).sibling('.token-input').set('test')
         find('.js-textarea').set('welcome to the community')

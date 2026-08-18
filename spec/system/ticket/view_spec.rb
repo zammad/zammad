@@ -258,7 +258,10 @@ RSpec.describe 'Ticket views', authenticated_as: :authenticate, type: :system do
           within(:active_content) do
             display_macro_batches Ticket.first
 
-            expect(page).to have_css('.batch-overlay-macro-entry', count: count)
+            # Not `have_css(count:)`: the overlay clips the overflowing entries
+            #   instead of hiding them, which the drivers disagree about (see
+            #   #visible_macro_entry_count).
+            wait.until { visible_macro_entry_count == count }
           end
         end
       end

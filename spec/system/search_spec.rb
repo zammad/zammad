@@ -301,7 +301,10 @@ RSpec.describe 'Search', authenticated_as: :authenticate, searchindex: true, typ
           display_macro_batches ticket_1
           within(:active_content) do
 
-            expect(page).to have_css('.batch-overlay-macro-entry', count: count)
+            # Not `have_css(count:)`: the overlay clips the overflowing entries
+            #   instead of hiding them, which the drivers disagree about (see
+            #   #visible_macro_entry_count).
+            wait.until { visible_macro_entry_count == count }
           end
         end
       end

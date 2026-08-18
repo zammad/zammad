@@ -83,7 +83,7 @@ RSpec.describe 'Chat Handling', type: :system do
 
         expect(page).to have_css('.zammad-chat', visible: :all)
         expect(page).to have_css('.zammad-chat-is-hidden', visible: :all)
-        expect(page).to have_no_css('.open-zammad-chat:not([style*="display: none"]', visible: :all)
+        expect(page).to have_no_css('.open-zammad-chat:not([style*="display: none"])', visible: :all)
       end
     end
   end

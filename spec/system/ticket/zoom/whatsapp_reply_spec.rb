@@ -75,10 +75,11 @@ RSpec.describe 'Ticket Zoom > Whatsapp reply', :use_vcr, authenticated_as: :user
         find('input#fileUpload_1', visible: :all).set(Rails.root.join('spec/fixtures/files/image/squares.png'))
         expect(page).to have_text('squares.png')
 
-        # This click tests if file upload by button is disabled successfully.
-        # If button is not disabled, it will crash with a file dialog being opened.
-        expect { find('.fileUpload').click(wait: 0) }
-          .to raise_error(Selenium::WebDriver::Error::ElementClickInterceptedError)
+        # Disabling the file input also sets pointer-events: none on '.fileUpload' via
+        #   CSS (see the :has() rule in zammad.scss), blocking the visible button too.
+        #   Assert both instead of a blocked click, since drivers raise different errors for that.
+        expect(page).to have_css('input#fileUpload_1[disabled]', visible: :all)
+        expect(find('.fileUpload').style('pointer-events')).to eq('pointer-events' => 'none')
 
         # This upload attempt simulates drag&drop which could work even with the button disabled.
         find('input#fileUpload_1', visible: :all).set(Rails.root.join('spec/fixtures/files/image/squares2.png'))

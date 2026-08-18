@@ -38,11 +38,11 @@ RSpec.describe 'Article Image View', type: :system do
       first('.ticket-article-item .js-preview').click
       images = Store.last(3)
       wait.until { page.find('div.imagePreview img')[:src].include?("/#{images[0].id}") }
-      find('body').send_keys :arrow_right
+      find('body').send_keys :right
       wait.until { page.find('div.imagePreview img')[:src].include?("/#{images[1].id}") }
-      find('body').send_keys :arrow_right
+      find('body').send_keys :right
       wait.until { page.find('div.imagePreview img')[:src].include?("/#{images[2].id}") }
-      find('body').send_keys :arrow_left
+      find('body').send_keys :left
       wait.until { page.find('div.imagePreview img')[:src].include?("/#{images[1].id}") }
     end
 

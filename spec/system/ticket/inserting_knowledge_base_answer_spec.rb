@@ -47,8 +47,7 @@ RSpec.describe 'inserting Knowledge Base answer', searchindex: true, type: :syst
         within(:richtext) do
           wait.until do
             elem   = first('img')
-            script = 'return arguments[0].naturalWidth;'
-            height = Capybara.current_session.driver.browser.execute_script(script, elem.native)
+            height = elem.evaluate_script('this.naturalWidth') # driver-agnostic, unlike driver.browser.execute_script
 
             next false if height <= 0
 

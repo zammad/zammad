@@ -227,6 +227,9 @@ group :development, :test do
   gem 'capybara'
   gem 'selenium-webdriver'
 
+  # Playwright pilot (throwaway evaluation)
+  gem 'capybara-playwright-driver'
+
   # code QA
   gem 'brakeman', require: false
   gem 'overcommit', require: false

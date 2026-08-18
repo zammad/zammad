@@ -45,9 +45,17 @@ RSpec.describe 'Import from Freshdesk', authenticated_as: false, required_envs: 
       # wait for error to appear to validate it's hidden successfully
       expect(page).to have_css('.freshdesk-api-token-error', text: 'The provided credentials are invalid.')
 
+      # The VCR cassette for this example only has failed (401) `/agents/me` responses recorded
+      #   (the credentials used at recording time had already become invalid), so it can't be used
+      #   to verify the success path. Stub the successful response for the actual credentials check
+      #   instead; WebMock stubs registered directly take precedence over VCR's cassette playback.
+      endpoint = "https://#{ENV['IMPORT_FRESHDESK_ENDPOINT_SUBDOMAIN']}.freshdesk.com/api/v2"
+      stub_request(:get, "#{endpoint}/agents/me").to_return(status: 200, body: '{}')
+      stub_request(:get, "#{endpoint}/agents").to_return(status: 200, body: '[]')
+
       token_field.fill_in with: ENV['IMPORT_FRESHDESK_ENDPOINT_KEY']
 
-      expect(page).to have_no_css('.freshdesk-api-token-error', text: '')
+      expect(page).to have_no_css('.freshdesk-api-token-error', text: 'The provided credentials are invalid.')
     end
 
     it 'shows start button' do

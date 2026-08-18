@@ -126,7 +126,13 @@ RSpec.describe 'Scenario > Text modules', authenticated_as: :authenticate, sessi
 
       # The placeholder now resolves to the new customer.
       within(:active_content) do
-        find('[data-name="body"]').send_keys(:backspace) while find('[data-name="body"]').text.present?
+        # Clear the field via select-all, and click it first: the modal close leaves
+        #   it unfocused, and the Playwright driver's #send_keys focuses via a plain
+        #   DOM #focus(), which puts the caret at offset 0. The previous unbounded
+        #   `send_keys(:backspace) while text.present?` loop then had nothing to
+        #   delete and spun forever, hanging real CI jobs for 20+ minutes.
+        find('[data-name="body"]').click.send_keys([magic_key, 'a'], :backspace)
+        expect(find('[data-name="body"]').text).to be_blank
         find('[data-name="body"]').send_keys "::#{keyword}"
       end
 

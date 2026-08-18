@@ -28,8 +28,7 @@ module FormMatchers
       def validation_message_found?
         actual
         .find(field)
-        .native
-        .attribute('validationMessage')
+        .evaluate_script('this.validationMessage')
         .present?
       end
 

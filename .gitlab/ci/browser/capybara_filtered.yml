@@ -33,3 +33,15 @@ capybara:filtered:firefox:
     - !reference [.template_browser-core_capybara_firefox, services]
     # Also add containers for integration tests here.
     - !reference [.services, auth]
+
+# Playwright counterpart for the driver evaluation: lets the same spec be looped
+#   head-to-head against capybara:filtered:chrome to compare flakiness per spec.
+capybara:filtered:playwright:
+  extends:
+    - .template_browser-core_capybara_playwright
+    - .template_capybara_filtered
+    - .variables_auth
+  services:
+    - !reference [.template_browser-core_capybara_playwright, services]
+    # Also add containers for integration tests here.
+    - !reference [.services, auth]

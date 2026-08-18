@@ -5,20 +5,23 @@ module WindowActions
   delegate :app_host, to: Capybara
 
   # This is a convenient wrapper method around #switch_to_window
-  # which switch to an given window index if exists.
+  # which switch to an given window index, waiting for it to appear
+  # first (e.g. right after triggering a new tab/window via a click,
+  # it may not be registered in Capybara's #windows list yet).
   #
   # @example
   #  switch_to_window_index(2)
   # => switch to window index 2
   #
   def switch_to_window_index(index)
-    return false if !windows[index - 1]
+    window = wait.until { windows[index - 1] }
 
-    switch_to_window(windows[index - 1])
+    switch_to_window(window)
   end
 
   # This is a convenient wrapper method around #close window
-  # which will close the given window index if it exists.
+  # which will close the given window index, waiting for it to appear
+  # first (see #switch_to_window_index).
   # If only one window is still open afterwards it will switch to it.
   #
   # @example
@@ -26,9 +29,9 @@ module WindowActions
   # => close window with index 2
   #
   def close_window_index(index)
-    return false if !windows[index - 1]
+    window = wait.until { windows[index - 1] }
 
-    windows[index - 1].close
+    window.close
 
     switch_to_window(windows[0]) if windows.length == 1
   end

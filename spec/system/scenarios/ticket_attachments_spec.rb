@@ -108,7 +108,10 @@ RSpec.describe 'Scenario > Ticket attachments', authenticated_as: :authenticate,
     end
 
     def zoom_file_input
-      page.first('.content.active .article-add input[type="file"]', visible: :all)
+      # No '.content.active' prefix: this is always called inside
+      #   within(:active_content), and Playwright evaluates element-scoped CSS
+      #   relative to the subtree (the scope element cannot match the prefix).
+      page.first('.article-add input[type="file"]', visible: :all)
     end
 
     it 'warns about the keyword, isolates attachments per article and requires a body' do

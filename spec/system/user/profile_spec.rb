@@ -128,8 +128,11 @@ RSpec.describe 'User Profile', type: :system do
     end
 
     it 'does show all secondary organizations on edit' do
-      tokens = page.all('div[data-attribute-name="organization_ids"] .token')
-      expect(tokens.count).to eq(19)
+      # Secondary organizations are fetched via an async request (see
+      # User#secondaryOrganizations) and the token list is (re-)rendered once
+      # that resolves, so wait for it to settle instead of taking an instant
+      # snapshot with #all, which can catch a partially rendered token list.
+      expect(page).to have_css('div[data-attribute-name="organization_ids"] .token', count: 19)
     end
   end
 

@@ -33,7 +33,7 @@ RSpec.describe 'Desktop > Personal Setting > Security', app: :desktop_view, auth
 
     context 'with security keys method' do
       before do
-        skip('Mocking of Web Authentication API is currently supported only in Chrome.') if Capybara.current_driver != :zammad_chrome
+        skip('Mocking of Web Authentication API is currently supported only in Chromium-based browsers.') if %i[zammad_chrome zammad_playwright].exclude?(Capybara.current_driver)
         Setting.set('two_factor_authentication_method_security_keys', true)
         Setting.set('two_factor_authentication_recovery_codes', false)
         Setting.set('two_factor_authentication_enforce_role_ids', [])
@@ -52,13 +52,10 @@ RSpec.describe 'Desktop > Personal Setting > Security', app: :desktop_view, auth
 
         fill_in 'Name for this security key', with: Faker::Lorem.unique.word
 
-        # Mock a U2F key via the Selenium virtual authenticator feature (supported only by Chrome ATM).
-        #   A virtual authenticator instance will be set up for the remainder of the browser session.
-        #   We will reuse it later during the login phase.
-        options = Selenium::WebDriver::VirtualAuthenticatorOptions.new(protocol: :u2f, transport: :usb, resident_key: false,
-                                                                       user_consenting: true, user_verification: true,
-                                                                       user_verified: true)
-        page.driver.browser.add_virtual_authenticator(options)
+        # Mock a U2F key via a virtual authenticator (supported only by Chromium ATM).
+        #   The instance will be set up for the remainder of the browser session,
+        #   we will reuse it later during the login phase.
+        VirtualAuthenticator.register(page)
 
         click_on 'Next'
 

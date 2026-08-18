@@ -36,7 +36,10 @@ RSpec.describe 'Ticket zoom > Link knowledge base answer', type: :system do
 
             find(%(li[data-value="#{translation.id}"])).click
 
-            expect(find('.link_kb_answers ol')).to have_text translation.title
+            # Scoped to '.link_kb_answers' already, so 'ol' alone is enough - re-adding the ancestor
+            # class here made this a self-referential descendant selector, which some CSS engines
+            # (e.g. Playwright's) never match from within their own scope.
+            expect(find('ol')).to have_text translation.title
           end
         end
       end

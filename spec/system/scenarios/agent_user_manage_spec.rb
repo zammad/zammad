@@ -17,7 +17,7 @@ RSpec.describe 'Scenario > Inline customer creation', authenticated_as: :authent
 
   def create_customer_inline(email)
     find('[name=customer_id_completion]').click
-    find('[name=customer_id_completion]').send_keys(:arrow_down)
+    find('[name=customer_id_completion]').send_keys(:down)
 
     click '.recipientList-entry.js-objectNew'
 

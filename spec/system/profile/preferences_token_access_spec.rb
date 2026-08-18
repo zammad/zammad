@@ -83,7 +83,7 @@ RSpec.describe 'Profile > Token Access', type: :system do
       visit 'profile/token_access'
 
       within :active_content do
-        find('.content.active .js-create').click
+        find('.js-create').click
       end
 
       in_modal disappears: false do

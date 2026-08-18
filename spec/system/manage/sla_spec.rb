@@ -18,9 +18,9 @@ RSpec.describe 'Manage > Sla', type: :system do
     page.find('input#solution_time', visible: false).find(:xpath, './/..').click
 
     # check if required
-    expect(page.find('input[name=first_response_time_in_text]')[:required]).to eq('true')
-    expect(page.find('input[name=update_time_in_text]')[:required]).to eq('true')
-    expect(page.find('input[name=solution_time_in_text]')[:required]).to eq('true')
+    expect(page.find('input[name=first_response_time_in_text]')[:required].to_s).to eq('true')
+    expect(page.find('input[name=update_time_in_text]')[:required].to_s).to eq('true')
+    expect(page.find('input[name=solution_time_in_text]')[:required].to_s).to eq('true')
 
     # drop all checkboxes
     page.find('input#first_response_time', visible: false).find(:xpath, './/..').click
@@ -28,9 +28,9 @@ RSpec.describe 'Manage > Sla', type: :system do
     page.find('input#solution_time', visible: false).find(:xpath, './/..').click
 
     # check if optional
-    expect(page.find('input[name=first_response_time_in_text]')[:required]).not_to eq('true')
-    expect(page.find('input[name=update_time_in_text]')[:required]).not_to eq('true')
-    expect(page.find('input[name=solution_time_in_text]')[:required]).not_to eq('true')
+    expect(page.find('input[name=first_response_time_in_text]')[:required].to_s).not_to eq('true')
+    expect(page.find('input[name=update_time_in_text]')[:required].to_s).not_to eq('true')
+    expect(page.find('input[name=solution_time_in_text]')[:required].to_s).not_to eq('true')
   end
 
   describe 'for saved entry', authenticated_as: :authenticate do
@@ -43,9 +43,9 @@ RSpec.describe 'Manage > Sla', type: :system do
       page.find('.js-edit').click
 
       # check if required
-      expect(page.find('input[name=first_response_time_in_text]')[:required]).to eq('true')
-      expect(page.find('input[name=update_time_in_text]')[:required]).to eq('true')
-      expect(page.find('input[name=solution_time_in_text]')[:required]).to eq('true')
+      expect(page.find('input[name=first_response_time_in_text]')[:required].to_s).to eq('true')
+      expect(page.find('input[name=update_time_in_text]')[:required].to_s).to eq('true')
+      expect(page.find('input[name=solution_time_in_text]')[:required].to_s).to eq('true')
 
       # drop all checkboxes
       page.find('input#first_response_time', visible: false).find(:xpath, './/..').click
@@ -53,9 +53,9 @@ RSpec.describe 'Manage > Sla', type: :system do
       page.find('input#solution_time', visible: false).find(:xpath, './/..').click
 
       # check if optional
-      expect(page.find('input[name=first_response_time_in_text]')[:required]).not_to eq('true')
-      expect(page.find('input[name=update_time_in_text]')[:required]).not_to eq('true')
-      expect(page.find('input[name=solution_time_in_text]')[:required]).not_to eq('true')
+      expect(page.find('input[name=first_response_time_in_text]')[:required].to_s).not_to eq('true')
+      expect(page.find('input[name=update_time_in_text]')[:required].to_s).not_to eq('true')
+      expect(page.find('input[name=solution_time_in_text]')[:required].to_s).not_to eq('true')
     end
   end
 

@@ -19,15 +19,15 @@ RSpec.describe 'Assets', db_strategy: :reset, type: :system do
     end
 
     def group_note
-      page.execute_script('return App.Group.first().note')
+      page.evaluate_script('App.Group.first().note')
     end
 
     def group_name_last
-      page.execute_script('return App.Group.first().name_last')
+      page.evaluate_script('App.Group.first().name_last')
     end
 
     def group_parent_id
-      page.execute_script('return App.Group.first().parent_id')
+      page.evaluate_script('App.Group.first().parent_id')
     end
 
     describe 'when customer', authenticated_as: :customer do
@@ -67,7 +67,7 @@ RSpec.describe 'Assets', db_strategy: :reset, type: :system do
 
   context 'organizations' do
     def organization_note
-      page.execute_script("return App.Organization.find(#{organization.id}).note")
+      page.evaluate_script("App.Organization.find(#{organization.id}).note")
     end
 
     before do
@@ -95,7 +95,7 @@ RSpec.describe 'Assets', db_strategy: :reset, type: :system do
 
   context 'roles' do
     def role_name
-      page.execute_script('return App.Role.first().name')
+      page.evaluate_script('App.Role.first().name')
     end
 
     before do
@@ -123,31 +123,31 @@ RSpec.describe 'Assets', db_strategy: :reset, type: :system do
 
   context 'users' do
     def customer_email
-      page.execute_script("return App.User.find(#{customer.id}).email")
+      page.evaluate_script("App.User.find(#{customer.id}).email")
     end
 
     def customer_note
-      page.execute_script("return App.User.find(#{customer.id}).note")
+      page.evaluate_script("App.User.find(#{customer.id}).note")
     end
 
     def customer_available_group_count
-      page.execute_script('return App.Group.all().length')
+      page.evaluate_script('App.Group.all().length')
     end
 
     def owner_firstname
-      page.execute_script("return App.User.find(#{agent.id}).firstname")
+      page.evaluate_script("App.User.find(#{agent.id}).firstname")
     end
 
     def owner_accounts
-      page.execute_script("return App.User.find(#{agent.id}).accounts")
+      page.evaluate_script("App.User.find(#{agent.id}).accounts")
     end
 
     def owner_details
       [
-        page.execute_script("return App.User.find(#{agent.id}).last_login"),
-        page.execute_script("return App.User.find(#{agent.id}).login_failed"),
-        page.execute_script("return App.User.find(#{agent.id}).email"),
-        page.execute_script("return App.User.find(#{agent.id}).note"),
+        page.evaluate_script("App.User.find(#{agent.id}).last_login"),
+        page.evaluate_script("App.User.find(#{agent.id}).login_failed"),
+        page.evaluate_script("App.User.find(#{agent.id}).email"),
+        page.evaluate_script("App.User.find(#{agent.id}).note"),
       ].compact
     end
 

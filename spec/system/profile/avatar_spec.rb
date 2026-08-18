@@ -21,10 +21,9 @@ RSpec.describe 'Profile > Avatar', type: :system do
 
     within :active_content do
       # Simulate hover to make the delete button visible and click on it.
-      page.execute_script("$('.avatar-delete').css('visibility', 'visible').click()")
-
-      prompt = page.driver.browser.switch_to.alert
-      prompt.accept
+      accept_confirm 'Delete Avatar?' do
+        page.execute_script("$('.avatar-delete').css('visibility', 'visible').click()")
+      end
 
       await_empty_ajax_queue
 

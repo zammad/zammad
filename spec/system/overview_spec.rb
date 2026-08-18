@@ -386,23 +386,20 @@ RSpec.describe 'Overview', type: :system do
 
     shared_examples 'resizing table columns' do
       it 'resizes table columns' do
-        initial_number_width = find_all('.js-tableHead')[1].native.size.width.to_i
-        initial_title_width = find_all('.js-tableHead')[2].native.size.width.to_i
+        initial_number_width = find_all('.js-tableHead')[1].evaluate_script('this.offsetWidth').to_i
+        initial_title_width = find_all('.js-tableHead')[2].evaluate_script('this.offsetWidth').to_i
 
         column_resize_handle = find_all('.js-col-resize')[0]
 
         # Drag the first column resize handle to the left.
         #   Move the cursor horizontally by 100 pixels.
         #   Finally, drop the handle to resize the column.
-        page.driver.browser.action
-          .move_to(column_resize_handle.native)
-          .click_and_hold
-          .move_by(-100, 0)
-          .release
-          .perform
+        click_and_hold(column_resize_handle.native)
+        move_mouse_by(-100, 0)
+        release_mouse
 
-        final_number_width = find_all('.js-tableHead')[1].native.size.width.to_i
-        final_title_width = find_all('.js-tableHead')[2].native.size.width.to_i
+        final_number_width = find_all('.js-tableHead')[1].evaluate_script('this.offsetWidth').to_i
+        final_title_width = find_all('.js-tableHead')[2].evaluate_script('this.offsetWidth').to_i
 
         expect(final_number_width).to be < initial_number_width
         expect(final_title_width).to be > initial_title_width

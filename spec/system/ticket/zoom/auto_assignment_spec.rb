@@ -41,7 +41,7 @@ RSpec.describe 'Ticket zoom > Auto Assignment', type: :system do
           visit "#ticket/zoom/#{ticket.id}"
 
           within(:active_content) do
-            expect(page).to have_css('.content.active select[name=owner_id]')
+            expect(page).to have_select('owner_id')
             expect(page).to have_select('owner_id',
                                         selected: session_user.fullname,
                                         options:  ['-', 'Agent 1 Test', 'Test Admin Agent'])

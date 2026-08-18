@@ -22,8 +22,15 @@ RSpec.describe 'Add Article Hint', authenticated_as: :authenticate, type: :syste
 
     it 'shows hint for the selected type' do
       within '.article-new' do
+        # Scope to the hint wrapper itself (rather than page/`.article-new`)
+        # so visibility (it's hidden via opacity/height, not display) is
+        # evaluated on that element directly. Checking from an ancestor that
+        # is itself visible can make some drivers report descendant text as
+        # present via plain innerText, even while opacity hides it from users.
+        hint = find('.article-visibility-text-wrapper', visible: :all)
+
         expect { click '.attachmentPlaceholder' }
-          .to change { page.has_text?('internal note', wait: 0) }
+          .to change { hint.has_text?('internal note', wait: 0) }
           .to true
       end
     end

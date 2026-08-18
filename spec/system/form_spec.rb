@@ -89,9 +89,11 @@ RSpec.describe 'Form', authenticated_as: true, type: :system do
         fill_in 'Name', with: 'some sender'
         fill_in 'Message', with: 'message here'
         fill_in 'Email', with: 'discard@discard.zammad.org'
-        # Avoid await_empty_ajax_queue.
-        execute_script('$("button:submit").trigger("click")')
-        accept_alert('The form could not be submitted!')
+        # Trigger inside the block: Playwright registers the alert handler up front.
+        accept_alert('The form could not be submitted!') do
+          # Avoid await_empty_ajax_queue.
+          execute_script('$("button:submit").trigger("click")')
+        end
       end
     end
   end
@@ -229,9 +231,11 @@ RSpec.describe 'Form', authenticated_as: true, type: :system do
           # the field is off-screen, so set it the way an automated client would
           execute_script("document.querySelector(\"#{honeypot}\").value = 'http://spam.example.com'")
 
-          # Avoid await_empty_ajax_queue.
-          execute_script('$("button:submit").trigger("click")')
-          accept_alert('Your submission could not be verified. Please make sure you completed any verification challenge and try again.')
+          # Trigger inside the block: Playwright registers the alert handler up front.
+          accept_alert('Your submission could not be verified. Please make sure you completed any verification challenge and try again.') do
+            # Avoid await_empty_ajax_queue.
+            execute_script('$("button:submit").trigger("click")')
+          end
 
           expect(page).to have_no_text('Thank you for your inquiry')
         end

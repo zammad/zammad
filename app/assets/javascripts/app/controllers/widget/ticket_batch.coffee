@@ -295,6 +295,11 @@ class App.TicketBatch extends App.Controller
     @el.addClass('is-visible')
     $('html').css('overflow', 'hidden')
     @batchOverlayBackdrop.velocity { opacity: [1, 0] }, { duration: 500 }
+    # These page-coordinate boundaries are captured once and compared against the
+    #   live cursor in controlBatchOverlay. That only holds because the page
+    #   cannot scroll while the overlay is open (overflow: hidden above) and the
+    #   panels themselves are not scrollable. If either changes, recompute them
+    #   there instead, otherwise the zone detection drifts mid-drag.
     @batchMacroOffset = @batchMacro.offset().top + @batchMacro.outerHeight()
     @batchAssignOffset = @batchAssign.offset().top
     @batchOverlayShown = true

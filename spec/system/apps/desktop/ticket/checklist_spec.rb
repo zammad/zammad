@@ -66,7 +66,10 @@ RSpec.describe 'Desktop > Ticket > Checklist', app: :desktop_view, authenticated
         Ticket.last.reload.state.name == 'closed'
       end
 
-      page.driver.browser.close
+      # Simulate the second agent closing their browser.
+      #   Quit the driver directly: Capybara::Playwright::Driver#quit is private,
+      #   so Session#quit would silently skip it and leave the browser running.
+      page.driver.send(:quit)
     end
 
     close_and_verify
@@ -107,7 +110,9 @@ RSpec.describe 'Desktop > Ticket > Checklist', app: :desktop_view, authenticated
     open_checklist
 
     find('span', text: 'IT to-dos').click
-    find('#ticketSidebar input').fill_in with: ticket_hook(Ticket.last)
+    # Target the inline edit field via its placeholder: a bare 'input' selector is ambiguous
+    #   under Playwright, whose visibility check also counts the appearance-none checkbox inputs.
+    find('#ticketSidebar input[placeholder="Text or ticket identifier"]').fill_in with: ticket_hook(Ticket.last)
     find('#ticketSidebar button[aria-label="Save changes"]').click
     wait_for_gql('apps/desktop/pages/ticket/graphql/mutations/ticketChecklistItemUpsert.graphql')
   end

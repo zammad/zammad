@@ -24,7 +24,9 @@ RSpec.describe 'Manage > Groups', type: :system do
     end
 
     it 'sorts group paths in correct order' do
-      expect(page).to have_text("#{group1.fullname}\n#{group2.fullname}\n#{group3.fullname}")
+      # normalize_ws avoids driver differences in how whitespace between adjacent table cells is rendered
+      # (e.g. Playwright's innerText inserts a tab between an empty action cell and the row's newline).
+      expect(page).to have_text("#{group1.fullname} #{group2.fullname} #{group3.fullname}", normalize_ws: true)
     end
 
     describe 'when creating a new group' do

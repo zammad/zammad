@@ -25,7 +25,7 @@ RSpec.describe 'Ticket create > Inline Image Replacement for AI Text Tools', aut
   end
 
   def authenticate
-    skip('Bubble menu does not work when using Chrome.') if Capybara.current_driver == :zammad_chrome
+    skip('Bubble menu does not work when using Chrome.') if %i[zammad_chrome zammad_playwright zammad_playwright_mobile].include?(Capybara.current_driver)
 
     allow(AI::Provider::ZammadAI).to receive(:ping!).and_return(true)
 

@@ -19,14 +19,21 @@ class Capybara::Node::Element
   #
   # @return [Capybara::Node::Element] the element/node
   def in_fixed_position(checks: 100, wait: 0.2)
-    previous = native.location
+    # PLAYWRIGHT PILOT: Playwright::ElementHandle has no #location (Selenium-only),
+    #   use its #bounding_box instead to detect settling. Unlike #location it
+    #   answers nil while the element is detached or not laid out (e.g. mid
+    #   transition), so two nil reads must not count as "stopped moving" - that
+    #   would hand the caller a still-moving element.
+    playwright = session.driver.is_a?(Capybara::Playwright::Driver)
+    position   = -> { playwright ? native.bounding_box : native.location }
+    previous   = position.call
 
     (checks + 1).times do
       sleep wait
 
-      current = native.location
+      current = position.call
 
-      return self if previous == current
+      return self if current && previous == current
 
       previous = current
     end
@@ -54,42 +61,64 @@ module ZammadCapybarActionDelegator
     end
   end
 
-  # A fading/animating overlay (e.g. a modal mid-transition) can briefly
-  #   obscure the target element, making an otherwise valid click fail.
-  #   Retry a few times to let the transition finish before giving up.
-  def retry_on_click_intercepted(retries: 3)
+  # Retryable click failures, all of them "the target was not usable yet":
+  #   - Selenium: a fading/animating overlay (e.g. a modal mid-transition)
+  #     briefly obscured the element.
+  #   - Playwright: the target kept moving for its whole actionability wait
+  #     ('not stable'), or it was re-rendered from under us (nav menu on chat WS
+  #     events, links swapped during boot) and outlasted Capybara's own
+  #     synchronize window.
+  #
+  # Retries are few and cheap on purpose: the stale case has already burned
+  #   Capybara's full wait before landing here, so a genuinely gone element
+  #   should not be retried many times over.
+  RETRYABLE_CLICK_ERRORS = [
+    Selenium::WebDriver::Error::ElementClickInterceptedError,
+    Capybara::Playwright::Node::StaleReferenceError,
+    Playwright::Error,
+  ].freeze
+
+  def retry_on_click_intercepted(retries: 2)
     tries = 0
     begin
       yield
-    rescue Selenium::WebDriver::Error::ElementClickInterceptedError
+    rescue *RETRYABLE_CLICK_ERRORS => e
+      # Playwright::Error is the driver's catch-all (TimeoutError and friends
+      #   inherit from it), so only its actionability timeout qualifies -
+      #   anything else is a real error.
+      raise if e.is_a?(Playwright::Error) && e.message.exclude?('not stable')
+
       tries += 1
       raise if tries > retries
 
+      # Re-resolve the element for the next attempt where there is one; at
+      #   session level (click_on and friends) the call re-runs its own lookup.
+      reload if respond_to?(:reload)
       sleep 0.3
       retry
     end
   end
 
   def click_on(...)
-    super.tap do
+    retry_on_click_intercepted { super }.tap do
       await_empty_ajax_queue
     end
   end
 
   def click_link(...)
-    super.tap do
+    retry_on_click_intercepted { super }.tap do
       await_empty_ajax_queue
     end
   end
 
   def click_link_or_button(...)
-    super.tap do
+    retry_on_click_intercepted { super }.tap do
       await_empty_ajax_queue
     end
   end
 
   def click_button(...)
-    super.tap do
+    retry_on_click_intercepted { super }.tap do
       await_empty_ajax_queue
     end
   end

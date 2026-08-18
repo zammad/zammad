@@ -65,7 +65,7 @@ FactoryBot.define do
         wrong_key { false }
 
         # We can mock a WebAuthn credential only within a running browser session.
-        #   The code below is a pretty heavy "hack" to get the credential information from the Selenium virtual
+        #   The code below is a pretty heavy "hack" to get the credential information from a virtual
         #   authenticator, by simulating the complete registration process.
         #   First, the create options are generated via Ruby code.
         #   Then, a virtual authenticator instance is set up within the browser session with a mocked U2F key.
@@ -87,12 +87,11 @@ FactoryBot.define do
             },
           )
 
-          options = Selenium::WebDriver::VirtualAuthenticatorOptions.new(protocol: :u2f, transport: :usb,
-                                                                         resident_key: false, user_consenting: true,
-                                                                         user_verification: true, user_verified: true)
-          page.driver.browser.add_virtual_authenticator(options)
+          VirtualAuthenticator.register(page)
 
-          public_key_credential = page.execute_script("return navigator.credentials.create({ publicKey: PublicKeyCredential.parseCreationOptionsFromJSON(#{initiate_configuration.as_json.to_h}) }).then((publicKeyCredential) => publicKeyCredential.toJSON());")
+          # evaluate_script returns the resolved promise value on both Selenium and Playwright
+          #   (Playwright's execute_script always discards the return value).
+          public_key_credential = page.evaluate_script("navigator.credentials.create({ publicKey: PublicKeyCredential.parseCreationOptionsFromJSON(#{initiate_configuration.as_json.to_h}) }).then((publicKeyCredential) => publicKeyCredential.toJSON())")
           webauthn_credential   = WebAuthn::Credential.from_create(public_key_credential)
 
           if wrong_key

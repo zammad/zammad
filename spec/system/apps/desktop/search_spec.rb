@@ -38,7 +38,9 @@ RSpec.describe 'Desktop > Search', app: :desktop_view, authenticated_as: :authen
     end
 
     within 'aside[aria-label="Main sidebar"]' do
-      find('[role="searchbox"][aria-label="Search…"').fill_in with: customer.fullname
+      # The missing closing bracket used to be silently tolerated by Chrome's
+      #   lenient CSS parser, but Playwright's selector engine rejects it.
+      find('[role="searchbox"][aria-label="Search…"]').fill_in with: customer.fullname
 
       expect(page).to have_text('Found users')
         .and have_link(customer.fullname)
@@ -56,7 +58,7 @@ RSpec.describe 'Desktop > Search', app: :desktop_view, authenticated_as: :authen
       expect(page).to have_link(customer.login)
 
       find('[role="tab"]', text: 'Ticket').click
-      find('[role="searchbox"][aria-label="Search…"').fill_in with: 'foobar'
+      find('[role="searchbox"][aria-label="Search…"]').fill_in with: 'foobar'
 
       expect(page).to have_text('No search results for this query.')
 
@@ -64,7 +66,7 @@ RSpec.describe 'Desktop > Search', app: :desktop_view, authenticated_as: :authen
 
       expect(page).to have_text('Start typing or apply filters to get the search results.')
 
-      find('[role="searchbox"][aria-label="Search…"').fill_in with: "state.name: closed AND article.from: #{agent.fullname} AND customer.firstname: #{customer.firstname}"
+      find('[role="searchbox"][aria-label="Search…"]').fill_in with: "state.name: closed AND article.from: #{agent.fullname} AND customer.firstname: #{customer.firstname}"
 
       click_on old_ticket.number
     end

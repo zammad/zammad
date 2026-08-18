@@ -271,7 +271,19 @@ RSpec.describe 'Ticket Create', time_zone: 'Europe/London', type: :system do
 
       field_date.sibling('[data-item=date]').set date.strftime('%m/%d/%Y')
       field_time.sibling('[data-item=date]').set time.strftime('%m/%d/%Y')
-      field_time.sibling('[data-item=time]').set time.strftime('%H:%M')
+
+      # bootstrap-timepicker asynchronously re-selects part of its text on focus/keydown
+      # (setTimeout-based). Simulated per-character typing races that, so a keystroke can
+      # land on a stale selection and overwrite digits instead of appending (e.g. saving
+      # "07:02" instead of "17:46"). Set the value directly and fire `change`, which is
+      # what App.UiElement.basedate#bindEvents listens for, to avoid the race entirely.
+      time_field = field_time.sibling('[data-item=time]')
+      time_value = time.strftime('%H:%M')
+      execute_script(<<~JS, time_field, time_value)
+        arguments[0].value = arguments[1];
+        arguments[0].dispatchEvent(new Event('change', { bubbles: true }));
+      JS
+      expect(time_field.value).to eq time_value
 
       click '.js-submit'
 

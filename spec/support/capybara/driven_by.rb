@@ -40,6 +40,7 @@ RSpec.configure do |config|
       # End the Capybara browser session whenever the user agent is to be mocked,
       #   in order to get a fresh session for subsequent examples.
       Capybara.send(:session_pool).reverse_each do |_mode, session|
+        PlaywrightSessionQuit.call(session)
         session.quit
       end
     end
@@ -69,7 +70,13 @@ RSpec.configure do |config|
       browser_height = 1000
     end
 
-    page.driver.browser.manage.window.resize_to(browser_width, browser_height)
+    # PLAYWRIGHT PILOT: the Playwright driver has no Selenium `manage` API - use
+    #   Capybara's window abstraction, which the driver maps to viewport resizing.
+    if page.driver.is_a?(Capybara::Playwright::Driver)
+      page.current_window.resize_to(browser_width, browser_height)
+    else
+      page.driver.browser.manage.window.resize_to(browser_width, browser_height)
+    end
 
     # Remember the size so that additional sessions (see CommonActions#using_session)
     #   can be brought to the same size - their windows otherwise keep the driver's
@@ -91,6 +98,8 @@ RSpec.configure do |config|
     #   (see https://github.com/teamcapybara/capybara/issues/2237)
     Capybara.send(:session_pool).reverse_each do |_mode, session|
       next if session.eql?(Capybara.current_session) && (capybara_examples_performed % 100).nonzero? && !example.metadata[:mobile_user_agent]
+
+      PlaywrightSessionQuit.call(session)
 
       # session.quit is a real WebDriver network call with no timeout of its own - specs
       #   using multiple sessions (e.g. chat_spec.rb's using_session :customer) have been

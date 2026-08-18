@@ -192,8 +192,7 @@ RSpec.describe 'AI > AI Agents', type: :system do
           click_on 'Back'
 
           error_message = page.find('[name="definition::instruction_context::object_attributes::group_id-required-validator"]', visible: :all)
-            .native
-            .attribute('validationMessage')
+            .evaluate_script('this.validationMessage')
 
           expect(error_message).to include('Please fill')
 

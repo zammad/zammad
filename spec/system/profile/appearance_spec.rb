@@ -15,7 +15,7 @@ RSpec.describe 'Profile > Appearance', type: :system do
       within :active_content do
         find('span', text: 'Dark').click
 
-        value = execute_script('return document.documentElement.dataset.theme')
+        value = evaluate_script('document.documentElement.dataset.theme')
         expect(value).to eq 'dark'
       end
     end

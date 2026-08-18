@@ -190,7 +190,7 @@ RSpec.describe 'Expert conditions in Manage > Overviews', type: :system do
 
             state_condition_draggable = find('.js-filterElement:nth-child(4) .draggable')
             priority_condition = find('.js-filterElement:nth-child(3)')
-            priority_height = priority_condition.native.size.height.to_i
+            priority_height = priority_condition.evaluate_script('this.offsetHeight').to_i
 
             # Ensure the draggable is fully inside the viewport so Selenium does not raise
             # MoveTargetOutOfBoundsError when the condition list grows beyond the viewport height.
@@ -200,12 +200,9 @@ RSpec.describe 'Expert conditions in Manage > Overviews', type: :system do
             #   Move the cursor vertically for the whole height of the priority element.
             #   Also, slightly move the cursor to the right, but more than the width of a single level constant (27px).
             #   Finally, drop the condition in order to assign it to the second level.
-            page.driver.browser.action
-              .move_to(state_condition_draggable.native)
-              .click_and_hold
-              .move_by(30, -priority_height)
-              .release
-              .perform
+            click_and_hold(state_condition_draggable.native)
+            move_mouse_by(30, -priority_height)
+            release_mouse
 
             await_empty_ajax_queue
 
@@ -249,7 +246,7 @@ RSpec.describe 'Expert conditions in Manage > Overviews', type: :system do
 
             state_condition_draggable = find('.js-filterElement:nth-child(4) .draggable')
             priority_condition = find('.js-filterElement:nth-child(3)')
-            priority_height = priority_condition.native.size.height.to_i
+            priority_height = priority_condition.evaluate_script('this.offsetHeight').to_i
 
             # Ensure the draggable is fully inside the viewport so Selenium does not raise
             # MoveTargetOutOfBoundsError when the condition list grows beyond the viewport height.
@@ -259,12 +256,9 @@ RSpec.describe 'Expert conditions in Manage > Overviews', type: :system do
             #   Move the cursor vertically for the whole height of the priority element.
             #   Also, do not move the cursor horizontally, so it stays flush with the element above.
             #   Finally, drop the condition in order to assign it to the first level.
-            page.driver.browser.action
-              .move_to(state_condition_draggable.native)
-              .click_and_hold
-              .move_by(0, -priority_height)
-              .release
-              .perform
+            click_and_hold(state_condition_draggable.native)
+            move_mouse_by(0, -priority_height)
+            release_mouse
 
             await_empty_ajax_queue
 

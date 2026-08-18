@@ -240,12 +240,16 @@ RSpec.describe 'Desktop > Ticket > Editor and Advanced Features', app: :desktop_
   # "Overflow menu" popover when the toolbar wraps and the action is not
   # rendered directly. The popover items appear in the body, outside the form.
   def click_editor_toolbar_action(label)
-    selector = %(button[aria-label="#{label}"])
     in_toolbar = false
     within(reply_form) do
-      if has_css?(selector, wait: 0.5)
+      # An action that wrapped out of the visible toolbar row stays in the
+      # DOM, but is disabled (ActionButton.vue) and reachable only via the
+      # overflow menu. Detect direct availability via the enabled state:
+      # Selenium reports the clipped button as invisible, Playwright as
+      # visible, but both agree on the disabled property.
+      if has_button?(label, disabled: false, wait: 0.5)
         in_toolbar = true
-        find(selector).click
+        find_button(label, disabled: false).click
       else
         find('button[aria-label="Overflow menu"]').click
       end
@@ -448,6 +452,14 @@ RSpec.describe 'Desktop > Ticket > Editor and Advanced Features', app: :desktop_
 
     # The internal note submission also opens the Time accounting flyout
     # (because time_accounting is enabled). Skip it.
+    expect(page).to have_css('#flyout-ticket-time-accounting', text: 'Time accounting')
+
+    # Wait for the flyout form to fully settle before interacting - its
+    # initial form updater response re-renders the form (see account_time
+    # above), which can otherwise pull the Skip button out from under a
+    # click that lands mid-render.
+    wait_for_form_to_settle('form-ticket-time-accounting')
+
     within '#flyout-ticket-time-accounting' do
       click_on 'Skip'
     end
@@ -458,7 +470,15 @@ RSpec.describe 'Desktop > Ticket > Editor and Advanced Features', app: :desktop_
   def click_button_when_centered(label)
     button = find('button', text: label, exact_text: true)
 
-    page.scroll_to(button, align: :center)
+    # scroll_to needs the plain Capybara element - a bare top-level find
+    # here goes through both CapybaraCustomExtensions#find and the
+    # Capybara::DSL#find it calls super into (which re-resolves the also
+    # overridden `page`), so the result is wrapped twice. #element only
+    # peels one layer, still leaving a delegator that Capybara does not
+    # recognize as an element (silently scrolls nowhere under Selenium,
+    # and the Playwright driver raises when serializing it as a script
+    # argument). #to_capybara_node unwraps any number of delegator layers.
+    page.scroll_to(button.to_capybara_node, align: :center)
     wait.until { !button.obscured? }
 
     button.click

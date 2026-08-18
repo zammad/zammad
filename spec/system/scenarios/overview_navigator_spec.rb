@@ -51,10 +51,10 @@ RSpec.describe 'Scenario > Overview navigator in the ticket zoom', authenticated
     expect_position(1, tickets.third)
 
     # Paging forward moves counter and ticket in sync.
-    find('.active .overview-navigator .btn--split--last').click
+    find('.active .ticketZoom-controls .overview-navigator .btn--split--last').click
     expect_position(2, tickets.second)
 
-    find('.active .overview-navigator .btn--split--last').click
+    find('.active .ticketZoom-controls .overview-navigator .btn--split--last').click
     expect_position(3, tickets.first)
 
     # Closing the current ticket does not remove it from this priority-based
@@ -64,17 +64,17 @@ RSpec.describe 'Scenario > Overview navigator in the ticket zoom', authenticated
     expect_position(3, tickets.first)
 
     # Paging backward and forward again.
-    find('.active .overview-navigator .btn--split--first').click
+    find('.active .ticketZoom-controls .overview-navigator .btn--split--first').click
     expect_position(2, tickets.second)
 
-    find('.active .overview-navigator .btn--split--last').click
+    find('.active .ticketZoom-controls .overview-navigator .btn--split--last').click
     expect_position(3, tickets.first)
 
     # Once the ticket leaves the overview, the navigator disappears,
     #   but the ticket itself stays open.
     tickets.first.update!(priority: Ticket::Priority.find_by(name: '3 high'))
 
-    expect(page).to have_no_css('.active .overview-navigator .pagination-counter .pagination-item-current', wait: 30)
+    expect(page).to have_no_css('.active .ticketZoom-controls .overview-navigator .pagination-counter .pagination-item-current', wait: 30)
     expect(page).to have_css('.active .ticketZoom-header .ticket-number', text: tickets.first.number)
   end
 end

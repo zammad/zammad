@@ -13,7 +13,7 @@ RSpec.describe 'Desktop > Personal Setting > Profile', app: :desktop_view, authe
   describe 'appearance selection' do
     it 'user can switch appearance' do
       # Switch starts on 'auto'
-      default_theme = page.execute_script("return matchMedia('(prefers-color-scheme: dark)').matches") ? 'dark' : 'light'
+      default_theme = page.evaluate_script("matchMedia('(prefers-color-scheme: dark)').matches") ? 'dark' : 'light'
       expect(page).to have_css("html[data-theme=#{default_theme}]")
 
       # Switch to 'dark'

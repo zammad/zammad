@@ -76,7 +76,10 @@ RSpec.describe 'Desktop > Ticket > Split, Link and Subscribe', app: :desktop_vie
 
         expect(page).to have_text('Ticket updated successfully.')
 
-        page.driver.browser.close
+        # Simulate the second agent closing their browser.
+        #   Quit the driver directly: Capybara::Playwright::Driver#quit is private,
+        #   so Session#quit would silently skip it and leave the browser running.
+        page.driver.send(:quit)
       end
 
       # Check that notification was created.

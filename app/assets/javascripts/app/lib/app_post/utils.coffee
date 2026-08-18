@@ -1435,6 +1435,8 @@ class App.Utils
                 additional_class = 'is-inactive'
               return $('<li>').addClass(additional_class).append(option_html).appendTo(ul)
         },
+      # Note the handler is bound after tokenfield() initialised, so tokens it
+      #   creates from content already in the field skip this check.
       ).on('tokenfield:createtoken', (e) ->
         if type is 'email' && !e.attrs.value.match(/@/) || e.attrs.value.match(/\s/)
           e.preventDefault()

@@ -28,7 +28,10 @@ RSpec.describe 'Ticket zoom > Merge action', type: :system do
             # trigger the paste event to replace the ticket hook, if present
             execute_script('$("input[name=\"target_ticket_number\"]").trigger("paste")')
 
-            expect(page).to have_no_css('.js-pager')
+            # Regression check for #5515: the customer/recently-viewed ticket lists must never render
+            #   pagination controls (pagerEnabled is false for them, so '.js-pager' stays an empty
+            #   placeholder - checking that placeholder's visibility is unreliable cross-driver).
+            expect(page).to have_no_css('.js-pager .js-page')
 
             click('.js-submit')
           end
@@ -65,7 +68,8 @@ RSpec.describe 'Ticket zoom > Merge action', type: :system do
         in_modal do
           find('input[name="target_ticket_number"]').fill_in with: ticket.number
 
-          expect(page).to have_no_css('.js-pager')
+          # Regression check for #5515, see comment above.
+          expect(page).to have_no_css('.js-pager .js-page')
 
           click('.js-submit')
         end

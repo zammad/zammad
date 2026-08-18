@@ -230,12 +230,7 @@ RSpec.describe 'Ticket > Update > Full Quote Header', current_user_id: -> { curr
               first('blockquote br:nth-child(2)', visible: :all)
             end
             blockquote_empty_line = first('blockquote br:nth-child(2)', visible: :all)
-            page.driver.browser.action.move_to_location(blockquote_empty_line.native.location.x, blockquote_empty_line.native.location.y).click.perform
-          end
-
-          # Special handling for firefox, because the cursor is at the wrong location after the move to with click.
-          if Capybara.current_driver == :zammad_firefox
-            find(:richtext).send_keys(:down)
+            place_cursor_before(blockquote_empty_line)
           end
 
           find(:richtext).send_keys(:enter)

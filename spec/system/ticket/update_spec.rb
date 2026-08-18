@@ -148,7 +148,10 @@ RSpec.describe 'Ticket Update', type: :system do
         within(:active_content) do
           expect(page).to have_css('.js-objectNumber', text: ticket.number)
 
-          expect(page).to have_field(attribute.name, with: '', visible: :hidden)
+          # The tree_select attribute is rendered as a shadow input that is
+          #   visually hidden by positioning it off-screen (rather than via
+          #   `display: none`), so it must be matched regardless of visibility.
+          expect(page).to have_field(attribute.name, with: '', visible: :all)
           expect(page).to have_select('state_id',
                                       selected: 'new',
                                       options:  ['new', 'closed', 'open', 'pending close', 'pending reminder'])
@@ -158,7 +161,7 @@ RSpec.describe 'Ticket Update', type: :system do
           expect(page).to have_no_css('.js-submitDropdown .js-submit[disabled]')
         end
 
-        expect(page).to have_field(attribute.name, with: attribute_value, visible: :hidden)
+        expect(page).to have_field(attribute.name, with: attribute_value, visible: :all)
         expect(page).to have_select('state_id',
                                     selected: 'closed',
                                     options:  ['closed', 'open', 'pending close', 'pending reminder'])

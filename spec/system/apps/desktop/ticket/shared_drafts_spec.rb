@@ -144,7 +144,10 @@ RSpec.describe 'Desktop > Ticket > Shared Drafts', app: :desktop_view, authentic
 
         close_tab
 
-        page.driver.browser.close
+        # Simulate the second agent closing their browser.
+        #   Quit the driver directly: Capybara::Playwright::Driver#quit is private,
+        #   so Session#quit would silently skip it and leave the browser running.
+        page.driver.send(:quit)
       end
 
       # Back to agent1

@@ -11,19 +11,12 @@ RSpec.shared_examples 'security keys setup', authenticated_as: :authenticate do
   end
 
   before do
-    skip('Mocking of Web Authentication API is currently supported only in Chrome.') if Capybara.current_driver != :zammad_chrome
+    skip('Mocking of Web Authentication API is currently supported only in Chromium-based browsers.') if %i[zammad_chrome zammad_playwright].exclude?(Capybara.current_driver)
   end
 
   it 'sets up security keys method' do
     setup_security_keys_method(user: current_user, password_check: password_check)
   end
-end
-
-def mock_security_key
-  options = Selenium::WebDriver::VirtualAuthenticatorOptions.new(protocol: :u2f, transport: :usb, resident_key: false,
-                                                                 user_consenting: true, user_verification: true,
-                                                                 user_verified: true)
-  page.driver.browser.add_virtual_authenticator(options)
 end
 
 def setup_security_keys_method(user:, password_check:)
@@ -44,7 +37,7 @@ def setup_security_keys_method(user:, password_check:)
 
     fill_in 'Name for this security key', with: Faker::Lorem.unique.word
 
-    mock_security_key
+    VirtualAuthenticator.register(page)
 
     click_on 'Next'
 
