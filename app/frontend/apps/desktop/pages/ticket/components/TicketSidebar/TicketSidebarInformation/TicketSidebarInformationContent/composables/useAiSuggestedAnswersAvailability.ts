@@ -23,6 +23,7 @@ export const useAiSuggestedAnswersAvailability = (
   const showAiSuggestedAnswers = computed(
     () =>
       toValue(hasAgentReadAccess) &&
+      Boolean(config.value.vectordb_enabled) &&
       Boolean(config.value.ai_provider) &&
       Boolean(config.value.ai_assistance_kb_answer_suggestions),
   )

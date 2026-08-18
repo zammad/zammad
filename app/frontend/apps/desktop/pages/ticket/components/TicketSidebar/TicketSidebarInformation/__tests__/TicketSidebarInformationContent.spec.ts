@@ -267,6 +267,7 @@ describe('TicketSidebarInformationContent', () => {
       mockPermissions(['ticket.agent', 'knowledge_base.reader'])
       mockApplicationConfig({
         kb_active: true,
+        vectordb_enabled: true,
         ai_provider: true,
         ai_assistance_kb_answer_suggestions: true,
       })

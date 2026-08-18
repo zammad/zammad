@@ -76,6 +76,7 @@ const showAIKnowledgeBaseDraft = computed(
   () =>
     isTicketEditable.value &&
     hasPermission('knowledge_base.editor') &&
+    config.value.vectordb_enabled &&
     config.value.ai_provider &&
     config.value.ai_assistance_kb_answer_from_ticket_generation,
 )

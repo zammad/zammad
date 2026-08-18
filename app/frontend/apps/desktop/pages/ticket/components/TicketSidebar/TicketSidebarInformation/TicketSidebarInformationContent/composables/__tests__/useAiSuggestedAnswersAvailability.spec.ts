@@ -18,6 +18,7 @@ describe('useAiSuggestedAnswersAvailability', () => {
     ])
 
     mockApplicationConfig({
+      vectordb_enabled: true,
       ai_provider: true,
       ai_assistance_kb_answer_suggestions: true,
     })
@@ -43,6 +44,18 @@ describe('useAiSuggestedAnswersAvailability', () => {
   it('is unavailable without a configured AI provider', () => {
     mockApplicationConfig({
       ai_provider: false,
+      ai_assistance_kb_answer_suggestions: true,
+    })
+
+    const { showAiSuggestedAnswers } = useAiSuggestedAnswersAvailability(true)
+
+    expect(showAiSuggestedAnswers.value).toBe(false)
+  })
+
+  it('is unavailable without vector DB enabled', () => {
+    mockApplicationConfig({
+      vectordb_enabled: false,
+      ai_provider: true,
       ai_assistance_kb_answer_suggestions: true,
     })
 

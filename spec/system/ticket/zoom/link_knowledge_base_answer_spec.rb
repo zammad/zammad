@@ -60,6 +60,7 @@ RSpec.describe 'Ticket zoom > Link knowledge base answer', type: :system do
 
     def authenticate
       setup_ai_provider('zammad_ai')
+      Setting.set('vectordb_enabled', true)
 
       allow(Service::AI::VectorDB::Available).to receive(:execute).and_return(true)
       # The knowledge base answer factory triggers the vector index callback, which must not reach
@@ -73,6 +74,7 @@ RSpec.describe 'Ticket zoom > Link knowledge base answer', type: :system do
 
     before do
       wait_for_setting('ai_provider', true)
+      wait_for_setting('vectordb_enabled', true)
 
       visit "#ticket/zoom/#{ticket.id}"
     end
@@ -120,6 +122,7 @@ RSpec.describe 'Ticket zoom > Link knowledge base answer', type: :system do
 
     def authenticate
       setup_ai_provider('zammad_ai')
+      Setting.set('vectordb_enabled', true)
 
       allow(Service::AI::VectorDB::Available).to receive(:execute).and_return(true)
       # The knowledge base answer factory triggers the vector index callback, which must not reach
@@ -138,6 +141,7 @@ RSpec.describe 'Ticket zoom > Link knowledge base answer', type: :system do
 
       wait_for_setting('ai_provider', true)
       wait_for_setting('kb_active', true)
+      wait_for_setting('vectordb_enabled', true)
 
       visit "#ticket/zoom/#{ticket.id}"
     end
@@ -149,6 +153,85 @@ RSpec.describe 'Ticket zoom > Link knowledge base answer', type: :system do
     end
   end
 
+  describe 'AI knowledge base features with the vector DB disabled', authenticated_as: :authenticate do
+    let(:ticket)      { create(:ticket, group: Group.find_by(name: 'Users')) }
+    let(:translation) { published_answer.translations.first }
+
+    def authenticate
+      setup_ai_provider('zammad_ai')
+      Setting.set('vectordb_enabled', false)
+
+      # The server backs the same availability with `Service::AI::VectorDB::Available`, so it would
+      #   deny the search anyway - this only isolates the assertion to the frontend gate.
+      allow(Service::AI::VectorDB::Available).to receive(:execute).and_return(false)
+      allow(Service::Ticket::AI::RelatedKnowledgeBaseAnswers)
+        .to receive(:execute).and_return({ answers: [{ translation:, score: 0.9 }], pending: false })
+
+      true
+    end
+
+    before do
+      wait_for_setting('ai_provider', true)
+      wait_for_setting('kb_active', true)
+      wait_for_setting('vectordb_enabled', false)
+
+      visit "#ticket/zoom/#{ticket.id}"
+    end
+
+    it 'shows neither AI suggestions nor the draft generation action' do
+      within :active_content, '.link_kb_answers' do
+        expect(page)
+          .to have_no_text('Suggested by AI')
+          .and(have_no_css('.js-kb-ai-generate'))
+
+        expect(Service::Ticket::AI::RelatedKnowledgeBaseAnswers).not_to have_received(:execute)
+      end
+    end
+  end
+
+  describe 'AI knowledge base features react to a live vector DB toggle', authenticated_as: :authenticate do
+    let(:ticket)      { create(:ticket, group: Group.find_by(name: 'Users')) }
+    let(:translation) { published_answer.translations.first }
+
+    def authenticate
+      setup_ai_provider('zammad_ai')
+      Setting.set('vectordb_enabled', true)
+
+      allow(Service::AI::VectorDB::Available).to receive(:execute).and_return(true)
+      # The knowledge base answer factory triggers the vector index callback, which must not reach
+      # Elasticsearch in this spec.
+      allow(Service::AI::VectorDB::Available).to receive(:execute).with(ping: false).and_return(false)
+      allow(Service::Ticket::AI::RelatedKnowledgeBaseAnswers)
+        .to receive(:execute).and_return({ answers: [{ translation:, score: 0.9 }], pending: false })
+
+      true
+    end
+
+    before do
+      wait_for_setting('ai_provider', true)
+      wait_for_setting('kb_active', true)
+      wait_for_setting('vectordb_enabled', true)
+
+      visit "#ticket/zoom/#{ticket.id}"
+    end
+
+    it 'hides the features once an administrator disables it, without a reload' do
+      within :active_content, '.link_kb_answers' do
+        # The title renders uppercase via CSS `text-transform`, which Capybara's rendered text
+        #   picks up - matched case-insensitively rather than asserting on that styling.
+        expect(page).to have_text(%r{Suggested by AI}i).and(have_css('.js-kb-ai-generate'))
+      end
+
+      Setting.set('vectordb_enabled', false)
+
+      within :active_content, '.link_kb_answers' do
+        expect(page)
+          .to have_no_text(%r{Suggested by AI}i, wait: 15)
+          .and(have_no_css('.js-kb-ai-generate'))
+      end
+    end
+  end
+
   describe 'AI-suggested answers without knowledge base permission', authenticated_as: :authenticate do
     let(:ticket)      { create(:ticket, group: Group.find_by(name: 'Users')) }
     let(:translation) { published_answer.translations.first }
@@ -156,6 +239,7 @@ RSpec.describe 'Ticket zoom > Link knowledge base answer', type: :system do
 
     def authenticate
       setup_ai_provider('zammad_ai')
+      Setting.set('vectordb_enabled', true)
 
       allow(Service::AI::VectorDB::Available).to receive(:execute).and_return(true)
       # The knowledge base answer factory triggers the vector index callback, which must not reach
@@ -171,6 +255,7 @@ RSpec.describe 'Ticket zoom > Link knowledge base answer', type: :system do
     before do
       wait_for_setting('ai_provider', true)
       wait_for_setting('kb_active', true)
+      wait_for_setting('vectordb_enabled', true)
 
       visit "#ticket/zoom/#{ticket.id}"
     end
@@ -208,6 +293,7 @@ RSpec.describe 'Ticket zoom > Link knowledge base answer', type: :system do
     def authenticate
       setup_ai_provider('zammad_ai')
       Setting.set('ai_assistance_kb_answer_suggestions', suggestions_enabled)
+      Setting.set('vectordb_enabled', true)
 
       allow(Service::AI::VectorDB::Available).to receive(:execute).and_return(true)
       allow(Service::AI::VectorDB::Available).to receive(:execute).with(ping: false).and_return(false)
@@ -228,6 +314,7 @@ RSpec.describe 'Ticket zoom > Link knowledge base answer', type: :system do
 
       wait_for_setting('ai_provider', true)
       wait_for_setting('kb_active', true)
+      wait_for_setting('vectordb_enabled', true)
 
       visit "#ticket/zoom/#{ticket.id}"
     end

@@ -124,7 +124,7 @@ class App.WidgetLinkKbAnswer extends App.WidgetLink
   # agents without knowledge base access are suggested published answers only (linked to their public
   # page, see #kbAnswerUrl).
   suggestionsSearchAvailable: =>
-    App.Config.get('ai_provider') and App.Config.get('kb_active') and @object?.currentView?() is 'agent'
+    App.Config.get('vectordb_enabled') and App.Config.get('ai_provider') and App.Config.get('kb_active') and @object?.currentView?() is 'agent'
 
   suggestionsVisible: =>
     @suggestionsSearchAvailable() and App.Config.get('ai_assistance_kb_answer_suggestions')
@@ -318,6 +318,7 @@ class App.WidgetLinkKbAnswer extends App.WidgetLink
 
     aiEnabled =
       App.Config.get('ai_assistance_kb_answer_from_ticket_generation') &&
+      App.Config.get('vectordb_enabled') &&
       App.Config.get('ai_provider') &&
       user?.permission('ticket.agent+knowledge_base.editor')
 

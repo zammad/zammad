@@ -38,6 +38,7 @@ const TARGET_TYPE = 'KnowledgeBase::Answer::Translation'
 const enableKnowledgeBaseAi = () => {
   mockApplicationConfig({
     kb_active: true,
+    vectordb_enabled: true,
     ai_provider: true,
     ai_assistance_kb_answer_suggestions: true,
     ai_assistance_kb_answer_from_ticket_generation: true,
@@ -145,6 +146,16 @@ describe('TicketRelatedKnowledge', () => {
 
     expect(await wrapper.findByText('Suggested by AI')).toBeInTheDocument()
     expect(wrapper.getByRole('button', { name: 'Add AI draft' })).toBeInTheDocument()
+  })
+
+  it('hides the AI draft action when the vector DB is disabled', () => {
+    mockPermissions(['ticket.agent', 'knowledge_base.editor'])
+    enableKnowledgeBaseAi()
+    mockApplicationConfig({ vectordb_enabled: false })
+
+    const wrapper = renderRelatedKnowledge()
+
+    expect(wrapper.queryByRole('button', { name: 'Add AI draft' })).not.toBeInTheDocument()
   })
 
   it('shows the AI suggestions but not the AI draft action for an agent without editor permission', async () => {

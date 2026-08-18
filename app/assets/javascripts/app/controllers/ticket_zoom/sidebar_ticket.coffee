@@ -93,11 +93,12 @@ class SidebarTicket extends App.Controller
     @controllerBind('config_update_local', (data) => @configUpdated(data))
 
   configUpdated: (data) ->
-    if data.name != 'kb_active'
-      return
+    return if data.name not in ['kb_active', 'vectordb_enabled']
 
-    if data.value
-      return
+    # Turning the knowledge base off hides the whole widget; turning it on can wait for the next
+    #   natural rebuild. Vector DB availability instead changes what the already-mounted widget may
+    #   show and search, in either direction, so it always rebuilds it.
+    return if data.name is 'kb_active' and data.value
 
     @editTicket(@el)
 
