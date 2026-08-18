@@ -4,6 +4,8 @@ import { ref } from 'vue'
 
 import { renderComponent } from '#tests/support/components/index.ts'
 
+import { getAlertClasses } from '#shared/initializer/initializeAlertClasses.ts'
+
 import TopBarHeaderShell from '../TopBarHeaderShell.vue'
 
 // jsdom has no layout and never scrolls, so the shell measures 0 everywhere. Drive its
@@ -82,6 +84,21 @@ describe('TopBarHeaderShell', () => {
 
     // One per header, so the message stays visible across the scroll swap.
     expect(view.getAllByText('No translation for this locale available')).toHaveLength(2)
+  })
+
+  it('tints the docked alert translucently over the blurred content', () => {
+    const view = renderShell({ alertMessage: 'No translation for this locale available' })
+
+    // The tint comes from the translucent variant on the alert's wrapper, so that the blur is not
+    //   faded along with it - as it would be with an `opacity` on the alert itself.
+    view.getAllByTestId('knowledge-base-header-alert-background').forEach((background) => {
+      expect(background).toHaveClass(getAlertClasses().translucent!.warning)
+      expect(background).toHaveClass('backdrop-blur-2xs')
+    })
+
+    view.getAllByRole('alert').forEach((alert) => {
+      expect(alert).toHaveClass('bg-transparent!')
+    })
   })
 
   it('withholds the alert while loading, when there is nothing settled to warn about', () => {

@@ -5,6 +5,7 @@ import { useElementSize } from '@vueuse/core'
 import { computed, toRef, useTemplateRef, type Ref } from 'vue'
 
 import CommonAlert from '#shared/components/CommonAlert/CommonAlert.vue'
+import { getAlertClasses } from '#shared/initializer/initializeAlertClasses.ts'
 
 import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
 import { useElementScroll } from '#desktop/composables/useElementScroll.ts'
@@ -87,8 +88,8 @@ const stickyContainerTop = computed(
   () => `${-Math.max(0, Math.min(y.value, fullBlockHeight.value))}px`,
 )
 
-const alertBaseClasses = 'rounded-none md:grid-cols-none md:justify-center'
-const alertWithBlurClasses = `${alertBaseClasses} opacity-95 backdrop-blur-2xs`
+const alertBaseClasses = 'rounded-none bg-transparent! md:grid-cols-none md:justify-center'
+const alertTranslucentClasses = getAlertClasses().translucent?.warning
 </script>
 
 <template>
@@ -103,9 +104,16 @@ const alertWithBlurClasses = `${alertBaseClasses} opacity-95 backdrop-blur-2xs`
   >
     <slot v-if="!loading" name="compact" :inert="!isCompactHeaderVisible" />
 
-    <CommonAlert v-if="showAlert" class="px-5.5!" :class="alertWithBlurClasses" variant="warning">
-      {{ alertMessage }}
-    </CommonAlert>
+    <div
+      v-if="showAlert"
+      :class="alertTranslucentClasses"
+      class="backdrop-blur-2xs"
+      data-test-id="knowledge-base-header-alert-background"
+    >
+      <CommonAlert class="px-5.5!" :class="alertBaseClasses" variant="warning">
+        {{ alertMessage }}
+      </CommonAlert>
+    </div>
   </div>
 
   <CommonLoader class="w-full" :loading="loading">
@@ -124,7 +132,12 @@ const alertWithBlurClasses = `${alertBaseClasses} opacity-95 backdrop-blur-2xs`
     >
       <slot name="full" :inert="isCompactHeaderVisible" />
 
-      <div v-if="showAlert" class="flex justify-center bg-yellow-50 px-5.5 dark:bg-yellow-900">
+      <div
+        v-if="showAlert"
+        :class="alertTranslucentClasses"
+        class="flex justify-center px-5.5 backdrop-blur-2xs"
+        data-test-id="knowledge-base-header-alert-background"
+      >
         <CommonAlert
           class="basis-full px-0! print:hidden"
           :class="[alertBaseClasses, contentOuterClass, contentWidthClass]"

@@ -35,6 +35,12 @@ export const initializeGlobalComponentStyles = () => {
     danger: 'bg-pink-100 dark:bg-red-900 text-red-500',
     dismissButton:
       'outline-transparent focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 rounded-sm',
+    translucent: {
+      success: 'bg-green-300/80 dark:bg-green-900/80 text-green-500',
+      info: 'bg-blue-500/80 dark:bg-blue-950/80 text-blue-800',
+      warning: 'bg-yellow-50/80 dark:bg-yellow-900/80 text-yellow-600',
+      danger: 'bg-pink-100/80 dark:bg-red-900/80 text-red-500',
+    },
   })
 
   initializeAvatarClasses({

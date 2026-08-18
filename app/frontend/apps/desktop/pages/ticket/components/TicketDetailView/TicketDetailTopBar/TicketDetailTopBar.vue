@@ -7,6 +7,7 @@ import { computed, toRef, useTemplateRef, type Ref } from 'vue'
 import CommonAlert from '#shared/components/CommonAlert/CommonAlert.vue'
 import { useTicketChannel } from '#shared/entities/ticket/composables/useTicketChannel.ts'
 import { useTicketView } from '#shared/entities/ticket/composables/useTicketView.ts'
+import { getAlertClasses } from '#shared/initializer/initializeAlertClasses.ts'
 
 import { useStickyTopCalculator } from '#desktop/components/Form/fields/FieldEditor/useStickyTopCalculator.ts'
 import { useElementScroll } from '#desktop/composables/useElementScroll.ts'
@@ -108,15 +109,26 @@ const headerBackgroundClasses = (withBlur: boolean) =>
     ? 'bg-neutral-50/80 backdrop-blur-2xs dark:bg-gray-500/80'
     : 'bg-neutral-50 dark:bg-gray-500'
 
-const alertBaseClasses = 'rounded-none px-14 md:grid-cols-none md:justify-center'
+const alertBaseClasses = 'w-full! rounded-none bg-transparent! px-0!'
 
-const alertWithBlurClasses = `${alertBaseClasses} opacity-95 backdrop-blur-2xs`
+// The alert leads with a tiny icon (1rem) and `gap-1.5`, so its text starts 1.375rem into the
+//   box. Widening the box by that gutter and pulling it back by the same amount on the end side
+//   lands the *text* on the middle column of the header grid - the one holding the ticket title -
+//   with the icon hanging into the avatar column next to it, as the knowledge base header does.
+const alertFullWidthClasses = 'me-5.5 max-w-[calc(46.5rem+1.375rem)]'
+const alertCompactWidthClasses = 'me-5.5 max-w-[calc(var(--container-3xl)+1.375rem)]'
 
 const currentVisibleHeaderHeight = computed(() => {
   if (shouldShowChannelAlert.value) return wrapperWithHiddenDetailsHeight.value
 
   return headerWithHiddenDetailsHeight.value
 })
+
+const alertClasses = getAlertClasses()
+
+const channelAlertVariantClasses = computed(() =>
+  channelAlert.value ? alertClasses.translucent?.[channelAlert.value.variant] : undefined,
+)
 
 useStickyTopCalculator(currentVisibleHeaderHeight, { offset: -1 }) // avoid joining with the top bar bottom border
 </script>
@@ -137,10 +149,14 @@ useStickyTopCalculator(currentVisibleHeaderHeight, { offset: -1 }) // avoid join
         :inert="!isCompactHeaderVisible"
       />
 
-      <div class="flex w-full justify-center bg-yellow-50 px-5.5 dark:bg-yellow-900">
+      <div
+        :class="channelAlertVariantClasses"
+        class="flex w-full justify-center px-5.5 backdrop-blur-2xs"
+        data-test-id="channel-alert-background"
+      >
+        <!-- 48rem is the middle column of the compact header grid, which holds the title. -->
         <CommonAlert
-          :class="alertWithBlurClasses"
-          class="max-w-4xl px-0!"
+          :class="[alertBaseClasses, alertCompactWidthClasses]"
           :variant="channelAlert?.variant"
         >
           {{ $t(channelAlert?.text, channelAlert?.textPlaceholder) }}
@@ -161,11 +177,16 @@ useStickyTopCalculator(currentVisibleHeaderHeight, { offset: -1 }) // avoid join
         :inert="isCompactHeaderVisible"
       />
 
-      <div class="flex w-full justify-center bg-yellow-50 px-5.5 dark:bg-yellow-900">
+      <div
+        :class="channelAlertVariantClasses"
+        class="flex w-full justify-center px-5.5 backdrop-blur-2xs"
+        data-test-id="channel-alert-background"
+      >
+        <!-- 46.5rem is the middle column of the full header grid, which holds the title. -->
         <CommonAlert
           ref="alert"
-          class="max-w-4xl px-0! print:hidden"
-          :class="alertBaseClasses"
+          class="print:hidden"
+          :class="[alertBaseClasses, alertFullWidthClasses]"
           :variant="channelAlert?.variant"
         >
           {{ $t(channelAlert?.text, channelAlert?.textPlaceholder) }}

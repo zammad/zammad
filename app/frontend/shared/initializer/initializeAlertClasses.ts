@@ -10,6 +10,12 @@ let alertClasses: AlertClassMap = {
   success: 'common-alert-success',
   warning: 'common-alert-warning',
   dismissButton: '',
+  translucent: {
+    danger: 'common-alert-danger-translucent',
+    info: 'common-alert-info-translucent',
+    success: 'common-alert-success-translucent',
+    warning: 'common-alert-warning-translucent',
+  },
 }
 
 export const initializeAlertClasses = (classes: AlertClassMap) => {
