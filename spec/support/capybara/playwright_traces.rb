@@ -5,8 +5,8 @@
 #   the hook order the two after-hooks below rely on.
 require_relative 'driven_by'
 
-# Record a Playwright trace (per-action screenshots, DOM snapshots, console and
-#   network timeline) for every example and keep it only on failure - far more
+# Record a Playwright trace (per-action screenshots, console and network
+#   timeline) for every example and keep it only on failure - far more
 #   diagnostic than the plain failure screenshot. Inspect a trace locally with
 #   `pnpm exec playwright show-trace <zip>` or at https://trace.playwright.dev.
 #   Covers the default session only: `using_session` sessions run their own
@@ -17,12 +17,20 @@ require_relative 'driven_by'
 PLAYWRIGHT_TRACE_PENDING_DIR = Rails.root.join('tmp/playwright-traces-pending')
 PLAYWRIGHT_TRACE_KEEP_DIR    = Rails.root.join('tmp/playwright-traces')
 
+# DOM snapshots additionally give the trace viewer its time travel - inspecting
+#   the live DOM at every step - but they are captured per Playwright action, and
+#   this driver's emulation layer issues several browser calls where Selenium
+#   issues one (`Element#text` alone costs four). Measured on desktop specs they
+#   cost 27-46% of runtime, against ~3% for the screenshots, so they are opt-in:
+#   set PLAYWRIGHT_TRACE=full for a run that needs them.
+PLAYWRIGHT_TRACE_SNAPSHOTS = ENV['PLAYWRIGHT_TRACE'] == 'full'
+
 RSpec.configure do |config|
   config.before(:each, type: :system) do
     next if !page.driver.is_a?(Capybara::Playwright::Driver)
 
     page.driver.with_playwright_page do |pw_page|
-      pw_page.context.tracing.start(screenshots: true, snapshots: true)
+      pw_page.context.tracing.start(screenshots: true, snapshots: PLAYWRIGHT_TRACE_SNAPSHOTS)
       @playwright_tracing_started = true
     end
   end
