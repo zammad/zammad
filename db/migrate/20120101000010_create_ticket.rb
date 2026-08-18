@@ -31,6 +31,7 @@ class CreateTicket < ActiveRecord::Migration[4.2]
     add_index :ticket_states, [:default_create]
     add_index :ticket_states, [:default_follow_up]
     add_index :ticket_states, [:default_close]
+    add_index :ticket_states, [:state_type_id]
     add_foreign_key :ticket_states, :ticket_state_types, column: :state_type_id
     add_foreign_key :ticket_states, :users, column: :created_by_id
     add_foreign_key :ticket_states, :users, column: :updated_by_id
@@ -95,6 +96,7 @@ class CreateTicket < ActiveRecord::Migration[4.2]
     add_index :tickets, [:group_id]
     add_index :tickets, [:owner_id]
     add_index :tickets, [:customer_id]
+    add_index :tickets, [:organization_id]
     add_index :tickets, %i[customer_id state_id created_at]
     add_index :tickets, [:number], unique: true
     add_index :tickets, [:title]
@@ -109,6 +111,7 @@ class CreateTicket < ActiveRecord::Migration[4.2]
     add_index :tickets, [:close_in_min]
     add_index :tickets, [:close_diff_in_min]
     add_index :tickets, [:escalation_at]
+    add_index :tickets, [:update_escalation_at]
     add_index :tickets, [:update_in_min]
     add_index :tickets, [:update_diff_in_min]
     add_index :tickets, [:last_contact_at]
@@ -240,6 +243,7 @@ class CreateTicket < ActiveRecord::Migration[4.2]
     add_index :ticket_time_accountings, [:ticket_article_id]
     add_index :ticket_time_accountings, [:created_by_id]
     add_index :ticket_time_accountings, [:time_unit]
+    add_index :ticket_time_accountings, [:type_id]
     add_foreign_key :ticket_time_accountings, :tickets
     add_foreign_key :ticket_time_accountings, :ticket_articles
     add_foreign_key :ticket_time_accountings, :users, column: :created_by_id
@@ -410,6 +414,7 @@ class CreateTicket < ActiveRecord::Migration[4.2]
       t.timestamps limit: 3, null: false
     end
     add_index :channels, [:area]
+    add_index :channels, [:group_id]
     add_foreign_key :channels, :groups
     add_foreign_key :channels, :users, column: :created_by_id
     add_foreign_key :channels, :users, column: :updated_by_id
@@ -550,6 +555,7 @@ class CreateTicket < ActiveRecord::Migration[4.2]
       t.column :updated_by_id, :integer, null: false
       t.timestamps limit: 3
     end
+    add_index :ticket_shared_draft_zooms, [:ticket_id]
 
     create_table :ticket_shared_draft_starts do |t|
       t.references :group, null: false, foreign_key: { to_table: :groups }
@@ -559,6 +565,7 @@ class CreateTicket < ActiveRecord::Migration[4.2]
       t.column :updated_by_id, :integer, null: false
       t.timestamps limit: 3
     end
+    add_index :ticket_shared_draft_starts, [:group_id]
 
     create_table :checklists do |t|
       t.string :name,      limit: 250,     null: false, default: ''
@@ -582,6 +589,8 @@ class CreateTicket < ActiveRecord::Migration[4.2]
       t.timestamps limit: 3,    null: false
     end
     add_index :checklist_items, [:checked]
+    add_index :checklist_items, [:checklist_id]
+    add_index :checklist_items, [:ticket_id]
 
     create_table :checklist_templates do |t|
       t.string  :name,      limit: 250,     null: false, default: ''
@@ -600,6 +609,7 @@ class CreateTicket < ActiveRecord::Migration[4.2]
       t.references :updated_by, null: false, foreign_key: { to_table: :users }
       t.timestamps limit: 3, null: false
     end
+    add_index :checklist_template_items, [:checklist_template_id]
 
     create_table :ticket_daily_event_locks do |t|
       t.date :date, null: false
@@ -611,6 +621,7 @@ class CreateTicket < ActiveRecord::Migration[4.2]
       t.index %i[date lock_type lock_activator ticket_id related_object_type related_object_id],
               name:   'index_daily_event_locks_on_unique_fields',
               unique: true
+      t.index [:ticket_id]
 
       t.timestamps limit: 3
     end
