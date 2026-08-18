@@ -4220,7 +4220,7 @@ msgstr ""
 msgid "Copied!"
 msgstr ""
 
-#: app/frontend/shared/composables/useCopyToClipboard.ts:28
+#: app/frontend/shared/composables/useCopyToClipboard.ts:49
 msgid "Copied."
 msgstr ""
 
@@ -18534,7 +18534,7 @@ msgstr ""
 msgid "The required parameter 'application_secret' is missing."
 msgstr ""
 
-#: app/controllers/channels_sms_controller.rb:89
+#: app/controllers/channels_sms_controller.rb:100
 msgid "The required parameter 'area' is missing."
 msgstr ""
 
@@ -18592,11 +18592,11 @@ msgstr ""
 msgid "The required parameter 'name' is missing."
 msgstr ""
 
-#: app/controllers/channels_sms_controller.rb:45
+#: app/controllers/channels_sms_controller.rb:46
 msgid "The required parameter 'options.adapter' is missing."
 msgstr ""
 
-#: app/controllers/channels_sms_controller.rb:93
+#: app/controllers/channels_sms_controller.rb:104
 msgid "The required parameter 'params' is missing."
 msgstr ""
 
