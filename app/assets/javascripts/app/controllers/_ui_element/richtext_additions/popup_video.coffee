@@ -81,7 +81,7 @@ class App.UiElement.richtext.additions.RichTextToolPopupVideo extends App.UiElem
     if !parsed.host
       return "( widget: video, provider: #{parsed.provider}, id: #{parsed.id} )"
 
-    hostAllowed = _.some(App.Config.get('kb_self_hosted_video_servers'), (server) -> server.host == parsed.host)
+    hostAllowed = App.KnowledgeBaseVideo.hostAllowed(parsed.host)
 
     if !hostAllowed
       @applyError(__('Video server not allowed. Please add to the list of allowed video servers.'))
