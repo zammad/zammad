@@ -557,6 +557,18 @@ RSpec.describe OnlineNotification, type: :model do
 
       expect(Sessions).to have_received(:send_to).once
     end
+
+    it 'triggers the GraphQL subscription for given users' do
+      agent1 = create(:agent)
+      agent2 = create(:agent)
+
+      triggered_users = []
+      allow(described_class).to receive(:trigger_subscriptions) { |user| triggered_users << user }
+
+      described_class.cleanup_notify_agents([agent1, agent2])
+
+      expect(triggered_users).to contain_exactly(agent1, agent2)
+    end
   end
 
   describe '.seen_state?' do

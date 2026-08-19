@@ -217,6 +217,7 @@ with dedicated times
             data:  {}
           }
         )
+        trigger_subscriptions(user)
       end
   end
 
