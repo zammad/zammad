@@ -17,14 +17,14 @@ RSpec.describe Sessions::Event::Base do
 
     context 'with X-Forwarded-For' do
       before do
-        allow(Rails.application.config.action_dispatch).to receive(:trusted_proxies).and_return(trusted_proxies)
+        allow(Rails.application.config.action_dispatch).to receive(:trusted_proxies).and_return(trusted_proxies.map { |proxy| IPAddr.new(proxy) })
       end
 
-      let(:trusted_proxies) { ['127.0.0.1', '::1'] }
+      let(:trusted_proxies) { ['127.0.0.1', '::1', '172.16.0.0/12'] }
 
       context 'with external IP' do
 
-        let(:headers) { { 'X-Forwarded-For' => '1.2.3.4 , 5.6.7.8, 127.0.0.1 , ::1' } }
+        let(:headers) { { 'X-Forwarded-For' => '1.2.3.4 , 5.6.7.8, 172.31.0.7 , 127.0.0.1 , ::1' } }
 
         it 'returns the correct value' do
           expect(instance.remote_ip).to eq('5.6.7.8')

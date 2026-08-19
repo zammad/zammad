@@ -128,10 +128,16 @@ class Sessions::Event::Base
 
     return if !raw_header
 
+    is_trusted_proxy = lambda do |ip|
+      Rails.application.config.action_dispatch.trusted_proxies.any? { |proxy| proxy.include?(IPAddr.new(ip)) }
+    rescue IPAddr::InvalidAddressError
+      false
+    end
+
     raw_header
       .split(',')
       .map(&:strip)
-      .difference(Rails.application.config.action_dispatch.trusted_proxies)
+      .reject { |ip| is_trusted_proxy.call(ip) }
       .last
   end
 
