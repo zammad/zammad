@@ -22,6 +22,10 @@ class Webhook < ApplicationModel
   validates :note, length: { maximum: 500 }
   sanitized_html :note
 
+  # Same gate as the initial delivery in SessionHelper::CollectionAdmin, otherwise the push would be
+  #   the only way for non-admins to receive webhooks - including endpoints which can carry a secret.
+  collection_push_permission('admin.*')
+
   store :preferences
 
   ensures_no_related_objects_path 'notification.webhook', 'webhook_id'

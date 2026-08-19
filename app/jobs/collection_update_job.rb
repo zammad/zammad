@@ -16,7 +16,7 @@ class CollectionUpdateJob < ApplicationJob
     all = []
     model.reorder(id: :asc).find_each do |record|
       assets = record.assets(assets)
-      all.push record.attributes_with_association_ids
+      all.push collection_attributes(record)
     end
 
     return if all.blank?
@@ -48,5 +48,17 @@ class CollectionUpdateJob < ApplicationJob
                     })
     end
 
+  end
+
+  private
+
+  # Collections are pushed to every session allowed to see the model, so their sensitive values
+  #   must be masked like in the assets.
+  def collection_attributes(record)
+    attributes = record.attributes_with_association_ids
+
+    return attributes if !record.respond_to?(:mask_sensitive_values)
+
+    record.mask_sensitive_values(attributes, record)
   end
 end
