@@ -242,6 +242,20 @@ RSpec.describe Store, type: :model do
         end
       end
 
+      context 'with content_type: nil' do
+        let(:content_type) { nil }
+        let(:data)         { 'foo' }
+
+        it 'is created without crashing (#6312)' do
+          expect { store }.not_to raise_error
+
+          expect(store.preferences)
+            .to not_include(resizable: true)
+            .and not_include(content_inline: true)
+            .and not_include(content_preview: true)
+        end
+      end
+
       context 'with content_type: "image/*"' do
         context 'and text content' do
           let(:content_type) { 'image/jpeg' }
