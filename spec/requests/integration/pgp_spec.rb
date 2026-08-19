@@ -22,7 +22,7 @@ RSpec.describe 'Integration PGP', :aggregate_failures, authenticated_as: :user, 
     let(:user) { create(:admin) }
 
     context 'when calling GET / key_show' do
-      let(:pgp_key)     { create(:'pgp_key/zammad@localhost') }
+      let(:pgp_key)     { create(:'pgp_key/zammad@localhost', passphrase: 'some_passphrase') }
       let(:fingerprint) { pgp_key.fingerprint }
 
       before do
@@ -92,7 +92,7 @@ RSpec.describe 'Integration PGP', :aggregate_failures, authenticated_as: :user, 
     end
 
     context 'when calling GET / key_list' do
-      let(:pgp_key)     { create(:'pgp_key/zammad@localhost') }
+      let(:pgp_key)     { create(:'pgp_key/zammad@localhost', passphrase: 'some_passphrase') }
       let(:fingerprint) { pgp_key.fingerprint }
 
       before do

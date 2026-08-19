@@ -259,13 +259,13 @@ FactoryBot.define do
             'provider'      => 'microsoft365',
             'access_token'  => 'xxx',
             'expires_in'    => 3599,
-            'refresh_token' => ENV['MICROSOFT365_REFRESH_TOKEN'],
+            'refresh_token' => ENV['MICROSOFT365_REFRESH_TOKEN'].presence || 'xxx',
             'scope'         => 'https://outlook.office.com/IMAP.AccessAsUser.All https://outlook.office.com/SMTP.Send offline_access openid profile email',
             'token_type'    => 'Bearer',
             'id_token'      => 'xxx',
             'created_at'    => 30.days.ago,
             'client_id'     => ENV['MICROSOFT365_CLIENT_ID'],
-            'client_secret' => ENV['MICROSOFT365_CLIENT_SECRET'],
+            'client_secret' => ENV['MICROSOFT365_CLIENT_SECRET'].presence || 'xxx',
             'client_tenant' => ENV['MICROSOFT365_CLIENT_TENANT'],
           }
         }
@@ -301,13 +301,13 @@ FactoryBot.define do
             'provider'      => 'microsoft_graph',
             'access_token'  => 'xxx',
             'expires_in'    => 3599,
-            'refresh_token' => ENV['MICROSOFTGRAPH_REFRESH_TOKEN'],
+            'refresh_token' => ENV['MICROSOFTGRAPH_REFRESH_TOKEN'].presence || 'xxx',
             'scope'         => 'offline_access openid profile email mail.readwrite mail.readwrite.shared mail.send mail.send.shared',
             'token_type'    => 'Bearer',
             'id_token'      => 'xxx',
             'created_at'    => 30.days.ago,
             'client_id'     => ENV['MICROSOFT365_CLIENT_ID'],
-            'client_secret' => ENV['MICROSOFT365_CLIENT_SECRET'],
+            'client_secret' => ENV['MICROSOFT365_CLIENT_SECRET'].presence || 'xxx',
             'client_tenant' => ENV['MICROSOFT365_CLIENT_TENANT'],
           }
         }

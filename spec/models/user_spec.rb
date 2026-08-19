@@ -75,9 +75,10 @@ RSpec.describe User, type: :model do
     end
 
     it 'masks the password values and records the changed attribute' do
+      tracked_user.update!(password: 'someInitialPass123!') # so that the previous value is maskable, too
       tracked_user.update!(password: 'someSecurePass123!')
 
-      expect(audit_logs.find_by(action_type: 'update', auditable_id: tracked_user.id)).to have_attributes(
+      expect(audit_logs.where(action_type: 'update', auditable_id: tracked_user.id).last).to have_attributes(
         auditable_name: tracked_user.fullname,
         value_from:     { 'password' => SensitiveParamsHelper::SENSITIVE_MASK },
         value_to:       { 'password' => SensitiveParamsHelper::SENSITIVE_MASK },

@@ -28,6 +28,31 @@ RSpec.describe SensitiveParamsHelper do
     it 'does not add mask if attribute was not present' do
       expect(instance.mask(payload_basic).keys).to eq(%w[nonsensitive])
     end
+
+    context 'with unset values' do
+      let(:payload_unset) { { test: nil, another: { test: '' }, nonsensitive: 'yes' } }
+
+      it 'does not mask unset attribute' do
+        expect(instance.mask(payload_unset)).to include('test' => nil)
+      end
+
+      it 'does not mask unset nested attribute' do
+        expect(instance.mask(payload_unset)).to include('another' => { 'test' => '' })
+      end
+    end
+
+    context 'with values which are blank but set' do
+      let(:payload_false)      { { test: false, nonsensitive: 'yes' } }
+      let(:payload_whitespace) { { test: '   ', nonsensitive: 'yes' } }
+
+      it 'masks a false attribute' do
+        expect(instance.mask(payload_false)).to include('test' => described_class::SENSITIVE_MASK)
+      end
+
+      it 'masks a whitespace-only attribute' do
+        expect(instance.mask(payload_whitespace)).to include('test' => described_class::SENSITIVE_MASK)
+      end
+    end
   end
 
   describe '#unmask' do

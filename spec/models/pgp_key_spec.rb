@@ -9,7 +9,7 @@ RSpec.describe PGPKey, type: :model do
   it_behaves_like 'HasAuditLogs', update_attribute: 'domain_alias', update_value: 'example.com'
 
   describe 'audit log sensitive values masking' do
-    subject(:pgp_key) { create(:pgp_key) }
+    subject(:pgp_key) { create(:pgp_key, passphrase: 'some_passphrase') }
 
     before do
       Setting.set('system_init_done', true)
