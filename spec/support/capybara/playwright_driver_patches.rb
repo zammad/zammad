@@ -76,6 +76,11 @@ module ZammadCapybaraPlaywrightTextInputPatches
   #   treeselect search. This way the page sees exactly the key events the
   #   unpatched gem would produce. Only the plain single-line case is handled
   #   here; everything else stays with the gem.
+  #
+  # Asserting the caret narrows the race but cannot close it: the page's own
+  #   timers keep running, and one firing between the assertion and the keystroke
+  #   moves the caret again. That still happened in CI (tags_spec wrote
+  #   '3New Tag 12'), so verify the result and repair it - see #set_text.
 
   private
 
@@ -86,17 +91,47 @@ module ZammadCapybaraPlaywrightTextInputPatches
 
     clusters   = text.scan(%r{\X})
     typed_text = clusters.last.to_s
+    prefix     = clusters[0...-1].join
 
-    @element.fill(clusters[0...-1].join, timeout: @timeout)
+    @element.fill(prefix, timeout: @timeout)
     return if typed_text.empty?
 
+    move_caret_to_end
+    @element.type(typed_text, timeout: @timeout)
+
+    observed = @element.input_value(timeout: @timeout)
+    return if observed == text
+
+    # Repair only a misplaced keystroke: the value has to be the prefix with the
+    #   typed character inserted at some other position. Anything else belongs to
+    #   the page - a keydown handler discarding the character, an input mask
+    #   rewriting the value - and repairing that would put back what the page
+    #   just refused, letting this driver quietly disagree with the Selenium ones
+    #   instead of failing.
+    return if misplaced_values(clusters).exclude?(observed)
+
+    @element.fill(text, timeout: @timeout)
+  end
+
+  # Every value the field could hold if the typed character had landed at the
+  #   wrong offset, built from grapheme clusters so multi-codepoint characters
+  #   stay intact. Excludes the character being missing altogether, which is a
+  #   refusal by the page rather than a misplacement.
+  def misplaced_values(clusters)
+    prefix_clusters = clusters[0...-1]
+
+    (0..prefix_clusters.length).map do |index|
+      (prefix_clusters[0...index] + [clusters.last] + prefix_clusters[index...]).join
+    end
+  end
+
+  def move_caret_to_end
     @element.evaluate(<<~JS)
       (el) => {
         // Throws for input types that have no text selection (number, date, ...).
         try { el.setSelectionRange(el.value.length, el.value.length) } catch (e) {}
       }
     JS
-    @element.type(typed_text, timeout: @timeout)
   end
 
   # Playwright's #fill validates a number input against the HTML5 number grammar,
