@@ -189,6 +189,14 @@ RSpec.describe 'Telegram Webhook Integration', type: :request do
           expect(Store.last.filename).to eq('document.pdf')
         end
 
+        it 'document message without mime type and file name' do
+          post callback_url, params: read_message('private', 'document_without_mime_type'), as: :json
+          expect(response).to have_http_status(:ok)
+          ticket = Ticket.last
+          expect(ticket.articles.last.attachments.count).to eq(1)
+          expect(Store.last.filename).to eq('document-documentfileid')
+        end
+
         it 'photo message' do
           post callback_url, params: read_message('private', 'photo'), as: :json
           expect(response).to have_http_status(:ok)
@@ -204,6 +212,14 @@ RSpec.describe 'Telegram Webhook Integration', type: :request do
           expect(ticket.articles.count).to eq(1)
           expect(ticket.articles.last.body).to match(%r{<img style="}i)
           expect(ticket.articles.last.content_type).to eq('text/html')
+          expect(ticket.articles.last.attachments.count).to eq(1)
+          expect(Store.last.filename).to eq('video-videofileid.mp4')
+        end
+
+        it 'video message without mime type' do
+          post callback_url, params: read_message('private', 'video_without_mime_type'), as: :json
+          expect(response).to have_http_status(:ok)
+          ticket = Ticket.last
           expect(ticket.articles.last.attachments.count).to eq(1)
           expect(Store.last.filename).to eq('video-videofileid.mp4')
         end

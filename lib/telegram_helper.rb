@@ -471,7 +471,7 @@ returns
         object:      'Ticket::Article',
         o_id:        article.id,
         data:        document_result.body,
-        filename:    document[:file_name],
+        filename:    document[:file_name] || "document-#{document[:file_id]}",
         preferences: {
           'Mime-Type' => document[:mime_type],
         },
@@ -507,7 +507,7 @@ returns
       )
 
       # get video type
-      type = video[:mime_type].gsub(%r{(.+/)}, '')
+      type = video[:mime_type]&.gsub(%r{(.+/)}, '') || 'mp4'
       Store.create!(
         object:      'Ticket::Article',
         o_id:        article.id,

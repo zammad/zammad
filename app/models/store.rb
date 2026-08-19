@@ -196,7 +196,7 @@ returns
   RESIZABLE_MIME_REGEXP = %r{image/(jpeg|jpg|png)}i
 
   def self.resizable_mime?(input)
-    input.match? RESIZABLE_MIME_REGEXP
+    input.to_s.match? RESIZABLE_MIME_REGEXP
   end
 
   def inline?
