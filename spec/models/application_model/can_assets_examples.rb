@@ -5,6 +5,12 @@ RSpec.shared_examples 'ApplicationModel::CanAssets' do |associations: [], select
 
   let(:admin) { create(:admin) }
 
+  # The asset structure is what is under test here, not the scoping of it, so run with the
+  # full access a userless system context has. Redaction is covered by the model's own specs.
+  around do |example|
+    UserInfo.with_system_context { example.run }
+  end
+
   describe '#assets (for supplying model data to front-end framework)' do
     shared_examples 'own asset attributes' do
       it 'returns a hash with own asset attributes' do

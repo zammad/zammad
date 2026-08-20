@@ -20,7 +20,9 @@ class TaskbarUpdateTriggerSubscriptionsJob < ApplicationJob
       # Always check if the notify flag should be set to true.
       # This happens when the taskbar's user is a different user than the record's updated by user.
       if !taskbar.notify && record && taskbar.user_id != record.updated_by_id
-        taskbar.update!(notify: true)
+        # local_update, because this taskbar belongs to somebody else: without it Taskbar#set_user
+        #   would reassign it to the current user and its owner would lose the entry.
+        taskbar.update!(notify: true, local_update: true)
 
         # When notify is set, it will already trigger the subscription automatically.
         next

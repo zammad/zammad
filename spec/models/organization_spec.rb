@@ -129,6 +129,12 @@ RSpec.describe Organization, type: :model do
   end
 
   describe 'Updating organization members' do
+    # the member and organization associations are only part of the attributes for privileged
+    # callers, while these examples are about cache invalidation
+    around do |example|
+      UserInfo.with_system_context { example.run }
+    end
+
     context 'when member gets removed' do
       let(:customer) { create(:customer, organization: organization) }
 
@@ -185,6 +191,12 @@ RSpec.describe Organization, type: :model do
   end
 
   describe 'Updating secondary organization members' do
+    # the member and organization associations are only part of the attributes for privileged
+    # callers, while these examples are about cache invalidation
+    around do |example|
+      UserInfo.with_system_context { example.run }
+    end
+
     context 'when member gets removed' do
       let(:customer)               { create(:customer, organization: organization) }
       let(:secondary_organization) { create(:organization) }

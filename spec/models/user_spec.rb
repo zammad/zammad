@@ -270,6 +270,11 @@ RSpec.describe User, type: :model do
   it_behaves_like 'User::HasTwoFactor'
 
   describe 'adding a group' do
+    # the group associations are only part of the attributes for privileged callers
+    around do |example|
+      UserInfo.with_system_context { example.run }
+    end
+
     it 'invalidates the association ID cache for both the user and the group' do
       agent = create(:agent)
       group = create(:group)
@@ -2247,6 +2252,12 @@ RSpec.describe User, type: :model do
 
   describe 'Assign user to multiple organizations #1573' do
     context 'when importing users via csv' do
+      # CSV import diffs records by their attributes, so it needs the unredacted ones - in the
+      # application it runs either as an admin or as background work
+      around do |example|
+        UserInfo.with_system_context { example.run }
+      end
+
       let(:organization1) { create(:organization) }
       let(:organization2) { create(:organization) }
       let(:organization3) { create(:organization) }

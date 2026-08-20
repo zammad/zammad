@@ -31,6 +31,27 @@ RSpec.describe TaskbarUpdateTriggerSubscriptionsJob, aggregate_failures: true, t
         expect(taskbar_2.reload.notify).to be(true)
         expect(Gql::Subscriptions::User::Current::TaskbarItemUpdates).to have_received(:trigger_after_update).twice
       end
+
+      # These taskbars belong to other users. Taskbar#set_user reassigns the owner on every save
+      # that is not a local_update, which would take the entry away from the user waiting for it.
+      it 'keeps the owner of the taskbars' do
+        ticket.update!(updated_by_id: different_user.id)
+        UserInfo.current_user_id = different_user.id
+
+        described_class.perform_now(taskbar_key, ticket, [])
+
+        expect(taskbar_1.reload.user_id).to eq(taskbar_owner.id)
+        expect(taskbar_2.reload.user_id).to eq(taskbar_other.id)
+      end
+
+      it 'does not touch the last contact of the taskbars' do
+        ticket.update!(updated_by_id: different_user.id)
+        UserInfo.current_user_id = different_user.id
+
+        expect { described_class.perform_now(taskbar_key, ticket, []) }
+          .to not_change { taskbar_1.reload.last_contact }
+          .and not_change { taskbar_2.reload.last_contact }
+      end
     end
 
     context 'when group_id changed' do

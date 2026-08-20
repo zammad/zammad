@@ -52,7 +52,7 @@ returns
   end
 
   def authorized_asset?
-    return true if UserInfo.current_user.blank?
+    return UserInfo.system_context? if UserInfo.current_user.blank?
     return true if TicketPolicy.new(UserInfo.current_user, self).show?
 
     false

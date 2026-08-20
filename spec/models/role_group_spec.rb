@@ -17,7 +17,11 @@ RSpec.describe RoleGroup do
       group: group,
       role:  create(:role)
     )
-    expect(group.assets({})[:Group][group.id]).not_to include('role_ids')
+
+    # groups are only part of the assets for a caller allowed to see them
+    assets = UserInfo.with_system_context { group.assets({}) }
+
+    expect(assets[:Group][group.id]).not_to include('role_ids')
   end
 
 end

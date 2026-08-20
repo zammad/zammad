@@ -41,7 +41,7 @@ returns
     end
 
     def filter_unauthorized_attributes(attributes)
-      return super if UserInfo.assets.blank? || UserInfo.assets.agent?
+      return super if UserInfo.assets.agent?
 
       attributes = super
       attributes['name'] = "Role_#{id}"

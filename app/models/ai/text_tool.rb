@@ -36,7 +36,7 @@ class AI::TextTool < ApplicationModel
   def attributes_with_association_ids
     attributes = super
 
-    if UserInfo.assets&.user&.permissions?('admin.ai_assistance_text_tools')
+    if UserInfo.assets.user&.permissions?('admin.ai_assistance_text_tools')
       attributes[ASSETS_ANALYTICS_STATS_KEY] = satisfaction_ratio
     end
 

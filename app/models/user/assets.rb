@@ -72,7 +72,7 @@ returns
     end
 
     def filter_unauthorized_attributes(attributes)
-      return super if UserInfo.assets.blank? || UserInfo.assets.agent?
+      return super if UserInfo.assets.agent?
 
       # customer assets for the user session
       if UserInfo.current_user_id == id
@@ -87,7 +87,7 @@ returns
     end
 
     def assets_accounts
-      return nil if UserInfo.assets.present? && !UserInfo.assets.agent? && UserInfo.current_user_id != id
+      return nil if !UserInfo.assets.agent? && UserInfo.current_user_id != id
 
       Rails.cache.fetch("User/authorizations/#{cache_key_with_version}") do
         local_accounts = {}
