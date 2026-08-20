@@ -6,6 +6,11 @@ RSpec.describe Authorization, type: :model do
   describe 'User assets' do
     subject(:authorization) { create(:twitter_authorization) }
 
+    # linked accounts are only part of the assets for the user itself or a privileged caller
+    around do |example|
+      UserInfo.with_system_context { example.run }
+    end
+
     it 'does update assets after new authorizations created' do
       authorization.user.assets({})
       create(:twitter_authorization, provider: 'twitter2', user: authorization.user)

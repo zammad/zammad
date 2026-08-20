@@ -44,8 +44,11 @@ class UserInfo::Assets
     end
   end
 
+  # A blank user is not privileged: a context that was cleared or never established must not
+  #   unlock agent or admin level data. Userless work that legitimately needs full access has
+  #   to say so via UserInfo.with_system_context.
   def check_level?(check)
-    return true if user.blank?
+    return UserInfo.system_context? if user.blank?
 
     level >= check
   end

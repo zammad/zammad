@@ -134,4 +134,79 @@ RSpec.describe UserInfo do
     end
 
   end
+
+  describe '#assets' do
+
+    it 'is unprivileged without any user context', :aggregate_failures do
+      described_class.reset
+
+      expect(described_class.assets.agent?).to be(false)
+      expect(described_class.assets.admin?).to be(false)
+    end
+
+    it 'is privileged in a system context', :aggregate_failures do
+      described_class.reset
+
+      described_class.with_system_context do
+        expect(described_class.assets.agent?).to be(true)
+        expect(described_class.assets.admin?).to be(true)
+      end
+    end
+
+    it 'survives a reset, it marks the unit of work and not the user' do
+      described_class.with_system_context do
+        described_class.reset
+
+        expect(described_class).to be_system_context
+      end
+    end
+
+    it 'is present even if the context was never established' do
+      Thread.current[:assets] = nil
+
+      expect(described_class.assets).to be_present
+    end
+  end
+
+  describe '#with_system_context' do
+
+    let(:return_value) { 'Hello World' }
+
+    it 'is not a system context by default' do
+      expect(described_class).not_to be_system_context
+    end
+
+    it 'marks the given block as system context' do
+      described_class.with_system_context do
+        expect(described_class).to be_system_context
+      end
+    end
+
+    it 'restores the surrounding state' do
+      described_class.with_system_context do # rubocop:disable Lint/EmptyBlock
+      end
+
+      expect(described_class).not_to be_system_context
+    end
+
+    it 'restores the surrounding state in case of an exception' do
+      begin
+        described_class.with_system_context do
+          raise 'error'
+        end
+      rescue # rubocop:disable Lint/SuppressedException
+      end
+
+      expect(described_class).not_to be_system_context
+    end
+
+    it 'passes return value of given block' do
+      received = described_class.with_system_context do
+        return_value
+      end
+
+      expect(received).to eq(return_value)
+    end
+  end
+
 end

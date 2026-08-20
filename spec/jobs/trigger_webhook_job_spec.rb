@@ -83,8 +83,10 @@ RSpec.describe TriggerWebhookJob, type: :job do
       )
     end
 
-    let(:payload_ticket) { TriggerWebhookJob::RecordPayload.generate(ticket) }
-    let(:payload_article) { TriggerWebhookJob::RecordPayload.generate(article) }
+    # The job builds its payload in a system context, so the expectation has to be built the
+    # same way - otherwise it would compare against redacted attributes.
+    let(:payload_ticket) { UserInfo.with_system_context { TriggerWebhookJob::RecordPayload.generate(ticket) } }
+    let(:payload_article) { UserInfo.with_system_context { TriggerWebhookJob::RecordPayload.generate(article) } }
 
     let!(:ticket) { create(:ticket) }
     let!(:article) { create(:'ticket/article') }

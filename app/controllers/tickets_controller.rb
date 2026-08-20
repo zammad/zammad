@@ -538,7 +538,16 @@ class TicketsController < ApplicationController
 
   private
 
+  # Transaction dispatch runs before this and leaves the user context blank, which the asset
+  #   filters treat as unprivileged. Re-establish it, so the response is scoped to the caller
+  #   instead of being redacted as if nobody was logged in.
   def render_reloaded_ticket(ticket, status: :ok)
+    UserInfo.with_user_id(current_user.id) do
+      render_reloaded_ticket_response(ticket, status:)
+    end
+  end
+
+  def render_reloaded_ticket_response(ticket, status:)
     if response_expand?
       result = ticket.reload.attributes_with_association_names
       render(json: result, status:)

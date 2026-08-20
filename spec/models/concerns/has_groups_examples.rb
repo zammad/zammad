@@ -580,6 +580,11 @@ RSpec.shared_examples 'HasGroups' do |group_access_factory:|
 
     describe '#attributes_with_association_ids' do
 
+      # the group access maps are only part of the attributes for privileged callers
+      around do |example|
+        UserInfo.with_system_context { example.run }
+      end
+
       it 'includes group_ids as group_ids_access_map' do
         expected = {
           group_full.id => ['full'],
@@ -594,6 +599,11 @@ RSpec.shared_examples 'HasGroups' do |group_access_factory:|
     end
 
     describe '#attributes_with_association_names' do
+
+      # the group access maps are only part of the attributes for privileged callers
+      around do |example|
+        UserInfo.with_system_context { example.run }
+      end
 
       it 'includes group_ids as group_ids_access_map' do
         expected = {
