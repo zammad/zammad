@@ -59,7 +59,7 @@ const editedLabel = computed(() => {
     <CommonBadge v-if="answer.internalAt" variant="tertiary" class="uppercase">
       <CommonDateTime :date-time="answer.internalAt" type="relative" class="ms-1">
         <template #prefix>
-          {{ $t('Internally published at') }}
+          {{ $t('Internally published') }}
         </template>
       </CommonDateTime>
     </CommonBadge>
@@ -67,7 +67,7 @@ const editedLabel = computed(() => {
     <CommonBadge v-if="answer.publishedAt" variant="tertiary" class="uppercase">
       <CommonDateTime :date-time="answer.publishedAt" type="relative" class="ms-1">
         <template #prefix>
-          {{ $t('Published at') }}
+          {{ $t('Published') }}
         </template>
       </CommonDateTime>
     </CommonBadge>
@@ -75,7 +75,7 @@ const editedLabel = computed(() => {
     <CommonBadge v-if="answer.archivedAt" variant="tertiary" class="uppercase">
       <CommonDateTime :date-time="answer.archivedAt" type="relative" class="ms-1">
         <template #prefix>
-          {{ $t('Archived at') }}
+          {{ $t('Archived') }}
         </template>
       </CommonDateTime>
     </CommonBadge>

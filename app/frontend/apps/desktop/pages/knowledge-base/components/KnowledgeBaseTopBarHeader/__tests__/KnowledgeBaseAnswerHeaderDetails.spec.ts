@@ -50,9 +50,10 @@ describe('KnowledgeBaseAnswerHeaderDetails', () => {
   it('shows only the publication dates the answer actually carries', () => {
     const view = renderDetails({ publishedAt: '2026-08-01T10:00:00Z' })
 
-    expect(view.getByText('Published at')).toBeInTheDocument()
-    expect(view.queryByText('Internally published at')).not.toBeInTheDocument()
-    expect(view.queryByText('Archived at')).not.toBeInTheDocument()
+    // Twice: the visibility badge and the publication date badge.
+    expect(view.getAllByText('Published')).toHaveLength(2)
+    expect(view.queryByText('Internally published')).not.toBeInTheDocument()
+    expect(view.queryByText('Archived')).not.toBeInTheDocument()
   })
 
   it('shows the internal and archival dates when they are set', () => {
@@ -62,8 +63,9 @@ describe('KnowledgeBaseAnswerHeaderDetails', () => {
       archivedAt: '2026-08-05T10:00:00Z',
     })
 
-    expect(view.getByText('Internally published at')).toBeInTheDocument()
-    expect(view.getByText('Archived at')).toBeInTheDocument()
+    expect(view.getByText('Internally published')).toBeInTheDocument()
+    // Twice: the visibility badge and the archival date badge.
+    expect(view.getAllByText('Archived')).toHaveLength(2)
   })
 
   // What a user without knowledge base permission receives: the backend nulls
@@ -77,10 +79,10 @@ describe('KnowledgeBaseAnswerHeaderDetails', () => {
       editedBy: null,
     })
 
-    expect(view.getByText('Published')).toBeInTheDocument()
-    expect(view.getByText('Published at')).toBeInTheDocument()
-    expect(view.queryByText('Internally published at')).not.toBeInTheDocument()
-    expect(view.queryByText('Archived at')).not.toBeInTheDocument()
+    // Twice: the visibility badge and the publication date badge.
+    expect(view.getAllByText('Published')).toHaveLength(2)
+    expect(view.queryByText('Internally published')).not.toBeInTheDocument()
+    expect(view.queryByText('Archived')).not.toBeInTheDocument()
     expect(view.queryByText(/edited/)).not.toBeInTheDocument()
   })
 

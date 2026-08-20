@@ -30,15 +30,15 @@ const editedByLabel = computed(() => {
       {{ $t(visibilityMeta[answer.visibility].label) }}
     </CommonObjectAttribute>
 
-    <CommonObjectAttribute v-if="answer.internalAt" :label="__('Internally published at')">
+    <CommonObjectAttribute v-if="answer.internalAt" :label="__('Internally published')">
       <CommonDateTime :date-time="answer.internalAt" type="relative" />
     </CommonObjectAttribute>
 
-    <CommonObjectAttribute v-if="answer.publishedAt" :label="__('Published at')">
+    <CommonObjectAttribute v-if="answer.publishedAt" :label="__('Published')">
       <CommonDateTime :date-time="answer.publishedAt" type="relative" />
     </CommonObjectAttribute>
 
-    <CommonObjectAttribute v-if="answer.archivedAt" :label="__('Archived at')">
+    <CommonObjectAttribute v-if="answer.archivedAt" :label="__('Archived')">
       <CommonDateTime :date-time="answer.archivedAt" type="relative" />
     </CommonObjectAttribute>
 

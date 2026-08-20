@@ -132,7 +132,6 @@ describe('knowledge base answer header', () => {
     const view = await visitView(ANSWER_PATH)
 
     expect(await view.findAllByText('Published')).not.toHaveLength(0)
-    expect(view.getAllByText('Published at')).not.toHaveLength(0)
     expect(view.getByText(/edited .* by Erika Mustermann/)).toBeInTheDocument()
   })
 

@@ -103,14 +103,14 @@ describe('TicketKnowledgeBaseAnswerPopover', () => {
   it('shows the published date and hides the archived row when the answer is not archived', () => {
     const wrapper = renderPopover()
 
-    expect(wrapper.getByText('Published at')).toBeInTheDocument()
-    expect(wrapper.queryByText('Archived at')).not.toBeInTheDocument()
+    expect(wrapper.getByText('Published')).toBeInTheDocument()
+    expect(wrapper.queryByText('Archived')).not.toBeInTheDocument()
   })
 
   it('hides the internally published row when the answer was never internally published', () => {
     const wrapper = renderPopover()
 
-    expect(wrapper.queryByText('Internally published at')).not.toBeInTheDocument()
+    expect(wrapper.queryByText('Internally published')).not.toBeInTheDocument()
   })
 
   it('shows the internally published date when the answer is internally published', () => {
@@ -118,7 +118,7 @@ describe('TicketKnowledgeBaseAnswerPopover', () => {
       buildTranslation({ answer: { internalAt: '2024-03-01T00:00:00Z' } }),
     )
 
-    expect(wrapper.getByText('Internally published at')).toBeInTheDocument()
+    expect(wrapper.getByText('Internally published')).toBeInTheDocument()
   })
 
   it('shows the archived date when the answer is archived', () => {
@@ -126,7 +126,7 @@ describe('TicketKnowledgeBaseAnswerPopover', () => {
       buildTranslation({ answer: { archivedAt: '2024-06-01T00:00:00Z' } }),
     )
 
-    expect(wrapper.getByText('Archived at')).toBeInTheDocument()
+    expect(wrapper.getByText('Archived')).toBeInTheDocument()
   })
 
   it('hides the category row when the category has no title in the requested locale', () => {
