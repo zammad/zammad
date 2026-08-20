@@ -18,7 +18,7 @@
   },
   "devDependencies": {
     "eslint": "^10.8.1",
-    "eslint-plugin-eslint-plugin": "^7.6.1",
+    "eslint-plugin-eslint-plugin": "^7.6.2",
     "eslint-plugin-n": "^18.3.0",
     "mocha": "^11.8.0",
     "vue-eslint-parser": "^10.4.1"
