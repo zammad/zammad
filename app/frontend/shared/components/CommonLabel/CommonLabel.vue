@@ -31,13 +31,21 @@ const iconClassMap = {
   large: 'small',
   xl: 'base',
 } as const
+
+const flexGapClassMap = {
+  xs: 'gap-x-1',
+  small: 'gap-x-1',
+  medium: 'gap-x-1.25',
+  large: 'gap-x-1.5',
+  xl: 'gap-x-2',
+}
 </script>
 
 <template>
   <component
     :is="tag"
-    class="inline-flex items-center justify-start gap-1 text-gray-100 dark:text-neutral-400"
-    :class="fontSizeClassMap[props.size]"
+    class="inline-flex items-center justify-start text-gray-100 dark:text-neutral-400"
+    :class="[fontSizeClassMap[props.size], flexGapClassMap[props.size]]"
     data-test-id="common-label"
   >
     <CommonIcon

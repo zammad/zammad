@@ -34,6 +34,7 @@ describe('knowledge base floating toolbar', () => {
         iconset: 'default',
         isPubliclyAvailable: true,
         isVisiblePublicly: true,
+        policy: { update: true },
         kbLocales: [
           {
             id: convertToGraphQLId('KnowledgeBase::Locale', 1),

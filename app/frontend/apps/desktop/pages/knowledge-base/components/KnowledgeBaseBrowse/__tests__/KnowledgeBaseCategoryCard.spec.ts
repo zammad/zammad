@@ -21,6 +21,8 @@ const renderCard = (props = {}) =>
       answerCount: 0,
       translationMissing: false,
       position: 0,
+      isDeletable: true,
+      policy: { update: true, destroy: true, createSubcategory: true },
       ...props,
     },
   })

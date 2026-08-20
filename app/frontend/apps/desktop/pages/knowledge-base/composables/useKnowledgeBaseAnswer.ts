@@ -13,9 +13,8 @@ import { ErrorStatusCodes, GraphQLErrorTypes } from '#shared/types/error.ts'
 
 import { useKnowledgeBaseAnswerQuery } from '#desktop/entities/knowledge-base/graphql/queries/knowledgeBaseAnswer.api.ts'
 import { KnowledgeBaseAnswerUpdatesDocument } from '#desktop/entities/knowledge-base/graphql/subscriptions/knowledgeBaseAnswerUpdates.api.ts'
+import { useKnowledgeBaseStore } from '#desktop/entities/knowledge-base/stores/knowledgeBase.ts'
 import { knowledgeBaseBrowseRoute } from '#desktop/entities/knowledge-base/utils/routeLocation.ts'
-
-import { useKnowledgeBaseStore } from '../../../entities/knowledge-base/stores/knowledgeBase.ts'
 
 export const useKnowledgeBaseAnswer = (
   options: {

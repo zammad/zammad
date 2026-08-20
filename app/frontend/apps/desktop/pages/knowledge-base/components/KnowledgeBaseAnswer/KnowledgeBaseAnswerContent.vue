@@ -54,12 +54,16 @@ onMounted(setupBody)
 </script>
 
 <template>
-  <div v-if="body" class="Content w-full">
-    <section>
-      <!-- eslint-disable vue/no-v-html -->
-      <article ref="content-body" class="inner-article-body text-sm" v-html="body" />
-    </section>
-  </div>
+  <!-- Focusable so the body can be reached by keyboard, and named so that stop is announced —
+       which also makes the section a region, as an unnamed one is not. -->
+  <section
+    v-if="body"
+    :aria-label="$t('Answer')"
+    class="Content w-full rounded-sm focus-visible-app-default"
+  >
+    <!-- eslint-disable vue/no-v-html -->
+    <article ref="content-body" class="inner-article-body text-sm" v-html="body" />
+  </section>
 </template>
 
 <style scoped>

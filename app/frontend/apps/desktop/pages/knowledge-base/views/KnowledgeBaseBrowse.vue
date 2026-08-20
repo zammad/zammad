@@ -1,24 +1,28 @@
 <!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed, toRef, useTemplateRef } from 'vue'
+import { useElementVisibility } from '@vueuse/core'
+import { computed, toRef, useTemplateRef, watch, type ComponentPublicInstance } from 'vue'
 
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import { scrollIntoView } from '#shared/utils/dom.ts'
 
+import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonFloatingToolbar from '#desktop/components/CommonFloatingToolbar/CommonFloatingToolbar.vue'
 import CommonIndicator from '#desktop/components/CommonIndicator/CommonIndicator.vue'
 import { useIndicator } from '#desktop/components/CommonIndicator/useIndicator.ts'
 import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
 import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
+import { useKnowledgeBaseStore } from '#desktop/entities/knowledge-base/stores/knowledgeBase.ts'
 
-// import KnowledgeBaseAddCategoryCard from '../components/KnowledgeBaseBrowse/KnowledgeBaseAddCategoryCard.vue'
-import { useKnowledgeBaseAccess } from '../../../entities/knowledge-base/composables/useKnowledgeBaseAccess.ts'
+import KnowledgeBaseAddCategoryCard from '../components/KnowledgeBaseBrowse/KnowledgeBaseAddCategoryCard.vue'
 import KnowledgeBaseAnswerList from '../components/KnowledgeBaseBrowse/KnowledgeBaseAnswerList.vue'
 import KnowledgeBaseCategoryCard from '../components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue'
 import KnowledgeBaseCategoryCardSkeleton from '../components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCardSkeleton.vue'
 import KnowledgeBaseTopBarHeader from '../components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue'
+import { useKnowledgeBaseCategoryFlyout } from '../composables/useKnowledgeBaseCategoryFlyout.ts'
 import { useKnowledgeBaseCategorySubcategories } from '../composables/useKnowledgeBaseCategorySubcategories.ts'
+import { useKnowledgeBaseEditFlyout } from '../composables/useKnowledgeBaseEditFlyout.ts'
 
 // The browsed locale and category come from the URL as route props (see
 //   routes.ts). Both are absent on the locale-less entry until the section
@@ -43,10 +47,17 @@ const {
   directSubcategoryCount,
   visiblePublicly: categoryVisiblePublicly,
   translationMissing: categoryTranslationMissing,
+  deletable: categoryDeletable,
+  policy: categoryPolicy,
 } = useKnowledgeBaseCategorySubcategories({
   categoryId,
   locale: toRef(props, 'localeCode'),
 })
+
+// What is browsed: a different category or locale is a different page. It keys the answer list, so
+//   a switch drops that instance with its query and pagination state — reusing the handler would
+//   let a `fetchMore` racing the switch page the new category with the old cursor.
+const browsedPage = computed(() => `${props.localeCode}:${categoryId.value}`)
 
 // The header needs only the breadcrumb, which is known immediately when opening
 //   a category, so it can appear at once instead of waiting out the full load.
@@ -62,7 +73,29 @@ const headerLoading = computed(
 const DEFAULT_SKELETON_COUNT = 4
 const categorySkeletonCount = computed(() => directSubcategoryCount.value || DEFAULT_SKELETON_COUNT)
 
-const { canEdit } = useKnowledgeBaseAccess()
+// Adding is gated by whoever would own the new category: the opened category (its own
+//   `createSubcategory`), or the knowledge base at the root — where `CategoryPolicy#create?`
+//   asks the knowledge base, so its `update` policy is the same answer. Granular editors are
+//   commonly reader on the base and editor on one subtree, so the global permission alone
+//   would offer them an add button the mutation refuses.
+const knowledgeBase = toRef(useKnowledgeBaseStore(), 'knowledgeBase')
+
+const canAddCategory = computed(() =>
+  categoryId.value
+    ? Boolean(categoryPolicy.value?.createSubcategory)
+    : Boolean(knowledgeBase.value?.policy.update),
+)
+
+const { openKnowledgeBaseCategoryAddFlyout } = useKnowledgeBaseCategoryFlyout()
+useKnowledgeBaseEditFlyout()
+
+// Adding from within a category preselects that category as the parent; at the root
+//   the updater falls back to its "top level" entry.
+const addCategory = () => openKnowledgeBaseCategoryAddFlyout({ parentId: categoryId.value })
+
+const addCategoryCardElement = useTemplateRef<ComponentPublicInstance>('add-category-card')
+
+const isAddCategoryCardVisible = useElementVisibility(addCategoryCardElement)
 
 // Fill the trailing gap in the last grid row with placeholder tiles so the row
 //   always looks complete. Must mirror the `grid-cols-*` breakpoints below.
@@ -94,7 +127,12 @@ const GRID_BREAKPOINTS = [
 ] as const
 
 // The add card occupies a grid cell too, so it counts towards the row fill.
-const tileCount = computed(() => subcategories.value.length + (canEdit.value ? 1 : 0))
+const tileCount = computed(() => subcategories.value.length + (canAddCategory.value ? 1 : 0))
+
+// Only the knowledge base root fills the page when it has no tiles: there its empty state is the
+//   entire content. A category without subcategories — a reader sees no add card either — still
+//   has its answers below, so the grid must not stretch above them.
+const showsEmptyState = computed(() => !tileCount.value && !categoryId.value)
 
 // For each breakpoint, reveal as many of the three filler tiles as there are
 // empty cells in the last row ([0] = shown class, [1] = hidden class).
@@ -122,6 +160,13 @@ const scrollToEnd = () => {
     behavior: 'instant',
   })
 }
+
+// Opening another page starts it at the top. Nothing else does that: the scrolling element
+//   is this container, not the window, so the router's scroll behavior never reaches it. Which
+//   only shows when the new page is tall from its first frame — an answer list served from the
+//   cache — because then the previous scroll position survives and the category section is
+//   left out of view.
+watch(browsedPage, () => scrollToStart())
 </script>
 
 <template>
@@ -142,61 +187,70 @@ const scrollToEnd = () => {
         :category-breadcrumb="breadcrumb"
         :category-visible-publicly="categoryVisiblePublicly"
         :category-translation-missing="categoryTranslationMissing"
+        :category-deletable="categoryDeletable"
+        :category-policy="categoryPolicy"
         :loading="headerLoading"
       />
 
-      <CommonLoader class="flex w-full items-center" :loading="loading">
-        <template #skeleton>
-          <KnowledgeBaseCategoryCardSkeleton :count="categorySkeletonCount" />
-        </template>
+      <!-- shrink-0: without it the flex scroll container compresses the section and clips its
+           bottom padding above the overflowing answers. -->
+      <section
+        class="w-full max-w-7xl shrink-0 px-5.5 py-3 pb-6"
+        :class="{ 'flex grow flex-col': showsEmptyState }"
+      >
+        <CommonLoader class="flex w-full items-center" :loading="loading">
+          <template #skeleton>
+            <KnowledgeBaseCategoryCardSkeleton :count="categorySkeletonCount" />
+          </template>
 
-        <!-- shrink-0 keeps the section at its full content height inside the
-             flex scroll container; without it the section is compressed and the
-             bottom padding is clipped above the overflowing answers. -->
-        <section
-          class="w-full max-w-7xl shrink-0 px-5.5 py-3 pb-6"
-          :class="{ 'flex grow flex-col': !tileCount }"
-        >
-          <ol class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
-            <KnowledgeBaseCategoryCard
-              v-for="category in subcategories"
-              :key="category.id"
-              v-bind="category"
-            />
-            <!-- <KnowledgeBaseAddCategoryCard v-if="canEdit" /> -->
-            <!-- Temporary placeholder card until KnowledgeBaseAddCategoryCard is reintroduced. -->
-            <!-- Remove the <li> below once that happens. -->
-            <li
-              v-if="canEdit && subcategories.length"
-              class="flex min-h-42 flex-col items-center justify-center rounded-xl bg-blue-75 px-4 py-2.5 dark:bg-gray-700"
-            />
-
-            <li
-              v-if="tileCount"
-              aria-hidden="true"
-              class="relative rounded-xl bg-blue-75 before:absolute before:inset-y-0 before:left-[calc(100%+1rem)] before:w-full before:rounded-xl before:bg-blue-75 after:absolute after:inset-y-0 after:left-[calc(200%+2rem)] after:w-full after:rounded-xl after:bg-blue-75 dark:bg-gray-700 dark:before:bg-gray-700 dark:after:bg-gray-700"
-              :class="placeholderClasses"
-            />
-          </ol>
-
+          <!-- One root element: the loader renders its slot inside a <Transition>. -->
           <div
-            v-if="!tileCount && !categoryId"
-            class="flex grow flex-col items-center justify-center gap-2"
+            v-if="tileCount || showsEmptyState"
+            :class="{ 'flex grow flex-col': showsEmptyState }"
           >
-            <CommonIcon name="book" size="medium" class="dark:text-neutral-500" />
-            <CommonLabel tag="p" class="flex-col dark:text-neutral-500">
-              <span>{{ $t('No knowledge base content is available yet.') }}</span>
-              <span>{{ $t('Please contact your administrator.') }}</span>
-            </CommonLabel>
-          </div>
+            <ol class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
+              <KnowledgeBaseCategoryCard
+                v-for="category in subcategories"
+                :key="category.id"
+                v-bind="category"
+              />
+              <!-- Also shown without subcategories: the only way to create the first one. -->
+              <KnowledgeBaseAddCategoryCard
+                v-if="canAddCategory"
+                ref="add-category-card"
+                @add="addCategory"
+              />
 
-          <KnowledgeBaseAnswerList
-            :category-id="categoryId"
-            :locale="localeCode"
-            :content-container-element="contentContainerElement"
-          />
-        </section>
-      </CommonLoader>
+              <li
+                v-if="tileCount"
+                aria-hidden="true"
+                class="relative rounded-xl bg-blue-75 before:absolute before:inset-y-0 before:left-[calc(100%+1rem)] before:w-full before:rounded-xl before:bg-blue-75 after:absolute after:inset-y-0 after:left-[calc(200%+2rem)] after:w-full after:rounded-xl after:bg-blue-75 dark:bg-gray-700 dark:before:bg-gray-700 dark:after:bg-gray-700"
+                :class="placeholderClasses"
+              />
+            </ol>
+
+            <div
+              v-if="showsEmptyState"
+              class="flex grow flex-col items-center justify-center gap-2"
+            >
+              <CommonIcon name="book" size="medium" class="dark:text-neutral-500" />
+              <CommonLabel tag="p" class="flex-col dark:text-neutral-500">
+                <span>{{ $t('No knowledge base content is available yet.') }}</span>
+                <span>{{ $t('Please contact your administrator.') }}</span>
+              </CommonLabel>
+            </div>
+          </div>
+        </CommonLoader>
+
+        <!-- Outside the loader above: the answers bring their own query and skeleton, and wrapping
+             them would remount the list on every category switch. -->
+        <KnowledgeBaseAnswerList
+          :key="browsedPage"
+          :category-id="categoryId"
+          :locale="localeCode"
+          :content-container-element="contentContainerElement"
+        />
+      </section>
 
       <CommonIndicator v-model="isReachingBottom" />
 
@@ -205,13 +259,21 @@ const scrollToEnd = () => {
           :label="$t('Knowledge base actions')"
           :is-reaching-bottom="isReachingBottom"
           :is-reaching-top="isReachingTop"
+          :hide-primary-action="isAddCategoryCardVisible"
           class="absolute inset-e-3 bottom-0"
           @scroll-to-start="scrollToStart"
           @scroll-to-end="scrollToEnd"
         >
-          <!-- TODO <template #action>
-            <CommonButton/>
-          </template> -->
+          <template v-if="canAddCategory" #primary-action>
+            <CommonButton
+              v-tooltip="$t('Add category')"
+              size="medium"
+              variant="secondary"
+              icon="folder-plus"
+              class="rounded-[(--toolbar-radius)-(--toolbar-p)]! border! border-neutral-100 dark:border-gray-900"
+              @click="addCategory"
+            />
+          </template>
         </CommonFloatingToolbar>
       </div>
     </div>

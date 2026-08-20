@@ -90,7 +90,10 @@ const displayItems = computed(() =>
             :class="item.iconClass"
           />
 
-          <CommonLabel class="line-clamp-1! hover:text-black hover:dark:text-white" :size="size">
+          <CommonLabel
+            class="line-clamp-1! break-all hover:text-black hover:dark:text-white"
+            :size="size"
+          >
             {{ item.displayLabel }}
           </CommonLabel>
         </CommonLink>

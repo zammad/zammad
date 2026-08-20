@@ -4,7 +4,10 @@ import { i18n, type I18N } from '#shared/i18n/index.ts'
 
 import type { FormKitNode } from '@formkit/core'
 
-const addTranslationFunctionPlugin = (node: FormKitNode) => {
+// Makes `$fns.t(…)` available in every node's schema, which is how both the form level and the
+//   field level messages translate what they render — a message set from outside (a server side
+//   user error) arrives as its source string.
+const addTranslationFunction = (node: FormKitNode) => {
   const { context } = node
 
   if (!context) return
@@ -14,4 +17,4 @@ const addTranslationFunctionPlugin = (node: FormKitNode) => {
   }
 }
 
-export default addTranslationFunctionPlugin
+export default addTranslationFunction

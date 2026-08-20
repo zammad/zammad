@@ -1,0 +1,8 @@
+mutation knowledgeBaseCategoryDelete($categoryId: ID!) {
+  knowledgeBaseCategoryDelete(categoryId: $categoryId) {
+    success
+    errors {
+      ...errors
+    }
+  }
+}

@@ -1,6 +1,7 @@
 import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
+import { KnowledgeBaseCategoryPolicyFragmentDoc } from '../fragments/knowledgeBaseCategoryPolicy.api';
 import { KnowledgeBaseCategoryPreInfoFragmentDoc } from '../fragments/knowledgeBaseCategoryPreInfo.api';
 import * as VueApolloComposable from '@vue/apollo-composable';
 import * as VueCompositionApi from 'vue';
@@ -13,6 +14,8 @@ export const KnowledgeBaseCategorySubcategoriesDocument = gql`
       id
       isVisiblePublicly
       translationMissing
+      isDeletable
+      ...knowledgeBaseCategoryPolicy
       ...knowledgeBaseCategoryPreInfo
     }
     subcategories {
@@ -24,11 +27,14 @@ export const KnowledgeBaseCategorySubcategoriesDocument = gql`
       answerCount
       subcategoryCount
       position
+      isDeletable
+      ...knowledgeBaseCategoryPolicy
       ...knowledgeBaseCategoryPreInfo
     }
   }
 }
-    ${KnowledgeBaseCategoryPreInfoFragmentDoc}`;
+    ${KnowledgeBaseCategoryPolicyFragmentDoc}
+${KnowledgeBaseCategoryPreInfoFragmentDoc}`;
 export function useKnowledgeBaseCategorySubcategoriesQuery(variables: Types.KnowledgeBaseCategorySubcategoriesQueryVariables | VueCompositionApi.Ref<Types.KnowledgeBaseCategorySubcategoriesQueryVariables> | ReactiveFunction<Types.KnowledgeBaseCategorySubcategoriesQueryVariables> = {}, options: VueApolloComposable.UseQueryOptions<Types.KnowledgeBaseCategorySubcategoriesQuery, Types.KnowledgeBaseCategorySubcategoriesQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.KnowledgeBaseCategorySubcategoriesQuery, Types.KnowledgeBaseCategorySubcategoriesQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.KnowledgeBaseCategorySubcategoriesQuery, Types.KnowledgeBaseCategorySubcategoriesQueryVariables>> = {}) {
   return VueApolloComposable.useQuery<Types.KnowledgeBaseCategorySubcategoriesQuery, Types.KnowledgeBaseCategorySubcategoriesQueryVariables>(KnowledgeBaseCategorySubcategoriesDocument, variables, options);
 }

@@ -1,0 +1,13 @@
+# Which actions the current user may perform on a category — granular permissions can narrow
+#   a global editor to a part of the tree, so every control asks per record.
+#
+# Always request the whole set, via this fragment: `policy` has no id of its own, so Apollo
+#   replaces it instead of merging, and a query selecting fewer fields would drop the others
+#   from the cached category (which then costs a refetch to get them back).
+fragment knowledgeBaseCategoryPolicy on KnowledgeBaseCategory {
+  policy {
+    update
+    destroy
+    createSubcategory
+  }
+}

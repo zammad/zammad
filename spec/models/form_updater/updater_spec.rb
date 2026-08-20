@@ -7,6 +7,9 @@ RSpec.describe(FormUpdater::Updater) do
     expect(described_class.updaters.sort_by(&:name)).to include(FormUpdater::Updater::Ticket::Create,
                                                                 FormUpdater::Updater::User::Create,
                                                                 FormUpdater::Updater::User::Edit,
-                                                                FormUpdater::Updater::Organization::Edit)
+                                                                FormUpdater::Updater::Organization::Edit,
+                                                                FormUpdater::Updater::KnowledgeBase::Edit,
+                                                                FormUpdater::Updater::KnowledgeBase::Category::Create,
+                                                                FormUpdater::Updater::KnowledgeBase::Category::Edit)
   end
 end

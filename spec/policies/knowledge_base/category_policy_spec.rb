@@ -49,6 +49,12 @@ describe KnowledgeBase::CategoryPolicy do
     include_examples 'with KB policy check', editor: true, reader: false, none: false, method: :update?
   end
 
+  describe '#create_subcategory?' do
+    # Editor access to *this* category, not to its parent: the question is whether a category may be
+    #   added below this one, which is why it is not the same as #create?.
+    include_examples 'with KB policy check', editor: true, reader: false, none: false, method: :create_subcategory?
+  end
+
   describe '#create?' do
     include_examples 'with KB policy check', editor: true, reader: false, none: false, method: :create?, access_method: :parent_access
   end

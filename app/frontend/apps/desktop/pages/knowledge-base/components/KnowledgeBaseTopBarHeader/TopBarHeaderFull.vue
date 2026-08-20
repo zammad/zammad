@@ -42,7 +42,7 @@ const selectedLocale = defineModel<DropdownItem>('selectedLocale')
       <CommonLabel
         class="mx-auto w-full text-xl font-medium text-black dark:text-white"
         :class="contentWidthClass"
-        tag="span"
+        tag="h2"
       >
         {{ title }}
       </CommonLabel>

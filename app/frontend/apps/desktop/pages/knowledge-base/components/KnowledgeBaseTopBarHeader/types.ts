@@ -3,6 +3,7 @@
 import type { Link } from '#shared/types/router.ts'
 
 import type { DropdownItem } from '#desktop/components/CommonDropdown/types.ts'
+import type { MenuItem } from '#desktop/components/CommonPopoverMenu/types.ts'
 
 import type { KnowledgeBaseAnswerHeader, KnowledgeBaseBreadcrumbItem } from '../../types.ts'
 
@@ -12,6 +13,7 @@ export interface TopBarHeaderProps {
   title?: Maybe<string>
   previewUrl?: Maybe<string>
   localeCode?: string
+  actions?: MenuItem[]
 }
 
 // Caps the header rows that have to line up with the content below them:

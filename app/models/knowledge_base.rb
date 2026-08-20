@@ -10,7 +10,8 @@ class KnowledgeBase < ApplicationModel
 
   LAYOUTS = %w[grid list].freeze
 
-  # Folder icon of each supported icon set, applied to every category whenever the icon set is
+  # Folder icon of each supported icon set: the default a new category starts with (see
+  # #default_category_icon) and what every existing category is reset to whenever the icon set is
   # switched (see #reset_category_icons). Kept in sync with
   # `App.KnowledgeBaseCategory.defaultIconFor`, which supplies the same defaults to newly created
   # categories in the legacy frontend.
@@ -255,6 +256,11 @@ class KnowledgeBase < ApplicationModel
     scope = scope.localed(kb_locale.system_locale) if kb_locale
 
     scope.any?
+  end
+
+  # Icon a category of this knowledge base starts out with, before the user picks their own.
+  def default_category_icon
+    ICONSET_DEFAULT_CATEGORY_ICONS[iconset]
   end
 
   private

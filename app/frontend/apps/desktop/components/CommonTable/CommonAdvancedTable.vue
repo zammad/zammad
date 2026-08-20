@@ -638,7 +638,7 @@ watch(
                 <slot :name="`item-suffix-${tableAttribute.name}`" :item="item" />
               </div>
             </td>
-            <td v-if="actions" headers="actions-header" class="h-10 p-2.5 text-center">
+            <td v-if="actions" headers="actions-header" class="h-10 px-2.5 py-1 text-center">
               <slot name="actions" v-bind="{ actions, item }">
                 <CommonActionMenu
                   class="flex! items-center justify-center"

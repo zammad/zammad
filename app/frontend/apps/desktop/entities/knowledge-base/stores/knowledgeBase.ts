@@ -8,10 +8,11 @@ import { SubscriptionHandler } from '#shared/server/apollo/handler/index.ts'
 import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
 
 import { useLastVisitedPath } from '#desktop/composables/useLastVisitedPath.ts'
-import type { KnowledgeBaseIconSet } from '#desktop/pages/knowledge-base/types.ts'
 
 import { useKnowledgeBaseQuery } from '../graphql/queries/knowledgeBase.api'
 import { useKnowledgeBaseContentUpdatesSubscription } from '../graphql/subscriptions/knowledgeBaseContentUpdates.api'
+
+import type { KnowledgeBaseIconSet } from '../types.ts'
 
 export const useKnowledgeBaseStore = defineStore('knowledgeBase', () => {
   const router = useRouter()

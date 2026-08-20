@@ -57,4 +57,18 @@ describe('KnowledgeBaseIconStatus', () => {
 
     expect(wrapper.getByLabelText(label)).toBeInTheDocument()
   })
+
+  it('supports two layouts', async () => {
+    const wrapper = renderStatus({ status: 'published', horizontal: true })
+
+    const container = wrapper.container.querySelector('div')!
+
+    expect(container).toHaveClass('flex')
+    expect(container).not.toHaveClass('relative')
+
+    await wrapper.rerender({ horizontal: false })
+
+    expect(container).not.toHaveClass('flex')
+    expect(container).toHaveClass('relative')
+  })
 })

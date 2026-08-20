@@ -117,17 +117,30 @@ class Service::KnowledgeBase::CategoryContent < Service::Base
   #   children and the breadcrumb (so the header has the current category's own
   #   counts) — keyed by category id.
   def category_details
-    (visible_child_categories + breadcrumb).uniq(&:id).to_h do |cat|
-      subtree = subtree_ids[cat.id]
+    (visible_child_categories + breadcrumb).uniq(&:id).to_h { |cat| [cat.id, detail_of(cat.id)] }
+  end
 
-      [cat.id, {
-        answer_count:             subtree.sum { |id| visible_answer_counts[id].to_i },
-        subcategory_count:        (subtree - [cat.id]).count { |id| visible_category_ids.include?(id) },
-        direct_answer_count:      visible_answer_counts[cat.id].to_i,
-        direct_subcategory_count: Array(children_by_parent[cat.id]).count { |child| visible_category_ids.include?(child.id) },
-        visibility:               visibility_of(cat.id),
-      }]
-    end
+  def detail_of(id)
+    {
+      answer_count:             subtree_answer_count(id),
+      subcategory_count:        subtree_subcategory_count(id),
+      direct_answer_count:      visible_answer_counts[id].to_i,
+      direct_subcategory_count: visible_children_count(id),
+      visibility:               visibility_of(id),
+      deletable:                empty_category?(id),
+    }
+  end
+
+  def subtree_answer_count(id)
+    subtree_ids[id].sum { |subtree_id| visible_answer_counts[subtree_id].to_i }
+  end
+
+  def subtree_subcategory_count(id)
+    (subtree_ids[id] - [id]).count { |subtree_id| visible_category_ids.include?(subtree_id) }
+  end
+
+  def visible_children_count(id)
+    Array(children_by_parent[id]).count { |child| visible_category_ids.include?(child.id) }
   end
 
   def all_categories
@@ -164,6 +177,22 @@ class Service::KnowledgeBase::CategoryContent < Service::Base
   def visible_answer_counts
     @visible_answer_counts ||= ::KnowledgeBase::Answer
       .visible_to_user(current_user, kb_locale: locale)
+      .where(category_id: all_category_ids)
+      .group(:category_id)
+      .count
+  end
+
+  # Whether a category holds nothing at all, which is what `destroy!` requires — the
+  #   backing data for `isDeletable`.
+  def empty_category?(id)
+    Array(children_by_parent[id]).empty? && total_answer_counts[id].nil?
+  end
+
+  # Answers per category regardless of visibility, for the emptiness check above:
+  #   `destroy!` is refused by any answer below the category, including ones the current
+  #   user may not see — so the visible counts above cannot answer it.
+  def total_answer_counts
+    @total_answer_counts ||= ::KnowledgeBase::Answer
       .where(category_id: all_category_ids)
       .group(:category_id)
       .count

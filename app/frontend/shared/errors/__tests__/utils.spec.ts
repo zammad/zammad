@@ -4,7 +4,7 @@ import { ApolloError } from '@apollo/client/errors'
 
 import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
 import UserError from '#shared/errors/UserError.ts'
-import { handleUserErrors } from '#shared/errors/utils.ts'
+import { handleUserErrors, remapUserErrorFields } from '#shared/errors/utils.ts'
 
 describe('errpr utils', () => {
   describe('handleUserErrors', () => {
@@ -39,6 +39,43 @@ describe('errpr utils', () => {
       const { notifications } = useNotifications()
 
       expect(notifications.value.length).toBe(0)
+    })
+  })
+
+  describe('remapUserErrorFields', () => {
+    it('relabels the listed fields and leaves the others alone', () => {
+      const remapped = remapUserErrorFields(
+        new UserError([
+          { field: 'translations.title', message: 'has to be unique' },
+          { field: 'category_icon', message: 'is required' },
+          { field: null, message: 'Something went wrong.' },
+        ]),
+        { 'translations.title': 'title' },
+      )
+
+      expect(remapped.errors).toEqual([
+        { field: 'title', message: 'has to be unique' },
+        { field: 'category_icon', message: 'is required' },
+        { field: null, message: 'Something went wrong.' },
+      ])
+    })
+
+    // The notification the error may also raise is keyed by this id, so relabeling must not
+    //   turn one failed submit into a second toast.
+    it('keeps the user error id', () => {
+      const userError = new UserError([
+        { field: 'translations.title', message: 'has to be unique' },
+      ])
+
+      expect(remapUserErrorFields(userError, { 'translations.title': 'title' }).userErrorId).toBe(
+        userError.userErrorId,
+      )
+    })
+
+    it('passes anything that is not a user error through unchanged', () => {
+      const error = new ApolloError({ errorMessage: 'Some error' })
+
+      expect(remapUserErrorFields(error, { 'translations.title': 'title' })).toBe(error)
     })
   })
 })

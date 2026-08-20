@@ -32,7 +32,12 @@ describe('knowledgeBaseBreadcrumbItems', () => {
     const items = knowledgeBaseBreadcrumbItems({ localeCode: 'en-us' })
 
     expect(items).toHaveLength(1)
-    expect(items[0]).toMatchObject({ label: 'Knowledge Base Home', icon: 'book', iconOnly: true })
+    expect(items[0]).toMatchObject({
+      label: 'Knowledge Base Home',
+      icon: 'book',
+      iconOnly: true,
+      noOptionLabelTranslation: false,
+    })
     expect(items[0].route).toBeUndefined()
   })
 

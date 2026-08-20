@@ -19,8 +19,8 @@ import {
   waitForKnowledgeBaseCategorySubcategoriesQueryCalls,
 } from '#desktop/entities/knowledge-base/graphql/queries/knowledgeBaseCategorySubcategories.mocks.ts'
 import { getKnowledgeBaseContentUpdatesSubscriptionHandler } from '#desktop/entities/knowledge-base/graphql/subscriptions/knowledgeBaseContentUpdates.mocks.ts'
+import { useKnowledgeBaseStore } from '#desktop/entities/knowledge-base/stores/knowledgeBase.ts'
 
-import { useKnowledgeBaseStore } from '../../../../entities/knowledge-base/stores/knowledgeBase.ts'
 import { useKnowledgeBaseCategorySubcategories } from '../useKnowledgeBaseCategorySubcategories.ts'
 
 const KB_ID = convertToGraphQLId('KnowledgeBase', 1)

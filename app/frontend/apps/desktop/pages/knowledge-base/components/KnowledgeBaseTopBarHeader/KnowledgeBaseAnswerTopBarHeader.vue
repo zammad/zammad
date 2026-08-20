@@ -9,6 +9,8 @@ import { useRouter } from 'vue-router'
 import { EnumKnowledgeBaseVisibility } from '#shared/graphql/types.ts'
 
 import { usePage } from '#desktop/composables/usePage.ts'
+import { useKnowledgeBaseAccess } from '#desktop/entities/knowledge-base/composables/useKnowledgeBaseAccess.ts'
+import { useKnowledgeBaseStore } from '#desktop/entities/knowledge-base/stores/knowledgeBase.ts'
 import { knowledgeBaseAnswerRoute } from '#desktop/entities/knowledge-base/utils/routeLocation.ts'
 import KnowledgeBaseAnswerHeaderDetails from '#desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerHeaderDetails.vue'
 import KnowledgeBaseAnswerStepper from '#desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerStepper.vue'
@@ -17,8 +19,6 @@ import TopBarHeaderFull from '#desktop/pages/knowledge-base/components/Knowledge
 import TopBarHeaderFullSkeleton from '#desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderFullSkeleton.vue'
 import TopBarHeaderShell from '#desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderShell.vue'
 
-import { useKnowledgeBaseAccess } from '../../../../entities/knowledge-base/composables/useKnowledgeBaseAccess.ts'
-import { useKnowledgeBaseStore } from '../../../../entities/knowledge-base/stores/knowledgeBase.ts'
 import { knowledgeBasePreviewUrl } from '../../composables/useKnowledgeBasePreviewUrl.ts'
 import { knowledgeBaseBreadcrumbItems } from '../../utils/knowledgeBaseBreadcrumbItems.ts'
 

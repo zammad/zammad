@@ -5,9 +5,9 @@ import { join } from 'node:path'
 
 import { renderComponent, type ExtendedRenderResult } from '#tests/support/components/index.ts'
 
-import KnowledgeBaseCategoryIcon from '../KnowledgeBaseCategoryIcon.vue'
+import type { KnowledgeBaseIconSet } from '#desktop/entities/knowledge-base/types.ts'
 
-import type { KnowledgeBaseIconSet } from '../../types.ts'
+import KnowledgeBaseCategoryIcon from '../KnowledgeBaseCategoryIcon.vue'
 
 const iconSets: KnowledgeBaseIconSet[] = [
   'anticon',
@@ -84,5 +84,12 @@ describe('KnowledgeBaseCategoryIcon', () => {
 
     expect(getIcon(wrapper)).toHaveAttribute('aria-hidden', 'true')
     expect(getIcon(wrapper)).not.toHaveAccessibleName()
+  })
+
+  it('carries an accessible name when it stands in for a label', () => {
+    const wrapper = renderIcon({ label: 'Folder Open' })
+
+    expect(getIcon(wrapper)).not.toHaveAttribute('aria-hidden')
+    expect(getIcon(wrapper)).toHaveAccessibleName('Folder Open')
   })
 })

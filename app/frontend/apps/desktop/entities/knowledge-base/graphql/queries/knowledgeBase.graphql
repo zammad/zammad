@@ -2,9 +2,15 @@ query knowledgeBase($locale: String) {
   knowledgeBase(locale: $locale) {
     id
     title
+    footerNote
     iconset
     isPubliclyAvailable
     isVisiblePublicly
+    # Editor access to the knowledge base itself, which is what gates adding a top level
+    #   category (its parent is the knowledge base).
+    policy {
+      update
+    }
     kbLocales {
       id
       primary

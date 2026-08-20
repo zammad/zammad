@@ -25,6 +25,7 @@ export const knowledgeBaseBreadcrumbItems = ({
   const items: KnowledgeBaseBreadcrumbItem[] = [
     {
       label: __('Knowledge Base Home') as string,
+      noOptionLabelTranslation: false, // only the root is translated, the rest is user content
       icon: 'book',
       iconOnly: true,
       // Link back to the localized root only while browsing below it.

@@ -47,12 +47,14 @@ import CommonTableSkeleton from '#desktop/components/CommonTable/Skeleton/Common
 import type { TableAdvancedItem } from '#desktop/components/CommonTable/types.ts'
 import CommonNavigationTabs from '#desktop/components/CommonTabs/CommonNavigationTabs/CommonNavigationTabs.vue'
 import CommonTabGroup from '#desktop/components/CommonTabs/CommonTabGroup/CommonTabGroup.vue'
+import {
+  KnowledgeBaseAccess,
+  type KnowledgeBasePermissionRow,
+} from '#desktop/components/Form/fields/FieldKnowledgeBasePermissions/types.ts'
 import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
 import SplitButton from '#desktop/components/SplitButton/SplitButton.vue'
 import ThemeSwitch from '#desktop/components/ThemeSwitch/ThemeSwitch.vue'
 import UserPopoverWithTrigger from '#desktop/components/User/UserPopoverWithTrigger.vue'
-// eslint-disable-next-line import/no-restricted-paths
-import KnowledgeBaseCategoryIcon from '#desktop/pages/knowledge-base/components/KnowledgeBaseCategoryIcon.vue'
 
 const alphabetOptions = computed(() =>
   [...Array(26).keys()].map((i) => ({
@@ -531,6 +533,27 @@ const buttonGroupOptions: CommonButtonItem[] = [
 
 const application = useApplicationStore()
 
+// The second role shows a locked row: it inherits editor from the parent, so nothing below
+//   may override it.
+const kbPermissionRows: KnowledgeBasePermissionRow[] = [
+  {
+    roleId: '1',
+    roleName: 'Admin',
+    inheritedAccess: null,
+    allowedAccesses: [
+      KnowledgeBaseAccess.Editor,
+      KnowledgeBaseAccess.Reader,
+      KnowledgeBaseAccess.None,
+    ],
+  },
+  {
+    roleId: '2',
+    roleName: 'Agent',
+    inheritedAccess: KnowledgeBaseAccess.Editor,
+    allowedAccesses: [KnowledgeBaseAccess.Editor],
+  },
+]
+
 const formSchema = defineFormSchema([
   {
     type: 'rating',
@@ -651,6 +674,28 @@ const formSchema = defineFormSchema([
           }
         }
       `,
+    },
+  },
+  {
+    type: 'kbCategoryIcon',
+    name: 'kb_category_icon',
+    label: 'Knowledge Base Category Icon',
+    props: {
+      // Pinned, so the catalog does not depend on how the knowledge base is themed.
+      iconSet: 'FontAwesome',
+    },
+    value: 'f115',
+  },
+  {
+    type: 'kbPermissions',
+    name: 'kb_permissions',
+    label: 'Knowledge Base Permissions',
+    props: {
+      permissionRows: kbPermissionRows,
+    },
+    value: {
+      '1': 'editor',
+      '2': 'editor',
     },
   },
   {
@@ -1419,14 +1464,6 @@ const { openFeedbackDialog } = useFeedbackDialog()
 <template>
   <LayoutContent>
     <div>
-      <h3>Knowledge Base Category Icons</h3>
-      <div class="mb-4 flex space-x-2 text-blue-800">
-        <KnowledgeBaseCategoryIcon name="e699" set="anticon" size="small" />
-        <KnowledgeBaseCategoryIcon name="f115" set="FontAwesome" size="small" />
-        <KnowledgeBaseCategoryIcon name="f38a" set="ionicons" size="small" />
-        <KnowledgeBaseCategoryIcon name="e94d" set="material" size="small" />
-        <KnowledgeBaseCategoryIcon name="e039" set="Simple-Line-Icons" size="small" />
-      </div>
       <h3>Notifications / Alerts</h3>
       <div class="mb-4 space-x-2">
         <CommonButton
@@ -1697,6 +1734,13 @@ const { openFeedbackDialog } = useFeedbackDialog()
 
       <div>
         <h2>Labels</h2>
+
+        <CommonLabel size="xs" prefix-icon="logo" suffix-icon="logo-flat">
+          Extra small
+        </CommonLabel>
+
+        <br />
+
         <CommonLabel size="small" prefix-icon="logo" suffix-icon="logo-flat"> Small </CommonLabel>
 
         <br />

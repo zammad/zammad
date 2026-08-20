@@ -2,6 +2,8 @@
 
 module Gql::Types
   class Policy::DefaultType < Gql::Types::BaseObject
+    include Gql::Types::Policy::Concerns::HasPunditQueries
+
     description 'Access Pundit policy queries for the current object and user.'
 
     # `read` is implicit, as the record cannot be fetched without it.
@@ -14,22 +16,6 @@ module Gql::Types
 
     def destroy
       pundit(:destroy?)
-    end
-
-    private
-
-    def pundit(query)
-      Pundit.authorize(user, record, query)
-    rescue Pundit::NotAuthorizedError
-      false
-    end
-
-    def record
-      @object
-    end
-
-    def user
-      context.current_user
     end
   end
 end

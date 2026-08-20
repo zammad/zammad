@@ -4,6 +4,11 @@ query knowledgeBaseCategorySubcategories($categoryId: ID, $locale: String) {
       id
       isVisiblePublicly
       translationMissing
+      # Whether the category holds no children or answers at all — deliberately not derived
+      #   from the user-visible counts, which can read zero on a category the backend will
+      #   still refuse to delete.
+      isDeletable
+      ...knowledgeBaseCategoryPolicy
       ...knowledgeBaseCategoryPreInfo
     }
     subcategories {
@@ -15,6 +20,8 @@ query knowledgeBaseCategorySubcategories($categoryId: ID, $locale: String) {
       answerCount
       subcategoryCount
       position
+      isDeletable
+      ...knowledgeBaseCategoryPolicy
       ...knowledgeBaseCategoryPreInfo
     }
   }

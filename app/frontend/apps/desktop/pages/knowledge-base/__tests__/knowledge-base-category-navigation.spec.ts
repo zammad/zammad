@@ -28,6 +28,15 @@ import {
 const ROOT_CATEGORY_ID = convertToGraphQLId('KnowledgeBase::Category', 1)
 const CHILD_CATEGORY_ID = convertToGraphQLId('KnowledgeBase::Category', 2)
 
+// The view scrolls its content container through scrollIntoView; mock it so the calls can be
+//   asserted without a real scroller.
+const scrollIntoViewMock = vi.hoisted(() => vi.fn())
+
+vi.mock('#shared/utils/dom.ts', async (importOriginal) => ({
+  ...(await importOriginal<typeof import('#shared/utils/dom.ts')>()),
+  scrollIntoView: scrollIntoViewMock,
+}))
+
 const category = (
   id: string,
   title: string,
@@ -63,6 +72,7 @@ describe('knowledge base category navigation', () => {
         iconset: 'default',
         isPubliclyAvailable: true,
         isVisiblePublicly: true,
+        policy: { update: true },
         kbLocales: [
           {
             id: convertToGraphQLId('KnowledgeBase::Locale', 1),
@@ -219,6 +229,78 @@ describe('knowledge base category navigation', () => {
     await waitFor(() => {
       expect(view.queryByText('Child Category'), 'left the category').not.toBeInTheDocument()
     })
+  })
+
+  it('starts the opened category at the top of the page', async () => {
+    const view = await visitView('/knowledge-base')
+
+    await view.events.click(await view.findByText('Root Category'))
+
+    await waitFor(() => {
+      expect(
+        scrollIntoViewMock,
+        'scrolled the content container back to the top',
+      ).toHaveBeenCalledWith(expect.anything(), 'start', { behavior: 'instant' })
+    })
+  })
+
+  // Only the knowledge base root stretches its (empty) grid to fill the page, for its empty state.
+  //   In a category with nothing in the grid — no subcategories, and no add card for a reader or a
+  //   public visitor — stretching would push the answers below the fold.
+  it('keeps the empty category grid from stretching above the answers', async () => {
+    mockKnowledgeBaseCategorySubcategoriesQuery({
+      knowledgeBaseCategorySubcategories: {
+        category: {
+          id: CHILD_CATEGORY_ID,
+          translationMissing: false,
+          breadcrumb: [{ id: CHILD_CATEGORY_ID, title: 'Child Category' }],
+          policy: { update: false, destroy: false, createSubcategory: false },
+        },
+        subcategories: [],
+      },
+    })
+
+    const view = await visitView(
+      `/knowledge-base/locale/en-us/category/${getIdFromGraphQLId(CHILD_CATEGORY_ID)}`,
+    )
+
+    const answers = await view.findByText('Getting Started')
+
+    expect(view.container.querySelector('ol.grid'), 'no grid above them').toBeNull()
+    expect(answers.closest('section'), 'section does not grow').not.toHaveClass('grow')
+  })
+
+  // The counterpart of the above: the root does stretch, because that is what centers its empty
+  //   state on the page.
+  it('shows the empty state at the root when there is nothing to list', async () => {
+    mockKnowledgeBaseQuery({
+      knowledgeBase: {
+        id: convertToGraphQLId('KnowledgeBase', 1),
+        title: 'My Knowledge Base',
+        iconset: 'default',
+        // No add card for a visitor who may not create a top level category.
+        policy: { update: false },
+        kbLocales: [
+          {
+            id: convertToGraphQLId('KnowledgeBase::Locale', 1),
+            primary: true,
+            systemLocale: { id: '1', locale: 'en-us', name: 'English (United States)' },
+          },
+        ],
+        currentLocale: {
+          id: convertToGraphQLId('KnowledgeBase::Locale', 1),
+          systemLocale: { id: '1', locale: 'en-us' },
+        },
+      },
+    })
+
+    mockKnowledgeBaseCategorySubcategoriesQuery({
+      knowledgeBaseCategorySubcategories: { category: null, subcategories: [] },
+    })
+
+    const view = await visitView('/knowledge-base')
+
+    expect(await view.findByText('No knowledge base content is available yet.')).toBeInTheDocument()
   })
 
   it('can navigate away from the knowledge base without being redirected back', async () => {

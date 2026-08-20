@@ -8,8 +8,7 @@ import { GraphQLErrorTypes } from '#shared/types/error.ts'
 import { normalizeEdges } from '#shared/utils/helpers.ts'
 
 import { useKnowledgeBaseAnswersQuery } from '#desktop/entities/knowledge-base/graphql/queries/knowledgeBaseAnswers.api.ts'
-
-import { useKnowledgeBaseStore } from '../../../entities/knowledge-base/stores/knowledgeBase.ts'
+import { useKnowledgeBaseStore } from '#desktop/entities/knowledge-base/stores/knowledgeBase.ts'
 
 const ANSWERS_PAGE_SIZE = 30
 
@@ -41,11 +40,10 @@ export const useKnowledgeBaseAnswers = (options: {
   const result = answersQuery.result()
   const loading = answersQuery.loadingWithoutCachedResult()
 
-  // A disabled query keeps its last result, so without gating on `categoryId`
-  //   the previously opened category's answers would linger at the knowledge
-  const connection = computed(() =>
-    normalizeEdges(categoryId.value ? result.value?.knowledgeBaseAnswers : undefined),
-  )
+  // No stale-result gating needed: the browse view keys this composable's component by
+  //   category and locale, so an instance only ever sees the arguments it was created
+  //   with — a different list is a different instance.
+  const connection = computed(() => normalizeEdges(result.value?.knowledgeBaseAnswers))
   const answers = computed(() => connection.value.array)
   const totalAnswerCount = computed(() => connection.value.totalCount)
 
@@ -66,14 +64,11 @@ export const useKnowledgeBaseAnswers = (options: {
     //   happened directly in this category — the payload lists the changed
     //   record's category first, then its ancestors, so a change in a
     //   descendant (this category only as an ancestor) does not match.
-    // Pin the refetch to the current reactive args explicitly: Vue only pushes
-    //   a changed `categoryId`/`locale` into the underlying query on its next
-    //   reactivity flush, so a ping arriving in the same tick as a category or
-    //   locale switch would otherwise refetch with the args being navigated
-    //   away from.
     if (affected.length === 0 || affected[0] === categoryId.value) {
+      // Pin the refetch to the current args explicitly, like the sibling composables do, rather
+      //   than relying on what the reactive query function last pushed into the query.
       answersQuery.refetch({
-        categoryId: categoryId.value as string,
+        categoryId: categoryId.value,
         locale: locale?.value,
         pageSize: ANSWERS_PAGE_SIZE,
       })

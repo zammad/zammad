@@ -9,9 +9,8 @@ import CommonIcon from '#shared/components/CommonIcon/CommonIcon.vue'
 import CommonLabel from '#shared/components/CommonLabel/CommonLabel.vue'
 
 import KnowledgeBaseAnswerIcon from '#desktop/components/KnowledgeBaseAnswerIcon/KnowledgeBaseAnswerIcon.vue'
+import { useKnowledgeBaseStore } from '#desktop/entities/knowledge-base/stores/knowledgeBase.ts'
 import { knowledgeBaseAnswerRoute } from '#desktop/entities/knowledge-base/utils/routeLocation.ts'
-
-import { useKnowledgeBaseStore } from '../../../../entities/knowledge-base/stores/knowledgeBase.ts'
 
 import type { KnowledgeBaseAnswerCompact } from '../../types.ts'
 

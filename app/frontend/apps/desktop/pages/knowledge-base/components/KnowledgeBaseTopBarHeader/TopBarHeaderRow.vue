@@ -3,6 +3,7 @@
 <script setup lang="ts">
 import { toRef } from 'vue'
 
+import CommonActionMenu from '#desktop/components/CommonActionMenu/CommonActionMenu.vue'
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonDropdown from '#desktop/components/CommonDropdown/CommonDropdown.vue'
 import type { DropdownItem } from '#desktop/components/CommonDropdown/types.ts'
@@ -98,15 +99,16 @@ const { copyKnowledgeBaseNameToClipboard } = useTopBarHeader(toRef(props))
       </template>
     </CommonDropdown>
 
-    <!-- :TODO -->
-    <!-- <CommonActionMenu
-            button-size="medium"
-            role="presentation"
-            class="flex! h-full items-center"
-            :custom-menu-button-label="$t('Additional actions')"
-            no-single-action-mode
-            placement="end"
-            hide-arrow
-          /> -->
+    <CommonActionMenu
+      v-if="actions?.length"
+      :actions="actions"
+      button-size="medium"
+      role="presentation"
+      class="flex! h-full items-center"
+      :custom-menu-button-label="$t('Additional actions')"
+      no-single-action-mode
+      placement="end"
+      hide-arrow
+    />
   </div>
 </template>

@@ -298,6 +298,30 @@ export type AutocompleteSearchKnowledgeBaseAnswerInput = {
   query: Scalars['String']['input'];
 };
 
+/** Type that represents an autocomplete knowledge base category icon entry. Its `value` is the codepoint stored on the category, which doubles as the sprite symbol id. */
+export type AutocompleteSearchKnowledgeBaseCategoryIconEntry = {
+  __typename?: 'AutocompleteSearchKnowledgeBaseCategoryIconEntry';
+  disabled?: Maybe<Scalars['Boolean']['output']>;
+  heading?: Maybe<Scalars['String']['output']>;
+  headingPlaceholder?: Maybe<Array<Scalars['String']['output']>>;
+  icon?: Maybe<Scalars['String']['output']>;
+  /** Icon font the entry was found in, needed to render it from the correct sprite */
+  iconSet: Scalars['KnowledgeBaseIconSet']['output'];
+  label: Scalars['String']['output'];
+  labelPlaceholder?: Maybe<Array<Scalars['String']['output']>>;
+  value: Scalars['String']['output'];
+};
+
+/** Input fields for knowledge base category icon autocomplete searches. */
+export type AutocompleteSearchKnowledgeBaseCategoryIconInput = {
+  /** Icon font of the knowledge base the category belongs to, selecting the catalog to search */
+  iconSet: Scalars['KnowledgeBaseIconSet']['input'];
+  /** Limit for the amount of entries */
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  /** Query from the autocomplete field */
+  query: Scalars['String']['input'];
+};
+
 /** Input fields for object attribute external data source autocomplete searches. */
 export type AutocompleteSearchObjectAttributeExternalDataSourceInput = {
   /** Name of the object attribute */
@@ -911,6 +935,9 @@ export enum EnumFormUpdaterId {
   FormUpdaterUpdaterGuidedSetupEmailInbound = 'FormUpdater__Updater__GuidedSetup__EmailInbound',
   FormUpdaterUpdaterGuidedSetupEmailNotification = 'FormUpdater__Updater__GuidedSetup__EmailNotification',
   FormUpdaterUpdaterGuidedSetupEmailOutbound = 'FormUpdater__Updater__GuidedSetup__EmailOutbound',
+  FormUpdaterUpdaterKnowledgeBaseCategoryCreate = 'FormUpdater__Updater__KnowledgeBase__Category__Create',
+  FormUpdaterUpdaterKnowledgeBaseCategoryEdit = 'FormUpdater__Updater__KnowledgeBase__Category__Edit',
+  FormUpdaterUpdaterKnowledgeBaseEdit = 'FormUpdater__Updater__KnowledgeBase__Edit',
   FormUpdaterUpdaterOrganizationEdit = 'FormUpdater__Updater__Organization__Edit',
   FormUpdaterUpdaterSearchAdvancedFilters = 'FormUpdater__Updater__Search__AdvancedFilters',
   FormUpdaterUpdaterTicketBulkEdit = 'FormUpdater__Updater__Ticket__BulkEdit',
@@ -922,6 +949,16 @@ export enum EnumFormUpdaterId {
   FormUpdaterUpdaterUserEdit = 'FormUpdater__Updater__User__Edit',
   FormUpdaterUpdaterUserInvite = 'FormUpdater__Updater__User__Invite',
   FormUpdaterUpdaterUserNotifications = 'FormUpdater__Updater__User__Notifications'
+}
+
+/** Access level a role has on a knowledge base object */
+export enum EnumKnowledgeBasePermissionAccess {
+  /** May read and edit the content. */
+  Editor = 'editor',
+  /** Has no access at all. */
+  None = 'none',
+  /** May read the content, including internally published answers. */
+  Reader = 'reader'
 }
 
 /** Publication state used for color-coding knowledge base content */
@@ -1399,6 +1436,8 @@ export type KnowledgeBase = {
   /** Locale the content resolved to (requested, else user-preferred, else primary) */
   currentLocale?: Maybe<KnowledgeBaseLocale>;
   customAddress?: Maybe<Scalars['String']['output']>;
+  /** Footer note in the requested locale (falls back to the primary locale) */
+  footerNote?: Maybe<Scalars['String']['output']>;
   homepageLayout: Scalars['String']['output'];
   iconset: Scalars['String']['output'];
   id: Scalars['ID']['output'];
@@ -1408,6 +1447,8 @@ export type KnowledgeBase = {
   isVisiblePublicly: Scalars['Boolean']['output'];
   /** Available locales, used for the language selector */
   kbLocales: Array<KnowledgeBaseLocale>;
+  /** Which actions the current user may perform on this knowledge base, including adding a top level category */
+  policy: PolicyKnowledgeBase;
   /** Title in the requested locale (falls back to the primary locale) */
   title?: Maybe<Scalars['String']['output']>;
   /** Last update date/time of the record */
@@ -1572,12 +1613,16 @@ export type KnowledgeBaseCategory = {
   /** Icon font of the knowledge base this category belongs to, needed to render `categoryIcon` */
   iconSet: Scalars['KnowledgeBaseIconSet']['output'];
   id: Scalars['ID']['output'];
+  /** Whether this category is empty, i.e. whether deleting it would be refused because of subcategories or answers below it */
+  isDeletable: Scalars['Boolean']['output'];
   /** Whether this category shows published content in the requested locale on the public help site (drives the "view public knowledge base" link) */
   isVisiblePublicly: Scalars['Boolean']['output'];
   /** resolver for Rails' belongs_to relationship */
   knowledgeBase: KnowledgeBase;
   /** resolver for Rails' belongs_to relationship */
   parent?: Maybe<KnowledgeBaseCategory>;
+  /** Which actions the current user may perform on this category */
+  policy: PolicyKnowledgeBaseCategory;
   position: Scalars['Int']['output'];
   /** Number of categories visible to the current user in this category and its whole subtree */
   subcategoryCount: Scalars['Int']['output'];
@@ -1590,6 +1635,36 @@ export type KnowledgeBaseCategory = {
   updatedAt: Scalars['ISO8601DateTime']['output'];
   /** Highest visibility of the content in this category and its subtree, in the requested locale (untranslated content counts as draft) */
   visibility: EnumKnowledgeBaseVisibility;
+};
+
+/** Autogenerated return type of KnowledgeBaseCategoryAdd. */
+export type KnowledgeBaseCategoryAddPayload = {
+  __typename?: 'KnowledgeBaseCategoryAddPayload';
+  /** The created category. */
+  category?: Maybe<KnowledgeBaseCategory>;
+  /** Errors encountered during execution of the mutation. */
+  errors?: Maybe<Array<UserError>>;
+};
+
+/** Autogenerated return type of KnowledgeBaseCategoryDelete. */
+export type KnowledgeBaseCategoryDeletePayload = {
+  __typename?: 'KnowledgeBaseCategoryDeletePayload';
+  /** Errors encountered during execution of the mutation. */
+  errors?: Maybe<Array<UserError>>;
+  /** Was the mutation successful? */
+  success?: Maybe<Scalars['Boolean']['output']>;
+};
+
+/** Represents the knowledge base category attributes to be used in create and update. */
+export type KnowledgeBaseCategoryInput = {
+  /** Icon of the category, from the icon set of its knowledge base. Defaults to the knowledge base default icon on create. */
+  categoryIcon?: InputMaybe<Scalars['String']['input']>;
+  /** Category this category belongs under. Pass `null` for the top level, omit it to leave the parent unchanged. */
+  parentId?: InputMaybe<Scalars['ID']['input']>;
+  /** Granular access per role, applied in the same transaction as the category itself. Omitted leaves the stored permissions alone, an empty list drops all of them (everything is then inherited). */
+  permissions?: InputMaybe<Array<KnowledgeBaseRolePermissionInput>>;
+  /** Title of the category in the locale of this mutation. */
+  title?: InputMaybe<Scalars['NonEmptyString']['input']>;
 };
 
 /** Autogenerated return type of KnowledgeBaseCategorySubcategories. */
@@ -1616,6 +1691,15 @@ export type KnowledgeBaseCategoryTranslation = {
   updatedAt: Scalars['ISO8601DateTime']['output'];
 };
 
+/** Autogenerated return type of KnowledgeBaseCategoryUpdate. */
+export type KnowledgeBaseCategoryUpdatePayload = {
+  __typename?: 'KnowledgeBaseCategoryUpdatePayload';
+  /** The updated category. */
+  category?: Maybe<KnowledgeBaseCategory>;
+  /** Errors encountered during execution of the mutation. */
+  errors?: Maybe<Array<UserError>>;
+};
+
 /** Autogenerated return type of KnowledgeBaseContentUpdates. */
 export type KnowledgeBaseContentUpdatesPayload = {
   __typename?: 'KnowledgeBaseContentUpdatesPayload';
@@ -1623,6 +1707,16 @@ export type KnowledgeBaseContentUpdatesPayload = {
   affectedCategoryIds?: Maybe<Array<Scalars['ID']['output']>>;
   /** The active knowledge base */
   knowledgeBase?: Maybe<KnowledgeBase>;
+};
+
+/** Represents the knowledge base attributes to be used in update. */
+export type KnowledgeBaseInput = {
+  /** Footer note of the knowledge base in the locale of this mutation. */
+  footerNote: Scalars['NonEmptyString']['input'];
+  /** Granular access per role, applied in the same transaction as the knowledge base itself. Omitted leaves the stored permissions alone, an empty list drops all of them. */
+  permissions?: InputMaybe<Array<KnowledgeBaseRolePermissionInput>>;
+  /** Title of the knowledge base in the locale of this mutation. */
+  title: Scalars['NonEmptyString']['input'];
 };
 
 /** Knowledge Base Locale */
@@ -1638,6 +1732,23 @@ export type KnowledgeBaseLocale = {
   systemLocale: Locale;
   /** Last update date/time of the record */
   updatedAt: Scalars['ISO8601DateTime']['output'];
+};
+
+/** Represents the access one role is granted on a knowledge base object. */
+export type KnowledgeBaseRolePermissionInput = {
+  /** Access level to grant the role. */
+  access: EnumKnowledgeBasePermissionAccess;
+  /** Role the access applies to. */
+  roleId: Scalars['ID']['input'];
+};
+
+/** Autogenerated return type of KnowledgeBaseUpdate. */
+export type KnowledgeBaseUpdatePayload = {
+  __typename?: 'KnowledgeBaseUpdatePayload';
+  /** Errors encountered during execution of the mutation. */
+  errors?: Maybe<Array<UserError>>;
+  /** The updated knowledge base. */
+  knowledgeBase?: Maybe<KnowledgeBase>;
 };
 
 /** Links between objects */
@@ -1859,6 +1970,14 @@ export type Mutations = {
   guidedSetupSetSystemInformation?: Maybe<GuidedSetupSetSystemInformationPayload>;
   /** Transform the content of a knowledge base answer suggestion to be usable in the frontend */
   knowledgeBaseAnswerSuggestionContentTransform?: Maybe<KnowledgeBaseAnswerSuggestionContentTransformPayload>;
+  /** Create a knowledge base category. */
+  knowledgeBaseCategoryAdd?: Maybe<KnowledgeBaseCategoryAddPayload>;
+  /** Delete an empty knowledge base category. */
+  knowledgeBaseCategoryDelete?: Maybe<KnowledgeBaseCategoryDeletePayload>;
+  /** Update a knowledge base category. */
+  knowledgeBaseCategoryUpdate?: Maybe<KnowledgeBaseCategoryUpdatePayload>;
+  /** Update the knowledge base. */
+  knowledgeBaseUpdate?: Maybe<KnowledgeBaseUpdatePayload>;
   /** Add a link between objects */
   linkAdd?: Maybe<LinkAddPayload>;
   /** Remove link between objects */
@@ -2147,6 +2266,35 @@ export type MutationsGuidedSetupSetSystemInformationArgs = {
 export type MutationsKnowledgeBaseAnswerSuggestionContentTransformArgs = {
   formId: Scalars['FormId']['input'];
   translationId: Scalars['ID']['input'];
+};
+
+
+/** All available mutations */
+export type MutationsKnowledgeBaseCategoryAddArgs = {
+  input: KnowledgeBaseCategoryInput;
+  knowledgeBaseId: Scalars['ID']['input'];
+  locale: Scalars['String']['input'];
+};
+
+
+/** All available mutations */
+export type MutationsKnowledgeBaseCategoryDeleteArgs = {
+  categoryId: Scalars['ID']['input'];
+};
+
+
+/** All available mutations */
+export type MutationsKnowledgeBaseCategoryUpdateArgs = {
+  categoryId: Scalars['ID']['input'];
+  input: KnowledgeBaseCategoryInput;
+  locale: Scalars['String']['input'];
+};
+
+
+/** All available mutations */
+export type MutationsKnowledgeBaseUpdateArgs = {
+  input: KnowledgeBaseInput;
+  locale: Scalars['String']['input'];
 };
 
 
@@ -3110,6 +3258,26 @@ export type PolicyDefault = {
   update: Scalars['Boolean']['output'];
 };
 
+/** Access knowledge base specific Pundit policy queries for the current object and user. */
+export type PolicyKnowledgeBase = {
+  __typename?: 'PolicyKnowledgeBase';
+  /** Is the user allowed to update this knowledge base? */
+  update: Scalars['Boolean']['output'];
+};
+
+/** Access knowledge base category specific Pundit policy queries for the current object and user. */
+export type PolicyKnowledgeBaseCategory = {
+  __typename?: 'PolicyKnowledgeBaseCategory';
+  /** Is the user allowed to add a category under this category? */
+  createSubcategory: Scalars['Boolean']['output'];
+  /** Is the user allowed to delete this object? */
+  destroy: Scalars['Boolean']['output'];
+  /** Is the user allowed to see and change the permissions of this category? */
+  permissions: Scalars['Boolean']['output'];
+  /** Is the user allowed to update this object? */
+  update: Scalars['Boolean']['output'];
+};
+
 /** Check Pundit policy queries for the mentioned object and user. */
 export type PolicyMentionUserTicketAccess = {
   __typename?: 'PolicyMentionUserTicketAccess';
@@ -3213,6 +3381,8 @@ export type Queries = {
   autocompleteSearchIdoitObjectTypes: Array<AutocompleteSearchEntry>;
   /** Search for knowledge base answers */
   autocompleteSearchKnowledgeBaseAnswer: Array<AutocompleteSearchKnowledgeBaseAnswerEntry>;
+  /** Search for knowledge base category icons */
+  autocompleteSearchKnowledgeBaseCategoryIcon: Array<AutocompleteSearchKnowledgeBaseCategoryIconEntry>;
   /** Search for values in object attributes for external data sources */
   autocompleteSearchObjectAttributeExternalDataSource: Array<AutocompleteSearchExternalDataSourceEntry>;
   /** Search for organizations */
@@ -3381,6 +3551,12 @@ export type QueriesAutocompleteSearchIdoitObjectTypesArgs = {
 /** All available queries */
 export type QueriesAutocompleteSearchKnowledgeBaseAnswerArgs = {
   input: AutocompleteSearchKnowledgeBaseAnswerInput;
+};
+
+
+/** All available queries */
+export type QueriesAutocompleteSearchKnowledgeBaseCategoryIconArgs = {
+  input: AutocompleteSearchKnowledgeBaseCategoryIconInput;
 };
 
 

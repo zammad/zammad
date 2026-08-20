@@ -11,9 +11,8 @@ import { ErrorStatusCodes, GraphQLErrorTypes } from '#shared/types/error.ts'
 
 import { KnowledgeBaseCategoryPreInfoFragmentDoc } from '#desktop/entities/knowledge-base/graphql/fragments/knowledgeBaseCategoryPreInfo.api.ts'
 import { useKnowledgeBaseCategorySubcategoriesQuery } from '#desktop/entities/knowledge-base/graphql/queries/knowledgeBaseCategorySubcategories.api.ts'
+import { useKnowledgeBaseStore } from '#desktop/entities/knowledge-base/stores/knowledgeBase.ts'
 import { knowledgeBaseBrowseRoute } from '#desktop/entities/knowledge-base/utils/routeLocation.ts'
-
-import { useKnowledgeBaseStore } from '../../../entities/knowledge-base/stores/knowledgeBase.ts'
 
 import type { CategoryBreadcrumb } from '../types.ts'
 
@@ -106,6 +105,15 @@ export const useKnowledgeBaseCategorySubcategories = (
   //   False at the root, where no single category is opened.
   const translationMissing = computed(() => Boolean(content.value?.category?.translationMissing))
 
+  // Whether the opened category may be deleted at all — undefined until its own
+  //   query resolves (the pre-info cache does not carry it).
+  const deletable = computed(() => content.value?.category?.isDeletable)
+
+  // Per-record permissions of the opened category, so the header and the add controls
+  //   offer only what this user may actually do here. Undefined at the root and until
+  //   the query resolves.
+  const policy = computed(() => content.value?.category?.policy)
+
   // Refetch on a content update only when it is relevant to what is shown: a
   //   knowledge-base-wide change (empty), or one touching the current category,
   //   a breadcrumb ancestor, or a displayed child (whose subtree counts and
@@ -154,5 +162,7 @@ export const useKnowledgeBaseCategorySubcategories = (
     directSubcategoryCount,
     visiblePublicly,
     translationMissing,
+    deletable,
+    policy,
   }
 }

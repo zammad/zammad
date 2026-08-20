@@ -4,13 +4,19 @@
 import type { Sizes } from '#shared/components/CommonIcon/types.ts'
 import { usePrivateIcon } from '#shared/components/CommonIcon/usePrivateIcon.ts'
 
-import type { KnowledgeBaseIconSet } from '../types.ts'
+import type { KnowledgeBaseIconSet } from '#desktop/entities/knowledge-base/types.ts'
 
 export interface Props {
   name: string
   set: KnowledgeBaseIconSet
   size?: Sizes
   fixedSize?: { width: number; height: number }
+  /**
+   * Accessible name of the icon. Unlike `CommonIcon`, this component is decorative
+   *   unless one is given: its `name` is a bare codepoint, which says nothing, and
+   *   its usual callers pair it with the category title already.
+   */
+  label?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -27,7 +33,8 @@ const { iconClass, finalSize } = usePrivateIcon(props)
     :class="iconClass"
     :width="finalSize.width"
     :height="finalSize.height"
-    aria-hidden="true"
+    :aria-label="label"
+    :aria-hidden="label ? undefined : true"
   >
     <use :href="`/assets/icon-fonts/${props.set}.svg#icon-${props.name}`" />
   </svg>

@@ -17,13 +17,20 @@ module Gql::Types
     field :custom_address, String
 
     field :title, String, null: true, description: 'Title in the requested locale (falls back to the primary locale)'
+    field :footer_note, String, null: true, description: 'Footer note in the requested locale (falls back to the primary locale)'
     field :kb_locales, [Gql::Types::KnowledgeBase::LocaleType], null: false, description: 'Available locales, used for the language selector'
     field :current_locale, Gql::Types::KnowledgeBase::LocaleType, null: true, description: 'Locale the content resolved to (requested, else user-preferred, else primary)'
     field :is_publicly_available, Boolean, null: false, description: 'Whether a public knowledge base with published content is reachable'
     field :is_visible_publicly, Boolean, null: false, description: 'Whether the public help site shows content in the requested locale (drives the "view public knowledge base" link)'
 
+    field :policy, Gql::Types::Policy::KnowledgeBaseType, null: false, method: :itself, description: 'Which actions the current user may perform on this knowledge base, including adding a top level category'
+
     def title
       object.translation_preferred(context[:knowledge_base_locale])&.title
+    end
+
+    def footer_note
+      object.translation_preferred(context[:knowledge_base_locale])&.footer_note
     end
 
     def current_locale

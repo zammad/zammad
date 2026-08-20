@@ -41,6 +41,9 @@ export type AutoCompleteProps = FormFieldContext<{
   multiple?: boolean
   noOptionsLabelTranslation?: boolean
   optionIconComponent?: ConcreteComponent
+  optionComponent?: ConcreteComponent
+  selectedOptionComponent?: ConcreteComponent
+  gridLayout?: boolean
   options?: AutoCompleteOption[]
   belongsToObjectField?: string
   additionalQueryParams?: Record<string, JsonValue> | (() => Record<string, JsonValue>)

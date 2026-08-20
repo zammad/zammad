@@ -24,15 +24,15 @@ export interface Props {
 const props = defineProps<Props>()
 
 const variantClass = computed(() => {
-  if (props.variant === 'secondary') return 'text-blue-800'
-  if (props.variant === 'danger') return 'text-red-500'
+  if (props.variant === 'secondary') return 'text-blue-800 dark:text-blue-800'
+  if (props.variant === 'danger') return 'text-red-500 dark:text-red-500'
   return 'group-hover:text-black dark:group-hover:text-white'
 })
 
 const iconColor = computed(() => {
   if (props.iconClass) return props.iconClass
-  if (props.variant === 'secondary') return 'text-blue-800'
-  if (props.variant === 'danger') return 'text-red-500'
+  if (props.variant === 'secondary') return 'text-blue-800 dark:text-blue-800'
+  if (props.variant === 'danger') return 'text-red-500 dark:text-red-500'
   return 'text-stone-200 dark:text-neutral-500 group-hover:text-black dark:group-hover:text-white'
 })
 </script>

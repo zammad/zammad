@@ -4,13 +4,14 @@ import { getNode } from '@formkit/core'
 import { FormKit } from '@formkit/vue'
 import { getAllByRole, getByRole, getByText, waitFor } from '@testing-library/vue'
 import { cloneDeep } from 'lodash-es'
+import { h } from 'vue'
 
 import { getGraphQLMockCalls } from '#tests/graphql/builders/mocks.ts'
 import { getByIconName } from '#tests/support/components/iconQueries.ts'
 import { renderComponent } from '#tests/support/components/index.ts'
 import { nullableMock, waitForNextTick } from '#tests/support/utils.ts'
 
-import type { SelectValue } from '#shared/components/CommonSelect/types.ts'
+import type { SelectOption, SelectValue } from '#shared/components/CommonSelect/types.ts'
 import { AutocompleteSearchUserDocument } from '#shared/components/Form/fields/FieldCustomer/graphql/queries/autocompleteSearch/user.api.ts'
 import {
   mockAutocompleteSearchUserQuery,
@@ -86,6 +87,36 @@ const testOptions: AutocompleteSearchUserEntry[] = [
     }),
   },
 ]
+
+// A functional component, so that it survives the deep cloning of the render options.
+const CustomOption = (
+  props: { option: SelectOption; selected?: boolean },
+  { emit }: { emit: (event: 'select', option: SelectOption) => void },
+) =>
+  h(
+    'button',
+    {
+      role: 'option',
+      tabindex: '0',
+      'aria-selected': props.selected ?? false,
+      'data-test-id': 'custom-option',
+      onClick: () => emit('select', props.option),
+    },
+    props.option.label,
+  )
+
+CustomOption.props = {
+  option: { type: Object, required: true },
+  selected: { type: Boolean, default: false },
+}
+CustomOption.emits = ['select']
+
+const CustomSelectedOption = (props: { option: SelectOption }) =>
+  h('span', { 'data-test-id': 'custom-selected-option' }, `#${props.option.value}`)
+
+CustomSelectedOption.props = {
+  option: { type: Object, required: true },
+}
 
 const wrapperParameters = {
   form: true,
@@ -1012,6 +1043,101 @@ describe('Form - Field - AutoComplete - Features', () => {
     await wrapper.events.click(wrapper.getByText('Custom Action'))
 
     expect(actionCallbackSpy).toHaveBeenCalledTimes(1)
+  })
+
+  it('supports a custom option component', async () => {
+    const wrapper = renderComponent(FormKit, {
+      ...wrapperParameters,
+      props: {
+        ...testProps,
+        options: testOptions,
+        optionComponent: CustomOption,
+      },
+    })
+
+    await wrapper.events.click(wrapper.getByLabelText('Select…'))
+
+    const dropdown = wrapper.getByRole('menu')
+    const selectOptions = getAllByRole(dropdown, 'option')
+
+    expect(selectOptions).toHaveLength(testOptions.length)
+
+    selectOptions.forEach((selectOption, index) => {
+      expect(selectOption).toHaveAttribute('data-test-id', 'custom-option')
+      expect(selectOption).toHaveTextContent(testOptions[index].label)
+    })
+
+    wrapper.events.click(selectOptions[1])
+
+    await waitFor(() => {
+      expect(wrapper.emitted().inputRaw).toBeTruthy()
+    })
+
+    const emittedInput = wrapper.emitted().inputRaw as Array<Array<InputEvent>>
+
+    expect(emittedInput[0][0]).toBe(testOptions[1].value)
+  })
+
+  it('supports grid layout of options', async () => {
+    const wrapper = renderComponent(FormKit, {
+      ...wrapperParameters,
+      props: {
+        ...testProps,
+        options: testOptions,
+        gridLayout: true,
+      },
+    })
+
+    await wrapper.events.click(wrapper.getByLabelText('Select…'))
+
+    const selectOptions = getAllByRole(wrapper.getByRole('menu'), 'option')
+
+    expect(selectOptions[0].parentElement).toHaveClass('flex', 'flex-wrap')
+  })
+
+  it('supports a custom component for the collapsed single selection', async () => {
+    const wrapper = renderComponent(FormKit, {
+      ...wrapperParameters,
+      props: {
+        ...testProps,
+        options: testOptions,
+        selectedOptionComponent: CustomSelectedOption,
+      },
+    })
+
+    await wrapper.events.click(wrapper.getByLabelText('Select…'))
+
+    wrapper.events.click(getAllByRole(wrapper.getByRole('menu'), 'option')[0])
+
+    await waitFor(() => {
+      expect(wrapper.queryByTestId('custom-selected-option')).toBeInTheDocument()
+    })
+
+    // The custom component replaces the icon and label of the default rendering.
+    expect(wrapper.getByTestId('custom-selected-option')).toHaveTextContent(
+      `#${testOptions[0].value}`,
+    )
+    expect(wrapper.getByRole('listitem')).not.toHaveTextContent(testOptions[0].label)
+  })
+
+  it('renders the label of the collapsed single selection without a custom component', async () => {
+    const wrapper = renderComponent(FormKit, {
+      ...wrapperParameters,
+      props: {
+        ...testProps,
+        options: testOptions,
+      },
+    })
+
+    await wrapper.events.click(wrapper.getByLabelText('Select…'))
+
+    wrapper.events.click(getAllByRole(wrapper.getByRole('menu'), 'option')[0])
+
+    await waitFor(() => {
+      expect(wrapper.getByRole('listitem')).toHaveTextContent(testOptions[0].label)
+    })
+
+    expect(wrapper.queryByTestId('custom-selected-option')).not.toBeInTheDocument()
   })
 })
 

@@ -1,28 +1,18 @@
 <!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed, type ConcreteComponent } from 'vue'
+import { computed } from 'vue'
 
 import type { MatchedSelectOption, SelectOption } from '#shared/components/CommonSelect/types.ts'
 import type { AutoCompleteOption } from '#shared/components/Form/fields/FieldAutocomplete/types'
 import { i18n } from '#shared/i18n.ts'
 import { useLocaleStore } from '#shared/stores/locale.ts'
 
-const props = defineProps<{
-  option: AutoCompleteOption | MatchedSelectOption | SelectOption
-  selected?: boolean
-  multiple?: boolean
-  noLabelTranslate?: boolean
-  filter?: string
-  optionIconComponent?: ConcreteComponent
-  noSelectionIndicator?: boolean
-  noInteraction?: boolean
-}>()
+import type { CommonSelectOptionEmits, CommonSelectOptionProps } from './types.ts'
 
-const emit = defineEmits<{
-  select: [option: SelectOption]
-  next: [{ option: AutoCompleteOption; noFocus?: boolean }]
-}>()
+const props = defineProps<CommonSelectOptionProps>()
+
+const emit = defineEmits<CommonSelectOptionEmits>()
 
 const goToNextPage = (option: AutoCompleteOption, noFocus?: boolean) => {
   emit('next', { option, noFocus })
@@ -51,8 +41,6 @@ const heading = computed(() => {
     ...((option as AutoCompleteOption).headingPlaceholder || []),
   )
 })
-
-const OptionIconComponent = props.optionIconComponent
 
 const locale = useLocaleStore()
 </script>
@@ -98,7 +86,7 @@ const locale = useLocaleStore()
       size="tiny"
       name="check2"
     />
-    <OptionIconComponent v-if="optionIconComponent" :option="option" />
+    <component :is="optionIconComponent" v-if="optionIconComponent" :option="option" />
     <CommonIcon
       v-else-if="option.icon"
       :name="option.icon"

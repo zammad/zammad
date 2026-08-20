@@ -47,12 +47,18 @@ const editedLabel = computed(() => {
 
   return i18n.t('edited %s by %s', date, userDisplayName(editedBy))
 })
+
+const editedTooltip = computed(() => {
+  const { editedAt } = props.answer
+
+  return editedAt ? i18n.dateTime(editedAt) : undefined
+})
 </script>
 
 <template>
   <div class="flex max-w-full flex-wrap items-center gap-2.5 text-nowrap *:h-7">
     <CommonBadge :variant="badgeVariants[visibility]" class="gap-1 uppercase">
-      <KnowledgeBaseAnswerIcon :visibility="visibility" size="tiny" />
+      <KnowledgeBaseAnswerIcon decorative :visibility="visibility" size="tiny" />
       {{ $t(visibilityMeta[visibility].label) }}
     </CommonBadge>
 
@@ -80,7 +86,12 @@ const editedLabel = computed(() => {
       </CommonDateTime>
     </CommonBadge>
 
-    <CommonBadge v-if="editedLabel" variant="tertiary" class="uppercase">
+    <CommonBadge
+      v-if="editedLabel"
+      v-tooltip.supportive="editedTooltip"
+      variant="tertiary"
+      class="uppercase"
+    >
       {{ editedLabel }}
     </CommonBadge>
   </div>

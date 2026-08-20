@@ -7,6 +7,18 @@ class KnowledgeBase
       @object = object
     end
 
+    # The access a role holds by virtue of its own global permission, i.e. with nothing stored for
+    #   it anywhere. Also what a granular selection has to differ from to be worth storing.
+    def self.default_role_access(role)
+      if role.with_permission?('knowledge_base.editor')
+        'editor'
+      elsif role.with_permission?('knowledge_base.reader')
+        'reader'
+      else
+        'none'
+      end
+    end
+
     def access_effective
       return 'none' if !@user
 
@@ -57,13 +69,7 @@ class KnowledgeBase
     end
 
     def default_role_access(role)
-      if role.with_permission?('knowledge_base.editor')
-        'editor'
-      elsif role.with_permission?('knowledge_base.reader')
-        'reader'
-      else
-        'none'
-      end
+      self.class.default_role_access(role)
     end
   end
 end

@@ -179,3 +179,27 @@ describe('Form - Field - Textarea (Formkit-BuildIn) - Translations', () => {
     expect(wrapper.getByLabelText('Anderer Text Example Placeholder')).toBeInTheDocument()
   })
 })
+
+describe('Form - Field - Messages - Translations', () => {
+  it('translates a message set from outside, e.g. a server side user error', async () => {
+    i18n.setTranslationMap(
+      new Map([['Invalid permissions, do not lock yourself out.', 'Ungültige Berechtigungen.']]),
+    )
+
+    const wrapper = renderComponent(FormKit, {
+      ...wrapperParameters,
+      props: {
+        name: 'textarea',
+        type: 'textarea',
+        id: 'messages-textarea',
+        label: 'Body',
+      },
+    })
+
+    getNode('messages-textarea')!.setErrors(['Invalid permissions, do not lock yourself out.'])
+
+    // The backend sends the source string — it only marks it for extraction — so the field has to
+    //   translate it, like the form level messages do.
+    expect(await wrapper.findByText('Ungültige Berechtigungen.')).toBeInTheDocument()
+  })
+})

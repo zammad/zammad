@@ -1,0 +1,9 @@
+query autocompleteSearchKnowledgeBaseCategoryIcon(
+  $input: AutocompleteSearchKnowledgeBaseCategoryIconInput!
+) {
+  autocompleteSearchKnowledgeBaseCategoryIcon(input: $input) {
+    value
+    label
+    iconSet
+  }
+}

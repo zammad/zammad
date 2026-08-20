@@ -20,6 +20,7 @@ const props = withDefaults(
   {
     size: 'large',
     label: __('Breadcrumb navigation'),
+    noOptionLabelTranslation: true, // kept for keeping the interface similar to CommonBreadcrumb
   },
 )
 
@@ -58,8 +59,9 @@ const displayItems = computed(() =>
           :set="item.iconSet"
           :status="item.visibility"
           size="xs"
-          class="me-2.25 shrink-0"
+          class="me-1 shrink-0"
           :class="item.iconClass"
+          horizontal
         />
         <CommonIcon
           v-else-if="!item.route && item.icon"
@@ -82,8 +84,9 @@ const displayItems = computed(() =>
             :set="item.iconSet"
             :status="item.visibility"
             size="xs"
-            class="me-1.25 shrink-0"
+            class="shrink-0"
             :class="item.iconClass"
+            horizontal
           />
           <CommonIcon
             v-else-if="item.icon"
@@ -107,8 +110,9 @@ const displayItems = computed(() =>
             :set="item.iconSet"
             :status="item.visibility"
             size="xs"
-            class="me-1.25 shrink-0"
+            class="shrink-0"
             :class="item.iconClass"
+            horizontal
           />
           <CommonIcon
             v-else-if="item.icon"
@@ -118,7 +122,10 @@ const displayItems = computed(() =>
             :class="item.iconClass"
           />
 
-          <CommonLabel class="line-clamp-1! hover:text-black hover:dark:text-white" :size="size">
+          <CommonLabel
+            class="line-clamp-1! break-all hover:text-black hover:dark:text-white"
+            :size="size"
+          >
             {{ item.displayLabel }}
           </CommonLabel>
         </CommonLink>

@@ -8,7 +8,7 @@
     <tr>
       
       <th
-        class="h-10 p-2.5 text-xs ltr:text-left rtl:text-right"
+        class="h-10 px-2.5 py-1 text-xs ltr:text-left rtl:text-right"
       >
         
         <common-label-stub
@@ -21,7 +21,7 @@
         
       </th>
       <th
-        class="h-10 p-2.5 text-xs ltr:text-left rtl:text-right"
+        class="h-10 px-2.5 py-1 text-xs ltr:text-left rtl:text-right"
       >
         
         <common-label-stub

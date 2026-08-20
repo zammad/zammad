@@ -54,4 +54,19 @@ module Gql::Concerns::HandlesKnowledgeBaseLocale
   def store_knowledge_base_locale(knowledge_base, locale_code)
     context.scoped_set!(:knowledge_base_locale, resolve_knowledge_base_locale(knowledge_base, locale_code))
   end
+
+  # The locale a mutation writes into, which is also the one it renders its response in.
+  #
+  # Strict, unlike #resolve_knowledge_base_locale: falling back to the user's preferred locale is
+  #   right for rendering, but writing texts into another locale than the client named is not — the
+  #   client would have no way to tell where they ended up.
+  def use_knowledge_base_locale!(knowledge_base, locale_code)
+    kb_locale = knowledge_base.kb_locales.joins(:system_locale).find_by(locales: { locale: locale_code })
+
+    raise Exceptions::UnprocessableContent, __('The selected language does not belong to this knowledge base.') if kb_locale.nil?
+
+    context.scoped_set!(:knowledge_base_locale, kb_locale)
+
+    kb_locale
+  end
 end

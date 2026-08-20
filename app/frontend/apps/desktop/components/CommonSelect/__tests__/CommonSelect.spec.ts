@@ -1,14 +1,16 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { ref } from 'vue'
+import { h, ref } from 'vue'
 
 import { renderComponent } from '#tests/support/components/index.ts'
+import type { ExtendedRenderResult } from '#tests/support/components/index.ts'
 
+import type { SelectOption } from '#shared/components/CommonSelect/types.ts'
 import { i18n } from '#shared/i18n.ts'
 
 import CommonSelect, { type Props } from '../CommonSelect.vue'
 
-import type { Ref } from 'vue'
+import type { ConcreteComponent, Ref } from 'vue'
 
 const options = [
   {
@@ -26,6 +28,31 @@ const options = [
 ]
 
 const html = String.raw
+
+// A functional component, so that it survives the deep cloning of the render options.
+const CustomSelectItem = (
+  props: { option: SelectOption; selected?: boolean },
+  { emit }: { emit: (event: 'select', option: SelectOption) => void },
+) =>
+  h(
+    'button',
+    {
+      role: 'option',
+      tabindex: '0',
+      'aria-selected': props.selected ?? false,
+      'data-test-id': 'custom-select-item',
+      onClick: () => emit('select', props.option),
+    },
+    props.option.label,
+  )
+
+CustomSelectItem.props = {
+  option: { type: Object, required: true },
+  selected: { type: Boolean, default: false },
+}
+CustomSelectItem.emits = ['select']
+
+const optionComponent = CustomSelectItem as unknown as ConcreteComponent
 
 const renderSelect = (props: Props, modelValue?: Ref) => {
   return renderComponent(CommonSelect, {
@@ -320,5 +347,125 @@ describe('CommonSelect.vue', () => {
     await view.events.click(view.getByText('child'))
 
     expect(view.emitted().select).toEqual([[testChildOption]])
+  })
+
+  describe('custom option component', () => {
+    it('replaces the default option', async () => {
+      const modelValue = ref(1)
+      const view = renderSelect({ options, optionComponent }, modelValue)
+
+      await view.events.click(view.getByText('Open Select'))
+
+      expect(view.getAllByTestId('custom-select-item')).toHaveLength(3)
+      expect(view.queryByTestId('select-item')).not.toBeInTheDocument()
+
+      const renderedOptions = view.getAllByRole('option')
+
+      expect(renderedOptions[0]).toHaveTextContent('Item A')
+      expect(renderedOptions[1]).toHaveAttribute('aria-selected', 'true')
+      expect(renderedOptions[0]).toHaveAttribute('aria-selected', 'false')
+    })
+
+    it('selects a value', async () => {
+      const modelValue = ref()
+      const view = renderSelect({ options, optionComponent }, modelValue)
+
+      await view.events.click(view.getByText('Open Select'))
+      await view.events.click(view.getByText('Item C'))
+
+      expect(view.emitted().select).toEqual([[options[2]]])
+      expect(modelValue.value).toBe(2)
+    })
+
+    it('keeps rendering the default option for the empty state', async () => {
+      const view = renderSelect({ options: [], optionComponent })
+
+      await view.events.click(view.getByText('Open Select'))
+
+      expect(view.getByTestId('select-item')).toHaveTextContent('No results found')
+      expect(view.queryByTestId('custom-select-item')).not.toBeInTheDocument()
+    })
+  })
+
+  describe('grid layout', () => {
+    const gridOptions = Array.from({ length: 7 }, (_, index) => ({
+      value: index,
+      label: `Item ${index}`,
+    }))
+
+    const focusFirstOption = (view: ExtendedRenderResult) => {
+      view.getAllByRole('option')[0].focus()
+    }
+
+    it('lays out the options as a wrapping grid', async () => {
+      const view = renderSelect({ options: gridOptions, gridLayout: true })
+
+      await view.events.click(view.getByText('Open Select'))
+
+      const renderedOptions = view.getAllByRole('option')
+
+      expect(renderedOptions[0].parentElement).toHaveClass('flex', 'flex-wrap')
+
+      // Corner cells cannot round themselves, therefore the dropdown has to clip them.
+      expect(view.getByRole('listbox').parentElement).toHaveClass('overflow-hidden')
+
+      // The options must stay identifiable for assistive technology.
+      expect(renderedOptions).toHaveLength(7)
+      renderedOptions.forEach((option) => {
+        expect(option).toHaveAttribute('aria-selected', 'false')
+      })
+    })
+
+    it('lays out the options as a list by default', async () => {
+      const view = renderSelect({ options: gridOptions })
+
+      await view.events.click(view.getByText('Open Select'))
+
+      expect(view.getAllByRole('option')[0].parentElement).not.toHaveClass('flex-wrap')
+    })
+
+    it('moves the focus along the rows with horizontal keys', async () => {
+      const view = renderSelect({
+        options: gridOptions,
+        gridLayout: true,
+        actions: [{ key: 'action', label: 'Custom action', onClick: vi.fn() }],
+      })
+
+      await view.events.click(view.getByText('Open Select'))
+
+      focusFirstOption(view)
+
+      await view.events.keyboard('{ArrowRight}')
+      expect(view.getAllByRole('option')[1]).toHaveFocus()
+
+      // Wrapping around must skip the dropdown actions, they are not options.
+      await view.events.keyboard('{ArrowLeft}')
+      await view.events.keyboard('{ArrowLeft}')
+      expect(view.getAllByRole('option')[6]).toHaveFocus()
+    })
+
+    it('supports a custom option component', async () => {
+      const modelValue = ref()
+      const view = renderSelect(
+        { options: gridOptions, gridLayout: true, optionComponent },
+        modelValue,
+      )
+
+      await view.events.click(view.getByText('Open Select'))
+
+      focusFirstOption(view)
+
+      expect(view.getAllByTestId('custom-select-item')[0].parentElement).toHaveClass(
+        'flex',
+        'flex-wrap',
+      )
+
+      await view.events.keyboard('{ArrowRight}')
+      expect(view.getAllByRole('option')[1]).toHaveFocus()
+
+      await view.events.keyboard('{Enter}')
+
+      expect(modelValue.value).toBe(1)
+    })
   })
 })

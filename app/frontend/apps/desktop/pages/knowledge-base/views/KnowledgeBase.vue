@@ -4,9 +4,8 @@
 import { ErrorRouteType, redirectErrorRoute } from '#shared/router/error.ts'
 import { ErrorStatusCodes } from '#shared/types/error.ts'
 
+import { useKnowledgeBaseStore } from '#desktop/entities/knowledge-base/stores/knowledgeBase.ts'
 import { knowledgeBaseBrowseRoute } from '#desktop/entities/knowledge-base/utils/routeLocation.ts'
-
-import { useKnowledgeBaseStore } from '../../../entities/knowledge-base/stores/knowledgeBase.ts'
 
 import type { NavigationGuard } from 'vue-router'
 

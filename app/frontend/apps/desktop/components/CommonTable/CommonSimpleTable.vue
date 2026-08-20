@@ -67,7 +67,7 @@ const { hasCheckboxId, allCheckboxRowsSelected, selectAllRowCheckboxes, handleCh
         <th
           v-for="header in tableHeaders"
           :key="header.key"
-          class="h-10 p-2.5 text-xs ltr:text-left rtl:text-right"
+          class="h-10 px-2.5 py-1 text-xs ltr:text-left rtl:text-right"
           :class="[header.headerClass, header.columnSeparator && columnSeparatorClasses]"
         >
           <FormKit
@@ -116,7 +116,7 @@ const { hasCheckboxId, allCheckboxRowsSelected, selectAllRowCheckboxes, handleCh
           <td
             v-for="header in tableHeaders"
             :key="`${item.id}-${header.key}`"
-            class="h-10 p-2.5 text-sm"
+            class="h-10 px-2.5 py-1 text-sm"
             :class="[
               header.columnSeparator && columnSeparatorClasses,
               cellAlignmentClasses[header.alignContent || 'left'],
@@ -188,7 +188,7 @@ const { hasCheckboxId, allCheckboxRowsSelected, selectAllRowCheckboxes, handleCh
 
             <slot :name="`item-suffix-${header.key}`" :item="item" />
           </td>
-          <td v-if="actions" class="h-10 p-2.5 text-center">
+          <td v-if="actions" class="h-10 px-2.5 py-1 text-center">
             <slot name="actions" v-bind="{ actions, item }">
               <CommonActionMenu
                 class="flex items-center justify-center"

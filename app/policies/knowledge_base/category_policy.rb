@@ -27,6 +27,14 @@ class KnowledgeBase::CategoryPolicy < ApplicationPolicy
     access_editor?
   end
 
+  # Whether a category may be added *under* this one. Aliases #update? today, but is deliberately
+  #   its own method: the question is about this category, not about creating it, so it must not be
+  #   confused with #create? (which asks the parent). Keeping them separate also lets them diverge
+  #   without silently changing what the UI offers.
+  def create_subcategory?
+    access_editor?
+  end
+
   def destroy?
     parent_editor?
   end
