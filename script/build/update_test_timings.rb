@@ -22,7 +22,8 @@ PROJECT = ENV.fetch('CI_PROJECT_ID', 'zammad%2Fzammad')
 
 # Which jobs provide the runtimes of which timings file.
 TIMINGS_FILES = {
-  '.gitlab/ci/timings/rspec.yml' => %r{^(rspec|capybara:chrome) \d+/\d+$},
+  '.gitlab/ci/timings/rspec.yml'            => %r{^(rspec|capybara:chrome) \d+/\d+$},
+  '.gitlab/ci/timings/rspec_playwright.yml' => %r{^capybara:playwright \d+/\d+$},
 }.freeze
 
 # Lines of the recorded timings YAML in the job log, e.g. 'spec/models/user_spec.rb: 12.3'.

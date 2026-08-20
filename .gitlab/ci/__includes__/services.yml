@@ -23,6 +23,10 @@
   variables:
     PLAYWRIGHT_SERVER_URL: 'ws://playwright:4444/'
     SELENIUM_BROWSER: 'playwright'
+    # Pack the parallel shards with runtimes measured under this driver - with
+    #   the default rspec.yml (Selenium runtimes) the slices come out uneven,
+    #   because per-file runtimes differ between the drivers.
+    CI_TEST_TIMINGS_FILE: '.gitlab/ci/timings/rspec_playwright.yml'
     # The version the zammad-playwright image is expected to ship. Must equal
     #   Playwright::COMPATIBLE_PLAYWRIGHT_VERSION of the playwright-ruby-client
     #   gem and the package.json pin; the driver asserts this at startup
