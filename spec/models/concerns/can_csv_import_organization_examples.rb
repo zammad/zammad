@@ -3,6 +3,12 @@
 require 'csv'
 
 RSpec.shared_examples 'CanCsvImport - Organization specific tests', :aggregate_failures do
+  # CSV import and export work on the unredacted attributes, which in the application means an
+  # admin or background work
+  around do |example|
+    UserInfo.with_system_context { example.run }
+  end
+
   describe '.csv_example' do
     before do
       Organization.destroy_all

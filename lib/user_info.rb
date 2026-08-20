@@ -1,6 +1,11 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module UserInfo
+  # the thread-local values the user context consists of. The system context is deliberately not
+  # part of it: it marks the unit of work as system work, so it has to survive a reset in the
+  # middle of that work - a transaction dispatch must not silently drop it.
+  CONTEXT_KEYS = %i[token user_id assets ip switched_from_user_id].freeze
+
   def self.current_user_id
     Thread.current[:user_id]
   end
@@ -44,17 +49,38 @@ module UserInfo
     User.find_by(id: current_switched_from_user_id)
   end
 
-  # resets the whole user context of the current thread, e.g. when a reused thread starts new work
+  # Resets the user context of the current thread, e.g. before it acts as somebody else. The
+  #   system context is not part of it and survives, see CONTEXT_KEYS: this can happen in the
+  #   middle of a unit of work. A thread that starts a new unit of work has to drop it too.
   def self.reset
-    # the token needs to be cleared first, current_user_id= reads it when rebuilding the assets
-    self.current_token                 = nil
-    self.current_user_id               = nil
-    self.current_ip                    = nil
-    self.current_switched_from_user_id = nil
+    CONTEXT_KEYS.each { |key| Thread.current[key] = nil }
+
+    # the assets are rebuilt as blank on purpose, that is what current_user_id= would do
+    Thread.current[:assets] = UserInfo::Assets.new(nil)
   end
 
+  # never nil: a missing context must be answerable as "unprivileged" rather than force
+  # every caller to guard for it, which is how it used to be mistaken for agent level.
+  # The user id is written together with the assets, so a missing one implies a blank user.
   def self.assets
-    Thread.current[:assets]
+    Thread.current[:assets] ||= UserInfo::Assets.new(nil)
+  end
+
+  # Grants full asset access to a genuinely userless context, e.g. background work that has to
+  #   build assets for somebody else. Without it a blank user context is unprivileged, so a
+  #   context that got lost along the way cannot silently unlock agent level data.
+  def self.with_system_context
+    old_system_context = Thread.current[:system_context]
+
+    Thread.current[:system_context] = true
+
+    yield
+  ensure
+    Thread.current[:system_context] = old_system_context
+  end
+
+  def self.system_context?
+    !!Thread.current[:system_context]
   end
 
   def self.ensure_current_user_id

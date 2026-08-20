@@ -102,11 +102,16 @@ class TriggerWebhookJob < ApplicationJob
     }
   end
 
+  # The payload is built for the receiving system and not for a user, so it needs the full
+  #   attributes rather than the unprivileged default of a blank user context. Asking for the
+  #   privilege here keeps the payload complete no matter how the job itself was started.
   def default_payload
-    {
-      ticket:  TriggerWebhookJob::RecordPayload.generate(ticket),
-      article: TriggerWebhookJob::RecordPayload.generate(article),
-    }
+    UserInfo.with_system_context do
+      {
+        ticket:  TriggerWebhookJob::RecordPayload.generate(ticket),
+        article: TriggerWebhookJob::RecordPayload.generate(article),
+      }
+    end
   end
 
   def payload

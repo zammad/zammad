@@ -69,6 +69,11 @@ class TransactionDispatcher
 
   def self.execute_single_backend(backend, item, params)
     Rails.logger.debug { "Execute single backend #{backend}" }
+
+    # The context is intentionally not restored afterwards: a lot of code writes records on
+    #   behalf of other users and relies on a blank UserInfo to keep the ownership it assigns
+    #   explicitly (see ApplicationModel::ChecksUserColumnsFillup). Endpoints that render
+    #   assets after dispatch re-establish the context themselves.
     begin
       UserInfo.reset
       integration = backend.new(item, params)

@@ -35,10 +35,9 @@ class Transaction::Trigger
       article = Ticket::Article.find_by(id: @item[:article_id])
     end
 
-    original_user_id = UserInfo.current_user_id
-
+    # No save/restore of UserInfo needed, TransactionDispatcher.execute_single_backend already
+    #   clears it for every backend and does not restore it afterwards.
     Ticket.perform_triggers(ticket, article, triggers_scope, @item, @params)
-    UserInfo.current_user_id = original_user_id
   end
 
   private
