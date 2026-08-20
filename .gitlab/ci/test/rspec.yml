@@ -10,18 +10,66 @@ include:
     - bundle exec rspec --require ./spec/rspec_extensions.rb --exclude-pattern "spec/system/**/*_spec.rb" -t ~searchindex -t ~integration
 
 # RSpec 3rd party integration tests are independent of the database
-# therefore we need only one job and choose a random database for each run
-# Optionally pass INTEGRATION_TESTS=enabled to run them in private- branch
+#   therefore we need only one job and choose a random database for each run.
+# They partly rely on live external services, so their signal is advisory only
+#   (allow_failure). The job runs automatically in scheduled pipelines and in
+#   merge request pipelines touching integration-relevant paths; in all other
+#   pipelines it can be triggered manually.
 
 rspec:integration:
   stage: test
   extends:
-    - .job_rules_default
-    - .job_rules_integration
     - .variables_proxy
     - .variables_mattermost
     - .variables_s3
   allow_failure: true
+  rules:
+    - !reference [.job_rules, variable_filters]
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+      allow_failure: true
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      changes:
+        # CI configuration of this job
+        - .gitlab/ci/test/rspec.yml
+        - .gitlab/ci/__includes__/{job_rules,services}.yml
+        # Dependency updates may break the integrations exercised by these specs
+        - Gemfile.lock
+        # Specs executed by this job
+        - spec/integration/**/*
+        - test/data/vcr_cassettes/**/*
+        - spec/support/{imap,required_envs,vcr}.rb
+        - spec/lib/{email_helper_spec.rb,email_helper/**/*}
+        - spec/lib/{facebook,microsoft_graph,user_agent}_spec.rb
+        - spec/lib/ai/provider/**/*
+        - spec/lib/import/exchange/**/*
+        - spec/lib/service/{geo_calendar,geo_ip}_spec.rb
+        - spec/lib/service/geo_location/**/*
+        - spec/lib/monitoring_helper/**/*
+        - spec/models/channel/**/*
+        - spec/models/store/**/*
+        - spec/models/webhook/pre_defined/**/*
+        - spec/requests/proxy_spec.rb
+        - spec/services/service/{ai,ticket/external_references}/**/*
+        # Application code covered by these specs
+        - lib/ai/**/*
+        - lib/auth/**/*
+        - lib/{email_helper.rb,email_helper/**/*}
+        - lib/enrichment/**/*
+        - lib/{facebook,microsoft_graph,user_agent}.rb
+        - lib/{github,gitlab}.rb
+        - lib/{github,gitlab}/**/*
+        - lib/import/**/*
+        - lib/{ldap.rb,ldap/**/*}
+        - lib/monitoring_helper/**/*
+        - lib/sequencer/**/*
+        - lib/service/{geo_calendar,geo_ip,geo_location}.rb
+        - lib/service/{geo_calendar,geo_ip,geo_location}/**/*
+        - app/models/{channel,external_credential,store,webhook}.rb
+        - app/models/{channel,external_credential,store,webhook}/**/*
+        - app/services/service/{ai,ticket/external_references}/**/*
+      allow_failure: true
+    - when: manual
+      allow_failure: true
   services:
     - !reference [.services, postgresql]
     - !reference [.services, imap]
