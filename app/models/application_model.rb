@@ -23,5 +23,7 @@ class ApplicationModel < ActiveRecord::Base
   include ApplicationModel::HasExistsCheckByObjectAndId
   include ApplicationModel::HasRequestCache
 
+  validates_with Validations::DateRangeValidator
+
   self.abstract_class = true
 end

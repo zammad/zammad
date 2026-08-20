@@ -23177,6 +23177,10 @@ msgstr ""
 msgid "must exist"
 msgstr ""
 
+#: lib/validations/date_range_validator.rb:16
+msgid "must have a year between 1 and 9999"
+msgstr ""
+
 #: app/models/knowledge_base.rb:279
 msgid "must not end with a slash (\"/\")"
 msgstr ""
