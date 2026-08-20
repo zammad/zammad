@@ -64,7 +64,11 @@ const selectOption = (option: RadioListOption, event?: Event) => {
         :id="`radio_list_radio_${context.id}_${option.value}`"
         size="small"
         tabindex="0"
-        class="shrink-0 self-start rounded-full group-hover:outline group-hover:outline-1 group-hover:-outline-offset-1 group-hover:outline-blue-600 focus:outline focus:outline-1 focus:-outline-offset-1 focus:outline-blue-800 group-hover:focus:outline-blue-800 dark:group-hover:outline-blue-900 dark:group-hover:focus:outline-blue-800 formkit-disabled:pointer-events-none formkit-invalid:outline-red-500 dark:hover:formkit-invalid:outline-red-500 formkit-errors:outline formkit-errors:outline-1 formkit-errors:-outline-offset-1 formkit-errors:outline-red-500 dark:hover:formkit-errors:outline-red-500"
+        class="shrink-0 self-start rounded-full group-hover:outline group-hover:-outline-offset-1 group-hover:outline-blue-600 focus:outline focus:-outline-offset-1 focus:outline-blue-800 group-hover:focus:outline-blue-800 dark:group-hover:outline-blue-900 dark:group-hover:focus:outline-blue-800 formkit-disabled:pointer-events-none"
+        :class="{
+          'formkit-invalid:outline-red-500 dark:hover:formkit-invalid:outline-red-500 formkit-errors:outline formkit-errors:-outline-offset-1 formkit-errors:outline-red-500 dark:hover:formkit-errors:outline-red-500':
+            option.value == localValue,
+        }"
         :name="option.value == localValue ? 'radio-yes' : 'radio-no'"
         @keydown.space.prevent="selectOption(option)"
       />

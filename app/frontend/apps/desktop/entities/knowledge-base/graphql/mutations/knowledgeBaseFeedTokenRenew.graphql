@@ -1,0 +1,10 @@
+mutation knowledgeBaseFeedTokenRenew($categoryId: ID, $locale: String) {
+  knowledgeBaseFeedTokenRenew(categoryId: $categoryId, locale: $locale) {
+    feed {
+      ...knowledgeBaseFeedAttributes
+    }
+    errors {
+      ...errors
+    }
+  }
+}

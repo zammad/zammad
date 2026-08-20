@@ -90,6 +90,22 @@ describe('TopBarHeaderFull', () => {
     expect(copyKnowledgeBaseNameToClipboard).toHaveBeenCalled()
   })
 
+  it('offers the given actions in the action menu', async () => {
+    const view = renderHeader({
+      actions: [{ key: 'knowledge-base-feed', label: 'Set up RSS feed', icon: 'rss' }],
+    })
+
+    await view.events.click(view.getByRole('button', { name: 'Additional actions' }))
+
+    expect(view.getByRole('button', { name: 'Set up RSS feed' })).toBeInTheDocument()
+  })
+
+  it('hides the action menu without actions', () => {
+    const view = renderHeader({ actions: [] })
+
+    expect(view.queryByRole('button', { name: 'Additional actions' })).not.toBeInTheDocument()
+  })
+
   // The title has to sit above the content it belongs to: the browse view's card
   //   grid is wide, the answer view's article body reads at the narrower measure.
   it('caps the title at the wide content width by default', () => {

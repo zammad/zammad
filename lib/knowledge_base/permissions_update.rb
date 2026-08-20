@@ -76,7 +76,7 @@ class KnowledgeBase
       return if !@user
       return if KnowledgeBase::EffectivePermission.new(@user, @object).access_effective == 'editor'
 
-      raise Exceptions::UnprocessableContent, __('Invalid permissions, do not lock yourself out.')
+      raise Exceptions::UnprocessableContent, __('These permissions are invalid because they would lock you out.')
     end
 
     def mark_permission_for_cleanup_if_needed(permission, parents)

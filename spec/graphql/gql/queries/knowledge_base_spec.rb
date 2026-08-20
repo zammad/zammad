@@ -14,6 +14,7 @@ RSpec.describe Gql::Queries::KnowledgeBase, type: :graphql do
           active
           isPubliclyAvailable
           isVisiblePublicly
+          showFeedIcon
           kbLocales {
             primary
             systemLocale { locale }
@@ -101,6 +102,25 @@ RSpec.describe Gql::Queries::KnowledgeBase, type: :graphql do
 
       it 'is publicly visible in the requested locale' do
         expect(gql.result.data).to include('isVisiblePublicly' => true)
+      end
+    end
+  end
+
+  context 'with the feed icon setting', authenticated_as: :agent do
+    let(:agent) { create(:agent) }
+
+    it 'is disabled by default' do
+      expect(gql.result.data).to include('showFeedIcon' => false)
+    end
+
+    context 'when enabled' do
+      before do
+        knowledge_base.update!(show_feed_icon: true)
+        gql.execute(query, variables:)
+      end
+
+      it 'is exposed' do
+        expect(gql.result.data).to include('showFeedIcon' => true)
       end
     end
   end

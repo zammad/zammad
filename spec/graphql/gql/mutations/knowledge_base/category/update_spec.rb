@@ -188,7 +188,7 @@ RSpec.describe Gql::Mutations::KnowledgeBase::Category::Update, type: :graphql d
       # Named after the matrix, so the form can show it below the field instead of on the form.
       it 'returns a user error for the permissions field' do
         expect(gql.result.data['errors'])
-          .to include(include('message' => 'Invalid permissions, do not lock yourself out.', 'field' => 'permissions'))
+          .to include(include('message' => 'These permissions are invalid because they would lock you out.', 'field' => 'permissions'))
       end
 
       it 'rolls the whole mutation back, including the title' do

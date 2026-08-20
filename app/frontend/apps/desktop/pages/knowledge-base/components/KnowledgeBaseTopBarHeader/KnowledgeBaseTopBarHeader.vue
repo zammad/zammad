@@ -21,6 +21,7 @@ import TopBarHeaderShell from '#desktop/pages/knowledge-base/components/Knowledg
 
 import { openKnowledgeBaseCategoryEditFlyout } from '../../composables/useKnowledgeBaseCategoryFlyout.ts'
 import { openKnowledgeBaseEditFlyout } from '../../composables/useKnowledgeBaseEditFlyout.ts'
+import { useKnowledgeBaseFeedAction } from '../../composables/useKnowledgeBaseFeedAction.ts'
 import { knowledgeBasePreviewUrl } from '../../composables/useKnowledgeBasePreviewUrl.ts'
 import { knowledgeBaseBreadcrumbItems } from '../../utils/knowledgeBaseBreadcrumbItems.ts'
 
@@ -89,6 +90,10 @@ const previewUrl = computed(() => {
   return knowledgeBasePreviewUrl('KnowledgeBase', base.id, locale)
 })
 
+const openedCategoryId = computed(() => props.categoryBreadcrumb?.at(-1)?.id)
+
+const { feedActions } = useKnowledgeBaseFeedAction(openedCategoryId)
+
 const metaTitle = computed(() => {
   const categoryTitle = props.categoryBreadcrumb?.at(-1)?.title
 
@@ -130,11 +135,11 @@ const { confirmCategoryDelete } = useKnowledgeBaseCategoryDelete()
 const actions = computed<MenuItem[]>(() => {
   const openedCategory = props.categoryBreadcrumb?.at(-1)
 
-  const items: MenuItem[] = []
+  const items: MenuItem[] = [...feedActions.value]
 
   if (!openedCategory) {
     if (knowledgeBase.value?.policy.update) {
-      items.push({
+      items.unshift({
         key: 'edit-knowledge-base',
         label: __('Edit knowledge base'),
         icon: 'pencil',
@@ -146,7 +151,7 @@ const actions = computed<MenuItem[]>(() => {
   }
 
   if (props.categoryPolicy?.update) {
-    items.push({
+    items.unshift({
       key: 'edit-category',
       label: __('Edit category'),
       icon: 'pencil',
@@ -181,6 +186,7 @@ const headerProps = computed<TopBarHeaderProps>((currentProps) => {
     breadcrumbs: breadcrumbItems.value,
     localeCode: selectedLocaleCode.value,
     previewUrl: previewUrl.value,
+    actions: actions.value,
   }
 
   if (currentProps && isEqual(currentProps, updatedProps)) return currentProps
@@ -201,7 +207,6 @@ const headerProps = computed<TopBarHeaderProps>((currentProps) => {
       <TopBarHeaderCompact
         v-model:selected-locale="selectedLocaleItem"
         v-bind="headerProps"
-        :actions="actions"
         :copy-label="__('Copy category title')"
         :inert="inert"
       />
@@ -211,7 +216,6 @@ const headerProps = computed<TopBarHeaderProps>((currentProps) => {
       <TopBarHeaderFull
         v-model:selected-locale="selectedLocaleItem"
         v-bind="headerProps"
-        :actions="actions"
         :copy-label="__('Copy category title')"
         :inert="inert"
       />

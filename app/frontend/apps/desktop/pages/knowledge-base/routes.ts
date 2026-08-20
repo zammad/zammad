@@ -9,6 +9,8 @@ import type { RouteRecordRaw } from 'vue-router'
 //   alive across root ↔ category, so its state survives the switch.
 const KnowledgeBaseBrowse = () => import('./views/KnowledgeBaseBrowse.vue')
 
+const LEGACY_PATH_PREFIX = '/knowledge_base/:knowledgeBaseInternalId(\\d+)/locale/:localeCode'
+
 const route: RouteRecordRaw[] = [
   {
     // The single "root entry" for the knowledge base section. It owns the
@@ -61,23 +63,47 @@ const route: RouteRecordRaw[] = [
       },
     ],
   },
+  // The legacy stack addresses knowledge base nodes as
+  //   `#knowledge_base/<kb id>/locale/<locale>[/category|answer/<id>][/edit]`, and links in
+  //   those shapes still arrive here: from answer bodies going through useHtmlLinks(), and
+  //   from the "edit" button the public help site puts on every node — where the feeds lead.
+  //   Without these they match no route and useHtmlLinks() drops the click on the dashboard.
+  //   The old interface's remaining routes (search, the `new` forms) have no counterpart yet.
+  //
+  //   Redirects rather than aliases on the routes above: an alias must declare the exact same
+  //   params, and these shapes carry the knowledge base id — which is not needed here (there
+  //   is only ever one) and is dropped on the way to the canonical URL. The `/edit` action is
+  //   matched and dropped as well: the new interface has no separate editing routes, so those
+  //   links open the node itself.
   {
-    // The legacy stack addresses an answer as
-    //   `#knowledge_base/<kb id>/locale/<locale>/answer/<answer id>`, and links in that shape
-    //   still arrive here — they still come from answer bodies going through useHtmlLinks() and
-    //   links copied out of the old interface. Without this they match no route and
-    //   useHtmlLinks() drops the click on the dashboard.
-    //
-    //   A redirect rather than an alias on the route above: an alias must declare the exact same
-    //   params, and this shape carries the knowledge base id — which is not needed here (there is
-    //   only ever one) and is dropped on the way to the canonical URL.
-    path: '/knowledge_base/:knowledgeBaseInternalId(\\d+)/locale/:localeCode/answer/:answerInternalId(\\d+)',
+    path: `${LEGACY_PATH_PREFIX}/answer/:answerInternalId(\\d+)/:action(edit)?`,
     name: 'KnowledgeBaseAnswerLegacyUrl',
     redirect: (to) => ({
       name: 'KnowledgeBaseAnswer',
       params: {
         localeCode: to.params.localeCode,
         answerInternalId: to.params.answerInternalId,
+      },
+    }),
+  },
+  {
+    path: `${LEGACY_PATH_PREFIX}/category/:categoryInternalId(\\d+)/:action(edit)?`,
+    name: 'KnowledgeBaseCategoryLegacyUrl',
+    redirect: (to) => ({
+      name: 'KnowledgeBaseCategory',
+      params: {
+        localeCode: to.params.localeCode,
+        categoryInternalId: to.params.categoryInternalId,
+      },
+    }),
+  },
+  {
+    path: `${LEGACY_PATH_PREFIX}/:action(edit)?`,
+    name: 'KnowledgeBaseLegacyUrl',
+    redirect: (to) => ({
+      name: 'KnowledgeBaseBrowse',
+      params: {
+        localeCode: to.params.localeCode,
       },
     }),
   },

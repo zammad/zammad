@@ -17,6 +17,7 @@ export const KnowledgeBaseDocument = gql`
     policy {
       update
     }
+    showFeedIcon
     kbLocales {
       id
       primary

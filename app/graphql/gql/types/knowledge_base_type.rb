@@ -22,6 +22,7 @@ module Gql::Types
     field :current_locale, Gql::Types::KnowledgeBase::LocaleType, null: true, description: 'Locale the content resolved to (requested, else user-preferred, else primary)'
     field :is_publicly_available, Boolean, null: false, description: 'Whether a public knowledge base with published content is reachable'
     field :is_visible_publicly, Boolean, null: false, description: 'Whether the public help site shows content in the requested locale (drives the "view public knowledge base" link)'
+    field :show_feed_icon, Boolean, null: false, description: 'Whether the feeds are offered at all (admin setting "Show Feed Icon")'
 
     field :policy, Gql::Types::Policy::KnowledgeBaseType, null: false, method: :itself, description: 'Which actions the current user may perform on this knowledge base, including adding a top level category'
 

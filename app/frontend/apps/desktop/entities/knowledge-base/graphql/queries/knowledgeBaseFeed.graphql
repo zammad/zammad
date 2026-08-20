@@ -1,0 +1,5 @@
+query knowledgeBaseFeed($categoryId: ID, $locale: String) {
+  knowledgeBaseFeed(categoryId: $categoryId, locale: $locale) {
+    ...knowledgeBaseFeedAttributes
+  }
+}

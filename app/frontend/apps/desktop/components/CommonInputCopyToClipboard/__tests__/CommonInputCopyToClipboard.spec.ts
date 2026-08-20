@@ -36,6 +36,23 @@ describe('CommonInputCopyToClipboard.vue', () => {
     expect(view.getByRole('button', { name: 'Copy text' })).toBeInTheDocument()
   })
 
+  // Used while the value is known to be outdated, e.g. a token being rotated.
+  it('blocks copying while disabled', async () => {
+    const view = renderCopyToClipboard({
+      value: uuidValue,
+      label: 'A label',
+      disabled: true,
+    })
+
+    const copyButton = view.getByRole('button', { name: 'Copy text' })
+
+    expect(copyButton).toBeDisabled()
+
+    await view.events.click(copyButton)
+
+    expect(copyToClipboardMock).not.toHaveBeenCalled()
+  })
+
   it('click copy button with a custom copy label', async () => {
     const view = renderCopyToClipboard({
       value: uuidValue,

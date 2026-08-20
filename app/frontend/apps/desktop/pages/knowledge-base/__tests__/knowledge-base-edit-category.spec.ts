@@ -69,6 +69,9 @@ describe('knowledge base edit category', () => {
         isPubliclyAvailable: true,
         isVisiblePublicly: true,
         policy: { update: true },
+        // The feeds have a menu entry of their own, which every reader gets — off
+        //   here, so this spec sees the category actions alone.
+        showFeedIcon: false,
         kbLocales: [
           {
             id: convertToGraphQLId('KnowledgeBase::Locale', 1),
@@ -213,6 +216,7 @@ describe('knowledge base edit category', () => {
           isPubliclyAvailable: true,
           isVisiblePublicly: true,
           policy: { update: false },
+          showFeedIcon: false,
           kbLocales: [
             {
               id: convertToGraphQLId('KnowledgeBase::Locale', 1),

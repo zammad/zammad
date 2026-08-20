@@ -6,11 +6,9 @@ import { computed, toRef } from 'vue'
 import useValue from '#shared/components/Form/composables/useValue.ts'
 import { i18n } from '#shared/i18n.ts'
 
-import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
 import CommonSimpleTable from '#desktop/components/CommonTable/CommonSimpleTable.vue'
 import type { TableItem, TableSimpleHeader } from '#desktop/components/CommonTable/types.ts'
 
-import FieldKnowledgeBasePermissionsSkeleton from './FieldKnowledgeBasePermissionsSkeleton.vue'
 import {
   KnowledgeBaseAccess,
   type KnowledgeBasePermissionRow,
@@ -27,6 +25,13 @@ const context = toRef(props, 'context')
 
 const { localValue } = useValue<KnowledgeBasePermissions>(context)
 
+// The table headers are fixed, so they can be defined once and for all. The widths are
+//   arbitrary, but the first column has to be wide enough for the longest role name,
+//   and the three access columns have to be of similar width at most of the times (wide enough for the radio buttons).
+const headerClass = 'w-1/5'
+
+const alignContent = 'center'
+
 // `alignContent` only reaches the cells, and its `text-center` is
 //   inert on the `inline-flex` label that `CommonSimpleTable` renders in the header.
 const labelClass = 'w-full justify-center!'
@@ -39,24 +44,25 @@ const tableHeaders: TableSimpleHeader[] = [
   {
     key: KnowledgeBaseAccess.Editor,
     label: __('Editor'),
-    alignContent: 'center',
+    alignContent,
+    headerClass,
     labelClass,
   },
   {
     key: KnowledgeBaseAccess.Reader,
     label: __('Reader'),
-    alignContent: 'center',
+    alignContent,
+    headerClass,
     labelClass,
   },
   {
     key: KnowledgeBaseAccess.None,
     label: __('None'),
-    alignContent: 'center',
+    alignContent,
+    headerClass,
     labelClass,
   },
 ]
-
-const isLoading = computed(() => !context.value.permissionRows)
 
 const tableItems = computed<PermissionsTableItem[]>(() =>
   (context.value.permissionRows || []).map(
@@ -119,58 +125,55 @@ const selectAccess = (item: TableItem, access: KnowledgeBaseAccess) => {
     v-bind="context.attrs"
     role="group"
   >
-    <CommonLoader :loading="isLoading">
-      <template #skeleton>
-        <FieldKnowledgeBasePermissionsSkeleton />
-      </template>
-
-      <CommonSimpleTable
-        :caption="__('Permissions matrix')"
-        class="w-full"
-        :headers="tableHeaders"
-        :items="tableItems"
+    <CommonSimpleTable
+      :caption="__('Permissions matrix')"
+      class="w-full"
+      :headers="tableHeaders"
+      :items="tableItems"
+    >
+      <!-- Radio group membership is by `name`, not by DOM ancestry, so one group per role
+      works across the three cells and keyboard behaviour comes for free. -->
+      <template
+        v-for="access in KnowledgeBaseAccess"
+        :key="access"
+        #[`column-cell-${access}`]="{ item, header }"
       >
-        <!-- Radio group membership is by `name`, not by DOM ancestry, so one group per role
-        works across the three cells and keyboard behaviour comes for free. -->
-        <template
-          v-for="access in KnowledgeBaseAccess"
-          :key="access"
-          #[`column-cell-${access}`]="{ item, header }"
+        <!-- The lock reason is `supportive` so it lands in `aria-description`: an `aria-label`
+        here would replace the cell label below as the radio's accessible name. -->
+        <label
+          v-tooltip.supportive="lockReason(item, access)"
+          class="group inline-flex size-8 items-center justify-center rounded-full"
+          :class="isLocked(item, access) ? 'cursor-not-allowed' : 'cursor-pointer'"
+          :for="`kb_permissions_radio_${context.id}_${item.id}_${access}`"
         >
-          <!-- The lock reason is `supportive` so it lands in `aria-description`: an `aria-label`
-          here would replace the cell label below as the radio's accessible name. -->
-          <label
-            v-tooltip.supportive="lockReason(item, access)"
-            class="group inline-flex size-8 items-center justify-center rounded-full"
-            :class="isLocked(item, access) ? 'cursor-not-allowed' : 'cursor-pointer'"
-            :for="`kb_permissions_radio_${context.id}_${item.id}_${access}`"
-          >
-            <input
-              :id="`kb_permissions_radio_${context.id}_${item.id}_${access}`"
-              type="radio"
-              class="peer sr-only"
-              :name="`kb_permissions_radio_${context.id}_${item.id}`"
-              :value="access"
-              :checked="isChecked(item, access)"
-              :disabled="context.disabled || isLocked(item, access)"
-              @change="selectAccess(item, access)"
-              @blur="context.handlers.blur"
-            />
-            <CommonIcon
-              size="small"
-              decorative
-              :name="isChecked(item, access) ? 'radio-yes' : 'radio-no'"
-              class="shrink-0 rounded-full peer-focus-visible:outline peer-focus-visible:-outline-offset-1 peer-focus-visible:outline-blue-800"
-              :class="
-                isLocked(item, access)
-                  ? 'opacity-40'
-                  : 'group-hover:outline group-hover:-outline-offset-1 group-hover:outline-blue-600 dark:group-hover:outline-blue-900'
-              "
-            />
-            <span class="sr-only">{{ cellLabel(item, header) }}</span>
-          </label>
-        </template>
-      </CommonSimpleTable>
-    </CommonLoader>
+          <input
+            :id="`kb_permissions_radio_${context.id}_${item.id}_${access}`"
+            type="radio"
+            class="peer sr-only"
+            :name="`kb_permissions_radio_${context.id}_${item.id}`"
+            :value="access"
+            :checked="isChecked(item, access)"
+            :disabled="context.disabled || isLocked(item, access)"
+            @change="selectAccess(item, access)"
+            @blur="context.handlers.blur"
+          />
+          <CommonIcon
+            size="small"
+            decorative
+            :name="isChecked(item, access) ? 'radio-yes' : 'radio-no'"
+            class="shrink-0 rounded-full group-hover:outline group-hover:-outline-offset-1 group-hover:outline-blue-600 peer-focus:outline peer-focus:-outline-offset-1 peer-focus:outline-blue-800 dark:group-hover:outline-blue-900 dark:peer-focus:outline-blue-800 formkit-disabled:pointer-events-none"
+            :class="[
+              isLocked(item, access)
+                ? 'opacity-40'
+                : 'group-hover:outline group-hover:-outline-offset-1 group-hover:outline-blue-600 dark:group-hover:outline-blue-900',
+              isChecked(item, access)
+                ? 'formkit-invalid:outline-red-500 dark:hover:formkit-invalid:outline-red-500 formkit-errors:outline formkit-errors:-outline-offset-1 formkit-errors:outline-red-500 dark:hover:formkit-errors:outline-red-500'
+                : '',
+            ]"
+          />
+          <span class="sr-only">{{ cellLabel(item, header) }}</span>
+        </label>
+      </template>
+    </CommonSimpleTable>
   </output>
 </template>

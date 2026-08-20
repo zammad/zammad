@@ -19,6 +19,7 @@ import TopBarHeaderFull from '#desktop/pages/knowledge-base/components/Knowledge
 import TopBarHeaderFullSkeleton from '#desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderFullSkeleton.vue'
 import TopBarHeaderShell from '#desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderShell.vue'
 
+import { useKnowledgeBaseFeedAction } from '../../composables/useKnowledgeBaseFeedAction.ts'
 import { knowledgeBasePreviewUrl } from '../../composables/useKnowledgeBasePreviewUrl.ts'
 import { knowledgeBaseBreadcrumbItems } from '../../utils/knowledgeBaseBreadcrumbItems.ts'
 
@@ -59,6 +60,9 @@ const previewUrl = computed(() => {
   return knowledgeBasePreviewUrl('KnowledgeBaseAnswer', answer.id, locale)
 })
 
+// The answer's own category, so its feed is offered like in the old interface.
+const { feedActions } = useKnowledgeBaseFeedAction(computed(() => props.answer?.category?.id))
+
 const metaTitle = computed(() => {
   const kbTitle = knowledgeBase.value?.title ?? __('Knowledge Base')
 
@@ -96,6 +100,7 @@ const headerProps = computed<TopBarHeaderProps>((currentProps) => {
     breadcrumbs: breadcrumbItems.value,
     localeCode: selectedLocaleCode.value,
     previewUrl: previewUrl.value,
+    actions: feedActions.value,
   }
 
   if (currentProps && isEqual(currentProps, updatedProps)) return currentProps

@@ -1,0 +1,4 @@
+fragment knowledgeBaseFeedAttributes on KnowledgeBaseFeed {
+  knowledgeBasePath
+  categoryPath
+}

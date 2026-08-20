@@ -245,7 +245,10 @@ describe('KnowledgeBaseEditFlyout', () => {
         knowledgeBaseUpdate: {
           knowledgeBase: null,
           errors: [
-            { message: 'Invalid permissions, do not lock yourself out.', field: 'permissions' },
+            {
+              message: 'These permissions are invalid because they would lock you out.',
+              field: 'permissions',
+            },
           ],
         },
       })
@@ -256,7 +259,7 @@ describe('KnowledgeBaseEditFlyout', () => {
       await wrapper.events.click(wrapper.getByRole('button', { name: 'Update' }))
 
       expect(
-        await wrapper.findByText('Invalid permissions, do not lock yourself out.'),
+        await wrapper.findByText('These permissions are invalid because they would lock you out.'),
       ).toBeInTheDocument()
 
       const formNode = getNode('form-knowledge-base')!

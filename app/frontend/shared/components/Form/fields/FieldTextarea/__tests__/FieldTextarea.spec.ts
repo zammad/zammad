@@ -183,7 +183,12 @@ describe('Form - Field - Textarea (Formkit-BuildIn) - Translations', () => {
 describe('Form - Field - Messages - Translations', () => {
   it('translates a message set from outside, e.g. a server side user error', async () => {
     i18n.setTranslationMap(
-      new Map([['Invalid permissions, do not lock yourself out.', 'Ungültige Berechtigungen.']]),
+      new Map([
+        [
+          'These permissions are invalid because they would lock you out.',
+          'Ungültige Berechtigungen.',
+        ],
+      ]),
     )
 
     const wrapper = renderComponent(FormKit, {
@@ -196,7 +201,9 @@ describe('Form - Field - Messages - Translations', () => {
       },
     })
 
-    getNode('messages-textarea')!.setErrors(['Invalid permissions, do not lock yourself out.'])
+    getNode('messages-textarea')!.setErrors([
+      'These permissions are invalid because they would lock you out.',
+    ])
 
     // The backend sends the source string — it only marks it for extraction — so the field has to
     //   translate it, like the form level messages do.

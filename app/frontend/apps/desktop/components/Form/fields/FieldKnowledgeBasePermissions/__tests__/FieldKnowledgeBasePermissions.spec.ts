@@ -125,20 +125,17 @@ describe('Form - Field - Knowledge Base Permissions', () => {
     })
   })
 
-  it('renders a skeleton until the form updater provides the rows', async () => {
+  it('renders an empty table until the form updater provides the rows', async () => {
     const view = await renderPermissionsInput({
       permissionRows: undefined,
     })
 
-    expect(view.getByTestId('knowledge-base-permissions-skeleton')).toBeInTheDocument()
-    expect(view.queryByRole('table')).not.toBeInTheDocument()
+    expect(view.getByRole('table')).toBeInTheDocument()
+    expect(view.queryAllByRole('radio')).toHaveLength(0)
 
     await view.rerender({ permissionRows })
 
-    await waitFor(() =>
-      expect(view.queryByTestId('knowledge-base-permissions-skeleton')).not.toBeInTheDocument(),
-    )
-    expect(view.getByRole('table')).toBeInTheDocument()
+    await waitFor(() => expect(view.queryAllByRole('radio')).not.toHaveLength(0))
   })
 
   // Offering a level a role may not hold is not merely useless: the form updater clamps an

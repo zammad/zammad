@@ -11,6 +11,7 @@ query knowledgeBase($locale: String) {
     policy {
       update
     }
+    showFeedIcon
     kbLocales {
       id
       primary

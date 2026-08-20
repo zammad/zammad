@@ -82,6 +82,7 @@
 - `assets/radio-yes.svg`
 - `assets/reply-all.svg`
 - `assets/reply.svg`
+- `assets/rss.svg`
 - `assets/search.svg`
 - `assets/shield-lock.svg`
 - `assets/sms.svg`
