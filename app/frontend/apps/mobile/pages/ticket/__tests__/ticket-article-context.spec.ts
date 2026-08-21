@@ -17,13 +17,7 @@ describe('actions inside article context', () => {
   test('opens metadata', async () => {
     const { waitUntilTicketLoaded } = mockTicketDetailViewGql()
 
-    const view = await visitView('/tickets/1', {
-      global: {
-        stubs: {
-          transition: false,
-        },
-      },
-    })
+    const view = await visitView('/tickets/1')
 
     await waitUntilTicketLoaded()
 

@@ -130,13 +130,7 @@ describe('testing tickets create a11y view', () => {
 
     handleMockUserQuery()
 
-    const view = await visitView(`/tickets/create/${uid}`, {
-      global: {
-        stubs: {
-          'transition-group': false,
-        },
-      },
-    })
+    const view = await visitView(`/tickets/create/${uid}`)
 
     await waitForUserQueryCalls()
 
