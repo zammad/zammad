@@ -157,7 +157,7 @@ const { hasReducedMotion } = useReducedMotion()
       <ArticleBubbleMediaError :article="article" />
 
       <div
-        class="relative isolate print:nth-2:rounded-t-xl"
+        class="relative isolate min-w-0 print:nth-2:rounded-t-xl"
         :class="{
           'nth-2:rounded-t-xl': !showMetaInformation,
           'nth-2:ltr:rounded-br-none nth-2:ltr:rounded-bl-xl nth-2:rtl:rounded-br-xl nth-2:rtl:rounded-bl-none':

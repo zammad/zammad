@@ -188,6 +188,19 @@ onMounted(() => {
   }
 
   /*
+    `overflow-wrap: anywhere` above lets long unbroken text (e.g. URLs)
+    break instead of stretching the bubble. But that also lets table
+    columns collapse toward zero width, since the browser's table layout
+    treats a breakable word as having almost no minimum width. This starves
+    narrow columns in favor of wide ones instead of letting the table
+    overflow and scroll (via `overflow-x: auto` above) at a readable width.
+    Reset to `normal` scoped to tables so columns keep their natural width.
+  */
+  &:deep(table) {
+    overflow-wrap: normal;
+  }
+
+  /*
     Strip inline color styles in dark mode.
       However, we need to keep the colors of the Zammad palette.
   */
@@ -221,6 +234,16 @@ onMounted(() => {
     [style*='color:rgb(201, 135, 236)'] [style*='color: rgb(201, 135, 236)'] /* purple 4 */
   ) {
     color: inherit !important;
+  }
+
+  /*
+    Strip inline background styles in dark mode (e.g. tables pasted from
+    external emails), so the bubble's own dark background shows through
+    instead of clashing with a light-mode background left over from the
+    original HTML.
+  */
+  [data-theme='dark'] &:deep(*[style*='background']) {
+    background: transparent !important;
   }
 }
 
