@@ -181,7 +181,7 @@ watch(browsedPage, () => scrollToStart())
       ref="content-container"
       class="@container flex size-full flex-col items-center overflow-y-auto"
     >
-      <CommonIndicator v-model="isReachingTop" />
+      <CommonIndicator v-model="isReachingTop" class="translate-y-1" />
       <KnowledgeBaseTopBarHeader
         :content-container-element="contentContainerElement"
         :category-breadcrumb="breadcrumb"

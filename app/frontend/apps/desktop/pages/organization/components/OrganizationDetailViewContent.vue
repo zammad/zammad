@@ -129,7 +129,7 @@ const scrollTo = (position: 'start' | 'end' = 'end') => {
       </template>
 
       <div ref="content-container" class="@container size-full overflow-y-auto">
-        <CommonIndicator v-model="isReachingTop" />
+        <CommonIndicator v-model="isReachingTop" class="translate-y-1" />
 
         <OrganizationDetailTopBar
           :organization="organization"
