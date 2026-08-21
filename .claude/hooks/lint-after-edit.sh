@@ -17,7 +17,9 @@ while IFS= read -r file; do
   case "$file" in
     *.rb)         RUBY_FILES+=("$file") ;;
     *.ts|*.vue)   FRONTEND_TS_FILES+=("$file") ;;
-    *.js)         [[ "$file" == public/* ]] || FRONTEND_JS_FILES+=("$file") ;;
+    # Legacy/vendored assets are third-party code and outside the scope of
+    #   `pnpm lint:js`, which only covers app/frontend/ and .eslint-plugin-zammad/.
+    *.js)         [[ "$file" == public/* || "$file" == app/assets/javascripts/* ]] || FRONTEND_JS_FILES+=("$file") ;;
     *.coffee)     COFFEESCRIPT_FILES+=("$file") ;;
     *.scss|*.css) STYLE_FILES+=("$file") ;;
     *.md)         MARKDOWN_FILES+=("$file") ;;

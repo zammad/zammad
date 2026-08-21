@@ -290,6 +290,26 @@ RSpec.describe 'Ticket Create', time_zone: 'Europe/London', type: :system do
       expect(Ticket.last).to have_attributes date_test: date, datetime_test: time
     end
 
+    it 'expands a 2-digit year to the current century' do
+      date = 4.years.from_now.to_date
+
+      field_date.sibling('[data-item=date]').set date.strftime('%m/%d/%y')
+
+      click '.js-submit'
+
+      expect(Ticket.last).to have_attributes date_test: date
+    end
+
+    it 'expands a 2-digit year to the previous century when it would be too far ahead' do
+      date = Time.zone.today.years_ago(49)
+
+      field_date.sibling('[data-item=date]').set date.strftime('%m/%d/%y')
+
+      click '.js-submit'
+
+      expect(Ticket.last).to have_attributes date_test: date
+    end
+
     it 'allows to save with cleared value' do
       field_date.sibling('[data-item=date]').click
       find('.datepicker .clear').click
