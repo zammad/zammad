@@ -35,7 +35,7 @@ The CoffeeScript frontend uses REST controllers.
 
 ## General Guidelines
 
-- All new files must include the Zammad copyright header.
+- All new files except Markdown files (`*.md`) must include the Zammad copyright header.
 - Never edit translation files (`i18n/*.po`) directly —
   translations are managed via translations.zammad.org.
 
