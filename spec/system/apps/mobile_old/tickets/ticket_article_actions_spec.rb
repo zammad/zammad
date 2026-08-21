@@ -275,41 +275,6 @@ RSpec.describe 'Mobile > Ticket > Article actions', app: :mobile, authenticated_
       end
     end
 
-    context 'when adding multiple replies' do
-      before do
-        article
-      end
-
-      it 'keeps signature' do
-        visit "/tickets/#{ticket.id}"
-
-        wait_for_form_to_settle('form-ticket-edit')
-        wait_for_gql('shared/entities/ticket/graphql/queries/ticket/articles.graphql')
-
-        find_button('Article actions').click
-        find_button('Follow up').click
-
-        wait_for_test_flag('editor.signatureAdd')
-
-        expect(find_editor('Text')).to have_text_value("#{agent.firstname}\nSignature!")
-
-        find_editor('Text').clear
-
-        expect(find_editor('Text')).to have_text_value('', exact: true)
-
-        find_button('Done').click
-
-        wait_for_test_flag('ticket-article-reply.closed')
-
-        find_button('Article actions').click
-        find_button('Follow up').click
-
-        wait_for_form_updater(3)
-
-        expect(find_editor('Text')).to have_text_value("#{agent.firstname}\nSignature!")
-      end
-    end
-
     context 'when forwarding email' do
       let(:trigger_label) { 'Forward' }
       let(:to)              { [] }

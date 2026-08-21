@@ -926,6 +926,38 @@ describe('ticket add/edit reply article', () => {
     expect(await view.findByRole('button', { name: 'Add reply' })).toBeInTheDocument()
     expect(view.queryByRole('button', { name: 'Save' })).not.toBeInTheDocument()
   })
+
+  it('keeps the selected article type when a remembered reply is reopened', async () => {
+    const { waitUntilTicketLoaded } = mockTicketDetailViewGql({
+      mockFrontendObjectAttributes: true,
+    })
+
+    const view = await visitView('/tickets/1')
+
+    await waitUntilTicketLoaded()
+
+    await view.events.click(view.getByRole('button', { name: 'Add reply' }))
+
+    await waitUntil(() => view.queryByRole('dialog', { name: 'Add reply' }))
+
+    const form = getNode('form-ticket-edit')
+    await form?.settled
+
+    form?.find('articleType', 'name')?.input('email')
+    await form?.settled
+
+    await view.events.type(view.getByLabelText('Text'), 'Testing')
+
+    await view.events.click(view.getByRole('button', { name: 'Done' }))
+
+    await view.events.click(await view.findByRole('button', { name: 'Edit reply' }))
+
+    expect(await view.findByRole('dialog', { name: 'Edit reply' })).toBeInTheDocument()
+
+    await form?.settled
+
+    expect(form?.find('articleType', 'name')?.value).toBe('email')
+  })
 })
 
 it('correctly redirects from ticket hash-based routes', async () => {

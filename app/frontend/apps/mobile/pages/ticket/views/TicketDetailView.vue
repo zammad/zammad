@@ -205,6 +205,16 @@ const showArticleReplyDialog = () => {
 
 const { openReplyForm } = useTicketArticleReplyAction(form, showArticleReplyDialog)
 
+const openArticleReplyForm = () => {
+  // The same button reopens a remembered reply ("Edit reply"), so keep the type the agent
+  //   already picked - a forced default would reset it and drop the applied signature.
+  const currentArticleType = form.value?.getNodeByName('articleType')?.value as string | undefined
+
+  return openReplyForm({
+    articleType: currentArticleType || (isTicketAgent.value ? 'note' : 'web'),
+  })
+}
+
 const { liveUserList } = useTicketLiveUser(
   toRef(() => props.internalId),
   isTicketAgent,
@@ -369,7 +379,7 @@ const showBottomBanner = computed(() => {
       :can-save="isTicketEditable && isDirty"
       :can-scroll-down="showScrollDown"
       :hidden="!showBottomBanner"
-      @reply="openReplyForm({ articleType: isTicketAgent ? 'note' : 'web' })"
+      @reply="openArticleReplyForm()"
       @save="submitForm"
     />
   </Teleport>
