@@ -23,7 +23,11 @@ module FormUpdater::Concerns::AppliesTicketSharedDraft
     apply_value = FormUpdater::ApplyValue.new(context:, data:, result:)
 
     new_attachments = UserInfo.with_user_id(context[:current_user].id) do
-      selected_draft.clone_attachments('UploadCache', meta[:form_id])
+      cloned_attachments = selected_draft.clone_attachments('UploadCache', meta[:form_id])
+
+      remove_stale_inline_attachments
+
+      cloned_attachments
     end
 
     apply_value.perform(field: 'attachments', config: { 'value' => new_attachments.reject(&:inline?) })
@@ -46,6 +50,30 @@ module FormUpdater::Concerns::AppliesTicketSharedDraft
 
     # Include shared draft internal ID for a subsequent reference.
     apply_value.perform(field: 'shared_draft_id', config: { 'value' => selected_draft.id })
+  end
+
+  # A draft's inline images receive a fresh Content-ID on every draft save (see
+  # HasRichText#has_rich_text_parse), so applying a re-saved draft clones another copy
+  # into the compose form's UploadCache and leaves the previous one behind. Drop those
+  # leftovers, mirroring HasRichText#has_rich_text_cleanup_unused_attachments.
+  #
+  # Only inline items carrying a Content-ID are considered: images uploaded directly in
+  # the editor have none and are referenced by attachment URL instead of by cid.
+  def remove_stale_inline_attachments
+    active_cids = HasRichText
+      .extract_inline_cids(selected_draft.body)
+      .flat_map { |cid| [cid, "<#{cid}>"] }
+
+    UploadCache
+      .new(meta[:form_id])
+      .attachments
+      .select { |elem| elem.inline? && inline_attachment_content_id(elem).present? }
+      .reject { |elem| active_cids.include?(inline_attachment_content_id(elem)) }
+      .each   { |elem| Store.remove_item(elem.id) }
+  end
+
+  def inline_attachment_content_id(attachment)
+    attachment.preferences['Content-ID'] || attachment.preferences['content_id']
   end
 
   def selected_draft

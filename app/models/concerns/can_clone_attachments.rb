@@ -32,12 +32,11 @@ returns
       .select do |elem|
         next if elem.preferences['content-alternative'] == true
 
-        # only_attached_attachments mode is used by apply attached attachments to forwared article
-        if options[:only_attached_attachments] == true && is_html_content
+        elem_content_id = attachment_content_id(elem)
 
-          content_id = elem.preferences['Content-ID'] || elem.preferences['content_id']
-          next if content_id.present? && body.present? && body.match?(%r{#{Regexp.quote(content_id)}}i)
-        end
+        # only_attached_attachments mode is used by apply attached attachments to forwared article
+        next if options[:only_attached_attachments] == true && is_html_content &&
+                elem_content_id.present? && body.present? && body.match?(%r{#{Regexp.quote(elem_content_id)}}i)
 
         # only_inline_attachments mode is used when quoting HTML mail with #{article.body_as_html}
         if options[:only_inline_attachments] == true
@@ -47,13 +46,19 @@ returns
           content_disposition = elem.preferences['Content-Disposition'] || elem.preferences['content_disposition']
           next if content_disposition.present? && content_disposition.exclude?('inline')
 
-          content_id = elem.preferences['Content-ID'] || elem.preferences['content_id']
-          next if content_id.blank?
-          next if !body.match?(%r{#{Regexp.quote(content_id)}}i)
+          next if elem_content_id.blank?
+          next if !body.match?(%r{#{Regexp.quote(elem_content_id)}}i)
         end
 
+        # Dedup by filename+size alone is not enough for inline images: they always get
+        # generic, position-based filenames (image1.png, image2.png, ...) and a fresh
+        # Content-ID is generated on every save, so an unrelated pre-existing attachment
+        # with the same filename+size must not be allowed to shadow the actual referenced
+        # image.
         next if existing_attachments.any? do |existing_attachment|
-          existing_attachment.filename == elem.filename && existing_attachment.size == elem.size
+          existing_attachment.filename == elem.filename &&
+          existing_attachment.size == elem.size &&
+          attachment_content_id(existing_attachment) == elem_content_id
         end
 
         true
@@ -87,5 +92,11 @@ returns
           preferences: old_attachment.preferences,
         )
       end
+  end
+
+  private
+
+  def attachment_content_id(attachment)
+    attachment.preferences['Content-ID'] || attachment.preferences['content_id']
   end
 end

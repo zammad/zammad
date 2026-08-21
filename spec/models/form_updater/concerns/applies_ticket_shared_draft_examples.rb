@@ -167,6 +167,112 @@ RSpec.shared_examples 'FormUpdater::AppliesTicketSharedDraft' do |draft_type: 's
         include_examples 'sets the draft value for the field'
       end
 
+      context 'with an inline image referenced via cid' do
+        let(:object_name) { 'article' }
+        let(:field_name)  { 'body' }
+        let(:form_id)     { SecureRandom.uuid }
+        let(:meta)        { { additional_data:, dirty_fields:, form_id: } }
+        let(:cid)         { 'image1.abcdef12@zammad.example.com' }
+        let(:image_data)  { Rails.root.join('test/data/image/1x1.png').binread }
+        let(:body)        { %(<img src="cid:#{cid}">) }
+
+        let(:draft) do
+          if draft_type == 'start'
+            create(:ticket_shared_draft_start, group: user.groups.first, content: { 'body' => body })
+          elsif draft_type == 'detail-view'
+            create(:ticket_shared_draft_zoom, ticket: create(:ticket, group: group), new_article: { body: body }, ticket_attributes: {})
+          end
+        end
+
+        # the draft's own inline attachment matching the cid referenced in its body
+        let(:inline_attachment) do
+          create(:store, object: draft.class.name, o_id: draft.id, filename: 'image1.png', data: image_data,
+                          preferences: { 'Content-Type' => 'image/png', 'Content-ID' => cid, 'Content-Disposition' => 'inline' })
+        end
+
+        # a pre-existing, unrelated attachment already in the target compose form's
+        # UploadCache that collides on filename + size (but not Content-ID) with the
+        # draft's inline image -- e.g. left over from a previous apply, or an unrelated
+        # image of equal byte size pasted separately into the same compose form.
+        let(:colliding_attachment) do
+          create(:store, object: 'UploadCache', o_id: form_id, filename: 'image1.png', data: image_data,
+                          preferences: { 'Content-Type' => 'image/png' })
+        end
+
+        let(:cloned_attachment) do
+          Store.list(object: 'UploadCache', o_id: form_id).find { |elem| elem.preferences['Content-ID'] == cid }
+        end
+
+        before do
+          inline_attachment
+          colliding_attachment
+        end
+
+        it 'clones the inline image into the target UploadCache and rewrites the cid: reference', :aggregate_failures do
+          resolved_body = resolved_result.resolve[:fields][field_name][:value]
+
+          expect(cloned_attachment).to be_present
+          expect(resolved_body).to include("/api/v1/attachments/#{cloned_attachment.id}")
+          expect(resolved_body).not_to include('cid:')
+        end
+
+        # A draft save regenerates the Content-ID of every inline image, so the clone of a
+        # previous apply can no longer be recognized as a duplicate. Without cleanup, every
+        # save + apply cycle would leave another copy behind in the same UploadCache.
+        context 'when the draft was saved and applied before' do
+          let(:stale_cid) { 'image1.12345678@zammad.example.com' }
+
+          # leftover of a previous apply: the same image, cloned under the Content-ID the
+          # draft carried before it was saved again
+          let(:stale_attachment) do
+            create(:store, object: 'UploadCache', o_id: form_id, filename: 'image1.png', data: image_data, created_by_id: user.id,
+                           preferences: { 'Content-Type' => 'image/png', 'Content-ID' => stale_cid, 'Content-Disposition' => 'inline' })
+          end
+
+          # inline image uploaded directly in the editor: no Content-ID, referenced by
+          # attachment URL instead of by cid, so it must survive untouched
+          let(:editor_attachment) do
+            create(:store, object: 'UploadCache', o_id: form_id, filename: 'editor.png', data: image_data, created_by_id: user.id,
+                           preferences: { 'Content-Type' => 'image/png', 'Content-Disposition' => 'inline' })
+          end
+
+          before do
+            stale_attachment
+            editor_attachment
+          end
+
+          it 'removes the superseded clone and keeps the other inline items', :aggregate_failures do
+            resolved_body = resolved_result.resolve[:fields][field_name][:value]
+
+            expect(resolved_body).to include("/api/v1/attachments/#{cloned_attachment.id}")
+            expect { stale_attachment.reload }.to raise_error(ActiveRecord::RecordNotFound)
+            expect { editor_attachment.reload }.not_to raise_error
+            expect { colliding_attachment.reload }.not_to raise_error
+          end
+        end
+
+        # Some attachments carry their Content-ID under the lowercase 'content_id'
+        # preference key instead of 'Content-ID' (e.g. clones of mail-parsed articles, see
+        # CanCloneAttachments#attachment_content_id). Cleanup must recognize both.
+        context 'when the stale clone stores its Content-ID under the lowercase key' do
+          let(:stale_cid) { 'image1.12345678@zammad.example.com' }
+
+          let(:stale_attachment) do
+            create(:store, object: 'UploadCache', o_id: form_id, filename: 'image1.png', data: image_data, created_by_id: user.id,
+                           preferences: { 'Content-Type' => 'image/png', 'content_id' => stale_cid, 'Content-Disposition' => 'inline' })
+          end
+
+          before { stale_attachment }
+
+          it 'removes the superseded clone', :aggregate_failures do
+            resolved_body = resolved_result.resolve[:fields][field_name][:value]
+
+            expect(resolved_body).to include("/api/v1/attachments/#{cloned_attachment.id}")
+            expect { stale_attachment.reload }.to raise_error(ActiveRecord::RecordNotFound)
+          end
+        end
+      end
+
       context 'with organization autocomplete fields' do
         let(:search_organization)   { create(:organization) }
         let(:object_attribute)      { create(:object_manager_attribute_organization_autocompletion) }

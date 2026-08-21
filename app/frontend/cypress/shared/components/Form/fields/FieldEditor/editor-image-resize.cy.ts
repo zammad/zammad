@@ -72,4 +72,38 @@ describe('resizing image within editor', () => {
         })
       })
   })
+
+  it('preserves resized width/height when an article/draft body is reloaded from saved HTML', () => {
+    cy.intercept('GET', '/api/v1/attachments/2062', { fixture: 'example.png' })
+
+    // This is the shape actually persisted for an article/shared-draft body: HtmlSanitizer.strict
+    // (via HtmlSanitizer::Scrubber::Wipe#move_attrs_to_css) moves width/height off the element and
+    // into an inline style with a 'px' suffix, so this - not the plain-attribute form below - is
+    // what a user reproducing #809 hits on reload (regression test for the style fallback
+    // stripping the 'px' unit rather than leaving it in place, which browsers ignore).
+    mountEditor({
+      value: '<p><img src="/api/v1/attachments/2062" style="width:83px;height:83px"></p>',
+    })
+
+    cy.get('img').then(($img) => {
+      expect($img.width()).to.eq(83)
+      expect($img.height()).to.eq(83)
+    })
+  })
+
+  it('preserves resized width/height when reloaded via plain width/height attributes', () => {
+    cy.intercept('GET', '/api/v1/attachments/2062', { fixture: 'example.png' })
+
+    // This is the shape produced by the editor's own renderHTML for a resized image (plain
+    // width/height attributes, no inline style). It's not how a saved article/draft body comes
+    // back (that goes through HtmlSanitizer.strict and ends up as an inline style instead - see
+    // the case above), but it is what round-trips through an editor -> clipboard -> editor copy,
+    // e.g. pasting a resized image from one compose window into another (regression test for
+    // parseHTML falling back to schema defaults).
+    mountEditor({
+      value: '<p><img src="/api/v1/attachments/2062" width="83" height="83"></p>',
+    })
+
+    cy.get('img').should('have.attr', 'width', '83').and('have.attr', 'height', '83')
+  })
 })
