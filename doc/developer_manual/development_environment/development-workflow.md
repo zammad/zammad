@@ -81,10 +81,6 @@ Zammad includes scripts to streamline common tasks.
 
 - `pnpm generate-graphql-api` - Regenerate GraphQL introspection file
 - `pnpm generate-setting-types` - Regenerate Zammad setting types
-- `pnpm generate:install` - Setup code generation tools
-- `pnpm generate:generic-component` - Generate generic component
-- `pnpm generate:composable` - Generate generic composable
-- `pnpm generate:store` - Generate generic store
 
 ## Testing
 

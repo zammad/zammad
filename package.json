@@ -29,11 +29,7 @@
     "cypress:snapshots": "sh .dev/cypress/visual-regression/snapshots.sh",
     "cypress:install": "pnpm --dir ./.dev/cypress install --frozen-lockfile",
     "playwright:install": "playwright install chromium",
-    "analyse:vite-bundle": "pnpm exec vite-bundle-visualizer",
-    "generate:install": "pnpm --dir ./.dev/hygen install --frozen-lockfile",
-    "generate:generic-component": "pnpm --dir ./.dev/hygen exec hygen new generic-component",
-    "generate:composable": "pnpm --dir ./.dev/hygen exec hygen new composable ",
-    "generate:store": "pnpm --dir ./.dev/hygen exec hygen new store"
+    "analyse:vite-bundle": "pnpm exec vite-bundle-visualizer"
   },
   "engines": {
     "node": ">=24",
