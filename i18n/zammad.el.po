@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-08-14 05:57+0000\n"
+"PO-Revision-Date: 2026-08-17 06:12+0000\n"
 "Last-Translator: IOANNIS KALINTIRIS <kalidiris@uop.gr>\n"
 "Language-Team: Greek <https://translations.zammad.org/projects/zammad/zammad-"
 "stable/el/>\n"
@@ -1353,26 +1353,23 @@ msgid "API Token Access"
 msgstr "Πρόσβαση με Token API"
 
 #: lib/whatsapp/webhook/payload.rb:22
-#, fuzzy
-#| msgid "Sign out"
 msgid "API error."
-msgstr "Εξοδος"
+msgstr "Σφάλμα API."
 
 #: lib/ai/provider/concerns/handles_response.rb:14
 msgid "API server error - please try again"
-msgstr ""
+msgstr "Σφάλμα διακομιστή API – παρακαλώ δοκιμάστε ξανά"
 
 #: app/assets/javascripts/app/views/generic/text_tools_modal.jst.eco:10
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_ticket_summary.jst.eco:7
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummaryContent.vue:91
-#, fuzzy
-#| msgid "Sign out"
 msgid "API server error: %s"
-msgstr "Εξοδος"
+msgstr "Σφάλμα διακομιστή API: %s"
 
 #: lib/ai/provider/concerns/handles_response.rb:15
 msgid "API server unavailable - please try again later"
 msgstr ""
+"Ο διακομιστής API δεν είναι διαθέσιμος – παρακαλώ δοκιμάστε ξανά αργότερα"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco:42
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco:43
@@ -1388,112 +1385,98 @@ msgstr "API token"
 #: app/assets/javascripts/app/views/channel/form.jst.eco:127
 msgid "Accept Data Privacy Policy & Acceptable Use Policy"
 msgstr ""
-"Αποδέχομαι την Πολιτική Απορρήτου Δεδομένων & την Πολιτική Ορθής Χρήσης"
+"Αποδοχή της Πολιτικής Προστασίας Δεδομένων και της Πολιτικής Επιτρεπόμενης "
+"Χρήσης"
 
 #: app/frontend/apps/desktop/components/CommonTicketLabel/CommonTicketLabel.vue:44
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabForbidden.vue:36
-#, fuzzy
-#| msgid "Access to %s"
 msgid "Access denied"
-msgstr "Προσβαση σε %s"
+msgstr "Η πρόσβαση δεν επιτρέπεται"
 
 #: db/seeds/permissions.rb:360
 msgid "Access the agent chat features."
-msgstr "Πρόσβαση στις λειτουργίες συνομιλίας των εκπροσώπων."
+msgstr "Αποκτήστε πρόσβαση στις λειτουργίες συνομιλίας με τους συνεργάτες."
 
 #: db/seeds/permissions.rb:375
 msgid "Access the agent phone features."
-msgstr "Πρόσβαση στις λειτουργίες τηλεφώνου των εκπροσώπων."
+msgstr "Πρόσβαση στις λειτουργίες του τηλεφώνου του συνεργάτη."
 
 #: db/seeds/permissions.rb:390
 msgid "Access the knowledge base editor features."
-msgstr "Πρόσβαση στις λειτουργίες επεξεργασίας της βάσης γνώσεων."
+msgstr "Αποκτήστε πρόσβαση στις λειτουργίες του επεξεργαστή της βάσης γνώσεων."
 
 #: db/seeds/permissions.rb:396
 msgid "Access the knowledge base reader features."
 msgstr ""
+"Αποκτήστε πρόσβαση στις λειτουργίες του προγράμματος ανάγνωσης της βάσης "
+"γνώσεων."
 
 #: db/seeds/permissions.rb:418
-#, fuzzy
-#| msgid "Access to Agent Tickets based on Group Access"
 msgid "Access the tickets as agent based on group access."
-msgstr "Access to Agent Tickets based on Group Access"
+msgstr ""
+"Πρόσβαση στα αιτήματα ως αντιπρόσωπος, βάσει των δικαιωμάτων πρόσβασης της "
+"ομάδας."
 
 #: db/seeds/permissions.rb:427
-#, fuzzy
-#| msgid "Recent Customer Tickets"
 msgid "Access tickets as customer."
-msgstr "Πρόσφατα αιτήματα πελατών"
+msgstr "Πρόσβαση στα αιτήματα ως πελάτης."
 
 #: db/seeds/permissions.rb:351
-#, fuzzy
-#| msgid "Recent Customer Tickets"
 msgid "Access to the chat interface."
-msgstr "Πρόσφατα αιτήματα πελατών"
+msgstr "Πρόσβαση στη διεπαφή συνομιλίας."
 
 #: db/seeds/permissions.rb:381
-#, fuzzy
-#| msgid "Delete Knowledge Base"
 msgid "Access to the knowledge base interface."
-msgstr "Διαγραφή βάσης γνώσεων"
+msgstr "Πρόσβαση στη διεπαφή της βάσης γνώσεων."
 
 #: db/seeds/permissions.rb:366
-#, fuzzy
-#| msgid "Recent Customer Tickets"
 msgid "Access to the phone interface."
-msgstr "Πρόσφατα αιτήματα πελατών"
+msgstr "Πρόσβαση στη διεπαφή του τηλεφώνου."
 
 #: db/seeds/permissions.rb:403
 msgid "Access to the report interface."
-msgstr ""
+msgstr "Πρόσβαση στη διεπαφή της έκθεσης."
 
 #: db/seeds/permissions.rb:409
-#, fuzzy
-#| msgid "Recent Customer Tickets"
 msgid "Access to the ticket interface."
-msgstr "Πρόσφατα αιτήματα πελατών"
+msgstr "Πρόσβαση στη διεπαφή έκδοσης αιτημάτων."
 
 #: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco:19
-#, fuzzy
-#| msgid "Access to %s"
 msgid "Access token"
-msgstr "Προσβαση σε %s"
+msgstr "Διακριτικό πρόσβασης"
 
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue:152
-#, fuzzy
-#| msgid "Agent limit exceeded, please check your account settings."
 msgid "Accessing your camera is forbidden. Please check your settings."
-msgstr "Υπέρβαση του ορίου εκπροσώπου, ελέγξτε τις ρυθμίσεις λογαριασμού σας."
+msgstr ""
+"Απαγορεύεται η πρόσβαση στην κάμερά σας. Παρακαλώ, ελέγξτε τις ρυθμίσεις σας."
 
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:45
 #: app/frontend/apps/mobile/pages/account/routes.ts:8
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:32
 msgid "Account"
-msgstr ""
+msgstr "Λογαριασμός"
 
 #: app/models/channel/driver/sms/twilio.rb:104
 msgid "Account SID"
-msgstr ""
+msgstr "Αναγνωριστικό λογαριασμού (SID)"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:6
 msgid "Account Time"
-msgstr "Account Time"
+msgstr "Χρόνος λογαριασμού"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:610
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:197
 #: app/controllers/channels_email_controller.rb:238
 msgid "Account already exists!"
-msgstr ""
+msgstr "Ο λογαριασμός υπάρχει ήδη!"
 
 #: app/assets/javascripts/app/controllers/_plugin/user_signup_check.coffee:34
 msgid "Account not verified"
-msgstr "O λογαριασμός δεν επαληθεύτηκε."
+msgstr "Ο λογαριασμός δεν έχει επαληθευτεί"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:128
-#, fuzzy
-#| msgid "Account Time"
 msgid "Account time"
-msgstr "Account Time"
+msgstr "Χρόνος λογαριασμού"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:37
 #: app/assets/javascripts/app/controllers/time_accounting.coffee:28
@@ -1502,21 +1485,17 @@ msgstr "Account Time"
 #: app/assets/javascripts/app/views/time_accounting/accounted_time.jst.eco:2
 #: app/graphql/gql/types/overview_type.rb:101
 msgid "Accounted Time"
-msgstr "Accounted Time"
+msgstr "Καταγεγραμμένος χρόνος"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:77
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:147
 #: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:14
-#, fuzzy
-#| msgid "Accounted Time"
 msgid "Accounted time"
-msgstr "Accounted Time"
+msgstr "Καταγεγραμμένος χρόνος"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketAccountedTime.vue:79
-#, fuzzy
-#| msgid "Accounted Time"
 msgid "Accounted time unit"
-msgstr "Accounted Time"
+msgstr "Λογιστική μονάδα χρόνου"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:11
 #: app/assets/javascripts/app/controllers/_channel/google.coffee:11
@@ -1561,28 +1540,20 @@ msgid "Action"
 msgstr "Ενέργεια"
 
 #: app/models/ai/agent/type/custom_ai_agent.rb:79
-#, fuzzy
-#| msgid "Bulk action executed!"
 msgid "Action definition"
-msgstr "Εκτελέστηκε μαζική ενέργεια!"
+msgstr "Ορισμός ενέργειας"
 
 #: app/assets/javascripts/app/models/trigger.coffee:8
-#, fuzzy
-#| msgid "Bulk action executed!"
 msgid "Action execution"
-msgstr "Εκτελέστηκε μαζική ενέργεια!"
+msgstr "Εκτέλεση ενέργειας"
 
 #: app/frontend/apps/desktop/entities/two-factor-configuration/plugins/authenticator-app.ts:12
-#, fuzzy
-#| msgid "Bulk action executed!"
 msgid "Action menu button for authenticator app"
-msgstr "Εκτελέστηκε μαζική ενέργεια!"
+msgstr "Κουμπί μενού ενεργειών για την εφαρμογή επαλήθευσης ταυτότητας"
 
 #: app/frontend/apps/desktop/entities/two-factor-configuration/plugins/security-keys.ts:12
-#, fuzzy
-#| msgid "Bulk action executed!"
 msgid "Action menu button for security keys"
-msgstr "Εκτελέστηκε μαζική ενέργεια!"
+msgstr "Κουμπί μενού ενεργειών για κλειδιά ασφαλείας"
 
 #: app/assets/javascripts/app/models/macro.coffee:7
 #: app/assets/javascripts/app/models/template.coffee:7
@@ -1596,19 +1567,19 @@ msgstr "Ενεργειες"
 
 #: db/seeds/settings.rb:2869
 msgid "Activate the recursive processing of ticket triggers."
-msgstr ""
+msgstr "Ενεργοποιήστε την αναδρομική επεξεργασία των ενεργοποιητών αιτημάτων."
 
 #: app/assets/javascripts/app/models/trigger.coffee:7
-#, fuzzy
-#| msgid "Active"
 msgid "Activated by"
-msgstr "Ενεργό"
+msgstr "Ενεργοποιείται από"
 
 #: db/seeds/settings.rb:1081
 msgid ""
 "Activates lost password feature for users. This setting is only effective if "
 "the password login is enabled."
 msgstr ""
+"Ενεργοποιεί τη λειτουργία «χαμένος κωδικός πρόσβασης» για τους χρήστες. Αυτή "
+"η ρύθμιση ισχύει μόνο εάν έχει ενεργοποιηθεί η σύνδεση με κωδικό πρόσβασης."
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:326
 #: app/assets/javascripts/app/models/ai_agent.coffee:10
@@ -1652,41 +1623,33 @@ msgid "Active Agents"
 msgstr "Ενεργοί Χειρηστές"
 
 #: app/assets/javascripts/app/views/time_accounting/accounted_time.jst.eco:16
-#, fuzzy
-#| msgid "Active"
 msgid "Activity"
-msgstr "Ενεργό"
+msgstr "Δραστηριότητα"
 
 #: app/assets/javascripts/app/views/dashboard.jst.eco:10
 msgid "Activity Stream"
-msgstr "Ιστορικό"
+msgstr "Ροή δραστηριοτήτων"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:49
 #: app/assets/javascripts/app/controllers/time_accounting_types.coffee:50
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco:16
 #: app/assets/javascripts/app/views/time_accounting/types.jst.eco:4
 #: app/controllers/time_accountings_controller.rb:111
-#, fuzzy
-#| msgid "Active"
 msgid "Activity Type"
-msgstr "Ενεργό"
+msgstr "Τύπος δραστηριότητας"
 
 #: app/assets/javascripts/app/controllers/time_accounting.coffee:23
 #: app/assets/javascripts/app/controllers/time_accounting_types.coffee:51
-#, fuzzy
-#| msgid "Active"
 msgid "Activity Types"
-msgstr "Ενεργό"
+msgstr "Τύποι δραστηριοτήτων"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:110
-#, fuzzy
-#| msgid "Active"
 msgid "Activity type"
-msgstr "Ενεργό"
+msgstr "Τύπος δραστηριότητας"
 
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:39
 msgid "Adapter"
-msgstr ""
+msgstr "Προσαρμογέας"
 
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee:90
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee:75
@@ -1723,56 +1686,50 @@ msgid "Add"
 msgstr "Προσθήκη"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketAIKnowledgeBaseAnswers.vue:67
-#, fuzzy
-#| msgid "Apply"
 msgid "Add AI draft"
-msgstr "Εφαρμογή"
+msgstr "Προσθήκη προσχεδίου με τεχνητή νοημοσύνη"
 
 #: app/assets/javascripts/app/views/channel_account/list.jst.eco:131
 #: app/assets/javascripts/app/views/exchange/token_information.jst.eco:7
 #: app/assets/javascripts/app/views/facebook/list.jst.eco:8
 #: app/assets/javascripts/app/views/whatsapp/index.jst.eco:7
 msgid "Add Account"
-msgstr "Προσθήκη λογαριασμου"
+msgstr "Προσθήκη λογαριασμού"
 
 #: app/assets/javascripts/app/views/generic/object_attribute_options_context.jst.eco:62
-#, fuzzy
-#| msgid "Add Link"
 msgid "Add All"
-msgstr "Προσθήκη συνδέσμου"
+msgstr "Προσθήκη όλων"
 
 #: app/assets/javascripts/app/views/telegram/index.jst.eco:7
 msgid "Add Bot"
-msgstr "Add Bot"
+msgstr "Προσθήκη bot"
 
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee:77
 #: app/assets/javascripts/app/controllers/ssl_certificate.coffee:88
 #: app/assets/javascripts/app/views/integration/smime.jst.eco:5
 msgid "Add Certificate"
-msgstr ""
+msgstr "Προσθήκη πιστοποιητικού"
 
 #: app/assets/javascripts/app/views/integration/pgp.jst.eco:5
-#, fuzzy
-#| msgid "reply"
 msgid "Add Key"
-msgstr "απαντηση"
+msgstr "Προσθήκη κλειδιού"
 
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee:120
 #: app/assets/javascripts/app/views/integration/smime.jst.eco:6
 msgid "Add Private Key"
-msgstr ""
+msgstr "Προσθήκη ιδιωτικού κλειδιού"
 
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee:92
 msgid "Add Public or Private Key"
-msgstr ""
+msgstr "Προσθήκη δημόσιου ή ιδιωτικού κλειδιού"
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/sms.ts:45
 msgid "Add SMS"
-msgstr ""
+msgstr "Προσθήκη SMS"
 
 #: app/assets/javascripts/app/views/ssl_certificates.jst.eco:5
 msgid "Add SSL Certificate"
-msgstr ""
+msgstr "Προσθήκη πιστοποιητικού SSL"
 
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/tags.jst.eco:19
 msgid "Add Tag"
@@ -1787,151 +1744,127 @@ msgstr "Προσθήκη telegram bot."
 #: app/assets/javascripts/app/views/widget/organization.jst.eco:20
 #: app/assets/javascripts/app/views/widget/user.jst.eco:27
 msgid "Add a Note"
-msgstr "Προσθήκη Σημείωσης"
+msgstr "Προσθήκη σημείωσης"
 
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee:80
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:6
 msgid "Add a Personal Access Token"
-msgstr "προσθέστε ένα διακριτικό πρόσβασης"
+msgstr "Προσθήκη προσωπικού διακριτικού πρόσβασης"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:114
 msgid "Add a data privacy deletion task"
-msgstr ""
+msgstr "Προσθήκη εργασίας διαγραφής δεδομένων προσωπικού χαρακτήρα"
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:295
-#, fuzzy
-#| msgid "Add Tag"
 msgid "Add a message"
-msgstr "Προσθήκη ετικέτας"
+msgstr "Προσθήκη μηνύματος"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco:123
 msgid "Add agreement text before submit."
-msgstr ""
+msgstr "Προσθέστε το κείμενο της συμφωνίας πριν από την υποβολή."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:294
-#, fuzzy
-#| msgid "Add alarm to pending reminder and escalated tickets."
 msgid "Add alarm to pending reminder and escalated tickets"
 msgstr ""
-"Προσθέστε ειδοποίηση για υπενθύμιση σε εκκρεμότητα και κλιμακωτά αιτήματα."
+"Προσθήκη ειδοποίησης σε εκκρεμείς υπενθυμίσεις και σε αιτήματα που έχουν "
+"αναβαθμιστεί"
 
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco:34
 msgid "Add alarm to pending reminder and escalated tickets."
 msgstr ""
-"Προσθέστε ειδοποίηση για υπενθύμιση σε εκκρεμότητα και κλιμακωτά αιτήματα."
+"Προσθήκη ειδοποίησης σε εκκρεμείς υπενθυμίσεις και σε αιτήματα που έχουν "
+"αναβαθμιστεί."
 
 #: app/frontend/shared/form/i18n/locales.ts:73
 msgid "Add all values"
-msgstr ""
+msgstr "Προσθέστε όλες τις τιμές"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco:112
 msgid "Add attachment option to upload."
-msgstr "Προσθήκη επιλογής συνημμένου για μεταφόρτωση."
+msgstr "Προσθήκη επιλογής συνημμένου κατά τη μεταφόρτωση."
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:251
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:248
 msgid "Add bullet list"
-msgstr ""
+msgstr "Προσθήκη λίστας με κουκκίδες"
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts:44
-#, fuzzy
-#| msgid "Add Account"
 msgid "Add comment"
-msgstr "Προσθήκη λογαριασμου"
+msgstr "Προσθήκη σχολίου"
 
 #: app/assets/javascripts/app/views/generic/application_selector_row.jst.eco:32
 #: app/assets/javascripts/app/views/generic/application_selector_subclause.jst.eco:18
-#, fuzzy
-#| msgid "Add Account"
 msgid "Add condition"
-msgstr "Προσθήκη λογαριασμου"
+msgstr "Προσθήκη συνθήκης"
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:146
-#, fuzzy
-#| msgid "email"
 msgid "Add email"
-msgstr "email"
+msgstr "Προσθήκη email"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/start.jst.eco:5
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:426
 msgid "Add empty checklist"
-msgstr ""
+msgstr "Προσθήκη κενής λίστας ελέγχου"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/start.jst.eco:11
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistTemplates.vue:36
 msgid "Add from a template"
-msgstr ""
+msgstr "Προσθήκη από πρότυπο"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:109
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:109
-#, fuzzy
-#| msgid "Add Tag"
 msgid "Add heading"
-msgstr "Προσθήκη ετικέτας"
+msgstr "Προσθήκη επικεφαλίδας"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:281
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:278
-#, fuzzy
-#| msgid "Add Tag"
 msgid "Add image"
-msgstr "Προσθήκη ετικέτας"
+msgstr "Προσθήκη εικόνας"
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/note.ts:15
-#, fuzzy
-#| msgid "Add a Note"
 msgid "Add internal note"
-msgstr "Προσθήκη Σημείωσης"
+msgstr "Προσθήκη εσωτερικής σημείωσης"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:300
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:158
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:297
 #: app/frontend/shared/components/Form/fields/FieldEditor/features/link/LinkForm.vue:173
-#, fuzzy
-#| msgid "Add Link"
 msgid "Add link"
 msgstr "Προσθήκη συνδέσμου"
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/telegram.ts:46
 #: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:187
-#, fuzzy
-#| msgid "Add Tag"
 msgid "Add message"
-msgstr "Προσθήκη ετικέτας"
+msgstr "Προσθήκη μηνύματος"
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/note.ts:15
-#, fuzzy
-#| msgid "Add Bot"
 msgid "Add note"
-msgstr "Add Bot"
+msgstr "Προσθήκη σημείωσης"
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:151
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:238
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:235
-#, fuzzy
-#| msgid "Format as ordered list"
 msgid "Add ordered list"
-msgstr "Μορφοποίηση ως λίστα παραγγελίας"
+msgstr "Προσθήκη ταξινομημένης λίστας"
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/phone.ts:13
 msgid "Add phone call"
-msgstr ""
+msgstr "Προσθήκη τηλεφωνικής κλήσης"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:36
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue:88
 #: app/frontend/shared/entities/ticket-article/action/plugins/web.ts:13
-#, fuzzy
-#| msgid "reply"
 msgid "Add reply"
-msgstr "απαντηση"
+msgstr "Προσθήκη απάντησης"
 
 #: app/frontend/shared/form/i18n/locales.ts:77
 msgid "Add selected values"
-msgstr ""
+msgstr "Προσθήκη επιλεγμένων τιμών"
 
 #: app/assets/javascripts/app/views/generic/application_selector_row.jst.eco:35
 #: app/assets/javascripts/app/views/generic/application_selector_subclause.jst.eco:21
 msgid "Add subclause"
-msgstr ""
+msgstr "Προσθήκη υποπαραγράφου"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:196
 #, fuzzy
@@ -1942,18 +1875,16 @@ msgstr "Προσθήκη ετικέτας"
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee:86
 msgid "Add this class to a button on your page that should open the chat."
 msgstr ""
-"Προσθέστε αυτήν την τάξη σε ένα κουμπί στη σελίδα σας που θα ξεκινήσει τη "
-"συνομιλία."
+"Προσθέστε αυτή την κλάση σε ένα κουμπί της σελίδας σας, το οποίο θα ανοίγει "
+"τη συνομιλία."
 
 #: app/models/ai/agent/type/ticket_tagger.rb:169
 msgid "Add to existing tags"
-msgstr ""
+msgstr "Προσθήκη σε υπάρχουσες ετικέτες"
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:158
-#, fuzzy
-#| msgid "Format as ordered list"
 msgid "Add unordered list"
-msgstr "Μορφοποίηση ως λίστα παραγγελίας"
+msgstr "Προσθήκη μη ταξινομημένης λίστας"
 
 #: app/controllers/first_steps_controller.rb:105
 msgid "Additional Channels"
@@ -1961,23 +1892,19 @@ msgstr "Πρόσθετα κανάλια"
 
 #: db/seeds/settings.rb:3351
 msgid "Additional follow-up detection"
-msgstr "Επιπρόσθετος εν συνεχεία συντονισμός"
+msgstr "Πρόσθετη ανίχνευση κατά την παρακολούθηση"
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:230
-#, fuzzy
-#| msgid "Block Notifications"
 msgid "Additional information"
-msgstr "Αποκλεισμός ειδοποιήσεων"
+msgstr "Πρόσθετες πληροφορίες"
 
 #: app/frontend/apps/desktop/components/layout/LayoutPublicPage/LayoutPublicPage.vue:59
-#, fuzzy
-#| msgid "Block Notifications"
 msgid "Additional information and links"
-msgstr "Αποκλεισμός ειδοποιήσεων"
+msgstr "Πρόσθετες πληροφορίες και σύνδεσμοι"
 
 #: db/seeds/settings.rb:846
 msgid "Additional notes for ticket create types."
-msgstr ""
+msgstr "Πρόσθετες σημειώσεις για τους τύπους δημιουργίας αιτημάτων."
 
 #: db/seeds/object_manager_attributes.rb:1439
 msgid "Address"
@@ -1985,7 +1912,7 @@ msgstr "Διεύθυνση"
 
 #: db/seeds/settings.rb:507
 msgid "Address of the proxy server for http and https resources."
-msgstr ""
+msgstr "Διεύθυνση του διακομιστή μεσολάβησης για πόρους http και https."
 
 #: db/seeds/roles.rb:5
 msgid "Admin"
@@ -1993,47 +1920,39 @@ msgstr "Διαχειριστης"
 
 #: app/assets/javascripts/app/controllers/_channel/_channel_account_overview.coffee:318
 msgid "Admin Consent"
-msgstr ""
+msgstr "Συγκατάθεση διαχειριστή"
 
 #: app/assets/javascripts/app/controllers/documentation_link.coffee:2
-#, fuzzy
-#| msgid "Administrator Account"
 msgid "Admin Documentation"
-msgstr "Λογαριασμός διαχειριστή"
+msgstr "Τεκμηρίωση διαχειριστή"
 
 #: app/assets/javascripts/app/controllers/admin_password_auth.coffee:23
-#, fuzzy
-#| msgid "Bind Password"
 msgid "Admin Password Login"
-msgstr "Δεσμευμένος κωδικός πρόσβασης"
+msgstr "Σύνδεση με κωδικό πρόσβασης διαχειριστή"
 
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/admin-documentation.ts:7
-#, fuzzy
-#| msgid "Administrator Account"
 msgid "Admin documentation"
-msgstr "Λογαριασμός διαχειριστή"
+msgstr "Τεκμηρίωση διαχειριστή"
 
 #: db/seeds/permissions.rb:5 db/seeds/settings.rb:1121
 msgid "Admin interface"
-msgstr ""
+msgstr "Διεπαφή διαχειριστή"
 
 #: app/frontend/apps/desktop/pages/authentication/routes.ts:25
-#, fuzzy
-#| msgid "Bind Password"
 msgid "Admin password login"
-msgstr "Δεσμευμένος κωδικός πρόσβασης"
+msgstr "Σύνδεση με κωδικό πρόσβασης διαχειριστή"
 
 #: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco:4
 #: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue:56
 msgid "Admin password login instructions were sent to your email address."
 msgstr ""
+"Οι οδηγίες για τη σύνδεση με τον κωδικό πρόσβασης διαχειριστή έχουν σταλεί "
+"στη διεύθυνση ηλεκτρονικού ταχυδρομείου σας."
 
 #: app/assets/javascripts/app/controllers/_default_navbar.coffee:13
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/MenuContainer/AdminMenu/plugins/admin.ts:9
-#, fuzzy
-#| msgid "Administrator Account"
 msgid "Administration"
-msgstr "Λογαριασμός διαχειριστή"
+msgstr "Διοίκηση"
 
 #. This is the template file app/views/mailer/admin_password_auth/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -2057,6 +1976,25 @@ msgid ""
 "<br>\n"
 "<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
+"Σύνδεση διαχειριστή στο #{config.product_name}\n"
+"\n"
+"<div>Γεια σου #{user.firstname},</div>\n"
+"<br>\n"
+"<div>Λάβαμε ένα αίτημα για σύνδεση διαχειριστή στον λογαριασμό σου στο #"
+"{config.product_name} <b>#{user.login}</b>.</div>\n"
+"<br>\n"
+"<div>Παρακαλώ, κάντε κλικ στον παρακάτω σύνδεσμο (ή αντιγράψτε και "
+"επικολλήστε τη διεύθυνση URL στον περιηγητή σας) για να συνεχίσετε:</div>\n"
+"<br>\n"
+"<div><a href=\"#{url}\">#{url}</a></div>\n"
+"<br>\n"
+"<div>Αυτός ο σύνδεσμος σας μεταφέρει σε μια σελίδα όπου μπορείτε να "
+"συνδεθείτε.</div>\n"
+"<br>\n"
+"<div>Εάν δεν επιθυμείτε να συνδεθείτε, παρακαλούμε αγνοήστε αυτό το μήνυμα.</"
+"div>\n"
+"<br>\n"
+"<div>Η ομάδα του #{config.product_name} σας</div>\n"
 
 #: app/assets/javascripts/app/views/getting_started/admin.jst.eco:5
 msgid "Administrator Account"
@@ -2064,37 +2002,40 @@ msgstr "Λογαριασμός διαχειριστή"
 
 #: app/assets/javascripts/app/models/macro.coffee:9
 msgid "Advance to next ticket from overview"
-msgstr ""
+msgstr "Μετάβαση στο επόμενο αίτημα από τη συνοπτική προβολή"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:61
-#, fuzzy
-#| msgid ""
-#| "Here you find your ticket overviews for open, assigned and escalated "
-#| "tickets."
 msgid "Affects only notifications for not assigned and all tickets."
-msgstr ""
-"Εδώ θα βρείτε τις επισκοπήσεις των αιτημάτων σας για ανοιχτά, καθορισμένα "
-"και κλιμακωτά αιτήματα."
+msgstr "Αφορά μόνο τις ειδοποιήσεις για τα μη ανατεθέντα και όλα τα αιτήματα."
 
 #: app/assets/javascripts/app/views/exchange/admin_consent.jst.eco:4
 msgid "After approval, please re-connect your Exchange account."
 msgstr ""
+"Μετά την έγκριση, παρακαλούμε να συνδέσετε εκ νέου τον λογαριασμό σας στο "
+"Exchange."
 
 #: app/assets/javascripts/app/views/channel_account/admin_consent.jst.eco:4
 msgid "After approval, please re-connect your Microsoft365 mailbox."
 msgstr ""
+"Μετά την έγκριση, παρακαλούμε να επανασυνδέσετε το γραμματοκιβώτιό σας στο "
+"Microsoft 365."
 
 #: app/assets/javascripts/app/views/package.jst.eco:12
 msgid ""
 "After installing, updating, or uninstalling packages the following commands "
 "need to be executed on the server:"
 msgstr ""
+"Μετά την εγκατάσταση, την ενημέρωση ή την απεγκατάσταση πακέτων, πρέπει να "
+"εκτελεστούν οι ακόλουθες εντολές στον διακομιστή:"
 
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceFreshdesk.vue:93
 msgid ""
 "After the import is completed, the account associated with the API token "
 "will become your username, and the token itself will be your password."
 msgstr ""
+"Μόλις ολοκληρωθεί η εισαγωγή, ο λογαριασμός που είναι συνδεδεμένος με το "
+"διακριτικό API θα γίνει το όνομα χρήστη σας, ενώ το ίδιο το διακριτικό θα "
+"αποτελέσει τον κωδικό πρόσβασής σας."
 
 #: app/assets/javascripts/app/views/session.jst.eco:11
 msgid "Age"
@@ -2110,21 +2051,21 @@ msgstr "Συνεργάτης"
 
 #: db/seeds/settings.rb:3264
 msgid "Agent Name"
-msgstr ""
+msgstr "Όνομα Συνεργάτη"
 
 #: db/seeds/settings.rb:3264
 msgid "Agent Name + FromSeparator + System Address Display Name"
 msgstr ""
+"Όνομα συνεργάτη + Διαχωριστικό «Από» + Εμφανιζόμενο όνομα διεύθυνσης "
+"συστήματος"
 
 #: db/seeds/permissions.rb:359
-#, fuzzy
-#| msgid "Agent"
 msgid "Agent chat"
-msgstr "Συνεργάτης"
+msgstr "Συνομιλία με τον συνεργάτη"
 
 #: db/seeds/settings.rb:3618
 msgid "Agent idle timeout"
-msgstr ""
+msgstr "Χρονικό όριο αδράνειας χειριστή"
 
 #: app/models/role.rb:151 app/models/user.rb:763
 msgid "Agent limit exceeded, please check your account settings."

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-08-12 10:42+0000\n"
+"PO-Revision-Date: 2026-08-17 06:12+0000\n"
 "Last-Translator: Thomas Meijer <tvm@bizconnect.dk>\n"
 "Language-Team: Danish <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/da/>\n"
@@ -25490,7 +25490,7 @@ msgstr "…af hele tekstfeltet"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
-msgstr "∅ Waiting time today"
+msgstr "∅ Ventetid i dag"
 
 #~ msgid "API server not accessible"
 #~ msgstr "API server ikke tilgængelig"

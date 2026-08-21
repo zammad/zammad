@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-07-06 22:07+0000\n"
+"PO-Revision-Date: 2026-08-19 22:12+0000\n"
 "Last-Translator: MBekspert <michal.bosak@ekspert.biz>\n"
 "Language-Team: Polish <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/pl/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 5.16.2\n"
+"X-Generator: Weblate 2026.7.1\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -822,7 +822,7 @@ msgstr "%{name} jest słowem zastrzeżonym"
 
 #: app/models/setting/validation/sso_trusted_ips.rb:9
 msgid "'%s' is not a valid IP address or CIDR range."
-msgstr ""
+msgstr "„%s” nie jest prawidłowym adresem IP ani zakresem CIDR."
 
 #: app/frontend/apps/mobile/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue:63
 msgid "(state: %s)"
@@ -1082,6 +1082,8 @@ msgid ""
 "A related knowledge base answer is being generated. You will be notified "
 "once the draft is ready."
 msgstr ""
+"Trwa tworzenie odpowiedzi w Bazie wiedzy dotyczącej tego zagadnienia. "
+"Otrzymają Państwo powiadomienie, gdy tylko wersja robocza będzie gotowa."
 
 #: app/assets/javascripts/app/views/dashboard/first_steps_test_ticket_finish.jst.eco:1
 msgid ""
@@ -2299,6 +2301,8 @@ msgid ""
 "Another bulk update is currently in progress. Please wait until it is "
 "finished before starting a new one."
 msgstr ""
+"Obecnie trwa kolejna aktualizacja zbiorcza. Prosimy o poczekanie do jej "
+"zakończenia przed rozpoczęciem nowej aktualizacji."
 
 #. This is the template file app/views/mailer/ticket_update_received_merge/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -2748,10 +2752,8 @@ msgstr ""
 "numer telefonu stacjonarnego, komórkowego lub adres e-mail)."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/new_controller.coffee:44
-#, fuzzy
-#| msgid "at least one letter is required"
 msgid "At least one locale is required."
-msgstr "wymagana jest co najmniej jedna litera"
+msgstr "Wymagane jest podanie co najmniej jednego ustawienia regionalnego."
 
 #: app/models/postmaster_filter.rb:29
 msgid "At least one match rule is required, but none was provided."
@@ -3076,6 +3078,8 @@ msgid ""
 "Available tags are limited to existing in the manage tags section. AI agent "
 "won't be able to generate new ones. %l"
 msgstr ""
+"Dostępne tagi są ograniczone do tych, które znajdują się w sekcji "
+"zarządzania tagami. Agent AI nie będzie mógł generować nowych tagów. %l"
 
 #: db/seeds/settings.rb:889
 msgid "Available types for a new ticket"
@@ -3124,7 +3128,7 @@ msgstr "Średnio: %s%"
 
 #: app/assets/javascripts/app/lib/app_post/ai_provider/azure_ai.coffee:3
 msgid "Azure AI (legacy deployment-based endpoints)"
-msgstr ""
+msgstr "Azure AI (starsze punkty końcowe oparte na wdrożeniach)"
 
 #: db/seeds/settings.rb:3507
 msgid "BCC address for all outgoing emails"
@@ -8583,10 +8587,8 @@ msgid "Execute planned jobs."
 msgstr "Wykonuj zaplanowane zadania."
 
 #: app/assets/javascripts/app/views/ticket_overview/batch_overlay.jst.eco:23
-#, fuzzy
-#| msgid "Confirmation"
 msgid "Executing bulk action…"
-msgstr "Potwierdzenie"
+msgstr "Wykonywanie operacji zbiorczej…"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:22
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:34
@@ -17077,10 +17079,8 @@ msgstr ""
 "URL subskrypcji do aplikacji kalendarza."
 
 #: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:289
-#, fuzzy
-#| msgid "Selector"
 msgid "Select"
-msgstr "Selector"
+msgstr "Wybierz"
 
 #: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:402
 #, fuzzy
@@ -23798,10 +23798,10 @@ msgid "Workflows"
 msgstr "Przepływy pracy"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:104
-#, fuzzy
-#| msgid "Would you like to give us feedback on the BETA UI? "
 msgid "Would you like to give us feedback on the BETA UI?"
-msgstr "Wyślij opinię na temat BETA UI "
+msgstr ""
+"Czy ty zechciałbyś podzielić się z nami opinią na temat interfejsu "
+"użytkownika wersji BETA?"
 
 #: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:25
 #: db/seeds/permissions.rb:245 db/seeds/settings.rb:6155
@@ -23890,7 +23890,9 @@ msgstr "Jesteś na pozycji listy oczekujących <strong>%s</strong>."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:78
 msgid "You are part of the BETA UI feedback program."
-msgstr "Jesteś częścią programu BETA UI"
+msgstr ""
+"Uczestniczysz w programie zbierania opinii na temat interfejsu użytkownika w "
+"wersji BETA."
 
 #: app/models/transaction/notification.rb:111
 msgid ""

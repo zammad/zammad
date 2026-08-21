@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-08-12 10:42+0000\n"
+"PO-Revision-Date: 2026-08-19 22:12+0000\n"
 "Last-Translator: Ralf Schmid <rsc@zammad.com>\n"
 "Language-Team: German <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/de/>\n"
@@ -5557,7 +5557,7 @@ msgstr "Definiert die maximale Nutzlast-Größe für Elasticsearch."
 
 #: db/seeds/settings.rb:3734
 msgid "Define model configuration for Elasticsearch."
-msgstr "Definieren Sie die Model-Konfiguration für Elasticsearch."
+msgstr "Definieren Sie die Modell-Konfiguration für Elasticsearch."
 
 #: db/seeds/settings.rb:3725
 msgid "Define pipeline name for Elasticsearch."
@@ -7472,7 +7472,7 @@ msgstr "Elasticsearch Endpunkt-Benutzer"
 
 #: db/seeds/settings.rb:3731
 msgid "Elasticsearch Model Configuration"
-msgstr "Elasticsearch Model-Konfiguration"
+msgstr "Elasticsearch Modell-Konfiguration"
 
 #: db/seeds/settings.rb:3722
 msgid "Elasticsearch Pipeline Name"
@@ -12421,7 +12421,7 @@ msgstr "Modus"
 
 #: app/assets/javascripts/app/controllers/_ai/provider.coffee:197
 msgid "Model"
-msgstr "Model"
+msgstr "Modell"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:272
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:66
@@ -13683,7 +13683,7 @@ msgstr "OAuth2 Token ist abgelaufen!"
 
 #: app/assets/javascripts/app/controllers/_ai/provider.coffee:244
 msgid "OCR Model"
-msgstr "OCR-Model"
+msgstr "OCR-Modell"
 
 #: app/frontend/apps/desktop/components/CommonDialog/CommonDialogActionFooter.vue:19
 #: app/frontend/apps/mobile/components/CommonConfirmation/CommonConfirmation.vue:29
