@@ -25,17 +25,28 @@ import { getTicketAiAssistanceSummaryUpdatesSubscriptionHandler } from '#desktop
 
 // The count the ticket's own updates subscription keeps current - that is what the summary watches,
 //   rather than opening an article subscription of its own.
-const ticketCacheId = () =>
+const ticketCacheId = (ticketId: string | number = 1) =>
   mockedApolloClient.cache.identify({
     __typename: 'Ticket',
-    id: convertToGraphQLId('Ticket', 1),
+    id: convertToGraphQLId('Ticket', ticketId),
   })
 
-const raiseArticleCount = () =>
-  mockedApolloClient.cache.modify({
-    id: ticketCacheId(),
+const raiseArticleCount = async (ticketId: string) => {
+  // The ticket query and the summarize mutation resolve independently, so the ticket's own
+  //   articleCount reading may still be unset at this point. Bumping it before that first
+  //   reading lands would look like the initial hydration to the consumer, which is designed
+  //   to ignore it - wait for a real baseline first so the bump is seen as an actual change.
+  await waitFor(() =>
+    expect(
+      mockedApolloClient.cache.extract()[ticketCacheId(ticketId) as string]?.articleCount,
+    ).toEqual(expect.any(Number)),
+  )
+
+  return mockedApolloClient.cache.modify({
+    id: ticketCacheId(ticketId),
     fields: { articleCount: (current: number) => current + 1 },
   })
+}
 
 // A System article touches the ticket like any other, but it is not counted.
 const touchTicket = () =>
@@ -150,9 +161,14 @@ describe('Ticket detail view - Ticket summary', () => {
       },
     })
 
-    mockTicketQuery({ ticket: createDummyTicket() })
+    // A ticket ID of its own, rather than the "1" most other tests in this file share: this test
+    //   reads the ticket's own articleCount back out of the cache before bumping it, and a shared
+    //   ID risks that read racing an unrelated mock's write to the same cache entity.
+    const ticketId = '90210'
 
-    const view = await visitView('/tickets/1')
+    mockTicketQuery({ ticket: createDummyTicket({ ticketId }) })
+
+    const view = await visitView(`/tickets/${ticketId}`)
 
     await view.events.click(view.getByRole('button', { name: 'AI summary' }))
 
@@ -162,7 +178,7 @@ describe('Ticket detail view - Ticket summary', () => {
 
     expect(await view.findByRole('heading', { name: 'Customer intent' }))
 
-    raiseArticleCount()
+    await raiseArticleCount(ticketId)
 
     await waitFor(() => expect(calls).toHaveLength(numberOfCalls + 1))
   })

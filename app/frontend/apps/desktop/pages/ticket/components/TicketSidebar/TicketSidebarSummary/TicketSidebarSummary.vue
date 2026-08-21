@@ -2,7 +2,7 @@
 
 <script setup lang="ts">
 import { whenever } from '@vueuse/shared'
-import { computed, type EffectScope, effectScope, ref, watch, toRef } from 'vue'
+import { computed, type EffectScope, effectScope, onUnmounted, ref, watch, toRef } from 'vue'
 
 import { useReactivate } from '#shared/composables/useReactivate.ts'
 import {
@@ -207,36 +207,46 @@ const activateTicketSummarySubscription = () => {
   })
 }
 
-const activateSubscriptions = () => {
-  watchTicketArticleCount()
-  activateTicketSummarySubscription()
+let subscriptionsScope: EffectScope | undefined
+
+const handleDeactivateSubscriptions = () => {
+  subscriptionsScope?.stop()
+  subscriptionsScope = undefined
 }
 
-let subscriptionsScope: EffectScope
-
-const handleDeactivateSubscriptions = () => subscriptionsScope?.stop()
-
+// useReactivate swallows the first onActivated (its isMounted flag only flips in
+// onDeactivated), so that hook and the immediate isEnabled watcher run below can never both
+// fire on mount. What they can coincide on is isEnabled flipping to true while the component
+// sits deactivated in the keep-alive cache, followed by onActivated on reactivation - so this
+// still has to be idempotent, otherwise a second, un-stopped scope leaks: it isn't attached to
+// the component's own scope (it's created outside the synchronous setup() call), so Vue never
+// disposes it on unmount, and it keeps reacting (e.g. double-firing the article count watcher)
+// for as long as the app lives.
 const handleActivateSubscriptions = () => {
+  if (subscriptionsScope) return
+
   subscriptionsScope = effectScope()
-  subscriptionsScope.run(activateSubscriptions)
+  subscriptionsScope.run(() => {
+    watchTicketArticleCount()
+    activateTicketSummarySubscription()
+  })
   getAIAssistanceSummary()
 }
 
 useReactivate(handleActivateSubscriptions, handleDeactivateSubscriptions)
 
+onUnmounted(handleDeactivateSubscriptions)
+
 watch(
   isEnabled,
   (showSidebar) => {
     if (showSidebar) {
-      subscriptionsScope = effectScope()
-      subscriptionsScope.run(activateSubscriptions)
-
-      getAIAssistanceSummary()
+      handleActivateSubscriptions()
 
       emit('show')
     } else {
       emit('hide')
-      subscriptionsScope?.stop()
+      handleDeactivateSubscriptions()
     }
   },
   { immediate: true },
