@@ -37,6 +37,8 @@ class App.UiElement.basedate
       todayBtn: 'linked'
       todayHighlight: true
       format: App.i18n.timeFormat()['FORMAT_DATE']
+      # expand a typed 2-digit year to the nearest year at most 50 years ahead of today (1977-2076 in 2026)
+      assumeNearbyYear: 50
       rtl: App.i18n.dir() is 'rtl'
       container: item
       language: 'custom'
