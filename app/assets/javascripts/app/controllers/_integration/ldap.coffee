@@ -627,10 +627,13 @@ class ConnectionWizard extends App.ControllerWizardModal
     length = user_attributes.source.length-1
     for count in [0..length]
       if user_attributes.source[count] && user_attributes.dest[count]
-        user_attributes_local[user_attributes.source[count]] = user_attributes.dest[count]
+        if !_.isArray(user_attributes_local[user_attributes.source[count]])
+          user_attributes_local[user_attributes.source[count]] = []
+        if !_.contains(user_attributes_local[user_attributes.source[count]], user_attributes.dest[count])
+          user_attributes_local[user_attributes.source[count]].push user_attributes.dest[count]
 
-    requiredAttribute = Object.keys(user_attributes_local).some( (local_attribute) ->
-      return user_attributes_local[local_attribute] == 'login'
+    requiredAttribute = _.some(_.values(user_attributes_local), (dest_attributes) ->
+      return _.contains(dest_attributes, 'login')
     )
 
     @wizardConfig.user_attributes = user_attributes_local
@@ -667,8 +670,10 @@ class ConnectionWizard extends App.ControllerWizardModal
   buildRowsUserMap: (user_attribute_map) =>
 
     el = []
-    for source, dest of user_attribute_map
-      el.push @buildRowUserAttribute(source, dest)
+    for source, dests of user_attribute_map
+      # a mapping value can be a single Zammad attribute or a list of them
+      for dest in [].concat(dests)
+        el.push @buildRowUserAttribute(source, dest)
     el
 
   buildRowUserAttribute: (source, dest) =>
