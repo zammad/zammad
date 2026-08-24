@@ -73,6 +73,25 @@ instead.
 
 ## 7.2
 
+### Dates with a year outside 1 to 9999 are no longer accepted
+
+**Who is affected?** Integrations that write date or datetime values with a year outside the range 1
+to 9999, for example a ticket object attribute set via `PUT /api/v1/tickets/:id`.
+
+Date and datetime attributes of all objects are now validated against the year range that
+Elasticsearch and RFC 3339 support. Previously such a value was stored, but broke the indexing of the
+whole record afterwards, so the affected ticket, user or organization could no longer be found via
+search at all. Saving a value like `20026-08-18` now fails with the validation error
+`must have a year between 1 and 9999` instead.
+
+Only attributes that are actually changed by a save are validated, so existing records keep their
+out-of-range values until the affected attribute is written again.
+
+⚠️ Update integrations that send such values, and correct existing out-of-range dates to make the
+affected records findable again.
+
+**Related issue:** [#6306](https://github.com/zammad/zammad/issues/6306)
+
 ### Import mode is reported as an issue by the health check
 
 **Who is affected?** Admins of instances that are left in import mode after a migration, and monitoring
