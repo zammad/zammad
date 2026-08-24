@@ -121,7 +121,7 @@ describe('TicketKnowledgeBaseAiSuggested', () => {
       answers: [relatedAnswer(1, 'Reset your password'), relatedAnswer(2, 'Update billing')],
     })
 
-    expect(wrapper.getByText('Suggested by AI')).toBeInTheDocument()
+    expect(wrapper.getByText('Suggested knowledge')).toBeInTheDocument()
     expect(await wrapper.findByText('Reset your password')).toBeInTheDocument()
     expect(wrapper.getByText('Update billing')).toBeInTheDocument()
 

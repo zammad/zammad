@@ -40,7 +40,7 @@ const { isTouchDevice } = useTouchDevice()
 
 <template>
   <CommonLabel tag="h3" size="small" class="text-stone-200! dark:text-neutral-500!">
-    {{ $t('Suggested by AI') }}
+    {{ $t('Suggested knowledge') }}
   </CommonLabel>
   <div v-if="hasError" class="flex flex-col items-end gap-3">
     <CommonAlert class="self-stretch" variant="danger">

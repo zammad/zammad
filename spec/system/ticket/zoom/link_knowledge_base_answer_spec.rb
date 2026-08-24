@@ -181,7 +181,7 @@ RSpec.describe 'Ticket zoom > Link knowledge base answer', type: :system do
     it 'shows neither AI suggestions nor the draft generation action' do
       within :active_content, '.link_kb_answers' do
         expect(page)
-          .to have_no_text('Suggested by AI')
+          .to have_no_text('Suggested knowledge')
           .and(have_no_css('.js-kb-ai-generate'))
 
         expect(Service::Ticket::AI::RelatedKnowledgeBaseAnswers).not_to have_received(:execute)
@@ -219,14 +219,14 @@ RSpec.describe 'Ticket zoom > Link knowledge base answer', type: :system do
       within :active_content, '.link_kb_answers' do
         # The title renders uppercase via CSS `text-transform`, which Capybara's rendered text
         #   picks up - matched case-insensitively rather than asserting on that styling.
-        expect(page).to have_text(%r{Suggested by AI}i).and(have_css('.js-kb-ai-generate'))
+        expect(page).to have_text(%r{Suggested knowledge}i).and(have_css('.js-kb-ai-generate'))
       end
 
       Setting.set('vectordb_enabled', false)
 
       within :active_content, '.link_kb_answers' do
         expect(page)
-          .to have_no_text(%r{Suggested by AI}i, wait: 15)
+          .to have_no_text(%r{Suggested knowledge}i, wait: 15)
           .and(have_no_css('.js-kb-ai-generate'))
       end
     end
@@ -488,7 +488,7 @@ RSpec.describe 'Ticket zoom > Link knowledge base answer', type: :system do
 
       it 'still checks for duplicate answers in the generation modal' do
         within :active_content, '.link_kb_answers' do
-          expect(page).to have_no_text('Suggested by AI')
+          expect(page).to have_no_text('Suggested knowledge')
           expect(Service::Ticket::AI::RelatedKnowledgeBaseAnswers).not_to have_received(:execute)
 
           find('.js-kb-ai-generate').click

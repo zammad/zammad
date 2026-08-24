@@ -144,7 +144,7 @@ describe('TicketRelatedKnowledge', () => {
 
     const wrapper = renderRelatedKnowledge({ showAiSuggestedAnswers: true })
 
-    expect(await wrapper.findByText('Suggested by AI')).toBeInTheDocument()
+    expect(await wrapper.findByText('Suggested knowledge')).toBeInTheDocument()
     expect(wrapper.getByRole('button', { name: 'Add AI draft' })).toBeInTheDocument()
   })
 
@@ -166,7 +166,7 @@ describe('TicketRelatedKnowledge', () => {
 
     const wrapper = renderRelatedKnowledge({ showAiSuggestedAnswers: true })
 
-    expect(await wrapper.findByText('Suggested by AI')).toBeInTheDocument()
+    expect(await wrapper.findByText('Suggested knowledge')).toBeInTheDocument()
     expect(wrapper.queryByRole('button', { name: 'Add AI draft' })).not.toBeInTheDocument()
   })
 
@@ -207,7 +207,7 @@ describe('TicketRelatedKnowledge', () => {
     })
 
     // The search runs on the server and excluded the answer while it was linked, so the
-    //   unlinked answer can only reappear under "Suggested by AI" by re-running it.
+    //   unlinked answer can only reappear under "Suggested knowledge" by re-running it.
     expect(wrapper.emitted('refresh-ai-suggested-answers')).toHaveLength(1)
   })
 
@@ -218,7 +218,7 @@ describe('TicketRelatedKnowledge', () => {
     const translation = buildLinkedAnswer(1, 'Duplicate charge on latest invoice')
 
     // A suggestions response that was still in flight while the answer got linked carries it
-    //   along; it must not show up under both "Linked" and "Suggested by AI".
+    //   along; it must not show up under both "Linked" and "Suggested knowledge".
     const wrapper = renderRelatedKnowledge({
       linkedAnswers: [translation],
       linkedAnswerIds: [translation.id],
@@ -232,7 +232,7 @@ describe('TicketRelatedKnowledge', () => {
       ],
     })
 
-    expect(await wrapper.findByText('Suggested by AI')).toBeInTheDocument()
+    expect(await wrapper.findByText('Suggested knowledge')).toBeInTheDocument()
 
     // Listed once, under "Linked" — the suggestions fall back to their empty state.
     expect(await wrapper.findAllByText('Duplicate charge on latest invoice')).toHaveLength(1)
@@ -262,7 +262,7 @@ describe('TicketRelatedKnowledge', () => {
       ],
     })
 
-    expect(await wrapper.findByText('Suggested by AI')).toBeInTheDocument()
+    expect(await wrapper.findByText('Suggested knowledge')).toBeInTheDocument()
     expect(await wrapper.findByText('Doppelte Abbuchung')).toBeInTheDocument()
     expect(wrapper.queryByText('Duplicate charge')).not.toBeInTheDocument()
     expect(wrapper.getByText('No suggestions.')).toBeInTheDocument()
@@ -283,7 +283,7 @@ describe('TicketRelatedKnowledge', () => {
 
     const wrapper = renderRelatedKnowledge()
 
-    expect(wrapper.queryByText('Suggested by AI')).not.toBeInTheDocument()
+    expect(wrapper.queryByText('Suggested knowledge')).not.toBeInTheDocument()
     expect(wrapper.queryByRole('button', { name: 'Add AI draft' })).not.toBeInTheDocument()
   })
 })

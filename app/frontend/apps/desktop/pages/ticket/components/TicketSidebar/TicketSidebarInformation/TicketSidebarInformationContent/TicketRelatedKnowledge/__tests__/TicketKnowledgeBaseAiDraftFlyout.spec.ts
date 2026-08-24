@@ -183,7 +183,7 @@ describe('TicketKnowledgeBaseAiDraftFlyout', () => {
     expect(wrapper.getByRole('button', { name: 'Retry' })).toBeInTheDocument()
 
     // The suggestion list is replaced by the error, not shown alongside it.
-    expect(wrapper.queryByText('AI suggested knowledge')).not.toBeInTheDocument()
+    expect(wrapper.queryByText('Suggested knowledge')).not.toBeInTheDocument()
   })
 
   it('clears an embed error and re-runs the search on retry', async () => {

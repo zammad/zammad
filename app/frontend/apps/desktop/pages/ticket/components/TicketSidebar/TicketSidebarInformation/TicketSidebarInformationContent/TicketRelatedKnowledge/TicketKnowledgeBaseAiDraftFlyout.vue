@@ -114,7 +114,7 @@ const { answers, loading, pending, hasError, errorDetail, retrySearch } =
 
             <div class="space-y-2.5 rounded-lg bg-blue-200 px-2.5 pt-2 pb-1 dark:bg-gray-700">
               <CommonLabel tag="h3" size="small" class="text-stone-200! dark:text-neutral-500!">
-                {{ $t('AI suggested knowledge') }}
+                {{ $t('Suggested knowledge') }}
               </CommonLabel>
 
               <ul class="divide-y divide-neutral-100 dark:divide-gray-900">
@@ -134,7 +134,7 @@ const { answers, loading, pending, hasError, errorDetail, retrySearch } =
 
           <div v-else class="space-y-2.5 rounded-lg bg-blue-200 px-2.5 py-2 dark:bg-gray-700">
             <CommonLabel tag="h3" size="small" class="text-stone-200! dark:text-neutral-500!">
-              {{ $t('AI suggested knowledge') }}
+              {{ $t('Suggested knowledge') }}
             </CommonLabel>
             <CommonLabel tag="p">
               {{
@@ -148,7 +148,7 @@ const { answers, loading, pending, hasError, errorDetail, retrySearch } =
           <template #skeleton>
             <div class="space-y-2.5 rounded-lg bg-blue-200 px-2.5 pt-2 pb-1 dark:bg-gray-700">
               <CommonLabel size="small" class="text-stone-200! dark:text-neutral-500!" tag="h3">
-                {{ $t('AI suggested knowledge') }}
+                {{ $t('Suggested knowledge') }}
               </CommonLabel>
 
               <ul class="divide-y divide-neutral-100 dark:divide-gray-900">

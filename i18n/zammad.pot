@@ -796,10 +796,6 @@ msgstr ""
 msgid "AI service result is missing expected keys"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiDraftFlyout.vue:117
-msgid "AI suggested knowledge"
-msgstr ""
-
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/ticket-summary.ts:11
 msgid "AI summary"
 msgstr ""
@@ -16984,8 +16980,9 @@ msgid "Suggest matching knowledge base answers in the ticket sidebar."
 msgstr ""
 
 #: app/assets/javascripts/app/views/link/kb_answer.jst.eco:33
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiDraftFlyout.vue:117
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiSuggested.vue:43
-msgid "Suggested by AI"
+msgid "Suggested knowledge"
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/admin/index.jst.eco:49

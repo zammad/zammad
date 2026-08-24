@@ -30,7 +30,7 @@
 <% end %>
 <div class="js-kb-link-search"></div>
 <% if @suggestionsEnabled: %>
-  <label class="kb-suggestions-title"><%- @T('Suggested by AI') %></label>
+  <label class="kb-suggestions-title"><%- @T('Suggested knowledge') %></label>
   <% if not @suggestionsLoaded: %>
     <p class="text-muted"><%- @T('Searching for related answers…') %></p>
   <% else if @suggestionsError: %>
