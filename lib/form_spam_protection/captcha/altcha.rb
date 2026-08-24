@@ -12,7 +12,7 @@ class FormSpamProtection::Captcha::Altcha < FormSpamProtection::Captcha
   CHALLENGE_TTL  = 1.hour
   # Pinned widget version: the server owns ALTCHA verification, so a widget upgrade
   # (payload/protocol change) must be a deliberate, tested change, not picked up silently.
-  SCRIPT_URL     = 'https://cdn.jsdelivr.net/npm/altcha@3.2.1/dist/main/altcha.min.js'.freeze
+  SCRIPT_URL     = 'https://cdn.jsdelivr.net/npm/altcha@3.2.2/dist/main/altcha.min.js'.freeze
   RESPONSE_FIELD = 'altcha'.freeze
 
   def self.key
