@@ -8,8 +8,8 @@ const modules = import.meta.glob<EntityModule>(['./*.ts', '!./index.ts'], {
   import: 'default',
 })
 
-const entityModules = Object.entries(modules).reduce(
-  (acc, [_, module]) => {
+const entityModules = Object.values(modules).reduce(
+  (acc, module) => {
     acc[module.type] = module
     return acc
   },

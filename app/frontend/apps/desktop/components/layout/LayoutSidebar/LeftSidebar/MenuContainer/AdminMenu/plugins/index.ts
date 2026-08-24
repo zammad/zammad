@@ -7,6 +7,6 @@ const modules = import.meta.glob<AdminMenuItem>(['./*.ts', '!./index.ts'], {
   import: 'default',
 })
 
-const adminModules = Object.entries(modules).map(([_, module]) => module)
+const adminModules = Object.values(modules)
 
 export default adminModules.sort((m1, m2) => m1.order - m2.order)

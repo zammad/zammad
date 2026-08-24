@@ -8,8 +8,8 @@ const eventActionModules = import.meta.glob<EventActionModule>(['./*.ts', '!./in
 })
 
 // Put all event actions from the glob output into an hash
-const eventActions = Object.entries(eventActionModules).reduce(
-  (lookup: Record<string, EventActionModule>, [_, module]) => {
+const eventActions = Object.values(eventActionModules).reduce(
+  (lookup: Record<string, EventActionModule>, module) => {
     lookup[module.name] = module
     return lookup
   },

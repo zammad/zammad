@@ -7,6 +7,6 @@ const modules = import.meta.glob<AddMenuItem>(['./*.ts', '!./index.ts'], {
   import: 'default',
 })
 
-const addModules = Object.entries(modules).map(([_, module]) => module)
+const addModules = Object.values(modules)
 
 export default addModules.sort((m1, m2) => m1.order - m2.order)

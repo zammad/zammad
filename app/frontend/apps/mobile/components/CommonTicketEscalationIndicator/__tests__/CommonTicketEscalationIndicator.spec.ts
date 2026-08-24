@@ -9,8 +9,6 @@ const { renderComponent } = await import('#tests/support/components/index.ts')
 const { default: CommonTicketEscalationIndicator } =
   await import('../CommonTicketEscalationIndicator.vue')
 
-export {}
-
 const renderCommonTicketEscalationIndicator = (props: Partial<Props> = {}) => {
   return renderComponent(CommonTicketEscalationIndicator, {
     props: {
