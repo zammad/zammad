@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-07-21 11:56+0000\n"
-"Last-Translator: Goudarz Jafari <goudarz.jafari@gmail.com>\n"
+"PO-Revision-Date: 2026-08-13 09:16+0000\n"
+"Last-Translator: Leonerd <3ickleonerd@gmail.com>\n"
 "Language-Team: Persian <https://translations.zammad.org/projects/zammad/"
 "zammad-development/fa/>\n"
 "Language: fa-ir\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.16.2\n"
+"X-Generator: Weblate 2026.7.1\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -374,8 +374,8 @@ msgstr "%s (متد)"
 msgid "%s (option)"
 msgstr "%s (ویژگی)"
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:322
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:565
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:343
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:590
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:261
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:354
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:145
@@ -434,9 +434,11 @@ msgstr "%s لینک"
 msgid "%s ago"
 msgstr "%s قبل"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleFooter.vue:31
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:221
-msgid "%s attached files"
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleFooter.vue:29
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:219
+#, fuzzy
+#| msgid "%s attached files"
+msgid "%s attached file(s)"
 msgstr "%s پرونده پیوست شده"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee:32
@@ -469,7 +471,7 @@ msgstr "%s سازمان |%s| را ایجاد کرد"
 msgid "%s created role |%s|"
 msgstr "%s نقش |%s| را ایجاد کرد"
 
-#: app/assets/javascripts/app/models/ticket.coffee:109
+#: app/assets/javascripts/app/models/ticket.coffee:112
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:21
 msgid "%s created ticket |%s|"
 msgstr "%s تیکت |%s| را ایجاد کرد"
@@ -597,7 +599,7 @@ msgid "%s of my tickets escalated"
 msgstr "%s عدد از تیکت‌های من بالاسپاری شد"
 
 #: app/assets/javascripts/app/views/ticket_overview/batch_overlay_user_group.jst.eco:11
-#: app/graphql/gql/queries/autocomplete_search/generic.rb:62
+#: app/graphql/gql/queries/autocomplete_search/generic.rb:73
 msgid "%s people"
 msgstr "%s شخص"
 
@@ -691,7 +693,7 @@ msgstr "%s سازمان |%s| را به‌روز کرد"
 msgid "%s updated role |%s|"
 msgstr "%s نقش |%s| را به‌روز کرد"
 
-#: app/assets/javascripts/app/models/ticket.coffee:111
+#: app/assets/javascripts/app/models/ticket.coffee:114
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:23
 msgid "%s updated ticket |%s|"
 msgstr "%s تیکت |%s| را به‌روز کرد"
@@ -823,11 +825,6 @@ msgstr ""
 #: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkCursorPreview.vue:72
 msgid "+ %s more"
 msgstr "+ %s مورد دیگر"
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleFooter.vue:30
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:220
-msgid "1 attached file"
-msgstr "۱ پرونده پیوست شده"
 
 #: db/seeds/settings.rb:1134
 msgid "1 day"
@@ -985,7 +982,7 @@ msgstr "یک سرویس قدرتمند برای دریافت اطلاعات بی
 msgid "A queue is required!"
 msgstr "یک صف الزامی است!"
 
-#: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee:448
+#: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee:449
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/composables/useTicketAiAssistanceEnqueueKnowledgeBaseAnswer.ts:43
 msgid ""
 "A related knowledge base answer is being generated. You will be notified "
@@ -1019,6 +1016,12 @@ msgid ""
 msgstr ""
 "وضعیت یک تیکت برای دسته‌بندی و مدیریت چرخه حیات یک تیکت یا درخواست مشتری "
 "استفاده می‌شود."
+
+#: app/services/service/knowledge_base/category/create.rb:57
+#, fuzzy
+#| msgid "A user is required!"
+msgid "A title is required."
+msgstr "یک کاربر الزامی است!"
 
 #: app/assets/javascripts/app/controllers/_integration/cti.coffee:216
 msgid "A user is required!"
@@ -1154,13 +1157,13 @@ msgstr "لاگ خطای هوش مصنوعی"
 msgid "AI provider"
 msgstr "ارائه‌دهنده هوش مصنوعی"
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:186
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:209
 #, fuzzy
 #| msgid "AI provider disabled successfully."
 msgid "AI provider configuration disabled successfully."
 msgstr "ارائه‌دهنده هوش مصنوعی با موفقیت غیرفعال شد."
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:186
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:209
 #, fuzzy
 #| msgid "AI provider enabled successfully."
 msgid "AI provider configuration enabled successfully."
@@ -1329,6 +1332,10 @@ msgstr "به رابط کاربری تیکت دسترسی دارد."
 #: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco:19
 msgid "Access token"
 msgstr "دسترسی توکن"
+
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyout/KnowledgeBaseFeedFlyout.vue:155
+msgid "Access token renewed, update your RSS reader with the new feed URLs."
+msgstr ""
 
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue:152
 msgid "Accessing your camera is forbidden. Please check your settings."
@@ -1611,17 +1618,11 @@ msgstr "افزودن حساب کاربری"
 msgid "Add All"
 msgstr "افزودن همه"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/CategoryCard.vue:46
-#, fuzzy
-#| msgid "Edit Answer"
-msgid "Add Answer"
-msgstr "ویرایش پاسخ"
-
 #: app/assets/javascripts/app/views/telegram/index.jst.eco:7
 msgid "Add Bot"
 msgstr "افزودن بات"
 
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:252
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:251
 msgid "Add CC"
 msgstr "افزودن رونوشت"
 
@@ -1676,7 +1677,7 @@ msgstr "یک توکن شخصی اضافه کنید"
 msgid "Add a data privacy deletion task"
 msgstr "افزودن یک وظیفه حذف حریم خصوصی داده"
 
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:295
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:294
 msgid "Add a message"
 msgstr "افزودن یک پیام"
 
@@ -1705,7 +1706,9 @@ msgstr "ضمیمه دلخواه را برای آپلود اضافه کنید."
 msgid "Add bullet list"
 msgstr "افزودن بولت-لیست"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/AddCategoryCard.vue:23
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAddCategoryCard.vue:23
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:176
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:269
 #, fuzzy
 #| msgid "Edit Category"
 msgid "Add category"
@@ -1720,7 +1723,7 @@ msgstr "افزودن نظر"
 msgid "Add condition"
 msgstr "افزودن شرط"
 
-#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:147
+#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:133
 msgid "Add email"
 msgstr "افزودن ایمیل"
 
@@ -1789,12 +1792,6 @@ msgstr "افزودن پاسخ"
 msgid "Add selected values"
 msgstr "افزودن مقادیر انتخاب شده"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/CategoryCard.vue:47
-#, fuzzy
-#| msgid "Add subclause"
-msgid "Add sub-category"
-msgstr "افزودن زیربند"
-
 #: app/assets/javascripts/app/views/generic/application_selector_row.jst.eco:35
 #: app/assets/javascripts/app/views/generic/application_selector_subclause.jst.eco:21
 msgid "Add subclause"
@@ -1827,8 +1824,7 @@ msgstr ""
 msgid "Additional Channels"
 msgstr "سایر کانال‌ها"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderCompact.vue:97
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderFull.vue:97
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderRow.vue:108
 #: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailTopBar/TopBarHeaderCompact.vue:60
 #: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailTopBar/TopBarHeaderFull.vue:84
 #: app/frontend/apps/desktop/pages/user/components/UserDetailTopBar/TopBarHeaderCompact.vue:61
@@ -1840,11 +1836,11 @@ msgstr "عملیات بیشتر"
 msgid "Additional follow-up detection"
 msgstr "تشخیص پیگیری اضافی"
 
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:230
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:229
 msgid "Additional information"
 msgstr "اطلاعات بیشتر"
 
-#: app/frontend/apps/desktop/components/layout/LayoutPublicPage/LayoutPublicPage.vue:63
+#: app/frontend/apps/desktop/components/layout/LayoutPublicPage/LayoutPublicPage.vue:70
 msgid "Additional information and links"
 msgstr "اطلاعات و پیوندهای بیشتر"
 
@@ -2116,6 +2112,12 @@ msgstr ""
 msgid "All groups will be considered for dispatching tickets."
 msgstr "همه گروه‌ها برای ارسال تیکت‌ها در نظر گرفته می‌شوند."
 
+#: app/assets/javascripts/app/controllers/widget/online_notification.coffee:165
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification.vue:103
+#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:64
+msgid "All notifications will be deleted. This action cannot be undone."
+msgstr ""
+
 #: app/models/ai/agent/type/ticket_prioritizer.rb:29
 msgid "All priorities will be considered for prioritizing tickets."
 msgstr "همه اولویت‌ها برای اولویت‌بندی تیکت‌ها در نظر گرفته می‌شوند."
@@ -2239,6 +2241,11 @@ msgstr ""
 "ایمیل به _%s_ ارسال گردید. لطفا پیوند داخل ایمیل را اجرا کنید تا حساب کاربری "
 "شما فعال شود."
 
+#: app/models/ai/provider_connection.rb:290
+msgid ""
+"An embedding model must be configured for the connection used for embeddings."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_calendar_view.coffee:50
 msgid "An error has occurred"
 msgstr "یک خطا رخ داد"
@@ -2272,6 +2279,7 @@ msgstr "یک خطای غیرمنتظره رخ داد."
 msgid "An unexpected error occurred during system setup."
 msgstr "یک خطای ناشناخته در هنگام نصب رخ داد."
 
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:769
 #: lib/ai/provider/concerns/handles_response.rb:22
 msgid "An unknown error occurred"
 msgstr "خطای ناشناخته‌ای رخ داد"
@@ -2330,20 +2338,33 @@ msgstr ""
 "target=\"zammad_app\">مشاهده این در #{config.product_name}</a>\n"
 "</div>\n"
 
-#: app/assets/javascripts/app/models/ticket.coffee:121
+#: app/assets/javascripts/app/models/ticket.coffee:124
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:33
 msgid "Another ticket was merged into ticket |%s|"
 msgstr "یک تیکت دیگر در تیکت |%s| ادغام شد"
 
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/link_answer_button.coffee:11
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerContent.vue:61
 msgid "Answer"
 msgstr "پاسخ"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/CategoryCard.vue:106
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:101
+#, fuzzy
+#| msgid "Answers: %s"
+msgid "Answer actions"
+msgstr "پاسخ‌ها: %s"
+
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:151
 #, fuzzy
 #| msgid "Answers: %s"
 msgid "Answer count: %s"
 msgstr "پاسخ‌ها: %s"
+
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerStepper.vue:51
+#, fuzzy
+#| msgid "KB Answer Generation"
+msgid "Answer navigation"
+msgstr "تولید پاسخ پایگاه دانش"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/answers.coffee:3
 msgid "Answers"
@@ -2353,7 +2374,7 @@ msgstr "پاسخ"
 msgid "Answers: %s"
 msgstr "پاسخ‌ها: %s"
 
-#: app/assets/javascripts/app/lib/app_post/ai_provider/anthropic.coffee:4
+#: app/assets/javascripts/app/lib/app_post/ai_provider/anthropic.coffee:3
 msgid "Anthropic"
 msgstr "Anthropic"
 
@@ -2513,14 +2534,16 @@ msgid "Archive ticket target state"
 msgstr "وضعیت هدف بایگانی تیکت"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:113
-#: app/frontend/apps/desktop/components/KnowledgeBaseAnswerIcon/KnowledgeBaseAnswerIcon.vue:41
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseIconStatus.vue:31
+#: app/frontend/apps/desktop/components/KnowledgeBaseAnswerIcon/visibilityMeta.ts:27
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerSidebarContent.vue:41
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseIconStatus.vue:35
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerHeaderDetails.vue:84
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/KnowledgeBaseAnswerAttributes.vue:54
 msgid "Archived"
 msgstr "بایگانی شده"
 
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco:30
 #: app/assets/javascripts/app/views/ticket_zoom/knowledge_base_ai_draft_modal.jst.eco:70
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/KnowledgeBaseAnswerAttributes.vue:64
 msgid "Archived at"
 msgstr "آرشیو شده در"
 
@@ -2528,7 +2551,13 @@ msgstr "آرشیو شده در"
 msgid "Are you sure to remove this article?"
 msgstr "آیا میخواهید این بند را حذف کنید؟"
 
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:152
+#: app/assets/javascripts/app/controllers/_ai/embedding_rebuild_confirm.coffee:16
+#, fuzzy
+#| msgid "Are you sure you want to delete this object?"
+msgid "Are you sure you want to change the embedding configuration?"
+msgstr "آیا واقعا مایل به حذف این آبجکت هستید؟"
+
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:147
 msgid "Are you sure you want to delete \"%s\"?"
 msgstr "آیا مایل به حذف «%s» هستید؟"
 
@@ -2663,7 +2692,7 @@ msgstr "تعداد بند"
 msgid "Article Language Detection"
 msgstr "تشخیص زبان مقاله"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:278
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:275
 msgid "Article actions"
 msgstr "فعالیت‌های بند"
 
@@ -2771,21 +2800,28 @@ msgstr "حداقل یک آبجکت باید انتخاب گردد."
 msgid "At least one user needs to have admin permissions."
 msgstr "حداقل یک کاربر بایستی دسترسی ادمین داشته باشد."
 
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:186
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:181
 msgid "Attach another file"
 msgstr "ضمیمه یک پرونده دیگر"
 
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:181
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:176
 msgid "Attach file"
 msgstr "ضمیمه پرونده"
 
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:184
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:179
 msgid "Attach files"
 msgstr "ضمیمه پرونده‌ها"
 
 #: app/assets/javascripts/app/views/generic/attachments.jst.eco:4
 #: app/views/knowledge_base/public/answers/show.html.erb:17
 msgid "Attached Files"
+msgstr "فایل‌های ضمیمه"
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldFile/FieldFileList.vue:62
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarAttachment/TicketSidebarAttachmentContent.vue:49
+#, fuzzy
+#| msgid "Attached Files"
+msgid "Attached files"
 msgstr "فایل‌های ضمیمه"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:223
@@ -2801,6 +2837,7 @@ msgstr "پیوست - جستجو برای پیگیری مجدد همچنین در
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_article_attachments.coffee:15
 #: app/assets/javascripts/app/views/knowledge_base/_answer_attachments.jst.eco:3
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/attachments.jst.eco:2
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerAttachments.vue:29
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarAttachment/TicketSidebarAttachment.vue:47
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/ticket-article-attachment.ts:12
 #: public/assets/form/form.js:50
@@ -3045,11 +3082,11 @@ msgstr ""
 "به طور خودکار فایل chat.css را بارگیری می‌کند. اگر می‌خواهید از css خود "
 "استفاده کنید، فقط آن را روی false تنظیم کنید."
 
-#: app/frontend/shared/components/Form/Form.vue:1326
+#: app/frontend/shared/components/Form/Form.vue:1324
 msgid "Autosave in progress…"
 msgstr "ذخیره خودکار در حال انجام…"
 
-#: app/frontend/shared/components/Form/Form.vue:1335
+#: app/frontend/shared/components/Form/Form.vue:1333
 msgid "Autosaving is taking longer than expected…"
 msgstr "ذخیره خودکار بیشتر از حد انتظار طول می‌کشد…"
 
@@ -3164,8 +3201,9 @@ msgid "BETA UI illustration"
 msgstr "تصویر رابط کاربری بتا"
 
 #: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:403
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:817
 #: app/assets/javascripts/app/views/generic/object_search/item_organization_members.jst.eco:5
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:449
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:473
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:430
 msgid "Back"
 msgstr "بازگشت"
@@ -3178,7 +3216,7 @@ msgstr "بازگشت به View من"
 msgid "Back to overview"
 msgstr "بازگشت به نمای‌کلی"
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:449
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:473
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:430
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue:181
 msgid "Back to previous page"
@@ -3352,7 +3390,8 @@ msgstr "بات‌ها"
 msgid "Branding"
 msgstr "برندسازی"
 
-#: app/frontend/apps/desktop/components/CommonBreadcrumb/CommonBreadcrumb.vue:19
+#: app/frontend/apps/desktop/components/CommonBreadcrumb/CommonBreadcrumb.vue:20
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseBreadcrumb.vue:22
 msgid "Breadcrumb navigation"
 msgstr "ناوبری خرده نشانه"
 
@@ -3464,12 +3503,12 @@ msgstr "تنظیمات ارائه دهنده کپچا"
 #: app/assets/javascripts/app/models/ticket_article.coffee:9
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:58
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:34
-#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:181
+#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:180
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:105
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:90
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:262
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:261
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:30
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:274
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:273
 #: db/seeds/object_manager_attributes.rb:523
 msgid "CC"
 msgstr "CC"
@@ -3659,7 +3698,7 @@ msgstr "لغو و خروج"
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue:118
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:147
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:135
-#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:437
+#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:435
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSharedDraftConflictDialog.vue:67
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:218
 msgid "Cancel & go back"
@@ -3676,6 +3715,7 @@ msgid "Cancel Upload"
 msgstr "صرف‌نظر از بارگذاری"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee:8
+#: app/frontend/apps/desktop/entities/knowledge-base/composables/useKnowledgeBaseCategoryDelete.ts:34
 msgid "Cannot delete category"
 msgstr "امکان حذف دسته‌بندی وجود ندارد"
 
@@ -3685,7 +3725,7 @@ msgstr "حذف رکورد امکان‌پذیر نیست زیرا یک %{record}
 msgid "Cannot delete record because dependent %{record} exist"
 msgstr "حذف رکورد امکان‌پذیر نیست زیرا %{record} وابسته وجود دارد"
 
-#: app/models/ai/provider_connection.rb:240
+#: app/models/ai/provider_connection.rb:434
 msgid "Cannot delete the Zammad AI connection on this system."
 msgstr ""
 
@@ -3701,7 +3741,7 @@ msgstr "نمی‌توان هم زمان پاسخ و هم زمان به‌روز�
 msgid "Cannot process external data source %s. %s"
 msgstr "نمی‌توان منبع داده خارجی %s را پردازش کرد. %s"
 
-#: app/frontend/shared/entities/online-notification/composables/useOnlineNotificationActions.ts:138
+#: app/frontend/shared/entities/online-notification/composables/useOnlineNotificationActions.ts:140
 msgid "Cannot set online notifications as seen"
 msgstr "نمی‌توان اعلان‌های برخط را به عنوان خوانده‌شده تنظیم کرد"
 
@@ -3720,7 +3760,7 @@ msgstr "دسته‌بندی ها"
 #: app/assets/javascripts/app/models/knowledge_base_answer.coffee:51
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco:36
 #: app/assets/javascripts/app/views/ticket_zoom/knowledge_base_ai_draft_modal.jst.eco:78
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/KnowledgeBaseAnswerAttributes.vue:68
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/KnowledgeBaseAnswerAttributes.vue:58
 msgid "Category"
 msgstr "دسته‌بندی"
 
@@ -3728,11 +3768,23 @@ msgstr "دسته‌بندی"
 msgid "Category Attribute"
 msgstr "ویژگی دسته‌بندی"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/CategoryCard.vue:90
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:163
+#, fuzzy
+#| msgid "Category page layout"
+msgid "Category actions"
+msgstr "ساختار صفحه دسته‌بندی"
+
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:135
 #, fuzzy
 #| msgid "Category page layout"
 msgid "Category count: %s"
 msgstr "ساختار صفحه دسته‌بندی"
+
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyout/KnowledgeBaseFeedFlyout.vue:196
+#, fuzzy
+#| msgid "Category"
+msgid "Category feed"
+msgstr "دسته‌بندی"
 
 #: app/assets/javascripts/app/models/knowledge_base.coffee:246
 msgid "Category page layout"
@@ -3766,7 +3818,7 @@ msgstr "تغییر"
 
 #: app/assets/javascripts/app/controllers/ticket_customer.coffee:5
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee:14
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee:125
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee:126
 msgid "Change Customer"
 msgstr "تغییر مشتری"
 
@@ -3790,8 +3842,13 @@ msgstr "تغییر مشتری"
 msgid "Change date"
 msgstr "تغییر تاریخ"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderCompact.vue:65
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderFull.vue:65
+#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:92
+#, fuzzy
+#| msgid "Change to %s"
+msgid "Change icon set"
+msgstr "تغییر به %s"
+
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderRow.vue:78
 #, fuzzy
 #| msgid "Target Language"
 msgid "Change language"
@@ -3871,7 +3928,7 @@ msgstr "تغییرات"
 msgid "Changes could not be loaded."
 msgstr "امکان بارگذاری تغییرات وجود ندارد."
 
-#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:106
+#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:147
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee:103
 msgid "Changes could not be saved."
 msgstr "امکان ذخیره تغییرات وجود ندارد."
@@ -3889,7 +3946,7 @@ msgstr "تغییرات انجام شده نیازمند به‌روزرسانی 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:163
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:123
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:102
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:163
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:162
 msgid "Channel"
 msgstr "کانال"
 
@@ -4193,7 +4250,10 @@ msgstr "پاکسازی نوار کارهای موبایل."
 msgid "Clear Selection"
 msgstr "پاکسازی انتخاب"
 
+#: app/assets/javascripts/app/views/widget/online_notification.jst.eco:5
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationPopover/NotificationHeader.vue:29
 #: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:117
+#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:66
 msgid "Clear all"
 msgstr "پاک کردن همه"
 
@@ -4204,6 +4264,14 @@ msgstr "همهٔ فیلترهای پیشرفته پاک شوند؟"
 #: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:202
 msgid "Clear all filters"
 msgstr "پاک کردن همه فیلترها"
+
+#: app/assets/javascripts/app/controllers/widget/online_notification.coffee:164
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification.vue:106
+#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:66
+#, fuzzy
+#| msgid "Service Notification"
+msgid "Clear all notifications"
+msgstr "اعلان سرویس"
 
 #: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue:85
 msgid "Clear filter"
@@ -4224,7 +4292,7 @@ msgstr "پاک کردن جستجو"
 
 #: app/frontend/apps/desktop/components/CommonTable/CellContent/BulkCheckbox.vue:61
 #: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:427
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:649
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:681
 #: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:386
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:314
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:376
@@ -4334,6 +4402,12 @@ msgstr "بستن برگه کنونی"
 msgid "Close dialog"
 msgstr "بستن دیالوگ"
 
+#: app/frontend/apps/desktop/components/CommonImageViewer/CommonImageViewer.vue:88
+#, fuzzy
+#| msgid "Image preview"
+msgid "Close image preview"
+msgstr "پیش‌نمایش تصویر"
+
 #: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:355
 msgid "Close side panel"
 msgstr "بستن پنل کناری"
@@ -4394,6 +4468,7 @@ msgstr "کلادفلر تورن‌استایل"
 
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:193
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarFooterMenu.vue:85
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerSidebar.vue:94
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar.vue:71
 msgid "Collapse sidebar"
 msgstr "جمع کردن نوار کناری"
@@ -4738,6 +4813,7 @@ msgid "Content"
 msgstr "محتوا"
 
 #: app/assets/javascripts/app/controllers/idoit_object_selector.coffee:42
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyout/KnowledgeBaseFeedFlyout.vue:111
 msgid "Content could not be loaded."
 msgstr "امکان بارگذاری محتوا وجود ندارد."
 
@@ -4749,7 +4825,7 @@ msgstr "بارگیر محتوا"
 msgid "Content preview could not be generated."
 msgstr "امکان ایجاد پیش‌نمایش محتوا وجود ندارد."
 
-#: app/frontend/apps/desktop/components/layout/LayoutContent.vue:189
+#: app/frontend/apps/desktop/components/layout/LayoutContent.vue:195
 msgid "Content sidebar"
 msgstr "نوار کناری محتوا"
 
@@ -4772,6 +4848,10 @@ msgstr "متن"
 msgid "Context menu"
 msgstr "منوی زمینه"
 
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:388
+msgid "Context window size"
+msgstr ""
+
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco:99
 #: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco:56
 #: app/assets/javascripts/app/views/getting_started/agent.jst.eco:8
@@ -4782,7 +4862,7 @@ msgstr "منوی زمینه"
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue:46
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSource.vue:52
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmail.vue:136
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:550
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:547
 msgid "Continue"
 msgstr "ادامه"
 
@@ -4839,13 +4919,26 @@ msgstr "کپی شد."
 msgid "Copy"
 msgstr "کپی"
 
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyout/KnowledgeBaseFeedFlyout.vue:189
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:291
 msgid "Copy URL"
 msgstr "کپی URL"
 
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:125
+#, fuzzy
+#| msgid "Copy secret"
+msgid "Copy answer title"
+msgstr "کپی راز"
+
 #: app/frontend/shared/entities/ticket-article/action/plugins/articlePermalink.ts:14
 msgid "Copy article permalink"
 msgstr "کپی پیوند دائمی مقاله"
+
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:210
+#, fuzzy
+#| msgid "Copy secret"
+msgid "Copy category title"
+msgstr "کپی راز"
 
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationRecoveryCodes.vue:113
 msgid "Copy codes"
@@ -4855,8 +4948,7 @@ msgstr "کپی کدها"
 msgid "Copy current object number (e. g. Ticket#) to clipboard"
 msgstr "کپی شماره آبجکت کنونی (مثلا شماره تیکت) داخل کلیپ‌بورد"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderCompact.vue:35
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderFull.vue:35
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderRow.vue:28
 #, fuzzy
 #| msgid "Knowledge base articles"
 msgid "Copy knowledge base name"
@@ -4871,7 +4963,7 @@ msgstr "کپی نام نمایشی سازمان"
 msgid "Copy secret"
 msgstr "کپی راز"
 
-#: app/frontend/apps/desktop/components/CommonInputCopyToClipboard/CommonInputCopyToClipboard.vue:17
+#: app/frontend/apps/desktop/components/CommonInputCopyToClipboard/CommonInputCopyToClipboard.vue:22
 msgid "Copy text"
 msgstr "کپی متن"
 
@@ -4995,7 +5087,7 @@ msgid "Could not set two-factor authentication method as default"
 msgstr "احراز هویت دوعاملی را نمی‌توان به عنوان احراز هویت پیش‌فرض تنظیم کرد"
 
 #: app/assets/javascripts/app/controllers/widget/link.coffee:72
-#: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee:408
+#: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee:409
 msgid "Couldn't save changes"
 msgstr "امکان ذخیره تغییرات وجود نداشت"
 
@@ -5030,9 +5122,10 @@ msgstr "کشور"
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:4
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:42
 #: app/frontend/apps/desktop/entities/user/composables/useUserCreate.ts:75
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:180
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:114
 #: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:311
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:501
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:499
 msgid "Create"
 msgstr "ایجاد"
 
@@ -5195,7 +5288,7 @@ msgid "Create tag"
 msgstr "ایجاد برچسب"
 
 #: app/frontend/apps/mobile/pages/ticket/routes.ts:64
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:501
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:499
 msgid "Create ticket"
 msgstr "ایجاد تیکت"
 
@@ -5332,7 +5425,7 @@ msgid "Created within last month"
 msgstr "ایجاد شده در ۱۴ روز گذشته"
 
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:24
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:476
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:474
 msgid "Creating new tickets via web is disabled."
 msgstr "ایجاد تیکت‌های جدید از طریق وب غیرفعال شده است."
 
@@ -5415,7 +5508,7 @@ msgstr ""
 msgid "Custom"
 msgstr "سفارشی"
 
-#: app/assets/javascripts/app/lib/app_post/ai_provider/custom.coffee:4
+#: app/assets/javascripts/app/lib/app_post/ai_provider/custom.coffee:3
 msgid "Custom (OpenAI Compatible)"
 msgstr "سفارشی (سازگار با OpenAI)"
 
@@ -5670,6 +5763,7 @@ msgid "Default"
 msgstr "پیش‌فرض"
 
 #: app/assets/javascripts/app/controllers/_ai/ai_feature_provider_modal.coffee:60
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:491
 #, fuzzy
 #| msgid "Default"
 msgid "Default (%s)"
@@ -5720,7 +5814,7 @@ msgstr "پیش‌فرض برای پیگیری‌ها"
 msgid "Default for new tickets"
 msgstr "پیش‌فرض برای تیکت‌های جدید"
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:165
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:178
 #, fuzzy
 #| msgid "AI provider disabled successfully."
 msgid "Default provider updated successfully."
@@ -6150,7 +6244,7 @@ msgstr ""
 "تعریف می‌کند که آیا برنامه در حالت توسعه‌دهنده است (همه کاربران رمز عبور "
 "یکسانی دارند و بازنشانی رمز عبور بدون تحویل ایمیل کار می‌کند)."
 
-#: db/seeds/settings.rb:6437
+#: db/seeds/settings.rb:6447
 msgid ""
 "Defines if the bubble menu feature of the richtext editor is enabled. Note "
 "that this setting will be ignored if the writing assistant is turned on."
@@ -6494,7 +6588,7 @@ msgstr "بک‌اند برای جستجوهای تصویر کاربر و ساز�
 msgid "Defines the backend service for ticket article language detection."
 msgstr "سرویس backend را برای تشخیص زبان مقاله تیکت تعریف می‌کند."
 
-#: db/seeds/settings.rb:6414
+#: db/seeds/settings.rb:6424
 msgid "Defines the chunking strategy for the knowledge base vector database."
 msgstr ""
 "استراتژی تکه‌تکه‌سازی (chunking) را برای پایگاه داده برداری پایگاه دانش تعریف "
@@ -6754,7 +6848,7 @@ msgstr ""
 "تعریف می‌کند که آیا تیکت‌های منطبق در صورت وجود تیکت‌های از قبل موجود نشان داده "
 "شوند."
 
-#: db/seeds/settings.rb:6405
+#: db/seeds/settings.rb:6415
 msgid ""
 "Defines which knowledge base categories are excluded from the vector "
 "database. Sub-categories of an excluded category are excluded as well. Note "
@@ -6787,13 +6881,13 @@ msgstr ""
 "تعریف می‌کند کدام نقش‌های کاربر در صورت وجود تیکت‌های منطبق یک هشدار دریافت "
 "می‌کنند."
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:116
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:129
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm_delete.coffee:4
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_destroy_confirm.coffee:4
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee:700
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee:130
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:188
-#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:78
+#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:118
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee:9
 #: app/assets/javascripts/app/controllers/package.coffee:73
 #: app/assets/javascripts/app/controllers/user.coffee:107
@@ -6824,7 +6918,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:221
 #: app/frontend/apps/desktop/pages/user/components/UserDetailTopBar/actions/delete.ts:10
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:154
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:154
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:149
 msgid "Delete"
 msgstr "حذف"
 
@@ -6860,7 +6954,17 @@ msgstr "حذف تیکت"
 msgid "Delete User"
 msgstr "حذف کاربر"
 
+#: app/assets/javascripts/app/controllers/widget/online_notification.coffee:166
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification.vue:107
+#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:67
+#, fuzzy
+#| msgid "Delete table"
+msgid "Delete all"
+msgstr "حذف جدول"
+
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee:9
+#: app/frontend/apps/desktop/entities/knowledge-base/composables/useKnowledgeBaseCategoryDelete.ts:33
+#: app/graphql/gql/mutations/knowledge_base/category/delete.rb:20
 msgid "Delete all child categories and answers, then try again."
 msgstr "تمام زیردسته‌ها و پاسخ‌ها را حذف و مجددا امتحان کنید."
 
@@ -6875,6 +6979,13 @@ msgstr "حذف مقاله"
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:154
 msgid "Delete avatar"
 msgstr "حذف آواتار"
+
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:72
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:165
+#, fuzzy
+#| msgid "Cannot delete category"
+msgid "Delete category"
+msgstr "امکان حذف دسته‌بندی وجود ندارد"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/features/table/TableMenuPopover.vue:90
 msgid "Delete column"
@@ -7234,7 +7345,7 @@ msgid "Discard article"
 msgstr "نادیده گرفتن بند"
 
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:56
-#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:434
+#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:432
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:65
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:73
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:36
@@ -7312,7 +7423,7 @@ msgstr "عدم امضای ایمیل"
 msgid "Do not update any tickets."
 msgstr "هیچ تیکتی را به‌روز نکن."
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:109
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:122
 #, fuzzy
 #| msgid "Set default for new tickets"
 msgid "Do not use for image text recognition"
@@ -7326,6 +7437,7 @@ msgstr "تنظیم پیش‌فرض برای تیکت‌های جدید"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee:24
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/attachments.coffee:123
+#: app/frontend/apps/desktop/entities/knowledge-base/composables/useKnowledgeBaseCategoryDelete.ts:103
 msgid "Do you really want to delete \"%s\"?"
 msgstr "آیا واقعا مایل به حذف \"%s\" هستید؟"
 
@@ -7395,7 +7507,8 @@ msgstr "انجام شد"
 msgid "Download"
 msgstr "دانلود"
 
-#: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:67
+#: app/frontend/apps/desktop/components/CommonFileList/CommonFileListItem.vue:73
+#: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue:65
 msgid "Download %s"
 msgstr "بارگیری %s"
 
@@ -7456,11 +7569,17 @@ msgstr ""
 msgid "Download feedback report"
 msgstr "دانلود گزارش بازخورد"
 
-#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:106
+#: app/frontend/apps/desktop/components/CommonFileList/CommonFileListItem.vue:94
+#, fuzzy
+#| msgid "Download %s"
+msgid "Download file: %s"
+msgstr "بارگیری %s"
+
+#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:92
 msgid "Download original email"
 msgstr "دانلود ایمیل اصلی"
 
-#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:117
+#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:103
 msgid "Download raw email"
 msgstr "دانلود ایمیل خام"
 
@@ -7470,8 +7589,8 @@ msgstr "بارگیری ضمیمه‌ها…"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:101
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:18
-#: app/frontend/apps/desktop/components/KnowledgeBaseAnswerIcon/KnowledgeBaseAnswerIcon.vue:26
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseIconStatus.vue:25
+#: app/frontend/apps/desktop/components/KnowledgeBaseAnswerIcon/visibilityMeta.ts:12
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseIconStatus.vue:29
 msgid "Draft"
 msgstr "پیش‌نویس"
 
@@ -7515,7 +7634,7 @@ msgstr "برای جابجایی بکشید"
 #: app/assets/javascripts/app/views/generic/attachment.jst.eco:28
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/attachments.jst.eco:44
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:119
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:342
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:274
 msgid "Drop files here"
 msgstr "فایلها را اینجا رها کنید"
 
@@ -7563,6 +7682,7 @@ msgstr ""
 msgid "Easter holiday"
 msgstr "تعطیلی عید پاک"
 
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:656
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:60
 #: app/assets/javascripts/app/controllers/organization_profile/action_row.coffee:36
 #: app/assets/javascripts/app/controllers/tag.coffee:118
@@ -7620,6 +7740,14 @@ msgstr ""
 msgid "Edit authenticator app"
 msgstr "ویرایش برنامه احراز هویت"
 
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:58
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:176
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:156
+#, fuzzy
+#| msgid "Edit Category"
+msgid "Edit category"
+msgstr "ویرایش دسته‌بندی"
+
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:121
 msgid "Edit checklist title"
 msgstr "ویرایش عنوان چک‌لیست"
@@ -7632,6 +7760,13 @@ msgstr "ویرایش مشتری"
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:67
 msgid "Edit item"
 msgstr "ویرایش آیتم"
+
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseEditFlyout/KnowledgeBaseEditFlyout.vue:120
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:144
+#, fuzzy
+#| msgid "Edit Knowledge Base"
+msgid "Edit knowledge base"
+msgstr "ویرایش پایگاه دانش"
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee:63
 msgid "Edit mask"
@@ -7662,6 +7797,7 @@ msgid "Edit user"
 msgstr "ویرایش کاربر"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee:9
+#: app/frontend/apps/desktop/components/Form/fields/FieldKnowledgeBasePermissions/FieldKnowledgeBasePermissionsInput.vue:46
 msgid "Editor"
 msgstr "ویرایشگر"
 
@@ -7744,7 +7880,7 @@ msgstr "نسخه Elasticsearch"
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue:34
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceZendesk.vue:34
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:11
-#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:146
+#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:132
 #: db/seeds/object_manager_attributes.rb:924 db/seeds/permissions.rb:131
 #: public/assets/form/form.js:32
 msgid "Email"
@@ -7886,8 +8022,12 @@ msgstr ""
 "ایمیل‌های قبل از زمان برش به عنوان تیکت‌های بایگانی شده وارد می‌شوند. ایمیل‌های "
 "بعد از زمان برش به عنوان تیکت‌های معمولی وارد می‌شوند."
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:237
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:354
 msgid "Embedding Model"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:383
+msgid "Embedding dimensions"
 msgstr ""
 
 #: app/services/service/ai/vectordb/embedding.rb:36
@@ -8491,7 +8631,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee:132
 #: app/assets/javascripts/app/controllers/widget/error_modal.coffee:6
 #: app/frontend/apps/desktop/components/CommonError/CommonError.vue:30
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBase.vue:42
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBase.vue:41
 #: app/frontend/apps/mobile/pages/error/views/Error.vue:37
 #: lib/excel_sheet/ai/analytics/errors.rb:36
 msgid "Error"
@@ -8634,11 +8774,18 @@ msgid "Event summary"
 msgstr "خلاصه رویداد"
 
 #: app/assets/javascripts/app/models/knowledge_base.coffee:271
+#, fuzzy
+#| msgid ""
+#| "Every category in your knowledge base should be given a unique icon for "
+#| "maximum visual clarity. Each set below provides a wide range of icons to "
+#| "choose from, but beware: You can't mix and match different icons from "
+#| "different sets. Choose carefully!"
 msgid ""
 "Every category in your knowledge base should be given a unique icon for "
 "maximum visual clarity. Each set below provides a wide range of icons to "
 "choose from, but beware: You can't mix and match different icons from "
-"different sets. Choose carefully!"
+"different sets. Switching the set later resets all category icons to the "
+"default icon of the new set, so choose carefully!"
 msgstr ""
 "به هر دسته در پایگاه دانش شما باید یک آیکون منحصر به فرد برای حداکثر وضوح "
 "بصری داده شود. هر مجموعه زیر طیف گسترده‌ای از آیکون‌ها را برای انتخاب فراهم "
@@ -8769,6 +8916,7 @@ msgstr "گسترش پیش‌نویس به بخش خوش‌ساخت"
 
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:194
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarFooterMenu.vue:86
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerSidebar.vue:95
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar.vue:72
 msgid "Expand sidebar"
 msgstr "باز کردن نوار کناری"
@@ -8982,10 +9130,6 @@ msgstr ""
 "فیلدی که کاربر را به طور یکتا شناسایی می‌کند. اگر تنظیم نشود، از \"sub\" "
 "استفاده می‌شود."
 
-#: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:151
-msgid "File '%s' is uploading"
-msgstr "فایل '%s' در حال آپلود است"
-
 #: lib/validations/ticket_article_validator/whatsapp_message.rb:25
 msgid "File format is not allowed: %s"
 msgstr "قالب پرونده مجاز نیست: %s"
@@ -9118,6 +9262,10 @@ msgstr "زمان اولین پاسخ"
 msgid "Firstname Lastname"
 msgstr "نام"
 
+#: app/frontend/apps/desktop/components/CommonImageViewer/FloatingToolbar.vue:44
+msgid "Fit to screen"
+msgstr ""
+
 #: db/seeds/ai/text_tools.rb:4
 msgid "Fix spelling and grammar"
 msgstr "رفع غلط‌های املایی و گرامری"
@@ -9153,12 +9301,12 @@ msgstr "پوشه:"
 msgid "Folders"
 msgstr "پوشه‌ها"
 
-#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:69
+#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:55
 #: app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts:18
 msgid "Follow up"
 msgstr "پیگیری"
 
-#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:91
+#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:77
 msgid "Follow up to all"
 msgstr "پیگیری برای همه"
 
@@ -9186,6 +9334,12 @@ msgstr "منوی پایین صفحه"
 
 #: app/assets/javascripts/app/models/knowledge_base.coffee:171
 msgid "Footer Note"
+msgstr "پانویس"
+
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseEditFlyout/KnowledgeBaseEditFlyout.vue:50
+#, fuzzy
+#| msgid "Footer Note"
+msgid "Footer note"
 msgstr "پانویس"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStart.vue:68
@@ -9233,7 +9387,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:44
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:39
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:23
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:475
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:473
 #: app/frontend/shared/errors/useErrorHandler.ts:29
 #: app/frontend/shared/router/guards/before/permission.ts:33
 msgid "Forbidden"
@@ -9341,7 +9495,7 @@ msgstr "قالب‌بندی به صورت |پررنگ|"
 msgid "Format as ||italic||"
 msgstr "قالب‌بندی به صورت ||مورب||"
 
-#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:78
+#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:64
 msgid "Forward"
 msgstr "جلو"
 
@@ -9635,7 +9789,8 @@ msgstr "برو به خانه"
 msgid "Go inside group"
 msgstr "رفتن به داخل گروه"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:56
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswer.ts:61
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:55
 #, fuzzy
 #| msgid "Edit Knowledge Base"
 msgid "Go to knowledge base"
@@ -9868,7 +10023,7 @@ msgstr "سخت‌افزار (به عنوان مثال هسته‌های CPU، ح
 msgid "Has processed"
 msgstr "انجام شده"
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelectItem.vue:156
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelectItem.vue:144
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdownItem.vue:149
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue:309
 msgid "Has submenu"
@@ -10145,7 +10300,7 @@ msgstr "راهنمایی برای افزودن مقاله به یک تیکت م�
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:8
 #: app/assets/javascripts/app/controllers/organization_profile/action_row.coffee:28
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee:114
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee:115
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:62
 #: app/frontend/apps/desktop/components/CommonHistoryFlyout/CommonHistoryFlyout.vue:71
 #: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailTopBar/actions/history.ts:13
@@ -10286,6 +10441,7 @@ msgid "Icinga integration"
 msgstr "ادغام Icinga"
 
 #: app/assets/javascripts/app/models/knowledge_base_category.coffee:63
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:56
 msgid "Icon"
 msgstr "آیکن"
 
@@ -10296,6 +10452,13 @@ msgstr "رنگ آیکون و پیوند"
 #: app/assets/javascripts/app/models/knowledge_base.coffee:268
 msgid "Icon Set"
 msgstr "آیکون ها"
+
+#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:93
+msgid ""
+"Icons cannot be carried over between icon sets. Switching the set will "
+"therefore reset all category icons to the default icon of the new set, and "
+"your current selections will be lost. Do you want to continue?"
+msgstr ""
 
 #: db/seeds/settings.rb:2103 lib/excel_sheet/ai/analytics/errors.rb:24
 #: lib/excel_sheet/ai/analytics/with_usage.rb:24
@@ -10402,6 +10565,12 @@ msgstr ""
 "اگر کدهای بازیابی خود را گم کردید، می‌توانید کدهای جدیدی تولید کنید. این "
 "اقدام باعث می‌شود کدهای بازیابی قبلی نامعتبر شوند."
 
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyout/KnowledgeBaseFeedFlyout.vue:212
+msgid ""
+"If you want to invalidate your feed URLs, renew the access token below. Make "
+"sure to update your RSS reader with new feed URLs afterwards."
+msgstr ""
+
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco:12
 msgid ""
 "If you want to move already stored attachments from one backend to another, "
@@ -10454,6 +10623,12 @@ msgstr "تصویر"
 msgid "Image Service"
 msgstr "سرویس تصاویر"
 
+#: app/frontend/apps/desktop/components/CommonImageViewer/FloatingToolbar.vue:23
+#, fuzzy
+#| msgid "Change Objects"
+msgid "Image actions"
+msgstr "تغییر آبجکت‌ها"
+
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee:61
 #: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:29
 #: lib/validations/ticket_article_validator/whatsapp_message.rb:9
@@ -10467,7 +10642,13 @@ msgid "Image file size is too large, please try inserting a smaller file."
 msgstr ""
 "اندازه فایل تصویر بسیار بزرگ است، لطفاً سعی کنید یک فایل کوچکتر وارد کنید."
 
-#: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:121
+#: app/frontend/apps/desktop/components/CommonFileList/CommonFileListItem.vue:151
+#, fuzzy
+#| msgid "Image of %s"
+msgid "Image name: %s"
+msgstr "تصویر %s"
+
+#: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue:100
 msgid "Image of %s"
 msgstr "تصویر %s"
 
@@ -10701,7 +10882,7 @@ msgstr "آیتم‌های چک‌لیست ناقص"
 msgid "Incomplete credentials"
 msgstr "نام‌کاربری و رمزعبور ناقص"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:472
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:469
 msgid "Incomplete ticket checklist"
 msgstr "چک‌لیست ناقص تیکت"
 
@@ -10901,10 +11082,10 @@ msgid "Integrity verification of the downloaded WhatsApp media failed."
 msgstr "تأیید یکپارچگی رسانه WhatsApp دانلود شده ناموفق بود."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:105
-#: app/frontend/apps/desktop/components/KnowledgeBaseAnswerIcon/KnowledgeBaseAnswerIcon.vue:31
+#: app/frontend/apps/desktop/components/KnowledgeBaseAnswerIcon/visibilityMeta.ts:17
 #: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:144
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseIconStatus.vue:27
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:207
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseIconStatus.vue:31
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:206
 msgid "Internal"
 msgstr "داخلی"
 
@@ -10920,9 +11101,23 @@ msgstr "ویژگی‌های داخلی قابل حذف نیستند"
 msgid "Internal error"
 msgstr "خطای داخلی"
 
+#: db/seeds/settings.rb:6406
+msgid ""
+"Internal record of the embedding model and vector size the knowledge base "
+"index was last built with. Used to detect a stale index by comparison, "
+"without probing Elasticsearch."
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerSidebarContent.vue:33
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerHeaderDetails.vue:68
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/KnowledgeBaseAnswerAttributes.vue:46
+#, fuzzy
+#| msgid "not published"
+msgid "Internally published"
+msgstr "منتشر نشده"
+
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco:18
 #: app/assets/javascripts/app/views/ticket_zoom/knowledge_base_ai_draft_modal.jst.eco:58
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/KnowledgeBaseAnswerAttributes.vue:56
 #, fuzzy
 #| msgid "not published"
 msgid "Internally published at"
@@ -11053,10 +11248,6 @@ msgid ""
 "Invalid password, it must contain at least 2 lowercase and 2 uppercase "
 "characters!"
 msgstr "رمز عبور نامعتبر. بایستی شامل حداقل ۲ حرف کوچک و ۲ حرف بزرگ باشد!"
-
-#: lib/knowledge_base/permissions_update.rb:79
-msgid "Invalid permissions, do not lock yourself out."
-msgstr "مجوزهای نامعتبر، خودتان را قفل نکنید."
 
 #: lib/knowledge_base/permissions_update.rb:106
 msgid "Invalid permissions."
@@ -11288,6 +11479,12 @@ msgstr "در محدوده مشخص شده کلیک کنید و ترجمه خود
 msgid "Just switch back"
 msgstr "فقط به عقب برگردید"
 
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:118
+#, fuzzy
+#| msgid "Answer"
+msgid "KB Answer"
+msgstr "پاسخ"
+
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/kayako.ts:11
 msgid "Kayako"
 msgstr "Kayako"
@@ -11332,9 +11529,10 @@ msgstr "کلمات کلیدی"
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee:2
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:3
 #: app/assets/javascripts/app/models/knowledge_base.coffee:75
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader.vue:88
-#: app/frontend/apps/desktop/pages/knowledge-base/routes.ts:24
-#: app/models/knowledge_base.rb:244 db/seeds/permissions.rb:113
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:67
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:67
+#: app/frontend/apps/desktop/pages/knowledge-base/routes.ts:26
+#: app/models/knowledge_base.rb:262 db/seeds/permissions.rb:113
 msgid "Knowledge Base"
 msgstr "پایگاه دانش"
 
@@ -11343,7 +11541,7 @@ msgid "Knowledge Base Answer"
 msgstr "پاسخ موجود در پایگاه دانش"
 
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee:26
-#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/knowledge-base-answer.ts:28
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/knowledge-base-answer.ts:40
 msgid "Knowledge Base Answer \"|%s|\" has been created"
 msgstr "پاسخ پایگاه دانش \"|%s|\" ایجاد شد"
 
@@ -11375,6 +11573,12 @@ msgstr "ویرایشگر پایگاه دانش"
 msgid "Knowledge Base Feed"
 msgstr "خوراک پایگاه دانش"
 
+#: app/frontend/apps/desktop/pages/knowledge-base/utils/knowledgeBaseBreadcrumbItems.ts:27
+#, fuzzy
+#| msgid "Knowledge Base"
+msgid "Knowledge Base Home"
+msgstr "پایگاه دانش"
+
 #: db/seeds/permissions.rb:404
 msgid "Knowledge Base Reader"
 msgstr "خواننده پایگاه دانش"
@@ -11391,7 +11595,7 @@ msgstr "فعالسازی مرکز دانش بصورت عمومی"
 msgid "Knowledge Base multilingual support"
 msgstr "پایگاه دانش چندزبانه"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:201
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:259
 #, fuzzy
 #| msgid "Knowledge base articles"
 msgid "Knowledge base actions"
@@ -11401,18 +11605,23 @@ msgstr "مقالات پایگاه دانش"
 msgid "Knowledge base articles"
 msgstr "مقالات پایگاه دانش"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderCompact.vue:47
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderFull.vue:47
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderRow.vue:60
 #, fuzzy
 #| msgid "Knowledge base articles"
 msgid "Knowledge base controls"
 msgstr "مقالات پایگاه دانش"
 
-#: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee:453
+#: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee:454
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/composables/useTicketAiAssistanceEnqueueKnowledgeBaseAnswer.ts:51
 #: app/services/service/ticket/ai_assistance/create_knowledge_base_answer.rb:21
 msgid "Knowledge base draft could not be generated."
 msgstr "پیش‌نویس پایگاه دانش ایجاد نشد."
+
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyout/KnowledgeBaseFeedFlyout.vue:177
+#, fuzzy
+#| msgid "Knowledge Base Feed"
+msgid "Knowledge base feed"
+msgstr "خوراک پایگاه دانش"
 
 #: app/assets/javascripts/app/views/ai/missing_knowledge_base_alert.jst.eco:2
 #: app/controllers/ticket/knowledge_base_answers_controller.rb:14
@@ -11421,8 +11630,7 @@ msgstr "پیش‌نویس پایگاه دانش ایجاد نشد."
 msgid "Knowledge base is unavailable or not properly configured."
 msgstr "پایگاه دانش در دسترس نیست یا به درستی پیکربندی نشده است."
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderCompact.vue:31
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderFull.vue:31
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderRow.vue:45
 #, fuzzy
 #| msgid "Knowledge base articles"
 msgid "Knowledge base navigation"
@@ -11479,7 +11687,7 @@ msgstr "طرح صفحه فرود"
 #: app/assets/javascripts/app/views/ticket_zoom/knowledge_base_ai_draft_modal.jst.eco:86
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/locale.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLocale.vue:13
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/KnowledgeBaseAnswerAttributes.vue:80
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/KnowledgeBaseAnswerAttributes.vue:70
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:149
 #: db/seeds/permissions.rb:456
 msgid "Language"
@@ -11605,6 +11813,12 @@ msgstr "آخرین همسان‌سازی"
 msgid "Last sync at:"
 msgstr "آخرین همسان‌سازی در:"
 
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerSidebarContent.vue:45
+#, fuzzy
+#| msgid "Has update"
+msgid "Last updated"
+msgstr "به‌روزرسانی دارد"
+
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:20
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:104
 msgid "Last used"
@@ -11634,7 +11848,7 @@ msgstr "مرجع طرح"
 msgid "Leave BETA UI feedback program?"
 msgstr "خروج از برنامه بازخورد BETA UI؟"
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:262
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:429
 msgid "Leave empty to use URL (Completions)"
 msgstr "برای استفاده از URL (تکمیل‌ها) خالی بگذارید"
 
@@ -11649,6 +11863,12 @@ msgstr "خروج از برنامه"
 #: app/assets/javascripts/app/controllers/_ai/ticket_summary.coffee:44
 msgid "Legal Information"
 msgstr "اطلاعات قانونی"
+
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:386
+msgid ""
+"Length of the vectors the embedding model produces. Filled in for a model "
+"whose size is known."
+msgstr ""
 
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:199
 msgid "Library"
@@ -12051,7 +12271,7 @@ msgstr ""
 msgid "Mailbox type"
 msgstr "نوع صندوق پستی"
 
-#: app/frontend/apps/desktop/components/layout/LayoutPage.vue:108
+#: app/frontend/apps/desktop/components/layout/LayoutPage.vue:114
 msgid "Main sidebar"
 msgstr "نوار کناری اصلی"
 
@@ -12432,11 +12652,11 @@ msgid "March"
 msgstr "مارس"
 
 #: app/assets/javascripts/app/views/widget/online_notification.jst.eco:4
-#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:99
+#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:126
 msgid "Mark all as read"
 msgstr "همه موارد خوانده شد"
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationPopover/NotificationList/NotificationItem.vue:54
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationPopover/NotificationList/NotificationItem.vue:39
 #: app/frontend/apps/mobile/pages/online-notification/components/ActivityMessage.vue:34
 msgid "Mark as read"
 msgstr "علامت‌گذاری به عنوان خوانده‌شده"
@@ -12545,7 +12765,7 @@ msgstr "می"
 msgid "Maybe later"
 msgstr "شاید بعداً"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:81
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:82
 msgid "Me"
 msgstr "من"
 
@@ -12586,7 +12806,7 @@ msgid "Mention user"
 msgstr "اشاره به کاربر"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee:7
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee:120
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee:121
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketMerge/TicketMergeFlyout.vue:89
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:71
 msgid "Merge"
@@ -12778,7 +12998,14 @@ msgstr "دقیقه"
 msgid "Mismatching phone number id."
 msgstr "شناسه شماره تلفن نامطابق."
 
-#: app/assets/javascripts/app/lib/app_post/ai_provider/mistral.coffee:4
+#: app/services/service/ai/provider_connection/resolve_embedding_metadata.rb:38
+#: app/services/service/ai/vectordb/create_table.rb:18 lib/ai/provider.rb:285
+#, fuzzy
+#| msgid "Stores the AI provider configuration."
+msgid "Missing embedding model in the provider configuration"
+msgstr "پیکربندی ارائه‌دهنده هوش مصنوعی را ذخیره می‌کند."
+
+#: app/assets/javascripts/app/lib/app_post/ai_provider/mistral.coffee:3
 msgid "Mistral AI"
 msgstr "Mistral AI"
 
@@ -12791,20 +13018,20 @@ msgstr "تلفن همراه"
 msgid "Mode"
 msgstr "حالت"
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:233
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:340
 msgid "Model"
 msgstr "مدل"
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:245
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:398
 msgid ""
-"Model used for image text recognition. Leave empty to use the default/base "
-"model."
+"Model used for image text recognition. Leave empty to use the model of this "
+"connection."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:240
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:362
 msgid ""
-"Model used for vector embedding in semantic search. Leave empty to use the "
-"default/base model."
+"Model used for vector embedding in semantic search. Required for the "
+"provider that serves semantic search."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:272
@@ -12958,7 +13185,7 @@ msgstr "نگیوس"
 msgid "Nagios integration"
 msgstr "ادغام Nagios"
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:218
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:522
 #: app/assets/javascripts/app/controllers/_application_controller/reorder_modal.coffee:13
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:325
 #: app/assets/javascripts/app/controllers/_ui_element/object_attribute_options_context.coffee:21
@@ -13109,6 +13336,7 @@ msgstr "شبکه"
 msgid "Never ask me again"
 msgstr "هرگز از من نپرس"
 
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:63
 #: app/assets/javascripts/app/controllers/_channel/_email_filter.coffee:12
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee:12
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:47
@@ -13331,7 +13559,7 @@ msgstr "ماژول متن جدید"
 #: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue:74
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/MenuContainer/AddMenu/plugins/ticket-create.ts:12
 #: app/frontend/apps/desktop/entities/ticket/composables/useTicketCreateTitle.ts:21
-#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:89
+#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:88
 #: app/frontend/apps/desktop/pages/ticket/routes.ts:19
 #: app/frontend/apps/desktop/pages/user/components/UserDetailTopBar/actions/newTicket.ts:11
 msgid "New ticket"
@@ -13410,6 +13638,7 @@ msgid "New user?"
 msgstr "کاربر جدید؟"
 
 #: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:109
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:644
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:113
 #: app/assets/javascripts/app/controllers/webhook.coffee:170
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee:2
@@ -13426,6 +13655,24 @@ msgstr "بعدی"
 #: app/assets/javascripts/app/models/ticket_state.coffee:8
 msgid "Next State"
 msgstr "وضعیت بعدی"
+
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerStepper.vue:40
+#, fuzzy
+#| msgid "No answers"
+msgid "Next answer"
+msgstr "بدون پاسخ"
+
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerStepper.vue:40
+#, fuzzy
+#| msgid "No answers"
+msgid "Next answer: %s"
+msgstr "بدون پاسخ"
+
+#: app/frontend/apps/desktop/components/CommonImageViewer/CommonImageViewer.vue:76
+#, fuzzy
+#| msgid "Next page"
+msgid "Next image"
+msgstr "صفحه بعد"
 
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:52
 #: app/assets/javascripts/app/views/ticket_zoom/overview_navigator.jst.eco:12
@@ -13471,7 +13718,7 @@ msgstr ""
 "در حال حاضر هیچ ارائه‌دهنده هوش مصنوعی راه‌اندازی نشده است. لطفاً با مدیر خود "
 "تماس بگیرید."
 
-#: app/models/setting/validation/vectordb.rb:10
+#: app/models/setting/validation/vectordb.rb:12
 #, fuzzy
 #| msgid "AI provider is not configured."
 msgid "No AI provider with a valid embedding model is configured."
@@ -13553,7 +13800,7 @@ msgstr "هیچ فیلتر پیشرفته‌ای برای %s در دسترس نی
 msgid "No answers"
 msgstr "بدون پاسخ"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarAttachment/TicketSidebarAttachmentContent.vue:61
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarAttachment/TicketSidebarAttachmentContent.vue:54
 msgid "No attached files"
 msgstr "هیچ فایل پیوستی وجود ندارد"
 
@@ -13621,7 +13868,7 @@ msgid "No email!"
 msgstr "بدون ایمیل!"
 
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:128
-#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:85
+#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:113
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue:247
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketList.vue:138
 msgid "No entries"
@@ -13663,7 +13910,7 @@ msgstr "هیچ درونبردی در جریان نیست."
 msgid "No items available"
 msgstr "هیچ آیتمی در دسترس نیست"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:184
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:238
 #, fuzzy
 #| msgid "No editable knowledge base categories available."
 msgid "No knowledge base content is available yet."
@@ -13678,6 +13925,7 @@ msgstr "هیچ منطقه‌زبانی برای پایگاه دانش پیکرب
 msgid "No linked issues"
 msgstr "هیچ مشکلی پیوند داده نشده است"
 
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerLinkedTickets.vue:61
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:136
 msgid "No links added yet."
 msgstr "هنوز هیچ لینکی اضافه نشده است."
@@ -13729,7 +13977,7 @@ msgstr "هیچ مقاله مرتبطی برای پردازش پیام واکنش
 msgid "No related article found to process the status message on."
 msgstr "هیچ مقاله مرتبطی برای پردازش پیام وضعیت یافت نشد."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge.vue:111
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge.vue:112
 #, fuzzy
 #| msgid "Inserts knowledge base answer"
 msgid "No related knowledge base answer links."
@@ -13740,9 +13988,10 @@ msgid "No results for this query."
 msgstr "هیچ نتیجه‌ای برای این جستجو وجود ندارد."
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js:716
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:355
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:376
 #: app/frontend/apps/desktop/components/CommonSimpleEntityList/plugins/ticket.ts:8
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:70
+#: app/frontend/apps/desktop/components/Form/fields/FieldKnowledgeBaseCategoryIcon/FieldKnowledgeBaseCategoryIconWrapper.vue:56
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:491
 #: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenu.vue:90
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout/IdoitObjectList.vue:38
@@ -13806,6 +14055,7 @@ msgstr ""
 "هیچ ویژگی شی مناسبی یافت نشد، لطفاً ابتدا یکی از انواع پشتیبانی شده را اضافه "
 "کنید: %s"
 
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:42
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:189
 msgid "No tags added yet."
 msgstr "هنوز هیچ برچسبی اضافه نشده است."
@@ -13823,9 +14073,10 @@ msgid "No token!"
 msgstr "توکن وجود ندارد!"
 
 #: app/assets/javascripts/app/views/knowledge_base/content.jst.eco:2
-#: app/frontend/apps/desktop/pages/knowledge-base/components/AnswerCard.vue:25
-#: app/frontend/apps/desktop/pages/knowledge-base/components/CategoryCard.vue:62
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader.vue:282
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerCard.vue:41
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:101
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue:117
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue:203
 msgid "No translation for this locale available"
 msgstr "هیچ ترجمه‌ای برای این منطقه در دسترس نیست"
 
@@ -13833,7 +14084,7 @@ msgstr "هیچ ترجمه‌ای برای این منطقه در دسترس نی
 msgid "No triggers active"
 msgstr "هیچ تریگری فعال نیست"
 
-#: app/assets/javascripts/app/views/widget/online_notification.jst.eco:8
+#: app/assets/javascripts/app/views/widget/online_notification.jst.eco:9
 msgid "No unread notifications for you. :)"
 msgstr "اعلان خوانده نشده ای برای شما نیست. :)"
 
@@ -13862,7 +14113,7 @@ msgid "No x-zammad-session-user-id, no sender set!"
 msgstr "x-zammad-session-user-id وجود ندارد، فرستنده تنظیم نشده است!"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:8
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:475
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:472
 msgid "No, just close the ticket"
 msgstr "نه، فقط تیکت را ببند"
 
@@ -13873,7 +14124,8 @@ msgstr "نه، متشکرم"
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee:9
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_unit.coffee:55
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:65
-#: app/graphql/gql/types/ticket_type.rb:110 db/seeds/settings.rb:2009
+#: app/frontend/apps/desktop/components/Form/fields/FieldKnowledgeBasePermissions/FieldKnowledgeBasePermissionsInput.vue:60
+#: app/graphql/gql/types/ticket_type.rb:112 db/seeds/settings.rb:2009
 msgid "None"
 msgstr "هیچکدام"
 
@@ -13945,8 +14197,9 @@ msgstr "پیکربندی نشده"
 
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabNotFound.vue:36
 #: app/frontend/apps/desktop/components/layout/LayoutTaskbarTabContent.vue:70
-#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:50
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBase.vue:17
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswer.ts:55
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:49
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBase.vue:16
 #: app/frontend/shared/errors/useErrorHandler.ts:25
 #: app/frontend/shared/router/error.ts:27
 msgid "Not found"
@@ -14083,7 +14336,7 @@ msgstr "صدای اعلان"
 #: app/assets/javascripts/app/views/profile/notification.jst.eco:2
 #: app/assets/javascripts/app/views/widget/mention.jst.eco:1
 #: app/assets/javascripts/app/views/widget/online_notification.jst.eco:3
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationPopover/NotificationHeader.vue:20
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationPopover/NotificationHeader.vue:22
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/notifications.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:35
 #: app/frontend/apps/mobile/pages/online-notification/routes.ts:8
@@ -14111,6 +14364,12 @@ msgstr "نوامبر"
 msgid "Number"
 msgstr "عدد"
 
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:391
+msgid ""
+"Number of input tokens the embedding model takes at once. Filled in for a "
+"model whose limit is known."
+msgstr ""
+
 #: app/models/ai/agent/type/ticket_tagger.rb:180
 msgid "Number of tags"
 msgstr "تعداد برچسب‌ها"
@@ -14136,11 +14395,13 @@ msgstr "آدرس‌های URL OAuth عبارتند از:"
 msgid "OAuth2 token is expired!"
 msgstr "توکن OAuth2 منقضی شده است!"
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:242
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:394
 msgid "OCR Model"
 msgstr "مدل OCR"
 
 #: app/frontend/apps/desktop/components/CommonDialog/CommonDialogActionFooter.vue:19
+#: app/frontend/apps/desktop/entities/knowledge-base/composables/useKnowledgeBaseCategoryDelete.ts:35
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyout/KnowledgeBaseFeedFlyout.vue:117
 #: app/frontend/apps/mobile/components/CommonConfirmation/CommonConfirmation.vue:29
 msgid "OK"
 msgstr "خب"
@@ -14243,7 +14504,7 @@ msgstr "برون خط"
 msgid "Ok"
 msgstr "بسیار خوب"
 
-#: app/assets/javascripts/app/lib/app_post/ai_provider/ollama.coffee:4
+#: app/assets/javascripts/app/lib/app_post/ai_provider/ollama.coffee:3
 msgid "Ollama"
 msgstr "Ollama"
 
@@ -14292,6 +14553,13 @@ msgstr "فرم‌های آنلاین"
 #: db/seeds/settings.rb:84
 msgid "Online Service"
 msgstr "سرویس آنلاین"
+
+#: app/assets/javascripts/app/controllers/widget/online_notification.coffee:181
+#: app/frontend/shared/entities/online-notification/composables/useOnlineNotificationActions.ts:162
+#, fuzzy
+#| msgid "The notifcation could not be deleted."
+msgid "Online notifications could not be cleared."
+msgstr "اعلان قابل حذف نیست."
 
 #: lib/validations/ticket_article_validator/whatsapp_message.rb:18
 msgid "Only %s attachment allowed"
@@ -14368,7 +14636,8 @@ msgstr "فقط زمانی که عضو سازمان مشترک است"
 msgid "Open"
 msgstr "باز"
 
-#: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:68
+#: app/frontend/apps/desktop/components/CommonFileList/CommonFileListItem.vue:81
+#: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue:66
 msgid "Open %s"
 msgstr "بازکردن %s"
 
@@ -14395,8 +14664,14 @@ msgstr "نسبت تیکت‌های باز و بسته (تعداد تیکت بر 
 msgid "Open checklist"
 msgstr "باز کردن چک‌لیست"
 
+#: app/frontend/apps/desktop/components/CommonFileList/CommonFileListItem.vue:95
+#, fuzzy
+#| msgid "Open Ticket# %s"
+msgid "Open file: %s"
+msgstr "تعداد تیکت‌های باز %s"
+
 #: app/assets/javascripts/app/models/public_link.coffee:10
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiDraftFlyoutAnswer.vue:42
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiDraftFlyoutAnswer.vue:38
 msgid "Open in new tab"
 msgstr "در لبه جدید باز کن"
 
@@ -14465,7 +14740,7 @@ msgstr "تیکت‌های باز"
 msgid "Open your authenticator app and scan the QR code below:"
 msgstr "برنامه احراز هویت خود را باز کنید و کد QR زیر را اسکن کنید:"
 
-#: app/assets/javascripts/app/lib/app_post/ai_provider/open_ai.coffee:4
+#: app/assets/javascripts/app/lib/app_post/ai_provider/open_ai.coffee:3
 msgid "OpenAI"
 msgstr "OpenAI"
 
@@ -14879,7 +15154,7 @@ msgstr "تیکت به‌روز شد."
 msgid "Packages"
 msgstr "پکیج‌های نرم‌افزاری"
 
-#: db/seeds/settings.rb:6461
+#: db/seeds/settings.rb:6471
 #, fuzzy
 #| msgid "Packages"
 msgid "Packages Token"
@@ -14910,6 +15185,12 @@ msgstr "پارامتر 'private_key' یا 'file' مورد نیاز است."
 #: app/assets/javascripts/app/models/knowledge_base_category.coffee:87
 msgid "Parent"
 msgstr "والد"
+
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:74
+#, fuzzy
+#| msgid "Edit Category"
+msgid "Parent category"
+msgstr "ویرایش دسته‌بندی"
 
 #: db/seeds/object_manager_attributes.rb:2104
 msgid "Parent group"
@@ -15047,7 +15328,7 @@ msgstr "پرداخت مورد نیاز است - لطفاً حساب خود را 
 msgid "Pending Reached Tickets"
 msgstr "تیکت‌های با اتمام زمان انتظار"
 
-#: app/assets/javascripts/app/models/ticket.coffee:113
+#: app/assets/javascripts/app/models/ticket.coffee:116
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:25
 msgid "Pending reminder reached for ticket |%s|"
 msgstr "انتظار یادآوری برای پرونده |%s| پایان یافت"
@@ -15086,8 +15367,16 @@ msgstr "سطح مجوز برای جستجوی تیکت‌ها"
 #: app/assets/javascripts/app/models/role.coffee:7
 #: app/assets/javascripts/app/views/object_manager/screens.jst.eco:5
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:17
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:89
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseEditFlyout/KnowledgeBaseEditFlyout.vue:56
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:89
 msgid "Permissions"
+msgstr "دسترسی‌ها"
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldKnowledgeBasePermissions/FieldKnowledgeBasePermissionsInput.vue:129
+#, fuzzy
+#| msgid "Permissions"
+msgid "Permissions matrix"
 msgstr "دسترسی‌ها"
 
 #: lib/core_ext/execjs/persistent_node_runtime.rb:128
@@ -15233,7 +15522,7 @@ msgid "Please configure import source before running."
 msgstr "لطفاً قبل از اجرا، منبع واردات را پیکربندی کنید."
 
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:146
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:185
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:239
 msgid "Please contact your administrator."
 msgstr "لطفا با ادمین تماس بگیرید."
 
@@ -15425,7 +15714,7 @@ msgstr "فیلتر Postmaster"
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco:22
 #: app/assets/javascripts/app/views/signup.jst.eco:23
 #: app/assets/javascripts/app/views/signup/verify.jst.eco:26
-#: app/frontend/apps/desktop/components/layout/LayoutPublicPage/LayoutPublicPage.vue:72
+#: app/frontend/apps/desktop/components/layout/LayoutPublicPage/LayoutPublicPage.vue:79
 #: app/frontend/apps/mobile/pages/authentication/components/LoginFooter.vue:22
 msgid "Powered by"
 msgstr "قدرت گرفته از"
@@ -15481,7 +15770,8 @@ msgstr ""
 msgid "Preview"
 msgstr "پیش‌نمایش"
 
-#: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:109
+#: app/frontend/apps/desktop/components/CommonFileList/CommonFileListItem.vue:65
+#: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue:88
 msgid "Preview %s"
 msgstr "پیش‌نمایش %s"
 
@@ -15510,6 +15800,24 @@ msgstr "پیش‌نمایش پیش‌نویس مشترک"
 #: app/frontend/shared/form/i18n/locales.ts:69
 msgid "Previous"
 msgstr "قبلی"
+
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerStepper.vue:27
+#, fuzzy
+#| msgid "Previous page"
+msgid "Previous answer"
+msgstr "صفحه قبل"
+
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerStepper.vue:27
+#, fuzzy
+#| msgid "Previous page"
+msgid "Previous answer: %s"
+msgstr "صفحه قبل"
+
+#: app/frontend/apps/desktop/components/CommonImageViewer/CommonImageViewer.vue:64
+#, fuzzy
+#| msgid "Previous page"
+msgid "Previous image"
+msgstr "صفحه قبل"
 
 #: app/assets/javascripts/app/views/ticket_zoom/overview_navigator.jst.eco:5
 msgid "Previous in overview"
@@ -15578,6 +15886,7 @@ msgstr "رمز کلید خصوصی"
 msgid "Problem"
 msgstr "مشکل"
 
+#: app/assets/javascripts/app/controllers/_ai/embedding_rebuild_confirm.coffee:14
 #: app/assets/javascripts/app/views/integration/exchange_certificate_issue.jst.eco:15
 msgid "Proceed"
 msgstr "ادامه"
@@ -15715,7 +16024,7 @@ msgstr "آدرس پروکسی"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:109
 #: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:139
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:208
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:207
 msgid "Public"
 msgstr "عمومی"
 
@@ -15741,15 +16050,17 @@ msgstr "منوی عمومی"
 msgid "Publish Article"
 msgstr "انتشار بند"
 
-#: app/frontend/apps/desktop/components/KnowledgeBaseAnswerIcon/KnowledgeBaseAnswerIcon.vue:36
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseIconStatus.vue:29
+#: app/frontend/apps/desktop/components/KnowledgeBaseAnswerIcon/visibilityMeta.ts:22
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerSidebarContent.vue:37
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseIconStatus.vue:33
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerHeaderDetails.vue:76
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/KnowledgeBaseAnswerAttributes.vue:50
 #: app/helpers/knowledge_base_top_bar_helper.rb:34
 msgid "Published"
 msgstr "منتشر شده"
 
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco:24
 #: app/assets/javascripts/app/views/ticket_zoom/knowledge_base_ai_draft_modal.jst.eco:64
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/KnowledgeBaseAnswerAttributes.vue:60
 msgid "Published at"
 msgstr "منتشرشده در"
 
@@ -15826,6 +16137,7 @@ msgid "Read"
 msgstr "خواندن"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee:9
+#: app/frontend/apps/desktop/components/Form/fields/FieldKnowledgeBasePermissions/FieldKnowledgeBasePermissionsInput.vue:53
 msgid "Reader"
 msgstr "خواننده"
 
@@ -15945,7 +16257,7 @@ msgstr ""
 msgid "Recursive Ticket Triggers"
 msgstr "تریگرهای تیکت بازگشتی"
 
-#: db/seeds/settings.rb:6423
+#: db/seeds/settings.rb:6433
 msgid "Recursive hierarchical chunking"
 msgstr "تکه‌تکه کردن سلسله‌مراتبی بازگشتی"
 
@@ -16029,6 +16341,7 @@ msgid ""
 "ticket."
 msgstr "ایجاد پاسخ پایگاه دانش مرتبط برای تیکت مشخص‌شده قبلاً آغاز شده است."
 
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerLinkedTickets.vue:43
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:153
 #: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:180
 msgid "Related tickets"
@@ -16038,7 +16351,7 @@ msgstr "تیکت‌های مرتبط"
 msgid "Relax, your system is being set up…"
 msgstr "آرام باشید، سیستم شما در حال راه‌اندازی است…"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiDraftFlyoutAnswer.vue:51
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiDraftFlyoutAnswer.vue:47
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiSuggested.vue:73
 #, fuzzy
 #| msgid "Confirm new password"
@@ -16111,11 +16424,11 @@ msgstr "از راه دور"
 msgid "Remove"
 msgstr "حذف کردن"
 
-#: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:177
+#: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue:152
 msgid "Remove %s"
 msgstr "حذف کردن %s"
 
-#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:82
+#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:122
 msgid "Remove Language"
 msgstr "حذف زبان"
 
@@ -16143,12 +16456,6 @@ msgstr "حذف کردن همه مقدارها"
 msgid "Remove authenticator app"
 msgstr "حذف برنامه احراز هویت"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/CategoryCard.vue:48
-#, fuzzy
-#| msgid "Remove filter"
-msgid "Remove category"
-msgstr "حذف فیلتر"
-
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:38
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:380
 msgid "Remove checklist"
@@ -16159,6 +16466,12 @@ msgstr "حذف چک‌لیست"
 #| msgid "Remove method"
 msgid "Remove element"
 msgstr "حذف کردن روش"
+
+#: app/frontend/apps/desktop/components/CommonFileList/CommonFileListItem.vue:204
+#, fuzzy
+#| msgid "Remove filter"
+msgid "Remove file: %s"
+msgstr "حذف فیلتر"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/FieldFilterSelectorInput.vue:516
 msgid "Remove filter"
@@ -16192,7 +16505,7 @@ msgstr "حذف لینک"
 msgid "Remove method"
 msgstr "حذف کردن روش"
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationPopover/NotificationList/NotificationItem.vue:99
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationPopover/NotificationList/NotificationItem.vue:84
 msgid "Remove notification"
 msgstr "حذف اعلان"
 
@@ -16232,7 +16545,7 @@ msgstr "حذف فرمت"
 msgid "Removes the shadows for a flat look."
 msgstr "سایه‌ها را برای یک ظاهر تخت حذف می‌کند."
 
-#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:79
+#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:119
 msgid ""
 "Removing %s language(s) will permanently delete all translation(s) related "
 "to them. Enter \"%s\" to confirm."
@@ -16248,6 +16561,18 @@ msgstr "تغییر نام چک‌لیست"
 #: app/assets/javascripts/app/controllers/knowledge_base/feed_dialog.coffee:9
 msgid "Renew Access Token"
 msgstr "بازسازی توکن دسترسی"
+
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyout/KnowledgeBaseFeedFlyout.vue:224
+#, fuzzy
+#| msgid "Renew Access Token"
+msgid "Renew access token"
+msgstr "بازسازی توکن دسترسی"
+
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyout/KnowledgeBaseFeedFlyout.vue:129
+#, fuzzy
+#| msgid "Delete this access token"
+msgid "Renewing the access token failed."
+msgstr "حذف این توکن دسترسی"
 
 #: app/models/report.rb:52
 msgid "Reopened"
@@ -16287,7 +16612,7 @@ msgid "Replacement agent"
 msgstr "عامل جایگزین"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReplyPanel.vue:114
-#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:69
+#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:55
 #: app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts:18
 #: app/frontend/shared/entities/ticket-article/action/plugins/sms.ts:18
 #: app/frontend/shared/entities/ticket-article/action/plugins/telegram.ts:19
@@ -16296,7 +16621,7 @@ msgstr "عامل جایگزین"
 msgid "Reply"
 msgstr "پاسخ"
 
-#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:91
+#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:77
 msgid "Reply all"
 msgstr "پاسخ به همه"
 
@@ -16632,7 +16957,7 @@ msgstr "تلاش مجدد برای دانلود رسانه ارسال شده ا�
 msgid "Rewrite complex section and make it easy to understand"
 msgstr "بازنویسی بخش پیچیده و آسان کردن درک آن"
 
-#: db/seeds/settings.rb:6434
+#: db/seeds/settings.rb:6444
 msgid "Richtext Bubble Menu"
 msgstr "منوی حباب متن غنی"
 
@@ -16645,6 +16970,7 @@ msgstr "اعلان‌های راکت چت"
 #: app/assets/javascripts/app/controllers/role.coffee:3
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:81
 #: app/assets/javascripts/app/views/knowledge_base/permissions_dialog.jst.eco:3
+#: app/frontend/apps/desktop/components/Form/fields/FieldKnowledgeBasePermissions/FieldKnowledgeBasePermissionsInput.vue:42
 msgid "Role"
 msgstr "نقش"
 
@@ -16677,6 +17003,14 @@ msgstr "بازگشت مهاجرت"
 #: app/assets/javascripts/app/controllers/_channel/_channel_account_overview.coffee:260
 msgid "Rollback of channel migration succeeded!"
 msgstr "بازگشت مهاجرت کانال موفقیت‌آمیز بود!"
+
+#: app/frontend/apps/desktop/components/CommonImageViewer/FloatingToolbar.vue:53
+msgid "Rotate left"
+msgstr ""
+
+#: app/frontend/apps/desktop/components/CommonImageViewer/FloatingToolbar.vue:62
+msgid "Rotate right"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:302
 msgid "Rows"
@@ -17007,7 +17341,7 @@ msgstr "صفحه نمایش"
 msgid "Script can be located under: ||%s|| and needs to be executable."
 msgstr "اسکریپت می‌تواند در زیر قرار داشته باشد: ||%s|| و باید قابل اجرا باشد."
 
-#: app/frontend/apps/desktop/components/CommonFloatingToolbar/CommonFloatingToolbar.vue:21
+#: app/frontend/apps/desktop/components/CommonFloatingToolbar/CommonFloatingToolbar.vue:24
 #, fuzzy
 #| msgid "Scroll to end"
 msgid "Scroll actions"
@@ -17027,12 +17361,12 @@ msgstr "حرکت به پایین برای دیدن %s پاسخ جدید"
 msgid "Scroll down to see new messages"
 msgstr "برای دیدن پیام‌های جدید به سمت پایین حرکت کنید"
 
-#: app/frontend/apps/desktop/components/CommonFloatingToolbar/CommonFloatingToolbar.vue:78
+#: app/frontend/apps/desktop/components/CommonFloatingToolbar/CommonFloatingToolbar.vue:94
 #: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/components/BulkScrollButton.vue:24
 msgid "Scroll to end"
 msgstr "پیمایش به انتها"
 
-#: app/frontend/apps/desktop/components/CommonFloatingToolbar/CommonFloatingToolbar.vue:62
+#: app/frontend/apps/desktop/components/CommonFloatingToolbar/CommonFloatingToolbar.vue:78
 #: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/components/BulkScrollButton.vue:24
 msgid "Scroll to start"
 msgstr "پیمایش به ابتدا"
@@ -17043,7 +17377,7 @@ msgstr "پیمایش به ابتدا"
 msgid "Scroll to unread article"
 msgstr "پیمایش به سمت ابتدا"
 
-#: app/frontend/apps/desktop/components/CommonFloatingToolbar/CommonFloatingToolbar.vue:20
+#: app/frontend/apps/desktop/components/CommonFloatingToolbar/CommonFloatingToolbar.vue:23
 #, fuzzy
 #| msgid "Scroll to end"
 msgid "Scroll to unread item"
@@ -17288,7 +17622,7 @@ msgstr "جستجوی قالب‌ها"
 #: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax_customer_organization.coffee:18
 #: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax_external_data_source.coffee:13
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:845
-#: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee:348
+#: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee:349
 #: app/assets/javascripts/app/views/generic/icon_picker.jst.eco:9
 #: app/assets/javascripts/app/views/translation/form.jst.eco:7
 #: app/frontend/apps/desktop/components/CommonInputSearch/CommonInputSearch.vue:24
@@ -17330,11 +17664,11 @@ msgstr "رمز"
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/password.ts:10
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/tokenAccess.ts:10
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts:10
-#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:191
+#: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:190
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:26
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:127
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:304
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:297
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:303
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:296
 #: db/seeds/permissions.rb:209
 msgid "Security"
 msgstr "امنیت"
@@ -17421,7 +17755,7 @@ msgstr "برای جزئیات به HTTPLog مراجعه کنید."
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:469
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:111
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:166
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:272
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:269
 msgid "See less"
 msgstr "نمایش کمتر"
 
@@ -17432,7 +17766,7 @@ msgstr "نمایش کمتر"
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco:21
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:134
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:166
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:272
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:269
 msgid "See more"
 msgstr "نمایش بیشتر"
 
@@ -17523,7 +17857,7 @@ msgid "Select the ticket article(s) that should be analyzed by the AI agent."
 msgstr ""
 "مقاله(های) تیکت را که باید توسط عامل هوش مصنوعی تحلیل شوند، انتخاب کنید."
 
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:162
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:161
 msgid "Select the type of ticket your are creating"
 msgstr "نوع تیکتی را که ایجاد می‌کنید انتخاب کنید"
 
@@ -17586,7 +17920,7 @@ msgstr "گره انتخاب‌گر باید یا یک زیرشرط (عملگر +
 msgid "Selects the ticket number generator module."
 msgstr "ماژول تولید کننده شماره تیکت را انتخاب می‌کند."
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:478
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:502
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:455
 #: app/frontend/apps/mobile/components/CommonSelect/CommonSelect.vue:197
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:274
@@ -17610,6 +17944,11 @@ msgstr "باز کردن جستجوی سریع"
 #| msgid "API server unavailable - please try again later"
 msgid "Semantic search is temporarily unavailable. Please try again later."
 msgstr "سرور API در دسترس نیست - لطفاً بعداً دوباره تلاش کنید"
+
+#: app/assets/javascripts/app/views/ai/embedding_rebuild_confirm.jst.eco:2
+msgid ""
+"Semantic search will stop working until another provider is selected for it."
+msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:78
 #: app/assets/javascripts/app/views/customer_chat/chat_window.jst.eco:58
@@ -17729,7 +18068,7 @@ msgstr "درحال ارسال…"
 msgid "Sent successfully!"
 msgstr "ارسال موفقیت‌آمیز بود!"
 
-#: db/seeds/settings.rb:6424
+#: db/seeds/settings.rb:6434
 msgid "Sentence-based chunking"
 msgstr "تکه‌تکه کردن مبتنی بر جمله"
 
@@ -17798,7 +18137,7 @@ msgstr "نشست‌ها"
 msgid "Set Up"
 msgstr "تنظیم"
 
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:136
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:135
 msgid "Set a title for your ticket"
 msgstr "یک عنوان برای تیکت خود تنظیم کنید"
 
@@ -17883,6 +18222,10 @@ msgstr "تنظیم به عمومی"
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:151
 msgid "Set up"
 msgstr "تنظیم"
+
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseFeedAction.ts:34
+msgid "Set up RSS feed"
+msgstr ""
 
 #: app/assets/javascripts/app/views/getting_started/intro.jst.eco:6
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupStart.vue:56
@@ -18596,7 +18939,7 @@ msgstr "برای جستجو یا وارد کردن شماره تلفن تایپ 
 msgid "Start typing to search or enter an email address…"
 msgstr "برای جستجو یا وارد کردن آدرس ایمیل تایپ کنید…"
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:65
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:78
 #: app/frontend/apps/desktop/components/Form/fields/FieldCustomer/FieldCustomerWrapper.vue:116
 #: app/frontend/apps/desktop/components/Form/fields/FieldKnowledgeBaseAnswer/FieldKnowledgeBaseAnswerWrapper.vue:39
 #: app/frontend/apps/desktop/components/Form/fields/FieldTags/FieldTagsWrapper.vue:37
@@ -18758,7 +19101,7 @@ msgstr "استان"
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:14
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:91
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:26
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:286
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:285
 msgid "Subject"
 msgstr "موضوع"
 
@@ -18772,6 +19115,7 @@ msgstr ""
 "هدر مراجع اگر با استفاده از تنظیمات پیش‌فرض پیگیری تشخیص داده نشد."
 
 #: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:412
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:663
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee:2
 #: app/assets/javascripts/app/controllers/tag.coffee:117
 #: app/assets/javascripts/app/controllers/widget/button_with_dropdown.coffee:12
@@ -18981,7 +19325,7 @@ msgstr "پیش‌فرض سامانه - %s"
 msgid "System information"
 msgstr "اطلاعات سیستم"
 
-#: app/models/knowledge_base.rb:20
+#: app/models/knowledge_base.rb:33
 msgid ""
 "System supports only one locale for knowledge base. Upgrade your plan to use "
 "more locales."
@@ -19049,8 +19393,9 @@ msgstr "برچسب‌گذاری شده %s"
 #: app/assets/javascripts/app/views/tag/index.jst.eco:3
 #: app/assets/javascripts/app/views/ticket_zoom/knowledge_base_ai_draft_modal.jst.eco:91
 #: app/assets/javascripts/app/views/widget/tag.jst.eco:1
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:25
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:143
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/KnowledgeBaseAnswerAttributes.vue:86
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/KnowledgeBaseAnswerAttributes.vue:76
 #: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue:143
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue:75
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:164
@@ -19409,7 +19754,7 @@ msgstr "داده وب‌هوک واتس‌اپ قابل پردازش نیست."
 msgid "The WhatsApp webhook payload could not be validated."
 msgstr "داده وب‌هوک واتس‌اپ نمی‌تواند معتبر شود."
 
-#: app/models/ai/provider_connection.rb:250
+#: app/models/ai/provider_connection.rb:444
 msgid ""
 "The Zammad AI connection is managed by the platform and cannot be created or "
 "changed here."
@@ -19711,13 +20056,17 @@ msgstr ""
 "زمینه یک شی JSON است که تعریف می‌کند چه اطلاعاتی در مورد نهاد فعلی به عامل "
 "هوش مصنوعی ارائه می‌شود."
 
+#: app/models/ai/provider_connection.rb:20
+msgid "The context window size must be a positive number."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee:45
 #: app/controllers/users_controller.rb:387
 #: app/graphql/gql/mutations/user/current/change_password.rb:29
 msgid "The current password you provided is incorrect."
 msgstr "رمز وارد شده اشتباه است."
 
-#: app/services/service/ai/vectordb/create_table.rb:20
+#: app/services/service/ai/vectordb/create_table.rb:21
 msgid "The currently selected AI provider does not support embeddings."
 msgstr "ارائه‌دهنده هوش مصنوعی انتخاب شده فعلی از جاسازی‌ها پشتیبانی نمی‌کند."
 
@@ -19753,7 +20102,7 @@ msgstr ""
 msgid "The default font size is 12px."
 msgstr "اندازه قلم پیش‌فرض 12px است."
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:170
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:193
 #, fuzzy
 #| msgid "The setting could not be updated."
 msgid "The default provider could not be updated."
@@ -19793,7 +20142,7 @@ msgstr "جداکننده بین TicketHook و شماره تیکت. به عنوا
 
 #: app/assets/javascripts/app/controllers/_ai/feedback_logs.coffee:56
 #: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:95
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1674
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1676
 msgid "The download could not be started. Please try again later."
 msgstr "دانلود شروع نشد. لطفاً بعداً دوباره تلاش کنید."
 
@@ -19810,6 +20159,10 @@ msgstr "ایمیل به دلیل فعال بودن تنظیمات import_mode ب
 #: app/services/service/user/password_reset/update.rb:40
 msgid "The email could not be sent to the user."
 msgstr "ایمیل به کاربر ارسال نشد."
+
+#: app/models/ai/provider_connection.rb:19
+msgid "The embedding dimensions must be a positive number."
+msgstr ""
 
 #: lib/secure_mailing/pgp/incoming.rb:118
 msgid ""
@@ -20007,15 +20360,38 @@ msgstr "مرجع مسئله از قبل وجود دارد."
 msgid "The issue reference could not be found."
 msgstr "مرجع مسئله یافت نشد."
 
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBase.vue:43
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:148
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseEditFlyout/KnowledgeBaseEditFlyout.vue:96
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBase.vue:42
 #, fuzzy
 #| msgid "The Knowledge Base could not be created."
 msgid "The knowledge base could not be loaded."
 msgstr "پایگاه دانش ایجاد نشد."
 
+#: app/controllers/ai/vector_index_controller.rb:17
+msgid ""
+"The knowledge base index cannot be built. Please check that Elasticsearch is "
+"reachable and runs a supported version."
+msgstr ""
+
+#: app/assets/javascripts/app/views/ai/embedding_rebuild_confirm.jst.eco:3
+msgid ""
+"The knowledge base index is kept, so selecting the same provider again "
+"requires no re-index."
+msgstr ""
+
 #: app/frontend/shared/composables/useLocaleUpdate.ts:21
 msgid "The language could not be updated."
 msgstr "زبان قابل به‌روزرسانی نبود."
+
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyout/KnowledgeBaseFeedFlyout.vue:188
+msgid "The latest internal answers in the whole knowledge base."
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyout/KnowledgeBaseFeedFlyout.vue:198
+msgid ""
+"The latest internal answers of the current category and its sub-categories."
+msgstr ""
 
 #: app/models/setting/validation/saml/security.rb:44
 msgid "The length of the private key is too short."
@@ -20043,6 +20419,12 @@ msgstr "ورود امکان پذیر نیست."
 msgid "The minutes overlay"
 msgstr "همپوشانی دقیقه"
 
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:775
+#, fuzzy
+#| msgid "The avatar could not be fetched."
+msgid "The model list could not be fetched: %s"
+msgstr "تصویر نمایه دریافت نمی‌شود."
+
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:96
 msgid "The month picker"
 msgstr "انتخابگر ماه"
@@ -20055,8 +20437,14 @@ msgstr "همپوشانی انتخابگر ماه"
 msgid "The new ticket number could not be generated."
 msgstr "شماره جدید تیکت قابل تولید نیست."
 
+#: app/assets/javascripts/app/views/ai/embedding_rebuild_confirm.jst.eco:6
+msgid ""
+"The number of extra AI requests will depend on the amount of indexable "
+"content."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_ai/ai_agent.coffee:555
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:343
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:632
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_new.coffee:69
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee:93
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:825
@@ -20071,7 +20459,7 @@ msgstr "آبجکت قابل ایجاد نبود."
 msgid "The object could not be found."
 msgstr "موضوع یافت نشد."
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:404
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:632
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_edit.coffee:69
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee:265
 #: app/assets/javascripts/app/controllers/_settings/area_switch.coffee:102
@@ -20083,7 +20471,7 @@ msgstr "موضوع یافت نشد."
 msgid "The object could not be updated."
 msgstr "آبجکت قابل بروزرسانی نبود."
 
-#: app/frontend/shared/entities/online-notification/composables/useOnlineNotificationActions.ts:128
+#: app/frontend/shared/entities/online-notification/composables/useOnlineNotificationActions.ts:130
 msgid "The online notification could not be marked as seen."
 msgstr "اعلان برخط قابل علامت زدن به عنوان خوانده شده نیست."
 
@@ -20106,6 +20494,14 @@ msgstr "صفحه‌ای که بدنبال آن هستید وجود ندارد."
 #: app/controllers/mentions_controller.rb:43
 msgid "The parameter 'mentionable_type' is invalid."
 msgstr "پارامتر 'mentionable_type' نامعتبر است."
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldKnowledgeBasePermissions/FieldKnowledgeBasePermissionsInput.vue:101
+msgid "The parent already grants this role editor access."
+msgstr ""
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldKnowledgeBasePermissions/FieldKnowledgeBasePermissionsInput.vue:104
+msgid "The parent denies this role access."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee:135
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee:135
@@ -20169,7 +20565,7 @@ msgstr ""
 msgid "The product version could not be fetched."
 msgstr "نسخه محصول قابل دریافت نبود."
 
-#: app/models/webhook.rb:80
+#: app/models/webhook.rb:83
 msgid "The provided HTTP method is invalid."
 msgstr "متد HTTP ارائه شده نامعتبر است."
 
@@ -20193,34 +20589,34 @@ msgstr "اعتبارنامه ارائه شده نامعتبر است."
 msgid "The provided email account is already in use."
 msgstr "حساب ایمیل ارائه شده قبلاً در حال استفاده است."
 
-#: app/models/webhook.rb:60
+#: app/models/webhook.rb:63
 msgid ""
 "The provided endpoint is invalid, it could not be resolved to a safe IP "
 "address."
 msgstr ""
 "نقطه پایانی ارائه شده نامعتبر است، نمی‌توان آن را به یک آدرس IP ایمن حل کرد."
 
-#: app/models/webhook.rb:58
+#: app/models/webhook.rb:61
 msgid "The provided endpoint is invalid, it points to a link-local IP address."
 msgstr ""
 "نقطه پایانی ارائه شده نامعتبر است، به یک آدرس IP پیوند محلی اشاره می‌کند."
 
-#: app/models/webhook.rb:56
+#: app/models/webhook.rb:59
 msgid "The provided endpoint is invalid, it points to a loopback IP address."
 msgstr ""
 "نقطه پایانی ارائه شده نامعتبر است، به یک آدرس IP حلقه بازگشت اشاره می‌کند."
 
-#: app/models/webhook.rb:50
+#: app/models/webhook.rb:53
 msgid "The provided endpoint is invalid, no hostname was specified."
 msgstr "نقطه پایانی ارائه شده نامعتبر است، هیچ نام میزبانی مشخص نشده است."
 
-#: app/models/webhook.rb:49
+#: app/models/webhook.rb:52
 msgid ""
 "The provided endpoint is invalid, no http or https protocol was specified."
 msgstr ""
 "نقطه پایانی ارائه شده نامعتبر است، هیچ پروتکل http یا https مشخص نشده است."
 
-#: app/models/webhook.rb:54
+#: app/models/webhook.rb:57
 msgid "The provided endpoint is invalid."
 msgstr "نقطه پایانی ارائه شده نامعتبر است."
 
@@ -20232,7 +20628,7 @@ msgstr "عملگر تطابق ارائه شده، یا وجود ندارد یا 
 msgid "The provided password is incorrect."
 msgstr "رمز عبور ارائه شده نادرست است."
 
-#: app/models/webhook.rb:69
+#: app/models/webhook.rb:72
 msgid "The provided payload is invalid. Please check your syntax."
 msgstr "بارگذاری ارائه شده نامعتبر است. لطفاً نحو خود را بررسی کنید."
 
@@ -20244,6 +20640,18 @@ msgstr "بارگذاری ارائه شده نامعتبر است. لطفاً ن�
 #: app/services/service/user/signup_verify.rb:25
 msgid "The provided token is invalid."
 msgstr "توکن ارائه شده نامعتبر است."
+
+#: app/models/setting/validation/vectordb.rb:17
+#, fuzzy
+#| msgid ""
+#| "The provider configuration is disabled. Please set up the provider before "
+#| "proceeding in |AI > Providers|."
+msgid ""
+"The provider configuration is disabled. Before proceeding, please enable it "
+"in AI > Providers."
+msgstr ""
+"پیکربندی ارائه‌دهنده غیرفعال است. لطفاً قبل از ادامه در |AI > Providers| "
+"ارائه‌دهنده را تنظیم کنید."
 
 #: app/assets/javascripts/app/views/ai/missing_provider_alert.jst.eco:2
 #, fuzzy
@@ -20262,6 +20670,18 @@ msgstr ""
 #| msgid "The object could not be updated."
 msgid "The provider could not be updated."
 msgstr "آبجکت قابل بروزرسانی نبود."
+
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:482
+msgid ""
+"The provider offered no matching model for this field, so it has to be "
+"entered manually."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:482
+msgid ""
+"The provider offered no models to choose from, so it has to be entered "
+"manually."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ai/ai_feature_provider_modal.coffee:20
 #, fuzzy
@@ -20445,7 +20865,8 @@ msgstr "مولفه الزامی «مقدار» وارد نشده است."
 msgid "The required value 'group_id' is missing."
 msgstr "مولفه الزامی «شناسه گروه» وارد نشده است."
 
-#: lib/ai/provider.rb:131
+#: lib/ai/provider.rb:252 lib/ai/provider/concerns/lists_models.rb:116
+#: lib/ai/provider/custom_open_ai.rb:82
 msgid "The response could not be processed."
 msgstr "پاسخ پردازش نشد."
 
@@ -20498,6 +20919,20 @@ msgstr "همپوشانی ثانیه"
 msgid "The selected date is invalid."
 msgstr "تاریخ انتخاب‌شده معتبر نیست."
 
+#: app/graphql/gql/concerns/handles_knowledge_base_locale.rb:61
+#: app/services/service/knowledge_base/category/concerns/assigns_title.rb:31
+#: app/services/service/knowledge_base/update.rb:60
+#, fuzzy
+#| msgid "The file does not belong to the specified article."
+msgid "The selected language does not belong to this knowledge base."
+msgstr "این پرونده به بند مشخص شده تعلق ندارد."
+
+#: app/services/service/knowledge_base/category/base.rb:17
+#, fuzzy
+#| msgid "The article does not belong to the specified ticket."
+msgid "The selected parent category does not belong to this knowledge base."
+msgstr "این بند به تیکت مشخص شده تعلق ندارد."
+
 #: app/services/service/system/import/apply_configuration_base.rb:38
 msgid "The server presented a certificate that could not be verified."
 msgstr "سرور گواهینامه‌ای ارائه کرده که قابل تایید نیست."
@@ -20537,7 +20972,7 @@ msgid "The setting could not be reset."
 msgstr "تنظیم قابل بازتنظیم نیست."
 
 #: app/assets/javascripts/app/controllers/_ai/knowledge_base_features.coffee:120
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:192
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:215
 #: app/assets/javascripts/app/models/setting.coffee:43
 msgid "The setting could not be updated."
 msgstr "تنظیم قابل به‌روزرسانی نیست."
@@ -20993,6 +21428,10 @@ msgstr "خطاهایی در فرم شما وجود داشت."
 msgid "These are supported:"
 msgstr "اینها پشتیبانی می‌شوند:"
 
+#: lib/knowledge_base/permissions_update.rb:79
+msgid "These permissions are invalid because they would lock you out."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_manage/security.coffee:13
 msgid "Third-party Applications"
 msgstr "اپلیکیشن‌های ثالث"
@@ -21060,6 +21499,10 @@ msgstr "خوراک این دسته شامل زیردسته‌ها:"
 #: app/assets/javascripts/app/controllers/knowledge_base/reader_list_controller.coffee:33
 msgid "This category is empty"
 msgstr "این دسته خالی است"
+
+#: app/services/service/ai/provider_connection/validator/embedding_rebuild.rb:43
+msgid "This change requires the knowledge base to be indexed again."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee:92
 msgid ""
@@ -21339,18 +21782,24 @@ msgid ""
 "This is not a valid X509 certificate. Please check the certificate format."
 msgstr "این یک گواهی X509 معتبر نیست. لطفاً قالب گواهی را بررسی کنید."
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelectItem.vue:69
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelectItem.vue:57
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdownItem.vue:89
 msgid "This item expands to show more options"
 msgstr "این آیتم گسترش می‌یابد تا گزینه‌های بیشتری را نشان دهد"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:51
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswer.ts:56
+#, fuzzy
+#| msgid "No editable knowledge base categories available."
+msgid "This knowledge base answer is not available."
+msgstr "هیچ دسته‌بندی قابل ویرایشی در پایگاه دانش موجود نیست."
+
+#: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:50
 #, fuzzy
 #| msgid "No editable knowledge base categories available."
 msgid "This knowledge base category is not available."
 msgstr "هیچ دسته‌بندی قابل ویرایشی در پایگاه دانش موجود نیست."
 
-#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBase.vue:18
+#: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBase.vue:17
 #, fuzzy
 #| msgid "Not available in selected language"
 msgid "This knowledge base is not available in the selected language."
@@ -21457,10 +21906,17 @@ msgid ""
 "permissions."
 msgstr "این سطح مجوز بر اساس مجوزهای نقش فعلی در دسترس نیست."
 
-#: app/controllers/ai/provider_connections_controller.rb:38
+#: app/controllers/ai/provider_connections_controller.rb:57
+#: app/services/service/ai/provider_connection/resolve_embedding_metadata.rb:37
 #, fuzzy
 #| msgid "The currently selected AI provider does not support embeddings."
 msgid "This provider does not support embeddings."
+msgstr "ارائه‌دهنده هوش مصنوعی انتخاب شده فعلی از جاسازی‌ها پشتیبانی نمی‌کند."
+
+#: app/services/service/ai/provider_connection/list_models.rb:51
+#, fuzzy
+#| msgid "The currently selected AI provider does not support embeddings."
+msgid "This provider does not support model listing."
 msgstr "ارائه‌دهنده هوش مصنوعی انتخاب شده فعلی از جاسازی‌ها پشتیبانی نمی‌کند."
 
 #: app/services/service/execute_locked_block.rb:43
@@ -21468,6 +21924,12 @@ msgid ""
 "This resource cannot be locked, because it has already been locked by "
 "another process."
 msgstr "این منبع نمی‌تواند قفل شود، زیرا قبلاً توسط فرآیند دیگری قفل شده است."
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldKnowledgeBasePermissions/FieldKnowledgeBasePermissionsInput.vue:106
+#, fuzzy
+#| msgid "Access the knowledge base editor features."
+msgid "This role has no knowledge base editor permission."
+msgstr "دسترسی به قابلیت‌های ویرایشگر پایگاه دانش."
 
 #: app/assets/javascripts/app/controllers/_integration/github.coffee:6
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee:6
@@ -21556,7 +22018,7 @@ msgstr ""
 "این سرویس مخاطبین تماس‌های دریافتی و یک لیست تماس‌گیرنده را در زمان واقعی به "
 "شما نشان می‌دهد."
 
-#: db/seeds/settings.rb:6464
+#: db/seeds/settings.rb:6474
 msgid ""
 "This setting defines the token to access the support.zammad.com instance for "
 "package remote commands."
@@ -21667,6 +22129,12 @@ msgstr ""
 "گروه تعیین می‌کند که از کدام آدرس برای ایمیل‌های خروجی استفاده شود، به عنوان "
 "مثال وقتی عاملی در حال نوشتن ایمیل است یا یک تریگر در حال ارسال پاسخ خودکار "
 "است."
+
+#: app/assets/javascripts/app/views/ai/embedding_rebuild_confirm.jst.eco:5
+msgid ""
+"This will rebuild the vector index used for the semantic search, which may "
+"result in higher AI costs."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
 msgid "Thu"
@@ -22077,7 +22545,7 @@ msgstr "برچسب‌های تیکت قابل به‌روز کردن نبود."
 msgid "Ticket tags updated successfully."
 msgstr "برچسب‌های تیکت به‌روز شدند."
 
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:139
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:138
 msgid "Ticket title"
 msgstr "عنوان تیکت"
 
@@ -22093,7 +22561,7 @@ msgid "Ticket update failed."
 msgstr "به‌روزرسانی تیکت ناموفق بود."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/composables/useTicketEditTitle.ts:26
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:564
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:561
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:162
 msgid "Ticket updated successfully."
 msgstr "تیکت به‌روز شد."
@@ -22154,17 +22622,17 @@ msgid ""
 "Ticket with specified ID was not found. Try checking the URL for errors."
 msgstr "تیکت با ID مشخص شده یافت نشد. سعی کنید URL را برای خطا بررسی کنید."
 
-#: app/assets/javascripts/app/models/ticket.coffee:115
+#: app/assets/javascripts/app/models/ticket.coffee:118
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:27
 msgid "Ticket |%s| has escalated!"
 msgstr "تیکت |%s| بالاسپاری شد!"
 
-#: app/assets/javascripts/app/models/ticket.coffee:119
+#: app/assets/javascripts/app/models/ticket.coffee:122
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:31
 msgid "Ticket |%s| was merged into another ticket"
 msgstr "تیکت |%s| در یک تیکت دیگر ادغام شد"
 
-#: app/assets/javascripts/app/models/ticket.coffee:117
+#: app/assets/javascripts/app/models/ticket.coffee:120
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:29
 msgid "Ticket |%s| will escalate soon!"
 msgstr "تیکت |%s| بزودی بالاسپاری خواهد شد!"
@@ -22345,8 +22813,10 @@ msgstr "زمان‌بندی"
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco:10
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco:10
 #: app/controllers/time_accountings_controller.rb:85
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:63
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseEditFlyout/KnowledgeBaseEditFlyout.vue:44
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/TicketSimpleTable.vue:34
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:152
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:151
 #: app/graphql/gql/types/overview_type.rb:92
 #: db/seeds/object_manager_attributes.rb:34 lib/excel_sheet/ticket.rb:24
 msgid "Title"
@@ -22364,7 +22834,7 @@ msgstr "عنوان فرم"
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:94
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:89
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:29
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:235
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:234
 #: db/seeds/object_manager_attributes.rb:496
 msgid "To"
 msgstr "گیرنده"
@@ -22501,7 +22971,7 @@ msgstr "تغییر وضعیت ردیف هدر"
 msgid "Toggle the overlay"
 msgstr "تغییر وضعیت همپوشانی"
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:229
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:335
 #: app/assets/javascripts/app/controllers/api.coffee:11
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:48
 #: app/models/channel/driver/sms/massenversand.rb:44
@@ -22551,7 +23021,6 @@ msgid "Too many redirections for the original URL, halting."
 msgstr "تغییر مسیرهای بسیار زیاد برای آدرس URL اصلی، توقف."
 
 #: app/assets/javascripts/app/controllers/_default_navbar.coffee:15
-#: app/frontend/apps/desktop/components/PageNavigation/groups/tools.ts:9
 msgid "Tools"
 msgstr "ابزارها"
 
@@ -22831,7 +23300,7 @@ msgstr "روش دو مرحله‌ای پیکربندی نشد."
 msgid "Two-factor method has been configured successfully."
 msgstr "روش دو مرحله‌ای با موفقیت پیکربندی شد."
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:217
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:521
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:415
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:240
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:79
@@ -22873,7 +23342,7 @@ msgstr "نام مقدار UID"
 msgid "UID Field"
 msgstr "فیلد UID"
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:247
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:414
 #: app/assets/javascripts/app/views/api.jst.eco:63
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco:12
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:12
@@ -22890,15 +23359,15 @@ msgstr "پیوند"
 msgid "URL (AJAX endpoint)"
 msgstr "آدرس URL (نقطه پایانی AJAX)"
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:251
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:418
 msgid "URL (Completions)"
 msgstr "URL (تکمیل‌ها)"
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:255
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:422
 msgid "URL (Embeddings)"
 msgstr "آدرس URL (جاسازی‌ها)"
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:259
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:426
 msgid "URL (OCR)"
 msgstr "آدرس URL (OCR)"
 
@@ -22944,7 +23413,7 @@ msgstr "واحد"
 msgid "Unknown"
 msgstr "ناشناخته"
 
-#: app/controllers/ai/provider_connections_controller.rb:35
+#: app/controllers/ai/provider_connections_controller.rb:54
 #, fuzzy
 #| msgid "Unknown error"
 msgid "Unknown default purpose."
@@ -22958,7 +23427,9 @@ msgstr "خطای ناشناخته"
 msgid "Unknown error: Could not create a ticket from this email."
 msgstr "خطای ناشناخته: نمی‌توان از این ایمیل یک تیکت ایجاد کرد."
 
-#: app/services/service/ai/provider_connection/test_connection.rb:20
+#: app/services/service/ai/provider_connection/list_models.rb:48
+#: app/services/service/ai/provider_connection/resolve_embedding_metadata.rb:36
+#: app/services/service/ai/provider_connection/test_connection.rb:22
 #, fuzzy
 #| msgid "Unknown error"
 msgid "Unknown provider"
@@ -23001,7 +23472,7 @@ msgstr "بازکردن قفل"
 msgid "Unpin this panel"
 msgstr "برداشتن سنجاق این پنل"
 
-#: app/frontend/apps/desktop/components/CommonFloatingToolbar/CommonFloatingToolbar.vue:92
+#: app/frontend/apps/desktop/components/CommonFloatingToolbar/CommonFloatingToolbar.vue:108
 msgid "Unread messages count"
 msgstr "تعداد پیام‌های خوانده‌نشده"
 
@@ -23017,11 +23488,11 @@ msgstr "اعلان‌های خوانده‌نشده"
 msgid "Unsaved changes"
 msgstr "تغییرات ذخیره نشده"
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification.vue:170
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification.vue:206
 msgid "Unseen notifications count"
 msgstr "تعداد اعلان‌های دیده نشده"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:575
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:600
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:268
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:332
 msgid "Unselect option"
@@ -23084,6 +23555,8 @@ msgstr "رویدادهای آینده"
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:66
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:9
 #: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyoutActionFooter.vue:9
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:180
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseEditFlyout/KnowledgeBaseEditFlyout.vue:124
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketAgentUpdateButton.vue:117
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:82
 msgid "Update"
@@ -23247,6 +23720,7 @@ msgstr "به‌روز شده در"
 #: app/assets/javascripts/app/models/ticket.coffee:29
 #: app/assets/javascripts/app/models/ticket_article.coffee:17
 #: app/assets/javascripts/app/models/user.coffee:25
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerSidebarContent.vue:49
 #: app/frontend/shared/entities/organization/stores/objectAttributes.ts:31
 #: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:109
 #: app/frontend/shared/entities/user/stores/objectAttributes.ts:33
@@ -23440,6 +23914,13 @@ msgstr "بارگزاری کلید"
 msgid "Uploading"
 msgstr "در حال بارگزاری"
 
+#: app/frontend/apps/desktop/components/Form/fields/FieldFile/FieldFileListSkeleton.vue:22
+#: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue:127
+#, fuzzy
+#| msgid "Download %s"
+msgid "Uploading file: %s"
+msgstr "بارگیری %s"
+
 #: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageUploadInsideOtherEditor.vue:6
 msgid "Uploading…"
 msgstr "در حال بارگذاری…"
@@ -23472,7 +23953,7 @@ msgstr "استفاده از مرتب‌سازی گزینه سفارشی"
 msgid "Use double click to change level of the row."
 msgstr "برای تغییر سطح ردیف، از دوبار کلیک استفاده کنید."
 
-#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:102
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:115
 #, fuzzy
 #| msgid "Set default for new tickets"
 msgid "Use for image text recognition"
@@ -23874,11 +24355,15 @@ msgstr "متغیرها"
 msgid "Vector DB"
 msgstr ""
 
-#: db/seeds/settings.rb:6411
+#: db/seeds/settings.rb:6403
+msgid "Vector DB indexed embedding configuration"
+msgstr ""
+
+#: db/seeds/settings.rb:6421
 msgid "Vector DB knowledge base chunking strategy"
 msgstr "استراتژی تکه‌تکه کردن پایگاه دانش برداری"
 
-#: db/seeds/settings.rb:6402
+#: db/seeds/settings.rb:6412
 #, fuzzy
 #| msgid "Vector DB knowledge base categories"
 msgid "Vector DB knowledge base excluded categories"
@@ -23987,8 +24472,7 @@ msgstr "مشاهده"
 msgid "View from user's perspective"
 msgstr "مشاهده از دید کاربر"
 
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderCompact.vue:52
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderFull.vue:52
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderRow.vue:65
 #, fuzzy
 #| msgid "Delete Knowledge Base"
 msgid "View public knowledge base"
@@ -24014,7 +24498,8 @@ msgstr "در حال نمایش تیکت‌"
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/article.jst.eco:3
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/notification.jst.eco:3
 #: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:133
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:193
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerSidebarContent.vue:29
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:192
 #: db/seeds/object_manager_attributes.rb:462
 msgid "Visibility"
 msgstr "قابلیت مشاهده"
@@ -24086,7 +24571,7 @@ msgstr "وب"
 msgid "Web (in)"
 msgstr "وب سایت (ورودی)"
 
-#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:119
+#: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:160
 #: app/assets/javascripts/app/controllers/knowledge_base/server_snippet.coffee:2
 msgid "Web Server Configuration"
 msgstr "تنظیمات سرور وب"
@@ -24453,7 +24938,7 @@ msgid "Yes, add attachments now"
 msgstr "بله، همین الان پیوست‌ها را اضافه کن"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:5
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:474
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:471
 msgid "Yes, open the checklist"
 msgstr "بله، چک‌لیست را باز کن"
 
@@ -24633,7 +25118,7 @@ msgstr "شما دیگر نمی‌توانید وظیفه حریم خصوصی د�
 msgid "You can no longer see the group."
 msgstr "شما دیگر نمی‌توانید گروه را ببینید."
 
-#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/knowledge-base-answer.ts:21
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/knowledge-base-answer.ts:33
 msgid "You can no longer see the knowledge base answer."
 msgstr "شما دیگر نمی‌توانید پاسخ پایگاه دانش را مشاهده کنید."
 
@@ -24846,7 +25331,7 @@ msgstr "شما باید به دوربین وب خود دسترسی دهید."
 msgid "You have unchecked items in the checklist."
 msgstr "شما آیتم‌های علامت نخورده در چک‌لیست دارید."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:469
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:466
 msgid ""
 "You have unchecked items in the checklist. Do you want to handle them before "
 "closing this ticket?"
@@ -25067,7 +25552,7 @@ msgstr "شما در حال تخصیص %s تیکت هستید. آیا می‌خو
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:91
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:134
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco:124
-#: app/frontend/apps/desktop/components/layout/LayoutPublicPage/LayoutPublicPage.vue:94
+#: app/frontend/apps/desktop/components/layout/LayoutPublicPage/LayoutPublicPage.vue:101
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:78
 #: app/frontend/apps/mobile/pages/authentication/components/LoginFooter.vue:24
 msgid "Zammad"
@@ -25090,6 +25575,7 @@ msgid "Zammad Foundation"
 msgstr "بنیاد Zammad"
 
 #: db/seeds/settings.rb:114
+#: lib/auth/two_factor/authentication_method/authenticator_app.rb:38
 msgid "Zammad Helpdesk"
 msgstr "میز خدمت"
 
@@ -25144,6 +25630,14 @@ msgstr "Zendesk"
 #: db/seeds/object_manager_attributes.rb:1316
 msgid "Zip"
 msgstr "کد پستی"
+
+#: app/frontend/apps/desktop/components/CommonImageViewer/FloatingToolbar.vue:26
+msgid "Zoom in"
+msgstr ""
+
+#: app/frontend/apps/desktop/components/CommonImageViewer/FloatingToolbar.vue:35
+msgid "Zoom out"
+msgstr ""
 
 #. This is the template file app/views/mailer/email_oversized/en.txt.erb in ERB/Text format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -25334,7 +25828,7 @@ msgstr "قابل تغییر نیست"
 msgid "can't be used because *_id and *_ids are not allowed"
 msgstr "نمی‌توان استفاده کرد زیرا *_id و *_ids مجاز نیستند"
 
-#: app/models/knowledge_base/category.rb:258
+#: app/models/knowledge_base/category.rb:277
 msgid "cannot be a subcategory of the parent category"
 msgstr "نمی‌توان زیردسته از دسته‌ی والد قرار داد"
 
@@ -25613,14 +26107,17 @@ msgstr "مثلاً تعطیلات عید پاک"
 msgid "edit"
 msgstr "اصلاح"
 
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerHeaderDetails.vue:44
 #: app/frontend/apps/mobile/composables/useEditedBy.ts:41
 msgid "edited %s"
 msgstr "%s ویرایش‌شده"
 
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerHeaderDetails.vue:48
 #: app/frontend/apps/mobile/composables/useEditedBy.ts:44
 msgid "edited %s by %s"
 msgstr "%s ویرایش‌شده توسط %s"
 
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerHeaderDetails.vue:46
 #: app/frontend/apps/mobile/composables/useEditedBy.ts:41
 msgid "edited %s by me"
 msgstr "%s توسط من ویرایش شده"
@@ -25644,7 +26141,7 @@ msgstr "با پایان می‌یابد"
 msgid "ends with one of"
 msgstr "با یکی از پایان می‌یابد"
 
-#: app/assets/javascripts/app/models/ticket.coffee:84
+#: app/assets/javascripts/app/models/ticket.coffee:85
 msgid "escalated"
 msgstr "بالاسپاری شده"
 
@@ -25746,6 +26243,10 @@ msgstr "فرا رسیده"
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:186
 msgid "has reached warning"
 msgstr "هشدار فرا رسیده"
+
+#: app/models/knowledge_base/has_unique_title.rb:21
+msgid "has to be unique"
+msgstr ""
 
 #: app/helpers/knowledge_base_visibility_note_helper.rb:38
 msgid "hidden, no published answers"
@@ -25906,10 +26407,6 @@ msgstr "پایگاه داده داخلی"
 msgid "is"
 msgstr "برابر است با"
 
-#: app/models/knowledge_base/has_unique_title.rb:21
-msgid "is already used"
-msgstr "قبلاً استفاده شده است"
-
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:36
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:187
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:63
@@ -25984,7 +26481,7 @@ msgstr "یک رنگ نیست. فقط رنگ‌های Hex، RGB و HSL پشتیب
 msgid "is not a number"
 msgstr "عدد نیست"
 
-#: app/models/ai/provider_connection.rb:157
+#: app/models/ai/provider_connection.rb:238
 #, fuzzy
 #| msgid "Test SMS provider"
 msgid "is not a supported AI provider"
@@ -26001,7 +26498,7 @@ msgstr "خارج از ساعت کاری"
 msgid "is not included in the list"
 msgstr "در فهرست موجود نیست"
 
-#: app/models/knowledge_base/category.rb:276
+#: app/models/knowledge_base/category.rb:295
 msgid "is part of a circular reference"
 msgstr ""
 
@@ -26077,7 +26574,7 @@ msgstr "linked accounts,facebook,github,gitlab,google,linkedin,microsoft,saml"
 msgid "m"
 msgstr "دقیقه"
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationPopover/NotificationHeader.vue:23
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationPopover/NotificationHeader.vue:26
 msgid "mark all as read"
 msgstr "علامت‌گذاری همه به عنوان خوانده شده"
 
@@ -26159,11 +26656,17 @@ msgstr "ماه(ها)"
 msgid "must be a hash with \"label\" and \"value\" keys"
 msgstr "باید یک هش با کلیدهای \"برچسب\" و \"مقدار\" باشد"
 
+#: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:905
+#, fuzzy
+#| msgid "must be an integer"
+msgid "must be a positive number"
+msgstr "باید یک عدد صحیح باشد"
+
 #: app/models/calendar.rb:247
 msgid "must be a valid HTTP(S) URL"
 msgstr "باید یک آدرس HTTP(S) معتبر باشد"
 
-#: app/models/knowledge_base.rb:270
+#: app/models/knowledge_base.rb:288
 msgid "must be a valid path or domain"
 msgstr "باید یک مسیر یا دامنه معتبر باشد"
 
@@ -26203,18 +26706,24 @@ msgstr "باید فرد باشد"
 msgid "must be other than %{count}"
 msgstr "باید غیر از %{count} باشد"
 
-#: app/models/knowledge_base.rb:258
+#: app/models/knowledge_base.rb:276
 msgid "must begin with a slash (\"/\")"
 msgstr "باید با یک اسلش (\"/\") شروع شود"
 
 msgid "must exist"
 msgstr "باید موجود باشد"
 
-#: app/models/knowledge_base.rb:266
+#: lib/validations/date_range_validator.rb:16
+#, fuzzy
+#| msgid "This field must have a value that is between %s and %s."
+msgid "must have a year between 1 and 9999"
+msgstr "این فیلد باید مقداری داشته باشد که بین %s و %s باشد."
+
+#: app/models/knowledge_base.rb:284
 msgid "must not end with a slash (\"/\")"
 msgstr "نباید با یک اسلش (\"/\") خاتمه یابد"
 
-#: app/models/knowledge_base.rb:262
+#: app/models/knowledge_base.rb:280
 msgid "must not include a protocol (e.g., \"http://\" or \"https://\")"
 msgstr "نباید شامل یک پروتکل باشد (به عنوان مثال، \"http://\" یا \"https://\")"
 
@@ -26408,7 +26917,7 @@ msgstr "منتشر شده"
 msgid "quarter-hour(s)"
 msgstr "ربع ساعت"
 
-#: app/assets/javascripts/app/models/ticket.coffee:82
+#: app/assets/javascripts/app/models/ticket.coffee:87
 msgid "reached"
 msgstr "فرارسیده"
 
@@ -26500,7 +27009,7 @@ msgstr "نوار کناری ناوبری سطح دوم"
 msgid "select"
 msgstr "انتخاب"
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:369
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:390
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:451
 msgid "select all options"
 msgstr "انتخاب همه اختیارات"
@@ -26826,13 +27335,13 @@ msgstr "در آخرین (نسبی)"
 msgid "within next (relative)"
 msgstr "در بعدی (نسبی)"
 
-#: app/models/knowledge_base/category.rb:289
+#: app/models/knowledge_base/category.rb:308
 #, fuzzy
 #| msgid "This group or its children exceed the allowed nesting depth."
 msgid "would exceed the allowed nesting depth"
 msgstr "این گروه یا فرزندان آن از عمق تودرتو مجاز فراتر می‌روند."
 
-#: app/models/knowledge_base/category.rb:294
+#: app/models/knowledge_base/category.rb:313
 #, fuzzy
 #| msgid "This group or its children exceed the allowed nesting depth."
 msgid "would push this category's children beyond the allowed nesting depth"
@@ -26898,12 +27407,36 @@ msgid "∅ Waiting time today"
 msgstr "میانگین زمان پاسخگویی (امروز)"
 
 #, fuzzy
+#~| msgid "Edit Answer"
+#~ msgid "Add Answer"
+#~ msgstr "ویرایش پاسخ"
+
+#, fuzzy
+#~| msgid "Add subclause"
+#~ msgid "Add sub-category"
+#~ msgstr "افزودن زیربند"
+
+#~ msgid "Invalid permissions, do not lock yourself out."
+#~ msgstr "مجوزهای نامعتبر، خودتان را قفل نکنید."
+
+#, fuzzy
+#~| msgid "Remove filter"
+#~ msgid "Remove category"
+#~ msgstr "حذف فیلتر"
+
+#~ msgid "is already used"
+#~ msgstr "قبلاً استفاده شده است"
+
+#~ msgid "1 attached file"
+#~ msgstr "۱ پرونده پیوست شده"
+
+#~ msgid "File '%s' is uploading"
+#~ msgstr "فایل '%s' در حال آپلود است"
+
+#, fuzzy
 #~| msgid "Inserts knowledge base answer"
 #~ msgid "No related knowledge base answers found."
 #~ msgstr "افزودن پاسخ از پایگاه دانش"
-
-#~ msgid "KB Answer Generation"
-#~ msgstr "تولید پاسخ پایگاه دانش"
 
 #, fuzzy
 #~| msgid "URL (Completions)"
@@ -26956,9 +27489,6 @@ msgstr "میانگین زمان پاسخگویی (امروز)"
 
 #~ msgid "Recognize image text (OCR)"
 #~ msgstr "تشخیص متن تصویر (OCR)"
-
-#~ msgid "Stores the AI provider configuration."
-#~ msgstr "پیکربندی ارائه‌دهنده هوش مصنوعی را ذخیره می‌کند."
 
 #~ msgid "This service allows you to connect Zammad with an AI provider."
 #~ msgstr ""
@@ -27098,11 +27628,6 @@ msgstr "میانگین زمان پاسخگویی (امروز)"
 
 #~ msgid "Till"
 #~ msgstr "تا تاریخ"
-
-#, fuzzy
-#~| msgid "Service Notification"
-#~ msgid "Close notification"
-#~ msgstr "اعلان سرویس"
 
 #~ msgid "Needed"
 #~ msgstr "مورد نیاز"
@@ -27596,9 +28121,6 @@ msgstr "میانگین زمان پاسخگویی (امروز)"
 #~ msgstr ""
 #~ "امکان راستی‌آزمایی ایمیل وجود ندارد. لطفا با ادمین سیستم تماس بگیرید."
 
-#~ msgid "The notifcation could not be deleted."
-#~ msgstr "اعلان قابل حذف نیست."
-
 #~ msgid "%s on message"
 #~ msgstr "%s در پیام"
 
@@ -27606,11 +28128,6 @@ msgstr "میانگین زمان پاسخگویی (امروز)"
 #~| msgid "message"
 #~ msgid "%s to message"
 #~ msgstr "پیام"
-
-#, fuzzy
-#~| msgid "Change Objects"
-#~ msgid "Changed reaction"
-#~ msgstr "تغییر آبجکت‌ها"
 
 #, fuzzy
 #~| msgid "Change text color"
