@@ -160,9 +160,52 @@ RSpec.describe Transaction::Notification, type: :model do
     context 'when there is a problem with the sending SMTP server' do
       let(:response_status_code) { 535 }
 
-      it 'raises an eroror' do
+      it 'delivers the online notification anyway' do
         expect { run(ticket, user, 'reminder_reached') }
-          .to raise_error(Channel::DeliveryError)
+          .to not_raise_error
+          .and change { OnlineNotification.exists?(user: user, object_lookup_id: ObjectLookup.by_name('Ticket'), o_id: ticket.id) }
+          .to(true)
+      end
+
+      it 'marks the notification channel as faulty' do
+        run(ticket, user, 'reminder_reached')
+
+        expect(Channel.find_by(area: 'Email::Notification', active: true)).to have_attributes(status_out: 'error', last_log_out: include('Net::SMTPFatalError'))
+      end
+
+      it 'does not list the email channel in the ticket history' do
+        run(ticket, user, 'reminder_reached')
+
+        expect(ticket.history_get.find { |entry| entry['type'] == 'notification' })
+          .to include('value_to' => "#{user.email}(reminder_reached:online)")
+      end
+
+      context 'with more than one recipient' do
+        let(:other_user) { create(:agent, groups: [ticket.group]) }
+
+        before do
+          other_user.preferences[:notification_config][:matrix][:reminder_reached][:criteria] = {
+            'owned_by_me' => false, 'owned_by_nobody' => false, 'subscribed' => false, 'no' => true
+          }
+          other_user.save!
+        end
+
+        it 'delivers the online notification to all recipients' do
+          expect { run(ticket, user, 'reminder_reached') }
+            .to change(OnlineNotification, :count).by(2)
+        end
+
+        it 'attempts the email delivery only once' do
+          delivery_attempts = 0
+          allow_any_instance_of(Net::SMTP).to receive(:start) do
+            delivery_attempts += 1
+            raise error
+          end
+
+          run(ticket, user, 'reminder_reached')
+
+          expect(delivery_attempts).to eq(1)
+        end
       end
     end
 
@@ -174,6 +217,73 @@ RSpec.describe Transaction::Notification, type: :model do
         run(ticket, user, 'reminder_reached')
         expect(Rails.logger).to have_received(:info)
       end
+
+      it 'does not list the email channel in the ticket history' do
+        run(ticket, user, 'reminder_reached')
+
+        expect(ticket.history_get.find { |entry| entry['type'] == 'notification' })
+          .to include('value_to' => "#{user.email}(reminder_reached:online)")
+      end
+    end
+  end
+
+  describe 'recipient with a failed email delivery' do
+    let(:group)       { create(:group) }
+    let(:preferences) { { mail_delivery_failed: true, mail_delivery_failed_data: Time.current } }
+    let(:user)        { create(:agent, groups: [group], preferences: preferences) }
+    let(:ticket)      { create(:ticket, owner: user, group: group, state_name: 'open', pending_time: Time.current) }
+
+    before do
+      allow(NotificationFactory::Mailer).to receive(:notification)
+    end
+
+    it 'delivers the online notification' do
+      expect { run(ticket, user, 'reminder_reached') }
+        .to change(OnlineNotification, :count).by(1)
+    end
+
+    it 'does not deliver the email notification' do
+      run(ticket, user, 'reminder_reached')
+
+      expect(NotificationFactory::Mailer).not_to have_received(:notification)
+    end
+
+    context 'without a failed email delivery' do
+      let(:preferences) { {} }
+
+      it 'delivers the email notification' do
+        run(ticket, user, 'reminder_reached')
+
+        expect(NotificationFactory::Mailer).to have_received(:notification)
+      end
+    end
+  end
+
+  describe 'a single email notification failing to be sent' do
+    let(:group)      { create(:group) }
+    let(:user)       { create(:agent, groups: [group]) }
+    let(:other_user) { create(:agent, groups: [group]) }
+    let(:ticket)     { create(:ticket, owner: user, group: group, state_name: 'open', pending_time: Time.current) }
+    let(:error)      { Channel::DeliveryError.new('Smtp: broken message (ArgumentError)', ArgumentError.new('broken message')) }
+
+    before do
+      other_user.preferences[:notification_config][:matrix][:reminder_reached][:criteria] = {
+        'owned_by_me' => false, 'owned_by_nobody' => false, 'subscribed' => false, 'no' => true
+      }
+      other_user.save!
+
+      allow(NotificationFactory::Mailer).to receive(:notification).and_raise(error)
+    end
+
+    it 'still attempts the delivery for the other recipient' do
+      run(ticket, user, 'reminder_reached')
+
+      expect(NotificationFactory::Mailer).to have_received(:notification).twice
+    end
+
+    it 'delivers the online notification to all recipients' do
+      expect { run(ticket, user, 'reminder_reached') }
+        .to change(OnlineNotification, :count).by(2)
     end
   end
 

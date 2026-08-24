@@ -3,6 +3,19 @@
 class Transaction::Notification
   include ChecksHumanChanges
 
+  # Errors of the notification channel itself, as opposed to a problem with one
+  #   single message: they will fail for every recipient alike.
+  CHANNEL_FAILURE_ERRORS = [
+    Channel::XOAuth2RefreshError,
+    IOError,
+    Net::OpenTimeout,
+    Net::ReadTimeout,
+    Net::SMTPError,
+    OpenSSL::SSL::SSLError,
+    SocketError,
+    SystemCallError,
+  ].freeze
+
 =begin
   {
     object: 'Ticket',
@@ -25,6 +38,7 @@ class Transaction::Notification
     @params                  = params
     @recipients_and_channels = []
     @recipients_reason       = {}
+    @email_channel_failed    = false
   end
 
   def ticket
@@ -151,12 +165,6 @@ class Transaction::Notification
     # ignore inactive users
     return if !user.active?
 
-    blocked_in_days = user.mail_delivery_failed_blocked_days
-    if blocked_in_days.positive?
-      Rails.logger.info "Send no system notifications to #{user.email} because email is marked as mail_delivery_failed for #{blocked_in_days} day(s)"
-      return
-    end
-
     # ignore if no changes has been done
     changes = human_changes(@item[:changes], ticket, user)
     return if @item[:type] == 'update' && !article && changes.blank?
@@ -180,10 +188,8 @@ class Transaction::Notification
       send_to_single_recipient_online(user, ticket, article)
     end
 
-    if channels['email'] && user.email.present?
+    if channels['email'] && user.email.present? && deliver_email(user, ticket, article, changes)
       used_channels.push 'email'
-
-      send_to_single_recipient_email(user, ticket, article, changes)
     end
 
     add_recipient_list_to_history(ticket, user, used_channels, @item[:type])
@@ -222,6 +228,54 @@ class Transaction::Notification
     Rails.cache.fetch("User/notification/possible_recipients_of_group/#{group_id}/#{User.latest_change}", expires_in: 20.seconds) do
       User.group_access(group_id, 'full').sort_by(&:login)
     end
+  end
+
+  # Deliver the email notification, but never let a broken 'Email::Notification'
+  #   channel take the online notification down with it (see #6308): the mail is
+  #   sent after the online notification was already created, inside the same
+  #   database transaction, and a propagating error would roll it back and abort
+  #   the remaining recipients as well.
+  #
+  # Channel#deliver already marked the channel as faulty before raising, so the
+  #   misconfiguration stays visible to admins via the channel status. A daily
+  #   event lock taken above is kept, just like for the SMTP errors the driver
+  #   silences: where the recipient has the online channel enabled, they were
+  #   notified, they only lack the email.
+  #
+  # Returns the delivery result, which is falsy if nothing was sent.
+  def deliver_email(user, ticket, article, changes)
+    return false if !email_deliverable?(user)
+
+    send_to_single_recipient_email(user, ticket, article, changes)
+  rescue Channel::DeliveryError => e
+    @email_channel_failed = true if channel_failure?(e)
+
+    Rails.logger.error "Unable to send ticket email notification to #{user.email}: #{e.message}"
+
+    false
+  end
+
+  def channel_failure?(error)
+    CHANNEL_FAILURE_ERRORS.any? { |klass| error.original_error.is_a?(klass) }
+  end
+
+  def email_deliverable?(user)
+    # A broken channel fails for every recipient alike, so stop trying after the
+    #   first error: an unreachable server costs a connection timeout per
+    #   attempt, which would otherwise block this notification for minutes on
+    #   end. Problems of a single message do not set this flag.
+    if @email_channel_failed
+      Rails.logger.info "Send no email notification to #{user.email} because the notification channel failed to deliver before"
+      return false
+    end
+
+    blocked_in_days = user.mail_delivery_failed_blocked_days
+    if blocked_in_days.positive?
+      Rails.logger.info "Send no email notification to #{user.email} because email is marked as mail_delivery_failed for #{blocked_in_days} day(s)"
+      return false
+    end
+
+    true
   end
 
   def send_to_single_recipient_online(user, ticket, article)
@@ -300,7 +354,8 @@ class Transaction::Notification
       references:  ticket.get_references,
       main_object: ticket,
       attachments: attachments,
-    )
-    Rails.logger.debug { "sent ticket email notification to agent (#{@item[:type]}/#{ticket.id}/#{user.email})" }
+    ).tap do
+      Rails.logger.debug { "sent ticket email notification to agent (#{@item[:type]}/#{ticket.id}/#{user.email})" }
+    end
   end
 end
