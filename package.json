@@ -81,7 +81,7 @@
     "markdownlint-cli2": "^0.23.2",
     "minimatch": "^10.2.6",
     "mock-apollo-client": "^1.4.0",
-    "oxfmt": "^0.63.0",
+    "oxfmt": "^0.64.0",
     "oxlint": "^1.78.0",
     "playwright": "1.62.1",
     "postcss-html": "^2.0.0",
