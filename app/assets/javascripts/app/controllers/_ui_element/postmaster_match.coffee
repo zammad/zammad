@@ -240,6 +240,10 @@ class App.UiElement.postmaster_match
       if selectorExists
         item.find('.js-filterElement').first().remove()
 
+        # refresh the state of the remaining rows, since it was calculated
+        #   while the dummy row was still present
+        @rebuildAttributeSelectors(item)
+
     item
 
   @buildValue: (elementFull, elementRow, key, groups, value, operator, attribute) ->
