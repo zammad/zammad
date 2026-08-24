@@ -9561,11 +9561,11 @@ msgstr ""
 msgid "Invalid auto wizard file."
 msgstr ""
 
-#: app/controllers/long_polling_controller.rb:83
+#: app/controllers/long_polling_controller.rb:82
 msgid "Invalid client_id in receive loop!"
 msgstr ""
 
-#: app/controllers/long_polling_controller.rb:51
+#: app/controllers/long_polling_controller.rb:50
 msgid "Invalid client_id received!"
 msgstr ""
 
@@ -11559,7 +11559,7 @@ msgstr ""
 msgid "Need help? Check the Zammad Documentation for detailed guidance."
 msgstr ""
 
-#: lib/sessions/event/chat_base.rb:27
+#: lib/sessions/event/chat_base.rb:28
 msgid "Need session_id."
 msgstr ""
 
@@ -17808,6 +17808,10 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:162
 #: app/assets/javascripts/app/controllers/_integration/exchange.coffee:718
 msgid "The entry could not be created."
+msgstr ""
+
+#: lib/sessions/event.rb:52
+msgid "The event could not be processed."
 msgstr ""
 
 #: lib/telegram_helper.rb:694

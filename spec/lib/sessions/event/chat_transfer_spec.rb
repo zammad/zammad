@@ -26,9 +26,7 @@ RSpec.describe Sessions::Event::ChatTransfer do
     Sessions.queue(client_id)
     described_class.new(
       payload:   { 'data' => { 'session_id' => chat_session.session_id }, 'session_id' => chat_session.id, 'chat_id' => chat_transfer_into.id },
-      user_id:   agent.id,
       client_id: client_id,
-      clients:   {},
       session:   { 'id' => agent.id },
     )
   end
@@ -43,9 +41,7 @@ RSpec.describe Sessions::Event::ChatTransfer do
       Sessions.queue(client_id)
       described_class.new(
         payload:   { 'data' => { 'session_id' => chat_session.session_id }, 'chat_id' => chat_transfer_into.id },
-        user_id:   customer.id,
         client_id: client_id,
-        clients:   {},
         session:   { 'id' => customer.id },
       )
     end

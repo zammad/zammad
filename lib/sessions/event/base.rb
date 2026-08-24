@@ -2,13 +2,30 @@
 
 class Sessions::Event::Base
 
-  def initialize(params)
-    params.each do |key, value|
-      instance_variable_set :"@#{key}", value
-    end
+  # Abstract event classes only provide shared behaviour for their subclasses
+  # and cannot be dispatched by their event name.
+  def self.abstract_event
+    @abstract_event = true
+  end
+
+  def self.abstract_event?
+    @abstract_event == true
+  end
+
+  abstract_event
+
+  # Only websocket connections provide a client entry, AJAX long polling does not.
+  def initialize(event: nil, payload: nil, session: nil, headers: nil, client_id: nil, client: nil, options: {})
+    @event     = event
+    @payload   = payload
+    @session   = session
+    @headers   = headers
+    @client_id = client_id
+    @client    = client
+    @options   = options
 
     @is_web_socket = false
-    return if !@clients[@client_id]
+    return if !@client
 
     @is_web_socket = true
 
@@ -37,21 +54,6 @@ class Sessions::Event::Base
   def self.inherited(subclass)
     super
     subclass.instance_variable_set(:@database_connection, @database_connection)
-  end
-
-  def websocket_send(recipient_client_id, data)
-    msg = if data.instance_of?(Array)
-            data.to_json
-          else
-            "[#{data.to_json}]"
-          end
-    if @clients[recipient_client_id]
-      log 'debug', "ws send #{msg}", recipient_client_id
-      @clients[recipient_client_id][:websocket].send(msg)
-    else
-      log 'debug', "fs send #{msg}", recipient_client_id
-      Sessions.send(recipient_client_id, data)
-    end
   end
 
   def valid_session?

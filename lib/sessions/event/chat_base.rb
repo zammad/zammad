@@ -2,6 +2,7 @@
 
 class Sessions::Event::ChatBase < Sessions::Event::Base
   database_connection_required
+  abstract_event
 
   def run
 

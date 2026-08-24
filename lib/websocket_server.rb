@@ -112,7 +112,7 @@ class WebsocketServer
         session:   @clients[client_id][:session],
         headers:   @clients[client_id][:headers],
         client_id: client_id,
-        clients:   @clients,
+        client:    @clients[client_id],
         options:   @options,
       )
       log 'info', "end: execute event '#{data['event']}'", client_id

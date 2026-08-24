@@ -26,9 +26,7 @@ RSpec.describe Sessions::Event::ChatAgentState do
           'active' => active
         },
       },
-      user_id:   user.id,
       client_id: client_id,
-      clients:   {},
       session:   {
         'id' => user.id
       },

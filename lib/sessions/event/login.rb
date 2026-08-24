@@ -33,8 +33,8 @@ To execute this manually, just paste the following into the browser console
     end
 
     # create new session
-    if @clients[@client_id]
-      @clients[@client_id][:session] = new_session_data
+    if @client
+      @client[:session] = new_session_data
       Sessions.create(@client_id, new_session_data, { type: 'websocket' })
     else
       Sessions.create(@client_id, new_session_data, { type: 'ajax' })
