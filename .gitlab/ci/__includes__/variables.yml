@@ -19,7 +19,10 @@ variables:
 
   # Settings for elasticsearch, if active
   ES_INDEX: 'estest.ci'
-  ELASTICSEARCH_TAG: 'stable'
+  # Pinned to the 7.x image on purpose: the ':stable' tag tracks the lowest version supported by
+  #   the current development release, which is Elasticsearch 8 since Zammad 7.2. This branch still
+  #   supports Elasticsearch 7.8 and later, so it has to keep testing against 7.x.
+  ELASTICSEARCH_TAG: '7'
 
   # Define image versions. Regular commits test against 'stable' (lowest supported version),
   #   scheduled pipelines against 'latest' (newest stable release of the services).
