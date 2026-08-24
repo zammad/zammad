@@ -19,7 +19,7 @@ class Overview extends App.ControllerSubContent
       searchQuery: @search_query
       searchShortcuts: [
         { query: 'active:true', label: __('Active only') }
-        { query: 'organization_shared:true', label: __('Shared with organizations') }
+        { query: 'organization_shared:true', label: __('Shared organizations') }
         { query: 'updated_at:>now-7d', label: __('Updated within last 7 days') }
       ]
       pageData:

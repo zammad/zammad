@@ -16184,12 +16184,9 @@ msgid "Shared organization"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/organization.coffee:21
+#: app/assets/javascripts/app/controllers/overview.coffee:22
 #: app/assets/javascripts/app/controllers/search.coffee:35
 msgid "Shared organizations"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/overview.coffee:22
-msgid "Shared with organizations"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:28
@@ -17807,7 +17804,7 @@ msgstr ""
 msgid "The entry could not be created."
 msgstr ""
 
-#: lib/sessions/event.rb:52
+#: lib/sessions/event.rb:61
 msgid "The event could not be processed."
 msgstr ""
 
