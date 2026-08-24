@@ -3,6 +3,10 @@
   image: node:24-alpine
   tags:
     - docker
+  # The job only needs the repository checkout. Without this, it implicitly
+  # depends on the artifacts of all earlier stages, so retrying it after those
+  # artifacts expired fails with `missing_dependency_failure`.
+  needs: []
   variables:
     DOCKER_HOST: unix:///var/run/docker.sock
     DEVCONTAINERS_CLI_VERSION: '0.87.0'
