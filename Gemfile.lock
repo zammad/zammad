@@ -289,7 +289,7 @@ GEM
       logger
     faraday-follow_redirects (0.5.0)
       faraday (>= 1, < 3)
-    faraday-mashify (1.0.2)
+    faraday-mashify (1.0.3)
       faraday (~> 2.0)
       hashie
     faraday-multipart (1.2.0)
@@ -308,7 +308,7 @@ GEM
       ostruct
     globalid (1.4.0)
       activesupport (>= 6.1)
-    google-protobuf (4.35.1)
+    google-protobuf (4.36.0)
       bigdecimal
       rake (~> 13.3)
     graphql (2.6.9)
@@ -633,7 +633,7 @@ GEM
     rb-fsevent (0.11.2)
     rb-inotify (0.11.1)
       ffi (~> 1.0)
-    rbs (4.1.3)
+    rbs (4.2.0)
       logger
       prism (>= 1.6.0)
       tsort
@@ -733,12 +733,12 @@ GEM
       rexml
     rubyntlm (0.6.5)
       base64
-    rubyzip (3.4.1)
+    rubyzip (3.5.0)
     safety_net_attestation (0.5.0)
       jwt (>= 2.0, < 4.0)
     samovar (2.5.1)
       console (~> 1.0)
-    sass-embedded (1.102.0)
+    sass-embedded (1.103.1)
       google-protobuf (~> 4.31)
       rake (>= 13)
     securerandom (0.4.1)
@@ -847,7 +847,7 @@ GEM
       activesupport
       faraday (~> 2.0)
       faraday-follow_redirects
-    webmock (3.26.2)
+    webmock (3.26.3)
       addressable (>= 2.8.0)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
