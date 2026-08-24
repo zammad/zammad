@@ -138,3 +138,7 @@ schema.graphql
 /.agents/skills
 /.claude/skills
 /.claude/settings.local.json
+
+# Codegraph
+/.codegraph/
+/.mcp.json

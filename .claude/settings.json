@@ -21,7 +21,8 @@
       "Bash(pnpm generate-graphql-api)",
       "Bash(pnpm generate-setting-types)",
       "mcp__github__issue_read",
-      "mcp__github__list_issue_comments"
+      "mcp__github__list_issue_comments",
+      "mcp__codegraph__*"
     ]
   },
   "hooks": {
@@ -41,6 +42,16 @@
             "type": "command",
             "command": ".claude/hooks/regenerate-after-edit.sh",
             "timeout": 120
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "pnpm exec codegraph prompt-hook"
           }
         ]
       }

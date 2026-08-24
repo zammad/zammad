@@ -13,6 +13,10 @@ pnpm config set store-dir "$(pwd)/.pnpm-store" --global
 
 bin/setup --skip-server
 
+echo "== Install CodeGraph index =="
+
+pnpm run codegraph:install
+
 echo "== Precompile Ruby cache =="
 
 bundle exec bootsnap precompile --gemfile app/ lib/
