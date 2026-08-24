@@ -9,7 +9,7 @@ module Gql::Mutations
 
     field :usage, Gql::Types::AI::Analytics::UsageType, description: 'AI analytics usage record.'
 
-    def resolve(ai_analytics_run:, input:)
+    def resolve(ai_analytics_run:, input: {})
       usage = Service::AI::Analytics::UpsertUsage
         .with_current_user(context.current_user)
         .execute(ai_analytics_run, **input)

@@ -1,6 +1,6 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-module Gql::Types::Concerns::IsModelObject # rubocop:disable GraphQL/ObjectDescription
+module Gql::Types::Concerns::IsModelObject
   extend ActiveSupport::Concern
 
   include Gql::Types::Concerns::HasDefaultModelFields

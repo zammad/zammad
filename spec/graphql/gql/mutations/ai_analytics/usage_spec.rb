@@ -54,6 +54,26 @@ RSpec.describe Gql::Mutations::AIAnalytics::Usage, :aggregate_failures, type: :g
         expect(gql.result.data['usage']['id']).to eq(gql.id(AI::Analytics::Usage.last))
       end
 
+      context 'without an input' do
+        let(:query) do
+          <<~MUTATION
+            mutation aiAnalyticsUsage($aiAnalyticsRunId: ID!) {
+              aiAnalyticsUsage(aiAnalyticsRunId: $aiAnalyticsRunId) {
+                usage {
+                  id
+                }
+              }
+            }
+          MUTATION
+        end
+
+        let(:variables) { { aiAnalyticsRunId: gql.id(ai_analytics_run) } }
+
+        it 'records usage' do
+          expect(gql.result.data['usage']['id']).to eq(gql.id(AI::Analytics::Usage.last))
+        end
+      end
+
       context 'with an existing usage' do
         let(:usage) { create(:ai_analytics_usage, ai_analytics_run:, user: agent) }
 

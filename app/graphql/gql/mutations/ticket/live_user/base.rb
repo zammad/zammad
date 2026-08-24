@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Mutations
-  class Ticket::LiveUser::Base < BaseMutation # rubocop:disable GraphQL/ObjectDescription
+  class Ticket::LiveUser::Base < BaseMutation
 
     argument :id, GraphQL::Types::ID, loads: Gql::Types::TicketType, as: :ticket, description: 'The ticket which is currently visited.'
     argument :app, Gql::Types::Enum::TaskbarAppType, description: 'Taskbar app to filter for.'

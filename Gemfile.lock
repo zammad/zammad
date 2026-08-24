@@ -696,9 +696,9 @@ GEM
       faker (>= 2.12.0)
       lint_roller (~> 1.1)
       rubocop (>= 1.72.1)
-    rubocop-graphql (1.7.0)
+    rubocop-graphql (1.8.0)
       lint_roller (~> 1.1)
-      rubocop (>= 1.72.1, < 2)
+      rubocop (>= 1.89, < 2)
     rubocop-inflector (1.0.0)
       activesupport
       rubocop

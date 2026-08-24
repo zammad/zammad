@@ -1,6 +1,6 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-class Gql::Context::CurrentUserAware < GraphQL::Query::Context # rubocop:disable GraphQL/ObjectDescription
+class Gql::Context::CurrentUserAware < GraphQL::Query::Context
 
   # Use this method to fetch the current user when it must be present - it throws an exception otherwise,
   #   making sure unauthenticated requests are handled properly.

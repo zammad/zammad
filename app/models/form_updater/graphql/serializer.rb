@@ -3,7 +3,7 @@
 # Serializes ActiveRecord objects to GraphQL-compatible hash structures.
 # Converts field names to camelCase, adds __typename and global ID,
 # and handles nested relations.
-class FormUpdater::Graphql::Serializer # rubocop:disable GraphQL/ObjectDescription
+class FormUpdater::Graphql::Serializer
   # Serializes an ActiveRecord object to a GraphQL-compatible hash.
   #
   # @param object [ActiveRecord::Base] The model instance to serialize

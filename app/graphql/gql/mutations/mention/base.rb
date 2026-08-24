@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Mutations
-  class Mention::Base < BaseMutation # rubocop:disable GraphQL/ObjectDescription
+  class Mention::Base < BaseMutation
     protected
 
     def fetch_object(object_id)

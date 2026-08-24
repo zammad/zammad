@@ -15,8 +15,5 @@ module Gql::Concerns::HandlesPasswordRevalidationToken
 
   end
 
-  # rubocop:disable GraphQL/ObjectDescription
   class InvalidTokenError < StandardError; end
-  # rubocop:enable GraphQL/ObjectDescription
-
 end
