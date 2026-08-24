@@ -50,7 +50,7 @@ defineOptions({
   },
 })
 
-const { breadcrumbItems } = useBreadcrumb(__('Token access'))
+const { breadcrumbItems } = useBreadcrumb()
 
 const newAccessTokenFlyout = useFlyout({
   name: 'new-access-token',

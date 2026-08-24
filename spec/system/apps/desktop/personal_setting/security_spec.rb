@@ -8,7 +8,7 @@ RSpec.describe 'Desktop > Personal Setting > Security', app: :desktop_view, auth
   def go_to_personal_setting
     visit '/'
     find("[aria-label=\"Avatar (#{agent.fullname})\"]").click
-    click_on 'Profile settings'
+    click_on 'Personal settings'
   end
 
   describe 'password change' do

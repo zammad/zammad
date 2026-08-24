@@ -107,7 +107,7 @@ const displayItems = computed(() =>
             'text-black dark:text-white': item.isActive,
             'break-all': displayItems.at(-1) === item,
           }"
-          aria-current="page"
+          :aria-current="displayItems.at(-1) === item ? 'page' : undefined"
         >
           {{ item.displayLabel }}
         </component>

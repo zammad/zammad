@@ -38,7 +38,7 @@ RSpec.describe 'Desktop > Ticket > Online Notifications', app: :desktop_view, au
 
       find("[aria-label='#{Capybara::Selector::CSS.escape(agent.fullname)}']").click
 
-      click_on 'Profile settings'
+      click_on 'Personal settings'
 
       click_on 'Notifications'
 

@@ -4,7 +4,7 @@ import type { AvatarMenuPlugin } from './index.ts'
 
 export default <AvatarMenuPlugin>{
   key: 'personal-setting',
-  label: __('Profile settings'),
+  label: __('Personal settings'),
   link: '/personal-setting',
   icon: 'user-settings',
   order: 400,

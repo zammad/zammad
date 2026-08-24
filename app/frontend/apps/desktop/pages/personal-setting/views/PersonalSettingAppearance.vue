@@ -51,7 +51,7 @@ const themeOptions = [
   },
 ]
 
-const { breadcrumbItems } = useBreadcrumb(__('Appearance'))
+const { breadcrumbItems } = useBreadcrumb()
 
 const { tabs, activeTab } = usePersonalSettingTabs()
 </script>

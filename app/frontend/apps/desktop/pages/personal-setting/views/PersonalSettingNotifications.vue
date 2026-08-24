@@ -32,7 +32,7 @@ import type { NotificationFormData } from '#desktop/pages/personal-setting/types
 
 import { usePersonalSettingTabs } from '../composables/usePersonalSettingTabs.ts'
 
-const { breadcrumbItems } = useBreadcrumb(__('Notifications'))
+const { breadcrumbItems } = useBreadcrumb()
 
 const user = toRef(useSessionStore(), 'user')
 

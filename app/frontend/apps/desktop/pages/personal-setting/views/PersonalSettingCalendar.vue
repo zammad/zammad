@@ -26,7 +26,7 @@ import { usePersonalSettingTabs } from '../composables/usePersonalSettingTabs.ts
 import { useUserCurrentCalendarSubscriptionUpdateMutation } from '../graphql/mutations/userCurrentCalendarSubscriptionUpdate.api.ts'
 import { useUserCurrentCalendarSubscriptionListQuery } from '../graphql/queries/userCurrentCalendarSubscriptionList.api.ts'
 
-const { breadcrumbItems } = useBreadcrumb(__('Calendar'))
+const { breadcrumbItems } = useBreadcrumb()
 
 const { form, isDirty, node, formReset, formSubmit, values } = useForm()
 

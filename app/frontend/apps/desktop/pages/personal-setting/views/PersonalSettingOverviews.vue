@@ -30,7 +30,7 @@ import { useUserCurrentOverviewResetOrderMutation } from '../graphql/mutations/u
 import { useUserCurrentOverviewUpdateOrderMutation } from '../graphql/mutations/userCurrentOverviewUpdateOrder.api.ts'
 import { useUserCurrentOverviewListQuery } from '../graphql/queries/userCurrentOverviewList.api.ts'
 
-const { breadcrumbItems } = useBreadcrumb(__('Overviews'))
+const { breadcrumbItems } = useBreadcrumb()
 
 const overviewListQuery = new QueryHandler(
   useUserCurrentOverviewListQuery({ ignoreUserConditions: true }),

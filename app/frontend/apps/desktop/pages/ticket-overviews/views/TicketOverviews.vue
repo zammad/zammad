@@ -92,7 +92,6 @@ const currentOverviewCount = computed(
 const breadcrumbItems = computed(() => [
   {
     label: __('Overviews'),
-    route: '/tickets/view',
   },
   {
     label: currentOverview.value?.name,

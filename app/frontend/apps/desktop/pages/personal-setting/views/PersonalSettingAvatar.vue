@@ -45,7 +45,7 @@ import type { ApolloCache, NormalizedCacheObject } from '@apollo/client/core'
 
 const user = toRef(useSessionStore(), 'user')
 
-const { breadcrumbItems } = useBreadcrumb(__('Avatar'))
+const { breadcrumbItems } = useBreadcrumb()
 
 const { notify } = useNotifications()
 

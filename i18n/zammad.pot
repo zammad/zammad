@@ -1904,7 +1904,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco:3
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/appearance.ts:9
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/appearance.ts:6
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:54
 #: db/seeds/permissions.rb:449
 msgid "Appearance"
 msgstr ""
@@ -2555,7 +2554,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco:3
 #: app/assets/javascripts/app/views/profile/imageCropper.jst.eco:3
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/avatar.ts:6
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:48
 #: app/frontend/apps/mobile/pages/account/routes.ts:28
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:120
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:167
@@ -2934,7 +2932,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco:3
 #: app/assets/javascripts/app/views/sla/index.jst.eco:55
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/calendar.ts:6
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:29
 #: db/seeds/permissions.rb:65
 msgid "Calendar"
 msgstr ""
@@ -4670,7 +4667,7 @@ msgid "Currently processing this ticket…"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:161
-#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:161
+#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:160
 msgid "Currently, no overviews are assigned to your roles. Please contact your administrator."
 msgstr ""
 
@@ -6079,7 +6076,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_profile/devices.coffee:3
 #: app/assets/javascripts/app/views/profile/devices.jst.eco:2
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/devices.ts:6
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:33
 #: db/seeds/permissions.rb:494
 msgid "Devices"
 msgstr ""
@@ -10005,7 +10001,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/profile/language.jst.eco:3
 #: app/assets/javascripts/app/views/ticket_zoom/knowledge_base_ai_draft_modal.jst.eco:86
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/locale.ts:6
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLocale.vue:13
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/KnowledgeBaseAnswerAttributes.vue:70
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:149
 #: db/seeds/permissions.rb:456
@@ -10339,7 +10334,7 @@ msgid "Linked Accounts"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/linkedAccounts.ts:8
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue:49
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue:196
 msgid "Linked accounts"
 msgstr ""
 
@@ -11631,7 +11626,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/clues/desktop_beta_switch_clues.coffee:5
 #: app/assets/javascripts/app/views/profile/newbetaui.jst.eco:3
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/newBetaUi.ts:8
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:21
 msgid "New BETA UI"
 msgstr ""
 
@@ -12121,7 +12115,7 @@ msgid "No organizations found"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:158
-#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:158
+#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:157
 msgid "No overviews"
 msgstr ""
 
@@ -12486,7 +12480,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/online_notification.jst.eco:3
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationPopover/NotificationHeader.vue:22
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/notifications.ts:6
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:35
 #: app/frontend/apps/mobile/pages/online-notification/routes.ts:8
 #: db/seeds/permissions.rb:515
 msgid "Notifications"
@@ -13083,7 +13076,6 @@ msgid "Out of all open tickets (company-wide), how many are assigned to you?"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/outOfOffice.ts:6
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue:122
 msgid "Out of office"
 msgstr ""
 
@@ -13173,7 +13165,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/overview.coffee:3
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee:258
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/ticketOverviews.ts:6
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:33
 #: app/frontend/apps/desktop/pages/ticket-overviews/routes.ts:17
 #: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:94
 #: db/seeds/permissions.rb:35
@@ -13321,7 +13312,6 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:48
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue:47
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/password.ts:8
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue:33
 #: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue:53
 #: db/seeds/object_manager_attributes.rb:1481
 #: db/seeds/permissions.rb:480
@@ -13504,6 +13494,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee:77
 msgid "Personal overview order was reset."
+msgstr ""
+
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/personal-settings.ts:7
+msgid "Personal settings"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/cti.coffee:322
@@ -13965,7 +13959,6 @@ msgid "Product Name"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/profile.coffee:24
-#: app/frontend/apps/desktop/pages/personal-setting/composables/useBreadcrumb.ts:7
 #: app/frontend/apps/desktop/pages/personal-setting/routes.ts:14
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/appearance.ts:8
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/avatar.ts:8
@@ -13979,7 +13972,6 @@ msgstr ""
 msgid "Profile language updated successfully."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/personal-settings.ts:7
 #: db/seeds/permissions.rb:442
 msgid "Profile settings"
 msgstr ""
@@ -20050,7 +20042,6 @@ msgid "Token Access"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/tokenAccess.ts:8
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:53
 msgid "Token access"
 msgstr ""
 
@@ -20302,7 +20293,6 @@ msgid "Two-factor Authentication Methods"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts:8
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:73
 msgid "Two-factor authentication"
 msgstr ""
 
@@ -21912,8 +21902,11 @@ msgstr ""
 msgid "You can switch between the following backends for new attachments even on a system that is already in production without any loss of data."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/navigation.coffee:185
 #: app/frontend/apps/desktop/components/BetaUi/composables/useBetaUi.ts:77
+msgid "You can switch between the old and the New BETA UI at any moment in the Personal settings > New BETA UI section."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_plugin/navigation.coffee:185
 msgid "You can switch between the old and the New BETA UI at any moment in the Profile settings > New BETA UI section."
 msgstr ""
 
@@ -23572,7 +23565,7 @@ msgstr ""
 msgid "run macro"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:122
+#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:121
 msgid "second level navigation sidebar"
 msgstr ""
 

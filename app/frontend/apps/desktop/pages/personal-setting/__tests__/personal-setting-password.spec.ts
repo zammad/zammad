@@ -1,5 +1,7 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
+import { queryByRole } from '@testing-library/vue'
+
 import type { ExtendedRenderResult } from '#tests/support/components/renderComponent.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
@@ -58,6 +60,18 @@ describe('password personal settings', () => {
     expect(view.getByText('Confirm new password')).toBeInTheDocument()
 
     expect(view.getByRole('button', { name: 'Change password' })).toBeInTheDocument()
+  })
+
+  it('shows the section of the page as non-interactive breadcrumb', async () => {
+    const view = await visitView('/personal-setting/password')
+
+    const breadcrumb = view.getByRole('navigation', { name: 'Breadcrumb navigation' })
+
+    expect(breadcrumb).toHaveTextContent('Security')
+    expect(view.getByRole('heading', { level: 1, name: 'Password' })).toBeInTheDocument()
+
+    // The section is contextual information only, so it must not be a link.
+    expect(queryByRole(breadcrumb, 'link', { name: 'Security' })).not.toBeInTheDocument()
   })
 
   it('shows an error message when e.g. current password is incorrect', async () => {

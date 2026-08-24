@@ -10,7 +10,7 @@ import { usePersonalSettingTabs } from '../composables/usePersonalSettingTabs.ts
 
 const { modelCurrentLocale, localeOptions, isSavingLocale, translation } = useLocaleUpdate()
 
-const { breadcrumbItems } = useBreadcrumb(__('Language'))
+const { breadcrumbItems } = useBreadcrumb()
 
 const { tabs, activeTab } = usePersonalSettingTabs()
 </script>

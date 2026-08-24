@@ -31,7 +31,7 @@ RSpec.describe 'Desktop > Personal Setting > Profile', app: :desktop_view, authe
 
   describe 'language selection' do
     it 'user can change language' do
-      click_on 'Profile settings'
+      click_on 'Personal settings'
       click_on 'Language'
 
       find('label', text: 'Your language').click
@@ -47,7 +47,7 @@ RSpec.describe 'Desktop > Personal Setting > Profile', app: :desktop_view, authe
     end
 
     it 'user can change overview order' do
-      click_on 'Profile settings'
+      click_on 'Personal settings'
 
       within '#personal-settings-sidebar' do
         click_on 'Overviews'
@@ -72,7 +72,7 @@ RSpec.describe 'Desktop > Personal Setting > Profile', app: :desktop_view, authe
     let(:agent) { create(:agent, firstname: 'Jane', lastname: 'Doe') }
 
     it 'user can upload avatar' do
-      click_on 'Profile settings'
+      click_on 'Personal settings'
       click_on 'Avatar'
 
       expect(page).to have_text('JD')
@@ -97,7 +97,7 @@ RSpec.describe 'Desktop > Personal Setting > Profile', app: :desktop_view, authe
       ticket.update_columns(escalation_at: 2.weeks.from_now)
       escalated_ticket.update_columns(escalation_at: 2.weeks.ago)
 
-      click_on 'Profile settings'
+      click_on 'Personal settings'
       click_on 'Calendar'
     end
 

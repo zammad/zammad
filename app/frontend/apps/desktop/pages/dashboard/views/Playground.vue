@@ -2054,7 +2054,7 @@ const { openFeedbackDialog } = useFeedbackDialog()
                 },
                 {
                   key: 'personal-setting',
-                  label: 'Profile settings',
+                  label: 'Personal settings',
                   link: '/personal-setting',
                   icon: 'user-settings',
                 },

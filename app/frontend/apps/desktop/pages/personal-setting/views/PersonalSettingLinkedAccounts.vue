@@ -46,7 +46,7 @@ defineOptions({
 })
 
 const { notify } = useNotifications()
-const { breadcrumbItems } = useBreadcrumb(__('Linked accounts'))
+const { breadcrumbItems } = useBreadcrumb()
 
 const user = toRef(useSessionStore(), 'user')
 

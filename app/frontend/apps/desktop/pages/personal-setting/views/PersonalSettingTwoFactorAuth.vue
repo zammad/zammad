@@ -70,7 +70,7 @@ watch(hasEnabledMethods, (newValue) => {
   )
 })
 
-const { breadcrumbItems } = useBreadcrumb(__('Two-factor authentication'))
+const { breadcrumbItems } = useBreadcrumb()
 
 const twoFactorConfigurationFlyout = useFlyout({
   name: 'two-factor-flyout',

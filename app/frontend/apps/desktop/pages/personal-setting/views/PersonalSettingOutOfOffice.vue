@@ -119,7 +119,7 @@ onChangedField('enabled', (newValue: FormFieldValue) => {
   Object.assign(formChangeFields, buildFormChangesHash(!!newValue))
 })
 
-const { breadcrumbItems } = useBreadcrumb(__('Out of office'))
+const { breadcrumbItems } = useBreadcrumb()
 
 const formDataToInput = (formData: FormSubmitData<OutOfOfficeFormData>): OutOfOfficeInput => {
   const replacementId = formData.replacement_id

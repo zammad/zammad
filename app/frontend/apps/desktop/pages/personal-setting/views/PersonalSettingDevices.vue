@@ -30,7 +30,7 @@ import { useUserCurrentDeviceDeleteMutation } from '../graphql/mutations/userCur
 import { useUserCurrentDeviceListQuery } from '../graphql/queries/userCurrentDeviceList.api.ts'
 import { UserCurrentDevicesUpdatesDocument } from '../graphql/subscriptions/userCurrentDevicesUpdates.api.ts'
 
-const { breadcrumbItems } = useBreadcrumb(__('Devices'))
+const { breadcrumbItems } = useBreadcrumb()
 
 const { notify } = useNotifications()
 

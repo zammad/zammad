@@ -136,7 +136,7 @@ describe('Left sidebar', () => {
           'User documentation',
           'Appearance',
           'Playground',
-          'Profile settings',
+          'Personal settings',
           'Sign out',
         ]
 
@@ -228,7 +228,7 @@ describe('Left sidebar', () => {
       await view.events.click(avatarButton)
 
       const personalSettingsLink = view.getByRole('link', {
-        name: 'Profile settings',
+        name: 'Personal settings',
       })
 
       await view.events.click(personalSettingsLink)

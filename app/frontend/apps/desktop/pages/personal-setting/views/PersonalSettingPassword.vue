@@ -86,7 +86,7 @@ const schema = [
   },
 ]
 
-const { breadcrumbItems } = useBreadcrumb(__('Password'))
+const { breadcrumbItems } = useBreadcrumb()
 
 const { notify } = useNotifications()
 
