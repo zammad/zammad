@@ -88,7 +88,11 @@ RSpec.describe 'Desktop > Ticket > Edit', app: :desktop_view, authenticated_as: 
       within '[data-test-id="ticket-detail-top-bar-full-details"]' do
         find('[aria-label="Edit ticket title"]').click
       end
-      wait.until { page.has_css?('button[aria-label="Save changes"]') }
+      # CommonInlineEdit focuses its input asynchronously (nextTick + queued
+      #   task), and page-level keystrokes go to whatever is focused - typing
+      #   after the save button renders but before the focus lands loses the
+      #   leading keys (produced titles like 'Test initialed' in CI).
+      expect(page).to have_css('[data-test-id="ticket-detail-top-bar-full-details"] input:focus')
       send_keys ' changed', :enter
       wait_for_gql('shared/entities/ticket/graphql/mutations/titleUpdate.graphql', number: 1)
       expect(page).to have_text('Ticket updated successfully')
