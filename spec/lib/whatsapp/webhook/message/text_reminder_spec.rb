@@ -52,7 +52,7 @@ RSpec.describe Whatsapp::Webhook::Message::Text, current_user_id: 1 do
     let(:timestamp) { Time.current.at_beginning_of_minute }
 
     before do
-      build_message.process
+      build_message(timestamp:).process
     end
 
     it 'schedules a reminder job for 23 hours in the future' do
