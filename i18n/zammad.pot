@@ -207,7 +207,7 @@ msgstr ""
 msgid "%s created role |%s|"
 msgstr ""
 
-#: app/assets/javascripts/app/models/ticket.coffee:109
+#: app/assets/javascripts/app/models/ticket.coffee:112
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:21
 msgid "%s created ticket |%s|"
 msgstr ""
@@ -414,7 +414,7 @@ msgstr ""
 msgid "%s updated role |%s|"
 msgstr ""
 
-#: app/assets/javascripts/app/models/ticket.coffee:111
+#: app/assets/javascripts/app/models/ticket.coffee:114
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:23
 msgid "%s updated ticket |%s|"
 msgstr ""
@@ -1721,7 +1721,7 @@ msgstr ""
 msgid "Another ticket was merged into ticket (#{ticket.title})\n\n<div>Hi #{recipient.firstname},</div>\n<br>\n<div>\nAnother ticket was merged into ticket (#{ticket.title}) by \"<b>#{current_user.longname}</b>\".\n</div>\n<br>\n<div>\n  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}\" target=\"zammad_app\">View this in #{config.product_name}</a>\n</div>\n"
 msgstr ""
 
-#: app/assets/javascripts/app/models/ticket.coffee:121
+#: app/assets/javascripts/app/models/ticket.coffee:124
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:33
 msgid "Another ticket was merged into ticket |%s|"
 msgstr ""
@@ -1855,13 +1855,13 @@ msgstr ""
 msgid "Approve"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:162
 #: app/assets/javascripts/app/controllers/report.coffee:221
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "Apr"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:162
 msgid "April"
 msgstr ""
 
@@ -2217,13 +2217,13 @@ msgstr ""
 msgid "Audio file"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
 #: app/assets/javascripts/app/controllers/report.coffee:221
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "Aug"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
 msgid "August"
 msgstr ""
 
@@ -4594,13 +4594,13 @@ msgstr ""
 msgid "Days"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
 #: app/assets/javascripts/app/controllers/report.coffee:221
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "Dec"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
 msgid "December"
 msgstr ""
 
@@ -7249,13 +7249,13 @@ msgstr ""
 msgid "Feature not configured, please contact your admin!"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:162
 #: app/assets/javascripts/app/controllers/report.coffee:221
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "Feb"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:162
 msgid "February"
 msgstr ""
 
@@ -7633,11 +7633,11 @@ msgstr ""
 msgid "Freshdesk"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:159
 msgid "Fri"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:159
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee:11
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee:19
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:56
@@ -9233,13 +9233,13 @@ msgstr ""
 msgid "Items per page"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:162
 #: app/assets/javascripts/app/controllers/report.coffee:221
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "Jan"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:162
 msgid "January"
 msgstr ""
 
@@ -9261,23 +9261,23 @@ msgstr ""
 msgid "Join feedback program"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
 #: app/assets/javascripts/app/controllers/report.coffee:221
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "Jul"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
 msgid "July"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:162
 #: app/assets/javascripts/app/controllers/report.coffee:221
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "Jun"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:162
 msgid "June"
 msgstr ""
 
@@ -10298,13 +10298,13 @@ msgstr ""
 msgid "Mapping"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:162
 #: app/assets/javascripts/app/controllers/report.coffee:221
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "Mar"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:162
 msgid "March"
 msgstr ""
 
@@ -10412,7 +10412,7 @@ msgstr ""
 msgid "Maximum number of ticket shown in overviews"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:162
 #: app/assets/javascripts/app/controllers/report.coffee:221
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "May"
@@ -10673,11 +10673,11 @@ msgstr ""
 msgid "Module"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:159
 msgid "Mon"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:159
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee:7
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee:15
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:44
@@ -11587,7 +11587,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee:9
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_unit.coffee:55
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:65
-#: app/graphql/gql/types/ticket_type.rb:109
+#: app/graphql/gql/types/ticket_type.rb:111
 #: db/seeds/settings.rb:1979
 msgid "None"
 msgstr ""
@@ -11793,13 +11793,13 @@ msgstr ""
 msgid "Notifications matrix"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
 #: app/assets/javascripts/app/controllers/report.coffee:221
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "Nov"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
 msgid "November"
 msgstr ""
 
@@ -11902,13 +11902,13 @@ msgstr ""
 msgid "Objects"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
 #: app/assets/javascripts/app/controllers/report.coffee:221
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "Oct"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
 msgid "October"
 msgstr ""
 
@@ -12673,7 +12673,7 @@ msgstr ""
 msgid "Pending Reached Tickets"
 msgstr ""
 
-#: app/assets/javascripts/app/models/ticket.coffee:113
+#: app/assets/javascripts/app/models/ticket.coffee:116
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:25
 msgid "Pending reminder reached for ticket |%s|"
 msgstr ""
@@ -14219,11 +14219,11 @@ msgstr ""
 msgid "STARTTLS"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:159
 msgid "Sat"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:159
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee:12
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee:20
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:59
@@ -14958,7 +14958,7 @@ msgstr ""
 msgid "Sent successfully!"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
 #: app/assets/javascripts/app/controllers/report.coffee:221
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "Sep"
@@ -14968,7 +14968,7 @@ msgstr ""
 msgid "Separate multiple values by ;"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
 msgid "September"
 msgstr ""
 
@@ -15996,11 +15996,11 @@ msgstr ""
 msgid "Summer holiday"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:159
 msgid "Sun"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:159
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee:13
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee:21
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:62
@@ -17026,7 +17026,7 @@ msgstr ""
 msgid "The product version could not be fetched."
 msgstr ""
 
-#: app/models/webhook.rb:77
+#: app/models/webhook.rb:80
 msgid "The provided HTTP method is invalid."
 msgstr ""
 
@@ -17050,27 +17050,27 @@ msgstr ""
 msgid "The provided email account is already in use."
 msgstr ""
 
-#: app/models/webhook.rb:57
+#: app/models/webhook.rb:60
 msgid "The provided endpoint is invalid, it could not be resolved to a safe IP address."
 msgstr ""
 
-#: app/models/webhook.rb:55
+#: app/models/webhook.rb:58
 msgid "The provided endpoint is invalid, it points to a link-local IP address."
 msgstr ""
 
-#: app/models/webhook.rb:53
+#: app/models/webhook.rb:56
 msgid "The provided endpoint is invalid, it points to a loopback IP address."
 msgstr ""
 
-#: app/models/webhook.rb:47
+#: app/models/webhook.rb:50
 msgid "The provided endpoint is invalid, no hostname was specified."
 msgstr ""
 
-#: app/models/webhook.rb:46
+#: app/models/webhook.rb:49
 msgid "The provided endpoint is invalid, no http or https protocol was specified."
 msgstr ""
 
-#: app/models/webhook.rb:51
+#: app/models/webhook.rb:54
 msgid "The provided endpoint is invalid."
 msgstr ""
 
@@ -17082,7 +17082,7 @@ msgstr ""
 msgid "The provided password is incorrect."
 msgstr ""
 
-#: app/models/webhook.rb:66
+#: app/models/webhook.rb:69
 msgid "The provided payload is invalid. Please check your syntax."
 msgstr ""
 
@@ -18135,11 +18135,11 @@ msgstr ""
 msgid "This will adjust the corresponding setting of the destination group within the group management. A group's email address determines which address should be used for outgoing mails, e.g. when an agent is composing an email or a trigger is sending an auto-reply."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:159
 msgid "Thu"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:159
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee:10
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee:18
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:53
@@ -18495,17 +18495,17 @@ msgstr ""
 msgid "Ticket with specified ID was not found. Try checking the URL for errors."
 msgstr ""
 
-#: app/assets/javascripts/app/models/ticket.coffee:115
+#: app/assets/javascripts/app/models/ticket.coffee:118
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:27
 msgid "Ticket |%s| has escalated!"
 msgstr ""
 
-#: app/assets/javascripts/app/models/ticket.coffee:119
+#: app/assets/javascripts/app/models/ticket.coffee:122
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:31
 msgid "Ticket |%s| was merged into another ticket"
 msgstr ""
 
-#: app/assets/javascripts/app/models/ticket.coffee:117
+#: app/assets/javascripts/app/models/ticket.coffee:120
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:29
 msgid "Ticket |%s| will escalate soon!"
 msgstr ""
@@ -19005,11 +19005,11 @@ msgstr ""
 msgid "Trying to reconnect…"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:159
 msgid "Tue"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:159
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee:8
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee:16
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:47
@@ -20130,11 +20130,11 @@ msgstr ""
 msgid "Website"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:159
 msgid "Wed"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:159
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee:9
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee:17
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:50
@@ -20868,6 +20868,7 @@ msgid "Zammad Foundation"
 msgstr ""
 
 #: db/seeds/settings.rb:114
+#: lib/auth/two_factor/authentication_method/authenticator_app.rb:38
 msgid "Zammad Helpdesk"
 msgstr ""
 
@@ -21086,7 +21087,7 @@ msgstr ""
 msgid "children"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:164
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:166
 msgid "clear"
 msgstr ""
 
@@ -21353,7 +21354,7 @@ msgstr ""
 msgid "ends with one of"
 msgstr ""
 
-#: app/assets/javascripts/app/models/ticket.coffee:84
+#: app/assets/javascripts/app/models/ticket.coffee:85
 msgid "escalated"
 msgstr ""
 
@@ -22065,7 +22066,7 @@ msgstr ""
 msgid "quarter-hour(s)"
 msgstr ""
 
-#: app/assets/javascripts/app/models/ticket.coffee:82
+#: app/assets/javascripts/app/models/ticket.coffee:87
 msgid "reached"
 msgstr ""
 
@@ -22334,7 +22335,7 @@ msgid "to go to the homepage."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
-#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
+#: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:165
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:65
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 #: app/assets/javascripts/app/controllers/chat.coffee:757
