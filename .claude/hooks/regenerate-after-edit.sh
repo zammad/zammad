@@ -2,6 +2,15 @@
 # Copyright (C) 2012-2025 Zammad Foundation, https://zammad-foundation.org/
 # Hook: regenerate generated files when their sources change.
 
+# Claude Code invokes this script outside of an interactive shell, so rv's
+#   PROMPT_COMMAND-based version switching never runs; re-resolve it here.
+#   Needed before the pnpm generate-* calls below, which shell out to
+#   `bundle exec rails generate ...` and inherit this process's env.
+if command -v rv >/dev/null 2>&1; then
+  RV_ENV=$(rv shell env bash) || { echo "rv shell env bash failed to resolve the Ruby environment" >&2; exit 2; }
+  eval "$RV_ENV"
+fi
+
 CHANGED_FILES=$(git diff --name-only --diff-filter=ACMR HEAD 2>/dev/null; git ls-files --others --exclude-standard 2>/dev/null)
 
 NEEDS_GRAPHQL=false

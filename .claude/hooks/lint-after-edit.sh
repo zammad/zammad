@@ -4,6 +4,13 @@
 # Hook: lint all changed/new files with the appropriate tools.
 # Collects modified and untracked files from git, then runs the matching linters.
 
+# Claude Code invokes this script outside of an interactive shell, so rv's
+#   PROMPT_COMMAND-based version switching never runs; re-resolve it here.
+if command -v rv >/dev/null 2>&1; then
+  RV_ENV=$(rv shell env bash) || { echo "rv shell env bash failed to resolve the Ruby environment" >&2; exit 2; }
+  eval "$RV_ENV"
+fi
+
 RUBY_FILES=()
 FRONTEND_TS_FILES=()
 FRONTEND_JS_FILES=()
