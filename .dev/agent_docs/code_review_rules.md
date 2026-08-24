@@ -147,6 +147,33 @@ Where the fix is mechanical, offer it as a suggestion the author can apply in on
 - Only when the fix is genuinely mechanical. If it needs a judgement call, describe it instead — a
   wrong one-click fix is worse than prose.
 
+## Step 5 — Report what you could not judge
+
+Step 2 is precision-first on purpose: no speculation, nothing resting on unstated assumptions. That
+makes "I cannot tell from the code" an honest and expected outcome — and since it produces no
+finding, it is lost unless it has somewhere to go. It is often the most useful thing a reviewer
+knows.
+
+Report it separately from the findings: **at most three items**, each naming a place and the
+question a human should answer there. Draw only on what the review actually produced:
+
+- An `Unverifiable` acceptance criterion.
+- A specific uncertainty with a named file — not "this might break something elsewhere".
+- Something the change cannot show on its own: migration timing on a large installation, a rendered
+  result, `i18n/*.po` content, binary assets.
+
+Two rules keep it honest:
+
+- **Never park a finding here.** If it meets the bar in Step 2 it is a finding, with an anchor and a
+  severity. Moving a real problem into this list hides it from whoever has to fix it.
+- **No items is the normal case.** Then write nothing — not a reassurance that there is nothing.
+  An open-ended list of things to double-check is a "check everything" disclaimer, and it trains
+  people to skim, for exactly the reason Step 2 exists.
+
+Where this surfaces is the caller's business: a reviewer working in a terminal can print it for the
+person running the review, while one posting to a merge request may deliberately keep it out of the
+thread. It is guidance for the human reviewing, not a comment for the author.
+
 ---
 
 ## What to check
@@ -207,6 +234,46 @@ produces a finding.
 - If the linked issue has **no** acceptance criteria, say so in one line and move on. Do not invent
   criteria from the issue's prose.
 - A change with no findings but an unaddressed or unverifiable criterion is **not** clean.
+
+#### Use-case cross-check
+
+Criteria and use cases are written at different moments and drift apart. A criteria list can pass
+completely while the story it was meant to describe is only half covered — so after the criteria
+pass, map the issue's use cases / user stories onto its criteria.
+
+Like the criteria pass, this is a **closed mapping between two lists the issue already contains**,
+not a fresh search for behaviour the issue never asked for. Never invent a use case from prose.
+
+Give each use case exactly one verdict:
+
+| Verdict           | Meaning                                                                |
+| ----------------- | ---------------------------------------------------------------------- |
+| Covered           | a criterion asserts its observable outcome — cite the criterion numbers |
+| Partially covered | an edge case, error path or role variant it describes has no criterion  |
+| Not covered       | no criterion touches it                                                |
+| Conflicts         | a criterion asserts something the use case contradicts                 |
+
+What a gap means depends on the change, and the distinction decides who has work to do:
+
+- **Not covered, but the change implements it** — not a finding. The change is fine; the issue's
+  criteria list is incomplete. Report it as that, and never attach it to the author's lines.
+- **Not covered, and the change does not implement it** — an `[issue]` finding. This is the case
+  the cross-check exists for: it is invisible to the criteria pass, because there is no criterion
+  to fail.
+- **Partially covered** — apply the same two cases to the uncovered aspect alone: an `[issue]`
+  finding when the change does not implement it, a gap in the criteria list when it does. Do not
+  re-litigate the part the criteria already cover.
+- **Conflicts** — stop and ask. A self-contradictory issue is not resolved by quietly picking
+  whichever reading matches the change.
+
+If the issue lists use cases but **no** acceptance criteria, there is no second list to map onto, so
+the verdicts above do not apply — every one of them is defined against a criterion. Run the
+acceptance-criteria pass over the use cases instead, exactly as written: each use case verbatim, one
+verdict each (Met / Not met / Unverifiable), evidence as `file:line`, table every time. Label the
+table as use cases, not criteria, so nobody reads it as something the issue asserted. Use cases are
+descriptive rather than assertive, so a verdict against one is weaker evidence than a verdict
+against a criterion — but dropping them entirely is worse. A contradiction _between_ two use cases
+is still a stop-and-ask.
 
 ### UI principles — `[ui]`
 
