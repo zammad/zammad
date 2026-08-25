@@ -88,7 +88,7 @@ class TicketArticlesController < ApplicationController
     end
 
     if response_full?
-      full = Ticket::Article.full(params[:id])
+      full = Ticket::Article.full(article.id)
       render json: full, status: :created
       return
     end
