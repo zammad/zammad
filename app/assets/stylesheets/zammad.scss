@@ -3050,6 +3050,11 @@ input.has-error {
         fill: currentColor;
       }
     }
+
+    li:hover > .searchfield-shortcut-docs,
+    li > .searchfield-shortcut-docs:hover {
+      color: inherit;
+    }
   }
 
   &.has-shortcut .empty-search {
