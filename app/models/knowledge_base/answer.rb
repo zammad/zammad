@@ -4,6 +4,7 @@ class KnowledgeBase::Answer < ApplicationModel
   include HasTranslations
   include HasAgentAllowedParams
   include HasTags
+  include HasTaskbars
   include CanBePublished
   include ChecksKbClientNotification
   include ChecksKbClientVisibility
@@ -14,6 +15,11 @@ class KnowledgeBase::Answer < ApplicationModel
 
   AGENT_ALLOWED_ATTRIBUTES       = %i[category_id promoted internal_note].freeze
   AGENT_ALLOWED_NESTED_RELATIONS = %i[translations].freeze
+
+  # The create view of the new interface lives in its own taskbar tab, holding the draft until it
+  #   is saved. There is no record behind such a tab, so its key carries a UUID instead of an id
+  #   (see Gql::Types::User::TaskbarItemType#object_entity!).
+  taskbar_entities 'KnowledgeBaseAnswerCreate'
 
   belongs_to :category, class_name: 'KnowledgeBase::Category', inverse_of: :answers, touch: true
 

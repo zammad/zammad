@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe FormUpdater::Relation::KnowledgeBaseCategoryParent do
+RSpec.describe FormUpdater::Relation::KnowledgeBaseEditorCategory do
   subject(:relation) do
     described_class.new(
       context:           {},

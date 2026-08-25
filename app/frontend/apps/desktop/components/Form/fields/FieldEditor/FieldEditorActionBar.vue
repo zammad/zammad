@@ -122,7 +122,7 @@ watch(
 
 <template>
   <div
-    class="sticky top-(--top-header-height) z-30 -order-1 border-x border-t border-blue-200 bg-neutral-50 ltr:left-0 rtl:right-0 dark:border-gray-700 dark:bg-gray-500"
+    class="sticky top-(--top-header-height) z-30 -order-1 border-x border-t border-blue-200 bg-neutral-50 ltr:left-0 rtl:right-0 dark:border-gray-700 dark:bg-gray-500 formkit-alternative-background:bg-blue-200 dark:formkit-alternative-background:bg-gray-400"
   >
     <ActionToolbar
       v-show="!hideActionBarLocally"

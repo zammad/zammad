@@ -30,7 +30,7 @@ const link = computed(() =>
       :is="link ? 'CommonLink' : 'div'"
       :link="link"
       :internal="link ? true : undefined"
-      class="flex w-full items-center gap-3 rounded-xl! bg-blue-200 px-3 py-2.5 hover:outline-1 hover:outline-blue-600 dark:bg-gray-500 hover:dark:outline-blue-900"
+      class="flex h-12.5 w-full items-center gap-3 rounded-xl! bg-blue-200 px-3 hover:outline-1 hover:outline-blue-600 dark:bg-gray-500 hover:dark:outline-blue-900"
     >
       <KnowledgeBaseAnswerIcon :visibility="visibility" size="small" />
       <CommonLabel size="medium" class="line-clamp-1! grow text-black! dark:text-white!">

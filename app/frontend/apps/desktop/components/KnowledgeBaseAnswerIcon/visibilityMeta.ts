@@ -6,11 +6,13 @@ import { EnumKnowledgeBaseVisibility } from '#shared/graphql/types.ts'
 //   label together here means the knowledge base answer list, the AI suggestions in the ticket
 //   sidebar and the answer header badge stay in sync, and `satisfies` makes the compiler flag a
 //   state that is missing an entry.
+// Should be kept in sync with `knowledgeBaseVisibilityMeta` in useKnowledgeBaseVisibility.ts,
+//   which is used to compute the category icon and color for a given state.
 export const visibilityMeta = {
   [EnumKnowledgeBaseVisibility.Draft]: {
     icon: 'kb-draft',
     label: __('Draft'),
-    class: 'text-neutral-500! dark:text-stone-200!',
+    class: 'text-stone-200! dark:text-neutral-500!',
   },
   [EnumKnowledgeBaseVisibility.Internal]: {
     icon: 'kb-internal',
@@ -25,7 +27,7 @@ export const visibilityMeta = {
   [EnumKnowledgeBaseVisibility.Archived]: {
     icon: 'kb-archived',
     label: __('Archived'),
-    class: 'text-stone-400!',
+    class: 'text-neutral-400! dark:text-neutral-600!',
   },
 } as const satisfies Record<
   EnumKnowledgeBaseVisibility,

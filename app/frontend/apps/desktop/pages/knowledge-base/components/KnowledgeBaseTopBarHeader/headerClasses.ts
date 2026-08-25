@@ -29,10 +29,3 @@ export const HEADER_CONTENT_OUTER_CLASSES: Record<HeaderContentWidth, string> = 
   wide: '',
   reading: '-mx-5.5',
 }
-
-// The header's first row is pinned to the stepper/toolbar row's fixed height,
-//   with the remaining row(s) sized to content. Shared so TopBarHeaderFull.vue
-//   and TopBarHeaderFullSkeleton.vue can't drift apart and produce mismatched
-//   heights (TopBarHeaderShell.vue measures the rendered height off of this).
-export const HEADER_ROWS_WITH_DETAILS_CLASS = 'grid-rows-[1.5rem_auto_auto]'
-export const HEADER_ROWS_CLASS = 'grid-rows-[1.5rem_auto]'

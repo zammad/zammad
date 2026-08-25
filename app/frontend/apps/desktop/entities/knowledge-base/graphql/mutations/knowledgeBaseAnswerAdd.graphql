@@ -1,0 +1,18 @@
+mutation knowledgeBaseAnswerAdd($input: KnowledgeBaseCreateAnswerInput!, $locale: String!) {
+  knowledgeBaseAnswerAdd(input: $input, locale: $locale) {
+    # The field set of the answer list the created answer joins, plus the id the view redirects
+    #   to - so it normalizes into the cache as a complete list entry instead of a partial one.
+    #   The detail view runs its own query for the rest, and the route derives the internal id
+    #   from this one (knowledgeBaseAnswerRoute).
+    answer {
+      id
+      title
+      visibility
+      translationMissing
+      position
+    }
+    errors {
+      ...errors
+    }
+  }
+}

@@ -76,6 +76,7 @@ export type SearchTaskbarItemStateUpdatesSubscription = { userCurrentTaskbarItem
         | { __typename: 'Organization' }
         | { __typename: 'Ticket' }
         | { __typename: 'User' }
+        | { __typename: 'UserTaskbarItemEntityKnowledgeBaseAnswerCreate' }
         | { __typename: 'UserTaskbarItemEntitySearch', query: string | null | undefined, model: string | null | undefined, filters: string | null | undefined, filterCount: number | null | undefined }
         | { __typename: 'UserTaskbarItemEntityTicketCreate' }
        | null | undefined } | null | undefined } };
@@ -160,11 +161,19 @@ export type KnowledgeBaseAnswerAttributesFragment = { __typename: 'KnowledgeBase
 
 export type KnowledgeBaseAnswerTranslationFragment = { __typename: 'KnowledgeBaseAnswerTranslation', id: string, title: string, visibility: Types.EnumKnowledgeBaseVisibility, categoryTreeTranslation: Array<{ __typename: 'KnowledgeBaseCategoryTranslation', id: string, title: string }>, content: { __typename: 'KnowledgeBaseAnswerTranslationContent', bodyExcerpt: string | null | undefined }, answer: { __typename: 'KnowledgeBaseAnswer', id: string, archivedAt: string | null | undefined, publishedAt: string | null | undefined, internalAt: string | null | undefined, tags: Array<string> | null | undefined, category: { __typename: 'KnowledgeBaseCategory', id: string, title: string | null | undefined } }, kbLocale: { __typename: 'KnowledgeBaseLocale', systemLocale: { __typename: 'Locale', locale: string, name: string } } };
 
-export type KnowledgeBaseCategoryPolicyFragment = { __typename: 'KnowledgeBaseCategory', policy: { __typename: 'PolicyKnowledgeBaseCategory', update: boolean, destroy: boolean, createSubcategory: boolean } };
+export type KnowledgeBaseCategoryPolicyFragment = { __typename: 'KnowledgeBaseCategory', policy: { __typename: 'PolicyKnowledgeBaseCategory', update: boolean, destroy: boolean, createSubcategory: boolean, createAnswer: boolean } };
 
 export type KnowledgeBaseCategoryPreInfoFragment = { __typename: 'KnowledgeBaseCategory', directAnswerCount: number, directSubcategoryCount: number, breadcrumb: Array<{ __typename: 'KnowledgeBaseCategory', id: string, title: string | null | undefined, categoryIcon: string, iconSet: 'anticon' | 'FontAwesome' | 'material' | 'ionicons' | 'Simple-Line-Icons', visibility: Types.EnumKnowledgeBaseVisibility }> };
 
 export type KnowledgeBaseFeedAttributesFragment = { __typename: 'KnowledgeBaseFeed', knowledgeBasePath: string, categoryPath: string | null | undefined };
+
+export type KnowledgeBaseAnswerAddMutationVariables = Exact<{
+  input: Types.KnowledgeBaseCreateAnswerInput;
+  locale: string;
+}>;
+
+
+export type KnowledgeBaseAnswerAddMutation = { knowledgeBaseAnswerAdd: { __typename: 'KnowledgeBaseAnswerAddPayload', answer: { __typename: 'KnowledgeBaseAnswer', id: string, title: string | null | undefined, visibility: Types.EnumKnowledgeBaseVisibility, translationMissing: boolean, position: number } | null | undefined, errors: Array<{ __typename: 'UserError', message: string, messagePlaceholder: Array<string> | null | undefined, field: string | null | undefined, exception: Types.EnumUserErrorException | null | undefined }> | null | undefined } | null | undefined };
 
 export type KnowledgeBaseCategoryAddMutationVariables = Exact<{
   input: Types.KnowledgeBaseCategoryInput;
@@ -172,7 +181,7 @@ export type KnowledgeBaseCategoryAddMutationVariables = Exact<{
 }>;
 
 
-export type KnowledgeBaseCategoryAddMutation = { knowledgeBaseCategoryAdd: { __typename: 'KnowledgeBaseCategoryAddPayload', category: { __typename: 'KnowledgeBaseCategory', id: string, title: string | null | undefined, categoryIcon: string, visibility: Types.EnumKnowledgeBaseVisibility, translationMissing: boolean, answerCount: number, subcategoryCount: number, position: number, isDeletable: boolean, directAnswerCount: number, directSubcategoryCount: number, policy: { __typename: 'PolicyKnowledgeBaseCategory', update: boolean, destroy: boolean, createSubcategory: boolean }, breadcrumb: Array<{ __typename: 'KnowledgeBaseCategory', id: string, title: string | null | undefined, categoryIcon: string, iconSet: 'anticon' | 'FontAwesome' | 'material' | 'ionicons' | 'Simple-Line-Icons', visibility: Types.EnumKnowledgeBaseVisibility }> } | null | undefined, errors: Array<{ __typename: 'UserError', message: string, messagePlaceholder: Array<string> | null | undefined, field: string | null | undefined, exception: Types.EnumUserErrorException | null | undefined }> | null | undefined } | null | undefined };
+export type KnowledgeBaseCategoryAddMutation = { knowledgeBaseCategoryAdd: { __typename: 'KnowledgeBaseCategoryAddPayload', category: { __typename: 'KnowledgeBaseCategory', id: string, title: string | null | undefined, categoryIcon: string, visibility: Types.EnumKnowledgeBaseVisibility, translationMissing: boolean, answerCount: number, subcategoryCount: number, position: number, isDeletable: boolean, directAnswerCount: number, directSubcategoryCount: number, policy: { __typename: 'PolicyKnowledgeBaseCategory', update: boolean, destroy: boolean, createSubcategory: boolean, createAnswer: boolean }, breadcrumb: Array<{ __typename: 'KnowledgeBaseCategory', id: string, title: string | null | undefined, categoryIcon: string, iconSet: 'anticon' | 'FontAwesome' | 'material' | 'ionicons' | 'Simple-Line-Icons', visibility: Types.EnumKnowledgeBaseVisibility }> } | null | undefined, errors: Array<{ __typename: 'UserError', message: string, messagePlaceholder: Array<string> | null | undefined, field: string | null | undefined, exception: Types.EnumUserErrorException | null | undefined }> | null | undefined } | null | undefined };
 
 export type KnowledgeBaseCategoryDeleteMutationVariables = Exact<{
   categoryId: string | number;
@@ -188,7 +197,7 @@ export type KnowledgeBaseCategoryUpdateMutationVariables = Exact<{
 }>;
 
 
-export type KnowledgeBaseCategoryUpdateMutation = { knowledgeBaseCategoryUpdate: { __typename: 'KnowledgeBaseCategoryUpdatePayload', category: { __typename: 'KnowledgeBaseCategory', id: string, title: string | null | undefined, categoryIcon: string, visibility: Types.EnumKnowledgeBaseVisibility, translationMissing: boolean, answerCount: number, subcategoryCount: number, position: number, isDeletable: boolean, directAnswerCount: number, directSubcategoryCount: number, policy: { __typename: 'PolicyKnowledgeBaseCategory', update: boolean, destroy: boolean, createSubcategory: boolean }, breadcrumb: Array<{ __typename: 'KnowledgeBaseCategory', id: string, title: string | null | undefined, categoryIcon: string, iconSet: 'anticon' | 'FontAwesome' | 'material' | 'ionicons' | 'Simple-Line-Icons', visibility: Types.EnumKnowledgeBaseVisibility }> } | null | undefined, errors: Array<{ __typename: 'UserError', message: string, messagePlaceholder: Array<string> | null | undefined, field: string | null | undefined, exception: Types.EnumUserErrorException | null | undefined }> | null | undefined } | null | undefined };
+export type KnowledgeBaseCategoryUpdateMutation = { knowledgeBaseCategoryUpdate: { __typename: 'KnowledgeBaseCategoryUpdatePayload', category: { __typename: 'KnowledgeBaseCategory', id: string, title: string | null | undefined, categoryIcon: string, visibility: Types.EnumKnowledgeBaseVisibility, translationMissing: boolean, answerCount: number, subcategoryCount: number, position: number, isDeletable: boolean, directAnswerCount: number, directSubcategoryCount: number, policy: { __typename: 'PolicyKnowledgeBaseCategory', update: boolean, destroy: boolean, createSubcategory: boolean, createAnswer: boolean }, breadcrumb: Array<{ __typename: 'KnowledgeBaseCategory', id: string, title: string | null | undefined, categoryIcon: string, iconSet: 'anticon' | 'FontAwesome' | 'material' | 'ionicons' | 'Simple-Line-Icons', visibility: Types.EnumKnowledgeBaseVisibility }> } | null | undefined, errors: Array<{ __typename: 'UserError', message: string, messagePlaceholder: Array<string> | null | undefined, field: string | null | undefined, exception: Types.EnumUserErrorException | null | undefined }> | null | undefined } | null | undefined };
 
 export type KnowledgeBaseFeedTokenRenewMutationVariables = Exact<{
   categoryId?: string | number | null | undefined;
@@ -251,7 +260,7 @@ export type KnowledgeBaseCategorySubcategoriesQueryVariables = Exact<{
 }>;
 
 
-export type KnowledgeBaseCategorySubcategoriesQuery = { knowledgeBaseCategorySubcategories: { __typename: 'KnowledgeBaseCategorySubcategoriesPayload', category: { __typename: 'KnowledgeBaseCategory', id: string, isVisiblePublicly: boolean, translationMissing: boolean, isDeletable: boolean, directAnswerCount: number, directSubcategoryCount: number, policy: { __typename: 'PolicyKnowledgeBaseCategory', update: boolean, destroy: boolean, createSubcategory: boolean }, breadcrumb: Array<{ __typename: 'KnowledgeBaseCategory', id: string, title: string | null | undefined, categoryIcon: string, iconSet: 'anticon' | 'FontAwesome' | 'material' | 'ionicons' | 'Simple-Line-Icons', visibility: Types.EnumKnowledgeBaseVisibility }> } | null | undefined, subcategories: Array<{ __typename: 'KnowledgeBaseCategory', id: string, title: string | null | undefined, categoryIcon: string, visibility: Types.EnumKnowledgeBaseVisibility, translationMissing: boolean, answerCount: number, subcategoryCount: number, position: number, isDeletable: boolean, directAnswerCount: number, directSubcategoryCount: number, policy: { __typename: 'PolicyKnowledgeBaseCategory', update: boolean, destroy: boolean, createSubcategory: boolean }, breadcrumb: Array<{ __typename: 'KnowledgeBaseCategory', id: string, title: string | null | undefined, categoryIcon: string, iconSet: 'anticon' | 'FontAwesome' | 'material' | 'ionicons' | 'Simple-Line-Icons', visibility: Types.EnumKnowledgeBaseVisibility }> }> } | null | undefined };
+export type KnowledgeBaseCategorySubcategoriesQuery = { knowledgeBaseCategorySubcategories: { __typename: 'KnowledgeBaseCategorySubcategoriesPayload', category: { __typename: 'KnowledgeBaseCategory', id: string, isVisiblePublicly: boolean, translationMissing: boolean, isDeletable: boolean, directAnswerCount: number, directSubcategoryCount: number, policy: { __typename: 'PolicyKnowledgeBaseCategory', update: boolean, destroy: boolean, createSubcategory: boolean, createAnswer: boolean }, breadcrumb: Array<{ __typename: 'KnowledgeBaseCategory', id: string, title: string | null | undefined, categoryIcon: string, iconSet: 'anticon' | 'FontAwesome' | 'material' | 'ionicons' | 'Simple-Line-Icons', visibility: Types.EnumKnowledgeBaseVisibility }> } | null | undefined, subcategories: Array<{ __typename: 'KnowledgeBaseCategory', id: string, title: string | null | undefined, categoryIcon: string, visibility: Types.EnumKnowledgeBaseVisibility, translationMissing: boolean, answerCount: number, subcategoryCount: number, position: number, isDeletable: boolean, directAnswerCount: number, directSubcategoryCount: number, policy: { __typename: 'PolicyKnowledgeBaseCategory', update: boolean, destroy: boolean, createSubcategory: boolean, createAnswer: boolean }, breadcrumb: Array<{ __typename: 'KnowledgeBaseCategory', id: string, title: string | null | undefined, categoryIcon: string, iconSet: 'anticon' | 'FontAwesome' | 'material' | 'ionicons' | 'Simple-Line-Icons', visibility: Types.EnumKnowledgeBaseVisibility }> }> } | null | undefined };
 
 export type KnowledgeBaseFeedQueryVariables = Exact<{
   categoryId?: string | number | null | undefined;
@@ -473,6 +482,7 @@ export type UserCurrentTaskbarItemAttributesFragment = { __typename: 'UserTaskba
     | { __typename: 'Organization', id: string, internalId: number, name: string | null | undefined, active: boolean | null | undefined }
     | { __typename: 'Ticket', id: string, internalId: number, number: string, title: string, stateColorCode: Types.EnumTicketStateColorCode, updatedAt: string, state: { __typename: 'TicketState', id: string, name: string } }
     | { __typename: 'User', id: string, internalId: number, fullname: string | null | undefined, active: boolean | null | undefined }
+    | { __typename: 'UserTaskbarItemEntityKnowledgeBaseAnswerCreate', uid: string, title: string, locale: string | null | undefined, visibility: Types.EnumKnowledgeBaseVisibility | null | undefined }
     | { __typename: 'UserTaskbarItemEntitySearch', query: string | null | undefined, model: string | null | undefined, filters: string | null | undefined, filterCount: number | null | undefined }
     | { __typename: 'UserTaskbarItemEntityTicketCreate', uid: string, title: string, createArticleTypeKey: string | null | undefined }
    | null | undefined };
@@ -498,6 +508,7 @@ export type UserCurrentTaskbarItemAddMutation = { userCurrentTaskbarItemAdd: { _
         | { __typename: 'Organization', id: string, internalId: number, name: string | null | undefined, active: boolean | null | undefined }
         | { __typename: 'Ticket', id: string, internalId: number, number: string, title: string, stateColorCode: Types.EnumTicketStateColorCode, updatedAt: string, state: { __typename: 'TicketState', id: string, name: string } }
         | { __typename: 'User', id: string, internalId: number, fullname: string | null | undefined, active: boolean | null | undefined }
+        | { __typename: 'UserTaskbarItemEntityKnowledgeBaseAnswerCreate', uid: string, title: string, locale: string | null | undefined, visibility: Types.EnumKnowledgeBaseVisibility | null | undefined }
         | { __typename: 'UserTaskbarItemEntitySearch', query: string | null | undefined, model: string | null | undefined, filters: string | null | undefined, filterCount: number | null | undefined }
         | { __typename: 'UserTaskbarItemEntityTicketCreate', uid: string, title: string, createArticleTypeKey: string | null | undefined }
        | null | undefined } | null | undefined, errors: Array<{ __typename: 'UserError', message: string, messagePlaceholder: Array<string> | null | undefined, field: string | null | undefined, exception: Types.EnumUserErrorException | null | undefined }> | null | undefined } | null | undefined };
@@ -525,6 +536,7 @@ export type UserCurrentTaskbarItemTouchLastContactMutation = { userCurrentTaskba
         | { __typename: 'Organization', id: string, internalId: number, name: string | null | undefined, active: boolean | null | undefined }
         | { __typename: 'Ticket', id: string, internalId: number, number: string, title: string, stateColorCode: Types.EnumTicketStateColorCode, updatedAt: string, state: { __typename: 'TicketState', id: string, name: string } }
         | { __typename: 'User', id: string, internalId: number, fullname: string | null | undefined, active: boolean | null | undefined }
+        | { __typename: 'UserTaskbarItemEntityKnowledgeBaseAnswerCreate', uid: string, title: string, locale: string | null | undefined, visibility: Types.EnumKnowledgeBaseVisibility | null | undefined }
         | { __typename: 'UserTaskbarItemEntitySearch', query: string | null | undefined, model: string | null | undefined, filters: string | null | undefined, filterCount: number | null | undefined }
         | { __typename: 'UserTaskbarItemEntityTicketCreate', uid: string, title: string, createArticleTypeKey: string | null | undefined }
        | null | undefined } | null | undefined, errors: Array<{ __typename: 'UserError', message: string, messagePlaceholder: Array<string> | null | undefined, field: string | null | undefined, exception: Types.EnumUserErrorException | null | undefined }> | null | undefined } | null | undefined };
@@ -539,6 +551,7 @@ export type UserCurrentTaskbarItemUpdateMutation = { userCurrentTaskbarItemUpdat
         | { __typename: 'Organization', id: string, internalId: number, name: string | null | undefined, active: boolean | null | undefined }
         | { __typename: 'Ticket', id: string, internalId: number, number: string, title: string, stateColorCode: Types.EnumTicketStateColorCode, updatedAt: string, state: { __typename: 'TicketState', id: string, name: string } }
         | { __typename: 'User', id: string, internalId: number, fullname: string | null | undefined, active: boolean | null | undefined }
+        | { __typename: 'UserTaskbarItemEntityKnowledgeBaseAnswerCreate', uid: string, title: string, locale: string | null | undefined, visibility: Types.EnumKnowledgeBaseVisibility | null | undefined }
         | { __typename: 'UserTaskbarItemEntitySearch', query: string | null | undefined, model: string | null | undefined, filters: string | null | undefined, filterCount: number | null | undefined }
         | { __typename: 'UserTaskbarItemEntityTicketCreate', uid: string, title: string, createArticleTypeKey: string | null | undefined }
        | null | undefined } | null | undefined, errors: Array<{ __typename: 'UserError', message: string, messagePlaceholder: Array<string> | null | undefined, field: string | null | undefined, exception: Types.EnumUserErrorException | null | undefined }> | null | undefined } | null | undefined };
@@ -570,6 +583,7 @@ export type UserCurrentTaskbarItemListQuery = { userCurrentTaskbarItemList: Arra
       | { __typename: 'Organization', id: string, internalId: number, name: string | null | undefined, active: boolean | null | undefined }
       | { __typename: 'Ticket', id: string, internalId: number, number: string, title: string, stateColorCode: Types.EnumTicketStateColorCode, updatedAt: string, state: { __typename: 'TicketState', id: string, name: string } }
       | { __typename: 'User', id: string, internalId: number, fullname: string | null | undefined, active: boolean | null | undefined }
+      | { __typename: 'UserTaskbarItemEntityKnowledgeBaseAnswerCreate', uid: string, title: string, locale: string | null | undefined, visibility: Types.EnumKnowledgeBaseVisibility | null | undefined }
       | { __typename: 'UserTaskbarItemEntitySearch', query: string | null | undefined, model: string | null | undefined, filters: string | null | undefined, filterCount: number | null | undefined }
       | { __typename: 'UserTaskbarItemEntityTicketCreate', uid: string, title: string, createArticleTypeKey: string | null | undefined }
      | null | undefined }> | null | undefined };
@@ -602,12 +616,14 @@ export type UserCurrentTaskbarItemUpdatesSubscription = { userCurrentTaskbarItem
         | { __typename: 'Organization', id: string, internalId: number, name: string | null | undefined, active: boolean | null | undefined }
         | { __typename: 'Ticket', id: string, internalId: number, number: string, title: string, stateColorCode: Types.EnumTicketStateColorCode, updatedAt: string, state: { __typename: 'TicketState', id: string, name: string } }
         | { __typename: 'User', id: string, internalId: number, fullname: string | null | undefined, active: boolean | null | undefined }
+        | { __typename: 'UserTaskbarItemEntityKnowledgeBaseAnswerCreate', uid: string, title: string, locale: string | null | undefined, visibility: Types.EnumKnowledgeBaseVisibility | null | undefined }
         | { __typename: 'UserTaskbarItemEntitySearch', query: string | null | undefined, model: string | null | undefined, filters: string | null | undefined, filterCount: number | null | undefined }
         | { __typename: 'UserTaskbarItemEntityTicketCreate', uid: string, title: string, createArticleTypeKey: string | null | undefined }
        | null | undefined } | null | undefined, updateItem: { __typename: 'UserTaskbarItem', id: string, key: string, callback: Types.EnumTaskbarEntity, formId: string | null | undefined, formNewArticlePresent: boolean, entityAccess: Types.EnumTaskbarEntityAccess | null | undefined, prio: number, changed: boolean, dirty: boolean, notify: boolean, updatedAt: string, entity:
         | { __typename: 'Organization', id: string, internalId: number, name: string | null | undefined, active: boolean | null | undefined }
         | { __typename: 'Ticket', id: string, internalId: number, number: string, title: string, stateColorCode: Types.EnumTicketStateColorCode, updatedAt: string, state: { __typename: 'TicketState', id: string, name: string } }
         | { __typename: 'User', id: string, internalId: number, fullname: string | null | undefined, active: boolean | null | undefined }
+        | { __typename: 'UserTaskbarItemEntityKnowledgeBaseAnswerCreate', uid: string, title: string, locale: string | null | undefined, visibility: Types.EnumKnowledgeBaseVisibility | null | undefined }
         | { __typename: 'UserTaskbarItemEntitySearch', query: string | null | undefined, model: string | null | undefined, filters: string | null | undefined, filterCount: number | null | undefined }
         | { __typename: 'UserTaskbarItemEntityTicketCreate', uid: string, title: string, createArticleTypeKey: string | null | undefined }
        | null | undefined } | null | undefined } };

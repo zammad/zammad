@@ -20,7 +20,9 @@ defineEmits<{
 </script>
 
 <template>
-  <div class="@container/file-list rounded-lg bg-blue-200 p-1 dark:bg-gray-700">
+  <div
+    class="@container/file-list rounded-lg bg-blue-200 p-1 dark:bg-gray-700 formkit-alternative-background:bg-neutral-50 dark:formkit-alternative-background:bg-gray-500"
+  >
     <ul
       :aria-label="label"
       class="grid grid-cols-1 gap-2 @md/file-list:grid-cols-2 @2xl/file-list:grid-cols-3"

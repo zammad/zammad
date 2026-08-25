@@ -3,6 +3,7 @@
 import createInput from '#shared/form/core/createInput.ts'
 import formUpdaterTrigger from '#shared/form/features/formUpdaterTrigger.ts'
 
+import addOptionDateValidation from './features/addOptionDateValidation.ts'
 import FieldRadioListInput from './FieldRadioListInput.vue'
 
 import type { RadioListOption, RadioListOptionValue } from './types.ts'
@@ -23,7 +24,7 @@ declare module '@formkit/inputs' {
 }
 
 const fieldDefinition = createInput(FieldRadioListInput, ['options'], {
-  features: [formUpdaterTrigger()],
+  features: [formUpdaterTrigger(), addOptionDateValidation],
 })
 
 export default {

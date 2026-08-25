@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 # The shared body of the category create and edit form updaters: the parent selection resolved
-#   through FormUpdater::Relation::KnowledgeBaseCategoryParent, on top of the permission matrix
+#   through FormUpdater::Relation::KnowledgeBaseEditorCategory, on top of the permission matrix
 #   every knowledge base form offers.
 #
 # The reason the whole form goes through an updater is the parent → permissions dependency:
@@ -33,7 +33,7 @@ module FormUpdater::Updater::KnowledgeBase::Category::Concerns::HasParentAndPerm
   end
 
   def parent_relation
-    @parent_relation ||= FormUpdater::Relation::KnowledgeBaseCategoryParent.new(
+    @parent_relation ||= FormUpdater::Relation::KnowledgeBaseEditorCategory.new(
       context:           context,
       current_user:      current_user,
       data:              data,

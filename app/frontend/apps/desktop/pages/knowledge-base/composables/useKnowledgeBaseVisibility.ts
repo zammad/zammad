@@ -6,6 +6,8 @@ import { EnumKnowledgeBaseVisibility } from '#shared/graphql/schema-types.ts'
 
 // Module-level so callers that only need the mapping (e.g. building a list of
 //   breadcrumb items) can read it without invoking a composable per item.
+// Should be kept in sync with the map in visibilityMeta.ts,
+//   which is used to compute the answer icon and color for a given state.
 export const knowledgeBaseVisibilityMeta = {
   [EnumKnowledgeBaseVisibility.Draft]: {
     icon: 'pencil-fill',
@@ -15,7 +17,7 @@ export const knowledgeBaseVisibilityMeta = {
   [EnumKnowledgeBaseVisibility.Published]: { icon: 'unlock-fill', class: 'text-green-400!' },
   [EnumKnowledgeBaseVisibility.Archived]: {
     icon: 'archive-fill',
-    class: 'text-stone-400! dark:text-neutral-400!',
+    class: 'text-neutral-400! dark:text-neutral-600!',
   },
 } as const
 

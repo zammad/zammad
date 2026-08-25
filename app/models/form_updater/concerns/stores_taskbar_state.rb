@@ -11,6 +11,15 @@ module FormUpdater::Concerns::StoresTaskbarState
     def store_state_group_keys(group_keys)
       @store_state_group_keys ||= group_keys
     end
+
+    # Store the initial round trip too, which is otherwise left alone. A form over an existing
+    #   object resolves that object's own values there, and storing them would turn every opened
+    #   tab into a draft of nothing. A create screen has no object to fall back on: what its first
+    #   round trip resolves *is* the draft - including whatever the client seeded it with, which
+    #   the tab cannot work out for itself, since the link it is reopened through carries no query.
+    def store_state_on_initial
+      @store_state_on_initial = true
+    end
   end
 
   attr_reader :applied_field_from_group_key
@@ -84,11 +93,14 @@ module FormUpdater::Concerns::StoresTaskbarState
     data
   end
 
+  # Memoized including nil, like its twin in AppliesTaskbarState - whichever of the two ends up
+  #   answering, the store path reads it several times per round trip.
   def current_taskbar
-    id = meta.dig(:additional_data, 'taskbarId')
-    return if id.blank?
+    return @current_taskbar if defined?(@current_taskbar)
 
-    Gql::ZammadSchema.authorized_object_from_id(id, type: Taskbar, user: context[:current_user])
+    id = meta.dig(:additional_data, 'taskbarId')
+
+    @current_taskbar = id.present? ? Gql::ZammadSchema.authorized_object_from_id(id, type: Taskbar, user: context[:current_user]) : nil
   end
 
   def should_store_field?(field, value, store_state_group_keys)
@@ -108,6 +120,15 @@ module FormUpdater::Concerns::StoresTaskbarState
   end
 
   def should_store?
-    meta.dig(:additional_data, 'applyTaskbarState') != true && !meta[:initial]
+    return false if meta.dig(:additional_data, 'applyTaskbarState') == true
+    return true if !meta[:initial]
+
+    # Only into a fresh tab: a draft that has been worked on already holds everything this round
+    #   trip would write, and the values it was opened with are the ones it must not fall back to.
+    store_state_on_initial? && current_taskbar.state.blank?
+  end
+
+  def store_state_on_initial?
+    self.class.instance_variable_get(:@store_state_on_initial).present?
   end
 end

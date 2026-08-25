@@ -7,6 +7,7 @@ export const KnowledgeBaseCategoryPolicyFragmentDoc = gql`
     update
     destroy
     createSubcategory
+    createAnswer
   }
 }
     `;

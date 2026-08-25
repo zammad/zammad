@@ -132,7 +132,7 @@ const onPrimaryClick = () => {
     :class="{
       // Only a file that can be previewed rests on its own surface — the neutral
       //   background is what marks the row as something to open.
-      'border border-neutral-100 bg-neutral-50 transition-colors hover:bg-blue-600 active:bg-blue-800! active:text-white dark:border-gray-900 dark:bg-gray-500 dark:hover:bg-blue-900':
+      'border border-neutral-100 bg-neutral-50 transition-colors hover:bg-blue-600 active:bg-blue-800! active:text-white dark:border-gray-900 dark:bg-gray-500 dark:hover:bg-blue-900 formkit-alternative-background:bg-blue-200 dark:formkit-alternative-background:bg-gray-700':
         canPreview,
       'hover:outline hover:outline-blue-800': !canPreview,
     }"

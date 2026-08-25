@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { getIdFromGraphQLId } from '#shared/graphql/utils.ts'
+import getUuid from '#shared/utils/getUuid.ts'
 
 import type { RouteLocationNamedRaw } from 'vue-router'
 
@@ -34,4 +35,19 @@ export const knowledgeBaseAnswerRoute = (
 ): RouteLocationNamedRaw => ({
   name: 'KnowledgeBaseAnswer',
   params: { localeCode, answerInternalId: getIdFromGraphQLId(answerId) },
+})
+
+// A create draft is one answer translation, so the locale is part of its URL and switching the
+//   language opens *another* draft instead of retitling this one. Every call mints a fresh tab
+//   id accordingly; an existing draft is reopened through its taskbar tab link.
+//
+// `categoryId` is the internal id the category field of the form works with (the form updater
+//   reads it back to preselect the category), not the GraphQL one.
+export const knowledgeBaseAnswerCreateRoute = (
+  localeCode: string,
+  categoryId?: string | number,
+): RouteLocationNamedRaw => ({
+  name: 'KnowledgeBaseAnswerCreate',
+  params: { localeCode, tabId: getUuid() },
+  query: categoryId ? { categoryId } : {},
 })

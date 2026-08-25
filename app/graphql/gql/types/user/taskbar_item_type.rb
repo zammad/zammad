@@ -68,6 +68,14 @@ module Gql::Types::User
       # Ticket create is ...
       return @object.state.merge({ uid: id, type: 'TicketCreate' }) if key_prefix == 'TicketCreateScreen'
 
+      # A knowledge base answer create tab has no record either, and its key must not look like
+      #   the record key of an answer ('KnowledgeBase__Answer-42'), which the edit view uses -
+      #   hence the 'Screen' suffix, like the ticket create tab above.
+      #
+      # The params carry the locale the draft is written in, which the state cannot: one draft is
+      #   one translation, and the tab link has to be rebuildable without the form (like Search).
+      return @object.params.merge(@object.state).merge({ uid: id, type: 'KnowledgeBaseAnswerCreate' }) if key_prefix == 'KnowledgeBaseAnswerCreateScreen'
+
       # Search is ...
       return @object.params.merge(@object.state).merge({ type: 'Search' }) if key_prefix == 'Search'
 

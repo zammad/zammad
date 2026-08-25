@@ -1,5 +1,7 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
+import { EnumTaskbarEntity } from '#shared/graphql/types.ts'
+
 import { useKnowledgeBaseAccess } from '#desktop/entities/knowledge-base/composables/useKnowledgeBaseAccess.ts'
 
 import type { RouteRecordRaw } from 'vue-router'
@@ -62,6 +64,39 @@ const route: RouteRecordRaw[] = [
         props: true,
       },
     ],
+  },
+  {
+    // Creating an answer is a taskbar tab of its own, so it must not be a child of the section
+    //   above: it brings its own layout (LayoutTaskbarTabContent), and would otherwise inherit
+    //   the section's single KeepAlive instance, its navigation meta, and the locale
+    //   reconciliation of KnowledgeBase.vue - which would send a create URL to the remembered
+    //   browse path.
+    //
+    // The path follows the grammar of every other knowledge base URL all the same - the locale
+    //   comes right after the section - because being a top-level *record* is what keeps the
+    //   guards, the KeepAlive and the nav meta away, not the shape of the path. The locale has to
+    //   be in there: it is what the knowledge base store derives the active locale from, and one
+    //   draft is one translation, so switching the language opens another draft rather than
+    //   retitling this one.
+    //
+    // No collision with the section's `locale/:localeCode/answer/:answerInternalId(\d+)` child:
+    //   the digit constraint cannot match `create`, and the static segments outrank the param
+    //   route anyway (asserted in the routes spec).
+    path: '/knowledge-base/locale/:localeCode/answer/create/:tabId?',
+    name: 'KnowledgeBaseAnswerCreate',
+    component: () => import('./views/KnowledgeBaseAnswerCreate.vue'),
+    props: true,
+    meta: {
+      title: __('New knowledge base answer'),
+      requiresAuth: true,
+      requiredPermission: ['knowledge_base.editor'],
+      // More than the permission `requiredPermission` states: an editor of a *deactivated*
+      //   knowledge base has nothing to create in either.
+      canAccess: () => useKnowledgeBaseAccess().canEdit.value,
+      taskbarTabEntity: EnumTaskbarEntity.KnowledgeBaseAnswerCreate,
+      isTaskbarTabPossible: (route) => !!route.params.tabId,
+      level: 2,
+    },
   },
   // The legacy stack addresses knowledge base nodes as
   //   `#knowledge_base/<kb id>/locale/<locale>[/category|answer/<id>][/edit]`, and links in

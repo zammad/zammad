@@ -11,6 +11,7 @@ export interface FieldFileProps {
   capture?: InputHTMLAttributes['capture']
   multiple?: InputHTMLAttributes['multiple']
   allowedFiles?: AllowedFile[]
+  alternativeBackground?: boolean
 }
 
 export type FileUploaded = Pick<StoredFile, 'id' | 'name' | 'size' | 'type'> & {

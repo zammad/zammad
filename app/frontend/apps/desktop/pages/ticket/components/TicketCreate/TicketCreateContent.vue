@@ -1,7 +1,6 @@
 <!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { isEqual } from 'lodash-es'
 import { computed, markRaw, nextTick, reactive } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 
@@ -10,7 +9,6 @@ import Form from '#shared/components/Form/Form.vue'
 import type { FormSubmitData } from '#shared/components/Form/types.ts'
 import { useForm } from '#shared/components/Form/useForm.ts'
 import { getNodeByName } from '#shared/components/Form/utils.ts'
-import { useConfirmation } from '#shared/composables/useConfirmation.ts'
 import { useTicketCreate } from '#shared/entities/ticket/composables/useTicketCreate.ts'
 import { useTicketCreateArticleType } from '#shared/entities/ticket/composables/useTicketCreateArticleType.ts'
 import { useTicketFormOrganizationHandler } from '#shared/entities/ticket/composables/useTicketFormOrganizationHandler.ts'
@@ -22,7 +20,6 @@ import {
   type User,
   type UserAddMutation,
 } from '#shared/graphql/types.ts'
-import { useWalker } from '#shared/router/walker.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
@@ -33,8 +30,9 @@ import { usePage } from '#desktop/composables/usePage.ts'
 import { useTicketCreateTitle } from '#desktop/entities/ticket/composables/useTicketCreateTitle.ts'
 import { useUserCreate } from '#desktop/entities/user/composables/useUserCreate.ts'
 import { useTaskbarTab } from '#desktop/entities/user/current/composables/useTaskbarTab.ts'
+import { useTaskbarTabContext } from '#desktop/entities/user/current/composables/useTaskbarTabContext.ts'
+import { useTaskbarTabDiscard } from '#desktop/entities/user/current/composables/useTaskbarTabDiscard.ts'
 import { useTaskbarTabStateUpdates } from '#desktop/entities/user/current/composables/useTaskbarTabStateUpdates.ts'
-import type { TaskbarTabContext } from '#desktop/entities/user/current/types.ts'
 
 import { useProvideTicketSidebar, useTicketSidebar } from '../../composables/useTicketSidebar.ts'
 import { TicketSidebarScreenType, type TicketSidebarContext } from '../../types/sidebar.ts'
@@ -50,7 +48,6 @@ interface Props {
 defineProps<Props>()
 
 const router = useRouter()
-const walker = useWalker()
 const route = useRoute()
 
 const { form, isDisabled, isDirty, isInitialSettled, formNodeId, values, triggerFormUpdater } =
@@ -75,10 +72,6 @@ const redirectAfterCreate = (internalId?: number) => {
 
   // Fallback redirect, in case the user has no access to the ticket they just created.
   router.replace({ name: 'Dashboard' })
-}
-
-const goBack = () => {
-  walker.back('/')
 }
 
 const { ticketArticleSenderTypeField } = useTicketCreateArticleType()
@@ -325,18 +318,13 @@ const changedFields = reactive({
   },
 })
 
-const tabContext = computed<TaskbarTabContext>((currentContext) => {
-  if (!isInitialSettled.value) return {}
-
-  const newContext = {
+const tabContext = useTaskbarTabContext(
+  () => ({
     formValues: values.value,
     formIsDirty: isDirty.value,
-  }
-
-  if (currentContext && isEqual(newContext, currentContext)) return currentContext
-
-  return newContext
-})
+  }),
+  isInitialSettled,
+)
 
 const { currentTaskbarTab, currentTaskbarTabId, currentTaskbarTabFormId, currentTaskbarTabDelete } =
   useTaskbarTab(tabContext)
@@ -355,15 +343,7 @@ useProvideTicketSidebar(sidebarContext)
 
 const { hasSidebar } = useTicketSidebar()
 
-const { waitForVariantConfirmation } = useConfirmation()
-
-const discardChanges = async () => {
-  const confirm = await waitForVariantConfirmation('unsaved')
-  if (!confirm) return
-
-  goBack()
-  currentTaskbarTabDelete()
-}
+const { goBack, discardChanges } = useTaskbarTabDiscard(currentTaskbarTabDelete)
 
 const applyTemplate = (templateId: string) => {
   triggerFormUpdater({
@@ -374,7 +354,7 @@ const applyTemplate = (templateId: string) => {
   })
 }
 
-const formAdditionalRouteQueryParams = computed(() => ({
+const formUpdaterAdditionalParams = computed(() => ({
   taskbarId: currentTaskbarTab.value?.taskbarTabId,
   ...route.query,
 }))
@@ -412,7 +392,7 @@ const submitCreateTicket = async (event: FormSubmitData<TicketFormData>) => {
         :form-updater-id="EnumFormUpdaterId.FormUpdaterUpdaterTicketCreate"
         :handlers="[useTicketFormOrganizationHandler()]"
         :change-fields="changedFields"
-        :form-updater-additional-params="formAdditionalRouteQueryParams"
+        :form-updater-additional-params="formUpdaterAdditionalParams"
         use-object-attributes
         form-class="flex flex-col gap-3 min-w-xs"
         @submit="submitCreateTicket($event as FormSubmitData<TicketFormData>)"

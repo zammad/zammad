@@ -561,6 +561,12 @@ class App.TaskManagerSingleton extends App.Controller
     for task in tasks
       continue if task.callback is 'TicketCreate' && isCustomer
 
+      # Both interfaces share the desktop taskbar (SessionHelper::CollectionBase hands over every
+      # 'desktop' entry), but the new interface has tabs this one has no controller for - e.g. the
+      # knowledge base answer create screen. Skipping them here keeps them out of both the taskbar
+      # list and startController(), which would otherwise construct 'new App[undefined]'.
+      continue if !App[task.callback]
+
       task.active = false
       @allTasksByKey[task.key] = task.attributes()
       @tasksPreferences[task.key] = task.preferences

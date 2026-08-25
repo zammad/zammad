@@ -13,6 +13,10 @@ class FormUpdater::Updater::Ticket::Create < FormUpdater::Updater
 
   core_workflow_screen 'create_middle'
 
+  # The customer a ticket create screen was opened for (and a split article) arrive with the first
+  #   round trip and nothing follows them, so without this the tab would be reopened without them.
+  store_state_on_initial
+
   def self.required_permissions
     %w[ticket.agent ticket.customer]
   end

@@ -106,13 +106,13 @@ export const getCoreDesktopClasses: FormThemeExtension = (classes: FormThemeClas
       wrapper: 'max-w-full',
       input:
         'min-h-[76px] text-sm text-(--editor-text-color) outline-hidden dark:text-(--editor-text-color-dark)',
-      inner: 'group rounded-t-none bg-blue-200 dark:bg-gray-700',
+      inner:
+        'group rounded-t-none bg-blue-200 dark:bg-gray-700 formkit-alternative-background:bg-neutral-50 dark:formkit-alternative-background:bg-gray-500',
     }),
-    // TODO: check...
     file: extendClasses(classes.file, {
       input: 'p-1',
       inner:
-        'formkit-invalid:outline formkit-invalid:outline-1 formkit-invalid:-outline-offset-1 formkit-invalid:outline-red-500 formkit-errors:outline formkit-errors:outline-1 formkit-errors:-outline-offset-1 formkit-errors:outline-red-500 w-full bg-blue-200 dark:bg-gray-700',
+        'formkit-invalid:outline formkit-invalid:outline-1 formkit-invalid:-outline-offset-1 formkit-invalid:outline-red-500 formkit-errors:outline formkit-errors:outline-1 formkit-errors:-outline-offset-1 formkit-errors:outline-red-500 w-full bg-blue-200 dark:bg-gray-700 formkit-alternative-background:bg-neutral-50 dark:formkit-alternative-background:bg-gray-500',
       messages: 'px-4',
     }),
   }

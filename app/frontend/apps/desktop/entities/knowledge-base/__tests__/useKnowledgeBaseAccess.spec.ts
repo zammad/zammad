@@ -36,15 +36,26 @@ describe('useKnowledgeBaseAccess', () => {
     })
   })
 
+  // More than the permission: an editor of a deactivated knowledge base has nothing to edit, and
+  //   that is what the create and edit routes gate on.
   describe('canEdit', () => {
-    it('is true for a knowledge base editor', () => {
+    it('is true for an editor of an active knowledge base', () => {
+      mockApplicationConfig({ kb_active_publicly: false, kb_active: true })
       mockPermissions(['knowledge_base.editor'])
 
       expect(useKnowledgeBaseAccess().canEdit.value).toBe(true)
     })
 
     it('is false without the editor permission', () => {
+      mockApplicationConfig({ kb_active_publicly: false, kb_active: true })
       mockPermissions(['knowledge_base.reader'])
+
+      expect(useKnowledgeBaseAccess().canEdit.value).toBe(false)
+    })
+
+    it('is false for an editor when no knowledge base is active', () => {
+      mockApplicationConfig({ kb_active_publicly: false, kb_active: false })
+      mockPermissions(['knowledge_base.editor'])
 
       expect(useKnowledgeBaseAccess().canEdit.value).toBe(false)
     })

@@ -23,10 +23,13 @@ export const useKnowledgeBaseAccess = () => {
     ),
   )
 
-  const canEdit = computed(() => session.hasPermission('knowledge_base.editor'))
+  // Editing rights *and* a knowledge base to use them in: an editor of a deactivated knowledge
+  //   base has nothing to edit or create. Both halves together are what the create and edit
+  //   routes gate on, on top of the permission their `requiredPermission` states.
+  const canEdit = computed(() => session.hasPermission('knowledge_base.editor') && canBrowse.value)
 
-  // Reader or editor — the internal knowledge base roles. Public visitors
-  //   browsing a publicly available knowledge base have neither.
+  // Reader or editor — the internal knowledge base roles, and only that: this is what tells an
+  //   internal user from a public visitor, so availability is deliberately not part of it.
   const canRead = computed(() => session.hasPermission('knowledge_base.*'))
 
   return { canBrowse, canEdit, canRead }

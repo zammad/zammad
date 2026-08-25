@@ -65,9 +65,14 @@ module FormUpdater::Concerns::AppliesTaskbarState
     end
   end
 
+  # Memoized including nil: one round trip resolves one taskbar, and the apply/store paths read
+  #   it repeatedly - each call is another GlobalID lookup with authorization.
   def current_taskbar
+    return @current_taskbar if defined?(@current_taskbar)
+
     id = meta.dig(:additional_data, 'taskbarId')
-    Gql::ZammadSchema.authorized_object_from_id(id, type: Taskbar, user: context[:current_user]) if id.present?
+
+    @current_taskbar = id.present? ? Gql::ZammadSchema.authorized_object_from_id(id, type: Taskbar, user: context[:current_user]) : nil
   end
 
   def should_apply?

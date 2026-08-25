@@ -19,6 +19,12 @@ export const UserCurrentTaskbarItemAttributesFragmentDoc = gql`
       title
       createArticleTypeKey
     }
+    ... on UserTaskbarItemEntityKnowledgeBaseAnswerCreate {
+      uid
+      title
+      locale
+      visibility
+    }
     ... on UserTaskbarItemEntitySearch {
       query
       model

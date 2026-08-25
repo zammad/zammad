@@ -35,3 +35,50 @@ describe('knowledge base legacy URLs', () => {
     expect(router.currentRoute.value.path).toBe(expectedPath)
   })
 })
+
+// The create view is a top-level record on purpose (it brings its own taskbar tab layout), so
+//   its path has to stay clear of the section's own children and of the legacy shapes above.
+describe('knowledge base answer create route', () => {
+  const router = createRouter({
+    history: createWebHistory('/desktop'),
+    routes: withStubbedViews(knowledgeBaseRoutes),
+  })
+
+  it('matches the create route with a locale and a tab id', async () => {
+    await router.push('/knowledge-base/locale/en-us/answer/create/f0a1')
+
+    expect(router.currentRoute.value.name).toBe('KnowledgeBaseAnswerCreate')
+    expect(router.currentRoute.value.params).toEqual({ localeCode: 'en-us', tabId: 'f0a1' })
+  })
+
+  // Without a tab id there is no draft to store anything under; the view's entry guard mints one.
+  it('matches the create route without a tab id', async () => {
+    await router.push('/knowledge-base/locale/en-us/answer/create')
+
+    expect(router.currentRoute.value.name).toBe('KnowledgeBaseAnswerCreate')
+    expect(router.currentRoute.value.params.tabId).toBeUndefined()
+  })
+
+  // Creating is editorial, and an inactive knowledge base has nothing to create in.
+  it('is gated by the editor permission and the section access', async () => {
+    await router.push('/knowledge-base/locale/en-us/answer/create/f0a1')
+
+    const { meta } = router.currentRoute.value
+
+    expect(meta.requiredPermission).toEqual(['knowledge_base.editor'])
+    expect(meta.canAccess).toBeTypeOf('function')
+  })
+
+  // The create path shares its first segments with the section's own children, so each of them
+  //   has to keep resolving to its own page - the `(\d+)` constraint is what keeps `create` out
+  //   of the answer route.
+  it.each([
+    ['/knowledge-base/locale/en-us', 'KnowledgeBaseBrowse'],
+    ['/knowledge-base/locale/en-us/category/2', 'KnowledgeBaseCategory'],
+    ['/knowledge-base/locale/en-us/answer/3', 'KnowledgeBaseAnswer'],
+  ])('leaves %s on %s', async (path, expectedName) => {
+    await router.push(path)
+
+    expect(router.currentRoute.value.name).toBe(expectedName)
+  })
+})

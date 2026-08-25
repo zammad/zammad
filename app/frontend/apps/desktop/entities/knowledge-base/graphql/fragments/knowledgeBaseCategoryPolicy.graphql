@@ -9,5 +9,6 @@ fragment knowledgeBaseCategoryPolicy on KnowledgeBaseCategory {
     update
     destroy
     createSubcategory
+    createAnswer
   }
 }

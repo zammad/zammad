@@ -115,7 +115,7 @@ const scrollToEnd = () => {
     <template #sideBar>
       <KnowledgeBaseAnswerSidebar
         :name="SidebarName.KnowledgeBaseAnswer"
-        :title="__('KB Answer')"
+        :title="__('Knowledge base answer')"
         icon="file-richtext"
       >
         <KnowledgeBaseAnswerSidebarContent v-if="answer" :answer="answer" />

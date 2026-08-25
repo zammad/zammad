@@ -35,6 +35,13 @@ class KnowledgeBase::CategoryPolicy < ApplicationPolicy
     access_editor?
   end
 
+  # Whether an answer may be created in this category. The same access as KnowledgeBase::
+  #   AnswerPolicy#create?, which resolves it through the answer's category — but asked of the
+  #   category alone, because the browse view has no answer to ask about yet.
+  def create_answer?
+    access_editor?
+  end
+
   def destroy?
     parent_editor?
   end

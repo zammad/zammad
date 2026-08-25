@@ -16,6 +16,7 @@ RSpec.describe Gql::Types::KnowledgeBase::CategoryType, type: :graphql do
               update
               destroy
               createSubcategory
+              createAnswer
               permissions
             }
           }
@@ -48,6 +49,7 @@ RSpec.describe Gql::Types::KnowledgeBase::CategoryType, type: :graphql do
         'update'            => true,
         'destroy'           => true,
         'createSubcategory' => true,
+        'createAnswer'      => true,
         'permissions'       => true,
       )
     end
@@ -101,6 +103,7 @@ RSpec.describe Gql::Types::KnowledgeBase::CategoryType, type: :graphql do
       expect(category_result['policy']).to include(
         'update'            => true,
         'createSubcategory' => true,
+        'createAnswer'      => true,
         'permissions'       => true,
         # Removing a category changes what its parent contains, and the parent is reader-only here.
         'destroy'           => false,
@@ -118,6 +121,7 @@ RSpec.describe Gql::Types::KnowledgeBase::CategoryType, type: :graphql do
         'update'            => false,
         'destroy'           => false,
         'createSubcategory' => false,
+        'createAnswer'      => false,
         'permissions'       => false,
       )
     end

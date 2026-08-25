@@ -14,6 +14,9 @@ export interface TopBarHeaderProps {
   previewUrl?: Maybe<string>
   localeCode?: string
   actions?: MenuItem[]
+  // There is nothing to copy while a node is being created - its title is a form field, not the
+  //   heading the button would copy.
+  noCopyButton?: boolean
 }
 
 // Caps the header rows that have to line up with the content below them:

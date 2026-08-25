@@ -5,12 +5,7 @@ import { computed } from 'vue'
 
 import CommonSkeleton from '#desktop/components/CommonSkeleton/CommonSkeleton.vue'
 
-import {
-  HEADER_CONTENT_OUTER_CLASSES,
-  HEADER_CONTENT_WIDTH_CLASSES,
-  HEADER_ROWS_CLASS,
-  HEADER_ROWS_WITH_DETAILS_CLASS,
-} from './headerClasses.ts'
+import { HEADER_CONTENT_OUTER_CLASSES, HEADER_CONTENT_WIDTH_CLASSES } from './headerClasses.ts'
 import { type HeaderContentWidth } from './types.ts'
 
 // Mirrors the detail row of the answer header, so the skeleton has the same
@@ -29,7 +24,6 @@ const contentOuterClass = computed(() => HEADER_CONTENT_OUTER_CLASSES[props.cont
 <template>
   <header
     class="grid w-full grid-cols-[1fr_min-content] gap-x-2 gap-y-2.5 border-b border-neutral-100 bg-neutral-50/80 px-5.5 py-3 backdrop-blur-2xs dark:border-gray-900 dark:bg-gray-500/80"
-    :class="withDetails ? HEADER_ROWS_WITH_DETAILS_CLASS : HEADER_ROWS_CLASS"
   >
     <div class="flex h-6 items-center gap-1.5">
       <CommonSkeleton class="size-3.5 shrink-0" rounded />

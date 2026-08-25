@@ -19,6 +19,7 @@ export enum SidebarName {
   TicketOverviews = 'ticket-overviews',
   PersonalSetting = 'personal-setting',
   KnowledgeBaseAnswer = 'knowledge-base-answer',
+  KnowledgeBaseAnswerCreate = 'knowledge-base-answer-create',
 }
 
 export interface ToggleOptions {

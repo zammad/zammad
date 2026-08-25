@@ -88,7 +88,7 @@ export const useInlineMode = (
     appName === 'desktop'
       ? {
           'rounded-b-lg pt-0!': isInlineMode.value,
-          'focus-within:outline-1 focus:outline-none focus-within:-outline-offset-1 rounded-b-lg focus-within:outline-blue-800 hover:outline-1 hover:-outline-offset-1 hover:outline-blue-600 focus-within:hover:outline-blue-800 focus-visible:outline-1 dark:bg-gray-700 dark:hover:outline-blue-900 dark:focus-within:hover:outline-blue-800':
+          'focus-within:outline-1 focus:outline-none focus-within:-outline-offset-1 rounded-b-lg focus-within:outline-blue-800 hover:outline-1 hover:-outline-offset-1 hover:outline-blue-600 focus-within:hover:outline-blue-800 focus-visible:outline-1 dark:hover:outline-blue-900 dark:focus-within:hover:outline-blue-800':
             !isInlineMode.value,
           'group-hover:bg-blue-200 dark:group-hover:bg-gray-700 rounded-b-lg group-focus-within:outline-1 group-focus-within:outline-blue-800 group-hover:outline-1 group-hover:-outline-offset-1 group-hover:outline-blue-600 group-focus-visible:outline-1 dark:group-hover:outline-blue-900':
             isInlineMode.value && !isEditing.value,

@@ -9,7 +9,7 @@ import FieldFileInput from './FieldFileInput.vue'
 
 const fieldDefinition = createInput(
   FieldFileInput,
-  ['multiple', 'capture', 'accept', 'allowedFiles'],
+  ['multiple', 'capture', 'accept', 'allowedFiles', 'alternativeBackground'],
   {
     features: [multipleFilesError, filesSizeError, filesTypeError],
   },

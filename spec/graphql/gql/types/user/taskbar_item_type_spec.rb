@@ -58,5 +58,38 @@ RSpec.describe Gql::Types::User::TaskbarItemType, :aggregate_failures do
         expect(instance.entity).to include('title' => 'Ticket Title', 'formSenderType' => 'email-out')
       end
     end
+
+    context 'when entity is a knowledge base answer create screen' do
+      let(:uid) { SecureRandom.uuid }
+      let(:key) { "KnowledgeBaseAnswerCreateScreen-#{uid}" }
+
+      it 'returns state and params as entity, with the tab id as uid' do
+        taskbar.update!(state: { 'title' => 'Answer Title' }, params: { 'locale' => 'de-de' })
+
+        expect(instance.entity).to include('title' => 'Answer Title', 'locale' => 'de-de', uid: uid, type: 'KnowledgeBaseAnswerCreate')
+      end
+
+      # The tab of a draft nothing was typed into yet, which must not look like a missing record.
+      it 'returns the entity without a title' do
+        taskbar.update!(state: {}, params: {})
+
+        # The state is stored with indifferent access, so the merged keys come back as strings.
+        expect(instance.entity).to eq({ 'uid' => uid, 'type' => 'KnowledgeBaseAnswerCreate' })
+      end
+    end
+
+    # The key of an answer *record*, which the edit view will use, must keep resolving to the
+    #   model - the create screen key above must not swallow it.
+    context 'when entity is a knowledge base answer' do
+      let(:editor_role) { create(:role, permission_names: 'knowledge_base.editor') }
+      let(:user)        { create(:user, roles: [editor_role]) }
+      let(:answer)      { create(:knowledge_base_answer) }
+      let(:key)         { "KnowledgeBase__Answer-#{answer.id}" }
+
+      it 'returns the answer' do
+        expect(instance.entity).to eq(answer)
+        expect(instance.entity_access).to eq('Granted')
+      end
+    end
   end
 end

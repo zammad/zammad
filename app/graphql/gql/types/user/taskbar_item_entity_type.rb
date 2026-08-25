@@ -7,6 +7,7 @@ module Gql::Types::User
                    Gql::Types::OrganizationType,
                    Gql::Types::TicketType,
                    Gql::Types::User::TaskbarItemEntity::TicketCreateType,
+                   Gql::Types::User::TaskbarItemEntity::KnowledgeBaseAnswerCreateType,
                    Gql::Types::User::TaskbarItemEntity::SearchType,
                    *extension_types
 

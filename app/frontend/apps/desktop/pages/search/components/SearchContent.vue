@@ -42,7 +42,7 @@ import { useTicketBulkEdit } from '#desktop/components/Ticket/TicketBulkEditFlyo
 import { useElementScroll } from '#desktop/composables/useElementScroll.ts'
 import { usePage } from '#desktop/composables/usePage.ts'
 import { useTaskbarTab } from '#desktop/entities/user/current/composables/useTaskbarTab.ts'
-import type { TaskbarTabContext } from '#desktop/entities/user/current/types.ts'
+import { useTaskbarTabContext } from '#desktop/entities/user/current/composables/useTaskbarTabContext.ts'
 import SearchControls from '#desktop/pages/search/components/SearchControls.vue'
 import SearchEmptyMessage from '#desktop/pages/search/components/SearchEmptyMessage.vue'
 import { useDetailSearchCache } from '#desktop/pages/search/composables/useDetailSearchCache.ts'
@@ -172,19 +172,13 @@ const notVisibleSearchEntities = computed(() =>
   ),
 )
 
-const tabContext = computed<TaskbarTabContext>((currentContext) => {
-  const newContext = {
-    query: currentSearchTerm.value,
-    model: selectedEntity.value,
-    formIsDirty: hasActiveFilters.value,
-    filters: stringifyQuery(currentFiltersQueryParams.value),
-    filterCount: filterCount.value,
-  }
-
-  if (currentContext && isEqual(newContext, currentContext)) return currentContext
-
-  return newContext
-})
+const tabContext = useTaskbarTabContext(() => ({
+  query: currentSearchTerm.value,
+  model: selectedEntity.value,
+  formIsDirty: hasActiveFilters.value,
+  filters: stringifyQuery(currentFiltersQueryParams.value),
+  filterCount: filterCount.value,
+}))
 
 const { currentTaskbarTab, currentTaskbarTabId, currentTaskbarTabUpdate } =
   useTaskbarTab(tabContext)

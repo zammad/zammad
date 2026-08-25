@@ -82,6 +82,7 @@ export interface FieldEditorProps {
   ticketId?: string
   customerId?: string
   inline?: boolean
+  alternativeBackground?: boolean
   extensionSet?: EditorExtensionSet
   signature?: Pick<PossibleSignature, 'internalId' | 'renderedBody'> | null
   /**

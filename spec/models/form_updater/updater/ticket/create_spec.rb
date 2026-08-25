@@ -180,6 +180,41 @@ RSpec.describe(FormUpdater::Updater::Ticket::Create) do
       let(:meta)     { { initial: true, form_id: SecureRandom.uuid, additional_data: { 'customer_id' => customer.id } } }
       let(:customer) { create(:customer, organization: create(:organization)) }
 
+      # The prefill reaches the form with this round trip only - the taskbar link the tab is
+      #   reopened through carries no query - so a create screen stores it right away
+      #   (`store_state_on_initial`), as long as the tab holds no draft yet.
+      context 'with a fresh taskbar' do
+        let(:taskbar) { create(:taskbar, key: 'TicketCreateScreen-1234', callback: 'TicketCreate', user_id: user.id) }
+        let(:meta) do
+          {
+            initial:         true,
+            form_id:         SecureRandom.uuid,
+            additional_data: {
+              'customer_id' => customer.id,
+              'taskbarId'   => Gql::ZammadSchema.id_from_object(taskbar),
+            },
+          }
+        end
+
+        it 'stores the prefilled customer with the draft' do
+          resolved_result.resolve
+
+          expect(taskbar.reload.state).to include('customer_id' => customer.id)
+        end
+
+        context 'when the draft has been worked on' do
+          let(:taskbar) do
+            create(:taskbar, key: 'TicketCreateScreen-1234', callback: 'TicketCreate', user_id: user.id,
+                             state: { 'customer_id' => other_customer.id, 'form_id' => SecureRandom.uuid })
+          end
+          let(:other_customer) { create(:customer) }
+
+          it 'stores nothing' do
+            expect { resolved_result.resolve }.not_to change { taskbar.reload.state }
+          end
+        end
+      end
+
       it 'returns initial value for customer_id' do
         expect(resolved_result.resolve[:fields]).to include(
           'customer_id' => include(

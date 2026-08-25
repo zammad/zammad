@@ -475,6 +475,14 @@ RSpec.describe Taskbar, performs_jobs: true, type: :model do
       it { is_expected.not_to be_relatable }
     end
 
+    # Its key carries a UUID, so it does not match KEY_REGEXP at all - which has to stay
+    #   harmless instead of raising.
+    context 'when it is a new knowledge base answer' do
+      subject(:taskbar) { create(:taskbar, :with_new_knowledge_base_answer) }
+
+      it { is_expected.not_to be_relatable }
+    end
+
     context 'when it is a ticket' do
       subject(:taskbar) { create(:taskbar, :with_ticket) }
 
@@ -522,6 +530,12 @@ RSpec.describe Taskbar, performs_jobs: true, type: :model do
 
     context 'when taskbar is a new ticket' do
       let(:taskbar) { create(:taskbar, :with_new_ticket) }
+
+      it { expect(taskbar.target_accessible_to_owner?).to be_nil }
+    end
+
+    context 'when taskbar is a new knowledge base answer' do
+      let(:taskbar) { create(:taskbar, :with_new_knowledge_base_answer) }
 
       it { expect(taskbar.target_accessible_to_owner?).to be_nil }
     end
@@ -606,9 +620,20 @@ RSpec.describe Taskbar, performs_jobs: true, type: :model do
     end
   end
 
+  describe '.taskbar_entities' do
+    it 'collects the entities of every model with taskbar support, plus the static ones' do
+      expect(described_class.taskbar_entities)
+        .to include('TicketZoom', 'TicketCreate', 'UserProfile', 'OrganizationProfile', 'KnowledgeBaseAnswerCreate', 'Search')
+    end
+  end
+
   describe '.entity_key_prefix' do
     it 'uses the class name' do
       expect(described_class.entity_key_prefix(Ticket)).to eq('Ticket')
+    end
+
+    it 'encodes a namespaced model like the knowledge base answer' do
+      expect(described_class.entity_key_prefix(KnowledgeBase::Answer)).to eq('KnowledgeBase__Answer')
     end
 
     it 'encodes the namespace separator like the GraphQL enums do' do
@@ -622,7 +647,7 @@ RSpec.describe Taskbar, performs_jobs: true, type: :model do
     after { described_class.instance_variable_set(:@entity_classes, nil) }
 
     it 'contains the models with taskbar support' do
-      expect(described_class.entity_classes).to include(Ticket, User, Organization)
+      expect(described_class.entity_classes).to include(Ticket, User, Organization, KnowledgeBase::Answer)
     end
 
     # Without this the entries of one model would resolve to the other one.

@@ -8,6 +8,7 @@ import CommonAlert from '#shared/components/CommonAlert/CommonAlert.vue'
 import { getAlertClasses } from '#shared/initializer/initializeAlertClasses.ts'
 
 import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
+import { useStickyTopCalculator } from '#desktop/components/Form/fields/FieldEditor/useStickyTopCalculator.ts'
 import { useElementScroll } from '#desktop/composables/useElementScroll.ts'
 
 import { HEADER_CONTENT_OUTER_CLASSES, HEADER_CONTENT_WIDTH_CLASSES } from './headerClasses.ts'
@@ -23,6 +24,7 @@ interface Props {
   //   the ticket detail top bar's channel alert.
   alertMessage?: string
   contentWidth?: HeaderContentWidth
+  noTitle?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -62,10 +64,13 @@ const compactHeaderWidth = computed(() =>
   contentContainerWidth.value ? `${contentContainerWidth.value}px` : 'auto',
 )
 
-// Show the header earlier to always have it visible
-const NEGATIVE_PADDING = -30
+// Show the header earlier to always have it visible,
+//   but account for the height of the displayed title beforehand.
+const negativePadding = computed(() => (props.noTitle ? 0 : -30))
 
-const compactHeaderOffset = computed(() => y.value - (fullBlockHeight.value + NEGATIVE_PADDING))
+const compactHeaderOffset = computed(
+  () => y.value - (fullBlockHeight.value + negativePadding.value),
+)
 
 const hasMeasuredHeaderHeights = computed(
   () => fullBlockHeight.value > 0 && compactBlockHeight.value > 0,
@@ -90,6 +95,8 @@ const stickyContainerTop = computed(
 
 const alertBaseClasses = 'rounded-none bg-transparent! md:grid-cols-none md:justify-center'
 const alertTranslucentClasses = getAlertClasses().translucent?.warning
+
+useStickyTopCalculator(compactBlockHeight, { offset: -1 }) // avoid joining with the top bar bottom border
 </script>
 
 <template>

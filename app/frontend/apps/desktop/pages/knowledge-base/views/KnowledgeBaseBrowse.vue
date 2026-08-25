@@ -2,7 +2,7 @@
 
 <script setup lang="ts">
 import { useElementVisibility } from '@vueuse/core'
-import { computed, toRef, useTemplateRef, watch, type ComponentPublicInstance } from 'vue'
+import { computed, ref, toRef, useTemplateRef, watch, type ComponentPublicInstance } from 'vue'
 
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import { scrollIntoView } from '#shared/utils/dom.ts'
@@ -13,8 +13,10 @@ import CommonIndicator from '#desktop/components/CommonIndicator/CommonIndicator
 import { useIndicator } from '#desktop/components/CommonIndicator/useIndicator.ts'
 import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
 import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
+import { useTransitionConfig } from '#desktop/composables/useTransitionConfig.ts'
 import { useKnowledgeBaseStore } from '#desktop/entities/knowledge-base/stores/knowledgeBase.ts'
 
+import { ADD_CARD_VISIBILITY_THRESHOLD } from '../components/KnowledgeBaseBrowse/addCardVisibility.ts'
 import KnowledgeBaseAddCategoryCard from '../components/KnowledgeBaseBrowse/KnowledgeBaseAddCategoryCard.vue'
 import KnowledgeBaseAnswerList from '../components/KnowledgeBaseBrowse/KnowledgeBaseAnswerList.vue'
 import KnowledgeBaseCategoryCard from '../components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue'
@@ -86,6 +88,10 @@ const canAddCategory = computed(() =>
     : Boolean(knowledgeBase.value?.policy.update),
 )
 
+// Per record, like adding a category: a granular editor may write to one subtree and only read
+//   elsewhere. There is nothing to add at the root, where no category is open.
+const canAddAnswer = computed(() => Boolean(categoryPolicy.value?.createAnswer))
+
 const { openKnowledgeBaseCategoryAddFlyout } = useKnowledgeBaseCategoryFlyout()
 useKnowledgeBaseEditFlyout()
 
@@ -95,7 +101,23 @@ const addCategory = () => openKnowledgeBaseCategoryAddFlyout({ parentId: categor
 
 const addCategoryCardElement = useTemplateRef<ComponentPublicInstance>('add-category-card')
 
-const isAddCategoryCardVisible = useElementVisibility(addCategoryCardElement)
+const isAddCategoryCardVisible = useElementVisibility(addCategoryCardElement, {
+  threshold: ADD_CARD_VISIBILITY_THRESHOLD,
+})
+
+// Reported by the answer list, whose card it is.
+const isAddAnswerCardVisible = ref(false)
+
+const showAddCategoryAction = computed(
+  () => canAddCategory.value && !isAddCategoryCardVisible.value,
+)
+
+const showAddAnswerAction = computed(() => canAddAnswer.value && !isAddAnswerCardVisible.value)
+
+// The list owns the navigation - it knows the category and the locale it is showing.
+const answerList = useTemplateRef<{ addAnswer: () => void }>('answer-list')
+
+const addAnswer = () => answerList.value?.addAnswer()
 
 // Fill the trailing gap in the last grid row with placeholder tiles so the row
 //   always looks complete. Must mirror the `grid-cols-*` breakpoints below.
@@ -146,6 +168,8 @@ const placeholderClasses = computed(() =>
     ]
   }),
 )
+
+const { transitions } = useTransitionConfig()
 
 const { isIntersecting: isReachingBottom } = useIndicator()
 const { isIntersecting: isReachingTop } = useIndicator()
@@ -245,10 +269,13 @@ watch(browsedPage, () => scrollToStart())
         <!-- Outside the loader above: the answers bring their own query and skeleton, and wrapping
              them would remount the list on every category switch. -->
         <KnowledgeBaseAnswerList
+          ref="answer-list"
           :key="browsedPage"
+          v-model:add-answer-card-visible="isAddAnswerCardVisible"
           :category-id="categoryId"
           :locale="localeCode"
           :content-container-element="contentContainerElement"
+          :can-add-answer="canAddAnswer"
         />
       </section>
 
@@ -259,20 +286,54 @@ watch(browsedPage, () => scrollToStart())
           :label="$t('Knowledge base actions')"
           :is-reaching-bottom="isReachingBottom"
           :is-reaching-top="isReachingTop"
-          :hide-primary-action="isAddCategoryCardVisible"
+          :hide-primary-action="!showAddAnswerAction && !showAddCategoryAction"
           class="absolute inset-e-3 bottom-0"
           @scroll-to-start="scrollToStart"
           @scroll-to-end="scrollToEnd"
         >
-          <template v-if="canAddCategory" #primary-action>
-            <CommonButton
-              v-tooltip="$t('Add category')"
-              size="medium"
-              variant="secondary"
-              icon="folder-plus"
-              class="rounded-[(--toolbar-radius)-(--toolbar-p)]! border! border-neutral-100 dark:border-gray-900"
-              @click="addCategory"
-            />
+          <!-- Both shortcuts share the one action slot, each hidden while its own card is on
+               screen - a toolbar duplicate of a button the user can already see is noise. The
+               slot itself collapses once neither is left.
+               Category first: it was the only action here before, and its grid sits above the
+               answers on the page.
+               The nesting is what `collapse-height` needs and what the toolbar's own scroll
+               buttons do: the transition turns its target into a grid and squeezes the *child*,
+               so it has to sit on a wrapper - putting it on the button collapses the button
+               itself to nothing. -->
+          <template v-if="canAddCategory || canAddAnswer" #primary-action>
+            <div class="flex flex-col gap-1">
+              <Transition :name="transitions.collapseHeight">
+                <div v-if="showAddCategoryAction">
+                  <div class="flex min-h-0">
+                    <CommonButton
+                      v-tooltip="$t('Add category')"
+                      size="medium"
+                      variant="secondary"
+                      icon="folder-plus"
+                      class="rounded-[(--toolbar-radius)-(--toolbar-p)]! border! border-neutral-100 dark:border-gray-900"
+                      @click="addCategory"
+                    />
+                  </div>
+                </div>
+              </Transition>
+
+              <!-- `kba-add`: the answer counterpart of `folder-plus`, a rich text document with
+                   the same corner plus. From the design system's custom icons. -->
+              <Transition :name="transitions.collapseHeight">
+                <div v-if="showAddAnswerAction">
+                  <div class="flex min-h-0">
+                    <CommonButton
+                      v-tooltip="$t('Add answer')"
+                      size="medium"
+                      variant="secondary"
+                      icon="kba-add"
+                      class="rounded-[(--toolbar-radius)-(--toolbar-p)]! border! border-neutral-100 dark:border-gray-900"
+                      @click="addAnswer"
+                    />
+                  </div>
+                </div>
+              </Transition>
+            </div>
           </template>
         </CommonFloatingToolbar>
       </div>

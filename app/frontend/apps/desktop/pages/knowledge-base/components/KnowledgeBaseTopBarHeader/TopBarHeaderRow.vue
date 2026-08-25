@@ -38,7 +38,8 @@ const { copyKnowledgeBaseNameToClipboard } = useTopBarHeader(toRef(props))
 
 <template>
   <KnowledgeBaseBreadcrumb
-    :class="variant === 'compact' ? 'flex h-6 grow' : 'flex'"
+    class="flex h-6"
+    :class="{ grow: variant === 'compact' }"
     :items="breadcrumbs"
     size="small"
     emphasize-last-item
@@ -46,7 +47,7 @@ const { copyKnowledgeBaseNameToClipboard } = useTopBarHeader(toRef(props))
   >
     <template #trailing>
       <CommonButton
-        v-if="breadcrumbs.length > 1"
+        v-if="!noCopyButton && breadcrumbs.length > 1"
         v-tooltip="$t(copyLabel)"
         variant="secondary"
         icon="files"
@@ -72,7 +73,14 @@ const { copyKnowledgeBaseNameToClipboard } = useTopBarHeader(toRef(props))
       <CommonIcon size="tiny" name="box-arrow-in-up-right" />
     </CommonLink>
 
-    <CommonDropdown v-model="selectedLocale" :items="locales" orientation="bottom">
+    <!-- NB: Hide the language switcher in case there is only one locale. -->
+    <!--   Declutters the UI, since the switcher serves no function in this case. -->
+    <CommonDropdown
+      v-if="locales.length > 1"
+      v-model="selectedLocale"
+      :items="locales"
+      orientation="bottom"
+    >
       <template #trigger="{ toggle, isOpen }">
         <CommonButton
           v-tooltip="$t('Change language')"

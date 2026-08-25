@@ -90,6 +90,21 @@ describe('TopBarHeaderFull', () => {
     expect(copyKnowledgeBaseNameToClipboard).toHaveBeenCalled()
   })
 
+  // While a node is being created the breadcrumb's last item is the heading, so the big title
+  //   row must not take up space above it.
+  it('renders no title row without a title', () => {
+    const view = renderHeader({ title: undefined })
+
+    expect(view.queryByText('Knowledge Base Title')).not.toBeInTheDocument()
+  })
+
+  // A node that is being created has no stored title to copy - its title is a form field.
+  it('hides the copy button when asked to', () => {
+    const view = renderHeader({ noCopyButton: true })
+
+    expect(view.queryByRole('button', { name: 'Copy knowledge base name' })).not.toBeInTheDocument()
+  })
+
   it('offers the given actions in the action menu', async () => {
     const view = renderHeader({
       actions: [{ key: 'knowledge-base-feed', label: 'Set up RSS feed', icon: 'rss' }],
