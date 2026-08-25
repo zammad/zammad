@@ -37,8 +37,6 @@ module CanLookupSearchIndexAttributesWithAttachments
   end
 
   def search_index_attachment_log(message)
-    Rails.logger.info message
-
     return if !defined?(Rack) || !defined?(Rack.application) || Rack.application.top_level_tasks.none?
 
     puts message # rubocop:disable Rails/Output
