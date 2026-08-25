@@ -12,7 +12,7 @@ RSpec.describe Issue6325FixSettingDescription, type: :db_migration do
 
     it 'updates the description text of send_no_auto_response_reg_exp' do
       expect { migrate }.to change { setting.reload.description }
-                             .to('If this regex matches, no notification will be sent to the sender.')
+        .to('If this regex matches, no notification will be sent to the sender.')
     end
   end
 end
