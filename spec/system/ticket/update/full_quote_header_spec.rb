@@ -249,6 +249,33 @@ RSpec.describe 'Ticket > Update > Full Quote Header', current_user_id: -> { curr
     let(:sender_agent)              { create(:agent) }
     let(:sender_outbound_article)   { create(:ticket_article, :outbound_email, ticket: ticket, created_by_id: sender_agent.id, origin_by_id: sender_agent.id, body: SecureRandom.hex(8)) }
 
+    # The recipient (To/CC) rendering must not depend on the sender format, so the
+    #   shared examples pin it for every format value.
+    shared_examples 'renders agent recipients name only' do
+      context 'when an agent is a recipient' do
+        let(:recipient_agent) { create(:agent, groups: [group]) }
+        let(:ticket)          { create(:ticket, group: group, owner: recipient_agent) }
+        let(:sender_outbound_article) do
+          create(:ticket_article, :outbound_email,
+                 ticket:        ticket,
+                 created_by_id: sender_agent.id,
+                 origin_by_id:  sender_agent.id,
+                 to:            "#{recipient_agent.fullname} <#{recipient_agent.email}>",
+                 body:          SecureRandom.hex(8))
+        end
+
+        it 'does show agent recipient name only on forward' do
+          sender_outbound_article
+          expect(page).to have_text(sender_outbound_article.body)
+
+          page.all(".js-ArticleAction[data-type='emailForward'] span").last.click
+          expect(page.find('.js-writeArea')).to have_text("To: #{recipient_agent.fullname}")
+          expect(page.find('.js-writeArea')).to have_no_text(recipient_agent.email)
+          expect(page.find('.js-writeArea')).to have_no_text("#{recipient_agent.fullname} #{Setting.get('ticket_define_email_from_separator')}")
+        end
+      end
+    end
+
     context 'when setting value is SystemAddressName' do
       let(:setting_ticket_email_from) { 'SystemAddressName' }
 
@@ -260,6 +287,8 @@ RSpec.describe 'Ticket > Update > Full Quote Header', current_user_id: -> { curr
         expect(page.find('.js-writeArea')).to have_text("From: #{ticket.group.email_address.name} <#{ticket.group.email_address.email}>")
         expect(page.find('.js-writeArea')).to have_no_text("From: #{sender_agent.fullname}")
       end
+
+      include_examples 'renders agent recipients name only'
     end
 
     context 'when setting value is AgentNameSystemAddressName' do
@@ -272,6 +301,109 @@ RSpec.describe 'Ticket > Update > Full Quote Header', current_user_id: -> { curr
         page.all(".js-ArticleAction[data-type='emailForward'] span").last.click
         expect(page.find('.js-writeArea')).to have_no_text("From: #{ticket.group.email_address.name} <#{ticket.group.email_address.email}>")
         expect(page.find('.js-writeArea')).to have_text("From: #{sender_agent.fullname} #{Setting.get('ticket_define_email_from_separator')} #{ticket.group.email_address.name} <#{ticket.group.email_address.email}>")
+      end
+
+      context 'when the agent has no name' do
+        let(:sender_agent) { create(:agent, firstname: nil, lastname: nil, email: 'namelessagent@example.com') }
+
+        it 'falls back to the system address display name on forward' do
+          sender_outbound_article
+          expect(page).to have_text(sender_outbound_article.body)
+
+          page.all(".js-ArticleAction[data-type='emailForward'] span").last.click
+          expect(page.find('.js-writeArea')).to have_text("From: #{ticket.group.email_address.name} <#{ticket.group.email_address.email}>")
+          expect(page.find('.js-writeArea')).to have_no_text(sender_agent.email)
+        end
+      end
+
+      include_examples 'renders agent recipients name only'
+    end
+
+    context 'when setting value is AgentName' do
+      let(:setting_ticket_email_from) { 'AgentName' }
+
+      it 'does show agent name with group email address on forward' do
+        sender_outbound_article
+        expect(page).to have_text(sender_outbound_article.body)
+
+        page.all(".js-ArticleAction[data-type='emailForward'] span").last.click
+        expect(page.find('.js-writeArea')).to have_text("From: #{sender_agent.fullname} <#{ticket.group.email_address.email}>")
+        expect(page.find('.js-writeArea')).to have_no_text(sender_agent.email)
+      end
+
+      context 'when an agent is a recipient' do
+        let(:sender_outbound_article) do
+          create(:ticket_article, :outbound_email,
+                 ticket:        ticket,
+                 created_by_id: sender_agent.id,
+                 origin_by_id:  sender_agent.id,
+                 to:            "#{sender_agent.fullname} <#{sender_agent.email}>",
+                 body:          SecureRandom.hex(8))
+        end
+
+        it 'does show agent recipient without email address on forward' do
+          sender_outbound_article
+          expect(page).to have_text(sender_outbound_article.body)
+
+          page.all(".js-ArticleAction[data-type='emailForward'] span").last.click
+          expect(page.find('.js-writeArea')).to have_text("To: #{sender_agent.fullname}")
+          expect(page.find('.js-writeArea')).to have_no_text(sender_agent.email)
+        end
+
+        context 'when the agent has no name' do
+          let(:sender_agent) { create(:agent, firstname: nil, lastname: nil, email: 'namelessagent@example.com') }
+
+          # The To header Zammad itself generates for such users is the quoted
+          #   form '"user@example.com" <user@example.com>'.
+          let(:sender_outbound_article) do
+            create(:ticket_article, :outbound_email,
+                   ticket:        ticket,
+                   created_by_id: sender_agent.id,
+                   origin_by_id:  sender_agent.id,
+                   to:            Channel::EmailBuild.recipient_line(sender_agent.fullname, sender_agent.email),
+                   body:          SecureRandom.hex(8))
+          end
+
+          it 'does not fall back to the agent email address on forward' do
+            sender_outbound_article
+            expect(page).to have_text(sender_outbound_article.body)
+
+            page.all(".js-ArticleAction[data-type='emailForward'] span").last.click
+            expect(page.find('.js-writeArea')).to have_text("From: #{ticket.group.email_address.name} <#{ticket.group.email_address.email}>")
+            expect(page.find('.js-writeArea')).to have_text('To: -')
+            expect(page.find('.js-writeArea')).to have_no_text(sender_agent.email)
+          end
+        end
+      end
+    end
+
+    context 'when the mail was sent from a different email address' do
+      let(:setting_ticket_email_from) { 'AgentName' }
+      let(:other_email_address)       { create(:email_address) }
+      let(:ticket_article) do
+        create(:ticket_article, :outbound_email, ticket: ticket, created_by_id: sender_agent.id, origin_by_id: sender_agent.id).tap do |article|
+          article.update!(preferences: article.preferences.merge('email_address_id' => other_email_address.id))
+        end
+      end
+
+      it 'prefers the recorded address over the group address on forward' do
+        click_forward
+
+        expect(page.find('.js-writeArea')).to have_text("From: #{sender_agent.fullname} <#{other_email_address.email}>")
+        expect(page.find('.js-writeArea')).to have_no_text(ticket.group.email_address.email)
+      end
+
+      context "when sender format is 'SystemAddressName'" do
+        let(:setting_ticket_email_from) { 'SystemAddressName' }
+
+        it 'prefers the recorded address name in the reply citation' do
+          highlight_and_click_reply
+
+          within(:richtext) do
+            expect(page).to have_text("#{other_email_address.name} wrote:")
+            expect(page).to have_no_text("#{ticket.group.email_address.name} wrote:")
+          end
+        end
       end
     end
   end

@@ -14385,15 +14385,11 @@
                 },
                 {
                   "name": "formId",
-                  "description": "Form identifier of the form for the new article to copy attachments to",
+                  "description": "Form identifier of the form for the new article to copy attachments to (forward only)",
                   "type": {
-                    "kind": "NON_NULL",
-                    "name": null,
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "FormId",
-                      "ofType": null
-                    }
+                    "kind": "SCALAR",
+                    "name": "FormId",
+                    "ofType": null
                   },
                   "defaultValue": null
                 }
@@ -27759,6 +27755,18 @@
                     "ofType": null
                   }
                 }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "quotableAuthorName",
+              "description": "Author name for the reply citation ('On ..., X wrote:'), following the configured email sender format",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
               },
               "isDeprecated": false,
               "deprecationReason": null

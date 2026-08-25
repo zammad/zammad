@@ -495,22 +495,29 @@ class App.User extends App.Model
     return @login  if @login
     '-'
 
-  recipientName: (ticket, withEmail = false) ->
-    format        = App.Config.get('ticket_define_email_from')
-    group         = App.Group.find(ticket.group_id)
-    email_address = App.EmailAddress.find(group.email_address_id)
+  recipientName: (ticket, withEmail = false, email_address = null) ->
+    format = App.Config.get('ticket_define_email_from')
+    if !email_address
+      group         = App.Group.find(ticket.group_id)
+      email_address = App.EmailAddress.find(group.email_address_id)
     return if !email_address
 
     separator = App.Config.get('ticket_define_email_from_separator')
+    # Build the name nil-safe from the parts - string interpolation would render
+    #   NULL name parts as the literal 'null'.
+    user_name = _.compact([@firstname, @lastname].map((part) -> part?.toString().trim())).join(' ')
     if (@id is 1 || format is 'SystemAddressName') && @permission('ticket.agent')
       result = email_address.name
       result = App.Utils.buildEmailAddress(result, email_address.email) if withEmail
       return result
     else if format is 'AgentNameSystemAddressName' && @permission('ticket.agent')
-      result = "#{@firstname} #{@lastname} #{separator} #{email_address.name}"
+      result = if user_name then "#{user_name} #{separator} #{email_address.name}" else email_address.name
       result = App.Utils.buildEmailAddress(result, email_address.email) if withEmail
       return result
     else
-      result = "#{@firstname} #{@lastname}" # AgentName or customer
-      result = App.Utils.buildEmailAddress(result, @email) if withEmail
+      result = user_name # AgentName or customer
+      result or= email_address.name if @permission('ticket.agent')
+      if withEmail
+        address = if @permission('ticket.agent') then email_address.email else @email
+        result  = App.Utils.buildEmailAddress(result, address)
       return result

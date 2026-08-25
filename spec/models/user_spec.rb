@@ -425,6 +425,36 @@ RSpec.describe User, type: :model do
       end
     end
 
+    describe '#display_name_from_parts' do
+      subject(:user) { described_class.new(firstname: 'John', lastname: 'Doe') }
+
+      it 'joins first and last name by default' do
+        expect(user.display_name_from_parts).to eq('John Doe')
+      end
+
+      context "when user_name_format is 'last_first'" do
+        before { Setting.set('user_name_format', 'last_first') }
+
+        it 'reverses the order' do
+          expect(user.display_name_from_parts).to eq('Doe John')
+        end
+      end
+
+      context "when user_name_format is 'last_first_comma'" do
+        before { Setting.set('user_name_format', 'last_first_comma') }
+
+        it 'reverses the order and joins with a comma' do
+          expect(user.display_name_from_parts).to eq('Doe, John')
+        end
+      end
+
+      it 'never falls back to personal data' do
+        user = described_class.new(firstname: nil, lastname: '', email: 'user@example.com', phone: '12345')
+
+        expect(user.display_name_from_parts).to eq('')
+      end
+    end
+
     describe '#by_reset_token' do
       subject(:user) { token.user }
 

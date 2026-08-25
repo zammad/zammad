@@ -24,7 +24,7 @@ class App.FullQuoteHeader
   @fullQuoteHeaderForwardFrom: (article) ->
     user_id = article.origin_by_id || article.created_by_id
 
-    @fullQuoteHeaderEnsurePrivacy(user_id, article) || @fullQuoteHeaderEnsurePrivacy(article.from, article) || article.from
+    @fullQuoteHeaderEnsurePrivacy(user_id, article, true) || @fullQuoteHeaderEnsurePrivacy(article.from, article, true) || article.from
 
   @fullQuoteHeaderForwardTo: (article) ->
     if article.type.name is 'email' || article.type.name is 'web'
@@ -64,15 +64,40 @@ class App.FullQuoteHeader
       when 'object'
         input
 
-  @fullQuoteHeaderEnsurePrivacy: (input, article) =>
+  @fullQuoteHeaderEnsurePrivacy: (input, article, sender = false) =>
     user = @fullQuoteHeaderEnsurePrivacyParseInput(input)
     return if !user
 
-    ticket = App.Ticket.find(article.ticket_id)
-    return if !ticket
+    # Only the sender line may substitute the configured sender format, which can
+    #   pair an agent's name with the group address the mail was sent from.
+    if sender
+      ticket = App.Ticket.find(article.ticket_id)
+      return if !ticket
 
-    user.recipientName(ticket, true)
+      return user.recipientName(ticket, true, @fullQuoteHeaderRecordedEmailAddress(article))
 
+    # Agents must not fall back to personal data (email, phone, login) when only
+    #   their name may be shown. The '-' also prevents the fallthrough to the raw
+    #   header element, which would expose the address again.
+    if user.permission('ticket.agent')
+      return user.displayNameFromParts() or '-'
+
+    return App.Utils.buildEmailAddress(user.displayName(), user.email) if user.email
+
+    user.displayName()
+
+  # Prefer the address the mail was actually sent from (stored at send time) -
+  #   the ticket may have been moved or the group address changed since.
+  @fullQuoteHeaderRecordedEmailAddress: (article) ->
+    return if !article.preferences?.email_address_id
+
+    App.EmailAddress.find(article.preferences.email_address_id)
+
+  # Do not allow whitespace, quotes or commas inside the address: display names
+  #   can contain email addresses themselves - for users without a name Zammad
+  #   builds headers like '"user@example.com" <user@example.com>' - and a match
+  #   bleeding into those characters would extract garbage, skip the user
+  #   lookup and expose the raw header element.
   @fullQuoteHeaderExtractEmail: (input) ->
-    if match = input.match(/<?(\S+@\S[^>]+)(>?)/)
+    if match = input.match(/<?([^\s"<,]+@[^>\s",]+)(>?)/)
       match[1]

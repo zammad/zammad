@@ -164,20 +164,7 @@ returns
     # Email sending: always first name last name (regardless of setting)
     format = recipient_line ? 'first_last' : Setting.get('user_name_format')
 
-    parts, separator = case format
-                       when 'last_first'
-                         [[lastname, firstname], ' ']
-                       when 'last_first_comma'
-                         [[lastname, firstname], ', ']
-                       else
-                         [[firstname, lastname], ' ']
-                       end
-
-    name = parts
-      .map { |part| part.to_s.strip }
-      .compact_blank
-      .join(separator)
-      .strip
+    name = display_name_from_parts(format)
 
     if name.blank? && email.present? && email_fallback
       return email
@@ -198,6 +185,37 @@ returns
     end
 
     name
+  end
+
+=begin
+
+display name of user, built only from the name parts following the given
+format - without any fallback to personal data like email or phone. The
+server side twin of the frontend's displayNameFromParts().
+
+  user = User.find(123)
+  result = user.display_name_from_parts
+
+returns
+
+  result = "Bob Smith"
+
+=end
+
+  def display_name_from_parts(format = Setting.get('user_name_format'))
+    parts, separator = case format
+                       when 'last_first'
+                         [[lastname, firstname], ' ']
+                       when 'last_first_comma'
+                         [[lastname, firstname], ', ']
+                       else
+                         [[firstname, lastname], ' ']
+                       end
+
+    parts
+      .map { |part| part.to_s.strip }
+      .compact_blank
+      .join(separator)
   end
 
 =begin

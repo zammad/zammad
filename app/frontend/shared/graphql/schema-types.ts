@@ -2716,7 +2716,7 @@ export type MutationsTicketArticleDeleteArgs = {
 /** All available mutations */
 export type MutationsTicketArticleEmailForwardReplyArgs = {
   articleId: Scalars['ID']['input'];
-  formId: Scalars['FormId']['input'];
+  formId?: InputMaybe<Scalars['FormId']['input']>;
 };
 
 
@@ -5053,6 +5053,8 @@ export type TicketArticleEmailForwardReplyPayload = {
   attachments: Array<StoredFile>;
   /** Errors encountered during execution of the mutation. */
   errors?: Maybe<Array<UserError>>;
+  /** Author name for the reply citation ('On ..., X wrote:'), following the configured email sender format */
+  quotableAuthorName?: Maybe<Scalars['String']['output']>;
   /** 'Cc' information of the original email to be inserted in the quoted email block */
   quotableCc?: Maybe<Scalars['String']['output']>;
   /** 'From' information of the original email to be inserted in the quoted email block */
