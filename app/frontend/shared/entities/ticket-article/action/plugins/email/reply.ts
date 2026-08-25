@@ -3,7 +3,9 @@
 import { uniq } from 'lodash-es'
 
 import type { TicketById, TicketArticle } from '#shared/entities/ticket/types.ts'
+import { useTicketArticleEmailForwardReplyMutation } from '#shared/entities/ticket-article/graphql/mutations/ticketArticleEmailForwardReply.api.ts'
 import { EnumTicketArticleSenderName, type AddressesField } from '#shared/graphql/types.ts'
+import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
 import type { ConfigList } from '#shared/types/store.ts'
 
 import { getArticleSelection, getReplyQuoteHeader } from './selection.ts'
@@ -148,7 +150,26 @@ const getRecipientArticle = (ticket: TicketById, article: TicketArticle, all = f
   return newArticle
 }
 
-export const replyToEmail = (
+const quotableAuthorNameMutation = new MutationHandler(
+  useTicketArticleEmailForwardReplyMutation({}),
+  {
+    errorShowNotification: false,
+  },
+)
+
+// The citation name follows the configured email sender format and is computed
+//   server side, shared with the forwarded quote header. On failure the plain
+//   author name serves as fallback.
+const fetchQuotableAuthorName = async (article: TicketArticle) => {
+  try {
+    const result = await quotableAuthorNameMutation.send({ articleId: article.id })
+    return result?.ticketArticleEmailForwardReply?.quotableAuthorName
+  } catch {
+    return undefined
+  }
+}
+
+export const replyToEmail = async (
   ticket: TicketById,
   article: TicketArticle,
   options: TicketArticlePerformOptions,
@@ -165,7 +186,10 @@ export const replyToEmail = (
   let { content: selection, full } = getArticleSelection(options.selection, article, config)
 
   if (selection) {
-    const header = getReplyQuoteHeader(config, article)
+    const authorName = config.ui_ticket_zoom_article_email_full_quote_header
+      ? await fetchQuotableAuthorName(article)
+      : undefined
+    const header = getReplyQuoteHeader(config, article, authorName)
     // data-full will be removed by the backend, it's used only for siganture handling
     selection = `${full ? '' : '<p><br><br></p>'}<blockquote type="cite" ${
       full ? 'data-marker="signature-before"' : ''

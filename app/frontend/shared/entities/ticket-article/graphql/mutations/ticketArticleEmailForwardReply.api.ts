@@ -7,11 +7,12 @@ import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;
 
 export const TicketArticleEmailForwardReplyDocument = gql`
-    mutation ticketArticleEmailForwardReply($articleId: ID!, $formId: FormId!) {
+    mutation ticketArticleEmailForwardReply($articleId: ID!, $formId: FormId) {
   ticketArticleEmailForwardReply(articleId: $articleId, formId: $formId) {
     quotableFrom
     quotableTo
     quotableCc
+    quotableAuthorName
     attachments {
       id
       internalId

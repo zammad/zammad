@@ -12,6 +12,63 @@ RSpec.describe EmailAddress, type: :model do
   it_behaves_like 'HasXssSanitizedNote', model_factory: :email_address
   it_behaves_like 'Association clears cache', association: :groups
 
+  describe '#sender_display_name' do
+    let(:user) { create(:agent) }
+
+    context "when sender format is 'SystemAddressName'" do
+      before { Setting.set('ticket_define_email_from', 'SystemAddressName') }
+
+      it 'returns the email address name only' do
+        expect(email_address.sender_display_name(user)).to eq(email_address.name)
+      end
+    end
+
+    context "when sender format is 'AgentName'" do
+      before { Setting.set('ticket_define_email_from', 'AgentName') }
+
+      it 'returns the user name only' do
+        expect(email_address.sender_display_name(user)).to eq("#{user.firstname} #{user.lastname}")
+      end
+    end
+
+    context "when sender format is 'AgentNameSystemAddressName'" do
+      before { Setting.set('ticket_define_email_from', 'AgentNameSystemAddressName') }
+
+      it 'combines user name and email address name' do
+        expect(email_address.sender_display_name(user))
+          .to eq("#{user.firstname} #{user.lastname} #{Setting.get('ticket_define_email_from_separator')} #{email_address.name}")
+      end
+    end
+
+    context "when sender format is 'AgentName' and the user has no name" do
+      let(:user) { create(:agent, firstname: '', lastname: '', email: 'namelessagent@example.com') }
+
+      before { Setting.set('ticket_define_email_from', 'AgentName') }
+
+      it 'falls back to the email address name' do
+        expect(email_address.sender_display_name(user)).to eq(email_address.name)
+      end
+    end
+
+    context "when sender format is 'AgentNameSystemAddressName' and the user has no name" do
+      let(:user) { create(:agent, firstname: nil, lastname: nil, email: 'namelessagent@example.com') }
+
+      before { Setting.set('ticket_define_email_from', 'AgentNameSystemAddressName') }
+
+      it 'falls back to the email address name without a dangling separator' do
+        expect(email_address.sender_display_name(user)).to eq(email_address.name)
+      end
+    end
+
+    context 'when the user is the system user' do
+      before { Setting.set('ticket_define_email_from', 'AgentName') }
+
+      it 'returns the email address name only' do
+        expect(email_address.sender_display_name(User.find(1))).to eq(email_address.name)
+      end
+    end
+  end
+
   describe 'Attributes:' do
     describe '#active' do
       subject(:email_address) do

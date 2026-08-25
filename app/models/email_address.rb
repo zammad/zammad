@@ -47,6 +47,37 @@ check and if channel not exists reset configured channels for email addresses
     end
   end
 
+=begin
+
+display name for the From header of outgoing emails sent via this address,
+following the ticket_define_email_from setting
+
+  email_address.sender_display_name(article.created_by)
+
+returns
+
+  'Some Group'                     # SystemAddressName or system user
+  'John Doe'                       # AgentName
+  'John Doe via Some Group'        # AgentNameSystemAddressName
+
+=end
+
+  def sender_display_name(user)
+    return name if user.nil? || user.id == 1
+
+    user_name = [user.firstname, user.lastname].map { |part| part.to_s.strip }.compact_blank.join(' ')
+    return name if user_name.blank?
+
+    case Setting.get('ticket_define_email_from')
+    when 'AgentNameSystemAddressName'
+      "#{user_name} #{Setting.get('ticket_define_email_from_separator')} #{name}"
+    when 'AgentName'
+      user_name
+    else
+      name
+    end
+  end
+
   private
 
   def check_email
