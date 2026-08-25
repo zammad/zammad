@@ -388,6 +388,22 @@ RSpec.describe 'Chat Handling', type: :system do
     end
   end
 
+  context 'when hovering over the active agents info' do
+    it 'shows the avatar of the active agent', authenticated_as: :authenticate do
+      visit '/'
+
+      enable_agent_chat
+
+      expect(page).to have_css('.active .js-activeAgents .js-badgeActiveAgents', text: '1')
+
+      find('.active .js-activeAgents .js-info').hover
+
+      # The avatar is positioned via an inline style - Bootstrap's popover sanitizer
+      #   strips that attribute unless sanitizing is disabled, leaving a blank avatar.
+      expect(page).to have_css('.popover .userList-entry .avatar[style]')
+    end
+  end
+
   context 'when jquery variant is used' do
     before do
       visit '/'
