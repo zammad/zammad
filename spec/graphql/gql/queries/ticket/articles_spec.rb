@@ -370,4 +370,95 @@ RSpec.describe Gql::Queries::Ticket::Articles, type: :graphql do
 
     it_behaves_like 'graphql responds with error if unauthenticated'
   end
+
+  context 'when fetching the accounted time of articles' do
+    let(:query) do
+      <<~QUERY
+        query ticketArticles($ticketId: ID!) {
+          ticketArticles(ticketId: $ticketId) {
+            edges {
+              node {
+                id
+                timeUnit
+                accountedTimeType {
+                  name
+                }
+              }
+            }
+          }
+        }
+      QUERY
+    end
+
+    let(:customer)  { create(:customer) }
+    let(:ticket)    { create(:ticket, customer:) }
+    let(:agent)     { create(:agent, groups: [ticket.group]) }
+    let(:variables) { { ticketId: gql.id(ticket) } }
+
+    let(:activity_type) { create(:ticket_time_accounting_type, name: 'Billing') }
+
+    let!(:accounted_article)   { create(:ticket_article, ticket:) }
+    let!(:untyped_article)     { create(:ticket_article, ticket:) }
+    let!(:unaccounted_article) { create(:ticket_article, ticket:) }
+    let!(:time_accounting)     { create(:ticket_time_accounting, ticket:, ticket_article: accounted_article, time_unit: 42, type: activity_type) }
+
+    let(:response_articles) { gql.result.nodes }
+
+    before { create(:ticket_time_accounting, ticket:, ticket_article: untyped_article, time_unit: 7) }
+
+    context 'with an agent', authenticated_as: :agent do
+      before { gql.execute(query, variables:) }
+
+      it 'returns the accounted time of the article' do
+        expect(response_articles).to include(include('id' => gql.id(accounted_article), 'timeUnit' => time_accounting.time_unit.to_f))
+      end
+
+      it 'returns the activity type of the accounted time' do
+        expect(response_articles).to include(include('id' => gql.id(accounted_article), 'accountedTimeType' => { 'name' => activity_type.name }))
+      end
+
+      it 'returns no activity type for an accounted time without one' do
+        expect(response_articles).to include(include('id' => gql.id(untyped_article), 'accountedTimeType' => nil))
+      end
+
+      it 'returns no accounted time for an article without one' do
+        expect(response_articles).to include(include('id' => gql.id(unaccounted_article), 'timeUnit' => nil, 'accountedTimeType' => nil))
+      end
+    end
+
+    context 'with a customer', authenticated_as: :customer do
+      before { gql.execute(query, variables:) }
+
+      it 'returns no accounted time at all' do
+        expect(response_articles).to include(include('id' => gql.id(accounted_article), 'timeUnit' => nil, 'accountedTimeType' => nil))
+      end
+    end
+
+    context 'when many articles are accounted', authenticated_as: :agent do
+      def query_count(table)
+        queries = []
+        subscriber = ActiveSupport::Notifications.subscribe('sql.active_record') do |*, payload|
+          queries << payload[:sql] if payload[:sql].include?(table)
+        end
+        gql.execute(query, variables:)
+        queries.size
+      ensure
+        ActiveSupport::Notifications.unsubscribe(subscriber)
+      end
+
+      # The accounted times and their activity types are batch loaded, so all articles are
+      #   resolved with one query each, no matter how long the article list grows.
+      it 'resolves the accounted times and activity types in a single query each', :aggregate_failures do
+        expect(query_count('ticket_time_accountings')).to eq(1)
+        expect(query_count('ticket_time_accounting_types')).to eq(1)
+
+        create_list(:ticket_article, 3, ticket:).each do |article|
+          create(:ticket_time_accounting, ticket:, ticket_article: article, time_unit: 7, type: create(:ticket_time_accounting_type))
+        end
+
+        expect(query_count('ticket_time_accountings')).to eq(1)
+        expect(query_count('ticket_time_accounting_types')).to eq(1)
+      end
+    end
+  end
 end

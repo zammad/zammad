@@ -7366,6 +7366,37 @@ a.list-group-item.active > .badge,
   }
 }
 
+// Two key/value pairs sharing one row, e.g. the channel and the accounted time.
+//   The keys keep their width, so they stay aligned with the single column rows.
+.article-meta-row--columns {
+  flex-wrap: wrap;
+
+  .article-meta-value {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  @include phone {
+    .article-meta-value {
+      // Fill the rest of the line, so the following key starts on a new one.
+      // 50px = .article-meta-key width, 8px = .article-meta-value margin.
+      min-width: calc(100% - 50px - 8px);
+    }
+  }
+}
+
+// The activity type is admin defined and can be long, so the line is ellipsized. Together
+//   with the truncated accounted time above it, it can never grow a third line. Only the
+//   marked up type keeps the normal text color, the label around it stays muted.
+.article-meta-activity-type {
+  @extend .u-textTruncate;
+
+  b {
+    color: var(--text-inverted);
+    font-weight: 400;
+  }
+}
+
 .article-meta-icon {
   fill: var(--text-inverted);
   vertical-align: top;

@@ -99,9 +99,15 @@ class Ticket::AssetsAll
   end
 
   def time_accountings
-    @time_accountings = ticket
-      .ticket_time_accounting
-      .map { |row| row.slice(:id, :ticket_id, :ticket_article_id, :time_unit, :type_id) }
+    @time_accountings ||= begin
+      if TicketPolicy.new(user, ticket).agent_read_access?
+        ticket
+          .ticket_time_accounting
+          .map { |row| row.slice(:id, :ticket_id, :ticket_article_id, :time_unit, :type_id) }
+      else
+        []
+      end
+    end
   end
 
   def mentions

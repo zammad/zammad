@@ -4784,6 +4784,8 @@ export type TicketAiRelatedKnowledgeBaseAnswersUpdatesPayload = {
 /** Ticket articles */
 export type TicketArticle = {
   __typename?: 'TicketArticle';
+  /** The activity type of the accounted time of this article. */
+  accountedTimeType?: Maybe<TicketTimeAccountingType>;
   /** All attached files as stored in the database. */
   attachments: Array<StoredFile>;
   /** Attachments for display, with inline images filtered out. */
@@ -4821,6 +4823,8 @@ export type TicketArticle = {
   subject?: Maybe<Scalars['String']['output']>;
   /** resolver for Rails' belongs_to relationship */
   ticket: Ticket;
+  /** The accounted time of this article. */
+  timeUnit?: Maybe<Scalars['Float']['output']>;
   to?: Maybe<AddressesField>;
   /** resolver for Rails' belongs_to relationship */
   type?: Maybe<TicketArticleType>;
@@ -5677,6 +5681,24 @@ export type TicketStatsMonthly = {
   ticketsClosed: Scalars['Int']['output'];
   ticketsCreated: Scalars['Int']['output'];
   year: Scalars['String']['output'];
+};
+
+/** Ticket time accounting activity types */
+export type TicketTimeAccountingType = {
+  __typename?: 'TicketTimeAccountingType';
+  active: Scalars['Boolean']['output'];
+  /** Create date/time of the record */
+  createdAt: Scalars['ISO8601DateTime']['output'];
+  /** User that created this record */
+  createdBy?: Maybe<User>;
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+  /** Internal note */
+  note?: Maybe<Scalars['String']['output']>;
+  /** Last update date/time of the record */
+  updatedAt: Scalars['ISO8601DateTime']['output'];
+  /** Last user that updated this record */
+  updatedBy?: Maybe<User>;
 };
 
 /** Ticket time accounting - sum per type */

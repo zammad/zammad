@@ -34,6 +34,49 @@ RSpec.describe 'Ticket::Article API > Time Accounting', :aggregate_failures, typ
     end
   end
 
+  describe 'POST /api/v1/ticket_articles' do
+    let(:params) do
+      {
+        ticket_id: ticket.id,
+        body:      'Some example body.',
+        time_unit: 42,
+      }
+    end
+
+    let(:time_accounting_enabled) { true }
+
+    before do
+      Setting.set('time_accounting', time_accounting_enabled)
+
+      ticket
+
+      authenticated_as(agent)
+      post '/api/v1/ticket_articles', params: params, as: :json
+    end
+
+    context 'when time accounting is enabled' do
+      it 'creates the article together with its accounted time' do
+        expect(response).to have_http_status(:created)
+        expect(ticket.reload.articles.count).to eq(1)
+        expect(Ticket::TimeAccounting.last)
+          .to have_attributes(ticket_article_id: json_response['id'], time_unit: 42)
+      end
+    end
+
+    context 'when time accounting is disabled' do
+      let(:time_accounting_enabled) { false }
+
+      # Article and accounted time are stored in one transaction, so a denied accounting
+      #   must not leave the article behind. Unlike 'PUT /api/v1/tickets/:id', this endpoint
+      #   has no surrounding transaction of its own to roll the article back.
+      it 'creates neither the article nor the accounted time' do
+        expect(response).to have_http_status(:forbidden)
+        expect(ticket.reload.articles).to be_empty
+        expect(Ticket::TimeAccounting.count).to be_zero
+      end
+    end
+  end
+
   describe 'PUT /api/v1/tickets/:id' do
     let(:params) do
       {

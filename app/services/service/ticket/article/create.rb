@@ -26,9 +26,15 @@ class Service::Ticket::Article::Create < Service::Base
 
       transform_article(article, attachments_raw, subtype)
 
-      article.save!
+      # Article and accounted time are stored in one transaction, so that the
+      #   'after_create_commit' subscription trigger of the article fires only once
+      #   the accounted time is available for the clients as well.
+      ActiveRecord::Base.transaction do
+        article.save!
 
-      time_accounting(article, time_unit, accounted_time_type)
+        time_accounting(article, time_unit, accounted_time_type)
+      end
+
       form_id_cleanup(attachments_raw)
     end
   end

@@ -7,10 +7,12 @@ import ObjectAttributeContent from '#shared/components/ObjectAttributes/ObjectAt
 import { useArticleSecurity } from '#shared/composables/useArticleSecurity.ts'
 import { useObjectAttributes } from '#shared/entities/object-attributes/composables/useObjectAttributes.ts'
 import { useWhatsapp } from '#shared/entities/ticket/channel/composables/useWhatsapp.ts'
+import { useTicketAccountedTime } from '#shared/entities/ticket/composables/useTicketAccountedTime.ts'
 import type { TicketArticle } from '#shared/entities/ticket/types.ts'
 import { getArticleChannelIcon } from '#shared/entities/ticket-article/composables/getArticleChannelIcon.ts'
 import { translateArticleSecurity } from '#shared/entities/ticket-article/composables/translateArticleSecurity.ts'
 import { EnumObjectManagerObjects } from '#shared/graphql/types.ts'
+import { markup } from '#shared/utils/markup.ts'
 
 import CommonDialog from '#mobile/components/CommonDialog/CommonDialog.vue'
 import CommonSectionMenu from '#mobile/components/CommonSectionMenu/CommonSectionMenu.vue'
@@ -79,6 +81,12 @@ const {
 const { attributesLookup } = useObjectAttributes(EnumObjectManagerObjects.TicketArticle)
 
 const detectedLanguageAttribute = computed(() => attributesLookup.value.get('detected_language'))
+
+const { formatAccountedTime, formatAccountedTimeType } = useTicketAccountedTime()
+
+const accountedTime = computed(() => formatAccountedTime(props.article.timeUnit))
+
+const activityTypeSentence = computed(() => formatAccountedTimeType(props.article))
 </script>
 
 <template>
@@ -115,6 +123,19 @@ const detectedLanguageAttribute = computed(() => attributesLookup.value.get('det
           >
             {{ $t(label) }}
           </CommonLink>
+        </div>
+      </CommonSectionMenuItem>
+      <CommonSectionMenuItem v-if="article.timeUnit" :label="__('Accounted time')">
+        <div class="flex gap-1">
+          <span class="shrink-0">{{ accountedTime }}</span>
+          <!-- The activity type is admin defined and can be long, so keep the sentence inside the dialog. -->
+          <!-- The markup helper escapes the sentence before it turns the markers into tags. -->
+          <!-- eslint-disable vue/no-v-html -->
+          <span
+            v-if="activityTypeSentence"
+            class="min-w-0 truncate text-white/50 *:font-normal *:text-white"
+            v-html="markup(activityTypeSentence)"
+          />
         </div>
       </CommonSectionMenuItem>
       <CommonSectionMenuItem v-if="articleDeliveryStatus" :label="__('Message status')">

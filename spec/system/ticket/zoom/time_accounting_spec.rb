@@ -262,4 +262,132 @@ RSpec.describe 'Ticket zoom > Time Accounting', authenticated_as: :authenticate,
       end
     end
   end
+
+  describe 'accounted time in the article details' do
+    let(:create_new_article)   { false }
+    let(:accounted_article)    { create(:ticket_article, ticket: ticket) }
+    let(:unaccounted_article)  { create(:ticket_article, ticket: ticket) }
+
+    def authenticate
+      Setting.set('time_accounting', true)
+      Setting.set('time_accounting_types', time_accounting_types)
+      Setting.set('time_accounting_unit', 'minute')
+
+      create(:ticket_time_accounting, ticket: ticket, ticket_article: accounted_article, time_unit: 42, type: active_type)
+      unaccounted_article
+      inactive_type
+
+      true
+    end
+
+    # The accounted time shares one row with the channel in a second column.
+    it 'shows the accounted time of the article next to the channel', :aggregate_failures do
+      within :active_ticket_article, accounted_article do
+        find('.article-content .textBubble').click
+
+        expect(page).to have_css('.article-meta-row--columns', text: %r{Channel}i)
+        expect(page).to have_css('.article-meta-row--columns', text: %r{Accounted\ Time\s+42\.00\ minute\(s\)}i)
+      end
+    end
+
+    it 'shows no accounted time for an article without one', :aggregate_failures do
+      within :active_ticket_article, unaccounted_article do
+        find('.article-content .textBubble').click
+
+        expect(page).to have_no_css('.article-meta-row--columns')
+        expect(page).to have_no_css('.article-meta-row', text: %r{Accounted\ Time}i)
+      end
+    end
+
+    it 'shows the accounted time that was added while the ticket is open' do
+      within :active_ticket_article, unaccounted_article do
+        expect(page).to have_no_css('.article-meta-row', text: %r{Accounted\ Time}i, visible: :all)
+      end
+
+      create(:ticket_time_accounting, ticket: ticket, ticket_article: unaccounted_article, time_unit: 7)
+      ticket.update!(title: "#{ticket.title} - updated")
+
+      within :active_ticket_article, unaccounted_article do
+        expect(page).to have_css('.article-meta-row--columns', text: %r{Accounted\ Time\s+7\.00\ minute\(s\)}i, visible: :all)
+      end
+    end
+
+    it 'shows no activity type if types are disabled' do
+      within :active_ticket_article, accounted_article do
+        find('.article-content .textBubble').click
+
+        expect(page).to have_no_css('.article-meta-row', text: %r{for\ activity\ type}i)
+      end
+    end
+
+    context 'when activity types are enabled' do
+      let(:time_accounting_types) { true }
+
+      # The activity type is rendered on a second line below the accounted time.
+      it 'shows the activity type below the accounted time' do
+        within :active_ticket_article, accounted_article do
+          find('.article-content .textBubble').click
+
+          expect(page).to have_css('.article-meta-row--columns', text: %r{Accounted\ Time\s+42\.00\ minute\(s\)\s+for\ activity\ type\s+#{active_type.name}}i)
+        end
+      end
+
+      it 'shows no activity type for an article without accounted time' do
+        within :active_ticket_article, unaccounted_article do
+          find('.article-content .textBubble').click
+
+          expect(page).to have_no_css('.article-meta-row', text: %r{for\ activity\ type}i)
+        end
+      end
+
+      it 'shows the activity type that was added while the ticket is open' do
+        within :active_ticket_article, unaccounted_article do
+          expect(page).to have_no_css('.article-meta-row', text: %r{for\ activity\ type}i, visible: :all)
+        end
+
+        create(:ticket_time_accounting, ticket: ticket, ticket_article: unaccounted_article, time_unit: 7, type: inactive_type)
+        ticket.update!(title: "#{ticket.title} - updated")
+
+        within :active_ticket_article, unaccounted_article do
+          expect(page).to have_css('.article-meta-row--columns', text: %r{Accounted\ Time\s+7\.00\ minute\(s\)\s+for\ activity\ type\s+#{inactive_type.name}}i, visible: :all)
+        end
+      end
+
+      context 'with an activity type that does not fit into the row' do
+        let(:active_type) { create(:ticket_time_accounting_type, name: 'A very long activity type name that certainly does not fit into the article meta row') }
+
+        # The line is ellipsized instead of wrapping, so the accounted time never grows a
+        #   third line.
+        it 'ellipsizes the activity type instead of adding another line' do
+          within :active_ticket_article, accounted_article do
+            find('.article-content .textBubble').click
+
+            expect(find('.article-meta-activity-type').evaluate_script('this.scrollWidth > this.clientWidth')).to be(true)
+          end
+        end
+      end
+    end
+
+    context 'when the ticket is opened by the customer' do
+      def authenticate
+        Setting.set('time_accounting', true)
+        Setting.set('time_accounting_types', true)
+        Setting.set('time_accounting_unit', 'minute')
+
+        create(:ticket_time_accounting, ticket: ticket, ticket_article: accounted_article, time_unit: 42, type: active_type)
+
+        ticket.customer
+      end
+
+      it 'does not show the accounted time and its activity type', :aggregate_failures do
+        within :active_ticket_article, accounted_article do
+          find('.article-content .textBubble').click
+
+          expect(page).to have_no_css('.article-meta-row--columns')
+          expect(page).to have_no_css('.article-meta-row', text: %r{Accounted\ Time}i)
+          expect(page).to have_no_css('.article-meta-row', text: %r{for\ activity\ type}i)
+        end
+      end
+    end
+  end
 end

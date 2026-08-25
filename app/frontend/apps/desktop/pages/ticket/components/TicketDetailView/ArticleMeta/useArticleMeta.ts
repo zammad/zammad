@@ -7,6 +7,7 @@ import type { TicketArticle } from '#shared/entities/ticket/types.ts'
 import { i18n } from '#shared/i18n.ts'
 
 import { lookupArticlePlugin } from '#desktop/pages/ticket/components/TicketDetailView/article-type/index.ts'
+import ArticleMetaAccountedTime from '#desktop/pages/ticket/components/TicketDetailView/ArticleMeta/ArticleMetaAccountedTime.vue'
 import ArticleMetaAddress from '#desktop/pages/ticket/components/TicketDetailView/ArticleMeta/ArticleMetaAddress.vue'
 import ArticleMetaDetectedLanguage from '#desktop/pages/ticket/components/TicketDetailView/ArticleMeta/ArticleMetaDetectedLanguage.vue'
 import type { ChannelMetaField } from '#desktop/pages/ticket/components/TicketDetailView/ArticleMeta/types.ts'
@@ -127,6 +128,13 @@ export const useArticleMeta = (article: Ref<TicketArticle>) => {
         links: article.value.preferences?.links,
         component: plugin?.channel?.component,
         order: 400,
+      },
+      {
+        label: __('Accounted time'),
+        name: 'timeUnit',
+        component: ArticleMetaAccountedTime,
+        show: () => !!article.value.timeUnit,
+        order: 500,
       },
     ]
 

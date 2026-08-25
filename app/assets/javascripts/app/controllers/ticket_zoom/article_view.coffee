@@ -6,13 +6,16 @@ class App.TicketZoomArticleView extends App.Controller
 
   execute: (params) =>
     @ticket_article_ids = params.ticket_article_ids
+    @time_accountings   = params.time_accountings
     @run()
 
   run: =>
     all = []
     for ticket_article_id, index in @ticket_article_ids
       controllerKey = ticket_article_id.toString()
-      if !@articleController[controllerKey]
+      if @articleController[controllerKey]
+        @articleController[controllerKey].updateTimeAccountings(@time_accountings)
+      else
         el = $('<div></div>')
         @articleController[controllerKey] = new App.ArticleViewItem(
           ticket:     @ticket
@@ -20,6 +23,7 @@ class App.TicketZoomArticleView extends App.Controller
           el:         el
           ui:         @ui
           highlighter: @highlighter
+          time_accountings: @time_accountings
           form_id:    @form_id
         )
         if !@ticketArticleInsertByIndex(index, el)

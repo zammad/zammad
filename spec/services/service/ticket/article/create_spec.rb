@@ -52,6 +52,7 @@ RSpec.describe Service::Ticket::Article::Create, current_user_id: -> { user.id }
         it 'does not save article and raises error' do
           expect { service_result }
             .to raise_error(%r{Time Accounting is not enabled})
+            .and(not_change(Ticket::Article, :count))
         end
       end
     end

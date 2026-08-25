@@ -63,6 +63,8 @@ export const createDummyArticle = (options?: {
   preferences?: ArticleNodeOptions['preferences']
   detectedLanguage?: ArticleNodeOptions['detectedLanguage']
   bodyRenderingError?: ArticleNode['bodyRenderingError']
+  timeUnit?: ArticleNodeOptions['timeUnit']
+  accountedTimeType?: string
 }) => {
   return nullableMock<ArticleNode>({
     __typename: 'TicketArticle',
@@ -95,5 +97,9 @@ export const createDummyArticle = (options?: {
     securityState: options?.securityState === undefined ? null : options.securityState,
     mediaErrorState: options?.mediaErrorState === undefined ? null : options.mediaErrorState,
     detectedLanguage: options?.detectedLanguage ?? null,
+    timeUnit: options?.timeUnit ?? null,
+    accountedTimeType: options?.accountedTimeType
+      ? { __typename: 'TicketTimeAccountingType', name: options.accountedTimeType }
+      : null,
   })
 }

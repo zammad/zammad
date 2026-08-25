@@ -4,6 +4,7 @@ import { waitFor } from '@testing-library/vue'
 import { expect } from 'vitest'
 
 import { type ExtendedRenderResult, renderComponent } from '#tests/support/components/index.ts'
+import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 
 import { type createDummyArticle } from '#shared/entities/ticket-article/__tests__/mocks/ticket-articles.ts'
 
@@ -126,6 +127,56 @@ describe('ArticleBubbleMetaFields', () => {
       await waitFor(() => {
         expect(wrapper.getByText('German')).toBeInTheDocument()
       })
+    })
+
+    it('displays the accounted time and its activity type in one line if available', () => {
+      mockApplicationConfig({ time_accounting_unit: 'minute', time_accounting_types: true })
+
+      const wrapper = renderWrapper('web', {
+        articleData: {
+          timeUnit: 5,
+          accountedTimeType: 'Billing',
+        },
+      })
+
+      expect(wrapper.getByText('Accounted time')).toBeInTheDocument()
+      expect(wrapper.getByText('5.00 minute(s)')).toBeInTheDocument()
+
+      // The activity type is the marked up part of the translated label.
+      const activityType = wrapper.getByText(/for activity type/)
+
+      expect(activityType).toHaveTextContent('for activity type Billing')
+      expect(activityType.querySelector('b')).toHaveTextContent('Billing')
+    })
+
+    it('does not display the activity type if the feature is disabled', () => {
+      mockApplicationConfig({ time_accounting_unit: 'minute', time_accounting_types: false })
+
+      const wrapper = renderWrapper('web', {
+        articleData: {
+          timeUnit: 5,
+          accountedTimeType: 'Billing',
+        },
+      })
+
+      expect(wrapper.getByText('5.00 minute(s)')).toBeInTheDocument()
+
+      expect(wrapper.queryByText('for activity type')).not.toBeInTheDocument()
+      expect(wrapper.queryByText('Billing')).not.toBeInTheDocument()
+    })
+
+    it('does not display the activity type if there is none', () => {
+      mockApplicationConfig({ time_accounting_unit: 'minute', time_accounting_types: true })
+
+      const wrapper = renderWrapper('web', {
+        articleData: {
+          timeUnit: 5,
+        },
+      })
+
+      expect(wrapper.getByText('5.00 minute(s)')).toBeInTheDocument()
+
+      expect(wrapper.queryByText('for activity type')).not.toBeInTheDocument()
     })
   })
 })

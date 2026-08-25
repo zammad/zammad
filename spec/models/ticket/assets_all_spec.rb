@@ -77,7 +77,7 @@ RSpec.describe Ticket::AssetsAll do
           links:              be_blank,
           tags:               [tag_name],
           mentions:           [mention.id],
-          time_accountings:   [time_accounting.slice(:id, :ticket_id, :ticket_article_id, :time_unit, :type_id)],
+          time_accountings:   be_empty,
           form_meta:          be_present,
           assets:             be_present,
         )
@@ -105,6 +105,14 @@ RSpec.describe Ticket::AssetsAll do
 
       it 'marks AI summary disabled below the ticket asset' do
         expect(instance.all_assets.dig(:assets, Ticket.to_app_model, ticket.id, 'ai_summary_enabled')).to be(false)
+      end
+    end
+
+    context 'when user is agent without access to the group of the ticket' do
+      let(:user) { create(:agent) }
+
+      it 'does not return the accounted times' do
+        expect(instance.all_assets).to include(time_accountings: be_empty)
       end
     end
   end

@@ -92,6 +92,10 @@ export const TicketArticleAttributesFragmentDoc = gql`
     error
   }
   detectedLanguage
+  timeUnit
+  accountedTimeType {
+    name
+  }
   highlightedTexts {
     startIndex
     endIndex

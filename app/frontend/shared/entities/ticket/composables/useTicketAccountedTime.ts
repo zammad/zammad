@@ -2,6 +2,8 @@
 
 import { computed, toRef } from 'vue'
 
+import type { TicketArticle } from '#shared/entities/ticket/types.ts'
+import { i18n } from '#shared/i18n.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
 import type { ConfigList } from '#shared/types/config.ts'
 
@@ -38,5 +40,32 @@ export const useTicketAccountedTime = () => {
     getTimeAccountingDisplayUnit(applicationConfig.value),
   )
 
-  return { timeAccountingDisplayUnit, timeAccountingConfig }
+  // The display unit is empty when no unit is configured, in that case only the value is shown.
+  const formatAccountedTime = (timeUnit?: number | null) => {
+    if (timeUnit == null) return ''
+
+    return [timeUnit.toFixed(2), i18n.t(timeAccountingDisplayUnit.value)].filter(Boolean).join(' ')
+  }
+
+  // Activity types are only recorded if the feature is enabled.
+  // The label and the activity type are one translatable sentence, so a translation can order
+  //   the type relative to the label. The accounted time stays out of it, because the legacy
+  //   ticket zoom renders it on a line of its own and shares this string.
+  // The sentence is returned untranslated-into-markup so callers can decide how to render it
+  //   (e.g. plain markup(), or cleanupMarkup() first for a tooltip).
+  const formatAccountedTimeType = (article: Pick<TicketArticle, 'accountedTimeType'>) => {
+    if (!timeAccountingConfig.value.time_accounting_types) return undefined
+
+    const activityType = article.accountedTimeType?.name
+    if (!activityType) return undefined
+
+    return i18n.t('for activity type |%s|', i18n.t(activityType))
+  }
+
+  return {
+    timeAccountingDisplayUnit,
+    timeAccountingConfig,
+    formatAccountedTime,
+    formatAccountedTimeType,
+  }
 }

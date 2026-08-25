@@ -1,4 +1,6 @@
 class App.ArticleViewItem extends App.ControllerObserver
+  @include App.TimeAccountingUnitMixin
+
   model: 'TicketArticle'
   observe:
     from: true
@@ -53,7 +55,41 @@ class App.ArticleViewItem extends App.ControllerObserver
         @highlighter.loadHighlights(@object_id)
     @delay(d, 200)
 
+  # Look up the time accounting entry of the given article
+  getArticleTimeAccounting: (article_id) =>
+    return undefined if !@time_accountings || !article_id
+
+    id = parseInt(article_id, 10)
+    _.find(@time_accountings, (item) -> item.ticket_article_id is id)
+
+  # Calculate time_unit for the given article
+  getArticleTimeUnit: (article_id) =>
+    return @getArticleTimeAccounting(article_id)?.time_unit || null
+
+  # Activity types are only recorded if the feature is enabled.
+  getArticleActivityType: (article_id) =>
+    return null if !@Config.get('time_accounting_types')
+
+    type_id = @getArticleTimeAccounting(article_id)?.type_id
+    return null if !type_id
+
+    return App.TicketTimeAccountingType.find(type_id)?.name || null
+
+  # The accounted time belongs to the ticket and not to the article, so a changed
+  # value does not reach the observer and has to be pushed in from the article view.
+  updateTimeAccountings: (time_accountings) =>
+    @time_accountings = time_accountings
+    return if @renderedTimeUnit is @getArticleTimeUnit(@object_id) and @renderedActivityType is @getArticleActivityType(@object_id)
+
+    article = App[@model].fullLocal(@object_id)
+    return if !article
+
+    @lastAttributes = undefined
+    @maybeRender(article)
+
   render: (article) =>
+    @renderedTimeUnit     = @getArticleTimeUnit(article.id)
+    @renderedActivityType = @getArticleActivityType(article.id)
 
     # set @el attributes
     @el.addClass("ticket-article-item #{article.sender.name.toLowerCase()}")
@@ -180,10 +216,13 @@ class App.ArticleViewItem extends App.ControllerObserver
       article['delivery_status_message'] = msg
 
     @html App.view('ticket_zoom/article_view')(
-      ticket:      @ticket
-      article:     article
-      attachments: App.view('generic/attachments')(attachments: attachments, has_body: !!article.html)
-      links:       links
+      ticket:        @ticket
+      article:       article
+      attachments:   App.view('generic/attachments')(attachments: attachments, has_body: !!article.html)
+      links:         links
+      displayUnit:   @timeAccountingDisplayUnit()
+      time_unit:     @renderedTimeUnit
+      activity_type: @renderedActivityType
     )
 
     new App.WidgetAvatar(

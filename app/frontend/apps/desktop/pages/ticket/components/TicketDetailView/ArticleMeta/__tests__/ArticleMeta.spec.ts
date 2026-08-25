@@ -4,11 +4,13 @@ import { waitFor } from '@testing-library/vue'
 import { describe } from 'vitest'
 
 import { renderComponent } from '#tests/support/components/index.ts'
+import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 
 import { createDummyArticle } from '#shared/entities/ticket-article/__tests__/mocks/ticket-articles.ts'
 import { EnumSecurityStateType } from '#shared/graphql/types.ts'
 
 import { mockDetailViewSetup } from '#desktop/pages/ticket/components/TicketDetailView/__tests__/support/article-detail-view-mocks.ts'
+import ArticleMetaAccountedTime from '#desktop/pages/ticket/components/TicketDetailView/ArticleMeta/ArticleMetaAccountedTime.vue'
 import ArticleMetaAddress from '#desktop/pages/ticket/components/TicketDetailView/ArticleMeta/ArticleMetaAddress.vue'
 import ArticleMetaDetectedLanguage from '#desktop/pages/ticket/components/TicketDetailView/ArticleMeta/ArticleMetaDetectedLanguage.vue'
 import ArticleMetaSecurity from '#desktop/pages/ticket/components/TicketDetailView/ArticleMeta/ArticleMetaSecurity.vue'
@@ -142,6 +144,36 @@ describe('Article Meta', () => {
         await waitFor(() => {
           expect(wrapper.getByText('German')).toBeInTheDocument()
         })
+      })
+    })
+
+    describe('Accounted Time', () => {
+      it('renders the accounted time with the configured unit', () => {
+        mockApplicationConfig({ time_accounting_unit: 'minute' })
+
+        const wrapper = renderComponent(ArticleMetaAccountedTime, {
+          props: {
+            context: {
+              article: createDummyArticle({ timeUnit: 5 }),
+            },
+          },
+        })
+
+        expect(wrapper.getByText('5.00 minute(s)')).toBeInTheDocument()
+      })
+
+      it('renders the accounted time alone when no unit is configured', () => {
+        mockApplicationConfig({ time_accounting_unit: '' })
+
+        const wrapper = renderComponent(ArticleMetaAccountedTime, {
+          props: {
+            context: {
+              article: createDummyArticle({ timeUnit: 1.5 }),
+            },
+          },
+        })
+
+        expect(wrapper.getByText('1.50')).toBeInTheDocument()
       })
     })
 

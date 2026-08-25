@@ -159,7 +159,8 @@
         <div class="article-meta-value"><%- @P(@article, 'detected_language') %></div>
       </div>
     <% end %>
-      <div class="horizontal article-meta-row">
+    <% showAccountedTime = @time_unit && @ticket.currentView() is 'agent' %>
+      <div class="horizontal article-meta-row<% if showAccountedTime: %> article-meta-row--columns<% end %>">
         <div class="article-meta-key"><%- @T('Channel') %></div>
         <div class="article-meta-value">
           <% icon = @article.type.name.split(" ")%>
@@ -176,6 +177,20 @@
           <% end %>
           </div>
         </div>
+        <% if showAccountedTime: %>
+          <div class="article-meta-key"><%- @T('Accounted Time') %></div>
+          <div class="article-meta-value">
+            <div class="u-textTruncate">
+              <%= @timeUnit(@time_unit) %>
+              <% if @displayUnit: %>
+                <%- @T(@displayUnit) %>
+              <% end %>
+            </div>
+            <% if @activity_type: %>
+              <div class="text-muted article-meta-activity-type"><%- @T('for activity type |%s|', @Tp(@activity_type)) %></div>
+            <% end %>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>
