@@ -11,8 +11,9 @@ module Gql::Queries
     type Gql::Types::KnowledgeBaseType, null: true
 
     def resolve(locale: nil)
-      knowledge_base = active_knowledge_base
-      return if knowledge_base.nil?
+      # Only the active knowledge base is browsable — without one there is nothing to browse at
+      #   all, which is an error like it is for its content.
+      knowledge_base = ::KnowledgeBase.active.first!
 
       store_knowledge_base_locale(knowledge_base, locale)
 

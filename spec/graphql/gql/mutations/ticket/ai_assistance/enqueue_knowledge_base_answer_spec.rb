@@ -58,6 +58,14 @@ RSpec.describe Gql::Mutations::Ticket::AIAssistance::EnqueueKnowledgeBaseAnswer,
       end
     end
 
+    context 'when the knowledge base is inactive' do
+      let(:knowledge_base) { create(:knowledge_base, active: false) }
+
+      it 'returns an error' do
+        expect(gql.result.error_message).to include('Knowledge base is unavailable or not properly configured.')
+      end
+    end
+
     context 'when knowledge base has no categories' do
       let(:with_category) { false }
 

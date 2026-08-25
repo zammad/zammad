@@ -1707,7 +1707,7 @@ export type KnowledgeBaseContentUpdatesPayload = {
   __typename?: 'KnowledgeBaseContentUpdatesPayload';
   /** IDs of the changed category and its ancestors (whose counts/visibility may change), limited to the ones visible to the subscriber; empty for knowledge-base-wide changes */
   affectedCategoryIds?: Maybe<Array<Scalars['ID']['output']>>;
-  /** The active knowledge base */
+  /** The active knowledge base; null once none is active */
   knowledgeBase?: Maybe<KnowledgeBase>;
 };
 
@@ -2294,7 +2294,6 @@ export type MutationsKnowledgeBaseAnswerSuggestionContentTransformArgs = {
 /** All available mutations */
 export type MutationsKnowledgeBaseCategoryAddArgs = {
   input: KnowledgeBaseCategoryInput;
-  knowledgeBaseId: Scalars['ID']['input'];
   locale: Scalars['String']['input'];
 };
 

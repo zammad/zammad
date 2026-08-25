@@ -2,6 +2,9 @@
 
 require 'rails_helper'
 
+# How the feed paths and their token are built is covered by
+#   spec/services/service/knowledge_base/feed_paths_spec.rb — this covers the GraphQL surface only:
+#   that the arguments reach the service, the payload, and authorization.
 RSpec.describe Gql::Queries::KnowledgeBase::Feed, type: :graphql do
   include_context 'basic Knowledge Base'
 
@@ -23,12 +26,9 @@ RSpec.describe Gql::Queries::KnowledgeBase::Feed, type: :graphql do
   end
 
   shared_examples 'returning the knowledge base feed' do
-    it 'returns the feed of all updates' do
+    it 'returns the feed of all updates', :aggregate_failures do
       expect(gql.result.data['knowledgeBasePath'])
         .to include("/api/v1/knowledge_bases/#{knowledge_base.id}/#{locale_name}/feed?token=")
-    end
-
-    it 'offers no category feed at the knowledge base root' do
       expect(gql.result.data['categoryPath']).to be_nil
     end
   end
@@ -41,22 +41,22 @@ RSpec.describe Gql::Queries::KnowledgeBase::Feed, type: :graphql do
     context 'with a category' do
       let(:variables) { { categoryId: gql.id(category) } }
 
-      it 'additionally returns the feed of the category and its sub-categories' do
-        expect(gql.result.data['categoryPath'])
-          .to include("/api/v1/knowledge_bases/#{knowledge_base.id}/categories/#{category.id}/#{locale_name}/feed?token=")
+      it 'passes it on, so the category feed is offered too' do
+        expect(gql.result.data['categoryPath']).to include("/categories/#{category.id}/")
       end
     end
 
     context 'with an alternative locale' do
       let(:variables) { { locale: alternative_locale.system_locale.locale } }
 
-      it 'delivers the feed in that locale' do
+      it 'passes it on, so the feed is delivered in that locale' do
         expect(gql.result.data['knowledgeBasePath'])
           .to include("/#{alternative_locale.system_locale.locale}/feed")
       end
     end
   end
 
+  # Browsing is what the feed follows, so a reader gets one as well.
   context 'with an agent (reader)', authenticated_as: :agent do
     let(:agent) { create(:agent) }
 

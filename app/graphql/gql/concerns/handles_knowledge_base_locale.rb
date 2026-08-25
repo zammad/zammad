@@ -9,20 +9,13 @@ module Gql::Concerns::HandlesKnowledgeBaseLocale
 
   private
 
-  def active_knowledge_base
-    ::KnowledgeBase.active.first
-  end
-
   # Resolve an answer through the same availability rules as the knowledge base
   #   browse route. Record authorization is already handled declaratively by the
   #   GraphQL argument's `loads:` type; these additional rules are route- and
   #   locale-specific and therefore do not belong in AnswerPolicy.
   def resolve_browsable_knowledge_base_answer(answer, locale_code)
-    knowledge_base = answer.category.knowledge_base
-
-    if !knowledge_base.active?
-      raise ActiveRecord::RecordNotFound
-    end
+    # Only the active knowledge base is browsable, an answer loaded by GID included.
+    knowledge_base = ::KnowledgeBase.active.first!
 
     store_knowledge_base_locale(knowledge_base, locale_code)
 
@@ -53,20 +46,5 @@ module Gql::Concerns::HandlesKnowledgeBaseLocale
   #   locales in one document cannot clobber each other.
   def store_knowledge_base_locale(knowledge_base, locale_code)
     context.scoped_set!(:knowledge_base_locale, resolve_knowledge_base_locale(knowledge_base, locale_code))
-  end
-
-  # The locale a mutation writes into, which is also the one it renders its response in.
-  #
-  # Strict, unlike #resolve_knowledge_base_locale: falling back to the user's preferred locale is
-  #   right for rendering, but writing texts into another locale than the client named is not — the
-  #   client would have no way to tell where they ended up.
-  def use_knowledge_base_locale!(knowledge_base, locale_code)
-    kb_locale = knowledge_base.kb_locales.joins(:system_locale).find_by(locales: { locale: locale_code })
-
-    raise Exceptions::UnprocessableContent, __('The selected language does not belong to this knowledge base.') if kb_locale.nil?
-
-    context.scoped_set!(:knowledge_base_locale, kb_locale)
-
-    kb_locale
   end
 end

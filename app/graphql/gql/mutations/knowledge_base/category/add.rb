@@ -6,15 +6,6 @@ module Gql::Mutations
 
     description 'Create a knowledge base category.'
 
-    # Not gated with `loads_pundit_method: :update?`: a granular editor of one subtree is usually
-    #   only a *reader* of the knowledge base itself, and that must not stand in the way of creating
-    #   a category under a category they do have editor access to.
-    #
-    # Where the new category may be created is decided by CategoryPolicy#create? in the service,
-    #   which asks the parent — or the knowledge base for a top level category. The parent in the
-    #   input therefore needs no gate of its own.
-    argument :knowledge_base_id, GraphQL::Types::ID, loads: Gql::Types::KnowledgeBaseType, description: 'Knowledge base to create the category in.'
-
     argument :input, Gql::Types::Input::KnowledgeBase::CategoryInputType, description: 'The category data.'
 
     # Deliberately a flat argument rather than part of `input`, which is the category's *data*: this
@@ -26,16 +17,21 @@ module Gql::Mutations
 
     field :category, Gql::Types::KnowledgeBase::CategoryType, null: true, description: 'The created category.'
 
-    def resolve(knowledge_base:, input:, locale:)
+    # Where the new category may be created is decided by CategoryPolicy#create? in the service,
+    #   which asks the parent — or the knowledge base for a top level category. Neither the
+    #   knowledge base nor the parent in the input is gated here: a granular editor of one subtree is
+    #   usually only a *reader* of the knowledge base itself, and that must not stand in the way of
+    #   creating a category under a category they do have editor access to.
+    def resolve(input:, locale:)
       created = Service::KnowledgeBase::Category::Create
         .with_current_user(context.current_user)
-        .execute(
-          knowledge_base:,
-          category_data:  input.to_h,
-          # Also stores the locale the payload is rendered in: its locale-dependent fields go
-          #   straight into the client cache, so they must speak the locale that was written.
-          kb_locale:      use_knowledge_base_locale!(knowledge_base, locale),
-        )
+        .execute(category_data: input.to_h, kb_locale: locale)
+
+      # The locale the payload is rendered in, which the service just wrote the title into: its
+      #   locale-dependent fields go straight into the client cache, so they must speak the locale
+      #   that was written. The service rejects a locale the knowledge base does not have, so this
+      #   resolves to that very locale.
+      store_knowledge_base_locale(created.knowledge_base, locale)
 
       { category: created }
     rescue Exceptions::UnprocessableContent => e

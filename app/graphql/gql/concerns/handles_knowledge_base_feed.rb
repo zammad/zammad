@@ -14,11 +14,9 @@ module Gql::Concerns::HandlesKnowledgeBaseFeed
   # `renew` mints a new access token first, which invalidates the URLs handed out
   #   so far.
   def knowledge_base_feed_paths(category:, locale:, renew: false)
-    knowledge_base = category&.knowledge_base || active_knowledge_base
-
     # Only the active knowledge base is browsable, so only it has feeds to offer —
-    #   asking for another one's is an error, like it is for its answers.
-    raise ActiveRecord::RecordNotFound if knowledge_base.nil? || !knowledge_base.active?
+    #   asking without one is an error, like it is for its answers.
+    knowledge_base = ::KnowledgeBase.active.first!
 
     store_knowledge_base_locale(knowledge_base, locale)
 

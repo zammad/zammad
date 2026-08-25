@@ -13,10 +13,11 @@ module Gql::Queries
 
     def resolve(category:, locale: nil)
       # Only the active knowledge base is browsable — a category loaded by GID
-      #   must not expose answers from an inactive knowledge base.
-      return ::KnowledgeBase::Answer.none if !category.knowledge_base.active?
+      #   must not expose answers from an inactive knowledge base, like it must
+      #   not expose the answer itself or its feeds.
+      knowledge_base = ::KnowledgeBase.active.first!
 
-      store_knowledge_base_locale(category.knowledge_base, locale)
+      store_knowledge_base_locale(knowledge_base, locale)
 
       # The type-level authorization is locale-agnostic; enforce the browsed
       #   locale here too, so a category hidden from this locale's listing cannot

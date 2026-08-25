@@ -643,7 +643,7 @@ msgstr ""
 msgid "A ticket's state is used to categorize and manage the lifecycle of a ticket or customer inquiry."
 msgstr ""
 
-#: app/services/service/knowledge_base/category/create.rb:57
+#: app/services/service/knowledge_base/category/create.rb:54
 msgid "A title is required."
 msgstr ""
 
@@ -5822,7 +5822,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee:9
 #: app/frontend/apps/desktop/entities/knowledge-base/composables/useKnowledgeBaseCategoryDelete.ts:33
-#: app/graphql/gql/mutations/knowledge_base/category/delete.rb:20
+#: app/graphql/gql/mutations/knowledge_base/category/delete.rb:22
 msgid "Delete all child categories and answers, then try again."
 msgstr ""
 
@@ -18446,14 +18446,8 @@ msgstr ""
 msgid "The selected date is invalid."
 msgstr ""
 
-#: app/graphql/gql/concerns/handles_knowledge_base_locale.rb:61
-#: app/services/service/knowledge_base/category/concerns/assigns_title.rb:31
-#: app/services/service/knowledge_base/update.rb:60
+#: app/services/service/knowledge_base/base.rb:27
 msgid "The selected language does not belong to this knowledge base."
-msgstr ""
-
-#: app/services/service/knowledge_base/category/base.rb:17
-msgid "The selected parent category does not belong to this knowledge base."
 msgstr ""
 
 #: app/services/service/system/import/apply_configuration_base.rb:38
@@ -21762,19 +21756,19 @@ msgstr ""
 msgid "You are part of the BETA UI feedback program."
 msgstr ""
 
-#: app/models/transaction/notification.rb:111
+#: app/models/transaction/notification.rb:124
 msgid "You are receiving this because you are a member of the group of this ticket."
 msgstr ""
 
-#: app/models/transaction/notification.rb:192
+#: app/models/transaction/notification.rb:197
 msgid "You are receiving this because you are out-of-office replacement for a participant of this ticket."
 msgstr ""
 
-#: app/models/transaction/notification.rb:79
+#: app/models/transaction/notification.rb:92
 msgid "You are receiving this because you are the owner of this ticket."
 msgstr ""
 
-#: app/models/transaction/notification.rb:73
+#: app/models/transaction/notification.rb:86
 msgid "You are receiving this because you were mentioned in this ticket."
 msgstr ""
 

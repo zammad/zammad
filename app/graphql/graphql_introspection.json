@@ -10133,7 +10133,7 @@
             },
             {
               "name": "knowledgeBase",
-              "description": "The active knowledge base",
+              "description": "The active knowledge base; null once none is active",
               "args": [],
               "type": {
                 "kind": "OBJECT",
@@ -12166,20 +12166,6 @@
               "name": "knowledgeBaseCategoryAdd",
               "description": "Create a knowledge base category.",
               "args": [
-                {
-                  "name": "knowledgeBaseId",
-                  "description": "Knowledge base to create the category in.",
-                  "type": {
-                    "kind": "NON_NULL",
-                    "name": null,
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "ID",
-                      "ofType": null
-                    }
-                  },
-                  "defaultValue": null
-                },
                 {
                   "name": "input",
                   "description": "The category data.",

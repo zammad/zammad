@@ -3,20 +3,24 @@
 # Updates a knowledge base category: its title in one locale, its icon, its place in the tree and
 #   its granular permissions.
 class Service::KnowledgeBase::Category::Update < Service::KnowledgeBase::Category::Base
-  attr_reader :category, :category_data, :kb_locale
+  attr_reader :category, :category_data
 
   # @param category [KnowledgeBase::Category] category to update
   # @param category_data [Hash] `category_icon`, `title`, `parent` and `permissions` as sent by
   #   Gql::Types::Input::KnowledgeBase::CategoryInputType; each is optional
-  # @param kb_locale [KnowledgeBase::Locale] locale the submitted title is for
+  # @param kb_locale [KnowledgeBase::Locale, String] locale the submitted title is for, as record
+  #   or as system locale code
   def initialize(category:, category_data:, kb_locale:)
-    @category      = category
-    @category_data = category_data
-    @kb_locale     = kb_locale
+    @category            = category
+    @category_data       = category_data
+    @submitted_kb_locale = kb_locale
   end
 
   def execute
-    ensure_parent_of_knowledge_base!(category.knowledge_base, category_data[:parent]) if parent_submitted?
+    # Editing a category is editing knowledge base content, so it follows the same rule as the
+    #   knowledge base itself: only while it is active. Asserted here rather than left to the locale
+    #   resolution, which a caller passing a KnowledgeBase::Locale record would skip.
+    active_knowledge_base!
 
     ActiveRecord::Base.transaction do
       assign_attributes

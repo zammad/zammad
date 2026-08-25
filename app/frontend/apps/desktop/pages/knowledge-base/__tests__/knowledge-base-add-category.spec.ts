@@ -130,7 +130,6 @@ describe('knowledge base add category card', () => {
     const calls = await waitForKnowledgeBaseCategoryAddMutationCalls()
 
     expect(calls.at(-1)?.variables).toMatchObject({
-      knowledgeBaseId: convertToGraphQLId('KnowledgeBase', 1),
       input: {
         title: 'Printers',
       },

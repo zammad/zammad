@@ -8,18 +8,23 @@ module Gql::Mutations
 
     field :success, Boolean, description: 'Was the mutation successful?'
 
+    # No service behind this one: the argument's `destroy?` gate has already authorized the record,
+    #   which leaves a single `destroy!` — there is nothing for a service to hold.
+    #
+    # A category with subcategories or answers is not deleted recursively: both associations are
+    #   `dependent: :restrict_with_exception`, so `destroy!` raises and the user has to empty the
+    #   category first, which is a deliberate, explicit step.
     def resolve(category:)
-      {
-        success: Service::KnowledgeBase::Category::Delete
-          .with_current_user(context.current_user)
-          .execute(category:),
-      }
+      # Deleting is editing knowledge base content, so it follows the same rule as the write
+      #   services: only an active knowledge base is editable.
+      ::KnowledgeBase.active.first!
+
+      category.destroy!
+
+      { success: true }
     rescue ActiveRecord::DeleteRestrictionError
-      # Subcategories and answers are not deleted along, so the user has to empty the category
-      #   first. Same wording as the legacy delete dialog.
+      # Same wording as the legacy delete dialog.
       error_response({ message: __('Delete all child categories and answers, then try again.') })
-    rescue Exceptions::UnprocessableContent => e
-      error_response({ message: e.message })
     end
   end
 end

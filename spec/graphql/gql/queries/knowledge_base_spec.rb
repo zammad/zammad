@@ -133,8 +133,8 @@ RSpec.describe Gql::Queries::KnowledgeBase, type: :graphql do
       gql.execute(query, variables:)
     end
 
-    it 'returns nothing' do
-      expect(gql.result.data).to be_nil
+    it 'is not found' do
+      expect(gql.result.error_type).to eq(ActiveRecord::RecordNotFound)
     end
   end
 end

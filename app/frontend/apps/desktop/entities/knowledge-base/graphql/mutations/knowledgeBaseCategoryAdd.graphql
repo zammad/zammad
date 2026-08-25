@@ -1,9 +1,5 @@
-mutation knowledgeBaseCategoryAdd(
-  $knowledgeBaseId: ID!
-  $input: KnowledgeBaseCategoryInput!
-  $locale: String!
-) {
-  knowledgeBaseCategoryAdd(knowledgeBaseId: $knowledgeBaseId, input: $input, locale: $locale) {
+mutation knowledgeBaseCategoryAdd($input: KnowledgeBaseCategoryInput!, $locale: String!) {
+  knowledgeBaseCategoryAdd(input: $input, locale: $locale) {
     # The same field set the browse grid lists, so the created category normalizes into
     #   the cache as a complete record instead of a partial one.
     category {

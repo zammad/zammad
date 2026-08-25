@@ -114,4 +114,22 @@ RSpec.describe Gql::Subscriptions::KnowledgeBase::ContentUpdates, type: :graphql
       expect(broadcasted_affected_category_ids).to eq([gql.id(subcategory), gql.id(category)])
     end
   end
+
+  # Deactivating is the one change subscribers cannot notice any other way: the browse queries
+  #   answer not-found from then on, so they have to be told to ask again.
+  context 'when the knowledge base is deactivated', authenticated_as: :agent do
+    let(:agent) { create(:agent) }
+
+    before do
+      mock_channel.mock_broadcasted_messages.clear
+
+      knowledge_base.update!(active: false)
+    end
+
+    it 'still pings, with no knowledge base left to hand out', :aggregate_failures do
+      expect(mock_channel.mock_broadcasted_messages.first&.dig(:result, 'data', 'knowledgeBaseContentUpdates'))
+        .to eq('knowledgeBase' => nil, 'affectedCategoryIds' => [])
+      expect(mock_channel.mock_broadcasted_messages.first.dig(:result, 'errors')).to be_nil
+    end
+  end
 end

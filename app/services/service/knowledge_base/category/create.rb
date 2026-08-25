@@ -2,17 +2,16 @@
 
 # Creates a knowledge base category, with its title in one locale and its granular permissions.
 class Service::KnowledgeBase::Category::Create < Service::KnowledgeBase::Category::Base
-  attr_reader :knowledge_base, :category_data, :kb_locale
+  attr_reader :category_data
 
-  # @param knowledge_base [KnowledgeBase] knowledge base to create the category in
   # @param category_data [Hash] `category_icon`, `title`, `parent` and `permissions` as sent by
   #   Gql::Types::Input::KnowledgeBase::CategoryInputType; without a parent the category is created
   #   at the top level
-  # @param kb_locale [KnowledgeBase::Locale] locale the submitted title is for
-  def initialize(knowledge_base:, category_data:, kb_locale:)
-    @knowledge_base = knowledge_base
-    @category_data  = category_data
-    @kb_locale      = kb_locale
+  # @param kb_locale [KnowledgeBase::Locale, String] locale the submitted title is for, as record
+  #   or as system locale code
+  def initialize(category_data:, kb_locale:)
+    @category_data       = category_data
+    @submitted_kb_locale = kb_locale
   end
 
   def parent
@@ -20,8 +19,6 @@ class Service::KnowledgeBase::Category::Create < Service::KnowledgeBase::Categor
   end
 
   def execute
-    ensure_parent_of_knowledge_base!(knowledge_base, parent)
-
     ActiveRecord::Base.transaction do
       category = build_category
 
@@ -41,6 +38,8 @@ class Service::KnowledgeBase::Category::Create < Service::KnowledgeBase::Categor
   private
 
   def build_category
+    knowledge_base = active_knowledge_base!
+
     ::KnowledgeBase::Category.new(
       knowledge_base: knowledge_base,
       parent:         parent,

@@ -26,14 +26,14 @@ module Gql::Mutations
     def resolve(category:, input:, locale:)
       updated = Service::KnowledgeBase::Category::Update
         .with_current_user(context.current_user)
-        .execute(
-          category:,
-          category_data: input.to_h,
-          # Also stores the locale the payload is rendered in. It carries locale-dependent fields
-          #   (title, visibility, breadcrumb titles), which the client normalizes straight into its
-          #   cache — so they have to come back in the locale that was written, not in the primary one.
-          kb_locale:     use_knowledge_base_locale!(category.knowledge_base, locale),
-        )
+        .execute(category:, category_data: input.to_h, kb_locale: locale)
+
+      # The locale the payload is rendered in, which the service just wrote the title into. It
+      #   carries locale-dependent fields (title, visibility, breadcrumb titles), which the client
+      #   normalizes straight into its cache — so they have to come back in the locale that was
+      #   written, not in the primary one. The service rejects a locale the knowledge base does not
+      #   have, so this resolves to that very locale.
+      store_knowledge_base_locale(updated.knowledge_base, locale)
 
       { category: updated }
     rescue Exceptions::UnprocessableContent => e

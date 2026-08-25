@@ -167,7 +167,6 @@ export type KnowledgeBaseCategoryPreInfoFragment = { __typename: 'KnowledgeBaseC
 export type KnowledgeBaseFeedAttributesFragment = { __typename: 'KnowledgeBaseFeed', knowledgeBasePath: string, categoryPath: string | null | undefined };
 
 export type KnowledgeBaseCategoryAddMutationVariables = Exact<{
-  knowledgeBaseId: string | number;
   input: Types.KnowledgeBaseCategoryInput;
   locale: string;
 }>;

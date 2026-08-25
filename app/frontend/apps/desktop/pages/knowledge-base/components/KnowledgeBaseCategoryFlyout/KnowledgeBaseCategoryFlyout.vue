@@ -160,7 +160,7 @@ const submitForm = async (data: FormSubmitData<CategoryFormData>) => {
   await (
     props.category
       ? categoryUpdateMutation.send({ categoryId: props.category.id, ...variables })
-      : categoryAddMutation.send({ knowledgeBaseId: base.id, ...variables })
+      : categoryAddMutation.send(variables)
   ).catch((error) => {
     throw remapUserErrorFields(error, FORM_FIELD_BY_ERROR_FIELD)
   })

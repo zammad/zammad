@@ -8,7 +8,7 @@ module Gql::Subscriptions
     #   knowledge base with published content is open to any user), so this mirrors
     #   the browse queries and gates on the policies instead — see #update.
 
-    field :knowledge_base, Gql::Types::KnowledgeBaseType, null: true, description: 'The active knowledge base'
+    field :knowledge_base, Gql::Types::KnowledgeBaseType, null: true, description: 'The active knowledge base; null once none is active'
     field :affected_category_ids, [GraphQL::Types::ID], null:        true,
                                                         description: 'IDs of the changed category and its ancestors (whose counts/visibility may change), limited to the ones visible to the subscriber; empty for knowledge-base-wide changes'
 
@@ -17,11 +17,13 @@ module Gql::Subscriptions
     #   refetch the scoped browse queries. `affectedCategoryIds` lets a client skip the
     #   refetch when the change is in a branch it is not currently viewing.
     def update(...)
+      # Nil once no knowledge base is active — deliberately still a ping rather than `no_update`:
+      #   deactivating one is itself a knowledge-base-wide change (KnowledgeBase includes
+      #   TriggersKnowledgeBaseContentUpdates), and this is the only signal the browse views get for
+      #   it. They refetch on it, the browse queries then answer not-found, and that is what takes
+      #   them off content which is no longer browsable — swallowing the ping would leave it on
+      #   screen instead.
       knowledge_base = ::KnowledgeBase.active.first
-
-      # Mirrors Gql::Queries::KnowledgeBase: nothing is browsable without an active
-      #   knowledge base.
-      return no_update if knowledge_base.nil?
 
       categories = object.is_a?(Hash) ? Array(object[:categories]) : []
 

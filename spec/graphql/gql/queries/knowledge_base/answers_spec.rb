@@ -2,6 +2,9 @@
 
 require 'rails_helper'
 
+# Which answers a user gets to see, and in which locale, is covered by
+#   spec/services/service/knowledge_base/answers_spec.rb — this covers the GraphQL surface only:
+#   the node fields, the connection, and authorization.
 RSpec.describe Gql::Queries::KnowledgeBase::Answers, type: :graphql do
   include_context 'basic Knowledge Base'
 
@@ -31,11 +34,6 @@ RSpec.describe Gql::Queries::KnowledgeBase::Answers, type: :graphql do
   context 'with an admin (editor)', authenticated_as: :admin do
     let(:admin) { create(:admin) }
 
-    it 'returns published, internal, draft and archived answers' do
-      expect(gql.result.nodes.pluck('id'))
-        .to contain_exactly(gql.id(published_answer), gql.id(internal_answer), gql.id(draft_answer), gql.id(archived_answer))
-    end
-
     it 'color-codes answers by publication state', :aggregate_failures do
       by_id = gql.result.nodes.index_by { |node| node['id'] }
 
@@ -49,23 +47,6 @@ RSpec.describe Gql::Queries::KnowledgeBase::Answers, type: :graphql do
       by_id = gql.result.nodes.index_by { |node| node['id'] }
 
       expect(by_id[gql.id(published_answer)]['title']).to eq(published_answer.translation_primary.title)
-    end
-  end
-
-  context 'with an agent (reader)', authenticated_as: :agent do
-    let(:agent) { create(:agent) }
-
-    it 'returns internal and published answers' do
-      expect(gql.result.nodes.pluck('id'))
-        .to contain_exactly(gql.id(published_answer), gql.id(internal_answer))
-    end
-  end
-
-  context 'with a customer (public)', authenticated_as: :customer do
-    let(:customer) { create(:customer) }
-
-    it 'returns only published answers' do
-      expect(gql.result.nodes.pluck('id')).to contain_exactly(gql.id(published_answer))
     end
   end
 
@@ -94,9 +75,12 @@ RSpec.describe Gql::Queries::KnowledgeBase::Answers, type: :graphql do
     end
   end
 
-  # Mirrors the agent app: non-editors only see answers translated to the
-  #   browsed locale, editors also see untranslated ones (title falls back).
-  context 'with an answer not translated to the browsed locale' do
+  # The browsed locale reaches the answer type through the query context, which is what lets it
+  #   flag a title that falls back from a missing translation.
+  context 'with an admin (editor) browsing the alternative locale', authenticated_as: :admin do
+    let(:admin)  { create(:admin) }
+    let(:locale) { alternative_locale.system_locale.locale }
+
     let(:untranslated_answer) do
       create(:knowledge_base_answer, :internal, category: category, translation_attributes: { kb_locale: alternative_locale })
     end
@@ -106,32 +90,11 @@ RSpec.describe Gql::Queries::KnowledgeBase::Answers, type: :graphql do
       gql.execute(query, variables:)
     end
 
-    context 'with an agent (reader)', authenticated_as: :agent do
-      let(:agent) { create(:agent) }
+    it 'flags answers whose title falls back from a missing translation', :aggregate_failures do
+      by_id = gql.result.nodes.index_by { |node| node['id'] }
 
-      it 'hides the untranslated answer' do
-        expect(gql.result.nodes.pluck('id')).not_to include(gql.id(untranslated_answer))
-      end
-    end
-
-    context 'with an admin (editor)', authenticated_as: :admin do
-      let(:admin) { create(:admin) }
-
-      it 'shows the untranslated answer' do
-        expect(gql.result.nodes.pluck('id')).to include(gql.id(untranslated_answer))
-      end
-    end
-
-    context 'with an admin (editor) browsing the alternative locale', authenticated_as: :admin do
-      let(:admin)  { create(:admin) }
-      let(:locale) { alternative_locale.system_locale.locale }
-
-      it 'flags answers whose title falls back from a missing translation', :aggregate_failures do
-        by_id = gql.result.nodes.index_by { |node| node['id'] }
-
-        expect(by_id[gql.id(published_answer)]).to include('translationMissing' => true)
-        expect(by_id[gql.id(untranslated_answer)]).to include('translationMissing' => false)
-      end
+      expect(by_id[gql.id(published_answer)]).to include('translationMissing' => true)
+      expect(by_id[gql.id(untranslated_answer)]).to include('translationMissing' => false)
     end
   end
 
@@ -161,8 +124,8 @@ RSpec.describe Gql::Queries::KnowledgeBase::Answers, type: :graphql do
       gql.execute(query, variables:)
     end
 
-    it 'exposes no answers from the inactive knowledge base' do
-      expect(gql.result.data['edges']).to be_empty
+    it 'is not found' do
+      expect(gql.result.error_type).to eq(ActiveRecord::RecordNotFound)
     end
   end
 

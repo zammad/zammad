@@ -13,11 +13,10 @@ module Gql::Queries
     field :subcategories, [Gql::Types::KnowledgeBase::CategoryType], null: false, description: 'Child categories visible to the current user, each carrying its own breadcrumb'
 
     def resolve(category: nil, locale: nil)
-      knowledge_base = category&.knowledge_base || active_knowledge_base
-
       # Only the active knowledge base is browsable — a category loaded by GID
-      #   must not expose content from an inactive knowledge base.
-      return { category: nil, subcategories: [] } if knowledge_base.nil? || !knowledge_base.active?
+      #   must not expose content from an inactive knowledge base, like it must
+      #   not expose its answers or feeds.
+      knowledge_base = ::KnowledgeBase.active.first!
 
       store_knowledge_base_locale(knowledge_base, locale)
 

@@ -2,6 +2,9 @@
 
 require 'rails_helper'
 
+# How the paths and their token are built, and what renewing does to it, is covered by
+#   spec/services/service/knowledge_base/feed_paths_spec.rb — this covers the GraphQL surface only:
+#   that the mutation asks for a renewal, the payload, and authorization.
 RSpec.describe Gql::Mutations::KnowledgeBase::Feed::TokenRenew, type: :graphql do
   include_context 'basic Knowledge Base'
 
@@ -41,44 +44,32 @@ RSpec.describe Gql::Mutations::KnowledgeBase::Feed::TokenRenew, type: :graphql d
       gql.execute(mutation, variables:)
     end
 
-    it 'renews the access token' do
+    it 'asks for a renewal, so the previous token no longer applies' do
       expect(Token.find_by(action: 'KnowledgeBaseFeed', user_id: agent.id).token).not_to eq(current_token)
     end
 
-    it 'answers with the paths carrying the renewed token' do
+    # The renewed paths come back with the mutation, so the caller can replace the ones it shows
+    #   in one step instead of fetching them again.
+    it 'answers with the paths carrying the renewed token', :aggregate_failures do
       renewed = Token.find_by(action: 'KnowledgeBaseFeed', user_id: agent.id).token
 
       expect(gql.result.data['feed']['knowledgeBasePath'])
         .to eq("/api/v1/knowledge_bases/#{knowledge_base.id}/#{locale_name}/feed?token=#{renewed}")
-    end
-
-    it 'offers no category feed at the knowledge base root' do
       expect(gql.result.data['feed']['categoryPath']).to be_nil
-    end
-
-    context 'without an existing token' do
-      let!(:current_token) { nil }
-
-      it 'creates one' do
-        expect(Token.find_by(action: 'KnowledgeBaseFeed', user_id: agent.id)).to be_present
-      end
     end
 
     context 'with a category' do
       let(:variables) { { categoryId: gql.id(category) } }
 
-      it 'additionally returns the category feed path' do
-        renewed = Token.find_by(action: 'KnowledgeBaseFeed', user_id: agent.id).token
-
-        expect(gql.result.data['feed']['categoryPath'])
-          .to eq("/api/v1/knowledge_bases/#{knowledge_base.id}/categories/#{category.id}/#{locale_name}/feed?token=#{renewed}")
+      it 'passes it on, so the category feed is offered too' do
+        expect(gql.result.data['feed']['categoryPath']).to include("/categories/#{category.id}/")
       end
     end
 
     context 'with an alternative locale' do
       let(:variables) { { locale: alternative_locale.system_locale.locale } }
 
-      it 'delivers the feed in that locale' do
+      it 'passes it on, so the feed is delivered in that locale' do
         expect(gql.result.data['feed']['knowledgeBasePath'])
           .to include("/#{alternative_locale.system_locale.locale}/feed")
       end

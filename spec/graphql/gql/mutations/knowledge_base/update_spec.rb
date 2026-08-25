@@ -2,6 +2,9 @@
 
 require 'rails_helper'
 
+# What the update itself does to the knowledge base is covered by
+#   spec/services/service/knowledge_base/update_spec.rb — this covers the GraphQL surface only:
+#   schema, authorization, how the service's errors reach the client, and the payload.
 RSpec.describe Gql::Mutations::KnowledgeBase::Update, type: :graphql do
   include_context 'basic Knowledge Base'
 
@@ -42,9 +45,15 @@ RSpec.describe Gql::Mutations::KnowledgeBase::Update, type: :graphql do
       expect(gql.result.data['knowledgeBase']).to include('title' => title)
     end
 
-    it 'updates the title and the footer note' do
-      expect(knowledge_base.reload.translation_to(primary_locale))
-        .to have_attributes(title:, footer_note:)
+    # The payload is normalized straight into the client cache, so it has to come back in the
+    #   locale that was written, not in the primary one.
+    context 'with another locale' do
+      let(:locale) { alternative_locale.system_locale.locale }
+      let(:setup)  { alternative_locale }
+
+      it 'returns the title in that locale' do
+        expect(gql.result.data['knowledgeBase']).to include('title' => title)
+      end
     end
 
     context 'with the footer note missing' do
@@ -55,62 +64,12 @@ RSpec.describe Gql::Mutations::KnowledgeBase::Update, type: :graphql do
       end
     end
 
-    context 'with texts for one locale only' do
-      let(:setup) do
-        knowledge_base.translations.create!(kb_locale: alternative_locale, title: 'Kita žinių bazė', footer_note: '© Kita')
-      end
-
-      it 'keeps the texts of the locales that were not submitted' do
-        expect(knowledge_base.reload.translation_to(alternative_locale).title).to eq('Kita žinių bazė')
-      end
-    end
-
     # `title` and `footer_note` are mandatory, so a permissions-only update no longer exists.
     context 'without any text' do
       let(:input) { { permissions: [{ roleId: gql.id(editor_role), access: 'editor' }] } }
 
       it 'is rejected by the schema' do
         expect(gql.result.error_message).to include('title')
-      end
-    end
-
-    # A locale added after the knowledge base was created has no translation yet.
-    context 'with a title for a locale that has no translation yet' do
-      let(:locale) { alternative_locale.system_locale.locale }
-      let(:setup)  { alternative_locale }
-
-      it 'creates the translation' do
-        expect(knowledge_base.reload.translation_to(alternative_locale))
-          .to have_attributes(title:, footer_note:)
-      end
-    end
-
-    # One locale per call: the submitted texts are written into it, and the payload — normalized
-    #   straight into the client cache — comes back in it, so a client always sees what it wrote.
-    context 'with another locale' do
-      let(:locale) { alternative_locale.system_locale.locale }
-      let(:setup)  { alternative_locale }
-
-      it 'writes the texts into that locale', :aggregate_failures do
-        expect(knowledge_base.reload.translation_to(alternative_locale)).to have_attributes(title:, footer_note:)
-        expect(knowledge_base.reload.translation_to(primary_locale).title).not_to eq(title)
-      end
-
-      it 'returns the title in that locale' do
-        expect(gql.result.data['knowledgeBase']).to include('title' => title)
-      end
-    end
-
-    context 'with a locale the knowledge base does not have' do
-      let(:locale) { 'zh-cn' }
-
-      # Nothing else in this example refers to the knowledge base, which the shared context creates
-      #   lazily — without this the mutation would not find one at all.
-      let(:setup) { knowledge_base }
-
-      it 'returns a user error' do
-        expect(gql.result.data['errors'])
-          .to include(include('message' => 'The selected language does not belong to this knowledge base.'))
       end
     end
 
@@ -130,38 +89,16 @@ RSpec.describe Gql::Mutations::KnowledgeBase::Update, type: :graphql do
       end
     end
 
-    context 'with permissions' do
-      let(:other_role)  { create(:role, permission_names: 'knowledge_base.reader') }
-      let(:permissions) { [{ roleId: gql.id(other_role), access: 'none' }, { roleId: gql.id(editor_role), access: 'editor' }] }
+    context 'with a locale the knowledge base does not have' do
+      let(:locale) { 'zh-cn' }
 
-      it 'applies them to the knowledge base' do
-        expect(knowledge_base.reload.permissions.map { |permission| [permission.role_id, permission.access] })
-          .to include([other_role.id, 'none'], [editor_role.id, 'editor'])
-      end
-    end
+      # Nothing else in this example refers to the knowledge base, which the shared context creates
+      #   lazily — without this the mutation would not find one at all.
+      let(:setup) { knowledge_base }
 
-    # The form offers the matrix before any permission exists, so saving it untouched must not be
-    #   what switches the whole instance to granular permissions.
-    context 'with permissions that only restate what the roles have anyway' do
-      let(:other_role)  { create(:role, permission_names: 'knowledge_base.reader') }
-      let(:permissions) { [{ roleId: gql.id(other_role), access: 'reader' }, { roleId: gql.id(editor_role), access: 'editor' }] }
-
-      it 'stores none of them', :aggregate_failures do
-        expect(knowledge_base.reload.permissions).to be_empty
-        expect(KnowledgeBase).not_to be_granular_permissions
-      end
-
-      it 'still saves the rest of the form' do
-        expect(knowledge_base.reload.translation_to(primary_locale).title).to eq(title)
-      end
-
-      context 'when granular permissions are already in use' do
-        let(:setup) { create(:knowledge_base_permission, permissionable: knowledge_base, role: editor_role, access: 'editor') }
-
-        it 'applies them like any other selection' do
-          expect(knowledge_base.reload.permissions.map { |permission| [permission.role_id, permission.access] })
-            .to include([other_role.id, 'reader'], [editor_role.id, 'editor'])
-        end
+      it 'returns a user error' do
+        expect(gql.result.data['errors'])
+          .to include(include('message' => 'The selected language does not belong to this knowledge base.'))
       end
     end
 
@@ -172,10 +109,6 @@ RSpec.describe Gql::Mutations::KnowledgeBase::Update, type: :graphql do
       it 'returns a user error for the permissions field' do
         expect(gql.result.data['errors'])
           .to include(include('message' => 'These permissions are invalid because they would lock you out.', 'field' => 'permissions'))
-      end
-
-      it 'rolls the whole mutation back, including the title' do
-        expect(knowledge_base.reload.translation_to(primary_locale).title).not_to eq(title)
       end
     end
   end

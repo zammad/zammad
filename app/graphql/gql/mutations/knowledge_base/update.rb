@@ -16,30 +16,19 @@ module Gql::Mutations
     field :knowledge_base, Gql::Types::KnowledgeBaseType, null: true, description: 'The updated knowledge base.'
 
     def resolve(input:, locale:)
-      knowledge_base = knowledge_base!
-
       updated = Service::KnowledgeBase::Update
         .with_current_user(context.current_user)
-        .execute(
-          knowledge_base:      knowledge_base,
-          knowledge_base_data: input.to_h,
-          kb_locale:           use_knowledge_base_locale!(knowledge_base, locale),
-        )
+        .execute(knowledge_base_data: input.to_h, kb_locale: locale)
+
+      # The locale the payload is rendered in, which the service just wrote the texts into: it
+      #   rejects one the knowledge base does not have, so this resolves to that very locale.
+      store_knowledge_base_locale(updated, locale)
 
       { knowledge_base: updated }
     rescue Exceptions::UnprocessableContent => e
       error_response({ message: e.message })
     rescue Exceptions::InvalidAttribute => e
       error_response({ message: e.message, field: e.attribute })
-    end
-
-    private
-
-    # The system supports a single knowledge base, so there is nothing to identify — unlike the
-    #   browsing queries this deliberately does not scope to `active`, since an inactive knowledge
-    #   base has to stay editable (that is how it is prepared before going live).
-    def knowledge_base!
-      ::KnowledgeBase.first || raise(ActiveRecord::RecordNotFound)
     end
   end
 end

@@ -2,6 +2,8 @@
 
 require 'rails_helper'
 
+# No service behind this mutation — deleting is a single `destroy!` on the loaded record, so this
+#   spec covers the deletion itself along with the GraphQL surface around it.
 RSpec.describe Gql::Mutations::KnowledgeBase::Category::Delete, type: :graphql do
   include_context 'basic Knowledge Base'
 
@@ -39,6 +41,9 @@ RSpec.describe Gql::Mutations::KnowledgeBase::Category::Delete, type: :graphql d
       expect(KnowledgeBase::Category).not_to exist(id: record.id)
     end
 
+    # Both associations are `dependent: :restrict_with_exception`: emptying the category first is a
+    #   deliberate, explicit step rather than a recursive delete. The database error that enforces
+    #   it is turned into something the user can act on, worded like the legacy delete dialog.
     context 'with a subcategory' do
       let(:setup) { subcategory }
 
@@ -59,6 +64,19 @@ RSpec.describe Gql::Mutations::KnowledgeBase::Category::Delete, type: :graphql d
         expect(gql.result.data['errors'])
           .to include(include('message' => 'Delete all child categories and answers, then try again.'))
       end
+    end
+  end
+
+  # Only an active knowledge base is editable — the legacy admin dialog is what activates it.
+  context 'when the knowledge base is inactive', authenticated_as: :editor do
+    let(:setup) { knowledge_base.update!(active: false) }
+
+    it 'raises an error' do
+      expect(gql.result.error_type).to eq(ActiveRecord::RecordNotFound)
+    end
+
+    it 'deletes nothing' do
+      expect(KnowledgeBase::Category).to exist(id: record.id)
     end
   end
 

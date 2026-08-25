@@ -9,12 +9,8 @@ import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;
 
 export const KnowledgeBaseCategoryAddDocument = gql`
-    mutation knowledgeBaseCategoryAdd($knowledgeBaseId: ID!, $input: KnowledgeBaseCategoryInput!, $locale: String!) {
-  knowledgeBaseCategoryAdd(
-    knowledgeBaseId: $knowledgeBaseId
-    input: $input
-    locale: $locale
-  ) {
+    mutation knowledgeBaseCategoryAdd($input: KnowledgeBaseCategoryInput!, $locale: String!) {
+  knowledgeBaseCategoryAdd(input: $input, locale: $locale) {
     category {
       id
       title

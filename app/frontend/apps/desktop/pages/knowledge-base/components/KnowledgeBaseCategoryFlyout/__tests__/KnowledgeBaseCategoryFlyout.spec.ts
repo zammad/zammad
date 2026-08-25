@@ -262,7 +262,7 @@ describe('KnowledgeBaseCategoryFlyout', () => {
     })
 
     describe('saving', () => {
-      it('creates the category in the browsed knowledge base and locale', async () => {
+      it('creates the category in the browsed locale', async () => {
         mockParentOptions()
 
         const wrapper = renderFlyout()
@@ -273,7 +273,6 @@ describe('KnowledgeBaseCategoryFlyout', () => {
         const calls = await waitForKnowledgeBaseCategoryAddMutationCalls()
 
         expect(calls.at(-1)?.variables).toEqual({
-          knowledgeBaseId: KNOWLEDGE_BASE_ID,
           // The locale of the call: the title is written into it and the response comes back in
           //   it, which is what the browsed page reads from the cache.
           locale: 'en-us',
