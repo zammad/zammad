@@ -708,7 +708,7 @@
 }
 
 @utility required {
-  @apply after:ms-1.5 after:inline-block after:size-1.5 after:rounded-full after:bg-yellow-600 after:align-middle after:content-[''];
+  @apply after:ms-0.75 after:text-yellow-600 after:content-['*'] formkit-invalid:after:text-red-500 formkit-errors:after:text-red-500;
 }
 
 @utility ai-stripe {
