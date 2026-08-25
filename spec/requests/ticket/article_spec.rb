@@ -924,4 +924,37 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
     end
 
   end
+
+  describe 'POST /api/v1/ticket_articles (full response)', authenticated_as: :customer do
+    let(:victim_ticket) do
+      create(:ticket, group: group, customer: agent, created_by_id: agent.id, updated_by_id: agent.id)
+    end
+
+    let(:victim_article) do
+      create(:'ticket/article', :internal_note,
+             ticket:        victim_ticket,
+             body:          'SECRET_INTERNAL_CONTENT',
+             created_by_id: agent.id,
+             updated_by_id: agent.id)
+    end
+
+    let(:attacker_ticket) do
+      create(:ticket, group: group, customer: customer, created_by_id: customer.id, updated_by_id: customer.id)
+    end
+
+    it 'renders the created article, ignoring a decoupled id parameter', :aggregate_failures do
+      post "/api/v1/ticket_articles?full=true&id=#{victim_article.id}",
+           params: { ticket_id: attacker_ticket.id, body: 'legit follow-up' },
+           as:     :json
+
+      created_article = attacker_ticket.articles.reload.last
+
+      expect(response).to have_http_status(:created)
+      expect(json_response['id']).to eq(created_article.id)
+      expect(json_response['assets']['TicketArticle'].keys).to include(created_article.id.to_s)
+      expect(json_response['assets']['TicketArticle'].keys).not_to include(victim_article.id.to_s)
+      expect(json_response['assets']['Ticket'].keys).not_to include(victim_ticket.id.to_s)
+      expect(response.body).not_to include('SECRET_INTERNAL_CONTENT')
+    end
+  end
 end
