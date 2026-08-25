@@ -11160,7 +11160,7 @@ msgstr ""
 "送信者がエージェントだったら、受信リストの先頭ユーザーを顧客として登録する"
 
 #: db/seeds/settings.rb:3565
-msgid "If this regex matches, no notification will be sent by the sender."
+msgid "If this regex matches, no notification will be sent to the sender."
 msgstr "正規表現にマッチした場合、通知されません。"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:179

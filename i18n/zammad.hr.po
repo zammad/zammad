@@ -10711,7 +10711,7 @@ msgstr ""
 "klijenta."
 
 #: db/seeds/settings.rb:3565
-msgid "If this regex matches, no notification will be sent by the sender."
+msgid "If this regex matches, no notification will be sent to the sender."
 msgstr "Ako se regex podudara, obavijest neće biti poslana pošiljatelju."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:179

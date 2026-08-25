@@ -10988,7 +10988,7 @@ msgstr ""
 "příjemců jako zákazníka."
 
 #: db/seeds/settings.rb:3565
-msgid "If this regex matches, no notification will be sent by the sender."
+msgid "If this regex matches, no notification will be sent to the sender."
 msgstr ""
 "Při shodě regulárního výrazu nebude odesílatelem zasláno žádné oznámení."
 

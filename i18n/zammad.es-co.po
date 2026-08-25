@@ -11607,7 +11607,7 @@ msgstr ""
 "destinatarios como el cliente."
 
 #: db/seeds/settings.rb:3565
-msgid "If this regex matches, no notification will be sent by the sender."
+msgid "If this regex matches, no notification will be sent to the sender."
 msgstr ""
 "Si esta expresión regular coincide, el remitente no enviará ninguna "
 "notificación."

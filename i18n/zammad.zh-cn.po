@@ -10792,7 +10792,7 @@ msgid ""
 msgstr "如果发件人是客服人员，则将收件人列表中的第一个用户设置为客户。"
 
 #: db/seeds/settings.rb:3565
-msgid "If this regex matches, no notification will be sent by the sender."
+msgid "If this regex matches, no notification will be sent to the sender."
 msgstr "如果此正则表达式匹配，发件人将不会发送任何通知。"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:179

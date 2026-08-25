@@ -11261,7 +11261,7 @@ msgstr ""
 "destinatarului ca client."
 
 #: db/seeds/settings.rb:3565
-msgid "If this regex matches, no notification will be sent by the sender."
+msgid "If this regex matches, no notification will be sent to the sender."
 msgstr ""
 "Dacă acest regex se potrivește, expeditorul nu va primi nici o notificare."
 
