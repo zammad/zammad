@@ -81,7 +81,7 @@ class App.ControllerGenericIndex extends App.Controller
     @delay(
       =>
         @navigate "#{@pageData.pagerBaseUrl}1/#{encodeURIComponent(@searchField.val())}"
-    , 300, "#{@controllerId}-render")
+    , 300, 'search')
 
   shortcutSearch: (e) ->
     e.preventDefault()
@@ -90,7 +90,7 @@ class App.ControllerGenericIndex extends App.Controller
     @search()
 
   delayedRender: =>
-    @delay(@render, 300, "#{@controllerId}-render")
+    @delay(@render, 300, 'render')
 
   render: =>
     if @pageData?.objects
