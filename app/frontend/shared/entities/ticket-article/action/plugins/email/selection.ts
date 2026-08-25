@@ -20,11 +20,23 @@ const formatDate = (date: string) => {
   }
 }
 
-export const getReplyQuoteHeader = (config: ConfigList, article: TicketArticle) => {
+export const getReplyQuoteHeader = (
+  config: ConfigList,
+  article: TicketArticle,
+  authorName?: Maybe<string>,
+) => {
   if (!config.ui_ticket_zoom_article_email_full_quote_header) return ''
 
   const date = formatDate(article.createdAt)
-  const name = article.author.fullname || ''
+
+  // Do not fall back to author.fullname - for users without a name it holds
+  //   their email address.
+  const fallbackName = [article.author.firstname, article.author.lastname]
+    .map((part) => part?.trim())
+    .filter(Boolean)
+    .join(' ')
+
+  const name = authorName || fallbackName
 
   return `${i18n.t('On %s, %s wrote:', date, name)}<p>\n</p>`
 }

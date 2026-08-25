@@ -66,23 +66,9 @@ module Ticket::Article::AddsMetadataEmail
     preferences['email_address_id'] = email_address.id
   end
 
-  def recipient_name(email_address)
-    if created_by_id != 1
-      case Setting.get('ticket_define_email_from')
-      when 'AgentNameSystemAddressName'
-        separator = Setting.get('ticket_define_email_from_separator')
-        return "#{created_by.firstname} #{created_by.lastname} #{separator} #{email_address.name}"
-      when 'AgentName'
-        return "#{created_by.firstname} #{created_by.lastname}"
-      end
-    end
-
-    email_address.name
-  end
-
   def metadata_email_process_from
     email_address = ticket.group.email_address
 
-    self.from = Channel::EmailBuild.recipient_line(recipient_name(email_address), email_address.email)
+    self.from = Channel::EmailBuild.recipient_line(email_address.sender_display_name(created_by), email_address.email)
   end
 end
