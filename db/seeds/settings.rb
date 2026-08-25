@@ -3563,7 +3563,7 @@ Setting.create_if_not_exists(
   title:       __('Block Notifications'),
   name:        'send_no_auto_response_reg_exp',
   area:        'Email::Base',
-  description: __('If this regex matches, no notification will be sent by the sender.'),
+  description: __('If this regex matches, no notification will be sent to the sender.'),
   options:     {
     form: [
       {
