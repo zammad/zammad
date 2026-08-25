@@ -10730,8 +10730,8 @@ msgstr ""
 "olarak ayarlayın."
 
 #: db/seeds/settings.rb:3565
-msgid "If this regex matches, no notification will be sent to the sender."
-msgstr "If this regex matches, no notification will be sent to the sender."
+msgid "If this regex matches, no notification will be sent by the sender."
+msgstr "If this regex matches, no notification will be sent by the sender."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:179
 msgid ""

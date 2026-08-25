@@ -10453,7 +10453,7 @@ msgstr ""
 "kunde."
 
 #: db/seeds/settings.rb:3565
-msgid "If this regex matches, no notification will be sent to the sender."
+msgid "If this regex matches, no notification will be sent by the sender."
 msgstr ""
 "Hvis dette regex matcher, sendes der ingen notifikation fra afsenderen."
 

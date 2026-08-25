@@ -11019,7 +11019,7 @@ msgstr ""
 "ontvangerslijst als klant."
 
 #: db/seeds/settings.rb:3565
-msgid "If this regex matches, no notification will be sent to the sender."
+msgid "If this regex matches, no notification will be sent by the sender."
 msgstr "Als deze regex overeenkomt, zal de afzender geen melding sturen."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:179

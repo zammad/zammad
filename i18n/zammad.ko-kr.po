@@ -10716,7 +10716,7 @@ msgstr ""
 "다."
 
 #: db/seeds/settings.rb:3565
-msgid "If this regex matches, no notification will be sent to the sender."
+msgid "If this regex matches, no notification will be sent by the sender."
 msgstr "이 정규식과 일치하는 경우, 통지는 송신자가 전송되지 않습니다."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:179

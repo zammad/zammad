@@ -11450,7 +11450,7 @@ msgid ""
 msgstr "إذا كان المرسل وكيلًا ، فعين أول مستخدم في قائمة المستلمين كعميل."
 
 #: db/seeds/settings.rb:3565
-msgid "If this regex matches, no notification will be sent to the sender."
+msgid "If this regex matches, no notification will be sent by the sender."
 msgstr "إذا تطابق التعبير العادي هذا ، فلن يتم إرسال إشعار من قبل المرسل."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:179
