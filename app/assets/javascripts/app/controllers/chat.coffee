@@ -302,6 +302,7 @@ class App.CustomerChat extends App.Controller
     @popovers.push @el.find('.js-activeAgents .js-info').popover(
       trigger:    'hover'
       html:       true
+      sanitize:   false
       animation:  false
       delay:      0
       placement:  'bottom'
