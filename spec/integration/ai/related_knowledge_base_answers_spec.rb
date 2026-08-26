@@ -16,13 +16,6 @@ RSpec.describe 'AI related knowledge base answers', :aggregate_failures, integra
   let(:kb_category) { create(:knowledge_base_category) }
 
   before do
-    # CI's :searchindex job still runs against ES 'stable' (the current release's lowest supported
-    # version), which is below vectordb's minimum - only the next release raises the floor. Skip
-    # rather than fail until then.
-    es_version = Gem::Version.new(SearchIndexBackend.version)
-    minimum    = Gem::Version.new(AI::VectorDB::SUPPORTED_ES_VERSION_MINIMUM)
-    skip "Elasticsearch #{es_version} is below the vectordb minimum (#{minimum})" if es_version < minimum
-
     setup_ai_provider('zammad_ai', token: ENV['ZAMMAD_AI_TOKEN'])
     Setting.set('vectordb_enabled', true)
 

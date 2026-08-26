@@ -120,14 +120,20 @@ state (draft, internal, published, archived). Existing indices do not contain th
 
 **Related issue:** [#6142](https://github.com/zammad/zammad/issues/6142)
 
-### Elasticsearch 7 is no longer supported
+### Elasticsearch 7 is no longer supported, 8.15 is the new minimum
 
-**Who is affected?** Admins of systems that still run Elasticsearch 7.
+**Who is affected?** Admins of systems that run an Elasticsearch older than 8.15, including every
+Elasticsearch 7 installation.
 
 Elasticsearch 7 has reached its end of life and was deprecated with Zammad 7.1. Support for it was
-removed with this release, so Zammad requires **Elasticsearch 8** or later.
+removed with this release, so the supported range is now **Elasticsearch 8.15 up to, but not
+including, 10** — 8.15 and later 8.x releases and every 9.x release. The requirement is enforced
+where Zammad reads the server version: the `zammad:searchindex:*` rake tasks, including
+`zammad:searchindex:rebuild`, and the "Elasticsearch version" system report abort with
+`Version <x> of configured elasticsearch is not supported.`
 
-⚠️ Upgrade the Elasticsearch installation to version 8 or later before updating to Zammad 7.2.
+⚠️ Upgrade the Elasticsearch installation to 8.15 or newer before updating to Zammad 7.2. Note that
+Elasticsearch 10 and later are not supported either.
 
 **Related issue:** [#6314](https://github.com/zammad/zammad/issues/6314)
 

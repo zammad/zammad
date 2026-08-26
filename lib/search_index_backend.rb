@@ -2,7 +2,7 @@
 
 class SearchIndexBackend
 
-  SUPPORTED_ES_VERSION_MINIMUM   = '7.8'.freeze
+  SUPPORTED_ES_VERSION_MINIMUM   = '8.15.0'.freeze
   SUPPORTED_ES_VERSION_LESS_THAN = '10'.freeze
 
   STORE_NAMES           = %w[preferences data].freeze

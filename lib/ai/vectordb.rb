@@ -3,9 +3,6 @@
 require 'elasticsearch'
 
 class AI::VectorDB
-  SUPPORTED_ES_VERSION_MINIMUM   = '8.11.0'.freeze
-  SUPPORTED_ES_VERSION_LESS_THAN = '10.0.0'.freeze
-
   # An Elasticsearch transport error can carry the whole response body as its message ("[400] {…}").
   # Keep that technical detail in the log and report an actionable message to callers instead.
   ERROR_MESSAGE = __('Semantic search is temporarily unavailable. Please try again later.')
@@ -323,11 +320,17 @@ class AI::VectorDB
     raise AI::VectorDB::Error, __('Connection to Elasticsearch Vector DB failed')
   end
 
+  # `knn` sends the Query DSL kNN query with a `k` parameter, which Elasticsearch accepts only from
+  #   8.15 on: 8.11 rejects the query outright ("[knn] queries cannot be provided directly") and 8.12
+  #   to 8.14 reject `k` ("[knn] unknown field [k]"). That is why the overall minimum in
+  #   SearchIndexBackend is 8.15, and the range comes from there rather than being declared again
+  #   here. This check stays separate because it talks to the server through Elasticsearch::Client
+  #   and reports unavailability instead of aborting.
   def verify_es_version!
     reported = request { client.info }['version']['number']
     version = Gem::Version.new(reported)
-    minimum = Gem::Version.new(SUPPORTED_ES_VERSION_MINIMUM)
-    less_than = Gem::Version.new(SUPPORTED_ES_VERSION_LESS_THAN)
+    minimum = Gem::Version.new(SearchIndexBackend::SUPPORTED_ES_VERSION_MINIMUM)
+    less_than = Gem::Version.new(SearchIndexBackend::SUPPORTED_ES_VERSION_LESS_THAN)
     return if version >= minimum && version < less_than
 
     Rails.logger.error { "AI::VectorDB: Incompatible Elasticsearch version #{reported}" }

@@ -9,7 +9,7 @@ RSpec.describe 'AI::VectorDB Version Check' do # rubocop:disable RSpec/DescribeC
   context 'when Elasticsearch version is within the supported range' do
     before do
       indices = instance_double(Elasticsearch::API::Indices::Actions, exists?: true)
-      client = instance_double(Elasticsearch::Client, indices:, info: { 'version' => { 'number' => '8.12.0' } })
+      client = instance_double(Elasticsearch::Client, indices:, info: { 'version' => { 'number' => '8.15.0' } })
       allow(instance).to receive_messages(client: client)
     end
 
@@ -21,7 +21,7 @@ RSpec.describe 'AI::VectorDB Version Check' do # rubocop:disable RSpec/DescribeC
   context 'when Elasticsearch version is below the minimum supported version' do
     before do
       indices = instance_double(Elasticsearch::API::Indices::Actions, exists?: true)
-      client = instance_double(Elasticsearch::Client, indices: indices, info: { 'version' => { 'number' => '8.10.0' } })
+      client = instance_double(Elasticsearch::Client, indices: indices, info: { 'version' => { 'number' => '8.14.3' } })
       allow(instance).to receive_messages(client: client)
     end
 

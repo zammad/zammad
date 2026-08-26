@@ -33,8 +33,16 @@ RSpec.describe SearchIndexBackend, 'version_handling' do
 
     let(:response) { instance_double(UserAgent::Result, success?: true, data: { 'version' => { 'number' => version } }) }
 
-    context 'with allowed version' do
-      let(:version) { '8.1.12' }
+    context 'with lowest allowed version' do
+      let(:version) { '8.15.0' }
+
+      it 'returns correct information' do
+        expect(described_class.info).to eq({ 'version' => { 'number' => version } })
+      end
+    end
+
+    context 'with highest supported major version' do
+      let(:version) { '9.1.2' }
 
       it 'returns correct information' do
         expect(described_class.info).to eq({ 'version' => { 'number' => version } })
@@ -42,7 +50,15 @@ RSpec.describe SearchIndexBackend, 'version_handling' do
     end
 
     context 'with version too low' do
-      let(:version) { '7.0.0' }
+      let(:version) { '7.17.0' }
+
+      it 'returns correct information' do
+        expect { described_class.info }.to raise_error(RuntimeError, "Version #{version} of configured elasticsearch is not supported.")
+      end
+    end
+
+    context 'with version just below the minimum' do
+      let(:version) { '8.14.3' }
 
       it 'returns correct information' do
         expect { described_class.info }.to raise_error(RuntimeError, "Version #{version} of configured elasticsearch is not supported.")
@@ -60,8 +76,8 @@ RSpec.describe SearchIndexBackend, 'version_handling' do
 
   describe '.version' do
     it 'returns the version' do
-      allow(described_class).to receive(:info).and_return({ 'version' => { 'number' => '7.12.0' } })
-      expect(described_class.version).to eq('7.12.0')
+      allow(described_class).to receive(:info).and_return({ 'version' => { 'number' => '8.19.20' } })
+      expect(described_class.version).to eq('8.19.20')
     end
   end
 

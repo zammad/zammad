@@ -323,45 +323,16 @@ function enforce_redis () {
   fi
 }
 
-function setup_elasticsearch () {
-  echo "# Configuring Elasticsearch..."
+# Every Elasticsearch version Zammad still supports ships the 'ingest-attachment' plugin as part of
+#   its core, so there is nothing left to set up here besides reading the configured server.
+function detect_elasticsearch () {
+  echo "# Checking Elasticsearch configuration..."
 
   ES_CONNECTION="$(zammad run rails r "puts '',Setting.get('es_url')"| tail -n 1 2>> /dev/null)"
 
   if [ -z "${ES_CONNECTION}" ]; then
     echo "-- Nevermind, no es_url is set, leaving Elasticsearch untouched ...!"
     echo "-- The above is all right if you don't want to use Elasticsearch (locally) - if this is not intended, consult https://docs.zammad.org !"
-    return 0
-  fi
-
-  if [[ "$(/usr/share/elasticsearch/bin/elasticsearch --version| cut -c 10)" -gt 7 ]]; then
-    # We're skipping the plugin reinstallation process for ES 8+ as it's part of the ES core
-    return 0
-  fi
-
-  if [ -n "$(/usr/share/elasticsearch/bin/elasticsearch-plugin list | grep mapper-attachments)" ]; then
-    REBUILD_ES_SEARCHINDEX="yes"
-
-    echo "# Deleting old elasticsearch index..."
-    zammad run rake zammad:searchindex:drop
-
-    yes | /usr/share/elasticsearch/bin/elasticsearch-plugin -s remove mapper-attachments
-
-  elif [ -n "$(/usr/share/elasticsearch/bin/elasticsearch-plugin list | grep ingest-attachment)" ]; then
-    yes | /usr/share/elasticsearch/bin/elasticsearch-plugin -s remove ingest-attachment
-  fi
-
-  yes | /usr/share/elasticsearch/bin/elasticsearch-plugin -s install ingest-attachment
-
-  if [ "${ES_CONNECTION}" == "http://127.0.0.1:9200" ] || [ "${ES_CONNECTION}" == "http://localhost:9200" ]; then
-    ${INIT_CMD} restart elasticsearch
-  else
-    echo -e "\n It seems you're running an external Elasticsearch server on ${ES_CONNECTION}"
-    echo -e "\n We'll not touch your Elasticsearch on the local and remote system."
-    echo -e "\n Please get sure to install the 'ingest-attachment' plugin on your Elasticsearch server by:"
-    echo -e "/usr/share/elasticsearch/bin/elasticsearch-plugin -s install ingest-attachment"
-    echo -e "\nAfter this you might need to rebuild the searchindex by:"
-    echo -e "zammad run rake zammad:searchindex:rebuild"
   fi
 }
 
@@ -428,7 +399,7 @@ function update_or_install () {
     initialise_database
   fi
 
-  setup_elasticsearch
+  detect_elasticsearch
 
   elasticsearch_searchindex_rebuild
 
