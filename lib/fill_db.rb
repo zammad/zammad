@@ -487,7 +487,12 @@ or if you only want to create 100 tickets
 
     locale = knowledge_base.kb_locales.first
 
-    category_pool = categories.presence || create_knowledge_base_categories(categories_amount, knowledge_base.id, locale.id, sleep_time)
+    category_pool = categories.presence || create_knowledge_base_categories(
+      amount:            categories_amount,
+      knowledge_base_id: knowledge_base.id,
+      locale_id:         locale.id,
+      sleep_time:        sleep_time,
+    )
     if category_pool.blank?
       puts " Found #{category_pool.count} categories, aborting!"
       return
