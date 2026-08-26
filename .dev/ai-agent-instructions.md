@@ -114,4 +114,11 @@ or locate code:
   prints the same output — `codegraph` is a local dev dependency, so the bare
   command is not on `PATH`.
 
+Setup is per developer: `pnpm codegraph:install` indexes this checkout and registers
+the server with the agent harnesses it finds (Claude Code, Cursor, Codex CLI,
+opencode, …). Say yes when it offers to put the CLI on `PATH`: that is how they
+launch it. `pnpm codegraph:uninstall` reverts it. Nothing lands in a commit —
+`.codegraph/` and `.mcp.json` are gitignored, and the harness registration lives in
+each tool's own config outside the repo.
+
 If there is no `.codegraph/` directory, skip CodeGraph entirely — indexing is the user's decision.
