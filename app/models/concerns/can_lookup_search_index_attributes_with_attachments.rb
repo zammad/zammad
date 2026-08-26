@@ -18,27 +18,10 @@ module CanLookupSearchIndexAttributesWithAttachments
   private
 
   def search_index_attachment_indexable?(attachment, current_size)
-    if SearchIndexBackend.attachment_ignored?(attachment)
-      search_index_attachment_log "Attachment #{attachment.id} is ignored for search index due to its file name or type."
-      return false
-    end
-
-    if SearchIndexBackend.attachment_too_big?(attachment)
-      search_index_attachment_log "Attachment #{attachment.id} is ignored for search index due to its file size."
-      return false
-    end
-
-    if SearchIndexBackend.payload_too_big?(current_size + attachment.content.bytesize)
-      search_index_attachment_log "Attachment #{attachment.id} is ignored for search index due to total payload size limit."
-      return false
-    end
+    return false if SearchIndexBackend.attachment_ignored?(attachment)
+    return false if SearchIndexBackend.attachment_too_big?(attachment)
+    return false if SearchIndexBackend.payload_too_big?(current_size + attachment.content.bytesize)
 
     true
-  end
-
-  def search_index_attachment_log(message)
-    return if !defined?(Rack) || !defined?(Rack.application) || Rack.application.top_level_tasks.none?
-
-    puts message # rubocop:disable Rails/Output
   end
 end
