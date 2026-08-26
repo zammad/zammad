@@ -234,11 +234,15 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
       # An asynchronous form re-render (e.g. the processing of a form updater response of a
       #  previous field change) may close the dropdown again right after it was opened.
       # In this case open the dropdown once again and retry.
-      raise if select_menu_open?
+      # NOTE: only click if it is actually closed. The trigger's click handler toggles the
+      #  dropdown, and `select_menu_open?` briefly lags behind it (e.g. during the collapse
+      #  transition), so clicking while the dropdown still considers itself open would close
+      #  it instead of reopening it, and 'common-select.opened' would then never fire again.
+      if !select_menu_open?
+        element.click
 
-      element.click
-
-      wait_for_test_flag('common-select.opened')
+        wait_for_test_flag('common-select.opened')
+      end
 
       select_option_by_label(label, **find_options)
     end
@@ -517,38 +521,41 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
     dialog_element
   end
 
-  # Checks without waiting if the menu of a select field is currently shown.
+  # Checks if the menu of a select field is currently shown.
+  #   A short wait (instead of an instant snapshot) tolerates the brief window where a
+  #   collapse-enter transition has inserted the menu but not yet restored its real height,
+  #   during which it is present in the DOM but not yet considered visible.
   def select_menu_open?
     if desktop_view?
-      page.has_css?('#common-select > [role="menu"]', wait: 0)
+      page.has_css?('#common-select > [role="menu"]', wait: 1)
     else
-      page.has_css?('#common-select[role="dialog"]', wait: 0)
+      page.has_css?('#common-select[role="dialog"]', wait: 1)
     end
   end
 
   # Dropdowns are teleported to the root element, so we must search them within the document body.
-  #   In order to improve the test performance, we don't do any implicit waits here.
-  #   Instead, we do explicit waits when opening/closing dropdowns within the actions.
+  #   A short explicit wait (instead of none) tolerates the same brief window as
+  #   `select_menu_open?`, while still failing fast if the dropdown genuinely never opens.
   def dropdown_element
     if type_select? || type_tags? || autocomplete?
-      page.find('#common-select > [role="menu"]', wait: false)
+      page.find('#common-select > [role="menu"]', wait: 1)
     elsif type_treeselect?
-      page.find('#field-tree-select-input-dropdown > [role="menu"]', wait: false)
+      page.find('#field-tree-select-input-dropdown > [role="menu"]', wait: 1)
     end
   end
 
   # Dialogs are teleported to the root element, so we must search them within the document body.
-  #   In order to improve the test performance, we don't do any implicit waits here.
-  #   Instead, we do explicit waits when opening/closing dialogs within the actions.
+  #   A short explicit wait (instead of none) tolerates the same brief window as
+  #   `select_menu_open?`, while still failing fast if the dialog genuinely never opens.
   def dialog_element
     if type_select?
-      page.find('#common-select[role="dialog"]', wait: false)
+      page.find('#common-select[role="dialog"]', wait: 1)
     elsif type_treeselect?
-      page.find("#dialog-field-tree-select-#{field_id}", wait: false)
+      page.find("#dialog-field-tree-select-#{field_id}", wait: 1)
     elsif type_tags?
-      page.find("#dialog-field-tags-#{field_id}", wait: false)
+      page.find("#dialog-field-tags-#{field_id}", wait: 1)
     elsif autocomplete?
-      page.find("#dialog-field-auto-complete-#{field_id}", wait: false)
+      page.find("#dialog-field-auto-complete-#{field_id}", wait: 1)
     end
   end
 

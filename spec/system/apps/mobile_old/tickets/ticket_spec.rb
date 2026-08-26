@@ -15,7 +15,10 @@ RSpec.describe 'Mobile > Ticket', app: :mobile, authenticated_as: :agent, type: 
       wait_for_gql 'apps/mobile/entities/ticket/graphql/queries/ticketWithMentionLimit.graphql'
       expect(page).to have_text('Ticket Title')
 
-      wait_for_subscription_start 'ticketUpdates'
+      # Scope the readiness check to this ticket's event stream - without the
+      #   entity, any ticketUpdates stream satisfies it and the push can race
+      #   the actual subscription (seen in CI as 'ticketUpdates 1 not set').
+      wait_for_subscription_start 'ticketUpdates', entity: ticket
 
       ticket.update!(title: 'New Title')
       wait_for_subscription_update 'ticketUpdates'

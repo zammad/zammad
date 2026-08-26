@@ -28,6 +28,10 @@ RSpec.describe 'Data Privacy', authenticated_as: :authenticate, type: :system do
       click '.js-submit'
 
       expect(page).to have_text('in process')
+
+      # 'completed' only arrives via a websocket push (no fallback if missed) -
+      # reconfirm the connection is still live right before the job triggers it.
+      ensure_websocket(check_if_pinged: false)
       DataPrivacyTaskJob.perform_now
       expect(page).to have_text('completed')
     end
@@ -52,6 +56,10 @@ RSpec.describe 'Data Privacy', authenticated_as: :authenticate, type: :system do
         click '.js-submit'
 
         expect(page).to have_text('in process')
+
+        # 'completed' only arrives via a websocket push (no fallback if missed) -
+        # reconfirm the connection is still live right before the job triggers it.
+        ensure_websocket(check_if_pinged: false)
         DataPrivacyTaskJob.perform_now
         expect(page).to have_text('completed')
       end
@@ -65,6 +73,10 @@ RSpec.describe 'Data Privacy', authenticated_as: :authenticate, type: :system do
         click '.js-submit'
 
         expect(page).to have_text('in process')
+
+        # 'completed' only arrives via a websocket push (no fallback if missed) -
+        # reconfirm the connection is still live right before the job triggers it.
+        ensure_websocket(check_if_pinged: false)
         DataPrivacyTaskJob.perform_now
         expect(page).to have_text('completed')
       end
@@ -87,6 +99,10 @@ RSpec.describe 'Data Privacy', authenticated_as: :authenticate, type: :system do
       click '.js-submit'
 
       expect(page).to have_text('in process')
+
+      # 'completed' only arrives via a websocket push (no fallback if missed) -
+      # reconfirm the connection is still live right before the job triggers it.
+      ensure_websocket(check_if_pinged: false)
       DataPrivacyTaskJob.perform_now
       expect(page).to have_text('completed')
     end
@@ -105,6 +121,10 @@ RSpec.describe 'Data Privacy', authenticated_as: :authenticate, type: :system do
       click '.js-submit'
 
       expect(page).to have_text('in process')
+
+      # 'completed' only arrives via a websocket push (no fallback if missed) -
+      # reconfirm the connection is still live right before the job triggers it.
+      ensure_websocket(check_if_pinged: false)
       DataPrivacyTaskJob.perform_now
       expect(page).to have_text('completed')
     end
