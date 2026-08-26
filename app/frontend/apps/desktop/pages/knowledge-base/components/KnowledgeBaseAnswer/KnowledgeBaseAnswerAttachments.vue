@@ -23,7 +23,7 @@ const { showPreview } = useFilePreviewViewer(attachments)
 </script>
 
 <template>
-  <section v-if="attachments.length">
+  <section v-if="attachments.length" class="mb-6">
     <CommonFileList
       :files="attachments"
       :label="$t('Attachments')"

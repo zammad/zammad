@@ -1,0 +1,52 @@
+query knowledgeBaseSearch(
+  $query: String!
+  $categoryId: ID
+  $locale: String
+  $pageSize: Int = 30
+  $cursor: String
+) {
+  knowledgeBaseSearch(
+    query: $query
+    categoryId: $categoryId
+    locale: $locale
+    first: $pageSize
+    after: $cursor
+  ) {
+    totalCount
+    edges {
+      node {
+        item {
+          ... on KnowledgeBaseAnswer {
+            id
+            title
+            visibility
+            translationMissing
+          }
+          ... on KnowledgeBaseCategory {
+            id
+            title
+            categoryIcon
+            iconSet
+            visibility
+          }
+        }
+        titlePreview {
+          text
+          highlight
+        }
+        bodyPreview {
+          text
+          highlight
+        }
+        categoryPath {
+          id
+          title
+        }
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+  }
+}

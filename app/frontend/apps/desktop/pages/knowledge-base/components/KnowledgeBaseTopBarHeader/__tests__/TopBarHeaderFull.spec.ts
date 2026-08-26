@@ -73,6 +73,22 @@ describe('TopBarHeaderFull', () => {
     )
   })
 
+  it('offers a link to the knowledge base search ahead of the public knowledge base link', () => {
+    const view = renderHeader({ searchLink: '/knowledge-base/locale/en-us' })
+
+    const searchLink = view.getByRole('link', { name: 'Search the knowledge base' })
+    const previewLink = view.getByRole('link', { name: 'View public knowledge base' })
+
+    expect(searchLink).toHaveAttribute('href', '/desktop/knowledge-base/locale/en-us')
+    expect(searchLink.compareDocumentPosition(previewLink)).toBe(Node.DOCUMENT_POSITION_FOLLOWING)
+  })
+
+  it('offers no search link without one', () => {
+    const view = renderHeader()
+
+    expect(view.queryByRole('link', { name: 'Search the knowledge base' })).not.toBeInTheDocument()
+  })
+
   it('emits the selected locale when a language is chosen', async () => {
     const view = renderHeader()
 

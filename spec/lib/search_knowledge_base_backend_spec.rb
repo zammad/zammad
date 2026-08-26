@@ -16,6 +16,13 @@ RSpec.describe SearchKnowledgeBaseBackend do
     }
   end
 
+  # The search returns KnowledgeBase::Answer::Translation ids, not answer ids. Comparing against
+  #   the answer id only works while the two sequences happen to line up, which is true in a
+  #   freshly seeded database and stops being true as soon as they drift apart.
+  def translation_id(answer)
+    answer.translations.first!.id
+  end
+
   def handle_elasticsearch(enabled)
     if enabled
       searchindex_model_reload([KnowledgeBase::Translation, KnowledgeBase::Category::Translation, KnowledgeBase::Answer::Translation])
@@ -94,11 +101,11 @@ RSpec.describe SearchKnowledgeBaseBackend do
         let(:ids)    { result.pluck(:id).map(&:to_i) }
 
         it 'finds drafts' do
-          expect(ids).to include(draft_answer.id)
+          expect(ids).to include(translation_id(draft_answer))
         end
 
         it 'excludes published answers' do
-          expect(ids).not_to include(published_answer.id)
+          expect(ids).not_to include(translation_id(published_answer))
         end
       end
 
@@ -108,11 +115,11 @@ RSpec.describe SearchKnowledgeBaseBackend do
         let(:ids)    { result.pluck(:id).map(&:to_i) }
 
         it 'finds ai-generated answers' do
-          expect(ids).to include(ai_generated_answer.id)
+          expect(ids).to include(translation_id(ai_generated_answer))
         end
 
         it 'excludes untagged answers' do
-          expect(ids).not_to include(published_answer.id)
+          expect(ids).not_to include(translation_id(published_answer))
         end
       end
 
@@ -122,11 +129,11 @@ RSpec.describe SearchKnowledgeBaseBackend do
         let(:ids)    { result.pluck(:id).map(&:to_i) }
 
         it 'finds recently created answers' do
-          expect(ids).to include(recently_created.id)
+          expect(ids).to include(translation_id(recently_created))
         end
 
         it 'excludes old answers' do
-          expect(ids).not_to include(old_answer.id)
+          expect(ids).not_to include(translation_id(old_answer))
         end
       end
 
@@ -136,12 +143,233 @@ RSpec.describe SearchKnowledgeBaseBackend do
         let(:ids)    { result.pluck(:id).map(&:to_i) }
 
         it 'finds recently updated answers' do
-          expect(ids).to include(recently_updated.id)
+          expect(ids).to include(translation_id(recently_updated))
         end
 
         it 'excludes old answers' do
-          expect(ids).not_to include(old_answer.id)
+          expect(ids).not_to include(translation_id(old_answer))
         end
+      end
+    end
+
+    describe '#search relevance' do
+      let(:options) do
+        {
+          knowledge_base: knowledge_base,
+          locale:         primary_locale,
+          scope:          nil,
+          flavor:         :agent,
+        }
+      end
+
+      let(:search_term) { 'xylophone' }
+
+      let(:matching_category) do
+        create(:knowledge_base_category, knowledge_base: knowledge_base).tap do |elem|
+          elem.translations.first.update!(title: 'Xylophone department')
+        end
+      end
+
+      let(:title_match) do
+        create(:knowledge_base_answer, :published, category: category, translation_attributes: { title: 'Xylophone maintenance' })
+      end
+
+      let(:tag_match) do
+        create(:knowledge_base_answer, :published, :with_tag, tag_names: [search_term], category: category, translation_attributes: { title: 'Percussion upkeep' })
+      end
+
+      # Repeats the term often enough that its raw term frequency beats a title that mentions it
+      #   once. Without the boost this outranks #title_match, so the ordering example below fails
+      #   if #options_apply_boost stops doing its job - which a single mention would not prove,
+      #   because BM25's field length norm already favours the short title field on its own.
+      let(:body_match) do
+        create(:knowledge_base_answer, :published, category: category, translation_attributes: { title: 'Completely unrelated heading' }).tap do |elem|
+          elem.translations.first.content.update!(body: (['xylophone'] * 40).join(' '))
+        end
+      end
+
+      let(:result) { instance.search(search_term, user: user) }
+
+      before do
+        matching_category
+        title_match
+        tag_match
+        body_match
+        searchindex_model_reload([KnowledgeBase::Translation, KnowledgeBase::Category::Translation, KnowledgeBase::Answer::Translation])
+      end
+
+      it 'returns one merged ranking, ordered by descending score' do
+        scores = result.pluck(:score)
+
+        expect(scores).to eq(scores.sort.reverse)
+      end
+
+      it 'interleaves categories and answers instead of grouping them by type' do
+        types = result.pluck(:type)
+
+        # Grouping by type - which is what #filter_results used to do - puts every answer before
+        #   every category, so a category ahead of the last answer can only come from a merged
+        #   ranking.
+        expect(types.index(KnowledgeBase::Category::Translation.name))
+          .to be < types.rindex(KnowledgeBase::Answer::Translation.name)
+      end
+
+      it 'ranks a title match above a body match' do
+        ids = result.pluck(:id)
+
+        expect(ids.index(translation_id(title_match))).to be < ids.index(translation_id(body_match))
+      end
+
+      it 'ranks a tag match above a body match' do
+        ids = result.pluck(:id)
+
+        expect(ids.index(translation_id(tag_match))).to be < ids.index(translation_id(body_match))
+      end
+    end
+
+    describe '#search with highlight options' do
+      let(:options) do
+        {
+          knowledge_base:    knowledge_base,
+          locale:            primary_locale,
+          scope:             nil,
+          flavor:            :agent,
+          highlight_options: {
+            pre_tags:            ['[HL]'],
+            post_tags:           ['[/HL]'],
+            number_of_fragments: 1,
+            fragment_size:       200,
+            no_match_size:       200,
+          },
+        }
+      end
+
+      # A term of its own: searchindex_model_reload reindexes from the database but leaves the
+      #   documents of rolled back records behind, and Elasticsearch answers with only 10 hits per
+      #   index by default. Sharing a term with another example group lets those leftovers crowd
+      #   these two answers out of the response.
+      let(:search_term) { 'marimba' }
+
+      # Title matches, body does not - so the body preview can only come from no_match_size.
+      let(:title_only_match) do
+        create(:knowledge_base_answer, :published, category: category, translation_attributes: { title: 'Marimba maintenance' })
+      end
+
+      # Mentions the term three times, each separated by more than the default fragment_size of 100
+      #   characters, so Elasticsearch's default of up to five fragments returns several of them.
+      #
+      # Deliberately kept well under 1000 characters: the 'with big attachment' group above PUTs
+      #   highlight.max_analyzed_offset=1000 onto every index, and an index setting is not rolled
+      #   back with the database transaction. A body longer than that makes Elasticsearch refuse to
+      #   highlight the field and fail the whole request, which reads here as "found nothing".
+      let(:long_body_match) do
+        create(:knowledge_base_answer, :published, category: category, translation_attributes: { title: 'Percussion upkeep' }).tap do |elem|
+          filler = 'Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua ut enim ad minim veniam. '
+          elem.translations.first.content.update!(body: Array.new(3) { "#{filler}marimba. " }.join)
+        end
+      end
+
+      def highlight_for(answer)
+        instance
+          .search(search_term, user: user)
+          .find { |elem| elem[:id] == translation_id(answer) }
+          .fetch(:highlight)
+      end
+
+      before do
+        title_only_match
+        long_body_match
+        searchindex_model_reload([KnowledgeBase::Translation, KnowledgeBase::Category::Translation, KnowledgeBase::Answer::Translation])
+      end
+
+      it 'marks the term with the requested tags instead of the <em> default' do
+        expect(highlight_for(title_only_match)['title'].first).to include('[HL]Marimba[/HL]').and(not_include('<em>'))
+      end
+
+      it 'returns a single fragment even where the default would return several' do
+        expect(highlight_for(long_body_match)['content.body'].length).to be 1
+      end
+
+      it 'returns a body preview even though only the title matched' do
+        expect(highlight_for(title_only_match)['content.body'].first).to be_present
+      end
+    end
+  end
+
+  describe '#options' do
+    let(:built) { instance.options('some term') }
+
+    context 'with agent flavor' do
+      let(:options) do
+        {
+          knowledge_base: knowledge_base,
+          locale:         primary_locale,
+          scope:          nil,
+          flavor:         :agent,
+        }
+      end
+
+      it 'boosts title and tags' do
+        expect(built[:query_extension][:bool][:should]).to eq(
+          [
+            { match_bool_prefix: { title: { query: 'some term', boost: 3 } } },
+            { match_bool_prefix: { tags: { query: 'some term', boost: 2 } } },
+          ]
+        )
+      end
+
+      it 'still sends no fields list, so a plain term keeps matching the index default fields' do
+        expect(built).not_to have_key(:query_fields_by_indexes)
+      end
+
+      it 'does not boost a field qualified query, which is a filter rather than a ranking' do
+        expect(instance.options('publication_state:draft')[:query_extension][:bool]).not_to have_key(:should)
+      end
+    end
+
+    context 'with public flavor' do
+      it 'does not boost, leaving the public site ranking as it was' do
+        expect(built[:query_extension][:bool]).not_to have_key(:should)
+      end
+    end
+
+    context 'without highlight options' do
+      it 'sends none, so Elasticsearch keeps its <em> defaults' do
+        expect(built).not_to have_key(:highlight_options)
+      end
+    end
+
+    it 'asks for the score, which is what merges the per index responses into one ranking' do
+      expect(built[:with_score]).to be true
+    end
+
+    context 'with an explicit order' do
+      let(:options) do
+        {
+          knowledge_base: knowledge_base,
+          locale:         primary_locale,
+          scope:          nil,
+          order_by:       { updated_at: :desc },
+        }
+      end
+
+      it 'does not ask for the score, since Elasticsearch already decided the order' do
+        expect(built).not_to have_key(:with_score)
+      end
+    end
+
+    context 'with highlight options' do
+      let(:options) do
+        {
+          knowledge_base:    knowledge_base,
+          locale:            primary_locale,
+          scope:             nil,
+          highlight_options: { pre_tags: ['[HL]'], number_of_fragments: 1 },
+        }
+      end
+
+      it 'passes them to the search index backend' do
+        expect(built[:highlight_options]).to eq({ pre_tags: ['[HL]'], number_of_fragments: 1 })
       end
     end
   end

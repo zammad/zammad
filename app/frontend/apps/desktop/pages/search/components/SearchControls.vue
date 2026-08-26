@@ -95,8 +95,12 @@ const focusSearch = () => {
   })
 }
 
-const clearAndFocusSearch = () => {
+const clearSearch = () => {
   searchTerm.value = ''
+}
+
+const clearAndFocusSearch = () => {
+  clearSearch()
   focusSearch()
 }
 
@@ -183,6 +187,7 @@ onBeforeRouteUpdate((to, from) => {
       v-model="searchTerm"
       wrapper-class="rounded-lg w-full bg-blue-200 px-2.5 py-2 dark:bg-gray-700 hover:outline-1 hover:outline-blue-600
 dark:hover:outline-blue-900 has-[input:focus]:outline-1 has-[input:focus]:outline-blue-800"
+      @keydown.esc.stop="clearSearch"
     >
       <template #prefix>
         <CommonBadge

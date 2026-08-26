@@ -11,7 +11,10 @@ import { EnumKnowledgeBaseVisibility } from '#shared/graphql/types.ts'
 import { usePage } from '#desktop/composables/usePage.ts'
 import { useKnowledgeBaseAccess } from '#desktop/entities/knowledge-base/composables/useKnowledgeBaseAccess.ts'
 import { useKnowledgeBaseStore } from '#desktop/entities/knowledge-base/stores/knowledgeBase.ts'
-import { knowledgeBaseAnswerRoute } from '#desktop/entities/knowledge-base/utils/routeLocation.ts'
+import {
+  knowledgeBaseAnswerRoute,
+  knowledgeBaseBrowseRoute,
+} from '#desktop/entities/knowledge-base/utils/routeLocation.ts'
 import KnowledgeBaseAnswerHeaderDetails from '#desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerHeaderDetails.vue'
 import KnowledgeBaseAnswerStepper from '#desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerStepper.vue'
 import TopBarHeaderCompact from '#desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/TopBarHeaderCompact.vue'
@@ -101,6 +104,11 @@ const headerProps = computed<TopBarHeaderProps>((currentProps) => {
     localeCode: selectedLocaleCode.value,
     previewUrl: previewUrl.value,
     actions: feedActions.value,
+    // `focus: 'search'` is a one-shot signal the search screen picks up to focus its
+    //   input and then strips from the URL - see KnowledgeBaseBrowse.vue.
+    searchLink: activeLocale.value
+      ? { ...knowledgeBaseBrowseRoute(activeLocale.value), query: { focus: 'search' } }
+      : undefined,
   }
 
   if (currentProps && isEqual(currentProps, updatedProps)) return currentProps

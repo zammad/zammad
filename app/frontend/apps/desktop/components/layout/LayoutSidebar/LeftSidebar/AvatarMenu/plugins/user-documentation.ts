@@ -6,7 +6,7 @@ export default <AvatarMenuPlugin>{
   key: 'user-documentation',
   label: __('User documentation'),
   permission: ['ticket.agent', 'report', 'knowledge_base.*', 'chat.agent', 'cti.agent'],
-  link: 'https://next.zammad.org/en/documentation/use/start.html', // TODO: change link when new user documentation is released
+  link: 'https://next.zammad.org/documentation/use/start.html', // TODO: change link when new user documentation is released
   linkExternal: true,
   openInNewTab: true,
   icon: 'book',

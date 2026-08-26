@@ -24,6 +24,7 @@ import { openKnowledgeBaseEditFlyout } from '../../composables/useKnowledgeBaseE
 import { useKnowledgeBaseFeedAction } from '../../composables/useKnowledgeBaseFeedAction.ts'
 import { knowledgeBasePreviewUrl } from '../../composables/useKnowledgeBasePreviewUrl.ts'
 import { knowledgeBaseBreadcrumbItems } from '../../utils/knowledgeBaseBreadcrumbItems.ts'
+import { knowledgeBaseBrowsedTitle } from '../../utils/knowledgeBaseBrowsedTitle.ts'
 
 import { useKnowledgeBaseHeaderLocales } from './useKnowledgeBaseHeaderLocales.ts'
 
@@ -62,9 +63,11 @@ const { activeLocale, knowledgeBase, loading: baseLoading } = storeToRefs(useKno
 //   resolves.
 const loading = computed(() => baseLoading.value || Boolean(props.loading))
 
-const title = computed(
-  () =>
-    props.categoryBreadcrumb?.at(-1)?.title ?? knowledgeBase.value?.title ?? __('Knowledge Base'),
+const title = computed(() =>
+  knowledgeBaseBrowsedTitle({
+    categoryBreadcrumb: props.categoryBreadcrumb,
+    knowledgeBaseTitle: knowledgeBase.value?.title,
+  }),
 )
 
 const { canEdit, canRead } = useKnowledgeBaseAccess()

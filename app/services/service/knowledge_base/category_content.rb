@@ -8,6 +8,8 @@
 #
 # `category` nil means the knowledge base root (only categories, no answers).
 class Service::KnowledgeBase::CategoryContent < Service::Base
+  include Service::KnowledgeBase::Concerns::WalksCategoryTree
+
   attr_reader :knowledge_base, :category, :locale
 
   # `locale` is the resolved KnowledgeBase::Locale used to localize titles.
@@ -34,22 +36,6 @@ class Service::KnowledgeBase::CategoryContent < Service::Base
   #   visibility batches must cover.
   def breadcrumb
     @breadcrumb ||= category.nil? ? [] : trail_of(category)
-  end
-
-  # Ancestor path of a category (root first, including itself), resolved from
-  #   the in-memory tree so no parent-walk queries are needed.
-  def trail_of(cat)
-    trail = []
-    node = cat
-    while node
-      trail.unshift(node)
-      node = node.parent_id && by_id[node.parent_id]
-    end
-    trail
-  end
-
-  def by_id
-    @by_id ||= all_categories.index_by(&:id)
   end
 
   # Breadcrumb (ancestor path) of the opened category and every rendered child,
@@ -126,45 +112,21 @@ class Service::KnowledgeBase::CategoryContent < Service::Base
       subcategory_count:        subtree_subcategory_count(id),
       direct_answer_count:      visible_answer_counts[id].to_i,
       direct_subcategory_count: visible_children_count(id),
-      visibility:               visibility_of(id),
+      visibility:               content_visibility(id),
       deletable:                empty_category?(id),
     }
   end
 
   def subtree_answer_count(id)
-    subtree_ids[id].sum { |subtree_id| visible_answer_counts[subtree_id].to_i }
+    subtree_ids(id).sum { |subtree_id| visible_answer_counts[subtree_id].to_i }
   end
 
   def subtree_subcategory_count(id)
-    (subtree_ids[id] - [id]).count { |subtree_id| visible_category_ids.include?(subtree_id) }
+    (subtree_ids(id) - [id]).count { |subtree_id| visible_category_ids.include?(subtree_id) }
   end
 
   def visible_children_count(id)
     Array(children_by_parent[id]).count { |child| visible_category_ids.include?(child.id) }
-  end
-
-  def all_categories
-    @all_categories ||= knowledge_base.categories.to_a
-  end
-
-  def children_by_parent
-    @children_by_parent ||= all_categories.group_by(&:parent_id)
-  end
-
-  def all_category_ids
-    @all_category_ids ||= all_categories.map(&:id)
-  end
-
-  # Category id => ids in its subtree (self first), resolved in memory from a
-  #   single load of the tree.
-  def subtree_ids
-    @subtree_ids ||= {}.tap do |map|
-      builder = lambda do |cat|
-        map[cat.id] ||= [cat.id] + Array(children_by_parent[cat.id]).flat_map { |child| builder.call(child) }
-      end
-
-      all_categories.each { |cat| builder.call(cat) }
-    end
   end
 
   # Answers visible to the current user, counted per category. Visibility —
@@ -209,9 +171,9 @@ class Service::KnowledgeBase::CategoryContent < Service::Base
                               when :granular
                                 granular_visible_category_ids
                               when :reader
-                                category_ids_with_internal_subtree
+                                category_ids_with_subtree_answers(:internal)
                               else
-                                category_ids_with_published_subtree
+                                category_ids_with_subtree_answers(:published)
                               end
   end
 
@@ -221,48 +183,7 @@ class Service::KnowledgeBase::CategoryContent < Service::Base
     accessible = KnowledgeBase::AccessibleCategories.for_user(current_user)
 
     Set.new(accessible.editor.map(&:id))
-      .merge(accessible.reader.map(&:id).select { |id| category_ids_with_internal_subtree.include?(id) })
-      .merge(accessible.public_reader.map(&:id).select { |id| category_ids_with_published_subtree.include?(id) })
-  end
-
-  # Highest content visibility of a category's subtree in the browsed locale
-  #   (independent of the current user), mirroring the agent app: untranslated
-  #   content does not count, so such categories show as draft.
-  def visibility_of(id)
-    if category_ids_with_published_subtree.include?(id)
-      :published
-    elsif category_ids_with_internal_subtree.include?(id)
-      :internal
-    elsif category_ids_with_archived_subtree.include?(id)
-      :archived
-    else
-      :draft
-    end
-  end
-
-  def category_ids_with_published_subtree
-    @category_ids_with_published_subtree ||= category_ids_with_subtree_answers(:published)
-  end
-
-  def category_ids_with_internal_subtree
-    @category_ids_with_internal_subtree ||= category_ids_with_subtree_answers(:internal)
-  end
-
-  def category_ids_with_archived_subtree
-    @category_ids_with_archived_subtree ||= category_ids_with_subtree_answers(:archived)
-  end
-
-  # Ids of categories whose subtree contains at least one answer in the given
-  #   publication scope (:internal, :published or :archived), translated to the
-  #   browsed locale.
-  def category_ids_with_subtree_answers(scope)
-    answers = ::KnowledgeBase::Answer.public_send(scope)
-    answers = answers.translated_to(locale) if locale
-
-    direct = answers.where(category_id: all_category_ids).group(:category_id).count
-
-    all_categories.each_with_object(Set.new) do |cat, set|
-      set << cat.id if subtree_ids[cat.id].any? { |id| direct[id].to_i.positive? }
-    end
+      .merge(accessible.reader.map(&:id).select { |id| category_ids_with_subtree_answers(:internal).include?(id) })
+      .merge(accessible.public_reader.map(&:id).select { |id| category_ids_with_subtree_answers(:published).include?(id) })
   end
 end

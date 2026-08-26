@@ -13,7 +13,9 @@ module Gql::Types
     field :total_count, Integer, null: false, description: 'Indicates the total number of available records.'
 
     def total_count
-      if object.items&.group_values&.any?
+      # A connection over a plain Array — a search result that was assembled in Ruby rather than
+      #   queried — has no relation to ask about grouping, and Array#size is already the total.
+      if object.items.respond_to?(:group_values) && object.items.group_values.any?
         return object.items
           .unscope(:order)
           .count(:all)

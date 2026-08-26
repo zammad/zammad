@@ -2,7 +2,16 @@
 
 <script setup lang="ts">
 import { useElementVisibility } from '@vueuse/core'
-import { computed, ref, toRef, useTemplateRef, watch, type ComponentPublicInstance } from 'vue'
+import { useRouteQuery } from '@vueuse/router'
+import {
+  computed,
+  onMounted,
+  ref,
+  toRef,
+  useTemplateRef,
+  watch,
+  type ComponentPublicInstance,
+} from 'vue'
 
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import { scrollIntoView } from '#shared/utils/dom.ts'
@@ -21,10 +30,15 @@ import KnowledgeBaseAddCategoryCard from '../components/KnowledgeBaseBrowse/Know
 import KnowledgeBaseAnswerList from '../components/KnowledgeBaseBrowse/KnowledgeBaseAnswerList.vue'
 import KnowledgeBaseCategoryCard from '../components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue'
 import KnowledgeBaseCategoryCardSkeleton from '../components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCardSkeleton.vue'
+import KnowledgeBaseSearchBar from '../components/KnowledgeBaseSearch/KnowledgeBaseSearchBar.vue'
+import KnowledgeBaseSearchResults from '../components/KnowledgeBaseSearch/KnowledgeBaseSearchResults.vue'
+import KnowledgeBaseSearchShortcuts from '../components/KnowledgeBaseSearch/KnowledgeBaseSearchShortcuts.vue'
 import KnowledgeBaseTopBarHeader from '../components/KnowledgeBaseTopBarHeader/KnowledgeBaseTopBarHeader.vue'
 import { useKnowledgeBaseCategoryFlyout } from '../composables/useKnowledgeBaseCategoryFlyout.ts'
 import { useKnowledgeBaseCategorySubcategories } from '../composables/useKnowledgeBaseCategorySubcategories.ts'
 import { useKnowledgeBaseEditFlyout } from '../composables/useKnowledgeBaseEditFlyout.ts'
+import { useKnowledgeBaseSearchTerm } from '../composables/useKnowledgeBaseSearchTerm.ts'
+import { knowledgeBaseBrowsedTitle } from '../utils/knowledgeBaseBrowsedTitle.ts'
 
 // The browsed locale and category come from the URL as route props (see
 //   routes.ts). Both are absent on the locale-less entry until the section
@@ -91,6 +105,32 @@ const canAddCategory = computed(() =>
 // Per record, like adding a category: a granular editor may write to one subtree and only read
 //   elsewhere. There is nothing to add at the root, where no category is open.
 const canAddAnswer = computed(() => Boolean(categoryPolicy.value?.createAnswer))
+
+const { searchTerm, searchQuery, searchNow } = useKnowledgeBaseSearchTerm()
+
+// While a term is committed to the URL, the results take the place of the browse content —
+//   the category grid and the answer list alike.
+const searchActive = computed(() => Boolean(searchQuery.value))
+
+// The answer header's search button (KnowledgeBaseAnswerTopBarHeader.vue) links here with
+//   `?focus=search` to land the cursor in the field it lands on - a one-shot signal, so it
+//   is stripped right away instead of lingering across reloads or a back/forward.
+const focusRequested = useRouteQuery<string | null>('focus', null)
+const searchBarElement = useTemplateRef<{ focus: () => void }>('search-bar')
+
+onMounted(() => {
+  if (focusRequested.value !== 'search') return
+
+  searchBarElement.value?.focus()
+  focusRequested.value = null
+})
+
+const browsedTitle = computed(() =>
+  knowledgeBaseBrowsedTitle({
+    categoryBreadcrumb: breadcrumb.value,
+    knowledgeBaseTitle: knowledgeBase.value?.title,
+  }),
+)
 
 const { openKnowledgeBaseCategoryAddFlyout } = useKnowledgeBaseCategoryFlyout()
 useKnowledgeBaseEditFlyout()
@@ -190,7 +230,7 @@ const scrollToEnd = () => {
 //   only shows when the new page is tall from its first frame — an answer list served from the
 //   cache — because then the previous scroll position survives and the category section is
 //   left out of view.
-watch(browsedPage, () => scrollToStart())
+watch(browsedPage, scrollToStart)
 </script>
 
 <template>
@@ -219,10 +259,29 @@ watch(browsedPage, () => scrollToStart())
       <!-- shrink-0: without it the flex scroll container compresses the section and clips its
            bottom padding above the overflowing answers. -->
       <section
-        class="w-full max-w-7xl shrink-0 px-5.5 py-3 pb-6"
-        :class="{ 'flex grow flex-col': showsEmptyState }"
+        class="w-full max-w-7xl shrink-0 px-5.5 pt-4 pb-6"
+        :class="{ 'flex grow flex-col': showsEmptyState || searchActive }"
       >
-        <CommonLoader class="flex w-full items-center" :loading="loading">
+        <KnowledgeBaseSearchBar ref="search-bar" v-model="searchTerm" :title="browsedTitle">
+          <template #controls>
+            <KnowledgeBaseSearchShortcuts @search="searchNow" />
+          </template>
+        </KnowledgeBaseSearchBar>
+
+        <!-- Keyed like the answer list: a scope or locale switch must drop the results with
+             their query and pagination state rather than page the new scope with the old cursor.
+             Outside the category loader below for the same reason the answer list is. -->
+        <KnowledgeBaseSearchResults
+          v-if="searchActive"
+          :key="browsedPage"
+          :query="searchQuery"
+          :category-id="categoryId"
+          :locale="localeCode"
+          :content-container-element="contentContainerElement"
+          @clear-search="searchTerm = ''"
+        />
+
+        <CommonLoader v-else class="flex w-full items-center" :loading="loading">
           <template #skeleton>
             <KnowledgeBaseCategoryCardSkeleton :count="categorySkeletonCount" />
           </template>
@@ -269,6 +328,7 @@ watch(browsedPage, () => scrollToStart())
         <!-- Outside the loader above: the answers bring their own query and skeleton, and wrapping
              them would remount the list on every category switch. -->
         <KnowledgeBaseAnswerList
+          v-if="!searchActive"
           ref="answer-list"
           :key="browsedPage"
           v-model:add-answer-card-visible="isAddAnswerCardVisible"

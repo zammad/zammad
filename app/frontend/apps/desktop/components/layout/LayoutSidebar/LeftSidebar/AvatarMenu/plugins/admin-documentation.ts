@@ -6,7 +6,7 @@ export default <AvatarMenuPlugin>{
   key: 'admin-documentation',
   label: __('Admin documentation'),
   permission: 'admin.*',
-  link: 'https://next.zammad.org/en/documentation/manage-zammad/start.html', // TODO: change link when new admin documentation is released
+  link: 'https://next.zammad.org/documentation/manage/start.html', // TODO: change link when new admin documentation is released
   linkExternal: true,
   openInNewTab: true,
   icon: 'book',

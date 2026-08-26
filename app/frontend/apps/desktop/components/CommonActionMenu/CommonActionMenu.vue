@@ -28,6 +28,7 @@ export interface Props {
   disabled?: boolean
   noSingleActionMode?: boolean
   customMenuButtonLabel?: string
+  headerLabel?: string
   defaultIcon?: string
   defaultButtonVariant?: ButtonVariant | 'neutral-light' | 'neutral-dark'
   zIndex?: string
@@ -159,7 +160,7 @@ const router = useRouter()
         :orientation="orientation"
         :owner="popoverTarget"
       >
-        <CommonPopoverMenu :entity="entity" :popover="popover" />
+        <CommonPopoverMenu :entity="entity" :popover="popover" :header-label="headerLabel" />
       </CommonPopover>
     </template>
   </div>

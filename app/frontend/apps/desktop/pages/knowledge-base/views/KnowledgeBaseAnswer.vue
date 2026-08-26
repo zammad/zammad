@@ -1,11 +1,15 @@
 <!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
 import { computed, toRef, useTemplateRef } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+import { useLocaleStore } from '#shared/stores/locale.ts'
 import { scrollIntoView } from '#shared/utils/dom.ts'
 
+import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonFloatingToolbar from '#desktop/components/CommonFloatingToolbar/CommonFloatingToolbar.vue'
 import CommonIndicator from '#desktop/components/CommonIndicator/CommonIndicator.vue'
 import { useIndicator } from '#desktop/components/CommonIndicator/useIndicator.ts'
@@ -21,6 +25,7 @@ import KnowledgeBaseAnswerSidebarContent from '../components/KnowledgeBaseAnswer
 import { READING_COLUMN_CLASS } from '../components/KnowledgeBaseTopBarHeader/headerClasses.ts'
 import KnowledgeBaseAnswerTopBarHeader from '../components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerTopBarHeader.vue'
 import { useKnowledgeBaseAnswer } from '../composables/useKnowledgeBaseAnswer.ts'
+import { knowledgeBaseSearchReturnRoute } from '../utils/knowledgeBaseSearchReturn.ts'
 
 const props = defineProps<{
   localeCode?: string
@@ -39,6 +44,15 @@ const { answer, loading } = useKnowledgeBaseAnswer({
   answerId,
   locale: toRef(props, 'localeCode'),
 })
+
+const route = useRoute()
+const router = useRouter()
+
+const { localeData } = storeToRefs(useLocaleStore())
+
+const searchReturnRoute = computed(() =>
+  knowledgeBaseSearchReturnRoute(props.localeCode, route.query),
+)
 
 const { isIntersecting: isReachingBottom } = useIndicator()
 const { isIntersecting: isReachingTop } = useIndicator()
@@ -80,7 +94,7 @@ const scrollToEnd = () => {
       <!-- Similar to the column of the ticket article list (ArticleList.vue), so an
            answer reads at the same measure as an article — and shared verbatim with
            the header title/details above, so both stay aligned at any width. -->
-      <section class="mx-auto w-full min-w-xs py-5" :class="READING_COLUMN_CLASS">
+      <section class="mx-auto mb-5 w-full min-w-xs py-5" :class="READING_COLUMN_CLASS">
         <CommonLoader :loading="loading">
           <template #skeleton>
             <KnowledgeBaseAnswerContentSkeleton />
@@ -96,7 +110,18 @@ const scrollToEnd = () => {
 
       <CommonIndicator v-model="isReachingBottom" />
 
-      <div class="pointer-none sticky bottom-3 h-0 w-full print:hidden">
+      <div class="sticky bottom-3 mt-auto h-0 w-full print:hidden">
+        <CommonButton
+          v-if="searchReturnRoute"
+          class="absolute inset-s-3 bottom-0"
+          size="medium"
+          variant="tertiary"
+          :prefix-icon="localeData?.dir === 'rtl' ? 'chevron-right' : 'chevron-left'"
+          @click="router.push(searchReturnRoute)"
+        >
+          {{ $t('Back to search results') }}
+        </CommonButton>
+
         <CommonFloatingToolbar
           :label="$t('Answer actions')"
           :is-reaching-bottom="isReachingBottom"

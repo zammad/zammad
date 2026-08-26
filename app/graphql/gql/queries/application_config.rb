@@ -11,7 +11,7 @@ module Gql::Queries
 
     # Reimplemented from sessions_controller#config_frontend.
     def resolve(...)
-      frontend_settings + rails_application_config + custom_settings
+      frontend_settings + rails_application_config + custom_settings + backend_capabilities
     end
 
     private
@@ -57,6 +57,15 @@ module Gql::Queries
 
         { key: config_name, value: value }
       end
+    end
+
+    # Backend capabilities computed rather than read from a Setting directly, e.g. because the
+    #   underlying Setting is not frontend-exposed (es_url holds the Elasticsearch endpoint, which
+    #   the front end has no need to see, only whether search is backed by it).
+    def backend_capabilities
+      [
+        { key: 'es_enabled', value: SearchIndexBackend.enabled? },
+      ].reject { |entry| unauthenticated? && !entry[:value] }
     end
   end
 end

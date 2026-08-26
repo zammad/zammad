@@ -7,6 +7,7 @@ import type {
 import type {
   KnowledgeBaseAnswerQuery,
   KnowledgeBaseCategoryPolicyFragment,
+  KnowledgeBaseSearchQuery,
 } from '#shared/graphql/types.ts'
 
 import type { BreadcrumbItem } from '#desktop/components/CommonBreadcrumb/types.ts'
@@ -73,6 +74,10 @@ export type CategoryBreadcrumb = Pick<
 // Derived from the query document, so the answer header cannot drift from what
 //   it actually fetches.
 export type KnowledgeBaseAnswerHeader = NonNullable<KnowledgeBaseAnswerQuery['knowledgeBaseAnswer']>
+
+// One search hit as the result list receives it — likewise derived from the query document.
+export type KnowledgeBaseSearchResult =
+  KnowledgeBaseSearchQuery['knowledgeBaseSearch']['edges'][number]['node']
 
 export type KnowledgeBaseBreadcrumbItem = BreadcrumbItem & {
   iconSet?: KnowledgeBaseIconSet

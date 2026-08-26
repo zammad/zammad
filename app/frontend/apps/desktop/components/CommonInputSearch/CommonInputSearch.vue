@@ -81,7 +81,7 @@ const onKeydown = (event: KeyboardEvent) => emit('keydown', event)
           ref="filter-input"
           v-model="filter"
           v-bind="$attrs"
-          :placeholder="i18n.t(placeholder)"
+          :placeholder="$t(placeholder)"
           :aria-label="$t('Search…')"
           class="w-full text-black outline-hidden dark:text-white"
           :class="{
@@ -108,8 +108,7 @@ const onKeydown = (event: KeyboardEvent) => emit('keydown', event)
         <span class="text-stone-200 dark:text-neutral-500">{{ suggestionVisiblePart }}</span>
       </div>
     </div>
-    <div class="flex shrink-0 items-center gap-1">
-      <slot name="controls" />
+    <div class="flex shrink-0 items-center gap-2">
       <CommonIcon
         v-if="filter?.length"
         class="fill-stone-200 focus-visible-app-default outline-0 hover:fill-black focus-visible:rounded-xs dark:fill-neutral-500 dark:hover:fill-white"
@@ -121,6 +120,7 @@ const onKeydown = (event: KeyboardEvent) => emit('keydown', event)
         @click.stop="clearFilter()"
         @keypress.space.prevent.stop="clearFilter()"
       />
+      <slot name="controls" />
     </div>
   </div>
 </template>

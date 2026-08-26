@@ -270,6 +270,20 @@ export type KnowledgeBaseFeedQueryVariables = Exact<{
 
 export type KnowledgeBaseFeedQuery = { knowledgeBaseFeed: { __typename: 'KnowledgeBaseFeed', knowledgeBasePath: string, categoryPath: string | null | undefined } };
 
+export type KnowledgeBaseSearchQueryVariables = Exact<{
+  query: string;
+  categoryId?: string | number | null | undefined;
+  locale?: string | null | undefined;
+  pageSize?: number | null | undefined;
+  cursor?: string | null | undefined;
+}>;
+
+
+export type KnowledgeBaseSearchQuery = { knowledgeBaseSearch: { __typename: 'KnowledgeBaseSearchResultConnection', totalCount: number, edges: Array<{ __typename: 'KnowledgeBaseSearchResultEdge', node: { __typename: 'KnowledgeBaseSearchResult', item:
+          | { __typename: 'KnowledgeBaseAnswer', id: string, title: string | null | undefined, visibility: Types.EnumKnowledgeBaseVisibility, translationMissing: boolean }
+          | { __typename: 'KnowledgeBaseCategory', id: string, title: string | null | undefined, categoryIcon: string, iconSet: 'anticon' | 'FontAwesome' | 'material' | 'ionicons' | 'Simple-Line-Icons', visibility: Types.EnumKnowledgeBaseVisibility }
+        , titlePreview: Array<{ __typename: 'KnowledgeBaseSearchPreviewSegment', text: string, highlight: boolean }>, bodyPreview: Array<{ __typename: 'KnowledgeBaseSearchPreviewSegment', text: string, highlight: boolean }>, categoryPath: Array<{ __typename: 'KnowledgeBaseSearchPathSegment', id: string, title: string | null | undefined }> } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null | undefined, hasNextPage: boolean } } };
+
 export type KnowledgeBaseAnswerUpdatesSubscriptionVariables = Exact<{
   answerId: string | number;
   locale?: string | null | undefined;

@@ -57,7 +57,13 @@ module Gql::Types::KnowledgeBase
       kb_locale.present? && object.translation_to(kb_locale).nil?
     end
 
+    # The search query batches this through a map of its own rather than through `category_details`:
+    #   it needs the visibility of its category hits but none of the counts, and a details entry
+    #   holding only this key would make the non-null count fields below resolve to nil.
     def visibility
+      visibilities = context[:knowledge_base_category_visibility]
+      return visibilities[object.id] if visibilities&.key?(object.id)
+
       precomputed_detail&.dig(:visibility) || object.content_visibility(kb_locale)
     end
 

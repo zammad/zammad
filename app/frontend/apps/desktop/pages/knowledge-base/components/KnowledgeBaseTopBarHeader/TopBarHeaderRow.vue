@@ -62,6 +62,17 @@ const { copyKnowledgeBaseNameToClipboard } = useTopBarHeader(toRef(props))
     <slot name="stepper" />
 
     <CommonLink
+      v-if="searchLink"
+      v-tooltip="$t('Search the knowledge base')"
+      :link="searchLink"
+      internal
+      class="rounded-lg! bg-green-200 p-1 outline outline-offset-0! outline-neutral-100 hover:bg-green-200 hover:outline-blue-600 dark:bg-gray-600 dark:outline-gray-900 dark:hover:bg-gray-600 dark:hover:outline-blue-900 print:hidden"
+      size="small"
+    >
+      <CommonIcon size="tiny" name="search" />
+    </CommonLink>
+
+    <CommonLink
       v-if="previewUrl"
       v-tooltip="$t('View public knowledge base')"
       :link="previewUrl"

@@ -61,6 +61,28 @@ RSpec.describe Gql::Queries::ApplicationConfig, type: :graphql do
                                              })
         end
       end
+
+      context 'when Elasticsearch is configured' do
+        before do
+          allow(SearchIndexBackend).to receive(:enabled?).and_return(true)
+          gql.execute(query)
+        end
+
+        it 'returns es_enabled true' do
+          expect(gql.result.data).to include({ 'key' => 'es_enabled', 'value' => true })
+        end
+      end
+
+      context 'when Elasticsearch is not configured' do
+        before do
+          allow(SearchIndexBackend).to receive(:enabled?).and_return(false)
+          gql.execute(query)
+        end
+
+        it 'returns es_enabled false' do
+          expect(gql.result.data).to include({ 'key' => 'es_enabled', 'value' => false })
+        end
+      end
     end
 
     context 'without authenticated session', authenticated_as: false do
@@ -96,6 +118,30 @@ RSpec.describe Gql::Queries::ApplicationConfig, type: :graphql do
                                                'key'   => 'auth_saml_credentials.display_name',
                                                'value' => 'Zammad SAML',
                                              })
+        end
+      end
+
+      context 'when Elasticsearch is configured' do
+        before do
+          allow(SearchIndexBackend).to receive(:enabled?).and_return(true)
+          gql.execute(query)
+        end
+
+        it 'returns es_enabled true even without a session' do
+          expect(gql.result.data).to include({ 'key' => 'es_enabled', 'value' => true })
+        end
+      end
+
+      # Like every other false value above, rather than reported as false - the front end reads a
+      #   missing capability as unavailable.
+      context 'when Elasticsearch is not configured' do
+        before do
+          allow(SearchIndexBackend).to receive(:enabled?).and_return(false)
+          gql.execute(query)
+        end
+
+        it 'omits es_enabled entirely' do
+          expect(gql.result.data.select { |s| s['key'].eql?('es_enabled') }).to be_empty
         end
       end
     end

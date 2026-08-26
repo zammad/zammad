@@ -62,6 +62,7 @@
 - `assets/info-circle.svg`
 - `assets/key.svg`
 - `assets/keyboard.svg`
+- `assets/lightbulb.svg`
 - `assets/lock.svg`
 - `assets/lock-fill.svg`
 - `assets/paperclip.svg`

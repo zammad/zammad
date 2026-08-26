@@ -135,6 +135,18 @@ describe('knowledge base answer header', () => {
     expect(view.getByText(/edited .* by Erika Mustermann/)).toBeInTheDocument()
   })
 
+  it('links the search button to the knowledge base root of the browsed locale, focusing its search field', async () => {
+    const view = await visitView(ANSWER_PATH)
+
+    // Once per header variant (full and compact).
+    const links = await view.findAllByRole('link', { name: 'Search the knowledge base' })
+
+    expect(links.length).toBeGreaterThan(0)
+    links.forEach((link) => {
+      expect(link).toHaveAttribute('href', '/desktop/knowledge-base/locale/en-us?focus=search')
+    })
+  })
+
   it('links the public knowledge base button to the answer preview endpoint', async () => {
     const view = await visitView(ANSWER_PATH)
 

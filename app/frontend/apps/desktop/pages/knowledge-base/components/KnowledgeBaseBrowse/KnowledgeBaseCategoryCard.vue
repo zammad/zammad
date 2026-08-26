@@ -115,7 +115,11 @@ const actions = computed<MenuItem[]>(() => {
         />
 
         <div class="flex min-h-11 w-full items-center justify-center">
-          <CommonLabel size="medium" class="line-clamp-2! text-center text-black! dark:text-white!">
+          <CommonLabel
+            tag="h3"
+            size="medium"
+            class="line-clamp-2! text-center text-black! dark:text-white!"
+          >
             {{ title }}
           </CommonLabel>
         </div>

@@ -17,6 +17,7 @@ export interface TopBarHeaderProps {
   // There is nothing to copy while a node is being created - its title is a form field, not the
   //   heading the button would copy.
   noCopyButton?: boolean
+  searchLink?: Link
 }
 
 // Caps the header rows that have to line up with the content below them:
