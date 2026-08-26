@@ -9,13 +9,6 @@ FROM docker.io/library/ruby:$RUBY_VERSION-slim-trixie AS base
 # Rails app lives here
 WORKDIR /opt/zammad
 
-# Set production environment
-ENV RAILS_ENV="production" \
-    BUNDLE_DEPLOYMENT="1" \
-    BUNDLE_PATH="/usr/local/bundle" \
-    BUNDLE_WITHOUT="test development" \
-    RAILS_LOG_TO_STDOUT="true"
-
 # Install base packages
 # Add official PostgreSQL apt repository to not depend on Debian's version.
 #   https://www.postgresql.org/download/linux/debian/
@@ -25,10 +18,18 @@ ENV RAILS_ENV="production" \
 RUN apt-get update -qq && \
     apt-get install -y postgresql-common && \
     /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh -y && \
-    apt-get install -y --no-install-recommends curl libimlib2 libpq5 nginx gnupg postgresql-client && \
+    apt-get install -y --no-install-recommends libjemalloc2 curl libimlib2 libpq5 nginx gnupg postgresql-client && \
     apt-get remove -y --purge exim4-base exim4-config bsd-mailx && \
     apt-get autoremove -y --purge && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
+
+# Set production environment
+ENV RAILS_ENV="production" \
+    BUNDLE_DEPLOYMENT="1" \
+    BUNDLE_PATH="/usr/local/bundle" \
+    BUNDLE_WITHOUT="test development" \
+    RAILS_LOG_TO_STDOUT="true" \
+    LD_PRELOAD="libjemalloc.so.2"
 
 # Throw-away stage to get the node binary
 FROM node:${NODE_VERSION}-trixie-slim AS node
